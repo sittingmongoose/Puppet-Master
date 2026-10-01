@@ -1,0 +1,78 @@
+{
+  "schema": "t12.evidence-chains.v1",
+  "note": "Issue/PR/commit/code/test links actually followed during this investigation, and links observed but not followed (missing). A closed issue title is a lead only; no test cited here was executed.",
+  "chains": [
+    {
+      "id": "C1-broken-pipe-stale-wc",
+      "issue": {"number": 4239, "state_at_capture": "closed 2024-09-22", "local": "inputs/issues/4239.json (body line 112)"},
+      "followed": [
+        {"step": "issue body: repro 'jj rebase -s third -d first 2>&1 | head -n 3' then stale error on next command", "evidence": "body quotes stale hint naming 'jj workspace update-stale'"},
+        {"step": "public comments fetch (only external fetch made)", "url": "https://api.github.com/repos/jj-vcs/jj/issues/4239/comments", "status": 200, "bytes": 11148},
+        {"step": "yuja comment 2024-08-08: 'expected after failed working-copy updates'; mitigation = reorder update_working_copy() before report_repo_changes(), linking cli/src/cli_util.rs@b3ede64 L1424-1430"},
+        {"step": "yuja comment 2024-08-10: 'Working-copy updates and git exports are two major sources of inconsistency'"},
+        {"step": "essiene comment 2024-09-21: draft PR #4517 moves report_repo_changes after the update block; issue closed 2024-09-22"}
+      ],
+      "code_verification_in_pin": {
+        "locator": "cli/src/cli_util.rs:1757-1771",
+        "finding": "finish_transaction updates the working copy BEFORE report_repo_changes with comment 'so that potential errors while reporting changes (broken pipe, etc) don't leave the working copy in a stale state' — fix present in pinned v0.22.0"
+      },
+      "missing_links": [
+        "PR #4517 diff not fetched (https://github.com/martinvonz/jj/pull/4517); equivalence to in-pin ordering inferred from comments + pinned code only",
+        "cli/src/cli_util.rs @b3ede64 (older revision linked from first comment) not fetched; pinned-revision region read instead"
+      ]
+    },
+    {
+      "id": "C2-hard-reboot-corruption",
+      "issue": {"number": 4423, "state_at_capture": "open", "local": "inputs/issues/4423.json (body line 58)"},
+      "followed": [
+        {"step": "issue body: after power-cycle, 'Failed to load the repo … Error when reading object of type view … Is a directory (os error 21)'; strace shows read of .jj/repo/op_store/views/ as a file path"},
+        {"step": "code cross-check: op-store/op-heads write path docs — docs/technical/concurrency.md:116-127 (heads as files; add-new-then-remove-old) and lib/src/op_heads_store.rs:63-138 (resolution handles missing/duplicate heads, not unreadable view objects)"}
+      ],
+      "missing_links": [
+        "18 comments not read (comments_url recorded, not fetched)",
+        "op_store.rs / simple_op_heads_store.rs internals not read; no in-repo repair tool located"
+      ]
+    },
+    {
+      "id": "C3-snapshot-skip-watchman",
+      "issue": {"number": 4545, "state_at_capture": "open", "local": "inputs/issues/4545.json (body line 70)"},
+      "followed": [
+        {"step": "body: 209ms vs 58ms jj log on Chromium; --ignore-working-copy risks stale workspace via #4028 and skips Watchman trigger registration at lib/src/fsmonitor.rs L210@0058c4f4"},
+        {"step": "code cross-check: watchman trigger query paths read at lib/src/local_working_copy.rs:761-790; SnapshotOptions semantics at lib/src/working_copy.rs:186-224"}
+      ],
+      "missing_links": [
+        "issue #4028 outside corpus window; not fetched",
+        "lib/src/fsmonitor.rs (incl. L210 region at pinned commit) not read",
+        "4 comments not fetched"
+      ]
+    },
+    {
+      "id": "C4-status-snapshot-panic",
+      "issue": {"number": 4396, "state_at_capture": "closed (not planned) 2024-09-05", "local": "inputs/issues/4396.json (body line 58)"},
+      "followed": [
+        {"step": "body backtrace: jj_lib::conflicts::parse_conflict <- TreeState::get_updated_tree_value <- rayon workers <- TreeState::visit_directory, panic at lib/src/merge.rs:163 'must have one more adds than removes'"},
+        {"step": "code cross-check: snapshot traversal and rayon parallelism confirmed at lib/src/local_working_copy.rs:795-1009 (into_par_iter at 939)"}
+      ],
+      "missing_links": ["lib/src/merge.rs:163 region not read", "2 comments not fetched"]
+    },
+    {
+      "id": "C5-concurrent-commit-test-lead",
+      "test_path": {"local": "lib/tests/test_bad_locking.rs:103-140", "note": "read, NOT executed"},
+      "followed": [
+        {"step": "test bodies test_bad_locking_children (+ git/local backends) simulate two machines via directory copy and assert concurrent commits are both visible"},
+        {"step": "design counterpart: docs/technical/concurrency.md:64-114; resolution code lib/src/op_heads_store.rs:63-138"}
+      ],
+      "missing_links": ["rest of test file (lines 141-223) not read", "test never run — pass/fail unknown"]
+    },
+    {
+      "id": "C6-colocated-workspace-gap",
+      "issue": {"number": 4436, "state_at_capture": "closed 2026-09-17 (post-dates v0.22.0 era)", "local": "inputs/issues/4436.json (body line 81)"},
+      "followed": [
+        {"step": "body: auxiliary workspaces in colocated repos lack .git, invisible to git tools (Nix example); proposes git-worktree mapping"},
+        {"step": "code cross-check: multi-workspace wc_commit handling read at cli/src/cli_util.rs:1714-1731; no worktree creation found in read regions — gap consistent with v0.22.0 code read"}
+      ],
+      "missing_links": ["8 comments not fetched; closing PR/commit (2026) outside pinned corpus and not fetched"]
+    }
+  ],
+  "empty_chain_note": "evidence-chains non-empty: five issue->code links and one issue->comments link were actually followed as listed."
+}

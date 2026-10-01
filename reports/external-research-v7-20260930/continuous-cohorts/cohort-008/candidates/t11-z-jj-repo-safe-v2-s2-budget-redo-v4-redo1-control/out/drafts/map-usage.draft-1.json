@@ -1,0 +1,21 @@
+{
+  "task_id": "t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control",
+  "map_used": false,
+  "arm": "control (documentation-led ad-hoc source navigation per TASK.md:5 matched policy; Z_SAFE_TASK.md:9 states T12 uses the map for navigation while control uses ad-hoc navigation)",
+  "host_index_setup_cost": {
+    "incurred": false,
+    "measurement": "none — the host-prepared generic map (map/index.json shards) was never opened, so no first-use/index setup cost was measured or incurred",
+    "provenance": "No read_file/public_https_get/mechanical call in this session targeted any map/index.json shard; chronology in out/navigation.json contains no map access."
+  },
+  "map_navigation_performed": [],
+  "what_was_used_instead": [
+    "inputs/source-locator.json path_to_shard tail (lines 2145-2305) to discover the inputs/repository/ candidate-file layout",
+    "inputs/catalog.json source inventory (issue/patch entries) for corpus scope",
+    "inputs/issues-index.json titles/states to select issues",
+    "targeted bounded read_file passes over docs and source files listed in out/acquisition.json"
+  ],
+  "mechanical_operations_used": [
+    {"operation": "line_map", "source": "inputs/repository/cli/src/cli_util.rs", "attempts": 2, "result": "ValueError both times (not a semantic tool issue; file not mapped)", "fallback": "bounded sequential reads with landmark probes (see out/navigation.json dead_ends)"}
+  ],
+  "notes": "Identical map/tool/source access was available to both arms; not using the map imposes no obligation on the control arm beyond this truthful record. No candidate-executed indexing is claimed."
+}

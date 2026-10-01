@@ -1,0 +1,62 @@
+{
+  "case_id": "t12-z-jj-repo-safe-v2-budget-redo-v4-redo1-control",
+  "definition": "Only links actually followed during this session are recorded as followed. Closed issues/titles are treated as leads; test source is not test execution; nothing was executed.",
+  "chains": [
+    {
+      "id": "EC1",
+      "claim": "The #4239 broken-pipe stale-working-copy failure was fixed by PR #4517, and the fix (reporting repo changes only after the working-copy update) is present in the pinned v0.22.0 source.",
+      "steps_followed": [
+        {"kind": "issue_body_local", "ref": "inputs/issues/4239.json:11,112", "content": "repro: `jj rebase -s third -d first 2>&1 | head -n 3` then next rebase errors: 'The working copy is stale (not updated since operation 6c9667ecda1f). Hint: Run `jj workspace update-stale`...'"},
+        {"kind": "issue_comments_remote", "ref": "https://api.github.com/repos/jj-vcs/jj/issues/4239/comments (HTTP 200, 11148 bytes)", "content": "yuja 2024-08-08: 'expected after failed working-copy updates'; mitigation = reorder update_working_copy() before report_repo_changes(), with historical code ref to cli_util.rs L1424-L1430 at commit b3ede64472f9cd9290cb6a3f8776caac69dca793; essiene 2024-09-21: draft PR #4517"},
+        {"kind": "pr_remote", "ref": "https://api.github.com/repos/jj-vcs/jj/pulls/4517 (HTTP 200, 17208 bytes)", "content": "'cli: reorder updating and reporting for consistency.' merged 2024-09-22T14:02:21Z; merge_commit_sha 76f40e5990db2981e7c86986c8af98f22edaccc9; body 'Fixes: #4239'; 7 changed files, +94/-85 (tests added per checklist)"},
+        {"kind": "corpus_patch_registered", "ref": "inputs/source-locator.json:315 (commit-patches/76f40e5990db2981e7c86986c8af98f22edaccc9.patch) and :453 (commit-patches/b3ede64472f9cd9290cb6a3f8776caac69dca793.patch)", "content": "both the fix merge commit and the pre-fix reference commit are within the corpus history (tip 67c2ae0 = 'release: release version 0.22.0', inputs/history-index.json:7-8); patch files themselves not read (not needed for the ordering check)"},
+        {"kind": "pinned_code_verified", "ref": "inputs/repository/cli/src/cli_util.rs:1765-1771", "content": "in finish_transaction, the working-copy update block ends (tail visible 1765-1769, including the 'workspace was deleted, so we shouldn't try to update it' arm) and only then report_repo_changes() is called (1771) - the #4517 ordering is in v0.22.0"}
+      ],
+      "conclusion": "Fix present in v0.22.0; stale state remains a designed, surfaced condition after genuinely failed working-copy updates.",
+      "missing_links": [
+        "PR #4517 changed 7 files including tests; the specific test additions were not identified or read (no test read, no execution)",
+        "#4239 timeline/events not fetched (state_reason 'completed' from body JSON only)"
+      ]
+    },
+    {
+      "id": "EC2",
+      "claim": "The divergent-operations panic in `jj op show` (#4465) reported on 0.21.0 has its panic site still present in the pinned v0.22.0 tree; the upstream fix post-dates v0.22.0.",
+      "steps_followed": [
+        {"kind": "issue_body_local", "ref": "inputs/issues/4465.json:11,112", "content": "repro with two workspaces and concurrent abandon vs edit; panic: 'thread main panicked at lib/src/default_index/revset_engine.rs:972:55: called Option::unwrap() on a None value'; version jj 0.21.0-6e72b1cfb02b994e738a16f7e965f1d0ebfe7224; jj op diff did not panic"},
+        {"kind": "issue_metadata_local", "ref": "inputs/issues/4465.json:73-75", "content": "created 2024-09-14; closed_at 2025-06-12 (after v0.22.0, released 2024-09)"},
+        {"kind": "pinned_code_verified", "ref": "inputs/repository/lib/src/default_index/revset_engine.rs:969-977", "content": "revset_for_commit_ids maps commit_id_to_pos(id).unwrap(); the unwrap is on line 972 - identical panic site present in v0.22.0"}
+      ],
+      "conclusion": "v0.22.0 retains the vulnerable unwrap; any revset evaluation over a commit set containing a missing commit can panic.",
+      "missing_links": [
+        "the eventual fix commit/PR for #4465 was not fetched (closed 2025-06-12; only state visible locally)"
+      ]
+    },
+    {
+      "id": "EC3",
+      "claim": "Documentation-led trails from official docs to implementation, all resolved inside the local corpus.",
+      "steps_followed": [
+        {"kind": "docs_to_code", "ref": "inputs/repository/docs/working-copy.md:94-100 -> inputs/repository/cli/src/commands/workspace/update_stale.rs:43-175", "content": "stale working copy remedy implemented as snapshot-then-merge with concurrency guard at 78-83 and missing-op recovery at 145-175"},
+        {"kind": "docs_to_code", "ref": "inputs/repository/docs/technical/concurrency.md:80-127 -> inputs/repository/lib/src/op_heads_store.rs:63-100 and lib/src/local_working_copy.rs:1607-1631,1693-1702,1931-1955", "content": "op-head file scheme and view merging vs implementation; per-workspace working_copy.lock and atomic state writes"},
+        {"kind": "docs_to_code", "ref": "inputs/repository/docs/operation-log.md:54-58 -> inputs/repository/cli/src/cli_util.rs:853-854,881-895,897-916", "content": "--at-op/--ignore-working-copy snapshot skip implemented as may_update_working_copy gate around maybe_snapshot"},
+        {"kind": "docs_to_code", "ref": "inputs/repository/docs/working-copy.md:10-27 -> inputs/repository/lib/src/local_working_copy.rs:792-906,939-958 and lib/src/working_copy.rs:186-227", "content": "auto-snapshot traversal, auto-track matcher, snapshot options/progress"},
+        {"kind": "code_to_error_history", "ref": "inputs/repository/cli/src/cli_util.rs:934-942 -> inputs/issues-index.json:226-235 (#4349), 406-415 (#4436)", "content": "colocated duplicate-working-copy TODO mirrored by colocated issue titles (title-level only)"}
+      ],
+      "conclusion": "Doc claims for snapshot/staleness/op-log mechanics are each anchored to pinned implementation lines.",
+      "missing_links": [
+        "inputs/repository/lib/src/lock.rs (FileLock semantics behind working_copy.lock) not read",
+        "inputs/repository/lib/src/fsmonitor.rs (Watchman trigger registration referenced by #4545 body's historical blob link) not read",
+        "inputs/repository/lib/src/repo.rs / transaction.rs (op-head merge entry, transaction commit path) not read"
+      ]
+    }
+  ],
+  "unfollowed_upstream_references": [
+    {"ref": "https://github.com/martinvonz/jj/issues/4028", "where": "inputs/issues/4545.json:70", "why_missing": "budget prioritization; not required for any finding claim"},
+    {"ref": "https://github.com/martinvonz/jj/issues/2193", "where": "inputs/repository/docs/technical/concurrency.md:51-54", "why_missing": "docs statement itself is the cited evidence; issue not fetched"},
+    {"ref": "https://github.com/martinvonz/jj/issues/19", "where": "inputs/repository/docs/working-copy.md:55", "why_missing": "docs statement itself is the cited evidence; issue not fetched"},
+    {"ref": "comments/timelines of #4423 (18), #4465 (1), #4508, #4545 (4)", "where": "inputs/issues/*.json comments_url fields", "why_missing": "only #4239's comment trail was followed"}
+  ],
+  "test_links": {
+    "followed": [],
+    "note": "No test source was read and nothing was executed; PR #4517 metadata mentions added tests but they were not read."
+  }
+}

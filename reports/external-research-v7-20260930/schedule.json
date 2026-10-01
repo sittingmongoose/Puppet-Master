@@ -49,15 +49,19 @@
       "R022",
       "R023",
       "R024",
-      "R025"
+      "R025",
+      "R026",
+      "R027"
     ],
     "current_partial_certification": [
       "R011",
       "R012"
     ],
     "current_pending": [
-      "R026",
-      "R027"
+      "R028",
+      "R029",
+      "R030",
+      "R031"
     ],
     "saved_history_complete_available_scope": [
       "R001",
@@ -93,18 +97,18 @@
   "original_wall_deadline_epoch": 1790820406,
   "deadline_edt": "2026-10-01T21:29:01-04:00",
   "extension_authority": "work-clock-extension/authority.json",
-  "publication_as_of_utc": "2026-10-01T22:14:29.186429+00:00",
+  "publication_as_of_utc": "2026-10-01T22:45:49.120916+00:00",
   "new_research_budget_required": false,
   "active_snapshot": {
-    "admissions": 43,
-    "operator_native_goals_pin": 41,
-    "derived_native_goal_lower_bound": 41,
+    "admissions": 47,
+    "operator_native_goals_pin": 45,
+    "derived_native_goal_lower_bound": 45,
     "derived_count_post_pin_explicit_activation_labels": [],
     "derived_count_basis": "Operator native counter plus explicit slot-ledger activation flags for admissions strictly after operator pin epoch; never traverse native receipts",
-    "operator_epoch": 1790892546.4499054,
-    "operator_staleness_seconds": 276.88739371299744,
-    "occupied_slot_seconds": 28471.287682294846,
-    "committed_remaining_seconds": 1559.5947139263153,
+    "operator_epoch": 1790894708.6073978,
+    "operator_staleness_seconds": 18.244316339492798,
+    "occupied_slot_seconds": 32126.604858398438,
+    "committed_remaining_seconds": 2244.4293189048767,
     "active_by_family": {
       "M": 0,
       "Z": 2,
@@ -116,19 +120,21 @@
       "L": 2
     },
     "M_L": "held original repair cap; no implicit route reopening",
-    "generated_output_lower_bound": 1216102,
+    "generated_output_lower_bound": 1423122,
     "generated_output_complete": false,
     "true_headroom": null,
     "warning": 2400000,
     "output_stop": 3000000,
     "start_cap": 144,
     "slot_seconds_cap": 172800,
-    "remaining_admission_starts": 101,
-    "reserve_starts_at_least": 21,
-    "uncommitted_slot_seconds_remaining": 142769.11760377884,
-    "reserve_slot_seconds_at_least": 28553.82352075577
+    "Z_slot_seconds_before_final_hour_upper_bound": 12428.296571731567,
+    "Z_clock_capacity_basis": "At most2Zslots, M/Lheld, stops routine admission before protected final hour; queue/service delays only lower realized capacity",
+    "remaining_admission_starts": 97,
+    "reserve_starts_at_least": 20,
+    "uncommitted_slot_seconds_remaining": 138428.9658226967,
+    "reserve_slot_seconds_at_least": 27685.79316453934
   },
-  "snapshot_source": "continuous-cohorts/cohort-007/observed-accountant-snapshot.json",
+  "snapshot_source": "continuous-cohorts/cohort-008/observed-accountant-snapshot.json",
   "snapshot_is_live_current": false,
   "helper_extension_authority": "continuous-cohorts/cohort-004/helper-authority.json",
   "native_inclusive_cap_verification": "UNESTABLISHED source-only8403cbcf review; no actual native qualification credit"

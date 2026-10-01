@@ -678,5 +678,73 @@
       "source_acquisition": "UNKNOWN",
       "integrated_execution_credit": false
     }
+  },
+  {
+    "method": "T11",
+    "instance": "budget redo pair cohort008",
+    "assessment": "pending all4 current reviews R028-R031",
+    "whole_delivery": "both measured exact receipts",
+    "same_quality_efficiency_claim": false,
+    "cohort": "continuous-cohorts/cohort-008",
+    "current_eligibility_metadata": {
+      "original_case_key_coverage": "original literal6 opportunity families/TWO coherent families/shared asks/full corpus; fresh review pending",
+      "original_case_source_coverage": null,
+      "original_case_current_coverage": null,
+      "full_original_case_eligible": null,
+      "missing_boolean_policy": "UNKNOWN, never inferred false",
+      "matched_scoped_semantic_review_complete": null,
+      "semantic_comparison_interpretable_for_scoped_review": null,
+      "quality_pass": null,
+      "native_context_inventory_qualification": "see frozen per-attempt receipts; not inferred from grade",
+      "inclusive_native_cap_verification": "UNESTABLISHED source-only review",
+      "current_delivery_qualification": "both measured exact receipts; inclusive cap proof separate",
+      "source_acquisition": "UNKNOWN",
+      "integrated_execution_credit": false
+    }
+  },
+  {
+    "method": "T12",
+    "instance": "budget redo pair cohort008",
+    "assessment": "pending all4 current reviews R028-R031",
+    "whole_delivery": "both measured exact receipts",
+    "same_quality_efficiency_claim": false,
+    "cohort": "continuous-cohorts/cohort-008",
+    "current_eligibility_metadata": {
+      "original_case_key_coverage": "original literal6 opportunity families/TWO coherent families/shared asks/full corpus; fresh review pending",
+      "original_case_source_coverage": null,
+      "original_case_current_coverage": null,
+      "full_original_case_eligible": null,
+      "missing_boolean_policy": "UNKNOWN, never inferred false",
+      "matched_scoped_semantic_review_complete": null,
+      "semantic_comparison_interpretable_for_scoped_review": null,
+      "quality_pass": null,
+      "native_context_inventory_qualification": "see frozen per-attempt receipts; not inferred from grade",
+      "inclusive_native_cap_verification": "UNESTABLISHED source-only review",
+      "current_delivery_qualification": "both measured exact receipts; inclusive cap proof separate",
+      "source_acquisition": "UNKNOWN",
+      "integrated_execution_credit": false
+    }
+  },
+  {
+    "method": "T13",
+    "instance": "budget redo pair cohort007",
+    "assessment": "R026/R027 complete assigned-scope current quality failures",
+    "same_quality_efficiency_claim": false,
+    "cohort": "continuous-cohorts/cohort-008",
+    "current_eligibility_metadata": {
+      "original_case_key_coverage": null,
+      "original_case_source_coverage": null,
+      "original_case_current_coverage": null,
+      "full_original_case_eligible": null,
+      "missing_boolean_policy": "UNKNOWN, never inferred false",
+      "matched_scoped_semantic_review_complete": true,
+      "semantic_comparison_interpretable_for_scoped_review": true,
+      "quality_pass": false,
+      "native_context_inventory_qualification": "see frozen per-attempt receipts; not inferred from grade",
+      "inclusive_native_cap_verification": "UNESTABLISHED source-only review",
+      "current_delivery_qualification": "both measured v3 receipt scopes; inclusive native caps separate",
+      "source_acquisition": "UNKNOWN",
+      "integrated_execution_credit": false
+    }
   }
 ]

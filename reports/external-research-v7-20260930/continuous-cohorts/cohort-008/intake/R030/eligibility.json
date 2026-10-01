@@ -1,0 +1,127 @@
+{
+  "schema": "er7.prospective_eligibility.v1",
+  "case_id": "jj-repo-dev-v1",
+  "prepared_before_outputs": true,
+  "status": "Prospective question-family eligibility; independent evaluator must source-check and pin facts before viewing candidate outputs",
+  "private_boundary": "Never copy to candidate inputs or maps; not authored candidate findings or an exhaustive answer key",
+  "author_role": "Development preparer; prohibited from grading this method or candidates",
+  "source_inventory_sha256": "12f1e765f370cdce1cbb1d8bacba5213ec707ded77f9b27c23cbd481e4552600",
+  "case_manifest_sha256": "6aef9692d7f2fefccee3c9746b46138eadb154b205ce3b8e67b91e8b715e53bf",
+  "candidate_task_sha256": "85f1d348299d9cb65e568d459f188713a592550ccd92624d46b5c494d25ff117",
+  "eligible_facets": [
+    {
+      "id": "observation_effects",
+      "question_family": "Whether the proposed background observation updates or snapshots state, what scope/options mean, and how evidence constrains a safe refresh design",
+      "prospective_source_roots": [
+        {
+          "file": "repository/docs/working-copy.md",
+          "sha256": "080b3610c8fa04c4184f3e3e8a504b70c576f64a824b3fc3147a6ecd877cbe62"
+        },
+        {
+          "file": "repository/docs/operation-log.md",
+          "sha256": "ab442987e777e787c98ac7c7f754949f970b63b25a3c05a41613fac2ec40effa"
+        },
+        {
+          "file": "repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04"
+        }
+      ]
+    },
+    {
+      "id": "workspace_state",
+      "question_family": "How separately named workspaces relate to shared repository history and files, with implementation-backed conditions relevant to concurrent people/agents",
+      "prospective_source_roots": [
+        {
+          "file": "repository/docs/working-copy.md",
+          "sha256": "080b3610c8fa04c4184f3e3e8a504b70c576f64a824b3fc3147a6ecd877cbe62"
+        },
+        {
+          "file": "repository/lib/src/workspace.rs",
+          "sha256": "bb2796db350fa8d3d1c508d1baff77ae252b2e7b1791a11da316184ec8c7ac20"
+        },
+        {
+          "file": "repository/cli/tests/test_workspaces.rs",
+          "sha256": "d8f6b2178f38e51dc97e519be3221f6830d540e175b47edc546b6be799b9559e"
+        }
+      ]
+    },
+    {
+      "id": "completion_and_delivery",
+      "question_family": "What source says about command state transition and output delivery, including failure-ordering or interruption limits; do not equate received output with proof of every durable effect",
+      "prospective_source_roots": [
+        {
+          "file": "repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04"
+        },
+        {
+          "file": "repository/cli/tests/test_repo_change_report.rs",
+          "sha256": "6614e2b5a4c457dc4b0fd9b0beb9052d3c9b810d00bdff4829be1a043fb5ddfd"
+        },
+        {
+          "file": "history-index.json",
+          "sha256": "e8330e80a540d4432e33843436ac76c255c879661e57d7b1f818554efd544d60"
+        }
+      ]
+    },
+    {
+      "id": "recovery",
+      "question_family": "Useful recovery controls and their versioned limits, distinguishing stale working-copy recovery, operation history, and claims source cannot establish",
+      "prospective_source_roots": [
+        {
+          "file": "repository/docs/working-copy.md",
+          "sha256": "080b3610c8fa04c4184f3e3e8a504b70c576f64a824b3fc3147a6ecd877cbe62"
+        },
+        {
+          "file": "repository/docs/operation-log.md",
+          "sha256": "ab442987e777e787c98ac7c7f754949f970b63b25a3c05a41613fac2ec40effa"
+        },
+        {
+          "file": "repository/cli/tests/test_workspaces.rs",
+          "sha256": "d8f6b2178f38e51dc97e519be3221f6830d540e175b47edc546b6be799b9559e"
+        }
+      ]
+    },
+    {
+      "id": "failure_history",
+      "question_family": "Independently selected relevant public issue evidence and fix/test support, with incomplete links left open rather than inferred from issue title or closed state",
+      "prospective_source_roots": [
+        {
+          "file": "issues-index.json",
+          "sha256": "6a6e593591ccd033b424101f2470effebc2cfd433dc97bb345e555dafac726d6"
+        },
+        {
+          "file": "history-index.json",
+          "sha256": "e8330e80a540d4432e33843436ac76c255c879661e57d7b1f818554efd544d60"
+        }
+      ]
+    },
+    {
+      "id": "integration_transfer",
+      "question_family": "Concrete integration decisions/safeguards/simpler alternatives derived from evidence; repository mechanism evidence does not establish this hypothetical companion GUI or runtime",
+      "prospective_source_roots": [
+        {
+          "file": "brief.md",
+          "sha256": "6455c54d08627a6669c8f176a5cfb1e1c23578a183f3e606addadcf59eefff36"
+        },
+        {
+          "file": "repository/docs/working-copy.md",
+          "sha256": "080b3610c8fa04c4184f3e3e8a504b70c576f64a824b3fc3147a6ecd877cbe62"
+        },
+        {
+          "file": "repository/cli/src/cli_util.rs",
+          "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04"
+        }
+      ]
+    }
+  ],
+  "coverage_rule": "Evaluate the two admitted coherent families in five-to-eight findings. Facets are source-grounded investigation opportunities, not required exact phrases or known-answer counts. Missing material constraints are identified by an independent source check, not by agreement with preparer. Credit useful supported novelty outside roots within admitted universe. Check every emitted material assertion and full current report; partial review cannot pass.",
+  "temporal_rule": "Target pinned v0.22.0, current issue capture differs from historical behavior, all claims need version/status qualifiers; missing shallow history is unresolved. Followups must be clearly scoped.",
+  "chain_rule": "Issue report, fix commit and related test source are distinct evidence roles. Do not demand invention of a regression test where source shows only related tests/snapshot updates. Missing links are legitimate unresolved results. Test source does not prove a test ran here.",
+  "scoring_staging": "Grade report.md first and save immutable current assessment, then inspect acquisition/navigation/evidence-chains/map artifacts for acquisition-to-final preservation. Independent evaluator must not inherit author conversation, prior grades or cost/treatment labels. Blinding imperfect where artifacts disclose methodology; report that.",
+  "not_evidence": [
+    "Historical 110-finding union not a key for this new version/brief",
+    "No local-log holdout content",
+    "No executed third-party tests",
+    "No expected-finding whitelist given to candidates"
+  ]
+}

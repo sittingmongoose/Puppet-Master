@@ -1,0 +1,27 @@
+{
+  "schema": "er7.independent_inclusive_watchdog_boundary.v3.final",
+  "decision": "REJECTED_SOURCE_BOUNDARY_FINAL",
+  "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/inclusive_stage_watchdog_v3.py",
+  "source_sha256": "ab9e41e0ccf514a6b9c93b10b67bac6470ba8f93a84c83c387493031205b6bf7",
+  "source_manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/inclusive-stage-watchdog-v3-source.json",
+  "source_manifest_sha256": "40bdf35056c21f3ed980729913b7b6b9e6e0b55a47eaeacd09add9ffed7f617a",
+  "synthetics_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/watchdog-v3-synthetics.json",
+  "synthetics_sha256": "aa7c18769ed6800814bdb600465e93588fca263c636df8f2aee2200280c340c3",
+  "test_driver_sha256": "72dc74fea7cc190ef11654de4bdeb8f16086712e9839e47dc26d772189e4141f",
+  "findings": [
+    {
+      "test": "initial-enrollment-stall-before-timer",
+      "finding": "Initial active /proc enrollment/scans execute after dispatcher Popen but before timer activation. A cap600 synthetic stall advances to620 while no timer exists; first owned native group signals occur at620, after inclusive cutoff. A permanent stall never reaches timer activation."
+    }
+  ],
+  "corrected_boundaries": "V1 four mechanical defects repaired. After v3 timer activation, blocked metadata/scans and recurring blocked provenance probes are interrupted; independent safe siblings cleaned; blocked/unregistered/late absence remains false and held. Post-quiescence bookkeeping is distinguishable from native proof interval and must be charged by the operator. These positive cases do not close the initial activation gap.",
+  "generic_required_condition": "Independent absolute interrupt must cover every active startup operation beginning before first dispatcher Popen, including initial process enrollment and scans. Source v3 arms only after these operations; a fresh standalone CLI does not remove this pre-arm interval. No fourth repair is authorized in this task.",
+  "native_qualification": "UNESTABLISHED. This review does not authorize an integrated launch or affirm wrapper_caps_include_native_startup_and_cleanup. Original frozen runtime/provider/candidate semantics remain unchanged.",
+  "native_or_any_process_launches": 0,
+  "actual_private_or_native_metadata_reads": 0,
+  "initial_task_start_epoch": 1790891744.9263375,
+  "freeze_epoch": 1790894071.0593624,
+  "wall_elapsed_from_original_start": 2326.1330256462097,
+  "generated_tokens": "UNKNOWN",
+  "failed_versions_and_costs": "V1/v2/v3 evidence retained; no substitution, deletion or quality/budget weakening."
+}

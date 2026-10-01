@@ -1,10 +1,10 @@
 {
-  "as_of_epoch": 1790892823.337299,
-  "counted_launch_admissions": 43,
-  "known_native_goal_starts": 41,
+  "as_of_epoch": 1790894726.8517141,
+  "counted_launch_admissions": 47,
+  "known_native_goal_starts": 45,
   "pre_goal_failures": 2,
-  "occupied_slot_seconds_as_of_snapshot": 28471.287682294846,
-  "reported_candidate_output_tokens_lower_bound": 1216102,
+  "occupied_slot_seconds_as_of_snapshot": 32126.604858398438,
+  "reported_candidate_output_tokens_lower_bound": 1423122,
   "generated_output_completeness": "unknown; all figures partial, native children/cancellation/unexposed fields retained unknown",
   "parent_sol_usage": "includes input; generated component unknown",
   "helper_generated_tokens": null,
@@ -25,7 +25,7 @@
     "quality": "both quality failure; treatment lower elapsed observed, no same-quality speedup claim",
     "current_summary": "reviews/R003-R004-current-only-summary.json"
   },
-  "as_of_utc": "2026-10-01T22:13:43.337299+00:00",
+  "as_of_utc": "2026-10-01T22:45:26.851714+00:00",
   "same_quality_efficiency_claim": false,
   "new_terminal_attempt_metrics": "cohort-evidence/terminal-attempts.json",
   "post_snapshot_final_hold_accounting": {
@@ -182,7 +182,7 @@
   },
   "T10_current_quality": "both complete current quality failures; source capture eligibility unknown; no efficiency benefit",
   "helper_extension_authority": "continuous-cohorts/cohort-004/helper-authority.json",
-  "publication_as_of_utc": "2026-10-01T22:14:29.186429+00:00",
+  "publication_as_of_utc": "2026-10-01T22:45:49.120916+00:00",
   "continuous_cohort_005_accounting": {
     "candidate_admissions": 37,
     "occupied_slot_seconds": 22305.353593349457,
@@ -263,5 +263,40 @@
     "reserve_starts_at_least": 21,
     "uncommitted_slot_seconds_remaining": 142769.11760377884,
     "reserve_slot_seconds_at_least": 28553.82352075577
+  },
+  "continuous_cohort_008_accounting": {
+    "admissions": 47,
+    "operator_native_goals_pin": 45,
+    "derived_native_goal_lower_bound": 45,
+    "derived_count_post_pin_explicit_activation_labels": [],
+    "derived_count_basis": "Operator native counter plus explicit slot-ledger activation flags for admissions strictly after operator pin epoch; never traverse native receipts",
+    "operator_epoch": 1790894708.6073978,
+    "operator_staleness_seconds": 18.244316339492798,
+    "occupied_slot_seconds": 32126.604858398438,
+    "committed_remaining_seconds": 2244.4293189048767,
+    "active_by_family": {
+      "M": 0,
+      "Z": 2,
+      "L": 0
+    },
+    "active_caps": {
+      "M": 2,
+      "Z": 2,
+      "L": 2
+    },
+    "M_L": "held original repair cap; no implicit route reopening",
+    "generated_output_lower_bound": 1423122,
+    "generated_output_complete": false,
+    "true_headroom": null,
+    "warning": 2400000,
+    "output_stop": 3000000,
+    "start_cap": 144,
+    "slot_seconds_cap": 172800,
+    "Z_slot_seconds_before_final_hour_upper_bound": 12428.296571731567,
+    "Z_clock_capacity_basis": "At most2Zslots, M/Lheld, stops routine admission before protected final hour; queue/service delays only lower realized capacity",
+    "remaining_admission_starts": 97,
+    "reserve_starts_at_least": 20,
+    "uncommitted_slot_seconds_remaining": 138428.9658226967,
+    "reserve_slot_seconds_at_least": 27685.79316453934
   }
 }

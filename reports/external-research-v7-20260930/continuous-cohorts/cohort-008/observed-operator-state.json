@@ -1,0 +1,991 @@
+{
+  "schema": "er7.continuous_operator_state.v1",
+  "epoch": 1790894748.360288,
+  "operator": "/root/resume_z_operator",
+  "continuous_task": "active until root global stop/deadline",
+  "historical_unestablished_edition": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/retained-versions/resume-native-unestablished-edition",
+  "candidate_admissions_added": 27,
+  "actual_native_goal_activations_added": 27,
+  "accounting": {
+    "candidate_admissions": 47,
+    "occupied_slot_seconds": 32169.563366413116,
+    "remaining_committed_slot_seconds": 2201.4708108901978,
+    "reported_generated_tokens_lower_bound": 1423122,
+    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "active_by_family": {
+      "M": 0,
+      "Z": 2,
+      "L": 0
+    },
+    "overdue_jobs": [],
+    "active_jobs": [
+      "t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control",
+      "t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment"
+    ]
+  },
+  "stage": "continuous management active; live_jobs and pending_qualified_order reflect current queue",
+  "new_native_canary_acceptance": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v3/acceptance.json",
+    "sha256": "4c99c392b317b25453e2ac15a4db642f36f8539fe8b7ce1702b480b22990dd8e"
+  },
+  "root_queue_authority": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/z-rolling-queue-authority-v11-t03-structural-repeat.json",
+    "sha256": "a3bf12e03211c670b43daab4cae130f2babb47da07b2a48be935ce3796d1904f"
+  },
+  "next_order": [
+    "t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-control",
+    "t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-treatment",
+    "t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1-control",
+    "t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1-treatment",
+    "t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control",
+    "t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment",
+    "t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control",
+    "t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment",
+    "t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control",
+    "t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment",
+    "t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-control-structural-repeat1",
+    "t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-treatment-structural-repeat1"
+  ],
+  "families": {
+    "M": "held",
+    "L": "held",
+    "Z": "qualified runtime/context route; no unconsumed root-authorized component"
+  },
+  "semantic_failure_policy": "native complete with context unknown remains frozen-unqualified; source attempt receipt/status untouched",
+  "prospective_dispatcher": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/z_productive_dispatch_v3.py",
+    "sha256": "5f25c1d1eed1a9e1794ca4a3cd0698e2cafea4c3d5a2b5d183bbb4007d1d39a9"
+  },
+  "live_jobs": [
+    {
+      "label": "t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-control",
+      "status": "native-running",
+      "admitted_epoch": 1790894257.1103563,
+      "native_goal_activation_observed_utc": "2026-10-01T22:37:42.300352+00:00",
+      "cap_seconds": 1500.0,
+      "owned_driver_pgid": 2105506
+    },
+    {
+      "label": "t08-z-ome-mcp-discovery-v2-repair1-budget-redo-v4-edition2-redo1-treatment",
+      "status": "native-running",
+      "admitted_epoch": 1790894321.0223908,
+      "native_goal_activation_observed_utc": "2026-10-01T22:38:46.535468+00:00",
+      "cap_seconds": 1500.0,
+      "owned_driver_pgid": 2106423
+    }
+  ],
+  "known_actual_native_goals_total": 45,
+  "next_dependency": "Root exact translated configs+reviews+queue authority; accepted T15seed remains next refill",
+  "completed_frozen_jobs": [
+    {
+      "label": "t07-z-ome-mcp-line-map-cache-v2-treatment",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t07-z-ome-mcp-line-map-cache-v2-treatment",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t07-z-ome-mcp-line-map-cache-v2-treatment/frozen-output/out",
+      "integrity_sha256": "6b76d56450a5c83dc922b946e0855844a1dae4292e988c5f5b0646086d3d339c",
+      "context_status": "qualified",
+      "native_outcome": "passed",
+      "inventory_verified": true,
+      "missing_required_outputs": [],
+      "status": "frozen-for-independent-evaluation",
+      "source_qualification": "qualified-current-for-independent-grading",
+      "public_get": false,
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "pending separate measured binding",
+      "actual_sourcecapture": "no GET; frozen admitted source inputs",
+      "whole_companion_operator_cost": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t07-z-ome-mcp-line-map-cache-v2-treatment/whole-companion-operator-cost.json",
+        "sha256": "76e29e16fc5e803be49743b70a1b78b59bc7d4000818bb3381717a229136933a",
+        "returncode": 0,
+        "elapsed_seconds": 0.3210024833679199
+      },
+      "whole_companion": {
+        "receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t07-z-ome-mcp-line-map-cache-v2-treatment/whole-companion-receipt.json",
+        "sha256": "ea98a2803c3290717a33f213f0238bb4819b4ab0261373d2b8263d3fb4220e4d",
+        "all_inputs_preserved": true,
+        "all_output_versions_preserved": true,
+        "source_and_output_immutable": true,
+        "copied_bytes": 199013,
+        "copy_seconds": 0.25754682399565354,
+        "semantic_assessment": "none",
+        "operator_measurement_sha256": "76e29e16fc5e803be49743b70a1b78b59bc7d4000818bb3381717a229136933a"
+      }
+    },
+    {
+      "label": "t07-z-ome-mcp-line-map-cache-v2-control",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t07-z-ome-mcp-line-map-cache-v2-control",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t07-z-ome-mcp-line-map-cache-v2-control/frozen-output/out",
+      "integrity_sha256": "8ff372762e8781f1f65e0767c6a06d5fc61120ed7715ed8e55245aca7cd7e49b",
+      "context_status": "qualified",
+      "native_outcome": "passed",
+      "inventory_verified": true,
+      "missing_required_outputs": [],
+      "status": "frozen-for-independent-evaluation",
+      "source_qualification": "qualified-current-for-independent-grading",
+      "public_get": false,
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "pending separate measured binding",
+      "actual_sourcecapture": "no GET; frozen admitted source inputs",
+      "whole_companion_operator_cost": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t07-z-ome-mcp-line-map-cache-v2-control/whole-companion-operator-cost.json",
+        "sha256": "fa68a4c8b333f85a8d6f8e596ebcbdf67e33025a99182afc6950a2f7079d0568",
+        "returncode": 0,
+        "elapsed_seconds": 0.42521166801452637
+      },
+      "whole_companion": {
+        "receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t07-z-ome-mcp-line-map-cache-v2-control/whole-companion-receipt.json",
+        "sha256": "8931a3b807a91343fb018011b2a9ab5fbee4a904dfc43ec53c021bdf0b3909a8",
+        "all_inputs_preserved": true,
+        "all_output_versions_preserved": true,
+        "source_and_output_immutable": true,
+        "copied_bytes": 230943,
+        "copy_seconds": 0.31218598599662073,
+        "semantic_assessment": "none",
+        "operator_measurement_sha256": "fa68a4c8b333f85a8d6f8e596ebcbdf67e33025a99182afc6950a2f7079d0568"
+      }
+    },
+    {
+      "label": "t15-z-ome-mcp-reuse-v2-seed",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t15-z-ome-mcp-reuse-v2-seed",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t15-z-ome-mcp-reuse-v2-seed/frozen-output/out",
+      "integrity_sha256": "5cc9c8d6142445135db1048a24c7b60041b6cc31e2623a261af45c224d374613",
+      "context_status": "qualified",
+      "native_outcome": "failed-or-unestablished",
+      "inventory_verified": false,
+      "missing_required_outputs": [
+        "report.md",
+        "acquisition.json",
+        "findings.json"
+      ],
+      "status": "failed-or-incomplete-preserved",
+      "source_qualification": "capped-incomplete-or-unqualified-preserved",
+      "public_get": false,
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "pending separate measured binding",
+      "actual_sourcecapture": "no GET; frozen admitted source inputs"
+    },
+    {
+      "label": "t10-z-azure-mcp-discovery-v2-control",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t10-z-azure-mcp-discovery-v2-control",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t10-z-azure-mcp-discovery-v2-control/frozen-output/out",
+      "integrity_sha256": "f82de55487be31416c0ae279626d87f503dea475f27cb41cf0fe4e652266906b",
+      "context_status": "qualified",
+      "native_outcome": "passed",
+      "inventory_verified": true,
+      "missing_required_outputs": [],
+      "status": "frozen-for-independent-evaluation",
+      "source_qualification": "actual GET capture v3 partial/unknown; no eligible source promotion",
+      "public_get": true,
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "pending separate measured binding",
+      "actual_sourcecapture": "pending accepted post-quiescent capture sample/dedup proof",
+      "capture_operator_cost": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t10-z-azure-mcp-discovery-v2-control/public-get-capture-operator-cost.json",
+        "sha256": "3e6c34f15adf9bc17ec3fb2a6a4a8c53eca9bf4959220b29f27e002591bbb778",
+        "returncode": 1,
+        "elapsed_seconds": 0.5159244537353516
+      },
+      "actual_sourcecapture_v3": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t10-z-azure-mcp-discovery-v2-control/actual-public-get-capture-v3/capture.json",
+        "sha256": "1ba21a11770f5fa7153fb640921e5f76cf628dff2b2b215efec3586e3d4620e8",
+        "source_count": 0,
+        "reject_count": 16,
+        "conflicts": 0,
+        "actual_source_eligibility": "partial-or-unknown",
+        "semantic_acquisition": "unassessed"
+      },
+      "capture_v3_cost": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t10-z-azure-mcp-discovery-v2-control/capture-v3-operator-cost.json",
+        "sha256": "5e0672424b044b9631a2f5d22f18728581d70136ee5048a0b9b1a76cef58f2dd",
+        "returncode": 0,
+        "elapsed_seconds": 1.9750661269936245
+      },
+      "capture_generic_diagnosis": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t10-z-azure-mcp-discovery-v2-control/capture-host-literal-diagnosis-v1.json",
+        "sha256": "b40028ccb9fc51850a7c04a22ce058765d00c6ed5f611102772372400652bd37",
+        "terminal_python_error_class": "ValueError",
+        "known_literal_reason": "native identity telemetry cap"
+      },
+      "whole_companion_operator_cost": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t10-z-azure-mcp-discovery-v2-control/whole-companion-operator-cost.json",
+        "sha256": "fa572f83513ef98b791048732c7cdaa6b442a496e6c2ad556f247bd5e3c0b5c1",
+        "returncode": 0,
+        "elapsed_seconds": 0.4074859619140625
+      },
+      "whole_companion": {
+        "receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t10-z-azure-mcp-discovery-v2-control/whole-companion-receipt.json",
+        "sha256": "0e37469dc881d7bf20a4463ed28140fc753eacb139438a1d10338850051dbf50",
+        "all_inputs_preserved": true,
+        "all_output_versions_preserved": true,
+        "source_and_output_immutable": true,
+        "copied_bytes": 107058,
+        "copy_seconds": 0.30502077100391034,
+        "semantic_assessment": "none",
+        "operator_measurement_sha256": "fa572f83513ef98b791048732c7cdaa6b442a496e6c2ad556f247bd5e3c0b5c1"
+      }
+    },
+    {
+      "label": "t10-z-azure-mcp-discovery-v2-treatment",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t10-z-azure-mcp-discovery-v2-treatment",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t10-z-azure-mcp-discovery-v2-treatment/frozen-output/out",
+      "integrity_sha256": "bb5cae2149cdb994bab6c707ae58320464153d4bcd25c54419d207bf79824fd3",
+      "context_status": "qualified",
+      "native_outcome": "passed",
+      "inventory_verified": true,
+      "missing_required_outputs": [],
+      "status": "frozen-for-independent-evaluation",
+      "source_qualification": "actual GET capture v3 partial/unknown; no eligible source promotion",
+      "public_get": true,
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "pending separate measured binding",
+      "actual_sourcecapture": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t10-z-azure-mcp-discovery-v2-treatment/actual-public-get-capture/capture.json",
+        "sha256": "e170002d6a6f541574ce78a5f670e17ff28ed71221349123bf7afad6182841ae",
+        "source_count": 0,
+        "reject_count": 13,
+        "conflicts": 0,
+        "actual_source_eligibility": "partial-or-unknown",
+        "semantic_acquisition": "unassessed"
+      },
+      "capture_operator_cost": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t10-z-azure-mcp-discovery-v2-treatment/public-get-capture-operator-cost.json",
+        "sha256": "e68c377ae3790e2d85236d3b3c95a21f1f9ca512c54e1c169a1d6795de6cb30b",
+        "returncode": 0,
+        "elapsed_seconds": 1.4235584735870361
+      },
+      "actual_sourcecapture_v3": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t10-z-azure-mcp-discovery-v2-treatment/actual-public-get-capture-v3/capture.json",
+        "sha256": "17558141d5fee579ad73999bbb2c6c57bdd590471235c0fdc76b2f65174a0231",
+        "source_count": 0,
+        "reject_count": 13,
+        "conflicts": 0,
+        "actual_source_eligibility": "partial-or-unknown",
+        "semantic_acquisition": "unassessed"
+      },
+      "capture_v3_cost": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t10-z-azure-mcp-discovery-v2-treatment/capture-v3-operator-cost.json",
+        "sha256": "5b41ae27b0d6b24afd51ac6f6647eb7f9b7229097efc445c5ffe4a4b36640b69",
+        "returncode": 0,
+        "elapsed_seconds": 1.5123657249932876
+      },
+      "whole_companion_operator_cost": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t10-z-azure-mcp-discovery-v2-treatment/whole-companion-operator-cost.json",
+        "sha256": "8d219833615a2908fc5421ebaaa5a3de2a72a06ac1f73a52e2d267ef6741c783",
+        "returncode": 0,
+        "elapsed_seconds": 0.3882749080657959
+      },
+      "whole_companion": {
+        "receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t10-z-azure-mcp-discovery-v2-treatment/whole-companion-receipt.json",
+        "sha256": "227794e278b98a091c497ddbf0c1530b44f4e128fad9efb143f9402c7a92d7ab",
+        "all_inputs_preserved": true,
+        "all_output_versions_preserved": true,
+        "source_and_output_immutable": true,
+        "copied_bytes": 48875,
+        "copy_seconds": 0.2877120740013197,
+        "semantic_assessment": "none",
+        "operator_measurement_sha256": "8d219833615a2908fc5421ebaaa5a3de2a72a06ac1f73a52e2d267ef6741c783"
+      }
+    },
+    {
+      "label": "t04r-z-ome-compact-contrasts-v1-control",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t04r-z-ome-compact-contrasts-v1-control",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t04r-z-ome-compact-contrasts-v1-control/frozen-output/out",
+      "integrity_sha256": "71459a86d6c8ace65055fb9c0a3c6fa9e4b8741097c22a6891e65f3cc78e37a7",
+      "context_status": "qualified",
+      "native_outcome": "failed-or-unestablished",
+      "inventory_verified": false,
+      "missing_required_outputs": [
+        "protocol/V001.json",
+        "final/V001.json"
+      ],
+      "status": "failed-or-incomplete-preserved",
+      "source_qualification": "capped-incomplete-or-unqualified-preserved",
+      "public_get": false,
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "failed preserved; independent whole-parent staging held",
+      "actual_sourcecapture": "no GET; frozen admitted source inputs",
+      "whole_companion_operator_cost": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t04r-z-ome-compact-contrasts-v1-control/whole-companion-operator-cost.json",
+        "sha256": "19f9b93155faa3e681fdbac95dba2fac45bc00529cd2ca9ca417f761ef7f5bcb",
+        "returncode": 1,
+        "elapsed_seconds": 0.5036118030548096
+      }
+    },
+    {
+      "label": "t04r-z-ome-compact-contrasts-v1-treatment",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t04r-z-ome-compact-contrasts-v1-treatment",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t04r-z-ome-compact-contrasts-v1-treatment/frozen-output/out",
+      "integrity_sha256": "293085e1898a4190675e30161adfa2951b2edf9bc2b00e0c84b906c5440d5210",
+      "context_status": "qualified",
+      "native_outcome": "failed-or-unestablished",
+      "inventory_verified": false,
+      "missing_required_outputs": [
+        "acquisition/V001.json",
+        "protocol/V001.json",
+        "final/V001.json"
+      ],
+      "status": "failed-or-incomplete-preserved",
+      "source_qualification": "capped-incomplete-or-unqualified-preserved",
+      "public_get": false,
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "failed preserved; independent whole-parent staging held",
+      "actual_sourcecapture": "no GET; frozen admitted source inputs",
+      "whole_companion_operator_cost": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t04r-z-ome-compact-contrasts-v1-treatment/whole-companion-operator-cost.json",
+        "sha256": "7beacba0f6a6ac2940d08724c4135dff0bfc7deb79c60a4b686fe4b76ee367ff",
+        "returncode": 1,
+        "elapsed_seconds": 0.5006942749023438
+      }
+    },
+    {
+      "label": "t11-z-jj-repo-safe-v2-s2-control",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-control",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-control/frozen-output/out",
+      "integrity_sha256": "3280ad9b72decb8a9372663bbbe7e7e3f11e5f9ff20795a2bf0d3818522d2396",
+      "context_status": "qualified",
+      "native_outcome": "failed-or-unestablished",
+      "inventory_verified": false,
+      "missing_required_outputs": [
+        "report.md",
+        "acquisition.json",
+        "navigation.json",
+        "evidence-chains.json",
+        "map-usage.json"
+      ],
+      "status": "failed-or-incomplete-preserved",
+      "source_qualification": "capped-incomplete-or-unqualified-preserved",
+      "public_get": true,
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "pending separate measured binding",
+      "actual_sourcecapture": "pending accepted post-quiescent capture sample/dedup proof"
+    },
+    {
+      "label": "t11-z-jj-repo-safe-v2-s2-treatment",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-treatment",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-treatment/frozen-output/out",
+      "integrity_sha256": "53688b1c23e50493226cf9ddfb1cd3cacc2235f4f5d296a9ca922c15d84ebac6",
+      "context_status": "qualified",
+      "native_outcome": "passed",
+      "inventory_verified": true,
+      "missing_required_outputs": [],
+      "status": "frozen-for-independent-evaluation",
+      "source_qualification": "actual GET capture v3 partial/unknown; no eligible source promotion",
+      "public_get": true,
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "pending separate measured binding",
+      "actual_sourcecapture": "pending accepted post-quiescent capture sample/dedup proof",
+      "actual_sourcecapture_v3": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-treatment/actual-public-get-capture-v3/capture.json",
+        "sha256": "2b3681d3aa80c36013f36658067874f5008c31f9befaf1f982fec0576e18eac9",
+        "source_count": 0,
+        "reject_count": 19,
+        "conflicts": 0,
+        "actual_source_eligibility": "partial-or-unknown",
+        "semantic_acquisition": "unassessed"
+      },
+      "capture_v3_cost": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-treatment/capture-v3-operator-cost.json",
+        "sha256": "68e6cc32b16c83f651aa2bce1bc20a3aa3b0448ccd8b4541771cbd7ba6178eba",
+        "returncode": 0,
+        "elapsed_seconds": 2.679400111999712
+      },
+      "whole_companion_operator_cost": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-treatment/whole-companion-operator-cost.json",
+        "sha256": "94aa9a68901212d1bbfb1797ac153adfa973bb94f7b02a3856cd61734f415fa9",
+        "returncode": 0,
+        "elapsed_seconds": 2.3984932899475098
+      },
+      "whole_companion": {
+        "receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-treatment/whole-companion-receipt.json",
+        "sha256": "cf993da58ae1ae4e9af4e44dbcb5f360b758d433efcc809ef75a43195392c5a2",
+        "all_inputs_preserved": true,
+        "all_output_versions_preserved": true,
+        "source_and_output_immutable": true,
+        "copied_bytes": 26891647,
+        "copy_seconds": 2.284467543999199,
+        "semantic_assessment": "none",
+        "operator_measurement_sha256": "94aa9a68901212d1bbfb1797ac153adfa973bb94f7b02a3856cd61734f415fa9"
+      }
+    },
+    {
+      "label": "t05r-z-ome-read-once-related-questions-v1-control",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t05r-z-ome-read-once-related-questions-v1-control",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t05r-z-ome-read-once-related-questions-v1-control/frozen-output/out",
+      "integrity_sha256": "1bcd6a68e6b925582492cffd8198bc76fbeb4c8af2b21827393f40c05638bbb4",
+      "context_status": "qualified",
+      "native_outcome": "passed",
+      "inventory_verified": true,
+      "missing_required_outputs": [],
+      "status": "frozen-for-independent-evaluation",
+      "source_qualification": "qualified-current-for-independent-grading",
+      "public_get": false,
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "pending separate measured binding",
+      "actual_sourcecapture": "no GET; frozen admitted source inputs",
+      "whole_companion_operator_cost": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t05r-z-ome-read-once-related-questions-v1-control/whole-companion-operator-cost.json",
+        "sha256": "a3a84180def9f8426211f9d8366f94c6c7bd7198ea5bf60167dfe20844bc3fd3",
+        "returncode": 0,
+        "elapsed_seconds": 0.4021575450897217
+      },
+      "whole_companion": {
+        "receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t05r-z-ome-read-once-related-questions-v1-control/whole-companion-receipt.json",
+        "sha256": "e08bd6c5bb908113ef4c70e2ed38b39ae9184867274191b2b38e8001b4493443",
+        "all_inputs_preserved": true,
+        "all_output_versions_preserved": true,
+        "source_and_output_immutable": true,
+        "copied_bytes": 100356,
+        "copy_seconds": 0.2816824000037741,
+        "semantic_assessment": "none",
+        "operator_measurement_sha256": "a3a84180def9f8426211f9d8366f94c6c7bd7198ea5bf60167dfe20844bc3fd3"
+      }
+    },
+    {
+      "label": "t15-z-ome-mcp-reuse-v2-redo1-seed",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t15-z-ome-mcp-reuse-v2-redo1-seed",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t15-z-ome-mcp-reuse-v2-redo1-seed/frozen-output/out",
+      "integrity_sha256": "1d7b2bd1c28c965c0a5468c71a0aaf20a7d673ede9766f5d3b030bb9591defa9",
+      "context_status": "qualified",
+      "native_outcome": "passed",
+      "inventory_verified": true,
+      "missing_required_outputs": [],
+      "status": "frozen-for-independent-evaluation",
+      "source_qualification": "qualified-current-for-independent-grading",
+      "public_get": false,
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "pending separate measured binding",
+      "actual_sourcecapture": "no GET; frozen admitted source inputs",
+      "whole_companion_operator_cost": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t15-z-ome-mcp-reuse-v2-redo1-seed/whole-companion-operator-cost.json",
+        "sha256": "d28b66c249c1e1148f83033ab1c0c4c10a430481cded83f1f94c1af461a1c7f1",
+        "returncode": 0,
+        "elapsed_seconds": 0.3631283249997068
+      },
+      "whole_companion": {
+        "receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t15-z-ome-mcp-reuse-v2-redo1-seed/whole-companion-receipt.json",
+        "sha256": "e0c099b7eaca756c888a128c3279716a3b2267b61ad7b61aaf226564ef8c39d1",
+        "all_inputs_preserved": true,
+        "all_output_versions_preserved": true,
+        "source_and_output_immutable": true,
+        "copied_bytes": 215777,
+        "copy_seconds": 0.260851247003302,
+        "semantic_assessment": "none",
+        "operator_measurement_sha256": "d28b66c249c1e1148f83033ab1c0c4c10a430481cded83f1f94c1af461a1c7f1"
+      }
+    },
+    {
+      "label": "t08-z-ome-mcp-discovery-v2-repair1-control",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-control",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-control/frozen-output/out",
+      "integrity_sha256": "17ae1d2503853b75cafebd11c0e9b293daaa26d57d53bc3e3949d90f4c7c9ff4",
+      "context_status": "qualified",
+      "native_outcome": "failed-or-unestablished",
+      "inventory_verified": true,
+      "missing_required_outputs": [],
+      "status": "failed-or-incomplete-preserved",
+      "source_qualification": "capped-incomplete-or-unqualified-preserved",
+      "public_get": true,
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "pending separate measured binding",
+      "actual_sourcecapture": "pending accepted post-quiescent capture sample/dedup proof"
+    },
+    {
+      "label": "t08-z-ome-mcp-discovery-v2-repair1-treatment",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-treatment",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t08-z-ome-mcp-discovery-v2-repair1-treatment/frozen-output/out",
+      "integrity_sha256": "cefc612faa564ed0a968970218f9a6af0eb96d6ef028726d2fcb3ffbe861fa8b",
+      "context_status": "qualified",
+      "native_outcome": "failed-or-unestablished",
+      "inventory_verified": false,
+      "missing_required_outputs": [
+        "report.md",
+        "acquisition.json"
+      ],
+      "status": "failed-or-incomplete-preserved",
+      "source_qualification": "capped-incomplete-or-unqualified-preserved",
+      "public_get": true,
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "pending separate measured binding",
+      "actual_sourcecapture": "pending accepted post-quiescent capture sample/dedup proof"
+    },
+    {
+      "label": "t05r-z-ome-read-once-related-questions-v1-treatment",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t05r-z-ome-read-once-related-questions-v1-treatment",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t05r-z-ome-read-once-related-questions-v1-treatment/frozen-output/out",
+      "integrity_sha256": "7b4f85780515624c75237fb62aa58a8702a97cf353e4210c6222c9acb9b34f3f",
+      "context_status": "qualified",
+      "native_outcome": "passed",
+      "inventory_verified": true,
+      "missing_required_outputs": [],
+      "status": "frozen-for-independent-evaluation",
+      "source_qualification": "qualified-current-for-independent-grading",
+      "public_get": false,
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "pending separate measured binding",
+      "actual_sourcecapture": "no GET; frozen admitted source inputs",
+      "whole_companion_operator_cost": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t05r-z-ome-read-once-related-questions-v1-treatment/whole-companion-operator-cost.json",
+        "sha256": "49a73509ccf1761f5eecf57fab0566d44406a4797f8039547ee8492bd23b5344",
+        "returncode": 0,
+        "elapsed_seconds": 0.4029183309903601
+      },
+      "whole_companion": {
+        "receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t05r-z-ome-read-once-related-questions-v1-treatment/whole-companion-receipt.json",
+        "sha256": "01b3c1f254ceca76bb422728c949d1dcbb1fc0a2e00e4f42a1e47cb32bbc0f87",
+        "all_inputs_preserved": true,
+        "all_output_versions_preserved": true,
+        "source_and_output_immutable": true,
+        "copied_bytes": 139861,
+        "copy_seconds": 0.2844495189929148,
+        "semantic_assessment": "none",
+        "operator_measurement_sha256": "49a73509ccf1761f5eecf57fab0566d44406a4797f8039547ee8492bd23b5344"
+      }
+    },
+    {
+      "label": "t15-z-ome-mcp-reuse-v2-redo1-witness",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t15-z-ome-mcp-reuse-v2-redo1-witness",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t15-z-ome-mcp-reuse-v2-redo1-witness/frozen-output/out",
+      "integrity_sha256": "53e4851280a1f5ab356dd0b631405363f9d0e929f9e07617c336487cbe1d3523",
+      "context_status": "qualified",
+      "native_outcome": "failed-or-unestablished",
+      "inventory_verified": false,
+      "missing_required_outputs": [
+        "report.md",
+        "acquisition.json"
+      ],
+      "status": "failed-or-incomplete-preserved",
+      "source_qualification": "capped-incomplete-or-unqualified-preserved",
+      "public_get": false,
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "pending separate measured binding",
+      "actual_sourcecapture": "no GET; frozen admitted source inputs"
+    },
+    {
+      "label": "t04r-z-ome-compact-contrasts-v1-budget-redo-v3-redo1-control",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t04r-z-ome-compact-contrasts-v1-budget-redo-v3-redo1-control",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t04r-z-ome-compact-contrasts-v1-budget-redo-v3-redo1-control/frozen-output/out",
+      "integrity_sha256": "03eda6af95077c9285ac017df3f118ab03624236eb739c7b91e395f17400c969",
+      "context_status": "qualified",
+      "native_outcome": "passed",
+      "inventory_verified": true,
+      "missing_required_outputs": [],
+      "status": "frozen-for-independent-evaluation",
+      "source_qualification": "qualified-current-for-independent-grading",
+      "public_get": false,
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "pending separate measured binding",
+      "actual_sourcecapture": "no GET; frozen admitted source inputs",
+      "whole_companion_operator_cost": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t04r-z-ome-compact-contrasts-v1-budget-redo-v3-redo1-control/whole-companion-operator-cost.json",
+        "sha256": "9b602275957aafc546bdbe372655fca987e97fb857f117fd11a8cf8b86d7bc44",
+        "returncode": 0,
+        "elapsed_seconds": 0.4102150359976804
+      },
+      "whole_companion": {
+        "receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t04r-z-ome-compact-contrasts-v1-budget-redo-v3-redo1-control/whole-companion-receipt.json",
+        "sha256": "b8bab864cb3192197f7a508f8aa7b0624e5b5ff7e2829afd5c5510ae88b33af8",
+        "all_inputs_preserved": true,
+        "all_output_versions_preserved": true,
+        "source_and_output_immutable": true,
+        "copied_bytes": 222403,
+        "copy_seconds": 0.28981986799044535,
+        "semantic_assessment": "none",
+        "operator_measurement_sha256": "9b602275957aafc546bdbe372655fca987e97fb857f117fd11a8cf8b86d7bc44"
+      }
+    },
+    {
+      "label": "t04r-z-ome-compact-contrasts-v1-budget-redo-v3-redo1-treatment",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t04r-z-ome-compact-contrasts-v1-budget-redo-v3-redo1-treatment",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t04r-z-ome-compact-contrasts-v1-budget-redo-v3-redo1-treatment/frozen-output/out",
+      "integrity_sha256": "8d8c223fe73e08c9e47c589bda81068dd8b8a6dc00fdc41b86266f9ab654be4c",
+      "context_status": "qualified",
+      "native_outcome": "passed",
+      "inventory_verified": true,
+      "missing_required_outputs": [],
+      "status": "frozen-for-independent-evaluation",
+      "source_qualification": "qualified-current-for-independent-grading",
+      "public_get": false,
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "pending separate measured binding",
+      "actual_sourcecapture": "no GET; frozen admitted source inputs",
+      "whole_companion_operator_cost": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t04r-z-ome-compact-contrasts-v1-budget-redo-v3-redo1-treatment/whole-companion-operator-cost.json",
+        "sha256": "74cd7c823e1890928211c3d617cb6121b357ff86a31a56a2754786cdfcd021fe",
+        "returncode": 0,
+        "elapsed_seconds": 0.41328542900737375
+      },
+      "whole_companion": {
+        "receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t04r-z-ome-compact-contrasts-v1-budget-redo-v3-redo1-treatment/whole-companion-receipt.json",
+        "sha256": "49c1381e09b864606024c0d44f6e5c8a7ae16a8e5c97409882e6b6d379c661b2",
+        "all_inputs_preserved": true,
+        "all_output_versions_preserved": true,
+        "source_and_output_immutable": true,
+        "copied_bytes": 110587,
+        "copy_seconds": 0.29320278800150845,
+        "semantic_assessment": "none",
+        "operator_measurement_sha256": "74cd7c823e1890928211c3d617cb6121b357ff86a31a56a2754786cdfcd021fe"
+      }
+    },
+    {
+      "label": "t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-control",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-control",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-control/frozen-output/out",
+      "integrity_sha256": "5eafd424fd769be0c42607d4c3db93319e82068ccd0068708465608fcdc361a5",
+      "context_status": "qualified",
+      "native_outcome": "passed",
+      "inventory_verified": true,
+      "missing_required_outputs": [],
+      "status": "frozen-for-independent-evaluation",
+      "source_qualification": "qualified-current-for-independent-grading",
+      "public_get": false,
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "failed preserved; independent whole-parent staging held",
+      "actual_sourcecapture": "no GET; frozen admitted source inputs",
+      "required_carrier_structural_metadata": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-control/t03-required-carrier-structural-metadata.json",
+        "sha256": "ece6e86ef1d4e8526644c92f49720fc6f5fdc0f43c41c1ac46ac5a1e9ccd3dcf",
+        "assessment": "Declared nonempty-list carrier requirement violated; original output unchanged"
+      },
+      "whole_v3_operator_cost": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-control/whole-v3-operator-cost.json",
+        "sha256": "07040f2fa5155a1397c04115bf5be28c4d8cd646965c8b7dc51f17a2ed9a111b",
+        "returncode": 1,
+        "elapsed_seconds": 1.0517664189974312
+      },
+      "postrender_delivery_v3": "failed preserved; no new successful delivery",
+      "whole_preservation_only_after_delivery_failure": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-control/whole-companion-no-delivery-v1-receipt.json",
+        "sha256": "ac11d3ea7f2086f420f01448b3349ce72d10e2c5c785b953911318fa1610578b",
+        "all_inputs_preserved": true,
+        "all_output_versions_preserved": true,
+        "source_and_output_immutable": true,
+        "delivery_success": false,
+        "semantic_quality": "unassessed",
+        "operator_cost": {
+          "sha256": "223d4310a44d45cd53d5570e9ef5378c869f0abb86ef4d655dcb6b7170a243e2",
+          "elapsed_seconds": 0.5317589909973321,
+          "returncode": 0
+        }
+      },
+      "whole_companion_operator_cost": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-control/whole-companion-operator-cost.json",
+        "sha256": "eca0d3bfe6575d93d9e463ed1d11f4cbabe64b1dbd4334a74a82e902e830b308",
+        "returncode": 1,
+        "elapsed_seconds": 0.45727501399233006
+      },
+      "delivery_literal_diagnosis": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-control/whole-delivery-literal-diagnosis-v1.json",
+        "sha256": "39681aa9d738675618f7f4c455ab00d05230ca21c059e9474cb5c204ad72b922",
+        "returncode": 1,
+        "elapsed_seconds": 1.088878605994978,
+        "terminal_python_error_class": "UNKNOWN",
+        "accepted_source_exact_literal_reason": "UNKNOWN"
+      },
+      "delivery_validation_class_diagnosis": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-control/whole-validation-class-diagnosis-v2.json",
+        "sha256": "a49bb1f32d3879e0e864f158b485c737c8c4568ed31910c336be8e008e7e6e3d",
+        "elapsed_seconds": 0.012462632992537692,
+        "terminal_python_error_class": "JSONDecodeError",
+        "accepted_guard_validation_passed": false
+      }
+    },
+    {
+      "label": "t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-treatment",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-treatment",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-treatment/frozen-output/out",
+      "integrity_sha256": "9920967361c622c880252fd7bb320da01fd18ad5d478bbf6d8989bca1e2313e2",
+      "context_status": "qualified",
+      "native_outcome": "passed",
+      "inventory_verified": true,
+      "missing_required_outputs": [],
+      "status": "frozen-for-independent-evaluation",
+      "source_qualification": "qualified-current-for-independent-grading",
+      "public_get": false,
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "pending separate measured binding",
+      "actual_sourcecapture": "no GET; frozen admitted source inputs",
+      "whole_companion_operator_cost": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-treatment/whole-companion-operator-cost.json",
+        "sha256": "ad1955cffbea6a40596b7ba2f83eb0f5773a460837d7c49cfa420aa942726306",
+        "returncode": 0,
+        "elapsed_seconds": 0.3606899400037946
+      },
+      "whole_companion": {
+        "receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-treatment/whole-companion-receipt.json",
+        "sha256": "89f75ef3ccc635f5556e9d77a87a548d450ea7ab98676798af85d2489b023723",
+        "all_inputs_preserved": true,
+        "all_output_versions_preserved": true,
+        "source_and_output_immutable": true,
+        "copied_bytes": 113247,
+        "copy_seconds": 0.23869050800567493,
+        "semantic_assessment": "none",
+        "operator_measurement_sha256": "ad1955cffbea6a40596b7ba2f83eb0f5773a460837d7c49cfa420aa942726306"
+      }
+    },
+    {
+      "label": "t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1-control",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1-control",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1-control/frozen-output/out",
+      "integrity_sha256": "0bc3b803c90f11f5efe42f306f8999beb5be5969fdbad54dda744f84a4f4bf5e",
+      "context_status": "qualified",
+      "native_outcome": "passed",
+      "inventory_verified": true,
+      "missing_required_outputs": [],
+      "status": "frozen-for-independent-evaluation",
+      "source_qualification": "qualified-current-for-independent-grading",
+      "public_get": false,
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "pending separate measured binding",
+      "actual_sourcecapture": "no GET; frozen admitted source inputs",
+      "whole_v3_operator_cost": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1-control/whole-v3-operator-cost.json",
+        "sha256": "70e20b4bec7f34a64810f4be1bf6bab2e1eb32fb945d89e5cdb93a9da4fa60a5",
+        "returncode": 0,
+        "elapsed_seconds": 0.5596205280016875
+      },
+      "whole_companion_v3": {
+        "receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1-control/whole-companion-v3-receipt.json",
+        "sha256": "fd439e1190bd7685e7bac7eaa68877ca6ace1e5f5dd6a05d999777b026283482",
+        "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1-control/whole-frozen-workspace-v3",
+        "all_inputs_preserved": true,
+        "all_output_versions_preserved": true,
+        "source_and_output_immutable": true,
+        "delivered_current": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1-control/delivered-current-v3",
+        "operator_cost_sha256": "70e20b4bec7f34a64810f4be1bf6bab2e1eb32fb945d89e5cdb93a9da4fa60a5",
+        "root_scope_authority_sha256": "a163832ead1f3f78175238d8814bd1bcdc7e6cfaaba2b316fa0d1ef47a760ae8",
+        "independent_acceptance_sha256": "d3d07a1d6ea1ba15b45f0f4a7d1e5ddc40625a2480a5b78b1bfd995ab48cb5c3"
+      },
+      "postrender_delivery_v3": "mechanically passed; independent current semantics unassessed"
+    },
+    {
+      "label": "t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1-treatment",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1-treatment",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1-treatment/frozen-output/out",
+      "integrity_sha256": "c8c81fbed9ff82acd5c2bfdd31aacd74f0862f3079e8cdb8a14467622d446d75",
+      "context_status": "qualified",
+      "native_outcome": "passed",
+      "inventory_verified": true,
+      "missing_required_outputs": [],
+      "status": "frozen-for-independent-evaluation",
+      "source_qualification": "qualified-current-for-independent-grading",
+      "public_get": false,
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "pending separate measured binding",
+      "actual_sourcecapture": "no GET; frozen admitted source inputs",
+      "whole_v3_operator_cost": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1-treatment/whole-v3-operator-cost.json",
+        "sha256": "dbd5648a441ef1d4544cc958907e5acc7c716796c3548f914ec2ff63aa633e47",
+        "returncode": 0,
+        "elapsed_seconds": 0.5525022079964401
+      },
+      "whole_companion_v3": {
+        "receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1-treatment/whole-companion-v3-receipt.json",
+        "sha256": "8b6f78218e414a606520408e3c5a979c12aad1614816027aac266d187c7227c5",
+        "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1-treatment/whole-frozen-workspace-v3",
+        "all_inputs_preserved": true,
+        "all_output_versions_preserved": true,
+        "source_and_output_immutable": true,
+        "delivered_current": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1-treatment/delivered-current-v3",
+        "operator_cost_sha256": "dbd5648a441ef1d4544cc958907e5acc7c716796c3548f914ec2ff63aa633e47",
+        "root_scope_authority_sha256": "a163832ead1f3f78175238d8814bd1bcdc7e6cfaaba2b316fa0d1ef47a760ae8",
+        "independent_acceptance_sha256": "d3d07a1d6ea1ba15b45f0f4a7d1e5ddc40625a2480a5b78b1bfd995ab48cb5c3"
+      },
+      "postrender_delivery_v3": "mechanically passed; independent current semantics unassessed"
+    },
+    {
+      "label": "t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/frozen-output/out",
+      "integrity_sha256": "052e0b1b5af78429087ae5d03cb6e9c21ba557754cb75454c380e9141b9abaa9",
+      "context_status": "qualified",
+      "native_outcome": "passed",
+      "inventory_verified": true,
+      "missing_required_outputs": [],
+      "status": "frozen-for-independent-evaluation",
+      "source_qualification": "native-context-qualified-GET-capture-pending",
+      "public_get": true,
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "pending separate measured binding",
+      "actual_sourcecapture": "pending accepted post-quiescent capture sample/dedup proof",
+      "whole_companion_operator_cost": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/whole-companion-operator-cost.json",
+        "sha256": "5cce00f5056a8182b5c11fc0cf06d385c9394ef22dfa20ab4410101e47da546f",
+        "returncode": 0,
+        "elapsed_seconds": 1.9370272619999014
+      },
+      "whole_companion": {
+        "receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/whole-companion-receipt.json",
+        "sha256": "f1b9b17bb27de00db7d2015920c1e6c88a98f6c83aa639fb0b071991622393f5",
+        "all_inputs_preserved": true,
+        "all_output_versions_preserved": true,
+        "source_and_output_immutable": true,
+        "copied_bytes": 26594386,
+        "copy_seconds": 1.676453740990837,
+        "semantic_assessment": "none",
+        "operator_measurement_sha256": "5cce00f5056a8182b5c11fc0cf06d385c9394ef22dfa20ab4410101e47da546f"
+      }
+    },
+    {
+      "label": "t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/frozen-output/out",
+      "integrity_sha256": "76aa69027cfd490cb4e681c2dbe618f6a0aea1d8ec065064c113f4d1c438832c",
+      "context_status": "qualified",
+      "native_outcome": "passed",
+      "inventory_verified": true,
+      "missing_required_outputs": [],
+      "status": "frozen-for-independent-evaluation",
+      "source_qualification": "native-context-qualified-GET-capture-pending",
+      "public_get": true,
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "pending separate measured binding",
+      "actual_sourcecapture": "pending accepted post-quiescent capture sample/dedup proof",
+      "whole_companion_operator_cost": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/whole-companion-operator-cost.json",
+        "sha256": "e2a6faf8715ce7aa4b305a076d3643c37cede3185d91ae66034e6eb8b47970fc",
+        "returncode": 0,
+        "elapsed_seconds": 1.8066055859962944
+      },
+      "whole_companion": {
+        "receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/whole-companion-receipt.json",
+        "sha256": "aab4850d84af4df21a0fca74c25105da71673c4c37b59c763e8e0c7adc380991",
+        "all_inputs_preserved": true,
+        "all_output_versions_preserved": true,
+        "source_and_output_immutable": true,
+        "copied_bytes": 26521371,
+        "copy_seconds": 1.5533073429978685,
+        "semantic_assessment": "none",
+        "operator_measurement_sha256": "e2a6faf8715ce7aa4b305a076d3643c37cede3185d91ae66034e6eb8b47970fc"
+      }
+    },
+    {
+      "label": "t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/frozen-output/out",
+      "integrity_sha256": "bc9779d70e39e8d2dd3cf6c9af0ee9be9a05cc6f01091ffbb718884e91e02b33",
+      "context_status": "qualified",
+      "native_outcome": "passed",
+      "inventory_verified": true,
+      "missing_required_outputs": [],
+      "status": "frozen-for-independent-evaluation",
+      "source_qualification": "native-context-qualified-GET-capture-pending",
+      "public_get": true,
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "pending separate measured binding",
+      "actual_sourcecapture": "pending accepted post-quiescent capture sample/dedup proof",
+      "whole_companion_operator_cost": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/whole-companion-operator-cost.json",
+        "sha256": "ff7caca70af482fefce06e35dbf226ec55ba1ea5bf380b3e8ab370f7e52f95cc",
+        "returncode": 0,
+        "elapsed_seconds": 1.831101577001391
+      },
+      "whole_companion": {
+        "receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/whole-companion-receipt.json",
+        "sha256": "f0d94021ac2ed1c9faac2ebc3ca170e0bc2634bddd382a7e58b6e3aabd52c988",
+        "all_inputs_preserved": true,
+        "all_output_versions_preserved": true,
+        "source_and_output_immutable": true,
+        "copied_bytes": 26581073,
+        "copy_seconds": 1.593187926991959,
+        "semantic_assessment": "none",
+        "operator_measurement_sha256": "ff7caca70af482fefce06e35dbf226ec55ba1ea5bf380b3e8ab370f7e52f95cc"
+      }
+    },
+    {
+      "label": "t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment",
+      "host": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment",
+      "frozen_output": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/frozen-output/out",
+      "integrity_sha256": "0f0b3bc897bde7e3be5e1021eda5151718360677c8663b55c9f91f714d3f8048",
+      "context_status": "qualified",
+      "native_outcome": "passed",
+      "inventory_verified": true,
+      "missing_required_outputs": [],
+      "status": "frozen-for-independent-evaluation",
+      "source_qualification": "native-context-qualified-GET-capture-pending",
+      "public_get": true,
+      "semantic_quality": "unassessed",
+      "current_before_history": true,
+      "postrender_delivery": "pending separate measured binding",
+      "actual_sourcecapture": "pending accepted post-quiescent capture sample/dedup proof",
+      "whole_companion_operator_cost": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/whole-companion-operator-cost.json",
+        "sha256": "d335412a91ff39ec2f924eca0b0043b29324a900be616ff23af6c97dde258338",
+        "returncode": 0,
+        "elapsed_seconds": 1.8074333029944682
+      },
+      "whole_companion": {
+        "receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/whole-companion-receipt.json",
+        "sha256": "8be87138e2d023163aa15c72d4b8dd62e5ec3bb05e65acccb4e1d70920f09627",
+        "all_inputs_preserved": true,
+        "all_output_versions_preserved": true,
+        "source_and_output_immutable": true,
+        "copied_bytes": 26635257,
+        "copy_seconds": 1.5535180540027795,
+        "semantic_assessment": "none",
+        "operator_measurement_sha256": "d335412a91ff39ec2f924eca0b0043b29324a900be616ff23af6c97dde258338"
+      }
+    }
+  ],
+  "evaluation_ready_sha256": "f52fa333dc13fada3d7a3be46be414bc76ed777011d2ee5b5cb3d99312450950",
+  "pending_qualified_order": [
+    "t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-control-structural-repeat1",
+    "t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-treatment-structural-repeat1"
+  ],
+  "held_unstarted_labels": [
+    "unbound future T15arms witnessunqualified",
+    "originalunstartedT03/T13supersededbynewmatchedbudgetbindings",
+    "originalunstartedT12heldfornew1500bindings",
+    "originalqualifiedintegratedandT16sourcecaptureHOLD"
+  ],
+  "new_matched_budget_pairs": "awaiting root independently accepted1500/160 versions; oldactiveT05controlfinishedunchanged",
+  "helper_start_user_override": 96,
+  "native_case_clock": {
+    "case_id": "t15-z-ome-mcp-reuse-v2-redo1",
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/t15-redo1-case-clock.json"
+  },
+  "pending_dependency_bindings": [
+    "T15redo1 matched successor witness/arms before1790889188.470268",
+    "new1500/160 pairedT04R/T05R/T03/T13 rootauthority",
+    "integrated discovery rootauthority + exactguard actualcaseclock",
+    "capture v3 source/review pins"
+  ],
+  "operator_receipt_selection_incident": {
+    "epoch": 1790886697.580862,
+    "status": "reported-root-no-negative-filter-reuse",
+    "scope": "metadata receipt nested cleanup_actions accidentally printed native snapshots",
+    "future_selection": "explicit scalar allowlists only",
+    "no_raw_native_client_file_opened": true
+  },
+  "reserved_case_priority": null,
+  "pending_binding_priorities": [
+    "T03new1500control/treatment",
+    "T13new1500control/treatment",
+    "repoT11/T12new1500pairs",
+    "independently accepted diagnostic integratedguard/binder rootrelease"
+  ],
+  "dependent_wholecase_hold": "External watchdog final v3 rejected; finite two repairs exhausted. No extra repair or inclusive-bound flag deployed. Static eligible queue continues.",
+  "queue_priority_note": "Dependent wholecase successor priority once exact inclusive host gate is accepted; otherwise individually refill authorized static T08 budget pair after active T12."
+}

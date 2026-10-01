@@ -1,0 +1,83 @@
+{
+  "schema": "t12.acquisition.v1",
+  "task": "t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment",
+  "date": "2026-10-01",
+  "source_version": {
+    "repository_url": "https://github.com/jj-vcs/jj",
+    "tag": "v0.22.0",
+    "commit": "67c2ae0a9e3e445f034a456b299e3f37c4dc4b93",
+    "evidence": "inputs/PIN.json:2-5 (sha256 6cb6112d93cdecd21d5e9a57db5f878b1afac553012e99f008e0c4102a503342, matching inputs/map/index.json source_pin_sha256)"
+  },
+  "issue_capture": {
+    "window": "issues created 2024-08-01..2024-10-02, all states",
+    "captured_utc": "2026-09-30",
+    "caveat": "bodies/status are capture-time, not release-time truth (inputs/issues-index.json:687-688)"
+  },
+  "tool_reads": [
+    {"path": "TASK.md", "lines": "1-11", "purpose": "task card"},
+    {"path": "inputs/brief.md", "lines": "1-7", "purpose": "product brief"},
+    {"path": "inputs/Z_SAFE_TASK.md", "lines": "1-11", "purpose": "safety/task constraints"},
+    {"path": "inputs/map/index.json", "lines": "1-509", "purpose": "host map index, shard partition, index_setup_seconds"},
+    {"path": "inputs/source-locator.json", "lines": "1-150, 2186-2305", "purpose": "transport schema + path_to_shard tail"},
+    {"path": "inputs/catalog.json", "lines": "1-120, 4723-4862", "purpose": "commit patch + issue inventory; issues-index entry"},
+    {"path": "inputs/issues-index.json", "lines": "1-689 (full, 3 windows)", "purpose": "all 68 issue titles/states to select leads"},
+    {"path": "inputs/repository/PIN.json", "lines": "1-40", "purpose": "version pin"},
+    {"path": "inputs/repository/lib/src/workspace.rs", "lines": "1-60", "purpose": "workspace API header"},
+    {"path": "inputs/repository/lib/src/working_copy.rs", "lines": "1-260", "purpose": "WC trait, LockedWorkingCopy, SnapshotOptions, errors"},
+    {"path": "inputs/repository/cli/src/cleanup_guard.rs", "lines": "1-126 (full)", "purpose": "signal cleanup semantics"},
+    {"path": "inputs/repository/docs/technical/concurrency.md", "lines": "1-127 (full)", "purpose": "op-log concurrency design"},
+    {"path": "inputs/repository/cli/src/commands/workspace/update_stale.rs", "lines": "1-175 (full)", "purpose": "stale recovery command"},
+    {"path": "inputs/repository/cli/src/progress.rs", "lines": "1-236 (full)", "purpose": "progress streaming"},
+    {"path": "inputs/repository/lib/src/local_working_copy.rs", "lines": "1-100, 760-1009, 1586-1750, 1750-1999", "purpose": "snapshot, start_mutation, write_proto, finish, recover"},
+    {"path": "inputs/repository/lib/src/lock.rs", "lines": "1-66 (full)", "purpose": "FileLock dispatch + tests (read, not run)"},
+    {"path": "inputs/repository/docs/working-copy.md", "lines": "1-100 (full)", "purpose": "stale WC, workspaces, snapshot docs"},
+    {"path": "inputs/repository/lib/src/op_heads_store.rs", "lines": "1-138 (full)", "purpose": "op head resolution"},
+    {"path": "inputs/repository/lib/tests/test_bad_locking.rs", "lines": "1-140", "purpose": "test-path lead: concurrent machines scenario (not executed)"},
+    {"path": "inputs/repository/cli/src/cli_util.rs", "lines": "1536-1705, 1699-1818, 2216-2345, 3276-3435", "purpose": "snapshot_working_copy, finish_transaction ordering, check_stale_working_copy, CliRunner"},
+    {"path": "inputs/issues/4239.json", "lines": "1-130", "purpose": "broken-pipe stale WC failure history"},
+    {"path": "inputs/issues/4423.json", "lines": "1-76", "purpose": "hard-reboot view corruption"},
+    {"path": "inputs/issues/4545.json", "lines": "1-88", "purpose": "snapshot-skip tradeoff"},
+    {"path": "inputs/issues/4493.json", "lines": "1-88", "purpose": "git import hang"},
+    {"path": "inputs/issues/4436.json", "lines": "1-99", "purpose": "colocated workspace gap"},
+    {"path": "inputs/issues/4396.json", "lines": "1-76", "purpose": "jj st snapshot panic"},
+    {"path": "out/drafts/line-map-local-working-copy.txt", "lines": "1 (single-line JSON; read truncated at ~50KiB)", "purpose": "mechanical line_map output; source lines 1-~754 recovered before truncation"}
+  ],
+  "public_url_fetches": [
+    {
+      "url": "https://api.github.com/repos/jj-vcs/jj/issues/4239/comments",
+      "status": 200,
+      "bytes": 11148,
+      "sha256": "042c4715bde42a5e4a051a215a99613447da791c93a4ddff5f3f3500c80fa5b4",
+      "purpose": "follow missing-link comments for issue 4239; identifies yuja reordering proposal and PR #4517"
+    }
+  ],
+  "urls_referenced_not_fetched": [
+    "https://github.com/jj-vcs/jj/issues/4423",
+    "https://github.com/jj-vcs/jj/issues/4545",
+    "https://github.com/jj-vcs/jj/issues/4493",
+    "https://github.com/jj-vcs/jj/issues/4436",
+    "https://github.com/jj-vcs/jj/issues/4396",
+    "https://github.com/jj-vcs/jj/issues/4342",
+    "https://github.com/martinvonz/jj/issues/2193 (referenced by docs/technical/concurrency.md:51-54)",
+    "https://github.com/martinvonz/jj/pull/4517 (referenced by 4239 comments; diff not fetched)",
+    "https://github.com/martinvonz/jj/issues/4028 (referenced by 4545 body; outside corpus window, not fetched)"
+  ],
+  "queries": [
+    "issues-index selection: repo:jj-vcs/jj is:issue created:2024-08-01..2024-10-02 sort=created asc (recorded in inputs/issues-index.json:2-3, total_count 68)"
+  ],
+  "finding_links": {
+    "F1_stale_detection_recovery": ["cli/src/cli_util.rs:1536-1643", "cli/src/cli_util.rs:2216-2268", "cli/src/commands/workspace/update_stale.rs:42-175", "lib/src/working_copy.rs:98-118", "docs/working-copy.md:94-100"],
+    "F2_lockfree_oplog": ["docs/technical/concurrency.md:35-127", "lib/src/op_heads_store.rs:31-138", "lib/tests/test_bad_locking.rs:103-140"],
+    "F3_wc_lock_and_state_writes": ["lib/src/local_working_copy.rs:1607-1631", "lib/src/local_working_copy.rs:1693-1702", "lib/src/local_working_copy.rs:1861-1875", "lib/src/local_working_copy.rs:1932-1955", "lib/src/local_working_copy.rs:660-706", "lib/src/lock.rs:15-21"],
+    "F4_snapshot_pipeline": ["lib/src/local_working_copy.rs:795-1009", "cli/src/cli_util.rs:1602-1641", "issues/4396.json", "issues/4508.json (title only, not read)"],
+    "F5_snapshot_cost_skip": ["issues/4545.json", "docs/working-copy.md:10-27", "lib/src/working_copy.rs:186-224", "lib/src/local_working_copy.rs:761-790"],
+    "F6_interrupted_delivery": ["issues/4239.json", "public: issues/4239/comments", "cli/src/cli_util.rs:1757-1771", "cli/src/progress.rs:19-214", "cli/src/cleanup_guard.rs:13-126"],
+    "F7_multi_workspace": ["docs/working-copy.md:78-100", "cli/src/cli_util.rs:1545-1549", "cli/src/cli_util.rs:1714-1731", "lib/src/working_copy.rs:49-50,110-111", "lib/src/local_working_copy.rs:1877-1879", "issues/4436.json"]
+  },
+  "omissions": [
+    "624 commit patches not mined (catalog-indexed only)",
+    "62 of 68 issue bodies not read",
+    "lib/src/simple_op_heads_store.rs, lib/src/lock/unix.rs, lib/src/lock/fallback.rs, lib/src/fsmonitor.rs, lib/src/merge.rs, lib/src/git.rs, lib/src/workspace.rs:61-629 not read",
+    "five demos/*.png not viewed (no viewing tool; none claimed)"
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "schema": "er7.productive_z.output_integrity.v1",
+  "epoch": 1790893471.220038,
+  "label": "t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control",
+  "files": {
+    "acquisition.json": {
+      "sha256": "f5c231acaf4b8c2c2835b69c2d5e753cea01e8e591857d79434f71d59140ad46",
+      "bytes": 11956
+    },
+    "drafts/acquisition.draft-1.json": {
+      "sha256": "8643806f57ddb25a784fdf70424dd3cf43363a6969263bc34db8a93877ba4142",
+      "bytes": 11877
+    },
+    "drafts/evidence-chains.draft-1.json": {
+      "sha256": "779b4322cfeac4ae0eacc6054e803a1e3b6d23a05021703eb81a62123d246063",
+      "bytes": 10178
+    },
+    "drafts/map-usage.draft-1.json": {
+      "sha256": "ed754988551c1436555115203e99f2a3a9d61da55cd6348040506036d0cedc00",
+      "bytes": 1633
+    },
+    "drafts/navigation.draft-1.json": {
+      "sha256": "f9c20081a9ab5cdf9ff8385ec7f4e70d098eac710a9784722db7f7333f16282d",
+      "bytes": 9340
+    },
+    "drafts/report.draft-1.md": {
+      "sha256": "d6ac261a23946fbcaaee0ae61030dbedb9f3edf4e878b2a80d95b3e1639520ee",
+      "bytes": 34759
+    },
+    "evidence-chains.json": {
+      "sha256": "8485ec0d7f774fe36b034dce252f1b64455afbce6dc127b70326d9d97927581c",
+      "bytes": 10168
+    },
+    "map-usage.json": {
+      "sha256": "17aa88ae8f067d3b96b7ca440766556e1b85b4b4a832f59c9f2cf4614ed79eb3",
+      "bytes": 1645
+    },
+    "navigation.json": {
+      "sha256": "1beccbd30ef0d050963f61f110b764cb640503a49081b292cc0bbef980e86174",
+      "bytes": 10565
+    },
+    "report.md": {
+      "sha256": "ac2b736ae8180ba31839cf0e80f9d48ef0783fdfb492fb90d78f5a65775c348c",
+      "bytes": 34692
+    }
+  },
+  "missing_required_outputs": [],
+  "sanitized_native_artifacts": {
+    "receipt.json": {
+      "sha256": "21cebaf4f5384ec10cf26f9aed902b795b01c9698ff7c432e061adf6538d5d16",
+      "bytes": 1149422
+    },
+    "host-process.json": {
+      "sha256": "b2e6f4f11fff83f8c8cdc4998194d4fa6269eebcfe4adfde446c9eae99b60acc",
+      "bytes": 58
+    },
+    "session-tool-contract.json": {
+      "sha256": "ee34314e26c298b3ff013b362bafe015c4e026cbe6a376ee10ef5b9e84196f7f",
+      "bytes": 2177
+    },
+    "progress.jsonl": {
+      "sha256": "a326303f03587d8dfcddac6e6a0827e3a01ba0a1432b8f84f2015c4ae2922d8a",
+      "bytes": 386
+    },
+    "usage-events.jsonl": {
+      "sha256": "155f70b623adcee7b17e728c9a3180cafa2d2ec5eb786edb336b8ba3e28e0685",
+      "bytes": 27383
+    },
+    "zcode-stdout.redacted.jsonl": {
+      "sha256": "fc21164d1fd48c117868edf591b17b260d47c4e344f132f935c601a11ef70d7e",
+      "bytes": 175350409
+    },
+    "zcode-stderr.omitted.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  },
+  "quiescence": {
+    "native_quiescent": true,
+    "own_process_group_absent": true,
+    "native_receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/native/receipt.json",
+    "native_receipt_sha256": "21cebaf4f5384ec10cf26f9aed902b795b01c9698ff7c432e061adf6538d5d16",
+    "owned_driver_pgid": 2073042,
+    "basis": "sanitized native receipt plus only known own group absence"
+  },
+  "private_client": "excluded entirely; never read",
+  "semantic_quality": "unassessed",
+  "context_observations_sha256": "f448401a585c5ecd66ad9a71007471f1c8cfb9853ba52ad887e6948c32a01926",
+  "future_native_context": "qualified",
+  "native_outcome": "passed",
+  "inventory_verified": true,
+  "method_postrender_delivery": "pending separate measured machinery; no free semantic helper rewrite"
+}

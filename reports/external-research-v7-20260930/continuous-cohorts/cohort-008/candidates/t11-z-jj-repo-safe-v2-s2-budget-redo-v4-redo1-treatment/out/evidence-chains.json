@@ -1,0 +1,90 @@
+{
+  "schema": "er7.evidence_chains.v1",
+  "task": "t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment",
+  "conventions": "local original line ranges are one-based; patch files are single identity-encoded locator parts so patch-local line == original line; 'unconfirmed' = link exists in the public record but the target bytes were not in this corpus/session",
+  "chains": [
+    {
+      "id": "F1",
+      "issue": {"number": 4239, "title": "Broken pipe when running `jj rebase 2>&1 | head` causes stale working copy", "state_at_capture": "closed", "state_reason": "completed", "local": "inputs/issues/4239.json", "body_lines": "11,112", "url": "https://github.com/jj-vcs/jj/issues/4239"},
+      "mechanism_link": {"kind": "maintainer_comment_via_timeline", "url": "https://github.com/jj-vcs/jj/issues/4239/timeline", "comment_id": 2275287126, "says": "reorder update_working_copy() and report_repo_changes()", "external_blob_ref": {"blob": "b3ede64472f9cd9290cb6a3f8776caac69dca793", "path": "cli/src/cli_util.rs", "lines": "1424-1430", "confirmed_locally": false}},
+      "fix": {"pr": "https://github.com/jj-vcs/jj/pull/4517", "merged_at": "2024-09-22T14:02:21Z", "main_commit": "76f40e5990db2981e7c86986c8af98f22edaccc9", "commit_url": "https://github.com/jj-vcs/jj/commit/76f40e5990db2981e7c86986c8af98f22edaccc9", "local_patch": "inputs/commit-patches/76f40e5990db2981e7c86986c8af98f22edaccc9.patch", "patch_lines_read": "1-200 of 451", "key_hunks": {"reorder": "patch lines 43-63 (@@ -1715,8 +1715,10 @@ and @@ -1726,6 +1728,8)", "changelog": "patch lines 20-37", "tests_reordered": {"file": "cli/tests/test_repo_change_report.rs", "patch_lines": "98-180", "pinned_file": "inputs/repository/cli/tests/test_repo_change_report.rs", "pinned_file_read": false, "pin_sha": "6614e2b5a4c457dc4b0fd9b0beb9052d3c9b810d00bdff4829be1a043fb5ddfd"}, {"file": "cli/tests/test_file_chmod_command.rs", "patch_lines": "64-97"}}},
+      "pinned_implementation": {"file": "inputs/repository/cli/src/cli_util.rs", "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04", "lines": {"finish_transaction": "1699-1789", "tx_commit": 1757, "fix_comment": "1759-1761", "update_working_copy_call": "1762-1769", "report_repo_changes_call": 1771, "update_working_copy_def": 1645, "report_repo_changes_def": 1805}},
+      "supporting": {"demos_redacted": {"patch": "inputs/commit-patches/d3b0f1b97064cf0a76ce603dcf6e059fbbcf5b99.patch", "lines_read": "1-60 of 206", "subject": "demos: redact one of the conflict outputs", "references_issue": true}},
+      "missing_or_unconfirmed": ["pre-fix blob b3ede644… (parent-era cli_util.rs) not in corpus", "fork/PR-branch referenced commits not in main-history corpus: 48eadb840d7af0b378b94240ba053312dad7ff7f, 3d16f209c3e81ed40058ca4248893e7e81f2c5b1, a5a5b263b744e2d02c6ad9dd6b0c49a109b7c769, caeb9aa7e03cd15273d2a0d2d1beca0e0ef1e4a0, a2d45ea2fc26056dba8ec1c9defcda693e8afcaa, a2563d509dc5ef4304e2300730b12838c6802632, b4c6146f4e149dd003668cfaa075cbacd61fba3a, 9979ea41781ec65a205f0ce3420538cbaac1f04f, cb909ba08fb481123d1ed44f3a3ada5a059d8cfd, 1795fed9b1ff4942adb91d515018a94161441cd0, 77772ceb0ef05b7e0ba62feb5328a41c53042678", "pinned test file content spot-check only via patch"],
+      "status": "complete issue→fix→pinned-code→test chain (test source only; test execution not performed)"
+    },
+    {
+      "id": "F2",
+      "issue": {"number": 4342, "title": "FR: Allow renaming of existing workspaces", "state_at_capture": "closed", "state_reason": "completed", "local": "inputs/issues/4342.json", "body_lines": "11,81", "url": "https://github.com/jj-vcs/jj/issues/4342"},
+      "fix": {"pr": "https://github.com/jj-vcs/jj/pull/4450", "merged_at": "2024-09-17T02:35:36Z", "main_commit": "412ef36259426d8d7a8bc33bf076922f2a801c18", "commit_url": "https://github.com/jj-vcs/jj/commit/412ef36259426d8d7a8bc33bf076922f2a801c18", "local_patch": "inputs/commit-patches/412ef36259426d8d7a8bc33bf076922f2a801c18.patch", "patch_lines_read": "1-462 of 462 (full)"},
+      "implementation_pieces_from_patch": {
+        "new_command": {"file": "cli/src/commands/workspace/rename.rs", "patch_lines": "101-184", "pinned_present": true, "pinned_file_read": false},
+        "wiring": {"file": "cli/src/commands/workspace/mod.rs", "patch_lines": "64-100"},
+        "error_mapping": {"file": "cli/src/command_error.rs", "patch_lines": "39-63"},
+        "view": {"file": "lib/src/view.rs", "patch_lines": "393-448", "symbols": ["View::rename_workspace (patch 409-430)", "RenameWorkspaceError (patch 440-448)"]},
+        "repo": {"file": "lib/src/repo.rs", "patch_lines": "365-392"},
+        "trait": {"file": "lib/src/working_copy.rs", "patch_lines": "449-461"},
+        "local_wc": {"file": "lib/src/local_working_copy.rs", "patch_lines": "322-364"},
+        "example": {"file": "cli/examples/custom-working-copy/main.rs", "patch_lines": "24-38"},
+        "cli_reference_snapshot": {"file": "cli/tests/cli-reference@.md.snap", "patch_lines": "185-223"}
+      },
+      "tests": {"file": "cli/tests/test_workspaces.rs", "patch_lines": "224-317", "test_names": ["test_workspaces_rename_nothing_changed", "test_workspaces_rename_new_workspace_name_already_used", "test_workspaces_rename_forgotten_workspace", "test_workspaces_rename_workspace"], "pinned_file": "inputs/repository/cli/tests/test_workspaces.rs", "pinned_file_read": false, "pin_sha": "d8f6b2178f38e51dc97e519be3221f6830d540e175b47edc546b6be799b9559e"},
+      "missing_or_unconfirmed": ["fork commits 0cb0bd16fb61f5217c81955aef9f868cf3481641, f29e816f07ef6ecfb168777be52b6e970a3eb23e, 326b35e46de1ad11e565c9a6f2e4da0640a8601c, 83ff635a1e6708ac013ff78e4a618116b3f1cb8b, 036d3bc85e5bd2ad6aa4128b1b7608a4a5a90eb9 not in corpus (PR-branch history)"],
+      "status": "complete chain; pinned rename.rs/view.rs bytes attested via PIN/manifest + ancestor-of-tip reasoning rather than direct byte read"
+    },
+    {
+      "id": "F3",
+      "issues": [
+        {"number": 4545, "title": "FR: Option to skip snapshotting-before-commands with automatic snapshots", "state_at_capture": "open", "local": "inputs/issues/4545.json", "url": "https://github.com/jj-vcs/jj/issues/4545"},
+        {"number": 4508, "title": "On a machine with many cores, snapshotting large repos is very CPU-intensive", "state_at_capture": "open", "local": "inputs/issues/4508.json", "url": "https://github.com/jj-vcs/jj/issues/4508"}
+      ],
+      "fix": null,
+      "pinned_implementation": {"file": "inputs/repository/cli/src/cli_util.rs", "lines": {"workspace_helper": "368-372", "workspace_helper_no_snapshot": "374-386", "is_working_copy_writable": "424-428", "is_at_head_operation": "431-438", "maybe_snapshot": "897-916", "import_git_head_dup_wc_todo": "934-942", "snapshot_working_copy": "1536-1643", "snapshot_options": "1603-1609", "set_is_snapshot": 1617, "auto_tracking_matcher_def": 1122, "base_ignores_def": 1142}},
+      "missing_or_unconfirmed": ["fsmonitor.rs trigger-registration line ref (#4545 body points at blob 0058c4f451a20507e937383d2642a3e80b507950 lib/src/fsmonitor.rs#L210): blob file exists in corpus file list but line not read", "#4028 referenced by #4545 body: outside issue window, not read"],
+      "status": "pinned behavior fully located; improvement unimplemented at pin — open/unresolved"
+    },
+    {
+      "id": "F4",
+      "issue": {"number": 4423, "title": "hosed jj repo after hard-reboot.", "state_at_capture": "open", "comments": 18, "local": "inputs/issues/4423.json", "url": "https://github.com/jj-vcs/jj/issues/4423"},
+      "fix": null,
+      "pinned_implementation": {
+        "freshness_enum": {"file": "inputs/repository/cli/src/cli_util.rs", "lines": "2216-2226"},
+        "check_stale_working_copy": {"file": "inputs/repository/cli/src/cli_util.rs", "lines": "2229-2268"},
+        "stale_error_and_hint": {"file": "inputs/repository/cli/src/cli_util.rs", "lines": "1572-1581"},
+        "op_not_found_hint": {"file": "inputs/repository/cli/src/cli_util.rs", "lines": "1591-1598"},
+        "concurrent_mutation_guard": {"file": "inputs/repository/cli/src/cli_util.rs", "lines": "1048-1054"},
+        "update_stale_command": {"file": "inputs/repository/cli/src/commands/workspace/update_stale.rs", "sha256": "d97bb464e4d0f2857ae571731925744acc40e0e705245f93b244b168d0289ad5", "lines": {"cmd": "43-108", "recovery_commit": "110-143", "locked_recover_call": 133}}
+      },
+      "missing_or_unconfirmed": ["18 comment thread unread; empty-filename root cause unconfirmed", "op_store read path (lib/src/simple_op_heads_store.rs / op_store) not read"],
+      "status": "pinned recovery surfaces complete; corruption case unresolved by design at pin"
+    },
+    {
+      "id": "F5",
+      "issue": {"number": 4559, "title": "FR: Ignored files re-appear and get lost when switching to different branches", "state_at_capture": "closed", "state_reason": "completed (dup closure)", "local": "inputs/issues/4559.json", "url": "https://github.com/jj-vcs/jj/issues/4559"},
+      "closure_link": {"kind": "comment_via_timeline", "url": "https://github.com/jj-vcs/jj/issues/4559/timeline", "comment_id": 2387274721, "says": "Closed as a dup of https://github.com/martinvonz/jj/issues/323#issuecomment-1586319508"},
+      "duplicate_of": {"number": 323, "url": "https://github.com/jj-vcs/jj/issues/323", "in_corpus": false, "closed_at": "2025-01-18 (after v0.22.0 pin)"},
+      "fix": null,
+      "pinned_context": {"file": "inputs/repository/cli/src/cli_util.rs", "lines": {"snapshot_filters": "1550-1551", "max_new_file_size_read": 1555, "snapshot_call": "1603-1609"}},
+      "missing_or_unconfirmed": ["#323 body/comments unread", "post-pin auto-tracking fix unconfirmed locally"],
+      "status": "closed-as-duplicate; no fix at pin — recorded unresolved/qualified"
+    },
+    {
+      "id": "F6",
+      "issue": {"number": 4396, "title": "Panic when running `jj st`: `must have one more adds than removes`", "state_at_capture": "closed", "state_reason": "not_planned", "local": "inputs/issues/4396.json", "url": "https://github.com/jj-vcs/jj/issues/4396", "reported_panic_location": "lib/src/merge.rs:163:45 via conflicts::parse_conflict ← local_working_copy::TreeState::get_updated_tree_value"},
+      "fix": null,
+      "pinned_panic_site": {"file": "inputs/repository/lib/src/merge.rs", "sha256": "2f049883f8d804d0055e7fae72e1a15bf73cf2e2415f6940db232912c352aa77", "lines": {"from_vec_assert": "146-149", "from_removes_adds_expect": 163, "read_window": "140-179"}},
+      "missing_or_unconfirmed": ["no fix commit linked upstream; parse_conflict path (lib/src/conflicts.rs, local_working_copy.rs get_updated_tree_value) not read at pin"],
+      "status": "report→pinned-panic-site confirmed; fix link missing (unresolved)"
+    },
+    {
+      "id": "F7",
+      "issue": {"number": 4446, "title": "Managed to checkout hidden change, escalated into panic", "state_at_capture": "closed", "state_reason": "completed", "local": "inputs/issues/4446.json", "url": "https://github.com/jj-vcs/jj/issues/4446", "reported_panic_location": "jj-lib-0.19.0/src/id_prefix.rs:176:89"},
+      "fix": {"close_event_commit": "bea013acd670859019577b0c9a85a88eb4b295f0", "commit_url": "https://github.com/jj-vcs/jj/commit/bea013acd670859019577b0c9a85a88eb4b295f0", "subject": "id_prefix: fix crash on hidden change id disambiguation", "local_patch": "inputs/commit-patches/bea013acd670859019577b0c9a85a88eb4b295f0.patch", "patch_lines_read": "1-45 of 189", "hunk": "expect() at lib/src/id_prefix.rs:176-179 replaced by NoMatch for hidden-only resolution (patch lines 17-31)", "test": {"file": "lib/tests/test_id_prefix.rs", "test_name": "test_id_prefix_hidden", "patch_lines": "34-45"}},
+      "pinned_state": "commit is ancestor of pinned tip 67c2ae0a… (both in inputs/history-index.json); pinned id_prefix.rs bytes not re-read (PIN sha 77b8df38c219def35ecd5a77ecd2f8e040abeb23b47d538318d3ac492185f018)",
+      "missing_or_unconfirmed": ["root cause of hidden change being checked out never established", "fork commits 448f093781aa9d8baaeeef2b77412f69a3db1a86, 40cc3d9bbcf00fa6900f7fdbdbf391fe480d28ff not in corpus", "#4427/#3861/#2193 references unread"],
+      "status": "complete issue→fix→test chain for the panic; underlying hidden-checkout cause unresolved"
+    }
+  ],
+  "png_caveat": "repository/demos/*.png (5 files) byte-preserved (PIN.json sha256s) and listed as binary_files_not_indexed in inputs/map/index.json lines 23-49; never visually inspected; no finding depends on them",
+  "test_execution_disclaimer": "all test references are to test SOURCE; no test was executed"
+}

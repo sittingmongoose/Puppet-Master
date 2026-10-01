@@ -1,0 +1,23 @@
+{
+  "schema": "er7.independent_inclusive_watchdog_boundary.v2",
+  "decision": "REJECTED_SOURCE_BOUNDARY",
+  "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/inclusive_stage_watchdog_v2.py",
+  "source_sha256": "2b3102215853573d9911c6cb1390842efa913b34f470450da0731c6265a15750",
+  "source_manifest_sha256": "4b69c044e2a612e3bda8095a4836a86bdb976704a53097e235836b5197ca5527",
+  "repaired_predecessor_defects": 4,
+  "synthetics_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/watchdog-v2-synthetics.json",
+  "synthetics_sha256": "318033ade43703d5ec41a5aa4e35b813ed69f5537f28807a504fb692bc8bb175",
+  "test_driver_sha256": "b96b3ef7fda69cfddb3b99268285f85b45992e3ee5f1769ae13eb57a25379a21",
+  "findings": [
+    {
+      "test": "blocked-active-metadata-defeats-cutoff",
+      "finding": "Active host metadata read delays the cooperative loop beyond cap; SIGINT and SIGKILL of still-live owned native groups occur at620 for cap600. No independent timer or watchdog interrupts this own read."
+    }
+  ],
+  "generic_required_condition": "The original absolute native cutoff must remain enforceable while active monitor metadata reads or process scans are blocked. Late cleanup and a false qualification result do not retroactively bound live native occupancy. After positively observed native absence, host receipt bookkeeping may be separately charged outside this native proof interval; that separation does not permit pre-absence blocking.",
+  "native_or_other_process_launches": 0,
+  "actual_private_or_native_metadata_reads": 0,
+  "start_epoch": 1790891744.9263375,
+  "frozen_epoch": 1790893470.7860062,
+  "generated_tokens": "UNKNOWN"
+}

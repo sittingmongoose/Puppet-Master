@@ -1,0 +1,36 @@
+{
+  "schema": "er7.map_usage.v1",
+  "task": "t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment",
+  "arm": "treatment (host-prepared lexical map used for navigation)",
+  "provenance": {
+    "map_is_host_prepared": true,
+    "index": "inputs/map/index.json",
+    "index_sha256": "9837b6f7f000e06d4a79f245885e8e09411257cb14114ab8feed278b46309e68",
+    "index_self_description": {
+      "schema": "er7.lexical_repo_map_index.v2",
+      "repository_commit": "67c2ae0a9e3e445f034a456b299e3f37c4dc4b93",
+      "source_pin_file": "inputs/PIN.json",
+      "host_generator_sha256": "068545b1671de8e034456bfb9c12e8084796430aa0e47a20939b3a287a2b3f68",
+      "files_indexed": 426,
+      "symbol_records": 5893,
+      "test_paths": 97,
+      "lexical_settings_line": "inputs/map/index.json lines 9-19 (patterns, test_path_regex, one-based original line numbering, shard cap 196608)",
+      "binary_files_not_indexed": "5 demo PNGs, index lines 23-49"
+    },
+    "host_index_setup_cost": {
+      "agent_executed_host_indexing": false,
+      "explanation": "the map/index and shards were prepared by the host before the session; the agent performed no indexing and cannot attest to generation cost",
+      "agent_first_use_cost": "three bounded read_file windows over map shards (see navigation), elapsed seconds unknown (tools do not report latency); response count for map navigation: 5 read calls total (index x2 windows counted as 2 reads, shard-000 x3 windows)"
+    }
+  },
+  "actual_map_navigation": [
+    {"step": 1, "path": "inputs/map/index.json", "line_range": "1-50", "got": "schema, generator sha, lexical settings, files_indexed=426, PNG exclusions"},
+    {"step": 2, "path": "inputs/map/index.json", "line_range": "50-139", "got": "shard list head: map/shard-000.json sha256 5128058b…, path coverage .cargo → cli/src/commands/file/untrack.rs"},
+    {"step": 3, "path": "inputs/map/shard-000.json", "line_range": "1-60", "got": "per-file record format: path, sha256, bytes, lines, module, symbols[{name,line}], test_path"},
+    {"step": 4, "path": "inputs/map/shard-000.json", "line_range": "760-1089", "got": "cli/src/cli_util.rs symbol pins: CommandHelper.workspace_helper:368, workspace_helper_no_snapshot:377, load_workspace:402, is_working_copy_writable:426, is_at_head_operation:431, ReadonlyUserRepo:507, WorkspaceCommandHelper:829, maybe_snapshot:900, import_git_head:925, import_git_refs:984, unchecked_start_working_copy_mutation:1033, start_working_copy_mutation:1048, auto_tracking_matcher:1122, base_ignores:1142"},
+    {"step": 5, "path": "inputs/map/shard-000.json", "line_range": "1089-1418", "got": "further cli_util.rs pins: snapshot_working_copy:1536, update_working_copy:1645, start_transaction:1688, finish_transaction:1699, report_repo_changes:1805, WorkspaceCommandTransaction:2009, find_workspace_dir:2134, map_workspace_load_error:2140, start_repo_transaction:2180, WorkingCopyFreshness:2216, check_stale_working_copy:2229, print_conflicted_paths:2271, print_checkout_stats:2362, update_working_copy(free fn):2455"}
+  ],
+  "how_map_was_used": "symbol line pins from the map were used to choose three narrow bounded read windows into inputs/repository/cli/src/cli_util.rs (368-442, 895-1054, 1536-1650, 2216-2315) instead of scanning 3435 lines; map claims were always confirmed against the actual source bytes before use in out/report.md",
+  "map_limits_respected": "the map is lexical only (no semantic/mechanism inference); every mechanism claim in the report cites read source bytes, not map records; map line numbers matched the pinned files (e.g. finish_transaction:1699 and check_stale_working_copy:2229 verified on read)",
+  "not_used": {"mechanical_operations": "line_map/render_sections/cache_source were available but not needed; no operation was invoked", "shards_001_plus": "inputs/map/shard-001.json… not opened (no symbol lookups needed outside cli_util.rs)"}
+}

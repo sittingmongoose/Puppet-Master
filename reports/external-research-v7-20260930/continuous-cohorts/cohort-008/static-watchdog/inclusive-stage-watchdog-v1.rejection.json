@@ -1,0 +1,35 @@
+{
+  "schema": "er7.independent_inclusive_watchdog_boundary.v1",
+  "decision": "REJECTED_SOURCE_BOUNDARY",
+  "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/inclusive_stage_watchdog_v1.py",
+  "source_sha256": "32eb6730da6ee6bdd4aacdc50220680748d91bf4fbce59c653ce8349f6c0976e",
+  "source_manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/inclusive-stage-watchdog-v1-source.json",
+  "source_manifest_sha256": "b37b953929a5f20fbf241ee2a59c42bc8afc628d6ee0d876df4996c8fa130d5a",
+  "synthetics_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/watchdog-v1-synthetics.json",
+  "synthetics_sha256": "3db3b5247e4362ba2cba6949dd5a585f85ea284bb04d2ea3a7f55347c9bc0620",
+  "test_driver_sha256": "1f6e266a211d0843dc9bd50a1fd459f6c51b07bb88f39ead4643c3d5a9176e3e",
+  "defects": [
+    {
+      "test": "late-absence-does-not-bind-proof-time",
+      "finding": "Inclusive predicate TRUE although final absence only observed after original cutoff; pre-scan elapsed freezes at600."
+    },
+    {
+      "test": "exhausted-preflight-still-spawns",
+      "finding": "After preflight consumed entire original cap, subprocess launch still occurs without a pre-spawn deadline rejection."
+    },
+    {
+      "test": "receipt-ancestor-link-accepted",
+      "finding": "Receipt successfully written through a symlink parent; output metadata ancestry not checked."
+    },
+    {
+      "test": "one-identity-error-skips-other-cleanup",
+      "finding": "First changed-identity group aborts hard-stop loop and exception cleanup repeats same failure, leaving still-proven owned groups unattempted."
+    }
+  ],
+  "native_or_other_process_launches": 0,
+  "actual_private_or_native_metadata_reads": 0,
+  "qualification": "Source-only synthetic rejection; neither actual native qualification nor candidate quality evaluation. Preserved v1 and its failed synthetic fixtures; root owns any new source.",
+  "start_epoch": 1790891744.9263375,
+  "frozen_epoch": 1790893305.2790823,
+  "generated_tokens": "UNKNOWN"
+}

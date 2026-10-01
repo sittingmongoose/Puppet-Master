@@ -1,0 +1,267 @@
+{
+  "as_of_epoch": 1790892823.337299,
+  "counted_launch_admissions": 43,
+  "known_native_goal_starts": 41,
+  "pre_goal_failures": 2,
+  "occupied_slot_seconds_as_of_snapshot": 28471.287682294846,
+  "reported_candidate_output_tokens_lower_bound": 1216102,
+  "generated_output_completeness": "unknown; all figures partial, native children/cancellation/unexposed fields retained unknown",
+  "parent_sol_usage": "includes input; generated component unknown",
+  "helper_generated_tokens": null,
+  "candidate_fees": null,
+  "unknown_usage_is_not_zero": true,
+  "T02": {
+    "control_whole_seconds": 265.061,
+    "treatment_whole_seconds": 338.88,
+    "control_reported_output": 16340,
+    "treatment_reported_output": 21010,
+    "quality": "both qualityfailure; no efficiency win"
+  },
+  "T06": {
+    "control_whole_seconds": 859.241,
+    "treatment_whole_seconds": 631.354,
+    "control_reported_output": 35463,
+    "treatment_reported_output": 28567,
+    "quality": "both quality failure; treatment lower elapsed observed, no same-quality speedup claim",
+    "current_summary": "reviews/R003-R004-current-only-summary.json"
+  },
+  "as_of_utc": "2026-10-01T22:13:43.337299+00:00",
+  "same_quality_efficiency_claim": false,
+  "new_terminal_attempt_metrics": "cohort-evidence/terminal-attempts.json",
+  "post_snapshot_final_hold_accounting": {
+    "counted_admissions": 19,
+    "reported_candidate_output_tokens_lower_bound": 356810,
+    "occupied_slot_seconds": 9003.527,
+    "usage_completeness": "unknown; native children and unexposed output unknown",
+    "source": "supervisor final rollup; zero-active safety receipt binds lifecycle only"
+  },
+  "assessment_update_utc": "2026-09-30T17:35:37.328046+00:00",
+  "T01": {
+    "control_aggregate_total_seconds_including_setup_waits_cleanup": 719.4490000000001,
+    "control_aggregate_reported_output_tokens": 43540,
+    "treatment_total_seconds_including_setup_waits_cleanup": 358.751,
+    "treatment_reported_output_tokens": 24996,
+    "control_assignments": 2,
+    "treatment_assignments": 1,
+    "original_capped_control_opening_preserved": true,
+    "native_completion_opening_seconds": null,
+    "aggregation": "sum actual two control assignments; not just completed display, no cap-reset rescue",
+    "quality": "both quality failure; unequal inventories/failure identities do not establish equal quality",
+    "efficiency_claim": false,
+    "usage_completeness": "unknown; figures exposed only"
+  },
+  "T09": {
+    "control": {
+      "total_seconds_including_setup_waits_cleanup": 533.128,
+      "reported_output_tokens": 33741
+    },
+    "treatment": {
+      "total_seconds_including_setup_waits_cleanup": 419.061,
+      "reported_output_tokens": 25003
+    },
+    "quality": "both quality failure despite useful supported novelty",
+    "efficiency_claim": false,
+    "preservation": "unassessed"
+  },
+  "T14": {
+    "control": {
+      "total_seconds_including_setup_waits_cleanup": 446.868,
+      "reported_output_tokens": 26635
+    },
+    "treatment": {
+      "total_seconds_including_setup_waits_cleanup": 811.242,
+      "reported_output_tokens": 59561
+    },
+    "quality": "both quality failure; capped current certification partial, material coverage complete",
+    "efficiency_claim": false,
+    "additive_current_review": "R018/R019 complete current quality failures; original partial edition preserved; native eligibility independent"
+  },
+  "review_economics": "evaluators did not inspect candidate economics; receipt timings remain a separate publisher observation",
+  "evaluator_budget_compliance": "C028 stage1 possible20minute overrun; C028 phase2 final freeze54.088638s over cap; C041 current finalsave1338.528707s exceeds1200s; no compliance claim",
+  "preservation_update": {
+    "T02": "no demonstrated saved source-supported temporal loss; acquisition semantics unknown",
+    "T06": "available artifacts retained; acquisition-to-final unassessed",
+    "T01": "complete staged history; no measured preservation benefit",
+    "T09": "partial; uncaptured source-lead/snippet validation unresolved"
+  },
+  "second_pause_accounting": {
+    "candidate_admissions": 20,
+    "occupied_slot_seconds": 9340.536205530167,
+    "remaining_committed_slot_seconds": 0,
+    "reported_generated_tokens_lower_bound": 366778,
+    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "active_by_family": {
+      "M": 0,
+      "Z": 0,
+      "L": 0
+    },
+    "overdue_jobs": [],
+    "active_jobs": []
+  },
+  "known_actual_native_goals_at_second_pause": 18,
+  "native_canary": {
+    "whole_seconds_including_setup_waits_cleanup": 229.858,
+    "native_completion_seconds": 228.0,
+    "usage": {
+      "inputTokens": 47183,
+      "outputTokens": 9968,
+      "reasoningTokens": 0,
+      "cacheReadTokens": 22208,
+      "cacheWriteTokens": 0,
+      "totalTokens": 57151
+    },
+    "meter_completeness": "unknown",
+    "qualification": "native-v3 historical all-three checks passed within1190.896active seconds; productive dispatchheld for prospective context isolation; tiny current one-finding gradeunchanged",
+    "same_quality_efficiency_win": false
+  },
+  "historical_initial_snapshot": {
+    "as_of_epoch": 1790782093.6996675,
+    "counted_launch_admissions": 19,
+    "known_native_goal_starts": 17,
+    "occupied_slot_seconds_as_of_snapshot": 8625.780723571777,
+    "reported_candidate_output_tokens_lower_bound": 297249,
+    "as_of_utc": "2026-09-30T16:24:47.383306+00:00"
+  },
+  "publication_status": "ACTIVE explicit work-clock extension; totals unchanged",
+  "administrative_closeout_as_of_utc": "2026-10-01T17:29:11.818480+00:00",
+  "extension_authority": "work-clock-extension/authority.json",
+  "known_conservative_helper_task_start_events": 96,
+  "helper_ceiling": 96,
+  "known_helper_headroom": 0,
+  "helper_event_count_completeness": "unknown; conservative events not guaranteed unique helpers",
+  "helper_event_count_as_of_utc": "2026-10-01T22:14:29.186429+00:00",
+  "helper_event_count_source": "Root explicit96-event rollup including93-96 bounded graders; omissions unknown",
+  "continuous_cohort_001_accounting": {
+    "candidate_admissions": 23,
+    "occupied_slot_seconds": 11117.104108572006,
+    "remaining_committed_slot_seconds": 0,
+    "reported_generated_tokens_lower_bound": 429962,
+    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "active_by_family": {
+      "M": 0,
+      "Z": 0,
+      "L": 0
+    },
+    "overdue_jobs": [],
+    "active_jobs": []
+  },
+  "continuous_cohort_002_accounting": {
+    "candidate_admissions": 29,
+    "occupied_slot_seconds": 15002.496506214142,
+    "remaining_committed_slot_seconds": 1250.7226617336273,
+    "reported_generated_tokens_lower_bound": 593370,
+    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "active_by_family": {
+      "M": 0,
+      "Z": 2,
+      "L": 0
+    },
+    "overdue_jobs": [],
+    "active_jobs": [
+      "t11-z-jj-repo-safe-v2-s2-control",
+      "t11-z-jj-repo-safe-v2-s2-treatment"
+    ]
+  },
+  "T07_current_quality": "complete independent qualityfailures;87/74claims all6facets1full5partial; acquisition/history pending",
+  "continuous_cohort_003_accounting": {
+    "candidate_admissions": 33,
+    "occupied_slot_seconds": 18402.633721590042,
+    "remaining_committed_slot_seconds": 1047.030165195465,
+    "reported_generated_tokens_lower_bound": 748968,
+    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "active_by_family": {
+      "M": 0,
+      "Z": 2,
+      "L": 0
+    },
+    "overdue_jobs": [],
+    "active_jobs": [
+      "t08-z-ome-mcp-discovery-v2-repair1-control",
+      "t08-z-ome-mcp-discovery-v2-repair1-treatment"
+    ]
+  },
+  "T10_current_quality": "both complete current quality failures; source capture eligibility unknown; no efficiency benefit",
+  "helper_extension_authority": "continuous-cohorts/cohort-004/helper-authority.json",
+  "publication_as_of_utc": "2026-10-01T22:14:29.186429+00:00",
+  "continuous_cohort_005_accounting": {
+    "candidate_admissions": 37,
+    "occupied_slot_seconds": 22305.353593349457,
+    "remaining_committed_slot_seconds": 1444.0161819458008,
+    "reported_generated_tokens_lower_bound": 919158,
+    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "active_by_family": {
+      "M": 0,
+      "Z": 2,
+      "L": 0
+    },
+    "overdue_jobs": [],
+    "active_jobs": [
+      "t04r-z-ome-compact-contrasts-v1-budget-redo-v3-redo1-control",
+      "t04r-z-ome-compact-contrasts-v1-budget-redo-v3-redo1-treatment"
+    ]
+  },
+  "continuous_cohort_006_accounting": {
+    "admissions": 41,
+    "operator_native_goals_pin": 39,
+    "operator_epoch": 1790891249.4393528,
+    "operator_staleness_seconds": 371.74369955062866,
+    "occupied_slot_seconds": 26818.58122420311,
+    "committed_remaining_seconds": 840.6559450626373,
+    "active_by_family": {
+      "M": 0,
+      "Z": 1,
+      "L": 0
+    },
+    "active_caps": {
+      "M": 2,
+      "Z": 2,
+      "L": 2
+    },
+    "M_L": "held original repair cap; no implicit route reopening",
+    "generated_output_lower_bound": 1166986,
+    "generated_output_complete": false,
+    "true_headroom": null,
+    "warning": 2400000,
+    "output_stop": 3000000,
+    "start_cap": 144,
+    "slot_seconds_cap": 172800,
+    "remaining_admission_starts": 103,
+    "reserve_starts_at_least": 21,
+    "uncommitted_slot_seconds_remaining": 145140.76283073425,
+    "reserve_slot_seconds_at_least": 29028.15256614685
+  },
+  "native_inclusive_cap_verification": "UNESTABLISHED source-only8403cbcf review; no actual native qualification credit",
+  "continuous_cohort_007_accounting": {
+    "admissions": 43,
+    "operator_native_goals_pin": 41,
+    "derived_native_goal_lower_bound": 41,
+    "derived_count_post_pin_explicit_activation_labels": [],
+    "derived_count_basis": "Operator native counter plus explicit slot-ledger activation flags for admissions strictly after operator pin epoch; never traverse native receipts",
+    "operator_epoch": 1790892546.4499054,
+    "operator_staleness_seconds": 276.88739371299744,
+    "occupied_slot_seconds": 28471.287682294846,
+    "committed_remaining_seconds": 1559.5947139263153,
+    "active_by_family": {
+      "M": 0,
+      "Z": 2,
+      "L": 0
+    },
+    "active_caps": {
+      "M": 2,
+      "Z": 2,
+      "L": 2
+    },
+    "M_L": "held original repair cap; no implicit route reopening",
+    "generated_output_lower_bound": 1216102,
+    "generated_output_complete": false,
+    "true_headroom": null,
+    "warning": 2400000,
+    "output_stop": 3000000,
+    "start_cap": 144,
+    "slot_seconds_cap": 172800,
+    "remaining_admission_starts": 101,
+    "reserve_starts_at_least": 21,
+    "uncommitted_slot_seconds_remaining": 142769.11760377884,
+    "reserve_slot_seconds_at_least": 28553.82352075577
+  }
+}

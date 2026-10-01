@@ -1,0 +1,104 @@
+{
+  "task_id": "t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control",
+  "note": "Chains record issue/fix/code/test links actually followed during this investigation. Test files are cited as source text only; no test was executed. 'missing_links' lists pointers observed but not followed.",
+  "chains": [
+    {
+      "id": "chain-4239-broken-pipe-stale-wc",
+      "finding": "F4",
+      "start": "inputs/issues-index.json:97-105 (title 'Broken pipe when running `jj rebase 2>&1 | head` causes stale working copy', closed)",
+      "followed": [
+        {"step": 1, "artifact": "inputs/issues/4239.json", "lines": "11,46,73-75,112", "content": "body: repro console transcript ending in 'Error: The working copy is stale (not updated since operation 6c9667ecda1f)'; created 2024-08-08, closed 2024-09-22, state_reason completed"},
+        {"step": 2, "url": "https://api.github.com/repos/jj-vcs/jj/issues/4239/comments", "status": 200, "content": "yuja 2024-08-08: expected after failed WC updates; 'mitigated by reordering update_working_copy() and report_repo_changes()' with blob link to cli_util.rs@b3ede644; yuja 2024-08-10: transactions bound most interrupted-mutation problems; essiene 2024-09-21: draft PR #4517 moves report_repo_changes after the may_update_working_copy block; yuja accepts the new output order"},
+        {"step": 3, "artifact": "inputs/repository/cli/src/cli_util.rs", "lines": "1757-1769 (ordering + 'broken pipe, etc' comment), 1699-1801 (finish_transaction)", "content": "pinned v0.22.0 source contains the reordering described by the fix; also update_working_copy free fn 2455-2481"},
+        {"step": 4, "artifact": "inputs/repository/cli/src/cli_util.rs", "lines": "1572-1598", "content": "user-facing stale/sibling/missing-op errors produced by snapshot_working_copy"},
+        {"step": 5, "artifact": "inputs/repository/cli/src/commands/workspace/update_stale.rs", "lines": "43-108, 110-175", "content": "recovery command; recovery-commit path on ObjectNotFound; recovery usage corroborated by the 2025-04 transcript on #4423 comments"}
+      ],
+      "version_qualification": "Fix present in pinned v0.22.0 (code + issue closed 2024-09-22 before the pin date); the regression is NOT runtime-tested here.",
+      "missing_links": [
+        "https://github.com/jj-vcs/jj/pull/4517 diff page not fetched (fix verified from pinned source instead)",
+        "blob link cli_util.rs@b3ede64472f9cd9290cb6a3f8776caac69dca793 cited in comments not fetched (pre-fix revision)"
+      ]
+    },
+    {
+      "id": "chain-4423-hard-reboot-recovery",
+      "finding": "F5",
+      "start": "inputs/issues-index.json:377-385 (title 'hosed jj repo after hard-reboot.', open)",
+      "followed": [
+        {"step": 1, "artifact": "inputs/issues/4423.json", "lines": "11,34,39-41,58", "content": "body: 'Failed to load the repo / Error when reading object of type view / Is a directory (os error 21)' after power cycle without sync; strace shows open of .jj/repo/op_store/views/"},
+        {"step": 2, "url": "https://api.github.com/repos/jj-vcs/jj/issues/4423/comments", "status": 200, "content": "martinvonz 2024-09-08 manual recipe (jj --ignore-working-copy op log -T id; roll back .jj/repo/op_heads/heads filenames); hanwen traces: 'Concurrent modification detected, resolving automatically.' then panics at lib/src/operation.rs:97 / default_index_store.rs:245; empty .git/objects found ('wasn't written with fsync()'); dbarnett 2024-10-19 same symptom; SyrupThinker 2025-04-03 recovery via copy of .jj/repo/store/git and refs/jj/keep; dhardy 2025-04-07 full recovery incl. deleting empty op/index/store-extra files, git HEAD fix, and 'jj workspace update-stale' producing 'RECOVERY COMMIT FROM jj workspace update-stale'; alberand 2025-05-27 tree_state corruption fixed by 'rm .jj/working_copy/tree_state'"},
+        {"step": 3, "artifact": "inputs/repository/docs/technical/concurrency.md", "lines": "116-127", "content": "op-head file scheme: write new head file then remove old; crash-tolerant ordering claim"},
+        {"step": 4, "artifact": "inputs/repository/lib/src/op_heads_store.rs", "lines": "31-35, 52-56, 63-138 (esp. 71-73, 87-89, 93-95)", "content": "resolve_op_heads: transient empty-heads tolerated, persistent empty -> NoHeads; merge under optional lock"},
+        {"step": 5, "artifact": "inputs/repository/cli/src/cli_util.rs", "lines": "2140-2177", "content": "load failures mapped to 'The repository appears broken or inaccessible' internal errors"},
+        {"step": 6, "artifact": "inputs/repository/lib/src/local_working_copy.rs", "lines": "595-617", "content": "tree_state absent -> TreeState::init (supports the 'rm tree_state' remedy); atomic save 683-704"}
+      ],
+      "version_qualification": "Original repo created on jj 0.7, inspected with 0.15/0.21; issue open at 2026-09-30 capture. No evidence pinning the gap to or fixing it in v0.22.0; treated as unresolved-at-pin risk.",
+      "missing_links": [
+        "upstream issue #3370 referenced by yuja comment not fetched",
+        "attachment jj_vpm_bak.zip not fetched",
+        "lib/src/operation.rs:97 and lib/src/default_index_store.rs:245 from user tracebacks not independently opened (line refs are from the thread, on 0.15/0.21-era versions)"
+      ]
+    },
+    {
+      "id": "chain-4465-divergent-op-panic",
+      "finding": "F2",
+      "start": "inputs/issues-index.json:456-465 (title 'Panic in `jj op show` on \"reconcile divergent operations\"', closed)",
+      "followed": [
+        {"step": 1, "artifact": "inputs/issues/4465.json", "lines": "11,46-47,72-75,112", "content": "body: two-workspace concurrent abandon/edit repro; panic at lib/src/default_index/revset_engine.rs:972 unwrap; version jj 0.21.0-6e72b1cf; closed 2025-06-12 (after v0.22.0)"},
+        {"step": 2, "artifact": "inputs/repository/lib/src/op_heads_store.rs", "lines": "63-138", "content": "pinned reconcile implementation (resolve_op_heads) read; the panic site itself (revset_engine.rs:972) was not read"}
+      ],
+      "version_qualification": "Reported on 0.21.0; closed post-pin; presence in v0.22.0 unverified -> recorded as unresolved-at-pin.",
+      "missing_links": ["fix commit/PR for #4465 not identified or fetched", "lib/src/default_index/revset_engine.rs not read"]
+    },
+    {
+      "id": "chain-4342-workspace-rename",
+      "finding": "F6",
+      "start": "inputs/issues-index.json:216-225 (title 'FR: Allow renaming of existing workspaces', closed 2024-09-17)",
+      "followed": [
+        {"step": 1, "artifact": "inputs/issues/4342.json", "lines": "11,57,62-64,81", "content": "FR body; closed pre-pin"},
+        {"step": 2, "artifact": "inputs/repository/cli/src/commands/workspace/rename.rs", "lines": "23-78", "content": "`jj workspace rename` implemented at pin: start_working_copy_mutation + rename_workspace + repo transaction"}
+      ],
+      "version_qualification": "Feature present in v0.22.0 (source verified).",
+      "missing_links": ["implementing PR not identified (feature verified from pinned source instead)"]
+    },
+    {
+      "id": "chain-4436-colocated-workspaces",
+      "finding": "F6",
+      "start": "inputs/issues-index.json:406-415 (title 'FR: workspaces should also be collocated in --colocate mode', closed 2026-09-17)",
+      "followed": [
+        {"step": 1, "artifact": "inputs/issues/4436.json", "lines": "11,57,62-64,81", "content": "body: secondary workspaces in colocated repos have no .git; Nix damage report; git-worktree proposal; closed only 2026-09-17"},
+        {"step": 2, "artifact": "inputs/repository/lib/src/workspace.rs", "lines": "209-235, 345-377, 541-570", "content": "pinned workspace init/add code: no git worktree creation for secondary workspaces; .jj/repo file indirection only"}
+      ],
+      "version_qualification": "Open at v0.22.0 (closed ~2 years post-pin).",
+      "missing_links": ["linked discussion 4424 comment not fetched", "post-pin fixing commit not investigated"]
+    },
+    {
+      "id": "chain-4545-4508-snapshot-cost",
+      "finding": "F1",
+      "start": "inputs/issues-index.json:606-615 (4545) and 556-565 (4508)",
+      "followed": [
+        {"step": 1, "artifact": "inputs/issues/4545.json", "lines": "11,46,70", "content": "209ms vs 58ms measurement; --ignore-working-copy pitfalls (upstream #4028; watchman trigger registration link to lib/src/fsmonitor.rs@0058c4f)"},
+        {"step": 2, "artifact": "inputs/issues/4508.json", "lines": "11,33-57,81", "content": "24-core macOS snapshot thrash: 2.28s wall/32.26s sys vs 1.13s/0.49s with RAYON_NUM_THREADS=4"},
+        {"step": 3, "artifact": "inputs/repository/lib/src/local_working_copy.rs", "lines": "939 (into_par_iter), 795-906 (snapshot)", "content": "parallel traversal consistent with rayon-thread sensitivity; snapshot entry from cli/src/cli_util.rs:897-916"}
+      ],
+      "version_qualification": "Both issues open at capture; mechanisms cited from pinned source.",
+      "missing_links": ["upstream #4028 not fetched", "lib/src/fsmonitor.rs not read (trigger-registration link referenced by #4545)", "comments on 4545/4508 not fetched"]
+    },
+    {
+      "id": "chain-tests-cited-not-executed",
+      "finding": "F2,F3",
+      "start": "inputs/repository/lib/tests/test_bad_locking.rs",
+      "followed": [
+        {"step": 1, "artifact": "inputs/repository/lib/tests/test_bad_locking.rs", "lines": "28-101,103+", "content": "directory-merge simulation of concurrent repo writes; test-case entry points; SOURCE ONLY — never compiled or run"},
+        {"step": 2, "artifact": "inputs/repository/lib/src/lock.rs", "lines": "32-65", "content": "in-source FileLock concurrency tests; SOURCE ONLY"}
+      ],
+      "version_qualification": "Pinned v0.22.0 sources.",
+      "missing_links": ["no test execution infrastructure used or permitted"]
+    }
+  ],
+  "issues_selected_but_chain_not_followed": [
+    {"issue": 4342, "reason": "feature verified directly at pin"},
+    {"issue": 4436, "reason": "absence verified from pinned init code"},
+    {"issue": 4545, "reason": "body measurements sufficient; comments unfetched"},
+    {"issue": 4508, "reason": "body measurements sufficient; comments unfetched"}
+  ]
+}

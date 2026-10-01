@@ -1,0 +1,62 @@
+{
+  "schema": "er7.acquisition_log.v1",
+  "task": "t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment",
+  "pinned_source": {
+    "repository_url": "https://github.com/jj-vcs/jj",
+    "tag": "v0.22.0",
+    "commit": "67c2ae0a9e3e445f034a456b299e3f37c4dc4b93",
+    "pin_file": "inputs/PIN.json",
+    "pin_sha256": "6cb6112d93cdecd21d5e9a57db5f878b1afac553012e99f008e0c4102a503342",
+    "locator": "inputs/source-locator.json",
+    "locator_sha256": "76cf4ab47379b92ef5443710e241aca47d087344ee23b4afb1fac533ff855218",
+    "original_manifest_sha256": "6aef9692d7f2fefccee3c9746b46138eadb154b205ce3b8e67b91e8b715e53bf",
+    "capture_boundary": "issue bodies/status captured 2026-09-30; comments not in local capture"
+  },
+  "tool_constraints": "bounded MCP read_file/write_file/public_https_get only; mechanical ops line_map/render_sections/cache_source available; no shell/native/execution; responses<=512KiB; issue-window issues 4190..4564; history window since 2024-07-01, 624 patches",
+  "reads": [
+    {"path": "TASK.md", "lines": "1-11 (full)", "sha256": "993b17de5769c6ddd474f55d7e53f64c584e32f340ddf0c15e3e13a0bfc9049c"},
+    {"path": "inputs/brief.md", "lines": "1-7 (full)", "sha256": "6455c54d08627a6669c8f176a5cfb1e1c23578a183f3e606addadcf59eefff36"},
+    {"path": "inputs/Z_SAFE_TASK.md", "lines": "1-11 (full)", "sha256": "2a850fceb3d4f0c3... (tool-reported 2a850fceb3d4f0c3)", "note": "sha as reported by tool: 2a850fceb3d45096d4f34520a58903b8f896e7126808ebac3ff03291d16097e4"},
+    {"path": "inputs/source-locator.json", "lines": "1-~628 (truncated by result budget), 628-1027, 1028-1358", "sha256": "76cf4ab47379b92ef5443710e241aca47d087344ee23b4afb1fac533ff855218", "bytes": 164119, "total_lines": 2305},
+    {"path": "inputs/locator/shard-002.json", "lines": "1-60", "sha256": "8e0795ec718f8a1326724abbe56c429cbb165423e317e2744a8c0a9fc53ce368", "purpose": "locator entry format; identity-encoded parts, candidate_file paths"},
+    {"path": "inputs/PIN.json", "lines": "1-441 (full)", "sha256": "6cb6112d93cdecd21d5e9a57db5f878b1afac553012e99f008e0c4102a503342"},
+    {"path": "inputs/issues-index.json", "lines": "1-200, 200-689 (full)", "sha256": "6a6e593591ccd033b424101f2470effecb... (tool-reported 6a6e593591ccd033b424101f2470effec2cfd433dc97bb345e555dafac726d6)", "bytes": 28194},
+    {"path": "inputs/history-index.json", "lines": "1-120 of 4376", "sha256": "e8330e80a540d4432e33843436ac76c255c879661e57d7b1f818558... (tool-reported e8330e80a540d4432e33843436ac76c255c879661e57d7b1f8185f855218)", "note": "sha as reported by tool: e8330e80a540d4432e33843436ac76c255c879661e57d7b1f81855218 incorrect transcription risk — authoritative value from tool output: e8330e80a540d4432e33843436ac76c255c879661e57d7b1f81855218? see raw: e8330e80a540d4432e33843436ac76c255c879661e57d7b1f81855218", "actual": "e8330e80a540d4432e33843436ac76c255c879661e57d7b1f81855218 (as shown: e8330e80a540d4432e33843436ac76c255c879661e57d7b1f81855218)"},
+    {"path": "inputs/catalog.json", "lines": "1-80 of 4862", "sha256": "edd0fdb850724199cdf5a7153053d26664704dba07fae418f29e7f5014f7e7a3"},
+    {"path": "inputs/issues/4239.json", "lines": "1-130 (full)", "sha256": "1f47a5da278ef981bde5e474a800b692ce72ea3a53f6c91408bfa975b127c795"},
+    {"path": "inputs/issues/4342.json", "lines": "1-99 (full)", "sha256": "d45a015ba6b063129d46c036ac9ba32f91c91aa6d047df3adeeeb5afed754680"},
+    {"path": "inputs/issues/4559.json", "lines": "1-88 (full)", "sha256": "c33be20786c20e77d0738d8015df61e1afbb3cc253a5733309c2c4f18c7eb057"},
+    {"path": "inputs/issues/4396.json", "lines": "1-76 (full)", "sha256": "00967c17d1d3746e4dfb012dcc5b0a86aa0d52266199991420a0afb617dd2f50"},
+    {"path": "inputs/issues/4423.json", "lines": "1-76 (full)", "sha256": "d72a14271fb697217917eef42baab65eff836b63acdca7ba9393ca5658cfda64"},
+    {"path": "inputs/issues/4545.json", "lines": "1-88 (full)", "sha256": "a6f9011c0ebda172ab04e2edcae10945a464556b871f2824e8f811351c1d0ae6"},
+    {"path": "inputs/issues/4508.json", "lines": "1-99 (full)", "sha256": "7574413e1681fc1e3c15cd306399095b9c722e312ae8bbfe77275df262e934cb"},
+    {"path": "inputs/issues/4446.json", "lines": "1-88 (full)", "sha256": "cc9079a5478550235cc0e95131fe9585ff998140e398e2aef81b385cd5d08666"},
+    {"path": "inputs/commit-patches/76f40e5990db2981e7c86986c8af98f22edaccc9.patch", "lines": "1-200 of 451 (identity part, original line 1 = local line 1)", "sha256": "9710b6108cf70350dddf76dcf4c182c56cc1622332fc559a33f58bdd706eea56", "role": "fix patch for #4239 (PR #4517)"},
+    {"path": "inputs/commit-patches/d3b0f1b97064cf0a76ce603dcf6e059fbbcf5b99.patch", "lines": "1-60 of 206 (identity part)", "sha256": "dd1508311096b45f8d3477bd708a7ddd5cbbda50d66a80b59ddc10d0ec7a43dd", "role": "demos redaction referencing #4239"},
+    {"path": "inputs/commit-patches/412ef36259426d8d7a8bc33bf076922f2a801c18.patch", "lines": "1-230, 230-462 of 462 (identity part)", "sha256": "12994fcbaae4bede93ed6e91ba65923c291ecb260311147ffcd7388a0b1dd265", "role": "fix patch for #4342 (PR #4450 squash)"},
+    {"path": "inputs/commit-patches/bea013acd670859019577b0c9a85a88eb4b295f0.patch", "lines": "1-45 of 189 (identity part)", "sha256": "d52495f94baebcf2e085c12e5eed626e8c9bf6e4c48f3cf3fc208479bf77471a", "role": "fix patch for #4446"},
+    {"path": "inputs/repository/cli/src/cli_util.rs", "lines": "368-442, 895-1054, 1536-1650, 1680-1789, 2216-2315 (bounded windows)", "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04", "bytes": 129809, "total_lines": 3435, "role": "pinned implementation"},
+    {"path": "inputs/repository/cli/src/commands/workspace/update_stale.rs", "lines": "1-150 of 175", "sha256": "d97bb464e4d0f2857ae571731925744acc40e0e705245f93b244b168d0289ad5", "role": "pinned implementation"},
+    {"path": "inputs/repository/lib/src/merge.rs", "lines": "140-179 of 1274", "sha256": "2f049883f8d804d0055e7fae72e1a15bf73cf2e2415f6940db232912c352aa77", "role": "pinned panic site for #4396"},
+    {"path": "inputs/map/index.json", "lines": "1-50, 50-139 of 509", "sha256": "9837b6f7f000e06d4a79f245885e8e09411257cb14114ab8feed278b46309e68"},
+    {"path": "inputs/map/shard-000.json", "lines": "1-60, 760-1089, 1089-1418 of 9171", "sha256": "5128058b9ef7993543177ae9be4929e0f6ff9306a1b28c44486c15537b9c6ca7", "purpose": "symbol line pins for cli_util.rs"}
+  ],
+  "public_https_gets": [
+    {"url": "https://api.github.com/repos/jj-vcs/jj/issues/4239/timeline", "status": 200, "bytes": 70409, "sha256": "b36e5eba288539e8762cf6506f242b1442b361f26e836bc61669a2c90d80e45e", "yield": "yuja mechanism comment; PR #4517 cross-reference; referenced commits"},
+    {"url": "https://api.github.com/repos/jj-vcs/jj/issues/4342/timeline", "status": 200, "bytes": 32675, "sha256": "ff01905a80d876699e5cf3ab047e30c0a860ac1633db1001e181d7350d114d98", "yield": "PR #4450 cross-reference; main commit 412ef362…; current-workspace-only constraint comment"},
+    {"url": "https://api.github.com/repos/jj-vcs/jj/commits?path=cli/src/cli_util.rs&since=2024-09-21T00:00:00Z&until=2024-09-24T00:00:00Z", "status": 200, "bytes": 13007, "sha256": "f52c2ab22d70a5b57ac160f684a97d0782020cd304bbc75d738f25c5b404009f", "yield": "main-branch fix commit 76f40e5990db2981e7c86986c8af98f22edaccc9 for #4239"},
+    {"url": "https://api.github.com/repos/jj-vcs/jj/issues/4559/timeline", "status": 200, "bytes": 17315, "sha256": "daddbaeecd8ef3cfe03f0c19436e979ae80646f745dde2e09677bce1c2e7a5a5", "yield": "closed-as-duplicate-of-#323 comment by yuja; no fix commit"},
+    {"url": "https://api.github.com/repos/jj-vcs/jj/issues/4446/timeline", "status": 200, "bytes": 14665, "sha256": "7c3ce9e1a6627e0b159185aea9ee773ec6848651ee1667b4fbf197b72b8c1e9c", "yield": "close commit bea013acd670859019577b0c9a85a88eb4b295f0; maintainer comments"}
+  ],
+  "queries_notes": "issue selection: all 68 windowed issues triaged by title from inputs/issues-index.json; 8 bodies read in full; fix-commit discovery via official timeline/commits API (5 GETs, all 200, each <=512KiB); all referenced main-branch fix commits were located in the local patch corpus and read as original raw patches through the locator (identity parts).",
+  "finding_links": {
+    "F1_4239": {"issue": "https://github.com/jj-vcs/jj/issues/4239", "pr": "https://github.com/jj-vcs/jj/pull/4517", "fix_commit": "https://github.com/jj-vcs/jj/commit/76f40e5990db2981e7c86986c8af98f22edaccc9", "local_patch": "inputs/commit-patches/76f40e5990db2981e7c86986c8af98f22edaccc9.patch"},
+    "F2_4342": {"issue": "https://github.com/jj-vcs/jj/issues/4342", "pr": "https://github.com/jj-vcs/jj/pull/4450", "fix_commit": "https://github.com/jj-vcs/jj/commit/412ef36259426d8d7a8bc33bf076922f2a801c18", "local_patch": "inputs/commit-patches/412ef36259426d8d7a8bc33bf076922f2a801c18.patch"},
+    "F3_4545_4508": {"issues": ["https://github.com/jj-vcs/jj/issues/4545", "https://github.com/jj-vcs/jj/issues/4508"], "fix_commit": null},
+    "F4_4423": {"issue": "https://github.com/jj-vcs/jj/issues/4423", "fix_commit": null},
+    "F5_4559": {"issue": "https://github.com/jj-vcs/jj/issues/4559", "duplicate_of": "https://github.com/jj-vcs/jj/issues/323", "fix_commit": null},
+    "F6_4396": {"issue": "https://github.com/jj-vcs/jj/issues/4396", "fix_commit": null, "state_reason": "not_planned"},
+    "F7_4446": {"issue": "https://github.com/jj-vcs/jj/issues/4446", "fix_commit": "https://github.com/jj-vcs/jj/commit/bea013acd670859019577b0c9a85a88eb4b295f0", "local_patch": "inputs/commit-patches/bea013acd670859019577b0c9a85a88eb4b295f0.patch"}
+  },
+  "not_read": ["68 issue comment threads (except four timelines fetched)", "issue bodies for 60 unselected issues (titles only)", "history-index lines 120-4376", "catalog.json lines 80-4862", "locator shards 000/001/003/004 contents (only file lists via source-locator.json)", "lib/src/working_copy.rs, cli/src/progress.rs, docs/* bodies", "five demo PNG visuals (no viewing tool)"]
+}

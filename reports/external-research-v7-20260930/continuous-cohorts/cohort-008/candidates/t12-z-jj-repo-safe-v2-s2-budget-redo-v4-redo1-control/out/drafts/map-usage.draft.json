@@ -1,0 +1,31 @@
+{
+  "case_id": "t12-z-jj-repo-safe-v2-budget-redo-v4-redo1-control",
+  "navigation_mode": "documentation-led (control arm per TASK.md matched method policy)",
+  "map_used": false,
+  "map_navigation_records": [],
+  "map_paths_read": [],
+  "host_index_setup": {
+    "first_use_cost_incurred": false,
+    "measurement": "not applicable - the host-prepared map/index.json and its shards were never opened, so no first-use/indexing cost was incurred or measured",
+    "provenance": "control arm; identical map/tool/source access existed but the documentation-led workflow never touched the map"
+  },
+  "substitute_navigation_used": [
+    "inputs/repository/docs (working-copy.md, technical/concurrency.md, operation-log.md) as entry points",
+    "inputs/source-locator.json for path/shard structure only (corpus artifact, not the module map)",
+    "inputs/issues-index.json and inputs/history-index.json (corpus artifacts, not the module map)",
+    "bounded ad-hoc read_file windows for implementation files; probe reads where file length was unknown"
+  ],
+  "mechanical_operations_provenance": {
+    "available_operations": ["line_map", "render_sections", "cache_source"],
+    "attempts": 4,
+    "succeeded": 0,
+    "details": [
+      "line_map lib/src/working_copy.rs -> drafts/wc-linemap.txt: error 'boundary failure: ValueError'",
+      "line_map lib/src/workspace.rs -> drafts/workspace-linemap.txt: error 'boundary failure: ValueError'",
+      "line_map lib/src/working_copy.rs -> wc-linemap-draft1.txt: error 'boundary failure: ValueError'",
+      "cache_source cli/src/cleanup_guard.rs -> cache-source-test.txt: error 'boundary failure: ValueError'"
+    ],
+    "conclusion": "no mechanically derived artifact exists; no semantic verification was claimed from mechanical operations"
+  },
+  "notes": "The map remains an admitted artifact; its non-use is a navigation-policy property of this control arm, not an access restriction. No candidate-executed indexing is asserted."
+}

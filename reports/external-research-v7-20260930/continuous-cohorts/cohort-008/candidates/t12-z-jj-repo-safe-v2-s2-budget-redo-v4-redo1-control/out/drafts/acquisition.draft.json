@@ -1,0 +1,80 @@
+{
+  "case_id": "t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control",
+  "original_case_id": "jj-repo-dev-v1",
+  "pinned_version": {
+    "tag": "v0.22.0",
+    "commit": "67c2ae0a9e3e445f034a456b299e3f37c4dc4b93",
+    "repository_url": "https://github.com/jj-vcs/jj",
+    "pin_source": "inputs/PIN.json:3-5",
+    "locator_source": "inputs/source-locator.json:2-5"
+  },
+  "issue_capture_date": "2026-09-30",
+  "navigation_policy": "documentation-led (control arm); cached map/index.json and shards never read",
+  "tool_constraints_actual": {
+    "read_file": "used for all local evidence; bounded line ranges recorded below",
+    "public_https_get": "2 calls, both HTTP 200, <=512KiB",
+    "mechanical": "4 attempts, 0 successes: every attempt returned error 'boundary failure: ValueError' (line_map x3, cache_source x1); no mechanical transformation contributed to findings",
+    "png_visual": "no image-viewing tool on this route; the five demos/*.png were not visually inspected"
+  },
+  "reads": [
+    {"seq": 1, "path": "TASK.md", "line_start": 1, "line_count": 11, "file_bytes": 3481, "file_sha256": "0290e37eac9484e866719a6a6d74afd5dfcb5beacde16325326a5ecf59a6c1d2", "purpose": "task card", "findings": []},
+    {"seq": 2, "path": "inputs/brief.md", "line_start": 1, "line_count": 7, "file_bytes": 1431, "file_sha256": "6455c54d08627a6669c8f176a5cfb1e1c23578a183f3e606addadcf59eefff36", "purpose": "product brief; two question families", "findings": []},
+    {"seq": 3, "path": "inputs/Z_SAFE_TASK.md", "line_start": 1, "line_count": 11, "file_bytes": 2697, "file_sha256": "2a850fceb3d55096d4f44520a58903b8f896e7126808ebac3ff03291d16097e4", "purpose": "safe-task constraints", "findings": []},
+    {"seq": 4, "path": "inputs/source-locator.json", "line_start": 1, "line_count": 627, "file_bytes": 164119, "file_sha256": "76cf4ab47379b92ef5443710e241aca47d087344ee23b4afb1fac533ff855218", "purpose": "corpus layout (shards 000-002 file lists); response truncated by harness budget", "findings": []},
+    {"seq": 5, "path": "inputs/source-locator.json", "line_start": 628, "line_count": 300, "file_sha256": "76cf4ab47379b92ef5443710e241aca47d087344ee23b4afb1fac533ff855218", "purpose": "shard-002 tail: issues list, repository file start; 76f40e5990db2981e7c86986c8af98f22edaccc9.patch registered at line 315", "findings": ["EC1"]},
+    {"seq": 6, "path": "inputs/source-locator.json", "line_start": 928, "line_count": 400, "file_sha256": "76cf4ab47379b92ef5443710e241aca47d087344ee23b4afb1fac533ff855218", "purpose": "repository test/doc file inventory; b3ede64472f9cd9290cb6a3f8776caac69dca793.patch registered at line 453", "findings": ["EC1"]},
+    {"seq": 7, "path": "inputs/PIN.json", "line_start": 1, "line_count": 441, "file_bytes": 44410, "file_sha256": "6cb6112d93cdecd21d5e9a57db5f878b1afac553012e99f008e0c4102a503342", "purpose": "version pin + per-file hashes; PNG inventory lines 255/258/260/262/266; embedding examples lines 36-41", "findings": ["F1", "F6"]},
+    {"seq": 8, "path": "inputs/issues-index.json", "line_start": 1, "line_count": 689, "file_bytes": 28194, "file_sha256": "6a6e593591ccd033b424101f2470effebc2cfd433dc97bb345e555dafac726d6", "purpose": "issue selection; #4508 entry 555-564, #4349 226-235, #4436 406-415; capture date 687-688", "findings": ["F1", "F7"]},
+    {"seq": 9, "path": "inputs/repository/docs/working-copy.md", "line_start": 1, "line_count": 100, "file_bytes": 4834, "file_sha256": "080b3610c8fa04c4184f3e3e8a504b70c576f64a824b3fc3147a6ecd877cbe62", "purpose": "snapshot/auto-track 10-27, conflicts 30-57, ignored files 60-75, workspaces 78-92, stale 94-100", "findings": ["F1", "F3"]},
+    {"seq": 10, "path": "inputs/repository/docs/technical/concurrency.md", "line_start": 1, "line_count": 127, "file_bytes": 7259, "file_sha256": "464ac73e5bead50a401ba00340c7fd9c837ee92ca39e2131f3f66af5a5025b5c", "purpose": "lock-free design 17-38, rsync/NFS limits 40-61 (#2193 at 51-54), op log 64-89, --at-op 91-97, divergent merge 99-114, storage 116-127", "findings": ["F4", "F5", "F7"]},
+    {"seq": 11, "path": "inputs/repository/docs/operation-log.md", "line_start": 1, "line_count": 67, "file_bytes": 3292, "file_sha256": "ab442987e777e787c98ac7c7f754949f970b63b25a3c05a41613fac2ec40effa", "purpose": "op log + undo/restore 6-18, divergent ops 29-44, --at-op skips snapshot 54-58", "findings": ["F1", "F4"]},
+    {"seq": 12, "path": "inputs/repository/cli/src/commands/workspace/update_stale.rs", "line_start": 1, "line_count": 175, "file_bytes": 6689, "file_sha256": "d97bb464e4d0f2857ae571731925744acc40e0e705245f93b244b168d0289ad5", "purpose": "recovery command: snapshot-then-merge 48-61, concurrency guard 78-83, recovery commit 110-143, missing-op recovery 145-175", "findings": ["F3", "F4"]},
+    {"seq": 13, "path": "inputs/repository/cli/src/cleanup_guard.rs", "line_start": 1, "line_count": 126, "file_bytes": 3778, "file_sha256": "383311c42fc4346fb7bd8d0bee07278a78ff0c29fbe571e9147ddda276a5b891", "purpose": "SIGINT/SIGTERM cleanup guards 13-46, unix handler 65-112, non-unix no-op 117-126", "findings": ["F4"]},
+    {"seq": 14, "path": "inputs/repository/lib/src/workspace.rs", "line_start": 1, "line_count": 250, "file_bytes": 22419, "file_sha256": "bb2796db350fa8d3d1c508d1baff77ae252b2e7b1791a11da316184ec8c7ac20", "purpose": "Workspace struct 100-107, init paths 181-275", "findings": []},
+    {"seq": 15, "path": "inputs/repository/cli/src/progress.rs", "line_start": 1, "line_count": 200, "file_bytes": 7109, "file_sha256": "3747f662ea359d1dd1cdd2b0712e4d901ea0ab9c0cf7afa9668694913006ef63", "purpose": "terminal progress 19-113, snapshot_progress 166-199 (file is 236 lines; tail not read)", "findings": ["F6"]},
+    {"seq": 16, "path": "inputs/repository/lib/src/working_copy.rs", "line_start": 1, "line_count": 120, "file_bytes": 11751, "file_sha256": "7f7f8f8a8b6c2570a1171f51bc10ee23cb7f960ee754ad210f0de8e9592c2f40", "purpose": "WorkingCopy trait 41-67, LockedWorkingCopy trait 91-118", "findings": ["F2"]},
+    {"seq": 17, "path": "inputs/repository/lib/src/workspace.rs", "line_start": 250, "line_count": 380, "file_sha256": "bb2796db350fa8d3d1c508d1baff77ae252b2e7b1791a11da316184ec8c7ac20", "purpose": "init_workspace_with_existing_repo 345-377 (.jj/repo pointer file 356-365), check_out ConcurrentCheckout 420-449, loader 541-599", "findings": ["F2"]},
+    {"seq": 18, "path": "inputs/repository/lib/src/working_copy.rs", "line_start": 120, "line_count": 188, "file_sha256": "7f7f8f8a8b6c2570a1171f51bc10ee23cb7f960ee754ad210f0de8e9592c2f40", "purpose": "finish 134-140, SnapshotError 142-184, SnapshotOptions 186-224, SnapshotProgress 226-227, CheckoutStats 232-244, CheckoutError 246-272", "findings": ["F1", "F2", "F6"]},
+    {"seq": 19, "path": "inputs/repository/lib/src/local_working_copy.rs", "line_start": 1, "line_count": 150, "file_bytes": 78059, "file_sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4", "purpose": "FileState 119-150; file is 2093 lines", "findings": []},
+    {"seq": 20, "path": "inputs/repository/lib/src/local_working_copy.rs", "line_start": 500, "line_count": 260, "file_sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4", "purpose": "TreeStateError 523-547, load 595-617, atomic save 660-706 (Windows TODO 694-695)", "findings": ["F2"]},
+    {"seq": 21, "path": "inputs/repository/lib/src/local_working_copy.rs", "line_start": 760, "line_count": 240, "file_sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4", "purpose": "watchman query 760-790, snapshot traversal 792-906, parallel visit_directory 908-999", "findings": ["F1", "F6"]},
+    {"seq": 22, "path": "inputs/repository/lib/src/local_working_copy.rs", "line_start": 1250, "line_count": 250, "file_sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4", "purpose": "write_file 1254-1281, check_out 1337-1349, update() skip/overwrite 1425-1440, conflict materialization 1472-1488", "findings": ["F2"]},
+    {"seq": 23, "path": "inputs/repository/lib/src/local_working_copy.rs", "line_start": 1500, "line_count": 250, "file_sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4", "purpose": "reset 1497-1551, recover 1553-1557, LocalWorkingCopy struct 1574-1580", "findings": ["F4"]},
+    {"seq": 24, "path": "inputs/repository/lib/src/local_working_copy.rs", "line_start": 1750, "line_count": 343, "file_sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4", "purpose": "save 1751-1757, LockedLocalWorkingCopy 1820-1830, snapshot 1849-1859, pending_checkout TODOs 1861-1863/1917-1918/1953, recover 1895-1907, finish 1931-1955", "findings": ["F2", "F4"]},
+    {"seq": 25, "path": "inputs/repository/cli/src/cli_util.rs", "line_start": 1, "line_count": 40, "file_bytes": 129809, "file_sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04", "purpose": "size probe; file is 3435 lines", "findings": []},
+    {"seq": 26, "path": "inputs/repository/cli/src/cli_util.rs", "line_start": 1200, "line_count": 250, "file_sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04", "purpose": "probe window: revset/template helpers (not stale-check); confirmed region miss", "findings": []},
+    {"seq": 27, "path": "inputs/repository/cli/src/cli_util.rs", "line_start": 1900, "line_count": 250, "file_sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04", "purpose": "report_repo_conflicts 1914-1960, WorkspaceCommandTransaction 2002-2132, find_workspace_dir 2134-2138", "findings": []},
+    {"seq": 28, "path": "inputs/repository/cli/src/cli_util.rs", "line_start": 3200, "line_count": 236, "file_sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04", "purpose": "file tail: CliRunner::run_internal 3277-3381 (workspace load/config), no freshness code here", "findings": []},
+    {"seq": 29, "path": "inputs/repository/lib/src/default_index/revset_engine.rs", "line_start": 940, "line_count": 60, "file_bytes": 49923, "file_sha256": "29478c70ab767e1f4b60b5dfa9ed2c18578dab9c338ae761c601226e2f6a0194", "purpose": "verify #4465 panic site: revset_for_commit_ids 969-977, .unwrap() on line 972 present in v0.22.0", "findings": ["F5", "EC2"]},
+    {"seq": 30, "path": "inputs/repository/cli/src/cli_util.rs", "line_start": 700, "line_count": 250, "file_sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04", "purpose": "WorkspaceCommandHelper::new 840-871 (may_update_working_copy 853-854), check_working_copy_writable 881-895, maybe_snapshot 897-916, import_git_head 918-949 (dup-WC TODOs 934-942)", "findings": ["F1", "F7"]},
+    {"seq": 31, "path": "inputs/repository/cli/src/cli_util.rs", "line_start": 2150, "line_count": 250, "file_sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04", "purpose": "map_workspace_load_error tail 2158-2177, WorkingCopyFreshness 2214-2226, check_stale_working_copy 2228-2268, print_checkout_stats 2362-2392", "findings": ["F2", "F3"]},
+    {"seq": 32, "path": "inputs/repository/lib/src/op_heads_store.rs", "line_start": 1, "line_count": 100, "file_bytes": 5173, "file_sha256": "4de9db047c0ddcc8fd98ed108b0301a466429f22a7f38d1f813493e2e10b4909", "purpose": "NoHeads 31-35, trait + optional lock 39-57, resolve_op_heads 63-100", "findings": ["F4"]},
+    {"seq": 33, "path": "inputs/repository/cli/src/cli_util.rs", "line_start": 1765, "line_count": 135, "file_sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04", "purpose": "finish_transaction tail: working-copy update block ends 1765-1769, report_repo_changes called at 1771 (#4517 ordering); report_repo_changes 1803-1899", "findings": ["F4", "EC1"]},
+    {"seq": 34, "path": "inputs/history-index.json", "line_start": 1, "line_count": 120, "file_bytes": 252489, "file_sha256": "e8330e80a540d4432e33843436ac76c255c879661e57d7b1f818554efd544d60", "purpose": "corpus history coverage: tip 67c2ae0 = release 0.22.0, since 2024-07-01", "findings": ["EC1"]},
+    {"seq": 35, "path": "inputs/issues/4239.json", "line_start": 1, "line_count": 130, "file_bytes": 6149, "file_sha256": "1f47a5da278ef981bde5e474a800b692ce72ea3a53f6c91408bfa975b127c795", "purpose": "body at line 112: broken-pipe repro, stale error text, update-stale hint; closed 2024-09-22", "findings": ["F3", "F4", "EC1"]},
+    {"seq": 36, "path": "inputs/issues/4423.json", "line_start": 1, "line_count": 76, "file_bytes": 3779, "file_sha256": "d72a14271fb697217917eef42baab65eff836b63acdca7ba9393ca5658cfda64", "purpose": "body at line 58: hard-reboot view corruption, os error 21; open, 18 comments", "findings": ["F5"]},
+    {"seq": 37, "path": "inputs/issues/4465.json", "line_start": 1, "line_count": 130, "file_bytes": 8366, "file_sha256": "ce41618f43514866713c7b26982deacef21910f93c0d6f2dcbf426e84c027c5d", "purpose": "body at line 112: divergent-ops repro, panic revset_engine.rs:972 on 0.21.0; closed 2025-06-12", "findings": ["F5", "EC2"]},
+    {"seq": 38, "path": "inputs/issues/4545.json", "line_start": 1, "line_count": 88, "file_bytes": 4373, "file_sha256": "a6f9011c0ebda172ab04e2edcae10945a464556b871f2824e8f811351c1d0ae6", "purpose": "body at line 70: 209ms vs 58ms, watchman trigger caveat, --ignore-working-copy + jj new stale (#4028)", "findings": ["F1"]}
+  ],
+  "http_gets": [
+    {"seq": 39, "url": "https://api.github.com/repos/jj-vcs/jj/issues/4239/comments", "status": 200, "bytes": 11148, "sha256": "042c4715bde42a5e4a051a215a99613447da791c93a4ddff5f3f3500c80fa5b4", "purpose": "comment trail for #4239: yuja 2024-08-08 (expected after failed WC updates; reorder mitigation; historical ref b3ede644 cli_util.rs L1424-1430), essiene 2024-09-21 (draft PR #4517)", "findings": ["F4", "EC1"]},
+    {"seq": 40, "url": "https://api.github.com/repos/jj-vcs/jj/pulls/4517", "status": 200, "bytes": 17208, "sha256": "bfa8e02edd83ce7939e511b21df4e84d1dfc45c866f63791b4b6b6c21b9e136d", "purpose": "PR 4517 'cli: reorder updating and reporting for consistency.' merged 2024-09-22T14:02:21Z, merge_commit_sha 76f40e5990db2981e7c86986c8af98f22edaccc9, Fixes: #4239, 7 files +94/-85", "findings": ["F4", "EC1"]}
+  ],
+  "mechanical_attempts": [
+    {"seq": "M1", "operation": "line_map", "source": "inputs/repository/lib/src/working_copy.rs", "output": "drafts/wc-linemap.txt", "result": "error: boundary failure: ValueError"},
+    {"seq": "M2", "operation": "line_map", "source": "inputs/repository/lib/src/workspace.rs", "output": "drafts/workspace-linemap.txt", "result": "error: boundary failure: ValueError"},
+    {"seq": "M3", "operation": "line_map", "source": "inputs/repository/lib/src/working_copy.rs", "output": "wc-linemap-draft1.txt", "result": "error: boundary failure: ValueError"},
+    {"seq": "M4", "operation": "cache_source", "source": "inputs/repository/cli/src/cleanup_guard.rs", "output": "cache-source-test.txt", "result": "error: boundary failure: ValueError"}
+  ],
+  "queries": [
+    "local corpus navigation (documentation-led); no external search",
+    "GitHub API: issue comments for jj-vcs/jj#4239",
+    "GitHub API: pull request jj-vcs/jj#4517 metadata"
+  ],
+  "unfetched_referenced_urls": [
+    "https://github.com/martinvonz/jj/issues/4028 (referenced by #4545 body)",
+    "https://github.com/martinvonz/jj/issues/2193 (referenced by docs/technical/concurrency.md:51-54)",
+    "https://github.com/martinvonz/jj/issues/19 (referenced by docs/working-copy.md:55)"
+  ],
+  "notes": "Line/byte counts are as reported by the read tool for each file; file_sha256 is the whole-file hash returned by the tool. Partial reads record requested ranges. Issue states/bodies captured 2026-09-30, not at release time."
+}

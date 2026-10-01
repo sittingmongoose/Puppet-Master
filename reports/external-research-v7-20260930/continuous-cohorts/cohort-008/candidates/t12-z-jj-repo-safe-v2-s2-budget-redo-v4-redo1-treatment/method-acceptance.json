@@ -1,0 +1,147 @@
+{
+  "schema": "er7.z.safe.method.acceptance.v1",
+  "verdict": "accepted",
+  "reviewer": "/root/repo_budget_checker_v5",
+  "created_utc": "2026-10-01T20:51:48.601274+00:00",
+  "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "method_config_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-budget-redos-v4/t12/treatment.method-config.json",
+  "method_config_sha256": "cc1613183429354ee2127cd568cf9d131991702debd6da0d34f45c365cff419e",
+  "method": "T12",
+  "arm": "treatment",
+  "scope": "Independent prospective exact repository1500s160 budget/namespace delta, source/input/whole-ask/policy preservation and current-operator ABI binding only; no semantic grading, actual native Goal qualification or actual source/capture grant.",
+  "original_config": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/final-repo-abi-configs-v1/t12-z-jj-repo-safe-v2-s2-treatment.method-config.json",
+    "sha256": "95833483e3d40c6af028eadef9b8479ecb7a97264efde12ba67ed27e1c7fd55e"
+  },
+  "original_independent_acceptance": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/t12-treatment.acceptance.json",
+    "sha256": "11a2f7139a0ad9b7bd581a1af8577bf3f2b1a52f6273c4d62df5fcbf3612abf1"
+  },
+  "independent_audit": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-budget-checker-v5/t12-treatment.review.json",
+    "sha256": "79eee041cf43b93abfcc8162cddc258799d24607b5f45c866685e8994287f7a4"
+  },
+  "independent_pair_audit": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-budget-checker-v5/t12.pair-review.json",
+    "sha256": "e1257d6fb4551c0d1c2a3d161c76f2ad76bffa2acb350281e83af316aa1e4f34"
+  },
+  "independent_synthetics": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-budget-checker-v5/t12.synthetics.json",
+    "sha256": "10cfaedc738bcf59b9ec0d47d5cc9b050328500040e95a259989617aabe13238"
+  },
+  "checks": {
+    "frozen_manifest_pin": true,
+    "frozen_exact_config_pin": true,
+    "manifest_method_arm_binding": true,
+    "original_config_pin": true,
+    "independent_original_acceptance": true,
+    "new_unique_namespace": true,
+    "runtime_context_delta_only_label": true,
+    "caps_all_consistent_within_ceiling": true,
+    "original_budget_remains_separate": true,
+    "pin_preserved_spec": true,
+    "pin_preserved_attempt_metadata": true,
+    "pin_method_closure_request": true,
+    "pin_pair_card": true,
+    "pin_original_config": true,
+    "pin_original_spec": true,
+    "pin_original_attempt_metadata": true,
+    "pin_original_pair_card": true,
+    "runtime_frozen_alias": true,
+    "unchanged_original_policy_fields": true,
+    "no_other_config_delta": true,
+    "attempt_abi": true,
+    "task_only_budget_header_delta": true,
+    "goal_only_budget_delta": true,
+    "Z_SAFE_TASK_only_literal_delta": true,
+    "task_prompt_current_pins": true,
+    "no_active_old_budget_literal": true,
+    "full1187_target_namespace": true,
+    "1186_exact_original_one_declared_delta": true,
+    "current_admitted_input_map": true,
+    "new_spec_input_map": true,
+    "internal_source_manifest_preserved": true,
+    "transparent_instruction_delta": true,
+    "whole_spec_exact_expected_delta": true,
+    "whole_attempt_exact_expected_delta": true,
+    "both_asks_visual_limits_and_feedback_unchanged": true,
+    "matched_method_card_policy_preserved": true,
+    "old_closure_retained_exact": true,
+    "full_closure_exact_and_bounded": true,
+    "output_empty_regular_directory": true,
+    "candidate_tree_declared_only": true,
+    "new_task_config_metadata_immutable": true,
+    "no_inherited_agent_instruction": true,
+    "manifest_pin_card": true,
+    "manifest_pin_ready_cost": true,
+    "manifest_pin_raw_failure_history": true,
+    "manifest_pin_original_exact_config_manifest": true,
+    "history_retains_prior_unknown_costs": true,
+    "prospective_no_starts_claim": true
+  },
+  "source_input_files": 1187,
+  "source_input_bytes": 26457573,
+  "exact_original_input_files": 1186,
+  "declared_generic_budget_input_deltas": 1,
+  "caps_each_arm": {
+    "seconds": 1500,
+    "responses": 160
+  },
+  "hard_individual_max_seconds": 1800,
+  "dependency_pins": {
+    "original_acceptance_index": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/repo-incremental-acceptances-v1.json",
+      "sha256": "74cc2a58a22e8335ff779e6816634f2f17562a8af0867787957c4cb00d5f23ae",
+      "current_pin_verified": true
+    },
+    "host": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/z_productive_dispatch_v3.py",
+      "sha256": "5f25c1d1eed1a9e1794ca4a3cd0698e2cafea4c3d5a2b5d183bbb4007d1d39a9",
+      "current_pin_verified": true
+    },
+    "host_context_acceptance": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/host-release-machinery-v2/host-v3-context-acceptance.json",
+      "sha256": "6fa1882e2e0ccdd4f4034a78cba3561b9d45f4fb56c11732a0f6c99f3dd652f3",
+      "current_pin_verified": true
+    },
+    "same_canary_acceptance": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v3/acceptance.json",
+      "sha256": "4c99c392b317b25453e2ac15a4db642f36f8539fe8b7ce1702b480b22990dd8e",
+      "current_pin_verified": true
+    },
+    "root_authority_reference": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/z-rolling-queue-authority-v5.json",
+      "sha256": "1e8645cf205294d856e1a214c3f018152171a1ffa5e78dda10e149bb7d1a09f9",
+      "current_pin_verified": true
+    },
+    "capture_privacy_acceptance": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/host-release-machinery-v2/capture-final-privacy-acceptance.json",
+      "sha256": "ac130e16b57409ccdf05fc1066bd02a19e2a3def8a181e5293709cb6e7374e66",
+      "current_pin_verified": true
+    }
+  },
+  "conditions": [
+    "Exact independently accepted dispatcher/context boundary, runtime298f, SAME counted canary4c99 and host5f25/context gate6fa188 remain mandatory. A new root authority edition must add these exact new config/acceptance components before launch; root v5authority1e864 is the verified reference edition, not authorization for these new components.",
+    "Both new arms must receive matched1500s160 budgets prospectively, within the1800s160 individual ceiling; record arm order and concurrent occupancy before launch. Each attempt label supplies a unique new instance namespace. Establish fresh native home, empty output and single-use admission at launch; absent runtime_context fields remain absent and permissions/native runtime are unchanged.",
+    "All1187 admitted inputs retain the original source universe.1186 targets retain exact original bytes; Z_SAFE_TASK.md changes only the declared900s96-to1500s160 generic budget literal. Original source MANIFEST bytes/hashes are retained and that historical instruction hash is disclosed separately from the current admitted-input map. Outer TASK changes only instance header/budget literal; goal prompt changes only its budget literal. Whole original asks, outputs and arm-specific method policies remain required.",
+    "GET additionally requires exact independent final capture privacy acceptanceac130 and source eligibility from each qualified realized public response. No actual future-job capture grant follows from old canary or privacy machinery evidence; actual capture completeness may remain unknown. No premium refetch, model alias, private auth/config/header/rawlog inspection or semantic source rescue.",
+    "Original JJv0.22 logical source and line/chunk pins remain required:431 logical repository files,68 issue bodies,624 raw patches and five PNG byte streams. Base64 preserves PNG bytes but provides no visual tool; required image-inspection facets remain held/unresolved. Never claim visual completion or shrink the denominator.",
+    "Before preservation/delivery use, reviewed trusted machinery must establish native quiescence and bind whole immutable output plus every original preexecution input hash in an exclusive regular nonlinked safe companion. No glob/private-context capture. Independent complete current-report assessment precedes acquisition/navigation/history access; candidate ledgers are SELF_REPORT where actual behavior is unobserved.",
+    "T11 issue/fix/test-chain and T12 generic lexical map remain hypothesis factors, not established wins. Source titles/closed status/test paths are leads rather than semantic truth or executed tests. This acceptance does not qualify semantic findings, actual source exposure, mechanism outcomes or actual native Goals.",
+    "Retain every original trial, failure, output, grade and cost unchanged. Record new cold export/transport/map preparation, input copying/hash/freeze, native retries/corrections/cleanup, companion and host-delivery costs separately. New budgets are an additional prospective variable; never pool as the original900/96 trial, compare old-treatment/new-control, rescue a running Goal or select best-of. Original native costs and unexposed reviewer/model usage remain unknown, never zero.",
+    "Any changed exact config, task, admitted source, runtime or host script needs a new independent binding. No new canary/runtime repair, source cap/privacy weakening or campaign ceiling reset is authorized."
+  ],
+  "native_Goals_started": 0,
+  "runtime_edits": 0,
+  "actual_private_reads": 0,
+  "candidate_findings_or_keys_read": false,
+  "actual_posthandoff_qualified": false,
+  "actual_source_capture_qualified": false,
+  "source_completeness_unknown_separate": true,
+  "semantic_qualified": false,
+  "native_launch_authorized_by_this_document_alone": false,
+  "new_root_component_required": true,
+  "original_costs_and_grades_changed": false,
+  "reviewer_model_token_usage": "unknown; not exposed",
+  "reviewer_model_billed_usage": "unknown; not exposed"
+}

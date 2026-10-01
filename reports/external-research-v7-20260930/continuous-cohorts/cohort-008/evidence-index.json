@@ -1,0 +1,457 @@
+[
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/expansion-accounting-v5/current.json",
+    "publication": "continuous-cohorts/cohort-008/observed-accountant-snapshot.json",
+    "sha256": "3bbd28feab6056a177279964423294d9c885f44f319a96b1107628cb7429dc19"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/continuous-rollup-versions/continuous-operator-state-b32ba0546cc0400f2d8f813bde7aa5e93391804f81254f8bf7a5abc32f217b3e.json",
+    "publication": "continuous-cohorts/cohort-008/observed-operator-state.json",
+    "sha256": "b32ba0546cc0400f2d8f813bde7aa5e93391804f81254f8bf7a5abc32f217b3e"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/output-integrity.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/output-integrity.json",
+    "sha256": "052e0b1b5af78429087ae5d03cb6e9c21ba557754cb75454c380e9141b9abaa9"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/operator-receipt.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/operator-receipt.json",
+    "sha256": "207741bc7c56436bd6ec8589fb63506b09f29d77d257881d6808c6a9d8dc9c44"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/context-observations.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/context-observations.json",
+    "sha256": "f448401a585c5ecd66ad9a71007471f1c8cfb9853ba52ad887e6948c32a01926"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-budget-redos-v4/t11/control.method-config.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/method-config.json",
+    "sha256": "575239f2204d06ef17277b3f2c9ad76970e14127b91632b10d4c94d27b24026d"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-budget-checker-v5/t11-control.acceptance.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/method-acceptance.json",
+    "sha256": "fee2e554f60fa9082b7702ab659c725a6064960f6a4d429383699b8de8b28bee"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-budget-redos-v4/t11/control/goal.txt",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/goal.txt",
+    "sha256": "23ee26ba1615068a4b78a401855733cb76974157ba9d12d8d443af55c654a1f9"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-budget-redos-v4/t11/control/workspace/TASK.md",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/TASK.md",
+    "sha256": "7a524892747f9a042e4ae5c47e21b971a914e66db4ebf0a3beb71db8f128a96a"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/frozen-output/out/report.md",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/out/report.md",
+    "sha256": "ac2b736ae8180ba31839cf0e80f9d48ef0783fdfb492fb90d78f5a65775c348c"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/frozen-output/out/navigation.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/out/navigation.json",
+    "sha256": "1beccbd30ef0d050963f61f110b764cb640503a49081b292cc0bbef980e86174"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/frozen-output/out/map-usage.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/out/map-usage.json",
+    "sha256": "17aa88ae8f067d3b96b7ca440766556e1b85b4b4a832f59c9f2cf4614ed79eb3"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/frozen-output/out/acquisition.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/out/acquisition.json",
+    "sha256": "f5c231acaf4b8c2c2835b69c2d5e753cea01e8e591857d79434f71d59140ad46"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/frozen-output/out/evidence-chains.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/out/evidence-chains.json",
+    "sha256": "8485ec0d7f774fe36b034dce252f1b64455afbce6dc127b70326d9d97927581c"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/frozen-output/out/drafts/map-usage.draft-1.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/out/drafts/map-usage.draft-1.json",
+    "sha256": "ed754988551c1436555115203e99f2a3a9d61da55cd6348040506036d0cedc00"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/frozen-output/out/drafts/navigation.draft-1.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/out/drafts/navigation.draft-1.json",
+    "sha256": "f9c20081a9ab5cdf9ff8385ec7f4e70d098eac710a9784722db7f7333f16282d"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/frozen-output/out/drafts/evidence-chains.draft-1.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/out/drafts/evidence-chains.draft-1.json",
+    "sha256": "779b4322cfeac4ae0eacc6054e803a1e3b6d23a05021703eb81a62123d246063"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/frozen-output/out/drafts/acquisition.draft-1.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/out/drafts/acquisition.draft-1.json",
+    "sha256": "8643806f57ddb25a784fdf70424dd3cf43363a6969263bc34db8a93877ba4142"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/frozen-output/out/drafts/report.draft-1.md",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/out/drafts/report.draft-1.md",
+    "sha256": "d6ac261a23946fbcaaee0ae61030dbedb9f3edf4e878b2a80d95b3e1639520ee"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/whole-companion-receipt.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/whole-companion-receipt.json",
+    "sha256": "f1b9b17bb27de00db7d2015920c1e6c88a98f6c83aa639fb0b071991622393f5"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/whole-companion-operator-cost.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/whole-companion-operator-cost.json",
+    "sha256": "5cce00f5056a8182b5c11fc0cf06d385c9394ef22dfa20ab4410101e47da546f"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/output-integrity.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/output-integrity.json",
+    "sha256": "76aa69027cfd490cb4e681c2dbe618f6a0aea1d8ec065064c113f4d1c438832c"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/operator-receipt.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/operator-receipt.json",
+    "sha256": "41efe08585b16405294f27e88668371692fcd3b24482f52657b292fb5a11e6e0"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/context-observations.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/context-observations.json",
+    "sha256": "3a6e78fc95fc99579b2f76e3b728bc5871f6491767a42bc28aa89fa7cb57fc45"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-budget-redos-v4/t11/treatment.method-config.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/method-config.json",
+    "sha256": "c15db91934d3b0a729b42a943e996e675d3ca73bfeb4bbd6f00f152ef60f3b4b"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-budget-checker-v5/t11-treatment.acceptance.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/method-acceptance.json",
+    "sha256": "50988b902eda57e8fe7e383c1f21988da39b98b8edbd249620a470a8d4b9a400"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-budget-redos-v4/t11/treatment/goal.txt",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/goal.txt",
+    "sha256": "23ee26ba1615068a4b78a401855733cb76974157ba9d12d8d443af55c654a1f9"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-budget-redos-v4/t11/treatment/workspace/TASK.md",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/TASK.md",
+    "sha256": "993b17de5769c6ddd474f55d7e53f64c584e32f340ddf0c15e3e13a0bfc9049c"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/frozen-output/out/report.md",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/out/report.md",
+    "sha256": "2c68ee7f430efaaecf841fc584fd30944ebf0bccd552058f283d4c0e1674bd4b"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/frozen-output/out/navigation.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/out/navigation.json",
+    "sha256": "0f5d3343df0df5d1f5a3308b9c0cef356f651ccd212f3f8ecd0941158a45d660"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/frozen-output/out/map-usage.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/out/map-usage.json",
+    "sha256": "877aee8520f5147f4b49b4ac4b755e9d9fd0f9945534284e945bdc243d3fe87d"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/frozen-output/out/acquisition.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/out/acquisition.json",
+    "sha256": "bb65746968f95d96ff750406718c6baa9a161f4c6a304e84ec7996b024445f97"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/frozen-output/out/evidence-chains.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/out/evidence-chains.json",
+    "sha256": "32e7306bc6d11754de548f50cec8281935c85155ba74bf41304aa6285dfc983f"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/whole-companion-receipt.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/whole-companion-receipt.json",
+    "sha256": "aab4850d84af4df21a0fca74c25105da71673c4c37b59c763e8e0c7adc380991"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/whole-companion-operator-cost.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/whole-companion-operator-cost.json",
+    "sha256": "e2a6faf8715ce7aa4b305a076d3643c37cede3185d91ae66034e6eb8b47970fc"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/output-integrity.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/output-integrity.json",
+    "sha256": "bc9779d70e39e8d2dd3cf6c9af0ee9be9a05cc6f01091ffbb718884e91e02b33"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/operator-receipt.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/operator-receipt.json",
+    "sha256": "dfae0621a4cb6ff87dd800d4a64a79feb61e9344acd48b1327611cd084ab1c1c"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/context-observations.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/context-observations.json",
+    "sha256": "b8e11fcd8d9cdecaa2b875a4c21c43f09276ffd9409251c60b7989e9dc38ac97"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-budget-redos-v4/t12/control.method-config.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/method-config.json",
+    "sha256": "447e6565c2c1b8c9eb9ba8ad699d1791bc5ac97f9078bddd89bed639b5c2fde6"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-budget-checker-v5/t12-control.acceptance.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/method-acceptance.json",
+    "sha256": "c9256532506dff87c869593237169b94f94e718148f513672fa20ef66a19bce6"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-budget-redos-v4/t12/control/goal.txt",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/goal.txt",
+    "sha256": "23ee26ba1615068a4b78a401855733cb76974157ba9d12d8d443af55c654a1f9"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-budget-redos-v4/t12/control/workspace/TASK.md",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/TASK.md",
+    "sha256": "0290e37eac9484e866719a6a6d74afd5dfcb5beacde16325326a5ecf59a6c1d2"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/frozen-output/out/report.md",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/out/report.md",
+    "sha256": "ce82a78099605bcc66b86b8a0959c386ead5f38e9d1dfc869b2d3a0fa2bd2442"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/frozen-output/out/navigation.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/out/navigation.json",
+    "sha256": "06ad1857a85f36c65b381b72c1b38f0874b26f220f216237d949bbdf7dd3aefe"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/frozen-output/out/map-usage.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/out/map-usage.json",
+    "sha256": "bbb2526db993e36400f4eaba87b28b19b558ffec5990d368f5f80ca86a7ee90d"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/frozen-output/out/acquisition.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/out/acquisition.json",
+    "sha256": "d247296bfcda7c953bd14806330cf9e32dc51fbbcff54fa481306c49bb2de088"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/frozen-output/out/evidence-chains.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/out/evidence-chains.json",
+    "sha256": "1788571b23e3180dcd767f551e5564b2d610af927717c2e41f1e46c73a0d6563"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/frozen-output/out/drafts/acquisition.draft.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/out/drafts/acquisition.draft.json",
+    "sha256": "ab61e2b03fa06309b10c27a34e4a48b13ad7c33910cee0fce3f456d50eebef09"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/frozen-output/out/drafts/evidence-chains.draft.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/out/drafts/evidence-chains.draft.json",
+    "sha256": "cf2a5324488688a370bca31aca412eea41a4f4f9da75e732563bd6eb5818a568"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/frozen-output/out/drafts/navigation.draft.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/out/drafts/navigation.draft.json",
+    "sha256": "f9f848311e59f2574d657e1a7abf5582b42390086115cf35e3d198e6913b9316"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/frozen-output/out/drafts/map-usage.draft.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/out/drafts/map-usage.draft.json",
+    "sha256": "2da79b97bc1b8cf2824981eadb473734054fbb2e29d8ec2abc1cb1fe9438ac4d"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/frozen-output/out/drafts/report.draft.md",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/out/drafts/report.draft.md",
+    "sha256": "d20e1a9385f6c3c1560e5ed19a64c9a5efc1a8b0a20b32738d68f74dafbd6a97"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/whole-companion-receipt.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/whole-companion-receipt.json",
+    "sha256": "f0d94021ac2ed1c9faac2ebc3ca170e0bc2634bddd382a7e58b6e3aabd52c988"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/whole-companion-operator-cost.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control/whole-companion-operator-cost.json",
+    "sha256": "ff7caca70af482fefce06e35dbf226ec55ba1ea5bf380b3e8ab370f7e52f95cc"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/output-integrity.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/output-integrity.json",
+    "sha256": "0f0b3bc897bde7e3be5e1021eda5151718360677c8663b55c9f91f714d3f8048"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/operator-receipt.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/operator-receipt.json",
+    "sha256": "a6b059c562f84daf7d8b86345ca10cd5d699ccf66186eca9dfffbda061eb6a16"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/context-observations.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/context-observations.json",
+    "sha256": "4b70d4c3a826a6d1e2816e0f936f2a2f911e6887f2dcd85e16fd9d597a6e4c28"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-budget-redos-v4/t12/treatment.method-config.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/method-config.json",
+    "sha256": "cc1613183429354ee2127cd568cf9d131991702debd6da0d34f45c365cff419e"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-budget-checker-v5/t12-treatment.acceptance.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/method-acceptance.json",
+    "sha256": "fca9d360fb41ae4639988b19a39fa7a555c385aaa6af1a3a00e43e42d6bb421b"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-budget-redos-v4/t12/treatment/goal.txt",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/goal.txt",
+    "sha256": "23ee26ba1615068a4b78a401855733cb76974157ba9d12d8d443af55c654a1f9"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-repo-budget-redos-v4/t12/treatment/workspace/TASK.md",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/TASK.md",
+    "sha256": "4220a1e05ec82d181a53d472d89e1eb9b449ffa977ae774618509d505548ca11"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/frozen-output/out/report.md",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/out/report.md",
+    "sha256": "87bc024aa70ecf7f5e51d0eebc07c606b58cc76c17171d31d6f028e8aaa15c20"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/frozen-output/out/navigation.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/out/navigation.json",
+    "sha256": "2c44526746cf87c2c12cc498fea0c8a0f5f2e4cb06dc4086e19161a01d14c9ff"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/frozen-output/out/map-usage.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/out/map-usage.json",
+    "sha256": "a45011862940855f1bf6ee9e202e75ecbc30935aaac6cdcb8536001d1e915662"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/frozen-output/out/acquisition.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/out/acquisition.json",
+    "sha256": "51b42f4a045d6919928dbedc65435c089fde6d6d14fe005c017ec3476e0b96f2"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/frozen-output/out/evidence-chains.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/out/evidence-chains.json",
+    "sha256": "58a88e526d87f176d4411af227675d048ab33aa755e8ebc37fca96bc2f66561f"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/whole-companion-receipt.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/whole-companion-receipt.json",
+    "sha256": "8be87138e2d023163aa15c72d4b8dd62e5ec3bb05e65acccb4e1d70920f09627"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/whole-companion-operator-cost.json",
+    "publication": "continuous-cohorts/cohort-008/candidates/t12-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-treatment/whole-companion-operator-cost.json",
+    "sha256": "d335412a91ff39ec2f924eca0b0043b29324a900be616ff23af6c97dde258338"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/normative-current-grading-v5/R026/current-assessment.json",
+    "publication": "continuous-cohorts/cohort-008/reviews/R026/current-assessment.json",
+    "sha256": "3a25458026ee425c8b5ec730e59f92cb065c6692489b9e5e97559bf872532033"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/normative-current-grading-v5/R026/current-assessment.md",
+    "publication": "continuous-cohorts/cohort-008/reviews/R026/current-assessment.md",
+    "sha256": "d38421055c603bc9295c1decb98d18e0b3a4096898ba51e8c7e923461d70d15b"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/normative-current-grading-v5/R027/current-assessment.json",
+    "publication": "continuous-cohorts/cohort-008/reviews/R027/current-assessment.json",
+    "sha256": "4329efe62eee6869533ff4127fe0e2ab71dbc7378874525f12aafab7de175e07"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/normative-current-grading-v5/R027/current-assessment.md",
+    "publication": "continuous-cohorts/cohort-008/reviews/R027/current-assessment.md",
+    "sha256": "6b9c58294949978761f33423b0fa0f6970f567d7c12c29c5be17c8458dd2c422"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R028/stage.json",
+    "publication": "continuous-cohorts/cohort-008/intake/R028/stage.json",
+    "sha256": "3593721d0afd6d0f76f5adf86c23029819691d5ef214c8714152d0d5c7164606"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R028/MANIFEST.json",
+    "publication": "continuous-cohorts/cohort-008/intake/R028/MANIFEST.json",
+    "sha256": "70326112a7e2717fbf9d6cacd243e5b6e4c3b44cebab13b818b475fc6cbe519b"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R028/eligibility.json",
+    "publication": "continuous-cohorts/cohort-008/intake/R028/eligibility.json",
+    "sha256": "1af0e98acb0fe01f7addaf3fb8cbe205239f1a9f56d6a09b92ef7ac00bfc668d"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R029/stage.json",
+    "publication": "continuous-cohorts/cohort-008/intake/R029/stage.json",
+    "sha256": "c318e89d96b777b6c9a73ccb68946ccd831a14caa887a947bd10f59afa115f44"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R029/MANIFEST.json",
+    "publication": "continuous-cohorts/cohort-008/intake/R029/MANIFEST.json",
+    "sha256": "4cd94bbfbf8df015a3a2bffbc517975850e5841d0c28a561b0bd7b1fa506f582"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R029/eligibility.json",
+    "publication": "continuous-cohorts/cohort-008/intake/R029/eligibility.json",
+    "sha256": "1af0e98acb0fe01f7addaf3fb8cbe205239f1a9f56d6a09b92ef7ac00bfc668d"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/stage.json",
+    "publication": "continuous-cohorts/cohort-008/intake/R030/stage.json",
+    "sha256": "62a240e1ee743f3ecdb41ca7e466c1e437aaeafc9a280bad3999d993bff961e8"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/MANIFEST.json",
+    "publication": "continuous-cohorts/cohort-008/intake/R030/MANIFEST.json",
+    "sha256": "4a0845a75e52d6c365489c13deff57c4bf91666358f18d41cb3b702fbe3e4cf9"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R030/eligibility.json",
+    "publication": "continuous-cohorts/cohort-008/intake/R030/eligibility.json",
+    "sha256": "1af0e98acb0fe01f7addaf3fb8cbe205239f1a9f56d6a09b92ef7ac00bfc668d"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R031/stage.json",
+    "publication": "continuous-cohorts/cohort-008/intake/R031/stage.json",
+    "sha256": "f8661e79aafc8d5d84e09fcb708ef40cbcd7b45d1c601b9adc300ff230563057"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R031/MANIFEST.json",
+    "publication": "continuous-cohorts/cohort-008/intake/R031/MANIFEST.json",
+    "sha256": "411cac357fcee61595516216091d1e0831082b507f0f736df4052aab11055372"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current/R031/eligibility.json",
+    "publication": "continuous-cohorts/cohort-008/intake/R031/eligibility.json",
+    "sha256": "1af0e98acb0fe01f7addaf3fb8cbe205239f1a9f56d6a09b92ef7ac00bfc668d"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current-addenda/R028-original-scope-clarification-v1/ROOT_SCOPE_CLARIFICATION.json",
+    "publication": "continuous-cohorts/cohort-008/original-scope-clarification/ROOT_SCOPE_CLARIFICATION.json",
+    "sha256": "59156426db1b004c7a91f3cc4737e129e4a116588103f15d1f3927b1b50423eb"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current-addenda/R028-original-scope-clarification-v1/ADDENDUM.json",
+    "publication": "continuous-cohorts/cohort-008/original-scope-clarification/ADDENDUM.json",
+    "sha256": "e7b956396d51e00a365f41438c1ee54b654d66196ead6daaf651ffae37c89b7d"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current-addenda/R028-original-scope-clarification-v1/MANIFEST.json",
+    "publication": "continuous-cohorts/cohort-008/original-scope-clarification/MANIFEST.json",
+    "sha256": "cb2194f86038307c98646ff0e2b2d51dc0a4bac4c80bf5025eb3b70c7ac3e648"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/inclusive-stage-watchdog-v1.rejection.json",
+    "publication": "continuous-cohorts/cohort-008/static-watchdog/inclusive-stage-watchdog-v1.rejection.json",
+    "sha256": "515875373dda57d608edad2a007924a555427d28eb16290ba65b4e436a45570b"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/inclusive-stage-watchdog-v2.rejection.json",
+    "publication": "continuous-cohorts/cohort-008/static-watchdog/inclusive-stage-watchdog-v2.rejection.json",
+    "sha256": "df92bf79f8e367743b494ae31dca4d1da08cb96a9ee2dce02e3dc0aeccd05fa0"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/inclusive-stage-watchdog-v3.final-rejection.json",
+    "publication": "continuous-cohorts/cohort-008/static-watchdog/inclusive-stage-watchdog-v3.final-rejection.json",
+    "sha256": "682673eafc08591c0963675c8cab44ad8548aaed48b90b43870de403f1b82637"
+  },
+  {
+    "source": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/inclusive-stage-watchdog-extra-repair-proposal.json",
+    "publication": "continuous-cohorts/cohort-008/static-watchdog/INACTIVE-extra-repair-proposal.json",
+    "sha256": "46c28eeeff592740c748f1496112b2d4a4a38055fcb0d93b2d518b255ffe88f1"
+  }
+]

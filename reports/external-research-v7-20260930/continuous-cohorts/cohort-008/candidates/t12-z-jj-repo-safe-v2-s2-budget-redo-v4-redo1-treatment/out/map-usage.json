@@ -1,0 +1,32 @@
+{
+  "schema": "t12.map-usage.v1",
+  "host_map": {
+    "index": "inputs/map/index.json (read in full, 509 lines)",
+    "schema": "er7.lexical_repo_map_index.v2",
+    "repository_commit": "67c2ae0a9e3e445f034a456b299e3f37c4dc4b93",
+    "files_indexed": 426,
+    "symbol_records": 5893,
+    "test_paths": 97,
+    "provenance": "Host-prepared deterministic lexical module/symbol/test-path map, identical for both arms; no semantic/dependency/architecture inference (index.json:506 limitations)"
+  },
+  "host_index_setup_cost": {
+    "index_setup_seconds": 0.9738001080004324,
+    "provenance_quote": "Actual first host index-build cost, paid before candidate launch. Equal cached map access in both arms; report cold setup separately from candidate navigation and retain it in T12 economics. Not candidate research or a scored comparison. (inputs/map/index.json:507-508)",
+    "boundary": "Reported separately as cold host setup. This is NOT candidate-measured indexing and must not be attributed to any finding or to candidate navigation effort."
+  },
+  "map_navigation_actual": [
+    {"artifact": "inputs/map/index.json", "lines": "1-509", "use": "shard partition + path lists selected candidate files (working_copy.rs, cli_util.rs in shard-000, local_working_copy.rs/op_heads_store.rs in shard-002), binary PNG exclusions, index_setup_seconds"},
+    {"artifact": "inputs/map/shard-002.json", "lines": "1-120", "use": "record format confirmation (path/sha256/bytes/lines/symbols[] with original line numbers); lib/src/graph.rs entry inspected"},
+    {"artifact": "inputs/map/shard-000.json", "lines": "1500-1559", "use": "probe locating end of cli_util.rs symbol list"},
+    {"artifact": "inputs/map/shard-000.json", "lines": "1080-1499", "use": "cli_util.rs symbol records: snapshot_working_copy=1536, update_working_copy=1645, report_repo_changes=1805, WorkingCopyFreshness=2216, check_stale_working_copy=2229, CliRunner::run_internal=3278 — used to target exact read windows"},
+    {"artifact": "map-derived decision", "use": "symbol hits were navigation metadata only; every cited mechanism was verified by reading the actual source regions (out/acquisition.json tool_reads)"}
+  ],
+  "shards_not_read": ["inputs/map/shard-001.json", "inputs/map/shard-003.json"],
+  "mechanical_operations": [
+    {"operation": "line_map", "source": "inputs/repository/lib/src/local_working_copy.rs", "output": "drafts-lm-local-working-copy.txt (workspace root)", "result": "ERROR boundary failure: ValueError; no output"},
+    {"operation": "line_map", "source": "inputs/repository/lib/src/local_working_copy.rs", "output": "out/drafts/line-map-local-working-copy.txt", "result": "OK; 133896 bytes; output sha256 5d762875bdded40834a09454a38d867a72751ec90f42167f850040afce506ea1; source sha256 05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4; single-line JSON whose read was truncated at ~50KiB (source lines ~1-754 recovered; remainder not used)"},
+    {"operation": "render_sections", "source": "inputs/repository/cli/src/cli_util.rs", "output": "out/drafts/sections-cli-util.txt", "result": "ERROR boundary failure: JSONDecodeError; no output written; not retried — cli_util navigation done via map shard symbol records instead"}
+  ],
+  "mechanical_interpretation_boundary": "line_map/render_sections/cache_source are generic exact-data transformations of chosen inputs; they performed no semantic verification, module mapping, or architecture inference. All interpretations are the agent's from direct source reads.",
+  "candidate_indexing_claim": "The candidate (this session) did not build or measure any repository index. The only indexing cost on record is the host's index_setup_seconds above."
+}

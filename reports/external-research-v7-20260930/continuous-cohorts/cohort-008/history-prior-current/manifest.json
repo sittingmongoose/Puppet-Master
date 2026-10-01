@@ -1,0 +1,61 @@
+{
+  "campaign_id": "external-research-v7-20260930",
+  "accepted_start_epoch": 1790777206,
+  "accepted_start_utc": "2026-09-30T14:06:46+00:00",
+  "deadline_epoch": 1790904541,
+  "deadline_utc": "2026-10-02T01:29:01+00:00",
+  "branch": "research/external-research-v7-20260930",
+  "worktree": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930",
+  "historical_head": "6a7bb6bf275a0169ea0062e52dd786ca34a24926",
+  "newer_work_checked_once": true,
+  "ceilings": {
+    "elapsed_hours": 12,
+    "candidate_starts": 144,
+    "occupied_slot_hours": 48,
+    "family_active": {
+      "M": 2,
+      "Z": 2,
+      "L": 2
+    },
+    "generated_candidate_stop": 3000000,
+    "helper_starts": 96,
+    "generated_helper_stop": 1500000,
+    "simultaneous_helpers": 23
+  },
+  "reserves": {
+    "candidate_fraction": 0.2,
+    "closeout_seconds": 3600
+  },
+  "helpers": [
+    {
+      "id": "operator",
+      "model": "gpt-6.1-sol",
+      "effort": "medium"
+    },
+    {
+      "id": "developer",
+      "model": "gpt-6.1-sol",
+      "effort": "high"
+    },
+    {
+      "id": "evaluation",
+      "model": "gpt-6.1-sol",
+      "effort": "xhigh"
+    }
+  ],
+  "runtime_usage_unknown_fields": [
+    "native_children_uncaptured_usage",
+    "unexposed_generated_tokens"
+  ],
+  "publication_status": "ACTIVE extendedcampaign; exact Zrolling queue; M/Lheld",
+  "publication_as_of_utc": "2026-10-01T22:14:29.186429+00:00",
+  "administrative_closeout_as_of_utc": "2026-10-01T17:29:11.818480+00:00",
+  "new_research_budget_required": false,
+  "status": "ACTIVE extendedcampaign; exact Zrolling queue; M/Lheld",
+  "original_wall_deadline_epoch": 1790820406,
+  "deadline_edt": "2026-10-01T21:29:01-04:00",
+  "extension_authority": "work-clock-extension/authority.json",
+  "current_frozen_cohort": "continuous-cohorts/cohort-007",
+  "helper_extension_authority": "continuous-cohorts/cohort-004/helper-authority.json",
+  "native_inclusive_cap_verification": "UNESTABLISHED source-only8403cbcf review; no actual native qualification credit"
+}

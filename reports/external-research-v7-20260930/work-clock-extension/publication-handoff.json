@@ -3,10 +3,10 @@
   "as_of_utc": "2026-10-01T20:39:56.044982+00:00",
   "deadline_edt": "October 1,2026 9:29:01 p.m. EDT",
   "authority_sha256": "ca4afed46dc1218bd449b3ef34f67f6c6245efbbbc73bb66e86d592102d36567",
-  "candidate_admissions": 43,
-  "actual_native_goals": 41,
-  "occupied_seconds": 28471.287682294846,
-  "reported_output_lower_bound": 1216102,
+  "candidate_admissions": 47,
+  "actual_native_goals": 45,
+  "occupied_seconds": 32126.604858398438,
+  "reported_output_lower_bound": 1423122,
   "known_conservative_helper_events": 96,
   "known_helper_headroom": 0,
   "unknown_usage_not_zero": true,
@@ -18,7 +18,7 @@
     "candidate conversations",
     "large corpora"
   ],
-  "previous_published_head": "2ae7a3af58712e083dd214f83ae638c5e314f400",
+  "previous_published_head": "e78a4cbef67c361fbaf81216cbc3ae2a0f003bcb",
   "native_v3_status": "historical passed; exact productive host/context route accepted; perattempt qualification mandatory",
   "evidence": [
     {
@@ -54,11 +54,11 @@
   ],
   "helper_headroom_as_of": "Root explicit84-event rollup; omissions unknown",
   "root_corrected_lab_manifest_sha256": "f5098b93e5b647b88bd103fb7a7d29bff280ae22dff6a5d120fe4612881b08cb",
-  "latest_frozen_cohort": "continuous-cohorts/cohort-007",
-  "accounting_snapshot_epoch": 1790892823.337299,
+  "latest_frozen_cohort": "continuous-cohorts/cohort-008",
+  "accounting_snapshot_epoch": 1790894726.8517141,
   "accounting_snapshot_later_state_unknown": true,
   "helper_ceiling": 96,
   "helper_extension_authority": "continuous-cohorts/cohort-004/helper-authority.json",
-  "publication_as_of_utc": "2026-10-01T22:14:29.186429+00:00",
+  "publication_as_of_utc": "2026-10-01T22:45:49.120916+00:00",
   "native_inclusive_cap_verification": "UNESTABLISHED source-only8403cbcf review; no actual native qualification credit"
 }

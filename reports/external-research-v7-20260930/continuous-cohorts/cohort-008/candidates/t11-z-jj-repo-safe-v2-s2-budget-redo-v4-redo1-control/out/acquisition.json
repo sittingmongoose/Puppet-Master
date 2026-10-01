@@ -1,0 +1,83 @@
+{
+  "task_id": "t11-z-jj-repo-safe-v2-s2-budget-redo-v4-redo1-control",
+  "pinned_version": {
+    "repository_url": "https://github.com/jj-vcs/jj",
+    "tag": "v0.22.0",
+    "commit": "67c2ae0a9e3e445f034a456b299e3f37c4dc4b93",
+    "evidence": "inputs/PIN.json lines 3-5",
+    "manifest_sha256": "6aef9692d7f2fefccee3c9746b46138eadb154b205ce3b8e67b91e8b715e53bf",
+    "note": "Issue bodies/status captured 2026-09-30 per inputs/issues-index.json:687-689; not release-time truth."
+  },
+  "read_policy": "All reads through mcp__pm_boundary__read_file with recorded paths/line ranges; issue selection via inputs/issues-index.json; documentation-led ad-hoc navigation (control arm); host map/index.json not read.",
+  "local_reads": [
+    {"path": "TASK.md", "sha256": "7a524892747f9a042e4ae5c47e21b971a914e66db4ebf0a3beb71db8f128a96a", "bytes": 3401, "lines_read": "1-11", "purpose": "task card", "findings": ["all"]},
+    {"path": "inputs/brief.md", "sha256": "6455c54d08627a6669c8f176a5cfb1e1c23578a183f3e606addadcf59eefff36", "bytes": 1431, "lines_read": "1-7", "purpose": "product brief, question families", "findings": ["all"]},
+    {"path": "inputs/Z_SAFE_TASK.md", "sha256": "2a850fceb3d45096d4f34520a58903b8f896e7126808ebac3ff03291d16097e4", "bytes": 2697, "lines_read": "1-11", "purpose": "safety/boundary policy", "findings": ["all"]},
+    {"path": "inputs/source-locator.json", "sha256": "76cf4ab47379b92ef5443710e241aca47d087344ee23b4afb1fac533ff855218", "bytes": 164119, "lines_read": "1-628 (reader-truncated), 2145-2305 (path_to_shard tail)", "purpose": "corpus layout; resolved repository/<path> -> locator shard mapping", "findings": ["navigation"]},
+    {"path": "inputs/PIN.json", "sha256": "6cb6112d93cdecd21d5e9a57db5f878b1afac553012e99f008e0c4102a503342", "bytes": 44410, "lines_read": "1-441", "purpose": "pin manifest: tag/commit, 431 file hashes", "findings": ["all"]},
+    {"path": "inputs/catalog.json", "sha256": "edd0fdb850724199cdf5a7153053d26664704dba07fae418f29e7f5014f7e7a3", "bytes": 243589, "lines_read": "1-120 (reader-truncated), 4355-4610, 4609-4862", "purpose": "source universe inventory: 624 commit patches, history-index, 68 issue entries, issues-index", "findings": ["navigation"]},
+    {"path": "inputs/issues-index.json", "sha256": "6a6e593591ccd033b424101f2470effebc2cfd433dc97bb345e555dafac726d6", "bytes": 28194, "lines_read": "1-689", "purpose": "issue titles/states for selection; capture date/boundary", "findings": ["F4", "F5", "F6", "issue-selection"]},
+    {"path": "inputs/locator/shard-004.json", "sha256": "d9ce869d94c37765268032d78ad8c331cf508a2900a9437eff088f0ff68cde76", "bytes": 134698, "lines_read": "1-60", "purpose": "locator entry format (candidate_file identity vs base64 transport for PNGs)", "findings": ["navigation"]},
+    {"path": "inputs/repository/docs/technical/concurrency.md", "sha256": "464ac73e5bead50a401ba00340c7fd9c837ee92ca39e2131f3f66af5a5025b5c", "bytes": 7259, "lines_read": "1-127", "purpose": "lock-free design, op log, divergent ops, storage", "findings": ["F2", "F5", "F6"]},
+    {"path": "inputs/repository/docs/working-copy.md", "sha256": "080b3610c8fa04c4184f3e3e8a504b70c576f64a824b3fc3147a6ecd877cbe62", "bytes": 4834, "lines_read": "1-100", "purpose": "auto-snapshot, conflicts, ignored files, workspaces, stale WC", "findings": ["F1", "F3", "F4", "F6", "conflicts"]},
+    {"path": "inputs/repository/docs/operation-log.md", "sha256": "ab442987e777e787c98ac7c7f754949f970b63b25a3c05a41613fac2ec40effa", "bytes": 3292, "lines_read": "1-67", "purpose": "op log semantics, divergent ops, --at-op snapshot skip", "findings": ["F1", "F2"]},
+    {"path": "inputs/issues/4239.json", "sha256": "1f47a5da278ef981bde5e474a800b692ce72ea3a53f6c91408bfa975b127c795", "bytes": 6149, "lines_read": "1-130", "purpose": "broken pipe -> stale working copy history", "findings": ["F4"]},
+    {"path": "inputs/issues/4423.json", "sha256": "d72a14271fb697217917eef42baab65eff836b63acdca7ba9393ca5658cfda64", "bytes": 3779, "lines_read": "1-76", "purpose": "hard-reboot corruption history", "findings": ["F4", "F5"]},
+    {"path": "inputs/issues/4545.json", "sha256": "a6f9011c0ebda172ab04e2edcae10945a464556b871f2824e8f811351c1d0ae6", "bytes": 4373, "lines_read": "1-88", "purpose": "snapshot-before-commands cost; --ignore-working-copy limits", "findings": ["F1"]},
+    {"path": "inputs/issues/4508.json", "sha256": "7574413e1681fc1e3c15cd306399095b9c722e312ae8bbfe77275df262e934cb", "bytes": 4256, "lines_read": "1-99", "purpose": "snapshot CPU cost on many-core machines", "findings": ["F1"]},
+    {"path": "inputs/issues/4465.json", "sha256": "ce41618f43514866713c7b26982deacef21910f93c0d6f2dcbf426e84c027c5d", "bytes": 8366, "lines_read": "1-130", "purpose": "divergent-operations reconcile panic (reported on 0.21.0)", "findings": ["F2"]},
+    {"path": "inputs/issues/4342.json", "sha256": "d45a015ba6b063129d46c036ac9ba32f91c91aa6d047df3adeeeb5afed754680", "bytes": 5088, "lines_read": "1-99", "purpose": "workspace rename FR (closed pre-pin)", "findings": ["F6"]},
+    {"path": "inputs/issues/4436.json", "sha256": "2939a2223ea17385ed89d208acb48c2e52a29f4144f679be274721382201ea2b", "bytes": 5499, "lines_read": "1-99", "purpose": "colocated secondary workspaces lack .git (open at pin)", "findings": ["F6"]},
+    {"path": "inputs/repository/lib/src/lock.rs", "sha256": "ba1763e5730e9c7232b883a6a0280abf45b0fb1e42ec403a22689d37755eb934", "bytes": 2208, "lines_read": "1-66", "purpose": "FileLock existence/platform split", "findings": ["F2", "F3"]},
+    {"path": "inputs/repository/lib/src/working_copy.rs", "sha256": "7f7f8f8a8b6c2570a1171f51bc10ee23cb7f960ee754ad210f0de8e9592c2f40", "bytes": 11751, "lines_read": "1-307 (two reads)", "purpose": "WorkingCopy/LockedWorkingCopy traits, SnapshotError/Options, progress, recover(), ConcurrentCheckout", "findings": ["F1", "F3", "F4", "F7"]},
+    {"path": "inputs/repository/lib/src/workspace.rs", "sha256": "bb2796db350fa8d3d1c508d1baff77ae252b2e7b1791a11da316184ec8c7ac20", "bytes": 22419, "lines_read": "1-629", "purpose": "workspace init/load, .jj/repo file indirection, check_out/ConcurrentCheckout, LockedWorkspace", "findings": ["F3", "F6"]},
+    {"path": "inputs/repository/cli/src/cli_util.rs", "sha256": "689a8b64a3d0ae0b6ab74996d95813a1b2387a58d2985e25a55ddf30b0cc1c04", "bytes": 129809, "lines_read": "1-15, 740-869, 870-1059, 1060-1219, 1250-1274, 1460-1579, 1580-1829, 1900-1924, 1931-2042, 2043-2177, 2178-2339, 2340-2569, 3245-3434 (bounded reads)", "purpose": "maybe_snapshot/snapshot_working_copy, staleness enum+check, finish_transaction ordering, error mapping", "findings": ["F1", "F2", "F3", "F4", "F5", "F7", "conflicts"]},
+    {"path": "inputs/repository/cli/src/commands/workspace/update_stale.rs", "sha256": "d97bb464e4d0f2857ae571731925744acc40e0e705245f93b244b168d0289ad5", "bytes": 6689, "lines_read": "1-175", "purpose": "stale recovery command incl. recovery-commit path", "findings": ["F4", "F5"]},
+    {"path": "inputs/repository/cli/src/commands/workspace/rename.rs", "sha256": "be6d3e326408ee9ac004b05a68dc72beae3803437c80638710992cf9ce48b2fd", "bytes": 2447, "lines_read": "1-78", "purpose": "verify workspace rename exists at pin (#4342)", "findings": ["F6"]},
+    {"path": "inputs/repository/cli/src/cleanup_guard.rs", "sha256": "383311c42fc4346fb7bd8d0bee07278a78ff0c29fbe571e9147ddda276a5b891", "bytes": 3778, "lines_read": "1-126", "purpose": "SIGINT/SIGTERM cleanup guards, second-signal fatal, non-unix no-op", "findings": ["F7"]},
+    {"path": "inputs/repository/lib/src/op_heads_store.rs", "sha256": "4de9db047c0ddcc8fd98ed108b0301a466429f22a7f38d1f813493e2e10b4909", "bytes": 5173, "lines_read": "1-138", "purpose": "op-head resolution/merging, optional lock, NoHeads", "findings": ["F2", "F5"]},
+    {"path": "inputs/repository/lib/src/op_walk.rs", "sha256": "69579bbc8d65f43949acb1b81728ae3f6278efe7b08a0b0339aac1e0a8776120", "bytes": 12257, "lines_read": "1-330", "purpose": "op expression resolution, head ops, MultipleOperations", "findings": ["F2"]},
+    {"path": "inputs/repository/lib/src/local_working_copy.rs", "sha256": "05ad60eda211d2aa19765d89b215f999dc741b7093b7f534a2afb925ddae00a4", "bytes": 78059, "lines_read": "1-40, 430-679, 680-929, 930-1139, 1134-1238 (bounded reads)", "purpose": "TreeState snapshot, mtime/own_mtime clean rule, visit_directory, watchman matcher, conflict re-parse, atomic tree_state save", "findings": ["F1", "F5", "conflicts"]},
+    {"path": "inputs/repository/lib/tests/test_bad_locking.rs", "sha256": "23daa5cd550d294ef540ff8ed4a9823fc719bfd257d7192e78cd645aa6310d13", "bytes": 9039, "lines_read": "14-103", "purpose": "concurrent-directory-merge test source (source only, not executed)", "findings": ["F2"]}
+  ],
+  "public_https_reads": [
+    {
+      "url": "https://api.github.com/repos/jj-vcs/jj/issues/4239/comments",
+      "status": 200,
+      "bytes": 11148,
+      "sha256": "042c4715bde42a5e4a051a215a99613447da791c93a4ddff5f3f3500c80fa5b4",
+      "purpose": "issue-to-fix chain for #4239: yuja 2024-08-08 diagnosis (reorder update_working_copy/report_repo_changes), essiene 2024-09-21 PR #4517, yuja approval of new output order",
+      "findings": ["F4"]
+    },
+    {
+      "url": "https://api.github.com/repos/jj-vcs/jj/issues/4423/comments",
+      "status": 200,
+      "sha256": "d9467a4c0b74e801161cedee468fb95698087f546c01a4d0648de17841a15463",
+      "bytes_note": "response exceeded the model-display budget; header sha256 recorded and tail truncated in reader view (no size violation of the 512KiB tool limit)",
+      "purpose": "recovery histories: manual op_heads rollback recipe (martinvonz 2024-09-08), 'Concurrent modification detected, resolving automatically.' panics, empty .git/objects (no fsync), refs/jj/keep + update-stale recovery transcript (dhardy 2025-04-07), tree_state delete remedy (alberand 2025-05-27)",
+      "findings": ["F4", "F5"]
+    }
+  ],
+  "queries": [
+    "issue selection: inputs/issues-index.json (local capture of GitHub search: repo:jj-vcs/jj is:issue created:2024-08-01..2024-10-02, per inputs/issues-index.json:2-4)",
+    "fix-link follow-up for #4239 and recovery comments for #4423 via api.github.com issue-comments endpoints (above)"
+  ],
+  "finding_link_index": {
+    "F1": ["inputs/repository/docs/working-copy.md", "cli/src/cli_util.rs", "lib/src/local_working_copy.rs", "lib/src/working_copy.rs", "issues/4545.json", "issues/4508.json"],
+    "F2": ["docs/technical/concurrency.md", "docs/operation-log.md", "lib/src/op_heads_store.rs", "lib/src/op_walk.rs", "lib/src/lock.rs", "lib/tests/test_bad_locking.rs", "issues/4465.json"],
+    "F3": ["lib/src/workspace.rs", "lib/src/working_copy.rs", "lib/src/lock.rs", "cli/src/cli_util.rs"],
+    "F4": ["cli/src/cli_util.rs", "cli/src/commands/workspace/update_stale.rs", "docs/working-copy.md", "issues/4239.json", "public:issues/4239/comments", "public:issues/4423/comments (dhardy transcript)"],
+    "F5": ["issues/4423.json", "public:issues/4423/comments", "docs/technical/concurrency.md", "lib/src/op_heads_store.rs", "cli/src/cli_util.rs", "lib/src/local_working_copy.rs"],
+    "F6": ["docs/working-copy.md", "lib/src/workspace.rs", "cli/src/commands/workspace/rename.rs", "issues/4342.json", "issues/4436.json", "cli/src/cli_util.rs"],
+    "F7": ["cli/src/cleanup_guard.rs", "lib/src/working_copy.rs", "cli/src/cli_util.rs", "public:issues/4239/comments"],
+    "conflicts": ["docs/working-copy.md", "lib/src/local_working_copy.rs", "cli/src/cli_util.rs"]
+  },
+  "not_acquired": [
+    "620+ commit patches under inputs/commit-patches/ (catalog metadata only)",
+    "issue bodies other than 4239/4423/4545/4508/4465/4342/4436",
+    "comments for issues other than 4239 and 4423",
+    "PR #4517 diff page (fix verified from pinned source reordering instead)",
+    "map/index.json shards (host-prepared generic map) — not used by control arm",
+    "visual content of the five demos/*.png (no image-viewing tool on this route)"
+  ]
+}

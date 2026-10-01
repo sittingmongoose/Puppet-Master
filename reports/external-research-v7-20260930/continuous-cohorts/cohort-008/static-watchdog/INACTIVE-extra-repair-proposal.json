@@ -1,0 +1,15 @@
+{
+  "schema": "er7.inactive.extra_watchdog_repair.proposal.v1",
+  "created_epoch": 1790894362.6584723,
+  "prior_source_sha256": "ab9e41e0ccf514a6b9c93b10b67bac6470ba8f93a84c83c387493031205b6bf7",
+  "proposed_source_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/inclusive-stage-watchdog-v4-proposed-source.txt",
+  "proposed_source_sha256": "00b536dd94bb162e9ac52b5ab3d404c9c433397f2fe242da4178cdb1a02d906a",
+  "diff_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/inclusive-stage-watchdog-v4-proposal.patch",
+  "diff_sha256": "0c075a2f0c0083c81b2bb56931e2a6da546ee1153069b41aa42d0d0d10b131c1",
+  "status": "INACTIVE PROPOSAL ONLY; requires explicit single-adapter repair-policy exception before freeze/deploy/native launch",
+  "extra_repair_ordinal": 3,
+  "native_launches": 0,
+  "helper_starts_added": 0,
+  "original_source_and_failed_costs_preserved": true,
+  "scope": "Move independent timer ahead of startup/enrollment; interruption cleanup retains trusted freshly owned Popen child; originalstage/case/candidate/helper caps and model/runtime/context/provider unchanged."
+}

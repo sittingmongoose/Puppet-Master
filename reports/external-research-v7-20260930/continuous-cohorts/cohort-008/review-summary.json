@@ -1,0 +1,25 @@
+[
+  {
+    "review": "R026",
+    "current_report_sha256": "96089edfc376c7df8883d8242b0471ac2c3ade6128d74d6d08547058e1d713d2",
+    "matching_reports": [
+      "continuous-cohorts/cohort-007/candidates/t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1-control/host-rendered-current/report.md",
+      "continuous-cohorts/cohort-007/candidates/t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1-control/out/reports/V001.md"
+    ],
+    "verdict": "quality failure",
+    "complete_coverage": true,
+    "scope": "assigned current scope, original case eligibility not inferred",
+    "native_credit_from_evaluator_join": false
+  },
+  {
+    "review": "R027",
+    "current_report_sha256": "0b3bae06289381e6766f64826b8b05f6fd7d89f46d6fb1b9fe2482fe73025bde",
+    "matching_reports": [
+      "continuous-cohorts/cohort-007/candidates/t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1-treatment/host-rendered-current/report.md"
+    ],
+    "verdict": "quality failure",
+    "complete_coverage": true,
+    "scope": "assigned current scope, original case eligibility not inferred",
+    "native_credit_from_evaluator_join": false
+  }
+]
