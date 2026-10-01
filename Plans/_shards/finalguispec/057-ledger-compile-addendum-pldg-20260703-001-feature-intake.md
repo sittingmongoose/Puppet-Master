@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L28523-L28981
+Source lines: L28544-L29007
 
-Source SHA256: `6eca938c359dfbe2c43525c0b5b4b39fd2475c03c73d25586cc511548f8b8d2c`
+Source SHA256: `b6c053a1765ffdf3f702d837c03f15c35da17a3794f3db8acfdd24fdd990d92e`
 
 ---
 
@@ -388,11 +388,12 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Puppet Master targets Slint 1.17.1 for the active GUI platform. Native desktop uses Slint Winit with Skia compiled
-  in and selected by default on Windows, Linux, and macOS; fallback order is explicit SLINT_BACKEND override, persisted
-  preference, Winit + Skia, Winit + FemtoVG-wgpu, then Winit software emergency mode. The first GUI build includes
-  native desktop plus a Rust Slint/WASM canvas web GUI compiled as cdylib through wasm-bindgen, wasm-pack, or an
-  approved equivalent and loaded through minimal HTML/canvas bootstrap rather than React, Tauri, or DOM product UI.
+  Puppet Master targets Slint 1.17.1 for the active GUI platform. Native desktop uses Slint Winit with Skia as the
+  only compiled renderer on Windows, Linux, and macOS, extended by Puppet Master's Skia renderer extensions (F3-582);
+  selection order is explicit SLINT_BACKEND override, persisted preference, Winit + Skia on the GPU, then Winit +
+  Skia CPU (winit-skia-software), and FemtoVG and Slint's separate software renderer are retired (DL-139). The first
+  GUI build includes native desktop plus a Rust Leptos web GUI compiled to WebAssembly, rendered in the browser with
+  browser elements and CSS, and served by the trusted local daemon, rather than React, Tauri, or TypeScript (F3-583).
   Browser-only WASM cannot claim PTY, filesystem, process/container, CEF, tray, native-window, or raw OS drag/drop
   authority; those OS-owned capabilities route through the trusted local daemon with authenticated local origin or
   pairing, origin/CSRF protection, capability probe, permission request, receipt/audit event, redaction, degraded
@@ -441,14 +442,15 @@ source_lineage:
 - fablereport.md:103-112
 - Plans/.audits/fable-20260706/currentness_check_report.json
 - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:8
+- "Plans/Decision_Log.md#DL-139 (owner answers, 2026-10-01)"
 source_atom_ids: []
 preserved_exact_tokens:
 - "Slint 1.17.1"
 - "Winit + Skia"
-- "Winit + FemtoVG-wgpu"
-- "Winit software renderer"
+- "Winit + Skia CPU"
+- "winit-skia-software"
 - "SLINT_BACKEND"
-- "Slint/WASM canvas"
+- "Leptos"
 - "trusted local daemon"
 - "native_full"
 - "web_supported_direct"
@@ -460,10 +462,13 @@ preserved_exact_tokens:
 negative_constraints:
 - "Do not create WorkNodes, NodeSeeds, queues, implementation files, runtime launches, or production build artifacts."
 - "Do not allow browser-only WASM to pretend it directly owns OS capabilities."
-- "Do not use React, Tauri, or DOM-rendered product UI for the Slint web GUI."
+- "Do not use React, Tauri, or TypeScript for the Leptos web GUI."
+- "Do not compile or ship FemtoVG or Slint's separate software renderer in desktop builds."
 - "Do not use emoji, emoji-like pictographs, Unicode pseudo-icons, network/CDN icons, or icon-only state carriers in production GUI source."
 compatibility_only_notes:
 - "Slint 1.17.0, Slint 1.15.1, PMConcept terminal transcripts, and FABLE pre-repair wording are source-lineage/history only after this repair."
+stale_retired_dispositions:
+- "DL-139 retires the Winit + FemtoVG-wgpu fallback, the Winit software emergency renderer, and the Slint/WASM canvas web GUI with its minimal HTML/canvas bootstrap; those names remain source lineage only."
 owner_boundary_notes:
 - "FinalGUISpec owns GUI platform and visible capability policy; Automated_Testing_System owns web GUI dev/test workflow; UI_Command_Catalog owns only development-preview command IDs."
 ```

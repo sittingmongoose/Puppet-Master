@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5323-L26401
+Source lines: L5331-L26422
 
-Source SHA256: `6eca938c359dfbe2c43525c0b5b4b39fd2475c03c73d25586cc511548f8b8d2c`
+Source SHA256: `b6c053a1765ffdf3f702d837c03f15c35da17a3794f3db8acfdd24fdd990d92e`
 
 ---
 
@@ -1393,6 +1393,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0020"
+- "Plans/Decision_Log.md#DL-139 (owner answers, 2026-10-01)"
 preserved_exact_tokens:
 - "Plans/DRY_Rules.md"
 - "Plans/Contracts_V0.md"
@@ -1400,12 +1401,13 @@ preserved_exact_tokens:
 - "Rust stable 1.96.1"
 - "Slint 1.17.1"
 - "slint_build"
-- "winit + Skia"
-- "FemtoVG-wgpu"
-- "software renderer"
+- "Winit + Skia"
+- "Winit + Skia CPU"
+- "Leptos"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "DL-139 retires Winit + FemtoVG-wgpu and the Winit software renderer from the renderer baseline; Skia's own CPU raster is the only fallback. Those names remain source lineage only."
 owner_boundary_notes:
 - "Compliance statement preserves SSOT references and deterministic Decision_Policy defaults."
 owner_hints:
@@ -1532,9 +1534,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The core GUI stack uses Rust, Slint markup compiled by slint_build, winit plus Skia with
-  FemtoVG-wgpu and software fallbacks, redb for layout persistence, seglog for events, and Tantivy
-  for search.
+  The core GUI stack uses Rust, Slint markup compiled by slint_build, winit plus Skia on the GPU with
+  Skia's own CPU raster as the only fallback (DL-139), redb for layout persistence, seglog for events,
+  and Tantivy for search; the web GUI is a Rust Leptos client drawn with browser elements and CSS.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -1559,19 +1561,22 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0024"
+- "Plans/Decision_Log.md#DL-139 (owner answers, 2026-10-01)"
 preserved_exact_tokens:
 - "Rust"
 - "Slint 1.17.1"
 - "slint_build"
-- "winit + Skia"
-- "winit + FemtoVG-wgpu"
-- "Software renderer"
+- "Winit + Skia (GPU)"
+- "Winit + Skia CPU"
+- "winit-skia-software"
+- "Leptos 0.8"
 - "redb"
 - "seglog"
 - "Tantivy"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "DL-139 retires the Winit + FemtoVG-wgpu fallback row and the Winit software renderer emergency row; both names remain source lineage only."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -1586,10 +1591,11 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The native desktop GUI does not use React, Tauri, JavaScript/TypeScript, HTML/CSS, or DOM-rendered
-  product UI; it is Rust + Slint `.slint` markup. The Slint/WASM web target may use only minimal
-  HTML/canvas bootstrap and generated/minimal JavaScript glue to load the Slint WASM canvas client,
-  attach assets and canvas, and connect to approved local services; it must not become an HTML/CSS/JS
-  product shell.
+  product UI; it is Rust + Slint `.slint` markup drawn by Skia. The web GUI is a Rust Leptos client
+  drawn with browser elements and CSS (DL-139, F3-583); it does not use React, Tauri, or TypeScript,
+  and its JavaScript is limited to generated glue and the minimal bootstrap needed to load the WASM
+  module, route static assets, and connect to approved local services; it must not grow a hand-written
+  JavaScript product shell.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -1598,8 +1604,8 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
 - "Native desktop GUI source remains Rust + Slint `.slint` markup and does not use React, Tauri, JavaScript/TypeScript, HTML/CSS, or DOM-rendered product UI."
-- "Slint/WASM web GUI source uses only minimal HTML/canvas bootstrap and generated/minimal JavaScript glue needed to load the WASM canvas client, attach assets and canvas, and connect to approved local services."
-- "HTML/CSS/JS product shell, React product UI, Tauri product UI, and DOM-rendered product UI remain forbidden for both native desktop and web product surfaces."
+- "Web GUI source is Rust Leptos components with CSS; its JavaScript is limited to generated glue and the minimal bootstrap needed to load the WASM module, route static assets, and connect to approved local services."
+- "React product UI, Tauri product UI, TypeScript product code, and a hand-written JavaScript product shell remain forbidden for both native desktop and web product surfaces."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -1615,17 +1621,18 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0025"
+- "Plans/Decision_Log.md#DL-139 (owner answers, 2026-10-01)"
 preserved_exact_tokens:
-- "No React/Tauri/DOM-rendered product UI"
-- "minimal HTML/canvas bootstrap"
-- "generated/minimal JavaScript glue"
-- "HTML/CSS/JS product shell"
+- "No React/Tauri product UI"
+- "Rust Leptos client"
+- "generated or minimal glue"
 - "Rust + Slint `.slint` markup"
 negative_constraints:
-- "React, Tauri, DOM-rendered product UI, and HTML/CSS/JS product shells are not used for the GUI implementation."
-- "The Slint/WASM web target may not expand its bootstrap HTML/canvas and generated/minimal JavaScript glue into a product UI shell."
+- "React, Tauri, TypeScript, and hand-written JavaScript product shells are not used for the GUI implementation."
+- "The web GUI may not expand its generated glue and minimal bootstrap JavaScript into a product UI shell."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "DL-139 retires the Slint/WASM canvas web client and its minimal HTML/canvas bootstrap rule; the web GUI is now drawn with browser elements and CSS by a Rust Leptos client. The former wording remains source lineage only."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -1741,7 +1748,8 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Slint backend selection uses SLINT_BACKEND, persisted app preference, compiled default order,
-  deterministic fallback, startup diagnostics, and setup surfaces that show the selected backend.
+  deterministic fallback, startup diagnostics, and setup surfaces that show the selected backend. Only the
+  Skia renderer is compiled; the default order is Skia on the GPU, then Skia's own CPU raster (DL-139).
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -1766,17 +1774,20 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0027"
+- "Plans/Decision_Log.md#DL-139 (owner answers, 2026-10-01)"
 preserved_exact_tokens:
 - "SLINT_BACKEND"
 - "slint::BackendSelector"
 - "winit + Skia"
-- "winit + FemtoVG-wgpu"
-- "emergency software renderer"
+- "winit + Skia CPU"
+- "winit-skia-software"
 - "startup diagnostic"
 - "selected backend"
-negative_constraints: []
+negative_constraints:
+- "Do not enable renderer-femtovg, renderer-femtovg-wgpu, or renderer-software in desktop builds."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "DL-139 retires the winit + FemtoVG-wgpu fallback and the emergency software renderer from the selection order; a SLINT_BACKEND value or preference naming them is an unavailable backend."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -14580,8 +14591,9 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Implementation decisions are final for Slint 1.17.1 on Rust stable 1.96.1, winit+Skia with FemtoVG-wgpu fallback,
-  no React/JS/TS/HTML/CSS shell, IDE shell layout, four theme families (eight built-in themes,
+  Implementation decisions are final for Slint 1.17.1 on Rust stable 1.96.1, winit+Skia only with Skia's own CPU
+  raster as the fallback and Puppet Master's Skia renderer extensions (DL-139), no React or Tauri product UI with the
+  web GUI a Rust Leptos client (DL-139), IDE shell layout, four theme families (eight built-in themes,
   untouched first-open/fresh-project factory default Basic Dark; the former Friendly Dark and
   prior three-family defaults remain superseded lineage), Settings owned by `Plans/Settings_System.md`,
   the Doctor registry/router/projection owned by `Plans/newtools.md` N2-151, Login retained by
@@ -14615,9 +14627,9 @@ source_lineage:
 preserved_exact_tokens:
 - "Rust stable 1.96.1"
 - "Slint 1.17.1"
-- "winit + Skia"
-- "winit + FemtoVG-wgpu"
-- "No React/JS/TS/HTML/CSS"
+- "winit + Skia only"
+- "No React/Tauri product UI"
+- "Leptos"
 - "IDE shell layout"
 - "Activity Bar + Primary Content + Side Panel + Bottom Panel"
 - "Retro Dark, Retro Light, Basic Modern"
@@ -14633,6 +14645,7 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "The Friendly Dark factory-default and unified Settings + Login + Doctor ownership summaries are superseded by the later factory-default and owner-routing contracts."
+- "DL-139 supersedes the winit + FemtoVG-wgpu fallback and the no-HTML/CSS rule for the web GUI: desktop is Skia only, and the web GUI is a Rust Leptos client drawn with browser elements and CSS."
 owner_boundary_notes:
 - "Settings_System owns the Settings shell and ordinary-setting semantics; N2-151 owns Doctor registry/router/projection; auth/account owners retain Login; Final GUI owns presentation only."
 owner_hints:

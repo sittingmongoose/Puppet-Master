@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L1366-L1487
+Source lines: L1374-L1495
 
-Source SHA256: `6eca938c359dfbe2c43525c0b5b4b39fd2475c03c73d25586cc511548f8b8d2c`
+Source SHA256: `b6c053a1765ffdf3f702d837c03f15c35da17a3794f3db8acfdd24fdd990d92e`
 
 ---
 
@@ -107,12 +107,12 @@ The `cosmic` base style is used because it supports `ColorScheme` toggling and h
 Provider CLI backend eligibility is separate from Slint renderer selection: Cursor CLI must be re-evaluated as an ACP-capable first-class CLI backend, not only a stream-json bridge, before GUI diagnostics classify it as a legacy stream transport.
 
 
-Backend is chosen at startup; all windows use the same backend. Selection uses `slint::BackendSelector::new().select()` with `SLINT_BACKEND` environment variable override. Cargo features control which renderers are compiled in (e.g., `default = ["renderer-skia"]`, optional `renderer-femtovg`).
+Backend is chosen at startup; all windows use the same backend. Selection uses `slint::BackendSelector::new().select()` with `SLINT_BACKEND` environment variable override. Cargo features compile only the Skia renderer with its CPU raster surface (`renderer-skia`); `renderer-femtovg`, `renderer-femtovg-wgpu`, and `renderer-software` are not enabled (DL-139).
 
 Deterministic selection order:
 1. Explicit valid `SLINT_BACKEND` override wins.
 2. Otherwise use the persisted app preference if it maps to a compiled-in backend.
-3. Otherwise use compiled default order: `winit + Skia` → `winit + FemtoVG-wgpu` → emergency software renderer.
+3. Otherwise use compiled default order: `winit + Skia` on the GPU (`winit-skia`) → `winit + Skia CPU` (`winit-skia-software`).
 
 Failure handling:
 - An invalid override or unavailable preferred backend MUST emit a startup diagnostic and fall through deterministically to the next compiled-in backend.

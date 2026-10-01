@@ -4,7 +4,7 @@ Source: `Plans/rewrite-tie-in-memo.md`
 
 Source lines: L1-L11
 
-Source SHA256: `5cf26c95b699d21fad666870edfe85bcc4248da18ab2fae729e042f5377dfd9e`
+Source SHA256: `ffac41c33959b2a15d4ef54158a98f7e5deab29e9ce7f0cc4543a998c59afc36`
 
 ---
 

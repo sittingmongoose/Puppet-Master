@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L2875
+Source lines: L13-L2918
 
-Source SHA256: `96ecdcbdda9594b541c26057fb39ce6f6e6b2bc400c0cf2a9e8ca72cecba76a2`
+Source SHA256: `dddd135f9cbeebaaeee63939977f07f9db305c24409bd134799103853ef540d6`
 
 ---
 
@@ -2871,3 +2871,46 @@ Question 9 does not waive event admission: runtime.automation_pause_changed is n
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md`, SHA-256 `345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c`; recommended options in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/OPEN-QUESTIONS.md`.
 
 ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Settings_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Scheduling_and_Quota_Resume.md
+
+### DL-139: The desktop draws with Skia only, extended by our own Skia code; the web version is a Leptos page
+
+**Question:** Which renderer does the desktop app use, and what is the web version built with?
+
+**Why it came up:** Checking the concept motion against Slint 1.18.1 showed that Slint has no element blur, backdrop blur, masks, blend modes or saturate/contrast filters, draws text without ClearType, and can only select text inside a plain read-only text box. Slint's own documentation says its browser build is not recommended for general web apps and draws its own, softer text. Nothing on Slint's roadmap fixes these on a date.
+
+**What you get:**
+- The desktop keeps Slint, drawn only by Skia, and our own Skia code adds the missing effects, ClearType text on Windows and selectable rich text, so the concepts' look ports instead of being cut.
+- One drawing path on every machine: Skia on the graphics card, then Skia's own CPU mode where there is no usable graphics card, so no machine silently loses the added effects.
+- A web version with the browser's own sharp text, real text selection and every CSS effect, written in Rust and sharing code with the desktop app.
+
+**What it costs:**
+- We maintain Skia changes on top of Slint until Slint accepts them, and carry them across each Slint upgrade.
+- Two interfaces (Slint on the desktop, Leptos on the web) that have to be kept in step.
+- Blur on the CPU path is expensive, so machines without a usable graphics card show solid panels instead of frosted ones.
+- The web page's first load is a little slower than plain JavaScript, because the browser downloads and compiles WebAssembly.
+
+**Options considered:**
+1. Keep the current plan: Skia, then FemtoVG, then Slint's software renderer, and a Slint canvas web build. The gaps stay and web text stays soft.
+2. Move the whole interface to Flutter. Every effect is built in, but Flutter has no ClearType either, its multi-window support is not stable, and it adds Dart and a bridge to the Rust core.
+3. Build a separate native interface per platform plus the web. Sharpest text, but four times the work and four versions that drift apart.
+4. Keep Slint on the desktop, on Skia only, with our own Skia code, and build the web version in Leptos. **Chosen.**
+
+Slint's experimental Vello renderer was checked and not chosen: its graphics-card path has no general blur and it has no subpixel text. It is worth another look once it leaves experimental status. For the web, Svelte 5 or SolidJS in TypeScript stay the fallback if Rust in the browser proves slow to work with; Dioxus and Yew were set aside as React-style.
+
+**Owner answers, verbatim (2026-10-01, in chat):**
+- "ok sounds like we are doing custom skia work and only using skia for desktop.  For web, you said we should use a browser-native web client, what would you recommend?"
+- "I told the other thread to drop the slint requirements since we are going to do custom code on skia to alleviate the shortcomings."
+- "ok go with Leptos, draft the decision card and spec edits.  Including the skia change, custom code, dropping FemtoVG then cpu(skia has cpu)."
+
+**What the spec now says:**
+1. **Desktop renderer.** Skia is the only renderer compiled and shipped. Selection runs `SLINT_BACKEND` override, persisted preference, Skia on the graphics card (`winit-skia`), then Skia's CPU raster (`winit-skia-software`). FemtoVG is dropped. Slint's separate software renderer also leaves the shipped set, because Skia's CPU mode takes its place and the added effects exist only in Skia. The Graphics Engine setting offers Auto, Skia (GPU) and Skia (CPU).
+2. **Skia extensions** (`Plans/FinalGUISpec.md#F3-582`): element blur, backdrop blur, gradient and alpha masks, blend modes, saturate/contrast/brightness filters, ClearType text on Windows, and selectable rich text with readable selection offsets. They are written to upstream quality, offered to Slint (slint-ui/slint#612, #2066 and #5748), and carried as a Cargo patch of Slint's crates until merged. Heavy blur is off on the CPU path and panels go solid.
+3. **Web client** (`Plans/FinalGUISpec.md#F3-583`): Leptos, rendered in the browser, pinned to the 0.8 line until 0.9 is stable, and served by the trusted local daemon. Browser elements and CSS draw it. No React and no TypeScript; JavaScript only as generated or minimal glue. The daemon contract and the web capability states do not change.
+4. **Keeping the two in step:** one shared Rust interface-model crate (state, commands, formatting, validation) that both interfaces bind to; one design-token source that generates the Slint theme globals and the CSS variables; and the same fixtures run through both.
+5. **Unchanged:** the Slint and Rust version pins (kept as they are until build time), "no React, no Tauri", the trusted local daemon contract, and the "in-canvas" name for the in-app float layer on both targets.
+
+The CPU-path reading of "dropping FemtoVG then cpu(skia has cpu)", which also leaves out Slint's own software renderer, is recorded as interpreted and stands unless the owner says otherwise.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/ANSWERS-20261001.md`, SHA-256 `9ca1e2ab54c77a744d629eb4c6dcc1aa8c9d206c6256efbce8b66230a0961ad6`.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Release_Supply_Chain.md, ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/settings_inventory.json

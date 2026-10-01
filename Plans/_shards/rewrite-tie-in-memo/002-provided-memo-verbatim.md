@@ -4,7 +4,7 @@ Source: `Plans/rewrite-tie-in-memo.md`
 
 Source lines: L13-L87
 
-Source SHA256: `5cf26c95b699d21fad666870edfe85bcc4248da18ab2fae729e042f5377dfd9e`
+Source SHA256: `ffac41c33959b2a15d4ef54158a98f7e5deab29e9ce7f0cc4543a998c59afc36`
 
 ---
 
@@ -31,7 +31,7 @@ The orchestrator rewrite is now locked to these cross-doc decisions:
 
 ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Crosswalk.md
 - **GUI rewrite:** Desktop UI is switching to Rust + Slint, with Slint's cross-platform **winit backend** for Windows/macOS/Linux. [web:149]
-- **Renderer decision (locked):** default is **winit + Skia**, fallback GPU is **winit + FemtoVG-wgpu**, and we keep an emergency software fallback for compatibility; selection can be controlled via Slint's backend selection mechanisms (e.g., `BackendSelector` and/or `SLINT_BACKEND`). [web:48][web:149]
+- **Renderer decision (locked, amended 2026-10-01 by DL-139):** **winit + Skia** is the only renderer: Skia on the GPU by default, with Skia's own CPU raster (`winit-skia-software`) as the fallback for compatibility, carrying Puppet Master's own Skia renderer extensions; FemtoVG and Slint's separate software renderer are retired. Selection can be controlled via Slint's backend selection mechanisms (e.g., `BackendSelector` and/or `SLINT_BACKEND`). The web GUI is a Rust Leptos client drawn with browser elements and CSS. [web:48][web:149]
 - **Theme behavior (locked):** theme switching will be supported, but it's acceptable to require an app **restart**; we will offer both a "Puppet Master default" look and a "Basic theme."
 - **Storage rewrite (no SQLite):** storage becomes a multi-store design: `seglog` as the canonical append-only event ledger, `redb` for durable KV state/projections/settings, and Tantivy for full-text search over chats/docs/log summaries. [web:88][web:90][web:82]
 - **Search & dashboards:** "fast search for humans + AI" is implemented via Tantivy indexes built from projected events/messages, while heavy analytics scans run off the append-only seglog stream and store rollups into redb. [web:82][web:88][web:90]

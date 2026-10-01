@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L268-L288
+Source lines: L271-L291
 
-Source SHA256: `7325bc9483c8896a7acd0c67d1112c75c4b8bc709c95220c702ef0093c89acee`
+Source SHA256: `b069d8d930b657070ac7d4ab2a870398f93c8dc4f0fd3be0250ec5b6c0c4671c`
 
 ---
 
@@ -13,7 +13,7 @@ The project is intentionally adapting an OpenCode-style architecture and is mid-
 - **Providers** behind one unified **event model**
 - **Event-sourced storage**: `seglog` (canonical ledger) -> projections into `redb` (KV state/settings) + Tantivy (search)
 - **Central tool registry + policy engine** and a patch/apply/verify/rollback pipeline
-- **UI rewrite**: Rust stable 1.96.1 + Slint 1.17.1 by owner decision on 2026-07-07 (Winit + Skia compiled/default on Windows/Linux/macOS; Winit + FemtoVG-wgpu fallback; Winit software emergency fallback; Slint/WASM canvas web GUI via trusted local daemon for OS capabilities; reverify official stable releases before runtime implementation)
+- **UI rewrite**: Rust stable 1.96.1 + Slint 1.17.1 by owner decision on 2026-07-07; renderer and web stack amended on 2026-10-01 by DL-139 (Winit + Skia the only desktop renderer on Windows/Linux/macOS, GPU by default then Skia's own CPU raster, with Puppet Master's Skia renderer extensions; FemtoVG and Slint's separate software renderer retired; Leptos web GUI drawn with browser elements and CSS, served by the trusted local daemon for OS capabilities; reverify official stable releases before runtime implementation)
 - **Auth**: subscription-first; Gemini Direct (`gemini`, direct key-only/API-key-backed) remains active, while Gemini CLI (`gemini_cli`) is retired from active provider support and preserved only as source-lineage/compatibility terminology. Antigravity CLI is the active CLI-backed Google/agent route replacing the stale Gemini CLI route. Provider identity, requested/effective auth, account identity, account/plan UI, quota/usage labels, media capabilities, and setup/health are route-, account-, and model-dependent across direct providers, CLI-backed providers, coding-plan providers, and generated-media routes.
 
 ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD

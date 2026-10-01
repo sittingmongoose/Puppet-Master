@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L4-L136
+Source lines: L4-L137
 
-Source SHA256: `6eca938c359dfbe2c43525c0b5b4b39fd2475c03c73d25586cc511548f8b8d2c`
+Source SHA256: `b6c053a1765ffdf3f702d837c03f15c35da17a3794f3db8acfdd24fdd990d92e`
 
 ---
 
@@ -138,6 +138,7 @@ Orchestrator worker identity rows from `Orchestrator_Page` / `Orchestrator_Page.
 **Date:** 2026-02-22
 **Status:** Authoritative specification for AI agent implementation
 **Tech Stack:** Rust stable 1.96.1 + Slint 1.17.1 (.slint markup compiled via slint_build)
-**Renderer:** Native desktop uses Slint Winit with Skia compiled in and selected by default; fallback is Winit + FemtoVG-wgpu, then Winit software renderer only as an emergency path.
+**Renderer:** Native desktop compiles and ships only Slint's Skia renderer, extended by Puppet Master's own Skia code (F3-582): Winit + Skia on the GPU by default, then Skia's own CPU raster (Winit + Skia CPU) as the only fallback. FemtoVG and Slint's separate software renderer are retired (DL-139).
+**Web GUI:** A Leptos client written in Rust and drawn with browser elements and CSS, served by the trusted local daemon (F3-583, DL-139).
 
 ---

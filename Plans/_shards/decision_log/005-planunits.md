@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L2883-L10413
+Source lines: L2926-L10526
 
-Source SHA256: `96ecdcbdda9594b541c26057fb39ce6f6e6b2bc400c0cf2a9e8ca72cecba76a2`
+Source SHA256: `dddd135f9cbeebaaeee63939977f07f9db305c24409bd134799103853ef540d6`
 
 ---
 
@@ -7538,4 +7538,74 @@ negative_constraints:
 - Do not treat static companion checks as implemented runtime evidence.
 owner_hints:
 - Plans/Decision_Log.md
+```
+
+### DL-139 - Skia Only Desktop With Our Own Skia Extensions And A Leptos Web Client
+
+```yaml
+plan_unit_id: DL-139
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-139 records the owner decision of 2026-10-01. The native desktop GUI compiles and ships only Slint's Skia
+  renderer. Selection runs SLINT_BACKEND override, persisted preference, Skia on the GPU (winit-skia), then Skia's
+  own CPU raster (winit-skia-software); FemtoVG and Slint's separate software renderer are not compiled or shipped.
+  Puppet Master carries its own extensions to Slint's Skia renderer for element blur, backdrop blur, gradient and
+  alpha masks, blend modes, saturate/contrast/brightness filters, ClearType text on Windows and selectable rich text
+  (F3-582), written to upstream quality, offered to Slint and carried as a Cargo patch until merged. The web GUI is a
+  Leptos client drawn with browser elements and CSS and served by the trusted local daemon (F3-583); it replaces the
+  Slint/WASM canvas web GUI. Both interfaces bind one shared Rust interface-model crate and one design-token source.
+  Jared said: "ok sounds like we are doing custom skia work and only using skia for desktop.  For web, you said we
+  should use a browser-native web client, what would you recommend?", then "I told the other thread to drop the
+  slint requirements since we are going to do custom code on skia to alleviate the shortcomings.", then "ok go with
+  Leptos, draft the decision card and spec edits.  Including the skia change, custom code, dropping FemtoVG then
+  cpu(skia has cpu)." Leaving out Slint's own software renderer is recorded as the reading of "dropping FemtoVG then
+  cpu(skia has cpu)". The Slint and Rust version pins, the no-React and no-Tauri rule, the trusted local daemon
+  contract and the in-canvas float-layer name are unchanged.
+gui_related: true
+gui_classification_reason: Records the owner decision on the desktop renderer set, the visual capabilities added to
+  it, and the technology of the web GUI.
+split_recommended: false
+depends_on: [F3-026, F3-029, F3-030, F3-033, F3-271, F3-417, ATS-023]
+unblocks: [F3-582, F3-583]
+acceptance_criteria:
+  - "Every live owner and consumer statement of the desktop renderer order names Skia on the GPU then Skia's CPU raster, with FemtoVG and Slint's separate software renderer retired."
+  - "The Skia extension set and the Leptos web client each have one owning FinalGUISpec PlanUnit."
+  - "The trusted local daemon contract, web capability states, Slint version pins and the no-React and no-Tauri rule are unchanged."
+  - "The three owner answers are preserved verbatim with their source hash."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: gui_platform_renderer_or_web_stack_drift
+reasoning_tier: high
+context_scope: gui_stack_skia_leptos
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Release_Supply_Chain.md
+  - Plans/Automated_Testing_System.md
+  - Plans/rewrite-tie-in-memo.md
+  - Plans/settings_inventory.json
+  - Plans/00-plans-index.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/ANSWERS-20261001.md, SHA-256 9ca1e2ab54c77a744d629eb4c6dcc1aa8c9d206c6256efbce8b66230a0961ad6"
+preserved_exact_tokens:
+  - "DL-139"
+  - "winit-skia"
+  - "winit-skia-software"
+  - "Leptos"
+  - "FemtoVG"
+  - "dropping FemtoVG then cpu(skia has cpu)"
+negative_constraints:
+  - "Do not compile or ship FemtoVG or Slint's separate software renderer in desktop builds."
+  - "Do not use React, Tauri or TypeScript for the web GUI; JavaScript is limited to generated or minimal glue."
+  - "Do not edit the Slint or Rust version pins under this decision."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/Release_Supply_Chain.md
+  - Plans/Automated_Testing_System.md
 ```

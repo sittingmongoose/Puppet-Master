@@ -1000,7 +1000,7 @@ Platform admission covers native Windows without WSL, optional WSL distributions
 
 Installed-size budgets report PM core, bundled CEF, each renderer/backend, Safe UI/recovery artifacts, on-demand capabilities, provider/source-control tools, project toolchains, plugin packages/data, and debug symbols separately plus combined supported configurations. Symbols publish separately. Duplicate tool versions, unused Slint backends/renderers, provider CLI pre-seeds, and unreferenced package payloads fail size admission.
 
-By explicit user approval on 2026-09-09, Release consumes the existing `Plans/FinalGUISpec.md` renderer-owner order: Winit + Skia is compiled and selected by default, Winit + FemtoVG-wgpu is the fallback, and the Winit software renderer is the emergency path. Selection precedence remains `SLINT_BACKEND` explicit override, persisted renderer preference, compiled Skia default, FemtoVG-wgpu fallback, then software emergency fallback; the compiled default never overrides either explicit operator choice. Release verification measures that selected order and precedence across themes/platforms, old GPU/CPU, VM/RDP, Wayland/X11, resize, effects, startup, frame, idle, memory, and package size. Those results may block a release or motivate a later explicit GUI-owner amendment, but Release does not reopen a renderer bakeoff, silently reorder the selector, or treat static packaging as runtime proof.
+By explicit user approval on 2026-09-09, Release consumes the `Plans/FinalGUISpec.md` renderer-owner order, which the owner amended on 2026-10-01 (DL-139): Skia is the only renderer compiled and shipped, drawing on the GPU (`winit-skia`) by default with Skia's own CPU raster (`winit-skia-software`) as the only fallback, and Puppet Master's Skia renderer extensions (F3-582) ship with it. FemtoVG and Slint's separate software renderer are not packaged. Selection precedence remains `SLINT_BACKEND` explicit override, persisted renderer preference, then the compiled Skia GPU default and the Skia CPU fallback; the compiled default never overrides either explicit operator choice. Release verification measures that selected order and precedence across themes/platforms, old GPU/CPU, VM/RDP, Wayland/X11, resize, effects, startup, frame, idle, memory, and package size. Those results may block a release or motivate a later explicit GUI-owner amendment, but Release does not reopen a renderer bakeoff, silently reorder the selector, or treat static packaging as runtime proof.
 
 Release acceptance consumes runtime benchmark receipts for cold/warm launch, same-frame command acknowledgement, pause/stop latency under saturation, provider-fragment paint, 1/10/50/200 logical threads, many named Plans, queue/fairness, process-tree RSS, unified graphics/media memory, idle CPU/wakeups/network/disk, low-resource/thermal/battery behavior, failure recovery, and 24-hour soak. Static schemas, conformance reports, artifact hashes, or package retention alone are not empirical performance proof.
 
@@ -1069,9 +1069,10 @@ status: accepted
 owner_doc: Plans/Release_Supply_Chain.md
 canonical_text: >-
   Release candidates retain portable x86-64 and native arm64 compatibility, admit runtime-dispatched fast
-  paths only with portable equivalence evidence, preserve the GUI-owner Winit plus Skia default, Winit plus
-  FemtoVG-wgpu fallback, and Winit software emergency order, separate installed-size families, and consume raw
-  cross-platform, low-resource, old-hardware, recovery, and soak benchmarks before any performance claim.
+  paths only with portable equivalence evidence, preserve the GUI-owner order of Winit plus Skia on the GPU then
+  Winit plus Skia CPU raster with Puppet Master's Skia renderer extensions and no FemtoVG or separate software
+  renderer (DL-139), separate installed-size families, and consume raw cross-platform, low-resource, old-hardware,
+  recovery, and soak benchmarks before any performance claim.
 gui_related: false
 depends_on: [SIR-017, RSC-006, RSC-008]
 unblocks: []
@@ -1079,7 +1080,7 @@ acceptance_criteria:
   - No artifact globally requires AVX2, AVX-512, target-cpu=native, WSL on Windows, or one CPU vendor.
   - Every optimized path retains a portable fallback and equivalence/fuzz/boundary/end-to-end/old-hardware evidence.
   - LTO/PGO and any assembly path bind reproducible toolchain/config/profile/ABI/fallback evidence.
-  - Release artifacts and tests preserve and verify SLINT_BACKEND explicit override, persisted renderer preference, Winit plus Skia compiled/default, Winit plus FemtoVG-wgpu fallback, then Winit software emergency selection without letting the default override operator choice or reopening a Release-owned renderer bakeoff.
+  - Release artifacts and tests preserve and verify SLINT_BACKEND explicit override, persisted renderer preference, Winit plus Skia on the GPU as the compiled default, then Winit plus Skia CPU raster (winit-skia-software) selection, with the Skia renderer extensions present on both paths and no FemtoVG or separate software renderer packaged, without letting the default override operator choice or reopening a Release-owned renderer bakeoff.
   - Installed size separates PM core, CEF, renderers, Safe UI, on-demand tools, provider tools, plugins/data, project toolchains, and symbols.
   - Unsupported platform or benchmark lanes remain not_run with residual risk, and static artifact/schema proof cannot become runtime performance evidence.
 validation_surfaces: [future release artifact matrix, size-budget receipts, architecture-dispatch tests, selected renderer-order and fallback-path verification, full-thread benchmark and 24-hour-soak receipts]
@@ -1090,6 +1091,7 @@ implementation_surfaces: [Plans/Release_Supply_Chain.md]
 node_compile_hint: {mode: portable_release_artifact_performance_gate, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - source_ref:user_approval:2026-09-09:uphold_final_gui_renderer_order
+  - "Plans/Decision_Log.md#DL-139 (owner answers, 2026-10-01; renderer set amended to Skia only)"
   - PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/02_FINAL_DECISION_REGISTER.md
   - PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/07_PERFORMANCE_PLATFORM_STORAGE_BENCHMARKS.md
   - PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/08_ACCEPTANCE_TEST_AND_FAILURE_MATRIX.md

@@ -2,17 +2,17 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L111-L328
+Source lines: L111-L334
 
-Source SHA256: `2b02322a32fc054957efa8bac3e82e77bd336091340e32287303f58c1d27e337`
+Source SHA256: `588d7b8b2569294ff025380387bb5dacbb90f22ef06903c31f2194b6c98ec08f`
 
 ---
 
 ## GUI web development and smoke-test workflow addendum (2026-07-07)
 
-The Slint/WASM web GUI development workflow uses a trusted local daemon plus a static web route, fixture mode, browser automation smoke tests, screenshots/state capture, deterministic state hooks, and fast rebuild/reload loops. The test harness must prove daemon capability probes, pairing/origin/CSRF protections, degraded reasons when the daemon is absent or narrowed, screenshot and state-capture evidence, and reload behavior for the static web route. Production builds must not enable dev/test, MCP, live-preview, fixture, or browser automation controls unless explicit configuration enables the capability and records permission/audit receipts.
+The Leptos web GUI development workflow (DL-139; it replaces the Slint/WASM web GUI) uses a trusted local daemon plus a static web route, fixture mode, browser automation smoke tests, screenshots/state capture, deterministic state hooks, and fast rebuild/reload loops. Because the web GUI is drawn with browser elements, smoke tests and state capture drive and read the page's own elements, and the same fixtures also run through the Slint desktop so screenshots of both can be compared (F3-583). The test harness must prove daemon capability probes, pairing/origin/CSRF protections, degraded reasons when the daemon is absent or narrowed, screenshot and state-capture evidence, and reload behavior for the static web route. Production builds must not enable dev/test, MCP, live-preview, fixture, or browser automation controls unless explicit configuration enables the capability and records permission/audit receipts.
 
-### ATS-023 - Slint WASM Web GUI Dev Preview And Smoke Tests
+### ATS-023 - Web GUI Dev Preview And Smoke Tests
 
 ```yaml
 plan_unit_id: ATS-023
@@ -20,8 +20,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
-  Slint/WASM web GUI development uses a trusted local daemon plus static web route, fixture mode, browser automation
-  smoke test, screenshots/state-capture, deterministic state hooks, and fast rebuild/reload. Production builds must not
+  Leptos web GUI development (DL-139, F3-583) uses a trusted local daemon plus static web route, fixture mode, browser
+  automation smoke test that drives and reads the page's own elements, screenshots/state-capture, deterministic state
+  hooks, and fast rebuild/reload; the same fixtures also run through the Slint desktop so screenshots of both can be
+  compared. Production builds must not
   enable dev/test, MCP, live-preview, fixture, or browser automation features unless explicit configuration enables the
   capability and records permission/audit receipts.
 gui_related: true
@@ -56,7 +58,9 @@ node_compile_hint:
 source_lineage:
 - Plans/.audits/fable-20260706/currentness_check_report.json
 - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:8
+- "Plans/Decision_Log.md#DL-139 (owner answers, 2026-10-01)"
 preserved_exact_tokens:
+- "Leptos web GUI"
 - "trusted local daemon"
 - "static web route"
 - "fixture mode"
@@ -67,6 +71,8 @@ preserved_exact_tokens:
 negative_constraints:
 - "Production builds must not enable dev/test/MCP/live-preview features unless explicitly configured."
 - "Browser-only WASM must not claim direct OS authority."
+stale_retired_dispositions:
+- "DL-139 retires the Slint/WASM web GUI this workflow was first written for; the workflow now serves the Leptos web GUI."
 owner_hints:
 - Plans/Automated_Testing_System.md
 - Plans/FinalGUISpec.md

@@ -2,13 +2,16 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L13-L107
+Source lines: L13-L110
 
-Source SHA256: `7325bc9483c8896a7acd0c67d1112c75c4b8bc709c95220c702ef0093c89acee`
+Source SHA256: `b069d8d930b657070ac7d4ab2a870398f93c8dc4f0fd3be0250ec5b6c0c4671c`
 
 ---
 
 ## Change Summary
+
+- 2026-10-01: Owner decision DL-139 on the GUI stack (`Plans/Decision_Log.md#DL-139`): the native desktop compiles and ships only Slint's Skia renderer, Skia on the GPU then Skia's own CPU raster, with FemtoVG and Slint's separate software renderer retired; Puppet Master's own Skia renderer extensions add element and backdrop blur, masks, blend modes, saturate/contrast/brightness filters, ClearType text on Windows and selectable rich text (`Plans/FinalGUISpec.md#F3-582`); the web GUI is a Rust Leptos client drawn with browser elements and CSS, replacing the Slint/WASM canvas client (`Plans/FinalGUISpec.md#F3-583`). Consumers updated: `Plans/FinalGUISpec.md` §2.1–2.4, §2.8, Appendix B and F3-026/029/030/033/271/417, `Plans/Automated_Testing_System.md#ATS-023`, `Plans/Release_Supply_Chain.md#RSC-012`, `Plans/rewrite-tie-in-memo.md#RTIM-005` and the Graphics Engine row of `Plans/settings_inventory.json`. Slint and Rust version pins are unchanged.
+  ContractRef: ContractName:Plans/Decision_Log.md#DL-139, ContractName:Plans/FinalGUISpec.md#F3-582, ContractName:Plans/FinalGUISpec.md#F3-583, ContractName:Plans/Automated_Testing_System.md#ATS-023, ContractName:Plans/Release_Supply_Chain.md#RSC-012
 
 - 2026-09-27: User decisions on the Settings rework: family-specific appearance rows (Glass, Retro, Basic) show only while their theme family is active (`Plans/Settings_System.md#SSYS-010`); Commands & Shortcuts uses guided New command and Add shortcut helpers and exposes the clash-handling choice (`Plans/Commands_System.md#CS-081`, S8); one-time registry and Unraid setup flows may run in Settings while container operations stay with Docker Manager (`Plans/Settings_System.md#SSYS-013`); Agent Config is realized inside Settings by the AI Providers, Personas & Crews and Skills managers (`Plans/FinalGUISpec.md` §7.4.7); eleven hand-drawn rows are admitted to `Plans/settings_inventory.json` and Corner roundness, Border width and Scrollbar width default to the theme's own (`Plans/FinalGUISpec.md#F3-441`).
 - 2026-09-27: Recorded the Settings rework demonstrated in `Concepts/onboarding/opus-5.5/src/settings`. `Plans/Settings_System.md` gains SSYS-040 (every view draws short everyday groups and one More options disclosure; the plain pages App & Input, Editor & Terminal, Containers, Planning & Interviews and Advanced Settings with their groups; manager tab groups; 44 canonical-id moves between pages; retired hand-written duplicate rows and manager-owned copies; plain-language labels with a sentence-case fallback and worded options, units and bounds; dependent-row visibility; owner routes and form/check/confirm/list/order flows instead of the generic action panel; structured editors; per-account and per-service rows) and SSYS-041 (appearance rows apply as overrides over the per-variant token contract, write nothing while unchanged, and reset removes only what they wrote), with §4.4 and §22 amended. `Plans/FinalGUISpec.md` §25, the Home reset-layout note and the theme-token addendum, `Plans/UI_Wiring_Rules.md` §16 and the Home checklist in `Plans/GUI_Rebuild_Requirements_Checklist.md` consume them. Manager keys, routes, command ids and inventory ids are unchanged; no command, handler, wiring row, inventory row or governance seal is added, and the concept remains fixture-only evidence.

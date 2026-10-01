@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-09-27T02:32:54Z",
+  "generated_at_utc": "2026-10-01T19:34:49Z",
   "index_path": "Plans/_shards/release_supply_chain/00-index.md",
-  "index_sha256": "5fa61d6bc92333fa6aa71003e162a3697fd402b584ed19697584a491f4211e87",
+  "index_sha256": "9ebe3af9a8c01c0330143aba45b1e5b67e0adb251ec94b5d522d2383c69dca0a",
   "manifest_path": "Plans/_shards/release_supply_chain/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/release_supply_chain/001-preamble.md",
-      "sha256": "ebe420d4c55c8c394ff208a75037249d33190b3fdb4a94d1bc19e7b37e5fb117",
+      "sha256": "6cfb8fedf89cb613f9afc0c19504099211bd0381ceeb355d57920edac9cbdcd3",
       "shard_id": "001",
       "source_line_end": 4,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/release_supply_chain/002-0.-scope.md",
-      "sha256": "e131ba00e98e3df06e342fca7487bf2696837755d9b1e3912e12929caecedd23",
+      "sha256": "05e041f47a902b829a05e4017390198d91173bb96de4622389ddc332ff4a4688",
       "shard_id": "002",
       "source_line_end": 10,
       "source_line_start": 6,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Ownership And Consumers",
       "path": "Plans/_shards/release_supply_chain/003-1.-ownership-and-consumers.md",
-      "sha256": "e77879c204c6643b5a77f5eefe341b2c5d61087e477cc40a5834226a9b5756f8",
+      "sha256": "f0a396d32647d09e18cc1dd9bc1b1e365c67d63b6ee83055eea40d6861d416c5",
       "shard_id": "003",
       "source_line_end": 36,
       "source_line_start": 12,
@@ -35,7 +35,7 @@
     {
       "heading": "2. Canonical PlanUnits",
       "path": "Plans/_shards/release_supply_chain/004-2.-canonical-planunits.md",
-      "sha256": "1b40c0afd2d11eef56a4a597469684b9a03b71c19301138e38eac77677d2a744",
+      "sha256": "39e7dc39ab68ec9787abcca6a795aa362feceddc022ac538196cc04036e2e20a",
       "shard_id": "004",
       "source_line_end": 602,
       "source_line_start": 38,
@@ -44,7 +44,7 @@
     {
       "heading": "3. Contracts, Schemas, Events, Or Data Shapes",
       "path": "Plans/_shards/release_supply_chain/005-3.-contracts-schemas-events-or-data-shapes.md",
-      "sha256": "357059771b1c289eed9382d54ffc816b71e273d24c29bba588fe594b317e0f5c",
+      "sha256": "cab6b807c1f2396cb492d766e956b74403e0996531cd55053d75a135c13a2ca7",
       "shard_id": "005",
       "source_line_end": 606,
       "source_line_start": 604,
@@ -53,7 +53,7 @@
     {
       "heading": "4. Integration Surfaces",
       "path": "Plans/_shards/release_supply_chain/006-4.-integration-surfaces.md",
-      "sha256": "f07b405b0efacc6d64f983891b80ec92dce3a2908416620f571437ae5b9643ad",
+      "sha256": "3af7d17f0710f9f1a97367d8bee44ccd0f10f5012ded091d0fbb1c58d0a276bc",
       "shard_id": "006",
       "source_line_end": 610,
       "source_line_start": 608,
@@ -62,7 +62,7 @@
     {
       "heading": "5. Validation And Acceptance",
       "path": "Plans/_shards/release_supply_chain/007-5.-validation-and-acceptance.md",
-      "sha256": "859a950d6e93f4adecba302d2296268ccf92dd620f6b05e2e09e93ffdf90804d",
+      "sha256": "e28b4bef665f0c5c38460f9bd695c671fc821aaed7d03857a7157b1d773f5721",
       "shard_id": "007",
       "source_line_end": 614,
       "source_line_start": 612,
@@ -71,7 +71,7 @@
     {
       "heading": "6. Plan-To-Node Readiness",
       "path": "Plans/_shards/release_supply_chain/008-6.-plan-to-node-readiness.md",
-      "sha256": "bd5d3eff0c4476e176ce370473c9d314da44a28b14d6b64c5e085eb3ff3f5a46",
+      "sha256": "de6c2b8ac2b34c4e260901a849e7fc6343fe41f5b0a16227ff5ffa85fc4bdf23",
       "shard_id": "008",
       "source_line_end": 618,
       "source_line_start": 616,
@@ -80,7 +80,7 @@
     {
       "heading": "7. Deferred, Retired, Compatibility, And Non-Goals",
       "path": "Plans/_shards/release_supply_chain/009-7.-deferred-retired-compatibility-and-non-goals.md",
-      "sha256": "91367dcfdac535dbf373223308cfea76f1231092a4c45f92a11ca92bb4cae548",
+      "sha256": "36797648d834bd23c13259e29dab6a2160c9d706b0c370f9b17d73a21e684cfc",
       "shard_id": "009",
       "source_line_end": 622,
       "source_line_start": 620,
@@ -89,7 +89,7 @@
     {
       "heading": "8. Source Lineage And Governance",
       "path": "Plans/_shards/release_supply_chain/010-8.-source-lineage-and-governance.md",
-      "sha256": "b6a9f077d5a01fe636745f3f583f4f7a20c246f2c26186718507114de961815c",
+      "sha256": "3bdc2e4a5b9945c64d0a6fda8385d7180cf6b216a402f5011eefed721a68d921",
       "shard_id": "010",
       "source_line_end": 628,
       "source_line_start": 624,
@@ -98,7 +98,7 @@
     {
       "heading": "FABLE Residual Release Supply Chain Cleanup Addendum - 2026-07-07",
       "path": "Plans/_shards/release_supply_chain/011-fable-residual-release-supply-chain-cleanup-addendum-2026-07-07.md",
-      "sha256": "503f178c6781eb5ef64dfe26054e9e0a10a37072af8ef185e9954b985529240c",
+      "sha256": "ece79750695e54df63973b06eeaeeb918bc780c97455835def311cf035973f75",
       "shard_id": "011",
       "source_line_end": 719,
       "source_line_start": 630,
@@ -107,7 +107,7 @@
     {
       "heading": "Case L Release Migration And Recovery Gate Propagation - 2026-07-17",
       "path": "Plans/_shards/release_supply_chain/012-case-l-release-migration-and-recovery-gate-propagation-2026-07-1.md",
-      "sha256": "29aaf3270d7c3ed10e88844282b05d8eb1583238d708350dc91cb1795189a118",
+      "sha256": "bf8a6f1b43a0bbe26d48ef501bea96b0da655d9ec387971e50a2d717adfabe50",
       "shard_id": "012",
       "source_line_end": 810,
       "source_line_start": 721,
@@ -116,7 +116,7 @@
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/release_supply_chain/013-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "fd716a07ff4e6b0b90bb10f2105736c65fef9da7597854417cc68f01836b7172",
+      "sha256": "bdb5726417b1d9592187d908874e409844cdcd1db291670f8936fcabb985ed65",
       "shard_id": "013",
       "source_line_end": 821,
       "source_line_start": 812,
@@ -125,7 +125,7 @@
     {
       "heading": "FABLE Remaining Action Plan Repair Notes (2026-07-08)",
       "path": "Plans/_shards/release_supply_chain/014-fable-remaining-action-plan-repair-notes-2026-07-08.md",
-      "sha256": "9544bdfeb1ab928de34c88c7520e003afe95b84b2c65a9eb24ef8c9bee553dac",
+      "sha256": "ffe4de0b3c822a93fcc4bf77b607df38eb3c964ebf8884ff5df0061e0a91024a",
       "shard_id": "014",
       "source_line_end": 831,
       "source_line_start": 822,
@@ -134,7 +134,7 @@
     {
       "heading": "Provider CLI Acquisition Supply-Chain Addendum - 2026-08-13",
       "path": "Plans/_shards/release_supply_chain/015-provider-cli-acquisition-supply-chain-addendum-2026-08-13.md",
-      "sha256": "c65017d10f87b60efd5baf82a5b48c67835cfc58b7efd1aefd51b2e786149b13",
+      "sha256": "b3e270c79293b05a1e7fdb329c4999562951b67d811126c838143af272b71570",
       "shard_id": "015",
       "source_line_end": 962,
       "source_line_start": 833,
@@ -143,70 +143,70 @@
     {
       "heading": "Plugin Package And Full-Thread Artifact Addendum - 2026-08-31",
       "path": "Plans/_shards/release_supply_chain/016-plugin-package-and-full-thread-artifact-addendum-2026-08-31.md",
-      "sha256": "a9513f99522f9c0afb504dd5fc7a3f1f82a0d71ce03369b4de13a4057b09ba31",
+      "sha256": "05342b141e06985ea5a8c8a8dca58de51d31ed01594fa4d715fb16b79839bad1",
       "shard_id": "016",
-      "source_line_end": 1100,
+      "source_line_end": 1102,
       "source_line_start": 964,
       "split_rule": "heading-##"
     },
     {
       "heading": "Typed Command Supply-Chain Handoff Addendum",
       "path": "Plans/_shards/release_supply_chain/017-typed-command-supply-chain-handoff-addendum.md",
-      "sha256": "6c12d264336cd1893179f74099a9514d14a5034a8135210844899a13c35adca2",
+      "sha256": "9c257872944b304e04e0286e442c6b8b6502461409663f96492b2f28f00dfae1",
       "shard_id": "017",
-      "source_line_end": 1165,
-      "source_line_start": 1102,
+      "source_line_end": 1167,
+      "source_line_start": 1104,
       "split_rule": "heading-##"
     },
     {
       "heading": "Server command-gap owner closure - application update lifecycle (2026-09-01)",
       "path": "Plans/_shards/release_supply_chain/018-server-command-gap-owner-closure-application-update-lifecycle-20.md",
-      "sha256": "d9bf04f5b7731aad7e7e2ce0115787eb1c421b05d5675e6273fcf7a470e7d1cb",
+      "sha256": "0118ec13fa3f174dee694ba2179c8b8650cf417d6199ad4af4301ca8e4ddef98",
       "shard_id": "018",
-      "source_line_end": 1207,
-      "source_line_start": 1167,
+      "source_line_end": 1209,
+      "source_line_start": 1169,
       "split_rule": "heading-##"
     },
     {
       "heading": "Post-Integration Bundled Dependency And Provider-Registration Addendum - 2026-09-01",
       "path": "Plans/_shards/release_supply_chain/019-post-integration-bundled-dependency-and-provider-registration-ad.md",
-      "sha256": "112b8cc26a7b43235e361811961da5515101c6067b69b38f15790fb53e10e61f",
+      "sha256": "c71e182f0052d00e3b90faa7135ec53745c22d832295f61fbcdbc8bdad96de6e",
       "shard_id": "019",
-      "source_line_end": 1289,
-      "source_line_start": 1209,
+      "source_line_end": 1291,
+      "source_line_start": 1211,
       "split_rule": "heading-##"
     },
     {
       "heading": "Platform package support carrier and current installation authority",
       "path": "Plans/_shards/release_supply_chain/020-platform-package-support-carrier-and-current-installation-author.md",
-      "sha256": "84ac2f446794ce01aae3c90ce0bb1a4669afc70c906586af52f8dcf673dfcf09",
+      "sha256": "66f4788d72c45fb53750d5dd961f7ea68c6b7eace81fd529f218c47e6f5a1696",
       "shard_id": "020",
-      "source_line_end": 1366,
-      "source_line_start": 1290,
+      "source_line_end": 1368,
+      "source_line_start": 1292,
       "split_rule": "heading-##"
     },
     {
       "heading": "Goal-created reader package graph and original installation",
       "path": "Plans/_shards/release_supply_chain/021-goal-created-reader-package-graph-and-original-installation.md",
-      "sha256": "8ece8ac329ac115479f49be3dde8a6ac38acfea731b3231bbf3820696d6fcd06",
+      "sha256": "3e4b5f10e0d2bd71fa50ff6578c66dd3fed75e7fe6e68cc3f1494bc5e1680217",
       "shard_id": "021",
-      "source_line_end": 1466,
-      "source_line_start": 1367,
+      "source_line_end": 1468,
+      "source_line_start": 1369,
       "split_rule": "heading-##"
     },
     {
       "heading": "Application check scheduling and managed WSL image admission \u2014 2026-09-27",
       "path": "Plans/_shards/release_supply_chain/022-application-check-scheduling-and-managed-wsl-image-admission-202.md",
-      "sha256": "1ea9de0e08a14762a0dce9248b410f638d061060ac60ce52df44f020edc08a70",
+      "sha256": "8a23a92b07f7b58bb5a4ace067857a19c3bb5a184f46f6eb18bc12af92a95d7f",
       "shard_id": "022",
-      "source_line_end": 1541,
-      "source_line_start": 1468,
+      "source_line_end": 1543,
+      "source_line_start": 1470,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 1541,
+    "line_count": 1543,
     "path": "Plans/Release_Supply_Chain.md",
-    "sha256": "b28d0c1be496104b047180f4354681eeacd459a3c9124356e8d77a913d600e30"
+    "sha256": "25b86a9c29a1ba3d386960f226d6688112a50c32aed876d76e1711d8352fcf17"
   }
 }

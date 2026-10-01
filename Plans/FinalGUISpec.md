@@ -131,7 +131,8 @@ Orchestrator worker identity rows from `Orchestrator_Page` / `Orchestrator_Page.
 **Date:** 2026-02-22
 **Status:** Authoritative specification for AI agent implementation
 **Tech Stack:** Rust stable 1.96.1 + Slint 1.17.1 (.slint markup compiled via slint_build)
-**Renderer:** Native desktop uses Slint Winit with Skia compiled in and selected by default; fallback is Winit + FemtoVG-wgpu, then Winit software renderer only as an emergency path.
+**Renderer:** Native desktop compiles and ships only Slint's Skia renderer, extended by Puppet Master's own Skia code (F3-582): Winit + Skia on the GPU by default, then Skia's own CPU raster (Winit + Skia CPU) as the only fallback. FemtoVG and Slint's separate software renderer are retired (DL-139).
+**Web GUI:** A Leptos client written in Rust and drawn with browser elements and CSS, served by the trusted local daemon (F3-583, DL-139).
 
 ---
 
@@ -196,22 +197,29 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Sec
 |-----------|-----------|-------|
 | Language | Rust stable 1.96.1 | All logic, state management, and Slint bridge code; verified current stable on 2026-07-02 |
 | UI Framework | Slint 1.17.1 | `.slint` markup files compiled via `slint_build` in `build.rs`; selected by owner decision on 2026-07-07 |
-| Default Renderer | Winit + Skia | Skia is compiled in for Windows, Linux, and macOS native desktop builds and is the default renderer |
-| Fallback Renderer | Winit + FemtoVG-wgpu | Used when Skia is unavailable after explicit override and persisted-preference resolution |
-| Emergency Renderer | Winit software renderer | Last resort for headless, CI, unsupported GPU, or emergency recovery environments |
+| Default Renderer | Winit + Skia (GPU) | Skia is the only renderer compiled into Windows, Linux, and macOS native desktop builds; it draws on the GPU (Metal, Direct3D, Vulkan, or OpenGL) by default and carries Puppet Master's Skia renderer extensions (F3-582) |
+| Fallback Renderer | Winit + Skia CPU (`winit-skia-software`) | Skia's own CPU raster, used when no GPU surface can be created after explicit override and persisted-preference resolution; also the headless, CI, and emergency-recovery renderer. Heavy blur is off on this path |
+| Retired Renderers | Winit + FemtoVG-wgpu, Winit software renderer | Not compiled or shipped (DL-139); the names remain source lineage only |
+| Web GUI | Leptos 0.8 (client-side rendered) | Rust compiled to WebAssembly, drawn with browser elements and CSS, served by the trusted local daemon (§2.3, F3-583) |
 | Persistence (layout) | redb | Durable KV store for layout state, preferences, editor state |
 | Persistence (events) | seglog | Canonical event ledger for usage, chat, orchestrator events |
 | Search | Tantivy | Full-text search index over seglog projections |
 
-Toolchain currentness is a certification input, not PMConcept evidence. Runtime implementation or production build packets must re-check the official Rust stable channel and Slint current stable release before code work starts; stale PMConcept terminal transcripts, demo version strings, and old audit references are concept/source-lineage fixtures only.
+Toolchain currentness is a certification input, not PMConcept evidence. Runtime implementation or production build packets must re-check the official Rust stable channel, Slint current stable release, and Leptos current stable release before code work starts; stale PMConcept terminal transcripts, demo version strings, and old audit references are concept/source-lineage fixtures only.
 
 ### 2.2 Native Desktop Renderer Contract
 
-Native desktop targets Windows, Linux, and macOS through the Slint Winit backend. The compiled renderer availability order is Winit + Skia, Winit + FemtoVG-wgpu, then Winit software renderer. Runtime selection resolves in this order: `SLINT_BACKEND` explicit override, persisted renderer preference, compiled Skia default, FemtoVG-wgpu fallback, and software emergency fallback. `SLINT_BACKEND` remains valid for debugging, CI, and operator override, but persisted preferences must not silently override an explicit environment override. Startup diagnostics record the requested backend, effective backend, fallback reason, platform, GPU/driver summary when available, and whether the fallback was operator-selected or automatic.
+Native desktop targets Windows, Linux, and macOS through the Slint Winit backend. Skia is the only compiled renderer (DL-139). The renderer availability order is Winit + Skia on the GPU (`winit-skia`), then Winit + Skia CPU raster (`winit-skia-software`). Runtime selection resolves in this order: `SLINT_BACKEND` explicit override, persisted renderer preference, Skia GPU default, then Skia CPU fallback. FemtoVG and Slint's separate software renderer are not compiled; a `SLINT_BACKEND` value or persisted preference naming them is an unavailable backend that emits a startup diagnostic and falls through. `SLINT_BACKEND` remains valid for debugging, CI, and operator override, but persisted preferences must not silently override an explicit environment override. Startup diagnostics record the requested backend, effective backend, fallback reason, platform, GPU/driver summary when available, whether the fallback was operator-selected or automatic, and whether the Skia renderer extensions run in their GPU or CPU form.
+
+#### Skia renderer extensions (DL-139)
+
+Puppet Master extends Slint's Skia renderer with its own code; F3-582 owns the contract. The extensions add, as `.slint` properties drawn by Skia: element blur; backdrop blur of what is drawn underneath an element; gradient and alpha masks; blend modes; saturate, contrast, and brightness filters; ClearType text on Windows; and selectable rich text (`StyledText`) with readable selection offsets. ClearType reads the Windows font-smoothing settings, gives Skia surfaces the screen's subpixel layout, draws glyphs with subpixel edging, and falls back to grayscale for text in fading or cached layers, text being scaled or rotated, and transparent windows. macOS keeps grayscale text; Linux subpixel text is out of scope until Skia's FreeType path supports it. On the CPU path heavy blur is off and blurred panels draw solid. The extensions are written to upstream quality, offered to Slint against slint-ui/slint#612, #2066, and #5748, and carried as a Cargo `[patch]` of Slint's crates until merged; each Slint upgrade re-applies and re-verifies them. Motion that Slint lacks but that needs no renderer work, such as multi-step keyframes, stepped easing, and path draw-on, is built from Slint animations, `animation-tick()`, and timers rather than from these extensions.
 
 ### 2.3 Web/WASM GUI Contract
 
-The first GUI implementation includes both the native desktop target and a Slint Rust WASM web GUI. The web GUI is a Slint/WASM canvas client compiled as a Rust `cdylib` with `wasm-bindgen`, `wasm-pack`, or an approved equivalent toolchain and loaded by a minimal HTML/canvas bootstrap. The web target does not use React, Tauri, or DOM-rendered product UI. Browser JavaScript is limited to generated or minimal bootstrap glue needed to load the WASM canvas client, route static assets, attach the canvas, and connect to approved local services.
+The first GUI implementation includes both the native desktop target and a web GUI (DL-139). The web GUI is a Leptos client written in Rust, compiled to WebAssembly, and rendered in the browser (client-side rendering). It draws its interface with browser elements and CSS, so it uses the browser's own text rendering, text selection, and CSS effects. It pins the Leptos 0.8 line until 0.9 is stable and is served as a static web route by the trusted local daemon. The web target does not use React, Tauri, or TypeScript; browser JavaScript is limited to generated glue (such as `wasm-bindgen` output) and the minimal bootstrap needed to load the WASM module, route static assets, and connect to approved local services. The Slint/WASM canvas web GUI is retired. F3-583 owns the web-client contract.
+
+Desktop and web stay in step through one shared Rust interface-model crate that owns state, commands, formatting, and validation and that both the Slint desktop and the Leptos web client bind to; one design-token source that generates both the Slint theme globals and the CSS custom properties for every theme; and the same fixtures run through both interfaces, with screenshots of each.
 
 Browser-only WASM is not allowed to pretend it owns OS capabilities. It must not claim direct ownership of PTY, project filesystem mutation or watching, process/container execution, CEF-class browser embedding, system tray, native windows, native child windows, or raw native OS drag/drop. When a capability is unavailable in the browser sandbox, the UI shows the capability state, degraded reason, and the approved native or daemon-mediated route.
 
@@ -246,7 +254,7 @@ The web GUI development workflow uses a local trusted daemon plus a static web r
 
 ### 2.8 What Is NOT Used
 
-Native product UI does not use React, JavaScript, TypeScript, HTML, CSS, Tauri, or DOM-rendered controls. The native desktop GUI is Rust + Slint `.slint` markup. The web GUI uses Rust Slint compiled to WASM canvas plus minimal bootstrap glue only; it is not a React/Tauri/web-DOM product UI.
+Native desktop product UI does not use React, JavaScript, TypeScript, HTML, CSS, Tauri, or DOM-rendered controls; it is Rust + Slint `.slint` markup drawn by Skia. The web GUI is a Rust Leptos client drawn with browser elements and CSS; it does not use React, Tauri, or TypeScript, and its JavaScript is limited to generated or minimal glue. Neither target uses FemtoVG, Slint's separate software renderer, or a Slint/WASM canvas client (DL-139).
 
 ### 2.9 Build Integration
 
@@ -1462,12 +1470,12 @@ The `cosmic` base style is used because it supports `ColorScheme` toggling and h
 Provider CLI backend eligibility is separate from Slint renderer selection: Cursor CLI must be re-evaluated as an ACP-capable first-class CLI backend, not only a stream-json bridge, before GUI diagnostics classify it as a legacy stream transport.
 
 
-Backend is chosen at startup; all windows use the same backend. Selection uses `slint::BackendSelector::new().select()` with `SLINT_BACKEND` environment variable override. Cargo features control which renderers are compiled in (e.g., `default = ["renderer-skia"]`, optional `renderer-femtovg`).
+Backend is chosen at startup; all windows use the same backend. Selection uses `slint::BackendSelector::new().select()` with `SLINT_BACKEND` environment variable override. Cargo features compile only the Skia renderer with its CPU raster surface (`renderer-skia`); `renderer-femtovg`, `renderer-femtovg-wgpu`, and `renderer-software` are not enabled (DL-139).
 
 Deterministic selection order:
 1. Explicit valid `SLINT_BACKEND` override wins.
 2. Otherwise use the persisted app preference if it maps to a compiled-in backend.
-3. Otherwise use compiled default order: `winit + Skia` → `winit + FemtoVG-wgpu` → emergency software renderer.
+3. Otherwise use compiled default order: `winit + Skia` on the GPU (`winit-skia`) → `winit + Skia CPU` (`winit-skia-software`).
 
 Failure handling:
 - An invalid override or unavailable preferred backend MUST emit a startup diagnostic and fall through deterministically to the next compiled-in backend.
@@ -4048,8 +4056,8 @@ LF-007 stale-reference cleanup applies to this appendix and to `Plans/assistant-
 These decisions are final and must not be revisited during implementation:
 
 1. **Rust stable 1.96.1 verified 2026-07-02; Slint 1.17.1 selected/currentness decision 2026-07-07** -- no other native UI framework; reverify official stable releases before coding/build work
-2. **winit + Skia** default, **winit + FemtoVG-wgpu** fallback
-3. **No React/Tauri/DOM-rendered product UI or HTML/CSS/JS product shell** -- native desktop is Rust + Slint `.slint` markup; Slint/WASM web may use only minimal HTML/canvas bootstrap and generated/minimal JavaScript glue needed to load the WASM canvas client
+2. **winit + Skia only** -- Skia on the GPU by default, Skia's own CPU raster as the only fallback, extended by Puppet Master's Skia renderer extensions (F3-582); FemtoVG and Slint's separate software renderer are retired (DL-139)
+3. **No React/Tauri product UI** -- native desktop is Rust + Slint `.slint` markup; the web GUI is a Rust Leptos client drawn with browser elements and CSS, with JavaScript limited to generated or minimal glue (DL-139, F3-583)
 4. **IDE shell layout** -- Activity Bar + Primary Content + Side Panel + Bottom Panel
 5. **Four theme families / eight built-in themes** -- Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, Basic Dark, Basic Light (built-in variants + custom themes via TOML). The untouched first-open/fresh-project factory default is Basic Dark; explicit saved project theme/layout customization survives, and a copied project receives a detached snapshot. This supersedes the Friendly Dark default and the earlier three-family lock while preserving both as historical lineage.
 6. **Settings and presentation ownership** -- `Plans/Settings_System.md` owns the Settings shell and ordinary-setting semantics; `Plans/newtools.md` N2-151 owns the Doctor registry/router/projection; auth/account owners retain Login; Final GUI owns their K3-shell presentation, chrome, theme, layout, and motion rather than a unified semantic Settings + Login + Doctor owner.
@@ -6705,6 +6713,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0020"
+- "Plans/Decision_Log.md#DL-139 (owner answers, 2026-10-01)"
 preserved_exact_tokens:
 - "Plans/DRY_Rules.md"
 - "Plans/Contracts_V0.md"
@@ -6712,12 +6721,13 @@ preserved_exact_tokens:
 - "Rust stable 1.96.1"
 - "Slint 1.17.1"
 - "slint_build"
-- "winit + Skia"
-- "FemtoVG-wgpu"
-- "software renderer"
+- "Winit + Skia"
+- "Winit + Skia CPU"
+- "Leptos"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "DL-139 retires Winit + FemtoVG-wgpu and the Winit software renderer from the renderer baseline; Skia's own CPU raster is the only fallback. Those names remain source lineage only."
 owner_boundary_notes:
 - "Compliance statement preserves SSOT references and deterministic Decision_Policy defaults."
 owner_hints:
@@ -6844,9 +6854,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The core GUI stack uses Rust, Slint markup compiled by slint_build, winit plus Skia with
-  FemtoVG-wgpu and software fallbacks, redb for layout persistence, seglog for events, and Tantivy
-  for search.
+  The core GUI stack uses Rust, Slint markup compiled by slint_build, winit plus Skia on the GPU with
+  Skia's own CPU raster as the only fallback (DL-139), redb for layout persistence, seglog for events,
+  and Tantivy for search; the web GUI is a Rust Leptos client drawn with browser elements and CSS.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -6871,19 +6881,22 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0024"
+- "Plans/Decision_Log.md#DL-139 (owner answers, 2026-10-01)"
 preserved_exact_tokens:
 - "Rust"
 - "Slint 1.17.1"
 - "slint_build"
-- "winit + Skia"
-- "winit + FemtoVG-wgpu"
-- "Software renderer"
+- "Winit + Skia (GPU)"
+- "Winit + Skia CPU"
+- "winit-skia-software"
+- "Leptos 0.8"
 - "redb"
 - "seglog"
 - "Tantivy"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "DL-139 retires the Winit + FemtoVG-wgpu fallback row and the Winit software renderer emergency row; both names remain source lineage only."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -6898,10 +6911,11 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The native desktop GUI does not use React, Tauri, JavaScript/TypeScript, HTML/CSS, or DOM-rendered
-  product UI; it is Rust + Slint `.slint` markup. The Slint/WASM web target may use only minimal
-  HTML/canvas bootstrap and generated/minimal JavaScript glue to load the Slint WASM canvas client,
-  attach assets and canvas, and connect to approved local services; it must not become an HTML/CSS/JS
-  product shell.
+  product UI; it is Rust + Slint `.slint` markup drawn by Skia. The web GUI is a Rust Leptos client
+  drawn with browser elements and CSS (DL-139, F3-583); it does not use React, Tauri, or TypeScript,
+  and its JavaScript is limited to generated glue and the minimal bootstrap needed to load the WASM
+  module, route static assets, and connect to approved local services; it must not grow a hand-written
+  JavaScript product shell.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -6910,8 +6924,8 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
 - "Native desktop GUI source remains Rust + Slint `.slint` markup and does not use React, Tauri, JavaScript/TypeScript, HTML/CSS, or DOM-rendered product UI."
-- "Slint/WASM web GUI source uses only minimal HTML/canvas bootstrap and generated/minimal JavaScript glue needed to load the WASM canvas client, attach assets and canvas, and connect to approved local services."
-- "HTML/CSS/JS product shell, React product UI, Tauri product UI, and DOM-rendered product UI remain forbidden for both native desktop and web product surfaces."
+- "Web GUI source is Rust Leptos components with CSS; its JavaScript is limited to generated glue and the minimal bootstrap needed to load the WASM module, route static assets, and connect to approved local services."
+- "React product UI, Tauri product UI, TypeScript product code, and a hand-written JavaScript product shell remain forbidden for both native desktop and web product surfaces."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -6927,17 +6941,18 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0025"
+- "Plans/Decision_Log.md#DL-139 (owner answers, 2026-10-01)"
 preserved_exact_tokens:
-- "No React/Tauri/DOM-rendered product UI"
-- "minimal HTML/canvas bootstrap"
-- "generated/minimal JavaScript glue"
-- "HTML/CSS/JS product shell"
+- "No React/Tauri product UI"
+- "Rust Leptos client"
+- "generated or minimal glue"
 - "Rust + Slint `.slint` markup"
 negative_constraints:
-- "React, Tauri, DOM-rendered product UI, and HTML/CSS/JS product shells are not used for the GUI implementation."
-- "The Slint/WASM web target may not expand its bootstrap HTML/canvas and generated/minimal JavaScript glue into a product UI shell."
+- "React, Tauri, TypeScript, and hand-written JavaScript product shells are not used for the GUI implementation."
+- "The web GUI may not expand its generated glue and minimal bootstrap JavaScript into a product UI shell."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "DL-139 retires the Slint/WASM canvas web client and its minimal HTML/canvas bootstrap rule; the web GUI is now drawn with browser elements and CSS by a Rust Leptos client. The former wording remains source lineage only."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -7053,7 +7068,8 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Slint backend selection uses SLINT_BACKEND, persisted app preference, compiled default order,
-  deterministic fallback, startup diagnostics, and setup surfaces that show the selected backend.
+  deterministic fallback, startup diagnostics, and setup surfaces that show the selected backend. Only the
+  Skia renderer is compiled; the default order is Skia on the GPU, then Skia's own CPU raster (DL-139).
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -7078,17 +7094,20 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0027"
+- "Plans/Decision_Log.md#DL-139 (owner answers, 2026-10-01)"
 preserved_exact_tokens:
 - "SLINT_BACKEND"
 - "slint::BackendSelector"
 - "winit + Skia"
-- "winit + FemtoVG-wgpu"
-- "emergency software renderer"
+- "winit + Skia CPU"
+- "winit-skia-software"
 - "startup diagnostic"
 - "selected backend"
-negative_constraints: []
+negative_constraints:
+- "Do not enable renderer-femtovg, renderer-femtovg-wgpu, or renderer-software in desktop builds."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "DL-139 retires the winit + FemtoVG-wgpu fallback and the emergency software renderer from the selection order; a SLINT_BACKEND value or preference naming them is an unavailable backend."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -19892,8 +19911,9 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Implementation decisions are final for Slint 1.17.1 on Rust stable 1.96.1, winit+Skia with FemtoVG-wgpu fallback,
-  no React/JS/TS/HTML/CSS shell, IDE shell layout, four theme families (eight built-in themes,
+  Implementation decisions are final for Slint 1.17.1 on Rust stable 1.96.1, winit+Skia only with Skia's own CPU
+  raster as the fallback and Puppet Master's Skia renderer extensions (DL-139), no React or Tauri product UI with the
+  web GUI a Rust Leptos client (DL-139), IDE shell layout, four theme families (eight built-in themes,
   untouched first-open/fresh-project factory default Basic Dark; the former Friendly Dark and
   prior three-family defaults remain superseded lineage), Settings owned by `Plans/Settings_System.md`,
   the Doctor registry/router/projection owned by `Plans/newtools.md` N2-151, Login retained by
@@ -19927,9 +19947,9 @@ source_lineage:
 preserved_exact_tokens:
 - "Rust stable 1.96.1"
 - "Slint 1.17.1"
-- "winit + Skia"
-- "winit + FemtoVG-wgpu"
-- "No React/JS/TS/HTML/CSS"
+- "winit + Skia only"
+- "No React/Tauri product UI"
+- "Leptos"
 - "IDE shell layout"
 - "Activity Bar + Primary Content + Side Panel + Bottom Panel"
 - "Retro Dark, Retro Light, Basic Modern"
@@ -19945,6 +19965,7 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "The Friendly Dark factory-default and unified Settings + Login + Doctor ownership summaries are superseded by the later factory-default and owner-routing contracts."
+- "DL-139 supersedes the winit + FemtoVG-wgpu fallback and the no-HTML/CSS rule for the web GUI: desktop is Skia only, and the web GUI is a Rust Leptos client drawn with browser elements and CSS."
 owner_boundary_notes:
 - "Settings_System owns the Settings shell and ordinary-setting semantics; N2-151 owns Doctor registry/router/projection; auth/account owners retain Login; Final GUI owns presentation only."
 owner_hints:
@@ -28900,11 +28921,12 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Puppet Master targets Slint 1.17.1 for the active GUI platform. Native desktop uses Slint Winit with Skia compiled
-  in and selected by default on Windows, Linux, and macOS; fallback order is explicit SLINT_BACKEND override, persisted
-  preference, Winit + Skia, Winit + FemtoVG-wgpu, then Winit software emergency mode. The first GUI build includes
-  native desktop plus a Rust Slint/WASM canvas web GUI compiled as cdylib through wasm-bindgen, wasm-pack, or an
-  approved equivalent and loaded through minimal HTML/canvas bootstrap rather than React, Tauri, or DOM product UI.
+  Puppet Master targets Slint 1.17.1 for the active GUI platform. Native desktop uses Slint Winit with Skia as the
+  only compiled renderer on Windows, Linux, and macOS, extended by Puppet Master's Skia renderer extensions (F3-582);
+  selection order is explicit SLINT_BACKEND override, persisted preference, Winit + Skia on the GPU, then Winit +
+  Skia CPU (winit-skia-software), and FemtoVG and Slint's separate software renderer are retired (DL-139). The first
+  GUI build includes native desktop plus a Rust Leptos web GUI compiled to WebAssembly, rendered in the browser with
+  browser elements and CSS, and served by the trusted local daemon, rather than React, Tauri, or TypeScript (F3-583).
   Browser-only WASM cannot claim PTY, filesystem, process/container, CEF, tray, native-window, or raw OS drag/drop
   authority; those OS-owned capabilities route through the trusted local daemon with authenticated local origin or
   pairing, origin/CSRF protection, capability probe, permission request, receipt/audit event, redaction, degraded
@@ -28953,14 +28975,15 @@ source_lineage:
 - fablereport.md:103-112
 - Plans/.audits/fable-20260706/currentness_check_report.json
 - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:8
+- "Plans/Decision_Log.md#DL-139 (owner answers, 2026-10-01)"
 source_atom_ids: []
 preserved_exact_tokens:
 - "Slint 1.17.1"
 - "Winit + Skia"
-- "Winit + FemtoVG-wgpu"
-- "Winit software renderer"
+- "Winit + Skia CPU"
+- "winit-skia-software"
 - "SLINT_BACKEND"
-- "Slint/WASM canvas"
+- "Leptos"
 - "trusted local daemon"
 - "native_full"
 - "web_supported_direct"
@@ -28972,10 +28995,13 @@ preserved_exact_tokens:
 negative_constraints:
 - "Do not create WorkNodes, NodeSeeds, queues, implementation files, runtime launches, or production build artifacts."
 - "Do not allow browser-only WASM to pretend it directly owns OS capabilities."
-- "Do not use React, Tauri, or DOM-rendered product UI for the Slint web GUI."
+- "Do not use React, Tauri, or TypeScript for the Leptos web GUI."
+- "Do not compile or ship FemtoVG or Slint's separate software renderer in desktop builds."
 - "Do not use emoji, emoji-like pictographs, Unicode pseudo-icons, network/CDN icons, or icon-only state carriers in production GUI source."
 compatibility_only_notes:
 - "Slint 1.17.0, Slint 1.15.1, PMConcept terminal transcripts, and FABLE pre-repair wording are source-lineage/history only after this repair."
+stale_retired_dispositions:
+- "DL-139 retires the Winit + FemtoVG-wgpu fallback, the Winit software emergency renderer, and the Slint/WASM canvas web GUI with its minimal HTML/canvas bootstrap; those names remain source lineage only."
 owner_boundary_notes:
 - "FinalGUISpec owns GUI platform and visible capability policy; Automated_Testing_System owns web GUI dev/test workflow; UI_Command_Catalog owns only development-preview command IDs."
 ```
@@ -39787,3 +39813,136 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-484, ContractName:Plans/Decision_Log.md#DL-126, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/UI_Wiring_Rules.md#UIW-025
+
+## DL-139 — Skia Only Desktop And Leptos Web Client (2026-10-01)
+
+This addendum compiles the owner decision DL-139. Sections 2.1 to 2.4, 2.8, and Appendix B carry the matching prose. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks.
+
+### F3-582 — Skia Renderer Extensions
+
+```yaml
+plan_unit_id: F3-582
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Puppet Master extends Slint's Skia renderer with its own code (DL-139). The Skia renderer extensions expose as
+  .slint properties, drawn by Skia: element blur; backdrop blur of what is drawn underneath an element; gradient and
+  alpha masks; blend modes; saturate, contrast, and brightness filters; ClearType text on Windows; and selectable rich
+  text (StyledText) whose selection offsets the application can read and set. ClearType reads the Windows
+  font-smoothing settings (on or off, RGB or BGR order, contrast), gives Skia surfaces the screen's subpixel layout,
+  draws glyphs with subpixel edging, and falls back to grayscale for text in fading or cached layers, text being
+  scaled or rotated, and transparent windows; macOS keeps grayscale text, and Linux subpixel text is out of scope
+  until Skia's FreeType path supports it. On the Skia CPU raster (winit-skia-software), heavy blur is off and blurred
+  panels draw solid. The extensions are written to upstream quality, offered to Slint against slint-ui/slint#612,
+  slint-ui/slint#2066, and slint-ui/slint#5748, and carried as a Cargo [patch] of Slint's crates until merged; every
+  Slint upgrade re-applies them and re-runs their screenshot checks before it lands. Motion that needs no renderer
+  work, such as multi-step keyframes, stepped easing, and path draw-on, is built from Slint animations,
+  animation-tick(), and timers rather than from these extensions.
+gui_related: true
+gui_classification_reason: Defines the visual capabilities the desktop renderer adds beyond stock Slint.
+split_recommended: false
+depends_on: [DL-139, F3-026, F3-029, F3-033, F3-417]
+unblocks: []
+acceptance_criteria:
+  - "Each listed effect is reachable as a .slint property and drawn by Skia on both the GPU and CPU paths, except heavy blur, which draws solid on the CPU path."
+  - "On Windows with ClearType on, static text over an opaque background draws with subpixel edging in the system's RGB or BGR order; text in fading or cached layers, scaled or rotated text, and transparent windows draw grayscale."
+  - "StyledText supports mouse and keyboard selection and copy, and the application can read and set its selection offsets."
+  - "The extensions live in a Cargo [patch] of Slint's crates with a recorded upstream issue or pull request for each, and a Slint upgrade does not land until they re-apply and their screenshot checks pass."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: renderer_extension_drift_or_upgrade_break
+reasoning_tier: high
+context_scope: gui_stack_skia_leptos
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: gui_platform_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-139 (owner answers, 2026-10-01)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/ANSWERS-20261001.md, SHA-256 9ca1e2ab54c77a744d629eb4c6dcc1aa8c9d206c6256efbce8b66230a0961ad6"
+preserved_exact_tokens:
+  - "Skia renderer extensions"
+  - "backdrop blur"
+  - "ClearType"
+  - "StyledText"
+  - "winit-skia-software"
+  - "slint-ui/slint#5748"
+negative_constraints:
+  - "Do not add these effects to any renderer other than Skia."
+  - "Do not draw heavy blur on the Skia CPU raster; draw those panels solid."
+  - "Do not land a Slint upgrade without re-applying and re-verifying the extensions."
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+### F3-583 — Leptos Web Client
+
+```yaml
+plan_unit_id: F3-583
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The web GUI is a Leptos client written in Rust, compiled to WebAssembly, and rendered in the browser (client-side
+  rendering). It draws its interface with browser elements and CSS, so it uses the browser's own text rendering, text
+  selection, and CSS effects (DL-139). It pins the Leptos 0.8 line until 0.9 is stable and is served as a static web
+  route by the trusted local daemon; first paint may later move to server rendering from the daemon if load time needs
+  it. It uses no React, Tauri, or TypeScript; JavaScript is limited to generated glue and the minimal bootstrap needed
+  to load the WASM module, route static assets, and connect to approved local services. The trusted local daemon
+  contract and the web capability states of sections 2.4 and 2.5 apply unchanged. Desktop and web stay in step through
+  one shared Rust interface-model crate that owns state, commands, formatting, and validation and that both interfaces
+  bind to; one design-token source that generates the Slint theme globals and the CSS custom properties for every
+  theme; and the same fixtures run through both interfaces, with screenshots of each. Web animations keep to transform
+  and opacity where the design allows, long lists render only their visible rows, and long transcripts are trimmed or
+  kept as page text rather than held in WebAssembly memory. The Slint/WASM canvas web GUI is retired.
+gui_related: true
+gui_classification_reason: Defines the technology, rendering, and parity rules of the web GUI.
+split_recommended: false
+depends_on: [DL-139, F3-030, F3-417, ATS-023]
+unblocks: []
+acceptance_criteria:
+  - "The web GUI is built from Rust Leptos components and CSS, pinned to the Leptos 0.8 line until 0.9 is stable, with no React, Tauri, or TypeScript product code."
+  - "The web GUI reaches OS-owned capabilities only through the trusted local daemon and reports the web capability states of section 2.5."
+  - "Desktop and web bind the same interface-model crate and the same generated design tokens, and the shared fixtures produce screenshots on both."
+  - "Web text is browser-rendered and selectable with the browser's own selection."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: web_client_stack_or_parity_drift
+reasoning_tier: high
+context_scope: gui_stack_skia_leptos
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: gui_platform_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-139 (owner answers, 2026-10-01)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/ANSWERS-20261001.md, SHA-256 9ca1e2ab54c77a744d629eb4c6dcc1aa8c9d206c6256efbce8b66230a0961ad6"
+preserved_exact_tokens:
+  - "Leptos"
+  - "Leptos 0.8"
+  - "client-side rendering"
+  - "trusted local daemon"
+  - "interface-model crate"
+  - "design-token source"
+negative_constraints:
+  - "Do not use React, Tauri, or TypeScript in web product code."
+  - "Do not let the web client claim OS-owned capabilities directly."
+  - "Do not fork interface state or theme tokens between desktop and web."
+stale_retired_dispositions:
+  - "DL-139 retires the Slint/WASM canvas web GUI, its cdylib canvas client, and its minimal HTML/canvas bootstrap; those names remain source lineage only."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/Automated_Testing_System.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-139, ContractName:Plans/Automated_Testing_System.md#ATS-023, ContractName:Plans/Release_Supply_Chain.md#RSC-012

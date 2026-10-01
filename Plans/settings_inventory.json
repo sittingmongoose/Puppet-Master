@@ -19646,9 +19646,8 @@
    "type": "select",
    "options": [
     "Auto",
-    "winit + Skia",
-    "winit + FemtoVG (wgpu)",
-    "Software"
+    "Skia (GPU)",
+    "Skia (CPU)"
    ],
    "default": "Auto",
    "scope": [
@@ -19660,8 +19659,8 @@
     "renderer",
     "backend",
     "Skia",
-    "FemtoVG",
-    "wgpu",
+    "GPU",
+    "CPU",
     "SLINT_BACKEND",
     "terminal rendering"
    ],
