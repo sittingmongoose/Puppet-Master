@@ -295,10 +295,32 @@
   {
     "method": "T05R",
     "instance": "original completed pair",
-    "assessment": "control R020 complete current quality failure; treatment semantic review pending",
+    "assessment": "R020/R022 full current quality failures",
     "native_context_inventory_complete": true,
     "whole_delivery": "both measured; receipts retained separately",
     "same_quality_efficiency_claim": false,
-    "cohort": "continuous-cohorts/cohort-005"
+    "cohort": "continuous-cohorts/cohort-005",
+    "current_reviews": [
+      "R020",
+      "R022"
+    ]
+  },
+  {
+    "method": "T04R",
+    "instance": "budget redo pair",
+    "assessment": "R023/R024 full current quality failures",
+    "whole_delivery": "both measured",
+    "same_quality_efficiency_claim": false,
+    "cohort": "continuous-cohorts/cohort-006"
+  },
+  {
+    "method": "T03",
+    "instance": "Z preservation redo pair",
+    "assessment": "unassessed",
+    "native_complete": true,
+    "treatment_delivery": "whole measured",
+    "control_delivery": "original combined JSONDecodeError; new whole-only preservation; no original delivery claim",
+    "same_quality_efficiency_claim": false,
+    "cohort": "continuous-cohorts/cohort-006"
   }
 ]

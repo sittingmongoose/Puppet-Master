@@ -1,0 +1,76 @@
+{
+  "artifact": "acquisition-record",
+  "case": "T03-v2 control - Slide Scout, read-only browser for local OME-Zarr 0.5 filesets",
+  "version": "V001",
+  "status": "complete",
+  "acquisition_date": "2026-10-01",
+  "tooling_constraints": {
+    "allowed_tools": ["mcp read_file", "mcp write_file", "mcp mechanical line_map", "mcp mechanical render_sections", "mcp mechanical cache_source"],
+    "forbidden_and_not_used": ["shell", "native Read", "arbitrary code execution", "live network fetching"],
+    "sandbox_allowlist_observed": ["TASK.md", "inputs/**", "out/**"],
+    "enumeration_capability": "none - the toolkit exposes point-path access only; mechanical tools reject directories (ValueError), line_map on the workspace root returns IndexError, glob-like source strings are treated literally"
+  },
+  "actual_source_reads": [
+    {
+      "path": "TASK.md",
+      "role": "assignment / instructions",
+      "sha256": "ed42fd360fb201e72ad425b333dea031e72182f594098f800250481c4b0fab80",
+      "bytes": 2572,
+      "total_lines": 5,
+      "read_mode": "read_file full text; cross-checked via mechanical line_map to out/tmp/task-map.json",
+      "content_summary": "Research directive for the admitted brief, assignment, thin plan and source corpus; bounded-tool constraint; preservation and anti-overclaim rules; versioned immutable deliverables (acquisition, observations, reports, final bindings); T03 control id/body section requirement; legacy out/report.md and out/acquisition.json declared unsupported delivery paths."
+    },
+    {
+      "path": "inputs/brief.md",
+      "role": "admitted product brief",
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "bytes": 905,
+      "total_lines": 5,
+      "read_mode": "read_file full text; cross-checked via mechanical line_map to out/tmp/brief-map.txt; byte-preserved via cache_source to out/tmp/cache-brief.json (sha256 identical, copy verified faithful)",
+      "content_summary": "Slide Scout product brief: read-only desktop browser for local OME-Zarr 0.5 bioimaging filesets; capability expectations (find images, inspect multiresolution by channel/time/plane, overlay label images, calibrated coordinates, responsiveness, explain non-displayable data); product boundary (local filesystem reading, source files unchanged, no editing/export/remote services/clinical interpretation); research mandate (format and actual reader implementations; obligations vs optional vs product decisions)."
+    }
+  ],
+  "finding_to_source_links": [
+    {"finding_id": "F01", "claim": "Product is a read-only desktop browser for local OME-Zarr 0.5 filesets; boundary excludes editing, export, remote services, clinical interpretation; source files unchanged", "source": "inputs/brief.md", "version_locator": "sha256 f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a", "lines": [3, 5]},
+    {"finding_id": "F02", "claim": "Six capability expectations: find images in fileset; inspect multiresolution by channel/time/plane; overlay label images; calibrated coordinates; responsiveness on large datasets; explain non-displayable data", "source": "inputs/brief.md", "version_locator": "sha256 f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a", "lines": [3]},
+    {"finding_id": "F03", "claim": "Research mandate: format plus actual reader implementations; uncover compatibility, correctness, navigation, display requirements a thin plan may miss; distinguish obligations vs optional vs product decisions", "source": "inputs/brief.md", "version_locator": "sha256 f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a", "lines": [5]},
+    {"finding_id": "F04", "claim": "Thin plan and source corpus not located; inputs/plan and inputs/sources exist as directories; ~110 point probes unresolved; absence NOT established", "source": "acquisition probe log (this record), under sandbox allowlist TASK.md, inputs/**, out/**", "version_locator": "probe_log_v1 in this record", "lines": []},
+    {"finding_id": "F05", "claim": "Deliverable/binding/versioning rules and T03 control observation format", "source": "TASK.md", "version_locator": "sha256 ed42fd360fb201e72ad425b333dea031e72182f594098f800250481c4b0fab80", "lines": [1, 3, 4]}
+  ],
+  "probe_log_v1": {
+    "method": "Point-path read_file probes; one path per query. Result classes: FNF = FileNotFoundError (path absent within an allowed tree); DIR = ValueError on an existing directory inside an allowed tree; DENIED = ValueError for paths outside the sandbox allowlist. Mechanical directory attempts and glob-like attempts are listed separately.",
+    "absence_disclaimer": "All lists below are probes that did not resolve. This log cannot establish that inputs/plan or inputs/sources are empty; unguessable child names would be invisible to point probes, and the assignment forbids equating failed search with corpus-wide absence.",
+    "directories_confirmed_existing": ["inputs", "out", "inputs/plan", "inputs/sources", "out/tmp (created by this session's mechanical outputs)"],
+    "files_confirmed_existing": ["TASK.md", "inputs/brief.md"],
+    "probes_inputs_root_FNF": ["inputs/assignment.md", "inputs/plan.md", "inputs/corpus.md", "inputs/sources.md", "inputs/README.md", "inputs/manifest.json", "inputs/index.md", "inputs/plan-v1.md", "inputs/manifest.md", "inputs/brief-v2.md", "inputs/.manifest", "inputs/.index", "inputs/brief (dir probe)", "inputs/docs (dir probe)", "inputs/data (dir probe)", "inputs/exhibits (dir probe)", "inputs/evidence (dir probe)", "inputs/thin-plan (dir probe)", "inputs/source (dir probe)", "inputs/assignments (dir probe)", "inputs/admitted (dir probe)", "inputs/corpus (dir probe)", "inputs/zzz/x.md (traversal calibration)"],
+    "probes_inputs_plan_FNF": ["inputs/plan/plan.md", "inputs/plan/assignment.md", "inputs/plan/README.md", "inputs/plan/v1.md", "inputs/plan/v2.md", "inputs/plan/v000.md", "inputs/plan/v1 (dir probe)", "inputs/plan/v001 (dir probe)", "inputs/plan/V001 (dir probe)", "inputs/plan/V000.md", "inputs/plan/thin-plan.md", "inputs/plan/thin.md", "inputs/plan/thinplan.md", "inputs/plan/THIN-PLAN.md", "inputs/plan/plan-v1.md", "inputs/plan/plan-v001.md", "inputs/plan/plan-v2.md", "inputs/plan/plan_v1.md", "inputs/plan/plan_thin.md", "inputs/plan/plan-thin.md", "inputs/plan/thin-plan-v1.md", "inputs/plan/initial-plan.md", "inputs/plan/current.md", "inputs/plan/draft.md", "inputs/plan/slide-scout-plan.md", "inputs/plan/t03-plan.md", "inputs/plan/t03.md", "inputs/plan/plan-001.md", "inputs/plan/001.md", "inputs/plan/01.md", "inputs/plan/outline.md", "inputs/plan/scope.md", "inputs/plan/requirements.md", "inputs/plan/design.md", "inputs/plan/mvp.md", "inputs/plan/the-plan.md", "inputs/plan/plans.md", "inputs/plan/plan.json", "inputs/plan/manifest.json", "inputs/plan/plan (no extension)", "inputs/plan/thin-plan (no extension)", "inputs/plan/plan.markdown", "inputs/plan/.plan"],
+    "probes_inputs_sources_FNF": ["inputs/sources/V001.md", "inputs/sources/v001.md", "inputs/sources/V000.md", "inputs/sources/V001.json", "inputs/sources/V001.markdown", "inputs/sources/s001.md", "inputs/sources/S001.md", "inputs/sources/source-001.md", "inputs/sources/1.md", "inputs/sources/01.md", "inputs/sources/00.md", "inputs/sources/02.md", "inputs/sources/10.md", "inputs/sources/0001.md", "inputs/sources/0000.md", "inputs/sources/001.txt", "inputs/sources/p01.md", "inputs/sources/s1.md", "inputs/sources/src.md", "inputs/sources/t03.md", "inputs/sources/t03-control-corpus.md", "inputs/sources/ome-zarr.md", "inputs/sources/ome_zarr.md", "inputs/sources/ome-zarr-0.5.md", "inputs/sources/ome-zarr-05.md", "inputs/sources/ome-zarr-0.5.0.md", "inputs/sources/ngff.md", "inputs/sources/ngff-0.5.md", "inputs/sources/ngff-spec.md", "inputs/sources/zarr.md", "inputs/sources/zarr.json", "inputs/sources/0.5.md", "inputs/sources/corpus.md", "inputs/sources/sources.md", "inputs/sources/source.md", "inputs/sources/source-corpus.md", "inputs/sources/specs.md", "inputs/sources/doc-01.md", "inputs/sources/readers.md", "inputs/sources/assignment.md", "inputs/sources/thin-plan.md", "inputs/sources/brief.md", "inputs/sources/plan.md", "inputs/sources/README.md", "inputs/sources/manifest.md", "inputs/sources/manifest.json", "inputs/sources/catalog.md", "inputs/sources/index.json", "inputs/sources/.index", "inputs/sources/.manifest", "inputs/sources/0.5 (dir probe)", "inputs/sources/ome-zarr (dir probe)", "inputs/sources/V001 (dir probe)", "inputs/sources/spec (dir probe)", "inputs/sources/corpus (dir probe)", "inputs/sources/docs (dir probe)"],
+    "probes_out_FNF_at_start": ["out/report.md", "out/acquisition.json", "out/observations (dir probe)", "out/reports (dir probe)", "out/final (dir probe)", "out/sources (dir probe)", "out/corpus (dir probe)", "out/acquisition (dir probe)"],
+    "probes_root_denied_or_dir": ["brief.md", "assignment.md", "plan.md", "sources", "zzz", "brief.md/brief.md", "brief.md/V001.md", "brief.md/zzz", "assignment.md/assignment.md", "assignment.md/V001.md", "assignment.md/zzz", "plan.md/plan.md", "plan.md/V001.md", "sources/zzz", "out (existing directory)", "inputs (existing directory)"],
+    "mechanical_attempts": [
+      {"attempt": "line_map source='.'", "result": "IndexError (workspace root not processable)"},
+      {"attempt": "line_map source='inputs', 'inputs/plan', 'inputs/sources', and trailing-slash variants", "result": "ValueError (directories rejected)"},
+      {"attempt": "cache_source source='inputs/plan', 'inputs/sources'", "result": "ValueError (directories rejected)"},
+      {"attempt": "line_map source='inputs/sources/*.md', 'inputs/plan/*', 'inputs/*'", "result": "FileNotFoundError (glob-like strings treated literally, no match)"},
+      {"attempt": "render_sections source='inputs/brief.md'", "result": "JSONDecodeError (render_sections expects a JSON sections document, not markdown)"},
+      {"attempt": "line_map source='TASK.md' and 'inputs/brief.md'", "result": "success (files accepted; outputs out/tmp/task-map.json, out/tmp/brief-map.txt)"},
+      {"attempt": "cache_source source='inputs/brief.md'", "result": "success (out/tmp/cache-brief.json, sha256 identical to source)"}
+    ],
+    "probe_total_distinct_paths": "approximately 110 across all namespaces"
+  },
+  "undeveloped_leads": [
+    {"lead_id": "L01", "topic": "multiscale metadata mechanism for multiresolution inspection", "why": "brief:3 requires multiresolution inspection; mechanism uncorroborated in this workspace", "next_step": "corroborate against located corpus once available", "status": "UNDEVELOPED"},
+    {"lead_id": "L02", "topic": "axes plus coordinate transformation model for calibrated coordinates", "why": "brief:3 requires correctly calibrated coordinates; mechanism uncorroborated", "next_step": "corroborate against located corpus once available", "status": "UNDEVELOPED"},
+    {"lead_id": "L03", "topic": "label-image association and overlay mechanics", "why": "brief:3 requires label overlay; mechanism uncorroborated", "next_step": "corroborate against located corpus once available", "status": "UNDEVELOPED"},
+    {"lead_id": "L04", "topic": "OME-Zarr 0.5 vs 0.4 deltas including Zarr v3 sharding", "why": "version string 0.5 appears in brief:3; version behavior uncorroborated", "next_step": "corroborate against located corpus once available", "status": "UNDEVELOPED"},
+    {"lead_id": "L05", "topic": "actual reader implementations and their version matrices", "why": "brief:5 mandates reader-implementation research; no corpus evidence available", "next_step": "identify and verify from corpus/reader documentation", "status": "UNDEVELOPED"},
+    {"lead_id": "L06", "topic": "responsiveness determinants for large saved datasets", "why": "brief:3 requires responsiveness; determinants uncorroborated and unmeasured", "next_step": "define budget then benchmark", "status": "UNDEVELOPED"}
+  ],
+  "coverage_limits": [
+    "inputs/plan and inputs/sources were not enumerable with the bounded toolkit; only point probes were possible, so their contents remain unknown and their emptiness is NOT established.",
+    "No file outside TASK.md, inputs/brief.md and this session's own out/ outputs was read; no read of any corpus document, thin plan, or assignment file other than TASK.md was performed or claimed.",
+    "No network, shell, or code-execution acquisition was performed (forbidden by the assignment).",
+    "Line evidence exists only for the two admitted files actually read.",
+    "All validation proposals are UNEXECUTED; no test, benchmark, or corpus verification has been performed."
+  ]
+}

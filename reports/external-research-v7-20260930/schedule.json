@@ -45,13 +45,18 @@
       "R017",
       "R019",
       "R020",
-      "R021"
+      "R021",
+      "R022",
+      "R023",
+      "R024"
     ],
     "current_partial_certification": [
       "R011",
       "R012"
     ],
-    "current_pending": [],
+    "current_pending": [
+      "R025"
+    ],
     "saved_history_complete_available_scope": [
       "R001",
       "R002",
@@ -85,26 +90,23 @@
   "original_wall_deadline_epoch": 1790820406,
   "deadline_edt": "2026-10-01T21:29:01-04:00",
   "extension_authority": "work-clock-extension/authority.json",
-  "publication_as_of_utc": "2026-10-01T21:17:44.037416+00:00",
+  "publication_as_of_utc": "2026-10-01T21:53:55.016228+00:00",
   "new_research_budget_required": false,
   "active_snapshot": {
-    "candidate_admissions": 37,
-    "occupied_slot_seconds": 22305.353593349457,
-    "remaining_committed_slot_seconds": 1444.0161819458008,
-    "reported_generated_tokens_lower_bound": 919158,
-    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "candidate_admissions": 41,
+    "occupied_slot_seconds": 26818.58122420311,
+    "reported_generated_tokens_lower_bound": 1166986,
     "active_by_family": {
       "M": 0,
-      "Z": 2,
+      "Z": 1,
       "L": 0
     },
-    "overdue_jobs": [],
     "active_jobs": [
-      "t04r-z-ome-compact-contrasts-v1-budget-redo-v3-redo1-control",
-      "t04r-z-ome-compact-contrasts-v1-budget-redo-v3-redo1-treatment"
+      "t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1-control",
+      "t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1-treatment"
     ]
   },
-  "snapshot_source": "continuous-cohorts/cohort-005/observed-evaluation-ready.json",
+  "snapshot_source": "continuous-cohorts/cohort-006/observed-accountant-snapshot.json",
   "snapshot_is_live_current": false,
   "helper_extension_authority": "continuous-cohorts/cohort-004/helper-authority.json"
 }

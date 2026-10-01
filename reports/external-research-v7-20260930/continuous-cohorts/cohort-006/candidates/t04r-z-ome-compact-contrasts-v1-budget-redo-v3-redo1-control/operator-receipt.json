@@ -1,0 +1,23 @@
+{
+  "epoch": 1790889319.6596434,
+  "label": "t04r-z-ome-compact-contrasts-v1-budget-redo-v3-redo1-control",
+  "status": "frozen-for-independent-evaluation",
+  "native_goal_status": "complete",
+  "output_integrity_sha256": "03eda6af95077c9285ac017df3f118ab03624236eb739c7b91e395f17400c969",
+  "accounting": {
+    "candidate_admissions": 38,
+    "occupied_slot_seconds": 22817.241666316986,
+    "remaining_committed_slot_seconds": 1415.842376947403,
+    "reported_generated_tokens_lower_bound": 1012629,
+    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "active_by_family": {
+      "M": 0,
+      "Z": 1,
+      "L": 0
+    },
+    "overdue_jobs": [],
+    "active_jobs": [
+      "t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-control"
+    ]
+  }
+}

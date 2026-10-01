@@ -1,0 +1,81 @@
+{
+  "schema": "er7.productive_z.output_integrity.v1",
+  "epoch": 1790890503.7773936,
+  "label": "t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-control",
+  "files": {
+    "acquisition/V001.json": {
+      "sha256": "813eb5437a0886ce2570edc8d9261680347ab21c86ca818d57b85a04781fa0f5",
+      "bytes": 12600
+    },
+    "final/V001.json": {
+      "sha256": "bb7ebe18882ec76815933222933a25c14ed2f452d17291730e40036f6ceee10d",
+      "bytes": 128
+    },
+    "observations/V001.json": {
+      "sha256": "9bbe303f155f161840ef01bfbd96949fcb1727222383bf749fce596ab19b5ecd",
+      "bytes": 13745
+    },
+    "reports/V001.md": {
+      "sha256": "c57063ba7325872cf347c8eb9530382427a146ab0e08ad880fba259557bd7ae8",
+      "bytes": 14712
+    },
+    "tmp/brief-map.txt": {
+      "sha256": "0f11bdc72d89fba04cff86304b32f7c6c4dacc6974892df0a8bcb9a66ab0f086",
+      "bytes": 1151
+    },
+    "tmp/cache-brief.json": {
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "bytes": 905
+    },
+    "tmp/task-map.json": {
+      "sha256": "a5399711ae4797942b119001251721c7903c03e97157163b93bf07f12fe003b8",
+      "bytes": 2822
+    }
+  },
+  "missing_required_outputs": [],
+  "sanitized_native_artifacts": {
+    "receipt.json": {
+      "sha256": "05ee80099df553e598c66f82e166c306194f3a75455e086c1dbae771329e27ba",
+      "bytes": 823484
+    },
+    "host-process.json": {
+      "sha256": "3127ad1bad31f4d2a0cb0ae49f66d57cfc93d00d1b8d2fd9989851d929706fa7",
+      "bytes": 58
+    },
+    "session-tool-contract.json": {
+      "sha256": "9ad53c5cda73ec3559024430ec7a0d660e7a23488ae9d786e423acd17e4a6a5e",
+      "bytes": 2159
+    },
+    "progress.jsonl": {
+      "sha256": "555f55a5d4890c046a7fd7e1dc891d97ad12ffb40f75bb4ff08dc4f0388341cf",
+      "bytes": 386
+    },
+    "usage-events.jsonl": {
+      "sha256": "ed9c5f634057724be75e8cce186677c16524d1be2d1b23188aa3eef46491491b",
+      "bytes": 32390
+    },
+    "zcode-stdout.redacted.jsonl": {
+      "sha256": "84723362a70dde097ce7dc581259d70319e9aafe06319ef94762f4b8f3a1e423",
+      "bytes": 84519338
+    },
+    "zcode-stderr.omitted.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  },
+  "quiescence": {
+    "native_quiescent": true,
+    "own_process_group_absent": true,
+    "native_receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-control/native/receipt.json",
+    "native_receipt_sha256": "05ee80099df553e598c66f82e166c306194f3a75455e086c1dbae771329e27ba",
+    "owned_driver_pgid": 2017630,
+    "basis": "sanitized native receipt plus only known own group absence"
+  },
+  "private_client": "excluded entirely; never read",
+  "semantic_quality": "unassessed",
+  "context_observations_sha256": "218279989c804a7b76b449000116bbc61d1e75fab8657f638f4110d02c28c57a",
+  "future_native_context": "qualified",
+  "native_outcome": "passed",
+  "inventory_verified": true,
+  "method_postrender_delivery": "pending separate measured machinery; no free semantic helper rewrite"
+}

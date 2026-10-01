@@ -1,0 +1,158 @@
+{
+  "schema": "slide-scout.protocol.v1",
+  "case_id": "ome-normative-dev-v1",
+  "created": "2026-10-01",
+  "supersedes": "out/protocol/V001.json (kept in place; corrections listed below)",
+  "binding": "out/final/V002.json",
+  "authorship_note": "Every record below is candidate-authored and is therefore labeled author=SELF_REPORT. No model marker, receiver acknowledgement, or feedback read is required or included.",
+  "entries": [
+    {
+      "seq": 1,
+      "author": "SELF_REPORT",
+      "action": "read",
+      "target": "TASK.md (workspace root)",
+      "result": "success (15/15 lines)",
+      "detail": "Governance: versioned artifact streams starting V001, final binding with exactly report/acquisition/protocol keys, rules R01-R10, no test-execution claims without evidence."
+    },
+    {
+      "seq": 2,
+      "author": "SELF_REPORT",
+      "action": "read",
+      "target": "inputs/TASK.md",
+      "result": "success (11/11 lines)",
+      "detail": "Assignment: full brief coverage within S003 only; exact-citation requirement; obligations vs optional vs product decisions; UNEXECUTED validation; task-card text not usable as format evidence. Two permitted brief-derived groups; this run covers the combined full scope."
+    },
+    {
+      "seq": 3,
+      "author": "SELF_REPORT",
+      "action": "read",
+      "target": "inputs/brief.md",
+      "result": "success (5/5 lines)",
+      "detail": "Product brief captured as research denominator."
+    },
+    {
+      "seq": 4,
+      "author": "SELF_REPORT",
+      "action": "read",
+      "target": "inputs/catalog.json",
+      "result": "success (40/40 lines)",
+      "detail": "Single admitted source S003; expected sha256 5d8b2408...82de; aliases include https://ngff.openmicroscopy.org/0.5/ (capture-only version tag)."
+    },
+    {
+      "seq": 5,
+      "author": "SELF_REPORT",
+      "action": "read",
+      "target": "inputs/plan/Viewer.md",
+      "result": "success (11/11 lines)",
+      "detail": "Thin viewer plan read as research target; plan explicitly a synthetic fixture, never treated as format evidence."
+    },
+    {
+      "seq": 6,
+      "author": "SELF_REPORT",
+      "action": "read_attempts_rejected",
+      "target": "sources/S003.txt (catalog's literal path)",
+      "result": "tool boundary rejection (ValueError) on 8 attempts: 7 read_file calls with varying parameterizations and 1 mechanical line_map call",
+      "detail": "No bytes observed. Interpreted as: the sources/ namespace is not admitted to the bounded tool boundary (workspace TASK.md admits only inputs, TASK.md and out namespaces)."
+    },
+    {
+      "seq": 7,
+      "author": "SELF_REPORT",
+      "action": "read",
+      "target": "inputs/sources/S003.txt",
+      "result": "success (896/896 lines, single read, 36980 bytes)",
+      "detail": "sha256 5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de equals the catalog's original_sha256 for S003; therefore treated as the admitted frozen capture. Full-source interpretation performed on this read; all report citations reference these line numbers."
+    },
+    {
+      "seq": 8,
+      "author": "SELF_REPORT",
+      "action": "write",
+      "target": "out/work/probe.txt",
+      "result": "success (5 bytes)",
+      "detail": "Capability probe confirming out namespace writability. File left in place (no delete tool available); it carries no research content."
+    },
+    {
+      "seq": 9,
+      "author": "SELF_REPORT",
+      "action": "write",
+      "target": "out/reports/V001.md",
+      "result": "success (33235 bytes, sha256 101b8f3f879bde95537ac12cf219353a950cad05f45b9ffb95b50ba1a047ab94)",
+      "detail": "Standalone complete research report V001: 16 supported findings (SS-A1..A6, SS-B1..B5, SS-C1..C5), obligation triage, plan implications/disposition, visible unresolved/rejected areas U1-U9, proposed validation V1-V6 all labeled UNEXECUTED, citation index."
+    },
+    {
+      "seq": 10,
+      "author": "SELF_REPORT",
+      "action": "write",
+      "target": "out/acquisition/V001.json",
+      "result": "success (19847 bytes, sha256 efec8f94d4d3a070a62f0f661a16be53ead206b7612522d3718a222f29dd2db6)",
+      "detail": "Acquisition ledger V001: actual read locators (including rejected attempts), independent finding IDs SS-*, source links (catalog alias URI, capture-only version), coverage limits, undeveloped leads; no invented read records."
+    },
+    {
+      "seq": 11,
+      "author": "SELF_REPORT",
+      "action": "write",
+      "target": "out/protocol/V001.json",
+      "result": "success (6233 bytes, sha256 02a06c7b51442b8bede3b0c204d02d0680a5e0a94f2027a47f8559feb1df1a2d; kept, superseded by this V002)",
+      "detail": "Protocol log V001 recording actual actions in sequence. Contained an inaccurate finding count in the seq-9 detail ('18 supported findings' for a set that numbers 16)."
+    },
+    {
+      "seq": 12,
+      "author": "SELF_REPORT",
+      "action": "write",
+      "target": "out/final/V001.json",
+      "result": "success (124 bytes, sha256 8d9a7df0740aa08c9135ae2a17132d2f7f9817b27b46fab2381e63f697aa9936; kept, superseded by out/final/V002.json)",
+      "detail": "Final binding V001 with exactly the keys report, acquisition, protocol selecting out/reports/V001.md, out/acquisition/V001.json, out/protocol/V001.json."
+    },
+    {
+      "seq": 13,
+      "author": "SELF_REPORT",
+      "action": "audit",
+      "target": "out/final/V001.json + out/reports/V001.md (full re-read) + out/acquisition/V001.json (full re-read) + out/protocol/V001.json (full re-read)",
+      "result": "completed",
+      "detail": "Completion audit against the objective: report complete and standalone (coverage map, 16 findings with exact line citations, obligation triage, 11-row plan disposition, unresolved areas U1-U9, UNEXECUTED validation V1-V6, citation index); acquisition ledger complete (actual locators incl. 8 recorded boundary rejections, finding IDs, source links, coverage limits, undeveloped leads); final binding has exactly the three required keys. One defect found: protocol V001 seq-9 detail overstated the finding count (18 instead of 16)."
+    },
+    {
+      "seq": 14,
+      "author": "SELF_REPORT",
+      "action": "write",
+      "target": "out/protocol/V002.json",
+      "result": "success (this file)",
+      "detail": "Correction applied: finding count fixed to 16 in the seq-9 detail; correction recorded in corrections[]; all V001 entries otherwise carried forward faithfully; new audit/write entries appended."
+    },
+    {
+      "seq": 15,
+      "author": "SELF_REPORT",
+      "action": "write",
+      "target": "out/final/V002.json",
+      "result": "planned (executed immediately after this entry)",
+      "detail": "Next full final binding: report=out/reports/V001.md (unchanged), acquisition=out/acquisition/V001.json (unchanged), protocol=out/protocol/V002.json (corrected). Highest final binding now V002; all prior versions kept."
+    }
+  ],
+  "corrections": [
+    {
+      "author": "SELF_REPORT",
+      "corrects": "out/protocol/V001.json entry seq 9",
+      "error": "Stated '18 supported findings' for SS-A1..A6 + SS-B1..B5 + SS-C1..C5.",
+      "fix": "Corrected to '16 supported findings' (6 + 5 + 5). Report and acquisition artifacts were unaffected and required no new version.",
+      "result": "out/protocol/V002.json"
+    }
+  ],
+  "compliance": {
+    "deviations": [
+      {
+        "author": "SELF_REPORT",
+        "deviation": "Source accessed at inputs/sources/S003.txt instead of the catalog's literal file field sources/S003.txt.",
+        "reason": "The sources/ namespace is rejected by the bounded tool boundary (8 recorded rejections); inputs/ is an admitted namespace and the isolated copy is byte-identical (sha256 match), so it is the same admitted S003 artifact.",
+        "impact": "None on content; locators in the acquisition ledger use the actual read path."
+      }
+    ],
+    "affirmative_compliance": [
+      "Only bounded MCP read_file, write_file and mechanical tools used; no shell, no arbitrary code, no native Read.",
+      "No live GET performed; source URI recorded from catalog aliases only.",
+      "No extra candidate stage; single combined full-scope run (groups 1 + 2).",
+      "Artifact streams begin at V001 and are contiguous (protocol now V001->V002); every version kept; highest final binding (out/final/V002.json) selects the highest version of each artifact.",
+      "No test execution performed or claimed; all proposed validation labeled UNEXECUTED.",
+      "Task-card and plan text used only as governance/targets, never as evidence about the OME-Zarr format.",
+      "No claim of reads that did not occur; boundary rejections recorded rather than hidden."
+    ]
+  }
+}

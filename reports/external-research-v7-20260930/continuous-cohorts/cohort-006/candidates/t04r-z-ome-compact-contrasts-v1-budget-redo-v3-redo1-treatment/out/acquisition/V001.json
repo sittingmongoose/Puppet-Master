@@ -1,0 +1,290 @@
+{
+  "schema": "slide-scout.acquisition.v1",
+  "case_id": "ome-normative-dev-v1",
+  "arm": "treatment (combined full scope: assignment groups 1 + 2)",
+  "created": "2026-10-01",
+  "binding": "out/final/V001.json",
+  "source_universe": {
+    "declared_in": "inputs/catalog.json (schema er7.candidate_case.v1)",
+    "admitted_sources": [
+      {
+        "handle": "S003",
+        "catalog_file_field": "sources/S003.txt",
+        "actual_read_path": "inputs/sources/S003.txt",
+        "original_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+        "bytes": 36980,
+        "lines": 896,
+        "identity": "OME-Zarr specification, Final Community Group Report, 8 September 2026 (version 0.5)",
+        "source_links": [
+          {
+            "alias_source_id": "SRC-2b11c54af373e1979af8cbb3",
+            "uri": "https://ngff.openmicroscopy.org/0.5/",
+            "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+            "note": "Recorded from catalog aliases; never fetched (no live GET permitted)."
+          }
+        ]
+      }
+    ],
+    "scope_rule": "Fixed admitted source S003 only; no live fetching (inputs/catalog.json source_scope, inputs/TASK.md)."
+  },
+  "reads": [
+    {
+      "seq": 1,
+      "tool": "read_file",
+      "path": "TASK.md",
+      "outcome": "success",
+      "extent": "lines 1-15 of 15 (full)",
+      "bytes": 3156,
+      "purpose": "Workspace governance: versioned streams, final binding, rules R01-R10."
+    },
+    {
+      "seq": 2,
+      "tool": "read_file",
+      "path": "inputs/TASK.md",
+      "outcome": "success",
+      "extent": "lines 1-11 of 11 (full)",
+      "bytes": 1367,
+      "purpose": "Research assignment; source scope S003 only; two permitted brief-derived groups; aggregate = full scope."
+    },
+    {
+      "seq": 3,
+      "tool": "read_file",
+      "path": "inputs/brief.md",
+      "outcome": "success",
+      "extent": "lines 1-5 of 5 (full)",
+      "bytes": 905,
+      "purpose": "Product brief (research denominator)."
+    },
+    {
+      "seq": 4,
+      "tool": "read_file",
+      "path": "inputs/catalog.json",
+      "outcome": "success",
+      "extent": "lines 1-40 of 40 (full)",
+      "bytes": 1563,
+      "purpose": "Source universe, sha256, aliases/links."
+    },
+    {
+      "seq": 5,
+      "tool": "read_file",
+      "path": "inputs/plan/Viewer.md",
+      "outcome": "success",
+      "extent": "lines 1-11 of 11 (full)",
+      "bytes": 1498,
+      "purpose": "Thin viewer plan (research target, not format evidence)."
+    },
+    {
+      "seq": 6,
+      "tool": "read_file + mechanical(line_map)",
+      "path": "sources/S003.txt",
+      "outcome": "rejected by tool boundary (ValueError) on 8 attempts (7 read_file parameterizations + 1 line_map)",
+      "extent": "no bytes observed",
+      "purpose": "Attempt to open the catalog's literal source path; sources/ namespace not admitted to the tool boundary."
+    },
+    {
+      "seq": 7,
+      "tool": "read_file",
+      "path": "inputs/sources/S003.txt",
+      "outcome": "success",
+      "extent": "lines 1-896 of 896 (entire capture, single read)",
+      "bytes": 36980,
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "purpose": "Primary-source research read: OME-Zarr 0.5 normative capture. Byte-identical to catalog original_sha256, hence the admitted S003 artifact."
+    },
+    {
+      "seq": 8,
+      "tool": "write_file",
+      "path": "out/work/probe.txt",
+      "outcome": "success",
+      "bytes": 5,
+      "purpose": "Boundary capability probe of the out namespace (file left in place; no delete tool)."
+    }
+  ],
+  "findings": [
+    {
+      "id": "SS-A1",
+      "title": "Container is Zarr v3; full Zarr feature surface in scope unless disallowed",
+      "claim": "OME-Zarr 0.5 is implemented on Zarr format version 3; codecs, chunk grids, chunk key encodings, data types and storage transformers may all be used unless explicitly disallowed.",
+      "condition": "Unless explicitly disallowed by the OME-Zarr specification.",
+      "obligation": "established (normative structure)",
+      "status": "supported",
+      "source": {"handle": "S003", "locator": "inputs/sources/S003.txt L67-L72", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"},
+      "related": ["SS-C5", "U1"]
+    },
+    {
+      "id": "SS-A2",
+      "title": "Metadata lives in zarr.json under the ome namespace; version consistent per hierarchy",
+      "claim": "OME-Zarr 0.5 metadata is stored under the namespaced key 'ome' in zarr.json attributes; ome.version (string) MUST be consistent within a hierarchy; image groups carry 'multiscales' and optionally 'omero'.",
+      "condition": "Within a single opened hierarchy.",
+      "obligation": "established obligation (MUST)",
+      "status": "supported",
+      "source": {"handle": "S003", "locator": "inputs/sources/S003.txt L149-L156", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"},
+      "related": ["SS-A6"]
+    },
+    {
+      "id": "SS-A3",
+      "title": "Dimensionality 2-5 and type-ordered axes",
+      "claim": "Multiscale image arrays have 2-5 dimensions (MUST NOT exceed 5); axes MUST be ordered time, then channel/custom, then space; zyx spatial ordering is SHOULD for anisotropic stacks.",
+      "condition": "For multiscales images.",
+      "obligation": "established obligation (MUST for dims/order; SHOULD for zyx)",
+      "status": "supported",
+      "source": {"handle": "S003", "locator": "inputs/sources/S003.txt L296, L300-L302, L307", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"},
+      "related": ["SS-B1"]
+    },
+    {
+      "id": "SS-A4",
+      "title": "Pyramid level identity is positional (datasets list), not nominal",
+      "claim": "Resolution levels are separate arrays with arbitrary names; datasets[].path MUST be ordered largest (highest resolution) to smallest; level order comes from the multiscales metadata, not the array names.",
+      "condition": "For any multiscales image.",
+      "obligation": "established obligation (MUST ordering); level-choice policy is a product decision (informative example L388-L397 only)",
+      "status": "supported",
+      "source": {"handle": "S003", "locator": "inputs/sources/S003.txt L91-L94, L304-L312, L317-L319", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"},
+      "related": []
+    },
+    {
+      "id": "SS-A5",
+      "title": "Three image-discovery families: plain groups, bioformats2raw.layout=3 collections, HCS plates",
+      "claim": "Image listing must cover: (a) plain multiscales groups; (b) transitional bioformats2raw collections (layout value MUST be 3; series list ordered as OME-XML images; consecutively numbered groups 0,1,2,... when no series and no plate; OME/METADATA.ome.xml SHOULD exist and MUST use MetadataOnly; readers SHOULD surface multiple images, SHOULD NOT default to the first; plate takes precedence when plate key present); (c) HCS plates with MUST groups plate/row/well, plate columns/rows/version/wells, well images list, 0-based consistent indices, sparse plates legal (empty rows/wells SHOULD NOT be present).",
+      "condition": "Each sub-rule holds under its stated condition (series present/absent, plate present/absent, multiple acquisitions, etc.).",
+      "obligation": "mixed: MUST structure + SHOULD reader behavior + MAY choices",
+      "status": "supported",
+      "source": {"handle": "S003", "locator": "inputs/sources/S003.txt L78-L148, L175-L206, L254-L275, L515-L560, L740-L752", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"},
+      "related": ["U2", "U6"]
+    },
+    {
+      "id": "SS-A6",
+      "title": "dimension_names integrity check",
+      "claim": "'dimension_names' MUST be included in the zarr.json of each multiscale-level array and MUST match the axes metadata names; axes length MUST equal array dimensionality.",
+      "condition": "Multiscale-level arrays in 0.5 (clarified MUST in 0.5.2).",
+      "obligation": "established obligation (MUST)",
+      "status": "supported",
+      "source": {"handle": "S003", "locator": "inputs/sources/S003.txt L173-L174", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"},
+      "related": ["SS-C5"]
+    },
+    {
+      "id": "SS-B1",
+      "title": "Axes: name MUST + unique; type/unit SHOULD with MAY custom types",
+      "claim": "Each axis MUST have a unique name; type SHOULD be space/time/channel but MAY be any custom string; unit SHOULD be a UDUNITS-2 string (valid space/time unit lists enumerated); unknown axis types must not imply rejection.",
+      "condition": "Custom unit/type values conform; missing unit is conforming.",
+      "obligation": "MUST name/length; SHOULD type/unit; MAY custom types",
+      "status": "supported",
+      "source": {"handle": "S003", "locator": "inputs/sources/S003.txt L166-L174", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"},
+      "related": ["SS-B2"]
+    },
+    {
+      "id": "SS-B2",
+      "title": "Coordinate calibration: per-level scale (exactly one) + optional translation after scale + optional top-level transforms applied after",
+      "claim": "Each dataset MUST have coordinateTransformations containing exactly one scale (physical pixel size or time duration; relative-factor fallback defaulting 1.0 when scaling unavailable for an axis); only translation/scale types; translation MUST follow scale; vector lengths MUST equal axes count; multiscales-level transforms MAY exist and are applied after the per-level ones; lists apply sequentially in order.",
+      "condition": "Relative-factor fallback applies only where scaling information is unavailable for an axis.",
+      "obligation": "established obligation (MUST core; MAY translation/top-level)",
+      "status": "supported",
+      "source": {"handle": "S003", "locator": "inputs/sources/S003.txt L276-L293, L304-L316", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"},
+      "related": ["U5"]
+    },
+    {
+      "id": "SS-B3",
+      "title": "omero is optional/transitional; channels color+window MUSTs conditional on presence; rdefs example-only",
+      "claim": "If omero is present it MUST contain channels; each channel MUST have 6-hex color and window with min/max/start/end. Per-channel label/active/coefficient/family/inverted and rdefs (defaultT/defaultZ/model) appear only in the example; display defaults are therefore not guaranteed; window semantics beyond L429-L430 defer to uncaptured OMERO docs.",
+      "condition": "All MUSTs conditional on omero being present.",
+      "obligation": "optional capability with conditional MUSTs",
+      "status": "supported (with normative-status uncertainty on rdefs -> U3, U4)",
+      "source": {"handle": "S003", "locator": "inputs/sources/S003.txt L398-L430", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"},
+      "related": ["U3", "U4", "U7"]
+    },
+    {
+      "id": "SS-B4",
+      "title": "Label overlays: discovery via labels key; integer dtypes; equal scale-level count; color/alpha display",
+      "claim": "labels group zarr.json MUST list label image paths (all SHOULD be listed); label pixels MUST be integer dtypes; intermediate groups MUST NOT contain metadata; label image MUST implement multiscales with the same number of scale levels as the source image; image-label SHOULD exist; readers SHOULD display using colors entries (label-value MUST be integer; rgba MAY, four ints 0-255, fourth = alpha); properties/source MAY; source.image default '../../'.",
+      "condition": "Color-display SHOULD binds only where image-label.colors is provided; rgba optional per entry.",
+      "obligation": "mixed: MUST structure/dtype/level-count; SHOULD discovery/display; MAY rgba/properties/source",
+      "status": "supported",
+      "source": {"handle": "S003", "locator": "inputs/sources/S003.txt L431-L474", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"},
+      "related": ["SS-B5"]
+    },
+    {
+      "id": "SS-B5",
+      "title": "Label-image alignment limits",
+      "claim": "Label dimensions may equal the image dimension or be 1 (irrelevant); coordinate-system identity with the source image is stated as 'usually', not MUST; overlays must be resolved through the label's own multiscales/coordinateTransformations.",
+      "condition": "Applies to conforming files; pixel-exact alignment cannot be assumed universally.",
+      "obligation": "limit/counterevidence to a naive alignment assumption",
+      "status": "supported",
+      "source": {"handle": "S003", "locator": "inputs/sources/S003.txt L106-L108, L432-L433, L454-L455", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"},
+      "related": ["SS-B4"]
+    },
+    {
+      "id": "SS-C1",
+      "title": "Normative force: RFC 2119; examples informative",
+      "claim": "MUST/SHOULD/MAY etc. per RFC 2119; all text normative except explicitly non-normative sections, examples and notes; e.g. the multiscale-entry selection pseudocode is example guidance.",
+      "condition": "Within the normative parts of S003.",
+      "obligation": "interpretive rule",
+      "status": "supported",
+      "source": {"handle": "S003", "locator": "inputs/sources/S003.txt L56-L59, L867-L888", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"},
+      "related": []
+    },
+    {
+      "id": "SS-C2",
+      "title": "JSON comments forbidden in real metadata",
+      "claim": "Example JSON comments are for clarity only; comments MUST NOT be included in JSON objects; comment-bearing zarr.json is malformed input for a reader.",
+      "condition": "Applies to data files; the spec document itself may show comments.",
+      "obligation": "established obligation (MUST NOT, writer-side; reader-side malformed-input trigger)",
+      "status": "supported",
+      "source": {"handle": "S003", "locator": "inputs/sources/S003.txt L65-L66", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"},
+      "related": []
+    },
+    {
+      "id": "SS-C3",
+      "title": "Transitional metadata: reading may be a MUST/SHOULD duty; writing optional",
+      "claim": "Implementations may be expected (MUST) or encouraged (SHOULD) to support reading of transitional metadata (bioformats2raw.layout, omero); writing is usually optional (MAY).",
+      "condition": "Reading side of transitional metadata.",
+      "obligation": "interpretive rule raising the priority of SS-A5b/SS-B3 for a read-only viewer",
+      "status": "supported",
+      "source": {"handle": "S003", "locator": "inputs/sources/S003.txt L60-L64", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"},
+      "related": []
+    },
+    {
+      "id": "SS-C4",
+      "title": "Storage-agnostic layout transfers to local disk under an assumption",
+      "claim": "The hierarchy may appear locally, on HTTP, or object storage; the same node/metadata mechanism transfers to Slide Scout's local reading if the local directory behaves as a valid Zarr v3 filesystem store.",
+      "condition": "Assumption: local FS = valid Zarr v3 store; remote concerns out of product boundary.",
+      "obligation": "mechanism-transfer statement (assumption preserved)",
+      "status": "supported (transfer inference marked in report)",
+      "source": {"handle": "S003", "locator": "inputs/sources/S003.txt L73-L77", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"},
+      "related": []
+    },
+    {
+      "id": "SS-C5",
+      "title": "Version-history compatibility signals",
+      "claim": "0.5.0 introduced Zarr v3; 0.5.2 made dimension_names a MUST; 0.5.1 re-added improved omero description; earlier versions (0.1-0.4) had differing layouts (e.g. chunk separator '/', axes added in 0.3/0.4).",
+      "condition": "Historical record within S003; current-version obligations are those of 0.5.",
+      "obligation": "context only",
+      "status": "supported",
+      "source": {"handle": "S003", "locator": "inputs/sources/S003.txt L821-L866", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"},
+      "related": ["U6"]
+    }
+  ],
+  "coverage": {
+    "brief_denominator": "Entire inputs/brief.md mapped in out/reports/V001.md section 1; both assignment groups (inputs/TASK.md) covered; aggregate = full single-assignment scope.",
+    "source_coverage": "All 896 lines of S003 read; normative sections 1-2.8 plus conventions, conformance, version history cited; TOC/index/references read.",
+    "coverage_limits": [
+      "Zarr v3 specification internals (chunk grids, codecs, sharding, storage transformers) are referenced by S003 L68-L72 but not included in the capture; chunk-access obligations cannot be derived from S003.",
+      "Implementations: S003 section 4 contains only 'See Tools.' (L813-L814); no reader/writer implementations are present in the capture, so the brief's 'actual reader implementations' request is unmet within scope (scoped to S003; no claim that implementations do not exist elsewhere).",
+      "Live verification impossible: no live GET permitted; catalog URI recorded, never fetched.",
+      "Pre-0.5 fileset layouts not specified in S003 (only version-history hints).",
+      "OMERO WebGateway documentation referenced (L424) but not captured; window display semantics beyond L429-L430 wording unverified.",
+      "Real-writer behavior (absolute vs relative scale semantics; rdefs presence; omero.channels length vs c axis) unobservable from a normative capture alone."
+    ]
+  },
+  "undeveloped_leads": [
+    "Capture the Zarr v3 specification (chunk grids, codecs, sharding, storage transformers, zarr.json array metadata) to close U1 and finalize responsiveness/codec requirements.",
+    "Capture the NGFF 'Tools' page referenced by S003 section 4 (L813-L814) to research actual reader implementations per the brief (U2).",
+    "Obtain representative filesets from real 0.5 writers - bioformats2raw is named in S003 (L179-L190) - including a multi-series collection, a sparse plate, and a labels-bearing image, to drive validation V1-V5.",
+    "Test rdefs prevalence and omero.channels/c-axis consistency across real writer outputs (U3, U4).",
+    "Verify absolute-vs-relative scale semantics in real 0.5 filesets (U5) via validation V3.",
+    "Decide and document 0.4-era fileset compatibility as a product question (U6)."
+  ],
+  "integrity": {
+    "no_invented_read_records": true,
+    "reads_match_tool_calls": "Every entry in reads[] corresponds to an actual tool call in this session; boundary rejections are recorded as rejections with no bytes observed.",
+    "execution_claims": "None. All proposed validation is UNEXECUTED (report section 9)."
+  }
+}

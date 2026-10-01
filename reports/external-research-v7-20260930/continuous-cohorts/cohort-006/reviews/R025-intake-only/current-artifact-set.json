@@ -1,0 +1,23 @@
+{
+  "schema": "er7.current_artifact_set.v1",
+  "report_id": "R025",
+  "report_sha256": "ec3395d2fef214bbfcd48e3676db2381a45b680fcb194d9b4f85c359d3863d23",
+  "artifacts": [
+    {
+      "file": "current-report.md",
+      "sha256": "ec3395d2fef214bbfcd48e3676db2381a45b680fcb194d9b4f85c359d3863d23",
+      "bytes": 18622
+    },
+    {
+      "file": "findings/V001.json",
+      "sha256": "5bbdac74e8e805cd5096beab9cbcc9ec654c0fee5b6df783a74b7ef3ba9e51fd",
+      "bytes": 19499,
+      "selection": "Highest contiguous positively named findings/Vnnn.json version in the same qualified frozen attempt; explicitly referenced configured-required stream",
+      "current_only": true
+    }
+  ],
+  "missing": [],
+  "coverage_obligation": "Assess every material current assertion across the complete standalone report and every supplied current semantic companion, plus every assigned eligible facet; no sampling.",
+  "history_excluded": true,
+  "acquisition_excluded": true
+}

@@ -1,0 +1,183 @@
+{
+  "artifact": "out/protocol/V001.json",
+  "schema": "slide-scout.protocol-log.v1",
+  "author": "SELF_REPORT",
+  "date": "2026-10-01",
+  "session": "single fresh native Goal covering both assignment groups together",
+  "tool_constraints": {
+    "permitted_tools": ["bounded MCP read_file", "bounded MCP write_file", "bounded MCP mechanical"],
+    "used_tools": ["read_file", "write_file", "mechanical(line_map)"],
+    "not_used": ["shell", "arbitrary code execution", "external fetch (no live GET)", "native Read", "search tools"],
+    "admitted_namespaces": ["TASK.md (workspace root)", "inputs/", "out/"],
+    "native_caps": { "seconds": 1500, "responses": 160 }
+  },
+  "entries": [
+    {
+      "seq": "PR-01",
+      "action": "read attempt",
+      "tool": "read_file",
+      "target": "/home/sittingmongoose/.../workspace/TASK.md (absolute path)",
+      "outcome": "error: boundary failure ValueError (tool rejected the absolute path)",
+      "author": "SELF_REPORT"
+    },
+    {
+      "seq": "PR-02",
+      "action": "read",
+      "tool": "read_file",
+      "target": "TASK.md",
+      "outcome": "success: 24 lines, sha256 825645cf212610c189a890e6812968fa8d0faa923c02f96525627328a476bdb2 (acquisition record RD-01)",
+      "author": "SELF_REPORT"
+    },
+    {
+      "seq": "PR-03",
+      "action": "read attempts",
+      "tool": "read_file",
+      "target": "sources/S003.txt (absolute path; then workspace-relative sources/S003.txt)",
+      "outcome": "error: boundary failure ValueError on both attempts; resolved by locating the capture under the inputs namespace as inputs/sources/S003.txt",
+      "notes": "Catalog lists the capture as sources/S003.txt relative to the inputs root; all subsequent reads used inputs/sources/S003.txt.",
+      "author": "SELF_REPORT"
+    },
+    {
+      "seq": "PR-04",
+      "action": "read",
+      "tool": "read_file",
+      "target": "inputs/TASK.md",
+      "outcome": "success: 11 lines, sha256 b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9 (RD-02)",
+      "author": "SELF_REPORT"
+    },
+    {
+      "seq": "PR-05",
+      "action": "read",
+      "tool": "read_file",
+      "target": "inputs/brief.md",
+      "outcome": "success: 5 lines, sha256 f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a (RD-03)",
+      "author": "SELF_REPORT"
+    },
+    {
+      "seq": "PR-06",
+      "action": "read",
+      "tool": "read_file",
+      "target": "inputs/catalog.json",
+      "outcome": "success: 40 lines, sha256 c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a (RD-04)",
+      "author": "SELF_REPORT"
+    },
+    {
+      "seq": "PR-07",
+      "action": "read",
+      "tool": "read_file",
+      "target": "inputs/plan/Viewer.md",
+      "outcome": "success: 11 lines, sha256 5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d (RD-05)",
+      "author": "SELF_REPORT"
+    },
+    {
+      "seq": "PR-08",
+      "action": "read (chunk 1/3)",
+      "tool": "read_file",
+      "target": "inputs/sources/S003.txt",
+      "locator": "lines 1-300",
+      "outcome": "success; full-file sha256 5d8b2408...2ae82de matches catalog identity (RD-06)",
+      "author": "SELF_REPORT"
+    },
+    {
+      "seq": "PR-09",
+      "action": "read (chunk 2/3)",
+      "tool": "read_file",
+      "target": "inputs/sources/S003.txt",
+      "locator": "lines 301-600",
+      "outcome": "success; sha256 unchanged (RD-07)",
+      "author": "SELF_REPORT"
+    },
+    {
+      "seq": "PR-10",
+      "action": "read (chunk 3/3)",
+      "tool": "read_file",
+      "target": "inputs/sources/S003.txt",
+      "locator": "lines 601-896",
+      "outcome": "success; sha256 unchanged; S003 fully read (RD-08)",
+      "author": "SELF_REPORT"
+    },
+    {
+      "seq": "PR-11",
+      "action": "mechanical line_map",
+      "tool": "mechanical",
+      "target": "inputs/sources/S003.txt",
+      "outcome": "success: wrote out/mechanical/S003-line-map-V001.txt (61299 bytes, sha256 efd3f618cc82322216fe63cfbeed145afeeb03f30b230d6eea8e477a8d484be4; source_sha256 echoed matches S003) (RD-09)",
+      "author": "SELF_REPORT"
+    },
+    {
+      "seq": "PR-12",
+      "action": "read (verification, partial)",
+      "tool": "read_file",
+      "target": "out/mechanical/S003-line-map-V001.txt",
+      "outcome": "success but truncated mid-line by result budget; anchors for S003 lines 1-554 directly confirmed; lines 555-896 anchors rest on the direct full-file reads (RD-10)",
+      "author": "SELF_REPORT"
+    },
+    {
+      "seq": "PR-13",
+      "action": "write",
+      "tool": "write_file",
+      "target": "out/reports/V001.md",
+      "outcome": "success: 44979 bytes, sha256 766013c91ef0a28a2cc030379161be055625cd7380333306a70d22965c6393b2",
+      "author": "SELF_REPORT"
+    },
+    {
+      "seq": "PR-14",
+      "action": "self-review correction",
+      "tool": "read_file",
+      "target": "inputs/catalog.json (re-read for exact identity)",
+      "outcome": "success: confirmed catalog sha256 c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a; found V001 report section 12 contained a garbled catalog-identity sentence",
+      "author": "SELF_REPORT"
+    },
+    {
+      "seq": "PR-15",
+      "action": "write (correction release)",
+      "tool": "write_file",
+      "target": "out/reports/V002.md",
+      "outcome": "success: 45627 bytes, sha256 2880232e585e815749f008bbf1664228c184be6a45ae281fabe3f5c25e6b06f7; supersedes V001 (section 12 catalog identity corrected, header updated, change log section 13 added); V001 retained unchanged",
+      "author": "SELF_REPORT"
+    },
+    {
+      "seq": "PR-16",
+      "action": "write",
+      "tool": "write_file",
+      "target": "out/acquisition/V001.json",
+      "outcome": "success: acquisition ledger recording actual reads RD-01..RD-10 and findings F-B*/F-G1*/F-G2*/F-Q*/N-*",
+      "author": "SELF_REPORT"
+    },
+    {
+      "seq": "PR-17",
+      "action": "write",
+      "tool": "write_file",
+      "target": "out/protocol/V001.json",
+      "outcome": "success: this protocol log",
+      "author": "SELF_REPORT"
+    },
+    {
+      "seq": "PR-18",
+      "action": "write (final binding)",
+      "tool": "write_file",
+      "target": "out/final/V001.json",
+      "outcome": "success: binding with exactly the keys report, acquisition, protocol selecting out/reports/V002.md, out/acquisition/V001.json, out/protocol/V001.json (highest version of each stream)",
+      "author": "SELF_REPORT"
+    }
+  ],
+  "corrections": [
+    {
+      "correction_id": "COR-01",
+      "artifact_corrected": "out/reports/V001.md",
+      "new_version": "out/reports/V002.md",
+      "reason": "Section 12 'Catalog' entry in V001 misstated the catalog identity (garbled sentence mixing an unrelated hash). Corrected in V002 with the verified identity sha256 c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a (1563 bytes, 40 lines) and added change log section 13. No finding, citation, or conclusion changed.",
+      "evidence": "entries PR-14, PR-15"
+    }
+  ],
+  "compliance_deviations": [],
+  "compliance_notes": [
+    "PR-01 and PR-03 were tool-boundary rejections of out-of-namespace or mis-rooted paths; no out-of-namespace access succeeded and no rule was knowingly violated. Recorded for transparency rather than as deviations.",
+    "No test, script, or fixture was executed in this session; the report's proposed validation is labeled UNEXECUTED throughout.",
+    "No live GET was attempted.",
+    "All records in this log and in out/acquisition/V001.json are candidate-authored and are labeled author=SELF_REPORT.",
+    "Source files (inputs/) were only read, never written; the studied dataset remained unchanged.",
+    "No model marker, receiver acknowledgement, or feedback read was required or performed."
+  ],
+  "execution_evidence": "none - no execution of any test or code occurred in this session"
+}

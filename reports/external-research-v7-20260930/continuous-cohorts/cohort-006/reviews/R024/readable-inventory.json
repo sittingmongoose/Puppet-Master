@@ -1,0 +1,1405 @@
+{
+  "schema": "er7.readability_addendum.v1",
+  "report_id": "R024",
+  "purpose": "Readable expansion of compressed claim-inventory prose only. Original phase1 artifacts remain immutable. No outcome,pin,facet coverage or verdict changed; no history was opened.",
+  "created_at_utc": "2026-10-01T21:39:25.347515Z",
+  "original_assessment_sha256": "779afb20b11d76951b1331111aedc5e754d820506c5064a83af1493e52b1c1fc",
+  "original_freeze_sha256": "76dccb95208aa0c6d8d38d3048d001d8c5014e445ac5fe98aa4dca9a3eb72055",
+  "complete_claim_rows": 101,
+  "entries": [
+    {
+      "claim_id": "R024-C001",
+      "report_locators": [
+        "L3-8,L249-252"
+      ],
+      "readable_assertion": "The current V002 carrier states the admitted source, brief, plan, catalog and source-size/hash pins.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "I01",
+        "E01"
+      ],
+      "readable_reason": "These identity values match the independently verified intake."
+    },
+    {
+      "claim_id": "R024-C002",
+      "report_locators": [
+        "L3-7,L21-22,L203,L229,L242-244"
+      ],
+      "readable_assertion": "The report claims a fresh native Goal, final bindings, complete sequential reads, rule compliance, no GET/tests, bounded tools and V001 retention.",
+      "source_outcome_unchanged": "unresolved",
+      "evidence_ids_unchanged": [
+        "I01"
+      ],
+      "readable_reason": "Actual operations and historical artifacts remain locked; none is inferred to succeed or fail."
+    },
+    {
+      "claim_id": "R024-C003",
+      "report_locators": [
+        "L13-20,L37-38"
+      ],
+      "readable_assertion": "The report uses plan/brief as targets, S003 as format authority, and explicit evidence/inference/uncertainty/example/product classes.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "P01",
+        "P02",
+        "B01",
+        "E02",
+        "E38"
+      ],
+      "readable_reason": "These stated conventions are appropriate; each actual classification is independently checked."
+    },
+    {
+      "claim_id": "R024-C004",
+      "report_locators": [
+        "L21,L245"
+      ],
+      "readable_assertion": "Both assignment groups and shared baseline/cross-cutting findings are claimed to cover the brief.",
+      "source_outcome_unchanged": "qualified",
+      "evidence_ids_unchanged": [
+        "B01",
+        "P01",
+        "P02",
+        "I01"
+      ],
+      "readable_reason": "Topical sections exist, but their presence does not establish complete six-facet coverage."
+    },
+    {
+      "claim_id": "R024-C005",
+      "report_locators": [
+        "L28-29,L205"
+      ],
+      "readable_assertion": "OME-Zarr uses Zarr v3; features may be used unless expressly disallowed.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E04",
+        "E05"
+      ],
+      "readable_reason": "The source directly establishes this version and condition."
+    },
+    {
+      "claim_id": "R024-C006",
+      "report_locators": [
+        "L30,L166,L171"
+      ],
+      "readable_assertion": "A reader should parse array metadata and avoid a single assumed chunk/codec or contiguous representation.",
+      "source_outcome_unchanged": "qualified",
+      "evidence_ids_unchanged": [
+        "E04",
+        "E05",
+        "E07"
+      ],
+      "readable_reason": "This is a sound compatibility warning; explicit supported limits are legitimate and core field details are outside S003."
+    },
+    {
+      "claim_id": "R024-C007",
+      "report_locators": [
+        "L30-31,L205"
+      ],
+      "readable_assertion": "The report says the image-array feature disallow list is empty and no codec/chunk/compression constraints are imposed.",
+      "source_outcome_unchanged": "qualified",
+      "evidence_ids_unchanged": [
+        "E04",
+        "E05",
+        "E18",
+        "E19"
+      ],
+      "readable_reason": "No particular codec rule is given, but broad empty-restriction wording overlooks mandatory image rank/order and label dtype constraints stated elsewhere."
+    },
+    {
+      "claim_id": "R024-C008",
+      "report_locators": [
+        "L33-35"
+      ],
+      "readable_assertion": "Metadata is attributes.ome in zarr.json; its version is a hierarchy-consistent string; mismatches get feedback.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E09",
+        "P02"
+      ],
+      "readable_reason": "Correct source rule; complete declared-0.5 admission remains unresolved."
+    },
+    {
+      "claim_id": "R024-C009",
+      "report_locators": [
+        "L37-38"
+      ],
+      "readable_assertion": "RFC2119 and descriptive text govern; explicit examples/notes are informative.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E02",
+        "E23",
+        "E38"
+      ],
+      "readable_reason": "Correct source convention and pseudocode status."
+    },
+    {
+      "claim_id": "R024-C010",
+      "report_locators": [
+        "L40-41,L193"
+      ],
+      "readable_assertion": "Transitional metadata intends future removal, with reading sometimes MUST/SHOULD and writing usually MAY.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E02",
+        "E13",
+        "E24"
+      ],
+      "readable_reason": "The general policy and b2raw/omero examples are accurately quoted."
+    },
+    {
+      "claim_id": "R024-C011",
+      "report_locators": [
+        "L42,L173-174,L193"
+      ],
+      "readable_assertion": "All transitional reading is effectively required for interoperability, while writers need not retain those keys.",
+      "source_outcome_unchanged": "qualified",
+      "evidence_ids_unchanged": [
+        "E02",
+        "E16",
+        "E25",
+        "P02"
+      ],
+      "readable_reason": "Useful interop advice, but may/usually conditions do not create a blanket reader mandate or writer exemption."
+    },
+    {
+      "claim_id": "R024-C012",
+      "report_locators": [
+        "L44-46,L249"
+      ],
+      "readable_assertion": "The capture date/version, draft warning, and 0.5.0/0.5.1/0.5.2 history are reported.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E01",
+        "E37"
+      ],
+      "readable_reason": "These source identity and version facts match the frozen text."
+    },
+    {
+      "claim_id": "R024-C013",
+      "report_locators": [
+        "L46,L209,L222"
+      ],
+      "readable_assertion": "Legacy 0.4 is outside admitted 0.5 guarantees; an unsupported-version message is a product option.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E01",
+        "E37",
+        "B01",
+        "P02"
+      ],
+      "readable_reason": "Honest scope limitation; admission behavior is not finalized."
+    },
+    {
+      "claim_id": "R024-C014",
+      "report_locators": [
+        "L52-54,L166,L184"
+      ],
+      "readable_assertion": "Images are groups, levels arrays, names arbitrary, paths group-relative and highest-resolution first.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E07",
+        "E19"
+      ],
+      "readable_reason": "Correct declared pyramid identity and relative path rule."
+    },
+    {
+      "claim_id": "R024-C015",
+      "report_locators": [
+        "L54,L184"
+      ],
+      "readable_assertion": "Lexical names may order10 before2; the metadata list determines order.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E07",
+        "E19"
+      ],
+      "readable_reason": "Valid inference, not observed reader behavior."
+    },
+    {
+      "claim_id": "R024-C016",
+      "report_locators": [
+        "L56-57,L168"
+      ],
+      "readable_assertion": "Images have2–5 dimensions,2–3 spatial axes, optional time/channel/null/custom, and metadata-corresponding order.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E06",
+        "E12",
+        "E18"
+      ],
+      "readable_reason": "Full source rank/order and optional-slot conditions are preserved."
+    },
+    {
+      "claim_id": "R024-C017",
+      "report_locators": [
+        "L58,L185"
+      ],
+      "readable_assertion": "Navigation should use validated axis identity/type when present rather than c/t/z names; optional axes control relevant UI.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E10",
+        "E12",
+        "E18",
+        "P01"
+      ],
+      "readable_reason": "Correct mapping principle; absent versus singleton axes is not explicitly distinguished."
+    },
+    {
+      "claim_id": "R024-C018",
+      "report_locators": [
+        "L60-62"
+      ],
+      "readable_assertion": "Axis names are required and unique; type/unit recommended and custom types allowed.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E10",
+        "E11"
+      ],
+      "readable_reason": "Correct normative levels and unit-value recommendations."
+    },
+    {
+      "claim_id": "R024-C019",
+      "report_locators": [
+        "L64-66,L170,L177,L232"
+      ],
+      "readable_assertion": "Array dimension_names is mandatory and matches axes; mismatches should be explained.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E12",
+        "E37",
+        "P02"
+      ],
+      "readable_reason": "Correct integrity rule; proposed cheapness is not a measured performance result."
+    },
+    {
+      "claim_id": "R024-C020",
+      "report_locators": [
+        "L68-69"
+      ],
+      "readable_assertion": "Multiscales requires axes/datasets/paths/transforms, exactly one scale, optional after-scale translation, matching vectors and recommended descriptive fields.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E18",
+        "E19",
+        "E20",
+        "E22"
+      ],
+      "readable_reason": "Correct source structure."
+    },
+    {
+      "claim_id": "R024-C021",
+      "report_locators": [
+        "L71-73,L120,L170"
+      ],
+      "readable_assertion": "Optional group transforms follow dataset transforms under the same restrictions.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E22"
+      ],
+      "readable_reason": "Correct composition order; omitting a nonidentity group transform loses calibration."
+    },
+    {
+      "claim_id": "R024-C022",
+      "report_locators": [
+        "L75-77,L197"
+      ],
+      "readable_assertion": "Multiple multiscales are allowed; named choice/first fallback is informative and product policy.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E23",
+        "P01"
+      ],
+      "readable_reason": "Correct separation of list structure and example selection advice."
+    },
+    {
+      "claim_id": "R024-C023",
+      "report_locators": [
+        "L79-80"
+      ],
+      "readable_assertion": "B2raw layout value3 and optional OME/series paths are required or conditioned as stated; XML order matters when provided.",
+      "source_outcome_unchanged": "qualified",
+      "evidence_ids_unchanged": [
+        "E13",
+        "E14",
+        "E15"
+      ],
+      "readable_reason": "Matches source prose; quoting3 does not establish string-only JSON typing."
+    },
+    {
+      "claim_id": "R024-C024",
+      "report_locators": [
+        "L80-81,L165"
+      ],
+      "readable_assertion": "Without series or plate, use consecutive groups from0; supplied XML uses MetadataOnly and XML is SHOULD-level.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E15"
+      ],
+      "readable_reason": "Correct conditional branch and XML guarantee distinction."
+    },
+    {
+      "claim_id": "R024-C025",
+      "report_locators": [
+        "L83-84,L164,L231"
+      ],
+      "readable_assertion": "Readers SHOULD make users aware of multiple images; MAY use series, show all or choice, and ignore other groups.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E16"
+      ],
+      "readable_reason": "The main quote preserves the actual recommendation and MAY choices."
+    },
+    {
+      "claim_id": "R024-C026",
+      "report_locators": [
+        "L85"
+      ],
+      "readable_assertion": "Showing only image0 is said to be automatically non-conforming.",
+      "source_outcome_unchanged": "unsupported",
+      "evidence_ids_unchanged": [
+        "E16",
+        "E38"
+      ],
+      "readable_reason": "This overstates a SHOULD as an unconditional MUST; justified RFC2119 exceptions remain possible."
+    },
+    {
+      "claim_id": "R024-C027",
+      "report_locators": [
+        "L87-88,L164"
+      ],
+      "readable_assertion": "HCS images have well,row,plate ancestors, required well/plate specs, same-well fields and optional labels.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E08",
+        "E07"
+      ],
+      "readable_reason": "Correct HCS hierarchy and empty-group recommendations."
+    },
+    {
+      "claim_id": "R024-C028",
+      "report_locators": [
+        "L89"
+      ],
+      "readable_assertion": "The thin plan is said to assume flat discovery and omit plate traversal.",
+      "source_outcome_unchanged": "qualified",
+      "evidence_ids_unchanged": [
+        "P01",
+        "P02",
+        "E08"
+      ],
+      "readable_reason": "Detail is omitted, but no flat/shallow discovery assumption is written; a flat list can be populated hierarchically."
+    },
+    {
+      "claim_id": "R024-C029",
+      "report_locators": [
+        "L91-92"
+      ],
+      "readable_assertion": "Plate rows/columns/version/wells, complete physical grid and matching0-based paths/indices are required.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E33"
+      ],
+      "readable_reason": "Correct detailed plate metadata rules."
+    },
+    {
+      "claim_id": "R024-C030",
+      "report_locators": [
+        "L92"
+      ],
+      "readable_assertion": "Plate name/field_count are recommended; acquisitions and timed descriptions are conditional with required value types.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E32",
+        "E33"
+      ],
+      "readable_reason": "Correct conditional keys and types."
+    },
+    {
+      "claim_id": "R024-C031",
+      "report_locators": [
+        "L92-93"
+      ],
+      "readable_assertion": "Sparse plates and case-sensitive-name collision caution matter locally.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E33",
+        "E34",
+        "B01"
+      ],
+      "readable_reason": "Useful source-grounded findings; no actual filesystem behavior was measured."
+    },
+    {
+      "claim_id": "R024-C032",
+      "report_locators": [
+        "L95-96"
+      ],
+      "readable_assertion": "Well images use unique alphanumeric paths and matching acquisition IDs when multiple; well version recommended.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E35"
+      ],
+      "readable_reason": "Correct field metadata and acquisition conditions."
+    },
+    {
+      "claim_id": "R024-C033",
+      "report_locators": [
+        "L98-100,L187,L196"
+      ],
+      "readable_assertion": "Plate can coexist with b2raw metadata but takes precedence; series supports unaware readers.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E14",
+        "E15"
+      ],
+      "readable_reason": "Correct branch rule, with co-presence allowed."
+    },
+    {
+      "claim_id": "R024-C034",
+      "report_locators": [
+        "L100"
+      ],
+      "readable_assertion": "Detector should check plate before interpreting b2raw as collection.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E14",
+        "E15"
+      ],
+      "readable_reason": "Valid inference from prescribed precedence."
+    },
+    {
+      "claim_id": "R024-C035",
+      "report_locators": [
+        "L102-103"
+      ],
+      "readable_assertion": "Format storage can be local, HTTP or object storage; local-only is product scope.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E06",
+        "B01",
+        "P02"
+      ],
+      "readable_reason": "Correct storage versus capability distinction."
+    },
+    {
+      "claim_id": "R024-C036",
+      "report_locators": [
+        "L104"
+      ],
+      "readable_assertion": "A narrow swappable storage layer is proposed to keep local scope inexpensive.",
+      "source_outcome_unchanged": "qualified",
+      "evidence_ids_unchanged": [
+        "E06",
+        "P02"
+      ],
+      "readable_reason": "Engineering recommendation; reduced maintenance cost is unmeasured."
+    },
+    {
+      "claim_id": "R024-C037",
+      "report_locators": [
+        "L110-111,L167,L183"
+      ],
+      "readable_assertion": "Omero is optional; supplied channels require six-hex colors and window fields; rich example fields/rdefs are not guaranteed.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E24",
+        "E25"
+      ],
+      "readable_reason": "Correct narrow conditional obligations and example status."
+    },
+    {
+      "claim_id": "R024-C038",
+      "report_locators": [
+        "L112,L167-168"
+      ],
+      "readable_assertion": "Use supplied rendering hints or choose fallback; channel-size correspondence is example-only and should be checked.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E24",
+        "E25",
+        "P01"
+      ],
+      "readable_reason": "Valid product proposal without inventing mandatory defaults."
+    },
+    {
+      "claim_id": "R024-C039",
+      "report_locators": [
+        "L114-115"
+      ],
+      "readable_assertion": "General transforms are identity/translation/scale in order, with inline floats or binary paths.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E17"
+      ],
+      "readable_reason": "Correct general vocabulary; multiscales restrictions are separately stated."
+    },
+    {
+      "claim_id": "R024-C040",
+      "report_locators": [
+        "L116,L177"
+      ],
+      "readable_assertion": "The plan is said to implicitly assume numeric transforms.",
+      "source_outcome_unchanged": "qualified",
+      "evidence_ids_unchanged": [
+        "P01",
+        "E17"
+      ],
+      "readable_reason": "The thin plan contains no representation assumption; a valid binary-path risk is still a useful proposed refinement."
+    },
+    {
+      "claim_id": "R024-C041",
+      "report_locators": [
+        "L116,L220,L236"
+      ],
+      "readable_assertion": "Valid binary-path transforms should decode if supported or get an explicit limitation; payload details remain unresolved.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E17",
+        "P02"
+      ],
+      "readable_reason": "Correct validity/capability distinction."
+    },
+    {
+      "claim_id": "R024-C042",
+      "report_locators": [
+        "L118-121"
+      ],
+      "readable_assertion": "Dataset transforms map physical sizes/time or conditional relative factors, with translation after scale and group transforms last.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E20",
+        "E21",
+        "E22"
+      ],
+      "readable_reason": "Correct calibration conditions and order."
+    },
+    {
+      "claim_id": "R024-C043",
+      "report_locators": [
+        "L119,L233"
+      ],
+      "readable_assertion": "The source example uses0.5/1/2µm voxel sizes and0.1ms group time scale.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E20",
+        "E22"
+      ],
+      "readable_reason": "Values match the example; this is not a measured output."
+    },
+    {
+      "claim_id": "R024-C044",
+      "report_locators": [
+        "L121,L123-125,L170,L194"
+      ],
+      "readable_assertion": "Absent physical scale/unit can prevent absolute calibration; use factor-only or absent-unit values with caveat and no invented units.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E11",
+        "E21",
+        "B01",
+        "P01"
+      ],
+      "readable_reason": "Strong, supported uncertainty treatment."
+    },
+    {
+      "claim_id": "R024-C045",
+      "report_locators": [
+        "L127-129,L168"
+      ],
+      "readable_assertion": "Anisotropic zyx is recommended, not guaranteed; plane controls follow detected space axes.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E18"
+      ],
+      "readable_reason": "Correct conditional ordering implication."
+    },
+    {
+      "claim_id": "R024-C046",
+      "report_locators": [
+        "L131-133,L169"
+      ],
+      "readable_assertion": "Labels are images in a nested container, integer typed, named arbitrarily, declared by paths, with permitted metadata-free intermediates and matching level count.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E27",
+        "E28"
+      ],
+      "readable_reason": "Correct discovery and structure, but exact-ID and association behavior remains incomplete."
+    },
+    {
+      "claim_id": "R024-C047",
+      "report_locators": [
+        "L135-136"
+      ],
+      "readable_assertion": "Image-label/colors/version are recommended; label-value is integer; rgba is optional four0–255 integers; reader colors are SHOULD.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E28",
+        "E29"
+      ],
+      "readable_reason": "Correct conditional metadata and palette force."
+    },
+    {
+      "claim_id": "R024-C048",
+      "report_locators": [
+        "L136"
+      ],
+      "readable_assertion": "Optional properties use integer label-value and heterogeneous keys; source.image is relative with default../../.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E30"
+      ],
+      "readable_reason": "Correct metadata semantics; reference resolution is not made an overlay admission step."
+    },
+    {
+      "claim_id": "R024-C049",
+      "report_locators": [
+        "L137,L169,L235"
+      ],
+      "readable_assertion": "Use specified colors with fallback when missing and optional property tooltips.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E29",
+        "E30",
+        "P01"
+      ],
+      "readable_reason": "Valid recommendation/product choice; wide-ID and resampling behavior remain absent."
+    },
+    {
+      "claim_id": "R024-C050",
+      "report_locators": [
+        "L139-140"
+      ],
+      "readable_assertion": "Diagram equal-or1 dimensions are called SHOULD-level; usually qualifies geometry equality.",
+      "source_outcome_unchanged": "qualified",
+      "evidence_ids_unchanged": [
+        "E07",
+        "E26",
+        "E38"
+      ],
+      "readable_reason": "Soft guidance is useful, but an informative diagram comment is not automatically a formal RFC2119 requirement."
+    },
+    {
+      "claim_id": "R024-C051",
+      "report_locators": [
+        "L141,L169,L195,L235"
+      ],
+      "readable_assertion": "Compute label geometry per file, broadcast irrelevant singleton dimensions and explain unsupported divergence.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E07",
+        "E26",
+        "E28",
+        "P02"
+      ],
+      "readable_reason": "Appropriate proposal; intended source identity still needs validation."
+    },
+    {
+      "claim_id": "R024-C052",
+      "report_locators": [
+        "L147-148,L232"
+      ],
+      "readable_assertion": "Comments in spec examples are not valid metadata JSON; a strict parser is appropriate.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E03"
+      ],
+      "readable_reason": "Directly supported by the comment prohibition."
+    },
+    {
+      "claim_id": "R024-C053",
+      "report_locators": [
+        "L150-151"
+      ],
+      "readable_assertion": "CamelCase has exceptions; maximumfieldcount and field_count must be looked up by exact spelling.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E39",
+        "E32",
+        "E33"
+      ],
+      "readable_reason": "Useful source-grounded compatibility inference."
+    },
+    {
+      "claim_id": "R024-C054",
+      "report_locators": [
+        "L153-154"
+      ],
+      "readable_assertion": "Image groups across all discovery families share multiscales/axes/datasets rules.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E08",
+        "E18",
+        "E19",
+        "E20"
+      ],
+      "readable_reason": "Correct transfer of image requirements through collection and plate layouts."
+    },
+    {
+      "claim_id": "R024-C055",
+      "report_locators": [
+        "L160"
+      ],
+      "readable_assertion": "OBL groups MUST/SHOULD, OPT optional, PD product choices; additional capabilities get review.",
+      "source_outcome_unchanged": "qualified",
+      "evidence_ids_unchanged": [
+        "E38",
+        "P02"
+      ],
+      "readable_reason": "Useful legend, but MUST and SHOULD must keep different force."
+    },
+    {
+      "claim_id": "R024-C056",
+      "report_locators": [
+        "L164"
+      ],
+      "readable_assertion": "D1 adds topology-aware discovery, plate precedence and multi-image awareness.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E08",
+        "E14",
+        "E15",
+        "E16",
+        "P01"
+      ],
+      "readable_reason": "Sound refinement of the thin plan; navigation presentation remains policy."
+    },
+    {
+      "claim_id": "R024-C057",
+      "report_locators": [
+        "L165"
+      ],
+      "readable_assertion": "D2 says listing is covered if conditional branch/order logic is followed.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E15",
+        "E16",
+        "P01"
+      ],
+      "readable_reason": "Correct conditional already-covered disposition."
+    },
+    {
+      "claim_id": "R024-C058",
+      "report_locators": [
+        "L166"
+      ],
+      "readable_assertion": "D3 says pan/zoom/level selection exists but metadata order and chunk/codec design need detail.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E04",
+        "E05",
+        "E19",
+        "P01"
+      ],
+      "readable_reason": "Proper format versus implementation distinction."
+    },
+    {
+      "claim_id": "R024-C059",
+      "report_locators": [
+        "L167"
+      ],
+      "readable_assertion": "D4 asks for fallback rendering/defaults without omero.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E24",
+        "E25",
+        "P01"
+      ],
+      "readable_reason": "Correct optionality and conditional metadata split."
+    },
+    {
+      "claim_id": "R024-C060",
+      "report_locators": [
+        "L168"
+      ],
+      "readable_assertion": "D5 treats controls as covered and t0/mid-plane defaults as policy.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E18",
+        "E24",
+        "E25",
+        "P01"
+      ],
+      "readable_reason": "Proposed defaults are not attributed to a format MUST."
+    },
+    {
+      "claim_id": "R024-C061",
+      "report_locators": [
+        "L169"
+      ],
+      "readable_assertion": "D6 adds singleton/transform alignment and fallback palette design.",
+      "source_outcome_unchanged": "qualified",
+      "evidence_ids_unchanged": [
+        "E27",
+        "E28",
+        "E29",
+        "E30",
+        "P01"
+      ],
+      "readable_reason": "Useful, but source association and exact categorical identity still need detail."
+    },
+    {
+      "claim_id": "R024-C062",
+      "report_locators": [
+        "L170"
+      ],
+      "readable_assertion": "D7 adds honest uncalibrated values and correct composition to existing details.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E11",
+        "E12",
+        "E20",
+        "E21",
+        "E22",
+        "P01"
+      ],
+      "readable_reason": "Supported calibration and unit treatment."
+    },
+    {
+      "claim_id": "R024-C063",
+      "report_locators": [
+        "L171"
+      ],
+      "readable_assertion": "D8 keeps background/cancellation requirements; chunking enables partial-read design.",
+      "source_outcome_unchanged": "qualified",
+      "evidence_ids_unchanged": [
+        "E04",
+        "E05",
+        "P02"
+      ],
+      "readable_reason": "Product requirements remain separate from unproven responsiveness or decoder-cost guarantees."
+    },
+    {
+      "claim_id": "R024-C064",
+      "report_locators": [
+        "L172"
+      ],
+      "readable_assertion": "D9 lists version/scale/dtype/intermediate/name/reference errors and path-variant transforms as violations.",
+      "source_outcome_unchanged": "contradicted",
+      "evidence_ids_unchanged": [
+        "E09",
+        "E12",
+        "E17",
+        "E20",
+        "E27",
+        "E33",
+        "E35",
+        "P02"
+      ],
+      "readable_reason": "Every structural example is valid except the path variant, which the source explicitly permits; unsupported decoding is a capability limit."
+    },
+    {
+      "claim_id": "R024-C065",
+      "report_locators": [
+        "L173"
+      ],
+      "readable_assertion": "D10 links real-tool interoperability to transitional reading.",
+      "source_outcome_unchanged": "qualified",
+      "evidence_ids_unchanged": [
+        "E02",
+        "E13",
+        "E24",
+        "E25",
+        "P02"
+      ],
+      "readable_reason": "Plausible recommendation, not measured tool necessity or universal reader MUST."
+    },
+    {
+      "claim_id": "R024-C066",
+      "report_locators": [
+        "L174"
+      ],
+      "readable_assertion": "D11 keeps read-only/session-local settings with no format writeback.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "B01",
+        "P02",
+        "E02"
+      ],
+      "readable_reason": "Correct product boundary; writing is usually optional, not universally exempt."
+    },
+    {
+      "claim_id": "R024-C067",
+      "report_locators": [
+        "L175"
+      ],
+      "readable_assertion": "D12 maps acceptance to proposed PV01–PV06, all unexecuted.",
+      "source_outcome_unchanged": "qualified",
+      "evidence_ids_unchanged": [
+        "P02"
+      ],
+      "readable_reason": "Correct status, but the proposals do not expose every full-facet failure."
+    },
+    {
+      "claim_id": "R024-C068",
+      "report_locators": [
+        "L177"
+      ],
+      "readable_assertion": "Additional narrative lists missing version/dimension_names/multiscale/path/HCS details.",
+      "source_outcome_unchanged": "qualified",
+      "evidence_ids_unchanged": [
+        "P01",
+        "P02",
+        "E09",
+        "E12",
+        "E17",
+        "E23",
+        "E08"
+      ],
+      "readable_reason": "Text omissions are real; largest-gap priority is judgment and numeric-transform assumption is not established."
+    },
+    {
+      "claim_id": "R024-C069",
+      "report_locators": [
+        "L183"
+      ],
+      "readable_assertion": "RJ1 rejects required rdefs.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E24",
+        "E25"
+      ],
+      "readable_reason": "Correct rejection of an example-only guarantee."
+    },
+    {
+      "claim_id": "R024-C070",
+      "report_locators": [
+        "L184"
+      ],
+      "readable_assertion": "RJ2 rejects numeric-level names and lexical ordering.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E07",
+        "E19"
+      ],
+      "readable_reason": "Correct declared-list identity."
+    },
+    {
+      "claim_id": "R024-C071",
+      "report_locators": [
+        "L185"
+      ],
+      "readable_assertion": "RJ3 rejects fixed c/t/z names and uses type only when available.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E06",
+        "E10",
+        "E18"
+      ],
+      "readable_reason": "Correct arbitrary naming and conditional role metadata."
+    },
+    {
+      "claim_id": "R024-C072",
+      "report_locators": [
+        "L186"
+      ],
+      "readable_assertion": "RJ4 rejects universal identical geometry and calls coordinate equality soft.",
+      "source_outcome_unchanged": "qualified",
+      "evidence_ids_unchanged": [
+        "E26",
+        "E28",
+        "E07"
+      ],
+      "readable_reason": "Equality of dimensions/transforms is qualified; usually should not be moved onto every coordinate-system statement."
+    },
+    {
+      "claim_id": "R024-C073",
+      "report_locators": [
+        "L187"
+      ],
+      "readable_assertion": "RJ5 rejects parsing a plate as collection when both keys occur.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E14",
+        "E15"
+      ],
+      "readable_reason": "Correct precedence without invalidating co-presence."
+    },
+    {
+      "claim_id": "R024-C074",
+      "report_locators": [
+        "L193"
+      ],
+      "readable_assertion": "CE1 retains transitional-removal tension and advises an exit plan.",
+      "source_outcome_unchanged": "qualified",
+      "evidence_ids_unchanged": [
+        "E02",
+        "E13",
+        "E24",
+        "P02"
+      ],
+      "readable_reason": "Useful tradeoff; interop/exiting new features is product judgment rather than universal source mandate."
+    },
+    {
+      "claim_id": "R024-C075",
+      "report_locators": [
+        "L194"
+      ],
+      "readable_assertion": "CE2 retains valid lack of absolute calibration and explicit factor-only caveat.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E11",
+        "E21",
+        "B01"
+      ],
+      "readable_reason": "Supported; truthful unsupported capability is also legitimate."
+    },
+    {
+      "claim_id": "R024-C076",
+      "report_locators": [
+        "L195"
+      ],
+      "readable_assertion": "CE3 proposes singleton and divergent-geometry fixtures.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E07",
+        "E26",
+        "E28",
+        "P02"
+      ],
+      "readable_reason": "Useful; equal level count is not sufficient registration."
+    },
+    {
+      "claim_id": "R024-C077",
+      "report_locators": [
+        "L196"
+      ],
+      "readable_assertion": "CE4 retains valid overlapping keys and prescribed plate priority.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E14"
+      ],
+      "readable_reason": "Correct source distinction."
+    },
+    {
+      "claim_id": "R024-C078",
+      "report_locators": [
+        "L197"
+      ],
+      "readable_assertion": "CE5 claims server-side WebGateway origin and conditional unverified local transfer; multiscale pseudocode remains guidance.",
+      "source_outcome_unchanged": "qualified",
+      "evidence_ids_unchanged": [
+        "E24",
+        "E23"
+      ],
+      "readable_reason": "S003 only provides a documentation pointer, not server-model facts; explicit unverified transfer caveat is appropriate."
+    },
+    {
+      "claim_id": "R024-C079",
+      "report_locators": [
+        "L201-205"
+      ],
+      "readable_assertion": "N1 finds no detailed codec/chunk/compression rules and allows broad reading or explicit non-support.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E04",
+        "E05"
+      ],
+      "readable_reason": "Valid scoped absence, while general OME array constraints still apply."
+    },
+    {
+      "claim_id": "R024-C080",
+      "report_locators": [
+        "L206"
+      ],
+      "readable_assertion": "N2 finds no reader catalog/behavior or satisfied actual-reader research in S003.",
+      "source_outcome_unchanged": "qualified",
+      "evidence_ids_unchanged": [
+        "E36",
+        "E13",
+        "E01"
+      ],
+      "readable_reason": "Correct reader gap; b2raw writer and draft-support references make blanket absence of every compatibility-adjacent statement too broad."
+    },
+    {
+      "claim_id": "R024-C081",
+      "report_locators": [
+        "L207"
+      ],
+      "readable_assertion": "N3 finds no UI/background/cancellation/memory guidance.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E04",
+        "E05",
+        "P02"
+      ],
+      "readable_reason": "Full capture does not supply a product performance model."
+    },
+    {
+      "claim_id": "R024-C082",
+      "report_locators": [
+        "L208"
+      ],
+      "readable_assertion": "N4 finds no mandated interpolation/LUT/compositing model, only conditional display metadata/recommendations.",
+      "source_outcome_unchanged": "qualified",
+      "evidence_ids_unchanged": [
+        "E24",
+        "E25",
+        "E29",
+        "E31"
+      ],
+      "readable_reason": "Source also defines rgba alpha semantics; absence of an algorithm does not justify lossy categorical IDs."
+    },
+    {
+      "claim_id": "R024-C083",
+      "report_locators": [
+        "L209"
+      ],
+      "readable_assertion": "N5 finds no migration mechanism or legacy-reader behavior beyond promised scripts.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E01",
+        "E37"
+      ],
+      "readable_reason": "Supported full-source scoped absence."
+    },
+    {
+      "claim_id": "R024-C084",
+      "report_locators": [
+        "L210"
+      ],
+      "readable_assertion": "N6 finds no binary-transform layout detail beyond its path reference.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E17"
+      ],
+      "readable_reason": "Supported encoding uncertainty; valid proposals are not false due to missing fixtures."
+    },
+    {
+      "claim_id": "R024-C085",
+      "report_locators": [
+        "L216"
+      ],
+      "readable_assertion": "U1 leaves readers/Tools and actual compatibility unverified.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E36",
+        "E13",
+        "I01"
+      ],
+      "readable_reason": "Honest undeveloped external lead."
+    },
+    {
+      "claim_id": "R024-C086",
+      "report_locators": [
+        "L217"
+      ],
+      "readable_assertion": "U2 leaves rich omero semantics external.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E24",
+        "E25"
+      ],
+      "readable_reason": "Correct admitted-source limit."
+    },
+    {
+      "claim_id": "R024-C087",
+      "report_locators": [
+        "L218"
+      ],
+      "readable_assertion": "U3 leaves arbitrary UDUNITS validity unknown and admits custom strings at SHOULD level.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E11"
+      ],
+      "readable_reason": "Listed values are recommended, not the only mandatory strings."
+    },
+    {
+      "claim_id": "R024-C088",
+      "report_locators": [
+        "L219"
+      ],
+      "readable_assertion": "U4 leaves OME-XML validation external while series order can be read.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E15"
+      ],
+      "readable_reason": "Correct dependency gap; product need is distinct from complete schema validation."
+    },
+    {
+      "claim_id": "R024-C089",
+      "report_locators": [
+        "L220"
+      ],
+      "readable_assertion": "U5 leaves path encoding and real-writer/upstream checks unresolved.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E17",
+        "I01"
+      ],
+      "readable_reason": "Fair undeveloped lead, within fixed source boundary."
+    },
+    {
+      "claim_id": "R024-C090",
+      "report_locators": [
+        "L221"
+      ],
+      "readable_assertion": "U6 leaves shard/transformer reading and performance unverified.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E05"
+      ],
+      "readable_reason": "Feature permission does not establish practical read behavior."
+    },
+    {
+      "claim_id": "R024-C091",
+      "report_locators": [
+        "L222"
+      ],
+      "readable_assertion": "U7 leaves unsupported non0.5 messaging as a product choice.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E01",
+        "E37",
+        "B01",
+        "P02"
+      ],
+      "readable_reason": "No implicit legacy reinterpretation, but admission is unfinished."
+    },
+    {
+      "claim_id": "R024-C092",
+      "report_locators": [
+        "L223"
+      ],
+      "readable_assertion": "U8 leaves post-capture errata unknown under frozen hash/date.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E01",
+        "I01"
+      ],
+      "readable_reason": "Honest version limit; no actual fetch conclusion inferred."
+    },
+    {
+      "claim_id": "R024-C093",
+      "report_locators": [
+        "L231"
+      ],
+      "readable_assertion": "PV1 proposes plain,b2raw and sparse HCS/multiple-acquisition discovery fixtures.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E07",
+        "E08",
+        "E14",
+        "E15",
+        "E16",
+        "E34",
+        "E35",
+        "P02"
+      ],
+      "readable_reason": "Valid unexecuted proposal; acquisition extension must use correct IDs."
+    },
+    {
+      "claim_id": "R024-C094",
+      "report_locators": [
+        "L232"
+      ],
+      "readable_assertion": "PV2 proposes malformed version/scale/dtype/intermediate/name/plate-reference fixtures and understandable no-crash feedback.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E09",
+        "E12",
+        "E20",
+        "E27",
+        "E33",
+        "P02"
+      ],
+      "readable_reason": "Valid unexecuted suite; permitted path variant is not included here."
+    },
+    {
+      "claim_id": "R024-C095",
+      "report_locators": [
+        "L233"
+      ],
+      "readable_assertion": "PV3 proposes analytic scale-example coordinates, time scale and nonnumeric level names.",
+      "source_outcome_unchanged": "qualified",
+      "evidence_ids_unchanged": [
+        "E20",
+        "E22",
+        "E19"
+      ],
+      "readable_reason": "Scale-only transforms commute, so this cannot catch reversed composition or missing offsets; names need deliberate ordering too."
+    },
+    {
+      "claim_id": "R024-C096",
+      "report_locators": [
+        "L234"
+      ],
+      "readable_assertion": "PV4 proposes large-chunk interactivity and stale-read cancellation checks.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "P02",
+        "E04",
+        "E05"
+      ],
+      "readable_reason": "Unexecuted product acceptance, not a source performance fact."
+    },
+    {
+      "claim_id": "R024-C097",
+      "report_locators": [
+        "L235"
+      ],
+      "readable_assertion": "PV5 proposes alpha/fallback/singleton-time geometry, level count and divergence feedback.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E07",
+        "E28",
+        "E29",
+        "E31",
+        "P02"
+      ],
+      "readable_reason": "Useful unexecuted overlay check; association,wide/sparse IDs and interpolation remain untested."
+    },
+    {
+      "claim_id": "R024-C098",
+      "report_locators": [
+        "L236"
+      ],
+      "readable_assertion": "PV6 proposes valid binary-path decoding or clear capability limitation.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "E17",
+        "P02"
+      ],
+      "readable_reason": "Correct proposal; it conflicts with D9's invalidity classification."
+    },
+    {
+      "claim_id": "R024-C099",
+      "report_locators": [
+        "L240-245"
+      ],
+      "readable_assertion": "The report claims full topic/read coverage and explicitly uninspected external sources.",
+      "source_outcome_unchanged": "qualified",
+      "evidence_ids_unchanged": [
+        "I01",
+        "B01",
+        "P01",
+        "P02"
+      ],
+      "readable_reason": "Topics are present and gaps visible; actual operations are locked and all six facets remain partial."
+    },
+    {
+      "claim_id": "R024-C100",
+      "report_locators": [
+        "L249-252"
+      ],
+      "readable_assertion": "Source aliases, catalog40-line/byte/hash pins and plan/brief pins are provided.",
+      "source_outcome_unchanged": "supported",
+      "evidence_ids_unchanged": [
+        "I01",
+        "E01"
+      ],
+      "readable_reason": "Metadata matches; staged catalog identity does not prove candidate operations."
+    },
+    {
+      "claim_id": "R024-C101",
+      "report_locators": [
+        "L254-259"
+      ],
+      "readable_assertion": "V002 claims repaired V001 identity prose, unchanged findings and retained prior version.",
+      "source_outcome_unchanged": "unresolved",
+      "evidence_ids_unchanged": [
+        "I01"
+      ],
+      "readable_reason": "Current identity is verified; prior error,unchanged findings and retention remain locked history. No V001 was opened."
+    }
+  ]
+}

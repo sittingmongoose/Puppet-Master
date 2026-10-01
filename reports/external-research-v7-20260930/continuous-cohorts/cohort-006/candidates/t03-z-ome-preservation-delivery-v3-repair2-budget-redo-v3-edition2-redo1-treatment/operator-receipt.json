@@ -1,0 +1,23 @@
+{
+  "epoch": 1790890618.0684297,
+  "label": "t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-treatment",
+  "status": "frozen-for-independent-evaluation",
+  "native_goal_status": "complete",
+  "output_integrity_sha256": "9920967361c622c880252fd7bb320da01fd18ad5d478bbf6d8989bca1e2313e2",
+  "accounting": {
+    "candidate_admissions": 40,
+    "occupied_slot_seconds": 25237.516275167465,
+    "remaining_committed_slot_seconds": 1559.460366487503,
+    "reported_generated_tokens_lower_bound": 1122195,
+    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "active_by_family": {
+      "M": 0,
+      "Z": 1,
+      "L": 0
+    },
+    "overdue_jobs": [],
+    "active_jobs": [
+      "t13-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-redo1-control"
+    ]
+  }
+}

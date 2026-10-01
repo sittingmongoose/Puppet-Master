@@ -1,0 +1,110 @@
+{
+  "as_of_utc": "2026-09-30T16:24:47.383306+00:00",
+  "status": "ACTIVE user-authorized extension; Z exact rolling queue, M/L held",
+  "deadline_epoch": 1790904541,
+  "deadline_utc": "2026-10-02T01:29:01+00:00",
+  "max_simultaneous_helpers": 23,
+  "helper_start_ceiling": 96,
+  "family_caps": {
+    "M": 2,
+    "Z": 2,
+    "L": 2
+  },
+  "active_owned_candidates": [],
+  "sibling_occupancy": "unknown; untouched",
+  "snapshot_source_sha256": "4cb1212178a24c67de5dc91eb9065c2aee1c8f3c0f8dcae6ce24c06a68a4b352",
+  "post_snapshot_review_addendum": {
+    "Z": "new launches held after credential/private-key readability probe; no credential contents read",
+    "L": "quarantined; carrier adjudication NO launch authority",
+    "T13": "terminal native timeout and preceding Bash namespace failure; causal link unknown",
+    "M": "auth readable in exact namespace boolean probe; admissions held and active T14 treatment ordered stopped; cleanup final state not in this snapshot",
+    "all_M_Z": "held pending independently accepted runtime isolation; historical safe-harness qualification withdrawn"
+  },
+  "final_hold_observation": {
+    "epoch": 1790785941.9870791,
+    "active_owned_candidates": [],
+    "new_mz_starts_held": true,
+    "source": "cohort-evidence/mz-safety-hold.json",
+    "T14_treatment": "already native Goal complete and released before stop instruction; none interrupted"
+  },
+  "grading_cohort_utc": "2026-09-30T16:46:19.685825+00:00",
+  "grading_coverage": {
+    "current_complete": [
+      "R001",
+      "R002",
+      "R003",
+      "R004",
+      "R005",
+      "R006",
+      "R007",
+      "R008",
+      "R013",
+      "R014",
+      "R015",
+      "R016",
+      "R017",
+      "R019",
+      "R020",
+      "R021"
+    ],
+    "current_partial_certification": [
+      "R011",
+      "R012"
+    ],
+    "current_pending": [],
+    "saved_history_complete_available_scope": [
+      "R001",
+      "R002",
+      "R003",
+      "R004",
+      "R005",
+      "R006"
+    ],
+    "saved_history_partial": [
+      "R007",
+      "R008"
+    ],
+    "native_admissions": "Zrolling exact rootbound queue; M/Lheld",
+    "additive_one_arm_complete": [
+      "R018"
+    ],
+    "additive_complete_pairs": [
+      [
+        "R018",
+        "R019"
+      ]
+    ]
+  },
+  "preservation_cohort_utc": "2026-09-30T17:35:37.328046+00:00",
+  "helper_override": "Explicit user raises helper starts96; simultaneous23 and deadline unchanged",
+  "new_admissions": true,
+  "requires_explicit_user_resume": false,
+  "pause_receipt": "second-pause/operator-pause.json",
+  "native_canary_independent_qualification": "historical passed; exact host/context route accepted; perproductiveattempt verification required",
+  "publication_status": "ACTIVE user-authorized extension; Z exact rolling queue, M/L held",
+  "original_wall_deadline_epoch": 1790820406,
+  "deadline_edt": "2026-10-01T21:29:01-04:00",
+  "extension_authority": "work-clock-extension/authority.json",
+  "publication_as_of_utc": "2026-10-01T21:17:44.037416+00:00",
+  "new_research_budget_required": false,
+  "active_snapshot": {
+    "candidate_admissions": 37,
+    "occupied_slot_seconds": 22305.353593349457,
+    "remaining_committed_slot_seconds": 1444.0161819458008,
+    "reported_generated_tokens_lower_bound": 919158,
+    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "active_by_family": {
+      "M": 0,
+      "Z": 2,
+      "L": 0
+    },
+    "overdue_jobs": [],
+    "active_jobs": [
+      "t04r-z-ome-compact-contrasts-v1-budget-redo-v3-redo1-control",
+      "t04r-z-ome-compact-contrasts-v1-budget-redo-v3-redo1-treatment"
+    ]
+  },
+  "snapshot_source": "continuous-cohorts/cohort-005/observed-evaluation-ready.json",
+  "snapshot_is_live_current": false,
+  "helper_extension_authority": "continuous-cohorts/cohort-004/helper-authority.json"
+}

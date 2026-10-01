@@ -1,10 +1,10 @@
 {
-  "as_of_epoch": 1790889014.4608958,
-  "counted_launch_admissions": 37,
-  "known_native_goal_starts": 35,
+  "as_of_epoch": 1790891621.1830523,
+  "counted_launch_admissions": 41,
+  "known_native_goal_starts": 39,
   "pre_goal_failures": 2,
-  "occupied_slot_seconds_as_of_snapshot": 22305.353593349457,
-  "reported_candidate_output_tokens_lower_bound": 919158,
+  "occupied_slot_seconds_as_of_snapshot": 26818.58122420311,
+  "reported_candidate_output_tokens_lower_bound": 1166986,
   "generated_output_completeness": "unknown; all figures partial, native children/cancellation/unexposed fields retained unknown",
   "parent_sol_usage": "includes input; generated component unknown",
   "helper_generated_tokens": null,
@@ -25,7 +25,7 @@
     "quality": "both quality failure; treatment lower elapsed observed, no same-quality speedup claim",
     "current_summary": "reviews/R003-R004-current-only-summary.json"
   },
-  "as_of_utc": "2026-10-01T21:10:14.460896+00:00",
+  "as_of_utc": "2026-10-01T21:53:41.183052+00:00",
   "same_quality_efficiency_claim": false,
   "new_terminal_attempt_metrics": "cohort-evidence/terminal-attempts.json",
   "post_snapshot_final_hold_accounting": {
@@ -125,12 +125,12 @@
   "publication_status": "ACTIVE explicit work-clock extension; totals unchanged",
   "administrative_closeout_as_of_utc": "2026-10-01T17:29:11.818480+00:00",
   "extension_authority": "work-clock-extension/authority.json",
-  "known_conservative_helper_task_start_events": 91,
+  "known_conservative_helper_task_start_events": 92,
   "helper_ceiling": 96,
-  "known_helper_headroom": 5,
+  "known_helper_headroom": 4,
   "helper_event_count_completeness": "unknown; conservative events not guaranteed unique helpers",
-  "helper_event_count_as_of_utc": "2026-10-01T21:17:44.037416+00:00",
-  "helper_event_count_source": "Frozen helper-admin reconciliation; fresh same-name followups retained; omissions unknown",
+  "helper_event_count_as_of_utc": "2026-10-01T21:53:55.016228+00:00",
+  "helper_event_count_source": "Parent explicit92-event conservative rollup; omissions unknown",
   "continuous_cohort_001_accounting": {
     "candidate_admissions": 23,
     "occupied_slot_seconds": 11117.104108572006,
@@ -182,7 +182,7 @@
   },
   "T10_current_quality": "both complete current quality failures; source capture eligibility unknown; no efficiency benefit",
   "helper_extension_authority": "continuous-cohorts/cohort-004/helper-authority.json",
-  "publication_as_of_utc": "2026-10-01T21:17:44.037416+00:00",
+  "publication_as_of_utc": "2026-10-01T21:53:55.016228+00:00",
   "continuous_cohort_005_accounting": {
     "candidate_admissions": 37,
     "occupied_slot_seconds": 22305.353593349457,
@@ -199,5 +199,35 @@
       "t04r-z-ome-compact-contrasts-v1-budget-redo-v3-redo1-control",
       "t04r-z-ome-compact-contrasts-v1-budget-redo-v3-redo1-treatment"
     ]
+  },
+  "continuous_cohort_006_accounting": {
+    "admissions": 41,
+    "operator_native_goals_pin": 39,
+    "operator_epoch": 1790891249.4393528,
+    "operator_staleness_seconds": 371.74369955062866,
+    "occupied_slot_seconds": 26818.58122420311,
+    "committed_remaining_seconds": 840.6559450626373,
+    "active_by_family": {
+      "M": 0,
+      "Z": 1,
+      "L": 0
+    },
+    "active_caps": {
+      "M": 2,
+      "Z": 2,
+      "L": 2
+    },
+    "M_L": "held original repair cap; no implicit route reopening",
+    "generated_output_lower_bound": 1166986,
+    "generated_output_complete": false,
+    "true_headroom": null,
+    "warning": 2400000,
+    "output_stop": 3000000,
+    "start_cap": 144,
+    "slot_seconds_cap": 172800,
+    "remaining_admission_starts": 103,
+    "reserve_starts_at_least": 21,
+    "uncommitted_slot_seconds_remaining": 145140.76283073425,
+    "reserve_slot_seconds_at_least": 29028.15256614685
   }
 }

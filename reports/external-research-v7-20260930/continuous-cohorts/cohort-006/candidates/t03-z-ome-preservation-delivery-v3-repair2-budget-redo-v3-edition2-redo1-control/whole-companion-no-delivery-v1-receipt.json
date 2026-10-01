@@ -1,0 +1,67 @@
+{
+  "schema": "er7.whole_companion.v1",
+  "label": "t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-control",
+  "method_config_sha256": "faf8974bbf1e8eceb8d9e2c9eb3d55f21c1e1dc515e5a00223bb0ef763712bc6",
+  "native_receipt_sha256": "05ee80099df553e598c66f82e166c306194f3a75455e086c1dbae771329e27ba",
+  "output_integrity_sha256": "5eafd424fd769be0c42607d4c3db93319e82068ccd0068708465608fcdc361a5",
+  "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-control/whole-frozen-workspace-no-delivery-v1",
+  "inputs": {
+    "brief.md": {
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "bytes": 905
+    },
+    "TASK.md": {
+      "sha256": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9",
+      "bytes": 1367
+    },
+    "catalog.json": {
+      "sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+      "bytes": 1563
+    },
+    "sources/S003.txt": {
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 36980
+    },
+    "plan/Viewer.md": {
+      "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "bytes": 1498
+    }
+  },
+  "out": {
+    "acquisition/V001.json": {
+      "sha256": "813eb5437a0886ce2570edc8d9261680347ab21c86ca818d57b85a04781fa0f5",
+      "bytes": 12600
+    },
+    "final/V001.json": {
+      "sha256": "bb7ebe18882ec76815933222933a25c14ed2f452d17291730e40036f6ceee10d",
+      "bytes": 128
+    },
+    "observations/V001.json": {
+      "sha256": "9bbe303f155f161840ef01bfbd96949fcb1727222383bf749fce596ab19b5ecd",
+      "bytes": 13745
+    },
+    "reports/V001.md": {
+      "sha256": "c57063ba7325872cf347c8eb9530382427a146ab0e08ad880fba259557bd7ae8",
+      "bytes": 14712
+    },
+    "tmp/brief-map.txt": {
+      "sha256": "0f11bdc72d89fba04cff86304b32f7c6c4dacc6974892df0a8bcb9a66ab0f086",
+      "bytes": 1151
+    },
+    "tmp/cache-brief.json": {
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "bytes": 905
+    },
+    "tmp/task-map.json": {
+      "sha256": "a5399711ae4797942b119001251721c7903c03e97157163b93bf07f12fe003b8",
+      "bytes": 2822
+    }
+  },
+  "copied_bytes": 88376,
+  "copy_seconds": 0.29953351699805353,
+  "all_inputs_preserved": true,
+  "all_output_versions_preserved": true,
+  "source_and_output_immutable": true,
+  "semantic_assessment": "none",
+  "private_client_access": false
+}

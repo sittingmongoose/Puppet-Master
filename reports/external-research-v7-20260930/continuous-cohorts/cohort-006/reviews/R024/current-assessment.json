@@ -1,0 +1,2208 @@
+{
+  "schema": "er7.current_assessment.v2",
+  "phase": 1,
+  "report_id": "R024",
+  "stage_case_id": "C061",
+  "fixed_case_id": "ome-normative-dev-v1",
+  "reviewer": "Codex independent evaluator /root/normative_current_grading_v5",
+  "runtime_identity": {
+    "requested_protocol_role": "GPT-6.1 Sol Extra High",
+    "actual_model_api_identity": "not exposed to this helper; no assertion of verification",
+    "independence": "Did not author candidate report or method; no prior assessments/history accessed; source/key evaluated independently."
+  },
+  "started_at_utc": "2026-10-01T21:17:58Z",
+  "frozen_at_utc": "2026-10-01T21:35:43.317963Z",
+  "budget_binding": {
+    "active_minutes": 150,
+    "response_cap": 120,
+    "finalization_reserve_minutes": 15,
+    "hard_deadline_utc": "2026-10-01T23:47:58Z",
+    "reserve_begins_no_later_than_utc": "2026-10-01T23:32:58Z",
+    "budget_not_reset": true
+  },
+  "input_pins": {
+    "stage_sha256": "b9a28a9b50d6085c938c1ac9eafeffcadaa3df85c5a05ec8f859853ab909e2aa",
+    "manifest_sha256": "3cb96654e867776c68794ecd5e853d27056899534c8306675052eb1c527425c8",
+    "current_report_sha256": "2880232e585e815749f008bbf1664228c184be6a45ae281fabe3f5c25e6b06f7",
+    "manifest_checks": [
+      {
+        "path": "PROTOCOL.md",
+        "expected_sha256": "f0427cc8d1495e368b8b79cb9ead18cc65d4b0b2e8b509e338b86923ee5b1e15",
+        "actual_sha256": "f0427cc8d1495e368b8b79cb9ead18cc65d4b0b2e8b509e338b86923ee5b1e15",
+        "matches": true
+      },
+      {
+        "path": "auxiliary-prebound-inputs-v1/ADDENDUM.json",
+        "expected_sha256": "f1825af35c061606497a9e21748fe839a98f44daf8f8573337f6f908fbb1e9a6",
+        "actual_sha256": "f1825af35c061606497a9e21748fe839a98f44daf8f8573337f6f908fbb1e9a6",
+        "matches": true
+      },
+      {
+        "path": "auxiliary-prebound-inputs-v1/catalog.json",
+        "expected_sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+        "actual_sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+        "matches": true
+      },
+      {
+        "path": "current-report.md",
+        "expected_sha256": "2880232e585e815749f008bbf1664228c184be6a45ae281fabe3f5c25e6b06f7",
+        "actual_sha256": "2880232e585e815749f008bbf1664228c184be6a45ae281fabe3f5c25e6b06f7",
+        "matches": true
+      },
+      {
+        "path": "eligibility.json",
+        "expected_sha256": "1dbb0006ccbc12ad4b31eb1c52e3e2e30abf304fcffb2f3938e0609079c42531",
+        "actual_sha256": "1dbb0006ccbc12ad4b31eb1c52e3e2e30abf304fcffb2f3938e0609079c42531",
+        "matches": true
+      },
+      {
+        "path": "inputs/brief.md",
+        "expected_sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+        "actual_sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+        "matches": true
+      },
+      {
+        "path": "inputs/plan/Viewer.md",
+        "expected_sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+        "actual_sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+        "matches": true
+      },
+      {
+        "path": "inputs/sources/S003.txt",
+        "expected_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+        "actual_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+        "matches": true
+      }
+    ],
+    "source_lines": 896,
+    "source_bytes": 36980,
+    "source_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+  },
+  "structural_eligibility": {
+    "all_pins_match": true,
+    "complete_standalone_current_carrier": true,
+    "current_semantic_companions": [],
+    "source_full_read": {
+      "path": "R023/inputs/sources/S003.txt",
+      "ranges": [
+        "1-240",
+        "241-500",
+        "501-740",
+        "741-896"
+      ],
+      "complete": true
+    },
+    "interpretability": "Full current semantic review is interpretable."
+  },
+  "scope": {
+    "assigned_facets": [
+      "OME05-C01",
+      "OME05-C02",
+      "OME05-C03",
+      "OME05-C04",
+      "OME05-C05",
+      "OME05-C06"
+    ],
+    "source_scope": "Entire original S003 frozen normative capture; unchanged full brief and Viewer plan; all material current assertions including novel findings, summaries, dispositions, absences, unresolved claims, proposals and unavoidable method cues.",
+    "key_role": "Non-exhaustive omission aid; every reported factual claim independently compared with S003.",
+    "live_evaluator_sources": [],
+    "denominator_reduced": false,
+    "sampled": false
+  },
+  "evidence_registry": {
+    "E01": {
+      "locator": "S003 L1-10, L25-27",
+      "quote": "Final Community Group Report, 8 September 2026",
+      "context": "This/latest/editor URI is /0.5/; editor-draft data not necessarily supported."
+    },
+    "E02": {
+      "locator": "S003 L56-64",
+      "quote": "Implementations may be expected (MUST) or encouraged (SHOULD) to support the reading of the data",
+      "context": "A general description of possible transitional reading obligations, not a blanket requirement to implement every transitional feature."
+    },
+    "E03": {
+      "locator": "S003 L65-66",
+      "quote": "comments MUST NOT be included in JSON objects."
+    },
+    "E04": {
+      "locator": "S003 L68-72",
+      "quote": "version 3 of the Zarr specification.",
+      "context": "All Zarr features may be used unless expressly disallowed; feature permission is distinct from mandatory support by every reader."
+    },
+    "E05": {
+      "locator": "S003 L70-72",
+      "quote": "unless explicitly disallowed in this specification.",
+      "context": "Permission includes codecs, chunk grids, key encodings, data types, storage transformers. No universal reader-codec support promise is stated."
+    },
+    "E06": {
+      "locator": "S003 L73-81",
+      "quote": "represented here as it would appear locally but could equally be stored on a web server",
+      "context": "Image rank is 2-5; axis names are arbitrary."
+    },
+    "E07": {
+      "locator": "S003 L82-117",
+      "quote": "The name of the array is arbitrary with the ordering defined by",
+      "context": "Illustrated image/labels hierarchy; label dimensions same or 1 appears in diagram comment, not an independent MUST."
+    },
+    "E08": {
+      "locator": "S003 L119-129",
+      "quote": "Three groups MUST be defined above the images:",
+      "context": "Well, row and plate; well/plate implement their specs. Empty row/well groups SHOULD NOT exist."
+    },
+    "E09": {
+      "locator": "S003 L149-156",
+      "quote": "ome in attributes.",
+      "context": "OME metadata in hierarchy zarr.json; version string in ome namespace and consistent within hierarchy."
+    },
+    "E10": {
+      "locator": "S003 L166-169",
+      "quote": "The values MUST be unique across all \"name\" fields.",
+      "context": "Axis name mandatory; type SHOULD and custom string types MAY. Valid custom types do not guarantee a particular reader can render them."
+    },
+    "E11": {
+      "locator": "S003 L170-172",
+      "quote": "SHOULD contain the field \"unit\"",
+      "context": "Recommended UDUNITS-2 strings; absent unit does not establish dimensionless physical coordinates."
+    },
+    "E12": {
+      "locator": "S003 L173-174",
+      "quote": "MUST match the names in the \"axes\" metadata.",
+      "context": "Axis-list length equals image array rank; multiscale-array dimension_names mandatory and matches axes."
+    },
+    "E13": {
+      "locator": "S003 L175-191",
+      "quote": "bioformats2raw internally introduced a wrapping layer.",
+      "context": "Transitional multi-image layout and typical collection hierarchy, not a survey of readers."
+    },
+    "E14": {
+      "locator": "S003 L193-206, L256",
+      "quote": "MUST have the value \"3\"",
+      "context": "Normative prose quotes the value; JSON examples use numeric 3. Plate metadata takes precedence when top-level represents plate; image collections cannot be mixed with plates."
+    },
+    "E15": {
+      "locator": "S003 L257-270",
+      "quote": "If the \"series\" attribute does not exist and no \"plate\" is present:",
+      "context": "Then consecutively numbered groups starting 0; series optional list of string paths ordered as XML Images if XML supplied; XML SHOULD exist and uses MetadataOnly if present."
+    },
+    "E16": {
+      "locator": "S003 L271-275",
+      "quote": "SHOULD make users aware of the presence of more than one image",
+      "context": "MAY show all images or offer choice; MAY use series and ignore extraneous groups. Awareness SHOULD does not require showing all images."
+    },
+    "E17": {
+      "locator": "S003 L276-293",
+      "quote": "The transformations in the list are applied sequentially and in order.",
+      "context": "General transform types include identity default, translation, scale; vectors may be inline or stored via path."
+    },
+    "E18": {
+      "locator": "S003 L295-303",
+      "quote": "MUST contain 2 or 3 entries of \"type:space\"",
+      "context": "2-5 dimensional multiscale; optional one time and one channel/null/custom. Axis order corresponds array order and time, channel/custom, space. Anisotropic zyx is SHOULD."
+    },
+    "E19": {
+      "locator": "S003 L304-307",
+      "quote": "relative to the current zarr group.",
+      "context": "datasets required; path required, group-relative, largest/highest-resolution to smallest; dimensionality and order equal axes."
+    },
+    "E20": {
+      "locator": "S003 L308-313",
+      "quote": "They MUST contain exactly one scale transformation",
+      "context": "Only scale and translation; scale physical size/duration or relative factor when physical scale unavailable/applicable. Optional exactly-one translation follows scale; vectors match axes."
+    },
+    "E21": {
+      "locator": "S003 L310",
+      "quote": "If scaling information is not available or applicable for one of the axes",
+      "context": "Relative-to-first-level factor required in this case, 1 when no downsampling. Relative values alone do not prove physical calibration."
+    },
+    "E22": {
+      "locator": "S003 L314-319",
+      "quote": "are applied after them.",
+      "context": "Optional multiscale-level transform follows dataset transforms, subject to same type/order rules; name,type,metadata SHOULD fields."
+    },
+    "E23": {
+      "locator": "S003 L388-397",
+      "quote": "using the first multiscale as a fallback:",
+      "context": "Named-multiscale selection/pseudocode; informative example, not a universal pyramid-level policy."
+    },
+    "E24": {
+      "locator": "S003 L398-425",
+      "quote": "See the OMERO WebGateway documentation",
+      "context": "Example contains channel label/active/coefficient/family/inverted and rdefs defaultT/defaultZ/model; their guaranteed presence not stated by normative requirements."
+    },
+    "E25": {
+      "locator": "S003 L426-430",
+      "quote": "The \"omero\" metadata is optional, but if present it MUST contain the field \"channels\"",
+      "context": "Each channel color six RGB hex digits and window min/max/start/end; no normative channel-list size equality sentence in capture."
+    },
+    "E26": {
+      "locator": "S003 L432-436",
+      "quote": "usually having the same dimensions and coordinate transformations",
+      "context": "Descriptive normative prose says corresponding label image same coordinate system in segmentation case; usually qualifies dimensions/transforms. It is not marked non-normative merely because it says usually."
+    },
+    "E27": {
+      "locator": "S003 L437-442",
+      "quote": "[uint8, int8, uint16, int16, uint32, int32, uint64, int64].",
+      "context": "Nested labels group, arbitrary label names, permitted metadata-free intermediate groups, declared labels paths; complete listing SHOULD."
+    },
+    "E28": {
+      "locator": "S003 L454-460",
+      "quote": "MUST have the same number of entries (scale levels) as the original unlabeled image.",
+      "context": "Label multiscales required; image-label object and colors/version SHOULD, required types if present."
+    },
+    "E29": {
+      "locator": "S003 L461-466",
+      "quote": "MUST be the integer corresponding to a particular label.",
+      "context": "colors entries keyed by label-value; rgba MAY, four integer 0-255 values if present; readers SHOULD use specified colors, not mandatory universal palette."
+    },
+    "E30": {
+      "locator": "S003 L467-474",
+      "quote": "a string specifying the relative path to a Zarr image group.",
+      "context": "Optional properties objects keyed by integer label-value; optional source.image relative reference, default ../../ because usual nesting. Correct resolution depends on label-group location."
+    },
+    "E31": {
+      "locator": "S003 L475-514",
+      "quote": "50% blue and 50% opacity.",
+      "context": "Example [0,0,128,128]; not evidence of actual viewer execution."
+    },
+    "E32": {
+      "locator": "S003 L518-529",
+      "quote": "greater than or equal to 0 within the context of the plate",
+      "context": "Optional acquisitions list; unique integer ID required. Acquisition name/maximumfieldcount SHOULD; description/start/end MAY with required types."
+    },
+    "E33": {
+      "locator": "S003 L530-560",
+      "quote": "rowIndex and columnIndex MUST be 0-based.",
+      "context": "All physical rows/columns defined even empty; alphanumeric case-sensitive unique names, avoid case-insensitive collisions SHOULD; required columns/rows/version/wells; row/column paths and indices agree."
+    },
+    "E34": {
+      "locator": "S003 L641-739",
+      "quote": "2 wells in a 96 well plate",
+      "context": "Sparse example one acquisition/one field per well; larger grid does not imply all well subgroups populated."
+    },
+    "E35": {
+      "locator": "S003 L741-752",
+      "quote": "specifying all fields of views for a given well.",
+      "context": "well.images list required; fields use unique alphanumeric case-sensitive paths. Each image acquisition ID required if multiple acquisitions and matches plate definition; well version SHOULD."
+    },
+    "E36": {
+      "locator": "S003 L809-820",
+      "quote": "4. Implementations See Tools.",
+      "context": "No reader implementation catalog in capture; bioformats2raw named elsewhere as writer. This edition /0.5/, latest /latest/ also appears in citing section."
+    },
+    "E37": {
+      "locator": "S003 L825-851",
+      "quote": "Clarify that the dimension_names field in axes MUST be included.",
+      "context": "0.5.2 clarification,0.5.1 omero,0.5.0 Zarr v3; pre-0.5 axes/types/transforms/separator history."
+    },
+    "E38": {
+      "locator": "S003 L867-888",
+      "quote": "All of the text of this specification is normative except sections explicitly marked as non-normative, examples, and notes.",
+      "context": "Requirements descriptive and RFC2119; lowercase keywords can carry force. Usually is a qualifier, not an automatic informative marker."
+    },
+    "B01": {
+      "locator": "inputs/brief.md, entire 2 paragraphs",
+      "quote": "local OME-Zarr 0.5 bioimaging filesets.",
+      "context": "Read-only local viewer; discovery, multiresolution axes navigation, associated labels, calibrated coordinates, responsiveness and truthful display limits. Research actual readers broadly; distinguish format obligations, optional capabilities and product decisions."
+    },
+    "P01": {
+      "locator": "inputs/plan/Viewer.md L5",
+      "quote": "time-point and plane selection where relevant",
+      "context": "Image listing, pan/zoom, conditional channel/time/plane controls, optional associated overlays, dimensions/units/coordinates, level choice; detailed metadata rules absent."
+    },
+    "P02": {
+      "locator": "inputs/plan/Viewer.md L7-11",
+      "quote": "Source files remain unchanged; display settings are local to the viewing session.",
+      "context": "Background reads/cancellation, understandable failures, real tools interoperability, additional capability choices explicit review, calibration/alignment/responsiveness acceptance. No concrete fixtures."
+    },
+    "I01": {
+      "locator": "stage.json, MANIFEST.json, eligibility.json, catalog.json",
+      "quote": "Fixed admitted source S003 only; no live fetching for this component case.",
+      "context": "Hash/source bytes/line count independently checked. All six facets assigned. Catalog metadata does not establish actual operations; no semantic companion declared."
+    },
+    "E39": {
+      "locator": "S003 L809-812",
+      "quote": "Multi-word keys in this specification should use the camelCase style.",
+      "context": "Existing exceptions acknowledged; exact field names such as maximumfieldcount and field_count remain authoritative."
+    }
+  },
+  "material_claims": [
+    {
+      "claim_id": "R024-C001",
+      "kind": "identity",
+      "report_locators": [
+        "L3-8,L249-252"
+      ],
+      "claim": "Current artifact V002 with unchanged source/brief/plan/catalog pins,896lines/36980bytes/S003 hash.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "I01",
+        "E01"
+      ],
+      "rationale": "Carrier identity and metadata pins match; byte-identical fixed inputs independently rechecked. Report's V002 label identifies current text only.",
+      "materiality": "low"
+    },
+    {
+      "claim_id": "R024-C002",
+      "kind": "operation",
+      "report_locators": [
+        "L3-7,L21-22,L203,L229,L242-244"
+      ],
+      "claim": "Candidate claims fresh native Goal,bindings,full sequential reading/task rule compliance,no GET or tests,bounded tool exposure and prior V001 retained.",
+      "source_outcome": "unresolved",
+      "evidence_ids": [
+        "I01"
+      ],
+      "rationale": "Referenced native/protocol/final/mechanical/TASK artifacts and actual operations are locked. No operational success/failure inferred; unexecuted proposals remain proposals.",
+      "materiality": "operational-only"
+    },
+    {
+      "claim_id": "R024-C003",
+      "kind": "method",
+      "report_locators": [
+        "L13-20,L37-38"
+      ],
+      "claim": "Thin plan/brief are targets rather than format evidence; RFC2119,source locators and explicit evidence/inference/unresolved/example/product classes.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "P01",
+        "P02",
+        "B01",
+        "E02",
+        "E38"
+      ],
+      "rationale": "Appropriate stated conventions. Conventions do not certify every subsequent classification; disputed cases below assessed independently.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C004",
+      "kind": "coverage",
+      "report_locators": [
+        "L21,L245"
+      ],
+      "claim": "Two groups plus baseline/cross-cutting material aggregate to full brief research.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "B01",
+        "P01",
+        "P02",
+        "I01"
+      ],
+      "rationale": "All topical sections present and source gaps visible, but all six facet completeness requirements have missing parts. Not full candidate quality merely by topical mapping.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C005",
+      "kind": "normative",
+      "report_locators": [
+        "L28-29,L205"
+      ],
+      "claim": "Zarrv3 with all features allowed unless explicitly disallowed.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E04",
+        "E05"
+      ],
+      "rationale": "Accurate container and feature permission condition.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C006",
+      "kind": "inference",
+      "report_locators": [
+        "L30,L166,L171"
+      ],
+      "claim": "Reader must parse per-array metadata and cannot assume fixed raw/chunk layout/codec or contiguous representation.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "E04",
+        "E05",
+        "E07"
+      ],
+      "rationale": "Sound compatibility warning; exact Zarr core metadata field semantics are not admitted. Bounded codec support plus clear non-support is legitimate, as N1 later acknowledges.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C007",
+      "kind": "absence",
+      "report_locators": [
+        "L30-31,L205"
+      ],
+      "claim": "S003 disallows no Zarr feature for image arrays; disallow list empty and no image-array codec/chunk/compression constraints.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "E04",
+        "E05",
+        "E18",
+        "E19"
+      ],
+      "rationale": "No particular codec/chunk/compression rule in capture, but broad empty-restriction phrasing overlooks image-array2-5D/rank/order/dimension_names requirements and label-integer restriction. Source permits features subject to these conditions; report states several elsewhere.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C008",
+      "kind": "normative",
+      "report_locators": [
+        "L33-35"
+      ],
+      "claim": "attributes.ome in zarr.json; version string hierarchy-consistent; mismatch explicit opening failure.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E09",
+        "P02"
+      ],
+      "rationale": "Appropriate format rule/disposition. Declared0.5/legacy admission outcome remains a product question rather than resolved requirement.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C009",
+      "kind": "normative-status",
+      "report_locators": [
+        "L37-38"
+      ],
+      "claim": "RFC2119; text normative except explicit non-normative examples/notes; multiscale pseudocode informative.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E02",
+        "E23",
+        "E38"
+      ],
+      "rationale": "Proper keyword/example distinction; avoids treating example-only rdefs as guaranteed.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C010",
+      "kind": "normative",
+      "report_locators": [
+        "L40-41,L193"
+      ],
+      "claim": "Transitional metadata intended removal; reading may be MUST/SHOULD expected,writing usually MAY; b2raw/omero transitional.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E02",
+        "E13",
+        "E24"
+      ],
+      "rationale": "Source policy faithfully quoted including may/usually conditions.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C011",
+      "kind": "mandate",
+      "report_locators": [
+        "L42,L173-174,L193"
+      ],
+      "claim": "Read-only viewer expected to keep all transitional keys; writer would not need them/writers MAY skip them; effectively required interop.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "E02",
+        "E16",
+        "E25",
+        "P02"
+      ],
+      "rationale": "Pragmatic interop recommendation valid, but general may-expected/usually-optional text is not blanket reader or writer exemption. Tool behavior unverified; specific feature scope/condition still matters.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C012",
+      "kind": "source-identity",
+      "report_locators": [
+        "L44-46,L249"
+      ],
+      "claim": "Report/capture date/version and0.5.0/1/2 history; source latest draft not necessarily supported.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E01",
+        "E37"
+      ],
+      "rationale": "Exact capture version qualifiers match. Draft support warning preserved.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C013",
+      "kind": "uncertainty",
+      "report_locators": [
+        "L46,L209,L222"
+      ],
+      "claim": "Older0.4 filesets beyond0.5 scope; unsupported-version message is explicit compatibility product option.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E01",
+        "E37",
+        "B01",
+        "P02"
+      ],
+      "rationale": "Honest non0.5 limitation, no unsupported assumption of legacy compatibility. Complete admission choice is still unresolved.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C014",
+      "kind": "normative",
+      "report_locators": [
+        "L52-54,L166,L184"
+      ],
+      "claim": "Images are groups,levels separate arrays,names arbitrary; dataset paths relative to group,highest-resolution first.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E07",
+        "E19"
+      ],
+      "rationale": "Correct declared level list and path relativity; no lexical/numeric-name authority.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C015",
+      "kind": "inference",
+      "report_locators": [
+        "L54,L184"
+      ],
+      "claim": "Directory name sorting may place10 before2; choose levels using listed metadata.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E07",
+        "E19"
+      ],
+      "rationale": "Valid sorting counterexample,not an observed implementation bug; no erroneous threshold stated here.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C016",
+      "kind": "normative",
+      "report_locators": [
+        "L56-57,L168"
+      ],
+      "claim": "Variable2-5D,arbitrary names,axes rank/order equal arrays,2-3space,at-mostone time/channel-null/custom,type order time→channel/custom→space.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E06",
+        "E12",
+        "E18"
+      ],
+      "rationale": "Full source conditions covered.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C017",
+      "kind": "implication",
+      "report_locators": [
+        "L58,L185"
+      ],
+      "claim": "Navigation driven by validated metadata/type when present,not names c/t/z; optional time/channel determines relevant controls.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E10",
+        "E12",
+        "E18",
+        "P01"
+      ],
+      "rationale": "Appropriate no-fixed-name/no-fixed-five-axis mapping. Distinction between absent and present singleton axes not explicit.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C018",
+      "kind": "normative",
+      "report_locators": [
+        "L60-62"
+      ],
+      "claim": "Names mandatory unique,type and unit SHOULD,custom string type MAY; units recommended UDUNITS-2 values.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E10",
+        "E11"
+      ],
+      "rationale": "Correct optionality,not a blanket guaranteed role/unit.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C019",
+      "kind": "normative",
+      "report_locators": [
+        "L64-66,L170,L177,L232"
+      ],
+      "claim": "Array dimension_names mandatory and matches axes; cross-check and explain malformed data.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E12",
+        "E37",
+        "P02"
+      ],
+      "rationale": "Correct at-open integrity rule; cheap/high-value is an engineering estimate,not measured result.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C020",
+      "kind": "normative",
+      "report_locators": [
+        "L68-69"
+      ],
+      "claim": "multiscales requires axes/datasets/path/perdataset transforms,scale onlyplus optional translation,exactlyone scale,after-scale translation,vectors axis-rank; recommended name/type/metadata.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E18",
+        "E19",
+        "E20",
+        "E22"
+      ],
+      "rationale": "Correct navigation/calibration structure; parent paths stated separately and same obligations across hierarchy recognized.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C021",
+      "kind": "normative",
+      "report_locators": [
+        "L71-73,L120,L170"
+      ],
+      "claim": "Optional multiscales group transforms same rules,applied after dataset transforms; skipping nonidentity ones loses calibration.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E22"
+      ],
+      "rationale": "Correct noncommutative composition order; skipping identity list has no effect but implication concerns actual nonidentity transforms.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C022",
+      "kind": "example",
+      "report_locators": [
+        "L75-77,L197"
+      ],
+      "claim": "Multiple multiscales permitted; example use single/choose name/first fallback is guidance,selection rule product decision.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E23",
+        "P01"
+      ],
+      "rationale": "Non-normative selection advice kept distinct from format list structure and viewport level policy.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C023",
+      "kind": "normative",
+      "report_locators": [
+        "L79-80"
+      ],
+      "claim": "b2raw top-level key value3,optional OME/series stringpaths ordered as XMLImages when XML supplied.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "E13",
+        "E14",
+        "E15"
+      ],
+      "rationale": "Exact sourceprose match; quoting3 does not establish JSONstring type (examples numeric3). OMEgroup existence not explicitly mandated.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C024",
+      "kind": "normative",
+      "report_locators": [
+        "L80-81,L165"
+      ],
+      "claim": "No series/no plate→consecutive groups0 onward,one OME-XMLImage per group; XML SHOULD and MetadataOnly conditional mandatory.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E15"
+      ],
+      "rationale": "Branch conditions preserved and recommended XML not universally required.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C025",
+      "kind": "normative",
+      "report_locators": [
+        "L83-84,L164,L231"
+      ],
+      "claim": "Readers SHOULD make aware of multiple images; MAY use series,showall/choice,ignore others.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E16"
+      ],
+      "rationale": "Main quotation accurate. D1 surface multi-image collections can mean awareness; no definite SHOULDshowall overclaim in this carrier.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C026",
+      "kind": "normative-status",
+      "report_locators": [
+        "L85"
+      ],
+      "claim": "Silently showing only image0 is automatically non-conforming despite SHOULD-level awareness.",
+      "source_outcome": "unsupported",
+      "evidence_ids": [
+        "E16",
+        "E38"
+      ],
+      "rationale": "Source states a SHOULD recommendation,not unconditional MUST. RFC2119 SHOULD permits justified exceptions; a categorical non-conformance conclusion overstates the force. Brief still strongly favors awareness.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C027",
+      "kind": "normative",
+      "report_locators": [
+        "L87-88,L164"
+      ],
+      "claim": "HCS three ancestor groups(well,row,plate),well/plate specs,fields belongwell,emptygroupsSHOULDNOT,optional field labels.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E08",
+        "E07"
+      ],
+      "rationale": "Correct conditional hierarchy requirements.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C028",
+      "kind": "plan-attribution",
+      "report_locators": [
+        "L89"
+      ],
+      "claim": "Plan silently assumes a flat list and hierarchical plate traversal is a structural gap.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "P01",
+        "P02",
+        "E08"
+      ],
+      "rationale": "Detailed traversal absent in thin plan,so useful proposed refinement. No text says discovery is flat/shallow; flat UI may list images discovered hierarchically. Do not convert an unspecified implementation into a proven existing assumption.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C029",
+      "kind": "normative",
+      "report_locators": [
+        "L91-92"
+      ],
+      "claim": "Plate columns/rows/version/wells mandatory;allphysical rows/cols,uniquealnumcase names;row/col/index paths agree0-based,nodirectoriesextra.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E33"
+      ],
+      "rationale": "Detailed plate rules correct,conditional on supportedHCS.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C030",
+      "kind": "normative",
+      "report_locators": [
+        "L92"
+      ],
+      "claim": "Plate name/field_count SHOULD withtypes; acquisitions MAY,unique nonnegativeintegerIDs,name/maxfieldcountSHOULD,description/epoch times MAY.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E32",
+        "E33"
+      ],
+      "rationale": "Conditional value/type requirements retained.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C031",
+      "kind": "example",
+      "report_locators": [
+        "L92-93"
+      ],
+      "claim": "Sparse plates legal and casecollision caution relevant locally.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E33",
+        "E34",
+        "B01"
+      ],
+      "rationale": "Useful source-grounded novelty; actual local filesystem behavior not measured.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C032",
+      "kind": "normative",
+      "report_locators": [
+        "L95-96"
+      ],
+      "claim": "Well images mandatory withuniquealnumcase paths,acquisitionID matchesplate when multiple,wellversionSHOULD.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E35"
+      ],
+      "rationale": "Correct fields versus plate reference distinction.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C033",
+      "kind": "normative",
+      "report_locators": [
+        "L98-100,L187,L196"
+      ],
+      "claim": "Plate coexists with b2raw but takes precedence; images followplate,seriesSHOULD for unawaretools,do not parse ascollection.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E14",
+        "E15"
+      ],
+      "rationale": "Co-presence allowed and branch priority preserved; not falsely malformed merely because both keys occur.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C034",
+      "kind": "inference",
+      "report_locators": [
+        "L100"
+      ],
+      "claim": "Detector must check plate first,b2raw alone means collection; ignoringplate can misparse.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E14",
+        "E15"
+      ],
+      "rationale": "Valid deterministic branch inference conditional on compatible metadata.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C035",
+      "kind": "normative",
+      "report_locators": [
+        "L102-103"
+      ],
+      "claim": "Hierarchy can local/HTTP/object store; local-only is productrestriction.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E06",
+        "B01",
+        "P02"
+      ],
+      "rationale": "Source permits alternative store locations; does not require remote capability in this case.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C036",
+      "kind": "recommendation",
+      "report_locators": [
+        "L104"
+      ],
+      "claim": "Narrow swappable access layer means local boundary costs little to maintain.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "E06",
+        "P02"
+      ],
+      "rationale": "Explicit engineering inference/proposal,not a source guarantee or measured maintenance-cost result. Whether abstraction reduces cost is unverified.",
+      "materiality": "low"
+    },
+    {
+      "claim_id": "R024-C037",
+      "kind": "normative",
+      "report_locators": [
+        "L110-111,L167,L183"
+      ],
+      "claim": "omero optional withconditional channels/color6hex/window4fields;example richfields/rdefs notguaranteed.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E24",
+        "E25"
+      ],
+      "rationale": "Correct narrow guarantees and optional defaults; external WebGateway semantics not admitted.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C038",
+      "kind": "implication",
+      "report_locators": [
+        "L112,L167-168"
+      ],
+      "claim": "Prepopulate provided hints and choose fallback if missing;channel-countmatch comment onlyexample,verify perfile.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E24",
+        "E25",
+        "P01"
+      ],
+      "rationale": "Valid design proposal,not universal source-defined fallback colors/defaults; correctly identifies example-only size expectation.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C039",
+      "kind": "normative",
+      "report_locators": [
+        "L114-115"
+      ],
+      "claim": "General transforms closed identity/translation/scale,sequential;vectorsinlinefloat orpathbinary,identitydefault.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E17"
+      ],
+      "rationale": "Proper generalvocabulary;multiscales onlyscale/translation restriction statedseparately.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C040",
+      "kind": "plan-attribution",
+      "report_locators": [
+        "L116,L177"
+      ],
+      "claim": "Plan implicitly assumes plain numeric transforms; binarypath is unacknowledged risk.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "P01",
+        "E17"
+      ],
+      "rationale": "Plan gives no transformrepresentation assumption. Need optional capability detection/explanatory limit is sound refinement,but implicit existing numeric implementation is unsupported.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C041",
+      "kind": "implication",
+      "report_locators": [
+        "L116,L220,L236"
+      ],
+      "claim": "Valid path transform must be detected and decoded if supported or truthfully explained as limitation;binarypayload details unresolved.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E17",
+        "P02"
+      ],
+      "rationale": "Strong valid-format-versus-reader-limit distinction; current D9 separately misclassifies it asviolation.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C042",
+      "kind": "normative",
+      "report_locators": [
+        "L118-121"
+      ],
+      "claim": "Perlevelscalephysicalsize/time orconditionalrelativefallback,translationafterscale,vectorsaxisrank,groupafterdataset.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E20",
+        "E21",
+        "E22"
+      ],
+      "rationale": "All critical sourceconditions preserved,including not-applicable in directquote.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C043",
+      "kind": "example",
+      "report_locators": [
+        "L119,L233"
+      ],
+      "claim": "S003example0.5/1/2µmvoxels andgroup0.1mstime scale.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E20",
+        "E22"
+      ],
+      "rationale": "Correct sourceexample values;not measured coordinate output.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C044",
+      "kind": "uncertainty",
+      "report_locators": [
+        "L121,L123-125,L170,L194"
+      ],
+      "claim": "Absent physicalscale/unit maypreventabsolutecalibration;showfactor/unitabsence with explicitcaveat,neverinventunits.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E11",
+        "E21",
+        "B01",
+        "P01"
+      ],
+      "rationale": "Good unknown-calibration treatment; headline unitless clarified by explicit limitations,no falsecalibration asserted.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C045",
+      "kind": "normative",
+      "report_locators": [
+        "L127-129,L168"
+      ],
+      "claim": "Anisotropic spatialzyxSHOULD,notguaranteed;planesliderdetectedspaceaxes.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E18"
+      ],
+      "rationale": "Appropriate nonfixedaxisname/order navigation implication.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C046",
+      "kind": "normative",
+      "report_locators": [
+        "L131-133,L169"
+      ],
+      "claim": "labelscontainimages,nestedataarraylevel;integer8/16/32/64,metadata-freeintermediategroups,namesarbitrary,declaredpathlistSHOULDall,labelmultiscales equalcount.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E27",
+        "E28"
+      ],
+      "rationale": "Correct discovery/dtype/levelrules,not exactidentity/resamplingorassociation design.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C047",
+      "kind": "normative",
+      "report_locators": [
+        "L135-136"
+      ],
+      "claim": "image-label/colors/versionSHOULDwithrequiredtypes;label-valueinteger;rgbaMAY4integers0..255;readercolorsSHOULD.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E28",
+        "E29"
+      ],
+      "rationale": "Correct palette recommendation and integer-key structure;not universalpaletteMUST.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C048",
+      "kind": "normative",
+      "report_locators": [
+        "L136"
+      ],
+      "claim": "Optionalproperties arrayintegerlabel-value withheterogeneousextrakeys;optional sourceobject/image relativepathdefault../../.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E30"
+      ],
+      "rationale": "Correct complete property/source metadata rule;label-source reference resolution/identity check not made overlay step.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C049",
+      "kind": "choice",
+      "report_locators": [
+        "L137,L169,L235"
+      ],
+      "claim": "Consume specifiedcolors,recommendfallbackpalette whenabsent/noentryrgba;tooltipspropertiesoptional.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E29",
+        "E30",
+        "P01"
+      ],
+      "rationale": "Source-grounded recommendation and explicit productchoice. Sparse/wide-ID exactlookup/resampling stillunaddressed.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C050",
+      "kind": "normative-status",
+      "report_locators": [
+        "L139-140"
+      ],
+      "claim": "Diagram dimensionsequalor1 describedSHOULD-level;usually qualifiesdimension/transformcompatibility.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "E07",
+        "E26",
+        "E38"
+      ],
+      "rationale": "Quoted dimensionexample is valid soft guidance. A comment in informative diagram is not automatically a formal RFC2119SHOULD obligation; usually qualifies dimensional/transform equality,not all normativeprose.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C051",
+      "kind": "implication",
+      "report_locators": [
+        "L141,L169,L195,L235"
+      ],
+      "claim": "Compute per-fileaxes/transforms,broadcastirrelevantdim1,degradewithmessage forunsupportedgeometry.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E07",
+        "E26",
+        "E28",
+        "P02"
+      ],
+      "rationale": "Appropriate registration/degradation proposal;equallevelcountaloneinsufficient,butexplicit sourceidentityassociation remainsmissing.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C052",
+      "kind": "normative",
+      "report_locators": [
+        "L147-148,L232"
+      ],
+      "claim": "SpeccommentedexamplesnotvalidmetadataJSON;commentsMUSTNOT,strictparsercorrect.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E03"
+      ],
+      "rationale": "Exact prohibition;not an executedparserclaim.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C053",
+      "kind": "normative",
+      "report_locators": [
+        "L150-151"
+      ],
+      "claim": "camelCaseprincipleexceptions;maximumfieldcount andfield_count spelledliterally,avoidnormalizingkeys.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E39",
+        "E32",
+        "E33"
+      ],
+      "rationale": "Useful novel compatibility finding directlygrounded,normative namingrecommendationdoesnotrenameexistingfields.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C054",
+      "kind": "normative",
+      "report_locators": [
+        "L153-154"
+      ],
+      "claim": "All topology imagegroups sharemultiscales/axes/datasetsrules.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E08",
+        "E18",
+        "E19",
+        "E20"
+      ],
+      "rationale": "Correct source-derived transferacrossplain/series/HCSimages.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C055",
+      "kind": "triage",
+      "report_locators": [
+        "L160"
+      ],
+      "claim": "OBLbundlesMUST/SHOULD;OPTcapability;PDproductchoice,in-plan/gap/decide;explicitreviewadditionalcapabilities.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "E38",
+        "P02"
+      ],
+      "rationale": "Operational legendfine but MUSTandSHOULD cannotbe treatedas equivalentunconditionalduties. IndividualupgradeL85 noted.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C056",
+      "kind": "disposition",
+      "report_locators": [
+        "L164"
+      ],
+      "claim": "D1topology-aware discovery gap,b2raw/HCS/plateprecedence,multiimageawareness.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E08",
+        "E14",
+        "E15",
+        "E16",
+        "P01"
+      ],
+      "rationale": "Sound additiontoskeletalplan;topology-specificUXchoicesremainproductdecisions.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C057",
+      "kind": "disposition",
+      "report_locators": [
+        "L165"
+      ],
+      "claim": "D2listingalreadyinplanprovidedconditionalbranches/seriesorder/ignorablegroupsfollowed.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E15",
+        "E16",
+        "P01"
+      ],
+      "rationale": "Correctalready-coveredconditionaldisposition,not observedexistingcodecompliance.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C058",
+      "kind": "disposition",
+      "report_locators": [
+        "L166"
+      ],
+      "claim": "D3panzoom/levelchoiceinplan,butdeclaredorderingrequiredandchunkcodecdesignunspecified.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E04",
+        "E05",
+        "E19",
+        "P01"
+      ],
+      "rationale": "Properformatversusimplementationgap; actualcodecsupportunknown.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C059",
+      "kind": "disposition",
+      "report_locators": [
+        "L167"
+      ],
+      "claim": "D4fallbackrenderingcolors/productdefaultsmissingomero;conditionalmetadataobligations.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E24",
+        "E25",
+        "P01"
+      ],
+      "rationale": "Properoptionalversusconditionalsplit.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C060",
+      "kind": "disposition",
+      "report_locators": [
+        "L168"
+      ],
+      "claim": "D5axiscontrolscovered;defaultt0/midplaneareproductchoices,exampledefaultT/Znonguaranteed.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E18",
+        "E24",
+        "E25",
+        "P01"
+      ],
+      "rationale": "ProposeddefaultsnotattributedtosourceMUST.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C061",
+      "kind": "disposition",
+      "report_locators": [
+        "L169"
+      ],
+      "claim": "D6overlaycapabilitycovered;alignmentdim1/transforms andfallbackneeddesign.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "E27",
+        "E28",
+        "E29",
+        "E30",
+        "P01"
+      ],
+      "rationale": "Soundgeometry/paletteproposals,butassociatedsourceidentityandexactlabeldecode/resamplingmissing.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C062",
+      "kind": "disposition",
+      "report_locators": [
+        "L170"
+      ],
+      "claim": "D7detailscovered;honestuncalibratedaxesandcorrectcompositionneeded.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E11",
+        "E12",
+        "E20",
+        "E21",
+        "E22",
+        "P01"
+      ],
+      "rationale": "Sourcecalibrationandunitconditionsfaithfullyretained.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C063",
+      "kind": "disposition",
+      "report_locators": [
+        "L171"
+      ],
+      "claim": "D8background/cancelproductrequirements,noS003threadingperformance;chunksmakepartialreadpossible.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "E04",
+        "E05",
+        "P02"
+      ],
+      "rationale": "Productrequirementsclearlydistinguished;sourceallowschunkingbutdoesnotprove responsiveness, memorybehavior ordecoderpartial-readcost.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C064",
+      "kind": "disposition",
+      "report_locators": [
+        "L172"
+      ],
+      "claim": "D9detectableviolationsincludeinconsistentversion,zero/multiple scale,floatlabels,metadata-bearingintermediates,dimensionnames,plate/wellrefs,andpath-varianttransforms.",
+      "source_outcome": "contradicted",
+      "evidence_ids": [
+        "E09",
+        "E12",
+        "E17",
+        "E20",
+        "E27",
+        "E33",
+        "E35",
+        "P02"
+      ],
+      "rationale": "Allnamedstructuralviolationsvalidexceptpathvariant:scale/translationpathisexpresslypermitted,notmalformed. Explainunsupporteddecoderascapabilitylimit;donotclassifyvalidrepresentationasformatviolation.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C065",
+      "kind": "disposition",
+      "report_locators": [
+        "L173"
+      ],
+      "claim": "D10realtoolinteroptiedtotransitionalb2raw/omeroreading,effectivelyrequired.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "E02",
+        "E13",
+        "E24",
+        "E25",
+        "P02"
+      ],
+      "rationale": "Goodcompatibilitygoalrecommendation,notmeasuredactualtoolrequirementor universalreadingMUST.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C066",
+      "kind": "disposition",
+      "report_locators": [
+        "L174"
+      ],
+      "claim": "D11read-only/sessionlocalproductdiscipline;noS003writeback.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "B01",
+        "P02",
+        "E02"
+      ],
+      "rationale": "Properalreadycoveredboundary;writerusuallyoptionalnotuniversalexemption.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C067",
+      "kind": "disposition",
+      "report_locators": [
+        "L175"
+      ],
+      "claim": "D12acceptancealreadyinplan,mappedPV01-PV06,allunexecuted.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "P02"
+      ],
+      "rationale": "Correctproposalstatus;PVsetdoesnotfullytestoffsetcomposition,sourceidentity,exactIDs,etc.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C068",
+      "kind": "plan-gap",
+      "report_locators": [
+        "L177"
+      ],
+      "claim": "Planlacksnamedversion/dimensionnames/multiscalechoice/pathvariants/HCSdetails.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "P01",
+        "P02",
+        "E09",
+        "E12",
+        "E17",
+        "E23",
+        "E08"
+      ],
+      "rationale": "Textlackverified;HCSaslargestomissionisascribedreviewerpriorityratherthanasourcefact. Pathnumericassumptionnotestablished.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C069",
+      "kind": "rejection",
+      "report_locators": [
+        "L183"
+      ],
+      "claim": "RJ1rdefsnotnormativelyrequired.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E24",
+        "E25"
+      ],
+      "rationale": "Correctfalse-rejectionavoidance:sourceexamplesnotMUST.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C070",
+      "kind": "rejection",
+      "report_locators": [
+        "L184"
+      ],
+      "claim": "RJ2numericnamesandsortingrejected.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E07",
+        "E19"
+      ],
+      "rationale": "Correctdeclaredlistidentity.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C071",
+      "kind": "rejection",
+      "report_locators": [
+        "L185"
+      ],
+      "claim": "RJ3fixedc/t/zaxisnamesrejected,typeonlywhenavailable.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E06",
+        "E10",
+        "E18"
+      ],
+      "rationale": "Correctarbitrarynames/conditionedtypeinference.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C072",
+      "kind": "rejection",
+      "report_locators": [
+        "L186"
+      ],
+      "claim": "RJ4alwaysgeometry-identicaloverlayMUSTrejected,samecoordinatesusuallysoft.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "E26",
+        "E28",
+        "E07"
+      ],
+      "rationale": "Dimensions/transformsnotalwaysidentical;usuallyattaches totheparentheticalequalityratherthan same-coordinate-systemstatement. Owngeometry/associationmuststillbevalidated.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C073",
+      "kind": "rejection",
+      "report_locators": [
+        "L187"
+      ],
+      "claim": "RJ5parseplateascollectionwhenbothkeysrejected.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E14",
+        "E15"
+      ],
+      "rationale": "Correctprecedence,notinvalidco-presence.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C074",
+      "kind": "counterevidence",
+      "report_locators": [
+        "L193"
+      ],
+      "claim": "CE1transitionalremovalintent versusinteropbenefitretained;readkeysandavoidnewfeatureswithoutexitplan.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "E02",
+        "E13",
+        "E24",
+        "P02"
+      ],
+      "rationale": "Retainedtension/recommendationuseful;universaltoolinteropnecessity/exitruleaproductchoice,notnormativeguarantee.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C075",
+      "kind": "counterevidence",
+      "report_locators": [
+        "L194"
+      ],
+      "claim": "CE2conformingdatawithoutabsoluteunit/scale;factor-onlydisplayexplicitcaveatratherthaninventcalibration.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E11",
+        "E21",
+        "B01"
+      ],
+      "rationale": "Important sourcecondition preserved; truthfulunsupportedviewalsolegitimateifcapabilityexceeded.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C076",
+      "kind": "counterevidence",
+      "report_locators": [
+        "L195"
+      ],
+      "claim": "CE3dim1/mismatchfixturesneeded;equallevelcountnotsufficientgeometryguarantee.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E07",
+        "E26",
+        "E28",
+        "P02"
+      ],
+      "rationale": "Goodproposeddegradationchecks;relativeassociationstillmissing.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C077",
+      "kind": "counterevidence",
+      "report_locators": [
+        "L196"
+      ],
+      "claim": "CE4overlappingtopkeysvalidbutonlyplateprecedencecorrect.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E14"
+      ],
+      "rationale": "Accuratemalformedversusvalidbranchdistinction.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C078",
+      "kind": "transfer",
+      "report_locators": [
+        "L197"
+      ],
+      "claim": "CE5OMEROWebGatewaymodeloriginatesinserver-siderendercontext,unverifiedsemanticslocaltransferonlyconditional;pseudocodeinformative.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "E24",
+        "E23"
+      ],
+      "rationale": "ExternalWebGatewaypointerdoesnotestablishservermodeldetailsinsideS003;origincontextunresolvednotindependentlyverified. Explicitnotverified/conditionalimportappropriate; nooutsidefactusedascalibrationmandate.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C079",
+      "kind": "absence",
+      "report_locators": [
+        "L201-205"
+      ],
+      "claim": "N1nodetailedcodec/chunksize/compressionrulesbutreaderbroadfeaturesorexplainlimits.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E04",
+        "E05"
+      ],
+      "rationale": "Scopedfullsourceabsencevalidforthesefeatures;generalOMEarrayconstraintstillapplies. Actualfullreadclaimoperationalunknown.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C080",
+      "kind": "absence",
+      "report_locators": [
+        "L206"
+      ],
+      "claim": "N2ImplementationsSeeTools,noactualreaderlist/compatibilityresearchsatisfiable.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "E36",
+        "E13",
+        "E01"
+      ],
+      "rationale": "Readercatalog/behaviorindeedabsent. b2rawnamedwriteranddraftsupportwarningarecompatibility-adjacent statements;blanketnoanytoolcompatibilityclaimisoverbroad. Sourcegapnotworldabsence.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C081",
+      "kind": "absence",
+      "report_locators": [
+        "L207"
+      ],
+      "claim": "N3nouiresponsiveness/background/cancellation/memoryguidanceinS003.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E04",
+        "E05",
+        "P02"
+      ],
+      "rationale": "Completecapturehasnoproductperformancemodel;chunkpermissionnotperformanceguarantee.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C082",
+      "kind": "absence",
+      "report_locators": [
+        "L208"
+      ],
+      "claim": "N4nointerpolation/LUT/compositingmodelMUST;conditionalomerofieldsandlabelcolorSHOULDonlydisplayrules.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "E24",
+        "E25",
+        "E29",
+        "E31"
+      ],
+      "rationale": "SourcehasRGBAalphasemantics/example butnoformalinterpolation/LUTalgorithm. Do notreadthisaspermissiontolosscategoricalIDidentity.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C083",
+      "kind": "absence",
+      "report_locators": [
+        "L209"
+      ],
+      "claim": "N5nomigrationmechanicsbeyondpromisedscriptsorbackcompatreaderbehavior.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E01",
+        "E37"
+      ],
+      "rationale": "Scopedabsencegroundedbycompletechapter,notfailedsearchproof.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C084",
+      "kind": "absence",
+      "report_locators": [
+        "L210"
+      ],
+      "claim": "N6binarytransformpayloadnotelaboratedbeyondpathbinaryreference.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E17"
+      ],
+      "rationale": "Accurateunresolvedencodinggap;validityofdatarenderingproposalnotfalseforlackoffixture.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C085",
+      "kind": "uncertainty",
+      "report_locators": [
+        "L216"
+      ],
+      "claim": "U1Readerlandscape/Toolleadoutsidefixedscope,actualtoolcompatibilityunverified.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E36",
+        "E13",
+        "I01"
+      ],
+      "rationale": "Honestunresolvedlead;noexternalcatalogused.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C086",
+      "kind": "uncertainty",
+      "report_locators": [
+        "L217"
+      ],
+      "claim": "U2richomerosemanticsnotadmitted;captureconstrainspresence/format.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E24",
+        "E25"
+      ],
+      "rationale": "Properpinned-sourceboundary.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C087",
+      "kind": "uncertainty",
+      "report_locators": [
+        "L218"
+      ],
+      "claim": "U3externalUDUNITSvalidityunknown;customunitstringsmayappearSHOULD-level.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E11"
+      ],
+      "rationale": "Sourcerecommendslistedunitsratherthanrequiresonlylist;unknownsneedtruthfulpresentation,notautomaticinvalidity.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C088",
+      "kind": "uncertainty",
+      "report_locators": [
+        "L219"
+      ],
+      "claim": "U4OME-XMLdetailsnotadmitted;seriesorderreadpossible,XMLvalidationunresolved.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E15"
+      ],
+      "rationale": "Properexternalnormative-dependencylimit. Atmostneedseriesisanexplicitproductjudgmentnotcompleteschemagate.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C089",
+      "kind": "uncertainty",
+      "report_locators": [
+        "L220"
+      ],
+      "claim": "U5pathencodingunresolved,upstream/realwriterevidenceoutsideassignment.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E17",
+        "I01"
+      ],
+      "rationale": "Fairundevelopedleadwithuncertainty.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C090",
+      "kind": "uncertainty",
+      "report_locators": [
+        "L221"
+      ],
+      "claim": "U6shard/storage-transformerreadpath/performanceunverified.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E05"
+      ],
+      "rationale": "Permissiondoesnotestablishpracticalreadbehavior.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C091",
+      "kind": "uncertainty",
+      "report_locators": [
+        "L222"
+      ],
+      "claim": "U7non0.5unsupportedmessageisproductchoice.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E01",
+        "E37",
+        "B01",
+        "P02"
+      ],
+      "rationale": "Noimplicitlegacyreinterpretation;admissioncontractstillnotfinalized.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C092",
+      "kind": "uncertainty",
+      "report_locators": [
+        "L223"
+      ],
+      "claim": "U8postcaptureerrataunknown,fixedhash/date,noliveverification.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E01",
+        "I01"
+      ],
+      "rationale": "Honestversionlimit;noactualfetchoperationconclusionfromthisclaim.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C093",
+      "kind": "proposal",
+      "report_locators": [
+        "L231"
+      ],
+      "claim": "PV1plain/b2raw/sparseHCS-multipleacquisitionfixturescheckbranchlistingandawareness.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E07",
+        "E08",
+        "E14",
+        "E15",
+        "E16",
+        "E34",
+        "E35",
+        "P02"
+      ],
+      "rationale": "Validunexecutedfixtureproposal;multipleacquisitionextensionneedscorrectplateIDsnotassumeoriginalsparseexamplehasmultiple.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C094",
+      "kind": "proposal",
+      "report_locators": [
+        "L232"
+      ],
+      "claim": "PV2induceversion,scale,labeldtype,intermediategroup,dimensionnames,platereferenceviolationsandexplanatorynocrashexpectation.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E09",
+        "E12",
+        "E20",
+        "E27",
+        "E33",
+        "P02"
+      ],
+      "rationale": "Source-groundedunexecutedmalformedsuite;noinvalidpathvariantincludedhere. Missingothercasesnotfalseexecution.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C095",
+      "kind": "proposal",
+      "report_locators": [
+        "L233"
+      ],
+      "claim": "PV3examplevoxel0.5/1/2µm,group0.1mstimecheckanalyticcoords,non-numericnames.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "E20",
+        "E22",
+        "E19"
+      ],
+      "rationale": "Correctscaleexamplebutallscale-onlytransformscommute;cannotexposereverseddataset/groupcompositionoromittedtranslationoffsets. Non-numericnamesalsodonotnecessarilyreorderlexicallywithoutadeliberateorderfixture.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C096",
+      "kind": "proposal",
+      "report_locators": [
+        "L234"
+      ],
+      "claim": "PV4largechunkslevelswitchinteraction/cancelstaleproductcheck.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "P02",
+        "E04",
+        "E05"
+      ],
+      "rationale": "Explicitunexecutedproductacceptance,nosourceperformanceclaim.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C097",
+      "kind": "proposal",
+      "report_locators": [
+        "L235"
+      ],
+      "claim": "PV5specifiedalpha/missing-colorfallback,dim1timebroadcast,equalcountandmismatchmessage.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E07",
+        "E28",
+        "E29",
+        "E31",
+        "P02"
+      ],
+      "rationale": "Usefulunexecutedoverlaycheck;missingassociation/wide-ID/sparse-ID/interpolation.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C098",
+      "kind": "proposal",
+      "report_locators": [
+        "L236"
+      ],
+      "claim": "PV6validpathscale decodedifsupportedelseclearlimitation.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "E17",
+        "P02"
+      ],
+      "rationale": "CorrectproposalconflictswithD9malformedclassificationbutnotitselfbad;noexecutionclaimed.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C099",
+      "kind": "coverage",
+      "report_locators": [
+        "L240-245"
+      ],
+      "claim": "Claimsalltopicgroups/source/taskinputsfullyreadandallbriefmapped,externalreader/specsourcesnotinspected.",
+      "source_outcome": "qualified",
+      "evidence_ids": [
+        "I01",
+        "B01",
+        "P01",
+        "P02"
+      ],
+      "rationale": "Topicalresearchpresentandexternalgapsdisclosed;actualreadslocked,allfacetcoveragepartial,nofullqualityinferencefromclaimedmapping.",
+      "materiality": "material"
+    },
+    {
+      "claim_id": "R024-C100",
+      "kind": "source-index",
+      "report_locators": [
+        "L249-252"
+      ],
+      "claim": "Sourcealiases/pins,cataloghashbytes40lines,andplan/briefpins;formatauthorityS003only.",
+      "source_outcome": "supported",
+      "evidence_ids": [
+        "I01",
+        "E01"
+      ],
+      "rationale": "Identitymatchespermittedcatalog;referencepathinputs/catalog.jsonrepresentedbypreboundmetadatastaging,notactualcandidateoperationproof.",
+      "materiality": "low"
+    },
+    {
+      "claim_id": "R024-C101",
+      "kind": "history-embedded",
+      "report_locators": [
+        "L254-259"
+      ],
+      "claim": "V002claimsrepairedgarbledV001catalogentry/nofindingchanged andoldversionretained.",
+      "source_outcome": "unresolved",
+      "evidence_ids": [
+        "I01"
+      ],
+      "rationale": "Currentcatalogidentityverified. Priorerror/findingstabilityandretentionarelockedhistory,notcurrentfalseclaimsorsuccessprooffromabsence. NoV001opened.",
+      "materiality": "operational-only"
+    }
+  ],
+  "facets": [
+    {
+      "id": "OME05-C01",
+      "title": "Versioned metadata admission",
+      "coverage": "partial",
+      "source_outcome": "qualified",
+      "report_locators": [
+        "L28-35",
+        "L44-46",
+        "L222",
+        "L232"
+      ],
+      "evidence_ids": [
+        "E04",
+        "E09",
+        "E37"
+      ],
+      "rationale": "Correctv3/attributes.ome/consistentversionandtruthfullyunresolvedlegacy;clearunsupported-versionmessageproposedaschoice.",
+      "missing": [
+        "Bindopeningadmissiontothedeclared0.5andlayoutidentity;chooseexplicitcompatibilityvalidationorunsupportedresultforlegacy ratherthanleaveitoptional."
+      ]
+    },
+    {
+      "id": "OME05-C02",
+      "title": "Axis-to-array identity",
+      "coverage": "partial",
+      "source_outcome": "qualified",
+      "report_locators": [
+        "L56-66",
+        "L127-129",
+        "L185"
+      ],
+      "evidence_ids": [
+        "E10",
+        "E12",
+        "E18"
+      ],
+      "rationale": "Fullrank/order/spatialcount/uniqueanddimension_namesrules;optionaltypes,namesanddimensionsproperlyidentified.",
+      "missing": [
+        "Explicitabsent-axis versuspresentlength-oneaxisnavigation/slicingdistinction;noinventedslider/coordinatecapabilitywhenrolesunavailable."
+      ]
+    },
+    {
+      "id": "OME05-C03",
+      "title": "Declared pyramid selection",
+      "coverage": "partial",
+      "source_outcome": "qualified",
+      "report_locators": [
+        "L52-54",
+        "L68-73",
+        "L166",
+        "L184",
+        "L233"
+      ],
+      "evidence_ids": [
+        "E19",
+        "E20",
+        "E22"
+      ],
+      "rationale": "Group-relativearbitrarypaths,declaredorder,andowntransformsarecovered;noauthoritativenumericfolderformula.",
+      "missing": [
+        "Explicitmissing/unavailabledeclaredlevelhandling.",
+        "Explicitnon-power-of-two/anisotropicreductionsandlevel-specificgeometryacceptancecheck,notjustthefactor2sourceexample."
+      ]
+    },
+    {
+      "id": "OME05-C04",
+      "title": "Composed coordinate calibration",
+      "coverage": "partial",
+      "source_outcome": "qualified",
+      "report_locators": [
+        "L71-73",
+        "L118-125",
+        "L170",
+        "L194",
+        "L233"
+      ],
+      "evidence_ids": [
+        "E17",
+        "E20",
+        "E21",
+        "E22",
+        "E11"
+      ],
+      "rationale": "Correctdatasetthengrouporder,scale-beforetranslationandunknownabsolutecalibration/unitcaveats. Proposednumericcheckusesonlycommutingscales.",
+      "missing": [
+        "Aconcreteoffset-bearing/noncommutativeexpected-resulttestthatwouldcatchreversedcompositionoromittedoffsets."
+      ]
+    },
+    {
+      "id": "OME05-C05",
+      "title": "Associated label discovery and registration",
+      "coverage": "partial",
+      "source_outcome": "qualified",
+      "report_locators": [
+        "L131-141",
+        "L169",
+        "L195",
+        "L235"
+      ],
+      "evidence_ids": [
+        "E27",
+        "E28",
+        "E30"
+      ],
+      "rationale": "Labelpaths/intermediates/source.image/properties,levelcountandowngeometry/dim1degradationcovered. Associationreferenceisdocumentedbutnotresolvedasoverlayadmission.",
+      "missing": [
+        "Resolveexplicit/defaultrelative source.imagefromthelabelimagelocationandvalidateintendedsourceidentitybeforeoverlay,especiallyintermediategroupanddifferentoriginimages."
+      ]
+    },
+    {
+      "id": "OME05-C06",
+      "title": "Categorical label identity",
+      "coverage": "partial",
+      "source_outcome": "qualified",
+      "report_locators": [
+        "L132",
+        "L136-137",
+        "L235"
+      ],
+      "evidence_ids": [
+        "E27",
+        "E29",
+        "E30"
+      ],
+      "rationale": "Integerdtypesandintegerlabel-valuecolor/propertykeys,paletteSHOULDandfallbackchoicesaccurate. Noexactwide-IDorresamplingcontract.",
+      "missing": [
+        "Exact64-bitintegerdecode/lookupanddeclared/refusedsupportedrangebeyondbinary64precision.",
+        "ExplicitcategoricalresamplingthatnevercreatesnewIDsandmetadata-entry-order-independentlookupchecks."
+      ]
+    }
+  ],
+  "complete_coverage": true,
+  "coverage_meaning": "All material assertion families and all six assigned facets assessed; this is review completeness, not candidate correctness or full candidate coverage.",
+  "omitted_or_unreviewed_scope": {
+    "unreviewed_current_claims": [],
+    "unreviewed_facets": [],
+    "candidate_omissions": [
+      "Bindopeningadmissiontothedeclared0.5andlayoutidentity;chooseexplicitcompatibilityvalidationorunsupportedresultforlegacy ratherthanleaveitoptional.",
+      "Explicitabsent-axis versuspresentlength-oneaxisnavigation/slicingdistinction;noinventedslider/coordinatecapabilitywhenrolesunavailable.",
+      "Explicitmissing/unavailabledeclaredlevelhandling.",
+      "Explicitnon-power-of-two/anisotropicreductionsandlevel-specificgeometryacceptancecheck,notjustthefactor2sourceexample.",
+      "Aconcreteoffset-bearing/noncommutativeexpected-resulttestthatwouldcatchreversedcompositionoromittedoffsets.",
+      "Resolveexplicit/defaultrelative source.imagefromthelabelimagelocationandvalidateintendedsourceidentitybeforeoverlay,especiallyintermediategroupanddifferentoriginimages.",
+      "Exact64-bitintegerdecode/lookupanddeclared/refusedsupportedrangebeyondbinary64precision.",
+      "ExplicitcategoricalresamplingthatnevercreatesnewIDsandmetadata-entry-order-independentlookupchecks."
+    ],
+    "broader_scope_limits": [
+      "Actualreaderimplementations,fullZarrv3internals,OME-XML/UDUNITS/WebGatewaydetail,realfilesetperformanceandpostcaptureerrataarenotadmittedinS003. Theirvisibleunresolvedstatusisvalidanddoesnotreducethesixfacets."
+    ]
+  },
+  "unresolved_matters": [
+    "ActualcandidateoperationsandembeddedV001→V002history/bindingclaimsuntilphase2.",
+    "Quotedb2rawvalue3isnotinterpretedasdefinitestring-onlydemand;numericexamplesretained.",
+    "Server-sideWebGatewayoriginstatementnotestablishedbyadmittedpointer;noexactcitedexternalURLavailableforpermittedfirst-partyverification."
+  ],
+  "novelty": [
+    {
+      "id": "R024-N01",
+      "support": "supported",
+      "description": "Detailedb2rawconditionaldiscovery/XML/platepriority/multiimageawareness.",
+      "report_locator": "L79-85,L98-100",
+      "evidence_ids": [
+        "E13",
+        "E14",
+        "E15",
+        "E16"
+      ]
+    },
+    {
+      "id": "R024-N02",
+      "support": "supported",
+      "description": "HCSrequiredmetadata,sparsephysicalgrid/acquisitionreferencesandcasecollisioncaution.",
+      "report_locator": "L87-96",
+      "evidence_ids": [
+        "E08",
+        "E32",
+        "E33",
+        "E34",
+        "E35"
+      ]
+    },
+    {
+      "id": "R024-N03",
+      "support": "supported",
+      "description": "Optionalomeronarrowrequirements,example-onlyrdefs,exactkeyspellingcamelCaseexceptionsandbinarytransformvariant/sourcedetailgap.",
+      "report_locator": "L110-116,L150-154",
+      "evidence_ids": [
+        "E24",
+        "E25",
+        "E17",
+        "E39"
+      ]
+    },
+    {
+      "id": "R024-N04",
+      "support": "supported",
+      "description": "Explicitfactor-only/unknownabsolutecalibrationcaveatandscopedfull-sourceabsences.",
+      "report_locator": "L118-125,L194,L205-210",
+      "evidence_ids": [
+        "E11",
+        "E21",
+        "E36",
+        "E17"
+      ]
+    }
+  ],
+  "material_failures": [
+    {
+      "id": "R024-F01",
+      "classification": "valid representation misclassified",
+      "description": "D9 lists permitted path-referencedscale/translation transforms asdetectableformatviolations. Theyarevalidandmayinsteadexceedadeclaredreadercapability;PV6correctlyrecognizesthatdistinction.",
+      "report_locator": "L172 (contrastL116,L236)",
+      "evidence_ids": [
+        "E17",
+        "P02"
+      ]
+    },
+    {
+      "id": "R024-F02",
+      "classification": "normative force overstated",
+      "description": "AutomaticallydeclaringareadernonconformingforviolatingaSHOULDrecommendationpromotesitintoanunconditionalMUST. Theawarenessrecommendationremainsstrong,butitsRFC2119forceisqualified.",
+      "report_locator": "L85",
+      "evidence_ids": [
+        "E16",
+        "E38"
+      ]
+    },
+    {
+      "id": "R024-F03",
+      "classification": "material coverage omission",
+      "description": "Thefullsix-facetdenominatorremainspartial:versionadmissionchoice,singletonaxes,missing/nonuniformlevels,offset-sensitivecalibrationtest,relative-sourceassociationandexactcategoricalidentity/resamplingunfinished.",
+      "report_locator": "Facet roster",
+      "evidence_ids": [
+        "E09",
+        "E12",
+        "E19",
+        "E20",
+        "E21",
+        "E27",
+        "E29",
+        "E30"
+      ]
+    }
+  ],
+  "blinding_limitations": [
+    "CurrentheaderexplicitlynamesafreshnativeGoal andfinalbinding;embeddedread/toolprotocol/mechanicalclaimsandV001correctionlogareunavoidable. NoGoal/final/protocol/mechanical/priorreportwasaccessed.",
+    "Catalog/addendumreceivedonlyasprebounddependency/identitymetadata,notactualoperations."
+  ],
+  "claim_inventory_control": {
+    "complete_report_read_ranges": [
+      "L1-110",
+      "L111-163",
+      "L164-259"
+    ],
+    "complete_original_source_read": true,
+    "same_source_reuse": "Source,brief,plan,key/protocol/catalogbyteidentitywiththecompleteoriginalS003readwasverifiedbeforeassessment;claimdecisionsindependentlymadeforR024.",
+    "nonassertion_lines": "Blanklines,headingsandseparatorsstructural;allsubstantivebaseline/findings/disposition/rejection/counterevidence/negative/unresolved/proposedvalidation/sourceindex/historyclaimfamiliesare represented.",
+    "all_current_dispositions_reviewed": true,
+    "all_unknown_and_rejected_items_reviewed": true,
+    "novel_claims_independently_source_checked": true,
+    "claimed_current_supersessions": "V002explicitlysupersedesV001;allcurrentdecisionclaimsjudgedasV002. Embeddedchangehistoryisunknown,nottreatedascurrentrepetitionofV001error."
+  },
+  "current_report_verdict": "quality failure",
+  "verdict_rationale": "Completecurrentsemanticreviewisfrozen. Thereisusefulbroadsource-groundedresearchandexplicituncertainty,butthecurrentreportmisclassifiesvalidbinarypathtransformsasviolationsandoverstatesaSHOULDrecommendation. Allsixassignedfacetshaveexplicitmissingrequirements;thereforecurrentqualityfailsfull-scopeassessment. Nooperationalfailureisinferredfromlockedhistory/native/read/GET/testclaims.",
+  "locked_dimensions": {
+    "acquisition": "unassessed; locked",
+    "preservation": "unassessed; locked",
+    "native_delivery": "unassessed; locked",
+    "source_acquisition_operations": "unassessed; locked",
+    "efficiency_and_cost": "unassessed; locked",
+    "history": "not accessed",
+    "no_negative_operational_inference_from_unknown": true
+  },
+  "evaluator_usage": {
+    "wall_clock_start_utc": "2026-10-01T21:17:58Z",
+    "candidate_cost_included": false,
+    "evaluator_cost_in_campaign": true,
+    "model_token_usage": "not exposed; unknown",
+    "input_cache_hit_usage": "not exposed; unknown; not inferred from generated tokens",
+    "tool_output_tokens": "Only per-tool original output counts exposed; these are not model token usage or candidate acquisition cost."
+  }
+}

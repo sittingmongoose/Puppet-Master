@@ -1,0 +1,201 @@
+{
+  "artifact": "out/acquisition/V001.json",
+  "schema": "slide-scout.acquisition-ledger.v1",
+  "author": "SELF_REPORT",
+  "date": "2026-10-01",
+  "assignment": {
+    "task_card": "TASK.md",
+    "assignment_doc": "inputs/TASK.md",
+    "brief": "inputs/brief.md",
+    "plan": "inputs/plan/Viewer.md",
+    "case_id": "ome-normative-dev-v1",
+    "groups": [
+      "Group 1: opening a fileset, listing/selecting images, navigating multiresolution data",
+      "Group 2: channel/time/plane display, coordinate details, associated label overlays"
+    ],
+    "grouping_note": "Both groups were covered together in one fresh native Goal; per inputs/TASK.md L7-L10 the aggregate has exactly the full single-assignment scope."
+  },
+  "source_scope": {
+    "admitted_sources": ["S003"],
+    "live_fetching": "prohibited and not performed",
+    "source_scope_statement": "Fixed admitted source S003 only; no live fetching for this component case (inputs/catalog.json L4)."
+  },
+  "sources": [
+    {
+      "handle": "S003",
+      "actual_path": "inputs/sources/S003.txt",
+      "description": "OME-Zarr specification, Final Community Group Report, 8 September 2026, version 0.5 (frozen normative capture)",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 36980,
+      "lines": 896,
+      "identity_verified_against_catalog": true,
+      "catalog_aliases": [
+        { "source_id": "SRC-2b11c54af373e1979af8cbb3", "uri": "https://ngff.openmicroscopy.org/0.5/", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de" },
+        { "source_id": "SRC-e59af1d3eedfb618a7ce766f", "uri": "local-capture (origin URL not recorded)", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de" },
+        { "source_id": "SRC-bf327c82f5ee6b5d1b754d8c", "uri": "local-capture (origin URL not recorded)", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de" },
+        { "source_id": "SRC-da65296ca0490aebb780c237", "uri": "local-capture (origin URL not recorded)", "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de" }
+      ]
+    }
+  ],
+  "reads": [
+    {
+      "record_id": "RD-01",
+      "tool": "read_file",
+      "path": "TASK.md",
+      "locator": "lines 1-24 (full file)",
+      "sha256": "825645cf212610c189a890e6812968fa8d0faa923c02f96525627328a476bdb2",
+      "bytes": 4011,
+      "purpose": "Top-level assignment/delivery requirements",
+      "notes": "Two earlier attempts to read TASK.md via an absolute workspace path failed with a tool boundary error (see out/protocol/V001.json entries PR-02, PR-03); this record is the successful read."
+    },
+    {
+      "record_id": "RD-02",
+      "tool": "read_file",
+      "path": "inputs/TASK.md",
+      "locator": "lines 1-11 (full file)",
+      "sha256": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9",
+      "bytes": 1367,
+      "purpose": "Research assignment, source scope, group batching definition"
+    },
+    {
+      "record_id": "RD-03",
+      "tool": "read_file",
+      "path": "inputs/brief.md",
+      "locator": "lines 1-5 (full file)",
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "bytes": 905,
+      "purpose": "Product brief defining what must be researched (scope input only, not format evidence)"
+    },
+    {
+      "record_id": "RD-04",
+      "tool": "read_file",
+      "path": "inputs/catalog.json",
+      "locator": "lines 1-40 (full file)",
+      "sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+      "bytes": 1563,
+      "purpose": "Source identity, admitted scope, source links/aliases"
+    },
+    {
+      "record_id": "RD-05",
+      "tool": "read_file",
+      "path": "inputs/plan/Viewer.md",
+      "locator": "lines 1-11 (full file)",
+      "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "bytes": 1498,
+      "purpose": "Thin viewer plan whose required format obligations are the research target (scope input only, not format evidence)"
+    },
+    {
+      "record_id": "RD-06",
+      "tool": "read_file",
+      "path": "inputs/sources/S003.txt",
+      "locator": "lines 1-300",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": null,
+      "purpose": "Primary evidence chunk 1: front matter, conventions, storage format (1.1 Images, 1.2 HCS), metadata intro, 2.1 axes, 2.2 bioformats2raw.layout, 2.3 coordinateTransformations, 2.4 multiscales (start)",
+      "supports_findings": ["F-B01", "F-B02", "F-B03", "F-B04", "F-B05", "F-G1-01", "F-G1-02", "F-G1-03", "F-G1-04", "F-G1-05", "F-G1-06", "F-G1-08", "F-G1-09", "F-G1-10", "F-G2-02", "F-Q01"]
+    },
+    {
+      "record_id": "RD-07",
+      "tool": "read_file",
+      "path": "inputs/sources/S003.txt",
+      "locator": "lines 301-600",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": null,
+      "purpose": "Primary evidence chunk 2: 2.4 multiscales (obligations, example, multi-multiscales), 2.5 omero, 2.6 labels/image-label, 2.7 plate (start)",
+      "supports_findings": ["F-G1-02", "F-G1-05", "F-G1-06", "F-G1-07", "F-G2-01", "F-G2-03", "F-G2-04", "F-G2-05", "F-G2-06", "F-G2-07", "F-G1-11"]
+    },
+    {
+      "record_id": "RD-08",
+      "tool": "read_file",
+      "path": "inputs/sources/S003.txt",
+      "locator": "lines 601-896",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": null,
+      "purpose": "Primary evidence chunk 3: plate examples, 2.8 well, naming style, implementations stub, citing, version history, conformance, references",
+      "supports_findings": ["F-G1-11", "F-G1-12", "F-G1-13", "F-B05", "F-Q02", "N-2", "U-07"]
+    },
+    {
+      "record_id": "RD-09",
+      "tool": "mechanical",
+      "operation": "line_map",
+      "path": "inputs/sources/S003.txt",
+      "output_path": "out/mechanical/S003-line-map-V001.txt",
+      "output_sha256": "efd3f618cc82322216fe63cfbeed145afeeb03f30b230d6eea8e477a8d484be4",
+      "source_sha256_reported": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "purpose": "Independent mechanical line/section anchor map of S003 for citation verification (R02)"
+    },
+    {
+      "record_id": "RD-10",
+      "tool": "read_file",
+      "path": "out/mechanical/S003-line-map-V001.txt",
+      "locator": "line 1 (single-line JSON; read was truncated mid-file at approximately line-554 entries of S003)",
+      "sha256": "efd3f618cc82322216fe63cfbeed145afeeb03f30b230d6eea8e477a8d484be4",
+      "bytes": 61299,
+      "purpose": "Spot-check of line anchors used in citations; confirms anchors for S003 lines 1-554 directly; anchors for lines 555-896 rest on the direct full-file reads (RD-08)",
+      "notes": "Partial inspection only; treated as a verification aid, not as an independent evidence source."
+    }
+  ],
+  "findings": [
+    { "id": "F-B01", "title": "OME-Zarr 0.5 is conventions on Zarr v3; all Zarr features allowed unless disallowed", "class": "EVIDENCE", "source": "S003", "locator": "L67-L72, L831-L833", "conditions": ["unless explicitly disallowed (no such disallowance in capture)"], "report_section": "out/reports/V002.md section 1" },
+    { "id": "F-B02", "title": "Metadata in zarr.json under attributes.ome; version string MUST be hierarchy-consistent", "class": "EVIDENCE", "source": "S003", "locator": "L149-L156", "conditions": [], "report_section": "out/reports/V002.md section 1" },
+    { "id": "F-B03", "title": "RFC2119 keywords; examples/notes non-normative", "class": "EVIDENCE", "source": "S003", "locator": "L57-L59, L867-L888", "conditions": [], "report_section": "out/reports/V002.md section 1" },
+    { "id": "F-B04", "title": "Transitional metadata policy: read-side MUST/SHOULD possible, write MAY, removal intended", "class": "EVIDENCE", "source": "S003", "locator": "L60-L64, L175-L181, L398-L400", "conditions": ["applies to bioformats2raw.layout and omero in this capture"], "report_section": "out/reports/V002.md section 1" },
+    { "id": "F-B05", "title": "Document status: released 0.5; editor's-draft data not necessarily supported; version history 0.5.0-0.5.2", "class": "EVIDENCE", "source": "S003", "locator": "L3-L4, L24-L27, L821-L866", "conditions": ["claims scoped to 0.5 as captured 2026-09-08"], "report_section": "out/reports/V002.md section 1" },
+    { "id": "F-G1-01", "title": "Image = Zarr group; levels = sibling arrays with arbitrary names; ordering from multiscales datasets, high-to-low resolution", "class": "EVIDENCE", "source": "S003", "locator": "L87-L94, L305-L306", "conditions": ["level names arbitrary"], "report_section": "out/reports/V002.md section 2" },
+    { "id": "F-G1-02", "title": "2-5 dimensions; axis names arbitrary; axes length MUST equal array dims; type ordering time, channel/custom, space", "class": "EVIDENCE", "source": "S003", "locator": "L81, L96-L97, L173, L296, L300-L302", "conditions": [], "report_section": "out/reports/V002.md section 2" },
+    { "id": "F-G1-03", "title": "axes: name MUST (unique); type SHOULD; unit SHOULD (UDUNITS-2 lists)", "class": "EVIDENCE", "source": "S003", "locator": "L167-L172", "conditions": ["type and unit are SHOULD-level"], "report_section": "out/reports/V002.md section 2" },
+    { "id": "F-G1-04", "title": "dimension_names MUST be in level-array zarr.json and MUST match axes names", "class": "EVIDENCE", "source": "S003", "locator": "L174, L825-L827", "conditions": [], "report_section": "out/reports/V002.md section 2" },
+    { "id": "F-G1-05", "title": "multiscales MUSTs: axes, datasets, path, coordinateTransformations with exactly one scale; MAY one translation after scale; lengths MUST equal axes", "class": "EVIDENCE", "source": "S003", "locator": "L294-L319", "conditions": [], "report_section": "out/reports/V002.md section 2" },
+    { "id": "F-G1-06", "title": "Group-level coordinateTransformations MAY; applied after dataset-level; same type/order rules", "class": "EVIDENCE", "source": "S003", "locator": "L314-L316, L368-L374", "conditions": ["key is MAY"], "report_section": "out/reports/V002.md section 2" },
+    { "id": "F-G1-07", "title": "Multiple multiscales entries: use single; else user choice by name, first fallback (informative pseudocode)", "class": "EXAMPLE-ONLY", "source": "S003", "locator": "L298, L388-L397", "conditions": ["selection guidance is non-normative example"], "report_section": "out/reports/V002.md section 2" },
+    { "id": "F-G1-08", "title": "bioformats2raw.layout discovery: value MUST be 3; OME/series MUST be string paths matching OME-XML Image order; else numbered groups from 0", "class": "EVIDENCE", "source": "S003", "locator": "L182-L206, L243-L270", "conditions": ["branch depends on presence of plate / series / neither"], "report_section": "out/reports/V002.md section 2" },
+    { "id": "F-G1-09", "title": "Readers SHOULD surface multi-image collections; SHOULD NOT default to first image; MAY use series / show all / ignore other groups", "class": "EVIDENCE", "source": "S003", "locator": "L271-L275", "conditions": ["SHOULD/MAY levels as stated"], "report_section": "out/reports/V002.md section 2" },
+    { "id": "F-G1-10", "title": "HCS hierarchy MUST: plate/row/well groups above images; images in a well are fields of view; empty rows/wells SHOULD NOT be present", "class": "EVIDENCE", "source": "S003", "locator": "L118-L129, L140-L146", "conditions": [], "report_section": "out/reports/V002.md section 2" },
+    { "id": "F-G1-11", "title": "plate metadata MUST columns/rows/version/wells; SHOULD field_count, name; MAY acquisitions; name uniqueness/case rules; sparse plates supported", "class": "EVIDENCE", "source": "S003", "locator": "L518-L560, L641-L739", "conditions": ["SHOULD/MAY levels as stated"], "report_section": "out/reports/V002.md section 2" },
+    { "id": "F-G1-12", "title": "well metadata MUST images list (path rules; acquisition key MUST with multiple acquisitions); SHOULD version", "class": "EVIDENCE", "source": "S003", "locator": "L744-L752, L756-L808", "conditions": [], "report_section": "out/reports/V002.md section 2" },
+    { "id": "F-G1-13", "title": "plate key takes precedence over bioformats2raw.layout; mixing not possible; images MUST be at plate-defined locations", "class": "EVIDENCE", "source": "S003", "locator": "L204-L206, L262-L263", "conditions": ["applies when top-level group is a plate"], "report_section": "out/reports/V002.md section 2" },
+    { "id": "F-G1-14", "title": "Format is storage-location agnostic (local/HTTP/object storage); local-only is a product boundary", "class": "EVIDENCE", "source": "S003", "locator": "L73-L77", "conditions": [], "report_section": "out/reports/V002.md section 2" },
+    { "id": "F-G2-01", "title": "omero optional/transitional; MUSTs when present: channels, color (6-hex RGB), window min/max/start/end; rdefs example-only", "class": "EVIDENCE", "source": "S003", "locator": "L398-L430", "conditions": ["omero optional; rdefs non-normative example; semantics delegated to OMERO WebGateway docs"], "report_section": "out/reports/V002.md section 3" },
+    { "id": "F-G2-02", "title": "coordinateTransformations types closed: identity/translation/scale; list-of-floats or path (binary in container); applied sequentially in order", "class": "EVIDENCE", "source": "S003", "locator": "L276-L293", "conditions": ["path variant layout unelaborated in capture (U-05)"], "report_section": "out/reports/V002.md section 3" },
+    { "id": "F-G2-03", "title": "Calibration: exactly-one scale = pixel size/time duration; fallback relative factor defaulting 1.0; translation after scale; group-level applied after dataset-level", "class": "EVIDENCE", "source": "S003", "locator": "L308-L316, L320-L374", "conditions": ["axes without scaling info carry relative factors"], "report_section": "out/reports/V002.md section 3" },
+    { "id": "F-G2-04", "title": "Units are SHOULD-level; conforming files can lack units entirely", "class": "EVIDENCE", "source": "S003", "locator": "L170-L172", "conditions": ["SHOULD-level"], "report_section": "out/reports/V002.md section 3" },
+    { "id": "F-G2-05", "title": "Spatial axes SHOULD be ordered zyx for anisotropic 3D stacks", "class": "EVIDENCE", "source": "S003", "locator": "L303", "conditions": ["SHOULD-level"], "report_section": "out/reports/V002.md section 3" },
+    { "id": "F-G2-06", "title": "labels group constraints: integer pixel types MUST; labels key MUST; intermediate groups MUST NOT contain metadata; label image MUST multiscales with equal level count", "class": "EVIDENCE", "source": "S003", "locator": "L104-L117, L431-L455", "conditions": ["all label images SHOULD be listed"], "report_section": "out/reports/V002.md section 3" },
+    { "id": "F-G2-07", "title": "image-label SHOULD present; colors array (MUST) with label-value (MUST) and rgba (MAY, 4 ints 0-255, 4th alpha); readers SHOULD honor colors; properties/source MAY", "class": "EVIDENCE", "source": "S003", "locator": "L456-L514", "conditions": ["SHOULD/MAY levels as stated"], "report_section": "out/reports/V002.md section 3" },
+    { "id": "F-G2-08", "title": "Label-image geometry compatibility soft: dims same or 1 (diagram, SHOULD-level); same coordinate system 'usually'; only level-count equality is MUST", "class": "EVIDENCE", "source": "S003", "locator": "L106-L108, L433, L454-L455", "conditions": ["hedged wording retained"], "report_section": "out/reports/V002.md section 3" },
+    { "id": "F-Q01", "title": "Spec examples contain JSON comments; comments MUST NOT appear in real JSON", "class": "EVIDENCE", "source": "S003", "locator": "L65-L66", "conditions": [], "report_section": "out/reports/V002.md section 4" },
+    { "id": "F-Q02", "title": "camelCase naming style with acknowledged exceptions; keys must be taken literally (maximumfieldcount vs field_count observed)", "class": "EVIDENCE", "source": "S003", "locator": "L809-L812, L524-L525, L538-L539", "conditions": [], "report_section": "out/reports/V002.md section 4" },
+    { "id": "F-Q03", "title": "multiscales/axes/datasets obligations identical across all discovery branches", "class": "EVIDENCE", "source": "S003", "locator": "L142, L294-L316", "conditions": [], "report_section": "out/reports/V002.md section 4" },
+    { "id": "N-1", "title": "No codec/chunk-size/compression requirement for image arrays within S003", "class": "NEGATIVE_SCOPED", "source": "S003", "locator": "L70-L72 (full-read basis)", "conditions": ["scoped to S003 full sequential read, 2026-10-01"], "report_section": "out/reports/V002.md section 8" },
+    { "id": "N-2", "title": "Section 4 Implementations is a stub ('See Tools'); no reader-implementation evidence in capture", "class": "NEGATIVE_SCOPED", "source": "S003", "locator": "L813-L814", "conditions": ["scoped to S003"], "report_section": "out/reports/V002.md section 8" },
+    { "id": "N-3", "title": "No format requirement on responsiveness/background loading/cancellation", "class": "NEGATIVE_SCOPED", "source": "S003", "locator": "full-read basis", "conditions": ["scoped to S003 full sequential read"], "report_section": "out/reports/V002.md section 8" },
+    { "id": "N-4", "title": "No normative display/rendering model mandated", "class": "NEGATIVE_SCOPED", "source": "S003", "locator": "full-read basis; display-adjacent normative content at L426-L430, L461-L462", "conditions": ["scoped to S003 full sequential read"], "report_section": "out/reports/V002.md section 8" },
+    { "id": "N-5", "title": "No 0.4-to-0.5 migration mechanics in capture beyond 'migration scripts will be provided'", "class": "NEGATIVE_SCOPED", "source": "S003", "locator": "L25-L26, L834-L866", "conditions": ["scoped to S003"], "report_section": "out/reports/V002.md section 8" },
+    { "id": "N-6", "title": "No elaboration of binary layout for path-referenced scale/translation vectors", "class": "NEGATIVE_SCOPED", "source": "S003", "locator": "L285-L289", "conditions": ["scoped to S003"], "report_section": "out/reports/V002.md section 8" }
+  ],
+  "coverage": {
+    "method": "Complete sequential read of S003 (lines 1-300, 301-600, 601-896) via bounded read_file; no keyword-search tool exists or was used; mechanical line map generated for citation anchoring and partially inspected.",
+    "s003_lines_read": [[1, 300], [301, 600], [601, 896]],
+    "s003_fully_read": true,
+    "task_inputs_read": ["TASK.md", "inputs/TASK.md", "inputs/brief.md", "inputs/catalog.json", "inputs/plan/Viewer.md"]
+  },
+  "coverage_limits": [
+    "Only S003 was admitted and inspected; no other primary or secondary source was read.",
+    "No live fetch was performed (prohibited); capture is frozen at 2026-09-08 document date; post-capture changes unknown (U-08).",
+    "Reader-implementation/tooling landscape is absent from the capture (N-2/U-01), so real-world tool compatibility is unverified.",
+    "UDUNITS-2 registry, OME-XML spec, RFC 2119 text, and OMERO WebGateway docs are referenced by S003 but not admitted; dependent semantics unverified (U-02, U-03, U-04).",
+    "No test or fixture execution occurred; all validation proposals are UNEXECUTED."
+  ],
+  "undeveloped_leads": [
+    "NGFF community 'Tools' listing referenced by S003 section 4 (would enable real-reader compatibility research; not admitted here).",
+    "OMERO WebGateway documentation for full omero field/window semantics (S003 L424-L425).",
+    "UDUNITS-2 registry for unit-string validation beyond the SHOULD lists (S003 L170-L172).",
+    "External OME-XML specification for OME/METADATA.ome.xml validation depth (S003 L257-L260).",
+    "Binary payload layout for path-variant scale/translation vectors (S003 L285-L289); could be resolved by examining real writer output.",
+    "Upstream clarification of pre-0.5 fileset handling by 0.5 readers (S003 version history L834-L866)."
+  ],
+  "integrity_notes": {
+    "s003_sha_match": "read_file-reported sha256 equals catalog original_sha256/view_sha256 (5d8b2408...2ae82de) on all three chunked reads",
+    "no_read_records_invented": "All read records above correspond to actual tool invocations logged in out/protocol/V001.json."
+  }
+}

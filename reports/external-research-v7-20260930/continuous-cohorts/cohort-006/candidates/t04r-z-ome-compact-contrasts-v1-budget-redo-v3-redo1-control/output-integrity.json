@@ -1,0 +1,77 @@
+{
+  "schema": "er7.productive_z.output_integrity.v1",
+  "epoch": 1790889319.6574912,
+  "label": "t04r-z-ome-compact-contrasts-v1-budget-redo-v3-redo1-control",
+  "files": {
+    "acquisition/V001.json": {
+      "sha256": "780fcd5e51dd50cd2411a16f719cd834fdb6d6348c10455fa82e51d64b97e312",
+      "bytes": 20228
+    },
+    "final/V001.json": {
+      "sha256": "b3d21d72bc27e516dac0552a6807b902ac708944b33fa7c57b597cf19200f391",
+      "bytes": 124
+    },
+    "mechanical/S003-line-map-V001.txt": {
+      "sha256": "efd3f618cc82322216fe63cfbeed145afeeb03f30b230d6eea8e477a8d484be4",
+      "bytes": 61299
+    },
+    "protocol/V001.json": {
+      "sha256": "91e1ceae2b56a02681db47672a809b10e12c70a6026c5665937efdf2cd2df4e4",
+      "bytes": 7833
+    },
+    "reports/V001.md": {
+      "sha256": "766013c91ef0a28a2cc030379161be055625cd7380333306a70d22965c6393b2",
+      "bytes": 44979
+    },
+    "reports/V002.md": {
+      "sha256": "2880232e585e815749f008bbf1664228c184be6a45ae281fabe3f5c25e6b06f7",
+      "bytes": 45627
+    }
+  },
+  "missing_required_outputs": [],
+  "sanitized_native_artifacts": {
+    "receipt.json": {
+      "sha256": "b50c510007742af0cca3835286624583e5b8aed1ddc5c75412208c3cb3b88ae6",
+      "bytes": 496735
+    },
+    "host-process.json": {
+      "sha256": "f3ca87000f42420563a9381e62144223738f031ba447d2defb7c475bca5e3ab0",
+      "bytes": 58
+    },
+    "session-tool-contract.json": {
+      "sha256": "f8af66ffcf89cef59cf2361b32c1f711f62805c80009a4a8ed1147f40dcafc88",
+      "bytes": 2153
+    },
+    "progress.jsonl": {
+      "sha256": "4fce23f6b091c48911795e4e4c20155022a6c7b93f1e594c9fb0df9c378f610a",
+      "bytes": 386
+    },
+    "usage-events.jsonl": {
+      "sha256": "9ecf5cdd9abdcbdd9d2d33d29727af589bcfbc1a796ad494a2def6d508315ba1",
+      "bytes": 11905
+    },
+    "zcode-stdout.redacted.jsonl": {
+      "sha256": "b5fcb24e4c8ee778d48e68561e0e0944e85f4b399a60918b2169133b0ad39912",
+      "bytes": 54966211
+    },
+    "zcode-stderr.omitted.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  },
+  "quiescence": {
+    "native_quiescent": true,
+    "own_process_group_absent": true,
+    "native_receipt": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t04r-z-ome-compact-contrasts-v1-budget-redo-v3-redo1-control/native/receipt.json",
+    "native_receipt_sha256": "b50c510007742af0cca3835286624583e5b8aed1ddc5c75412208c3cb3b88ae6",
+    "owned_driver_pgid": 1960123,
+    "basis": "sanitized native receipt plus only known own group absence"
+  },
+  "private_client": "excluded entirely; never read",
+  "semantic_quality": "unassessed",
+  "context_observations_sha256": "a4c05ee0b25b592299058335e4674051bcf2cf6a32245901a61e1e96a1210530",
+  "future_native_context": "qualified",
+  "native_outcome": "passed",
+  "inventory_verified": true,
+  "method_postrender_delivery": "pending separate measured machinery; no free semantic helper rewrite"
+}
