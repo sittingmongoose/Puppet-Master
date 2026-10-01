@@ -1,0 +1,92 @@
+{
+  "schema": "er7.public_get_capture_host.acceptance.v1",
+  "verdict": "accepted",
+  "reviewer": "/root/capture_metadata_checker_v4",
+  "created_utc": "2026-10-01T20:30:02.188132+00:00",
+  "wrapper_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/capture-host-metadata-repair2-v3/public_get_capture_host_v3.py",
+  "wrapper_sha256": "e1f428316cf20f9d6339cff71aa87a3cbe373917e4f51346883c024f824351b7",
+  "author_closure": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/capture-host-metadata-repair2-v3/CLOSURE.json",
+    "sha256": "9150775251bd0792d328bc806d6221021106b6e322290b747f8aadd2be9d77db",
+    "bytes": 4335
+  },
+  "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+  "guard_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/whole_freeze_delivery_v2.py",
+  "guard_sha256": "7f6f8a2bfc2c50172cc00541238c6951459300f23a0905a2eabe5c779f6ce844",
+  "projector_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/z-mcp-acquisition-capture-v2/projector_final.py",
+  "projector_sha256": "5a9894290471a1947964c9c9c47699a5f48ed08a3b949c3bb18f908097a622e4",
+  "privacy_gate": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/host-release-machinery-v2/capture-final-privacy-acceptance.json",
+    "sha256": "ac130e16b57409ccdf05fc1066bd02a19e2a3def8a181e5293709cb6e7374e66",
+    "bytes": 3971
+  },
+  "authorized_selection_rule": "exact-quiescent-job-modelio-native-identities-v1",
+  "tests": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/capture-metadata-checker-v4/independent-synthetic-results.json",
+    "sha256": "6ad0b051c10d9e161b0566c357d3c3e436b235e9596fa1f1c7b432ae8d5c0e3c",
+    "test_code": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/capture-metadata-checker-v4/independent_synthetics.py",
+      "sha256": "9d0503946bf17120d543c1540e464c8c8a4ab45dab1bd8a85c3748164921ca46",
+      "bytes": 28470
+    },
+    "test_count": 64,
+    "all_passed": true,
+    "synthetic_only": true,
+    "read_fence_forbids_actual_private_and_candidate_artifacts": true
+  },
+  "source_audit": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/capture-metadata-checker-v4/source-audit.json",
+    "sha256": "0c048956744c0ffd4a06529ec031362c879e634ec0b9bbd8aebcef8f7abeb90d",
+    "bytes": 2021
+  },
+  "findings": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/capture-metadata-checker-v4/findings.json",
+    "sha256": "9fd903abaebeb07f60bf80fefa7d61ba97ba1fdc4c3408a9b8b23d0dff8d5851",
+    "bytes": 6096
+  },
+  "prior_wrapper_acceptance": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/capture-wrapper-v2.acceptance.json",
+    "sha256": "290f71abc9afc2c1b1400acd5012b98fde6e66e7659d7181899ca4134b9cdfd3",
+    "bytes": 5546
+  },
+  "checks": [
+    "Exact frozen wrapper and author closure match source and dependent privacy/guard/projector pins.",
+    "Guard source hash check precedes guard import; fresh empty cache prefix is additionally required to bind actual executed sources.",
+    "Actual method cfg/native receipt/preflight/root component internal binding precedes native interpretation and every selected private metadata/read. Caller externally authenticates the admitted authority.",
+    "Named sanitized-native streaming above64MiB succeeds on invented65MiB+ log while rejecting cap/partial/duplicate/nonfinite/path/owner/metadata failures.",
+    "Strict native whitelist retains all model statuses, exact lifecycle identities/IDs/seq/phases and error presence/truthiness, with no error text or unrelated secret content.",
+    "Unchanged projector bounds private read and fullBODY public-only shape/provider/model/session/request/attempt/lifecycle/URL/body/hash/credential predicates; rejection emits no private detail.",
+    "Dedup compares exact session/turn/toolCallId public URLs/status/body bytes/hash/source eligibility and lifecycle IDs; repeated exposure count differs from unique completion and conflicts exclude the identity.",
+    "Actual sample eligibility and semantic acquisition remain UNKNOWN until permitted actual capture and separate independent current-before-history assessment."
+  ],
+  "conditions": [
+    "Before invocation, independently verify this exact wrapper, author closure, guard, unchanged projector and existing independent privacy gate SHA-256 pins. Keep accepted source bytes stable throughout the invocation; no changed source or replacement gate is authorized.",
+    "Before any selected private-file stat/read, the caller must independently bind the exact previously user-authorized root-authority path and SHA, exact host allowlist, method-config SHA, accepted method-review SHA and original accepted canary-review SHA. Compare the host admission and preflight references to those externally trusted records. A preflight-supplied self-consistent authority is not sufficient authentication. Preserve the existing user helper cap 96 and its root authority; this capture review grants no helper or dispatch budget.",
+    "Use a fresh Python process started with -B and an absolute -X pycache_prefix pointing to a freshly created exclusive empty owned non-symlink directory, with no existing cached bytecode for wrapper/guard/projector. -B alone is insufficient because Python may read cached .pyc. The cache prefix and accepted sources must remain under trusted caller control during invocation.",
+    "Actual use is limited to the original already owned qualified quiescent T10/T11 control/treatment jobs allowed by the retained independent root authority. Verify exact native receipt runtime, complete native request inventory, qualified future native context, accepted_method_sha256 and method-config SHA, component labels and actual own process-group quiescence. No sibling host, arbitrary private root, new candidate Goal/dispatch or replacement canary is authorized.",
+    "Only the exact own named sanitized native stdout may be streamed under 512MiB, 4MiB per line, 262144 lines and 4096 retained identity rows, with stable owner/regular/single-link/non-symlink metadata. The exact session-derived private model-I/O stays under the unchanged accepted projector 64MiB/4MiB/4096 limits. Never hash/copy actual private files.",
+    "Keep all actual rejection, zero qualified capture, conflict, source-ineligible response, missing fullBODY and identity mismatch outcomes partial/UNKNOWN. Do not weaken filters, rewrite history, refetch to improve evidence or substitute selected public bodies. Capture success does not qualify semantic acquisition, comprehension, factor use, quality or broad mechanism claims.",
+    "Original T10 control telemetry-cap failure and original treatment zero-qualified/thirteen-rejected UNKNOWN remain unchanged. Preserve all prior development, failure and operator costs. Measure all new selection/projection/dedup/freezing elapsed and cost; no code or synthetic-test method-count credit. Complete current-only semantic assessment before any candidate acquisition/history grading."
+  ],
+  "scope": "Exact v3 source/privacy machinery only. Subject to every mandatory condition, root/author may retest the original already owned quiet qualified T10/T11 hosts with the unchanged accepted projector. This is not actual sample qualification, semantic grading, productive dispatch approval, new Goal/canary authorization, budget expansion or method-count credit.",
+  "actual_private_reads_by_reviewer": 0,
+  "actual_candidate_outputs_read": 0,
+  "actual_candidate_semantic_grades_read": 0,
+  "native_Goals_started": 0,
+  "actual_capture_calls": 0,
+  "actual_GET_sample_qualified": false,
+  "actual_source_eligibility": "unknown until permitted actual projection succeeds",
+  "semantic_acquisition": "unknown",
+  "candidate_comprehension": "unknown",
+  "preserved_lineage": {
+    "baseline_v1": "held; unchanged",
+    "accepted_first_repair_v2": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/capture-wrapper-v2.acceptance.json",
+      "sha256": "290f71abc9afc2c1b1400acd5012b98fde6e66e7659d7181899ca4134b9cdfd3",
+      "bytes": 5546
+    },
+    "original_t10_control": "ValueError native identity telemetry cap; unchanged",
+    "original_t10_treatment": "0 qualified, 13 rejected; UNKNOWN unchanged",
+    "prior_failure_and_development_costs": "All preserved; this reviewer did not inspect or modify actual cost records."
+  }
+}

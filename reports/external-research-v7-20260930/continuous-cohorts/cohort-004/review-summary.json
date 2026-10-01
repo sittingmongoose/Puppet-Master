@@ -1,0 +1,38 @@
+[
+  {
+    "review": "R015",
+    "report_sha256": "00732ac3d612c28c90b3e1a3ed7af83b16a42ff0e79286832dfad2fefffdbee9",
+    "matching_published_reports": [
+      "continuous-cohorts/cohort-002/candidates/t10-z-azure-mcp-discovery-v2-control/out/report.md"
+    ],
+    "verdict": "quality failure",
+    "complete_coverage": true,
+    "claims": 66,
+    "facet_and_anchor_entries": 16,
+    "additive_only": true
+  },
+  {
+    "review": "R016",
+    "report_sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+    "matching_published_reports": [
+      "continuous-cohorts/cohort-002/candidates/t10-z-azure-mcp-discovery-v2-treatment/out/report.md"
+    ],
+    "verdict": "quality failure",
+    "complete_coverage": true,
+    "claims": 70,
+    "facet_and_anchor_entries": 16,
+    "additive_only": true
+  },
+  {
+    "review": "R018",
+    "report_sha256": "b0866759263b91aa1fe982edbc9c3cfcaa70bc90d2ff3501b9a1ce6e70ed110a",
+    "matching_published_reports": [
+      "candidate-outputs/t14-m-ome-negative-screen-v1-control/report.md"
+    ],
+    "verdict": "quality failure",
+    "complete_coverage": true,
+    "claims": 83,
+    "facet_and_anchor_entries": 6,
+    "additive_only": true
+  }
+]

@@ -1,0 +1,101 @@
+{
+  "schema": "er7.capture_metadata_checker_v4.index.v1",
+  "created_utc": "2026-10-01T20:30:02.188132+00:00",
+  "review_artifacts": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/capture-metadata-checker-v4/README.md",
+      "sha256": "2c5e97ebd7f8f5e7280ac6e03517366ea67dcf4dd130bb1c765ba2f9e9d6f7f8",
+      "bytes": 3198
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/capture-metadata-checker-v4/attempt1-harness-fence-results.json",
+      "sha256": "c1128133e5d9223ff4d7761f1b845f3e83ba9908ce556bbba6dee744d29a9823",
+      "bytes": 9429
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/capture-metadata-checker-v4/attempt1-harness-fence-test-log.txt",
+      "sha256": "c31114febe89a24c3666af45152ca96b947affd047000784954356e0eb807767",
+      "bytes": 45646
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/capture-metadata-checker-v4/attempt2-63-pass-results.json",
+      "sha256": "e3e730ab2dfd3f0586c0e712a23a40598010f64ef1d17a44d1ec4c4c9e711800",
+      "bytes": 9411
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/capture-metadata-checker-v4/attempt2-63-pass-test-log.txt",
+      "sha256": "95a0c844881c382ed4f4531d7243b53052dcc9bb520e3b555c403d21cdb5359e",
+      "bytes": 7022
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/capture-metadata-checker-v4/capture-wrapper-v3.acceptance.json",
+      "sha256": "96c421a9e8d924d51e1edeac459610c47e2125e73fb78cb6305dd4899d595da0",
+      "bytes": 8782
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/capture-metadata-checker-v4/findings.json",
+      "sha256": "9fd903abaebeb07f60bf80fefa7d61ba97ba1fdc4c3408a9b8b23d0dff8d5851",
+      "bytes": 6096
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/capture-metadata-checker-v4/independent-synthetic-results.json",
+      "sha256": "6ad0b051c10d9e161b0566c357d3c3e436b235e9596fa1f1c7b432ae8d5c0e3c",
+      "bytes": 9574
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/capture-metadata-checker-v4/independent-synthetic-test-log.txt",
+      "sha256": "2dcd02e6cf723b07103cdd9e5d83646c2870993fb53dc32a411f644306dbcf62",
+      "bytes": 7186
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/capture-metadata-checker-v4/independent_synthetics.py",
+      "sha256": "9d0503946bf17120d543c1540e464c8c8a4ab45dab1bd8a85c3748164921ca46",
+      "bytes": 28470
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/capture-metadata-checker-v4/source-audit.json",
+      "sha256": "0c048956744c0ffd4a06529ec031362c879e634ec0b9bbd8aebcef8f7abeb90d",
+      "bytes": 2021
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/capture-metadata-checker-v4/timer.json",
+      "sha256": "9beed526378f99990d7730086e9113662dbf09c28c4f604dc8c6c27049292416",
+      "bytes": 818
+    }
+  ],
+  "trusted_dependencies": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/capture-host-metadata-repair2-v3/public_get_capture_host_v3.py",
+      "sha256": "e1f428316cf20f9d6339cff71aa87a3cbe373917e4f51346883c024f824351b7",
+      "bytes": 14346
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/capture-host-metadata-repair2-v3/CLOSURE.json",
+      "sha256": "9150775251bd0792d328bc806d6221021106b6e322290b747f8aadd2be9d77db",
+      "bytes": 4335
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/whole_freeze_delivery_v2.py",
+      "sha256": "7f6f8a2bfc2c50172cc00541238c6951459300f23a0905a2eabe5c779f6ce844",
+      "bytes": 8216
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/z-mcp-acquisition-capture-v2/projector_final.py",
+      "sha256": "5a9894290471a1947964c9c9c47699a5f48ed08a3b949c3bb18f908097a622e4",
+      "bytes": 10782
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/host-release-machinery-v2/capture-final-privacy-acceptance.json",
+      "sha256": "ac130e16b57409ccdf05fc1066bd02a19e2a3def8a181e5293709cb6e7374e66",
+      "bytes": 3971
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/exact-methods-release-v3/capture-wrapper-v2.acceptance.json",
+      "sha256": "290f71abc9afc2c1b1400acd5012b98fde6e66e7659d7181899ca4134b9cdfd3",
+      "bytes": 5546
+    }
+  ],
+  "synthetic_fixture_indexed": false,
+  "actual_private_hash_or_copy": false,
+  "closed_utc": "2026-10-01T20:31:36.320267+00:00"
+}

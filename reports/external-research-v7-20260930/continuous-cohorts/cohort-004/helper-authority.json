@@ -1,0 +1,26 @@
+{
+  "schema": "er7.user.helper_envelope.extension.v1",
+  "epoch": 1790885151.6939378,
+  "status": "authorized",
+  "user_answer": "Raise helper starts to 96",
+  "prior_cap": 72,
+  "new_cap": 96,
+  "known_starts_at_extension": 71,
+  "concurrency_available": 23,
+  "proposed_scopes_sha256": "cd3a1da36c0003f77d6c6e099f93e830f18089df4e6847629830deac7884ef5f",
+  "unchanged_candidate_caps": {
+    "M": 2,
+    "Z": 2,
+    "L": 2
+  },
+  "unchanged_campaign_deadline_epoch": 1790904541,
+  "unchanged_goal_start_ceiling": 144,
+  "unchanged_occupied_hours": 48,
+  "token_stops_unchanged": true,
+  "role_bindings": {
+    "easy": "gpt-6.1-sol medium",
+    "harder": "gpt-6.1-sol xhigh",
+    "hardest": "gpt-6.1-sol max"
+  },
+  "prior_costs_history_and_grades_preserved": true
+}

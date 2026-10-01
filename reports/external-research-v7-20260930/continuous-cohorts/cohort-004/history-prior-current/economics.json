@@ -124,12 +124,12 @@
   "publication_status": "ACTIVE explicit work-clock extension; totals unchanged",
   "administrative_closeout_as_of_utc": "2026-10-01T17:29:11.818480+00:00",
   "extension_authority": "work-clock-extension/authority.json",
-  "known_conservative_helper_task_start_events": 84,
-  "helper_ceiling": 96,
-  "known_helper_headroom": 12,
+  "known_conservative_helper_task_start_events": 71,
+  "helper_ceiling": 72,
+  "known_helper_headroom": 1,
   "helper_event_count_completeness": "unknown; conservative events not guaranteed unique helpers",
-  "helper_event_count_as_of_utc": "2026-10-01T20:51:34.636953+00:00",
-  "helper_event_count_source": "Root explicit84-event rollup; original omissions remain unknown",
+  "helper_event_count_as_of_utc": "2026-10-01T18:42:28.876602+00:00",
+  "helper_event_count_source": "root explicit rollup including fresh host_release_machinery_v2; manual omissions/true starttimes remain unknown",
   "continuous_cohort_001_accounting": {
     "candidate_admissions": 23,
     "occupied_slot_seconds": 11117.104108572006,
@@ -178,8 +178,5 @@
       "t08-z-ome-mcp-discovery-v2-repair1-control",
       "t08-z-ome-mcp-discovery-v2-repair1-treatment"
     ]
-  },
-  "T10_current_quality": "both complete current quality failures; source capture eligibility unknown; no efficiency benefit",
-  "helper_extension_authority": "continuous-cohorts/cohort-004/helper-authority.json",
-  "publication_as_of_utc": "2026-10-01T20:51:34.636953+00:00"
+  }
 }

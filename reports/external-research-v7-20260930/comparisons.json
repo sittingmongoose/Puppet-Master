@@ -240,11 +240,16 @@
   {
     "method": "T10",
     "instance": "actual v2 pair cohort002",
-    "assessment": "unassessed",
+    "assessment": "both complete current quality failures",
     "native_context_inventory_complete": true,
-    "actualGETsource_eligibility": "treatmentpartial/unknown;controlpending",
+    "actualGETsource_eligibility": "zero eligible capture sources; semantic acquisition unknown",
     "same_quality_efficiency_claim": false,
-    "cohort": "continuous-cohorts/cohort-002"
+    "cohort": "continuous-cohorts/cohort-002",
+    "current_reviews": [
+      "R015",
+      "R016"
+    ],
+    "review_cohort": "continuous-cohorts/cohort-004"
   },
   {
     "method": "T04R",

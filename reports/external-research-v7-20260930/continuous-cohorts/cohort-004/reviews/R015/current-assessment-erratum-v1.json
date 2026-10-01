@@ -1,0 +1,14 @@
+{
+  "schema": "er7.immutable_current_assessment_erratum.v1",
+  "report_id": "R015",
+  "saved_at_utc": "2026-10-01T20:12:55.019725+00:00",
+  "preserved_original_json_sha256": "06bb16b370f23538e3f7b1f91c56a3ba122d4a138f5daedd32bbc4d51a309d16",
+  "preserved_original_md_sha256": "ff2c8885ca063a66b31de948ce1197dbf9bfa71108b4f2f7d0ed22a172df40ab",
+  "changes": [
+    {
+      "claim_id": "R015-C012",
+      "correction": "The assertion shorthand complete flag false means incomplete_results=false. The source locator and rationale already name incomplete_results=false correctly; no factual outcome, coverage, failure identity or verdict changes."
+    }
+  ],
+  "history_or_acquisition_read": false
+}

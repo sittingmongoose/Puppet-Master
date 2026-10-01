@@ -1,0 +1,47 @@
+{
+  "schema": "er7.independent_primary_source_verification.v1",
+  "report_id": "R015",
+  "immutable": true,
+  "source_identity_warning": "Current evaluator-only first-party public repository verification; no candidate bytes/history supplied. Branch guesses that fail remain unresolved.",
+  "sources": [
+    {
+      "source_id": "skizzle_readme",
+      "requested_url": "https://raw.githubusercontent.com/AxaFrance/Skizzle/master/README.md",
+      "retrieved_at_utc": "2026-10-01T19:59:44.919899+00:00",
+      "basis": "independent verification of report-cited primary repository; not native candidate acquisition",
+      "final_url": "https://raw.githubusercontent.com/AxaFrance/Skizzle/master/README.md",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "body_bytes": 2603,
+      "sha256": "2caf95ff64b4612f2ecc55e4444836727132c05f57952fac8a9172ea0c1b4a46",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R015/source-addendum-independent-v2/skizzle_readme.body",
+      "elapsed_seconds": 0.20032095909118652
+    },
+    {
+      "source_id": "adopure_readme",
+      "requested_url": "https://raw.githubusercontent.com/Willem-J-an/adopure.nvim/main/README.md",
+      "retrieved_at_utc": "2026-10-01T19:59:44.921882+00:00",
+      "basis": "independent verification of report-cited primary repository; not native candidate acquisition",
+      "final_url": "https://raw.githubusercontent.com/Willem-J-an/adopure.nvim/main/README.md",
+      "http_status": 404,
+      "error": "HTTP Error 404: Not Found",
+      "body_bytes": 14,
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R015/source-addendum-independent-v2/adopure_readme.body",
+      "elapsed_seconds": 0.24118924140930176
+    },
+    {
+      "source_id": "teammate_repo_metadata",
+      "requested_url": "https://api.github.com/repos/microsoft/TeamMate",
+      "retrieved_at_utc": "2026-10-01T19:59:44.923159+00:00",
+      "basis": "independent verification of report-cited primary repository; not native candidate acquisition",
+      "final_url": "https://api.github.com/repos/microsoft/TeamMate",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "body_bytes": 6471,
+      "sha256": "ac024cacaf04d63ea335dd24cc79effb47ced7de917b5e39774b4a856c6c152c",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R015/source-addendum-independent-v2/teammate_repo_metadata.body",
+      "elapsed_seconds": 0.2183082103729248
+    }
+  ]
+}

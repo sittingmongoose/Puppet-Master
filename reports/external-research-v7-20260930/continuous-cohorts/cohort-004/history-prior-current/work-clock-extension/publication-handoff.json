@@ -7,8 +7,8 @@
   "actual_native_goals": 31,
   "occupied_seconds": 18402.633721590042,
   "reported_output_lower_bound": 748968,
-  "known_conservative_helper_events": 84,
-  "known_helper_headroom": 12,
+  "known_conservative_helper_events": 71,
+  "known_helper_headroom": 1,
   "unknown_usage_not_zero": true,
   "next_publication": "exact sourcecapture/current grades and next frozen rolling jobs",
   "private_publication_exclusions": [
@@ -18,7 +18,7 @@
     "candidate conversations",
     "large corpora"
   ],
-  "previous_published_head": "c1b856506062826fca7d377a07a5305b66ea8af1",
+  "previous_published_head": "e7b698a5d273c990799999ed2ca48f3ead7a3683",
   "native_v3_status": "historical passed; exact productive host/context route accepted; perattempt qualification mandatory",
   "evidence": [
     {
@@ -52,12 +52,9 @@
       "publication_path": "work-clock-extension/native-review/v2/resumed-native-assessment.md"
     }
   ],
-  "helper_headroom_as_of": "Root explicit84-event rollup; omissions unknown",
+  "helper_headroom_as_of": "root latest explicit66-event rollup; unknown omissions/true-starttimes retained",
   "root_corrected_lab_manifest_sha256": "f5098b93e5b647b88bd103fb7a7d29bff280ae22dff6a5d120fe4612881b08cb",
-  "latest_frozen_cohort": "continuous-cohorts/cohort-004",
+  "latest_frozen_cohort": "continuous-cohorts/cohort-003",
   "accounting_snapshot_epoch": 1790886810.0985003,
-  "accounting_snapshot_later_state_unknown": true,
-  "helper_ceiling": 96,
-  "helper_extension_authority": "continuous-cohorts/cohort-004/helper-authority.json",
-  "publication_as_of_utc": "2026-10-01T20:51:34.636953+00:00"
+  "accounting_snapshot_later_state_unknown": true
 }

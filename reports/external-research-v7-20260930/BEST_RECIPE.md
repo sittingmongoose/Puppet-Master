@@ -1,4 +1,6 @@
-**ACTIVE — resumed under the explicit user work-clock extension.** Deadline: **October 1, 2026, 9:29:01 p.m. EDT**. Documented stopped intervals contribute 84,135 seconds of idle credit; the original 12-hour active-work allowance and all resource, repair and quality limits remain in force.
+Latest [cohort004](continuous-cohorts/cohort-004/README.md): helper authority96/84 known; T10 both complete current quality failures; additive T14 R018 one-arm review; three captures have zero eligible sources and unknown acquisition. Candidate totals below remain the explicitly dated cohort003 snapshot.
+
+**ACTIVE — resumed under the explicit user work-clock extension.** Deadline: **October 1, 2026, 9:29:01 p.m. EDT**. Documented stopped intervals contribute 84,135 seconds of idle credit; the original 12-hour active-work allowance and candidate, repair and quality limits remain in force. A later explicit user authority raises helper starts to96.
 
 # Best recipe
 

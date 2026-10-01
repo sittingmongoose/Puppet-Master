@@ -1,0 +1,2996 @@
+{
+  "schema": "er7.complete_current_assessment.v1",
+  "report_id": "R016",
+  "case_id": "C083",
+  "reviewer": "current-discovery-grading-v4",
+  "runtime_identity": "GPT-6.1 Sol Extra High as assigned; no candidate-author context",
+  "saved_at_utc": "2026-10-01T20:12:25.521813+00:00",
+  "report_sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+  "input_pins": {
+    "eligibility.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/eligibility.json",
+      "sha256": "bfb71e0ea605588f11125e8fe1c40260cd712d1afde1173091a96c6b080c3a66"
+    },
+    "current-report.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+      "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630"
+    },
+    "PROTOCOL.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/PROTOCOL.md",
+      "sha256": "f0427cc8d1495e368b8b79cb9ead18cc65d4b0b2e8b509e338b86923ee5b1e15"
+    },
+    "inputs/brief.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/brief.md",
+      "sha256": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607"
+    },
+    "inputs/source-universe.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/source-universe.json",
+      "sha256": "7cc60766b401bb255bf4a4796ec907629c1827f2e5acf672fe9376b6ecc17332"
+    },
+    "inputs/sources/A001.txt": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A001.txt",
+      "sha256": "32fcc785fe70012836f3db8aaaea0a907ade445304b7f17b1f949522139b85ef"
+    },
+    "inputs/sources/A003.txt": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A003.txt",
+      "sha256": "98070bba044326e23f6ea75dbcdc9f59cadeb6c6f3aa7f6923f91efc577fdbce"
+    },
+    "inputs/sources/A002.txt": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A002.txt",
+      "sha256": "8a9864d3cb9718a4c7d140feeb1700a258de9cb6b85233bc90699df026ada0bb"
+    }
+  },
+  "stage_sha256": "8015b5b245510286f36d656df2027013d463a55abbaf9a52df8a501afdb73836",
+  "stage0": {
+    "all_manifest_hashes_match": true,
+    "complete_carrier": true,
+    "current_only": true,
+    "acquisition_unlocked": false,
+    "native_freeze_time": "not separately exposed; queue admission epoch1790883799.3487403 pins stage identity",
+    "native_actual_body_refs_admitted": 0,
+    "independent_source_verification_explicitly_host_authorized": true
+  },
+  "source_catalog": {
+    "iterations_list": {
+      "source_id": "iterations_list",
+      "requested_url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iterations/list?view=azure-devops-rest-7.1&accept=text/markdown",
+      "retrieved_at_utc": "2026-10-01T19:57:12.078315+00:00",
+      "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition",
+      "not_candidate_capture": true,
+      "final_url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iterations/list?view=azure-devops-rest-7.1&accept=text/markdown",
+      "http_status": 200,
+      "content_type": "text/markdown; charset=utf-8",
+      "body_bytes": 17254,
+      "elapsed_seconds": 0.09203314781188965,
+      "sha256": "28d00fc54547afac615e4658cc8845efc2aba3b6efded7090db3dcf95014f5b1",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/iterations_list.body",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/MANIFEST.json",
+      "manifest_sha256": "3d87817c2b87a6187cad10dc4b91830772cce8f13011e4301260c415c0004bac"
+    },
+    "iterations_get": {
+      "source_id": "iterations_get",
+      "requested_url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iterations/get?view=azure-devops-rest-7.1&accept=text/markdown",
+      "retrieved_at_utc": "2026-10-01T19:57:12.091975+00:00",
+      "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition",
+      "not_candidate_capture": true,
+      "final_url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iterations/get?view=azure-devops-rest-7.1&accept=text/markdown",
+      "http_status": 200,
+      "content_type": "text/markdown; charset=utf-8",
+      "body_bytes": 16974,
+      "elapsed_seconds": 0.08358550071716309,
+      "sha256": "6583421f74e813f4740cefce53b56d072f0be78e8a82e24ed59d5003f6e5a80f",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/iterations_get.body",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/MANIFEST.json",
+      "manifest_sha256": "3d87817c2b87a6187cad10dc4b91830772cce8f13011e4301260c415c0004bac"
+    },
+    "iteration_changes": {
+      "source_id": "iteration_changes",
+      "requested_url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iteration-changes/get?view=azure-devops-rest-7.1&accept=text/markdown",
+      "retrieved_at_utc": "2026-10-01T19:57:12.097652+00:00",
+      "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition",
+      "not_candidate_capture": true,
+      "final_url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iteration-changes/get?view=azure-devops-rest-7.1&accept=text/markdown",
+      "http_status": 200,
+      "content_type": "text/markdown; charset=utf-8",
+      "body_bytes": 11261,
+      "elapsed_seconds": 0.0682675838470459,
+      "sha256": "7bd3fcd0e67783f75d9bbc4557136b89e36148e992b8a61d08c914cf8e420745",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/iteration_changes.body",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/MANIFEST.json",
+      "manifest_sha256": "3d87817c2b87a6187cad10dc4b91830772cce8f13011e4301260c415c0004bac"
+    },
+    "pr_statuses": {
+      "source_id": "pr_statuses",
+      "requested_url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-statuses/list?view=azure-devops-rest-7.1&accept=text/markdown",
+      "retrieved_at_utc": "2026-10-01T19:57:12.104335+00:00",
+      "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition",
+      "not_candidate_capture": true,
+      "final_url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-statuses/list?view=azure-devops-rest-7.1&accept=text/markdown",
+      "http_status": 200,
+      "content_type": "text/markdown; charset=utf-8",
+      "body_bytes": 13118,
+      "elapsed_seconds": 0.052187442779541016,
+      "sha256": "3699494b0b0fab58565709b91e66910d4f477e99943ef25ba53df275c37e7a38",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/pr_statuses.body",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/MANIFEST.json",
+      "manifest_sha256": "3d87817c2b87a6187cad10dc4b91830772cce8f13011e4301260c415c0004bac"
+    },
+    "policy_evaluations": {
+      "source_id": "policy_evaluations",
+      "requested_url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/evaluations/list?view=azure-devops-rest-7.1&accept=text/markdown",
+      "retrieved_at_utc": "2026-10-01T19:57:12.123006+00:00",
+      "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition",
+      "not_candidate_capture": true,
+      "final_url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/evaluations/list?view=azure-devops-rest-7.1&accept=text/markdown",
+      "http_status": 200,
+      "content_type": "text/markdown; charset=utf-8",
+      "body_bytes": 12661,
+      "elapsed_seconds": 0.060289621353149414,
+      "sha256": "ff7c1ff1e6b9e62d3ff299a72f05eca571cac063e96b9198cc4660e79d41c7b8",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/policy_evaluations.body",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/MANIFEST.json",
+      "manifest_sha256": "3d87817c2b87a6187cad10dc4b91830772cce8f13011e4301260c415c0004bac"
+    },
+    "get_pr": {
+      "source_id": "get_pr",
+      "requested_url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-request?view=azure-devops-rest-7.1&accept=text/markdown",
+      "retrieved_at_utc": "2026-10-01T19:57:12.133569+00:00",
+      "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition",
+      "not_candidate_capture": true,
+      "final_url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-request?view=azure-devops-rest-7.1&accept=text/markdown",
+      "http_status": 200,
+      "content_type": "text/markdown; charset=utf-8",
+      "body_bytes": 31535,
+      "elapsed_seconds": 0.07448458671569824,
+      "sha256": "410c2fcae80e0876bf8f8831efc75a7231ad463d84acd4751b71e09947cb0095",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/get_pr.body",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/MANIFEST.json",
+      "manifest_sha256": "3d87817c2b87a6187cad10dc4b91830772cce8f13011e4301260c415c0004bac"
+    },
+    "github_search": {
+      "source_id": "github_search",
+      "requested_url": "https://api.github.com/search/repositories?q=azure%20devops%20pull%20request&sort=stars&order=desc&per_page=15",
+      "retrieved_at_utc": "2026-10-01T19:57:12.157199+00:00",
+      "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition",
+      "not_candidate_capture": true,
+      "final_url": "https://api.github.com/search/repositories?q=azure%20devops%20pull%20request&sort=stars&order=desc&per_page=15",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "body_bytes": 85483,
+      "elapsed_seconds": 0.28726911544799805,
+      "sha256": "0309674a19d6f6a89fa017aca29c2db525026de095e276b4d68e9aa5b5a9c830",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/github_search.body",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/MANIFEST.json",
+      "manifest_sha256": "3d87817c2b87a6187cad10dc4b91830772cce8f13011e4301260c415c0004bac"
+    },
+    "qvl_adapter": {
+      "source_id": "qvl_adapter",
+      "requested_url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/src/providers/ado.ts",
+      "retrieved_at_utc": "2026-10-01T19:57:12.166541+00:00",
+      "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition",
+      "not_candidate_capture": true,
+      "final_url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/src/providers/ado.ts",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "body_bytes": 15483,
+      "elapsed_seconds": 0.09428882598876953,
+      "sha256": "6b57b42baa4407116b1cec6d0d2875e998189d558e602caf0060765a9fa675e4",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_adapter.body",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/MANIFEST.json",
+      "manifest_sha256": "3d87817c2b87a6187cad10dc4b91830772cce8f13011e4301260c415c0004bac"
+    },
+    "qvl_readme": {
+      "source_id": "qvl_readme",
+      "requested_url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/README.md",
+      "retrieved_at_utc": "2026-10-01T19:57:12.171292+00:00",
+      "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition",
+      "not_candidate_capture": true,
+      "final_url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/README.md",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "body_bytes": 18102,
+      "elapsed_seconds": 0.1291344165802002,
+      "sha256": "d0f16ae6b3ddf9c29bd8225d13c746483aa9c2afff04878c4066cfe8f8710abd",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_readme.body",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/MANIFEST.json",
+      "manifest_sha256": "3d87817c2b87a6187cad10dc4b91830772cce8f13011e4301260c415c0004bac"
+    },
+    "azure_viewer_architecture": {
+      "source_id": "azure_viewer_architecture",
+      "requested_url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/docs/architecture.md",
+      "retrieved_at_utc": "2026-10-01T19:57:12.176223+00:00",
+      "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition",
+      "not_candidate_capture": true,
+      "final_url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/docs/architecture.md",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "body_bytes": 3665,
+      "elapsed_seconds": 0.08770537376403809,
+      "sha256": "7ad9af78cfad7550b7d075a87b261a665d5cdeb0abe23d7d5b4caf7f8dbf1897",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_architecture.body",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/MANIFEST.json",
+      "manifest_sha256": "3d87817c2b87a6187cad10dc4b91830772cce8f13011e4301260c415c0004bac"
+    },
+    "azure_viewer_readme": {
+      "source_id": "azure_viewer_readme",
+      "requested_url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/README.md",
+      "retrieved_at_utc": "2026-10-01T19:57:12.183910+00:00",
+      "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition",
+      "not_candidate_capture": true,
+      "final_url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/README.md",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "body_bytes": 6676,
+      "elapsed_seconds": 0.0873863697052002,
+      "sha256": "5f7b31c0c417dcd7872808911cdd38c906fec6b2581f57456bb2f9f572a90d6f",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_readme.body",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/MANIFEST.json",
+      "manifest_sha256": "3d87817c2b87a6187cad10dc4b91830772cce8f13011e4301260c415c0004bac"
+    },
+    "pullrequest_manager_readme": {
+      "source_id": "pullrequest_manager_readme",
+      "requested_url": "https://raw.githubusercontent.com/Meral-IT/PullRequest-Manager/develop/README.md",
+      "retrieved_at_utc": "2026-10-01T19:57:12.208817+00:00",
+      "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition",
+      "not_candidate_capture": true,
+      "final_url": "https://raw.githubusercontent.com/Meral-IT/PullRequest-Manager/develop/README.md",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "body_bytes": 6240,
+      "elapsed_seconds": 0.10231137275695801,
+      "sha256": "490718bb7be675348fa402b77430bd8a95e86600cc52307065a6a41cfc9b1831",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/pullrequest_manager_readme.body",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/MANIFEST.json",
+      "manifest_sha256": "3d87817c2b87a6187cad10dc4b91830772cce8f13011e4301260c415c0004bac"
+    },
+    "devcenter_readme": {
+      "source_id": "devcenter_readme",
+      "requested_url": "https://raw.githubusercontent.com/BipulRaman/DevCenter/main/README.md",
+      "retrieved_at_utc": "2026-10-01T19:57:12.212270+00:00",
+      "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition",
+      "not_candidate_capture": true,
+      "final_url": "https://raw.githubusercontent.com/BipulRaman/DevCenter/main/README.md",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "body_bytes": 2664,
+      "elapsed_seconds": 0.09590768814086914,
+      "sha256": "90e1aef73f21d5054fcd9337683f40b2f3295330d38b73e5dc10139b22870277",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/devcenter_readme.body",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/MANIFEST.json",
+      "manifest_sha256": "3d87817c2b87a6187cad10dc4b91830772cce8f13011e4301260c415c0004bac"
+    },
+    "gh_view_code": {
+      "source_id": "gh_view_code",
+      "requested_url": "https://raw.githubusercontent.com/cli/cli/trunk/pkg/cmd/pr/view/view.go",
+      "retrieved_at_utc": "2026-10-01T19:57:12.261534+00:00",
+      "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition",
+      "not_candidate_capture": true,
+      "final_url": "https://raw.githubusercontent.com/cli/cli/trunk/pkg/cmd/pr/view/view.go",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "body_bytes": 13316,
+      "elapsed_seconds": 0.16820645332336426,
+      "sha256": "2a4422232ca522ee5c5284fa83387fe22e6251d8597489f5af28b19727a6e4c7",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/gh_view_code.body",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/MANIFEST.json",
+      "manifest_sha256": "3d87817c2b87a6187cad10dc4b91830772cce8f13011e4301260c415c0004bac"
+    },
+    "qvl_repo_metadata": {
+      "source_id": "qvl_repo_metadata",
+      "requested_url": "https://api.github.com/repos/QVL-ToolBox/PrViewer",
+      "retrieved_at_utc": "2026-10-01T19:59:44.924316+00:00",
+      "basis": "independent verification of report-cited primary repository; not native candidate acquisition",
+      "final_url": "https://api.github.com/repos/QVL-ToolBox/PrViewer",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "body_bytes": 6375,
+      "sha256": "113abb166eae19a7b96b7e789bc202d666a03b0223a716ba73eb6a9810752fab",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/qvl_repo_metadata.body",
+      "elapsed_seconds": 0.3142416477203369,
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/MANIFEST.json",
+      "manifest_sha256": "a3182049d83d8e72549e1e6a3c00747d26579354819c65cf134333fdca2cd24e"
+    },
+    "azure_viewer_repo_metadata": {
+      "source_id": "azure_viewer_repo_metadata",
+      "requested_url": "https://api.github.com/repos/zunhdev/azure-pr-viewer",
+      "retrieved_at_utc": "2026-10-01T19:59:44.925389+00:00",
+      "basis": "independent verification of report-cited primary repository; not native candidate acquisition",
+      "final_url": "https://api.github.com/repos/zunhdev/azure-pr-viewer",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "body_bytes": 5392,
+      "sha256": "7b2dc75308767be1c02647a21a48ec395d9c695883a90e55cb16b2e20457c432",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/azure_viewer_repo_metadata.body",
+      "elapsed_seconds": 0.20817065238952637,
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/MANIFEST.json",
+      "manifest_sha256": "a3182049d83d8e72549e1e6a3c00747d26579354819c65cf134333fdca2cd24e"
+    },
+    "pullrequest_manager_repo_metadata": {
+      "source_id": "pullrequest_manager_repo_metadata",
+      "requested_url": "https://api.github.com/repos/Meral-IT/PullRequest-Manager",
+      "retrieved_at_utc": "2026-10-01T19:59:44.927028+00:00",
+      "basis": "independent verification of report-cited primary repository; not native candidate acquisition",
+      "final_url": "https://api.github.com/repos/Meral-IT/PullRequest-Manager",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "body_bytes": 6812,
+      "sha256": "969aab6495aa2d4d34dad8177d1a50305822d68cc30dfaa2c18722648395b26a",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/pullrequest_manager_repo_metadata.body",
+      "elapsed_seconds": 0.2390592098236084,
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/MANIFEST.json",
+      "manifest_sha256": "a3182049d83d8e72549e1e6a3c00747d26579354819c65cf134333fdca2cd24e"
+    },
+    "devcenter_repo_metadata": {
+      "source_id": "devcenter_repo_metadata",
+      "requested_url": "https://api.github.com/repos/BipulRaman/DevCenter",
+      "retrieved_at_utc": "2026-10-01T19:59:44.929146+00:00",
+      "basis": "independent verification of report-cited primary repository; not native candidate acquisition",
+      "final_url": "https://api.github.com/repos/BipulRaman/DevCenter",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "body_bytes": 5405,
+      "sha256": "44e6b1e0d7447a398784b204a7c23de3f5352a5407f896f0366c423051a23c21",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/devcenter_repo_metadata.body",
+      "elapsed_seconds": 0.19696712493896484,
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/MANIFEST.json",
+      "manifest_sha256": "a3182049d83d8e72549e1e6a3c00747d26579354819c65cf134333fdca2cd24e"
+    },
+    "ado_mcp_repo_metadata": {
+      "source_id": "ado_mcp_repo_metadata",
+      "requested_url": "https://api.github.com/repos/isaacOjeda/AdoMcpServer",
+      "retrieved_at_utc": "2026-10-01T19:59:44.930742+00:00",
+      "basis": "independent verification of report-cited primary repository; not native candidate acquisition",
+      "final_url": "https://api.github.com/repos/isaacOjeda/AdoMcpServer",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "body_bytes": 5391,
+      "sha256": "686fd5f2ab8895c30a0d46ddb3f9b97496523045dc68da0ea8183d2922d4f76b",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/ado_mcp_repo_metadata.body",
+      "elapsed_seconds": 0.19577407836914062,
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/MANIFEST.json",
+      "manifest_sha256": "a3182049d83d8e72549e1e6a3c00747d26579354819c65cf134333fdca2cd24e"
+    },
+    "prex_repo_metadata": {
+      "source_id": "prex_repo_metadata",
+      "requested_url": "https://api.github.com/repos/dylsmith8/PRex",
+      "retrieved_at_utc": "2026-10-01T19:59:45.120328+00:00",
+      "basis": "independent verification of report-cited primary repository; not native candidate acquisition",
+      "final_url": "https://api.github.com/repos/dylsmith8/PRex",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "body_bytes": 4928,
+      "sha256": "571c3fda9331dccc8653bb1048fdb9ac1500e5b4bc8620817db02684eafc0398",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/prex_repo_metadata.body",
+      "elapsed_seconds": 0.17608070373535156,
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/MANIFEST.json",
+      "manifest_sha256": "a3182049d83d8e72549e1e6a3c00747d26579354819c65cf134333fdca2cd24e"
+    },
+    "pdfdiff_repo_metadata": {
+      "source_id": "pdfdiff_repo_metadata",
+      "requested_url": "https://api.github.com/repos/TimothyK/PdfDiff",
+      "retrieved_at_utc": "2026-10-01T19:59:45.126153+00:00",
+      "basis": "independent verification of report-cited primary repository; not native candidate acquisition",
+      "final_url": "https://api.github.com/repos/TimothyK/PdfDiff",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "body_bytes": 5114,
+      "sha256": "5ceef2f18084ee4013410a03976bf777dc0c528a27cacdf69c7ba3b9230ab822",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/pdfdiff_repo_metadata.body",
+      "elapsed_seconds": 0.187028169631958,
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/MANIFEST.json",
+      "manifest_sha256": "a3182049d83d8e72549e1e6a3c00747d26579354819c65cf134333fdca2cd24e"
+    },
+    "devops_gate_repo_metadata": {
+      "source_id": "devops_gate_repo_metadata",
+      "requested_url": "https://api.github.com/repos/Dev4mir/devops-gate-releases",
+      "retrieved_at_utc": "2026-10-01T19:59:45.126553+00:00",
+      "basis": "independent verification of report-cited primary repository; not native candidate acquisition",
+      "final_url": "https://api.github.com/repos/Dev4mir/devops-gate-releases",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "body_bytes": 5526,
+      "sha256": "43a38a35bca95adb0f684eff7774268a384cf9586cefceff8caef927e5f0d6f7",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/devops_gate_repo_metadata.body",
+      "elapsed_seconds": 0.2535512447357178,
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/MANIFEST.json",
+      "manifest_sha256": "a3182049d83d8e72549e1e6a3c00747d26579354819c65cf134333fdca2cd24e"
+    },
+    "ado_mcp_readme": {
+      "source_id": "ado_mcp_readme",
+      "requested_url": "https://raw.githubusercontent.com/isaacOjeda/AdoMcpServer/main/README.md",
+      "retrieved_at_utc": "2026-10-01T19:59:45.133594+00:00",
+      "basis": "independent verification of report-cited primary repository; not native candidate acquisition",
+      "final_url": "https://raw.githubusercontent.com/isaacOjeda/AdoMcpServer/main/README.md",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "body_bytes": 1673,
+      "sha256": "606ee0ffa724537cf75079d750d25939147e40ab19d1a33273ddc9dbcb68e25b",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/ado_mcp_readme.body",
+      "elapsed_seconds": 0.1661086082458496,
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/MANIFEST.json",
+      "manifest_sha256": "a3182049d83d8e72549e1e6a3c00747d26579354819c65cf134333fdca2cd24e"
+    },
+    "prex_readme": {
+      "source_id": "prex_readme",
+      "requested_url": "https://raw.githubusercontent.com/dylsmith8/PRex/master/README.md",
+      "retrieved_at_utc": "2026-10-01T19:59:45.141503+00:00",
+      "basis": "independent verification of report-cited primary repository; not native candidate acquisition",
+      "final_url": "https://raw.githubusercontent.com/dylsmith8/PRex/master/README.md",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "body_bytes": 685,
+      "sha256": "b42e629db799fe94b388f2281a2d677423d2d6f54214be3b416911aec02d00fc",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/prex_readme.body",
+      "elapsed_seconds": 0.15099501609802246,
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/MANIFEST.json",
+      "manifest_sha256": "a3182049d83d8e72549e1e6a3c00747d26579354819c65cf134333fdca2cd24e"
+    },
+    "pdfdiff_readme": {
+      "source_id": "pdfdiff_readme",
+      "requested_url": "https://raw.githubusercontent.com/TimothyK/PdfDiff/master/README.md",
+      "retrieved_at_utc": "2026-10-01T19:59:45.163199+00:00",
+      "basis": "independent verification of report-cited primary repository; not native candidate acquisition",
+      "final_url": "https://raw.githubusercontent.com/TimothyK/PdfDiff/master/README.md",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "body_bytes": 3153,
+      "sha256": "26a53df45817dddacb8b52474daef75bf7553fbffc864b1b3a7008302d64006f",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/pdfdiff_readme.body",
+      "elapsed_seconds": 0.1599593162536621,
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/MANIFEST.json",
+      "manifest_sha256": "a3182049d83d8e72549e1e6a3c00747d26579354819c65cf134333fdca2cd24e"
+    },
+    "devops_gate_readme": {
+      "source_id": "devops_gate_readme",
+      "requested_url": "https://raw.githubusercontent.com/Dev4mir/devops-gate-releases/main/README.md",
+      "retrieved_at_utc": "2026-10-01T19:59:45.166102+00:00",
+      "basis": "independent verification of report-cited primary repository; not native candidate acquisition",
+      "final_url": "https://raw.githubusercontent.com/Dev4mir/devops-gate-releases/main/README.md",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "body_bytes": 731,
+      "sha256": "d60e33287241c5311acb7a803ec5f62d7d287d720429ba20aaca35a89766e8fc",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/devops_gate_readme.body",
+      "elapsed_seconds": 0.13935446739196777,
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/MANIFEST.json",
+      "manifest_sha256": "a3182049d83d8e72549e1e6a3c00747d26579354819c65cf134333fdca2cd24e"
+    },
+    "A001": {
+      "source_id": "A001",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A001.txt",
+      "sha256": "32fcc785fe70012836f3db8aaaea0a907ade445304b7f17b1f949522139b85ef",
+      "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+    },
+    "A002": {
+      "source_id": "A002",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A002.txt",
+      "sha256": "8a9864d3cb9718a4c7d140feeb1700a258de9cb6b85233bc90699df026ada0bb",
+      "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+    },
+    "A003": {
+      "source_id": "A003",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A003.txt",
+      "sha256": "98070bba044326e23f6ea75dbcdc9f59cadeb6c6f3aa7f6923f91efc577fdbce",
+      "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+    },
+    "brief": {
+      "source_id": "brief",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/brief.md",
+      "sha256": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607",
+      "basis": "admitted product brief"
+    }
+  },
+  "source_catalog_scope": "Prospective brief/reference universe and frozen current report-cited public primary repositories/docs only. GetPR is evaluator verification of report proposed U6, not candidate acquisition. Reference anchors non-exhaustive, no universal S003 denominator.",
+  "claims": [
+    {
+      "id": "R016-C001",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 3,
+        "end_line": 6
+      },
+      "assertion": "Research date/currentness; independently selected sources, public fetch log completeness and plan-blindness",
+      "kind": "provenance",
+      "outcome": "unresolved",
+      "source_refs": [],
+      "rationale": "Carrier is complete; native acquisition sequence and no-private-input claim await stage2. Current source facts are independently verifiable without native capture proof.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C002",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 4,
+        "end_line": 17
+      },
+      "assertion": "Read-only selected context plus CQ1-CQ6 identity/version/check/honesty/auth/simplicity questions",
+      "kind": "scope",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "brief",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/brief.md",
+          "sha256": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607",
+          "url": null,
+          "locator": "L3",
+          "basis": "admitted product brief"
+        }
+      ],
+      "rationale": "Faithful component decomposition; per-user role lists are optional potential surfaces rather than brief mandates.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C003",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 24,
+        "end_line": 27
+      },
+      "assertion": "7.1 Learn moniker/commit cb0d0b30ca71a83e03cc7a7bbd9361e1a432b377/update 2025-03-18; Git7.1 and policy7.1-preview.1",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "iterations_list",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/iterations_list.body",
+          "sha256": "28d00fc54547afac615e4658cc8845efc2aba3b6efded7090db3dcf95014f5b1",
+          "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iterations/list?view=azure-devops-rest-7.1&accept=text/markdown",
+          "locator": "L1-32,L59-82",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "iteration_changes",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/iteration_changes.body",
+          "sha256": "7bd3fcd0e67783f75d9bbc4557136b89e36148e992b8a61d08c914cf8e420745",
+          "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iteration-changes/get?view=azure-devops-rest-7.1&accept=text/markdown",
+          "locator": "L1-32,L59-83",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "A003",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A003.txt",
+          "sha256": "98070bba044326e23f6ea75dbcdc9f59cadeb6c6f3aa7f6923f91efc577fdbce",
+          "url": null,
+          "locator": "L27-35",
+          "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+        }
+      ],
+      "rationale": "Version strings and document source identity match the current independently frozen originals.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C004",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 25,
+        "end_line": 29
+      },
+      "assertion": "Hosted docs4.1-to7.2 and Server5.0-to7.1 version lists; do not assume Server7.2; unprobed",
+      "kind": "factual",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "iterations_list",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/iterations_list.body",
+          "sha256": "28d00fc54547afac615e4658cc8845efc2aba3b6efded7090db3dcf95014f5b1",
+          "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iterations/list?view=azure-devops-rest-7.1&accept=text/markdown",
+          "locator": "L389-402",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "iteration_changes",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/iteration_changes.body",
+          "sha256": "7bd3fcd0e67783f75d9bbc4557136b89e36148e992b8a61d08c914cf8e420745",
+          "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iteration-changes/get?view=azure-devops-rest-7.1&accept=text/markdown",
+          "locator": "L280-293",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Menus list supported documentation editions. They justify compatibility caution, not proof Server2022 accepts every7.1 API or rejects7.2.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C005",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 28,
+        "end_line": 28
+      },
+      "assertion": "Pin7.1 matching implementation; one global version string will break policy call",
+      "kind": "plan_implication",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "qvl_adapter",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_adapter.body",
+          "sha256": "6b57b42baa4407116b1cec6d0d2875e998189d558e602caf0060765a9fa675e4",
+          "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/src/providers/ado.ts",
+          "locator": "L7,L187-194,L246-247",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "A003",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A003.txt",
+          "sha256": "98070bba044326e23f6ea75dbcdc9f59cadeb6c6f3aa7f6923f91efc577fdbce",
+          "url": null,
+          "locator": "L27-56",
+          "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+        }
+      ],
+      "rationale": "Git7.1 choice and different documented policy requirement supported. QVL already overrides connectionData to7.1-preview; actual break is not live-tested and should be a documented compatibility risk, not execution evidence.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C006",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 31,
+        "end_line": 32
+      },
+      "assertion": "connectionData with7.1-preview yields authenticatedUser.id; creator/reviewer active PR filters",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "qvl_adapter",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_adapter.body",
+          "sha256": "6b57b42baa4407116b1cec6d0d2875e998189d558e602caf0060765a9fa675e4",
+          "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/src/providers/ado.ts",
+          "locator": "L80-82,L246-251,L370-374,L393-418",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "azure_viewer_architecture",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_architecture.body",
+          "sha256": "7ad9af78cfad7550b7d075a87b261a665d5cdeb0abe23d7d5b4caf7f8dbf1897",
+          "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/docs/architecture.md",
+          "locator": "L8-16",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "These are concrete inspected implementation/read-path facts; architecture calls user ID a GUID, code types it as a string.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C007",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 32,
+        "end_line": 34
+      },
+      "assertion": "Required-reviewer split and approval tally already available from same list response",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "azure_viewer_architecture",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_architecture.body",
+          "sha256": "7ad9af78cfad7550b7d075a87b261a665d5cdeb0abe23d7d5b4caf7f8dbf1897",
+          "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/docs/architecture.md",
+          "locator": "L10-16",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "azure_viewer_readme",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_readme.body",
+          "sha256": "5f7b31c0c417dcd7872808911cdd38c906fec6b2581f57456bb2f9f572a90d6f",
+          "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/README.md",
+          "locator": "L7-14",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Maintainer architecture documents this request-saving computation; the official field caveat is explicit. Not a live-run observation.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C008",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 33,
+        "end_line": 34
+      },
+      "assertion": "Selected context plus your/requiring-you views maps to role queries with no extra required-reviewer call",
+      "kind": "transfer",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "azure_viewer_architecture",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_architecture.body",
+          "sha256": "7ad9af78cfad7550b7d075a87b261a665d5cdeb0abe23d7d5b4caf7f8dbf1897",
+          "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/docs/architecture.md",
+          "locator": "L10-16",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "brief",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/brief.md",
+          "sha256": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607",
+          "url": null,
+          "locator": "L3",
+          "basis": "admitted product brief"
+        }
+      ],
+      "rationale": "Useful optional product choice; the brief does not require user-role aggregation across projects/repos. Scope filtering to explicitly selected repository still needs design.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C009",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 38,
+        "end_line": 39
+      },
+      "assertion": "Iteration repositoryId ID-or-name/project ID-or-name versus statuses target-repository-ID wording",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "A001",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A001.txt",
+          "sha256": "32fcc785fe70012836f3db8aaaea0a907ade445304b7f17b1f949522139b85ef",
+          "url": null,
+          "locator": "L50-63",
+          "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+        },
+        {
+          "source_id": "pr_statuses",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/pr_statuses.body",
+          "sha256": "3699494b0b0fab58565709b91e66910d4f477e99943ef25ba53df275c37e7a38",
+          "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-statuses/list?view=azure-devops-rest-7.1&accept=text/markdown",
+          "locator": "L70-76",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "iterations_get",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/iterations_get.body",
+          "sha256": "6583421f74e813f4740cefce53b56d072f0be78e8a82e24ed59d5003f6e5a80f",
+          "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iterations/get?view=azure-devops-rest-7.1&accept=text/markdown",
+          "locator": "L70-77",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Exact wording differs; report appropriately disclaims a proven runtime rejection of repository names.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C010",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 40,
+        "end_line": 43
+      },
+      "assertion": "CodeReview artifact projectId is project GUID, not display name; resolve once from payload",
+      "kind": "identity",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "A003",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A003.txt",
+          "sha256": "98070bba044326e23f6ea75dbcdc9f59cadeb6c6f3aa7f6923f91efc577fdbce",
+          "url": null,
+          "locator": "L29-61",
+          "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+        },
+        {
+          "source_id": "qvl_adapter",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_adapter.body",
+          "sha256": "6b57b42baa4407116b1cec6d0d2875e998189d558e602caf0060765a9fa675e4",
+          "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/src/providers/ado.ts",
+          "locator": "L52-60,L270-273",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "get_pr",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/get_pr.body",
+          "sha256": "410c2fcae80e0876bf8f8831efc75a7231ad463d84acd4751b71e09947cb0095",
+          "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-request?view=azure-devops-rest-7.1&accept=text/markdown",
+          "locator": "L304-318,L575-592",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "A003 alone does not type projectId as GUID. Evaluator-only GetPR verification (report-cited as proposed U6, not candidate acquisition) types repository.project as TeamProjectReference and its id as uuid, supporting the intended ID-versus-name interpretation. Hard rejection of names in artifactId is not a live-probed contract; do not mistake the path project parameter for artifact identity.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C011",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 41,
+        "end_line": 43
+      },
+      "assertion": "QVL buildWebUrl reads repository.project.name and repository.id; resolving data already in payload",
+      "kind": "source_fit",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "qvl_adapter",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_adapter.body",
+          "sha256": "6b57b42baa4407116b1cec6d0d2875e998189d558e602caf0060765a9fa675e4",
+          "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/src/providers/ado.ts",
+          "locator": "L52-60,L270-273,L310-315",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "get_pr",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/get_pr.body",
+          "sha256": "410c2fcae80e0876bf8f8831efc75a7231ad463d84acd4751b71e09947cb0095",
+          "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-request?view=azure-devops-rest-7.1&accept=text/markdown",
+          "locator": "L304-318,L575-592",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "buildWebUrl actually uses repository.name, while thread route uses repository.id. Fields exist in model/docs, but project reference is optional in adapter and presence is not guaranteed. The locator overstates ID use at that function.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C012",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 46,
+        "end_line": 46
+      },
+      "assertion": "Iteration1 source head at creation, subsequent pushes; compareTo0 common commit; top100/max2000, continuation zero at end",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "iteration_changes",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/iteration_changes.body",
+          "sha256": "7bd3fcd0e67783f75d9bbc4557136b89e36148e992b8a61d08c914cf8e420745",
+          "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iteration-changes/get?view=azure-devops-rest-7.1&accept=text/markdown",
+          "locator": "L78-86,L215-225",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "All exact defaults/limits/identifiers supported.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C013",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 46,
+        "end_line": 46
+      },
+      "assertion": "includeCommits, seven IterationReason values, retarget old/new refs and commit truncation flags",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "A001",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A001.txt",
+          "sha256": "32fcc785fe70012836f3db8aaaea0a907ade445304b7f17b1f949522139b85ef",
+          "url": null,
+          "locator": "L64-67,L175-183,L269-293,L468-479",
+          "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+        }
+      ],
+      "rationale": "Enum and incomplete-commit signals match.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C014",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 48,
+        "end_line": 49
+      },
+      "assertion": "Selected iteration compareTo earlier, sample iteration2 vs1 originalObjectId, continuation paging necessary",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "iteration_changes",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/iteration_changes.body",
+          "sha256": "7bd3fcd0e67783f75d9bbc4557136b89e36148e992b8a61d08c914cf8e420745",
+          "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iteration-changes/get?view=azure-devops-rest-7.1&accept=text/markdown",
+          "locator": "L153-183,L203-225",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Correct reference semantics and page completeness, with max2000 interpreted as per-page cap.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C015",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 50,
+        "end_line": 51
+      },
+      "assertion": "Retarget/rebase/forcePush need not mean new commits; reason labels improve context; full hunks need additional content source",
+      "kind": "transfer",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "A001",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A001.txt",
+          "sha256": "32fcc785fe70012836f3db8aaaea0a907ade445304b7f17b1f949522139b85ef",
+          "url": null,
+          "locator": "L276-293,L468-479",
+          "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+        },
+        {
+          "source_id": "iteration_changes",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/iteration_changes.body",
+          "sha256": "7bd3fcd0e67783f75d9bbc4557136b89e36148e992b8a61d08c914cf8e420745",
+          "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iteration-changes/get?view=azure-devops-rest-7.1&accept=text/markdown",
+          "locator": "L203-225",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Reason distinction supports avoiding a new-commits assertion. Force-push can also change code, so not-new-code is a possibility, not universal. Content-rendering call and exact request count remain unresolved.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C016",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 55,
+        "end_line": 55
+      },
+      "assertion": "Statuses route, full six native states, context identity, creator/detailURL/iteration association min1",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "pr_statuses",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/pr_statuses.body",
+          "sha256": "3699494b0b0fab58565709b91e66910d4f477e99943ef25ba53df275c37e7a38",
+          "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-statuses/list?view=azure-devops-rest-7.1&accept=text/markdown",
+          "locator": "L62-76,L178-218",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Exact enum/fields and association supported; dedicated per-iteration route itself is not surfaced.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C017",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 56,
+        "end_line": 56
+      },
+      "assertion": "Policy route/artifact exact template, full six states, flags/settings/includeNotApplicable and top/skip",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "A003",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A003.txt",
+          "sha256": "98070bba044326e23f6ea75dbcdc9f59cadeb6c6f3aa7f6923f91efc577fdbce",
+          "url": null,
+          "locator": "L29-75,L169-210,L247-263",
+          "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+        }
+      ],
+      "rationale": "All named policy contract facts supported; collection pagination method is mentioned but not turned into a completeness guarantee.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C018",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 57,
+        "end_line": 58
+      },
+      "assertion": "Compose status and policy surfaces, do not collapse broken/nonapplicable to red/green; settings vary by type",
+      "kind": "presentation",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "A002",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A002.txt",
+          "sha256": "8a9864d3cb9718a4c7d140feeb1700a258de9cb6b85233bc90699df026ada0bb",
+          "url": null,
+          "locator": "L159-230",
+          "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+        },
+        {
+          "source_id": "A003",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A003.txt",
+          "sha256": "98070bba044326e23f6ea75dbcdc9f59cadeb6c6f3aa7f6923f91efc577fdbce",
+          "url": null,
+          "locator": "L169-210,L247-263",
+          "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+        }
+      ],
+      "rationale": "Useful source-grounded presentation implication. notApplicable means not applying, not meaningless data; broken is unexpected error. Per-type settings shapes remain explicitly unstudied. Cross-reference U5 actually points to rate limits rather than U4 settings.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C019",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 62,
+        "end_line": 62
+      },
+      "assertion": "azure-pr-viewer reads blocking Build/Status policy checks only; reviewer/comment governance separate; failure degrades active",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "azure_viewer_architecture",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_architecture.body",
+          "sha256": "7ad9af78cfad7550b7d075a87b261a665d5cdeb0abe23d7d5b4caf7f8dbf1897",
+          "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/docs/architecture.md",
+          "locator": "L27-33",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Concrete maintainer implementation description preserved with correct application boundary.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C020",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 62,
+        "end_line": 64
+      },
+      "assertion": "Negative vote rejected/waiting, -10/-5 labels and unknown fallback voted",
+      "kind": "presentation",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "qvl_adapter",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_adapter.body",
+          "sha256": "6b57b42baa4407116b1cec6d0d2875e998189d558e602caf0060765a9fa675e4",
+          "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/src/providers/ado.ts",
+          "locator": "L302-308,L337-339",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "get_pr",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/get_pr.body",
+          "sha256": "410c2fcae80e0876bf8f8831efc75a7231ad463d84acd4751b71e09947cb0095",
+          "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-request?view=azure-devops-rest-7.1&accept=text/markdown",
+          "locator": "L453",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Specific known vote values source-supported. Unknown-to-voted is a reasonable proposed presentation choice; inspected QVL activity code classifies every negative vote as rejected and does not implement that literal fallback.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C021",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 63,
+        "end_line": 63
+      },
+      "assertion": "gh dismissed=>Commented, pending omitted, empty actor=>ghost, truncated label/assignee/project lists=>ellipsis",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "gh_view_code",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/gh_view_code.body",
+          "sha256": "2a4422232ca522ee5c5284fa83387fe22e6251d8597489f5af28b19727a6e4c7",
+          "url": "https://raw.githubusercontent.com/cli/cli/trunk/pkg/cmd/pr/view/view.go",
+          "locator": "L314-329,L351-388,L407-443,L446-479",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Exact mapping rationale, filtering, fallback and truncation behavior all present in the reproduced code.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C022",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 65,
+        "end_line": 65
+      },
+      "assertion": "GitHub statusCheckRollup server aggregate has no Azure DevOps equivalent, so client must compose",
+      "kind": "absence",
+      "outcome": "unsupported",
+      "source_refs": [
+        {
+          "source_id": "gh_view_code",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/gh_view_code.body",
+          "sha256": "2a4422232ca522ee5c5284fa83387fe22e6251d8597489f5af28b19727a6e4c7",
+          "url": "https://raw.githubusercontent.com/cli/cli/trunk/pkg/cmd/pr/view/view.go",
+          "locator": "L88-95,L210-215",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "A002",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A002.txt",
+          "sha256": "8a9864d3cb9718a4c7d140feeb1700a258de9cb6b85233bc90699df026ada0bb",
+          "url": null,
+          "locator": "L148-230",
+          "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+        },
+        {
+          "source_id": "A003",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A003.txt",
+          "sha256": "98070bba044326e23f6ea75dbcdc9f59cadeb6c6f3aa7f6923f91efc577fdbce",
+          "url": null,
+          "locator": "L214-263",
+          "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+        }
+      ],
+      "rationale": "The cited code requests rollup and prints a summary; admitted Azure endpoints do not establish corpus-wide absence of an equivalent. Composition is a valid design, but universal no-equivalent/must claim lacks exhaustive primary support. Missing internal §2-analogies target also weakens standalone navigation.",
+      "material_failure": true
+    },
+    {
+      "id": "R016-C023",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 69,
+        "end_line": 69
+      },
+      "assertion": "QVL checks2xx+JSON; handles auth401/203/nonJSON2xx, transient429/502/503/504, capped Retry-After5s",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "qvl_adapter",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_adapter.body",
+          "sha256": "6b57b42baa4407116b1cec6d0d2875e998189d558e602caf0060765a9fa675e4",
+          "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/src/providers/ado.ts",
+          "locator": "L9-16,L132-184,L213-238",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Actual code and comments support adapter behavior. Retry-After parsing is numeric-seconds only; code does not prove general provider contracts or all date-form header support.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C024",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 69,
+        "end_line": 74
+      },
+      "assertion": "Auth token-refresh HTML/login203 behavior provider can show; exact Entra-versus-PAT codes unprobed",
+      "kind": "transfer",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "qvl_adapter",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_adapter.body",
+          "sha256": "6b57b42baa4407116b1cec6d0d2875e998189d558e602caf0060765a9fa675e4",
+          "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/src/providers/ado.ts",
+          "locator": "L9-10,L136-172",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Maintainer comment is evidence for this adapter experience, not an official normative guarantee; explicit U2/live boundary retained.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C025",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 69,
+        "end_line": 69
+      },
+      "assertion": "Failed per-PR thread read falls back new with explicit warning rather than silently asserting no activity",
+      "kind": "presentation",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "qvl_adapter",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_adapter.body",
+          "sha256": "6b57b42baa4407116b1cec6d0d2875e998189d558e602caf0060765a9fa675e4",
+          "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/src/providers/ado.ts",
+          "locator": "L344-349",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Fallback and console.warn are real. This warning goes to the console and is not returned as a user-visible FetchResult warning; presentation-facing interpretation needs qualification.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C026",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 70,
+        "end_line": 71
+      },
+      "assertion": "Per-project partial warnings/rest renders; viewer policy failure active and thread failure ?",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "qvl_adapter",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_adapter.body",
+          "sha256": "6b57b42baa4407116b1cec6d0d2875e998189d558e602caf0060765a9fa675e4",
+          "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/src/providers/ado.ts",
+          "locator": "L393-418,L468-474",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "qvl_readme",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_readme.body",
+          "sha256": "d0f16ae6b3ddf9c29bd8225d13c746483aa9c2afff04878c4066cfe8f8710abd",
+          "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/README.md",
+          "locator": "L46-47",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "azure_viewer_architecture",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_architecture.body",
+          "sha256": "7ad9af78cfad7550b7d075a87b261a665d5cdeb0abe23d7d5b4caf7f8dbf1897",
+          "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/docs/architecture.md",
+          "locator": "L27-33",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "azure_viewer_readme",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_readme.body",
+          "sha256": "5f7b31c0c417dcd7872808911cdd38c906fec6b2581f57456bb2f9f572a90d6f",
+          "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/README.md",
+          "locator": "L120-127",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Project aggregation is user-returned warning; per-thread console warning remains a different carrier. Correct ? precedent verified.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C027",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 72,
+        "end_line": 73
+      },
+      "assertion": "Truncation/continuation/filtering/older iteration statuses need honest display; queued/broken not success/failure",
+      "kind": "presentation",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "A001",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A001.txt",
+          "sha256": "32fcc785fe70012836f3db8aaaea0a907ade445304b7f17b1f949522139b85ef",
+          "url": null,
+          "locator": "L269-271",
+          "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+        },
+        {
+          "source_id": "iteration_changes",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/iteration_changes.body",
+          "sha256": "7bd3fcd0e67783f75d9bbc4557136b89e36148e992b8a61d08c914cf8e420745",
+          "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iteration-changes/get?view=azure-devops-rest-7.1&accept=text/markdown",
+          "locator": "L224-225",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "A003",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A003.txt",
+          "sha256": "98070bba044326e23f6ea75dbcdc9f59cadeb6c6f3aa7f6923f91efc577fdbce",
+          "url": null,
+          "locator": "L72-75,L252-263",
+          "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+        },
+        {
+          "source_id": "pr_statuses",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/pr_statuses.body",
+          "sha256": "3699494b0b0fab58565709b91e66910d4f477e99943ef25ba53df275c37e7a38",
+          "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-statuses/list?view=azure-devops-rest-7.1&accept=text/markdown",
+          "locator": "L178-188",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Proposed mechanics follow brief and API distinctions; iteration association alone does not prove a particular stale live status was returned.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C028",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 78,
+        "end_line": 78
+      },
+      "assertion": "Azure CLI Entra resource499b84ac-1321-427f-aa17-267ca6975798, cached token refreshed~5min early, no PAT",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "azure_viewer_architecture",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_architecture.body",
+          "sha256": "7ad9af78cfad7550b7d075a87b261a665d5cdeb0abe23d7d5b4caf7f8dbf1897",
+          "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/docs/architecture.md",
+          "locator": "L5-7",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "azure_viewer_readme",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_readme.body",
+          "sha256": "5f7b31c0c417dcd7872808911cdd38c906fec6b2581f57456bb2f9f572a90d6f",
+          "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/README.md",
+          "locator": "L3-4,L44,L82-87",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Exact command/resource/refresh policy documented by the implementation owner; not independently established as a generic provider contract.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C029",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 78,
+        "end_line": 79
+      },
+      "assertion": "QVL no-PAT server token injection/proxy due browser CORS; PAT Basic base64(:pat) CodeRead guidance",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "qvl_readme",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_readme.body",
+          "sha256": "d0f16ae6b3ddf9c29bd8225d13c746483aa9c2afff04878c4066cfe8f8710abd",
+          "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/README.md",
+          "locator": "L63-71,L173-194,L374-376",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "qvl_adapter",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_adapter.body",
+          "sha256": "6b57b42baa4407116b1cec6d0d2875e998189d558e602caf0060765a9fa675e4",
+          "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/src/providers/ado.ts",
+          "locator": "L132-134,L187-196,L423-444",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Concrete code and README agree; CORS statement is implementation architecture context rather than independently probed policy across all origins.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C030",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 79,
+        "end_line": 79
+      },
+      "assertion": "Official read scope code for Git/policy; code OR code_status for status",
+      "kind": "auth",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "A001",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A001.txt",
+          "sha256": "32fcc785fe70012836f3db8aaaea0a907ade445304b7f17b1f949522139b85ef",
+          "url": null,
+          "locator": "L75-89",
+          "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+        },
+        {
+          "source_id": "A002",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A002.txt",
+          "sha256": "8a9864d3cb9718a4c7d140feeb1700a258de9cb6b85233bc90699df026ada0bb",
+          "url": null,
+          "locator": "L75-91",
+          "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+        },
+        {
+          "source_id": "A003",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A003.txt",
+          "sha256": "98070bba044326e23f6ea75dbcdc9f59cadeb6c6f3aa7f6923f91efc577fdbce",
+          "url": null,
+          "locator": "L83-97",
+          "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+        }
+      ],
+      "rationale": "Scope listings supported; the OR sufficiency guarantee is not established by a list and remains untested. code_status is write-bearing.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C031",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 80,
+        "end_line": 80
+      },
+      "assertion": "DevCenter multiple provider tokens held in OS keychain",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "devcenter_readme",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/devcenter_readme.body",
+          "sha256": "90e1aef73f21d5054fcd9337683f40b2f3295330d38b73e5dc10139b22870277",
+          "url": "https://raw.githubusercontent.com/BipulRaman/DevCenter/main/README.md",
+          "locator": "L15-16",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Maintainer statement, not security/storage exercise.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C032",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 76,
+        "end_line": 81
+      },
+      "assertion": "Two proven zero-OAuth paths; reuse az login no OAuth dance/no stored secret; native desktop does not need browser CORS proxy",
+      "kind": "transfer",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "azure_viewer_readme",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_readme.body",
+          "sha256": "5f7b31c0c417dcd7872808911cdd38c906fec6b2581f57456bb2f9f572a90d6f",
+          "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/README.md",
+          "locator": "L3-4,L44,L82-87",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "azure_viewer_architecture",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_architecture.body",
+          "sha256": "7ad9af78cfad7550b7d075a87b261a665d5cdeb0abe23d7d5b4caf7f8dbf1897",
+          "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/docs/architecture.md",
+          "locator": "L5-7",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "qvl_readme",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_readme.body",
+          "sha256": "d0f16ae6b3ddf9c29bd8225d13c746483aa9c2afff04878c4066cfe8f8710abd",
+          "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/README.md",
+          "locator": "L63-71,L374-376",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "No new app OAuth flow or PAT management is a supported implementation possibility. Azure CLI still obtains/caches an Entra token; no-stored-secret is limited to avoiding a new app-managed persistent PAT, not absence of credentials anywhere. CORS does not constrain a native HTTP client, but a desktop webview can still have web-origin limits.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C033",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 82,
+        "end_line": 82
+      },
+      "assertion": "Refresh timing one-product policy and resource ID configurable not folklore; well-known ADO resource",
+      "kind": "transfer",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "azure_viewer_architecture",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_architecture.body",
+          "sha256": "7ad9af78cfad7550b7d075a87b261a665d5cdeb0abe23d7d5b4caf7f8dbf1897",
+          "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/docs/architecture.md",
+          "locator": "L5-7",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Good transfer boundary. This independent capture supports the ID as used by that product, not the report broader well-known classification; no official Entra resource page supplied.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C034",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 86,
+        "end_line": 86
+      },
+      "assertion": "Approval/required-reviewer tally no extra request",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "azure_viewer_architecture",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_architecture.body",
+          "sha256": "7ad9af78cfad7550b7d075a87b261a665d5cdeb0abe23d7d5b4caf7f8dbf1897",
+          "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/docs/architecture.md",
+          "locator": "L10-16",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Useful request-saving implementation precedent.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C035",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 87,
+        "end_line": 87
+      },
+      "assertion": "Threads N+1, concurrency8 in both products, viewer cancellation on newer refresh",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "qvl_adapter",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_adapter.body",
+          "sha256": "6b57b42baa4407116b1cec6d0d2875e998189d558e602caf0060765a9fa675e4",
+          "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/src/providers/ado.ts",
+          "locator": "L15-16,L310-315,L370-376",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "azure_viewer_architecture",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_architecture.body",
+          "sha256": "7ad9af78cfad7550b7d075a87b261a665d5cdeb0abe23d7d5b4caf7f8dbf1897",
+          "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/docs/architecture.md",
+          "locator": "L17-22",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Exact concurrency constants and cancellation maintainer statement verified. Ceiling8 is product policy, not documented provider safe limit.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C036",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 88,
+        "end_line": 88
+      },
+      "assertion": "Policy evaluations lazy only own PRs where Status column shown",
+      "kind": "implementation",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "azure_viewer_architecture",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_architecture.body",
+          "sha256": "7ad9af78cfad7550b7d075a87b261a665d5cdeb0abe23d7d5b4caf7f8dbf1897",
+          "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/docs/architecture.md",
+          "locator": "L27-33",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Concrete optional request-reduction choice; cannot suppress policy data required by Review Desk selected review.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C037",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 89,
+        "end_line": 89
+      },
+      "assertion": "Thread-granularity counting correct/cheaper than comment count because ADO resolves threads",
+      "kind": "transfer",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "azure_viewer_architecture",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_architecture.body",
+          "sha256": "7ad9af78cfad7550b7d075a87b261a665d5cdeb0abe23d7d5b4caf7f8dbf1897",
+          "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/docs/architecture.md",
+          "locator": "L17-26",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Documented implementation semantics; normative official thread API intentionally remains U1. Cost saving is an inference, not measured performance.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C038",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 90,
+        "end_line": 91
+      },
+      "assertion": "QVL ports/adapters provider seam isolates auth/retry/thread analysis and normalizes modern/legacy org/project URLs",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "qvl_adapter",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_adapter.body",
+          "sha256": "6b57b42baa4407116b1cec6d0d2875e998189d558e602caf0060765a9fa675e4",
+          "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/src/providers/ado.ts",
+          "locator": "L1-5,L100-128,L448-476",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "qvl_readme",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_readme.body",
+          "sha256": "d0f16ae6b3ddf9c29bd8225d13c746483aa9c2afff04878c4066cfe8f8710abd",
+          "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/README.md",
+          "locator": "L88-118",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Exact code and architecture support an optional cheap/testable seam; any future provider breadth is a product choice.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C039",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 92,
+        "end_line": 94
+      },
+      "assertion": "Both inspected desktop clients raw REST7.1 Go/TS, no SDK needed; viewer httptest seam",
+      "kind": "transfer",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "qvl_adapter",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_adapter.body",
+          "sha256": "6b57b42baa4407116b1cec6d0d2875e998189d558e602caf0060765a9fa675e4",
+          "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/src/providers/ado.ts",
+          "locator": "L187-218,L370-374",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "qvl_readme",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_readme.body",
+          "sha256": "d0f16ae6b3ddf9c29bd8225d13c746483aa9c2afff04878c4066cfe8f8710abd",
+          "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/README.md",
+          "locator": "L3,L63-71",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "azure_viewer_architecture",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_architecture.body",
+          "sha256": "7ad9af78cfad7550b7d075a87b261a665d5cdeb0abe23d7d5b4caf7f8dbf1897",
+          "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/docs/architecture.md",
+          "locator": "L43-50,L62-67",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Raw HTTP implementation and documented httptest seam support avoiding a mandatory SDK. QVL is a browser web app, not a desktop client; Go architecture does not establish every call uses7.1. Test existence is not candidate execution.",
+      "material_failure": true
+    },
+    {
+      "id": "R016-C040",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 94,
+        "end_line": 94
+      },
+      "assertion": "Org-wide versus per-project PR query shapes working, org-wide exact contract unverified",
+      "kind": "transfer",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "azure_viewer_architecture",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_architecture.body",
+          "sha256": "7ad9af78cfad7550b7d075a87b261a665d5cdeb0abe23d7d5b4caf7f8dbf1897",
+          "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/docs/architecture.md",
+          "locator": "L10-16",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "qvl_adapter",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_adapter.body",
+          "sha256": "6b57b42baa4407116b1cec6d0d2875e998189d558e602caf0060765a9fa675e4",
+          "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/src/providers/ado.ts",
+          "locator": "L370-374",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Two owner-described implementations, no live working-shape test; the explicit contract verification limit prevents a normative route mandate.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C041",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 100,
+        "end_line": 100
+      },
+      "assertion": "azure-pr-viewer Go TUI MIT role/vote/thread/policy dashboard, not repo version inspector",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "azure_viewer_architecture",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_architecture.body",
+          "sha256": "7ad9af78cfad7550b7d075a87b261a665d5cdeb0abe23d7d5b4caf7f8dbf1897",
+          "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/docs/architecture.md",
+          "locator": "L5-36,L43-64",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "azure_viewer_readme",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_readme.body",
+          "sha256": "5f7b31c0c417dcd7872808911cdd38c906fec6b2581f57456bb2f9f572a90d6f",
+          "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/README.md",
+          "locator": "L3-14,L138-140",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "azure_viewer_repo_metadata",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/azure_viewer_repo_metadata.body",
+          "sha256": "7b2dc75308767be1c02647a21a48ec395d9c695883a90e55cb16b2e20457c432",
+          "url": "https://api.github.com/repos/zunhdev/azure-pr-viewer",
+          "locator": "JSON $.language,$.license",
+          "basis": "independent verification of report-cited primary repository; not native candidate acquisition"
+        }
+      ],
+      "rationale": "Relevant whole-product overlap and transfer boundary supported at README/architecture level, not binary parity.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C042",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 101,
+        "end_line": 101
+      },
+      "assertion": "PullRequest-Manager Electron React FluentUI cross-project filters/notifications, WIP integration, noncommercial license",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "pullrequest_manager_readme",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/pullrequest_manager_readme.body",
+          "sha256": "490718bb7be675348fa402b77430bd8a95e86600cc52307065a6a41cfc9b1831",
+          "url": "https://raw.githubusercontent.com/Meral-IT/PullRequest-Manager/develop/README.md",
+          "locator": "L23-32,L42-49,L67-75,L153-155",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "All qualifiers preserved, especially WIP and commercial-license condition.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C043",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 102,
+        "end_line": 102
+      },
+      "assertion": "QVL React web app via proxy, PR activity since visit/warnings, different presentation scope",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "qvl_readme",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_readme.body",
+          "sha256": "d0f16ae6b3ddf9c29bd8225d13c746483aa9c2afff04878c4066cfe8f8710abd",
+          "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/README.md",
+          "locator": "L3-9,L38-48,L63-71",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Explicit web-app identity counters report F9 desktop misclassification.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C044",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 103,
+        "end_line": 103
+      },
+      "assertion": "DevCenter Tauri multi-provider desktop, list/in-app diff plus reply/approve writes beyond scope",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "devcenter_readme",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/devcenter_readme.body",
+          "sha256": "90e1aef73f21d5054fcd9337683f40b2f3295330d38b73e5dc10139b22870277",
+          "url": "https://raw.githubusercontent.com/BipulRaman/DevCenter/main/README.md",
+          "locator": "L3-16",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "brief",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/brief.md",
+          "sha256": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607",
+          "url": null,
+          "locator": "L3",
+          "basis": "admitted product brief"
+        }
+      ],
+      "rationale": "Useful product overlap and read-only divergence are accurately separated.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C045",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 105,
+        "end_line": 105
+      },
+      "assertion": "gh view analogous read-only renderer; mapping/truncation/empty-body transfers, not REST API shape",
+      "kind": "transfer",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "gh_view_code",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/gh_view_code.body",
+          "sha256": "2a4422232ca522ee5c5284fa83387fe22e6251d8597489f5af28b19727a6e4c7",
+          "url": "https://raw.githubusercontent.com/cli/cli/trunk/pkg/cmd/pr/view/view.go",
+          "locator": "L97-144,L269-282,L314-388,L407-479",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Source-backed component analogy within presentation scope; no candidate binary test claimed.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C046",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 106,
+        "end_line": 106
+      },
+      "assertion": "Reject AdoMcpServer as whole human review UI because Claude MCP bridge",
+      "kind": "rejection",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "ado_mcp_readme",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/ado_mcp_readme.body",
+          "sha256": "606ee0ffa724537cf75079d750d25939147e40ab19d1a33273ddc9dbcb68e25b",
+          "url": "https://raw.githubusercontent.com/isaacOjeda/AdoMcpServer/main/README.md",
+          "locator": "L1-3,L38-58",
+          "basis": "independent verification of report-cited primary repository; not native candidate acquisition"
+        },
+        {
+          "source_id": "ado_mcp_repo_metadata",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/ado_mcp_repo_metadata.body",
+          "sha256": "686fd5f2ab8895c30a0d46ddb3f9b97496523045dc68da0ea8183d2922d4f76b",
+          "url": "https://api.github.com/repos/isaacOjeda/AdoMcpServer",
+          "locator": "JSON $.description",
+          "basis": "independent verification of report-cited primary repository; not native candidate acquisition"
+        }
+      ],
+      "rationale": "Valid whole-product rejection, but source explicitly has read-only operations and PR/code-review metadata. Dismissing every provider-adapter analogy would be too broad; current report does not inspect its code.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C047",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 106,
+        "end_line": 119
+      },
+      "assertion": "Reject stale PRex notifier-only; existence retained despite2021 date",
+      "kind": "rejection",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "prex_readme",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/prex_readme.body",
+          "sha256": "b42e629db799fe94b388f2281a2d677423d2d6f54214be3b416911aec02d00fc",
+          "url": "https://raw.githubusercontent.com/dylsmith8/PRex/master/README.md",
+          "locator": "L1-8",
+          "basis": "independent verification of report-cited primary repository; not native candidate acquisition"
+        },
+        {
+          "source_id": "prex_repo_metadata",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/prex_repo_metadata.body",
+          "sha256": "571c3fda9331dccc8653bb1048fdb9ac1500e5b4bc8620817db02684eafc0398",
+          "url": "https://api.github.com/repos/dylsmith8/PRex",
+          "locator": "JSON $.description,$.pushed_at",
+          "basis": "independent verification of report-cited primary repository; not native candidate acquisition"
+        }
+      ],
+      "rationale": "Limited notifier product supported; useful account/read-only scope precedent remains possible even without review UI. Date does not establish nonexistence.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C048",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 106,
+        "end_line": 106
+      },
+      "assertion": "Reject PdfDiff single-format diff viewer as irrelevant analogy",
+      "kind": "rejection",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "pdfdiff_readme",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/pdfdiff_readme.body",
+          "sha256": "26a53df45817dddacb8b52474daef75bf7553fbffc864b1b3a7008302d64006f",
+          "url": "https://raw.githubusercontent.com/TimothyK/PdfDiff/master/README.md",
+          "locator": "L1-11",
+          "basis": "independent verification of report-cited primary repository; not native candidate acquisition"
+        },
+        {
+          "source_id": "pdfdiff_repo_metadata",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/pdfdiff_repo_metadata.body",
+          "sha256": "5ceef2f18084ee4013410a03976bf777dc0c528a27cacdf69c7ba3b9230ab822",
+          "url": "https://api.github.com/repos/TimothyK/PdfDiff",
+          "locator": "JSON $.description",
+          "basis": "independent verification of report-cited primary repository; not native candidate acquisition"
+        }
+      ],
+      "rationale": "Not a whole desktop competitor, but directly comparable ADO PR-diff presentation with side-by-side/inline/pixel modes. Relevance can be declined for this pass only, not categorically eliminated.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C049",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 106,
+        "end_line": 131
+      },
+      "assertion": "Reject DevOps Gate implementation reuse: private source/release-only; existence retained unresolved",
+      "kind": "rejection",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "devops_gate_readme",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/devops_gate_readme.body",
+          "sha256": "d60e33287241c5311acb7a803ec5f62d7d287d720429ba20aaca35a89766e8fc",
+          "url": "https://raw.githubusercontent.com/Dev4mir/devops-gate-releases/main/README.md",
+          "locator": "L1-9",
+          "basis": "independent verification of report-cited primary repository; not native candidate acquisition"
+        }
+      ],
+      "rationale": "Primary README explicitly distinguishes desktop product from private implementation; no source-code fact inferred.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C050",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 109,
+        "end_line": 109
+      },
+      "assertion": "Read paths termed provider-supported obligations: PR roles/iterations/changes/status/policy/current identity",
+      "kind": "classification",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "A001",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A001.txt",
+          "sha256": "32fcc785fe70012836f3db8aaaea0a907ade445304b7f17b1f949522139b85ef",
+          "url": null,
+          "locator": "L29-67",
+          "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+        },
+        {
+          "source_id": "A002",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A002.txt",
+          "sha256": "8a9864d3cb9718a4c7d140feeb1700a258de9cb6b85233bc90699df026ada0bb",
+          "url": null,
+          "locator": "L29-30",
+          "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+        },
+        {
+          "source_id": "A003",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A003.txt",
+          "sha256": "98070bba044326e23f6ea75dbcdc9f59cadeb6c6f3aa7f6923f91efc577fdbce",
+          "url": null,
+          "locator": "L29-75",
+          "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+        },
+        {
+          "source_id": "qvl_adapter",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_adapter.body",
+          "sha256": "6b57b42baa4407116b1cec6d0d2875e998189d558e602caf0060765a9fa675e4",
+          "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/src/providers/ado.ts",
+          "locator": "L246-251,L370-374",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Documented/owner-used capabilities exist, but connectionData/role views are not brief-required obligations and owner code is not an official normative contract.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C051",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 110,
+        "end_line": 110
+      },
+      "assertion": "Optional flags includeCommits/includeNotApplicable/compareTo/page sizes/detaillinks/iteration binding/isRequired split",
+      "kind": "classification",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "A001",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A001.txt",
+          "sha256": "32fcc785fe70012836f3db8aaaea0a907ade445304b7f17b1f949522139b85ef",
+          "url": null,
+          "locator": "L64-67",
+          "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+        },
+        {
+          "source_id": "A002",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A002.txt",
+          "sha256": "8a9864d3cb9718a4c7d140feeb1700a258de9cb6b85233bc90699df026ada0bb",
+          "url": null,
+          "locator": "L185-197",
+          "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+        },
+        {
+          "source_id": "A003",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A003.txt",
+          "sha256": "98070bba044326e23f6ea75dbcdc9f59cadeb6c6f3aa7f6923f91efc577fdbce",
+          "url": null,
+          "locator": "L72-75",
+          "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+        },
+        {
+          "source_id": "iteration_changes",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/iteration_changes.body",
+          "sha256": "7bd3fcd0e67783f75d9bbc4557136b89e36148e992b8a61d08c914cf8e420745",
+          "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iteration-changes/get?view=azure-devops-rest-7.1&accept=text/markdown",
+          "locator": "L84-86",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Contract options and UI choices correctly separated. If the app purports to show all non-applying policies or complete compare results, relevant option/paging obligations become conditional rather than wholly dispensable.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C052",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 111,
+        "end_line": 111
+      },
+      "assertion": "Policy/vote/reviewer/degradation/last-visit mappings are product choices; Meral noncommercial and QVL no license means idea-only transfer",
+      "kind": "classification",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "pullrequest_manager_readme",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/pullrequest_manager_readme.body",
+          "sha256": "490718bb7be675348fa402b77430bd8a95e86600cc52307065a6a41cfc9b1831",
+          "url": "https://raw.githubusercontent.com/Meral-IT/PullRequest-Manager/develop/README.md",
+          "locator": "L153-155",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "qvl_repo_metadata",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/qvl_repo_metadata.body",
+          "sha256": "113abb166eae19a7b96b7e789bc202d666a03b0223a716ba73eb6a9810752fab",
+          "url": "https://api.github.com/repos/QVL-ToolBox/PrViewer",
+          "locator": "JSON $.license",
+          "basis": "independent verification of report-cited primary repository; not native candidate acquisition"
+        },
+        {
+          "source_id": "qvl_readme",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_readme.body",
+          "sha256": "d0f16ae6b3ddf9c29bd8225d13c746483aa9c2afff04878c4066cfe8f8710abd",
+          "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/README.md",
+          "locator": "L430-431",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Choice-versus-contract discipline is useful. GitHub null license/README add-license admonition supports caution, not repository-wide absence proof or legal opinion; code licensing limits are constraints, not arbitrary product choices.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C053",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 117,
+        "end_line": 117
+      },
+      "assertion": "Three wrong Learn slugs404 then corrected200/fullcontent",
+      "kind": "false_dismissal",
+      "outcome": "unresolved",
+      "source_refs": [],
+      "rationale": "Current official sources are reachable, but native retry sequence/three404 evidence is locked; independent verification cannot reconstruct execution.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C054",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 118,
+        "end_line": 118
+      },
+      "assertion": "DDG202 challenge; two GitHub query recovery; no further competitor absence established",
+      "kind": "false_dismissal",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "github_search",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/github_search.body",
+          "sha256": "0309674a19d6f6a89fa017aca29c2db525026de095e276b4d68e9aa5b5a9c830",
+          "url": "https://api.github.com/search/repositories?q=azure%20devops%20pull%20request&sort=stars&order=desc&per_page=15",
+          "locator": "JSON entire body",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "One independently reproduced search and bounded absence rule supported; native second-query/challenge/acquisition chronology unresolved.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C055",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 120,
+        "end_line": 120
+      },
+      "assertion": "? mockup counts intentional degradation cross-checked owner troubleshooting/architecture",
+      "kind": "false_dismissal",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "azure_viewer_readme",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_readme.body",
+          "sha256": "5f7b31c0c417dcd7872808911cdd38c906fec6b2581f57456bb2f9f572a90d6f",
+          "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/README.md",
+          "locator": "L32,L120-127",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "azure_viewer_architecture",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_architecture.body",
+          "sha256": "7ad9af78cfad7550b7d075a87b261a665d5cdeb0abe23d7d5b4caf7f8dbf1897",
+          "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/docs/architecture.md",
+          "locator": "L17-33",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Current owner documents support intentional placeholder; native cross-check sequence remains unverified.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C056",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 124,
+        "end_line": 124
+      },
+      "assertion": "U1: Threads API and exact active/pending/fixed/wontFix/closed/byDesign enum only owner architecture; official verification proposed",
+      "kind": "unresolved_area",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "azure_viewer_architecture",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_architecture.body",
+          "sha256": "7ad9af78cfad7550b7d075a87b261a665d5cdeb0abe23d7d5b4caf7f8dbf1897",
+          "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/docs/architecture.md",
+          "locator": "L17-26",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Valid explicit unresolved/test proposal; UNEXECUTED is not false merely because no fixture exists. Native acquisition count/no-live-execution claims are provenance-locked. GetPR evaluator verification does not imply the candidate performed U6.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C057",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 125,
+        "end_line": 125
+      },
+      "assertion": "U2: Live degraded auth/status-name tolerance/Entra ID unprobed; read-only test proposed",
+      "kind": "unresolved_area",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "qvl_adapter",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_adapter.body",
+          "sha256": "6b57b42baa4407116b1cec6d0d2875e998189d558e602caf0060765a9fa675e4",
+          "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/src/providers/ado.ts",
+          "locator": "L136-172",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "azure_viewer_architecture",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_architecture.body",
+          "sha256": "7ad9af78cfad7550b7d075a87b261a665d5cdeb0abe23d7d5b4caf7f8dbf1897",
+          "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/docs/architecture.md",
+          "locator": "L5-7",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Valid explicit unresolved/test proposal; UNEXECUTED is not false merely because no fixture exists. Native acquisition count/no-live-execution claims are provenance-locked. GetPR evaluator verification does not imply the candidate performed U6.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C058",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 126,
+        "end_line": 126
+      },
+      "assertion": "U3: Server7.2 rejection/7.1 acceptance live probe proposed from doc version menus",
+      "kind": "unresolved_area",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "iterations_list",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/iterations_list.body",
+          "sha256": "28d00fc54547afac615e4658cc8845efc2aba3b6efded7090db3dcf95014f5b1",
+          "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iterations/list?view=azure-devops-rest-7.1&accept=text/markdown",
+          "locator": "L389-402",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Valid explicit unresolved/test proposal; UNEXECUTED is not false merely because no fixture exists. Native acquisition count/no-live-execution claims are provenance-locked. GetPR evaluator verification does not imply the candidate performed U6.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C059",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 127,
+        "end_line": 127
+      },
+      "assertion": "U4: Per-type policy settings unexamined; policy-type enumeration proposed",
+      "kind": "unresolved_area",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "A003",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A003.txt",
+          "sha256": "98070bba044326e23f6ea75dbcdc9f59cadeb6c6f3aa7f6923f91efc577fdbce",
+          "url": null,
+          "locator": "L205-210",
+          "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+        }
+      ],
+      "rationale": "Valid explicit unresolved/test proposal; UNEXECUTED is not false merely because no fixture exists. Native acquisition count/no-live-execution claims are provenance-locked. GetPR evaluator verification does not imply the candidate performed U6.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C060",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 128,
+        "end_line": 128
+      },
+      "assertion": "U5: Actual rate ceilings/safe concurrency unknown; bounded8-vs16 load proposal",
+      "kind": "unresolved_area",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "qvl_adapter",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_adapter.body",
+          "sha256": "6b57b42baa4407116b1cec6d0d2875e998189d558e602caf0060765a9fa675e4",
+          "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/src/providers/ado.ts",
+          "locator": "L13-16,L175-184",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Valid explicit unresolved/test proposal; UNEXECUTED is not false merely because no fixture exists. Native acquisition count/no-live-execution claims are provenance-locked. GetPR evaluator verification does not imply the candidate performed U6.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C061",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 129,
+        "end_line": 129
+      },
+      "assertion": "U6: Official isRequired/mergeStatus/item content verification not done; GetPR/items docs proposed",
+      "kind": "unresolved_area",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "get_pr",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/get_pr.body",
+          "sha256": "410c2fcae80e0876bf8f8831efc75a7231ad463d84acd4751b71e09947cb0095",
+          "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-request?view=azure-devops-rest-7.1&accept=text/markdown",
+          "locator": "L236,L448",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Valid explicit unresolved/test proposal; UNEXECUTED is not false merely because no fixture exists. Native acquisition count/no-live-execution claims are provenance-locked. GetPR evaluator verification does not imply the candidate performed U6.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C062",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 130,
+        "end_line": 130
+      },
+      "assertion": "U7: Two GitHub queries/blocked web scope, future alternate-engine/Marketplace sweep",
+      "kind": "unresolved_area",
+      "outcome": "qualified",
+      "source_refs": [],
+      "rationale": "Valid explicit unresolved/test proposal; UNEXECUTED is not false merely because no fixture exists. Native acquisition count/no-live-execution claims are provenance-locked. GetPR evaluator verification does not imply the candidate performed U6.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C063",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 131,
+        "end_line": 131
+      },
+      "assertion": "U8: Closed-source DevOpsGate no implementation inference",
+      "kind": "unresolved_area",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "devops_gate_readme",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/devops_gate_readme.body",
+          "sha256": "d60e33287241c5311acb7a803ec5f62d7d287d720429ba20aaca35a89766e8fc",
+          "url": "https://raw.githubusercontent.com/Dev4mir/devops-gate-releases/main/README.md",
+          "locator": "L3-9",
+          "basis": "independent verification of report-cited primary repository; not native candidate acquisition"
+        }
+      ],
+      "rationale": "Valid explicit unresolved/test proposal; UNEXECUTED is not false merely because no fixture exists. Native acquisition count/no-live-execution claims are provenance-locked. GetPR evaluator verification does not imply the candidate performed U6.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C064",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 135,
+        "end_line": 137
+      },
+      "assertion": "Source register docs API versions/commit/update and all fetching bytes hash claim",
+      "kind": "factual",
+      "outcome": "qualified",
+      "source_refs": [
+        {
+          "source_id": "iterations_list",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/iterations_list.body",
+          "sha256": "28d00fc54547afac615e4658cc8845efc2aba3b6efded7090db3dcf95014f5b1",
+          "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-iterations/list?view=azure-devops-rest-7.1&accept=text/markdown",
+          "locator": "L1-32",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        },
+        {
+          "source_id": "A003",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A003.txt",
+          "sha256": "98070bba044326e23f6ea75dbcdc9f59cadeb6c6f3aa7f6923f91efc577fdbce",
+          "url": null,
+          "locator": "L27-35",
+          "basis": "prospective frozen primary evaluator reference, not candidate acquisition"
+        },
+        {
+          "source_id": "get_pr",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/get_pr.body",
+          "sha256": "410c2fcae80e0876bf8f8831efc75a7231ad463d84acd4751b71e09947cb0095",
+          "url": "https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-request?view=azure-devops-rest-7.1&accept=text/markdown",
+          "locator": "L1-32",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Version/source metadata verified. Native retrieval date/actual final URL/log completeness remain unresolved; independently captured bytes cannot certify candidate acquisition.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C065",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 138,
+        "end_line": 138
+      },
+      "assertion": "qvl report branch/source-prefix/push/license metadata",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "qvl_repo_metadata",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/qvl_repo_metadata.body",
+          "sha256": "113abb166eae19a7b96b7e789bc202d666a03b0223a716ba73eb6a9810752fab",
+          "url": "https://api.github.com/repos/QVL-ToolBox/PrViewer",
+          "locator": "JSON $.default_branch,$.pushed_at,$.license",
+          "basis": "independent verification of report-cited primary repository; not native candidate acquisition"
+        },
+        {
+          "source_id": "qvl_adapter",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/qvl_adapter.body",
+          "sha256": "6b57b42baa4407116b1cec6d0d2875e998189d558e602caf0060765a9fa675e4",
+          "url": "https://raw.githubusercontent.com/QVL-ToolBox/PrViewer/main/src/providers/ado.ts",
+          "locator": "L7",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Current primary repository metadata matches stated push date/default branch; independently returned code/README prefixes match the report. No native acquisition inference.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C066",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 139,
+        "end_line": 139
+      },
+      "assertion": "azure_viewer report branch/source-prefix/push/license metadata",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "azure_viewer_repo_metadata",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/azure_viewer_repo_metadata.body",
+          "sha256": "7b2dc75308767be1c02647a21a48ec395d9c695883a90e55cb16b2e20457c432",
+          "url": "https://api.github.com/repos/zunhdev/azure-pr-viewer",
+          "locator": "JSON $.default_branch,$.pushed_at,$.license",
+          "basis": "independent verification of report-cited primary repository; not native candidate acquisition"
+        },
+        {
+          "source_id": "azure_viewer_readme",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_readme.body",
+          "sha256": "5f7b31c0c417dcd7872808911cdd38c906fec6b2581f57456bb2f9f572a90d6f",
+          "url": "https://raw.githubusercontent.com/zunhdev/azure-pr-viewer/main/README.md",
+          "locator": "L138-140",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Current primary repository metadata matches stated push date/default branch; independently returned code/README prefixes match the report. No native acquisition inference.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C067",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 140,
+        "end_line": 140
+      },
+      "assertion": "pullrequest_manager report branch/source-prefix/push/license metadata",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "pullrequest_manager_repo_metadata",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/pullrequest_manager_repo_metadata.body",
+          "sha256": "969aab6495aa2d4d34dad8177d1a50305822d68cc30dfaa2c18722648395b26a",
+          "url": "https://api.github.com/repos/Meral-IT/PullRequest-Manager",
+          "locator": "JSON $.default_branch,$.pushed_at,$.license",
+          "basis": "independent verification of report-cited primary repository; not native candidate acquisition"
+        },
+        {
+          "source_id": "pullrequest_manager_readme",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/pullrequest_manager_readme.body",
+          "sha256": "490718bb7be675348fa402b77430bd8a95e86600cc52307065a6a41cfc9b1831",
+          "url": "https://raw.githubusercontent.com/Meral-IT/PullRequest-Manager/develop/README.md",
+          "locator": "L153-155",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Current primary repository metadata matches stated push date/default branch; independently returned code/README prefixes match the report. No native acquisition inference.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C068",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 141,
+        "end_line": 141
+      },
+      "assertion": "devcenter report branch/source-prefix/push/license metadata",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "devcenter_repo_metadata",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v2/devcenter_repo_metadata.body",
+          "sha256": "44e6b1e0d7447a398784b204a7c23de3f5352a5407f896f0366c423051a23c21",
+          "url": "https://api.github.com/repos/BipulRaman/DevCenter",
+          "locator": "JSON $.default_branch,$.pushed_at,$.license",
+          "basis": "independent verification of report-cited primary repository; not native candidate acquisition"
+        },
+        {
+          "source_id": "devcenter_readme",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/devcenter_readme.body",
+          "sha256": "90e1aef73f21d5054fcd9337683f40b2f3295330d38b73e5dc10139b22870277",
+          "url": "https://raw.githubusercontent.com/BipulRaman/DevCenter/main/README.md",
+          "locator": "L3-16",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Current primary repository metadata matches stated push date/default branch; independently returned code/README prefixes match the report. No native acquisition inference.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C069",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 142,
+        "end_line": 142
+      },
+      "assertion": "cli/cli trunk view.go source prefix2a442223",
+      "kind": "factual",
+      "outcome": "supported",
+      "source_refs": [
+        {
+          "source_id": "gh_view_code",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/gh_view_code.body",
+          "sha256": "2a4422232ca522ee5c5284fa83387fe22e6251d8597489f5af28b19727a6e4c7",
+          "url": "https://raw.githubusercontent.com/cli/cli/trunk/pkg/cmd/pr/view/view.go",
+          "locator": "entire body, sha256 matches report prefix",
+          "basis": "independent evaluator verification after explicit host authorization; never native candidate acquisition"
+        }
+      ],
+      "rationale": "Exact source prefix reproduced independently.",
+      "material_failure": false
+    },
+    {
+      "id": "R016-C070",
+      "report_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/current-report.md",
+        "sha256": "020548a659eadfc4e8dd17674c2cba21f3deb77b737a02f6cb737ba0db744630",
+        "start_line": 144,
+        "end_line": 144
+      },
+      "assertion": "All proposed validation UNEXECUTED; no invented access/probe evidence",
+      "kind": "execution_absence",
+      "outcome": "unresolved",
+      "source_refs": [],
+      "rationale": "Current report clearly makes no test-success claim. Execution absence and no-invention provenance cannot be certified without stage2 native history.",
+      "material_failure": false
+    }
+  ],
+  "facets": [
+    {
+      "id": "AZR-01",
+      "coverage": "partial",
+      "report_lines": [
+        38,
+        46,
+        55,
+        72
+      ],
+      "assessment": "Iteration/context and status iteration association retained. Dedicated iterations/{iterationId}/statuses route and sourceRefCommit/targetRefCommit meanings omitted.",
+      "source_refs": [
+        {
+          "source_id": "A001",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A001.txt",
+          "sha256": "32fcc785fe70012836f3db8aaaea0a907ade445304b7f17b1f949522139b85ef",
+          "locator": "L259-293"
+        },
+        {
+          "source_id": "A002",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A002.txt",
+          "sha256": "8a9864d3cb9718a4c7d140feeb1700a258de9cb6b85233bc90699df026ada0bb",
+          "locator": "L29-42"
+        }
+      ]
+    },
+    {
+      "id": "AZR-02",
+      "coverage": "partial",
+      "report_lines": [
+        55,
+        56,
+        57,
+        73
+      ],
+      "assessment": "Separate complete enums and pending/error policy distinctions. Status notApplicable target-object scope and explicit notSet/error/nonpassing status mapping not developed.",
+      "source_refs": [
+        {
+          "source_id": "A002",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A002.txt",
+          "sha256": "8a9864d3cb9718a4c7d140feeb1700a258de9cb6b85233bc90699df026ada0bb",
+          "locator": "L214-230"
+        },
+        {
+          "source_id": "A003",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A003.txt",
+          "sha256": "98070bba044326e23f6ea75dbcdc9f59cadeb6c6f3aa7f6923f91efc577fdbce",
+          "locator": "L247-263"
+        }
+      ]
+    },
+    {
+      "id": "AZR-03",
+      "coverage": "partial",
+      "report_lines": [
+        40,
+        42,
+        43
+      ],
+      "assessment": "Exact artifact template retained, but GUID-only force is stronger than cited A003. Independent evaluator verification of proposed GetPR source gives typed project UUID support; live name rejection remains unresolved and cannot be credited as candidate acquisition.",
+      "source_refs": [
+        {
+          "source_id": "A003",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A003.txt",
+          "sha256": "98070bba044326e23f6ea75dbcdc9f59cadeb6c6f3aa7f6923f91efc577fdbce",
+          "locator": "L29-61"
+        },
+        {
+          "source_id": "get_pr",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/get_pr.body",
+          "sha256": "410c2fcae80e0876bf8f8831efc75a7231ad463d84acd4751b71e09947cb0095",
+          "locator": "L304-318,L575-592"
+        }
+      ]
+    },
+    {
+      "id": "AZR-04",
+      "coverage": "partial",
+      "report_lines": [
+        56,
+        62,
+        64
+      ],
+      "assessment": "Blocking-policy/check presentation precedent developed; isEnabled merely listed, disabled-policy enforcement/result presentation incomplete.",
+      "source_refs": [
+        {
+          "source_id": "A003",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A003.txt",
+          "sha256": "98070bba044326e23f6ea75dbcdc9f59cadeb6c6f3aa7f6923f91efc577fdbce",
+          "locator": "L169-210"
+        },
+        {
+          "source_id": "azure_viewer_architecture",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R016/source-addendum-independent-v1/azure_viewer_architecture.body",
+          "sha256": "7ad9af78cfad7550b7d075a87b261a665d5cdeb0abe23d7d5b4caf7f8dbf1897",
+          "locator": "L27-33"
+        }
+      ]
+    },
+    {
+      "id": "AZR-05",
+      "coverage": "full",
+      "report_lines": [
+        25,
+        27,
+        28,
+        56
+      ],
+      "assessment": "Endpoint-specific7.1 versus7.1-preview.1 explicit; global API constant not assumed universal.",
+      "source_refs": [
+        {
+          "source_id": "A001",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A001.txt",
+          "sha256": "32fcc785fe70012836f3db8aaaea0a907ade445304b7f17b1f949522139b85ef",
+          "locator": "L27-32"
+        },
+        {
+          "source_id": "A003",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A003.txt",
+          "sha256": "98070bba044326e23f6ea75dbcdc9f59cadeb6c6f3aa7f6923f91efc577fdbce",
+          "locator": "L27-56"
+        }
+      ]
+    },
+    {
+      "id": "AZR-06",
+      "coverage": "partial",
+      "report_lines": [
+        56,
+        72,
+        110
+      ],
+      "assessment": "top/skip and includeNotApplicable named; truthfulness of policy collection completeness after one partial response is not developed.",
+      "source_refs": [
+        {
+          "source_id": "A003",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/sources/A003.txt",
+          "sha256": "98070bba044326e23f6ea75dbcdc9f59cadeb6c6f3aa7f6923f91efc577fdbce",
+          "locator": "L34-75"
+        }
+      ]
+    },
+    {
+      "id": "BRIEF-CONTEXT",
+      "coverage": "partial",
+      "report_lines": [
+        32,
+        33,
+        38,
+        40,
+        46,
+        55,
+        72
+      ],
+      "assessment": "Identity fields/version reasons useful; per-user multi-project precedents need selected-repository/account boundaries.",
+      "source_refs": [
+        {
+          "source_id": "brief",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/brief.md",
+          "sha256": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607",
+          "locator": "L3"
+        }
+      ]
+    },
+    {
+      "id": "BRIEF-VERSIONS",
+      "coverage": "full",
+      "report_lines": [
+        46,
+        48,
+        49,
+        50,
+        51
+      ],
+      "assessment": "Server comparison/paging/reasons and content-diff boundary covered.",
+      "source_refs": [
+        {
+          "source_id": "brief",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/brief.md",
+          "sha256": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607",
+          "locator": "L3"
+        }
+      ]
+    },
+    {
+      "id": "BRIEF-CHECKS",
+      "coverage": "partial",
+      "report_lines": [
+        55,
+        56,
+        57,
+        62,
+        64
+      ],
+      "assessment": "Status/policy/governance composition useful; enforcement/completeness details incomplete.",
+      "source_refs": [
+        {
+          "source_id": "brief",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/brief.md",
+          "sha256": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607",
+          "locator": "L3"
+        }
+      ]
+    },
+    {
+      "id": "BRIEF-HONESTY",
+      "coverage": "partial",
+      "report_lines": [
+        69,
+        70,
+        71,
+        72,
+        73
+      ],
+      "assessment": "Real degradation/warnings/truncation mechanics; console warning differs from UI warning.",
+      "source_refs": [
+        {
+          "source_id": "brief",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/brief.md",
+          "sha256": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607",
+          "locator": "L3"
+        }
+      ]
+    },
+    {
+      "id": "BRIEF-ACCOUNT",
+      "coverage": "partial",
+      "report_lines": [
+        78,
+        79,
+        80,
+        81,
+        82
+      ],
+      "assessment": "Existing CLI account/PAT/keychain precedents supplied; zero-OAuth/no-secret and scope sufficiency need qualification.",
+      "source_refs": [
+        {
+          "source_id": "brief",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/brief.md",
+          "sha256": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607",
+          "locator": "L3"
+        }
+      ]
+    },
+    {
+      "id": "BRIEF-IMMUTABILITY",
+      "coverage": "full",
+      "report_lines": [
+        4,
+        105,
+        109,
+        125
+      ],
+      "assessment": "Read-only companion maintained; no proposed provider writes beyond read probes/load reads.",
+      "source_refs": [
+        {
+          "source_id": "brief",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/brief.md",
+          "sha256": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607",
+          "locator": "L3"
+        }
+      ]
+    },
+    {
+      "id": "BRIEF-REAL-IMPLEMENTATIONS",
+      "coverage": "full",
+      "report_lines": [
+        32,
+        62,
+        63,
+        69,
+        78,
+        86,
+        100,
+        101,
+        102,
+        103
+      ],
+      "assessment": "Actual adapter/renderer code plus owner architecture/README provide grounded precedents and useful limits.",
+      "source_refs": [
+        {
+          "source_id": "brief",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/brief.md",
+          "sha256": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607",
+          "locator": "L3"
+        }
+      ]
+    },
+    {
+      "id": "BRIEF-COMPATIBILITY",
+      "coverage": "partial",
+      "report_lines": [
+        25,
+        27,
+        28,
+        38,
+        40,
+        126
+      ],
+      "assessment": "Pinned versions and ID wording provided; doc editions/live behavior separated, some hard claims overreach.",
+      "source_refs": [
+        {
+          "source_id": "brief",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/brief.md",
+          "sha256": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607",
+          "locator": "L3"
+        }
+      ]
+    },
+    {
+      "id": "BRIEF-PRESENTATION",
+      "coverage": "partial",
+      "report_lines": [
+        62,
+        63,
+        64,
+        65,
+        69,
+        71,
+        73
+      ],
+      "assessment": "Useful mapping/degradation analogies; no-equivalent absence and overly broad rejection boundaries unsupported.",
+      "source_refs": [
+        {
+          "source_id": "brief",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/brief.md",
+          "sha256": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607",
+          "locator": "L3"
+        }
+      ]
+    },
+    {
+      "id": "BRIEF-SIMPLICITY",
+      "coverage": "partial",
+      "report_lines": [
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93
+      ],
+      "assessment": "Request-saving/concurrency/seam/lazy-read precedents; SDK optional, but browser app mislabeled desktop and no measured performance.",
+      "source_refs": [
+        {
+          "source_id": "brief",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current/R016/inputs/brief.md",
+          "sha256": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607",
+          "locator": "L3"
+        }
+      ]
+    }
+  ],
+  "complete_coverage": true,
+  "coverage_definition": "Every material NOW assertion, qualification, rejection, unresolved/test/provenance/absence and every anchor/brief facet is explicitly assessed; source gaps assessed unresolved rather than credited.",
+  "unreviewed_scope": [],
+  "omitted_scope": [
+    "Iteration/context and status iteration association retained. Dedicated iterations/{iterationId}/statuses route and sourceRefCommit/targetRefCommit meanings omitted.",
+    "Separate complete enums and pending/error policy distinctions. Status notApplicable target-object scope and explicit notSet/error/nonpassing status mapping not developed.",
+    "Exact artifact template retained, but GUID-only force is stronger than cited A003. Independent evaluator verification of proposed GetPR source gives typed project UUID support; live name rejection remains unresolved and cannot be credited as candidate acquisition.",
+    "Blocking-policy/check presentation precedent developed; isEnabled merely listed, disabled-policy enforcement/result presentation incomplete.",
+    "top/skip and includeNotApplicable named; truthfulness of policy collection completeness after one partial response is not developed.",
+    "Identity fields/version reasons useful; per-user multi-project precedents need selected-repository/account boundaries.",
+    "Status/policy/governance composition useful; enforcement/completeness details incomplete.",
+    "Real degradation/warnings/truncation mechanics; console warning differs from UI warning.",
+    "Existing CLI account/PAT/keychain precedents supplied; zero-OAuth/no-secret and scope sufficiency need qualification.",
+    "Pinned versions and ID wording provided; doc editions/live behavior separated, some hard claims overreach.",
+    "Useful mapping/degradation analogies; no-equivalent absence and overly broad rejection boundaries unsupported.",
+    "Request-saving/concurrency/seam/lazy-read precedents; SDK optional, but browser app mislabeled desktop and no measured performance."
+  ],
+  "unresolved_matters": [
+    "R016-C001: Research date/currentness; independently selected sources, public fetch log completeness and plan-blindness",
+    "R016-C053: Three wrong Learn slugs404 then corrected200/fullcontent",
+    "R016-C070: All proposed validation UNEXECUTED; no invented access/probe evidence",
+    "Actual live Server/Entra/PAT/name-vs-ID/version rejection behavior",
+    "Official connectionData/thread/policy-type semantics beyond owner precedents",
+    "Universal Azure DevOps no-rollup claim",
+    "Native acquisition, source-independent/no-probe claims and second GitHub/DDG sequence"
+  ],
+  "novelty": {
+    "supported_useful": [
+      "Role/reviewer tally from same list response",
+      "Real adapter JSON/auth/throttle/partial-project mechanics",
+      "Real policy failure and ? thread-placeholder degradation",
+      "CLI existing-account token refresh precedent",
+      "Eight-way thread fan-out/cancel/lazy-policy and thread-granularity precedent",
+      "Provider seam and modern/legacy URL normalization",
+      "gh reviewer-state/deleted-account/truncation mappings",
+      "Four primary-documented product competitors and licensed/private-source boundaries"
+    ],
+    "qualification": "Supported outside-reference findings are credited, but owner implementation choices do not become provider mandates or measured performance."
+  },
+  "material_failure_identities": [
+    "R016-C022",
+    "R016-C039",
+    "AZR-01 exact iteration-status route/source-target commit roles missing",
+    "AZR-06 policy collection completeness undeveloped"
+  ],
+  "blinding": {
+    "history_read": false,
+    "mapping_read": false,
+    "economics_read": false,
+    "limitations": [
+      "Report L3 exposes treatment method wording. No external mapping/economics consulted.",
+      "Native captures absent; independent evaluator source verification explicitly authorized and costs belong to Sol evaluation."
+    ]
+  },
+  "standalone_coherence": [
+    "F5 settings see U5 points to rate ceilings rather than settings U4",
+    "F6 references absent section2-analogies",
+    "F9 calls QVL a desktop client while F10 correctly calls it a web app"
+  ],
+  "current_report_verdict": "quality failure",
+  "verdict_basis": "Fully graded with substantial useful supported implementation novelty, but material identity/collection coverage omissions remain, universal no-Azure-rollup claim is unsupported and browser-app desktop classification contradicts its primary README. Unsupported native capture/provenance is separately unresolved, never converted into false candidate facts.",
+  "comparison_or_efficiency_verdict": "unassessed",
+  "acquisition_preservation": "locked until all cohort stage1 assessments saved and explicit host receipt"
+}

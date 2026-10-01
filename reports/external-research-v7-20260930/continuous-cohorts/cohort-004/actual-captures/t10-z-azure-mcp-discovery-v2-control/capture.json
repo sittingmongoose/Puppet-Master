@@ -1,0 +1,207 @@
+{
+  "schema": "er7.actual_public_get_capture.v1",
+  "capture_repair": "second-successive-v3",
+  "admission_bindings": {
+    "root_authority_sha256": "47453363b29a5e171f6d92e41cd53c1fa941683f993347a872fb0baddc7e6f26",
+    "method_config_sha256": "85b5ef16a5d006b8bed3ab70db2a760953e8f17945302a7b0979089689c5d69c",
+    "accepted_method_sha256": "85b5ef16a5d006b8bed3ab70db2a760953e8f17945302a7b0979089689c5d69c"
+  },
+  "original_sanitized_native_metadata": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t10-z-azure-mcp-discovery-v2-control/native/zcode-stdout.redacted.jsonl",
+    "root": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t10-z-azure-mcp-discovery-v2-control/native",
+    "metadata": {
+      "bytes": 76333647,
+      "mtime_ns": 1790883607059648438,
+      "inode": 18763553,
+      "device": 64512
+    },
+    "streamed_bytes": 76333647,
+    "streamed_lines": 14249,
+    "identity_events": 74,
+    "derived_bytes": 25742,
+    "private_file_hash_or_copy": false
+  },
+  "derived_identity_metadata": {
+    "bytes": 25742,
+    "mtime_ns": 1790887050672869049,
+    "inode": 19289991,
+    "device": 64512
+  },
+  "source_ineligible_completions_excluded": 0,
+  "host_label": "t10-z-azure-mcp-discovery-v2-control",
+  "native_receipt_sha256": "159be8ff80b98409bd02576983ae2ba2d0505284383bc83a8a32bf9cb3b1a53a",
+  "privacy_gate_sha256": "ac130e16b57409ccdf05fc1066bd02a19e2a3def8a181e5293709cb6e7374e66",
+  "projector_sha256": "5a9894290471a1947964c9c9c47699a5f48ed08a3b949c3bb18f908097a622e4",
+  "wrapper_sha256": "e1f428316cf20f9d6339cff71aa87a3cbe373917e4f51346883c024f824351b7",
+  "public_sources": [],
+  "unique_joined_public_get_completions": 0,
+  "completed_native_get_identity_count": 14,
+  "conflicting_native_identities": 0,
+  "rejected_selection_tuples": 16,
+  "selection_tuple_records": [
+    {
+      "expected": {
+        "requestId": "ebf6312e-bfbd-4251-b796-9c35af4cdccc",
+        "attempt": 1,
+        "sessionId": "sess_a295b0d6-6320-4c80-9e02-b8252a5fae6f",
+        "turnId": "turn_c7c29f99-e242-462c-8de9-03f52a0bdd2e"
+      },
+      "selection_sha256": "1957ad551f9ce4d1fde53a4a45f25a74cd60dfc384d56199ba1b0c47034ca49c",
+      "status": "unknown-rejected-no-private-details"
+    },
+    {
+      "expected": {
+        "requestId": "10254b97-9359-4b31-8bf6-2e4ee1eea855",
+        "attempt": 1,
+        "sessionId": "sess_a295b0d6-6320-4c80-9e02-b8252a5fae6f",
+        "turnId": "turn_c7c29f99-e242-462c-8de9-03f52a0bdd2e"
+      },
+      "selection_sha256": "5232e865a9b19d07d2c24e545dc6483962e0e20f0cb102991df951cab1136159",
+      "status": "unknown-rejected-no-private-details"
+    },
+    {
+      "expected": {
+        "requestId": "82f04416-782a-4368-b6bb-f5d6fd948d77",
+        "attempt": 1,
+        "sessionId": "sess_a295b0d6-6320-4c80-9e02-b8252a5fae6f",
+        "turnId": "turn_c7c29f99-e242-462c-8de9-03f52a0bdd2e"
+      },
+      "selection_sha256": "18249c49070922ff69b60628e664a71268f6b71ba16115e21a9f24d530852a59",
+      "status": "unknown-rejected-no-private-details"
+    },
+    {
+      "expected": {
+        "requestId": "c989b3f9-b24b-4582-8da0-5d19b7b55993",
+        "attempt": 1,
+        "sessionId": "sess_a295b0d6-6320-4c80-9e02-b8252a5fae6f",
+        "turnId": "turn_c7c29f99-e242-462c-8de9-03f52a0bdd2e"
+      },
+      "selection_sha256": "9cbe7ecafabc3b3f4b82202e73747524eddfa5ac22cf8ea7b3296a73bb7cd455",
+      "status": "unknown-rejected-no-private-details"
+    },
+    {
+      "expected": {
+        "requestId": "395539c4-5f0b-41e6-b813-e2be3ce0e785",
+        "attempt": 1,
+        "sessionId": "sess_a295b0d6-6320-4c80-9e02-b8252a5fae6f",
+        "turnId": "turn_c7c29f99-e242-462c-8de9-03f52a0bdd2e"
+      },
+      "selection_sha256": "03bf5187eab7526774a914c5ea3f789ffddfbeb90a7f1b51dff62ab76d4a2353",
+      "status": "unknown-rejected-no-private-details"
+    },
+    {
+      "expected": {
+        "requestId": "dc035fb3-7fc9-4e9c-826c-6f418dabe283",
+        "attempt": 1,
+        "sessionId": "sess_a295b0d6-6320-4c80-9e02-b8252a5fae6f",
+        "turnId": "turn_c7c29f99-e242-462c-8de9-03f52a0bdd2e"
+      },
+      "selection_sha256": "d695ea857ca310bd828114f8c981fe474fa33aa32bb41fe671522265a345ccb4",
+      "status": "unknown-rejected-no-private-details"
+    },
+    {
+      "expected": {
+        "requestId": "3ca6f7c5-a942-4c88-a551-fd2336d59779",
+        "attempt": 1,
+        "sessionId": "sess_a295b0d6-6320-4c80-9e02-b8252a5fae6f",
+        "turnId": "turn_c7c29f99-e242-462c-8de9-03f52a0bdd2e"
+      },
+      "selection_sha256": "2499055463f856633e0e98cafcb327de5c00be1eefc73d2250ce3f94089987dc",
+      "status": "unknown-rejected-no-private-details"
+    },
+    {
+      "expected": {
+        "requestId": "36f5a0b6-19e1-42f4-9a76-f05dba6f16cd",
+        "attempt": 1,
+        "sessionId": "sess_a295b0d6-6320-4c80-9e02-b8252a5fae6f",
+        "turnId": "turn_c7c29f99-e242-462c-8de9-03f52a0bdd2e"
+      },
+      "selection_sha256": "6581a7b6f9d7547c297b476f68a306000806e4c62fc75b7c8fd876ff1d1f83b0",
+      "status": "unknown-rejected-no-private-details"
+    },
+    {
+      "expected": {
+        "requestId": "c025c555-6c0a-487b-8bb1-0bc527453752",
+        "attempt": 1,
+        "sessionId": "sess_a295b0d6-6320-4c80-9e02-b8252a5fae6f",
+        "turnId": "turn_c7c29f99-e242-462c-8de9-03f52a0bdd2e"
+      },
+      "selection_sha256": "8e40206ae902cdb1725dc6eca383f2610cad5df5a9e07030130267559705bb45",
+      "status": "unknown-rejected-no-private-details"
+    },
+    {
+      "expected": {
+        "requestId": "543f6222-30fb-439f-9535-4286444106b0",
+        "attempt": 1,
+        "sessionId": "sess_a295b0d6-6320-4c80-9e02-b8252a5fae6f",
+        "turnId": "turn_c7c29f99-e242-462c-8de9-03f52a0bdd2e"
+      },
+      "selection_sha256": "c0c74af24c4926c1681f556a7fb3dd936dc0c910a22a9dcbec04f74ca1e0f4c4",
+      "status": "unknown-rejected-no-private-details"
+    },
+    {
+      "expected": {
+        "requestId": "e964d655-efc5-4955-affa-11a4306099ba",
+        "attempt": 1,
+        "sessionId": "sess_a295b0d6-6320-4c80-9e02-b8252a5fae6f",
+        "turnId": "turn_c7c29f99-e242-462c-8de9-03f52a0bdd2e"
+      },
+      "selection_sha256": "6a830dff799195cbec91087106b5cad16c6bfb9549801f06bff0c15c07bff6cb",
+      "status": "unknown-rejected-no-private-details"
+    },
+    {
+      "expected": {
+        "requestId": "64aef866-f7ba-44a1-9289-02bc6ccda1e6",
+        "attempt": 1,
+        "sessionId": "sess_a295b0d6-6320-4c80-9e02-b8252a5fae6f",
+        "turnId": "turn_c7c29f99-e242-462c-8de9-03f52a0bdd2e"
+      },
+      "selection_sha256": "587e66e5704cfed5c6b625791722e35d4eb1e620aa739499a4f55ca7a7d38d92",
+      "status": "unknown-rejected-no-private-details"
+    },
+    {
+      "expected": {
+        "requestId": "27f5cd29-2cee-43d9-ac75-fcdb50b6c0f8",
+        "attempt": 1,
+        "sessionId": "sess_a295b0d6-6320-4c80-9e02-b8252a5fae6f",
+        "turnId": "turn_c7c29f99-e242-462c-8de9-03f52a0bdd2e"
+      },
+      "selection_sha256": "b9f62affa872b0e91aa045c3e0f72705dfcf42a3a5784843f0270c8d49aef401",
+      "status": "unknown-rejected-no-private-details"
+    },
+    {
+      "expected": {
+        "requestId": "f001e187-2d7e-44cb-9ec6-0ec1e33d0d58",
+        "attempt": 1,
+        "sessionId": "sess_a295b0d6-6320-4c80-9e02-b8252a5fae6f",
+        "turnId": "turn_c7c29f99-e242-462c-8de9-03f52a0bdd2e"
+      },
+      "selection_sha256": "0dc16e3daeb0686f48abe6ca6554a8c9aa60e58d00f25ab41f3775b9c4a75bf4",
+      "status": "unknown-rejected-no-private-details"
+    },
+    {
+      "expected": {
+        "requestId": "624246eb-5b59-4b64-bfe7-1324cf9fdfb4",
+        "attempt": 1,
+        "sessionId": "sess_a295b0d6-6320-4c80-9e02-b8252a5fae6f",
+        "turnId": "turn_c7c29f99-e242-462c-8de9-03f52a0bdd2e"
+      },
+      "selection_sha256": "d798e5976456600d34ac1f6ec16e5316fd35aa0564febe7cffc32d40d6d5aa47",
+      "status": "unknown-rejected-no-private-details"
+    },
+    {
+      "expected": {
+        "requestId": "73e022cb-b394-4ccc-b16c-a38cb377c032",
+        "attempt": 1,
+        "sessionId": "sess_a295b0d6-6320-4c80-9e02-b8252a5fae6f",
+        "turnId": "turn_c7c29f99-e242-462c-8de9-03f52a0bdd2e"
+      },
+      "selection_sha256": "170dfd16391f558cf73d3b08f15649ac1758a105ac93988750ea253d47f83a5d",
+      "status": "unknown-rejected-no-private-details"
+    }
+  ],
+  "actual_source_eligibility": "partial-or-unknown",
+  "semantic_acquisition": "unknown pending independent current-before-history grading",
+  "private_file_hash_or_copy": false,
+  "projection_seconds": 1.6116616820072522
+}

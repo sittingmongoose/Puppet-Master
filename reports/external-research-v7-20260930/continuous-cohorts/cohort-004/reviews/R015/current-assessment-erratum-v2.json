@@ -1,0 +1,18 @@
+{
+  "schema": "er7.immutable_current_assessment_erratum.v1",
+  "report_id": "R015",
+  "saved_at_utc": "2026-10-01T20:13:24.530682+00:00",
+  "preserved_original_json_sha256": "06bb16b370f23538e3f7b1f91c56a3ba122d4a138f5daedd32bbc4d51a309d16",
+  "supersedes_erratum_locator_only": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/R015/current-assessment-erratum-v1.json",
+    "sha256": "f3b3b6ae27eefe1e9fca254d43ff56944ae157fb51685163e63688220624063a",
+    "reason": "v1 used C012; the relevant assertion is C013"
+  },
+  "changes": [
+    {
+      "claim_id": "R015-C013",
+      "correction": "The assertion shorthand complete flag false should read incomplete_results=false. Its source locator and rationale already name incomplete_results=false correctly. No outcome, coverage, failure identity or verdict changes."
+    }
+  ],
+  "history_or_acquisition_read": false
+}
