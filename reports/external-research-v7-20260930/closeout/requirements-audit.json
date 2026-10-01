@@ -1,0 +1,809 @@
+{
+  "schema": "er7.terminal_requirements_audit.v1",
+  "campaign_id": "external-research-v7-20260930",
+  "audit_started_utc": "2026-10-01T17:32:17.966945+00:00",
+  "administrative_post_envelope": true,
+  "scope": "Frozen evidence requirements closeout only; no new semantic grades, source-fact review, raw/private conversations, adapters, native Goals, Git operations or continuation of native qualification.",
+  "campaign_start_epoch": 1790777206,
+  "campaign_deadline_epoch": 1790820406,
+  "deadline_utc": "2026-10-01T02:06:46Z",
+  "campaign_terminal_state": "expired_incomplete",
+  "campaign_achieved": false,
+  "counts": {
+    "registered_methods": 16,
+    "unique_methods_with_actual_screen_attempts": 8,
+    "actual_screen_method_ids": [
+      "T01",
+      "T02",
+      "T03",
+      "T06",
+      "T08",
+      "T09",
+      "T13",
+      "T14"
+    ],
+    "comparison_rows": 13,
+    "preparation_only_comparison_rows": 5,
+    "fully_certified_quality_assessed_pairs": 4,
+    "partial_certification_material_complete_pairs": 1,
+    "strict_interpretable_pair_count": 4,
+    "broad_material_complete_interpretable_pair_count_upper_bound": 5,
+    "substantive_interpretable_pair_count_upper_bound": 5,
+    "discovery_repo_quality_assessed_pairs": 1,
+    "completed_current_reports": 10,
+    "full_current_certifications": 8,
+    "partial_current_certifications": 2,
+    "established_replications": 0,
+    "established_integrated_executions": 0,
+    "candidate_admissions": 20,
+    "known_actual_native_goals": 18,
+    "occupied_slot_seconds": 9340.536205530167,
+    "reported_generated_tokens_lower_bound": 366778,
+    "all_leases_released": true,
+    "recorded_peak_family_occupancy": {
+      "M": 2,
+      "Z": 2,
+      "L": 2
+    },
+    "historical_baseline_file_count": 8311,
+    "second_pause_copy_checks": 29,
+    "second_pause_copy_hash_matches": 29,
+    "canary_required_artifacts": 5
+  },
+  "canary": {
+    "current": "passed with qualifications for exactly one assigned finding",
+    "native": "UNESTABLISHED; no productive launch authority",
+    "counts_as_comparison": false,
+    "saved_native_checkpoint": {
+      "schema": "er7.z.canary.review.checkpoint.v1",
+      "status": "paused_at_user_restart",
+      "saved_utc": "2026-09-30T18:09:47.410776+00:00",
+      "native_verdict": "unestablished",
+      "files": {
+        "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v2/current-assessment.json": "bb35da244f476f8b23875017087d10daf0c99e8cb519da1427b8fff5dc2a71a8",
+        "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v2/current-assessment.md": "336b748638d30baf8ce93ca88894482d403fd83a1cbf401560b0e6cceb698480",
+        "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v2/current-assessment-hashes.json": "108f8a1c56f3512dbef2561b7d621b4c25ba8736a4ce2d2b92ad48395f9602d9",
+        "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v2/stage2-unlock.json": "42b89bf461b1e95a6d6d3db552bad868ca8f25c77290869febe58a0db15d6d47",
+        "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v2/native-assessment.partial.json": "8f08f032f9e0ea20015375153acc43bf857967762ca59da25475ba4a85884190",
+        "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/z-final-canary-v2/native-assessment.partial.md": "7f023a90316eed00a89b3b2fd52be89ed82869d2da1269ea32ca1fd2ef97dabc"
+      },
+      "elapsed_seconds": 496.411,
+      "remaining_seconds_at_pause": 703.589,
+      "pause_count": 1,
+      "original_clock_deadline_utc": "2026-09-30T18:21:31+00:00"
+    },
+    "artifacts": [
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/candidate-outputs/z-runtime2-ome-useful-canary-r1/report.md",
+        "sha256": "50413c60728dc05656154ff19e5f7de013377c7d6e67f0a7ec4a32d22652fc25",
+        "bytes": 3809
+      },
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/candidate-outputs/z-runtime2-ome-useful-canary-r1/tool-inventory.json",
+        "sha256": "ace5a931b4e1945ad1efe9166ea2369725e163fd8227b78cdf1f084ca02363d2",
+        "bytes": 1789
+      },
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/candidate-outputs/z-runtime2-ome-useful-canary-r1/canary-carrier.txt",
+        "sha256": "abd822153f119481ae40789444fb7db45f8b87e4b8f41608e730e37f7aa7fda9",
+        "bytes": 18
+      },
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/candidate-outputs/z-runtime2-ome-useful-canary-r1/acquisition.json",
+        "sha256": "966b0a6b2a4621bfeed60e44b7af6c1d3826fbbe19ee1c951eb48b550c7697b1",
+        "bytes": 2153
+      },
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/candidate-outputs/z-runtime2-ome-useful-canary-r1/boundary-checks.json",
+        "sha256": "bca93f0eca2f348df77f35bad37f8720f4c7001a9aa2f938ac31e47762998299",
+        "bytes": 1659
+      }
+    ]
+  },
+  "requirements": [
+    {
+      "id": "breadth-16",
+      "status": "incomplete",
+      "requirement": "Execute 16 distinct method hypotheses",
+      "evidence": "16 registered; 8 unique methods with actual screen attempts",
+      "qualification": "Registration is proven; execution breadth is incomplete. No protocol/unit/canary/preparation row is a comparison."
+    },
+    {
+      "id": "interpretable-12",
+      "status": "incomplete",
+      "requirement": "At least 12 interpretable comparisons",
+      "evidence": "4 fully certified quality-assessed pairs; T14 adds 1 material-complete pair with partial capped certification",
+      "qualification": "Strict certified count 4; broad material-complete count at most 5. Quality failure can be interpretable; carrier failure cannot."
+    },
+    {
+      "id": "substantive-8",
+      "status": "incomplete",
+      "requirement": "At least 8 substantive method comparisons",
+      "evidence": "4 fully certified substantive pairs; 1 partial-certification substantive pair",
+      "qualification": "At most 5, fewer than 8."
+    },
+    {
+      "id": "discovery-repo-3",
+      "status": "incomplete",
+      "requirement": "At least 3 autonomous discovery or repository/issue comparisons",
+      "evidence": "T09 is the sole quality-assessed discovery comparison",
+      "qualification": "T08 is an actual failed route screen, not interpretable; T10/T11/T12 are preparation only."
+    },
+    {
+      "id": "first-screen-balance",
+      "status": "incomplete",
+      "requirement": "Screen methods on one available family, approximately balanced M/Z/L",
+      "evidence": "Attempted methods: M T01/T02/T09/T13/T14; Z T03/T06; L T08",
+      "qualification": "L output carrier failed; no completed L comparison."
+    },
+    {
+      "id": "matched-controls",
+      "status": "proven",
+      "requirement": "Preserve declared matched controls/treatments for reported screen pairs",
+      "evidence": "Frozen comparison and prospective-card records retain controls/treatments",
+      "qualification": "This is administrative evidence binding, not renewed semantic validation. T01 control is the actual two-assignment aggregate including its capped opening."
+    },
+    {
+      "id": "replicate-best-six",
+      "status": "incomplete",
+      "requirement": "Replicate best six promising/ambiguous methods on another family/case",
+      "evidence": "No qualifying replication is established in frozen comparisons",
+      "qualification": "Repairs, control subassignments and canary are not method replication."
+    },
+    {
+      "id": "fresh-same-config",
+      "status": "incomplete",
+      "requirement": "Finalists include genuinely fresh same-configuration repetition",
+      "evidence": "No finalist or fresh repetition result established",
+      "qualification": "No old answers count as fresh work."
+    },
+    {
+      "id": "integrated-six",
+      "status": "incomplete",
+      "requirement": "At least six integrated case executions across explicit control/recipe layout",
+      "evidence": "0 established integrated candidate executions",
+      "qualification": "Integrated templates and offline acceptance are preparation only."
+    },
+    {
+      "id": "integrated-domains-discovery",
+      "status": "incomplete",
+      "requirement": "Integrated executions cover two domains and fresh discovery",
+      "evidence": "0 integrated executions",
+      "qualification": "OME and Azure were screened, but this does not satisfy integrated coverage."
+    },
+    {
+      "id": "actual-proposal-flash",
+      "status": "incomplete",
+      "requirement": "Recipes end in actual research-to-plan proposal with independent candidate flash review",
+      "evidence": "No integrated proposal or candidate flash-reviewed final recipe established",
+      "qualification": "Sol grading is not a candidate production-path flash stage."
+    },
+    {
+      "id": "one-account-recipe",
+      "status": "incomplete",
+      "requirement": "Deliver measured affordable one-family/one-account recipe using at most 2 slots",
+      "evidence": "BEST_RECIPE.md states no measured recipe qualifies",
+      "qualification": "No same-quality efficiency win established; timing observations cannot repair quality failures."
+    },
+    {
+      "id": "two-substantive-domains",
+      "status": "proven",
+      "requirement": "Use at least two substantive domains",
+      "evidence": "Actual OME and Azure screen outputs; Jujutsu prepared only",
+      "qualification": "Domain use does not imply research quality pass."
+    },
+    {
+      "id": "fresh-holdout",
+      "status": "incomplete",
+      "requirement": "Reserve untouched case/slice and confirm generalization",
+      "evidence": "Frozen holdout preparation accepted, execution held",
+      "qualification": "No fresh holdout confirming result."
+    },
+    {
+      "id": "brief-only-discovery",
+      "status": "proven",
+      "requirement": "Include brief-only autonomous source discovery without evaluator answer list",
+      "evidence": "Frozen T09 Azure discovery comparison and independent current summaries",
+      "qualification": "Both arms quality failure; eligibility/source-access boundaries inherited from saved cards, not re-audited semantically."
+    },
+    {
+      "id": "native-freshness-models",
+      "status": "unassessed",
+      "requirement": "Fresh native sessions, correct runtime model/effort, Luna standalone",
+      "evidence": "Pause receipt reports 18 actual native Goals; attempt rows retain requested/effective fields",
+      "qualification": "Some effective identifiers remain unknown; this audit does not open native conversations or independently requalify launch routes."
+    },
+    {
+      "id": "candidate-family-caps",
+      "status": "proven",
+      "requirement": "Campaign caps M=2 Z=2 L=2 and released leases",
+      "evidence": "Recorded admission/release intervals peak {'M': 2, 'Z': 2, 'L': 2}; 20 admissions, all released",
+      "qualification": "Recorded ledger only; sibling occupancy unknown and untouched. Native child usage remains separately unknown."
+    },
+    {
+      "id": "candidate-start-slot-ceilings",
+      "status": "proven",
+      "requirement": "At most 144 fresh Goals and 48 occupied-slot hours",
+      "evidence": "20 counted admissions, 18 known actual Goals; 9340.536205530167 recorded occupied seconds",
+      "qualification": "Conservative admissions 20 below 144; 9340.536205530167 seconds below 172800. No new admissions authorized after expiry."
+    },
+    {
+      "id": "elapsed-envelope",
+      "status": "incomplete",
+      "requirement": "Finish breadth, review and publication within fixed 12-hour campaign",
+      "evidence": "Start 1790777206; deadline 1790820406 (2026-10-01 02:06:46 UTC); envelope expired",
+      "qualification": "Pause and continue do not renew deadline. This closeout audit is post-envelope administration, not campaign achievement or budgeted execution."
+    },
+    {
+      "id": "individual-caps",
+      "status": "unassessed",
+      "requirement": "Predeclare equalized trial limits; enforce response/time caps including cleanup",
+      "evidence": "Saved slots retain cap_seconds and hard_release_deadline_epoch; evaluator overrun disclosures retained",
+      "qualification": "Full native response-cap audit is not performed. T14 current certification partial after 1338.528707s versus 1200s; C028 possible stage1 overrun and phase2 +54.088638s are disclosed."
+    },
+    {
+      "id": "helper-caps",
+      "status": "unassessed",
+      "requirement": "Helper starts, concurrency and generated-output ceilings",
+      "evidence": "58 helper-event records; published manifest records user override to 23 simultaneous helpers",
+      "qualification": "Event rows are not necessarily fresh starts. Complete helper occupancy/output not established; parent generated output separately unknown. Original packet 6-helper limit has recorded user override."
+    },
+    {
+      "id": "reserve-closeout",
+      "status": "unassessed",
+      "requirement": "Protect 20% candidate reserve and final hour for evaluation/closeout",
+      "evidence": "Resource reserves recorded in manifest; large unused start/slot budget remains",
+      "qualification": "Continuous reservation enforcement and timely final-hour completion not independently established."
+    },
+    {
+      "id": "token-fees",
+      "status": "proven",
+      "requirement": "Report partial usage honestly; unavailable costs are unknown",
+      "evidence": "366778 generated-token lower bound; native children/cancellation meters, fees and helper output unknown",
+      "qualification": "No exact token-budget or affordability compliance from partial meters. Candidate starts/slot ceilings are independent controls."
+    },
+    {
+      "id": "runtime-isolation",
+      "status": "incomplete",
+      "requirement": "Candidate runtime must isolate credentials/keys and evaluator-only material",
+      "evidence": "Inherited M/Z v1 qualification withdrawn for readable auth/key boundary; new productive qualification unestablished; L quarantined",
+      "qualification": "No evidence inferred that candidates read credentials. Canary self-pass grants no productive launch authority."
+    },
+    {
+      "id": "finite-repairs",
+      "status": "proven",
+      "requirement": "Retain failures and stop after finite two successive repair versions",
+      "evidence": "L finite repairs exhausted; final common runtime repair2 frozen; native canary qualification UNESTABLISHED",
+      "qualification": "No further repair/native qualification is authorized by expiry. This audit does not recalculate adapter-version lineage."
+    },
+    {
+      "id": "retain-all-attempts",
+      "status": "proven",
+      "requirement": "Preserve first/repaired attempts and total endpoint cost; no best-of rescue",
+      "evidence": "20 attempts rows including 4 L admissions and 1 canary; failed T03/T13 and capped T01 opening remain recorded",
+      "qualification": "Admissions include 2 pre-Goal failures; canary does not count as comparison."
+    },
+    {
+      "id": "independent-current-first",
+      "status": "proven",
+      "requirement": "Judge current report and save before acquisition/history phase",
+      "evidence": "Frozen R001-R008 current assessments; R011/R012 partial capped current; staged phase2 summaries preserve original grades",
+      "qualification": "8 complete current reviews +2 partial-certification reviews; history never rescues quality. Embedded cues and incomplete format blinding disclosed."
+    },
+    {
+      "id": "all-material-review",
+      "status": "incomplete",
+      "requirement": "All eligible reports receive independent complete assessment within bounds",
+      "evidence": "10 current reports reviewed: 8 complete certification, 2 partial capped certification",
+      "qualification": "T03/T13 required final reports absent; T09 preservation partial. Tiny canary one-finding passed with qualifications, native proof unestablished."
+    },
+    {
+      "id": "preservation-phase2",
+      "status": "incomplete",
+      "requirement": "Distinguish supported acquisition, current output and temporal preservation",
+      "evidence": "Available-history coverage complete for T01/T02/T06/T14; T09 partial; no current grades changed",
+      "qualification": "Absent acquisition notes/unsaved observations leave acquisition-to-final unknown where disclosed. Zero observed saved-history loss is not acquisition or quality pass."
+    },
+    {
+      "id": "publish-deliverables",
+      "status": "proven",
+      "requirement": "Publish actual candidate deliverables/configs/code/reviews, not only hashes",
+      "evidence": "Local saved report root includes development outputs and review bundles; 29 frozen second-pause copies checked; 5/5 canary required artifacts present",
+      "qualification": "Local artifact verification only; cannot imply new GitHub visibility. Missing T03/T13 outputs explicitly preserved as absent."
+    },
+    {
+      "id": "entrypoint-files",
+      "status": "proven",
+      "requirement": "README links required results, methods, attempts, comparisons, economics, schedule, failures, recipe, reproduce, checkpoint",
+      "evidence": "All 11 required entrypoint files exist locally",
+      "qualification": "Link correctness and remote visibility require publisher verification; this audit performs no Git operations."
+    },
+    {
+      "id": "remote-publication",
+      "status": "unassessed",
+      "requirement": "Final delivery confirmed visible on GitHub at a commit",
+      "evidence": "Saved root event records earlier publication commit 7f7d56b968f7ae5f73ef01d1c4ec7942c228eaa9",
+      "qualification": "Remote visibility and terminal closeout publication must be confirmed by sole publisher."
+    },
+    {
+      "id": "method-terminal-table",
+      "status": "incomplete",
+      "requirement": "Every one of 16 methods receives truthful terminal assessment",
+      "evidence": "8 frozen method entries terminal; 8 remain queued with null terminal_assessment",
+      "qualification": "Closeout table below terminalizes administrative state without changing old semantic grades; publisher must replace stale queued/pause claims."
+    },
+    {
+      "id": "history-preservation",
+      "status": "unassessed",
+      "requirement": "Establish preservation baseline once and verify at closeout",
+      "evidence": "Baseline records 8311 historical files under /home/sittingmongoose/PM-Experiments/external-research-v6-20260926",
+      "qualification": "Baseline existence/count proven; complete closeout rehash not performed here to avoid private/raw scope and duplicate operator work."
+    },
+    {
+      "id": "new-branch-scope",
+      "status": "unassessed",
+      "requirement": "Isolated research branch; publisher sole worktree writer; no canon/main/PR changes",
+      "evidence": "Manifest binds research/external-research-v7-20260930 and local report root",
+      "qualification": "No Git/status/diff operation in this audit. Historical root event discloses interrupted mis-targeted sparse checkout; no blanket clean-scope assertion."
+    },
+    {
+      "id": "no-new-campaign",
+      "status": "proven",
+      "requirement": "No automatic second campaign or revived capped/paused Goal",
+      "evidence": "Administrative terminal closeout only; deadline expired",
+      "qualification": "No new research, semantic grading, adapters, native Goals or qualification continuation in this audit."
+    }
+  ],
+  "methods": [
+    {
+      "id": "T01",
+      "name": "Coherent semantic batching",
+      "actual_screen_attempt": true,
+      "terminal_assessment": "quality failure",
+      "semantic_assessment": "fully certified current quality failure",
+      "terminal_reason": "Original frozen grade preserved; available-history phase does not repair it.",
+      "prior_status": "executed historical result; independent current review complete; quality failure",
+      "prior_terminal_assessment": "quality failure"
+    },
+    {
+      "id": "T02",
+      "name": "Compact task context and tool surface",
+      "actual_screen_attempt": true,
+      "terminal_assessment": "quality failure",
+      "semantic_assessment": "fully certified current quality failure",
+      "terminal_reason": "Original frozen grade preserved; available-history phase does not repair it.",
+      "prior_status": "executed historical result; independent current review complete; quality failure",
+      "prior_terminal_assessment": "quality failure"
+    },
+    {
+      "id": "T03",
+      "name": "Maintain complete findings, render once",
+      "actual_screen_attempt": true,
+      "terminal_assessment": "infrastructure-limited",
+      "semantic_assessment": "unassessed",
+      "terminal_reason": "Required final reports/history absent; frozen semantic unassessed status preserved.",
+      "prior_status": "executed historical result; structural output failure; no final reports",
+      "prior_terminal_assessment": "unassessed"
+    },
+    {
+      "id": "T04",
+      "name": "One completed Write as explicit submission",
+      "actual_screen_attempt": false,
+      "terminal_assessment": "unassessed",
+      "semantic_assessment": "unassessed",
+      "terminal_reason": "Global-budget-limited: no actual method execution before fixed deadline; preparation excluded.",
+      "prior_status": "not executed; held at campaign expiry",
+      "prior_terminal_assessment": null
+    },
+    {
+      "id": "T05",
+      "name": "Batch structural feedback",
+      "actual_screen_attempt": false,
+      "terminal_assessment": "unassessed",
+      "semantic_assessment": "unassessed",
+      "terminal_reason": "Global-budget-limited: no actual method execution before fixed deadline; preparation excluded.",
+      "prior_status": "not executed; held at campaign expiry",
+      "prior_terminal_assessment": null
+    },
+    {
+      "id": "T06",
+      "name": "Question-driven progressive evidence retrieval",
+      "actual_screen_attempt": true,
+      "terminal_assessment": "quality failure",
+      "semantic_assessment": "fully certified current quality failure",
+      "terminal_reason": "Original frozen grade preserved; available-history phase does not repair it.",
+      "prior_status": "executed historical result; independent current review complete; quality failure",
+      "prior_terminal_assessment": "quality failure"
+    },
+    {
+      "id": "T07",
+      "name": "Fetch once; reuse exact evidence across questions",
+      "actual_screen_attempt": false,
+      "terminal_assessment": "unassessed",
+      "semantic_assessment": "unassessed",
+      "terminal_reason": "Global-budget-limited: no actual method execution before fixed deadline; preparation excluded.",
+      "prior_status": "not executed; held at campaign expiry",
+      "prior_terminal_assessment": null
+    },
+    {
+      "id": "T08",
+      "name": "Coverage-first research scheduling",
+      "actual_screen_attempt": true,
+      "terminal_assessment": "infrastructure-limited",
+      "semantic_assessment": "unassessed",
+      "terminal_reason": "L carrier finite repair exhaustion.",
+      "prior_status": "executed historical result; L quarantined; finite repairs exhausted",
+      "prior_terminal_assessment": "infrastructure-limited"
+    },
+    {
+      "id": "T09",
+      "name": "Assumption- and failure-driven questions",
+      "actual_screen_attempt": true,
+      "terminal_assessment": "quality failure",
+      "semantic_assessment": "fully certified current quality failure",
+      "terminal_reason": "Original frozen grade preserved; available-history phase does not repair it.",
+      "prior_status": "executed historical result; independent current review complete; quality failure",
+      "prior_terminal_assessment": "quality failure"
+    },
+    {
+      "id": "T10",
+      "name": "Search beyond direct competitors",
+      "actual_screen_attempt": false,
+      "terminal_assessment": "unassessed",
+      "semantic_assessment": "unassessed",
+      "terminal_reason": "Global-budget-limited: no actual method execution before fixed deadline; preparation excluded.",
+      "prior_status": "not executed; held at campaign expiry",
+      "prior_terminal_assessment": null
+    },
+    {
+      "id": "T11",
+      "name": "Issue \u2192 fix \u2192 test evidence chains",
+      "actual_screen_attempt": false,
+      "terminal_assessment": "unassessed",
+      "semantic_assessment": "unassessed",
+      "terminal_reason": "Global-budget-limited: no actual method execution before fixed deadline; preparation excluded.",
+      "prior_status": "not executed; held at campaign expiry",
+      "prior_terminal_assessment": null
+    },
+    {
+      "id": "T12",
+      "name": "Architecture-guided repository reading",
+      "actual_screen_attempt": false,
+      "terminal_assessment": "unassessed",
+      "semantic_assessment": "unassessed",
+      "terminal_reason": "Global-budget-limited: no actual method execution before fixed deadline; preparation excluded.",
+      "prior_status": "not executed; held at campaign expiry",
+      "prior_terminal_assessment": null
+    },
+    {
+      "id": "T13",
+      "name": "Verifier amendments instead of rewrite",
+      "actual_screen_attempt": true,
+      "terminal_assessment": "infrastructure-limited",
+      "semantic_assessment": "unassessed",
+      "terminal_reason": "Both native jobs blocked; required outputs absent.",
+      "prior_status": "executed historical result; native blocked; all required outputs missing",
+      "prior_terminal_assessment": "infrastructure-limited"
+    },
+    {
+      "id": "T14",
+      "name": "Scope-aware negative-claim verification",
+      "actual_screen_attempt": true,
+      "terminal_assessment": "quality failure",
+      "semantic_assessment": "quality failure; partial capped certification, complete material coverage",
+      "terminal_reason": "Current grade unchanged; later available-history review complete.",
+      "prior_status": "executed historical result; both current artifact sets graded quality failure; partial capped certification",
+      "prior_terminal_assessment": "quality failure"
+    },
+    {
+      "id": "T15",
+      "name": "Dependency-aware reuse and covered fast path",
+      "actual_screen_attempt": false,
+      "terminal_assessment": "unassessed",
+      "semantic_assessment": "unassessed",
+      "terminal_reason": "Global-budget-limited: no actual method execution before fixed deadline; preparation excluded.",
+      "prior_status": "not executed; held at campaign expiry",
+      "prior_terminal_assessment": null
+    },
+    {
+      "id": "T16",
+      "name": "Fewer semantic handoffs",
+      "actual_screen_attempt": false,
+      "terminal_assessment": "unassessed",
+      "semantic_assessment": "unassessed",
+      "terminal_reason": "Global-budget-limited: no actual method execution before fixed deadline; preparation excluded.",
+      "prior_status": "not executed; held at campaign expiry",
+      "prior_terminal_assessment": null
+    }
+  ],
+  "metadata_hash_checks": [
+    {
+      "path": "second-pause/evaluation-ready.json",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "second-pause/operator-pause.json",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "candidate-outputs/z-runtime2-ome-useful-canary-r1/output-integrity.json",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "candidate-outputs/z-runtime2-ome-useful-canary-r1/report.md",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "candidate-outputs/z-runtime2-ome-useful-canary-r1/tool-inventory.json",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "candidate-outputs/z-runtime2-ome-useful-canary-r1/canary-carrier.txt",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "candidate-outputs/z-runtime2-ome-useful-canary-r1/acquisition.json",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "candidate-outputs/z-runtime2-ome-useful-canary-r1/boundary-checks.json",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "candidate-outputs/z-runtime2-ome-useful-canary-r1/spec.json",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "candidate-outputs/z-runtime2-ome-useful-canary-r1/TASK.md",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "candidate-outputs/z-runtime2-ome-useful-canary-r1/native/session-tool-contract.json",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "candidate-outputs/z-runtime2-ome-useful-canary-r1/native/progress.jsonl",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "candidate-outputs/z-runtime2-ome-useful-canary-r1/native/usage-events.jsonl",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "candidate-outputs/z-runtime2-ome-useful-canary-r1/native/host-process.json",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "reviews/z-final-canary-v2/current-assessment.json",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "second-pause/canary-stage2-unlock.json",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "reviews/C041-phase2-summary.json",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "reviews/C041-phase2-summary.md",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "reviews/R011/preservation-assessment.json",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "reviews/R011/preservation-assessment.md",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "reviews/R012/preservation-assessment.json",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "reviews/R012/preservation-assessment.md",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "second-pause/canary-review-checkpoint.json",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "reviews/z-final-canary-v2/current-assessment.md",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "reviews/z-final-canary-v2/current-assessment-hashes.json",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "reviews/z-final-canary-v2/stage2-unlock.json",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "reviews/z-final-canary-v2/native-assessment.partial.json",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "reviews/z-final-canary-v2/native-assessment.partial.md",
+      "exists": true,
+      "sha256_match": true
+    },
+    {
+      "path": "second-pause/root-restart-checkpoint.json",
+      "exists": true,
+      "sha256_match": true
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/methods.json",
+      "sha256": "1d1f02093afefa21ecbf0ad52dd47efb294353c1dc1b8ad370c30a71aa26f584",
+      "bytes": 20518
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/comparisons.json",
+      "sha256": "1f836f451f8ff4534b27d945047fce86c7bf94a56e6ef8930d988d19c8e63702",
+      "bytes": 7819
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/attempts.jsonl",
+      "sha256": "bc598fb07547c40eea3c3ada8a83b8ec737682bb178d1bdbbdf0c9c2686a08f9",
+      "bytes": 17802
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/economics.json",
+      "sha256": "15d408177252e8d09f90f2f73f0175d8f9c471232b13a0eea3821dad822049be",
+      "bytes": 5497
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/schedule.json",
+      "sha256": "93dab009ebc09a7e73259738920d1eebbbd84a534e43274fdbf3ddb4eb517dda",
+      "bytes": 2368
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/manifest.json",
+      "sha256": "a08beb5b4b2f6c389a752980d458ab6d7bcc254e9271405af36705f2d7db7a59",
+      "bytes": 1507
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/RESULTS.md",
+      "sha256": "e38ca613773bcd35db2d119f9e342be2335238cf27aa61c5648bd79bfb0bbbdc",
+      "bytes": 10370
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/BEST_RECIPE.md",
+      "sha256": "60e83fd6bc7e55aff535ec2d4de469f3601de141ffa694b22be194f84c0ab7ed",
+      "bytes": 1868
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/CHECKPOINT.md",
+      "sha256": "ac1e9da82af445d74808eae77ee801c3dfacc3cf4bcf5249a2b2855429a31ba8",
+      "bytes": 3747
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/second-pause/operator-pause.json",
+      "sha256": "62ddc6a6040aeff48bdd5023af8258d99fc2854cd57c44fe35d7e663299a917d",
+      "bytes": 6756
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/second-pause/source-freeze.json",
+      "sha256": "e6442c85e82142fe1a576f875d84d95b8ca24fd7dcec0c3161516a19de84de7e",
+      "bytes": 16945
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/second-pause/canary-review-checkpoint.json",
+      "sha256": "2b7d090c7e97a9e6d89c12e1e90fd787a34b5fce77e1b0e6fbe40a969f49800a",
+      "bytes": 1578
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/reviews/first-pair-quality.json",
+      "sha256": "6f151e9cf1e7f69d288a174e78b3c42ccb1ea845fe1435a911d36b5adfd340a5",
+      "bytes": 8657
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/reviews/first-pair-preservation-summary.json",
+      "sha256": "7284e9fcc81e6492b90067875afa3a56752052fb30a27a7647fe2eff3ecf93da",
+      "bytes": 4323
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/reviews/R003-R004-current-only-summary.json",
+      "sha256": "8c338976a1b72165ec62e4839ee38e277ebd14d496efbabbd6747935104bb093",
+      "bytes": 7156
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/reviews/R003-R004-phase2-summary.json",
+      "sha256": "8c791175690580d803bcbd31ff99dd173924a7fcea14f9ded5531dd426dc6552",
+      "bytes": 5084
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/reviews/C017-current-summary.json",
+      "sha256": "ed6441575be171c830f846f0630cb7e8b96427e212d7f1403b68917ed1430c2e",
+      "bytes": 8258
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/reviews/C017-phase2-summary.json",
+      "sha256": "de0c06ab58dbf3f87ee0b89a037bad23322ad6126b980988ebfa87e08ba09169",
+      "bytes": 5320
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/reviews/C028-current-summary.json",
+      "sha256": "ef6c60f843fd7b57838671441d01e7b19fafcb7b0b902b5a85a779d4500ecfe0",
+      "bytes": 2810
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/reviews/C028-phase2-summary.json",
+      "sha256": "ed6ca51394a4226f4ec6cbe66d0d31a506978d0a88623eb2a8fdafe64c386758",
+      "bytes": 5054
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/reviews/C041-current-pair-summary.json",
+      "sha256": "df9a5463a36e12e23321a2a7c84b3c3d645736a9cdc5420cef17cbbb9494da91",
+      "bytes": 3691
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v7-20260930/reports/external-research-v7-20260930/reviews/C041-phase2-summary.json",
+      "sha256": "5081ead60f6e7553e843b1a1c81eb2575b39c8ed1cc2560f7b4e4f670ec83e02",
+      "bytes": 3173
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/manifest.json",
+      "sha256": "16eb353e0368257b9c2cd2e39cf64e56e71695ce22b825af06873b72ac0b7838",
+      "bytes": 1229
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/slots.json",
+      "sha256": "67b8197962ab390f3a5d858047ed5d97341ead5069499034ff219e9d1083024c",
+      "bytes": 40927
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/historical-preservation-baseline.json",
+      "sha256": "643293db2793f1a806b840c6b9e8d863bd8fb6c668fca89854bb344cad34f61d",
+      "bytes": 1835569
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/packet/Puppet_Master_External_Research_Parallel_Campaign_v7/CAMPAIGN.md",
+      "sha256": "f813f953ee7e2504b8dd95be5a17ca4a9071f022ebf6ae4ad0afb8b04938bc80",
+      "bytes": 24513
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/packet/Puppet_Master_External_Research_Parallel_Campaign_v7/EXPERIMENTS.md",
+      "sha256": "b3e1f66029100a0a1458ec88b72f25d87fddcbf94f80ce4f0f54a30f9d65216f",
+      "bytes": 14047
+    }
+  ],
+  "publisher_actions": [
+    "Replace queued/null method statuses with terminal unassessed/global-budget-limited; retain frozen grades and failures.",
+    "Replace ongoing/paused-resume wording with expired-incomplete; no resumed native qualification.",
+    "Publish final closeout commit and confirm GitHub visibility; report administrative post-envelope time separately.",
+    "Do not count prepared cards, offline/unit checks or tiny canary as comparisons."
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "checked_utc": "2026-10-01T17:30:42.716478+00:00",
+  "administrative_only": true,
+  "all_publication_json_parses": true,
+  "prior_readout_snapshots": [
+    {
+      "path": "README-pre-closeout.md",
+      "sha256": "15ea2ded0b7b21f3f5527a8985675dde8086cf99047902a4faf8147927618c94",
+      "exact_previous_HEAD": true
+    },
+    {
+      "path": "RESULTS-pre-closeout.md",
+      "sha256": "c8855ace101f5b1f83864f9cdab115a6fcadb014cff7d772b6b9e82b318eb516",
+      "exact_previous_HEAD": true
+    },
+    {
+      "path": "CHECKPOINT-pre-closeout.md",
+      "sha256": "1faaa5beded90ae6cc08379bfcc06a7454f1401e0b2e053c26b88f25332f56d5",
+      "exact_previous_HEAD": true
+    },
+    {
+      "path": "BEST_RECIPE-pre-closeout.md",
+      "sha256": "6b8594e09e02ca25dafb8235ec4157bda79e15a7df0fcc462c9320f7e2de7ce4",
+      "exact_previous_HEAD": true
+    },
+    {
+      "path": "REPRODUCE-pre-closeout.md",
+      "sha256": "42ed5e1e11a0abf23c14867d7f9231179df284053d7a869c824691ca68417e41",
+      "exact_previous_HEAD": true
+    }
+  ],
+  "original_candidate_outputs_and_grades_untouched": true,
+  "scope": "reports only; no candidate launch, semantic regrade, Plans/main/PR change"
+}

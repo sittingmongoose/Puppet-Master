@@ -1,0 +1,69 @@
+{
+  "schema": "er7.global_boundary.closeout.v1",
+  "campaign_id": "external-research-v7-20260930",
+  "status": "closed-global-elapsed-envelope-expired; requested breadth incomplete",
+  "objective_achieved": false,
+  "campaign_start_epoch": 1790777206,
+  "fixed_deadline_epoch": 1790820406,
+  "deadline_utc": "2026-10-01T02:06:46+00:00",
+  "resume_observed_utc": "2026-10-01T17:24:38+00:00",
+  "resume_observed_epoch": 1790875478,
+  "deadline_excess_seconds_at_observed_resume": 55072,
+  "pause_counts_toward_elapsed_budget": true,
+  "native_goal_tool_status_at_resume": "active; does not enlarge explicit campaign envelope",
+  "no_new_research_or_semantic_grading_or_candidate_admissions": true,
+  "last_candidate_admission_epoch": 1790790924.3729877,
+  "candidate_admissions": 20,
+  "native_goal_activations": 18,
+  "active_owned_leases": [],
+  "aggregate_occupied_candidate_seconds": 9340.536205530167,
+  "aggregate_occupied_candidate_hours": 2.594593390425046,
+  "reported_generated_candidate_output_lower_bound": 366778,
+  "native_children_cancelled_unexposed_usage": "unknown",
+  "generated_sol_helper_output": "unknown",
+  "parent_total_usage_includes_input_and_cache": "Not generated-output accounting",
+  "user_defined_ceilings": {
+    "elapsed_seconds": 43200,
+    "candidate_goal_starts": 144,
+    "aggregate_occupied_seconds": 172800,
+    "candidate_generated_output_stop_when_exposed": 3000000,
+    "helper_task_starts": 72
+  },
+  "outcome": "Five semantic matched comparisons yielded quality-failure verdicts. Additional structural/infrastructure and route failures preserved. Native canary current one-finding review passed with qualifications; independent native qualification remains unestablished. No qualified recipe, replications or integrated execution success. Exact terminal matrix supplied separately.",
+  "unfinished_scope": "All16 method hypotheses not screened;12 interpretable comparisons/8substantive/3discovery-repo not achieved; replication and6integratedcaseexecutions not achieved. Prepared/unrun/unit/canary artifacts do not count.",
+  "post_envelope_activity": "Administrative readout/custody audit/publication of already-frozen evidence only, explicitly outside campaign. No new experiment, model call, adapter repair or semantic regrade.",
+  "no_continuation_authority": "Do not silently reset deadline, native Goal, per-task caps or finite repair allowances. A later tranche needs explicit new user envelope; existing frozen repairs/failures remain unchanged.",
+  "historical_checkpoints": [
+    "RESTART_CHECKPOINT_SECOND.json",
+    "RESTART_CHECKPOINT_SECOND_SUPPLEMENT.json",
+    "ops/pause-second-restart.json"
+  ],
+  "new_closeout_task_roles": [
+    {
+      "name": "expired_requirements_audit",
+      "model_requested": "gpt-6.1-sol",
+      "effort_requested": "xhigh",
+      "fork": "none",
+      "role": "existing-evidence requirements audit, no semantic regrade"
+    },
+    {
+      "name": "expired_custody_accounting",
+      "model_requested": "gpt-6.1-sol",
+      "effort_requested": "medium",
+      "fork": "none",
+      "role": "existing-byte custody/metrics verification"
+    },
+    {
+      "name": "expired_closeout_publisher",
+      "model_requested": "gpt-6.1-sol",
+      "effort_requested": "medium",
+      "fork": "none",
+      "role": "terminal publication only"
+    }
+  ],
+  "known_prior_helper_task_start_conservative_count": 55,
+  "current_closeout_helper_task_starts": 3,
+  "known_combined_conservative_helper_start_count": 58,
+  "undocumented_helper_usage": "unknown; do not claim complete exact token compliance",
+  "created_epoch": 1790875705.7080674
+}

@@ -1,7 +1,3 @@
-**TERMINAL — GLOBAL ELAPSED ENVELOPE EXPIRED.** Fixed deadline: 2026-10-01 02:06:46 UTC. The October 1 17:24:38 UTC continuation arrived 15h 17m 52s after that deadline; restart pauses do not reset it. No candidate, experiment, evaluation or integration work is admitted. Further research requires a new explicit budget envelope.
-
-[Terminal readout and limits](TERMINAL.md).
-
 # Reproduce and inspect
 
 Start at [results](RESULTS.md), [methods](methods.json), [attempts](attempts.jsonl), and [source freeze](cohort-evidence/source-freeze.json). Candidate directories contain the actual frozen deliverables, exact Goal and TASK text, prospective configuration and input hashes, output integrity, separated metrics, and selected exact native receipt fields. Missing artifacts are enumerated rather than regenerated. T01 aggregate is mechanical concatenation of the two actual control bodies.

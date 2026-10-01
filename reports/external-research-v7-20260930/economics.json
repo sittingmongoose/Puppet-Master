@@ -1,10 +1,10 @@
 {
-  "as_of_epoch": 1790782093.6996675,
-  "counted_launch_admissions": 19,
-  "known_native_goal_starts": 17,
+  "as_of_epoch": null,
+  "counted_launch_admissions": 20,
+  "known_native_goal_starts": 18,
   "pre_goal_failures": 2,
-  "occupied_slot_seconds_as_of_snapshot": 8625.780723571777,
-  "reported_candidate_output_tokens_lower_bound": 297249,
+  "occupied_slot_seconds_as_of_snapshot": 9340.536205530167,
+  "reported_candidate_output_tokens_lower_bound": 366778,
   "generated_output_completeness": "unknown; all figures partial, native children/cancellation/unexposed fields retained unknown",
   "parent_sol_usage": "includes input; generated component unknown",
   "helper_generated_tokens": null,
@@ -25,7 +25,7 @@
     "quality": "both quality failure; treatment lower elapsed observed, no same-quality speedup claim",
     "current_summary": "reviews/R003-R004-current-only-summary.json"
   },
-  "as_of_utc": "2026-09-30T16:24:47.383306+00:00",
+  "as_of_utc": "2026-09-30 second-pause frozen accounting; not a new live runtime measurement",
   "same_quality_efficiency_claim": false,
   "new_terminal_attempt_metrics": "cohort-evidence/terminal-attempts.json",
   "post_snapshot_final_hold_accounting": {
@@ -110,7 +110,17 @@
       "totalTokens": 57151
     },
     "meter_completeness": "unknown",
-    "qualification": "self-pass; independent native proof pending",
+    "qualification": "host self-pass; tiny current review passed with qualifications for one finding; independent native qualification UNESTABLISHED partial, not productive authority",
     "same_quality_efficiency_win": false
-  }
+  },
+  "historical_initial_snapshot": {
+    "as_of_epoch": 1790782093.6996675,
+    "counted_launch_admissions": 19,
+    "known_native_goal_starts": 17,
+    "occupied_slot_seconds_as_of_snapshot": 8625.780723571777,
+    "reported_candidate_output_tokens_lower_bound": 297249,
+    "as_of_utc": "2026-09-30T16:24:47.383306+00:00"
+  },
+  "publication_status": "TERMINAL GLOBAL ELAPSED ENVELOPE EXPIRED",
+  "administrative_closeout_as_of_utc": "2026-10-01T17:29:11.818480+00:00"
 }

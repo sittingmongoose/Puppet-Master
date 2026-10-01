@@ -1,0 +1,567 @@
+{
+  "accounting": {
+    "admissions": 20,
+    "admissions_after_deadline": 0,
+    "all_released": true,
+    "entries": [
+      {
+        "admitted_epoch": 1790779709.1883001,
+        "elapsed_seconds": 265.28252816200256,
+        "family": "M",
+        "id": "t02-m-ome-dev1-control-r1",
+        "native_identity_recorded": true,
+        "native_quiescent_recorded": true,
+        "own_process_group_absent_recorded": true,
+        "receipt_actual_sha256": "f9115cad8c06e8fa404c48c374d53a924662d237fff2f4a4c9590c05525496e5",
+        "receipt_expected_sha256": "f9115cad8c06e8fa404c48c374d53a924662d237fff2f4a4c9590c05525496e5",
+        "receipt_path": "attempts/t02-m-ome-dev1-control-r1/native/receipt.json",
+        "released_epoch": 1790779974.4708283,
+        "reported_output_tokens": 16340
+      },
+      {
+        "admitted_epoch": 1790779710.3732014,
+        "elapsed_seconds": 339.104074716568,
+        "family": "M",
+        "id": "t02-m-ome-dev1-treatment-r1",
+        "native_identity_recorded": true,
+        "native_quiescent_recorded": true,
+        "own_process_group_absent_recorded": true,
+        "receipt_actual_sha256": "30ba464a92bbe0393b6122ee034bb54d374085f0992c590ed51253b77b3840a2",
+        "receipt_expected_sha256": "30ba464a92bbe0393b6122ee034bb54d374085f0992c590ed51253b77b3840a2",
+        "receipt_path": "attempts/t02-m-ome-dev1-treatment-r1/native/receipt.json",
+        "released_epoch": 1790780049.477276,
+        "reported_output_tokens": 21010
+      },
+      {
+        "admitted_epoch": 1790779711.559406,
+        "elapsed_seconds": 859.479576587677,
+        "family": "Z",
+        "id": "t06-z-ome-dev1-control-r1",
+        "native_identity_recorded": true,
+        "native_quiescent_recorded": true,
+        "own_process_group_absent_recorded": true,
+        "receipt_actual_sha256": "8a13e3d99daa09be8a0e6aa961d36b95327355418247ca2c8dbf07364fad7d70",
+        "receipt_expected_sha256": "8a13e3d99daa09be8a0e6aa961d36b95327355418247ca2c8dbf07364fad7d70",
+        "receipt_path": "attempts/t06-z-ome-dev1-control-r1/native/receipt.json",
+        "released_epoch": 1790780571.0389826,
+        "reported_output_tokens": 35463
+      },
+      {
+        "admitted_epoch": 1790779712.7106817,
+        "elapsed_seconds": 631.5733661651611,
+        "family": "Z",
+        "id": "t06-z-ome-dev1-treatment-r1",
+        "native_identity_recorded": true,
+        "native_quiescent_recorded": true,
+        "own_process_group_absent_recorded": true,
+        "receipt_actual_sha256": "2e627e93bf3539c82b5287cc8ad24961fe6ddcd77f37f97062da7d42321fbf2b",
+        "receipt_expected_sha256": "2e627e93bf3539c82b5287cc8ad24961fe6ddcd77f37f97062da7d42321fbf2b",
+        "receipt_path": "attempts/t06-z-ome-dev1-treatment-r1/native/receipt.json",
+        "released_epoch": 1790780344.2840478,
+        "reported_output_tokens": 28567
+      },
+      {
+        "admitted_epoch": 1790779906.3848898,
+        "elapsed_seconds": 0.6180615425109863,
+        "family": "L",
+        "id": "t08-l-ome-discovery-screen-v3-control",
+        "native_identity_recorded": false,
+        "native_quiescent_recorded": true,
+        "own_process_group_absent_recorded": true,
+        "receipt_actual_sha256": null,
+        "receipt_expected_sha256": null,
+        "receipt_path": null,
+        "released_epoch": 1790779907.0029514,
+        "reported_output_tokens": null
+      },
+      {
+        "admitted_epoch": 1790779906.398833,
+        "elapsed_seconds": 0.6051919460296631,
+        "family": "L",
+        "id": "t08-l-ome-discovery-screen-v3-treatment",
+        "native_identity_recorded": false,
+        "native_quiescent_recorded": true,
+        "own_process_group_absent_recorded": true,
+        "receipt_actual_sha256": null,
+        "receipt_expected_sha256": null,
+        "receipt_path": null,
+        "released_epoch": 1790779907.004025,
+        "reported_output_tokens": null
+      },
+      {
+        "admitted_epoch": 1790780311.5959523,
+        "elapsed_seconds": 358.97495555877686,
+        "family": "M",
+        "id": "t01-m-ome-batching-screen-v1-treatment",
+        "native_identity_recorded": true,
+        "native_quiescent_recorded": true,
+        "own_process_group_absent_recorded": true,
+        "receipt_actual_sha256": "5fa1f748c69d4d718461eecf667cd4d9afc5ca6e5bc0f0b9621b5b22d5555b17",
+        "receipt_expected_sha256": "5fa1f748c69d4d718461eecf667cd4d9afc5ca6e5bc0f0b9621b5b22d5555b17",
+        "receipt_path": "methods-v1/pairs/t01-m-ome-batching-screen-v1/treatment/native/receipt.json",
+        "released_epoch": 1790780670.5709078,
+        "reported_output_tokens": 24996
+      },
+      {
+        "admitted_epoch": 1790780312.754942,
+        "elapsed_seconds": 420.52099442481995,
+        "family": "M",
+        "id": "t01-m-ome-batching-screen-v1-control-opening",
+        "native_identity_recorded": true,
+        "native_quiescent_recorded": true,
+        "own_process_group_absent_recorded": true,
+        "receipt_actual_sha256": "0afbed3179a3140faed781428115001282b3278f96ace882d30af919252378c9",
+        "receipt_expected_sha256": "0afbed3179a3140faed781428115001282b3278f96ace882d30af919252378c9",
+        "receipt_path": "methods-v1/pairs/t01-m-ome-batching-screen-v1/control-opening/native/receipt.json",
+        "released_epoch": 1790780733.2759364,
+        "reported_output_tokens": 25078
+      },
+      {
+        "admitted_epoch": 1790780810.0127606,
+        "elapsed_seconds": 299.38376903533936,
+        "family": "M",
+        "id": "t01-m-ome-batching-screen-v1-control-display",
+        "native_identity_recorded": true,
+        "native_quiescent_recorded": true,
+        "own_process_group_absent_recorded": true,
+        "receipt_actual_sha256": "2b4b037ccecc20736975a2bca376bfd8a3070755ef6d669a79dc5828c08c7c62",
+        "receipt_expected_sha256": "2b4b037ccecc20736975a2bca376bfd8a3070755ef6d669a79dc5828c08c7c62",
+        "receipt_path": "methods-v1/pairs/t01-m-ome-batching-screen-v1/control-display/native/receipt.json",
+        "released_epoch": 1790781109.3965297,
+        "reported_output_tokens": 18462
+      },
+      {
+        "admitted_epoch": 1790780860.3338668,
+        "elapsed_seconds": 579.6315906047821,
+        "family": "L",
+        "id": "t08-l-ome-discovery-screen-v4-control.r2",
+        "native_identity_recorded": true,
+        "native_quiescent_recorded": true,
+        "own_process_group_absent_recorded": true,
+        "receipt_actual_sha256": null,
+        "receipt_expected_sha256": null,
+        "receipt_path": null,
+        "released_epoch": 1790781439.9654574,
+        "reported_output_tokens": 225
+      },
+      {
+        "admitted_epoch": 1790780860.367188,
+        "elapsed_seconds": 579.8056280612946,
+        "family": "L",
+        "id": "t08-l-ome-discovery-screen-v4-treatment.r2",
+        "native_identity_recorded": true,
+        "native_quiescent_recorded": true,
+        "own_process_group_absent_recorded": true,
+        "receipt_actual_sha256": null,
+        "receipt_expected_sha256": null,
+        "receipt_path": null,
+        "released_epoch": 1790781440.172816,
+        "reported_output_tokens": 203
+      },
+      {
+        "admitted_epoch": 1790780964.4059017,
+        "elapsed_seconds": 533.352037191391,
+        "family": "M",
+        "id": "t09-m-azure-discovery-screen-v1-control",
+        "native_identity_recorded": true,
+        "native_quiescent_recorded": true,
+        "own_process_group_absent_recorded": true,
+        "receipt_actual_sha256": "3b7b947519346e3202b42e0998660c33378730c80ba608c462d93a5cb8970588",
+        "receipt_expected_sha256": "3b7b947519346e3202b42e0998660c33378730c80ba608c462d93a5cb8970588",
+        "receipt_path": "methods-v1/pairs/t09-m-azure-discovery-screen-v1/control/native/receipt.json",
+        "released_epoch": 1790781497.7579389,
+        "reported_output_tokens": 33741
+      },
+      {
+        "admitted_epoch": 1790781239.2491007,
+        "elapsed_seconds": 872.6404337882996,
+        "family": "Z",
+        "id": "t03-z-ome-render-screen-v2-treatment",
+        "native_identity_recorded": true,
+        "native_quiescent_recorded": true,
+        "own_process_group_absent_recorded": true,
+        "receipt_actual_sha256": "48d0226fe263231aa6d9e7c80dc81e42a3d3d70a7e6b5b3aef60c390b5c46746",
+        "receipt_expected_sha256": "48d0226fe263231aa6d9e7c80dc81e42a3d3d70a7e6b5b3aef60c390b5c46746",
+        "receipt_path": "methods-v1/pairs/t03-z-ome-render-screen-v2/treatment/native/receipt.json",
+        "released_epoch": 1790782111.8895345,
+        "reported_output_tokens": 615
+      },
+      {
+        "admitted_epoch": 1790781240.4190722,
+        "elapsed_seconds": 872.63991522789,
+        "family": "Z",
+        "id": "t03-z-ome-render-screen-v2-control",
+        "native_identity_recorded": true,
+        "native_quiescent_recorded": true,
+        "own_process_group_absent_recorded": true,
+        "receipt_actual_sha256": "d15fca5d5f614581743a34d65fd134f17238c02c7ad24e4642cc38253b49e17a",
+        "receipt_expected_sha256": "d15fca5d5f614581743a34d65fd134f17238c02c7ad24e4642cc38253b49e17a",
+        "receipt_path": "methods-v1/pairs/t03-z-ome-render-screen-v2/control/native/receipt.json",
+        "released_epoch": 1790782113.0589874,
+        "reported_output_tokens": 30767
+      },
+      {
+        "admitted_epoch": 1790781378.6924536,
+        "elapsed_seconds": 419.28450059890747,
+        "family": "M",
+        "id": "t09-m-azure-discovery-screen-v1-treatment",
+        "native_identity_recorded": true,
+        "native_quiescent_recorded": true,
+        "own_process_group_absent_recorded": true,
+        "receipt_actual_sha256": "a61418de7c1769275d0c7957fe6154a49f0943fe22a38fa24c3bd74c6f134209",
+        "receipt_expected_sha256": "a61418de7c1769275d0c7957fe6154a49f0943fe22a38fa24c3bd74c6f134209",
+        "receipt_path": "methods-v1/pairs/t09-m-azure-discovery-screen-v1/treatment/native/receipt.json",
+        "released_epoch": 1790781797.9769542,
+        "reported_output_tokens": 25003
+      },
+      {
+        "admitted_epoch": 1790784606.2170174,
+        "elapsed_seconds": 345.0516531467438,
+        "family": "M",
+        "id": "t13-m-ome-amendments-screen-v1-control",
+        "native_identity_recorded": true,
+        "native_quiescent_recorded": true,
+        "own_process_group_absent_recorded": true,
+        "receipt_actual_sha256": "a5973e4a03303388475a5a7a525559e6ba91c00f085110969e62e5eb03456dde",
+        "receipt_expected_sha256": "a5973e4a03303388475a5a7a525559e6ba91c00f085110969e62e5eb03456dde",
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/control/native/receipt.json",
+        "released_epoch": 1790784951.2686706,
+        "reported_output_tokens": 5847
+      },
+      {
+        "admitted_epoch": 1790784606.223315,
+        "elapsed_seconds": 367.0076012611389,
+        "family": "M",
+        "id": "t13-m-ome-amendments-screen-v1-treatment",
+        "native_identity_recorded": true,
+        "native_quiescent_recorded": true,
+        "own_process_group_absent_recorded": true,
+        "receipt_actual_sha256": "fb792425117e539739a9667d3700419634d2702027b5425cd0b9592f0f59695c",
+        "receipt_expected_sha256": "fb792425117e539739a9667d3700419634d2702027b5425cd0b9592f0f59695c",
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t13-m-ome-amendments-screen-v1/treatment/native/receipt.json",
+        "released_epoch": 1790784973.2309163,
+        "reported_output_tokens": 4297
+      },
+      {
+        "admitted_epoch": 1790784959.2216306,
+        "elapsed_seconds": 447.09534525871277,
+        "family": "M",
+        "id": "t14-m-ome-negative-screen-v1-control",
+        "native_identity_recorded": true,
+        "native_quiescent_recorded": true,
+        "own_process_group_absent_recorded": true,
+        "receipt_actual_sha256": "6823fcc76c41163873064cc61eeaabbdc1ef208b3c3ea4dee5468e5e7fc23f00",
+        "receipt_expected_sha256": "6823fcc76c41163873064cc61eeaabbdc1ef208b3c3ea4dee5468e5e7fc23f00",
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t14-m-ome-negative-screen-v1/control/native/receipt.json",
+        "released_epoch": 1790785406.3169758,
+        "reported_output_tokens": 26635
+      },
+      {
+        "admitted_epoch": 1790785053.6537971,
+        "elapsed_seconds": 811.4760015010834,
+        "family": "M",
+        "id": "t14-m-ome-negative-screen-v1-treatment",
+        "native_identity_recorded": true,
+        "native_quiescent_recorded": true,
+        "own_process_group_absent_recorded": true,
+        "receipt_actual_sha256": "a0a57cc80ff4c1930a28975748cf7f0bb11b9770d2a3d7971e8fc6a0f964f3ec",
+        "receipt_expected_sha256": "a0a57cc80ff4c1930a28975748cf7f0bb11b9770d2a3d7971e8fc6a0f964f3ec",
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-v1/pairs/t14-m-ome-negative-screen-v1/treatment/native/receipt.json",
+        "released_epoch": 1790785865.1297987,
+        "reported_output_tokens": 59561
+      },
+      {
+        "admitted_epoch": 1790790924.3729877,
+        "elapsed_seconds": 337.0089807510376,
+        "family": "Z",
+        "id": "z-runtime2-ome-useful-canary-r1",
+        "native_identity_recorded": true,
+        "native_quiescent_recorded": true,
+        "own_process_group_absent_recorded": true,
+        "receipt_actual_sha256": "1c563d1c086bb08d05df75e0025c125025a5bd831bd29f75ed2edee4931aad79",
+        "receipt_expected_sha256": "1c563d1c086bb08d05df75e0025c125025a5bd831bd29f75ed2edee4931aad79",
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/staging-canary-final2/canary-attempt/native/receipt.json",
+        "released_epoch": 1790791261.3819685,
+        "reported_output_tokens": 9968
+      }
+    ],
+    "latest_admission_epoch": 1790790924.3729877,
+    "latest_admission_id": "z-runtime2-ome-useful-canary-r1",
+    "native_goal_mode_activations": "18 recorded by campaign; 18 identity-bearing slot entries corroborate count, not a fresh activation",
+    "native_identity_bearing_admissions": 18,
+    "no_token_or_account_compliance_claim": true,
+    "reported_output_tokens_lower_bound": 366778,
+    "slot_source_sha256": "67b8197962ab390f3a5d858047ed5d97341ead5069499034ff219e9d1083024c",
+    "total_admission_to_release_seconds": 9340.536205530167,
+    "unknown_usage": [
+      "native children",
+      "cancelled output not fully metered",
+      "helper generated output",
+      "parent generated output",
+      "sibling/account-wide use",
+      "actual monetary bill"
+    ]
+  },
+  "boundary": {
+    "global_boundary_source": {
+      "path": "closeout/global-boundary.json",
+      "sha256": "3b8a92cc378b3efe2444b5026b26180df672402d40369589832262a1c355319c"
+    },
+    "global_deadline_expired": true,
+    "no_new_goal": true,
+    "no_research": true,
+    "no_restart": true,
+    "no_semantic_grading": true,
+    "no_signal_sent": true,
+    "no_slots_mutation": true,
+    "pause_markers_left_in_place": [
+      {
+        "path": "PAUSED",
+        "sha256": "0ba7d2dfa4bd66c1b67d1404597bd6c925b85311048e413eb09eddd46436e369"
+      },
+      {
+        "path": "ops/PAUSED",
+        "sha256": "a82284a1ff431054b9afa9e00485ece9ddff2ad977d697648178c3ec0d251651"
+      }
+    ]
+  },
+  "classification": "POST-envelope administrative verification; outside campaign elapsed; no new run or candidate admission",
+  "completed_epoch": 1790875792.8001015,
+  "completed_utc": "2026-10-01T17:29:52.800102+00:00",
+  "deadline_epoch": 1790820406,
+  "frozen_runtime": {
+    "closure": [
+      {
+        "actual_sha256": "770b65b3493c50c1198c8e6284822dfb0801ae5f0796b1810d05084dab555d8c",
+        "expected_sha256": "770b65b3493c50c1198c8e6284822dfb0801ae5f0796b1810d05084dab555d8c",
+        "matches": true,
+        "path": "dev/auth-boundary-design-v1/design.md"
+      },
+      {
+        "actual_sha256": "7f24b0cb372cda05e8bbefa36bf40a6f470c37e485e9df4e037cdbd2f8c09d90",
+        "expected_sha256": "7f24b0cb372cda05e8bbefa36bf40a6f470c37e485e9df4e037cdbd2f8c09d90",
+        "matches": true,
+        "path": "dev/auth-boundary-design-v1/selected-runtime-controls.json"
+      },
+      {
+        "actual_sha256": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+        "expected_sha256": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+        "matches": true,
+        "path": "dev/harness-v1-frozen/native/run_goal.py"
+      },
+      {
+        "actual_sha256": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+        "expected_sha256": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+        "matches": true,
+        "path": "dev/harness-v1-frozen/native/zcode_goal_driver.py"
+      },
+      {
+        "actual_sha256": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633",
+        "expected_sha256": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633",
+        "matches": true,
+        "path": "dev/harness-v1-frozen/native/zcode_native.py"
+      },
+      {
+        "actual_sha256": "3fda9644f7cc67e202b54c6baa067cd393ee2e6518f5ce00549c0801a86a8c05",
+        "expected_sha256": "3fda9644f7cc67e202b54c6baa067cd393ee2e6518f5ce00549c0801a86a8c05",
+        "matches": true,
+        "path": "dev/runtime-boundary-final-repair2/INTERFACE.md"
+      },
+      {
+        "actual_sha256": "113580e30510c03ae0951bb6fd3f760cb600db9346c930e2498a37bffd897988",
+        "expected_sha256": "113580e30510c03ae0951bb6fd3f760cb600db9346c930e2498a37bffd897988",
+        "matches": true,
+        "path": "dev/runtime-boundary-final-repair2/README.md"
+      },
+      {
+        "actual_sha256": "d2f258784b8d02a7069b0f8cb2dec3539b7aa4d401c03fdbd84661aefc7ae8af",
+        "expected_sha256": "d2f258784b8d02a7069b0f8cb2dec3539b7aa4d401c03fdbd84661aefc7ae8af",
+        "matches": true,
+        "path": "dev/runtime-boundary-final-repair2/admission.py"
+      },
+      {
+        "actual_sha256": "e4b39a3bbb978968ec4ac9684bd8bf1c1662e9f594293808444fd6c18bcc7621",
+        "expected_sha256": "e4b39a3bbb978968ec4ac9684bd8bf1c1662e9f594293808444fd6c18bcc7621",
+        "matches": true,
+        "path": "dev/runtime-boundary-final-repair2/boundary.py"
+      },
+      {
+        "actual_sha256": "88031fa3534763fda4e3841337ece12cb3e2fef1ed03739d1b1172af379dd7bd",
+        "expected_sha256": "88031fa3534763fda4e3841337ece12cb3e2fef1ed03739d1b1172af379dd7bd",
+        "matches": true,
+        "path": "dev/runtime-boundary-final-repair2/forced-driver-death/receipt.json"
+      },
+      {
+        "actual_sha256": "855224ce1e4e316a3b28eb75c2720a82173d848e58d0fc8411f6dc3af82644b6",
+        "expected_sha256": "855224ce1e4e316a3b28eb75c2720a82173d848e58d0fc8411f6dc3af82644b6",
+        "matches": true,
+        "path": "dev/runtime-boundary-final-repair2/forced-mcp-parent-death/receipt.json"
+      },
+      {
+        "actual_sha256": "3aa60ec7c7a3886619835c2e5238579e415223041828775f9e226331c3faa438",
+        "expected_sha256": "3aa60ec7c7a3886619835c2e5238579e415223041828775f9e226331c3faa438",
+        "matches": true,
+        "path": "dev/runtime-boundary-final-repair2/host_guard.py"
+      },
+      {
+        "actual_sha256": "9894fa2d82f801cf2d70f1f0a9756e2a14e7bcbd59fe95d69459d6d552d4baa9",
+        "expected_sha256": "9894fa2d82f801cf2d70f1f0a9756e2a14e7bcbd59fe95d69459d6d552d4baa9",
+        "matches": true,
+        "path": "dev/runtime-boundary-final-repair2/native_runner.py"
+      },
+      {
+        "actual_sha256": "c69a509fd4f07b7453d3edb2e5df991891face7ec1b46d3ee53dd83262ffb5de",
+        "expected_sha256": "c69a509fd4f07b7453d3edb2e5df991891face7ec1b46d3ee53dd83262ffb5de",
+        "matches": true,
+        "path": "dev/runtime-boundary-final-repair2/offline-checks.txt"
+      },
+      {
+        "actual_sha256": "34f536cf3d811facbbe0884a7e98ee96e225926c4b031dece590e47fb108f995",
+        "expected_sha256": "34f536cf3d811facbbe0884a7e98ee96e225926c4b031dece590e47fb108f995",
+        "matches": true,
+        "path": "dev/runtime-boundary-final-repair2/probe_no_goal.py"
+      },
+      {
+        "actual_sha256": "19b3e2ddcb39cefbeec8a152690dea1172a0d7265218dbc9691c582c6528084e",
+        "expected_sha256": "19b3e2ddcb39cefbeec8a152690dea1172a0d7265218dbc9691c582c6528084e",
+        "matches": true,
+        "path": "dev/runtime-boundary-final-repair2/review-snapshot.json"
+      },
+      {
+        "actual_sha256": "e8f1b641b20981a0109c36dc2010d23d2c90d0ca0ed4966dbb1139b80ef5ca31",
+        "expected_sha256": "e8f1b641b20981a0109c36dc2010d23d2c90d0ca0ed4966dbb1139b80ef5ca31",
+        "matches": true,
+        "path": "dev/runtime-boundary-final-repair2/startup-no-goal-private-logging/receipt.json"
+      },
+      {
+        "actual_sha256": "64d6b1ddbb1434deb47fa5b50b8c6849cf6adcbcda4e2b0c3ebf5b42762f688c",
+        "expected_sha256": "64d6b1ddbb1434deb47fa5b50b8c6849cf6adcbcda4e2b0c3ebf5b42762f688c",
+        "matches": true,
+        "path": "dev/runtime-boundary-final-repair2/startup-no-goal-supported-config/receipt.json"
+      },
+      {
+        "actual_sha256": "4b446ca7ab2f99987a71adff50ecda1a63069629683c1d35dad94ffebc1c5844",
+        "expected_sha256": "4b446ca7ab2f99987a71adff50ecda1a63069629683c1d35dad94ffebc1c5844",
+        "matches": true,
+        "path": "dev/runtime-boundary-final-repair2/startup-no-goal/receipt.json"
+      },
+      {
+        "actual_sha256": "17b72bfd7e3bee95ebac1f88aed3b9263d1ac9514b8c51ba5fcde909e8d52dd9",
+        "expected_sha256": "17b72bfd7e3bee95ebac1f88aed3b9263d1ac9514b8c51ba5fcde909e8d52dd9",
+        "matches": true,
+        "path": "dev/runtime-boundary-final-repair2/storage-and-native-goal-controls.json"
+      },
+      {
+        "actual_sha256": "f68b844969df146e52c055042c5a6f0db2898e2f70f845f9e06c54920d18ba73",
+        "expected_sha256": "f68b844969df146e52c055042c5a6f0db2898e2f70f845f9e06c54920d18ba73",
+        "matches": true,
+        "path": "dev/runtime-boundary-final-repair2/test_admission.py"
+      },
+      {
+        "actual_sha256": "9649feb3fcdd9fe423a1e6db0a18116ccb68d1db0deaeb6ae140a2a68f09b7bf",
+        "expected_sha256": "9649feb3fcdd9fe423a1e6db0a18116ccb68d1db0deaeb6ae140a2a68f09b7bf",
+        "matches": true,
+        "path": "dev/runtime-boundary-final-repair2/test_contract.py"
+      },
+      {
+        "actual_sha256": "18018ffa38006f9ff1d22e3f06d115982872c9bfe4ab75e87e258dcdc9a2d1a3",
+        "expected_sha256": "18018ffa38006f9ff1d22e3f06d115982872c9bfe4ab75e87e258dcdc9a2d1a3",
+        "matches": true,
+        "path": "dev/runtime-boundary-final-repair2/test_lifecycle.py"
+      },
+      {
+        "actual_sha256": "6a6fc98a024f9c50ba21c626bc85e2b031bbcdc69b3431d638d093022a0ed758",
+        "expected_sha256": "6a6fc98a024f9c50ba21c626bc85e2b031bbcdc69b3431d638d093022a0ed758",
+        "matches": true,
+        "path": "dev/runtime-boundary-final-repair2/test_mcp_lifecycle.py"
+      },
+      {
+        "actual_sha256": "72557b5e8d5c4f529570b55bd4c04867fb7b72d88bfbbd351fc8fbfce65eb0dd",
+        "expected_sha256": "72557b5e8d5c4f529570b55bd4c04867fb7b72d88bfbbd351fc8fbfce65eb0dd",
+        "matches": true,
+        "path": "dev/runtime-boundary-final-repair2/tool_server.py"
+      },
+      {
+        "actual_sha256": "ce801ca3988e4f598a79aa3e3cb4ee2da5489d3cf5d04e4e71c65fae00853059",
+        "expected_sha256": "ce801ca3988e4f598a79aa3e3cb4ee2da5489d3cf5d04e4e71c65fae00853059",
+        "matches": true,
+        "path": "dev/runtime-boundary-repair-v2/review-snapshot.json"
+      }
+    ],
+    "external_executables_and_native_bundle": "not re-read; outside custody scope",
+    "freeze_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/dev/runtime-boundary-final-repair2/FREEZE.json",
+    "freeze_sha256": "eb0c97ee748afa3cee832a87501c92e0b30a5e5b67e6541ac6bbc00edbbd5625",
+    "independent_review_sha256_actual": "221200efa800242afda5c7b7782b36bcf5b68798fa18ec937a85d362570bcf5e",
+    "independent_review_sha256_expected": "221200efa800242afda5c7b7782b36bcf5b68798fa18ec937a85d362570bcf5e",
+    "runtime_snapshot_actual_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+    "runtime_snapshot_matches": true,
+    "runtime_snapshot_path": "dev/runtime-boundary-final-repair2/review-snapshot-final.json",
+    "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+    "staging_freeze_sha256": "eb0c97ee748afa3cee832a87501c92e0b30a5e5b67e6541ac6bbc00edbbd5625"
+  },
+  "helper_events": {
+    "conservative_task_events_before_today": 55,
+    "excluded_failure_records": 3,
+    "helper_start_ceiling": 72,
+    "helper_start_ceiling_compliance": "unknown: omissions, reconciled true start times and duplicate identities unresolved",
+    "interpretation": "task/start/continuation event count, not deduplicated helper identities; reconciled timestamps are record times; unknown true start times and duplicates remain",
+    "kind_counts": {
+      "helper_continuation": 1,
+      "helper_failure": 3,
+      "helper_start": 17,
+      "helper_task_start": 18,
+      "reconciled_helper_start": 7,
+      "reconciled_helper_task_start": 12
+    },
+    "known_combined_conservative_task_count": 58,
+    "post_envelope_closeout_tasks_parent_declared": 3,
+    "post_envelope_in_current_helper_log": 0,
+    "post_envelope_task_source": {
+      "path": "closeout/administrative-task-starts.json",
+      "sha256": "9d09f68c7c43e222a76a0558f55005d0bd3d5ab5eeb76028345908cdf1352d05"
+    },
+    "post_envelope_tasks_candidate_activations": 0,
+    "records": 58,
+    "source_sha256": "d0beff33cac280d915f2264b3c50b7f6a5f66b91914ff68c002e744fd64aa959"
+  },
+  "historical_preservation": {
+    "actual_files": 8311,
+    "actual_matched_bytes": 2025997108,
+    "baseline_bytes": 2025997108,
+    "baseline_files": 8311,
+    "baseline_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/historical-preservation-baseline.json",
+    "baseline_sha256_after": "643293db2793f1a806b840c6b9e8d863bd8fb6c668fca89854bb344cad34f61d",
+    "baseline_sha256_before": "643293db2793f1a806b840c6b9e8d863bd8fb6c668fca89854bb344cad34f61d",
+    "changed": [],
+    "comparison": "all original file SHA-256 hashes read once via streaming; contents never printed; no baseline overwrite",
+    "extra": [],
+    "missing": [],
+    "read_errors": [],
+    "root": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926"
+  },
+  "limitations": [
+    "No whole-host process inventory; absence checks limited to three specified prior canary PIDs.",
+    "Historical receipt quiescence is recorded evidence, not proof of every possible unknown child on host.",
+    "External binaries not independently rehashed in this administrative scope."
+  ],
+  "own_prior_canary_process_identity": [
+    {
+      "exists": false,
+      "pid": 148297,
+      "signal_sent": false
+    },
+    {
+      "exists": false,
+      "pid": 148298,
+      "signal_sent": false
+    },
+    {
+      "exists": false,
+      "pid": 148301,
+      "signal_sent": false
+    }
+  ],
+  "schema": "er7.post_envelope.custody_accounting.v1",
+  "seconds_after_deadline_at_completion": 55386.80010151863,
+  "started_epoch": 1790875735.2719963
+}

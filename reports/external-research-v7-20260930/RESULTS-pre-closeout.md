@@ -1,18 +1,8 @@
-**TERMINAL — GLOBAL ELAPSED ENVELOPE EXPIRED.** Fixed deadline: 2026-10-01 02:06:46 UTC. The October 1 17:24:38 UTC continuation arrived 15h 17m 52s after that deadline; restart pauses do not reset it. No candidate, experiment, evaluation or integration work is admitted. Further research requires a new explicit budget envelope.
-
-# Terminal campaign closeout
-
-Actual frozen accounting: **20 admissions, 18 native Goals, 9,340.536 occupied slot seconds, 366,778 reported generated-token lower bound**; complete generated usage, native children, helper generated tokens and fees remain unknown. Five matched semantic quality-failure pairs produced ten reviewed reports (T14 certification partial); T03 is structural failure, T13 infrastructure-limited, and Luna T08 remains quarantined. The completed Z canary passed a tiny current review with qualifications for exactly one finding; independent native qualification remains **UNESTABLISHED**, partial and insufficient for productive authority. No qualified one-account recipe or same-quality efficiency win is established.
-
-See [terminal readout](TERMINAL.md), [requirements audit](closeout/requirements-audit.md) and [closeout custody/accounting](closeout/custody-accounting.json).
-
-## Historical published checkpoint (retained; superseded for current status)
-
-The following checkpoint prose records earlier state only. Its pause/resume language, earlier counters and pending runtime preparation do not authorize any further work.
+**PAUSED — user requested a second restart. No admissions or existing Goal restarts until explicit user resume.**
 
 # Resumed campaign — partial reviewed results
 
-Ten current candidate reports across T01, T02, T06, T09 and T14 have independent source-grounded quality-failure verdicts. Eight current reviews are complete; T14’s two reviews have partial certification after final validation exceeded the cap, despite complete material coverage. **No same-quality efficiency win or qualified one-account recipe is established.** At this historical checkpoint, breadth, replications and six integrated executions were incomplete.
+Ten current candidate reports across T01, T02, T06, T09 and T14 have independent source-grounded quality-failure verdicts. Eight current reviews are complete; T14’s two reviews have partial certification after final validation exceeded the cap, despite complete material coverage. **No same-quality efficiency win or qualified one-account recipe is established.** This remains an ongoing, partial campaign: breadth, replications and six integrated executions are incomplete.
 
 | Method | Frozen independent result | Timing and limits |
 |---|---|---|

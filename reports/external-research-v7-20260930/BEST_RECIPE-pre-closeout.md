@@ -1,7 +1,3 @@
-**TERMINAL — GLOBAL ELAPSED ENVELOPE EXPIRED.** Fixed deadline: 2026-10-01 02:06:46 UTC. The October 1 17:24:38 UTC continuation arrived 15h 17m 52s after that deadline; restart pauses do not reset it. No candidate, experiment, evaluation or integration work is admitted. Further research requires a new explicit budget envelope.
-
-[Terminal readout and limits](TERMINAL.md).
-
 # Best recipe
 
 No measured one-account recipe qualifies. T01/T02/T06/T09 both arms fail complete independent current review. T09 contains useful supported novelty, but material gaps remain. T06’s lower treatment latency and T01’s lower aggregate treatment cost do not establish comparable quality. T14 both arms fail quality with partial capped certification; T03/T13 lack final deliverables, and Luna remains quarantined.
@@ -10,4 +6,4 @@ The first pair’s available saved-history preservation result shows no demonstr
 
 The next discriminating work requires an independently accepted runtime, prospective exact job binding, complete semantic/current-first review and preservation analysis, followed by fresh matched replication and actual research-to-plan proposal with independent flash review. No further campaign or budget renewal is inferred.
 
-T01’s complete available-history review measures no temporal preservation benefit. T06 acquisition-to-final remains unassessed and T09 preservation remains partial. No saved-history result repairs current errors. The earlier runtime-repair checkpoint was unfrozen; the later frozen canary still has no productive native qualification. Holdout preparation has no execution result.
+T01’s complete available-history review measures no temporal preservation benefit. T06 acquisition-to-final remains unassessed and T09 preservation remains partial. No saved-history result repairs current errors. Runtime repair2 remains unfrozen, and holdout preparation has no execution result.

@@ -1,0 +1,30 @@
+{
+  "post_envelope": true,
+  "created_epoch": 1790875705.7080674,
+  "tasks": [
+    {
+      "name": "expired_requirements_audit",
+      "model_requested": "gpt-6.1-sol",
+      "effort_requested": "xhigh",
+      "fork": "none",
+      "role": "existing-evidence requirements audit, no semantic regrade"
+    },
+    {
+      "name": "expired_custody_accounting",
+      "model_requested": "gpt-6.1-sol",
+      "effort_requested": "medium",
+      "fork": "none",
+      "role": "existing-byte custody/metrics verification"
+    },
+    {
+      "name": "expired_closeout_publisher",
+      "model_requested": "gpt-6.1-sol",
+      "effort_requested": "medium",
+      "fork": "none",
+      "role": "terminal publication only"
+    }
+  ],
+  "candidate_goal_starts": 0,
+  "generated_output_tokens": null,
+  "included_helper_start_guardrail": true
+}

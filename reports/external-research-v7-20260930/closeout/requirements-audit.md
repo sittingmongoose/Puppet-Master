@@ -1,0 +1,71 @@
+# Frozen campaign terminal requirements audit
+
+Administrative audit recorded 2026-10-01T17:32:17.966945+00:00; after fixed campaign deadline 2026-10-01 02:06:46 UTC. Campaign state: **expired, incomplete**. The pause and later continue do not renew the 12-hour envelope. No new semantic grading, research, adapters, native Goals or qualification continuation was performed.
+
+16 hypotheses were registered; 8 methods had actual screen attempts. Four method pairs have full current certification (T01/T02/T06/T09); T14 adds one material-complete pair with partial capped certification. Thus strict interpretable count is 4 and the broader count is at most 5, all substantive; only T09 is discovery. T03/T13 missing outputs and T08 route failures do not count as interpretable. Five preparation-only comparison rows and the tiny one-finding canary are excluded.
+
+No replication, fresh same-configuration finalist repeat, integrated case execution, flash-reviewed research-to-plan recipe, same-quality win or measured one-account recipe is established. Actual OME/Azure screening does not satisfy the integrated-domain requirement.
+
+Recorded accounting: 20 admissions, 18 known native Goals, 9340.536205530 occupied-slot seconds, 366,778 reported generated-token lower bound. All leases released. Generated output, native children, helper output and fees remain incomplete/unknown. Recorded family occupancy peaks are {'M': 2, 'Z': 2, 'L': 2}. Canary current verdict passed with qualifications for one finding; native qualification remains UNESTABLISHED.
+
+Metadata checks: 29 frozen second-pause published-copy hashes checked, 29 matched; 5/5 canary artifacts exist. Historical baseline contains 8,311 files; complete historical closeout rehash is unassessed here. Remote visibility is the publisher’s verification responsibility.
+
+| Method | Terminal assessment | Scope |
+|---|---|---|
+| T01 | quality failure | fully certified current quality failure; Original frozen grade preserved; available-history phase does not repair it. |
+| T02 | quality failure | fully certified current quality failure; Original frozen grade preserved; available-history phase does not repair it. |
+| T03 | infrastructure-limited | unassessed; Required final reports/history absent; frozen semantic unassessed status preserved. |
+| T04 | unassessed | unassessed; Global-budget-limited: no actual method execution before fixed deadline; preparation excluded. |
+| T05 | unassessed | unassessed; Global-budget-limited: no actual method execution before fixed deadline; preparation excluded. |
+| T06 | quality failure | fully certified current quality failure; Original frozen grade preserved; available-history phase does not repair it. |
+| T07 | unassessed | unassessed; Global-budget-limited: no actual method execution before fixed deadline; preparation excluded. |
+| T08 | infrastructure-limited | unassessed; L carrier finite repair exhaustion. |
+| T09 | quality failure | fully certified current quality failure; Original frozen grade preserved; available-history phase does not repair it. |
+| T10 | unassessed | unassessed; Global-budget-limited: no actual method execution before fixed deadline; preparation excluded. |
+| T11 | unassessed | unassessed; Global-budget-limited: no actual method execution before fixed deadline; preparation excluded. |
+| T12 | unassessed | unassessed; Global-budget-limited: no actual method execution before fixed deadline; preparation excluded. |
+| T13 | infrastructure-limited | unassessed; Both native jobs blocked; required outputs absent. |
+| T14 | quality failure | quality failure; partial capped certification, complete material coverage; Current grade unchanged; later available-history review complete. |
+| T15 | unassessed | unassessed; Global-budget-limited: no actual method execution before fixed deadline; preparation excluded. |
+| T16 | unassessed | unassessed; Global-budget-limited: no actual method execution before fixed deadline; preparation excluded. |
+
+| Requirement | Status | Evidence and limit |
+|---|---|---|
+| Execute 16 distinct method hypotheses | incomplete | 16 registered; 8 unique methods with actual screen attempts Registration is proven; execution breadth is incomplete. No protocol/unit/canary/preparation row is a comparison. |
+| At least 12 interpretable comparisons | incomplete | 4 fully certified quality-assessed pairs; T14 adds 1 material-complete pair with partial capped certification Strict certified count 4; broad material-complete count at most 5. Quality failure can be interpretable; carrier failure cannot. |
+| At least 8 substantive method comparisons | incomplete | 4 fully certified substantive pairs; 1 partial-certification substantive pair At most 5, fewer than 8. |
+| At least 3 autonomous discovery or repository/issue comparisons | incomplete | T09 is the sole quality-assessed discovery comparison T08 is an actual failed route screen, not interpretable; T10/T11/T12 are preparation only. |
+| Screen methods on one available family, approximately balanced M/Z/L | incomplete | Attempted methods: M T01/T02/T09/T13/T14; Z T03/T06; L T08 L output carrier failed; no completed L comparison. |
+| Preserve declared matched controls/treatments for reported screen pairs | proven | Frozen comparison and prospective-card records retain controls/treatments This is administrative evidence binding, not renewed semantic validation. T01 control is the actual two-assignment aggregate including its capped opening. |
+| Replicate best six promising/ambiguous methods on another family/case | incomplete | No qualifying replication is established in frozen comparisons Repairs, control subassignments and canary are not method replication. |
+| Finalists include genuinely fresh same-configuration repetition | incomplete | No finalist or fresh repetition result established No old answers count as fresh work. |
+| At least six integrated case executions across explicit control/recipe layout | incomplete | 0 established integrated candidate executions Integrated templates and offline acceptance are preparation only. |
+| Integrated executions cover two domains and fresh discovery | incomplete | 0 integrated executions OME and Azure were screened, but this does not satisfy integrated coverage. |
+| Recipes end in actual research-to-plan proposal with independent candidate flash review | incomplete | No integrated proposal or candidate flash-reviewed final recipe established Sol grading is not a candidate production-path flash stage. |
+| Deliver measured affordable one-family/one-account recipe using at most 2 slots | incomplete | BEST_RECIPE.md states no measured recipe qualifies No same-quality efficiency win established; timing observations cannot repair quality failures. |
+| Use at least two substantive domains | proven | Actual OME and Azure screen outputs; Jujutsu prepared only Domain use does not imply research quality pass. |
+| Reserve untouched case/slice and confirm generalization | incomplete | Frozen holdout preparation accepted, execution held No fresh holdout confirming result. |
+| Include brief-only autonomous source discovery without evaluator answer list | proven | Frozen T09 Azure discovery comparison and independent current summaries Both arms quality failure; eligibility/source-access boundaries inherited from saved cards, not re-audited semantically. |
+| Fresh native sessions, correct runtime model/effort, Luna standalone | unassessed | Pause receipt reports 18 actual native Goals; attempt rows retain requested/effective fields Some effective identifiers remain unknown; this audit does not open native conversations or independently requalify launch routes. |
+| Campaign caps M=2 Z=2 L=2 and released leases | proven | Recorded admission/release intervals peak {'M': 2, 'Z': 2, 'L': 2}; 20 admissions, all released Recorded ledger only; sibling occupancy unknown and untouched. Native child usage remains separately unknown. |
+| At most 144 fresh Goals and 48 occupied-slot hours | proven | 20 counted admissions, 18 known actual Goals; 9340.536205530167 recorded occupied seconds Conservative admissions 20 below 144; 9340.536205530167 seconds below 172800. No new admissions authorized after expiry. |
+| Finish breadth, review and publication within fixed 12-hour campaign | incomplete | Start 1790777206; deadline 1790820406 (2026-10-01 02:06:46 UTC); envelope expired Pause and continue do not renew deadline. This closeout audit is post-envelope administration, not campaign achievement or budgeted execution. |
+| Predeclare equalized trial limits; enforce response/time caps including cleanup | unassessed | Saved slots retain cap_seconds and hard_release_deadline_epoch; evaluator overrun disclosures retained Full native response-cap audit is not performed. T14 current certification partial after 1338.528707s versus 1200s; C028 possible stage1 overrun and phase2 +54.088638s are disclosed. |
+| Helper starts, concurrency and generated-output ceilings | unassessed | 58 helper-event records; published manifest records user override to 23 simultaneous helpers Event rows are not necessarily fresh starts. Complete helper occupancy/output not established; parent generated output separately unknown. Original packet 6-helper limit has recorded user override. |
+| Protect 20% candidate reserve and final hour for evaluation/closeout | unassessed | Resource reserves recorded in manifest; large unused start/slot budget remains Continuous reservation enforcement and timely final-hour completion not independently established. |
+| Report partial usage honestly; unavailable costs are unknown | proven | 366778 generated-token lower bound; native children/cancellation meters, fees and helper output unknown No exact token-budget or affordability compliance from partial meters. Candidate starts/slot ceilings are independent controls. |
+| Candidate runtime must isolate credentials/keys and evaluator-only material | incomplete | Inherited M/Z v1 qualification withdrawn for readable auth/key boundary; new productive qualification unestablished; L quarantined No evidence inferred that candidates read credentials. Canary self-pass grants no productive launch authority. |
+| Retain failures and stop after finite two successive repair versions | proven | L finite repairs exhausted; final common runtime repair2 frozen; native canary qualification UNESTABLISHED No further repair/native qualification is authorized by expiry. This audit does not recalculate adapter-version lineage. |
+| Preserve first/repaired attempts and total endpoint cost; no best-of rescue | proven | 20 attempts rows including 4 L admissions and 1 canary; failed T03/T13 and capped T01 opening remain recorded Admissions include 2 pre-Goal failures; canary does not count as comparison. |
+| Judge current report and save before acquisition/history phase | proven | Frozen R001-R008 current assessments; R011/R012 partial capped current; staged phase2 summaries preserve original grades 8 complete current reviews +2 partial-certification reviews; history never rescues quality. Embedded cues and incomplete format blinding disclosed. |
+| All eligible reports receive independent complete assessment within bounds | incomplete | 10 current reports reviewed: 8 complete certification, 2 partial capped certification T03/T13 required final reports absent; T09 preservation partial. Tiny canary one-finding passed with qualifications, native proof unestablished. |
+| Distinguish supported acquisition, current output and temporal preservation | incomplete | Available-history coverage complete for T01/T02/T06/T14; T09 partial; no current grades changed Absent acquisition notes/unsaved observations leave acquisition-to-final unknown where disclosed. Zero observed saved-history loss is not acquisition or quality pass. |
+| Publish actual candidate deliverables/configs/code/reviews, not only hashes | proven | Local saved report root includes development outputs and review bundles; 29 frozen second-pause copies checked; 5/5 canary required artifacts present Local artifact verification only; cannot imply new GitHub visibility. Missing T03/T13 outputs explicitly preserved as absent. |
+| README links required results, methods, attempts, comparisons, economics, schedule, failures, recipe, reproduce, checkpoint | proven | All 11 required entrypoint files exist locally Link correctness and remote visibility require publisher verification; this audit performs no Git operations. |
+| Final delivery confirmed visible on GitHub at a commit | unassessed | Saved root event records earlier publication commit 7f7d56b968f7ae5f73ef01d1c4ec7942c228eaa9 Remote visibility and terminal closeout publication must be confirmed by sole publisher. |
+| Every one of 16 methods receives truthful terminal assessment | incomplete | 8 frozen method entries terminal; 8 remain queued with null terminal_assessment Closeout table below terminalizes administrative state without changing old semantic grades; publisher must replace stale queued/pause claims. |
+| Establish preservation baseline once and verify at closeout | unassessed | Baseline records 8311 historical files under /home/sittingmongoose/PM-Experiments/external-research-v6-20260926 Baseline existence/count proven; complete closeout rehash not performed here to avoid private/raw scope and duplicate operator work. |
+| Isolated research branch; publisher sole worktree writer; no canon/main/PR changes | unassessed | Manifest binds research/external-research-v7-20260930 and local report root No Git/status/diff operation in this audit. Historical root event discloses interrupted mis-targeted sparse checkout; no blanket clean-scope assertion. |
+| No automatic second campaign or revived capped/paused Goal | proven | Administrative terminal closeout only; deadline expired No new research, semantic grading, adapters, native Goals or qualification continuation in this audit. |
+
+The JSON companion contains exact SHA-256/path evidence bindings and counts. Existing semantic grades remain unchanged. Complete available-history reviews never replace the first current assessment, and observed lack of saved-history loss does not prove acquisition-to-final preservation.

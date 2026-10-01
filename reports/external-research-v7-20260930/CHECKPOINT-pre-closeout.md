@@ -1,15 +1,3 @@
-**TERMINAL — GLOBAL ELAPSED ENVELOPE EXPIRED.** Fixed deadline: 2026-10-01 02:06:46 UTC. The October 1 17:24:38 UTC continuation arrived 15h 17m 52s after that deadline; restart pauses do not reset it. No candidate, experiment, evaluation or integration work is admitted. Further research requires a new explicit budget envelope.
-
-# Terminal campaign closeout
-
-Actual frozen accounting: **20 admissions, 18 native Goals, 9,340.536 occupied slot seconds, 366,778 reported generated-token lower bound**; complete generated usage, native children, helper generated tokens and fees remain unknown. Five matched semantic quality-failure pairs produced ten reviewed reports (T14 certification partial); T03 is structural failure, T13 infrastructure-limited, and Luna T08 remains quarantined. The completed Z canary passed a tiny current review with qualifications for exactly one finding; independent native qualification remains **UNESTABLISHED**, partial and insufficient for productive authority. No qualified one-account recipe or same-quality efficiency win is established.
-
-See [terminal readout](TERMINAL.md), [requirements audit](closeout/requirements-audit.md) and [closeout custody/accounting](closeout/custody-accounting.json).
-
-## Historical published checkpoint (retained; superseded for current status)
-
-The following checkpoint prose records earlier state only. Its pause/resume language, earlier counters and pending runtime preparation do not authorize any further work.
-
 # Second restart — PAUSED
 
 User requested pause at2026-09-30 18:07 UTC. No new admissions or existing Goal restarts until explicit user resume. All own native leases released; sibling untouched. Original deadline1790820406 /2026-10-01 02:06:46UTC, budget/repair ceilings/history unchanged.
