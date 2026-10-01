@@ -2,7 +2,7 @@
 
 # Current rolling checkpoint
 
-All candidate families are currently held pending exact prospective context isolation and dispatch acceptance. Frozen accounting remains **20 admissions, 18 native Goal activations, 9,340.536 occupied slot seconds and 366,778 reported generated-token lower bound**. Usage completeness remains unknown. Known conservative helper task/start events are **65/72**, leaving seven known events of headroom; omissions and exact generated helper output remain unknown.
+All candidate families are currently held pending exact prospective context isolation and dispatch acceptance. Frozen accounting remains **20 admissions, 18 native Goal activations, 9,340.536 occupied slot seconds and 366,778 reported generated-token lower bound**. Usage completeness remains unknown. Known conservative helper task/start events are **66/72**, leaving six known events of headroom; omissions and exact generated helper output remain unknown.
 
 User stops, pauses and the superseded wall deadline are administrative interruptions, **not candidate failures**. Incomplete or timing-limited native review remains **UNESTABLISHED**, not a failed candidate. Genuine observed tool/output defects and source-grounded quality failures remain unchanged. Fresh bounded native-v3 review of the unchanged counted canary has completed; no second canary or new candidate job is implied.
 
