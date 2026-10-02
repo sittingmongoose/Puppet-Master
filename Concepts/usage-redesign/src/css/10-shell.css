@@ -1,16 +1,63 @@
-/* Usage redesign (placeholder): the rail and the stage. The real page replaces this file. */
-#panel-usage .pmu-shell { display: grid; grid-template-columns: 196px minmax(0, 1fr); height: 100%; min-height: 0; color: var(--pmu-text); background: var(--pmu-ground); }
-#panel-usage .pmu-rail { display: flex; flex-direction: column; gap: 10px; min-width: 0; min-height: 0; padding: 14px 10px; border-right: 1px solid var(--pmu-line); background: var(--pmu-surface); overflow: auto; }
-#panel-usage .pmu-brand h1 { margin: 2px 8px 4px; font-size: 15px; font-weight: 650; letter-spacing: 0; }
-#panel-usage .pmu-nav { display: flex; flex-direction: column; gap: 2px; }
-#panel-usage .pmu-navbtn { display: flex; align-items: center; gap: 10px; width: 100%; padding: 7px 10px; border: 0; border-radius: 8px; background: transparent; color: var(--pmu-text-2); font: inherit; font-size: 13px; text-align: left; cursor: pointer; }
-#panel-usage .pmu-navbtn:hover { background: color-mix(in srgb, var(--pmu-accent) 8%, transparent); color: var(--pmu-text); }
-#panel-usage .pmu-navbtn.active { background: color-mix(in srgb, var(--pmu-accent) 14%, transparent); color: var(--pmu-text); }
+/* Shell: rail, one-line head, controls, popovers (owner: engine; DESIGN-SPEC sections 2.1, 3 and 14). */
+#panel-usage .pmu-shell { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); height: 100%; min-height: 0; container-type: inline-size;
+  color: var(--pmu-ink); background: var(--pmu-ground); font-family: var(--pmu-font); font-size: 13px; line-height: 1.45; }
+#panel-usage .pmu-ico { display: inline-flex; width: 16px; height: 16px; flex: none; }
+#panel-usage .pmu-ico svg { display: block; width: 100%; height: 100%; }
+#panel-usage .pmu-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+#panel-usage .pmu-defs { position: absolute; width: 0; height: 0; overflow: hidden; color: var(--pmu-ink); }
+
+/* rail */
+#panel-usage .pmu-rail { display: flex; flex-direction: column; gap: 10px; width: 172px; min-width: 0; min-height: 0; padding: 14px 8px; border-right: 1px solid var(--pmu-hairline);
+  background: var(--pmu-card); overflow: auto; }
+@container (min-width: 1000px) { #panel-usage .pmu-rail { width: 184px; } }
+#panel-usage .pmu-brand h1 { margin: 2px 8px 4px; font-size: 15px; font-weight: 650; letter-spacing: 0; color: var(--pmu-ink); }
+#panel-usage .pmu-nav { position: relative; display: flex; flex-direction: column; gap: 1px; }
+#panel-usage .pmu-navink { position: absolute; left: 0; top: 0; width: 0; height: 0; border-radius: var(--pmu-r-sm); background: var(--pmu-hover); pointer-events: none; }
+#panel-usage .pmu-navbtn { position: relative; z-index: 1; display: flex; align-items: center; gap: 10px; width: 100%; height: 30px; padding: 0 10px; border: 0; border-radius: var(--pmu-r-sm);
+  background: transparent; color: var(--pmu-ink-2); font: inherit; font-size: 13px; text-align: left; cursor: pointer; }
+#panel-usage .pmu-navbtn:hover { color: var(--pmu-ink); }
+#panel-usage .pmu-navbtn.active { color: var(--pmu-ink); font-weight: 600; }
 #panel-usage .pmu-navbtn:focus-visible { outline: 2px solid var(--pmu-accent); outline-offset: 1px; }
-#panel-usage .pmu-navicon { width: 16px; height: 16px; flex: none; }
+#panel-usage .pmu-navicon { width: 16px; height: 16px; flex: none; color: var(--pmu-ink-3); }
+#panel-usage .pmu-navbtn.active .pmu-navicon { color: var(--pmu-accent); }
 #panel-usage .pmu-navicon svg { display: block; width: 100%; height: 100%; }
-#panel-usage .pmu-stage { display: flex; flex-direction: column; gap: 16px; min-width: 0; min-height: 0; padding: 22px 26px; overflow: auto; }
-#panel-usage .pmu-stagehead h2 { margin: 0; font-size: 20px; font-weight: 650; }
-#panel-usage .pmu-roomdesc { margin: 4px 0 0; color: var(--pmu-text-2); font-size: 13px; }
-#panel-usage .pmu-building { max-width: 640px; padding: 18px 20px; border: 1px dashed var(--pmu-line-strong); border-radius: var(--pmu-radius); color: var(--pmu-text-3); font-size: 13px; }
+#panel-usage .pmu-navtext { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* stage and head */
+#panel-usage .pmu-stage { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 0; overflow: hidden; }
+#panel-usage .pmu-stagehead { display: flex; align-items: center; gap: 12px; height: 52px; padding: 0 16px; flex: none; border-bottom: 1px solid var(--pmu-hairline); }
+#panel-usage .pmu-titleblock { display: flex; align-items: baseline; gap: 10px; min-width: 0; flex: 1 1 auto; }
+#panel-usage #pmuRoomTitle { margin: 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; font-size: 16px; font-weight: 650; line-height: 1.2; letter-spacing: -0.012em;
+  white-space: nowrap; outline: none; }
+/* below 1000 px of panel the subtitle goes to the title's hover tag and the scope label shortens (DESIGN-SPEC 2.1) */
+@container (max-width: 999px) { #panel-usage .pmu-roomdesc { display: none; } #panel-usage #pmuScopeLabel { max-width: 96px; overflow: hidden; text-overflow: ellipsis; } }
+#panel-usage .pmu-roomdesc { margin: 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--pmu-ink-3); font-size: 12.5px; }
+#panel-usage .pmu-headctl { display: flex; align-items: center; gap: 6px; flex: none; }
+#panel-usage .pmu-ctlbtn { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px; border: 1px solid var(--pmu-hairline); border-radius: var(--pmu-r-sm);
+  background: transparent; color: var(--pmu-ink-2); font: inherit; font-size: 12.5px; cursor: pointer; white-space: nowrap; }
+#panel-usage .pmu-ctlbtn:hover { color: var(--pmu-ink); background: var(--pmu-hover); }
+#panel-usage .pmu-seg { display: inline-flex; align-items: center; gap: 2px; height: 28px; }
+#panel-usage .pmu-seg button { position: relative; height: 28px; padding: 0 8px; border: 0; background: transparent; color: var(--pmu-ink-3); font: inherit; font-size: 12.5px; cursor: pointer; }
+#panel-usage .pmu-seg button.active { color: var(--pmu-ink); font-weight: 600; }
+#panel-usage .pmu-seg button.active::after { content: ""; position: absolute; left: 8px; right: 8px; bottom: 2px; height: 2px; border-radius: 1px;
+  background: linear-gradient(90deg, var(--pmu-accent), var(--pmu-accent-b)); }
+#panel-usage .pmu-iconbtn { display: inline-grid; place-items: center; width: 28px; height: 28px; padding: 0; border: 0; border-radius: var(--pmu-r-sm); background: transparent;
+  color: var(--pmu-ink-3); cursor: pointer; }
+#panel-usage .pmu-iconbtn:hover { color: var(--pmu-ink); background: var(--pmu-hover); }
+#panel-usage .pmu-iconbtn svg { width: 16px; height: 16px; }
+#panel-usage .pmu-iconbtn.spinning svg { animation: pmu-spin 650ms var(--pmu-ease-out) 1; }
+@keyframes pmu-spin { to { transform: rotate(360deg); } }
+
+/* popovers (stay mounted while open; NieR slice keys on .pmu-pop.open) */
+#panel-usage .pmu-pop { position: absolute; z-index: 60; min-width: 220px; max-width: 320px; max-height: 70vh; overflow: auto; padding: 6px; border: 1px solid var(--pmu-hairline);
+  border-radius: 8px; background: var(--pmu-card); box-shadow: var(--pmu-elev-lift); animation: pmu-pop-in var(--pmu-dur-pop) var(--pmu-ease-pop) both; }
+@keyframes pmu-pop-in { from { opacity: 0; transform: translateY(4px) scale(.97); } }
+#panel-usage .pmu-poptitle { padding: 6px 8px 4px; color: var(--pmu-ink-3); font-size: 11.5px; font-weight: 600; }
+#panel-usage .pmu-poprow { display: flex; align-items: center; gap: 8px; width: 100%; min-height: 32px; padding: 4px 8px; border: 0; border-radius: var(--pmu-r-sm);
+  background: transparent; color: var(--pmu-ink); font: inherit; text-align: left; cursor: pointer; }
+#panel-usage .pmu-poprow:hover, #panel-usage .pmu-poprow.active { background: var(--pmu-hover); }
+#panel-usage .pmu-poptext { display: flex; flex-direction: column; min-width: 0; flex: 1 1 auto; }
+#panel-usage .pmu-poptext b { font-weight: 550; font-size: 13px; }
+#panel-usage .pmu-poptext span { color: var(--pmu-ink-3); font-size: 11.5px; }
+#panel-usage .pmu-popcheck { color: var(--pmu-accent); }
 body.pmu-page-active #pm-home-workspace { pointer-events: none !important; }

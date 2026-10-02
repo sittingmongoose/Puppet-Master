@@ -2,10 +2,30 @@
   "page": {
     "title": "Usage"
   },
-  "stage": {
-    "building": "The redesigned Usage page is being built. Its rooms, data and actions are connected; the panels come next."
+  "head": {
+    "panels": "{n} panels",
+    "scope_all": "All current usage",
+    "refresh": "Refresh usage",
+    "export": "Export usage"
+  },
+  "board": {
+    "empty_level": "No panels at {level}. {holder} holds this room's panels.",
+    "empty_none": "No panels are shown in this room. Use Panels to show one again.",
+    "not_built": "{kind} · {w} x {h}",
+    "moved": "Moved to column {x}, row {y}",
+    "resized": "Resized to {name}, {w} by {h}"
   },
   "toast": {
-    "refreshed": "Usage refreshed just now"
+    "refreshed": "Usage refreshed just now",
+    "detail": "{level} shows {n} panels",
+    "range": "Range changed to {range}",
+    "scope": "Scope changed to {scope}",
+    "reset": "Usage layout reset",
+    "saved_settings": "Saved to Settings > AI > Providers & Accounts"
+  },
+  "inspector": {
+    "close": "Close details",
+    "curated": "Curated",
+    "raw": "Raw"
   }
 }

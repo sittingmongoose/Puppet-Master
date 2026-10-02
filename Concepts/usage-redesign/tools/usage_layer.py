@@ -22,7 +22,8 @@ What apply() does, every step guarded so it happens exactly once or the build st
   5. Outside the band: removes pm7-t24-usage-readability-and-fit and filters the Usage rules out of
      pm7-t23-adjustments (75 kept, 215 dropped). Shared blocks that merely name a pm7u- class are left alone: with the
      new pmu- namespace those selectors match nothing.
-  6. Adds the new page's class names to the NieR Mode selector lists in the Settings script (NIER_SELECTOR_PATCHES).
+  6. Merges the review roster (src/roster.json) into the Settings providers fixture and seeds saved Settings states once
+     (roster_patch), then adds the new page's class names to the NieR Mode selector lists (NIER_SELECTOR_PATCHES).
 """
 from __future__ import annotations
 
@@ -77,12 +78,12 @@ CTX_JS_EDITS = [
 ]
 
 # NieR Mode selector lists in the Settings script (built from opus-5.5 src/settings/kit.d/19-nier-parts.js). The new
-# page's class names go here; the build phase fills them with the real ones. An empty list skips that patch.
+# page's class names go here (ARCHITECTURE.md section 7.1). An empty list skips that patch.
 NIER_NAMES = {
-    'cursor': ['.pmu-navbtn', '.pmu-menurow'],   # items that become the NieR ink-bar menu cursor
-    'chosen': ['.pmu-navbtn'],                   # places a click chooses (the brackets lock on)
-    'strip': ['.pmu-range button'],              # items in a horizontal strip (the cursor sits under them)
-    'titles': ['#pmuRoomTitle', '.pmu-brand h1'],  # the Usage page's titles for the NieR decode
+    'cursor': ['.pmu-navbtn', '.pmu-poprow'],                # items that become the NieR ink-bar menu cursor
+    'chosen': ['.pmu-navbtn'],                               # places a click chooses (the brackets lock on)
+    'strip': ['.pmu-range button', '.pmu-seg button'],       # items in a horizontal strip (the cursor sits under them)
+    'titles': ['#pmuRoomTitle', '.pmu-brand h1'],            # the Usage page's titles for the NieR decode
 }
 
 
@@ -247,8 +248,41 @@ def read_parts(folder: Path, suffix: str) -> str:
                      for p in files)
 
 
+def copy_parts() -> tuple[dict, list[str]]:
+    """src/copy.json merged with every src/copy.d/*.json (sorted). Each file owns its top-level keys; a key that two
+    files define is a problem (the build fails on it), so the three builders never write the same copy file."""
+    merged: dict = {}
+    owner: dict = {}
+    problems: list[str] = []
+    files = [SRC / 'copy.json'] + sorted((SRC / 'copy.d').glob('*.json'))
+    for path in files:
+        if not path.exists():
+            continue
+        rel = path.relative_to(SRC).as_posix()
+        try:
+            part = json.loads(path.read_text(encoding='utf-8'))
+        except json.JSONDecodeError as exc:
+            problems.append(f'usage {rel} is not valid JSON: {exc}')
+            continue
+        if not isinstance(part, dict):
+            problems.append(f'usage {rel} must hold a JSON object')
+            continue
+        for key, value in part.items():
+            if key in merged:
+                problems.append(f'usage copy key {key!r} is defined in both {owner[key]} and {rel}')
+                continue
+            merged[key] = value
+            owner[key] = rel
+    return merged, problems
+
+
 def copy_json() -> dict:
-    path = SRC / 'copy.json'
+    return copy_parts()[0]
+
+
+def roster_json() -> dict:
+    """src/roster.json: the review roster (ARCHITECTURE.md section 7). Absent means no roster."""
+    path = SRC / 'roster.json'
     return json.loads(path.read_text(encoding='utf-8')) if path.exists() else {}
 
 
@@ -305,9 +339,16 @@ CTX_SHIM_TAIL = """  /* <<< extracted context module */
 def build_script(ctx_js: str) -> str:
     """The body of <script id="pm-usage-js">: the copy, the page (src/js in one strict wrapper, so the files share one
     scope; a boot failure is reported and cannot take the chat context module down with it), then the context module."""
-    copy = json.dumps(copy_json(), ensure_ascii=False, separators=(',', ':'))
+    merged, problems = copy_parts()
+    if problems:
+        raise ValueError('; '.join(problems))
+    copy = json.dumps(merged, ensure_ascii=False, separators=(',', ':'))
+    roster = roster_json()
+    facts = {k: roster[k] for k in ('version', 'seed', 'facts', 'switch_log') if k in roster}
+    roster_js = json.dumps(facts, ensure_ascii=False, separators=(',', ':'))
     js = read_parts(SRC / 'js', '.js')
     return (f'window.PM_USAGE_COPY={copy};\n'
+            f'window.PM_USAGE_ROSTER={roster_js};\n'
             'try {\n(function () {\n\'use strict\';\n' + js + '})();\n'
             "} catch (error) { try { console.error('[pm-usage] boot failed', error); } catch (_) {} }\n"
             + CTX_SHIM_HEAD + ctx_js + CTX_SHIM_TAIL)
@@ -356,6 +397,8 @@ def apply(text: str, need) -> tuple[str, dict]:
     notes['context module'] = {'bytes': len(band[js_a:js_z].encode('utf-8')), 'sha256': sha[:16], 'edits': len(CTX_JS_EDITS)}
 
     # 4. the new band
+    _, copy_problems = copy_parts()
+    need(not copy_problems, 'usage layer: ' + '; '.join(copy_problems))
     css = read_parts(SRC / 'css', '.css')
     markup = (SRC / 'markup.html').read_text(encoding='utf-8')
     script = build_script(ctx_js)
@@ -387,12 +430,95 @@ def apply(text: str, need) -> tuple[str, dict]:
     text = text[:m.start(1)] + css + text[m.end(1):]
     notes['dropped whole'] = DROP_WHOLE + ['pm7-t31-usage-final (with the band)']
 
-    # 6. NieR Mode selector lists
+    # 6. the review roster in the Settings fixture, then NieR Mode selector lists
+    text = roster_patch(need, text, notes)
     for old, new, label in NIER_SELECTOR_PATCHES:
         text = replace_once(need, text, old, new, label)
     notes['nier selector patches'] = [label for _, _, label in NIER_SELECTOR_PATCHES]
     notes['bytes_out'] = len(text.encode('utf-8'))
     return text, notes
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+# the review roster in the shared Settings fixture (ARCHITECTURE.md section 7)
+
+ROSTER_FIXTURE_ANCHOR = '  const providers = '
+ROSTER_SEED_ANCHOR = 'fixture.forEach(fx => { if (!have.has(fx.id)) state.providers.push(clone(fx)); });'
+ROSTER_SEED_FLAG = 'usage-review-2026-10-02'
+ROSTER_SEED_JS = (
+    " { const s51 = PM51.s(); if (s51 && s51.usageReviewSeed !== '" + ROSTER_SEED_FLAG + "') {"
+    " fixture.forEach(fx => { const p = state.providers.find(x => x.id === fx.id);"
+    " const add = (fx.accounts || []).filter(a => a && a.seed === 'usage-review'); if (!p || !add.length) return;"
+    " if (!Array.isArray(p.accounts)) p.accounts = [];"
+    " add.forEach(a => { if (!p.accounts.some(x => x.id === a.id)) p.accounts.push(clone(a)); });"
+    " ['installed', 'signedIn', 'status'].forEach(k => { if (fx[k] !== undefined) p[k] = fx[k]; });"
+    " p.readiness = Object.assign({}, p.readiness || {}, { installed: !!fx.installed, signedIn: !!fx.signedIn });"
+    " const ord = (fx.routing && Array.isArray(fx.routing.accountOrder)) ? fx.routing.accountOrder : [];"
+    " if (ord.length) p.routing = Object.assign({}, p.routing || {}, { accountOrder: ord.slice() }); });"
+    " s51.usageReviewSeed = '" + ROSTER_SEED_FLAG + "'; } } /* usage review roster seed (tools/usage_layer.py) */"
+)
+
+
+def roster_patch(need, text: str, notes: dict) -> str:
+    """Merge roster.json 'settings' into the Settings providers fixture and seed saved Settings states once. Guarded:
+    the fixture must be the one json.dumps(indent=2) array after the anchor, with the 22 providers in order; every
+    roster provider must exist, every added account id must be new, and every original account must survive unchanged."""
+    roster = roster_json()
+    patch = roster.get('settings') or {}
+    if not patch:
+        notes['roster'] = 'no settings block; skipped'
+        return text
+    seed = roster.get('seed') or 'usage-review'
+    m = list(re.finditer(r'<script id="pm4-settings-js">', text))
+    need(len(m) == 1, f'usage layer roster: <script id="pm4-settings-js"> found {len(m)} times')
+    s_start = m[0].end()
+    s_end = text.index('</script>', s_start)
+    script = text[s_start:s_end]
+    anchor = ROSTER_FIXTURE_ANCHOR + '[\n'
+    need(script.count(anchor) == 1, f'usage layer roster: {anchor!r} found {script.count(anchor)} times in pm4-settings-js')
+    a = script.index(anchor) + len(ROSTER_FIXTURE_ANCHOR)
+    data, length = json.JSONDecoder().raw_decode(script[a:])
+    original = script[a:a + length]
+    need(original == json.dumps(data, indent=2, ensure_ascii=False),
+         'usage layer roster: the providers fixture is not the json.dumps(indent=2) text it was (review the patch)')
+    need(isinstance(data, list) and len(data) == 22, f'usage layer roster: expected 22 providers, got {len(data) if isinstance(data, list) else type(data)}')
+    ids = [p.get('id') for p in data]
+    before = {p['id']: json.dumps(p.get('accounts', []), sort_keys=True) for p in data}
+    added = 0
+    for pid, block in patch.items():
+        need(pid in ids, f'usage layer roster: provider {pid!r} is not in the Settings fixture')
+        prov = data[ids.index(pid)]
+        accounts = prov.setdefault('accounts', [])
+        have = {acc.get('id') for acc in accounts}
+        for acc in block.get('accounts', []):
+            need(acc.get('id') and acc['id'] not in have, f'usage layer roster: account {pid}/{acc.get("id")} exists already or has no id')
+            item = dict(acc)
+            item['seed'] = seed
+            accounts.append(item)
+            have.add(acc['id'])
+            added += 1
+        flags = block.get('provider') or {}
+        for key, value in flags.items():
+            need(key in ('installed', 'signedIn', 'status'), f'usage layer roster: provider flag {key!r} is not allowed')
+            prov[key] = value
+        if flags:
+            prov['readiness'] = dict(prov.get('readiness') or {}, installed=bool(prov.get('installed')),
+                                     signedIn=bool(prov.get('signedIn')), accountChosen=True)
+        order = block.get('accountOrder')
+        if order:
+            need(sorted(order) == sorted(have), f'usage layer roster: accountOrder for {pid} must list exactly its accounts')
+            routing = prov.setdefault('routing', {})
+            routing['accountOrder'] = list(order)
+            if not prov.get('defaultAccount'):
+                prov['defaultAccount'] = order[0]
+    for p in data:
+        kept = [acc for acc in p.get('accounts', []) if acc.get('seed') != seed]
+        need(json.dumps(kept, sort_keys=True) == before[p['id']], f'usage layer roster: an original account of {p["id"]} changed')
+    script = script[:a] + json.dumps(data, indent=2, ensure_ascii=False) + script[a + length:]
+    need(script.count(ROSTER_SEED_ANCHOR) == 1, f'usage layer roster: seed anchor found {script.count(ROSTER_SEED_ANCHOR)} times')
+    script = script.replace(ROSTER_SEED_ANCHOR, ROSTER_SEED_ANCHOR + ROSTER_SEED_JS, 1)
+    notes['roster'] = {'providers': len(patch), 'accounts_added': added, 'seed_flag': ROSTER_SEED_FLAG}
+    return text[:s_start] + script + text[s_end:]
 
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -479,10 +605,13 @@ def lint() -> list[str]:
                 problems.append(f'banned word in usage copy.json{path}: {node[:80]}')
             if build.EMOJI.search(node):
                 problems.append(f'emoji glyph in usage copy.json{path}')
+    merged, copy_problems = copy_parts()
+    problems.extend(copy_problems)
+    walk(merged, '')
     try:
-        walk(copy_json(), '')
+        roster_json()
     except json.JSONDecodeError as exc:
-        problems.append(f'usage copy.json is not valid JSON: {exc}')
+        problems.append(f'usage roster.json is not valid JSON: {exc}')
     for need_file in ('markup.html', 'copy.json'):
         if not (SRC / need_file).is_file():
             problems.append(f'usage src/{need_file} is missing')
