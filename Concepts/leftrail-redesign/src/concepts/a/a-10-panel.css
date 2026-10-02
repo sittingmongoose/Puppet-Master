@@ -63,7 +63,7 @@ html[data-theme^="retro"][data-rail-concept="a"] .pmr-a .pmr-a-chev { transition
 
 /* ---------- tabs: full words, a gliding ink ---------- */
 html[data-rail-concept="a"] .pmr-a-tabs {
-  position: relative; flex: none; display: flex; align-items: stretch; column-gap: 16px; height: 34px; padding: 0 var(--a-px);
+  position: relative; flex: none; display: flex; align-items: stretch; column-gap: 11px; height: 34px; padding: 0 var(--a-px);
   border-bottom: 1px solid var(--pmr-line); overflow: hidden;
 }
 html[data-rail-concept="a"] .pmr-a-tab {
@@ -76,10 +76,11 @@ html[data-rail-concept="a"] .pmr-a-tab.is-active { color: var(--pmr-text); }
 html[data-rail-concept="a"] .pmr-a-tab.is-conditional .pmr-a-tablabel { color: var(--pmr-text-3); }
 html[data-rail-concept="a"] .pmr-a-tab:focus-visible { outline: 2px solid var(--pmr-focus); outline-offset: -4px; border-radius: var(--pmr-radius); }
 html[data-rail-concept="a"] .pmr-a-tab .pmr-glyph { width: 12px; height: 12px; }
-html[data-rail-concept="a"] .pmr-a-moretab { gap: 3px; }
+html[data-rail-concept="a"] .pmr-a-moretab { gap: 2px; }
+html[data-rail-concept="a"] .pmr-a-tab { gap: 4px; }
 html[data-rail-concept="a"] .pmr-a-moretab.is-menu-open { color: var(--pmr-text); }
 html[data-rail-concept="a"] .pmr-a-moreattn:empty { display: none; }
-html[data-rail-concept="a"] .pmr-a-tabchev { width: 12px; height: 12px; color: var(--pmr-text-3); transition: transform var(--pmr-t-med) var(--pmr-spring); }
+html[data-rail-concept="a"] .pmr-a-tabchev { width: 10px; height: 10px; color: var(--pmr-text-3); transition: transform var(--pmr-t-med) var(--pmr-spring); }
 html[data-rail-concept="a"] .pmr-a-moretab.is-menu-open .pmr-a-tabchev { transform: rotate(180deg); }
 html[data-rail-concept="a"] .pmr-a-ink {
   position: absolute; left: 0; bottom: 0; width: 100px; height: 2px; border-radius: 1px; background: var(--pmr-accent);
@@ -379,7 +380,10 @@ html[data-rail-concept="a"] .pmr-a-stepn {
 }
 html[data-rail-concept="a"] .pmr-a-step[data-state="ok"] .pmr-a-stepn { color: var(--pmr-st-ok); border-color: currentColor; }
 html[data-rail-concept="a"] .pmr-a-step.is-current .pmr-a-stepn { color: var(--pmr-text); border-color: var(--pmr-text); }
-html[data-rail-concept="a"] .pmr-a-gate .pmr-a-l1 .pmr-a-gsrc, html[data-rail-concept="a"] .pmr-a-gsrc { flex: none; max-width: 48%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--pmr-fs-meta); color: var(--pmr-text-2); }
+html[data-rail-concept="a"] .pmr-a-gsrc { display: block; max-width: 132px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--pmr-fs-meta); color: var(--pmr-text-2); }
+html[data-rail-concept="a"] .pmr-a-gate .pmr-a-rcol { flex: 0 1 auto; min-width: 0; }
+html[data-rail-concept="a"] .pmr-a-gate .pmr-a-r1 { min-width: 0; max-width: 100%; }
+html[data-rail-concept="a"] .pmr-a-gate .pmr-a-main { flex: 1 0 auto; max-width: 62%; }
 html[data-rail-concept="a"] .pmr-a-graph { padding: 0 var(--a-px) 2px; }
 html[data-rail-concept="a"] .pmr-a-glane { position: relative; display: flex; align-items: center; gap: 8px; min-height: 26px; padding-left: 22px; font-size: var(--pmr-fs-meta); }
 html[data-rail-concept="a"] .pmr-a-glane::before { content: ''; position: absolute; left: 6px; top: 0; bottom: 50%; width: 10px; border-bottom: 1px solid var(--pmr-line-strong); border-left: 1px solid var(--pmr-line-strong); border-bottom-left-radius: 6px; }
@@ -399,9 +403,9 @@ html[data-rail-concept="a"] .pmr-a-dots {
   display: inline-block; width: 15px; height: 4px; flex: none;
   background: radial-gradient(circle at 2px 2px, currentColor 1.45px, transparent 1.85px) 0 0 / 5.5px 4px repeat-x;
 }
-html[data-rail-concept="a"] .pmr-a-idline.is-nowrap { flex-wrap: nowrap; }
-html[data-rail-concept="a"] .pmr-a-idline.is-nowrap .pmr-a-trigger { flex: 0 1 auto; min-width: 0; }
-html[data-rail-concept="a"] .pmr-a-idline.is-nowrap .pmr-status { flex: none; }
+/* a trigger keeps its full short name (up to 60 % of the line); the status word takes the rest or the end of the next line */
+html[data-rail-concept="a"] .pmr-a-idline .pmr-a-trigger { flex: none; max-width: 60%; }
+html[data-rail-concept="a"] .pmr-a-idline.has-trigger > .pmr-status { flex: none; margin-left: auto; }
 html[data-rail-concept="a"] .pmr-a-dacts { margin: 6px 0 2px -8px; gap: 0 2px; }
 html[data-rail-concept="a"] .pmr-a .pmr-a-dacts .pmr-a-act { min-height: 28px; padding: 0 8px; color: var(--pmr-text); font-weight: 500; }
 html[data-rail-concept="a"] .pmr-a .pmr-a-dacts .pmr-a-act .pmr-ico { width: 14px; height: 14px; color: var(--pmr-text-2); }
@@ -438,3 +442,11 @@ html[data-rail-concept="a"] .pmr-a-attn[data-state="conflict"] { background: var
 html[data-rail-concept="a"] .pmr-a-tab .pmr-a-attn { margin-top: -6px; }
 html[data-rail-concept="a"] .pmr-a-secblock > .pmr-a-why { margin: 2px var(--a-px) 4px calc(var(--a-px) + 15px); }
 html[data-rail-concept="a"] .pmr-a-secblock > .pmr-a-secacts { margin-bottom: 0; }
+html[data-rail-concept="a"] .pmr-a-l2t > .is-drop { display: none; }
+html[data-rail-concept="a"] .pmr-a-l2t > .pmr-a-f { white-space: nowrap; }
+html[data-rail-concept="a"] .pmr-a-l2r .pmr-a-rword { font-weight: 600; white-space: nowrap; }
+html[data-rail-concept="a"] .pmr-a-l2r .pmr-a-rword[data-state="ok"], html[data-rail-concept="a"] .pmr-a-l2r .pmr-a-rword[data-state="running"],
+html[data-rail-concept="a"] .pmr-a-l2r .pmr-a-rword[data-state="info"] { color: var(--pmr-text-2); font-weight: 500; }
+html[data-rail-concept="a"] .pmr-a-row.is-wrapname .pmr-a-name.is-wrap { padding-top: 1px; }
+html[data-rail-concept="a"] .pmr-a .pmr-a-trigger { border-radius: var(--pmr-radius) !important; }
+html[data-rail-concept="a"] .pmr-a-pane.is-leaving { position: absolute; left: 0; right: 0; pointer-events: none; z-index: 0; }

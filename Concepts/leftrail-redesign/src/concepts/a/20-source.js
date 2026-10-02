@@ -16,7 +16,7 @@ function sourceIdentity(inst) {
   if (engine === 'git' && panel.menus.branch) {
     const trig = PMR.menu.trigger(panel.menus.branch, { icon: 'branch', cls: 'pmr-a-trigger', hover: { label: 'Switch branch', detail: 'Current branch: ' + panel.menus.branch.value } });
     setNav(trig, 'menu', navIdOf('branch', 'source'), true);
-    out.push(h('div.pmr-a-idline.is-nowrap', h('span.pmr-a-idname', { text: 'tastebook' }), sep(), trig));
+    out.push(h('div.pmr-a-idline', h('span.pmr-a-idname', { text: 'tastebook' }), sep(), trig));
   } else {
     out.push(h('div.pmr-a-idline', h('span.pmr-a-idname', { text: 'tastebook' }), sep(), h('span.pmr-a-idtext', { text: 'default workspace' })));
   }
@@ -62,13 +62,14 @@ function sourceRowOpts(inst, sec, v) {
   base.primary = null;
   const firstKind = (sec.items || [])[0] ? kindOf(sec.items[0]) : '';
   if (SOURCE_CLICK_KINDS[firstKind]) base.primary = undefined;
-  if (firstKind === 'commit') Object.assign(base, { wrap: true, cls: 'is-wrapname', l2: it => [it.status ? stateWord(it.status) : null].concat(it.meta || []).filter(m => !(it.status && m === it.status.word)) });
+  if (firstKind === 'commit') Object.assign(base, { wrap: true, cls: 'is-wrapname', l2: it => (it.meta || []).filter(m => !(it.status && m === it.status.word)) });
   if (firstKind === 'worktree') {
     Object.assign(base, {
       right: it => (it.status ? PMR.glyph(it.status.state) : null),
-      l2: it => [stateWord(it.status), it.owner].concat((it.meta || []).slice(0, 1)),
+      l2: it => [it.owner],
+      timeOn3: true,
       extra: it => (it.diff ? [h('div.pmr-a-fact.pmr-a-dline', h('span.pmr-a-fk', { text: 'Changes against the base' }), h('span.pmr-a-fv', diffEl(it.diff)))] : []),
-      l3: it => ((it.meta || []).length > 1 ? it.meta.slice(1) : []),
+      l3: it => (it.meta || []).slice(),
     });
   }
   if (firstKind === 'branch' || firstKind === 'bookmark' || firstKind === 'stash' || firstKind === 'operation') {
@@ -77,7 +78,7 @@ function sourceRowOpts(inst, sec, v) {
   if (firstKind === 'review') {
     Object.assign(base, {
       primary: null,
-      l2: it => [stateWord(it.status), (it.meta || [])[0]],
+      l2: it => [(it.meta || [])[0]],
       l3: it => [factValue(it.facts, 'Merge strategy')].concat((it.meta || []).slice(1)),
     });
   }

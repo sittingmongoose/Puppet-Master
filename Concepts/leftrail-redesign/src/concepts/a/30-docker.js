@@ -16,18 +16,10 @@ function dockerIdentity(inst) {
   const ready = ctx.state ? h('span', { class: 'pmr-status', 'data-state': ctx.state.state }, PMR.glyph(ctx.state.state), h('span.pmr-status-word', { text: parts[0] || ctx.state.word })) : null;
   return [
     h('div.pmr-a-idline.is-quiet', lead),
-    h('div.pmr-a-idline.is-nowrap', h('span.pmr-a-idk', { text: 'Context' }), trig, h('span.pmr-a-idsp'), ready),
+    h('div.pmr-a-idline.has-trigger', h('span.pmr-a-idk', { text: 'Context' }), trig, ready),
     parts.length > 1 ? h('div.pmr-a-idline.is-quiet', { 'data-canon': l2.canon || null }, h('span.pmr-a-idtext', { text: parts.slice(1).join(' \u00b7 ') })) : null,
     miniDisclosure(inst, 'where', 'Where this runs', () => factsBlock(inst, ctx.facts || [], 'where'), { cls: 'pmr-a-where' }),
   ];
-}
-
-/* a status word where it helps: running and healthy rows show the glyph alone, anything else names its state */
-function quietWord(it) {
-  const st = it.status;
-  if (!st) return null;
-  if (st.state === 'running' && /^running$/.test(st.word)) return PMR.h('span', { class: 'pmr-status', 'data-state': st.state, 'aria-label': st.word }, PMR.glyph(st.state));
-  return PMR.statusEl(st);
 }
 
 function dockerRowOpts(inst, sec, v) {
@@ -35,19 +27,18 @@ function dockerRowOpts(inst, sec, v) {
   const kind = ((sec.items || [])[0] || {}).kind;
   if (kind === 'container') {
     Object.assign(o, {
-      right: quietWord,
       l2: it => (it.meta || []).filter(m => !(it.status && m === it.status.word)),
       hoverDetail: it => 'Image ' + factValue(it.facts, 'Image'),
     });
   } else if (kind === 'service' || kind === 'scenario' || kind === 'registry' || kind === 'context') {
-    Object.assign(o, { right: kind === 'service' ? quietWord : null, wordAt: 'l1', l2: it => (it.meta || []).filter(m => !(it.status && m === it.status.word)) });
-    if (!o.right) delete o.right;
+    Object.assign(o, { l2: it => (it.meta || []).filter(m => !(it.status && m === it.status.word)) });
+    if (kind === 'scenario') Object.assign(o, { wrap: true, cls: 'is-wrapname' });
     if (kind !== 'service') o.primary = null;
   } else if (kind === 'event') {
-    Object.assign(o, { wordAt: 'l1', flat: true });
+    Object.assign(o, { flat: true });
   } else if (kind === 'stage') {
     Object.assign(o, {
-      cls: 'pmr-a-step is-wrapname', wrap: true, wordAt: 'l1', primary: null, defaultOpen: true,
+      cls: 'pmr-a-step is-wrapname', wrap: true, primary: null, defaultOpen: true,
       lead: it => h('span.pmr-a-stepn', { text: String((sec.items || []).indexOf(it) + 1), 'aria-hidden': 'true' }),
       l2: it => (it.meta || []).filter(m => !/^step \d+$/.test(m)),
     });
