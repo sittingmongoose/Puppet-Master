@@ -284,7 +284,7 @@ function filesFooter(inst) {
     const prog = op.progress || { done: 0, total: 1 };
     const fill = h('span.pmr-a-progfill', { style: { transform: `scaleX(${(prog.done / prog.total).toFixed(3)})` } });
     const opRow = row(inst, op, {
-      cls: 'pmr-a-oprow', icons: false, wordAt: 'l2', navScope: 'ops', primary: null,
+      cls: 'pmr-a-oprow is-wrapname', wrap: true, icons: false, navScope: 'ops', primary: null,
       l2: it => (it.meta || []).slice(),
       right: () => { const c = op.actions.find(a => a.local === 'opsCancel'); return c ? act(c, { variant: 'quiet', cls: 'pmr-a-sm pmr-a-opcancel', onLocal: (l, b) => cancelOp(b) }) : null; },
       onLocal: (l, b) => { if (l === 'opsCancel') cancelOp(b); },
@@ -293,7 +293,8 @@ function filesFooter(inst) {
       if (tray.classList.contains('is-cancelled')) return;
       tray.classList.add('is-cancelled');
       tray.querySelectorAll('[data-local="opsCancel"]').forEach(x => { x.setAttribute('aria-disabled', 'true'); PMR.hover(x, 'Cancel', 'This copy was cancelled after 3 of 50 files.'); });
-      const nm = tray.querySelector('.pmr-a-l1 .pmr-a-name'); if (nm) { nm.setAttribute('data-full', 'Copy cancelled after 3 of 50 files'); nm.textContent = 'Copy cancelled after 3 of 50 files'; fitNames(tray); }
+      const nm = tray.querySelector('.pmr-a-l1 .pmr-a-name'); if (nm) nm.textContent = 'Copy cancelled after 3 of 50 files';
+      const w = tray.querySelector('.pmr-a-rword'); if (w) { w.textContent = 'cancelled'; w.setAttribute('data-state', 'stopped'); }
     }
     tray = h('div.pmr-a-ops', { role: 'status', 'data-canon': ops.canon || null }, opRow, h('div.pmr-a-prog', { 'aria-hidden': 'true' }, fill));
   }
@@ -307,7 +308,7 @@ function renderFiles(panel, view, ctx) {
     identity() {
       const trig = PMR.menu.trigger(panel.menus.root, { icon: 'branch', cls: 'pmr-a-trigger', hover: ctxLine.hover });
       setNav(trig, 'menu', navIdOf('root', 'files'), true);
-      return h('div.pmr-a-idline.is-nowrap', h('span.pmr-a-idk', { text: 'Worktree' }), trig, h('span.pmr-a-idsp'), PMR.statusEl(panel.context.state));
+      return h('div.pmr-a-idline.has-trigger', h('span.pmr-a-idk', { text: 'Worktree' }), trig, PMR.statusEl(panel.context.state));
     },
     toolbar(inst2, v) {
       if (v.id !== 'explorer') return null;
@@ -362,11 +363,7 @@ function renderFiles(panel, view, ctx) {
         rowOpts: (s, vv) => {
           if (vv.id === 'changed') return { primary: s.items.length ? undefined : null, context: ctxOf, l2: it => (it.meta || []) };
           if (s.id === 'recent') return { flat: true, l2: () => [], context: ctxOf };
-          return {
-            context: ctxOf, wordAt: 'l2', primary: null,
-            l2: it => [stateWord(it.status), (it.meta || [])[0], it.active ? 'you are here' : null],
-            right: it => (it.status ? PMR.glyph(it.status.state) : null),
-          };
+          return { context: ctxOf, primary: null, l2: it => [(it.meta || [])[0], it.active ? 'you are here' : null] };
         },
       });
     },

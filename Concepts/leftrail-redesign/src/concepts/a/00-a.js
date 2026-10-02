@@ -32,7 +32,10 @@ function attnDot(state) { return h('span', { class: 'pmr-a-attn', 'data-state': 
 function sep() { return h('span.pmr-a-dot', { 'aria-hidden': 'true', text: '·' }); }
 function joinFacts(parts) {
   const out = [];
-  parts.filter(p => p != null && p !== '' && p !== false).forEach((p, i) => { if (i) out.push(sep()); out.push(p instanceof Node ? p : h('span', { text: String(p) })); });
+  parts.filter(p => p != null && p !== '' && p !== false).forEach((p, i) => {
+    if (i) out.push(sep());
+    if (p instanceof Node) { if (p.classList) p.classList.add('pmr-a-f'); out.push(p); } else out.push(h('span.pmr-a-f', { text: String(p) }));
+  });
   return out;
 }
 function stateWord(status, cls) {
@@ -78,8 +81,26 @@ function fitNames(root) {
     while (n > 6 && measureText(t, font) > w + 0.5) { n -= 1; t = PMR.util.midName(full, n); }
     if (el.textContent !== t) el.textContent = t;
   });
+  fitFacts(root);
 }
 function resetFontCache() { FIT.fonts.clear(); }
+/* line 2 keeps its most meaningful facts: when the line is too narrow, whole facts drop off the end (the first fact may
+   still end with an ellipsis), never a cut in the middle of a word further along */
+function fitFacts(root) {
+  const lines = Array.from(root.querySelectorAll('.pmr-a-l2t')).filter(l => l.offsetParent !== null);
+  lines.forEach(l => { for (const k of l.children) k.classList.remove('is-drop'); });
+  const data = lines.map(l => ({ l, w: l.clientWidth, kids: Array.from(l.children).map(k => ({ k, w: k.getBoundingClientRect().width + (k.classList.contains('pmr-a-dot') ? 10 : 0) })) }));
+  data.forEach(({ w, kids }) => {
+    let used = 0, dropping = false;
+    kids.forEach((x, i) => {
+      if (dropping) { x.k.classList.add('is-drop'); return; }
+      const isDot = x.k.classList.contains('pmr-a-dot');
+      const next = isDot && kids[i + 1] ? kids[i + 1].w : 0;
+      if (i > 0 && (isDot ? used + x.w + next : used + x.w) > w - 2) { dropping = true; x.k.classList.add('is-drop'); return; }
+      used += x.w;
+    });
+  });
+}
 
 /* ---------- buttons ---------------------------------------------------------------------------------------------- */
 /* act(action, { variant, menus, cls, keepPrimary, onLocal }) -> button. A row's primary action reads as the first,
@@ -242,7 +263,7 @@ function row(inst, item, o) {
     ? h('button', { type: 'button', class: 'pmr-a-disc', 'aria-expanded': String(open), 'aria-label': (open ? 'Hide' : 'Show') + ' details for ' + item.name }, ico('chevR', 'pmr-a-chev'))
     : h('span.pmr-a-disc.is-empty', { 'aria-hidden': 'true' });
   const mainKids = [o.lead ? o.lead(item) : null, withIcon ? ico(item.icon, 'pmr-a-ricon') : null,
-    o.wrap ? h('span.pmr-a-name.is-wrap', { text: item.name }) : nameEl(item.name, { mono: item.mono, hoverDetail: item.path || (o.hoverDetail ? o.hoverDetail(item) : null) })];
+    o.wrap ? h('span.pmr-a-name.is-wrap', { text: item.name, 'data-pm-hover-label': item.name }) : nameEl(item.name, { mono: item.mono, hoverDetail: item.path || (o.hoverDetail ? o.hoverDetail(item) : null) })];
   const main = primary
     ? h('button', Object.assign({ type: 'button', class: 'pmr-a-main' }, PMR.actionAttrs(Object.assign({}, primary, { primary: false })), { 'aria-label': primary.label + ': ' + item.name }), mainKids)
     : h('button', { type: 'button', class: cx('pmr-a-main', detailable && 'is-toggle', !detailable && 'is-inert'), 'aria-label': item.name, tabindex: detailable ? null : '-1' }, mainKids);
@@ -250,8 +271,7 @@ function row(inst, item, o) {
   if (o.right) PMR.append(right, [o.right(item)]);
   else {
     const d = item.time ? diffEl(item.diff) : null; if (d) right.appendChild(d);
-    if (o.wordAt === 'l1' && item.status) right.appendChild(PMR.statusEl(item.status));
-    else if (item.letter) right.appendChild(PMR.letterEl(item.letter, item.status && item.status.state));
+    if (item.letter) right.appendChild(PMR.letterEl(item.letter, item.status && item.status.state));
     else if (item.status) right.appendChild(PMR.glyph(item.status.state));
   }
   let more = null;
@@ -271,13 +291,19 @@ function row(inst, item, o) {
   const parts = o.l2 ? o.l2(item) : defaultL2(item, o);
   const time = o.time === false ? null : item.time;
   const l2diff = !item.time && !o.right ? diffEl(item.diff) : null;
+  /* the name owns line 1 (only the glyph or letter at its right); the status word reads in line 2's right column */
+  const word = o.l2right || o.word === false || item.letter || !item.status || !item.status.word ? null : stateWord(item.status, 'pmr-a-rword');
+  const time2 = o.timeOn3 ? null : time;
   let l2 = null;
-  if ((parts && parts.length) || time || l2diff || o.l2right) {
-    l2 = h('div.pmr-a-l2', h('span.pmr-a-l2t', joinFacts(parts || [])), time ? h('span.pmr-a-time', { text: time }) : null, l2diff ? h('span.pmr-a-l2r', l2diff) : null,
-      o.l2right ? h('span.pmr-a-l2r', o.l2right(item)) : null);
+  if ((parts && parts.length) || time2 || l2diff || word || o.l2right) {
+    l2 = h('div.pmr-a-l2', h('span.pmr-a-l2t', joinFacts(parts || [])), l2diff ? h('span.pmr-a-l2r', l2diff) : null,
+      o.l2right ? h('span.pmr-a-l2r', o.l2right(item)) : null, word ? h('span.pmr-a-l2r', word) : null, time2 ? h('span.pmr-a-time', { text: time2 }) : null);
     el.appendChild(l2);
   }
-  if (o.l3) { const p3 = o.l3(item); if (p3 && p3.length) el.appendChild(h('div.pmr-a-l2.pmr-a-l3', h('span.pmr-a-l2t', joinFacts(p3)))); }
+  if (o.l3) {
+    const p3 = o.l3(item) || [];
+    if (p3.length || (o.timeOn3 && time)) el.appendChild(h('div.pmr-a-l2.pmr-a-l3', h('span.pmr-a-l2t', joinFacts(p3)), o.timeOn3 && time ? h('span.pmr-a-time', { text: time }) : null));
+  }
 
   /* blocked: stays visible while collapsed */
   if (item.blocked) {
@@ -317,13 +343,9 @@ function row(inst, item, o) {
   });
   return el;
 }
-function defaultL2(item, o) {
-  const word = o.wordAt !== 'l1' && !item.letter && item.status ? stateWord(item.status) : null;
+function defaultL2(item) {
   const meta = (item.meta || []).filter(m => !(item.status && m === item.status.word));
-  const parts = [];
-  if (word) parts.push(word);
-  if (item.owner) parts.push(item.owner);
-  return parts.concat(meta);
+  return (item.owner ? [item.owner] : []).concat(meta);
 }
 /* the inline detail, in the expander slot order: facts / status / blocked reason / actions / overflow */
 function detailOf(inst, item, o) {
@@ -464,9 +486,10 @@ function tabStrip(inst, views, onSelect) {
 
   const st = { active: null, x: 0, w: 0, anim: null };
   function fit() {
-    const avail = strip.clientWidth;
-    if (!avail) return;
-    const gap = parseFloat(getComputedStyle(strip).columnGap) || 0;
+    const cs = getComputedStyle(strip);
+    const avail = strip.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
+    if (avail <= 0) return;
+    const gap = parseFloat(cs.columnGap) || 0;
     tabs.forEach(b => { b.hidden = false; b.style.order = ''; });
     more.hidden = false;
     const ids = views.map(v => v.id);
@@ -595,18 +618,30 @@ function makePanel(panel, view, ctx, cfg) {
     PMR.menu.closeAll();
     const prev = inst.active;
     if (id === prev) { strip.setActive(id, false); return; }
-    inst.scrollMemo.set(prev, scroll.scrollTop);
+    const oldTop = scroll.scrollTop;
+    inst.scrollMemo.set(prev, oldTop);
     const out = inst.panes.get(prev), inn = inst.panes.get(id);
     inst.active = id;
     A.tabMemo[memoKey(panel.id)] = id;
-    out.hidden = true; inn.hidden = false;
+    const outY = out.offsetTop - oldTop;
+    inn.hidden = false;
     inst.tools.forEach((t, vid) => { t.hidden = vid !== id; });
     tools.hidden = !inst.tools.has(id);
     scroll.scrollTop = inst.scrollMemo.get(id) || 0;
+    /* the outgoing pane fades where it stood while the incoming rows rise (Retro and NieR cut instead) */
+    if (inst.fading) { try { inst.fading.anim.cancel(); } catch (e) { /* ignore */ } inst.fading.done(); }
+    const fadeOut = !reduced() && !stepped() ? animateEl(out, [{ opacity: 1 }, { opacity: 0 }], { duration: Math.round(M.spec().fast * 0.7), easing: 'linear', fill: 'forwards' }) : null;
+    if (fadeOut) {
+      out.classList.add('is-leaving');
+      out.style.top = (outY + scroll.scrollTop) + 'px';
+      const done = () => { out.classList.remove('is-leaving'); out.style.top = ''; if (inst.active !== out.getAttribute('data-view')) out.hidden = true; try { fadeOut.cancel(); } catch (e) { /* ignore */ } inst.fading = null; };
+      inst.fading = { anim: fadeOut, done };
+      fadeOut.onfinish = done;
+    } else out.hidden = true;
     strip.setActive(id, true);
     fitNames(inn); fitNames(tools);
     if (cfg.onShowPane) cfg.onShowPane(inst, inst.views.find(v => v.id === id));
-    cascade(paneRows(inn).concat(tools.hidden ? [] : [inst.tools.get(id)]), { dy: 6, step: 18, max: 14 });
+    cascade((tools.hidden ? [] : [inst.tools.get(id)]).concat(paneRows(inn)), { dy: 6, step: 18, max: 14, delay: stepped() ? 0 : 40 });
   }
   inst.select = select;
 
@@ -622,9 +657,13 @@ function makePanel(panel, view, ctx, cfg) {
   };
   const ro = new ResizeObserver(() => refit(false));
   ro.observe(view);
-  const mo = new MutationObserver(() => refit(true));
+  /* a theme change swaps fonts: refit now, and again once the family's web fonts have loaded */
+  let late = 0;
+  const mo = new MutationObserver(() => { refit(true); clearTimeout(late); late = setTimeout(() => refit(true), 450); });
   mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier'] });
-  inst.cleanups.push(() => { ro.disconnect(); mo.disconnect(); cancelAnimationFrame(raf); });
+  const onFonts = () => refit(true);
+  if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', onFonts);
+  inst.cleanups.push(() => { ro.disconnect(); mo.disconnect(); cancelAnimationFrame(raf); clearTimeout(late); if (document.fonts && document.fonts.removeEventListener) document.fonts.removeEventListener('loadingdone', onFonts); });
 
   strip.setActive(inst.active, false);
   inst.show = function show() {
