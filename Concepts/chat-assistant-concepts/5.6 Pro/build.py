@@ -22,7 +22,10 @@ shell=(root/'shell.html').read_text(encoding=ENC)
 #        -> a module's window.PM56_EXT registrations exist before the app boots,
 #           so they are live on the very first render.
 # Adding a module here is the only build.py edit a feature wave should ever need.
-MODULES=['command-transaction','activity-panel','activity-bar','goals','context','history','menus',
+# Neon icons (2026-10-02): neon-icons loads FIRST of all modules, so window.PM56_NEON (the glyph registry,
+# the renderer and the status set) exists before any module or app.js draws a glyph. Its stylesheet is the
+# exception to "module CSS in MODULES order": neon-icons.css is appended after composer.css (see CSS_LAST).
+MODULES=['neon-icons','command-transaction','activity-panel','activity-bar','goals','context','history','menus',
          'transcript','lens-protocol','lens','orbit','threadops','questions',
          # Assistant-redesign wave (2026-09-03). One owner per file; each registers
          # through window.PM56_EXT and owns a bounded feature family, so app.js does
@@ -47,8 +50,15 @@ def read(name):
 
 def join(names): return '\n'.join(read(n) for n in names)
 
-css=join(['styles.css','motion.css','variants-a.css','variants-b.css','variants-c.css',
-          'transcripts.css']+[f'{m}.css' for m in MODULES]+['composer.css'])
+# CSS_LAST closes the sheet: composer.css, then neon-icons.css, the lighting grammar. Every neon rule is
+# written at specificity (0,0,1)/(0,1,1) so any context rule overrides it; being last only settles ties.
+# A file listed here is skipped in the MODULES pass, so no stylesheet is ever included twice.
+CSS_LAST=['composer.css','neon-icons.css']
+CSS_ORDER=(['styles.css','motion.css','variants-a.css','variants-b.css','variants-c.css','transcripts.css']
+           +[f'{m}.css' for m in MODULES if f'{m}.css' not in CSS_LAST]+CSS_LAST)
+if len(set(CSS_ORDER))!=len(CSS_ORDER):
+    raise SystemExit('build.py: a stylesheet is listed twice: '+', '.join(sorted({c for c in CSS_ORDER if CSS_ORDER.count(c)>1})))
+css=join(CSS_ORDER)
 
 # Minimal collector shim.  The full registry (render slots, action dispatch, the
 # context object) is implemented in app.js, which upgrades this object in place;

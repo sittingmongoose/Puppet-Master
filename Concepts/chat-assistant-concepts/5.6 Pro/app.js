@@ -20,43 +20,46 @@
   };
   const uid = (p='id') => `${p}-${Math.random().toString(36).slice(2,9)}-${Date.now().toString(36)}`;
 
+  /* The glyph family lives in neon-icons.js (window.PM56_NEON, loaded first of all modules): one drawing per
+     concept, the neon halo, the acts and the status set. icon() delegates to it. PATHS is only the fallback that
+     keeps the lab readable if neon-icons.js ever fails to load; it is not the family and is not extended. It
+     keeps more than twenty core names because tests/shell-selfcheck.cjs reads this table as the app table that
+     module-shell's pmxGlyph falls back to when it runs with no PM56_NEON (A2-09). */
   const PATHS = {
     user:'<circle cx="12" cy="8" r="4"/><path d="M4 21v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2"/>',
-    chat:'<path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H4l-2 2V11.5a9.5 9.5 0 0 1 19 0Z"/>',
-    sliders:'<path d="M4 6h5M13 6h7M4 12h10M18 12h2M4 18h2M10 18h10M9 3v6M14 9v6M6 15v6"/>',
     search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>',
     history:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/>',
-    reset:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>',
-    settings:'<path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.55V21h-4v-.08A1.7 1.7 0 0 0 9 19.37a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.63 15a1.7 1.7 0 0 0-1.55-1.03H3v-4h.08A1.7 1.7 0 0 0 4.63 9a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 9 4.63a1.7 1.7 0 0 0 1.03-1.55V3h4v.08A1.7 1.7 0 0 0 15 4.63a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.37 9c.2.6.8 1 1.55 1H21v4h-.08c-.75 0-1.35.4-1.52 1Z"/>',
     close:'<path d="m6 6 12 12M18 6 6 18"/>',
     more:'<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>',
     chevron:'<path d="m9 18 6-6-6-6"/>', down:'<path d="m6 9 6 6 6-6"/>', up:'<path d="m18 15-6-6-6 6"/>', left:'<path d="m15 18-6-6 6-6"/>',
     check:'<path d="m5 12 4 4L19 6"/>', plus:'<path d="M12 5v14M5 12h14"/>', minus:'<path d="M5 12h14"/>',
-    pin:'<path d="M12 17v5"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/>',
-    unpin:'<path d="M2 2l20 20"/><path d="M12 17v5"/><path d="M9 9v1.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V17h12"/><path d="M15 9.34V6h1a2 2 0 0 0 0-4H7.89"/>',
-    archive:'<path d="M4 7v13h16V7M3 3h18v4H3zM9 11h6"/>', restore:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>', edit:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/>', fork:'<circle cx="6" cy="4" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="6" cy="20" r="2"/><path d="M6 6v12M8 9c5 0 5-3 8-3"/>',
-    copy:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>', branch:'<path d="M6 3v12a4 4 0 0 0 4 4h8"/><circle cx="6" cy="3" r="2"/><circle cx="18" cy="19" r="2"/><path d="M6 9h7a4 4 0 0 0 4-4V3"/><circle cx="17" cy="3" r="2"/>',
-    info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>', play:'<path d="m8 5 11 7-11 7Z"/>', pause:'<path d="M9 5v14M15 5v14"/>', step:'<path d="m7 5 9 7-9 7zM18 5v14"/>',     stop:'<rect x="7.5" y="7.5" width="9" height="9" rx="1.75"/>',
-    send:'<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>', attach:'<path d="m21 11-8.5 8.5a6 6 0 0 1-8.5-8.5L13 2a4 4 0 0 1 5.7 5.7l-9 9a2 2 0 0 1-2.8-2.8L15 5.8"/>', wand:'<path d="m15 4 5 5L8 21H3v-5Z"/><path d="m14 5 5 5M6 4V2M5 3H3M20 17v-2M21 16h2M19 3V1M18 2h-2"/>',
+    copy:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>',
+    edit:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/>',
+    info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>', play:'<path d="m8 5 11 7-11 7Z"/>', pause:'<path d="M9 5v14M15 5v14"/>',
+    stop:'<rect x="7.5" y="7.5" width="9" height="9" rx="1.75"/>',
+    send:'<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>',
+    attach:'<path d="m21 11-8.5 8.5a6 6 0 0 1-8.5-8.5L13 2a4 4 0 0 1 5.7 5.7l-9 9a2 2 0 0 1-2.8-2.8L15 5.8"/>',
     sparkles:'<path d="m12 3 1.2 3.8L17 8l-3.8 1.2L12 13l-1.2-3.8L7 8l3.8-1.2Z"/><path d="m19 14 .8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8Z"/><path d="m5 14 .8 1.7L8 16.5l-2.2.8L5 19l-.8-1.7L2 16.5l2.2-.8Z"/>',
-    goal:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M20 4 15 9"/>', todo:'<path d="M9 6h11M9 12h11M9 18h11"/><path d="m3 6 1 1 2-2M3 12l1 1 2-2M3 18l1 1 2-2"/>', users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>', changes:'<path d="M4 7h11M4 17h16M15 4l3 3-3 3M9 14l-3 3 3 3"/>', artifact:'<path d="M4 3h12l4 4v14H4z"/><path d="M16 3v5h5M8 13h8M8 17h6"/>',
-    brain:'<path d="M9.5 4A3.5 3.5 0 0 0 6 7.5v.4A3.5 3.5 0 0 0 4 11a3.5 3.5 0 0 0 2.2 3.25A3.5 3.5 0 0 0 9.5 19H11V4ZM14.5 4A3.5 3.5 0 0 1 18 7.5v.4a3.5 3.5 0 0 1 2 3.1 3.5 3.5 0 0 1-2.2 3.25A3.5 3.5 0 0 1 14.5 19H13V4Z"/><path d="M7 10h4M13 8h4M13 14h4"/>',
-    'folder-search':'<path d="M3 5h6l2 2h10v12H3z"/><circle cx="12" cy="13" r="3"/><path d="m14.5 15.5 2 2"/>', download:'<path d="M12 3v12M7 10l5 5 5-5"/><path d="M5 21h14"/>', globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/>', terminal:'<path d="m4 7 5 5-5 5M11 17h9"/>', 'file-edit':'<path d="M4 3h11l5 5v13H4z"/><path d="M15 3v5h5M9 17l1-4 6-6 3 3-6 6Z"/>', 'monitor-play':'<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4M10 7l5 3-5 3Z"/>', flask:'<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3M8 14h8"/>', 'check-circle':'<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>', chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
-    eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>', eyeoff:'<path d="m3 3 18 18M10.6 10.6a2 2 0 0 0 2.8 2.8M9.5 5.2A9.8 9.8 0 0 1 12 5c6 0 10 7 10 7a18 18 0 0 1-2.1 2.8M6.6 6.6C3.8 8.4 2 12 2 12s4 7 10 7a9.8 9.8 0 0 0 4.4-1"/>',
-    filter:'<path d="M3 5h18l-7 8v6l-4 2v-8Z"/>', collapse:'<path d="m8 3 4 4 4-4M8 21l4-4 4 4"/>', expand:'<path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/>',
-    lightning:'<path d="M13 2 4 14h7l-1 8 10-13h-7Z"/>', plug:'<path d="M9 7V2M15 7V2"/><path d="M6 7h12v4a6 6 0 0 1-12 0Z"/><path d="M12 17v5"/>', star:'<path d="m12 2 3 6 7 .9-5 4.8 1.3 6.8L12 17l-6.3 3.5L7 13.7 2 8.9 9 8Z"/>',
-    document:'<path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h8"/>', image:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/>', code:'<path d="m8 9-3 3 3 3M16 9l3 3-3 3M14 4l-4 16"/>',
-    warning:'<path d="M12 3 2 21h20Z"/><path d="M12 9v5M12 17h.01"/>', lock:'<rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>', refresh:'<path d="M20 11a8 8 0 1 0-2 5.3M20 4v7h-7"/>',
-    lens:'<circle cx="12" cy="12" r="7"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="15" x2="16" y2="15"/>',
-    effort:'<circle cx="12" cy="12" r="7"/>'
+    eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',
+    document:'<path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h8"/>',
+    warning:'<path d="M12 3 2 21h20Z"/><path d="M12 9v5M12 17h.01"/>',
+    lock:'<rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>',
+    refresh:'<path d="M20 11a8 8 0 1 0-2 5.3M20 4v7h-7"/>'
   };
   function icon(name, size=15, cls='') {
+    const N = window.PM56_NEON;
+    if (N && typeof N.icon === 'function') return N.icon(name, size, cls);
     const paths = PATHS[name] || PATHS.info;
     /* Stop is a filled media-player square (not a stroked Lucide rect). */
     if(name==='stop'){
       return `<svg class="${cls}" width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">${PATHS.stop}</svg>`;
     }
     return `<svg class="${cls}" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
+  }
+  /* hasIcon(name): whether the family draws this name (module-shell's pmxGlyph asks before it falls back). */
+  function hasIcon(name) {
+    const N = window.PM56_NEON;
+    return N && typeof N.has === 'function' ? N.has(name) : Object.prototype.hasOwnProperty.call(PATHS, name);
   }
   /* Filled provider marks (rail + model rows). Stroke `icon()` cannot draw
      brand silhouettes; these are SVG-only, currentColor, viewBox 24. */
@@ -71,7 +74,7 @@
   function providerMark(p, size=16){
     const d=PROVIDER_MARKS[p];
     if(!d) return icon('sparkles', size);
-    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${d}</svg>`;
+    return `<svg class="nx-brand" width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${d}</svg>`;
   }
   /* F0b (f): a module's kind mark (DESIGN-SPEC 4.2 B2) when module-shell provides one at
      call time, else the old stroke icon, so the concept still renders without it. */
@@ -316,7 +319,7 @@
   function extCtx(extra){
     return Object.assign({
       /* data */
-      state, D, M, clone, clamp, esc, uid, icon, providerMark,
+      state, D, M, clone, clamp, esc, uid, icon, hasIcon, providerMark,
       thread: activeThread(), model: selectedModel(),
       activeThread, selectedModel, statusLabel, activityDefs, activityScope, workStep,
       formatText, formatElapsed, msgIndex, msgClock, isNarrow, isPhone,

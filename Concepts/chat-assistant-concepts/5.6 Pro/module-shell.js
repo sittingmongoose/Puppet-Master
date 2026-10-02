@@ -8,7 +8,14 @@
   'use strict';
   if (window.PM56_SHELL) return;
 
+  /* The picker's default chevron. CHEVRON is the drawing used when the neon family is absent (and what
+     tests/shell-selfcheck.cjs, which evals this file with no PM56_NEON, compares against); chevron() asks
+     neon-icons.js for the family's chevron-down at call time, never at load (pmx-chevron keeps the 2-unit weight). */
   var CHEVRON = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
+  function chevron() {
+    var N = window.PM56_NEON;
+    return N && typeof N.icon === 'function' ? N.icon('chevron-down', 12, 'pmx-chevron') : CHEVRON;
+  }
 
   function esc(s) {
     return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -26,7 +33,7 @@
     return '<button type="button" class="shared-picker-button" data-action="' + esc(o.action) + '" data-menu-anchor="' + esc(o.anchor) + '"' + (o.extra ? ' ' + o.extra : '') + '>' +
       (o.markHtml || '') +
       '<span class="shared-picker-copy"><strong>' + (o.strong || '') + '</strong>' + (o.small ? '<small>' + o.small + '</small>' : '') + '</span>' +
-      (o.iconHtml || CHEVRON) +
+      (o.iconHtml || chevron()) +
     '</button>';
   }
 
@@ -186,6 +193,17 @@
     return appHas[name] ? appIconFn(name, size, c) : null;
   }
   var warnedGlyphs = {};
+  /* Neon (step 2, 2026-10-02): the glyph family (neon-icons.js, window.PM56_NEON) lights every glyph. At the first
+     glyph call, never at load (tests/shell-selfcheck.cjs and tests/b16 eval this file with no PM56_NEON), this
+     table is handed to the registry; a drawing the registry already owns (the 14 reconciled names, the kind marks
+     it splits into moving parts) is kept, the rest join it. Without PM56_NEON everything below works as before. */
+  var neonSeen = false;
+  function neon() {
+    var N = window.PM56_NEON;
+    if (!N || typeof N.icon !== 'function' || typeof N.has !== 'function') return null;
+    if (!neonSeen) { neonSeen = true; try { N.registerMany(PMX_GLYPHS); } catch (e) { } }
+    return N;
+  }
   /* pmxGlyph(name,size,cls) - an unknown name never throws (amendment G-11): it
      returns a visible dashed square of the requested size and logs once with
      console.info, and pmx-gallery/pmx-verify fail on any .pmx-glyph-missing. */
@@ -193,6 +211,8 @@
     size = num(size, 14);
     var body = PMX_GLYPHS[name];
     var c = cls('pmx-glyph', extraCls);
+    var N = name ? neon() : null;
+    if (N && N.has(String(name))) return N.icon(String(name), size, c);
     if (body == null && name) { var viaApp = appIcon(String(name), size, c); if (viaApp) return viaApp; }
     if (body == null) {
       if (!warnedGlyphs[name]) { warnedGlyphs[name] = 1; try { console.info('PM56_SHELL.pmxGlyph: unknown glyph "' + name + '"'); } catch (e) { } }
