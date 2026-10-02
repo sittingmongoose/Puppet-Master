@@ -289,8 +289,11 @@
       var fams = ro.providers.filter(function (p) { return p.accounts.length > 1 && p.windows.length && PMU.data.settingsInScope(p.id); }).map(function (p) { return { p: p, mr: mostRoom(p) }; }).filter(function (x) { return x.mr; });
       var famHtml = function (x, i) {
         return '<span class="pmu-swfam" data-prov="' + esc(x.p.id) + '"' + C.hover(x.p.name + ' · most room now', x.mr.text + ' · ' + x.mr.account.binding.short + ' window') + '>' + PMU.mark(x.p.id, 16) +
-          '<span class="pmu-swfamname">' + esc(famShort(x.p)) + '</span><span class="pmu-swbar" data-i="' + i + '"></span></span>';
+          '<span class="pmu-swfamname">' + esc(famName(x.p)) + '</span><span class="pmu-swbar" data-i="' + i + '"></span></span>';
       };
+      /* a family's Settings name where it fits (panel rows: 16 px mark, a bar of at least 44 px, two 6 px gaps), else
+         its short word (final fix M8) */
+      var famName = function (p) { return !panel || C.fitsW(p.name, ctx.tier.bw - 16 - 44 - 12, 13, 400) ? (panel ? p.name : famShort(p)) : famShort(p); };
       var ladder = ctx.tier.bw >= 420 && ctx.tier.bh >= 200 || (!panel && ctx.tier.bh >= 140 && ctx.tier.bw >= 560);
       if (ladder) { body.innerHTML = ladderHtml(ctx, th, toggle, stepper, warn); body._pmuSw = { form: 'ladder' }; return; }
       body._pmuSw = { form: panel ? 'panel' : 'strip' };

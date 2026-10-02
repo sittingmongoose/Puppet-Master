@@ -175,7 +175,7 @@
           var nextHover = (r.next ? r.next.short + ' window · ' + PMU.fmt.date(r.next.resetAt) + ' ' + PMU.fmt.clock(r.next.resetAt) + ' · ' + PMU.fmt.truth(r.next.truth) : (main ? main.short + ' window · reset unknown' : 'No upcoming reset is known')) +
             (r.soonest && r.soonest !== r.next ? ' · soonest of any window: ' + r.soonest.short + ' ' + PMU.fmt.until(r.soonest.resetAt) : '');
           /* words that repeat the provider name are left out ("OpenCode Go · OpenCode Go", "Muse Code · Muse Code") */
-          var ident = single ? PMU.mark(g.providerId, 20) + '<b>' + esc(g.name) + '</b>' + (a.nickname && a.nickname !== g.name ? '<span class="pmu-qacct">' + esc(a.nickname) + '</span>' : '') : '<b>' + esc(a.nickname) + '</b>';
+          var ident = single ? PMU.mark(g.providerId, 20) + '<b>' + esc(g.name) + '</b>' + (a.nickname && !C.nickRepeats(a.nickname, g.name) ? '<span class="pmu-qacct">' + esc(a.nickname) + '</span>' : '') : '<b>' + esc(a.nickname) + '</b>';
           /* a single-account row already carries the provider name: its plan shows from 560 px, its window word from 760 px */
           var meta = (a.effective && g.rows.length > 1 ? '<em class="pmu-qactive">Active</em>' : '') + (a.plan && !(single && (a.plan === g.name || !mid)) ? '<span class="pmu-qplan">' + esc(a.plan) + '</span>' : '') +
             (main && single && wide ? '<span class="pmu-qplan">' + esc(main.short.toLowerCase()) + '</span>' : '');
@@ -276,7 +276,7 @@
       var textW = colW - (narrow ? 46 : 52) - 18 - Math.ceil(usedW) - 3 * (narrow ? 8 : 10) + 4;
       var lineHOf = function (ev) {
         var a = ev.account;
-        var bl = C.wrapLines(a.nickname + (narrow ? '' : '  ' + a.providerName), textW, 13, 540), sl = C.wrapLines(ev.what + (ev.stale ? ' · ' + a.ageText : ''), textW, 12.5);
+        var bl = C.wrapLines(C.nickRepeats(a.nickname, a.providerName) ? a.providerName : a.nickname + (narrow ? '' : '  ' + a.providerName), textW, 13, 540), sl = C.wrapLines(ev.what + (ev.stale ? ' · ' + a.ageText : ''), textW, 12.5);
         return Math.max(minLine, Math.ceil(9 + 17.6 * bl + 17 * sl)) + 1;
       };
       var total = 0; groups.forEach(function (g) { total += headH; g.events.forEach(function (ev) { total += lineHOf(ev); }); });
@@ -329,7 +329,7 @@
         (ev.windows[0] && ev.windows[0].amount ? ' · ' + ev.windows[0].amount : '');
       return '<div class="pmu-agline" data-key="' + esc(ev.key) + '" data-acct="' + esc(a.key) + '" data-prov="' + esc(ev.provider.id) + '" role="button" tabindex="0"' + C.hover(a.providerName + ' · ' + a.nickname, hover) + '>' +
         '<span class="pmu-agtime">' + esc(time) + '</span>' + PMU.mark(ev.provider.id, 18) +
-        '<span class="pmu-agtext"><b>' + esc(a.nickname) + (narrow ? '' : ' <em>' + esc(a.providerName) + '</em>') + '</b><span>' + esc(what) + (ev.stale ? ' · <i class="pmu-agstale">' + esc(a.ageText) + '</i>' : '') + '</span></span>' +
+        '<span class="pmu-agtext"><b>' + (C.nickRepeats(a.nickname, a.providerName) ? esc(a.providerName) : esc(a.nickname) + (narrow ? '' : ' <em>' + esc(a.providerName) + '</em>')) + '</b><span>' + esc(what) + (ev.stale ? ' · <i class="pmu-agstale">' + esc(a.ageText) + '</i>' : '') + '</span></span>' +
         '<span class="pmu-agused">' + usedHtml + '</span></div>';
     }).join('') + '</section>';
   }

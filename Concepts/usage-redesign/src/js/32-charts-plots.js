@@ -830,9 +830,15 @@
       var tot = 0; (s.settled || []).concat(s.estimate || []).forEach(function (v) { if (finite(v)) tot += v; });
       var full = s.name || (PMU.roster && PMU.roster.provider && PMU.roster.provider(s.providerId) ? PMU.roster.provider(s.providerId).name : s.providerId);
       /* every legend item names its provider: the official mark plus a short name (LOOK-REVIEW-2 item 18) */
-      if (tot > 0) items.unshift(Object.assign({ key: s.providerId, name: tw === 'm' || tw === 's' ? shortName(full) : full, full: full, prov: s.members ? null : s.providerId,
+      if (tot > 0) items.unshift(Object.assign({ key: s.providerId, name: full, _short: shortName(full), full: full, prov: s.members ? null : s.providerId,
         markName: !!s.vendor && !s.members }, stackKey(s)));
     });
+    /* the Settings names (final fix M8): a legend may take one more line for them; only a narrower legend, where they
+       would take two more, falls back to the short words */
+    if (items.length && (tw === 'm' || tw === 's')) {
+      var shortItems = items.map(function (it) { return Object.assign({}, it, { name: it._short }); });
+      if (legendLines(items, (c._w || 300) - 4) > legendLines(shortItems, (c._w || 300) - 4) + (tw === 'm' ? 1 : 0)) items = shortItems;
+    }
     var legendH = setLegend(c, items, function (k) {
       $$('.pmu-colstack > i', c.el).forEach(function (el) { el.classList.toggle('is-dim', !!k && el.getAttribute('data-prov') !== k); });
     });

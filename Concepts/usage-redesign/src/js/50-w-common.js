@@ -121,6 +121,20 @@
   var wrapMemo = {}, wrapN = 0;
   /* one line's width in the theme's face (the same measure as C.wrapLines) */
   C.wrapW = function (text, px, weight) { text = String(text == null ? '' : text).replace(/<[^>]+>/g, ''); return PMU.charts && PMU.charts.textW ? PMU.charts.textW(text, px || 13, false, weight || 400) * 1.06 : text.length * (px || 13) * 0.55; };
+  /* a provider's Settings name wherever it fits by measure (final fix M8, DECISIONS: every provider name on the page is
+     EXACTLY the Settings display name; the short word only where the full name would wrap or be cut). The margin covers
+     faces that lay out wider than their canvas measure (NieR's tracked capitals, Retro's mono). */
+  C.fitsW = function (text, avail, px, weight) {
+    var l = PMU.theme.look(), k = l.nier || l.family === 'retro' ? 1.15 : 1.04;
+    var w = PMU.charts && PMU.charts.textW ? PMU.charts.textW(String(text == null ? '' : text), px || 13, false, weight || 400) : String(text || '').length * (px || 13) * 0.58;
+    return w * k <= avail;
+  };
+  /* an account nickname that only repeats its provider's name ("Muse" of Muse Code, "Antigravity" of Google Antigravity,
+     "Z.ai" of Z.AI Coding Plan) gives way to the provider's Settings name */
+  C.nickRepeats = function (nick, provName) {
+    var n = String(nick || '').trim().toLowerCase(), p = String(provName || '').toLowerCase();
+    return !!n && (n === p || (' ' + p.replace(/[^a-z0-9.]+/g, ' ') + ' ').indexOf(' ' + n.replace(/[^a-z0-9.]+/g, ' ').trim() + ' ') >= 0);
+  };
   C.wrapLines = function (text, width, px, weight) {
     text = String(text == null ? '' : text).replace(/<[^>]+>/g, '').replace(/&[a-z]+;/g, ' ');
     if (!text) return 0;
@@ -844,8 +858,12 @@
       
       /* a narrow card shows a provider's short word (its full Settings name in the hover) instead of a name on three
          lines (LOOK-REVIEW-2 15) */
-      var narrowNames = ctx.tier.bw < 262;
-      var c = C.chart(body, 'ranked', host, { rows: inline || !C.w(ctx, 'l') ? shown.map(function (r) { return Object.assign({}, r, inline && r.valueShort ? { valueText: r.valueShort } : {}, r.short && narrowNames ? { name: r.short, hover: r.hover || r.name } : {}); }) : shown, scale: m.scale, inline: inline }, { label: ctx.def.title, tier: ctx.tier });
+      /* final fix M8: by measure, row by row: the Settings name when it fits beside the value and a 48 px bar, else the
+         short word (Route pressure at 1920 read "Codex, Kimi, Qwen, Copilot, Gemini" with room for "Kimi Code") */
+      var valW = 0; shown.forEach(function (r) { valW = Math.max(valW, C.wrapW(inline && r.valueShort ? r.valueShort : r.valueText || '', 13, 640)); });
+      var nameAvail = ctx.tier.bw - 16 - 20 - 48 - valW - 24;
+      var narrowName = function (r) { return r.short && r.short !== r.name && !C.fitsW(r.name, nameAvail, 13, 560); };
+      var c = C.chart(body, 'ranked', host, { rows: inline || !C.w(ctx, 'l') ? shown.map(function (r) { return Object.assign({}, r, inline && r.valueShort ? { valueText: r.valueShort } : {}, narrowName(r) ? { name: r.short, hover: r.hover || r.name } : {}); }) : shown, scale: m.scale, inline: inline }, { label: ctx.def.title, tier: ctx.tier });
       if (!c && !body._pmuDry) host.innerHTML = shown.map(function (r) { return '<div class="pmu-lrow"><span class="pmu-lname"><b>' + esc(r.name) + '</b></span><span class="pmu-lval">' + esc(r.valueText) + '</span></div>'; }).join('');
     }
   });
