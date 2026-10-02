@@ -95,3 +95,14 @@ html[data-o55-nier-parts~="headers"] #panel-usage .pmu-card[data-head="band"] > 
 /* the room title keeps its whole name in a narrow head: lighter tracking and a smaller size (REVIEW-data should-fix 5) */
 @container (max-width: 999px) { html[data-o55-nier-parts~="headers"] #panel-usage #pmuRoomTitle { letter-spacing: .03em; font-size: 16px; } }
 @container (max-width: 860px) { html[data-o55-nier-parts~="headers"] #panel-usage #pmuRoomTitle { font-size: 14px; letter-spacing: .02em; } }
+/* hover (WOW-SPEC 3.17, NieR): the corner brackets lock on 2 px outside the plate, in two steps, on the pre-rendered hover
+   layer (opacity only); the hard ink offset shadow stays on the same layer */
+html[data-o55-nier="on"] #panel-usage .pmu-card:not([data-head="band"])::before { inset: -4px; border-radius: 0;
+  --nb: var(--o55-nier-ink); --nl: 12px; --nw: 1.5px;
+  background:
+    linear-gradient(var(--nb), var(--nb)) left top / var(--nl) var(--nw) no-repeat, linear-gradient(var(--nb), var(--nb)) left top / var(--nw) var(--nl) no-repeat,
+    linear-gradient(var(--nb), var(--nb)) right top / var(--nl) var(--nw) no-repeat, linear-gradient(var(--nb), var(--nb)) right top / var(--nw) var(--nl) no-repeat,
+    linear-gradient(var(--nb), var(--nb)) left bottom / var(--nl) var(--nw) no-repeat, linear-gradient(var(--nb), var(--nb)) left bottom / var(--nw) var(--nl) no-repeat,
+    linear-gradient(var(--nb), var(--nb)) right bottom / var(--nl) var(--nw) no-repeat, linear-gradient(var(--nb), var(--nb)) right bottom / var(--nw) var(--nl) no-repeat;
+  box-shadow: none; }
+html[data-o55-nier="on"] #panel-usage .pmu-card:not([data-head="band"]):hover::before { transition: opacity calc(120ms * var(--pmu-speed, 1)) steps(2, jump-start); }
