@@ -1,0 +1,6 @@
+/* NieR Mode for charts and meters (owner: charts; DESIGN-SPEC section 13): blocks, charts, intel. Skeleton: the meter
+   cells; series patterns and the readout card come with the chart kit. */
+html[data-o55-nier-parts~="blocks"] #panel-usage .pmu-metertrack { border-radius: 0; background: transparent; box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .5); }
+html[data-o55-nier-parts~="blocks"] #panel-usage .pmu-meterfill { border-radius: 0; background: repeating-linear-gradient(90deg, var(--o55-nier-ink) 0 6px, transparent 6px 8px) !important; }
+html[data-o55-nier-parts~="blocks"] #panel-usage .pmu-meter[data-tone="warn"] .pmu-meterfill { background: repeating-linear-gradient(90deg, var(--o55-nier-warn) 0 6px, transparent 6px 8px) !important; }
+html[data-o55-nier-parts~="blocks"] #panel-usage .pmu-meter:is([data-tone="hot"], [data-tone="exhausted"]) .pmu-meterfill { background: repeating-linear-gradient(90deg, var(--o55-nier-error) 0 6px, transparent 6px 8px) !important; }

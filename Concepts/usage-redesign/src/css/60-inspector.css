@@ -1,0 +1,13 @@
+/* The inspector drawer (owner: engine; DESIGN-SPEC section 12). */
+#panel-usage .pmu-inspector { position: absolute; z-index: 50; top: 52px; right: 0; bottom: 0; width: 400px; max-width: 92%; display: flex; flex-direction: column;
+  border-left: 1px solid var(--pmu-hairline); background: var(--pmu-card); box-shadow: var(--pmu-elev-lift); transform: translateX(104%); opacity: 0; pointer-events: none;
+  transition: transform var(--pmu-dur-insp) cubic-bezier(.16,1,.3,1), opacity var(--pmu-dur-insp); }
+#panel-usage .pmu-inspector.open { transform: none; opacity: 1; pointer-events: auto; }
+#panel-usage .pmu-insphead { display: flex; align-items: center; justify-content: space-between; gap: 8px; height: 44px; padding: 0 8px 0 16px; flex: none; border-bottom: 1px solid var(--pmu-hairline); }
+#panel-usage .pmu-insphead h3 { margin: 0; font-size: 14px; font-weight: 650; }
+#panel-usage .pmu-inspbody { flex: 1 1 auto; overflow: auto; padding: 8px 16px 24px; }
+#panel-usage .pmu-inspsec h4 { margin: 14px 0 6px; color: var(--pmu-ink-3); font-size: 11.5px; font-weight: 600; }
+#panel-usage .pmu-inspgrid { display: grid; grid-template-columns: 132px minmax(0, 1fr); }
+#panel-usage .pmu-inspgrid > * { padding: 5px 0; border-bottom: 1px solid var(--pmu-hairline); font-size: 13px; }
+#panel-usage .pmu-inspgrid > span { color: var(--pmu-ink-3); }
+#panel-usage .pmu-inspgrid > b { font-weight: 500; overflow-wrap: anywhere; }

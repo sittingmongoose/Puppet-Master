@@ -1,0 +1,20 @@
+/* NieR Mode for the shell and board (owner: engine; DESIGN-SPEC section 13). Ported from opus-5.5
+   src/settings/styles.d/14-nier-parts.css, 15-nier-world.css and 16-nier-scenes.css onto the pmu- hooks, each rule
+   scoped by its part. Skeleton: ground, scenes, square-safe shapes, ticks and headers; the engine builder adds the rest. */
+html[data-o55-nier-parts~="ground"] #pmuApp.pmu-shell { background-image: linear-gradient(rgba(var(--o55-nier-ink-rgb), .06) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .06) 1px, transparent 1px); background-size: 32px 32px; }
+html[data-o55-nier-scene] #pmuApp.pmu-shell { background-color: transparent; background-image: none; }
+html[data-o55-nier-scene] #pmuApp .pmu-rail, html[data-o55-nier-scene] #pmuApp .pmu-stagehead, html[data-o55-nier-scene] #pmuApp .pmu-card,
+html[data-o55-nier-scene] #pmuApp .pmu-inspector, html[data-o55-nier-scene] #pmuApp .pmu-pop { background-color: var(--surface); }
+html[data-o55-nier-parts~="ticks"] #panel-usage .pmu-board { counter-reset: pmu-nier-usage; }
+html[data-o55-nier-parts~="ticks"] #panel-usage .pmu-card { counter-increment: pmu-nier-usage; background-image: var(--o55nw-ticks) !important;
+  background-size: var(--o55nw-ticks-size) !important; background-position: var(--o55nw-ticks-pos) !important; background-repeat: no-repeat !important; }
+html[data-o55-nier-parts~="ticks"] #panel-usage .pmu-card > .pmu-cardhead::after { content: "U-" counter(pmu-nier-usage, decimal-leading-zero); position: absolute; right: 14px; bottom: 4px;
+  z-index: 4; pointer-events: none; font: 500 8px/1 var(--mono-font); letter-spacing: .16em; color: var(--o55-nier-ink); opacity: .6; }
+html[data-o55-nier-parts~="headers"] #panel-usage :is(.pmu-cardtitle, #pmuRoomTitle, .pmu-brand h1) { text-transform: uppercase; letter-spacing: .07em; }
+html[data-o55-nier-parts~="headers"] #panel-usage .pmu-cardhead { background-image: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)), linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)),
+  linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45)); background-size: 5px 5px, 5px 5px, calc(100% - 12px) 1px;
+  background-position: left bottom, right bottom, center calc(100% - 2px); background-repeat: no-repeat; }
+html[data-o55-nier-parts~="headers"] #panel-usage .pmu-insphead { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="empty"] #panel-usage .pmu-empty::before { content: ""; display: block; width: 44px; height: 44px; margin: 0 auto 8px;
+  background: var(--o55nw-art-machine) center / contain no-repeat; opacity: .82; }

@@ -1,0 +1,3 @@
+/* NieR Mode for widget bodies and the Accounts room (owner: content; DESIGN-SPEC sections 10 and 13). Skeleton: the
+   account-state inks; the content builder adds the rest (glyph-only state in heads, tracked capitals that do not truncate). */
+html[data-o55-nier="on"] #panel-usage .pmu-acstate[data-state="active"] { color: var(--o55-nier-ok-text, var(--o55-nier-ink)); }

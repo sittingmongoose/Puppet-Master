@@ -1,0 +1,22 @@
+/* Accounts room (owner: content; DESIGN-SPEC section 10). Skeleton: the minimal provider rows and switch strip. */
+#panel-usage .pmu-acclist { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+#panel-usage .pmu-accrow { display: grid; grid-template-columns: minmax(96px, 34%) minmax(0, 1fr); gap: 10px; align-items: start; min-width: 0; }
+#panel-usage .pmu-card[data-tw="xs"] .pmu-accrow, #panel-usage .pmu-card[data-tw="s"] .pmu-accrow { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+#panel-usage .pmu-accid { display: flex; flex-direction: column; min-width: 0; }
+#panel-usage .pmu-accid b { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-accmeters { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+#panel-usage .pmu-accline { display: block; color: var(--pmu-ink-2); font-size: 12.5px; }
+#panel-usage .pmu-acstate { display: inline-flex; align-items: center; gap: 4px; color: var(--pmu-ink-3); font-size: 11.5px; }
+#panel-usage .pmu-acstate .pmu-ico { width: 12px; height: 12px; }
+#panel-usage .pmu-acstate[data-state="active"] { color: var(--pmu-ink-ok); }
+#panel-usage .pmu-acstate[data-state="exhausted"] { color: var(--pmu-ink-error); }
+#panel-usage .pmu-acstate[data-state="cooldown"], #panel-usage .pmu-acstate[data-state="signed-out"] { color: var(--pmu-ink-warn); }
+#panel-usage .pmu-switch { display: flex; align-items: center; gap: 10px; min-width: 0; flex-wrap: wrap; }
+#panel-usage .pmu-switchtext { min-width: 0; font-size: 13px; color: var(--pmu-ink-2); }
+#panel-usage .pmu-switchtext b { color: var(--pmu-ink); }
+#panel-usage .pmu-switchmeta { margin-left: auto; color: var(--pmu-ink-3); font-size: 11.5px; }
+#panel-usage .pmu-toggle { position: relative; width: 34px; height: 20px; padding: 0; border: 1px solid var(--pmu-hairline); border-radius: 10px; background: var(--pmu-track); cursor: pointer; }
+#panel-usage .pmu-toggle i { position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: var(--pmu-ink-3);
+  transition: transform var(--pmu-dur-hover) var(--pmu-ease-pop), background var(--pmu-dur-hover); }
+#panel-usage .pmu-toggle.on { background: linear-gradient(90deg, var(--pmu-accent), var(--pmu-accent-b)); border-color: transparent; }
+#panel-usage .pmu-toggle.on i { transform: translateX(14px); background: var(--pmu-card); }

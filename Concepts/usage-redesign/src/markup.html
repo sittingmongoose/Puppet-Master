@@ -1,9 +1,10 @@
-<!-- Usage redesign (placeholder): the rail with the 13 rooms in canon order and a stage. Room titles and descriptions
-     come from the room fixtures (src/js/05-data.js); icons are filled from the SVG map by PM7_USAGE.injectIcons(). -->
+<!-- Usage redesign (B v2 skeleton; owner: engine). The DOM contract is ARCHITECTURE.md section 5. The rail lists the 13
+     rooms in canon order; icons are filled from the SVG map by PM7_USAGE.injectIcons(); the board by PMU.board.mount(). -->
 <div class="pmu-shell" id="pmuApp" data-room="overview">
   <aside class="pmu-rail" aria-label="Usage rooms">
     <div class="pmu-brand"><h1>Usage</h1></div>
     <nav class="pmu-nav" id="pmuNav" aria-label="Usage rooms">
+      <span class="pmu-navink" id="pmuNavInk" aria-hidden="true"></span>
       <button type="button" class="pmu-navbtn active" data-room="overview" aria-current="page"><span class="pmu-navicon" data-icon="grid" aria-hidden="true"></span><span class="pmu-navtext">Overview</span></button>
       <button type="button" class="pmu-navbtn" data-room="plans"><span class="pmu-navicon" data-icon="gauge" aria-hidden="true"></span><span class="pmu-navtext">Plans &amp; limits</span></button>
       <button type="button" class="pmu-navbtn" data-room="costs"><span class="pmu-navicon" data-icon="wallet" aria-hidden="true"></span><span class="pmu-navtext">Costs</span></button>
@@ -21,9 +22,27 @@
   </aside>
   <section class="pmu-stage" id="pmuStage" aria-labelledby="pmuRoomTitle">
     <header class="pmu-stagehead">
-      <h2 id="pmuRoomTitle">Current usage</h2>
-      <p class="pmu-roomdesc" id="pmuRoomDesc">Limits, costs, and run pressure at the current pace.</p>
+      <div class="pmu-titleblock">
+        <h2 id="pmuRoomTitle" tabindex="-1" data-tour-id="guided_tour.usage.heading">Current usage</h2>
+        <p class="pmu-roomdesc" id="pmuRoomDesc">Limits, costs, and run pressure at the current pace.</p>
+      </div>
+      <div class="pmu-headctl">
+        <button type="button" class="pmu-ctlbtn" id="pmuScopeBtn" aria-haspopup="menu"><span id="pmuScopeLabel">All current usage</span></button>
+        <div class="pmu-range pmu-seg" id="pmuRange" role="group" aria-label="Range"><button type="button" data-range="5h">5h</button><button type="button" data-range="24h" class="active" aria-pressed="true">24h</button><button type="button" data-range="7d">7d</button><button type="button" data-range="30d">30d</button></div>
+        <button type="button" class="pmu-ctlbtn" id="pmuDetailBtn" aria-haspopup="menu"><span id="pmuDetailLabel">At a glance</span></button>
+        <button type="button" class="pmu-ctlbtn" id="pmuCustomize" aria-haspopup="menu"><span id="pmuPanelCount">Panels</span></button>
+        <button type="button" class="pmu-iconbtn" id="pmuRefresh" aria-label="Refresh usage" data-pm-hover-label="Refresh usage"><span class="pmu-ico" data-icon="refresh" aria-hidden="true"></span></button>
+        <button type="button" class="pmu-iconbtn" id="pmuExport" aria-label="Export usage" data-pm-hover-label="Export usage"><span class="pmu-ico" data-icon="export" aria-hidden="true"></span></button>
+      </div>
     </header>
-    <div class="pmu-building" id="pmuBuilding" role="status">The redesigned Usage page is being built. Its rooms, data and actions are connected; the panels come next.</div>
+    <div class="pmu-scroll" id="pmuScroll">
+      <div class="pmu-board" id="pmuBoard" data-room="overview"></div>
+    </div>
+    <aside class="pmu-inspector" id="pmuInspector" aria-hidden="true" aria-labelledby="pmuInspTitle">
+      <header class="pmu-insphead"><h3 id="pmuInspTitle">Details</h3><button type="button" class="pmu-iconbtn" id="pmuInspClose" aria-label="Close details"><span class="pmu-ico" data-icon="close" aria-hidden="true"></span></button></header>
+      <div class="pmu-inspbody" id="pmuInspBody"></div>
+    </aside>
   </section>
+  <svg class="pmu-defs" aria-hidden="true" width="0" height="0" focusable="false"><defs id="pmuDefs"></defs></svg>
+  <div class="pmu-sr" id="pmuLive" aria-live="polite"></div>
 </div>

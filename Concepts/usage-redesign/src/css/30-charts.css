@@ -1,0 +1,25 @@
+/* Chart kit styles (owner: charts; DESIGN-SPEC section 7). Marks are painted from these rules, never inline.
+   Skeleton: the gradient stops, the placeholder and the basic quota meter (sliding-window fill). */
+#panel-usage .pmu-stop-top { stop-opacity: .42; }
+#panel-usage .pmu-stop-bottom { stop-opacity: 0; }
+#panel-usage .pmu-chart-todo { display: grid; place-items: center; min-height: 40px; flex: 1 1 auto; border: 1px dashed var(--pmu-hairline); border-radius: var(--pmu-r-sm);
+  color: var(--pmu-ink-3); font-size: 11px; }
+#panel-usage .pmu-meter { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+#panel-usage .pmu-meterhead { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; min-width: 0; }
+#panel-usage .pmu-meterlabel { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--pmu-ink-2); font-size: 12.5px; }
+#panel-usage .pmu-metervalue { flex: none; font-size: 13px; font-weight: 650; font-variant-numeric: tabular-nums; }
+#panel-usage .pmu-metertrack { position: relative; height: 6px; overflow: hidden; border-radius: 3px; background: var(--pmu-track); }
+#panel-usage .pmu-meterfill { position: absolute; inset: 0; border-radius: 3px; transform: translateX(calc(var(--fill, 0%) - 100%));
+  background: linear-gradient(90deg, var(--pmu-tone-calm-b), var(--pmu-tone-calm)); }
+#panel-usage .pmu-meter[data-tone="watch"] .pmu-meterfill { background: linear-gradient(90deg, var(--pmu-tone-watch-b), var(--pmu-tone-watch)); }
+#panel-usage .pmu-meter[data-tone="warn"] .pmu-meterfill { background: linear-gradient(90deg, var(--pmu-tone-warn-b), var(--pmu-tone-warn)); }
+#panel-usage .pmu-meter[data-tone="hot"] .pmu-meterfill { background: linear-gradient(90deg, var(--pmu-tone-hot-b), var(--pmu-tone-hot)); }
+#panel-usage .pmu-meter[data-tone="exhausted"] .pmu-meterfill { background: var(--pmu-tone-exhausted); }
+#panel-usage .pmu-meterfoot { color: var(--pmu-ink-3); font-size: 11.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-legend { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 11px; color: var(--pmu-ink-2); }
+#panel-usage .pmu-legend-item { display: inline-flex; align-items: center; gap: 5px; }
+#panel-usage .pmu-swatch { width: 10px; height: 10px; border-radius: 2px; background: var(--pmu-s0); }
+#panel-usage .pmu-vs { display: inline-flex; align-items: center; gap: 4px; color: var(--pmu-ink-3); font-size: 12px; font-weight: 500; }
+#panel-usage .pmu-vs[data-tone="warn"] { color: var(--pmu-ink-warn); }
+#panel-usage .pmu-vs[data-tone="error"] { color: var(--pmu-ink-error); }
+#panel-usage .pmu-vs .pmu-ico { width: 12px; height: 12px; }
