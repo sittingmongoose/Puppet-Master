@@ -1,0 +1,15 @@
+{
+  "schema": "pm.er8.host-source-acceptance.v1",
+  "verdict": "accepted",
+  "allowed_modes": [
+    "productive"
+  ],
+  "snapshot_sha256": "a41aa5bd077f9a18326975c994c5de4842d24b948d93f7d6b90b929c7eafaade",
+  "source": "LAB_ROOT/dev/resume-execution-v1/integrated-controller/SOURCE_FREEZE.json",
+  "reviewer": "root supervisor independent of source authors; authors unavailable platformusageLimited",
+  "created_utc": "2026-10-02T22:38:55.313645+00:00",
+  "scope": "Deadlineonlyledger/control rebinding; fiveunchangedcontrollerfiles; rolling/casesupervisor additions are exact held-Popen PID/PGID andoriginalclock launch/wait receipts.11authfreeresume/history/identity tests independently rerun pass. Nativeclosureunchanged and actualv3 qualified separately.",
+  "native_boundary_requalification": "Unchanged exact native/sourcecapture/config alreadyreviewed/pass canaryv3. No newnativecalls duringhostreview.",
+  "limitations": "Failurecleanup holds if PLAN/enrollment/ownership missing; no inferenceofabsentactivation. Slotoccupancy actualcurrentrelease charged; failedcomponentoutside-nativeintervals require reconciliation beforequality/costclaims.",
+  "tests": "11authorfixtures independentlyrerun passed; monitorread reviewed exactselectedhash and positivekeyjoins"
+}

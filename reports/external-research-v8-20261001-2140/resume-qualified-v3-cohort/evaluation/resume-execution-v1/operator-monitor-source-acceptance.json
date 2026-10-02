@@ -1,0 +1,15 @@
+{
+  "schema": "pm.er8.host-source-acceptance.v1",
+  "verdict": "accepted",
+  "allowed_modes": [
+    "productive"
+  ],
+  "snapshot_sha256": "44c3671a2f51d02e412ac5d0df1e719098a80a755ae192a4a07c7fae1d5ae042",
+  "source": "LAB_ROOT/ops/execution-resume-v1/quiet_production_monitor.py",
+  "reviewer": "root supervisor independent of source authors; authors unavailable platformusageLimited",
+  "created_utc": "2026-10-02T22:38:55.314102+00:00",
+  "scope": "Exactlaunch/waitidentityjoins; heldrollingwaitfallbackonlyaftergroupabsence; ownenrollednativecgroupquiet verifiedbeforecurrenttimerelease. Metadata-only no candidatebody/privateauth/nativeIO. No broadsignals/retries/fakequiet. Unknown enrollment/identity staysHOLD.",
+  "native_boundary_requalification": "Unchanged exact native/sourcecapture/config alreadyreviewed/pass canaryv3. No newnativecalls duringhostreview.",
+  "limitations": "Failurecleanup holds if PLAN/enrollment/ownership missing; no inferenceofabsentactivation. Slotoccupancy actualcurrentrelease charged; failedcomponentoutside-nativeintervals require reconciliation beforequality/costclaims.",
+  "tests": "11authorfixtures independentlyrerun passed; monitorread reviewed exactselectedhash and positivekeyjoins"
+}

@@ -1,0 +1,647 @@
+{
+  "schema": "pm.er8.public-resume-cohort.v1",
+  "scope": "Root-positive 79 files: original operational v3 canary, source acceptance and pins, explicit resume authority and historical-input Muse draft. Independent actual native proof pending; no research-quality finding.",
+  "projection": "Host paths tokenized, internal exec/thread handles omitted, native session handles consistently pseudonymized. Original/public hashes are separate. Locators and embedded original pins describe the external runtime, not rewritten public bytes.",
+  "artifacts": [
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/PUBLICATION_HANDOFF_RESUME_V1.json",
+      "public_path": "ROOT_HANDOFF.json",
+      "original_sha256": "889da561bdbe1eebfa4fe8f9bcbdaf4b61bd7f659c5686aa14909665d6bb2458",
+      "public_sha256": "1c658dd0c971de3380f5c3f651884dae31c5eecc883d3168f73588c6756c83c7",
+      "bytes": 16328,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/FREEZE.json",
+      "public_path": "dev/route-recovery-v2/FREEZE.json",
+      "original_sha256": "523cb6cc77df53d98045394cec894da6f0bffa313de613d4fe5f70d694bd8084",
+      "public_sha256": "2e1fe043ba5d188e3eab6d3dfca9cf0901c71d276048b0df7b54f486f119801f",
+      "bytes": 2280,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/INPUT_MAP.json",
+      "public_path": "dev/route-recovery-v2/INPUT_MAP.json",
+      "original_sha256": "8015a3f0c21120cfef990d22b32b9d363fd8ac81c6f4ca212c4aac6017414233",
+      "public_sha256": "5b9a9ab5a1be240de4baa9f4665d9776c60dd2530b1715d42bc31fdb5ed5acfe",
+      "bytes": 9457,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/OBJECTIVES.json",
+      "public_path": "dev/route-recovery-v2/OBJECTIVES.json",
+      "original_sha256": "f80217252bc73b00a7050d2a8e49d61cf63ac4d810366900fe49b32d31fca116",
+      "public_sha256": "c20d013639579bba76d9977c30a7025ebb2ae3546a1aa607b4b2ff1786f96346",
+      "bytes": 93548,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/broker_exec.py",
+      "public_path": "dev/route-recovery-v2/broker_exec.py",
+      "original_sha256": "3484668112269099bf59fdf1cdad5f0d515b80da9eb6675157cc5fb52795902a",
+      "public_sha256": "3484668112269099bf59fdf1cdad5f0d515b80da9eb6675157cc5fb52795902a",
+      "bytes": 5447,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/candidate_inputs.py",
+      "public_path": "dev/route-recovery-v2/candidate_inputs.py",
+      "original_sha256": "213e1a6aea20e3e0499971b283e900e31956338cbe6c02fad5e16aa701445abf",
+      "public_sha256": "213e1a6aea20e3e0499971b283e900e31956338cbe6c02fad5e16aa701445abf",
+      "bytes": 2124,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/dispatcher/SOURCE_FREEZE.json",
+      "public_path": "dev/route-recovery-v2/dispatcher/SOURCE_FREEZE.json",
+      "original_sha256": "074e7563753b9d5f4dae6f2ec00ba253fd0d3f9503b47eeeeb1bf35b1f09a70d",
+      "public_sha256": "d8bce136fa2b75511963a67ea2039f83f2b9187f4bbebc4c09d2190993a80710",
+      "bytes": 6036,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/dispatcher/canary_runner.py",
+      "public_path": "dev/route-recovery-v2/dispatcher/canary_runner.py",
+      "original_sha256": "e1e75362f33c7951ce98c90aa520fc5686e489b786a2328fcb28c2d11c45ba45",
+      "public_sha256": "e1e75362f33c7951ce98c90aa520fc5686e489b786a2328fcb28c2d11c45ba45",
+      "bytes": 12995,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/dispatcher/dispatcher.py",
+      "public_path": "dev/route-recovery-v2/dispatcher/dispatcher.py",
+      "original_sha256": "8cb8ea5b48b305f78a0ce3d04162ee298a95b1be5f5ef0acd56c891c9b2c705b",
+      "public_sha256": "a5547dad6c2d7689c83b0d5ec4f4ffda5299d5290076b13d39b3f8eb9e426a83",
+      "bytes": 6338,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/dispatcher/external_close.py",
+      "public_path": "dev/route-recovery-v2/dispatcher/external_close.py",
+      "original_sha256": "e57acbd7cca3b051a8f49298c67c54ddf91c91570e0cbd3395fc06e8ba0b8896",
+      "public_sha256": "e57acbd7cca3b051a8f49298c67c54ddf91c91570e0cbd3395fc06e8ba0b8896",
+      "bytes": 6200,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/dispatcher/parent_launcher.py",
+      "public_path": "dev/route-recovery-v2/dispatcher/parent_launcher.py",
+      "original_sha256": "1c5a98ef919b7651d0aa837fd628f55e1e2787c98229af44a8dd628a742965f2",
+      "public_sha256": "1c5a98ef919b7651d0aa837fd628f55e1e2787c98229af44a8dd628a742965f2",
+      "bytes": 2912,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/SNAPSHOT.json",
+      "public_path": "dev/route-recovery-v2/execution-path-v1/SNAPSHOT.json",
+      "original_sha256": "667e9b86a7547c8e647142787637c34adfcc63eb52f33826e0f1f5453d379438",
+      "public_sha256": "b0ab7f33f75875f197c63d9d5f4f291e643926d2a58c5474e57bebe72e820e13",
+      "bytes": 6033,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/deadline_gate",
+      "public_path": "dev/route-recovery-v2/execution-path-v1/deadline_gate",
+      "original_sha256": "2575d0c5ea4fe0af283bb0a2f484c0309c9d27be210660d98986bdbcc01f7e58",
+      "public_sha256": "2575d0c5ea4fe0af283bb0a2f484c0309c9d27be210660d98986bdbcc01f7e58",
+      "bytes": 1041440,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/deadline_gate.c",
+      "public_path": "dev/route-recovery-v2/execution-path-v1/deadline_gate.c",
+      "original_sha256": "abde9b4b9d70bbfd7c97ed397733228707ad2e27ed9214b11185e371631029ee",
+      "public_sha256": "abde9b4b9d70bbfd7c97ed397733228707ad2e27ed9214b11185e371631029ee",
+      "bytes": 2384,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/entry.py",
+      "public_path": "dev/route-recovery-v2/execution-path-v1/entry.py",
+      "original_sha256": "3160d2e6624731218ecf0a465c19ff71a6351ecc4a9fb08d7893c86f6f5b99ca",
+      "public_sha256": "de4f1a71486e2766581842df53f0f85931f688918c455c6f4bda1a4fb25d650e",
+      "bytes": 10257,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/make_plan.py",
+      "public_path": "dev/route-recovery-v2/execution-path-v1/make_plan.py",
+      "original_sha256": "542f2363c15c213bec422b8e63b62b16a545dbda950d0478d625d10719ccd78b",
+      "public_sha256": "dbeb9fc1eed38bd00ac9ccc6256687a83ce5d314f6c9d2cdfe049fa12f66242e",
+      "bytes": 6603,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/observe.py",
+      "public_path": "dev/route-recovery-v2/execution-path-v1/observe.py",
+      "original_sha256": "e398276c666b50306aa408065d7397ff4ad63d594a1f35d1a4cf9deacc998816",
+      "public_sha256": "e398276c666b50306aa408065d7397ff4ad63d594a1f35d1a4cf9deacc998816",
+      "bytes": 2567,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/host_preflight.py",
+      "public_path": "dev/route-recovery-v2/host_preflight.py",
+      "original_sha256": "bea86b191eae203707af24943c048169b418368b5115a4e2ae75d6605068f1f2",
+      "public_sha256": "bea86b191eae203707af24943c048169b418368b5115a4e2ae75d6605068f1f2",
+      "bytes": 3206,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/proxy.py",
+      "public_path": "dev/route-recovery-v2/proxy.py",
+      "original_sha256": "58ea8262a773b4dc15f1ab0167ebad7e81ac2f3c59c583873017dfc965717f41",
+      "public_sha256": "58ea8262a773b4dc15f1ab0167ebad7e81ac2f3c59c583873017dfc965717f41",
+      "bytes": 1604,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/recovery-control.json",
+      "public_path": "dev/route-recovery-v2/recovery-control.json",
+      "original_sha256": "201304db9f643fa48a8de74e4340e26717ac8af15c2a07d113d7cb88cceae1b7",
+      "public_sha256": "a3193998025bbad6390bfe0894488ff4588634ce36765d7502b00152561c0d22",
+      "bytes": 798,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/SNAPSHOT.json",
+      "public_path": "dev/route-recovery-v2/route-assembly-v1/SNAPSHOT.json",
+      "original_sha256": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b",
+      "public_sha256": "e46d4d8106eba7ef1469ad45baca1aad6eb04bd641d53560c855df57f8d4edbf",
+      "bytes": 6024,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/adapter.py",
+      "public_path": "dev/route-recovery-v2/route-assembly-v1/adapter.py",
+      "original_sha256": "2f790fbe0245322b0b24613eb8cd4a0b24070b69728e7cf5ebb234593ddae826",
+      "public_sha256": "2f790fbe0245322b0b24613eb8cd4a0b24070b69728e7cf5ebb234593ddae826",
+      "bytes": 5724,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/admission.py",
+      "public_path": "dev/route-recovery-v2/route-assembly-v1/admission.py",
+      "original_sha256": "e6250830d4e609bc3650024c81cb237fb5252f4d95a21411efa16f4e302d3858",
+      "public_sha256": "e6250830d4e609bc3650024c81cb237fb5252f4d95a21411efa16f4e302d3858",
+      "bytes": 9477,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/boundary.py",
+      "public_path": "dev/route-recovery-v2/route-assembly-v1/boundary.py",
+      "original_sha256": "69db267d6cc9efb8cac73fb729b93d6c69b82e18b4eccaa321b8bfc9de3000be",
+      "public_sha256": "69db267d6cc9efb8cac73fb729b93d6c69b82e18b4eccaa321b8bfc9de3000be",
+      "bytes": 1213,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/canary/ECHO.txt",
+      "public_path": "dev/route-recovery-v2/route-assembly-v1/canary/ECHO.txt",
+      "original_sha256": "f7e2e10edb3dc012fe1d7294b256b368bfb7ac9f96378f61f934e5cb912874df",
+      "public_sha256": "f7e2e10edb3dc012fe1d7294b256b368bfb7ac9f96378f61f934e5cb912874df",
+      "bytes": 83,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/canary/OBJECTIVE.md",
+      "public_path": "dev/route-recovery-v2/route-assembly-v1/canary/OBJECTIVE.md",
+      "original_sha256": "c46f27278a35b7e404e8f32d385b38ef011188789f4f14fbf9db2f3a1430e081",
+      "public_sha256": "c46f27278a35b7e404e8f32d385b38ef011188789f4f14fbf9db2f3a1430e081",
+      "bytes": 589,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/canary/TASK.md",
+      "public_path": "dev/route-recovery-v2/route-assembly-v1/canary/TASK.md",
+      "original_sha256": "0f1ca17bd3a03ddd29ee8a537442824ba0cdce1907a6390bf4e4df483050b881",
+      "public_sha256": "0f1ca17bd3a03ddd29ee8a537442824ba0cdce1907a6390bf4e4df483050b881",
+      "bytes": 1066,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/host_guard.py",
+      "public_path": "dev/route-recovery-v2/route-assembly-v1/host_guard.py",
+      "original_sha256": "3aa60ec7c7a3886619835c2e5238579e415223041828775f9e226331c3faa438",
+      "public_sha256": "3aa60ec7c7a3886619835c2e5238579e415223041828775f9e226331c3faa438",
+      "bytes": 1405,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/launch.py",
+      "public_path": "dev/route-recovery-v2/route-assembly-v1/launch.py",
+      "original_sha256": "8dec4108eacd3814d5b1fff069daaef87703f8466bc6d15c77607e1bcba1e0d4",
+      "public_sha256": "8dec4108eacd3814d5b1fff069daaef87703f8466bc6d15c77607e1bcba1e0d4",
+      "bytes": 1331,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/native_runner.py",
+      "public_path": "dev/route-recovery-v2/route-assembly-v1/native_runner.py",
+      "original_sha256": "9b8bf700a30a9a4be0add4f3161b69bf98c6068acef88d73606085c3b6d6caca",
+      "public_sha256": "fc8ed19a20c3080f648398e8a4b34d22c73870caffb2f302066ab6f5a3ff1889",
+      "bytes": 18327,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/positive-output-contract.json",
+      "public_path": "dev/route-recovery-v2/route-assembly-v1/positive-output-contract.json",
+      "original_sha256": "e7cb63d0e50efdbc40ad863dba94e2b7b93b3e1095d3d2059991b5b95ebdb447",
+      "public_sha256": "e7cb63d0e50efdbc40ad863dba94e2b7b93b3e1095d3d2059991b5b95ebdb447",
+      "bytes": 2634,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/projector.py",
+      "public_path": "dev/route-recovery-v2/route-assembly-v1/projector.py",
+      "original_sha256": "92ba648f160f2bec1296cf0a7510bebc6b6a61bcef1e0ccc7c69902610899fd2",
+      "public_sha256": "92ba648f160f2bec1296cf0a7510bebc6b6a61bcef1e0ccc7c69902610899fd2",
+      "bytes": 16369,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/root-config.json",
+      "public_path": "dev/route-recovery-v2/route-assembly-v1/root-config.json",
+      "original_sha256": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d",
+      "public_sha256": "89591d938364e971f0f509ea7a9435007c5672f677c1a0a469ae28bec4f4bd07",
+      "bytes": 3180,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/run_goal.py",
+      "public_path": "dev/route-recovery-v2/route-assembly-v1/run_goal.py",
+      "original_sha256": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+      "public_sha256": "e6bf4e911c5283c3e412a51fefb4e486251e54b8d7725a859ceac52ee2d4804a",
+      "bytes": 21465,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/zcode_goal_driver.py",
+      "public_path": "dev/route-recovery-v2/route-assembly-v1/zcode_goal_driver.py",
+      "original_sha256": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+      "public_sha256": "561f2acef2931e5510fe2038c43a861729f2a1c23675f64e4b4eb9d9065f3b64",
+      "bytes": 11547,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/zcode_native.py",
+      "public_path": "dev/route-recovery-v2/route-assembly-v1/zcode_native.py",
+      "original_sha256": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633",
+      "public_sha256": "8c7d47b64eaa80fed74a1d34a99b27a28062f7b9f03706aa4af3aa2eed3f7a74",
+      "bytes": 31556,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/source-capture-v1/binding.json",
+      "public_path": "dev/route-recovery-v2/source-capture-v1/binding.json",
+      "original_sha256": "8dea681e5a43fa54cec4a8ae76e37fcd9c6db878e73576ef5611e76e0313ff99",
+      "public_sha256": "22c9c8669dca635cccf47d7efae183c7da5006be6918c9ebc64313f6c9525da2",
+      "bytes": 2481,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/source-capture-v1/boundary.py",
+      "public_path": "dev/route-recovery-v2/source-capture-v1/boundary.py",
+      "original_sha256": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+      "public_sha256": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+      "bytes": 2648,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/route-recovery-v2/source-capture-v1/tool_server.py",
+      "public_path": "dev/route-recovery-v2/source-capture-v1/tool_server.py",
+      "original_sha256": "9c25c1faaf7c4557aaeb22b0977061914a9fbba1a04d87d2a3a29851daa29846",
+      "public_sha256": "9c25c1faaf7c4557aaeb22b0977061914a9fbba1a04d87d2a3a29851daa29846",
+      "bytes": 21910,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/recovery-route-v1/ROUTE_V2_SOURCE_ACCEPTANCE_HANDOFF.json",
+      "public_path": "evaluation/recovery-route-v1/ROUTE_V2_SOURCE_ACCEPTANCE_HANDOFF.json",
+      "original_sha256": "fb05ead9e7b05f1306495451baa6e44dde0db8fb8ce793aaae5c13cd50cc00c1",
+      "public_sha256": "614da81bb3cf0048fa4711d5bc68708c36c90ae53e75f5c1c8659989559d7b50",
+      "bytes": 1156,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/recovery-route-v1/caller-v2-source-acceptance.json",
+      "public_path": "evaluation/recovery-route-v1/caller-v2-source-acceptance.json",
+      "original_sha256": "04cc0c7cad1ef7a41780ab236a6075959787214be8742d76ab24e69467ee76c3",
+      "public_sha256": "8a25fc2b44ff8d8ff7535433c30b9afd26e12b2a93edf3a3adfbbfa2eab0f8a5",
+      "bytes": 4514,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/recovery-route-v1/execution-v2-source-acceptance.json",
+      "public_path": "evaluation/recovery-route-v1/execution-v2-source-acceptance.json",
+      "original_sha256": "9702cfd12df7ad290f19dcae6e8134ec77b2fd45f7fff293746a483c1d22c8a7",
+      "public_sha256": "757042cc1a332187e0d8003612406f922a2c2e5ed5a0702cf9c4761ac0d93d4a",
+      "bytes": 4480,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/recovery-route-v1/route-v2-source-acceptance.json",
+      "public_path": "evaluation/recovery-route-v1/route-v2-source-acceptance.json",
+      "original_sha256": "d668bfbe74b74e91ae5a9527d99600684b98070d59b14dde0c62c612960a3351",
+      "public_sha256": "8a9fcc6f5f59605dc1c3b609828bfc204bbd8d55654db330fc61f0ad2218b1dc",
+      "bytes": 4603,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/CANARY_V3_TERMINAL_MANIFEST.json",
+      "public_path": "ops/execution-recovery-v1/CANARY_V3_TERMINAL_MANIFEST.json",
+      "original_sha256": "a05f297e8d808184e637c0accef8a8c006b43bb3b502ae1f36e0b6b63210916a",
+      "public_sha256": "077d3323d36efb9da11b241667b56591e8e927a89e5253f7605c2b81973cab56",
+      "bytes": 9004,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/PAUSED_OPERATOR_STATE.json",
+      "public_path": "ops/execution-recovery-v1/PAUSED_OPERATOR_STATE.json",
+      "original_sha256": "e8acba68227d51ad9ebb019aeadddeda520a57cda35f92bbb9861058d5d974ca",
+      "public_sha256": "d3b23702462ab91e97c51cc8e13bed153296adcffa89f21648108093205b4832",
+      "bytes": 1285,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/ACTIVATION_POSITIVE.json",
+      "public_path": "ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/ACTIVATION_POSITIVE.json",
+      "original_sha256": "5ec0695dc0b3b51bad75f43a0d696efddf32fda360317178c6090bd6d23a8e51",
+      "public_sha256": "5ec0695dc0b3b51bad75f43a0d696efddf32fda360317178c6090bd6d23a8e51",
+      "bytes": 331,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/BIRTH.json",
+      "public_path": "ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/BIRTH.json",
+      "original_sha256": "94e19187d3c4cb24c40155291a0204d27ab304e4e6a24d17d413c741faee24fe",
+      "public_sha256": "94e19187d3c4cb24c40155291a0204d27ab304e4e6a24d17d413c741faee24fe",
+      "bytes": 1709,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/CASE_AUTHORITY.json",
+      "public_path": "ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/CASE_AUTHORITY.json",
+      "original_sha256": "c06f78c085d13bff407efdfb6c2eb03c6ccbeed990e891f50a4c892e1de47b4f",
+      "public_sha256": "c06f78c085d13bff407efdfb6c2eb03c6ccbeed990e891f50a4c892e1de47b4f",
+      "bytes": 431,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/CASE_BINDING.json",
+      "public_path": "ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/CASE_BINDING.json",
+      "original_sha256": "325447b20c69b655fca0b5b7341fbfdd0ac702263472c47281cf6844548a19b3",
+      "public_sha256": "80e8bd93ec0143e06e8d631aa3c905e2f86e6fc9b6fb66b131b8a8c92e14bd1c",
+      "bytes": 1561,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/COMPLETE.json",
+      "public_path": "ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/COMPLETE.json",
+      "original_sha256": "67f36aeb0b781bb0c1f307f3674108f1992b9af77fe9e58d8b4aedc44423b181",
+      "public_sha256": "de5e5f459b78ba399a1740ed2ebec7285f79af565f9dc6fdaaf39e8d2de57e42",
+      "bytes": 1443,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/EXTERNAL_PARENT_CLOSE.json",
+      "public_path": "ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/EXTERNAL_PARENT_CLOSE.json",
+      "original_sha256": "b037946f6e87e792b62112ad6595ceac71270e59166c531cdd48056c4aad53f5",
+      "public_sha256": "b037946f6e87e792b62112ad6595ceac71270e59166c531cdd48056c4aad53f5",
+      "bytes": 1743,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/EXTERNAL_SETTLEMENT.json",
+      "public_path": "ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/EXTERNAL_SETTLEMENT.json",
+      "original_sha256": "b64b1da9fe9b2fd51dacf6b339b8590c393c7f060924a13be504ac7ae2346e9f",
+      "public_sha256": "b64b1da9fe9b2fd51dacf6b339b8590c393c7f060924a13be504ac7ae2346e9f",
+      "bytes": 312,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/FAILURE_OR_SUCCESS_QUIET_PROOF.json",
+      "public_path": "ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/FAILURE_OR_SUCCESS_QUIET_PROOF.json",
+      "original_sha256": "5b0cad643e4a1658a20e8a9335b6d4df98cda88374e730ff6d4382843d85ade6",
+      "public_sha256": "5b0cad643e4a1658a20e8a9335b6d4df98cda88374e730ff6d4382843d85ade6",
+      "bytes": 2492,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/FULL_CASE_COST.json",
+      "public_path": "ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/FULL_CASE_COST.json",
+      "original_sha256": "e0b827fa5166fedf82e7fb5f222f914631b5ff9122a28ead8a98a62216f5851f",
+      "public_sha256": "e0b827fa5166fedf82e7fb5f222f914631b5ff9122a28ead8a98a62216f5851f",
+      "bytes": 992,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/IMMEDIATE_PRELAUNCH_PINS.json",
+      "public_path": "ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/IMMEDIATE_PRELAUNCH_PINS.json",
+      "original_sha256": "7d2b8ed63876a4b4dd53733d76b554a9ede39655efbd24cd2134c301463516b9",
+      "public_sha256": "e80f68f76153fdfa0fec00289d7b393662542ae6d031bf43128de2221e248a5a",
+      "bytes": 6196,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/LAUNCHED.json",
+      "public_path": "ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/LAUNCHED.json",
+      "original_sha256": "058ec0bb735dff1a77f1fa9df541bbeeb7083765b9950a705058a60a3b8cc677",
+      "public_sha256": "058ec0bb735dff1a77f1fa9df541bbeeb7083765b9950a705058a60a3b8cc677",
+      "bytes": 260,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/LEASE.json",
+      "public_path": "ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/LEASE.json",
+      "original_sha256": "40e099c6305dfab1e162995b25d12e53156a74d63ed4e1154f474c377bce3dbb",
+      "public_sha256": "a57c8276ad525781bbfb3cc18121d653b8a9f1f8271fe36613858189b1c13097",
+      "bytes": 1010,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/PLAN.enrollment.json",
+      "public_path": "ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/PLAN.enrollment.json",
+      "original_sha256": "10462a7ed543ccbb9f009cba90d13b8ffa28fbdb4ef1d4dfa739639f09265141",
+      "public_sha256": "1ba855fc0fbbec2067be7e01270ec52a1dcb67261b259b7259c81440ce12a421",
+      "bytes": 321,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/PLAN.json",
+      "public_path": "ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/PLAN.json",
+      "original_sha256": "e963845b76825f40a12d948abfaea31433ae15221f306cbedb0daaeaa3f2aa88",
+      "public_sha256": "f654c258939f282a9984f14f7d24e825b5c78fc2d1d85ca8291012390bbaacf6",
+      "bytes": 6024,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/PUBLIC_ARTIFACT_FREEZE.json",
+      "public_path": "ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/PUBLIC_ARTIFACT_FREEZE.json",
+      "original_sha256": "f493d93ff5357b0b9b733d4992d7ade656f2e8c216c512f21c67f99123fa17e2",
+      "public_sha256": "ceba7c8e9ab22658587719217067a4133d73eba17e8b7d0e4e27f74d60cbeaa3",
+      "bytes": 1583,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/PUBLIC_METRICS_FREEZE.json",
+      "public_path": "ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/PUBLIC_METRICS_FREEZE.json",
+      "original_sha256": "7a4f6ab945e22919ff300e51e970c564cd5429d2de0724d3254723fe8dc6c896",
+      "public_sha256": "23b334fcc717909f40fff848b6f4a5b9747f9a42335ae8e46ab4b264fb4ec6e4",
+      "bytes": 234,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/QUIESCENCE.json",
+      "public_path": "ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/QUIESCENCE.json",
+      "original_sha256": "520d511a40cad4b78c0228a2a57c7ebc37cf81a9b5e45239a809ef45f56f9800",
+      "public_sha256": "520d511a40cad4b78c0228a2a57c7ebc37cf81a9b5e45239a809ef45f56f9800",
+      "bytes": 991,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/native-public/activation.json",
+      "public_path": "ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/native-public/activation.json",
+      "original_sha256": "5ec0695dc0b3b51bad75f43a0d696efddf32fda360317178c6090bd6d23a8e51",
+      "public_sha256": "5ec0695dc0b3b51bad75f43a0d696efddf32fda360317178c6090bd6d23a8e51",
+      "bytes": 331,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/native-public/progress.jsonl",
+      "public_path": "ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/native-public/progress.jsonl",
+      "original_sha256": "1b445cc81605f3a7c42f8443fa02fa87bbfab6ce86f58af5decd980b7b1553b3",
+      "public_sha256": "1b445cc81605f3a7c42f8443fa02fa87bbfab6ce86f58af5decd980b7b1553b3",
+      "bytes": 360,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/native-public/public-metrics.json",
+      "public_path": "ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/native-public/public-metrics.json",
+      "original_sha256": "87130a3246f79952c40e2bd3203b3d816b35bb5a4e8206acb1d004f8e9782cba",
+      "public_sha256": "4e66988dd4ac8f6a492208f21b4e455a38210b5118647d24993245f8b993fe0f",
+      "bytes": 17653,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/native-public/receipt.json",
+      "public_path": "ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/native-public/receipt.json",
+      "original_sha256": "87130a3246f79952c40e2bd3203b3d816b35bb5a4e8206acb1d004f8e9782cba",
+      "public_sha256": "4e66988dd4ac8f6a492208f21b4e455a38210b5118647d24993245f8b993fe0f",
+      "bytes": 17653,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/workspace/operation_receipts/events.jsonl",
+      "public_path": "ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/workspace/operation_receipts/events.jsonl",
+      "original_sha256": "517b2918edc86497809f9e52238aecccfcb2fc1b8a9f809e94cad3d604a2b215",
+      "public_sha256": "8f9ea00c2b38f2c372f87d2cbe07f6804dc83cb4a2f0c6120a200033f75b3b55",
+      "bytes": 12890,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/workspace/out/RESULT.md",
+      "public_path": "ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/workspace/out/RESULT.md",
+      "original_sha256": "c16724a42e235415fdfae3b6f4e794fb867f4252458685fcdf43ac3247264119",
+      "public_sha256": "c16724a42e235415fdfae3b6f4e794fb867f4252458685fcdf43ac3247264119",
+      "bytes": 821,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/workspace/public_captures/7d3e61f8f627c8cc640c209ba0777db95f198a64e766f47484c321d5eb5e0962.body",
+      "public_path": "ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/workspace/public_captures/7d3e61f8f627c8cc640c209ba0777db95f198a64e766f47484c321d5eb5e0962.body",
+      "original_sha256": "7d3e61f8f627c8cc640c209ba0777db95f198a64e766f47484c321d5eb5e0962",
+      "public_sha256": "7d3e61f8f627c8cc640c209ba0777db95f198a64e766f47484c321d5eb5e0962",
+      "bytes": 713,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/workspace/public_captures/cf45ac8886324474af46ed6944041f0c.json",
+      "public_path": "ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/workspace/public_captures/cf45ac8886324474af46ed6944041f0c.json",
+      "original_sha256": "eed598b9d59165275209277219587948e7dc6d64db4b26a60f784cb33b6057e5",
+      "public_sha256": "c8b7469adf1c631b1ce57c50fc1cb592ef9cff3cb2ca2e66f76743fe45dafd8e",
+      "bytes": 1108,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/root-canary-release-v4.json",
+      "public_path": "ops/execution-recovery-v1/root-canary-release-v4.json",
+      "original_sha256": "9f4895db862f0edb0802521ab5c5d049d134837ccec5c067d254e74d34683422",
+      "public_sha256": "8bd1eacb6deae356f40a4ce14b5a10d9239145561ff9feaa1e9d8a28f8010540",
+      "bytes": 9441,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/v8-z-mechanical-route-canary-v3-monitor-parent.json",
+      "public_path": "ops/execution-recovery-v1/v8-z-mechanical-route-canary-v3-monitor-parent.json",
+      "original_sha256": "8d2aecfb7e29047b71d89bdc787b7649c6d5c1b5eb505d0576640077495602e5",
+      "public_sha256": "b281be0899de37469d192bfeb0fc690290b2fa02d1e8586807fa4e468b20e991",
+      "bytes": 206,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/v8-z-mechanical-route-canary-v3-monitor-terminal.json",
+      "public_path": "ops/execution-recovery-v1/v8-z-mechanical-route-canary-v3-monitor-terminal.json",
+      "original_sha256": "f1bc57fb4799ce6322df618f344896aefb4d0b623a4da125c828c2631d7b23b6",
+      "public_sha256": "f1bc57fb4799ce6322df618f344896aefb4d0b623a4da125c828c2631d7b23b6",
+      "bytes": 1325,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-recovery-v1/v8-z-mechanical-route-canary-v3-parent-positive.jsonl",
+      "public_path": "ops/execution-recovery-v1/v8-z-mechanical-route-canary-v3-parent-positive.jsonl",
+      "original_sha256": "7466dcc581faecc9723e7b49d3cd102e06d7501c1b60cd636189fbc3afef1ab2",
+      "public_sha256": "7466dcc581faecc9723e7b49d3cd102e06d7501c1b60cd636189fbc3afef1ab2",
+      "bytes": 773,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/muse-helper-v1/BIRTH.json",
+      "public_path": "ops/muse-helper-v1/BIRTH.json",
+      "original_sha256": "9a35c3e073528d938570a5eda4821ac25298101a58307d6e846c7325de4f32b6",
+      "public_sha256": "9d00e1a75b9ca5bcacd584330f67b8eb5830afbe8214c01db14c6a0b9ced1802",
+      "bytes": 973,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/muse-helper-v1/DRAFT.md",
+      "public_path": "ops/muse-helper-v1/DRAFT.md",
+      "original_sha256": "beaab98bf45d6baed2c9025427fd4eb6a1eca29148713cf391fb43371ee478d5",
+      "public_sha256": "beaab98bf45d6baed2c9025427fd4eb6a1eca29148713cf391fb43371ee478d5",
+      "bytes": 4286,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/muse-helper-v1/QUIET.json",
+      "public_path": "ops/muse-helper-v1/QUIET.json",
+      "original_sha256": "bef90b0c66c966bab8d60b1857889a90dadb7ee471452996fe12565d16b8ff63",
+      "public_sha256": "bef90b0c66c966bab8d60b1857889a90dadb7ee471452996fe12565d16b8ff63",
+      "bytes": 1006,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/muse-helper-v1/RESULT.json",
+      "public_path": "ops/muse-helper-v1/RESULT.json",
+      "original_sha256": "26ac3277b56d473c0ea6dc89fcdfe5890f7a436c3aece07fd4c8fac34c189e3d",
+      "public_sha256": "211a381e78d42d8e9154109a35dcabf1ebef977daf65e216721e30ccffc795f2",
+      "bytes": 2792,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/RESTART.json",
+      "public_path": "ops/recovery-v1/RESTART.json",
+      "original_sha256": "62bdfe4d00b00626bd0c2d0cccefd8574342fb6ecf0096d1bd2bd01245f97422",
+      "public_sha256": "f3a3e7f435952e776797d9836c5720caf2e9a7e9e9b9539ae58dd16aa3eef219",
+      "bytes": 11094,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/RESUME_20261002.json",
+      "public_path": "ops/recovery-v1/RESUME_20261002.json",
+      "original_sha256": "9fc1c92a3b6074610b3b4026bd4d7500e0f0a135b506863965e2919fb640c02f",
+      "public_sha256": "9fc1c92a3b6074610b3b4026bd4d7500e0f0a135b506863965e2919fb640c02f",
+      "bytes": 1157,
+      "sanitized": false
+    }
+  ]
+}

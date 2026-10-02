@@ -1,0 +1,25 @@
+{
+  "schema": "pm.er8.route-v2-source-acceptance-handoff.v1",
+  "observed_epoch": 1790914258.7197456,
+  "verdict": "SOURCE_ONLY_CANARY_CONDITIONAL",
+  "acceptances": [
+    {
+      "path": "LAB_ROOT/evaluation/recovery-route-v1/route-v2-source-acceptance.json",
+      "sha256": "d668bfbe74b74e91ae5a9527d99600684b98070d59b14dde0c62c612960a3351",
+      "snapshot_sha256": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/recovery-route-v1/execution-v2-source-acceptance.json",
+      "sha256": "9702cfd12df7ad290f19dcae6e8134ec77b2fd45f7fff293746a483c1d22c8a7",
+      "snapshot_sha256": "667e9b86a7547c8e647142787637c34adfcc63eb52f33826e0f1f5453d379438"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/recovery-route-v1/caller-v2-source-acceptance.json",
+      "sha256": "04cc0c7cad1ef7a41780ab236a6075959787214be8742d76ab24e69467ee76c3",
+      "snapshot_sha256": "074e7563753b9d5f4dae6f2ec00ba253fd0d3f9503b47eeeeb1bf35b1f09a70d"
+    }
+  ],
+  "fresh_actual_canary_required": true,
+  "native_canary_calls_by_reviewer": 0,
+  "original_review_deadline_utc": "2026-10-02T04:27:50.287178+00:00"
+}

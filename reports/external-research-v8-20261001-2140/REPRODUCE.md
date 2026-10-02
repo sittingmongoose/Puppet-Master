@@ -1,6 +1,6 @@
 # Reproduction boundary
 
-The [protocol](protocol/README.md) supplies exact candidate TASK/METHOD inputs, shared synthetic briefs/plans, three-stage templates and prospective reservations. No actual candidate output or executed configuration is supplied yet; this checkpoint cannot reproduce an experiment result.
+The [protocol](protocol/README.md) supplies exact candidate TASK/METHOD inputs, shared synthetic briefs/plans, three-stage templates and prospective reservations. Original planning inputs describe prospective research work; no completed integrated research output is supplied at this selected freeze.
 
 Future batches will bind immutable candidate inputs, actual outputs, sanitized runtime configurations and pinned reproducible code through authorized public projections. Required native subscriptions/account context can limit independent replay. Private conversations, evaluator keys, authentication material and raw large corpora stay outside this branch. Public claim verification must use permitted excerpts/locators and independent assessment; missing publishable bodies will be explicitly identified as a verification limit.
 
@@ -13,3 +13,7 @@ Planner candidate files and the prospective manifest are preserved from the plan
 [Canary/controller cohort](canary-controller-cohort-v1/README.md) adds actual failed-canary positive metadata, runnable controller source and frozen independent offline checks. No RESULT.md or successful native terminal receipt exists in this cohort. Locator-projected sources require local binding and must not be treated as original runtime pins. Caller2 conditional source acceptance is published; productive native replay remains HOLD.
 
 [Tranche cohort v2](tranche-cohort-v2/README.md) exports prospective exact task/method inputs and accounting overlay test source/metadata. Scoring-only evaluator files and holdout briefs remain excluded. Original six inputs remain in the earlier protocol; this publication must never be mounted wholesale as candidate context. Rebound offline replay copies, when provided, are distinct from accepted native runtime pins.
+
+[Resume cohort v1](resume-cohort-v1/README.md) now supplies original v3 mechanical RESULT/capture/metrics, selected route source/config closure and runtime source pins. Independent actual native proof remains pending; no research result can be reproduced from the mechanical canary. Host path projections and original pins must be distinguished from public bytes; native subscriptions/application prerequisites remain external.
+
+[Qualified native v3 cohort](resume-qualified-v3-cohort/README.md) supersedes the earlier pending-proof observation: the exact native route passed narrow independent mechanical qualification. Research quality and method effects remain unassessed; no completed integrated result is claimed here.

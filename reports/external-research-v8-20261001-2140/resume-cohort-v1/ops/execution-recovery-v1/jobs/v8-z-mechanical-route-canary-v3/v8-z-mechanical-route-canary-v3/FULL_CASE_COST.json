@@ -1,0 +1,27 @@
+{
+  "schema": "pm.er8.fullcase-mechanical-cost.v1",
+  "job": "v8-z-mechanical-route-canary-v3",
+  "original_birth_epoch": 1790914384.0490766,
+  "original_birth_monotonic_ns": 136130218847511,
+  "original_deadline_monotonic_ns": 136610218847511,
+  "actual_parent_exit_observed_monotonic_ns": 136203367094933,
+  "inclusive_host_wall_seconds": 73.148247422,
+  "native_wrapper_to_first_positive_quiet_seconds": 72.613138196,
+  "inclusive_outside_native_seconds": 0.535109226000003,
+  "actual_occupied_lease_seconds": 73.06437873840332,
+  "native_goal_starts": 1,
+  "native_responses": 6,
+  "usage_reported": {
+    "inputTokens": 22040,
+    "outputTokens": 1923,
+    "reasoningTokens": 0,
+    "cacheReadTokens": 15680,
+    "cacheWriteTokens": 0,
+    "totalTokens": 23963
+  },
+  "unexposed_provider_cost_money": "UNKNOWN",
+  "all_case_parent_groups_absent": true,
+  "native_mcp_quiet": true,
+  "actual_end_before_original_deadline": true,
+  "semantic_qualification": "PENDING_INDEPENDENT_REVIEW"
+}

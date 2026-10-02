@@ -1,0 +1,126 @@
+{
+  "actual_model_inventory": {
+    "actual_executed_tools": [
+      "read_file",
+      "read_file",
+      "public_https_get",
+      "read_file",
+      "write_file"
+    ],
+    "all_request_attempts_verified": true,
+    "candidate_requests_with_admitted_four_tools": 5,
+    "effort": "max",
+    "model": "GLM-5.3-Flash",
+    "native_completion_verifier_request_tools": [],
+    "provider": "builtin:zai-coding-plan",
+    "request_attempts": 6,
+    "unexpected_tools": 0
+  },
+  "case": "v8-z-mechanical-route-canary-v3",
+  "created_utc": "2026-10-02T22:22:04.161601+00:00",
+  "frozen_source_closure_check": {
+    "path": "LAB_ROOT/evaluation/native-v3-resume-v1/FROZEN_SOURCE_CLOSURE_CHECK.json",
+    "sha256": "684173ad5b6c1394251566e21191716bbcf39396a783a32522409051b9b16e15"
+  },
+  "inclusive_native_lifetime_verified": true,
+  "job": "v8-z-mechanical-route-canary-v3",
+  "lifetime": {
+    "held_parent_launcher_exit_seconds": 73.148247422,
+    "inclusive_to_final_positive_quiet_seconds": 73.151310195,
+    "native_response_cap": 64,
+    "native_responses": 6,
+    "on_time_enrolled_native_mcp_and_both_parent_groups_absent": true,
+    "original_cap_seconds": 480,
+    "original_deadline_monotonic_ns": 136610218847511,
+    "original_start_monotonic_ns": 136130218847511,
+    "reported_occupied_lease_seconds": 73.06437873840332,
+    "root_campaign_total_occupied_seconds_preserved": 1427.4393529891968,
+    "root_campaign_total_starts_preserved": 3
+  },
+  "native_cli_opened_or_hashed_by_reviewer": false,
+  "native_goal": {
+    "automatic_continuation_source_count": 52,
+    "complete_then_cleanup_pause_does_not_negate_observed_complete": true,
+    "continuation_completed_count": 1,
+    "continuation_failed_count": 0,
+    "fresh_session": true,
+    "idle_active_after_response_5_then_native_complete_after_response_6": true,
+    "native_engine_sha256": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+    "positive_activation": true,
+    "same_target_complete_idle": true,
+    "target_id": "target_muqg6r5l_f92321cc-c23b-494e-bdbc-036a4a738eb7"
+  },
+  "native_goal_activation_continuation_completion_verified": true,
+  "native_provider_network_calls_by_reviewer": 0,
+  "no_campaign_or_case_clock_or_budget_reset": true,
+  "privacy_and_actual_tool_inventory_verified": true,
+  "private_auth_raw_modelio_reads_by_reviewer": 0,
+  "productive_case_admissions_by_reviewer": 0,
+  "public_copy_manifest": {
+    "path": "LAB_ROOT/evaluation/native-v3-resume-v1/PUBLIC_COPY_MANIFEST.json",
+    "sha256": "7385f92cceffde2f95fa57d879e79741463ebdf567b24657cf15ccd5325e598f"
+  },
+  "qualification_scope": "NATIVE_ACCEPTED_MECHANICAL_ROUTE_ONLY",
+  "review_completed_epoch": 1790979724.1616006,
+  "review_started_epoch": 1790979724.0668344,
+  "reviewer": "/root/er8_v3_proof_resume",
+  "root_release_authorized": false,
+  "route_freeze": {
+    "path": "LAB_ROOT/dev/route-recovery-v2/FREEZE.json",
+    "sha256": "523cb6cc77df53d98045394cec894da6f0bffa313de613d4fe5f70d694bd8084"
+  },
+  "route_snapshot": {
+    "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/SNAPSHOT.json",
+    "sha256": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b"
+  },
+  "route_snapshot_sha256": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b",
+  "schema": "pm.er8.native-canary-review.v1",
+  "scope": "Qualifies the actual frozen Z route mechanical source transport, privacy/tool inventory, fresh native Goal activation/automatic continuation/completion, and inclusive on-time cleanup only. Research outputs require their own frozen independent semantic grading.",
+  "semantic_or_smoke_quality_claims": false,
+  "source_acceptance_handoff": {
+    "path": "LAB_ROOT/evaluation/recovery-route-v1/ROUTE_V2_SOURCE_ACCEPTANCE_HANDOFF.json",
+    "sha256": "fb05ead9e7b05f1306495451baa6e44dde0db8fb8ce793aaae5c13cd50cc00c1"
+  },
+  "source_capture_and_delivered_range_basis": {
+    "path": "LAB_ROOT/evaluation/native-v3-resume-v1/SOURCE_DELIVERY_JOIN.json",
+    "sha256": "4f72decf53522365420b2987d98a256b3a99d9c7f9a4655cac9ba78242130ce6"
+  },
+  "source_capture_and_delivered_range_verified": true,
+  "telemetry_limits": {
+    "all_memory_off_claim": false,
+    "complete_generated_usage": "UNKNOWN: only five usage deltas for six responses",
+    "direct_operation_id_native_call_id_join": "UNKNOWN",
+    "generated_output_tokens_reported_lower_bound": 1923,
+    "global_hooks_disabled_claim": false,
+    "memory_extraction_enabled_in_supported_native_startup": true,
+    "model_understanding": "UNKNOWN",
+    "money": "UNKNOWN",
+    "native_model_responses": 6,
+    "reported_usage_requests": 5,
+    "reported_usage_totals_partial": {
+      "cacheReadTokens": 15680,
+      "cacheWriteTokens": 0,
+      "inputTokens": 22040,
+      "outputTokens": 1923,
+      "reasoningTokens": 0,
+      "totalTokens": 23963
+    },
+    "semantic_acquisition": "UNKNOWN",
+    "shared_native_metadata_changed_paths": "UNOBSERVED-no-host-inventory",
+    "underlying_account_identity": "UNKNOWN"
+  },
+  "verdict": "passed",
+  "snapshot_sha256": "667e9b86a7547c8e647142787637c34adfcc63eb52f33826e0f1f5453d379438",
+  "execution_snapshot": {
+    "path": "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/SNAPSHOT.json",
+    "sha256": "667e9b86a7547c8e647142787637c34adfcc63eb52f33826e0f1f5453d379438"
+  },
+  "additive_binding": {
+    "previous_review": {
+      "path": "LAB_ROOT/evaluation/native-v3-resume-v1/native-canary-v3-review.json",
+      "sha256": "5e1e6e8788b66388103174b21ead80592c26858ba0ede2d9f3c42727a6c76a91"
+    },
+    "scope": "Add exact actualcanary PLAN boundary/executionsnapshot proofmetadata omittedfromoriginal review. Allnativepredicate verdicts/evidence/costs unchanged. No nativeboundary/source/modelconfig change or newcanary.",
+    "created_utc": "2026-10-02T22:42:01.682174+00:00"
+  }
+}

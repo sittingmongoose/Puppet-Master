@@ -1,0 +1,37 @@
+{
+  "schema": "er8.resume-ledger.offline-test.v1",
+  "status": "PASS",
+  "tests": 9,
+  "host_identity_tests": 2,
+  "source": {
+    "path": "LAB_ROOT/ops/recovery-v1/ledger_resume.py",
+    "sha256": "a98cf53c1826f1f4c9fa47a9e181eaae8beb971ea41e6564578a253059450b61"
+  },
+  "test_source": {
+    "path": "LAB_ROOT/dev/resume-execution-v1/test_ledger_resume.py",
+    "sha256": "9e11c88722c213434b05d1e0cf4ca3fc201e117e7d81e719b35e59762dd8dfe2"
+  },
+  "host_test_source": {
+    "path": "LAB_ROOT/dev/resume-execution-v1/test_host_receipts.py",
+    "sha256": "6bdc17ee577d77ede05ed62472c839616c74d9f53ee87d45e70be6bbd1668284"
+  },
+  "private_auth_reads": 0,
+  "native_launches": 0,
+  "provider_calls": 0,
+  "actual_candidate_admissions": 0,
+  "shared_transactions": 0,
+  "coverage": [
+    "auth deadline only",
+    "exact shared state path",
+    "old births/caps/jobs/reservations unchanged",
+    "public elapsed pause exclusion only",
+    "root resume receipt required",
+    "prospective new births beyond old cutoff only",
+    "144 starts plus84 protected starts reserve",
+    "172800 occupied seconds plus151200 protected reserve",
+    "Z2 active slot guard",
+    "six active helpers",
+    "adjusted deadline stop",
+    "failed supervisor/stage held-Popen immediate identities and wait receipts"
+  ]
+}

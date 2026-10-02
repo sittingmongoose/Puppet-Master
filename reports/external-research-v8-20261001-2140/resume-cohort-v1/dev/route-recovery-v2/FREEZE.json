@@ -1,0 +1,47 @@
+{
+  "schema": "er8.legacy-protocol-successor.freeze.v1",
+  "status": "FROZEN_REQUIRES_INDEPENDENT_CANARY_ONLY_ACCEPTANCE",
+  "route_snapshot": {
+    "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/SNAPSHOT.json",
+    "sha256": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b"
+  },
+  "execution_snapshot": {
+    "path": "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/SNAPSHOT.json",
+    "sha256": "667e9b86a7547c8e647142787637c34adfcc63eb52f33826e0f1f5453d379438"
+  },
+  "caller_snapshot": {
+    "path": "LAB_ROOT/dev/route-recovery-v2/dispatcher/SOURCE_FREEZE.json",
+    "sha256": "074e7563753b9d5f4dae6f2ec00ba253fd0d3f9503b47eeeeb1bf35b1f09a70d"
+  },
+  "config": {
+    "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/root-config.json",
+    "sha256": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d"
+  },
+  "control": {
+    "path": "LAB_ROOT/dev/route-recovery-v2/recovery-control.json",
+    "sha256": "201304db9f643fa48a8de74e4340e26717ac8af15c2a07d113d7cb88cceae1b7"
+  },
+  "synthetic_report": {
+    "path": "LAB_ROOT/dev/route-recovery-v2/synthetic-sdk-legacy-31a3872e/REPORT.json",
+    "sha256": "c46e393c755b8a5d9560156e894317d058446b8e998401fdb024a47557c673eb"
+  },
+  "diagnostic": {
+    "path": "LAB_ROOT/dev/native-route-diagnostic-v2/REPORT.json",
+    "sha256": "f12b8f812b0cfff35d9ab2867d93b08f30fdaf0309550b6013a64cd8ea43f939"
+  },
+  "predecessor_frozen45_unchanged": true,
+  "new_canary_id": "v8-z-mechanical-route-canary-v3",
+  "caps": [
+    480,
+    64
+  ],
+  "source_closure_count": 38,
+  "parent_canary_entry": "LAB_ROOT/dev/route-recovery-v2/dispatcher/parent_launcher.py",
+  "operator_metadata_root": "LAB_ROOT/ops/execution-recovery-v1",
+  "native_calls": 0,
+  "provider_calls": 0,
+  "network_calls": 0,
+  "only_behavior_delta": "native MCP protocolVersion auto -> legacy; existing2024server, single-use socket, private mounts, model/Goal/context/clocks/caps unaffected",
+  "path_binding_changes": "Selected snapshot/config/metadata objective/source root references point prospectively to this additive successor; no historical source edits",
+  "production_controller_binding": "Root-owned controller-recovery-v2 source/accept remains separate; not edited or reviewed as part of this narrow delta."
+}

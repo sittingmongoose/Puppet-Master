@@ -1,0 +1,69 @@
+{
+  "schema": "pm.er8.muse-helper-result.v1",
+  "job": "muse-public-accounting-helper-v1",
+  "classification": "helper_not_candidate",
+  "status": "DRAFT_RETURNED_FOR_ROOT_VALIDATION",
+  "native_helper_exec_starts": 1,
+  "candidate_goal_starts": 0,
+  "native_goal_used": false,
+  "model_requested": "muse-spark-1.3-contributor",
+  "model_configured": "muse-spark-1.3-contributor",
+  "provider_configured": "meta",
+  "reasoning_requested": "max",
+  "reasoning_realized": "UNKNOWN_NO_EXPORTED_RECEIPT",
+  "model_responses_started": 1,
+  "generated_tokens": null,
+  "input_tokens": null,
+  "reasoning_tokens": null,
+  "money": null,
+  "elapsed_seconds": 60.90604103700025,
+  "started_utc": "2026-10-02T22:16:39.551479+00:00",
+  "ended_utc": "2026-10-02T22:17:40.457526+00:00",
+  "parent_reaped": true,
+  "own_process_group_absent": true,
+  "exit_code": 0,
+  "tool_or_approval_event_types": [],
+  "draft_word_count": 429,
+  "publisher_review_notes": [
+    "Correct draft sentence adds no starts, usage, or grades: helper adds one separately accounted helper/inference start and 60.90604103700025 elapsed seconds, but zero candidate starts; tokens/cost remain unknown.",
+    "Fixed/synthetic-looking native recorded_at values do not agree with host UTC; host wall/monotonic duration governs helper receipt.",
+    "Draft links not supplied are navigation-only; no research/evaluator/source bundles consulted."
+  ],
+  "receipts": {
+    "DRAFT.md": {
+      "path": "LAB_ROOT/ops/muse-helper-v1/DRAFT.md",
+      "bytes": 4286,
+      "sha256": "beaab98bf45d6baed2c9025427fd4eb6a1eca29148713cf391fb43371ee478d5"
+    },
+    "QUIET.json": {
+      "path": "LAB_ROOT/ops/muse-helper-v1/QUIET.json",
+      "bytes": 1006,
+      "sha256": "bef90b0c66c966bab8d60b1857889a90dadb7ee471452996fe12565d16b8ff63"
+    },
+    "BIRTH.json": {
+      "path": "LAB_ROOT/ops/muse-helper-v1/BIRTH.json",
+      "bytes": 1111,
+      "sha256": "9a35c3e073528d938570a5eda4821ac25298101a58307d6e846c7325de4f32b6"
+    },
+    "INPUT_MANIFEST.json": {
+      "path": "LAB_ROOT/ops/muse-helper-v1/INPUT_MANIFEST.json",
+      "bytes": 3097,
+      "sha256": "ff94151955d959f3e942bf71d0a2dc6774463ce1ff5ce35eac0da547b02c9660"
+    },
+    "native-events.jsonl": {
+      "path": "LAB_ROOT/ops/muse-helper-v1/native-events.jsonl",
+      "bytes": 164710,
+      "sha256": "f3beff9f1bdbf2a137921aea6f7b8b06f8f630758e83202c9abf81ee55cb789d"
+    },
+    "native-stderr.txt": {
+      "path": "LAB_ROOT/ops/muse-helper-v1/native-stderr.txt",
+      "bytes": 268,
+      "sha256": "6aace993f07349833abd8cca11e70fec8afce8d59891d0c536666159d558381d"
+    },
+    "run_helper.py": {
+      "path": "LAB_ROOT/ops/muse-helper-v1/run_helper.py",
+      "bytes": 3414,
+      "sha256": "38a48812445ea790d3b298c10612eaa3d99990b9a4e62c7a63d0b480171bacb0"
+    }
+  }
+}

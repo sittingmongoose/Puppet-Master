@@ -1,0 +1,38 @@
+{
+  "job": "v8-z-mechanical-route-canary-v3",
+  "parent_launcher_pid": 2927981,
+  "parent_launcher_returncode": 0,
+  "parent_launcher_actual_exit_observed_ns": 136203367094933,
+  "private_reads": 0,
+  "parent_positive_rows": [
+    {
+      "schema": "er8.dispatcher.parent-launch-positive.v1",
+      "original_start_monotonic_ns": 136130218847511,
+      "original_birth_epoch": 1790914384.0490766,
+      "original_deadline_monotonic_ns": 136610218847511,
+      "held_outer_pid": 2927982,
+      "held_outer_pgid": 2927982
+    },
+    {
+      "schema": "er8.dispatcher.parent-exit-positive.v1",
+      "held_outer_pid": 2927982,
+      "held_Popen_wait_returncode": 0,
+      "outer_exit_observed_monotonic_ns": 136203129314758,
+      "original_deadline_monotonic_ns": 136610218847511
+    },
+    {
+      "schema": "er8.dispatcher.parent-settlement-positive.v1",
+      "settlement_returncode": 0,
+      "parent_observed_settlement_close_monotonic_ns": 136203305788292,
+      "original_deadline_monotonic_ns": 136610218847511,
+      "all_required_close_on_time": true,
+      "native_semantic_qualification": "PENDING_INDEPENDENT_REVIEW"
+    }
+  ],
+  "lease_released": true,
+  "released_epoch": 1790914457.1134553,
+  "occupied_seconds": 73.06437873840332,
+  "release_on_time": true,
+  "goal_starts": 1,
+  "outcome": "PENDING_REVIEW"
+}

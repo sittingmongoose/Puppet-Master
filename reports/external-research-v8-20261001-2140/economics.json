@@ -1,5 +1,5 @@
 {
-  "checkpoint": "PAUSED_BY_EXPLICIT_USER_REQUEST",
+  "checkpoint": "RESUMED_V3_OPERATIONAL_NATIVE_PROOF_PENDING",
   "observed_native_starts": 3,
   "occupied_candidate_seconds": 1427.4393529891968,
   "candidate_generated_tokens": null,
@@ -45,7 +45,7 @@
   },
   "observed_physical_canary_seconds": 450.307123673,
   "governing_authority_amendment": "canary-controller-cohort-v1/recovery-v1/AUTHORITY_AMENDMENT.json",
-  "observed_usage_scope": "Timestamped pause ledger metadata; third-canary actual outcome/qualification pending",
+  "observed_usage_scope": "Selected restart at 2026-10-02T22:17:46.343042+00:00; original v3 terminal operational completion, independent native proof pending",
   "reserved_native_starts": 84,
   "reserved_occupied_candidate_seconds": 151200,
   "reservation_scope": "24 initial integrated and four fresh holdout whole pipelines; reservations are not starts/usage; root-selected overlay-v2 freeze",
@@ -62,7 +62,7 @@
       "original_cap_seconds": 480
     }
   ],
-  "current_evidence": "recovery-results-cohort-v2/evaluation/recovery-route-v1/canary-v2-review.json",
+  "current_evidence": "resume-cohort-v1/ops/execution-recovery-v1/CANARY_V3_TERMINAL_MANIFEST.json",
   "last_independently_reviewed_usage": {
     "native_starts": 2,
     "occupied_candidate_seconds": 1354.3749742507935,
@@ -70,6 +70,36 @@
   },
   "pause_evidence": "paused-checkpoint-20261002/USER_PAUSE_20261002.json",
   "pause_requested_epoch": 1790914502.1696212,
-  "resume_epoch": null,
-  "pause_duration_seconds": null
+  "resume_epoch": 1790979124.0,
+  "pause_duration_seconds": 64621.83037877083,
+  "generated_output_tokens_lower_bound": 1923,
+  "reported_output_lower_bound_scope": "v3 only; prior unexposed usage remains UNKNOWN",
+  "prospective_deadline_epoch": 1791013030.8303788,
+  "observation_utc": "2026-10-02T22:17:46.343042+00:00",
+  "resume_evidence": "resume-cohort-v1/ops/recovery-v1/RESUME_20261002.json",
+  "observed_physical_canary_seconds_scope": "Historical first canary only",
+  "native_muse_mechanical_helper": {
+    "starts": 1,
+    "candidate_goal_starts": 0,
+    "elapsed_seconds": 60.90604103700025,
+    "generated_tokens": null,
+    "reasoning_realized": "UNKNOWN",
+    "money": null,
+    "evidence": "resume-cohort-v1/ops/muse-helper-v1/RESULT.json",
+    "scope": "Separate helper; not zero usage, not candidate occupancy"
+  },
+  "third_canary_reported_usage": {
+    "usage": {
+      "inputTokens": 22040,
+      "outputTokens": 1923,
+      "reasoningTokens": 0,
+      "cacheReadTokens": 15680,
+      "cacheWriteTokens": 0,
+      "totalTokens": 23963
+    },
+    "scope": "Reported v3 request deltas only; not campaign total or independent semantic finding",
+    "evidence": "resume-cohort-v1/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/FULL_CASE_COST.json"
+  },
+  "native_qualification": "V3_MECHANICAL_PASSED_LIMITED_DELIVERY_INFERENCE",
+  "native_qualification_evidence": "resume-qualified-v3-cohort/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json"
 }

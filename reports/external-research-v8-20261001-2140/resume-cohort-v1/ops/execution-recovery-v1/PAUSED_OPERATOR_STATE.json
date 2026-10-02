@@ -1,0 +1,31 @@
+{
+  "schema": "pm.er8.operator-pause.v1",
+  "state": "USER_EXPLICIT_PAUSE_STOPPED_AFTER_EXISTING_V3_TERMINAL_FREEZE",
+  "saved_epoch": 1790914526.2171938,
+  "no_new_starts_or_admissions": true,
+  "last_exec_session_status": "COMPLETED0",
+  "last_owned_parent_pid": 2927981,
+  "last_owned_outer_pid": 2927982,
+  "all_owned_groups_absent": true,
+  "known_candidate_leases_active": {
+    "M": 0,
+    "Z": 0,
+    "L": 0
+  },
+  "campaign_birth_epoch": 1790905209,
+  "campaign_deadline_epoch": 1790948409,
+  "pause_extension_seconds": "ROOT_POLICY_PENDING_USER_RESUME_NO_ASSUMPTION",
+  "campaign_actual_native_starts": 3,
+  "campaign_occupied_seconds": 1427.4393529891968,
+  "generated_output_tokens_lower_bound": 1923,
+  "manifest": {
+    "path": "LAB_ROOT/ops/execution-recovery-v1/CANARY_V3_TERMINAL_MANIFEST.json",
+    "sha256": "a05f297e8d808184e637c0accef8a8c006b43bb3b502ae1f36e0b6b63210916a"
+  },
+  "production_draft": "root-production-release-v1.draft.json HOLD noauthority",
+  "luna_draft": "LUNA_CANARY_RELEASE_DRAFT.json HOLD noauthority",
+  "source_route_snapshot_sha256": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b",
+  "independent_proof": "PENDING reviewer mayfinish externalwork",
+  "root_release_scope": "CANARY_ONLY",
+  "auth_private_raw_reads": 0
+}

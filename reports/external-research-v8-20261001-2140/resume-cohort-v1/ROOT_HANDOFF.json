@@ -1,0 +1,325 @@
+{
+  "schema": "pm.er8.positive-publication-handoff.v1",
+  "created_utc": "2026-10-02T22:19:59.901158+00:00",
+  "scope": "Actualoperationalcompletev3nativecanary, independentactualproofPENDING, preservedv1/v2HOLD, explicitpause/resume no budgetreset, Musehelperseparatemechanicalinference; no semanticquality/winner/methodresult",
+  "positive_files": [
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/FREEZE.json",
+      "sha256": "523cb6cc77df53d98045394cec894da6f0bffa313de613d4fe5f70d694bd8084"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/INPUT_MAP.json",
+      "sha256": "8015a3f0c21120cfef990d22b32b9d363fd8ac81c6f4ca212c4aac6017414233"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/OBJECTIVES.json",
+      "sha256": "f80217252bc73b00a7050d2a8e49d61cf63ac4d810366900fe49b32d31fca116"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/broker_exec.py",
+      "sha256": "3484668112269099bf59fdf1cdad5f0d515b80da9eb6675157cc5fb52795902a"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/candidate_inputs.py",
+      "sha256": "213e1a6aea20e3e0499971b283e900e31956338cbe6c02fad5e16aa701445abf"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/dispatcher/SOURCE_FREEZE.json",
+      "sha256": "074e7563753b9d5f4dae6f2ec00ba253fd0d3f9503b47eeeeb1bf35b1f09a70d"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/dispatcher/canary_runner.py",
+      "sha256": "e1e75362f33c7951ce98c90aa520fc5686e489b786a2328fcb28c2d11c45ba45"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/dispatcher/dispatcher.py",
+      "sha256": "8cb8ea5b48b305f78a0ce3d04162ee298a95b1be5f5ef0acd56c891c9b2c705b"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/dispatcher/external_close.py",
+      "sha256": "e57acbd7cca3b051a8f49298c67c54ddf91c91570e0cbd3395fc06e8ba0b8896"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/dispatcher/parent_launcher.py",
+      "sha256": "1c5a98ef919b7651d0aa837fd628f55e1e2787c98229af44a8dd628a742965f2"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/SNAPSHOT.json",
+      "sha256": "667e9b86a7547c8e647142787637c34adfcc63eb52f33826e0f1f5453d379438"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/deadline_gate",
+      "sha256": "2575d0c5ea4fe0af283bb0a2f484c0309c9d27be210660d98986bdbcc01f7e58"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/deadline_gate.c",
+      "sha256": "abde9b4b9d70bbfd7c97ed397733228707ad2e27ed9214b11185e371631029ee"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/entry.py",
+      "sha256": "3160d2e6624731218ecf0a465c19ff71a6351ecc4a9fb08d7893c86f6f5b99ca"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/make_plan.py",
+      "sha256": "542f2363c15c213bec422b8e63b62b16a545dbda950d0478d625d10719ccd78b"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/observe.py",
+      "sha256": "e398276c666b50306aa408065d7397ff4ad63d594a1f35d1a4cf9deacc998816"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/host_preflight.py",
+      "sha256": "bea86b191eae203707af24943c048169b418368b5115a4e2ae75d6605068f1f2"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/proxy.py",
+      "sha256": "58ea8262a773b4dc15f1ab0167ebad7e81ac2f3c59c583873017dfc965717f41"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/recovery-control.json",
+      "sha256": "201304db9f643fa48a8de74e4340e26717ac8af15c2a07d113d7cb88cceae1b7"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/SNAPSHOT.json",
+      "sha256": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/adapter.py",
+      "sha256": "2f790fbe0245322b0b24613eb8cd4a0b24070b69728e7cf5ebb234593ddae826"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/admission.py",
+      "sha256": "e6250830d4e609bc3650024c81cb237fb5252f4d95a21411efa16f4e302d3858"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/boundary.py",
+      "sha256": "69db267d6cc9efb8cac73fb729b93d6c69b82e18b4eccaa321b8bfc9de3000be"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/canary/ECHO.txt",
+      "sha256": "f7e2e10edb3dc012fe1d7294b256b368bfb7ac9f96378f61f934e5cb912874df"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/canary/OBJECTIVE.md",
+      "sha256": "c46f27278a35b7e404e8f32d385b38ef011188789f4f14fbf9db2f3a1430e081"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/canary/TASK.md",
+      "sha256": "0f1ca17bd3a03ddd29ee8a537442824ba0cdce1907a6390bf4e4df483050b881"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/host_guard.py",
+      "sha256": "3aa60ec7c7a3886619835c2e5238579e415223041828775f9e226331c3faa438"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/launch.py",
+      "sha256": "8dec4108eacd3814d5b1fff069daaef87703f8466bc6d15c77607e1bcba1e0d4"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/native_runner.py",
+      "sha256": "9b8bf700a30a9a4be0add4f3161b69bf98c6068acef88d73606085c3b6d6caca"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/positive-output-contract.json",
+      "sha256": "e7cb63d0e50efdbc40ad863dba94e2b7b93b3e1095d3d2059991b5b95ebdb447"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/projector.py",
+      "sha256": "92ba648f160f2bec1296cf0a7510bebc6b6a61bcef1e0ccc7c69902610899fd2"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/root-config.json",
+      "sha256": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/run_goal.py",
+      "sha256": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/zcode_goal_driver.py",
+      "sha256": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/zcode_native.py",
+      "sha256": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/source-capture-v1/binding.json",
+      "sha256": "8dea681e5a43fa54cec4a8ae76e37fcd9c6db878e73576ef5611e76e0313ff99"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/source-capture-v1/boundary.py",
+      "sha256": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/source-capture-v1/tool_server.py",
+      "sha256": "9c25c1faaf7c4557aaeb22b0977061914a9fbba1a04d87d2a3a29851daa29846"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/recovery-route-v1/ROUTE_V2_SOURCE_ACCEPTANCE_HANDOFF.json",
+      "sha256": "fb05ead9e7b05f1306495451baa6e44dde0db8fb8ce793aaae5c13cd50cc00c1"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/recovery-route-v1/caller-v2-source-acceptance.json",
+      "sha256": "04cc0c7cad1ef7a41780ab236a6075959787214be8742d76ab24e69467ee76c3"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/recovery-route-v1/execution-v2-source-acceptance.json",
+      "sha256": "9702cfd12df7ad290f19dcae6e8134ec77b2fd45f7fff293746a483c1d22c8a7"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/recovery-route-v1/route-v2-source-acceptance.json",
+      "sha256": "d668bfbe74b74e91ae5a9527d99600684b98070d59b14dde0c62c612960a3351"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/CANARY_V3_TERMINAL_MANIFEST.json",
+      "sha256": "a05f297e8d808184e637c0accef8a8c006b43bb3b502ae1f36e0b6b63210916a"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/PAUSED_OPERATOR_STATE.json",
+      "sha256": "e8acba68227d51ad9ebb019aeadddeda520a57cda35f92bbb9861058d5d974ca"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/ACTIVATION_POSITIVE.json",
+      "sha256": "5ec0695dc0b3b51bad75f43a0d696efddf32fda360317178c6090bd6d23a8e51"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/BIRTH.json",
+      "sha256": "94e19187d3c4cb24c40155291a0204d27ab304e4e6a24d17d413c741faee24fe"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/CASE_AUTHORITY.json",
+      "sha256": "c06f78c085d13bff407efdfb6c2eb03c6ccbeed990e891f50a4c892e1de47b4f"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/CASE_BINDING.json",
+      "sha256": "325447b20c69b655fca0b5b7341fbfdd0ac702263472c47281cf6844548a19b3"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/COMPLETE.json",
+      "sha256": "67f36aeb0b781bb0c1f307f3674108f1992b9af77fe9e58d8b4aedc44423b181"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/EXTERNAL_PARENT_CLOSE.json",
+      "sha256": "b037946f6e87e792b62112ad6595ceac71270e59166c531cdd48056c4aad53f5"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/EXTERNAL_SETTLEMENT.json",
+      "sha256": "b64b1da9fe9b2fd51dacf6b339b8590c393c7f060924a13be504ac7ae2346e9f"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/FAILURE_OR_SUCCESS_QUIET_PROOF.json",
+      "sha256": "5b0cad643e4a1658a20e8a9335b6d4df98cda88374e730ff6d4382843d85ade6"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/FULL_CASE_COST.json",
+      "sha256": "e0b827fa5166fedf82e7fb5f222f914631b5ff9122a28ead8a98a62216f5851f"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/IMMEDIATE_PRELAUNCH_PINS.json",
+      "sha256": "7d2b8ed63876a4b4dd53733d76b554a9ede39655efbd24cd2134c301463516b9"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/LAUNCHED.json",
+      "sha256": "058ec0bb735dff1a77f1fa9df541bbeeb7083765b9950a705058a60a3b8cc677"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/LEASE.json",
+      "sha256": "40e099c6305dfab1e162995b25d12e53156a74d63ed4e1154f474c377bce3dbb"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/PLAN.enrollment.json",
+      "sha256": "10462a7ed543ccbb9f009cba90d13b8ffa28fbdb4ef1d4dfa739639f09265141"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/PLAN.json",
+      "sha256": "e963845b76825f40a12d948abfaea31433ae15221f306cbedb0daaeaa3f2aa88"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/PUBLIC_ARTIFACT_FREEZE.json",
+      "sha256": "f493d93ff5357b0b9b733d4992d7ade656f2e8c216c512f21c67f99123fa17e2"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/PUBLIC_METRICS_FREEZE.json",
+      "sha256": "7a4f6ab945e22919ff300e51e970c564cd5429d2de0724d3254723fe8dc6c896"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/QUIESCENCE.json",
+      "sha256": "520d511a40cad4b78c0228a2a57c7ebc37cf81a9b5e45239a809ef45f56f9800"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/native-public/activation.json",
+      "sha256": "5ec0695dc0b3b51bad75f43a0d696efddf32fda360317178c6090bd6d23a8e51"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/native-public/progress.jsonl",
+      "sha256": "1b445cc81605f3a7c42f8443fa02fa87bbfab6ce86f58af5decd980b7b1553b3"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/native-public/public-metrics.json",
+      "sha256": "87130a3246f79952c40e2bd3203b3d816b35bb5a4e8206acb1d004f8e9782cba"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/native-public/receipt.json",
+      "sha256": "87130a3246f79952c40e2bd3203b3d816b35bb5a4e8206acb1d004f8e9782cba"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/workspace/operation_receipts/events.jsonl",
+      "sha256": "517b2918edc86497809f9e52238aecccfcb2fc1b8a9f809e94cad3d604a2b215"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/workspace/out/RESULT.md",
+      "sha256": "c16724a42e235415fdfae3b6f4e794fb867f4252458685fcdf43ac3247264119"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/workspace/public_captures/7d3e61f8f627c8cc640c209ba0777db95f198a64e766f47484c321d5eb5e0962.body",
+      "sha256": "7d3e61f8f627c8cc640c209ba0777db95f198a64e766f47484c321d5eb5e0962"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/workspace/public_captures/cf45ac8886324474af46ed6944041f0c.json",
+      "sha256": "eed598b9d59165275209277219587948e7dc6d64db4b26a60f784cb33b6057e5"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/root-canary-release-v4.json",
+      "sha256": "9f4895db862f0edb0802521ab5c5d049d134837ccec5c067d254e74d34683422"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/v8-z-mechanical-route-canary-v3-monitor-parent.json",
+      "sha256": "8d2aecfb7e29047b71d89bdc787b7649c6d5c1b5eb505d0576640077495602e5"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/v8-z-mechanical-route-canary-v3-monitor-terminal.json",
+      "sha256": "f1bc57fb4799ce6322df618f344896aefb4d0b623a4da125c828c2631d7b23b6"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/v8-z-mechanical-route-canary-v3-parent-positive.jsonl",
+      "sha256": "7466dcc581faecc9723e7b49d3cd102e06d7501c1b60cd636189fbc3afef1ab2"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-helper-v1/BIRTH.json",
+      "sha256": "9a35c3e073528d938570a5eda4821ac25298101a58307d6e846c7325de4f32b6"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-helper-v1/DRAFT.md",
+      "sha256": "beaab98bf45d6baed2c9025427fd4eb6a1eca29148713cf391fb43371ee478d5"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-helper-v1/QUIET.json",
+      "sha256": "bef90b0c66c966bab8d60b1857889a90dadb7ee471452996fe12565d16b8ff63"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-helper-v1/RESULT.json",
+      "sha256": "26ac3277b56d473c0ea6dc89fcdfe5890f7a436c3aece07fd4c8fac34c189e3d"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/RESTART.json",
+      "sha256": "62bdfe4d00b00626bd0c2d0cccefd8574342fb6ecf0096d1bd2bd01245f97422"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/RESUME_20261002.json",
+      "sha256": "9fc1c92a3b6074610b3b4026bd4d7500e0f0a135b506863965e2919fb640c02f"
+    }
+  ],
+  "exclusions": "No raw private/modelIO/auth/installednativeapplicationbundle/proprietarysource or evaluator-only keys. Only selected paths; source snapshots originalhostproof; sanitizer prior rules. Retain actualattempt allcosts andscopeobservations.",
+  "draft_validation": "Muse raw DRAFT retained as helperoutput historicalinputscope only; correct addsno usage claim ineditorialpublishedtext; separate1helperinference60.906sec tokensrealizedeffortmoneyUNKNOWN; no candidateGoalstart."
+}

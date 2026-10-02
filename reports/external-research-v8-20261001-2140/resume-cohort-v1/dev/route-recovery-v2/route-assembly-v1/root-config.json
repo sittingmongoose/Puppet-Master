@@ -1,0 +1,71 @@
+{
+  "schema": "er8.route.config.v1",
+  "status": "PROSPECTIVE_REQUIRES_INDEPENDENT_CANARY_ONLY_ACCEPTANCE",
+  "snapshot_path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/SNAPSHOT.json",
+  "account_identity": "existing-authorized-zcode-account-v8-A",
+  "account_identity_semantics": "opaque campaign role reference; existing authorized native Coding Plan auth remains host memory only; not account contents proof",
+  "external_account_load": "UNKNOWN",
+  "native_model": {
+    "provider_id": "builtin:zai-coding-plan",
+    "model_id": "GLM-5.3-Flash",
+    "effort": "max",
+    "session_mode": "build"
+  },
+  "source_capture_binding": {
+    "path": "LAB_ROOT/dev/source-capture-v1/binding.json",
+    "sha256": "8dea681e5a43fa54cec4a8ae76e37fcd9c6db878e73576ef5611e76e0313ff99"
+  },
+  "tool_allowlist": [
+    "mcp__pm_boundary__read_file",
+    "mcp__pm_boundary__write_file",
+    "mcp__pm_boundary__mechanical",
+    "mcp__pm_boundary__public_https_get"
+  ],
+  "context_policy": {
+    "fresh_home_and_xdg": true,
+    "controlled_ancestor_instructions": true,
+    "fresh_session_no_import": true,
+    "plugins_and_plugin_hooks_and_skill_roots_zero": true,
+    "memoryUse": false,
+    "memoryEnabled": false,
+    "memoryExtractionEnabled": "OBSERVED_BOOL_MAY_BE_TRUE_NO_ALL_MEMORY_OFF_CLAIM",
+    "request_context_marker_gate": "logical-request.messages-and-body.system-source-defined-markers",
+    "global_hooks_disabled_claim": false,
+    "all_memory_off_claim": false
+  },
+  "process_dependencies": {
+    "python": {
+      "path": "/usr/bin/python3.13",
+      "sha256": "efb29ce53d36ebaeee80e3aa44fd6c7f9d71bbded5fe1665240b2ed8ecaeee0e"
+    },
+    "node": {
+      "path": "USER_HOME/.local/bin/node",
+      "sha256": "81925c0995b5c1427b5d538e6a90ca2fdc4daffb786b09af749beaf7369d4e90"
+    },
+    "bwrap": {
+      "path": "/usr/bin/bwrap",
+      "sha256": "7bbffeb19f312d5503232e1502f0f97f2ac4ffcb51dec47d9a58bffbad1f12d5"
+    },
+    "native_cli": {
+      "path": "USER_HOME/.local/opt/zcode/app.backup-3.11.2.6792/resources/glm/zcode.cjs",
+      "sha256": "e9f1868c0fdb863537ed910ee3828b9be96b8c2fd805473f63b439e1113266b8"
+    }
+  },
+  "old_lineage": {
+    "native_runner_sha256": "9894fa2d82f801cf2d70f1f0a9756e2a14e7bcbd59fe95d69459d6d552d4baa9",
+    "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+    "native_engine_sha256": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+    "old_canary_scope": "historical v7 only; no v8 launch authority; immutable claim untouched"
+  },
+  "canary": {
+    "job_id": "v8-z-mechanical-route-canary-v3",
+    "max_seconds": 480,
+    "max_responses": 64,
+    "public_get": true,
+    "source_url": "https://example.com/",
+    "scored_research": false
+  },
+  "productive_gate": "same changed-closure canary source/context/native/lifetime proof and exact root/operator admission after actual proof",
+  "input_adapter": "prospective input/ to inputs/ filename normalization only; no cross-case content",
+  "cost_policy": "all case preparation/startup/queue/waits/cleanup count under original case; global prospective planning costs separately reported, never case clock reset"
+}

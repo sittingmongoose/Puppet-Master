@@ -1,0 +1,22 @@
+{
+  "schema": "er8.recovery-control.v1",
+  "campaign": "LAB_ROOT",
+  "operator_root": "LAB_ROOT/ops/execution-recovery-v1",
+  "assembly": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1",
+  "execution": "LAB_ROOT/dev/route-recovery-v2/execution-path-v1",
+  "ledger": {
+    "path": "LAB_ROOT/ops/recovery-v1/ledger_overlay.py",
+    "sha256": "597a3d3349154fbb4614ed7ece864f1cd77ecfea145fbfddaefc79fe0a1cd618"
+  },
+  "authority": {
+    "path": "LAB_ROOT/ops/recovery-v1/AUTHORITY_AMENDMENT.json",
+    "sha256": "1479c0b44869d13878b90ccd2f02d5fb2d755cfa0f0b17315105dc48d57616ec"
+  },
+  "deadline_epoch": 1790948409,
+  "canary_id": "v8-z-mechanical-route-canary-v3",
+  "default_queue": [
+    "V8-BIO-C-Z",
+    "V8-BIO-WIT-T-Z"
+  ],
+  "planning_map": "LAB_ROOT/dev/route-recovery-v2/INPUT_MAP.json"
+}

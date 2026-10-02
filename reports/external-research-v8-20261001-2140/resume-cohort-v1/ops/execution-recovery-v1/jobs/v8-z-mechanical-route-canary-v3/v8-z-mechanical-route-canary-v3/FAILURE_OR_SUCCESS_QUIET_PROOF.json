@@ -1,0 +1,59 @@
+{
+  "schema": "pm.er8.failure-cleanup-proof.v2",
+  "root_authority": true,
+  "job": "v8-z-mechanical-route-canary-v3",
+  "parent_launcher_held_wait_returncode": 0,
+  "parent_launcher_actual_exit_observed_monotonic_ns": 136203367094933,
+  "positive_parent_records": [
+    {
+      "schema": "er8.dispatcher.parent-launch-positive.v1",
+      "original_start_monotonic_ns": 136130218847511,
+      "original_birth_epoch": 1790914384.0490766,
+      "original_deadline_monotonic_ns": 136610218847511,
+      "held_outer_pid": 2927982,
+      "held_outer_pgid": 2927982
+    },
+    {
+      "schema": "er8.dispatcher.parent-exit-positive.v1",
+      "held_outer_pid": 2927982,
+      "held_Popen_wait_returncode": 0,
+      "outer_exit_observed_monotonic_ns": 136203129314758,
+      "original_deadline_monotonic_ns": 136610218847511
+    },
+    {
+      "schema": "er8.dispatcher.parent-settlement-positive.v1",
+      "settlement_returncode": 0,
+      "parent_observed_settlement_close_monotonic_ns": 136203305788292,
+      "original_deadline_monotonic_ns": 136610218847511,
+      "all_required_close_on_time": true,
+      "native_semantic_qualification": "PENDING_INDEPENDENT_REVIEW"
+    }
+  ],
+  "owned_groups_absent": {
+    "2927981": true,
+    "2927982": true
+  },
+  "enrolled_native_mcp_quiet": {
+    "schema": "er8.execution.quiescence.v1",
+    "owned_unit": "er8-v8-z-mechanical-route-canary-v3.service",
+    "owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-z-mechanical-route-canary-v3.service",
+    "enrollment": {
+      "schema": "er8.execution.enrollment.v1",
+      "owned_unit": "er8-v8-z-mechanical-route-canary-v3.service",
+      "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-z-mechanical-route-canary-v3.service",
+      "enrolled_monotonic_ns": 136130573278176,
+      "original_deadline_monotonic_ns": 136610218847511
+    },
+    "absence_proof": "positively-enrolled-owned-cgroup-removed",
+    "owned_native_quiescent": true,
+    "quiescence_observed_monotonic_ns": 136203370105017,
+    "original_deadline_monotonic_ns": 136610218847511,
+    "inclusive_native_lifetime_established": true,
+    "occupancy_disposition": "releasable-native-only",
+    "native_goal_or_quality_qualification": "UNESTABLISHED; independent native receipt review mandatory"
+  },
+  "original_deadline_monotonic_ns": 136610218847511,
+  "cleanup_observed_monotonic_ns": 136203370157706,
+  "no_backdating": true,
+  "missing_metrics_is_failure_not_quality": true
+}

@@ -1,0 +1,7 @@
+# Qualified native v3 and resumed host bindings
+
+V3 passed independent mechanical qualification: fresh native GLM-5.3-Flash/max Goal activation, automatic continuation/completion, restricted tools, public capture/range delivery and on-time owned cleanup. The [review](evaluation/native-v3-resume-v1/native-canary-v3-review.json) records the delivery inference: unique calls/order, flushed response envelopes and exact later candidate-authored hashes. Direct operation-ID/native-call-ID joining and semantic understanding remain unestablished. This is no research-quality or method result.
+
+The [additive review binding](evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json) adds the actual canary execution snapshot omitted from the initial review metadata, preserving all verdicts/evidence/costs. The first production launch was rejected by that missing host field; both failed leases were positively cleaned up. Their attempts remain preserved.
+
+The new [productive acceptance](evaluation/resume-execution-v1/route-native-acceptance-bound-execution.json), [controller review](evaluation/resume-execution-v1/controller-source-acceptance.json), ledger and host controls retain original candidate clocks/costs. Host-specific projected paths and original hashes are not portable native runtime bindings. Installed native applications, auth, raw private IO and evaluator keys are excluded.

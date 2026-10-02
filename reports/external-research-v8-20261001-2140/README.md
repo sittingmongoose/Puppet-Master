@@ -1,22 +1,24 @@
 # External research v8 — current campaign checkpoint
 
-**PAUSED BY USER — three recorded native starts; two assessed canaries HOLD; third outcome pending. Integrated research results NOT_RUN.** This entry declares the fresh authorized integration-first campaign; it is not campaign completion or evidence of a qualified recipe. The [code qualification cohort](code-cohort-v1/README.md) supplies conditional source/offline acceptances and retained finite repairs; native qualification is HOLD after the first canary. Later cohort batches will publish actual full-pipeline outputs and independent current assessments together.
+**RESUMED at the user's request on 2026-10-02T22:12:04Z. Three recorded native starts; first two canaries HOLD; third independently qualified for mechanical native execution. Integrated research results remain 0/24 and matched comparisons 0/12.** No research-quality finding, qualified recipe, winner or same-quality speedup is established.
 
 - [Current results](RESULTS.md), [methods](methods.json), [attempts](attempts.json), [comparisons](comparisons.json)
 - [Economics](economics.json), [schedule](schedule.json), [failures](FAILURES.md)
 - [Best recipe disposition](BEST_RECIPE.md), [reproduction](REPRODUCE.md), [checkpoint](CHECKPOINT.md)
 - [Protocol and exact candidate tasks](protocol/README.md), [authorization](authority/AUTHORIZATION.json), [v7 review reconciliation](REVIEW_RECONCILIATION.md)
 
-The six reserved complete cases are BIO-C/P/B and NB-C/P/B on the same declared existing Z account/model/mode. Each uses fresh research/proposal, independent same-family candidate critic, and correction Goals. Research selects public primary evidence from a brief; sandbox proposals do not edit Puppet Master canon. Independent source-grounded evaluation follows actual frozen outputs. Source acquisition and source body/range observation remain UNKNOWN until mechanical receipts establish them. Quality, preservation and efficiency are separate outcomes.
+The [resume cohort](resume-cohort-v1/README.md) adds the original third-canary terminal records, actual mechanical RESULT and bounded public capture, source acceptance and runtime pins, explicit resume authority and separately accounted Muse helper output. Latest selected restart observation (2026-10-02T22:17:46.343042+00:00) records **3 starts, 1427.4393529891968 occupied candidate slot seconds and 1923 reported output tokens as a lower bound**. Its active-jobs list is empty at that observation; it is not a current liveness guarantee. Total tokens and money remain UNKNOWN.
 
-V7 at `c8f9cbc9195602688702bbbf9b3ce23c14fa5586` remains closed with unmet outcomes. No unused v7 starts transfer here.
+Only the actual explicit user pause, **64621.83037877083 seconds**, is excluded from the prospective supervisor clock. The adjusted campaign deadline is **2026-10-03T07:37:10.830379Z** (03:37:10 EDT on October 3). Original campaign birth, 144-start/172800-slot-second resource ceilings, consumed usage, frozen job births/deadlines and all prior outcomes remain unchanged. The first complete pair is prospective at this selected freeze; candidate execution may advance separately.
 
-[Route code and public dependency cohort](route-cohort-v1/README.md) adds the pinned source/config closure and two authorized historical public dependency copies. Caller repair2 has conditional source acceptance; first actual native canary remains HOLD.
+The six original reserved complete cases are BIO-C/P/B and NB-C/P/B on the declared existing Z account/model/mode. The prospective tranche expands to 24 complete pipelines, 12 pairs and four reserved unseen holdouts. Each pipeline uses fresh research/proposal, independent same-family candidate critic and correction Goals; independent source-grounded evaluation follows frozen outputs. Research selects public primary evidence from a brief; sandbox proposals do not edit Puppet Master canon. Research acquisition, quality, preservation and efficiency remain separate outcomes. V7 at `c8f9cbc9195602688702bbbf9b3ce23c14fa5586` stays closed with unmet outcomes; no unused v7 starts transfer.
 
-[Canary, controller and recovery cohort](canary-controller-cohort-v1/README.md) publishes the failed canary, independent conditional controller assessment and prospective authority amendment. Current deadline is **2026-10-02T13:40:09Z**, measured from the original start without reset. No integrated execution or research quality result is claimed.
+Historical cohorts remain frozen at their own observation times:
 
-[Prospective tranche and accounting cohort v2](tranche-cohort-v2/README.md) publishes the 24-pipeline/12-pair scope, four reserved unseen holdout names and protected accounting reservations. These are prospective inputs; completed integrated executions and comparisons remain zero at the freeze.
+- [Code qualification](code-cohort-v1/README.md) and [route/dependency closure](route-cohort-v1/README.md): conditional source/offline acceptance and finite failed repairs.
+- [First native canary/controller](canary-controller-cohort-v1/README.md): first actual HOLD; source-only controller acceptance.
+- [Prospective tranche/accounting](tranche-cohort-v2/README.md): reservations and prompts, not observed starts/results.
+- [Second canary/recovery](recovery-results-cohort-v2/README.md): two-start assessed freeze, both HOLD, 1354.3749742507935 occupied seconds.
+- [Explicit pause checkpoint](paused-checkpoint-20261002/README.md): original paused observation with resume unset, retained unchanged as history.
 
-[Native canary v2 and recovery evidence](recovery-results-cohort-v2/README.md) retains the second failed activation and late cleanup: two counted native starts and 1354.3749742507935 cumulative occupied seconds. Integrated executions remain **0/24**, matched comparisons **0/12** at this freeze; no qualified productive route or winner is claimed.
-
-[Explicit pause checkpoint](paused-checkpoint-20261002/README.md) records the user pause at 2026-10-02T04:15:02Z. New admissions are disabled. Resume time and excluded pause duration are unset; prior limits, births, failed outcomes and costs are preserved. Latest selected ledger metadata records three starts and 1427.4393529891968 occupied seconds, with no active jobs at its observation; third-canary actual outcome/evaluation remains pending.
+[Qualified native v3 cohort](resume-qualified-v3-cohort/README.md) supersedes the earlier pending-proof observation: the exact native route passed narrow independent mechanical qualification. Research quality and method effects remain unassessed; no completed integrated result is claimed here.

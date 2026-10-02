@@ -1,5 +1,5 @@
 {
-  "checkpoint": "PAUSED_BY_EXPLICIT_USER_REQUEST",
+  "checkpoint": "RESUMED_V3_MECHANICAL_QUALIFIED_RESEARCH_NOT_RUN",
   "files": [
     {
       "path": "BEST_RECIPE.md",
@@ -8,8 +8,8 @@
     },
     {
       "path": "CHECKPOINT.md",
-      "sha256": "ac136b92e819a4c3a6d9bcc10f18fe54e78c5cbf6c4b4928a29841b642f2cae7",
-      "bytes": 2984
+      "sha256": "f91d15da07c34fd1b0a61f5945d284329084a185e542ad5685439a2ef71a2c48",
+      "bytes": 3459
     },
     {
       "path": "FAILURES.md",
@@ -18,18 +18,18 @@
     },
     {
       "path": "README.md",
-      "sha256": "ce2858270d64f54c699ed7e5ec0e07c338340694f31924bc5eec4b20fb2d0012",
-      "bytes": 3468
+      "sha256": "e70b10a0fec373b67d752a135d105761e49416a7fe248792ea5331bb3a3b9f1d",
+      "bytes": 3688
     },
     {
       "path": "REPRODUCE.md",
-      "sha256": "3864124772344e964c7e9fd3f04fb96fc18f11053da01df1f24bd48eab3f3987",
-      "bytes": 3042
+      "sha256": "7d5b4fdbac3f141555896af5e4a015d40d7ebe9bf9d01e58da6181941880329c",
+      "bytes": 3780
     },
     {
       "path": "RESULTS.md",
-      "sha256": "ff9ffd429527c116677788e0b9c90cb91f9eb02182487329cf85c07072d77194",
-      "bytes": 1870
+      "sha256": "f2a55cbf9e027bd261dc9fb2b930a320c96d640d8e930438e3c5b507a20a2382",
+      "bytes": 2714
     },
     {
       "path": "REVIEW_RECONCILIATION.md",
@@ -38,8 +38,8 @@
     },
     {
       "path": "attempts.json",
-      "sha256": "9c3984dc55c61d089c9d00da50fb86c0458723c7aeb2e78ec3cd3a7a1734e768",
-      "bytes": 1265
+      "sha256": "da25aca66de05e530fce2166eee4131e9443e79ec77ce6a0bcc0e0f364a98fd5",
+      "bytes": 2436
     },
     {
       "path": "authority/AUTHORIZATION.json",
@@ -628,8 +628,8 @@
     },
     {
       "path": "economics.json",
-      "sha256": "513986d09ec13341c99ef6f82acd9c8d414d555ce47883d115935d74ca0f8d1e",
-      "bytes": 2816
+      "sha256": "da293988ab8de295af7db529c1e42cb51b15649643006d4f4b2e3fb25d65b145",
+      "bytes": 4353
     },
     {
       "path": "methods.json",
@@ -1077,6 +1077,526 @@
       "bytes": 8110
     },
     {
+      "path": "resume-cohort-v1/PUBLIC_EXPORT.json",
+      "sha256": "7ea49b3010bdb003d89ac49f88c5fa1d783ecc8e51dbe55f02e7964c3166c4a2",
+      "bytes": 36752
+    },
+    {
+      "path": "resume-cohort-v1/README.md",
+      "sha256": "ec2698d595f43ce7a295d899dc81119233aa3a4496d61e7bf79f1bfb060b784d",
+      "bytes": 3217
+    },
+    {
+      "path": "resume-cohort-v1/ROOT_HANDOFF.json",
+      "sha256": "1c658dd0c971de3380f5c3f651884dae31c5eecc883d3168f73588c6756c83c7",
+      "bytes": 16328
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/FREEZE.json",
+      "sha256": "2e1fe043ba5d188e3eab6d3dfca9cf0901c71d276048b0df7b54f486f119801f",
+      "bytes": 2280
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/INPUT_MAP.json",
+      "sha256": "5b9a9ab5a1be240de4baa9f4665d9776c60dd2530b1715d42bc31fdb5ed5acfe",
+      "bytes": 9457
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/OBJECTIVES.json",
+      "sha256": "c20d013639579bba76d9977c30a7025ebb2ae3546a1aa607b4b2ff1786f96346",
+      "bytes": 93548
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/broker_exec.py",
+      "sha256": "3484668112269099bf59fdf1cdad5f0d515b80da9eb6675157cc5fb52795902a",
+      "bytes": 5447
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/candidate_inputs.py",
+      "sha256": "213e1a6aea20e3e0499971b283e900e31956338cbe6c02fad5e16aa701445abf",
+      "bytes": 2124
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/dispatcher/SOURCE_FREEZE.json",
+      "sha256": "d8bce136fa2b75511963a67ea2039f83f2b9187f4bbebc4c09d2190993a80710",
+      "bytes": 6036
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/dispatcher/canary_runner.py",
+      "sha256": "e1e75362f33c7951ce98c90aa520fc5686e489b786a2328fcb28c2d11c45ba45",
+      "bytes": 12995
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/dispatcher/dispatcher.py",
+      "sha256": "a5547dad6c2d7689c83b0d5ec4f4ffda5299d5290076b13d39b3f8eb9e426a83",
+      "bytes": 6338
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/dispatcher/external_close.py",
+      "sha256": "e57acbd7cca3b051a8f49298c67c54ddf91c91570e0cbd3395fc06e8ba0b8896",
+      "bytes": 6200
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/dispatcher/parent_launcher.py",
+      "sha256": "1c5a98ef919b7651d0aa837fd628f55e1e2787c98229af44a8dd628a742965f2",
+      "bytes": 2912
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/execution-path-v1/SNAPSHOT.json",
+      "sha256": "b0ab7f33f75875f197c63d9d5f4f291e643926d2a58c5474e57bebe72e820e13",
+      "bytes": 6033
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/execution-path-v1/deadline_gate",
+      "sha256": "2575d0c5ea4fe0af283bb0a2f484c0309c9d27be210660d98986bdbcc01f7e58",
+      "bytes": 1041440
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/execution-path-v1/deadline_gate.c",
+      "sha256": "abde9b4b9d70bbfd7c97ed397733228707ad2e27ed9214b11185e371631029ee",
+      "bytes": 2384
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/execution-path-v1/entry.py",
+      "sha256": "de4f1a71486e2766581842df53f0f85931f688918c455c6f4bda1a4fb25d650e",
+      "bytes": 10257
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/execution-path-v1/make_plan.py",
+      "sha256": "dbeb9fc1eed38bd00ac9ccc6256687a83ce5d314f6c9d2cdfe049fa12f66242e",
+      "bytes": 6603
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/execution-path-v1/observe.py",
+      "sha256": "e398276c666b50306aa408065d7397ff4ad63d594a1f35d1a4cf9deacc998816",
+      "bytes": 2567
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/host_preflight.py",
+      "sha256": "bea86b191eae203707af24943c048169b418368b5115a4e2ae75d6605068f1f2",
+      "bytes": 3206
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/proxy.py",
+      "sha256": "58ea8262a773b4dc15f1ab0167ebad7e81ac2f3c59c583873017dfc965717f41",
+      "bytes": 1604
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/recovery-control.json",
+      "sha256": "a3193998025bbad6390bfe0894488ff4588634ce36765d7502b00152561c0d22",
+      "bytes": 798
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/route-assembly-v1/SNAPSHOT.json",
+      "sha256": "e46d4d8106eba7ef1469ad45baca1aad6eb04bd641d53560c855df57f8d4edbf",
+      "bytes": 6024
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/route-assembly-v1/adapter.py",
+      "sha256": "2f790fbe0245322b0b24613eb8cd4a0b24070b69728e7cf5ebb234593ddae826",
+      "bytes": 5724
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/route-assembly-v1/admission.py",
+      "sha256": "e6250830d4e609bc3650024c81cb237fb5252f4d95a21411efa16f4e302d3858",
+      "bytes": 9477
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/route-assembly-v1/boundary.py",
+      "sha256": "69db267d6cc9efb8cac73fb729b93d6c69b82e18b4eccaa321b8bfc9de3000be",
+      "bytes": 1213
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/route-assembly-v1/canary/ECHO.txt",
+      "sha256": "f7e2e10edb3dc012fe1d7294b256b368bfb7ac9f96378f61f934e5cb912874df",
+      "bytes": 83
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/route-assembly-v1/canary/OBJECTIVE.md",
+      "sha256": "c46f27278a35b7e404e8f32d385b38ef011188789f4f14fbf9db2f3a1430e081",
+      "bytes": 589
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/route-assembly-v1/canary/TASK.md",
+      "sha256": "0f1ca17bd3a03ddd29ee8a537442824ba0cdce1907a6390bf4e4df483050b881",
+      "bytes": 1066
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/route-assembly-v1/host_guard.py",
+      "sha256": "3aa60ec7c7a3886619835c2e5238579e415223041828775f9e226331c3faa438",
+      "bytes": 1405
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/route-assembly-v1/launch.py",
+      "sha256": "8dec4108eacd3814d5b1fff069daaef87703f8466bc6d15c77607e1bcba1e0d4",
+      "bytes": 1331
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/route-assembly-v1/native_runner.py",
+      "sha256": "fc8ed19a20c3080f648398e8a4b34d22c73870caffb2f302066ab6f5a3ff1889",
+      "bytes": 18327
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/route-assembly-v1/positive-output-contract.json",
+      "sha256": "e7cb63d0e50efdbc40ad863dba94e2b7b93b3e1095d3d2059991b5b95ebdb447",
+      "bytes": 2634
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/route-assembly-v1/projector.py",
+      "sha256": "92ba648f160f2bec1296cf0a7510bebc6b6a61bcef1e0ccc7c69902610899fd2",
+      "bytes": 16369
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/route-assembly-v1/root-config.json",
+      "sha256": "89591d938364e971f0f509ea7a9435007c5672f677c1a0a469ae28bec4f4bd07",
+      "bytes": 3180
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/route-assembly-v1/run_goal.py",
+      "sha256": "e6bf4e911c5283c3e412a51fefb4e486251e54b8d7725a859ceac52ee2d4804a",
+      "bytes": 21465
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/route-assembly-v1/zcode_goal_driver.py",
+      "sha256": "561f2acef2931e5510fe2038c43a861729f2a1c23675f64e4b4eb9d9065f3b64",
+      "bytes": 11547
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/route-assembly-v1/zcode_native.py",
+      "sha256": "8c7d47b64eaa80fed74a1d34a99b27a28062f7b9f03706aa4af3aa2eed3f7a74",
+      "bytes": 31556
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/source-capture-v1/binding.json",
+      "sha256": "22c9c8669dca635cccf47d7efae183c7da5006be6918c9ebc64313f6c9525da2",
+      "bytes": 2481
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/source-capture-v1/boundary.py",
+      "sha256": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+      "bytes": 2648
+    },
+    {
+      "path": "resume-cohort-v1/dev/route-recovery-v2/source-capture-v1/tool_server.py",
+      "sha256": "9c25c1faaf7c4557aaeb22b0977061914a9fbba1a04d87d2a3a29851daa29846",
+      "bytes": 21910
+    },
+    {
+      "path": "resume-cohort-v1/evaluation/recovery-route-v1/ROUTE_V2_SOURCE_ACCEPTANCE_HANDOFF.json",
+      "sha256": "614da81bb3cf0048fa4711d5bc68708c36c90ae53e75f5c1c8659989559d7b50",
+      "bytes": 1156
+    },
+    {
+      "path": "resume-cohort-v1/evaluation/recovery-route-v1/caller-v2-source-acceptance.json",
+      "sha256": "8a25fc2b44ff8d8ff7535433c30b9afd26e12b2a93edf3a3adfbbfa2eab0f8a5",
+      "bytes": 4514
+    },
+    {
+      "path": "resume-cohort-v1/evaluation/recovery-route-v1/execution-v2-source-acceptance.json",
+      "sha256": "757042cc1a332187e0d8003612406f922a2c2e5ed5a0702cf9c4761ac0d93d4a",
+      "bytes": 4480
+    },
+    {
+      "path": "resume-cohort-v1/evaluation/recovery-route-v1/route-v2-source-acceptance.json",
+      "sha256": "8a9fcc6f5f59605dc1c3b609828bfc204bbd8d55654db330fc61f0ad2218b1dc",
+      "bytes": 4603
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/CANARY_V3_TERMINAL_MANIFEST.json",
+      "sha256": "077d3323d36efb9da11b241667b56591e8e927a89e5253f7605c2b81973cab56",
+      "bytes": 9004
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/PAUSED_OPERATOR_STATE.json",
+      "sha256": "d3b23702462ab91e97c51cc8e13bed153296adcffa89f21648108093205b4832",
+      "bytes": 1285
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/ACTIVATION_POSITIVE.json",
+      "sha256": "5ec0695dc0b3b51bad75f43a0d696efddf32fda360317178c6090bd6d23a8e51",
+      "bytes": 331
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/BIRTH.json",
+      "sha256": "94e19187d3c4cb24c40155291a0204d27ab304e4e6a24d17d413c741faee24fe",
+      "bytes": 1709
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/CASE_AUTHORITY.json",
+      "sha256": "c06f78c085d13bff407efdfb6c2eb03c6ccbeed990e891f50a4c892e1de47b4f",
+      "bytes": 431
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/CASE_BINDING.json",
+      "sha256": "80e8bd93ec0143e06e8d631aa3c905e2f86e6fc9b6fb66b131b8a8c92e14bd1c",
+      "bytes": 1561
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/COMPLETE.json",
+      "sha256": "de5e5f459b78ba399a1740ed2ebec7285f79af565f9dc6fdaaf39e8d2de57e42",
+      "bytes": 1443
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/EXTERNAL_PARENT_CLOSE.json",
+      "sha256": "b037946f6e87e792b62112ad6595ceac71270e59166c531cdd48056c4aad53f5",
+      "bytes": 1743
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/EXTERNAL_SETTLEMENT.json",
+      "sha256": "b64b1da9fe9b2fd51dacf6b339b8590c393c7f060924a13be504ac7ae2346e9f",
+      "bytes": 312
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/FAILURE_OR_SUCCESS_QUIET_PROOF.json",
+      "sha256": "5b0cad643e4a1658a20e8a9335b6d4df98cda88374e730ff6d4382843d85ade6",
+      "bytes": 2492
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/FULL_CASE_COST.json",
+      "sha256": "e0b827fa5166fedf82e7fb5f222f914631b5ff9122a28ead8a98a62216f5851f",
+      "bytes": 992
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/IMMEDIATE_PRELAUNCH_PINS.json",
+      "sha256": "e80f68f76153fdfa0fec00289d7b393662542ae6d031bf43128de2221e248a5a",
+      "bytes": 6196
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/LAUNCHED.json",
+      "sha256": "058ec0bb735dff1a77f1fa9df541bbeeb7083765b9950a705058a60a3b8cc677",
+      "bytes": 260
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/LEASE.json",
+      "sha256": "a57c8276ad525781bbfb3cc18121d653b8a9f1f8271fe36613858189b1c13097",
+      "bytes": 1010
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/PLAN.enrollment.json",
+      "sha256": "1ba855fc0fbbec2067be7e01270ec52a1dcb67261b259b7259c81440ce12a421",
+      "bytes": 321
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/PLAN.json",
+      "sha256": "f654c258939f282a9984f14f7d24e825b5c78fc2d1d85ca8291012390bbaacf6",
+      "bytes": 6024
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/PUBLIC_ARTIFACT_FREEZE.json",
+      "sha256": "ceba7c8e9ab22658587719217067a4133d73eba17e8b7d0e4e27f74d60cbeaa3",
+      "bytes": 1583
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/PUBLIC_METRICS_FREEZE.json",
+      "sha256": "23b334fcc717909f40fff848b6f4a5b9747f9a42335ae8e46ab4b264fb4ec6e4",
+      "bytes": 234
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/QUIESCENCE.json",
+      "sha256": "520d511a40cad4b78c0228a2a57c7ebc37cf81a9b5e45239a809ef45f56f9800",
+      "bytes": 991
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/native-public/activation.json",
+      "sha256": "5ec0695dc0b3b51bad75f43a0d696efddf32fda360317178c6090bd6d23a8e51",
+      "bytes": 331
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/native-public/progress.jsonl",
+      "sha256": "1b445cc81605f3a7c42f8443fa02fa87bbfab6ce86f58af5decd980b7b1553b3",
+      "bytes": 360
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/native-public/public-metrics.json",
+      "sha256": "4e66988dd4ac8f6a492208f21b4e455a38210b5118647d24993245f8b993fe0f",
+      "bytes": 17653
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/native-public/receipt.json",
+      "sha256": "4e66988dd4ac8f6a492208f21b4e455a38210b5118647d24993245f8b993fe0f",
+      "bytes": 17653
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/workspace/operation_receipts/events.jsonl",
+      "sha256": "8f9ea00c2b38f2c372f87d2cbe07f6804dc83cb4a2f0c6120a200033f75b3b55",
+      "bytes": 12890
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/workspace/out/RESULT.md",
+      "sha256": "c16724a42e235415fdfae3b6f4e794fb867f4252458685fcdf43ac3247264119",
+      "bytes": 821
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/workspace/public_captures/7d3e61f8f627c8cc640c209ba0777db95f198a64e766f47484c321d5eb5e0962.body",
+      "sha256": "7d3e61f8f627c8cc640c209ba0777db95f198a64e766f47484c321d5eb5e0962",
+      "bytes": 713
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/workspace/public_captures/cf45ac8886324474af46ed6944041f0c.json",
+      "sha256": "c8b7469adf1c631b1ce57c50fc1cb592ef9cff3cb2ca2e66f76743fe45dafd8e",
+      "bytes": 1108
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/root-canary-release-v4.json",
+      "sha256": "8bd1eacb6deae356f40a4ce14b5a10d9239145561ff9feaa1e9d8a28f8010540",
+      "bytes": 9441
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/v8-z-mechanical-route-canary-v3-monitor-parent.json",
+      "sha256": "b281be0899de37469d192bfeb0fc690290b2fa02d1e8586807fa4e468b20e991",
+      "bytes": 206
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/v8-z-mechanical-route-canary-v3-monitor-terminal.json",
+      "sha256": "f1bc57fb4799ce6322df618f344896aefb4d0b623a4da125c828c2631d7b23b6",
+      "bytes": 1325
+    },
+    {
+      "path": "resume-cohort-v1/ops/execution-recovery-v1/v8-z-mechanical-route-canary-v3-parent-positive.jsonl",
+      "sha256": "7466dcc581faecc9723e7b49d3cd102e06d7501c1b60cd636189fbc3afef1ab2",
+      "bytes": 773
+    },
+    {
+      "path": "resume-cohort-v1/ops/muse-helper-v1/BIRTH.json",
+      "sha256": "9d00e1a75b9ca5bcacd584330f67b8eb5830afbe8214c01db14c6a0b9ced1802",
+      "bytes": 973
+    },
+    {
+      "path": "resume-cohort-v1/ops/muse-helper-v1/DRAFT.md",
+      "sha256": "beaab98bf45d6baed2c9025427fd4eb6a1eca29148713cf391fb43371ee478d5",
+      "bytes": 4286
+    },
+    {
+      "path": "resume-cohort-v1/ops/muse-helper-v1/QUIET.json",
+      "sha256": "bef90b0c66c966bab8d60b1857889a90dadb7ee471452996fe12565d16b8ff63",
+      "bytes": 1006
+    },
+    {
+      "path": "resume-cohort-v1/ops/muse-helper-v1/RESULT.json",
+      "sha256": "211a381e78d42d8e9154109a35dcabf1ebef977daf65e216721e30ccffc795f2",
+      "bytes": 2792
+    },
+    {
+      "path": "resume-cohort-v1/ops/recovery-v1/RESTART.json",
+      "sha256": "f3a3e7f435952e776797d9836c5720caf2e9a7e9e9b9539ae58dd16aa3eef219",
+      "bytes": 11094
+    },
+    {
+      "path": "resume-cohort-v1/ops/recovery-v1/RESUME_20261002.json",
+      "sha256": "9fc1c92a3b6074610b3b4026bd4d7500e0f0a135b506863965e2919fb640c02f",
+      "bytes": 1157
+    },
+    {
+      "path": "resume-qualified-v3-cohort/PUBLIC_EXPORT.json",
+      "sha256": "3f78b24a1664bc730acc9e5895fee4a818653b47cadfce9bcac2f0e6c3f8ef11",
+      "bytes": 6252
+    },
+    {
+      "path": "resume-qualified-v3-cohort/README.md",
+      "sha256": "cc00ed395a15f87935af0fb814cbf6f1effdd9aab9229c38fadc5625c67935c6",
+      "bytes": 1410
+    },
+    {
+      "path": "resume-qualified-v3-cohort/dev/resume-execution-v1/integrated-controller/SOURCE_FREEZE.json",
+      "sha256": "e297ff8cd7a0ba1ed791e36654ff7a19a8b8a2706ef43785450733531886fb64",
+      "bytes": 11663
+    },
+    {
+      "path": "resume-qualified-v3-cohort/dev/resume-execution-v1/integrated-controller/case_supervisor.py",
+      "sha256": "618246779aae7611a69a99f3dc3cd2cff7883b9f8ce655598f306938f2c07621",
+      "bytes": 6425
+    },
+    {
+      "path": "resume-qualified-v3-cohort/dev/resume-execution-v1/integrated-controller/common.py",
+      "sha256": "d8993a239bf56979b3993af0b20d9e845378bf2c3cba6f50dbac4362c845076e",
+      "bytes": 12756
+    },
+    {
+      "path": "resume-qualified-v3-cohort/dev/resume-execution-v1/integrated-controller/external_case_close.py",
+      "sha256": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c",
+      "bytes": 3590
+    },
+    {
+      "path": "resume-qualified-v3-cohort/dev/resume-execution-v1/integrated-controller/external_stage_close.py",
+      "sha256": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4",
+      "bytes": 3512
+    },
+    {
+      "path": "resume-qualified-v3-cohort/dev/resume-execution-v1/integrated-controller/parent_receipt.py",
+      "sha256": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea",
+      "bytes": 4114
+    },
+    {
+      "path": "resume-qualified-v3-cohort/dev/resume-execution-v1/integrated-controller/rolling.py",
+      "sha256": "65be42996fc3adebe1b7cd4367335fb70dc8749e9db31b2eb10e50ecaa6d95cf",
+      "bytes": 6092
+    },
+    {
+      "path": "resume-qualified-v3-cohort/dev/resume-execution-v1/integrated-controller/stage_actor.py",
+      "sha256": "ba3b13cd1209fd086ecd96e24d776deda92824063fc216cd7796e7b299ffb8cc",
+      "bytes": 12965
+    },
+    {
+      "path": "resume-qualified-v3-cohort/dev/resume-execution-v1/recovery-control.json",
+      "sha256": "013fb9afc934919a0b60111bf353f7a903c28282331fd70551f6738014bee8ba",
+      "bytes": 974
+    },
+    {
+      "path": "resume-qualified-v3-cohort/dev/resume-execution-v1/root-production-release-v1.draft.json",
+      "sha256": "f44ced31172f84e599b42276cddf60846a0d68ebb9086aaf984c1603e2044ad1",
+      "bytes": 14694
+    },
+    {
+      "path": "resume-qualified-v3-cohort/dev/resume-execution-v1/test_host_receipts.py",
+      "sha256": "6bdc17ee577d77ede05ed62472c839616c74d9f53ee87d45e70be6bbd1668284",
+      "bytes": 3761
+    },
+    {
+      "path": "resume-qualified-v3-cohort/dev/resume-execution-v1/test_ledger_resume.py",
+      "sha256": "9e11c88722c213434b05d1e0cf4ca3fc201e117e7d81e719b35e59762dd8dfe2",
+      "bytes": 6398
+    },
+    {
+      "path": "resume-qualified-v3-cohort/evaluation/native-v3-resume-v1/native-canary-v3-review.json",
+      "sha256": "1b183c55d3c72605a8ec5a6544b55873e23c3c274459f902b84991c585fad9db",
+      "bytes": 5030
+    },
+    {
+      "path": "resume-qualified-v3-cohort/evaluation/native-v3-resume-v1/route-native-acceptance.json",
+      "sha256": "c96dc489d074dcb120d4e3d583edbeb87a825c042ed634c5ccba5fe10d1bb05f",
+      "bytes": 2435
+    },
+    {
+      "path": "resume-qualified-v3-cohort/evaluation/resume-execution-v1/controller-source-acceptance.json",
+      "sha256": "2a538ec9e535d3940569f0927698a319176a959b55f4fca213a74d0815049e20",
+      "bytes": 1274
+    },
+    {
+      "path": "resume-qualified-v3-cohort/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json",
+      "sha256": "70485c3ddd8a2323da3b9a06cec96d4e9eb50ce16f798dc4c3acc9d5c705797d",
+      "bytes": 5818
+    },
+    {
+      "path": "resume-qualified-v3-cohort/evaluation/resume-execution-v1/operator-monitor-source-acceptance.json",
+      "sha256": "e040f9642727596617a3858ed4ed2abfeb7df4092f3a8ffbf0ff221e533fd953",
+      "bytes": 1235
+    },
+    {
+      "path": "resume-qualified-v3-cohort/evaluation/resume-execution-v1/route-native-acceptance-bound-execution.json",
+      "sha256": "a6599137b2ce49291b58546756ab82219656eb6cf464d0075b638a3343a81e79",
+      "bytes": 2620
+    },
+    {
+      "path": "resume-qualified-v3-cohort/ops/recovery-v1/TEST_LEDGER_RESUME.json",
+      "sha256": "8aa6ff694ace0939b594ea54e054c28f8612a5188ffd136eb8afc3bf961706e5",
+      "bytes": 1299
+    },
+    {
+      "path": "resume-qualified-v3-cohort/ops/recovery-v1/ledger_resume.py",
+      "sha256": "a98cf53c1826f1f4c9fa47a9e181eaae8beb971ea41e6564578a253059450b61",
+      "bytes": 4421
+    },
+    {
       "path": "review-arithmetic/README.md",
       "sha256": "4b4a1823d9532e06a174504b30ecfc2e97317a953d0de21c630dd0aaadc0d3c4",
       "bytes": 726
@@ -1248,8 +1768,8 @@
     },
     {
       "path": "schedule.json",
-      "sha256": "cd17a12a336a1433de83a0edacd3417605e8897cac9f49ff8a67c29c78fcca88",
-      "bytes": 2984
+      "sha256": "f378a75cf06a526d62706076b8635b35c262e3bbf9ad11928155dbf575c41608",
+      "bytes": 3502
     },
     {
       "path": "tranche-cohort-v2/AUTHORIZATION.json",
@@ -1716,6 +2236,5 @@
       "sha256": "ee7f9b79b25017e71bab6c09206de3fc29131ab57284925aaf30204e45c803e1",
       "bytes": 3198
     }
-  ],
-  "scope": "Existing public history plus root-authorized positive frozen native/controller and recovery metadata; no raw/private/native auth/modelIO/corpora/evaluator keys."
+  ]
 }

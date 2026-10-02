@@ -1,0 +1,58 @@
+{
+  "schema": "er8.route.public-output-contract.v1",
+  "frozen_runtime_snapshot_sha256": "9455eaa5876e5627360c80ee98e41b554118205544b3244af3ba272b0d928668",
+  "public_paths": [
+    "<native_out>/activation.json",
+    "<native_out>/progress.jsonl",
+    "<native_out>/receipt.json",
+    "<native_out>/public-metrics.json"
+  ],
+  "closed_paths": [
+    "<native_out>/private-runtime/**"
+  ],
+  "live_activation_scope": "actual native session/goal action=set acknowledgement and active target; positive timestamp and target receipt_id only; unknown acknowledgements do not prove absent activation",
+  "final_public_receipt": [
+    "admission_mode",
+    "runtime_snapshot_sha256",
+    "accepted_method_sha256",
+    "requested_model",
+    "requested_effort",
+    "fresh_session",
+    "native_goal_entry",
+    "goal_target_id",
+    "goal_started_turn",
+    "goal_status_final",
+    "stop_reason",
+    "native_responses",
+    "request_status_counts",
+    "usage_totals",
+    "usage_requests_with_delta",
+    "provider_id",
+    "model_id",
+    "effort_effective",
+    "native_quiescent",
+    "own_process_group_absent",
+    "host_groups_absent",
+    "quiescence_group_remaining_counts",
+    "elapsed_milliseconds",
+    "original_case_start_monotonic_ns",
+    "original_stage_start_monotonic_ns",
+    "original_native_stop_monotonic_ns",
+    "original_deadline_monotonic_ns",
+    "local_context",
+    "startup_context",
+    "inventory_check",
+    "native_structure",
+    "activation",
+    "cleanup_projection",
+    "canary_qualification",
+    "component_outcome"
+  ],
+  "excluded": "raw native frames/stdout/stderr, body/system/messages, arbitrary native errors, cleanup responses, headers/provider config/auth, secrets, oldcontext or evaluator inputs",
+  "same_case_public_export": "adapter.export_manifest(workspace,case_id): only declared out artifacts plus public_captures and operation_receipts; no native private path",
+  "qualification": "component_outcome alone is not finalqualification. Root independent grader joins exact accepted closure, native request/attempt and context, autoGoal continuation/completion, source capture/range proof, enrolled original deadline and cgroup quiet proof.",
+  "native_source_delivery_fields": "inventory_check.rows[].source_deliveries: actual logical call ID/name, operation_id, public content-addressed path and typed source/hash/status/completeness/range/transmitted-text witness; no text/headers/errors",
+  "inherited_abi_field_semantics": {
+    "accepted_method_sha256": "HOST_LEASE_SHA256_ONLY; semantic METHOD.md bytes are in immutable_inputs and full casebinding is separately hostbound"
+  }
+}

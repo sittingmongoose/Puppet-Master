@@ -1,0 +1,32 @@
+{
+  "schema": "pm.er8.muse-helper-process-quiet.v1",
+  "job": "muse-public-accounting-helper-v1",
+  "classification": "helper_not_candidate",
+  "requested_model": "muse-spark-1.3-contributor",
+  "requested_reasoning": "max",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 60.90604103700025,
+  "started_epoch": 1790979399.551479,
+  "ended_epoch": 1790979460.4575257,
+  "parent_reaped": true,
+  "own_process_group_absent": true,
+  "generated_tokens": null,
+  "money": null,
+  "native-events.jsonl": {
+    "bytes": 164710,
+    "sha256": "f3beff9f1bdbf2a137921aea6f7b8b06f8f630758e83202c9abf81ee55cb789d"
+  },
+  "native-stderr.txt": {
+    "bytes": 268,
+    "sha256": "6aace993f07349833abd8cca11e70fec8afce8d59891d0c536666159d558381d"
+  },
+  "prompt.txt": {
+    "bytes": 23510,
+    "sha256": "f7afaf0718f64514df13021d0a24793142d64f47a864337149d618ab8588877a"
+  },
+  "INPUT_MANIFEST.json": {
+    "bytes": 3097,
+    "sha256": "ff94151955d959f3e942bf71d0a2dc6774463ce1ff5ce35eac0da547b02c9660"
+  }
+}

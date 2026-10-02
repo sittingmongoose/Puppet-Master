@@ -1,0 +1,37 @@
+{
+  "schema": "er8.dispatcher.external-parent-close.v1",
+  "case": "v8-z-mechanical-route-canary-v3",
+  "job": "v8-z-mechanical-route-canary-v3",
+  "outer_process_identity": {
+    "pid": 2927982,
+    "pgid": 2927982,
+    "held_Popen_wait_returncode": 0
+  },
+  "outer_parent_exited": true,
+  "outer_process_group_absent": true,
+  "outer_exit_observed_monotonic_ns": 136203129314758,
+  "external_full_quiet_observed_monotonic_ns": 136203243825208,
+  "original_case_start_monotonic_ns": 136130218847511,
+  "original_deadline_monotonic_ns": 136610218847511,
+  "inner_quiescence": {
+    "schema": "er8.execution.quiescence.v1",
+    "owned_unit": "er8-v8-z-mechanical-route-canary-v3.service",
+    "owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-z-mechanical-route-canary-v3.service",
+    "enrollment": {
+      "schema": "er8.execution.enrollment.v1",
+      "owned_unit": "er8-v8-z-mechanical-route-canary-v3.service",
+      "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-z-mechanical-route-canary-v3.service",
+      "enrolled_monotonic_ns": 136130573278176,
+      "original_deadline_monotonic_ns": 136610218847511
+    },
+    "absence_proof": "positively-enrolled-owned-cgroup-removed",
+    "owned_native_quiescent": true,
+    "quiescence_observed_monotonic_ns": 136203243825208,
+    "original_deadline_monotonic_ns": 136610218847511,
+    "inclusive_native_lifetime_established": true,
+    "occupancy_disposition": "releasable-native-only",
+    "native_goal_or_quality_qualification": "UNESTABLISHED; independent native receipt review mandatory"
+  },
+  "actual_outside_native_seconds_at_observation": 0.411846234,
+  "native_or_semantic_qualification": "PENDING_INDEPENDENT_ACTUAL_REVIEW"
+}

@@ -1,0 +1,74 @@
+{
+  "verdict": "accepted",
+  "decision": "PASSREVIEW_LEGACY_PROTOCOL_SOURCE_ONLY_CANARY_CONDITIONAL",
+  "reviewer": "/root/v8_route_independent",
+  "created_utc": "2026-10-02T04:10:58.716482+00:00",
+  "source_freeze2": {
+    "path": "LAB_ROOT/dev/route-recovery-v2/FREEZE.json",
+    "sha256": "523cb6cc77df53d98045394cec894da6f0bffa313de613d4fe5f70d694bd8084"
+  },
+  "qualification_scope": "CANARY_ONLY_SOURCE_CONDITIONAL",
+  "actual_native_qualification": "UNESTABLISHED",
+  "productive_release_authorized": false,
+  "native_calls_by_reviewer": 0,
+  "provider_calls_by_reviewer": 0,
+  "public_network_calls_by_reviewer": 0,
+  "private_or_auth_reads_by_reviewer": 0,
+  "native_cli_not_opened_or_hashed_by_reviewer": true,
+  "generated_usage": "UNKNOWN",
+  "clock_reset": false,
+  "proof_artifacts": [
+    {
+      "path": "LAB_ROOT/evaluation/recovery-route-v1/route-v2-independent-source-review.json",
+      "sha256": "b59494a3954995051771b1441ba8dcf05dbd23e1f6e91f7b480369f65637f564"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/recovery-route-v1/route-v2-independent-delta.patch",
+      "sha256": "cabecf76cf2f417ded93fef72b6944c5ac0f7eab05bc2490c58055b63ffaeffb"
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/synthetic-sdk-legacy-31a3872e/REPORT.json",
+      "sha256": "c46e393c755b8a5d9560156e894317d058446b8e998401fdb024a47557c673eb"
+    },
+    {
+      "path": "LAB_ROOT/dev/native-route-diagnostic-v2/REPORT.json",
+      "sha256": "f12b8f812b0cfff35d9ab2867d93b08f30fdaf0309550b6013a64cd8ea43f939"
+    }
+  ],
+  "findings_closed_by_successor": [
+    "RR-004 auto SDK disposableprobe exhausts one-use socket in exactsyntheticrepro; selectorlegacy prospectively uses one transport; actualcause remainsinference untilnewnativeproof"
+  ],
+  "conditions": [
+    "Root issues exact freshv2 CANARY_ONLY release before birth/allcaseprep and actualnative start; one counted480s/64 mechanicalcanary only",
+    "Exact source/config/acceptance/overlay/amendment hashes and immutable original authority/case/stage/lease/plan binding must remain current",
+    "Original firstnativecanary failure and1Goal816.649292slotsec remain immutable; this verdict grants no retroactive qualification",
+    "Fresh SAMEclosure actualnative Goal activation/autocontinuation/sametargetcomplete, GLM5.3Flash/max allrequestattempt context/inventory, sourceGET/body/range host/native receiptjoin required",
+    "Original heldparent launch/exit/externalsettlement, positiveallownedcgroup quiet and originalinclusivedeadline/fullcost/startpermit proof required; UNKNOWN remainsheld",
+    "Productive mode needs separate independentfreshcanary passed record and root exactsame-snapshot scopeexpansion; sourceacceptance alone cannot dispatchresearch",
+    "Fresh countedv3 canary uses exact523cb successor,480s64 beforeprep originalbirth; no oldv1/v2 actual qualification transfer",
+    "Productive controller must bind new successor control/route/execution/config sourceclosure; oldcontrollercontrol selects oldruntime and cannot dispatchnewroute"
+  ],
+  "review_scope": "Exact auto->legacy nativeMCP protocol selector and additive snapshot/config/canaryv3 pathbindings only; private sandbox/server/broker/Goal/model/context/deadline sources unchanged",
+  "schema": "er8.execution.source-acceptance.v1",
+  "snapshot_path": "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/SNAPSHOT.json",
+  "snapshot_sha256": "667e9b86a7547c8e647142787637c34adfcc63eb52f33826e0f1f5453d379438",
+  "source_freeze": {
+    "path": "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/SNAPSHOT.json",
+    "sha256": "667e9b86a7547c8e647142787637c34adfcc63eb52f33826e0f1f5453d379438"
+  },
+  "allowed_modes": [
+    "canary"
+  ],
+  "execution_snapshot_sha256": "667e9b86a7547c8e647142787637c34adfcc63eb52f33826e0f1f5453d379438",
+  "route_snapshot_sha256": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b",
+  "root_config_sha256": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d",
+  "accounting_sha256": "597a3d3349154fbb4614ed7ece864f1cd77ecfea145fbfddaefc79fe0a1cd618",
+  "predecessor_45_sources_unchanged": true,
+  "case_specific_research_or_proposal_or_evaluator_key_content_reads": 0,
+  "original_failed_canaries_preserved": [
+    "v1:1Goal816.649292slotseconds",
+    "v2:1Goal537.725682slotseconds latecleanup, terminalmetrics/sourceoperations/RESULT missing"
+  ],
+  "synthetic_tool_or_semantic_qualification_granted": false,
+  "native_route_productive_acceptance_issued": false
+}

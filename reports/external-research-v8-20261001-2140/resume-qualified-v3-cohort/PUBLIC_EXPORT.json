@@ -1,0 +1,125 @@
+{
+  "scope": "Independent actual mechanicalv3 qualification and additiveexecution proofbinding; hostcontroller resume source/monitor review. Research quality unassessed. Original source/publicprojection SHA distinct.",
+  "artifacts": [
+    {
+      "public_path": "dev/resume-execution-v1/integrated-controller/SOURCE_FREEZE.json",
+      "original_sha256": "a41aa5bd077f9a18326975c994c5de4842d24b948d93f7d6b90b929c7eafaade",
+      "public_sha256": "e297ff8cd7a0ba1ed791e36654ff7a19a8b8a2706ef43785450733531886fb64",
+      "bytes": 11663
+    },
+    {
+      "public_path": "dev/resume-execution-v1/integrated-controller/case_supervisor.py",
+      "original_sha256": "618246779aae7611a69a99f3dc3cd2cff7883b9f8ce655598f306938f2c07621",
+      "public_sha256": "618246779aae7611a69a99f3dc3cd2cff7883b9f8ce655598f306938f2c07621",
+      "bytes": 6425
+    },
+    {
+      "public_path": "dev/resume-execution-v1/integrated-controller/common.py",
+      "original_sha256": "dff47a78fcd86494b3c34e26833b08739211148c4f711e5ec8758e69735692e3",
+      "public_sha256": "d8993a239bf56979b3993af0b20d9e845378bf2c3cba6f50dbac4362c845076e",
+      "bytes": 12756
+    },
+    {
+      "public_path": "dev/resume-execution-v1/integrated-controller/external_case_close.py",
+      "original_sha256": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c",
+      "public_sha256": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c",
+      "bytes": 3590
+    },
+    {
+      "public_path": "dev/resume-execution-v1/integrated-controller/external_stage_close.py",
+      "original_sha256": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4",
+      "public_sha256": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4",
+      "bytes": 3512
+    },
+    {
+      "public_path": "dev/resume-execution-v1/integrated-controller/parent_receipt.py",
+      "original_sha256": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea",
+      "public_sha256": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea",
+      "bytes": 4114
+    },
+    {
+      "public_path": "dev/resume-execution-v1/integrated-controller/rolling.py",
+      "original_sha256": "65be42996fc3adebe1b7cd4367335fb70dc8749e9db31b2eb10e50ecaa6d95cf",
+      "public_sha256": "65be42996fc3adebe1b7cd4367335fb70dc8749e9db31b2eb10e50ecaa6d95cf",
+      "bytes": 6092
+    },
+    {
+      "public_path": "dev/resume-execution-v1/integrated-controller/stage_actor.py",
+      "original_sha256": "ba3b13cd1209fd086ecd96e24d776deda92824063fc216cd7796e7b299ffb8cc",
+      "public_sha256": "ba3b13cd1209fd086ecd96e24d776deda92824063fc216cd7796e7b299ffb8cc",
+      "bytes": 12965
+    },
+    {
+      "public_path": "dev/resume-execution-v1/recovery-control.json",
+      "original_sha256": "e41b7464eefa9c19ce57bda562bca015b09dc3a062e1cf272d146f65a2949e89",
+      "public_sha256": "013fb9afc934919a0b60111bf353f7a903c28282331fd70551f6738014bee8ba",
+      "bytes": 974
+    },
+    {
+      "public_path": "dev/resume-execution-v1/root-production-release-v1.draft.json",
+      "original_sha256": "41b673f16d6c9648726fede101e72f72c5c0e7e4292caf370724eff5b0d6c356",
+      "public_sha256": "f44ced31172f84e599b42276cddf60846a0d68ebb9086aaf984c1603e2044ad1",
+      "bytes": 14694
+    },
+    {
+      "public_path": "dev/resume-execution-v1/test_host_receipts.py",
+      "original_sha256": "6bdc17ee577d77ede05ed62472c839616c74d9f53ee87d45e70be6bbd1668284",
+      "public_sha256": "6bdc17ee577d77ede05ed62472c839616c74d9f53ee87d45e70be6bbd1668284",
+      "bytes": 3761
+    },
+    {
+      "public_path": "dev/resume-execution-v1/test_ledger_resume.py",
+      "original_sha256": "9e11c88722c213434b05d1e0cf4ca3fc201e117e7d81e719b35e59762dd8dfe2",
+      "public_sha256": "9e11c88722c213434b05d1e0cf4ca3fc201e117e7d81e719b35e59762dd8dfe2",
+      "bytes": 6398
+    },
+    {
+      "public_path": "evaluation/native-v3-resume-v1/native-canary-v3-review.json",
+      "original_sha256": "5e1e6e8788b66388103174b21ead80592c26858ba0ede2d9f3c42727a6c76a91",
+      "public_sha256": "1b183c55d3c72605a8ec5a6544b55873e23c3c274459f902b84991c585fad9db",
+      "bytes": 5030
+    },
+    {
+      "public_path": "evaluation/native-v3-resume-v1/route-native-acceptance.json",
+      "original_sha256": "e4aa79e348c421cffa2938b146112fe8d15c8b971b6f5e0d4db579b9e22175e6",
+      "public_sha256": "c96dc489d074dcb120d4e3d583edbeb87a825c042ed634c5ccba5fe10d1bb05f",
+      "bytes": 2435
+    },
+    {
+      "public_path": "ops/recovery-v1/TEST_LEDGER_RESUME.json",
+      "original_sha256": "a76d61a8a39abf6ebe94e0d8bbca00178d3c5a6a3d27e53747a298b95799f543",
+      "public_sha256": "8aa6ff694ace0939b594ea54e054c28f8612a5188ffd136eb8afc3bf961706e5",
+      "bytes": 1299
+    },
+    {
+      "public_path": "ops/recovery-v1/ledger_resume.py",
+      "original_sha256": "a98cf53c1826f1f4c9fa47a9e181eaae8beb971ea41e6564578a253059450b61",
+      "public_sha256": "a98cf53c1826f1f4c9fa47a9e181eaae8beb971ea41e6564578a253059450b61",
+      "bytes": 4421
+    },
+    {
+      "public_path": "evaluation/resume-execution-v1/controller-source-acceptance.json",
+      "original_sha256": "37296ddc7addbb309a6ad9882144c63e720f48968fbb38a32d0fa8d8e5e5be9e",
+      "public_sha256": "2a538ec9e535d3940569f0927698a319176a959b55f4fca213a74d0815049e20",
+      "bytes": 1274
+    },
+    {
+      "public_path": "evaluation/resume-execution-v1/operator-monitor-source-acceptance.json",
+      "original_sha256": "987bc81a8d2b43eb5b3b33a9d22b071cfa7c1a8773ba1b5d181ef5ed5a4ef0f2",
+      "public_sha256": "e040f9642727596617a3858ed4ed2abfeb7df4092f3a8ffbf0ff221e533fd953",
+      "bytes": 1235
+    },
+    {
+      "public_path": "evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json",
+      "original_sha256": "aba3336e6475d1eb50e00b66c3804e2747d7fef38be764ec53379614cfb68fc7",
+      "public_sha256": "70485c3ddd8a2323da3b9a06cec96d4e9eb50ce16f798dc4c3acc9d5c705797d",
+      "bytes": 5818
+    },
+    {
+      "public_path": "evaluation/resume-execution-v1/route-native-acceptance-bound-execution.json",
+      "original_sha256": "59b08282df39fe1c86e21eea06d1197a17f3ea30ef13b1569d6c34a31347a18c",
+      "public_sha256": "a6599137b2ce49291b58546756ab82219656eb6cf464d0075b638a3343a81e79",
+      "bytes": 2620
+    }
+  ]
+}
