@@ -73408,6 +73408,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
        one "stopped" signal (a turn, goal or plan that ends any other way has "finished"). Before the module actions,
        so goals.js's chained stop-run never sees the double-click either. */
     if(a==='stop-run'){if(e.detail>1)return;window.PM56_SENDSTOP?.halt();}
+    if(a==='send'&&e.detail>1&&!state.composer.trim())return;   /* the rest of a double-click on Stop: no sputter */
     if(a==='return-to-chat'){state.editorRevealed=false;renderApp();return;}
     if(handleScopedPickerAction(a,btn,e)) return;
     const preview=btn.closest('.ab-card');
