@@ -43,7 +43,9 @@ const PAGE_LIB = () => {
   L.visible = (el) => { if (!el || !el.isConnected) return false; const r = el.getBoundingClientRect(); if (r.width < 1 || r.height < 1) return false; const cs = getComputedStyle(el); return cs.visibility !== 'hidden' && cs.display !== 'none' && +cs.opacity > 0.02; };
   L.view = (panel) => document.querySelector(`.pmr-view[data-pmr-for="panel-${panel}"]`);
   L.roots = (panel) => [L.view(panel), document.getElementById('pmr-overlay'), ...document.querySelectorAll('.pmr-menu')].filter(Boolean);
-  L.pairs = (panel) => { const s = new Set(); for (const r of L.roots(panel)) r.querySelectorAll('[data-demo-action]').forEach((e) => s.add(e.getAttribute('data-demo-action') + ' | ' + (e.getAttribute('data-demo-arg') || ''))); return s; };
+  /* a pair counts when an element carries it, or carries it as data-legacy-cmd/-arg (the fixture's canon replacement of
+     an original action keeps the original pair there on purpose) */
+  L.pairs = (panel) => { const s = new Set(); for (const r of L.roots(panel)) { r.querySelectorAll('[data-demo-action]').forEach((e) => s.add(e.getAttribute('data-demo-action') + ' | ' + (e.getAttribute('data-demo-arg') || ''))); r.querySelectorAll('[data-legacy-cmd]').forEach((e) => s.add(e.getAttribute('data-legacy-cmd') + ' | ' + (e.getAttribute('data-legacy-arg') || ''))); } return s; };
   L.open = async (panel) => {
     const icon = document.querySelector(`#activityBar .icon[data-target="${'panel-' + panel}"]`);
     const slot = document.getElementById('sidePanelSlot');
@@ -74,27 +76,35 @@ const PAGE_LIB = () => {
         el.click(); await L.sleep(360);
         const item = [...document.querySelectorAll('.pmr-menu .pmr-mi[data-pmr-nav]')].find((m) => m.textContent.trim() === t);
         if (!item) { window.PMR.menu.closeAll(); await L.sleep(300); continue; }
+        const before = new Set(navs().map(key));
         item.click(); await L.sleep(420); collect();
         if (document.querySelector('.pmr-menu')) { window.PMR.menu.closeAll(); await L.sleep(300); }
-        await explore(depth + 1);
+        await explore(depth + 1, before);
         if (kind === 'drill') await goBack();
       }
     }
-    async function explore(depth) {
-      if (depth > 7) return;
-      for (let pass = 0; pass < 12 && steps < budget; pass++) {
-        const cands = navs();
+    /* order inside a pass: things that reveal content in place first, then drills, then menus, then tabs, so a view is
+       exhausted before the crawler leaves it */
+    const RANK = { tab: 4, menu: 3, drill: 2 };
+    const rank = (e) => RANK[e.getAttribute('data-pmr-nav')] || 0;
+    async function explore(depth, scope) {
+      if (depth > 12) return;
+      for (let pass = 0; pass < 14 && steps < budget; pass++) {
+        let cands = navs();
+        if (scope) cands = cands.filter((e) => !scope.has(key(e)));      // only what the parent click revealed
         if (!cands.length) return;
+        cands.sort((x, y) => rank(x) - rank(y));
         let progressed = false;
         for (const el of cands) {
           if (steps >= budget) return;
           if (!el.isConnected || !L.visible(el)) continue;
           const k = key(el); if (clicked.has(k)) continue;
           const kind = el.getAttribute('data-pmr-nav');
+          const before = new Set(navs().map(key));
           clicked.add(k); steps++; progressed = true;
           el.click(); await L.sleep(360); collect();
           if (document.querySelector('.pmr-menu')) { await readMenu(el, depth); continue; }
-          await explore(depth + 1);
+          await explore(depth + 1, before);
           if (kind === 'drill') await goBack();
         }
         if (!progressed) return;
