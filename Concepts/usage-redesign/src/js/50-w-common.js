@@ -589,6 +589,10 @@
       rows.forEach(function (r) { if (r.day) return; var l = leadW(r); if (l) anyLead = true; lw = Math.max(lw, l); vw = Math.max(vw, tw(valText(r), 13, 600) * 1.06 + (r.vs ? 20 : 0)); });
       vw = Math.ceil(Math.min(Math.max(28, vw + 6), bw * 0.42));
       var nameW = bw - (anyLead ? lw + 10 : 0) - vw - 10, noteW = 0;
+      /* a narrow list whose name column would fall under 150 px puts each value on its own line under the name instead
+         (Overview at 1440: "Claude allowance pressure" wrapped to three lines beside a 60 px "now" column) */
+      var stack = !extra && vw > 0 && nameW < 150 && hasSub && rows.some(function (r) { return !r.day && valText(r); });
+      if (stack) nameW = bw - (anyLead ? lw + 10 : 0);
       if (extra) { noteW = Math.round((nameW - 10) / 2.6); nameW = nameW - 10 - noteW; }
       /* two-line rows (name over its second line) when the card has the width; each row's height follows its wrapped
          text (LOOK-REVIEW-2 1 and 6: rows printed over each other when a wrapped second line overran a fixed pitch) */
@@ -598,7 +602,7 @@
         if (r.day) return 30;
         var nl = C.wrapLines(r.name, nameW, 13, 540), sl = two && r.sub ? C.wrapLines(r.sub, nameW, 12) : 0;
         var notel = extra && r.note ? C.wrapLines(r.note, noteW, 12) : 0;
-        var h = 8 + Math.max(nl * 17.6 + sl * 16.2, notel * 16.2, 18);
+        var h = 8 + Math.max(nl * 17.6 + sl * 16.2 + (stack && valText(r) ? 17 : 0), notel * 16.2, 18);
         return Math.max(two ? 44 : 32, Math.ceil(h)) + 1;
       };
       var footH = m.foot ? 12 + 18 * Math.min(2, C.wrapLines(String(m.foot), bw - 30, 12.5)) : 0;
@@ -612,8 +616,8 @@
         used += hh; shown.push(rows[k]);
       }
       var hidden = rows.filter(function (r) { return !r.day; }).length - shown.filter(function (r) { return !r.day; }).length;
-      var cols = (anyLead ? lw + 'px ' : '') + 'minmax(0,1fr) ' + (extra ? noteW + 'px ' : '') + vw + 'px';
-      body.innerHTML = '<div class="pmu-list is-aligned' + (two ? ' is-two' : '') + (extra ? ' has-note' : '') + '" style="--pmu-lcols:' + cols + '">' + shown.map(function (r, i) {
+      var cols = stack ? (anyLead ? lw + 'px ' : '') + 'minmax(0,1fr)' : (anyLead ? lw + 'px ' : '') + 'minmax(0,1fr) ' + (extra ? noteW + 'px ' : '') + vw + 'px';
+      body.innerHTML = '<div class="pmu-list is-aligned' + (two ? ' is-two' : '') + (extra ? ' has-note' : '') + (stack ? ' is-stack' : '') + '" style="--pmu-lcols:' + cols + '">' + shown.map(function (r, i) {
         if (r.day) return '<div class="pmu-lday" data-reveal><b>' + esc(r.day) + '</b><span>' + esc(r.note || '') + '</span></div>';
         var lead = leadOf(r);
         var val = r.vs ? C.vs(r.vs, r.word) : r.valueHtml != null ? r.valueHtml : r.value != null ? esc(r.value) : '';

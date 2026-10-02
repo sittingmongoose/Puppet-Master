@@ -108,7 +108,8 @@
       body.innerHTML = '<div class="pmu-alert">' + top + rest.html + '</div>' + (footOk ? C.foot(esc(m.foot), m.sev === 'ok' ? 'checkCircle' : 'info') : '');
       var host = body.querySelector('.pmu-alertmeter');
       if (host) C.chart(body, 'meter', host, { label: 'Current pressure', pct: m.score, suffix: 'pressure score', noPct: true, tone: m.score >= m.raise ? 'warn' : 'calm', size: 'k', notch: { at: m.raise, faint: false, off: false },
-        resetText: 'baseline ' + m.baseline + ' · raise at ' + m.raise, hover: { label: 'Pressure score', detail: m.score + ' of 100 · raises an alert at ' + m.raise + ' · 24-hour norm ' + m.baseline } }, { label: 'Current pressure ' + m.score });
+        /* "raise at 70" never breaks before its number (a lone "70" on the third line) */
+        resetText: 'baseline ' + m.baseline + ' · raise\u00a0at\u00a0' + m.raise, hover: { label: 'Pressure score', detail: m.score + ' of 100 · raises an alert at ' + m.raise + ' · 24-hour norm ' + m.baseline } }, { label: 'Current pressure ' + m.score });
     }
   });
 

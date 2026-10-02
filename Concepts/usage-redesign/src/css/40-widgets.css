@@ -599,3 +599,8 @@ html[data-o55-nier="on"] #panel-usage .pmu-wmk em { border-radius: 0; background
 #panel-usage .pmu-mixrow { grid-template-columns: 10px minmax(min-content, 1fr) auto 36px; }
 #panel-usage .pmu-mixrow > b { white-space: normal; text-align: right; }
 #panel-usage .pmu-tcell .pmu-vs { white-space: normal; }
+
+/* a narrow list stacks each value under its name (integration 2: 50-w-common.js list kind, stack) */
+#panel-usage .pmu-list.is-stack > .pmu-lrow { align-items: start; height: auto; min-height: 44px; padding-top: 5px; padding-bottom: 5px; }
+#panel-usage .pmu-list.is-stack .pmu-lval { grid-column: -2 / -1; grid-row: 2; justify-self: start; text-align: left; white-space: normal; font-size: 12.5px; }
+#panel-usage .pmu-list.is-stack .pmu-llead { grid-row: 1 / span 2; align-self: start; padding-top: 2px; }

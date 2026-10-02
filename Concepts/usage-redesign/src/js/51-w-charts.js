@@ -75,17 +75,18 @@
   function rebucket(m, maxBars) {
     var n = (m.labels || []).length;
     if (!n || n <= maxBars) return m;
-    var g = Math.ceil(n / maxBars), out = Object.assign({}, m, { labels: [], values: [], states: m.states ? [] : undefined, est: m.est ? [] : undefined, labelsLong: m.labelsLong ? [] : undefined });
+    var g = Math.ceil(n / maxBars), out = Object.assign({}, m, { labels: [], values: [], states: m.states ? [] : undefined, est: m.est ? [] : undefined, labelsLong: [] });
     if (m.stacks) out.stacks = m.stacks.map(function (s) { return Object.assign({}, s, { settled: [], estimate: [] }); });
     for (var i = 0; i < n; i += g) {
       var j = Math.min(n, i + g);
-      /* "Sep 29-Oct 2": the end label drops its month word only when the group starts in the same month ("Sep 29-2" read wrong) */
-      var la = String(m.labels[i]), lz = String(m.labels[j - 1]), ma = /^[A-Za-z]+ /.exec(la), mz = /^[A-Za-z]+ /.exec(lz);
-      out.labels.push(g > 1 ? la + (j - 1 > i ? '-' + (ma && mz && ma[0] === mz[0] ? lz.slice(mz[0].length) : lz) : '') : m.labels[i]);
+      /* a group's axis label is its first day ("Sep 29"; the caption names the bucket size, so a range never reads
+         "Sep 29-2"); the readout names the whole span ("Sep 29 to Oct 2") */
+      out.labels.push(m.labels[i]);
       if (m.values) { var s = 0, any = false; for (var k = i; k < j; k++) if (m.values[k] != null) { s += m.values[k]; any = true; } out.values.push(any ? Math.round(s * 100) / 100 : null); }
       if (m.states) out.states.push(m.states[j - 1]);
       if (m.est) { var es = 0; for (var q = i; q < j; q++) es += m.est[q] || 0; out.est.push(Math.round(es * 100) / 100); }
-      if (m.labelsLong) out.labelsLong.push(j - 1 > i ? m.labelsLong[i] + ' to ' + m.labelsLong[j - 1] : m.labelsLong[i]);
+      var ll = m.labelsLong || m.labels;
+      out.labelsLong.push(j - 1 > i ? ll[i] + ' to ' + ll[j - 1] : ll[i]);
       if (m.stacks) m.stacks.forEach(function (st, si) {
         var a = 0, e = 0, anyA = false, anyE = false;
         for (var k = i; k < j; k++) { if (st.settled[k] != null) { a += st.settled[k]; anyA = true; } if (st.estimate[k] != null) { e += st.estimate[k]; anyE = true; } }
