@@ -274,6 +274,8 @@
     list.forEach(function (a) {
       var t = new Date(a.occurred_at).getTime(); if (t < first) return;
       var i = Math.min(b.n - 1, Math.floor((t - first) / b.bucketMs)), v = (a.charge || 0) + (a.plan_allocation_estimate || 0);
+      /* a receipt still pending with no value yet is unknown, not $0 (missing is never zero): the bucket keeps its gap */
+      if (!(v > 0) && /pending/i.test(a.settlement_status || '')) { split[i]._pending = (split[i]._pending || 0) + 1; return; }
       vals[i] = (vals[i] || 0) + v;
       split[i][a.provider_id] = (split[i][a.provider_id] || 0) + v;
     });

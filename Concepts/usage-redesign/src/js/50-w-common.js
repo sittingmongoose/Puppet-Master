@@ -94,7 +94,8 @@
   };
   C.vs = function (state, word) { return PMU.vs.html(state, word); };
   C.glyph = function (name, cls) { return name ? PMU.icon(name, cls || 'pmu-glyph') : ''; };
-  C.more = function (n, what) { var w = what ? (n === 1 ? String(what).replace(/s$/, '') : what) : (n === 1 ? 'row' : 'rows'); return n > 0 ? '<div class="pmu-more">' + esc(n + ' more ' + w + ' at a taller size') + '</div>' : ''; };
+  /* short: narrow cards drop "at a taller size" so the line stays one line */
+  C.more = function (n, what, short) { var w = what ? (n === 1 ? String(what).replace(/s$/, '') : what) : (n === 1 ? 'row' : 'rows'); return n > 0 ? '<div class="pmu-more">' + esc(n + ' more ' + w + (short ? '' : ' at a taller size')) + '</div>' : ''; };
   C.fit = function (bh, rowH, reserve) { return Math.max(0, Math.floor((bh - (reserve || 0) + 0.5) / rowH)); };
   C.foot = function (html, glyph, when) {
     return html ? '<div class="pmu-cardfoot pmu-cfoot">' + (glyph ? C.glyph(glyph) : '') + '<span class="pmu-cfoot-text">' + html + '</span>' + (when ? '<span class="pmu-cfoot-when">' + esc(when) + '</span>' : '') + '</div>' : '';
@@ -201,6 +202,14 @@
         var isRow = !/pmu-(cfoot|note|factrow|efflegend|effspark|kpitrend|kpifoot|agbeyond|setupnote|effcost|swfam)/.test(String(last.className)) && last.tagName !== 'EM';
         if (!isRow) return;
         b._pmuHidden = (b._pmuHidden || 0) + 1;
+        /* a kind's own "N more ..." line absorbs the rows this pass hides (one line, one count), else one auto line */
+        var own = Array.prototype.filter.call(b.querySelectorAll('.pmu-more:not([data-auto])'), function (e) { return /^\d+ /.test(e.textContent); }).pop();
+        if (own) {
+          if (!own.hasAttribute('data-base')) own.setAttribute('data-base', String(parseInt(own.textContent, 10)));
+          own.textContent = own.textContent.replace(/^\d+/, String(+own.getAttribute('data-base') + b._pmuHidden))
+            .replace(/^(\d+ more )(\w+)/, function (m0, a, w) { return a + (/s$/.test(w) ? w : /y$/.test(w) ? w.replace(/y$/, 'ies') : w + 's'); });
+          return;
+        }
         var more = b.querySelector('.pmu-more[data-auto]');
         if (!more) {
           more = document.createElement('div'); more.className = 'pmu-more'; more.setAttribute('data-auto', '');
@@ -470,8 +479,8 @@
       var m = ctx.model || { rows: [] }, rows = m.rows || [];
       if (!rows.length) { body.innerHTML = C.empty(m.empty || 'No values for the selected range', m.emptyFacts); return; }
       /* two-line rows when they show every row; otherwise the one-line form whenever it shows more rows */
-      var fit2 = C.fit(ctx.tier.bh, 46, 4), fit1 = C.fit(ctx.tier.bh, 34, 4);
-      var inline = !C.w(ctx, 'm') || (fit2 < rows.length && fit1 > fit2), rowH = inline ? 34 : 46;
+      var fit2 = C.fit(ctx.tier.bh, 48, 4), fit1 = C.fit(ctx.tier.bh, 34, 4);
+      var inline = !C.w(ctx, 'm') || (fit2 < rows.length && fit1 > fit2), rowH = inline ? 34 : 48;
       var footOk = m.foot && C.fit(ctx.tier.bh, rowH, 38) >= rows.length;
       var fit = C.fit(ctx.tier.bh, rowH, (footOk ? 38 : 0) + 4);
       var shown = rows.length > fit ? rows.slice(0, Math.max(1, fit * rowH + 22 + 4 <= ctx.tier.bh ? fit : fit - 1)) : rows;
@@ -502,26 +511,36 @@
   C.kind('context', {
     render: function (body, ctx) {
       var m = ctx.model; if (!m) { body.innerHTML = C.empty('No thread context'); return; }
-      var side = C.w(ctx, 'm');
-      var ringPx = side ? 96 : 84;
+      /* the ring sits beside its legend whenever the card is at least 200 px wide and too short to stack ring, bar and
+         three legend rows (a narrow 6 x 8 card stacked showed no family at all) */
+      var LEG = PMU.theme.look().nier ? 26 : 24, MORE = 34, n = m.segments.length;
+      var side = C.w(ctx, 'm') || (ctx.tier.bw >= 200 && ctx.tier.bh < 84 + 30 + 3 * LEG);
       var legendRows = m.segments.map(function (s) {
         return '<div class="pmu-ctxleg" data-reveal><i class="pmu-swatch" data-sw="box" data-series-index="' + s.idx + '"></i><span>' + esc(s.name) + '</span><b>' + esc(PMU.fmt.tok(s.tokens)) + '</b><em>' + esc(s.pct + '%') + '</em></div>';
       });
       var factsRoom = C.w(ctx, 'l');
       var bh = ctx.tier.bh;
-      var legFit = side ? C.fit(bh - 24, 24) : C.fit(bh - ringPx - 30, 24);
-      var factFit = factsRoom ? C.fit(bh - (C.w(ctx, 'xl') ? 0 : 0), 26) : 0;
+      var oneCol = side || ctx.tier.bw < 300, per = oneCol ? 1 : 2, needRows = Math.ceil(n / per);
+      /* measured: ring + 10 px gap, composition bar 8 px + 10 px gap, legend rows 24 px (26 in NieR), "N more" line 24 px.
+         A stacked card keeps the 84 px ring and the bar only when every family still fits; otherwise the bar goes (the ring
+         shows the same split) and the ring shrinks to 68 px, so families come first */
+      var ringPx, mixOk, avail;
+      if (side) { mixOk = true; ringPx = C.w(ctx, 'm') ? 96 : 68; avail = bh - 18; }
+      else if (bh - 84 - 10 - 18 >= needRows * LEG) { mixOk = true; ringPx = 84; avail = bh - 84 - 10 - 18; }
+      else { mixOk = false; ringPx = 68; avail = bh - 68 - 10; }
+      var legFit = C.fit(avail, LEG);
+      var factFit = factsRoom ? C.fit(bh, 26) : 0;
       /* two legend columns only where a family name and its count both fit (about 145 px a column); every family shows or
          the hidden ones are counted on one line (complete or hidden) */
-      var oneCol = side || ctx.tier.bw < 300, per = oneCol ? 1 : 2, legCap = legFit * per;
-      if (legCap < legendRows.length) legCap = Math.max(per, (legFit - 1) * per);
+      var legCap = legFit * per;
+      if (legCap < n) legCap = Math.max(per, C.fit(avail - MORE, LEG) * per);
       body.innerHTML = '<div class="pmu-ctx' + (side ? ' is-side' : '') + (factsRoom ? ' has-facts' : '') + (ctx.tier.bw < 300 ? ' is-narrow' : '') + '">' +
         '<div class="pmu-ctxring" style="width:' + ringPx + 'px;height:' + ringPx + 'px"></div>' +
-        '<div class="pmu-ctxmain"><div class="pmu-ctxmix"></div><div class="pmu-ctxlegs' + (oneCol ? '' : ' is-2col') + '">' + legendRows.slice(0, legCap).join('') + '</div>' + (legCap < legendRows.length ? C.more(legendRows.length - legCap, legendRows.length - legCap === 1 ? 'family' : 'families') : '') + '</div>' +
+        '<div class="pmu-ctxmain">' + (mixOk ? '<div class="pmu-ctxmix"></div>' : '') + '<div class="pmu-ctxlegs' + (oneCol ? '' : ' is-2col') + '">' + legendRows.slice(0, legCap).join('') + '</div>' + (legCap < legendRows.length ? C.more(legendRows.length - legCap, legendRows.length - legCap === 1 ? 'family' : 'families', ctx.tier.bw < 260) : '') + '</div>' +
         (factsRoom ? '<div class="pmu-ctxfacts">' + C.facts(m.facts, factFit) + '</div>' : '') + '</div>';
       C.chart(body, 'ring', body.querySelector('.pmu-ctxring'), { segments: m.segments.map(function (s) { return { name: s.name, value: s.tokens, idx: s.idx }; }).concat([{ name: 'Reserved output', value: m.reserved, idx: 7, hatched: true }]),
         limit: m.limit, value: m.used, max: m.limit, centre: m.pct + '%', caption: PMU.fmt.tok(m.used) + ' / ' + PMU.fmt.tok(m.limit), token: 'in' }, { label: 'Context window ' + m.pct + '% used' });
-      C.chart(body, 'mix', body.querySelector('.pmu-ctxmix'), { segments: m.segments.map(function (s) { return { name: s.name, value: s.tokens, idx: s.idx }; }), total: m.used, legend: false }, { label: 'Context composition' });
+      if (mixOk) C.chart(body, 'mix', body.querySelector('.pmu-ctxmix'), { segments: m.segments.map(function (s) { return { name: s.name, value: s.tokens, idx: s.idx }; }), total: m.used, legend: false }, { label: 'Context composition' });
     }
   });
 })();

@@ -587,10 +587,10 @@
   function drawColumns(c, mode) {
     var spec = c.spec, f = frame(c), tw = tierW(c), m = colModel(spec), unit = spec.unit || 'usd';
     var items = [];
-    if (m.stacked && c.opts.legend !== false && !COMPACT[tw]) spec.stacks.forEach(function (s) {
+    if (m.stacked && c.opts.legend !== false && tw !== 'xs') spec.stacks.forEach(function (s) {
       var tot = 0; (s.settled || []).concat(s.estimate || []).forEach(function (v) { if (finite(v)) tot += v; });
       if (tot > 0) items.push(Object.assign({ key: s.providerId, name: s.name || (PMU.roster && PMU.roster.provider && PMU.roster.provider(s.providerId) ? PMU.roster.provider(s.providerId).name : s.providerId), prov: s.providerId,
-        compact: !!s.vendor && tw === 'm' }, stackKey(s)));
+        compact: !!s.vendor && (tw === 'm' || tw === 's') }, stackKey(s)));
     });
     var legendH = setLegend(c, items, function (k) {
       $$('.pmu-colstack > i', c.el).forEach(function (el) { el.classList.toggle('is-dim', !!k && el.getAttribute('data-prov') !== k); });
@@ -638,6 +638,10 @@
       if (!finite(tot)) {
         newH.push(0);
         lab = st ? (st === 'hidden_subscription' ? t('charts.covered') : PMU.vs.STATES[st] ? PMU.vs.STATES[st].word : '') : '';
+        /* the state word fits its slot (and its neighbours' labels): the full word, its first word, or nothing (the readout
+           still names it) */
+        if (lab && charts.textW(lab, 11, true) + 4 > slot * 1.6) lab = lab.split(' ')[0];
+        if (lab && charts.textW(lab, 11, true) + 4 > slot * 1.6) lab = '';
         html += '<div class="pmu-col is-gap" data-i="' + i + '" style="left:' + r1(x) + 'px;width:' + r1(bw) + 'px;bottom:' + pad.b + 'px;height:0">' +
           (lab ? '<span class="pmu-collab is-state" style="bottom:4px">' + esc(lab) + '</span>' : '') + '</div>';
         continue;

@@ -158,6 +158,13 @@
     var old = {};
     if (morph) $$('.pmu-rk', c.el).forEach(function (el) { old[el.getAttribute('data-id')] = parseFloat(el.getAttribute('data-f')); });
     c.el.setAttribute('data-inline', inline ? '1' : '0');
+    /* one-line rows share a name column as wide as the longest name (measured without layout, capped at 55 %), so
+       every bar starts at the same x and no short name is cut */
+    if (inline) {
+      var nw = 0; rows.forEach(function (r) { nw = Math.max(nw, charts.textW(r.name || '', 13) + (r.mark ? 24 : 0)); });
+      /* +15 %: NieR and Retro draw these names in wider faces than the measured theme font */
+      c.el.style.setProperty('--rk-name', 'minmax(0, ' + Math.ceil(nw * 1.15 + 8) + 'px)');
+    } else c.el.style.removeProperty('--rk-name');
     c.el.innerHTML = rows.map(function (r, i) {
       var f = finite(r.value) && max > 0 ? clamp(r.value / max, 0, 1) : 0;
       var k = { idx: r.idx != null ? r.idx : i, vendor: r.vendor, tk: r.tk, tone: r.tone };

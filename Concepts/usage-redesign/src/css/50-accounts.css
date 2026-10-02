@@ -55,7 +55,9 @@
 #panel-usage .pmu-card[data-tw="l"] .pmu-accfootline > span, #panel-usage .pmu-card[data-tw="xl"] .pmu-accfootline > span { white-space: normal; }
 
 /* ------------------------------------------------------------------ single plate (A1 10.2) */
-#panel-usage .pmu-acc.is-single { gap: 12px; }
+/* the single plate never shrinks under its content: a block that does not fit pushes the footer out of the body, where
+   the complete-or-hidden pass removes it whole (it can never slide under the footer) */
+#panel-usage .pmu-acc.is-single { gap: 12px; flex: 1 0 auto; }
 #panel-usage .pmu-acc.is-single > .pmu-facts + .pmu-facts { margin-top: -12px; }
 #panel-usage .pmu-acc.is-single > .pmu-facts + .pmu-facts > .pmu-fact { border-top: 1px dashed var(--pmu-rule); }
 #panel-usage .pmu-accmeter { min-width: 0; }

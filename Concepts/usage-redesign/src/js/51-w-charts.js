@@ -66,8 +66,10 @@
       if (m.est) { var es = 0; for (var q = i; q < j; q++) es += m.est[q] || 0; out.est.push(Math.round(es * 100) / 100); }
       if (m.labelsLong) out.labelsLong.push(j - 1 > i ? m.labelsLong[i] + ' to ' + m.labelsLong[j - 1] : m.labelsLong[i]);
       if (m.stacks) m.stacks.forEach(function (st, si) {
-        var a = 0, e = 0; for (var k = i; k < j; k++) { a += st.settled[k] || 0; e += st.estimate[k] || 0; }
-        out.stacks[si].settled.push(Math.round(a * 100) / 100); out.stacks[si].estimate.push(Math.round(e * 100) / 100);
+        var a = 0, e = 0, anyA = false, anyE = false;
+        for (var k = i; k < j; k++) { if (st.settled[k] != null) { a += st.settled[k]; anyA = true; } if (st.estimate[k] != null) { e += st.estimate[k]; anyE = true; } }
+        /* a group with no value stays unknown (null), never $0 */
+        out.stacks[si].settled.push(anyA ? Math.round(a * 100) / 100 : null); out.stacks[si].estimate.push(anyE ? Math.round(e * 100) / 100 : null);
       });
     }
     if (m.totals) { out.totals = []; for (var t = 0; t < n; t += g) { var tt = 0; for (var u = t; u < Math.min(n, t + g); u++) tt += m.totals[u] || 0; out.totals.push(Math.round(tt * 100) / 100); } }
@@ -93,7 +95,7 @@
         (noteOk ? '<p class="pmu-note">' + esc(m.note) + '</p>' : '') + '</div>';
       if (legendOk) { try { PMU.charts.legend(body.querySelector('.pmu-trendlegend'), m.legend, { inline: true }); } catch (error) {} }
       var cs = Object.assign({ unit: m.unit || 'usd' }, spec); delete cs.caption; delete cs.facts; delete cs.note; delete cs.tools;
-      C.chart(body, 'columns', body.querySelector('.pmu-colsplot'), cs, { label: ctx.def.title, tier: ctx.tier, readout: true, legend: m.legend !== false && (!m.stacks || C.w(ctx, 'l') || (C.w(ctx, 'm') && ctx.tier.bh >= 190)) });
+      C.chart(body, 'columns', body.querySelector('.pmu-colsplot'), cs, { label: ctx.def.title, tier: ctx.tier, readout: true, legend: m.legend !== false && (!m.stacks || C.w(ctx, 'l') || (C.w(ctx, 's') && ctx.tier.bh >= 190)) });
     }
   });
 

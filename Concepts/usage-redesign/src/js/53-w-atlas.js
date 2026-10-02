@@ -120,7 +120,7 @@
       var splitOk = used + splitH <= bh; if (splitOk) used += splitH;
       var costOk = top(true, false) - top(false, false) + used <= bh; if (costOk) used += top(true, false) - top(false, false);
       var explOk = bw >= 260 && top(costOk, true) - top(costOk, false) + used <= bh; if (explOk) used += top(costOk, true) - top(costOk, false);
-      var footOk = used + footH <= bh + 12; if (footOk) used += footH;
+      var footOk = used + footH <= bh; if (footOk) used += footH;
       var sparkOk = m.spark && used + sparkH <= bh; if (sparkOk) used += sparkH;
       var foot2 = C.w(ctx, 'm');
       body.innerHTML = '<div class="pmu-eff' + (narrow ? ' is-narrow' : '') + '">' +
@@ -174,8 +174,9 @@
           var nextHover = r.next ? r.next.short + ' window · ' + PMU.fmt.date(r.next.resetAt) + ' ' + PMU.fmt.clock(r.next.resetAt) + ' · ' + r.next.truth.replace(/_/g, ' ') : 'No upcoming reset is known';
           /* words that repeat the provider name are left out ("OpenCode Go · OpenCode Go", "Muse Code · Muse Code") */
           var ident = single ? PMU.mark(g.providerId, 20) + '<b>' + esc(g.name) + '</b>' + (a.nickname && a.nickname !== g.name ? '<span class="pmu-qacct">' + esc(a.nickname) + '</span>' : '') : '<b>' + esc(a.nickname) + '</b>';
-          var meta = (a.effective && g.rows.length > 1 ? '<em class="pmu-qactive">Active</em>' : '') + (a.plan && !(single && a.plan === g.name) ? '<span class="pmu-qplan">' + esc(a.plan) + '</span>' : '') +
-            (main && single && C.w(ctx, 'l') ? '<span class="pmu-qplan">' + esc(main.short.toLowerCase()) + '</span>' : '');
+          /* a single-account row already carries the provider name: its plan shows from 560 px, its window word from 760 px */
+          var meta = (a.effective && g.rows.length > 1 ? '<em class="pmu-qactive">Active</em>' : '') + (a.plan && !(single && (a.plan === g.name || !mid)) ? '<span class="pmu-qplan">' + esc(a.plan) + '</span>' : '') +
+            (main && single && wide ? '<span class="pmu-qplan">' + esc(main.short.toLowerCase()) + '</span>' : '');
           out.push('<div class="pmu-qrow pmu-row' + (single ? ' is-single' : '') + (isOpen ? ' is-open' : '') + '" data-reveal data-flash-key="' + esc(key) + '" data-flash-sig="' + esc(String(pct) + '|' + a.effective) + '" data-prov="' + esc(g.providerId) + '" data-pmu-act="qrow" data-value="' + esc(key) + '" role="button" tabindex="0" aria-expanded="' + isOpen + '" style="grid-template-columns:' + tmpl + '"' +
             C.hover(a.nickname, a.identity) + '><span class="pmu-qident">' + ident + meta + '</span><span class="pmu-qline" data-key="' + esc(key) + '"></span><span class="pmu-qusedcell" data-align="r">' + usedHtml +
             (mid ? '' : '<em>' + esc(nextTxt) + '</em>') + '</span>' + (mid ? '<span class="pmu-qnext" data-align="r"' + C.hover('Next reset', nextHover) + '>' + esc(nextTxt) + '</span>' : '') +

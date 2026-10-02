@@ -20,6 +20,9 @@ html[data-o55-nier-parts~="ticks"] #panel-usage .pmu-card { counter-increment: p
   background-size: var(--o55nw-ticks-size) !important; background-position: var(--o55nw-ticks-pos) !important; background-repeat: no-repeat !important; }
 html[data-o55-nier-parts~="ticks"] #panel-usage .pmu-card > .pmu-cardhead::after { content: "U-" counter(pmu-nier-usage, decimal-leading-zero); position: absolute; right: 14px; bottom: 2px;
   z-index: 3; pointer-events: none; font: 500 8px/1 var(--mono-font); letter-spacing: .16em; color: var(--o55-nier-ink); opacity: .6; }
+/* the subtitle line ends before the U-nn coordinate, so the two never print over each other */
+html[data-o55-nier-parts~="ticks"] #panel-usage .pmu-cardsub { padding-right: 34px; box-sizing: border-box; }
+html[data-o55-nier-parts~="ticks"] #panel-usage .pmu-card:is([data-head="tile"], [data-head="line"]) .pmu-cardtitle { padding-right: 30px; box-sizing: border-box; }
 
 /* headers: tracked capitals on titles, the head rule with square end caps, the ink title band of the inspector */
 html[data-o55-nier-parts~="headers"] #panel-usage :is(.pmu-cardtitle, #pmuRoomTitle, .pmu-brand h1) { text-transform: uppercase; letter-spacing: .07em; }
