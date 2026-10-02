@@ -13,16 +13,15 @@
  *   --nx-ink                tube + halo ink (tone classes set it; unset = the host's currentColor)
  *   --nx-stroke-base        context weight (was each context's stroke-width); --nx-tone-k the tone's factor
  *   --nx-hi-a / --nx-ho-a   inner / wide halo stroke-opacity;  --nx-hiv / --nx-hov their visibility
- *   --nx-lp                 a running loop:   var(--nx-L) <period> var(--nx-le) infinite, with --nx-per = <period>
- *   --nx-1a / --nx-1b / --nx-1c   a one-shot: arrive / bounce / reveal (set together by a state selector)
- *   --nx-of                 the part opacity floor (loops .6, controls .7)
- * A state sets the variables on the svg; parts pick them up. Nothing here sets an svg's own `animation`, so the
- * bar's and the status wrappers' rhythms (ab-breathe, ab-alert) are never touched by hover.
+ *   --nx-1                  a one-shot's timing (a hover state sets it); each part's own keyframes play once
+ *   --nx-le                 the loop easing (the voice); a context that runs a loop targets the parts:
+ *                           <ctx> .nx-p { animation: var(--kl) <period> var(--nx-le) infinite;
+ *                                         animation-delay: calc(var(--ad, 0) * <stagger> * 1ms - <period>); }
+ * Each moving part carries --k1 (its one-shot keyframes) and --kl (its loop keyframes), literal keyframes that
+ * neon-icons.js generates from the part's pose (transform and opacity only, so they composite).
+ * Nothing here sets an svg's own `animation`, so the bar's and the status wrappers' rhythms (ab-breathe, ab-alert)
+ * are never touched by hover.
  */
-
-/* --nx-t drives every part: 0 is the rest pose (the finished, lit drawing), 1 the part's displaced pose. A
-   registered number interpolates, so loop keyframes stay literal (no var() inside a looping keyframe). */
-@property --nx-t { syntax: '<number>'; inherits: false; initial-value: 0; }
 
 /* ------------------------------------------------------------------ 1. tokens */
 /* Dark themes: the halo recipe (plan §1), tuned against tools/glow-metric.mjs. Widths are screen px
@@ -39,7 +38,7 @@ body {
   --nx-h-hover-i: .22; --nx-h-swell-i: .20;
   /* voices (plan §1): one easing token per theme family; timing and order never change */
   --nx-ease: cubic-bezier(.2, .75, .25, 1);
-  --nx-ease-loop: cubic-bezier(.45, 0, .25, 1);
+  --nx-le: cubic-bezier(.45, 0, .25, 1);
   --nx-ease-c: cubic-bezier(.3, .6, .3, 1);
   --nx-d1: 440ms;
 }
@@ -55,14 +54,14 @@ body[data-theme$="-light"] {
   --nx-h-hover-i: .14; --nx-h-swell-i: .16;
 }
 /* Friendly overshoots, Glass glides, Retro steps. */
-body[data-theme^="friendly"] { --nx-ease: cubic-bezier(.34, 1.56, .64, 1); --nx-ease-loop: cubic-bezier(.34, 1.4, .64, 1); --nx-ease-c: cubic-bezier(.34, 1.3, .64, 1); }
-body[data-theme^="glass"] { --nx-ease: cubic-bezier(.4, 0, .1, 1); --nx-ease-loop: cubic-bezier(.6, 0, .25, 1); --nx-ease-c: cubic-bezier(.4, 0, .1, 1); }
-body[data-theme^="retro"] { --nx-ease: steps(4, end); --nx-ease-loop: steps(4, end); --nx-ease-c: steps(4, end); }
+body[data-theme^="friendly"] { --nx-ease: cubic-bezier(.34, 1.56, .64, 1); --nx-le: cubic-bezier(.34, 1.4, .64, 1); --nx-ease-c: cubic-bezier(.34, 1.3, .64, 1); }
+body[data-theme^="glass"] { --nx-ease: cubic-bezier(.4, 0, .1, 1); --nx-le: cubic-bezier(.6, 0, .25, 1); --nx-ease-c: cubic-bezier(.4, 0, .1, 1); }
+body[data-theme^="retro"] { --nx-ease: steps(4, end); --nx-le: steps(4, end); --nx-ease-c: steps(4, end); }
 /* Inside the transcript the voice follows .transcript[data-voice], which PM56_DEMO can pin apart from the theme. */
-.transcript[data-voice="basic"] { --nx-ease: cubic-bezier(.2, .75, .25, 1); --nx-ease-loop: cubic-bezier(.45, 0, .25, 1); --nx-ease-c: cubic-bezier(.3, .6, .3, 1); }
-.transcript[data-voice="friendly"] { --nx-ease: cubic-bezier(.34, 1.56, .64, 1); --nx-ease-loop: cubic-bezier(.34, 1.4, .64, 1); --nx-ease-c: cubic-bezier(.34, 1.3, .64, 1); }
-.transcript[data-voice="glass"] { --nx-ease: cubic-bezier(.4, 0, .1, 1); --nx-ease-loop: cubic-bezier(.6, 0, .25, 1); --nx-ease-c: cubic-bezier(.4, 0, .1, 1); }
-.transcript[data-voice="retro"] { --nx-ease: steps(4, end); --nx-ease-loop: steps(4, end); --nx-ease-c: steps(4, end); }
+.transcript[data-voice="basic"] { --nx-ease: cubic-bezier(.2, .75, .25, 1); --nx-le: cubic-bezier(.45, 0, .25, 1); --nx-ease-c: cubic-bezier(.3, .6, .3, 1); }
+.transcript[data-voice="friendly"] { --nx-ease: cubic-bezier(.34, 1.56, .64, 1); --nx-le: cubic-bezier(.34, 1.4, .64, 1); --nx-ease-c: cubic-bezier(.34, 1.3, .64, 1); }
+.transcript[data-voice="glass"] { --nx-ease: cubic-bezier(.4, 0, .1, 1); --nx-le: cubic-bezier(.6, 0, .25, 1); --nx-ease-c: cubic-bezier(.4, 0, .1, 1); }
+.transcript[data-voice="retro"] { --nx-ease: steps(4, end); --nx-le: steps(4, end); --nx-ease-c: steps(4, end); }
 
 /* ------------------------------------------------------------------ 2. the glyph */
 /* Halos and part travel run past the 24-unit box; the ink is inherited by every tube and halo; the weight is a
@@ -71,7 +70,6 @@ svg:where(.nx) {
   overflow: visible;
   stroke: var(--nx-ink, currentColor);
   stroke-width: calc(var(--nx-stroke-base, 1.8) * var(--nx-tone-k, 1));
-  --nx-le: var(--nx-ease-loop);
 }
 /* Filled parts (stop, status satellites) paint the ink as fill and carry no tube stroke. */
 svg:where(.nx) .nx-f { fill: var(--nx-ink, currentColor); stroke: none; }
@@ -88,9 +86,14 @@ svg:where(.nx) .nx-h {
   fill: none;
   stroke-width: var(--nx-hi-w, 3.6px);
   stroke-opacity: var(--nx-hi-a, 0);
-  visibility: var(--nx-hiv, visible);
   vector-effect: non-scaling-stroke;
   pointer-events: none;
+}
+/* Only a control's halo comes and goes (hover ignite): it alone carries the visibility switch, the 180 ms fade
+   and the flicker slot, so the other halos (most of them) cost no transition or animation bookkeeping in a
+   whole-document restyle. */
+svg:where(.nx-r-control) .nx-h {
+  visibility: var(--nx-hiv, hidden);
   transition: stroke-opacity 180ms ease-out, visibility 180ms;
   animation: var(--nx-fl);
 }
@@ -102,12 +105,17 @@ svg:where(.nx) .nx-ho, svg:where(.nx) .nx-hm {
   visibility: var(--nx-hov, hidden);
 }
 svg:where(.nx) .nx-hm { stroke-width: var(--nx-hm-w, 8px); }
+/* Halo copies inside a moving part scale with the drawing instead (non-scaling-stroke would keep the part's
+   transform off the compositor): the same screen widths, converted with the root's --nx-u (24 / size). */
+svg:where(.nx) .nx-p .nx-h { vector-effect: none; stroke-width: calc(var(--nx-hi-w, 3.6px) * var(--nx-u, var(--nx-u0, 1.6))); }
+svg:where(.nx) .nx-p .nx-ho { stroke-width: calc(var(--nx-ho-w, 14px) * var(--nx-u, var(--nx-u0, 1.6))); }
+svg:where(.nx) .nx-p .nx-hm { stroke-width: calc(var(--nx-hm-w, 8px) * var(--nx-u, var(--nx-u0, 1.6))); }
 
 /* ------------------------------------------------------------------ 4. roles (plan §1 table) */
 /* concept: the host's ink with a faint same-ink halo, lit steady. */
 svg:where(.nx-r-concept) { --nx-hi-a: var(--nx-h-quiet-i); }
 /* control: unlit at rest (no halo painted); it ignites on hover / focus-visible (section 8). */
-svg:where(.nx-r-control) { --nx-hiv: hidden; --nx-hi-a: 0; --nx-of: .7; }
+svg:where(.nx-r-control) { --nx-hiv: hidden; --nx-hi-a: 0; }
 /* status: lit by its tone class (section 5); the wide band is on. */
 svg:where(.nx-r-status) { --nx-hi-a: var(--nx-h-quiet-i); --nx-hov: visible; }
 /* brand: provider marks keep their own drawing and get no neon light. */
@@ -126,65 +134,22 @@ svg:where(.nx-t-idle) { --nx-ink: var(--subtle); --nx-tone-k: .78; --nx-hi-a: va
 svg:where(.nx-t-paused) { --nx-ink: var(--muted); --nx-tone-k: 1; --nx-hi-a: 0; --nx-ho-a: 0; --nx-hiv: hidden; --nx-hov: hidden; }
 
 /* ------------------------------------------------------------------ 6. parts and acts */
-/* A part's pose is a function of --nx-t: translate (--ax/--ay, plus a circle of radius --cr), rotate (--ar about
-   --o, user units on the view box) and opacity (--ao, floored at --nx-of so a tube never fades below the floor).
-   No scale anywhere. At rest --nx-t is 0, so the computed pose is the drawing itself. */
+/* A moving part rotates about its pivot (--o, user units on the view box). At rest it carries no transform and no
+   opacity of its own: the base style is the finished, lit drawing. Its one-shot plays when a state sets --nx-1
+   (both unset resolve to none: invalid at computed-value time); the stagger is --ad. No scale anywhere. */
 svg:where(.nx) .nx-p {
   transform-box: view-box;
   transform-origin: var(--o, 12px 12px);
-  transform: translate(calc((var(--ax, 0) * var(--nx-t) + var(--cr, 0) * (cos(var(--nx-t) * 360deg) - 1)) * 1px), calc((var(--ay, 0) * var(--nx-t) + var(--cr, 0) * sin(var(--nx-t) * 360deg)) * 1px)) rotate(calc(var(--ar, 0) * var(--nx-t) * 1deg));
-  opacity: max(var(--nx-of, .6), calc(1 - (1 - var(--ao, 1)) * var(--nx-t)));
-  /* a loop when one runs, else the one-shot; both unset resolve to none (invalid at computed-value time) */
-  animation: var(--nx-lp, var(--nx-1a));
-  /* the stagger: positive for a one-shot; a loop subtracts its period so the phase offset holds from frame one */
-  animation-delay: calc(var(--ad, 0) * var(--nx-sk, 1) * 1ms - var(--nx-per, 0ms));
+  animation: var(--k1) var(--nx-1);
+  animation-delay: calc(var(--ad, 0) * 1ms);
 }
-/* bounce parts go out and come back in a one-shot (nudges, launches, lifts) */
-svg:where(.nx) .nx-pb { animation: var(--nx-lp, var(--nx-1b)); animation-delay: calc(var(--ad, 0) * var(--nx-sk, 1) * 1ms - var(--nx-per, 0ms)); }
-/* reveal parts draw on by clip in a one-shot; a loop never clips (it uses the part's opacity pose instead) */
-svg:where(.nx) .nx-pc { animation: var(--nx-lp, var(--nx-1c)); animation-delay: calc(var(--ad, 0) * var(--nx-sk, 1) * 1ms - var(--nx-per, 0ms)); }
-/* parts that sit out loops (terminal's prompt) */
-svg:where(.nx) .nx-pn { animation: var(--nx-1a); animation-delay: calc(var(--ad, 0) * 1ms); }
-svg:where(.nx) .nx-pn.nx-pb { animation: var(--nx-1b); }
-svg:where(.nx) .nx-pn.nx-pc { animation: var(--nx-1c); }
 /* self-centred parts (strike and scan about their own box) */
 svg:where(.nx) .nx-pf { transform-box: fill-box; transform-origin: center; }
-
-/* Each glyph names its loop shape (neon-icons.js act); a context that runs a loop writes var(--nx-L). */
-svg:where(.nx-a-strike) { --nx-L: nx-L-strike; }
-svg:where(.nx-a-seq) { --nx-L: nx-L-seq; }
-svg:where(.nx-a-fill) { --nx-L: nx-L-fill; }
-svg:where(.nx-a-wave) { --nx-L: nx-L-wave; }
-svg:where(.nx-a-swap) { --nx-L: nx-L-swap; }
-svg:where(.nx-a-hop) { --nx-L: nx-L-hop; }
-svg:where(.nx-a-drop) { --nx-L: nx-L-drop; }
-svg:where(.nx-a-ratchet) { --nx-L: nx-L-ratchet; }
-svg:where(.nx-a-blink) { --nx-L: nx-L-blink; }
 /* continuous turns are linear in every voice (an eased orbit lurches); retro keeps its stepped texture */
-svg:where(.nx-a-spin) { --nx-L: nx-L-spin; --nx-le: linear; }
+svg:where(.nx-a-spin) { --nx-le: linear; }
 body[data-theme^="retro"] svg:where(.nx-a-spin) { --nx-le: steps(16, end); }
-
-/* One-shots. Literal keyframes on --nx-t (from-only: the base style is the finished pose); only the clip reveal
-   reads var() (each part's own inset), and it is attached only while a state selector holds it. */
-@keyframes nx-in { from { --nx-t: 1; } }
-@keyframes nx-bk { 0%, 100% { --nx-t: 0; } 42% { --nx-t: 1; } }
-/* both endpoints stated with the view-box keyword: a from-only clip flips discretely, and a straight line's
-   fill-box has zero height */
-@keyframes nx-reveal { from { clip-path: inset(var(--ac)) view-box; } to { clip-path: inset(var(--ae, 0px)) view-box; } }
 /* the ignite flicker lives on the halo path, never the tube */
 @keyframes nx-flick { 0% { opacity: 0; } 16% { opacity: .9; } 28% { opacity: .3; } 46% { opacity: 1; } 60% { opacity: .55; } 100% { opacity: 1; } }
-
-/* Loops: there-and-back on --nx-t, each starting and ending at rest (so a paused frame 0 is the lit drawing). */
-@keyframes nx-L-strike { 0%, 40%, 100% { --nx-t: 0; } 14% { --nx-t: 1; } }
-@keyframes nx-L-seq { 0%, 34%, 100% { --nx-t: 0; } 16% { --nx-t: 1; } }
-@keyframes nx-L-fill { 0%, 44%, 100% { --nx-t: 0; } 10%, 30% { --nx-t: 1; } }
-@keyframes nx-L-wave { 0%, 100% { --nx-t: 0; } 50% { --nx-t: 1; } }
-@keyframes nx-L-swap { 0%, 75%, 100% { --nx-t: 0; } 25%, 50% { --nx-t: 1; } }
-@keyframes nx-L-spin { from { --nx-t: 0; } to { --nx-t: 1; } }
-@keyframes nx-L-hop { 0%, 16%, 32%, 100% { --nx-t: 0; } 8%, 24% { --nx-t: 1; } }
-@keyframes nx-L-drop { 0%, 52%, 100% { --nx-t: 0; } 40% { --nx-t: 1; } }
-@keyframes nx-L-ratchet { 0% { --nx-t: 0; } 10%, 25% { --nx-t: .25; } 35%, 50% { --nx-t: .5; } 60%, 75% { --nx-t: .75; } 85%, 100% { --nx-t: 1; } }
-@keyframes nx-L-blink { 0%, 40%, 100% { --nx-t: 0; } 50%, 90% { --nx-t: 1; } }
 
 /* ------------------------------------------------------------------ 7. size gate */
 /* neon-icons.js already renders every part static below 12 px; this guards a context that resizes a moving
@@ -201,17 +166,13 @@ svg:where(.nx-z0) .nx-p { animation: none; }
   /* control: the halo fades in over 180 ms and flickers once; the act plays once, then rests */
   --nx-hiv: visible; --nx-hi-a: var(--nx-h-hover-i);
   --nx-fl: nx-flick 300ms linear;
-  --nx-1a: nx-in var(--nx-d1) var(--nx-ease) backwards;
-  --nx-1b: nx-bk var(--nx-d1) var(--nx-ease);
-  --nx-1c: nx-reveal var(--nx-d1) var(--nx-ease-c) backwards;
+  --nx-1: var(--nx-d1) var(--nx-ease) backwards;
 }
 :where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .af-chip-pending, .orbit-node, .wa-disc, .rail8-item)) > svg:where(.nx-r-concept:not(.nx-self)),
 :where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .af-chip-pending, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg:where(.nx-r-concept:not(.nx-self)) {
   /* concept: the halo swells and the act plays once; no flicker, no dimming of the tube */
   --nx-hi-a: var(--nx-h-swell-i);
-  --nx-1a: nx-in var(--nx-d1) var(--nx-ease) backwards;
-  --nx-1b: nx-bk var(--nx-d1) var(--nx-ease);
-  --nx-1c: nx-reveal var(--nx-d1) var(--nx-ease-c) backwards;
+  --nx-1: var(--nx-d1) var(--nx-ease) backwards;
 }
 /* Filled chips (Send, Stop, primary buttons) already carry their own fill: the act plays, the halo stays off. */
 .send-button > svg.nx, .primary-button > svg.nx, .soft-button.primary > svg.nx { --nx-hiv: hidden; --nx-fl: none; }
@@ -222,21 +183,21 @@ svg:where(.nx-z0) .nx-p { animation: none; }
 .nx-st { display: inline-flex; flex: none; line-height: 0; vertical-align: middle; }
 .nx-st > svg.nx { display: block; }
 /* working: a slow satellite orbit (3.2 s), no breathe, inner halo only */
-.nx-st-working > svg.nx { --nx-lp: var(--nx-L) 3200ms var(--nx-le) infinite; --nx-per: 3200ms; --nx-hov: hidden; }
+.nx-st-working > svg.nx { --nx-hov: hidden; }
+.nx-st-working .nx-p { animation: var(--kl) 3200ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 3.2ms - 3200ms); }
 /* reviewing: the lens sweeps the page */
-.nx-st-reviewing > svg.nx { --nx-lp: var(--nx-L) 2800ms var(--nx-le) infinite; --nx-per: 2800ms; --nx-of: .6; }
+.nx-st-reviewing .nx-p { animation: var(--kl) 2800ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 2.8ms - 2800ms); }
 /* waiting (needs you): full steady halo, the "?" hops twice every 2.4 s; it outshines working in a list */
-.nx-st-waiting > svg.nx { --nx-lp: var(--nx-L) 2400ms var(--nx-le) infinite; --nx-per: 2400ms; }
+.nx-st-waiting .nx-p { animation: var(--kl) 2400ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 2.4ms - 2400ms); }
 /* waiting on a dependency: the hourglass tips slowly */
-.nx-st-waiting-dep > svg.nx { --nx-lp: var(--nx-L) 3600ms var(--nx-le) infinite; --nx-per: 3600ms; }
+.nx-st-waiting-dep .nx-p { animation: var(--kl) 3600ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 3.6ms - 3600ms); }
 /* recovering: a counter-clockwise ratchet in four eased 45-degree ticks */
-.nx-st-recovering > svg.nx { --nx-lp: var(--nx-L) 2400ms var(--nx-le) infinite; --nx-per: 2400ms; }
-/* complete: a bold check that clip-draws once on mount (literal keyframe, nothing var() left attached) */
+.nx-st-recovering .nx-p { animation: var(--kl) 2400ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 2.4ms - 2400ms); }
+/* complete: a bold check that clip-draws once on mount */
 .nx-st-complete > svg.nx { --nx-stroke-base: 2.4; --nx-tone-k: 1; }
-.nx-st-complete .nx-pc { animation: nx-st-draw 520ms var(--nx-ease-c) backwards; }
-@keyframes nx-st-draw { from { clip-path: inset(0 20px 0 4px) view-box; } to { clip-path: inset(0 4px 0 4px) view-box; } }
+.nx-st-complete .nx-p { animation: var(--k1) 520ms var(--nx-ease-c) backwards; }
 /* blocked: the shackle drops shut once, then the wrapper takes the bar's hard double blink */
-.nx-st-blocked > svg.nx { --nx-1a: nx-in 520ms var(--nx-ease) backwards; }
+.nx-st-blocked .nx-p { animation: var(--k1) 520ms var(--nx-ease) backwards; }
 .nx-st-blocked { animation: ab-alert 1900ms steps(1, end) 700ms infinite; }
 /* failed: an irregular stutter, reserved for failed */
 .nx-st-failed { animation: nx-stutter 2700ms linear infinite; }

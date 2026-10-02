@@ -393,7 +393,9 @@
     }
     function register(name, def) {
       var d = normal(def); if (!name || !d) return false;
-      GLYPHS[String(name)] = d; cache = Object.create(null); cacheN = 0; return true;
+      GLYPHS[String(name)] = d; cache = Object.create(null); cacheN = 0;
+      if (d.parts.some(function (p) { return p.m; })) addActs(actsCss(String(name), d));
+      return true;
     }
     /* registerMany(map): module-shell hands PMX_GLYPHS over at its first glyph call. A drawing this file owns
        (reconciled, or split into parts for an act) is never replaced; {force:true} replaces it anyway. */
@@ -440,51 +442,135 @@
         travel = Math.max(travel, far * Math.min(Math.PI, Math.abs(m.ar) * Math.PI / 180));
       }
       if (travel * k >= 1.5) return true;
-      /* a reveal act (clip, or opacity only) needs the part itself to be at least 1.5 px long */
+      /* a reveal act (clip, or opacity only) needs the part itself, as painted (stroke included), to be at least
+         1.5 px long */
       var reveal = m.ac || (m.ao != null && m.ao < 1 && !travel);
-      return !!reveal && Math.max(b[2] - b[0], b[3] - b[1]) * k >= 1.5;
+      return !!reveal && (Math.max(b[2] - b[0], b[3] - b[1]) + 1.8) * k >= 1.5;
     }
-    function partStyle(m, origin) {
+    /* ---------------------------------------------------------------- acts: literal keyframes per part
+       Every moving part gets literal keyframes, generated here once from its pose (no var() inside any keyframe,
+       so nothing var()-dependent is ever left attached): <name>-<j>L its loop (the glyph's act shape, opacity
+       floored at .6) and one one-shot, <name>-<j>A arrive (pose -> rest), B bounce (rest -> pose -> rest) or
+       C reveal (clip from --ac to --ae on the view box, both endpoints stated). They animate transform and opacity
+       only, which Chromium composites even on an SVG child (a registered custom property would not be). The part
+       names its own keyframes in its style (--kl, --k1); neon-icons.css and the contexts supply the timing. */
+    var SHAPES = {
+      strike: [[0, 0], [14, 1], [40, 0], [100, 0]], seq: [[0, 0], [16, 1], [34, 0], [100, 0]],
+      fill: [[0, 0], [10, 1], [30, 1], [44, 0], [100, 0]], wave: [[0, 0], [50, 1], [100, 0]],
+      swap: [[0, 0], [25, 1], [50, 1], [75, 0], [100, 0]], spin: [[0, 0], [100, 1]],
+      hop: [[0, 0], [8, 1], [16, 0], [24, 1], [32, 0], [100, 0]], drop: [[0, 0], [40, 1], [52, 0], [100, 0]],
+      ratchet: [[0, 0], [10, .25], [25, .25], [35, .5], [50, .5], [60, .75], [75, .75], [85, 1], [100, 1]],
+      blink: [[0, 0], [40, 0], [50, 1], [90, 1], [100, 0]]
+    };
+    function kfName(name, j, k) { return 'nx-' + String(name).replace(/[^\w-]/g, '_') + '-' + j + k; }
+    function poseCss(m, t, floor) {
+      var x = (m.ax || 0) * t, y = (m.ay || 0) * t, r = (m.ar || 0) * t;
+      if (m.cr) { x += m.cr * (Math.cos(t * 2 * Math.PI) - 1); y += m.cr * Math.sin(t * 2 * Math.PI); }
+      /* only the channels the part uses, the same function list in every frame (so it interpolates and composites) */
+      var fn = [];
+      if (m.ax || m.ay || m.cr) fn.push('translate(' + fmt(x) + 'px,' + fmt(y) + 'px)');
+      if (m.ar) fn.push('rotate(' + fmt(r) + 'deg)');
+      var out = fn.length ? ['transform:' + fn.join(' ')] : [];
+      if (m.ao != null && m.ao < 1) out.push('opacity:' + fmt(1 - (1 - Math.max(m.ao, floor)) * t));
+      return out.join(';');
+    }
+    /* a circling part needs its path sampled (8 stops per segment, linear between them) */
+    function stops(m, list) {
+      if (!m.cr) return list;
+      var out = [];
+      for (var i = 0; i < list.length - 1; i++) for (var q = 0; q < 8; q++) out.push([list[i][0] + (list[i + 1][0] - list[i][0]) * q / 8, list[i][1] + (list[i + 1][1] - list[i][1]) * q / 8]);
+      out.push(list[list.length - 1]);
+      return out;
+    }
+    function frames(list, m, floor) {
+      var lin = m.cr ? ';animation-timing-function:linear' : '';
+      return list.map(function (st) { return fmt(st[0]) + '%{' + poseCss(m, st[1], floor) + lin + '}'; }).join('');
+    }
+    function insets(v) { return String(v || '0').split(/\s+/).map(function (x) { return fmt(+x) + 'px'; }).join(' '); }
+    function actsCss(name, d) {
+      var css = '', j = 0, shape = SHAPES[d.act], f1 = d.role === 'control' ? .7 : .5;
+      d.parts.forEach(function (p) {
+        if (!p.m) return;
+        var m = p.m;
+        if (shape && !m.n) css += '@keyframes ' + kfName(name, j, 'L') + '{' + frames(stops(m, shape), m, .6) + '}';
+        if (m.ac) css += '@keyframes ' + kfName(name, j, 'C') + '{from{clip-path:inset(' + insets(m.ac) + ') view-box}to{clip-path:inset(' + insets(m.ae) + ') view-box}}';
+        else if (m.b) css += '@keyframes ' + kfName(name, j, 'B') + '{' + frames(stops(m, [[0, 0], [42, 1], [100, 0]]), m, f1) + '}';
+        else css += '@keyframes ' + kfName(name, j, 'A') + '{' + frames(stops(m, [[0, 1], [100, 0]]), m, f1) + '}';
+        j++;
+      });
+      return css;
+    }
+    var actSheet = null;
+    function addActs(css) {
+      if (!css) return;
+      try {
+        if (!actSheet) { actSheet = document.createElement('style'); actSheet.id = 'nx-acts'; (document.head || document.documentElement).appendChild(actSheet); }
+        actSheet.textContent += css;
+      } catch (e) { }
+    }
+    function partStyle(name, j, m, origin) {
       var s = [];
       ['ax', 'ay', 'ar', 'ao', 'ad', 'cr'].forEach(function (k) { if (m[k] != null && m[k] !== 0) s.push('--' + k + ':' + fmt(m[k])); });
-      if (m.ac) s.push('--ac:' + m.ac.split(/\s+/).map(function (v) { return fmt(+v) + 'px'; }).join(' '));
-      if (m.ae) s.push('--ae:' + m.ae.split(/\s+/).map(function (v) { return fmt(+v) + 'px'; }).join(' '));
       var o = Array.isArray(m.o) ? m.o : (m.o === 'c' ? null : origin);
       if (o && (m.ar || m.cr)) s.push('--o:' + fmt(o[0]) + 'px ' + fmt(o[1]) + 'px');
+      s.push('--k1:' + kfName(name, j, m.ac ? 'C' : m.b ? 'B' : 'A'));
+      if (!m.n) s.push('--kl:' + kfName(name, j, 'L'));
       return s.join(';');
     }
+    /* The glyphs the activity bar lights through its tone (the mid and wide bands are emitted for them); any other
+       glyph gets those bands as a status (role or status()) or on request with the nx-lit class token. */
+    var LIT = { goal: 1, todo: 1, users: 1, changes: 1, page: 1, 'kind-crew': 1, 'kind-brainstorm': 1, 'kind-review': 1, 'kind-chat_room': 1 };
+    function travels(m) { return !!(m.ax || m.ay || m.ar || m.cr); }
     function render(name, size, cls, statusWrap) {
       var key = name + '|' + size + '|' + cls + '|' + (statusWrap ? 1 : 0);
       if (cache[key]) return cache[key];
       var n = canon(name), d = GLYPHS[n];
       if (!d) { miss(name); n = 'info'; d = GLYPHS.info; }
-      var toks = String(cls || '').split(/\s+/).filter(Boolean), role = d.role;
-      toks = toks.filter(function (t) { var m = /^nx-r-(status|concept|control|brand)$/.exec(t); if (m) { role = m[1]; return false; } return true; });
-      /* The wide band is ONE merged path for the whole glyph at rest (static parts and moving parts alike), so wide
-         bands never stack; it stays put while a part moves (at a few percent alpha the eye reads it as the glyph's
-         glow, not the part's). Each moving part carries its own inner band, which moves with its tube. A glyph that
-         is all one moving part (spin, ratchet, tip) gives that part the wide band too, so it turns with it. */
-      var stat = [], wide = [], tubes = '', moving = '', i = 0, live = [];
+      var toks = String(cls || '').split(/\s+/).filter(Boolean), role = d.role, litTok = false;
+      toks = toks.filter(function (t) { var m = /^nx-r-(status|concept|control|brand)$/.exec(t); if (m) { role = m[1]; return false; } if (t === 'nx-lit') litTok = true; return true; });
+      var lit = role === 'status' || !!LIT[n] || litTok;
+      /* Halo layout. The core band (.nx-h) of the static parts is one merged path. A moving part carries its own
+         core copy, so the glow moves with its tube, only where the halo is the point: lit glyphs (status, the bar's
+         domains, nx-lit) and concept parts that travel. A control's parts (its halo shows on hover only) and a
+         concept part that only fades or draws in keep their core in the merged path, and a one-element part is then
+         the bare tube itself: one element instead of three (`more` alone appears dozens of times in a thread list).
+         The mid and wide bands, when emitted, are each ONE merged path for the whole glyph at rest, so they never
+         stack; a glyph that is all one moving part gives that part its bands so they turn with it. */
+      var stat = [], core = [], tubes = '', moving = '', i = 0, live = [];
+      var j = 0;
       d.parts.forEach(function (p) {
-        if (!p.m || !moves(p, size, d.origin)) { p.els.forEach(function (e) { stat.push(e); tubes += tube(e, d.fill); }); return; }
-        live.push(p);
+        var jj = p.m ? j++ : -1;
+        if (!p.m || !moves(p, size, d.origin)) { p.els.forEach(function (e) { stat.push(e); core.push(e); tubes += tube(e, d.fill); }); return; }
+        live.push({ p: p, j: jj });
       });
       var selfWide = !stat.length && live.length === 1;
-      wide = stat.slice();
-      live.forEach(function (p) {
-        var m = p.m, kind = m.ac ? ' nx-pc' : (m.b ? ' nx-pb' : '');
-        var gcls = 'nx-p nx-p' + i + kind + (m.n ? ' nx-pn' : '') + (m.o === 'c' ? ' nx-pf' : '') + (statusWrap ? ' nx-st-move' : '');
-        var st = partStyle(m, d.origin);
-        if (!selfWide) wide = wide.concat(p.els);
-        moving += '<g class="' + gcls + '"' + (st ? ' style="' + st + '"' : '') + '>' + (selfWide ? halo(p.els, 'nx-h nx-ho') + halo(p.els, 'nx-h nx-hm') : '') + halo(p.els, 'nx-h') + p.els.map(function (e) { return tube(e, d.fill); }).join('') + '</g>';
+      var all = stat.slice();
+      live.forEach(function (it) {
+        var p = it.p, m = p.m, st = partStyle(n, it.j, m, d.origin);
+        var pcls = 'nx-p nx-p' + i + (m.n ? ' nx-pn' : '') + (m.o === 'c' ? ' nx-pf' : '') + (statusWrap ? ' nx-st-move' : '');
+        all = all.concat(p.els);
+        if (!selfWide && (role === 'control' || (!lit && !travels(m)))) {
+          core = core.concat(p.els);
+          if (p.els.length === 1) {
+            var e1 = p.els[0], c1 = 'nx-c ' + pcls + (e1.f || d.fill ? ' nx-f' : '') + (e1.cls ? ' ' + e1.cls : '');
+            moving += '<' + e1.tag + ' class="' + c1 + '"' + attrs(e1) + ' style="' + st + '"/>';
+          } else moving += '<g class="' + pcls + '" style="' + st + '">' + p.els.map(function (e) { return tube(e, d.fill); }).join('') + '</g>';
+        } else {
+          var bands = selfWide && lit ? halo(p.els, 'nx-h nx-ho') + halo(p.els, 'nx-h nx-hm') : '';
+          moving += '<g class="' + pcls + '" style="' + st + '">' + bands + halo(p.els, 'nx-h') + p.els.map(function (e) { return tube(e, d.fill); }).join('') + '</g>';
+        }
         i++;
       });
-      var base = (wide.length && !selfWide ? halo(wide, 'nx-h nx-ho') + halo(wide, 'nx-h nx-hm') : '') + (stat.length ? halo(stat, 'nx-h') : '') + tubes;
+      var base = (lit && !selfWide ? halo(all, 'nx-h nx-ho') + halo(all, 'nx-h nx-hm') : '') + (core.length ? halo(core, 'nx-h') : '') + tubes;
       if (statusWrap) base = '<g class="nx-st-base">' + base + '</g>';
       var z = size < 12 ? ' nx-z0' : size < 15 ? ' nx-z1' : '';
       var tone = statusWrap ? ' nx-t-' + statusWrap.tone : '';
       var c = 'nx nx-r-' + role + ' nx-a-' + d.act + z + tone + (toks.length ? ' ' + toks.join(' ') : '');
-      var out = '<svg class="' + esc(c) + '" data-nx="' + esc(n) + '" width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + base + moving + '</svg>';
+      /* --nx-u0 (user units per screen px at this size) sizes the halo copies inside moving parts, which cannot use
+         non-scaling-stroke: Chromium will not composite a transform over non-scaling strokes. A context that renders
+         the icon at another size sets --nx-u in its CSS, which wins over this default (the bar: 24/14). */
+      var u = live.length ? ' style="--nx-u0:' + fmt(24 / size) + '"' : '';
+      var out = '<svg class="' + esc(c) + '" data-nx="' + esc(n) + '" width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"' + u + '>' + base + moving + '</svg>';
       if (cacheN > 4000) { cache = Object.create(null); cacheN = 0; }
       cache[key] = out; cacheN++;
       return out;
@@ -507,6 +593,8 @@
         return { name: k, role: d.role, act: d.act, moving: d.parts.filter(function (p) { return p.m; }).length, aliases: back[k] || [], own: !!d.own, status: /^st-/.test(k) };
       });
     }
+
+    addActs(Object.keys(GLYPHS).map(function (k) { return actsCss(k, GLYPHS[k]); }).join(''));
 
     window.PM56_NEON = {
       version: 1,
