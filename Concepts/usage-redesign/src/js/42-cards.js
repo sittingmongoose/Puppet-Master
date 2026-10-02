@@ -84,6 +84,18 @@
     if (prov && (form !== 'line' || acct)) return PMU.mark(prov, size);   /* provider widgets keep their mark in a line head too */
     return '';
   }
+  /* does the whole title fit its head line? Measured without a layout read: the card width from its grid rect and the
+     board pitch, the text in the theme face (NieR: tracked capitals). A plate whose title does not fit wraps the title to
+     two lines and gives the subtitle line to it (the subtitle stays in the title's hover tag). */
+  function titleFits(card, text, form) {
+    var cls = PMU.board && PMU.board.cls ? PMU.board.cls() : null;
+    if (!cls || !cls.pitchX || !PMU.charts || !PMU.charts.textW) return true;
+    var w = (+card.dataset.w || 0) * cls.pitchX - 8 - 28 - (card.querySelector('.pmu-cardkey:not([hidden])') ? 34 : 0) - 6;
+    var nier = document.documentElement.getAttribute('data-o55-nier') === 'on';
+    var px = form === 'plate' ? 15 : form === 'tile' ? 13 : 13.5, tx = nier ? String(text).toUpperCase() : String(text);
+    /* 10 % and a 12 px gap of margin: a canvas measure can run narrower than the laid-out face (Retro's mono, NieR) */
+    return (PMU.charts.textW(tx, px, false, 640) + (nier ? tx.length * px * 0.05 : 0)) * 1.1 <= w - 12;
+  }
   function syncHead(card, ctx) {
     var def = ctx.def, form = card.getAttribute('data-head') || 'line', tier = ctx.tier || {};
     var titleEl = card.querySelector('.pmu-cardtitle'), subEl = card.querySelector('.pmu-cardsub'), asideEl = card.querySelector('.pmu-cardmeta'), keyEl = card.querySelector('.pmu-cardkey');
@@ -95,6 +107,8 @@
       if ((titleEl.getAttribute('data-pm-hover-detail') || '') !== sub) titleEl.setAttribute('data-pm-hover-detail', sub);
     }
     if (subEl && subEl.textContent !== sub) subEl.textContent = sub;
+    var wrap = form === 'plate' && !titleFits(card, want, form);
+    if (card.hasAttribute('data-title-wrap') !== wrap) card.toggleAttribute('data-title-wrap', wrap);
     if (asideEl) { var a = asideHtml(text(def.aside || def.lineMeta, ctx)); if (asideEl._pmu !== a) { asideEl.innerHTML = a; asideEl._pmu = a; } }
     if (keyEl) { var k = keyHtml(def, ctx, form); if (keyEl._pmu !== k) { keyEl.innerHTML = k; keyEl._pmu = k; keyEl.hidden = !k; } }
     var tone = def.tone ? text(def.tone, ctx) : '';
@@ -106,12 +120,40 @@
     var p = (kindSpec && kindSpec.presets || []).filter(function (x) { return x.w === w && x.h === h; })[0];
     return p ? p.name : null;
   }
+  /* one muted line per size row, the way the Chat Assistant menus describe each choice: what the panel shows at that size */
+  var SIZE_DESC = {
+    limit: [[3, 'The binding window on one line'], [6, 'Every window and its reset'], [8, 'Windows and the plan line'], [99, 'Windows, plan, spend and facts']],
+    kpi: [[3, 'The value alone'], [4, 'Value and its second line'], [6, 'Value, line and facts'], [99, 'Value, trend and every fact']],
+    kpis: [[3, 'Values in one strip'], [5, 'Values with their second lines'], [99, 'Two rows of values']],
+    provider: [[3, 'One line per account'], [7, 'Accounts with every window'], [99, 'Accounts, windows and notes']],
+    providers: [[4, 'Two or three lines'], [99, 'Every provider line']],
+    switch: [[3, 'Toggle and threshold on one line'], [99, 'Toggle, threshold and most room']],
+    alert: [[6, 'State, detail and meter'], [99, 'State, meter, actions and facts']],
+    free: [[6, 'State and price'], [99, 'State, price and every fact']],
+    cache: [[6, 'Read share and split'], [99, 'Read share, split and facts']],
+    context: [[6, 'Ring and families'], [99, 'Ring, families and route']],
+    trend: [[5, 'A compact chart'], [8, 'Chart with axes and legend'], [99, 'Chart, legend and facts']],
+    columns: [[5, 'A compact chart'], [8, 'Chart with axes'], [99, 'Chart, caption and facts']],
+    budget: [[6, 'Spend and projection'], [99, 'Spend, projection chart and facts']],
+    heat: [[6, 'The week at a glance'], [99, 'Every hour with labels']],
+    donut: [[10, 'Ring and top models'], [99, 'Ring and every model']],
+    breakdown: [[10, 'Every token type'], [99, 'Types with the counting note']],
+    efficiency: [[9, 'Ring and savings'], [99, 'Ring, savings and trend']],
+    models: [[8, 'The top models'], [99, 'Every model']],
+    mix: [[4, 'The mix bar'], [99, 'Mix bar and every part']],
+    setup: [[3, 'The setup line'], [99, 'Setup and every fact']]
+  };
+  function sizeDesc(kind, w, h) {
+    var list = SIZE_DESC[kind] || [[6, 'The first rows'], [10, 'Most rows'], [99, 'Every row']];
+    for (var i = 0; i < list.length; i++) if (h <= list[i][0]) return list[i][1];
+    return list[list.length - 1][1];
+  }
   function sizeRows(id) {
-    var ks = PMU.widgets.spec(id), cls = PMU.board.cls(), me = PMU.board.rect(id);
+    var ks = PMU.widgets.spec(id), cls = PMU.board.cls(), me = PMU.board.rect(id), kind = (PMU.widgets.get(id) || {}).kind;
     if (!ks || !me) return [];
     return (ks.presets || []).map(function (p) {
       var w = Math.min(p.w, cls.tracks), wide = p.w > cls.tracks;
-      return { value: 'size:' + p.w + 'x' + p.h, label: p.name, right: w + ' x ' + p.h, active: me.w === p.w && me.h === p.h,
+      return { value: 'size:' + p.w + 'x' + p.h, label: p.name, sub: sizeDesc(kind, p.w, p.h), right: w + ' x ' + p.h, active: me.w === p.w && me.h === p.h,
         disabled: wide, reason: wide ? 'Wider than this board (' + cls.tracks + ' columns)' : null };
     });
   }
@@ -163,7 +205,7 @@
       { value: 'kbresize', label: t('cardmenu.resize'), sub: t('cardmenu.resize_sub'), icon: 'resize', action: true },
       { value: 'tidy', label: t('cardmenu.tidy'), sub: t('cardmenu.tidy_sub'), icon: 'tidy', action: true },
       { value: 'hide', label: t('cardmenu.hide'), sub: t('cardmenu.hide_sub'), icon: 'eyeOff', action: true, danger: true });
-    return { id: 'card:' + id, title: title, current: cur, align: 'end', width: 300,
+    return { id: 'card:' + id, title: title, current: cur, align: 'end', width: 320,
       sections: [{ label: t('cardmenu.size'), rows: sizeRows(id) }, { label: 'Panel', rows: panelRows }],
       onPick: function (v) { return cardAction(id, v); } };
   }
@@ -186,7 +228,7 @@
   function sizeMenuSpec(id) {
     var def = PMU.widgets.get(id) || {}, me = PMU.board.rect(id), ks = PMU.widgets.spec(id) || {};
     var nm = me ? sizeName(ks, me.w, me.h) : null;
-    return { id: 'size:' + id, title: t('cardmenu.size'), current: me ? (nm ? nm + ' · ' : '') + me.w + ' x ' + me.h : '', align: 'end', width: 260,
+    return { id: 'size:' + id, title: t('cardmenu.size'), current: me ? (nm ? nm + ' · ' : '') + me.w + ' x ' + me.h : '', align: 'end', width: 300,
       rows: sizeRows(id), foot: 'Drag any edge or corner for any size in between.', onPick: function (v) { applySize(id, v); return true; } };
   }
 

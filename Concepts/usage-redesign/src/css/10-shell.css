@@ -110,6 +110,16 @@ html[data-theme^="retro"] #panel-usage .pmu-toggle::after { transition-timing-fu
 @keyframes pmu-ul { 0% { transform: scaleX(0); opacity: 1; } 50% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
 
 body.pmu-page-active #pm-home-workspace { pointer-events: none !important; }
+/* no GPU (html[data-pmu-soft], 90-api.js): while Usage shows, the Glass pane is solid instead of a live full-window blur,
+   so Usage motion is not re-blurred on the CPU every frame; the pane keeps its rim, radius and shadow */
+html[data-pmu-soft][data-theme^="glass"] body.pmu-page-active .app-shell {
+  backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+  background: linear-gradient(var(--bg), var(--bg)) padding-box,
+    linear-gradient(145deg, var(--rg-rim, rgba(255,255,255,.3)), rgba(255,255,255,.08) 23%, rgba(255,255,255,.04) 68%, var(--rg-rim-low, rgba(255,255,255,.1))) border-box !important; }
+html[data-pmu-soft][data-theme^="glass"] body.pmu-page-active .app-shell::before { mix-blend-mode: normal; opacity: .18; }
+html[data-pmu-soft][data-theme^="glass"] body.pmu-page-active .app-shell::after { mix-blend-mode: normal; }
+/* the window-wide film-grain overlay blends every frame in software; it goes while Usage shows on such a machine */
+html[data-pmu-soft][data-theme^="glass"] body.pmu-page-active #pixelGrid { display: none; }
 /* the app's title-bar notes (Settings writes such as "Next run uses this account") drop over the Usage head: while Usage
    shows they never take a pointer, so a click on Detail, Panels or the range goes through (the inbox keeps them) */
 body.pmu-page-active #rsStage, body.pmu-page-active #rsStage .rs-card { pointer-events: none !important; }

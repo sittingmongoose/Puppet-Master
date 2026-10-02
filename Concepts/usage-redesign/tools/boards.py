@@ -183,7 +183,7 @@ W = {
     'settlement-states': ('mix', 'G', 'Settlement states', 'range'),
     'ledger-main': ('table', 'G', 'Recent attempts', 'range'),
     'ledger-events': ('list', 'G', 'Usage events', 'today'),
-    'attempt-lineage': ('table', 'D', 'Attempt lineage', 'receipt chain'),
+    'attempt-lineage': ('table', 'G', 'Attempt lineage', 'receipt chain'),
     'ledger-coverage': ('kpi', 'X', 'Identity coverage', 'range'),
     'ledger-export': ('kpi', 'X', 'Receipts', 'range'),
     'usage-record-state': ('list', 'X', 'Usage record state', 'settlement lifecycle'),
@@ -240,26 +240,26 @@ W = {
 B = {
     'overview': {
         'S': 'health 4x4 month 4x4 cache-saved 4x4 active-runs 4x4 next-reset 4x4 plan-value-now 4x4 ov-headroom 12x3 '
-             'plan-claude 4x8 plan-codex 4x8 plan-qwen 4x8 plan-gemini 4x8 context-now 8x8 budget-now 7x10 attention-now 5x10 '
+             'plan-claude 4x9 plan-codex 4x9 plan-qwen 4x9 plan-gemini 4x9 context-now 8x9 budget-now 7x10 attention-now 5x10 '
              'ov-resets 7x13 route-pressure 5x13 '
              'forecast 12x7 completion-capacity 6x5 capacity-reservations 6x5 run-attribution 12x7',
         'M': 'health 4x4 month 4x4 cache-saved 4x4 active-runs 4x4 next-reset 4x4 '
-             'plan-claude 4x8 plan-codex 4x8 plan-qwen 4x8 plan-gemini 4x8 context-now 4x8 '
+             'plan-claude 4x9 plan-codex 4x9 plan-qwen 4x9 plan-gemini 4x9 context-now 4x9 '
              'budget-now 8x10 attention-now 6x10 ov-resets 6x14 plan-value-now 7x10 route-pressure 7x10 ov-headroom 6x6 '
              'forecast 10x7 completion-capacity 5x7 capacity-reservations 5x7 run-attribution 10x7',
         'L': 'health 4x4 month 4x4 cache-saved 4x4 active-runs 4x4 next-reset 4x4 plan-value-now 4x4 '
-             'plan-claude 4x8 plan-codex 4x8 plan-qwen 4x8 plan-gemini 4x8 context-now 4x8 attention-now 4x8 '
+             'plan-claude 4x9 plan-codex 4x9 plan-qwen 4x9 plan-gemini 4x9 context-now 4x9 attention-now 4x9 '
              'budget-now 8x10 ov-resets 8x10 route-pressure 8x10 ov-headroom 24x3 '
              'forecast 12x7 completion-capacity 6x7 capacity-reservations 6x7 run-attribution 12x7',
     },
     'plans': {
-        'S': 'plan-claude 4x8 plan-codex 4x8 plan-qwen 4x8 plan-gemini 4x8 plan-kimi 4x8 plan-copilot 4x8 '
+        'S': 'plan-claude 4x9 plan-codex 4x9 plan-qwen 4x9 plan-gemini 4x9 plan-kimi 4x9 plan-copilot 4x9 '
              'reset-map 12x14 quota-history 12x31 plan-settlement 12x12 '
              'plan-pressure 6x9 plan-authority 6x9 allowance-attribution 12x5 counting-basis 6x8 native-allowance-units 6x8',
-        'M': 'plan-claude 4x8 plan-codex 4x8 plan-qwen 4x8 plan-gemini 4x8 plan-kimi 4x8 '
+        'M': 'plan-claude 4x9 plan-codex 4x9 plan-qwen 4x9 plan-gemini 4x9 plan-kimi 4x9 '
              'plan-copilot 4x12 reset-map 16x12 quota-history 20x30 plan-settlement 20x12 '
              'plan-pressure 7x9 plan-authority 7x9 allowance-attribution 6x9 counting-basis 10x7 native-allowance-units 10x7',
-        'L': 'plan-claude 4x8 plan-codex 4x8 plan-qwen 4x8 plan-gemini 4x8 plan-kimi 4x8 plan-copilot 4x8 '
+        'L': 'plan-claude 4x9 plan-codex 4x9 plan-qwen 4x9 plan-gemini 4x9 plan-kimi 4x9 plan-copilot 4x9 '
              'reset-map 24x12 quota-history 24x30 plan-settlement 24x12 '
              'plan-pressure 8x9 plan-authority 8x9 allowance-attribution 8x9 counting-basis 12x7 native-allowance-units 12x7',
     },
@@ -272,21 +272,21 @@ B = {
              'cost-authority 8x11 cost-trend 8x11 pricing-confidence 12x6 burn-basis 12x6',
     },
     'accounts': {
-        'S': 'acct-switch 12x4 acct-group-plan 12x2 acct-claude-code 12x14 acct-openai-codex 12x14 '
+        'S': 'acct-switch 12x4 acct-group-plan 12x2 acct-claude-code 12x16 acct-openai-codex 12x14 '
              'acct-antigravity 6x9 acct-muse 6x9 acct-github-copilot 12x9 acct-qwen-coding 12x9 '
              'acct-zai-coding 4x10 acct-kimi-coding 4x10 acct-opencode-go 4x10 acct-more-plan 12x4 '
              'acct-group-use 12x2 acct-anthropic-api 4x11 acct-gemini-direct 4x11 acct-cursor-cli 4x11 acct-more-use 12x6 '
              'acct-group-own 12x2 acct-more-own 12x5 acct-history 12x14 acct-resets 12x14 '
              'routing 12x7 account-fallbacks 12x7 route-mismatches 12x8 '
              'credential-ownership 12x7 connection-authority 12x8 acct-opencode-personal-setup 12x7',
-        'M': 'acct-switch 20x3 acct-group-plan 20x2 acct-claude-code 10x14 acct-openai-codex 10x14 '
+        'M': 'acct-switch 20x3 acct-group-plan 20x2 acct-claude-code 10x16 acct-openai-codex 10x16 '
              'acct-antigravity 4x10 acct-muse 4x10 acct-github-copilot 12x10 acct-qwen-coding 12x10 acct-zai-coding 4x10 '
              'acct-kimi-coding 4x10 acct-opencode-go 10x5 acct-more-plan 10x5 '
              'acct-group-use 20x2 acct-anthropic-api 5x10 acct-gemini-direct 5x10 acct-cursor-cli 5x10 acct-more-use 5x10 '
              'acct-group-own 20x2 acct-more-own 20x4 acct-history 10x15 acct-resets 10x15 '
              'routing 10x7 account-fallbacks 10x7 route-mismatches 20x7 '
              'credential-ownership 10x7 connection-authority 10x7 acct-opencode-personal-setup 10x7',
-        'L': 'acct-switch 24x3 acct-group-plan 24x2 acct-claude-code 12x14 acct-openai-codex 12x14 '
+        'L': 'acct-switch 24x3 acct-group-plan 24x2 acct-claude-code 12x16 acct-openai-codex 12x16 '
              'acct-antigravity 4x10 acct-muse 4x10 acct-github-copilot 16x10 acct-qwen-coding 12x10 acct-zai-coding 4x10 '
              'acct-kimi-coding 4x10 acct-opencode-go 4x10 acct-more-plan 24x3 '
              'acct-group-use 24x2 acct-anthropic-api 6x10 acct-gemini-direct 6x10 acct-cursor-cli 6x10 acct-more-use 6x10 '
@@ -311,25 +311,25 @@ B = {
              'context-composition 24x9 ctx-maint 8x7 ctx-routing 8x7 compaction-history 8x7',
     },
     'analytics': {
-        'S': 'an-totals 12x7 tok-claude 4x5 tok-codex 4x5 tok-qwen 4x5 tok-gemini 4x5 tok-kimi 4x5 tok-copilot 4x5 '
-             'token-trend 12x11 model-mix 12x15 an-model-donut 6x13 an-token-breakdown 6x13 '
+        'S': 'an-totals 12x8 tok-claude 4x5 tok-codex 4x5 tok-qwen 4x5 tok-gemini 4x5 tok-kimi 4x5 tok-copilot 4x5 '
+             'token-trend 12x14 model-mix 12x15 an-model-donut 6x13 an-token-breakdown 6x13 '
              'cache-read-share 6x11 an-daily-cost 6x11 activity-heat 12x10 an-quota-history 12x32 an-resets 12x30 '
              'reasoning-mix 12x7 token-counting-basis 12x7 unknown-token-buckets 12x6',
-        'M': 'an-totals 20x4 token-trend 14x15 tok-claude 3x5 tok-codex 3x5 tok-qwen 3x5 tok-gemini 3x5 tok-kimi 3x5 '
+        'M': 'an-totals 20x5 token-trend 14x15 tok-claude 3x5 tok-codex 3x5 tok-qwen 3x5 tok-gemini 3x5 tok-kimi 3x5 '
              'tok-copilot 3x5 model-mix 20x15 an-model-donut 7x12 an-token-breakdown 7x12 cache-read-share 6x12 '
              'activity-heat 12x10 an-daily-cost 8x10 an-quota-history 20x30 an-resets 20x18 '
              'reasoning-mix 10x7 token-counting-basis 10x7 unknown-token-buckets 10x7',
-        'L': 'an-totals 24x4 tok-claude 4x5 tok-codex 4x5 tok-qwen 4x5 tok-gemini 4x5 tok-kimi 4x5 tok-copilot 4x5 '
+        'L': 'an-totals 24x5 tok-claude 4x5 tok-codex 4x5 tok-qwen 4x5 tok-gemini 4x5 tok-kimi 4x5 tok-copilot 4x5 '
              'token-trend 24x12 model-mix 16x14 an-model-donut 8x14 an-token-breakdown 8x11 cache-read-share 8x11 '
              'an-daily-cost 8x11 activity-heat 24x9 an-quota-history 24x30 an-resets 24x14 '
              'reasoning-mix 12x7 token-counting-basis 12x7 unknown-token-buckets 12x7',
     },
     'ledger': {
-        'S': 'ledger-count 4x4 ledger-errors 4x4 ledger-routes 4x4 settlement-states 12x4 ledger-main 12x17 ledger-events 12x14 '
+        'S': 'ledger-count 4x4 ledger-errors 4x4 ledger-routes 4x4 settlement-states 12x5 ledger-main 12x17 ledger-events 12x14 '
              'attempt-lineage 12x8 ledger-coverage 6x4 ledger-export 6x4 usage-record-state 12x6',
-        'M': 'ledger-count 5x4 ledger-errors 5x4 ledger-routes 5x4 settlement-states 5x4 ledger-main 13x17 ledger-events 7x17 '
+        'M': 'ledger-count 5x5 ledger-errors 5x5 ledger-routes 5x5 settlement-states 5x5 ledger-main 13x17 ledger-events 7x17 '
              'attempt-lineage 20x9 ledger-coverage 5x5 ledger-export 5x5 usage-record-state 10x5',
-        'L': 'ledger-count 6x4 ledger-errors 6x4 ledger-routes 6x4 settlement-states 6x4 ledger-main 16x17 ledger-events 8x17 '
+        'L': 'ledger-count 6x5 ledger-errors 6x5 ledger-routes 6x5 settlement-states 6x5 ledger-main 16x17 ledger-events 8x17 '
              'attempt-lineage 24x9 ledger-coverage 6x5 ledger-export 6x5 usage-record-state 12x5',
     },
     'attention': {
@@ -382,7 +382,7 @@ PROMOTED = {'next-reset': 'D', 'route-pressure': 'D', 'reset-map': 'D', 'plan-se
             'attention-policy': 'D', 'cache-trend': 'D', 'tool-list': 'D', 'tool-latency': 'X', 'anom': 'D', 'attention-history': 'D', 'signal-history': 'X',
             'cache-read-share': 'D', 'an-quota-history': 'D',
             # fixer 2026-10-02: under-filled rooms show their next content at Glance instead of empty space
-            'free-throughput': 'D', 'context-composition': 'D', 'auth-list': 'D', 'pricing-provenance': 'D',
+            'free-throughput': 'D', 'context-composition': 'D', 'auth-list': 'D', 'pricing-provenance': 'D', 'attempt-lineage': 'D',
             # demoted: not installed reads as one line in Free and your own (DECISIONS "Provider catalog"); the card
             # with every setup fact stays at Diagnostics and in that line's Details
             'acct-opencode-personal-setup': 'G'}   # the last two: Amendment A1 (Atlas analytics at G)

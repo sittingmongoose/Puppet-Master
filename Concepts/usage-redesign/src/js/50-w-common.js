@@ -105,6 +105,13 @@
   C.glyph = function (name, cls) { return name ? PMU.icon(name, cls || 'pmu-glyph') : ''; };
   /* short: narrow cards drop "at a taller size" so the line stays one line */
   C.more = function (n, what, short) { var w = what ? (n === 1 ? String(what).replace(/s$/, '') : what) : (n === 1 ? 'row' : 'rows'); return n > 0 ? '<div class="pmu-more">' + esc(n + ' more ' + w + (short ? '' : ' at a taller size')) + '</div>' : ''; };
+  /* wrap-aware heights for stacked blocks (values wrap instead of ellipsizing): a fact whose label and value do not fit
+     the width on one line takes two (46 px); a free text line takes as many 18 px lines as its measured width needs */
+  C.textLines = function (text, bw, px) {
+    var w = PMU.charts && PMU.charts.textW ? PMU.charts.textW(String(text || ''), px || 12.5) * 1.06 : String(text || '').length * 7;
+    return Math.max(1, Math.ceil(w / Math.max(60, bw)));
+  };
+  C.factH = function (f, bw) { return C.textLines(String(f[0]) + '    ' + String(f[1]), bw - 16, 12.5) > 1 ? 46 : 27; };
   C.fit = function (bh, rowH, reserve) { return Math.max(0, Math.floor((bh - (reserve || 0) + 0.5) / rowH)); };
   C.foot = function (html, glyph, when) {
     return html ? '<div class="pmu-cardfoot pmu-cfoot">' + (glyph ? C.glyph(glyph) : '') + '<span class="pmu-cfoot-text">' + html + '</span>' + (when ? '<span class="pmu-cfoot-when">' + esc(when) + '</span>' : '') + '</div>' : '';
@@ -192,18 +199,24 @@
      "N more at a taller size" line says so. Reads are batched across every card of the pass, then the writes. */
   var FIT_SEL = '.pmu-lrow, .pmu-lday, .pmu-fact, .pmu-tbody > .pmu-trow, .pmu-agline, .pmu-qrow:not(.pmu-qaxis), .pmu-qgroup, .pmu-mixrow, .pmu-ctxleg, ' +
     '.pmu-amount, .pmu-limitplan, .pmu-accrow, .pmu-provrow, .pmu-swfam, .pmu-setupnote, .pmu-factrow, .pmu-note, .pmu-agbeyond, .pmu-effsave > em, .pmu-effcost, .pmu-efflegend, .pmu-effspark, .pmu-kpitrend, .pmu-kpifoot, .pmu-cfoot';
-  var fitQueue = [], fitScheduled = false;
+  var fitQueue = [], fitScheduled = false, fitAgain = [], fitAgainScheduled = false;
   function fitLater(body) {
     if (fitQueue.indexOf(body) < 0) fitQueue.push(body);
+    if (fitAgain.indexOf(body) < 0) fitAgain.push(body);
     if (!fitScheduled) { fitScheduled = true; (window.queueMicrotask || function (f) { Promise.resolve().then(f); })(function () { fitScheduled = false; fitFlush(); }); }
+    /* once more in the next frame: meters and charts finish their own layout after the render, and wrapped text can then
+       push a foot past the body (a one-off frame, never a loop) */
+    if (!fitAgainScheduled) { fitAgainScheduled = true; requestAnimationFrame(function () { fitAgainScheduled = false; var list = fitAgain.splice(0); list.forEach(function (b) { b._pmuFitDone = false; }); fitFlush(list); }); }
   }
-  function fitFlush() {
-    var items = fitQueue.splice(0);
+  function fitFlush(list) {
+    var items = list || fitQueue.splice(0);
     for (var pass = 0; pass < 12 && items.length; pass++) {
       var over = items.filter(function (b) { return b.isConnected && b.clientHeight > 0 && b.scrollHeight > b.clientHeight + 2; });
       over.forEach(function (b) {
         var cands = Array.prototype.slice.call(b.querySelectorAll(FIT_SEL)).filter(function (el) { return !el.closest('.pmu-chart') && !el.closest('.pmu-headtools'); });
-        var last = cands[cands.length - 1];
+        /* rows and facts go before a card's foot (the foot names the source and freshness of what the card shows) */
+        var rows = cands.filter(function (el) { return !/pmu-(cfoot|kpifoot)/.test(String(el.className)); });
+        var last = rows.length ? rows[rows.length - 1] : cands[cands.length - 1];
         if (!last) { b._pmuFitDone = true; return; }
         var parent = last.parentNode;
         last.remove();
@@ -480,7 +493,8 @@
         return '<div class="pmu-mixrow" data-reveal' + (s.prov ? ' data-prov="' + esc(s.prov) + '"' : '') + '><i class="pmu-swatch" data-sw="' + (s.est ? 'hatch' : 'box') + '"' + C.keyAttrs(s) + '></i><span class="pmu-mixname">' + esc(s.name) +
           (s.sub && C.w(ctx, 'l') ? '<em>' + esc(s.sub) + '</em>' : '') + '</span><b>' + esc(s.valueText || C.fmt(s.value, m.fmt)) + '</b><span class="pmu-mixpct">' + esc(C.fmt(100 * s.value / total, 'pct')) + '</span></div>';
       }).join('') + C.more(segs.length - Math.min(fit, segs.length)) + '</div>' : '') + '</div>' + (m.foot && C.h(ctx, 'h2') ? C.foot(m.foot) : '');
-      C.chart(body, 'mix', body.querySelector('.pmu-mixhost'), { segments: segs.map(function (s) { return { name: s.name, value: s.value, idx: s.idx, tk: s.tk, vendor: s.vendor, est: !!s.est, valueText: s.valueText }; }), total: total, legend: rowsOk || !C.h(ctx, 'h2') ? false : 'rows' },
+      /* a short mix keeps an inline swatch legend with the counts (the segment names never live only in hover tags) */
+      C.chart(body, 'mix', body.querySelector('.pmu-mixhost'), { segments: segs.map(function (s) { return { name: s.name, value: s.value, idx: s.idx, tk: s.tk, vendor: s.vendor, est: !!s.est, valueText: s.valueText }; }), total: total, legend: rowsOk ? false : C.h(ctx, 'h2') ? 'rows' : ctx.tier.bw >= 150 },
         { label: ctx.def.title });
     }
   });

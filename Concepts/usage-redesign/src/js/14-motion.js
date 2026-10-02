@@ -130,6 +130,9 @@
     if (reduced() || paused()) return;
     var base = (opts && opts.base) || 0, f = family(), step = (opts && opts.step) || 32, cap = (opts && opts.cap) || 480;
     var from = enterFrom(f);
+    /* a room change travels in the rail's direction: the new plates come up from below when the room is further down the
+       rail and down from above when it is higher (REVIEW-jared should-fix 6); NieR keeps its unfold */
+    if (opts && opts.dir && f !== 'nier') from = { transform: String(from.transform).replace(/translateY\((\d+)px\)/, function (m0, n) { return 'translateY(' + (opts.dir < 0 ? -1 : 1) * (+n + 14) + 'px)'; }) };
     cards.forEach(function (card, rank) {
       var delay = base + Math.min(cap, step * rank);
       card._pmuEnterDelay = delay;

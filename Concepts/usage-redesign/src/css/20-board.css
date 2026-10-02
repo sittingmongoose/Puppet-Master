@@ -15,8 +15,9 @@
   border-radius: var(--pmu-r-card); background: var(--pmu-card); box-shadow: var(--pmu-shadow-1); outline: none;
   transition: box-shadow var(--pmu-dur-hover) var(--pmu-ease-out), border-color var(--pmu-dur-hover) var(--pmu-ease-out), transform var(--pmu-dur-hover) var(--pmu-ease-spring); }
 #panel-usage .pmu-card:hover { box-shadow: var(--pmu-shadow-2); border-color: var(--pmu-rule-strong); }
-/* tiles lift 2 px with the spring; plates do not move (Atlas) */
+/* tiles lift 2 px with the spring, plates 1 px with a brighter rim (Jared: "hover lift"; Atlas: no bounce) */
 #panel-usage .pmu-card[data-head="tile"]:hover { transform: translateY(-2px); }
+#panel-usage .pmu-card:is([data-head="plate"], [data-head="line"]):hover { transform: translateY(-1px); box-shadow: var(--pmu-shadow-2), inset 0 1px 0 rgba(255,255,255,.07); }
 html[data-theme^="friendly"] #panel-usage .pmu-card[data-head="tile"]:hover { transform: translateY(-3px); }
 html[data-theme^="glass"] #panel-usage .pmu-card:hover { border-color: rgba(255,255,255,.34); }
 html[data-theme^="retro"] #panel-usage .pmu-card:hover { transform: none; border-color: var(--pmu-accent); }

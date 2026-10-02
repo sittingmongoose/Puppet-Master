@@ -28,7 +28,7 @@
     var row = scopeRows().filter(function (s) { return s[0] === scope; })[0];
     return row ? row[1] : 'Validated Usage scope';
   }
-  var RANGES = [['5h', 'Last 5 hours', '15-minute buckets'], ['24h', 'Last 24 hours', 'Hourly buckets'], ['7d', 'Last 7 days', '4-hour buckets'], ['30d', 'Last 30 days', 'Daily buckets']];
+  var RANGES = [['5h', 'Last 5 hours', 'Half-hour buckets'], ['24h', 'Last 24 hours', 'Hourly buckets'], ['7d', 'Last 7 days', '6-hour buckets'], ['30d', 'Last 30 days', 'Daily buckets']];
 
   function syncInk(animate) {
     if (!inkCtl && window.PM6_LIQUID_INK && nav && ink) {
@@ -143,14 +143,15 @@
   function rangeMenu(anchor) {
     return PMU.menu.toggle(anchor, {
       id: 'range', title: 'Range', current: st.range, align: 'end', width: 260,
-      rows: RANGES.map(function (r) { return { value: r[0], label: r[1], sub: r[2], right: r[0], active: st.range === r[0] }; }),
+      /* the bucket words come from the series the charts draw (5 hours: half-hour, 7 days: 6-hour buckets) */
+      rows: RANGES.map(function (r) { var b = PMU.data && PMU.data.buckets ? PMU.data.buckets(r[0]) : null; return { value: r[0], label: r[1], sub: b && b.label ? b.label : r[2], right: r[0], active: st.range === r[0] }; }),
       onPick: function (v) { setView({ range: v }, 'range-menu'); }
     });
   }
   function detailMenu(anchor) {
     var c = counts(st.room);
     return PMU.menu.toggle(anchor, {
-      id: 'detail', title: 'Detail', current: DETAIL[st.detail].label, align: 'end', width: 300,
+      id: 'detail', title: 'Detail', current: DETAIL[st.detail].label, align: 'end', width: 360,
       rows: Object.keys(DETAIL).map(function (k) {
         return { value: k, label: DETAIL[k].label, sub: DETAIL[k].desc, right: t('head.panels', { n: c[k] }), active: st.detail === k,
           icon: k === 'glance' ? 'grid' : k === 'detailed' ? 'list' : 'tool' };

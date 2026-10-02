@@ -5,11 +5,13 @@
   var C = PMU.content;
 
   /* stack blocks [{h, html, need?}] into a height budget; returns the html of the blocks that fit (in order) */
-  function stack(blocks, budget) {
-    var used = 0, out = [], hidden = [];
+  /* stack blocks into a height budget; prefix: stop at the first block that does not fit (the order is the priority, so a
+     plan line is never dropped while a later fact squeezes in) */
+  function stack(blocks, budget, prefix) {
+    var used = 0, out = [], hidden = [], stopped = false;
     blocks.forEach(function (b) {
       if (!b || !b.html) return;
-      if (used + b.h <= budget || b.always) { used += b.h; out.push(b.html); } else hidden.push(b);
+      if (!stopped && (used + b.h <= budget || b.always)) { used += b.h; out.push(b.html); } else { hidden.push(b); if (prefix && !b.always) stopped = true; }
     });
     return { html: out.join(''), hidden: hidden, used: used };
   }
@@ -37,7 +39,10 @@
       var size = ctx.tier.bw >= 220 ? 'i' : 'k', mh = METER_H[size] + 8;
       var wins = m.windows || [];
       var xl = ctx.tier.w === 'xl' && C.h(ctx, 'h3');
-      var bh = ctx.tier.bh, footH = m.foot ? 34 : 0;
+      /* the foot (pace and source) takes two lines when it does not fit the card's width on one */
+      var footText = m.foot ? String(m.foot).replace(/<[^>]+>/g, '').replace(/&[a-z]+;/g, ' ') : '';
+      var footLines = footText && PMU.charts && PMU.charts.textW ? Math.min(2, Math.ceil((PMU.charts.textW(footText, 12.5) * 1.06 + 26) / Math.max(80, ctx.tier.bw))) : 1;
+      var bh = ctx.tier.bh, footH = m.foot ? (footLines > 1 ? 52 : 34) : 0;
       if (ctx.tier.h === 'h0') {
         var b = m.binding || wins[0];
         body.innerHTML = '<div class="pmu-limit is-h0"><span class="pmu-limitinline">' + (b ? esc(b.short) + ' <b>' + esc(b.pct === null ? PMU.roster.vsWord(b) : C.fmt(b.pct, 'pct')) + '</b>' + (b.pct === null ? '' : ' used · ' + esc(PMU.fmt.resetLine(b).text)) : esc('No plan windows')) + '</span></div>';
@@ -55,15 +60,16 @@
         return { h: 32, html: '<div class="pmu-amount pmu-amt"' + C.hover(a.label + (a.value ? ' ' + a.value : ''), [a.suffix, a.word, a.hover].filter(Boolean).join(' · ')) + '>' + (vsA ? '<span></span>' : C.glyph(a.glyph || 'info')) + '<span>' + esc(label) + '</span>' +
           (vsA ? '<span class="pmu-amtv">' + C.vs(a.vs, a.word) + '</span>' : '<b>' + esc(a.value) + (a.suffix && !nar ? ' <em>' + esc(a.suffix) + '</em>' : '') + '</b>') + '</div>' };
       });
-      var planLine = { h: 24, html: '<div class="pmu-limitplan"><b>' + esc(m.plan) + '</b>' + (m.requests != null ? ' · ' + esc(PMU.fmt.num(m.requests)) + ' requests' : '') + (m.tokens != null ? ' · ' + esc(PMU.fmt.tok(m.tokens)) + ' tokens' : '') + '</div>' };
-      var facts = (m.facts || []).map(function (f) { return { h: 27, html: C.facts([f]) }; });
+      var planText = (m.plan || '') + (m.requests != null ? ' · ' + PMU.fmt.num(m.requests) + ' requests' : '') + (m.tokens != null ? ' · ' + PMU.fmt.tok(m.tokens) + ' tokens' : '');
+      var planLine = { h: 6 + 18 * C.textLines(planText, ctx.tier.bw, 12.5), html: '<div class="pmu-limitplan"><b>' + esc(m.plan) + '</b>' + (m.requests != null ? ' · ' + esc(PMU.fmt.num(m.requests)) + ' requests' : '') + (m.tokens != null ? ' · ' + esc(PMU.fmt.tok(m.tokens)) + ' tokens' : '') + '</div>' };
+      var facts = (m.facts || []).map(function (f) { return { h: C.factH(f, ctx.tier.bw), html: C.facts([f]) }; });
       var side = '';
       if (xl) {
-        var right = stack([planLine].concat(lines).concat(facts), bh - footH);
+        var right = stack([planLine].concat(lines).concat(facts), bh - footH, true);
         side = '<div class="pmu-limitside">' + right.html + '</div>';
         body.innerHTML = '<div class="pmu-limit is-xl"><div class="pmu-limitmain">' + meters + '</div>' + side + '</div>' + (m.foot && footH ? C.foot(m.foot, m.footGlyph) : '');
       } else {
-        var rest = stack([planLine].concat(lines).concat(C.h(ctx, 'h3') || C.w(ctx, 'm') ? facts : []), bh - footH - used - 4);
+        var rest = stack([planLine].concat(lines).concat(C.h(ctx, 'h3') || C.w(ctx, 'm') ? facts : []), bh - footH - used - 4, true);
         body.innerHTML = '<div class="pmu-limit">' + meters + rest.html + '</div>' + (m.foot && footH ? C.foot(m.foot, m.footGlyph) : '');
       }
       shownWins.forEach(function (w, i) {
@@ -114,7 +120,7 @@
       /* a wide card sets its facts in two columns (pairs share a 27 px line), a narrow one in one */
       var two = ctx.tier.bw >= 400, facts = m.facts || [];
       if (two) for (var fi = 0; fi < facts.length; fi += 2) blocks.push({ h: 27, html: C.facts(facts.slice(fi, fi + 2), null, { cols: 2 }) });
-      else blocks = blocks.concat(facts.map(function (f) { return { h: 27, html: C.facts([f]) }; }));
+      else blocks = blocks.concat(facts.map(function (f) { return { h: C.factH(f, ctx.tier.bw), html: C.facts([f]) }; }));
       var rest = C.h(ctx, 'h2') ? stack(blocks, ctx.tier.bh - 46) : { html: '' };
       body.innerHTML = '<div class="pmu-free' + (two ? ' is-wide' : '') + '">' + head + rest.html + '</div>';
     }

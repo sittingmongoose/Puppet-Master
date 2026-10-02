@@ -98,8 +98,11 @@
     var bh = ctx.tier.bh, bandH = n ? 26 : 0;
     var rowsN = p.accounts.length;
     var footH = Math.min(footLines.length, footCap) ? 10 + Math.min(footLines.length, footCap) * 19 : 0;
-    var comfy = bandH + rowsN * 66 + footH <= bh + 12;
-    var rowH = comfy ? 66 : 44;
+    /* a comfortable row holds the name and two meta lines (70 px), plus the Use button line when the plate has no action
+       column (80 px) */
+    var comfyH = mode === 'full' ? 70 : 80;
+    var comfy = bandH + rowsN * comfyH + footH <= bh + 12;
+    var rowH = comfy ? comfyH : 44;
     var fit = C.fit(bh + 12, rowH, bandH + footH);
     if (fit < rowsN) { footLines = footLines.slice(0, 1); footH = footLines.length ? 30 : 0; fit = C.fit(bh + 12, rowH, bandH + footH); }
     var shown = p.accounts.slice(0, Math.max(1, rowsN > fit ? fit - 1 : fit));
@@ -107,7 +110,10 @@
     var rows = shown.map(function (a) {
       var ident = '<span class="pmu-accid">' + '<span class="pmu-accglyph">' + (a.stateGlyph ? C.glyph(a.stateGlyph) : '') + '</span>' +
         '<span class="pmu-acctext"><b class="pmu-ident' + (a.effective ? ' is-eff' : p.effective ? ' is-other' : '') + '">' + esc(a.nickname) + '</b>' +
-        (comfy ? '<span class="pmu-identmeta">' + metaLine(a, ['plan', 'host', 'age']) + (mode !== 'full' ? ' ' + useBtn(a, false) : '') + '</span>' +
+        /* two short meta lines instead of one long one cut with "...": the state and plan, then host and reading age (and the
+           Use button when the plate has no action column) */
+        (comfy ? '<span class="pmu-identmeta">' + metaLine(a, ['plan']) + '</span><span class="pmu-identmeta is-2">' + [a.host ? esc(a.host) : '', a.fresh.stale ? '<span class="pmu-stale">' + C.glyph('clockCircle') + esc(a.ageText) + '</span>' : esc(a.ageText)].filter(Boolean).join('<i class="pmu-dot"> · </i>') +
+          (mode !== 'full' ? ' ' + useBtn(a, false) : '') + '</span>' +
           (a.amounts.length ? '<span class="pmu-amounts">' + a.amounts.slice(0, 1).map(function (x) { return esc(x.label) + ' <b>' + esc(x.value || x.word) + '</b>' + (x.suffix ? ' ' + esc(x.suffix) : ''); }).join('') + '</span>' : '')
           : '<span class="pmu-identmeta">' + stateHtml(a, { glyph: false }) + (mode !== 'full' ? ' ' + useBtn(a, false) : '') + '</span>') + '</span></span>';
       var cells = mode === 'binding' ? ['<span class="pmu-acccell" data-win="binding"></span>'] : p.windows.map(function (w) { return '<span class="pmu-acccell" data-win="' + esc(w.key) + '"></span>'; });
