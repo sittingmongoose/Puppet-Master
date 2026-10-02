@@ -1,6 +1,7 @@
 /* PMR.menu extras on top of the chat picker classes (pm6-chat-mini-popout-portal, pm6-chat-modelitem, ...).
    Only what the chat pickers do not have: placement, separators, icons, keys, submenus, danger items, focus. */
 .pmr-menu { box-sizing: border-box; }
+.pmr-menu:focus, .pmr-menu:focus-visible { outline: none; }
 .pmr-menu-list { padding: 0; }
 .pmr-menu-group[hidden], .pmr-mi[hidden] { display: none !important; }
 .pmr-menu-sep { height: 1px; margin: 4px 6px; background: var(--border-light, var(--border)); }
@@ -12,7 +13,7 @@
 .pmr-menu .pmr-mi-ico svg { width: 15px; height: 15px; }
 .pmr-menu .pmr-mi-sub { flex: none; width: 14px; height: 14px; color: var(--text-muted); }
 .pmr-menu .pmr-mi-sub svg { width: 13px; height: 13px; }
-.pmr-menu .pm6-chat-modeleffort { max-width: 46%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmr-menu .pm6-chat-modeleffort { max-width: 58%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pmr-menu .pmr-key { flex: none; font: 500 11px/1 var(--mono-font); color: var(--text-muted); background: none; border: 0; padding: 0; }
 .pmr-menu .pmr-mi.is-danger .pm6-chat-modelname { color: var(--accent-error, var(--graph-failed)); }
 .pmr-menu .pmr-mi[aria-disabled="true"] { opacity: .5; cursor: default; }

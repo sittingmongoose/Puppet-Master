@@ -8,9 +8,9 @@ function switcherMenu() {
     id: 'pmr-concepts', label: 'Rail concept', value: cur,
     groups: [{
       label: 'Left rail concepts',
-      items: PMR.concepts.list().map((c, i) => ({
+      items: PMR.concepts.list().map(c => ({
         value: c.id, label: (c.id === 'current' ? '' : c.id.toUpperCase() + ' · ') + c.label,
-        meta: c.blurb, key: 'Alt+Shift+' + (i + 1),
+        meta: c.blurb,
       })),
     }],
   };
