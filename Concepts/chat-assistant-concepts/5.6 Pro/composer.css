@@ -276,22 +276,26 @@
   width: 16px; height: 16px;
 }
 .hh-plus-glyph { --nx-stroke-base: 2.6; }
-/* Neon icons (3E2, 2026-10-02): a toggled header or panel button reads as on the way the Context Lens trigger does
-   (3D) -- a neutral surface tile with a hairline, and its glyph lit steady (the text ink with the concept bloom) --
-   not by an accent tile; colour is reserved for status (plan §4). Hover still ignites it. Menu check marks keep
-   the accent (a selection). The Lens trigger keeps its own tone rules (lens.css). */
-.chat-header .icon-button.active,
-.chat-header .icon-button.is-on,
+/* Neon icons (3E2, 2026-10-02; fix cycle 1): a toggled header or panel button (the history pin, the Activity
+   panel's pressed pin) reads as on by a raised neutral tile -- --surface-4 with the strong hairline, a step past
+   both the resting tile (--surface-3) and the hover, which keeps --surface-3 -- and its glyph lit steady (the text
+   ink with the concept bloom). Not an accent tile: colour is reserved for status (plan §4). Hover still ignites it.
+   Under NieR the on-state is NieR's own idiom, the ink block (the checked Plug-in Chip): ink tile, on-ink glyph.
+   The Lens trigger keeps its tone rules (lens.css); the sound toggle says on/off by its own glyph (chat-sound). */
 .history-head .icon-button.is-pinned,
 .activity-panel-head .icon-button[aria-pressed="true"] {
   color: var(--text);
   border-color: var(--border-strong);
-  background: var(--surface-3);
+  background: var(--surface-4);
 }
-.chat-header .icon-button:is(.active, .is-on):not(.pm-lens-trigger) > svg.nx,
+html[data-o55-nier="on"] .history-head .icon-button.is-pinned,
+html[data-o55-nier="on"] .activity-panel-head .icon-button[aria-pressed="true"] {
+  color: var(--o55-nier-on-ink);
+  border-color: var(--o55-nier-ink);
+  background: var(--o55-nier-ink);
+}
 .history-head .icon-button.is-pinned > svg.nx,
 .activity-panel-head .icon-button[aria-pressed="true"] > svg.nx { --nx-hiv: visible; --nx-hi-a: var(--nx-h-concept-i); }
-.chat-header .icon-button:is(.active, .is-on):not(.pm-lens-trigger):is(:hover, :focus-visible) > svg.nx,
 .history-head .icon-button.is-pinned:is(:hover, :focus-visible) > svg.nx,
 .activity-panel-head .icon-button[aria-pressed="true"]:is(:hover, :focus-visible) > svg.nx { --nx-hi-a: var(--nx-h-hover-i); }
 .history-head .soft-button {

@@ -5013,10 +5013,11 @@ body[data-ph-drawer="closing"] .history-flyout{
   flex:0 0 28px; width:28px; min-width:28px; max-width:28px;
   justify-content:center; padding:0; gap:0;
 }
-/* pinned: the neutral tile with its lit glyph (composer.css, 3E2), not an accent tile */
+/* pinned: the raised neutral tile with its lit glyph (composer.css, 3E2 fix cycle 1), not an accent tile; NieR's ink
+   block is composer.css's (higher specificity) */
 .history-head .ph-head-pin.is-pinned {
   color: var(--text);
-  background: var(--surface-3);
+  background: var(--surface-4);
 }
 body[data-ph-drawer="pinned"] .chat-header [data-action="toggle-history"],
 body[data-ph-drawer="pinned"] .chat-header [data-action="new-thread"] { display: none; }
@@ -16267,7 +16268,7 @@ body[data-theme$="-light"] .transcript-inner > [data-family="deliverable"] .arti
    open button, which the neon hover rules already ignite. Status marks are lit in their tone through --nx-ink (never
    `color`, so the accent budget is untouched) and stay lit. A warning or danger line's glyph takes its tone through
    --nx-ink (the colour rules above lose to the neutral (0,4,0) rule just above); a positive line's glyph too
-   (3E2). The Needs-you medallion keeps the canon accent (--needs) for every glyph in it, status marks included. */
+   (3E2). Only a concept glyph takes the line's tone: a status mark on a toned line keeps its own (fix cycle 1). The Needs-you medallion keeps the canon accent (--needs) for every glyph in it, status marks included. */
 .transcript-inner > [data-family="ledger"] > .event-icon > svg.nx-r-concept,
 .transcript-inner > [data-family="deliverable"] .system-card-head > .event-icon > svg.nx-r-concept { --nx-hi-a: 0; }
 .transcript-inner > [data-family="ledger"] > .event-icon > svg.nx { --nx-u: 2; }
@@ -16276,9 +16277,9 @@ body[data-theme$="-light"] .transcript-inner > [data-family="deliverable"] .arti
 .transcript-inner > [data-family="deliverable"] .system-card-head:is(:hover, :focus-within) > .event-icon > svg.nx-r-concept {
   --nx-hi-a: var(--nx-h-swell-i); --nx-1: var(--nx-d1) var(--nx-ease) backwards;
 }
-.transcript-inner > [data-family="ledger"].warning > .event-icon > svg.nx { --nx-ink: var(--warning); }
-.transcript-inner > [data-family="ledger"].danger > .event-icon > svg.nx { --nx-ink: var(--danger); }
-.transcript-inner > [data-family="ledger"].positive > .event-icon > svg.nx { --nx-ink: var(--positive); }
+.transcript-inner > [data-family="ledger"].warning > .event-icon > svg.nx-r-concept { --nx-ink: var(--warning); }
+.transcript-inner > [data-family="ledger"].danger > .event-icon > svg.nx-r-concept { --nx-ink: var(--danger); }
+.transcript-inner > [data-family="ledger"].positive > .event-icon > svg.nx-r-concept { --nx-ink: var(--positive); }
 .transcript-inner > [data-family="needs"] > .event-icon > svg.nx { --nx-ink: var(--needs); }
 
 /* needs-you: the action sits at the far edge, the copy takes the room. In a
@@ -16792,22 +16793,26 @@ textarea[data-input="composer"]::placeholder { transition: color 220ms ease; }
   width: 16px; height: 16px;
 }
 .hh-plus-glyph { --nx-stroke-base: 2.6; }
-/* Neon icons (3E2, 2026-10-02): a toggled header or panel button reads as on the way the Context Lens trigger does
-   (3D) -- a neutral surface tile with a hairline, and its glyph lit steady (the text ink with the concept bloom) --
-   not by an accent tile; colour is reserved for status (plan §4). Hover still ignites it. Menu check marks keep
-   the accent (a selection). The Lens trigger keeps its own tone rules (lens.css). */
-.chat-header .icon-button.active,
-.chat-header .icon-button.is-on,
+/* Neon icons (3E2, 2026-10-02; fix cycle 1): a toggled header or panel button (the history pin, the Activity
+   panel's pressed pin) reads as on by a raised neutral tile -- --surface-4 with the strong hairline, a step past
+   both the resting tile (--surface-3) and the hover, which keeps --surface-3 -- and its glyph lit steady (the text
+   ink with the concept bloom). Not an accent tile: colour is reserved for status (plan §4). Hover still ignites it.
+   Under NieR the on-state is NieR's own idiom, the ink block (the checked Plug-in Chip): ink tile, on-ink glyph.
+   The Lens trigger keeps its tone rules (lens.css); the sound toggle says on/off by its own glyph (chat-sound). */
 .history-head .icon-button.is-pinned,
 .activity-panel-head .icon-button[aria-pressed="true"] {
   color: var(--text);
   border-color: var(--border-strong);
-  background: var(--surface-3);
+  background: var(--surface-4);
 }
-.chat-header .icon-button:is(.active, .is-on):not(.pm-lens-trigger) > svg.nx,
+html[data-o55-nier="on"] .history-head .icon-button.is-pinned,
+html[data-o55-nier="on"] .activity-panel-head .icon-button[aria-pressed="true"] {
+  color: var(--o55-nier-on-ink);
+  border-color: var(--o55-nier-ink);
+  background: var(--o55-nier-ink);
+}
 .history-head .icon-button.is-pinned > svg.nx,
 .activity-panel-head .icon-button[aria-pressed="true"] > svg.nx { --nx-hiv: visible; --nx-hi-a: var(--nx-h-concept-i); }
-.chat-header .icon-button:is(.active, .is-on):not(.pm-lens-trigger):is(:hover, :focus-visible) > svg.nx,
 .history-head .icon-button.is-pinned:is(:hover, :focus-visible) > svg.nx,
 .activity-panel-head .icon-button[aria-pressed="true"]:is(:hover, :focus-visible) > svg.nx { --nx-hi-a: var(--nx-h-hover-i); }
 .history-head .soft-button {
@@ -16938,10 +16943,16 @@ body[data-theme$="-light"] {
    reads 3.08-3.13:1 on the row field, still under every live tone there (the lowest, friendly-light working, is
    3.22). It stays unlit (no halo, no backlight) and is not the paused or pending ink (--muted, about 4.1-4.9). Dark
    themes keep --subtle. Literal colours, no color-mix(). */
-body[data-theme="basic-light"] { --nx-idle: #8c8c95; }
+/* Fix cycle 1: the row's hover tint (--surface-3) is the darker field, so basic and retro take the ink that holds
+   3.06-3.07:1 there (3.37 and 3.50 at rest, still under their live minimums 4.35 and 4.80). Friendly cannot: its
+   working ink (the theme accent) is only 3.22 at rest, so a darker idle at rest would read above working. Friendly
+   keeps 3.08 at rest and darkens only on a hovered row (3.08 on the tint, where working itself falls to 2.89; the
+   order there is the lead's call, see the 3E2 log). Glass holds 3.35+ on its tint. */
+body[data-theme="basic-light"] { --nx-idle: #86868f; }
 body[data-theme="friendly-light"] { --nx-idle: #93838e; }
+body[data-theme="friendly-light"] .thread-row:hover { --nx-idle: #8b7b86; }
 body[data-theme="glass-light"] { --nx-idle: #857d98; }
-body[data-theme="retro-light"] { --nx-idle: #77897d; }
+body[data-theme="retro-light"] { --nx-idle: #6e8174; }
 /* Friendly overshoots, Glass glides, Retro steps. */
 body[data-theme^="friendly"] { --nx-ease: cubic-bezier(.34, 1.56, .64, 1); --nx-le: cubic-bezier(.34, 1.4, .64, 1); --nx-ease-c: cubic-bezier(.34, 1.3, .64, 1); }
 body[data-theme^="glass"] { --nx-ease: cubic-bezier(.4, 0, .1, 1); --nx-le: cubic-bezier(.6, 0, .25, 1); --nx-ease-c: cubic-bezier(.4, 0, .1, 1); }
@@ -17220,7 +17231,10 @@ html[data-o55-nier="on"] svg:where(.nx-t-idle) { --nx-ink: rgba(var(--o55-nier-i
 /* NieR Light: idle ink at .545 reads 3.06:1 on the row field (3:1 floor; the rust of blocked is 3.14) (3E2). A token,
    so the rules that restate a set member's ink (pending's, section 6) keep their specificity over it. */
 html[data-o55-nier="on"] body[data-theme$="-light"] { --nx-idle-a: .545; }
-html[data-o55-nier="on"] svg:where(.nx-t-paused) { --nx-ink: rgba(var(--o55-nier-ink-rgb), .45); }
+html[data-o55-nier="on"] svg:where(.nx-t-paused) { --nx-ink: rgba(var(--o55-nier-ink-rgb), var(--nx-paused-a, .45)); }
+/* NieR Light paused and skipped at .63 (3.78:1 on the row field), so the quiet order holds above idle's .545 (fix
+   cycle 1; at .45 they read 2.45, under idle). NieR Dark keeps .45. */
+html[data-o55-nier="on"] body[data-theme$="-light"] { --nx-paused-a: .63; }
 /* Square icon strokes [icons]: square caps and mitred joins, with a miter limit of 2 so a right angle stays sharp and
    anything tighter (the bolt, the wand's sparkle, a chevron at 12 px) bevels instead of spiking. */
 html[data-o55-nier-parts~="icons"] svg.nx { stroke-linecap: square; stroke-linejoin: miter; stroke-miterlimit: 2; }
