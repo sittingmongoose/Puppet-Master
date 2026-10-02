@@ -231,6 +231,17 @@ html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-r
   animation: o55np-slice 300ms linear backwards !important; transform-origin: 50% 50% !important;
 }
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .dialog:not(.demo-dialog):not(.pmx-sheet) { transform-origin: 0 0 !important; }
+/* the menus' corner sprout (menus.css: a transform transition from --pm56-sx/sy/tx/ty) becomes identity, so the slice
+   is the only motion of an opening; their fade-in transition goes too (a running transition outranks an animation),
+   and their size springs stay. Closing, the menu's ghost (menus.js re-materialises it on <body>) folds back to a line. */
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) .overlay-menu {
+  --pm56-sx: 1 !important; --pm56-sy: 1 !important; --pm56-tx: 0px !important; --pm56-ty: 0px !important;
+  transition-property: height, width !important;
+}
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) .overlay-menu.pm56-menu-ghost {
+  transition: scale 150ms cubic-bezier(.6, 0, .85, .35), opacity 70ms linear 120ms !important; transform-origin: 50% 50% !important;
+}
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) .overlay-menu.pm56-menu-ghost.pm56-collapsing { transform: none !important; scale: 1 .006; opacity: 0; }
 @keyframes o55np-slice {
   0% { scale: 1 .006; opacity: 1; animation-timing-function: cubic-bezier(.2, .85, .25, 1); }
   58% { scale: 1 1; opacity: 1; animation-timing-function: step-end; }
@@ -353,6 +364,10 @@ html[data-o55-nier-parts~="icons"] svg ellipse { stroke-linecap: square; stroke-
 @media (prefers-reduced-motion: reduce) {
   #o55np-cursor, #o55np-cursor > i, #o55np-reticle, #o55np-reticle > i, #o55np-ground > .o55np-mote, #o55np-pod *, #o55np-wipe > i { animation: none !important; transition: none !important; }
   html[data-o55-nier-parts~="diamonds"] .ctx-spin, html[data-o55-nier-parts~="diamonds"] .qs-orbit { animation: none !important; }
-  html[data-o55-nier-parts~="slice"] #pmOverlayRoot .overlay-menu, html[data-o55-nier-parts~="slice"] #pmOverlayRoot .dialog,
-  html[data-o55-nier-parts~="slice"] #pmOverlayRoot .drawer, html[data-o55-nier-parts~="slice"] #pmOverlayRoot .pmx-sheet { animation: none !important; scale: none !important; }
+  /* the same selectors as the slice rules above (equal weight, later wins) */
+  html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .overlay-menu,
+  html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .dialog,
+  html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .drawer,
+  html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .pmx-sheet { animation: none !important; scale: none !important; }
+  html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) .overlay-menu.pm56-menu-ghost { transition: none !important; }
 }
