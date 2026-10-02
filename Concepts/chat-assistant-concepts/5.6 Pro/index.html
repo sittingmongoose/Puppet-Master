@@ -69218,7 +69218,8 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
  *   ss-sputter(300 ms)  a click with nothing to send, or with the queue full: the glyph flickers and does not light
  *   ss-fail   (760 ms)  a refused send (a pre-send validator held it): one shake and a danger flash, then rest;
  *   ss-fail-static      under reduced motion, a danger ring for 1.4 s instead
- *   ss-snap             a thread switch: the control jumps to the new thread's state (two frames, then dropped)
+ *   ss-snap             a thread switch: the control jumps to the new thread's state (two frames, then dropped);
+ *                       a one-shot still pending from the thread left behind is dropped with it
  * The breathe's cadence changes only at a loop boundary, where the square is at full size, so it never jumps: an
  * animationiteration listener reads how long ago the last word arrived (under 900 ms -> flowing, else waiting).
  * Glyph geometry (chip pixels, viewBox 0 0 24 24): the registry's `send` drawing scaled .58 about the centre for the
@@ -69267,7 +69268,9 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   /* The button for the app's state {busy, text, qlen, tid}; hover(key, text) is app.js hoverAttrs (tip + aria-label). */
   function html(o, hover) {
     var s = stateOf(o), q = o.qlen || 0;
-    if (o.tid !== tid0) { if (tid0 !== undefined) armSnap(); tid0 = o.tid; }
+    /* a thread switch: the new thread's state as a jump, and a one-shot still pending (a launch, halt or ignite armed
+       on the thread we left) is dropped, so it never replays on a chip where nothing happened */
+    if (o.tid !== tid0) { if (tid0 !== undefined) { armSnap(); fx = null; clearTimeout(fxT); } tid0 = o.tid; }
     if (s === 'stop' && lastSs !== 'stop') { flow = (now() - lastTok < 900 || streaming(o.tid)) ? 'flowing' : 'waiting'; flowed = false; }
     if (s !== 'stop') flowed = false;
     if (s === 'queue' || s === 'full') { if (q) shownQ = q; }
