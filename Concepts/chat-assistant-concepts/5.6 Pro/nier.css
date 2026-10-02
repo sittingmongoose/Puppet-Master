@@ -379,8 +379,6 @@ html[data-o55-nier="on"] .orbit-node.live:hover { color: var(--o55-nier-on-ink);
 html[data-o55-nier="on"] .orbit-node.live .orbit-node-pip { border-color: var(--o55-nier-ink); animation-timing-function: steps(4, end); }
 html[data-o55-nier="on"] .orbit-node.done { color: var(--positive); border-color: var(--o55-nier-ok); background: var(--surface-3); }
 html[data-o55-nier="on"] .orbit-node.failed { animation-timing-function: steps(5, end); }
-/* the core's status inks stay NieR's (orbit.css lifts a light theme's to its dark sibling's for the default dark puck) */
-html[data-o55-nier="on"] body { --nx-disc-positive: var(--positive); --nx-disc-warning: var(--warning); }
 /* the collapsed strip and Step Rail Simple: the current disc is the ink block, it blinks in one step instead of
    growing a ring (NieR never animates a glow; the default themes' pulse ring on ::before is dropped); done discs take
    the olive ink, unless a failed or waiting flag is up. The shared trail's current disc and the live step's tile in

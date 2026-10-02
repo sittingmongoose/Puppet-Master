@@ -7006,20 +7006,21 @@ button.wa-row {
 /* The disc. --nx-disc is opaque: the canvas on dark themes (glass included:
    its canvas is solid), and on light themes a dark puck, the text ink itself,
    so the phase hue reads lit on every theme. --nx-disc-text is the ink of the
-   disc's own words (the core label). */
-body { --nx-disc: var(--canvas); --nx-disc-text: var(--text); --nx-disc-positive: var(--positive); --nx-disc-warning: var(--warning); }
-body[data-theme$="-light"] { --nx-disc: var(--text); --nx-disc-text: var(--canvas); }
+   disc's own words (the core label). Declared on the working card, the only
+   place discs live, so the body's inherited custom properties (which every
+   element of a whole-document restyle carries) do not grow. */
+.working-card { --nx-disc: var(--canvas); --nx-disc-text: var(--text); }
+body[data-theme$="-light"] .working-card { --nx-disc: var(--text); --nx-disc-text: var(--canvas); }
 /* The core shows status in its disc (a finished run's check and green rim, a
    run waiting for the reader in the attention ink). A light theme's positive
    and warning are dark inks for paper and sink into the dark puck (retro-light
    measured about 2.2:1), so inside the core they are the theme family's dark
    values (styles.css, the -dark sibling of each light theme). NieR keeps its
-   own inks (nier.css resets these). */
-body[data-theme="basic-light"] { --nx-disc-positive: #5cd69b; --nx-disc-warning: #f5bd55; }
-body[data-theme="friendly-light"] { --nx-disc-positive: #86d8a7; --nx-disc-warning: #ffd078; }
-body[data-theme="glass-light"] { --nx-disc-positive: #7be0af; --nx-disc-warning: #ffd074; }
-body[data-theme="retro-light"] { --nx-disc-positive: #74ffb0; --nx-disc-warning: #f2d35e; }
-.orbit-core { --positive: var(--nx-disc-positive); --warning: var(--nx-disc-warning); }
+   own inks. */
+html:not([data-o55-nier="on"]) body[data-theme="basic-light"] .orbit-core { --positive: #5cd69b; --warning: #f5bd55; }
+html:not([data-o55-nier="on"]) body[data-theme="friendly-light"] .orbit-core { --positive: #86d8a7; --warning: #ffd078; }
+html:not([data-o55-nier="on"]) body[data-theme="glass-light"] .orbit-core { --positive: #7be0af; --warning: #ffd074; }
+html:not([data-o55-nier="on"]) body[data-theme="retro-light"] .orbit-core { --positive: #74ffb0; --warning: #f2d35e; }
 /* Inside a dark disc the glow strengths of the dark themes apply on every
    theme (neon-icons.css section 1 tunes the light-theme values for ink on
    paper, where a bloom reads as a tinted sticker): restated on the disc, its
@@ -17538,8 +17539,6 @@ html[data-o55-nier="on"] .orbit-node.live:hover { color: var(--o55-nier-on-ink);
 html[data-o55-nier="on"] .orbit-node.live .orbit-node-pip { border-color: var(--o55-nier-ink); animation-timing-function: steps(4, end); }
 html[data-o55-nier="on"] .orbit-node.done { color: var(--positive); border-color: var(--o55-nier-ok); background: var(--surface-3); }
 html[data-o55-nier="on"] .orbit-node.failed { animation-timing-function: steps(5, end); }
-/* the core's status inks stay NieR's (orbit.css lifts a light theme's to its dark sibling's for the default dark puck) */
-html[data-o55-nier="on"] body { --nx-disc-positive: var(--positive); --nx-disc-warning: var(--warning); }
 /* the collapsed strip and Step Rail Simple: the current disc is the ink block, it blinks in one step instead of
    growing a ring (NieR never animates a glow; the default themes' pulse ring on ::before is dropped); done discs take
    the olive ink, unless a failed or waiting flag is up. The shared trail's current disc and the live step's tile in
