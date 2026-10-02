@@ -651,7 +651,8 @@
       if (!h || extra <= 0) return null;
       var lim = (PMU_BOARDS.kinds && PMU_BOARDS.kinds.table && PMU_BOARDS.kinds.table.hMax) || 24;
       var pitch = PMU.board.ROW || 30;   /* the row pitch: a 22 px row and the 8 px gap */
-      return Math.min(lim, h + Math.ceil(extra / pitch));
+      var fit = Math.min(lim, h + Math.ceil(extra / pitch));
+      return fit > h ? fit : null;   /* already at the tallest size: no Fit (a resize to the same size would be a no-op) */
     },
     render: function (body, ctx) {
       var m = ctx.model || { cols: [], rows: [] }, id = ctx.id;

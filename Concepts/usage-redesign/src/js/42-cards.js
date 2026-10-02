@@ -220,7 +220,10 @@
     var cur = me ? (sizeName(ks, me.w, me.h) ? t('cardmenu.current_size', { name: sizeName(ks, me.w, me.h), w: me.w, h: me.h }) : t('cardmenu.custom_size', { w: me.w, h: me.h })) : '';
     var kind = PMU.widgets.kindOf(id);
     var panelRows = [{ value: 'configure', label: t('cardmenu.configure'), sub: t('cardmenu.configure_sub'), icon: 'gear', submenu: function () { return gearSpec(id); } }];
-    if (kind && typeof kind.autoH === 'function') panelRows.push({ value: 'fit', label: t('cardmenu.fit'), sub: t('cardmenu.fit_sub'), icon: 'size', action: true });
+    /* "Fit" only when it would change the card (the kind's autoH names a taller height that shows every row) */
+    var fitH = null;
+    if (kind && typeof kind.autoH === 'function') { try { var cb = PMU.board.card(id), bd = cb && cb.querySelector('.pmu-cardbody'); fitH = kind.autoH(bd && bd._pmuCtx ? bd._pmuCtx : ctxBase(id, st.room)); } catch (error) { fitH = null; } }
+    if (fitH) panelRows.push({ value: 'fit', label: t('cardmenu.fit'), sub: t('cardmenu.fit_sub'), icon: 'size', action: true });
     if (typeof def.inspect === 'function') panelRows.push({ value: 'details', label: t('cardmenu.details'), sub: t('cardmenu.details_sub'), icon: 'info', action: true });
     panelRows.push({ value: 'kbmove', label: t('cardmenu.move'), sub: t('cardmenu.move_sub'), icon: 'grip', action: true },
       { value: 'kbresize', label: t('cardmenu.resize'), sub: t('cardmenu.resize_sub'), icon: 'resize', action: true },
