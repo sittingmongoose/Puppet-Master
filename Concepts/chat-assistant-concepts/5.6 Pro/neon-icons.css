@@ -232,7 +232,7 @@ svg:where(.nx-z0) .nx-p { animation: none; }
 /* recovering: a counter-clockwise ratchet in four eased 45-degree ticks */
 .nx-st-recovering > svg.nx { --nx-lp: var(--nx-L) 2400ms var(--nx-le) infinite; --nx-per: 2400ms; }
 /* complete: a bold check that clip-draws once on mount (literal keyframe, nothing var() left attached) */
-.nx-st-complete > svg.nx { --nx-stroke-base: 2.3; }
+.nx-st-complete > svg.nx { --nx-stroke-base: 2.4; --nx-tone-k: 1; }
 .nx-st-complete .nx-pc { animation: nx-st-draw 520ms var(--nx-ease-c) backwards; }
 @keyframes nx-st-draw { from { clip-path: inset(0 20px 0 4px) view-box; } to { clip-path: inset(0 4px 0 4px) view-box; } }
 /* blocked: the shackle drops shut once, then the wrapper takes the bar's hard double blink */
@@ -242,8 +242,9 @@ svg:where(.nx-z0) .nx-p { animation: none; }
 .nx-st-failed { animation: nx-stutter 2700ms linear infinite; }
 @keyframes nx-stutter { 0%, 61%, 66%, 70%, 74%, 100% { opacity: 1; } 63% { opacity: .35; } 68% { opacity: .55; } 72% { opacity: .3; } }
 /* idle (ready), paused, pending, skipped, mixed: static */
-.nx-st-idle > svg.nx { --nx-hi-a: 0; --nx-hiv: hidden; }
-.nx-st-pending > svg.nx { --nx-ho-a: 0; }
+/* idle and pending are unlit, but keep the full weight so a ready or queued row still reads at a glance */
+.nx-st-idle > svg.nx { --nx-hi-a: 0; --nx-hiv: hidden; --nx-tone-k: 1; }
+.nx-st-pending > svg.nx { --nx-ho-a: 0; --nx-tone-k: 1; }
 
 /* ------------------------------------------------------------------ 10. reduced motion */
 /* Both routes (the media query and body.pm56-reduced) stop every neon animation and transition outright; the base

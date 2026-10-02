@@ -300,7 +300,7 @@
       'play-ring': G([C(12, 12, 8.5), M(P('M10.3 8.8v6.4l5-3.2z'), { ao: .3, b: 1 })], 'seq'),
 
       /* ---- the status marks (plan §3); status() wraps them, icon('st-<s>') draws them bare ---- */
-      'st-working': G([C(12, 12, 7.5, { c: 'nx-dim' }), M(C(12, 4.5, 1.7, { c: 'pmx-g-dot' }), { ar: 360, o: [12, 12] })], 'spin', 'status'),
+      'st-working': G([C(12, 12, 7.5, { c: 'nx-dim' }), M(C(12, 4.5, 2.1, { f: 1 }), { ar: 360, o: [12, 12] })], 'spin', 'status'),
       'st-reviewing': G([P('M5 3h9l4 4v6'), P('M5 3v17h6'), M([C(16, 16, 3.6), P('m18.6 18.6 2.6 2.6')], { ax: -5, ay: -5, b: 1 })], 'wave', 'status'),
       'st-waiting': G([P('M5 3h14a2.5 2.5 0 0 1 2.5 2.5v10.5a2.5 2.5 0 0 1-2.5 2.5h-6.5L8 21.8v-3.3H5A2.5 2.5 0 0 1 2.5 16V5.5A2.5 2.5 0 0 1 5 3z'),
         M([P('M9.4 8.6a2.6 2.6 0 1 1 3.9 2.25c-.85.45-1.3 1.05-1.3 1.9v.1'), P('M12 15.6h.01')], { ay: -2.4 })], 'hop', 'status'),

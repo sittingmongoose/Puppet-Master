@@ -16886,7 +16886,7 @@ svg:where(.nx-z0) .nx-p { animation: none; }
 /* recovering: a counter-clockwise ratchet in four eased 45-degree ticks */
 .nx-st-recovering > svg.nx { --nx-lp: var(--nx-L) 2400ms var(--nx-le) infinite; --nx-per: 2400ms; }
 /* complete: a bold check that clip-draws once on mount (literal keyframe, nothing var() left attached) */
-.nx-st-complete > svg.nx { --nx-stroke-base: 2.3; }
+.nx-st-complete > svg.nx { --nx-stroke-base: 2.4; --nx-tone-k: 1; }
 .nx-st-complete .nx-pc { animation: nx-st-draw 520ms var(--nx-ease-c) backwards; }
 @keyframes nx-st-draw { from { clip-path: inset(0 20px 0 4px) view-box; } to { clip-path: inset(0 4px 0 4px) view-box; } }
 /* blocked: the shackle drops shut once, then the wrapper takes the bar's hard double blink */
@@ -16896,8 +16896,9 @@ svg:where(.nx-z0) .nx-p { animation: none; }
 .nx-st-failed { animation: nx-stutter 2700ms linear infinite; }
 @keyframes nx-stutter { 0%, 61%, 66%, 70%, 74%, 100% { opacity: 1; } 63% { opacity: .35; } 68% { opacity: .55; } 72% { opacity: .3; } }
 /* idle (ready), paused, pending, skipped, mixed: static */
-.nx-st-idle > svg.nx { --nx-hi-a: 0; --nx-hiv: hidden; }
-.nx-st-pending > svg.nx { --nx-ho-a: 0; }
+/* idle and pending are unlit, but keep the full weight so a ready or queued row still reads at a glance */
+.nx-st-idle > svg.nx { --nx-hi-a: 0; --nx-hiv: hidden; --nx-tone-k: 1; }
+.nx-st-pending > svg.nx { --nx-ho-a: 0; --nx-tone-k: 1; }
 
 /* ------------------------------------------------------------------ 10. reduced motion */
 /* Both routes (the media query and body.pm56-reduced) stop every neon animation and transition outright; the base
@@ -21821,7 +21822,7 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
       'play-ring': G([C(12, 12, 8.5), M(P('M10.3 8.8v6.4l5-3.2z'), { ao: .3, b: 1 })], 'seq'),
 
       /* ---- the status marks (plan §3); status() wraps them, icon('st-<s>') draws them bare ---- */
-      'st-working': G([C(12, 12, 7.5, { c: 'nx-dim' }), M(C(12, 4.5, 1.7, { c: 'pmx-g-dot' }), { ar: 360, o: [12, 12] })], 'spin', 'status'),
+      'st-working': G([C(12, 12, 7.5, { c: 'nx-dim' }), M(C(12, 4.5, 2.1, { f: 1 }), { ar: 360, o: [12, 12] })], 'spin', 'status'),
       'st-reviewing': G([P('M5 3h9l4 4v6'), P('M5 3v17h6'), M([C(16, 16, 3.6), P('m18.6 18.6 2.6 2.6')], { ax: -5, ay: -5, b: 1 })], 'wave', 'status'),
       'st-waiting': G([P('M5 3h14a2.5 2.5 0 0 1 2.5 2.5v10.5a2.5 2.5 0 0 1-2.5 2.5h-6.5L8 21.8v-3.3H5A2.5 2.5 0 0 1 2.5 16V5.5A2.5 2.5 0 0 1 5 3z'),
         M([P('M9.4 8.6a2.6 2.6 0 1 1 3.9 2.25c-.85.45-1.3 1.05-1.3 1.9v.1'), P('M12 15.6h.01')], { ay: -2.4 })], 'hop', 'status'),
