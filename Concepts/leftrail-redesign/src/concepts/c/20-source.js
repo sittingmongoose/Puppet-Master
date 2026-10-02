@@ -217,7 +217,9 @@ C_SPECS.source = {
       parts.title = item.name; parts.sub = item.path || null; parts.meta = null;
       parts.related = [];
       const cmp = (item.meta || [])[1];
-      if (cmp) parts.related.push(h('div.pmr-c-lens-block', cLensHeading('Compare'), h('p.pmr-c-lens-meta', { text: item.kind === 'conflict' ? 'Three-way: base, ours and theirs. ' + cmp : cmp })));
+      if (cmp) parts.related.push(item.kind === 'conflict'
+        ? h('div.pmr-c-lens-block', cLensHeading('Why it conflicted'), h('p.pmr-c-lens-meta', { text: cmp.charAt(0).toUpperCase() + cmp.slice(1) }))
+        : h('div.pmr-c-lens-block', cLensHeading('Compare'), h('p.pmr-c-lens-meta', { text: cmp })));
       if (item.hunks) parts.related.push(h('div.pmr-c-lens-block', cLensHeading('Hunks', h('span.pmr-num', { text: String(item.hunks.length) })),
         h('div.pmr-c-mini', item.hunks.map(hk => h('div.pmr-c-hunk', h('span.pmr-c-mini-name.is-mono', { text: hk.header }), h('span.pmr-c-hunk-acts', (hk.actions || []).map(a => PMR.button(a, { variant: 'text' }))))))));
       if (item.preview) parts.related.push(h('div.pmr-c-lens-block', cLensHeading('First line'), h('p.pmr-c-lens-note.is-mono', { text: item.preview })));
