@@ -39,12 +39,19 @@
   function dur(name) { return typeof name === 'number' ? name : (BASE[name] || 200); }
   function ease(name) { var f = EASE[family()] || {}; return f[name] || EASE.basic[name] || name || 'ease'; }
 
+  /* WOW round 3: while a film moment runs (PMU.film.begin), every animation and tween made through here is recorded, so a
+     rapid room switch, a gesture or a menu can finish the running moment at once (Animation.finish(), no getAnimations()
+     style flush) and start the next one from its final state (WOW-SPEC-3 6.2 "Rapid switching") */
+  var tracking = null;
+  function track(list) { tracking = list || null; }
   function animate(el, keyframes, opts) {
     if (!el || reduced() || typeof el.animate !== 'function') return null;
     opts = opts || {};
     try {
-      return el.animate(keyframes, { duration: dur(opts.dur || 'enter'), delay: opts.delay || 0, easing: opts.easing || ease(opts.ease || 'enter'),
+      var a = el.animate(keyframes, { duration: dur(opts.dur || 'enter'), delay: opts.delay || 0, easing: opts.easing || ease(opts.ease || 'enter'),
         fill: opts.fill || 'none', composite: opts.composite || 'replace' });
+      if (tracking && a) tracking.push(a);
+      return a;
     } catch (error) { return null; }
   }
 
@@ -100,7 +107,10 @@
     if (typeof o.ease === 'function') handle.curve = o.ease;
     else if (!o.ease && (fam === 'retro' || fam === 'nier')) handle.curve = curveFor(ease('value'));
     else handle.curve = curveFor(o.ease ? ease(o.ease) : ease('value'));
+    /* finish(): jump to the end (a finished moment) */
+    handle.finish = function () { if (handle.cancelled) return; handle.cancelled = true; try { handle.step(handle.to, 1); if (handle.done) handle.done(); } catch (error) {} };
     queue.push(handle);
+    if (tracking) tracking.push(handle);
     if (!raf) raf = requestAnimationFrame(frame);
     return handle;
   }
@@ -214,5 +224,5 @@
 
   PMU.motion = { reduced: reduced, paused: paused, speed: speed, dur: dur, ease: ease, family: family, animate: animate, tween: tween,
     countUp: countUp, enter: enter, reveal: reveal, flash: flash, clipReveal: clipReveal, flip: flip, pulse: pulse, release: release,
-    after: after, curve: curveFor, BASE: BASE };
+    after: after, curve: curveFor, BASE: BASE, track: track };
 })();

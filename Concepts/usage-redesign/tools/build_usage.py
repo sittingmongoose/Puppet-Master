@@ -73,7 +73,7 @@ def report(text: str, notes: dict) -> dict:
             'sha256': hashlib.sha256(data).hexdigest()[:16], 'input_bytes': notes.get('bytes_in'),
             'rules': rules, 'context_module': notes.get('context module'), 'band': notes.get('band'),
             'dropped_whole': notes.get('dropped whole'), 'nier_selector_patches': notes.get('nier selector patches'),
-            'roster': notes.get('roster')}
+            'roster': notes.get('roster'), 'app_patches': notes.get('app patches')}
 
 
 def main() -> int:

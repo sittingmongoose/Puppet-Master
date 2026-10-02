@@ -14,48 +14,54 @@
 
   /* ================= meter (A1 6): value line, quiet track with quarter ticks, sliding-window fill, auto-switch notch ================= */
   /* spec: {label, pct (% used) | null, vs, tone, size: 'c'|'k'|'i', notch: {at, faint, off} | null, resetText, resetSoon, amount,
-     estimated, stale, dimmed, binding, window, prov, left (show % left: headroom), hover: {label, detail}, valueText} */
+     estimated, stale, dimmed, binding, window, prov, left (show % left: headroom), hover: {label, detail}, valueText}
+     Round 3 (WOW-SPEC-3 4.5, 4.6): the meter carries --v (the USED value, also for a headroom bar) next to data-ramp, so the
+     calm ramp shades it continuously (30-charts.css); at rest a recessed track, a gradient fill with a specular top line and
+     a 3 px lit tip whose glow leaves the track. */
   charts.meter = function (host, spec, opts) {
     return charts.make('meter', host, spec, opts, {
       flow: true, noObserve: true, role: 'meter',
       draw: function (c, first) { paintMeter(c, first); },
       update: function (c, prev) { paintMeter(c, false, prev); },
-      snapshot: function (c) { var m = c.el._m; return m ? { size: m.size, known: m.known, fill: m.fill, at: m.at, shown: m.shown, ramp: c.el.getAttribute('data-ramp'), tone: c.el.getAttribute('data-tone') } : null; },
+      live: function (c, prev, lo) { return paintMeter(c, false, prev, lo); },
+      snapshot: function (c) { var m = c.el._m; return m ? { size: m.size, known: m.known, fill: m.fill, at: m.at, shown: m.shown, v: m.v, ramp: c.el.getAttribute('data-ramp'), tone: c.el.getAttribute('data-tone') } : null; },
       carry: function (c, from) {
         paintMeter(c, true);
         var o = from.snap, m = c.el._m;
         if (!o || !m || o.size !== m.size || o.known !== m.known) return;
-        m.fill = o.fill; m.at = o.at; m.shown = o.shown;
+        m.fill = o.fill; m.at = o.at; m.shown = o.shown; m.v = o.v;
         if (o.ramp != null) c.el.setAttribute('data-ramp', o.ramp);
         if (o.tone) c.el.setAttribute('data-tone', o.tone);
+        if (finite(o.v)) c.el.style.setProperty('--v', String(o.v));
         paintMeter(c, false, from.spec);
       },
-      enter: function (c, delay) { enterMeter(c, delay); }
+      enter: function (c, delay) { enterMeter(c, delay); },
+      still: function () {}
     });
   };
-  function meterTone(spec) {
-    if (!finite(spec.pct)) return 'missing';
-    var tn = spec.tone || (PMU.roster && PMU.roster.tone ? PMU.roster.tone(spec.pct) : null) || 'calm';
-    if (tn === 'hot') tn = 'crit';
-    if (tn === 'watch') tn = 'calm';
-    if (spec.pct > 100 && tn !== 'over') tn = 'over';
-    if (spec.pct >= 100 && tn === 'calm') tn = 'exhausted';
-    return tn;
-  }
-  /* the fill's step on the severity ramp (WOW-SPEC 2.3): calm splits by value (teal below 50, cyan 50-79), the rest
-     follows the semantic tone, which follows the Settings thresholds (warn, switch), exhausted and over */
-  var RAMP = { warn: 2, crit: 3, exhausted: 4, over: 5 };
-  function rampOf(tone, pct) { return tone === 'missing' ? null : RAMP[tone] != null ? RAMP[tone] : pct >= 50 ? 1 : 0; }
-  function paintMeter(c, first, prev) {
+  function meterTone(spec) { return finite(spec.pct) ? charts.rampTone(spec.pct, spec.tone) : 'missing'; }
+  /* the fill's step on the severity ramp (WOW-SPEC 2.3, WOW-SPEC-3 4.5) */
+  function rampOf(tone, pct) { return tone === 'missing' ? null : charts.rampStep(tone, pct); }
+  function setV(el, v) { if (finite(v)) el.style.setProperty('--v', String(v)); else el.style.removeProperty('--v'); }
+  /* paintMeter(c, first, prev, lo): lo = a live change ({lead, still, soft, delay}); returns {anims} */
+  function paintMeter(c, first, prev, lo) {
     var spec = c.spec || {}, el = c.el, size = spec.size || (c.opts && c.opts.size) || 'c';
     el.classList.add('pmu-meter');
     var known = finite(spec.pct), tone = meterTone(spec);
     var shownPct = known ? (spec.left ? Math.max(0, 100 - spec.pct) : spec.pct) : null;
     var fillPct = known ? clamp(spec.left ? 100 - spec.pct : spec.pct, 0, 100) : 0;
+    var vUsed = known ? r1(clamp(spec.pct, 0, 100)) : null;
     el.setAttribute('data-size', size);
-    el.setAttribute('data-tone', tone);
     var ramp = known ? rampOf(tone, spec.pct) : null;
-    if (ramp == null) el.removeAttribute('data-ramp'); else el.setAttribute('data-ramp', String(ramp));
+    var same = el._m && el._m.size === size && el._m.known === known;
+    /* the colour holds while the fill moves (the heat layer brings the new one, 34 heatUp); every other path paints the
+       new colour at once */
+    var moving = !first && same && !Mo.reduced() && !(lo && lo.still) && finite(el._m.fill) && Math.abs(el._m.fill - fillPct) > 0.05;
+    if (!moving) {
+      el.setAttribute('data-tone', tone);
+      if (ramp == null) el.removeAttribute('data-ramp'); else el.setAttribute('data-ramp', String(ramp));
+      if (!el._m || el._m.v !== vUsed) setV(el, vUsed);
+    }
     el.toggleAttribute('data-zero', known && fillPct < 0.5);
     el.toggleAttribute('data-est', !!spec.estimated);
     el.toggleAttribute('data-stale', !!spec.stale);
@@ -75,131 +81,163 @@
     var hv = spec.hover || {};
     var detail = hv.detail || [known ? (spec.noPct ? pctText(spec.pct) + ' ' + (spec.suffix || '') : pctText(spec.pct) + '% used · ' + pctText(Math.max(0, 100 - spec.pct)) + '% left') : (PMU.vs.STATES[spec.vs] || PMU.vs.STATES.unknown).word,
       spec.amount, spec.resetText, spec.source, spec.notch && !spec.notch.off && finite(spec.notch.at) ? t('charts.notch_means', { pct: Math.round(spec.notch.at) }) : ''].filter(Boolean).join(' · ');
-    el.setAttribute('data-pm-hover-label', hv.label || label || t('charts.window'));
-    el.setAttribute('data-pm-hover-detail', detail);
+    var hl = hv.label || label || t('charts.window');
+    if (el.getAttribute('data-pm-hover-label') !== hl) el.setAttribute('data-pm-hover-label', hl);
+    if (el.getAttribute('data-pm-hover-detail') !== detail) el.setAttribute('data-pm-hover-detail', detail);
     /* spec.suffix replaces "used" / "left" and spec.noPct drops the % sign (a pressure score reads "78 score") */
     var suffix = spec.suffix != null ? spec.suffix : spec.left ? t('charts.left') : t('charts.used');
+    var numText = known ? String(spec.valueText || pctText(shownPct)) : '';
     var valueHtml = known
-      ? '<b class="pmu-meterval"><span class="pmu-num">' + esc(spec.valueText || pctText(shownPct)) + '</span>' + (spec.valueText || spec.noPct ? '' : '<span class="pmu-u">%</span>') + '</b>' +
+      ? '<b class="pmu-meterval"><span class="pmu-num">' + esc(numText) + '</span>' + (spec.valueText || spec.noPct ? '' : '<span class="pmu-u">%</span>') + '</b>' +
         '<span class="pmu-suffix">' + esc(suffix) + (spec.estimated ? ' ' + esc(t('charts.est')) : '') + '</span>'
       : '<span class="pmu-meterna">' + PMU.vs.html(spec.vs && spec.vs !== 'ok' ? spec.vs : 'unknown', spec.vsWord) + '</span>';
     var notch = spec.notch && finite(spec.notch.at) && !spec.left ? spec.notch : null;
-    var same = el._m && el._m.size === size && el._m.known === known;
     if (!same) {
       el.innerHTML = '<div class="pmu-meterline">' + (size === 'i' ? '<span class="pmu-meterlabel">' + esc(label) + '</span>' : size === 'k' && spec.window && !spec.noLabel ? '<span class="pmu-meterlabel is-short"' + '>' + esc(shortWin(spec)) + '</span>' : '') + '<span class="pmu-metervalue"></span></div>' +
         '<div class="pmu-metertrack"><span class="pmu-meterclip"><i class="pmu-meterfill pmu-mark" data-mark="fill"><i class="pmu-meterwash"></i></i></span><i class="pmu-meterover pmu-mark" data-mark="segment"></i>' +
         '<span class="pmu-notchrail"><i class="pmu-notch"></i></span></div>' +
         '<div class="pmu-meterfoot"><span class="pmu-reset"></span><span class="pmu-meteramt"></span></div>';
-      el._m = { size: size, known: known, fill: null, at: null };
-    } else if (size === 'i') { var lb = el.querySelector('.pmu-meterlabel'); if (lb) lb.textContent = label; }
-    else if (size === 'k') { var lk = el.querySelector('.pmu-meterlabel.is-short'); if (lk) lk.textContent = shortWin(spec); }
+      el._m = { size: size, known: known, fill: null, at: null, v: null, html: null };
+    } else if (size === 'i') { var lb = el.querySelector('.pmu-meterlabel'); if (lb && lb.textContent !== label) lb.textContent = label; }
+    else if (size === 'k') { var lk = el.querySelector('.pmu-meterlabel.is-short'), sw = shortWin(spec); if (lk && lk.textContent !== sw) lk.textContent = sw; }
     var valEl = el.querySelector('.pmu-metervalue');
     var prevShown = el._m.shown;
-    valEl.innerHTML = valueHtml;
+    /* the value line is patched in place (PERF-3 rule 7: a live beat changes no child list): the number's text follows
+       below (rolled or written), the rest only when its words changed */
+    var shapeKey = known ? 'k|' + (spec.valueText || spec.noPct ? '1' : '0') + '|' + suffix + '|' + !!spec.estimated : 'n|' + spec.vs + '|' + (spec.vsWord || '');
+    if (el._m.html !== shapeKey || !valEl.firstChild) { valEl.innerHTML = valueHtml; el._m.html = shapeKey; }
     var fill = el.querySelector('.pmu-meterfill'), rail = el.querySelector('.pmu-notchrail'), nEl = el.querySelector('.pmu-notch');
     var reset = el.querySelector('.pmu-reset'), amount = el.querySelector('.pmu-meteramt');
-    reset.textContent = spec.resetText || '';
+    if (reset.textContent !== (spec.resetText || '')) reset.textContent = spec.resetText || '';
     reset.classList.toggle('is-soon', !!spec.resetSoon);
-    amount.textContent = spec.amount || '';
-    el.querySelector('.pmu-meterfoot').style.display = spec.resetText || spec.amount ? '' : 'none';
-    var overEl = el.querySelector('.pmu-meterover');
-    overEl.style.setProperty('--over', over ? String(clamp((spec.pct - 100) / 100, 0, 1)) : '0');
-    var oldFill = el._m.fill;
+    if (amount.textContent !== (spec.amount || '')) amount.textContent = spec.amount || '';
+    var footDisp = spec.resetText || spec.amount ? '' : 'none', footEl = el.querySelector('.pmu-meterfoot');
+    if (footEl.style.display !== footDisp) footEl.style.display = footDisp;
+    var overEl = el.querySelector('.pmu-meterover'), ov = over ? String(clamp((spec.pct - 100) / 100, 0, 1)) : '0';
+    if (overEl.style.getPropertyValue('--over') !== ov) overEl.style.setProperty('--over', ov);
+    var oldFill = el._m.fill, oldAt = el._m.at, oldV = el._m.v;
     fill.style.setProperty('--fill', fillPct + '%');
-    rail.style.display = notch ? '' : 'none';
+    var railDisp = notch ? '' : 'none';
+    if (rail.style.display !== railDisp) rail.style.display = railDisp;
     if (notch) {
       rail.style.setProperty('--at', clamp(notch.at, 0, 100) + '%');
       nEl.toggleAttribute('data-faint', !!notch.faint);
       nEl.toggleAttribute('data-off', !!notch.off);
     }
-    /* a change (WOW-SPEC 3.8, WOW-TASKS C-6): the fill slides old -> new 520 ms ROLL with the head glow riding it; the
-       colour heats up through the ramp while it moves (a pre-painted layer of the next step fades in over 120 ms at the
-       moment the moving head crosses that threshold); the notch slides 320 ms (.2,.8,.2,1); the value rolls only its
-       changed digits; a meter that reaches 95 % or more rings once */
-    if (!first && same && !Mo.reduced()) {
+    var num = valEl.querySelector('.pmu-num'), anims = 0;
+    /* a change (WOW-SPEC 3.8, WOW-SPEC-3 8.4): the fill slides old -> new 520 ROLL with the head glow riding it (a live
+       change: only the beat's lead carries it, never without a GPU); the colour follows through the pre-painted heat
+       layer; the notch slides 320 ms (.2,.8,.2,1) and pops at a threshold crossing; the value rolls only its changed
+       digits; a meter that reaches 95 % or more rings once. Unchanged readings never animate (WOW-SPEC-3 9.1). */
+    if (!first && same && !Mo.reduced() && !(lo && lo.still)) {
       var fam = Mo.fam(), stepped = fam === 'retro' || fam === 'nier';
       var fillEase = stepped ? (fam === 'nier' ? 'steps(5,jump-start)' : 'steps(6,jump-start)') : noOvershoot;
-      if (finite(oldFill) && Math.abs(oldFill - fillPct) > 0.05) {
-        Mo.anim(fill, [{ transform: 'translateX(' + (oldFill - 100) + '%)' }, { transform: 'translateX(' + (fillPct - 100) + '%)' }], 520, 0, fillEase, 'none');
-        if (PMU.film && PMU.film.headGlow && !spec.estimated) PMU.film.headGlow(fill.closest('.pmu-metertrack'), { from: oldFill, to: fillPct, dur: 520, easing: fillEase });
-        heatUp(el, fill, prev, spec, oldFill, fillPct, fillEase);
+      var delay = lo && lo.delay || 0, hu = null;
+      if (moving) {
+        if (Mo.anim(fill, [{ transform: 'translateX(' + (oldFill - 100) + '%)' }, { transform: 'translateX(' + (fillPct - 100) + '%)' }], 520, delay, fillEase, lo ? 'backwards' : 'none')) anims++;
+        var glow = !spec.estimated && (!lo || (lo.lead && !lo.soft));
+        if (glow && PMU.film && PMU.film.headGlow && PMU.film.headGlow(fill.closest('.pmu-metertrack'), { from: oldFill, to: fillPct, dur: 520, delay: delay, easing: fillEase })) anims++;
+        var hu = heatUp(el, fill, prev, spec, oldFill, fillPct, fillEase, oldV, vUsed, tone, ramp, delay);
+        anims += hu.n;
+        /* Friendly (WOW-SPEC-3 8.4): the lit head hops 3 px when a live fill lands; the number never bounces */
+        if (lo && fam === 'friendly' && !lo.soft && !spec.estimated && fillPct > 0.5) {
+          try { fill.animate([{ transform: 'none' }, { transform: 'translateY(-3px)', offset: 0.4 }, { transform: 'none' }], { duration: 260, delay: delay + 520, easing: 'cubic-bezier(.34,1.56,.64,1)', pseudoElement: '::after' }); anims++; } catch (error) {}
+        }
       }
-      if (notch && finite(el._m.at) && Math.abs(el._m.at - notch.at) > 0.05) {
+      if (notch && finite(oldAt) && Math.abs(oldAt - notch.at) > 0.05) {
         /* the slide is kept on the rail (rail._pmuSlide) so a Settings ripple can retime it without getAnimations() (a style
            flush per call: 25-36 ms per ripple on the VM, PERF-3) */
-        rail._pmuSlide = Mo.anim(rail, [{ transform: 'translateX(' + (el._m.at - notch.at).toFixed(2) + '%)' }, { transform: 'none' }], stepped ? 160 : 320, 0, stepped ? 'steps(4,jump-start)' : 'cubic-bezier(.2,.8,.2,1)', 'none');
+        rail._pmuSlide = Mo.anim(rail, [{ transform: 'translateX(' + (oldAt - notch.at).toFixed(2) + '%)' }, { transform: 'none' }], stepped ? 160 : 320, 0, stepped ? 'steps(4,jump-start)' : 'cubic-bezier(.2,.8,.2,1)', 'none');
+        if (rail._pmuSlide) anims++;
       }
-      var num = valEl.querySelector('.pmu-num');
-      if (num && known && finite(prevShown) && Math.abs(prevShown - shownPct) >= 0.5 && !spec.valueText) {
+      /* a threshold crossing (calm -> warn, warn -> switch, ...): the notch pops once as the head reaches it (260 POP) */
+      /* the notch flashes at the frame the head crosses a threshold (warn, switch, exhausted): the heat layer's crossing */
+      if (lo && notch && nEl && hu && finite(hu.crossAt)) {
+        if (Mo.anim(nEl, [{ scale: '1' }, { scale: '1.6', offset: 0.4 }, { scale: '1' }], 260, hu.crossAt, stepped ? 'steps(3,jump-start)' : (PMU.film && PMU.film.E ? PMU.film.E.pop : Mo.EASE.spring), 'none')) anims++;
+      }
+      if (num && known && !spec.valueText && finite(prevShown) && Math.abs(prevShown - shownPct) >= 0.05 && String(pctText(prevShown)) !== String(pctText(shownPct))) {
         num.setAttribute('data-shown', String(prevShown));
-        charts.roll(num, shownPct, function (v) { return String(pctText(v)); }, { dur: 420 });
-      }
-      if (known && spec.pct >= 95 && !(prev && finite(prev.pct) && prev.pct >= 95) && PMU.film && PMU.film.ring) PMU.film.ring(fill.closest('.pmu-metertrack'), { delay: 420 });
+        charts.roll(num, shownPct, function (v) { return String(pctText(v)); }, { dur: 420, delay: delay });
+        anims++;
+      } else if (num && num.textContent !== numText && !num._pmuOdo) num.textContent = numText;
+      if (known && spec.pct >= 95 && !(prev && finite(prev.pct) && prev.pct >= 95) && PMU.film && PMU.film.ring && (!lo || lo.lead)) { if (PMU.film.ring(fill.closest('.pmu-metertrack'), { delay: delay + 420 })) anims++; }
+    } else if (num && num.textContent !== numText) {
+      if (num._pmuOdo) num._pmuOdo.cancel();
+      num.textContent = numText;
     }
+    if (num && known) num.setAttribute('data-shown', String(shownPct));
     el._m.fill = fillPct; el._m.at = notch ? notch.at : null; el._m.shown = shownPct;
+    if (!moving) el._m.v = vUsed;
+    return { anims: anims };
   }
-  /* heat-up while the fill moves: for each ramp step the moving head enters, a layer painted in that step's colour fades in
-     over 120 ms at the moment of the crossing (opacity on the compositor; the head's position is the ROLL ease of the
-     slide, inverted with PMU.film.edgeAt); the meter keeps its old step until the slide ends, then takes the new one and
-     the layers go. The value words switch their tone at the last crossing. */
-  function heatUp(el, fill, prev, spec, a, b, easing) {
-    var oldR = +el.getAttribute('data-ramp'), newR = rampOf(meterTone(spec), spec.pct);
-    var prevR = prev && finite(prev.pct) ? rampOf(meterTone(prev), prev.pct) : oldR;
-    if (!finite(prevR) || newR == null || prevR === newR || spec.left) return;
-    el.setAttribute('data-ramp', String(prevR));
-    var newTone = el.getAttribute('data-tone');
-    if (prev) el.setAttribute('data-tone', meterTone(prev));
-    /* the value where each step starts: 50 (cyan), the warn and switch points of the tones, 100 */
-    var starts = { 0: 0, 1: 50 };
-    for (var v = 50; v <= 101; v += 1) {
-      var r = rampOf(meterTone(Object.assign({}, spec, { pct: v, tone: null })), v);
-      if (starts[r] == null) starts[r] = v;
-    }
-    var dir = newR > prevR ? 1 : -1, layers = [], lastAt = 0;
-    for (var step = prevR + dir; dir > 0 ? step <= newR : step >= newR; step += dir) {
-      var at = starts[dir > 0 ? step : step + 1];
-      if (!finite(at)) at = dir > 0 ? b : a;
-      var frac = clamp((at - a) / ((b - a) || 1), 0, 1);
-      var t0 = 520 * (PMU.film && PMU.film.edgeAt ? PMU.film.edgeAt(frac, easing) : frac);
+  /* heat-up while the fill moves (WOW-SPEC-3 8.4, NOTES3-perf Q7): the colour of a moving value changes through a layer
+     pre-painted in the new colour (ramp step + --v) that cross-fades in by opacity (300 OUT, compositor) at the frame the
+     head crosses a step, or at the end of the move when the step stays and the spectrum shade moved visibly; never an
+     animated custom property. When the move ends the meter takes the new step, tone and --v and the layers go (one task). */
+  function heatUp(el, fill, prev, spec, a, b, easing, oldV, newV, newTone, newR, delay) {
+    var prevR = prev && finite(prev.pct) ? rampOf(meterTone(prev), prev.pct) : +el.getAttribute('data-ramp');
+    var layers = [], lastAt = 0, n = 0, crossAt = null;
+    var mkLayer = function (step, v, at) {
+      if (step >= 2 && crossAt == null) crossAt = at;
       var lay = H('i', 'pmu-meterheat');
-      fill.insertBefore(lay, fill.querySelector('.pmu-meterwash'));   /* in step order: the latest step paints on top */
       lay.setAttribute('data-step', String(step));
-      layers.push({ el: lay, step: step, at: t0 });
-      lastAt = Math.max(lastAt, t0);
+      if (finite(v)) lay.style.setProperty('--v', String(v));
+      fill.insertBefore(lay, fill.querySelector('.pmu-meterwash'));   /* in step order: the latest step paints on top */
+      layers.push({ el: lay, at: at });
+      lastAt = Math.max(lastAt, at);
+    };
+    if (finite(prevR) && newR != null && prevR !== newR && !spec.left) {
+      /* the value where each step starts: 50 (cyan), the warn and switch points of the tones, 100 */
+      var starts = { 0: 0, 1: 50 };
+      for (var v = 50; v <= 101; v += 1) { var r = rampOf(meterTone({ pct: v }), v); if (starts[r] == null) starts[r] = v; }
+      var dir = newR > prevR ? 1 : -1;
+      for (var step = prevR + dir; dir > 0 ? step <= newR : step >= newR; step += dir) {
+        var at = starts[dir > 0 ? step : step + 1];
+        if (!finite(at)) at = dir > 0 ? b : a;
+        var frac = clamp((at - a) / ((b - a) || 1), 0, 1);
+        mkLayer(step, step === newR ? newV : at, delay + 520 * (PMU.film && PMU.film.edgeAt ? PMU.film.edgeAt(frac, easing) : frac));
+      }
+    } else if (newR != null && newR <= 1 && finite(oldV) && finite(newV) && Math.abs(newV - oldV) >= 4) {
+      mkLayer(newR, newV, delay + 220);   /* the shade moved visibly inside the calm ramp: it lands with the move */
     }
-    /* each layer is painted in its step's colour by CSS (.pmu-meterheat[data-step]), no style read here */
-    var lastAnim = null;
-    layers.forEach(function (L) { lastAnim = Mo.anim(L.el, [{ opacity: 0 }, { opacity: 1 }], 120, L.at, Mo.EASE.out, 'both') || lastAnim; });
+    layers.forEach(function (L) { if (Mo.anim(L.el, [{ opacity: 0 }, { opacity: 1 }], 300, L.at, 'cubic-bezier(.22,.8,.28,1)', 'both')) n++; });
+    var swapTone = function () { el.setAttribute('data-tone', newTone); };
     var finish = function () {
-      el.setAttribute('data-ramp', String(newR));
+      if (newR == null) el.removeAttribute('data-ramp'); else el.setAttribute('data-ramp', String(newR));
       el.setAttribute('data-tone', newTone);
+      setV(el, newV);
+      if (el._m) el._m.v = newV;
       layers.forEach(function (L) { L.el.remove(); });
     };
     /* the value words take their new tone at the last crossing (the colour follows the counting value) */
-    if (PMU.film && PMU.film.at) { PMU.film.at(lastAt, function () { el.setAttribute('data-tone', newTone); }); PMU.film.at(lastAt + 130, finish); } else finish();
-    if (Mo.reduced()) finish();
+    var endAt = Math.max(delay + 520, lastAt + 300);
+    if (Mo.reduced() || !PMU.film || !PMU.film.at) finish();
+    else { if (layers.length) PMU.film.at(lastAt, swapTone); PMU.film.at(endAt + 10, finish); }
+    return { n: n, crossAt: crossAt };
   }
   /* the short window word of a narrow meter: 5h / Wk / Mo (the full name stays in the hover tag) */
   var SHORT_WIN = { fiveHour: '5h', weekly: 'Wk', monthly: 'Mo', daily: 'Day' };
   function shortWin(spec) { return SHORT_WIN[spec.window] || String(spec.label || '').split(/\s+/)[0]; }
+  /* the entrance: the hero's meters fill 900 ROLL with the head glow riding and the value rolling with the fill; a quiet
+     (supporting) meter fills 520 ROLL with no light and its value already final (WOW-SPEC-3 5 Phase C) */
   function enterMeter(c, delay) {
     var el = c.el, fill = el.querySelector('.pmu-meterfill'), rail = el.querySelector('.pmu-notchrail');
     if (!fill) return;
     var f = Mo.fam(), easing = f === 'retro' || f === 'nier' ? Mo.voice('fill') : noOvershoot;
-    var target = el._m.fill || 0;
-    Mo.anim(fill, [{ transform: 'translateX(-100%)' }, { transform: 'translateX(' + (target - 100) + '%)' }], 900, delay, easing, 'backwards');
-    /* the head glow rides the fill's head (WOW-SPEC 3.1 Phase C, 3.8; PMU.film.headGlow) */
-    if (PMU.film && PMU.film.headGlow && target > 0.5) PMU.film.headGlow(fill.closest('.pmu-metertrack'), { to: target, dur: 900, delay: delay, easing: easing });
+    var target = el._m.fill || 0, q = c._quiet, dur = q ? 520 : 900;
+    Mo.anim(fill, [{ transform: 'translateX(-100%)' }, { transform: 'translateX(' + (target - 100) + '%)' }], dur, delay, easing, 'backwards');
+    /* the head glow rides the fill's head (WOW-SPEC 3.1 Phase C, 3.8; PMU.film.headGlow); never on a quiet meter */
+    if (!q && PMU.film && PMU.film.headGlow && target > 0.5 && !c.spec.estimated) PMU.film.headGlow(fill.closest('.pmu-metertrack'), { to: target, dur: dur, delay: delay, easing: easing });
     var ov = el.querySelector('.pmu-meterover');
-    if (el.hasAttribute('data-over')) Mo.anim(ov, [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], 260, delay + 820, Mo.EASE.out, 'backwards');
-    if (rail && rail.style.display !== 'none') {
+    if (el.hasAttribute('data-over')) Mo.anim(ov, [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], 260, delay + dur - 80, Mo.EASE.out, 'backwards');
+    if (!q && rail && rail.style.display !== 'none') {
       var n = rail.querySelector('.pmu-notch');
       var fin = n.hasAttribute('data-off') ? 'scaleY(.7)' : n.hasAttribute('data-faint') ? 'scaleY(.7)' : 'scaleY(1)';
       /* the notch drops 140 ms after its fill ends: 240 ms, zero overshoot (WOW-SPEC 3.1 Phase C) */
-      Mo.anim(n, [{ transform: 'scaleY(0)' }, { transform: fin }], 240, delay + 900 + 140, f === 'retro' || f === 'nier' ? 'steps(3,end)' : 'cubic-bezier(.17,.84,.29,.99)', 'backwards');
+      Mo.anim(n, [{ transform: 'scaleY(0)' }, { transform: fin }], 240, delay + dur + 140, f === 'retro' || f === 'nier' ? 'steps(3,end)' : 'cubic-bezier(.17,.84,.29,.99)', 'backwards');
     }
     var num = el.querySelector('.pmu-num');
-    if (num && finite(el._m.shown) && !c.spec.valueText) {
+    if (!q && num && finite(el._m.shown) && !c.spec.valueText) {
       num.removeAttribute('data-shown');
       /* the number rolls with its fill (same 900 ms), digits straight to their place (no spin: the fill shows the value) */
       charts.roll(num, el._m.shown, function (v) { return String(pctText(v)); }, { dur: 900, delay: delay, spins: 0 });
@@ -223,7 +261,9 @@
       update: function (c) { drawRanked(c, true); },
       snapshot: function (c) { var o = {}; $$('.pmu-rk', c.el).forEach(function (el) { o[el.getAttribute('data-id')] = parseFloat(el.getAttribute('data-f')); }); return o; },
       carry: function (c, from) { c._old = from.snap; drawRanked(c, true); c._old = null; },
-      enter: function (c, delay) { growRows(c, '.pmu-rkfill', delay, 760, 36); }
+      enter: function (c, delay) { growRows(c, '.pmu-rkfill', delay, c._quiet ? 520 : 760, 36, null, c._quiet); },
+      live: function (c, prev, lo) { return liveRanked(c, lo); },
+      still: function () {}
     });
   };
   function drawRanked(c, morph) {
@@ -246,12 +286,16 @@
       var k = { idx: r.idx != null ? r.idx : i, vendor: r.vendor, tk: r.tk, tone: r.tone };
       var estF = finite(r.est) && finite(r.value) && r.value > 0 ? clamp(r.est / r.value, 0, 1) : 0;
       var val = finite(r.value) ? esc(r.valueText || charts.fmtValue(r.value, spec.unit)) : PMU.vs.html(r.vs || 'unknown');
-      var bar = '<span class="pmu-rkbar"><i class="pmu-rkfill" style="--f:' + (f * 100).toFixed(2) + '%">' +
+      /* shared-element keys (content N3-1): the bar carries the row's window (win:...), the mark its provider (prov:...) */
+      var bar = '<span class="pmu-rkbar"' + (r.share ? ' data-share="' + esc(r.share) + '"' : '') + '><i class="pmu-rkfill" style="--f:' + (f * 100).toFixed(2) + '%">' +
         (estF < 1 ? '<i class="pmu-mark" data-mark="bar"' + charts.keyAttrs(k) + ' style="flex-grow:' + (1 - estF) + '"></i>' : '') +
         (estF > 0 ? '<i class="pmu-mark" data-mark="bar" data-est="1"' + charts.keyAttrs(k) + ' style="flex-grow:' + estF + '"></i>' : '') + '</i></span>';
+      /* a "% used" row (route pressure: a state tone on a 100 scale) takes the calm ramp by its value (WOW-SPEC-3 4.5) */
+      var rampOn = finite(r.value) && r.tone && r.ramp !== false && (spec.scale === 100 || spec.ramp);
       return '<div class="pmu-rk pmu-irow" data-id="' + esc(r.id || i) + '" data-f="' + f + '"' + (r.prov ? ' data-prov="' + esc(r.prov) + '"' : '') +
+        (rampOn ? charts.rampAttr(r.value, r.tone) + ' style="' + charts.rampVar(r.value) + '"' : '') +
         hoverAttrs(r.name, r.hover) + '>' +
-        '<span class="pmu-rkname">' + (r.mark ? PMU.mark(r.mark, 16) : '') + '<span class="pmu-rkt">' + esc(r.name) + '</span>' + (r.role && !inline ? '<em>' + esc(r.role) + '</em>' : '') + '</span>' +
+        '<span class="pmu-rkname">' + (r.mark ? (r.markShare ? '<span class="pmu-rkmark" data-share="' + esc(r.markShare) + '">' + PMU.mark(r.mark, 16) + '</span>' : PMU.mark(r.mark, 16)) : '') + '<span class="pmu-rkt">' + esc(r.name) + '</span>' + (r.role && !inline ? '<em>' + esc(r.role) + '</em>' : '') + '</span>' +
         '<span class="pmu-rkval"><b>' + val + '</b>' + (finite(r.share) && !inline ? '<em>' + esc(pctText(r.share)) + '%</em>' : '') + '</span>' + bar + '</div>';
     }).join('');
     if (morph && !Mo.reduced()) {
@@ -265,11 +309,80 @@
   /* rows grow left to right with light (WOW-SPEC 3.3, WOW-TASKS C-3): scaleX 0 -> 1, 760 ms ROLL, 36 ms apart, and the
      head glow (PMU.film.headGlow) rides each bar's head on its track; Retro grows in six steps, NieR in five */
   function growEase() { var f = Mo.fam(); return f === 'retro' ? 'steps(6,jump-start)' : f === 'nier' ? 'steps(5,jump-start)' : noOvershoot; }
-  function growRows(c, sel, delay, dur, step, cap) {
+  /* a live change of a ranked list (WOW-SPEC-3 8.4, C3-4), in place: the changed values roll only their changed digits,
+     the bars scale from their old length (420 SLIDE), and when the order changes the rows re-rank by CSS order (no
+     child-list change: the app's document observers stay asleep) with a FLIP slide 420 SLIDE 20 apart and the moving row's
+     soft highlight (row-sel 60 % -> 0, 600). One batched read of the row tops, only when the order changes. A structure
+     change (rows added or removed, another form) redraws without motion. */
+  var SLIDE = 'cubic-bezier(.22,1,.36,1)';
+  function rollTo(el, oldText, newText, dur, delay) {
+    if (!el || oldText === newText) return false;
+    var a = parseFloat(String(oldText).replace(/[^0-9.\-]/g, '')), b = parseFloat(String(newText).replace(/[^0-9.\-]/g, ''));
+    if (!PMU.film || !PMU.film.odometer || !finite(a) || !finite(b) || a === b) { el.textContent = newText; return false; }
+    PMU.film.odometer(el, b, function (v) { return v === b ? newText : oldText; }, { from: a, change: true, dur: dur || 420, delay: delay || 0 });
+    return true;
+  }
+  charts.rollTo = rollTo;
+  function liveRanked(c, lo) {
+    var spec = c.spec || {}, rows = spec.rows || [], els = $$('.pmu-rk', c.el), byId = {}, n = 0;
+    els.forEach(function (el) { byId[el.getAttribute('data-id')] = el; });
+    var idOf = function (r, i) { return String(r.id != null ? r.id : i); };
+    var w = c._w || 300, inline = (c.opts.tier && (c.opts.tier.w === 'xs' || c.opts.tier.w === 's')) || w < 248 || spec.inline;
+    if (rows.length !== els.length || c.el.getAttribute('data-inline') !== (inline ? '1' : '0') || rows.some(function (r, i) { return !byId[idOf(r, i)]; })) {
+      drawRanked(c, !lo.still);
+      return { anims: 0 };
+    }
+    var max = spec.scale || 0;
+    rows.forEach(function (r) { if (finite(r.value)) max = Math.max(max, r.value); });
+    var rank = {}; els.forEach(function (el, i) { rank[el.getAttribute('data-id')] = el.style.order !== '' ? +el.style.order : i; });
+    var moved = rows.some(function (r, i) { return rank[idOf(r, i)] !== i; });
+    var slot = null;
+    if (moved && !lo.still) { slot = []; els.forEach(function (el) { slot[rank[el.getAttribute('data-id')]] = el.offsetTop; }); }   /* the one read */
+    var changed = {};
+    rows.forEach(function (r, i) {
+      var el = byId[idOf(r, i)], id = idOf(r, i);
+      var f = finite(r.value) && max > 0 ? clamp(r.value / max, 0, 1) : 0, oldF = parseFloat(el.getAttribute('data-f'));
+      var b = el.querySelector('.pmu-rkval b'), em = el.querySelector('.pmu-rkval em');
+      var newText = finite(r.value) ? (r.valueText || charts.fmtValue(r.value, spec.unit)) : null;
+      if (b && newText != null && b.textContent !== newText) { changed[id] = true; if (lo.still) b.textContent = newText; else if (rollTo(b, b.textContent, newText, 420, lo.delay)) n++; }
+      var shareT = finite(r.share) && !inline ? pctText(r.share) + '%' : null;
+      if (em && shareT != null && em.textContent !== shareT) em.textContent = shareT;
+      if (finite(oldF) && Math.abs(oldF - f) > 0.002) {
+        changed[id] = true;
+        var fillEl = el.querySelector('.pmu-rkfill');
+        el.setAttribute('data-f', String(f));
+        if (fillEl) {
+          fillEl.style.setProperty('--f', (f * 100).toFixed(2) + '%');
+          if (!lo.still && f > 0 && Mo.anim(fillEl, [{ transform: 'scaleX(' + clamp(oldF / f, 0, 20) + ')' }, { transform: 'scaleX(1)' }], 420, lo.delay, SLIDE, 'none')) n++;
+        }
+      }
+      /* the ramp colour and the state tone follow at the end of the move (a shade, never an animated property) */
+      var rampOn = finite(r.value) && r.tone && r.ramp !== false && (spec.scale === 100 || spec.ramp);
+      var swap = function () {
+        if (rampOn) { var rp = charts.ramp(r.value, r.tone); el.setAttribute('data-ramp', String(rp.ramp)); el.style.setProperty('--v', String(rp.v)); }
+        $$('.pmu-rkfill > i', el).forEach(function (m) { if (r.tone) m.setAttribute('data-tone', r.tone); });
+      };
+      if (lo.still || !PMU.film || !PMU.film.at) swap(); else PMU.film.at(lo.delay + 420, swap);
+      var hv = r.hover; if (hv != null && el.getAttribute('data-pm-hover-detail') !== hv) el.setAttribute('data-pm-hover-detail', hv);
+    });
+    if (moved) {
+      rows.forEach(function (r, i) { byId[idOf(r, i)].style.order = String(i); });
+      if (slot) rows.forEach(function (r, i) {
+        var id = idOf(r, i), el = byId[id], from = slot[rank[id]], to = slot[i];
+        if (!finite(from) || !finite(to) || Math.abs(from - to) < 0.5) return;
+        if (Mo.anim(el, [{ transform: 'translateY(' + r1(from - to) + 'px)' }, { transform: 'none' }], 420, lo.delay + 20 * i, SLIDE, 'backwards')) n++;
+        if (changed[id] && !Mo.reduced()) { try { el.animate([{ opacity: 0.6 }, { opacity: 0 }], { duration: 600, delay: lo.delay, easing: 'cubic-bezier(.22,.8,.28,1)', pseudoElement: '::before' }); n++; } catch (error) {} }
+      });
+    }
+    return { anims: n };
+  }
+  /* quiet (C3-3): the rows grow together (no stagger) without the head glow */
+  function growRows(c, sel, delay, dur, step, cap, quiet) {
     var e = growEase();
     $$(sel, c.el).forEach(function (el, i) {
-      var dl = delay + Math.min(cap || 560, i * (step || 36));
+      var dl = quiet ? delay : delay + Math.min(cap || 560, i * (step || 36));
       Mo.anim(el, [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], dur, dl, e);
+      if (quiet) return;
       var f = parseFloat(el.style.getPropertyValue('--f'));
       var track = el.parentNode;
       if (PMU.film && PMU.film.headGlow && track && finite(f) && f > 3) PMU.film.headGlow(track, { to: f, dur: dur, delay: dl, easing: e });
@@ -287,6 +400,7 @@
         if (bar && !Mo.reduced()) Mo.anim(c.el.querySelector('.pmu-mixbar'), [{ opacity: 0.25 }, { opacity: 1 }], 260, 0, Mo.EASE.out, 'none');
       },
       enter: function (c, delay) {
+        if (c._quiet) { var mb = c.el.querySelector('.pmu-mixbar'); if (mb) Mo.anim(mb, [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], 520, delay, Mo.voice('grow')); return; }
         $$('.pmu-mixseg', c.el).forEach(function (el, i) {
           Mo.anim(el, [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], 480, delay + i * 50, Mo.voice('grow'));
         });
@@ -349,13 +463,45 @@
         void prev;
       },
       enter: function (c, delay) {
-        sweepRing(c, delay, 900, null);
+        /* quiet (C3-3): the arcs sweep 600 without the glint, the centre is already final */
+        if (c._quiet) { if (!charts.flightTarget(c)) sweepRing(c, delay, 600, null, false); return; }
+        /* the ring that arrives by flight does not sweep again under the flyer */
+        if (!charts.flightTarget(c)) {
+          sweepRing(c, delay, 900, null);
+          if (c._fly) charts.watchFlight(c, function () { var bx = c.el.querySelector('.pmu-ringbox'); if (bx && bx._pmuSweep) bx._pmuSweep.cancel(); });
+        }
         var cv = c.el.querySelector('.pmu-centre-v');
         if (cv && finite(c.spec.centreValue)) { cv.removeAttribute('data-shown'); charts.roll(cv, c.spec.centreValue, c.spec.centreFmt, { dur: 1000, delay: delay }); }
         var ct = c.el.querySelector('.pmu-centre');
         if (ct) Mo.anim(ct, [{ opacity: 0, transform: 'scale(.92)' }, { opacity: 1, transform: 'none' }], 420, delay + 120, Mo.EASE.out);
-      }
+        /* the Context hero's beat (WOW-SPEC-3 7, C3-6): when the sweep has closed, the limit tick drops onto the ring */
+        if (charts.isHero(c)) c.beatEnd = ringBeat(c, delay + 900 + 40) - delay;
+      },
+      beat: function (c, delay) { return ringBeat(c, delay); },
+      live: function (c, prev, lo) {
+        var fromEnd = c._end, oldCv = c.el.querySelector('.pmu-centre-v'), before = oldCv ? parseFloat(oldCv.getAttribute('data-shown')) : NaN, n = 0;
+        drawRing(c);
+        if (lo.still) return { anims: 0 };
+        if (finite(fromEnd) && Math.abs(fromEnd - c._end) > 0.3) { sweepRing(c, lo.delay, 520, fromEnd, !!lo.lead && !lo.soft); n += 4; }
+        var cv = c.el.querySelector('.pmu-centre-v');
+        if (cv && finite(c.spec.centreValue) && finite(before) && before !== c.spec.centreValue) {
+          cv.setAttribute('data-shown', String(before));
+          charts.roll(cv, c.spec.centreValue, c.spec.centreFmt, { dur: 420, delay: lo.delay, finalText: c.spec.centre != null ? String(c.spec.centre) : null });
+          n++;
+        }
+        void prev;
+        return { anims: n };
+      },
+      still: function () {}
     });
+  }
+  /* the limit tick drops onto the ring (260 SETTLE): where the window closes, at 12 o'clock */
+  function ringBeat(c, at) {
+    var tk = c.el.querySelector('.pmu-ringtick');
+    if (!tk || Mo.reduced()) return at;
+    var fm = Mo.fam(), stepped = fm === 'retro' || fm === 'nier';
+    Mo.anim(tk, [{ transform: 'translateY(-10px)', opacity: 0 }, { opacity: 1, offset: 0.4 }, { transform: 'none', opacity: 1 }], 260, at, stepped ? 'steps(3,jump-start)' : (PMU.film && PMU.film.E ? PMU.film.E.settle : Mo.EASE.out), 'backwards');
+    return at + 260;
   }
   /* a point on the ring (r 50 around 60,60) at `deg` clockwise from 12 o'clock */
   function ringPt(deg, r) { var a = deg * Math.PI / 180; return r1(60 + r * Math.sin(a)) + ',' + r1(60 - r * Math.cos(a)); }
@@ -402,28 +548,40 @@
     var arcs = ringArcs(segs, stroke, spec.unit);
     c._end = arcs.end;
     c.el.setAttribute('data-ring', size < 76 ? 'xs' : size < 104 ? 's' : 'm');
+    /* the limit tick (WOW-SPEC 4 Context, WOW-SPEC-3 7): a segmented ring measured against a limit (the context window)
+       marks where the window closes, at 12 o'clock, across the track (HTML: it drops on the compositor) */
+    var tick = spec.limitTick || (spec.limitTick !== false && spec.segments && finite(spec.limit) && finite(spec.max));
     c.el.innerHTML = '<div class="pmu-ringbox" style="width:' + size + 'px;height:' + size + 'px">' +
       '<svg class="pmu-ringsvg" viewBox="0 0 120 120" width="' + size + '" height="' + size + '" style="--sw:' + stroke + '">' +
       '<circle class="pmu-ringtrack" cx="60" cy="60" r="50"/><g class="pmu-ringarcs">' + arcs.html + '</g></svg>' +
-      '<div class="pmu-centre"><b class="pmu-centre-v">' + esc(spec.centre != null ? spec.centre : '') + '</b>' + (spec.caption ? '<span class="pmu-centre-c">' + esc(spec.caption) + '</span>' : '') + '</div></div>';
+      (tick ? '<i class="pmu-ringtick" aria-hidden="true" style="top:' + r1((60 - 50 - stroke / 2 - 4) / 1.2) + '%;height:' + r1((stroke + 8) / 1.2) + '%"' + hoverAttrs(t('charts.limit_tick'), '') + '></i>' : '') +
+      '<div class="pmu-centre"><b class="pmu-centre-v"' + (spec.centreShare ? ' data-share="' + esc(spec.centreShare) + '"' : '') + '>' + esc(spec.centre != null ? spec.centre : '') + '</b>' + (spec.caption ? '<span class="pmu-centre-c">' + esc(spec.caption) + '</span>' : '') + '</div></div>';
     var pm = !finite(spec.centreValue) && finite(spec.value) && typeof spec.centre === 'string' ? /^(\d+)(?:\.(\d+))?%$/.exec(spec.centre) : null;
     if (pm && Math.abs(parseFloat(spec.centre) - spec.value) < 0.06) {
       var dec = pm[2] ? pm[2].length : 0;
       spec.centreValue = spec.value; spec.centreFmt = function (v) { return v.toFixed(dec) + '%'; };
     }
     if (finite(spec.centreValue)) { var cv = c.el.querySelector('.pmu-centre-v'); cv.setAttribute('data-shown', String(spec.centreValue)); }
+    /* the flyer map (C3-5): the context ring repeats on Overview and Context (chart:context); a ring flies as its picture */
+    var shareKey = c.opts.share || spec.share || (tick ? 'context' : null);
+    if (shareKey) {
+      var rb = c.el.querySelector('.pmu-ringbox');
+      charts.setFly(c, rb, shareKey, { ring: true, shareEl: rb.querySelector('.pmu-ringsvg'), box: { l: 0, t: 0, w: size, h: size }, vb: '0 0 120 120', domain: null,
+        paths: function () { var sv = rb.querySelector('.pmu-ringsvg'); return sv ? $$('.pmu-ringtrack, [data-mark="arc"], .pmu-ringcap, .pmu-ringglow', sv) : []; } });
+    }
   }
   /* the sweep (WOW-TASKS C-2) runs on the compositor: the arcs (and their caps) are copied into two rotating half masks
      (PMU.charts.arcSweep) while the track stays; a change sweeps the new picture from the old end angle (a shrink shows
      the new picture at once: the wedge cannot hide what is already gone, so it cross-fades instead) */
-  function sweepRing(c, delay, dur, fromEnd) {
+  function sweepRing(c, delay, dur, fromEnd, glint) {
     var box = c.el.querySelector('.pmu-ringbox'), svg = box && box.querySelector('.pmu-ringsvg');
     if (!box || !svg || !(c._end > 0.5)) return;
     var from = finite(fromEnd) ? fromEnd : 0;
     if (from > c._end + 0.5) { Mo.anim(svg.querySelector('.pmu-ringarcs'), [{ opacity: 0.35 }, { opacity: 1 }], 260, delay, Mo.EASE.out, 'none'); return; }
     var pic = svg.cloneNode(true), tr = pic.querySelector('.pmu-ringtrack');
     if (tr) tr.remove();
-    charts.arcSweep(box, pic, { from: from, to: c._end, dur: dur, delay: delay, radius: 10 / 120 * 100 });
+    ['data-share', 'data-pmu-fly-target'].forEach(function (a) { pic.removeAttribute(a); });   /* the sweep's copies never pose as the shared ring */
+    charts.arcSweep(box, pic, { from: from, to: c._end, dur: dur, delay: delay, radius: 10 / 120 * 100, glint: glint !== false });
   }
 
   /* ================= stackbar: cost by model by token type (A1 7.3) ================= */
@@ -445,7 +603,7 @@
       },
       snapshot: function (c) { return sbSnap(c); },
       carry: function (c, from) { drawStackbar(c); if (from.snap) sbFlip(c, from.snap); },
-      enter: function (c, delay) { growRows(c, '.pmu-sbfill', delay, 760, 36); }
+      enter: function (c, delay) { growRows(c, '.pmu-sbfill', delay, c._quiet ? 520 : 760, 36, null, c._quiet); }
     });
   };
   var TKN = function (tk) { return (charts.TK_NAMES || {})[tk] || tk; };
@@ -526,6 +684,15 @@
       flow: true,
       draw: function (c) { drawDonut(c, null); },
       update: function (c) { var prev = c._arcs; drawDonut(c, prev); },
+      /* live (C3-4): in place (the same rows patch their text, the arcs morph 420 from the old angles), the centre total
+         rolls only its changed digits */
+      live: function (c, prev, lo) {
+        var pa = c._arcs, cv0 = c.el.querySelector('.pmu-dc-v'), t0 = cv0 ? cv0.textContent : null;
+        c._live = lo; try { drawDonut(c, lo.still ? null : pa); } finally { c._live = null; }
+        var cv = c.el.querySelector('.pmu-dc-v'), n = lo.still ? 0 : 1;
+        if (!lo.still && cv && t0 != null && t0 !== cv.textContent && rollTo(cv, t0, cv.textContent, 420, lo.delay)) n++;
+        return { anims: n };
+      },
       carry: function (c) { var prev = c._arcs; drawDonut(c, prev); },
       enter: function (c, delay) {
         /* the arcs sweep from 12 o'clock on the compositor (WOW-TASKS C-2), the share labels fade in at the end */
@@ -534,6 +701,8 @@
         var labels = c.el.querySelector('.pmu-dlabels');
         var pic = svg.cloneNode(true), tr = pic.querySelector('.pmu-ringtrack');
         if (tr) tr.remove();
+        /* quiet (C3-3): the slices sweep 600, labels, centre and legend are already final */
+        if (c._quiet) { charts.arcSweep(box, pic, { from: 0, to: 360, dur: 600, delay: delay, glint: false }); return; }
         charts.arcSweep(box, pic, { from: 0, to: 360, dur: 900, delay: delay, glint: false });
         if (labels) Mo.anim(labels, [{ opacity: 0 }, { opacity: 1 }], 260, delay + 820, Mo.EASE.out);
         var cv = c.el.querySelector('.pmu-dc-v');
@@ -591,6 +760,10 @@
     var centreCap = spec.centre && spec.centre.caption ? spec.centre.caption : '';
     /* every row fits: up to 7 rows, else the first rows plus one "N smaller models" row (complete or hidden) */
     var showN = arcs.length <= Math.min(7, maxRows) ? arcs.length : Math.max(1, Math.min(6, maxRows - 1));
+    /* the share column is as wide as its widest share in the theme's face (NOTES3-content E6: a fixed 52 px cut "Other 2
+       models" and "Gemini 3.1 Pro" at 1440 in Glass and Retro, while "9.8%" needs about 30) */
+    var shareW = 30;
+    arcs.forEach(function (x) { shareW = Math.max(shareW, Math.ceil(charts.textW(pctText(x.f * 100) + '%', 12.5) * 1.06) + 3); });
     var legendRows = arcs.slice(0, showN).map(function (x, i) {
       var k = x.s.other ? { idx: 7 } : { vendor: x.s.vendor || 'community', shade: x.s.shade || 1 };
       return '<div class="pmu-dl-row" data-i="' + i + '"' + charts.keyAttrs(k) + ' style="--shf:' + x.f.toFixed(3) + '"' + (x.s.prov ? ' data-prov="' + esc(x.s.prov) + '"' : '') + '><i class="pmu-swatch"' + charts.keyAttrs(k) + '></i><span class="pmu-dl-n">' + esc(x.s.name) +
@@ -611,11 +784,11 @@
     var shade = '<defs><radialGradient id="' + gid + '" cx="' + r1(cx) + '" cy="' + r1(cy) + '" r="' + r1(R1) + '" gradientUnits="userSpaceOnUse">' +
       '<stop offset="' + (k0 - 0.002).toFixed(3) + '" class="pmu-dsh-none"/><stop offset="' + k0.toFixed(3) + '" class="pmu-dsh-in"/>' +
       '<stop offset="' + Math.min(0.97, k0 + 0.16).toFixed(3) + '" class="pmu-dsh-none"/><stop offset=".9" class="pmu-dsh-none"/><stop offset="1" class="pmu-dsh-out"/></radialGradient></defs>';
-    c.el.innerHTML = '<div class="pmu-donut" style="width:' + r1(Sz) + 'px;height:' + r1(Sz) + 'px"><svg width="' + r1(Sz) + '" height="' + r1(Sz) + '" viewBox="0 0 ' + r1(Sz) + ' ' + r1(Sz) + '">' + shade +
+    charts.patchHtml(c.el, '<div class="pmu-donut" style="width:' + r1(Sz) + 'px;height:' + r1(Sz) + 'px"><svg width="' + r1(Sz) + '" height="' + r1(Sz) + '" viewBox="0 0 ' + r1(Sz) + ' ' + r1(Sz) + '">' + shade +
       '<circle class="pmu-ringtrack" cx="' + r1(cx) + '" cy="' + r1(cy) + '" r="' + r1((R0 + R1) / 2) + '" style="stroke-width:' + r1(R1 - R0) + 'px"/>' + paths +
       '<circle class="pmu-dshade" data-mark="arc" cx="' + r1(cx) + '" cy="' + r1(cy) + '" r="' + r1(R1) + '" style="fill:url(#' + gid + ')"/>' +
       '</svg><div class="pmu-dlabels">' + labels + '</div><div class="pmu-dcentre" style="padding:0 ' + r1(m + (R1 - R0) + 6) + 'px"><b class="pmu-dc-v" style="font-size:' + cfs + 'px">' + esc(centreVal) + '</b><span class="pmu-dc-c"' + (capOk ? '' : ' hidden') + '>' + esc(centreCap) + '</span></div></div>' +
-      '<div class="pmu-dlegend">' + legendRows + '</div>';
+      '<div class="pmu-dlegend" style="--dl-share:' + Math.min(52, shareW) + 'px">' + legendRows + '</div>');
     var pathEls = $$('path[data-mark="arc"]', c.el);
     var paint = c._paintArcs = function (k, from) {
       var head = k * Math.PI * 2;
@@ -629,7 +802,7 @@
     paint(1);
     if (prevArcs && !Mo.reduced()) {
       if (c._dt) c._dt.cancel();
-      c._dt = Mo.tween(520, 'io', function (k) { paint(k, prevArcs); }, function () { c._dt = null; paint(1); });
+      c._dt = Mo.tween(c._live ? 420 : 520, 'io', function (k) { paint(k, prevArcs); }, function () { c._dt = null; paint(1); }, c._live ? c._live.delay : 0);
     }
     /* centre number roll (tokens or money) */
     var cv = c.el.querySelector('.pmu-dc-v');
@@ -637,17 +810,20 @@
     c._centreFmt = spec.centre && spec.centre.fmt ? spec.centre.fmt : fmtV;
     if (finite(c._centreNum)) cv.setAttribute('data-shown', String(c._centreNum));
     /* hover: the arc's share moves into the centre and the other arcs dim to .3 */
-    var cap = c.el.querySelector('.pmu-dc-c');
+    /* hover reads the chart's current state (a live patch keeps the elements and their listeners) */
+    c._dh = { arcs: arcs, centreVal: centreVal, centreCap: centreCap, fmtV: fmtV, mode: mode };
     var hot = function (i) {
-      pathEls.forEach(function (p, j) { p.classList.toggle('is-dim', i != null && j !== i); });
+      var D = c._dh, cvx = c.el.querySelector('.pmu-dc-v'), capx = c.el.querySelector('.pmu-dc-c');
+      $$('path[data-mark="arc"]', c.el).forEach(function (p, j) { p.classList.toggle('is-dim', i != null && j !== i); });
       $$('.pmu-dl-row', c.el).forEach(function (r) { r.classList.toggle('is-hot', i != null && +r.getAttribute('data-i') === i); });
-      if (i == null) { cv.textContent = centreVal; cap.textContent = centreCap; return; }
-      var x = arcs[i];
-      cv.textContent = (Math.round(x.f * 1000) / 10).toFixed(1) + '%';
-      cap.textContent = x.s.name + ' · ' + (x.s.valueText || fmtV(x.s.value)) + (mode === 'cost' ? '' : ' ' + t('charts.tokens_word'));
+      if (!cvx || !capx) return;
+      if (i == null || !D.arcs[i]) { cvx.textContent = D.centreVal; capx.textContent = D.centreCap; return; }
+      var x = D.arcs[i];
+      cvx.textContent = (Math.round(x.f * 1000) / 10).toFixed(1) + '%';
+      capx.textContent = x.s.name + ' · ' + (x.s.valueText || D.fmtV(x.s.value)) + (D.mode === 'cost' ? '' : ' ' + t('charts.tokens_word'));
     };
-    pathEls.forEach(function (p, i) { p.addEventListener('pointerenter', function () { hot(i); }); p.addEventListener('pointerleave', function () { hot(null); }); });
-    $$('.pmu-dl-row[data-i]', c.el).forEach(function (r) { r.addEventListener('pointerenter', function () { hot(+r.getAttribute('data-i')); }); r.addEventListener('pointerleave', function () { hot(null); }); });
+    pathEls.forEach(function (p, i) { if (p._pmuHot) return; p._pmuHot = 1; p.addEventListener('pointerenter', function () { hot(i); }); p.addEventListener('pointerleave', function () { hot(null); }); });
+    $$('.pmu-dl-row[data-i]', c.el).forEach(function (r) { if (r._pmuHot) return; r._pmuHot = 1; r.addEventListener('pointerenter', function () { hot(+r.getAttribute('data-i')); }); r.addEventListener('pointerleave', function () { hot(null); }); });
   }
 
   /* ================= sharebars: token breakdown (A1 7.5) ================= */
@@ -668,6 +844,7 @@
       },
       enter: function (c, delay) {
         var e = growEase();
+        if (c._quiet) { $$('.pmu-tbbars', c.el).forEach(function (bx) { Mo.anim(bx, [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], 520, delay, e); }); return; }
         $$('.pmu-tbrow', c.el).forEach(function (row, i) {
           $$('.pmu-tb i', row).forEach(function (el, j) {
             var dl = delay + i * 36 + j * 40, f = parseFloat(el.style.getPropertyValue('--f'));
@@ -752,6 +929,7 @@
         void prev;
       },
       enter: function (c, delay) {
+        if (c._quiet) return;   /* a supporting value arrives final with its body (WOW-SPEC-3 3.3) */
         var nv = c.el.querySelector('.pmu-kpivalue .pmu-num');
         if (nv && finite(c.spec.value)) { nv.removeAttribute('data-shown'); charts.roll(nv, c.spec.value, c.spec.fmt, { dur: 1000, delay: delay }); }
         var d = c.el.querySelector('.pmu-kpidelta');

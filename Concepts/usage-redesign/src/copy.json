@@ -87,5 +87,23 @@
     "curated": "Curated",
     "raw": "Raw",
     "raw_note": "Every field as recorded. Credential handles are masked."
+  },
+  "live": {
+    "on": "Live",
+    "paused": "Paused",
+    "tag_title": "Live readings",
+    "tag_on": "Demo readings change about every 6 seconds while Usage is open. Click to pause. Demo readings from the concept's demo engine; no real account is read.",
+    "tag_paused": "Live readings are paused. Click to resume. Demo readings from the concept's demo engine; no real account is read.",
+    "menu_title": "Live readings",
+    "menu_on": "Live readings on",
+    "menu_on_sub": "A few readings change about every 6 seconds",
+    "menu_off": "Pause live readings",
+    "menu_off_sub": "Readings stay as they are until you resume",
+    "menu_hour": "Play the next hour at 60x",
+    "menu_hour_sub": "One demo minute per second: resets, a cooldown, an auto-switch",
+    "menu_now": "Back to now",
+    "menu_now_sub": "Return to the current readings",
+    "menu_foot": "Demo readings from the concept's demo engine. No real account is read.",
+    "demo_time": "Demo time {time}"
   }
 }

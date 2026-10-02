@@ -32,6 +32,11 @@
     return { cols: cols, th: PMU.roster.thresholds() };
   };
   var WIN_WORD = { fiveHour: '5H', weekly: 'WK', monthly: 'MO', daily: 'DAY' };
+  /* a tower's fill offset (translateY %, of the track's height) and its --v (0-100, one decimal) */
+  function colDetail(c) { var w = c.w; return C.fmt(w.pct, 'pct') + ' used · ' + C.fmt(Math.max(0, 100 - w.pct), 'pct') + ' left · ' + F.resetLine(w).text + ' · ' + PMU.fmt.truth(w.truth) + (w.est ? ' · estimated' : '') + ' · ' + c.a.ageText; }
+  function skyOff(pct) { return +(100 - Math.max(1.5, Math.min(100, pct))).toFixed(2); }
+  function skyV(pct) { return +Math.max(0, Math.min(100, pct)).toFixed(1); }
+  C.skyOff = skyOff; C.skyV = skyV;
   function skySig(m) {
     m = m || C.skylineModel();
     return JSON.stringify([m.th.auto, m.th.switchLeft, m.th.warnLeft, m.cols.map(function (c) { return [c.p.id, c.a.key, c.w.key, c.w.pct, c.w.truth, c.w.resetAt ? shortReset(c.w) : '']; })]);
@@ -39,12 +44,13 @@
   /* the reset under a gauge in one short word: "1h41" today, "Tue" this week, "Nov 1" later, "-" unknown */
   function shortReset(w) {
     if (!w.resetAt || w.truth === 'unknown') return '-';
-    var ms = w.resetAt - Date.now(); if (ms <= 0) return 'now';
+    var ms = w.resetAt - PMU.clock.now(); if (ms <= 0) return 'now';
     if (ms < 86400000) { var h = Math.floor(ms / 3600000), m = Math.floor(ms % 3600000 / 60000); return h ? h + 'h' + (m < 10 ? '0' : '') + m : m + 'm'; }
     return ms < 6 * 86400000 ? F.day(w.resetAt) : F.date(w.resetAt);
   }
   var skyImpl;
   C.kind('skyline', skyImpl = {
+    liveSig: function () { return skySig(); },
     render: function (body, ctx) {
       var m = C.skylineModel(), cols = m.cols, th = m.th;
       if (!body._pmuDry) body._pmuSkySig = skySig(m);
@@ -62,16 +68,23 @@
       body.innerHTML = '<div class="pmu-sky">' + head + '<div class="pmu-skyplot" style="--sky-h:' + plotH + 'px;grid-template-columns:repeat(' + n + ',minmax(0,1fr))">' +
         shown.map(function (c, i) {
           var w = c.w, r = C.ramp(w.pct), rl = F.resetLine(w);
-          var hv = C.hover(c.p.name + ' · ' + c.a.nickname + ' · ' + w.label, C.fmt(w.pct, 'pct') + ' used · ' + C.fmt(Math.max(0, 100 - w.pct), 'pct') + ' left · ' + rl.text + ' · ' + PMU.fmt.truth(w.truth) + (w.est ? ' · estimated' : '') + ' · ' + c.a.ageText);
-          return '<div class="pmu-skycol" data-ramp="' + r + '" data-i="' + i + '" data-prov="' + esc(c.p.id) + '" data-acct="' + esc(c.a.key) + '" role="button" tabindex="0"' + hv + '>' +
-            '<span class="pmu-skyval"><b class="pmu-num" data-v="' + w.pct + '">' + esc(C.numOnly(w.pct, w.pct < 10 && w.pct % 1 ? 'pct1' : 'pct')) + '</b><i>%</i></span>' +
-            '<span class="pmu-skytrack' + (w.est ? ' is-est' : '') + '"><i class="pmu-skyfill" style="height:' + Math.max(1.5, Math.min(100, w.pct)) + '%"></i></span>' +
-            '<span class="pmu-skyfoot">' + PMU.mark(c.p.id, 16) + '<b>' + esc(WIN_WORD[w.key] || w.short.slice(0, 3).toUpperCase()) + '</b></span>' +
+          var hv = C.hover(c.p.name + ' · ' + c.a.nickname + ' · ' + w.label, colDetail(c));
+          var key = 'win:' + c.a.key + '/' + w.key, off = skyOff(w.pct);
+          /* WOW-TASKS-3 N3-7: --v (the used value) drives the spectrum; the fill and its rider move by translateY in a
+             clipped track (never by height); N3-1: the track is the window's share, the value its share text */
+          return '<div class="pmu-skycol" data-ramp="' + r + '" style="--v:' + skyV(w.pct) + '" data-i="' + i + '" data-prov="' + esc(c.p.id) + '" data-acct="' + esc(c.a.key) + '" data-win="' + esc(w.key) + '" role="button" tabindex="0"' + hv + '>' +
+            '<span class="pmu-skyval" data-share-v="' + esc(key) + '"><b class="pmu-num" data-v="' + w.pct + '">' + esc(C.numOnly(w.pct, w.pct < 10 && w.pct % 1 ? 'pct1' : 'pct')) + '</b><i>%</i></span>' +
+            '<span class="pmu-skytrack' + (w.est ? ' is-est' : '') + '" data-share="' + esc(key) + '" data-share-dir="v"><span class="pmu-skyclip"><i class="pmu-skyfill" style="transform:translateY(' + off + '%)"><i class="pmu-skyheat"></i><i class="pmu-skyflare"></i></i></span></span>' +
+            '<span class="pmu-skyfoot">' + C.shareMark(c.p.id, 16) + '<b>' + esc(WIN_WORD[w.key] || w.short.slice(0, 3).toUpperCase()) + '</b></span>' +
             '<span class="pmu-skyreset">' + esc(shortReset(w)) + '</span></div>';
         }).join('') +
         '<i class="pmu-skyswitch"' + (th.auto ? '' : ' data-off') + ' data-at="' + swAt + '" style="bottom:calc(var(--sky-foot) + ' + (swAt / 100) + ' * var(--sky-h))"><span>' + (th.auto ? swAt + '%' : 'OFF') + '</span></i>' +
+        '<i class="pmu-skyfront" style="bottom:calc(var(--sky-foot) + ' + (swAt / 100) + ' * var(--sky-h))"></i>' +
         '</div>' + (cols.length > n ? C.more(cols.length - n, 'windows', false, cols.slice(n).map(function (c) { return c.p.name + ' · ' + c.a.nickname + ' · ' + c.w.label + ' ' + C.fmt(c.w.pct, 'pct') + ' used · ' + F.resetLine(c.w).text; })) : '') + '</div>';
       if (body._pmuDry) return;
+      /* the plot's geometry for the beats and the toggle (no layout read later): the line runs from -4 px to the plot's
+         width less 34 px; the body is the plot's width */
+      body._pmuSky = { plotH: plotH, plotW: bw, n: n };
       body.querySelector('.pmu-skyplot').addEventListener('click', function (event) {
         var col = event.target.closest('.pmu-skycol'); if (!col) return;
         if (PMU.accounts) PMU.accounts.inspect(col.getAttribute('data-acct'), col);
@@ -84,6 +97,9 @@
       var plot = body.querySelector('.pmu-skyplot'); if (!plot) return false;
       /* nothing the skyline shows changed: keep it as it is (a cheap check before the dry render) */
       var dsig = skySig(); if (body._pmuSkySig === dsig) return true;
+      /* a live beat that only moves readings (same towers in the same order, same switch line): each tower is patched
+         from the model directly (no dry render: the VM budget of a beat is 8 ms) */
+      if (fastLive(body, plot, ctx)) { body._pmuSkySig = dsig; return true; }
       var dry = document.createElement('div'); dry._pmuDry = true;
       try { skyImpl.render(dry, ctx); } catch (error) { return false; }
       var norm = function (root) {
@@ -92,71 +108,194 @@
         return c.innerHTML.replace(/ (?:style|data-ramp|data-off|data-at|data-v|data-pm-hover-[a-z-]+|aria-describedby|aria-label|data-tone)(?:="[^"]*")?/g, '');
       };
       var next = dry.querySelector('.pmu-skyplot'); if (!next || norm(next) !== norm(plot)) return false;
-      var f = fam(), st = stepped(), trackH = 0;
+      var f = fam(), st = stepped();
       Array.prototype.forEach.call(next.querySelectorAll('.pmu-skycol'), function (c1, i) {
         var c0 = plot.querySelectorAll('.pmu-skycol')[i]; if (!c0) return;
-        ['data-ramp', 'data-pm-hover-label', 'data-pm-hover-detail'].forEach(function (a) { c0.setAttribute(a, c1.getAttribute(a) || ''); });
-        var f0 = c0.querySelector('.pmu-skyfill'), f1 = c1.querySelector('.pmu-skyfill');
-        var h0 = parseFloat(f0.style.height), h1 = parseFloat(f1.style.height);
-        if (isFinite(h0) && isFinite(h1) && Math.abs(h0 - h1) > 0.05) {
-          if (!trackH) trackH = f0.parentNode.clientHeight;
-          f0.style.height = f1.style.height;
-          M.animate(f0, [{ transform: 'translateY(' + ((h1 - h0) / 100 * trackH).toFixed(1) + 'px)' }, { transform: 'none' }], { dur: 520, easing: st ? 'steps(5,jump-start)' : E('roll', 'cubic-bezier(.16,1,.3,1)') });
-        }
-        var n0 = c0.querySelector('.pmu-num'), n1 = c1.querySelector('.pmu-num');
-        var v0 = parseFloat(n0.getAttribute('data-v')), v1 = parseFloat(n1.getAttribute('data-v'));
-        if (isFinite(v0) && isFinite(v1) && v0 !== v1) { n0.setAttribute('data-v', String(v1)); M.countUp(n0, v0, v1, function (v) { return C.numOnly(v, v1 < 10 && v1 % 1 ? 'pct1' : 'pct'); }, { dur: 'value' }); C.flashRow(c0); }
+        ['data-pm-hover-label', 'data-pm-hover-detail'].forEach(function (a) { c0.setAttribute(a, c1.getAttribute(a) || ''); });
+        moveTower(c0, c1, ctx, { flash: ctx.reason !== 'live', final: !!ctx.liveFinal });
       });
-      var s0 = plot.querySelector('.pmu-skyswitch'), s1 = next.querySelector('.pmu-skyswitch');
-      if (s0 && s1) {
-        var a0 = +s0.getAttribute('data-at'), a1 = +s1.getAttribute('data-at');
-        if (a0 !== a1) {
-          var skyH = parseFloat(getComputedStyle(plot).getPropertyValue('--sky-h')) || 0;
-          s0.setAttribute('style', s1.getAttribute('style')); s0.setAttribute('data-at', String(a1));
-          /* kept on the element (_pmuSlides) so the Settings ripple retimes it without getAnimations() (NOTES3-perf C2) */
-          s0._pmuSlides = [M.animate(s0, [{ transform: 'translateY(' + ((a1 - a0) / 100 * skyH).toFixed(1) + 'px)' }, { transform: 'none' }], { dur: st ? 160 : 320, easing: st ? 'steps(4,jump-start)' : 'cubic-bezier(.2,.8,.2,1)' })];
-        }
-        if (s0.hasAttribute('data-off') !== s1.hasAttribute('data-off')) {
-          var off = s1.hasAttribute('data-off'); s0.toggleAttribute('data-off', off);
-          s0._pmuSlides = (s0._pmuSlides || []).concat([M.animate(s0, off ? [{ opacity: 1 }, { opacity: 0.3 }] : [{ opacity: 0.3 }, { opacity: 1 }], { dur: st ? 120 : 240, easing: st ? 'steps(3,jump-start)' : 'cubic-bezier(.2,.8,.2,1)' })]);
-        }
-        var l0 = s0.querySelector('span'), l1 = s1.querySelector('span'); if (l0 && l1 && l0.textContent !== l1.textContent) l0.textContent = l1.textContent;
-      }
+      var s1 = next.querySelector('.pmu-skyswitch');
+      if (s1) patchSwitch(body, plot, +s1.getAttribute('data-at'), s1.hasAttribute('data-off'), (s1.querySelector('span') || {}).textContent || '', ctx);
       var h0 = body.querySelector('.pmu-herohead'), hh = dry.querySelector('.pmu-herohead');
       if (h0 && hh) {
-        var sb0 = h0.querySelector('.pmu-herosub'), sb1 = hh.querySelector('.pmu-herosub'); if (sb0 && sb1 && sb0.innerHTML !== sb1.innerHTML) { sb0.innerHTML = sb1.innerHTML; M.animate(sb0, [{ opacity: 0.25 }, { opacity: 1 }], { dur: 160 }); }
+        var sb0 = h0.querySelector('.pmu-herosub'), sb1 = hh.querySelector('.pmu-herosub'); if (sb0 && sb1 && sb0.innerHTML !== sb1.innerHTML) { C.setHtml(sb0, sb1.innerHTML); if (!ctx.liveFinal) M.animate(sb0, [{ opacity: 0.25 }, { opacity: 1 }], { dur: 160 }); }
         var hn = h0.querySelector('.pmu-num[data-k]'), hn1 = hh.querySelector('.pmu-num[data-k]');
-        if (hn && hn1) { var o = parseFloat(hn.getAttribute('data-v')), z = parseFloat(hn1.getAttribute('data-v')); if (isFinite(o) && isFinite(z) && o !== z) { hn.setAttribute('data-v', String(z)); M.countUp(hn, o, z, function (v) { return C.numOnly(v, 'pct'); }, { dur: 'value' }); } }
+        if (hn && hn1) { var o = parseFloat(hn.getAttribute('data-v')), z = parseFloat(hn1.getAttribute('data-v')); if (isFinite(o) && isFinite(z) && o !== z) { hn.setAttribute('data-v', String(z)); if (ctx.liveFinal) hn.textContent = C.numOnly(z, 'pct'); else M.countUp(hn, o, z, function (v) { return C.numOnly(v, 'pct'); }, { dur: 'value' }); } }
+        if (h0.getAttribute('data-tone') !== hh.getAttribute('data-tone')) { if (hh.getAttribute('data-tone')) h0.setAttribute('data-tone', hh.getAttribute('data-tone')); else h0.removeAttribute('data-tone'); }
         var lb0 = h0.querySelector('.pmu-herolabel'), lb1 = hh.querySelector('.pmu-herolabel'); if (lb0 && lb1 && lb0.textContent !== lb1.textContent) lb0.textContent = lb1.textContent;
       }
       body._pmuSkySig = dsig;
       return true;
     },
-    /* the gauges fill bottom-up 40 ms apart (900 ROLL, the head lit), their values roll with them, then the auto-switch
-       line draws across (360, from the axis) and its word fades in (WOW-SPEC 4, Overview) */
+    /* WOW-SPEC-3 7 Overview hero: the towers rise left to right 40 apart (fill 900 ROLL with the lit cap riding the top,
+       transform only); with a GPU each tower's value rolls with it, without one (the no-GPU profile) the values are final
+       (PERF-3: odometer columns only where the light is); the auto-switch line is not drawn here: the room's beat draws it
+       (the scan, 70-rooms-a.js). With no beat (Reduce Motion, a refresh) the line is simply there. */
     enter: function (body, ctx, delay) {
-      var d = delay || 0, st = stepped();
+      var d = delay || 0, st = stepped(), soft = film() && film().soft ? film().soft() : false;
       C.enterAll(body, ctx, d);
       var cols = Array.prototype.slice.call(body.querySelectorAll('.pmu-skycol'));
       var ease = st ? 'steps(6,jump-start)' : E('roll', 'cubic-bezier(.16,1,.3,1)');
       cols.forEach(function (col, i) {
-        var dl = d + 40 * i, fill = col.querySelector('.pmu-skyfill'), num = col.querySelector('.pmu-num');
-        if (fill) M.animate(fill, [{ transform: 'translateY(100%)' }, { transform: 'translateY(0)' }], { dur: 900, delay: dl, easing: ease, fill: 'backwards' });
-        if (num) { var to = parseFloat(num.getAttribute('data-v')); M.countUp(num, 0, to, function (v) { return C.numOnly(v, to < 10 && to % 1 ? 'pct1' : 'pct'); }, { delay: dl, dur: 900 }); }
-        /* a gauge's value is not shown before its own roll starts (no row of zeros waiting) */
-        var val = col.querySelector('.pmu-skyval'); if (val) M.animate(val, [{ opacity: 0 }, { opacity: 1 }], { dur: 160, delay: dl, easing: E('out', 'ease-out'), fill: 'backwards' });
-        var foot = col.querySelector('.pmu-skyfoot');
-        if (foot) M.animate(foot, [{ opacity: 0, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }], { dur: 260, delay: dl + 120, easing: E('out', 'ease-out'), fill: 'backwards' });
+        var dl = d + 40 * i, num = col.querySelector('.pmu-num');
+        var off = C.skyOff(parseFloat(num ? num.getAttribute('data-v') : 0) || 0);
+        var fillEl = col.querySelector('.pmu-skyfill');
+        if (fillEl) M.animate(fillEl, [{ transform: 'translateY(100%)' }, { transform: 'translateY(' + off + '%)' }], { dur: 900, delay: dl, easing: ease, fill: 'backwards' });
+        /* the tower's value appears with its tower (final; WOW-SPEC-3 7: only the hero number rolls, PERF-3: odometer
+           columns only where the light is); without a GPU it is simply there */
+        var val = col.querySelector('.pmu-skyval'); if (val && !soft) M.animate(val, [{ opacity: 0 }, { opacity: 1 }], { dur: 160, delay: dl + 120, easing: E('out', 'ease-out'), fill: 'backwards' });
       });
-      var sw = body.querySelector('.pmu-skyswitch');
-      if (sw) {
-        var at = d + 40 * Math.max(0, cols.length - 1) + 700;
-        M.animate(sw, [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { dur: 360, delay: at, easing: st ? 'steps(6,jump-start)' : E('settle', 'ease-out'), fill: 'backwards' });
-        var lab = sw.querySelector('span');
-        if (lab) M.animate(lab, [{ opacity: 0 }, { opacity: 1 }], { dur: 220, delay: at + 260, easing: E('out', 'ease-out'), fill: 'backwards' });
-      }
     }
   });
+  /* one tower takes a new reading in place (a live beat, a Settings change, a refresh): the fill and its rider move from
+     the old offset to the new one (520 ROLL, compositor transforms); the colour follows the ramp by a cross-fade of the
+     pre-painted heat layer (it holds the old colour and fades out over 300 OUT at the end of the move, NOTES3-perf Q7);
+     a crossing of the warn line flares the cap once; only the changed digits roll (the odometer leaves an unchanged
+     text alone). opts.flash flashes the column (a refresh; a live beat's lead flash is the engine's). */
+  function moveTower(c0, c1, ctx, opts) {
+    var n1 = c1.querySelector('.pmu-num');
+    return moveTowerTo(c0, parseFloat(n1 && n1.getAttribute('data-v')), c1.getAttribute('data-ramp'), ctx, opts);
+  }
+  function moveTowerTo(c0, v1, r1, ctx, opts) {
+    opts = opts || {};
+    var n0 = c0.querySelector('.pmu-num');
+    var v0 = parseFloat(n0 && n0.getAttribute('data-v'));
+    if (!isFinite(v0) || !isFinite(v1) || v0 === v1) return false;
+    var st = stepped(), quiet = M.reduced() || opts.final;
+    var r0 = c0.getAttribute('data-ramp'); r1 = String(r1);
+    var off0 = C.skyOff(v0), off1 = C.skyOff(v1);
+    var moving = Array.prototype.slice.call(c0.querySelectorAll('.pmu-skyfill'));
+    moving.forEach(function (el) { el.style.transform = 'translateY(' + off1 + '%)'; });
+    var heat = c0.querySelector('.pmu-skyheat');
+    if (heat && !quiet && (r0 !== r1 || r1 === '0' || r1 === '1')) {
+      heat.setAttribute('data-ramp', r0); heat.style.setProperty('--v', String(C.skyV(v0)));
+    }
+    c0.setAttribute('data-ramp', r1); c0.style.setProperty('--v', String(C.skyV(v1)));
+    n0.setAttribute('data-v', String(v1));
+    var fmt = v1 < 10 && v1 % 1 ? 'pct1' : 'pct';
+    if (quiet) { n0.textContent = C.numOnly(v1, fmt); return true; }
+    var dur = 520, ease = st ? 'steps(5,jump-start)' : E('roll', 'cubic-bezier(.16,1,.3,1)');
+    moving.forEach(function (el) { M.animate(el, [{ transform: 'translateY(' + off0 + '%)' }, { transform: 'translateY(' + off1 + '%)' }], { dur: dur, easing: ease }); });
+    if (heat && heat.hasAttribute('data-ramp')) M.animate(heat, [{ opacity: 1 }, { opacity: 1, offset: dur / (dur + 300) }, { opacity: 0 }], { dur: dur + 300, easing: 'linear' });
+    var crossed = (+r1 >= 2) && (+r0 < 2);
+    var flare = c0.querySelector('.pmu-skyflare');
+    if (crossed && flare) M.animate(flare, [{ opacity: 0 }, { opacity: 1, offset: 0.35 }, { opacity: 0 }], { dur: 260 * 2, delay: dur - 120, easing: E('out', 'ease-out'), fill: 'backwards' });
+    M.countUp(n0, v0, v1, function (v) { return C.numOnly(v, fmt); }, { dur: 'value' });
+    if (opts.flash) C.flashRow(c0);
+    return true;
+  }
+  C.moveTower = moveTower;
+  /* the auto-switch line takes a new level or state in place (WOW-SPEC-3 9.2): a new level slides 320 SLIDE and the towers
+     now at or past it flare once; off, the line dims with a light front running right to left (360 SLIDE); on, it draws
+     left to right with the scan (520) and the caps flare as the front passes. Animations are kept on the element
+     (_pmuSlides) so the Settings ripple retimes them without getAnimations() (NOTES3-perf C2). */
+  function patchSwitch(body, plot, a1, off1, label, ctx) {
+    var s0 = plot.querySelector('.pmu-skyswitch'); if (!s0) return;
+    var st = stepped(), a0 = +s0.getAttribute('data-at'), fr0 = plot.querySelector('.pmu-skyfront');
+    if (a0 !== a1) {
+      var skyH = (body._pmuSky && body._pmuSky.plotH) || 0, bottom = 'calc(var(--sky-foot) + ' + (a1 / 100) + ' * var(--sky-h))';
+      s0.style.bottom = bottom; s0.setAttribute('data-at', String(a1)); if (fr0) fr0.style.bottom = bottom;
+      s0._pmuSlides = [M.animate(s0, [{ transform: 'translateY(' + ((a1 - a0) / 100 * skyH).toFixed(1) + 'px)' }, { transform: 'none' }], { dur: st ? 160 : 320, easing: st ? 'steps(4,jump-start)' : 'cubic-bezier(.22,1,.36,1)' })];
+      if (!off1 && !M.reduced()) Array.prototype.forEach.call(plot.querySelectorAll('.pmu-skycol'), function (col) {
+        var v = parseFloat(col.querySelector('.pmu-num').getAttribute('data-v')), fl = col.querySelector('.pmu-skyflare');
+        if (fl && v >= a1) M.animate(fl, [{ opacity: 0 }, { opacity: 1, offset: 0.3 }, { opacity: 0 }], { dur: 260, delay: st ? 160 : 260, easing: E('out', 'ease-out'), fill: 'backwards' });
+      });
+    }
+    if (s0.hasAttribute('data-off') !== off1) {
+      s0.toggleAttribute('data-off', off1);
+      s0._pmuSlides = (s0._pmuSlides || []).concat([M.animate(s0, off1 ? [{ opacity: 1 }, { opacity: 0.3 }] : [{ opacity: 0.3 }, { opacity: 1 }], { dur: st ? 120 : off1 ? 360 : 240, easing: st ? 'steps(3,jump-start)' : 'cubic-bezier(.2,.8,.2,1)' })]);
+      if (ctx.reason !== 'live') C.skyScan(body, off1 ? { dir: -1, dur: 360, delay: 180, flare: false } : { dir: 1, dur: 520, delay: 180, draw: true });
+    }
+    var l0 = s0.querySelector('span'); if (l0 && label && l0.textContent !== label) l0.textContent = label;
+  }
+  function fastLive(body, plot, ctx) {
+    var m = C.skylineModel(), sw = plot.querySelector('.pmu-skyswitch');
+    /* the towers in their shown order (a re-rank moves them by CSS order, never in the DOM) */
+    var cols = Array.prototype.slice.call(plot.querySelectorAll('.pmu-skycol')).sort(function (a, z) { return (a.style.order !== '' ? +a.style.order : +a.dataset.i) - (z.style.order !== '' ? +z.style.order : +z.dataset.i); });
+    if (!cols.length || m.cols.length < cols.length || !sw) return false;
+    var keyOf = function (el) { return el.getAttribute('data-acct') + '/' + el.getAttribute('data-win'); };
+    var shown = m.cols.slice(0, cols.length), want = shown.map(function (c) { return c.a.key + '/' + c.w.key; }), have = cols.map(keyOf);
+    if (want.slice().sort().join(',') !== have.slice().sort().join(',')) return false;
+    var more = body.querySelector('.pmu-sky > .pmu-more');
+    if ((m.cols.length > cols.length) !== !!more) return false;
+    /* WOW-SPEC-3 8.4: a tower whose order changes slides sideways to its new slot (FLIP 420 SLIDE, 20 apart); slots from the
+       render's geometry (no layout read) */
+    if (want.join(',') !== have.join(',')) {
+      var g = body._pmuSky || { plotW: 0, n: cols.length }, n = cols.length, pitch = g.plotW ? (g.plotW - 40 - 8 * (n - 1)) / n + 8 : 0, k = 0;
+      var quiet = M.reduced() || ctx.liveFinal, st = stepped();
+      cols.forEach(function (el, oldI) {
+        var newI = want.indexOf(keyOf(el)); el.style.order = String(newI);
+        if (newI !== oldI && pitch && !quiet) M.animate(el, [{ transform: 'translateX(' + ((oldI - newI) * pitch).toFixed(1) + 'px)' }, { transform: 'none' }], { dur: st ? 200 : 420, delay: 20 * (k++), easing: st ? 'steps(4,jump-start)' : 'cubic-bezier(.22,1,.36,1)' });
+      });
+      cols.sort(function (a, z) { return +a.style.order - +z.style.order; });
+    }
+    patchSwitch(body, plot, 100 - m.th.switchLeft, !m.th.auto, m.th.auto ? (100 - m.th.switchLeft) + '%' : 'OFF', ctx);
+    cols.forEach(function (c0, k) {
+      var c = m.cols[k];
+      moveTowerTo(c0, c.w.pct, C.ramp(c.w.pct), ctx, { final: !!ctx.liveFinal, flash: ctx.reason !== 'live' });
+      var det = colDetail(c); if (c0.getAttribute('data-pm-hover-detail') !== det) c0.setAttribute('data-pm-hover-detail', det);
+      var rs = c0.querySelector('.pmu-skyreset'), rt = shortReset(c.w); if (rs && rs.textContent !== rt) rs.textContent = rt;
+    });
+    var h0 = body.querySelector('.pmu-herohead');
+    if (h0) {
+      var tmp = document.createElement('div'), top = m.cols[0], th = m.th;
+      var warnN = m.cols.filter(function (c) { return c.w.pct >= 100 - th.warnLeft; }).length;
+      tmp.innerHTML = C.heroHead(ctx, { value: top.w.pct, fmt: top.w.pct < 10 && top.w.pct % 1 ? 'pct1' : 'pct', label: 'highest window · ' + top.p.name + ' ' + top.w.short.toLowerCase(),
+        sub: b(C.plural(m.cols.length, 'window')) + ' · ' + b(warnN) + ' at or past the warn line · ' + (th.auto ? 'auto-switch at ' + b((100 - th.switchLeft) + '%') : 'auto-switch ' + b('off')),
+        tone: { 2: 'warn', 3: 'crit', 4: 'crit', 5: 'crit' }[C.ramp(top.w.pct)] || null });
+      var hh = tmp.firstChild;
+      var sb0 = h0.querySelector('.pmu-herosub'), sb1 = hh.querySelector('.pmu-herosub'); if (sb0 && sb1 && sb0.innerHTML !== sb1.innerHTML) C.setHtml(sb0, sb1.innerHTML);
+      var lb0 = h0.querySelector('.pmu-herolabel'), lb1 = hh.querySelector('.pmu-herolabel'); if (lb0 && lb1 && lb0.textContent !== lb1.textContent) lb0.textContent = lb1.textContent;
+      if (h0.getAttribute('data-tone') !== hh.getAttribute('data-tone')) { if (hh.getAttribute('data-tone')) h0.setAttribute('data-tone', hh.getAttribute('data-tone')); else h0.removeAttribute('data-tone'); }
+      var hn = h0.querySelector('.pmu-num[data-k]'), o = parseFloat(hn && hn.getAttribute('data-v')), z = top.w.pct;
+      if (hn && isFinite(o) && o !== z) { hn.setAttribute('data-v', String(z)); if (ctx.liveFinal) hn.textContent = C.numOnly(z, 'pct'); else M.countUp(hn, o, z, function (v) { return C.numOnly(v, 'pct'); }, { dur: 'value' }); }
+    }
+    return true;
+  }
+
+  /* the time (0..1 of the duration) at which a cubic-bezier easing reaches a progress p (the light front passing a tower) */
+  function easeInv(cb, p) {
+    if (!cb) return p;
+    var bx = function (u) { return 3 * cb[0] * u * (1 - u) * (1 - u) + 3 * cb[2] * u * u * (1 - u) + u * u * u; };
+    var by = function (u) { return 3 * cb[1] * u * (1 - u) * (1 - u) + 3 * cb[3] * u * u * (1 - u) + u * u * u; };
+    var lo = 0, hi = 1;
+    for (var k = 0; k < 24; k++) { var mid = (lo + hi) / 2; if (by(mid) < p) lo = mid; else hi = mid; }
+    return Math.max(0, Math.min(1, bx((lo + hi) / 2)));
+  }
+  C.easeInv = easeInv;
+  var SLIDE = [0.22, 1, 0.36, 1];
+  /* the light front along the auto-switch line (WOW-SPEC-3 7 Overview beat, 9.2 toggle): dir 1 runs left to right (with
+     draw: the line draws from the left, scaleX on its own layer, 520 SLIDE), dir -1 runs right to left (the toggle off,
+     360 SLIDE); each tower's cap flares once as the front passes it (flare: 'all' | 'past' = only the towers at or past
+     the line | false). Geometry from the render (body._pmuSky), no layout read. Returns the time the front leaves the
+     plot (ms after o.delay). Every animation is created now with its delay (one task). */
+  C.skyScan = function (body, o) {
+    o = o || {};
+    var g = body && body._pmuSky, sw = body && body.querySelector('.pmu-skyswitch'), front = body && body.querySelector('.pmu-skyfront');
+    if (!g || !sw || M.reduced()) return 0;
+    var st = stepped(), dir = o.dir || 1, dur = o.dur || (dir > 0 ? 520 : 360), d = o.delay || 0;
+    var ease = st ? 'steps(8,jump-start)' : 'cubic-bezier(' + SLIDE.join(',') + ')';
+    var span = Math.max(40, g.plotW - 30);
+    if (o.draw) M.animate(sw, [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { dur: dur, delay: d, easing: ease, fill: 'backwards' });
+    if (front && !sw.hasAttribute('data-off') || (front && dir < 0)) {
+      var x0 = -24, x1 = span - 24;
+      M.animate(front, [{ transform: 'translateX(' + (dir > 0 ? x0 : x1) + 'px)', opacity: 0 }, { opacity: 1, offset: 0.12 }, { opacity: 1, offset: 0.82 },
+        { transform: 'translateX(' + (dir > 0 ? x1 : x0) + 'px)', opacity: 0 }], { dur: dur, delay: d, easing: ease, fill: 'backwards' });
+    }
+    if (o.flare !== false) {
+      var cols = Array.prototype.slice.call(body.querySelectorAll('.pmu-skycol')), n = cols.length || 1;
+      var cw = (g.plotW - 40 - 8 * (n - 1)) / n, at = +sw.getAttribute('data-at') || 90;
+      cols.forEach(function (col, i) {
+        var flare = col.querySelector('.pmu-skyflare'); if (!flare || i >= 8) return;   /* the eight highest towers (the beat's 24-animation budget) */
+        if (o.flare === 'past') { var v = parseFloat((col.querySelector('.pmu-num') || {}).getAttribute ? col.querySelector('.pmu-num').getAttribute('data-v') : 0); if (!(v >= at)) return; }
+        var x = i * (cw + 8) + cw / 2 + 4, p = Math.max(0, Math.min(1, x / span));
+        if (dir < 0) p = 1 - p;
+        var t = st ? p : easeInv(SLIDE, p);
+        M.animate(flare, [{ opacity: 0 }, { opacity: 1, offset: 0.3 }, { opacity: 0 }], { dur: 260, delay: d + Math.round(t * dur) - 40, easing: E('out', 'ease-out'), fill: 'backwards' });
+      });
+    }
+    return dur;
+  };
 
   /* ================================================================== attempts (Ledger hero): the attempt timeline */
   /* Details of the hero kinds whose content does not come from a model (CONTENT-3: every reading a card holds is in its
@@ -184,7 +323,7 @@
       var list = D.attempts().slice().sort(function (a, z) { return new Date(a.occurred_at) - new Date(z.occurred_at); });
       if (!list.length) { body.innerHTML = C.empty('No attempts for the selected scope and range', 'Unknown is never shown as zero'); return; }
       var bw = ctx.tier.bw, bh = ctx.tier.bh, c = D.costs();
-      var hrs = c.hours || 24, now = Date.now(), t0 = now - hrs * 3600000;
+      var hrs = c.hours || 24, now = PMU.clock.now(), t0 = now - hrs * 3600000;
       var lanes = []; list.forEach(function (a) { if (lanes.indexOf(a.provider_id) < 0) lanes.push(a.provider_id); });
       var heroOk = bh >= 200;
       var value = function (a) { return (a.charge || 0) + (a.plan_allocation_estimate || 0); };
@@ -303,7 +442,10 @@
       var boxes = Array.prototype.slice.call(body.querySelectorAll('.pmu-flowsrc, .pmu-flowmid, .pmu-flowlab'));
       boxes.forEach(function (bx, i) { M.animate(bx, [{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { dur: 280, delay: d + 22 * i, easing: st ? 'steps(3,jump-start)' : E('out', 'ease-out'), fill: 'backwards' }); });
       var svg = body.querySelector('.pmu-flowsvg');
-      if (svg) M.animate(svg, [{ clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0 0 0)' }], { dur: 900, delay: d + 180, easing: st ? 'steps(10,jump-start)' : E('draw', 'cubic-bezier(.65,0,.35,1)'), fill: 'backwards' });
+      /* a clip reveal is not composited: with a GPU only; without one the bands fade in (one opacity animation, PERF-3) */
+      var soft = film() && film().soft ? film().soft() : false;
+      if (svg && !soft) M.animate(svg, [{ clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0 0 0)' }], { dur: 900, delay: d + 180, easing: st ? 'steps(10,jump-start)' : E('draw', 'cubic-bezier(.65,0,.35,1)'), fill: 'backwards' });
+      else if (svg) M.animate(svg, [{ opacity: 0 }, { opacity: 1 }], { dur: 300, delay: d + 180, easing: E('out', 'ease-out'), fill: 'backwards' });
     }
   });
   var SHORT = { claude: 'Claude', codex: 'Codex', qwen: 'Qwen', gemini: 'Gemini', kimi: 'Kimi', copilot: 'Copilot' };
@@ -320,9 +462,36 @@
      in its headroom tone with its window word and % used; a reset past the horizon waits at the right edge with its
      date; no reset is ever inferred (a window with no known reset shows none) */
   var SHAPE = { fiveHour: 'c', weekly: 'd', monthly: 's' };
+  /* a live beat on the windows line (a reading moved): the markers keep their places (they sit at reset times); each
+     marker's words ("5H 79%") and tone, its bar's tone and the hero's label patch in place; no dry render */
+  function windowsLive(body, ctx) {
+    var now = PMU.clock.now(), span = 7 * 86400000, marks = body.querySelectorAll('.pmu-wmk[data-reset]'), byKey = {}, ok = true;
+    PMU.roster.read().providers.forEach(function (p) {
+      if (!p.effective || !D.settingsInScope(p.id)) return;
+      p.effective.windows.forEach(function (w) { if (w.pct !== null && w.resetAt) byKey[p.effective.key + '/' + Math.round(w.resetAt / 60000)] = { p: p, a: p.effective, w: w }; });
+    });
+    Array.prototype.forEach.call(marks, function (mk) { if (!byKey[mk.getAttribute('data-reset')]) ok = false; });
+    if (!ok || !marks.length) return false;
+    Array.prototype.forEach.call(marks, function (mk) {
+      var it = byKey[mk.getAttribute('data-reset')], w = it.w, r = String(C.ramp(w.pct));
+      var lab = ({ fiveHour: '5H', weekly: 'WK', monthly: 'MO' }[w.key] || w.short.slice(0, 3).toUpperCase()) + ' ' + C.fmt(w.pct, w.pct < 10 && w.pct % 1 ? 'pct1' : 'pct') + (w.resetAt - now > span ? ' · ' + F.date(w.resetAt) : '');
+      var em = mk.querySelector('em'); if (em && em.textContent !== lab) em.textContent = lab;
+      if (mk.getAttribute('data-ramp') !== r) mk.setAttribute('data-ramp', r);
+      var bar = body.querySelector('.pmu-wbar[data-share="win:' + it.a.key + '/' + w.key + '"]'); if (bar && bar.getAttribute('data-ramp') !== r) bar.setAttribute('data-ramp', r);
+      var det = C.fmt(w.pct, 'pct') + ' used · ' + F.resetLine(w).text + ' · ' + PMU.fmt.truth(w.truth); if (mk.getAttribute('data-pm-hover-detail') !== det) mk.setAttribute('data-pm-hover-detail', det);
+    });
+    var all = Object.keys(byKey).map(function (k) { return byKey[k]; }).filter(function (x) { return x.w.resetAt > now && x.w.truth !== 'unknown'; }).sort(function (x, y) { return x.w.resetAt - y.w.resetAt; });
+    var lb = body.querySelector('.pmu-herolabel'), next = all[0];
+    if (lb && next) { var t = 'next reset · ' + next.p.name + ' ' + next.w.short.toLowerCase() + ' · ' + C.fmt(next.w.pct, 'pct') + ' used'; if (lb.textContent !== t) lb.textContent = t; }
+    return true;
+  }
   C.kind('windows', {
+    live: function (body, ctx) { return windowsLive(body, ctx); },
+    liveSig: function () {
+      return JSON.stringify(PMU.roster.read().providers.map(function (p) { return p.effective && D.settingsInScope(p.id) ? [p.id, p.effective.key, p.effective.windows.map(function (w) { return [w.pct, w.resetAt ? Math.round(w.resetAt / 60000) : null, w.truth]; })] : 0; }));
+    },
     render: function (body, ctx) {
-      var lanes = [], now = Date.now(), span = 7 * 86400000, all = [];
+      var lanes = [], now = PMU.clock.now(), span = 7 * 86400000, all = [];
       PMU.roster.read().providers.forEach(function (p) {
         if (!p.effective || !D.settingsInScope(p.id)) return;
         var ms = p.effective.windows.filter(function (w) { return w.pct !== null; }).map(function (w) {
@@ -370,13 +539,13 @@
         var r = C.ramp(m.w.pct), beyond = m.at && m.at - now > span, x = m.at ? (beyond ? 100 : xOf(m.at)) : null;
         if (x === null) return '';
         var lab = labOf(m);
-        return '<i class="pmu-wbar" data-ramp="' + r + '" style="width:' + x.toFixed(2) + '%;z-index:' + (10 - j) + '"></i>' +
-          '<span class="pmu-wmk' + (beyond ? ' is-beyond' : '') + (m.side === 'l' && !beyond ? ' is-left' : '') + (m.side === 'none' ? ' no-label' : '') + '" data-ramp="' + r + '" data-shape="' + (SHAPE[m.w.key] || 'c') + '" style="' + (beyond ? 'right:-6px' : 'left:' + x.toFixed(2) + '%') + '"' +
+        return '<i class="pmu-wbar" data-ramp="' + r + '"' + C.shareAttr('win:' + ln.a.key + '/' + m.w.key) + ' style="width:' + x.toFixed(2) + '%;z-index:' + (10 - j) + '"></i>' +
+          '<span class="pmu-wmk' + (beyond ? ' is-beyond' : '') + (m.side === 'l' && !beyond ? ' is-left' : '') + (m.side === 'none' ? ' no-label' : '') + '" data-ramp="' + r + '" data-shape="' + (SHAPE[m.w.key] || 'c') + '" data-reset="' + esc(ln.a.key + '/' + Math.round(m.at / 60000)) + '" style="' + (beyond ? 'right:-6px' : 'left:' + x.toFixed(2) + '%') + '"' +
           C.hover(ln.p.name + ' · ' + ln.a.nickname + ' · ' + m.w.label, C.fmt(m.w.pct, 'pct') + ' used · ' + F.resetLine(m.w).text + ' · ' + PMU.fmt.truth(m.w.truth)) + '><i></i><em>' + esc(lab) + '</em></span>';
       };
       body.innerHTML = '<div class="pmu-wline">' + head + '<div class="pmu-wplot" style="--lab:' + labW + 'px;--edge:' + edge + 'px;height:' + (lanesN * laneH + axisH) + 'px">' +
         '<div class="pmu-wlanes">' + lanes.slice(0, lanesN).map(function (ln, k) {
-          return '<div class="pmu-wlane" style="top:' + (k * laneH) + 'px;height:' + laneH + 'px" data-acct="' + esc(ln.a.key) + '"><span class="pmu-wlab"' + C.hover(ln.p.name, ln.a.nickname) + '>' + PMU.mark(ln.p.id, 16) +
+          return '<div class="pmu-wlane" style="top:' + (k * laneH) + 'px;height:' + laneH + 'px" data-acct="' + esc(ln.a.key) + '"><span class="pmu-wlab"' + C.hover(ln.p.name, ln.a.nickname) + '>' + C.shareMark(ln.p.id, 16) +
             (labW > 60 ? '<span>' + esc(laneName(ln)) + '</span>' : '') + '</span>' +
             '<span class="pmu-wtrack">' + ln.ms.slice().sort(function (x, y) { return (y.at || 0) - (x.at || 0); }).map(function (m, j) { return mk(m, ln, j); }).join('') + '</span></div>';
         }).join('') + '</div>' +
@@ -387,22 +556,22 @@
         var lane = event.target.closest('.pmu-wlane'); if (lane && PMU.accounts) PMU.accounts.inspect(lane.getAttribute('data-acct'), lane);
       });
     },
-    /* the NOW line drops (260 SETTLE), then the reset markers pop in time order 30 ms apart (POP) (WOW-SPEC 4, Plans) */
+    /* WOW-SPEC-3 7 Plans hero: the NOW line drops (260 SETTLE); each lane's window bars grow from the NOW line 36 apart
+       down the lanes (520 ROLL). The reset markers pop in the room's beat (70-rooms-a.js), so a refresh or Reduce Motion
+       shows them at once. */
     enter: function (body, ctx, delay) {
       var d = delay || 0, st = stepped();
       C.enterAll(body, ctx, d);
-      var nowEl = body.querySelector('.pmu-wnow'); if (nowEl && film() && film().drop) film().drop(nowEl, { from: 24, delay: d });
-      var mks = Array.prototype.slice.call(body.querySelectorAll('.pmu-wmk')).sort(function (a, z) { return (a.style.left ? parseFloat(a.style.left) : 101) - (z.style.left ? parseFloat(z.style.left) : 101); });
-      /* each window's open span grows from NOW (600 ROLL, 30 ms apart down the lanes), its marker pops where it ends */
+      var nowEl = body.querySelector('.pmu-wnow'); if (nowEl && film() && film().drop) film().drop(nowEl, { from: 24, delay: d, dur: 260 });
       Array.prototype.forEach.call(body.querySelectorAll('.pmu-wlane'), function (ln, k) {
         Array.prototype.forEach.call(ln.querySelectorAll('.pmu-wbar'), function (bar) {
-          M.animate(bar, [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { dur: 600, delay: d + 200 + 30 * k, easing: st ? 'steps(6,jump-start)' : E('roll', 'cubic-bezier(.16,1,.3,1)'), fill: 'backwards' });
+          M.animate(bar, [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { dur: 520, delay: d + 200 + 36 * k, easing: st ? 'steps(6,jump-start)' : E('roll', 'cubic-bezier(.16,1,.3,1)'), fill: 'backwards' });
         });
-      });
-      mks.forEach(function (m, i) {
-        M.animate(m, [{ transform: 'scale(0)', opacity: 0 }, { opacity: 1, offset: 0.3 }, { transform: 'scale(1)', opacity: 1 }],
-          { dur: 380, delay: d + 500 + 30 * i, easing: st ? 'steps(3,jump-start)' : E('pop', 'cubic-bezier(.34,1.45,.64,1)'), fill: 'backwards' });
       });
     }
   });
+  /* the hero's reset markers in time order (the soonest first; a reset past the horizon last) */
+  C.windowMarks = function (card) {
+    return Array.prototype.slice.call(card.querySelectorAll('.pmu-wmk')).sort(function (a, z) { return (a.style.left ? parseFloat(a.style.left) : 101) - (z.style.left ? parseFloat(z.style.left) : 101); });
+  };
 })();

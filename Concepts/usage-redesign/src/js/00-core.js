@@ -223,3 +223,39 @@ var PMU = window.PMU = {
     return '<span class="pmu-ico' + (cls ? ' ' + cls : '') + '" aria-hidden="true">' + (SVG[name] || SVG.grid) + '</span>';
   }
 };
+
+/* PMU.flags (WOW round 3, DECISIONS "Coordinator defaults pending Jared's answer"): every open question to Jared is
+   built behind one switch, so his answer is a one-line change of PMU_FLAG_DEFAULTS. Review films override them in the
+   URL: ?pmu-flags=live:0,heroLight:0 (names case-insensitive; aliases: hour = playHour, roll = heroRoll,
+   light / hero = heroLight, ramp = spectrum; values 1/0, on/off, true/false). Each flag is also written on #pmuApp as
+   data-pmu-f-<lowercase name>="1" | "0" so CSS can branch (e.g. #pmuApp[data-pmu-f-spectrum="0"]). Read once at boot;
+   PMU.flags is frozen. */
+var PMU_FLAG_DEFAULTS = { live: true, playHour: true, heroRoll: true, spectrum: true, heroLight: true };
+PMU.flags = (function () {
+  var flags = {}, alias = { hour: 'playHour', playhour: 'playHour', roll: 'heroRoll', heroroll: 'heroRoll', light: 'heroLight', hero: 'heroLight', herolight: 'heroLight', ramp: 'spectrum', spectrum: 'spectrum', live: 'live' };
+  Object.keys(PMU_FLAG_DEFAULTS).forEach(function (k) { flags[k] = PMU_FLAG_DEFAULTS[k]; });
+  try {
+    var m = /[?&]pmu-flags=([^&#]*)/.exec(location.search);
+    if (m) decodeURIComponent(m[1]).split(',').forEach(function (pair) {
+      var kv = pair.split(':'), key = alias[String(kv[0] || '').trim().toLowerCase()], v = String(kv[1] == null ? '1' : kv[1]).trim().toLowerCase();
+      if (key) flags[key] = !(v === '0' || v === 'off' || v === 'false' || v === 'no');
+    });
+  } catch (error) {}
+  if (app) Object.keys(flags).forEach(function (k) { app.setAttribute('data-pmu-f-' + k.toLowerCase(), flags[k] ? '1' : '0'); });
+  return Object.freeze(flags);
+})();
+
+/* PMU.clock (WOW-SPEC-3 8.6, WOW-TASKS-3 P3-1; flag playHour): the one indirection every "now" of the page goes through
+   (10-fmt.js, and the model's projections). It is the real clock until "Play the next hour" runs the demo clock ahead;
+   "Back to now" returns it. Nothing in DATA or Settings changes. */
+PMU.clock = (function () {
+  var offset = 0;
+  return {
+    now: function () { return Date.now() + offset; },
+    date: function () { return new Date(Date.now() + offset); },
+    offset: function () { return offset; },
+    advance: function (ms) { offset += Math.max(0, Number(ms) || 0); return offset; },
+    reset: function () { offset = 0; },
+    demo: function () { return offset !== 0; }
+  };
+})();

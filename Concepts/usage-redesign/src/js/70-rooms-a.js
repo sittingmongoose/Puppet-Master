@@ -26,20 +26,20 @@
 
   /* ================================================================== Overview */
   def('health', 'overview', { meta: function () { return 'current reading · scope and range do not apply'; }, model: function () {
-    return { value: 92.4, fmt: 'pct1', delta: { v: 1.8, goodWhen: 'up' }, sub: 'provider readings healthy · trust ' + b('current'),
+    return { value: 92.4, fmt: 'pct1', share: 'num:health.score', delta: { v: 1.8, goodWhen: 'up' }, sub: 'provider readings healthy · trust ' + b('current'),
       facts: [['Fresh', '6 / 6'], ['Warnings', '2', { tone: 'warn' }], ['Sync age', '20s'], ['Unpriced', '0.02%'], ['Routes', '6'], ['Policy', 'All routes · within policy']],
       spark: { values: D.series('healthDaily7').values, idx: 1 }, foot: 'All routes · within policy' };
   }, inspect: function () { return C.insp('Usage health', [['Health', '92.4% provider readings healthy (+1.8%)'], ['Freshness', 'current · 6 of 6 fresh · sync 20s ago'], ['Warnings', '2'], ['Unpriced', '0.02% of events (3 events)'], ['Authority', 'provider reported · 20s ago']]); } });
 
   def('month', 'overview', { short: 'Window value', meta: rangeMeta(), model: function (ctx) {
     var c = D.costs();
-    return { value: c.selected, fmt: 'money', sub: b(c.attempts) + (c.attempts === 1 ? ' attempt' : ' attempts') + ' · attempt-backed charge plus plan allocation',
+    return { value: c.selected, fmt: 'money', share: 'num:value.window', sub: b(c.attempts) + (c.attempts === 1 ? ' attempt' : ' attempts') + ' · attempt-backed charge plus plan allocation',
       facts: [['Settled API', money(c.settled)], ['Plan estimate', money(c.plan) + ' est.'], ['Cache estimate', money(c.cache) + ' est.'], ['Pending', String(c.pending), c.pending ? { tone: 'warn' } : {}], ['24h equivalent', money(c.dayEquivalent)], ['Basis', D.rangeLabel(ctx.state.range) + ' selected window']] };
   } });
 
   def('cache-saved', 'overview', { meta: function (ctx) { return 'estimated · ' + D.rangeLabel(ctx.state.range); }, model: function () {
     var c = D.costs();
-    return { value: c.cache, fmt: 'money', sub: b(c.attempts) + (c.attempts === 1 ? ' attempt' : ' attempts') + ' · explicit cache-avoided estimates',
+    return { value: c.cache, fmt: 'money', share: 'num:cache.saved', sub: b(c.attempts) + (c.attempts === 1 ? ' attempt' : ' attempts') + ' · explicit cache-avoided estimates',
       facts: [['Cache read', F.tok(c.cacheRead)], ['Cache write', F.tok(c.cacheWrite)], ['Providers', String(c.providers)], ['Authority', 'fixture record estimate'],
         ['30-day read', '6.29M'], ['30-day write', '347k'], ['Best route', 'Codex · 97.2%'], ['Low route', 'Gemini · 84.6%'], ['Read share', '96.8%'], ['30-day gain', '+12.4%']],
       spark: { values: D.series('cacheDaily30').saved, tk: 'cr', idx: 6 } };
@@ -55,7 +55,7 @@
     var ev = null;
     PMU.roster.read().providers.forEach(function (p) {
       if (!p.effective || !D.settingsInScope(p.id)) return;
-      p.effective.windows.forEach(function (w) { if (w.resetAt && w.resetAt > Date.now() && w.truth !== 'unknown' && w.pct !== null && (!ev || w.resetAt < ev.w.resetAt)) ev = { p: p, a: p.effective, w: w }; });
+      p.effective.windows.forEach(function (w) { if (w.resetAt && w.resetAt > PMU.clock.now() && w.truth !== 'unknown' && w.pct !== null && (!ev || w.resetAt < ev.w.resetAt)) ev = { p: p, a: p.effective, w: w }; });
     });
     if (!ev) return { vs: 'unknown', word: 'Reset unknown', sub: 'No effective account reports a reset time' };
     var other = ev.a.windows.filter(function (w) { return w !== ev.w && w.resetAt; })[0];
@@ -130,15 +130,17 @@
 
   def('budget-now', 'overview', { short: 'Budget', meta: function () { return C.budgetModel().periodText + ' · period to date · range does not apply'; }, model: function () { return C.budgetModel(); } });
   C.budgetModel = function () {
-    var S = D.series('spendDaily30'), P = D.series('budgetProjection'), cum = [], s = 0;
+    var S = D.series('spendDaily30'), P = D.series('budgetProjection'), cum = [], s = 0, live = D.ov ? D.ov('spend.month') : 0;
     S.values.forEach(function (v) { s += v; cum.push(Math.round(s * 100) / 100); });
+    /* live: today's spend of the running work (WOW-SPEC-3 8.3) lands on the period-to-date total and today's point */
+    if (live && cum.length) cum[cum.length - 1] = Math.round((cum[cum.length - 1] + live) * 100) / 100;
     var budget = DATA.costs.budget, c = D.costs();
     /* one clock (REVIEW-jared must-fix 8): the fixture is day S.today of a S.days-day budget period that ends with today's
        spend, so the period runs from today - (S.today - 1) days; the axis dates and the period end come from the real
        date, and the Spend chart's 28 days are the same days */
-    var start = new Date(); start.setHours(0, 0, 0, 0); start.setDate(start.getDate() - (S.today - 1));
+    var start = new Date(PMU.clock.now()); start.setHours(0, 0, 0, 0); start.setDate(start.getDate() - (S.today - 1));
     var end = new Date(start.getTime()); end.setDate(end.getDate() + S.days - 1);
-    return { spent: DATA.costs.month, budget: budget, days: S.days, today: S.today, cumulative: cum, periodStart: start.getTime(), periodEnd: end.getTime(),
+    return { spent: Math.round((DATA.costs.month + live) * 100) / 100, budget: budget, share: 'num:spend.month', days: S.days, today: S.today, cumulative: cum, periodStart: start.getTime(), periodEnd: end.getTime(),
       periodText: F.date(start.getTime()) + ' to ' + F.date(end.getTime()),
       projection: { to: P.to, lo: P.lo, hi: P.hi, label: 'est. ' + C.money(P.to) + ' · PM estimate', confidence: P.confidence },
       /* "Forecast used": the projection as a share of the Settings budget (the old meter; its 30x extrapolation is gone,
@@ -164,7 +166,12 @@
     'Vision helper calls raised daily API spend by 18%.',
     'Current pace leaves an estimated 31% left at reset (estimate).'
   ];
-  def('attention-now', 'overview', { meta: function () { return DATA.alerts.filter(function (a) { return a.state === 'warn'; }).length + ' current · scope filters by provider'; }, model: function () {
+  def('attention-now', 'overview', { meta: function () { return (DATA.alerts.filter(function (a) { return a.state === 'warn'; }).length + (D.liveAlerts ? D.liveAlerts().length : 0)) + ' current · scope filters by provider'; }, model: function () {
+    /* live: an alert the demo engine raised while Usage is open arrives at the top (WOW-SPEC-3 8.3 beat 7) */
+    var liveRows = (D.liveAlerts ? D.liveAlerts() : []).filter(function (al) { return !al.provider_id || D.inScope(al.provider_id); }).map(function (al) {
+      return { name: al.title, sub: al.detail, glyph: 'alert', tone: al.state === 'warn' ? 'warn' : 'good', value: 'now', note: C.oldName(al.owner), key: 'alert:' + al.id, share: 'alert:' + al.id, live: true,
+        prov: al.provider_id ? PMU.roster.legacyProvider(al.provider_id) : null, onClick: function () { PMU.shell.setView({ room: 'attention' }, 'attention-now'); } };
+    });
     var rows = DATA.alerts.map(function (al, i) {
       if (al.provider_id && !D.inScope(al.provider_id)) return null;
       /* the alert's board title (no "runway": headroom, not a run-out countdown) and its Settings owner name */
@@ -172,7 +179,7 @@
       return { name: bt, sub: C.alertCopy[i], glyph: al.state === 'warn' ? 'alert' : 'checkCircle', tone: al.state === 'warn' ? 'warn' : 'good', value: al.time === 'now' ? 'now' : al.time + ' ago', note: C.oldName(al.owner),
         prov: al.provider_id ? PMU.roster.legacyProvider(al.provider_id) : null, onClick: function () { PMU.shell.setView({ room: 'attention' }, 'attention-now'); } };
     }).filter(Boolean);
-    return { rows: rows, empty: 'No alerts for the selected scope' };
+    return { rows: liveRows.concat(rows), empty: 'No alerts for the selected scope' };
   } });
 
   def('route-pressure', 'overview', { meta: function () { return 'binding window · relative pace'; }, model: function () {
@@ -180,6 +187,8 @@
       var v = D.planView(p.id), w = v && v.binding;
       return { id: p.id, name: legName(p.id), short: SHORT_NAME[p.id], role: (w ? w.short : p.primaryLabel) + ' · ' + C.pace(p.pace), value: w ? w.pct : p.used, valueText: C.fmt(w ? w.pct : p.used, 'pct') + ' used', valueShort: C.fmt(w ? w.pct : p.used, 'pct'),
         tone: w ? w.tone : PMU.roster.tone(p.used), vendor: PMU.markOf(PMU.roster.legacyProvider(p.id)).vendor, mark: PMU.roster.legacyProvider(p.id), prov: PMU.roster.legacyProvider(p.id),
+        /* N3-1: the row's bar is its provider's binding window (effective account); its mark the provider's */
+        shareKey: w && v.account ? 'win:' + v.account.key + '/' + w.key : null, markShare: 'prov:' + PMU.roster.legacyProvider(p.id),
         hover: (w ? w.label : p.primaryLabel) + ' · ' + C.pace(p.pace) + ' · ' + C.routeEstimate(p) };
     }).sort(function (a, b2) { return b2.value - a.value; });
     return { rows: rows, scale: 100, foot: 'Pace is relative to the 24-hour norm; no run-out times are projected.' };
@@ -279,7 +288,7 @@
   /* ================================================================== Costs */
   def('cost-month', 'costs', { short: 'Window value', meta: rangeMeta(), model: function (ctx) {
     var c = D.costs();
-    return { value: c.selected, fmt: 'money', sub: 'attempt-backed charge plus estimates · ' + b(c.attempts) + (c.attempts === 1 ? ' attempt' : ' attempts') + '',
+    return { value: c.selected, fmt: 'money', share: 'num:value.window', sub: 'attempt-backed charge plus estimates · ' + b(c.attempts) + (c.attempts === 1 ? ' attempt' : ' attempts') + '',
       facts: [['Settled API', money(c.settled)], ['Plan estimate', money(c.plan) + ' est.'], ['24h equivalent', money(c.dayEquivalent)], ['Pending', String(c.pending), c.pending ? { tone: 'warn' } : {}], ['Basis', D.rangeLabel(ctx.state.range)]] };
   } });
   def('cost-api', 'costs', { short: 'Settled API', meta: rangeMeta('settled receipts'), model: function () {
@@ -309,7 +318,7 @@
     while (parts.length > 1 && C.wrapLines(parts.join(' · '), bw - 4, 12.5) > 1) parts.pop();
     return parts.join(' · ');
   }, model: function () {
-    var S = D.series('spendDaily30'), v = S.values, n = v.length, today = new Date(); today.setHours(0, 0, 0, 0);
+    var S = D.series('spendDaily30'), v = S.values, n = v.length, today = new Date(PMU.clock.now()); today.setHours(0, 0, 0, 0);
     var sum = function (k) { return D.sum(v.slice(n - k)); };
     var labels = v.map(function (x, i) { return F.date(today.getTime() - (n - 1 - i) * 86400000); });
     return { labels: labels, values: v, idx: 0, unit: 'usd', highlightLast: true, states: v.map(function (x) { return x === 0 ? 'zero' : 'ok'; }),
@@ -508,43 +517,62 @@
     }) };
   } });
 
-  /* ================================================================== room beats (WOW-SPEC 4, WOW-TASKS N-1) */
+  /* ================================================================== room beats (WOW-SPEC-3 7, WOW-TASKS-3 N3-5)
+     PMU.film.beat(room, fn): fn(b) runs once per arrival / room change when the room's first-screen bodies are built, in
+     one task, with the light budget open; b.at = ms from now when the hero's instruments end (older engines: the hero
+     card's _pmuEnterDelay + b.inner + 900). Every animation is created here with its delay (the compositor plays it);
+     each beat creates at most 24. The chart side of a beat (Costs cone, Analytics NOW halo, Context limit tick, Tools
+     ring, Signals cells) is the hero chart's own entrance (charts C3-6). */
+  C.beatT = function (b, hero, fallback) { return b && typeof b.at === 'number' ? b.at : C.beatAt(b, hero, fallback == null ? 900 : fallback); };
   if (PMU.film && PMU.film.beat) {
-    var FB = PMU.film;
-    /* Overview: the skyline's gauges fill left to right and its auto-switch line draws (its own entrance); when the
-       tiles have rolled one light crosses them, then the skyline's hero number catches the light */
+    var FB = PMU.film, M = PMU.motion;
+    var famNow = function () { return M.family ? M.family() : 'basic'; };
+    var popEase = function () { return /retro|nier/.test(famNow()) ? 'steps(3,jump-start)' : 'cubic-bezier(.34,1.45,.64,1)'; };
+    /* Overview: the line scans the skyline. The auto-switch line draws left to right (520 SLIDE) with a light front in the
+       warn tone riding its end; each tower's cap flares as the front passes; the front leaves the skyline at its right edge
+       and goes on as the sweep across the KPI tiles beside it (70 apart, 650 OUT): one light crosses the top of the room */
     FB.beat('overview', function (b) {
-      var tiles = C.byPos(C.beatCards(b, function (c) { return c.getAttribute('data-kind') === 'kpi' && +c.dataset.y < 12; }));
-      var t0 = 0; tiles.forEach(function (c) { t0 = Math.max(t0, C.beatAt(b, c, 900)); });
-      tiles.forEach(function (c, i) { FB.sweep(c, { delay: t0 + 70 * i }); });
-      var sky = C.beatCard(b, 'ov-skyline');
-      if (sky) { var n = sky.querySelectorAll('.pmu-skycol').length; C.sweepHero(b, sky, 40 * n + 1100); }
+      var sky = C.beatCard(b, 'ov-skyline'), at = C.beatT(b, sky), body = sky && sky.querySelector('.pmu-cardbody');
+      var dur = body && C.skyScan ? C.skyScan(body, { delay: at, dir: 1, draw: true }) : 0;
+      var leave = at + (dur && C.easeInv ? Math.round(C.easeInv([0.22, 1, 0.36, 1], 0.92) * dur) : 0);
+      var bottom = sky ? +sky.dataset.y + +sky.dataset.h : 12;
+      var tiles = C.byPos(C.beatCards(b, function (c) { return c.getAttribute('data-kind') === 'kpi' && +c.dataset.y < bottom; })).slice(0, 4);
+      /* 60 apart and 560 long so the light has left the room by about T0 + 1.8 s (N3-5) */
+      tiles.forEach(function (c, i) { FB.sweep(c, { delay: leave + 60 * i, dur: 560 }); });
     });
-    /* Plans & limits: the windows line's NOW drops and its reset markers pop in time order (the hero's own entrance);
-       then its next-reset time catches the light and one light crosses the plan cards */
+    /* Plans & limits: the reset markers pop left to right 30 apart (POP 260); then the soonest marker gets one halo and its
+       line in the reset map flashes once: the hero points at the agenda */
     FB.beat('plans', function (b) {
-      var tl = C.beatCard(b, 'plans-timeline');
-      if (tl) C.sweepHero(b, tl, 420 + 30 * tl.querySelectorAll('.pmu-wmk').length);
-      var plans = C.byPos(C.beatCards(b, function (c) { return c.getAttribute('data-kind') === 'limit'; }));
-      var t1 = 0; plans.forEach(function (c) { t1 = Math.max(t1, C.beatAt(b, c, 1000)); });
-      plans.forEach(function (c, i) { FB.sweep(c, { delay: t1 + 70 * i }); });
-    });
-    /* Costs: the burn line draws with its comet and the budget rule follows (the chart's own entrance); then the light
-       crosses the four value tiles and lands on the 52 px month spend */
-    FB.beat('costs', function (b) {
-      var tiles = C.byPos(C.beatCards(b, function (c) { return c.getAttribute('data-kind') === 'kpi' && +c.dataset.y < 4; }));
-      var t0 = 0; tiles.forEach(function (c) { t0 = Math.max(t0, C.beatAt(b, c, 900)); });
-      tiles.forEach(function (c, i) { FB.sweep(c, { delay: t0 + 70 * i }); });
-      C.sweepHero(b, C.beatCard(b, 'budget'), 1300);
-    });
-    /* Accounts: the meters fill down the rows (their own entrance, 40 ms apart); the exhausted row rings and the active
-       light settles on each provider's active row */
-    FB.beat('accounts', function (b) {
-      C.beatCards(b, function (c) { return c.getAttribute('data-kind') === 'provider'; }).forEach(function (c) {
-        var n = c.querySelectorAll('.pmu-meter').length, t = C.beatAt(b, c, 900 + 40 * n);
-        Array.prototype.forEach.call(c.querySelectorAll('.pmu-accrow[data-state="exhausted"]'), function (row) { FB.ring(row, { tone: 'crit', delay: t }); });
-        Array.prototype.forEach.call(c.querySelectorAll('.pmu-accrow.is-eff'), function (row) { FB.flash(row, { delay: t + 120 }); });
+      var tl = C.beatCard(b, 'plans-timeline'); if (!tl) return;
+      var at = C.beatT(b, tl), mks = C.windowMarks ? C.windowMarks(tl) : [];
+      /* 30 apart, the run held to about 360 ms when there are many markers (the beat is over by about T0 + 1.9 s) */
+      var shown = mks.slice(0, 20), gap = Math.min(30, 360 / Math.max(1, shown.length));
+      shown.forEach(function (m, i) {
+        M.animate(m, [{ transform: 'scale(0)', opacity: 0 }, { opacity: 1, offset: 0.3 }, { transform: 'scale(1)', opacity: 1 }], { dur: 260, delay: at + Math.round(gap * i), easing: popEase(), fill: 'backwards' });
       });
+      var soon = mks[0]; if (!soon) return;
+      var t2 = at + Math.round(gap * shown.length) + 80;
+      FB.halo(soon.querySelector('i') || soon, { delay: t2 });
+      var key = soon.getAttribute('data-reset'), rm = C.beatCard(b, 'reset-map');
+      var line = key && rm ? rm.querySelector('[data-share="reset:' + key + '"]') : null;
+      if (line) { if (FB.budget) FB.budget(rm); FB.flash(line, { delay: t2 + 120 }); }
+    });
+    /* Costs: the cone opens and "est. $... by ..." rides its edge; the budget rule draws (the hero chart's own entrance,
+       charts C3-6). The supporting tiles arrive quiet. */
+    FB.beat('costs', function () {});
+    /* Accounts: the active light settles. A soft backlight fades in on each provider plate's active row, plate by plate in
+       reading order 80 apart (420 OUT), then the exhausted rows ring once (WOW-SPEC 3.6 ring) */
+    FB.beat('accounts', function (b) {
+      var hero = C.beatCard(b, 'acct-switch'), at = C.beatT(b, hero), k = 0, out = /retro|nier/.test(famNow()) ? 'steps(3,jump-start)' : 'cubic-bezier(.22,.8,.28,1)';
+      var plates = C.byPos(C.beatCards(b, function (c) { return c.getAttribute('data-kind') === 'provider' && (!PMU.board.inView || PMU.board.inView(c)); }));
+      plates.forEach(function (c) {
+        var lights = c.querySelectorAll('.pmu-accrow.is-eff .pmu-acclight'); if (!lights.length || k >= 12) return;
+        if (FB.budget) FB.budget(c);
+        Array.prototype.forEach.call(lights, function (l) { M.animate(l, [{ opacity: 0 }, { opacity: 1 }], { dur: 420, delay: at + 80 * k, easing: out, fill: 'backwards' }); });
+        k++;
+      });
+      var tEnd = at + 80 * k + 200;
+      plates.forEach(function (c) { Array.prototype.forEach.call(c.querySelectorAll('.pmu-accrow[data-state="exhausted"]'), function (row) { FB.ring(row, { tone: 'crit', delay: tEnd }); }); });
     });
   }
 })();

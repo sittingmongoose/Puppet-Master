@@ -186,7 +186,7 @@ html[data-theme^="retro"] #panel-usage .pmu-mark[data-mark="glow"] { stroke-widt
 #panel-usage .pmu-xband { position: absolute; left: 0; top: 0; width: 0; height: 0; z-index: 1; pointer-events: none; opacity: 0; border-radius: 3px;
   background: linear-gradient(180deg, color-mix(in srgb, var(--accent-primary) 4%, transparent), color-mix(in srgb, var(--accent-primary) 9%, transparent));
   transition: transform calc(140ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1), opacity calc(120ms * var(--pmu-speed, 1)) cubic-bezier(.22,.8,.28,1), width calc(140ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1); }
-#panel-usage .pmu-xh-on .pmu-xband { opacity: 1; }
+#panel-usage .pmu-xband.is-on { opacity: 1; }
 #panel-usage .pmu-xdot { position: absolute; left: 0; top: 0; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: var(--pmu-card);
   border: 2px solid var(--c, var(--pmu-ink)); box-sizing: border-box; opacity: 0; pointer-events: none; z-index: 4;
   transition: transform calc(140ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1), opacity calc(140ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1), scale calc(160ms * var(--pmu-speed, 1)) cubic-bezier(.34,1.45,.64,1); scale: .8; }
@@ -216,9 +216,10 @@ html[data-theme="glass-light"] #panel-usage .pmu-readout { background: #FBFCFE; 
 #panel-usage .pmu-ro-sep { height: 1px; margin: 5px 0; background: var(--pmu-rule-2); }
 #panel-usage .pmu-readout p { margin: 6px 0 0; font-size: 12px; line-height: 1.35; color: var(--pmu-ink-3); white-space: normal; overflow-wrap: break-word; }
 #panel-usage .pmu-readout strong { white-space: normal; }
-#panel-usage .pmu-xh-on .pmu-xh, #panel-usage .pmu-xh-on .pmu-xdot, #panel-usage .pmu-readout.is-on { opacity: 1; }
-#panel-usage .pmu-xh-on .pmu-xh { opacity: .55; }
-#panel-usage .pmu-xh-instant .pmu-xh, #panel-usage .pmu-xh-instant .pmu-xdot, #panel-usage .pmu-readout.is-instant { transition: opacity 140ms cubic-bezier(.2,.8,.2,1); }
+/* the state sits on the elements that change, never on the plot box (round 3: a class on the box restyled its subtree) */
+#panel-usage .pmu-xdot.is-on, #panel-usage .pmu-readout.is-on { opacity: 1; }
+#panel-usage .pmu-xh.is-on { opacity: .55; }
+#panel-usage :is(.pmu-xh, .pmu-xdot, .pmu-xband).is-instant, #panel-usage .pmu-readout.is-instant { transition: opacity 140ms cubic-bezier(.2,.8,.2,1); }
 
 /* ---------- meters (A1 6): value line, quiet track with quarter ticks, sliding-window fill with the wash, the notch ---------- */
 #panel-usage .pmu-meter { container-type: inline-size; display: flex; flex-direction: column; min-width: 0; --mt: 8px; --mr: 4px; --ni: 4px; }
@@ -314,6 +315,7 @@ html[data-theme$="-light"] #panel-usage .pmu-meter[data-ramp="1"] { --c: color-m
 /* the name keeps its width (up to the row) and the muted role line gives way first */
 #panel-usage .pmu-rkt { flex: 0 1 auto; min-width: 0; }
 #panel-usage .pmu-rkname .pmu-pmark { flex: none; }
+#panel-usage .pmu-rkmark { display: inline-flex; flex: none; }
 #panel-usage .pmu-rkval { grid-area: val; display: inline-flex; align-items: baseline; gap: 6px; white-space: nowrap; }
 #panel-usage .pmu-rkval b { font-size: 13px; font-weight: 620; }
 #panel-usage .pmu-rkval em { font-style: normal; font-size: 12px; color: var(--pmu-ink-3); }
@@ -389,7 +391,7 @@ html[data-theme^="retro"] #panel-usage .pmu-sweep-glint { border-radius: 0; back
 #panel-usage .pmu-dc-c { margin-top: 3px; font-size: 12px; line-height: 1.3; color: var(--pmu-ink-3); overflow-wrap: anywhere; }
 #panel-usage .pmu-dlegend { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1 1 auto; align-self: stretch; justify-content: center; }
 #panel-usage .pmu-c-donut[data-side="0"] .pmu-dlegend { width: 100%; }
-#panel-usage .pmu-dl-row { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto 52px; gap: 9px; align-items: center; padding: 5px 8px; border-radius: 7px;
+#panel-usage .pmu-dl-row { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto var(--dl-share, 52px); gap: 9px; align-items: center; padding: 5px 8px; border-radius: 7px;
   font-size: 12.5px; font-variant-numeric: tabular-nums; transition: background-color 140ms cubic-bezier(.2,.8,.2,1); }
 #panel-usage .pmu-dl-row:hover, #panel-usage .pmu-dl-row.is-hot { background: var(--pmu-row-hover); }
 #panel-usage .pmu-dl-n { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -692,3 +694,99 @@ html[data-o55-nier="on"] #panel-usage .pmu-callring { border-color: var(--pmu-in
 #panel-usage .pmu-readout { width: max-content; }
 #panel-usage .pmu-ro-row { white-space: normal; }
 #panel-usage .pmu-ro-row > span { overflow: visible; text-overflow: clip; overflow-wrap: break-word; line-height: 1.3; }
+
+/* =====================================================================================================================
+   ROUND 3 (WOW-SPEC-3 4.5 and 4.6, WOW-TASKS-3 C3-1 and C3-2): the calm ramp, meters and rows at rest. Static paint:
+   nothing here animates. Tokens (--pmu-l-r0/r1/r2, --pmu-l-track-in, --pmu-l-tip) come from 00-base.css per family.
+   ===================================================================================================================== */
+/* ---------- the calm ramp: below the warn line a "% used" reading shades continuously by its value (--v, 0-100, written
+   by 34-charts-bars.js and by content through PMU.charts.rampAttr / rampVar): indigo -> cyan below 50, cyan -> mint from
+   50 to 79; the Settings thresholds take over above (amber, red-orange, red, magenta). Behind the spectrum flag
+   (#pmuApp[data-pmu-f-spectrum="0"] keeps the calm teal / cyan of round 2); NieR keeps its ink. ---------- */
+html:not([data-o55-nier="on"]) #panel-usage #pmuApp:not([data-pmu-f-spectrum="0"]) :is(.pmu-meter, .pmu-rk, .pmu-ladrow, .pmu-skycol, .pmu-ramp)[data-ramp="0"],
+html:not([data-o55-nier="on"]) #panel-usage #pmuApp:not([data-pmu-f-spectrum="0"]) .pmu-meterheat[data-step="0"] {
+  --c: color-mix(in oklch, var(--pmu-l-r1) clamp(0%, calc(var(--v, 25) * 2%), 100%), var(--pmu-l-r0)); }
+html:not([data-o55-nier="on"]) #panel-usage #pmuApp:not([data-pmu-f-spectrum="0"]) :is(.pmu-meter, .pmu-rk, .pmu-ladrow, .pmu-skycol, .pmu-ramp)[data-ramp="1"],
+html:not([data-o55-nier="on"]) #panel-usage #pmuApp:not([data-pmu-f-spectrum="0"]) .pmu-meterheat[data-step="1"] {
+  --c: color-mix(in oklch, var(--pmu-l-r2) clamp(0%, calc((var(--v, 65) - 50) * 3.4%), 100%), var(--pmu-l-r1)); }
+html:not([data-o55-nier="on"]) #panel-usage #pmuApp:not([data-pmu-f-spectrum="0"]) :is(.pmu-meter, .pmu-rk, .pmu-ladrow, .pmu-skycol, .pmu-ramp)[data-ramp] { --cb: color-mix(in srgb, #fff 55%, var(--c)); }
+html[data-theme$="-light"]:not([data-o55-nier="on"]) #panel-usage #pmuApp:not([data-pmu-f-spectrum="0"]) :is(.pmu-meter, .pmu-rk, .pmu-ladrow, .pmu-skycol, .pmu-ramp)[data-ramp] { --cb: color-mix(in srgb, #fff 30%, var(--c)); }
+/* a ranked row's bar segments take the row's ramp colour (their own state tone would paint the round-2 teal) */
+html:not([data-o55-nier="on"]) #panel-usage #pmuApp:not([data-pmu-f-spectrum="0"]) .pmu-rk:is([data-ramp="0"], [data-ramp="1"]) .pmu-rkfill > i { --c: inherit; --cb: inherit; }
+
+/* ---------- meters at rest (4.6): recessed track, a fill that brightens toward its lit 3 px tip (the fill is full width and
+   translated, so a short fill shows the bright end and a long one the whole gradient), a specular top line, and a clip
+   that lets the tip's glow out of the track (never out of its left edge, where the translated fill waits) ---------- */
+html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-metertrack { box-shadow: var(--pmu-l-track-in); }
+html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage :is(.pmu-meterfill, .pmu-meterheat) {
+  background-color: transparent;
+  background-image: linear-gradient(90deg, color-mix(in srgb, var(--c) 30%, transparent) 0, color-mix(in srgb, var(--c) 78%, transparent) 55%, var(--c) 100%);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 32%, transparent); }
+html[data-theme$="-light"]:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage :is(.pmu-meterfill, .pmu-meterheat) {
+  background-image: linear-gradient(90deg, color-mix(in srgb, var(--c) 42%, transparent) 0, color-mix(in srgb, var(--c) 82%, transparent) 55%, var(--c) 100%);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 45%, transparent); }
+html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-meterwash { display: none; }
+html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-meterfill::after { width: 3px; background: var(--cb);
+  box-shadow: var(--pmu-l-tip) color-mix(in srgb, var(--c) 75%, transparent); }
+html[data-theme^="glass"]:not([data-o55-nier="on"]) #panel-usage .pmu-meterfill::after { box-shadow: var(--pmu-l-tip) color-mix(in srgb, var(--c) 90%, transparent); }
+html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-meterclip { overflow: visible; clip-path: inset(-12px -14px -12px 0 round var(--mr)); }
+/* estimates keep the hatch and no light (light means measured); missing keeps its dashed empty track */
+html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-meter[data-est] .pmu-meterfill {
+  background-color: var(--c); background-image: repeating-linear-gradient(135deg, var(--pmu-card) 0 2px, transparent 2px 5px); box-shadow: none; }
+html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-meter[data-est] .pmu-meterclip { overflow: hidden; clip-path: none; }
+
+/* ---------- ranked rows (route pressure and every ranked list) and the Accounts ladder at rest: recessed track, a fill
+   that brightens toward its head, a lit head with a short glow past it (estimates: hatch, no glow) ---------- */
+html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-rkbar { box-shadow: var(--pmu-l-track-in); }
+html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-rkfill { overflow: visible; }
+html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-rkfill > i:first-child { border-radius: 3px 0 0 3px; }
+html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-rkfill > i:last-child { border-radius: 0 3px 3px 0; }
+html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-rkfill > i:only-child { border-radius: 3px; }
+html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-rkfill > i:not([data-est]) {
+  background-color: transparent; background-image: linear-gradient(90deg, color-mix(in srgb, var(--c) 35%, transparent), var(--c)); }
+html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-rkfill > i:last-child:not([data-est]) {
+  box-shadow: inset -3px 0 0 var(--cb), 6px 0 10px -4px color-mix(in srgb, var(--c) 80%, transparent); }
+html[data-theme$="-light"]:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-rkfill > i:last-child:not([data-est]) {
+  box-shadow: inset -3px 0 0 var(--cb), 3px 0 5px -3px color-mix(in srgb, var(--c) 70%, transparent); }
+/* the ladder (content writes data-ramp and --v on .pmu-ladrow through PMU.charts.rampAttr / rampVar) */
+html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-ladrow[data-ramp] .pmu-ladtrack { overflow: visible; box-shadow: var(--pmu-l-track-in); }
+html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-ladrow[data-ramp] .pmu-ladfill {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--c) 35%, transparent), var(--c));
+  box-shadow: inset -3px 0 0 var(--cb), 6px 0 10px -4px color-mix(in srgb, var(--c) 80%, transparent); }
+html[data-theme$="-light"]:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-ladrow[data-ramp] .pmu-ladfill {
+  box-shadow: inset -3px 0 0 var(--cb), 3px 0 5px -3px color-mix(in srgb, var(--c) 70%, transparent); }
+
+/* ---------- round 3 marks: the ring's limit tick (Context), incident halos (Signals), the slowest tool's ring anchor
+   (Tools), the live row highlight (ranked re-rank), quiet-grow origins ---------- */
+#panel-usage .pmu-ringtick { position: absolute; left: 50%; width: 2px; margin-left: -1px; z-index: 2; border-radius: 1px; background: var(--pmu-ink);
+  box-shadow: 0 0 0 1.5px var(--pmu-card); pointer-events: auto; }
+html[data-theme="glass-dark"] #panel-usage .pmu-ringtick { box-shadow: 0 0 0 1.5px #2A2140; }
+html[data-theme^="retro"] #panel-usage .pmu-ringtick, html[data-o55-nier="on"] #panel-usage .pmu-ringtick { border-radius: 0; }
+html[data-o55-nier="on"] #panel-usage .pmu-ringtick { background: var(--o55-nier-ink); }
+#panel-usage .pmu-hinc { width: 22px; height: 22px; margin: -11px 0 0 -11px; opacity: 0;
+  background: radial-gradient(circle, color-mix(in srgb, var(--pmu-warn) 55%, transparent) 0, color-mix(in srgb, var(--pmu-warn) 22%, transparent) 45%, transparent 70%);
+  box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--pmu-warn) 70%, transparent); }
+html[data-theme^="retro"] #panel-usage .pmu-hhalo.pmu-hinc, html[data-o55-nier="on"] #panel-usage .pmu-hhalo.pmu-hinc { display: block; border-radius: 0; background: none;
+  box-shadow: 0 0 0 1.5px var(--pmu-warn); }
+html[data-o55-nier="on"] #panel-usage .pmu-hhalo.pmu-hinc { box-shadow: 0 0 0 1.5px var(--o55-nier-ink); }
+#panel-usage .pmu-rtip { position: absolute; top: -4px; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%; pointer-events: none; }
+#panel-usage .pmu-mixbar, #panel-usage .pmu-tbbars { transform-origin: 0 50%; }
+#panel-usage .pmu-rk { position: relative; isolation: isolate; }
+#panel-usage .pmu-rk::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: var(--pmu-row-sel); opacity: 0; pointer-events: none; }
+
+/* ---------- every bar family at rest (WOW-SPEC-3 4 "light in marks"): recessed tracks, fills that brighten toward a lit
+   head with a short glow past it, estimates hatched and unlit; Retro and NieR keep their own (segments, ink) ---------- */
+html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage :is(.pmu-sbbar, .pmu-tb, .pmu-rtrack, .pmu-mixbar, .pmu-splitbar) { box-shadow: var(--pmu-l-track-in); }
+html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage :is(.pmu-tb i, .pmu-rbar) {
+  background-color: transparent; background-image: linear-gradient(90deg, color-mix(in srgb, var(--c) 38%, transparent), var(--c));
+  box-shadow: inset -2px 0 0 var(--cb), 5px 0 9px -4px color-mix(in srgb, var(--c) 75%, transparent); }
+html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-tb.is-tok i { opacity: .55; box-shadow: inset -2px 0 0 var(--cb); }
+html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-sbfill { overflow: visible; }
+html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-sbfill > i:first-child { border-radius: 4px 0 0 4px; }
+html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-sbfill > i:last-child { border-radius: 0 4px 4px 0;
+  box-shadow: inset -2px 0 0 var(--cb), 6px 0 10px -5px color-mix(in srgb, var(--c) 75%, transparent); }
+html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-sbfill > i:only-child { border-radius: 4px; }
+html[data-theme$="-light"]:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage :is(.pmu-tb i, .pmu-rbar, .pmu-sbfill > i:last-child) { box-shadow: inset -2px 0 0 var(--cb); }
+/* the lit column cap carries a short glow above the column on dark themes (static paint) */
+html:not([data-theme$="-light"]):not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-colcap { box-shadow: 0 -2px 8px 0 color-mix(in srgb, var(--c) 60%, transparent); }
+html:not([data-o55-nier="on"]) #panel-usage .pmu-colcap[data-est] { box-shadow: none; }

@@ -65,7 +65,7 @@
   var COMPACT = { xs: 1, s: 1 };
   function axisW(labels) { var m = 0; labels.forEach(function (s) { m = Math.max(m, charts.textW(s, 11, true)); }); return m; }
   /* axes: horizontal gridlines with left (and right) ticks sharing k divisions, unit titles, x ticks and grid */
-  function drawAxes(svg, g) {
+  function drawAxes(svg, g, patch) {
     svg.setAttribute('width', g.W); svg.setAttribute('height', g.H);
     var s = '', i, y;
     for (i = 0; i <= g.ya.k; i++) {
@@ -84,12 +84,17 @@
       if (g.vgrid !== false) s += '<path class="pmu-vgrid' + (tk.major ? ' is-major' : '') + '" d="M' + x + ' ' + g.pad.t + 'V' + (g.pad.t + g.ph) + '"/>';
       s += '<text class="pmu-tick' + (tk.major ? ' is-major' : '') + '" x="' + x + '" y="' + (g.pad.t + g.ph + 20) + '" text-anchor="middle">' + esc(tk.label) + '</text>';
     });
-    svg.innerHTML = s + (g.extra || '');
+    var html = s + (g.extra || '');
+    /* a live patch with the same words costs nothing (no parse) */
+    if (patch) { if (svg._pmuAx !== html) charts.patchSvg(svg, html); } else svg.innerHTML = html;
+    svg._pmuAx = html;
   }
   /* swap the static axes layer on a morph (WOW-SPEC 3.4): the old labels leave first (140 ms IN) and the new ones arrive
      after them (from 150 ms over 220 ms OUT), so two labels never print over each other at a readable opacity; both
      layers are whole SVG roots, so the swap runs on the compositor */
   function swapAxes(f, g, morph) {
+    /* a live change patches the ticks in place (no new layer, no child-list change when the shape is the same) */
+    if (morph === 'live') { drawAxes(f.axes, g, true); return; }
     if (!morph || Mo.reduced()) { drawAxes(f.axes, g); return; }
     var old = f.axes, next = S('svg', { class: 'pmu-axes', 'aria-hidden': 'true' });
     drawAxes(next, g);
@@ -204,6 +209,18 @@
   /* morphs read as data in every family (WOW-SPEC 5): one continuous ease-out, the same on the JS path tween and on the
      WAAPI marks that ride it */
   var MORPH_EASE = 'cubic-bezier(.33,1,.68,1)';
+  /* a live change of an HTML mark layer (end dots, halos): the markup is patched in place and every mark slides from where
+     it was (translate, the morph's ease); returns the number of animations */
+  function slideMarks(layer, html, lo) {
+    var olds = $$(':scope > *', layer).map(function (el) { return [parseFloat(el.style.left), parseFloat(el.style.top)]; }), n = 0;
+    charts.patchHtml(layer, html);
+    $$(':scope > *', layer).forEach(function (el, i) {
+      var o = olds[i]; if (!o) return;
+      var dx = o[0] - parseFloat(el.style.left), dy = o[1] - parseFloat(el.style.top);
+      if (finite(dx) && finite(dy) && (Math.abs(dx) > 0.3 || Math.abs(dy) > 0.3) && Mo.anim(el, [{ translate: r1(dx) + 'px ' + r1(dy) + 'px' }, { translate: '0px 0px' }], 420, (lo && lo.delay) || 0, MORPH_EASE, 'backwards')) n++;
+    });
+    return n;
+  }
   function morphTween(dur, step, done) {
     return PMU.motion.tween({ from: 0, to: 1, dur: dur, ease: 'linear', step: function (v, t) { var x = t == null ? v : t; step(1 - Math.pow(1 - x, 3)); }, done: done });
   }
@@ -224,8 +241,10 @@
     return charts.make('area', host, spec, opts, {
       draw: function (c, first, resized) { drawArea(c, first ? 'first' : resized ? 'resize' : 'redraw'); },
       update: function (c, prev) { drawArea(c, 'morph', prev); },
+      live: function (c, prev, lo) { return liveArea(c, prev, lo); },
       carry: function (c, from) { drawArea(c, 'morph', from.spec); },
-      enter: function (c, delay) { enterPlot(c, delay); }
+      enter: function (c, delay) { enterPlot(c, delay); },
+      beat: function (c, delay) { return areaBeat(c, delay); }
     });
   };
   function areaModel(spec) {
@@ -235,8 +254,17 @@
     var byTk = {}; series.forEach(function (s) { if (s._tk) byTk[s._tk] = s; });
     return { series: series, token: token, n: n, byTk: byTk };
   }
+  /* a live change of the token trend (WOW-SPEC-3 8.4, C3-4): the paths morph (one tween, 420), the end dots slide to the
+     new NOW point and the NOW halo swells once (the lead), cost dots slide; axes and the peak label are patched in place */
+  function liveArea(c, prev, lo) {
+    c._live = lo;
+    try { drawArea(c, lo.still ? 'redraw' : 'live', prev); } finally { c._live = null; }
+    return { anims: lo.still ? 0 : (c._liveAnims || 0) };
+  }
   function drawArea(c, mode, prevSpec) {
     var spec = c.spec, m = areaModel(spec), f = frame(c), tw = tierW(c);
+    var live = mode === 'live';
+    c._liveAnims = 0;
     var compact = !!COMPACT[tw] || c.opts.compact;
     c.el.setAttribute('data-compact', compact ? '1' : '0');
     /* token series stack by type when split is on, or when a widget asks for stacked bands without the split switch
@@ -304,6 +332,13 @@
       pad = { l: 44, r: 14, t: 28, b: 30 };
       ph = Math.max(30, Hh - pad.t - pad.b);
       sc = charts.scales(maxA, maxB, ph);
+      /* a live change keeps the scale while the data still fits under it (the axes never churn on a beat) */
+      if (live && c._geo && c._geo.sc && c._geo.ph === ph && !!c._geo.sc.b === !!sc.b) {
+        var osc = c._geo.sc;
+        if (osc.a.top >= maxA && (!sc.b || osc.b.top >= maxB)) sc = osc;
+        /* it has to grow: the same number of divisions, so the ticks patch their words in place */
+        else sc = { a: osc.a.top >= maxA ? osc.a : charts.nice(maxA * 1.04, osc.a.k), b: !sc.b ? null : osc.b.top >= maxB ? osc.b : charts.nice(maxB * 1.04, osc.b.k) };
+      }
       var labsA = [], labsB = [];
       for (var k = 0; k <= sc.a.k; k++) { labsA.push(charts.fmtAxis(sc.a.step * k, unit, sc.a.step)); if (sc.b) labsB.push(charts.fmtAxis(sc.b.step * k, ov.unit, sc.b.step)); }
       pad.l = Math.max(44, Math.ceil(axisW(labsA.concat([spec.unitTitle || charts.unitTitle(unit)]))) + 14);
@@ -339,7 +374,7 @@
       }
       swapAxes(f, { W: W, H: Hh, pad: pad, pw: pw, ph: ph, ya: sc.a, yb: sc.b, yMin0: true, unitA: spec.unitTitle || charts.unitTitle(unit), unitB: sc.b ? charts.unitTitle(ov.unit) : '',
         ylab: function (i) { return charts.fmtAxis(sc.a.step * i, unit, sc.a.step); }, ylab2: function (i) { return charts.fmtAxis(sc.b.step * i, ov.unit, sc.b.step); },
-        xt: xt, extra: extra }, mode === 'morph');
+        xt: xt, extra: extra }, live ? 'live' : mode === 'morph');
     } else { f.axes.innerHTML = ''; }
     /* plot layer */
     var P = c.P;
@@ -388,12 +423,13 @@
       prev = { W: W, H: Hh, x0: x0, x1: x1, N: prev.N, pad: pad, ph: ph, lv: prev.lv.map(function (row) { return row.map(sy); }), tot: prev.tot.map(sy), base: prev.base.map(sy),
         cs: prev.cs ? prev.cs.map(function (v) { return finite(v) && sc.b && prev.sc && prev.sc.b ? sy(v) : null; }) : null };
     }
-    var morph = mode === 'morph' && prev && prev.W === W && prev.H === Hh && prev.lv.length === lv.length && !Mo.reduced();
+    var morph = (mode === 'morph' || live) && prev && prev.W === W && prev.H === Hh && prev.lv.length === lv.length && !Mo.reduced();
     if (c._tw) { c._tw.cancel(); c._tw = null; }
     if (morph) {
       var from = prev.N === N ? prev : { x0: prev.x0, x1: prev.x1, lv: prev.lv.map(function (row) { return resample(row, N); }), tot: resample(prev.tot, N), base: resample(prev.base, N),
         cs: prev.cs ? resample(prev.cs, N) : null };
-      c._tw = morphTween(520, function (k) {
+      if (live) c._liveAnims++;
+      c._tw = morphTween(live ? 420 : 520, function (k) {
         paintArea(c, {
           x0: from.x0 + (geo.x0 - from.x0) * k, x1: from.x1 + (geo.x1 - from.x1) * k,
           lv: geo.lv.map(function (row, j) { return row.map(function (v, i) { return mix(from.lv[j][i], v, k); }); }),
@@ -401,14 +437,24 @@
           base: geo.base.map(function (v, i) { return mix(from.base[i], v, k); }),
           cs: geo.cs ? geo.cs.map(function (v, i) { return mix(from.cs ? from.cs[i] : v, v, k); }) : null
         }, geo);
-      }, function () { c._tw = null; paintArea(c, geo, geo); if (P.cost && cost) { var cp = costPoints(cost, mids, YB); P.cost.setAttribute('d', cp.length > 1 ? charts.monoD(cp.map(function (q) { return [q.x, q.y]; })) : ''); } rescan(c); });
-      morphCostMarks(c, geo, from, cost, mids, YB);
-    } else { paintArea(c, geo, geo); paintCostMarks(c, geo, cost, mids, YB); }
+      }, function () { c._tw = null; paintArea(c, geo, geo); if (P.cost && cost) { var cp = costPoints(cost, mids, YB); P.cost.setAttribute('d', cp.length > 1 ? charts.monoD(cp.map(function (q) { return [q.x, q.y]; })) : ''); } if (!live) rescan(c); });
+      if (live) liveCostMarks(c, geo, cost, mids, YB);
+      else morphCostMarks(c, geo, from, cost, mids, YB);
+    } else { paintArea(c, geo, geo); if (!live || !liveCostMarks(c, geo, cost, mids, YB, true)) paintCostMarks(c, geo, cost, mids, YB); }
     c._geo = geo;
-    /* end dots and peak label (after a morph they fade in where the morph lands, never over the old shape) */
-    endDots(c, geo, m, totals, cost, Y, YB, mids);
-    peakLabel(c, geo, spec, m, totals, Y, mids, dom, tw);
-    if (morph) [P.endL, f.over].forEach(function (el) { if (el) Mo.anim(el, [{ opacity: 0 }, { opacity: 0, offset: 0.7 }, { opacity: 1 }], 640, 0, Mo.EASE.out, 'none'); });
+    /* the flyer map (C3-5): the token trend repeats on Overview and Analytics (chart:tokens) */
+    if (!compact) {
+      var yTop = sc.a.top, tt0 = dom.t0, tt1 = t1;
+      charts.setFly(c, f.box, c.opts.share || spec.share || (m.token ? 'tokens' : null), { shareEl: f.rv,
+        box: { l: pad.l, t: pad.t, w: pw, h: ph }, domain: { x0: tt0, x1: tt1, y0: 0, y1: yTop },
+        boxOf: function (d) { var l = X(d.x0), r = X(d.x1); return { l: l, t: Y(d.y1), w: r - l, h: Y(d.y0) - Y(d.y1) }; },
+        paths: function () { return P.total ? [P.total, P.glow, P.totalLine] : [P.bands[0], P.edges[0]]; } });
+    }
+    /* end dots and peak label (after a morph they fade in where the morph lands, never over the old shape; a live change
+       slides them in place) */
+    endDots(c, geo, m, totals, cost, Y, YB, mids, live && morph);
+    peakLabel(c, geo, spec, m, totals, Y, mids, dom, tw, live);
+    if (morph && !live) [P.endL, f.over].forEach(function (el) { if (el) Mo.anim(el, [{ opacity: 0 }, { opacity: 0, offset: 0.7 }, { opacity: 1 }], 640, 0, Mo.EASE.out, 'none'); });
     /* hover */
     if (!compact) bindAreaHover(c, geo, m, dom, mids, totals, cost, Y, YB, incSeries, include, t1);
     else if (c._hover) { c._hover.destroy(); c._hover = null; }
@@ -429,7 +475,7 @@
     if (P.cost && cur.cs) P.cost.setAttribute('d', gapLine(cur.x0, cur.x1, cur.cs));
   }
   /* the NOW / last point of each line: a 3.5 px dot with a static 10 px halo (WOW-SPEC 2.4), HTML over the plot */
-  function endDots(c, geo, m, totals, cost, Y, YB, mids) {
+  function endDots(c, geo, m, totals, cost, Y, YB, mids, slide) {
     var P = c.P, s = '';
     var li = lastFinite(totals);
     if (geo.token && li >= 0) s += charts.dotHtml(mids[li], Y(totals[li]), { tk: 'all' }, { key: 'all', halo: true });
@@ -442,7 +488,43 @@
         if (finite(v)) s += charts.dotHtml(mids[i], Y(v), { idx: m.series[j].idx != null ? m.series[j].idx : j, vendor: m.series[j].vendor }, { key: k, halo: true });
       });
     }
-    P.endL.innerHTML = geo.compact && !c.opts.endDot ? '' : s;
+    var html = geo.compact && !c.opts.endDot ? '' : s;
+    if (slide) {
+      /* live: the dots keep their elements and slide from where they were (translate, the morph's ease); the lead's NOW
+         halo swells once */
+      var olds = $$(':scope > i', P.endL).map(function (el) { return [parseFloat(el.style.left), parseFloat(el.style.top)]; });
+      if (charts.patchHtml && (charts.patchHtml(P.endL, html), true)) {
+        var lo = c._live || {};
+        $$(':scope > i', P.endL).forEach(function (el, i) {
+          var o = olds[i]; if (!o) return;
+          var dx = o[0] - parseFloat(el.style.left), dy = o[1] - parseFloat(el.style.top);
+          if ((Math.abs(dx) > 0.3 || Math.abs(dy) > 0.3) && Mo.anim(el, [{ translate: r1(dx) + 'px ' + r1(dy) + 'px' }, { translate: '0px 0px' }], 420, lo.delay || 0, MORPH_EASE, 'backwards')) c._liveAnims++;
+        });
+        var halo = P.endL.querySelector('.pmu-hhalo');
+        if (halo && lo.lead && charts.swellHalo(halo, (lo.delay || 0) + 120)) c._liveAnims++;
+      }
+      return;
+    }
+    P.endL.innerHTML = html;
+  }
+  /* live cost dots: same count -> they slide to their new place in place; otherwise false (the caller rebuilds) */
+  function liveCostMarks(c, geo, cost, mids, YB, still) {
+    var els = (c._costEls || []).filter(function (el) { return el.isConnected; });
+    if (!cost || geo.compact) return false;
+    var pts = costPoints(cost, mids, YB), real = els.filter(function (el) { return el.getAttribute('data-cost-dot') === '1'; });
+    /* pending markers stay where they are (a bucket's receipts still pending keeps its place); a changed set of recorded
+       buckets or pending markers rebuilds */
+    var pend = (c.spec.cost && c.spec.cost.pending) || [], nPend = 0;
+    cost.forEach(function (v, i) { if (!finite(v) && pend[i] > 0) nPend++; });
+    if (real.length !== pts.length || els.length - real.length !== nPend) { paintCostMarks(c, geo, cost, mids, YB); return true; }
+    var lo = c._live || {};
+    real.forEach(function (el, j) {
+      var p = pts[j], ox = parseFloat(el.style.left), oy = parseFloat(el.style.top);
+      el.style.left = r1(p.x) + 'px'; el.style.top = r1(p.y) + 'px'; el.setAttribute('data-ci', String(p.i));
+      if (!still && (Math.abs(ox - p.x) > 0.3 || Math.abs(oy - p.y) > 0.3) && Mo.anim(el, [{ translate: r1(ox - p.x) + 'px ' + r1(oy - p.y) + 'px' }, { translate: '0px 0px' }], 420, lo.delay || 0, MORPH_EASE, 'backwards')) c._liveAnims++;
+    });
+    if (still && c.P && c.P.cost) c.P.cost.setAttribute('d', pts.length > 1 ? charts.monoD(pts.map(function (q) { return [q.x, q.y]; })) : '');
+    return true;
   }
   /* a range change (WOW-SPEC 3.4, MOTION-REVIEW-2 item 4): the old cost dots shrink away (160 ms), the new ones ride the
      morphing line from where the old line was at their sample (translate on the compositor, the same ease as the path)
@@ -464,13 +546,13 @@
       Mo.anim(el, [{ scale: '0' }, { scale: '1' }], 200, 320, Mo.EASE.out, 'backwards');
     });
   }
-  function peakLabel(c, geo, spec, m, totals, Y, mids, dom, tw) {
+  function peakLabel(c, geo, spec, m, totals, Y, mids, dom, tw, live) {
     var f = c.f;
-    f.over.innerHTML = '';
-    if (geo.compact || spec.peak === false || (tw !== 'm' && tw !== 'l' && tw !== 'xl') || !m.token || geo.ph < 56) return;
+    var put = function (html) { if (live) charts.patchSvg(f.over, html); else f.over.innerHTML = html; };
+    if (geo.compact || spec.peak === false || (tw !== 'm' && tw !== 'l' && tw !== 'xl') || !m.token || geo.ph < 56) { put(''); return; }
     var best = -1;
     totals.forEach(function (v, i) { if (finite(v) && (best < 0 || v > totals[best])) best = i; });
-    if (best < 0 || !(totals[best] > 0)) return;
+    if (best < 0 || !(totals[best] > 0)) { put(''); return; }
     /* a sub-day bucket in a multi-day range names its day too ("Tue 06:00"), the way the card's own Peak fact does */
     var multiDay = dom.x.length > 1 && dom.x[dom.x.length - 1] - dom.x[0] >= 86400000;
     var when = dom.bucket >= 86400000 ? charts.time.md(dom.x[best]) : (multiDay ? charts.time.day(dom.x[best]) + ' ' : '') + charts.time.clock(dom.x[best]);
@@ -499,8 +581,7 @@
     }
     if (!pick) pick = { x: px - 10, y: Math.max(geo.pad.t + 12, py + 4), anchor: 'end' };
     var x = pick.x, anchor = pick.anchor, y = pick.y;
-    var tx = S('text', { class: 'pmu-tick is-peak', x: r1(x), y: r1(y), 'text-anchor': anchor }, f.over);
-    tx.textContent = label;
+    put('<text class="pmu-tick is-peak" x="' + r1(x) + '" y="' + r1(y) + '" text-anchor="' + anchor + '">' + esc(label) + '</text>');
   }
   function bindAreaHover(c, geo, m, dom, mids, totals, cost, Y, YB, incSeries, include, t1) {
     var spec = c.spec, n = mids.length;
@@ -570,22 +651,36 @@
     var f = c.f;
     if (!f) return;
     f.rv.style.visibility = '';
+    if (c._quiet) return quietPlot(c, delay);
     var fm = Mo.fam(), draw = fm === 'nier' ? 600 : (dur || 900);
-    Mo.anim(f.axes, [{ opacity: 0 }, { opacity: 1 }], 260, delay, fm === 'nier' || fm === 'retro' ? 'steps(3,jump-start)' : Mo.EASE.out);
-    Mo.reveal(f.rv, f.rvin, draw, delay, 'x', fm === 'nier' ? 'steps(10,jump-start)' : fm === 'retro' ? 'steps(10,jump-start)' : null);
-    var pw = +f.plot.getAttribute('width') || 0, de = fm === 'nier' || fm === 'retro' ? 'linear' : Mo.voice('draw');
+    /* the hero's line starts drawing with its number (NOTES3b-engine, Mac film: on DRAW (.65,0,.35,1) the first 200 ms
+       revealed about 4 % of the plot, so the line read as starting 230 ms after the number): a hero draws on a softer
+       ease-in that still lands like DRAW (.45,.05,.25,1); Glass keeps DEPTH, Retro / NieR their steps */
+    var heroEase = charts.isHero(c) && fm !== 'glass' && fm !== 'retro' && fm !== 'nier' ? 'cubic-bezier(.45,.05,.25,1)' : null;
+    /* the shared line arrives by flight: no draw under the flyer (see charts.watchFlight) */
+    var flown = charts.flightTarget(c);
+    if (!flown) {
+      Mo.anim(f.axes, [{ opacity: 0 }, { opacity: 1 }], 260, delay, fm === 'nier' || fm === 'retro' ? 'steps(3,jump-start)' : Mo.EASE.out);
+      Mo.reveal(f.rv, f.rvin, draw, delay, 'x', fm === 'nier' ? 'steps(10,jump-start)' : fm === 'retro' ? 'steps(10,jump-start)' : heroEase);
+      if (c._fly) charts.watchFlight(c, function () { charts.finishReveal(f.rv); });
+    }
+    var pw = +f.plot.getAttribute('width') || 0, de = fm === 'nier' || fm === 'retro' ? 'linear' : heroEase || Mo.voice('draw');
     var at = function (el, fallback) {
       var x = parseFloat(el.style.left) || 0;
       return PMU.film && PMU.film.edgeAt && pw > 0 && x > 0 ? delay + draw * PMU.film.edgeAt(x / pw, de) - 20 : delay + draw - fallback;
     };
     var endAt = delay + draw - 80, costs = [], pend = [];
+    /* the hero's signature beat (WOW-SPEC-3 7, C3-6): the area's NOW halo waits for the cost dots, then swells and the
+       peak label drops onto the peak */
+    var heroArea = c.name === 'area' && charts.isHero(c) && !c._quiet;
+    var nowHalo = heroArea ? f.hl.querySelector('.pmu-hhalo[data-key="all"], .pmu-hhalo') : null;
     $$('.pmu-hdot', f.hl).forEach(function (d) {
       var kind = d.getAttribute('data-cost-dot');
       if (kind === '1') { costs.push(d); return; }
       if (kind === 'pending') { pend.push(d); return; }
       charts.popDot(d, at(d, 80));
     });
-    $$('.pmu-hhalo', f.hl).forEach(function (d) { charts.swellHalo(d, at(d, 60)); });
+    $$('.pmu-hhalo', f.hl).forEach(function (d) { if (d !== nowHalo) charts.swellHalo(d, at(d, 60)); });
     /* the line's annotation (spec.callout): its ring swells when the comet reaches the point, then the label unfolds from
        its leader (scaleX from the point's side); the chart owns the moment, so a re-draw never shows it early */
     var cring = f.hl.querySelector('.pmu-callring'), cnote = f.hl.querySelector('.pmu-callout');
@@ -597,11 +692,64 @@
     costs.sort(function (a, b) { return parseFloat(a.style.left) - parseFloat(b.style.left); })
       .forEach(function (d, i) { charts.popDot(d, endAt + Math.min(600, 40 * i), 300); });
     pend.forEach(function (d, i) { Mo.anim(d, [{ opacity: 0 }, { opacity: 1 }], 260, endAt + Math.min(600, 40 * costs.length) + 120 + 30 * i, Mo.EASE.out); });
-    if (f.over.firstChild && !c._ownOver) Mo.anim(f.over, [{ opacity: 0 }, { opacity: 1 }], 260, delay + draw - 40, Mo.EASE.out);
+    var dotsEnd = endAt + (costs.length ? Math.min(600, 40 * (costs.length - 1)) + 300 : 0);
+    if (heroArea) { c.beatEnd = areaBeat(c, dotsEnd, nowHalo) - delay; }
+    else if (f.over.firstChild && !c._ownOver) Mo.anim(f.over, [{ opacity: 0 }, { opacity: 1 }], 260, delay + draw - 40, Mo.EASE.out);
+    /* Signals (the line hero): the readings that dipped flash once in time order, 40 apart, when the draw has landed */
+    if (c.name === 'line' && charts.isHero(c) && !c._quiet) c.beatEnd = lineBeat(c, delay + draw + 60) - delay;
     if (f.legendHost.firstChild) Mo.anim(f.legendHost, [{ opacity: 0, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }], 420, delay, Mo.EASE.out);
     /* Retro: at draw end the line blooms once, a phosphor afterglow that settles to its static .14 (WOW-SPEC 7) */
     if (fm === 'retro') afterglow(c, delay + draw);
     return delay + draw;
+  }
+  /* the quiet draw of a supporting plot (WOW-SPEC-3 5 Phase C, C3-3): 600 DRAW without comet or light front; the marks
+     over the plot (dots, halos, cost dots, markers, labels) appear together at draw end in one fade; the axes and the
+     legend come with the body's own reveal (the engine fades the body). Five animations at most. */
+  var QUIET_DRAW = 600;
+  function quietPlot(c, delay) {
+    var f = c.f, fm = Mo.fam(), stepped = fm === 'nier' || fm === 'retro';
+    Mo.reveal(f.rv, f.rvin, QUIET_DRAW, delay, 'x', stepped ? 'steps(8,jump-start)' : null, { quiet: true });
+    var endAt = delay + QUIET_DRAW - 60;
+    if (f.hl.firstChild) Mo.anim(f.hl, [{ opacity: 0 }, { opacity: 1 }], 200, endAt, stepped ? 'steps(2,jump-start)' : Mo.EASE.out, 'backwards');
+    if (f.over.firstChild && !c._ownOver) Mo.anim(f.over, [{ opacity: 0 }, { opacity: 1 }], 200, endAt, stepped ? 'steps(2,jump-start)' : Mo.EASE.out, 'backwards');
+    return delay + QUIET_DRAW;
+  }
+  /* the area's beat part (Analytics; WOW-SPEC-3 7): the NOW halo swells .2 -> 1.35 -> 1 (620) and the peak label drops onto
+     the peak 80 later (260 SETTLE). Returns its end time. */
+  function areaBeat(c, at, halo) {
+    var f = c.f; if (!f || Mo.reduced()) return at;
+    halo = halo || f.hl.querySelector('.pmu-hhalo[data-key="all"], .pmu-hhalo');
+    if (halo) charts.swellHalo(halo, at);
+    var fm = Mo.fam(), stepped = fm === 'nier' || fm === 'retro', end = at + 620;
+    if (f.over.firstChild && !c._ownOver) {
+      Mo.anim(f.over, [{ opacity: 0, transform: 'translateY(-10px)' }, { opacity: 1, offset: 0.4 }, { opacity: 1, transform: 'none' }], 260, at + 80,
+        stepped ? 'steps(3,jump-start)' : (PMU.film && PMU.film.E ? PMU.film.E.settle : Mo.EASE.out), 'backwards');
+      end = Math.max(end, at + 340);
+    }
+    return end;
+  }
+  /* the line hero's beat (Signals; WOW-SPEC-3 7): the readings that dipped (spec.incidents, else the buckets in the lower
+     40 % of a fixed axis) light once in time order, 40 apart: a warn-tone halo swells off each point and fades */
+  function lineBeat(c, at) {
+    var f = c.f, g = c._lgeo, spec = c.spec || {};
+    if (!f || !g || Mo.reduced() || !g.pts || !g.pts[0]) return at;
+    var row = g.pts[0], vals = (spec.series && spec.series[0] && spec.series[0].values) || [], list = spec.incidents;
+    if (!list) {
+      if (!finite(spec.yMin) || !finite(spec.yMax) || spec.yMax <= spec.yMin) return at;
+      var cut = spec.yMin + 0.6 * (spec.yMax - spec.yMin);
+      list = []; vals.forEach(function (v, i) { if (finite(v) && v < cut) list.push(i); });
+    }
+    var end = at, made = 0;
+    list.slice(0, 6).forEach(function (i, k) {
+      if (!finite(row[i]) || !g.xs) return;
+      var h = H('i', 'pmu-hhalo pmu-hinc', f.hl);
+      h.setAttribute('data-tone', 'warn');
+      h.style.left = r1(g.xs[i]) + 'px'; h.style.top = r1(row[i]) + 'px';
+      var a = Mo.anim(h, [{ transform: 'scale(.3)', opacity: 0 }, { transform: 'scale(1.5)', opacity: 1, offset: 0.35 }, { transform: 'scale(1.9)', opacity: 0 }], 620, at + 40 * k, Mo.EASE.out, 'both');
+      if (a) a.finished.then(function () { h.remove(); }, function () { h.remove(); }); else h.remove();
+      end = at + 40 * k + 620; made++;
+    });
+    return made ? end : at;
   }
   /* the Retro phosphor afterglow: a copy of the primary line in its own SVG root over the plot flares to .6 and settles
      onto the static .14 glow over 700 ms (an SVG root's opacity runs on the compositor), then goes */
@@ -623,11 +771,13 @@
       draw: function (c, first, resized) { drawLine(c, first ? 'first' : 'redraw'); },
       update: function (c) { drawLine(c, 'morph'); },
       carry: function (c) { drawLine(c, 'morph'); },
-      enter: function (c, delay) { enterPlot(c, delay); }
+      enter: function (c, delay) { enterPlot(c, delay); },
+      beat: function (c, delay) { return lineBeat(c, delay); },
+      live: function (c, prev, lo) { c._live = lo; c._liveAnims = 0; try { drawLine(c, lo.still ? 'redraw' : 'live'); } finally { c._live = null; } return { anims: c._liveAnims || 0 }; }
     });
   };
   function drawLine(c, mode) {
-    var spec = c.spec, f = frame(c), tw = tierW(c), compact = !!COMPACT[tw] || c.opts.compact;
+    var spec = c.spec, f = frame(c), tw = tierW(c), compact = !!COMPACT[tw] || c.opts.compact, live = mode === 'live';
     var series = spec.series || [];
     var n = 0; series.forEach(function (s) { n = Math.max(n, (s.values || []).length); });
     var fc = spec.forecast;
@@ -652,6 +802,7 @@
     if (unit === 'pct' && !finite(spec.yMax) && lo === 0) ya = { step: 25, top: 100, k: 4 };
     else if (finite(spec.yMax)) { var kk = ph >= 160 ? 4 : 2; ya = { step: (spec.yMax - lo) / kk, top: spec.yMax - lo, k: kk }; }
     else ya = charts.scales(Math.max(1e-9, hiV - lo), null, ph).a;
+    if (live && c._lgeo && c._lgeo.ya && c._lgeo.ph === ph && c._lgeo.lo === lo && c._lgeo.ya.top >= hiV - lo) ya = c._lgeo.ya;
     var labs = []; for (var k = 0; k <= ya.k; k++) labs.push(charts.fmtAxis(lo + ya.step * k, unit, ya.step));
     if (!compact) pad.l = Math.max(44, Math.ceil(axisW(labs.concat([spec.unitTitle || charts.unitTitle(unit)]))) + 14);
     var limitLab = (spec.limits || []).some(function (l) { return l.label; });
@@ -671,7 +822,7 @@
         if (l.label) extra += '<text class="pmu-tick is-limit" data-role="' + esc(l.role || 'limit') + '" x="' + (pad.l + pw - 2) + '" y="' + (y - 5) + '" text-anchor="end">' + esc(l.label) + '</text>';
       });
       swapAxes(f, { W: W, H: Hh, pad: pad, pw: pw, ph: ph, ya: ya, yMin0: lo === 0, unitA: spec.unitTitle || charts.unitTitle(unit),
-        ylab: function (i) { return charts.fmtAxis(lo + ya.step * i, unit, ya.step); }, xt: xt, extra: extra }, mode === 'morph');
+        ylab: function (i) { return charts.fmtAxis(lo + ya.step * i, unit, ya.step); }, xt: xt, extra: extra }, live ? 'live' : mode === 'morph');
     } else f.axes.innerHTML = '';
     f.plot.setAttribute('width', W); f.plot.setAttribute('height', Hh);
     f.over.setAttribute('width', W); f.over.setAttribute('height', Hh);
@@ -693,7 +844,7 @@
       var ky = ph / prev.ph;
       prev = { sig: sig, W: W, H: Hh, pad: pad, ph: ph, pts: prev.pts.map(function (row) { return row.map(function (v) { return finite(v) ? pad.t + (v - prev.pad.t) * ky : v; }); }) };
     }
-    var morph = mode === 'morph' && prev && prev.sig === sig && prev.W === W && prev.H === Hh && !Mo.reduced();
+    var morph = (mode === 'morph' || live) && prev && prev.sig === sig && prev.W === W && prev.H === Hh && !Mo.reduced();
     function paint(cur) {
       var s = '';
       if (bandPts && bandPts.top.length > 1) s += '<path class="pmu-mark" data-mark="band" data-series-role="forecast" data-series-index="' + (series[0] && series[0].idx != null ? series[0].idx : 0) + '" data-key="fc" d="' +
@@ -714,7 +865,8 @@
         var pp = (lastJ >= 0 && fc.from > 0 ? [[xs[lastJ], cur[0][lastJ]]] : []).concat(fcPts.filter(function (q) { return q[0] != null; }));
         s += '<path class="pmu-mark" data-mark="forecast" data-series-role="forecast" data-series-index="' + (series[0] && series[0].idx != null ? series[0].idx : 0) + '" data-key="fc" d="' + charts.monoD(pp) + '"/>';
       }
-      f.plot.innerHTML = s;
+      /* in place when the paths are the same (a morph tween patches d attributes every frame, never a new child list) */
+      charts.patchSvg(f.plot, s);
     }
     /* end dots with their NOW halos, HTML over the plot (WOW-TASKS C-9) */
     function dots() {
@@ -732,24 +884,23 @@
         h += '<i class="pmu-callring" data-tone="' + esc(co.tone || 'warn') + '" style="left:' + r1(cx) + 'px;top:' + r1(cy) + 'px"></i>' +
           '<div class="pmu-callout" data-tone="' + esc(co.tone || 'warn') + '" data-side="' + (left ? 'l' : 'r') + '" style="' + (left ? 'right:' + r1(W - cx + 16) : 'left:' + r1(cx + 16)) + 'px;top:' + r1(top) + 'px;--stem-y:' + r1(cy - top) + 'px">' +
           '<b>' + esc(co.title || '') + '</b>' + (co.sub ? '<span>' + esc(co.sub) + '</span>' : '') + '</div>';
-        f.hl.innerHTML = h;
-        return;
       }
-      f.hl.innerHTML = h;
+      if (live && morph) c._liveAnims += slideMarks(f.hl, h, c._live); else charts.patchHtml(f.hl, h);
     }
     if (c._tw) { c._tw.cancel(); c._tw = null; }
     dots();
     if (morph) {
       var from = prev.pts;
-      c._tw = morphTween(520, function (k) { paint(pts.map(function (row, j) { return row.map(function (v, i) { return mix(from[j] ? from[j][i] : v, v, k); }); })); },
-        function () { c._tw = null; paint(pts); paintIso(c); rescan(c); });
-      Mo.anim(f.hl, [{ opacity: 0 }, { opacity: 0, offset: 0.7 }, { opacity: 1 }], 640, 0, Mo.EASE.out, 'none');
+      if (live) c._liveAnims++;
+      c._tw = morphTween(live ? 420 : 520, function (k) { paint(pts.map(function (row, j) { return row.map(function (v, i) { return mix(from[j] ? from[j][i] : v, v, k); }); })); },
+        function () { c._tw = null; paint(pts); paintIso(c); if (!live) rescan(c); });
+      if (!live) Mo.anim(f.hl, [{ opacity: 0 }, { opacity: 0, offset: 0.7 }, { opacity: 1 }], 640, 0, Mo.EASE.out, 'none');
     } else {
       paint(pts);
       /* a different bucket count re-scans the line left to right (WOW-SPEC 3.4: one light runs along the new line) */
       if (mode === 'morph' && prev && !Mo.reduced() && f.rv) { Mo.reveal(f.rv, f.rvin, 640, 60, 'x'); Mo.anim(f.hl, [{ opacity: 0 }, { opacity: 1 }], 220, 620, Mo.EASE.out, 'backwards'); }
     }
-    c._lgeo = { sig: sig, W: W, H: Hh, pts: pts, pad: pad, ph: ph };
+    c._lgeo = { sig: sig, W: W, H: Hh, pts: pts, pad: pad, ph: ph, xs: xs, lo: lo, top: ya.top, ya: ya, t0: dom.t0, t1: dom.t1 };
     if (!compact) {
       var cfg = {
         n: n, pad: { t: pad.t, h: ph, l: pad.l, r: pad.r }, xAt: function (i) { return xs[i]; },
@@ -777,6 +928,8 @@
     return charts.make('columns', host, spec, opts, {
       draw: function (c, first) { drawColumns(c, first ? 'first' : 'redraw'); },
       update: function (c) { drawColumns(c, 'morph'); },
+      /* live (C3-4): the changed columns grow from their old height (scaleY 420), their labels roll the changed digits */
+      live: function (c, prev, lo) { c._live = lo; c._liveAnims = 0; try { drawColumns(c, lo.still ? 'redraw' : 'live'); } finally { c._live = null; } return { anims: c._liveAnims || 0 }; },
       carry: function (c) { drawColumns(c, 'morph'); },
       enter: function (c, delay) { enterColumns(c, delay); }
     });
@@ -823,7 +976,7 @@
     return n;
   }
   function drawColumns(c, mode) {
-    var spec = c.spec, f = frame(c), tw = tierW(c), m = colModel(spec), unit = spec.unit || 'usd';
+    var spec = c.spec, f = frame(c), tw = tierW(c), m = colModel(spec), unit = spec.unit || 'usd', live = mode === 'live';
     spec = m.spec;
     var items = [];
     if (m.stacked && c.opts.legend !== false && tw !== 'xs') spec.stacks.forEach(function (s) {
@@ -856,6 +1009,7 @@
     var pad = { l: noAxis ? 2 : 44, r: noAxis ? 2 : 10, t: 20, b: 22 };
     var ph = Math.max(20, Hh - pad.t - pad.b);
     var ya = charts.scales(maxV, null, ph).a;
+    if (live && c._colGeo && c._colGeo.ya && c._colGeo.ph === ph && c._colGeo.ya.top >= maxV) ya = c._colGeo.ya;
     var labs = []; for (var k = 0; k <= ya.k; k++) labs.push(charts.fmtAxis(ya.step * k, unit, ya.step));
     if (!noAxis) pad.l = Math.max(40, Math.ceil(axisW(labs)) + 12);
     var pw = Math.max(20, W - pad.l - pad.r), n = m.n, slot = pw / n;
@@ -867,7 +1021,7 @@
     for (var i = 0; i < n; i++) if ((n - 1 - i) % every === 0 && labels[i] != null) xt.push({ x: pad.l + slot * (i + 0.5), label: String(labels[i]), major: false, bar: true });
     var g = { W: W, H: Hh, pad: pad, pw: pw, ph: ph, ya: ya, yMin0: true, noY: noAxis, vgrid: false,
       ylab: function (i) { return charts.fmtAxis(ya.step * i, unit, ya.step); }, xt: xt };
-    swapAxes(f, g, mode === 'morph');
+    swapAxes(f, g, live ? 'live' : mode === 'morph');
     /* the overlay svg keeps the plot's size (an unsized svg is 300 x 150 and pushed short cards into overflow) */
     f.over.setAttribute('width', W); f.over.setAttribute('height', Hh);
     /* bars (DOM) */
@@ -935,17 +1089,22 @@
         (zeroWord ? '<span class="pmu-collab is-zero">' + (unit === 'usd' ? '$0' : '0') + '<i>' + esc(t('charts.reported_word')) + '</i></span>'
           : show || inside ? '<span class="pmu-collab' + (inside ? ' is-in' : '') + '">' + esc(lab) + '</span>' : '') + '</div>';
     }
-    bars.innerHTML = html;
+    var oldLabs = live ? $$('.pmu-col', bars).map(function (el) { var l = el.querySelector('.pmu-collab'); return l ? l.textContent : null; }) : null;
+    charts.patchHtml(bars, html);
+    if (live && oldLabs) $$('.pmu-col', bars).forEach(function (el, j) {
+      var l = el.querySelector('.pmu-collab');
+      if (l && oldLabs[j] != null && oldLabs[j] !== l.textContent && charts.rollTo && charts.rollTo(l, oldLabs[j], l.textContent, 420, (c._live && c._live.delay) || 0)) c._liveAnims++;
+    });
     c._colH = newH;
-    c._colGeo = { pad: pad, slot: slot, n: n, ph: ph, W: W };
+    c._colGeo = { pad: pad, slot: slot, n: n, ph: ph, W: W, ya: ya };
     /* morph: each bar scales from its old height (transform only) */
-    if (mode === 'morph' && !Mo.reduced() && prevH.length) {
+    if ((mode === 'morph' || live) && !Mo.reduced() && prevH.length) {
       var regrow = prevH.length !== newH.length;
       $$('.pmu-col', bars).forEach(function (el, j) {
         var a = regrow ? 0 : prevH[j], b = newH[j];
         if (!(b > 0) || !finite(a) || Math.abs(a - b) < 0.5) return;
         var st2 = el.querySelector('.pmu-colstack');
-        Mo.anim(st2, [{ transform: 'scaleY(' + clamp(a / b, 0, 40) + ')' }, { transform: 'scaleY(1)' }], 520, regrow ? Math.min(240, j * 14) : 0, Mo.EASE.io, regrow ? 'backwards' : undefined);
+        if (Mo.anim(st2, [{ transform: 'scaleY(' + clamp(a / b, 0, 40) + ')' }, { transform: 'scaleY(1)' }], live ? 420 : 520, regrow ? Math.min(240, j * 14) : live ? (c._live.delay || 0) : 0, live ? 'cubic-bezier(.16,1,.3,1)' : Mo.EASE.io, regrow || live ? 'backwards' : undefined) && live) c._liveAnims++;
         if (regrow) { var lb = el.querySelector('.pmu-collab'); if (lb) Mo.anim(lb, [{ opacity: 0 }, { opacity: 1 }], 260, 300 + Math.min(240, j * 14), Mo.EASE.out, 'backwards'); }
       });
     }
@@ -996,6 +1155,12 @@
     var f = c.f;
     if (!f || !f.bars) return;
     f.bars.style.visibility = '';
+    /* quiet (C3-3): the columns rise together behind one clip from the baseline (GPU only; one animation), no lit caps */
+    if (c._quiet) {
+      var fq = Mo.fam(), st = fq === 'retro' || fq === 'nier';
+      Mo.anim(f.bars, [{ clipPath: 'inset(100% 0 0 0)' }, { clipPath: 'inset(0 0 0 0)' }], 520, delay, st ? 'steps(5,jump-start)' : 'cubic-bezier(.16,1,.3,1)', 'backwards');
+      return;
+    }
     Mo.anim(f.axes, [{ opacity: 0 }, { opacity: 1 }], 260, delay, Mo.EASE.out);
     /* columns grow from the baseline 760 ms ROLL, 30 ms apart left to right; the lit cap fades in as each grow lands and
        the value label rises in after it (WOW-SPEC 3.3, WOW-TASKS C-3) */
@@ -1016,17 +1181,19 @@
     return charts.make('spark', host, spec, opts, {
       draw: function (c, first) { drawSpark(c, first); },
       update: function (c) { drawSpark(c, false, true); },
+      live: function (c, prev, lo) { c._live = lo; try { drawSpark(c, false, !lo.still, lo.still ? null : 420); } finally { c._live = null; } return { anims: lo.still ? 0 : 2 }; },
       carry: function (c) { drawSpark(c, false, true); },
       enter: function (c, delay) {
         if (!c.f) return;
         c.f.rv.style.visibility = '';
-        Mo.reveal(c.f.rv, c.f.rvin, 900, delay, 'x');
+        var q = c._quiet;
+        Mo.reveal(c.f.rv, c.f.rvin, q ? 600 : 900, delay, 'x', null, { quiet: q });
         var dot = c.f.hl.querySelector('.pmu-hdot');
-        if (dot) charts.popDot(dot, delay + 820, 240);
+        if (dot) { if (q) Mo.anim(dot, [{ opacity: 0 }, { opacity: 1 }], 160, delay + 560, Mo.EASE.out, 'backwards'); else charts.popDot(dot, delay + 820, 240); }
       }
     });
   };
-  function drawSpark(c, first, morph) {
+  function drawSpark(c, first, morph, morphDur) {
     var spec = c.spec, f = c.f;
     if (!f) {
       f = c.f = {};
@@ -1057,20 +1224,21 @@
         if (p.length > 1) s += '<path class="pmu-mark" data-mark="area" data-spark="1"' + k + ' d="' + charts.monoD(p) + 'L' + r1(p[p.length - 1][0]) + ',' + Hh + 'L' + r1(p[0][0]) + ',' + Hh + 'Z"/>';
         s += '<path class="pmu-mark" data-mark="line" data-spark="1"' + k + ' d="' + charts.monoD(p) + '"/>';
       });
-      f.plot.innerHTML = s;
+      charts.patchSvg(f.plot, s);
     }
     function dot(P) {
       var li = lastFinite(P.map(function (p) { return p ? 1 : null; }));
-      f.hl.innerHTML = li >= 0 && spec.dot !== false ? charts.dotHtml(P[li][0], P[li][1], { idx: spec.idx != null ? spec.idx : 0, tk: spec.tk, vendor: spec.vendor, tone: spec.tone }, { size: 'xs', attrs: ' data-spark="1"' }) : '';
+      charts.patchHtml(f.hl, li >= 0 && spec.dot !== false ? charts.dotHtml(P[li][0], P[li][1], { idx: spec.idx != null ? spec.idx : 0, tk: spec.tk, vendor: spec.vendor, tone: spec.tone }, { size: 'xs', attrs: ' data-spark="1"' }) : '');
     }
     var prev = c._sp;
     if (c._tw) { c._tw.cancel(); c._tw = null; }
     if (morph && prev && prev.length === pts.length && !Mo.reduced()) {
-      c._tw = morphTween(520, function (q) { paint(pts.map(function (p, i) { return p && prev[i] ? [p[0], prev[i][1] + (p[1] - prev[i][1]) * q] : p; })); }, function () { c._tw = null; });
+      var md = morphDur || 520, ld = (c._live && c._live.delay) || 0;
+      c._tw = PMU.motion.tween({ from: 0, to: 1, dur: md, delay: ld, ease: 'linear', step: function (v, t) { var x = t == null ? v : t, q = 1 - Math.pow(1 - x, 3); paint(pts.map(function (p, i) { return p && prev[i] ? [p[0], prev[i][1] + (p[1] - prev[i][1]) * q] : p; })); }, done: function () { c._tw = null; paint(pts); } });
       var li = lastFinite(pts.map(function (p) { return p ? 1 : null; })), d0 = li >= 0 && prev[li] ? prev[li][1] - pts[li][1] : 0;
       dot(pts);
       var de = f.hl.firstChild;
-      if (de && d0) Mo.anim(de, [{ translate: '0px ' + r1(d0) + 'px' }, { translate: '0px 0px' }], 520, 0, MORPH_EASE, 'backwards');
+      if (de && d0) Mo.anim(de, [{ translate: '0px ' + r1(d0) + 'px' }, { translate: '0px 0px' }], md, ld, MORPH_EASE, 'backwards');
     } else { paint(pts); dot(pts); }
     c._sp = pts;
   }
@@ -1080,30 +1248,75 @@
     return charts.make('budget', host, spec, opts, {
       draw: function (c, first) { drawBudget(c, first); },
       update: function (c) { drawBudget(c, false, true); },
+      /* live (spend beats): the line's last point, the cone and the markers move in place (one path tween, 420); the
+         axes patch in place */
+      live: function (c, prev, lo) { c._live = lo; try { drawBudget(c, false, lo.still ? false : 'live'); } finally { c._live = null; } return { anims: lo.still ? 0 : (c._liveAnims || 0) }; },
       enter: function (c, delay) {
         c._ownOver = true;
-        enterPlot(c, delay);
+        var end = enterPlot(c, delay);
         var f = c.f, g = c._bgeo;
-        if (!g) return;
-        /* Overview's signature beat (WOW-SPEC 3.1 Phase D): the comet reaches today, the TODAY marker drops onto it from the
-           top of the plot (its label 40 ms later), the projection opens from the last point, the budget rule draws from
-           the axis. All of them are HTML or a whole SVG root, so the beat runs on the compositor (WOW-TASKS C-9). */
-        var fm = Mo.fam(), draw = fm === 'nier' ? 600 : 900, de = fm === 'nier' || fm === 'retro' ? 'linear' : Mo.voice('draw');
+        if (!g || !f) return;
+        var fm = Mo.fam(), stepped = fm === 'retro' || fm === 'nier';
+        /* quiet (Overview, WOW-SPEC-3 5 Phase C and C3-3): the line draws 600 without a comet; at the end of the draw the
+           projection fades in and the TODAY marker drops onto today (260 SETTLE, no light) */
+        if (c._quiet) {
+          var qe = (end || delay + 600) - 60, settle = stepped ? 'steps(3,jump-start)' : (PMU.film && PMU.film.E ? PMU.film.E.settle : Mo.EASE.out);
+          if (f.over.firstChild) Mo.anim(f.over, [{ opacity: 0 }, { opacity: 1 }], 260, qe, Mo.EASE.out, 'backwards');
+          var qm = f.hl.querySelector('.pmu-hnow'), ql = f.hl.querySelector('.pmu-hlab.is-today');
+          [qm, ql].forEach(function (el) { if (el) Mo.anim(el, [{ transform: 'translateY(-16px)' }, { transform: 'none' }], 260, qe, settle, 'backwards'); });
+          return;
+        }
+        /* the hero (Costs) and the full entrance: the comet reaches today, the TODAY marker drops onto it from the top of the
+           plot (its label 40 ms later); then the signature beat (C3-6): the estimate cone opens from the last point (520,
+           clip on a GPU, a fade without one), "est. $... by ..." counts from today's spend to the projection in step with
+           the cone's edge, and the budget rule draws from the axis (360). All HTML or whole SVG roots (WOW-TASKS C-9). */
+        var draw = fm === 'nier' ? 600 : 900, de = fm === 'nier' || fm === 'retro' ? 'linear' : charts.isHero(c) && fm !== 'glass' ? 'cubic-bezier(.45,.05,.25,1)' : Mo.voice('draw');
         var tNow = PMU.film && PMU.film.edgeAt && g.W > 0 ? delay + draw * PMU.film.edgeAt(g.xNow / g.W, de) : delay + draw;
-        if (f.over.firstChild) Mo.anim(f.over, [{ opacity: 0, transform: 'translateX(-6px)' }, { opacity: 1, transform: 'none' }], 420, tNow + 60, Mo.EASE.out);
-        var rule = f.hl.querySelector('.pmu-hrule'), rlab = f.hl.querySelector('.pmu-hlab[data-role="budget"]');
-        if (rule) Mo.anim(rule, [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], 360, tNow + 200, fm === 'retro' || fm === 'nier' ? 'steps(6,jump-start)' : Mo.EASE.out);
-        if (rlab) Mo.anim(rlab, [{ opacity: 0 }, { opacity: 1 }], 220, tNow + 420, Mo.EASE.out);
         var mk = f.hl.querySelector('.pmu-hnow'), lab = f.hl.querySelector('.pmu-hlab.is-today');
         if (mk && PMU.film && PMU.film.drop) {
           PMU.film.drop(mk, { from: Math.round(g.ph * 0.6), delay: tNow + 40 });
           if (lab) PMU.film.drop(lab, { from: Math.round(g.ph * 0.6), delay: tNow + 80 });
         }
-      }
+        c.beatEnd = budgetBeat(c, tNow + 60) - delay;
+      },
+      beat: function (c, delay) { return budgetBeat(c, delay); }
     });
   };
+  function budgetBeat(c, at) {
+    var f = c.f, g = c._bgeo;
+    if (!f || !g || Mo.reduced()) return at;
+    var fm = Mo.fam(), stepped = fm === 'retro' || fm === 'nier', soft = Mo.soft(), CONE = 520;
+    var coneEase = stepped ? 'steps(6,jump-start)' : 'cubic-bezier(.22,1,.36,1)';
+    if (f.over.firstChild) {
+      if (soft || !g.xLast) Mo.anim(f.over, [{ opacity: 0 }, { opacity: 1 }], 260, at, Mo.EASE.out, 'backwards');
+      else Mo.anim(f.over, [{ clipPath: 'inset(-4px ' + r1(Math.max(0, g.W - g.xLast)) + 'px -4px ' + r1(g.xLast) + 'px)' }, { clipPath: 'inset(-4px -4px -4px ' + r1(g.xLast) + 'px)' }], CONE, at, coneEase, 'backwards');
+    }
+    /* the projection's hollow marker lands with the cone's edge */
+    var pj = f.hl.querySelector('.pmu-hdot[data-proj]');
+    if (pj) Mo.anim(pj, [{ opacity: 0, transform: 'scale(.4)' }, { opacity: 1, transform: 'none' }], 200, at + CONE - 120, Mo.EASE.out, 'backwards');
+    /* "est. $201.30 by Oct 4" counts up from today's spend in step with the cone (the same 520 and easing) */
+    var est = c.opts.coneLabel || (function () { var b = c.host.closest('.pmu-cardbody'); return b ? b.querySelector('.pmu-budgetest') : null; })();
+    var pr = c.spec.projection, cum = c.spec.cumulative || [], fromV = cum.length ? cum[cum.length - 1] : null;
+    if (est && pr && finite(pr.to) && finite(fromV) && fromV < pr.to && PMU.film && PMU.film.odometer && !est._pmuOdo) {
+      var txt = est.textContent, m = /\$[\d,]+\.\d{2}/.exec(txt), money = charts.money;
+      if (m && money(pr.to) === m[0]) {
+        var pre = txt.slice(0, m.index), post = txt.slice(m.index + m[0].length), fmtE = function (v) { return pre + money(Math.round(v * 100) / 100) + post; };
+        /* the estimate is not on screen before its cone: the label waits hidden (an opacity hold created in this task, so
+           no frame shows the count's start value as an estimate) and counts up as the cone opens */
+        est.textContent = fmtE(fromV);
+        Mo.anim(est, [{ opacity: 0 }, { opacity: 1 }], 160, at, Mo.EASE.out, 'backwards');
+        PMU.film.odometer(est, pr.to, fmtE, { from: fromV, change: true, dur: CONE, delay: at });
+        if (est.textContent === fmtE(fromV) && !est._pmuOdo) est.textContent = txt;   /* the odometer declined: the final words */
+      }
+    }
+    var rule = f.hl.querySelector('.pmu-hrule'), rlab = f.hl.querySelector('.pmu-hlab[data-role="budget"]');
+    if (rule) Mo.anim(rule, [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], 360, at + 200, stepped ? 'steps(6,jump-start)' : Mo.EASE.out, 'backwards');
+    if (rlab) Mo.anim(rlab, [{ opacity: 0 }, { opacity: 1 }], 220, at + 420, Mo.EASE.out, 'backwards');
+    return at + Math.max(CONE, 640);
+  }
   function drawBudget(c, first, morph) {
-    var spec = c.spec, f = frame(c), tw = tierW(c);
+    var spec = c.spec, f = frame(c), tw = tierW(c), live = morph === 'live';
+    c._liveAnims = 0;
     setLegend(c, []);
     var d = dims(c, 150), W = d.W, Hh = d.H;
     f.box.style.height = Hh + 'px';
@@ -1118,6 +1331,7 @@
     var pad = compact ? { l: 2, r: 2, t: 8, b: 4 } : { l: 44, r: 12, t: 22, b: 28 };
     var ph = Math.max(20, Hh - pad.t - pad.b);
     var ya = charts.scales(maxV, null, ph).a;
+    if (live && c._bgeo && c._bgeo.ya && c._bgeo.ph === ph && c._bgeo.ya.top >= maxV) ya = c._bgeo.ya;
     var labs = []; for (var k = 0; k <= ya.k; k++) labs.push(charts.fmtAxis(ya.step * k, 'usd', ya.step));
     if (!compact) pad.l = Math.max(40, Math.ceil(axisW(labs)) + 14);
     var pw = Math.max(30, W - pad.l - pad.r);
@@ -1151,12 +1365,18 @@
       } else hl += '<span class="pmu-hlab" style="left:' + r1(pad.l + 4) + 'px;top:' + r1(pad.t - 18) + 'px">' + esc(t('charts.no_budget')) + '</span>';
     }
     swapAxes(f, { W: W, H: Hh, pad: pad, pw: pw, ph: ph, ya: ya, yMin0: true, noY: compact, unitA: '', vgrid: false,
-      ylab: function (i) { return charts.fmtAxis(ya.step * i, 'usd', ya.step); }, xt: xt, extra: extra }, morph);
-    c._bgeo = { W: W, ph: ph, xNow: xtd };
+      ylab: function (i) { return charts.fmtAxis(ya.step * i, 'usd', ya.step); }, xt: xt, extra: extra }, live ? 'live' : morph);
+    c._bgeo = { W: W, ph: ph, xNow: xtd, pad: pad, pw: pw, days: days, top: ya.top, ya: ya, xLast: null };
     if (compact) f.axes.innerHTML = '';
     f.plot.setAttribute('width', W); f.plot.setAttribute('height', Hh);
     f.over.setAttribute('width', W); f.over.setAttribute('height', Hh);
     var pts = []; cum.forEach(function (v, i) { if (finite(v)) pts.push([X(i + 1), Y(v)]); });
+    if (pts.length) c._bgeo.xLast = pts[pts.length - 1][0];
+    /* the flyer map (C3-5): the budget repeats on Overview and Costs (chart:budget); its domain is the month x [0, top] */
+    if (!compact) charts.setFly(c, f.box, c.opts.share || spec.share || 'budget', { shareEl: f.rv,
+      box: { l: pad.l, t: pad.t, w: pw, h: ph }, domain: { x0: 1, x1: days, y0: 0, y1: ya.top },
+      boxOf: function (d) { var l = X(d.x0), r = X(d.x1); return { l: l, t: Y(d.y1), w: r - l, h: Y(d.y0) - Y(d.y1) }; },
+      paths: function () { return $$('path[data-mark="area"], path[data-mark="glow"], path[data-mark="line"]', f.plot); } });
     var s = '', fs = '';
     /* the projection (an estimate: dashed, hatched cone, hollow marker, never lit) lives in the overlay root, so it opens
        as one layer after the comet passes today */
@@ -1174,9 +1394,13 @@
         (compact ? '' : '<path class="pmu-mark" data-mark="core" data-series-index="0" d="' + charts.monoD(pts) + '"/>');
       hl += charts.dotHtml(pts[pts.length - 1][0], pts[pts.length - 1][1], { idx: 0 }, { halo: !compact, size: compact ? 'xs' : '' });
     }
-    f.plot.innerHTML = s;
-    f.over.innerHTML = fs;
-    f.hl.innerHTML = hl;
+    if (live) {
+      var lo0 = c._live || {};
+      if (f._pS !== s && charts.livePatchSvg(f.plot, s, 420, lo0.delay)) c._liveAnims++;
+      if (f._pO !== fs && charts.livePatchSvg(f.over, fs, 420, lo0.delay)) c._liveAnims++;
+      if (f._pH !== hl) c._liveAnims += slideMarks(f.hl, hl, lo0);
+    } else { charts.patchSvg(f.plot, s); charts.patchSvg(f.over, fs); charts.patchHtml(f.hl, hl); }
+    f._pS = s; f._pO = fs; f._pH = hl;
     if (!compact) {
       var n = days;
       var cfg = {
@@ -1216,6 +1440,8 @@
         if (g) Mo.anim(g, [{ opacity: 0.45 }, { opacity: 1 }], 360, 0, Mo.EASE.out, 'none');
       },
       enter: function (c, delay) {
+        /* quiet (C3-3): the grid arrives with its body, no wash and no peak flash */
+        if (c._quiet) return;
         /* a diagonal wash: each weekday row slides in from the left while it fades (one layer per row, not one per cell,
            so the entrance stays cheap on the CPU-only VM; A1 8.4 fallback) */
         var fm = Mo.fam(), stepped = fm === 'retro' || fm === 'nier', rows = $$('.pmu-hrow', c.el);
@@ -1296,9 +1522,9 @@
     var lg = c.el.querySelector('.pmu-heatleg');
     var chips = ''; for (var s = 1; s <= 6; s++) chips += '<i data-step="' + s + '"></i>';
     lg.style.display = ownLeg ? 'none' : '';
-    if (!ownLeg) lg.innerHTML = '<span>' + esc(t('charts.less')) + '</span><span class="pmu-hs">' + chips + '</span><span>' + esc(t('charts.more')) +
+    if (!ownLeg) charts.patchHtml(lg, '<span>' + esc(t('charts.less')) + '</span><span class="pmu-hs">' + chips + '</span><span>' + esc(t('charts.more')) +
       (pk ? ' · ' + esc(t('charts.busiest')) + ' <b>' + esc(pk.label) + '</b>' : '') + '</span>' +
-      '<span class="pmu-hs-key is-first"><i data-step="0"></i>' + esc(t('charts.heat_nothing')) + '</span><span class="pmu-hs-key"><i data-step="-1"></i>' + esc(t('charts.heat_outside')) + '</span>';
+      '<span class="pmu-hs-key is-first"><i data-step="0"></i>' + esc(t('charts.heat_nothing')) + '</span><span class="pmu-hs-key"><i data-step="-1"></i>' + esc(t('charts.heat_outside')) + '</span>');
     if (pk) { var pc = c.el.querySelector('.pmu-hc[data-r="' + pk.row + '"][data-c="' + pk.col + '"]'); if (pc) pc.setAttribute('data-peak', '1'); }
     void morph;
   }
@@ -1313,12 +1539,16 @@
     } : {
       draw: function (c, first) { drawQRow(c, first); },
       update: function (c) { drawQRow(c, false); },
+      /* live (C3-4): the last segment morphs (one path tween, 420) and an exhausted span grows from its right edge */
+      live: function (c, prev, lo) { c._live = lo; c._liveAnims = 0; try { drawQRow(c, false, !lo.still); } finally { c._live = null; } return { anims: c._liveAnims || 0 }; },
       /* the mini line draws 600 ms (no comet on minis), then each exhausted span fills in from the left 300 ms */
       enter: function (c, delay) {
         if (!c.f) return;
         c.f.rv.style.visibility = '';
-        var fm = Mo.fam();
-        Mo.reveal(c.f.rv, c.f.rvin, 600, delay, 'x', fm === 'nier' || fm === 'retro' ? 'steps(10,jump-start)' : Mo.voice('draw'));
+        var fm = Mo.fam(), q = c._quiet;
+        Mo.reveal(c.f.rv, c.f.rvin, 600, delay, 'x', fm === 'nier' || fm === 'retro' ? 'steps(10,jump-start)' : Mo.voice('draw'), { quiet: true });
+        /* quiet: the exhausted spans appear with the line's end in one fade of their layer */
+        if (q) { if (c.f.hl.firstChild) Mo.anim(c.f.hl, [{ opacity: 0 }, { opacity: 1 }], 200, delay + 540, Mo.EASE.out, 'backwards'); return; }
         $$('.pmu-qx', c.f.hl).forEach(function (el) { Mo.anim(el, [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], 300, delay + 600, fm === 'nier' || fm === 'retro' ? 'steps(4,jump-start)' : 'cubic-bezier(.16,1,.3,1)'); });
       }
     });
@@ -1362,7 +1592,7 @@
   /* a quota history row (LOOK-REVIEW-2 item 3, WOW-SPEC 3.10): 30 px, each state run a step line over a vertical
      gradient of its tone, the dashed 100 % reference on top; a run at or over 100 % (exhausted) is a warm red hatched
      span laid over the row in HTML, so it can fill in from the left on the compositor after the line has drawn */
-  function drawQRow(c, first) {
+  function drawQRow(c, first, live) {
     var spec = c.spec, f = c.f, Hh = spec.height || 30;
     if (!f) {
       f = c.f = {};
@@ -1383,8 +1613,19 @@
         '<path class="pmu-mark" data-mark="line" data-q="1" data-tone="' + run.tone + '" d="' + d + '"/>';
       if (run.tone === 'exhausted' || run.tone === 'over') spans += '<i class="pmu-qx" data-tone="' + run.tone + '" style="left:' + r1(run.x0 * 100) + '%;width:' + r1(Math.max(0.6, (run.x1 - run.x0) * 100)) + '%"></i>';
     });
-    f.plot.innerHTML = s;
-    f.hl.innerHTML = spans;
+    if (live) {
+      var lo1 = c._live || {}, oldSpans = $$('.pmu-qx', f.hl).map(function (el) { return parseFloat(el.style.width); });
+      if (charts.livePatchSvg(f.plot, s, 420, lo1.delay)) c._liveAnims++;
+      charts.patchHtml(f.hl, spans);
+      $$('.pmu-qx', f.hl).forEach(function (el, i) {
+        var w0 = oldSpans[i], w1 = parseFloat(el.style.width);
+        if (finite(w1) && w1 > 0 && (!finite(w0) || Math.abs(w0 - w1) > 0.05)) {
+          /* a growing exhausted span grows from its right edge */
+          el.style.transformOrigin = '100% 50%';
+          if (Mo.anim(el, [{ transform: 'scaleX(' + clamp(finite(w0) ? w0 / w1 : 0, 0, 1) + ')' }, { transform: 'none' }], 420, lo1.delay || 0, 'cubic-bezier(.16,1,.3,1)', 'backwards')) c._liveAnims++;
+        }
+      });
+    } else { charts.patchSvg(f.plot, s); charts.patchHtml(f.hl, spans); }
     c.el.style.height = Hh + 'px';
   }
   var DASHES = ['', '9 4', '9 3 2 3', '2 3'];
@@ -1451,8 +1692,8 @@
       });
       if (pts.length) { var lp = pts[pts.length - 1]; hl += charts.dotHtml(Math.min(X(now), pad.l + pw), Y(lp.v), { tone: toneOf(lp.v, spec) || 'calm' }, { key: 'W' + i, halo: i === 0 }); }
     });
-    f.plot.innerHTML = s;
-    f.hl.innerHTML = hl;
+    charts.patchSvg(f.plot, s);
+    charts.patchHtml(f.hl, hl);
     /* readout: the nearest sample time across windows */
     var times = [];
     wins.forEach(function (w) { (w.points || []).forEach(function (p) { if (times.indexOf(p.t) < 0) times.push(p.t); }); });
@@ -1480,19 +1721,38 @@
       update: function (c) { drawRange(c, false); },
       /* the p50 mark pops, then the p50 -> p95 bar grows right 520 ms ROLL with the head glow, rows 36 ms apart (WOW-SPEC 3.3) */
       enter: function (c, delay) {
-        var fm = Mo.fam(), e = fm === 'retro' ? 'steps(6,jump-start)' : fm === 'nier' ? 'steps(5,jump-start)' : 'cubic-bezier(.16,1,.3,1)';
+        var fm = Mo.fam(), e = fm === 'retro' ? 'steps(6,jump-start)' : fm === 'nier' ? 'steps(5,jump-start)' : 'cubic-bezier(.16,1,.3,1)', q = c._quiet, last = delay;
         $$('.pmu-rrow', c.el).forEach(function (row, i) {
           var dl = delay + Math.min(560, i * 36), bar = row.querySelector('.pmu-rbar'), p50 = row.querySelector('.pmu-rp50');
-          if (p50) charts.popDot(p50, dl, 220);
+          if (p50 && !q) charts.popDot(p50, dl, 220);
           if (!bar) return;
-          Mo.anim(bar, [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], 520, dl + 140, e);
+          Mo.anim(bar, [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], 520, (q ? delay : dl + 140), e);
+          last = Math.max(last, dl + 140 + 520);
           var a = parseFloat(bar.style.left), w = parseFloat(bar.style.width);
-          if (PMU.film && PMU.film.headGlow && finite(a) && w > 3) PMU.film.headGlow(bar.parentNode, { from: a, to: a + w, dur: 520, delay: dl + 140, easing: e });
+          if (!q && PMU.film && PMU.film.headGlow && finite(a) && w > 3) PMU.film.headGlow(bar.parentNode, { from: a, to: a + w, dur: 520, delay: dl + 140, easing: e });
         });
         c.el.classList.remove('is-pre');
-      }
+        /* the Tools hero's beat (WOW-SPEC-3 7, C3-6): the slowest tool's p95 head rings once when the bars have landed */
+        if (!q && charts.isHero(c)) c.beatEnd = rangeBeat(c, last + 80) - delay;
+      },
+      beat: function (c, delay) { return rangeBeat(c, delay); }
     });
   };
+  /* the ring on the slowest tool: in the warn tone when the row is past its own budget (spec row.budget), otherwise in
+     its series light (the data has no per-tool budget: an honest "slowest", not an invented "over budget") */
+  function rangeBeat(c, at) {
+    if (Mo.reduced()) return at;
+    var rows = (c.spec && c.spec.rows) || [], best = -1;
+    rows.forEach(function (r, i) { if (finite(r.p95) && (best < 0 || r.p95 > rows[best].p95)) best = i; });
+    var row = best >= 0 ? $$('.pmu-rrow', c.el)[best] : null, bar = row && row.querySelector('.pmu-rbar');
+    if (!bar || !PMU.film || !(PMU.film.halo || PMU.film.ring)) return at;
+    var r = rows[best], over = finite(r.budget) && r.p95 > r.budget;
+    var tip = H('i', 'pmu-rtip', bar.parentNode);
+    tip.style.left = (parseFloat(bar.style.left) + parseFloat(bar.style.width)) + '%';
+    var a = PMU.film.halo ? PMU.film.halo(tip, { tone: over ? 'warn' : null, delay: at, dur: 700 }) : PMU.film.ring(tip, { delay: at });
+    if (a) a.finished.then(function () { tip.remove(); }, function () { tip.remove(); }); else tip.remove();
+    return at + 700;
+  }
   function drawRange(c, first) {
     var spec = c.spec, rows = spec.rows || [];
     var lo = Math.log10(spec.min || 0.1), hi = Math.log10(spec.max || 30);
@@ -1508,7 +1768,7 @@
         '<i class="pmu-rbar pmu-mark" data-mark="bar" data-series-index="' + (r.idx != null ? r.idx : 0) + '"' + (r.tone ? ' data-tone="' + r.tone + '"' : '') + ' style="left:' + a + '%;width:' + Math.max(0.8, b - a) + '%"></i>' +
         '<i class="pmu-rp50" style="left:' + a + '%"></i></span><span class="pmu-rval"><b>' + esc(charts.fmtValue(r.p50, 's')) + '</b> · ' + esc(charts.fmtValue(r.p95, 's')) + '</span></div>';
     });
-    c.el.innerHTML = html;
+    charts.patchHtml(c.el, html);
   }
 
   /* timeline is withdrawn (A1 7.10: the agenda kind renders DOM rows); kept as a quiet placeholder so old calls do not throw */

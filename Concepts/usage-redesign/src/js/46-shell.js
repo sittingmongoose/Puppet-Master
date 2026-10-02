@@ -7,6 +7,7 @@
   var app = document.getElementById('pmuApp');
   var nav = document.getElementById('pmuNav'), ink = document.getElementById('pmuNavInk');
   var inkCtl = null, inkReady = false, lastRoom = null, lastRange = null;
+  var titleDir = 1;   /* the camera's direction (WOW-SPEC-3 6.1): the titles move with it */
   var ROOM_ORDER = Object.keys(ROOM);
   /* DATA.providers -> the Settings catalog names and ids (PROVIDERS.md; every provider name on the page is the Settings name) */
   var SETTINGS_OF = { claude: 'claude-code', codex: 'openai-codex', qwen: 'qwen-coding', gemini: 'gemini-direct', kimi: 'kimi-coding', copilot: 'github-copilot' };
@@ -63,21 +64,28 @@
     return out;
   }
   /* a copy of the old title block (no ids, no hover tags) over the real one, leaving upward */
-  function titleGhost(tb) {
+  /* the reads of the title ghost happen before render() writes anything (a room click forces no layout of its own) */
+  function ghostGeo(tb) {
+    var src = tb.querySelector('#pmuRoomTitle'), cs = src ? getComputedStyle(src) : null;
+    return { css: cs ? 'margin:0;white-space:nowrap;overflow:hidden;font-style:' + cs.fontStyle + ';font-weight:' + cs.fontWeight + ';font-size:' + cs.fontSize + ';line-height:' + cs.lineHeight + ';font-family:' + cs.fontFamily + ';letter-spacing:' + cs.letterSpacing + ';text-transform:' + cs.textTransform + ';color:' + cs.color : '',
+      l: tb.offsetLeft, t: tb.offsetTop, w: tb.offsetWidth, h: tb.offsetHeight };
+  }
+  function titleGhost(tb, geo) {
     var head = tb.parentNode; if (!head) return;
+    geo = geo || ghostGeo(tb);
     var old = head.querySelector(':scope > .pmu-titleghost'); if (old) old.remove();
     var g = tb.cloneNode(true);
     g.classList.add('pmu-titleghost'); g.setAttribute('aria-hidden', 'true');
-    /* the title's look comes from its id: the copy takes the computed face (the layout is clean at this point) */
-    var src = tb.querySelector('#pmuRoomTitle'), dst = g.querySelector('h2');
-    if (src && dst) { var cs = getComputedStyle(src); dst.style.cssText = 'margin:0;white-space:nowrap;overflow:hidden;font:' + cs.font + ';letter-spacing:' + cs.letterSpacing + ';text-transform:' + cs.textTransform + ';color:' + cs.color; }
+    /* the title's look comes from its id: the copy takes the computed face */
+    var dst = g.querySelector('h2');
+    if (dst && geo.css) dst.style.cssText = geo.css;
     Array.prototype.forEach.call([g].concat(Array.prototype.slice.call(g.querySelectorAll('*'))), function (n) {
       n.removeAttribute('id'); n.removeAttribute('data-pm-hover-label'); n.removeAttribute('data-pm-hover-detail'); n.removeAttribute('tabindex');
     });
-    g.style.left = tb.offsetLeft + 'px'; g.style.top = tb.offsetTop + 'px'; g.style.width = tb.offsetWidth + 'px'; g.style.height = tb.offsetHeight + 'px';
+    g.style.left = geo.l + 'px'; g.style.top = geo.t + 'px'; g.style.width = geo.w + 'px'; g.style.height = geo.h + 'px';
     head.appendChild(g);
     var stepped = PMU.motion.family() === 'retro';
-    var a = PMU.motion.animate(g, [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-8px)' }],
+    var a = PMU.motion.animate(g, [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(' + (-8 * titleDir) + 'px)' }],
       { dur: 120, easing: stepped ? 'steps(2,jump-start)' : 'cubic-bezier(.4,0,1,1)', fill: 'forwards' });
     if (a) a.finished.then(function () { g.remove(); }, function () { g.remove(); }); else g.remove();
   }
@@ -91,8 +99,10 @@
   if (PMU.theme && PMU.theme.onChange) PMU.theme.onChange(function () { syncSpeed(); });
   function render() {
     if (!app) return;
-    syncSpeed();
     var room = ROOM[st.room] ? st.room : 'overview';
+    var tb0 = lastRoom !== null && lastRoom !== room && PMU.motion && !PMU.motion.reduced() && !PMU.theme.look().nier ? app.querySelector('.pmu-stagehead > .pmu-titleblock:not(.pmu-titleghost)') : null;
+    var geo0 = tb0 ? ghostGeo(tb0) : null;
+    syncSpeed();
     app.setAttribute('data-room', room);
     PMU.core.$$('.pmu-navbtn[data-room]', app).forEach(function (button) {
       var rk = button.getAttribute('data-room'), chosen = rk === room;
@@ -111,10 +121,10 @@
     /* the room title carries the cut (WOW-SPEC 3.2): the old title slides up 8 px and fades (120 IN) while the new one
        rises 10 px (260 OUT, from 60); NieR decodes instead (the app's page-title decode on #pmuRoomTitle) */
     var tb = title && title.closest('.pmu-titleblock'), animTitle = changed && tb && PMU.motion && !PMU.motion.reduced() && !PMU.theme.look().nier;
-    if (animTitle) titleGhost(tb);
+    if (animTitle) titleGhost(tb, geo0);
     if (title && title.textContent !== ROOM[room].title) title.textContent = ROOM[room].title;   /* one text node (NieR decode) */
     if (title) { title.setAttribute('data-pm-hover-label', ROOM[room].title); title.setAttribute('data-pm-hover-detail', ROOM[room].desc); }
-    if (desc && desc.textContent !== ROOM[room].desc) desc.textContent = ROOM[room].desc;
+    /* (the subtitle's text and fit: fitDesc, below) */
     /* the chosen room's rail icon answers the click: one small pop (POP, 320; Retro and NieR step) while the ink travels */
     if (changed && PMU.motion && !PMU.motion.reduced()) {
       var navOn = app.querySelector('.pmu-navbtn[data-room="' + room + '"] .pmu-navicon'), ff = PMU.motion.family();
@@ -124,7 +134,7 @@
     if (animTitle) {
       var f = PMU.motion.family(), stepped = f === 'retro';
       [title, desc].forEach(function (el, i) {
-        if (el) PMU.motion.animate(el, [{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }],
+        if (el) PMU.motion.animate(el, [{ opacity: 0, transform: 'translateY(' + (10 * titleDir) + 'px)' }, { opacity: 1, transform: 'none' }],
           { dur: 260, delay: 60 + i * 40, easing: stepped ? 'steps(3,jump-start)' : 'cubic-bezier(.22,.8,.28,1)', fill: 'backwards' });
       });
     }
@@ -138,6 +148,10 @@
     if (lastRange !== st.range || !(segInk && segInk._pmuPlaced)) { syncSegInk(rangeEl); lastRange = st.range; }
     var rl = document.getElementById('pmuRangeLabel'); if (rl && rl.textContent !== st.range) rl.textContent = st.range;
     var detail = document.getElementById('pmuDetailLabel'); if (detail) detail.textContent = DETAIL[st.detail].label;
+    /* a narrow head shows the level as its icon (the menu's icons), the label in the hover tag (E4: the title stays whole) */
+    var dLead = document.getElementById('pmuDetailLead'), dIcon = st.detail === 'detailed' ? 'list' : st.detail === 'diagnostics' ? 'tool' : 'eye';
+    if (dLead && dLead._pmu !== dIcon) { dLead.innerHTML = PMU.icon(dIcon); dLead._pmu = dIcon; }
+    var dBtn = document.getElementById('pmuDetailBtn'); if (dBtn) { dBtn.setAttribute('data-pm-hover-label', 'Detail'); dBtn.setAttribute('data-pm-hover-detail', DETAIL[st.detail].label); }
     var scope = document.getElementById('pmuScopeLabel'); if (scope) scope.textContent = scopeLabel(st.scope);
     var lead = document.getElementById('pmuScopeLead');
     if (lead) {
@@ -145,14 +159,60 @@
       var want = pid ? PMU.mark(pid, 16) : PMU.icon(st.scope === 'work' ? 'briefcase' : st.scope === 'personal' ? 'user' : 'filter');
       if (lead._pmu !== want) { lead.innerHTML = want; lead._pmu = want; }
     }
-    var count = document.getElementById('pmuPanelCount'); if (count && PMU.board) count.textContent = t('head.panels', { n: PMU.board.visible(room).length });
+    /* the count and its word apart: a narrow head shows the grid icon and the count only (E4: the room title is never cut) */
+    var count = document.getElementById('pmuPanelCount');
+    if (count && PMU.board) {
+      var nP = PMU.board.visible(room).length, word = t('head.panels', { n: '' }).trim(), html = nP + '<span class="pmu-pcw"> ' + esc(word) + '</span>';
+      if (count._pmu !== html) { count.innerHTML = html; count._pmu = html; }
+    }
+    fitDesc();
     syncInk(true);
   }
+  /* the head subtitle (E3-11, NOTES3-content E3): shown whole when it fits beside the title, otherwise hidden (the title's
+     hover tag carries it); never an ellipsis. Measured with canvas text metrics against the title block's width from a
+     ResizeObserver, so a room click reads no layout. In the demo hour (Q2) the slot shows "Demo time HH:MM". */
+  var fitCtx = null, faceKey = null, faces = null, tbW = 0;
+  function textW(text, face) {
+    if (!fitCtx) { try { fitCtx = document.createElement('canvas').getContext('2d'); } catch (error) { return 0; } }
+    fitCtx.font = face.font;
+    var s0 = face.tt === 'uppercase' ? String(text).toUpperCase() : String(text);
+    return fitCtx.measureText(s0).width + (parseFloat(face.ls) || 0) * s0.length;
+  }
+  function fitDesc() {
+    var title = document.getElementById('pmuRoomTitle'), desc = document.getElementById('pmuRoomDesc');
+    if (!title || !desc) return;
+    var room = ROOM[st.room] ? st.room : 'overview';
+    var demo = PMU.live && PMU.live.hour && PMU.live.hour.running && PMU.live.hour.running() ? PMU.live.hour.label() : null;
+    var text = demo || ROOM[room].desc;
+    if (desc.textContent !== text) desc.textContent = text;
+    desc.classList.toggle('is-demo', !!demo);
+    if (!tbW) { desc.hidden = false; return; }   /* before the first measure: the CSS keeps it on one line */
+    var key = PMU.theme.look().key;
+    if (faceKey !== key || !faces) {
+      /* the font shorthand reads '' when a sub-property has no shorthand form (tabular-nums): build it from the longhands */
+      var face = function (cs) { return { font: [cs.fontStyle, cs.fontWeight, cs.fontSize, cs.fontFamily].join(' '), ls: cs.letterSpacing, tt: cs.textTransform }; };
+      faces = { title: face(getComputedStyle(title)), desc: face(getComputedStyle(desc)) };
+      faceKey = key;
+    }
+    var need = textW(text, faces.desc) + 4;   /* stacked under the title: the block's whole width */
+    var hide = need > tbW;
+    if (desc.hidden !== hide) desc.hidden = hide;
+  }
+  var tbEl = app && app.querySelector('.pmu-stagehead > .pmu-titleblock:not(.pmu-titleghost)');
+  if (tbEl && window.ResizeObserver) new ResizeObserver(function (entries) {
+    var w = entries && entries[0] && entries[0].contentRect ? entries[0].contentRect.width : 0;
+    if (Math.abs(w - tbW) < 0.5) return;
+    tbW = w; fitDesc();
+  }).observe(tbEl);
+  if (PMU.theme && PMU.theme.onChange) PMU.theme.onChange(function () { faces = null; requestAnimationFrame(fitDesc); });
   function setView(patch, source) {
     var changed = Object.keys(patch).filter(function (k) { return patch[k] !== undefined && st[k] !== patch[k]; });
     if (!changed.length) return false;
-    if (PMU.menu) PMU.menu.close();
     var roomChange = changed.indexOf('room') >= 0, prevRoom = st.room;
+    if (roomChange) titleDir = ROOM_ORDER.indexOf(patch.room) < ROOM_ORDER.indexOf(prevRoom) ? -1 : 1;
+    /* the shared-element flight reads the old room's shares in one batch before anything is written (WOW-SPEC-3 6.2) */
+    if (roomChange && PMU.film && PMU.film.snapShares) { try { PMU.film.snapShares(patch.room); } catch (error) { console.error('[pm-usage] flight read', error); } }
+    if (PMU.menu) PMU.menu.close();
     /* the inspector belongs to a panel of the room it was opened from */
     if (roomChange && PMU.inspector && PMU.inspector.isOpen()) PMU.inspector.close(true);
     changed.forEach(function (k) { st[k] = patch[k]; });
@@ -205,7 +265,7 @@
       id: 'detail', title: 'Detail', current: DETAIL[st.detail].label, align: 'end', width: 360,
       rows: Object.keys(DETAIL).map(function (k) {
         return { value: k, label: DETAIL[k].label, sub: DETAIL[k].desc, right: t('head.panels', { n: c[k] }), active: st.detail === k,
-          icon: k === 'glance' ? 'grid' : k === 'detailed' ? 'list' : 'tool' };
+          icon: k === 'glance' ? 'eye' : k === 'detailed' ? 'list' : 'tool' };
       }),
       onPick: function (v) { setView({ detail: v }, 'detail'); }
     });
@@ -345,6 +405,6 @@
   if (window.ResizeObserver) { var stageEl = document.getElementById('pmuStage'); if (stageEl) new ResizeObserver(queueNotices).observe(stageEl); }
   window.addEventListener('resize', queueNotices);
 
-  PMU.shell = { render: render, setView: setView, pop: pop, closePop: closePop, toast: toastText, syncInk: syncInk, syncSegInk: syncSegInk, placeNotices: queueNotices,
+  PMU.shell = { render: render, setView: setView, fitDesc: fitDesc, pop: pop, closePop: closePop, toast: toastText, syncInk: syncInk, syncSegInk: syncSegInk, placeNotices: queueNotices,
     scopeLabel: scopeLabel, providerName: providerName, counts: counts, menus: { scope: scopeMenu, range: rangeMenu, detail: detailMenu, panels: panelsSpec, export: exportMenu } };
 })();
