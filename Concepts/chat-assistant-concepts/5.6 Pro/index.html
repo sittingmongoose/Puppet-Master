@@ -17013,7 +17013,10 @@ svg:where(.nx-z0) .nx-p { animation: none; }
    element opacity carries the curve (.32 at rest = the attention tone's strength). The backlight is the ::before of
    the .nx-bolt wrapper the hosts draw round the svg. Hovering the host re-strikes once: a one-shot copy joins the
    animation list (the loop keeps running underneath, so leaving the host does not strike again). The keyframes are
-   generated from one timeline in milliseconds. Reduced motion: lit and static. NieR: an ink crack in steps, no flash. */
+   one timeline in milliseconds, written out as percentages of the 5200 ms loop and of the 1100 ms one-shot: the bands
+   light (.12 -> 1) at 52, 92, 132 and 172 ms; the halo (element opacity) and the backlight are dark until 184 ms,
+   flash at 198, dip at 246, flash again at 286, ease to 366 and settle by 1040 (dark .32 halo / .08 backlight; light
+   themes a lower backlight curve, rest .07). Reduced motion: lit and static. NieR: an ink crack in steps, no flash. */
 .nx-bolt {
   position: relative; isolation: isolate; display: inline-flex; flex: none; line-height: 0; vertical-align: middle;
   --nxb-bl: nx-bolt-bl; --nxb-blh: nx-bolt-bl-h; --nxb-rest: var(--nx-bl-attention);
