@@ -16919,6 +16919,26 @@ body[data-theme$="-light"] .nx-st-waiting::before { animation-name: nx-bl-needs-
 }
 body.pm56-reduced svg.nx, body.pm56-reduced svg.nx .nx-p, body.pm56-reduced svg.nx .nx-h, body.pm56-reduced .nx-st, body.pm56-reduced .nx-st::before { animation: none !important; transition: none !important; }
 
+/* ------------------------------------------------------------------ 11. NieR Mode (PMConcept7 contract) */
+/* OWNER of this section: NieR Mode, step N-A (2026-10-02); the rest of the file is the foundation's. Every rule is
+   scoped by html[data-o55-nier="on"] (nier.js writes it only while a NieR theme is painted; nier.css holds the
+   palette), so the default themes never see one. NieR: Automata has no bloom: ink tubes, no halo band and no
+   backlight. Tone inks come from the NieR tables through the same tokens (--accent is the ink, --warning the warning
+   ink, --danger the rust, --positive the olive, --accent-2 the secondary ink); idle and paused are the ink at .45.
+   Motion is stepped (the NieR voice), transform and opacity only. */
+html[data-o55-nier="on"] body {
+  --nx-h-blocked-i: 0; --nx-h-attention-i: 0; --nx-h-working-i: 0; --nx-h-changed-i: 0; --nx-h-quiet-i: 0;
+  --nx-h-concept-i: 0; --nx-h-hover-i: 0; --nx-h-swell-i: 0;
+  --nx-bl-blocked: 0; --nx-bl-attention: 0; --nx-bl-working: 0; --nx-bl-changed: 0;
+  --nx-ease: steps(4, end); --nx-le: steps(6, end); --nx-ease-c: steps(3, end);
+}
+html[data-o55-nier="on"] svg.nx .nx-h { display: none; }
+html[data-o55-nier="on"] .nx-st::before { display: none; }
+html[data-o55-nier="on"] .activity-item[data-hover-domain]::after { display: none; }
+html[data-o55-nier="on"] svg:where(.nx-a-spin) { --nx-le: steps(12, end); }
+html[data-o55-nier="on"] svg:where(.nx-t-idle) { --nx-ink: rgba(var(--o55-nier-ink-rgb), .45); }
+html[data-o55-nier="on"] svg:where(.nx-t-paused) { --nx-ink: rgba(var(--o55-nier-ink-rgb), .45); }
+
 /* nier.css — NieR Mode for the 5.6 Pro concept: the palette, the type and the base look. OWNER: NieR Mode, step N-A
  * (2026-10-02). Closes the sheet (build.py CSS_LAST, after neon-icons.css). The engine is nier.js; the parts are
  * nier-parts.css / nier-parts.js; the neon icons' NieR rendering is the marked NieR section of neon-icons.css.
@@ -17184,14 +17204,63 @@ html[data-o55-nier="on"] body[data-theme^="basic"] {
   --pmx-ease-out: steps(4, jump-end); --pmx-ease-in: steps(3, jump-end); --pmx-ease-emph: steps(8, jump-end);
   --pmx-ease-move: steps(6, jump-end); --pmx-ease-pop: steps(3, jump-end);
 }
-/* Retro's voice glows (the phosphor flash on each streamed word, the block caret's bloom); NieR never glows. The
-   characters still type in, stepped (turn-stream .tx-c), and the caret still blinks. */
+/* ------------------------------------------------------------------ nothing glows */
+/* NieR has no bloom: every coloured blur the default themes use as a glow (box-shadow 0 0 N, drop-shadow, a
+   text-shadow flash) is dropped under the contract; the shape and its ink carry the state alone. Retro's voice (the
+   NieR voice) keeps its stepped typing and blinking caret, without the phosphor flash or the caret's bloom; a word in
+   any other voice still fades in, stepped, without its blur and glow. */
 html[data-o55-nier="on"] [data-voice="retro"] .tx-w { animation: none; }
-html[data-o55-nier="on"] [data-voice="retro"] .tx-caret { box-shadow: none; }
-
-/* ------------------------------------------------------------------ base surfaces that paint their own colour */
-/* The brand tile is a gradient with a bloom in every theme; in NieR it is a flat ink square. */
+html[data-o55-nier="on"] .tx-caret { box-shadow: none; }
+html[data-o55-nier="on"] .transcript:not([data-voice="retro"]) .tx-w { animation-name: o55n-word; animation-timing-function: steps(3, end); }
+@keyframes o55n-word { from { opacity: 0; } to { opacity: 1; } }
+html[data-o55-nier="on"] .jump-bottom.is-working > svg { filter: none; }
+html[data-o55-nier="on"] .pm-lens-trigger { --lens-shadow: none; }
+html[data-o55-nier="on"] .sp-mark[data-state="live"] .sp-sat { filter: none; }
+html[data-o55-nier="on"] .sp-comet { filter: none; }
+html[data-o55-nier="on"] .orbit-node.live { box-shadow: none; }
+html[data-o55-nier="on"] .orbit-node.current { box-shadow: none; }
+html[data-o55-nier="on"] .orbit-node.waiting { box-shadow: none; }
+html[data-o55-nier="on"] .orbit-core { box-shadow: none; }
+html[data-o55-nier="on"] .orbit-core.waiting { box-shadow: none; }
+html[data-o55-nier="on"] .orbit-narration-mark { box-shadow: none; }
 html[data-o55-nier="on"] .brand-mark { background: var(--o55-nier-ink); box-shadow: none; }
+
+/* ------------------------------------------------------------------ surfaces that paint their own colour */
+/* Literal or gradient paint the token tables cannot reach, found by the palette audit (scratch nier-audit.mjs over
+   the app views and every pmx-verify surface): each becomes ink on parchment. */
+/* initials avatars: a two-hue gradient with white letters in every theme; here an ink tile with paper letters */
+html[data-o55-nier="on"] .agent-avatar { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .transcript-inner > [data-family="people"] .agent-avatar { background: var(--surface-3); color: var(--text); box-shadow: inset 0 0 0 1px var(--border-strong); }
+/* the Orbit node's corner flag (blocked rust, waiting ochre) carries paper, not white or near-black */
+html[data-o55-nier="on"] .orbit-node-flag { color: var(--o55-nier-on-ink); }
+/* the warm primary (pmx) writes a literal dark or white label over the warning fill */
+html[data-o55-nier="on"] .pmx-sheet .pmx-primary[data-tone="warm"] { color: var(--on-accent); }
+/* the Workbench take's line counts are literal green and red */
+html[data-o55-nier="on"] .wa-add { color: var(--positive); }
+html[data-o55-nier="on"] .wa-del { color: var(--danger); }
+/* Debug's pass line falls back to a literal green (no --success token in the concept) */
+html[data-o55-nier="on"] .debug-pass { color: var(--positive); }
+/* the artifact revision graph reads --panel and --line, which the concept never defines (navy and grey fallbacks) */
+html[data-o55-nier="on"] .ar-graph-svg { --panel: var(--surface-2); --line: var(--border-strong); }
+/* Terminal Cast (working take 22) draws a literal graphite strip */
+html[data-o55-nier="on"] .working-variant-21 .c21-strip { background: var(--tx-sunken); background-color: var(--tx-sunken); }
+html[data-o55-nier="on"] .working-variant-21 .c21-strip::before { background: repeating-linear-gradient(90deg, transparent 0 10px, var(--border) 10px 18px); }
+html[data-o55-nier="on"] .working-variant-21 .c21-strip::after { background: repeating-linear-gradient(90deg, transparent 0 10px, var(--border) 10px 18px); }
+html[data-o55-nier="on"] .working-variant-21 .c21-frame { border-color: var(--border); background: var(--surface-2); color: var(--subtle); }
+html[data-o55-nier="on"] .working-variant-21 .c21-frame.done { color: var(--muted); background: var(--surface-3); }
+html[data-o55-nier="on"] .working-variant-21 .c21-frame.current { border-color: var(--pm-step, var(--accent)); }
+/* lab takes whose motion is a glow: the Diff Tape count flashes and the Branch status pulse hold still in ink */
+html[data-o55-nier="on"] .working-variant-11 .dt-add { animation-name: none; }
+html[data-o55-nier="on"] .working-variant-11 .dt-del { animation-name: none; }
+html[data-o55-nier="on"] .working-variant-11 .dt-ok { animation-name: none; }
+html[data-o55-nier="on"] .working-variant-11 .dt-ms { animation-name: none; }
+html[data-o55-nier="on"] .status-branch { animation-name: o55n-blink; animation-timing-function: steps(1, end); }
+@keyframes o55n-blink { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+/* Send carries an accent-tinted bloom under it, Stop a rust fill: in NieR both are flat ink squares with paper glyphs
+   (PMConcept7's chat send), Stop told apart by its glyph. */
+html[data-o55-nier="on"] .send-button { box-shadow: none; }
+html[data-o55-nier="on"] .composer-infield .send-button { box-shadow: none; }
+html[data-o55-nier="on"] .composer-infield .send-button.is-stop { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); box-shadow: none; }
 </style>
 </head>
 <body>

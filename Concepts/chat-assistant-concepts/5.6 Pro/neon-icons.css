@@ -245,3 +245,23 @@ body[data-theme$="-light"] .nx-st-waiting::before { animation-name: nx-bl-needs-
   svg.nx, svg.nx .nx-p, svg.nx .nx-h, .nx-st, .nx-st::before { animation: none !important; transition: none !important; }
 }
 body.pm56-reduced svg.nx, body.pm56-reduced svg.nx .nx-p, body.pm56-reduced svg.nx .nx-h, body.pm56-reduced .nx-st, body.pm56-reduced .nx-st::before { animation: none !important; transition: none !important; }
+
+/* ------------------------------------------------------------------ 11. NieR Mode (PMConcept7 contract) */
+/* OWNER of this section: NieR Mode, step N-A (2026-10-02); the rest of the file is the foundation's. Every rule is
+   scoped by html[data-o55-nier="on"] (nier.js writes it only while a NieR theme is painted; nier.css holds the
+   palette), so the default themes never see one. NieR: Automata has no bloom: ink tubes, no halo band and no
+   backlight. Tone inks come from the NieR tables through the same tokens (--accent is the ink, --warning the warning
+   ink, --danger the rust, --positive the olive, --accent-2 the secondary ink); idle and paused are the ink at .45.
+   Motion is stepped (the NieR voice), transform and opacity only. */
+html[data-o55-nier="on"] body {
+  --nx-h-blocked-i: 0; --nx-h-attention-i: 0; --nx-h-working-i: 0; --nx-h-changed-i: 0; --nx-h-quiet-i: 0;
+  --nx-h-concept-i: 0; --nx-h-hover-i: 0; --nx-h-swell-i: 0;
+  --nx-bl-blocked: 0; --nx-bl-attention: 0; --nx-bl-working: 0; --nx-bl-changed: 0;
+  --nx-ease: steps(4, end); --nx-le: steps(6, end); --nx-ease-c: steps(3, end);
+}
+html[data-o55-nier="on"] svg.nx .nx-h { display: none; }
+html[data-o55-nier="on"] .nx-st::before { display: none; }
+html[data-o55-nier="on"] .activity-item[data-hover-domain]::after { display: none; }
+html[data-o55-nier="on"] svg:where(.nx-a-spin) { --nx-le: steps(12, end); }
+html[data-o55-nier="on"] svg:where(.nx-t-idle) { --nx-ink: rgba(var(--o55-nier-ink-rgb), .45); }
+html[data-o55-nier="on"] svg:where(.nx-t-paused) { --nx-ink: rgba(var(--o55-nier-ink-rgb), .45); }
