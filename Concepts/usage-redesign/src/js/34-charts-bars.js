@@ -286,8 +286,9 @@
       var k = { idx: r.idx != null ? r.idx : i, vendor: r.vendor, tk: r.tk, tone: r.tone };
       var estF = finite(r.est) && finite(r.value) && r.value > 0 ? clamp(r.est / r.value, 0, 1) : 0;
       var val = finite(r.value) ? esc(r.valueText || charts.fmtValue(r.value, spec.unit)) : PMU.vs.html(r.vs || 'unknown');
-      /* shared-element keys (content N3-1): the bar carries the row's window (win:...), the mark its provider (prov:...) */
-      var bar = '<span class="pmu-rkbar"' + (r.share ? ' data-share="' + esc(r.share) + '"' : '') + '><i class="pmu-rkfill" style="--f:' + (f * 100).toFixed(2) + '%">' +
+      /* shared-element keys (content N3-1): the bar carries the row's window (row.shareKey, win:...; row.share is the numeric
+         share column), the mark its provider (row.markShare, prov:...) */
+      var bar = '<span class="pmu-rkbar"' + (r.shareKey ? ' data-share="' + esc(r.shareKey) + '"' : '') + '><i class="pmu-rkfill" style="--f:' + (f * 100).toFixed(2) + '%">' +
         (estF < 1 ? '<i class="pmu-mark" data-mark="bar"' + charts.keyAttrs(k) + ' style="flex-grow:' + (1 - estF) + '"></i>' : '') +
         (estF > 0 ? '<i class="pmu-mark" data-mark="bar" data-est="1"' + charts.keyAttrs(k) + ' style="flex-grow:' + estF + '"></i>' : '') + '</i></span>';
       /* a "% used" row (route pressure: a state tone on a 100 scale) takes the calm ramp by its value (WOW-SPEC-3 4.5) */

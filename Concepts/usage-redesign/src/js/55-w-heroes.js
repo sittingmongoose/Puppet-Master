@@ -430,7 +430,7 @@
           return '<div class="pmu-flowsrc" data-k="' + (r.est ? 'est' : 'rep') + '" style="top:' + (i * (leftH + 6)) + 'px;height:' + leftH + 'px;width:' + colW + 'px"' + C.hover(r.name, (r.est ? 'PM estimate' : 'provider reported') + ' · ' + r.what + ' · ' + r.age) + '>' +
             (r.prov ? PMU.mark(r.prov, 16) : C.glyph(r.est ? 'pencil' : 'check')) + '<span>' + esc(srcName(r).name) + '</span>' + (srcName(r).age ? '<em>' + esc(r.age) + '</em>' : '') + '</div>';
         }).join('') +
-        mid.map(function (m0) { return m0.n ? '<div class="pmu-flowmid" data-k="' + m0.key + '" style="left:' + x2 + 'px;top:' + m0.y + 'px;height:' + m0.h + 'px;width:' + colW + 'px"><b>' + m0.n + '</b><span>' + esc(m0.label) + '</span></div>' : ''; }).join('') +
+        mid.map(function (m0) { return m0.n ? '<div class="pmu-flowmid' + (m0.h < 54 ? ' is-row' : '') + '" data-k="' + m0.key + '" style="left:' + x2 + 'px;top:' + m0.y + 'px;height:' + m0.h + 'px;width:' + colW + 'px"><b>' + m0.n + '</b><span>' + esc(m0.label) + '</span></div>' : ''; }).join('') +
         '<div class="pmu-flowlab" style="left:' + x4 + 'px;top:0;height:' + (repH + estH + 12) + 'px;width:' + colW + 'px"><b>' + rows.length + ' of ' + rows.length + '</b><span>labelled</span><em>0 stale · 0 unknown · freshness policy 5m</em></div>' +
         '</div></div>';
     },

@@ -112,6 +112,9 @@ html[data-theme$="-light"] #panel-usage :is([data-series-index], [data-tk], [dat
 #panel-usage .pmu-mark[data-mark="line"][data-dash="dash"] { stroke-dasharray: 9 4; }
 #panel-usage .pmu-mark[data-mark="line"][data-spark] { stroke-width: 1.5; }
 #panel-usage .pmu-mark[data-mark="forecast"] { fill: none; stroke: var(--c); stroke-width: 2; stroke-dasharray: 4 3; stroke-linecap: round; opacity: .9; }
+/* integ3: the estimate cone had no rule (SVG's default black fill: a black wedge in Friendly Light); the band under it carries the
+   fill, the cone draws its two edges dashed and faint (an estimate, never lit) */
+#panel-usage .pmu-mark[data-mark="cone"] { fill: none; stroke: var(--c); stroke-width: 1; stroke-dasharray: 2 3; stroke-opacity: .45; }
 /* the static under-glow of a hero line, every family (WOW-SPEC 2.4): a wide soft duplicate stroke, blurred once on a GPU */
 #panel-usage .pmu-mark[data-mark="glow"] { fill: none; stroke: var(--c); stroke-width: 6; opacity: .16; stroke-linejoin: round; stroke-linecap: round; pointer-events: none; }
 html[data-theme$="-light"] #panel-usage .pmu-mark[data-mark="glow"] { opacity: .12; }

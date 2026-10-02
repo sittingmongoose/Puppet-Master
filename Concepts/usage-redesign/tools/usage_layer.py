@@ -476,6 +476,19 @@ APP_PATCHES = [
     ('    sweepTimer = 0; if (!sweep) return;\n    if (!document.hidden && !still() && !onboarding()) {\n',
      '    sweepTimer = 0; if (!sweep) return;\n    if (!document.hidden && !still() && !onboarding() && !document.body.classList.contains(\'pmu-page-active\')) { /* usage layer A6 */\n',
      'A6 NieR sweep waits while Usage shows'),
+    # A7 (integrator, round 3): Usage's rail uses the app's liquid ink; its spring read two rects every frame of its travel,
+    # and during a Usage room change each read forced the style and layout of the room being built (VM profile of the Costs
+    # room change: 6-13 ms of forced style per ink frame, 140 elements). While a Usage moment runs (html[data-pmu-moment])
+    # the ink of a strip inside #panel-usage reuses its first measure of the target (the rail does not move during the
+    # 250 ms travel); every other ink and every other time measures as before.
+    ('      function metrics(el) {\n        /* getBoundingClientRect so nested Usage',
+     '      function metrics(el) { /* usage layer A7: the Usage rail ink measures once per target during a Usage moment */\n'
+     '        var pmuM = strip._pmuM, pmuC = !!(strip.closest && strip.closest(\'#panel-usage\')) && document.documentElement.hasAttribute(\'data-pmu-moment\');\n'
+     '        if (pmuC && pmuM && pmuM.el === el && performance.now() - pmuM.t < 1200) return pmuM.v;\n'
+     '        var pmuV = metrics0(el); if (pmuC) strip._pmuM = { el: el, t: performance.now(), v: pmuV }; return pmuV;\n'
+     '      }\n'
+     '      function metrics0(el) {\n        /* getBoundingClientRect so nested Usage',
+     'A7 Usage rail ink measures once per target during a Usage moment'),
 ]
 
 
