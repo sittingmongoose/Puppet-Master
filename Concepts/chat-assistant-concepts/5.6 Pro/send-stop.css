@@ -15,7 +15,10 @@
  * 140-480 ms a fresh plane slides in; 240-540 ms it morphs into the square ON THE ACCENT; from 420 ms the red floods
  * out from under the square (half way at ~470 ms, when the square has formed), so a plane never sits on red; the
  * breathe starts at 800 ms. Retro steps from accent to danger in one step as the square lands (a stepped flood would
- * split the chip green and red). Leaving Stop the red drains first (fast, never overshooting), then the square opens.
+ * split the chip green and red). Leaving Stop the red drains first (fast, never overshooting), then the square opens;
+ * Retro and NieR drain in one step 40 ms in, never at the drain's first instant: a run that ends and a queued message
+ * that sends itself flip the chip Stop -> Send -> Stop inside one task (turn-stream.js renders, then flushes the
+ * queue), and a step at the start would leave the chip on the accent until the flood's way back has run.
  * The run: the square breathes ~1 px (scale .88) at the activity bar's 2.2 s working cadence while words arrive, and
  * .95 at 3.2 s while the model thinks or a tool runs; the danger backlight breathes .30/.18 (.10/.06 on light themes).
  * Both loops animate transform or opacity on a box (the svg root, the backlight's gradient), so they run on the
@@ -41,6 +44,7 @@ body {
   --ss-out: cubic-bezier(.3, .15, .65, .45);        /* lift-off: moves at once, accelerates away */
   --ss-shake: cubic-bezier(.3, 0, .3, 1);
   --ss-drain: cubic-bezier(.2, .75, .25, 1);        /* the red leaves fast, before the plane takes shape */
+  --ss-drain-t: 300ms;                              /* the drain's length (Retro and NieR: one step at 40 ms) */
   --ss-fo: 70ms;                                    /* the drain's last dot fades from here (the disc is under the square) */
   --ss-flood-e: var(--nx-ease, cubic-bezier(.2, .75, .25, 1));
   /* the glow loop's voice: a sine in-out for Basic. Not the loop token (.45, 0, .25, 1): on an opacity loop that
@@ -58,7 +62,9 @@ body[data-theme$="-light"] {
 }
 body[data-theme^="friendly"] { --ss-gle: cubic-bezier(.34, 1.4, .64, 1); }
 body[data-theme^="glass"] { --ss-drain: cubic-bezier(.4, 0, .1, 1); --ss-fo: 110ms; --ss-gle: cubic-bezier(.6, 0, .25, 1); }
-body[data-theme^="retro"] { --ss-out: steps(4, end); --ss-shake: steps(4, end); --ss-drain: steps(1, start); --ss-flood-e: steps(1, start); --ss-gle: steps(4, end); }
+/* Retro's drain is one step at 40 ms (jump-end): at its first instant it still holds the red, so a Stop -> Send ->
+   Stop flip in one task finds the flood unchanged and Chrome drops the transition instead of reversing it from 0 */
+body[data-theme^="retro"] { --ss-out: steps(4, end); --ss-shake: steps(4, end); --ss-drain: steps(1, end); --ss-drain-t: 40ms; --ss-flood-e: steps(1, start); --ss-gle: steps(4, end); }
 
 /* ------------------------------------------------------------------ the chip */
 .send-button.sendstop {
@@ -111,7 +117,7 @@ body[data-theme^="retro"] .sendstop[data-ss="stop"] .ss-bl { transition: opacity
 .ss-flood {
   position: absolute; left: 50%; top: 50%; width: 36px; height: 36px; margin: -18px 0 0 -18px; border-radius: 50%;
   background: var(--danger); scale: 0; opacity: 0; pointer-events: none;
-  transition: scale 300ms var(--ss-drain) var(--ss-dd, 0ms), opacity 60ms linear calc(var(--ss-dd, 0ms) + var(--ss-fo));
+  transition: scale var(--ss-drain-t) var(--ss-drain) var(--ss-dd, 0ms), opacity 60ms linear calc(var(--ss-dd, 0ms) + var(--ss-fo));
 }
 .sendstop[data-ss="stop"] .ss-flood { scale: 1; opacity: 1; transition: scale 360ms var(--ss-flood-e) calc(var(--ss-md, 0ms) + 180ms), opacity 0ms; }
 /* Retro: one step from accent to danger the moment the stepped morph lands (it ends at --ss-md + 300 ms) */
@@ -338,7 +344,7 @@ html[data-motion="reduced"] .sendstop .ss-bl::before, html[data-motion="reduced"
    (#o55np-reticle, on keyboard focus) from nier-parts.js are the only pointers; this control adds none. */
 html[data-o55-nier="on"] .sendstop {
   --ss-r: 0px; --ss-halo-a: 0; --ss-rim: transparent; --ss-drop: transparent; --ss-sheen: transparent;
-  --ss-out: steps(3, end); --ss-shake: steps(4, end); --ss-drain: steps(1, start); --ss-flood-e: steps(1, start);
+  --ss-out: steps(3, end); --ss-shake: steps(4, end); --ss-drain: steps(1, end); --ss-drain-t: 40ms; --ss-flood-e: steps(1, start);
 }
 html[data-o55-nier="on"] .sendstop::before, html[data-o55-nier="on"] .sendstop .ss-bl { display: none; }
 html[data-o55-nier="on"] .sendstop .ss-face { box-shadow: none; }
@@ -355,4 +361,14 @@ html[data-o55-nier="on"] .sendstop[data-ss="stop"] .ss-body, html[data-o55-nier=
 html[data-o55-nier="on"] .sendstop[data-ss="stop"] .ss-body { fill-opacity: 1; }
 html[data-o55-nier="on"] .sendstop[data-ss="stop"] .ss-fold { opacity: 0; }
 html[data-o55-nier="on"] .sendstop.ss-sputter .ss-all { animation-timing-function: steps(1, end); }
+/* every other move steps too, not only the voice curves: the hover lift and the press squeeze, the face's fill (into
+   Full), the ink fades (idle to ready, the fold, the queued plane, the knock-out, the badge) and the launch's trail.
+   Jump-end steps hold the start value at a transition's first instant, so a state flip inside one task stays a no-op. */
+html[data-o55-nier="on"] .send-button.sendstop, html[data-o55-nier="on"] .sendstop .ss-face,
+html[data-o55-nier="on"] .sendstop .ss-g { transition-timing-function: steps(2, end); }
+html[data-o55-nier="on"] .sendstop .ss-fold { transition-timing-function: var(--ss-ease); }
+html[data-o55-nier="on"] .sendstop .ss-knock { transition-timing-function: var(--ss-ease), steps(2, end); }
+html[data-o55-nier="on"] .sendstop .ss-back { transition-timing-function: steps(2, end), var(--ss-ease); }
+html[data-o55-nier="on"] .sendstop[data-ss] .ss-count { transition-timing-function: steps(2, end), var(--ss-ease); }
+html[data-o55-nier="on"] .sendstop.ss-launch .ss-trail { animation-timing-function: steps(3, end); }
 html[data-o55-nier="on"] .sendstop.ss-fail .ss-face::after { animation-timing-function: steps(2, end); }
