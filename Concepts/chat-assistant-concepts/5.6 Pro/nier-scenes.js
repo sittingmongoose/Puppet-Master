@@ -39,8 +39,9 @@
  * animation can only show the new scene, never a stale one. Rapid changes keep one leaving layer: the one of the two
  * scenes on screen that shows more stays (at the opacity it has) and fades out over the newest; the newest always wins.
  * A change back to the leaving scene (A-B-A) keeps the arriving one, which fades out from its share, so it never snaps.
- * A third scene within about 75 ms of a change (A-B-C, the leaving scene still the larger) swaps the middle scene for the
- * newest in one frame: one leaving layer cannot hold both (PMConcept7 stacks its leaving scenes).
+ * A third scene during a fade (A-B-C) swaps the one of the two on screen that shows less (at most half the picture: the
+ * arriving one in the first ~75 ms, the leaving one after) for the newest in one frame: one leaving layer cannot hold
+ * three scenes (PMConcept7 stacks its leaving scenes).
  * The new image is loaded before the fade starts, so the stage never shows bare ground. Instant (no fade) under every
  * reduced route (the system's reduced motion, html[data-motion="reduced"], body.pm56-reduced) and when no Motion part
  * is installed (the Still and Colors only presets: "Nothing moves"), as PMConcept7's o55Still() stops it there; turning
