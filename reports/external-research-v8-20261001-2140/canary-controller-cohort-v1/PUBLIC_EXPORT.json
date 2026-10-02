@@ -450,6 +450,15 @@
       "public_sha256": "8c5b9306801eb5ed9502a97af46c9d9f1c3df0cfbbdf92a5464059a9beb04d48",
       "bytes": 1160,
       "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/RESTART.json",
+      "public_path": "recovery-v1/RESTART.json",
+      "original_sha256": "afa0d5ff7a1cc3e05b3c299c85b2ae6cd15d88705bdae0b14afd0a18a600b25e",
+      "public_sha256": "9d7dffba3ca5fc40d0cb93656ee73302761cb8dc074663c1d22883291cd133a0",
+      "bytes": 5120,
+      "sanitized": true,
+      "projection": "Host paths substituted; internal exec_session_id omitted; other metadata preserved."
     }
   ],
   "required_missing_positive_files": [

@@ -1,0 +1,135 @@
+{
+  "schema": "pm.er8.restart.v1",
+  "campaign_id": "external-research-v8-20261001-2140",
+  "updated_utc": "2026-10-02T03:44:26.063573+00:00",
+  "state": "CONTINUING_ROUTE_DELTA_SOURCE_REVIEW_PENDING",
+  "lab_root": "LAB_ROOT",
+  "worktree": "WORKTREE_ROOT",
+  "branch": "research/external-research-v8-20261001-2140",
+  "last_published_commit": "6a648dfde2701ee787c9998ccf4989d943eefeb8",
+  "authority": {
+    "original": "AUTHORIZATION.json",
+    "amendment": "ops/recovery-v1/AUTHORITY_AMENDMENT.json",
+    "amendment_sha256": "1479c0b44869d13878b90ccd2f02d5fb2d755cfa0f0b17315105dc48d57616ec",
+    "policy_applied": "ops/recovery-v1/POLICY_APPLIED.json",
+    "original_start_epoch": 1790905209,
+    "campaign_deadline_epoch": 1790948409,
+    "explicit_user_pause_seconds": 0,
+    "prior_frozen_caps_unchanged": true
+  },
+  "consumed": {
+    "elapsed_seconds": 7504.510703086853,
+    "deadline_epoch": 1790948409,
+    "admissions": 1,
+    "native_goal_starts": 1,
+    "pending_start_permits": 0,
+    "occupied_slot_seconds": 816.6492922306061,
+    "committed_slot_seconds": 0,
+    "reserved_or_committed_slot_seconds": 32400,
+    "reserved_or_committed_native_starts": 18,
+    "active_by_family": {
+      "M": 0,
+      "Z": 0,
+      "L": 0
+    },
+    "candidate_output_warning": false,
+    "candidate_output_stop": false,
+    "active_jobs": [],
+    "overdue_jobs": [],
+    "helper_task_starts": 20,
+    "active_helpers": 6,
+    "evaluator_helper_starts_remaining": 6,
+    "generated_output_tokens_lower_bound": 0,
+    "generated_usage": "unknown",
+    "outside_native_seconds_by_case": {
+      "v8-z-mechanical-route-canary-v1": 0.435632441
+    },
+    "category_seconds": {
+      "cancel": 0,
+      "cleanup": 0.190546614,
+      "evaluation": 0,
+      "handoff": 0,
+      "native": 449.871491232,
+      "retry": 0,
+      "setup": 0.245085827,
+      "source_capture": 0,
+      "wait": 0
+    },
+    "occupancy_reconciled": true,
+    "route_reviews": [
+      "v8-z-route-repair1-canary-v1",
+      "v8-z-route-repair1-caller2-canary-v2"
+    ],
+    "final_reserved_names": [
+      "V8-BIO-C-Z",
+      "V8-BIO-P-Z",
+      "V8-BIO-B-Z",
+      "V8-NB-C-Z",
+      "V8-NB-P-Z",
+      "V8-NB-B-Z"
+    ],
+    "evaluator_reserved_names": [
+      "V8-EVAL-BIO-C",
+      "V8-EVAL-BIO-P",
+      "V8-EVAL-BIO-B",
+      "V8-EVAL-NB-C",
+      "V8-EVAL-NB-P",
+      "V8-EVAL-NB-B"
+    ],
+    "closed": false
+  },
+  "usage_unknowns": [
+    "candidate_generated_tokens",
+    "Sol helper/management/evaluation_tokens",
+    "money",
+    "underlying_account_identity",
+    "external_provider_load"
+  ],
+  "ownership": {
+    "supervisor": "codex-er8-recovery",
+    "thread_id": "01a0fab0-e24a-7221-8f34-1cc0c4faecdb",
+    "lifetime_lock": "ops/recovery-v1/supervisor.lock",
+    "claim": "ops/recovery-v1/SUPERVISOR.json",
+    "pid": 2774121,
+    "legacy_root_and_four_running_helpers": "verified idle/interrupted at1790911585",
+    "active_helpers": [
+      "v8_route_repair",
+      "v8_publisher_replacement",
+      "v8_other_family_routes",
+      "v8_tranche_scope",
+      "v8_route_independent",
+      "v8_operator_replacement"
+    ],
+    "active_candidate_jobs": []
+  },
+  "outcomes": {
+    "matched_comparisons_completed": 0,
+    "integrated_executions_completed": 0,
+    "target_comparisons": 12,
+    "target_integrated_executions": 24,
+    "reserved_holdout_executions": 4,
+    "failed_canaries": 1,
+    "first_canary_native_starts": 1,
+    "first_canary_occupied_seconds": 816.6492922306061,
+    "frozen_native_hold": "evaluation/native-qualification-v1/CURRENT_ASSESSMENT.json",
+    "original_prepared_cases": "cases/planning-v1",
+    "all_original_cases_not_run": true
+  },
+  "current_work": {
+    "route_delta": "dev/route-recovery-v1",
+    "route_reviewer": "evaluation/recovery-route-v1",
+    "route_delta_state": "synthetic sibling MCP direct+nested echo passed, finishing pins+negative tests before source review; AppArmor/profile/sysctl unchanged",
+    "other_family_routes": "dev/other-family-recovery-v1",
+    "future_tranche": "cases/tranche-v2",
+    "accounting_overlay": "ops/recovery-v1/ledger_overlay.py",
+    "native_operator": "ops/execution-recovery-v1"
+  },
+  "exact_next_actions": [
+    "Accept independent safe exact delta source review; admit one fresh counted bounded native canary under amended campaign policy, retain original failed attempt",
+    "Review actual native outcome separately; once safe run first complete control/recipe pair without waiting for other family routes/catalog",
+    "Freeze prospective12pair scopes with original6 reused; execute fresh samefamily research/critic/revision stages, refill slots as free",
+    "Freeze outputs for independent fullscope evaluation; reserve4freshholdouts only for supported promisingrecipe",
+    "Publish actual evidence/results in continuing sanitized GitHub batches; update this restart after consequential transitions"
+  ],
+  "restrictions": "No canon/main/v7/sibling/sharedprofile changes; no evaluator keys/Sol answers/private auth in candidate or public access; two candidate slots per family; six Sol helpers. No budget reset or failure erasure."
+}

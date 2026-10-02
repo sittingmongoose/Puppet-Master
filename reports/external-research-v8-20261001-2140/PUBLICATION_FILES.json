@@ -8,8 +8,8 @@
     },
     {
       "path": "CHECKPOINT.md",
-      "sha256": "7d8f0c6f75133b8b1b1a7aa816e46c0354bf8dfdc0430aa705ed4915d26e0fd8",
-      "bytes": 1346
+      "sha256": "c13b5c27b0d9a5368a859e61b7d3c332c18372db3b11144fbb48bb9499172aa0",
+      "bytes": 1523
     },
     {
       "path": "FAILURES.md",
@@ -48,13 +48,13 @@
     },
     {
       "path": "canary-controller-cohort-v1/PUBLIC_EXPORT.json",
-      "sha256": "9f7017f177c05622982d1e053fda1811ab4d78a920d25bcdcb936da87ca998b9",
-      "bytes": 26197
+      "sha256": "0c0db713a4353b8a8adf20e3a87015f65d25bae99a217f9c62bf01fccfae0bbc",
+      "bytes": 26663
     },
     {
       "path": "canary-controller-cohort-v1/README.md",
-      "sha256": "264a568f226b22dc6d7901cfef1281ec89f0bb87452afbb16db252a578034a32",
-      "bytes": 2645
+      "sha256": "9aa3c86c99cfe024c7e031a55e66062accfd4f360ad1dac7957fe676841b23e0",
+      "bytes": 2988
     },
     {
       "path": "canary-controller-cohort-v1/ROOT_HANDOFF.json",
@@ -325,6 +325,11 @@
       "path": "canary-controller-cohort-v1/recovery-v1/AUTHORITY_AMENDMENT.json",
       "sha256": "1479c0b44869d13878b90ccd2f02d5fb2d755cfa0f0b17315105dc48d57616ec",
       "bytes": 1717
+    },
+    {
+      "path": "canary-controller-cohort-v1/recovery-v1/RESTART.json",
+      "sha256": "9d7dffba3ca5fc40d0cb93656ee73302761cb8dc074663c1d22883291cd133a0",
+      "bytes": 5120
     },
     {
       "path": "canary-controller-cohort-v1/recovery-v1/SUPERVISOR_OBSERVATION.json",
