@@ -293,6 +293,14 @@
   function carryKey(c) {
     var card = c.host && c.host.closest ? c.host.closest('.pmu-card[data-widget]') : null;
     if (!card) return null;
+    /* a chart inside a keyed row (an account row, a list row) pairs with the same row's chart, not with whatever chart
+       now sits at the same index (integration 2, Mac film of "Use this account": the plate changed its columns and the
+       Personal row's meter morphed from Work Claude's weekly 54 %) */
+    var row = c.host.closest('[data-flash-key]');
+    if (row && card.contains(row)) {
+      var inRow = row.querySelectorAll('[data-pmu-chart="' + c.name + '"]');
+      return card.getAttribute('data-widget') + '|' + c.name + '|row:' + row.getAttribute('data-flash-key') + '|' + Array.prototype.indexOf.call(inRow, c.el);
+    }
     var same = card.querySelectorAll('[data-pmu-chart="' + c.name + '"]');
     return card.getAttribute('data-widget') + '|' + c.name + '|' + Array.prototype.indexOf.call(same, c.el);
   }
