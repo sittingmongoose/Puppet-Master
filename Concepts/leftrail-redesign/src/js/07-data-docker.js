@@ -73,7 +73,7 @@ const DOCKER_DATA = {
           items: [
             {
               id: 'ctr:tastebook-api-batch', kind: 'container', name: 'tastebook-api-batch',
-              status: { state: 'running', word: 'running' },
+              status: { state: 'ok', word: 'running' },
               meta: ['port 8080', 'up 3 hours', 'healthy'],
               metrics: [{ label: 'CPU', value: 12, text: '12%' }, { label: 'Memory', value: 34, text: '34%' }],
               ports: [{ label: '8080 → 8080', cmd: 'demo.toast', arg: 'Opening http://localhost:8080 in browser' }],
@@ -93,7 +93,7 @@ const DOCKER_DATA = {
             },
             {
               id: 'ctr:tastebook-import-worker-batch', kind: 'container', name: 'tastebook-import-worker-batch',
-              status: { state: 'running', word: 'running' },
+              status: { state: 'ok', word: 'running' },
               meta: ['up 3 hours', 'idle', 'draining queue'],
               metrics: [{ label: 'CPU', value: 6, text: '6%' }, { label: 'Memory', value: 49, text: '49%' }],
               facts: [
@@ -112,7 +112,7 @@ const DOCKER_DATA = {
             },
             {
               id: 'ctr:postgres-16-alpine-primary', kind: 'container', name: 'postgres-16-alpine-primary',
-              status: { state: 'running', word: 'running' },
+              status: { state: 'ok', word: 'running' },
               meta: ['port 5432', 'up 2 days', 'primary'],
               metrics: [{ label: 'CPU', value: 8, text: '8%' }, { label: 'Memory', value: 41, text: '41%' }],
               ports: [{ label: '5432 → 5432', cmd: 'demo.toast', arg: 'Copied localhost:5432 (postgres connection)' }],
@@ -167,7 +167,7 @@ const DOCKER_DATA = {
             },
             {
               id: 'ctr:ghcr-io-jared-tastebook-web-mirror', kind: 'container', name: 'ghcr-io-jared-tastebook-web-mirror',
-              status: { state: 'running', word: 'running' },
+              status: { state: 'ok', word: 'running' },
               meta: ['port 8081', 'up 22 hours'],
               metrics: [{ label: 'CPU', value: 9, text: '9%' }, { label: 'Memory', value: 22, text: '22%' }],
               ports: [{ label: '8081 → 80', cmd: 'demo.toast', arg: 'Opening http://localhost:8081 in browser' }],
@@ -187,7 +187,7 @@ const DOCKER_DATA = {
             },
             {
               id: 'ctr:tastebook-import-worker-1', kind: 'container', name: 'tastebook-import-worker-1',
-              status: { state: 'running', word: 'running' },
+              status: { state: 'ok', word: 'running' },
               meta: ['up 41 minutes', 'draining queue'],
               metrics: [{ label: 'CPU', value: 63, text: '63%' }, { label: 'Memory', value: 58, text: '58%' }],
               facts: [
@@ -206,7 +206,7 @@ const DOCKER_DATA = {
             },
             {
               id: 'ctr:registry-cache-pull-through', kind: 'container', name: 'registry-cache-pull-through',
-              status: { state: 'running', word: 'running' },
+              status: { state: 'ok', word: 'running' },
               meta: ['port 5001', 'up 2 days'],
               metrics: [{ label: 'CPU', value: 2, text: '2%' }, { label: 'Memory', value: 9, text: '9%' }],
               ports: [{ label: '5001 → 5000', cmd: 'demo.toast', arg: 'Opening http://localhost:5001/v2/_catalog in browser' }],
@@ -403,7 +403,7 @@ const DOCKER_DATA = {
           items: [
             {
               id: 'svc:db', kind: 'service', name: 'db', meta: ['postgres:16'],
-              status: { state: 'running', word: 'running' },
+              status: { state: 'ok', word: 'running' },
               ports: [{ label: '5432 → 5432', cmd: 'demo.toast', arg: 'Copied localhost:5432 (postgres connection)' }],
               facts: [
                 ['Image', 'postgres:16.3-alpine3.19', { mono: true }],
@@ -420,7 +420,7 @@ const DOCKER_DATA = {
             },
             {
               id: 'svc:cache', kind: 'service', name: 'cache', meta: ['redis:7'],
-              status: { state: 'running', word: 'running' },
+              status: { state: 'ok', word: 'running' },
               ports: [{ label: '6379 → 6379', cmd: 'demo.toast', arg: 'Copied localhost:6379 (redis)' }],
               facts: [
                 ['Image', 'redis:7.2-alpine3.19', { mono: true }],
@@ -455,7 +455,7 @@ const DOCKER_DATA = {
             },
             {
               id: 'svc:worker', kind: 'service', name: 'worker', meta: ['worker:v1.1'],
-              status: { state: 'running', word: 'running' },
+              status: { state: 'ok', word: 'running' },
               facts: [
                 ['Image', 'tastebook-worker:v1.1', { mono: true }],
                 ['State', 'running · up 41 minutes'],
@@ -501,7 +501,7 @@ const DOCKER_DATA = {
             },
             {
               id: 'svc:registry-cache', kind: 'service', name: 'registry-cache', meta: ['registry:2 · pull-through'],
-              status: { state: 'running', word: 'running' },
+              status: { state: 'ok', word: 'running' },
               ports: [{ label: '5001 → 5000', cmd: 'demo.toast', arg: 'Opening http://localhost:5001/v2/_catalog in browser' }],
               facts: [
                 ['Image', 'registry:2.8', { mono: true }],
