@@ -417,6 +417,12 @@
       var u = ln.querySelector('.pmu-agused'), h = agUsedHtml(byKey[ln.getAttribute('data-key')]);
       if (u && u.innerHTML !== h) C.setHtml(u, h);
     });
+    /* integ3: a day head's relative note ("in 2d 5h") follows the clock (the demo hour moves it as plain text) */
+    Array.prototype.forEach.call(body.querySelectorAll('.pmu-agday'), function (sec) {
+      var ln = sec.querySelector('.pmu-agline'), ev = ln && byKey[ln.getAttribute('data-key')], sp = sec.querySelector('header > span');
+      if (!ev || !ev.at || !sp || !/^in \d/.test(sp.textContent)) return;
+      var note = PMU.fmt.dayHead(ev.at).note || ''; if (/^in \d/.test(note) && sp.textContent !== note) sp.textContent = note;
+    });
     return true;
   }
   function groupHtml(g, lines, narrow) {

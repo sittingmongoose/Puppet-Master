@@ -8,7 +8,8 @@
 /* facts: label and value both wrap; the line grows from 27 px */
 #panel-usage .pmu-fact { height: auto; min-height: 27px; padding: 4px 0; line-height: 1.35; }
 #panel-usage .pmu-factl { flex: 0 1 auto; max-width: 52%; white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: break-word; }
-#panel-usage .pmu-factv { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: break-word; }
+#panel-usage .pmu-factv { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: normal; min-width: min-content; }
+/* integ3: a value never breaks inside a word ("2.39 / M" in the 97 px token tiles); the label wraps at its spaces instead */
 
 /* list rows: the second line and the note wrap; the value keeps its width and never cuts */
 #panel-usage .pmu-lname span, #panel-usage .pmu-lnote { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: break-word; line-height: 1.35; }

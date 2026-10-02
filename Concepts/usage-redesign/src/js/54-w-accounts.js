@@ -174,7 +174,7 @@
       try { same = JSON.stringify(spec) === JSON.stringify(r.spec); } catch (error) {}
       if (!same) { C.chartTo(r.chart, spec, ctx); r.spec = spec; }
     });
-    var lines = footLinesOf(p, PMU.roster.thresholds()), shown = body.querySelectorAll('.pmu-accfootline > span');
+    var lines = footLinesOf(p, PMU.roster.thresholds()), shown = body.querySelectorAll('.pmu-accfootline > span:not(.pmu-ico)');   /* integ3: the glyph span is not a text slot (a live beat wrote each line into the one before it) */
     Array.prototype.forEach.call(shown, function (sp, i) { if (lines[i] && sp.innerHTML !== lines[i].html) C.setHtml(sp, lines[i].html); });
     return true;
   }

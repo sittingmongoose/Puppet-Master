@@ -818,7 +818,9 @@
      the card alone (no dry render) */
   function msig(impl, ctx) {
     try {
-      var th = PMU.roster.thresholds(), pre = [th.auto, th.switchLeft, th.warnLeft, ctx.tier ? ctx.tier.bw + 'x' + ctx.tier.bh : ''].join('|') + '|';
+      /* while the demo hour runs (8.6) the demo minute is part of every signature: relative times ("resets in 1h 41m")
+         change as plain text each step */
+      var th = PMU.roster.thresholds(), pre = [th.auto, th.switchLeft, th.warnLeft, ctx.tier ? ctx.tier.bw + 'x' + ctx.tier.bh : '', PMU.clock && PMU.clock.demo && PMU.clock.demo() ? Math.floor(PMU.clock.now() / 60000) : ''].join('|') + '|';
       return impl.liveSig ? pre + String(impl.liveSig(ctx)) : ctx.model && typeof ctx.model === 'object' ? pre + JSON.stringify(ctx.model) : null;
     } catch (error) { return null; }
   }
@@ -846,7 +848,9 @@
     liveLaterT = idle(function () {
       liveLaterT = 0;
       var list = liveLater.splice(0);
-      list.forEach(function (b) { var card = b.isConnected && b.closest('.pmu-card'); if (card && PMU.cards && PMU.cards.update) PMU.cards.update(card, 'data'); });
+      /* integ3: the live patch already recorded the new signature, so a plain 'data' update returned at its signature check
+         and the deferred re-render never ran (a re-ranked ladder kept its old order); forget it so the card renders */
+      list.forEach(function (b) { var card = b.isConnected && b.closest('.pmu-card'); if (card && PMU.cards && PMU.cards.update) { b._pmuMSig = null; b._pmuPre = null; PMU.cards.update(card, 'data'); } });
     }, { timeout: 2500 });
   }
   function liveUpdate(body, ctx, impl) {

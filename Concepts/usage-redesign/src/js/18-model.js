@@ -59,11 +59,13 @@
     var s = String(label || key).replace(/ window$/i, '');
     return s.charAt(0).toUpperCase() + s.slice(1);
   }
-  function windowView(key, label, fact, governed) {
+  function windowView(key, label, fact, governed, rolls) {
     fact = fact || { vs: 'unknown' };
     var pct = num(fact.pct);
     var resetAt = num(fact.reset_in_min) !== null ? loadedAt + fact.reset_in_min * MIN : fact.reset_rule === 'next_month' ? nextMonthStart() : null;
     var winMin = fact.win_min || WINDOW_MIN[key] || null;
+    /* a window whose reset passed during the demo hour (8.6) starts its next window: the reset moves on by whole windows */
+    if (rolls > 0 && resetAt !== null && winMin) resetAt += rolls * winMin * MIN;
     var truth = fact.truth || 'unknown';
     var pace = resetAt && winMin ? Math.max(0, Math.min(1, 1 - (resetAt - clockNow()) / (winMin * MIN))) : null;
     var vsState = fact.vs && fact.vs !== 'ok' && fact.vs !== 'estimated' ? fact.vs : pct === null ? 'unknown' : (pct === 0 && fact.zero ? 'zero' : 'ok');
@@ -126,7 +128,9 @@
       var keys = accs.map(function (a) { return p.id + '/' + a.id; });
       var factEff = keys.filter(function (k) { var f = (ROSTER.facts || {})[k]; return f && f.effective; })[0];
       var nextKey = next && next.provider === p.id ? p.id + '/' + next.account : null;
+      var demoEff = OV() && OV()['eff:' + p.id];
       var eff = ovr[p.id] && keys.indexOf(ovr[p.id]) >= 0 ? ovr[p.id]
+        : typeof demoEff === 'string' && keys.indexOf(demoEff) >= 0 ? demoEff
         : bridge && keys.indexOf(bridge) >= 0 ? bridge
         : nextKey && keys.indexOf(nextKey) >= 0 ? nextKey
         : factEff || (p.defaultAccount && keys.indexOf(p.id + '/' + p.defaultAccount) >= 0 ? p.id + '/' + p.defaultAccount : keys[0]);
@@ -141,15 +145,17 @@
             fact = Object.assign({}, fact, { pct: Math.max(0, Math.round((fact.pct + dw) * 10) / 10) });
             if (num(fact.used) !== null && num(fact.limit) !== null) fact.used = Math.round(fact.used + dw / 100 * fact.limit);
           }
-          return windowView(w.key, w.label, fact, governed);
+          return windowView(w.key, w.label, fact, governed, ov('roll:' + key + '/' + w.key));
         });
         var known = wins.filter(function (w) { return w.pct !== null; });
         var binding = known.slice().sort(function (x, y) { return (x.left - y.left) || (WINDOW_ORDER.indexOf(x.key) - WINDOW_ORDER.indexOf(y.key)); })[0] || null;
         if (binding) binding.binding = true;
         var state = f && f.state ? f.state : (a.active === false ? 'signed-out' : /limit/i.test(a.health || '') ? 'exhausted' : f ? 'standby' : 'unknown');
+        var ovState = OV() && OV()['state:' + key]; if (typeof ovState === 'string' && STATE_WORD[ovState]) state = ovState;
         var effective = key === eff;
         var cooldown = f && f.cooldown ? { untilAt: loadedAt + (f.cooldown.until_in_min || 0) * MIN, reason: f.cooldown.reason, source: f.cooldown.source, retry: f.cooldown.retry_budget } : null;
-        if (cooldown && window.PM7_USAGE && Number(window.PM7_USAGE.cooldown_seconds) > 0) cooldown.untilAt = clockNow() + Number(window.PM7_USAGE.cooldown_seconds) * 1000;
+        /* the bridge's seconds count down on the real clock: anchored there, the demo hour's clock passes the end (8.6) */
+        if (cooldown && window.PM7_USAGE && Number(window.PM7_USAGE.cooldown_seconds) > 0) cooldown.untilAt = Date.now() + Number(window.PM7_USAGE.cooldown_seconds) * 1000;
         if (cooldown && cooldown.untilAt <= clockNow()) { cooldown = null; if (state === 'cooldown') state = 'standby'; }
         var supports = !!(f && f.supports_manual_set_active) && accs.length > 1;
         var exhaustedWin = wins.filter(function (w) { return w.pct !== null && w.pct >= 100; })[0];
@@ -160,7 +166,9 @@
           : state === 'signed-out' ? { ok: false, reason: 'Signed out' }
           : state === 'needs-seat' ? { ok: false, reason: 'Needs a seat' } : { ok: true };
         var fresh = f && f.fresh ? { ageS: f.fresh.age_s, source: f.fresh.source, stale: !!f.fresh.stale } : { ageS: null, source: 'no reading yet', stale: false };
-        var shownState = state === 'standby' && effective && p.accounts.length > 1 ? 'active' : state;
+        /* one active account per provider: the effective one (integ3: after "Use this account" the routing default kept
+           reading "Active" beside the override's "Active · override") */
+        var shownState = state === 'standby' && effective && p.accounts.length > 1 ? 'active' : state === 'active' && !effective && p.accounts.length > 1 ? 'standby' : state;
         var word = shownState === 'active' && isOverride && effective ? 'Active · override'
           : shownState === 'cooldown' && cooldown ? 'Cooldown until ' + PMU.fmt.clock(cooldown.untilAt) : STATE_WORD[shownState] || 'Usage unknown';
         var amounts = [];
@@ -189,10 +197,11 @@
       var g = groups.filter(function (x) { return x.id === view.group; })[0] || groups[groups.length - 1];
       g.providers.push(view);
     });
-    var log = (ROSTER.switch_log || []).map(function (e) {
+    var demoLog = ((OV() && OV()._switches) || []).map(function (e) { return { at_ms: e.at, provider: e.provider, from: e.from, to: e.to, code: 'threshold_preemptive_switch', text: e.text, outcome: 'switched', demo: true }; });
+    var log = demoLog.concat(ROSTER.switch_log || []).map(function (e) {
       var p = views.filter(function (v) { return v.id === e.provider; })[0];
       var nick = function (id) { var a = p && p.accounts.filter(function (x) { return x.id === id; })[0]; return a ? a.nickname : id; };
-      return { at: loadedAt - e.at_min_ago * MIN, providerId: e.provider, providerName: p ? p.name : e.provider, from: e.from, to: e.to, fromName: e.from ? nick(e.from) : '', toName: e.to ? nick(e.to) : '',
+      return { at: e.at_ms != null ? e.at_ms : loadedAt - e.at_min_ago * MIN, providerId: e.provider, providerName: p ? p.name : e.provider, from: e.from, to: e.to, fromName: e.from ? nick(e.from) : '', toName: e.to ? nick(e.to) : '',
         code: e.code, text: e.text, outcome: e.outcome };
     }).sort(function (a, b) { return b.at - a.at; });
     return { groups: groups, providers: views, accounts: accounts, switchLog: log, thresholds: th };
@@ -626,7 +635,92 @@
         memo = {}; cache = null;
         return { beat: i, n: b.beat, shares: sharesOf(b), lead: (b.lead || []).slice() };
       },
-      reset: function (o) { if (!o) return; Object.keys(o).forEach(function (k) { delete o[k]; }); memo = {}; cache = null; }
+      reset: function (o) { if (!o) return; Object.keys(o).forEach(function (k) { delete o[k]; }); memo = {}; cache = null; },
+      /* WOW-SPEC-3 8.6 / WOW-TASKS-3 P3-2 (flag playHour): one step of "Play the next hour" (the engine advanced the demo
+         clock by two demo minutes before calling). Readings rise every step (roster.json live.hour); the climbing window
+         is the effective account's, so after an auto-switch the next account climbs; a window whose reset time the demo
+         clock passed starts its next window (0 % used, its reset moved on, "Usage exhausted" ends); a cooldown ends by
+         the clock (the roster already reads it); the auto-switch happens when the effective account's binding window
+         reaches the Settings switch line and auto-switch is on: the eligible account with the most room becomes
+         effective and the switch history gains "Auto-switch (demo)". Settings is never written; DATA never changes.
+         Returns {shares, lead} like apply(): every changed number and every account whose state, effective flag or
+         window readings changed. */
+      hourStep: function (o, now, step) {
+        if (!o) return null;
+        var L = (window.PM_USAGE_ROSTER && window.PM_USAGE_ROSTER.live) || ROSTER.live || {}, H = L.hour || {};
+        var changed = {}, lead = [];
+        var add = function (k, d) { if (typeof d !== 'number' || !isFinite(d) || !d) return; o[k] = Math.round(((o[k] || 0) + d) * 1e6) / 1e6; changed[k] = true; };
+        var inval = function () { memo = {}; cache = null; };
+        var snap = function () {
+          var out = {};
+          PMU.roster.read().accounts.forEach(function (a) {
+            out[a.key] = JSON.stringify([a.shownState, a.stateWord, a.effective, a.windows.map(function (w) { return [w.key, w.pct, w.resetAt]; })]);
+          });
+          return out;
+        };
+        var before = o._hourSnap || snap();
+        /* 1 the steady readings (tokens, spend, value, cache, attempts) */
+        var every = function (map, n) { if (map && (!n || step % n === 0)) Object.keys(map).forEach(function (k) { add(k, map[k]); }); };
+        every(H.every); every(H.every3, 3); every(H.every4, 4);
+        /* 2 the climbing windows: the effective account of each provider in the script */
+        inval();
+        var crossedWarn = [];
+        (H.climb || []).forEach(function (c) {
+          var pv = PMU.roster.provider(c.provider), a = pv && pv.effective; if (!a) return;
+          Object.keys(c.windows || {}).forEach(function (wk) {
+            var w = a.windows.filter(function (x) { return x.key === wk; })[0]; if (!w || w.pct === null) return;
+            var k = 'win:' + a.key + '/' + wk, was = w.pct, thl = PMU.roster.thresholds();
+            add(k, c.windows[wk]);
+            if (was < 100 - thl.warnLeft && was + c.windows[wk] >= 100 - thl.warnLeft) crossedWarn.push(a);
+            if (!lead.length) lead.push(k);
+          });
+        });
+        /* 3 resets the demo clock passed: the window starts again (rolling windows with a known length only) */
+        inval();
+        PMU.roster.read().accounts.forEach(function (a) {
+          var reset = false;
+          a.windows.forEach(function (w) {
+            if (w.pct === null || w.resetAt === null || w.truth === 'unknown' || w.resetAt > now || !(WINDOW_MIN[w.key])) return;
+            o['roll:' + a.key + '/' + w.key] = (o['roll:' + a.key + '/' + w.key] || 0) + 1;
+            o['win:' + a.key + '/' + w.key] = Math.round(((o['win:' + a.key + '/' + w.key] || 0) - w.pct) * 1e6) / 1e6;
+            changed['win:' + a.key + '/' + w.key] = true; reset = true;
+          });
+          if (reset && a.state === 'exhausted' && !a.windows.some(function (w) { return w.pct !== null && w.pct >= 100 && !(w.resetAt !== null && w.resetAt <= now); })) o['state:' + a.key] = 'standby';
+        });
+        /* 4 the auto-switch (only when Settings has it on) */
+        inval();
+        var th = PMU.roster.thresholds();
+        if (th.auto) (H.climb || []).forEach(function (c) {
+          var pv = PMU.roster.provider(c.provider), a = pv && pv.effective;
+          if (!a || !a.binding || a.binding.left > th.switchLeft || o['eff:' + pv.id]) return;   /* one demo switch per provider */
+          var next = pv.accounts.filter(function (x) { return x !== a && x.binding && x.signedIn && (x.state === 'standby' || x.state === 'active'); })
+            .sort(function (x, y) { return y.binding.left - x.binding.left; })[0];
+          if (!next) return;
+          o['eff:' + pv.id] = next.key;
+          if (a.state === 'active') o['state:' + a.key] = 'standby';
+          o._switches = (o._switches || []).concat([{ provider: pv.id, from: a.id, to: next.id, at: now,
+            text: (H.switch_text || 'Auto-switch (demo)') + ' · ' + a.nickname + ' reached ' + Math.round(100 - th.switchLeft) + '% used; switched to ' + next.nickname }]);
+          lead.unshift('acct:' + next.key);
+        });
+        /* 5 the warn line crossed: the same alert the 1x loop plays once (beat 7), if it has not arrived yet */
+        if (crossedWarn.length) script().forEach(function (b) {
+          if (!b.alert || o['alert:' + b.alert.id]) return;
+          if (crossedWarn.some(function (a) { return b.alert.account === a.key; })) { o['alert:' + b.alert.id] = Object.assign({}, b.alert, { at: now, time: 'now', live: true }); changed['alert:' + b.alert.id] = true; lead.push('alert:' + b.alert.id); }
+        });
+        inval();
+        var after = snap(); o._hourSnap = after;
+        var shares = sharesOf({ deltas: Object.keys(changed).filter(function (k) { return k.indexOf('alert:') !== 0; }).reduce(function (m, k) { m[k] = 1; return m; }, {}) });
+        Object.keys(changed).forEach(function (k) { if (k.indexOf('alert:') === 0) shares.push(k); });
+        /* relative times move with the demo clock: every window with a reset time is touched (its cards patch as text) */
+        PMU.roster.read().accounts.forEach(function (a) { a.windows.forEach(function (w) { if (w.resetAt !== null && w.pct !== null) shares.push('win:' + a.key + '/' + w.key); }); });
+        Object.keys(after).forEach(function (key) {
+          if (before[key] === after[key]) return;
+          shares.push('acct:' + key);
+          var a = PMU.roster.account(key); (a ? a.windows : []).forEach(function (w) { shares.push('win:' + key + '/' + w.key); });
+        });
+        if (!lead.length) lead = ['num:spend.month', 'num:value.window'];
+        return { step: step, shares: shares.filter(function (x, i) { return shares.indexOf(x) === i; }), lead: lead };
+      }
     };
   }
 })();

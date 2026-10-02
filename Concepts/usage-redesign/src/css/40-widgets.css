@@ -219,6 +219,9 @@ html[data-theme^="retro"] #panel-usage .pmu-caveat, html[data-o55-nier="on"] #pa
 /* ------------------------------------------------------------------ trend, columns, budget, heat */
 #panel-usage .pmu-trend, #panel-usage .pmu-colsw, #panel-usage .pmu-budget, #panel-usage .pmu-heatw { display: flex; flex-direction: column; gap: 6px; min-width: 0; min-height: 0; flex: 1 1 auto; }
 #panel-usage .pmu-trendplot, #panel-usage .pmu-colsplot, #panel-usage .pmu-budgetplot, #panel-usage .pmu-heatplot { position: relative; flex: none; min-width: 0; }
+/* integ3: the columns plot gives way (its chart redraws on resize) when its caption wraps taller than measured (Windows
+   stills: the mono caption took two lines and the Spend axis labels were cut by the plate) */
+#panel-usage .pmu-colsplot { flex: 0 1 auto; min-height: 60px; }
 #panel-usage .pmu-trend.is-spark { justify-content: center; gap: 4px; }
 #panel-usage .pmu-trendhead { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
 #panel-usage .pmu-trendlabel { font-size: 12.5px; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -590,6 +593,9 @@ html[data-o55-nier="on"] #panel-usage .pmu-atdot.is-pending { background: transp
 #panel-usage .pmu-flowmid[data-k="est"] { --c: var(--pmu-warn); }
 #panel-usage .pmu-flowlab { --c: var(--pmu-accent); }
 #panel-usage :is(.pmu-flowmid, .pmu-flowlab) b { font-size: 26px; font-weight: 640; line-height: 1.1; color: var(--pmu-ink); font-variant-numeric: tabular-nums; }
+/* integ3: a middle box under 54 px (the PM estimate box at 1440) sets its count and label in one row (the label ran past the box) */
+#panel-usage .pmu-flowmid.is-row { flex-direction: row; align-items: center; justify-content: flex-start; gap: 10px; }
+#panel-usage .pmu-flowmid.is-row b { font-size: 22px; }
 #panel-usage .pmu-flowlab b { font-size: 22px; }
 #panel-usage :is(.pmu-flowmid, .pmu-flowlab) span { font-size: 12.5px; font-weight: 560; color: var(--pmu-ink-2); }
 #panel-usage .pmu-flowlab em { font-style: normal; font-size: 12px; line-height: 1.35; color: var(--pmu-ink-3); }

@@ -33,7 +33,8 @@
 
   def('month', 'overview', { short: 'Window value', meta: rangeMeta(), model: function (ctx) {
     var c = D.costs();
-    return { value: c.selected, fmt: 'money', share: 'num:value.window', sub: b(c.attempts) + (c.attempts === 1 ? ' attempt' : ' attempts') + ' · attempt-backed charge plus plan allocation',
+    /* integ3: the attempts count is the lead of a running-work beat on Overview (WOW-SPEC-3 8.3 beat 2: "else attempts") */
+    return { value: c.selected, fmt: 'money', share: 'num:value.window', sub: '<b data-share-v="num:attempts.count">' + c.attempts + '</b>' + (c.attempts === 1 ? ' attempt' : ' attempts') + ' · attempt-backed charge plus plan allocation',
       facts: [['Settled API', money(c.settled)], ['Plan estimate', money(c.plan) + ' est.'], ['Cache estimate', money(c.cache) + ' est.'], ['Pending', String(c.pending), c.pending ? { tone: 'warn' } : {}], ['24h equivalent', money(c.dayEquivalent)], ['Basis', D.rangeLabel(ctx.state.range) + ' selected window']] };
   } });
 

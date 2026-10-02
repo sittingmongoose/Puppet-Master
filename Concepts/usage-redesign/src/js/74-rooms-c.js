@@ -259,11 +259,12 @@
      live reading derived from them without carrying the key, so they declare the key prefixes they follow (the engine
      writes them as data-live on the card) */
   var LIVE = {
-    'month': ['num:value', 'num:attempts'], 'cost-month': ['num:value', 'num:attempts'], 'cache-saved': ['num:cache'], 'plan-value-now': ['num:value'],
+    'month': ['num:value', 'num:attempts'], 'cost-month': ['num:value', 'num:attempts'], 'cache-saved': ['num:cache', 'num:attempts'], 'cost-save': ['num:cache', 'num:attempts'], 'burn-basis': ['num:attempts'], 'forecast': ['num:attempts'],
+    'cache-trend': ['num:cache', 'num:attempts'], 'signal-history': ['num:attempts'], /* integ3: every card that prints the selected attempts count follows it */ 'plan-value-now': ['num:value'],
     'an-totals': ['num:tokens', 'num:value', 'num:cache'], 'token-trend': ['num:tokens', 'chart:tokens'], 'next-reset': ['win:'], 'route-pressure': ['win:'],
     'ov-headroom': ['win:'], 'acct-switch': ['win:'], 'ov-resets': ['win:'], 'reset-map': ['win:'], 'acct-resets': ['win:'], 'an-resets': ['win:'],
     'attention-now': ['alert:'], 'ledger-count': ['num:attempts'], 'ledger-routes': ['num:attempts'], 'budget-now': ['num:spend', 'chart:budget'], 'budget': ['num:spend', 'chart:budget'],
-    'quota-history': ['win:'], 'an-quota-history': ['win:'], 'plans-timeline': ['win:'], 'ov-skyline': ['win:']
+    'quota-history': ['win:'], 'acct-history': ['acct:'], 'an-quota-history': ['win:'], 'plans-timeline': ['win:'], 'ov-skyline': ['win:']
   };
   Object.keys(LIVE).forEach(function (id) { if (PMU.widgets.get(id)) PMU.widgets.define(id, { live: LIVE[id] }); });
   ['claude', 'codex', 'qwen', 'gemini', 'kimi', 'copilot'].forEach(function (id) { if (PMU.widgets.get('tok-' + id)) PMU.widgets.define('tok-' + id, { live: ['num:tokens.' + id] }); });
