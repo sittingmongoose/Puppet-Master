@@ -94,7 +94,8 @@
     var nier = document.documentElement.getAttribute('data-o55-nier') === 'on';
     var px = form === 'plate' ? 15 : form === 'tile' ? 13 : 13.5, tx = nier ? String(text).toUpperCase() : String(text);
     /* 10 % and a 12 px gap of margin: a canvas measure can run narrower than the laid-out face (Retro's mono, NieR) */
-    return (PMU.charts.textW(tx, px, false, 640) + (nier ? tx.length * px * 0.05 : 0)) * 1.1 <= w - 12;
+    var wide = nier || /^retro/.test(document.documentElement.getAttribute('data-theme') || '');
+    return (PMU.charts.textW(tx, px, false, 640) + (nier ? tx.length * px * 0.05 : 0)) * (wide ? 1.25 : 1.1) <= w - 12;
   }
   function syncHead(card, ctx) {
     var def = ctx.def, form = card.getAttribute('data-head') || 'line', tier = ctx.tier || {};

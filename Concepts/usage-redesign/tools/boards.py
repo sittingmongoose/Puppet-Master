@@ -264,9 +264,9 @@ B = {
              'plan-pressure 8x9 plan-authority 8x9 allowance-attribution 8x9 counting-basis 12x7 native-allowance-units 12x7',
     },
     'costs': {
-        'S': 'cost-month 6x4 cost-api 6x4 cost-plan 6x4 cost-save 6x4 budget 12x9 cost-spend 6x10 provider-cost 6x10 '
+        'S': 'cost-month 6x4 cost-api 6x4 cost-plan 6x4 cost-save 6x4 budget 12x11 cost-spend 6x10 provider-cost 6x10 '
              'cost-authority 12x14 cost-trend 12x9 pricing-confidence 12x6 burn-basis 12x6',
-        'M': 'cost-month 5x4 cost-api 5x4 cost-plan 5x4 cost-save 5x4 budget 12x10 cost-spend 8x10 '
+        'M': 'cost-month 5x4 cost-api 5x4 cost-plan 5x4 cost-save 5x4 budget 12x12 cost-spend 8x12 '
              'provider-cost 10x13 cost-authority 10x13 cost-trend 20x9 pricing-confidence 10x6 burn-basis 10x6',
         'L': 'cost-month 6x4 cost-api 6x4 cost-plan 6x4 cost-save 6x4 budget 12x10 cost-spend 12x10 provider-cost 8x11 '
              'cost-authority 8x11 cost-trend 8x11 pricing-confidence 12x6 burn-basis 12x6',
@@ -325,12 +325,12 @@ B = {
              'reasoning-mix 12x7 token-counting-basis 12x7 unknown-token-buckets 12x7',
     },
     'ledger': {
-        'S': 'ledger-count 4x4 ledger-errors 4x4 ledger-routes 4x4 settlement-states 12x5 ledger-main 12x17 ledger-events 12x14 '
-             'attempt-lineage 12x8 ledger-coverage 6x4 ledger-export 6x4 usage-record-state 12x6',
-        'M': 'ledger-count 5x5 ledger-errors 5x5 ledger-routes 5x5 settlement-states 5x5 ledger-main 13x17 ledger-events 7x17 '
-             'attempt-lineage 20x9 ledger-coverage 5x5 ledger-export 5x5 usage-record-state 10x5',
-        'L': 'ledger-count 6x5 ledger-errors 6x5 ledger-routes 6x5 settlement-states 6x5 ledger-main 16x17 ledger-events 8x17 '
-             'attempt-lineage 24x9 ledger-coverage 6x5 ledger-export 6x5 usage-record-state 12x5',
+        'S': 'ledger-count 4x4 ledger-errors 4x4 ledger-routes 4x4 settlement-states 12x7 ledger-main 12x17 ledger-events 12x14 '
+             'attempt-lineage 12x14 ledger-coverage 6x4 ledger-export 6x4 usage-record-state 12x6',
+        'M': 'ledger-count 5x6 ledger-errors 5x6 ledger-routes 5x6 settlement-states 5x6 ledger-main 13x17 ledger-events 7x17 '
+             'attempt-lineage 20x12 ledger-coverage 5x5 ledger-export 5x5 usage-record-state 10x5',
+        'L': 'ledger-count 6x6 ledger-errors 6x6 ledger-routes 6x6 settlement-states 6x6 ledger-main 16x17 ledger-events 8x17 '
+             'attempt-lineage 24x12 ledger-coverage 6x5 ledger-export 6x5 usage-record-state 12x5',
     },
     'attention': {
         'S': 'alert-0 6x8 alert-1 6x8 alert-2 6x8 attention-policy 6x8 anom 12x10 attention-history 12x9',

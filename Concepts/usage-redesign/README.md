@@ -25,7 +25,8 @@ Concepts/usage-redesign/
   src/copy.json           shell strings; src/copy.d/*.json one file per owner (merged; a key in two files fails the build)
   src/roster.json         the review roster: Settings fixture accounts + Usage facts + switch log (ARCHITECTURE section 7)
   src/css/*.css           sorted, concatenated into <style id="pm-usage-css">; owners in ARCHITECTURE section 2.2
-                          (15-menu.css: the dropdown menu, engine)
+                          (15-menu.css: the dropdown menu, engine; 70-wrap.css: values wrap instead of ellipsizing,
+                          titles before meta, fixer 2026-10-02)
   src/js/*.js             sorted, concatenated into one strict wrapper in <script id="pm-usage-js">; owners in section 2.1
     00-core.js            helpers, copy lookup t(), STORE, icons, state, the command/receipt/event/view-action seam, window.PMU
     05-data.js            every fixture of the old page's DATA object and its constants, unchanged (frozen)
@@ -87,7 +88,9 @@ keep its exact rule count, or the build stops.
 5. It merges the review roster (`src/roster.json` `settings`) into the Settings providers fixture (the one
    `json.dumps(indent=2)` array after `  const providers = ` in `pm4-settings-js`; 22 providers asserted, original accounts
    asserted unchanged) and inserts a once-per-saved-state seed into the providers manager's `migrate()`, so Settings shows
-   the same roster as the Accounts room, also in a browser with saved Settings.
+   the same roster as the Accounts room, also in a browser with saved Settings. Every account's Settings usage windows (pct
+   and reset words) are written from the roster facts (`align_usage`) and the seed re-aligns saved states, so Settings and
+   Usage read the same resets.
 6. It adds the new page's class names to the NieR Mode selector lists in the Settings script: the menu cursor
    (`.pmu-navbtn`, `.pmu-poprow`), the chosen brackets (`.pmu-navbtn`), the strip cursor (`.pmu-range button`,
    `.pmu-seg button`) and the page-title decode (`#pmuRoomTitle`, `.pmu-brand h1`) (`NIER_NAMES`).

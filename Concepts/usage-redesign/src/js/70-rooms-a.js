@@ -192,7 +192,7 @@
       states: list.map(function (a) { return pendingZero(a) ? 'pending' : null; }),
       est: list.map(function (a) { return Math.round((a.plan_allocation_estimate || 0) * 100) / 100; }),
       labelsLong: list.map(function (a) { return a.attempt_id + ' · ' + C.legName(a.provider_id) + (a.plan_allocation_estimate ? ' · plan estimate hatched' : ''); }), idx: 0, unit: 'usd', highlightLast: true,
-      caption: 'SELECTED <b>' + esc(money(c.selected)) + '</b> · MONTH END EST. <b>' + esc(money(P.to)) + '</b> · BUDGET <b>' + esc(money(DATA.costs.budget)) + '</b>',
+      caption: 'SELECTED <b>' + esc(money(c.selected)) + '</b> · PERIOD END EST. <b>' + esc(money(P.to)) + '</b> · BUDGET <b>' + esc(money(DATA.costs.budget)) + '</b>',
       facts: [['Attempts', String(c.attempts)], ['Confidence', P.confidence + '%'], ['Basis', 'local-time pace']], note: 'Projection uses explicit attempt charges and labeled plan-allocation estimates.', emptyText: 'No attempts in this range.' };
   } });
 
@@ -243,7 +243,7 @@
       { name: 'Retries', value: 34, valueText: '34 req', idx: 2, sub: '4% · watch' }], fmt: 'int', foot: 'Selected records by provider are in Details.' };
   }, inspect: function () {
     var c = D.costs();
-    return C.insp('Allowance attribution', Object.keys(c.byProvider).map(function (k) { var x = c.byProvider[k]; return [legName(k), x.attempts + ' attempts · ' + x.requests + ' requests · ' + F.tok(x.input + x.output) + ' tokens · ' + money(x.settled) + ' settled · ' + money(x.plan) + ' plan estimate']; })
+    return C.insp('Allowance attribution', Object.keys(c.byProvider).map(function (k) { var x = c.byProvider[k]; return [legName(k), x.attempts + ' attempts · ' + x.requests + ' requests · ' + F.tok(x.input + x.output) + ' tokens · ' + (x.settled ? money(x.settled) + ' settled' : 'covered by subscription') + ' · ' + (x.plan ? money(x.plan) + ' plan estimate' : 'no plan estimate (metered)')]; })
       .concat([['User work', '71% · 611 requests'], ['Validation', '17% · 146'], ['Helpers', '8% · 69'], ['Retries', '4% · 34 (watch)']]));
   } });
   def('counting-basis', 'plans', { meta: function () { return 'inclusive versus additive'; }, model: function () {
@@ -301,11 +301,12 @@
       var tot = x.settled + x.plan;
       return { id: p.id, name: legName(p.id), role: (x.settled ? 'metered API' : 'subscription · covered') + ' · ' + x.attempts + ' attempts', value: tot, est: x.plan, valueText: money(tot) + (x.plan && !x.settled ? ' est.' : ''),
         vendor: PMU.markOf(PMU.roster.legacyProvider(p.id)).vendor, mark: PMU.roster.legacyProvider(p.id), prov: PMU.roster.legacyProvider(p.id), tone: x.pending ? 'warn' : null,
-        hover: 'API ' + money(x.settled) + ' · plan estimate ' + money(x.plan) + (x.pending ? ' · ' + x.pending + ' pending receipt' : '') };
+        /* covered work reads "covered", a metered route has no plan estimate: never $0.00 for either (DESIGN-SPEC 11) */
+        hover: (x.settled ? 'API ' + money(x.settled) : 'API charge not applicable · covered by subscription') + ' · ' + (x.plan ? 'plan estimate ' + money(x.plan) : 'plan estimate not applicable · metered') + (x.pending ? ' · ' + x.pending + ' pending receipt' : '') };
     }).sort(function (a, b2) { return (b2.value || 0) - (a.value || 0); });
     return { rows: rows, foot: 'Subscription routes read covered; their value is a labelled plan estimate.' };
   } });
-  def('cost-authority', 'costs', { meta: function () { return 'one billing model · month to date'; }, model: function () {
+  def('cost-authority', 'costs', { meta: function () { return 'one billing model · budget period to date'; }, model: function () {
     var c = D.costs();
     return { rows: [
       { name: 'API billed', sub: 'counts against the spending limit', value: money(DATA.costs.api), note: 'selected range ' + money(c.settled) + ' settled', glyph: 'check' },
@@ -327,7 +328,7 @@
       /* a receipt still pending with no value is unknown, never $0.00: its column is a gap labelled "Pending receipt" */
       states: list.map(function (a) { return pendingZero(a) ? 'pending' : null; }),
       totals: list.map(function (a) { return pendingZero(a) ? null : Math.round(((a.charge || 0) + (a.plan_allocation_estimate || 0)) * 100) / 100; }),
-      caption: 'SELECTED <b>' + esc(money(c.selected)) + '</b> · 24H EQUIVALENT <b>' + esc(money(c.dayEquivalent)) + '</b> · MONTH END EST. <b>' + esc(money(D.series('budgetProjection').to)) + '</b>',
+      caption: 'SELECTED <b>' + esc(money(c.selected)) + '</b> · 24H EQUIVALENT <b>' + esc(money(c.dayEquivalent)) + '</b> · PERIOD END EST. <b>' + esc(money(D.series('budgetProjection').to)) + '</b>',
       note: 'Settled charges and labeled allocation estimates remain separate fields.', emptyText: 'No attempts in this range.' };
   } });
   def('pricing-confidence', 'costs', { meta: rangeMeta('value authority'), model: function () {
@@ -342,7 +343,7 @@
     var c = D.costs();
     return { value: c.dayEquivalent, fmt: 'perday', sub: '24h equivalent from selected records · ' + b(c.attempts) + ' attempts',
       facts: [['Settled charge', money(c.settled)], ['Plan estimate', money(c.plan) + ' est.'], ['Pending', String(c.pending)], ['Window hours', String(c.hours)], ['Confidence', '87%'], ['Provider charges', money(DATA.costs.api)],
-        ['Plan allocation', money(DATA.costs.plans) + ' est.'], ['Unpriced', '3 events'], ['Time zone', 'local 24h'], ['Month end', money(D.series('budgetProjection').to) + ' est.'], ['Overage buffer', money(DATA.costs.budget - D.series('budgetProjection').to)], ['Next refresh', '40s']],
+        ['Plan allocation', money(DATA.costs.plans) + ' est.'], ['Unpriced', '3 events'], ['Time zone', 'local 24h'], ['Period end', money(D.series('budgetProjection').to) + ' est.'], ['Overage buffer', money(DATA.costs.budget - D.series('budgetProjection').to)], ['Next refresh', '40s']],
       spark: { values: D.series('spendDaily30').settled, idx: 1 }, foot: esc(D.scopeText()) + ' · projection only' };
   } });
 

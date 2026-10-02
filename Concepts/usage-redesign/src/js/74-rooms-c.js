@@ -175,7 +175,7 @@
   def('signal-history', 'signals', { meta: function () { return 'Hourly · 24 hours · % of provider readings healthy (90 to 100 axis)'; }, model: function () {
     var S = D.series('signalHealth24h'), n = S.values.length, now = new Date(); now.setMinutes(0, 0, 0);
     var x = S.values.map(function (v, i) { return now.getTime() - (n - 1 - i) * 3600000; });
-    return { chart: 'line', spec: { x: x, unit: 'pct', unitTitle: '% HEALTHY', yMin: 90, yMax: 100, series: [{ name: 'Healthy readings', idx: 1, values: S.values }] }, headline: { value: S.values[n - 1], fmt: 'pct', label: 'healthy now' }, spark: { values: S.values, idx: 1 },
+    return { chart: 'line', spec: { x: x, unit: 'pct', unitTitle: '% HEALTHY', yMin: 90, yMax: 100, series: [{ name: 'Healthy readings', idx: 1, values: S.values, area: true }] }, headline: { value: S.values[n - 1], fmt: 'pct', label: 'healthy now' }, spark: { values: S.values, idx: 1 },
       facts: [['Healthy', '6'], ['Warnings', '2'], ['Stale', '0'], ['Unpriced', '3'], ['Selected attempts', String(D.costs().attempts)]], note: 'Health is not inferred from absent Usage attempts.' };
   } });
   def('signal-coverage', 'signals', { meta: function () { return 'current · events with usable signal data'; }, model: function () {

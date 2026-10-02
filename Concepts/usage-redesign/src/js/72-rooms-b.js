@@ -225,15 +225,16 @@
   C.openAttempt = function (a, opener) {
     var bk = D.attemptBuckets(a), row = function (k, v) { return [k, esc(v == null || v === '' ? '-' : v)]; };
     var basis = (D.series('countingBasis') || {})[a.provider_id] || {};
-    PMU.inspector.open({ kind: 'attempt', title: 'Usage attempt ' + a.attempt_id, subtitle: legName(a.provider_id) + ' · ' + new Date(a.occurred_at).toLocaleString(), sections: [
-      { title: 'Attempt', rows: [row('Timestamp', new Date(a.occurred_at).toLocaleString()), row('Usage event ref', a.usage_event_ref), row('Usage record id', a.usage_record_id), row('Attempt id', a.attempt_id), row('Provider attempt ref', a.provider_attempt_ref),
+    PMU.inspector.open({ kind: 'attempt', title: 'Usage attempt ' + a.attempt_id, subtitle: legName(a.provider_id) + ' · ' + (F.dayHead(new Date(a.occurred_at).getTime()).note + ' ' + F.clock(new Date(a.occurred_at).getTime())), sections: [
+      { title: 'Attempt', rows: [row('Timestamp', F.dayHead(new Date(a.occurred_at).getTime()).note + ' ' + F.clock(new Date(a.occurred_at).getTime()) + ' · ' + a.occurred_at), row('Usage event ref', a.usage_event_ref), row('Usage record id', a.usage_record_id), row('Attempt id', a.attempt_id), row('Provider attempt ref', a.provider_attempt_ref),
         row('Provider / installation', a.provider_id + ' · ' + a.installation_id), row('Account / connection', a.account_id + ' · ' + a.connection_id), row('Product / model', a.product_id + ' · ' + a.model_id), row('Tool', a.tool_id)] },
       { title: 'Token buckets', rows: [row('Input (uncached)', F.num(bk.in)), row('Cache read', F.num(bk.cr)), row('Cache write', F.num(bk.cw)), row('Output (visible)', F.num(bk.out)), row('Reasoning', F.num(bk.rsn)),
         row('Reported input', F.num(a.input_tokens) + ' · cache ' + (basis.cache || 'inclusive')), row('Reported output', F.num(a.output_tokens) + ' · reasoning ' + (basis.reasoning || 'inclusive')), row('Requests', String(a.request_count))] },
       { title: 'Route and settlement', rows: [row('Requested route', a.requested_route_id), row('Effective route', a.effective_route_id), row('Billing basis', a.billing_basis), row('Entitlement', a.entitlement_class),
         row('Settlement status', a.settlement_status), row('Settlement authority', a.settlement_authority)] },
       { title: 'Source', rows: [row('Class', a.source_class), row('Confidence', a.source_confidence), row('Authority', a.source_authority), row('Freshness', a.projection_freshness), row('Health', a.projection_health)] },
-      { title: 'Value', rows: [row('Charge', money(a.charge) + ' · ' + a.charge_authority), row('Plan allocation estimate', money(a.plan_allocation_estimate) + ' · ' + a.plan_allocation_authority),
+      { title: 'Value', rows: [row('Charge', a.charge > 0 || a.charge_authority !== 'not applicable to subscription attempt' ? money(a.charge) + ' · ' + a.charge_authority : 'Not applicable · covered by subscription'),
+        row('Plan allocation estimate', a.plan_allocation_estimate > 0 ? money(a.plan_allocation_estimate) + ' · ' + a.plan_allocation_authority : 'Not applicable · ' + a.plan_allocation_authority),
         row('Cache avoided estimate', money(a.cache_avoided_estimate) + ' · ' + a.cache_avoided_authority), row('Tool latency', (a.tool_latency_ms / 1000).toFixed(1) + 's'), row('Tool errors', String(a.tool_error_count)), row('Anomaly score', String(a.anomaly_score))] }
     ], raw: a }, opener);
   };
@@ -270,7 +271,7 @@
         var v = (a.charge || 0) + (a.plan_allocation_estimate || 0);
         return { tone: /pending/.test(a.settlement_status) ? 'warn' : null, match: { prov: a.provider_id, set: a.settlement_status },
           cells: { time: (t.getHours() < 10 ? '0' : '') + t.getHours() + ':' + (t.getMinutes() < 10 ? '0' : '') + t.getMinutes(), id: a.attempt_id, prov: { html: PMU.mark(PMU.roster.legacyProvider(a.provider_id), 16) + ' ' + esc(legName(a.provider_id)) },
-            model: m.name, io: F.tok(a.input_tokens) + ' / ' + F.tok(a.output_tokens), acct: a.account_id.replace(/^account:/, ''), plat: 'desktop', op: a.tool_id,
+            model: m.name, io: F.tok(a.input_tokens) + ' / ' + F.tok(a.output_tokens), acct: (PMU.roster.byLegacy(a.account_id) || {}).nickname || a.account_id.replace(/^account:/, ''), plat: 'desktop', op: a.tool_id,
             val: { html: /pending/.test(a.settlement_status) && !v ? C.vs('pending', 'pending') : esc(money(v)) + (a.charge ? '' : ' <em>est.</em>') }, set: { html: setGlyph(a.settlement_status) } },
           hover: [a.attempt_id, a.usage_event_ref + ' · ' + a.provider_id + ' · ' + a.model_id + ' · ' + a.settlement_status],
           onClick: function (el) {
@@ -288,7 +289,7 @@
   } });
   def('attempt-lineage', 'ledger', { meta: function (ctx) { return D.rangeLabel(ctx.state.range) + ' · receipt chain'; }, model: function () {
     return { cols: [{ id: 'id', label: 'ATTEMPT', w: '76px', mono: true }, { id: 'who', label: 'PROVIDER · ACCOUNT', w: 'minmax(140px,2fr)' }, { id: 'route', label: 'EFFECTIVE ROUTE', w: 'minmax(120px,1.6fr)', min: 'm' }, { id: 'ref', label: 'EVENT REF', w: '80px', mono: true, min: 'l' }, { id: 'set', label: 'SETTLEMENT', w: 'minmax(100px,1.2fr)' }],
-      rows: D.attempts().map(function (a) { return { cells: { id: a.attempt_id, who: legName(a.provider_id) + ' · ' + a.account_id.replace(/^account:/, ''), route: a.effective_route_id, ref: a.usage_event_ref, set: { html: setGlyph(a.settlement_status) } }, onClick: function (el) { C.openAttempt(a, el); } }; }) };
+      rows: D.attempts().map(function (a) { return { cells: { id: a.attempt_id, who: C.acctName(a.account_id), route: a.effective_route_id, ref: a.usage_event_ref, set: { html: setGlyph(a.settlement_status) } }, onClick: function (el) { C.openAttempt(a, el); } }; }) };
   } });
   def('ledger-coverage', 'ledger', { meta: function (ctx) { return D.rangeLabel(ctx.state.range) + ' · stable identity axes'; }, model: function () {
     var c = D.costs(), acc = {}; D.attempts().forEach(function (a) { acc[a.account_id] = 1; });
