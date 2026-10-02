@@ -1,0 +1,20 @@
+{
+  "schema": "er8.execution.independent-build.v1",
+  "source_sha256": "abde9b4b9d70bbfd7c97ed397733228707ad2e27ed9214b11185e371631029ee",
+  "author_executable_sha256": "2575d0c5ea4fe0af283bb0a2f484c0309c9d27be210660d98986bdbcc01f7e58",
+  "independent_executable_sha256": "2575d0c5ea4fe0af283bb0a2f484c0309c9d27be210660d98986bdbcc01f7e58",
+  "byte_identical": true,
+  "build_argv": [
+    "/usr/bin/gcc",
+    "-std=c11",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static",
+    "-o",
+    "evaluation/execution-qualification-v1/deadline_gate.independent-build",
+    "dev/execution-path-v1/deadline_gate.c"
+  ],
+  "native_calls": 0
+}

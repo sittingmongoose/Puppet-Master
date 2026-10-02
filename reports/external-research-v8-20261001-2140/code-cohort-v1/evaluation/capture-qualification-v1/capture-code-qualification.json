@@ -1,0 +1,115 @@
+{
+  "schema": "pm.v8.capture-code-qualification.v1",
+  "state": "FROZEN",
+  "campaign_id": "external-research-v8-20261001-2140",
+  "reviewer": "codex-v8-capture-check",
+  "decision": "CONDITIONAL_ACCEPT_CANARY_ONLY",
+  "offline_code_boundary_accepted": true,
+  "productive_pass": false,
+  "native_proof": "PENDING_SEPARATE_NEW_CANARY",
+  "live_public_get_proof": "PENDING_SEPARATE_NEW_CANARY",
+  "semantic_acquisition": "UNKNOWN",
+  "llm_read": "UNOBSERVED",
+  "numeric_witness": "UNEXECUTED",
+  "generated_usage": "UNKNOWN",
+  "start_utc": "2026-10-02T02:09:02+00:00",
+  "frozen_utc": "2026-10-02T02:16:53.155994+00:00",
+  "elapsed_seconds": 471.155994,
+  "clock_reset": false,
+  "component_own_hard_deadline_utc": "2026-10-02T02:39:02+00:00",
+  "stricter_original_checker_hard_deadline_utc": "2026-10-02T02:33:52+00:00",
+  "stricter_original_checker_test_cutoff_utc": "2026-10-02T02:23:52+00:00",
+  "source_version": "v8-source-capture-v1",
+  "pins": [
+    {
+      "path": "LAB_ROOT/dev/source-capture-v1/binding.json",
+      "sha256": "8dea681e5a43fa54cec4a8ae76e37fcd9c6db878e73576ef5611e76e0313ff99"
+    },
+    {
+      "path": "LAB_ROOT/dev/source-capture-v1/tool_server.py",
+      "sha256": "9c25c1faaf7c4557aaeb22b0977061914a9fbba1a04d87d2a3a29851daa29846"
+    },
+    {
+      "path": "LAB_ROOT/dev/source-capture-v1/boundary.py",
+      "sha256": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b"
+    },
+    {
+      "path": "LAB_ROOT/dev/source-capture-v1/test_source_capture.py",
+      "sha256": "a2e661f064dff5efb21c61461106d9473995e76c14133a8ff4abdec5a5aaf808"
+    },
+    {
+      "path": "LAB_ROOT/dev/source-capture-v1/README.md",
+      "sha256": "f92dfad615d6c60bca9b989e5147cfd5e1eb506acb23d35d44ba99cded81a5a7"
+    }
+  ],
+  "runtime_closure": [
+    "tool_server.py",
+    "boundary.py"
+  ],
+  "review_scope": "Frozen public capture/read/write/mechanical tool code, synthetic privacy boundaries, ranges, hash/completeness truthfulness, and operation receipt stages. Route/SDK/context closure and process/whole-case lifecycle are owned by separate checkers.",
+  "tests": {
+    "schema": "pm.v8.capture-offline-results.v1",
+    "author_suite": {
+      "command": "python3 -B dev/source-capture-v1/test_source_capture.py",
+      "tests": 14,
+      "passed": 14,
+      "exit_code": 0,
+      "reported_suite_seconds": 0.198,
+      "tool_wall_seconds": 0.278126431
+    },
+    "independent_suite": {
+      "command": "python3 -B evaluation/capture-qualification-v1/test_independent_capture.py",
+      "tests": 12,
+      "passed": 12,
+      "exit_code": 0,
+      "reported_suite_seconds": 0.642,
+      "tool_wall_seconds": 0.749148349
+    },
+    "actual_local_bwrap_tool_server_processes": 4,
+    "actual_native_candidate_processes": 0,
+    "actual_live_network_calls": 0,
+    "provider_calls": 0,
+    "raw_native_logs_read": 0,
+    "credential_reads": 0,
+    "scope": "Synthetic fixtures only. Four local MCP tool-server processes are mechanical namespace tests, not native candidate starts.",
+    "test_script_sha256": "af740041eddcdf9fe5d475cfebdcdd5216fc65d61c35749ba44821046f53c871",
+    "observed_results_are_complete": true
+  },
+  "test_results_path": "LAB_ROOT/evaluation/capture-qualification-v1/test-results.json",
+  "test_results_sha256": "cdb683f3607afbe373238a7306034ff11e347b066232dd8dd4063aafa93b2be4",
+  "independent_test_path": "LAB_ROOT/evaluation/capture-qualification-v1/test_independent_capture.py",
+  "repairs_requested": 0,
+  "repair_versions_used": 0,
+  "source_modifications": 0,
+  "findings": [],
+  "verified_properties": [
+    "Read namespace restricts access to admitted case inputs/out/TASK and verified content-addressed capture bodies; receipts and capture metadata are not model-readable.",
+    "Absolute/traversal/noncanonical paths, symlinks, hardlinks, special files and oversized inputs fail closed; synthetic private/evaluator/sibling paths denied in actual local bwrap MCP tests.",
+    "Writes and enumerated mechanical outputs are exclusive creates under out; public capture bodies cannot be overwritten through admitted tools.",
+    "Public GET permits URL only, HTTPS port 443, solely global unicast DNS answers, checked-IP TCP pin and hostname-verifying TLS; no caller auth/headers/proxy/body or alternate ports.",
+    "Exact bounded raw HTTP body prefix, content address, source version, HTTP status, actual URL, truncation and incomplete-body flags remain distinguishable.",
+    "Delivered source ranges and transmitted text have separate hashes and byte counts; invalid UTF-8 replacement and line formatting do not silently become exact source bytes.",
+    "Operation receipts bind argument hash, operation identity, elapsed cost and exact RPC envelope across operation-started/prepared-result/stdout-flushed.",
+    "Prepared-result evidence is required before stdout; receipt capacity prevents unrecorded response, and broken stdout creates no flush witness."
+  ],
+  "conditions_before_actual_use": [
+    "Pinned adapter/server selection and route closure must independently pass; this review does not establish suppression of every general host filesystem/execution tool in the native client.",
+    "Only declared per-case public inputs/TASK/out/capture/receipt directories may be supplied. Host input selection and case admission must exclude credentials, evaluator keys, private corpora and sibling cases.",
+    "Whole-case lifecycle/accounting limits must independently pass and root/operator must explicitly admit a bounded new canary.",
+    "Actual native/public GET/range delivery and context closure require separate new canary evidence. No previous native proof or old closure qualification is inherited."
+  ],
+  "evidence_interpretation": [
+    "stdout-flushed proves only tool-server stdout write/flush; frontend receipt and model consumption are unobserved.",
+    "A GET or capture hash establishes mechanical capture, not semantic acquisition or a true finding.",
+    "complete_source_delivered describes the admitted captured bytes and exact UTF-8 delivery; HTTP completeness/truncation and prior/following range coverage must be checked separately.",
+    "Invalid UTF-8 can expand replacement text beyond the requested source-byte count; raw and transmitted hashes/byte counts explicitly distinguish this.",
+    "Host immutability is not claimed: a privileged host can mutate its own files, while public-body reads detect content-address mismatch."
+  ],
+  "excluded_actions": [
+    "No native/provider/canary starts.",
+    "No live public/private network requests.",
+    "No credentials, private host inventory, evaluator keys, raw native logs, private corpus or old candidate bodies read.",
+    "No old v7 code read and no canonical/main/Git edits."
+  ],
+  "handoff": "Root/operator and execution checker may use this exact frozen receipt only for conditional canary admission. A fresh independent grader must assess actual new canary proof without repeating the whole source audit."
+}

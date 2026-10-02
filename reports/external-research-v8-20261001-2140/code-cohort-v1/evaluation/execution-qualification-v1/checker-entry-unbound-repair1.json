@@ -1,0 +1,24 @@
+{
+  "schema": "er8.execution.repair1.local-before-assignment.v1",
+  "verdict": "HOLD",
+  "finding_id": "EXQ-002",
+  "source_path": "LAB_ROOT/dev/execution-path-v1/entry.py",
+  "source_sha256": "5053f3f20a8443b668a8ecc4fa0e2930eb89dee7bbfeeedc0fae3412a20af74b",
+  "snapshot_sha256": "dc96856f5913541b24b1709caf6a473c14464f5dac1e2d9efcede280bbc13914",
+  "failure": "Valid entry execution reads argv and expected_mode before assignment, raising UnboundLocalError before native. Main has no earlier assignment on any path.",
+  "ast_evidence": {
+    "argv": {
+      "first_load": 104,
+      "first_assignment": 127,
+      "first_load_precedes_assignment": true
+    },
+    "expected_mode": {
+      "first_load": 104,
+      "first_assignment": 136,
+      "first_load_precedes_assignment": true
+    }
+  },
+  "native_calls": 0,
+  "provider_calls": 0,
+  "remaining_execution_repairs": 1
+}

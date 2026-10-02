@@ -1,0 +1,89 @@
+{
+  "schema": "er8.route.acceptance.v1",
+  "verdict": "accepted",
+  "decision": "PASSREVIEW_CANARY_ONLY_CONDITIONAL",
+  "snapshot_path": "LAB_ROOT/dev/route-assembly-v1/SNAPSHOT.json",
+  "snapshot_sha256": "9455eaa5876e5627360c80ee98e41b554118205544b3244af3ba272b0d928668",
+  "allowed_modes": [
+    "canary"
+  ],
+  "root_config_sha256": "266b8c9930f26b00deb232d877f8f255c95630e4fc62f511f27e1aed6c7ca671",
+  "execution_snapshot_sha256": "4dd65e644807179250dac5735fbc58f57d5336647989075cc864405efef424ed",
+  "capture_review": {
+    "path": "LAB_ROOT/evaluation/capture-qualification-v1/capture-code-qualification.json",
+    "sha256": "1480a8252d15bc811c4ca19621703b214321843ab37e166debe77ecb1994c9ae"
+  },
+  "scope": "changed assembled Z host context/admission/capture selectors plus exact old native Goal engine/auth/model/max/retry semantics; source and offline checks only",
+  "canary_caps": {
+    "seconds": 480,
+    "responses": 64,
+    "job": "v8-z-mechanical-route-canary-v1",
+    "public_get": true
+  },
+  "native_dispatch": "HOLD until root/operator exact caller/atomiccasebirth-before-allprep admission and outer absolute existing gate verified; this record alone does not dispatch",
+  "productive_dispatch": "HOLD until independently passed SAME new execution+route actualcanary with sourceGET/body/rangedelivery/context/Goal/inventory/lifetime proofs",
+  "new_native_qualification": "UNESTABLISHED",
+  "native_calls_by_reviewer": 0,
+  "provider_calls_by_reviewer": 0,
+  "private_client_stdout_modelio_keys_reads_by_reviewer": 0,
+  "native_cli_not_opened_or_hashed_by_reviewer": true,
+  "exact_unchanged_goal_engine_sha256": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+  "old_privacy_ruling_reuse": "historical SAME3tool scope only; new capture/context closure independently reviewed and actual4tool proof remains pending",
+  "public_closure_files_match": 19,
+  "reviewed_delta": [
+    "flat-module relocations and explicit capture boundaryselection",
+    "freshHOME/XDG/storage; controlled ancestorstat checks; exactzero plugin/hooks/skillcounts and memoryUse/memoryEnabled false actualpreGoal startup gate",
+    "strict logical request.messages + body.system allrequestcontext markerprojections and exactrequestAttemptID/toolname join; malformed/missing proof failsclosed",
+    "positive scalar progress/receipt/projectors; rawengine output/privatefiles never emitted",
+    "immutable originalcase/stage/lease/config/acceptance pathhash ABI; canaryonly mode and no repeatedclaim",
+    "repair1 canonicalnativeout/noaliasdisjoint; emptycandidateout; immutablecaptinputs exact coverage/canaryempty; source logicaltoolresult public metadata joinedcallID/name"
+  ],
+  "retained_route_findings": [
+    {
+      "id": "RQ-001",
+      "baseline_snapshot": "8d5b105a9c51a3200b4724ace0226134a94df45f153a87996749f74a12ac9267",
+      "finding": "baseline native output aliases/emptyoutput/captureinput scope lacked mandatoryguard; repair1 adds predicates"
+    },
+    {
+      "id": "RQ-002",
+      "baseline_snapshot": "8d5b105a9c51a3200b4724ace0226134a94df45f153a87996749f74a12ac9267",
+      "finding": "baseline lacked logical toolresult publicoperation/range projector; repair1 adds typedmetadata selector; actualhost/native join stillmandatory"
+    }
+  ],
+  "repair_versions": {
+    "route_used": 1,
+    "route_limit": 2,
+    "execution_used": 2,
+    "execution_limit": 2,
+    "no_execution_further_repair": true
+  },
+  "remaining_native_canary_obligations": [
+    "actual source-defined native startup bool/int/enums/contextgate",
+    "freshsame-session nativeGoal active/autocontinuation/verifier/sametargetcomplete",
+    "exactallrequestAttemptID GLM5.3Flash/max/provider/tool/context inventory including failed/unfinished/unknown attempts",
+    "native logicaltoolresult GET+byterange operationID/hash/status/completeness matching hostprepared/stdout-flush/sourcebodycapture receipts; no semanticacquisition claim",
+    "positively enrolled allowned native/host/MCP cgroup absence observed afterfullread by original unchangeddeadline",
+    "all originalcase/campaign elapsed/occupied/outside costs including preparation/waits/retries/cancellation/copy/cleanup retained"
+  ],
+  "proof_artifacts": [
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/route-frozen-closure-check.json",
+      "sha256": "0534ef0a0af423c203ed1aae09a3ac90cc4099c901a80b44cd931f7e9519b780"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker-route-projection-results.json",
+      "sha256": "49886ab9384c9b17b1814c5aa7ed292007700075922b00fcdaf07b59e0d2b470"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker-source-delivery-projection.json",
+      "sha256": "0faf129a6f35c7998ecb73ad3cdf14cce147020c1a634ad082f6cb30c70e31b0"
+    }
+  ],
+  "review_clock": {
+    "original_start_utc": "2026-10-02T01:48:52Z",
+    "final_reserve_starts_utc": "2026-10-02T02:23:52Z",
+    "hard_deadline_utc": "2026-10-02T02:33:52Z",
+    "clock_reset": false,
+    "generated_tokens": "UNKNOWN"
+  }
+}

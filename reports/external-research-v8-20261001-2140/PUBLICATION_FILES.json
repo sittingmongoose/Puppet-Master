@@ -1,5 +1,5 @@
 {
-  "checkpoint": "INITIAL_SCOPE",
+  "checkpoint": "INITIAL_SCOPE_PLUS_CODE_QUALIFICATION",
   "files": [
     {
       "path": "BEST_RECIPE.md",
@@ -8,23 +8,23 @@
     },
     {
       "path": "CHECKPOINT.md",
-      "sha256": "20d6a7daa0650868daf4dc0771349405ebc7a4c8af5fa9fd75be31537d79c4f9",
-      "bytes": 759
+      "sha256": "6b705981ddddc7fdd37e6b3ed6bd8a913001a80889b69c9c8064fbb68b5ba2cc",
+      "bytes": 1078
     },
     {
       "path": "FAILURES.md",
-      "sha256": "c266b226f091f4e8ee4cc4154f565282828a1feeacb38b7754a8c852b40238a4",
-      "bytes": 422
+      "sha256": "479f5800a7725b7ddc772c1389e3c38afab43251a7c594def8eadbbdbe86d51f",
+      "bytes": 749
     },
     {
       "path": "README.md",
-      "sha256": "73a0d3c56553f5028813fac4920a510ef3f0fe7b179763b0174ab2648dbbd776",
-      "bytes": 1533
+      "sha256": "a2104c36d31156b76048352e9c6aa6a1e25736b7e3d0bd69329b21b6585c8b38",
+      "bytes": 1706
     },
     {
       "path": "REPRODUCE.md",
-      "sha256": "3e3ebf1d079f8be8fc8e0e152017630e147f7c6c471d5366437934a7f247b73c",
-      "bytes": 1392
+      "sha256": "b327eb3356827d4c2499a953c01d643d8f850980dbcdfe4806f0290d61f21566",
+      "bytes": 1753
     },
     {
       "path": "RESULTS.md",
@@ -45,6 +45,286 @@
       "path": "authority/AUTHORIZATION.json",
       "sha256": "25609fc787d622958fd62afa5df218a1e4789f61595a4152865ceb0c143304f2",
       "bytes": 2294
+    },
+    {
+      "path": "code-cohort-v1/PUBLIC_EXPORT.json",
+      "sha256": "3d8799e73d4be81c25d5c74b49c1af4fe18ca843ab7a8a20a8b3421f4ca1f00b",
+      "bytes": 23156
+    },
+    {
+      "path": "code-cohort-v1/README.md",
+      "sha256": "0ab67384f1f95a37950e32065472a64c5b7c761656b755408684da0f53ecf077",
+      "bytes": 2831
+    },
+    {
+      "path": "code-cohort-v1/ROOT_HANDOFF.json",
+      "sha256": "6fc25061a31eb3da841e7a1cba66613200efe43a3eaeca1645b8fdd6e0c25d3c",
+      "bytes": 1625
+    },
+    {
+      "path": "code-cohort-v1/dev/execution-path-v1/README.md",
+      "sha256": "2d96cd2d220744fb731980caaacaed3a1eefcc67049cccf6958ec5d6cb2787be",
+      "bytes": 9342
+    },
+    {
+      "path": "code-cohort-v1/dev/execution-path-v1/SNAPSHOT.json",
+      "sha256": "060f2616232f206289cfee207cd658aedd888b7cf19e20f94fdb0a02ed8c1449",
+      "bytes": 3529
+    },
+    {
+      "path": "code-cohort-v1/dev/execution-path-v1/deadline_gate.c",
+      "sha256": "abde9b4b9d70bbfd7c97ed397733228707ad2e27ed9214b11185e371631029ee",
+      "bytes": 2384
+    },
+    {
+      "path": "code-cohort-v1/dev/execution-path-v1/entry.py",
+      "sha256": "77d6d2e34e33aaaf7d0d9dcef35bb1f7aaae1bc4a8f5b63415f24d0303b37cb1",
+      "bytes": 10069
+    },
+    {
+      "path": "code-cohort-v1/dev/execution-path-v1/make_plan.py",
+      "sha256": "ff8032c3247b6992e58bd6955f4fe644b8495a6e6722efeee822637b10b95c50",
+      "bytes": 6437
+    },
+    {
+      "path": "code-cohort-v1/dev/execution-path-v1/observe.py",
+      "sha256": "e398276c666b50306aa408065d7397ff4ad63d594a1f35d1a4cf9deacc998816",
+      "bytes": 2567
+    },
+    {
+      "path": "code-cohort-v1/dev/execution-path-v1/receipts/AUTHOR_CLOSEOUT.json",
+      "sha256": "5ae836fa5d8b660a8f7115daf66a89321e8a507fb7ae7db72534bead81354852",
+      "bytes": 1891
+    },
+    {
+      "path": "code-cohort-v1/dev/execution-path-v1/versions/baseline-v1/SNAPSHOT.json",
+      "sha256": "6b8a2c00a12b1e9320df52bcb5aff4b8039bb9795d44548fc2914635ce4ad8e9",
+      "bytes": 1141
+    },
+    {
+      "path": "code-cohort-v1/dev/execution-path-v1/versions/repair1/SNAPSHOT.json",
+      "sha256": "b2980998e1711d556669b2cc5125a750e02ac44d83d69bbe19fcfd77c0a345d9",
+      "bytes": 3463
+    },
+    {
+      "path": "code-cohort-v1/dev/source-capture-v1/README.md",
+      "sha256": "f92dfad615d6c60bca9b989e5147cfd5e1eb506acb23d35d44ba99cded81a5a7",
+      "bytes": 7024
+    },
+    {
+      "path": "code-cohort-v1/dev/source-capture-v1/binding.json",
+      "sha256": "35a9a2a2676d2afedd90e863a30701e041b51df80a9748054b5921abe0ea282e",
+      "bytes": 2459
+    },
+    {
+      "path": "code-cohort-v1/dev/source-capture-v1/boundary.py",
+      "sha256": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+      "bytes": 2648
+    },
+    {
+      "path": "code-cohort-v1/dev/source-capture-v1/test-results.txt",
+      "sha256": "0fba5c3d27a6d3cc3ad4d5dd3b2fbbefd80c762a4badced4eb5177097d7b87df",
+      "bytes": 2189
+    },
+    {
+      "path": "code-cohort-v1/dev/source-capture-v1/test_source_capture.py",
+      "sha256": "a2e661f064dff5efb21c61461106d9473995e76c14133a8ff4abdec5a5aaf808",
+      "bytes": 17816
+    },
+    {
+      "path": "code-cohort-v1/dev/source-capture-v1/tool_server.py",
+      "sha256": "9c25c1faaf7c4557aaeb22b0977061914a9fbba1a04d87d2a3a29851daa29846",
+      "bytes": 21910
+    },
+    {
+      "path": "code-cohort-v1/evaluation/capture-qualification-v1/CURRENT_COVERAGE.json",
+      "sha256": "af2b35ca2937248ad280a001b34e6b82b0215f1dc6e987a2586a13c0582eb728",
+      "bytes": 2572
+    },
+    {
+      "path": "code-cohort-v1/evaluation/capture-qualification-v1/QUALIFICATION.md",
+      "sha256": "2df205bf2cfbef300d43e09a3548cb32de139a05e987135f9f063e557ee40552",
+      "bytes": 1988
+    },
+    {
+      "path": "code-cohort-v1/evaluation/capture-qualification-v1/SANITIZED_EXPORT.json",
+      "sha256": "0f71cbf7764cf06d8ec8689fe67104242f078f53584e4bdce902067ec7282c98",
+      "bytes": 2426
+    },
+    {
+      "path": "code-cohort-v1/evaluation/capture-qualification-v1/capture-code-qualification.json",
+      "sha256": "63282cffd9d7032b49c2f230852cf3e035462aa63a0fc37d40cc1db7eb5bc2fd",
+      "bytes": 6968
+    },
+    {
+      "path": "code-cohort-v1/evaluation/capture-qualification-v1/test-results.json",
+      "sha256": "cdb683f3607afbe373238a7306034ff11e347b066232dd8dd4063aafa93b2be4",
+      "bytes": 1003
+    },
+    {
+      "path": "code-cohort-v1/evaluation/capture-qualification-v1/test_independent_capture.py",
+      "sha256": "af740041eddcdf9fe5d475cfebdcdd5216fc65d61c35749ba44821046f53c871",
+      "bytes": 14365
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/SANITIZED_EXPORT.json",
+      "sha256": "5b27d8e102a224ebb241d42f5a14d6f635c9ccedd7688188986ff0da883f8839",
+      "bytes": 10453
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/caller-repair1-reviewed.diff",
+      "sha256": "7ae96d84c2c949dcc2e68d7084410b5c818b76cc621c3d9606081453d0cd2b31",
+      "bytes": 4551
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/caller-source-acceptance.json",
+      "sha256": "ca4daa4241dcbe5580d3ccf8c16ac75ceb87e4cb614a7aebc3aa8c9b7ef9336b",
+      "bytes": 3514
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/checker-clock-config-results.json",
+      "sha256": "62c2466a6668fe7c3988de8b5b76fb41a3d7621a8ab89e0598a2d27ac65ce7d0",
+      "bytes": 827
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/checker-entry-metadata-results.json",
+      "sha256": "225019354c6a35f981cd4c71b534e3eed54212c79b242a804e02519939f54db6",
+      "bytes": 767
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/checker-entry-unbound-repair1.json",
+      "sha256": "3a4d3dc0e71ac3660072dbbe7709c222e5e4337387e3a6706a78063e5dce5520",
+      "bytes": 879
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/checker-more-offline-results-final.json",
+      "sha256": "e629382143075732d7bec8374e376cc575237798e68fc4ae57f6f73aa9b63b0a",
+      "bytes": 3739
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/checker-more-offline-results.json",
+      "sha256": "a9ce4da12c2a2f6729c620251b35623e9e2956595a2cf50385a7f1aed05269ed",
+      "bytes": 3737
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/checker-observe-binding-failure-v1.json",
+      "sha256": "86eb5f2a24757b099f96461156a0711316de920b1423e952e1ddabb950d0143f",
+      "bytes": 2758
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/checker-observe-binding-repair1.json",
+      "sha256": "ef5816a864bf6c0e8b1b4ec45347dde585d8ba020f1c3fd404927bc4411a2457",
+      "bytes": 1434
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/checker-offline-results-final.json",
+      "sha256": "c0c580892f94a73291d2f06d3b451f9e580396465d5bdf6ebce7eab66d207835",
+      "bytes": 5060
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/checker-offline-results-v2.json",
+      "sha256": "329104509cd0a8e9e39685bced8c61a459cf460111daf552d09ef447a3ff3f37",
+      "bytes": 5109
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/checker-offline-results.json",
+      "sha256": "50de5adc89ae041c35de77c6dbabc84cfd865fcfa9ee0366867cd65da658f778",
+      "bytes": 5018
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/checker-route-projection-results.json",
+      "sha256": "49886ab9384c9b17b1814c5aa7ed292007700075922b00fcdaf07b59e0d2b470",
+      "bytes": 1090
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/checker-source-delivery-projection.json",
+      "sha256": "0faf129a6f35c7998ecb73ad3cdf14cce147020c1a634ad082f6cb30c70e31b0",
+      "bytes": 1194
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/checker_entry_metadata.py",
+      "sha256": "bc8a14c3c3eee352da01e1fec255878d23230ce22af9e53e925859bc139e318c",
+      "bytes": 5559
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/checker_more_offline.py",
+      "sha256": "9fb79bf53cffa676cb40519f77964e5b4cc9adc0e4ba0b65914d446a523d14ce",
+      "bytes": 3420
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/checker_more_offline_final.py",
+      "sha256": "37e434344fba3f856b4b7ce549726b5dacc614cabef6156aa031e1e45be997e9",
+      "bytes": 3429
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/checker_offline.py",
+      "sha256": "c22cb3266ea887c1d33d5534a3ae8016fee254ef02f1f94de4072e41aaa2bc2b",
+      "bytes": 5422
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/checker_offline_final.py",
+      "sha256": "e8f9cd31ca9a6a58cdfddf5f1202d6940f2970d4c84c7b522024e8de44390f24",
+      "bytes": 5455
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/checker_offline_v2.py",
+      "sha256": "1368977bc00a9709877915792361bedfd25969928c15ad162c83fc53b57674db",
+      "bytes": 5452
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/checker_route_projection.py",
+      "sha256": "f9f78ebafceb2d77ffeab8e51a8aa5e00146ca372908bc9df1d62cdc221eeed1",
+      "bytes": 2809
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/execution-source-acceptance.json",
+      "sha256": "c0180aa6eb1a9df48cf43a3ec4a8f0b54e24f15d841d1f2f16afbc959628da0c",
+      "bytes": 6581
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/frozen-closure-check.json",
+      "sha256": "12c4238ae9c0e6703b976ef92d90047824eea6623ff996680a95bc1a3254f622",
+      "bytes": 3626
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/independent-build.json",
+      "sha256": "9083f4768066a907ea044779846af46070596a99d370264882d6a23712bfe5e6",
+      "bytes": 647
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/observed-baseline-observe.py.txt",
+      "sha256": "2b397dfa23a6c899d11e57bb0800fb315f121651ed0f38bd6e1d0a96875bd2d6",
+      "bytes": 2061
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/observed-repair1-entry.py.txt",
+      "sha256": "ba7fad0a8cac082147a94c0f3254921312eed9e667138e6552cbec85c37004f1",
+      "bytes": 10069
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/pre-freeze-hold-v1.json",
+      "sha256": "3c038e149f25a7a674fd7a37846db7e7560a6fba8917be8e8c0587aec0ad5931",
+      "bytes": 1501
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/route-frozen-closure-check.json",
+      "sha256": "66a210ae900df0cf21949be403febfdfaeab9f5da81ea3f63de7f967bcdd0dab",
+      "bytes": 3723
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/route-source-acceptance.json",
+      "sha256": "d9490829626e5010f324c09ec27b4ce28d0a4e11aad9802551579b050f1b769e",
+      "bytes": 5063
+    },
+    {
+      "path": "code-cohort-v1/evaluation/execution-qualification-v1/synthetic-enrollment-original-deadline.json",
+      "sha256": "5fa2bc89b9603104eac1dd014e45d52420618c2acab494abca018c1eb5c72e7d",
+      "bytes": 291
+    },
+    {
+      "path": "code-cohort-v1/ops/root-helper-starts.json",
+      "sha256": "37a11186b2271f5d1521d664f9693e58ccbd53af925c442b6d185f67ed4a0c98",
+      "bytes": 2376
     },
     {
       "path": "comparisons.json",
@@ -248,8 +528,8 @@
     },
     {
       "path": "schedule.json",
-      "sha256": "ae4e97211a93b356657825749902c03d9128e6e6fcb8f234bb3449771ac80167",
-      "bytes": 1954
+      "sha256": "8698512ad2944a1d57558961dbd0d791ec180fab13e27669adf94efabc8e7cf4",
+      "bytes": 2374
     }
   ],
   "scope": "Positive whitelist: public authorization, candidate planning inputs, sanitized reservation metadata and publisher summaries. No private/raw/evaluator-key files read. Plus authorized selected published-number arithmetic script/input/output and deterministic replay checksums."

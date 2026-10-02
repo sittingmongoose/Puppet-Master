@@ -1,0 +1,66 @@
+{
+  "schema": "pm.v8.capture-qualification-coverage.v1",
+  "state": "FROZEN",
+  "frozen_utc": "2026-10-02T02:17:44.416174+00:00",
+  "decision": "CONDITIONAL_ACCEPT_CANARY_ONLY",
+  "offline_tests": {
+    "author": 14,
+    "independent": 12,
+    "total": 26,
+    "passed": 26
+  },
+  "actual_local_tool_namespace_processes": 4,
+  "current_code_defects": [],
+  "code_repair_versions_used": 0,
+  "source_scope": {
+    "boundary": "Read/write/mechanical/public_https_get admitted tool surface only",
+    "route_sdk_context_closure": "SEPARATE_CHECKER_GATE",
+    "native_context_privacy": "PENDING_NEW_CANARY"
+  },
+  "context_boundary_test_metadata": {
+    "fixture_class": "SYNTHETIC_ONLY",
+    "actual_tool_namespace_denials": [
+      "Synthetic private/evaluator absolute path",
+      "Synthetic sibling-case absolute path",
+      "Parent traversal",
+      "Case input symlink to synthetic outside file",
+      "Case input hardlink to synthetic outside file",
+      "Operation receipts",
+      "Synthetic home-auth path",
+      "Process environment path",
+      "Public capture write attempt",
+      "Non-enumerated mechanical operation"
+    ],
+    "host_environment": "clearenv adapter construction inspected; synthetic inherited auth/proxy fixture never exposed through admitted tools",
+    "native_context_or_frontend_read": "UNEXERCISED"
+  },
+  "mechanical_evidence_coverage": [
+    "Whole-body and range hashes",
+    "Separate transmitted UTF-8 text hashes",
+    "Original Unicode line terminators",
+    "Invalid UTF-8 replacement declaration",
+    "Actual parsed chunked HTTP completeness",
+    "Short Content-Length incompleteness",
+    "TLS denial before request/capture",
+    "Global-only IPv4/IPv6 and mixed DNS sets",
+    "Prepared/result/failure costs and exact RPC envelope hashes",
+    "Receipt capacity suppresses unrecorded stdout",
+    "Broken stdout produces no flush witness",
+    "Immutable writes and public-body tamper detection"
+  ],
+  "pending_proof": [
+    "Actual live public GET through admitted fresh native route",
+    "Actual subsequent public body range delivery through native frontend",
+    "Native Goal/context/tool allowlist closure",
+    "Frontend reception and model consumption evidence",
+    "Source-grounded semantic acquisition and quality/recipe comparison"
+  ],
+  "quality_or_recipe_win_claimed": false,
+  "numeric_witness": "UNEXECUTED",
+  "semantic_acquisition": "UNKNOWN",
+  "generated_usage": "UNKNOWN",
+  "native_starts": 0,
+  "provider_calls": 0,
+  "live_network_calls": 0,
+  "raw_captures_or_native_outputs_exported": false
+}

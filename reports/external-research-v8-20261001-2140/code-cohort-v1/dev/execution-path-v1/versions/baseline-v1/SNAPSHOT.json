@@ -1,0 +1,15 @@
+{
+  "schema": "er8.execution.baseline.v1",
+  "status": "rejected-observe-original-deadline-binding",
+  "closure_sha256": {
+    "LAB_ROOT/dev/execution-path-v1/versions/baseline-v1/entry.py": "3ee09b9bd28d17e8fb2d08003150f62b9b89c5e75430320e38b593cda0bee16e",
+    "LAB_ROOT/dev/execution-path-v1/versions/baseline-v1/README.md": "3806e199ef26e2af3137321fd38dd65deb0b7b6d6e25fbefc94f910e2eeca848",
+    "LAB_ROOT/dev/execution-path-v1/versions/baseline-v1/deadline_gate.c": "abde9b4b9d70bbfd7c97ed397733228707ad2e27ed9214b11185e371631029ee",
+    "LAB_ROOT/dev/execution-path-v1/versions/baseline-v1/observe.py": "2b397dfa23a6c899d11e57bb0800fb315f121651ed0f38bd6e1d0a96875bd2d6",
+    "LAB_ROOT/dev/execution-path-v1/versions/baseline-v1/deadline_gate": "2575d0c5ea4fe0af283bb0a2f484c0309c9d27be210660d98986bdbcc01f7e58",
+    "LAB_ROOT/dev/execution-path-v1/versions/baseline-v1/make_plan.py": "72934ea13fd43596a711378ab4ce9947779181e1b8bf356297fc8c14b03939c8"
+  },
+  "source_reviews": "evaluation/execution-qualification-v1/checker-observe-binding-failure-v1.json",
+  "author_initial_utc": "2026-10-02T01:44:17Z",
+  "task_clock_reset": false
+}

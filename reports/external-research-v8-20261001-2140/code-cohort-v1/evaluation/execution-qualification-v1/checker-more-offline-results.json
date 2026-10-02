@@ -1,0 +1,93 @@
+{
+  "schema": "er8.independent.execution.more-offline.v1",
+  "native_calls": 0,
+  "provider_calls": 0,
+  "private_client_reads": 0,
+  "all_pass": true,
+  "rows": [
+    {
+      "test": "blocked-before-enrollment",
+      "unit": "er8-check-4b89031adef3473a.service",
+      "start_ns": 127886602082453,
+      "stop_ns": 127888602082453,
+      "deadline_ns": 127889602082453,
+      "own_initial_unit": {
+        "MainPID": "2423644",
+        "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-check-4b89031adef3473a.service",
+        "ActiveState": "active",
+        "SubState": "running"
+      },
+      "own_pid_count": 2,
+      "synthetic_stdout": "synthetic-fifo-stall\n",
+      "synthetic_stderr": "Running as unit: er8-check-4b89031adef3473a.service; invocation ID: 47ed5b8fb57a4319b71380cc0da688cd\nFinished with result: signal\nMain processes terminated with: code=killed, status=9/KILL\nService runtime: 1.986s\nCPU time consumed: 49ms\nMemory peak: 4.1M (swap: 0B)\n",
+      "returncode": 255,
+      "own_remaining_cgroup": [],
+      "absence_observed_ns": 127888617622823,
+      "final_unit": {
+        "MainPID": "0",
+        "ControlGroup": "",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "late_marker_absent": true,
+      "unrelated_owned_sibling_alive": true,
+      "pass": true
+    },
+    {
+      "test": "blocked-active-metadata",
+      "unit": "er8-check-2974df0154b54e5b.service",
+      "start_ns": 127888636058194,
+      "stop_ns": 127890636058194,
+      "deadline_ns": 127891636058194,
+      "own_initial_unit": {
+        "MainPID": "2423716",
+        "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-check-2974df0154b54e5b.service",
+        "ActiveState": "active",
+        "SubState": "running"
+      },
+      "own_pid_count": 4,
+      "synthetic_stdout": "synthetic-fifo-stall\n",
+      "synthetic_stderr": "Running as unit: er8-check-2974df0154b54e5b.service; invocation ID: f215b4d8025e49b1bb87f2e12ed5137e\nFinished with result: signal\nMain processes terminated with: code=killed, status=9/KILL\nService runtime: 1.991s\nCPU time consumed: 59ms\nMemory peak: 4M (swap: 0B)\n",
+      "returncode": 255,
+      "own_remaining_cgroup": [],
+      "absence_observed_ns": 127890657518354,
+      "final_unit": {
+        "MainPID": "0",
+        "ControlGroup": "",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "late_marker_absent": true,
+      "unrelated_owned_sibling_alive": true,
+      "pass": true
+    },
+    {
+      "test": "late-service-entry",
+      "unit": "er8-check-2836a7d528aa4dcb.service",
+      "start_ns": 127890679846106,
+      "stop_ns": 127892679846106,
+      "deadline_ns": 127893679846106,
+      "own_initial_unit": {
+        "MainPID": "2423733",
+        "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-check-2836a7d528aa4dcb.service",
+        "ActiveState": "active",
+        "SubState": "running"
+      },
+      "own_pid_count": 1,
+      "synthetic_stdout": "synthetic-late-service\n",
+      "synthetic_stderr": "Running as unit: er8-check-2836a7d528aa4dcb.service; invocation ID: 70a8044de9684a0c9cb61d20a48da7c4\nFinished with result: exit-code\nMain processes terminated with: code=exited, status=124/n/a\nService runtime: 2.315s\nCPU time consumed: 50ms\nMemory peak: 3.4M (swap: 0B)\n",
+      "returncode": 124,
+      "own_remaining_cgroup": [],
+      "absence_observed_ns": 127893026047720,
+      "final_unit": {
+        "MainPID": "0",
+        "ControlGroup": "",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "late_marker_absent": true,
+      "unrelated_owned_sibling_alive": true,
+      "pass": true
+    }
+  ]
+}

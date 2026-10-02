@@ -1,0 +1,36 @@
+{
+  "schema": "er8.execution-author.closeout.v1",
+  "created_epoch": 1790906916.8276908,
+  "author_original_start_utc": "2026-10-02T01:44:17Z",
+  "author_hard_deadline_utc": "2026-10-02T02:14:17Z",
+  "final_reserve_original_utc": "2026-10-02T02:04:17Z",
+  "clock_reset": false,
+  "snapshot_path": "LAB_ROOT/dev/execution-path-v1/SNAPSHOT.json",
+  "snapshot_sha256": "4dd65e644807179250dac5735fbc58f57d5336647989075cc864405efef424ed",
+  "boundary_version": "final-repair2",
+  "repairs_used": 2,
+  "repair_limit": 2,
+  "closure_rechecked": true,
+  "closure_mismatch": [],
+  "final_entry_startup_stub_probe": {
+    "path": "LAB_ROOT/dev/execution-path-v1/receipts/entry-repair2-da35c597/results.json",
+    "sha256": "449468414c6db19272b23b8e6e2c27bede62c5bd97b2592aae0a98165ae9e8a7"
+  },
+  "actual_offline_OS_and_clock_tests": {
+    "path": "LAB_ROOT/dev/execution-path-v1/receipts/offline-c5d95bbd/results.json",
+    "sha256": "53ec8e03a743ca76a4e41c355b23db9a96a22ce41ca2492602e15ff99265080a",
+    "tests_passed": 9
+  },
+  "failed_history_preserved": [
+    "versions/baseline-v1/SNAPSHOT.json",
+    "versions/repair1/SNAPSHOT.json",
+    "receipts/failed-standalone-bootstrap.json"
+  ],
+  "native_goals_started": 0,
+  "canary_candidate_provider_calls": 0,
+  "selected_route": "dev/route-assembly-v1/launch.py requires separate exact route snapshot and independent acceptance",
+  "native_lifetime_actual_qualification": "UNESTABLISHED; root/operator new counted native canary and on-time own cgroup proof required",
+  "whole_case_cost_qualification": "UNESTABLISHED; operator prospective atomic case/slot/outside ledger mandatory",
+  "generated_usage": "UNKNOWN",
+  "prohibited_private_access_disclosure": "One initial overbroad filename search listed private-client filenames; no private contents or hashes opened. Immediately corrected to exact public code/review paths and notified root."
+}

@@ -1,0 +1,38 @@
+{
+  "schema": "er8.independent.observe-deadline-repair1-check.v1",
+  "all_pass": true,
+  "native_calls": 0,
+  "provider_calls": 0,
+  "rows": [
+    {
+      "test": "unchanged-original",
+      "pass": true,
+      "result": {
+        "schema": "er8.execution.quiescence.v1",
+        "owned_unit": "er8-check-c59ff194d65d44a1.service",
+        "owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-check-c59ff194d65d44a1.service",
+        "enrollment": {
+          "schema": "er8.execution.enrollment.v1",
+          "owned_unit": "er8-check-c59ff194d65d44a1.service",
+          "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-check-c59ff194d65d44a1.service",
+          "enrolled_monotonic_ns": 127733382789644,
+          "original_deadline_monotonic_ns": 127736382789644
+        },
+        "absence_proof": "positively-enrolled-owned-cgroup-removed",
+        "owned_native_quiescent": true,
+        "quiescence_observed_monotonic_ns": 128310044351943,
+        "original_deadline_monotonic_ns": 127736382789644,
+        "inclusive_native_lifetime_established": false,
+        "occupancy_disposition": "held-until-positive-quiescence",
+        "native_goal_or_quality_qualification": "UNESTABLISHED; independent native receipt review mandatory"
+      }
+    },
+    {
+      "test": "caller-extension",
+      "pass": true,
+      "result": {
+        "error_class": "ValueError"
+      }
+    }
+  ]
+}

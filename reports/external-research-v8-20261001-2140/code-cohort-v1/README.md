@@ -1,0 +1,14 @@
+# Code qualification cohort v1
+
+**Source/offline qualification only; native qualification PENDING; research cases NOT_RUN.** This frozen positive export includes the bounded execution source, public HTTPS capture source, independent source/offline review results and retained failures. Conditional acceptance permits one prospectively counted native canary under exact operator admission. It does not establish a completed integrated pipeline, actual acquisition, quality pass or recipe win.
+
+- [Execution source acceptance](evaluation/execution-qualification-v1/execution-source-acceptance.json)
+- [Route source acceptance](evaluation/execution-qualification-v1/route-source-acceptance.json), [caller source acceptance](evaluation/execution-qualification-v1/caller-source-acceptance.json)
+- [Capture qualification](evaluation/capture-qualification-v1/QUALIFICATION.md), [current coverage](evaluation/capture-qualification-v1/CURRENT_COVERAGE.json)
+- [Source/original and public checksums](PUBLIC_EXPORT.json)
+
+Execution baseline had a deadline-binding defect (EXQ-001); repair1 fixed it and exposed an entry local-before-assignment defect (EXQ-002); repair2 metadata checks passed. Original snapshots, source excerpts and failed checks remain here. Both of the allowed execution repair versions are used. Route baseline findings RQ-001/RQ-002 and caller CQ001 remain in their source acceptances; successful successor checks do not overwrite them. Synthetic ownership/lifetime checks establish only their controlled scopes.
+
+Prospective operator limits for every integrated case are whole-case wall ≤3600 seconds, occupied ≤5400 seconds, and outside-native host work ≤300 seconds, measured from the original birth before all preparation. This strict300 host cap narrows the planner’s original ≤600 allowance for all six cases; it never resets a clock or enlarges another cap. The native canary has separate ≤480-second/64-response bounds. Native Goal continuation/completion, current context/inventory, actual source body and joined range delivery, owned cleanup and inclusive costs remain proof obligations.
+
+Private lab paths are replaced by `LAB_ROOT` and historical dependency locators by `V7_LAB_ROOT`; each export records both original SHA and public SHA. Sanitized public hashes do not replace accepted runtime pins. No compiled binary, raw native output, private log, raw capture, evaluator corpus or credential content is exported. Code without substitutions is exact; source with locator substitutions is an archival projection. Native replay remains incomplete pending positively authorized route/caller/dependency exports and admitted subscriptions. The source-capture fixture code can be copied to an isolated writable directory for offline checks; no result here demonstrates native semantic acquisition.

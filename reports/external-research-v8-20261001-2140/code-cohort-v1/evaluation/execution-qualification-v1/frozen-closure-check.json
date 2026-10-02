@@ -1,0 +1,88 @@
+{
+  "schema": "er8.independent.execution.frozen-closure.v1",
+  "snapshot_path": "LAB_ROOT/dev/execution-path-v1/SNAPSHOT.json",
+  "snapshot_sha256": "4dd65e644807179250dac5735fbc58f57d5336647989075cc864405efef424ed",
+  "all_match": true,
+  "rows": [
+    {
+      "path": "LAB_ROOT/dev/execution-path-v1/deadline_gate.c",
+      "expected": "abde9b4b9d70bbfd7c97ed397733228707ad2e27ed9214b11185e371631029ee",
+      "actual": "abde9b4b9d70bbfd7c97ed397733228707ad2e27ed9214b11185e371631029ee",
+      "match": true
+    },
+    {
+      "path": "LAB_ROOT/dev/execution-path-v1/deadline_gate",
+      "expected": "2575d0c5ea4fe0af283bb0a2f484c0309c9d27be210660d98986bdbcc01f7e58",
+      "actual": "2575d0c5ea4fe0af283bb0a2f484c0309c9d27be210660d98986bdbcc01f7e58",
+      "match": true
+    },
+    {
+      "path": "LAB_ROOT/dev/execution-path-v1/entry.py",
+      "expected": "9d1835b406178396dbd571e04cf0b256e5775a613fbc8fae6c7f03d91307b660",
+      "actual": "9d1835b406178396dbd571e04cf0b256e5775a613fbc8fae6c7f03d91307b660",
+      "match": true
+    },
+    {
+      "path": "LAB_ROOT/dev/execution-path-v1/make_plan.py",
+      "expected": "fc798c6726865dcc944358c6a5506912121c1e7ea272489d5d0d1d96f4273d64",
+      "actual": "fc798c6726865dcc944358c6a5506912121c1e7ea272489d5d0d1d96f4273d64",
+      "match": true
+    },
+    {
+      "path": "LAB_ROOT/dev/execution-path-v1/observe.py",
+      "expected": "e398276c666b50306aa408065d7397ff4ad63d594a1f35d1a4cf9deacc998816",
+      "actual": "e398276c666b50306aa408065d7397ff4ad63d594a1f35d1a4cf9deacc998816",
+      "match": true
+    },
+    {
+      "path": "LAB_ROOT/dev/execution-path-v1/README.md",
+      "expected": "2d96cd2d220744fb731980caaacaed3a1eefcc67049cccf6958ec5d6cb2787be",
+      "actual": "2d96cd2d220744fb731980caaacaed3a1eefcc67049cccf6958ec5d6cb2787be",
+      "match": true
+    },
+    {
+      "path": "LAB_ROOT/dev/execution-path-v1/tests/test_offline.py",
+      "expected": "6e43e3c856b8e0b2b6d5cdbca7044da1656711a47911e53db7735471abf10645",
+      "actual": "6e43e3c856b8e0b2b6d5cdbca7044da1656711a47911e53db7735471abf10645",
+      "match": true
+    },
+    {
+      "path": "LAB_ROOT/dev/execution-path-v1/tests/fixture.py",
+      "expected": "32d887fb7fadb1568887ea5417867aa7f56ac749dfb936209e2dabe26a1bd16f",
+      "actual": "32d887fb7fadb1568887ea5417867aa7f56ac749dfb936209e2dabe26a1bd16f",
+      "match": true
+    },
+    {
+      "path": "/usr/bin/x86_64-linux-gnu-gcc-15",
+      "expected": "1fa7bb6439186b9f4912ad97d9072b6e0ded5b98b831a257d23d619719b74722",
+      "actual": "1fa7bb6439186b9f4912ad97d9072b6e0ded5b98b831a257d23d619719b74722",
+      "match": true
+    },
+    {
+      "path": "/usr/bin/bwrap",
+      "expected": "7bbffeb19f312d5503232e1502f0f97f2ac4ffcb51dec47d9a58bffbad1f12d5",
+      "actual": "7bbffeb19f312d5503232e1502f0f97f2ac4ffcb51dec47d9a58bffbad1f12d5",
+      "match": true
+    },
+    {
+      "path": "/usr/bin/systemd-run",
+      "expected": "335bdfa88864cb15c5952f6910c92694205080c9bcc34de70dbdcb70f08514cd",
+      "actual": "335bdfa88864cb15c5952f6910c92694205080c9bcc34de70dbdcb70f08514cd",
+      "match": true
+    },
+    {
+      "path": "/usr/bin/systemctl",
+      "expected": "66f1d45d82f18e57d1fe582b263c3d92d59a90640cfa836400d1206e24c21e85",
+      "actual": "66f1d45d82f18e57d1fe582b263c3d92d59a90640cfa836400d1206e24c21e85",
+      "match": true
+    },
+    {
+      "path": "/usr/bin/python3.13",
+      "expected": "efb29ce53d36ebaeee80e3aa44fd6c7f9d71bbded5fe1665240b2ed8ecaeee0e",
+      "actual": "efb29ce53d36ebaeee80e3aa44fd6c7f9d71bbded5fe1665240b2ed8ecaeee0e",
+      "match": true
+    }
+  ],
+  "native_calls": 0,
+  "private_reads": 0
+}

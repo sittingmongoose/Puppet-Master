@@ -1,0 +1,35 @@
+{
+  "schema": "er8.independent.case-clock-config.v1",
+  "native_calls": 0,
+  "provider_calls": 0,
+  "all_pass": true,
+  "rows": [
+    {
+      "test": "clip-stage-to-original-case-and-campaign",
+      "pass": true,
+      "deadline_ns": 128090910455523,
+      "command_absolute_ns": "128090910455523"
+    },
+    {
+      "test": "retry-stage-clock-reset",
+      "pass": true,
+      "result": "ValueError"
+    },
+    {
+      "test": "response-cap-reset",
+      "pass": true,
+      "result": "ValueError"
+    },
+    {
+      "test": "elapsed-cap-expanded",
+      "pass": true,
+      "result": "ValueError"
+    },
+    {
+      "test": "integrated-without-new-native-review",
+      "pass": true,
+      "result": "ValueError"
+    }
+  ],
+  "scope": "pure construction source checks; actual case birth/cost ledgers still operator-owned"
+}

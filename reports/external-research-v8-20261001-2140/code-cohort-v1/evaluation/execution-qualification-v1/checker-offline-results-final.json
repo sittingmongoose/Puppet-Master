@@ -1,0 +1,133 @@
+{
+  "schema": "er8.independent.execution.offline.v1",
+  "native_calls": 0,
+  "provider_calls": 0,
+  "private_client_reads": 0,
+  "synthetic_owned_processes_only": true,
+  "gate_sha256": "2575d0c5ea4fe0af283bb0a2f484c0309c9d27be210660d98986bdbcc01f7e58",
+  "rows": [
+    {
+      "test": "late-entry-rejects-before-launch",
+      "result": {
+        "rc": 124,
+        "stdout": "",
+        "stderr": ""
+      },
+      "marker_absent": true,
+      "pass": true
+    },
+    {
+      "test": "ordinary-exit",
+      "unit": "er8-check-462220e3ac1b4770.service",
+      "start_ns": 128813380319369,
+      "stop_ns": 128815380319369,
+      "deadline_ns": 128816380319369,
+      "initial_unit": {
+        "MainPID": "2492452",
+        "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-check-462220e3ac1b4770.service",
+        "ActiveState": "active",
+        "SubState": "running"
+      },
+      "owned_pid_count": 4,
+      "returncode": 0,
+      "synthetic_stdout": "synthetic-complete\n",
+      "synthetic_stderr": "Running as unit: er8-check-462220e3ac1b4770.service\nFinished with result: success\nMain processes terminated with: code=exited, status=0/SUCCESS\nService runtime: 585ms\nCPU time consumed: 71ms\nMemory peak: 4.2M (swap: 0B)\n",
+      "client_finished_ns": 128814002649891,
+      "absence_observed_ns": 128814021180925,
+      "final_unit": {
+        "MainPID": "0",
+        "ControlGroup": "",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "owned_cgroup_remaining": [],
+      "unrelated_owned_sibling_alive": true,
+      "pass": true
+    },
+    {
+      "test": "ignored-signals-setsid",
+      "unit": "er8-check-0612fe30a40e4746.service",
+      "start_ns": 128814021271540,
+      "stop_ns": 128816021271540,
+      "deadline_ns": 128817021271540,
+      "initial_unit": {
+        "MainPID": "2492481",
+        "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-check-0612fe30a40e4746.service",
+        "ActiveState": "active",
+        "SubState": "running"
+      },
+      "owned_pid_count": 5,
+      "returncode": 255,
+      "synthetic_stdout": "synthetic-parent\nsynthetic-descendant\n",
+      "synthetic_stderr": "Running as unit: er8-check-0612fe30a40e4746.service; invocation ID: 43003c5c1d4b4f3c937159181ae73577\nFinished with result: signal\nMain processes terminated with: code=killed, status=9/KILL\nService runtime: 1.994s\nCPU time consumed: 57ms\nMemory peak: 6.2M (swap: 0B)\n",
+      "client_finished_ns": 128816043443802,
+      "absence_observed_ns": 128816061422895,
+      "final_unit": {
+        "MainPID": "0",
+        "ControlGroup": "",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "owned_cgroup_remaining": [],
+      "unrelated_owned_sibling_alive": true,
+      "pass": true
+    },
+    {
+      "test": "bootstrap-stall",
+      "unit": "er8-check-51c1f782f75d4a4d.service",
+      "start_ns": 128816061501148,
+      "stop_ns": 128818061501148,
+      "deadline_ns": 128819061501148,
+      "initial_unit": {
+        "MainPID": "2492531",
+        "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-check-51c1f782f75d4a4d.service",
+        "ActiveState": "active",
+        "SubState": "running"
+      },
+      "owned_pid_count": 2,
+      "returncode": 255,
+      "synthetic_stdout": "",
+      "synthetic_stderr": "Running as unit: er8-check-51c1f782f75d4a4d.service; invocation ID: 7df0e8f6b0bb4460ae4cd71a6d9e7f55\nFinished with result: signal\nMain processes terminated with: code=killed, status=9/KILL\nService runtime: 1.988s\nCPU time consumed: 44ms\nMemory peak: 3.4M (swap: 0B)\n",
+      "client_finished_ns": 128818076452416,
+      "absence_observed_ns": 128818097453870,
+      "final_unit": {
+        "MainPID": "0",
+        "ControlGroup": "",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "owned_cgroup_remaining": [],
+      "unrelated_owned_sibling_alive": true,
+      "pass": true
+    },
+    {
+      "test": "outer-cancellation",
+      "unit": "er8-check-edddd8ba5d844fd2.service",
+      "start_ns": 128818097520973,
+      "stop_ns": 128820097520973,
+      "deadline_ns": 128821097520973,
+      "initial_unit": {
+        "MainPID": "2492567",
+        "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-check-edddd8ba5d844fd2.service",
+        "ActiveState": "active",
+        "SubState": "running"
+      },
+      "owned_pid_count": 5,
+      "returncode": -9,
+      "synthetic_stdout": "synthetic-parent\nsynthetic-descendant\n",
+      "synthetic_stderr": "Running as unit: er8-check-edddd8ba5d844fd2.service; invocation ID: 00476001ca374190b8d5cd1b75b6aa38\n",
+      "client_finished_ns": 128820104509087,
+      "absence_observed_ns": 128820125966434,
+      "final_unit": {
+        "MainPID": "0",
+        "ControlGroup": "",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "owned_cgroup_remaining": [],
+      "unrelated_owned_sibling_alive": true,
+      "pass": true
+    }
+  ],
+  "all_pass": true
+}

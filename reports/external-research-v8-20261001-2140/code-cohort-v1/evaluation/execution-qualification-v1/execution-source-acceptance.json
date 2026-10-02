@@ -1,0 +1,112 @@
+{
+  "schema": "er8.execution-path.acceptance.v1",
+  "verdict": "accepted",
+  "decision": "PASSREVIEW_EXECUTION_SOURCE_CANARY_ONLY_CONDITIONAL",
+  "snapshot_path": "LAB_ROOT/dev/execution-path-v1/SNAPSHOT.json",
+  "snapshot_sha256": "4dd65e644807179250dac5735fbc58f57d5336647989075cc864405efef424ed",
+  "reviewer": "codex-v8-execution-check",
+  "scope": "Exact final execution repair2 host lifetime/ownership/entry/clock proof boundary; offline source + actual safe synthetic processes only",
+  "allowed_next_action": "root/operator one prospective counted v8 lifetime-canary<=480s64 after separately accepted exact route/capture/context closure and original case/stage/campaign budget admission",
+  "native_dispatch_now": "HOLD until separate route/capture/context/operator acceptance; this record alone cannot dispatch",
+  "integrated_dispatch": "HOLD until independently passed SAME execution+route native canary, all required lifetime/Goal/privacy-inventory/source proofs and unchanged case ancestry",
+  "native_qualification": "UNESTABLISHED",
+  "native_goals_started_by_reviewer": 0,
+  "provider_calls_by_reviewer": 0,
+  "actual_private_client_reads": 0,
+  "actual_native_receipt_or_stdout_or_modelio_reads": 0,
+  "source_closure_public_dependencies_verified": 13,
+  "independent_static_gate_byte_identical": true,
+  "gate_sha256": "2575d0c5ea4fe0af283bb0a2f484c0309c9d27be210660d98986bdbcc01f7e58",
+  "independent_actual_lifetime_cases_passed": 8,
+  "independent_entry_metadata_checks_passed": 3,
+  "original_deadline_observer_repair_verified": true,
+  "mechanism": [
+    "kernel CLOCK_MONOTONIC absolute SIGKILL timers armed before own fork/Popen-equivalent",
+    "owned systemd cgroup covers bootstrap including user-namespace credential transition",
+    "PID1 namespace death covers ignored signals/detached sessions/nested native descendants",
+    "late gate entry rejects before child launch",
+    "cgroup absence proof time formed after full read and exact bound original enrollment deadline",
+    "all assembly inputs/config/lease/case/acceptance hash-bound before native; replay and cap drift reject"
+  ],
+  "proof_artifacts": [
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker-offline-results-v2.json",
+      "sha256": "329104509cd0a8e9e39685bced8c61a459cf460111daf552d09ef447a3ff3f37"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker-more-offline-results.json",
+      "sha256": "a9ce4da12c2a2f6729c620251b35623e9e2956595a2cf50385a7f1aed05269ed"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker-entry-metadata-results.json",
+      "sha256": "225019354c6a35f981cd4c71b534e3eed54212c79b242a804e02519939f54db6"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker-observe-binding-repair1.json",
+      "sha256": "ef5816a864bf6c0e8b1b4ec45347dde585d8ba020f1c3fd404927bc4411a2457"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/frozen-closure-check.json",
+      "sha256": "30abc43e8b97a75cb46f07a0c7a7e08b50ed3e022b874a951d036f13620e7fe7"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/independent-build.json",
+      "sha256": "9083f4768066a907ea044779846af46070596a99d370264882d6a23712bfe5e6"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker_offline_final.py",
+      "sha256": "e8f9cd31ca9a6a58cdfddf5f1202d6940f2970d4c84c7b522024e8de44390f24"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker_more_offline_final.py",
+      "sha256": "37e434344fba3f856b4b7ce549726b5dacc614cabef6156aa031e1e45be997e9"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker-offline-results-final.json",
+      "sha256": "c0c580892f94a73291d2f06d3b451f9e580396465d5bdf6ebce7eab66d207835"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker-more-offline-results-final.json",
+      "sha256": "e629382143075732d7bec8374e376cc575237798e68fc4ae57f6f73aa9b63b0a"
+    }
+  ],
+  "retained_failures": [
+    "initial normal-exit checker missed83ms ownership enrollment; false result preserved and fixture corrected",
+    "EXQ-001 baseline observer accepted deadline extension; source/failure preserved and repair1 verified",
+    "EXQ-002 repair1 entry local-before-assignment; source/snapshot/failure preserved and repair2 metadata fixture verified",
+    "author standalone bwrap prebootstrap failure outside requiredsystemd ownership retained; production ownership independently tested"
+  ],
+  "finite_versions": {
+    "baseline": true,
+    "repairs_used": 2,
+    "repair_limit": 2,
+    "further_ordinary_execution_repair": "HOLD; no extra repair implied"
+  },
+  "mandatory_operator_limits": {
+    "wholecase_first_birth": "before ALL setup/queue/admission/metadata/native/copy/cleanup stages",
+    "elapsed_cap_seconds": 3600,
+    "occupied_cap_seconds": 5400,
+    "outside_native_cap_seconds": 300,
+    "counters": "atomic original case/stage/campaign ancestry; all failures/retries cost retained; no clock reset",
+    "original_absolute_cutoff": "min original stage, originalcase elapsed, campaign native cutoff; stop3s within cutoff reserves positiveproof"
+  },
+  "remaining_actual_canary_proof": [
+    "native Goal activation/automatic continuation/verifier/same-target completion",
+    "actual exact request/attempt tool inventory plus modelGLM5.3Flash/max native identity",
+    "controlled freshHOME/ancestorroots actual effective context absence in every logical request",
+    "publicGET actual public responsebody/version/completeness and admittedbyte-range delivery mechanical receipts with frontendscope stated",
+    "all positively owned native/host/MCP/cgroup absence observed by exactunchanged originalstage/case cutoff",
+    "all original elapsed/occupied/outside/campaign costs/counters include failed/cancelled/unknown work"
+  ],
+  "old_scope_reused": "Historical exact oldZ privacy/native3toolcanary ruling only with pinned source/config dependencies; its productive contextHOLD and publicGETunknown are NOT lifted by this offline acceptance",
+  "review_clock": {
+    "original_start_utc": "2026-10-02T01:48:52+00:00",
+    "hard_deadline_utc": "2026-10-02T02:33:52+00:00",
+    "final_reserve_starts_utc": "2026-10-02T02:23:52+00:00",
+    "clock_reset": false,
+    "max_conservative_events": 120,
+    "exact_response_usage": "not exposed; bounded task continues on original clock",
+    "generated_tokens": "UNKNOWN"
+  },
+  "final_frozen_gate_actual_lifetime_cases_passed": 8
+}

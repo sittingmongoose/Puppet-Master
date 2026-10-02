@@ -1,0 +1,27 @@
+{
+  "schema": "er8.independent.entry-metadata.v1",
+  "source_sha256": "9d1835b406178396dbd571e04cf0b256e5775a613fbc8fae6c7f03d91307b660",
+  "native_calls": 0,
+  "provider_calls": 0,
+  "actual_private_reads": 0,
+  "proof_scope": "source-authenticated offline host binding with fake PID1/cgroup and sentinel; never actual native qualification",
+  "all_pass": true,
+  "rows": [
+    {
+      "test": "valid-full-host-bindings-reach-sentinel-once",
+      "pass": true,
+      "returncode": 126,
+      "sentinel_calls": 1
+    },
+    {
+      "test": "same-enrollment-not-replayed",
+      "pass": true,
+      "result": "FileExistsError"
+    },
+    {
+      "test": "native-response-cap-drift-denied-before-sentinel",
+      "pass": true,
+      "result": "ValueError"
+    }
+  ]
+}

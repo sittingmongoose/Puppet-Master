@@ -1,0 +1,171 @@
+{
+  "schema": "er8.sanitized-export.v1",
+  "created_utc": "2026-10-02T02:33:32.890357+00:00",
+  "positive_allowlist_only": true,
+  "files": [
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/caller-repair1-reviewed.diff",
+      "sha256": "7ae96d84c2c949dcc2e68d7084410b5c818b76cc621c3d9606081453d0cd2b31",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/caller-source-acceptance.json",
+      "sha256": "5de94d6fbda4ece9c4a920cc49afc8c3ae05446ec715ab3f371b473265eac5be",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker-clock-config-results.json",
+      "sha256": "62c2466a6668fe7c3988de8b5b76fb41a3d7621a8ab89e0598a2d27ac65ce7d0",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker-entry-metadata-results.json",
+      "sha256": "225019354c6a35f981cd4c71b534e3eed54212c79b242a804e02519939f54db6",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker-entry-unbound-repair1.json",
+      "sha256": "3d8df51383fd508f04d940747c762cbffe4c8977953bd46e5cad6dd0ddd75ffd",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker-more-offline-results-final.json",
+      "sha256": "e629382143075732d7bec8374e376cc575237798e68fc4ae57f6f73aa9b63b0a",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker-more-offline-results.json",
+      "sha256": "a9ce4da12c2a2f6729c620251b35623e9e2956595a2cf50385a7f1aed05269ed",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker-observe-binding-failure-v1.json",
+      "sha256": "0f8441015e3507896b5520089d2af2e70e1e0fb28561be7dcf14c8b9dbee5442",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker-observe-binding-repair1.json",
+      "sha256": "ef5816a864bf6c0e8b1b4ec45347dde585d8ba020f1c3fd404927bc4411a2457",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker-offline-results-final.json",
+      "sha256": "c0c580892f94a73291d2f06d3b451f9e580396465d5bdf6ebce7eab66d207835",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker-offline-results-v2.json",
+      "sha256": "329104509cd0a8e9e39685bced8c61a459cf460111daf552d09ef447a3ff3f37",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker-offline-results.json",
+      "sha256": "50de5adc89ae041c35de77c6dbabc84cfd865fcfa9ee0366867cd65da658f778",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker-route-projection-results.json",
+      "sha256": "49886ab9384c9b17b1814c5aa7ed292007700075922b00fcdaf07b59e0d2b470",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker-source-delivery-projection.json",
+      "sha256": "0faf129a6f35c7998ecb73ad3cdf14cce147020c1a634ad082f6cb30c70e31b0",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker_entry_metadata.py",
+      "sha256": "bc8a14c3c3eee352da01e1fec255878d23230ce22af9e53e925859bc139e318c",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker_more_offline.py",
+      "sha256": "9fb79bf53cffa676cb40519f77964e5b4cc9adc0e4ba0b65914d446a523d14ce",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker_more_offline_final.py",
+      "sha256": "37e434344fba3f856b4b7ce549726b5dacc614cabef6156aa031e1e45be997e9",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker_offline.py",
+      "sha256": "c22cb3266ea887c1d33d5534a3ae8016fee254ef02f1f94de4072e41aaa2bc2b",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker_offline_final.py",
+      "sha256": "e8f9cd31ca9a6a58cdfddf5f1202d6940f2970d4c84c7b522024e8de44390f24",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker_offline_v2.py",
+      "sha256": "1368977bc00a9709877915792361bedfd25969928c15ad162c83fc53b57674db",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/checker_route_projection.py",
+      "sha256": "f9f78ebafceb2d77ffeab8e51a8aa5e00146ca372908bc9df1d62cdc221eeed1",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/execution-source-acceptance.json",
+      "sha256": "5b4479953622d6f1f76cc642d20e8dbea5fba73d6445949c90cc3fa59896de05",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/frozen-closure-check.json",
+      "sha256": "30abc43e8b97a75cb46f07a0c7a7e08b50ed3e022b874a951d036f13620e7fe7",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/independent-build.json",
+      "sha256": "9083f4768066a907ea044779846af46070596a99d370264882d6a23712bfe5e6",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/observed-baseline-observe.py.txt",
+      "sha256": "2b397dfa23a6c899d11e57bb0800fb315f121651ed0f38bd6e1d0a96875bd2d6",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/observed-repair1-entry.py.txt",
+      "sha256": "5053f3f20a8443b668a8ecc4fa0e2930eb89dee7bbfeeedc0fae3412a20af74b",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/pre-freeze-hold-v1.json",
+      "sha256": "894d8f3b27645d3c716e292e4d168f503d2fe91bc646b4dfe6f1bd1325c910f9",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/route-frozen-closure-check.json",
+      "sha256": "0534ef0a0af423c203ed1aae09a3ac90cc4099c901a80b44cd931f7e9519b780",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/route-source-acceptance.json",
+      "sha256": "054a3d15e4d317c71e1f0a1a8495f136f1c0cd584e28ede503d04f576e9e59f1",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/execution-qualification-v1/synthetic-enrollment-original-deadline.json",
+      "sha256": "5fa2bc89b9603104eac1dd014e45d52420618c2acab494abca018c1eb5c72e7d",
+      "scope": "public source qualification or controlled synthetic offline evidence; no actual native/provider data"
+    }
+  ],
+  "excluded_scopes": [
+    "actual raw native/private-client/stdout/modelIO/keys",
+    "synthetic fake launch acceptance fixture directory",
+    "duplicate synthetic script stdout wrappers",
+    "compiled binaries"
+  ],
+  "scope_notes": [
+    "No actual native or provider call by reviewer. Synthetic OS receipts are controlled fixture evidence only.",
+    "Retained failed checks include two execution source failures, one route source repair covering two findings, and one caller source failure; original versions retained.",
+    "accepted_method_sha256 in route admission is currently the lease hash, not a semantic method-configuration hash.",
+    "Historical old accepted native and privacy rulings apply only to exact unchanged dependencies and old scope; v8 actual canary proof remains pending.",
+    "Capture has separate positive export manifest in evaluation/capture-qualification-v1/SANITIZED_EXPORT.json.",
+    "Original checker hard deadline 2026-10-02 02:33:52 UTC is unchanged."
+  ]
+}

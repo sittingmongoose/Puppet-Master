@@ -1,0 +1,23 @@
+{
+  "schema": "er8.execution.boundary.pre-freeze-hold.v1",
+  "verdict": "HOLD",
+  "review_scope": "changed execution deadline/quiescence boundary only",
+  "original_review_start_utc": "2026-10-02T01:48:52+00:00",
+  "clock_not_reset": true,
+  "native_goals_started": 0,
+  "private_client_reads": 0,
+  "mechanism_offline_cases_passed": 8,
+  "findings": [
+    {
+      "id": "EXQ-001",
+      "owner": "dev/execution-path-v1/observe.py",
+      "observed_source_sha256": "2b397dfa23a6c899d11e57bb0800fb315f121651ed0f38bd6e1d0a96875bd2d6",
+      "failure_path": "LAB_ROOT/evaluation/execution-qualification-v1/checker-observe-binding-failure-v1.json",
+      "failure_sha256": "0f8441015e3507896b5520089d2af2e70e1e0fb28561be7dcf14c8b9dbee5442",
+      "finding": "caller original_deadline_ns not equal enrollment original_deadline_monotonic_ns; later caller argument allows false inclusive proof for actual prior safe owned cgroup",
+      "required_condition": "exact authoritative original deadline/schema/types bound before read/proof; reject drift without resetting any clock"
+    }
+  ],
+  "remaining_native_obligation": "root/operator only, one counted prospective480s64 same-boundary route qualification; actual Goal continuity/complete, exact request-attempt tools/context, publicGET/body and ranged source delivery receipts, positive all-owned native quiescence by unchanged stage/case deadline",
+  "fullcase_and_source_capture_scope": "not yet independently accepted from this mechanism-only result"
+}

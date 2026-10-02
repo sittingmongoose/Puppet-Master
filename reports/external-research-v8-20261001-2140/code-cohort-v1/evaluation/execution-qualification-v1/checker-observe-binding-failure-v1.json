@@ -1,0 +1,50 @@
+{
+  "schema": "er8.independent.observe-original-deadline-binding.v1",
+  "native_calls": 0,
+  "provider_calls": 0,
+  "actual_safe_owned_cgroup_from_prior_test": true,
+  "expired_original_deadline_ns": 127736382789644,
+  "true_original_observation": {
+    "schema": "er8.execution.quiescence.v1",
+    "owned_unit": "er8-check-c59ff194d65d44a1.service",
+    "owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-check-c59ff194d65d44a1.service",
+    "enrollment": {
+      "schema": "er8.execution.enrollment.v1",
+      "owned_unit": "er8-check-c59ff194d65d44a1.service",
+      "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-check-c59ff194d65d44a1.service",
+      "enrolled_monotonic_ns": 127733382789644,
+      "original_deadline_monotonic_ns": 127736382789644
+    },
+    "absence_proof": "positively-enrolled-owned-cgroup-removed",
+    "owned_native_quiescent": true,
+    "quiescence_observed_monotonic_ns": 128102572401241,
+    "original_deadline_monotonic_ns": 127736382789644,
+    "inclusive_native_lifetime_established": false,
+    "occupancy_disposition": "held-until-positive-quiescence",
+    "native_goal_or_quality_qualification": "UNESTABLISHED; independent native receipt review mandatory"
+  },
+  "extended_argument_observation": {
+    "schema": "er8.execution.quiescence.v1",
+    "owned_unit": "er8-check-c59ff194d65d44a1.service",
+    "owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-check-c59ff194d65d44a1.service",
+    "enrollment": {
+      "schema": "er8.execution.enrollment.v1",
+      "owned_unit": "er8-check-c59ff194d65d44a1.service",
+      "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-check-c59ff194d65d44a1.service",
+      "enrolled_monotonic_ns": 127733382789644,
+      "original_deadline_monotonic_ns": 127736382789644
+    },
+    "absence_proof": "positively-enrolled-owned-cgroup-removed",
+    "owned_native_quiescent": true,
+    "quiescence_observed_monotonic_ns": 128102572606974,
+    "original_deadline_monotonic_ns": 128103572406724,
+    "inclusive_native_lifetime_established": true,
+    "occupancy_disposition": "releasable-native-only",
+    "native_goal_or_quality_qualification": "UNESTABLISHED; independent native receipt review mandatory"
+  },
+  "pass": false,
+  "finding": "observe accepts caller deadline later than enrollment original deadline; it can claim on-time absence although actual observation is late by enrollment authority",
+  "observed_source_path": "LAB_ROOT/dev/execution-path-v1/observe.py",
+  "observed_source_sha256": "2b397dfa23a6c899d11e57bb0800fb315f121651ed0f38bd6e1d0a96875bd2d6",
+  "preserved_observed_source_path": "LAB_ROOT/evaluation/execution-qualification-v1/observed-baseline-observe.py.txt"
+}

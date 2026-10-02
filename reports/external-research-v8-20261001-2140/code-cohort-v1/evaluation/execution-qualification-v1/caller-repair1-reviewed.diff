@@ -1,0 +1,59 @@
+--- caller-v1/canary_runner.py
++++ caller-repair1/canary_runner.py
+@@ -76,15 +76,35 @@
+     check=verify_positive_pins(release);atomic_json(home/'IMMEDIATE_PRELAUNCH_PINS.json',check)
+     for record in (config,acceptance,release['execution_acceptance'],release['route_snapshot']):
+         if sha(record['path'])!=record['sha256']:raise RuntimeError('exact launch record drift')
++    # Upfront measured host exposure must be admitted before provider-capable launch.
++    outside_end=time.monotonic_ns()
++    if outside_end-start>=300*10**9 or outside_end>=deadline:
++        raise RuntimeError('original pre-wrapper outside/deadline budget exhausted')
++    ledger('event',{'case':CANARY,'job':CANARY,'category':'setup',
++        'seconds':(outside_end-start)/10**9,'outside_native_seconds':(outside_end-start)/10**9,
++        'interval_receipt_id':CANARY+'-outside-before-guard'})
+     permit=CANARY+'-permit-1'
+     ledger('guard-start',{'job':CANARY,'permit_id':permit})
++    after_guard=time.monotonic_ns()
++    if after_guard-start>=300*10**9 or after_guard>=deadline:
++        ledger('start-absent',{'job':CANARY,'permit_id':permit,'native_activation_absent':True,
++            'receipt_id':CANARY+'-no-launch-outside-exhausted'})
++        raise RuntimeError('original pre-wrapper budget exhausted during accounting')
++    ledger('event',{'case':CANARY,'job':CANARY,'category':'setup',
++        'seconds':(after_guard-outside_end)/10**9,'outside_native_seconds':(after_guard-outside_end)/10**9,
++        'interval_receipt_id':CANARY+'-outside-guard-accounting'})
+     launch_begin=time.monotonic_ns()
+-    # The native-owned wrapper begins at launch_begin; category receipt writing is inside it.
++    if launch_begin-start>=300*10**9 or launch_begin>=deadline:
++        ledger('start-absent',{'job':CANARY,'permit_id':permit,'native_activation_absent':True,
++            'receipt_id':CANARY+'-no-launch-final-outside-exhausted'})
++        raise RuntimeError('original pre-wrapper budget exhausted before Popen')
++    # Wrapper streams are discarded; native-private trees remain closed.
+     proc=subprocess.Popen(plan['command'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
++    # Reconcile the small event-write interval; this overlaps the running wrapper
++    # only in wall time, while its measured segment precedes launch_begin.
+     ledger('event',{'case':CANARY,'job':CANARY,'category':'setup',
+-        'seconds':(launch_begin-start)/10**9,'outside_native_seconds':(launch_begin-start)/10**9,
+-        'interval_receipt_id':CANARY+'-outside-before-wrapper'})
+-    # Wrapper streams are discarded; native-private trees remain closed.
++        'seconds':(launch_begin-after_guard)/10**9,'outside_native_seconds':(launch_begin-after_guard)/10**9,
++        'interval_receipt_id':CANARY+'-outside-final-prelaunch-tail'})
+     atomic_json(home/'LAUNCHED.json',{'schema':'er8.dispatcher.launch-positive.v1','job':CANARY,
+         'launch_begin_monotonic_ns':launch_begin,'owned_unit':unit,'original_deadline_monotonic_ns':deadline})
+     started=False
+@@ -141,10 +161,15 @@
+     ledger('release',{'job':CANARY,'quiescence':{'native_quiescent':True,'own_process_group_absent':True,
+         'receipt_id':CANARY+'-positive-owned-quiet','proof_path':str(home/'QUIESCENCE.json'),
+         'inclusive_native_lifetime_established':quiet['inclusive_native_lifetime_established']}})
++    measured_outside=(launch_begin-start+finish-quiet['quiescence_observed_monotonic_ns'])/10**9
++    whole_case_hold=(not quiet['inclusive_native_lifetime_established'] or finish>=deadline or measured_outside>=300)
+     atomic_json(home/'COMPLETE.json',{'schema':'er8.dispatcher.canary-close.v1',
+         'job':CANARY,'wrapper_returncode':proc.returncode,'observed_native_goal':started,
+         'public_metrics_path':str(metrics_path),'artifact_freeze_path':str(home/'PUBLIC_ARTIFACT_FREEZE.json'),
+-        'quiescence_path':str(home/'QUIESCENCE.json'),'independent_native_qualification':'PENDING',
++        'quiescence_path':str(home/'QUIESCENCE.json'),'independent_native_qualification':'HOLD' if whole_case_hold else 'PENDING',
++        'whole_case_status':'HOLD_LATE_OR_OUTSIDE' if whole_case_hold else 'PENDING_PARENT_CLOSE_PROOF',
++        'measured_outside_native_seconds_lower_bound':measured_outside,
++        'all_required_host_work_closed':'PENDING_PARENT_CLOSE_PROOF',
+         'source_semantic_acquisition':'UNKNOWN','underlying_account_identity':'UNKNOWN',
+         'generated_usage':'UNKNOWN except reported monotonic output lower bound'})
+ 

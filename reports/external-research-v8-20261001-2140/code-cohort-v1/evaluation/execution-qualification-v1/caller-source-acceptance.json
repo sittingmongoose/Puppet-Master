@@ -1,0 +1,52 @@
+{
+  "schema": "er8.caller.source-qualification.v1",
+  "verdict": "accepted",
+  "decision": "PASSREVIEW_CALLER_SOURCE_CANARY_ONLY_CONDITIONAL",
+  "allowed_modes": [
+    "canary"
+  ],
+  "created_utc": "2026-10-02T02:33:32.863730+00:00",
+  "original_checker_birth_utc": "2026-10-02T01:48:52Z",
+  "original_checker_hard_deadline_utc": "2026-10-02T02:33:52Z",
+  "clock_reset": false,
+  "source_freeze": {
+    "path": "LAB_ROOT/ops/dispatcher-v1/SOURCE_FREEZE.json",
+    "sha256": "39f28f1c45b0f532f814c417b10ead6fc3d299971bb460c7082a2a46a111da9a"
+  },
+  "closure_sha256": {
+    "LAB_ROOT/ops/dispatcher-v1/dispatcher.py": "f2ea1c012485db97da65553b374e3ec6d9243132e0433afe1300c1a12b6c7c7f",
+    "LAB_ROOT/ops/dispatcher-v1/canary_runner.py": "7504d04c351ef9ac5bb82ed41d5af4d5834fc926bc54b54a9345fca32c3faa9e"
+  },
+  "accounting_sha256": "5590fdc09936005e09b2de7aa4ac4113bbe0ddeefa4a8caf3548d78b0e3045af",
+  "execution_snapshot_sha256": "4dd65e644807179250dac5735fbc58f57d5336647989075cc864405efef424ed",
+  "route_snapshot_sha256": "9455eaa5876e5627360c80ee98e41b554118205544b3244af3ba272b0d928668",
+  "route_acceptance_sha256": "054a3d15e4d317c71e1f0a1a8495f136f1c0cd584e28ede503d04f576e9e59f1",
+  "root_config_sha256": "266b8c9930f26b00deb232d877f8f255c95630e4fc62f511f27e1aed6c7ca671",
+  "reviewed_mechanisms": [
+    "accepted static absolute CLOCK_MONOTONIC outer gate must start before Python imports, root release reads, ledger setup, and case packing",
+    "outer deadline exactly original birth plus 480 seconds; supplied original birth is atomically admitted before packing; native inner stop original plus 450 seconds",
+    "pre-wrapper outside setup is measured and charged before guard-start and provider-capable Popen; original 300-second outside and 480-second deadline checked again immediately before Popen",
+    "small prelaunch accounting tail reconciled as distinct original-clock interval without double charge",
+    "positive owned-cgroup absence required before release; late or outside overrun remains HOLD with actual cost retained"
+  ],
+  "retained_failure": {
+    "id": "CQ001",
+    "version": "caller-v1",
+    "reason": "outside preparation admission occurred after provider-capable Popen",
+    "retained_source_path": "LAB_ROOT/ops/dispatcher-v1/versions/v1/canary_runner.py",
+    "retained_source_sha256": "c7fb0e7ee2174286718185a18ae1f50cb8775d42f50912b6071f9866948e373c",
+    "repair_count": 1
+  },
+  "mandatory_next_step": "Root/operator may release exactly one counted <=480-second <=64-response canary using these exact source pins and existing route/execution/capture acceptances. Independently grade actual original-clock whole-case costs, parent close proof, startup/context, public GET body and joined native range delivery, and owned cleanup. Productive execution remains HOLD.",
+  "limitations": [
+    "source acceptance is not actual native completion, exposure, semantic acquisition, or account identity proof",
+    "outer gate hard-bounds original whole-case process lifetime; no blanket hard-real-time guarantee for the separate 300-second outside ledger budget",
+    "all required host work closed remains pending parent close proof",
+    "response/token usage of reviewer unexposed and unknown; no reset and no native/provider calls by reviewer"
+  ],
+  "checks": {
+    "LAB_ROOT/ops/dispatcher-v1/dispatcher.py": true,
+    "LAB_ROOT/ops/dispatcher-v1/canary_runner.py": true
+  },
+  "reviewed_diff_sha256": "7ae96d84c2c949dcc2e68d7084410b5c818b76cc621c3d9606081453d0cd2b31"
+}

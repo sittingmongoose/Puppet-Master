@@ -1,6 +1,6 @@
 # External research v8 — current campaign checkpoint
 
-**INITIAL SCOPE CHECKPOINT — execution and research results NOT_RUN in this publication.** This entry declares the fresh authorized integration-first campaign; it is not campaign completion or evidence of a qualified recipe. Later cohort batches will publish actual full-pipeline outputs and independent current assessments together.
+**INITIAL SCOPE CHECKPOINT — execution and research results NOT_RUN in this publication.** This entry declares the fresh authorized integration-first campaign; it is not campaign completion or evidence of a qualified recipe. The [code qualification cohort](code-cohort-v1/README.md) supplies conditional source/offline acceptances and retained finite repairs; native qualification remains pending. Later cohort batches will publish actual full-pipeline outputs and independent current assessments together.
 
 - [Current results](RESULTS.md), [methods](methods.json), [attempts](attempts.json), [comparisons](comparisons.json)
 - [Economics](economics.json), [schedule](schedule.json), [failures](FAILURES.md)

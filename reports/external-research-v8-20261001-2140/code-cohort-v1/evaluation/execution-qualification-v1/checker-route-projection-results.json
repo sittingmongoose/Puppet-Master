@@ -1,0 +1,42 @@
+{
+  "schema": "er8.independent.route-synthetic-projection.v1",
+  "source_sha256": "92ba648f160f2bec1296cf0a7510bebc6b6a61bcef1e0ccc7c69902610899fd2",
+  "native_calls": 0,
+  "provider_calls": 0,
+  "private_reads": 0,
+  "scope": "synthetic direct pure functions only; actual native shape unestablished",
+  "all_pass": true,
+  "rows": [
+    {
+      "test": "mandatory-logical-request-projection-no-secret-output",
+      "pass": true
+    },
+    {
+      "test": "rendered-instruction-marker-rejects-context",
+      "marker_kind": "agentsMd",
+      "pass": true
+    },
+    {
+      "test": "rendered-instruction-marker-rejects-context",
+      "marker_kind": "auto-memory",
+      "pass": true
+    },
+    {
+      "test": "rendered-instruction-marker-rejects-context",
+      "marker_kind": "fresh-HOME-default-instructions",
+      "pass": true
+    },
+    {
+      "test": "missing-mandatory-logical-array",
+      "pass": true
+    },
+    {
+      "test": "boolean-attempt",
+      "pass": true
+    },
+    {
+      "test": "event-known-scalars-only-no-all-memory-off-claim",
+      "pass": true
+    }
+  ]
+}

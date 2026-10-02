@@ -1,0 +1,56 @@
+{
+  "schema": "pm.v8.sanitized-export.v1",
+  "state": "FROZEN",
+  "owner": "codex-v8-capture-check",
+  "root": "LAB_ROOT/evaluation/capture-qualification-v1",
+  "allowlist_policy": "Exact positive file whitelist only; no recursive directory export. Any additional file requires a separate sanitized review.",
+  "scope": "Code acceptance and offline synthetic/context-boundary test metadata; no quality or recipe-win evidence. Native proof pending.",
+  "files": [
+    {
+      "path": "LAB_ROOT/evaluation/capture-qualification-v1/capture-code-qualification.json",
+      "relative_path": "capture-code-qualification.json",
+      "sha256": "1480a8252d15bc811c4ca19621703b214321843ab37e166debe77ecb1994c9ae",
+      "bytes": 7409,
+      "safe_content_class": "sanitized_code_acceptance_metadata"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/capture-qualification-v1/CURRENT_COVERAGE.json",
+      "relative_path": "CURRENT_COVERAGE.json",
+      "sha256": "af2b35ca2937248ad280a001b34e6b82b0215f1dc6e987a2586a13c0582eb728",
+      "bytes": 2572,
+      "safe_content_class": "sanitized_code_acceptance_metadata"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/capture-qualification-v1/QUALIFICATION.md",
+      "relative_path": "QUALIFICATION.md",
+      "sha256": "2df205bf2cfbef300d43e09a3548cb32de139a05e987135f9f063e557ee40552",
+      "bytes": 1988,
+      "safe_content_class": "sanitized_code_acceptance_metadata"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/capture-qualification-v1/test-results.json",
+      "relative_path": "test-results.json",
+      "sha256": "cdb683f3607afbe373238a7306034ff11e347b066232dd8dd4063aafa93b2be4",
+      "bytes": 1003,
+      "safe_content_class": "sanitized_code_acceptance_metadata"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/capture-qualification-v1/test_independent_capture.py",
+      "relative_path": "test_independent_capture.py",
+      "sha256": "af740041eddcdf9fe5d475cfebdcdd5216fc65d61c35749ba44821046f53c871",
+      "bytes": 14365,
+      "safe_content_class": "independent_synthetic_fixture_code"
+    }
+  ],
+  "prohibited_exports": [
+    "Raw captures",
+    "Native logs/stdout/model input/output",
+    "Credential or evaluator keys",
+    "Private corpora",
+    "Private host inventory",
+    "Temporary synthetic workspaces"
+  ],
+  "includes_only_synthetic_fixture_code_and_sanitized_metadata": true,
+  "native_quality_proof": false,
+  "quality_or_recipe_win_claimed": false
+}

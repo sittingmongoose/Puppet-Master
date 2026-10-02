@@ -1,0 +1,29 @@
+{
+  "schema": "er8.independent.source-delivery-projection.v1",
+  "source_sha256": "92ba648f160f2bec1296cf0a7510bebc6b6a61bcef1e0ccc7c69902610899fd2",
+  "positive_join": [
+    {
+      "tool_call_id": "synthetic-call",
+      "tool_name": "mcp__pm_boundary__public_https_get",
+      "operation_id": "22222222222222222222222222222222",
+      "capture_path": "public_captures/1111111111111111111111111111111111111111111111111111111111111111.body",
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "status": 200,
+      "body_complete": true,
+      "delivery": {
+        "sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "range_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+        "transmitted_text_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+        "range_bytes": 256,
+        "byte_start": 0,
+        "byte_end_exclusive": 256,
+        "transmitted_text_utf8_bytes": 256
+      }
+    }
+  ],
+  "unjoined_result": [],
+  "all_pass": true,
+  "native_calls": 0,
+  "private_reads": 0,
+  "actual_frontend_delivery": "UNESTABLISHED; synthetic selector test only"
+}

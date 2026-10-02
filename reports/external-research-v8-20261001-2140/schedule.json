@@ -77,5 +77,19 @@
       "evaluator": "V8-EVAL-NB-B"
     }
   ],
-  "policy": "Run complete controls early on a qualified route; no sixteen-method prerequisite; original births never reset; ordinary boundary repairs remain bounded."
+  "policy": "Run complete controls early on a qualified route; no sixteen-method prerequisite; original births never reset; ordinary boundary repairs remain bounded.",
+  "prospective_runtime_overlay": {
+    "outside_native_cap_seconds": 300,
+    "applies_to": [
+      "V8-BIO-C-Z",
+      "V8-BIO-P-Z",
+      "V8-BIO-B-Z",
+      "V8-NB-C-Z",
+      "V8-NB-P-Z",
+      "V8-NB-B-Z"
+    ],
+    "scope": "All six cases; narrower than original planner 600 allowance; original birth/caps unchanged",
+    "code_qualification": "CONDITIONAL_CANARY_ONLY",
+    "native_qualification": "PENDING"
+  }
 }

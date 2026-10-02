@@ -1,0 +1,61 @@
+{
+  "schema": "er8.execution-path.snapshot.v1",
+  "status": "repair2-final-ready-independent-source-review-NOT-native-qualified",
+  "author_start_utc": "2026-10-02T01:44:17Z",
+  "author_hard_deadline_utc": "2026-10-02T02:14:17Z",
+  "author_final_review_reserve_utc": "2026-10-02T02:04:17Z",
+  "clock_reset": false,
+  "frozen_epoch": 1790906751.4014773,
+  "boundary_version": "baseline-plus-final-repair2",
+  "repair_count": 2,
+  "repair_limit": 2,
+  "closure_sha256": {
+    "LAB_ROOT/dev/execution-path-v1/deadline_gate.c": "abde9b4b9d70bbfd7c97ed397733228707ad2e27ed9214b11185e371631029ee",
+    "LAB_ROOT/dev/execution-path-v1/deadline_gate": "2575d0c5ea4fe0af283bb0a2f484c0309c9d27be210660d98986bdbcc01f7e58",
+    "LAB_ROOT/dev/execution-path-v1/entry.py": "9d1835b406178396dbd571e04cf0b256e5775a613fbc8fae6c7f03d91307b660",
+    "LAB_ROOT/dev/execution-path-v1/make_plan.py": "fc798c6726865dcc944358c6a5506912121c1e7ea272489d5d0d1d96f4273d64",
+    "LAB_ROOT/dev/execution-path-v1/observe.py": "e398276c666b50306aa408065d7397ff4ad63d594a1f35d1a4cf9deacc998816",
+    "LAB_ROOT/dev/execution-path-v1/README.md": "2d96cd2d220744fb731980caaacaed3a1eefcc67049cccf6958ec5d6cb2787be",
+    "LAB_ROOT/dev/execution-path-v1/tests/test_offline.py": "6e43e3c856b8e0b2b6d5cdbca7044da1656711a47911e53db7735471abf10645",
+    "LAB_ROOT/dev/execution-path-v1/tests/fixture.py": "32d887fb7fadb1568887ea5417867aa7f56ac749dfb936209e2dabe26a1bd16f",
+    "/usr/bin/x86_64-linux-gnu-gcc-15": "1fa7bb6439186b9f4912ad97d9072b6e0ded5b98b831a257d23d619719b74722",
+    "/usr/bin/bwrap": "7bbffeb19f312d5503232e1502f0f97f2ac4ffcb51dec47d9a58bffbad1f12d5",
+    "/usr/bin/systemd-run": "335bdfa88864cb15c5952f6910c92694205080c9bcc34de70dbdcb70f08514cd",
+    "/usr/bin/systemctl": "66f1d45d82f18e57d1fe582b263c3d92d59a90640cfa836400d1206e24c21e85",
+    "/usr/bin/python3.13": "efb29ce53d36ebaeee80e3aa44fd6c7f9d71bbded5fe1665240b2ed8ecaeee0e"
+  },
+  "build_argv": [
+    "/usr/bin/gcc",
+    "-std=c11",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static",
+    "-o",
+    "deadline_gate",
+    "deadline_gate.c"
+  ],
+  "host_mechanisms": {
+    "systemd_version": "257.9-0ubuntu2.5",
+    "cgroup": "v2 user service ownership",
+    "clock": "CLOCK_MONOTONIC kernel POSIX TIMER_ABSTIME SIGKILL",
+    "namespace": "supported bwrap PID1 init-death descendant termination"
+  },
+  "exact_v7_reuse": {
+    "native_runtime_sha256": "9894fa2d82f801cf2d70f1f0a9756e2a14e7bcbd59fe95d69459d6d552d4baa9",
+    "runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+    "goal_engine_sha256": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31"
+  },
+  "selected_route_entry": "dev/route-assembly-v1/launch.py",
+  "selected_route_acceptance": "mandatory separately frozen exact route closure and independent acceptance; no sourcegate/capflag/oldcanary substitutes for newcountedcanary",
+  "new_native_canary_obligation": "root/operator only; 480s64 maximum; integrated requires independent SAME execution+route snapshot passed",
+  "native_goals_started_by_author": 0,
+  "candidate_or_provider_calls_by_author": 0,
+  "native_qualification": "UNESTABLISHED",
+  "whole_case_cost_qualification": "UNESTABLISHED; immutable authority binds case limits, operator atomic cost ledger still mandatory",
+  "failed_baseline": "versions/baseline-v1/SNAPSHOT.json",
+  "failed_fixture": "receipts/failed-standalone-bootstrap.json",
+  "usage_generated_tokens": "UNKNOWN",
+  "failed_repair1": "versions/repair1/SNAPSHOT.json"
+}
