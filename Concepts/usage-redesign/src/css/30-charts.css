@@ -332,7 +332,10 @@ html[data-theme$="-light"] #panel-usage .pmu-meter[data-ramp="1"] { --c: color-m
 #panel-usage .pmu-sbfill > i { background-image: linear-gradient(180deg, color-mix(in srgb, #fff 10%, transparent), transparent 45%, color-mix(in srgb, var(--pmu-card) 22%, transparent)); }
 html[data-theme$="-light"] #panel-usage .pmu-sbfill > i { background-image: linear-gradient(180deg, color-mix(in srgb, #fff 22%, transparent), transparent 55%); }
 #panel-usage .pmu-mark[data-est="1"] { background-image: repeating-linear-gradient(135deg, var(--pmu-card) 0 2px, transparent 2px 5px) !important; opacity: .82; }
-#panel-usage .pmu-c-ranked[data-inline="1"] .pmu-rk { grid-template-columns: var(--rk-name, minmax(56px, 40%)) minmax(36px, 1fr) auto; grid-template-areas: "name bar val"; align-items: center; min-height: 28px; padding: 4px 8px; }
+#panel-usage .pmu-c-ranked[data-inline="1"] .pmu-rk { grid-template-columns: var(--rk-name, minmax(56px, 40%)) minmax(36px, 1fr) auto; grid-template-areas: "name bar val"; align-items: center; min-height: 28px; padding: 3px 8px; }
+/* integ3: a one-line row whose name wraps (a narrow card: Costs provider value in Glass at 1440 ran 9 px past its body with
+   "ChatGPT / Codex" on three lines) sets the wrapped name tighter; single-line rows keep their 28 px */
+#panel-usage .pmu-c-ranked[data-inline="1"] .pmu-rkt { line-height: 1.2; }
 
 /* ---------- mix bar (A1 7.11) ---------- */
 #panel-usage .pmu-mixbar { display: flex; gap: 1px; height: 10px; border-radius: 3px; overflow: hidden; background: var(--pmu-card-3); }

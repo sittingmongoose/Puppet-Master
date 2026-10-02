@@ -461,6 +461,9 @@
       PMU.motion.countUp(el, 0, to, function (v) { return C.numOnly(v, v === to || f !== 'money' ? f : 'money2'); }, { delay: d, dur: el.getAttribute('data-count') === 'kpi' ? 1000 : 900 });
     });
     var rows = Array.prototype.slice.call(body.querySelectorAll('[data-reveal]'));
+    /* integ3: a supporting body (outside the light budget during an entrance) shows its lists with the body, no per-row
+       cascade (WOW-SPEC-3 5 Phase C; the GPU arrival had context legend, attention and mix rows cascading under quiet fades) */
+    if (rows.length && PMU.film && PMU.film.isQuiet && PMU.film.isQuiet(body)) rows = [];
     if (rows.length) {
       if (PMU.motion.reveal) PMU.motion.reveal(rows, { delay: d - 120, step: 22, cap: 400 });
       else rows.forEach(function (r, i) { PMU.motion.animate(r, [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { dur: 480, delay: d - 120 + Math.min(400, i * 22), fill: 'backwards', ease: 'enter' }); });
