@@ -6461,7 +6461,9 @@ body[data-ph-resizing] .assistant-grid{ transition:none; }
   --pop: 1.2;
   box-shadow: 0 0 22px color-mix(in srgb, var(--pm-step, var(--accent)) 42%, transparent);
 }
-.orbit-node.open,
+/* a pinned node takes the open look, except the live one: it stays the dark
+   disc (and pops a little more, below) */
+.orbit-node.open:not(.live),
 .orbit-node.focus:not(.live) {
   color: var(--pm-step, var(--accent));
   border-color: color-mix(in srgb, var(--pm-step, var(--accent)) 62%, transparent);
@@ -7028,6 +7030,15 @@ body[data-theme="retro-light"] { --nx-disc-positive: #74ffb0; --nx-disc-warning:
   --nx-hi-w: 3.6px;
   --nx-h-working-i: .20; --nx-h-attention-i: .20; --nx-h-blocked-i: .24; --nx-h-quiet-i: .10;
   --nx-bl-attention: .08;
+}
+
+/* On a 1x screen Chromium floors a 1.5px border to one device pixel, which
+   under the node's 1.2 pop paints a 1.2px rim that never fully covers a pixel,
+   so the hue reads washed; there the dark discs' rim is 2px (orbit-verify
+   reads it). From 2x up it is the 1.5px of the design. */
+@media (max-resolution: 1.5dppx) {
+  .orbit-node.live, .orbit-core, .wa-chrome .wa-disc.current, .pm-rail-item.orbit-strip-item.current,
+  .working-variant-8 .rail8-item.current:not(.failed, .waiting) { border-width: 2px; }
 }
 
 /* Orbit. A node's glyph sits at rest unlit; the live one is lit in the phase
