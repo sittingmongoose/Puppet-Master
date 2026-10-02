@@ -32,3 +32,8 @@ html[data-theme^="glass"] .pmr-view { background: transparent; }
 /* Today's active activity-bar icon carries a 3px coloured side bar in every theme (Glass with !important). Jared's
    rule forbids coloured side bars, so under any concept it goes; each concept draws its own active mark. */
 html[data-rail-concept]:not([data-rail-concept="current"]) #activityBar .icon.active::before { content: none !important; display: none !important; }
+
+/* Review copy only: the onboarding "Concept demo" pill sits fixed at the bottom-left, over the rail and the switcher.
+   Here it moves to the bottom centre of the window so the rail's bottom edge stays visible. */
+html[data-rail-concept] .o55-demo:not([data-o55-narrow]) { left: 50%; bottom: 34px; transform: translateX(-50%); }
+html[data-rail-concept] .o55-demo:not([data-o55-narrow]) .o55-demomenu { left: 50%; transform: translateX(-50%); }
