@@ -207,9 +207,9 @@ svg.fast-bolt, svg.meta-fast { --nx-ink: var(--warning); --nx-hiv: visible; --nx
 .nx-tn-changed { --nx-bl-ink: var(--accent-2); --nx-bl-a: var(--nx-bl-changed); }
 /* the quiet tones are unlit: no backlight box at all */
 .nx-tn-done::before, .nx-tn-idle::before, .nx-tn-paused::before { display: none; }
-/* working: a slow satellite orbit (8 s: the quietest live mark, below reviewing), no breathe, no backlight */
+/* working: a slow satellite orbit (9 s: the quietest live mark, below reviewing), no breathe, no backlight */
 .nx-st-working::before { display: none; }
-.nx-st-working .nx-p { animation: var(--kl) 8000ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 8ms - 8000ms); }
+.nx-st-working .nx-p { animation: var(--kl) 9000ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 9ms - 9000ms); }
 /* reviewing: the lens sweeps the page; no outer glow, so it stays below needs-you */
 .nx-st-reviewing::before { display: none; }
 .nx-st-reviewing .nx-p { animation: var(--kl) 2800ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 2.8ms - 2800ms); }

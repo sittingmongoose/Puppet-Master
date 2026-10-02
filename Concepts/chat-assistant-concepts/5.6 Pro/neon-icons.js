@@ -321,7 +321,7 @@
       'st-reviewing': G([P('M5 3h9l4 4v6'), P('M5 3v17h6'), M([C(16, 16, 3.6), P('m18.6 18.6 2.6 2.6')], { ax: -2.5, ay: -2.5, b: 1 })], 'calm', 'status'),
       'st-waiting': G([P('M5 3h14a2.5 2.5 0 0 1 2.5 2.5v10.5a2.5 2.5 0 0 1-2.5 2.5h-6.5L8 21.8v-3.3H5A2.5 2.5 0 0 1 2.5 16V5.5A2.5 2.5 0 0 1 5 3z'),
         M([P('M9.4 8.6a2.6 2.6 0 1 1 3.9 2.25c-.85.45-1.3 1.05-1.3 1.9v.1'), P('M12 15.6h.01')], { ay: -3.4 })], 'hop', 'status'),
-      'st-waiting-dep': G([M([P('M6.5 3h11M6.5 21h11'), P('M8 3v2.5c0 2.4 4 4 4 6.5s-4 4.1-4 6.5V21M16 3v2.5c0 2.4-4 4-4 6.5s4 4.1 4 6.5V21')], { ar: 18, o: [12, 12], b: 1 })], 'tip', 'status'),
+      'st-waiting-dep': G([M([P('M6.5 3h11M6.5 21h11'), P('M8 3v2.5c0 2.4 4 4 4 6.5s-4 4.1-4 6.5V21M16 3v2.5c0 2.4-4 4-4 6.5s4 4.1 4 6.5V21')], { ar: 16, o: [12, 12], b: 1 })], 'tip', 'status'),
       'st-idle': G([C(12, 12, 4.5)], 'none', 'status'),
       'st-complete': G([M(P('m5 12.5 4.5 4.5L19 7.5'), { ac: '0 20 0 4', ae: '0 4 0 4' })], 'none', 'status'),
       'st-blocked': G([R(5, 11, 14, 9, 2), M(P('M8 11V8a4 4 0 0 1 8 0v3'), { ay: -3 })], 'none', 'status'),
@@ -375,7 +375,7 @@
        STATUS (plan §3): canonical status -> mark, tone and list motion, with every alias the surfaces use.
        ====================================================================== */
     var STATUS = {
-      working: { glyph: 'st-working', tone: 'working', motion: 'satellite orbit outside the ring, 8 s, its core halo only', aliases: ['running', 'in_progress', 'doing', 'live', 'active', 'loading', 'starting'] },
+      working: { glyph: 'st-working', tone: 'working', motion: 'satellite orbit outside the ring, 9 s, its core halo only', aliases: ['running', 'in_progress', 'doing', 'live', 'active', 'loading', 'starting'] },
       reviewing: { glyph: 'st-reviewing', tone: 'working', motion: 'lens sweeps 2.5 units and rests; no backlight', aliases: ['verifying', 'review'] },
       waiting: { glyph: 'st-waiting', tone: 'attention', motion: 'full steady halo, backlight breathes .6-1, "?" hops 3.4 units (two beats every 2.4 s)', aliases: ['needs', 'needs_you', 'needs-you', 'yourmove', 'input', 'decide'] },
       'waiting-dep': { glyph: 'st-waiting-dep', tone: 'attention', motion: 'tips once, holds 60 % of 3.6 s', aliases: ['waiting_dep', 'dependency', 'blocked_on', 'held'] },
