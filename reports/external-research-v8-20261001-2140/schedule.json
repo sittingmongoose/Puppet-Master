@@ -1,5 +1,5 @@
 {
-  "checkpoint": "ONGOING_RECOVERY",
+  "checkpoint": "PAUSED_BY_EXPLICIT_USER_REQUEST",
   "accepted_utc": "2026-10-02T01:40:09+00:00",
   "deadline_utc": "2026-10-02T13:40:09Z",
   "cases": [
@@ -93,5 +93,10 @@
   },
   "historical_deadline_utc": "2026-10-02T07:40:09Z",
   "historical_protected_final_hour_utc": "2026-10-02T06:40:09Z",
-  "authority_amendment": "canary-controller-cohort-v1/recovery-v1/AUTHORITY_AMENDMENT.json"
+  "authority_amendment": "canary-controller-cohort-v1/recovery-v1/AUTHORITY_AMENDMENT.json",
+  "new_admissions": "DISABLED",
+  "pause_requested_epoch": 1790914502.1696212,
+  "resume_epoch": null,
+  "pause_duration_seconds": null,
+  "pause_policy": "Actual explicit pause interval may be excluded prospectively on resume; no fixed assignment deadlines or births/outcomes/consumed usage reset"
 }

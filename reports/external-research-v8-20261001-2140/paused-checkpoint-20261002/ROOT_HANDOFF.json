@@ -1,0 +1,15 @@
+{
+  "schema": "pm.er8.positive-publication-handoff.v1",
+  "scope": "Explicit user pause checkpoint only; external existingv3 retains original480s deadline; no new admissions; actualterminal pending",
+  "positive_files": [
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/RESTART.json",
+      "sha256": "8c1b8c62096344b7407ed6e624076f96e833d2d1bf1a4ec53b9473f6737e92b8"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/USER_PAUSE_20261002.json",
+      "sha256": "930f3468305c47402cf5998c496306f9f3bd255845fa7aee6ee4beddd6ef04c4"
+    }
+  ],
+  "sanitization": "Use existing path/session sanitizer; preserve original/public byte hashes; no additional paths or private native IO"
+}

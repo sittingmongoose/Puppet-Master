@@ -1,0 +1,106 @@
+{
+  "schema": "pm.er8.explicit-user-pause.v1",
+  "pause": {
+    "requested_epoch": 1790914502.1696212,
+    "requested_utc": "2026-10-02T04:15:02.170944+00:00",
+    "user_request": "I need you to pause your work. I will resume it tomorrow when usage comes back. If there are external agents working, they can continue to work.",
+    "resume_epoch": null,
+    "campaign_clock_exclusion": "Explicit user pause interval may be excluded prospectively on resume; no fixed job/review birth, deadline, prior outcome, starts or occupied costs change. No campaign budget reset. Do not invent pause duration before resume.",
+    "new_admissions": "DISABLED",
+    "external_existing_work_allowed": [
+      "v8-z-mechanical-route-canary-v3"
+    ],
+    "current_native_deadline_epoch": 1790914864.0490766,
+    "Sol_helpers": "Requested compact durable checkpoint then stop; operator only finishes existing exact canary terminal cleanup; publisher only final pause checkpoint. No successors/pipelines/new reviews.",
+    "supervisor_lock": "Existing holder2774121/internal-session-omitted expires at originalcampaign deadline; on resume reconcile exact ownership before admitting. No duplicate supervisor."
+  },
+  "frozen_policy_amendment_sha256": "1479c0b44869d13878b90ccd2f02d5fb2d755cfa0f0b17315105dc48d57616ec",
+  "accounting_observation": {
+    "elapsed_seconds": 9293.17032122612,
+    "deadline_epoch": 1790948409,
+    "admissions": 3,
+    "native_goal_starts": 3,
+    "pending_start_permits": 0,
+    "occupied_slot_seconds": 1427.4393529891968,
+    "committed_slot_seconds": 0,
+    "reserved_or_committed_slot_seconds": 151200,
+    "reserved_or_committed_native_starts": 84,
+    "active_by_family": {
+      "M": 0,
+      "Z": 0,
+      "L": 0
+    },
+    "candidate_output_warning": false,
+    "candidate_output_stop": false,
+    "active_jobs": [],
+    "overdue_jobs": [],
+    "helper_task_starts": 28,
+    "active_helpers": 6,
+    "evaluator_helper_starts_remaining": 28,
+    "generated_output_tokens_lower_bound": 1923,
+    "generated_usage": "unknown",
+    "outside_native_seconds_by_case": {
+      "v8-z-mechanical-route-canary-v1": 0.435632441,
+      "v8-z-mechanical-route-canary-v2": 87.708301406,
+      "v8-z-mechanical-route-canary-v3": 0.416744337
+    },
+    "category_seconds": {
+      "cancel": 0,
+      "cleanup": 87.855565254,
+      "evaluation": 0,
+      "handoff": 0.047485072,
+      "native": 899.865067933,
+      "retry": 0,
+      "setup": 0.657627858,
+      "source_capture": 0,
+      "wait": 0
+    },
+    "occupancy_reconciled": true,
+    "route_reviews": [
+      "v8-z-route-repair1-canary-v1",
+      "v8-z-route-repair1-caller2-canary-v2",
+      "v8-z-route-recovery-v1-canary-v2",
+      "v8-z-route-recovery-v2-canary-v3"
+    ],
+    "final_reserved_names": [
+      "V8-BIO-C-Z",
+      "V8-BIO-P-Z",
+      "V8-BIO-B-Z",
+      "V8-NB-C-Z",
+      "V8-NB-P-Z",
+      "V8-NB-B-Z"
+    ],
+    "evaluator_reserved_names": [
+      "V8-EVAL-BIO-C",
+      "V8-EVAL-BIO-P",
+      "V8-EVAL-BIO-B",
+      "V8-EVAL-NB-C",
+      "V8-EVAL-NB-P",
+      "V8-EVAL-NB-B",
+      "V8-EVAL-V8-BIO-WIT-T-Z",
+      "V8-EVAL-V8-BIO-COND-C-Z",
+      "V8-EVAL-V8-BIO-BATCH-C-Z",
+      "V8-EVAL-V8-BIO-RETR-C-M",
+      "V8-EVAL-V8-BIO-RETR-T-M",
+      "V8-EVAL-V8-BIO-AMEND-C-L",
+      "V8-EVAL-V8-BIO-AMEND-T-L",
+      "V8-EVAL-V8-BIO-BREADTH-C-M",
+      "V8-EVAL-V8-BIO-BREADTH-T-M",
+      "V8-EVAL-V8-NB-WIT-T-Z",
+      "V8-EVAL-V8-NB-COND-C-Z",
+      "V8-EVAL-V8-NB-BATCH-C-Z",
+      "V8-EVAL-V8-NB-RETR-C-M",
+      "V8-EVAL-V8-NB-RETR-T-M",
+      "V8-EVAL-V8-NB-AMEND-C-L",
+      "V8-EVAL-V8-NB-AMEND-T-L",
+      "V8-EVAL-V8-NB-BREADTH-C-M",
+      "V8-EVAL-V8-NB-BREADTH-T-M",
+      "V8-EVAL-HOLDOUT-BIO-C",
+      "V8-EVAL-HOLDOUT-BIO-R",
+      "V8-EVAL-HOLDOUT-NB-C",
+      "V8-EVAL-HOLDOUT-NB-R"
+    ],
+    "closed": false
+  },
+  "no_resource_or_outcome_reset": true
+}

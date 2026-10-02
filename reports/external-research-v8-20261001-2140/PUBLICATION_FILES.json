@@ -1,5 +1,5 @@
 {
-  "checkpoint": "ONGOING_RECOVERY_RESULTS_V2",
+  "checkpoint": "PAUSED_BY_EXPLICIT_USER_REQUEST",
   "files": [
     {
       "path": "BEST_RECIPE.md",
@@ -8,8 +8,8 @@
     },
     {
       "path": "CHECKPOINT.md",
-      "sha256": "28f4b4b21ec4ff87f7ee16ef8546faf27cfd481b255e1695f524070f9a8fa656",
-      "bytes": 2496
+      "sha256": "ac136b92e819a4c3a6d9bcc10f18fe54e78c5cbf6c4b4928a29841b642f2cae7",
+      "bytes": 2984
     },
     {
       "path": "FAILURES.md",
@@ -18,8 +18,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "84e6c7c12f0badc1163b1583bce476395c4e5cdb561e4e4c8a856eff9098392c",
-      "bytes": 2980
+      "sha256": "ce2858270d64f54c699ed7e5ec0e07c338340694f31924bc5eec4b20fb2d0012",
+      "bytes": 3468
     },
     {
       "path": "REPRODUCE.md",
@@ -628,13 +628,38 @@
     },
     {
       "path": "economics.json",
-      "sha256": "56561c573eaaccd6803cfe51aa72d3ea90faf1bbecb3dc92b68dad38ac06ff96",
-      "bytes": 2405
+      "sha256": "513986d09ec13341c99ef6f82acd9c8d414d555ce47883d115935d74ca0f8d1e",
+      "bytes": 2816
     },
     {
       "path": "methods.json",
       "sha256": "9ba25dd9ec3e25e299ec2add2eb9a7725026aa2d76a7237f68a3513a8898b3c8",
       "bytes": 3512
+    },
+    {
+      "path": "paused-checkpoint-20261002/PUBLIC_EXPORT.json",
+      "sha256": "559e1c5b51fa72c5d9152b4c49fef1bac407acd8259c0969c59c39bf5c9f8b9e",
+      "bytes": 1377
+    },
+    {
+      "path": "paused-checkpoint-20261002/README.md",
+      "sha256": "fdc78d82c3064662da92cf2975d668e3aaf30878d1a47dfad431ddcb25870b8a",
+      "bytes": 1436
+    },
+    {
+      "path": "paused-checkpoint-20261002/RESTART.json",
+      "sha256": "bf825563b3581ea4e9a094b3915f7a353f8b92466245f471f5472c89b805b456",
+      "bytes": 10041
+    },
+    {
+      "path": "paused-checkpoint-20261002/ROOT_HANDOFF.json",
+      "sha256": "1a172b85ab8efe78d82e22ed361199d70c28e232fa212f6659e0ac8be55535e6",
+      "bytes": 678
+    },
+    {
+      "path": "paused-checkpoint-20261002/USER_PAUSE_20261002.json",
+      "sha256": "cfed821d9b86fdb013577531ddcb327a81b6e24d4fee5478d434c80d1a8b9fdf",
+      "bytes": 3858
     },
     {
       "path": "protocol/README.md",
@@ -1223,8 +1248,8 @@
     },
     {
       "path": "schedule.json",
-      "sha256": "db8622ebe903d624fbf53295259c097a765c7bc7bd7a7126dcdb1207763d04a6",
-      "bytes": 2669
+      "sha256": "cd17a12a336a1433de83a0edacd3417605e8897cac9f49ff8a67c29c78fcca88",
+      "bytes": 2984
     },
     {
       "path": "tranche-cohort-v2/AUTHORIZATION.json",

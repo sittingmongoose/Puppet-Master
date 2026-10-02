@@ -1,0 +1,31 @@
+{
+  "schema": "pm.er8.public-pause-checkpoint.v1",
+  "scope": "Explicit user pause checkpoint only. No new sources or outcome evaluation.",
+  "projection": "Host paths tokenized; internal exec/monitor session handles omitted; original/public byte hashes separate.",
+  "artifacts": [
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/PUBLICATION_HANDOFF_PAUSED.json",
+      "public_path": "ROOT_HANDOFF.json",
+      "original_sha256": "ffedddcfb656c3e1a1f4fc06b498e0475f9ce6ddc8f04c261a2711cd35d210f5",
+      "public_sha256": "1a172b85ab8efe78d82e22ed361199d70c28e232fa212f6659e0ac8be55535e6",
+      "bytes": 678,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/RESTART.json",
+      "public_path": "RESTART.json",
+      "original_sha256": "8c1b8c62096344b7407ed6e624076f96e833d2d1bf1a4ec53b9473f6737e92b8",
+      "public_sha256": "bf825563b3581ea4e9a094b3915f7a353f8b92466245f471f5472c89b805b456",
+      "bytes": 10041,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/USER_PAUSE_20261002.json",
+      "public_path": "USER_PAUSE_20261002.json",
+      "original_sha256": "930f3468305c47402cf5998c496306f9f3bd255845fa7aee6ee4beddd6ef04c4",
+      "public_sha256": "cfed821d9b86fdb013577531ddcb327a81b6e24d4fee5478d434c80d1a8b9fdf",
+      "bytes": 3858,
+      "sanitized": true
+    }
+  ]
+}
