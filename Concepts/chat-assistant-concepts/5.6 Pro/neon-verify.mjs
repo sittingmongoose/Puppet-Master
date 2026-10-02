@@ -16,8 +16,9 @@
  *
  * WHAT IT CHECKS (numbers are the labels it prints)
  *   1  census: every <svg> outside the out-of-scope hosts is svg.nx (or a provider mark), PM56_NEON.misses is
- *      empty, no .pmx-glyph-missing; five views (default, model menu, Demo Studio, a wand sheet, the wide thread
- *      list) in every theme.
+ *      empty, no .pmx-glyph-missing; eight views (default, model menu, Demo Studio, a wand sheet, the wide thread
+ *      list, and the Crew, Review and Chat Room configure sheets, whose run preview must be in the view: fpfix F-1,
+ *      the preview's inert filter once stripped its kind badge and status mark bare) in every theme.
  *   2  status matrix: the 13 set members render their wrapper and tone; 7 animate, 5 stand still, complete's
  *      one-shot has iteration count 1 (every theme). 2b the bar: each item's root rhythm matches its
  *      html[data-ab-<domain>] tone (working/attention ab-breathe, blocked ab-alert, others none). 2c the nine
@@ -294,6 +295,24 @@ async function openWandSheet(p) {
   }
   return await p.locator('.overlay-menu.sidecar').count() > 0;
 }
+/* wand > Workflows > Crew… / Review… / Chat Room… opens the collab configure sheet; its hero holds the run preview
+   (module-shell pmxPreview + pmxRun preview mode), which must render svgs, or the view measured nothing. */
+const CONFIGURE_KINDS = ['crew', 'review', 'chat_room'];
+async function openConfigureSheet(p, kind) {
+  await openMenu(p, 'wand');
+  const menu = p.locator('.overlay-menu[data-overlay="root-menu"]').first();
+  const row = () => menu.locator(`[data-action="collab-open-configure"][data-kind="${kind}"]:not([data-auto])`).first();
+  if (await row().count() === 0) {
+    await menu.locator('.polish-group-toggle[data-group="work"]').first().click({ timeout: 5000 });
+    await p.waitForTimeout(400);
+  }
+  if (await row().count() === 0) return { skipped: 'no ' + kind + ' row under Workflows' };
+  await row().click({ timeout: 5000 });
+  await p.locator('#pmOverlayRoot .pmx-sheet.collab-configure').first().waitFor({ timeout: 5000 });
+  await p.waitForTimeout(500);
+  const pv = await p.evaluate(() => document.querySelectorAll('#pmOverlayRoot .pmx-sheet.collab-configure .pmx-preview-card svg').length);
+  return pv > 0 ? null : { skipped: kind + ' configure sheet has no run preview svg' };
+}
 for (const theme of THEMES) {
   await sec(`census ${theme}`, async () => {
     const views = {};
@@ -314,6 +333,12 @@ for (const theme of THEMES) {
       await setTheme(p, theme);
       const sheet = await openWandSheet(p);
       views.wandSheet = sheet ? await censusOf(p) : { skipped: 'no wand sheet opened' };
+      for (const kind of CONFIGURE_KINDS) {
+        await closeOverlays(p);
+        await setTheme(p, theme);
+        const miss = await openConfigureSheet(p, kind);
+        views['configure:' + kind] = miss || await censusOf(p);
+      }
     } finally { await shut(p); }
     const w = await newWidePage();
     try {
