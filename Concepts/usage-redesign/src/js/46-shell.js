@@ -17,7 +17,7 @@
     try { p = PMU.roster && PMU.roster.provider ? PMU.roster.provider(sid) : null; } catch (e) { p = null; }
     return (p && p.name) || SETTINGS_NAME[sid] || (DATA.providers.filter(function (x) { return x.id === legacyId; })[0] || {}).name || legacyId;
   }
-  var VIEWS = [['all', 'All current usage', 'Every configured route', 'grid'], ['work', 'Work accounts', 'Company and team credentials', 'briefcase'],
+  var VIEWS = [['all', 'All current usage', 'Every configured route', 'filter'], ['work', 'Work accounts', 'Company and team credentials', 'briefcase'],
     ['personal', 'Personal accounts', 'Personal plans and keys', 'user']];
   function scopeRows() {
     return VIEWS.map(function (s) { return [s[0], s[1], s[2], s[3]]; }).concat(DATA.providers.map(function (p) {
@@ -92,7 +92,7 @@
     var lead = document.getElementById('pmuScopeLead');
     if (lead) {
       var pid = st.scope.indexOf('provider:') === 0 ? st.scope.slice(9) : null;
-      var want = pid ? PMU.mark(pid, 16) : PMU.icon(st.scope === 'work' ? 'briefcase' : st.scope === 'personal' ? 'user' : 'grid');
+      var want = pid ? PMU.mark(pid, 16) : PMU.icon(st.scope === 'work' ? 'briefcase' : st.scope === 'personal' ? 'user' : 'filter');
       if (lead._pmu !== want) { lead.innerHTML = want; lead._pmu = want; }
     }
     var count = document.getElementById('pmuPanelCount'); if (count && PMU.board) count.textContent = t('head.panels', { n: PMU.board.visible(room).length });
@@ -103,19 +103,23 @@
     if (!changed.length) return false;
     if (PMU.menu) PMU.menu.close();
     var roomChange = changed.indexOf('room') >= 0, prevRoom = st.room;
+    /* the inspector belongs to a panel of the room it was opened from */
+    if (roomChange && PMU.inspector && PMU.inspector.isOpen()) PMU.inspector.close(true);
     changed.forEach(function (k) { st[k] = patch[k]; });
     var type = roomChange ? 'view.usage.room_selected' : 'view.usage.' + changed[0] + '_selected';
     var payload = { source: source || 'head' }; changed.forEach(function (k) { payload[k] = patch[k]; });
     viewAction(type, payload);
     render();
     if (PMU.board) {
+      /* a room change re-reads the Settings roster first (Settings may have changed it since the last read) */
+      if (roomChange && PMU.settings) { PMU.settings.invalidate(); if (PMU.roster) PMU.roster.invalidate(); if (PMU.data && PMU.data.invalidate) PMU.data.invalidate(); }
       if (roomChange) PMU.board.mount(st.room, { dir: ROOM_ORDER.indexOf(st.room) < ROOM_ORDER.indexOf(prevRoom) ? -1 : 1, transition: true });
       else if (changed.indexOf('detail') >= 0) PMU.board.relevel();
       else PMU.board.refresh(changed[0]);
       PMU.board.persist();
     }
-    if (changed.indexOf('detail') >= 0) PMU.shell.toast(t('toast.detail', { level: DETAIL[st.detail].label, n: PMU.board ? PMU.board.visible(st.room).length : 0 }));
-    if (changed.indexOf('range') >= 0 && source === 'range-menu') PMU.shell.toast(t('toast.range', { range: st.range }));
+    /* no confirmation toast for a view change: the control's own label already shows the new value (a toast in the
+       title-bar slot covered the head controls and swallowed the next click) */
     return true;
   }
 
@@ -125,7 +129,7 @@
     return PMU.menu.toggle(anchor, {
       id: 'scope', title: 'Scope', current: scopeLabel(st.scope), search: { placeholder: 'Find a scope…' }, width: 340, align: 'start',
       railLabel: 'Scope groups',
-      rail: [{ value: 'all', label: 'Every scope', icon: 'grid' }, { value: 'views', label: 'Account groups', icon: 'users' }].concat(DATA.providers.map(function (p) {
+      rail: [{ value: 'all', label: 'Every scope', icon: 'filter' }, { value: 'views', label: 'Account groups', icon: 'users' }].concat(DATA.providers.map(function (p) {
         return { value: p.id, label: providerName(p.id), mark: p.id };
       })),
       sections: [
@@ -133,7 +137,7 @@
         { label: 'Providers', group: 'providers', rows: rows.slice(3).map(function (s) { return { value: s[0], label: s[1], sub: s[2], mark: s[4], group: s[4], active: st.scope === s[0] }; }) }
       ],
       foot: st.scope && !rows.some(function (s) { return s[0] === st.scope; }) ? 'Current scope: Validated Usage scope' : null,
-      onPick: function (v) { if (setView({ scope: v }, 'scope')) PMU.shell.toast(t('toast.scope', { scope: scopeLabel(v) })); }
+      onPick: function (v) { setView({ scope: v }, 'scope'); }
     });
   }
   function rangeMenu(anchor) {
@@ -211,7 +215,32 @@
     return { close: function () { if (h) h.close(); } };
   }
   function closePop() { if (PMU.menu) PMU.menu.close(); }
-  function toastText(text) { toast(text); }
+  /* Usage's own toasts: a stage-local note at the bottom centre of #pmuStage that never takes a pointer, so it can never
+     cover or swallow a head control; when the page is hidden (bridge actions) they go to the app's notification layer */
+  var toastEl = null, toastTimer = 0, toastAnim = null;
+  function toastText(text) {
+    var stage = document.getElementById('pmuStage');
+    if (!stage || !document.body.classList.contains('pmu-page-active')) { if (typeof window.toast === 'function') window.toast(text); return; }
+    if (!toastEl || !toastEl.isConnected) {
+      toastEl = document.createElement('div');
+      toastEl.className = 'pmu-toast'; toastEl.id = 'pmuToast'; toastEl.setAttribute('role', 'status');
+      toastEl.innerHTML = '<span class="pmu-toast-ico" aria-hidden="true">' + PMU.icon('check') + '</span><span class="pmu-toast-text"></span>';
+      stage.appendChild(toastEl);
+    }
+    toastEl.querySelector('.pmu-toast-text').textContent = String(text);
+    toastEl.hidden = false;
+    clearTimeout(toastTimer);
+    if (toastAnim) { toastAnim.cancel(); toastAnim = null; }
+    var sp = PMU.motion.speed(), calm = PMU.motion.reduced();
+    if (!calm && toastEl.animate) toastEl.animate([{ opacity: 0, transform: 'translate(-50%, 10px) scale(.96)' }, { opacity: 1, transform: 'translate(-50%, 0) scale(1)' }],
+      { duration: 260 * sp, easing: 'cubic-bezier(.22,1.3,.36,1)' });
+    toastTimer = setTimeout(function () {
+      var done = function () { if (toastEl) toastEl.hidden = true; toastAnim = null; };
+      if (calm || !toastEl.animate) { done(); return; }
+      toastAnim = toastEl.animate([{ opacity: 1, transform: 'translate(-50%, 0)' }, { opacity: 0, transform: 'translate(-50%, 6px)' }], { duration: 200 * sp, easing: 'ease-in', fill: 'forwards' });
+      toastAnim.onfinish = function () { done(); if (toastEl) toastEl.getAnimations().forEach(function (a) { a.cancel(); }); };
+    }, 2600);
+  }
 
   if (app) {
     app.addEventListener('click', function (event) {

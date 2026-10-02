@@ -69,12 +69,13 @@
     var notch = spec.notch && finite(spec.notch.at) && !spec.left ? spec.notch : null;
     var same = el._m && el._m.size === size && el._m.known === known;
     if (!same) {
-      el.innerHTML = '<div class="pmu-meterline">' + (size === 'i' ? '<span class="pmu-meterlabel">' + esc(label) + '</span>' : '') + '<span class="pmu-metervalue"></span></div>' +
+      el.innerHTML = '<div class="pmu-meterline">' + (size === 'i' ? '<span class="pmu-meterlabel">' + esc(label) + '</span>' : size === 'k' && spec.window && !spec.noLabel ? '<span class="pmu-meterlabel is-short"' + '>' + esc(shortWin(spec)) + '</span>' : '') + '<span class="pmu-metervalue"></span></div>' +
         '<div class="pmu-metertrack"><span class="pmu-meterclip"><i class="pmu-meterfill pmu-mark" data-mark="fill"><i class="pmu-meterwash"></i></i></span><i class="pmu-meterover pmu-mark" data-mark="segment"></i>' +
         '<span class="pmu-notchrail"><i class="pmu-notch"></i></span></div>' +
         '<div class="pmu-meterfoot"><span class="pmu-reset"></span><span class="pmu-meteramt"></span></div>';
       el._m = { size: size, known: known, fill: null, at: null };
     } else if (size === 'i') { var lb = el.querySelector('.pmu-meterlabel'); if (lb) lb.textContent = label; }
+    else if (size === 'k') { var lk = el.querySelector('.pmu-meterlabel.is-short'); if (lk) lk.textContent = shortWin(spec); }
     var valEl = el.querySelector('.pmu-metervalue');
     var prevShown = el._m.shown;
     valEl.innerHTML = valueHtml;
@@ -100,7 +101,8 @@
         Mo.anim(fill, [{ transform: 'translateX(' + (oldFill - 100) + '%)' }, { transform: 'translateX(' + (fillPct - 100) + '%)' }], 520, 0, Mo.voice('fill') === Mo.EASE.soft ? noOvershoot : Mo.voice('grow'), 'none');
       }
       if (notch && finite(el._m.at) && Math.abs(el._m.at - notch.at) > 0.05) {
-        Mo.anim(rail, [{ transform: 'translateX(' + el._m.at + '%)' }, { transform: 'translateX(' + notch.at + '%)' }], 520, 0, Mo.voice('pop'), 'none');
+        var tw = rail.parentNode ? rail.parentNode.clientWidth : 0, dx = (el._m.at - notch.at) / 100 * tw;
+        Mo.anim(rail, [{ transform: 'translateX(' + dx.toFixed(1) + 'px)' }, { transform: 'none' }], 520, 0, Mo.voice('pop'), 'none');
       }
       if (prev && prev.tone && meterTone(prev) !== tone) Mo.anim(fill, [{ opacity: 0.35 }, { opacity: 1 }], 520, 0, Mo.EASE.out, 'none');
       var num = valEl.querySelector('.pmu-num');
@@ -112,6 +114,9 @@
     }
     el._m.fill = fillPct; el._m.at = notch ? notch.at : null; el._m.shown = shownPct;
   }
+  /* the short window word of a narrow meter: 5h / Wk / Mo (the full name stays in the hover tag) */
+  var SHORT_WIN = { fiveHour: '5h', weekly: 'Wk', monthly: 'Mo', daily: 'Day' };
+  function shortWin(spec) { return SHORT_WIN[spec.window] || String(spec.label || '').split(/\s+/)[0]; }
   function enterMeter(c, delay) {
     var el = c.el, fill = el.querySelector('.pmu-meterfill'), rail = el.querySelector('.pmu-notchrail');
     if (!fill) return;

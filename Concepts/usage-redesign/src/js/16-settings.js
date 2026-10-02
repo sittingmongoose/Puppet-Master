@@ -34,9 +34,21 @@
       invalidate(); emit('next-account');
       return true;
     },
+    /* a setting id opens that setting's bloom; a provider id lands on that provider in Providers & Accounts (its own
+       pane, no bloom over it), through the Settings owner's navigate and its providers-open action */
     open: function (providerId, settingId) {
       try { if (window.PM_PAGES && typeof window.PM_PAGES.go === 'function') window.PM_PAGES.go('settings'); } catch (error) {}
+      var k = kimi();
+      if (providerId && !settingId && k && typeof k.navigate === 'function') {
+        try {
+          var tab = document.getElementById('tab-settings'); if (tab && !document.getElementById('panel-settings').classList.contains('active')) tab.click();
+          k.navigate('ai', 'providers');
+          if (typeof k.dispatchAction === 'function') k.dispatchAction('pm51-providers-open', { provider: providerId });
+          return true;
+        } catch (error) { /* fall back to the bloom below */ }
+      }
       try { if (typeof window.PM7_SETTINGS_OPEN_BLOOM === 'function') window.PM7_SETTINGS_OPEN_BLOOM('ai', settingId || 'ai.accounts.provider-connections'); } catch (error) {}
+      return false;
     },
     invalidate: function (reason) { invalidate(); if (reason) emit(reason); },
     onChange: function (fn) { listeners.push(fn); return function () { listeners = listeners.filter(function (f) { return f !== fn; }); }; }

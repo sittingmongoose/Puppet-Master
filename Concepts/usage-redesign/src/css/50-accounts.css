@@ -103,6 +103,7 @@
 
 /* ------------------------------------------------------------------ compact provider rows (A1 10.4) */
 #panel-usage .pmu-provlist { display: flex; flex-direction: column; min-width: 0; }
+#panel-usage .pmu-provlist[data-cols] { display: grid; column-gap: 28px; align-content: start; }
 #panel-usage .pmu-provrow { display: flex; align-items: center; gap: 8px; min-height: 32px; padding: 2px 0; min-width: 0; }
 /* a narrow card keeps the whole provider name: it wraps to a second line instead of ending in an ellipsis */
 #panel-usage .pmu-provname { flex: 1 1 auto; min-width: 0; font-size: 13px; line-height: 1.22; font-weight: 540; color: var(--pmu-ink); overflow: hidden;
@@ -122,3 +123,20 @@
 #panel-usage .pmu-setupcta { height: auto; min-height: 28px; padding: 4px 10px; white-space: normal; text-align: left; line-height: 1.3; }
 #panel-usage .pmu-setupcta-row { height: auto; min-height: 36px; }
 #panel-usage .pmu-amt .pmu-amtline2 { display: block; flex-basis: 100%; font-style: normal; font-weight: 400; font-size: 12px; text-align: right; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Settings group headings over the Accounts plates (kind group, head form band): no plate, the group name with a hairline
+   rule under it, the count line muted; the tools still appear on hover so a heading can be moved or hidden */
+#panel-usage .pmu-card[data-head="band"] { background: transparent; border-color: transparent; box-shadow: none; }
+#panel-usage .pmu-card[data-head="band"]:hover { border-color: transparent; box-shadow: none; transform: none; }
+#panel-usage .pmu-card[data-head="band"] > .pmu-cardhead { height: 52px; align-items: flex-end; padding: 0 2px 9px; border-bottom: 1px solid var(--pmu-rule); }
+#panel-usage .pmu-card[data-head="band"] > .pmu-cardbody { display: none; }
+#panel-usage .pmu-card[data-head="band"] .pmu-cardtitles { flex-direction: row; align-items: baseline; gap: 12px; }
+#panel-usage .pmu-card[data-head="band"] .pmu-cardtitle { flex: none; font-size: 16px; line-height: 20px; font-weight: 650; letter-spacing: -.01em; overflow: visible; }
+#panel-usage .pmu-card[data-head="band"] .pmu-cardsub { display: block; flex: 1 1 auto; margin: 0; font-family: var(--pmu-mono); font-size: 11px; letter-spacing: .05em; text-transform: uppercase;
+  font-stretch: 87.5%; }
+#panel-usage .pmu-card[data-head="band"] .pmu-cardtools { top: 14px; right: 0; }
+#panel-usage .pmu-provword[data-tone="good"] { color: var(--pmu-ink-good, var(--pmu-ink-ok)); font-weight: 600; }
+#panel-usage .pmu-provword[data-tone="warn"] { color: var(--pmu-ink-warn); font-weight: 600; }
+#panel-usage .pmu-provrow.is-setup { cursor: pointer; border-radius: 6px; margin: 0 -6px; padding: 2px 6px; transition: background-color 160ms; }
+#panel-usage .pmu-provrow.is-setup:hover { background: var(--pmu-row-hover); }
+html[data-theme^="retro"] #panel-usage .pmu-provrow.is-setup { border-radius: 0; }

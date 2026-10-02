@@ -9,7 +9,7 @@
   var EDGES = ['e', 'w', 's', 'se', 'sw', 'ne', 'nw'];
   var TILE_KINDS = { kpi: 1, free: 1, cache: 1, gauge: 1 };
   var LINE_KINDS = { kpis: 1 };
-  var HEAD_PX = { plate: 52, line: 34, tile: 30 };
+  var HEAD_PX = { plate: 52, line: 34, tile: 30, band: 52 };
   var st = PMU.core.state;
 
   PMU.widgets = {
@@ -52,6 +52,7 @@
   function headForm(def, w, h, pitch) {
     if (TILE_KINDS[def.kind]) return 'tile';
     if (LINE_KINDS[def.kind]) return 'line';
+    if (def.kind === 'group') return 'band';
     var px = w * pitch - 8;
     return h >= 7 && px >= 228 ? 'plate' : 'line';
   }

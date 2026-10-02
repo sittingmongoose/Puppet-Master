@@ -171,7 +171,8 @@
           var usedHtml = pct === null ? C.vs(main && main.vs === 'not_exposed' ? 'not_exposed' : 'unknown', main ? PMU.roster.vsWord(main) : 'Usage unknown')
             : '<b class="pmu-qused" data-tone="' + (main.tone || 'calm') + '">' + esc(C.fmt(pct, pct < 10 && pct % 1 ? 'pct1' : 'pct')) + '</b>';
           var nextTxt = r.next ? (r.next.truth === 'locally_inferred' ? '≈ ' : '') + PMU.fmt.until(r.next.resetAt) : 'reset unknown';
-          var nextHover = r.next ? r.next.short + ' window · ' + PMU.fmt.date(r.next.resetAt) + ' ' + PMU.fmt.clock(r.next.resetAt) + ' · ' + r.next.truth.replace(/_/g, ' ') : 'No upcoming reset is known';
+          var nextHover = (r.next ? r.next.short + ' window · ' + PMU.fmt.date(r.next.resetAt) + ' ' + PMU.fmt.clock(r.next.resetAt) + ' · ' + PMU.fmt.truth(r.next.truth) : (main ? main.short + ' window · reset unknown' : 'No upcoming reset is known')) +
+            (r.soonest && r.soonest !== r.next ? ' · soonest of any window: ' + r.soonest.short + ' ' + PMU.fmt.until(r.soonest.resetAt) : '');
           /* words that repeat the provider name are left out ("OpenCode Go · OpenCode Go", "Muse Code · Muse Code") */
           var ident = single ? PMU.mark(g.providerId, 20) + '<b>' + esc(g.name) + '</b>' + (a.nickname && a.nickname !== g.name ? '<span class="pmu-qacct">' + esc(a.nickname) + '</span>' : '') : '<b>' + esc(a.nickname) + '</b>';
           /* a single-account row already carries the provider name: its plan shows from 560 px, its window word from 760 px */
@@ -288,7 +289,7 @@
       var usedHtml = used.length > 1 && used.every(function (u) { return u === used[0]; }) ? '<b data-tone="' + (PMU.roster.tone(used[0]) || 'calm') + '">' + esc(C.fmt(used[0], 'pct')) + '</b><em>both</em>'
         : used.map(function (u) { return '<b data-tone="' + (PMU.roster.tone(u) || 'calm') + '">' + esc(C.fmt(u, u < 10 && u % 1 ? 'pct1' : 'pct')) + '</b>'; }).join('');
       var what = ev.what + (ev.stale ? '' : '');
-      var hover = (ev.at ? PMU.fmt.dayHead(ev.at).note + ' ' + PMU.fmt.clock(ev.at) + ' · ' : '') + (ev.windows[0] ? ev.windows[0].truth.replace(/_/g, ' ') + ' · ' + a.fresh.source + ' · ' + a.ageText : a.fresh.source) +
+      var hover = (ev.at ? PMU.fmt.dayHead(ev.at).note + ' ' + PMU.fmt.clock(ev.at) + ' · ' : '') + (ev.windows[0] ? PMU.fmt.truth(ev.windows[0].truth) + ' · ' + a.fresh.source + ' · ' + a.ageText : a.fresh.source) +
         (ev.windows[0] && ev.windows[0].amount ? ' · ' + ev.windows[0].amount : '');
       return '<div class="pmu-agline" data-key="' + esc(ev.key) + '" data-acct="' + esc(a.key) + '" data-prov="' + esc(ev.provider.id) + '" role="button" tabindex="0"' + C.hover(a.providerName + ' · ' + a.nickname, hover) + '>' +
         '<span class="pmu-agtime">' + esc(time) + '</span>' + PMU.mark(ev.provider.id, 18) +

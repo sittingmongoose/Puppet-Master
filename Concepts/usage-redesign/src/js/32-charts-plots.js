@@ -134,6 +134,35 @@
     return d;
   }
   function lastFinite(arr) { for (var i = arr.length - 1; i >= 0; i--) if (finite(arr[i])) return i; return -1; }
+  /* resample a sampled row (with null gaps) to n points by position, so a morph can run between ranges whose sample
+     counts differ */
+  function resample(row, n) {
+    var m = row.length, out = new Array(n);
+    if (m === n) return row.slice();
+    for (var i = 0; i < n; i++) {
+      var p = m > 1 ? i * (m - 1) / Math.max(1, n - 1) : 0, a = Math.floor(p), b = Math.min(m - 1, a + 1), k = p - a;
+      out[i] = finite(row[a]) && finite(row[b]) ? row[a] + (row[b] - row[a]) * k : finite(row[a]) ? row[a] : finite(row[b]) ? row[b] : null;
+    }
+    return out;
+  }
+  /* the estimated-cost marks (REVIEW-jared must-fix 5): a dot with a halo on every bucket that holds a recorded value (an
+     isolated value is never an invisible zero-length subpath), and a thin dashed bridge across the buckets with no
+     recorded attempt, so the line reads as one series without claiming $0 in between (missing is never zero) */
+  function paintCostMarks(c, geo, cost, mids, YB, fade) {
+    var P = c.P; if (!P || !P.costDots) return;
+    if (!cost) { P.costDots.innerHTML = ''; P.costBridge.setAttribute('d', ''); return; }
+    var pts = [], dots = '', bridge = '';
+    cost.forEach(function (v, i) { if (finite(v)) pts.push({ i: i, x: mids[i], y: YB(v), iso: !finite(cost[i - 1]) && !finite(cost[i + 1]) }); });
+    pts.forEach(function (p, j) {
+      dots += (p.iso ? '<circle class="pmu-halo" data-series-index="ink" cx="' + r1(p.x) + '" cy="' + r1(p.y) + '" r="7"/>' : '') +
+        '<circle class="pmu-mark" data-mark="dot" data-series-index="ink" data-key="cost" data-cost-dot="' + (p.iso ? 'iso' : 'run') + '" cx="' + r1(p.x) + '" cy="' + r1(p.y) + '" r="' + (p.iso ? 3.5 : 2.5) + '"/>';
+      var q = pts[j + 1];
+      if (q && q.i - p.i > 1) bridge += 'M' + r1(p.x) + ',' + r1(p.y) + 'L' + r1(q.x) + ',' + r1(q.y);
+    });
+    P.costDots.innerHTML = geo.compact ? '' : dots;
+    P.costBridge.setAttribute('d', geo.compact ? '' : bridge);
+    if (fade && !Mo.reduced()) [P.costDots, P.costBridge].forEach(function (el) { Mo.anim(el, [{ opacity: 0 }, { opacity: 1 }], 260, 0, Mo.EASE.out, 'none'); });
+  }
   function mix(a, b, k) { return !finite(b) ? null : !finite(a) ? b : a + (b - a) * k; }
 
   /* token-type helpers */
@@ -281,17 +310,22 @@
         if (s.role) { a.setAttribute('data-series-role', s.role); e.setAttribute('data-series-role', s.role); }
         P.bands.push(a); P.edges.push(e);
       });
-      if (cost) P.cost = S('path', { class: 'pmu-mark', 'data-mark': 'line', 'data-series-index': 'ink', 'data-key': 'cost', 'data-role': 'cost' }, f.plot);
+      if (cost) {
+        P.costBridge = S('path', { class: 'pmu-mark', 'data-mark': 'bridge', 'data-series-index': 'ink', 'data-key': 'cost', 'data-role': 'cost' }, f.plot);
+        P.cost = S('path', { class: 'pmu-mark', 'data-mark': 'line', 'data-series-index': 'ink', 'data-key': 'cost', 'data-role': 'cost' }, f.plot);
+        P.costDots = S('g', { class: 'pmu-costdots', 'data-key': 'cost' }, f.plot);
+      }
       P.end = S('g', { class: 'pmu-enddots' }, f.plot);
     }
     f.plot.setAttribute('width', W); f.plot.setAttribute('height', Hh);
     f.over.setAttribute('width', W); f.over.setAttribute('height', Hh);
     f.plot.classList.toggle('is-split', split);
     var prev = c._geo;
-    var morph = mode === 'morph' && prev && prev.N === N && prev.W === W && prev.H === Hh && prev.lv.length === lv.length && !Mo.reduced();
+    var morph = mode === 'morph' && prev && prev.W === W && prev.H === Hh && prev.lv.length === lv.length && !Mo.reduced();
     if (c._tw) { c._tw.cancel(); c._tw = null; }
     if (morph) {
-      var from = prev;
+      var from = prev.N === N ? prev : { x0: prev.x0, x1: prev.x1, lv: prev.lv.map(function (row) { return resample(row, N); }), tot: resample(prev.tot, N), base: resample(prev.base, N),
+        cs: prev.cs ? resample(prev.cs, N) : null };
       c._tw = Mo.tween(520, 'io', function (k) {
         paintArea(c, {
           x0: from.x0 + (geo.x0 - from.x0) * k, x1: from.x1 + (geo.x1 - from.x1) * k,
@@ -300,12 +334,14 @@
           base: geo.base.map(function (v, i) { return mix(from.base[i], v, k); }),
           cs: geo.cs ? geo.cs.map(function (v, i) { return mix(from.cs ? from.cs[i] : v, v, k); }) : null
         }, geo);
-      }, function () { c._tw = null; paintArea(c, geo, geo); });
-    } else paintArea(c, geo, geo);
+      }, function () { c._tw = null; paintArea(c, geo, geo); paintCostMarks(c, geo, cost, mids, YB, true); });
+      paintCostMarks(c, geo, null);
+    } else { paintArea(c, geo, geo); paintCostMarks(c, geo, cost, mids, YB, false); }
     c._geo = geo;
-    /* end dots and peak label */
+    /* end dots and peak label (after a morph they fade in where the morph lands, never over the old shape) */
     endDots(c, geo, m, totals, cost, Y, YB, mids);
     peakLabel(c, geo, spec, m, totals, Y, mids, dom, tw);
+    if (morph) [P.end, f.over].forEach(function (el) { if (el) Mo.anim(el, [{ opacity: 0 }, { opacity: 0, offset: 0.7 }, { opacity: 1 }], 640, 0, Mo.EASE.out, 'none'); });
     /* hover */
     if (!compact) bindAreaHover(c, geo, m, dom, mids, totals, cost, Y, YB, incSeries, include, t1);
     else if (c._hover) { c._hover.destroy(); c._hover = null; }
@@ -349,7 +385,10 @@
     var best = -1;
     totals.forEach(function (v, i) { if (finite(v) && (best < 0 || v > totals[best])) best = i; });
     if (best < 0 || !(totals[best] > 0)) return;
-    var label = t('charts.peak_label', { time: dom.bucket >= 86400000 ? charts.time.md(dom.x[best]) : charts.time.clock(dom.x[best]), value: charts.fmtValue(totals[best], 'tokens') });
+    /* a sub-day bucket in a multi-day range names its day too ("Tue 06:00"), the way the card's own Peak fact does */
+    var multiDay = dom.x.length > 1 && dom.x[dom.x.length - 1] - dom.x[0] >= 86400000;
+    var when = dom.bucket >= 86400000 ? charts.time.md(dom.x[best]) : (multiDay ? charts.time.day(dom.x[best]) + ' ' : '') + charts.time.clock(dom.x[best]);
+    var label = t('charts.peak_label', { time: when, value: charts.fmtValue(totals[best], 'tokens') });
     var w = charts.textW(label, 11, true);
     var px = mids[best], anchor = 'middle', x = clamp(px, geo.pad.l + w / 2 + 2, geo.pad.l + geo.pw - w / 2 - 2);
     /* near the right end (where the NOW label sits) the label hangs to the left of its point */
@@ -536,7 +575,10 @@
       var from = prev.pts;
       c._tw = Mo.tween(520, 'io', function (k) { paint(pts.map(function (row, j) { return row.map(function (v, i) { return mix(from[j] ? from[j][i] : v, v, k); }); })); },
         function () { c._tw = null; paint(pts); paintIso(c); });
-    } else paint(pts);
+    } else {
+      paint(pts);
+      if (mode === 'morph' && prev && !Mo.reduced() && f.rv) Mo.reveal(f.rv, f.rvin, 640, 60, 'x');
+    }
     c._lgeo = { sig: sig, W: W, H: Hh, pts: pts };
     if (!compact) {
       var cfg = {
@@ -672,11 +714,13 @@
     c._colGeo = { pad: pad, slot: slot, n: n, ph: ph, W: W };
     /* morph: each bar scales from its old height (transform only) */
     if (mode === 'morph' && !Mo.reduced() && prevH.length) {
+      var regrow = prevH.length !== newH.length;
       $$('.pmu-col', bars).forEach(function (el, j) {
-        var a = prevH[j], b = newH[j];
+        var a = regrow ? 0 : prevH[j], b = newH[j];
         if (!(b > 0) || !finite(a) || Math.abs(a - b) < 0.5) return;
         var st2 = el.querySelector('.pmu-colstack');
-        Mo.anim(st2, [{ transform: 'scaleY(' + clamp(a / b, 0, 40) + ')' }, { transform: 'scaleY(1)' }], 520, 0, Mo.EASE.io);
+        Mo.anim(st2, [{ transform: 'scaleY(' + clamp(a / b, 0, 40) + ')' }, { transform: 'scaleY(1)' }], 520, regrow ? Math.min(240, j * 14) : 0, Mo.EASE.io, regrow ? 'backwards' : undefined);
+        if (regrow) { var lb = el.querySelector('.pmu-collab'); if (lb) Mo.anim(lb, [{ opacity: 0 }, { opacity: 1 }], 260, 300 + Math.min(240, j * 14), Mo.EASE.out, 'backwards'); }
       });
     }
     bindColumnsHover(c, m);
@@ -829,7 +873,8 @@
     var X = function (day) { return pad.l + (day - 1) / Math.max(1, days - 1) * pw; };
     var Y = function (v) { return pad.t + ph - v / ya.top * ph; };
     var ms0 = spec.monthStart || (function () { var dd = new Date(); dd.setDate(1); dd.setHours(0, 0, 0, 0); return dd.getTime(); })();
-    var dayMs = function (day) { var dd = new Date(ms0); dd.setDate(day); return dd.getTime(); };
+    /* day 1 is the period's first day (spec.monthStart; the calendar month's 1st when none is given) */
+    var dayMs = function (day) { var dd = new Date(ms0); dd.setDate(dd.getDate() + day - 1); return dd.getTime(); };
     var xt = [];
     if (!compact) { var stepD = pw / days >= 12 ? 7 : 14; for (var dd = 1; dd <= days; dd += stepD) xt.push({ x: X(dd), label: charts.time.md(dayMs(dd)) }); }
     var extra = '';

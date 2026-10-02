@@ -444,11 +444,12 @@ def apply(text: str, need) -> tuple[str, dict]:
 
 ROSTER_FIXTURE_ANCHOR = '  const providers = '
 ROSTER_SEED_ANCHOR = 'fixture.forEach(fx => { if (!have.has(fx.id)) state.providers.push(clone(fx)); });'
-ROSTER_SEED_FLAG = 'usage-review-2026-10-02'
+ROSTER_SEED_FLAG = 'usage-review-2026-10-02c'
 ROSTER_SEED_JS = (
     " { const s51 = PM51.s(); if (s51 && s51.usageReviewSeed !== '" + ROSTER_SEED_FLAG + "') {"
-    " fixture.forEach(fx => { const p = state.providers.find(x => x.id === fx.id);"
-    " const add = (fx.accounts || []).filter(a => a && a.seed === 'usage-review'); if (!p || !add.length) return;"
+    " fixture.forEach(fx => { const p = state.providers.find(x => x.id === fx.id); if (!p) return;"
+    " (fx.accounts || []).forEach(a => { const x = (p.accounts || []).find(y => y && y.id === a.id); if (x && a.usage) x.usage = clone(a.usage); });"
+    " const add = (fx.accounts || []).filter(a => a && a.seed === 'usage-review'); if (!add.length) return;"
     " if (!Array.isArray(p.accounts)) p.accounts = [];"
     " add.forEach(a => { if (!p.accounts.some(x => x.id === a.id)) p.accounts.push(clone(a)); });"
     " ['installed', 'signedIn', 'status'].forEach(k => { if (fx[k] !== undefined) p[k] = fx[k]; });"
@@ -457,6 +458,46 @@ ROSTER_SEED_JS = (
     " if (ord.length) p.routing = Object.assign({}, p.routing || {}, { accountOrder: ord.slice() }); });"
     " s51.usageReviewSeed = '" + ROSTER_SEED_FLAG + "'; } } /* usage review roster seed (tools/usage_layer.py) */"
 )
+
+
+def _reset_text(fact: dict) -> str | None:
+    """The Settings reset words for one Usage window fact, so both pages read the same reset (one fixture: roster.json
+    facts). Relative resets are minutes from page load, the same clock the Usage page reads."""
+    if fact.get('truth') == 'unknown':
+        return None
+    if fact.get('reset_rule') == 'next_month':
+        return 'Resets on the 1st'
+    m = fact.get('reset_in_min')
+    if not isinstance(m, (int, float)):
+        return None
+    m = int(round(m))
+    d, h, mm = m // 1440, (m % 1440) // 60, m % 60
+    return f'Resets in {d}d {h}h' if d else f'Resets in {h}h {mm}m' if h else f'Resets in {mm}m'
+
+
+def align_usage(data: list, facts: dict) -> list[str]:
+    """Write each Settings account's usage windows (pct and reset words) from the roster facts (REVIEW-data must-fix 3:
+    Settings said "Resets at 4:00 PM" and "Resets Oct 1" where Usage said 06:33 and Nov 1). Only the usage block of an
+    account changes; windows the facts mark not exposed or unknown keep what Settings had."""
+    changed = []
+    for p in data:
+        for acc in p.get('accounts', []) or []:
+            f = facts.get(f"{p.get('id')}/{acc.get('id')}")
+            if not f or not isinstance(f.get('windows'), dict):
+                continue
+            usage = acc.setdefault('usage', {})
+            wins = usage.setdefault('windows', {})
+            for key, fact in f['windows'].items():
+                if not isinstance(fact.get('pct'), (int, float)):
+                    continue
+                want = {'pct': fact['pct']}
+                words = _reset_text(fact)
+                if words:
+                    want['reset'] = words
+                if wins.get(key) != want:
+                    changed.append(f"{p.get('id')}/{acc.get('id')}/{key}: {wins.get(key)} -> {want}")
+                    wins[key] = want
+    return changed
 
 
 def roster_patch(need, text: str, notes: dict) -> str:
@@ -483,7 +524,8 @@ def roster_patch(need, text: str, notes: dict) -> str:
          'usage layer roster: the providers fixture is not the json.dumps(indent=2) text it was (review the patch)')
     need(isinstance(data, list) and len(data) == 22, f'usage layer roster: expected 22 providers, got {len(data) if isinstance(data, list) else type(data)}')
     ids = [p.get('id') for p in data]
-    before = {p['id']: json.dumps(p.get('accounts', []), sort_keys=True) for p in data}
+    strip = lambda accs: [{k: v for k, v in a.items() if k != 'usage'} for a in accs]
+    before = {p['id']: json.dumps(strip(p.get('accounts', [])), sort_keys=True) for p in data}
     added = 0
     for pid, block in patch.items():
         need(pid in ids, f'usage layer roster: provider {pid!r} is not in the Settings fixture')
@@ -511,13 +553,14 @@ def roster_patch(need, text: str, notes: dict) -> str:
             routing['accountOrder'] = list(order)
             if not prov.get('defaultAccount'):
                 prov['defaultAccount'] = order[0]
+    aligned = align_usage(data, roster.get('facts') or {})
     for p in data:
         kept = [acc for acc in p.get('accounts', []) if acc.get('seed') != seed]
-        need(json.dumps(kept, sort_keys=True) == before[p['id']], f'usage layer roster: an original account of {p["id"]} changed')
+        need(json.dumps(strip(kept), sort_keys=True) == before[p['id']], f'usage layer roster: an original account of {p["id"]} changed (beyond its usage windows)')
     script = script[:a] + json.dumps(data, indent=2, ensure_ascii=False) + script[a + length:]
     need(script.count(ROSTER_SEED_ANCHOR) == 1, f'usage layer roster: seed anchor found {script.count(ROSTER_SEED_ANCHOR)} times')
     script = script.replace(ROSTER_SEED_ANCHOR, ROSTER_SEED_ANCHOR + ROSTER_SEED_JS, 1)
-    notes['roster'] = {'providers': len(patch), 'accounts_added': added, 'seed_flag': ROSTER_SEED_FLAG}
+    notes['roster'] = {'providers': len(patch), 'accounts_added': added, 'seed_flag': ROSTER_SEED_FLAG, 'usage_windows_aligned': len(aligned)}
     return text[:s_start] + script + text[s_end:]
 
 

@@ -67,9 +67,17 @@ html[data-theme^="retro"] #panel-usage .pmu-keysw { border-radius: 0; }
 #panel-usage .pmu-cardtools .pmu-iconbtn { width: 24px; height: 24px; border-radius: 7px; }
 #panel-usage .pmu-cardtools .pmu-iconbtn svg { width: 14px; height: 14px; }
 #panel-usage .pmu-cardtools .pmu-grip { cursor: grab; }
-#panel-usage .pmu-card:hover .pmu-cardtools, #panel-usage .pmu-card:focus-within .pmu-cardtools { opacity: 1; pointer-events: auto; }
+/* shown on hover, on keyboard focus of the card, and while a tool inside has focus (a pointer-down focuses the card
+   article, so :focus-within on the card would keep them over a narrow title after a drag) */
+#panel-usage .pmu-card:hover .pmu-cardtools, #panel-usage .pmu-card:focus-visible .pmu-cardtools, #panel-usage .pmu-cardtools:focus-within { opacity: 1; pointer-events: auto; }
 #panel-usage .pmu-cardtools .pmu-menu-anchor-open { color: var(--pmu-ink); background: var(--pmu-row-hover); }
-#panel-usage .pmu-card:hover :is(.pmu-cardmeta, .pmu-headtools), #panel-usage .pmu-card:focus-within :is(.pmu-cardmeta, .pmu-headtools) { opacity: 0; }
+/* the meta (text only) gives way to the tools; the head tools (switches, legends) never vanish: they are placed in the
+   head only when the title, the head tools and the tools cluster all fit (C.headTools), and slide left of the cluster */
+#panel-usage .pmu-card:hover .pmu-cardmeta, #panel-usage .pmu-card:focus-visible .pmu-cardmeta { opacity: 0; }
+#panel-usage .pmu-headtools { transition: transform 220ms var(--pmu-ease-out); }
+#panel-usage .pmu-card:hover .pmu-headtools, #panel-usage .pmu-card:focus-visible .pmu-headtools { transform: translateX(-108px); }
+#panel-usage .pmu-card[data-tw="xs"]:hover .pmu-headtools { transform: translateX(-58px); }
+#panel-usage .pmu-board[data-op] .pmu-headtools { transform: none; }
 #panel-usage .pmu-card[data-tw="xs"] .pmu-cardtools .pmu-cardsize, #panel-usage .pmu-card[data-tw="xs"] .pmu-cardtools .pmu-cardgear { display: none; }
 #panel-usage .pmu-board[data-op] .pmu-cardtools { opacity: 0 !important; pointer-events: none !important; }
 html[data-theme^="retro"] #panel-usage .pmu-cardtools, html[data-theme^="retro"] #panel-usage .pmu-cardtools .pmu-iconbtn { border-radius: 0; }

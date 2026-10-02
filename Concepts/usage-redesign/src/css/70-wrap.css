@@ -1,0 +1,56 @@
+/* Values never ellipsize (REVIEW-jared must-fix 3, fixer 2026-10-02). A value, an amount, a reset, a source line or a row's
+   second line wraps to the next line instead of ending in "..."; the card's complete-or-hidden pass then moves whole rows
+   to "N more" when the wrapped content no longer fits. Titles keep their whole name before any meta text gives way.
+   This file comes after the widget and account sheets, so these rules win over the one-line rules there. */
+
+/* facts: label and value both wrap; the line grows from 27 px */
+#panel-usage .pmu-fact { height: auto; min-height: 27px; padding: 4px 0; line-height: 1.35; }
+#panel-usage .pmu-factl { flex: 0 1 auto; max-width: 52%; white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: break-word; }
+#panel-usage .pmu-factv { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: anywhere; }
+
+/* list rows: the second line and the note wrap; the value keeps its width and never cuts */
+#panel-usage .pmu-lname span, #panel-usage .pmu-lnote { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: anywhere; line-height: 1.35; }
+#panel-usage .pmu-lval { overflow: visible; text-overflow: clip; }
+#panel-usage .pmu-lname b { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: anywhere; }
+
+/* tables: a cell wraps inside its column; a row grows from its 32 px */
+#panel-usage .pmu-tcell { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: anywhere; line-height: 1.35; }
+#panel-usage .pmu-tbody > .pmu-trow { min-height: 32px; height: auto; padding-top: 5px; padding-bottom: 5px; }
+
+/* feet, notes, captions, amounts and the account meta lines */
+#panel-usage :is(.pmu-cfoot-text, .pmu-note, .pmu-kpifoot, .pmu-kpicell .pmu-kpisub, .pmu-identmeta, .pmu-amounts, .pmu-accfootline > span, .pmu-amtv,
+  .pmu-amount > :nth-child(2), .pmu-amt > :nth-child(3), .pmu-amtsub, .pmu-amt .pmu-amtline2, .pmu-mixname, .pmu-ctxleg span, .pmu-trendlabel,
+  .pmu-colscap, .pmu-agtext > span, .pmu-agtext b, .pmu-limitplan, .pmu-freeprov, .pmu-cacherep, .pmu-provword, .pmu-sampled, .pmu-setupnote,
+  .pmu-mixhead span, .pmu-limitinline) {
+  white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: anywhere; }
+#panel-usage .pmu-kpifoot.has-act > span { overflow: visible; text-overflow: clip; white-space: normal; }
+#panel-usage .pmu-limitplan { height: auto; min-height: 24px; line-height: 1.4; padding: 3px 0; }
+#panel-usage .pmu-setupnote { height: auto; min-height: 22px; }
+#panel-usage .pmu-provword { max-width: none; flex: 0 1 auto; text-align: right; }
+#panel-usage .pmu-amount > :nth-child(3) { white-space: normal; text-align: right; }
+#panel-usage .pmu-factrow { max-height: none; overflow: visible; }
+/* the meter foot: the reset and the amount each wrap inside their half (the reset first) */
+#panel-usage .pmu-meterfoot { white-space: normal; align-items: flex-start; }
+#panel-usage .pmu-meterfoot > span { overflow: visible; text-overflow: clip; overflow-wrap: anywhere; }
+#panel-usage .pmu-meterfoot > .pmu-meteramt { text-align: right; }
+
+/* quota history: the account name is never cut; the plan word moves under it when the column is narrow */
+#panel-usage .pmu-qident { flex-wrap: wrap; row-gap: 0; }
+#panel-usage .pmu-qident b { overflow: visible; text-overflow: clip; white-space: nowrap; }
+#panel-usage .pmu-qident .pmu-qacct, #panel-usage .pmu-qident .pmu-qplan { overflow: visible; text-overflow: clip; white-space: nowrap; }
+#panel-usage .pmu-qnext { overflow: visible; text-overflow: clip; }
+#panel-usage .pmu-qrow { height: auto; min-height: 36px; }
+
+/* titles: the whole name first; the head's right meta (a count, a state word) shrinks and gives way before the title does */
+#panel-usage .pmu-cardtitles { flex: 1 1 auto; min-width: min(100%, max-content); }
+#panel-usage .pmu-cardmeta { flex: 0 1 auto; max-width: none; min-width: 0; }
+/* a title longer than its head wraps to a second line in line and tile heads (two 15 px lines fit the 34 / 30 px head) */
+#panel-usage .pmu-card:is([data-head="line"], [data-head="tile"]) .pmu-cardtitle { white-space: normal; overflow: visible; text-overflow: clip; line-height: 15px;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow-wrap: break-word; }
+
+/* KPI tile second line: up to four lines before anything is cut (a 3-track tile carries "2.39M in · 474k out · 184 calls") */
+#panel-usage .pmu-kpi .pmu-kpisub { -webkit-line-clamp: 4; }
+
+/* ranked rows: the provider name wraps instead of ending in "..." (narrow Route pressure, Provider value) */
+#panel-usage .pmu-rkt { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: break-word; line-height: 1.25; }
+#panel-usage .pmu-rkname { overflow: visible; }

@@ -10,7 +10,7 @@
   var CLASSES = [{ name: 'S', tracks: 12, min: 0 }, { name: 'M', tracks: 20, min: 820 }, { name: 'L', tracks: 24, min: 1100 }, { name: 'XL', tracks: 30, min: 1460 }];
   var GAP = 8, ROW = 30, HYST = 24, MOVE_THRESHOLD = 4, TARGET_HYST = 0.675, SCROLL_BAND = 48;
   var STORE_KEY = 'widget_layout:v1:usage';
-  var DEFAULT_SET = 'pmu-b2-2026-10-02b';
+  var DEFAULT_SET = 'pmu-b2-2026-10-02c';   /* c: the fixer's default boards (fill the first screen, Settings order in Accounts) */
   var LEVEL_RANK = { glance: 0, detailed: 1, diagnostics: 2 };
   var st = PMU.core.state;
   var scroll = document.getElementById('pmuScroll');
@@ -170,8 +170,10 @@
   /* ---- defaults, projection, resolver ---- */
   function rectsOf(list) { return list.map(function (e) { return { id: e[0], x: e[1], y: e[2], w: e[3], h: e[4] }; }); }
   function overlaps(a, b) { return a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h; }
-  function firstFit(items, tracks) {
-    var placed = [];
+  function firstFit(items, tracks) { return firstFitInto([], items, tracks); }
+  /* first-fit `items` into a board that already holds `seed` (real rects, never re-packed); returns only the new rects */
+  function firstFitInto(seed, items, tracks) {
+    var placed = (seed || []).map(function (r) { return { id: r.id, x: r.x, y: r.y, w: r.w, h: r.h }; }), fresh = [];
     items.forEach(function (it) {
       var w = Math.min(it.w, tracks), y = 0, x = null;
       while (x === null) {
@@ -181,9 +183,10 @@
         }
         if (x === null) y++;
       }
-      placed.push({ id: it.id, x: x, y: y, w: w, h: it.h });
+      var rect = { id: it.id, x: x, y: y, w: w, h: it.h };
+      placed.push(rect); fresh.push(rect);
     });
-    return placed;
+    return fresh;
   }
   function project(rects, tracks) {
     return firstFit(rects.slice().sort(function (a, b) { return a.y - b.y || a.x - b.x; }), tracks);
@@ -229,11 +232,11 @@
       rects = saved.map(function (r) { return clampRect(r, cls.tracks); });
       var have = {}; rects.forEach(function (r) { have[r.id] = true; });
       var missing = defaults.filter(function (r) { return !have[r.id]; });
-      if (missing.length) rects = rects.concat(firstFit(rects.concat(missing), cls.tracks).filter(function (r) { return !have[r.id]; }));
+      if (missing.length) rects = rects.concat(firstFitInto(rects, missing, cls.tracks));
     } else {
       var near = nearestEdited(room, cls);
       rects = near ? project(near.map(function (r) { return { id: r.id, x: r.x, y: r.y, w: r.w, h: r.h }; }), cls.tracks) : defaults;
-      if (near) { var hv = {}; rects.forEach(function (r) { hv[r.id] = true; }); var miss = defaults.filter(function (r) { return !hv[r.id]; }); if (miss.length) rects = rects.concat(firstFit(rects.concat(miss), cls.tracks).filter(function (r) { return !hv[r.id]; })); }
+      if (near) { var hv = {}; rects.forEach(function (r) { hv[r.id] = true; }); var miss = defaults.filter(function (r) { return !hv[r.id]; }); if (miss.length) rects = rects.concat(firstFitInto(rects, miss, cls.tracks)); }
     }
     if (room === 'accounts') rects = mergeRoster(rects, cls);
     return rects;
@@ -251,7 +254,7 @@
       var many = withAccounts[id].accounts.length > 1; return { id: id, w: Math.min(many ? 10 : 4, cls.tracks), h: many ? 11 : 7 };
     });
     if (!extra.length) return kept;
-    return kept.concat(firstFit(kept.concat(extra), cls.tracks).filter(function (r) { return !have[r.id]; }));
+    return kept.concat(firstFitInto(kept, extra, cls.tracks));
   }
   function visibleIds(room) {
     var rank = LEVEL_RANK[st.detail] || 0, hidden = st.hidden[room] || {};
@@ -539,6 +542,8 @@
     var r = g.scrollRect || (g.scrollRect = scroll.getBoundingClientRect()), v = 0;
     if (g.py < r.top + SCROLL_BAND) v = -(3 + 11 * Math.min(1, (r.top + SCROLL_BAND - g.py) / SCROLL_BAND));
     else if (g.py > r.bottom - SCROLL_BAND) v = 3 + 11 * Math.min(1, (g.py - (r.bottom - SCROLL_BAND)) / SCROLL_BAND);
+    /* never scroll a move past the row under the other cards: the landing cannot go lower than that */
+    if (v > 0 && g.type === 'move' && g.target && g.target.y >= g.maxY) v = 0;
     if (v) { var before = scroll.scrollTop; scroll.scrollTop = Math.max(0, before + v); if (scroll.scrollTop !== before) g.dirty = true; }
   }
   function loop(g) {
@@ -561,7 +566,7 @@
     var cls = current.cls, rawX = (g.cardL + dx - g.pad.l) / cls.pitchX, rawY = (g.cardT + dy - g.pad.t) / ROW;
     var nx = g.target.x, ny = g.target.y;
     if (Math.abs(rawX - g.target.x) >= TARGET_HYST) nx = Math.max(0, Math.min(cls.tracks - g.me.w, Math.round(rawX)));
-    if (Math.abs(rawY - g.target.y) >= TARGET_HYST) ny = Math.max(0, Math.round(rawY));
+    if (Math.abs(rawY - g.target.y) >= TARGET_HYST) ny = Math.max(0, Math.min(g.maxY, Math.round(rawY)));
     if (nx !== g.target.x || ny !== g.target.y) {
       g.target = { id: g.id, x: nx, y: ny, w: g.me.w, h: g.me.h };
       previewTo(g, g.target);
@@ -601,6 +606,9 @@
     g.me = g.snapshot.filter(function (r) { return r.id === g.id; })[0];
     if (!g.me) { gesture = null; return false; }
     g.target = { id: g.id, x: g.me.x, y: g.me.y, w: g.me.w, h: g.me.h };
+    var shownNow = {}; visibleIds(current.room).forEach(function (id) { shownNow[id] = true; });
+    g.maxY = g.snapshot.reduce(function (m, r) { return r.id === g.id || !shownNow[r.id] ? m : Math.max(m, r.y + r.h); }, 0);
+    g.maxY = Math.max(g.maxY, g.me.y);
     g.preview = g.snapshot;
     g.pad = padOf();
     g.cards = cardsNow();
@@ -918,17 +926,17 @@
   }
   function tidy() {
     if (!current.mounted) return [];
+    /* DESIGN-SPEC 6.1: compact every card upward, first-fit in reading order (x may change); the cards shown at this
+       detail level go first so their holes close, the cards of other levels and hidden ones follow below them */
     var room = current.room, rects = layoutFor(room).slice().sort(function (a, b) { return a.y - b.y || a.x - b.x; });
-    var placed = [], receipts = [];
-    rects.forEach(function (r) {
-      var y = 0, c = null;
-      while (y <= r.y) { var cand = { id: r.id, x: r.x, y: y, w: r.w, h: r.h }; if (placed.every(function (p) { return !overlaps(cand, p); })) { c = cand; break; } y++; }
-      placed.push(c || { id: r.id, x: r.x, y: r.y, w: r.w, h: r.h });
-    });
+    var shown = {}; visibleIds(room).forEach(function (id) { shown[id] = true; });
+    var receipts = [];
+    var front = firstFit(rects.filter(function (r) { return shown[r.id]; }), current.cls.tracks);
+    var placed = front.concat(firstFitInto(front, rects.filter(function (r) { return !shown[r.id]; }), current.cls.tracks));
     var before = toMap(rects);
     placed.forEach(function (r) {
       var b = before[r.id];
-      if (b.y !== r.y) receipts.push(command('cmd.widget.move', { room: room, widget_id: r.id, from: { x: b.x, y: b.y }, to: { x: r.x, y: r.y }, board_class: current.cls.name, source: 'tidy' }, { moved: true }));
+      if (b.y !== r.y || b.x !== r.x) receipts.push(command('cmd.widget.move', { room: room, widget_id: r.id, from: { x: b.x, y: b.y }, to: { x: r.x, y: r.y }, board_class: current.cls.name, source: 'tidy' }, { moved: true }));
     });
     var accepted = placed;
     if (receipts.some(function (rc) { return rc.dispatch_accepted === false; })) { PMU.shell.toast(t('board.rejected')); return receipts; }

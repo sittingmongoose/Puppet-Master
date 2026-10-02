@@ -98,6 +98,16 @@ if (app) {
     var button = event.target.closest('.pmu-navbtn[data-room]');
     if (button && app.contains(button)) selectRoom(button.getAttribute('data-room'), 'rail');
   });
+  /* the rail behaves as a list: Up / Down (and Home / End) move focus between rooms; Enter or Space opens one */
+  var navEl = document.getElementById('pmuNav');
+  if (navEl) navEl.addEventListener('keydown', function (event) {
+    var keys = { ArrowDown: 1, ArrowUp: -1, Home: -99, End: 99 };
+    if (!(event.key in keys)) return;
+    var btns = Array.prototype.slice.call(navEl.querySelectorAll('.pmu-navbtn[data-room]')), i = btns.indexOf(document.activeElement);
+    if (i < 0) return;
+    var d = keys[event.key], j = d === -99 ? 0 : d === 99 ? btns.length - 1 : Math.max(0, Math.min(btns.length - 1, i + d));
+    event.preventDefault(); btns[j].focus();
+  });
 }
 if (usagePanel) new MutationObserver(syncUsageLayer).observe(usagePanel, { attributes: true, attributeFilter: ['class'] });
 

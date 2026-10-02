@@ -11,26 +11,30 @@
   /* ================================================================== Free models */
   var FREE = [
     { provider: 'Free Models route · Z.AI catalog', price: '$0', priceSource: 'provider catalog', capacity: '82 calls left', capacitySource: 'provider published · catalog 2m old', availability: { pct: 100, tone: 'calm', label: 'Ready now', valueText: 'Ready', detail: 'Ready now · provider catalog 2m old' }, eligibility: 'eligible now' },
-    { provider: 'Free Models route · Qwen catalog', price: '$0', priceSource: 'provider catalog', capacity: 'remaining not published', capacitySource: 'provider publishes no remaining count', availability: { pct: 42, tone: 'warn', label: 'Cooldown', reset: 'resets 16:48 · provider reset clock', detail: 'Cooling down · resets 16:48 · provider reported' }, eligibility: 'after reset 16:48' },
+    { provider: 'Free Models route · Qwen catalog', price: '$0', priceSource: 'provider catalog', capacity: 'remaining not published', capacitySource: 'provider publishes no remaining count', availability: { pct: 42, tone: 'warn', label: 'Cooldown', reset: 'resets 16:48 · provider reset clock', detail: 'Cooling down · resets 16:48 · provider reported' }, eligibility: 'after reset 16:48', clocked: true },
     { provider: 'Free Models route · Google catalog', price: '$0', priceSource: 'provider catalog', capacity: '1,420 calls left', capacitySource: 'provider published · catalog 2m old', availability: { pct: 100, tone: 'calm', label: 'Ready now', valueText: 'Ready', detail: 'Ready now · provider catalog 2m old' }, eligibility: 'eligible now' },
     { provider: 'Local model server · this network', price: '$0', priceSource: 'local inference', capacity: 'device capacity', capacitySource: 'device reported · RX 7900 XTX', availability: { pct: 100, tone: 'calm', label: 'Ready now', valueText: 'Ready', detail: 'Ready now · device reported' }, eligibility: 'eligible now' }
   ];
   function ctxTok(s) { var m = /([\d.]+)\s*([kM])/.exec(s); return m ? +m[1] * (m[2] === 'M' ? 1e6 : 1e3) : null; }
   DATA.free.forEach(function (r, i) {
-    var x = FREE[i];
-    def('free-' + i, 'free', { title: r[0], meta: function () { return r[1] + ' · ' + x.provider; }, model: function () {
+    var x0 = FREE[i];
+    /* the fixture's clock strings on the page clock (PMU.clock), read when the card renders */
+    var fx = function () { return x0.clocked ? Object.assign({}, x0, { availability: Object.assign({}, x0.availability, { reset: PMU.clock.text(x0.availability.reset), detail: PMU.clock.text(x0.availability.detail) }),
+      eligibility: PMU.clock.text(x0.eligibility) }) : x0; };
+    def('free-' + i, 'free', { title: r[0], meta: function () { return r[1] + ' · ' + x0.provider; }, model: function () {
+      var x = fx();
       var cool = /Cooldown/.test(r[1]);
       var win = ctxTok(r[3]), fit = win ? (DATA.context.used <= win ? 'fits the current thread (' + F.tok(DATA.context.used) + ' of ' + r[3] + ')' : 'smaller than the current thread') : 'unknown';
-      return { state: cool ? 'Cooldown until 16:48' : 'Ready', stateTone: cool ? 'warn' : 'good', stateGlyph: cool ? 'hourglass' : 'checkCircle', provider: x.provider, price: x.price, priceSource: x.priceSource,
+      return { state: cool ? 'Cooldown until ' + PMU.clock.clock('16:48') + ' · ' + PMU.clock.until('16:48') : 'Ready', stateTone: cool ? 'warn' : 'good', stateGlyph: cool ? 'hourglass' : 'checkCircle', provider: x.provider, price: x.price, priceSource: x.priceSource,
         context: r[3], capacity: x.capacity, capacitySource: x.capacitySource, availability: x.availability,
-        facts: [['Availability', cool ? 'cooling down · ' + x.availability.reset.replace(/ ·.*$/, '') + ' (42% of the wait done)' : 'ready now'], ['Eligibility', x.eligibility], ['Route class', 'free'], ['Source', i === 3 ? 'device reported' : 'provider catalog'], ['Catalog age', '2m'], ['Context fit', fit], ['Capacity note', r[4]], ['Price word', r[2]]] };
-    }, inspect: function () { return C.insp(r[0], [['State', r[1]], ['Underlying route', x.provider], ['Price', x.price + ' · ' + x.priceSource + ' (no metered charge does not imply a free entitlement)'], ['Context window', r[3]], ['Capacity', x.capacity + ' · ' + x.capacitySource], ['Note', r[4]], ['Eligibility', x.eligibility], ['Catalog age', '2m']]); } });
+        facts: [['Availability', cool ? 'cooling down · ' + x.availability.reset.replace(/ ·.*$/, '') + ' (42% of the wait done)' : 'ready now'], ['Eligibility', x.eligibility], ['Route class', 'free'], ['Source', i === 3 ? 'device reported' : 'provider catalog'], ['Catalog age', '2m'], ['Context fit', fit], ['Capacity note', PMU.clock.text(r[4])], ['Price word', r[2]]] };
+    }, inspect: function () { var x = fx(); return C.insp(r[0], [['State', r[1]], ['Underlying route', x.provider], ['Price', x.price + ' · ' + x.priceSource + ' (no metered charge does not imply a free entitlement)'], ['Context window', r[3]], ['Capacity', x.capacity + ' · ' + x.capacitySource], ['Note', PMU.clock.text(r[4])], ['Eligibility', x.eligibility], ['Catalog age', '2m']]); } });
   });
   def('free-route', 'free', { meta: function () { return 'free routes in fallback order'; }, model: function () {
-    return { rows: DATA.free.map(function (r, i) { return { name: (i + 1) + '. ' + r[0], sub: r[1] + ' · ' + r[4], value: r[3], note: r[2] === 'local' ? '$0 · local' : '$0 · catalog', glyph: /Cooldown/.test(r[1]) ? 'hourglass' : 'checkCircle', tone: /Cooldown/.test(r[1]) ? 'warn' : null }; }) };
+    return { rows: DATA.free.map(function (r, i) { return { name: (i + 1) + '. ' + r[0], sub: r[1] + ' · ' + PMU.clock.text(r[4]), value: r[3], note: r[2] === 'local' ? '$0 · local' : '$0 · catalog', glyph: /Cooldown/.test(r[1]) ? 'hourglass' : 'checkCircle', tone: /Cooldown/.test(r[1]) ? 'warn' : null }; }) };
   } });
   def('cooldown-eligibility', 'free', { meta: function () { return 'free-route state · retry rules'; }, model: function () {
-    return { rows: DATA.free.map(function (r) { var cool = /Cooldown/.test(r[1]); return { name: r[0], sub: r[3] + ' context · ' + (r[2] === 'local' ? 'local' : '$0 · catalog'), value: cool ? 'wait 40m' : 'eligible', tone: cool ? 'warn' : 'good', note: r[4] }; }) };
+    return { rows: DATA.free.map(function (r) { var cool = /Cooldown/.test(r[1]); return { name: r[0], sub: r[3] + ' context · ' + (r[2] === 'local' ? 'local' : '$0 · catalog'), value: cool ? 'wait ' + PMU.clock.until('16:48') : 'eligible', tone: cool ? 'warn' : 'good', note: PMU.clock.text(r[4]) }; }) };
   } });
   def('free-throughput', 'free', { meta: function () { return '2-hour buckets · 24 hours · free and local routes'; }, model: function () {
     var S = D.series('freeThroughput24h'), n = S.requests.length, now = Date.now(), x = [];
@@ -92,14 +96,15 @@
   } });
   def('ctx-maint', 'context', { meta: function () { return 'last 24h · never billed usage'; }, model: function () {
     return { rows: [{ name: 'Context compacted', sub: '18.6k reclaimed', value: '15:47', note: 'automatic threshold' }, { name: 'Model switch repack', sub: 'cache rebuilt', value: '13:22', note: 'route change' },
-      { name: 'Local prune', sub: '4.2k reclaimed', value: '10:04', note: 'tool transcript' }, { name: 'Pinned refresh', sub: 'instructions updated', value: '08:40', note: 'policy refresh' }] };
+      { name: 'Local prune', sub: '4.2k reclaimed', value: '10:04', note: 'tool transcript' }, { name: 'Pinned refresh', sub: 'instructions updated', value: '08:40', note: 'policy refresh' }].map(function (r) {
+        return Object.assign({}, r, { value: PMU.clock.clock(r.value), hover: PMU.clock.ago(r.value) + ' · ' + r.note }); }) };
   } });
   def('ctx-routing', 'context', { meta: function () { return 'requested versus effective'; }, model: function () {
     return { rows: [{ name: 'Requested model', sub: 'thread preference', value: 'Claude Opus 4.6' }, { name: 'Effective model', sub: 'rate-limit fallback', value: 'Claude Sonnet 4.6', tone: 'warn' },
       { name: 'Output reserve', sub: 'response budget', value: '16k' }, { name: 'Cache disposition', sub: 'prefix reused · provider reading', value: '96.8%', note: 'read share' }] };
   } });
   def('compaction-history', 'context', { meta: function () { return 'current thread · compaction is not billed usage'; }, model: function () {
-    return { rows: [{ name: '15:47', sub: 'automatic threshold compaction', value: '18.6k', note: 'messages and tool results' }, { name: '13:22', sub: 'manual Compact Now', value: '9.4k', note: 'no pinned context removed' },
+    return { rows: [{ name: PMU.clock.clock('15:47'), sub: 'automatic threshold compaction', value: '18.6k', note: 'messages and tool results' }, { name: PMU.clock.clock('13:22'), sub: 'manual Compact Now', value: '9.4k', note: 'no pinned context removed' },
       { name: 'Yesterday', sub: 'handoff compaction', value: '31.2k', note: 'goal state retained' }, { name: 'Reserved output', sub: 'current route guarantee', value: '16k', note: 'not reclaimable' }] };
   } });
 
@@ -118,14 +123,16 @@
       { label: 'Output value', key: { swatch: 'out' }, value: vt.output + vt.reasoning, fmt: 'money', sub: b(F.tok(tk.totals.output)) + ' output · ' + b(F.tok(tk.totals.reasoning)) + ' reasoning', subShort: b(F.tok(tk.totals.output + tk.totals.reasoning)) + ' out incl. reasoning', hover: 'PM estimate · catalog pricing' }] };
   } });
   ['claude', 'codex', 'qwen', 'gemini', 'kimi', 'copilot'].forEach(function (id) {
-    def('tok-' + id, 'analytics', { title: function () { return legName(id).replace(/ Coding Plan| API| Code$/, '').replace('ChatGPT / Codex', 'Codex').replace('GitHub ', ''); }, mark: PMU.roster.legacyProvider(id), prov: PMU.roster.legacyProvider(id),
+    def('tok-' + id, 'analytics', { title: function () { return legName(id); }, mark: PMU.roster.legacyProvider(id), prov: PMU.roster.legacyProvider(id),
       meta: function (ctx) { return legName(id) + ' tokens · ' + D.rangeLabel(ctx.state.range); }, model: function (ctx) {
         if (!D.inScope(id)) return { vs: 'unknown', word: 'Not in scope', sub: 'outside the selected scope' };
         var p = DATA.providers.filter(function (x) { return x.id === id; })[0];
         var by = (D.series('tokensByProvider') || {})[ctx.state.range] || {};
         var tok = D.sum(by[id] || []);
         var c = D.costs().byProvider[id] || { attempts: 0, requests: 0 };
-        return { value: tok, fmt: 'tok', sub: b(F.tok(p.input)) + ' in · ' + b(F.tok(p.output)) + ' out · ' + b(p.requests) + ' calls', subText: F.tok(p.input) + ' in · ' + F.tok(p.output) + ' out · ' + p.requests + ' calls (24h reading)',
+        /* the in / out / calls split is the provider's 24-hour reading: at any other range it says so (REVIEW-jared 4) */
+        var day = ctx.state.range === '24h', pre = day ? '' : '<span class="pmu-cap">24H</span> ';
+        return { value: tok, fmt: 'tok', sub: pre + b(F.tok(p.input)) + ' in · ' + b(F.tok(p.output)) + ' out · ' + b(p.requests) + ' calls', subText: F.tok(p.input) + ' in · ' + F.tok(p.output) + ' out · ' + p.requests + ' calls (24h reading)',
           facts: [['Input (24h)', F.tok(p.input)], ['Output (24h)', F.tok(p.output)], ['Attempts', String(c.attempts)], ['Requests', String(c.requests)], ['Output ratio', (100 * p.output / p.tokens).toFixed(1) + '%'],
             ['Authority', p.allowance_authority + ' · ' + p.allowance_freshness]], spark: by[id] ? { values: by[id], vendor: PMU.markOf(PMU.roster.legacyProvider(id)).vendor, idx: 0 } : null };
       } });
@@ -151,9 +158,18 @@
           return out.length ? out.join(' · ') : 'no attempts recorded in this bucket';
         } },
       headline: { value: cr ? tk.totals.all : tk.totals.noCache, fmt: 'tok', label: cr ? 'tokens' : 'tokens without cache reads' }, spark: { values: tk.noCache, tk: 'all' },
-      facts: [['Input', F.tok(tk.totals.input)], ['Output', F.tok(tk.totals.output)], ['Cache read', F.tok(tk.totals.cacheRead)], ['Peak', F.clock(tk.peak.x) + ' · ' + F.tok(tk.peak.v)]],
+      facts: [['Input', F.tok(tk.totals.input)], ['Output', F.tok(tk.totals.output)], ['Cache read', F.tok(tk.totals.cacheRead)], ['Peak', peakText(tk, cr)]],
       note: 'Input and output are summed only from selected identity-bound attempts; the cost line is recorded value (settled + plan estimate).' };
   } });
+  /* the Peak fact is the chart's own peak: the same series (cache reads only when shown), the same bucket, the same
+     time words (a sub-day bucket in a multi-day range names its day) */
+  function peakText(tk, cr) {
+    var vals = cr ? tk.all : tk.noCache, best = -1;
+    vals.forEach(function (v, i) { if (v != null && (best < 0 || v > vals[best])) best = i; });
+    if (best < 0) return '-';
+    var x = tk.x[best], bm = tk.buckets.bucketMs, multi = tk.x.length > 1 && tk.x[tk.x.length - 1] - tk.x[0] >= 86400000;
+    return (bm >= 86400000 ? F.date(x) : (multi ? F.day(x) + ' ' : '') + F.clock(x)) + ' · ' + F.tok(vals[best]);
+  }
   C.act('tt-split', function (el, id) { C.setCfg(id, 'split', C.cfg(id, 'split', 'off') === 'on' ? 'off' : 'on'); });
   C.act('tt-cr', function (el, id) { C.setCfg(id, 'cacheReads', C.cfg(id, 'cacheReads', 'off') === 'on' ? 'off' : 'on'); });
   def('model-mix', 'analytics', { meta: function (ctx) { return 'Estimated cost by token type · ' + D.rangeLabel(ctx.state.range) + ' · select a model for detail'; }, model: function () { return { rows: D.models() }; } });
@@ -265,7 +281,9 @@
       }), empty: 'No attempts for the selected scope and range', emptyFacts: 'Unknown is never shown as zero' };
   } });
   def('ledger-events', 'ledger', { meta: function () { return 'today · humanized usage events'; }, model: function () {
-    return { rows: DATA.ledger.map(function (e) { return { name: HUMAN[e[1]] || e[1], sub: e[2] + ' · ' + e[3], value: e[0].slice(0, 5), note: e[1], glyph: GLY[e[1]] || 'list', tone: e[1] === 'limit.warning' ? 'warn' : null, hover: e[0] + ' · ' + e[1] + ' · ' + e[2] + ' · ' + e[3] }; }).reverse() };
+    return { rows: DATA.ledger.map(function (e) { var who = C.oldName(e[2]);
+      return { name: HUMAN[e[1]] || e[1], sub: who + ' · ' + e[3], value: PMU.clock.ago(e[0]), note: e[1] + ' · ' + PMU.clock.clock(e[0]), glyph: GLY[e[1]] || 'list', tone: e[1] === 'limit.warning' ? 'warn' : null,
+        hover: PMU.clock.clock(e[0]) + ' · ' + e[1] + ' · ' + who + ' · ' + e[3] }; }).reverse() };
   } });
   def('attempt-lineage', 'ledger', { meta: function (ctx) { return D.rangeLabel(ctx.state.range) + ' · receipt chain'; }, model: function () {
     return { cols: [{ id: 'id', label: 'ATTEMPT', w: '76px', mono: true }, { id: 'who', label: 'PROVIDER · ACCOUNT', w: 'minmax(140px,2fr)' }, { id: 'route', label: 'EFFECTIVE ROUTE', w: 'minmax(120px,1.6fr)', min: 'm' }, { id: 'ref', label: 'EVENT REF', w: '80px', mono: true, min: 'l' }, { id: 'set', label: 'SETTLEMENT', w: 'minmax(100px,1.2fr)' }],

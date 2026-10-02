@@ -108,7 +108,7 @@
       var pct = m.budget ? Math.round(100 * m.spent / m.budget) : null;
       var hero = '<div class="pmu-budgethero">' + C.valHtml(m.spent, 'money2', 'pmu-bigval', ctx.id + ':spent').replace('class="pmu-num"', 'class="pmu-num" data-count="kpi"') +
         '<span class="pmu-budgetof">' + (m.budget ? 'of ' + esc(C.money(m.budget)) + ' budget · ' + pct + '%' : 'No budget set') + '</span>' +
-        '<span class="pmu-budgetest">est. ' + esc(C.money(m.projection.to)) + ' month end</span></div>';
+        '<span class="pmu-budgetest">est. ' + esc(C.money(m.projection.to)) + (m.periodEnd ? ' by ' + esc(PMU.fmt.date(m.periodEnd)) : ' month end') + '</span></div>';
       var factsOk = C.w(ctx, 'l') && C.h(ctx, 'h3') && m.facts;
       var mixOk = m.mix && C.w(ctx, 'xl') && C.h(ctx, 'h3');
       /* the one-line hero is 29 px plus a 6 px gap (measured); compact heroes wrap to two lines */
@@ -118,7 +118,7 @@
       body.innerHTML = '<div class="pmu-budget' + (compact ? ' is-compact' : '') + '">' + hero + '<div class="pmu-budgetplot pmu-fillplot"></div>' +
         (factsOk ? '<div class="pmu-factrow">' + m.facts.map(function (f) { return '<span><em>' + esc(f[0]) + '</em> <b>' + esc(f[1]) + '</b></span>'; }).join('') + '</div>' : '') +
         (mixOk ? '<div class="pmu-budgetmix"></div>' : '') + '</div>';
-      C.chart(body, 'budget', body.querySelector('.pmu-budgetplot'), { days: m.days, today: m.today, cumulative: m.cumulative, projection: m.projection, budget: m.budget || 0, unit: 'usd', compact: compact },
+      C.chart(body, 'budget', body.querySelector('.pmu-budgetplot'), { days: m.days, today: m.today, cumulative: m.cumulative, projection: m.projection, budget: m.budget || 0, unit: 'usd', compact: compact, monthStart: m.periodStart },
         { label: 'Budget projection: ' + C.money(m.spent) + ' of ' + C.money(m.budget), tier: ctx.tier, readout: true });
       if (mixOk) C.chart(body, 'mix', body.querySelector('.pmu-budgetmix'), { segments: m.mix, legend: true }, { label: 'Plan allocation versus metered' });
     }

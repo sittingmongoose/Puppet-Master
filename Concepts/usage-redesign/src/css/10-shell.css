@@ -29,6 +29,9 @@ html[data-o55-nier="on"] #panel-usage .pmu-shell { --pmu-font: "PM NieR Sans", v
 #panel-usage .pmu-navicon svg { display: block; width: 100%; height: 100%; }
 #panel-usage .pmu-navtext { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 html[data-theme^="retro"] #panel-usage :is(.pmu-navink, .pmu-navbtn) { border-radius: 0; }
+/* the mono face is wider: the Retro rail keeps every room name whole ("Source authority", "Plans & limits") */
+html[data-theme^="retro"] #panel-usage .pmu-rail { width: 196px; }
+html[data-theme^="retro"] #panel-usage .pmu-navbtn { font-size: 12.5px; gap: 8px; padding: 0 8px; }
 
 /* stage and head (A1 2.2: room title 18 / 640) */
 #panel-usage .pmu-stage { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 0; overflow: hidden; }
@@ -107,6 +110,17 @@ html[data-theme^="retro"] #panel-usage .pmu-toggle::after { transition-timing-fu
 @keyframes pmu-ul { 0% { transform: scaleX(0); opacity: 1; } 50% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
 
 body.pmu-page-active #pm-home-workspace { pointer-events: none !important; }
+/* the app's title-bar notes (Settings writes such as "Next run uses this account") drop over the Usage head: while Usage
+   shows they never take a pointer, so a click on Detail, Panels or the range goes through (the inbox keeps them) */
+body.pmu-page-active #rsStage, body.pmu-page-active #rsStage .rs-card { pointer-events: none !important; }
+/* Usage's own note: bottom centre of the stage, never a pointer target */
+#panel-usage .pmu-toast { position: absolute; left: 50%; bottom: 18px; z-index: 40; display: flex; align-items: center; gap: 8px; max-width: min(460px, calc(100% - 32px));
+  padding: 8px 14px 8px 10px; border: 1px solid var(--pmu-rule-strong); border-radius: 10px; background: var(--pmu-card); color: var(--pmu-ink); font-size: 13px; line-height: 1.35;
+  box-shadow: var(--pmu-elev-lift); transform: translate(-50%, 0); pointer-events: none; }
+#panel-usage .pmu-toast[hidden] { display: none; }
+#panel-usage .pmu-toast-ico { display: inline-grid; place-items: center; width: 16px; height: 16px; flex: none; color: var(--pmu-ink-ok); }
+#panel-usage .pmu-toast-ico svg { width: 14px; height: 14px; }
+html[data-theme^="retro"] #panel-usage .pmu-toast { border-radius: 0; }
 /* during a gesture: nothing restyles the application. user-select on body would restyle all ~15k nodes (98 ms on the VM),
    so text selection is blocked by a selectstart listener instead; the grabbing cursor lives on the lifted card. */
 html[data-motion="reduced"] #panel-usage :is(.pmu-seg-ink, .pmu-toggle, .pmu-toggle::after, .pmu-ctlchev, .pmu-navicon) { transition: none !important; }

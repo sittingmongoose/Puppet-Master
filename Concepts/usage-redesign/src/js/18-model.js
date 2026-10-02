@@ -209,6 +209,27 @@
   };
   PMU.settings.onChange(function () { cache = null; memo = {}; });
 
+  /* ---------------------------------------------------------------- one fixture clock (REVIEW-jared must-fix 8)
+     The series and the roster facts are anchored to the page's load time; the old page's frozen clock strings
+     ("16:05:42", "resets 16:48", "Cooldown · 40m") were written at their own "now", 16:08. Every such string is shown
+     on the page clock: the same offset from now that it had from 16:08, so a cooldown that ends in 40 minutes ends 40
+     minutes from now and an event 3 minutes old is 3 minutes old. The fixture text itself is never changed. */
+  var FIXTURE_NOW_MIN = 16 * 60 + 8;
+  function fixtureAt(hms) {
+    var p = String(hms || '').split(':').map(Number); if (p.length < 2 || !isFinite(p[0]) || !isFinite(p[1])) return null;
+    return loadedAt + ((p[0] * 60 + p[1] + (p[2] || 0) / 60) - FIXTURE_NOW_MIN) * MIN;
+  }
+  PMU.clock = {
+    loadedAt: loadedAt,
+    fixtureAt: fixtureAt,
+    /* "16:48" -> the page clock time; "16:05:42" -> "HH:MM" */
+    clock: function (hms) { var at = fixtureAt(hms); return at === null ? String(hms) : PMU.fmt.clock(at); },
+    /* replace every HH:MM(:SS) in a fixture sentence with its page clock time */
+    text: function (str) { return String(str == null ? '' : str).replace(/\b(\d\d):(\d\d)(?::\d\d)?\b/g, function (m0) { return PMU.clock.clock(m0); }); },
+    ago: function (hms) { var at = fixtureAt(hms); return at === null ? '' : PMU.fmt.age(Math.max(0, (Date.now() - at) / 1000)); },
+    until: function (hms) { var at = fixtureAt(hms); return at === null ? '' : PMU.fmt.span(Math.max(0, at - Date.now())); }
+  };
+
   /* ---------------------------------------------------------------- PMU.data */
   function rangeKey(range) { return range || st.range || '24h'; }
   function scopeLegacy() { var s = st.scope || 'all'; return s.indexOf('provider:') === 0 ? s.slice(9) : null; }
@@ -450,8 +471,11 @@
         var withHist = a.windows.filter(function (w) { return qh[a.key + '/' + w.key]; });
         var main = withHist.slice().sort(byLength)[0] || a.windows.slice().sort(byLength)[0];
         var pts = main ? qh[a.key + '/' + main.key] || null : null;
-        var upcoming = a.windows.filter(function (w) { return w.resetAt && w.resetAt > Date.now() && w.truth !== 'unknown'; }).sort(function (x, y) { return x.resetAt - y.resetAt; })[0] || null;
-        return { account: a, main: main, points: pts, runs: pts ? runsOf(pts) : [], next: upcoming,
+        /* the reset shown on the row is the plotted (main) window's own reset, never another window's (R-PLAN-07);
+           the soonest reset of any window stays in the hover */
+        var known = function (w) { return w && w.resetAt && w.resetAt > Date.now() && w.truth !== 'unknown'; };
+        var upcoming = a.windows.filter(known).sort(function (x, y) { return x.resetAt - y.resetAt; })[0] || null;
+        return { account: a, main: main, points: pts, runs: pts ? runsOf(pts) : [], next: known(main) ? main : null, soonest: upcoming,
           focus: a.windows.map(function (w) { return { label: w.short, key: w.key, points: qh[a.key + '/' + w.key] || null, resetAt: w.resetAt, pct: w.pct }; }) };
       });
       var mainKey = rows[0] && rows[0].main ? rows[0].main.key : p.windows[0].key;

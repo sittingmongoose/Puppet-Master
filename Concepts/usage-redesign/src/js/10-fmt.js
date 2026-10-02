@@ -21,7 +21,9 @@
       if (missing(n)) return '-';
       if (n >= 1e9) return (n / 1e9).toFixed(n >= 1e10 ? 0 : 1).replace(/\.0$/, '') + 'B';
       if (n >= 1e6) return (n / 1e6).toFixed(n >= 1e7 ? 1 : 2).replace(/\.?0+$/, '') + 'M';
-      if (n >= 1e3) return (n / 1e3).toFixed(n >= 1e5 ? 0 : 1).replace(/\.0$/, '') + 'k';
+      /* three significant figures below 10k (3,980 reads 3.98k, never 4k) */
+      if (n >= 1e5) return (n / 1e3).toFixed(0) + 'k';
+      if (n >= 1e3) return (n / 1e3).toFixed(n >= 1e4 ? 1 : 2).replace(/\.?0+$/, '') + 'k';
       return String(Math.round(n));
     },
     num: function (n) { return missing(n) ? '-' : Number(n).toLocaleString('en-US'); },
@@ -66,6 +68,9 @@
       return { text: (up ? '+' : '') + Number(v).toFixed(1).replace(/\.0$/, '') + '%', dir: up ? 'up' : 'down',
         tone: (up && good === 'up') || (!up && good === 'down') ? 'ok' : 'warn' };
     },
+    /* reset / reading truth words: pm_estimate reads "PM estimate" (R-PLAN-14: the Gemini API % is a PM estimate of
+       invoiced spend over the Settings budget), the others their own words */
+    truth: function (tr) { return { pm_estimate: 'PM estimate', provider_reported: 'provider reported', locally_inferred: 'locally inferred', pending_recheck: 'pending recheck' }[tr] || String(tr || 'unknown').replace(/_/g, ' '); },
     plural: function (n, word) { return n + ' ' + word + (n === 1 ? '' : 's'); },
     /* [A1 6] the meter reset line in lower case with the B v2 truth rules: "resets in 1h 42m" (< 24 h), "resets Thu 03:06"
        (< 7 d), "resets Oct 1"; "≈" when locally inferred; "reset unknown"; "pending recheck" after a passed reset.
