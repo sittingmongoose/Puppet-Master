@@ -72,8 +72,8 @@ svg:where(.nx) {
 }
 /* Filled parts (stop, status satellites) paint the ink as fill and carry no tube stroke. */
 svg:where(.nx) .nx-f { fill: var(--nx-ink, currentColor); stroke: none; }
-/* The faint half of a two-level drawing (working's ring, mixed's unlit half). */
-svg:where(.nx) .nx-dim { opacity: .4; }
+/* The quieter half of a two-level drawing (working's ring under its bright satellite). */
+svg:where(.nx) .nx-dim { opacity: .65; }
 /* module-shell's picker chevron (CHEVRON) keeps the 2-unit weight it was drawn with. */
 svg.pmx-chevron { --nx-stroke-base: 2; }
 
@@ -191,18 +191,23 @@ svg:where(.nx-z0) .nx-p { animation: none; }
 .nx-tn-changed { --nx-bl-ink: var(--accent-2); --nx-bl-a: var(--nx-bl-changed); }
 /* the quiet tones are unlit: no backlight box at all */
 .nx-tn-done::before, .nx-tn-idle::before, .nx-tn-paused::before { display: none; }
-/* working: a slow satellite orbit (3.2 s), no breathe, its core halo only */
+/* working: a slow satellite orbit (8 s: the quietest live mark, below reviewing), no breathe, no backlight */
 .nx-st-working::before { display: none; }
-.nx-st-working .nx-p { animation: var(--kl) 3200ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 3.2ms - 3200ms); }
+.nx-st-working .nx-p { animation: var(--kl) 8000ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 8ms - 8000ms); }
 /* reviewing: the lens sweeps the page; no outer glow, so it stays below needs-you */
 .nx-st-reviewing::before { display: none; }
 .nx-st-reviewing .nx-p { animation: var(--kl) 2800ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 2.8ms - 2800ms); }
-/* waiting (needs you): full steady halo, the "?" hops twice every 2.4 s; it outshines working in a list */
+/* waiting (needs you) leads every list: full steady halo, the "?" hops 3.4 units twice every 2.4 s and the
+   backlight breathes .6-1 (literal keyframes per theme brightness; opacity only, so it composites) */
 .nx-st-waiting .nx-p { animation: var(--kl) 2400ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 2.4ms - 2400ms); }
-/* waiting on a dependency: the hourglass tips slowly */
+.nx-st-waiting::before { animation: nx-bl-needs 2400ms ease-in-out infinite; }
+body[data-theme$="-light"] .nx-st-waiting::before { animation-name: nx-bl-needs-l; }
+@keyframes nx-bl-needs { 0%, 100% { opacity: .074; } 50% { opacity: .044; } }
+@keyframes nx-bl-needs-l { 0%, 100% { opacity: .095; } 50% { opacity: .057; } }
+/* waiting on a dependency: the hourglass tips once, then holds */
 .nx-st-waiting-dep .nx-p { animation: var(--kl) 3600ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 3.6ms - 3600ms); }
-/* recovering: a counter-clockwise ratchet in four eased 45-degree ticks */
-.nx-st-recovering .nx-p { animation: var(--kl) 2400ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 2.4ms - 2400ms); }
+/* recovering: a counter-clockwise ratchet, one 90-degree tick every 2.4 s (two per 4.8 s cycle) */
+.nx-st-recovering .nx-p { animation: var(--kl) 4800ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 4.8ms - 4800ms); }
 /* complete: a bold check that clip-draws once on mount */
 .nx-st-complete > svg.nx { --nx-stroke-base: 2.4; --nx-tone-k: 1; }
 .nx-st-complete .nx-p { animation: var(--k1) 520ms var(--nx-ease-c) backwards; }
@@ -215,7 +220,7 @@ svg:where(.nx-z0) .nx-p { animation: none; }
 /* idle (ready), paused, pending, skipped, mixed: static */
 /* idle and pending are unlit, but keep the full weight so a ready or queued row still reads at a glance */
 .nx-st-idle > svg.nx { --nx-hi-a: 0; --nx-hiv: hidden; --nx-tone-k: 1; }
-.nx-st-pending > svg.nx { --nx-tone-k: 1; }
+.nx-st-pending > svg.nx { --nx-tone-k: 1; --nx-ink: var(--muted); }
 
 /* ------------------------------------------------------------------ 10. reduced motion */
 /* Both routes (the media query and body.pm56-reduced) stop every neon animation and transition outright; the base

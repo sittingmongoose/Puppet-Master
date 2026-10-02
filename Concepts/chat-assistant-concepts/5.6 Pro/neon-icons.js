@@ -307,20 +307,25 @@
       'play-ring': G([C(12, 12, 8.5), M(P('M10.3 8.8v6.4l5-3.2z'), { ao: .3, b: 1 })], 'seq'),
 
       /* ---- the status marks (plan §3); status() wraps them, icon('st-<s>') draws them bare ---- */
-      'st-working': G([C(12, 12, 7.5, { c: 'nx-dim' }), M(C(12, 4.5, 2.1, { f: 1 }), { ar: 360, o: [12, 12] })], 'spin', 'status'),
-      'st-reviewing': G([P('M5 3h9l4 4v6'), P('M5 3v17h6'), M([C(16, 16, 3.6), P('m18.6 18.6 2.6 2.6')], { ax: -5, ay: -5, b: 1 })], 'wave', 'status'),
+      /* working: a ring at .65 and a bright satellite (r2.4, its own halo) orbiting OUTSIDE it (radius 9.5), so it
+         reads on the accent-tinted selected row and never looks like mixed's half disc */
+      'st-working': G([C(12, 12, 7.5, { c: 'nx-dim' }), M(C(12, 2.5, 2.4, { f: 1 }), { ar: 360, o: [12, 12] })], 'spin', 'status'),
+      /* reviewing: the lens sweeps half as far and rests (it must stay below needs-you) */
+      'st-reviewing': G([P('M5 3h9l4 4v6'), P('M5 3v17h6'), M([C(16, 16, 3.6), P('m18.6 18.6 2.6 2.6')], { ax: -2.5, ay: -2.5, b: 1 })], 'calm', 'status'),
       'st-waiting': G([P('M5 3h14a2.5 2.5 0 0 1 2.5 2.5v10.5a2.5 2.5 0 0 1-2.5 2.5h-6.5L8 21.8v-3.3H5A2.5 2.5 0 0 1 2.5 16V5.5A2.5 2.5 0 0 1 5 3z'),
-        M([P('M9.4 8.6a2.6 2.6 0 1 1 3.9 2.25c-.85.45-1.3 1.05-1.3 1.9v.1'), P('M12 15.6h.01')], { ay: -2.4 })], 'hop', 'status'),
-      'st-waiting-dep': G([M([P('M6.5 3h11M6.5 21h11'), P('M8 3v2.5c0 2.4 4 4 4 6.5s-4 4.1-4 6.5V21M16 3v2.5c0 2.4-4 4-4 6.5s4 4.1 4 6.5V21')], { ar: 16, o: [12, 12], b: 1 })], 'wave', 'status'),
+        M([P('M9.4 8.6a2.6 2.6 0 1 1 3.9 2.25c-.85.45-1.3 1.05-1.3 1.9v.1'), P('M12 15.6h.01')], { ay: -3.4 })], 'hop', 'status'),
+      'st-waiting-dep': G([M([P('M6.5 3h11M6.5 21h11'), P('M8 3v2.5c0 2.4 4 4 4 6.5s-4 4.1-4 6.5V21M16 3v2.5c0 2.4-4 4-4 6.5s4 4.1 4 6.5V21')], { ar: 18, o: [12, 12], b: 1 })], 'tip', 'status'),
       'st-idle': G([C(12, 12, 4.5)], 'none', 'status'),
       'st-complete': G([M(P('m5 12.5 4.5 4.5L19 7.5'), { ac: '0 20 0 4', ae: '0 4 0 4' })], 'none', 'status'),
       'st-blocked': G([R(5, 11, 14, 9, 2), M(P('M8 11V8a4 4 0 0 1 8 0v3'), { ay: -3 })], 'none', 'status'),
       'st-failed': G([P('M12 4.2 21 19.5H3z'), P('M12 10v4.2M12 17.1v.1')], 'none', 'status'),
       'st-paused': G([P('M9 6.5v11M15 6.5v11')], 'none', 'status'),
-      'st-recovering': G([M([P('M18.34 9.04A7 7 0 0 0 5.66 9.04'), P('M8.02 7.94 5.66 9.04 4.99 6.53'), P('M5.66 14.96A7 7 0 0 0 18.34 14.96'), P('M15.98 16.06 18.34 14.96 19.01 17.47')], { ar: -180, o: [12, 12] })], 'ratchet', 'status'),
-      'st-pending': G([C(12, 12, 7.5, { dash: '2.4 5.45' })], 'none', 'status'),
+      'st-recovering': G([M([P('M18.34 9.04A7 7 0 0 0 5.66 9.04'), P('M8.02 7.94 5.66 9.04 4.99 6.53'), P('M5.66 14.96A7 7 0 0 0 18.34 14.96'), P('M15.98 16.06 18.34 14.96 19.01 17.47')], { ar: -180, o: [12, 12] })], 'tick2', 'status'),
+      /* pending: six long dashes (4 on, 3.85 off) that do not break into specks on light themes */
+      'st-pending': G([C(12, 12, 7.5, { dash: '4 3.85' })], 'none', 'status'),
       'st-skipped': G([C(12, 12, 7.5), P('m6.7 6.7 10.6 10.6')], 'none', 'status'),
-      'st-mixed': G([C(12, 12, 7.5, { c: 'nx-dim' }), P('M12 4.5a7.5 7.5 0 0 1 0 15')], 'none', 'status')
+      /* mixed: a half-filled disc (left half filled, right half outline), nothing like a spinner */
+      'st-mixed': G([P('M12 4.5a7.5 7.5 0 0 0 0 15z', { f: 1 }), P('M12 4.5a7.5 7.5 0 0 1 0 15')], 'none', 'status')
     };
     Object.keys(GLYPHS).forEach(function (k) { GLYPHS[k].own = 1; });
 
@@ -361,16 +366,16 @@
        STATUS (plan §3): canonical status -> mark, tone and list motion, with every alias the surfaces use.
        ====================================================================== */
     var STATUS = {
-      working: { glyph: 'st-working', tone: 'working', motion: 'satellite orbit, 3.2 s, inner halo only', aliases: ['running', 'in_progress', 'doing', 'live', 'active', 'loading', 'starting'] },
-      reviewing: { glyph: 'st-reviewing', tone: 'working', motion: 'lens sweeps', aliases: ['verifying', 'review'] },
-      waiting: { glyph: 'st-waiting', tone: 'attention', motion: 'full steady halo + "?" hop (two beats every 2.4 s)', aliases: ['needs', 'needs_you', 'needs-you', 'yourmove', 'input', 'decide'] },
-      'waiting-dep': { glyph: 'st-waiting-dep', tone: 'attention', motion: 'slow tip', aliases: ['waiting_dep', 'dependency', 'blocked_on', 'held'] },
+      working: { glyph: 'st-working', tone: 'working', motion: 'satellite orbit outside the ring, 8 s, its core halo only', aliases: ['running', 'in_progress', 'doing', 'live', 'active', 'loading', 'starting'] },
+      reviewing: { glyph: 'st-reviewing', tone: 'working', motion: 'lens sweeps 2.5 units and rests; no backlight', aliases: ['verifying', 'review'] },
+      waiting: { glyph: 'st-waiting', tone: 'attention', motion: 'full steady halo, backlight breathes .6-1, "?" hops 3.4 units (two beats every 2.4 s)', aliases: ['needs', 'needs_you', 'needs-you', 'yourmove', 'input', 'decide'] },
+      'waiting-dep': { glyph: 'st-waiting-dep', tone: 'attention', motion: 'tips once, holds 60 % of 3.6 s', aliases: ['waiting_dep', 'dependency', 'blocked_on', 'held'] },
       idle: { glyph: 'st-idle', tone: 'idle', motion: 'none', aliases: ['ready'] },
       complete: { glyph: 'st-complete', tone: 'done', motion: 'clip-draws once', aliases: ['done', 'completed', 'sent', 'verified', 'restored'] },
       blocked: { glyph: 'st-blocked', tone: 'blocked', motion: 'shackle drops, then ab-alert', aliases: ['stalled', 'locked'] },
       failed: { glyph: 'st-failed', tone: 'blocked', motion: 'irregular stutter', aliases: ['error', 'invalidated', 'refused'] },
       paused: { glyph: 'st-paused', tone: 'paused', motion: 'none', aliases: ['stopped', 'hold'] },
-      recovering: { glyph: 'st-recovering', tone: 'attention', motion: 'counter-clockwise ratchet, steps of 45 degrees', aliases: ['retrying', 'replanned', 'backing-off', 'backing_off', 'fallback'] },
+      recovering: { glyph: 'st-recovering', tone: 'attention', motion: 'counter-clockwise ratchet, one 90-degree tick every 2.4 s', aliases: ['retrying', 'replanned', 'backing-off', 'backing_off', 'fallback'] },
       pending: { glyph: 'st-pending', tone: 'idle', motion: 'none', aliases: ['queued', 'next', 'scheduled', 'unverified'] },
       skipped: { glyph: 'st-skipped', tone: 'paused', motion: 'none', aliases: ['cancelled', 'canceled', 'expired', 'stale'] },
       mixed: { glyph: 'st-mixed', tone: 'changed', motion: 'none', aliases: ['partial'] }
@@ -467,7 +472,11 @@
       swap: [[0, 0], [25, 1], [50, 1], [75, 0], [100, 0]], spin: [[0, 0], [100, 1]],
       hop: [[0, 0], [8, 1], [16, 0], [24, 1], [32, 0], [100, 0]], drop: [[0, 0], [40, 1], [52, 0], [100, 0]],
       ratchet: [[0, 0], [10, .25], [25, .25], [35, .5], [50, .5], [60, .75], [75, .75], [85, 1], [100, 1]],
-      blink: [[0, 0], [40, 0], [50, 1], [90, 1], [100, 0]]
+      blink: [[0, 0], [40, 0], [50, 1], [90, 1], [100, 0]],
+      /* G1 priority shapes: a held rest (reviewing), one tip then a 60 % hold (waiting-dep), two quick 90-degree
+         ticks per 4.8 s cycle of a 180-degree-symmetric drawing (recovering: a ratchet clicks, it does not glide) */
+      calm: [[0, 0], [22, 1], [38, 1], [60, 0], [100, 0]], tip: [[0, 0], [20, 1], [40, 0], [100, 0]],
+      tick2: [[0, 0], [2, .5], [50, .5], [52, 1], [100, 1]]
     };
     function kfName(name, j, k) { return 'nx-' + String(name).replace(/[^\w-]/g, '_') + '-' + j + k; }
     function poseCss(m, t, floor) {
