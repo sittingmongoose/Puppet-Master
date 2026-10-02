@@ -321,6 +321,8 @@
       var rank = (DETAIL[st.detail] || DETAIL.glance).rank;
       var holder = ['detailed', 'diagnostics'].filter(function (lv) { return DETAIL[lv].rank > rank && PMU.board.layout(room).some(function (r) { return (PMU.widgets.get(r.id) || {}).level === lv; }); })[0];
       el.textContent = holder ? t('board.empty_level', { level: DETAIL[st.detail].label, holder: DETAIL[holder].label }) : t('board.empty_none');
+      /* an empty board's note rises 12 px, 320 OUT (WOW-SPEC 3.16) */
+      if (PMU.motion) PMU.motion.animate(el, [{ opacity: 0, transform: 'translateY(12px)' }, { opacity: 1, transform: 'none' }], { dur: 320, delay: 80, easing: 'cubic-bezier(.22,.8,.28,1)', fill: 'backwards' });
       return el;
     },
     menu: function (id, anchor) { return PMU.menu.toggle(anchor, cardMenuSpec(id)); },
@@ -334,7 +336,7 @@
   if (boardEl) boardEl.addEventListener('click', function (event) {
     var tool = event.target.closest('.pmu-cardtools [data-tool]');
     if (!tool) return;
-    var card = tool.closest('.pmu-card'); if (!card) return;
+    var card = tool.closest('.pmu-card'); if (!card || card.hasAttribute('data-leaving')) return;
     var id = card.getAttribute('data-widget'), which = tool.getAttribute('data-tool');
     event.stopPropagation();
     if (which === 'menu') PMU.cards.menu(id, tool);

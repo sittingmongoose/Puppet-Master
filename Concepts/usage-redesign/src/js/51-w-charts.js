@@ -23,13 +23,15 @@
       }
       var tools = C.headTools(ctx, m.tools && C.w(ctx, m.toolsMin || 's') ? m.tools : '');
       var legendOk = !!m.legendOwn && C.w(ctx, 's');
+      /* a room's hero chart leads with its number (WOW-TASKS N-2) */
+      var heroH = m.hero && m.headline && C.isHero(ctx) ? C.heroHead(ctx, { value: m.headline.value, fmt: m.headline.fmt, label: m.headline.label, sub: m.heroSub, tone: m.heroTone, note: C.w(ctx, 'xl') ? m.heroNote : '', noteTone: m.heroTone }) : '';
       /* rangebars are rows (18 px axis + 30 px per tool): they need their whole height before facts or a note get room */
       var MINP = m.chart === 'rangebars' ? 22 + ((m.spec && m.spec.rows) || []).length * 30 : 120;
-      var room = ctx.tier.bh - (tools ? 34 : 0) - (legendOk ? 24 : 0) - MINP;
+      var room = ctx.tier.bh - (tools ? 34 : 0) - (legendOk ? 24 : 0) - (heroH ? 66 : 0) - MINP;
       var factsOk = m.facts && m.facts.length && C.w(ctx, 'l') && room >= 28; if (factsOk) room -= 28;
       var noteOk = m.note && C.w(ctx, 'm') && room >= 24; if (noteOk) room -= 24;
-      var reserve = (tools ? 34 : 0) + (legendOk ? 24 : 0) + (noteOk ? 24 : 0) + (factsOk ? 28 : 0) + 6;
-      body.innerHTML = '<div class="pmu-trend">' + tools + (legendOk ? '<div class="pmu-trendlegend"></div>' : '') +
+      var reserve = (tools ? 34 : 0) + (legendOk ? 24 : 0) + (heroH ? 66 : 0) + (noteOk ? 24 : 0) + (factsOk ? 28 : 0) + 6;
+      body.innerHTML = '<div class="pmu-trend' + (heroH ? ' is-hero' : '') + '">' + heroH + tools + (legendOk ? '<div class="pmu-trendlegend"></div>' : '') +
         '<div class="pmu-trendplot" style="height:' + (m.chart === 'rangebars' ? Math.max(MINP, hostH(ctx, reserve)) : hostH(ctx, reserve)) + 'px"></div>' +
         (factsOk ? '<div class="pmu-factrow">' + m.facts.map(function (f) { return '<span><em>' + esc(f[0]) + '</em> <b>' + esc(f[1]) + '</b></span>'; }).join('') + '</div>' : '') +
         (noteOk ? '<p class="pmu-note">' + esc(m.note) + '</p>' : '') + '</div>';
@@ -45,6 +47,17 @@
       var legend = body.querySelector('.pmu-trendlegend');
       if (legend && m.legendOwn) { legend.textContent = ''; try { PMU.charts.legend(legend, m.legendOwn, { inline: true }); } catch (error) {} }
       var note = body.querySelector('.pmu-note'); if (note && m.note) note.textContent = m.note;
+      /* the hero number rolls its changed digits and its row flashes (WOW-SPEC 3.6) */
+      var hn = body.querySelector('.pmu-herohead .pmu-num[data-k]');
+      if (hn && m.headline) {
+        var oldV = parseFloat(hn.getAttribute('data-v')), f = hn.getAttribute('data-f'), to = m.headline.value;
+        var lb = body.querySelector('.pmu-herohead .pmu-herolabel'); if (lb && lb.textContent !== (m.headline.label || '')) lb.textContent = m.headline.label || '';
+        if (isFinite(oldV) && isFinite(to) && oldV !== to) {
+          hn.setAttribute('data-v', String(to));
+          PMU.motion.countUp(hn, oldV, to, function (v) { return C.numOnly(v, f); }, { dur: 'value' });
+          C.flashRow(hn.closest('.pmu-herohead'));
+        }
+      }
       /* the facts under the chart follow the range with the chart (REVIEW-jared must-fix 4: they stayed at 24 hours) */
       var fr = body.querySelector('.pmu-factrow');
       if (fr && m.facts) {
@@ -54,7 +67,7 @@
       return true;
     }
   });
-  function sig(ctx) { return ctx.tier.w + ctx.tier.h + (ctx.model && ctx.model.sig || '') + (ctx.model && ctx.model.tools || ''); }
+  function sig(ctx) { return ctx.tier.w + ctx.tier.h + (ctx.model && ctx.model.sig || '') + (ctx.model && ctx.model.tools || '') + (ctx.model && ctx.model.hero && C.isHero(ctx) ? 'H' : ''); }
 
   /* ================================================================== columns: labelled columns, stacked columns */
   /* model: {labels, values, idx, unit, fmt, states?, highlightLast?, caption?, stacks?, facts?, note?, legend?, tools?}
@@ -89,10 +102,12 @@
       var tools = C.headTools(ctx, m.tools || '');
       var legendOk = false, MINP = m.stacks ? 150 : 120;
       var room = ctx.tier.bh - (tools ? 34 : 0) - MINP;
-      var capOk = m.caption && C.w(ctx, 's') && room >= 22; if (capOk) room -= 22;
+      /* the caption's own wrapped height: a two-line caption no longer squeezes the plot by a line it did not count */
+      var capH = m.caption ? 22 + 18 * (Math.min(2, C.wrapLines(m.caption, ctx.tier.bw, 12.5, 600)) - 1) : 0;
+      var capOk = m.caption && C.w(ctx, 's') && room >= capH; if (capOk) room -= capH;
       var factsOk = m.facts && m.facts.length && C.w(ctx, 'm') && room >= 28; if (factsOk) room -= 28;
       var noteOk = m.note && C.w(ctx, 'm') && room >= 24; if (noteOk) room -= 24;
-      var reserve = (tools ? 34 : 0) + (capOk ? 22 : 0) + (noteOk ? 24 : 0) + (factsOk ? 28 : 0) + 6;
+      var reserve = (tools ? 34 : 0) + (capOk ? capH : 0) + (noteOk ? 24 : 0) + (factsOk ? 28 : 0) + 6;
       var plotW = Math.max(80, ctx.tier.bw - 52);
       var spec = rebucket(m, Math.max(3, Math.floor(plotW / 28)));
       body.innerHTML = '<div class="pmu-colsw">' + tools + (capOk ? '<div class="pmu-colscap">' + m.caption + '</div>' : '') + (legendOk ? '<div class="pmu-trendlegend"></div>' : '') +
@@ -112,7 +127,8 @@
       var m = ctx.model; if (!m) { body.innerHTML = C.empty('No month to date spend'); return; }
       var compact = !C.w(ctx, 'm') || !C.h(ctx, 'h2');
       var pct = m.budget ? Math.round(100 * m.spent / m.budget) : null;
-      var hero = '<div class="pmu-budgethero">' + C.valHtml(m.spent, 'money2', 'pmu-bigval', ctx.id + ':spent').replace('class="pmu-num"', 'class="pmu-num" data-count="kpi"') +
+      var big = C.isHero(ctx);
+      var hero = '<div class="pmu-budgethero' + (big ? ' is-hero' : '') + '">' + C.valHtml(m.spent, 'money2', big ? 'pmu-heronum' : 'pmu-bigval', ctx.id + ':spent').replace('class="pmu-num"', 'class="pmu-num" data-count="kpi"') +
         '<span class="pmu-budgetof">' + (m.budget ? 'of ' + esc(C.money(m.budget)) + ' budget · ' + pct + '%' : 'No budget set') + '</span>' +
         '<span class="pmu-budgetest">est. ' + esc(C.money(m.projection.to)) + (m.periodEnd ? ' by ' + esc(PMU.fmt.date(m.periodEnd)) : ' month end') + '</span></div>';
       var factsOk = C.w(ctx, 'l') && C.h(ctx, 'h3') && m.facts;

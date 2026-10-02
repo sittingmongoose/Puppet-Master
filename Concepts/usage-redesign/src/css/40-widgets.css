@@ -381,3 +381,220 @@ html[data-motion="reduced"] #panel-usage :is(.pmu-wswitch-track, .pmu-wswitch-tr
 #panel-usage .pmu-ctx.is-narrow .pmu-ctxleg em { display: none; }
 #panel-usage .pmu-ctx.is-narrow .pmu-ctxleg { grid-template-columns: 10px minmax(0, 1fr) auto; }
 #panel-usage .pmu-amount.pmu-amt { grid-template-columns: 18px minmax(44px, 1fr) minmax(0, max-content); }
+
+/* ------------------------------------------------------------------ POLISH2 content (WOW round, 2026-10-02) */
+/* rows never shrink below their wrapped text: a flex column gives way by shrinking its items, and with an explicit
+   min-height a wrapped second line overran the next row (LOOK-REVIEW-2 1 and 6: Switch history and Attention printed
+   over each other); now a row keeps its height and the complete-or-hidden pass moves whole rows to "N more" */
+#panel-usage :is(.pmu-list, .pmu-tbody, .pmu-qhist, .pmu-accrows, .pmu-provlist, .pmu-mixrows) > * { flex-shrink: 0; }
+/* one column template down the whole list (LOOK-REVIEW-2 17): the lead and value columns are the list's widest */
+#panel-usage .pmu-list.is-aligned > .pmu-lrow, #panel-usage .pmu-list.is-aligned.has-note > .pmu-lrow,
+#panel-usage .pmu-list.is-aligned > .pmu-lrow.no-lead { grid-template-columns: var(--pmu-lcols); }
+#panel-usage .pmu-list.is-aligned .pmu-llead:empty { display: inline-flex; }
+#panel-usage .pmu-list.is-aligned .pmu-lval { white-space: normal; overflow-wrap: break-word; }
+/* hosts of the change flash, the light sweep and the ring swell (PMU.film layers are absolutely placed) */
+#panel-usage :is(.pmu-lrow, .pmu-accrow, .pmu-qrow, .pmu-trow, .pmu-agline, .pmu-kpicell, .pmu-fact, .pmu-mixhead, .pmu-trendhead, .pmu-budgethero, .pmu-cachehead, .pmu-effsave, .pmu-kpiline, .pmu-provrow) { position: relative; }
+/* the resets agenda in explicit columns (LOOK-REVIEW-2 10) */
+#panel-usage .pmu-agenda.is-cols { display: grid; column-gap: 28px; align-items: start; column-count: auto; flex: none; }
+#panel-usage .pmu-agcol { display: flex; flex-direction: column; min-width: 0; }
+#panel-usage .pmu-agcol > .pmu-agday { flex: none; }
+/* quota history: a single-account row takes the grouped rows' indent and column template, its mark hangs in the
+   indent, so names and timelines line up down the card (LOOK-REVIEW-2 17) */
+#panel-usage .pmu-card .pmu-qhist > .pmu-qrow.is-single { padding-left: 48px; }
+#panel-usage .pmu-card:is([data-tw="l"], [data-tw="m"]) .pmu-qhist > .pmu-qrow.is-single { padding-left: 34px; }
+#panel-usage .pmu-card:is([data-tw="s"], [data-tw="xs"]) .pmu-qhist > .pmu-qrow.is-single { padding-left: 14px; }
+#panel-usage .pmu-card:not([data-tw="s"]):not([data-tw="xs"]) .pmu-qhist > .pmu-qrow.is-single .pmu-qident > .pmu-pmark:first-child { margin-left: -28px; }
+#panel-usage .pmu-card .pmu-qhist > .pmu-qaxis { padding-left: 48px; }
+#panel-usage .pmu-card:is([data-tw="l"], [data-tw="m"]) .pmu-qhist > .pmu-qaxis { padding-left: 34px; }
+#panel-usage .pmu-card:is([data-tw="s"], [data-tw="xs"]) .pmu-qhist > .pmu-qaxis { padding-left: 14px; }
+#panel-usage .pmu-card:not([data-tw="s"]):not([data-tw="xs"]) .pmu-qhist > .pmu-qrow.is-single .pmu-qident { overflow: visible; }
+
+/* ------------------------------------------------------------------ room heroes (WOW-SPEC 2.6, WOW-TASKS N-2) */
+#panel-usage .pmu-herohead { position: relative; display: flex; align-items: flex-end; gap: 14px; min-width: 0; flex: none; height: 60px; padding-bottom: 6px; }
+#panel-usage .pmu-heronum { position: relative; display: inline-flex; align-items: baseline; flex: none; font-size: 48px; font-weight: 640; line-height: 1; letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums; color: var(--pmu-ink); white-space: nowrap; }
+#panel-usage .pmu-heronum .pmu-u { margin-left: 2px; font-size: .55em; font-weight: 560; letter-spacing: 0; color: var(--pmu-ink-2); }
+#panel-usage .pmu-heronum::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; border-radius: 1px;
+  background: linear-gradient(90deg, var(--pmu-accent), color-mix(in srgb, var(--pmu-accent) 0%, transparent)); opacity: .9; }
+#panel-usage .pmu-herohead[data-tone="warn"] .pmu-heronum { color: var(--pmu-ink-warn); }
+#panel-usage .pmu-herohead[data-tone="crit"] .pmu-heronum { color: var(--pmu-ink-crit); }
+#panel-usage .pmu-herotext { display: flex; flex-direction: column; gap: 2px; min-width: 0; padding-bottom: 3px; }
+#panel-usage .pmu-herolabel { font-size: 13.5px; font-weight: 560; color: var(--pmu-ink-2); }
+#panel-usage .pmu-herosub { font-size: 12.5px; color: var(--pmu-ink-3); }
+#panel-usage .pmu-herosub b { font-weight: 600; color: var(--pmu-ink-2); }
+#panel-usage .pmu-card[data-tw="s"] .pmu-heronum, #panel-usage .pmu-card[data-tw="xs"] .pmu-heronum { font-size: 40px; }
+#panel-usage .pmu-budgethero.is-hero { max-height: none; align-items: flex-end; gap: 4px 14px; padding-bottom: 8px; }
+#panel-usage .pmu-budgethero.is-hero .pmu-heronum { font-size: 52px; }
+html[data-theme^="retro"] #panel-usage .pmu-heronum { letter-spacing: -.01em; }
+html[data-theme^="retro"] #panel-usage .pmu-heronum::after { border-radius: 0; background: var(--pmu-s0); height: 2px; }
+html[data-o55-nier="on"] #panel-usage .pmu-heronum { font-family: "PM NieR Mono", var(--pmu-mono); letter-spacing: .02em; }
+html[data-o55-nier="on"] #panel-usage .pmu-heronum::after { background: var(--o55-nier-ink, var(--pmu-ink)); border-radius: 0; }
+
+/* the Overview skyline (hero): each window a lit vertical gauge in its headroom tone, the auto-switch line across */
+#panel-usage .pmu-sky { display: flex; flex-direction: column; min-width: 0; min-height: 0; flex: 1 1 auto; }
+#panel-usage .pmu-skyplot { position: relative; display: grid; column-gap: 8px; align-items: end; flex: none; --sky-foot: 44px; margin-top: 2px; }
+#panel-usage .pmu-skycol { display: grid; grid-template-rows: 20px var(--sky-h) 22px 18px; row-gap: 2px; justify-items: center; min-width: 0; cursor: pointer; --c: var(--pmu-calm); }
+#panel-usage .pmu-skycol[data-ramp="1"] { --c: color-mix(in srgb, var(--pmu-calm) 50%, #3BB8F2); }
+html[data-theme$="-light"] #panel-usage .pmu-skycol[data-ramp="1"] { --c: color-mix(in srgb, var(--pmu-calm) 50%, #0A76B6); }
+#panel-usage .pmu-skycol[data-ramp="2"] { --c: var(--pmu-warn); }
+#panel-usage .pmu-skycol[data-ramp="3"] { --c: var(--pmu-crit); }
+#panel-usage .pmu-skycol[data-ramp="4"] { --c: var(--pmu-tone-exhausted, var(--pmu-crit)); }
+#panel-usage .pmu-skycol[data-ramp="5"] { --c: var(--pmu-over); }
+#panel-usage .pmu-skyval { display: inline-flex; align-items: baseline; font-size: 13.5px; font-weight: 640; color: var(--pmu-ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+#panel-usage .pmu-skyval i { margin-left: 1px; font-style: normal; font-size: .78em; font-weight: 540; color: var(--pmu-ink-3); }
+#panel-usage .pmu-skycol[data-ramp="2"] .pmu-skyval b, #panel-usage .pmu-skycol[data-ramp="3"] .pmu-skyval b, #panel-usage .pmu-skycol[data-ramp="4"] .pmu-skyval b { color: var(--c); }
+#panel-usage .pmu-skytrack { position: relative; width: clamp(14px, 42%, 26px); height: 100%; overflow: hidden; border-radius: 7px; background-color: var(--pmu-card-3, rgba(127,127,127,.12));
+  background-image: linear-gradient(to top, transparent calc(25% - 1px), var(--pmu-rule-2) calc(25% - 1px) 25%, transparent 25% calc(50% - 1px), var(--pmu-rule-2) calc(50% - 1px) 50%,
+    transparent 50% calc(75% - 1px), var(--pmu-rule-2) calc(75% - 1px) 75%, transparent 75%); }
+#panel-usage .pmu-skyfill { position: absolute; left: 0; right: 0; bottom: 0; border-radius: 7px 7px 0 0;
+  background: linear-gradient(to top, color-mix(in srgb, var(--c) 42%, transparent), color-mix(in srgb, var(--c) 82%, transparent) 70%, var(--c));
+  box-shadow: inset 0 0 12px -2px color-mix(in srgb, var(--cb, #fff) 45%, transparent); }
+#panel-usage .pmu-skyfill::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; border-radius: 2px; background: color-mix(in srgb, #fff 55%, var(--c));
+  box-shadow: 0 0 8px 2px color-mix(in srgb, var(--c) 70%, transparent); }
+html[data-theme$="-light"] #panel-usage .pmu-skyfill::before { background: color-mix(in srgb, #fff 25%, var(--c)); box-shadow: 0 0 6px 1px color-mix(in srgb, var(--c) 45%, transparent); }
+#panel-usage .pmu-skytrack.is-est .pmu-skyfill { background: repeating-linear-gradient(-45deg, color-mix(in srgb, var(--c) 70%, transparent) 0 3px, transparent 3px 6px); box-shadow: none; }
+#panel-usage .pmu-skytrack.is-est .pmu-skyfill::before { box-shadow: none; }
+#panel-usage .pmu-skyfoot { display: inline-flex; align-items: center; gap: 4px; height: 22px; }
+#panel-usage .pmu-skyfoot b { font-family: var(--pmu-mono); font-size: 11px; font-weight: 600; letter-spacing: .04em; color: var(--pmu-ink-2); }
+#panel-usage .pmu-skyreset { max-width: 100%; font-size: 11px; line-height: 18px; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: clip; }
+#panel-usage .pmu-skycol:hover .pmu-skytrack { box-shadow: 0 0 0 1px color-mix(in srgb, var(--c) 55%, transparent); }
+/* the plot keeps a 40 px gutter on the right for the auto-switch level, so its word never sits on a gauge's value */
+#panel-usage .pmu-skyplot { padding-right: 40px; }
+#panel-usage .pmu-skyswitch { position: absolute; left: -4px; right: 34px; height: 0; border-top: 2px dashed color-mix(in srgb, var(--pmu-warn) 78%, transparent); transform-origin: 0 50%; pointer-events: none;
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--pmu-warn) 45%, transparent)); }
+html[data-pmu-soft] #panel-usage .pmu-skyswitch { filter: none; }
+#panel-usage .pmu-skyplot .pmu-skyswitch span { color: var(--pmu-ink-warn); font-weight: 600; }
+#panel-usage .pmu-skyswitch span { position: absolute; left: calc(100% + 6px); top: -8px; font-family: var(--pmu-mono); font-size: 11px; letter-spacing: .04em; line-height: 16px; color: var(--pmu-ink-2); white-space: nowrap; }
+html[data-theme^="retro"] #panel-usage :is(.pmu-skytrack, .pmu-skyfill, .pmu-skyfill::before) { border-radius: 0; }
+html[data-o55-nier="on"] #panel-usage .pmu-skyfill { background: repeating-linear-gradient(to top, var(--o55-nier-ink) 0 5px, transparent 5px 7px); box-shadow: none; }
+html[data-o55-nier="on"] #panel-usage .pmu-skyfill::before { background: var(--o55-nier-ink); box-shadow: none; }
+html[data-o55-nier="on"] #panel-usage .pmu-skytrack { border-radius: 0; background-color: rgba(var(--o55-nier-ink-rgb, 72, 69, 58), .08); }
+
+/* the Ledger attempt timeline (hero): one dot per attempt on its provider's lane, sized by its recorded value */
+#panel-usage .pmu-attl { display: flex; flex-direction: column; min-width: 0; flex: 1 1 auto; }
+#panel-usage .pmu-atplot { position: relative; flex: none; padding-left: var(--lab); }
+#panel-usage .pmu-atlanes { position: absolute; left: 0; right: 0; top: 0; pointer-events: none; }
+#panel-usage .pmu-atlane { position: absolute; left: 0; right: 0; border-bottom: 1px solid var(--pmu-rule-2); }
+#panel-usage .pmu-atlab { position: absolute; left: 0; top: 50%; display: flex; align-items: center; gap: 7px; width: calc(var(--lab) - 8px); transform: translateY(-50%);
+  font-size: 12.5px; font-weight: 540; color: var(--pmu-ink-2); white-space: nowrap; pointer-events: auto; }
+#panel-usage .pmu-atarea { position: relative; }
+#panel-usage .pmu-attick { position: absolute; top: 0; bottom: 0; width: 0; border-left: 1px dashed var(--pmu-rule-2); }
+#panel-usage .pmu-atnow { position: absolute; right: 0; top: -6px; bottom: 0; width: 0; border-left: 1.5px solid color-mix(in srgb, var(--pmu-accent) 80%, transparent); }
+#panel-usage .pmu-atdot { position: absolute; z-index: 1; width: calc(var(--r) * 2); height: calc(var(--r) * 2); border-radius: 50%; transform: translate(-50%, -50%); cursor: pointer;
+  background: radial-gradient(circle at 35% 30%, var(--cb, var(--c)), var(--c) 70%); box-shadow: 0 0 0 1.5px var(--pmu-card), 0 0 14px -2px color-mix(in srgb, var(--c) 60%, transparent); }
+#panel-usage .pmu-atdot.is-est { background: color-mix(in srgb, var(--c) 72%, var(--pmu-card)); box-shadow: 0 0 0 1.5px var(--pmu-card); }
+#panel-usage .pmu-atdot.is-pending { background: transparent; border: 1.5px dashed var(--c); box-shadow: none; }
+#panel-usage .pmu-atdot:hover { z-index: 2; box-shadow: 0 0 0 1.5px var(--pmu-card), 0 0 0 3px color-mix(in srgb, var(--c) 55%, transparent); }
+#panel-usage .pmu-ataxis { position: relative; height: 22px; }
+#panel-usage .pmu-ataxis span { position: absolute; top: 6px; transform: translateX(-50%); font-family: var(--pmu-mono); font-size: 11px; letter-spacing: .04em; color: var(--pmu-ink-3); white-space: nowrap; }
+#panel-usage .pmu-ataxis span.is-now { transform: translateX(-100%); color: var(--pmu-ink-2); font-weight: 600; }
+html[data-o55-nier="on"] #panel-usage .pmu-atdot { border-radius: 0; background: var(--o55-nier-ink); box-shadow: none; }
+html[data-o55-nier="on"] #panel-usage .pmu-atdot.is-pending { background: transparent; border-color: var(--o55-nier-ink); }
+
+/* the Source authority provenance flow (hero) */
+#panel-usage .pmu-flow { display: flex; flex-direction: column; min-width: 0; flex: 1 1 auto; }
+#panel-usage .pmu-flowcaps { display: grid; flex: none; height: 20px; margin-bottom: 6px; }
+#panel-usage .pmu-flowplot { position: relative; flex: none; }
+#panel-usage .pmu-flowsvg { position: absolute; left: 0; top: 0; overflow: visible; }
+#panel-usage .pmu-flowband { fill: color-mix(in srgb, var(--pmu-calm) 22%, transparent); stroke: color-mix(in srgb, var(--pmu-calm) 40%, transparent); stroke-width: .75; }
+#panel-usage .pmu-flowband[data-k="est"] { fill: color-mix(in srgb, var(--pmu-warn) 18%, transparent); stroke: color-mix(in srgb, var(--pmu-warn) 38%, transparent); }
+#panel-usage .pmu-flowband[data-stage="2"] { fill-opacity: .8; }
+#panel-usage :is(.pmu-flowsrc, .pmu-flowmid, .pmu-flowlab) { position: absolute; box-sizing: border-box; min-width: 0; border: 1px solid var(--pmu-rule); border-radius: 9px; background: var(--pmu-card); }
+#panel-usage .pmu-flowsrc { border-radius: 5px; }
+#panel-usage .pmu-flowsrc { left: 0; display: flex; align-items: center; gap: 8px; padding: 0 10px; font-size: 12.5px; color: var(--pmu-ink); }
+#panel-usage .pmu-flowsrc > span { flex: 1 1 auto; min-width: 0; font-weight: 560; white-space: nowrap; overflow: hidden; text-overflow: clip; }
+#panel-usage .pmu-flowsrc > em { flex: none; font-style: normal; font-family: var(--pmu-mono); font-size: 11px; color: var(--pmu-ink-3); }
+#panel-usage .pmu-flowsrc[data-k="est"] .pmu-glyph { color: var(--pmu-ink-warn); }
+#panel-usage :is(.pmu-flowmid, .pmu-flowlab) { display: flex; flex-direction: column; justify-content: center; gap: 2px; padding: 0 14px; --c: var(--pmu-calm);
+  border-color: color-mix(in srgb, var(--c) 55%, var(--pmu-rule)); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--c) 30%, transparent); }
+#panel-usage .pmu-flowmid[data-k="est"] { --c: var(--pmu-warn); }
+#panel-usage .pmu-flowlab { --c: var(--pmu-accent); }
+#panel-usage :is(.pmu-flowmid, .pmu-flowlab) b { font-size: 26px; font-weight: 640; line-height: 1.1; color: var(--pmu-ink); font-variant-numeric: tabular-nums; }
+#panel-usage .pmu-flowlab b { font-size: 22px; }
+#panel-usage :is(.pmu-flowmid, .pmu-flowlab) span { font-size: 12.5px; font-weight: 560; color: var(--pmu-ink-2); }
+#panel-usage .pmu-flowlab em { font-style: normal; font-size: 12px; line-height: 1.35; color: var(--pmu-ink-3); }
+html[data-theme^="retro"] #panel-usage :is(.pmu-flowsrc, .pmu-flowmid, .pmu-flowlab) { border-radius: 0; }
+html[data-o55-nier="on"] #panel-usage :is(.pmu-flowsrc, .pmu-flowmid, .pmu-flowlab) { border-radius: 0; border-color: var(--o55-nier-ink); box-shadow: none; }
+html[data-o55-nier="on"] #panel-usage .pmu-flowband { fill: rgba(var(--o55-nier-ink-rgb, 72, 69, 58), .14); stroke: var(--o55-nier-ink); }
+
+/* free-route capacity gauges and prompt-cache split rings (room heroes, WOW-TASKS N-2) */
+#panel-usage .pmu-freehero { display: flex; align-items: center; gap: 16px; min-width: 0; flex: none; padding-bottom: 6px; }
+#panel-usage .pmu-freering { flex: none; }
+#panel-usage .pmu-freehero .pmu-freetop { flex: 1 1 auto; min-width: 0; gap: 4px; }
+#panel-usage .pmu-freecapline { display: flex; align-items: baseline; flex-wrap: wrap; gap: 2px 8px; min-width: 0; }
+#panel-usage .pmu-freecap { font-size: 34px; font-weight: 640; line-height: 1.05; letter-spacing: -.02em; color: var(--pmu-ink); font-variant-numeric: tabular-nums; }
+#panel-usage .pmu-freecapu { font-size: 12.5px; color: var(--pmu-ink-3); }
+#panel-usage .pmu-freecapvs .pmu-vs { font-size: 14px; font-weight: 560; }
+#panel-usage .pmu-card[data-tw="xs"] .pmu-freecap, #panel-usage .pmu-card[data-tw="s"] .pmu-freecap { font-size: 28px; }
+#panel-usage .pmu-cache.is-hero { gap: 8px; }
+#panel-usage .pmu-cachehero { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: none; min-width: 0; }
+#panel-usage .pmu-cachering.is-big { flex: none; }
+#panel-usage .pmu-cachesave { display: flex; align-items: baseline; gap: 6px; }
+#panel-usage .pmu-cachesave > span { font-size: 12.5px; color: var(--pmu-ink-2); }
+#panel-usage .pmu-cachesave .pmu-kpivalue { font-size: 24px; font-weight: 640; color: var(--pmu-ink-good); }
+#panel-usage .pmu-cachesave em { font-style: normal; font-size: 12px; color: var(--pmu-ink-3); }
+#panel-usage .pmu-cachehero .pmu-cacherep { text-align: center; }
+/* hosts of the room beats' light (PMU.film.sweep / flash layers are absolutely placed) */
+#panel-usage :is(.pmu-freering, .pmu-ctxring, .pmu-cachering, .pmu-budgethero, .pmu-agtime, .pmu-heronote) { position: relative; }
+#panel-usage .pmu-heronote { display: flex; flex-direction: column; gap: 1px; margin-left: auto; padding: 6px 12px; border: 1px solid color-mix(in srgb, var(--pmu-ink-warn) 45%, var(--pmu-rule));
+  border-radius: 9px; font-size: 12.5px; color: var(--pmu-ink-2); transform-origin: 50% 100%; }
+#panel-usage .pmu-heronote b { font-weight: 640; color: var(--pmu-ink); }
+#panel-usage .pmu-heronote span { font-size: 12px; color: var(--pmu-ink-3); }
+html[data-theme^="retro"] #panel-usage .pmu-heronote, html[data-o55-nier="on"] #panel-usage .pmu-heronote { border-radius: 0; }
+#panel-usage .pmu-skyswitch[data-off] { opacity: .3; }
+/* a stacked amount line: the label, then its state word under it, both whole */
+#panel-usage .pmu-amount.pmu-amt.is-stack { grid-template-columns: 18px minmax(0, 1fr); row-gap: 2px; }
+#panel-usage .pmu-amount.pmu-amt.is-stack > :nth-child(3) { grid-column: 2 / -1; justify-self: start; text-align: left; white-space: normal; }
+#panel-usage .pmu-amount.pmu-amt.is-stack .pmu-vs { white-space: normal; }
+#panel-usage .pmu-ctxfacts.is-under { flex: none; margin-top: 4px; }
+#panel-usage .pmu-list.is-aligned .pmu-lval .pmu-vs { white-space: normal; text-align: right; }
+
+/* the Plans & limits hero: the 7-day windows line */
+#panel-usage .pmu-wline { display: flex; flex-direction: column; min-width: 0; flex: 1 1 auto; }
+#panel-usage .pmu-wplot { position: relative; flex: none; padding-left: var(--lab); padding-right: var(--edge); }
+#panel-usage .pmu-wlanes { position: absolute; left: 0; right: 0; top: 0; }
+#panel-usage .pmu-wlane { position: absolute; left: 0; right: 0; border-bottom: 1px solid var(--pmu-rule-2); cursor: pointer; }
+#panel-usage .pmu-wlane:hover { background: var(--pmu-row-hover); }
+#panel-usage .pmu-wlab { position: absolute; left: 0; top: 50%; display: flex; align-items: center; gap: 7px; width: calc(var(--lab) - 10px); transform: translateY(-50%);
+  font-size: 12.5px; font-weight: 540; color: var(--pmu-ink-2); white-space: nowrap; overflow: hidden; }
+#panel-usage .pmu-wtrack { position: absolute; left: var(--lab); right: var(--edge); top: 0; bottom: 0; }
+#panel-usage .pmu-wgrid { position: absolute; left: var(--lab); right: var(--edge); top: 0; bottom: 24px; pointer-events: none; }
+#panel-usage .pmu-wgrid i { position: absolute; top: 0; bottom: 0; width: 0; border-left: 1px dashed var(--pmu-rule-2); }
+#panel-usage .pmu-wgrid i.pmu-wnow { left: 0; top: -6px; border-left: 1.5px solid color-mix(in srgb, var(--pmu-accent) 85%, transparent); }
+#panel-usage .pmu-waxis { position: absolute; left: var(--lab); right: var(--edge); bottom: 0; height: 24px; }
+#panel-usage .pmu-waxis span { position: absolute; top: 6px; transform: translateX(-50%); font-family: var(--pmu-mono); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--pmu-ink-3); white-space: nowrap; }
+#panel-usage .pmu-waxis span.is-now { transform: none; color: var(--pmu-ink-2); font-weight: 600; }
+#panel-usage .pmu-wmk { position: absolute; top: 50%; z-index: 12; display: inline-flex; align-items: center; gap: 5px; height: 18px; margin-top: -9px; margin-left: -6px; transform-origin: 6px 50%;
+  --c: var(--pmu-calm); white-space: nowrap; }
+#panel-usage .pmu-wmk.is-beyond { flex-direction: row-reverse; margin-left: 0; transform-origin: calc(100% - 6px) 50%; }
+#panel-usage .pmu-wbar { position: absolute; left: 0; top: 50%; height: 6px; margin-top: -3px; border-radius: 3px; transform-origin: 0 50%; --c: var(--pmu-calm);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--c) 10%, transparent), color-mix(in srgb, var(--c) 42%, transparent)); }
+#panel-usage .pmu-wbar[data-ramp="1"] { --c: color-mix(in srgb, var(--pmu-calm) 50%, #3BB8F2); }
+#panel-usage .pmu-wbar[data-ramp="2"] { --c: var(--pmu-warn); }
+#panel-usage .pmu-wbar[data-ramp="3"], #panel-usage .pmu-wbar[data-ramp="4"] { --c: var(--pmu-crit); }
+html[data-theme^="retro"] #panel-usage .pmu-wbar, html[data-o55-nier="on"] #panel-usage .pmu-wbar { border-radius: 0; }
+html[data-o55-nier="on"] #panel-usage .pmu-wbar { background: repeating-linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb, 72, 69, 58), .35) 0 4px, transparent 4px 6px); }
+#panel-usage .pmu-wmk[data-ramp="1"] { --c: color-mix(in srgb, var(--pmu-calm) 50%, #3BB8F2); }
+#panel-usage .pmu-wmk[data-ramp="2"] { --c: var(--pmu-warn); }
+#panel-usage .pmu-wmk[data-ramp="3"], #panel-usage .pmu-wmk[data-ramp="4"] { --c: var(--pmu-crit); }
+#panel-usage .pmu-wmk i { flex: none; width: 11px; height: 11px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 2px var(--pmu-card), 0 0 10px 1px color-mix(in srgb, var(--c) 55%, transparent); }
+#panel-usage .pmu-wmk[data-shape="d"] i { border-radius: 2px; transform: rotate(45deg) scale(.86); }
+#panel-usage .pmu-wmk[data-shape="s"] i { border-radius: 2px; }
+#panel-usage .pmu-wmk em { font-style: normal; font-family: var(--pmu-mono); font-size: 11px; letter-spacing: .03em; color: var(--pmu-ink-2); }
+
+#panel-usage .pmu-wmk.is-beyond i { background: transparent; border: 1.5px solid var(--c); box-shadow: none; }
+html[data-o55-nier="on"] #panel-usage .pmu-wmk i { border-radius: 0; background: var(--o55-nier-ink); box-shadow: none; }
+/* a tile's lines never shrink under each other: an overrun leaves the body, where the fit pass removes whole facts */
+#panel-usage .pmu-kpi > :not(.pmu-kpitrend) { flex-shrink: 0; }
+#panel-usage .pmu-freecapvs { min-width: 0; }
+#panel-usage .pmu-freecapvs .pmu-vs { white-space: normal; }
+#panel-usage .pmu-wmk.is-left { flex-direction: row-reverse; margin-left: 0; transform-origin: calc(100% - 6px) 50%; translate: calc(-100% + 6px) 0; }
+#panel-usage .pmu-wmk.no-label em { display: none; }
+/* a marker's words sit on the card's own ground, so a longer window's span never runs through them */
+#panel-usage .pmu-wmk em { padding: 0 3px; background: var(--pmu-card); border-radius: 3px; }
+html[data-o55-nier="on"] #panel-usage .pmu-wmk em { border-radius: 0; background: var(--o55-nier-paper, var(--pmu-card)); }
+/* words stay whole in narrow columns (Retro 2026-10-02): a mix row's name keeps its longest word ("Sett / led") and its
+   value wraps at a space instead; a table cell's state word wraps inside its column ("Pending receip" ran past the edge) */
+#panel-usage .pmu-mixrow { grid-template-columns: 10px minmax(min-content, 1fr) auto 36px; }
+#panel-usage .pmu-mixrow > b { white-space: normal; text-align: right; }
+#panel-usage .pmu-tcell .pmu-vs { white-space: normal; }

@@ -34,9 +34,11 @@ html[data-theme^="retro"] #panel-usage .pmu-shell { --pmu-r-menu: 0px; --pmu-r-m
 #panel-usage .pmu-menu[data-mnomo] { transition: none !important; animation: none !important; }
 #panel-usage .pmu-menu[data-mstate="closed"] { opacity: 0; transform: translate3d(0, var(--pmu-m-ty), 0) scale3d(var(--pmu-m-sx), var(--pmu-m-sy), 1); }
 #panel-usage .pmu-menu[data-mstate="open"] { opacity: 1; transform: none; }
-/* asymmetric close: transform 220 ms on an ease-in curve, the fade held to its last 45 ms (5.6 Pro ACD-439) */
-#panel-usage .pmu-menu[data-mstate="leaving"] { pointer-events: none; opacity: 0; transform: translate3d(0, var(--pmu-m-ty), 0) scale3d(var(--pmu-m-sx), var(--pmu-m-sy), 1);
-  transition: opacity calc(45ms * var(--pmu-msp, 1)) ease-in calc(175ms * var(--pmu-msp, 1)), transform calc(220ms * var(--pmu-msp, 1)) cubic-bezier(.45, .05, .55, .2); }
+/* the 5.6 Pro asymmetric close (WOW-SPEC 3.14, E-6): 180 ms, a UNIFORM end transform (6 px toward the trigger, scale .94),
+   fully opaque until 70 %, then faded over the last 54 ms: never a squashed opaque frame */
+#panel-usage .pmu-menu[data-mstate="leaving"] { pointer-events: none; opacity: 0; transform: translate3d(0, var(--pmu-m-cy, -6px), 0) scale(.94);
+  transition: opacity calc(54ms * var(--pmu-msp, 1)) linear calc(126ms * var(--pmu-msp, 1)), transform calc(180ms * var(--pmu-msp, 1)) cubic-bezier(.4, 0, .2, 1); }
+#panel-usage .pmu-menu[data-side="above"] { --pmu-m-cy: 6px; }
 /* height spring when the contents change (search, rail, drill-in): 340 ms with overshoot (5.6 Pro model picker) */
 #panel-usage .pmu-menu.pmu-m-spring { transition: opacity calc(160ms * var(--pmu-msp, 1)) var(--pmu-m-ease), transform calc(300ms * var(--pmu-msp, 1)) cubic-bezier(.22, 1.55, .36, 1),
   height calc(340ms * var(--pmu-msp, 1)) cubic-bezier(.22, 1.72, .36, 1); }
@@ -67,7 +69,7 @@ html[data-theme^="retro"] #panel-usage .pmu-shell { --pmu-r-menu: 0px; --pmu-r-m
 #panel-usage .pmu-mdiv { height: 1px; margin: 5px 3px; background: var(--pmu-rule); }
 #panel-usage .pmu-mitem { display: flex; align-items: center; gap: 9px; width: 100%; min-height: 34px; padding: 6px 8px; border: 0; border-radius: var(--pmu-r-mitem);
   background: transparent; color: var(--pmu-ink-2); font: inherit; text-align: left; cursor: pointer; outline: none;
-  transition: background-color 130ms, color 130ms, transform 130ms; }
+  transition: background-color calc(130ms * var(--pmu-speed, 1)), color calc(130ms * var(--pmu-speed, 1)), transform calc(130ms * var(--pmu-speed, 1)); }
 #panel-usage .pmu-mitem.has-sub { min-height: 42px; }
 #panel-usage .pmu-mitem:hover, #panel-usage .pmu-mitem:focus-visible { background: var(--pmu-menu-hot); color: var(--pmu-ink); }
 #panel-usage .pmu-mitem.active { background: var(--pmu-menu-active); color: var(--pmu-ink); }
@@ -99,7 +101,7 @@ html[data-theme^="retro"] #panel-usage .pmu-shell { --pmu-r-menu: 0px; --pmu-r-m
 #panel-usage .pmu-mrail { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 0; border-right: 1px solid var(--pmu-rule);
   overflow: auto; scrollbar-width: none; }
 #panel-usage .pmu-mrailbtn { display: inline-grid; place-items: center; flex: none; width: 32px; height: 32px; padding: 0; border: 0; border-radius: 9px;
-  background: transparent; color: var(--pmu-ink-3); cursor: pointer; outline: none; transition: background-color 130ms, color 130ms; }
+  background: transparent; color: var(--pmu-ink-3); cursor: pointer; outline: none; transition: background-color calc(130ms * var(--pmu-speed, 1)), color calc(130ms * var(--pmu-speed, 1)); }
 #panel-usage .pmu-mrailbtn:hover, #panel-usage .pmu-mrailbtn:focus-visible { background: var(--pmu-menu-hot); color: var(--pmu-ink); }
 #panel-usage .pmu-mrailbtn.active { background: var(--pmu-menu-active); color: var(--pmu-accent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmu-accent) 45%, transparent); }
 #panel-usage .pmu-mrailbtn .pmu-ico { width: 16px; height: 16px; }

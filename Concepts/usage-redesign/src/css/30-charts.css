@@ -1,7 +1,11 @@
 /* Chart kit styles (owner: charts; DESIGN-SPEC 7, DESIGN-SPEC-ATLAS 4, 6 and 7). Marks are painted from these rules, never
    inline: every colour key (data-tk token type, data-vendor provider hue, data-series-index slot, data-tone state) sets
-   --c, and every mark paints with var(--c) or the matching page-level gradient. Tokens come from 00-base.css; nothing
-   here runs color-mix(). NieR rules live in 92-nier-charts.css. */
+   --c, and every mark paints with var(--c) or the matching page-level gradient; --cb is its bright partner (the -b token
+   where the theme has one) for lit tips, caps and heads. Tokens come from 00-base.css; color-mix() here is static paint
+   (resolved once per style recalc, never animated). NieR rules live in 92-nier-charts.css.
+   WOW round (WOW-SPEC 2.3 to 2.5, WOW-TASKS C-1): every mark carries light at rest, statically: under-glow on hero lines,
+   areas with a 34 % gradient, a halo on NOW, meters on a severity ramp with a lit tip, columns with rounded lit caps,
+   rings lit along their arc with a round lit head. Estimates never glow (light means measured). */
 
 /* ---------- colour keys -> --c ---------- */
 #panel-usage [data-series-index="0"] { --c: var(--pmu-s0); } #panel-usage [data-series-index="1"] { --c: var(--pmu-s1); }
@@ -24,6 +28,12 @@
 #panel-usage [data-tone="crit"], #panel-usage [data-tone="hot"], #panel-usage [data-tone="exhausted"] { --c: var(--pmu-crit); }
 #panel-usage [data-tone="over"] { --c: var(--pmu-over); } #panel-usage [data-tone="watch"] { --c: var(--pmu-calm); }
 #panel-usage [data-tone="missing"] { --c: var(--pmu-rule-strong); }
+#panel-usage :is([data-series-index], [data-tk], [data-vendor], [data-tone], .pmu-meter) { --cb: color-mix(in srgb, var(--c) 56%, #fff); }
+html[data-theme$="-light"] #panel-usage :is([data-series-index], [data-tk], [data-vendor], [data-tone], .pmu-meter) { --cb: color-mix(in srgb, var(--c) 78%, #fff); }
+#panel-usage [data-series-index="0"] { --cb: var(--pmu-s0-b); } #panel-usage [data-series-index="1"] { --cb: var(--pmu-s1-b); }
+#panel-usage [data-series-index="2"] { --cb: var(--pmu-s2-b); } #panel-usage [data-series-index="3"] { --cb: var(--pmu-s3-b); }
+#panel-usage [data-series-index="4"] { --cb: var(--pmu-s4-b); } #panel-usage [data-series-index="5"] { --cb: var(--pmu-s5-b); }
+#panel-usage [data-series-index="6"] { --cb: var(--pmu-s6-b); } #panel-usage [data-series-index="7"] { --cb: var(--pmu-s7-b); }
 
 /* ---------- chart roots and layers ---------- */
 #panel-usage .pmu-chart { position: relative; min-width: 0; font-variant-numeric: tabular-nums; color: var(--pmu-ink); }
@@ -93,8 +103,8 @@
 #panel-usage .pmu-mark[data-mark="band"][data-tk="cr"] { fill: url(#pmu-gb-tk-cr); fill-opacity: 1; }
 #panel-usage .pmu-mark[data-mark="band"][data-series-role="forecast"] { fill: var(--c); fill-opacity: .12; }
 #panel-usage .pmu-mark[data-mark="edge"] { fill: none; stroke: var(--c); stroke-width: 1.25; stroke-linejoin: round; stroke-linecap: round; }
-#panel-usage .pmu-mark[data-mark="edge"][data-primary] { stroke-width: 1.75; }
-#panel-usage .pmu-mark[data-mark="line"] { fill: none; stroke: var(--c); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+#panel-usage .pmu-mark[data-mark="edge"][data-primary] { stroke-width: 2.25; }
+#panel-usage .pmu-mark[data-mark="line"] { fill: none; stroke: var(--c); stroke-width: 2.25; stroke-linejoin: round; stroke-linecap: round; }
 #panel-usage .pmu-mark[data-mark="line"][data-role="cost"] { stroke-width: 2; }
 #panel-usage .pmu-mark[data-mark="bridge"] { fill: none; stroke: var(--c); stroke-width: 1.25; stroke-dasharray: 2 4; stroke-linecap: round; opacity: .55; }
 #panel-usage .pmu-costdots .pmu-mark[data-mark="dot"] { stroke-width: 1.75; }
@@ -102,11 +112,34 @@
 #panel-usage .pmu-mark[data-mark="line"][data-dash="dash"] { stroke-dasharray: 9 4; }
 #panel-usage .pmu-mark[data-mark="line"][data-spark] { stroke-width: 1.5; }
 #panel-usage .pmu-mark[data-mark="forecast"] { fill: none; stroke: var(--c); stroke-width: 2; stroke-dasharray: 4 3; stroke-linecap: round; opacity: .9; }
-#panel-usage .pmu-mark[data-mark="glow"] { display: none; fill: none; stroke: var(--c); stroke-linejoin: round; stroke-linecap: round; pointer-events: none; }
+/* the static under-glow of a hero line, every family (WOW-SPEC 2.4): a wide soft duplicate stroke, blurred once on a GPU */
+#panel-usage .pmu-mark[data-mark="glow"] { fill: none; stroke: var(--c); stroke-width: 6; opacity: .16; stroke-linejoin: round; stroke-linecap: round; pointer-events: none; }
+html[data-theme$="-light"] #panel-usage .pmu-mark[data-mark="glow"] { opacity: .12; }
+html:not([data-pmu-soft]) #panel-usage .pmu-mark[data-mark="glow"] { filter: blur(2px); stroke-width: 7; opacity: .26; }
+html:not([data-pmu-soft])[data-theme$="-light"] #panel-usage .pmu-mark[data-mark="glow"] { opacity: .18; }
 #panel-usage .pmu-mark[data-mark="dot"] { fill: var(--c); stroke: var(--pmu-card); stroke-width: 2; transform-box: fill-box; transform-origin: center; }
 #panel-usage .pmu-mark[data-mark="dot"][data-spark] { stroke-width: 1.5; }
 #panel-usage .pmu-halo { fill: var(--c); opacity: .18; stroke: none; pointer-events: none; transform-box: fill-box; transform-origin: center; }
-html[data-theme^="retro"] #panel-usage .pmu-halo, html[data-o55-nier="on"] #panel-usage .pmu-halo { display: none; }
+html[data-theme^="retro"] #panel-usage :is(.pmu-halo, .pmu-hhalo), html[data-o55-nier="on"] #panel-usage :is(.pmu-halo, .pmu-hhalo) { display: none; }
+/* HTML marks over the plot (WOW-TASKS C-9): dots, halos, the TODAY marker and the budget rule animate on the compositor */
+#panel-usage .pmu-hmarks { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+#panel-usage .pmu-hdot { position: absolute; display: block; width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; border-radius: 50%; box-sizing: border-box;
+  background: var(--c); box-shadow: 0 0 0 2px var(--pmu-card); }
+#panel-usage .pmu-hdot.is-sm { width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px; box-shadow: 0 0 0 1.75px var(--pmu-card); }
+#panel-usage .pmu-hdot.is-xs { width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px; box-shadow: 0 0 0 1.5px var(--pmu-card); }
+#panel-usage .pmu-hdot.is-hollow { background: var(--pmu-card); border: 1.75px solid var(--c); }
+#panel-usage .pmu-hdot.is-pending { width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; background: transparent; border: 1.5px dashed var(--c); box-shadow: none; opacity: .8; }
+#panel-usage .pmu-hhalo { position: absolute; display: block; width: 20px; height: 20px; margin: -10px 0 0 -10px; border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--c) 34%, transparent) 0, color-mix(in srgb, var(--c) 18%, transparent) 42%, transparent 70%); }
+#panel-usage .pmu-hdot.is-dim, #panel-usage .pmu-hhalo.is-dim { opacity: .2; }
+#panel-usage .pmu-hnow { position: absolute; width: 0; border-left: 1px dashed var(--pmu-ink-3); }
+#panel-usage .pmu-hnow.is-today { border-left: 1.5px solid var(--pmu-ink-2); }
+#panel-usage .pmu-hnow > b { position: absolute; left: -5px; top: -3px; width: 9px; height: 9px; margin-left: -.5px; border-radius: 50%; background: var(--pmu-ink); box-shadow: 0 0 0 2px var(--pmu-card); }
+#panel-usage .pmu-hlab { position: absolute; font-family: var(--pmu-mono); font-size: 11px; line-height: 13px; font-stretch: 87.5%; letter-spacing: .05em; text-transform: uppercase;
+  white-space: nowrap; color: var(--pmu-ink-3); text-shadow: 0 0 3px var(--pmu-card), 0 0 2px var(--pmu-card); }
+#panel-usage .pmu-hlab.is-today { color: var(--pmu-ink); font-weight: 600; }
+#panel-usage .pmu-hlab[data-role="budget"] { color: var(--pmu-ink-warn); }
+#panel-usage .pmu-hrule { position: absolute; height: 0; border-top: 1.5px dashed var(--pmu-warn); transform-origin: 0 50%; opacity: .85; }
 #panel-usage .pmu-mark[data-mark="dot"][data-series-role="forecast"] { fill: var(--pmu-card); stroke: var(--c); stroke-width: 1.75; }
 #panel-usage .pmu-plot.is-split .pmu-g-total { opacity: 0; }
 #panel-usage .pmu-plot .pmu-g-bands { opacity: 0; }
@@ -114,9 +147,9 @@ html[data-theme^="retro"] #panel-usage .pmu-halo, html[data-o55-nier="on"] #pane
 #panel-usage .pmu-plot .pmu-g-total, #panel-usage .pmu-plot .pmu-g-bands { transition: opacity 520ms cubic-bezier(.65,0,.35,1); }
 #panel-usage .pmu-chart[data-compact="1"] .pmu-legendslot { display: none; }
 
-/* depth per family (A1 7.1): no glow in Basic, Retro and NieR; Friendly one 5 px under-stroke at 12 %, Glass 6 px at 16 % */
-html[data-theme^="friendly"] #panel-usage .pmu-mark[data-mark="glow"] { display: inline; stroke-width: 5; opacity: .12; }
-html[data-theme^="glass"] #panel-usage .pmu-mark[data-mark="glow"] { display: inline; stroke-width: 6; opacity: .16; }
+/* depth per family: Glass glows widest (WOW-SPEC 6); Retro's phosphor rests at .14 after its one-shot afterglow (7) */
+html[data-theme^="glass"] #panel-usage .pmu-mark[data-mark="glow"] { stroke-width: 9; opacity: .24; }
+html[data-theme^="retro"] #panel-usage .pmu-mark[data-mark="glow"] { stroke-width: 6; opacity: .14; filter: none; stroke-linecap: square; stroke-linejoin: miter; }
 
 /* ---------- legend (A1 7.1) ---------- */
 #panel-usage .pmu-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12.5px; line-height: 18px; color: var(--pmu-ink-2); min-width: 0; }
@@ -132,7 +165,11 @@ html[data-theme^="glass"] #panel-usage .pmu-mark[data-mark="glow"] { display: in
 #panel-usage .pmu-legend-item b { font-weight: 600; color: var(--pmu-ink); }
 #panel-usage .pmu-legend-rows { flex-direction: column; gap: 2px; }
 #panel-usage .pmu-legend-rows .pmu-legend-item { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto; gap: 8px; }
-#panel-usage .pmu-legend-rows .pmu-legend-name { overflow: hidden; text-overflow: ellipsis; }
+/* row legends wrap their names instead of cutting them ("Pending..." read as a clipped word, LOOK-REVIEW-2 item 13) */
+#panel-usage .pmu-legend-rows .pmu-legend-item { white-space: normal; align-items: start; }
+#panel-usage .pmu-legend-rows .pmu-legend-name { overflow-wrap: break-word; line-height: 16px; min-width: 0; }
+#panel-usage .pmu-legend-rows .pmu-swatch { margin-top: 3px; }
+#panel-usage .pmu-legend-rows .pmu-legend-item b { white-space: nowrap; }
 #panel-usage .pmu-swatch { display: inline-block; flex: none; width: 10px; height: 10px; border-radius: 3px; background: var(--c, var(--pmu-s0)); }
 #panel-usage .pmu-swatch[data-sw="line"] { width: 14px; height: 3px; border-radius: 2px; }
 #panel-usage .pmu-swatch[data-sw="dash"] { width: 14px; height: 0; border-radius: 0; background: none; border-top: 2px dashed var(--c, var(--pmu-ink)); }
@@ -145,15 +182,26 @@ html[data-theme^="glass"] #panel-usage .pmu-mark[data-mark="glow"] { display: in
 /* ---------- crosshair and readout card (A1 7.1) ---------- */
 #panel-usage .pmu-xh { position: absolute; left: 0; top: 0; width: 1px; height: 0; background: var(--pmu-ink-3); opacity: 0; pointer-events: none; z-index: 3;
   transition: transform 140ms cubic-bezier(.2,.8,.2,1), opacity 140ms cubic-bezier(.2,.8,.2,1); }
+/* the hovered bucket's band (accent 8 %), the hovered series' dot grown to 5 px with a 12 px halo (WOW-SPEC 3.5) */
+#panel-usage .pmu-xband { position: absolute; left: 0; top: 0; width: 0; height: 0; z-index: 1; pointer-events: none; opacity: 0; border-radius: 3px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent-primary) 4%, transparent), color-mix(in srgb, var(--accent-primary) 9%, transparent));
+  transition: transform calc(140ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1), opacity calc(120ms * var(--pmu-speed, 1)) cubic-bezier(.22,.8,.28,1), width calc(140ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1); }
+#panel-usage .pmu-xh-on .pmu-xband { opacity: 1; }
 #panel-usage .pmu-xdot { position: absolute; left: 0; top: 0; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: var(--pmu-card);
   border: 2px solid var(--c, var(--pmu-ink)); box-sizing: border-box; opacity: 0; pointer-events: none; z-index: 4;
-  transition: transform 140ms cubic-bezier(.2,.8,.2,1), opacity 140ms cubic-bezier(.2,.8,.2,1); }
+  transition: transform calc(140ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1), opacity calc(140ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1), scale calc(160ms * var(--pmu-speed, 1)) cubic-bezier(.34,1.45,.64,1); scale: .8; }
+#panel-usage .pmu-xdot.is-hot { background: var(--c, var(--pmu-ink)); border-color: var(--pmu-card); scale: 1;
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--c, var(--pmu-ink)) 22%, transparent); }
 #panel-usage .pmu-xdot[data-dot="ink"] { border-color: var(--pmu-ink); }
+#panel-usage .pmu-xdot[data-dot="ink"].is-hot { background: var(--pmu-ink); border-color: var(--pmu-card); }
+/* the other series dim to 35 % while one is hovered (160 ms) */
+#panel-usage .pmu-chart .pmu-mark.is-cold { opacity: .35; transition: opacity calc(160ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1); }
 #panel-usage .pmu-rolayer { position: fixed; left: 0; top: 0; width: 0; height: 0; overflow: visible; z-index: 9500; pointer-events: none; }
-#panel-usage .pmu-readout { position: absolute; left: 0; top: 0; z-index: 6; pointer-events: none; min-width: 200px; max-width: 320px; box-sizing: border-box;
+#panel-usage .pmu-readout { position: absolute; left: 0; top: 0; z-index: 6; pointer-events: none; min-width: 176px; max-width: 220px; box-sizing: border-box;
   padding: 10px 12px; border-radius: 10px; background: var(--pmu-card); border: 1px solid var(--pmu-rule); box-shadow: var(--pmu-shadow-2);
   font-size: 12.5px; line-height: 1.35; color: var(--pmu-ink); opacity: 0; font-variant-numeric: tabular-nums;
-  transition: opacity 140ms cubic-bezier(.2,.8,.2,1), transform 140ms cubic-bezier(.2,.8,.2,1); }
+  transition: opacity calc(160ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1), transform calc(140ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1); }
+#panel-usage .pmu-readout.is-flip { transition: opacity calc(160ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1), transform calc(220ms * var(--pmu-speed, 1)) cubic-bezier(.22,1,.36,1); }
 html[data-theme="glass-dark"] #panel-usage .pmu-readout { background: #2A2140; }
 html[data-theme="glass-light"] #panel-usage .pmu-readout { background: #FBFCFE; }
 #panel-usage .pmu-readout strong { display: block; margin-bottom: 6px; font-family: var(--pmu-mono); font-size: 11px; font-weight: 400; letter-spacing: .04em;
@@ -166,8 +214,10 @@ html[data-theme="glass-light"] #panel-usage .pmu-readout { background: #FBFCFE; 
 #panel-usage .pmu-ro-row.is-total b { font-weight: 680; }
 #panel-usage .pmu-ro-row .pmu-swatch { justify-self: center; }
 #panel-usage .pmu-ro-sep { height: 1px; margin: 5px 0; background: var(--pmu-rule-2); }
-#panel-usage .pmu-readout p { margin: 6px 0 0; font-size: 12px; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-readout p { margin: 6px 0 0; font-size: 12px; line-height: 1.35; color: var(--pmu-ink-3); white-space: normal; overflow-wrap: break-word; }
+#panel-usage .pmu-readout strong { white-space: normal; }
 #panel-usage .pmu-xh-on .pmu-xh, #panel-usage .pmu-xh-on .pmu-xdot, #panel-usage .pmu-readout.is-on { opacity: 1; }
+#panel-usage .pmu-xh-on .pmu-xh { opacity: .55; }
 #panel-usage .pmu-xh-instant .pmu-xh, #panel-usage .pmu-xh-instant .pmu-xdot, #panel-usage .pmu-readout.is-instant { transition: opacity 140ms cubic-bezier(.2,.8,.2,1); }
 
 /* ---------- meters (A1 6): value line, quiet track with quarter ticks, sliding-window fill with the wash, the notch ---------- */
@@ -200,6 +250,20 @@ html[data-theme="glass-light"] #panel-usage .pmu-readout { background: #FBFCFE; 
 #panel-usage .pmu-meter[data-size="k"] .pmu-metertrack::before { top: 1px; bottom: 1px; }
 #panel-usage .pmu-meterclip { position: absolute; inset: 0; overflow: hidden; border-radius: inherit; }
 #panel-usage .pmu-meterfill { position: absolute; inset: 0; border-radius: var(--mr); background-color: var(--c, var(--pmu-calm)); transform: translateX(calc(var(--fill, 0%) - 100%)); will-change: transform; }
+/* the severity ramp follows the value (WOW-SPEC 2.3): calm teal below 50, cyan 50-79, then the Settings thresholds: amber
+   (warn), red-orange (switch), exhausted red (100), magenta (over); the value words keep the semantic tone colours */
+#panel-usage .pmu-meter[data-ramp="0"] { --c: var(--pmu-calm); }
+#panel-usage .pmu-meter[data-ramp="1"] { --c: color-mix(in srgb, var(--pmu-calm) 50%, #3BB8F2); }
+html[data-theme$="-light"] #panel-usage .pmu-meter[data-ramp="1"] { --c: color-mix(in srgb, var(--pmu-calm) 50%, #0A76B6); }
+#panel-usage .pmu-meter[data-ramp="2"] { --c: var(--pmu-warn); }
+#panel-usage .pmu-meter[data-ramp="3"] { --c: var(--pmu-crit); }
+#panel-usage .pmu-meter[data-ramp="4"] { --c: var(--pmu-tone-exhausted, var(--pmu-crit)); }
+#panel-usage .pmu-meter[data-ramp="5"] { --c: var(--pmu-over); }
+/* the lit tip: a 2 px bright cap on the head and a soft glow just past it, static; never on an estimate or an empty fill */
+#panel-usage .pmu-meterfill::after { content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 2px; border-radius: 0 var(--mr) var(--mr) 0; background: var(--cb);
+  box-shadow: 0 0 9px 2px color-mix(in srgb, var(--c) 60%, transparent); }
+#panel-usage .pmu-meter:is([data-est], [data-zero], [data-stale]) .pmu-meterfill::after { display: none; }
+#panel-usage .pmu-meterheat { position: absolute; inset: 0; border-radius: inherit; background-color: var(--c); opacity: 0; pointer-events: none; }
 #panel-usage .pmu-meterwash { position: absolute; top: 0; bottom: 0; right: 0; left: calc(100% - var(--fill, 0%)); border-radius: inherit; background: linear-gradient(90deg, var(--pmu-wash), transparent 88%); }
 #panel-usage .pmu-meter[data-est] .pmu-meterfill { background-image: repeating-linear-gradient(135deg, var(--pmu-card) 0 2px, transparent 2px 5px); background-blend-mode: normal; }
 #panel-usage .pmu-meter[data-est] .pmu-meterfill { opacity: .78; }
@@ -214,7 +278,8 @@ html[data-theme="glass-light"] #panel-usage .pmu-readout { background: #FBFCFE; 
 /* the rail is a zero-width line at the notch (left: --at of the track), so nothing reaches past the track; a threshold
    change slides it with a transform from the old position (FLIP, 34-charts-bars.js) */
 #panel-usage .pmu-notchrail { position: absolute; top: 0; bottom: 0; left: var(--at, 100%); width: 0; pointer-events: none; }
-#panel-usage .pmu-notch { position: absolute; left: -1px; top: calc(-1 * var(--ni)); bottom: calc(-1 * var(--ni)); width: 2px; border-radius: 1px; background: var(--pmu-ink); }
+#panel-usage .pmu-notch { position: absolute; left: -1px; top: calc(-1 * var(--ni)); bottom: calc(-1 * var(--ni)); width: 2px; border-radius: 1px; background: var(--pmu-ink);
+  box-shadow: 0 0 0 1px var(--pmu-card); transform-origin: 50% 50%; }
 #panel-usage .pmu-notch[data-faint] { opacity: .32; transform: scaleY(.7); }
 #panel-usage .pmu-notch[data-off] { opacity: .18; transform: scaleY(.7); }
 #panel-usage .pmu-meterfoot { display: flex; justify-content: space-between; gap: 8px; margin-top: 4px; font-size: 12px; line-height: 14px; color: var(--pmu-ink-3);
@@ -250,11 +315,15 @@ html[data-theme="glass-light"] #panel-usage .pmu-readout { background: #FBFCFE; 
 #panel-usage .pmu-rkval { grid-area: val; display: inline-flex; align-items: baseline; gap: 6px; white-space: nowrap; }
 #panel-usage .pmu-rkval b { font-size: 13px; font-weight: 620; }
 #panel-usage .pmu-rkval em { font-style: normal; font-size: 12px; color: var(--pmu-ink-3); }
-#panel-usage .pmu-rkbar { grid-area: bar; display: block; height: 6px; border-radius: 3px; background: var(--pmu-card-3); overflow: hidden; }
+#panel-usage .pmu-rkbar { grid-area: bar; position: relative; display: block; height: 6px; border-radius: 3px; background: var(--pmu-card-3); }
 #panel-usage .pmu-rkfill { display: flex; gap: 1px; height: 100%; width: var(--f, 0%); border-radius: 3px; overflow: hidden; transform-origin: 0 50%; }
 #panel-usage .pmu-rkfill > i, #panel-usage .pmu-sbfill > i, #panel-usage .pmu-mixseg { display: block; min-width: 0; height: 100%; flex-basis: 0;
   background-color: var(--c); background-image: linear-gradient(90deg, var(--pmu-wash), transparent 88%); }
 #panel-usage .pmu-sbfill > i, #panel-usage .pmu-mixseg { background-image: none; }
+/* lit end caps on every bar's head (WOW-SPEC 2.5), static */
+#panel-usage :is(.pmu-rkfill, .pmu-sbfill) > i:last-child:not([data-est]), #panel-usage .pmu-tb i, #panel-usage .pmu-rbar { box-shadow: inset -2px 0 0 var(--cb); }
+#panel-usage .pmu-sbfill > i { background-image: linear-gradient(180deg, color-mix(in srgb, #fff 10%, transparent), transparent 45%, color-mix(in srgb, var(--pmu-card) 22%, transparent)); }
+html[data-theme$="-light"] #panel-usage .pmu-sbfill > i { background-image: linear-gradient(180deg, color-mix(in srgb, #fff 22%, transparent), transparent 55%); }
 #panel-usage .pmu-mark[data-est="1"] { background-image: repeating-linear-gradient(135deg, var(--pmu-card) 0 2px, transparent 2px 5px) !important; opacity: .82; }
 #panel-usage .pmu-c-ranked[data-inline="1"] .pmu-rk { grid-template-columns: var(--rk-name, minmax(56px, 40%)) minmax(36px, 1fr) auto; grid-template-areas: "name bar val"; align-items: center; min-height: 28px; padding: 4px 8px; }
 
@@ -268,14 +337,35 @@ html[data-theme="glass-light"] #panel-usage .pmu-readout { background: #FBFCFE; 
 #panel-usage .pmu-ringbox { position: relative; flex: none; }
 #panel-usage .pmu-ringbox svg { display: block; overflow: visible; }
 #panel-usage .pmu-ringtrack { fill: none; stroke: var(--pmu-track); stroke-width: var(--sw, 12); }
-#panel-usage .pmu-ringbox [data-mark="arc"] { fill: none; stroke: var(--c); stroke-width: var(--sw, 12); stroke-linecap: round; transition: opacity 140ms; }
-#panel-usage .pmu-ringbox [data-mark="arc"][data-est] { stroke-opacity: .55; }
-#panel-usage .pmu-ringbox [data-mark="arc"][data-tk="cr"] { stroke: url(#pmu-gr-cr); } #panel-usage .pmu-ringbox [data-mark="arc"][data-tk="in"] { stroke: url(#pmu-gr-in); }
-#panel-usage .pmu-ringbox [data-mark="arc"][data-tk="out"] { stroke: url(#pmu-gr-out); } #panel-usage .pmu-ringbox [data-mark="arc"][data-tk="all"] { stroke: url(#pmu-gr-all); }
-#panel-usage .pmu-ringbox [data-mark="arc"][data-tone="calm"]:not([data-tk]) { stroke: url(#pmu-gr-calm); } #panel-usage .pmu-ringbox [data-mark="arc"][data-tone="warn"]:not([data-tk]) { stroke: url(#pmu-gr-warn); }
-#panel-usage .pmu-ringbox [data-mark="arc"][data-tone="crit"]:not([data-tk]) { stroke: url(#pmu-gr-crit); }
-html[data-theme^="retro"] #panel-usage .pmu-ringbox [data-mark="arc"] { stroke: var(--c); }
-#panel-usage .pmu-centre { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none; padding: 0 16%; }
+/* rings lit along the arc (WOW-SPEC 2.5): short sub-arcs from 55 % of the colour (mixed into a solid base) to 100 % at
+   the head, a round start cap, 1 px gaps between segments, a round head cap in the bright partner with a soft static glow */
+#panel-usage .pmu-ringbox { --ring-base: var(--pmu-card); }
+html[data-theme="glass-dark"] #panel-usage .pmu-ringbox { --ring-base: #2A2140; }
+html[data-theme="glass-light"] #panel-usage .pmu-ringbox { --ring-base: #F2F4FA; }
+#panel-usage .pmu-ringbox [data-mark="arc"] { fill: none; stroke: color-mix(in srgb, var(--c) var(--k, 100%), var(--ring-base)); stroke-width: var(--sw, 12); stroke-linecap: butt; transition: opacity 140ms; }
+#panel-usage .pmu-ringcap { fill: color-mix(in srgb, var(--c) var(--k, 100%), var(--ring-base)); stroke: none; }
+#panel-usage .pmu-ringcap.is-head { fill: var(--cb); }
+#panel-usage .pmu-ringglow { fill: var(--c); opacity: .2; stroke: none; }
+html:not([data-pmu-soft]) #panel-usage .pmu-ringglow { filter: blur(2.5px); opacity: .42; }
+#panel-usage .pmu-ringbox [data-mark="arc"][data-est] { stroke: var(--c); stroke-opacity: .5; }
+#panel-usage .pmu-ringcap[data-est] { fill: var(--c); fill-opacity: .5; }
+html[data-theme^="retro"] #panel-usage .pmu-ringbox [data-mark="arc"], html[data-theme^="retro"] #panel-usage .pmu-ringcap { stroke: var(--c); fill: var(--c); }
+html[data-theme^="retro"] #panel-usage .pmu-ringbox [data-mark="arc"] { fill: none; }
+html[data-theme^="retro"] #panel-usage .pmu-ringcap.is-start { display: none; }
+/* the compositor sweep (WOW-TASKS C-2): two half masks turn over counter-turned copies; a glint rides the head */
+#panel-usage .pmu-sweep, #panel-usage .pmu-sweep-h, #panel-usage .pmu-sweep-r, #panel-usage .pmu-sweep-c, #panel-usage .pmu-sweep-arm { position: absolute; inset: 0; pointer-events: none; }
+#panel-usage .pmu-sweep { z-index: 1; }
+#panel-usage .pmu-sweep-h.is-r { clip-path: inset(0 0 0 50%); }
+#panel-usage .pmu-sweep-h.is-l { clip-path: inset(0 50% 0 0); }
+#panel-usage .pmu-sweep-r { clip-path: inset(0 0 0 50%); will-change: transform; }
+#panel-usage .pmu-sweep-c, #panel-usage .pmu-sweep-arm { will-change: transform; }
+#panel-usage .pmu-sweep-c > svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; }
+#panel-usage .pmu-sweep-glint { position: absolute; left: 50%; top: 8.33%; width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 50%;
+  background: rgba(255,255,255,.75); box-shadow: 0 0 8px 3px rgba(255,255,255,.32); }
+html[data-theme$="-light"] #panel-usage .pmu-sweep-glint { background: rgba(255,255,255,.9); box-shadow: 0 0 6px 2px rgba(255,255,255,.7); }
+html[data-theme^="retro"] #panel-usage .pmu-sweep-glint { border-radius: 0; background: var(--pmu-s0); box-shadow: 0 0 8px var(--pmu-s0); }
+#panel-usage [data-sweeping] > svg .pmu-ringarcs, #panel-usage .pmu-donut[data-sweeping] > svg [data-mark="arc"] { visibility: hidden; }
+#panel-usage .pmu-centre { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none; padding: 0 16%; }
 #panel-usage .pmu-centre-v { font-size: 20px; font-weight: 640; line-height: 1.1; letter-spacing: -.01em; font-variant-numeric: tabular-nums; white-space: nowrap; transform-origin: 50% 60%; }
 #panel-usage .pmu-centre-c { margin-top: 3px; font-size: 12px; line-height: 1.25; color: var(--pmu-ink-3); }
 #panel-usage .pmu-chart[data-ring="s"] .pmu-centre-v { font-size: 16px; }
@@ -321,7 +411,7 @@ html[data-theme^="retro"] #panel-usage .pmu-ringbox [data-mark="arc"] { stroke: 
 #panel-usage .pmu-sbrow:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
 #panel-usage .pmu-sbname { display: flex; align-items: center; gap: 9px; min-width: 0; font-weight: 560; }
 #panel-usage .pmu-sbt { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-#panel-usage .pmu-sbbar { display: block; height: 14px; border-radius: 4px; background: var(--pmu-card-3); overflow: hidden; min-width: 0; }
+#panel-usage .pmu-sbbar { position: relative; display: block; height: 14px; border-radius: 4px; background: var(--pmu-card-3); min-width: 0; }
 #panel-usage .pmu-sbfill { display: flex; gap: 1px; height: 100%; width: var(--f, 0%); border-radius: 4px; overflow: hidden; transform-origin: 0 50%; }
 #panel-usage .pmu-sbfill > i { transition: opacity 140ms; }
 #panel-usage .pmu-sbrow:hover .pmu-sbfill > i { opacity: .9; }
@@ -337,7 +427,7 @@ html[data-theme^="retro"] #panel-usage .pmu-ringbox [data-mark="arc"] { stroke: 
 #panel-usage .pmu-tbrow { display: grid; grid-template-columns: 104px minmax(80px, 1fr) 150px; gap: 14px; align-items: center; }
 #panel-usage .pmu-tbname { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 560; white-space: nowrap; min-width: 0; overflow: hidden; }
 #panel-usage .pmu-tbbars { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-#panel-usage .pmu-tb { display: block; height: 7px; border-radius: 4px; background: var(--pmu-card-3); overflow: hidden; }
+#panel-usage .pmu-tb { position: relative; display: block; height: 7px; border-radius: 4px; background: var(--pmu-card-3); }
 #panel-usage .pmu-tb i { display: block; height: 100%; width: var(--f, 0%); border-radius: 4px; background: var(--c); transform-origin: 0 50%; }
 #panel-usage .pmu-tb.is-tok i { opacity: .42; }
 #panel-usage .pmu-tbvals { display: grid; grid-template-rows: auto auto; font-size: 12px; line-height: 1.4; color: var(--pmu-ink-3); white-space: nowrap; font-variant-numeric: tabular-nums; }
@@ -376,11 +466,15 @@ html[data-theme^="retro"] #panel-usage .pmu-ringbox [data-mark="arc"] { stroke: 
 /* ---------- columns (A1 7.8, 7.11): DOM bars over SVG axes, one label per bar ---------- */
 #panel-usage .pmu-cols { position: absolute; inset: 0; pointer-events: none; }
 #panel-usage .pmu-col { position: absolute; display: block; }
-#panel-usage .pmu-colstack { position: absolute; inset: 0; display: flex; flex-direction: column-reverse; gap: 1px; border-radius: 4px 4px 2px 2px; overflow: hidden;
+#panel-usage .pmu-colstack { position: absolute; inset: 0; display: flex; flex-direction: column-reverse; gap: 1px; border-radius: 3px 3px 1px 1px; overflow: hidden;
   transform-origin: 50% 100%; transition: opacity 140ms cubic-bezier(.2,.8,.2,1); }
 #panel-usage .pmu-colstack > i.is-dim { opacity: .25; }
 #panel-usage .pmu-colstack > i { display: block; min-height: 0; flex-basis: 0; width: 100%; background-color: var(--c); transition: opacity 140ms;
-  background-image: linear-gradient(180deg, rgba(255,255,255,.10), rgba(0,0,0,.10)); }
+  background-image: linear-gradient(180deg, transparent, color-mix(in srgb, var(--pmu-card) 30%, transparent)); }
+/* the lit cap (WOW-SPEC 2.5, 3.3): the top 3 px of a column in the bright partner, fading in when the grow ends */
+#panel-usage .pmu-colcap { position: absolute; left: 0; right: 0; top: 0; height: 3px; border-radius: 3px 3px 0 0; background: var(--cb); pointer-events: none; }
+#panel-usage .pmu-colcap[data-est] { display: none; }
+#panel-usage .pmu-collab.is-in { bottom: auto; top: 6px; color: var(--pmu-mark-ink); font-weight: 600; }
 #panel-usage .pmu-col.is-zero .pmu-colstack { background: var(--pmu-rule-strong); border-radius: 1px; }
 #panel-usage .pmu-col.is-zero .pmu-colstack > i { display: none; }
 #panel-usage .pmu-collab { position: absolute; left: 50%; bottom: calc(100% + 4px); transform: translateX(-50%); font-family: var(--pmu-mono); font-size: 11px; font-stretch: 87.5%;
@@ -419,13 +513,24 @@ html[data-theme^="retro"] #panel-usage .pmu-ringbox [data-mark="arc"] { stroke: 
 #panel-usage .pmu-hs-key.is-first { margin-left: auto; }
 
 /* ---------- quota history (A1 7.9): step runs per state, dashed 100 % line ---------- */
-#panel-usage .pmu-c-qspark { display: block; width: 100%; height: 24px; }
+#panel-usage .pmu-c-qspark { display: block; width: 100%; height: 30px; }
+#panel-usage .pmu-qspans { position: absolute; inset: 0; pointer-events: none; }
+#panel-usage .pmu-qx { position: absolute; top: 2px; bottom: 0; transform-origin: 0 50%; border-radius: 2px 2px 0 0;
+  background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--pmu-tone-exhausted, var(--pmu-crit)) 55%, transparent) 0 1.5px, transparent 1.5px 4px),
+    linear-gradient(180deg, color-mix(in srgb, var(--pmu-tone-exhausted, var(--pmu-crit)) 45%, transparent), color-mix(in srgb, var(--pmu-tone-exhausted, var(--pmu-crit)) 12%, transparent));
+  box-shadow: inset 0 1.5px 0 var(--pmu-tone-exhausted, var(--pmu-crit)); }
+#panel-usage .pmu-qx[data-tone="over"] { background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--pmu-over) 55%, transparent) 0 1.5px, transparent 1.5px 4px),
+    linear-gradient(180deg, color-mix(in srgb, var(--pmu-over) 45%, transparent), color-mix(in srgb, var(--pmu-over) 12%, transparent)); box-shadow: inset 0 1.5px 0 var(--pmu-over); }
 #panel-usage .pmu-c-qspark .pmu-rv { position: absolute; inset: 0; }
 #panel-usage .pmu-qsvg { width: 100%; height: 100%; }
 #panel-usage .pmu-qsvg .pmu-qref { stroke: var(--pmu-rule-strong); stroke-width: 1; stroke-dasharray: 2 3; fill: none; vector-effect: non-scaling-stroke; }
 #panel-usage .pmu-mark[data-q][data-mark="line"] { stroke-width: 1.6; vector-effect: non-scaling-stroke; stroke-linecap: butt; stroke-linejoin: miter; }
-#panel-usage .pmu-mark[data-q][data-mark="area"] { fill: var(--c); fill-opacity: .16; }
-#panel-usage .pmu-mark[data-q][data-mark="area"][data-tone="calm"] { fill-opacity: .12; }
+/* each run's area is a vertical gradient of its tone (34 % at the line to 3 % at the base), warn and switch runs brighter */
+#panel-usage .pmu-mark[data-q][data-mark="area"] { fill: url(#pmu-gq-calm); }
+#panel-usage .pmu-mark[data-q][data-mark="area"][data-tone="warn"] { fill: url(#pmu-gq-warn); }
+#panel-usage .pmu-mark[data-q][data-mark="area"]:is([data-tone="crit"], [data-tone="exhausted"]) { fill: url(#pmu-gq-crit); }
+#panel-usage .pmu-mark[data-q][data-mark="area"][data-tone="over"] { fill: url(#pmu-gq-over); }
+#panel-usage .pmu-mark[data-q][data-mark="line"]:is([data-tone="warn"], [data-tone="crit"], [data-tone="exhausted"], [data-tone="over"]) { stroke-width: 2; }
 #panel-usage .pmu-row:hover .pmu-mark[data-q][data-mark="line"], #panel-usage .pmu-c-qspark:hover .pmu-mark[data-q][data-mark="line"] { stroke-width: 2.2; }
 #panel-usage .pmu-mark[data-focus][data-mark="line"] { stroke-width: 1.75; stroke-linecap: butt; }
 
@@ -559,3 +664,56 @@ html[data-theme^="retro"] #panel-usage .pmu-xdot { border-radius: 0; }
 
 /* Retro estimates: a hatch in the series colour itself (the slat fill has no background colour to stripe over) */
 html[data-theme^="retro"] #panel-usage .pmu-mark[data-est="1"]:not(svg *) { background: repeating-linear-gradient(135deg, var(--c) 0 2px, transparent 2px 4.5px) !important; opacity: 1; }
+/* Retro afterglow layer (WOW-SPEC 7): its glow copy flares brighter than the resting glow */
+html[data-theme^="retro"] #panel-usage .pmu-afterglow { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; z-index: 1; }
+html[data-theme^="retro"] #panel-usage .pmu-afterglow .pmu-mark[data-mark="glow"] { opacity: .6; stroke-width: 7; }
+#panel-usage .pmu-costbase { fill: none; stroke: var(--pmu-rule-strong); stroke-width: 1; stroke-dasharray: 2 3; opacity: .7; }
+html[data-theme^="retro"] #panel-usage .pmu-colcap { border-radius: 0; }
+#panel-usage .pmu-col.is-zero .pmu-colcap, #panel-usage .pmu-col.is-gap .pmu-colcap { display: none; }
+html[data-theme^="retro"] #panel-usage .pmu-meterheat { background: repeating-linear-gradient(90deg, var(--c) 0 5px, transparent 5px 6px); }
+html[data-theme^="retro"] #panel-usage .pmu-meterfill::after { border-radius: 0; box-shadow: 0 0 8px 1px color-mix(in srgb, var(--c) 70%, transparent); }
+/* donut share labels (HTML, WOW-TASKS C-9) and the legend rows' share bars (a quiet 2 px bar of the slice's share) */
+#panel-usage .pmu-dlabels { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+#panel-usage .pmu-dl-pct { position: absolute; font-family: var(--pmu-mono); font-size: 11px; line-height: 13px; font-stretch: 87.5%; color: var(--pmu-ink-2); white-space: nowrap; }
+#panel-usage .pmu-donut .pmu-dcentre { z-index: 2; }
+#panel-usage .pmu-dl-row { position: relative; }
+#panel-usage .pmu-dl-row::before { content: ""; position: absolute; left: 27px; right: 8px; bottom: 1px; height: 2px; border-radius: 1px; background: var(--pmu-track); pointer-events: none; }
+#panel-usage .pmu-dl-row::after { content: ""; position: absolute; left: 27px; bottom: 1px; height: 2px; width: calc((100% - 35px) * var(--shf, 0));
+  border-radius: 1px; background: var(--c); opacity: .7; pointer-events: none; }
+html[data-o55-nier="on"] #panel-usage .pmu-dl-row::after { background: var(--o55-nier-ink); opacity: .3; }
+/* the donut lit from inside: a static soft inner edge on every slice (GPU only) */
+html:not([data-pmu-soft]) #panel-usage .pmu-donut path[data-mark="arc"] { filter: drop-shadow(0 0 3px color-mix(in srgb, var(--c) 35%, transparent)); }
+#panel-usage .pmu-collab.is-zero { display: flex; flex-direction: column; align-items: center; line-height: 12px; color: var(--pmu-ink-2); }
+#panel-usage .pmu-collab.is-zero i { font-style: normal; color: var(--pmu-ink-3); letter-spacing: .02em; }
+#panel-usage .pmu-legend-item .pmu-pmark { flex: none; margin-left: -2px; }
+#panel-usage .pmu-mark[data-mark="line"][data-role="cost"] { stroke-width: 1.75; opacity: .92; }
+/* the hottest cell carries a 1 px inner highlight at rest and flashes once on arrival (WOW-SPEC 2.5, 3.3) */
+#panel-usage .pmu-hc[data-peak] { position: relative; box-shadow: inset 0 0 0 1px color-mix(in srgb, #fff 55%, transparent), 0 0 10px 1px color-mix(in srgb, var(--pmu-heat-6) 55%, transparent); }
+html[data-theme$="-light"] #panel-usage .pmu-hc[data-peak] { box-shadow: inset 0 0 0 1px color-mix(in srgb, #fff 70%, transparent), 0 0 8px 1px color-mix(in srgb, var(--pmu-heat-6) 45%, transparent); }
+#panel-usage .pmu-hpeakfx { position: absolute; inset: -3px; border-radius: 5px; pointer-events: none; box-shadow: 0 0 0 2px var(--pmu-heat-6), 0 0 14px 4px color-mix(in srgb, var(--pmu-heat-6) 60%, transparent); }
+
+/* donut depth: a static shade layer (it sweeps in with the slices, it never takes the pointer) */
+#panel-usage .pmu-dshade { pointer-events: none; }
+#panel-usage .pmu-dsh-none { stop-color: #000; stop-opacity: 0; }
+#panel-usage .pmu-dsh-in { stop-color: #000; stop-opacity: .26; }
+#panel-usage .pmu-dsh-out { stop-color: #fff; stop-opacity: .16; }
+html[data-theme$="-light"] #panel-usage .pmu-dsh-in { stop-opacity: .12; }
+html[data-theme$="-light"] #panel-usage .pmu-dsh-out { stop-opacity: .3; }
+html[data-o55-nier="on"] #panel-usage .pmu-dshade, html[data-theme^="retro"] #panel-usage .pmu-dshade { display: none; }
+/* the readout card is glass on a GPU (blurred backdrop), solid without one */
+html:not([data-pmu-soft]) #panel-usage .pmu-readout { background: color-mix(in srgb, var(--pmu-card) 84%, transparent); -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2); }
+html:not([data-pmu-soft])[data-o55-nier="on"] #panel-usage .pmu-readout, html:not([data-pmu-soft])[data-theme^="retro"] #panel-usage .pmu-readout { background: var(--pmu-card); -webkit-backdrop-filter: none; backdrop-filter: none; }
+
+/* heat-up layers take their step's colour from CSS (the same ramp as the meter) */
+#panel-usage .pmu-meterheat[data-step="0"] { --c: var(--pmu-calm); }
+#panel-usage .pmu-meterheat[data-step="1"] { --c: color-mix(in srgb, var(--pmu-calm) 50%, #3BB8F2); }
+html[data-theme$="-light"] #panel-usage .pmu-meterheat[data-step="1"] { --c: color-mix(in srgb, var(--pmu-calm) 50%, #0A76B6); }
+#panel-usage .pmu-meterheat[data-step="2"] { --c: var(--pmu-warn); }
+#panel-usage .pmu-meterheat[data-step="3"] { --c: var(--pmu-crit); }
+#panel-usage .pmu-meterheat[data-step="4"] { --c: var(--pmu-tone-exhausted, var(--pmu-crit)); }
+#panel-usage .pmu-meterheat[data-step="5"] { --c: var(--pmu-over); }
+
+/* the hero line's bright core (dark themes): a 0.9 px hairline of its bright partner over the stroke */
+#panel-usage .pmu-mark[data-mark="core"] { fill: none; stroke: var(--cb); stroke-width: .9; opacity: .8; stroke-linejoin: round; stroke-linecap: round; pointer-events: none; }
+html[data-theme$="-light"] #panel-usage .pmu-mark[data-mark="core"], html[data-theme^="retro"] #panel-usage .pmu-mark[data-mark="core"], html[data-o55-nier="on"] #panel-usage .pmu-mark[data-mark="core"] { display: none; }
+#panel-usage .pmu-plot.is-split .pmu-mark[data-mark="core"] { display: none; }

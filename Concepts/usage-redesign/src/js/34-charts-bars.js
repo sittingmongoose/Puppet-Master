@@ -20,6 +20,16 @@
       flow: true, noObserve: true, role: 'meter',
       draw: function (c, first) { paintMeter(c, first); },
       update: function (c, prev) { paintMeter(c, false, prev); },
+      snapshot: function (c) { var m = c.el._m; return m ? { size: m.size, known: m.known, fill: m.fill, at: m.at, shown: m.shown, ramp: c.el.getAttribute('data-ramp'), tone: c.el.getAttribute('data-tone') } : null; },
+      carry: function (c, from) {
+        paintMeter(c, true);
+        var o = from.snap, m = c.el._m;
+        if (!o || !m || o.size !== m.size || o.known !== m.known) return;
+        m.fill = o.fill; m.at = o.at; m.shown = o.shown;
+        if (o.ramp != null) c.el.setAttribute('data-ramp', o.ramp);
+        if (o.tone) c.el.setAttribute('data-tone', o.tone);
+        paintMeter(c, false, from.spec);
+      },
       enter: function (c, delay) { enterMeter(c, delay); }
     });
   };
@@ -32,6 +42,10 @@
     if (spec.pct >= 100 && tn === 'calm') tn = 'exhausted';
     return tn;
   }
+  /* the fill's step on the severity ramp (WOW-SPEC 2.3): calm splits by value (teal below 50, cyan 50-79), the rest
+     follows the semantic tone, which follows the Settings thresholds (warn, switch), exhausted and over */
+  var RAMP = { warn: 2, crit: 3, exhausted: 4, over: 5 };
+  function rampOf(tone, pct) { return tone === 'missing' ? null : RAMP[tone] != null ? RAMP[tone] : pct >= 50 ? 1 : 0; }
   function paintMeter(c, first, prev) {
     var spec = c.spec || {}, el = c.el, size = spec.size || (c.opts && c.opts.size) || 'c';
     el.classList.add('pmu-meter');
@@ -40,6 +54,9 @@
     var fillPct = known ? clamp(spec.left ? 100 - spec.pct : spec.pct, 0, 100) : 0;
     el.setAttribute('data-size', size);
     el.setAttribute('data-tone', tone);
+    var ramp = known ? rampOf(tone, spec.pct) : null;
+    if (ramp == null) el.removeAttribute('data-ramp'); else el.setAttribute('data-ramp', String(ramp));
+    el.toggleAttribute('data-zero', known && fillPct < 0.5);
     el.toggleAttribute('data-est', !!spec.estimated);
     el.toggleAttribute('data-stale', !!spec.stale);
     el.toggleAttribute('data-dim', !!spec.dimmed);
@@ -95,24 +112,71 @@
       nEl.toggleAttribute('data-faint', !!notch.faint);
       nEl.toggleAttribute('data-off', !!notch.off);
     }
-    /* change: the fill slides old to new (520 ms), the notch slides with a spring, the number rolls and pulses */
+    /* a change (WOW-SPEC 3.8, WOW-TASKS C-6): the fill slides old -> new 520 ms ROLL with the head glow riding it; the
+       colour heats up through the ramp while it moves (a pre-painted layer of the next step fades in over 120 ms at the
+       moment the moving head crosses that threshold); the notch slides 320 ms (.2,.8,.2,1); the value rolls only its
+       changed digits; a meter that reaches 95 % or more rings once */
     if (!first && same && !Mo.reduced()) {
+      var fam = Mo.fam(), stepped = fam === 'retro' || fam === 'nier';
+      var fillEase = stepped ? (fam === 'nier' ? 'steps(5,jump-start)' : 'steps(6,jump-start)') : noOvershoot;
       if (finite(oldFill) && Math.abs(oldFill - fillPct) > 0.05) {
-        Mo.anim(fill, [{ transform: 'translateX(' + (oldFill - 100) + '%)' }, { transform: 'translateX(' + (fillPct - 100) + '%)' }], 520, 0, Mo.voice('fill') === Mo.EASE.soft ? noOvershoot : Mo.voice('grow'), 'none');
+        Mo.anim(fill, [{ transform: 'translateX(' + (oldFill - 100) + '%)' }, { transform: 'translateX(' + (fillPct - 100) + '%)' }], 520, 0, fillEase, 'none');
+        if (PMU.film && PMU.film.headGlow && !spec.estimated) PMU.film.headGlow(fill.closest('.pmu-metertrack'), { from: oldFill, to: fillPct, dur: 520, easing: fillEase });
+        heatUp(el, fill, prev, spec, oldFill, fillPct, fillEase);
       }
       if (notch && finite(el._m.at) && Math.abs(el._m.at - notch.at) > 0.05) {
         var tw = rail.parentNode ? rail.parentNode.clientWidth : 0, dx = (el._m.at - notch.at) / 100 * tw;
-        Mo.anim(rail, [{ transform: 'translateX(' + dx.toFixed(1) + 'px)' }, { transform: 'none' }], 520, 0, Mo.voice('pop'), 'none');
+        Mo.anim(rail, [{ transform: 'translateX(' + dx.toFixed(1) + 'px)' }, { transform: 'none' }], stepped ? 160 : 320, 0, stepped ? 'steps(4,jump-start)' : 'cubic-bezier(.2,.8,.2,1)', 'none');
       }
-      if (prev && prev.tone && meterTone(prev) !== tone) Mo.anim(fill, [{ opacity: 0.35 }, { opacity: 1 }], 520, 0, Mo.EASE.out, 'none');
       var num = valEl.querySelector('.pmu-num');
       if (num && known && finite(prevShown) && Math.abs(prevShown - shownPct) >= 0.5 && !spec.valueText) {
         num.setAttribute('data-shown', String(prevShown));
-        charts.roll(num, shownPct, function (v) { return String(pctText(v)); }, { dur: 520 });
-        charts.pulse(valEl.querySelector('.pmu-meterval'));
+        charts.roll(num, shownPct, function (v) { return String(pctText(v)); }, { dur: 420 });
       }
+      if (known && spec.pct >= 95 && !(prev && finite(prev.pct) && prev.pct >= 95) && PMU.film && PMU.film.ring) PMU.film.ring(fill.closest('.pmu-metertrack'), { delay: 420 });
     }
     el._m.fill = fillPct; el._m.at = notch ? notch.at : null; el._m.shown = shownPct;
+  }
+  /* heat-up while the fill moves: for each ramp step the moving head enters, a layer painted in that step's colour fades in
+     over 120 ms at the moment of the crossing (opacity on the compositor; the head's position is the ROLL ease of the
+     slide, inverted with PMU.film.edgeAt); the meter keeps its old step until the slide ends, then takes the new one and
+     the layers go. The value words switch their tone at the last crossing. */
+  function heatUp(el, fill, prev, spec, a, b, easing) {
+    var oldR = +el.getAttribute('data-ramp'), newR = rampOf(meterTone(spec), spec.pct);
+    var prevR = prev && finite(prev.pct) ? rampOf(meterTone(prev), prev.pct) : oldR;
+    if (!finite(prevR) || newR == null || prevR === newR || spec.left) return;
+    el.setAttribute('data-ramp', String(prevR));
+    var newTone = el.getAttribute('data-tone');
+    if (prev) el.setAttribute('data-tone', meterTone(prev));
+    /* the value where each step starts: 50 (cyan), the warn and switch points of the tones, 100 */
+    var starts = { 0: 0, 1: 50 };
+    for (var v = 50; v <= 101; v += 1) {
+      var r = rampOf(meterTone(Object.assign({}, spec, { pct: v, tone: null })), v);
+      if (starts[r] == null) starts[r] = v;
+    }
+    var dir = newR > prevR ? 1 : -1, layers = [], lastAt = 0;
+    for (var step = prevR + dir; dir > 0 ? step <= newR : step >= newR; step += dir) {
+      var at = starts[dir > 0 ? step : step + 1];
+      if (!finite(at)) at = dir > 0 ? b : a;
+      var frac = clamp((at - a) / ((b - a) || 1), 0, 1);
+      var t0 = 520 * (PMU.film && PMU.film.edgeAt ? PMU.film.edgeAt(frac, easing) : frac);
+      var lay = H('i', 'pmu-meterheat');
+      fill.insertBefore(lay, fill.querySelector('.pmu-meterwash'));   /* in step order: the latest step paints on top */
+      lay.setAttribute('data-step', String(step));
+      layers.push({ el: lay, step: step, at: t0 });
+      lastAt = Math.max(lastAt, t0);
+    }
+    /* each layer is painted in its step's colour by CSS (.pmu-meterheat[data-step]), no style read here */
+    var lastAnim = null;
+    layers.forEach(function (L) { lastAnim = Mo.anim(L.el, [{ opacity: 0 }, { opacity: 1 }], 120, L.at, Mo.EASE.out, 'both') || lastAnim; });
+    var finish = function () {
+      el.setAttribute('data-ramp', String(newR));
+      el.setAttribute('data-tone', newTone);
+      layers.forEach(function (L) { L.el.remove(); });
+    };
+    /* the value words take their new tone at the last crossing (the colour follows the counting value) */
+    if (PMU.film && PMU.film.at) { PMU.film.at(lastAt, function () { el.setAttribute('data-tone', newTone); }); PMU.film.at(lastAt + 130, finish); } else finish();
+    if (Mo.reduced()) finish();
   }
   /* the short window word of a narrow meter: 5h / Wk / Mo (the full name stays in the hover tag) */
   var SHORT_WIN = { fiveHour: '5h', weekly: 'Wk', monthly: 'Mo', daily: 'Day' };
@@ -156,7 +220,9 @@
       flow: true, role: 'list',
       draw: function (c) { drawRanked(c); },
       update: function (c) { drawRanked(c, true); },
-      enter: function (c, delay) { growRows(c, '.pmu-rkfill', delay, 760, 70); }
+      snapshot: function (c) { var o = {}; $$('.pmu-rk', c.el).forEach(function (el) { o[el.getAttribute('data-id')] = parseFloat(el.getAttribute('data-f')); }); return o; },
+      carry: function (c, from) { c._old = from.snap; drawRanked(c, true); c._old = null; },
+      enter: function (c, delay) { growRows(c, '.pmu-rkfill', delay, 760, 36); }
     });
   };
   function drawRanked(c, morph) {
@@ -164,8 +230,8 @@
     var inline = (c.opts.tier && (c.opts.tier.w === 'xs' || c.opts.tier.w === 's')) || w < 248 || spec.inline;
     var max = spec.scale || 0;
     rows.forEach(function (r) { if (finite(r.value)) max = Math.max(max, r.value); });
-    var old = {};
-    if (morph) $$('.pmu-rk', c.el).forEach(function (el) { old[el.getAttribute('data-id')] = parseFloat(el.getAttribute('data-f')); });
+    var old = c._old || {};
+    if (morph && !c._old) $$('.pmu-rk', c.el).forEach(function (el) { old[el.getAttribute('data-id')] = parseFloat(el.getAttribute('data-f')); });
     c.el.setAttribute('data-inline', inline ? '1' : '0');
     /* one-line rows share a name column as wide as the longest name (measured without layout, capped at 55 %), so
        every bar starts at the same x and no short name is cut */
@@ -195,9 +261,17 @@
       });
     }
   }
+  /* rows grow left to right with light (WOW-SPEC 3.3, WOW-TASKS C-3): scaleX 0 -> 1, 760 ms ROLL, 36 ms apart, and the
+     head glow (PMU.film.headGlow) rides each bar's head on its track; Retro grows in six steps, NieR in five */
+  function growEase() { var f = Mo.fam(); return f === 'retro' ? 'steps(6,jump-start)' : f === 'nier' ? 'steps(5,jump-start)' : noOvershoot; }
   function growRows(c, sel, delay, dur, step, cap) {
+    var e = growEase();
     $$(sel, c.el).forEach(function (el, i) {
-      Mo.anim(el, [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], dur, delay + Math.min(cap || 560, i * step), Mo.voice('grow'));
+      var dl = delay + Math.min(cap || 560, i * (step || 36));
+      Mo.anim(el, [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], dur, dl, e);
+      var f = parseFloat(el.style.getPropertyValue('--f'));
+      var track = el.parentNode;
+      if (PMU.film && PMU.film.headGlow && track && finite(f) && f > 3) PMU.film.headGlow(track, { to: f, dur: dur, delay: dl, easing: e });
     });
   }
 
@@ -248,7 +322,7 @@
     if (spec.segments) {
       var lim = spec.limit || spec.segments.reduce(function (a, s) { return a + (finite(s.value) ? s.value : 0); }, 0) || 1;
       return spec.segments.filter(function (s) { return finite(s.value) && s.value > 0; }).map(function (s, i) {
-        return { f: s.value / lim, k: { idx: s.idx != null ? s.idx : i, tk: s.tk, vendor: s.vendor }, hatched: s.hatched, name: s.name, value: s.value };
+        return { f: s.value / lim, k: { idx: s.idx != null ? s.idx : i, tk: s.tk || s.token, vendor: s.vendor, tone: s.tone }, hatched: s.hatched || s.est, name: s.name, value: s.value };
       });
     }
     var v = finite(spec.value) ? spec.value : 0, mx = spec.max || 100, tok = spec.token || spec.tk;
@@ -260,10 +334,11 @@
     return charts.make(name, host, spec, opts, {
       flow: true,
       draw: function (c) { drawRing(c); },
+      carry: function (c, from) { this.update(c, from.spec); },
       update: function (c, prev) {
-        var from = c._segs, oldCv = c.el.querySelector('.pmu-centre-v'), before = oldCv ? parseFloat(oldCv.getAttribute('data-shown')) : NaN;
+        var fromEnd = c._end, oldCv = c.el.querySelector('.pmu-centre-v'), before = oldCv ? parseFloat(oldCv.getAttribute('data-shown')) : NaN;
         drawRing(c);
-        if (from && !Mo.reduced()) sweepRing(c, 0, 520, from);
+        if (finite(fromEnd) && !Mo.reduced()) sweepRing(c, 0, 520, fromEnd);
         var cv = c.el.querySelector('.pmu-centre-v');
         if (cv && finite(c.spec.centreValue) && finite(before) && before !== c.spec.centreValue) {
           cv.setAttribute('data-shown', String(before));
@@ -281,25 +356,54 @@
       }
     });
   }
+  /* a point on the ring (r 50 around 60,60) at `deg` clockwise from 12 o'clock */
+  function ringPt(deg, r) { var a = deg * Math.PI / 180; return r1(60 + r * Math.sin(a)) + ',' + r1(60 - r * Math.cos(a)); }
+  function ringArcD(d0, d1, r) {
+    if (d1 - d0 >= 359.9) d1 = d0 + 359.9;
+    return 'M' + ringPt(d0, r) + 'A' + r + ',' + r + ' 0 ' + (d1 - d0 > 180 ? 1 : 0) + ' 1 ' + ringPt(d1, r);
+  }
+  /* WOW-SPEC 2.5: each arc is lit along its length (a conic ramp drawn as short sub-arcs, 55 % of its colour at the start
+     to 100 % at the head), segments sit 1 px apart, the start is round and the leading cap is round and lit (the -b
+     colour with a soft static glow); estimates are hatched and never lit */
+  function ringArcs(segs, sw, unit) {
+    var r = 50, gapDeg = segs.length > 1 ? 1.3 : 0;   /* about 1 px at the usual sizes */
+    var total = 0; segs.forEach(function (s) { total += s.f * 360; });
+    var out = '', at = 0, end = 0;
+    /* the light ramps across the whole sweep (62 % of the colour at 12 o'clock to 100 % at the head), so a segmented ring
+       reads as one lit sweep whose hue changes per segment; sub-arcs of at most 5 degrees keep the ramp seamless */
+    var lit = function (deg) { return Math.round(62 + 38 * clamp(deg / (total || 1), 0, 1)); };
+    segs.forEach(function (s, i) {
+      var span = s.f * 360, d0 = at, d1 = at + span - (gapDeg && i < segs.length - 1 ? gapDeg : 0);
+      at += span;
+      if (d1 - d0 < 0.3) return;
+      var ka = charts.keyAttrs(s.k) + (s.hatched ? ' data-est="1"' : '');
+      var hov = hoverAttrs(s.name, s.name ? charts.fmtValue(s.value, unit) : '');
+      var n = Math.max(1, Math.min(72, Math.ceil((d1 - d0) / 5)));
+      for (var k = 0; k < n; k++) {
+        var a = d0 + (d1 - d0) * k / n, b = d0 + (d1 - d0) * (k + 1) / n + (k < n - 1 ? 0.4 : 0);
+        out += '<path class="pmu-mark" data-mark="arc" data-seg="' + i + '"' + ka + ' style="--k:' + (s.hatched ? 100 : lit((a + b) / 2)) + '%" d="' + ringArcD(a, b, r) + '"' + hov + '/>';
+      }
+      if (i === 0) { var p0 = ringPt(d0, r).split(','); out += '<circle class="pmu-ringcap is-start"' + ka + ' cx="' + p0[0] + '" cy="' + p0[1] + '" r="' + r1(sw / 2) + '" style="--k:' + lit(0) + '%"/>'; }
+      end = d1;
+      if (i === segs.length - 1) {
+        var p = ringPt(d1, r).split(',');
+        out += (s.hatched ? '' : '<circle class="pmu-ringglow"' + ka + ' cx="' + p[0] + '" cy="' + p[1] + '" r="' + r1(sw / 2 + 5) + '"/>') +
+          '<circle class="pmu-ringcap is-head"' + ka + ' cx="' + p[0] + '" cy="' + p[1] + '" r="' + r1(sw / 2) + '"/>';
+      }
+    });
+    return { html: out, end: end };
+  }
   function drawRing(c) {
     var spec = c.spec || {};
     var size = spec.size || c.opts.size || clamp(Math.min(c._w || 120, c._h > 40 ? c._h : 120), 56, 160);
     var stroke = spec.stroke || 12;
     var segs = ringSegs(spec);
-    var gap = segs.length > 1 ? 1.4 : 0;
-    var off = 0, arcs = '';
-    segs.forEach(function (s, i) {
-      var len = Math.max(0, s.f * 100 - (gap && s.f * 100 > gap ? gap : 0));
-      arcs += '<circle class="pmu-mark" data-mark="arc"' + charts.keyAttrs(s.k) + (s.hatched ? ' data-est="1"' : '') + ' cx="60" cy="60" r="50" pathLength="100"' +
-        ' style="stroke-dasharray:' + r1(len) + ' 100;stroke-dashoffset:' + r1(-off) + '" data-len="' + r1(len) + '" data-off="' + r1(off) + '"' +
-        hoverAttrs(s.name, s.name ? charts.fmtValue(s.value, spec.unit) : '') + '/>';
-      off += s.f * 100;
-    });
-    c._segs = segs.map(function (s) { return s.f; });
+    var arcs = ringArcs(segs, stroke, spec.unit);
+    c._end = arcs.end;
     c.el.setAttribute('data-ring', size < 76 ? 'xs' : size < 104 ? 's' : 'm');
     c.el.innerHTML = '<div class="pmu-ringbox" style="width:' + size + 'px;height:' + size + 'px">' +
-      '<svg viewBox="0 0 120 120" width="' + size + '" height="' + size + '" style="--sw:' + stroke + '"><g transform="rotate(-90 60 60)">' +
-      '<circle class="pmu-ringtrack" cx="60" cy="60" r="50"/>' + arcs + '</g></svg>' +
+      '<svg class="pmu-ringsvg" viewBox="0 0 120 120" width="' + size + '" height="' + size + '" style="--sw:' + stroke + '">' +
+      '<circle class="pmu-ringtrack" cx="60" cy="60" r="50"/><g class="pmu-ringarcs">' + arcs.html + '</g></svg>' +
       '<div class="pmu-centre"><b class="pmu-centre-v">' + esc(spec.centre != null ? spec.centre : '') + '</b>' + (spec.caption ? '<span class="pmu-centre-c">' + esc(spec.caption) + '</span>' : '') + '</div></div>';
     var pm = !finite(spec.centreValue) && finite(spec.value) && typeof spec.centre === 'string' ? /^(\d+)(?:\.(\d+))?%$/.exec(spec.centre) : null;
     if (pm && Math.abs(parseFloat(spec.centre) - spec.value) < 0.06) {
@@ -308,25 +412,17 @@
     }
     if (finite(spec.centreValue)) { var cv = c.el.querySelector('.pmu-centre-v'); cv.setAttribute('data-shown', String(spec.centreValue)); }
   }
-  function sweepRing(c, delay, dur, from) {
-    var arcs = $$('[data-mark="arc"]', c.el);
-    if (!arcs.length) return;
-    var tg = arcs.map(function (a) { return { len: +a.getAttribute('data-len'), off: +a.getAttribute('data-off') }; });
-    var src = from ? (function () { var o = 0; return tg.map(function (x, i) { var f = (from[i] || 0) * 100, r = { len: Math.max(0, f - (tg.length > 1 ? 1.4 : 0)), off: o }; o += f; return r; }); })() : null;
-    var total = tg.length ? tg[tg.length - 1].off + tg[tg.length - 1].len : 0;
-    if (c._rt) c._rt.cancel();
-    var paint = function (k) {
-      arcs.forEach(function (a, i) {
-        var len, off;
-        if (src) { len = src[i].len + (tg[i].len - src[i].len) * k; off = src[i].off + (tg[i].off - src[i].off) * k; }
-        else { var head = total * k; off = tg[i].off; len = clamp(head - off, 0, tg[i].len); }
-        a.style.strokeDasharray = r1(len) + ' 100';
-        a.style.strokeDashoffset = r1(-off);
-        a.style.opacity = len > 0.05 ? '' : '0';
-      });
-    };
-    paint(0);
-    c._rt = Mo.tween(dur, 'sweep', paint, function () { c._rt = null; paint(1); }, delay);
+  /* the sweep (WOW-TASKS C-2) runs on the compositor: the arcs (and their caps) are copied into two rotating half masks
+     (PMU.charts.arcSweep) while the track stays; a change sweeps the new picture from the old end angle (a shrink shows
+     the new picture at once: the wedge cannot hide what is already gone, so it cross-fades instead) */
+  function sweepRing(c, delay, dur, fromEnd) {
+    var box = c.el.querySelector('.pmu-ringbox'), svg = box && box.querySelector('.pmu-ringsvg');
+    if (!box || !svg || !(c._end > 0.5)) return;
+    var from = finite(fromEnd) ? fromEnd : 0;
+    if (from > c._end + 0.5) { Mo.anim(svg.querySelector('.pmu-ringarcs'), [{ opacity: 0.35 }, { opacity: 1 }], 260, delay, Mo.EASE.out, 'none'); return; }
+    var pic = svg.cloneNode(true), tr = pic.querySelector('.pmu-ringtrack');
+    if (tr) tr.remove();
+    charts.arcSweep(box, pic, { from: from, to: c._end, dur: dur, delay: delay, radius: 10 / 120 * 100 });
   }
 
   /* ================= stackbar: cost by model by token type (A1 7.3) ================= */
@@ -336,17 +432,45 @@
     return charts.make('stackbar', host, spec, opts, {
       flow: true, role: 'table',
       draw: function (c) { drawStackbar(c); },
+      /* a range change (WOW-SPEC 3.4): rows FLIP to their new rank (420 ms (.2,.8,.2,1), 20 ms apart), each bar's width
+         morphs from the old one (520 ms), the number cells roll only their changed digits; positions are read once
+         before the change and once after it, never inside a frame of motion. A body re-rendered by its kind carries the
+         old rows over (charts.make carry) and plays the same morph. */
       update: function (c) {
-        var body = c.el.querySelector('.pmu-sbbody');
-        if (!body || Mo.reduced()) { drawStackbar(c); return; }
-        var a = Mo.anim(body, [{ opacity: 1 }, { opacity: 0 }], 160, 0, Mo.EASE.io, 'forwards');
-        var swap = function () { drawStackbar(c); growRows(c, '.pmu-sbfill', 0, 760, 70); };
-        if (a) a.onfinish = swap; else swap();
+        if (!c.el.querySelector('.pmu-sbbody') || Mo.reduced()) { drawStackbar(c); return; }
+        var old = sbSnap(c);
+        drawStackbar(c);
+        sbFlip(c, old);
       },
-      enter: function (c, delay) { growRows(c, '.pmu-sbfill', delay, 760, 70); }
+      snapshot: function (c) { return sbSnap(c); },
+      carry: function (c, from) { drawStackbar(c); if (from.snap) sbFlip(c, from.snap); },
+      enter: function (c, delay) { growRows(c, '.pmu-sbfill', delay, 760, 36); }
     });
   };
   var TKN = function (tk) { return (charts.TK_NAMES || {})[tk] || tk; };
+  /* rows sit at a fixed pitch per form (40 px, 46 px in the two-line form; names never wrap), so the FLIP needs no
+     layout read: the move is the change of rank times the pitch */
+  function sbPitch(c) { return c.el.getAttribute('data-form') === 'two' ? 46 : 40; }
+  function sbSnap(c) {
+    var old = {}, pitch = sbPitch(c);
+    $$('.pmu-sbrow', c.el).forEach(function (r, i) {
+      old[r.getAttribute('data-id')] = { top: i * pitch, f: parseFloat((r.querySelector('.pmu-sbfill') || r).style.getPropertyValue('--f')),
+        nums: $$('.pmu-sbnum', r).map(function (n) { return n.textContent; }) };
+    });
+    return old;
+  }
+  function sbFlip(c, old) {
+    var pitch = sbPitch(c);
+    $$('.pmu-sbrow', c.el).forEach(function (r, i) {
+      var o = old[r.getAttribute('data-id')], fill = r.querySelector('.pmu-sbfill');
+      if (!o) { Mo.anim(r, [{ opacity: 0 }, { opacity: 1 }], 260, 200 + i * 20, Mo.EASE.out, 'backwards'); if (fill) growRows({ el: r }, '.pmu-sbfill', 200 + i * 20, 520, 0); return; }
+      var dy = o.top - i * pitch;
+      if (Math.abs(dy) > 0.5) Mo.anim(r, [{ transform: 'translateY(' + r1(dy) + 'px)' }, { transform: 'none' }], 420, i * 20, 'cubic-bezier(.2,.8,.2,1)', 'backwards');
+      var nf = fill ? parseFloat(fill.style.getPropertyValue('--f')) : NaN;
+      if (fill && finite(o.f) && nf > 0 && Math.abs(o.f - nf) > 0.05) Mo.anim(fill, [{ transform: 'scaleX(' + clamp(o.f / nf, 0, 40) + ')' }, { transform: 'scaleX(1)' }], 520, 0, 'cubic-bezier(.33,1,.68,1)', 'backwards');
+      $$('.pmu-sbnum', r).forEach(function (n, k) { if (o.nums[k] != null && charts.rollText) charts.rollText(n, o.nums[k], n.textContent); });
+    });
+  }
   function drawStackbar(c) {
     var spec = c.spec || {}, rows = spec.rows || [], w = c._w || 600;
     var form = w < 360 ? 'two' : w < 480 ? 'm' : w < 600 ? 'l' : w < 720 ? 'xl' : 'xxl';
@@ -401,14 +525,16 @@
       flow: true,
       draw: function (c) { drawDonut(c, null); },
       update: function (c) { var prev = c._arcs; drawDonut(c, prev); },
+      carry: function (c) { var prev = c._arcs; drawDonut(c, prev); },
       enter: function (c, delay) {
-        var paint = c._paintArcs;
-        if (!paint) return;
+        /* the arcs sweep from 12 o'clock on the compositor (WOW-TASKS C-2), the share labels fade in at the end */
+        var box = c.el.querySelector('.pmu-donut'), svg = box && box.querySelector('svg');
+        if (!box || !svg) return;
         var labels = c.el.querySelector('.pmu-dlabels');
-        paint(0);
-        if (c._dt) c._dt.cancel();
-        c._dt = Mo.tween(900, 'sweep', function (k) { paint(k); }, function () { c._dt = null; paint(1); }, delay);
-        if (labels) Mo.anim(labels, [{ opacity: 0 }, { opacity: 1 }], 260, delay + 900, Mo.EASE.out);
+        var pic = svg.cloneNode(true), tr = pic.querySelector('.pmu-ringtrack');
+        if (tr) tr.remove();
+        charts.arcSweep(box, pic, { from: 0, to: 360, dur: 900, delay: delay, glint: false });
+        if (labels) Mo.anim(labels, [{ opacity: 0 }, { opacity: 1 }], 260, delay + 820, Mo.EASE.out);
         var cv = c.el.querySelector('.pmu-dc-v');
         if (cv && finite(c._centreNum)) { cv.removeAttribute('data-shown'); charts.roll(cv, c._centreNum, c._centreFmt, { dur: 1000, delay: delay }); }
         $$('.pmu-dl-row', c.el).forEach(function (el, i) { Mo.anim(el, [{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], 420, delay + 200 + i * 40, Mo.EASE.out); });
@@ -421,6 +547,7 @@
     if (a1 - a0 <= 0.0005) return '';
     return 'M' + p(r1v, a0) + 'A' + r1(r1v) + ',' + r1(r1v) + ' 0 ' + big + ' 1 ' + p(r1v, a1) + 'L' + p(r0, a1) + 'A' + r1(r0) + ',' + r1(r0) + ' 0 ' + big + ' 0 ' + p(r0, a0) + 'Z';
   }
+  var donutSeq = 0;
   function drawDonut(c, prevArcs) {
     var spec = c.spec || {}, w = c._w || 300, mode = spec.mode || 'tokens';
     var fmtV = spec.fmt || function (v) { return charts.fmtValue(v, mode === 'cost' ? 'usd' : 'tokens'); };
@@ -431,11 +558,20 @@
       segs = segs.filter(function (s) { return s.value / total >= 0.01; });
       segs.push({ id: '_small', name: t('charts.smaller_models', { n: small.length }), value: small.reduce(function (a, s) { return a + s.value; }, 0), other: true });
     }
-    var side = w >= 420, hostH = c._h || 0, ROW = 30;
+    var side = w >= 420, hostH = c._h || 0, ROW = 27;
     var Sz = side ? clamp(0.44 * w, 200, 280) : clamp(0.62 * w, 168, 220);
-    /* fit the host the widget gave (content sets its height): the ring shrinks before the legend loses its first rows */
-    if (hostH >= 120) Sz = side ? Math.min(Sz, Math.max(150, hostH)) : Math.min(Sz, Math.max(140, hostH - 12 - 3 * ROW));
-    var m = Sz < 220 ? 30 : 40, R1 = Sz / 2 - m, R0 = R1 - Math.max(16, Math.round(0.1 * Sz)), cx = Sz / 2, cy = Sz / 2;
+    /* the legend names slices by share until its "Other" row is the smallest row, or 5 rows fit (LOOK-REVIEW-2 item 20:
+       an "Other" bigger than every named slice hides the answer); the ring gives up height for those rows first */
+    var want = segs.length;
+    for (var nn = 1; nn < segs.length; nn++) {
+      var restV = 0; for (var q = nn; q < segs.length; q++) restV += segs[q].value;
+      if (restV <= segs[nn - 1].value) { want = nn + 1; break; }
+    }
+    want = Math.min(Math.max(want, Math.min(5, segs.length)), 7);
+    if (hostH >= 120) Sz = side ? Math.min(Sz, Math.max(150, hostH)) : Math.min(Sz, Math.max(120, hostH - 12 - want * ROW));
+    /* a small donut drops its outside share labels (the legend carries every share) and gives the ring that margin */
+    var outside = Sz >= 190;
+    var m = !outside ? 6 : Sz < 220 ? 30 : 40, R1 = Sz / 2 - m, R0 = R1 - Math.max(16, Math.round(0.13 * Sz)), cx = Sz / 2, cy = Sz / 2;
     var maxRows = hostH >= 120 ? Math.max(2, Math.floor(((side ? hostH : hostH - Sz - 12) + 2) / ROW)) : 7;
     var a = 0, arcs = segs.map(function (s) { var f = total ? s.value / total : 0, r = { id: s.id || s.name, a0: a, a1: a + f * Math.PI * 2, f: f, s: s }; a += f * Math.PI * 2; return r; });
     c._arcs = arcs.map(function (x) { return { id: x.id, a0: x.a0, a1: x.a1 }; });
@@ -444,10 +580,11 @@
       var k = x.s.other ? { idx: 7 } : { vendor: x.s.vendor || 'community', shade: x.s.shade || 1 };
       return '<path class="pmu-mark" data-mark="arc" data-i="' + i + '"' + charts.keyAttrs(k) + (x.s.prov ? ' data-prov="' + esc(x.s.prov) + '"' : '') + '/>';
     }).join('');
-    var labels = arcs.filter(function (x) { return x.f >= 0.05; }).map(function (x) {
-      var mid = (x.a0 + x.a1) / 2, rr = R1 + 12, lx = cx + rr * Math.sin(mid), ly = cy - rr * Math.cos(mid) + 4;
-      var anchor = Math.sin(mid) > 0.2 ? 'start' : Math.sin(mid) < -0.2 ? 'end' : 'middle';
-      return '<text class="pmu-tick is-dl" x="' + r1(lx) + '" y="' + r1(ly) + '" text-anchor="' + anchor + '">' + esc(pctText(x.f * 100)) + '%</text>';
+    /* share labels are HTML (they fade in on the compositor), placed outside the ring by their arc's middle angle */
+    var labels = arcs.filter(function (x) { return outside && x.f >= 0.05; }).map(function (x) {
+      var mid = (x.a0 + x.a1) / 2, rr = R1 + 12, lx = cx + rr * Math.sin(mid), ly = cy - rr * Math.cos(mid);
+      var anchor = Math.sin(mid) > 0.2 ? '0' : Math.sin(mid) < -0.2 ? '-100%' : '-50%';
+      return '<span class="pmu-dl-pct" style="left:' + r1(lx) + 'px;top:' + r1(ly) + 'px;transform:translate(' + anchor + ',-50%)">' + esc(pctText(x.f * 100)) + '%</span>';
     }).join('');
     var centreVal = spec.centre && spec.centre.value != null ? spec.centre.value : fmtV(total);
     var centreCap = spec.centre && spec.centre.caption ? spec.centre.caption : '';
@@ -455,24 +592,30 @@
     var showN = arcs.length <= Math.min(7, maxRows) ? arcs.length : Math.max(1, Math.min(6, maxRows - 1));
     var legendRows = arcs.slice(0, showN).map(function (x, i) {
       var k = x.s.other ? { idx: 7 } : { vendor: x.s.vendor || 'community', shade: x.s.shade || 1 };
-      return '<div class="pmu-dl-row" data-i="' + i + '"' + (x.s.prov ? ' data-prov="' + esc(x.s.prov) + '"' : '') + '><i class="pmu-swatch"' + charts.keyAttrs(k) + '></i><span class="pmu-dl-n">' + esc(x.s.name) +
+      return '<div class="pmu-dl-row" data-i="' + i + '"' + charts.keyAttrs(k) + ' style="--shf:' + x.f.toFixed(3) + '"' + (x.s.prov ? ' data-prov="' + esc(x.s.prov) + '"' : '') + '><i class="pmu-swatch"' + charts.keyAttrs(k) + '></i><span class="pmu-dl-n">' + esc(x.s.name) +
         '</span><b>' + esc(x.s.valueText || fmtV(x.s.value)) + '</b><em>' + esc(pctText(x.f * 100)) + '%</em></div>';
     }).join('');
     if (arcs.length > showN) {
       var restArcs = arcs.slice(showN), rest = restArcs.reduce(function (s, x) { return s + x.s.value; }, 0);
       var restN = restArcs.reduce(function (n, x) { return n + (x.s.other ? small.length : 1); }, 0);
-      legendRows += '<div class="pmu-dl-row is-rest"><i class="pmu-swatch" data-series-index="7"></i><span class="pmu-dl-n">' + esc(t('charts.smaller_models', { n: restN })) + '</span><b>' + esc(fmtV(rest)) + '</b><em>' + esc(pctText(rest / total * 100)) + '%</em></div>';
+      legendRows += '<div class="pmu-dl-row is-rest" data-series-index="7" style="--shf:' + (rest / total).toFixed(3) + '"><i class="pmu-swatch" data-series-index="7"></i><span class="pmu-dl-n">' + esc(t('charts.smaller_models', { n: restN })) + '</span><b>' + esc(fmtV(rest)) + '</b><em>' + esc(pctText(rest / total * 100)) + '%</em></div>';
     }
     /* the centre value is sized to the hole; the caption shows only where it fits */
     var holeW = 2 * R0 - 14, cfs = 22, ctw = charts.textW(centreVal, 22, false, 640);
     if (ctw > holeW) cfs = Math.max(12, Math.floor(22 * holeW / ctw));
     var capOk = R0 >= 44;
     c.el.setAttribute('data-side', side ? '1' : '0');
-    c.el.innerHTML = '<div class="pmu-donut" style="width:' + r1(Sz) + 'px;height:' + r1(Sz) + 'px"><svg width="' + r1(Sz) + '" height="' + r1(Sz) + '" viewBox="0 0 ' + r1(Sz) + ' ' + r1(Sz) + '">' +
+    /* depth (WOW-SPEC 2.5): one static radial shade over the slices, a lit outer rim and a soft inner shadow */
+    var gid = 'pmu-dsh-' + (++donutSeq), k0 = R0 / R1;
+    var shade = '<defs><radialGradient id="' + gid + '" cx="' + r1(cx) + '" cy="' + r1(cy) + '" r="' + r1(R1) + '" gradientUnits="userSpaceOnUse">' +
+      '<stop offset="' + (k0 - 0.002).toFixed(3) + '" class="pmu-dsh-none"/><stop offset="' + k0.toFixed(3) + '" class="pmu-dsh-in"/>' +
+      '<stop offset="' + Math.min(0.97, k0 + 0.16).toFixed(3) + '" class="pmu-dsh-none"/><stop offset=".9" class="pmu-dsh-none"/><stop offset="1" class="pmu-dsh-out"/></radialGradient></defs>';
+    c.el.innerHTML = '<div class="pmu-donut" style="width:' + r1(Sz) + 'px;height:' + r1(Sz) + 'px"><svg width="' + r1(Sz) + '" height="' + r1(Sz) + '" viewBox="0 0 ' + r1(Sz) + ' ' + r1(Sz) + '">' + shade +
       '<circle class="pmu-ringtrack" cx="' + r1(cx) + '" cy="' + r1(cy) + '" r="' + r1((R0 + R1) / 2) + '" style="stroke-width:' + r1(R1 - R0) + 'px"/>' + paths +
-      '<g class="pmu-dlabels">' + labels + '</g></svg><div class="pmu-dcentre" style="padding:0 ' + r1(m + (R1 - R0) + 6) + 'px"><b class="pmu-dc-v" style="font-size:' + cfs + 'px">' + esc(centreVal) + '</b><span class="pmu-dc-c"' + (capOk ? '' : ' hidden') + '>' + esc(centreCap) + '</span></div></div>' +
+      '<circle class="pmu-dshade" data-mark="arc" cx="' + r1(cx) + '" cy="' + r1(cy) + '" r="' + r1(R1) + '" style="fill:url(#' + gid + ')"/>' +
+      '</svg><div class="pmu-dlabels">' + labels + '</div><div class="pmu-dcentre" style="padding:0 ' + r1(m + (R1 - R0) + 6) + 'px"><b class="pmu-dc-v" style="font-size:' + cfs + 'px">' + esc(centreVal) + '</b><span class="pmu-dc-c"' + (capOk ? '' : ' hidden') + '>' + esc(centreCap) + '</span></div></div>' +
       '<div class="pmu-dlegend">' + legendRows + '</div>';
-    var pathEls = $$('[data-mark="arc"]', c.el);
+    var pathEls = $$('path[data-mark="arc"]', c.el);
     var paint = c._paintArcs = function (k, from) {
       var head = k * Math.PI * 2;
       pathEls.forEach(function (p, i) {
@@ -523,11 +666,14 @@
         });
       },
       enter: function (c, delay) {
+        var e = growEase();
         $$('.pmu-tbrow', c.el).forEach(function (row, i) {
           $$('.pmu-tb i', row).forEach(function (el, j) {
-            Mo.anim(el, [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], 820, delay + i * 90 + j * 40, Mo.voice('grow'));
+            var dl = delay + i * 36 + j * 40, f = parseFloat(el.style.getPropertyValue('--f'));
+            Mo.anim(el, [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], 760, dl, e);
+            if (PMU.film && PMU.film.headGlow && finite(f) && f > 3) PMU.film.headGlow(el.parentNode, { to: f, dur: 760, delay: dl, easing: e });
           });
-          Mo.anim(row, [{ opacity: 0 }, { opacity: 1 }], 420, delay + i * 60, Mo.EASE.out);
+          Mo.anim(row, [{ opacity: 0 }, { opacity: 1 }], 420, delay + i * 36, Mo.EASE.out);
         });
         $$('b[data-roll]', c.el).forEach(function (b) {
           var v = parseFloat(b.getAttribute('data-v')), u = b.getAttribute('data-roll');

@@ -481,7 +481,8 @@
       var mainKey = rows[0] && rows[0].main ? rows[0].main.key : p.windows[0].key;
       groups.push({ providerId: p.id, name: p.name, vendor: p.vendor, windowLabel: String((p.windows.filter(function (w) { return w.key === mainKey; })[0] || p.windows[0]).label).toLowerCase(), rows: rows, provider: p });
     });
-    return { groups: groups, noWindows: noWindows, points: 42, bucketMs: bucketMs, now: Date.now() };
+    /* now on the minute: the rows read the same within a minute, so a refresh that changes nothing keeps them */
+    return { groups: groups, noWindows: noWindows, points: 42, bucketMs: bucketMs, now: Math.floor(Date.now() / 60000) * 60000 };
   }
 
   /* a plan card (Plans & limits, Overview): one of the six legacy providers, with the windows of the provider's effective

@@ -7,25 +7,78 @@
 #panel-usage .pmu-board { position: relative; display: grid; grid-template-columns: repeat(var(--pmu-tracks, 20), minmax(0, 1fr)); grid-auto-rows: var(--pmu-row);
   gap: var(--pmu-gap); padding: 10px 14px 28px; align-content: start; }
 #panel-usage .pmu-board[data-held] > .pmu-card { opacity: 0; }
-#panel-usage .pmu-board-ghost { position: absolute; z-index: 1; overflow: hidden; pointer-events: none; }
-#panel-usage .pmu-board-ghost > .pmu-board { padding-top: 10px; }
+/* a room change (WOW-SPEC 3.2): the new room's cards are laid out at once but painted only when their body is built
+   (data-pending); the old room's cards fade out in place under them (data-leaving). No inherited property changes on a
+   leaving card (pointer-events or inert would restyle its whole subtree in the click frame): the board's pointer and
+   tool handlers ignore a leaving card instead. */
+#panel-usage .pmu-board > .pmu-card[data-pending] { visibility: hidden; }
 
-/* ---- the plate (A1 3.2) ---- */
+/* ---- the plate (A1 3.2) with real depth (WOW-SPEC 2.2, E-8) ---- */
+/* depth tokens: dark plates carry a 1 px inner top highlight (8 % white) and a soft ambient shadow; light plates a warm
+   paper shadow and a 70 % white top highlight. The hover / lift shadow is pre-rendered on ::before and only its opacity
+   moves (E-4: no box-shadow or border-color transition on a plate, ever). --pmu-speed: the Animation speed (46-shell.js). */
+#panel-usage .pmu-shell {
+  --pmu-plate-rest: inset 0 1px 0 rgba(255,255,255,.08), 0 18px 40px -18px rgba(0,0,0,.45);
+  --pmu-plate-hover: inset 0 1px 0 rgba(255,255,255,.10), 0 18px 40px -12px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.05);
+  --pmu-plate-lift: inset 0 1px 0 rgba(255,255,255,.12), 0 28px 60px -18px rgba(0,0,0,.6), 0 0 0 1px color-mix(in srgb, var(--pmu-accent) 40%, transparent);
+  --pmu-sheen: rgba(255,255,255,.06);
+  --pmu-lift-y: -4px; --pmu-lift-s: 1.01;
+}
+html[data-theme$="-light"] #panel-usage .pmu-shell {
+  --pmu-plate-rest: inset 0 1px 0 rgba(255,255,255,.7), 0 10px 26px -14px rgba(21,32,43,.14);
+  --pmu-plate-hover: inset 0 1px 0 rgba(255,255,255,.6), 0 14px 32px -12px rgba(21,32,43,.18), 0 0 0 1px rgba(21,32,43,.05);
+  --pmu-plate-lift: inset 0 1px 0 rgba(255,255,255,.6), 0 22px 48px -16px rgba(21,32,43,.22), 0 0 0 1px color-mix(in srgb, var(--pmu-accent) 40%, transparent);
+  --pmu-sheen: color-mix(in srgb, var(--pmu-accent) 5%, transparent);
+}
+html[data-theme="friendly-light"] #panel-usage .pmu-shell {
+  --pmu-plate-rest: inset 0 1px 0 rgba(255,255,255,.75), 0 10px 26px -14px rgba(92,64,51,.16);
+  --pmu-plate-hover: inset 0 1px 0 rgba(255,255,255,.7), 0 16px 34px -12px rgba(92,64,51,.2), 0 0 0 1px rgba(92,64,51,.05); }
+html[data-theme^="glass"] #panel-usage .pmu-shell {
+  --pmu-plate-rest: inset 0 1px 0 rgba(255,255,255,.18), inset 0 -1px 0 rgba(255,255,255,.04), 0 18px 40px -18px rgba(8,4,20,.5);
+  --pmu-plate-hover: inset 0 1px 0 rgba(255,255,255,.24), 0 20px 44px -12px rgba(8,4,20,.55), 0 0 0 1px rgba(255,255,255,.12); }
+html[data-theme="glass-light"] #panel-usage .pmu-shell {
+  --pmu-plate-rest: inset 0 1px 0 rgba(255,255,255,.85), 0 12px 28px -14px rgba(23,34,42,.16);
+  --pmu-plate-hover: inset 0 1px 0 rgba(255,255,255,.9), 0 16px 34px -12px rgba(23,34,42,.2), 0 0 0 1px rgba(255,255,255,.5); }
+html[data-theme^="retro"] #panel-usage .pmu-shell {
+  --pmu-plate-rest: var(--pmu-shadow-1); --pmu-plate-hover: 4px 4px 0 rgba(0,0,0,.38); --pmu-plate-lift: 7px 7px 0 rgba(0,0,0,.35); --pmu-lift-y: 0px; --pmu-lift-s: 1; }
+html[data-theme="retro-light"] #panel-usage .pmu-shell { --pmu-plate-hover: 4px 4px 0 rgba(23,26,20,.22); --pmu-plate-lift: 7px 7px 0 rgba(23,26,20,.2); }
+html[data-o55-nier="on"] #panel-usage .pmu-shell { --pmu-plate-rest: none; --pmu-plate-hover: 3px 3px 0 rgba(var(--o55-nier-ink-rgb), .18); --pmu-lift-y: 0px; --pmu-lift-s: 1; --pmu-sheen: transparent; }
+
 #panel-usage .pmu-card { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 0; border: var(--pmu-bw) solid var(--pmu-rule);
-  border-radius: var(--pmu-r-card); background: var(--pmu-card); box-shadow: var(--pmu-shadow-1); outline: none;
-  transition: box-shadow var(--pmu-dur-hover) var(--pmu-ease-out), border-color var(--pmu-dur-hover) var(--pmu-ease-out), transform var(--pmu-dur-hover) var(--pmu-ease-spring); }
-#panel-usage .pmu-card:hover { box-shadow: var(--pmu-shadow-2); border-color: var(--pmu-rule-strong); }
-/* tiles lift 2 px with the spring, plates 1 px with a brighter rim (Jared: "hover lift"; Atlas: no bounce) */
-#panel-usage .pmu-card[data-head="tile"]:hover { transform: translateY(-2px); }
-#panel-usage .pmu-card:is([data-head="plate"], [data-head="line"]):hover { transform: translateY(-1px); box-shadow: var(--pmu-shadow-2), inset 0 1px 0 rgba(255,255,255,.07); }
-html[data-theme^="friendly"] #panel-usage .pmu-card[data-head="tile"]:hover { transform: translateY(-3px); }
-html[data-theme^="glass"] #panel-usage .pmu-card:hover { border-color: rgba(255,255,255,.34); }
-html[data-theme^="retro"] #panel-usage .pmu-card:hover { transform: none; border-color: var(--pmu-accent); }
-#panel-usage .pmu-card:focus-visible { box-shadow: 0 0 0 2px var(--pmu-accent), var(--pmu-shadow-2); }
-#panel-usage .pmu-board[data-op] .pmu-card:not([data-lifted]):hover { transform: none; }
-/* during a gesture every card keeps its own layer, so peer slides starting and ending never re-layerize the page */
-#panel-usage .pmu-board[data-op] > .pmu-card, #panel-usage .pmu-board[data-op] > :is(.pmu-landing, .pmu-outline) { will-change: transform; }
-
+  border-radius: var(--pmu-r-card); background: var(--pmu-card); box-shadow: var(--pmu-plate-rest); outline: none;
+  transition: transform calc(260ms * var(--pmu-speed, 1)) var(--pmu-ease-settle); }
+/* the pre-rendered hover / lift shadow and top highlight: one layer whose opacity moves */
+#panel-usage .pmu-card::before { content: ""; position: absolute; inset: calc(-1 * var(--pmu-bw)); border-radius: inherit; pointer-events: none;
+  box-shadow: var(--pmu-plate-hover); opacity: 0; transition: opacity calc(260ms * var(--pmu-speed, 1)) var(--pmu-ease-settle); }
+#panel-usage .pmu-card[data-head="band"]::before { display: none; }
+/* hover depth (WOW-SPEC 3.17): lift 4 px and scale 1.01 on the spring (tiles 5 px), shadow layer in 220; unhover 260 SETTLE.
+   The hovered plate gets its own layer for the moment (will-change) and sits above its neighbours. */
+#panel-usage .pmu-card:not([data-head="band"]):hover { z-index: 3; will-change: transform; transform: translateY(var(--pmu-lift-y)) scale(var(--pmu-lift-s));
+  transition: transform calc(220ms * var(--pmu-speed, 1)) var(--pmu-ease-spring); }
+#panel-usage .pmu-card[data-head="tile"]:hover { --pmu-lift-y: -5px; }
+#panel-usage .pmu-card:not([data-head="band"]):hover::before { opacity: 1; transition: opacity calc(220ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
+html[data-theme^="retro"] #panel-usage .pmu-card[data-head="tile"]:hover, html[data-o55-nier="on"] #panel-usage .pmu-card[data-head="tile"]:hover { --pmu-lift-y: 0px; }
+/* Retro: the hard 4 px offset shadow appears in two steps, no lift */
+html[data-theme^="retro"] #panel-usage .pmu-card:hover::before { transition-timing-function: steps(2, jump-start); transition-duration: calc(120ms * var(--pmu-speed, 1)); }
+#panel-usage .pmu-card:focus-visible { box-shadow: 0 0 0 2px var(--pmu-accent), var(--pmu-plate-rest); }
+#panel-usage .pmu-board[data-op] .pmu-card:not([data-lifted]):hover { transform: none; z-index: auto; }
+#panel-usage .pmu-board[data-op] .pmu-card:not([data-lifted]):hover::before { opacity: 0; }
+/* the pointer sheen (40-board.js): a 280 px radial light inside the hovered plate, moved by transform only */
+#panel-usage .pmu-sheen { position: absolute; inset: 0; z-index: 0; overflow: hidden; border-radius: inherit; pointer-events: none; opacity: 0;
+  transition: opacity calc(200ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
+#panel-usage .pmu-sheen.on { opacity: 1; }
+#panel-usage .pmu-sheen > i { position: absolute; left: 0; top: 0; width: 280px; height: 280px; margin: -140px 0 0 -140px; border-radius: 50%; will-change: transform;
+  background: radial-gradient(circle, var(--pmu-sheen) 0, transparent 70%); }
+/* Glass with a GPU (not data-pmu-soft): plates blur what is behind them and carry a rim light (18 % white at the top,
+   4 % at the bottom) and a static specular sheet on the room's hero plate (the first plate of the board) */
+html[data-theme^="glass"]:not([data-pmu-soft]) #panel-usage .pmu-card:not([data-head="band"]) { -webkit-backdrop-filter: blur(18px) saturate(1.2); backdrop-filter: blur(18px) saturate(1.2); }
+html[data-theme^="glass"] #panel-usage .pmu-card:not([data-head="band"]) { background-image: linear-gradient(180deg, rgba(255,255,255,.07), transparent 38%);
+  border-color: transparent; box-shadow: var(--pmu-plate-rest), inset 0 0 0 1px rgba(255,255,255,.08); }
+html[data-theme^="glass"] #panel-usage .pmu-card:not([data-head="band"])::after { content: ""; position: absolute; inset: calc(-1 * var(--pmu-bw)); border-radius: inherit; pointer-events: none;
+  padding: 1px; background: linear-gradient(180deg, rgba(255,255,255,.34), rgba(255,255,255,.08) 40%, rgba(255,255,255,.04));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
+html[data-theme="glass-light"] #panel-usage .pmu-card:not([data-head="band"])::after { background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.4) 40%, rgba(23,34,42,.08)); }
+html[data-theme^="glass"] #panel-usage .pmu-board > .pmu-card[data-hero] { background-image: linear-gradient(118deg, rgba(255,255,255,.10), rgba(255,255,255,.02) 34%, transparent 52%, rgba(255,255,255,.05) 78%, transparent); }
 /* ---- head forms (A1 3.1) ---- */
 #panel-usage .pmu-cardhead { position: relative; display: flex; align-items: center; gap: 8px; flex: none; min-width: 0; height: var(--pmu-head-line); padding: 0 14px;
   cursor: grab; user-select: none; -webkit-user-select: none; touch-action: none; }
@@ -50,7 +103,7 @@ html[data-theme^="retro"] #panel-usage .pmu-keysw { border-radius: 0; }
 #panel-usage .pmu-cardsub:empty { display: none !important; }
 /* the short right meta of a line head (count, state word) from width tier s; plates keep it on the title line */
 #panel-usage .pmu-cardmeta { flex: none; max-width: 46%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--pmu-ink-3); font-size: 12px; line-height: 18px;
-  transition: opacity 140ms; }
+  transition: opacity calc(140ms * var(--pmu-speed, 1)); }
 #panel-usage .pmu-cardmeta:empty { display: none; }
 #panel-usage .pmu-card[data-head="plate"] .pmu-cardmeta { margin-top: 1px; font-size: 12.5px; }
 #panel-usage .pmu-card[data-tw="xs"] .pmu-cardmeta { display: none; }
@@ -58,12 +111,12 @@ html[data-theme^="retro"] #panel-usage .pmu-keysw { border-radius: 0; }
 #panel-usage .pmu-cardmeta [data-tone="warn"] { color: var(--pmu-ink-warn); font-weight: 600; }
 #panel-usage .pmu-cardmeta [data-tone="crit"] { color: var(--pmu-ink-crit); font-weight: 600; }
 /* head tools filled by a kind (inline legend, two-way switches); right-aligned on the title line */
-#panel-usage .pmu-headtools { display: flex; align-items: center; gap: 12px; flex: none; min-width: 0; transition: opacity 140ms; }
+#panel-usage .pmu-headtools { display: flex; align-items: center; gap: 12px; flex: none; min-width: 0; transition: opacity calc(140ms * var(--pmu-speed, 1)); }
 #panel-usage .pmu-headtools:empty { display: none; }
 #panel-usage .pmu-card[data-head="plate"] .pmu-headtools { margin-top: 1px; }
 /* the tools cluster: grip, size, gear, menu at the top right; fades in on hover / focus and covers the head tools */
 #panel-usage .pmu-cardtools { position: absolute; z-index: 4; top: 5px; right: 6px; display: flex; gap: 1px; padding: 2px; border-radius: 9px; opacity: 0; pointer-events: none;
-  background: var(--pmu-menu-bg, var(--pmu-card)); transition: opacity 140ms var(--pmu-ease-out); }
+  background: var(--pmu-menu-bg, var(--pmu-card)); transition: opacity calc(140ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
 #panel-usage .pmu-card[data-head="plate"] .pmu-cardtools { top: 9px; right: 9px; }
 #panel-usage .pmu-cardtools .pmu-iconbtn { width: 24px; height: 24px; border-radius: 7px; }
 #panel-usage .pmu-cardtools .pmu-iconbtn svg { width: 14px; height: 14px; }
@@ -75,7 +128,7 @@ html[data-theme^="retro"] #panel-usage .pmu-keysw { border-radius: 0; }
 /* the meta (text only) gives way to the tools; the head tools (switches, legends) never vanish: they are placed in the
    head only when the title, the head tools and the tools cluster all fit (C.headTools), and slide left of the cluster */
 #panel-usage .pmu-card:hover .pmu-cardmeta, #panel-usage .pmu-card:focus-visible .pmu-cardmeta { opacity: 0; }
-#panel-usage .pmu-headtools { transition: transform 220ms var(--pmu-ease-out); }
+#panel-usage .pmu-headtools { transition: transform calc(220ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
 #panel-usage .pmu-card:hover .pmu-headtools, #panel-usage .pmu-card:focus-visible .pmu-headtools { transform: translateX(-108px); }
 #panel-usage .pmu-card[data-tw="xs"]:hover .pmu-headtools { transform: translateX(-58px); }
 #panel-usage .pmu-board[data-op] .pmu-headtools { transform: none; }
@@ -95,11 +148,11 @@ html[data-theme^="retro"] #panel-usage .pmu-cardtools, html[data-theme^="retro"]
 #panel-usage .pmu-colhead { display: grid; align-items: center; min-height: 26px; margin: 0 -14px; padding: 6px 14px; background: var(--pmu-card-2);
   border-top: 1px solid var(--pmu-rule-2); border-bottom: 1px solid var(--pmu-rule-2); font-family: var(--pmu-mono); font-size: 11px; letter-spacing: .05em;
   text-transform: uppercase; font-stretch: 87.5%; color: var(--pmu-ink-3); }
-#panel-usage .pmu-row { margin: 0 -14px; padding: 0 14px; border-bottom: 1px solid var(--pmu-rule-2); transition: background-color 180ms; }
+#panel-usage .pmu-row { margin: 0 -14px; padding: 0 14px; border-bottom: 1px solid var(--pmu-rule-2); transition: background-color calc(180ms * var(--pmu-speed, 1)); }
 #panel-usage .pmu-row:last-child { border-bottom: 0; }
 #panel-usage .pmu-row:hover { background: var(--pmu-row-hover); }
 #panel-usage .pmu-row[aria-selected="true"], #panel-usage .pmu-row.is-selected { background: var(--pmu-row-sel); }
-#panel-usage .pmu-irow { padding: 7px 10px; border-radius: 8px; transition: background-color 180ms; }
+#panel-usage .pmu-irow { padding: 7px 10px; border-radius: 8px; transition: background-color calc(180ms * var(--pmu-speed, 1)); }
 #panel-usage .pmu-irow:hover { background: var(--pmu-row-hover); }
 #panel-usage .pmu-amount { display: grid; grid-template-columns: 18px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 7px 0; border-top: 1px dashed var(--pmu-rule); font-size: 12.5px; }
 #panel-usage .pmu-amount:first-child { border-top: 0; }
@@ -127,15 +180,20 @@ html[data-theme^="retro"] #panel-usage .pmu-irow { border-radius: 0; }
 #panel-usage .pmu-h[data-edge="nw"] { left: -4px; top: -4px; width: 14px; height: 14px; cursor: nwse-resize; }
 /* the se corner shows a two-stroke L at 50 % ink; an edge under the pointer shows a 2 x 28 px accent bar centred ON the edge */
 #panel-usage .pmu-h[data-edge="se"]::after { content: ""; position: absolute; right: 7px; bottom: 7px; width: 7px; height: 7px; border-right: 1.5px solid var(--pmu-ink-3);
-  border-bottom: 1.5px solid var(--pmu-ink-3); border-bottom-right-radius: 2px; opacity: 0; transition: opacity 140ms; }
+  border-bottom: 1.5px solid var(--pmu-ink-3); border-bottom-right-radius: 2px; opacity: 0; transition: opacity calc(140ms * var(--pmu-speed, 1)); }
 #panel-usage .pmu-card:hover > .pmu-h[data-edge="se"]::after, #panel-usage .pmu-card:focus-visible > .pmu-h[data-edge="se"]::after { opacity: .7; }
 #panel-usage .pmu-h:is([data-edge="e"], [data-edge="w"])::before { content: ""; position: absolute; top: 50%; left: 3px; width: 2px; height: 28px; margin-top: -14px; border-radius: 1px;
-  background: var(--pmu-accent); opacity: 0; transform: scaleY(.6); transition: opacity 100ms, transform 160ms var(--pmu-ease-out); }
+  background: var(--pmu-accent); opacity: 0; transform: scaleY(.6); transition: opacity calc(100ms * var(--pmu-speed, 1)), transform calc(160ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
 #panel-usage .pmu-h[data-edge="s"]::before { content: ""; position: absolute; left: 50%; top: 3px; width: 28px; height: 2px; margin-left: -14px; border-radius: 1px;
-  background: var(--pmu-accent); opacity: 0; transform: scaleX(.6); transition: opacity 100ms, transform 160ms var(--pmu-ease-out); }
+  background: var(--pmu-accent); opacity: 0; transform: scaleX(.6); transition: opacity calc(100ms * var(--pmu-speed, 1)), transform calc(160ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
 #panel-usage .pmu-h:hover::before, #panel-usage .pmu-card[data-resizing="e"] > .pmu-h[data-edge="e"]::before, #panel-usage .pmu-card[data-resizing="w"] > .pmu-h[data-edge="w"]::before,
 #panel-usage .pmu-card[data-resizing="s"] > .pmu-h[data-edge="s"]::before { opacity: 1; transform: none; }
 #panel-usage .pmu-board[data-op] .pmu-card:not([data-resizing]) > .pmu-h { pointer-events: none; }
+/* the hover lift moves a card's bottom edge up 4-5 px: its bottom handles reach 6 px further down while it is lifted, so
+   a pointer resting on the edge stays on the handle (no hover jitter, no missed grab) */
+#panel-usage .pmu-card:hover > .pmu-h[data-edge="s"] { bottom: -10px; height: 14px; }
+#panel-usage .pmu-card:hover > .pmu-h:is([data-edge="se"], [data-edge="sw"]) { bottom: -10px; height: 22px; }
+#panel-usage .pmu-card:hover > .pmu-h[data-edge="se"]::after { bottom: 13px; }
 #panel-usage .pmu-board[data-op="resize"] { cursor: default; }
 
 /* ---- previews (DESIGN-SPEC 6.2, 6.3): the landing slot and the resize outline, placed in the grid by the engine ---- */
@@ -154,14 +212,34 @@ html[data-theme^="retro"] #panel-usage .pmu-irow { border-radius: 0; }
 html[data-theme^="retro"] #panel-usage :is(.pmu-landing, .pmu-outline, .pmu-outline-label) { border-radius: 0; }
 
 /* ---- the lifted card, the settle and the resize morph ---- */
-#panel-usage .pmu-card[data-lifted] { z-index: 30; box-shadow: var(--pmu-shadow-pop); cursor: grabbing; transition: box-shadow 140ms var(--pmu-ease-out); will-change: transform; }
+/* pick-up (WOW-SPEC 3.11): the pre-rendered lift shadow on the same ::before layer (dark 0 28 60 -18 at 60 %, light 0 22 48
+   -16 at 22 % ink) with a 1 px accent rim at 40 %, in 140 (.2,.8,.2,1); after the drop it fades out over 200 (data-settling) */
+#panel-usage .pmu-board > .pmu-card[data-lifted] { z-index: 30; cursor: grabbing; will-change: transform; transition: none; }
+#panel-usage .pmu-board > .pmu-card[data-lifted]::before { box-shadow: var(--pmu-plate-lift); opacity: 1; transition: opacity calc(140ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1); }
+#panel-usage .pmu-board > .pmu-card[data-settling]::before { box-shadow: var(--pmu-plate-lift); opacity: 0; transition: opacity calc(200ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
+html[data-theme^="retro"] #panel-usage .pmu-card[data-lifted]::before { transition-timing-function: steps(2, jump-start); }
 #panel-usage .pmu-card[data-lifted], #panel-usage .pmu-card[data-lifted] * { cursor: grabbing !important; }
-html[data-theme^="retro"] #panel-usage .pmu-card[data-lifted] { box-shadow: 7px 7px 0 rgba(0,0,0,.35); }
-#panel-usage .pmu-card[data-settling] { z-index: 20; }
-#panel-usage .pmu-card[data-resizing] { z-index: 6; }
-#panel-usage .pmu-card[data-morphing] { background: transparent; border-color: transparent; box-shadow: none; transition: none; }
+#panel-usage .pmu-board > .pmu-card[data-settling] { z-index: 20; }
+/* grabbing an edge (WOW-SPEC 3.12): the card lifts 2 px onto its hover shadow while the outline shows the snapped size */
+#panel-usage .pmu-board > .pmu-card[data-resizing] { z-index: 6; }
+#panel-usage .pmu-board[data-op] > .pmu-card[data-resizing]:not([data-lifted]) { transform: translateY(-2px); transition: transform calc(160ms * var(--pmu-speed, 1)) cubic-bezier(.22,.8,.28,1); }
+#panel-usage .pmu-board[data-op] > .pmu-card[data-resizing]:not([data-lifted])::before { opacity: 1; }
+html[data-theme^="retro"] #panel-usage .pmu-board[data-op] > .pmu-card[data-resizing]:not([data-lifted]),
+html[data-o55-nier="on"] #panel-usage .pmu-board[data-op] > .pmu-card[data-resizing]:not([data-lifted]) { transform: none; }
+/* the resize release (E-3): the card's own surface steps aside for the morph surface; its content stays opaque */
+#panel-usage .pmu-board > .pmu-card[data-morphing] { background: transparent; border-color: transparent; box-shadow: none; transition: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+#panel-usage .pmu-board > .pmu-card[data-morphing]::before, #panel-usage .pmu-board > .pmu-card[data-morphing]::after { opacity: 0; transition: none; }
 #panel-usage .pmu-morph { position: absolute; z-index: 0; box-sizing: border-box; border: var(--pmu-bw) solid var(--pmu-rule); border-radius: var(--pmu-r-card);
-  background: var(--pmu-card); box-shadow: var(--pmu-shadow-2); transform-origin: 0 0; pointer-events: none; }
+  background: var(--pmu-card); box-shadow: var(--pmu-plate-hover); transform-origin: 0 0; pointer-events: none; will-change: transform; }
+html[data-theme^="glass"] #panel-usage .pmu-morph { border-color: rgba(255,255,255,.2); }
+/* the seat after a drop and the opener's rim while the inspector is open: a pre-rendered 1 px accent rim (opacity only) */
+#panel-usage .pmu-rim { position: absolute; inset: calc(-1 * var(--pmu-bw)); z-index: 6; border-radius: inherit; pointer-events: none; opacity: 0;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--pmu-accent) 45%, transparent), inset 0 0 0 1px color-mix(in srgb, var(--pmu-accent) 45%, transparent), 0 0 18px -4px color-mix(in srgb, var(--pmu-accent) 35%, transparent); }
+#panel-usage .pmu-rim.is-held { opacity: 1; transition: opacity calc(160ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
+html[data-o55-nier="on"] #panel-usage .pmu-rim { box-shadow: 0 0 0 1px var(--o55-nier-ink), 0 0 0 4px rgba(var(--o55-nier-ink-rgb), .12); }
 #panel-usage .pmu-card[data-leaving] { z-index: 0; }
-html[data-motion="reduced"] #panel-usage .pmu-card { transition: none; }
-@media (prefers-reduced-motion: reduce) { #panel-usage .pmu-card { transition: none; } }
+/* Reduce Motion (WOW-SPEC 9): no lift; the shadow layer keeps a 120 ms opacity change */
+html[data-motion="reduced"] #panel-usage .pmu-card, html[data-motion="reduced"] #panel-usage .pmu-card:hover { transition: none; transform: none; }
+html[data-motion="reduced"] #panel-usage .pmu-card::before, html[data-motion="reduced"] #panel-usage .pmu-card:hover::before { transition: opacity calc(120ms * var(--pmu-speed, 1)) linear; }
+@media (prefers-reduced-motion: reduce) { #panel-usage .pmu-card, #panel-usage .pmu-card:hover { transition: none; transform: none; }
+  #panel-usage .pmu-card::before, #panel-usage .pmu-card:hover::before { transition: opacity calc(120ms * var(--pmu-speed, 1)) linear; } }

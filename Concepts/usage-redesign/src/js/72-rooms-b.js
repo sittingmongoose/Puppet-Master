@@ -7,6 +7,7 @@
   function def(id, room, o) { PMU.widgets.define(id, Object.assign({ room: room }, o)); }
   function money(v) { return C.money(v); }
   var legName = C.legName;
+  function st0() { return PMU.core.state; }
 
   /* ================================================================== Free models */
   var FREE = [
@@ -78,10 +79,12 @@
     return { text: 'Sonnet 4.6', tone: 'warn', sub: 'requested ' + b('Opus 4.6') + ' unavailable · fallback',
       facts: [['Requested', 'Opus 4.6'], ['Effective', 'Sonnet 4.6'], ['Reason', 'rate limited'], ['Cache', 'reused'], ['Receipt', 'recorded']], foot: 'Receipt · recorded' };
   } });
-  def('ctx-sources', 'context', { meta: function () { return F.tok(DATA.context.used) + ' tokens · by source family'; }, model: function () {
+  /* the window's room by source family: each family against the whole window (not the used part, which the Current
+     window ring shows), so the bars read as how much of the 128k each one takes (LOOK-REVIEW-2 16: no third copy) */
+  def('ctx-sources', 'context', { meta: function () { return 'share of the ' + F.tok(DATA.context.limit) + ' window · by source family'; }, model: function () {
     var X = DATA.context;
-    return { rows: X.labels.map(function (l, i) { var tk = Math.round(X.used * X.segments[i] / 100); return { id: l, name: l, role: i === 0 ? 'conversation history' : 'loaded context', value: tk, valueText: F.tok(tk), share: X.segments[i], idx: i }; }),
-      foot: 'Share of the current context window by source family.' };
+    return { rows: X.labels.map(function (l, i) { var tk = Math.round(X.used * X.segments[i] / 100); return { id: l, name: l, role: i === 0 ? 'conversation history' : 'loaded context', value: tk, valueText: F.tok(tk) + ' · ' + (100 * tk / X.limit).toFixed(1) + '%', valueShort: (100 * tk / X.limit).toFixed(1) + '%', share: X.segments[i], idx: i }; }),
+      scale: X.limit, foot: F.tok(X.limit - X.used) + ' of the window free · ' + F.tok(X.reserved) + ' held for the response.' };
   } });
   def('ctx-limits', 'context', { meta: function () { return 'effective routes · capability snapshot'; }, model: function () {
     return { rows: [
@@ -137,9 +140,18 @@
             ['Authority', p.allowance_authority + ' · ' + p.allowance_freshness]], spark: by[id] ? { values: by[id], vendor: PMU.markOf(PMU.roster.legacyProvider(id)).vendor, idx: 0 } : null };
       } });
   });
-  def('token-trend', 'analytics', { meta: function (ctx) {
+  /* the old page's static intent of these cards (PARITY 158-160) is kept, labelled, in their Details (DECISIONS
+     overnight 3: never drop data) */
+  function fixtureSection(rows) { return { title: 'Concept fixture · static intent', rows: rows.map(function (r) { return [r[0], esc(r[1])]; }) }; }
+  def('token-trend', 'analytics', { inspect: function (ctx) {
+    var tk = D.tokens(), cr = C.cfg('token-trend', 'cacheReads', 'off') === 'on';
+    return { kind: 'panel', title: 'Token volume', subtitle: tk.buckets.label + ' · ' + D.rangeLabel(st0().range), sections: [
+      { title: 'Selected range', rows: [['Input', esc(F.tok(tk.totals.input))], ['Output', esc(F.tok(tk.totals.output))], ['Reasoning', esc(F.tok(tk.totals.reasoning))], ['Cache write', esc(F.tok(tk.totals.cacheWrite))],
+        ['Cache read', esc(F.tok(tk.totals.cacheRead))], ['Peak', esc(peakText(tk, cr))], ['Basis', 'token series · estimated cost from recorded attempts']] },
+      fixtureSection([['Series', '20-point token series'], ['Input', '7.1M'], ['Output', '1.2M'], ['Cache read', '5.4M'], ['Peak hour', '15:00']])] };
+  }, meta: function (ctx) {
     var tk = D.tokens(), c = D.costs();
-    return tk.buckets.label + ' · tokens left axis, estimated cost right axis' + (ctx && ctx.tier && ctx.tier.w === 'xl' ? ' · ' + c.attempts + ' attempts · ' + c.providers + ' providers' : '');
+    return tk.buckets.label + ' · tokens left axis, estimated cost right axis' + (ctx && ctx.tier && ctx.tier.w === 'xl' ? ' · ' + C.plural(c.attempts, 'attempt') + ' · ' + C.plural(c.providers, 'provider') : '');
   }, config: [{ id: 'split', label: 'Token types', value: 'off', options: [{ value: 'off', label: 'One area', sub: 'Tokens without cache reads' }, { value: 'on', label: 'Token types', sub: 'Stacked bands by token type' }] },
     { id: 'cacheReads', label: 'Cache reads', value: 'off', options: [{ value: 'off', label: 'Hidden', sub: 'Cache reads dwarf the other types, so they start hidden' }, { value: 'on', label: 'Shown' }] }],
   model: function (ctx) {
@@ -147,7 +159,8 @@
     var split = C.cfg(ctx.id, 'split', 'off') === 'on', cr = C.cfg(ctx.id, 'cacheReads', 'off') === 'on';
     var tools = '<span data-key="split">' + C.switchBtn('tt-split', split, 'Token types', 'Stack the bands by token type') + '</span>' +
       '<span data-key="cacheReads">' + C.switchBtn('tt-cr', cr, 'Cache reads', 'Cache reads dwarf the other types, so they start hidden') + '</span>';
-    return { chart: 'area', sig: (split ? 's' : '') + (cr ? 'c' : ''), tools: tools, toolsMin: 'm',
+    return { chart: 'area', sig: (split ? 's' : '') + (cr ? 'c' : ''), tools: tools, toolsMin: 'm', hero: true,
+      heroSub: 'peak ' + b(peakText(tk, cr)) + ' · ' + b(F.tok(tk.totals.input)) + ' in · ' + b(F.tok(tk.totals.output)) + ' out',
       spec: { x: tk.x, unit: 'tokens', split: split, cacheReads: cr, now: Date.now(), peak: true, bucketMs: tk.buckets.bucketMs,
         series: [{ name: 'Input', tk: 'in', values: tk.input }, { name: 'Output', tk: 'out', values: tk.output }, { name: 'Reasoning', tk: 'rsn', values: tk.reasoning }, { name: 'Cache write', tk: 'cw', values: tk.cacheWrite }, { name: 'Cache read', tk: 'cr', values: tk.cacheRead }],
         cost: { values: cost.values, unit: 'usd' }, source: 'token series · estimated cost from recorded attempts', notes: 'Input and output are summed only from selected identity-bound attempts.',
@@ -173,7 +186,11 @@
   }
   C.act('tt-split', function (el, id) { C.setCfg(id, 'split', C.cfg(id, 'split', 'off') === 'on' ? 'off' : 'on'); });
   C.act('tt-cr', function (el, id) { C.setCfg(id, 'cacheReads', C.cfg(id, 'cacheReads', 'off') === 'on' ? 'off' : 'on'); });
-  def('model-mix', 'analytics', { meta: function (ctx) { return 'Estimated cost by token type · ' + D.rangeLabel(ctx.state.range) + ' · select a model for detail'; }, model: function () { return { rows: D.models() }; } });
+  def('model-mix', 'analytics', { inspect: function () {
+    return { kind: 'panel', title: 'Model mix', subtitle: 'Estimated cost by model and token type · ' + D.rangeLabel(st0().range), sections: [
+      { title: 'Selected range', rows: D.models().map(function (m) { return [m.name, esc(PMU.fmt.tok(m.tokens.total) + ' · ' + C.money(m.value.total) + ' · ' + C.plural(m.attempts, 'attempt') + ' · ' + m.role)]; }) },
+      fixtureSection([['Sonnet 4.6', '42% · 3.8M · primary code'], ['GPT-5.4', '28% · 2.4M · fast-edit fallback'], ['Qwen3 Coder', '18% · 1.5M · long context'], ['Other', '12% · 0.9M · specialists']])] };
+  }, meta: function (ctx) { return 'Estimated cost by token type · ' + D.rangeLabel(ctx.state.range) + ' · select a model for detail'; }, model: function () { return { rows: D.models() }; } });
   def('an-model-donut', 'analytics', { meta: function (ctx) { return 'Share of ' + (C.cfg('an-model-donut', 'mode', 'tokens') === 'cost' ? 'estimated cost' : 'tokens') + ' · ' + D.rangeLabel(ctx.state.range) + ' · recorded attempts'; },
     config: [{ id: 'mode', label: 'Measure', value: 'tokens', options: [{ value: 'tokens', label: 'Tokens' }, { value: 'cost', label: 'Cost' }] }], model: function () { return { rows: D.models() }; } });
   def('an-token-breakdown', 'analytics', { meta: function (ctx) { return 'Share of tokens and of estimated cost · ' + D.rangeLabel(ctx.state.range); }, model: function () {
@@ -184,7 +201,12 @@
       tokensText: F.tok(tk.totals[k]), valueText: money(vt[k]) }; }),
       foot: 'Five disjoint buckets: cache split out of inclusive input, reasoning out of inclusive output. Cost by type is a PM estimate at catalog rates.' };
   } });
-  def('cache-read-share', 'analytics', { meta: function (ctx) { return 'Read share and savings · ' + D.rangeLabel(ctx.state.range) + ' · PM estimate, catalog pricing'; }, model: function () {
+  def('cache-read-share', 'analytics', { inspect: function () {
+    var tk = D.tokens(), c = D.costs(), read = tk.totals.cacheRead, write = tk.totals.cacheWrite;
+    return { kind: 'panel', title: 'Cache-read share', subtitle: 'Read share and savings · ' + D.rangeLabel(st0().range), sections: [
+      { title: 'Selected range', rows: [['Read', esc(F.tok(read))], ['Write', esc(F.tok(write))], ['Read share', esc((read + write ? 100 * read / (read + write) : 0).toFixed(1) + '% (not a hit rate)')], ['Saved', esc(C.money(c.cache) + ' est.')]] },
+      fixtureSection([['Read', '5.4M'], ['Write', '347k'], ['Read share', '96.8% (the old page called it a hit rate)'], ['Saved', 'catalog pricing estimate']])] };
+  }, meta: function (ctx) { return 'Read share and savings · ' + D.rangeLabel(ctx.state.range) + ' · PM estimate, catalog pricing'; }, model: function () {
     var tk = D.tokens(), c = D.costs(), vt = D.valueByType(), cd = D.series('cacheDaily30');
     var read = tk.totals.cacheRead, write = tk.totals.cacheWrite;
     return { read: read, write: write, share: read + write ? 100 * read / (read + write) : 0, savings: c.cache, cost: vt.cacheRead + vt.cacheWrite, costRead: vt.cacheRead, costWrite: vt.cacheWrite,
@@ -238,6 +260,8 @@
         row('Cache avoided estimate', money(a.cache_avoided_estimate) + ' · ' + a.cache_avoided_authority), row('Tool latency', (a.tool_latency_ms / 1000).toFixed(1) + 's'), row('Tool errors', String(a.tool_error_count)), row('Anomaly score', String(a.anomaly_score))] }
     ], raw: a }, opener);
   };
+  /* the Ledger hero (WOW-TASKS N-2): every attempt of the range on its provider's lane */
+  def('ledger-timeline', 'ledger', { kind: 'attempts', meta: function (ctx) { return D.rangeLabel(ctx.state.range) + ' · one dot per attempt, sized by its recorded value · hollow while a receipt is pending'; } });
   def('ledger-count', 'ledger', { meta: function (ctx) { return D.rangeLabel(ctx.state.range) + ' · selected records'; }, model: function () {
     var c = D.costs(), acc = {}; D.attempts().forEach(function (a) { acc[a.account_id] = 1; });
     return { value: c.attempts, fmt: 'int', sub: 'identity-bound usage attempts', facts: [['Settled', String(c.settledAttempts)], ['Pending', String(c.pending), c.pending ? { tone: 'warn' } : {}], ['Providers', String(c.providers)], ['Accounts', String(Object.keys(acc).length)]],
@@ -255,7 +279,7 @@
     var c = D.costs(), st = c.statuses, keys = Object.keys(st);
     if (!keys.length) return { segments: [], empty: 'No attempts · selected scope and range', emptyFacts: '0 · no settlement inferred' };
     var idx = { settled: 1, 'pending provider receipt': 2, 'adjusted and settled': 3 };
-    return { headline: { value: st.settled || 0, fmt: 'int', label: 'of ' + c.attempts + ' attempts settled' }, segments: keys.map(function (k) { return { name: k.charAt(0).toUpperCase() + k.slice(1), value: st[k], valueText: st[k] + ' attempts', idx: idx[k] != null ? idx[k] : 7, sub: 'independent attempt receipt state' }; }), fmt: 'int', total: c.attempts };
+    return { headline: { value: st.settled || 0, fmt: 'int', label: 'of ' + C.plural(c.attempts, 'attempt') + ' settled' }, segments: keys.map(function (k) { return { name: k.charAt(0).toUpperCase() + k.slice(1), short: ({ 'pending provider receipt': 'Pending', 'adjusted and settled': 'Adjusted' })[k], valueShort: String(st[k]), value: st[k], valueText: C.plural(st[k], 'attempt'), idx: idx[k] != null ? idx[k] : 7, sub: 'independent attempt receipt state' }; }), fmt: 'int', total: c.attempts };
   } });
   def('ledger-main', 'ledger', { meta: function (ctx) { return D.rangeLabel(ctx.state.range) + ' · newest first · select a row for the attempt'; }, model: function () {
     var list = D.attempts().slice().sort(function (a, c) { return new Date(c.occurred_at) - new Date(a.occurred_at); });
@@ -263,15 +287,15 @@
     return { toolbar: { search: 'Search attempts', export: function () { if (window.PM7_USAGE) window.PM7_USAGE.exportJson('ledger'); },
       filters: [{ id: 'prov', label: 'Provider', options: DATA.providers.map(function (p) { return { value: p.id, label: legName(p.id), mark: PMU.roster.legacyProvider(p.id) }; }) },
         { id: 'set', label: 'Settlement', options: [{ value: 'settled', label: 'Settled' }, { value: 'pending provider receipt', label: 'Pending receipt' }, { value: 'adjusted and settled', label: 'Adjusted' }] }] },
-      cols: [{ id: 'time', label: 'TIME', w: '62px', mono: true }, { id: 'id', label: 'ATTEMPT', w: 'minmax(64px,.8fr)', mono: true }, { id: 'prov', label: 'PROVIDER', w: 'minmax(96px,1.2fr)' },
-        { id: 'model', label: 'MODEL', w: 'minmax(90px,1fr)', min: 'l' }, { id: 'io', label: 'IN / OUT', w: '96px', align: 'right', min: 'l' }, { id: 'acct', label: 'ACCOUNT', w: 'minmax(96px,1fr)', min: 'xl' },
+      cols: [{ id: 'time', label: 'TIME', w: '62px', mono: true }, { id: 'id', label: 'ATTEMPT', w: 'minmax(64px,.8fr)', mono: true }, { id: 'prov', label: 'PROVIDER', w: 'minmax(124px,1.4fr)' },
+        { id: 'model', label: 'MODEL', w: 'minmax(104px,1.1fr)', min: 'l' }, { id: 'io', label: 'IN / OUT', w: '96px', align: 'right', min: 'l' }, { id: 'acct', label: 'ACCOUNT', w: 'minmax(96px,1fr)', min: 'xl' },
         { id: 'plat', label: 'PLATFORM', w: '80px', min: 'xl' }, { id: 'op', label: 'OPERATION', w: 'minmax(90px,1fr)', min: 'xl' }, { id: 'val', label: 'VALUE', w: '78px', align: 'right' }, { id: 'set', label: 'SETTLEMENT', w: 'minmax(110px,1fr)', min: 'm' }],
       rows: list.map(function (a) {
         var t = new Date(a.occurred_at), m = names[a.model_id] || { name: a.model_id };
         var v = (a.charge || 0) + (a.plan_allocation_estimate || 0);
         return { tone: /pending/.test(a.settlement_status) ? 'warn' : null, match: { prov: a.provider_id, set: a.settlement_status },
           cells: { time: (t.getHours() < 10 ? '0' : '') + t.getHours() + ':' + (t.getMinutes() < 10 ? '0' : '') + t.getMinutes(), id: a.attempt_id, prov: { html: PMU.mark(PMU.roster.legacyProvider(a.provider_id), 16) + ' ' + esc(legName(a.provider_id)) },
-            model: m.name, io: F.tok(a.input_tokens) + ' / ' + F.tok(a.output_tokens), acct: (PMU.roster.byLegacy(a.account_id) || {}).nickname || a.account_id.replace(/^account:/, ''), plat: 'desktop', op: a.tool_id,
+            model: m.name, io: F.tok(a.input_tokens) + ' / ' + F.tok(a.output_tokens), acct: (PMU.roster.byLegacy(a.account_id) || {}).nickname || a.account_id.replace(/^account:/, ''), plat: 'desktop', op: C.idCell(a.tool_id),
             val: { html: /pending/.test(a.settlement_status) && !v ? C.vs('pending', 'pending') : esc(money(v)) + (a.charge ? '' : ' <em>est.</em>') }, set: { html: setGlyph(a.settlement_status) } },
           hover: [a.attempt_id, a.usage_event_ref + ' · ' + a.provider_id + ' · ' + a.model_id + ' · ' + a.settlement_status],
           onClick: function (el) {
@@ -289,7 +313,7 @@
   } });
   def('attempt-lineage', 'ledger', { meta: function (ctx) { return D.rangeLabel(ctx.state.range) + ' · receipt chain'; }, model: function () {
     return { cols: [{ id: 'id', label: 'ATTEMPT', w: '76px', mono: true }, { id: 'who', label: 'PROVIDER · ACCOUNT', w: 'minmax(140px,2fr)' }, { id: 'route', label: 'EFFECTIVE ROUTE', w: 'minmax(120px,1.6fr)', min: 'm' }, { id: 'ref', label: 'EVENT REF', w: '80px', mono: true, min: 'l' }, { id: 'set', label: 'SETTLEMENT', w: 'minmax(100px,1.2fr)' }],
-      rows: D.attempts().map(function (a) { return { cells: { id: a.attempt_id, who: C.acctName(a.account_id), route: a.effective_route_id, ref: a.usage_event_ref, set: { html: setGlyph(a.settlement_status) } }, onClick: function (el) { C.openAttempt(a, el); } }; }) };
+      rows: D.attempts().map(function (a) { return { cells: { id: a.attempt_id, who: C.acctName(a.account_id), route: C.idCell(a.effective_route_id), ref: C.idCell(a.usage_event_ref), set: { html: setGlyph(a.settlement_status) } }, onClick: function (el) { C.openAttempt(a, el); } }; }) };
   } });
   def('ledger-coverage', 'ledger', { meta: function (ctx) { return D.rangeLabel(ctx.state.range) + ' · stable identity axes'; }, model: function () {
     var c = D.costs(), acc = {}; D.attempts().forEach(function (a) { acc[a.account_id] = 1; });
@@ -305,4 +329,38 @@
     var st = D.costs().statuses;
     return { rows: Object.keys(st).map(function (k) { return { name: k.charAt(0).toUpperCase() + k.slice(1), sub: 'attempt receipt authority', value: String(st[k]), note: 'never inferred from billing or entitlement' }; }), empty: 'No attempts in range', emptyFacts: 'No settlement inferred' };
   } });
+
+  /* ================================================================== room beats (WOW-SPEC 4, WOW-TASKS N-1) */
+  if (PMU.film && PMU.film.beat) {
+    var FB = PMU.film;
+    /* Free models: the capacity arcs sweep (their own entrance); a light then crosses the gauges 40 ms apart and the
+       cooling route's progress catches it once more */
+    FB.beat('free', function (b) {
+      var cards = C.byPos(C.beatCards(b, function (c) { return c.getAttribute('data-kind') === 'free'; }));
+      cards.forEach(function (c, i) {
+        var ring = c.querySelector('.pmu-freering'); if (!ring) return;
+        FB.sweep(ring, { delay: C.beatAt(b, c, 900 + 40 * i), dur: 600 });
+        if (c.querySelector('.pmu-freestate[data-tone="warn"]')) FB.flash(ring, { tone: 'warn', delay: C.beatAt(b, c, 1500), noSweep: true });
+      });
+    });
+    /* Context: the composition sweeps round the hero ring (its own entrance); the light then crosses the ring and the
+       compactable tile flashes once */
+    FB.beat('context', function (b) {
+      var w = C.beatCard(b, 'ctx-window'); if (!w) return;
+      var ring = w.querySelector('.pmu-ctxring'); if (ring) FB.sweep(ring, { delay: C.beatAt(b, w, 1000), dur: 700 });
+      var rc = C.beatCard(b, 'ctx-reclaim'); if (rc) FB.flash(rc.querySelector('.pmu-kpiline') || rc, { delay: C.beatAt(b, w, 1300) });
+    });
+    /* Analytics: the token volume draws with its comet and the cost dots pop (the chart's own entrance); the hero number
+       then catches the light */
+    FB.beat('analytics', function (b) { C.sweepHero(b, C.beatCard(b, 'token-trend'), 1300); });
+    /* Ledger: the attempts pop in time order (the timeline's own entrance); the light then crosses the hero number and
+       the pending tile flashes in its warn tone */
+    FB.beat('ledger', function (b) {
+      var tl = C.beatCard(b, 'ledger-timeline'); if (!tl) return;
+      var n = tl.querySelectorAll('.pmu-atdot').length;
+      C.sweepHero(b, tl, 600 + 12 * n);
+      var pend = C.beatCard(b, 'ledger-errors');
+      if (pend && pend.querySelector('.pmu-kpiline[data-tone="warn"]')) FB.flash(pend.querySelector('.pmu-kpiline'), { tone: 'warn', delay: C.beatAt(b, tl, 900 + 12 * n) });
+    });
+  }
 })();

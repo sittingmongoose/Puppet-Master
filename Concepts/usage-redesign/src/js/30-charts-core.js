@@ -79,7 +79,7 @@
     var f = fam();
     if (f === 'retro') return kind === 'draw' ? 'steps(8,end)' : kind === 'count' ? 'steps(6,end)' : 'steps(4,end)';
     if (f === 'nier') return kind === 'draw' ? 'steps(7,end)' : 'steps(5,end)';
-    if (kind === 'draw' || kind === 'sweep') return f === 'glass' ? 'cubic-bezier(.16,1,.3,1)' : EASE.io;
+    if (kind === 'draw' || kind === 'sweep') return f === 'glass' ? 'cubic-bezier(.05,.7,.1,1)' : EASE.io;   /* Glass draws on DEPTH (WOW-SPEC 1.3) */
     /* values never overshoot (Jared caught a 99% meter bouncing to 100% in Atlas): fills and bars ease out; springs are
        for marks that carry no value (dots, notches, halos) */
     if (kind === 'fill') return 'cubic-bezier(.16,1,.3,1)';
@@ -121,6 +121,83 @@
   }
   charts.motion = { fam: fam, reduced: reduced, EASE: EASE, voice: voice, curve: curve, anim: anim, tween: tw, reveal: reveal };
 
+  /* ---------- HTML marks (WOW-TASKS C-9): every mark that animates on its own (end dots, NOW halos, cost dots, the
+     TODAY marker, the budget rule) is an HTML element in a layer over the plot, never an SVG child: an animation of an
+     SVG child runs on the main thread and keeps a full frame running on the CPU-only VM, an HTML transform or opacity
+     runs on the compositor. Positions are left / top (laid out once); transform stays free for the motion. ---------- */
+  charts.dotHtml = function (x, y, k, o) {
+    o = o || {};
+    var pos = ' style="left:' + r1(x) + 'px;top:' + r1(y) + 'px"';
+    return (o.halo ? '<i class="pmu-hhalo"' + keyAttrs(k) + (o.key ? ' data-key="' + esc(o.key) + '"' : '') + pos + '></i>' : '') +
+      '<i class="pmu-hdot pmu-mark' + (o.size ? ' is-' + o.size : '') + (o.hollow ? ' is-hollow' : '') + '" data-mark="dot"' + keyAttrs(k) +
+      (o.key ? ' data-key="' + esc(o.key) + '"' : '') + (o.attrs || '') + pos + '></i>';
+  };
+  /* a dot pops (or blinks on in three steps under NieR, WOW-SPEC 5); a halo swells .2 -> 1.35 -> 1 */
+  charts.popDot = function (el, delay, dur) {
+    if (!el || reduced()) return null;
+    var f = fam();
+    if (f === 'nier') return anim(el, [{ opacity: 0 }, { opacity: 1 }], 90, delay, 'steps(3,jump-start)', 'backwards');
+    if (f === 'retro') return anim(el, [{ transform: 'scale(0)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }], 120, delay, 'steps(2,jump-start)', 'backwards');
+    return anim(el, [{ transform: 'scale(0)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }], dur || 260, delay, f === 'friendly' ? 'cubic-bezier(.34,1.56,.64,1)' : EASE.spring, 'backwards');
+  };
+  charts.swellHalo = function (el, delay) {
+    if (!el || reduced()) return null;
+    return anim(el, [{ transform: 'scale(.2)', opacity: 0 }, { transform: 'scale(1.35)', opacity: 1, offset: 0.45 }, { transform: 'scale(1)', opacity: 1 }], 620, delay, EASE.out, 'backwards');
+  };
+
+  /* ---------- the compositor arc sweep (WOW-TASKS C-2): a ring or donut picture is revealed from 12 o'clock by two
+     rotating half masks, each holding a counter-rotated copy of the picture, so the arc grows without a frame of main
+     thread work (the old sweep re-wrote stroke-dasharray from a JS tween every frame). The wedge [0, a] (degrees,
+     clockwise from 12 o'clock) is the intersection of a static half plane and a rotating half plane: the right half
+     shows [0, min(a, 180)], the left half [180, max(a, 180)]. With the effect easing on the whole animation, keyframe
+     offsets are eased progress, so the two halves and the glint arm stay on one timeline. The copies are removed when
+     the sweep ends and the original (its arcs hidden while it ran) shows the same picture. ---------- */
+  charts.arcSweep = function (box, picture, o) {
+    o = o || {};
+    if (!box || !picture || reduced() || typeof box.animate !== 'function') return null;
+    var a0 = clamp(o.from || 0, 0, 360), a1 = clamp(o.to == null ? 360 : o.to, 0, 360);
+    if (Math.abs(a1 - a0) < 0.5) return null;
+    var dur = o.dur || 900, delay = o.delay || 0, f = fam();
+    var easing = o.easing || (f === 'retro' ? 'steps(8,jump-start)' : f === 'nier' ? 'steps(6,jump-start)' : 'cubic-bezier(.16,1,.3,1)');
+    if (box._pmuSweep) box._pmuSweep.cancel();
+    var wrap = H('div', 'pmu-sweep');
+    wrap.setAttribute('aria-hidden', 'true');
+    /* keyframes of a rotation that is a piecewise-linear function of the wedge angle, sampled at the wedge's kink */
+    function frames(fn, sign) {
+      var pts = [0, 1], kink = (180 - a0) / (a1 - a0);
+      if (kink > 0 && kink < 1) pts.splice(1, 0, kink);
+      return pts.map(function (p) { var a = a0 + (a1 - a0) * p; return { offset: p, transform: 'rotate(' + (sign * fn(a)).toFixed(2) + 'deg)' }; });
+    }
+    var halves = [
+      { side: 'r', fn: function (a) { return Math.min(a, 180) - 180; }, need: Math.min(a0, a1) < 180 },
+      { side: 'l', fn: function (a) { return Math.max(a, 180) - 180; }, need: Math.max(a0, a1) > 180 }
+    ];
+    var anims = [];
+    halves.forEach(function (h) {
+      if (!h.need) return;
+      var half = H('div', 'pmu-sweep-h is-' + h.side, wrap), rot = H('div', 'pmu-sweep-r', half), cnt = H('div', 'pmu-sweep-c', rot);
+      cnt.appendChild(picture.cloneNode(true));
+      anims.push(anim(rot, frames(h.fn, 1), dur, delay, easing, 'both'), anim(cnt, frames(h.fn, -1), dur, delay, easing, 'both'));
+    });
+    /* the glint (WOW-SPEC 3.3): a 6 px white light at 60 % rides the leading cap on an arm that turns with the wedge */
+    if (o.glint !== false && f !== 'nier') {
+      var arm = H('div', 'pmu-sweep-arm', wrap), g = H('i', 'pmu-sweep-glint', arm);
+      if (o.radius) g.style.top = r1(o.radius) + '%';
+      anims.push(anim(arm, [{ transform: 'rotate(' + a0 + 'deg)', opacity: 0 }, { opacity: 1, offset: 0.08 }, { opacity: 1, offset: 0.82 },
+        { transform: 'rotate(' + a1 + 'deg)', opacity: 0 }], dur, delay, easing, 'both'));
+    }
+    box.appendChild(wrap);
+    box.setAttribute('data-sweeping', '');
+    var done = false, handle = {
+      cancel: function () { if (done) return; done = true; anims.forEach(function (a) { if (a) try { a.cancel(); } catch (e) {} }); wrap.remove(); box.removeAttribute('data-sweeping'); if (box._pmuSweep === handle) box._pmuSweep = null; }
+    };
+    box._pmuSweep = handle;
+    var first = anims.filter(Boolean)[0];
+    if (!first) { handle.cancel(); return null; }
+    first.finished.then(function () { setTimeout(handle.cancel, 40); }, function () {});
+    return handle;
+  };
+
   /* number roll: from the value on screen to the new one (first time from 0), tabular, no overshoot. The element keeps
      the shown value in data-shown so a later change counts from it (DESIGN-SPEC 8.5, A1 8.1). */
   charts.roll = function (el, to, format, opts) {
@@ -144,18 +221,14 @@
       function () { el._pmuRoll = null; el.textContent = opts.finalText != null ? opts.finalText : format(to); }, opts.delay || 0);
     return el._pmuRoll;
   };
-  /* value-change pulse (DESIGN-SPEC 8.5): the number scales 1 -> 1.05 -> 1 and an accent underline sweeps in and out.
-     Nothing pulses on first render; the caller calls it on a change only. */
+  /* value-change pulse (WOW-SPEC 3.6): the reading flashes once (a pre-painted glow layer, opacity only) and a light
+     sweeps across it (PMU.film.flash); values never scale or bounce. Nothing pulses on first render. */
   charts.pulse = function (el) {
     if (!el || reduced()) return;
-    var f = fam();
-    var peak = f === 'friendly' ? 1.07 : f === 'retro' || f === 'nier' ? 1 : 1.05;
-    if (peak !== 1) anim(el, [{ transform: 'scale(1)' }, { transform: 'scale(' + peak + ')', offset: 0.4 }, { transform: 'scale(1)' }], 420, 0,
-      f === 'friendly' ? EASE.spring : 'cubic-bezier(.3,1.4,.5,1)', 'none');
     if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
+    if (PMU.film && PMU.film.flash) { PMU.film.flash(el, {}); return; }
     var u = H('i', 'pmu-pulseline', el);
-    var a = anim(u, [{ transform: 'scaleX(0)', opacity: 1 }, { transform: 'scaleX(1)', opacity: 1, offset: 0.55 }, { transform: 'scaleX(1)', opacity: 0 }], 460, 0,
-      f === 'retro' ? 'steps(4,end)' : f === 'nier' ? 'steps(5,end)' : EASE.out, 'none');
+    var a = anim(u, [{ transform: 'scaleX(0)', opacity: 1 }, { transform: 'scaleX(1)', opacity: 1, offset: 0.55 }, { transform: 'scaleX(1)', opacity: 0 }], 460, 0, EASE.out, 'none');
     if (a) a.onfinish = function () { u.remove(); }; else u.remove();
   };
 
@@ -168,7 +241,14 @@
     list.forEach(function (c, i) {
       if (!sizes[i]) return;
       c._w = sizes[i].w; c._h = sizes[i].h;
-      try { c._draw(c._first, !c._first); } catch (error) { console.error('[pm-usage] chart draw', c.name, error); }
+      /* a chart re-created in the same card in the same task (a content update or resize re-renders the body) morphs from
+         the one it replaces instead of appearing in its final state (WOW-SPEC 3.4) */
+      var carried = c._carry && c._first && !c._entered && c._pendingEnter == null && !reduced() && !charts.noCarry ? c._carry : null;
+      c._carry = null;
+      try {
+        if (carried && c._impl.carry) { Object.assign(c, carried.state || {}); c._impl.carry(c, carried); c._drawn = true; }
+        else c._draw(c._first, !c._first);
+      } catch (error) { console.error('[pm-usage] chart draw', c.name, error); }
       c._first = false;
       if (c._pendingEnter != null && c._drawn) { var d = c._pendingEnter; c._pendingEnter = null; c._enter(d); }
     });
@@ -207,6 +287,17 @@
 
   /* make(name, host, spec, opts, impl): the shared chart object. impl.draw(c, first, resized) builds or re-lays the
      chart from c.spec at c._w x c._h; impl.enter(c, delay) plays the one entrance; impl.update(c, prevSpec) morphs. */
+  var carry = {}, carryClear = false;
+  function carryKey(c) {
+    var card = c.host && c.host.closest ? c.host.closest('.pmu-card[data-widget]') : null;
+    if (!card) return null;
+    var same = card.querySelectorAll('[data-pmu-chart="' + c.name + '"]');
+    return card.getAttribute('data-widget') + '|' + c.name + '|' + Array.prototype.indexOf.call(same, c.el);
+  }
+  function keepCarry(k, entry) {
+    carry[k] = entry;
+    if (!carryClear) { carryClear = true; (window.queueMicrotask || function (f) { Promise.resolve().then(f); })(function () { carry = {}; carryClear = false; }); }
+  }
   charts.make = function (name, host, spec, opts, impl) {
     opts = opts || {};
     var root = H(impl.tag || 'div', 'pmu-chart pmu-c-' + name);
@@ -216,7 +307,8 @@
     if (impl.flow) root.setAttribute('data-flow', '1');
     host.appendChild(root);
     var c = { name: name, host: host, el: root, spec: spec || {}, opts: opts, _w: 0, _h: 0, _cw: -1, _ch: -1, _first: true, _drawn: false, _pendingEnter: null,
-      _dead: false, _entered: false, _flow: !!impl.flow };
+      _dead: false, _entered: false, _flow: !!impl.flow, _impl: impl };
+    if (impl.carry) { var ck = carryKey(c); if (ck && carry[ck] && carry[ck].name === name) { c._carry = carry[ck]; delete carry[ck]; } }
     c._draw = function (first, resized) {
       if (c._dead) return;
       impl.draw(c, first, !!resized);
@@ -242,6 +334,11 @@
       c._enter(delay || 0);
     };
     c.destroy = function () {
+      if (impl.carry && c._drawn && !c._dead && !reduced()) {
+        var ck = carryKey(c);
+        if (ck) try { keepCarry(ck, { name: name, spec: c.spec, state: { _geo: c._geo, _lgeo: c._lgeo, _colH: c._colH, _arcs: c._arcs, _sp: c._sp, _end: c._end, _iso: c._iso },
+          snap: impl.snapshot ? impl.snapshot(c) : null }); } catch (error) {}
+      }
       c._dead = true;
       ['_tw', '_rt', '_dt'].forEach(function (k) { if (c[k] && c[k].cancel) c[k].cancel(); c[k] = null; });
       if (ro && watched.get(host) === c) { ro.unobserve(host); watched.delete(host); }
@@ -466,7 +563,7 @@
   }
   charts.defs = function () {
     var defs = document.getElementById('pmuDefs');
-    if (!defs || defs.getAttribute('data-ready') === 'v3') return defs;
+    if (!defs || defs.getAttribute('data-ready') === 'v4') return defs;
     var html = '', k;
     for (k = 0; k < 8; k++) {
       html += grad('pmu-g-' + k, 'var(--pmu-s' + k + ')', 0.42, 0);
@@ -486,6 +583,8 @@
       html += '<linearGradient id="pmu-gr-' + k + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:' + col + ';stop-opacity:.55"/>' +
         '<stop offset=".6" style="stop-color:' + col + ';stop-opacity:1"/></linearGradient>';
     });
+    html += grad('pmu-gq-calm', 'var(--pmu-calm)', 0.34, 0.03) + grad('pmu-gq-warn', 'var(--pmu-warn)', 0.46, 0.05) + grad('pmu-gq-crit', 'var(--pmu-crit)', 0.5, 0.06) +
+      grad('pmu-gq-over', 'var(--pmu-over)', 0.5, 0.06);
     html += grad('pmu-ga-calm', 'var(--pmu-calm)', 0.16, 0.02) + grad('pmu-ga-warn', 'var(--pmu-warn)', 0.2, 0.02) +
       grad('pmu-ga-crit', 'var(--pmu-crit)', 0.22, 0.02) + grad('pmu-ga-over', 'var(--pmu-over)', 0.22, 0.02) + grad('pmu-ga-ink', 'var(--pmu-ink)', 0.14, 0.01);
     /* patterns: their strokes are painted by class, so CSS sets the colour per theme */
@@ -497,7 +596,7 @@
       '<pattern id="pmu-pat-est" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path class="pmu-pat-est" d="M0 0v6" stroke-width="2"/></pattern>' +
       '<pattern id="pmu-pat-out" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path class="pmu-pat-out" d="M0 0v6" stroke-width="1.2"/></pattern>';
     defs.innerHTML = html;
-    defs.setAttribute('data-ready', 'v3');
+    defs.setAttribute('data-ready', 'v4');
     return defs;
   };
 
@@ -520,7 +619,8 @@
             (opts.onToggle ? ' role="button" tabindex="0"' : '') + ' aria-label="' + esc(it.name) + '">' + swHtml + PMU.mark(it.prov, 14) + '</span>';
         }
         return '<span class="pmu-legend-item' + (isolated && isolated !== k ? ' is-dim' : '') + '" data-key="' + esc(k) + '"' + (it.prov ? ' data-prov="' + esc(it.prov) + '"' : '') +
-          (opts.onToggle ? ' role="button" tabindex="0"' : '') + '>' + swHtml + '<span class="pmu-legend-name">' + esc(it.name) + '</span>' +
+          (it.full && it.full !== it.name ? ' data-pm-hover-label="' + esc(it.full) + '"' : '') +
+          (opts.onToggle ? ' role="button" tabindex="0"' : '') + '>' + swHtml + (it.markName && it.prov && PMU.mark ? PMU.mark(it.prov, 14) : '') + '<span class="pmu-legend-name">' + esc(it.name) + '</span>' +
           (it.qual ? '<em>' + esc(it.qual) + '</em>' : '') + (it.valueText ? '<b>' + esc(it.valueText) + '</b>' : '') + '</span>';
       }).join('');
     }
@@ -559,14 +659,42 @@
   }
   var openCards = new Set();
   window.addEventListener('scroll', function () { openCards.forEach(function (h) { h.hide(); }); }, true);
+  /* WOW-SPEC 3.5 (WOW-TASKS C-5): a bucket-wide band (accent 8 %) fades in 120 ms and follows the crosshair by transform;
+     the hovered series' dot grows to 5 px with a 12 px halo and the other series dim to 35 % (the series nearest the
+     pointer is the hovered one); the card appears from the dot's side (scale .96 -> 1, 120 ms), keeps its side until the
+     other side is 48 px better (the flip glides 220 ms), is at most 220 px wide, and rolls only the changed digits of a
+     changed value (160 ms odometer); leaving fades everything in 160 ms. */
+  function rollText(el, oldText, newText) {
+    if (!PMU.film || !PMU.film.odometer || reduced() || oldText === newText || !/\d/.test(newText) || !/\d/.test(oldText)) return;
+    var a = parseFloat(String(oldText).replace(/[^0-9.\-]/g, '')), b = parseFloat(String(newText).replace(/[^0-9.\-]/g, ''));
+    var from = 0, to = 1;
+    if (finite(a) && finite(b) && a !== b) { from = a; to = b; }
+    PMU.film.odometer(el, to, function (v) { return v === to ? newText : oldText; }, { from: from, change: true, dur: 160 });
+  }
+  charts.rollText = rollText;
   charts.hover = function (box, cfg) {
-    var xh = H('div', 'pmu-xh', box), card = H('div', 'pmu-readout', layer()), dotEls = [];
-    var on = false, last = -1, api;
-    function place(i) {
+    var band = H('div', 'pmu-xband', box), xh = H('div', 'pmu-xh', box), card = H('div', 'pmu-readout', layer()), dotEls = [];
+    var on = false, last = -1, api, side = 1, hotKey = null, py = -1, lastSwap = 0;
+    function bandW() {
+      if (cfg.bw) return cfg.bw;
+      if (cfg.n > 1) return Math.abs(cfg.xAt(1) - cfg.xAt(0));
+      return 24;
+    }
+    function setHot(k) {
+      if (k === hotKey) return;
+      hotKey = k;
+      var root = box.parentNode || box;
+      $$('.pmu-mark[data-key]', root).forEach(function (m) { m.classList.toggle('is-cold', !!k && m.getAttribute('data-key') !== k); });
+    }
+    function place(i, instant) {
       var x = cfg.xAt(i), top = cfg.pad.t;
       xh.style.height = cfg.pad.h + 'px';
       xh.style.transform = 'translate(' + r1(x) + 'px,' + r1(top) + 'px)';
-      var dots = cfg.dots ? cfg.dots(i) : [];
+      var bw = Math.max(4, bandW());
+      band.style.height = cfg.pad.h + 'px';
+      band.style.width = r1(bw) + 'px';
+      band.style.transform = 'translate(' + r1(x - bw / 2) + 'px,' + r1(top) + 'px)';
+      var dots = cfg.dots ? cfg.dots(i) : [], nearest = -1, nd = Infinity;
       while (dotEls.length < dots.length) dotEls.push(H('i', 'pmu-xdot', box));
       dotEls.forEach(function (d, k) {
         var p = dots[k];
@@ -576,36 +704,60 @@
         key(d, p.key);
         if (p.ink) d.setAttribute('data-dot', 'ink');
         d.style.transform = 'translate(' + r1(x) + 'px,' + r1(p.y) + 'px)';
+        if (py >= 0 && Math.abs(p.y - py) < nd) { nd = Math.abs(p.y - py); nearest = k; }
       });
-      if (last !== i) card.innerHTML = cfg.html(i);
+      dotEls.forEach(function (d, k) { d.classList.toggle('is-hot', dots.length < 2 || k === nearest); });
+      setHot(dots.length > 1 && nearest >= 0 && dots[nearest].dk ? dots[nearest].dk : null);
+      if (last !== i) {
+        /* values roll only when the pointer has settled on a bucket (a fast sweep would roll every row of every bucket) */
+        var nowT = performance.now(), calm = nowT - lastSwap > 90 * (PMU.motion.speed ? PMU.motion.speed() : 1);
+        lastSwap = nowT;
+        var olds = calm ? $$('.pmu-ro-row', card).map(function (r) { var n = r.querySelector('span'), b = r.querySelector('b'); return [n ? n.textContent : '', b ? b.textContent : '']; }) : [];
+        card.innerHTML = cfg.html(i);
+        if (last >= 0 && !instant && calm && !charts.noRoll) $$('.pmu-ro-row', card).forEach(function (r, k) {
+          var n = r.querySelector('span'), b = r.querySelector('b');
+          if (b && olds[k] && n && olds[k][0] === n.textContent) rollText(b, olds[k][1], b.textContent);
+        });
+      }
       last = i;
       var r = box.getBoundingClientRect(), k2 = r.width / (box.clientWidth || r.width || 1);
       var sx = r.left + x * k2, sy = r.top + (top + 4) * k2;
       var cw = card.offsetWidth, ch = card.offsetHeight, vw = window.innerWidth, vh = window.innerHeight;
-      var left = sx + 16 + cw > Math.min(vw, r.right) - 6 ? sx - 16 - cw : sx + 16;
+      var limit = Math.min(vw, r.right) - 6, roomR = limit - (sx + 16 + cw), roomL = (sx - 16 - cw) - Math.max(4, r.left - 40);
+      /* keep the side; flip only when the current side does not fit and the other is 48 px better (hysteresis) */
+      var was = side;
+      if (side > 0 && roomR < 0 && roomL > roomR + 48) side = -1;
+      else if (side < 0 && (roomL < 0 || roomR > 48) && roomR > roomL - 48 && roomR >= 0) side = 1;
+      if (instant) side = roomR >= 0 ? 1 : -1;
+      var left = side > 0 ? sx + 16 : sx - 16 - cw;
       left = clamp(left, 4, Math.max(4, vw - cw - 4));
       var y = clamp(sy, 4, Math.max(4, vh - ch - 4));
+      card.classList.toggle('is-flip', was !== side && !instant);
+      card.style.transformOrigin = side > 0 ? '0 12px' : '100% 12px';
       card.style.transform = 'translate(' + Math.round(left) + 'px,' + Math.round(y) + 'px)';
     }
     function move(e) {
       if (!cfg.n) return;
-      var r = box.getBoundingClientRect(), mx = (e.clientX - r.left) * (box.clientWidth / (r.width || 1));
+      var r = box.getBoundingClientRect(), sc = box.clientWidth / (r.width || 1), mx = (e.clientX - r.left) * sc;
+      py = (e.clientY - r.top) * sc;
       if (mx < cfg.pad.l - 10 || mx > box.clientWidth - cfg.pad.r + 10) { hide(); return; }
       var best = 0, bd = Infinity;
       for (var i = 0; i < cfg.n; i++) { var d = Math.abs(cfg.xAt(i) - mx); if (d < bd) { bd = d; best = i; } }
       var first = !on;
       if (first) { box.classList.add('pmu-xh-instant'); card.classList.add('is-instant'); }
-      place(best);
+      place(best, first);
       if (first) {
         void box.offsetWidth;
         box.classList.remove('pmu-xh-instant'); card.classList.remove('is-instant');
         box.classList.add('pmu-xh-on'); card.classList.add('is-on'); on = true; openCards.add(api);
+        if (!reduced()) anim(card, [{ scale: '.96', opacity: 0 }, { scale: '1', opacity: 1 }], 120, 0, 'cubic-bezier(.22,.8,.28,1)', 'backwards');
       }
       if (cfg.onIndex) cfg.onIndex(best);
     }
     function hide() {
       if (!on) return;
       on = false; last = -1;
+      setHot(null);
       box.classList.remove('pmu-xh-on'); card.classList.remove('is-on'); openCards.delete(api);
       if (cfg.onIndex) cfg.onIndex(null);
     }
@@ -617,11 +769,11 @@
       showAt: function (i) {
         if (!cfg.n) return;
         box.classList.add('pmu-xh-instant'); card.classList.add('is-instant');
-        place(clamp(i, 0, cfg.n - 1)); void box.offsetWidth;
+        place(clamp(i, 0, cfg.n - 1), true); void box.offsetWidth;
         box.classList.remove('pmu-xh-instant'); card.classList.remove('is-instant');
         box.classList.add('pmu-xh-on'); card.classList.add('is-on'); on = true; openCards.add(api);
       },
-      destroy: function () { hide(); box.removeEventListener('pointermove', move); box.removeEventListener('pointerleave', hide); xh.remove(); card.remove(); dotEls.forEach(function (d) { d.remove(); }); }
+      destroy: function () { hide(); box.removeEventListener('pointermove', move); box.removeEventListener('pointerleave', hide); band.remove(); xh.remove(); card.remove(); dotEls.forEach(function (d) { d.remove(); }); }
     };
     return api;
   };

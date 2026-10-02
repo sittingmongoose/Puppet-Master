@@ -11,6 +11,7 @@
   var LEG_NAME = { claude: 'Claude', codex: 'ChatGPT / Codex', qwen: 'Qwen Coding Plan', gemini: 'Gemini API', kimi: 'Kimi Code', copilot: 'GitHub Copilot' };
   function legName(id) { var p = PMU.roster.provider(PMU.roster.legacyProvider(id)); return p ? p.name : LEG_NAME[id] || id; }
   C.legName = legName;
+  var SHORT_NAME = { claude: 'Claude', codex: 'Codex', qwen: 'Qwen', gemini: 'Gemini', kimi: 'Kimi', copilot: 'Copilot' };
   /* the old fixtures' provider words ("Claude Code", "Codex", "Gemini Direct") and account names ("Anthropic · Work") are
      shown by their Settings names (DECISIONS "Provider catalog"); the raw words stay in the inspectors' raw view */
   var OLD_NAME = { 'Claude Code': 'claude', 'Claude': 'claude', 'Codex': 'codex', 'Qwen': 'qwen', 'Gemini Direct': 'gemini', 'Gemini': 'gemini', 'Kimi': 'kimi', 'Copilot': 'copilot', 'GitHub Copilot': 'copilot' };
@@ -25,20 +26,20 @@
 
   /* ================================================================== Overview */
   def('health', 'overview', { meta: function () { return 'current reading · scope and range do not apply'; }, model: function () {
-    return { value: 92.4, fmt: 'pct1', delta: { v: 1.8, goodWhen: 'up' }, sub: 'provider readings healthy · trust ' + b('current · healthy'),
+    return { value: 92.4, fmt: 'pct1', delta: { v: 1.8, goodWhen: 'up' }, sub: 'provider readings healthy · trust ' + b('current'),
       facts: [['Fresh', '6 / 6'], ['Warnings', '2', { tone: 'warn' }], ['Sync age', '20s'], ['Unpriced', '0.02%'], ['Routes', '6'], ['Policy', 'All routes · within policy']],
       spark: { values: D.series('healthDaily7').values, idx: 1 }, foot: 'All routes · within policy' };
   }, inspect: function () { return C.insp('Usage health', [['Health', '92.4% provider readings healthy (+1.8%)'], ['Freshness', 'current · 6 of 6 fresh · sync 20s ago'], ['Warnings', '2'], ['Unpriced', '0.02% of events (3 events)'], ['Authority', 'provider reported · 20s ago']]); } });
 
   def('month', 'overview', { short: 'Window value', meta: rangeMeta(), model: function (ctx) {
     var c = D.costs();
-    return { value: c.selected, fmt: 'money', sub: b(c.attempts) + ' attempts · attempt-backed charge plus plan allocation',
+    return { value: c.selected, fmt: 'money', sub: b(c.attempts) + (c.attempts === 1 ? ' attempt' : ' attempts') + ' · attempt-backed charge plus plan allocation',
       facts: [['Settled API', money(c.settled)], ['Plan estimate', money(c.plan) + ' est.'], ['Cache estimate', money(c.cache) + ' est.'], ['Pending', String(c.pending), c.pending ? { tone: 'warn' } : {}], ['24h equivalent', money(c.dayEquivalent)], ['Basis', D.rangeLabel(ctx.state.range) + ' selected window']] };
   } });
 
   def('cache-saved', 'overview', { meta: function (ctx) { return 'estimated · ' + D.rangeLabel(ctx.state.range); }, model: function () {
     var c = D.costs();
-    return { value: c.cache, fmt: 'money', sub: b(c.attempts) + ' attempts · explicit cache-avoided estimates',
+    return { value: c.cache, fmt: 'money', sub: b(c.attempts) + (c.attempts === 1 ? ' attempt' : ' attempts') + ' · explicit cache-avoided estimates',
       facts: [['Cache read', F.tok(c.cacheRead)], ['Cache write', F.tok(c.cacheWrite)], ['Providers', String(c.providers)], ['Authority', 'fixture record estimate'],
         ['30-day read', '6.29M'], ['30-day write', '347k'], ['Best route', 'Codex · 97.2%'], ['Low route', 'Gemini · 84.6%'], ['Read share', '96.8%'], ['30-day gain', '+12.4%']],
       spark: { values: D.series('cacheDaily30').saved, tk: 'cr', idx: 6 } };
@@ -57,8 +58,8 @@
     });
     if (!ev) return { vs: 'unknown', word: 'Reset unknown', sub: 'No effective account reports a reset time' };
     var other = ev.a.windows.filter(function (w) { return w !== ev.w && w.resetAt; })[0];
-    return { text: F.clock(ev.w.resetAt), sub: b(ev.p.name + ' ' + ev.w.short) + ' · ' + esc(F.resetLine(ev.w).text) + ' · ' + b(C.fmt(ev.w.pct, 'pct')) + ' used',
-      facts: [['Route', ev.p.name + ' · ' + ev.a.nickname], ['Plan', ev.a.planLine || ev.a.plan], other ? [other.short, F.resetLine(other).text + ' · ' + C.fmt(other.pct, 'pct') + ' used'] : ['Windows', String(ev.a.windows.length)],
+    return { text: F.clock(ev.w.resetAt), sub: b(ev.p.name + ' ' + ev.w.short) + ' · ' + b(C.fmt(ev.w.pct, 'pct')) + ' used · ' + esc(F.resetLine(ev.w).text),
+      facts: [['Resets', F.resetLine(ev.w).text], ['Route', ev.p.name + ' · ' + ev.a.nickname], ['Plan', ev.a.planLine || ev.a.plan], other ? [other.short, F.resetLine(other).text + ' · ' + C.fmt(other.pct, 'pct') + ' used'] : ['Windows', String(ev.a.windows.length)],
         ['Reset truth', PMU.fmt.truth(ev.w.truth)], ['After reset', 'pending recheck'], ['Source', ev.a.fresh.source + ' · ' + ev.a.ageText]] };
   } });
 
@@ -72,7 +73,7 @@
       if (!D.inScope(id)) return null;
       var v = D.planView(id); if (!v) return null;
       var p = v.legacy, a = v.account, x = PLAN_EXTRA[id];
-      var pace = p.pace;
+      var pace = C.pace(p.pace);
       var amounts = a ? a.amounts.slice() : [];
       var facts = [['Billing', p.billing_basis], ['Entitlement', p.entitlement_class], ['Settlement', p.settlement_status], ['Monthly share', x.share + '%'], ['Pace', pace + ' (relative)'],
         ['Cache read', p.cache + '%'], ['Authority', p.allowance_authority + ' · ' + (a ? a.ageText : p.allowance_freshness)], ['Model', x.model], ['Attempts', v.attempts.map(function (t) { return t.attempt_id; }).join(', ') || 'none in range']];
@@ -97,7 +98,7 @@
       return { kind: 'provider', title: v.name, subtitle: (a ? a.nickname + ' · ' : '') + p.plan, sections: [
         { title: 'Windows', rows: v.windows.map(function (w) { return row(w.label, w.pct === null ? PMU.roster.vsWord(w) : C.fmt(w.pct, 'pct') + ' used' + (w.amount ? ' · ' + w.amount : '') + ' · ' + F.reset(w).text + ' · ' + PMU.fmt.truth(w.truth) + (w.est ? ' · estimated' : '')); }) },
         { title: 'Plan', rows: [row('Plan tier', p.plan), row('Requests', String(p.requests)), row('Tokens', F.tok(p.tokens) + ' (' + F.tok(p.input) + ' in · ' + F.tok(p.output) + ' out)'), row('Billing basis', p.billing_basis),
-          row('Entitlement', p.entitlement_class), row('Settlement', p.settlement_status), row('Pace', p.pace + ' (relative to norm)'), row('Cache read share', p.cache + '%'), row('Allowance authority', p.allowance_authority + ' · ' + p.allowance_freshness),
+          row('Entitlement', p.entitlement_class), row('Settlement', p.settlement_status), row('Pace', C.pace(p.pace) + ' (relative to the 24-hour norm)'), row('Cache read share', p.cache + '%'), row('Allowance authority', p.allowance_authority + ' · ' + p.allowance_freshness),
           row('Monthly share', PLAN_EXTRA[id].share + '%'), row('Model', PLAN_EXTRA[id].model), row('Counting basis', JSON.stringify((D.series('countingBasis') || {})[id] || {}).replace(/[{}"]/g, '').replace(/,/g, ', '))] },
         { title: 'Identifiers', rows: [row('Provider', p.provider_id), row('Installation', p.installation_id), row('Account IDs', p.account_ids.join(', ')), row('Connection IDs', p.connection_ids.join(', ')),
           row('Product / model', p.product_id + ' · ' + p.model_id), row('Requested route', p.requested_route_id), row('Effective route', p.effective_route_id),
@@ -147,14 +148,14 @@
     var c = D.costs();
     if (!c.selected) return { segments: [], empty: 'No attempts in the selected scope and range', emptyFacts: 'Plan allocation 0 attempts · not zero, nothing recorded' };
     var plans = {}; D.attempts().forEach(function (a) { if (a.plan_allocation_estimate > 0) plans[a.provider_id] = 1; });
-    return { headline: { value: 100 * c.plan / c.selected, fmt: 'pct', label: 'of value plan-covered (estimate)' },
+    return { headline: { value: 100 * c.plan / c.selected, fmt: 'pct', label: 'of value plan-covered (estimate)', short: 'plan-covered est.' },
       segments: [{ name: 'Plan estimate', value: c.plan, idx: 0, est: true, valueText: money(c.plan), sub: 'explicit values on selected attempts' }, { name: 'Settled API', value: c.settled, idx: 1, valueText: money(c.settled), sub: 'settled attempt receipts' }],
       foot: esc(c.planAttempts + ' plan attempts · ' + c.meteredAttempts + ' metered · ' + Object.keys(plans).length + ' plan providers · ' + F.tok(c.input + c.output) + ' selected tokens') };
   } });
 
   /* attention rows: the old copy without countdowns (X-06) */
   C.alertCopy = [
-    'Claude 5-hour window is 78% used and running +11% above its 24-hour norm.',
+    'Claude 5-hour window is 78% used and running +11 pts above its 24-hour norm.',
     'Vision helper calls raised daily API spend by 18%.',
     'Current pace leaves an estimated 31% left at reset (estimate).'
   ];
@@ -172,16 +173,22 @@
   def('route-pressure', 'overview', { meta: function () { return 'binding window · relative pace'; }, model: function () {
     var rows = D.providers().map(function (p) {
       var v = D.planView(p.id), w = v && v.binding;
-      return { id: p.id, name: legName(p.id), role: (w ? w.short : p.primaryLabel) + ' · ' + p.pace, value: w ? w.pct : p.used, valueText: C.fmt(w ? w.pct : p.used, 'pct') + ' used', valueShort: C.fmt(w ? w.pct : p.used, 'pct'),
+      return { id: p.id, name: legName(p.id), short: SHORT_NAME[p.id], role: (w ? w.short : p.primaryLabel) + ' · ' + C.pace(p.pace), value: w ? w.pct : p.used, valueText: C.fmt(w ? w.pct : p.used, 'pct') + ' used', valueShort: C.fmt(w ? w.pct : p.used, 'pct'),
         tone: w ? w.tone : PMU.roster.tone(p.used), vendor: PMU.markOf(PMU.roster.legacyProvider(p.id)).vendor, mark: PMU.roster.legacyProvider(p.id), prov: PMU.roster.legacyProvider(p.id),
-        hover: (w ? w.label : p.primaryLabel) + ' · ' + p.pace + ' · ' + C.routeEstimate(p) };
+        hover: (w ? w.label : p.primaryLabel) + ' · ' + C.pace(p.pace) + ' · ' + C.routeEstimate(p) };
     }).sort(function (a, b2) { return b2.value - a.value; });
     return { rows: rows, scale: 100, foot: 'Pace is relative to the 24-hour norm; no run-out times are projected.' };
   } });
   C.routeEstimate = function (p) {
-    return { claude: 'pace above norm', codex: 'healthy pace', qwen: 'about 31% left at reset (estimate)', gemini: '$21.40 month end (estimate)', kimi: 'healthy pace', copilot: '65% remaining' }[p.id] || p.pace;
+    return { claude: 'pace above norm', codex: 'healthy pace', qwen: 'about 31% left at reset (estimate)', gemini: '$21.40 month end (estimate)', kimi: 'healthy pace', copilot: '65% remaining' }[p.id] || C.pace(p.pace);
   };
 
+  /* the Overview hero (WOW-TASKS N-2): every window of the active accounts as a lit gauge, ordered by pressure */
+  def('ov-skyline', 'overview', { kind: 'skyline', meta: function () { var th = PMU.roster.thresholds(); return 'active account of each provider · ordered by pressure · ' + (th.auto ? 'auto-switch at ' + (100 - th.switchLeft) + '% used' : 'auto-switch off'); },
+    inspect: function () {
+      var m = C.skylineModel();
+      return C.insp('Headroom skyline', m.cols.map(function (c) { return [c.p.name + ' · ' + c.w.label, C.fmt(c.w.pct, 'pct') + ' used · ' + C.fmt(Math.max(0, 100 - c.w.pct), 'pct') + ' left · ' + F.resetLine(c.w).text + ' · ' + c.a.nickname + ' · ' + PMU.fmt.truth(c.w.truth)]; }));
+    } });
   def('ov-resets', 'overview', { kind: 'agenda', horizon: '24h', meta: function (ctx) { return C.agendaMeta(ctx, '24h'); }, config: [C.horizonCfg('24h')] });
   def('ov-headroom', 'overview', { meta: function () { return 'shared with Settings'; } });
 
@@ -212,6 +219,8 @@
   } });
 
   /* ================================================================== Plans & limits */
+  /* the Plans & limits hero (WOW-TASKS N-2): every active account's windows and their next resets on one 7-day line */
+  def('plans-timeline', 'plans', { kind: 'windows', meta: function () { return 'next 7 days from now · the active account of each provider · local time'; } });
   def('reset-map', 'plans', { kind: 'agenda', horizon: '7d', meta: function (ctx) { return C.agendaMeta(ctx, '7d'); }, config: [C.horizonCfg('7d')] });
   def('quota-history', 'plans', { kind: 'qhist', meta: function () { return C.qhistMeta(); }, model: function () { return D.quotaRows(); } });
   def('plan-settlement', 'plans', { meta: rangeMeta('billing and settlement are separate axes'), model: function () {
@@ -229,9 +238,9 @@
        word and the labelled estimate stay in the role line and the hover */
     var rows = D.providers().map(function (p) {
       var tone = PMU.roster.tone(p.used), watch = p.status === 'watch' ? 'watch' : 'healthy';
-      return { id: p.id, name: legName(p.id), role: p.primaryLabel + ' · ' + p.pace + ' · ' + watch, value: p.used, valueText: C.fmt(p.used, 'pct') + ' used', valueShort: C.fmt(p.used, 'pct'),
+      return { id: p.id, name: legName(p.id), short: SHORT_NAME[p.id], role: p.primaryLabel + ' · ' + C.pace(p.pace) + ' · ' + watch, value: p.used, valueText: C.fmt(p.used, 'pct') + ' used', valueShort: C.fmt(p.used, 'pct'),
         tone: tone, vendor: PMU.markOf(PMU.roster.legacyProvider(p.id)).vendor, mark: PMU.roster.legacyProvider(p.id), prov: PMU.roster.legacyProvider(p.id),
-        hover: p.primaryLabel + ' · ' + p.pace + ' · ' + watch + ' · ' + C.routeEstimate(p) };
+        hover: p.primaryLabel + ' · ' + C.pace(p.pace) + ' · ' + watch + ' · ' + C.routeEstimate(p) };
     }).sort(function (a, b2) { return b2.value - a.value; });
     return { rows: rows, scale: 100, foot: 'Ordered by the primary window; pace is relative to the 24-hour norm.' };
   } });
@@ -243,7 +252,7 @@
       { name: 'Retries', value: 34, valueText: '34 req', idx: 2, sub: '4% · watch' }], fmt: 'int', foot: 'Selected records by provider are in Details.' };
   }, inspect: function () {
     var c = D.costs();
-    return C.insp('Allowance attribution', Object.keys(c.byProvider).map(function (k) { var x = c.byProvider[k]; return [legName(k), x.attempts + ' attempts · ' + x.requests + ' requests · ' + F.tok(x.input + x.output) + ' tokens · ' + (x.settled ? money(x.settled) + ' settled' : 'covered by subscription') + ' · ' + (x.plan ? money(x.plan) + ' plan estimate' : 'no plan estimate (metered)')]; })
+    return C.insp('Allowance attribution', Object.keys(c.byProvider).map(function (k) { var x = c.byProvider[k]; return [legName(k), C.plural(x.attempts, 'attempt') + ' · ' + C.plural(x.requests, 'request') + ' · ' + F.tok(x.input + x.output) + ' tokens · ' + (x.settled ? money(x.settled) + ' settled' : 'covered by subscription') + ' · ' + (x.plan ? money(x.plan) + ' plan estimate' : 'no plan estimate (metered)')]; })
       .concat([['User work', '71% · 611 requests'], ['Validation', '17% · 146'], ['Helpers', '8% · 69'], ['Retries', '4% · 34 (watch)']]));
   } });
   def('counting-basis', 'plans', { meta: function () { return 'inclusive versus additive'; }, model: function () {
@@ -264,7 +273,7 @@
   /* ================================================================== Costs */
   def('cost-month', 'costs', { short: 'Window value', meta: rangeMeta(), model: function (ctx) {
     var c = D.costs();
-    return { value: c.selected, fmt: 'money', sub: 'attempt-backed charge plus estimates · ' + b(c.attempts) + ' attempts',
+    return { value: c.selected, fmt: 'money', sub: 'attempt-backed charge plus estimates · ' + b(c.attempts) + (c.attempts === 1 ? ' attempt' : ' attempts') + '',
       facts: [['Settled API', money(c.settled)], ['Plan estimate', money(c.plan) + ' est.'], ['24h equivalent', money(c.dayEquivalent)], ['Pending', String(c.pending), c.pending ? { tone: 'warn' } : {}], ['Basis', D.rangeLabel(ctx.state.range)]] };
   } });
   def('cost-api', 'costs', { short: 'Settled API', meta: rangeMeta('settled receipts'), model: function () {
@@ -280,17 +289,26 @@
   } });
   def('cost-save', 'costs', { short: 'Cache avoided', meta: rangeMeta('labelled estimate'), model: function () {
     var c = D.costs();
-    return { value: c.cache, fmt: 'money', sub: b(c.attempts) + ' attempts · explicit cache-avoided estimates',
+    return { value: c.cache, fmt: 'money', sub: b(c.attempts) + (c.attempts === 1 ? ' attempt' : ' attempts') + ' · explicit cache-avoided estimates',
       facts: [['Input', F.tok(c.input)], ['Output', F.tok(c.output)], ['Providers', String(c.providers)], ['Authority', 'labeled estimate'], ['Runtime rate', 'not used · fixture carried']] };
   } });
   def('budget', 'costs', { meta: function () { return C.budgetModel().periodText + ' · period to date · budget from Settings'; }, model: function () { return C.budgetModel(); },
     config: [{ id: 'alert', label: 'Budget alert at', value: '80', options: ['50', '80', '90', '95', '100'].map(function (v) { return { value: v, label: v + '% of budget' }; }) }] });
-  def('cost-spend', 'costs', { meta: function () { return 'settled plus plan estimates per day · 28 days'; }, model: function () {
+  /* the subtitle says the bucket the chart draws (LOOK-REVIEW-2 18: "per day" over 3-day buckets) */
+  def('cost-spend', 'costs', { meta: function (ctx) {
+    var n = (D.series('spendDaily30') || { values: [] }).values.length, bw = ctx && ctx.tier && ctx.tier.bw ? ctx.tier.bw : 600;
+    var g = Math.ceil(n / Math.max(3, Math.floor(Math.max(80, bw - 52) / 28)));
+    /* whole parts only: a part that would run past the card's edge is dropped, never cut (Mac stills 2026-10-02) */
+    var parts = ['settled plus plan estimates', g > 1 ? g + '-day buckets' : 'per day', n + ' days'];
+    while (parts.length > 1 && C.wrapLines(parts.join(' · '), bw - 4, 12.5) > 1) parts.pop();
+    return parts.join(' · ');
+  }, model: function () {
     var S = D.series('spendDaily30'), v = S.values, n = v.length, today = new Date(); today.setHours(0, 0, 0, 0);
     var sum = function (k) { return D.sum(v.slice(n - k)); };
     var labels = v.map(function (x, i) { return F.date(today.getTime() - (n - 1 - i) * 86400000); });
     return { labels: labels, values: v, idx: 0, unit: 'usd', highlightLast: true, states: v.map(function (x) { return x === 0 ? 'zero' : 'ok'; }),
-      caption: '<span class="pmu-cap">TODAY</span> <b>' + esc(money(v[n - 1])) + '</b> · <span class="pmu-cap">7 DAYS</span> <b>' + esc(money(sum(7))) + '</b> · <span class="pmu-cap">PERIOD</span> <b>' + esc(money(sum(n))) + '</b>',
+      /* each label keeps its value on its line when the caption wraps */
+      caption: [['TODAY', v[n - 1]], ['7 DAYS', sum(7)], ['PERIOD', sum(n)]].map(function (x) { return '<span style="white-space:nowrap"><span class="pmu-cap">' + x[0] + '</span> <b>' + esc(money(x[1])) + '</b></span>'; }).join(' · '),
       note: 'A provider-reported zero day is drawn as a stub labelled $0.00.' };
   } });
   def('provider-cost', 'costs', { meta: rangeMeta('settled versus plan estimate'), model: function () {
@@ -299,7 +317,7 @@
       var x = c.byProvider[p.id];
       if (!x) return { id: p.id, name: legName(p.id), role: p.billing_basis + ' · no attempts in range', value: null, vs: 'unknown', valueText: '', vendor: PMU.markOf(PMU.roster.legacyProvider(p.id)).vendor, mark: PMU.roster.legacyProvider(p.id) };
       var tot = x.settled + x.plan;
-      return { id: p.id, name: legName(p.id), role: (x.settled ? 'metered API' : 'subscription · covered') + ' · ' + x.attempts + ' attempts', value: tot, est: x.plan, valueText: money(tot) + (x.plan && !x.settled ? ' est.' : ''),
+      return { id: p.id, name: legName(p.id), role: (x.settled ? 'metered API' : 'subscription · covered') + ' · ' + C.plural(x.attempts, 'attempt'), value: tot, est: x.plan, valueText: money(tot) + (x.plan && !x.settled ? ' est.' : ''),
         vendor: PMU.markOf(PMU.roster.legacyProvider(p.id)).vendor, mark: PMU.roster.legacyProvider(p.id), prov: PMU.roster.legacyProvider(p.id), tone: x.pending ? 'warn' : null,
         /* covered work reads "covered", a metered route has no plan estimate: never $0.00 for either (DESIGN-SPEC 11) */
         hover: (x.settled ? 'API ' + money(x.settled) : 'API charge not applicable · covered by subscription') + ' · ' + (x.plan ? 'plan estimate ' + money(x.plan) : 'plan estimate not applicable · metered') + (x.pending ? ' · ' + x.pending + ' pending receipt' : '') };
@@ -341,7 +359,7 @@
   } });
   def('burn-basis', 'costs', { meta: function () { return 'forecast inputs · labelled projection'; }, model: function (ctx) {
     var c = D.costs();
-    return { value: c.dayEquivalent, fmt: 'perday', sub: '24h equivalent from selected records · ' + b(c.attempts) + ' attempts',
+    return { value: c.dayEquivalent, fmt: 'perday', sub: '24h equivalent from selected records · ' + b(c.attempts) + (c.attempts === 1 ? ' attempt' : ' attempts') + '',
       facts: [['Settled charge', money(c.settled)], ['Plan estimate', money(c.plan) + ' est.'], ['Pending', String(c.pending)], ['Window hours', String(c.hours)], ['Confidence', '87%'], ['Provider charges', money(DATA.costs.api)],
         ['Plan allocation', money(DATA.costs.plans) + ' est.'], ['Unpriced', '3 events'], ['Time zone', 'local 24h'], ['Period end', money(D.series('budgetProjection').to) + ' est.'], ['Overage buffer', money(DATA.costs.budget - D.series('budgetProjection').to)], ['Next refresh', '40s']],
       spark: { values: D.series('spendDaily30').settled, idx: 1 }, foot: esc(D.scopeText()) + ' · projection only' };
@@ -349,12 +367,14 @@
 
   /* ================================================================== Accounts */
   def('acct-switch', 'accounts', { meta: function () { return 'Shared with Settings > AI > Providers & Accounts'; }, aside: function () { return 'Shared with Settings'; } });
+  /* a single plate's subtitle names the account (the state is the head's right word and the plan a fact: each said once,
+     LOOK-REVIEW-2 16; a long subtitle was cut, LOOK-REVIEW-2 13) */
   function providerMeta(id) {
     return function () {
       var p = PMU.roster.provider(id); if (!p || !p.accounts.length) return 'Not set up';
       if (p.accounts.length > 1) return p.accounts.length + ' accounts · ' + (p.effective ? p.effective.nickname + ' active' : 'none active');
-      var a = p.accounts[0];
-      return [a.stateWord, a.nickname, a.identity, a.plan].filter(Boolean).join(' · ');
+      var a = p.accounts[0], nick = a.nickname && a.nickname !== p.name && p.name.indexOf(a.nickname) < 0 ? a.nickname : '';
+      return [nick, a.identity].filter(Boolean).join(' · ') || a.plan || a.nickname;
     };
   }
   /* one acct-<providerId> definition per Settings provider. Settings may not be ready when this file runs, so the ids
@@ -374,12 +394,15 @@
         if (r.accounts.length > 1) {
           if (ctx && ctx.form === 'plate' && r.group === 'plan' && r.windows.length) { var th = PMU.roster.thresholds();
             var tw = ctx.tier ? ctx.tier.w : 'l'; if (tw === 'xs' || tw === 's') return '';
-            var words = th.auto ? (tw === 'm' ? 'Switch at ' + (100 - th.switchLeft) + '%' : 'Auto-switch at ' + (100 - th.switchLeft) + '% used') : 'Auto-switch off';
+            /* the long words only where the subtitle beside them stays whole (Retro 2026-10-02: "4 accounts · Work Claude ...") */
+            var longW = 'Auto-switch at ' + (100 - th.switchLeft) + '% used', metaT = providerMeta(p.id)();
+            var longOk = tw !== 'm' && C.wrapLines(metaT, (ctx.tier.bw || 0) - 44 - C.wrapW(longW, 12.5) - 40, 12.5) <= 1;
+            var words = th.auto ? (longOk ? longW : 'Switch at ' + (100 - th.switchLeft) + '%') : 'Auto-switch off';
             return { html: '<span class="pmu-asw"' + C.hover('Auto-switch', (th.auto ? 'Switches at ' + (100 - th.switchLeft) + '% used. ' : '') + 'Shared with Settings; change it in the Auto-switch strip or in Settings') + '>' + SVG.notch + esc(words) + '</span>' }; }
           return r.accounts.length + ' accounts';
         }
         var a = r.accounts[0];
-        return ctx && ctx.form === 'plate' ? (a.plan || '') : { text: a.stateWord, tone: a.stateTone === 'muted' ? null : a.stateTone };
+        return { text: a.stateWord, tone: a.stateTone === 'muted' ? null : a.stateTone };
       },
       inspect: function () { var r = PMU.roster.provider(p.id); return r && r.accounts[0] ? (PMU.accounts.inspect(r.effective ? r.effective.key : r.accounts[0].key), null) : null; } });
   }
@@ -389,7 +412,7 @@
   C.moreMeta = function (g) {
     var gr = PMU.roster.read().groups.filter(function (x) { return x.id === g; })[0];
     var n = gr ? gr.providers.filter(function (p) { return !p.accounts.length; }).length : 0;
-    return g === 'own' ? 'Routes, servers and local models · ' + n + ' providers' : n + ' without an account';
+    return C.plural(n, 'provider') + ' without an account';
   };
   /* the three Settings group headings (DECISIONS "Provider catalog": group the room the way Settings does) */
   ['plan', 'use', 'own'].forEach(function (g) {
@@ -407,7 +430,7 @@
       return C.insp('OpenCode on your computer', [['Status', a.status], ['Installation', a.installation_status], ['Authentication', a.authentication_status], ['Billing', a.billing_basis], ['Entitlement', a.entitlement_class],
         ['Settlement', a.settlement_status], ['Requests', String(a.requests)], ['Last seen', a.last], ['Scope', a.scope], ['Route', a.route], ['Account', a.account_id], ['Connection', a.connection_id], ['Installation id', a.installation_id],
         ['Product / model', a.product_id + ' · ' + a.model_id], ['Requested route', a.requested_route_id], ['Effective route', a.effective_route_id], ['Attempt', a.attempt_id], ['Operation', a.operation_id], ['Continuation', a.continuation_id],
-        ['Host / environment', a.host + ' / ' + a.environment], ['Note', 'No automatic acquisition or route change.']]);
+        ['Host / environment', a.host + ' / ' + a.environment], ['Activity', 'No acquisition attempted'], ['Note', 'No automatic acquisition or route change.']]);
     } });
   def('acct-history', 'accounts', { meta: function () { return 'Switch and pressure events · blocked attempts included'; }, model: function () {
     var rows = [], lastDay = null;
@@ -438,12 +461,12 @@
       { name: 'Context fit', sub: 'ChatGPT / Codex to Qwen Coding Plan', value: '3', note: 'long context' },
       { name: 'Credential unavailable', sub: 'Personal to Work', value: '1', tone: 'warn', note: 'automatic recovery' }];
     var differ = D.attempts().filter(function (a) { return a.requested_route_id !== a.effective_route_id; });
-    rows.push({ name: 'Selected attempts', sub: differ.length ? differ.length + ' attempts with a different effective route' : 'requested and effective routes match in every selected attempt', value: String(D.attempts().length), note: 'attempt receipts' });
+    rows.push({ name: 'Selected attempts', sub: differ.length ? C.plural(differ.length, 'attempt') + ' with a different effective route' : 'requested and effective routes match in every selected attempt', value: String(D.attempts().length), note: 'attempt receipts' });
     return { rows: rows };
   } });
   def('route-mismatches', 'accounts', { meta: function () { return 'fallback evidence · requested versus effective'; }, model: function () {
     var rows = D.attempts().map(function (a) {
-      return { cells: { id: { html: '<b>' + esc(a.attempt_id) + '</b>' }, req: a.requested_route_id, eff: a.effective_route_id, who: C.acctName(a.account_id), why: a.requested_route_id === a.effective_route_id ? 'no mismatch' : 'fallback' },
+      return { cells: { id: { html: '<b>' + esc(a.attempt_id) + '</b>' }, req: C.idCell(a.requested_route_id), eff: C.idCell(a.effective_route_id), who: C.acctName(a.account_id), why: a.requested_route_id === a.effective_route_id ? 'no mismatch' : 'fallback' },
         onClick: function (el) { attemptInspect(a, el); } };
     });
     [['Tastebook build', 'no mismatch'], ['Vision helper', 'capability fallback'], ['Fast edit', 'allowance pressure'], ['Long context', 'context fit'], ['Completion', 'completion-only route']].forEach(function (s) {
@@ -465,4 +488,44 @@
       return { name: ra ? ra.providerName + ' · ' + ra.nickname : a.setup_required ? legName(a.provider_id) : a.name, sub: a.auth + ' · ' + a.scope, value: a.last, note: a.setup_required ? 'no receipt yet' : 'connection receipt', glyph: a.setup_required ? 'gear' : 'link', tone: a.setup_required ? 'warn' : null };
     }) };
   } });
+
+  /* ================================================================== room beats (WOW-SPEC 4, WOW-TASKS N-1) */
+  if (PMU.film && PMU.film.beat) {
+    var FB = PMU.film;
+    /* Overview: the skyline's gauges fill left to right and its auto-switch line draws (its own entrance); when the
+       tiles have rolled one light crosses them, then the skyline's hero number catches the light */
+    FB.beat('overview', function (b) {
+      var tiles = C.byPos(C.beatCards(b, function (c) { return c.getAttribute('data-kind') === 'kpi' && +c.dataset.y < 12; }));
+      var t0 = 0; tiles.forEach(function (c) { t0 = Math.max(t0, C.beatAt(b, c, 900)); });
+      tiles.forEach(function (c, i) { FB.sweep(c, { delay: t0 + 70 * i }); });
+      var sky = C.beatCard(b, 'ov-skyline');
+      if (sky) { var n = sky.querySelectorAll('.pmu-skycol').length; C.sweepHero(b, sky, 40 * n + 1100); }
+    });
+    /* Plans & limits: the windows line's NOW drops and its reset markers pop in time order (the hero's own entrance);
+       then its next-reset time catches the light and one light crosses the plan cards */
+    FB.beat('plans', function (b) {
+      var tl = C.beatCard(b, 'plans-timeline');
+      if (tl) C.sweepHero(b, tl, 420 + 30 * tl.querySelectorAll('.pmu-wmk').length);
+      var plans = C.byPos(C.beatCards(b, function (c) { return c.getAttribute('data-kind') === 'limit'; }));
+      var t1 = 0; plans.forEach(function (c) { t1 = Math.max(t1, C.beatAt(b, c, 1000)); });
+      plans.forEach(function (c, i) { FB.sweep(c, { delay: t1 + 70 * i }); });
+    });
+    /* Costs: the burn line draws with its comet and the budget rule follows (the chart's own entrance); then the light
+       crosses the four value tiles and lands on the 52 px month spend */
+    FB.beat('costs', function (b) {
+      var tiles = C.byPos(C.beatCards(b, function (c) { return c.getAttribute('data-kind') === 'kpi' && +c.dataset.y < 4; }));
+      var t0 = 0; tiles.forEach(function (c) { t0 = Math.max(t0, C.beatAt(b, c, 900)); });
+      tiles.forEach(function (c, i) { FB.sweep(c, { delay: t0 + 70 * i }); });
+      C.sweepHero(b, C.beatCard(b, 'budget'), 1300);
+    });
+    /* Accounts: the meters fill down the rows (their own entrance, 40 ms apart); the exhausted row rings and the active
+       light settles on each provider's active row */
+    FB.beat('accounts', function (b) {
+      C.beatCards(b, function (c) { return c.getAttribute('data-kind') === 'provider'; }).forEach(function (c) {
+        var n = c.querySelectorAll('.pmu-meter').length, t = C.beatAt(b, c, 900 + 40 * n);
+        Array.prototype.forEach.call(c.querySelectorAll('.pmu-accrow[data-state="exhausted"]'), function (row) { FB.ring(row, { tone: 'crit', delay: t }); });
+        Array.prototype.forEach.call(c.querySelectorAll('.pmu-accrow.is-eff'), function (row) { FB.flash(row, { delay: t + 120 }); });
+      });
+    });
+  }
 })();

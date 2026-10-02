@@ -34,9 +34,9 @@
   });
   def('attention-policy', 'attention', { meta: function () { return 'current · alert rules'; }, model: function () {
     var th = PMU.roster.thresholds();
-    return { text: '4', unit: ' / 4', sub: 'alert rules reporting · ' + b('healthy'), facts: [['Allowance', 'on'], ['Pricing', 'on'], ['Freshness', 'on'], ['Fallback', 'on'],
-      ['Thresholds', 'warn ' + (100 - th.warnLeft) + '% used · switch ' + (100 - th.switchLeft) + '% used'], ['Quiet window', 'not set', { vs: 'disabled', word: 'not set' }], ['Last review', '2d']],
-      foot: '<span>Last review · 2d</span><button type="button" class="pmu-textbtn" data-pmu-act="policy-settings">Adjust in Settings</button>' };
+    return { text: '4', unit: ' / 4', sub: 'alert rules reporting · ' + b('healthy'), facts: [['Allowance', 'on'], ['Pricing', 'on'], ['Freshness', 'on'], ['Fallback', 'on'], ['Last review', '2d'],
+      ['Thresholds', 'warn ' + (100 - th.warnLeft) + '% used · switch ' + (100 - th.switchLeft) + '% used'], ['Quiet window', 'not set', { vs: 'disabled', word: 'not set' }]],
+      foot: '<button type="button" class="pmu-textbtn" data-pmu-act="policy-settings">Adjust in Settings</button>' };
   } });
   C.act('policy-settings', function () { var r = command('cmd.settings.open', { category: 'ai', setting_id: 'ai.accounts.soft-warning-level' }, { opened: true }); if (r.dispatch_accepted !== false) PMU.settings.open(null, 'ai.accounts.soft-warning-level'); });
   def('anom', 'attention', { meta: function () { return 'Hourly · 24 hours · score versus the 24-hour norm'; }, model: function () {
@@ -49,7 +49,9 @@
     return { chart: 'line', spec: { x: x, unit: 'count', unitTitle: 'SCORE', yMin: 0, yMax: 100, series: [{ name: 'Anomaly score', idx: 2, values: A.values }, { name: '24-hour norm', idx: 7, values: B.values, role: 'baseline' }],
       limits: [{ value: A.raise, label: 'Raise at ' + A.raise, role: 'warn' }], notes: 'The ' + peakAt + ' spike is vision-helper traffic.' },
       headline: { value: Math.max.apply(null, A.values), fmt: 'int', label: 'peak score · ' + peakAt }, spark: { values: A.values, idx: 2 },
-      facts: [['Selected', String(list.length)], ['Raised', String(raised)], ['Current', '+18%'], ['Peak', peakAt], ['Cause', 'vision calls'], ['Baseline', 'normal']],
+      hero: true, heroTone: Math.max.apply(null, A.values) >= A.raise ? 'warn' : null, heroSub: 'raises at ' + b(A.raise) + ' · ' + b(raised) + (raised === 1 ? ' attempt raised · ' : ' attempts raised · ') + '24-hour norm ' + b('normal'),
+      heroNote: '<b>' + esc(peakAt) + ' spike</b><span>vision-helper traffic · ' + esc(C.legName('gemini')) + '</span>',
+      facts: [['Selected', String(list.length)], ['Raised', String(raised)], ['Current', '+18 pts vs norm'], ['Peak', peakAt], ['Cause', 'vision calls'], ['Baseline', 'normal']],
       note: 'The spike is limited to vision-helper traffic. Scores belong to timestamped identity-bound attempt fixtures.' };
   } });
   def('attention-history', 'attention', { meta: function () { return 'Daily · 7 days · actionable provider and pricing signals'; }, model: function () {
@@ -111,10 +113,10 @@
   var totalCalls = D.sum(DATA.tools.map(function (r) { return parseInt(r[1], 10) || 0; }));
   DATA.tools.forEach(function (r, i) {
     var lat = LAT[i] || {};
-    def('tool-' + i, 'tools', { title: r[0], meta: function (ctx) { return 'tool calls · ' + D.rangeLabel(ctx.state.range); }, model: function () {
+    def('tool-' + i, 'tools', { title: r[0].replace(/_/g, '_\u200b'), meta: function (ctx) { return 'tool calls · ' + D.rangeLabel(ctx.state.range); }, model: function () {
       var list = D.attempts().filter(function (a) { return a.tool_id === r[0]; });
       var calls = parseInt(r[1], 10) || 0;
-      return { value: calls, fmt: 'int', sub: b(lat.errors != null ? lat.errors : '-') + ' executed failures · p50 ' + b(F.num(lat.p50) + 's') + ' · p95 ' + b(F.num(lat.p95) + 's'),
+      return { value: calls, fmt: 'int', sub: (lat.errors != null ? b(lat.errors) + (lat.errors === 1 ? ' executed failure' : ' executed failures') : 'executed failures not reported') + ' · p50 ' + b(F.num(lat.p50) + 's') + ' · p95 ' + b(F.num(lat.p95) + 's'),
         facts: [['Errors', r[2]], ['p50', lat.p50 + 's'], ['p95', lat.p95 + 's'], ['Mean', r[3].replace(' median', '') + ' (was labelled median)'], ['Volume', r[4]], ['Share', Math.round(100 * calls / totalCalls) + '% of calls'],
           ['Selected attempts', String(list.length)], ['Selected tokens', F.tok(D.sum(list.map(function (a) { return a.input_tokens + a.output_tokens; })))]] };
     } });
@@ -125,15 +127,17 @@
   } });
   def('tool-list', 'tools', { meta: function (ctx) { return 'all tools · ' + D.rangeLabel(ctx.state.range); }, model: function () {
     return { cols: [{ id: 't', label: 'TOOL', w: 'minmax(120px,1.6fr)', mono: true }, { id: 'calls', label: 'CALLS', align: 'right', w: '60px' }, { id: 'err', label: 'ERRORS', w: 'minmax(70px,1fr)', min: 's' },
-      { key: 'p50', label: 'P50', align: 'right', w: '56px', min: 'm' }, { key: 'p95', label: 'P95', align: 'right', w: '56px', min: 'm' }, { id: 'vol', label: 'VOLUME', w: 'minmax(90px,1fr)', min: 'l' }, { id: 'sel', label: 'SELECTED', align: 'right', w: '120px', min: 'xl' }],
+      { key: 'p50', label: 'P50', align: 'right', w: '56px', min: 'm' }, { key: 'p95', label: 'P95', align: 'right', w: '56px', min: 'm' }, { id: 'vol', label: 'VOLUME', w: 'minmax(90px,1fr)', min: 'l' }, { id: 'sel', label: 'SELECTED', align: 'right', w: '150px', min: 'xl' }],
       rows: DATA.tools.map(function (r, i) {
         var lat = LAT[i] || {}, list = D.attempts().filter(function (a) { return a.tool_id === r[0]; });
-        return { tone: lat.errors ? 'warn' : null, cells: { t: r[0], calls: r[1].replace(' calls', ''), err: r[2], p50: lat.p50 + 's', p95: lat.p95 + 's', vol: r[4], sel: list.length + ' attempts · ' + (D.sum(list.map(function (a) { return a.charge; })) > 0 ? money(D.sum(list.map(function (a) { return a.charge; }))) + ' settled' : 'covered') } };
+        return { tone: lat.errors ? 'warn' : null, cells: { t: C.idCell(r[0]), calls: r[1].replace(' calls', ''), err: r[2], p50: lat.p50 + 's', p95: lat.p95 + 's', vol: r[4], sel: C.plural(list.length, 'attempt') + ' · ' + (D.sum(list.map(function (a) { return a.charge; })) > 0 ? money(D.sum(list.map(function (a) { return a.charge; }))) + ' settled' : 'covered') } };
       }) };
   } });
   def('tool-latency', 'tools', { kind: 'trend', meta: function () { return 'p50 to p95 per tool · log axis'; }, model: function () {
     var T = D.series('toolLatency');
+    var slow = T.rows.slice().sort(function (a, z) { return z.p95 - a.p95; })[0] || {};
     return { chart: 'rangebars', spec: { rows: T.rows, unit: 's' }, headline: { value: T.overall.p95, fmt: 's', label: 'p95 overall · p50 ' + T.overall.p50 + 's' }, spark: { values: T.rows.map(function (r) { return r.p95; }), idx: 0 },
+      hero: true, heroSub: 'slowest ' + b(String(slow.name || slow.tool || '').replace(/_/g, '_\u200b')) + ' · p95 ' + b(slow.p95 + 's') + ' · ' + b(T.overall.retries) + ' retry · ' + b(T.overall.timeouts) + ' timeouts',
       facts: [['Median', T.overall.p50 + 's'], ['P95', T.overall.p95 + 's'], ['Retries', String(T.overall.retries)], ['Timeouts', String(T.overall.timeouts)]], note: 'Browser and terminal calls dominate the long tail.' };
   } });
   def('tool-receipts', 'tools', { meta: function () { return 'current · retention 90d'; }, model: function () {
@@ -148,7 +152,7 @@
     var rows = [['browser_exec', 'Gemini vision helper route', 68, '68 calls', 'counts against API budget', 'warn'], ['run_shell_command', 'no provider usage', 284, '284 calls', 'local tool only'],
       ['read_file', 'context-bearing output', 412, '1.9M tok', 'affects context, not allowance'], ['image_gen', 'metered image generation', 18, '$3.62', 'separate billed surface', 'warn'], ['git', 'no provider usage', 71, '71 calls', 'local tool only']];
     return { rows: rows.map(function (r, i) { var sel = D.attempts().filter(function (a) { return a.tool_id === r[0]; }); return { id: r[0], name: r[0], role: r[1] + ' · ' + r[4], value: r[2], valueText: r[3], idx: i, tone: r[5] || null,
-      hover: r[4] + ' · selected ' + sel.length + ' attempts · ' + F.tok(D.sum(sel.map(function (a) { return a.input_tokens + a.output_tokens; }))) + ' tokens · ' + (D.sum(sel.map(function (a) { return a.charge; })) > 0 ? money(D.sum(sel.map(function (a) { return a.charge; }))) + ' settled' : 'covered') }; }) };
+      hover: r[4] + ' · selected ' + C.plural(sel.length, 'attempt') + ' · ' + F.tok(D.sum(sel.map(function (a) { return a.input_tokens + a.output_tokens; }))) + ' tokens · ' + (D.sum(sel.map(function (a) { return a.charge; })) > 0 ? money(D.sum(sel.map(function (a) { return a.charge; }))) + ' settled' : 'covered') }; }) };
   } });
   def('catalog-refresh', 'tools', { meta: function () { return 'never active probing'; }, model: function () {
     return { rows: [{ name: 'Provider catalog', sub: 'official pricing and model metadata', value: '2h old', note: 'version 18' }, { name: 'Free allowance catalog', sub: 'provider published limits', value: '2m old', note: '4 routes' },
@@ -175,7 +179,9 @@
   def('signal-history', 'signals', { meta: function () { return 'Hourly · 24 hours · % of provider readings healthy (90 to 100 axis)'; }, model: function () {
     var S = D.series('signalHealth24h'), n = S.values.length, now = new Date(); now.setMinutes(0, 0, 0);
     var x = S.values.map(function (v, i) { return now.getTime() - (n - 1 - i) * 3600000; });
-    return { chart: 'line', spec: { x: x, unit: 'pct', unitTitle: '% HEALTHY', yMin: 90, yMax: 100, series: [{ name: 'Healthy readings', idx: 1, values: S.values, area: true }] }, headline: { value: S.values[n - 1], fmt: 'pct', label: 'healthy now' }, spark: { values: S.values, idx: 1 },
+    var lo = 0; S.values.forEach(function (v, i) { if (v < S.values[lo]) lo = i; });
+    return { chart: 'line', spec: { x: x, unit: 'pct', unitTitle: '% HEALTHY', yMin: 90, yMax: 100, series: [{ name: 'Healthy readings', idx: 1, values: S.values, area: true }] }, headline: { value: S.values[n - 1], fmt: 'pct', label: 'of provider readings healthy now' }, spark: { values: S.values, idx: 1 },
+      hero: true, heroSub: 'low ' + b(C.fmt(S.values[lo], 'pct')) + ' at ' + b(F.clock(x[lo])) + ' · 2 warnings · 0 stale',
       facts: [['Healthy', '6'], ['Warnings', '2'], ['Stale', '0'], ['Unpriced', '3'], ['Selected attempts', String(D.costs().attempts)]], note: 'Health is not inferred from absent Usage attempts.' };
   } });
   def('signal-coverage', 'signals', { meta: function () { return 'current · events with usable signal data'; }, model: function () {
@@ -188,6 +194,8 @@
   } });
 
   /* ================================================================== Source authority (4 / 6 / 8 panels by level, R-AUTH-01) */
+  /* the Source authority hero (WOW-TASKS N-2): each top-level reading flows to its authority and its label */
+  def('auth-flow', 'authority', { kind: 'flow', meta: function () { return 'current · reading, authority, label · freshness policy 5m'; } });
   def('auth-summary', 'authority', { meta: function () { return 'current · top-level readings'; }, model: function () {
     return { text: '4', unit: ' / 6', sub: 'top-level readings provider reported · ' + b('fresh'), facts: [['Allowance', '4'], ['Reset', '4'], ['Spend', '1'], ['Cache', '3']], foot: 'Oldest · 1m' };
   } });
@@ -241,4 +249,51 @@
       if (have.indexOf(e[0]) < 0 && (!d || !d.model)) PMU.widgets.define(e[0], Object.assign({}, d && d.model ? {} : {}, { room: room }));
     });
   });
+
+  /* ================================================================== room beats (WOW-SPEC 4, WOW-TASKS N-1) */
+  if (PMU.film && PMU.film.beat) {
+    var FB = PMU.film;
+    /* Attention: the anomaly line draws with its comet (the chart's own entrance); the spike's annotation then unfolds
+       from its line (scaleY, 260 SETTLE) and the hero number takes the light */
+    FB.beat('attention', function (b) {
+      var an = C.beatCard(b, 'anom'); if (!an) return;
+      var note = an.querySelector('.pmu-heronote'), f = PMU.motion.family ? PMU.motion.family() : 'basic';
+      if (note) PMU.motion.animate(note, [{ transform: 'scaleY(.02)', opacity: 0 }, { opacity: 1, offset: 0.3 }, { transform: 'scaleY(1)', opacity: 1 }],
+        { dur: 260, delay: C.beatAt(b, an, 1000), easing: f === 'retro' || f === 'nier' ? 'steps(3,jump-start)' : FB.E.settle, fill: 'backwards' });
+      C.sweepHero(b, an, 1150);
+      C.byPos(C.beatCards(b, function (c) { return c.getAttribute('data-kind') === 'alert' && c.querySelector('.pmu-alerttop[data-tone="warn"]'); }))
+        .forEach(function (c, i) { FB.flash(c.querySelector('.pmu-alerttop') || c, { tone: 'warn', delay: C.beatAt(b, an, 1400 + 90 * i), noSweep: true }); });
+    });
+    /* Prompt cache: the read arcs sweep, then the write arcs (the rings' own entrance); one light then crosses the four
+       rings left to right and the savings roll */
+    FB.beat('cache', function (b) {
+      C.byPos(C.beatCards(b, function (c) { return c.getAttribute('data-kind') === 'cache'; })).forEach(function (c, i) {
+        var ring = c.querySelector('.pmu-cachering'); if (ring) FB.sweep(ring, { delay: C.beatAt(b, c, 1000 + 70 * i), dur: 600 });
+      });
+    });
+    /* Tools: the p50 dots pop and the p95 bars grow with their head glows (the ladder's own entrance); the light then
+       crosses the hero number and the five tool tiles */
+    FB.beat('tools', function (b) {
+      var lat = C.beatCard(b, 'tool-latency'); C.sweepHero(b, lat, 1100);
+      var tiles = C.byPos(C.beatCards(b, function (c) { return /^tool-\d$/.test(c.getAttribute('data-widget') || ''); }));
+      var t0 = 0; tiles.forEach(function (c) { t0 = Math.max(t0, C.beatAt(b, c, 900)); });
+      tiles.forEach(function (c, i) { FB.sweep(c, { delay: t0 + 70 * i }); });
+    });
+    /* Signals: the health history paints with its light front (the chart's own entrance); the signals that need review
+       flash once */
+    FB.beat('signals', function (b) {
+      var h = C.beatCard(b, 'signal-history'); C.sweepHero(b, h, 1100);
+      C.beatCards(b, function (c) { return /^signal-\d$/.test(c.getAttribute('data-widget') || '') && c.querySelector('.pmu-kpiline[data-tone="warn"]'); })
+        .forEach(function (c) { FB.flash(c.querySelector('.pmu-kpiline'), { tone: 'warn', delay: C.beatAt(b, h, 1300) }); });
+      var list = C.beatCard(b, 'signal-list');
+      if (list) Array.prototype.forEach.call(list.querySelectorAll('.pmu-lrow[data-tone="warn"]'), function (row) { FB.flash(row, { tone: 'warn', delay: C.beatAt(b, h, 1400) }); });
+    });
+    /* Source authority: the bands flow left to right (the flow's own entrance); a light then crosses the authority and
+       label boxes 80 ms apart */
+    FB.beat('authority', function (b) {
+      var fl = C.beatCard(b, 'auth-flow'); if (!fl) return;
+      Array.prototype.forEach.call(fl.querySelectorAll('.pmu-flowmid, .pmu-flowlab'), function (bx, i) { FB.sweep(bx, { delay: C.beatAt(b, fl, 1000 + 80 * i), dur: 600 }); });
+      C.sweepHero(b, fl, 1300);
+    });
+  }
 })();

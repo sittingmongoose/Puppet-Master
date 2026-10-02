@@ -65,7 +65,7 @@ html[data-o55-nier-parts~="charts"] #panel-usage .pmu-col.is-zero .pmu-colstack 
 /* ---------- donut and rings: SVG arcs (round under Square), pattern fills by index, track ink 12 % ---------- */
 html[data-o55-nier-parts~="charts"] #panel-usage .pmu-ringtrack { stroke: rgba(var(--o55-nier-ink-rgb), .12) !important; }
 html[data-o55-nier-parts~="charts"] #panel-usage .pmu-ringbox [data-mark="arc"] { stroke: var(--o55-nier-ink); stroke-linecap: butt; }
-html[data-o55-nier-parts~="charts"] #panel-usage .pmu-ringbox [data-mark="arc"]:nth-of-type(3n + 2) { stroke-dasharray: none; stroke-opacity: .6; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-ringbox [data-mark="arc"]:is([data-seg="1"], [data-seg="4"], [data-seg="7"]) { stroke-dasharray: none; stroke-opacity: .6; }
 html[data-o55-nier-parts~="charts"] #panel-usage .pmu-donut [data-mark="arc"] { fill: url(#pmu-pat-solid); stroke: var(--o55-nier-ink); stroke-width: .75; }
 html[data-o55-nier-parts~="charts"] #panel-usage .pmu-donut [data-mark="arc"]:is([data-vendor="openai"], [data-vendor="meta"], [data-vendor="cursor"]) { fill: url(#pmu-pat-hatch); }
 html[data-o55-nier-parts~="charts"] #panel-usage .pmu-donut [data-mark="arc"]:is([data-vendor="google"], [data-vendor="xai"], [data-vendor="community"], [data-series-index="7"]) { fill: url(#pmu-pat-cross); }
@@ -111,3 +111,24 @@ html[data-o55-nier-parts~="intel"] #panel-usage .pmu-xdot { border-radius: 0; bo
 /* ---------- square: every chart corner is 0 (rings and dots are SVG, so they stay round) ---------- */
 html[data-o55-nier-parts~="square"] #panel-usage :is(.pmu-colstack, .pmu-sbbar, .pmu-sbfill, .pmu-mixbar, .pmu-tb, .pmu-tb i, .pmu-rkbar, .pmu-rkfill, .pmu-splitbar, .pmu-hc, .pmu-hs i,
   .pmu-hs-key i, .pmu-swatch, .pmu-sbrow, .pmu-dl-row, .pmu-rk, .pmu-rrow, .pmu-rtrack, .pmu-rbar, .pmu-readout, .pmu-legend-item, .pmu-notch, .pmu-meterover) { border-radius: 0 !important; }
+
+/* ---------- WOW round: the ramp under NieR is the NieR inks (ink, warn, error); no lit tip, no glow halo ---------- */
+html[data-o55-nier="on"] #panel-usage .pmu-meter:is([data-ramp="0"], [data-ramp="1"]) { --c: var(--o55-nier-ink); }
+html[data-o55-nier="on"] #panel-usage .pmu-meter[data-ramp="2"] { --c: var(--o55-nier-warn); }
+html[data-o55-nier="on"] #panel-usage .pmu-meter:is([data-ramp="3"], [data-ramp="4"], [data-ramp="5"]) { --c: var(--o55-nier-error); }
+html[data-o55-nier="on"] #panel-usage .pmu-meterfill::after { display: none; }
+html[data-o55-nier-parts~="blocks"] #panel-usage .pmu-meterheat { border-radius: 0; background: repeating-linear-gradient(90deg, var(--c) 0 6px, transparent 6px 8px); }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-hdot { background: var(--o55-nier-ink); box-shadow: 0 0 0 2px var(--surface, var(--pmu-card)); border-radius: 0; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-hdot.is-hollow, html[data-o55-nier-parts~="charts"] #panel-usage .pmu-hdot.is-pending { background: var(--surface, var(--pmu-card)); border-color: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-ringcap, html[data-o55-nier-parts~="charts"] #panel-usage .pmu-ringglow { fill: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-ringglow, html[data-o55-nier-parts~="charts"] #panel-usage .pmu-ringcap.is-start { display: none; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-colcap { display: none; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-hnow { border-left-color: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-hnow > b { border-radius: 0; background: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-hrule { border-top-color: var(--o55-nier-warn); }
+html[data-o55-nier="on"] #panel-usage .pmu-hlab { font-family: "PM NieR Mono", var(--pmu-mono); letter-spacing: .10em; text-shadow: none; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-mark[data-mark="glow"] { stroke: var(--o55-nier-ink); filter: none; opacity: .12; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-sweep-glint { display: none; }
+html[data-o55-nier="on"] #panel-usage .pmu-meterheat:is([data-step="0"], [data-step="1"]) { --c: var(--o55-nier-ink); }
+html[data-o55-nier="on"] #panel-usage .pmu-meterheat[data-step="2"] { --c: var(--o55-nier-warn); }
+html[data-o55-nier="on"] #panel-usage .pmu-meterheat:is([data-step="3"], [data-step="4"], [data-step="5"]) { --c: var(--o55-nier-error); }

@@ -8,7 +8,7 @@
    transition and the reading-order entrance; the tier pass. */
 (function () {
   var CLASSES = [{ name: 'S', tracks: 12, min: 0 }, { name: 'M', tracks: 20, min: 820 }, { name: 'L', tracks: 24, min: 1100 }, { name: 'XL', tracks: 30, min: 1460 }];
-  var GAP = 8, ROW = 30, HYST = 24, MOVE_THRESHOLD = 4, TARGET_HYST = 0.675, SCROLL_BAND = 48;
+  var GAP = 8, ROW = 30, HYST = 24, MOVE_THRESHOLD = 4, TARGET_HYST = 0.75, SCROLL_BAND = 48;
   var STORE_KEY = 'widget_layout:v1:usage';
   var DEFAULT_SET = 'pmu-b2-2026-10-02c';   /* c: the fixer's default boards (fill the first screen, Settings order in Accounts) */
   var LEVEL_RANK = { glance: 0, detailed: 1, diagnostics: 2 };
@@ -21,6 +21,7 @@
   var listeners = {};
   var gesture = null;
   var configs = {};       /* widget id -> {range?, scope?, <option id>: value} (the records' configuration_refs) */
+  var parkedFrom = {};    /* room/class/widget -> the rect a hidden panel had before it was parked under the board */
   var revisions = {};     /* widget id -> committed_revision */
   var landing = null, outline = null;
 
@@ -266,8 +267,9 @@
   }
 
   /* ---- cards: placement, head form, tiers ---- */
-  function cardOf(id) { return boardEl ? boardEl.querySelector('.pmu-card[data-widget="' + (window.CSS && CSS.escape ? CSS.escape(id) : id) + '"]') : null; }
-  function cardsNow() { return boardEl ? Array.prototype.slice.call(boardEl.querySelectorAll(':scope > .pmu-card')) : []; }
+  /* cards leaving the board (a room change fading out in place, a hidden panel) are not the board's cards any more */
+  function cardOf(id) { return boardEl ? boardEl.querySelector(':scope > .pmu-card[data-widget="' + (window.CSS && CSS.escape ? CSS.escape(id) : id) + '"]:not([data-leaving])') : null; }
+  function cardsNow() { return boardEl ? Array.prototype.slice.call(boardEl.querySelectorAll(':scope > .pmu-card:not([data-leaving])')) : []; }
   function gridPlace(el, r) {
     var col = (r.x + 1) + ' / span ' + r.w, row = (r.y + 1) + ' / span ' + r.h;
     if (el.style.gridColumn !== col) el.style.gridColumn = col;
@@ -336,28 +338,166 @@
     requestAnimationFrame(slice);
   }
 
-  /* ---- mount (held build, release, entrance) and the room transition ---- */
-  function exitBoard(dir) {
-    var cards = cardsNow();
-    if (!cards.length || reduced() || !stage) { cards.forEach(destroyCard); return; }
-    var ghost = document.createElement('div');
-    ghost.className = 'pmu-board-ghost';
-    ghost.setAttribute('aria-hidden', 'true');
-    ghost.style.top = scroll.offsetTop + 'px'; ghost.style.left = scroll.offsetLeft + 'px';
-    ghost.style.width = scroll.clientWidth + 'px'; ghost.style.height = scroll.clientHeight + 'px';
-    var inner = document.createElement('div');
-    inner.className = 'pmu-board';
-    inner.setAttribute('data-cls', boardEl.getAttribute('data-cls') || '');
-    inner.style.cssText = boardEl.style.cssText;
-    inner.style.transform = 'translateY(' + (-scroll.scrollTop) + 'px)';
-    cards.forEach(function (c) { inner.appendChild(c); });
-    Array.prototype.slice.call(boardEl.children).forEach(function (n) { if (!n.classList.contains('pmu-landing') && !n.classList.contains('pmu-outline')) n.remove(); });
-    ghost.appendChild(inner);
-    stage.appendChild(ghost);
-    var a = PMU.motion.animate(ghost, [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(' + (-22 * (dir || 1)) + 'px)' }], { dur: 'exit', ease: 'in', fill: 'forwards' });
-    var done = function () { cards.forEach(destroyCard); ghost.remove(); };
-    if (a) a.onfinish = done; else done();
-    setTimeout(function () { if (ghost.isConnected) done(); }, 400);
+  /* ---- the room change (WOW-SPEC 3.2, WOW-TASKS E-1, coordinator decision 5: no main-thread task over ~50 ms on a
+     room click). The click frame starts the light, the title and the exit and builds only the new chrome; the bodies are
+     built in slices of at most 8 ms per frame in reading order, and each plate enters as soon as its body exists, at
+     max(its wave delay, its build time), so the wave streams with the build. The old room fades out IN PLACE (its cards
+     stay in the grid, inert, 160 ms), so nothing is re-parented and re-laid out on the click; a widget present in both
+     rooms keeps its card and glides from its old rect to its new one (FLIP 320 SETTLE). ---- */
+  var leaving = [], leaveFlushQueued = false;
+  function filmE(name, dflt) { return (PMU.film && PMU.film.E && PMU.film.E[name]) || dflt; }
+  function softGpu() { return document.documentElement.hasAttribute('data-pmu-soft'); }
+  function flushLeaving(all) {
+    leaving = leaving.filter(function (l) {
+      if (!all && !l.done) return true;
+      destroyCard(l.card); if (l.card.isConnected) l.card.remove();
+      return false;
+    });
+  }
+  function queueLeaveFlush() {
+    if (leaveFlushQueued) return;
+    leaveFlushQueued = true;
+    requestAnimationFrame(function () { leaveFlushQueued = false; flushLeaving(false); });
+  }
+  function leaveCards(ids, dir, sTop, instant) {
+    var want = {}; ids.forEach(function (id) { want[id] = true; });
+    var reuse = {}, f = PMU.motion.family();
+    var stepped = f === 'retro' || f === 'nier', blur = f === 'glass' && !softGpu();
+    var ty = -28 * (dir || 1);
+    cardsNow().forEach(function (c) {
+      var id = c.getAttribute('data-widget');
+      if (want[id] && !reuse[id] && !c.hasAttribute('data-pending')) {
+        /* shared widget: it stays, and glides from where it is now to its new rect once placed */
+        reuse[id] = c; c._pmuFromPx = px(rectOfCard(c)); c._pmuFromScroll = sTop;
+        return;
+      }
+      /* no inert, no aria-hidden and no getAnimations() here: inert restyles the whole subtree, getAnimations() flushes the style
+         once per card (84 ms of style recalc in one click on the VM); a card still entering leaves from its entrance:
+         the exit animations are created later, so they win over it */
+      c.setAttribute('data-leaving', 'room');
+      if (c._pmuSlide) { c._pmuSlide.cancel(); c._pmuSlide = null; }
+      /* without a GPU (data-pmu-soft) the old room goes at once: fading it would first re-raster every old card into its
+         own layer on the CPU (190 ms on the VM before the first frame of the change could be drawn); the new plates'
+         entrance carries the change there */
+      if (instant || c.hasAttribute('data-pending') || reduced() || softGpu()) { leaving.push({ card: c, done: true }); return; }
+      /* the scroll goes back to the top for the new room: the old cards keep their place on screen (translateY by the old
+         scroll), then leave: opacity 1 -> 0 on (.33,0,.67,1), translateY(-28 px x dir) scale(.985) on IN, 160 ms */
+      var t0 = 'translateY(' + (-sTop) + 'px)', t1 = 'translateY(' + (-sTop + ty) + 'px) scale(.985)';
+      var fr = [{ transform: t0 }, { transform: t1 }];
+      if (blur) { fr[0].filter = 'blur(0px)'; fr[1].filter = 'blur(6px)'; }
+      PMU.motion.animate(c, fr, { dur: 160, easing: stepped ? 'steps(3,jump-start)' : filmE('in', 'cubic-bezier(.4,0,1,1)'), fill: 'forwards' });
+      /* the old room stays opaque for the first 30 % and then fades on (.33,0,.67,1): it crosses 50 % at about 104 ms,
+         after the first new plates (base 30, fade 280 OUT) have passed 50 % (film: no frame where both are below it) */
+      var a = PMU.motion.animate(c, [{ opacity: 1, easing: stepped ? 'steps(3,jump-start)' : filmE('exit', 'cubic-bezier(.33,0,.67,1)') }, { opacity: 1, offset: 0.3, easing: stepped ? 'steps(3,jump-start)' : filmE('exit', 'cubic-bezier(.33,0,.67,1)') }, { opacity: 0 }], { dur: 160, easing: 'linear', fill: 'forwards' });
+      var rec = { card: c, done: !a };
+      leaving.push(rec);
+      if (a) a.finished.then(function () { rec.done = true; queueLeaveFlush(); }, function () { rec.done = true; queueLeaveFlush(); });
+    });
+    if (!leaving.some(function (l) { return !l.done; })) flushLeaving(true);
+    return reuse;
+  }
+  /* the room's key light changes tint by a cross-fade (the old light, cloned, fades out over the new one, 420 OUT;
+     opacity only). The light itself is PMU.film.key (15-film.js). */
+  function keyShift(room) {
+    var key = stage ? stage.querySelector(':scope > .pmu-film-key:not(.pmu-key-old)') : null;
+    if (!key) { if (PMU.film && PMU.film.key) PMU.film.key({ room: room }); return; }
+    if (key.getAttribute('data-room') === room) return;
+    if (!reduced() && !(PMU.theme.look().nier) && !softGpu()) {
+      var old = key.cloneNode(false);
+      old.classList.add('pmu-key-old');
+      key.parentNode.insertBefore(old, key.nextSibling);
+      var a = PMU.motion.animate(old, [{ opacity: 1 }, { opacity: 0 }], { dur: 420, easing: filmE('out', 'cubic-bezier(.22,.8,.28,1)'), fill: 'forwards' });
+      if (a) a.finished.then(function () { old.remove(); }, function () { old.remove(); }); else old.remove();
+    }
+    if (PMU.film && PMU.film.key) PMU.film.key({ room: room }); else key.setAttribute('data-room', room);
+  }
+  /* the hover tags wait for the moment to end (WOW-SPEC 3.2 budget): the app's hover-tag controller is held in its own
+     page-settling state and scans the Usage panel once when the entrance is over (PMU.film.deferHoverTags when the film
+     core offers it; the same rule here otherwise) */
+  var hoverT = 0;
+  function deferHover(ms) {
+    if (PMU.film && typeof PMU.film.deferHoverTags === 'function') { PMU.film.deferHoverTags(ms); return; }
+    var hc = window.PM_HOVER_TAG_CONTROLLER;
+    if (!hc || typeof hc.scheduleScan !== 'function' || reduced()) return;
+    try { clearTimeout(hc.pageScanTimer); hc.pageScanTimer = 0; hc.pageSettling = true; } catch (error) { return; }
+    clearTimeout(hoverT);
+    hoverT = setTimeout(function () {
+      hoverT = 0;
+      try { hc.pageSettling = false; hc.scheduleScan(document.getElementById('panel-usage') || document); } catch (error) {}
+    }, Math.max(0, ms) * speed());
+  }
+  /* the streamed build of a room change: chrome and body together, card by card in reading order, in slices of at most
+     8 ms per frame; each plate enters as soon as it exists. plans: [{id, rect, card?}] (card = a shared widget's card) */
+  var filmEndT = 0;
+  function streamBuild(plans, o) {
+    var token = ++buildToken, t0 = o.t0, sp = speed(), first = true, built = [];
+    /* the wave on the whole new layout (grid rows and columns from the rects; no element needed yet) */
+    var proxies = plans.map(function (pl) { return { plan: pl, dataset: { x: pl.rect.x, y: pl.rect.y } }; });
+    var fresh = proxies.filter(function (q) { return !q.plan.card; });
+    if (PMU.film && PMU.film.wave) PMU.film.wave(fresh, {});
+    else readingOrder(fresh).forEach(function (q, i) { q._pmuEnterDelay = Math.min(480, 32 * i); });
+    proxies.forEach(function (q) { q.plan.at = q.plan.card ? 0 : (q._pmuEnterDelay || 0) + o.base; });
+    var queue = proxies.map(function (q) { return q.plan; }).sort(function (a, b) { return (a.rect.y - b.rect.y) || (a.rect.x - b.rect.x); });
+    function slice(all) {
+      if (token !== buildToken || !queue.length && finished) return;
+      flushLeaving(!!all);
+      try { performance.mark('pmu-room-slice'); } catch (error) {}
+      /* the style and layout the frame owes already (the inner entrances of the plates built last frame) are flushed
+         first, so the 8 ms budget measures this slice's own cards (on the CPU-only VM that flush is 10-25 ms and would
+         otherwise leave room for one card per frame, stretching a 300 ms wave over a second) */
+      void boardEl.offsetWidth;
+      var start = performance.now(), now = [], entering = [];
+      while (queue.length && (all || !now.length || performance.now() - start < 8)) {
+        var pl = queue.shift(), c = pl.card;
+        if (c && !c.isConnected) continue;
+        if (!c) {
+          c = PMU.cards.build(pl.id, o.room, pl.rect);
+          if (pl.id === o.hero) c.setAttribute('data-hero', '');
+          boardEl.insertBefore(c, landing && landing.parentNode === boardEl ? landing : null);
+          entering.push(c);
+        }
+        c._pmuPlan = pl.at;
+        c._pmuEnterDelay = Math.max(0, pl.at - (performance.now() - t0) / sp);
+        if (pl.card) tierPass([c], false); else tierPass([c], 'enter');
+        now.push(c); built.push(c);
+      }
+      if (entering.length) {
+        if (PMU.film && PMU.film.enterPlates) PMU.film.enterPlates(entering, { dir: o.dir, base: 0, scan: first, board: boardEl });
+        else PMU.motion.enter(entering, { base: 0, dir: o.dir });
+        first = false;
+      }
+      if (queue.length) { requestAnimationFrame(function () { slice(false); }); return; }
+      finish();
+    }
+    var finished = false;
+    function finish() {
+      if (finished) return;
+      finished = true;
+      if (streaming && streaming.token === token) streaming = null;
+      var elapsed = (performance.now() - t0) / sp, last = 0;
+      var live = built.filter(function (c) { return c.isConnected; });
+      live.forEach(function (c) { c._pmuEnterDelay = Math.max(0, (c._pmuPlan || 0) - elapsed); last = Math.max(last, c._pmuEnterDelay); });
+      var shared = {}; plans.forEach(function (pl) { if (pl.card) shared[pl.id] = true; });
+      try { if (PMU.film && PMU.film.playBeat) PMU.film.playBeat(o.room, live.filter(function (c) { return !shared[c.getAttribute('data-widget')]; })); } catch (error) { console.error('[pm-usage] room beat', error); }
+      if (!live.length && !boardEl.querySelector(':scope > .pmu-board-empty')) boardEl.appendChild(PMU.cards.empty(o.room));
+      var endAt = last + 160 + 1500;
+      deferHover(endAt);
+      clearTimeout(filmEndT);
+      filmEndT = setTimeout(function () { filmEndT = 0; if (token === buildToken) boardEl.removeAttribute('data-film'); }, endAt * sp);
+      try { performance.mark('pmu-room-built'); } catch (error) {}
+      emit('built', { room: o.room, cards: live.length, ms: Math.round(performance.now() - t0) });
+    }
+    /* the first slice waits one frame: the click's own frame paints the exit, the title and the light first */
+    streaming = { token: token, complete: function () { slice(true); } };
+    requestAnimationFrame(function () { requestAnimationFrame(function () { slice(false); }); });
+  }
+  /* a gesture, a layout change or a re-class while a room is still being built finishes the build at once, so every
+     card of the room exists (at its planned rect) before anything moves */
+  var streaming = null;
+  function completeStream() {
+    var sm = streaming;
+    if (sm && sm.token === buildToken) { try { sm.complete(); } catch (error) { console.error('[pm-usage] complete build', error); } }
+    streaming = null;
   }
   function destroyCard(card) {
     var body = card.querySelector('.pmu-cardbody');
@@ -372,6 +512,27 @@
     if (landing.parentNode !== boardEl) boardEl.appendChild(landing);
     if (outline.parentNode !== boardEl) boardEl.appendChild(outline);
   }
+  /* the room's hero plate (WOW-SPEC 2.2, 6: Glass gives it a static specular sheet): the largest plate (w x h, at least
+     8 tracks and 7 rows) that starts in the first 12 rows; no layout read */
+  function heroOf(rects, ids) {
+    var shown = {}; ids.forEach(function (id) { shown[id] = true; });
+    var best = null;
+    rects.forEach(function (r) {
+      if (!shown[r.id] || r.y > 12 || r.w < 8 || r.h < 7) return;
+      var k = (PMU.widgets.get(r.id) || {}).kind; if (k === 'group' || k === 'kpi' || k === 'kpis') return;
+      if (!best || r.w * r.h > best.w * best.h) best = r;
+    });
+    return best ? best.id : null;
+  }
+  function markHero(card, heroId) { if (card.getAttribute('data-widget') === heroId) card.setAttribute('data-hero', ''); else card.removeAttribute('data-hero'); }
+  /* the board class on the board and the shell: written only when it changes (--pmu-tracks is an inherited custom
+     property: writing it, even with the same value, restyles every element of the board) */
+  function setBoardClass() {
+    var name = current.cls.name, tr = String(current.cls.tracks);
+    if (boardEl.getAttribute('data-cls') !== name) boardEl.setAttribute('data-cls', name);
+    if (boardEl.style.getPropertyValue('--pmu-tracks') !== tr) boardEl.style.setProperty('--pmu-tracks', tr);
+    var app = document.getElementById('pmuApp'); if (app && app.getAttribute('data-cls') !== name) app.setAttribute('data-cls', name);
+  }
   function mount(room, opts) {
     ensure();
     opts = opts || {};
@@ -381,23 +542,61 @@
     var W = boardWidth();
     if (W <= 0) { current.pending = true; current.room = room; return; }
     current.pending = false;
+    flushGravity();
+    var t0 = performance.now(), sTop = scroll.scrollTop;   /* every read before the first write */
     var roomChanged = current.room !== room;
-    var transition = !!opts.transition && current.mounted && roomChanged && !opts.instant;
-    if (transition) exitBoard(opts.dir || 1);
-    else cardsNow().forEach(destroyCard);
+    var transition = !!opts.transition && current.mounted && roomChanged && !opts.instant && !opts.held && !reduced() && !PMU.motion.paused();
     current.cls = pickClass(W);
     current.room = room;
     var rects = layoutFor(room), ids = visibleIds(room);
     var byId = {}; rects.forEach(function (r) { byId[r.id] = r; });
+    clearTimeout(filmEndT); boardEl.removeAttribute('data-film');
+    if (transition) {
+      try { performance.mark('pmu-room-click'); } catch (error) {}
+      /* a room click during the arrival takes over; the held (never shown) board goes at once */
+      var wasHeld = boardEl.hasAttribute('data-held');
+      if (PMU.film && PMU.film.holding && PMU.film.holding()) PMU.film.cancelHold();
+      deferHover(4000);
+      keyShift(room);
+      var reuse = leaveCards(wasHeld ? [] : ids, opts.dir || 1, sTop, wasHeld);
+      boardEl.removeAttribute('data-held');
+      boardEl.setAttribute('data-room', room);
+      setBoardClass();
+      boardEl.removeAttribute('data-op');
+      Array.prototype.slice.call(boardEl.children).forEach(function (n) { if (!n.classList.contains('pmu-card')) n.remove(); });
+      if (sTop) scroll.scrollTop = 0;
+      ensurePreviews();
+      /* the click frame builds no card: the plans go to the slices; a shared widget's card is placed now and glides from
+         its old place on screen to its new rect (no layout read: grid geometry) */
+      var plans = ids.map(function (id) {
+        var old = reuse[id];
+        if (old) {
+          old.setAttribute('data-room', room);
+          place(old, byId[id]);   /* never re-appended: a moved node is laid out again from scratch */
+          var to = px(byId[id]), from = old._pmuFromPx, dx = from ? from.l - to.l : 0, dy = from ? from.t - old._pmuFromScroll - to.t : 0;
+          old._pmuFromPx = null;
+          if (Math.abs(dx) >= 0.5 || Math.abs(dy) >= 0.5) PMU.motion.animate(old, [{ transform: 'translate(' + dx + 'px,' + dy + 'px)' }, { transform: 'none' }], { dur: 320, easing: filmE('settle', 'cubic-bezier(.17,.84,.29,.99)') });
+        }
+        return { id: id, rect: byId[id], card: old || null };
+      });
+      boardEl.setAttribute('data-film', '');
+      current.mounted = true;
+      var hero = heroOf(rects, ids);
+      plans.forEach(function (pl) { if (pl.card) markHero(pl.card, hero); });
+      streamBuild(plans, { t0: t0, base: 30, dir: opts.dir || 1, room: room, hero: hero });
+      emit('mount', { room: room, cls: current.cls.name, widgets: ids, transition: true, scrolled: sTop });
+      return;
+    }
+    flushLeaving(true);
+    cardsNow().forEach(destroyCard);
     boardEl.setAttribute('data-held', '');
     boardEl.setAttribute('data-room', room);
-    boardEl.setAttribute('data-cls', current.cls.name);
-    boardEl.style.setProperty('--pmu-tracks', current.cls.tracks);
+    setBoardClass();
     boardEl.removeAttribute('data-op');
-    var app = document.getElementById('pmuApp'); if (app) app.setAttribute('data-cls', current.cls.name);
     boardEl.textContent = '';
     if (roomChanged) scroll.scrollTop = 0;
-    var cards = ids.map(function (id) { var card = PMU.cards.build(id, room, byId[id]); boardEl.appendChild(card); return card; });
+    var heroId = heroOf(rects, ids);
+    var cards = ids.map(function (id) { var card = PMU.cards.build(id, room, byId[id]); markHero(card, heroId); boardEl.appendChild(card); return card; });
     ensurePreviews();
     if (!cards.length) boardEl.appendChild(PMU.cards.empty(room));
     if (opts.held && !reduced()) {
@@ -415,7 +614,8 @@
     setEntranceDelays(cards);
     tierPass(cards, entering ? 'enter' : true);
     current.mounted = true;
-    PMU.motion.release(boardEl);
+    /* Reduce Motion (E-12): the board shows at once; otherwise the entrance releases it two frames later */
+    if (reduced() || opts.instant) boardEl.removeAttribute('data-held'); else PMU.motion.release(boardEl);
     if (entering) PMU.motion.enter(readingOrder(cards), { base: transition ? 16 : 0, dir: transition ? (opts.dir || 1) : 0 });
     emit('mount', { room: room, cls: current.cls.name, widgets: ids });
   }
@@ -426,6 +626,8 @@
   /* reconcile the board to a layout: leaving cards fade, staying cards slide (FLIP), new cards enter (B v2 8.2) */
   function reconcile(rects, opts) {
     opts = opts || {};
+    completeStream();
+    flushGravity();
     var room = current.room, ids = visibleIds(room), want = {};
     ids.forEach(function (id) { want[id] = true; });
     var byId = {}; rects.forEach(function (r) { byId[r.id] = r; });
@@ -474,7 +676,7 @@
     return { x: from.x * k, y: from.y * k, sx: 1 + ((from.sx || 1) - 1) * k, sy: 1 + ((from.sy || 1) - 1) * k };
   }
   /* ---- peers slide live (interruptible: each slide starts from the peer's visual position) ---- */
-  function slidePeers(map, exceptId, durName, easeName) {
+  function slidePeers(map, exceptId, durName, easeName, step) {
     var pool = gesture && gesture.cards ? gesture.cards : cardsNow();
     var changing = pool.filter(function (c) {
       var id = c.getAttribute('data-widget'), r = map[id];
@@ -490,11 +692,16 @@
       return { c: c, dx: from.l + off.x - to.l, dy: from.t + off.y - to.t };
     });
     if (reduced()) return;
+    /* neighbours flow in reading order, `step` ms apart (WOW-SPEC 3.11: 20 during a gesture, 30 for gravity), so the board
+       moves like a liquid rather than jumping; an in-flight slide continues from where it is (no delay then) */
+    var rank = moves.slice().sort(function (a, b) { return (+a.c.dataset.y - +b.c.dataset.y) || (+a.c.dataset.x - +b.c.dataset.x); });
     moves.forEach(function (m) {
       var c = m.c;
       if (Math.abs(m.dx) < 0.5 && Math.abs(m.dy) < 0.5) { c._pmuSlideFrom = null; return; }
       c._pmuSlideFrom = { x: m.dx, y: m.dy };
-      c._pmuSlide = PMU.motion.animate(c, [{ transform: 'translate(' + m.dx + 'px,' + m.dy + 'px)' }, { transform: 'translate(0,0)' }], { dur: durName || 'slide', ease: easeName || 'slide' });
+      var delay = step ? Math.min(240, step * rank.indexOf(m)) : 0;
+      c._pmuSlide = PMU.motion.animate(c, [{ transform: 'translate(' + m.dx + 'px,' + m.dy + 'px)' }, { transform: 'translate(0,0)' }],
+        { dur: durName || 250, easing: easeName && /^cubic|^steps|^linear/.test(easeName) ? easeName : undefined, ease: easeName || 'slide', delay: delay, fill: delay ? 'backwards' : 'none' });
       if (c._pmuSlide) { var me = c._pmuSlide; me.onfinish = function () { if (c._pmuSlide === me) { c._pmuSlide = null; c._pmuSlideFrom = null; } }; }
     });
   }
@@ -586,31 +793,53 @@
     if (g.type === 'move') frameMove(g); else frameResize(g);
     g.raf = requestAnimationFrame(function () { loop(g); });
   }
-  function liftScale() { var f = PMU.motion.family(); return f === 'glass' ? 1.04 : f === 'friendly' ? 1.035 : f === 'retro' || f === 'nier' ? 1 : 1.03; }
-  function frameMove(g) {
+  function liftScale() { var f = PMU.motion.family(); return f === 'retro' || f === 'nier' ? 1 : 1.04; }
+  /* the velocity tilt's limit per voice (WOW-SPEC 3.11): Basic 1deg, Glass 1.5, Friendly 2, Retro and NieR none */
+  function tiltMax() { var f = PMU.motion.family(); return f === 'friendly' ? 2 : f === 'glass' ? 1.5 : f === 'retro' || f === 'nier' ? 0 : 1; }
+  var liftEase = null;
+  function frameMove(g, force) {
     var now = performance.now();
     var dx = g.px - g.sx + (scroll.scrollLeft - g.scrollL), dy = g.py - g.sy + (scroll.scrollTop - g.scrollT);
-    var k = reduced() ? 1 : Math.min(1, (now - g.liftAt) / (140 * speed()));
-    var s = 1 + (liftScale() - 1) * (1 - Math.pow(1 - k, 3));
-    var tilt = PMU.motion.family() === 'friendly' ? ' rotate(' + (-0.6 * k).toFixed(3) + 'deg)' : '';
-    var tr = 'translate3d(' + dx.toFixed(1) + 'px,' + dy.toFixed(1) + 'px,0) scale(' + s.toFixed(4) + ')' + tilt;
+    /* pick-up: 140 ms (.2,.8,.2,1) to scale 1.04 and 6 px up (Retro and NieR: no scale, no lift) */
+    if (!liftEase) liftEase = PMU.motion.curve('cubic-bezier(.2,.8,.2,1)');
+    var k = reduced() ? 1 : liftEase(Math.min(1, (now - g.liftAt) / (140 * speed())));
+    var flat = liftScale() === 1;
+    var s = 1 + (liftScale() - 1) * k, ly = flat ? 0 : -6 * k;
+    /* velocity tilt: rotate = clamp(vx / 1200 px/s x 1deg), easing in while the pointer moves and back to 0 over about
+       160 ms when it rests (the loop runs every frame, so a resting pointer reads as vx 0) */
+    var dt = g.lastT ? now - g.lastT : 0, max = reduced() ? 0 : tiltMax();
+    if (dt > 0) {
+      var vx = (g.px - (g.lastPx == null ? g.px : g.lastPx)) / dt * 1000;
+      g.vx = (g.vx || 0) * 0.55 + vx * 0.45;
+      var target = Math.max(-max, Math.min(max, g.vx / 1200));
+      g.tilt = (g.tilt || 0) + (target - (g.tilt || 0)) * Math.min(1, dt / (Math.abs(target) > Math.abs(g.tilt || 0) ? 60 : 160));
+    }
+    g.lastT = now; g.lastPx = g.px;
+    var tilt = max && Math.abs(g.tilt || 0) > 0.01 ? ' rotate(' + g.tilt.toFixed(3) + 'deg)' : '';
+    var tr = 'translate3d(' + dx.toFixed(1) + 'px,' + (dy + ly).toFixed(1) + 'px,0) scale(' + s.toFixed(4) + ')' + tilt;
     if (g.lastTr !== tr) { g.card.style.transform = tr; g.lastTr = tr; }
-    g.dx = dx; g.dy = dy; g.s = s;
-    /* the target slot is the cell under the card's top-left anchor, with 35 % of a pitch of hysteresis across the boundary */
+    g.dx = dx; g.dy = dy + ly; g.s = s;
+    /* the target slot is the cell under the card's top-left anchor, with 75 % of a pitch of hysteresis across the
+       boundary, and a new slot is taken only after the card has dwelt over it 100 ms (a fast pass does not shove the
+       board); the release takes the slot under the pointer at once */
     var cls = current.cls, rawX = (g.cardL + dx - g.pad.l) / cls.pitchX, rawY = (g.cardT + dy - g.pad.t) / ROW;
     var nx = g.target.x, ny = g.target.y;
     if (Math.abs(rawX - g.target.x) >= TARGET_HYST) nx = Math.max(0, Math.min(cls.tracks - g.me.w, Math.round(rawX)));
     if (Math.abs(rawY - g.target.y) >= TARGET_HYST) ny = Math.max(0, Math.min(g.maxY, Math.round(rawY)));
     if (nx !== g.target.x || ny !== g.target.y) {
-      g.target = { id: g.id, x: nx, y: ny, w: g.me.w, h: g.me.h };
-      previewTo(g, g.target);
-    }
+      if (!g.cand || g.cand.x !== nx || g.cand.y !== ny) g.cand = { x: nx, y: ny, at: now };
+      if (force || reduced() || now - g.cand.at >= 100 * speed()) {
+        g.cand = null;
+        g.target = { id: g.id, x: nx, y: ny, w: g.me.w, h: g.me.h };
+        previewTo(g, g.target);
+      }
+    } else g.cand = null;
   }
   function previewTo(g, rect) {
     g.preview = resolve(g.snapshot, g.id, rect);
     var map = toMap(g.preview);
     if (g.type === 'move') glide(landing, rect, 'landing'); else showOutline(g, rect);
-    slidePeers(map, g.id);
+    slidePeers(map, g.id, 250, 'slide', g.kb ? 0 : 20);
     emit('preview', { op: g.type, id: g.id, rect: rect, peers: g.preview.filter(function (r) { return r.id !== g.id; }) });
   }
   function frameResize(g) {
@@ -634,6 +863,9 @@
     if (!sameRect(r, g.target)) { g.target = r; previewTo(g, r); }
   }
   function beginGesture(g) {
+    completeStream();
+    flushGravity();
+    sheenOff();
     gesture = g;
     if (PMU.menu) PMU.menu.close();
     g.snapshot = snapshotNow();
@@ -692,7 +924,10 @@
     if (changed) {
       var room = current.room, cls = current.cls.name;
       var snapMap = toMap(g.snapshot);
-      var peers = g.preview.filter(function (r) { return r.id !== g.id && !sameRect(r, snapMap[r.id]); });
+      /* coordinator decision 1: the committed layout is the resolver's preview plus gravity (displaced peers that fit the
+         freed region move into it, every card floats up into the holes above it); one command carries every peer */
+      g.final = gravity(g.preview, g.id, g.me, g.snapshot, current.cls.tracks);
+      var peers = g.final.filter(function (r) { return r.id !== g.id && !sameRect(r, snapMap[r.id]); });
       if (g.type === 'move') {
         receipt = command('cmd.widget.move', { room: room, widget_id: g.id, from: { x: g.me.x, y: g.me.y }, to: { x: g.target.x, y: g.target.y }, board_class: cls,
           moved_peers: peers.map(function (r) { return { widget_id: r.id, to: { x: r.x, y: r.y } }; }), source: g.source || (g.kb ? 'keyboard' : 'pointer') }, { moved: true });
@@ -708,17 +943,20 @@
       if (receipt.dispatch_accepted === false) { changed = false; how = 'rejected'; }
     }
     if (changed) {
-      saveLayout(current.room, g.preview);
+      saveLayout(current.room, g.final || g.preview);
       revisions[g.id] = (revisions[g.id] || 0) + 1;
       persist();
-      if (g.type === 'move') settleMove(g, instant); else morphResize(g, instant);
+      var settleMs = g.type === 'move' ? settleMove(g, instant) : morphResize(g, instant);
+      /* 60 ms after the settle the displaced cards float up (250 SLIDE, 30 apart in reading order) */
+      if (g.final) { if (instant || reduced()) { gravityMap = toMap(g.final); flushGravity(); } else scheduleGravity(toMap(g.final), Math.min(settleMs || 0, 280) + 60); }
       hidePreview(g.type === 'move' ? landing : outline);
       say(g.type === 'move' ? t('board.moved', { x: g.target.x + 1, y: g.target.y + 1 }) : t('board.resized', { name: sizeLabel(g.id, g.target).name || 'custom size', w: g.target.w, h: g.target.h }));
       emit('commit', { op: g.type, id: g.id, rect: g.target, receipt: receipt });
     } else {
       /* cancel, rejection or no change: everything glides back to the snapshot; no command, no write */
       if (g.type === 'move') settleMove(g, instant, true); else { card.removeAttribute('data-resizing'); }
-      slidePeers(toMap(g.snapshot), g.id, how === 'drop' ? 'settle' : 'cancel', how === 'drop' ? 'settle' : 'cancel');
+      /* peers glide back 250 (WOW-SPEC 3.11 Escape) while the card glides home on the cancel ease */
+      slidePeers(toMap(g.snapshot), g.id, how === 'drop' ? 'settle' : 250, how === 'drop' ? 'settle' : 'slide');
       hidePreview(g.type === 'move' ? landing : outline);
       if (how === 'rejected') PMU.shell.toast(t('board.rejected'));
       if (how !== 'drop') { say(t('board.cancelled', { name: cardTitle(g.id) })); emit('cancel', { op: g.type, id: g.id, reason: how }); }
@@ -726,49 +964,124 @@
     if (g.kb && card.isConnected) card.focus({ preventScroll: true });
     if (!g.kb && g.started) suppressClick();
   }
+  /* the drop (WOW-SPEC 3.11): the card settles from the pointer into its slot on a physical spring (k 520 c 38, about
+     260 ms; Friendly k 380 c 22 for a visible hop; Retro snaps in three steps), the lift shadow fades over 200
+     (data-settling), then one seat: the rim goes to 45 % accent and back (420 OUT). Escape glides back in 300. Returns the
+     settle's duration (unscaled ms) so gravity can follow it. */
   function settleMove(g, instant, back) {
     var card = g.card;
-    var cur = card.style.transform;
     var from = px(g.me), to = px(back ? g.me : g.target);
-    var dx = g.dx || 0, dy = g.dy || 0, s = g.s || (g.kb && g.type === 'move' ? liftScale() : 1);
+    var dx = g.dx || 0, dy = g.dy || 0, s = g.s || (g.kb && g.type === 'move' ? liftScale() : 1), tilt = g.tilt || 0;
     card.style.transform = '';
     card.removeAttribute('data-lifted');
     if (!back) place(card, g.target);
-    if (instant || reduced()) return;
+    if (instant || reduced()) return 0;
     var tx = from.l + dx - to.l, ty = from.t + dy - to.t;
-    if (Math.abs(tx) < 0.5 && Math.abs(ty) < 0.5 && Math.abs(s - 1) < 0.002) return;
+    if (Math.abs(tx) < 0.5 && Math.abs(ty) < 0.5 && Math.abs(s - 1) < 0.002) { if (!back) seat(card); return 0; }
     card.setAttribute('data-settling', '');
-    card._pmuSettle = PMU.motion.animate(card, [{ transform: 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')' + (/rotate/.test(cur) ? ' rotate(-0.6deg)' : '') }, { transform: 'none' }],
-      { dur: back ? 'cancel' : 'settle', ease: back ? 'cancel' : 'settle' });
-    var clear = function () { card.removeAttribute('data-settling'); card._pmuSettle = null; };
+    var f = PMU.motion.family(), dur, easing;
+    if (back) { dur = 300; easing = PMU.motion.ease('cancel'); }
+    else if (f === 'retro' || f === 'nier') { dur = 160; easing = 'steps(3,jump-start)'; }
+    else if (PMU.film && PMU.film.spring) { var sp = PMU.film.spring(f === 'friendly' ? { k: 380, c: 22 } : { k: 520, c: 38 }); dur = sp.duration; easing = sp.easing; }
+    else { dur = 220; easing = PMU.motion.ease('settle'); }
+    card._pmuSettle = PMU.motion.animate(card, [{ transform: 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')' + (Math.abs(tilt) > 0.01 ? ' rotate(' + tilt.toFixed(3) + 'deg)' : '') }, { transform: 'none' }],
+      { dur: dur, easing: easing });
+    var clear = function () { card.removeAttribute('data-settling'); card._pmuSettle = null; if (!back) seat(card); };
     if (card._pmuSettle) card._pmuSettle.onfinish = clear; else clear();
+    return dur;
   }
-  /* DESIGN-SPEC 8.6: the card takes its new placement; a surface (.pmu-morph) scales from the old rect to the new one
-     while the card's own surface is transparent and its content fades in at the new tier between 40 % and 100 % */
+  /* one seat (and the inspector's held rim): a pre-rendered 1 px accent rim whose opacity moves */
+  function rimOf(card) {
+    var r = card.querySelector(':scope > .pmu-rim');
+    if (!r) { r = document.createElement('i'); r.className = 'pmu-rim'; r.setAttribute('aria-hidden', 'true'); card.appendChild(r); }
+    return r;
+  }
+  function seat(card) {
+    if (reduced() || !card.isConnected) return;
+    var r = rimOf(card), nier = PMU.theme.look().nier;
+    var a = PMU.motion.animate(r, nier ? [{ opacity: 0 }, { opacity: 1 }, { opacity: 0 }, { opacity: 1 }, { opacity: 0 }] : [{ opacity: 0 }, { opacity: 1, offset: 0.28 }, { opacity: 0 }],
+      { dur: nier ? 240 : 420, easing: nier ? 'steps(4,jump-start)' : 'cubic-bezier(.22,.8,.28,1)' });
+    if (a) a.finished.then(function () { if (!r.classList.contains('is-held')) r.remove(); }, function () {});
+  }
+  /* coordinator decision 1 (WOW-SPEC 3.11, 3.13): after a move or resize settles, (1) every peer the gesture displaced
+     takes the highest free place above where the resolver put it, preferring the freed region (the active card's old
+     rect), then the row, then the column nearest its own; (2) every card but the active one floats straight up into
+     the hole above it, in reading order, so the order is kept; (1) and (2) run twice, since a float can open a place
+     for a displaced card. Every rect of the room (all levels, hidden ones too) takes part, so no level ever overlaps
+     another; the active card stays where it was put. Pure. */
+  function gravity(rects, activeId, me, snapshot, tracks) {
+    var snap = toMap(snapshot || []);
+    var cur = rects.map(function (r) { return { id: r.id, x: r.x, y: r.y, w: r.w, h: r.h }; });
+    var act = cur.filter(function (r) { return r.id === activeId; })[0] || null;
+    function hits(c) { for (var i = 0; i < cur.length; i++) { var p = cur[i]; if (p.id !== c.id && overlaps(c, p)) return true; } return false; }
+    function reading(a, b) { return a.y - b.y || a.x - b.x; }
+    var others = cur.filter(function (r) { return r !== act; });
+    var displaced = others.filter(function (c) { var o = snap[c.id]; return o && (o.x !== c.x || o.y !== c.y); });
+    for (var round = 0; round < 2; round++) {
+      displaced.sort(reading).forEach(function (c) {
+        var o = snap[c.id], best = null, bestScore = Infinity;
+        for (var y = 0; y < c.y; y++) {
+          for (var x = 0; x + c.w <= tracks; x++) {
+            var cand = { id: c.id, x: x, y: y, w: c.w, h: c.h };
+            if (hits(cand)) continue;
+            var score = (me && act && overlaps(cand, me) ? 0 : 1e6) + y * 1000 + Math.abs(x - o.x);
+            if (score < bestScore) { bestScore = score; best = cand; }
+          }
+        }
+        if (best) { c.x = best.x; c.y = best.y; }
+      });
+      others.sort(reading).forEach(function (c) {
+        while (c.y > 0) { c.y--; if (hits(c)) { c.y++; break; } }
+      });
+    }
+    return cur;
+  }
+  var gravityT = 0, gravityMap = null;
+  function scheduleGravity(map, ms) {
+    clearTimeout(gravityT); gravityMap = map;
+    if (!ms) { runGravity(); return; }
+    gravityT = setTimeout(runGravity, ms * speed());
+  }
+  function runGravity() {
+    gravityT = 0;
+    var m = gravityMap; gravityMap = null;
+    if (!m || !current.mounted) return;
+    slidePeers(m, null, 250, 'slide', 30);
+  }
+  /* a new gesture, a mount or a reconcile takes the floated layout at once */
+  function flushGravity() {
+    if (!gravityMap) return;
+    clearTimeout(gravityT); gravityT = 0;
+    var m = gravityMap; gravityMap = null;
+    cardsNow().forEach(function (c) { var r = m[c.getAttribute('data-widget')]; if (r) place(c, r); });
+  }
+  /* the resize release (WOW-SPEC 3.12, E-3): the body renders at its new tier BEFORE the first morph frame; the plate's
+     surface (a .pmu-morph layer under the card) morphs from the old rect to the new one, 220 SETTLE; the card's content
+     never fades: it is revealed by clip-path inset() from the old rect to the new on the same 220 (a shrink shows the new
+     content at once inside the shrinking surface). NieR snaps in two steps. Returns the morph's duration. */
   function morphResize(g, instant) {
     var card = g.card;
     var o = px(g.me), n = px(g.target);
-    var old = { l: o.l, t: o.t, w: o.w, h: o.h }, now = { l: n.l, t: n.t, w: n.w, h: n.h };
     card.removeAttribute('data-resizing');
     place(card, g.target);
-    if (instant || reduced()) { tierPass([card], true); return; }
-    /* the body re-renders at its new tier on the next frame, while the morph (compositor transform) already runs */
-    requestAnimationFrame(function () { if (card.isConnected) tierPass([card], true); });
-    if (!now.w || !now.h) return;
+    tierPass([card], false);
+    if (instant || reduced() || !n.w || !n.h || !o.w || !o.h) return 0;
+    var nier = PMU.theme.look().nier, dur = nier ? 120 : 220, easing = nier ? 'steps(2,jump-start)' : filmE('settle', 'cubic-bezier(.17,.84,.29,.99)');
     var m = document.createElement('div');
     m.className = 'pmu-morph';
     m.setAttribute('aria-hidden', 'true');
-    m.style.left = old.l + 'px'; m.style.top = old.t + 'px'; m.style.width = old.w + 'px'; m.style.height = old.h + 'px';
-    boardEl.appendChild(m);
+    m.style.left = n.l + 'px'; m.style.top = n.t + 'px'; m.style.width = n.w + 'px'; m.style.height = n.h + 'px';
+    boardEl.insertBefore(m, boardEl.firstChild);
     card.setAttribute('data-morphing', '');
-    var a = PMU.motion.animate(m, [{ transform: 'translate(0,0) scale(1,1)' }, { transform: 'translate(' + (now.l - old.l) + 'px,' + (now.t - old.t) + 'px) scale(' + (now.w / old.w) + ',' + (now.h / old.h) + ')' }],
-      { dur: 'morphSize', ease: 'settle', fill: 'forwards' });
-    Array.prototype.forEach.call(card.querySelectorAll(':scope > .pmu-cardhead, :scope > .pmu-cardbody'), function (part) {
-      PMU.motion.animate(part, [{ opacity: 0 }, { opacity: 0, offset: 0.4 }, { opacity: 1 }], { dur: 'morphSize', easing: 'linear' });
-    });
+    var a = PMU.motion.animate(m, [{ transform: 'translate(' + (o.l - n.l) + 'px,' + (o.t - n.t) + 'px) scale(' + (o.w / n.w) + ',' + (o.h / n.h) + ')' }, { transform: 'none' }],
+      { dur: dur, easing: easing, fill: 'forwards' });
+    var r = getComputedStyle(card).borderTopLeftRadius || '0px';
+    var it = Math.max(0, o.t - n.t), il = Math.max(0, o.l - n.l), ir = Math.max(0, (n.l + n.w) - (o.l + o.w)), ib = Math.max(0, (n.t + n.h) - (o.t + o.h));
+    if (it || il || ir || ib) PMU.motion.animate(card, [{ clipPath: 'inset(' + it + 'px ' + ir + 'px ' + ib + 'px ' + il + 'px round ' + r + ')' }, { clipPath: 'inset(0px 0px 0px 0px round ' + r + ')' }],
+      { dur: dur, easing: easing });
     var done = function () { m.remove(); card.removeAttribute('data-morphing'); };
-    if (a) a.onfinish = done; else done();
-    setTimeout(function () { if (m.isConnected) done(); }, 600 * speed());
+    if (a) a.finished.then(done, done); else done();
+    return dur;
   }
   var suppressT = 0;
   function suppressClick() {
@@ -789,7 +1102,7 @@
       if (g.started) e.preventDefault(); };
     g.onUp = function (e) { if (e.pointerId !== g.pointerId) return; g.px = e.clientX; g.py = e.clientY;
       if (!g.started) { detach(g); return; }
-      if (gesture === g) { if (g.type === 'move') frameMove(g); else frameResize(g); }
+      if (gesture === g) { if (g.type === 'move') frameMove(g, true); else frameResize(g); }
       var r = scroll.getBoundingClientRect();
       var outside = e.clientX < r.left - 24 || e.clientX > r.right + 24 || e.clientY < r.top - 24 || e.clientY > r.bottom + 24;
       endGesture(g, outside && g.type === 'move' ? 'outside' : 'drop'); };
@@ -891,7 +1204,45 @@
     }
     if (onCard && (event.key === 'r' || event.key === 'R')) { event.preventDefault(); keyboard(card.getAttribute('data-widget'), 'resize'); }
   }
+  /* ---- the pointer sheen (WOW-SPEC 3.17): a 280 px radial light inside the hovered plate, under its content, moved by
+     transform only (one rAF write per pointer frame, the card's rect read once on entry), fading out 200 on leave ---- */
+  var sheen = { card: null, el: null, rect: null, x: 0, y: 0, raf: 0 };
+  function sheenOff() {
+    var el = sheen.el;
+    sheen.card = null; sheen.rect = null; sheen.el = null;
+    if (!el) return;
+    el.classList.remove('on');
+    setTimeout(function () { el.remove(); }, 240 * speed());
+  }
+  function sheenMove() {
+    sheen.raf = 0;
+    if (!sheen.el || !sheen.card) return;
+    if (!sheen.rect) sheen.rect = sheen.card.getBoundingClientRect();
+    sheen.el.firstChild.style.transform = 'translate(' + (sheen.x - sheen.rect.left).toFixed(1) + 'px,' + (sheen.y - sheen.rect.top).toFixed(1) + 'px)';
+  }
+  function onSheen(e) {
+    if (e.pointerType === 'touch') return;
+    var card = gesture || reduced() ? null : (e.target.closest ? e.target.closest('.pmu-card') : null);
+    if (card && (card.parentNode !== boardEl || card.hasAttribute('data-leaving') || card.hasAttribute('data-pending') || card.getAttribute('data-head') === 'band')) card = null;
+    if (card !== sheen.card) {
+      sheenOff();
+      if (card && PMU.theme.look().nier) card = null;
+      if (card) {
+        var el = document.createElement('i'); el.className = 'pmu-sheen'; el.setAttribute('aria-hidden', 'true'); el.appendChild(document.createElement('i'));
+        card.insertBefore(el, card.firstChild);
+        sheen.card = card; sheen.el = el; sheen.x = e.clientX; sheen.y = e.clientY;
+        /* the rect is read in the next frame's rAF, never in the pointer event (a read here forced the hover's style
+           recalc into the event: 14 ms on the VM) */
+        if (!sheen.raf) sheen.raf = requestAnimationFrame(function () { sheenMove(); if (sheen.el === el) el.classList.add('on'); });
+        return;
+      }
+    }
+    if (card) { sheen.x = e.clientX; sheen.y = e.clientY; if (!sheen.raf) sheen.raf = requestAnimationFrame(sheenMove); }
+  }
   if (boardEl) {
+    boardEl.addEventListener('pointermove', onSheen, { passive: true });
+    boardEl.addEventListener('pointerleave', sheenOff);
+    if (scroll) scroll.addEventListener('scroll', function () { sheen.rect = null; }, { passive: true });
     boardEl.addEventListener('pointerdown', onPointerDown);
     boardEl.addEventListener('keydown', onKeyDown);
     document.addEventListener('keydown', function (event) { if (gesture && event.key === 'Escape' && !gesture.kb) { event.preventDefault(); endGesture(gesture, 'escape'); } }, true);
@@ -901,6 +1252,8 @@
 
   /* ---- API commits (size menu, keyboard-free callers, verifiers): same resolver, same motion ---- */
   function apiCommit(type, id, rect, source) {
+    completeStream();
+    flushGravity();
     var card = cardOf(id);
     var snap = snapshotNow(), me = snap.filter(function (r) { return r.id === id; })[0];
     if (!me) return null;
@@ -940,19 +1293,48 @@
   }
   function setVisible(id, visible) {
     ensure();
+    completeStream();
     var room = current.room || st.room; st.hidden[room] = st.hidden[room] || {};
     if (visible) delete st.hidden[room][id]; else st.hidden[room][id] = true;
-    var receipt = command(visible ? 'cmd.widget.add' : 'cmd.widget.remove', { room: room, widget_id: id }, { visible: !!visible });
+    /* WOW-SPEC 3.13 (gravity after a hide): the hidden panel is parked under the board (it returns there) and the cards
+       below the freed region float up into it; the one command carries the peers that moved */
+    var fin = null, movedPeers = [];
+    if (!visible && current.mounted) {
+      flushGravity();
+      var rects0 = layoutFor(room), me0 = rects0.filter(function (r) { return r.id === id; })[0];
+      if (me0) {
+        var floor = rects0.reduce(function (m, r) { return r.id === id ? m : Math.max(m, r.y + r.h); }, 0);
+        var parked = rects0.map(function (r) { return r.id === id ? { id: r.id, x: r.x, y: Math.max(floor, r.y), w: r.w, h: r.h } : r; });
+        fin = gravity(parked, id, me0, rects0, current.cls.tracks);
+        parkedFrom[room + '/' + current.cls.name + '/' + id] = { x: me0.x, y: me0.y, w: me0.w, h: me0.h };
+        var b0 = toMap(rects0);
+        movedPeers = fin.filter(function (r) { return r.id !== id && !sameRect(r, b0[r.id]); }).map(function (r) { return { widget_id: r.id, to: { x: r.x, y: r.y } }; });
+      }
+    }
+    var payload = { room: room, widget_id: id };
+    if (movedPeers.length) payload.moved_peers = movedPeers;
+    var receipt = command(visible ? 'cmd.widget.add' : 'cmd.widget.remove', payload, { visible: !!visible });
     revisions[id] = (revisions[id] || 0) + 1;
     if (current.mounted) {
       var rects = layoutFor(room);
+      if (fin && receipt.dispatch_accepted !== false) { saveLayout(room, fin); rects = fin; }
       if (visible) {
-        /* a returning panel takes its rectangle; panels now in the way move down (the resolver) */
+        /* a returning panel takes its rectangle (the one it had before it was hidden in this session, else its parked
+           one); panels now in the way move down (the resolver) and the board then floats up (gravity) */
         var me = rects.filter(function (r) { return r.id === id; })[0];
+        var back = parkedFrom[room + '/' + current.cls.name + '/' + id];
+        if (me && back) {
+          delete parkedFrom[room + '/' + current.cls.name + '/' + id];
+          var snapB = rects.map(function (r) { return { id: r.id, x: r.x, y: r.y, w: r.w, h: r.h }; });
+          var wantB = { id: id, x: Math.min(back.x, current.cls.tracks - me.w), y: back.y, w: me.w, h: me.h };
+          rects = gravity(resolve(snapB, id, wantB), id, me, snapB, current.cls.tracks);
+          saveLayout(room, rects);
+          me = null;
+        }
         var shown = visibleIds(room);
         if (me && rects.some(function (r) { return r.id !== id && shown.indexOf(r.id) >= 0 && overlaps(r, me); })) { rects = resolve(rects, id, me); saveLayout(room, rects); }
       }
-      reconcile(rects);
+      reconcile(rects, fin ? { dur: 250, ease: 'slide' } : {});
     }
     persist();
     if (PMU.shell) PMU.shell.render();
@@ -960,6 +1342,7 @@
   }
   function tidy() {
     if (!current.mounted) return [];
+    completeStream();
     /* DESIGN-SPEC 6.1: compact every card upward, first-fit in reading order (x may change); the cards shown at this
        detail level go first so their holes close, the cards of other levels and hidden ones follow below them */
     var room = current.room, rects = layoutFor(room).slice().sort(function (a, b) { return a.y - b.y || a.x - b.x; });
@@ -977,7 +1360,9 @@
     if (receipts.length) {
       saveLayout(room, accepted);
       persist();
-      reconcile(accepted, { dur: 'slide', ease: 'settle' });
+      /* Tidy (WOW-SPEC 3.13): every card glides to its first-fit place, 420 SETTLE, 16 ms apart in reading order */
+      flushGravity();
+      slidePeers(toMap(accepted), null, 420, 'settle', 16);
       PMU.shell.toast(t('toast.tidied'));
     }
     return receipts;
@@ -1008,6 +1393,33 @@
     return receipt;
   }
 
+  /* a board-class change after the board is mounted (WOW-TASKS E-2): never the instant remount (it killed running
+     entrances): the cards take their rects in the new class with FLIP (260 SETTLE, added onto any entrance transform, so
+     rolls, fills and draws keep running) and only the bodies whose tier changed render again */
+  function reclass(prevCls) {
+    completeStream();
+    flushGravity();
+    var room = current.room, rects = layoutFor(room), ids = visibleIds(room), byId = toMap(rects);
+    var cards = cardsNow(), have = {};
+    cards.forEach(function (c) { have[c.getAttribute('data-widget')] = true; });
+    if (ids.some(function (id) { return !have[id]; }) || cards.some(function (c) { return !byId[c.getAttribute('data-widget')]; })) { mount(room, { instant: true }); return; }
+    /* grid geometry, not layout reads (a read would include the entrance transforms the FLIP is added onto) */
+    /* the old tracks have already stretched to the new width for a frame: that is where the cards are on screen */
+    var p = padOf(), op = prevCls && prevCls.tracks ? (current.cls.W + GAP) / prevCls.tracks : current.cls.pitchX;
+    var before = cards.map(function (c) { return { l: p.l + (+c.dataset.x) * op, t: p.t + (+c.dataset.y) * ROW }; });
+    setBoardClass();
+    cards.forEach(function (c) { place(c, byId[c.getAttribute('data-widget')]); });
+    var hero = heroOf(rects, ids); cards.forEach(function (c) { markHero(c, hero); });
+    if (!reduced()) {
+      cards.forEach(function (c, i) {
+        var a = before[i], b = px(rectOfCard(c)), dx = a.l - b.l, dy = a.t - b.t;
+        if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) return;
+        PMU.motion.animate(c, [{ transform: 'translate(' + dx.toFixed(1) + 'px,' + dy.toFixed(1) + 'px)' }, { transform: 'translate(0,0)' }],
+          { dur: 260, easing: filmE('settle', 'cubic-bezier(.17,.84,.29,.99)'), composite: 'add' });
+      });
+    }
+    tierPass(cards, false);
+  }
   /* the board width decides the class (24 px hysteresis); within a class, bodies re-measure (debounced for dock drags) */
   var roTimer = 0;
   if (scroll && window.ResizeObserver) {
@@ -1021,12 +1433,12 @@
         var next = pickClass(W);
         if (!current.cls || next.name !== current.cls.name) {
           if (gesture) endGesture(gesture, 'cancel', true);
-          var prev = current.cls ? current.cls.name : null;
+          var prev = current.cls ? current.cls.name : null, prevCls = current.cls;
           current.cls = next;
           /* while the first arrival holds the board, a class change rebuilds it held (never the instant remount that
              cancelled the entrance, MOTION-REVIEW-2 item 1) */
           if (PMU.film && PMU.film.holding()) mount(current.room, { held: true, onBuilt: PMU.film.rehold() });
-          else mount(current.room, { instant: true });
+          else reclass(prevCls);
           emit('class', { cls: next.name, from: prev });
           return;
         }
@@ -1046,7 +1458,7 @@
     mount: mount, refresh: refresh, relevel: relevel, layout: function (room) { return layoutFor(room || current.room || st.room); },
     visible: function (room) { return visibleIds(room || current.room || st.room); },
     rect: function (id) { return layoutFor(current.room || st.room).filter(function (r) { return r.id === id; })[0] || null; },
-    resolve: resolve, project: project, firstFit: firstFit, tierOf: tierOf, tierPass: tierPass, measure: measure,
+    resolve: resolve, gravity: gravity, project: project, firstFit: firstFit, tierOf: tierOf, tierPass: tierPass, measure: measure,
     move: move, resize: resize, setVisible: setVisible, reset: reset, tidy: tidy, place: place, persist: persist,
     config: config, setConfig: setConfig, keyboard: keyboard,
     gesture: function () { return gesture ? { type: gesture.type, id: gesture.id, edge: gesture.edge || null, kb: !!gesture.kb, target: gesture.target, me: gesture.me } : null; },

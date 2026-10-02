@@ -23,3 +23,8 @@ html[data-o55-nier="on"] #panel-usage .pmu-mpbar i[data-tk="rsn"], html[data-o55
 /* under NieR the plate head shows only the state glyph; the word stays in the meta line (DESIGN-SPEC 10.5) */
 html[data-o55-nier-parts~="headers"] #panel-usage .pmu-card[data-kind="provider"] .pmu-cardmeta .pmu-acstate b { display: none; }
 html[data-o55-nier="on"] #panel-usage .pmu-row:hover, html[data-o55-nier="on"] #panel-usage .pmu-lrow:hover, html[data-o55-nier="on"] #panel-usage .pmu-agline:hover { background: rgba(var(--o55-nier-ink-rgb, 72, 69, 58), .08); }
+
+/* POLISH2 content (WOW round, 2026-10-02): a tile has no subtitle line, so its head rule sat on the caps title
+   (LOOK-REVIEW-2 8); the head keeps 7 px under the title box for the rule */
+html[data-o55-nier-parts~="headers"] #panel-usage .pmu-card[data-head="tile"] > .pmu-cardhead { padding-bottom: 7px; min-height: calc(var(--pmu-head-tile) + 7px); }
+html[data-o55-nier-parts~="headers"] #panel-usage .pmu-card[data-head="line"] > .pmu-cardhead { padding-bottom: 6px; }
