@@ -711,23 +711,39 @@ await sec('old keyframes', async () => {
 });
 
 /* ------------------------------------------------------------- check 10: reduced motion, all three routes */
+/* Fix cycle 2 (review 2): the check could pass vacuously. It counted only animations inside svg.nx/.nx-st, so the Fast
+   bolt's backlight (.nx-bolt::before, outside the svg) was never seen, and it ran in basic-dark only, so NieR's own
+   reduced rules were never exercised. Now every route runs in every theme of --themes, over three working takes (the
+   Orbit, Step Rail Simple, v0) with the bar's hover card open, and two things must be zero: running animations on
+   neon targets (svg.nx, .nx-st, .nx-bolt, pseudo-elements included) and running infinite animations anywhere in the
+   document (INFINITE_ALLOW names the exceptions; there are none). v0's trail scroll must not glide (.wa-track
+   scroll-behavior auto). The 13-member matrix keeps its lit state (halos paint, complete's clip resolved). */
+const INFINITE_ALLOW = [];
+const REDUCED_TAKES = [[1, '.orbit-node.live', 'Orbit'], [8, '.rail8-item', 'Step Rail Simple'], [0, '.wa-track', 'v0']];
 async function reducedState(p) {
-  return p.evaluate(() => {
+  return p.evaluate(allow => {
     let host = document.getElementById('nx-test-matrix');
     if (!host) {
       host = document.createElement('div');
       host.id = 'nx-test-matrix';
-      host.style.cssText = 'position:fixed;left:0;top:0;z-index:99999;';
+      host.style.cssText = 'position:fixed;left:0;top:0;z-index:99999;pointer-events:none;';
       document.body.appendChild(host);
     }
     const N = window.PM56_NEON;
     host.innerHTML = ['working', 'reviewing', 'waiting', 'waiting-dep', 'idle', 'complete',
       'blocked', 'failed', 'paused', 'recovering', 'pending', 'skipped', 'mixed']
       .map(s => N.status(s, 15)).join('');
-    const running = [];
+    const running = [], infinite = [];
     for (const a of document.getAnimations()) {
       const t = a.effect && a.effect.target;
-      if (t && t.closest && t.closest('svg.nx, .nx-st') && a.playState === 'running') running.push(a.animationName || a.transitionProperty || 'waapi');
+      if (!t || a.playState !== 'running') continue;
+      const name = a.animationName || (a.transitionProperty ? 'tr:' + a.transitionProperty : 'waapi');
+      const cls = String(t.className && t.className.baseVal !== undefined ? t.className.baseVal : t.className).split(/\s+/).filter(Boolean).slice(0, 3).join('.');
+      const key = (t.tagName || '').toLowerCase() + (cls ? '.' + cls : '') + (a.effect.pseudoElement || '') + ' ' + name;
+      if (t.closest && t.closest('svg.nx, .nx-st, .nx-bolt')) running.push(key);
+      let tm = {};
+      try { tm = a.effect.getComputedTiming(); } catch (e) {}
+      if (tm.iterations === Infinity && !allow.includes(name)) infinite.push(key);
     }
     const done = host.querySelector('.nx-st-complete .nx-pc');
     /* the lit state must survive: halos still paint (idle's is hidden by design) */
@@ -736,18 +752,39 @@ async function reducedState(p) {
       const cs = getComputedStyle(h);
       if (cs.display !== 'none' && cs.visibility !== 'hidden' && parseFloat(cs.strokeOpacity) > 0) halos++;
     }
-    return { running: running.length, names: [...new Set(running)].slice(0, 12), halos, completeClip: done ? getComputedStyle(done).clipPath : '(no .nx-pc)' };
-  });
+    const wa = document.querySelector('.wa-track');
+    return {
+      running: running.length, names: [...new Set(running)].slice(0, 12),
+      infinite: infinite.length, infNames: [...new Set(infinite)].slice(0, 12),
+      halos, completeClip: done ? getComputedStyle(done).clipPath : '(no .nx-pc)',
+      waScroll: wa ? getComputedStyle(wa).scrollBehavior : null
+    };
+  }, INFINITE_ALLOW);
 }
-/* Each route runs with a live scene: the Query thread working with its Orbit open (the live node's glyph loops, the
-   bar's rhythm, the jump button), plus the 13-member matrix. 10c is the PMConcept7 contract html[data-motion]. */
-async function liveScene(p) {
-  await p.evaluate(() => { window.PM56_DEMO.selectThread('query'); window.PM56_DEMO.startWorking(); });
-  await p.waitForTimeout(2500);
-  return p.evaluate(() => !!document.querySelector('.orbit-node.live'));
+/* One page per route; per theme, each take: the Query thread working (startWorking resets the run), the bar's hover
+   card open, then the census. */
+async function reducedSweep(p, k, route) {
+  for (const theme of THEMES) {
+    await setTheme(p, theme);
+    const per = [];
+    let ok = true;
+    for (const [take, sel, label] of REDUCED_TAKES) {
+      await p.mouse.move(700, 5);
+      await p.evaluate(t => { window.PM56_DEMO.setVariant(2, t); window.PM56_DEMO.selectThread('query'); window.PM56_DEMO.startWorking(); }, take);
+      await p.waitForTimeout(2600);
+      const bar = p.locator('.activity-item[data-hover-domain]').first();
+      let card = false;
+      if (await bar.count()) { await bar.hover(); await p.waitForTimeout(200); card = await p.evaluate(() => !!document.querySelector('.hover-card')); }
+      const scene = await p.evaluate(s => !!document.querySelector(s), sel);
+      const r = await reducedState(p);
+      const good = scene && r.running === 0 && r.infinite === 0 && r.completeClip === 'none' && r.halos >= 5 && (take !== 0 || r.waScroll === 'auto');
+      if (!good) ok = false;
+      per.push({ take: label, scene, card, ...r });
+    }
+    const sum = per.map(x => `${x.take}${x.scene ? '' : ' MISSING'}: ${x.running} neon running, ${x.infinite} infinite`).join('; ');
+    check(ok, `${k} reduced motion (${route}) [${theme}]: ${sum}; halos ${per.map(x => x.halos).join('/')} (want >= 5), complete clip ${per[0].completeClip}, v0 trail scroll ${per[2].waScroll}`, ok ? null : per.filter(x => !x.scene || x.running || x.infinite || x.halos < 5 || x.completeClip !== 'none' || (x.take === 'v0' && x.waScroll !== 'auto')));
+  }
 }
-const reducedMsg = (k, route, r, orbit) =>
-  `${k} reduced motion (${route}): ${r.running} running on svg.nx/.nx-st with the Orbit ${orbit ? 'open' : 'MISSING'}, ${r.halos} halos paint (want >= 5), complete clip-path ${r.completeClip}`;
 await sec('reduced media', async () => {
   const ctx = await browser.newContext({
     viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1, reducedMotion: 'reduce'
@@ -757,25 +794,19 @@ await sec('reduced media', async () => {
     watch(p);
     await p.goto(pathToFileURL(FILE).href, { waitUntil: 'load' });
     await boot(p);
-    await setTheme(p, 'basic-dark');
-    const orbit = await liveScene(p);
-    const r = await reducedState(p);
-    check(orbit && r.running === 0 && r.completeClip === 'none' && r.halos >= 5, reducedMsg('10a', 'media', r, orbit), r);
+    await reducedSweep(p, '10a', 'media');
   } finally { try { await p.close(); await ctx.close(); } catch (e) {} }
 });
 for (const [k, route] of [['10b', 'body.pm56-reduced'], ['10c', 'html[data-motion="reduced"]']]) {
   await sec('reduced ' + route, async () => {
     const p = await newPage({ reducedMotion: 'no-preference' });
     try {
-      await setTheme(p, 'basic-dark');
       await p.evaluate(k => {
         if (k === '10b') document.body.classList.add('pm56-reduced');
         else document.documentElement.setAttribute('data-motion', 'reduced');
       }, k);
       await p.waitForTimeout(300);
-      const orbit = await liveScene(p);
-      const r = await reducedState(p);
-      check(orbit && r.running === 0 && r.completeClip === 'none' && r.halos >= 5, reducedMsg(k, route, r, orbit), r);
+      await reducedSweep(p, k, route);
     } finally { await shut(p); }
   });
 }
@@ -1033,15 +1064,30 @@ for (const [theme, thread] of [['basic-dark', 'query'], ['friendly-dark', 'query
       await p.mouse.move(5, 1075);
       await p.waitForTimeout(400);
       const r = await p.evaluate(hosts => {
-        const rgb = c => { c = String(c || '').trim(); if (c[0] === '#') return [1, 3, 5].map(i => parseInt(c.slice(i, i + 2), 16)); const m = /rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)/.exec(c); return m ? [+m[1], +m[2], +m[3]] : null; };
-        const bs = getComputedStyle(document.body), tones = {};
-        for (const t of ['danger', 'warning', 'positive', 'accent', 'accent-2']) tones[t] = rgb(bs.getPropertyValue('--' + t));
+        /* fix cycle 2: every colour goes through the browser (a probe element's computed colour), so a token written
+           as 3-digit hex, hsl() or color-mix() resolves, and color(srgb ...) (a color-mix() tube) parses; an ink that
+           still cannot be parsed is reported, never skipped */
+        const parse = c => {
+          c = String(c || '').trim();
+          let m = /^color\(srgb\s+([\d.e-]+)\s+([\d.e-]+)\s+([\d.e-]+)/.exec(c);
+          if (m) return [m[1] * 255, m[2] * 255, m[3] * 255];
+          m = /^rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)/.exec(c);
+          return m ? [+m[1], +m[2], +m[3]] : null;
+        };
+        const pr = document.createElement('span');
+        pr.style.cssText = 'position:absolute;left:-9999px;top:0;';
+        document.body.appendChild(pr);
+        const resolve = (el, v) => { (el || document.body).appendChild(pr); pr.style.color = ''; pr.style.color = v; const c = getComputedStyle(pr).color; return pr.style.color ? parse(c) : null; };
+        const rgb = parse;
+        const tones = {}, unparsed = [];
+        for (const t of ['danger', 'warning', 'positive', 'accent', 'accent-2']) { tones[t] = resolve(document.body, 'var(--' + t + ')'); if (!tones[t]) unparsed.push('token --' + t); }
         /* Turn Stage family hues (the deliverable kicker's --fam-deliverable) are canon item-family inks, not status;
            in retro-light --fam-deliverable is the same colour as --accent-2, so a glyph in its family ink is skipped */
         const fams = [];
         for (const host of document.querySelectorAll('.transcript-inner > [data-family]')) {
-          const v = rgb(getComputedStyle(host).getPropertyValue('--fam-' + host.dataset.family));
-          if (v) fams.push(v);
+          if (!getComputedStyle(host).getPropertyValue('--fam-' + host.dataset.family).trim()) continue;
+          const v = resolve(host, 'var(--fam-' + host.dataset.family + ')');
+          if (v) fams.push(v); else unparsed.push('--fam-' + host.dataset.family);
         }
         const isFam = (ink, s) => !!s.closest('.transcript-inner > [data-family]') && fams.some(v => Math.hypot(ink[0] - v[0], ink[1] - v[1], ink[2] - v[2]) < 3);
         const bad = [];
@@ -1049,8 +1095,10 @@ for (const [theme, thread] of [['basic-dark', 'query'], ['friendly-dark', 'query
         for (const s of document.querySelectorAll('svg.nx')) {
           if (s.classList.contains('nx-r-status') || s.closest(hosts)) continue;
           if (!s.getBoundingClientRect().width) continue;
-          const tube = s.querySelector('.nx-c'), ink = tube && rgb(getComputedStyle(tube).stroke);
-          if (!ink) continue;
+          const tube = s.querySelector('.nx-c');
+          if (!tube) continue;
+          const raw = getComputedStyle(tube).stroke, ink = rgb(raw);
+          if (!ink) { if (raw !== 'none') unparsed.push(s.dataset.nx + ': ' + raw); continue; }
           n++;
           if (isFam(ink, s)) continue;
           for (const [t, v] of Object.entries(tones)) {
@@ -1063,9 +1111,10 @@ for (const [theme, thread] of [['basic-dark', 'query'], ['friendly-dark', 'query
           }
         }
         const toned = document.querySelectorAll('.transcript-inner > [data-family="ledger"]:is(.positive, .warning, .danger) > .event-icon > svg.nx').length;
-        return { n, toned, bad: bad.slice(0, 12) };
+        pr.remove();
+        return { n, toned, bad: bad.slice(0, 12), unparsed: unparsed.slice(0, 12) };
       }, TONE_HOSTS);
-      check(r.n >= 20 && r.bad.length === 0, `14 no status ink on concept/control glyphs [${theme}, ${thread}] (${r.n} glyphs read at rest, ${r.toned} in toned ledger lines skipped)`, r.bad);
+      check(r.n >= 20 && r.bad.length === 0 && r.unparsed.length === 0, `14 no status ink on concept/control glyphs [${theme}, ${thread}] (${r.n} glyphs read at rest, ${r.toned} in toned ledger lines skipped, ${r.unparsed.length} unparsable inks)`, { bad: r.bad, unparsed: r.unparsed });
     } finally { await shut(p); }
   });
 }
