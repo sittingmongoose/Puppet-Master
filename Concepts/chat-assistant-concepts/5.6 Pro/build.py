@@ -43,7 +43,10 @@ MODULES=['neon-icons','nier-fonts','nier','nier-parts','nier-world','nier-scenes
          # Chat WOW (2026-09-26): transcript families + Turn Stage take. Loaded last so
          # its family rules sit over the module cards they restyle.
          'collab-view','crew-view','review-view','brainstorm-view','room-view',
-         'turn-stage','turn-stream','chat-sound']
+         'turn-stage','turn-stream','chat-sound',
+         # Send/Stop (step SS, 2026-10-02): the composer's Send / Stop control, "solid-living" (one button patched in
+         # place, the plane-to-square morph). app.js sendButtonHtml asks it for the markup; its sheet sits in CSS_LAST.
+         'send-stop']
 
 def read(name):
     f=root/name
@@ -54,13 +57,14 @@ def read(name):
 
 def join(names): return '\n'.join(read(n) for n in names)
 
-# CSS_LAST closes the sheet: composer.css, then neon-icons.css, the lighting grammar. Every neon rule is
+# CSS_LAST closes the sheet: composer.css, then neon-icons.css, the lighting grammar, then send-stop.css (the Send /
+# Stop chip, which replaces composer.css's send rules and reads the neon voice tokens). Every neon rule is
 # written at specificity (0,0,1)/(0,1,1) so any context rule overrides it; being last only settles ties.
 # nier.css, nier-parts.css, nier-world.css and nier-scenes.css (NieR Mode: palette, type, parts, scenes) come last of
 # all: every rule in them is scoped by PMConcept7's contract
 # (html[data-o55-nier...]) and must win the ties it restyles. A file listed here is skipped in the MODULES pass,
 # so no stylesheet is ever included twice.
-CSS_LAST=['composer.css','neon-icons.css','nier.css','nier-parts.css','nier-world.css','nier-scenes.css']
+CSS_LAST=['composer.css','neon-icons.css','send-stop.css','nier.css','nier-parts.css','nier-world.css','nier-scenes.css']
 CSS_ORDER=(['styles.css','motion.css','variants-a.css','variants-b.css','variants-c.css','transcripts.css']
            +[f'{m}.css' for m in MODULES if f'{m}.css' not in CSS_LAST]+CSS_LAST)
 if len(set(CSS_ORDER))!=len(CSS_ORDER):
