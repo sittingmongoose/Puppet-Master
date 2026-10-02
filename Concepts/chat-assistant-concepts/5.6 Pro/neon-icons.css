@@ -39,7 +39,7 @@ body {
   --nx-h-quiet-i: .10;
   /* concept "lit steady": a visible bloom on dark; hover ignite (controls, and concepts inside a host) */
   --nx-h-concept-i: .17; --nx-h-hover-i: .30; --nx-h-swell-i: .30;
-  --nx-bl-blocked: .078; --nx-bl-attention: .074; --nx-bl-working: .076; --nx-bl-changed: .042;
+  --nx-bl-blocked: .086; --nx-bl-attention: .08; --nx-bl-working: .082; --nx-bl-changed: .042;
   /* voices (plan §1): one easing token per theme family; timing and order never change */
   --nx-ease: cubic-bezier(.2, .75, .25, 1);
   --nx-le: cubic-bezier(.45, 0, .25, 1);
@@ -53,7 +53,7 @@ body[data-theme$="-light"] {
   --nx-h-blocked-i: .08; --nx-h-attention-i: .08; --nx-h-working-i: .08; --nx-h-changed-i: .07;
   --nx-h-quiet-i: .06;
   --nx-h-concept-i: 0; --nx-h-hover-i: 0; --nx-h-swell-i: 0;
-  --nx-bl-blocked: .12; --nx-bl-attention: .095; --nx-bl-working: .10; --nx-bl-changed: .055;
+  --nx-bl-blocked: .12; --nx-bl-attention: .095; --nx-bl-working: .10; --nx-bl-changed: .05;
 }
 /* Friendly overshoots, Glass glides, Retro steps. */
 body[data-theme^="friendly"] { --nx-ease: cubic-bezier(.34, 1.56, .64, 1); --nx-le: cubic-bezier(.34, 1.4, .64, 1); --nx-ease-c: cubic-bezier(.34, 1.3, .64, 1); }
@@ -218,7 +218,7 @@ svg.fast-bolt, svg.meta-fast { --nx-ink: var(--warning); --nx-hiv: visible; --nx
 .nx-st-waiting .nx-p { animation: var(--kl) 2400ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 2.4ms - 2400ms); }
 .nx-st-waiting::before { animation: nx-bl-needs 2400ms ease-in-out infinite; }
 body[data-theme$="-light"] .nx-st-waiting::before { animation-name: nx-bl-needs-l; }
-@keyframes nx-bl-needs { 0%, 100% { opacity: .074; } 50% { opacity: .044; } }
+@keyframes nx-bl-needs { 0%, 100% { opacity: .08; } 50% { opacity: .048; } }
 @keyframes nx-bl-needs-l { 0%, 100% { opacity: .095; } 50% { opacity: .057; } }
 /* waiting on a dependency: the hourglass tips once, then holds */
 .nx-st-waiting-dep .nx-p { animation: var(--kl) 3600ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 3.6ms - 3600ms); }
