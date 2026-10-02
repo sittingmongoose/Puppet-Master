@@ -527,7 +527,7 @@
             h += ro.row({ tk: tk }, TK_NAMES[tk], finite(v) ? charts.fmtValue(v, 'tokens') : PMU.vs.STATES.unknown.word, include(tk) ? '' : 'is-dim');
           });
           h += ro.sep() + ro.row({ tk: 'all' }, t('charts.all_tokens'), anyMiss ? '-' : charts.fmtValue(all, 'tokens'), 'is-total');
-          if (cost) h += ro.row(c._ov.key, c._ov.name, finite(cost[i]) ? charts.fmtValue(cost[i], c._ov.unit) : t('charts.no_attempts'), 'is-total', 'line');
+          if (cost) h += ro.row(c._ov.key, c._ov.name, finite(cost[i]) ? charts.fmtValue(cost[i], c._ov.unit) : t('charts.none_recorded'), 'is-total', 'line');
         } else {
           var sum = 0;
           incSeries.forEach(function (s, j) {

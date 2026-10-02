@@ -63,6 +63,14 @@
 #panel-usage .pmu-factrow { display: flex; flex-wrap: wrap; gap: 4px 16px; flex: none; min-height: 22px; font-size: 12.5px; color: var(--pmu-ink-2); overflow: hidden; max-height: 22px; }
 #panel-usage .pmu-factrow em { font-style: normal; color: var(--pmu-ink-3); }
 #panel-usage .pmu-factrow b { font-weight: 600; color: var(--pmu-ink); }
+/* the one info icon of a chart's scope caveat (final fix M5): the end of the facts row, the hero row or the legend line */
+#panel-usage .pmu-caveat { display: inline-grid; place-items: center; flex: none; width: 18px; height: 18px; margin-left: auto; color: var(--pmu-ink-3); cursor: help;
+  border-radius: 50%; outline-offset: 2px; transition: color calc(160ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1), background-color calc(160ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1); }
+#panel-usage .pmu-caveat svg { width: 15px; height: 15px; }
+#panel-usage .pmu-caveat:hover, #panel-usage .pmu-caveat:focus-visible { color: var(--pmu-ink); background: var(--pmu-row-hover); }
+#panel-usage .pmu-herohead > .pmu-caveat { align-self: flex-start; margin-top: 2px; }
+#panel-usage .pmu-trendlegend > .pmu-caveat, #panel-usage .pmu-colscap > .pmu-caveat { margin-left: auto; vertical-align: middle; }
+html[data-theme^="retro"] #panel-usage .pmu-caveat, html[data-o55-nier="on"] #panel-usage .pmu-caveat { border-radius: 0; }
 
 /* ------------------------------------------------------------------ kpi tiles (A1 3.5) */
 #panel-usage .pmu-kpi { display: flex; flex-direction: column; gap: 4px; min-width: 0; min-height: 0; flex: 1 1 auto; }
