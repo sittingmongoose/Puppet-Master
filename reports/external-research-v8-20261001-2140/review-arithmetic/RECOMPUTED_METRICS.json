@@ -1,0 +1,47 @@
+{
+  "scope": "Descriptive arithmetic on published selected counters, not independent raw-log verification, statistical equivalence, or native qualification.",
+  "occupied_candidate_hours": 10.55115763730473,
+  "candidate_admission_cap_used_pct": 36.80555555555556,
+  "occupied_slot_ceiling_used_pct": 21.98157841105152,
+  "admissions_without_observed_native_goal": 4,
+  "literal_category_reconciliation": "all three sums match the published totals",
+  "comparisons": {
+    "T01": {
+      "treatment_to_control_ratio": 0.4986468811548838,
+      "descriptive_time_reduction_pct": 50.135311884511616,
+      "boundary": "sum of two control assignments versus one treatment; original capped control opening retained; not same-quality evidence"
+    },
+    "T02": {
+      "treatment_to_control_ratio": 1.278498157028005,
+      "descriptive_time_reduction_pct": -27.849815702800495,
+      "boundary": "published whole-slot measurements; both scoped quality failures"
+    },
+    "T06": {
+      "treatment_to_control_ratio": 0.7347810451316918,
+      "descriptive_time_reduction_pct": 26.521895486830815,
+      "boundary": "published whole-slot measurements; both scoped quality failures; material failure identities differ"
+    },
+    "T09": {
+      "treatment_to_control_ratio": 0.7860420011704505,
+      "descriptive_time_reduction_pct": 21.395799882954947,
+      "boundary": "published whole-slot measurements; both scoped quality failures; useful novelty does not establish quality equivalence"
+    },
+    "T05R1500": {
+      "treatment_to_control_ratio": 0.8416956053167285,
+      "descriptive_time_reduction_pct": 15.830439468327151,
+      "boundary": "native-only durations; both one full/five partial facets; not full end-to-end cost"
+    },
+    "T13_redo": {
+      "treatment_to_control_ratio": 0.9413612565445026,
+      "descriptive_time_reduction_pct": 5.8638743455497355,
+      "boundary": "native-only durations; source-quality failures remain"
+    }
+  },
+  "not_computed": [
+    "actual average parallel occupancy",
+    "cash costs",
+    "full generated-token totals",
+    "causal speedups",
+    "semantic quality scores"
+  ]
+}

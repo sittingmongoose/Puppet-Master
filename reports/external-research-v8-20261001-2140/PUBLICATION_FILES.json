@@ -33,8 +33,8 @@
     },
     {
       "path": "REVIEW_RECONCILIATION.md",
-      "sha256": "a1b67c02e8cfdb983e0752ed21897639c094ac51ffa57225b2ea943b0246e4c8",
-      "bytes": 1868
+      "sha256": "fae65537fcfa703ffde435fba1fae10ab1393cacd32e235504c329266b95daee",
+      "bytes": 2082
     },
     {
       "path": "attempts.json",
@@ -222,10 +222,35 @@
       "bytes": 1586
     },
     {
+      "path": "review-arithmetic/README.md",
+      "sha256": "4b4a1823d9532e06a174504b30ecfc2e97317a953d0de21c630dd0aaadc0d3c4",
+      "bytes": 726
+    },
+    {
+      "path": "review-arithmetic/RECOMPUTED_METRICS.json",
+      "sha256": "a3ec011852e157c58a40873747d855e64ce0c02b5d52790547e59d90f2e670eb",
+      "bytes": 2133
+    },
+    {
+      "path": "review-arithmetic/RECONCILIATION.json",
+      "sha256": "04d3eb273f6c563638a5ad24b28e11c3ec7aceafb8b2041b8d3f4dcf138692c1",
+      "bytes": 1054
+    },
+    {
+      "path": "review-arithmetic/SELECTED_PUBLISHED_VALUES.json",
+      "sha256": "7d25b4ed066938cef47085aabc70ceda43394638d0319020e79819bd8f31d783",
+      "bytes": 2709
+    },
+    {
+      "path": "review-arithmetic/recompute_metrics.py",
+      "sha256": "69849a68fd63fa472bca12535ab4fe3f4f3dbedcd997accceb8c81060eeab18f",
+      "bytes": 1590
+    },
+    {
       "path": "schedule.json",
       "sha256": "ae4e97211a93b356657825749902c03d9128e6e6fcb8f234bb3449771ac80167",
       "bytes": 1954
     }
   ],
-  "scope": "Positive whitelist: public authorization, candidate planning inputs, sanitized reservation metadata and publisher summaries. No private/raw/evaluator-key files read."
+  "scope": "Positive whitelist: public authorization, candidate planning inputs, sanitized reservation metadata and publisher summaries. No private/raw/evaluator-key files read. Plus authorized selected published-number arithmetic script/input/output and deterministic replay checksums."
 }

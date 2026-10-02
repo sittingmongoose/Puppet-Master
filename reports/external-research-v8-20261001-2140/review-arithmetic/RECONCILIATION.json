@@ -1,0 +1,26 @@
+{
+  "scope": "Deterministic arithmetic only on explicitly transcribed published v7 values; not raw-ledger verification, new grading, source acquisition proof, statistical equivalence or qualified causal speedup.",
+  "copied_script_executed": true,
+  "parsed_regenerated_json_exactly_matches_original": true,
+  "artifacts": [
+    {
+      "path": "recompute_metrics.py",
+      "sha256": "69849a68fd63fa472bca12535ab4fe3f4f3dbedcd997accceb8c81060eeab18f",
+      "bytes": 1590
+    },
+    {
+      "path": "SELECTED_PUBLISHED_VALUES.json",
+      "sha256": "7d25b4ed066938cef47085aabc70ceda43394638d0319020e79819bd8f31d783",
+      "bytes": 2709
+    },
+    {
+      "path": "RECOMPUTED_METRICS.json",
+      "sha256": "a3ec011852e157c58a40873747d855e64ce0c02b5d52790547e59d90f2e670eb",
+      "bytes": 2133
+    }
+  ],
+  "replay_history": [
+    "Initial writable-copy replay failed because copied output retained read-only permission; no original packet change.",
+    "Made only scratch output user-writable; replay succeeded; exact parsed comparison passed."
+  ]
+}

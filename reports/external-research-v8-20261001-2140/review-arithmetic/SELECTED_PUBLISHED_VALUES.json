@@ -1,0 +1,78 @@
+{
+  "source_commit": "c8f9cbc9195602688702bbbf9b3ce23c14fa5586",
+  "source_root": "reports/external-research-v7-20260930",
+  "provenance": "Selected values transcribed from the published economics.json, RESULTS.md and continuous-cohorts/cohort-011/accounting/publisher-cost-freeze-v1.json. This is not a copy of the full source ledger.",
+  "admissions": 53,
+  "observed_native_goals": 49,
+  "candidate_start_cap": 144,
+  "occupied_slot_seconds": 37984.16749429703,
+  "slot_seconds_cap": 172800,
+  "helper_start_accounting_events": 100,
+  "helper_start_cap": 100,
+  "candidate_generated_output_lower_bound": 1677375,
+  "integrated_executions": 0,
+  "status_categories": {
+    "frozen_for_independent_evaluation": {
+      "admissions": 34,
+      "seconds": 26280.966980934143,
+      "reported_output": 1324204
+    },
+    "infrastructure_error": {
+      "admissions": 2,
+      "seconds": 1.2232534885406494,
+      "reported_output": 0
+    },
+    "infrastructure_error_reconciled": {
+      "admissions": 2,
+      "seconds": 1159.4372186660767,
+      "reported_output": 428
+    },
+    "failed_or_incomplete_preserved": {
+      "admissions": 12,
+      "seconds": 9448.598692178726,
+      "reported_output": 342775
+    },
+    "frozen_for_canary_evaluation": {
+      "admissions": 1,
+      "seconds": 337.0089807510376,
+      "reported_output": 9968
+    },
+    "pre_native_metadata_failure": {
+      "admissions": 2,
+      "seconds": 756.9323682785034,
+      "reported_output": 0
+    }
+  },
+  "comparisons": {
+    "T01": {
+      "control_seconds": 719.449,
+      "treatment_seconds": 358.751,
+      "boundary": "sum of two control assignments versus one treatment; original capped control opening retained; not same-quality evidence"
+    },
+    "T02": {
+      "control_seconds": 265.061,
+      "treatment_seconds": 338.88,
+      "boundary": "published whole-slot measurements; both scoped quality failures"
+    },
+    "T06": {
+      "control_seconds": 859.241,
+      "treatment_seconds": 631.354,
+      "boundary": "published whole-slot measurements; both scoped quality failures; material failure identities differ"
+    },
+    "T09": {
+      "control_seconds": 533.128,
+      "treatment_seconds": 419.061,
+      "boundary": "published whole-slot measurements; both scoped quality failures; useful novelty does not establish quality equivalence"
+    },
+    "T05R1500": {
+      "control_seconds": 835.1,
+      "treatment_seconds": 702.9,
+      "boundary": "native-only durations; both one full/five partial facets; not full end-to-end cost"
+    },
+    "T13_redo": {
+      "control_seconds": 859.5,
+      "treatment_seconds": 809.1,
+      "boundary": "native-only durations; source-quality failures remain"
+    }
+  }
+}

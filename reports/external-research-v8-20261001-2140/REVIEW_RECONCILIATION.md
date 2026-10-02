@@ -13,3 +13,5 @@ Basis: independent campaign review of closed v7 snapshot `c8f9cbc9195602688702bb
 | Descriptive timings lacked same-quality qualification | Separate quality, acquisition, preservation and timing outcomes | Matched complete passes plus actual inclusive costs |
 
 This is a response to the review, not evidence these remedies work. Initial planning reserves six evaluator tasks (40 minutes each), 18 candidate Goal starts and up to 9 occupied slot-hours, within fresh campaign ceilings. Diagnostic failures can end screening; incomplete coverage cannot earn a pass.
+
+[Selected published-number arithmetic replay](review-arithmetic/README.md) reproduces the provided computed JSON exactly. This is arithmetic reconciliation, not independent raw-log verification or new v7 grading.
