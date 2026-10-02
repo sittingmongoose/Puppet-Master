@@ -3085,7 +3085,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       ? document.querySelector(`[data-hover-key="${CSS.escape(state.hover.key||'')}"]`)
       : document.querySelector(`[data-hover-domain="${CSS.escape(state.hover.domain)}"]`);
     if(anchor&&el){
-      const ar=anchor.getBoundingClientRect(),r=el.getBoundingClientRect();
+      /* The card's layout size, not its rect: an entrance that scales the card (NieR's intel unfold starts at scale
+         1 .08 from the top) would place it a sliver tall above the anchor and then unfold it over the anchor. */
+      const ar=anchor.getBoundingClientRect(),r={width:el.offsetWidth,height:el.offsetHeight};
       let left=clamp(ar.left+ar.width/2-r.width/2,8,window.innerWidth-r.width-8);
       let top=ar.top-r.height-8;
       if(top<8) top=ar.bottom+8;
@@ -4340,6 +4342,8 @@ suggested path                    migration 0043, reversible</div></div></sectio
   });
 
   document.addEventListener('pointerdown',e=>{
+    /* Send/Stop (send-stop.js): a pressed chip drops its tip, a pending one too, so no tip re-renders over the hero */
+    if(e.target.closest('.sendstop')){clearTimeout(hoverTimer);if(state.hover){state.hover=null;syncHoverCard();}}
     const actBtn=e.target.closest('[data-action="open-activity"]');
     /* A preview footer must survive through click. Removing its overlay on
        pointerdown disconnects the button before click can dispatch. Bar
