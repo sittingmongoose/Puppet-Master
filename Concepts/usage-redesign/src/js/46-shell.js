@@ -100,6 +100,11 @@
       if (ROOM[rk] && !button.hasAttribute('data-pm-hover-detail')) { button.setAttribute('data-pm-hover-label', ROOM[rk].title); button.setAttribute('data-pm-hover-detail', ROOM[rk].desc); }
       button.classList.toggle('active', chosen);
       if (chosen) button.setAttribute('aria-current', 'page'); else button.removeAttribute('aria-current');
+      /* the room just opened shows no rail tag (final fixes, Mac films: about a second after a rail click the tag of the
+         button under the resting pointer opened over the board's first card, "Auto-switch 91%" read "1%"); the head
+         names the open room, and every other room keeps its tag */
+      if (chosen) button.setAttribute('data-pm-hover-exempt', 'current-room');
+      else if (button.getAttribute('data-pm-hover-exempt') === 'current-room') button.removeAttribute('data-pm-hover-exempt');
     });
     var title = document.getElementById('pmuRoomTitle'), desc = document.getElementById('pmuRoomDesc');
     var changed = lastRoom !== null && lastRoom !== room;
