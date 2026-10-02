@@ -75,17 +75,24 @@
  /* 8.6: the ambient eye by the composer. app.js renders it from PM56_BSD.dot() (F0b (c)); it reads the owner
     projection, never the legacy flag. Off: no eye. Otherwise the eye by mode (lowered lid Auto, open On); its hover
     card is the status line; a check plays one iris sweep (sweepIris below). */
+ /* the eye by mode: the registry's kind mark (neon icons). Its iris (On: the pupil; Auto: the lowered half) is the
+    glyph's one moving part, a g.nx-p holding its own halo and tube, which sweepIris turns (3E2) */
  function eyeGlyph(mode,size){
-  const S=window.PM56_SHELL,h=S&&S.pmxKindMark?S.pmxKindMark(kindOf(mode),size):E.ctx().icon('eye',size);
-  return h.replace('<circle cx="12" cy="12" r="3"/>','<circle class="pmx-bsd-iris" cx="12" cy="12" r="3"/>').replace('<path d="M9 11.8a3 3 0 0 0 6 0"/>','<path class="pmx-bsd-iris" d="M9 11.8a3 3 0 0 0 6 0"/>');
+  const S=window.PM56_SHELL;
+  return S&&S.pmxKindMark?S.pmxKindMark(kindOf(mode),size):E.ctx().icon('eye',size);
  }
  function dot(c){const v=view(c&&c.thread?c.thread.id:null),st=statusOf(v,'eye');if(st.key==='off')return '';return {glyph:eyeGlyph(v.mode,16),hover:'Back Seat Driver · '+st.text,state:st.key};}
  const swept=new Map();
+ /* a new check sweeps the iris once: the eye glyph's moving part (g.nx-p), transform only, the same 2.5-unit
+    look left then right as before the neon family. PM56_PMX.animate skips it under the media query and
+    body.pm56-reduced; html[data-motion="reduced"] (the PMConcept7 route) is checked here. The part's own hover act
+    is a CSS animation; this WAAPI sweep has no fill, so it never pins a transform over it. */
  function sweepIris(){
   const X=window.PM56_PMX,c=E.ctx&&E.ctx();if(!X||!c||!c.thread)return;
   const a=engine.current(c.thread.id),id=a&&a.pending?a.pending.id:null;
   if(!id||swept.get(c.thread.id)===id)return;swept.set(c.thread.id,id);
-  const iris=document.querySelector('.capability-dot.bsd .pmx-bsd-iris');
+  if(document.documentElement.getAttribute('data-motion')==='reduced')return;
+  const iris=document.querySelector('.capability-dot.bsd > svg.nx > .nx-p');
   if(iris)X.animate(iris,[{transform:'translateX(0)'},{transform:'translateX(-2.5px)',offset:.3},{transform:'translateX(2.5px)',offset:.7},{transform:'translateX(0)'}],{duration:X.t('pulse'),easing:X.ease('move')});
  }
  /* the Context popover row (slot contextBsdRow): the eye by mode, the canon name, the mode and Persona, then the

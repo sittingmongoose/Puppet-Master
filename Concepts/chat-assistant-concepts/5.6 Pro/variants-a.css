@@ -202,7 +202,8 @@ button.rail8-row {
 @media (prefers-reduced-motion: reduce) {
   .working-variant-8 .rail8-item.current::before { animation: none !important; }
 }
-body.pm56-reduced .working-variant-8 .rail8-item.current::before { animation: none !important; }
+body.pm56-reduced .working-variant-8 .rail8-item.current::before,
+html[data-motion="reduced"] .working-variant-8 .rail8-item.current::before { animation: none !important; }
 .working-variant-8 .rail8-item:hover { transform: scale(1.12); }
 .working-variant-8 .rail8-item.current:hover { transform: scale(1.06); }
 /* A live rail collapsed to icons-only should not float in 122px of card. */

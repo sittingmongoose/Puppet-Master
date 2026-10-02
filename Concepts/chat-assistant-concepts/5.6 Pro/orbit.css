@@ -1022,3 +1022,11 @@ html:not([data-o55-nier="on"]) body[data-theme="retro-light"] .orbit-core { --po
   .orbit-strip-item::before { animation: none !important; }
 }
 body.pm56-reduced .orbit-strip-item::before { animation: none !important; }
+/* The other two reduced routes (3E2, 2026-10-02): body.pm56-reduced (the Demo Studio switch, which PM56_PMX.reduced()
+   also reads) and html[data-motion="reduced"] (the PMConcept7 contract) stop what the media query above and the
+   Orbit block (PART 2) stop: the live node's pulse pip, the dashed track's spin, the strip's entrance and its ring
+   loop, and the strip and rail8 entrances run in 1ms (their end state unchanged). Before, only the media query did. */
+body.pm56-reduced .orbit-node-pip, body.pm56-reduced .orbit-track, body.pm56-reduced .orbit-strip-item,
+html[data-motion="reduced"] .orbit-node-pip, html[data-motion="reduced"] .orbit-track, html[data-motion="reduced"] .orbit-strip-item,
+html[data-motion="reduced"] .orbit-strip-item::before { animation: none !important; }
+body.pm56-reduced .pm-rail-item.enter, html[data-motion="reduced"] .pm-rail-item.enter { animation-duration: 1ms; }

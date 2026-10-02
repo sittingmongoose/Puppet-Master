@@ -325,8 +325,6 @@ html[data-o55-nier="on"] [data-voice="retro"] .tx-w { animation: none; }
 html[data-o55-nier="on"] .tx-caret { box-shadow: none; }
 html[data-o55-nier="on"] .transcript:not([data-voice="retro"]) .tx-w { animation-name: o55n-word; animation-timing-function: steps(3, end); }
 @keyframes o55n-word { from { opacity: 0; } to { opacity: 1; } }
-html[data-o55-nier="on"] .jump-bottom.is-working > svg { filter: none; }
-html[data-o55-nier="on"] .pm-lens-trigger { --lens-shadow: none; }
 html[data-o55-nier="on"] .sp-mark[data-state="live"] .sp-sat { filter: none; }
 html[data-o55-nier="on"] .sp-comet { filter: none; }
 html[data-o55-nier="on"] .orbit-node.live { box-shadow: none; }

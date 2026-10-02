@@ -233,8 +233,8 @@ body[data-theme$="-light"] .transcript-inner > [data-family="deliverable"] .arti
    to the text ink, the halo swells (dark themes) and the glyph plays its act once. A work output's glyph sits in its
    open button, which the neon hover rules already ignite. Status marks are lit in their tone through --nx-ink (never
    `color`, so the accent budget is untouched) and stay lit. A warning or danger line's glyph takes its tone through
-   --nx-ink (the colour rules above lose to the neutral rule just above). The Needs-you medallion keeps the canon
-   accent (--needs) for every glyph in it, status marks included. */
+   --nx-ink (the colour rules above lose to the neutral (0,4,0) rule just above); a positive line's glyph too
+   (3E2). The Needs-you medallion keeps the canon accent (--needs) for every glyph in it, status marks included. */
 .transcript-inner > [data-family="ledger"] > .event-icon > svg.nx-r-concept,
 .transcript-inner > [data-family="deliverable"] .system-card-head > .event-icon > svg.nx-r-concept { --nx-hi-a: 0; }
 .transcript-inner > [data-family="ledger"] > .event-icon > svg.nx { --nx-u: 2; }
@@ -245,6 +245,7 @@ body[data-theme$="-light"] .transcript-inner > [data-family="deliverable"] .arti
 }
 .transcript-inner > [data-family="ledger"].warning > .event-icon > svg.nx { --nx-ink: var(--warning); }
 .transcript-inner > [data-family="ledger"].danger > .event-icon > svg.nx { --nx-ink: var(--danger); }
+.transcript-inner > [data-family="ledger"].positive > .event-icon > svg.nx { --nx-ink: var(--positive); }
 .transcript-inner > [data-family="needs"] > .event-icon > svg.nx { --nx-ink: var(--needs); }
 
 /* needs-you: the action sits at the far edge, the copy takes the room. In a

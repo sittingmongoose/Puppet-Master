@@ -13,11 +13,10 @@
 
 /* =====================================================================
    1. THE EYE BY THE COMPOSER. app.js draws .capability-dot.bsd from PM56_BSD.dot(). It watches quietly: a muted eye
-   on a neutral tile (the accent is for things you act on), the lid by mode. A check turns the iris once (WAAPI from
-   bsd.js, 900 ms, on a new check only).
+   on a neutral tile (the accent is for things you act on), the lid by mode. A check sweeps the iris once (WAAPI from
+   bsd.js on the eye glyph's moving part, a translate, on a new check only).
    ===================================================================== */
 .composer-infield .capability-dot.bsd{color:var(--muted);background:var(--surface-3);border-color:var(--border);}
-.capability-dot.bsd .pmx-bsd-iris{transform-box:fill-box;transform-origin:center;}
 
 /* =====================================================================
    2. THE CONTEXT POPOVER ROW (slot contextBsdRow, inside .ctx-pop). Two lines: the canon name with its mode and

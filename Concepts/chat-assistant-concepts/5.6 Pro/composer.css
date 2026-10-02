@@ -276,14 +276,24 @@
   width: 16px; height: 16px;
 }
 .hh-plus-glyph { --nx-stroke-base: 2.6; }
+/* Neon icons (3E2, 2026-10-02): a toggled header or panel button reads as on the way the Context Lens trigger does
+   (3D) -- a neutral surface tile with a hairline, and its glyph lit steady (the text ink with the concept bloom) --
+   not by an accent tile; colour is reserved for status (plan §4). Hover still ignites it. Menu check marks keep
+   the accent (a selection). The Lens trigger keeps its own tone rules (lens.css). */
 .chat-header .icon-button.active,
 .chat-header .icon-button.is-on,
 .history-head .icon-button.is-pinned,
 .activity-panel-head .icon-button[aria-pressed="true"] {
-  color: var(--accent);
-  border-color: color-mix(in srgb, var(--accent) 62%, transparent);
-  background: color-mix(in srgb, var(--accent) 15%, var(--surface-3));
+  color: var(--text);
+  border-color: var(--border-strong);
+  background: var(--surface-3);
 }
+.chat-header .icon-button:is(.active, .is-on):not(.pm-lens-trigger) > svg.nx,
+.history-head .icon-button.is-pinned > svg.nx,
+.activity-panel-head .icon-button[aria-pressed="true"] > svg.nx { --nx-hiv: visible; --nx-hi-a: var(--nx-h-concept-i); }
+.chat-header .icon-button:is(.active, .is-on):not(.pm-lens-trigger):is(:hover, :focus-visible) > svg.nx,
+.history-head .icon-button.is-pinned:is(:hover, :focus-visible) > svg.nx,
+.activity-panel-head .icon-button[aria-pressed="true"]:is(:hover, :focus-visible) > svg.nx { --nx-hi-a: var(--nx-h-hover-i); }
 .history-head .soft-button {
   height: 28px; min-height: 28px;
   border-radius: 9px;

@@ -7,7 +7,9 @@
   var demoOnly=new Set(['cs-quota-demo','cs-quota-source','af-eli5-demo','af-revert-seed',
     'af-title-race-demo','af-debug-start','af-debug-advance','af-debug-recover','bc-open',
     'collab-build-with-crew']);
-  var groups=[['assist','Assistance','goal'],['work','Workflows','users'],
+  /* Group glyphs are registry concept glyphs (neon icons). Workflows holds the multi-agent workflows (crew, brainstorm,
+     review, room, Build With Crew) and Revert: a crew is 'kind-crew' (plan §2; 'users'/'user' is a persona) (3E2). */
+  var groups=[['assist','Assistance','goal'],['work','Workflows','kind-crew'],
     ['schedule','Scheduling','kind-schedule'],['memory','Memory & teaching','kind-memory'],
     ['preferences','Preferences','settings']];
   function template(html){var t=document.createElement('template');t.innerHTML=html;return t;}

@@ -1066,7 +1066,8 @@ button.rail8-row {
 @media (prefers-reduced-motion: reduce) {
   .working-variant-8 .rail8-item.current::before { animation: none !important; }
 }
-body.pm56-reduced .working-variant-8 .rail8-item.current::before { animation: none !important; }
+body.pm56-reduced .working-variant-8 .rail8-item.current::before,
+html[data-motion="reduced"] .working-variant-8 .rail8-item.current::before { animation: none !important; }
 .working-variant-8 .rail8-item:hover { transform: scale(1.12); }
 .working-variant-8 .rail8-item.current:hover { transform: scale(1.06); }
 /* A live rail collapsed to icons-only should not float in 122px of card. */
@@ -5009,9 +5010,10 @@ body[data-ph-drawer="closing"] .history-flyout{
   flex:0 0 28px; width:28px; min-width:28px; max-width:28px;
   justify-content:center; padding:0; gap:0;
 }
+/* pinned: the neutral tile with its lit glyph (composer.css, 3E2), not an accent tile */
 .history-head .ph-head-pin.is-pinned {
-  color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  color: var(--text);
+  background: var(--surface-3);
 }
 body[data-ph-drawer="pinned"] .chat-header [data-action="toggle-history"],
 body[data-ph-drawer="pinned"] .chat-header [data-action="new-thread"] { display: none; }
@@ -7124,6 +7126,14 @@ html:not([data-o55-nier="on"]) body[data-theme="retro-light"] .orbit-core { --po
   .orbit-strip-item::before { animation: none !important; }
 }
 body.pm56-reduced .orbit-strip-item::before { animation: none !important; }
+/* The other two reduced routes (3E2, 2026-10-02): body.pm56-reduced (the Demo Studio switch, which PM56_PMX.reduced()
+   also reads) and html[data-motion="reduced"] (the PMConcept7 contract) stop what the media query above and the
+   Orbit block (PART 2) stop: the live node's pulse pip, the dashed track's spin, the strip's entrance and its ring
+   loop, and the strip and rail8 entrances run in 1ms (their end state unchanged). Before, only the media query did. */
+body.pm56-reduced .orbit-node-pip, body.pm56-reduced .orbit-track, body.pm56-reduced .orbit-strip-item,
+html[data-motion="reduced"] .orbit-node-pip, html[data-motion="reduced"] .orbit-track, html[data-motion="reduced"] .orbit-strip-item,
+html[data-motion="reduced"] .orbit-strip-item::before { animation: none !important; }
+body.pm56-reduced .pm-rail-item.enter, html[data-motion="reduced"] .pm-rail-item.enter { animation-duration: 1ms; }
 
 /* threadops.css — feature module styles.  OWNER: Wave 4 — Thread Ops (item 13).
  *
@@ -12136,11 +12146,10 @@ body[data-theme^="retro"] .pmx-sheet.collab-configure .pmx-roster{--pmx-cols:28p
 
 /* =====================================================================
    1. THE EYE BY THE COMPOSER. app.js draws .capability-dot.bsd from PM56_BSD.dot(). It watches quietly: a muted eye
-   on a neutral tile (the accent is for things you act on), the lid by mode. A check turns the iris once (WAAPI from
-   bsd.js, 900 ms, on a new check only).
+   on a neutral tile (the accent is for things you act on), the lid by mode. A check sweeps the iris once (WAAPI from
+   bsd.js on the eye glyph's moving part, a translate, on a new check only).
    ===================================================================== */
 .composer-infield .capability-dot.bsd{color:var(--muted);background:var(--surface-3);border-color:var(--border);}
-.capability-dot.bsd .pmx-bsd-iris{transform-box:fill-box;transform-origin:center;}
 
 /* =====================================================================
    2. THE CONTEXT POPOVER ROW (slot contextBsdRow, inside .ctx-pop). Two lines: the canon name with its mode and
@@ -16240,8 +16249,8 @@ body[data-theme$="-light"] .transcript-inner > [data-family="deliverable"] .arti
    to the text ink, the halo swells (dark themes) and the glyph plays its act once. A work output's glyph sits in its
    open button, which the neon hover rules already ignite. Status marks are lit in their tone through --nx-ink (never
    `color`, so the accent budget is untouched) and stay lit. A warning or danger line's glyph takes its tone through
-   --nx-ink (the colour rules above lose to the neutral rule just above). The Needs-you medallion keeps the canon
-   accent (--needs) for every glyph in it, status marks included. */
+   --nx-ink (the colour rules above lose to the neutral (0,4,0) rule just above); a positive line's glyph too
+   (3E2). The Needs-you medallion keeps the canon accent (--needs) for every glyph in it, status marks included. */
 .transcript-inner > [data-family="ledger"] > .event-icon > svg.nx-r-concept,
 .transcript-inner > [data-family="deliverable"] .system-card-head > .event-icon > svg.nx-r-concept { --nx-hi-a: 0; }
 .transcript-inner > [data-family="ledger"] > .event-icon > svg.nx { --nx-u: 2; }
@@ -16252,6 +16261,7 @@ body[data-theme$="-light"] .transcript-inner > [data-family="deliverable"] .arti
 }
 .transcript-inner > [data-family="ledger"].warning > .event-icon > svg.nx { --nx-ink: var(--warning); }
 .transcript-inner > [data-family="ledger"].danger > .event-icon > svg.nx { --nx-ink: var(--danger); }
+.transcript-inner > [data-family="ledger"].positive > .event-icon > svg.nx { --nx-ink: var(--positive); }
 .transcript-inner > [data-family="needs"] > .event-icon > svg.nx { --nx-ink: var(--needs); }
 
 /* needs-you: the action sits at the far edge, the copy takes the room. In a
@@ -16765,14 +16775,24 @@ textarea[data-input="composer"]::placeholder { transition: color 220ms ease; }
   width: 16px; height: 16px;
 }
 .hh-plus-glyph { --nx-stroke-base: 2.6; }
+/* Neon icons (3E2, 2026-10-02): a toggled header or panel button reads as on the way the Context Lens trigger does
+   (3D) -- a neutral surface tile with a hairline, and its glyph lit steady (the text ink with the concept bloom) --
+   not by an accent tile; colour is reserved for status (plan §4). Hover still ignites it. Menu check marks keep
+   the accent (a selection). The Lens trigger keeps its own tone rules (lens.css). */
 .chat-header .icon-button.active,
 .chat-header .icon-button.is-on,
 .history-head .icon-button.is-pinned,
 .activity-panel-head .icon-button[aria-pressed="true"] {
-  color: var(--accent);
-  border-color: color-mix(in srgb, var(--accent) 62%, transparent);
-  background: color-mix(in srgb, var(--accent) 15%, var(--surface-3));
+  color: var(--text);
+  border-color: var(--border-strong);
+  background: var(--surface-3);
 }
+.chat-header .icon-button:is(.active, .is-on):not(.pm-lens-trigger) > svg.nx,
+.history-head .icon-button.is-pinned > svg.nx,
+.activity-panel-head .icon-button[aria-pressed="true"] > svg.nx { --nx-hiv: visible; --nx-hi-a: var(--nx-h-concept-i); }
+.chat-header .icon-button:is(.active, .is-on):not(.pm-lens-trigger):is(:hover, :focus-visible) > svg.nx,
+.history-head .icon-button.is-pinned:is(:hover, :focus-visible) > svg.nx,
+.activity-panel-head .icon-button[aria-pressed="true"]:is(:hover, :focus-visible) > svg.nx { --nx-hi-a: var(--nx-h-hover-i); }
 .history-head .soft-button {
   height: 28px; min-height: 28px;
   border-radius: 9px;
@@ -16896,6 +16916,15 @@ body[data-theme$="-light"] {
   --nx-h-bolt-i: .2;
   --nx-bl-blocked: .12; --nx-bl-attention: .095; --nx-bl-working: .10; --nx-bl-changed: .05;
 }
+/* Idle (Ready) ink on paper (3E2, 2026-10-02): the theme's --subtle read under 3:1 on the thread rows (2.4-2.8), so
+   each light theme's idle ink is precomputed (work/3E2/idlecalc.py): --subtle moved toward --muted in sRGB until it
+   reads 3.08-3.13:1 on the row field, still under every live tone there (the lowest, friendly-light working, is
+   3.22). It stays unlit (no halo, no backlight) and is not the paused or pending ink (--muted, about 4.1-4.9). Dark
+   themes keep --subtle. Literal colours, no color-mix(). */
+body[data-theme="basic-light"] { --nx-idle: #8c8c95; }
+body[data-theme="friendly-light"] { --nx-idle: #93838e; }
+body[data-theme="glass-light"] { --nx-idle: #857d98; }
+body[data-theme="retro-light"] { --nx-idle: #77897d; }
 /* Friendly overshoots, Glass glides, Retro steps. */
 body[data-theme^="friendly"] { --nx-ease: cubic-bezier(.34, 1.56, .64, 1); --nx-le: cubic-bezier(.34, 1.4, .64, 1); --nx-ease-c: cubic-bezier(.34, 1.3, .64, 1); }
 body[data-theme^="glass"] { --nx-ease: cubic-bezier(.4, 0, .1, 1); --nx-le: cubic-bezier(.6, 0, .25, 1); --nx-ease-c: cubic-bezier(.4, 0, .1, 1); }
@@ -16967,7 +16996,7 @@ svg:where(.nx-t-attention) { --nx-ink: var(--warning); --nx-tone-k: 1.17; --nx-h
 svg:where(.nx-t-working) { --nx-ink: var(--accent); --nx-tone-k: 1.17; --nx-hi-a: var(--nx-h-working-i); }
 svg:where(.nx-t-changed) { --nx-ink: var(--accent-2); --nx-tone-k: 1; --nx-hi-a: var(--nx-h-changed-i); }
 svg:where(.nx-t-done) { --nx-ink: var(--positive); --nx-tone-k: .83; --nx-hi-a: var(--nx-h-quiet-i); }
-svg:where(.nx-t-idle) { --nx-ink: var(--subtle); --nx-tone-k: .78; --nx-hi-a: var(--nx-h-quiet-i); }
+svg:where(.nx-t-idle) { --nx-ink: var(--nx-idle, var(--subtle)); --nx-tone-k: .78; --nx-hi-a: var(--nx-h-quiet-i); }
 /* paused (and skipped): muted, no halo. */
 svg:where(.nx-t-paused) { --nx-ink: var(--muted); --nx-tone-k: 1; --nx-hi-a: 0; }
 
@@ -17165,7 +17194,10 @@ html[data-o55-nier="on"] svg.nx .nx-h { display: none; }
 html[data-o55-nier="on"] .nx-st::before { display: none; }
 html[data-o55-nier="on"] .activity-item[data-hover-domain]::after { display: none; }
 html[data-o55-nier="on"] svg:where(.nx-a-spin) { --nx-le: steps(12, end); }
-html[data-o55-nier="on"] svg:where(.nx-t-idle) { --nx-ink: rgba(var(--o55-nier-ink-rgb), .45); }
+html[data-o55-nier="on"] svg:where(.nx-t-idle) { --nx-ink: rgba(var(--o55-nier-ink-rgb), var(--nx-idle-a, .45)); }
+/* NieR Light: idle ink at .545 reads 3.06:1 on the row field (3:1 floor; the rust of blocked is 3.14) (3E2). A token,
+   so the rules that restate a set member's ink (pending's, section 6) keep their specificity over it. */
+html[data-o55-nier="on"] body[data-theme$="-light"] { --nx-idle-a: .545; }
 html[data-o55-nier="on"] svg:where(.nx-t-paused) { --nx-ink: rgba(var(--o55-nier-ink-rgb), .45); }
 /* Square icon strokes [icons]: square caps and mitred joins, with a miter limit of 2 so a right angle stays sharp and
    anything tighter (the bolt, the wand's sparkle, a chevron at 12 px) bevels instead of spiking. */
@@ -17631,8 +17663,6 @@ html[data-o55-nier="on"] [data-voice="retro"] .tx-w { animation: none; }
 html[data-o55-nier="on"] .tx-caret { box-shadow: none; }
 html[data-o55-nier="on"] .transcript:not([data-voice="retro"]) .tx-w { animation-name: o55n-word; animation-timing-function: steps(3, end); }
 @keyframes o55n-word { from { opacity: 0; } to { opacity: 1; } }
-html[data-o55-nier="on"] .jump-bottom.is-working > svg { filter: none; }
-html[data-o55-nier="on"] .pm-lens-trigger { --lens-shadow: none; }
 html[data-o55-nier="on"] .sp-mark[data-state="live"] .sp-sat { filter: none; }
 html[data-o55-nier="on"] .sp-comet { filter: none; }
 html[data-o55-nier="on"] .orbit-node.live { box-shadow: none; }
@@ -17988,13 +18018,8 @@ html[data-o55-nier-parts~="diamonds"] .qs-orbit {
   animation: o55np-diamond 2.8s linear infinite !important;
 }
 html[data-o55-nier-parts~="diamonds"] .qs-orbit i { visibility: hidden; }
-/* the pmx running mark (the arc loader glyph) is a still diamond: pmx surfaces carry no loops (pmx-verify loop-census),
-   so it holds its pose; the neon working mark's turning diamond is in neon-icons.css section 11 */
-html[data-o55-nier-parts~="diamonds"] svg.nx[data-nx="arc"] {
-  border: 1.5px solid currentColor; outline: 1px solid currentColor; outline-offset: -4.5px; box-sizing: border-box;
-  transform: rotate(45deg) scale(.72);
-}
-html[data-o55-nier-parts~="diamonds"] svg.nx[data-nx="arc"] > * { visibility: hidden; }
+/* (3E2: the pmx running mark's still-diamond rule for svg.nx[data-nx="arc"] is gone: since neon 3E a pmx run status is
+   the shared status set's still working mark, whose diamond is neon-icons.css section 11/14, and nothing draws arc.) */
 @keyframes o55np-diamond { from { transform: rotateY(0deg) rotate(45deg) scale(.72); } to { transform: rotateY(360deg) rotate(45deg) scale(.72); } }
 html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] .ctx-spin,
 html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] .qs-orbit { animation: none !important; }
@@ -49493,17 +49518,24 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
  /* 8.6: the ambient eye by the composer. app.js renders it from PM56_BSD.dot() (F0b (c)); it reads the owner
     projection, never the legacy flag. Off: no eye. Otherwise the eye by mode (lowered lid Auto, open On); its hover
     card is the status line; a check plays one iris sweep (sweepIris below). */
+ /* the eye by mode: the registry's kind mark (neon icons). Its iris (On: the pupil; Auto: the lowered half) is the
+    glyph's one moving part, a g.nx-p holding its own halo and tube, which sweepIris turns (3E2) */
  function eyeGlyph(mode,size){
-  const S=window.PM56_SHELL,h=S&&S.pmxKindMark?S.pmxKindMark(kindOf(mode),size):E.ctx().icon('eye',size);
-  return h.replace('<circle cx="12" cy="12" r="3"/>','<circle class="pmx-bsd-iris" cx="12" cy="12" r="3"/>').replace('<path d="M9 11.8a3 3 0 0 0 6 0"/>','<path class="pmx-bsd-iris" d="M9 11.8a3 3 0 0 0 6 0"/>');
+  const S=window.PM56_SHELL;
+  return S&&S.pmxKindMark?S.pmxKindMark(kindOf(mode),size):E.ctx().icon('eye',size);
  }
  function dot(c){const v=view(c&&c.thread?c.thread.id:null),st=statusOf(v,'eye');if(st.key==='off')return '';return {glyph:eyeGlyph(v.mode,16),hover:'Back Seat Driver · '+st.text,state:st.key};}
  const swept=new Map();
+ /* a new check sweeps the iris once: the eye glyph's moving part (g.nx-p), transform only, the same 2.5-unit
+    look left then right as before the neon family. PM56_PMX.animate skips it under the media query and
+    body.pm56-reduced; html[data-motion="reduced"] (the PMConcept7 route) is checked here. The part's own hover act
+    is a CSS animation; this WAAPI sweep has no fill, so it never pins a transform over it. */
  function sweepIris(){
   const X=window.PM56_PMX,c=E.ctx&&E.ctx();if(!X||!c||!c.thread)return;
   const a=engine.current(c.thread.id),id=a&&a.pending?a.pending.id:null;
   if(!id||swept.get(c.thread.id)===id)return;swept.set(c.thread.id,id);
-  const iris=document.querySelector('.capability-dot.bsd .pmx-bsd-iris');
+  if(document.documentElement.getAttribute('data-motion')==='reduced')return;
+  const iris=document.querySelector('.capability-dot.bsd > svg.nx > .nx-p');
   if(iris)X.animate(iris,[{transform:'translateX(0)'},{transform:'translateX(-2.5px)',offset:.3},{transform:'translateX(2.5px)',offset:.7},{transform:'translateX(0)'}],{duration:X.t('pulse'),easing:X.ease('move')});
  }
  /* the Context popover row (slot contextBsdRow): the eye by mode, the canon name, the mode and Persona, then the
@@ -57611,7 +57643,9 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   var demoOnly=new Set(['cs-quota-demo','cs-quota-source','af-eli5-demo','af-revert-seed',
     'af-title-race-demo','af-debug-start','af-debug-advance','af-debug-recover','bc-open',
     'collab-build-with-crew']);
-  var groups=[['assist','Assistance','goal'],['work','Workflows','users'],
+  /* Group glyphs are registry concept glyphs (neon icons). Workflows holds the multi-agent workflows (crew, brainstorm,
+     review, room, Build With Crew) and Revert: a crew is 'kind-crew' (plan §2; 'users'/'user' is a persona) (3E2). */
+  var groups=[['assist','Assistance','goal'],['work','Workflows','kind-crew'],
     ['schedule','Scheduling','kind-schedule'],['memory','Memory & teaching','kind-memory'],
     ['preferences','Preferences','settings']];
   function template(html){var t=document.createElement('template');t.innerHTML=html;return t;}
