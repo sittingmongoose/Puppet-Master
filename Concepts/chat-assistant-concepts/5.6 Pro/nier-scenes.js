@@ -286,10 +286,12 @@
   if (!start()) window.setTimeout(start, 0);
   var EXT = window.PM56_EXT;
   if (EXT && typeof EXT.slot === 'function') {
+    /* every phase: the context drawer opens through an overlay render (PM56_DEMO.openContext, its chip) and the work
+       tick patches a scope, so an app render alone would follow those only at the next full render */
     EXT.slot('afterRender', function (c, info) {
-      if (!info || info.phase !== 'app' || html.getAttribute('data-o55-nier') !== 'on') return;
+      if (!info || html.getAttribute('data-o55-nier') !== 'on') return;
       try {
-        if (leave) follower();
+        if (leave && info.phase !== 'overlay') follower();
         var n = N(), f = viewScene(c), was = follow;
         follow = f;
         if ((n && n.background() === 'Follow the page' && f !== was) || (!cur && !pending && wanted())) apply();
