@@ -88,7 +88,7 @@
       (fx && fx.launch && cls.indexOf('ss-launch') >= 0 ? ' data-launch="' + fx.launch + '"' : '') +
       (hold ? ' data-hold=""' : '') + (s === 'full' ? ' aria-disabled="true"' : '') +
       (hover ? hover('send-btn', label) : ' aria-label="' + label + '"') + '>' +
-      '<span class="ss-face"><span class="ss-flood"></span><svg class="nx nx-self ss-g" viewBox="0 0 24 24" aria-hidden="true"><g class="ss-all">' +
+      '<span class="ss-bl"></span><span class="ss-face"><span class="ss-flood"></span><svg class="nx nx-self ss-g" viewBox="0 0 24 24" aria-hidden="true"><g class="ss-all">' +
       '<g class="ss-back"><path d="' + G.QBACK + '"/><path d="' + G.QBACK_FOLD + '"/></g>' +
       '<g class="ss-ghost"><path class="ss-trail" d="' + G.TRAIL + '"/><path class="ss-gb" d="' + G.PLANE + '"/><path class="ss-gf" d="' + G.FOLD_P + '"/></g>' +
       '<g class="ss-main"><g class="ss-hov"><g class="ss-breath">' +

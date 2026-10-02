@@ -9,7 +9,7 @@
  * layers carry the lift-off (ghost) and the queued plane (back). Layers in the chip (.ss-face, clipped to its radius):
  * the accent fill, .ss-flood (the danger disc that floods out from the centre for Stop and drains back when it ends),
  * the top sheen (::before), the failure flash (::after), the glyph svg. Behind the chip: two radial backlights
- * (::before accent, ::after danger) at element opacity.
+ * (the chip's ::before in the accent, .ss-bl in the danger tone) at element opacity.
  *
  * The hero (Send click into a run), in order: 0-320 ms the plane lifts off along its heading (clipped by the chip);
  * 140-480 ms a fresh plane slides in; 240-540 ms it morphs into the square ON THE ACCENT; from 420 ms the red floods
@@ -18,7 +18,8 @@
  * split the chip green and red). Leaving Stop the red drains first (fast, never overshooting), then the square opens.
  * The run: the square breathes ~1 px (scale .88) at the activity bar's 2.2 s working cadence while words arrive, and
  * .95 at 3.2 s while the model thinks or a tool runs; the danger backlight breathes .30/.18 (.10/.06 on light themes).
- * Both loops animate transform or opacity on a box (the svg root, the ::after), so they run on the compositor.
+ * Both loops animate transform or opacity on a box (the svg root, the backlight's gradient), so they run on the
+ * compositor.
  *
  * Family grammar: tubes are strokes in the host ink (on-accent), the bloom is a halo stroke (.nx-h, dark themes
  * only), the glow is a radial gradient at element opacity; no filter, no color-mix(), no stroke-dashoffset. Voices:
@@ -41,6 +42,10 @@ body {
   --ss-shake: cubic-bezier(.3, 0, .3, 1);
   --ss-drain: cubic-bezier(.2, .75, .25, 1);        /* the red leaves fast, before the plane takes shape */
   --ss-flood-e: var(--nx-ease, cubic-bezier(.2, .75, .25, 1));
+  /* the glow loop's voice: a sine in-out for Basic. Not the loop token (.45, 0, .25, 1): on an opacity loop that
+     curve keeps Chrome 151 asking for a main frame every frame although the animation reports composited (VM trace:
+     360 main frames in 6 s vs ~60 with any other curve), so the backlight carries its own per-family token. */
+  --ss-gle: cubic-bezier(.37, 0, .63, 1);
 }
 /* light themes: no bloom on the glyph (a white halo on a coloured chip reads as a smudge) and a faint, tighter
    backlight, so no accent or danger haze lies on the light field (G1) */
@@ -50,8 +55,9 @@ body[data-theme$="-light"] {
   --ss-rim: rgb(255 255 255 / .26); --ss-drop: rgb(20 20 60 / .2); --ss-sheen: rgb(255 255 255 / .12);
   --ss-idle-ink: .76;
 }
-body[data-theme^="glass"] { --ss-drain: cubic-bezier(.4, 0, .1, 1); }
-body[data-theme^="retro"] { --ss-out: steps(4, end); --ss-shake: steps(4, end); --ss-drain: steps(1, start); --ss-flood-e: steps(1, start); }
+body[data-theme^="friendly"] { --ss-gle: cubic-bezier(.34, 1.4, .64, 1); }
+body[data-theme^="glass"] { --ss-drain: cubic-bezier(.4, 0, .1, 1); --ss-gle: cubic-bezier(.6, 0, .25, 1); }
+body[data-theme^="retro"] { --ss-out: steps(4, end); --ss-shake: steps(4, end); --ss-drain: steps(1, start); --ss-flood-e: steps(1, start); --ss-gle: steps(4, end); }
 
 /* ------------------------------------------------------------------ the chip */
 .send-button.sendstop {
@@ -67,18 +73,26 @@ body[data-theme^="retro"] { --ss-out: steps(4, end); --ss-shake: steps(4, end); 
   --ss-ld: 800ms;
   transition: transform 200ms var(--ease);
 }
-/* Two backlights behind the chip: ::before in the accent (Send, Queue), ::after in the danger tone (Stop). They
-   cross-fade by opacity; hover swells them with `scale`; the Stop loop breathes the danger one's opacity. Centred a
-   little low, so it also does the old accent drop shadow's job. */
-.sendstop::before, .sendstop::after {
+/* Two backlights behind the chip: ::before in the accent (Send, Queue) and .ss-bl in the danger tone (Stop). They
+   cross-fade by opacity; hover swells them with `scale`. Centred a little low, so they also do the old accent drop
+   shadow's job. The danger one is a wrapper (its opacity fades with the state, after the flood) around ::before (the
+   gradient, which the Stop loop breathes): a loop created while a transition of the SAME property runs on the same
+   element starts on the main thread and stays there (VM trace: a main frame every frame), so the fade and the loop
+   live on two elements and multiply. */
+.sendstop::before, .ss-bl {
   content: ""; position: absolute; left: 50%; top: 58%; width: var(--ss-glow-w); height: var(--ss-glow-w); translate: -50% -50%;
   border-radius: 50%; pointer-events: none; z-index: -1; opacity: 0;
   transition: opacity 260ms ease-out, scale 260ms var(--ease);
 }
 .sendstop::before { background: radial-gradient(closest-side, var(--accent), transparent); }
-.sendstop::after { background: radial-gradient(closest-side, var(--danger), transparent); }
+.ss-bl::before {
+  content: ""; position: absolute; inset: 0; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(closest-side, var(--danger), transparent); opacity: var(--ss-glow-stop-a);
+}
 .sendstop[data-ss="ready"]::before, .sendstop[data-ss="queue"]::before { opacity: var(--ss-glow-a); }
-.sendstop[data-ss="stop"]::after { opacity: var(--ss-glow-stop-a); }
+/* the red backlight comes up with the flood (its half-way point), never ahead of it; Retro steps on with it */
+.sendstop[data-ss="stop"] .ss-bl { opacity: 1; transition: opacity 300ms ease-out calc(var(--ss-md, 0ms) + 220ms), scale 260ms var(--ease); }
+body[data-theme^="retro"] .sendstop[data-ss="stop"] .ss-bl { transition: opacity 300ms steps(1, start) calc(var(--ss-md, 0ms) + 300ms), scale 260ms var(--ease); }
 
 .ss-face {
   position: absolute; inset: 0; border-radius: inherit; overflow: hidden;
@@ -119,31 +133,32 @@ body[data-theme^="retro"] .sendstop[data-ss="stop"] .ss-flood { transition: scal
 .ss-g g { transform-box: view-box; transform-origin: 12px 12px; }
 
 /* the body: plane outline (Send) <-> rounded square (Stop) <-> the smaller front plane (Queue). Into Stop the morph
-   takes 300 ms (the hero's timing above); back out of it 380 ms, after the red has begun to drain. */
+   takes 300 ms (the hero's timing above, delayed by --ss-md); back out of it 380 ms from --ss-xd (90 ms: by then the
+   red has drained to a 2 px dot under the square, so the plane never takes shape on red; a Stop click: 200 ms). */
 .sendstop .ss-body {
   d: path("M5.6 10.86 L17.2 6.8 Q17.2 6.8 17.2 6.8 L13.14 18.4 Q13.14 18.4 13.14 18.4 L10.82 13.18 Q10.82 13.18 10.82 13.18 L5.6 10.86 Q5.6 10.86 5.6 10.86 Z");
   stroke-width: 1.35px; fill: currentColor; fill-opacity: 0;
-  transition: d 380ms var(--ss-ease) var(--ss-md, 0ms), stroke-width 380ms var(--ss-ease) var(--ss-md, 0ms),
-    fill-opacity 300ms ease-out var(--ss-md, 0ms);
+  transition: d 380ms var(--ss-ease) var(--ss-xd, 90ms), stroke-width 380ms var(--ss-ease) var(--ss-xd, 90ms),
+    fill-opacity 300ms ease-out var(--ss-xd, 90ms);
 }
 /* the fold line, which becomes the square's inner tube highlight */
 .sendstop .ss-fold {
   d: path("M17.2 6.8 L14.01 9.99 L10.82 13.18");
   stroke-width: 1.2px;
-  transition: d 380ms var(--ss-ease) var(--ss-md, 0ms), stroke-width 380ms var(--ss-ease) var(--ss-md, 0ms), opacity 300ms ease-out var(--ss-md, 0ms);
+  transition: d 380ms var(--ss-ease) var(--ss-xd, 90ms), stroke-width 380ms var(--ss-ease) var(--ss-xd, 90ms), opacity 300ms ease-out var(--ss-xd, 90ms);
 }
 /* the bloom: a wider, faint copy of the body's own outline (dark themes) */
 .sendstop .ss-g .nx-h {
   d: path("M5.6 10.86 L17.2 6.8 Q17.2 6.8 17.2 6.8 L13.14 18.4 Q13.14 18.4 13.14 18.4 L10.82 13.18 Q10.82 13.18 10.82 13.18 L5.6 10.86 Q5.6 10.86 5.6 10.86 Z");
   stroke-width: var(--ss-halo-w); stroke-opacity: var(--ss-halo-a); vector-effect: none; visibility: visible;
-  transition: d 380ms var(--ss-ease) var(--ss-md, 0ms), stroke-width 380ms var(--ss-ease) var(--ss-md, 0ms), stroke-opacity 260ms ease-out;
+  transition: d 380ms var(--ss-ease) var(--ss-xd, 90ms), stroke-width 380ms var(--ss-ease) var(--ss-xd, 90ms), stroke-opacity 260ms ease-out;
 }
 .sendstop[data-ss="idle"] .ss-g .nx-h { stroke-opacity: 0; }
 /* the queue's knock-out: chip-coloured, under the front plane, so the queued plane passes BEHIND it */
 .sendstop .ss-knock {
   d: path("M5.6 10.86 L17.2 6.8 Q17.2 6.8 17.2 6.8 L13.14 18.4 Q13.14 18.4 13.14 18.4 L10.82 13.18 Q10.82 13.18 10.82 13.18 L5.6 10.86 Q5.6 10.86 5.6 10.86 Z");
   stroke: var(--accent); fill: var(--accent); stroke-width: 3.4px; opacity: 0;
-  transition: d 380ms var(--ss-ease) var(--ss-md, 0ms), opacity 200ms ease-out;
+  transition: d 380ms var(--ss-ease) var(--ss-xd, 90ms), opacity 200ms ease-out;
 }
 
 .sendstop[data-ss="stop"] .ss-body {
@@ -215,7 +230,7 @@ body[data-theme^="retro"] .sendstop[data-ss="stop"] .ss-flood { transition: scal
    squeezes it. */
 .ss-hov { transition: translate 240ms var(--ss-ease), scale 200ms var(--ss-ease); }
 .sendstop:not([data-ss="full"]):hover { transform: translateY(-1px); }
-.sendstop:hover::before, .sendstop:hover::after { scale: 1.16; }
+.sendstop:hover::before, .sendstop:hover .ss-bl { scale: 1.16; }
 .sendstop[data-ss="ready"]:hover .ss-hov, .sendstop[data-ss="queue"]:hover .ss-hov, .sendstop[data-ss="idle"]:hover .ss-hov { translate: .92px -.92px; }
 .sendstop[data-ss="ready"]:hover .ss-g .nx-h, .sendstop[data-ss="queue"]:hover .ss-g .nx-h { stroke-opacity: calc(var(--ss-halo-a) * 1.5); }
 .sendstop:not([data-ss="full"]):active { transform: translateY(0) scale(.93); transition-duration: 90ms; }
@@ -225,14 +240,14 @@ body[data-theme^="retro"] .sendstop[data-ss="stop"] .ss-flood { transition: scal
 
 /* ------------------------------------------------------------------ Stop: breathing with the stream */
 /* One loop on the glyph (transform on the svg root, a box, so the compositor runs it) and one on the danger
-   backlight (opacity), same period. Flowing (words arriving): 2200 ms, the activity bar's working breathe, ~1 px;
+   backlight's gradient (opacity, .ss-bl::before), same period. Flowing (words arriving): 2200 ms, the activity bar's working breathe, ~1 px;
    waiting (thinking, a tool running): 3200 ms, the attention cadence, shallower. send-stop.js switches the mode only
    at an iteration boundary (scale 1), and once it has switched the next loop starts at once (data-flowed). */
 .sendstop[data-ss="stop"] .ss-g { animation: ss-breathe 2200ms var(--ss-le) var(--ss-ld) infinite; }
-.sendstop[data-ss="stop"]::after { animation: ss-glow 2200ms var(--ss-le) var(--ss-ld) infinite; }
+.sendstop[data-ss="stop"] .ss-bl::before { animation: ss-glow 2200ms var(--ss-gle) var(--ss-ld) infinite; }
 .sendstop[data-ss="stop"][data-flow="waiting"] .ss-g { animation-name: ss-breathe-w; animation-duration: 3200ms; }
-.sendstop[data-ss="stop"][data-flow="waiting"]::after { animation-name: ss-glow-w; animation-duration: 3200ms; }
-.sendstop[data-ss="stop"][data-flowed] .ss-g, .sendstop[data-ss="stop"][data-flowed]::after { animation-delay: 0ms; }
+.sendstop[data-ss="stop"][data-flow="waiting"] .ss-bl::before { animation-name: ss-glow-w; animation-duration: 3200ms; }
+.sendstop[data-ss="stop"][data-flowed] .ss-g, .sendstop[data-ss="stop"][data-flowed] .ss-bl::before { animation-delay: 0ms; }
 @keyframes ss-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(.88); } }
 @keyframes ss-breathe-w { 0%, 100% { transform: scale(1); } 50% { transform: scale(.95); } }
 /* literal values per theme brightness (no var() inside a loop's keyframes, so the compositor runs it) */
@@ -240,8 +255,8 @@ body[data-theme^="retro"] .sendstop[data-ss="stop"] .ss-flood { transition: scal
 @keyframes ss-glow-w { 0%, 100% { opacity: .3; } 50% { opacity: .24; } }
 @keyframes ss-glow-l { 0%, 100% { opacity: .1; } 50% { opacity: .06; } }
 @keyframes ss-glow-wl { 0%, 100% { opacity: .1; } 50% { opacity: .08; } }
-body[data-theme$="-light"] .sendstop[data-ss="stop"]::after { animation-name: ss-glow-l; }
-body[data-theme$="-light"] .sendstop[data-ss="stop"][data-flow="waiting"]::after { animation-name: ss-glow-wl; }
+body[data-theme$="-light"] .sendstop[data-ss="stop"] .ss-bl::before { animation-name: ss-glow-l; }
+body[data-theme$="-light"] .sendstop[data-ss="stop"][data-flow="waiting"] .ss-bl::before { animation-name: ss-glow-wl; }
 
 /* ------------------------------------------------------------------ the launch (Send or Queue click) */
 /* 0-320 ms the plane lifts off along its heading and fades as it crosses the chip edge (the face clips it); from
@@ -273,9 +288,10 @@ body[data-theme$="-light"] .sendstop[data-ss="stop"][data-flow="waiting"]::after
 
 /* ------------------------------------------------------------------ halt (the Stop click) */
 /* The square clunks down before it opens back into the plane; the red drains from 60 ms, the square opens from
-   200 ms, so a user's stop reads differently from a run that finished (which drains and morphs from 0, no clunk). */
+   200 ms, so a user's stop reads differently from a run that finished (it drains at once, the square opens from
+   90 ms, no clunk). */
 .sendstop.ss-halt .ss-hov { animation: ss-clunk 260ms var(--ss-ease); }
-.sendstop.ss-halt { --ss-md: 200ms; --ss-dd: 60ms; }
+.sendstop.ss-halt { --ss-xd: 200ms; --ss-dd: 60ms; }
 @keyframes ss-clunk { 0% { scale: .84; } 45% { scale: .78; } 100% { scale: 1; } }
 
 /* ------------------------------------------------------------------ failure (a refused send) */
@@ -293,19 +309,19 @@ body[data-theme^="retro"] .sendstop.ss-fail .ss-face::after { animation: ss-flas
 .sendstop.ss-fail-static .ss-face { box-shadow: inset 0 0 0 1.5px var(--danger), 0 0 0 2px var(--danger); }
 
 /* a state change that must not animate (a thread switch): send-stop.js sets ss-snap, flushes style, removes it */
-.sendstop.ss-snap, .sendstop.ss-snap *, .sendstop.ss-snap::before, .sendstop.ss-snap::after,
+.sendstop.ss-snap, .sendstop.ss-snap *, .sendstop.ss-snap::before, .sendstop.ss-snap .ss-bl::before,
 .sendstop.ss-snap .ss-face::after { transition: none !important; animation: none !important; }
 
 /* ------------------------------------------------------------------ reduced motion */
 /* End states only: no transitions, no loops, no one-shots. The square, the stacked planes, the count and the colours
    carry every state. Every route: the media query, the concept's body.pm56-reduced, NieR's html[data-motion]. */
 @media (prefers-reduced-motion: reduce) {
-  .sendstop, .sendstop *, .sendstop::before, .sendstop::after, .sendstop .ss-face::after { animation: none !important; transition: none !important; }
+  .sendstop, .sendstop *, .sendstop::before, .sendstop .ss-bl::before, .sendstop .ss-face::after { animation: none !important; transition: none !important; }
 }
-body.pm56-reduced .sendstop, body.pm56-reduced .sendstop *, body.pm56-reduced .sendstop::before, body.pm56-reduced .sendstop::after,
+body.pm56-reduced .sendstop, body.pm56-reduced .sendstop *, body.pm56-reduced .sendstop::before, body.pm56-reduced .sendstop .ss-bl::before,
 body.pm56-reduced .sendstop .ss-face::after { animation: none !important; transition: none !important; }
 html[data-motion="reduced"] .sendstop, html[data-motion="reduced"] .sendstop *, html[data-motion="reduced"] .sendstop::before,
-html[data-motion="reduced"] .sendstop::after, html[data-motion="reduced"] .sendstop .ss-face::after { animation: none !important; transition: none !important; }
+html[data-motion="reduced"] .sendstop .ss-bl::before, html[data-motion="reduced"] .sendstop .ss-face::after { animation: none !important; transition: none !important; }
 
 /* ------------------------------------------------------------------ NieR Mode (html[data-o55-nier="on"]) */
 /* Flat ink on parchment, nothing glows (NieR's own rule). The NieR palette repaints the tokens (accent = ink,
@@ -319,7 +335,7 @@ html[data-o55-nier="on"] .sendstop {
   --ss-r: 0px; --ss-halo-a: 0; --ss-rim: transparent; --ss-drop: transparent; --ss-sheen: transparent;
   --ss-out: steps(3, end); --ss-shake: steps(4, end); --ss-drain: steps(1, start); --ss-flood-e: steps(1, start);
 }
-html[data-o55-nier="on"] .sendstop::before, html[data-o55-nier="on"] .sendstop::after { display: none; }
+html[data-o55-nier="on"] .sendstop::before, html[data-o55-nier="on"] .sendstop .ss-bl { display: none; }
 html[data-o55-nier="on"] .sendstop .ss-face { box-shadow: none; }
 html[data-o55-nier="on"] .sendstop .ss-flood { background: var(--o55-nier-ink); }
 html[data-o55-nier="on"] .sendstop[data-ss="stop"]:not([data-hold]):hover .ss-flood { background: var(--o55-nier-error); }
