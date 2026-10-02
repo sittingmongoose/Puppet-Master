@@ -1,0 +1,33 @@
+{
+  "schema": "pm.external_research.v8.planning_bundle.v1",
+  "campaign_id": "external-research-v8-20261001-2140",
+  "status": "FROZEN_PROSPECTIVE_PLANNING_READY_REQUIRES_HOST_EXECUTION_BINDINGS",
+  "created_utc": "2026-10-02T01:52:57+00:00",
+  "authorization": "../../AUTHORIZATION.json",
+  "planner_clock": {
+    "birth_utc": "2026-10-02T01:44:41+00:00",
+    "birth_epoch": 1790905481,
+    "deadline_utc": "2026-10-02T02:14:41+00:00",
+    "final_reserve_start_utc": "2026-10-02T02:04:41+00:00",
+    "hard_seconds": 1800,
+    "conservative_event_cap": 120,
+    "no_reset": true
+  },
+  "ownership": "ONLY cases/planning-v1; no native/provider calls, source groundtruth, evaluator research answers, canon/Git/runtime writes or old rescoring",
+  "domains": [
+    "bioimaging",
+    "notebook-workspace"
+  ],
+  "candidate_cases_reserved": 6,
+  "evaluator_tasks_reserved": 6,
+  "native_goal_starts_reserved": 18,
+  "fresh_brief_only_discovery_cases": 6,
+  "methods": "methods.json",
+  "source_access": "source-access.json",
+  "candidate_reservations": "reservations/candidates.json",
+  "evaluator_reservations": "reservations/evaluators.json",
+  "native_objectives": "native-objectives.json",
+  "evaluator_only_scope": "evaluation-scope.json",
+  "no_launch_authority_from_manifest": "binding is prospective reservation under AUTHORIZATION; host must bind accepted route version, nonsecret account identity/load and immutable inputs before activation; record birth before actual preparation",
+  "freeze": "method/brief/caps/reuse/account-role/evaluation scope are prospective. Host records a mechanical binding receipt to their hashes; actual identity/birth data belong in host receipts, not edits to candidate method cards. Any method/input revision after freeze needs a distinct prospective version before any affected preparation, never outcome rescue."
+}

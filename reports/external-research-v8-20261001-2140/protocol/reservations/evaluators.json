@@ -1,0 +1,75 @@
+{
+  "schema": "pm.external_research.v8.evaluator_reservations.v1",
+  "count": 6,
+  "helper_starts_reserved": 6,
+  "bound_per_task_seconds": 2400,
+  "reserved_total_max_task_seconds": 14400,
+  "reservations": [
+    {
+      "reservation_id": "V8-EVAL-BIO-C",
+      "case_id": "V8-BIO-C-Z",
+      "model_role": "independent gpt-6.1-sol/xhigh source-grounded evaluation",
+      "source_scope": "this case's actually admitted captures plus independently acquired evaluator primary-source rulings",
+      "scope_declaration": "evaluation-scope.json",
+      "original_task_hard_seconds": 2400,
+      "conservative_response_cap": 120,
+      "state": "RESERVED",
+      "candidate_access": "NONE"
+    },
+    {
+      "reservation_id": "V8-EVAL-BIO-P",
+      "case_id": "V8-BIO-P-Z",
+      "model_role": "independent gpt-6.1-sol/xhigh source-grounded evaluation",
+      "source_scope": "this case's actually admitted captures plus independently acquired evaluator primary-source rulings",
+      "scope_declaration": "evaluation-scope.json",
+      "original_task_hard_seconds": 2400,
+      "conservative_response_cap": 120,
+      "state": "RESERVED",
+      "candidate_access": "NONE"
+    },
+    {
+      "reservation_id": "V8-EVAL-BIO-B",
+      "case_id": "V8-BIO-B-Z",
+      "model_role": "independent gpt-6.1-sol/xhigh source-grounded evaluation",
+      "source_scope": "this case's actually admitted captures plus independently acquired evaluator primary-source rulings",
+      "scope_declaration": "evaluation-scope.json",
+      "original_task_hard_seconds": 2400,
+      "conservative_response_cap": 120,
+      "state": "RESERVED",
+      "candidate_access": "NONE"
+    },
+    {
+      "reservation_id": "V8-EVAL-NB-C",
+      "case_id": "V8-NB-C-Z",
+      "model_role": "independent gpt-6.1-sol/xhigh source-grounded evaluation",
+      "source_scope": "this case's actually admitted captures plus independently acquired evaluator primary-source rulings",
+      "scope_declaration": "evaluation-scope.json",
+      "original_task_hard_seconds": 2400,
+      "conservative_response_cap": 120,
+      "state": "RESERVED",
+      "candidate_access": "NONE"
+    },
+    {
+      "reservation_id": "V8-EVAL-NB-P",
+      "case_id": "V8-NB-P-Z",
+      "model_role": "independent gpt-6.1-sol/xhigh source-grounded evaluation",
+      "source_scope": "this case's actually admitted captures plus independently acquired evaluator primary-source rulings",
+      "scope_declaration": "evaluation-scope.json",
+      "original_task_hard_seconds": 2400,
+      "conservative_response_cap": 120,
+      "state": "RESERVED",
+      "candidate_access": "NONE"
+    },
+    {
+      "reservation_id": "V8-EVAL-NB-B",
+      "case_id": "V8-NB-B-Z",
+      "model_role": "independent gpt-6.1-sol/xhigh source-grounded evaluation",
+      "source_scope": "this case's actually admitted captures plus independently acquired evaluator primary-source rulings",
+      "scope_declaration": "evaluation-scope.json",
+      "original_task_hard_seconds": 2400,
+      "conservative_response_cap": 120,
+      "state": "RESERVED",
+      "candidate_access": "NONE"
+    }
+  ]
+}

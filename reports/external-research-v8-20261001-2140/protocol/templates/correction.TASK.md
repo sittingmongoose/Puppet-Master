@@ -1,0 +1,7 @@
+# Final correction and actual proposal
+
+This is a fresh context in the original case's candidate family/account. Read `input/BRIEF.md`, `input/THIN_PLAN.md`, `input/METHOD.md`, the frozen `input/PROPOSAL.md`, `input/CRITIQUE.md`, optional `input/UNRESOLVED_LEADS.md` and this case's raw public-source captures. You may retrieve allowed public primary sources to resolve a critique. Do not use evaluator rulings, sibling discoveries, earlier reasoning histories or prior campaign outputs.
+
+Write `out/FINAL_PROPOSAL.md`, the complete usable corrected research-to-plan artifact, and `out/UNRESOLVED_LEADS.md` if needed. Address all three questions and all five product obligations, preserve correct evidence, replace or reject false propositions with source support, and distinguish version/condition/exception/normative force/inference/product choice. State which critique points changed the plan and why; unresolved consequential dependencies remain visible. Include the chosen component tradeoff, real issue → fix → test investigation, implementation steps and discriminating validations. Check any required self-derived witness. A JSON status or response saying the plan was corrected is insufficient.
+
+At most 600 seconds from this stage's fixed birth, still inside the original 3600-second case clock; clocks are never reset. The host records captures/histories/hashes/cost. No host ledger, helper/child/native Goal/provider launch or private/sibling/evaluator access.

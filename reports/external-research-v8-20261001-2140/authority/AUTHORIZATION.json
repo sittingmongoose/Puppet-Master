@@ -1,0 +1,44 @@
+{
+  "schema": "pm.external_research.v8.authorization.v1",
+  "campaign_id": "external-research-v8-20261001-2140",
+  "accepted_utc": "2026-10-02T01:40:09+00:00",
+  "accepted_epoch": 1790905209,
+  "user_instruction": "follow the brief",
+  "explicit_authorization": "I authorize it all. Make sure you use sol 6.1 medium for easy tasks, 6.1 sol xhigh for harder tasks.",
+  "prior_campaign": "external-research-v7-20260930",
+  "prior_status": "CLOSED with unmet outcomes, no reopening or budget transfer",
+  "reviewed_commit": "c8f9cbc9195602688702bbbf9b3ce23c14fa5586",
+  "root_work_clock_deadline_epoch": 1790926809,
+  "limits": {
+    "elapsed_seconds": 21600,
+    "native_goal_starts": 48,
+    "occupied_candidate_slot_seconds": 57600,
+    "helpers_task_starts": 32,
+    "active_helpers": 8,
+    "active_candidates_by_family": {
+      "M": 2,
+      "Z": 2,
+      "L": 2
+    },
+    "candidate_output_warning": 1200000,
+    "candidate_output_stop": 1500000,
+    "helper_output_warning": 800000,
+    "helper_output_stop": 1000000,
+    "component_hard_seconds": 1800,
+    "component_hard_responses": 160,
+    "case_elapsed_seconds": 3600,
+    "case_occupied_seconds": 5400,
+    "repair_versions_per_boundary": 2,
+    "final_review_reserve_seconds": 3600
+  },
+  "models": {
+    "easy": "gpt-6.1-sol/medium",
+    "hard": "gpt-6.1-sol/xhigh",
+    "M": "Muse Code/Muse 1.3 Contributor/Max",
+    "Z": "zcode/GLM5.3Flash/Max",
+    "L": "GPT6Luna/Max fresh standalone native Codex threads only"
+  },
+  "scope": "Fresh autonomous integration-first execution, bounded ordinary repairs, source-grounded independent evaluation and batched GitHub research-branch publication; sandbox only. Native Goal Mode and existing authorized subscriptions; no canonical/main changes, evaluator keys/premium research in candidate paths, provider-limit bypass or purchase.",
+  "budget_selection": "Fresh conservative ceilings selected prospectively within earlier campaign ceilings; no automatic increases. Unknown generated usage remains unknown.",
+  "principle": "Early complete control pipeline; reserve named integrated candidate/evaluator work; modest semantic treatments in parallel; mechanical history/acquisition/operation receipts; diagnostic failure can end screening, full declared coverage required for passes."
+}

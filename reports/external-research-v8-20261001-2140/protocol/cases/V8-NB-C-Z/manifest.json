@@ -1,0 +1,100 @@
+{
+  "schema": "pm.external_research.v8.integrated_case.v1",
+  "campaign_id": "external-research-v8-20261001-2140",
+  "case_id": "V8-NB-C-Z",
+  "status": "PROSPECTIVELY_RESERVED_NOT_EXECUTED",
+  "reserved_at": "2026-10-02T01:52:57+00:00",
+  "domain": "notebook-workspace",
+  "method_id": "C",
+  "method": "simple-complete-control",
+  "brief": "briefs/notebook-workspace.md",
+  "thin_plan": "sandbox-plans/notebook-workspace.md",
+  "research_question_count": 3,
+  "required_product_obligations": [
+    "N1",
+    "N2",
+    "N3",
+    "N4",
+    "N5"
+  ],
+  "stages": [
+    {
+      "reservation_id": "V8-NB-C-Z-research-proposal",
+      "native_goal_required": true,
+      "fresh_context": true,
+      "seconds": 1800,
+      "task_template": "templates/research.TASK.md",
+      "required_artifact": "PROPOSAL.md"
+    },
+    {
+      "reservation_id": "V8-NB-C-Z-independent-candidate-critic",
+      "native_goal_required": true,
+      "fresh_context": true,
+      "seconds": 600,
+      "task_template": "templates/critic.TASK.md",
+      "required_artifact": "CRITIQUE.md"
+    },
+    {
+      "reservation_id": "V8-NB-C-Z-final-correction",
+      "native_goal_required": true,
+      "fresh_context": true,
+      "seconds": 600,
+      "task_template": "templates/correction.TASK.md",
+      "required_artifact": "FINAL_PROPOSAL.md"
+    }
+  ],
+  "candidate_account": {
+    "family": "Z",
+    "model": "GLM5.3Flash",
+    "native_application": "zcode",
+    "mode": "Max",
+    "account_policy": "one existing authorized account for all six primary cases; same account and model/mode through all three native Goals and within each domain comparison",
+    "opaque_identity_binding": null,
+    "binding_required": "host records an opaque nonsecret identity reference before actual case preparation; this declaration reserves the existing-account role and does not invent an account identifier",
+    "fresh_contexts": "three fresh native Goal contexts per case; no copied reasoning histories; critic sees only current proposal, unresolved leads, brief/method/plan and same-case raw source captures; correction also sees candidate critique",
+    "load_policy": "host freezes admission's own active-case/Goal occupancy and exposed account/provider load snapshot; external/unexposed load is UNKNOWN, never assumed zero",
+    "no_automatic_fallback": true
+  },
+  "caps": {
+    "research_proposal_seconds": 1800,
+    "candidate_critic_seconds": 600,
+    "final_correction_seconds": 600,
+    "summed_stage_hard_seconds": 3000,
+    "host_overhead_hard_seconds": 600,
+    "case_wall_hard_seconds": 3600,
+    "case_occupied_hard_seconds": 5400,
+    "research_response_cap": 160,
+    "critic_response_cap": 160,
+    "correction_response_cap": 160,
+    "native_goal_starts_for_complete_case": 3,
+    "active_ours_family_caps": {
+      "M": 2,
+      "Z": 2,
+      "L": 2
+    },
+    "stages": "sequential; critic and correction consume the same family slots as research",
+    "clock_birth": "case birth is recorded before the first actual case-specific preparation/account execution binding/sandbox setup/source preparation/launch, whichever is earliest; each stage birth precedes its own preparation",
+    "no_reset": true,
+    "inclusive_timing": "all preparation, waits, launch/activation delay, critique, corrections, cancel/termination and host work count; original case clock persists across stages and failures",
+    "overrun": "stop under host caps; unused stages remain unexecuted and incomplete cases cannot pass"
+  },
+  "source_access": "source-access.json",
+  "case_birth_utc": null,
+  "case_birth_epoch": null,
+  "birth_required": "host records BEFORE actual case-specific preparation; reservation/template preparation time is not an activation receipt",
+  "evaluator_reservation": "V8-EVAL-NB-C",
+  "input_packaging": "copy only the assigned brief, thin plan, method card and stage TASK; later stages get only permitted same-case frozen current artifacts/raw source captures; no full planning directory mount",
+  "candidate_writes": [
+    "actual stage proposal/critique/final proposal",
+    "unresolved consequential leads",
+    "optional within-case witness artifact with honest execution status"
+  ],
+  "host_writes": [
+    "capture/provenance/delivered ranges",
+    "native histories and stage artifact hashes",
+    "births/termination/waits/occupancy",
+    "account/load binding",
+    "cost and known/unknown token components"
+  ],
+  "method_extra_requirements": []
+}

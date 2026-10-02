@@ -1,0 +1,33 @@
+{
+  "checkpoint": "INITIAL_SCOPE",
+  "planned_limits": {
+    "elapsed_seconds": 21600,
+    "native_goal_starts": 48,
+    "occupied_candidate_slot_seconds": 57600,
+    "helpers_task_starts": 32,
+    "active_helpers": 8,
+    "active_candidates_by_family": {
+      "M": 2,
+      "Z": 2,
+      "L": 2
+    },
+    "candidate_output_warning": 1200000,
+    "candidate_output_stop": 1500000,
+    "helper_output_warning": 800000,
+    "helper_output_stop": 1000000,
+    "component_hard_seconds": 1800,
+    "component_hard_responses": 160,
+    "case_elapsed_seconds": 3600,
+    "case_occupied_seconds": 5400,
+    "repair_versions_per_boundary": 2,
+    "final_review_reserve_seconds": 3600
+  },
+  "observed_native_starts": null,
+  "occupied_candidate_seconds": null,
+  "candidate_generated_tokens": null,
+  "management_tokens": null,
+  "evaluation_tokens": null,
+  "total_tokens": null,
+  "money": null,
+  "note": "Unknown is not zero. Planning reservations are not observed usage; failures, retries, waits and repairs must remain in later accounting."
+}

@@ -1,0 +1,37 @@
+{
+  "mode": "brief-only-independent-public-primary-source-discovery",
+  "supplied_research_sources": [],
+  "supplied_research_facts": [],
+  "allowed_subjects": [
+    "public primary documentation",
+    "public implementation repository source",
+    "public issue/fix/regression-test history"
+  ],
+  "route": "public_https_get",
+  "route_constraints": {
+    "maximum_response_bytes": 524288,
+    "text_encoding": "UTF-8",
+    "public_ip_only": true,
+    "dns_ip_pinned": true,
+    "tls": true,
+    "port": 443,
+    "authentication": false,
+    "proxy": false,
+    "alternate_ports": false
+  },
+  "route_version_binding": "host must bind the new-v8 accepted tool/code/config hash before case preparation; no silent route change",
+  "capture": "host records request/response provenance, capture bytes/hash and model-delivered ranges mechanically; positive source acquisition requires actual capture plus delivered-range evidence",
+  "availability": "uncaptured or unavailable sources remain unresolved; candidate-authored access assertions are not host acquisition proof",
+  "within_case_reuse": "research, fresh critic and fresh correction may read this case's raw admitted public-source captures; each may independently fetch further allowed public sources",
+  "cross_case_reuse": "prohibited: no captures, discoveries, proposals, critiques, source selections, evaluator lists, rulings or feedback from another case/arm",
+  "prohibited": [
+    "private host files",
+    "credential contents",
+    "evaluator keys/rulings",
+    "prior campaign candidate/evaluator output",
+    "sibling case content",
+    "premium-model research answers",
+    "unapproved source tools",
+    "candidate helper/child/native/provider launches"
+  ]
+}

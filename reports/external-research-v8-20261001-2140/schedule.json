@@ -1,0 +1,81 @@
+{
+  "checkpoint": "INITIAL_SCOPE",
+  "accepted_utc": "2026-10-02T01:40:09+00:00",
+  "deadline_utc": "2026-10-02T07:40:09Z",
+  "protected_final_hour_utc": "2026-10-02T06:40:09Z",
+  "cases": [
+    {
+      "case_id": "V8-BIO-C-Z",
+      "state": "NOT_RUN",
+      "native_stages_seconds": [
+        1800,
+        600,
+        600
+      ],
+      "full_case_wall_seconds": 3600,
+      "full_case_occupied_seconds": 5400,
+      "evaluator": "V8-EVAL-BIO-C"
+    },
+    {
+      "case_id": "V8-BIO-P-Z",
+      "state": "NOT_RUN",
+      "native_stages_seconds": [
+        1800,
+        600,
+        600
+      ],
+      "full_case_wall_seconds": 3600,
+      "full_case_occupied_seconds": 5400,
+      "evaluator": "V8-EVAL-BIO-P"
+    },
+    {
+      "case_id": "V8-BIO-B-Z",
+      "state": "NOT_RUN",
+      "native_stages_seconds": [
+        1800,
+        600,
+        600
+      ],
+      "full_case_wall_seconds": 3600,
+      "full_case_occupied_seconds": 5400,
+      "evaluator": "V8-EVAL-BIO-B"
+    },
+    {
+      "case_id": "V8-NB-C-Z",
+      "state": "NOT_RUN",
+      "native_stages_seconds": [
+        1800,
+        600,
+        600
+      ],
+      "full_case_wall_seconds": 3600,
+      "full_case_occupied_seconds": 5400,
+      "evaluator": "V8-EVAL-NB-C"
+    },
+    {
+      "case_id": "V8-NB-P-Z",
+      "state": "NOT_RUN",
+      "native_stages_seconds": [
+        1800,
+        600,
+        600
+      ],
+      "full_case_wall_seconds": 3600,
+      "full_case_occupied_seconds": 5400,
+      "evaluator": "V8-EVAL-NB-P"
+    },
+    {
+      "case_id": "V8-NB-B-Z",
+      "state": "NOT_RUN",
+      "native_stages_seconds": [
+        1800,
+        600,
+        600
+      ],
+      "full_case_wall_seconds": 3600,
+      "full_case_occupied_seconds": 5400,
+      "evaluator": "V8-EVAL-NB-B"
+    }
+  ],
+  "policy": "Run complete controls early on a qualified route; no sixteen-method prerequisite; original births never reset; ordinary boundary repairs remain bounded."
+}

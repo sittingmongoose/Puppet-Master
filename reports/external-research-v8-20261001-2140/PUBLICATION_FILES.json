@@ -1,0 +1,231 @@
+{
+  "checkpoint": "INITIAL_SCOPE",
+  "files": [
+    {
+      "path": "BEST_RECIPE.md",
+      "sha256": "64285dbb97e49290fd2a8c3856855df3f30e3a38f5a87aa916697d190176a924",
+      "bytes": 442
+    },
+    {
+      "path": "CHECKPOINT.md",
+      "sha256": "20d6a7daa0650868daf4dc0771349405ebc7a4c8af5fa9fd75be31537d79c4f9",
+      "bytes": 759
+    },
+    {
+      "path": "FAILURES.md",
+      "sha256": "c266b226f091f4e8ee4cc4154f565282828a1feeacb38b7754a8c852b40238a4",
+      "bytes": 422
+    },
+    {
+      "path": "README.md",
+      "sha256": "73a0d3c56553f5028813fac4920a510ef3f0fe7b179763b0174ab2648dbbd776",
+      "bytes": 1533
+    },
+    {
+      "path": "REPRODUCE.md",
+      "sha256": "30a7b1cb728674ffd78b5c6e9499efc162081eba32f197a8f347d5461bc75bae",
+      "bytes": 844
+    },
+    {
+      "path": "RESULTS.md",
+      "sha256": "807b9f43b6c97c7d2170801dab75ad7b6871affcd80b6411b15468d45b942f47",
+      "bytes": 1048
+    },
+    {
+      "path": "REVIEW_RECONCILIATION.md",
+      "sha256": "a1b67c02e8cfdb983e0752ed21897639c094ac51ffa57225b2ea943b0246e4c8",
+      "bytes": 1868
+    },
+    {
+      "path": "attempts.json",
+      "sha256": "df321453d09553e036f63b1f1a6ae2d3f2bde30b97ee6a7814d1696efe3c1416",
+      "bytes": 279
+    },
+    {
+      "path": "authority/AUTHORIZATION.json",
+      "sha256": "25609fc787d622958fd62afa5df218a1e4789f61595a4152865ceb0c143304f2",
+      "bytes": 2294
+    },
+    {
+      "path": "comparisons.json",
+      "sha256": "b0f02044caab87f6a0c894cdeb7f3d85f7262380141d58e160e6fc9d84107a70",
+      "bytes": 709
+    },
+    {
+      "path": "economics.json",
+      "sha256": "04f8364561649f66416f18b4a13f44e521f99ddd8875be612ad5108ce586fe1d",
+      "bytes": 1042
+    },
+    {
+      "path": "methods.json",
+      "sha256": "9ba25dd9ec3e25e299ec2add2eb9a7725026aa2d76a7237f68a3513a8898b3c8",
+      "bytes": 3512
+    },
+    {
+      "path": "protocol/README.md",
+      "sha256": "9b2193a01330741ce1140bbf772e8b8c1299dd25e132a5b3621bbe1adc7178f5",
+      "bytes": 3098
+    },
+    {
+      "path": "protocol/briefs/bioimaging.md",
+      "sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+      "bytes": 3352
+    },
+    {
+      "path": "protocol/briefs/notebook-workspace.md",
+      "sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+      "bytes": 3603
+    },
+    {
+      "path": "protocol/cases/V8-BIO-B-Z/METHOD.md",
+      "sha256": "f6df08a280a4db79323bd96c9d816c34aee66a02e3f155602407f1290c599f5c",
+      "bytes": 2024
+    },
+    {
+      "path": "protocol/cases/V8-BIO-B-Z/TASK.md",
+      "sha256": "cb0f443bfa9daee35e3d30f6e7dfa27be5a1933a8097ef5b77175bffc2dcd551",
+      "bytes": 1078
+    },
+    {
+      "path": "protocol/cases/V8-BIO-B-Z/manifest.json",
+      "sha256": "bacf9033fa8af87aef92fb6c6ff4128135fab2159632a395c286b2a9425c74b7",
+      "bytes": 4623
+    },
+    {
+      "path": "protocol/cases/V8-BIO-C-Z/METHOD.md",
+      "sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "bytes": 473
+    },
+    {
+      "path": "protocol/cases/V8-BIO-C-Z/TASK.md",
+      "sha256": "af4401598f65effb4271b0cc1fb24c757d2b331d71b7bb35f73ed5df03d17ff9",
+      "bytes": 1078
+    },
+    {
+      "path": "protocol/cases/V8-BIO-C-Z/manifest.json",
+      "sha256": "8e7640a9e34d166a97e4c22f732cb56e5ee516bec47327da605324e5608a5447",
+      "bytes": 4436
+    },
+    {
+      "path": "protocol/cases/V8-BIO-P-Z/METHOD.md",
+      "sha256": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a",
+      "bytes": 1172
+    },
+    {
+      "path": "protocol/cases/V8-BIO-P-Z/TASK.md",
+      "sha256": "4c8c7e7e083d4788e4d5e7db27e3e8841c5073d51e46ae3b937a88dab4a6636f",
+      "bytes": 1078
+    },
+    {
+      "path": "protocol/cases/V8-BIO-P-Z/manifest.json",
+      "sha256": "4642c8d7ebb2b925f3a2256db79c73070549a451ad2bc4235df1862a0c6cba0b",
+      "bytes": 4543
+    },
+    {
+      "path": "protocol/cases/V8-NB-B-Z/METHOD.md",
+      "sha256": "f6df08a280a4db79323bd96c9d816c34aee66a02e3f155602407f1290c599f5c",
+      "bytes": 2024
+    },
+    {
+      "path": "protocol/cases/V8-NB-B-Z/TASK.md",
+      "sha256": "3637535202f4e89c20924ce2938ca17d5761c5ebec07bf6c4c23fe23fb6ab822",
+      "bytes": 1093
+    },
+    {
+      "path": "protocol/cases/V8-NB-B-Z/manifest.json",
+      "sha256": "8b4268c2b11ccccae378713bfa8c87ddea7bc03ee1e50c236ccd269b7bc50485",
+      "bytes": 4642
+    },
+    {
+      "path": "protocol/cases/V8-NB-C-Z/METHOD.md",
+      "sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "bytes": 473
+    },
+    {
+      "path": "protocol/cases/V8-NB-C-Z/TASK.md",
+      "sha256": "d9816fe920d7e06953d52572466f681d8d74d9fb494d03a6d62219269de36428",
+      "bytes": 1093
+    },
+    {
+      "path": "protocol/cases/V8-NB-C-Z/manifest.json",
+      "sha256": "feabe7e17c01d50d74c5431ace0dcb41de0e409ac1ab7ede6489c4f0c0a37a81",
+      "bytes": 4455
+    },
+    {
+      "path": "protocol/cases/V8-NB-P-Z/METHOD.md",
+      "sha256": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a",
+      "bytes": 1172
+    },
+    {
+      "path": "protocol/cases/V8-NB-P-Z/TASK.md",
+      "sha256": "af2b57df7cbf964103c9c91b2396f34c1d924179de064c8ea9c2ff023e4a473e",
+      "bytes": 1093
+    },
+    {
+      "path": "protocol/cases/V8-NB-P-Z/manifest.json",
+      "sha256": "081d67be0ab11b321add5f13ff70418833937c897873b2f7c2560131f362ba7c",
+      "bytes": 4562
+    },
+    {
+      "path": "protocol/manifest.json",
+      "sha256": "b755069cd2e0926819e1a9157c5007aee4c08470dafa60203e73a29d7ac3e9aa",
+      "bytes": 1853
+    },
+    {
+      "path": "protocol/methods.json",
+      "sha256": "682b81210e7cef1dfc53e18dabe4bfdaec3374f24981d24945a1fe2028c4b810",
+      "bytes": 3497
+    },
+    {
+      "path": "protocol/native-objectives.json",
+      "sha256": "79773937d8a2e11ac66fe31568477af450d142692d8a09dbcf683f13876c575c",
+      "bytes": 23155
+    },
+    {
+      "path": "protocol/reservations/candidates.json",
+      "sha256": "a28c20f83fcc472c85583f8f478bc61c7497932e0093189ee26c6ffe55834017",
+      "bytes": 2801
+    },
+    {
+      "path": "protocol/reservations/evaluators.json",
+      "sha256": "addf319fa3f7dce4b9d0422f1074ea36bc75441f548681e056ff157086c27277",
+      "bytes": 3113
+    },
+    {
+      "path": "protocol/sandbox-plans/bioimaging.md",
+      "sha256": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30",
+      "bytes": 959
+    },
+    {
+      "path": "protocol/sandbox-plans/notebook-workspace.md",
+      "sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+      "bytes": 920
+    },
+    {
+      "path": "protocol/source-access.json",
+      "sha256": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df",
+      "bytes": 1728
+    },
+    {
+      "path": "protocol/templates/correction.TASK.md",
+      "sha256": "9ef5b51a9b2e9db734e492f6be2978f277ec8ee7f456b310c1f793375f1997d5",
+      "bytes": 1477
+    },
+    {
+      "path": "protocol/templates/critic.TASK.md",
+      "sha256": "fa635038ca75a96599f09d43eb289b89c25320eda9325fd836c6fef2878504b2",
+      "bytes": 1448
+    },
+    {
+      "path": "protocol/templates/research.TASK.md",
+      "sha256": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3",
+      "bytes": 1586
+    },
+    {
+      "path": "schedule.json",
+      "sha256": "ae4e97211a93b356657825749902c03d9128e6e6fcb8f234bb3449771ac80167",
+      "bytes": 1954
+    }
+  ],
+  "scope": "Positive whitelist: public authorization, candidate planning inputs, sanitized reservation metadata and publisher summaries. No private/raw/evaluator-key files read."
+}

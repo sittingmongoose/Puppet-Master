@@ -1,0 +1,83 @@
+{
+  "schema": "pm.external_research.v8.candidate_reservations.v1",
+  "count": 6,
+  "candidate_family": "Z",
+  "account_role": "V8-Z-PRIMARY-EXISTING",
+  "native_goals_reserved": 18,
+  "worst_case_occupied_seconds_reserved": 32400,
+  "schedule": "run BIO-C and NB-C as earliest integrated controls as soon as a usable route is admitted; do not gate on component screens; later C/P/B order and overlapping domains remain subject to ours Z2 and original deadlines",
+  "reservations": [
+    {
+      "reservation_id": "V8-BIO-C-Z",
+      "domain": "bioimaging",
+      "method_id": "C",
+      "family": "Z",
+      "shared_existing_account_role": "V8-Z-PRIMARY-EXISTING",
+      "native_goal_starts": 3,
+      "case_manifest": "cases/V8-BIO-C-Z/manifest.json",
+      "paired_evaluator": "V8-EVAL-BIO-C",
+      "occupied_hard_seconds": 5400,
+      "state": "RESERVED"
+    },
+    {
+      "reservation_id": "V8-BIO-P-Z",
+      "domain": "bioimaging",
+      "method_id": "P",
+      "family": "Z",
+      "shared_existing_account_role": "V8-Z-PRIMARY-EXISTING",
+      "native_goal_starts": 3,
+      "case_manifest": "cases/V8-BIO-P-Z/manifest.json",
+      "paired_evaluator": "V8-EVAL-BIO-P",
+      "occupied_hard_seconds": 5400,
+      "state": "RESERVED"
+    },
+    {
+      "reservation_id": "V8-BIO-B-Z",
+      "domain": "bioimaging",
+      "method_id": "B",
+      "family": "Z",
+      "shared_existing_account_role": "V8-Z-PRIMARY-EXISTING",
+      "native_goal_starts": 3,
+      "case_manifest": "cases/V8-BIO-B-Z/manifest.json",
+      "paired_evaluator": "V8-EVAL-BIO-B",
+      "occupied_hard_seconds": 5400,
+      "state": "RESERVED"
+    },
+    {
+      "reservation_id": "V8-NB-C-Z",
+      "domain": "notebook-workspace",
+      "method_id": "C",
+      "family": "Z",
+      "shared_existing_account_role": "V8-Z-PRIMARY-EXISTING",
+      "native_goal_starts": 3,
+      "case_manifest": "cases/V8-NB-C-Z/manifest.json",
+      "paired_evaluator": "V8-EVAL-NB-C",
+      "occupied_hard_seconds": 5400,
+      "state": "RESERVED"
+    },
+    {
+      "reservation_id": "V8-NB-P-Z",
+      "domain": "notebook-workspace",
+      "method_id": "P",
+      "family": "Z",
+      "shared_existing_account_role": "V8-Z-PRIMARY-EXISTING",
+      "native_goal_starts": 3,
+      "case_manifest": "cases/V8-NB-P-Z/manifest.json",
+      "paired_evaluator": "V8-EVAL-NB-P",
+      "occupied_hard_seconds": 5400,
+      "state": "RESERVED"
+    },
+    {
+      "reservation_id": "V8-NB-B-Z",
+      "domain": "notebook-workspace",
+      "method_id": "B",
+      "family": "Z",
+      "shared_existing_account_role": "V8-Z-PRIMARY-EXISTING",
+      "native_goal_starts": 3,
+      "case_manifest": "cases/V8-NB-B-Z/manifest.json",
+      "paired_evaluator": "V8-EVAL-NB-B",
+      "occupied_hard_seconds": 5400,
+      "state": "RESERVED"
+    }
+  ]
+}

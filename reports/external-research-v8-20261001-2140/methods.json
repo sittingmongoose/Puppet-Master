@@ -1,0 +1,35 @@
+{
+  "schema": "pm.external_research.v8.methods.v1",
+  "frozen_at": "2026-10-02T01:52:57+00:00",
+  "methods": {
+    "C": {
+      "name": "simple-complete-control",
+      "instruction": "Use a lean ordinary research \u2192 proposal \u2192 independent candidate critique \u2192 final correction pipeline. Choose an efficient research order yourself. All brief obligations and accurate source scope/conditions remain required. No special proposition table, witness procedure, batching schedule or retrieval waves are imposed. If you spontaneously use such techniques, they are observable control behavior, not a reason to suppress useful work.",
+      "extra_requirements": []
+    },
+    "P": {
+      "name": "proposition-condition-witness-lean",
+      "instruction": "Use the complete lean three-stage pipeline. Before finalizing the proposal, inspect exactly three consequential decision propositions, one anchored in each research question, in a compact paragraph/table. For each preserve the selected source/version, applicability condition, relevant exception, normative force and distinction between source evidence, inference and product choice. State the supported correction when rejecting an earlier proposition. Include one small discriminating numerical witness for a consequential interpretation or proposed algorithm: choose and derive your own values, show intermediate reasoning and the competing interpretation it distinguishes. For the viewer this can test a calibration/transform or resolution interpretation; for the notebook it can test cell matching/change counts or captured-state recovery ordering. Do not use supplied evaluator values or answers. Execute arithmetic only through an admitted deterministic tool. Otherwise show a reasoned UNEXECUTED validation proposal and do not claim a runtime result. This three-proposition check supplements, not limits, whole-case coverage.",
+      "extra_requirements": [
+        "three-proposition-condition-check",
+        "self-derived-discriminating-numerical-witness"
+      ]
+    },
+    "B": {
+      "name": "condition-witness-with-batching-progressive-retrieval",
+      "instruction": "Apply the proposition/condition/witness lean recipe in full. Plan two or three coherent research batches across the three questions; reuse an acquired source within this case when it bears on related obligations. Retrieve progressively: identify source identity/version and relevant sections first, then expand surrounding context for each consequential claim, ambiguity, exception and issue \u2192 fix \u2192 test link. Complete the bounded obligations before stopping; initial snippets are leads, not sufficient evidence by default. Do not retrieve an entire corpus merely to satisfy a procedure and do not truncate uncovered obligations to save time. Include only a short research-order note in the proposal; host histories/captures measure actual operations. No cross-case cache or discoveries.",
+      "extra_requirements": [
+        "three-proposition-condition-check",
+        "self-derived-discriminating-numerical-witness",
+        "coherent-batches",
+        "progressive-context-retrieval"
+      ]
+    }
+  },
+  "comparison_order": [
+    "C versus P",
+    "P versus B"
+  ],
+  "differences": "shared brief, complete stages, source access, account/model/mode, timing and evaluation coverage; only prospective method instructions differ",
+  "posthoc_changes": "no relabeling, shared discoveries, evaluator rescue or outcome-based obligation reduction"
+}

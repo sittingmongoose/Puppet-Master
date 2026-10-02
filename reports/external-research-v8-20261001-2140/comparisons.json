@@ -1,0 +1,33 @@
+{
+  "schema": "pm.external_research.v8.public_comparisons.v1",
+  "comparisons": [
+    {
+      "domain": "BIO",
+      "pair": "C versus P",
+      "state": "NOT_RUN",
+      "quality": "UNASSESSED",
+      "speedup": "NOT_ESTABLISHED"
+    },
+    {
+      "domain": "BIO",
+      "pair": "P versus B",
+      "state": "NOT_RUN",
+      "quality": "UNASSESSED",
+      "speedup": "NOT_ESTABLISHED"
+    },
+    {
+      "domain": "NB",
+      "pair": "C versus P",
+      "state": "NOT_RUN",
+      "quality": "UNASSESSED",
+      "speedup": "NOT_ESTABLISHED"
+    },
+    {
+      "domain": "NB",
+      "pair": "P versus B",
+      "state": "NOT_RUN",
+      "quality": "UNASSESSED",
+      "speedup": "NOT_ESTABLISHED"
+    }
+  ]
+}
