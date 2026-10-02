@@ -34,7 +34,8 @@ html[data-o55-nier-parts~="cursor"] .pmr-menu .pmr-mi:is(:hover, :focus-visible,
 
 /* the trigger: the chat selector button's look (surface-elevated, hairline, radius-sm, 26px) at rail text size */
 .pmr-trigger {
-  display: inline-flex; align-items: center; gap: 6px; min-width: 0; max-width: 100%; min-height: 28px; padding: 3px 8px 3px 9px;
+  /* keeps its content width (its label is the point); neighbours such as status words shrink instead */
+  display: inline-flex; flex: 0 0 auto; align-items: center; gap: 6px; min-width: 0; max-width: 100%; min-height: 28px; padding: 3px 8px 3px 9px;
   background: var(--surface-elevated); border: 1px solid var(--border-light, var(--border)); border-radius: var(--pmr-radius);
   color: var(--text-primary); font: 600 12px/1.25 var(--pmr-font); cursor: pointer; text-align: left;
   transition: background var(--pmr-t-fast) var(--pmr-ease), border-color var(--pmr-t-fast) var(--pmr-ease);
