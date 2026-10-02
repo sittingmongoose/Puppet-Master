@@ -678,6 +678,22 @@ html[data-motion="reduced"] .working-variant-8 .rail8-item.current::before { ani
   }
   .working-variant-11 .dt-row.retired { animation-duration:1ms, 1ms; animation-delay:0ms, 1ms; }
 }
+/* The two class routes (neon 3E2, fix cycle 2): the three loops this file adds stop as under the media query, and
+   the two shimmers drop back to painted text (motion.css restates its own block for these routes). */
+body.pm56-reduced .working-variant-9 .ws-caret,
+html[data-motion="reduced"] .working-variant-9 .ws-caret { animation:none; opacity:.75; }
+body.pm56-reduced .working-variant-11 .dt-feed,
+html[data-motion="reduced"] .working-variant-11 .dt-feed { animation:none; opacity:.75; }
+body.pm56-reduced .working-variant-8 .rail8-verb.pm-shimmer,
+body.pm56-reduced .working-variant-8 .rail8-verb.pm-shimmer.pm-settled,
+body.pm56-reduced .working-variant-10 .tc10-line b.pm-shimmer,
+body.pm56-reduced .working-variant-10 .tc10-line b.pm-shimmer.pm-settled,
+html[data-motion="reduced"] .working-variant-8 .rail8-verb.pm-shimmer,
+html[data-motion="reduced"] .working-variant-8 .rail8-verb.pm-shimmer.pm-settled,
+html[data-motion="reduced"] .working-variant-10 .tc10-line b.pm-shimmer,
+html[data-motion="reduced"] .working-variant-10 .tc10-line b.pm-shimmer.pm-settled {
+  animation:none; background:none; color:var(--text);
+}
 
 /* Chat WOW M4 -- Step Rail parity with Orbit: status flags, clusters, narration. */
 .rail8-item { position: relative; }
