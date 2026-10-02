@@ -17334,6 +17334,7 @@ body {
   --ss-out: cubic-bezier(.3, .15, .65, .45);        /* lift-off: moves at once, accelerates away */
   --ss-shake: cubic-bezier(.3, 0, .3, 1);
   --ss-drain: cubic-bezier(.2, .75, .25, 1);        /* the red leaves fast, before the plane takes shape */
+  --ss-fo: 70ms;                                    /* the drain's last dot fades from here (the disc is under the square) */
   --ss-flood-e: var(--nx-ease, cubic-bezier(.2, .75, .25, 1));
   /* the glow loop's voice: a sine in-out for Basic. Not the loop token (.45, 0, .25, 1): on an opacity loop that
      curve keeps Chrome 151 asking for a main frame every frame although the animation reports composited (VM trace:
@@ -17349,7 +17350,7 @@ body[data-theme$="-light"] {
   --ss-idle-ink: .76;
 }
 body[data-theme^="friendly"] { --ss-gle: cubic-bezier(.34, 1.4, .64, 1); }
-body[data-theme^="glass"] { --ss-drain: cubic-bezier(.4, 0, .1, 1); --ss-gle: cubic-bezier(.6, 0, .25, 1); }
+body[data-theme^="glass"] { --ss-drain: cubic-bezier(.4, 0, .1, 1); --ss-fo: 110ms; --ss-gle: cubic-bezier(.6, 0, .25, 1); }
 body[data-theme^="retro"] { --ss-out: steps(4, end); --ss-shake: steps(4, end); --ss-drain: steps(1, start); --ss-flood-e: steps(1, start); --ss-gle: steps(4, end); }
 
 /* ------------------------------------------------------------------ the chip */
@@ -17387,23 +17388,27 @@ body[data-theme^="retro"] { --ss-out: steps(4, end); --ss-shake: steps(4, end); 
 .sendstop[data-ss="stop"] .ss-bl { opacity: 1; transition: opacity 300ms ease-out calc(var(--ss-md, 0ms) + 220ms), scale 260ms var(--ease); }
 body[data-theme^="retro"] .sendstop[data-ss="stop"] .ss-bl { transition: opacity 300ms steps(1, start) calc(var(--ss-md, 0ms) + 300ms), scale 260ms var(--ease); }
 
+/* pointer-events none on the face (and so the glyph): the button is the one hit target, so a glyph moving under a still
+   pointer fires no pointerover and re-arms no tip mid-hero (app.js drops the tip when the chip is pressed) */
 .ss-face {
-  position: absolute; inset: 0; border-radius: inherit; overflow: hidden;
+  position: absolute; inset: 0; border-radius: inherit; overflow: hidden; pointer-events: none;
   background: var(--accent);
   box-shadow: inset 0 1px 0 var(--ss-rim), 0 1px 2px var(--ss-drop);
   transition: background-color 300ms ease-out, box-shadow 300ms ease-out;
 }
 /* The run's colour FLOODS the chip from its centre (a disc that scales up behind the glyph) instead of blending:
    accent-to-danger blends pass through mud (green to red is brown in Retro), a flood has a clean edge and says "this
-   started here". Transform only. Leaving Stop the red drains back behind the square first. */
+   started here". Transform and opacity only. Leaving Stop the red drains back behind the square first; the drain's
+   curve has a long tail, so once the disc is under the square (--ss-fo, per drain curve) its last dot fades out in
+   60 ms, before the square's fill has thinned enough to show it inside the opening plane. */
 .ss-flood {
   position: absolute; left: 50%; top: 50%; width: 36px; height: 36px; margin: -18px 0 0 -18px; border-radius: 50%;
-  background: var(--danger); scale: 0; pointer-events: none;
-  transition: scale 300ms var(--ss-drain) var(--ss-dd, 0ms);
+  background: var(--danger); scale: 0; opacity: 0; pointer-events: none;
+  transition: scale 300ms var(--ss-drain) var(--ss-dd, 0ms), opacity 60ms linear calc(var(--ss-dd, 0ms) + var(--ss-fo));
 }
-.sendstop[data-ss="stop"] .ss-flood { scale: 1; transition: scale 360ms var(--ss-flood-e) calc(var(--ss-md, 0ms) + 180ms); }
+.sendstop[data-ss="stop"] .ss-flood { scale: 1; opacity: 1; transition: scale 360ms var(--ss-flood-e) calc(var(--ss-md, 0ms) + 180ms), opacity 0ms; }
 /* Retro: one step from accent to danger the moment the stepped morph lands (it ends at --ss-md + 300 ms) */
-body[data-theme^="retro"] .sendstop[data-ss="stop"] .ss-flood { transition: scale 300ms var(--ss-flood-e) calc(var(--ss-md, 0ms) + 300ms); }
+body[data-theme^="retro"] .sendstop[data-ss="stop"] .ss-flood { transition: scale 300ms var(--ss-flood-e) calc(var(--ss-md, 0ms) + 300ms), opacity 0ms; }
 /* a faint top sheen: the solid chip reads as a lit tile, not a flat sticker */
 .ss-face::before {
   content: ""; position: absolute; inset: 0 0 50% 0; pointer-events: none; z-index: 1;
@@ -17633,6 +17638,8 @@ html[data-o55-nier="on"] .sendstop .ss-face { box-shadow: none; }
 html[data-o55-nier="on"] .sendstop .ss-flood { background: var(--o55-nier-ink); }
 html[data-o55-nier="on"] .sendstop[data-ss="stop"]:not([data-hold]):hover .ss-flood { background: var(--o55-nier-error); }
 html[data-o55-nier="on"] .sendstop[data-ss="full"] .ss-face { box-shadow: inset 0 0 0 1px var(--o55-nier-line-strong); }
+/* the refused send under reduced motion: the static ring in the NieR rust (the face rule above would drop it) */
+html[data-o55-nier="on"] .sendstop.ss-fail-static .ss-face { box-shadow: inset 0 0 0 1.5px var(--o55-nier-error), 0 0 0 2px var(--o55-nier-error); }
 html[data-o55-nier="on"] .sendstop .ss-count { border-radius: 0; box-shadow: none; }
 html[data-o55-nier="on"] .sendstop .ss-g { stroke-linejoin: miter; }
 html[data-o55-nier="on"] .sendstop[data-ss="stop"] .ss-body, html[data-o55-nier="on"] .sendstop[data-ss="stop"] .ss-knock {
