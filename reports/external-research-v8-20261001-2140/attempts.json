@@ -1,6 +1,6 @@
 {
   "schema": "pm.external_research.v8.public_attempts.v1",
-  "checkpoint": "RESUMED_V3_OPERATIONAL_NATIVE_PROOF_PENDING",
+  "checkpoint": "INTEGRATED_Z_TRANCHE_V3_RESEARCH_ACTIVE",
   "attempts": [
     {
       "id": "v8-z-mechanical-route-canary-v1",
@@ -30,7 +30,7 @@
     {
       "id": "v8-z-mechanical-route-canary-v3",
       "scope": "mechanical_native_canary",
-      "status": "OPERATIONAL_COMPLETE_PENDING_INDEPENDENT_NATIVE_PROOF",
+      "status": "MECHANICAL_NATIVE_PASS_QUALITY_UNASSESSED",
       "native_goal_starts": 1,
       "occupied_slot_seconds": 73.06437873840332,
       "original_occupied_cap_seconds": 480,
@@ -47,9 +47,57 @@
       "generated_usage_scope": "Reported v3 request deltas; total campaign usage remains UNKNOWN",
       "research_quality": "UNASSESSED",
       "evidence": "resume-cohort-v1/ops/execution-recovery-v1/CANARY_V3_TERMINAL_MANIFEST.json"
+    },
+    {
+      "id": "V8-BIO-C-Z",
+      "scope": "integrated_case_host_attempt",
+      "status": "HOST_FAILURE",
+      "native_goal_starts": 0,
+      "research_quality": "UNASSESSED",
+      "evidence": "running-tranche-cohort-v1/OBSERVATION.json"
+    },
+    {
+      "id": "V8-BIO-WIT-T-Z",
+      "scope": "integrated_case_host_attempt",
+      "status": "HOST_FAILURE",
+      "native_goal_starts": 0,
+      "research_quality": "UNASSESSED",
+      "evidence": "running-tranche-cohort-v1/OBSERVATION.json"
+    },
+    {
+      "id": "V8-NB-C-Z",
+      "scope": "integrated_case_host_attempt",
+      "status": "HOST_FAILURE",
+      "native_goal_starts": 0,
+      "research_quality": "UNASSESSED",
+      "evidence": "running-tranche-cohort-v1/OBSERVATION.json"
+    },
+    {
+      "id": "V8-NB-WIT-T-Z",
+      "scope": "integrated_case_host_attempt",
+      "status": "HOST_FAILURE",
+      "native_goal_starts": 0,
+      "research_quality": "UNASSESSED",
+      "evidence": "running-tranche-cohort-v1/OBSERVATION.json"
+    },
+    {
+      "id": "V8-BIO-COND-C-Z",
+      "scope": "integrated_case_research_stage",
+      "status": "NATIVE_ACTIVE_AT_SELECTED_OBSERVATION",
+      "native_goal_starts": 1,
+      "research_quality": "UNASSESSED",
+      "evidence": "running-tranche-cohort-v1/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/native-public/activation.json"
+    },
+    {
+      "id": "V8-BIO-P-Z",
+      "scope": "integrated_case_research_stage",
+      "status": "NATIVE_ACTIVE_AT_SELECTED_OBSERVATION",
+      "native_goal_starts": 1,
+      "research_quality": "UNASSESSED",
+      "evidence": "running-tranche-cohort-v1/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/native-public/activation.json"
     }
   ],
-  "note": "Frozen v1/v2 failed mechanical canaries unchanged. V3 operational completion appended; independent native proof pending. Current selected freeze 0/24 integrated research executions and 0/12 comparisons; reservations are not starts.",
+  "note": "V1/v2 failures preserved. V3 mechanically qualified independently; no research-quality result. Four failed host cases retained, two actual research Goals active at selected observation; 0/24 integrated executions and 0/12 comparisons complete.",
   "native_qualification": "V3_MECHANICAL_PASSED_LIMITED_DELIVERY_INFERENCE",
   "native_qualification_evidence": "resume-qualified-v3-cohort/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json"
 }

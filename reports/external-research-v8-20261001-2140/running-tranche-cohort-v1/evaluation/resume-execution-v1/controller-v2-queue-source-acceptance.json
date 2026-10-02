@@ -1,0 +1,12 @@
+{
+  "schema": "pm.er8.host-source-acceptance.v1",
+  "verdict": "accepted",
+  "allowed_modes": [
+    "productive"
+  ],
+  "snapshot_sha256": "c6b0e36b3d46562284d81ace42456a681741fd97a1c74d238c236f4b527d5779",
+  "reviewer": "root independentofNativeMusemechanicalsourceauthor",
+  "author": "MuseCode muse-spark-1.3-contributor requestedmax",
+  "scope": "Exacttwoqueuechanges, noother behavior/source/nativeboundary changes; 2meaningful mockedregressions independently passed: nondefaultselectedqueue acceptedbeforechildgate, refill3casesacross2slotsafterpositivefailure",
+  "created_utc": "2026-10-02T22:50:25.722430+00:00"
+}

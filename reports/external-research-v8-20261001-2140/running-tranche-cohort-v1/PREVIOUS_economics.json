@@ -1,7 +1,7 @@
 {
-  "checkpoint": "INTEGRATED_Z_TRANCHE_V3_RESEARCH_ACTIVE",
-  "observed_native_starts": 5,
-  "occupied_candidate_seconds": 2424.506318807602,
+  "checkpoint": "RESUMED_V3_OPERATIONAL_NATIVE_PROOF_PENDING",
+  "observed_native_starts": 3,
+  "occupied_candidate_seconds": 1427.4393529891968,
   "candidate_generated_tokens": null,
   "management_tokens": null,
   "evaluation_tokens": null,
@@ -45,7 +45,7 @@
   },
   "observed_physical_canary_seconds": 450.307123673,
   "governing_authority_amendment": "canary-controller-cohort-v1/recovery-v1/AUTHORITY_AMENDMENT.json",
-  "observed_usage_scope": "Selected running observation; failure-inclusive observed candidate leases through snapshot, active jobs continue increasing. Four host failures retained; pre-admission notebook setup cost unresolved separately.",
+  "observed_usage_scope": "Selected restart at 2026-10-02T22:17:46.343042+00:00; original v3 terminal operational completion, independent native proof pending",
   "reserved_native_starts": 84,
   "reserved_occupied_candidate_seconds": 151200,
   "reservation_scope": "24 initial integrated and four fresh holdout whole pipelines; reservations are not starts/usage; root-selected overlay-v2 freeze",
@@ -62,7 +62,7 @@
       "original_cap_seconds": 480
     }
   ],
-  "current_evidence": "running-tranche-cohort-v1/OBSERVATION.json",
+  "current_evidence": "resume-cohort-v1/ops/execution-recovery-v1/CANARY_V3_TERMINAL_MANIFEST.json",
   "last_independently_reviewed_usage": {
     "native_starts": 2,
     "occupied_candidate_seconds": 1354.3749742507935,
@@ -75,18 +75,18 @@
   "generated_output_tokens_lower_bound": 1923,
   "reported_output_lower_bound_scope": "v3 only; prior unexposed usage remains UNKNOWN",
   "prospective_deadline_epoch": 1791013030.8303788,
-  "observation_utc": "2026-10-02T22:58:57.540514+00:00",
+  "observation_utc": "2026-10-02T22:17:46.343042+00:00",
   "resume_evidence": "resume-cohort-v1/ops/recovery-v1/RESUME_20261002.json",
   "observed_physical_canary_seconds_scope": "Historical first canary only",
   "native_muse_mechanical_helper": {
-    "starts": 2,
+    "starts": 1,
     "candidate_goal_starts": 0,
-    "elapsed_seconds": 178.194792833,
+    "elapsed_seconds": 60.90604103700025,
     "generated_tokens": null,
     "reasoning_realized": "UNKNOWN",
     "money": null,
-    "evidence": "running-tranche-cohort-v1/ops/muse-helper-controller-v2/QUIET.json",
-    "scope": "Two separately accounted helpers, not candidate Goal starts or zero usage"
+    "evidence": "resume-cohort-v1/ops/muse-helper-v1/RESULT.json",
+    "scope": "Separate helper; not zero usage, not candidate occupancy"
   },
   "third_canary_reported_usage": {
     "usage": {

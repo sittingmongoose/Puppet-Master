@@ -1,5 +1,9 @@
 # Checkpoint
 
+Current selected observation: 2026-10-02T22:58:57.540514+00:00. Five native starts, two active GLM research Goals, 0/24 integrated executions and 0/12 matched comparisons completed. The [running tranche checkpoint](running-tranche-cohort-v1/README.md) supersedes the older observations below. It preserves four host case failures and two separately accounted native Muse helpers. Active occupied time continues after the snapshot.
+
+Earlier published observation follows:
+
 State: RESUMED; the third canary is independently qualified for mechanical native execution. The earlier selected operational-only freeze is retained in the resume cohort. Latest selected restart observation (2026-10-02T22:17:46.343042+00:00): **3 native starts, 1427.4393529891968 occupied candidate slot seconds, 1923 reported output tokens as a lower bound, 0/24 integrated research executions and 0/12 completed comparisons**. Its active-jobs list is empty at the observation only. The third canary's actual RESULT, metrics, bounded public capture/range record, lease settlement and parent cleanup are now published in the [resume cohort](resume-cohort-v1/README.md); operational completion alone establishes no research-quality or method result.
 
 The [resume authority](resume-cohort-v1/ops/recovery-v1/RESUME_20261002.json) fixes resume epoch 1790979124.0 (2026-10-02T22:12:04Z), excludes exactly 64621.83037877083 seconds of explicit user pause and sets prospective campaign deadline epoch 1791013030.8303788 (**2026-10-03T07:37:10.830379Z**). Original start 2026-10-02T01:40:09Z, consumed usage and frozen assignment births/deadlines remain unchanged. The [earlier amendment](canary-controller-cohort-v1/recovery-v1/AUTHORITY_AMENDMENT.json) still governs 144 native starts, 172800 occupied candidate slot seconds, six simultaneous helpers and M2/Z2/L2 concurrency. No resource budget resets.

@@ -1,0 +1,81 @@
+{
+  "schema": "pm.er8.failure-cleanup-proof.production.v1",
+  "case": "V8-BIO-C-Z",
+  "job": "V8-BIO-C-Z-research-proposal",
+  "root_authority": true,
+  "case_launch": {
+    "case": "V8-BIO-C-Z",
+    "case_supervisor_pid": 1767800,
+    "case_supervisor_pgid": 1767800,
+    "original_case_start_monotonic_ns": 202496135248347,
+    "original_case_birth_epoch": 1790980749.9654746,
+    "original_case_deadline_monotonic_ns": 206096135248347
+  },
+  "stage_launch": {
+    "case": "V8-BIO-C-Z",
+    "job": "V8-BIO-C-Z-research-proposal",
+    "stage_actor_pid": 1767811,
+    "stage_actor_pgid": 1767811,
+    "original_stage_start_monotonic_ns": 202496135248347,
+    "original_stage_birth_epoch": 1790980749.9654746,
+    "original_stage_deadline_monotonic_ns": 204296135248347
+  },
+  "case_held_wait": {
+    "case": "V8-BIO-C-Z",
+    "case_supervisor_pid": 1767800,
+    "case_supervisor_pgid": 1767800,
+    "original_case_start_monotonic_ns": 202496135248347,
+    "original_case_birth_epoch": 1790980749.9654746,
+    "original_case_deadline_monotonic_ns": 206096135248347,
+    "held_Popen_returncode": 126,
+    "actual_exit_observed_monotonic_ns": 202498717322223
+  },
+  "stage_held_wait": {
+    "case": "V8-BIO-C-Z",
+    "job": "V8-BIO-C-Z-research-proposal",
+    "stage_actor_pid": 1767811,
+    "stage_actor_pgid": 1767811,
+    "original_stage_start_monotonic_ns": 202496135248347,
+    "original_stage_birth_epoch": 1790980749.9654746,
+    "original_stage_deadline_monotonic_ns": 204296135248347,
+    "held_Popen_returncode": 126,
+    "actual_exit_observed_monotonic_ns": 202498583372703
+  },
+  "held_rolling_exit": {
+    "held_rolling_pid": 1767768,
+    "held_rolling_pgid": 1767768,
+    "held_Popen_returncode": 126,
+    "actual_exit_observed_monotonic_ns": 202498820739503,
+    "rolling_group_absent": true,
+    "root_release_sha256": "d54db5d7dc2b1fa9925eb3e00d5b8f6ba03ca9501b860edcee74307e555f4ea4",
+    "no_private_reads": true
+  },
+  "all_owned_groups_absent": {
+    "case_supervisor": true,
+    "stage_actor": true
+  },
+  "enrolled_native_mcp_quiet": {
+    "schema": "er8.execution.quiescence.v1",
+    "owned_unit": "er8-v8-bio-c-z-research-proposal.service",
+    "owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-c-z-research-proposal.service",
+    "enrollment": {
+      "schema": "er8.execution.enrollment.v1",
+      "owned_unit": "er8-v8-bio-c-z-research-proposal.service",
+      "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-c-z-research-proposal.service",
+      "enrolled_monotonic_ns": 202498136258314,
+      "original_deadline_monotonic_ns": 204296135248347
+    },
+    "absence_proof": "positively-enrolled-owned-cgroup-removed",
+    "owned_native_quiescent": true,
+    "quiescence_observed_monotonic_ns": 202498860801087,
+    "original_deadline_monotonic_ns": 204296135248347,
+    "inclusive_native_lifetime_established": true,
+    "occupancy_disposition": "releasable-native-only",
+    "native_goal_or_quality_qualification": "UNESTABLISHED; independent native receipt review mandatory"
+  },
+  "actual_observed_monotonic_ns": 202498860811810,
+  "complete_receipt_present": false,
+  "outcome": "FAILURE_OR_INCOMPLETE_PRESERVED",
+  "no_backdating": true,
+  "qualification": "cleanup only"
+}

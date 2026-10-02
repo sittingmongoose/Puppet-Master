@@ -1,0 +1,55 @@
+{
+  "schema": "pm.external_research.v8.public_attempts.v1",
+  "checkpoint": "RESUMED_V3_OPERATIONAL_NATIVE_PROOF_PENDING",
+  "attempts": [
+    {
+      "id": "v8-z-mechanical-route-canary-v1",
+      "scope": "mechanical_native_canary",
+      "status": "HOLD",
+      "native_goal_starts": 1,
+      "retries": 0,
+      "physical_lifecycle_seconds": 450.307123673,
+      "occupied_slot_seconds": 816.6492922306061,
+      "original_occupied_cap_seconds": 480,
+      "generated_usage": "UNKNOWN",
+      "research_quality": "UNASSESSED",
+      "evidence": "canary-controller-cohort-v1/evaluation/native-qualification-v1/native-canary-proof.json"
+    },
+    {
+      "id": "v8-z-mechanical-route-canary-v2",
+      "scope": "mechanical_native_canary",
+      "status": "HOLD",
+      "native_goal_starts": 1,
+      "physical_parent_lifecycle_seconds": 450.33003837,
+      "occupied_slot_seconds": 537.7256820201874,
+      "original_occupied_cap_seconds": 480,
+      "generated_usage": "UNKNOWN",
+      "research_quality": "UNASSESSED",
+      "evidence": "recovery-results-cohort-v2/evaluation/recovery-route-v1/canary-v2-review.json"
+    },
+    {
+      "id": "v8-z-mechanical-route-canary-v3",
+      "scope": "mechanical_native_canary",
+      "status": "OPERATIONAL_COMPLETE_PENDING_INDEPENDENT_NATIVE_PROOF",
+      "native_goal_starts": 1,
+      "occupied_slot_seconds": 73.06437873840332,
+      "original_occupied_cap_seconds": 480,
+      "physical_inclusive_host_seconds": 73.148247422,
+      "native_responses": 6,
+      "reported_usage": {
+        "inputTokens": 22040,
+        "outputTokens": 1923,
+        "reasoningTokens": 0,
+        "cacheReadTokens": 15680,
+        "cacheWriteTokens": 0,
+        "totalTokens": 23963
+      },
+      "generated_usage_scope": "Reported v3 request deltas; total campaign usage remains UNKNOWN",
+      "research_quality": "UNASSESSED",
+      "evidence": "resume-cohort-v1/ops/execution-recovery-v1/CANARY_V3_TERMINAL_MANIFEST.json"
+    }
+  ],
+  "note": "Frozen v1/v2 failed mechanical canaries unchanged. V3 operational completion appended; independent native proof pending. Current selected freeze 0/24 integrated research executions and 0/12 comparisons; reservations are not starts.",
+  "native_qualification": "V3_MECHANICAL_PASSED_LIMITED_DELIVERY_INFERENCE",
+  "native_qualification_evidence": "resume-qualified-v3-cohort/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json"
+}

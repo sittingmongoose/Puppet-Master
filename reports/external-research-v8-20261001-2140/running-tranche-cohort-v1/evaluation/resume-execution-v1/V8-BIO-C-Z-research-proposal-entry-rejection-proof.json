@@ -1,0 +1,14 @@
+{
+  "schema": "pm.er8.pre-native-entry-rejection-proof.v1",
+  "job": "V8-BIO-C-Z-research-proposal",
+  "permit_id": "V8-BIO-C-Z-research-proposal-permit-1",
+  "entry_source_sha256": "3160d2e6624731218ecf0a465c19ff71a6351ecc4a9fb08d7893c86f6f5b99ca",
+  "proof_review_sha256": "5e1e6e8788b66388103174b21ead80592c26858ba0ede2d9f3c42727a6c76a91",
+  "predicate_actual_review_snapshot_sha256": null,
+  "required_exact_execution_snapshot_sha256": "667e9b86a7547c8e647142787637c34adfcc63eb52f33826e0f1f5453d379438",
+  "entry_gate_cannot_pass": true,
+  "native_engine_runpy_after_gate": true,
+  "enrolled_cgroup_removed_positive": true,
+  "no_native_activation": "Deterministic selectedentryrejectsbeforeanynativeenginepath; absentfilealone notproof",
+  "root_authority": true
+}

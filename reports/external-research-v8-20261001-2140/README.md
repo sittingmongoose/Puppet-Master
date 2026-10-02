@@ -1,6 +1,6 @@
 # External research v8 — current campaign checkpoint
 
-**RESUMED at the user's request on 2026-10-02T22:12:04Z. Three recorded native starts; first two canaries HOLD; third independently qualified for mechanical native execution. Integrated research results remain 0/24 and matched comparisons 0/12.** No research-quality finding, qualified recipe, winner or same-quality speedup is established.
+**Continuing integrated execution. Five recorded native starts at 2026-10-02T22:58:57.540514+00:00; two actual GLM research Goals active in the condition-aware bioimaging pair. Integrated completions remain 0/24 and completed comparisons 0/12.** No qualified recipe or research-quality winner is established. See the [running tranche checkpoint](running-tranche-cohort-v1/README.md) for current accounting, preserved host failures and Muse’s independently checked queue repair.
 
 - [Current results](RESULTS.md), [methods](methods.json), [attempts](attempts.json), [comparisons](comparisons.json)
 - [Economics](economics.json), [schedule](schedule.json), [failures](FAILURES.md)

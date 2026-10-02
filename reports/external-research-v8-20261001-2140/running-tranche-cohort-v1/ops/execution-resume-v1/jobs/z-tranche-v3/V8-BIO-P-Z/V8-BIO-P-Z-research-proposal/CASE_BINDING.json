@@ -1,0 +1,32 @@
+{
+  "schema": "er8.route.case-binding.v1",
+  "case_id": "V8-BIO-P-Z",
+  "case_start_monotonic_ns": 203187923811630,
+  "stage_id": "v8-bio-p-z-research-proposal",
+  "stage_start_monotonic_ns": 203187923811630,
+  "max_seconds": 1800,
+  "max_responses": 160,
+  "workspace": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace",
+  "prompt_file": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/OBJECTIVE.md",
+  "prompt_sha256": "9696c0a1126d02769031d8a75f26c4a09eb6cad3399e88ec8c3211d343d83058",
+  "native_out": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/native-public",
+  "label": "V8-BIO-P-Z-research-proposal",
+  "mode": "productive",
+  "public_get": true,
+  "immutable_inputs": {
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/TASK.md": "c35c81c39114025a5af0984d5b209cc9112e7c2596c3b25a8612d162bd71b317",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/inputs/METHOD.md": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/inputs/BRIEF.md": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/inputs/TASK.md": "c35c81c39114025a5af0984d5b209cc9112e7c2596c3b25a8612d162bd71b317",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/inputs/THIN_PLAN.md": "9a4a13328e3f3d4af25d13c371b79b918d898cb20fa2ec99e0901a70fe7be98f"
+  },
+  "immutable_capture_inputs": {},
+  "capture_origin_case_id": "V8-BIO-P-Z",
+  "config_sha256": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d",
+  "lease_sha256": "cb7356b2622bf543c8c2103b128307e62e629769b5058c0e8d409b95e314523d",
+  "account_identity": "existing-authorized-zcode-account-v8-A",
+  "canary_review": {
+    "path": "LAB_ROOT/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json",
+    "sha256": "aba3336e6475d1eb50e00b66c3804e2747d7fef38be764ec53379614cfb68fc7"
+  }
+}

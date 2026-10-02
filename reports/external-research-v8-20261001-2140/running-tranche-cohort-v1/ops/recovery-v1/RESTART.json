@@ -1,0 +1,249 @@
+{
+  "schema": "pm.er8.restart.v1",
+  "campaign_id": "external-research-v8-20261001-2140",
+  "updated_utc": "2026-10-02T22:58:57.540514+00:00",
+  "state": "INTEGRATED_Z_TRANCHE_V3_NATIVE_GOALS_ACTIVE",
+  "lab_root": "LAB_ROOT",
+  "worktree": "WORKTREE_ROOT",
+  "branch": "research/external-research-v8-20261001-2140",
+  "last_published_commit": "a615a9731b8ed051be18abb65d5fb7a58d313be4",
+  "authority": {
+    "original": "AUTHORIZATION.json",
+    "amendment": "ops/recovery-v1/AUTHORITY_AMENDMENT.json",
+    "amendment_sha256": "1479c0b44869d13878b90ccd2f02d5fb2d755cfa0f0b17315105dc48d57616ec",
+    "policy_applied": "ops/recovery-v1/POLICY_APPLIED.json",
+    "original_start_epoch": 1790905209,
+    "campaign_deadline_epoch": 1791013030.8303788,
+    "explicit_user_pause_seconds": 64621.83037877083,
+    "prior_frozen_caps_unchanged": true,
+    "resume_authority": "LAB_ROOT/ops/recovery-v1/RESUME_20261002.json",
+    "resume_authority_sha256": "9fc1c92a3b6074610b3b4026bd4d7500e0f0a135b506863965e2919fb640c02f"
+  },
+  "consumed": {
+    "elapsed_seconds": 12106.700803279877,
+    "deadline_epoch": 1791013030.8303788,
+    "admissions": 7,
+    "native_goal_starts": 5,
+    "pending_start_permits": 0,
+    "occupied_slot_seconds": 2424.506318807602,
+    "committed_slot_seconds": 2608.4399921894073,
+    "reserved_or_committed_slot_seconds": 150202.9330341816,
+    "reserved_or_committed_native_starts": 82,
+    "active_by_family": {
+      "M": 0,
+      "Z": 2,
+      "L": 0
+    },
+    "candidate_output_warning": false,
+    "candidate_output_stop": false,
+    "active_jobs": [
+      "V8-BIO-P-Z-research-proposal",
+      "V8-BIO-COND-C-Z-research-proposal"
+    ],
+    "overdue_jobs": [],
+    "helper_task_starts": 38,
+    "active_helpers": 0,
+    "evaluator_helper_starts_remaining": 28,
+    "generated_output_tokens_lower_bound": 1923,
+    "generated_usage": "unknown",
+    "outside_native_seconds_by_case": {
+      "v8-z-mechanical-route-canary-v1": 0.435632441,
+      "v8-z-mechanical-route-canary-v2": 87.708301406,
+      "v8-z-mechanical-route-canary-v3": 0.416744337,
+      "V8-BIO-C-Z": 1.881573445,
+      "V8-BIO-WIT-T-Z": 1.93355986,
+      "V8-BIO-P-Z": 1.988957893,
+      "V8-BIO-COND-C-Z": 2.08376917
+    },
+    "category_seconds": {
+      "cancel": 0,
+      "cleanup": 87.855565254,
+      "evaluation": 0,
+      "handoff": 0.047485072,
+      "native": 972.478206129,
+      "retry": 0,
+      "setup": 8.545488226,
+      "source_capture": 0,
+      "wait": 0
+    },
+    "occupancy_reconciled": true,
+    "route_reviews": [
+      "v8-z-route-repair1-canary-v1",
+      "v8-z-route-repair1-caller2-canary-v2",
+      "v8-z-route-recovery-v1-canary-v2",
+      "v8-z-route-recovery-v2-canary-v3",
+      "v8-z-route-recovery-v2-native-accepted-v1",
+      "v8-z-route-recovery-v2-native-bound-v2"
+    ],
+    "final_reserved_names": [
+      "V8-BIO-C-Z",
+      "V8-BIO-P-Z",
+      "V8-BIO-B-Z",
+      "V8-NB-C-Z",
+      "V8-NB-P-Z",
+      "V8-NB-B-Z"
+    ],
+    "evaluator_reserved_names": [
+      "V8-EVAL-BIO-C",
+      "V8-EVAL-BIO-P",
+      "V8-EVAL-BIO-B",
+      "V8-EVAL-NB-C",
+      "V8-EVAL-NB-P",
+      "V8-EVAL-NB-B",
+      "V8-EVAL-V8-BIO-WIT-T-Z",
+      "V8-EVAL-V8-BIO-COND-C-Z",
+      "V8-EVAL-V8-BIO-BATCH-C-Z",
+      "V8-EVAL-V8-BIO-RETR-C-M",
+      "V8-EVAL-V8-BIO-RETR-T-M",
+      "V8-EVAL-V8-BIO-AMEND-C-L",
+      "V8-EVAL-V8-BIO-AMEND-T-L",
+      "V8-EVAL-V8-BIO-BREADTH-C-M",
+      "V8-EVAL-V8-BIO-BREADTH-T-M",
+      "V8-EVAL-V8-NB-WIT-T-Z",
+      "V8-EVAL-V8-NB-COND-C-Z",
+      "V8-EVAL-V8-NB-BATCH-C-Z",
+      "V8-EVAL-V8-NB-RETR-C-M",
+      "V8-EVAL-V8-NB-RETR-T-M",
+      "V8-EVAL-V8-NB-AMEND-C-L",
+      "V8-EVAL-V8-NB-AMEND-T-L",
+      "V8-EVAL-V8-NB-BREADTH-C-M",
+      "V8-EVAL-V8-NB-BREADTH-T-M",
+      "V8-EVAL-HOLDOUT-BIO-C",
+      "V8-EVAL-HOLDOUT-BIO-R",
+      "V8-EVAL-HOLDOUT-NB-C",
+      "V8-EVAL-HOLDOUT-NB-R"
+    ],
+    "closed": false,
+    "elapsed_seconds_including_user_pause": 76728.5311820507,
+    "authorized_user_pause_excluded_seconds": 64621.83037877083
+  },
+  "usage_unknowns": [
+    "candidate_generated_tokens",
+    "Sol helper/management/evaluation_tokens",
+    "money",
+    "underlying_account_identity",
+    "external_provider_load"
+  ],
+  "ownership": {
+    "supervisor": "codex-er8-recovery",
+    "lifetime_lock": "ops/recovery-v1/supervisor.lock",
+    "claim": "ops/recovery-v1/SUPERVISOR_RESUMED.json",
+    "pid": 1688782,
+    "active_helpers": [],
+    "active_candidate_jobs": {
+      "V8-BIO-P-Z-research-proposal": {
+        "case": "V8-BIO-P-Z",
+        "family": "Z",
+        "route": "v8-z-route-recovery-v2-native-bound-v2",
+        "birth_epoch": 1790981441.7540474,
+        "hard_deadline_epoch": 1790983241.7540474,
+        "status": "native-active",
+        "goal_starts": [
+          {
+            "job": "V8-BIO-P-Z-research-proposal",
+            "receipt_id": "target_murk432y_33a528d0-c4fa-4ce7-8a2c-125f814a0cd9",
+            "epoch": 1790981450,
+            "recorded_epoch": 1790981450.8134336,
+            "guard_violations": []
+          }
+        ],
+        "launch_pending": null
+      },
+      "V8-BIO-COND-C-Z-research-proposal": {
+        "case": "V8-BIO-COND-C-Z",
+        "family": "Z",
+        "route": "v8-z-route-recovery-v2-native-bound-v2",
+        "birth_epoch": 1790981441.748309,
+        "hard_deadline_epoch": 1790983241.748309,
+        "status": "native-active",
+        "goal_starts": [
+          {
+            "job": "V8-BIO-COND-C-Z-research-proposal",
+            "receipt_id": "target_murk43ft_8eb4661d-af5f-40a1-b466-6da6c5111ea8",
+            "epoch": 1790981451,
+            "recorded_epoch": 1790981451.3918574,
+            "guard_violations": []
+          }
+        ],
+        "launch_pending": null
+      }
+    }
+  },
+  "outcomes": {
+    "integrated_executions_completed": 0,
+    "target_integrated_executions": 24,
+    "matched_comparisons_completed": 0,
+    "target_comparisons": 12,
+    "reserved_holdout_executions": 4,
+    "native_canaries": {
+      "v1": "HOLD/816.6492922306061 occupied seconds",
+      "v2": "HOLD/537.725682 occupied seconds",
+      "v3": "Independent mechanical PASS/73.06437873840332 occupied seconds; quality unassessed; direct delivery ID join UNKNOWN"
+    },
+    "production_host_failures": {
+      "BIO_check_pair": "Twoadmittedstageattempts deterministically rejectedbeforeGoal due missingexecution snapshotmetadata; quietleasesreleasedfullcost,pendingpermitsclearedpositive sourceproof; sourcefailure not modelquality",
+      "NB_check_pair": "Twohostcase supervisors rejectedbeforeadmission by stale defaultqueueprecheck; actualheldparentreceipts frozen; no scoredresult orcleancredit; setupelapsedglobalclockcounted, detailedoccupancyreconciliationpending"
+    },
+    "original_six_cases": "BIO-P research currently active; BIO-C host failure retained; other original cases not yet born"
+  },
+  "current_work": {
+    "production_release": {
+      "path": "LAB_ROOT/ops/execution-resume-v1/root-production-release-v3.json",
+      "sha256": "2f1a432bff900fe0846d04391af17511e02f066fcaebcaac5a8053cc301cb545",
+      "queue": "8unbornZpipelines BIO/NBconditions+batching",
+      "run_root": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3",
+      "source": "dev/resume-execution-v2",
+      "source_freeze_sha256": "c6b0e36b3d46562284d81ace42456a681741fd97a1c74d238c236f4b527d5779"
+    },
+    "source_acceptance": "evaluation/resume-execution-v1/controller-v2-queue-source-acceptance.json",
+    "execution_bound_native_review": "evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json",
+    "native_route_acceptance": "evaluation/resume-execution-v1/route-native-acceptance-bound-execution.json",
+    "native_route": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b",
+    "queue": [
+      "V8-BIO-COND-C-Z",
+      "V8-BIO-P-Z",
+      "V8-NB-COND-C-Z",
+      "V8-NB-P-Z",
+      "V8-BIO-BATCH-C-Z",
+      "V8-BIO-B-Z",
+      "V8-NB-BATCH-C-Z",
+      "V8-NB-B-Z"
+    ],
+    "tranche_freeze": "cases/tranche-v2/manifest.json",
+    "tranche_freeze_sha256": "d1d0bc0c4efae38e34819f7cf245030ff78ba1b85e8de2c35342549f5db60152",
+    "tranche_scope_review": "evaluation/tranche-scope-review-v1/review.json",
+    "other_families": {
+      "Muse": "Native candidate route HOLD dynamic MCP tool-rule validation; 0 candidate Goals. Ordinary approved native helper lane is separate.",
+      "Luna": "dev/luna-resume-v1 unfinished/unfrozen, fresh independent reviewer incomplete; 0 candidate Goals, do not launch."
+    },
+    "Sol_helper_platform_status": "Usage limit endedSolhelper scopes; rootactive turncontinues mechanicalwork, Musehelperoffload used; nativeGoalapp status usageLimited, not userpause/campaignreset",
+    "native_muse_helpers": {
+      "completed": 2,
+      "elapsed_seconds": 178.194792833,
+      "candidate_goal_starts": 0,
+      "configured_model": "muse-spark-1.3-contributor",
+      "reasoning_requested": "max",
+      "realized_reasoning_tokens_money": "UNKNOWN",
+      "quiet_receipts": [
+        "ops/muse-helper-v1/RESULT.json",
+        "ops/muse-helper-controller-v2/QUIET.json"
+      ]
+    },
+    "publications": "Previous GitHub cohorts frozen; next positive source/evidence batch being prepared."
+  },
+  "exact_next_actions": [
+    "Monitor originalrunningZ2jobs/caps andfreshcritic/revision transitions usingpositivepublicmetadata, no candidatebodySolhelp",
+    "Freezecompletepipelines actualoutputs and independentlyevaluate fullscope; no methodwinner frommechanicalcanary",
+    "Preserve failedBIO/NBcheckpairattempts; later boundedreplacements need newidentity+originalcosts, no clockreset/cleancredit",
+    "Prospectivelyrebind unstartedwholeMuse/Lunapairs to safeZ ifroutesremain unavailable; use samefamilyaccount forresearch/critic/revision",
+    "Publishactualoutputs/results/evidence in scopedcontinuingGitHubbatches andkeeprestartcurrent"
+  ],
+  "restrictions": "No canon/main/v7/sibling/sharedprofile changes; no evaluator keys/Sol answers/private auth in candidate or public access; two candidate slots per family; six Sol helpers. No budget reset or failure erasure.",
+  "history_pointer": "ops/recovery-v1/RESTART_OBSERVATION_20261002_225215.json",
+  "pause": {
+    "requested_epoch": 1790914502.1696212,
+    "resume_epoch": 1790979124.0,
+    "excluded_seconds": 64621.83037877083,
+    "fixed_job_births_deadlines_costs_unchanged": true
+  }
+}
