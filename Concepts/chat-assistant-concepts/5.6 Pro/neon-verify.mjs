@@ -714,7 +714,7 @@ await sec('old keyframes', async () => {
 /* Fix cycle 2 (review 2): the check could pass vacuously. It counted only animations inside svg.nx/.nx-st, so the Fast
    bolt's backlight (.nx-bolt::before, outside the svg) was never seen, and it ran in basic-dark only, so NieR's own
    reduced rules were never exercised. Now every route runs in every theme of --themes, over three working takes (the
-   Orbit, Step Rail Simple, v0) with the bar's hover card open, and two things must be zero: running animations on
+   Orbit, Step Rail Simple, v0) with the bar's hover card open (required), and two things must be zero: running animations on
    neon targets (svg.nx, .nx-st, .nx-bolt, pseudo-elements included) and running infinite animations anywhere in the
    document (INFINITE_ALLOW names the exceptions; there are none). v0's trail scroll must not glide (.wa-track
    scroll-behavior auto). The 13-member matrix keeps its lit state (halos paint, complete's clip resolved). */
@@ -756,7 +756,7 @@ async function reducedState(p) {
     return {
       running: running.length, names: [...new Set(running)].slice(0, 12),
       infinite: infinite.length, infNames: [...new Set(infinite)].slice(0, 12),
-      halos, completeClip: done ? getComputedStyle(done).clipPath : '(no .nx-pc)',
+      halos, nier: document.documentElement.getAttribute('data-o55-nier') === 'on', completeClip: done ? getComputedStyle(done).clipPath : '(no .nx-pc)',
       waScroll: wa ? getComputedStyle(wa).scrollBehavior : null
     };
   }, INFINITE_ALLOW);
@@ -774,15 +774,16 @@ async function reducedSweep(p, k, route) {
       await p.waitForTimeout(2600);
       const bar = p.locator('.activity-item[data-hover-domain]').first();
       let card = false;
-      if (await bar.count()) { await bar.hover(); await p.waitForTimeout(200); card = await p.evaluate(() => !!document.querySelector('.hover-card')); }
+      if (await bar.count()) { await bar.hover(); await p.waitForTimeout(700); card = await p.evaluate(() => !!document.querySelector('.hover-card')); } /* the card opens after a 220 ms intent delay */
       const scene = await p.evaluate(s => !!document.querySelector(s), sel);
       const r = await reducedState(p);
-      const good = scene && r.running === 0 && r.infinite === 0 && r.completeClip === 'none' && r.halos >= 5 && (take !== 0 || r.waScroll === 'auto');
+      /* NieR draws no halos (neon-icons.css: NieR's flat ink); there the lit state is the ink itself, so 0 is the design */
+      const good = scene && card && r.running === 0 && r.infinite === 0 && r.completeClip === 'none' && (r.nier ? r.halos === 0 : r.halos >= 5) && (take !== 0 || r.waScroll === 'auto');
       if (!good) ok = false;
       per.push({ take: label, scene, card, ...r });
     }
-    const sum = per.map(x => `${x.take}${x.scene ? '' : ' MISSING'}: ${x.running} neon running, ${x.infinite} infinite`).join('; ');
-    check(ok, `${k} reduced motion (${route}) [${theme}]: ${sum}; halos ${per.map(x => x.halos).join('/')} (want >= 5), complete clip ${per[0].completeClip}, v0 trail scroll ${per[2].waScroll}`, ok ? null : per.filter(x => !x.scene || x.running || x.infinite || x.halos < 5 || x.completeClip !== 'none' || (x.take === 'v0' && x.waScroll !== 'auto')));
+    const sum = per.map(x => `${x.take}${x.scene ? '' : ' MISSING'}${x.card ? '' : ' (no hover card)'}: ${x.running} neon running, ${x.infinite} infinite`).join('; ');
+    check(ok, `${k} reduced motion (${route}) [${theme}]: ${sum}; halos ${per.map(x => x.halos).join('/')} (want ${per[0].nier ? '0 under NieR' : '>= 5'}), complete clip ${per[0].completeClip}, v0 trail scroll ${per[2].waScroll}`, ok ? null : per.filter(x => !x.scene || !x.card || x.running || x.infinite || (x.nier ? x.halos !== 0 : x.halos < 5) || x.completeClip !== 'none' || (x.take === 'v0' && x.waScroll !== 'auto')));
   }
 }
 await sec('reduced media', async () => {
