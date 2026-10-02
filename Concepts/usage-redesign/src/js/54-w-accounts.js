@@ -434,7 +434,9 @@
     var top = L.rows[0], hn = lad.querySelector('.pmu-herohead .pmu-num[data-k]');
     if (top && hn) { var o = parseFloat(hn.getAttribute('data-v')), z = Math.round(top.left); if (isFinite(o) && o !== z) { hn.setAttribute('data-v', String(z)); if (ctx.liveFinal) hn.textContent = C.numOnly(z, 'pct'); else PMU.motion.countUp(hn, o, z, function (v) { return C.numOnly(v, 'pct'); }, { dur: 'value' }); } }
     var past = L.rows.filter(function (r) { return r.left <= th.switchLeft; }).length, sub = lad.querySelector('.pmu-herosub');
-    if (sub) { var sh = (th.auto ? 'switch at ' + b((100 - th.switchLeft) + '%') + ' used' : 'auto-switch ' + b('off')) + (past ? ' · ' + b(past) + ' past the line' : ''); if (sub.innerHTML !== sh) C.setHtml(sub, sh); }
+    /* integ3: the render dropped trailing " · " parts by measure (heroHead); a live patch keeps that many parts (a beat had
+       grown "switch at 90% used" into "... · 2 past the line" past the measured width) */
+    if (sub) { var sh = (th.auto ? 'switch at ' + b((100 - th.switchLeft) + '%') + ' used' : 'auto-switch ' + b('off')) + (past ? ' · ' + b(past) + ' past the line' : ''); var nShown = sub.innerHTML.split(' · ').length, shp = sh.split(' · '); if (shp.length > nShown) sh = shp.slice(0, nShown).join(' · '); if (sub.innerHTML !== sh) C.setHtml(sub, sh); }
     return true;
   }
   C.kind('switch', switchImpl = {

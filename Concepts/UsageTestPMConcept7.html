@@ -31562,7 +31562,10 @@ html[data-theme$="-light"] #panel-usage .pmu-meter[data-ramp="1"] { --c: color-m
 #panel-usage .pmu-sbfill > i { background-image: linear-gradient(180deg, color-mix(in srgb, #fff 10%, transparent), transparent 45%, color-mix(in srgb, var(--pmu-card) 22%, transparent)); }
 html[data-theme$="-light"] #panel-usage .pmu-sbfill > i { background-image: linear-gradient(180deg, color-mix(in srgb, #fff 22%, transparent), transparent 55%); }
 #panel-usage .pmu-mark[data-est="1"] { background-image: repeating-linear-gradient(135deg, var(--pmu-card) 0 2px, transparent 2px 5px) !important; opacity: .82; }
-#panel-usage .pmu-c-ranked[data-inline="1"] .pmu-rk { grid-template-columns: var(--rk-name, minmax(56px, 40%)) minmax(36px, 1fr) auto; grid-template-areas: "name bar val"; align-items: center; min-height: 28px; padding: 4px 8px; }
+#panel-usage .pmu-c-ranked[data-inline="1"] .pmu-rk { grid-template-columns: var(--rk-name, minmax(56px, 40%)) minmax(36px, 1fr) auto; grid-template-areas: "name bar val"; align-items: center; min-height: 28px; padding: 3px 8px; }
+/* integ3: a one-line row whose name wraps (a narrow card: Costs provider value in Glass at 1440 ran 9 px past its body with
+   "ChatGPT / Codex" on three lines) sets the wrapped name tighter; single-line rows keep their 28 px */
+#panel-usage .pmu-c-ranked[data-inline="1"] .pmu-rkt { line-height: 1.2; }
 
 /* ---------- mix bar (A1 7.11) ---------- */
 #panel-usage .pmu-mixbar { display: flex; gap: 1px; height: 10px; border-radius: 3px; overflow: hidden; background: var(--pmu-card-3); }
@@ -33103,6 +33106,9 @@ html[data-motion="reduced"] #panel-usage .pmu-inspector { transition: none; }
 @container (max-width: 860px) {
   html[data-theme^="retro"] #panel-usage #pmuRoomTitle { font-size: 14.5px; letter-spacing: -.01em; }
 }
+/* integ3: a mix row whose name wraps (NieR's wider face: "Plan / estimate" in Plan allocation at 1920) grows with it instead of
+   running its second line across the next row's rule */
+#panel-usage .pmu-mixrow { height: auto; min-height: 30px; }
 
 /* ---- css/90-nier-shell.css ---- */
 /* NieR Mode for the shell, the board and the menus (owner: engine; DESIGN-SPEC section 13, DESIGN-SPEC-ATLAS section 12).
@@ -35105,18 +35111,21 @@ var PMU_SERIES = {
   }
   /* ---- NieR decode (5): glyphs cycle every 30 ms and lock left to right, 35 ms per character, at most 420 ms; the final
      characters are exact (never zero-first) ---- */
-  var GLYPHS = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789#%$/+';
+  /* integ3: no digits among the cycling glyphs (a live 79% -> 80% decode showed "89%" for a frame: a reading that was never
+     true); and a change decode (o.from) cycles only the characters that changed (WOW-SPEC-3 8.4 NieR) */
+  var GLYPHS = 'ABCDEFGHJKLMNPQRSTUVWXYZ#$/+';
   function decode(el, text, o) {
     o = o || {};
     if (!el) return { cancel: function () {} };
     if (el._pmuDecode) el._pmuDecode.cancel();
     if (reduced() || !text) { el.classList.remove('pmu-dec-wait'); el.textContent = text; return { cancel: function () {} }; }
     var n = text.length, per = Math.min(35, 420 / Math.max(1, n)), total = per * n + 60, lastBucket = -1;
+    var same = o.from != null && String(o.from).length === n ? String(o.from) : null;
     function glyphs(ms, bucket) {
       var out = '';
       for (var i = 0; i < n; i++) {
         var ch = text[i];
-        out += ms >= (i + 1) * per || /\s/.test(ch) ? ch : GLYPHS[(i * 7 + bucket * 13) % GLYPHS.length];
+        out += ms >= (i + 1) * per || /\s/.test(ch) || (same && same[i] === ch) ? ch : GLYPHS[(i * 7 + bucket * 13) % GLYPHS.length];
       }
       return out;
     }
@@ -35965,7 +35974,11 @@ var PMU_SERIES = {
     key({ bloom: !soft() });
     var brand = app.querySelector('.pmu-brand');
     if (brand) anim(brand, [{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { dur: T.title, delay: 40, easing: ease });
-    Array.prototype.forEach.call(app.querySelectorAll('#pmuNav > .pmu-navbtn'), function (b, i) {
+    /* integ3: without a GPU the rail and the head controls each enter as ONE group (rule 10: one layer per moving group;
+       the soft first arrival peaked at 66-79 running animations against the 60 cap, 13 of them rail rows) */
+    var navEl = app.querySelector('#pmuNav');
+    if (soft() && navEl) anim(navEl, [{ opacity: 0, transform: 'translateX(-12px)' }, { opacity: 1, transform: 'none' }], { dur: T.rail + 80, delay: 40, easing: ease });
+    else Array.prototype.forEach.call(app.querySelectorAll('#pmuNav > .pmu-navbtn'), function (b, i) {
       anim(b, [{ opacity: 0, transform: 'translateX(-12px)' }, { opacity: 1, transform: 'none' }], { dur: T.rail, delay: 40 + T.railStep * i, easing: ease });
     });
     var ink = document.getElementById('pmuNavInk');
@@ -35974,7 +35987,9 @@ var PMU_SERIES = {
       var tb = app.querySelector('.pmu-titleblock');
       if (tb) anim(tb, [{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], { dur: T.title, delay: 60, easing: ease });
     }
-    Array.prototype.forEach.call(app.querySelectorAll('.pmu-headctl > *'), function (c, i) {
+    var hc = app.querySelector('.pmu-headctl');
+    if (soft() && hc) anim(hc, [{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { dur: T.rail + 60, delay: 120, easing: ease });
+    else Array.prototype.forEach.call(app.querySelectorAll('.pmu-headctl > *'), function (c, i) {
       anim(c, [{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { dur: T.rail, delay: 120 + T.headStep * i, easing: ease });
     });
   }
@@ -44830,6 +44845,9 @@ var PMU_SERIES = {
       PMU.motion.countUp(el, 0, to, function (v) { return C.numOnly(v, v === to || f !== 'money' ? f : 'money2'); }, { delay: d, dur: el.getAttribute('data-count') === 'kpi' ? 1000 : 900 });
     });
     var rows = Array.prototype.slice.call(body.querySelectorAll('[data-reveal]'));
+    /* integ3: a supporting body (outside the light budget during an entrance) shows its lists with the body, no per-row
+       cascade (WOW-SPEC-3 5 Phase C; the GPU arrival had context legend, attention and mix rows cascading under quiet fades) */
+    if (rows.length && PMU.film && PMU.film.isQuiet && PMU.film.isQuiet(body)) rows = [];
     if (rows.length) {
       if (PMU.motion.reveal) PMU.motion.reveal(rows, { delay: d - 120, step: 22, cap: 400 });
       else rows.forEach(function (r, i) { PMU.motion.animate(r, [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { dur: 480, delay: d - 120 + Math.min(400, i * 22), fill: 'backwards', ease: 'enter' }); });
@@ -46850,9 +46868,12 @@ var PMU_SERIES = {
     });
     /* integ3: a day head's relative note ("in 2d 5h") follows the clock (the demo hour moves it as plain text) */
     Array.prototype.forEach.call(body.querySelectorAll('.pmu-agday'), function (sec) {
-      var ln = sec.querySelector('.pmu-agline'), ev = ln && byKey[ln.getAttribute('data-key')], sp = sec.querySelector('header > span');
-      if (!ev || !ev.at || !sp || !/^in \d/.test(sp.textContent)) return;
-      var note = PMU.fmt.dayHead(ev.at).note || ''; if (/^in \d/.test(note) && sp.textContent !== note) sp.textContent = note;
+      var ln = sec.querySelector('.pmu-agline'), ev = ln && byKey[ln.getAttribute('data-key')], sp = sec.querySelector('header > span'), lb = sec.querySelector('header > b');
+      if (!ev || !ev.at || !sp || /continued/i.test(sp.textContent)) return;
+      var hd = PMU.fmt.dayHead(ev.at), note = hd.note || '';
+      if (/^in \d/.test(sp.textContent) && /^in \d/.test(note) && sp.textContent !== note) sp.textContent = note;
+      /* the demo clock can pass midnight: "Tomorrow" becomes "Today" */
+      if (lb && /^(Today|Tomorrow|Yesterday)$/.test(lb.textContent) && /^(Today|Tomorrow|Yesterday)$/.test(hd.label || '') && lb.textContent !== hd.label) lb.textContent = hd.label;
     });
     return true;
   }
@@ -47308,7 +47329,9 @@ var PMU_SERIES = {
     var top = L.rows[0], hn = lad.querySelector('.pmu-herohead .pmu-num[data-k]');
     if (top && hn) { var o = parseFloat(hn.getAttribute('data-v')), z = Math.round(top.left); if (isFinite(o) && o !== z) { hn.setAttribute('data-v', String(z)); if (ctx.liveFinal) hn.textContent = C.numOnly(z, 'pct'); else PMU.motion.countUp(hn, o, z, function (v) { return C.numOnly(v, 'pct'); }, { dur: 'value' }); } }
     var past = L.rows.filter(function (r) { return r.left <= th.switchLeft; }).length, sub = lad.querySelector('.pmu-herosub');
-    if (sub) { var sh = (th.auto ? 'switch at ' + b((100 - th.switchLeft) + '%') + ' used' : 'auto-switch ' + b('off')) + (past ? ' · ' + b(past) + ' past the line' : ''); if (sub.innerHTML !== sh) C.setHtml(sub, sh); }
+    /* integ3: the render dropped trailing " · " parts by measure (heroHead); a live patch keeps that many parts (a beat had
+       grown "switch at 90% used" into "... · 2 past the line" past the measured width) */
+    if (sub) { var sh = (th.auto ? 'switch at ' + b((100 - th.switchLeft) + '%') + ' used' : 'auto-switch ' + b('off')) + (past ? ' · ' + b(past) + ' past the line' : ''); var nShown = sub.innerHTML.split(' · ').length, shp = sh.split(' · '); if (shp.length > nShown) sh = shp.slice(0, nShown).join(' · '); if (sub.innerHTML !== sh) C.setHtml(sub, sh); }
     return true;
   }
   C.kind('switch', switchImpl = {

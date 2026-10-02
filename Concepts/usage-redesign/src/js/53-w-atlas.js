@@ -419,9 +419,12 @@
     });
     /* integ3: a day head's relative note ("in 2d 5h") follows the clock (the demo hour moves it as plain text) */
     Array.prototype.forEach.call(body.querySelectorAll('.pmu-agday'), function (sec) {
-      var ln = sec.querySelector('.pmu-agline'), ev = ln && byKey[ln.getAttribute('data-key')], sp = sec.querySelector('header > span');
-      if (!ev || !ev.at || !sp || !/^in \d/.test(sp.textContent)) return;
-      var note = PMU.fmt.dayHead(ev.at).note || ''; if (/^in \d/.test(note) && sp.textContent !== note) sp.textContent = note;
+      var ln = sec.querySelector('.pmu-agline'), ev = ln && byKey[ln.getAttribute('data-key')], sp = sec.querySelector('header > span'), lb = sec.querySelector('header > b');
+      if (!ev || !ev.at || !sp || /continued/i.test(sp.textContent)) return;
+      var hd = PMU.fmt.dayHead(ev.at), note = hd.note || '';
+      if (/^in \d/.test(sp.textContent) && /^in \d/.test(note) && sp.textContent !== note) sp.textContent = note;
+      /* the demo clock can pass midnight: "Tomorrow" becomes "Today" */
+      if (lb && /^(Today|Tomorrow|Yesterday)$/.test(lb.textContent) && /^(Today|Tomorrow|Yesterday)$/.test(hd.label || '') && lb.textContent !== hd.label) lb.textContent = hd.label;
     });
     return true;
   }

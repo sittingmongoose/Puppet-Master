@@ -287,18 +287,21 @@
   }
   /* ---- NieR decode (5): glyphs cycle every 30 ms and lock left to right, 35 ms per character, at most 420 ms; the final
      characters are exact (never zero-first) ---- */
-  var GLYPHS = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789#%$/+';
+  /* integ3: no digits among the cycling glyphs (a live 79% -> 80% decode showed "89%" for a frame: a reading that was never
+     true); and a change decode (o.from) cycles only the characters that changed (WOW-SPEC-3 8.4 NieR) */
+  var GLYPHS = 'ABCDEFGHJKLMNPQRSTUVWXYZ#$/+';
   function decode(el, text, o) {
     o = o || {};
     if (!el) return { cancel: function () {} };
     if (el._pmuDecode) el._pmuDecode.cancel();
     if (reduced() || !text) { el.classList.remove('pmu-dec-wait'); el.textContent = text; return { cancel: function () {} }; }
     var n = text.length, per = Math.min(35, 420 / Math.max(1, n)), total = per * n + 60, lastBucket = -1;
+    var same = o.from != null && String(o.from).length === n ? String(o.from) : null;
     function glyphs(ms, bucket) {
       var out = '';
       for (var i = 0; i < n; i++) {
         var ch = text[i];
-        out += ms >= (i + 1) * per || /\s/.test(ch) ? ch : GLYPHS[(i * 7 + bucket * 13) % GLYPHS.length];
+        out += ms >= (i + 1) * per || /\s/.test(ch) || (same && same[i] === ch) ? ch : GLYPHS[(i * 7 + bucket * 13) % GLYPHS.length];
       }
       return out;
     }
@@ -1147,7 +1150,11 @@
     key({ bloom: !soft() });
     var brand = app.querySelector('.pmu-brand');
     if (brand) anim(brand, [{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { dur: T.title, delay: 40, easing: ease });
-    Array.prototype.forEach.call(app.querySelectorAll('#pmuNav > .pmu-navbtn'), function (b, i) {
+    /* integ3: without a GPU the rail and the head controls each enter as ONE group (rule 10: one layer per moving group;
+       the soft first arrival peaked at 66-79 running animations against the 60 cap, 13 of them rail rows) */
+    var navEl = app.querySelector('#pmuNav');
+    if (soft() && navEl) anim(navEl, [{ opacity: 0, transform: 'translateX(-12px)' }, { opacity: 1, transform: 'none' }], { dur: T.rail + 80, delay: 40, easing: ease });
+    else Array.prototype.forEach.call(app.querySelectorAll('#pmuNav > .pmu-navbtn'), function (b, i) {
       anim(b, [{ opacity: 0, transform: 'translateX(-12px)' }, { opacity: 1, transform: 'none' }], { dur: T.rail, delay: 40 + T.railStep * i, easing: ease });
     });
     var ink = document.getElementById('pmuNavInk');
@@ -1156,7 +1163,9 @@
       var tb = app.querySelector('.pmu-titleblock');
       if (tb) anim(tb, [{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], { dur: T.title, delay: 60, easing: ease });
     }
-    Array.prototype.forEach.call(app.querySelectorAll('.pmu-headctl > *'), function (c, i) {
+    var hc = app.querySelector('.pmu-headctl');
+    if (soft() && hc) anim(hc, [{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { dur: T.rail + 60, delay: 120, easing: ease });
+    else Array.prototype.forEach.call(app.querySelectorAll('.pmu-headctl > *'), function (c, i) {
       anim(c, [{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { dur: T.rail, delay: 120 + T.headStep * i, easing: ease });
     });
   }

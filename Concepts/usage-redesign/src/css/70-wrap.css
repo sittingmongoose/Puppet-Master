@@ -85,3 +85,6 @@
 @container (max-width: 860px) {
   html[data-theme^="retro"] #panel-usage #pmuRoomTitle { font-size: 14.5px; letter-spacing: -.01em; }
 }
+/* integ3: a mix row whose name wraps (NieR's wider face: "Plan / estimate" in Plan allocation at 1920) grows with it instead of
+   running its second line across the next row's rule */
+#panel-usage .pmu-mixrow { height: auto; min-height: 30px; }
