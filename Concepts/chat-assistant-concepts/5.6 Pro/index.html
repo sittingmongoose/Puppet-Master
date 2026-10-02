@@ -21761,8 +21761,10 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
       clipboard: G([R(6, 4, 12, 17, 2), P('M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1'),
         M(P('M9 11h6'), { ao: .5, ac: '0 16 0 8', ae: '0 8 0 8' }), M(P('M9 15h6'), { ao: .5, ac: '0 16 0 8', ae: '0 8 0 8', ad: 130 })], 'fill'),
       camera: G([P('M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z'), M(C(12, 14, 3.5), { ao: .3, b: 1 })], 'seq'),
-      plan: G([P('M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z'), P('M9 4v13.5M15 6.5V20'),
-        M(P('M5.5 14c1.5-2.6 3-3.2 4.5-1.6s3 1.4 4.5-1.4 3-2.8 4-1.2'), { ao: .5, ac: '0 19.5 0 4.5', ae: '0 4.5 0 4.5' })], 'seq'),
+      /* plan: a folded map (three panels), not a page; the folds draw down in turn (a route drawn across the
+         panels read as clutter at 14 px, so the map stays bare) */
+      plan: G([P('M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z'),
+        M(P('M9 4v13.5'), { ao: .5, ac: '3 0 21 0', ae: '3 0 2 0' }), M(P('M15 6.5V20'), { ao: .5, ac: '3 0 21 0', ae: '3 0 2 0', ad: 130 })], 'seq'),
       shield: G([M(P('M12 3l7.5 3v5.5c0 4.6-3.2 8-7.5 9.5-4.3-1.5-7.5-4.9-7.5-9.5V6z'), { ao: .4, b: 1 })], 'seq'),
       bug: G([P('M8 10a4 4 0 0 1 8 0v4.5a4 4 0 0 1-8 0z'), P('M8 11H4.5M8 14.5H4M8.6 17.5 6 19.5M16 11h3.5M16 14.5h4M15.4 17.5 18 19.5'),
         M(P('M9.6 6.8 8 4.6M14.4 6.8 16 4.6'), { ay: 2, ao: .3, b: 1 })], 'seq'),
@@ -21824,7 +21826,7 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
        changes = the app arrows with shafts that reach their heads; chat/eli5/defaults share the PMX bubble;
        the back arc (reset/restore/rewind/undo) = the app arc; trash = PMX (threadops' copy retired);
        chevrons = PMX (the app's chevron/down/up/left were the same shapes); clock = PMX clock (app-wide).
-       New: plan (a folded map with a route), shield, bug, hourglass, speaker/speaker-off (chat-sound SPK at the
+       New: plan (a folded map), shield, bug, hourglass, speaker/speaker-off (chat-sound SPK at the
        family stroke), the 13 status marks. module-shell CHEVRON is chevron-down.
        ====================================================================== */
     var ALIAS = {
