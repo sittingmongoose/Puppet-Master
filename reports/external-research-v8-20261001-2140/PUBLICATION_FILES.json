@@ -1,5 +1,5 @@
 {
-  "checkpoint": "INITIAL_SCOPE_PLUS_CODE_QUALIFICATION",
+  "checkpoint": "INITIAL_SCOPE_PLUS_CODE_AND_ROUTE_COHORTS",
   "files": [
     {
       "path": "BEST_RECIPE.md",
@@ -8,23 +8,23 @@
     },
     {
       "path": "CHECKPOINT.md",
-      "sha256": "6b705981ddddc7fdd37e6b3ed6bd8a913001a80889b69c9c8064fbb68b5ba2cc",
-      "bytes": 1078
+      "sha256": "dcd5a99d4b941be6f5048038b362d6fe7992f9da82bcb185a5405cab5ce7af9e",
+      "bytes": 1388
     },
     {
       "path": "FAILURES.md",
-      "sha256": "479f5800a7725b7ddc772c1389e3c38afab43251a7c594def8eadbbdbe86d51f",
-      "bytes": 749
+      "sha256": "96b7f52016040fb520ebe9de3e417492fe52ccc0da205c21a844332df3de1c6a",
+      "bytes": 1089
     },
     {
       "path": "README.md",
-      "sha256": "a2104c36d31156b76048352e9c6aa6a1e25736b7e3d0bd69329b21b6585c8b38",
-      "bytes": 1706
+      "sha256": "761f3bd2c5a4832efb4f661fb42742ba662d60c9270cd68c7ed9cf42b7d0fab6",
+      "bytes": 1972
     },
     {
       "path": "REPRODUCE.md",
-      "sha256": "b327eb3356827d4c2499a953c01d643d8f850980dbcdfe4806f0290d61f21566",
-      "bytes": 1753
+      "sha256": "fe12aaed6492486ac76b38c67f20ef354015858fa604fe6862f422075d60db1d",
+      "bytes": 2179
     },
     {
       "path": "RESULTS.md",
@@ -525,6 +525,151 @@
       "path": "review-arithmetic/recompute_metrics.py",
       "sha256": "69849a68fd63fa472bca12535ab4fe3f4f3dbedcd997accceb8c81060eeab18f",
       "bytes": 1590
+    },
+    {
+      "path": "route-cohort-v1/PUBLIC_EXPORT.json",
+      "sha256": "e2ebb679c5dc33da1655975e408231f1536a2f3a5a0bd628bf62bd1701ebfd09",
+      "bytes": 10996
+    },
+    {
+      "path": "route-cohort-v1/README.md",
+      "sha256": "8417f02e02285e2fbc61b41e11a1ae2eae9e94e189b49edef935b65eebac943c",
+      "bytes": 2273
+    },
+    {
+      "path": "route-cohort-v1/ROOT_HANDOFF.json",
+      "sha256": "a897b28d0b80c3bd11ed9d3f8f65d694ad1af3820a1d8366a0a1983c1db1e8b5",
+      "bytes": 2229
+    },
+    {
+      "path": "route-cohort-v1/dev/route-assembly-v1/AUTHOR-CLOSEOUT.json",
+      "sha256": "9994c14a160d4560279056ca2ff0e8788c54c8b7586378abfa3dfe383c6da54b",
+      "bytes": 1236
+    },
+    {
+      "path": "route-cohort-v1/dev/route-assembly-v1/INTERFACE.md",
+      "sha256": "a2e5b3d06fddafa9c8d81ad47150199d5e9db79f4a917277a132588f895e26a0",
+      "bytes": 4131
+    },
+    {
+      "path": "route-cohort-v1/dev/route-assembly-v1/SNAPSHOT.json",
+      "sha256": "c18e7ffae03335f8e28b3e069dc5caa8aca3a46ed7b76c784ccd23d72a156d68",
+      "bytes": 3634
+    },
+    {
+      "path": "route-cohort-v1/dev/route-assembly-v1/adapter.py",
+      "sha256": "6424fe4019101bfe71e5a51d4e7dd1935353cd756807db9b148af03cb54b140a",
+      "bytes": 5555
+    },
+    {
+      "path": "route-cohort-v1/dev/route-assembly-v1/admission.py",
+      "sha256": "e6250830d4e609bc3650024c81cb237fb5252f4d95a21411efa16f4e302d3858",
+      "bytes": 9477
+    },
+    {
+      "path": "route-cohort-v1/dev/route-assembly-v1/archive/baseline-v1/SNAPSHOT.json",
+      "sha256": "3e431e05a90ef742809e2172002e05d11c739f7af64e9060c2e866c3c7ab2372",
+      "bytes": 3115
+    },
+    {
+      "path": "route-cohort-v1/dev/route-assembly-v1/boundary.py",
+      "sha256": "ac08c1c541574f15ad82f78228d80688f004d95726ca29fa03fab0bb47d5a2a9",
+      "bytes": 423
+    },
+    {
+      "path": "route-cohort-v1/dev/route-assembly-v1/canary/ECHO.txt",
+      "sha256": "f7e2e10edb3dc012fe1d7294b256b368bfb7ac9f96378f61f934e5cb912874df",
+      "bytes": 83
+    },
+    {
+      "path": "route-cohort-v1/dev/route-assembly-v1/canary/OBJECTIVE.md",
+      "sha256": "c46f27278a35b7e404e8f32d385b38ef011188789f4f14fbf9db2f3a1430e081",
+      "bytes": 589
+    },
+    {
+      "path": "route-cohort-v1/dev/route-assembly-v1/canary/TASK.md",
+      "sha256": "0f1ca17bd3a03ddd29ee8a537442824ba0cdce1907a6390bf4e4df483050b881",
+      "bytes": 1066
+    },
+    {
+      "path": "route-cohort-v1/dev/route-assembly-v1/host_guard.py",
+      "sha256": "3aa60ec7c7a3886619835c2e5238579e415223041828775f9e226331c3faa438",
+      "bytes": 1405
+    },
+    {
+      "path": "route-cohort-v1/dev/route-assembly-v1/launch.py",
+      "sha256": "8dec4108eacd3814d5b1fff069daaef87703f8466bc6d15c77607e1bcba1e0d4",
+      "bytes": 1331
+    },
+    {
+      "path": "route-cohort-v1/dev/route-assembly-v1/native_runner.py",
+      "sha256": "9b8bf700a30a9a4be0add4f3161b69bf98c6068acef88d73606085c3b6d6caca",
+      "bytes": 18339
+    },
+    {
+      "path": "route-cohort-v1/dev/route-assembly-v1/positive-output-contract.json",
+      "sha256": "e7cb63d0e50efdbc40ad863dba94e2b7b93b3e1095d3d2059991b5b95ebdb447",
+      "bytes": 2634
+    },
+    {
+      "path": "route-cohort-v1/dev/route-assembly-v1/projector.py",
+      "sha256": "92ba648f160f2bec1296cf0a7510bebc6b6a61bcef1e0ccc7c69902610899fd2",
+      "bytes": 16369
+    },
+    {
+      "path": "route-cohort-v1/dev/route-assembly-v1/repair1-source-diff.patch",
+      "sha256": "95628334aa520f5f5999a4d190e7dc38be43437ab3c1b6aed49f01171d3cb4cd",
+      "bytes": 7003
+    },
+    {
+      "path": "route-cohort-v1/dev/route-assembly-v1/root-config.json",
+      "sha256": "19b93c816d6233c405534821bcdf9d1f508e5c427280ecaf053a04d5667ecad1",
+      "bytes": 3186
+    },
+    {
+      "path": "route-cohort-v1/dev/route-assembly-v1/run_goal.py",
+      "sha256": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+      "bytes": 21477
+    },
+    {
+      "path": "route-cohort-v1/dev/route-assembly-v1/runtime-source-diff.patch",
+      "sha256": "ac84892f7357b2a65f86be1bfd2a295c47ac432ad55002ca1c3f7234f5eaa34d",
+      "bytes": 18841
+    },
+    {
+      "path": "route-cohort-v1/dev/route-assembly-v1/zcode_goal_driver.py",
+      "sha256": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+      "bytes": 11583
+    },
+    {
+      "path": "route-cohort-v1/dev/route-assembly-v1/zcode_native.py",
+      "sha256": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633",
+      "bytes": 31616
+    },
+    {
+      "path": "route-cohort-v1/dev/source-capture-v1/binding.json",
+      "sha256": "35a9a2a2676d2afedd90e863a30701e041b51df80a9748054b5921abe0ea282e",
+      "bytes": 2459
+    },
+    {
+      "path": "route-cohort-v1/dev/source-capture-v1/boundary.py",
+      "sha256": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+      "bytes": 2648
+    },
+    {
+      "path": "route-cohort-v1/dev/source-capture-v1/tool_server.py",
+      "sha256": "9c25c1faaf7c4557aaeb22b0977061914a9fbba1a04d87d2a3a29851daa29846",
+      "bytes": 21910
+    },
+    {
+      "path": "route-cohort-v1/historical-public-dependencies/dev/runtime-boundary-final-repair2/native_runner.py",
+      "sha256": "9894fa2d82f801cf2d70f1f0a9756e2a14e7bcbd59fe95d69459d6d552d4baa9",
+      "bytes": 15606
+    },
+    {
+      "path": "route-cohort-v1/historical-public-dependencies/dev/runtime-boundary-final-repair2/review-snapshot-final.json",
+      "sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4",
+      "bytes": 6183
     },
     {
       "path": "schedule.json",

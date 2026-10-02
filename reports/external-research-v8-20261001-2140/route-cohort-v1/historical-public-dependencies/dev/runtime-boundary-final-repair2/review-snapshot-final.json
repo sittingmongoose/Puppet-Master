@@ -1,0 +1,83 @@
+{
+  "schema": "er7.z.safe.final.repair2.review.final.v1",
+  "status": "ready-independent-review-not-frozen",
+  "repair_count": 2,
+  "original_partial_snapshot_sha256": "ce801ca3988e4f598a79aa3e3cb4ee2da5489d3cf5d04e4e71c65fae00853059",
+  "policy_final_sha256": "13a5e42f9a082e566e983da389f18ac81560fbbc1e7c327683478c7219688871",
+  "native_bundle_path": "/home/sittingmongoose/.local/opt/zcode/app.backup-3.11.2.6792/resources/glm/zcode.cjs",
+  "native_bundle_sha256": "e9f1868c0fdb863537ed910ee3828b9be96b8c2fd805473f63b439e1113266b8",
+  "closure_sha256": {
+    "dev/auth-boundary-design-v1/design.md": "770b65b3493c50c1198c8e6284822dfb0801ae5f0796b1810d05084dab555d8c",
+    "dev/auth-boundary-design-v1/selected-runtime-controls.json": "7f24b0cb372cda05e8bbefa36bf40a6f470c37e485e9df4e037cdbd2f8c09d90",
+    "dev/harness-v1-frozen/native/run_goal.py": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+    "dev/harness-v1-frozen/native/zcode_goal_driver.py": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+    "dev/harness-v1-frozen/native/zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633",
+    "dev/runtime-boundary-final-repair2/INTERFACE.md": "3fda9644f7cc67e202b54c6baa067cd393ee2e6518f5ce00549c0801a86a8c05",
+    "dev/runtime-boundary-final-repair2/README.md": "113580e30510c03ae0951bb6fd3f760cb600db9346c930e2498a37bffd897988",
+    "dev/runtime-boundary-final-repair2/admission.py": "d2f258784b8d02a7069b0f8cb2dec3539b7aa4d401c03fdbd84661aefc7ae8af",
+    "dev/runtime-boundary-final-repair2/boundary.py": "e4b39a3bbb978968ec4ac9684bd8bf1c1662e9f594293808444fd6c18bcc7621",
+    "dev/runtime-boundary-final-repair2/forced-driver-death/receipt.json": "88031fa3534763fda4e3841337ece12cb3e2fef1ed03739d1b1172af379dd7bd",
+    "dev/runtime-boundary-final-repair2/forced-mcp-parent-death/receipt.json": "855224ce1e4e316a3b28eb75c2720a82173d848e58d0fc8411f6dc3af82644b6",
+    "dev/runtime-boundary-final-repair2/host_guard.py": "3aa60ec7c7a3886619835c2e5238579e415223041828775f9e226331c3faa438",
+    "dev/runtime-boundary-final-repair2/native_runner.py": "9894fa2d82f801cf2d70f1f0a9756e2a14e7bcbd59fe95d69459d6d552d4baa9",
+    "dev/runtime-boundary-final-repair2/offline-checks.txt": "c69a509fd4f07b7453d3edb2e5df991891face7ec1b46d3ee53dd83262ffb5de",
+    "dev/runtime-boundary-final-repair2/probe_no_goal.py": "34f536cf3d811facbbe0884a7e98ee96e225926c4b031dece590e47fb108f995",
+    "dev/runtime-boundary-final-repair2/review-snapshot.json": "19b3e2ddcb39cefbeec8a152690dea1172a0d7265218dbc9691c582c6528084e",
+    "dev/runtime-boundary-final-repair2/startup-no-goal-private-logging/receipt.json": "e8f1b641b20981a0109c36dc2010d23d2c90d0ca0ed4966dbb1139b80ef5ca31",
+    "dev/runtime-boundary-final-repair2/startup-no-goal-supported-config/receipt.json": "64d6b1ddbb1434deb47fa5b50b8c6849cf6adcbcda4e2b0c3ebf5b42762f688c",
+    "dev/runtime-boundary-final-repair2/startup-no-goal/receipt.json": "4b446ca7ab2f99987a71adff50ecda1a63069629683c1d35dad94ffebc1c5844",
+    "dev/runtime-boundary-final-repair2/storage-and-native-goal-controls.json": "17b72bfd7e3bee95ebac1f88aed3b9263d1ac9514b8c51ba5fcde909e8d52dd9",
+    "dev/runtime-boundary-final-repair2/test_admission.py": "f68b844969df146e52c055042c5a6f0db2898e2f70f845f9e06c54920d18ba73",
+    "dev/runtime-boundary-final-repair2/test_contract.py": "9649feb3fcdd9fe423a1e6db0a18116ccb68d1db0deaeb6ae140a2a68f09b7bf",
+    "dev/runtime-boundary-final-repair2/test_lifecycle.py": "18018ffa38006f9ff1d22e3f06d115982872c9bfe4ab75e87e258dcdc9a2d1a3",
+    "dev/runtime-boundary-final-repair2/test_mcp_lifecycle.py": "6a6fc98a024f9c50ba21c626bc85e2b031bbcdc69b3431d638d093022a0ed758",
+    "dev/runtime-boundary-final-repair2/tool_server.py": "72557b5e8d5c4f529570b55bd4c04867fb7b72d88bfbbd351fc8fbfce65eb0dd",
+    "dev/runtime-boundary-repair-v2/review-snapshot.json": "ce801ca3988e4f598a79aa3e3cb4ee2da5489d3cf5d04e4e71c65fae00853059"
+  },
+  "native_goals_started": 0,
+  "prompts_sent": 0,
+  "research_attempts_dispatched": 0,
+  "startup_probe_usage": "unknown; four host startups including forced driver death, not scored research",
+  "unavailable_methods": [
+    "T07",
+    "T12",
+    "T13",
+    "T15",
+    "all Bash-dependent methods",
+    "inputs >524288 bytes"
+  ],
+  "actual_goal_inventory_and_continuation_proven": false,
+  "private_client_artifacts": "host-only excluded from source/hash review closure; do not inspect raw auth/config/log contents",
+  "freeze_owner": "independent root/method_gate_resume; at most one counted480s64canary after acceptance",
+  "preserved_pre_final_manifest_sha256": "19b3e2ddcb39cefbeec8a152690dea1172a0d7265218dbc9691c582c6528084e",
+  "native_caps": {
+    "canary_seconds": 480,
+    "canary_responses": 64,
+    "productive_seconds": 1800,
+    "productive_responses": 160
+  },
+  "productive_admission": "mandatory independently verified SAME frozen canary PASS and independently accepted exact method config, hash-bound host-only admission, no flag substitute",
+  "native_attempt_coverage": "exact telemetry requestId,attempt pairs vs native model-I/O records; missing/duplicate/wrong model/provider fail closed",
+  "permissions": "supported build permission.allowedTools exact MCP names; autoApproveHighRisk false, plugins/hooks/skills/memory/subagent disabled; actual effective state mandatory canary",
+  "offline_checks": {
+    "contract_tests_passed": 10,
+    "admission_tests_passed": 4,
+    "actual_MCP_parent_SIGKILL_descendants_absent": true,
+    "actual_native_host_guard_driver_SIGKILL_absent": true
+  },
+  "code_change_lineage": "ONE final completion of still-unfrozen repair2, not repair3; old ce801 partial and19b3 pre-final manifests preserved",
+  "process_dependencies": {
+    "python": {
+      "path": "/usr/bin/python3.13",
+      "sha256": "efb29ce53d36ebaeee80e3aa44fd6c7f9d71bbded5fe1665240b2ed8ecaeee0e"
+    },
+    "node": {
+      "path": "/home/sittingmongoose/.local/bin/node",
+      "sha256": "81925c0995b5c1427b5d538e6a90ca2fdc4daffb786b09af749beaf7369d4e90"
+    },
+    "bwrap": {
+      "path": "/usr/bin/bwrap",
+      "sha256": "7bbffeb19f312d5503232e1502f0f97f2ac4ffcb51dec47d9a58bffbad1f12d5"
+    }
+  }
+}

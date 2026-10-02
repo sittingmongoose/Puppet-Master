@@ -1,0 +1,105 @@
+--- baseline/admission.py
++++ repair1/admission.py
+@@ -4,6 +4,8 @@
+ import os
+ from pathlib import Path
+ import time
++import stat
++import re
+ 
+ ACTIVE=None
+ 
+@@ -11,7 +13,7 @@
+ 
+ def regular(path):
+     p=Path(path)
+-    if not p.is_absolute() or any(q.is_symlink() for q in (p,*p.parents)) or not p.is_file():
++    if not p.is_absolute() or '..' in p.parts or any(q.is_symlink() for q in (p,*p.parents)) or not p.is_file():
+         raise ValueError('absolute unaliased regular host file required')
+     return p
+ 
+@@ -67,7 +69,8 @@
+     workspace=Path(binding['workspace'])
+     if not workspace.is_absolute() or not workspace.is_dir() or any(p.is_symlink() for p in (workspace,*workspace.parents)): raise ValueError('unaliased candidate workspace required')
+     out=Path(binding['native_out']); prompt=regular(binding['prompt_file'])
+-    if not out.is_absolute() or out.exists() or out.is_relative_to(workspace) or workspace.is_relative_to(out): raise ValueError('fresh disjoint host output required')
++    if not out.is_absolute() or '..' in out.parts or any(p.is_symlink() for p in (out,*out.parents)) or out.exists() or out.resolve().is_relative_to(workspace.resolve()) or workspace.resolve().is_relative_to(out.resolve()): raise ValueError('fresh canonical disjoint host output required')
++    if not (workspace/'out').is_dir() or (workspace/'out').is_symlink() or any((workspace/'out').iterdir()): raise ValueError('fresh empty candidate output required')
+     if any(p.is_relative_to(workspace) for p in a['paths']) or prompt.is_relative_to(workspace): raise ValueError('host gates/objective outside workspace required')
+     objective=prompt.read_text().strip()
+     if not objective or len(objective)>4000: raise ValueError('finite exact native objective required')
+@@ -81,7 +84,16 @@
+     if set(inputs)!=actual: raise ValueError('exact immutable input coverage required')
+     for path,pin in inputs.items():
+         p=regular(path)
+-        if not p.is_relative_to(workspace) or sha(p)!=pin: raise ValueError('case input drift')
++        if not p.is_relative_to(workspace) or p.stat().st_nlink!=1 or p.stat().st_size>524288 or sha(p)!=pin: raise ValueError('case input drift')
++    capture_inputs=binding.get('immutable_capture_inputs')
++    if not isinstance(capture_inputs,dict): raise ValueError('exact immutable same-case public capture inputs required')
++    capture_store=workspace/'public_captures'
++    actual_captures={str(p) for p in capture_store.glob('*')}
++    if set(capture_inputs)!=actual_captures or (binding['mode']=='canary' and capture_inputs): raise ValueError('capture scope mismatch')
++    for path,pin in capture_inputs.items():
++        p=regular(path)
++        if p.parent!=capture_store or re.fullmatch(r'(?:[0-9a-f]{64}\.body|[0-9a-f]{32}\.json)',p.name) is None or p.stat().st_nlink!=1 or p.stat().st_size>524288 or sha(p)!=pin: raise ValueError('same-case capture drift')
++    if capture_inputs and binding.get('capture_origin_case_id')!=binding['case_id']: raise ValueError('sibling capture inputs forbidden')
+     # Native instruction resolution walks to its project root or filesystem root.
+     # Check only enumerated instruction/config names, without reading contents.
+     for parent in (workspace,*workspace.parents):
+--- baseline/projector.py
++++ repair1/projector.py
+@@ -161,7 +161,54 @@
+             row['agentsMd_marker_present'] |= '# agentsMd' in text
+             row['auto_memory_marker_present'] |= "(user's auto-memory, persists across conversations):" in text
+     row['context_verified']=row['system_text_part_count']>0 and row['logical_text_part_count']>0 and all(row[k] is False for k in ('global_user_instructions_marker_present','agentsMd_marker_present','auto_memory_marker_present'))
++    row['source_deliveries']=source_deliveries(logical,expected)
+     return row
++
++def source_deliveries(logical,expected):
++    """Only actual logical tool-result exposure; public fields, never content."""
++    uses={}; results=[]
++    for message in logical:
++        content=message.get('content')
++        if not isinstance(content,list): continue
++        for part in content:
++            if not isinstance(part,dict): continue
++            kind=part.get('type')
++            name=part.get('name',part.get('toolName'))
++            if kind in ('tool_use','tool-call') and name in expected:
++                uses[identity(part.get('id',part.get('toolCallId')))]=name
++            if kind not in ('tool_result','tool-result') or part.get('is_error') is True: continue
++            call=part.get('tool_use_id',part.get('toolCallId'))
++            if call not in uses: continue
++            value=part.get('content',(part.get('output') or {}).get('value') if isinstance(part.get('output'),dict) else None)
++            if isinstance(value,list) and len(value)==1 and isinstance(value[0],dict) and value[0].get('type')=='text': value=value[0].get('text')
++            if isinstance(value,str):
++                if len(value.encode('utf8'))>1048576: continue
++                try: value=json.loads(value)
++                except ValueError: continue
++            if not isinstance(value,dict) or re.fullmatch(r'[0-9a-f]{32}',str(value.get('operation_id',''))) is None: continue
++            path=value.get('capture_path',value.get('path'))
++            if type(path) is not str or re.fullmatch(r'public_captures/[0-9a-f]{64}\.body',path) is None: continue
++            item={'tool_call_id':identity(call),'tool_name':uses[call],'operation_id':value['operation_id'],'capture_path':path}
++            hashes=('sha256','range_sha256','transmitted_text_sha256')
++            integers=('status','bytes','captured_bytes','range_bytes','byte_start','byte_end_exclusive','transmitted_text_utf8_bytes')
++            booleans=('body_complete','truncated','complete_source_delivered','additional_source_bytes_remain')
++            for key in hashes:
++                if type(value.get(key)) is str and re.fullmatch(r'[0-9a-f]{64}',value[key]): item[key]=value[key]
++            for key in integers:
++                if type(value.get(key)) is int and 0<=value[key]<=1048576: item[key]=value[key]
++            for key in booleans:
++                if type(value.get(key)) is bool: item[key]=value[key]
++            delivery=value.get('delivery')
++            if isinstance(delivery,dict):
++                item['delivery']={}
++                for key in hashes:
++                    if type(delivery.get(key)) is str and re.fullmatch(r'[0-9a-f]{64}',delivery[key]): item['delivery'][key]=delivery[key]
++                for key in integers:
++                    if type(delivery.get(key)) is int and 0<=delivery[key]<=1048576: item['delivery'][key]=delivery[key]
++                for key in booleans:
++                    if type(delivery.get(key)) is bool: item['delivery'][key]=delivery[key]
++            results.append(item)
++    return results
+ 
+ def inventory(private, session_id, expected, model_events):
+     root=Path(private)/'storage/cli/rollout'

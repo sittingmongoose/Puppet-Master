@@ -1,0 +1,47 @@
+{
+  "schema": "er8.route.snapshot.v1",
+  "status": "FROZEN_FOR_INDEPENDENT_CANARY_ONLY_REVIEW",
+  "frozen_utc": "2026-10-02T02:21:49.257324+00:00",
+  "version": 2,
+  "baseline_plus_ordinary_repairs_limit": 2,
+  "closure_sha256": {
+    "LAB_ROOT/dev/route-assembly-v1/launch.py": "8dec4108eacd3814d5b1fff069daaef87703f8466bc6d15c77607e1bcba1e0d4",
+    "LAB_ROOT/dev/route-assembly-v1/admission.py": "e6250830d4e609bc3650024c81cb237fb5252f4d95a21411efa16f4e302d3858",
+    "LAB_ROOT/dev/route-assembly-v1/native_runner.py": "9b8bf700a30a9a4be0add4f3161b69bf98c6068acef88d73606085c3b6d6caca",
+    "LAB_ROOT/dev/route-assembly-v1/projector.py": "92ba648f160f2bec1296cf0a7510bebc6b6a61bcef1e0ccc7c69902610899fd2",
+    "LAB_ROOT/dev/route-assembly-v1/boundary.py": "ac08c1c541574f15ad82f78228d80688f004d95726ca29fa03fab0bb47d5a2a9",
+    "LAB_ROOT/dev/route-assembly-v1/adapter.py": "6424fe4019101bfe71e5a51d4e7dd1935353cd756807db9b148af03cb54b140a",
+    "LAB_ROOT/dev/route-assembly-v1/run_goal.py": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+    "LAB_ROOT/dev/route-assembly-v1/zcode_goal_driver.py": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+    "LAB_ROOT/dev/route-assembly-v1/zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633",
+    "LAB_ROOT/dev/route-assembly-v1/host_guard.py": "3aa60ec7c7a3886619835c2e5238579e415223041828775f9e226331c3faa438",
+    "LAB_ROOT/dev/route-assembly-v1/root-config.json": "266b8c9930f26b00deb232d877f8f255c95630e4fc62f511f27e1aed6c7ca671",
+    "LAB_ROOT/dev/route-assembly-v1/canary/TASK.md": "0f1ca17bd3a03ddd29ee8a537442824ba0cdce1907a6390bf4e4df483050b881",
+    "LAB_ROOT/dev/route-assembly-v1/canary/ECHO.txt": "f7e2e10edb3dc012fe1d7294b256b368bfb7ac9f96378f61f934e5cb912874df",
+    "LAB_ROOT/dev/route-assembly-v1/canary/OBJECTIVE.md": "c46f27278a35b7e404e8f32d385b38ef011188789f4f14fbf9db2f3a1430e081",
+    "LAB_ROOT/dev/source-capture-v1/boundary.py": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+    "LAB_ROOT/dev/source-capture-v1/tool_server.py": "9c25c1faaf7c4557aaeb22b0977061914a9fbba1a04d87d2a3a29851daa29846",
+    "LAB_ROOT/dev/source-capture-v1/binding.json": "8dea681e5a43fa54cec4a8ae76e37fcd9c6db878e73576ef5611e76e0313ff99",
+    "LAB_ROOT/dev/route-assembly-v1/runtime-source-diff.patch": "ac84892f7357b2a65f86be1bfd2a295c47ac432ad55002ca1c3f7234f5eaa34d",
+    "LAB_ROOT/dev/route-assembly-v1/repair1-source-diff.patch": "95628334aa520f5f5999a4d190e7dc38be43437ab3c1b6aed49f01171d3cb4cd"
+  },
+  "lineage": {
+    "old_native_runner_sha256": "9894fa2d82f801cf2d70f1f0a9756e2a14e7bcbd59fe95d69459d6d552d4baa9",
+    "unchanged_engine_sha256": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+    "old_runtime_snapshot_sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4"
+  },
+  "native_goal_starts_by_author": 0,
+  "provider_calls_by_author": 0,
+  "raw_native_reads_by_author": 0,
+  "scope": "new v8 context/capture/positive projection boundary; historical v7 canary is not authorization",
+  "canary_requires": "exact independent source/route/lifetime acceptance and root CANARY_ONLY release before actual job packing/birth",
+  "productive_hold": true,
+  "repair_version": 1,
+  "baseline_snapshot_sha256": "8d5b105a9c51a3200b4724ace0226134a94df45f153a87996749f74a12ac9267",
+  "narrow_repair_findings": [
+    "fresh canonical disjoint native host output",
+    "actual empty workspace output",
+    "exact immutable same-case capture input coverage",
+    "logical native public source delivery receipt projection joined to call identity"
+  ]
+}

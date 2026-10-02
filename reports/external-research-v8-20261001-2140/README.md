@@ -10,3 +10,5 @@
 The six reserved complete cases are BIO-C/P/B and NB-C/P/B on the same declared existing Z account/model/mode. Each uses fresh research/proposal, independent same-family candidate critic, and correction Goals. Research selects public primary evidence from a brief; sandbox proposals do not edit Puppet Master canon. Independent source-grounded evaluation follows actual frozen outputs. Source acquisition and source body/range observation remain UNKNOWN until mechanical receipts establish them. Quality, preservation and efficiency are separate outcomes.
 
 V7 at `c8f9cbc9195602688702bbbf9b3ce23c14fa5586` remains closed with unmet outcomes. No unused v7 starts transfer here.
+
+[Route code and public dependency cohort](route-cohort-v1/README.md) adds the pinned source/config closure and two authorized historical public dependency copies. Current operator startup remains held pending caller repair2 review; native qualification is pending.

@@ -1,0 +1,74 @@
+{
+  "schema": "pm.v8.source-capture-binding.v1",
+  "state": "FROZEN_FOR_INDEPENDENT_REVIEW",
+  "frozen_utc": "2026-10-02T02:06:32.164764+00:00",
+  "server_version": "v8-source-capture-v1",
+  "original_basis": [
+    {
+      "path": "V7_LAB_ROOT/dev/runtime-boundary-final-repair2/tool_server.py",
+      "sha256": "72557b5e8d5c4f529570b55bd4c04867fb7b72d88bfbbd351fc8fbfce65eb0dd",
+      "bytes": 10169
+    },
+    {
+      "path": "V7_LAB_ROOT/dev/runtime-boundary-final-repair2/boundary.py",
+      "sha256": "e4b39a3bbb978968ec4ac9684bd8bf1c1662e9f594293808444fd6c18bcc7621",
+      "bytes": 1835
+    }
+  ],
+  "files": [
+    {
+      "path": "LAB_ROOT/dev/source-capture-v1/tool_server.py",
+      "sha256": "9c25c1faaf7c4557aaeb22b0977061914a9fbba1a04d87d2a3a29851daa29846",
+      "bytes": 21910
+    },
+    {
+      "path": "LAB_ROOT/dev/source-capture-v1/boundary.py",
+      "sha256": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+      "bytes": 2648
+    },
+    {
+      "path": "LAB_ROOT/dev/source-capture-v1/test_source_capture.py",
+      "sha256": "a2e661f064dff5efb21c61461106d9473995e76c14133a8ff4abdec5a5aaf808",
+      "bytes": 17816
+    },
+    {
+      "path": "LAB_ROOT/dev/source-capture-v1/README.md",
+      "sha256": "f92dfad615d6c60bca9b989e5147cfd5e1eb506acb23d35d44ba99cded81a5a7",
+      "bytes": 7024
+    },
+    {
+      "path": "LAB_ROOT/dev/source-capture-v1/test-results.txt",
+      "sha256": "0fba5c3d27a6d3cc3ad4d5dd3b2fbbefd80c762a4badced4eb5177097d7b87df",
+      "bytes": 2189
+    }
+  ],
+  "runtime_closure": [
+    "tool_server.py",
+    "boundary.py"
+  ],
+  "tool_names": [
+    "read_file",
+    "write_file",
+    "mechanical",
+    "public_https_get"
+  ],
+  "public_get_policy_env": "PM_PUBLIC_GET=1",
+  "new_case_stores": [
+    "public_captures",
+    "operation_receipts"
+  ],
+  "integration": "Explicit pinned boundary module selection by route assembly before old runner import; unchanged model-facing tool names; new scope and schemas require independent review.",
+  "test_result": {
+    "exit_code": 0,
+    "elapsed_seconds": 0.3743788540014066,
+    "tests": 14,
+    "live_network_calls": 0,
+    "native_candidate_calls": 0,
+    "provider_calls": 0,
+    "actual_local_tool_namespace_rpc": true
+  },
+  "live_public_get": "UNEXERCISED_AUTHOR; root/operator canary required",
+  "semantic_acquisition": "UNKNOWN",
+  "numeric_witness": "UNEXECUTED",
+  "native_goal_mode_and_provider_retries": "UNCHANGED_BY_THIS_MODULE"
+}

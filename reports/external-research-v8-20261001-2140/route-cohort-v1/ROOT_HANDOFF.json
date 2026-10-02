@@ -1,0 +1,41 @@
+{
+  "schema": "pm.er8.positive-publication-handoff.v1",
+  "scope": "Publicsource/config code-qualifiedcohort only; callerrepair2pending; no actualnativequalification/scoredresearch",
+  "positive_files": [
+    "LAB_ROOT/dev/route-assembly-v1/AUTHOR-CLOSEOUT.json",
+    "LAB_ROOT/dev/route-assembly-v1/INTERFACE.md",
+    "LAB_ROOT/dev/route-assembly-v1/SNAPSHOT.json",
+    "LAB_ROOT/dev/route-assembly-v1/adapter.py",
+    "LAB_ROOT/dev/route-assembly-v1/admission.py",
+    "LAB_ROOT/dev/route-assembly-v1/archive/baseline-v1/SNAPSHOT.json",
+    "LAB_ROOT/dev/route-assembly-v1/boundary.py",
+    "LAB_ROOT/dev/route-assembly-v1/canary/ECHO.txt",
+    "LAB_ROOT/dev/route-assembly-v1/canary/OBJECTIVE.md",
+    "LAB_ROOT/dev/route-assembly-v1/canary/TASK.md",
+    "LAB_ROOT/dev/route-assembly-v1/host_guard.py",
+    "LAB_ROOT/dev/route-assembly-v1/launch.py",
+    "LAB_ROOT/dev/route-assembly-v1/native_runner.py",
+    "LAB_ROOT/dev/route-assembly-v1/positive-output-contract.json",
+    "LAB_ROOT/dev/route-assembly-v1/projector.py",
+    "LAB_ROOT/dev/route-assembly-v1/repair1-source-diff.patch",
+    "LAB_ROOT/dev/route-assembly-v1/root-config.json",
+    "LAB_ROOT/dev/route-assembly-v1/run_goal.py",
+    "LAB_ROOT/dev/route-assembly-v1/runtime-source-diff.patch",
+    "LAB_ROOT/dev/route-assembly-v1/zcode_goal_driver.py",
+    "LAB_ROOT/dev/route-assembly-v1/zcode_native.py",
+    "LAB_ROOT/dev/source-capture-v1/binding.json",
+    "LAB_ROOT/dev/source-capture-v1/boundary.py",
+    "LAB_ROOT/dev/source-capture-v1/tool_server.py"
+  ],
+  "additional_named_old_public_dependencies": [
+    {
+      "path": "V7_LAB_ROOT/dev/runtime-boundary-final-repair2/native_runner.py",
+      "sha256": "9894fa2d82f801cf2d70f1f0a9756e2a14e7bcbd59fe95d69459d6d552d4baa9"
+    },
+    {
+      "path": "V7_LAB_ROOT/dev/runtime-boundary-final-repair2/review-snapshot-final.json",
+      "sha256": "298f125f395f38d15202a0b1d07ba0753130d547c56db6bfecdb0f509f40c8c4"
+    }
+  ],
+  "restriction": "No nativeCLI/proprietaryappbundles/privateauth/nativeJSON/stdout/modelIO/bodies. Code copiedbyteexact unlessdeclaredlocator publicsanitization withtwohashes. Reproductionrequiresexistingauthorizednativeappandauth notbundled. No hiddenfullportable/replayclaim."
+}

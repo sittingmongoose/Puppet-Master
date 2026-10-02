@@ -5,3 +5,5 @@ State: INITIAL_SCOPE, ongoing campaign. Publication freezes the prospective scop
 Fresh ceilings: 6 hours, 48 native Goal starts, 16 occupied candidate slot-hours, 32 helper starts, 8 active helpers and M2/Z2/L2 candidate family concurrency. Three case stages reserve 1800/600/600 seconds; whole case wall ≤3600 seconds and occupied ≤5400 seconds. No silent cap increases, clock resets, or prior-campaign budget transfers.
 
 Code cohort v1: frozen conditional source/offline execution, route/caller and capture acceptances. Native qualification pending. Strict outside-native host cap ≤300 seconds prospectively applies to all six integrated cases; the original planning files remain intact. No candidate outcome is upgraded by this cohort.
+
+Route cohort v1 exports 19 route closure entries and two named historical public dependencies, with exact original SHA checks. Caller repair2 remains pending independent review after operator pre-startup HOLD. Underlying actual account ID/load remains UNKNOWN. No research result has run in this publication.

@@ -1,0 +1,28 @@
+{
+  "schema": "er8.route.author-closeout.v1",
+  "original_birth_utc": "2026-10-02T02:00:13+00:00",
+  "observed_closeout_utc": "2026-10-02T02:26:01.372533+00:00",
+  "observed_elapsed_seconds": 1549,
+  "hard_seconds": 2700,
+  "final_reserve_seconds": 600,
+  "conservative_event_cap": 120,
+  "no_clock_reset": true,
+  "helper_native_goal_starts": 0,
+  "helper_provider_calls": 0,
+  "helper_live_public_get_calls": 0,
+  "helper_raw_native_reads": 0,
+  "baseline_version": 1,
+  "ordinary_repair_versions": 1,
+  "unused_ordinary_repair_versions": 1,
+  "failed_attempt_and_review_costs_included_in_elapsed": true,
+  "generated_output_usage": "UNKNOWN-not-exposed",
+  "exact_helper_dollar_cost": "UNKNOWN",
+  "scope_status": "SOURCE_ACCEPTED_CANARY_ONLY_HANDOFF_COMPLETE",
+  "native_or_productive_qualification": "HOLD pendingactualnewcanaryandrootadmission",
+  "source_acceptance": {
+    "path": "LAB_ROOT/evaluation/execution-qualification-v1/route-source-acceptance.json",
+    "sha256": "054a3d15e4d317c71e1f0a1a8495f136f1c0cd584e28ede503d04f576e9e59f1"
+  },
+  "snapshot_sha256": "9455eaa5876e5627360c80ee98e41b554118205544b3244af3ba272b0d928668",
+  "root_config_sha256": "266b8c9930f26b00deb232d877f8f255c95630e4fc62f511f27e1aed6c7ca671"
+}
