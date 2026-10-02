@@ -25,25 +25,26 @@
    object literals, so all five pulsed identically whether work was running,
    stalled or finished.  activity-bar.js publishes a derived six-value tone
    per domain onto <html> (data-ab-<id>) and <body> as the --ab-ink, --ab-anim,
-   --ab-hi, --ab-ho and --ab-stroke property families; the nine mapping rules
+   --ab-hi, --ab-bl and --ab-stroke property families; the nine mapping rules
    below hand the right one to the right button, and one rule lights the icon.
    Neon icons (2026-10-02): the icon is an svg.nx (neon-icons.js) and its glow
    is the neon halo (two merged stroke bands behind the tubes), not a CSS
-   filter: --ab-hi / --ab-ho are the inner and wide band strengths. The bar is
+   filter: --ab-hi is the core band's strength and --ab-bl the backlight's (the
+   soft tail, an anchored ::after behind the icon; section below). The bar is
    self-lit, so it sets every neon variable itself, which also keeps the
    generic hover ignite (neon-icons.css section 8) off it.
    ===================================================================== */
 html[data-ab-ready] .activity-item .state-mark { display: none; }
 
-html[data-ab-ready] .activity-item[data-hover-domain="goal"]       { --ab-ink: var(--ab-ink-goal);       --ab-anim: var(--ab-anim-goal);       --ab-hi: var(--ab-hi-goal);       --ab-ho: var(--ab-ho-goal);       --ab-stroke: var(--ab-stroke-goal); }
-html[data-ab-ready] .activity-item[data-hover-domain="todo"]       { --ab-ink: var(--ab-ink-todo);       --ab-anim: var(--ab-anim-todo);       --ab-hi: var(--ab-hi-todo);       --ab-ho: var(--ab-ho-todo);       --ab-stroke: var(--ab-stroke-todo); }
-html[data-ab-ready] .activity-item[data-hover-domain="subagents"]  { --ab-ink: var(--ab-ink-subagents);  --ab-anim: var(--ab-anim-subagents);  --ab-hi: var(--ab-hi-subagents);  --ab-ho: var(--ab-ho-subagents);  --ab-stroke: var(--ab-stroke-subagents); }
-html[data-ab-ready] .activity-item[data-hover-domain="crew"]       { --ab-ink: var(--ab-ink-crew);       --ab-anim: var(--ab-anim-crew);       --ab-hi: var(--ab-hi-crew);       --ab-ho: var(--ab-ho-crew);       --ab-stroke: var(--ab-stroke-crew); }
-html[data-ab-ready] .activity-item[data-hover-domain="brainstorm"] { --ab-ink: var(--ab-ink-brainstorm); --ab-anim: var(--ab-anim-brainstorm); --ab-hi: var(--ab-hi-brainstorm); --ab-ho: var(--ab-ho-brainstorm); --ab-stroke: var(--ab-stroke-brainstorm); }
-html[data-ab-ready] .activity-item[data-hover-domain="review"]     { --ab-ink: var(--ab-ink-review);     --ab-anim: var(--ab-anim-review);     --ab-hi: var(--ab-hi-review);     --ab-ho: var(--ab-ho-review);     --ab-stroke: var(--ab-stroke-review); }
-html[data-ab-ready] .activity-item[data-hover-domain="chat_room"]  { --ab-ink: var(--ab-ink-chat_room);  --ab-anim: var(--ab-anim-chat_room);  --ab-hi: var(--ab-hi-chat_room);  --ab-ho: var(--ab-ho-chat_room);  --ab-stroke: var(--ab-stroke-chat_room); }
-html[data-ab-ready] .activity-item[data-hover-domain="changes"]    { --ab-ink: var(--ab-ink-changes);    --ab-anim: var(--ab-anim-changes);    --ab-hi: var(--ab-hi-changes);    --ab-ho: var(--ab-ho-changes);    --ab-stroke: var(--ab-stroke-changes); }
-html[data-ab-ready] .activity-item[data-hover-domain="artifacts"]  { --ab-ink: var(--ab-ink-artifacts);  --ab-anim: var(--ab-anim-artifacts);  --ab-hi: var(--ab-hi-artifacts);  --ab-ho: var(--ab-ho-artifacts);  --ab-stroke: var(--ab-stroke-artifacts); }
+html[data-ab-ready] .activity-item[data-hover-domain="goal"]       { --ab-ink: var(--ab-ink-goal);       --ab-anim: var(--ab-anim-goal);       --ab-hi: var(--ab-hi-goal);       --ab-bl: var(--ab-bl-goal);       --ab-stroke: var(--ab-stroke-goal); }
+html[data-ab-ready] .activity-item[data-hover-domain="todo"]       { --ab-ink: var(--ab-ink-todo);       --ab-anim: var(--ab-anim-todo);       --ab-hi: var(--ab-hi-todo);       --ab-bl: var(--ab-bl-todo);       --ab-stroke: var(--ab-stroke-todo); }
+html[data-ab-ready] .activity-item[data-hover-domain="subagents"]  { --ab-ink: var(--ab-ink-subagents);  --ab-anim: var(--ab-anim-subagents);  --ab-hi: var(--ab-hi-subagents);  --ab-bl: var(--ab-bl-subagents);  --ab-stroke: var(--ab-stroke-subagents); }
+html[data-ab-ready] .activity-item[data-hover-domain="crew"]       { --ab-ink: var(--ab-ink-crew);       --ab-anim: var(--ab-anim-crew);       --ab-hi: var(--ab-hi-crew);       --ab-bl: var(--ab-bl-crew);       --ab-stroke: var(--ab-stroke-crew); }
+html[data-ab-ready] .activity-item[data-hover-domain="brainstorm"] { --ab-ink: var(--ab-ink-brainstorm); --ab-anim: var(--ab-anim-brainstorm); --ab-hi: var(--ab-hi-brainstorm); --ab-bl: var(--ab-bl-brainstorm); --ab-stroke: var(--ab-stroke-brainstorm); }
+html[data-ab-ready] .activity-item[data-hover-domain="review"]     { --ab-ink: var(--ab-ink-review);     --ab-anim: var(--ab-anim-review);     --ab-hi: var(--ab-hi-review);     --ab-bl: var(--ab-bl-review);     --ab-stroke: var(--ab-stroke-review); }
+html[data-ab-ready] .activity-item[data-hover-domain="chat_room"]  { --ab-ink: var(--ab-ink-chat_room);  --ab-anim: var(--ab-anim-chat_room);  --ab-hi: var(--ab-hi-chat_room);  --ab-bl: var(--ab-bl-chat_room);  --ab-stroke: var(--ab-stroke-chat_room); }
+html[data-ab-ready] .activity-item[data-hover-domain="changes"]    { --ab-ink: var(--ab-ink-changes);    --ab-anim: var(--ab-anim-changes);    --ab-hi: var(--ab-hi-changes);    --ab-bl: var(--ab-bl-changes);    --ab-stroke: var(--ab-stroke-changes); }
+html[data-ab-ready] .activity-item[data-hover-domain="artifacts"]  { --ab-ink: var(--ab-ink-artifacts);  --ab-anim: var(--ab-anim-artifacts);  --ab-hi: var(--ab-hi-artifacts);  --ab-bl: var(--ab-bl-artifacts);  --ab-stroke: var(--ab-stroke-artifacts); }
 
 html[data-ab-ready] .activity-item > svg {
   /* 14px, not the emitted 12px: dropping the dot and its 6px gap returns 11px
@@ -68,10 +69,11 @@ html[data-ab-ready] .activity-item > svg {
   --nx-tone-k: 1;
   /* drawn at 14, emitted at 12: the moving parts' halo copies convert at 24/14 */
   --nx-u: 1.7143;
-  /* The static glow carries the tone with motion off: the inner band always,
-     the wide band for the live and changed tones. */
+  /* The static glow carries the tone with motion off: the core band on the
+     icon, and the backlight behind it (the item's ::after, below). */
   --nx-hiv: visible; --nx-hi-a: var(--ab-hi, var(--nx-h-quiet-i));
-  --nx-hov: visible; --nx-ho-a: var(--ab-ho, 0);
+  /* anchor for the backlight */
+  anchor-name: --nx-ab-icon;
   /* The rhythm: the keyframes only touch opacity, so the halo is never
      fill-mode-clobbered. */
   animation: var(--ab-anim, none);
@@ -107,6 +109,21 @@ html[data-ab-changes="attention"] .activity-item[data-hover-domain="changes"] > 
 html[data-ab-artifacts="attention"] .activity-item[data-hover-domain="artifacts"] > svg .nx-p {
   animation: var(--kl) 3200ms var(--nx-le) infinite;
   animation-delay: calc(var(--ad, 0) * 3.2ms - 3200ms);
+}
+/* The backlight: the glow's soft tail, a radial gradient of the tone ink about
+   2.2x the icon, behind it, at element opacity (no filter, no color-mix, no
+   edge). It is the item's ::after anchored to the item's own svg (anchor-scope
+   keeps each item to its own icon), because the icon's position differs in
+   every bar variant and compact tier; the item is a small stacking context so
+   the light paints over its background and under its content. Steady: the
+   icon breathes, the light does not. */
+html[data-ab-ready] .activity-item[data-hover-domain] { position: relative; isolation: isolate; anchor-scope: --nx-ab-icon; }
+html[data-ab-ready] .activity-item[data-hover-domain]::after {
+  content: ""; position: absolute; position-anchor: --nx-ab-icon;
+  left: anchor(center); top: anchor(center); width: 31px; height: 31px; translate: -50% -50%;
+  border-radius: 50%; pointer-events: none; z-index: -1;
+  background: radial-gradient(closest-side, var(--ab-ink, var(--subtle)), transparent);
+  opacity: var(--ab-bl, 0);
 }
 /* Hover and press must still read as hover and press: the inner band brightens
    a step while the button takes its own background. */

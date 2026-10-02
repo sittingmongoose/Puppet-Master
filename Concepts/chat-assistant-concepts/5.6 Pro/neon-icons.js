@@ -13,17 +13,14 @@
  *   PMX name (the kind marks, eye family, lock, ...), the geometry is PMX's, copied verbatim and only split into
  *   parts; if module-shell changes one of those drawings, mirror it here (see RECONCILED and the per-glyph notes).
  * - The neon anatomy (plan §1). Every glyph renders as
- *     1. the merged halos, each one <path> with a single d (rect/circle/ellipse/line converted) so halos never
- *        stack: the wide band (.nx-h.nx-ho) and the mid band (.nx-h.nx-hm), both holding the whole glyph at rest,
- *        then the core band (.nx-h) holding every static part;
+ *     1. the merged core halo, one <path class="nx-h"> whose single d holds every static part's geometry
+ *        (rect/circle/ellipse/line converted), so halos never stack;
  *     2. the static tubes (.nx-c), each keeping its original element (check keeps d="m5 12 4 4L19 6", copy keeps
  *        <rect x="8" y="8" ...>: transcript-verify pins both);
  *     3. each moving part as <g class="nx-p nx-p<i>" style="--ax:..;--ay:..;--ar:..;--ao:..;--ad:.."> holding its
- *        own inner halo copy and its tube(s) (and the wide band too when the part is the whole glyph).
- *   Three bands rather than one: the core band hugs the tube (the neon itself); the mid and wide bands are the
- *   faint falloff and the 4-6 px tail the halo pixel metric asks for, stepped in two so neither edge reads as a
- *   plate. neon-icons.css keeps the outer two visibility:hidden (no paint) except where a status or the bar
- *   lights them.
+ *        own halo copy and its tube(s).
+ *   The halo is the core band only: the neon tube's bloom. The soft tail of the glow is a radial backlight on the
+ *   HTML host (status wrapper, activity bar item), because stepped stroke bands drew a glyph-shaped plate (G1).
  * - Acts. A part carries its displaced pose (--ax/--ay translate, --ar rotate, --ao opacity, --cr circle radius,
  *   all in user units / degrees), a stagger (--ad, ms) and, for draw-ons, a clip (--ac start inset, --ae end
  *   inset, user units on the view box). neon-icons.css moves the part by animating one registered number, --nx-t
@@ -519,8 +516,8 @@
       if (!m.n) s.push('--kl:' + kfName(name, j, 'L'));
       return s.join(';');
     }
-    /* The glyphs the activity bar lights through its tone (the mid and wide bands are emitted for them); any other
-       glyph gets those bands as a status (role or status()) or on request with the nx-lit class token. */
+    /* The glyphs the activity bar lights through its tone: their moving parts always carry their own halo copy, so
+       the glow moves with the tube in the bar's loops. Status marks do the same; any glyph can ask with nx-lit. */
     var LIT = { goal: 1, todo: 1, users: 1, changes: 1, page: 1, 'kind-crew': 1, 'kind-brainstorm': 1, 'kind-review': 1, 'kind-chat_room': 1 };
     function travels(m) { return !!(m.ax || m.ay || m.ar || m.cr); }
     function render(name, size, cls, statusWrap) {
@@ -531,14 +528,14 @@
       var toks = String(cls || '').split(/\s+/).filter(Boolean), role = d.role, litTok = false;
       toks = toks.filter(function (t) { var m = /^nx-r-(status|concept|control|brand)$/.exec(t); if (m) { role = m[1]; return false; } if (t === 'nx-lit') litTok = true; return true; });
       var lit = role === 'status' || !!LIT[n] || litTok;
-      /* Halo layout. The core band (.nx-h) of the static parts is one merged path. A moving part carries its own
-         core copy, so the glow moves with its tube, only where the halo is the point: lit glyphs (status, the bar's
-         domains, nx-lit), parts that draw in by clip (the clip must hide the glow with the stroke, or the halo
-         shows the shape before it is drawn) and concept parts that travel. A control's other parts (its halo shows
-         on hover only) and a concept part that only fades keep their core in the merged path, and a one-element part is then
-         the bare tube itself: one element instead of three (`more` alone appears dozens of times in a thread list).
-         The mid and wide bands, when emitted, are each ONE merged path for the whole glyph at rest, so they never
-         stack; a glyph that is all one moving part gives that part its bands so they turn with it. */
+      /* Halo layout: one core band (.nx-h), the neon itself, hugging the tube. The soft tail is NOT drawn in the svg
+         (stepped stroke bands read as a glyph-shaped plate): it is a radial backlight on the HTML host (the status
+         wrapper, the activity bar item; neon-icons.css and activity-bar.css). The core of the static parts is one
+         merged path. A moving part carries its own core copy, so the glow moves with its tube, where the halo is the
+         point: lit glyphs (status, the bar's domains, nx-lit), parts that draw in by clip (the clip must hide the glow
+         with the stroke) and concept parts that travel. A control's other parts (its halo shows on hover only) and a
+         concept part that only fades keep their core in the merged path, and a one-element part is then the bare tube
+         itself: one element instead of three (`more` alone appears dozens of times in a thread list). */
       var stat = [], core = [], tubes = '', moving = '', i = 0, live = [];
       var j = 0;
       d.parts.forEach(function (p) {
@@ -546,25 +543,22 @@
         if (!p.m || !moves(p, size, d.origin)) { p.els.forEach(function (e) { stat.push(e); core.push(e); tubes += tube(e, d.fill); }); return; }
         live.push({ p: p, j: jj });
       });
-      var selfWide = !stat.length && live.length === 1;
-      var all = stat.slice();
+      var whole = !stat.length && live.length === 1;
       live.forEach(function (it) {
         var p = it.p, m = p.m, st = partStyle(n, it.j, m, d.origin);
         var pcls = 'nx-p nx-p' + i + (m.n ? ' nx-pn' : '') + (m.o === 'c' ? ' nx-pf' : '') + (statusWrap ? ' nx-st-move' : '');
-        all = all.concat(p.els);
-        if (!selfWide && !m.ac && (role === 'control' || (!lit && !travels(m)))) {
+        if (!whole && !m.ac && (role === 'control' || (!lit && !travels(m)))) {
           core = core.concat(p.els);
           if (p.els.length === 1) {
             var e1 = p.els[0], c1 = 'nx-c ' + pcls + (e1.f || d.fill ? ' nx-f' : '') + (e1.cls ? ' ' + e1.cls : '');
             moving += '<' + e1.tag + ' class="' + c1 + '"' + attrs(e1) + ' style="' + st + '"/>';
           } else moving += '<g class="' + pcls + '" style="' + st + '">' + p.els.map(function (e) { return tube(e, d.fill); }).join('') + '</g>';
         } else {
-          var bands = selfWide && lit ? halo(p.els, 'nx-h nx-ho') + halo(p.els, 'nx-h nx-hm') : '';
-          moving += '<g class="' + pcls + '" style="' + st + '">' + bands + halo(p.els, 'nx-h') + p.els.map(function (e) { return tube(e, d.fill); }).join('') + '</g>';
+          moving += '<g class="' + pcls + '" style="' + st + '">' + halo(p.els, 'nx-h') + p.els.map(function (e) { return tube(e, d.fill); }).join('') + '</g>';
         }
         i++;
       });
-      var base = (lit && !selfWide ? halo(all, 'nx-h nx-ho') + halo(all, 'nx-h nx-hm') : '') + (core.length ? halo(core, 'nx-h') : '') + tubes;
+      var base = (core.length ? halo(core, 'nx-h') : '') + tubes;
       if (statusWrap) base = '<g class="nx-st-base">' + base + '</g>';
       var z = size < 12 ? ' nx-z0' : size < 15 ? ' nx-z1' : '';
       var tone = statusWrap ? ' nx-t-' + statusWrap.tone : '';
@@ -586,7 +580,7 @@
       var k = STATUS_OF[String(s == null ? '' : s)];
       if (!k) { miss('status:' + s); k = 'idle'; }
       var S = STATUS[k];
-      return '<span class="nx-st nx-st-' + k + (cls ? ' ' + esc(cls) : '') + '" data-k="st:' + k + '" aria-hidden="true">' + render(S.glyph, num(size, 15), '', S) + '</span>';
+      return '<span class="nx-st nx-st-' + k + ' nx-tn-' + S.tone + (cls ? ' ' + esc(cls) : '') + '" data-k="st:' + k + '" aria-hidden="true">' + render(S.glyph, num(size, 15), '', S) + '</span>';
     }
     function list() {
       var back = Object.create(null);

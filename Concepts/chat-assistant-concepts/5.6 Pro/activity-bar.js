@@ -127,17 +127,17 @@
     changed: 'none', done: 'none', idle: 'none'
   };
   /* The glow is the neon halo (neon-icons.js / neon-icons.css), not a CSS
-     filter: each tone names the halo strength tokens for the inner band and
-     the wide band. Written as `var(--nx-h-live-i)` etc rather than a number,
-     and set on <body>, so a theme swap (light themes carry their own token
-     values) needs no re-sync — see setVar's note below. Done and idle had no
-     glow under the filter; they keep a faint inner band, well under the live
-     tones, so a settled domain still reads as lit. */
+     filter: each tone names the strength token of the tube's core band and of
+     the backlight behind the icon (its soft tail, activity-bar.css). Written as
+     `var(--nx-h-working-i)` etc rather than a number, and set on <body>, so a
+     theme swap (light themes carry their own token values) needs no re-sync —
+     see setVar's note below. Done and idle had no glow under the filter; they
+     keep a faint core band and no backlight, well under the live tones. */
   var TONE_HALO = {
-    blocked: ['var(--nx-h-blocked-i)', 'var(--nx-h-blocked-o)'],
-    attention: ['var(--nx-h-attention-i)', 'var(--nx-h-attention-o)'],
-    working: ['var(--nx-h-working-i)', 'var(--nx-h-working-o)'],
-    changed: ['var(--nx-h-changed-i)', 'var(--nx-h-changed-o)'],
+    blocked: ['var(--nx-h-blocked-i)', 'var(--nx-bl-blocked)'],
+    attention: ['var(--nx-h-attention-i)', 'var(--nx-bl-attention)'],
+    working: ['var(--nx-h-working-i)', 'var(--nx-bl-working)'],
+    changed: ['var(--nx-h-changed-i)', 'var(--nx-bl-changed)'],
     done: ['var(--nx-h-quiet-i)', '0'],
     idle: ['var(--nx-h-quiet-i)', '0']
   };
@@ -297,7 +297,7 @@
         delVar(body, '--ab-ink-' + id);
         delVar(body, '--ab-anim-' + id);
         delVar(body, '--ab-hi-' + id);
-        delVar(body, '--ab-ho-' + id);
+        delVar(body, '--ab-bl-' + id);
         delVar(body, '--ab-stroke-' + id);
         continue;
       }
@@ -316,7 +316,7 @@
       var halo = TONE_HALO[tone] || TONE_HALO.idle;
       setVar(body, '--ab-anim-' + id, TONE_ANIM[tone] || 'none');
       setVar(body, '--ab-hi-' + id, halo[0]);
-      setVar(body, '--ab-ho-' + id, halo[1]);
+      setVar(body, '--ab-bl-' + id, halo[1]);
       setVar(body, '--ab-stroke-' + id, TONE_STROKE[tone] || '1.8');
     }
     var t = diffTotals(ctx);
