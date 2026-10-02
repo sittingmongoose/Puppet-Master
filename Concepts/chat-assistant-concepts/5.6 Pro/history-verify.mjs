@@ -18,6 +18,19 @@
  *
  * Chromium comes from the local playwright install; the page is driven over
  * file:// because http hangs in this sandbox.
+ *
+ * DESIGN-AGNOSTIC (neon icons step 3B, 2026-10-02).  This harness must hold
+ * for BOTH the shipped standalone (CSS ring + satellite marks) and the neon
+ * test build (PM56_NEON.status() marks inside the same .ph-status host), so
+ * it reads every descendant of .ph-status, never named children.  Item 3
+ * runs with the drawer WIDE (a stored pinned width of 320px, clamped by the
+ * module, and a 1080px-tall viewport so every status row is above the fold;
+ * item 4 goes back to 1440x900): the drawer boots pinned at 200px, which
+ * is the narrow band that hides the status slot, so an item-3 read of a
+ * .ph-status at that width timed out (the pre-existing crash at the first
+ * scrollIntoViewIfNeeded).  The narrow-mode assertions then run on a real
+ * narrow drawer (no stored width, the 200px default), which is also the state
+ * item 4 was written for.
  */
 import {chromium} from 'playwright';
 import {pathToFileURL} from 'url';
@@ -38,8 +51,16 @@ const check=(ok,label,detail)=>{ results.push({ok:!!ok,label,detail}); ok?pass++
   console.log(`${ok?'PASS':'FAIL'}  ${label}${ok?'':'\n        '+JSON.stringify(detail)}`); };
 
 const browser=await chromium.launch({headless:true,args:['--disable-gpu','--allow-file-access-from-files','--no-sandbox']});
-const page=await browser.newPage({viewport:{width:1440,height:900},deviceScaleFactor:1,
+const bctx=await browser.newContext({viewport:{width:1440,height:1080},deviceScaleFactor:1,
   reducedMotion: REDUCED ? 'reduce' : 'no-preference'});
+/* Item 3 needs the drawer wide (see the header).  The stored width is what
+   history.js restores at boot (`pm56-history-w`); a session flag turns it off
+   for the narrow-mode pass and everything after it, across reloads. */
+await bctx.addInitScript(()=>{ try{
+  if(!sessionStorage.getItem('__hvNarrow')) localStorage.setItem('pm56-history-w','320');
+  else localStorage.removeItem('pm56-history-w');
+}catch(e){} });
+const page=await bctx.newPage();
 const consoleErrors=[],pageErrors=[];
 page.on('console',m=>{if(m.type()==='error'||m.type()==='warning')consoleErrors.push(m.type()+': '+m.text())});
 page.on('pageerror',e=>pageErrors.push(String(e)));
@@ -77,7 +98,8 @@ async function paint(selector, index=0){
       for(let y=y0;y<y1;y++)for(let x=x0;x<x1;x++){const i=(y*c.width+x)*4;s+=(d[i]*.299+d[i+1]*.587+d[i+2]*.114);k++;}
       grid.push(Math.round(s/k));
     }
-    return {w:c.width,h:c.height,mean:[Math.round(r/n),Math.round(gg/n),Math.round(b/n)],distinct:seen.size,grid};
+    const px=[]; for(let i=0;i<d.length;i+=4) px.push(d[i],d[i+1],d[i+2]);
+    return {w:c.width,h:c.height,mean:[Math.round(r/n),Math.round(gg/n),Math.round(b/n)],distinct:seen.size,grid,px};
   }, b64);
 }
 const hitsSelf = (sel,i=0)=>page.locator(sel).nth(i).evaluate(el=>{
@@ -112,6 +134,16 @@ await page.evaluate(()=>PM56_DEMO.setVariant(1,5));
 await page.waitForTimeout(400);
 
 const NINE=['working','reviewing','waiting','idle','complete','blocked','failed','paused','recovering'];
+/* idle (Ready) and paused stand still in the status set (plan §3); every other
+   status moves. */
+const STILL=['idle','paused'];
+const MOVING=NINE.filter(s=>!STILL.includes(s));
+const wide = await page.evaluate(()=>{const f=document.querySelector('.history-flyout');
+  const sl=document.querySelector('.history-flyout .thread-status-slot');
+  return {w:f?Math.round(f.getBoundingClientRect().width):0, narrow:!!(f&&f.classList.contains('is-history-narrow')),
+          slot:sl?getComputedStyle(sl).display:null};});
+check(wide.w>204 && !wide.narrow && wide.slot!=='none',
+      'precondition: item 3 runs on a WIDE drawer, where the status slot shows', wide);
 const present = await page.evaluate(()=>{
   const o={}; document.querySelectorAll('.history-flyout .ph-status').forEach(e=>{o[e.dataset.status]=(o[e.dataset.status]||0)+1});
   return o;
@@ -120,41 +152,80 @@ check(NINE.every(s=>present[s]>0), 'All nine statuses render a .ph-status indica
 
 /* Each indicator must be a DISTINCT PAINTED GLYPH, not nine copies of the
    spinner with different tooltips.  Signatures are compared pairwise. */
-const sigs={};
-for(const s of NINE){
-  const sel = `.history-flyout .ph-status[data-status="${s}"]`;
-  if(await page.locator(sel).count()===0){ check(false,`Painted signature: ${s}`,'no such row'); continue; }
-  await page.locator(sel).first().scrollIntoViewIfNeeded();
-  await page.waitForTimeout(60);
-  const p = await paint(sel);
-  const hit = await hitsSelf(sel);
-  sigs[s]=p;
-  check(!!p && p.distinct>1 && hit, `Painted indicator + hit-test: ${s}`, {p,hit});
+/* silhouette: the ink mask of a crop.  The background is the median of the
+   crop's outer ring (a glow's soft tail reaches it, evenly); a pixel is ink
+   when it sits clearly away from that, so a faint halo or backlight never
+   counts and the shape alone is compared — hue does not enter it. */
+const silhouette = (p)=>{
+  if(!p||!p.px) return null;
+  const {w,h,px}=p, ring=[];
+  for(let y=0;y<h;y++)for(let x=0;x<w;x++) if(x===0||y===0||x===w-1||y===h-1) ring.push(px.slice((y*w+x)*3,(y*w+x)*3+3));
+  const med=[0,1,2].map(k=>{const v=ring.map(c=>c[k]).sort((a,b)=>a-b);return v[v.length>>1];});
+  const dist=[]; let mx=0;
+  for(let i=0;i<w*h;i++){const d=Math.hypot(px[i*3]-med[0],px[i*3+1]-med[1],px[i*3+2]-med[2]);dist.push(d);if(d>mx)mx=d;}
+  const t=Math.max(40,mx*.45);
+  return dist.map(d=>d>t?1:0);
+};
+async function signatures(tag){
+  const out={};
+  for(const s of NINE){
+    const sel = `.history-flyout .ph-status[data-status="${s}"]`;
+    if(await page.locator(sel).count()===0){ check(false,`Painted signature${tag}: ${s}`,'no such row'); continue; }
+    await page.locator(sel).first().scrollIntoViewIfNeeded();
+    await page.waitForTimeout(60);
+    const p = await paint(sel);
+    const hit = await hitsSelf(sel);
+    out[s]=p;
+    check(!!p && p.distinct>1 && hit, `Painted indicator + hit-test${tag}: ${s}`, {p:p&&{w:p.w,h:p.h,mean:p.mean,distinct:p.distinct},hit});
+  }
+  const dup=[], twins=[];
+  for(let i=0;i<NINE.length;i++)for(let j=i+1;j<NINE.length;j++){
+    const a=out[NINE[i]],b=out[NINE[j]]; if(!a||!b) continue;
+    const same = a.distinct===b.distinct && a.grid.every((v,k)=>Math.abs(v-b.grid[k])<=2)
+              && a.mean.every((v,k)=>Math.abs(v-b.mean[k])<=2);
+    if(same) dup.push(`${NINE[i]}==${NINE[j]}`);
+    const ma=silhouette(a), mb=silhouette(b);
+    if(ma&&mb&&ma.length===mb.length){ let d=0; for(let k=0;k<ma.length;k++) if(ma[k]!==mb[k]) d++; if(d<8) twins.push(`${NINE[i]}~${NINE[j]} (${d}px)`); }
+  }
+  check(dup.length===0 && Object.keys(out).length===NINE.length,
+        `All nine indicators are pairwise visually distinct${tag}`,
+        {duplicates:dup, measured:Object.keys(out).length});
+  return {sigs:out, twins};
 }
-const dup=[];
-for(let i=0;i<NINE.length;i++)for(let j=i+1;j<NINE.length;j++){
-  const a=sigs[NINE[i]],b=sigs[NINE[j]]; if(!a||!b) continue;
-  const same = a.distinct===b.distinct && a.grid.every((v,k)=>Math.abs(v-b.grid[k])<=2)
-            && a.mean.every((v,k)=>Math.abs(v-b.mean[k])<=2);
-  if(same) dup.push(`${NINE[i]}==${NINE[j]}`);
+const {sigs, twins:twins0} = await signatures('');
+/* Under reduced motion nothing moves, so the SHAPE must carry each status by
+   itself — including the themes where hue cannot: retro-light (accent is
+   positive's green) and friendly (accent close to danger).  The silhouettes are
+   compared there, not just the colours. */
+if(REDUCED){
+  check(twins0.length===0,'Reduced motion: the nine silhouettes are pairwise distinct (basic-dark)',{twins:twins0});
+  for(const th of ['retro-light','friendly-dark','friendly-light']){
+    await page.evaluate(t=>PM56_DEMO.setTheme(t),th);
+    await page.waitForTimeout(500);
+    const r = await signatures(' ['+th+']');
+    check(r.twins.length===0,`Reduced motion: the nine silhouettes are pairwise distinct in ${th}`,{twins:r.twins});
+  }
+  await page.evaluate(()=>PM56_DEMO.setTheme('basic-dark'));
+  await page.waitForTimeout(400);
 }
-check(dup.length===0 && Object.keys(sigs).length===NINE.length,
-      'All nine indicators are pairwise visually distinct',
-      {duplicates:dup, measured:Object.keys(sigs).length});
 
 /* Each must also carry its own motion signature (animation-name set), and the
-   terminal one (complete) must NOT loop. */
+   terminal one (complete) must NOT loop.  The reader walks the indicator and
+   EVERY descendant, with both pseudo-elements, and splits comma lists, so it
+   reads either design (a CSS ring and mark, or a neon wrapper, svg and parts)
+   without naming a child. */
 const anims = await page.evaluate(()=>{
   const out={};
   document.querySelectorAll('.history-flyout .ph-status').forEach(e=>{
     if(out[e.dataset.status]) return;
     const names=[];
-    for(const n of [e,e.querySelector('.ph-ring'),e.querySelector('.ph-mark')]){
-      if(!n) continue;
+    for(const n of [e,...e.querySelectorAll('*')]){
       for(const pe of ['',"::before","::after"]){
         const cs=getComputedStyle(n,pe||undefined);
-        if(cs.animationName && cs.animationName!=='none')
-          names.push(cs.animationName+'|'+cs.animationDuration+'|'+cs.animationIterationCount);
+        if(!cs.animationName || cs.animationName==='none') continue;
+        const nm=cs.animationName.split(','), du=cs.animationDuration.split(','), it=cs.animationIterationCount.split(',');
+        nm.forEach((x,i)=>{ x=x.trim(); if(x && x!=='none')
+          names.push(x+'|'+du[Math.min(i,du.length-1)].trim()+'|'+it[Math.min(i,it.length-1)].trim()); });
       }
     }
     out[e.dataset.status]=names.sort();
@@ -171,11 +242,13 @@ if(REDUCED){
       .filter(a=>{try{return a.effect.getTiming().iterations===Infinity}catch(e){return false}}).length);
   check(inf===0,'Reduced motion: zero perpetual loops document-wide',{infinite:inf});
 } else {
-  check(NINE.every(s=>(anims[s]||[]).length>0), 'Every status has at least one animation', anims);
+  check(MOVING.every(s=>(anims[s]||[]).length>0), 'Every moving status has at least one animation', anims);
+  check(STILL.every(s=>(anims[s]||[]).length===0), 'Ready (idle) and paused stand still (no animation)',
+        Object.fromEntries(STILL.map(s=>[s,anims[s]])));
   check((anims.complete||[]).length>0 && (anims.complete||[]).every(a=>a.split('|')[2]==='1'),
         'complete is terminal — one iteration, no loop', anims.complete);
-  check(new Set(NINE.map(s=>(anims[s]||[]).join(','))).size===NINE.length,
-        'All nine motion signatures differ', anims);
+  check(new Set(MOVING.map(s=>(anims[s]||[]).join(','))).size===MOVING.length,
+        'All seven moving statuses have different motion signatures', anims);
 }
 
 /* Row hover: status stays visible; menu appears on the right. */
@@ -210,24 +283,6 @@ await sec('item3: row hover reveals right-side menu', async()=>{
   await page.waitForTimeout(220);
   const afterMore=await more.evaluate(el=>getComputedStyle(el).opacity);
   check(Number(afterMore)<0.5,'Menu hides after pointer leaves focused row',{afterMore});
-});
-
-await sec('item3: narrow hides status and time at rest', async()=>{
-  await page.evaluate(()=>{
-    const f=document.querySelector('.history-flyout');
-    if(f) f.classList.add('is-history-narrow');
-  });
-  const slot=page.locator('.history-flyout .thread-row .thread-status-slot').first();
-  const time=page.locator('.history-flyout .thread-row .thread-time').first();
-  const slotDisp=await slot.evaluate(el=>getComputedStyle(el).display);
-  const timeDisp=await time.evaluate(el=>getComputedStyle(el).display);
-  check(slotDisp==='none' && timeDisp==='none',
-        'Narrow mode hides status slot and timestamp at rest',
-        {slotDisp,timeDisp});
-  await page.evaluate(()=>{
-    const f=document.querySelector('.history-flyout');
-    if(f) f.classList.remove('is-history-narrow');
-  });
 });
 
 /* ROW PADDING actually decreased.  Measured as a real before/after in the same
@@ -341,6 +396,31 @@ await sec('item3: only the summary wraps', async()=>{
   check(r.timeLeftOfTitle && !r.subHasTime, 'Timestamp sits left of the title (not in the subtitle)', r);
 });
 await shot(`item3-take6${REDUCED?'-reduced':''}.png`);
+
+/* Narrow mode, measured on a REAL narrow drawer: drop the stored width and
+   boot again, so the drawer opens pinned at its 200px default, inside the
+   narrow band; the module (not this harness) flags it narrow.  Item 4 below
+   continues from this boot state, which is the state it was written for. */
+await sec('item3: narrow hides status and time at rest', async()=>{
+  await page.evaluate(()=>{ try{ sessionStorage.setItem('__hvNarrow','1'); localStorage.removeItem('pm56-history-w'); }catch(e){} });
+  /* back to the 900px-tall viewport item 4 was written against: its scrim
+     clicks land mid-pane, where a taller viewport puts a transcript card */
+  await page.setViewportSize({width:1440,height:900});
+  await page.reload({waitUntil:'load'});
+  await page.waitForFunction(()=>window.__PM56_BOOT_OK===true&&window.PM56_DEMO);
+  await page.evaluate(()=>PM56_DEMO.setVariant(1,5));
+  await page.waitForTimeout(500);
+  const g=await page.evaluate(()=>{const f=document.querySelector('.history-flyout');
+    return {w:f?Math.round(f.getBoundingClientRect().width):0, narrow:!!(f&&f.classList.contains('is-history-narrow')),
+            ph:document.querySelectorAll('.history-flyout .ph-status').length};});
+  const slot=page.locator('.history-flyout .thread-row .thread-status-slot').first();
+  const time=page.locator('.history-flyout .thread-row .thread-time').first();
+  const slotDisp=await slot.evaluate(el=>getComputedStyle(el).display);
+  const timeDisp=await time.evaluate(el=>getComputedStyle(el).display);
+  check(g.narrow && g.w<=210 && slotDisp==='none' && timeDisp==='none',
+        'Narrow mode hides status slot and timestamp at rest',
+        {...g,slotDisp,timeDisp});
+});
 
 /* =====================================================================
    ITEM 4 — the open / pin / close choreography
@@ -875,7 +955,11 @@ await shot(`item4-resized${REDUCED?'-reduced':''}.png`);
 /* =====================================================================
    Regressions: 8 themes, no overflow, other takes untouched
    ===================================================================== */
-await sec('regression: 8 themes', async()=>{
+/* The theme count is read from the theme list (8 on the shipped standalone,
+   10 with NieR Light and Dark on the neon build); the eight family themes must
+   all be in it. */
+const BASE_THEMES=['basic-dark','basic-light','friendly-dark','friendly-light','glass-dark','glass-light','retro-dark','retro-light'];
+await sec('regression: every theme', async()=>{
   const ids=await page.evaluate(()=>(window.PM56_DATA&&window.PM56_DATA.themes||[]).map(t=>t.id));
   const bad=[];
   for(const id of (ids.length?ids:['basic-dark'])){
@@ -884,9 +968,9 @@ await sec('regression: 8 themes', async()=>{
     const r=await page.evaluate(()=>({sw:document.documentElement.scrollWidth,cw:document.documentElement.clientWidth,
       bw:document.body.scrollWidth,drawer:!!document.querySelector('.history-flyout')}));
     if(r.sw>r.cw+1||r.bw>r.cw+1||!r.drawer) bad.push({id,...r});
-    if(SHOTS && ids.indexOf(id)<8) await shot(`theme-${id}${REDUCED?'-reduced':''}.png`);
+    if(SHOTS) await shot(`theme-${id}${REDUCED?'-reduced':''}.png`);
   }
-  check(bad.length===0 && ids.length===8, `No overflow and the drawer paints in all ${ids.length} themes`, {bad,ids});
+  check(bad.length===0 && BASE_THEMES.every(t=>ids.includes(t)), `No overflow and the drawer paints in all ${ids.length} themes`, {bad,ids});
   await page.evaluate(()=>PM56_DEMO.setTheme('basic-dark'));
 });
 await sec('regression: other seven takes', async()=>{
