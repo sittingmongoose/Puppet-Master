@@ -175,3 +175,19 @@ pr, trash, play, stop, pause, copy, terminal, cog, filter, clock, layers, flame,
 pull, push, fetch, branch, stash, globe, monitor, pin, key, book, camera, arrowUp, arrowDn, grip, edit, filePlus,
 folderPlus, boxMinus, boxPlus, stepOver, stepInto, stepOut, bpLine, bpCond, bpLog, and the file types rust, ts, js,
 svelte, sql, toml, yml, xml, md. Use only these names; pick the closest one rather than inventing a name.
+
+## Extensions the fixture uses (beyond the types above)
+
+- `local: '<original element id>'` on an Action with no `cmd`: a control the panel handles itself (Collapse all, Hide
+  ignored files, Filter, Clear filter, Clear selection, the ops tray's Cancel / Retry failed). Implement the behaviour
+  in the concept (collapse the tree, hide `data-ignored` rows, filter rows by name, ...); there is no command to send.
+- Actions with only `commandId` / `uiActionId` (no `cmd`) carry those attributes and no `data-demo-action`.
+- `attrs['data-legacy-cmd' | 'data-legacy-arg']`: the original pair where a canon id replaced it.
+- Files: `selection` (selection bar actions), `ops` (the ops tray), `indexChip`, `view.filter`, `view.notices`
+  (e.g. the reveal-hidden notice), `item.rollup` (folder roll-up status), `item.capped` ("Show 245 more"),
+  `item.active` (the file open in the editor).
+- Source Control: `item.hunks` (per-hunk lines with Stage hunk / Unstage hunk), `item.preview`, `section.status`
+  (a card's state word) and `section.attrs` (`data-scm-section`), `view.canon`, `view.canonNote`.
+- Docker: `item.metrics` (CPU / memory values), `item.ports` (each port with its own action pair), `section.status`.
+- `canon` may also appear on context lines and inside fact options.
+- Counts that the shell computes live (items in view, selection counts) are not in the fixture; compute them.
