@@ -55,9 +55,11 @@ html[data-o55-nier="on"] #panel-usage .pmu-shell { --pmu-plate-rest: none; --pmu
    The hovered plate gets its own layer for the moment (will-change) and sits above its neighbours. */
 #panel-usage .pmu-card:not([data-head="band"]):hover { z-index: 3; will-change: transform; transform: translateY(var(--pmu-lift-y)) scale(var(--pmu-lift-s));
   transition: transform calc(220ms * var(--pmu-speed, 1)) var(--pmu-ease-spring); }
-#panel-usage .pmu-card[data-head="tile"]:hover { --pmu-lift-y: -5px; }
+/* a tile lifts 5 px: written as the transform itself, never as a custom property set on hover (an inherited custom
+   property changed on the card restyles its whole subtree on every hover, PERF-3) */
+#panel-usage .pmu-card[data-head="tile"]:not([data-head="band"]):hover { transform: translateY(-5px) scale(var(--pmu-lift-s)); }
 #panel-usage .pmu-card:not([data-head="band"]):hover::before { opacity: 1; transition: opacity calc(220ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
-html[data-theme^="retro"] #panel-usage .pmu-card[data-head="tile"]:hover, html[data-o55-nier="on"] #panel-usage .pmu-card[data-head="tile"]:hover { --pmu-lift-y: 0px; }
+html[data-theme^="retro"] #panel-usage .pmu-card[data-head="tile"]:hover, html[data-o55-nier="on"] #panel-usage .pmu-card[data-head="tile"]:hover { transform: translateY(0px) scale(var(--pmu-lift-s)); }
 /* Retro: the hard 4 px offset shadow appears in two steps, no lift */
 html[data-theme^="retro"] #panel-usage .pmu-card:hover::before { transition-timing-function: steps(2, jump-start); transition-duration: calc(120ms * var(--pmu-speed, 1)); }
 #panel-usage .pmu-card:focus-visible { box-shadow: 0 0 0 2px var(--pmu-accent), var(--pmu-plate-rest); }
@@ -67,7 +69,8 @@ html[data-theme^="retro"] #panel-usage .pmu-card:hover::before { transition-timi
 #panel-usage .pmu-sheen { position: absolute; inset: 0; z-index: 0; overflow: hidden; border-radius: inherit; pointer-events: none; opacity: 0;
   transition: opacity calc(200ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
 #panel-usage .pmu-sheen.on { opacity: 1; }
-#panel-usage .pmu-sheen > i { position: absolute; left: 0; top: 0; width: 280px; height: 280px; margin: -140px 0 0 -140px; border-radius: 50%; will-change: transform;
+#panel-usage .pmu-sheen.on > i { will-change: transform; }
+#panel-usage .pmu-sheen > i { position: absolute; left: 0; top: 0; width: 280px; height: 280px; margin: -140px 0 0 -140px; border-radius: 50%;
   background: radial-gradient(circle, var(--pmu-sheen) 0, transparent 70%); }
 /* Glass with a GPU (not data-pmu-soft): plates blur what is behind them and carry a rim light (18 % white at the top,
    4 % at the bottom) and a static specular sheet on the room's hero plate (the first plate of the board) */
@@ -137,8 +140,12 @@ html[data-theme^="retro"] #panel-usage .pmu-keysw { border-radius: 0; }
 html[data-theme^="retro"] #panel-usage .pmu-cardtools, html[data-theme^="retro"] #panel-usage .pmu-cardtools .pmu-iconbtn { border-radius: 0; }
 
 /* ---- body (A1 3.1: plate 4 14 12; line and tile 0 14 10) ---- */
-#panel-usage .pmu-cardbody { position: relative; display: flex; flex-direction: column; gap: 8px; flex: 1 1 auto; min-height: 0; padding: 0 14px 10px; overflow: hidden; contain: layout paint; }
+/* contain: strict (PERF-3): the body is a relayout boundary (its size comes from the card's grid area, never from its
+   content: flex 1 1 auto in a fixed-height card), so a body built, trimmed by the fit pass or patched lays out alone
+   instead of the whole page (a fit pass of 60 dirty objects cost a 70 ms layout of 4,300 objects on the VM) */
+#panel-usage .pmu-cardbody { position: relative; display: flex; flex-direction: column; gap: 8px; flex: 1 1 auto; min-height: 0; padding: 0 14px 10px; overflow: hidden; contain: strict; }
 #panel-usage .pmu-card[data-head="plate"] > .pmu-cardbody { padding: 4px 14px 12px; }
+#panel-usage .pmu-cardbody[data-pmu-stale] > * { display: none; }
 #panel-usage .pmu-todo { margin: auto 0; color: var(--pmu-ink-3); font-size: 12px; }
 
 /* ---- inside a plate (A1 3.3) ---- */
@@ -201,7 +208,7 @@ html[data-theme^="retro"] #panel-usage .pmu-irow { border-radius: 0; }
 #panel-usage .pmu-landing { border: 1.5px dashed color-mix(in srgb, var(--pmu-accent) 70%, transparent); background: color-mix(in srgb, var(--pmu-accent) 8%, transparent); }
 #panel-usage .pmu-outline { z-index: 25; border: 1.5px solid var(--pmu-accent); background: color-mix(in srgb, var(--pmu-accent) 6%, transparent);
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--pmu-accent) 10%, transparent); }
-#panel-usage .pmu-landing[hidden], #panel-usage .pmu-outline[hidden] { display: none; }
+#panel-usage .pmu-landing[hidden], #panel-usage .pmu-outline[hidden], #panel-usage .pmu-morph[hidden] { display: none; }
 #panel-usage .pmu-outline-label { position: absolute; right: 8px; bottom: 8px; display: inline-flex; align-items: baseline; gap: 6px; max-width: calc(100% - 16px); padding: 4px 8px;
   border: 1px solid var(--pmu-rule); border-radius: 7px; background: var(--pmu-menu-bg, var(--pmu-card)); box-shadow: var(--pmu-shadow-1); color: var(--pmu-ink); font-size: 11.5px; font-weight: 600;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transform-origin: 100% 100%; font-variant-numeric: tabular-nums; }
@@ -239,7 +246,7 @@ html[data-theme^="glass"] #panel-usage .pmu-morph { border-color: rgba(255,255,2
 html[data-o55-nier="on"] #panel-usage .pmu-rim { box-shadow: 0 0 0 1px var(--o55-nier-ink), 0 0 0 4px rgba(var(--o55-nier-ink-rgb), .12); }
 #panel-usage .pmu-card[data-leaving] { z-index: 0; }
 /* Reduce Motion (WOW-SPEC 9): no lift; the shadow layer keeps a 120 ms opacity change */
-html[data-motion="reduced"] #panel-usage .pmu-card, html[data-motion="reduced"] #panel-usage .pmu-card:hover { transition: none; transform: none; }
+html[data-motion="reduced"] #panel-usage .pmu-card, html[data-motion="reduced"] #panel-usage .pmu-card:hover, html[data-motion="reduced"] #panel-usage .pmu-card[data-head="tile"]:hover { transition: none; transform: none; }
 html[data-motion="reduced"] #panel-usage .pmu-card::before, html[data-motion="reduced"] #panel-usage .pmu-card:hover::before { transition: opacity calc(120ms * var(--pmu-speed, 1)) linear; }
-@media (prefers-reduced-motion: reduce) { #panel-usage .pmu-card, #panel-usage .pmu-card:hover { transition: none; transform: none; }
+@media (prefers-reduced-motion: reduce) { #panel-usage .pmu-card, #panel-usage .pmu-card:hover, #panel-usage .pmu-card[data-head="tile"]:not([data-head="band"]):hover { transition: none; transform: none; }
   #panel-usage .pmu-card::before, #panel-usage .pmu-card:hover::before { transition: opacity calc(120ms * var(--pmu-speed, 1)) linear; } }

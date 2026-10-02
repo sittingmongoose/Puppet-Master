@@ -11,6 +11,12 @@
   function caveat(note) {
     return note ? '<span class="pmu-caveat" tabindex="0" role="note" aria-label="' + esc(note) + '"' + C.hover('About this chart', note) + '>' + C.glyph('info') + '</span>' : '';
   }
+  /* the icon's words: the caveat, then the facts the card has no row for at this size (CONTENT-3: a chart card's facts
+     were silently dropped below the l tier; they are one hover away and in Details) */
+  function cavText(m, factsShown, extra) {
+    var folded = (!factsShown && m.facts && m.facts.length ? m.facts.map(C.factText) : []).concat(extra || []).filter(Boolean).join('; ');
+    return [m.note || '', folded ? (m.note ? 'Not shown at this size: ' : '') + folded : ''].filter(Boolean).join(' ');
+  }
   function factSpans(facts) { return facts.map(function (f) { return '<span><em>' + esc(f[0]) + '</em> <b>' + esc(f[1]) + '</b></span>'; }).join(''); }
   C.caveat = caveat;
 
@@ -27,6 +33,7 @@
         body.innerHTML = '<div class="pmu-trend is-spark">' + head + '<div class="pmu-trendspark" style="height:' + Math.max(28, Math.min(40, ctx.tier.bh - 34)) + 'px"></div></div>';
         var sp = m.spark || { values: (m.spec.series && m.spec.series[0] ? m.spec.series[0].values : []) };
         C.chart(body, 'spark', body.querySelector('.pmu-trendspark'), sp, { label: ctx.def.title });
+        C.headNote(ctx, body, caveat(cavText(m, false)));
         return;
       }
       var tools = C.headTools(ctx, m.tools && C.w(ctx, m.toolsMin || 's') ? m.tools : '');
@@ -36,16 +43,19 @@
       /* rangebars are rows (18 px axis + 30 px per tool): they need their whole height before facts or a note get room */
       var MINP = m.chart === 'rangebars' ? 22 + ((m.spec && m.spec.rows) || []).length * 30 : 120;
       var room = ctx.tier.bh - (tools ? 34 : 0) - (legendOk ? 24 : 0) - (heroH ? 66 : 0) - MINP;
-      var factsOk = m.facts && m.facts.length && C.w(ctx, 'l') && room >= 28; if (factsOk) room -= 28;
-      var reserve = (tools ? 34 : 0) + (legendOk ? 24 : 0) + (heroH ? 66 : 0) + (factsOk ? 28 : 0) + 6;
+      var frH = m.facts && m.facts.length ? 10 + 18 * Math.min(3, C.wrapLines(m.facts.map(function (f) { return f[0] + ' ' + f[1]; }).join('      '), ctx.tier.bw - 20, 12.5, 500)) : 0;
+      var factsOk = m.facts && m.facts.length && C.w(ctx, 'l') && room >= frH; if (factsOk) room -= frH;
+      var reserve = (tools ? 34 : 0) + (legendOk ? 24 : 0) + (heroH ? 66 : 0) + (factsOk ? frH : 0) + 6;
       /* the caveat icon: the facts row's end, else the hero row, else the legend line (final fix M5) */
-      var cav = m.note && C.w(ctx, 's') ? caveat(m.note) : '', cavAt = !cav ? '' : factsOk ? 'facts' : heroH ? 'hero' : legendOk ? 'legend' : '';
+      var cav = caveat(cavText(m, factsOk)), cavAt = !cav ? '' : factsOk ? 'facts' : heroH ? 'hero' : legendOk ? 'legend' : '';
       if (cavAt === 'hero') heroH = heroH.replace(/<\/div>$/, cav + '</div>');
       body.innerHTML = '<div class="pmu-trend' + (heroH ? ' is-hero' : '') + '">' + heroH + tools + (legendOk ? '<div class="pmu-trendlegend"></div>' : '') +
         '<div class="pmu-trendplot" style="height:' + (m.chart === 'rangebars' ? Math.max(MINP, hostH(ctx, reserve)) : hostH(ctx, reserve)) + 'px"></div>' +
         (factsOk ? '<div class="pmu-factrow">' + factSpans(m.facts) + (cavAt === 'facts' ? cav : '') + '</div>' : '') + '</div>';
       if (legendOk) { try { PMU.charts.legend(body.querySelector('.pmu-trendlegend'), m.legendOwn, { inline: true }); } catch (error) { console.error('[pm-usage] legend', error); } }
       if (cavAt === 'legend') { var lg = body.querySelector('.pmu-trendlegend'); if (lg) lg.insertAdjacentHTML('beforeend', cav); }
+      /* no facts row, hero row or legend line: the icon sits in the card head (CONTENT-3) */
+      if (cav && !cavAt) C.headNote(ctx, body, cav);
       C.chart(body, m.chart || 'area', body.querySelector('.pmu-trendplot'), m.spec, { label: m.label || ctx.def.title, tier: ctx.tier, readout: true, fmt: m.fmt });
       C.bag(body).sig = sig(ctx);
     },
@@ -56,7 +66,8 @@
       try { b.charts[0].update(m.spec); } catch (error) { return false; }
       var legend = body.querySelector('.pmu-trendlegend');
       if (legend && m.legendOwn) { legend.textContent = ''; try { PMU.charts.legend(legend, m.legendOwn, { inline: true }); } catch (error) {} }
-      var cv = body.querySelector('.pmu-caveat'); if (cv && m.note && cv.getAttribute('data-pm-hover-detail') !== m.note) { cv.setAttribute('data-pm-hover-detail', m.note); cv.setAttribute('aria-label', m.note); }
+      var cvT = cavText(m, !!body.querySelector('.pmu-factrow')), cv = body.querySelector('.pmu-caveat') || (ctx.head && ctx.head.querySelector('.pmu-caveat'));
+      if (cv && cvT && cv.getAttribute('data-pm-hover-detail') !== cvT) { cv.setAttribute('data-pm-hover-detail', cvT); cv.setAttribute('aria-label', cvT); }
       /* the hero number rolls its changed digits and its row flashes (WOW-SPEC 3.6) */
       var hn = body.querySelector('.pmu-herohead .pmu-num[data-k]');
       if (hn && m.headline) {
@@ -69,7 +80,8 @@
           var tmp = document.createElement('div');
           tmp.innerHTML = C.heroHead(ctx, { value: m.headline.value, fmt: m.headline.fmt, label: m.headline.label, sub: m.heroSub, tone: m.heroTone, note: C.w(ctx, 'xl') ? m.heroNote : '', noteTone: m.heroTone });
           var ns = tmp.querySelector('.pmu-herosub');
-          if (ns && ns.innerHTML !== hs.innerHTML) { hs.innerHTML = ns.innerHTML; PMU.motion.animate(hs, [{ opacity: 0.2 }, { opacity: 1 }], { dur: 320, easing: 'cubic-bezier(.22,.8,.28,1)' }); }
+          /* patched in place where the shape is the same (NOTES3-perf C5: no innerHTML child-list change in an update) */
+          if (ns && ns.innerHTML !== hs.innerHTML) { if (PMU.charts.patchHtml) PMU.charts.patchHtml(hs, ns.innerHTML); else hs.innerHTML = ns.innerHTML; PMU.motion.animate(hs, [{ opacity: 0.2 }, { opacity: 1 }], { dur: 320, easing: 'cubic-bezier(.22,.8,.28,1)' }); }
         }
         if (isFinite(oldV) && isFinite(to) && oldV !== to) {
           hn.setAttribute('data-v', String(to));
@@ -80,8 +92,8 @@
       /* the facts under the chart follow the range with the chart (REVIEW-jared must-fix 4: they stayed at 24 hours) */
       var fr = body.querySelector('.pmu-factrow');
       if (fr && m.facts) {
-        var fh = factSpans(m.facts) + (fr.querySelector('.pmu-caveat') && m.note && C.w(ctx, 's') ? caveat(m.note) : '');
-        if (fr.innerHTML !== fh) { fr.innerHTML = fh; if (PMU.motion && PMU.motion.animate) PMU.motion.animate(fr, [{ opacity: 0.25 }, { opacity: 1 }], { dur: 420, ease: 'out' }); }
+        var fh = factSpans(m.facts) + (fr.querySelector('.pmu-caveat') && m.note ? caveat(cavText(m, true)) : '');
+        if (fr.innerHTML !== fh) { if (PMU.charts.patchHtml) PMU.charts.patchHtml(fr, fh); else fr.innerHTML = fh; if (PMU.motion && PMU.motion.animate) PMU.motion.animate(fr, [{ opacity: 0.25 }, { opacity: 1 }], { dur: 420, ease: 'out' }); }
       }
       return true;
     }
@@ -127,16 +139,20 @@
       /* the caption's own wrapped height: a two-line caption no longer squeezes the plot by a line it did not count */
       var capH = m.caption ? 22 + 18 * (Math.min(2, C.wrapLines(m.caption, ctx.tier.bw, 12.5, 600)) - 1) : 0;
       var capOk = m.caption && C.w(ctx, 's') && room >= capH; if (capOk) room -= capH;
-      var factsOk = m.facts && m.facts.length && C.w(ctx, 'm') && room >= 28; if (factsOk) room -= 28;
-      var reserve = (tools ? 34 : 0) + (capOk ? capH : 0) + (factsOk ? 28 : 0) + 6;
+      /* the facts row's own wrapped height (CONTENT-3: two lines at 8 tracks clipped the card by 2 px) */
+      var frH = m.facts && m.facts.length ? 10 + 18 * Math.min(3, C.wrapLines(m.facts.map(function (f) { return f[0] + ' ' + f[1]; }).join('      '), ctx.tier.bw - 20, 12.5, 500)) : 0;
+      var factsOk = m.facts && m.facts.length && C.w(ctx, 'm') && room >= frH; if (factsOk) room -= frH;
+      var reserve = (tools ? 34 : 0) + (capOk ? capH : 0) + (factsOk ? frH : 0) + 6;
       /* the caveat icon ends the facts row, else the caption (final fix M5) */
-      var cav = m.note && C.w(ctx, 's') ? caveat(m.note) : '', cavAt = !cav ? '' : factsOk ? 'facts' : capOk ? 'cap' : '';
+      var cav = caveat(cavText(m, factsOk, m.caption && !capOk ? [String(m.caption).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()] : [])), cavAt = !cav ? '' : factsOk ? 'facts' : capOk ? 'cap' : '';
       var plotW = Math.max(80, ctx.tier.bw - 52);
       var spec = rebucket(m, Math.max(3, Math.floor(plotW / 28)));
       body.innerHTML = '<div class="pmu-colsw">' + tools + (capOk ? '<div class="pmu-colscap">' + m.caption + (cavAt === 'cap' ? cav : '') + '</div>' : '') + (legendOk ? '<div class="pmu-trendlegend"></div>' : '') +
         '<div class="pmu-colsplot" style="height:' + hostH(ctx, reserve) + 'px"></div>' +
         (factsOk ? '<div class="pmu-factrow">' + factSpans(m.facts) + (cavAt === 'facts' ? cav : '') + '</div>' : '') + '</div>';
       if (legendOk) { try { PMU.charts.legend(body.querySelector('.pmu-trendlegend'), m.legend, { inline: true }); } catch (error) {} }
+      /* no facts row or caption: the icon sits in the card head (CONTENT-3: the forecast's caveat was nowhere at 10 x 7) */
+      if (cav && !cavAt) C.headNote(ctx, body, cav);
       var cs = Object.assign({ unit: m.unit || 'usd' }, spec); delete cs.caption; delete cs.facts; delete cs.note; delete cs.tools;
       C.chart(body, 'columns', body.querySelector('.pmu-colsplot'), cs, { label: ctx.def.title, tier: ctx.tier, readout: true, legend: m.legend !== false && (!m.stacks || C.w(ctx, 'l') || (C.w(ctx, 's') && ctx.tier.bh >= 190)) });
     }
@@ -153,7 +169,10 @@
       var hero = '<div class="pmu-budgethero' + (big ? ' is-hero' : '') + '">' + C.valHtml(m.spent, 'money2', big ? 'pmu-heronum' : 'pmu-bigval', ctx.id + ':spent').replace('class="pmu-num"', 'class="pmu-num" data-count="kpi"') +
         '<span class="pmu-budgetof">' + (m.budget ? 'of ' + esc(C.money(m.budget)) + ' budget · ' + pct + '%' : 'No budget set') + '</span>' +
         '<span class="pmu-budgetest">est. ' + esc(C.money(m.projection.to)) + (m.periodEnd ? ' by ' + esc(PMU.fmt.date(m.periodEnd)) : ' month end') + '</span></div>';
-      var factsOk = C.w(ctx, 'l') && C.h(ctx, 'h3') && m.facts;
+      /* the facts row from about 300 px (it wraps; the plot takes what is left); narrower, the info icon in the hero row
+         lists them (CONTENT-3: "Forecast used" was nowhere on the Overview card) */
+      var factsOk = C.h(ctx, 'h3') && m.facts && ctx.tier.bw >= 300;
+      if (!factsOk && m.facts && m.facts.length) hero = hero.replace(/<\/div>$/, caveat(cavText(m, false)) + '</div>');
       var mixOk = m.mix && C.w(ctx, 'xl') && C.h(ctx, 'h3');
       /* the one-line hero is 29 px plus a 6 px gap (measured); compact heroes wrap to two lines */
       var reserve = (compact ? 56 : 40) + (factsOk ? 30 : 0) + (mixOk ? 40 : 0);

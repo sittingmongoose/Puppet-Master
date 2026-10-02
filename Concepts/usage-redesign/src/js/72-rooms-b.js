@@ -28,7 +28,8 @@
       var win = ctxTok(r[3]), fit = win ? (DATA.context.used <= win ? 'fits the current thread (' + F.tok(DATA.context.used) + ' of ' + r[3] + ')' : 'smaller than the current thread') : 'unknown';
       return { state: cool ? 'Cooldown until ' + PMU.clock.clock('16:48') + ' · ' + PMU.clock.until('16:48') : 'Ready', stateTone: cool ? 'warn' : 'good', stateGlyph: cool ? 'hourglass' : 'checkCircle', provider: x.provider, price: x.price, priceSource: x.priceSource,
         context: r[3], capacity: x.capacity, capacitySource: x.capacitySource, availability: x.availability,
-        facts: [['Availability', cool ? 'cooling down · ' + x.availability.reset.replace(/ ·.*$/, '') + ' (42% of the wait done)' : 'ready now'], ['Eligibility', x.eligibility], ['Route class', 'free'], ['Source', i === 3 ? 'device reported' : 'provider catalog'], ['Catalog age', '2m'], ['Context fit', fit], ['Capacity note', PMU.clock.text(r[4])], ['Price word', r[2]]] };
+        /* the short facts lead (CONTENT-3: "Route class free" was folded on every card at every size) */
+        facts: [['Route class', 'free'], ['Catalog age', '2m'], ['Source', i === 3 ? 'device reported' : 'provider catalog'], ['Price word', r[2]], ['Eligibility', x.eligibility], ['Availability', cool ? 'cooling down · ' + x.availability.reset.replace(/ ·.*$/, '') + ' (42% of the wait done)' : 'ready now'], ['Context fit', fit], ['Capacity note', PMU.clock.text(r[4])]] };
     }, inspect: function () { var x = fx(); return C.insp(r[0], [['State', r[1]], ['Underlying route', x.provider], ['Price', x.price + ' · ' + x.priceSource + ' (no metered charge does not imply a free entitlement)'], ['Context window', r[3]], ['Capacity', x.capacity + ' · ' + x.capacitySource], ['Note', PMU.clock.text(r[4])], ['Eligibility', x.eligibility], ['Catalog age', '2m']]); } });
   });
   def('free-route', 'free', { meta: function () { return 'free routes in fallback order'; }, model: function () {
@@ -73,7 +74,9 @@
   def('ctx-output', 'context', { meta: function () { return 'current thread · capability snapshot'; }, model: function () {
     var X = DATA.context;
     return { value: X.reserved, fmt: 'tok', sub: 'tokens held for the response · ' + b((100 * X.reserved / X.limit).toFixed(1) + '%') + ' of the window',
-      facts: [['Window', F.tok(X.limit)], ['Loaded', F.tok(X.used)], ['Available', F.tok(X.limit - X.used)], ['Hard stop', '112k'], ['Model', 'Sonnet 4.6']], foot: 'Current model · Sonnet 4.6' };
+      /* the hard stop leads (CONTENT-3: it was folded at every size; the old card's four facts were Window, Loaded,
+         Available, Hard stop) */
+      facts: [['Hard stop', '112k'], ['Window', F.tok(X.limit)], ['Loaded', F.tok(X.used)], ['Available', F.tok(X.limit - X.used)], ['Model', 'Sonnet 4.6']], foot: 'Current model · Sonnet 4.6' };
   } });
   def('ctx-route', 'context', { meta: function () { return 'current thread · requested versus effective'; }, model: function () {
     return { text: 'Sonnet 4.6', tone: 'warn', sub: 'requested ' + b('Opus 4.6') + ' unavailable · fallback',
@@ -195,7 +198,9 @@
   }, meta: function (ctx) { return 'Estimated cost by token type · ' + D.rangeLabel(ctx.state.range) + ' · select a model for detail'; }, model: function () { return { rows: D.models() }; } });
   def('an-model-donut', 'analytics', { meta: function (ctx) { return 'Share of ' + (C.cfg('an-model-donut', 'mode', 'tokens') === 'cost' ? 'estimated cost' : 'tokens') + ' · ' + D.rangeLabel(ctx.state.range) + ' · recorded attempts'; },
     config: [{ id: 'mode', label: 'Measure', value: 'tokens', options: [{ value: 'tokens', label: 'Tokens' }, { value: 'cost', label: 'Cost' }] }], model: function () { return { rows: D.models() }; } });
-  def('an-token-breakdown', 'analytics', { meta: function (ctx) { return 'Share of tokens and of estimated cost · ' + D.rangeLabel(ctx.state.range); }, model: function () {
+  /* subtitles in whole short parts (CONTENT-3, census 1440: "Share of tokens and of estimated cost" alone was wider than
+     the 6-track plate in Glass, Retro and NieR) */
+  def('an-token-breakdown', 'analytics', { meta: function (ctx) { return 'Token share · estimated cost share · ' + D.rangeLabel(ctx.state.range); }, model: function () {
     var tk = D.tokens(), vt = D.valueByType();
     var keys = ['input', 'output', 'reasoning', 'cacheWrite', 'cacheRead'], TKK = { input: 'in', output: 'out', reasoning: 'rsn', cacheWrite: 'cw', cacheRead: 'cr' };
     var tokAll = tk.totals.all || 1, valAll = vt.total || 1;
@@ -217,7 +222,7 @@
   } });
   def('activity-heat', 'analytics', { meta: function () { return (C.cfg('activity-heat', 'mode', 'tokens') === 'cost' ? 'Estimated cost' : 'Tokens') + ' per hour, local time · last 7 days · range does not apply'; },
     config: [{ id: 'mode', label: 'Measure', value: 'tokens', options: [{ value: 'tokens', label: 'Tokens' }, { value: 'cost', label: 'Cost', sub: 'Settled plus plan estimate per hour' }] }] });
-  def('an-daily-cost', 'analytics', { meta: function (ctx) { var r = ctx.state.range; return 'Settled charges and plan estimates, USD · ' + (r === '30d' ? '28 days of this month' : 'last 7 days') + (r === '5h' || r === '24h' ? ' · daily (no hourly split by provider is recorded)' : ''); },
+  def('an-daily-cost', 'analytics', { meta: function (ctx) { var r = ctx.state.range; return 'Settled and plan estimates · USD · ' + (r === '30d' ? '28 days of this month' : 'last 7 days') + (r === '5h' || r === '24h' ? ' · daily (no hourly split by provider is recorded)' : ''); },
     model: function (ctx) {
       var dp = D.dailyByProvider(ctx.state.range);
       return { labels: dp.labels, stacks: dp.stacks, totals: dp.totals, unit: 'usd', emptyText: 'No value recorded in this range.',
@@ -239,8 +244,10 @@
       { name: 'Unpublished basis', sub: 'provider does not say', value: '1 route', tone: 'warn', note: 'total labeled partial' }, { name: 'Missing provider count', sub: 'no token figure', value: '4 events', tone: 'warn', note: 'excluded from total' }] };
   } });
   def('unknown-token-buckets', 'analytics', { meta: function (ctx) { return D.rangeLabel(ctx.state.range) + ' · unknown is never zero'; }, model: function () {
+    /* the static intent's buckets, then the selected records' own reading (the old card's override: 0 records with
+       missing required token facts, fail-closed append, Excluded 0) */
     return { text: '4', unit: ' events', sub: 'with unknown token buckets · ' + b('not zero'), facts: [['Input unknown', '1'], ['Output unknown', '1'], ['Cache unavailable', '2'], ['Reasoning unknown', '4'], ['Partial totals', '3'], ['Excluded totals', '4'],
-      ['Selected records missing facts', '0 · fail-closed append']], foot: 'Policy · preserve unknown' };
+      ['Selected records missing facts', '0 · fail-closed append'], ['Excluded', '0 selected records']], foot: 'Policy · preserve unknown' };
   } });
 
   /* ================================================================== Ledger */

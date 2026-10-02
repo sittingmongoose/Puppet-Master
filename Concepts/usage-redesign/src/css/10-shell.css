@@ -127,7 +127,16 @@ html[data-pmu-soft][data-theme^="glass"] body.pmu-page-active .app-shell {
 html[data-pmu-soft][data-theme^="glass"] body.pmu-page-active .app-shell::before { mix-blend-mode: normal; opacity: .18; }
 html[data-pmu-soft][data-theme^="glass"] body.pmu-page-active .app-shell::after { mix-blend-mode: normal; }
 /* the window-wide film-grain overlay blends every frame in software; it goes while Usage shows on such a machine */
-html[data-pmu-soft][data-theme^="glass"] body.pmu-page-active #pixelGrid { display: none; }
+/* the Glass grain is a full-window mix-blend-mode: overlay layer; the app shows it with display: block !important, so
+   the soft rule needs !important too (PERF-3: with it every Glass frame on the VM was a 150-170 ms software draw, 5-6
+   fps in every moment) */
+html[data-pmu-soft][data-theme^="glass"] body.pmu-page-active #pixelGrid { display: none !important; }
+/* the Glass wallpaper's light layer (#glass-bg::after: filter blur(4px) + mix-blend-mode: screen over the whole window)
+   made every software draw 120-190 ms (5-7 fps in every moment of Glass on the VM; glassbisect.py: hidden -> 4-6 ms,
+   60 fps). Without a GPU it goes while Usage shows, and the scene below it is not blurred; with the solid pane only the
+   10 px around the shell shows the wallpaper */
+html[data-pmu-soft][data-theme^="glass"] body.pmu-page-active #glass-bg::after { display: none !important; }
+html[data-pmu-soft][data-theme^="glass"] body.pmu-page-active #glass-bg::before { filter: none !important; }
 /* the app's title-bar notes (Settings writes such as "Next run uses this account") drop over the Usage head: while Usage
    shows they never take a pointer, so a click on Detail, Panels or the range goes through (the inbox keeps them) */
 body.pmu-page-active #rsStage, body.pmu-page-active #rsStage .rs-card { pointer-events: none !important; }

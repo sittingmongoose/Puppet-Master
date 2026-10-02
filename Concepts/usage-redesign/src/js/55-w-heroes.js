@@ -70,7 +70,7 @@
             '<span class="pmu-skyreset">' + esc(shortReset(w)) + '</span></div>';
         }).join('') +
         '<i class="pmu-skyswitch"' + (th.auto ? '' : ' data-off') + ' data-at="' + swAt + '" style="bottom:calc(var(--sky-foot) + ' + (swAt / 100) + ' * var(--sky-h))"><span>' + (th.auto ? swAt + '%' : 'OFF') + '</span></i>' +
-        '</div>' + (cols.length > n ? C.more(cols.length - n, 'windows') : '') + '</div>';
+        '</div>' + (cols.length > n ? C.more(cols.length - n, 'windows', false, cols.slice(n).map(function (c) { return c.p.name + ' · ' + c.a.nickname + ' · ' + c.w.label + ' ' + C.fmt(c.w.pct, 'pct') + ' used · ' + F.resetLine(c.w).text; })) : '') + '</div>';
       if (body._pmuDry) return;
       body.querySelector('.pmu-skyplot').addEventListener('click', function (event) {
         var col = event.target.closest('.pmu-skycol'); if (!col) return;
@@ -113,11 +113,12 @@
         if (a0 !== a1) {
           var skyH = parseFloat(getComputedStyle(plot).getPropertyValue('--sky-h')) || 0;
           s0.setAttribute('style', s1.getAttribute('style')); s0.setAttribute('data-at', String(a1));
-          M.animate(s0, [{ transform: 'translateY(' + ((a1 - a0) / 100 * skyH).toFixed(1) + 'px)' }, { transform: 'none' }], { dur: st ? 160 : 320, easing: st ? 'steps(4,jump-start)' : 'cubic-bezier(.2,.8,.2,1)' });
+          /* kept on the element (_pmuSlides) so the Settings ripple retimes it without getAnimations() (NOTES3-perf C2) */
+          s0._pmuSlides = [M.animate(s0, [{ transform: 'translateY(' + ((a1 - a0) / 100 * skyH).toFixed(1) + 'px)' }, { transform: 'none' }], { dur: st ? 160 : 320, easing: st ? 'steps(4,jump-start)' : 'cubic-bezier(.2,.8,.2,1)' })];
         }
         if (s0.hasAttribute('data-off') !== s1.hasAttribute('data-off')) {
           var off = s1.hasAttribute('data-off'); s0.toggleAttribute('data-off', off);
-          M.animate(s0, off ? [{ opacity: 1 }, { opacity: 0.3 }] : [{ opacity: 0.3 }, { opacity: 1 }], { dur: st ? 120 : 240, easing: st ? 'steps(3,jump-start)' : 'cubic-bezier(.2,.8,.2,1)' });
+          s0._pmuSlides = (s0._pmuSlides || []).concat([M.animate(s0, off ? [{ opacity: 1 }, { opacity: 0.3 }] : [{ opacity: 0.3 }, { opacity: 1 }], { dur: st ? 120 : 240, easing: st ? 'steps(3,jump-start)' : 'cubic-bezier(.2,.8,.2,1)' })]);
         }
         var l0 = s0.querySelector('span'), l1 = s1.querySelector('span'); if (l0 && l1 && l0.textContent !== l1.textContent) l0.textContent = l1.textContent;
       }
@@ -158,6 +159,26 @@
   });
 
   /* ================================================================== attempts (Ledger hero): the attempt timeline */
+  /* Details of the hero kinds whose content does not come from a model (CONTENT-3: every reading a card holds is in its
+     Details): the account windows of the windows-ahead line, the attempts of the ledger lanes, the authority flow's
+     sources */
+  var winReadings = function () {
+    var rows = [];
+    PMU.roster.read().providers.forEach(function (p) {
+      if (!p.effective || !D.settingsInScope(p.id)) return;
+      p.effective.windows.forEach(function (w) { rows.push([p.name + ' · ' + p.effective.nickname + ' · ' + w.label, (w.pct === null ? PMU.roster.vsWord(w) : C.fmt(w.pct, 'pct') + ' used') + ' · ' + F.resetLine(w).text + ' · ' + PMU.fmt.truth(w.truth)]); });
+    });
+    return rows;
+  };
+  C.kindReadings.windows = winReadings;
+  C.kindReadings.attempts = function () {
+    return D.attempts().slice().sort(function (a, z) { return new Date(a.occurred_at) - new Date(z.occurred_at); }).map(function (a) {
+      return [a.attempt_id + ' · ' + F.clock(new Date(a.occurred_at).getTime()), C.legName(a.provider_id) + ' · ' + C.money((a.charge || 0) + (a.plan_allocation_estimate || 0)) + (a.charge ? '' : ' est.') + ' · ' + a.settlement_status];
+    });
+  };
+  C.kindReadings.flow = function () {
+    return (DATA.authority || []).map(function (r) { return [C.oldName(r[0]), r[1] + ' · ' + r[2] + ' · ' + r[3]]; });
+  };
   C.kind('attempts', {
     render: function (body, ctx) {
       var list = D.attempts().slice().sort(function (a, z) { return new Date(a.occurred_at) - new Date(z.occurred_at); });
@@ -361,7 +382,7 @@
         }).join('') + '</div>' +
         '<div class="pmu-wgrid">' + days.map(function (t) { return '<i style="left:' + xOf(t).toFixed(2) + '%"></i>'; }).join('') + '<i class="pmu-wnow"></i></div>' +
         '<div class="pmu-waxis"><span class="is-now" style="left:0">NOW</span>' + days.map(function (t) { return '<span style="left:' + xOf(t).toFixed(2) + '%">' + esc(F.day(t)) + '</span>'; }).join('') + '</div>' +
-        '</div>' + (lanes.length > lanesN ? C.more(lanes.length - lanesN, 'providers') : '') + '</div>';
+        '</div>' + (lanes.length > lanesN ? C.more(lanes.length - lanesN, 'providers', false, lanes.slice(lanesN).map(function (ln) { return ln.p.name + ' · ' + ln.a.nickname + ' · ' + ln.ms.map(function (m) { return m.w.short + ' ' + C.fmt(m.w.pct, 'pct') + ' used · ' + F.resetLine(m.w).text; }).join(' · '); })) : '') + '</div>';
       body.querySelector('.pmu-wplot').addEventListener('click', function (event) {
         var lane = event.target.closest('.pmu-wlane'); if (lane && PMU.accounts) PMU.accounts.inspect(lane.getAttribute('data-acct'), lane);
       });

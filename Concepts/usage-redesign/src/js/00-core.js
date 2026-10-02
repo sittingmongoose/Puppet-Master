@@ -204,6 +204,12 @@ Object.assign(SVG, {
   eyeOff: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3l18 18M10.6 5.1A10 10 0 0 1 12 5c6 0 10 7 10 7a17 17 0 0 1-3.2 3.9M6.6 6.6A17 17 0 0 0 2 12s4 7 10 7a9.6 9.6 0 0 0 4.4-1.1"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>'
 });
 SVG.grip = SVG.drag;
+/* the card head's four tools as one path each (PERF-3): the same drawings with 3 elements per button instead of 4-8, so a
+   room's chrome (16 cards x 4 buttons) restyles about 140 fewer elements on the VM (45-90 us each) */
+SVG.toolGrip = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.5 6a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0zM14.5 6a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0zM6.5 12a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0zM14.5 12a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0zM6.5 18a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0zM14.5 18a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0z"/></svg>';
+SVG.toolKebab = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M10.35 5a1.65 1.65 0 1 0 3.3 0a1.65 1.65 0 1 0-3.3 0zM10.35 12a1.65 1.65 0 1 0 3.3 0a1.65 1.65 0 1 0-3.3 0zM10.35 19a1.65 1.65 0 1 0 3.3 0a1.65 1.65 0 1 0-3.3 0z"/></svg>';
+SVG.toolGear = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12a3 3 0 1 0 6 0a3 3 0 1 0-6 0zM12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>';
+SVG.toolSize = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a2.5 2.5 0 0 1 2.5 2.5v12a2.5 2.5 0 0 1-2.5 2.5h-12a2.5 2.5 0 0 1-2.5-2.5v-12a2.5 2.5 0 0 1 2.5-2.5zM13 17h4v-4M11 7H7v4"/></svg>';
 SVG.kebab = SVG.dots;
 
 var PMU = window.PMU = {

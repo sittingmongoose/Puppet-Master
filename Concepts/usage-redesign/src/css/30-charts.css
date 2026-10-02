@@ -277,8 +277,10 @@ html[data-theme$="-light"] #panel-usage .pmu-meter[data-ramp="1"] { --c: color-m
 #panel-usage .pmu-meter[data-over] .pmu-meterover { display: block; }
 /* the rail is a zero-width line at the notch (left: --at of the track), so nothing reaches past the track; a threshold
    change slides it with a transform from the old position (FLIP, 34-charts-bars.js) */
-#panel-usage .pmu-notchrail { position: absolute; top: 0; bottom: 0; left: var(--at, 100%); width: 0; pointer-events: none; }
-#panel-usage .pmu-notch { position: absolute; left: -1px; top: calc(-1 * var(--ni)); bottom: calc(-1 * var(--ni)); width: 2px; border-radius: 1px; background: var(--pmu-ink);
+/* the rail spans the track and the notch sits at --at inside it (PERF-3): a notch slide is a translateX in % of the track,
+   with no layout read on a Settings change */
+#panel-usage .pmu-notchrail { position: absolute; top: 0; bottom: 0; left: 0; right: 0; pointer-events: none; }
+#panel-usage .pmu-notch { position: absolute; left: calc(var(--at, 100%) - 1px); top: calc(-1 * var(--ni)); bottom: calc(-1 * var(--ni)); width: 2px; border-radius: 1px; background: var(--pmu-ink);
   box-shadow: 0 0 0 1px var(--pmu-card); transform-origin: 50% 50%; }
 #panel-usage .pmu-notch[data-faint] { opacity: .32; transform: scaleY(.7); }
 #panel-usage .pmu-notch[data-off] { opacity: .18; transform: scaleY(.7); }

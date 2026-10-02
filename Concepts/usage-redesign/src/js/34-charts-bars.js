@@ -125,8 +125,9 @@
         heatUp(el, fill, prev, spec, oldFill, fillPct, fillEase);
       }
       if (notch && finite(el._m.at) && Math.abs(el._m.at - notch.at) > 0.05) {
-        var tw = rail.parentNode ? rail.parentNode.clientWidth : 0, dx = (el._m.at - notch.at) / 100 * tw;
-        Mo.anim(rail, [{ transform: 'translateX(' + dx.toFixed(1) + 'px)' }, { transform: 'none' }], stepped ? 160 : 320, 0, stepped ? 'steps(4,jump-start)' : 'cubic-bezier(.2,.8,.2,1)', 'none');
+        /* the slide is kept on the rail (rail._pmuSlide) so a Settings ripple can retime it without getAnimations() (a style
+           flush per call: 25-36 ms per ripple on the VM, PERF-3) */
+        rail._pmuSlide = Mo.anim(rail, [{ transform: 'translateX(' + (el._m.at - notch.at).toFixed(2) + '%)' }, { transform: 'none' }], stepped ? 160 : 320, 0, stepped ? 'steps(4,jump-start)' : 'cubic-bezier(.2,.8,.2,1)', 'none');
       }
       var num = valEl.querySelector('.pmu-num');
       if (num && known && finite(prevShown) && Math.abs(prevShown - shownPct) >= 0.5 && !spec.valueText) {

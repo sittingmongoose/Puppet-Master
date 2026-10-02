@@ -141,7 +141,8 @@
     var slow = T.rows.slice().sort(function (a, z) { return z.p95 - a.p95; })[0] || {};
     return { chart: 'rangebars', spec: { rows: T.rows, unit: 's' }, headline: { value: T.overall.p95, fmt: 's', label: 'p95 overall · p50 ' + T.overall.p50 + 's' }, spark: { values: T.rows.map(function (r) { return r.p95; }), idx: 0 },
       hero: true, heroSub: 'slowest ' + b(String(slow.name || slow.tool || '').replace(/_/g, '_\u200b')) + ' · p95 ' + b(slow.p95 + 's') + ' · ' + b(T.overall.retries) + ' retry · ' + b(T.overall.timeouts) + ' timeouts',
-      facts: [['Median', T.overall.p50 + 's'], ['P95', T.overall.p95 + 's'], ['Retries', String(T.overall.retries)], ['Timeouts', String(T.overall.timeouts)]], note: 'Browser and terminal calls dominate the long tail.' };
+      /* the old card's provenance note is the caveat's second sentence again (CONTENT-3; PARITY C.1) */
+      facts: [['Median', T.overall.p50 + 's'], ['P95', T.overall.p95 + 's'], ['Retries', String(T.overall.retries)], ['Timeouts', String(T.overall.timeouts)]], note: 'Browser and terminal calls dominate the long tail. Latency facts belong to selected attempt fixtures.' };
   } });
   def('tool-receipts', 'tools', { meta: function () { return 'current · retention 90d'; }, model: function () {
     return { value: 100, fmt: 'pct', sub: 'tool calls linked to receipts · ' + b('881') + ' linked', facts: [['Missing', '0'], ['Redacted', '7'], ['Retries', '1'], ['Errors', '3']], foot: 'Retention · 90d' };
@@ -252,6 +253,9 @@
       if (have.indexOf(e[0]) < 0 && (!d || !d.model)) PMU.widgets.define(e[0], Object.assign({}, d && d.model ? {} : {}, { room: room }));
     });
   });
+  /* every widget's Details lists every reading its card holds (CONTENT-3: nothing is ever hidden silently; a fact the
+     card folds at its size is in its "N more" hover tag and here) */
+  C.inspectAll(Object.keys(PMU_BOARDS.widgets).concat.apply(Object.keys(PMU_BOARDS.widgets), Object.keys(PMU_BOARDS.rooms).map(function (room) { return PMU.widgets.list(room); })));
 
   /* ================================================================== room beats (WOW-SPEC 4, WOW-TASKS N-1) */
   if (PMU.film && PMU.film.beat) {

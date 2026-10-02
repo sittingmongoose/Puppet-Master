@@ -47,7 +47,8 @@
 
   def('active-runs', 'overview', { meta: function () { return 'right now · Governor reading'; }, model: function () {
     return { value: 3, fmt: 'int', sub: 'runs across ' + b(9) + ' agents · ' + b(2) + ' queued',
-      facts: [['Agents', '9'], ['Nodes', '47'], ['Oldest', '38m'], ['Projected', '$8.40 est.'], ['Running', 'run-47 Tastebook initial build']], foot: 'Run 47 · 6 specialists' };
+      /* the facts the sub line does not already say lead (CONTENT-3: Oldest and Projected were folded at every size) */
+      facts: [['Oldest', '38m'], ['Projected', '$8.40 est.'], ['Nodes', '47'], ['Agents', '9'], ['Running', 'run-47 Tastebook initial build']], foot: 'Run 47 · 6 specialists' };
   } });
 
   def('next-reset', 'overview', { meta: function () { return 'allowance clock · effective accounts'; }, model: function () {
@@ -140,12 +141,15 @@
     return { spent: DATA.costs.month, budget: budget, days: S.days, today: S.today, cumulative: cum, periodStart: start.getTime(), periodEnd: end.getTime(),
       periodText: F.date(start.getTime()) + ' to ' + F.date(end.getTime()),
       projection: { to: P.to, lo: P.lo, hi: P.hi, label: 'est. ' + C.money(P.to) + ' · PM estimate', confidence: P.confidence },
-      facts: [['Burn', C.money(DATA.costs.burn) + '/day'], ['Projection', C.money(P.to) + ' est.'], ['Confidence', P.confidence + '%'], ['Projected remaining', C.money(budget - P.to) + ' est.'], ['Metered overage', C.money(DATA.costs.overage)]],
+      /* "Forecast used": the projection as a share of the Settings budget (the old meter; its 30x extrapolation is gone,
+         the PM projection is the forecast) */
+      facts: [['Burn', C.money(DATA.costs.burn) + '/day'], ['Projection', C.money(P.to) + ' est.'], ['Forecast used', (budget ? Math.round(100 * P.to / budget) + '% of budget' : 'no budget set') + ' est.'], ['Confidence', P.confidence + '%'], ['Projected remaining', C.money(budget - P.to) + ' est.'], ['Metered overage', C.money(DATA.costs.overage)]],
       mix: [{ name: 'Plan allocation est.', value: DATA.costs.plans, idx: 0, est: true, valueText: C.money(DATA.costs.plans) }, { name: 'Settled API', value: DATA.costs.api, idx: 1, valueText: C.money(DATA.costs.api) }],
       selected: c.selected };
   };
 
-  def('plan-value-now', 'overview', { meta: rangeMeta('estimate'), model: function () {
+  /* the old card's subtitle ("explicit values on selected attempts") is the subtitle's last part again (CONTENT-3) */
+  def('plan-value-now', 'overview', { meta: rangeMeta('estimate · explicit values on selected attempts'), model: function () {
     var c = D.costs();
     if (!c.selected) return { segments: [], empty: 'No attempts in the selected scope and range', emptyFacts: 'Plan allocation 0 attempts · not zero, nothing recorded' };
     var plans = {}; D.attempts().forEach(function (a) { if (a.plan_allocation_estimate > 0) plans[a.provider_id] = 1; });
@@ -208,7 +212,8 @@
     return { value: 74, fmt: 'pct', sub: 'safe remaining completion capacity · ' + b(3) + ' routes ready', facts: [['Immediate', '2.8M tok'], ['Queued', '604k tok'], ['Fallback', '3 routes'], ['Blocked', '0'], ['Basis', 'At pace (relative)']] };
   } });
   def('capacity-reservations', 'overview', { meta: function () { return 'current runs · Governor projection'; }, model: function () {
-    return { text: '9', unit: ' / 12', sub: 'worker slots reserved · ' + b(3) + ' available', facts: [['Requested', '12'], ['Admitted', '9'], ['Queued', '3'], ['Reserved tokens', '604k'], ['Reserved spend', '$8.40 est.'], ['Longest wave', '6 agents']], foot: 'Governor projection · not usage' };
+    /* requested and admitted are the headline (9 / 12): the facts it does not say lead (CONTENT-3) */
+    return { text: '9', unit: ' / 12', sub: 'worker slots reserved · ' + b(3) + ' available', facts: [['Queued', '3'], ['Reserved tokens', '604k'], ['Reserved spend', '$8.40 est.'], ['Longest wave', '6 agents'], ['Requested', '12'], ['Admitted', '9']], foot: 'Governor projection · not usage' };
   } });
   def('run-attribution', 'overview', { meta: function () { return 'current work · child usage under its parent'; }, model: function () {
     return { cols: [{ id: 'name', label: 'RUN', w: 'minmax(120px,2fr)' }, { id: 'state', label: 'STATE', w: 'minmax(80px,1fr)' }, { id: 'agents', label: 'AGENTS', align: 'right', w: '64px', min: 'm' },
@@ -370,12 +375,24 @@
   def('acct-switch', 'accounts', { meta: function () { return 'Shared with Settings > AI > Providers & Accounts'; }, aside: function () { return 'Shared with Settings'; } });
   /* a single plate's subtitle names the account (the state is the head's right word and the plan a fact: each said once,
      LOOK-REVIEW-2 16; a long subtitle was cut, LOOK-REVIEW-2 13) */
+  /* a single account's state word sits at the head's right (the aside) where it fits beside the whole title, measured
+     in the theme face; where it does not (or the plate is xs, where the aside is not drawn) it leads the subtitle instead
+     (CONTENT-3, census: "Standby" ended in an ellipsis beside "Google Antigravity" and "Anthropic API" at 1440) */
+  function stateFitsAside(ctx, title, word) {
+    var t = ctx && ctx.tier; if (!t || !t.bw) return true;
+    if (t.w === 'xs') return false;
+    var l = PMU.theme.look(), k = l.nier || l.family === 'retro' ? 1.22 : l.family === 'glass' ? 1.1 : 1.04;
+    var cardW = (t.pw || t.bw + 28);
+    var titleW = C.wrapW(l.nier ? String(title).toUpperCase() : title, 15, 640) * k;
+    return titleW + 34 + 10 + C.wrapW(word, 12.5, 600) * k + 28 + 12 <= cardW;
+  }
   function providerMeta(id) {
-    return function () {
+    return function (ctx) {
       var p = PMU.roster.provider(id); if (!p || !p.accounts.length) return 'Not set up';
       if (p.accounts.length > 1) return p.accounts.length + ' accounts · ' + (p.effective ? p.effective.nickname + ' active' : 'none active');
       var a = p.accounts[0], nick = a.nickname && a.nickname !== p.name && p.name.indexOf(a.nickname) < 0 ? a.nickname : '';
-      return [nick, a.identity].filter(Boolean).join(' · ') || a.plan || a.nickname;
+      var rest = [nick, a.identity].filter(Boolean).join(' · ') || a.plan || a.nickname;
+      return ctx && ctx.tier && !stateFitsAside(ctx, p.name, a.stateWord) ? a.stateWord + ' · ' + rest : rest;
     };
   }
   /* one acct-<providerId> definition per Settings provider. Settings may not be ready when this file runs, so the ids
@@ -403,6 +420,7 @@
           return r.accounts.length + ' accounts';
         }
         var a = r.accounts[0];
+        if (ctx && ctx.tier && !stateFitsAside(ctx, r.name, a.stateWord)) return '';
         return { text: a.stateWord, tone: a.stateTone === 'muted' ? null : a.stateTone };
       },
       inspect: function () { var r = PMU.roster.provider(p.id); return r && r.accounts[0] ? (PMU.accounts.inspect(r.effective ? r.effective.key : r.accounts[0].key), null) : null; } });

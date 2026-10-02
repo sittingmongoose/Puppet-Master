@@ -75,6 +75,8 @@
     if (p.accounts.length > 1) group(body, ctx, p); else single(body, ctx, p, p.accounts[0]);
   }
   C.kind('provider', {
+    /* a single plate whose meters all show grows its facts into a free band (its meters keep their size) */
+    grow: function (body) { return !!body.querySelector('.pmu-acc.is-single') && !body._pmuWinHidden; },
     render: function (body, ctx) {
       var p = PMU.roster.provider(ctx.id.replace(/^acct-/, ''));
       if (!p || !p.accounts.length) { body._pmuSig = null; body.innerHTML = C.empty('No account is set up for this provider.', 'Set one up in Settings > AI > Providers & Accounts'); return; }
@@ -204,7 +206,11 @@
         ' style="grid-template-columns:' + tmpl + '"' + C.hover(a.nickname, a.identity + (a.routeRole ? ' · ' + a.routeRole : '') + ' · priority ' + a.priority) + '>' + parts + '</div>';
     }).join('');
     var foot = footLines.slice(0, footCap).map(function (l) { return '<span class="pmu-accfootline" data-fit-first' + (l.tone ? ' data-tone="' + l.tone + '"' : '') + '>' + C.glyph(l.glyph) + '<span>' + l.html + '</span></span>'; }).join('');
-    body.innerHTML = '<div class="pmu-acc is-group" data-mode="' + mode + '">' + band + '<div class="pmu-accrows">' + rows + '</div>' + C.more(rowsN - shown.length, rowsN - shown.length === 1 ? 'account' : 'accounts') + '</div>' +
+    /* the accounts and foot notes the plate has no room for are listed in the "N more" line's hover tag, or the plate's
+       (CONTENT-3) */
+    var accFold = p.accounts.slice(shown.length).map(function (a) { return a.nickname + ' · ' + a.stateWord + (a.binding && a.binding.pct !== null ? ' · ' + a.binding.short + ' ' + C.fmt(a.binding.pct, 'pct') + ' used' : ''); })
+      .concat(footLines.slice(footCap).map(function (l) { return String(l.html).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(); }));
+    body.innerHTML = '<div class="pmu-acc is-group" data-mode="' + mode + '"' + (rowsN > shown.length ? '' : C.foldHover(accFold)) + '>' + band + '<div class="pmu-accrows">' + rows + '</div>' + C.more(rowsN - shown.length, rowsN - shown.length === 1 ? 'account' : 'accounts', false, accFold) + '</div>' +
       (foot ? '<div class="pmu-cardfoot pmu-accfoot">' + foot + '</div>' : '');
     shown.forEach(function (a) {
       var row = body.querySelector('.pmu-accrow[data-acct="' + a.key + '"]');
@@ -256,10 +262,17 @@
     var prevFact = false;
     blocks.forEach(function (b, i) { var isFact = !b.win && b.html.indexOf('pmu-facts') >= 0; b.h += i === 0 || (isFact && prevFact) ? 0 : 12; prevFact = isFact; });
     var res = C.stack(blocks, bh - footH - 8);
-    var hiddenWins = res.hidden.filter(function (b) { return b.win; }).length;
+    /* anything that does not fit is counted on the plate's own "N more" line (inside the plate, above its footer; its
+       hover tag lists them) and the line's 33 px come off the budget (CONTENT-3: the fit pass's line used to land under
+       the footer after it trimmed two facts) */
+    if (res.hidden.length) res = C.stack(blocks, bh - footH - 8 - 33);
+    var hiddenWins = res.hidden.filter(function (b) { return b.win; }).length, hiddenN = res.hidden.length;
+    body._pmuWinHidden = hiddenWins;
     var foot = '<div class="pmu-accsfoot"><span class="pmu-sampled' + (a.fresh.stale ? ' is-stale' : '') + '">' + (a.fresh.stale ? C.glyph('clockCircle') : '') + esc(a.fresh.ageS === null ? 'no reading yet' : 'sampled ' + a.ageText.replace(/^cached /, '')) + '</span>' +
       (ctx.tier.bw < 200 && actText(a).btn ? '' : '<span class="pmu-host">' + esc(a.host || '') + '</span>') + (actText(a).btn ? useBtn(a, false) : '') + '</div>';
-    body.innerHTML = '<div class="pmu-acc is-single" data-acct="' + esc(a.key) + '" data-state="' + a.shownState + '">' + res.html + (hiddenWins ? '<div class="pmu-more">' + esc(hiddenWins + ' more ' + (hiddenWins === 1 ? 'window' : 'windows') + ' at a larger size') + '</div>' : '') + '</div>' + foot;
+    /* the windows and facts the plate has no room for: listed in the "N more" line's hover tag, or the plate's (CONTENT-3) */
+    var oneFold = res.hidden.map(function (b) { return b.win ? b.win.label + ' ' + (b.win.pct === null ? PMU.roster.vsWord(b.win) : C.fmt(b.win.pct, 'pct') + ' used · ' + PMU.fmt.resetLine(b.win).text) : String(b.html || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(); }).filter(Boolean);
+    body.innerHTML = '<div class="pmu-acc is-single" data-acct="' + esc(a.key) + '" data-state="' + a.shownState + '">' + res.html + (hiddenN ? C.more(hiddenN, hiddenWins === hiddenN ? 'windows' : 'facts', ctx.tier.bw < 200, oneFold) : '') + '</div>' + foot;
     wins.forEach(function (w) {
       var h = body.querySelector('.pmu-accmeter[data-win="' + w.key + '"]');
       meter(body, a.key + '|' + w.key, h, Object.assign(meterOpts(a, p, size === 'i' && w.pct !== null ? 'i' : 'k', w, true), { label: w.label }), { label: p.name + ' ' + w.label });
@@ -271,6 +284,20 @@
   function famShort(p) { return FAM_SHORT[p.id] || p.name; }
   /* ================================================================== switch: the bound auto-switch strip (A1 10.3) */
   var switchImpl;
+  /* Details of the switch strips and the not-set-up lists (CONTENT-3): the shared thresholds, then each family's most
+     room now; every provider of the group with its state */
+  C.kindReadings.switch = function () {
+    var th = PMU.roster.thresholds(), rows = [['Auto-switch', th.auto ? 'on · switches at ' + (100 - th.switchLeft) + '% used (' + th.switchLeft + '% left)' : 'off'], ['Warn level', (100 - th.warnLeft) + '% used (' + th.warnLeft + '% left)']];
+    PMU.roster.read().providers.forEach(function (p) {
+      if (!(p.accounts.length > 1 && p.windows.length && PMU.data.settingsInScope(p.id))) return;
+      var mr = mostRoom(p); if (mr) rows.push([p.name + ' · most room now', mr.text]);
+    });
+    return rows;
+  };
+  C.kindReadings.providers = function (ctx) {
+    var group = ctx.model && ctx.model.group, ro = PMU.roster.read(), g = ro.groups.filter(function (x) { return x.id === group; })[0];
+    return g ? g.providers.filter(function (p) { return !p.accounts.length; }).map(function (p) { return [p.name, p.statusWord + ' · ' + (p.windows.length ? p.windows.map(function (w) { return w.label; }).join(', ') : 'no plan windows') + ' · ' + p.product]; }) : [];
+  };
   C.kind('switch', switchImpl = {
     render: function (body, ctx) {
       var th = PMU.roster.thresholds(), ok = th.available;
@@ -293,16 +320,23 @@
       };
       /* a family's Settings name where it fits (panel rows: 16 px mark, a bar of at least 44 px, two 6 px gaps), else
          its short word (final fix M8) */
-      var famName = function (p) { return !panel || C.fitsW(p.name, ctx.tier.bw - 16 - 44 - 12, 13, 400) ? (panel ? p.name : famShort(p)) : famShort(p); };
+      /* the panel row's name column is what the 16 px mark, two 6 px gaps and the bar (up to 46 %) leave (CONTENT-3, census
+         1440: "ChatGPT / Codex" was measured against a 44 px bar and ended in an ellipsis) */
+      var famName = function (p) { return !panel || C.fitsW(p.name, ctx.tier.bw * 0.54 - 16 - 12 - 2, 13, 400) ? (panel ? p.name : famShort(p)) : famShort(p); };
+      var famFold = function (list) { return list.map(function (x) { return x.p.name + ' · most room now ' + x.mr.text; }); };
       var ladder = ctx.tier.bw >= 420 && ctx.tier.bh >= 200 || (!panel && ctx.tier.bh >= 140 && ctx.tier.bw >= 560);
       if (ladder) { body.innerHTML = ladderHtml(ctx, th, toggle, stepper, warn); body._pmuSw = { form: 'ladder' }; return; }
       body._pmuSw = { form: panel ? 'panel' : 'strip' };
       if (panel) {
         /* toggle and level share a row from about 300 px; the MOST ROOM NOW caption shows only with at least one family */
         var joined = ctx.tier.bw >= 280, ctlRows = joined ? 2 : 3;
-        var fit = C.fit(ctx.tier.bh, 30, ctlRows * 34 + 22);
-        body.innerHTML = '<div class="pmu-switch is-panel">' + (joined ? '<div class="pmu-swrow">' + toggle + stepper + '</div>' : '<div class="pmu-swrow">' + toggle + '</div><div class="pmu-swrow">' + stepper + '</div>') + '<div class="pmu-swrow">' + warn + '</div>' +
-          (fams.length && fit ? '<div class="pmu-cap pmu-swcap">MOST ROOM NOW</div>' + fams.slice(0, fit).map(famHtml).join('') : '') + '</div>';
+        /* 4 px of margin (Retro at 1440 ran the panel 2 px past the body); families past the room are counted on one "N
+           more families" line whose hover tag lists them (CONTENT-3) */
+        var fit = C.fit(ctx.tier.bh - 4, 30, ctlRows * 34 + 22);
+        if (fit < fams.length && fit > 0) fit = C.fit(ctx.tier.bh - 4 - 25, 30, ctlRows * 34 + 22);
+        var famHid = fams.slice(fit);
+        body.innerHTML = '<div class="pmu-switch is-panel"' + (fit ? '' : C.foldHover(famFold(famHid))) + '>' + (joined ? '<div class="pmu-swrow">' + toggle + stepper + '</div>' : '<div class="pmu-swrow">' + toggle + '</div><div class="pmu-swrow">' + stepper + '</div>') + '<div class="pmu-swrow">' + warn + '</div>' +
+          (fams.length && fit ? '<div class="pmu-cap pmu-swcap">MOST ROOM NOW</div>' + fams.slice(0, fit).map(famHtml).join('') + C.more(famHid.length, 'families', ctx.tier.bw < 260, famFold(famHid)) : '') + '</div>';
       } else {
         /* two lines when the body has the height; on one line the families take what the controls (about 450 px) and
            the MOST ROOM NOW caption (about 110 px) leave, whole families only */
@@ -310,7 +344,8 @@
         var avail = two ? ctx.tier.bw - 120 : ctx.tier.bw - 450 - 110, n = 0;
         fams.forEach(function (x) { var wpx = 150 + 7 * famShort(x.p).length; if (n === fams.indexOf(x) && avail - wpx >= 0) { avail -= wpx + 18; n += 1; } });
         if (two) n = fams.length;   /* two-line form: the families wrap; whole ones that do not fit are hidden by the fit pass */
-        body.innerHTML = '<div class="pmu-switch' + (two ? ' is-two' : '') + '"><div class="pmu-swctl">' + toggle + stepper + warn + '</div>' +
+        /* the families a one-line strip has no room for are listed in the strip's hover tag (CONTENT-3) */
+        body.innerHTML = '<div class="pmu-switch' + (two ? ' is-two' : '') + '"' + C.foldHover(famFold(fams.slice(n))) + '><div class="pmu-swctl">' + toggle + stepper + warn + '</div>' +
           (fams.length && n ? '<div class="pmu-swfams"><span class="pmu-cap">MOST ROOM NOW</span>' + fams.slice(0, n).map(famHtml).join('') + '</div>' : '') + '</div>';
       }
       body._pmuSwCharts = [];
@@ -364,12 +399,12 @@
         if (ln && isFinite(a) && isFinite(z) && a !== z) {
           var tw = ln.parentNode.querySelector('.pmu-ladtrack'), px = tw ? (z - a) * tw.clientWidth : 0;
           c0.style.setProperty('--swf', String(z));
-          PMU.motion.animate(ln, [{ transform: 'translateX(' + (-px).toFixed(1) + 'px)' }, { transform: 'none' }], { dur: st ? 160 : 320, easing: st ? 'steps(4,jump-start)' : 'cubic-bezier(.2,.8,.2,1)' });
+          ln._pmuSlides = [PMU.motion.animate(ln, [{ transform: 'translateX(' + (-px).toFixed(1) + 'px)' }, { transform: 'none' }], { dur: st ? 160 : 320, easing: st ? 'steps(4,jump-start)' : 'cubic-bezier(.2,.8,.2,1)' })];
         }
         if (ln && ln1 && ln.hasAttribute('data-off') !== ln1.hasAttribute('data-off')) {
           var off = ln1.hasAttribute('data-off');
           ln.toggleAttribute('data-off', off);
-          PMU.motion.animate(ln, off ? [{ opacity: 1 }, { opacity: 0.25 }] : [{ opacity: 0.25 }, { opacity: 1 }], { dur: st ? 120 : 240, easing: st ? 'steps(3,jump-start)' : 'cubic-bezier(.2,.8,.2,1)' });
+          ln._pmuSlides = (ln._pmuSlides || []).concat([PMU.motion.animate(ln, off ? [{ opacity: 1 }, { opacity: 0.25 }] : [{ opacity: 0.25 }, { opacity: 1 }], { dur: st ? 120 : 240, easing: st ? 'steps(3,jump-start)' : 'cubic-bezier(.2,.8,.2,1)' })]);
         }
         Array.prototype.forEach.call(c1.querySelectorAll('.pmu-ladrow'), function (r1, k) {
           var r0 = c0.querySelectorAll('.pmu-ladrow')[k]; if (!r0) return;
@@ -408,7 +443,8 @@
     var rowMin = 104 + nameCol + 48;
     /* the side column keeps "Auto-switch at [- 90% +] used" on one line where the two ladder columns still fit (Retro's
        mono pushed "used" to a line of its own) */
-    var ctlW = Math.ceil(34 + C.wrapW('Auto-switch', 12.5, 540) + C.wrapW('at', 12.5) + 94 + C.wrapW('used', 12.5) + 4 * 7 + 4);
+    var lk = PMU.theme.look(), wideFace = lk.nier || lk.family === 'retro' || lk.family === 'glass' ? 1.1 : 1;
+    var ctlW = Math.ceil((34 + C.wrapW('Auto-switch', 12.5, 540) + C.wrapW('at', 12.5) + 94 + C.wrapW('used', 12.5) + 4 * 7 + 4) * wideFace);
     if (!stacked && ctlW > sideW && ctlW <= 340 && bw - ctlW - 28 >= 2 * rowMin + 28) { sideW = ctlW; lw = bw - sideW - 28; }
     if (!stacked && lw < 2 * rowMin + 28 && lw >= 2 * Math.min(rowMin, 104 + 110 + 48) + 28) nameCol = Math.min(nameCol, Math.floor((lw - 28) / 2) - 152);
     var colsN = lw >= 2 * (104 + nameCol + 48) + 28 ? 2 : 1, rowH = 24, capH = 22, footH = L.none.length ? 20 + (stacked ? 16 : 0) : 0;
@@ -417,7 +453,10 @@
     if (rows.length <= cap) perCol = Math.ceil(rows.length / colsN);   /* balanced columns when every row fits */
     var shown = rows.slice(0, cap), top = rows[0];
     var past = rows.filter(function (r) { return r.left <= th.switchLeft; }).length;
-    var head = top ? C.heroHead(ctx, { value: Math.round(top.left), fmt: 'pct', label: 'left · ' + top.a.nickname + (top.a.nickname.indexOf(famShort(top.p)) >= 0 ? '' : ' · ' + famShort(top.p)),
+    /* the hero head sits in the side column: its words wrap at the column's width (CONTENT-3: measured at the card's
+       864 px it took four lines in Glass at 1920 and ran the card 9 px past its body) */
+    var headCtx = stacked ? ctx : Object.assign({}, ctx, { tier: Object.assign({}, ctx.tier, { bw: sideW }) });
+    var head = top ? C.heroHead(headCtx, { value: Math.round(top.left), fmt: 'pct', label: 'left · ' + top.a.nickname + (top.a.nickname.indexOf(famShort(top.p)) >= 0 ? '' : ' · ' + famShort(top.p)),
       sub: (th.auto ? 'switch at ' + b((100 - th.switchLeft) + '%') + ' used' : 'auto-switch ' + b('off')) + (past ? ' · ' + b(past) + ' past the line' : '') }) : '';
     var cols = []; for (var c = 0; c < colsN; c++) cols.push(shown.slice(c * perCol, (c + 1) * perCol));
     /* the provider mark names the family, so a row says the account and its window ("Qwen Global wk"); the family word
@@ -438,7 +477,7 @@
       '<div class="pmu-ladcols" style="grid-template-columns:repeat(' + colsN + ',minmax(0,1fr))">' + cols.map(function (cl) {
         return '<div class="pmu-ladcol" style="--swf:' + (th.switchLeft / 100) + '">' + cl.map(rowHtml).join('') + '<i class="pmu-ladline"' + (th.auto ? '' : ' data-off') + ' aria-hidden="true"></i></div>';
       }).join('') + '</div>' +
-      (rows.length > shown.length || L.none.length ? '<p class="pmu-ladfoot">' + esc([rows.length > shown.length ? (rows.length - shown.length) + ' more at a taller size' : '', L.none.length ? L.none.map(function (x) { return x.a.nickname + ' (' + famShort(x.p) + ')'; }).join(', ') + ': Usage unknown' : ''].filter(Boolean).join(' · ')) + '</p>' : '') +
+      (rows.length > shown.length || L.none.length ? '<p class="pmu-ladfoot"' + C.foldHover(rows.slice(shown.length).map(function (r) { return r.p.name + ' · ' + r.a.nickname + ' ' + C.fmt(Math.round(r.left), 'pct') + ' left in the ' + r.w.short.toLowerCase() + ' window'; })) + '>' + esc([rows.length > shown.length ? (rows.length - shown.length) + ' more at a taller size' : '', L.none.length ? L.none.map(function (x) { return x.a.nickname + ' (' + famShort(x.p) + ')'; }).join(', ') + ': Usage unknown' : ''].filter(Boolean).join(' · ')) + '</p>' : '') +
       '</div></div>';
   }
   /* the ladder's entrance: the bars fill from the left 36 ms apart down the rows, the switch line drops in (WOW-SPEC 4,
@@ -459,6 +498,7 @@
 
   /* ================================================================== providers: compact rows for providers with no account (A1 10.4) */
   C.kind('providers', {
+    grow: function (body) { return (body._pmuProvCols || 1) === 1; },
     render: function (body, ctx) {
       var group = ctx.model && ctx.model.group, ro = PMU.roster.read();
       var g = ro.groups.filter(function (x) { return x.id === group; })[0];
@@ -468,8 +508,9 @@
          about 300 px puts the state word under the name, so neither breaks inside a word (LOOK-REVIEW-2 13 and 15:
          "OpenCod / e Zen", "Not / set / up") */
       var colsN = ctx.tier.bw >= 720 ? 3 : ctx.tier.bw >= 460 ? 2 : 1, colW = (ctx.tier.bw - 28 * (colsN - 1)) / colsN, stacked = colW < 300;
+      if (!body._pmuDry) body._pmuProvCols = colsN;
       var word = true;
-      var fit = C.fit(ctx.tier.bh, stacked ? 46 : 32, 2) * colsN;
+      var fit = C.fit(ctx.tier.bh, stacked ? 48 : 32, 2) * colsN;   /* measured: a stacked row 47-48 px (1440, +2 px clip) */
       var shown = list.length > fit ? list.slice(0, Math.max(1, fit - 1)) : list;
       var setupAcct = DATA.accounts.filter(function (x) { return x.setup_required; })[0];
       body.innerHTML = '<div class="pmu-provlist"' + (colsN > 1 ? ' data-cols="' + colsN + '" style="grid-template-columns:repeat(' + colsN + ',minmax(0,1fr))"' : '') + '>' + shown.map(function (p) {
@@ -486,7 +527,7 @@
         var wordHtml = '<span class="pmu-provword"' + (ready ? ' data-tone="good"' : setup ? ' data-tone="warn"' : '') + '>' + esc(wordText) + '</span>';
         return '<div class="pmu-provrow' + (setup ? ' is-setup' : '') + (stacked ? ' is-stacked' : '') + '" data-reveal data-prov="' + esc(p.id) + '"' + (setup ? ' data-pmu-act="setup-details" role="button" tabindex="0"' : '') + hover + '>' +
           PMU.mark(p.id, 18) + (stacked ? '<span class="pmu-provtext"><span class="pmu-provname">' + esc(p.name) + '</span>' + wordHtml + '</span>' : '<span class="pmu-provname">' + esc(p.name) + '</span>' + wordHtml) + btn + '</div>';
-      }).join('') + C.more(list.length - shown.length, 'providers') + '</div>';
+      }).join('') + C.more(list.length - shown.length, 'providers', false, list.slice(shown.length).map(function (p) { return p.name + ' · ' + p.statusWord; })) + '</div>';
     }
   });
 
@@ -508,15 +549,30 @@
   });
 
   /* ================================================================== actions (ARCHITECTURE 4.11, DESIGN-SPEC 10.8) */
-  function refreshAccounts() { PMU.roster.invalidate(); if (PMU.data.invalidate) PMU.data.invalidate(); if (PMU.board && PMU.board.refresh) PMU.board.refresh('settings'); }
+  /* the cards that hold the bound controls, notches, switch lines and active marks are named first (NOTES3-perf C3: the
+     engine may patch these in the click task and slice the rest; a refresh that does not know the option ignores it) */
+  function boundCards() {
+    var board = document.getElementById('pmuBoard'), ids = [];
+    if (board) Array.prototype.forEach.call(board.querySelectorAll(':scope > .pmu-card'), function (c) {
+      if (c.querySelector('.pmu-notch, .pmu-ladline, .pmu-skyswitch, .pmu-toggle, .pmu-accrow.is-eff, .pmu-stepper')) ids.push(c.getAttribute('data-widget'));
+    });
+    return ids;
+  }
+  function refreshAccounts() { PMU.roster.invalidate(); if (PMU.data.invalidate) PMU.data.invalidate(); if (PMU.board && PMU.board.refresh) PMU.board.refresh('settings', { first: boundCards() }); }
   /* the Settings change ripples down the board (WOW-SPEC 3.9): every notch keeps its old look until its row's turn,
      30 ms apart in reading order (24 ms for a level change), then eases to the new one; the rows are patched in place,
      so the notch elements are the same before and after */
   function reducedNow() { return PMU.motion.reduced ? PMU.motion.reduced() : false; }
+  /* NOTES3-perf C2: no layout read in the click task. A notch's ripple rank comes from its card's grid row and its order
+     in the card (the old per-notch rect read was a 23-33 ms forced layout on the VM); the rail's --at is a style read */
   function rippleCapture() {
     var board = document.getElementById('pmuBoard'); if (!board || reducedNow()) return null;
     var ns = Array.prototype.slice.call(board.querySelectorAll('.pmu-notch, .pmu-ladline, .pmu-skyswitch'));
-    var tops = ns.map(function (n) { var r = n.getBoundingClientRect(); return r.height ? Math.round(r.top / 8) : null; });
+    var local = new Map(), tops = ns.map(function (n) {
+      var card = n.closest('.pmu-card'); if (!card) return null;
+      var k = local.get(card) || 0; local.set(card, k + 1);
+      return (+card.dataset.y || 0) * 64 + Math.min(63, k);
+    });
     var uniq = tops.filter(function (v, i) { return v !== null && tops.indexOf(v) === i; }).sort(function (a, z) { return a - z; });
     return ns.map(function (n, i) { return { el: n, rank: Math.max(0, uniq.indexOf(tops[i])), off: n.hasAttribute('data-off'), faint: n.hasAttribute('data-faint'), at: n.parentNode ? n.parentNode.style.getPropertyValue('--at') : '' }; });
   }
@@ -530,9 +586,11 @@
       if (n.classList.contains('pmu-notch')) {
         var off = n.hasAttribute('data-off'), faint = n.hasAttribute('data-faint');
         if (off !== c.off || faint !== c.faint) PMU.motion.animate(n, [vis(c.off, c.faint), vis(off, faint)], { dur: stp ? 120 : 240, delay: d, easing: stp ? 'steps(3,jump-start)' : 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' });
-        var rail = n.parentNode;
-        if (rail && rail.style.getPropertyValue('--at') !== c.at && rail.getAnimations) rail.getAnimations().forEach(function (a) { try { a.effect.updateTiming({ delay: d * sp, fill: 'backwards' }); } catch (error) {} });
-      } else if (n.getAnimations) n.getAnimations().forEach(function (a) { try { a.effect.updateTiming({ delay: d * sp, fill: 'backwards' }); } catch (error) {} });
+        /* the rail's notch slide is kept on the rail by the chart kit (rail._pmuSlide): retimed directly, no getAnimations()
+           (a style flush per call, 25-36 ms per ripple on the VM; NOTES3-perf C2) */
+        var rail = n.parentNode, sl = rail && rail._pmuSlide;
+        if (sl && sl.playState !== 'finished' && rail.style.getPropertyValue('--at') !== c.at) { try { sl.effect.updateTiming({ delay: d * sp, fill: 'backwards' }); } catch (error) {} }
+      } else (n._pmuSlides || []).forEach(function (a) { if (a && a.playState !== 'finished') { try { a.effect.updateTiming({ delay: d * sp, fill: 'backwards' }); } catch (error) {} } });
     });
   }
   PMU.accounts = {

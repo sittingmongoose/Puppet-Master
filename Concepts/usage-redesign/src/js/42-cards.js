@@ -298,10 +298,10 @@
         '<span class="pmu-cardsub">' + esc(sub) + '</span></div>' +
         '<span class="pmu-cardmeta"></span><span class="pmu-headtools"></span>' +
         '<span class="pmu-cardtools">' +
-        '<button type="button" class="pmu-iconbtn pmu-grip" data-tool="grip" aria-label="' + esc(t('board.grip')) + '" data-pm-hover-label="' + esc(t('board.grip')) + '">' + SVG.grip + '</button>' +
-        '<button type="button" class="pmu-iconbtn pmu-cardsize" data-tool="size" aria-haspopup="menu" aria-expanded="false" aria-label="' + esc(t('board.size_tool')) + '">' + SVG.size + '</button>' +
-        '<button type="button" class="pmu-iconbtn pmu-cardgear" data-tool="gear" aria-haspopup="menu" aria-expanded="false" aria-label="' + esc(t('board.gear_tool')) + '">' + SVG.gear + '</button>' +
-        '<button type="button" class="pmu-iconbtn pmu-cardmenu" data-tool="menu" aria-haspopup="menu" aria-expanded="false" aria-label="' + esc(t('board.menu_tool')) + '">' + SVG.kebab + '</button></span></header>' +
+        '<button type="button" class="pmu-iconbtn pmu-grip" data-tool="grip" aria-label="' + esc(t('board.grip')) + '" data-pm-hover-label="' + esc(t('board.grip')) + '">' + SVG.toolGrip + '</button>' +
+        '<button type="button" class="pmu-iconbtn pmu-cardsize" data-tool="size" aria-haspopup="menu" aria-expanded="false" aria-label="' + esc(t('board.size_tool')) + '">' + SVG.toolSize + '</button>' +
+        '<button type="button" class="pmu-iconbtn pmu-cardgear" data-tool="gear" aria-haspopup="menu" aria-expanded="false" aria-label="' + esc(t('board.gear_tool')) + '">' + SVG.toolGear + '</button>' +
+        '<button type="button" class="pmu-iconbtn pmu-cardmenu" data-tool="menu" aria-haspopup="menu" aria-expanded="false" aria-label="' + esc(t('board.menu_tool')) + '">' + SVG.toolKebab + '</button></span></header>' +
         '<div class="pmu-cardbody"></div>' + EDGES.map(function (e) { return '<i class="pmu-h" data-edge="' + e + '" aria-hidden="true"></i>'; }).join('');
       if (rect) PMU.board.place(card, rect);
       return card;
@@ -379,7 +379,7 @@
   if (boardEl) boardEl.addEventListener('click', function (event) {
     var tool = event.target.closest('.pmu-cardtools [data-tool]');
     if (!tool) return;
-    var card = tool.closest('.pmu-card'); if (!card || card.hasAttribute('data-leaving')) return;
+    var card = tool.closest('.pmu-card'); if (!card || card._pmuLeaving || card.hasAttribute('data-leaving')) return;
     var id = card.getAttribute('data-widget'), which = tool.getAttribute('data-tool');
     event.stopPropagation();
     if (which === 'menu') PMU.cards.menu(id, tool);

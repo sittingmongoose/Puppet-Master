@@ -85,7 +85,10 @@ function appendUsageAttempt(attempt) {
    Usage shows on such a machine, html[data-pmu-soft] swaps the Glass pane's live blur for a solid pane (10-shell.css),
    the onboarding's O55.solid answer to the same problem. Read once. */
 var softRendered = null;
+/* ?pmu-soft=1 forces the no-GPU profile (a GPU film of what the VM plays), ?pmu-soft=0 turns it off (PERF-3 A/B) */
+var softParam = (function () { try { var m = /[?&]pmu-soft=([01])\b/.exec(location.search); return m ? m[1] : null; } catch (error) { return null; } })();
 function softwareRendered() {
+  if (softParam !== null) return softParam === '1';
   if (softRendered !== null) return softRendered;
   try {
     if (window.O55 && O55.motion && typeof O55.motion.softwareRendered === 'function') return (softRendered = !!O55.motion.softwareRendered());
