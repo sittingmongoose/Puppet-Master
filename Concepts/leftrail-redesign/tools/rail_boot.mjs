@@ -59,7 +59,7 @@ const PAGE_LIB = () => {
     const seen = L.pairs(panel), clicked = new Set(); let steps = 0;
     const key = (el) => el.getAttribute('data-pmr-nav-id') || (el.getAttribute('data-pmr-nav') + '|' + (el.textContent || '').trim().slice(0, 60) + '|' + (el.getAttribute('aria-label') || ''));
     const collect = () => L.pairs(panel).forEach((p) => seen.add(p));
-    const navs = () => L.roots(panel).flatMap((r) => [...r.querySelectorAll('[data-pmr-nav]')]).filter((e) => L.visible(e) && !e.closest('.pmr-menu') && !clicked.has(key(e)));
+    const navs = () => L.roots(panel).flatMap((r) => [...r.querySelectorAll('[data-pmr-nav]')]).filter((e) => e.getAttribute('data-pmr-nav') !== 'back' && L.visible(e) && !e.closest('.pmr-menu') && !clicked.has(key(e)));
     const goBack = async () => { const b = L.roots(panel).flatMap((r) => [...r.querySelectorAll('[data-pmr-nav="back"]')]).find(L.visible); if (b) { b.click(); await L.sleep(420); } };
     async function readMenu(el, depth) {
       for (const sub of [...document.querySelectorAll('.pmr-menu .pmr-mi.has-sub')]) {
@@ -94,7 +94,6 @@ const PAGE_LIB = () => {
           clicked.add(k); steps++; progressed = true;
           el.click(); await L.sleep(360); collect();
           if (document.querySelector('.pmr-menu')) { await readMenu(el, depth); continue; }
-          if (kind === 'back') continue;
           await explore(depth + 1);
           if (kind === 'drill') await goBack();
         }
