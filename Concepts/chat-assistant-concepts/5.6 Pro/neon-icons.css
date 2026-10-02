@@ -55,7 +55,7 @@ body[data-theme$="-light"] {
   --nx-h-blocked-i: .08; --nx-h-attention-i: .08; --nx-h-working-i: .08; --nx-h-changed-i: .07;
   --nx-h-quiet-i: .06;
   --nx-h-concept-i: 0; --nx-h-hover-i: 0; --nx-h-swell-i: 0;
-  --nx-h-bolt-i: .26;
+  --nx-h-bolt-i: .2;
   --nx-bl-blocked: .12; --nx-bl-attention: .095; --nx-bl-working: .10; --nx-bl-changed: .05;
 }
 /* Friendly overshoots, Glass glides, Retro steps. */
@@ -194,24 +194,39 @@ svg:where(.nx-z0) .nx-p { animation: none; }
    the .nx-bolt wrapper the hosts draw round the svg. Hovering the host re-strikes once: a one-shot copy joins the
    animation list (the loop keeps running underneath, so leaving the host does not strike again). The keyframes are
    generated from one timeline in milliseconds. Reduced motion: lit and static. NieR: an ink crack in steps, no flash. */
-.nx-bolt { position: relative; isolation: isolate; display: inline-flex; flex: none; line-height: 0; vertical-align: middle; }
+.nx-bolt {
+  position: relative; isolation: isolate; display: inline-flex; flex: none; line-height: 0; vertical-align: middle;
+  --nxb-bl: nx-bolt-bl; --nxb-blh: nx-bolt-bl-h; --nxb-rest: var(--nx-bl-attention);
+}
+body[data-theme$="-light"] .nx-bolt { --nxb-bl: nx-bolt-bl-l; --nxb-blh: nx-bolt-bl-lh; --nxb-rest: .07; }
 .nx-bolt > svg.nx { display: block; }
 .nx-bolt::before {
   content: ""; position: absolute; left: 50%; top: 50%; width: 200%; height: 200%; translate: -50% -50%;
   border-radius: 50%; pointer-events: none; z-index: -1;
   background: radial-gradient(closest-side, var(--warning), transparent);
-  opacity: var(--nx-bl-attention); animation: nx-bolt-bl 5200ms linear infinite;
+  opacity: var(--nxb-rest);
 }
-body[data-theme$="-light"] .nx-bolt::before { animation-name: nx-bolt-bl-l; }
 svg.fast-bolt, svg.meta-fast, svg.fast-row-bolt { --nx-ink: var(--warning); --nx-hiv: visible; --nx-hi-a: var(--nx-h-bolt-i); animation: none; opacity: 1; }
-svg.fast-bolt .nx-h, svg.meta-fast .nx-h, svg.fast-row-bolt .nx-h { opacity: .32; animation: nx-bolt-halo 5200ms linear infinite; }
-svg.fast-bolt .nx-p0, svg.meta-fast .nx-p0, svg.fast-row-bolt .nx-p0 { animation: nx-bolt-0 5200ms linear infinite; }
-svg.fast-bolt .nx-p1, svg.meta-fast .nx-p1, svg.fast-row-bolt .nx-p1 { animation: nx-bolt-1 5200ms linear infinite; }
-svg.fast-bolt .nx-p2, svg.meta-fast .nx-p2, svg.fast-row-bolt .nx-p2 { animation: nx-bolt-2 5200ms linear infinite; }
-svg.fast-bolt .nx-p3, svg.meta-fast .nx-p3, svg.fast-row-bolt .nx-p3 { animation: nx-bolt-3 5200ms linear infinite; }
+.nx-bolt > svg .nx-h { opacity: .32; }
+/* the loop (the composer chip, the picker's model row, the Fast row: always while drawn) */
+.nx-bolt::before { animation: var(--nxb-bl) 5200ms linear infinite; }
+.nx-bolt > svg .nx-h { animation: nx-bolt-halo 5200ms linear infinite; }
+.nx-bolt > svg .nx-p0 { animation: nx-bolt-0 5200ms linear infinite; }
+.nx-bolt > svg .nx-p1 { animation: nx-bolt-1 5200ms linear infinite; }
+.nx-bolt > svg .nx-p2 { animation: nx-bolt-2 5200ms linear infinite; }
+.nx-bolt > svg .nx-p3 { animation: nx-bolt-3 5200ms linear infinite; }
+/* The transcript meta's bolt (.nx-bolt-gated) sits in the message chrome, which is hidden until its message is
+   hovered (transcript.css), so it strikes only while the chrome shows: as the row appears the bolt cracks, then it
+   keeps the cycle; a hidden row runs no animation (one per fast turn would otherwise tick unseen). */
+.nx-bolt-gated::before, .nx-bolt-gated > svg .nx-h, .nx-bolt-gated > svg .nx-p { animation: none; }
+:where(.message:hover, .message:focus-within, .tx-peek, .message-chrome.is-overflow-open) .nx-bolt-gated::before { animation: var(--nxb-bl) 5200ms linear infinite; }
+:where(.message:hover, .message:focus-within, .tx-peek, .message-chrome.is-overflow-open) .nx-bolt-gated > svg .nx-h { animation: nx-bolt-halo 5200ms linear infinite; }
+:where(.message:hover, .message:focus-within, .tx-peek, .message-chrome.is-overflow-open) .nx-bolt-gated > svg .nx-p0 { animation: nx-bolt-0 5200ms linear infinite; }
+:where(.message:hover, .message:focus-within, .tx-peek, .message-chrome.is-overflow-open) .nx-bolt-gated > svg .nx-p1 { animation: nx-bolt-1 5200ms linear infinite; }
+:where(.message:hover, .message:focus-within, .tx-peek, .message-chrome.is-overflow-open) .nx-bolt-gated > svg .nx-p2 { animation: nx-bolt-2 5200ms linear infinite; }
+:where(.message:hover, .message:focus-within, .tx-peek, .message-chrome.is-overflow-open) .nx-bolt-gated > svg .nx-p3 { animation: nx-bolt-3 5200ms linear infinite; }
 /* hover re-strikes once (hosts: a button, a [data-action] row, the transcript's model chip) */
-:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt::before { animation: nx-bolt-bl 5200ms linear infinite, nx-bolt-bl-h 1100ms linear 1; }
-body[data-theme$="-light"] :where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt::before { animation-name: nx-bolt-bl-l, nx-bolt-bl-lh; }
+:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt::before { animation: var(--nxb-bl) 5200ms linear infinite, var(--nxb-blh) 1100ms linear 1; }
 :where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-h { animation: nx-bolt-halo 5200ms linear infinite, nx-bolt-halo-h 1100ms linear 1; }
 :where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-p0 { animation: nx-bolt-0 5200ms linear infinite, nx-bolt-0h 1100ms linear 1; }
 :where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-p1 { animation: nx-bolt-1 5200ms linear infinite, nx-bolt-1h 1100ms linear 1; }
@@ -229,8 +244,8 @@ body[data-theme$="-light"] :where(button, [data-action], .meta-model):where(:hov
 @keyframes nx-bolt-halo-h { 0% { opacity: 0; } 16.73% { opacity: 0; } 18% { opacity: 1; } 22.36% { opacity: 0.45; } 26% { opacity: 0.95; } 33.27% { opacity: 0.7; } 94.55%, 100% { opacity: 0.32; } }
 @keyframes nx-bolt-bl { 0% { opacity: 0; } 3.54% { opacity: 0; } 3.81% { opacity: 0.42; } 4.73% { opacity: 0.12; } 5.5% { opacity: 0.34; } 7.04% { opacity: 0.2; } 20%, 100% { opacity: 0.08; } }
 @keyframes nx-bolt-bl-h { 0% { opacity: 0; } 16.73% { opacity: 0; } 18% { opacity: 0.42; } 22.36% { opacity: 0.12; } 26% { opacity: 0.34; } 33.27% { opacity: 0.2; } 94.55%, 100% { opacity: 0.08; } }
-@keyframes nx-bolt-bl-l { 0% { opacity: 0; } 3.54% { opacity: 0; } 3.81% { opacity: 0.36; } 4.73% { opacity: 0.1; } 5.5% { opacity: 0.28; } 7.04% { opacity: 0.17; } 20%, 100% { opacity: 0.095; } }
-@keyframes nx-bolt-bl-lh { 0% { opacity: 0; } 16.73% { opacity: 0; } 18% { opacity: 0.36; } 22.36% { opacity: 0.1; } 26% { opacity: 0.28; } 33.27% { opacity: 0.17; } 94.55%, 100% { opacity: 0.095; } }
+@keyframes nx-bolt-bl-l { 0% { opacity: 0; } 3.54% { opacity: 0; } 3.81% { opacity: 0.24; } 4.73% { opacity: 0.07; } 5.5% { opacity: 0.19; } 7.04% { opacity: 0.12; } 20%, 100% { opacity: 0.07; } }
+@keyframes nx-bolt-bl-lh { 0% { opacity: 0; } 16.73% { opacity: 0; } 18% { opacity: 0.24; } 22.36% { opacity: 0.07; } 26% { opacity: 0.19; } 33.27% { opacity: 0.12; } 94.55%, 100% { opacity: 0.07; } }
 
 /* ------------------------------------------------------------------ 9. the status set (plan §3) */
 /* The wrapper carries the list rhythm; .nx-st-base is the static lit layer, .nx-st-move the moving part. Wired

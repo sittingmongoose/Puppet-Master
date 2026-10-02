@@ -575,6 +575,13 @@
     return (q.resetSource === 'locally inferred' ? '~' : 'in ') + body;
   }
 
+  /* The wait is a live status, so the strip shows the neon status set's waiting-on-a-dependency mark (the hourglass in
+     the attention tone: it tips once and holds), read at call time; the warning glyph only without the registry. */
+  function quotaMark(icon) {
+    var N = window.PM56_NEON;
+    return N && typeof N.status === 'function' ? N.status('waiting-dep', 13) : icon('warning', 13);
+  }
+
   function renderQuota(ctx) {
     var q = RT.quota;
     if (!q || !q.waiting) return '';
@@ -594,7 +601,7 @@
       : '';
 
     return '<div class="cs-quota" data-k="cs-quota" role="status" aria-live="polite">' +
-      '<span class="cs-quota-icon">' + icon('warning', 13) + '</span>' +
+      '<span class="cs-quota-icon">' + quotaMark(icon) + '</span>' +
       '<span class="cs-quota-copy">' +
       '<b class="cs-quota-state">Paused</b>' +
       '<span class="cs-quota-sep"> · </span>' + esc(q.reason || 'Provider wait') +
