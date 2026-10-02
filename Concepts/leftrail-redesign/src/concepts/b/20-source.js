@@ -177,7 +177,7 @@ B.panels.source = (function () {
       build: (page) => {
         const l0 = panel.context.lines[0], l1 = panel.context.lines[1];
         const [repo, ...rest] = l0.text.split(' · ');
-        const repoLine = h('div.pmr-b-ident-line', h('span.pmr-b-repo', { text: repo }), h('span.pmr-b-repo-meta', { text: rest.join(' · ') }));
+        const repoLine = h('div.pmr-b-ident-line', h('span.pmr-b-repo', { text: repo }), h('span.pmr-b-repo-meta', { text: rest.join(' · ') }), B.panels.source.state(st));
         if (l0.hover) PMR.hover(repoLine, l0.hover.label, l0.hover.detail);
         const trig = PMR.menu.trigger(panel.menus.branch, { icon: 'branch', hover: { label: 'Switch branch', detail: 'Current branch: ' + panel.menus.branch.value } });
         trig.setAttribute('data-pmr-nav', 'menu');

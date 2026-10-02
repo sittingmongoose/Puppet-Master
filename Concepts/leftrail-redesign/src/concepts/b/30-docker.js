@@ -44,12 +44,16 @@ B.panels.docker = (function () {
         const trig = PMR.menu.trigger(panel.menus.context, { icon: 'docker', hover: l0.hover });
         trig.setAttribute('data-pmr-nav', 'menu');
         const facts = panel.context.facts;
-        const top3 = facts.filter(f => /^(Execution Host|Execution Environment|Source Location)$/.test(f[0]));
-        const more = facts.filter(f => !top3.includes(f));
-        const ident = h('div.pmr-b-block.pmr-b-ident', { 'data-canon': l0.canon || null },
-          h('div.pmr-b-ident-line', trig, h('span.pmr-b-grow'), h('span.pmr-b-readiness', { 'data-canon': l1.canon || null, text: l1.text.replace(/^Ready · /, '') })),
-          h('div.pmr-b-facts.is-ident', top3.map(factEl)),
-          disclosure('Readiness and context', factList(more, { key: 'docker-where' }), { navId: 'docker-where' }));
+        const val = k => ((facts.find(f => f[0] === k) || [])[1] || '');
+        /* one line names where Docker runs; the labelled facts live in "Readiness and context" */
+        const where = [val('Execution Host').replace(/\s*\(.*\)$/, ''), val('Execution Environment').split(' · ')[0], val('Source Location')].filter(Boolean).join(' · ');
+        const whereEl = h('div.pmr-b-ident-line.pmr-b-where1', { 'data-canon': l0.canon || null }, h('span', { text: where }));
+        if (l0.hover) PMR.hover(whereEl, l0.hover.label, l0.hover.detail);
+        const ident = h('div.pmr-b-block.pmr-b-ident',
+          h('div.pmr-b-ident-line', trig, B.panels.docker.state(st)),
+          whereEl,
+          h('div.pmr-b-ident-line.pmr-b-counts', { 'data-canon': l1.canon || null }, h('span', { text: l1.text.replace(/^Ready · /, '') })),
+          disclosure('Readiness and context', factList(facts, { key: 'docker-where' }), { navId: 'docker-where' }));
         const vs = panel.views;
         const dest = v => {
           if (v.conditional && !v.conditional.shown) {

@@ -99,8 +99,8 @@ B.panels.files = (function () {
     const meta = asList(it.meta).slice(1);
     return row({
       key: it.id, lead: it.letter ? PMR.letterEl(it.letter, it.status && it.status.state) : leadIco, name: it.name, nameText: U.midName(it.name, 30), mono: true, path: it.path,
-      metaEl: h('span.pmr-b-meta', folder ? h('span.pmr-b-meta-path', { text: folder }) : null, meta.length ? h('span.pmr-b-meta-rest', { text: meta.join(' · ') }) : null),
-      end: [it.diff ? diffEl(it.diff) : (it.kind === 'open' ? wordEl(it.status) : null)],
+      metaEl: h('span.pmr-b-meta.is-split', folder ? h('span.pmr-b-meta-path', { text: folder }) : null, it.diff ? diffEl(it.diff) : (it.kind === 'open' ? wordEl(it.status) : null)),
+      hover: { label: it.path || it.name, detail: meta.join(' · ') || null },
       selected: !!it.active,
       primary: opener || null,
       drill: () => changedDesc(st, it, sibs),
@@ -124,16 +124,21 @@ B.panels.files = (function () {
     const common = { 'data-path': it.path || null, 'data-ignored': ign ? '1' : null, 'data-depth': String(depth), style: `--b-ind:${indent(depth)}px` };
     if (it.kind === 'folder') {
       const roll = it.rollup;
-      const end = [roll ? h('span.pmr-b-endword', { 'data-state': roll.state, text: roll.word }) : (asList(it.meta)[0] ? h('span.pmr-b-endmeta', { text: asList(it.meta)[0] }) : null)];
+      /* the name has priority: the roll-up is the strongest status letter (or the capped count) in a narrow column;
+         the words live in the hover tag and on the folder page */
+      const capCount = it.capped ? String(it.capped.total) : null;
+      const end = [roll ? PMR.letterEl(PMR.STATE_LETTER[roll.state] || 'M', roll.state) : (capCount ? h('span.pmr-b-endmeta.pmr-num', { text: capCount }) : null)];
+      const words = [roll && roll.word].concat(asList(it.meta)).filter(Boolean).join(' · ');
+      const tag = { label: it.path || it.name, detail: words || null };
       if (depth >= DEEP) {
         const r = row({ key: 'fold:' + it.id, lead: PMR.icon('folder'), name: it.name, mono: true, dim: ign, end, drill: () => folderDesc(st, it, sibs), cls: 'pmr-b-trow is-deep', attrs: common,
-          hover: { label: 'Open ' + it.name + ' as a page', detail: it.path } });
+          hover: { label: it.path || it.name, detail: (words ? words + '. ' : '') + 'Opens as a page.' } });
         r._bItem = it;
         return [r];
       }
       const open = st.fm.open.has(it.id) ? st.fm.open.get(it.id) : !!it.open;
       const r = row({ key: 'fold:' + it.id, lead: [PMR.icon('chevR', 'pmr-b-twist'), PMR.icon('folder', 'pmr-b-ficon')], name: it.name, mono: true, dim: ign, end, cls: ['pmr-b-trow', 'pmr-b-folder', roll && !open && 'is-rolled'].filter(Boolean).join(' '), attrs: common,
-        drill: () => folderDesc(st, it, sibs), primary: { label: it.name } });
+        drill: () => folderDesc(st, it, sibs), primary: { label: it.name }, hover: tag });
       const main = r.querySelector('.pmr-b-row-main');
       main.setAttribute('aria-expanded', String(open));
       main.setAttribute('data-pmr-nav', 'expand');
@@ -160,7 +165,8 @@ B.panels.files = (function () {
     const openAct = asList(it.actions)[0];
     const r = row({
       key: 'file:' + it.id, lead: PMR.icon(it.icon || 'file'), name: it.name, nameText: U.midName(it.name, 26), mono: true, dim: ign, path: it.path,
-      end: [it.letter ? PMR.letterEl(it.letter, it.status && it.status.state) : (it.status && it.status.state === 'info' ? h('span.pmr-b-endmeta', { text: it.status.word }) : null)],
+      end: [it.letter ? PMR.letterEl(it.letter, it.status && it.status.state) : null],
+      hover: { label: it.path || it.name, detail: [it.status && it.status.word, it.note].filter(Boolean).join('. ') || null },
       primary: openAct, drill: () => fileDesc(st, it, sibs), quietGo: true, selected: !!it.active, cls: 'pmr-b-trow', attrs: Object.assign({ 'aria-current': it.active ? 'true' : null }, common),
     });
     if (it.active) r.querySelector('.pmr-b-row-main').setAttribute('aria-current', 'true');
@@ -226,8 +232,8 @@ B.panels.files = (function () {
         PMR.hover(selBtn, 'Select files', 'Choose several files, then copy their paths, cut, add them to the chat or delete them');
         selBtn.addEventListener('click', () => setSelMode(st, !st.fm.selMode));
         st.fm.selBtn = selBtn;
-        out.push(h('div.pmr-b-block.pmr-b-tools', trig, h('span.pmr-b-grow'),
-          filterBtn, iconAct(tb.find(a => a.cmd === 'cmd.file.new_file'), panel.menus), iconAct(tb.find(a => a.cmd === 'cmd.file.new_folder'), panel.menus), selBtn));
+        out.push(h('div.pmr-b-block.pmr-b-tools', trig,
+          h('span.pmr-b-toolset', filterBtn, iconAct(tb.find(a => a.cmd === 'cmd.file.new_file'), panel.menus), iconAct(tb.find(a => a.cmd === 'cmd.file.new_folder'), panel.menus), selBtn)));
         /* the filter field (opens under the head) */
         const input = h('input', { type: 'text', class: 'pmr-b-input', placeholder: v.filter.placeholder, 'aria-label': v.filter.label, id: v.filter.id ? 'pmr-b-' + v.filter.id : null, value: st.fm.filter || '' });
         const clear = iconAct(v.filter.action, panel.menus);
@@ -257,7 +263,7 @@ B.panels.files = (function () {
         hide.setAttribute('aria-pressed', String(!!st.fm.hideIgnored));
         hide.addEventListener('click', () => setHideIgnored(st, page, !st.fm.hideIgnored));
         page.hideBtn = hide;
-        out.push(h('div.pmr-b-sec-head.pmr-b-treehead', h('span.pmr-b-sec-title.pmr-head', { text: v.label }), h('span.pmr-b-sec-count.pmr-b-trunc', { text: v.summary }), h('span.pmr-b-grow'), collapse, hide));
+        out.push(h('div.pmr-b-sec-head.pmr-b-treehead', h('span.pmr-b-sec-title.pmr-head', { text: v.label }), PMR.hover(h('span.pmr-b-treestate', B.panels.files.state(st)), v.label, v.summary), h('span.pmr-b-grow'), collapse, hide));
         const tree = st.fm.filter ? filtered(st, st.fm.filter) : treeBlock(st, treeItems(panel), null);
         page.tree = tree;
         page.el.classList.toggle('is-hide-ignored', !!st.fm.hideIgnored);
