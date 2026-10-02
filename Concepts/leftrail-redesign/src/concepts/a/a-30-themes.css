@@ -1,0 +1,46 @@
+/* Concept A — theme and NieR polish. Each family keeps its personality: Basic crisp, Friendly soft corners, Glass plain
+   fills in the pane (no blur), Retro square and stepped, NieR ink and paper with the square cursor. */
+
+/* form fields never pick up a theme's own input plate */
+html[data-rail-concept="a"] .pmr-a-field textarea,
+html[data-rail-concept="a"] .pmr-a-filterin { background: transparent !important; box-shadow: none !important; border: 0 !important; border-radius: 0 !important; backdrop-filter: none !important; }
+html[data-theme^="glass"][data-rail-concept="a"] .pmr-a-field,
+html[data-theme^="glass"][data-rail-concept="a"] .pmr-a-filterrow { background: var(--pmr-hover); border-color: var(--pmr-line); }
+
+/* Friendly: rounder hover tiles, a touch more air between rows */
+html[data-theme^="friendly"][data-rail-concept="a"] .pmr-view.pmr-a { --a-row-r: 10px; }
+html[data-theme^="friendly"][data-rail-concept="a"] .pmr-a-row { padding-top: 5px; padding-bottom: 6px; }
+
+/* Glass: the pane stays a plain fill; the ink and tile glide slower (motion in JS) */
+html[data-theme^="glass"][data-rail-concept="a"] .pmr-a-tabs { border-bottom-color: var(--pmr-line); }
+
+/* Retro: square, mono, stepped; the ink jumps and a one-frame flash marks the cut */
+html[data-theme^="retro"][data-rail-concept="a"] .pmr-a-ink,
+html[data-theme^="retro"][data-rail-concept="a"] .pmr-a-engink { border-radius: 0; height: 3px; }
+html[data-theme^="retro"][data-rail-concept="a"] .pmr-a-tab { font-size: 12px; }
+html[data-theme^="retro"][data-rail-concept="a"] .pmr-a-stepn { border-radius: 0; }
+html[data-theme^="retro"][data-rail-concept="a"] .pmr-a-row,
+html[data-theme^="retro"][data-rail-concept="a"] .pmr-a-trow { transition-timing-function: steps(2, end); }
+
+/* NieR Mode: ink and paper. Rows become the ink bar on hover through .pmr-cur (shared hooks); the tab ink is ink; the
+   section labels take the YoRHa capitals through .pmr-head */
+html[data-o55-nier="on"][data-rail-concept="a"] .pmr-a-ink,
+html[data-o55-nier="on"][data-rail-concept="a"] .pmr-a-engink { background: var(--o55-nier-ink); border-radius: 0; height: 3px; }
+html[data-o55-nier="on"][data-rail-concept="a"] .pmr-a-tab.is-active { font-weight: 600; }
+html[data-o55-nier="on"][data-rail-concept="a"] .pmr-a-row,
+html[data-o55-nier="on"][data-rail-concept="a"] .pmr-a-trow { border-radius: 0; }
+html[data-o55-nier="on"][data-rail-concept="a"] .pmr-a-row.is-current:not(:hover) { background: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .08); }
+html[data-o55-nier="on"][data-rail-concept="a"] .pmr-a-trow.is-selected { background: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .16); }
+html[data-o55-nier="on"][data-rail-concept="a"] .pmr-a-stepn { border-radius: 0; }
+html[data-o55-nier="on"][data-rail-concept="a"] .pmr-a-attn { border-radius: 0; background: var(--o55-nier-ink); }
+html[data-o55-nier="on"][data-rail-concept="a"] .pmr-a-meter-fill { background: var(--o55-nier-ink); }
+html[data-o55-nier="on"][data-rail-concept="a"] .pmr-a-gdot { border-radius: 0; }
+html[data-o55-nier="on"][data-rail-concept="a"] .pmr-a-field,
+html[data-o55-nier="on"][data-rail-concept="a"] .pmr-a-filterrow { border-radius: 0; background: transparent; border-color: var(--pmr-line-strong); }
+html[data-o55-nier-parts~="cursor"][data-rail-concept="a"] .pmr-a-row:hover .pmr-a-word,
+html[data-o55-nier-parts~="cursor"][data-rail-concept="a"] .pmr-a-row:hover .pmr-diff span,
+html[data-o55-nier-parts~="cursor"][data-rail-concept="a"] .pmr-a-row.is-current .pmr-a-word { color: inherit !important; }
+html[data-o55-nier-parts~="cursor"][data-rail-concept="a"] .pmr-a-trow:hover .pmr-a-name,
+html[data-o55-nier-parts~="cursor"][data-rail-concept="a"] .pmr-a-trow[aria-selected="true"] .pmr-a-name { color: inherit !important; }
+html[data-o55-nier-parts~="headers"][data-rail-concept="a"] .pmr-a-seclabel { font-size: 11.5px; }
+html[data-o55-nier-parts~="headers"][data-rail-concept="a"] .pmr-a-title { font-size: 13px; }
