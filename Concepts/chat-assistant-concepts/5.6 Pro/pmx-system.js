@@ -63,7 +63,8 @@
   var tokCache = { theme: null, v: Object.create(null) };
   function tokRaw(name) {
     var b = document.body; if (!b) return '';
-    var th = b.getAttribute('data-theme') || '';
+    /* NieR Mode paints basic-* under html[data-o55-nier] with its own stepped eases (nier.css): part of the key */
+    var th = (b.getAttribute('data-theme') || '') + (document.documentElement.hasAttribute('data-o55-nier') ? '+nier' : '');
     if (tokCache.theme !== th) { tokCache.theme = th; tokCache.v = Object.create(null); }
     if (!(name in tokCache.v)) { try { tokCache.v[name] = getComputedStyle(b).getPropertyValue(name).trim(); } catch (e) { return ''; } }
     return tokCache.v[name];

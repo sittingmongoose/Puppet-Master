@@ -3116,7 +3116,9 @@
     { id:'basic-dark', name:'Basic Dark' }, { id:'basic-light', name:'Basic Light' },
     { id:'friendly-dark', name:'Friendly Dark' }, { id:'friendly-light', name:'Friendly Light' },
     { id:'glass-dark', name:'Glass Dark' }, { id:'glass-light', name:'Glass Light' },
-    { id:'retro-dark', name:'Retro Dark' }, { id:'retro-light', name:'Retro Light' }
+    { id:'retro-dark', name:'Retro Dark' }, { id:'retro-light', name:'Retro Light' },
+    /* NieR Mode (nier.js, PMConcept7's contract): paints Basic in NieR: Automata's ink and parchment */
+    { id:'nier-dark', name:'NieR Dark' }, { id:'nier-light', name:'NieR Light' }
   ];
 
 

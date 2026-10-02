@@ -865,6 +865,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const v=state.motionVoice;
     if(v&&v!=='auto') return v;
     const fam=String(state.theme||'basic').split('-')[0];
+    /* NieR Mode (nier.js) moves in Retro's stepped, mechanical voice; nier.css strips Retro's glow under its contract. */
+    if(fam==='nier') return 'retro';
     return ['basic','friendly','glass','retro'].includes(fam)?fam:'basic';
   }
   function renderChat(){
@@ -1980,7 +1982,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       return;
     }
     const avail=tools.clientWidth||box.clientWidth;
-    const signature=[box.clientWidth,tools.clientWidth,tools.textContent,document.body.dataset.theme,document.fonts?.status].join('|');
+    const signature=[box.clientWidth,tools.clientWidth,tools.textContent,state.theme,document.fonts?.status].join('|');
     if(!composerMeasureCache||composerMeasureCache.node!==tools||composerMeasureCache.key!==signature)
       composerMeasureCache={node:tools,key:signature,value:measureLabeledTools(box,tools)};
     const need=composerMeasureCache.value;
@@ -2045,7 +2047,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const cs=getComputedStyle(wrap);
     const avail=wrap.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
     const slack=8;
-    const signature=[wrap.clientWidth,bar.textContent,bar.dataset.variant,document.body.dataset.theme,document.fonts?.status].join('|');
+    const signature=[wrap.clientWidth,bar.textContent,bar.dataset.variant,state.theme,document.fonts?.status].join('|');
     if(!activityMeasureCache||activityMeasureCache.node!==bar||activityMeasureCache.key!==signature)
       activityMeasureCache={node:bar,key:signature,labeled:measureActivityTier(wrap,bar,0),compact:measureActivityTier(wrap,bar,1)};
     const {labeled,compact}=activityMeasureCache;
@@ -2203,7 +2205,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const rollBefore=new Map([...document.querySelectorAll('.pm-roll')].map(el=>[el, el.textContent]));
     const moveTargets=[...document.querySelectorAll('[data-flip-move]')];
     const moveBefore=new Map(moveTargets.map(el=>{const r=el.getBoundingClientRect();return [el,{x:r.left,y:r.top}];}));
-    document.body.dataset.theme=state.theme;
+    /* NieR Mode paints Basic: nier.js answers basic-light/dark for a NieR theme and writes PMConcept7's contract
+       attributes on <html> in the same call (every other theme id comes back unchanged). */
+    document.body.dataset.theme=window.PM56_NIER_PAINT?window.PM56_NIER_PAINT(state.theme):state.theme;
     const historyPinned=state.historyMode==='pinned'&&!isNarrow();
     const activityPinned=activityPinnedInLayout();
     activityPinLayout=activityPinned;

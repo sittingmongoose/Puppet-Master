@@ -25,7 +25,9 @@ shell=(root/'shell.html').read_text(encoding=ENC)
 # Neon icons (2026-10-02): neon-icons loads FIRST of all modules, so window.PM56_NEON (the glyph registry,
 # the renderer and the status set) exists before any module or app.js draws a glyph. Its stylesheet is the
 # exception to "module CSS in MODULES order": neon-icons.css is appended after composer.css (see CSS_LAST).
-MODULES=['neon-icons','command-transaction','activity-panel','activity-bar','goals','context','history','menus',
+# NieR Mode (2026-10-02): nier loads right after neon-icons, so window.PM_NIER and the paint hook app.js asks for
+# <body data-theme> exist before the first render; nier.css closes the sheet after neon-icons.css (CSS_LAST).
+MODULES=['neon-icons','nier','command-transaction','activity-panel','activity-bar','goals','context','history','menus',
          'transcript','lens-protocol','lens','orbit','threadops','questions',
          # Assistant-redesign wave (2026-09-03). One owner per file; each registers
          # through window.PM56_EXT and owns a bounded feature family, so app.js does
@@ -52,8 +54,10 @@ def join(names): return '\n'.join(read(n) for n in names)
 
 # CSS_LAST closes the sheet: composer.css, then neon-icons.css, the lighting grammar. Every neon rule is
 # written at specificity (0,0,1)/(0,1,1) so any context rule overrides it; being last only settles ties.
-# A file listed here is skipped in the MODULES pass, so no stylesheet is ever included twice.
-CSS_LAST=['composer.css','neon-icons.css']
+# nier.css (NieR Mode: palette, type, look) comes last of all: every rule in it is scoped by PMConcept7's contract
+# (html[data-o55-nier...]) and must win the ties it restyles. A file listed here is skipped in the MODULES pass,
+# so no stylesheet is ever included twice.
+CSS_LAST=['composer.css','neon-icons.css','nier.css']
 CSS_ORDER=(['styles.css','motion.css','variants-a.css','variants-b.css','variants-c.css','transcripts.css']
            +[f'{m}.css' for m in MODULES if f'{m}.css' not in CSS_LAST]+CSS_LAST)
 if len(set(CSS_ORDER))!=len(CSS_ORDER):
