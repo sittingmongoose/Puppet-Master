@@ -197,7 +197,8 @@ C_SPECS.source = {
       cGlyph(d.context.state), h('span', h('b.pmr-c-idrepo', { text: 'tastebook' }), ' · ' + d.context.lines[1].text));
     PMR.hover(where, 'Where this runs', d.context.lines[0].text + ' · ' + d.context.lines[1].text + ' · ' + d.context.state.word);
     where.addEventListener('click', () => cLensShow(P, { key: '__where', el: where, kind: 'Where this runs', icon: 'monitor', label: 'tastebook', build: () => cSrcWhereDoc(P) }));
-    return h('div.pmr-c-identcol', h('div.pmr-c-identrow', branch, eng), where);
+    /* Jujutsu has bookmarks, not branches: the Git branch menu is not offered while previewing Jujutsu */
+    return h('div.pmr-c-identcol', h('div.pmr-c-identrow', engId === 'jj' ? null : branch, eng), where);
   },
   tools(P, view) {
     const panelActs = P.panel.actions.map(a => ({ a }));
@@ -213,7 +214,7 @@ C_SPECS.source = {
   itemLens(P, item, parts, ctx) {
     const view = (ctx && ctx.view) || P.viewDef();
     if (item.kind === 'change' || item.kind === 'conflict') {
-      parts.title = item.name; parts.sub = item.path || null;
+      parts.title = item.name; parts.sub = item.path || null; parts.meta = null;
       parts.related = [];
       const cmp = (item.meta || [])[1];
       if (cmp) parts.related.push(h('div.pmr-c-lens-block', cLensHeading('Compare'), h('p.pmr-c-lens-meta', { text: item.kind === 'conflict' ? 'Three-way: base, ours and theirs. ' + cmp : cmp })));

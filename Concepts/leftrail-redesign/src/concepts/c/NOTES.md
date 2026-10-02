@@ -17,4 +17,9 @@ Own drivers (not in repo): `~/PM-Experiments/leftrail-redesign-20261002/builds/c
 
 ## Status
 - [x] core, Files, Source, Docker, bar written and screenshot-checked once (basic-dark)
-- [ ] quick/full boot check, themes + NieR review, motion polish
+- [x] quick boot green; crawler fixed by lead (d39db1dc98)
+- [x] Glass Lens plate made opaque (raised surface over --bg)
+- [x] full boot (all themes): reach 0 missing in all three panels; only Friendly pills failed -> fixed (radius 9 px cap)
+- [x] jj views checked (branch menu hidden in Jujutsu), Retro footer fixed, NieR bar tile re-syncs on theme change
+- [x] final full boot (8 themes + NieR light/dark, crawl): rail boot ok, 0 missing, 0 errors; shots reviewed and deleted
+- Possible next: dwell preview (deliberately not built), Lens for Kubernetes 'Show' state, more motion tuning after GPU films

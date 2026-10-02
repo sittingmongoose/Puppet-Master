@@ -315,8 +315,8 @@ html[data-theme^="glass"] .pmr-c-foot { background: transparent; }
 .pmr-c-sync-n span { font-size: var(--pmr-fs-meta); color: var(--pmr-text-2); line-height: 1.2; }
 
 /* ---------------------------------------------------------------- themes */
-html[data-theme^="glass"] .pmr-c-lens-plate { background: var(--pm6-glass-step-2, var(--pmr-bg-raised)); border-color: var(--glass-hairline, var(--pmr-line-strong)); }
-html[data-theme^="glass"] .pmr-c-lens-beak { background: var(--pm6-glass-step-2, var(--pmr-bg-raised)); border-color: var(--glass-hairline, var(--pmr-line-strong)); }
+html[data-theme^="glass"] .pmr-c-lens-plate { background: linear-gradient(var(--pmr-bg-raised), var(--pmr-bg-raised)), var(--bg, var(--surface)); border-color: var(--glass-hairline, var(--pmr-line-strong)); }
+html[data-theme^="glass"] .pmr-c-lens-beak { background: linear-gradient(var(--pmr-bg-raised), var(--pmr-bg-raised)), var(--bg, var(--surface)); border-color: var(--glass-hairline, var(--pmr-line-strong)); }
 html[data-theme^="retro"] .pmr-c-lens-bar { margin: 0 0 8px; padding: 2px 4px 2px 12px; min-height: 32px; border-bottom: 1px solid var(--pmr-line-strong); }
 html[data-theme^="retro"] .pmr-c-lens-plate { box-shadow: none; border-width: 1px; }
 html[data-theme^="retro"] .pmr-c-lens-name { letter-spacing: 0; }
@@ -442,3 +442,13 @@ html[data-rail-concept="c"] #activityBar:not(.collapsed) .pmr-c-ab-st .pmr-glyph
 .pmr-c-identcol > .pmr-c-idstate { white-space: normal; text-align: left; line-height: 1.35; padding-top: 3px; padding-bottom: 3px; align-items: flex-start; }
 .pmr-c-identcol > .pmr-c-idstate > .pmr-glyph { margin-top: 1px; }
 .pmr-c-identcol > .pmr-c-idstate > span:last-child { overflow: visible; }
+.pmr-c-identcol > .pmr-c-idstate > span:last-child { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+html[data-theme^="glass"] .pmr-c-act.is-primary { color: var(--bg, var(--pmr-bg)); }
+html[data-theme^="glass"] .pmr-btn.is-primary { color: var(--bg, var(--pmr-bg)); }
+.pmr-c-selcount { flex: none; }
+.pmr-c-footline.is-op { display: grid; grid-template-columns: 14px minmax(0, 1fr); column-gap: 8px; row-gap: 4px; padding-top: 5px; padding-bottom: 6px; }
+.pmr-c-footline.is-op .pmr-c-footline-t { white-space: normal; }
+.pmr-c-footline.is-op .pmr-c-meter { grid-column: 2; width: 100%; flex: none; }
+/* Friendly rounds every button to 14 px; on 26-30 px controls that reads as a pill, so the rail keeps 9 px */
+html[data-theme^="friendly"][data-rail-concept="c"] :is(.pmr-c-tab, .pmr-c-idtrig, .pmr-c-idstate, .pmr-c-titlebtn, .pmr-c-row, .pmr-c-hl, .pmr-c-footline, .pmr-c-filter, .pmr-c-msg, .pmr-view .pmr-btn) { border-radius: 9px !important; }
+html[data-theme^="friendly"] .pmr-c-lens :is(.pmr-c-act, .pmr-btn, .pmr-c-tech-btn) { border-radius: 9px !important; }

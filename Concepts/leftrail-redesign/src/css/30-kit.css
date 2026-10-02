@@ -49,7 +49,7 @@
 .pmr-btn-quiet { color: var(--pmr-text-2); }
 .pmr-btn-text { border-color: var(--pmr-line); background: var(--pmr-bg-raised); }
 .pmr-btn-text:hover { border-color: var(--pmr-line-strong); }
-.pmr-btn.is-primary { background: var(--pmr-accent); color: var(--o55-on-accent, #fff); border-color: transparent; }
+.pmr-btn.is-primary { background: var(--pmr-accent); color: var(--pmr-on-accent); border-color: transparent; }
 .pmr-btn.is-primary .pmr-ico { color: inherit; }
 .pmr-btn.is-primary:hover { filter: brightness(1.06); background: var(--pmr-accent); }
 .pmr-btn.is-danger .pmr-btn-label { color: var(--accent-error, var(--graph-failed)); }
@@ -59,6 +59,9 @@
 .pmr-key { font: 500 var(--pmr-fs-small)/1 var(--pmr-mono); color: var(--pmr-text-3); }
 html[data-o55-nier="on"] .pmr-btn.is-primary { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"] .pmr-btn-text { background: transparent; border-color: var(--pmr-line-strong); }
+
+/* themes round every button (Friendly 14px), which turns a 28px control into a pill: the rail radius wins */
+.pmr-view .pmr-btn, .pmr-trigger, #pmr-overlay .pmr-btn { border-radius: var(--pmr-radius) !important; }
 
 /* the focus ring for rows and anything custom */
 .pmr-view :focus { outline: none; }
