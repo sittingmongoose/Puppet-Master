@@ -1,0 +1,68 @@
+/* Shared primitives every concept may use: glyphs, file letters, diff numbers, buttons, keys, the focus ring.
+   No pills: a status is glyph + word in its colour; a button is text or an icon on a quiet surface. */
+.pmr-glyph { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 14px; height: 14px; color: var(--pmr-st-info); }
+.pmr-glyph svg { width: 12px; height: 12px; display: block; }
+.pmr-glyph[data-state="ok"], .pmr-status[data-state="ok"] { color: var(--pmr-st-ok); }
+.pmr-glyph[data-state="running"], .pmr-status[data-state="running"] { color: var(--pmr-st-running); }
+.pmr-glyph[data-state="paused"], .pmr-status[data-state="paused"] { color: var(--pmr-st-paused); }
+.pmr-glyph[data-state="stopped"], .pmr-status[data-state="stopped"] { color: var(--pmr-st-stopped); }
+.pmr-glyph[data-state="pending"], .pmr-status[data-state="pending"] { color: var(--pmr-st-pending); }
+.pmr-glyph[data-state="warn"], .pmr-status[data-state="warn"] { color: var(--pmr-st-warn); }
+.pmr-glyph[data-state="failed"], .pmr-status[data-state="failed"] { color: var(--pmr-st-failed); }
+.pmr-glyph[data-state="blocked"], .pmr-status[data-state="blocked"] { color: var(--pmr-st-blocked); }
+.pmr-glyph[data-state="stale"], .pmr-status[data-state="stale"] { color: var(--pmr-st-stale); }
+.pmr-glyph[data-state="unknown"], .pmr-status[data-state="unknown"] { color: var(--pmr-st-unknown); }
+.pmr-glyph[data-state="info"], .pmr-status[data-state="info"] { color: var(--pmr-st-info); }
+.pmr-glyph[data-state="modified"], .pmr-status[data-state="modified"] { color: var(--pmr-st-modified); }
+.pmr-glyph[data-state="added"], .pmr-status[data-state="added"] { color: var(--pmr-st-added); }
+.pmr-glyph[data-state="deleted"], .pmr-status[data-state="deleted"] { color: var(--pmr-st-deleted); }
+.pmr-glyph[data-state="untracked"], .pmr-status[data-state="untracked"] { color: var(--pmr-st-untracked); }
+.pmr-glyph[data-state="conflict"], .pmr-status[data-state="conflict"] { color: var(--pmr-st-conflict); }
+.pmr-glyph[data-state="ignored"], .pmr-status[data-state="ignored"] { color: var(--pmr-st-ignored); }
+.pmr-status { display: inline-flex; align-items: center; gap: 5px; min-width: 0; font-size: var(--pmr-fs-meta); font-weight: 600; line-height: 1.3; white-space: nowrap; }
+.pmr-status-word { overflow: hidden; text-overflow: ellipsis; }
+
+.pmr-letter { display: inline-flex; align-items: center; justify-content: center; flex: none; min-width: 14px; font: 700 var(--pmr-fs-meta)/1 var(--pmr-mono); letter-spacing: 0; }
+.pmr-letter[data-state="modified"] { color: var(--pmr-st-modified); }
+.pmr-letter[data-state="added"] { color: var(--pmr-st-added); }
+.pmr-letter[data-state="deleted"] { color: var(--pmr-st-deleted); }
+.pmr-letter[data-state="untracked"] { color: var(--pmr-st-untracked); }
+.pmr-letter[data-state="conflict"] { color: var(--pmr-st-conflict); }
+
+.pmr-diff { display: inline-flex; gap: 6px; font: 600 var(--pmr-fs-small)/1.3 var(--pmr-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pmr-diff .add { color: var(--pmr-diff-add); }
+.pmr-diff .del { color: var(--pmr-diff-del); }
+.pmr-num { font-variant-numeric: tabular-nums; }
+
+/* buttons: text buttons for actions with words; icon buttons only where the icon is unmistakable (with a hover tag) */
+.pmr-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 28px; min-width: 28px; padding: 0 10px;
+  border: 1px solid transparent; border-radius: var(--pmr-radius); background: transparent; color: var(--pmr-text);
+  font: 600 var(--pmr-fs-meta)/1.2 var(--pmr-font); cursor: pointer; white-space: nowrap;
+  transition: background var(--pmr-t-fast) var(--pmr-ease), color var(--pmr-t-fast) var(--pmr-ease), border-color var(--pmr-t-fast) var(--pmr-ease), transform var(--pmr-t-fast) var(--pmr-ease);
+}
+.pmr-btn .pmr-ico { width: 15px; height: 15px; color: var(--pmr-text-2); }
+.pmr-btn:hover { background: var(--pmr-hover); }
+.pmr-btn:active { background: var(--pmr-press); transform: scale(.98); }
+.pmr-btn:focus-visible { outline: 2px solid var(--pmr-focus); outline-offset: 1px; }
+.pmr-btn-icon { padding: 0; width: 28px; }
+.pmr-btn-quiet { color: var(--pmr-text-2); }
+.pmr-btn-text { border-color: var(--pmr-line); background: var(--pmr-bg-raised); }
+.pmr-btn-text:hover { border-color: var(--pmr-line-strong); }
+.pmr-btn.is-primary { background: var(--pmr-accent); color: var(--o55-on-accent, #fff); border-color: transparent; }
+.pmr-btn.is-primary .pmr-ico { color: inherit; }
+.pmr-btn.is-primary:hover { filter: brightness(1.06); background: var(--pmr-accent); }
+.pmr-btn.is-danger .pmr-btn-label { color: var(--accent-error, var(--graph-failed)); }
+.pmr-btn[aria-disabled="true"] { opacity: .5; cursor: default; }
+.pmr-btn[aria-disabled="true"]:hover { background: transparent; }
+.pmr-btn-text[aria-disabled="true"]:hover { background: var(--pmr-bg-raised); }
+.pmr-key { font: 500 var(--pmr-fs-small)/1 var(--pmr-mono); color: var(--pmr-text-3); }
+html[data-o55-nier="on"] .pmr-btn.is-primary { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .pmr-btn-text { background: transparent; border-color: var(--pmr-line-strong); }
+
+/* the focus ring for rows and anything custom */
+.pmr-view :focus { outline: none; }
+.pmr-view :focus-visible { outline: 2px solid var(--pmr-focus); outline-offset: -2px; border-radius: var(--pmr-radius); }
+
+/* reduced motion: nothing in the rail moves */
+html[data-motion="reduced"] .pmr-view *, html[data-reduced-motion="1"] .pmr-view * { transition: none !important; animation: none !important; }

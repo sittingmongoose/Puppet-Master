@@ -1,0 +1,18 @@
+/* Generic NieR Mode hooks for every concept. Tag elements, don't grow selector lists:
+   .pmr-cur     hover / chosen item becomes the ink bar with paper text (part "cursor"); the square cursor and its tick
+                sound come from the Settings script's cursor list, which the layer extends with .pmr-cur
+   .pmr-chosen  places a click chooses (tabs, rows): the brackets lock on
+   .pmr-strip   items in a horizontal strip: the square cursor sits under them
+   .pmr-head    a section heading: YoRHa capitals with a hairline rule (part "headers")
+   .pmr-title   a panel title band (part "headers") */
+html[data-o55-nier-parts~="cursor"] .pmr-cur:is(:hover, .is-current, [aria-current="true"], [aria-selected="true"]):not([aria-disabled="true"]) {
+  background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; border-color: var(--o55-nier-ink) !important;
+  box-shadow: none !important; text-shadow: none !important;
+}
+html[data-o55-nier-parts~="cursor"] .pmr-cur:is(:hover, .is-current, [aria-current="true"], [aria-selected="true"]):not([aria-disabled="true"]) :where(*) {
+  color: inherit !important; -webkit-text-fill-color: currentColor;
+}
+html[data-o55-nier-parts~="cursor"] .pmr-cur:is(:hover, .is-current, [aria-current="true"], [aria-selected="true"]) :is(.pmr-glyph, .pmr-letter, .pmr-status, .pmr-diff span) { color: var(--o55-nier-on-ink) !important; }
+html[data-o55-nier-parts~="headers"] .pmr-head { text-transform: uppercase; letter-spacing: .14em; font-weight: 600; }
+html[data-o55-nier-parts~="headers"] .pmr-title { text-transform: uppercase; letter-spacing: .16em; }
+html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-running: var(--o55-nier-ink); --pmr-st-stopped: rgba(var(--o55-nier-ink-rgb), .55); }
