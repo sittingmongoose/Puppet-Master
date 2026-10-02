@@ -586,6 +586,14 @@
       charts.popDot(d, at(d, 80));
     });
     $$('.pmu-hhalo', f.hl).forEach(function (d) { charts.swellHalo(d, at(d, 60)); });
+    /* the line's annotation (spec.callout): its ring swells when the comet reaches the point, then the label unfolds from
+       its leader (scaleX from the point's side); the chart owns the moment, so a re-draw never shows it early */
+    var cring = f.hl.querySelector('.pmu-callring'), cnote = f.hl.querySelector('.pmu-callout');
+    if (cring) {
+      var ct = at(cring, 60), stp = fm === 'nier' || fm === 'retro';
+      Mo.anim(cring, [{ transform: 'scale(.2)', opacity: 0 }, { transform: 'scale(1.35)', opacity: 1, offset: 0.55 }, { transform: 'scale(1)', opacity: 1 }], 420, ct, stp ? 'steps(3,jump-start)' : Mo.EASE.out);
+      if (cnote) Mo.anim(cnote, [{ transform: 'scaleX(.04)', opacity: 0 }, { opacity: 1, offset: 0.35 }, { transform: 'scaleX(1)', opacity: 1 }], 320, ct + 160, stp ? 'steps(3,jump-start)' : 'cubic-bezier(.17,.84,.29,.99)');
+    }
     costs.sort(function (a, b) { return parseFloat(a.style.left) - parseFloat(b.style.left); })
       .forEach(function (d, i) { charts.popDot(d, endAt + Math.min(600, 40 * i), 300); });
     pend.forEach(function (d, i) { Mo.anim(d, [{ opacity: 0 }, { opacity: 1 }], 260, endAt + Math.min(600, 40 * costs.length) + 120 + 30 * i, Mo.EASE.out); });

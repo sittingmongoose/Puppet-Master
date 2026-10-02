@@ -144,7 +144,8 @@
     render: function (body, ctx) {
       var q = ctx.model; if (!q || !q.groups.length) { body.innerHTML = C.empty('No provider in scope reports quota windows.'); return; }
       var bw = ctx.tier.bw, wide = bw >= 760, mid = bw >= 560;
-      var tmpl = wide ? 'minmax(240px,34%) minmax(140px,1fr) 76px 110px 26px' : mid ? 'minmax(170px,36%) minmax(110px,1fr) 64px 96px 22px' : 'minmax(120px,40%) minmax(80px,1fr) 56px 20px';
+      /* the timeline takes the middle of the row (Atlas; coordinator review 1 item 3: a third of the row was too little) */
+      var tmpl = wide ? 'minmax(210px,26%) minmax(160px,1fr) 76px 110px 26px' : mid ? 'minmax(170px,36%) minmax(110px,1fr) 64px 96px 22px' : 'minmax(120px,40%) minmax(80px,1fr) 56px 20px';
       var collapsed = (C.view(ctx.id, 'collapsed', '') || '').split(',').filter(Boolean);
       var open = openRows[ctx.id] || '';
       var rowH = mid ? 36 : 40, headH = 36, focusH = 236;

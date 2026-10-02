@@ -682,3 +682,8 @@ html[data-theme^="retro"] #panel-usage .pmu-callout, html[data-o55-nier="on"] #p
 html[data-theme^="retro"] #panel-usage .pmu-callring, html[data-o55-nier="on"] #panel-usage .pmu-callring { border-radius: 0; box-shadow: none; }
 html[data-o55-nier="on"] #panel-usage .pmu-callout { border-color: var(--pmu-ink); }
 html[data-o55-nier="on"] #panel-usage .pmu-callring { border-color: var(--pmu-ink); }
+/* the readout names its rows whole (integration 2, NieR film: "Spend that..." / "Month to ..." / "Budget l..." in the mono
+   face): the card may grow to 268 px and a long name wraps under itself instead of ending in an ellipsis */
+#panel-usage .pmu-readout { max-width: 268px; }
+#panel-usage .pmu-ro-row { white-space: normal; }
+#panel-usage .pmu-ro-row > span { overflow: visible; text-overflow: clip; overflow-wrap: break-word; line-height: 1.3; }
