@@ -321,6 +321,8 @@ html[data-o55-nier="on"] .brand-mark { background: var(--o55-nier-ink); box-shad
 /* ------------------------------------------------------------------ surfaces that paint their own colour */
 /* Literal or gradient paint the token tables cannot reach, found by the palette audit (scratch nier-audit.mjs over
    the app views and every pmx-verify surface): each becomes ink on parchment. */
+/* the history drawer's scrim over the chat is literal black; NieR veils in its own shadow ink */
+html[data-o55-nier="on"] .assistant-pane::after { background: rgba(var(--o55-nier-shadow-rgb), .34); }
 /* initials avatars: a two-hue gradient with white letters in every theme; here an ink tile with paper letters */
 html[data-o55-nier="on"] .agent-avatar { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"] .transcript-inner > [data-family="people"] .agent-avatar { background: var(--surface-3); color: var(--text); box-shadow: inset 0 0 0 1px var(--border-strong); }

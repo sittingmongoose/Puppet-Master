@@ -17338,6 +17338,8 @@ html[data-o55-nier="on"] .brand-mark { background: var(--o55-nier-ink); box-shad
 /* ------------------------------------------------------------------ surfaces that paint their own colour */
 /* Literal or gradient paint the token tables cannot reach, found by the palette audit (scratch nier-audit.mjs over
    the app views and every pmx-verify surface): each becomes ink on parchment. */
+/* the history drawer's scrim over the chat is literal black; NieR veils in its own shadow ink */
+html[data-o55-nier="on"] .assistant-pane::after { background: rgba(var(--o55-nier-shadow-rgb), .34); }
 /* initials avatars: a two-hue gradient with white letters in every theme; here an ink tile with paper letters */
 html[data-o55-nier="on"] .agent-avatar { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"] .transcript-inner > [data-family="people"] .agent-avatar { background: var(--surface-3); color: var(--text); box-shadow: inset 0 0 0 1px var(--border-strong); }
@@ -17521,6 +17523,9 @@ html[data-o55-nier-parts~="headers"] .pd-h2 {
 html[data-o55-nier-parts~="headers"] .pmx-head .pmx-title > strong { text-transform: uppercase; letter-spacing: .1em; }
 html[data-o55-nier-parts~="headers"] .working-head strong { text-transform: uppercase; letter-spacing: .07em; }
 html[data-o55-nier-parts~="headers"] .orbit-panel-title { text-transform: uppercase; letter-spacing: .07em; }
+/* the decision card's title (plan ready, permission, questions) */
+html[data-o55-nier-parts~="headers"] .qs-head .qs-title { text-transform: uppercase; letter-spacing: .08em; }
+html[data-o55-nier-parts~="headers"] .decision-top > strong { text-transform: uppercase; letter-spacing: .08em; }
 /* the rule: a hairline across the header box with a square cap at each end. Boxes with bottom padding carry it as
    their own background (the plan document's h2 trades its 6 px bottom margin for padding, so nothing moves); the
    sheet heads have none, so the rule is a pseudo-element just below them, in the gap the sheet already leaves. */
