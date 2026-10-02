@@ -485,7 +485,7 @@ class Stack {
     let ended = false;
     const end = () => {
       if (ended) return; ended = true;
-      if (kind === 'push') from.el.hidden = true;
+      if (kind === 'push') { from.el.hidden = true; from.el.getAnimations().forEach(a => a.cancel()); }
       else if (kind !== 'pop') from.el.remove();
       if (snap.parentNode) snap.remove();
       this.layer.textContent = '';
@@ -498,6 +498,10 @@ class Stack {
     const anims = [];
     const keep = a => { if (a) anims.push(a); return a; };
     this.root.appendChild(snap);
+    /* shared-element titles: the tapped row's label flies into the title; the old title flies into the back label
+       (sources the head re-render detached are read from the head snapshot) */
+    const resolve = el => (!el ? null : el.isConnected ? el : Array.from(snap.querySelectorAll('.pmr-b-ptitle, .pmr-b-back-label')).find(x => x.textContent === el.textContent) || null);
+    const flights = fly && (kind === 'push' || kind === 'pop') ? [this.prepFly(resolve(fly.src), fly.dst, f), this.prepFly(resolve(fly.src2), fly.dst2, f)] : [];
     const dur = f === 'retro' ? 160 : f === 'nier' ? 320 : s.med;
     const D = 28 * (fwd ? 1 : -1);
     /* pages: shared axis; the old page drifts 30% of the distance and fades, the new one slides in */
@@ -519,21 +523,18 @@ class Stack {
     /* head: the old head fades out, the new one slides in a little */
     keep(anim(snap, [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: `translateX(${-D * 0.25}px)` }], { dur: Math.round(dur * 0.55), ease: stepped(f) ? 'steps(2, end)' : 'ease', fill: 'forwards' }));
     Array.from(this.head.children).forEach(c => keep(anim(c, [{ opacity: 0, transform: `translateX(${D * 0.35}px)` }, { opacity: 1, transform: 'none' }], { dur, ease: stepped(f) ? 'steps(3, end)' : 'ease', delay: Math.round(dur * 0.15) })));
-    /* shared-element titles: the tapped row's label flies into the title; the old title flies into the back label */
-    if (fly && (kind === 'push' || kind === 'pop')) {
-      this.flyText(fly.src, fly.dst, dur, anims, f, kind === 'pop' ? null : null);
-      this.flyText(fly.src2, fly.dst2, dur, anims, f, snap);
-    }
+    flights.forEach(go => go && go(dur, anims));
     const longest = Math.max(dur, s.slow) + 120;
     const timer = setTimeout(() => { if (this.running && this.running.timer === timer) { this.running = null; end(); } }, longest);
     this.running = { anims, timer, done: () => { clearTimeout(timer); end(); } };
   }
-  /* clone the source text, fly it to the destination's place and size, then hand off to the real element */
-  flyText(src, dst, dur, anims, f, snap) {
-    if (!src || !dst || !src.isConnected || !dst.isConnected) return;
+  /* measure first (before any page or head animation moves things), then fly: a clone of the source text travels to
+     the destination's place and size, and hands off to the real element */
+  prepFly(src, dst, f) {
+    if (!src || !dst || !src.isConnected || !dst.isConnected) return null;
     const rr = this.root.getBoundingClientRect();
     const a = src.getBoundingClientRect(), b = dst.getBoundingClientRect();
-    if (!a.width || !b.width || a.bottom < rr.top || a.top > rr.bottom || b.bottom < rr.top || b.top > rr.bottom) return;
+    if (!a.width || !b.width || a.bottom < rr.top || a.top > rr.bottom || b.bottom < rr.top || b.top > rr.bottom) return null;
     const cs = getComputedStyle(src), ds = getComputedStyle(dst);
     const k = (parseFloat(ds.fontSize) || 13) / (parseFloat(cs.fontSize) || 13);
     const lineH = parseFloat(ds.lineHeight) || b.height;
@@ -541,16 +542,17 @@ class Stack {
     const w = Math.min(Math.max(a.width, b.width / k), rr.right - a.left);
     clone.style.cssText = `left:${a.left - rr.left}px;top:${a.top - rr.top}px;width:${w}px;height:${a.height}px;`
       + `font-family:${cs.fontFamily};font-size:${cs.fontSize};font-weight:${cs.fontWeight};line-height:${a.height}px;letter-spacing:${cs.letterSpacing};text-transform:${cs.textTransform};color:${cs.color};`;
-    this.layer.appendChild(clone);
     const dx = b.left - a.left;
     const dy = (b.top + Math.min(lineH, b.height) / 2) - (a.top + (a.height * k) / 2);
+    this.layer.appendChild(clone);
     dst.style.visibility = 'hidden';
-    if (!snap) src.style.visibility = 'hidden';
-    else Array.from(snap.querySelectorAll('.pmr-b-ptitle, .pmr-b-back-label')).forEach(tw => { if (tw.textContent === src.textContent) tw.style.visibility = 'hidden'; });
+    src.style.visibility = 'hidden';
     const ease = f === 'retro' ? 'steps(3, end)' : f === 'nier' ? 'steps(4, end)' : (f === 'friendly' ? 'spring' : 'ease');
-    const a1 = anim(clone, [{ transform: 'translate(0px, 0px) scale(1)' }, { transform: `translate(${dx}px, ${dy}px) scale(${k})` }], { dur, ease, fill: 'forwards' });
-    const done = () => { dst.style.visibility = ''; if (!snap) src.style.visibility = ''; clone.remove(); };
-    if (a1) { anims.push(a1); a1.onfinish = done; } else done();
+    return (dur, anims) => {
+      const a1 = anim(clone, [{ transform: 'translate(0px, 0px) scale(1)' }, { transform: `translate(${dx}px, ${dy}px) scale(${k})` }], { dur, ease, fill: 'forwards' });
+      const done = () => { dst.style.visibility = ''; src.style.visibility = ''; clone.remove(); };
+      if (a1) { anims.push(a1); a1.onfinish = done; } else done();
+    };
   }
   /* NieR: a horizontal slice wipe with the square cursor riding its leading edge */
   slices(fwd, anims) {
@@ -561,7 +563,7 @@ class Stack {
     for (let i = 0; i < n; i++) {
       const sl = h('span.pmr-b-slice', { style: `top:${Math.round(top + i * band + band * 0.34)}px;height:${Math.max(3, Math.round(band * 0.3))}px;` });
       this.layer.appendChild(sl);
-      const a = anim(sl, [{ transform: `translateX(${fwd ? -w : w}px)` }, { transform: `translateX(${fwd ? w : -w}px)` }], { dur: 300, delay: i * 16, ease: 'steps(8, end)', fill: 'forwards' });
+      const a = anim(sl, [{ transform: `translateX(${fwd ? -w : w}px)` }, { transform: `translateX(${fwd ? w : -w}px)` }], { dur: 300, delay: i * 16, ease: 'steps(8, end)', fill: 'both' });
       if (a) anims.push(a);
     }
     const sq = h('span.pmr-b-square', { style: `top:${top + 8}px;` });
