@@ -1,7 +1,7 @@
 # Concept B (Stack) — builder notes
 
 Status (2026-10-02, final): full check passes after motion fixes (reach files 205/0, source 146/0, docker 153/0;
-no fails, 0 console errors). Shots reviewed and deleted. Next (if resumed): only polish requested by the lead.
+no fails, 0 console errors). Shots reviewed and deleted. Review 1 (lead, B-review-1.md): fixes 1-2 done (state word left the title row; Files trigger keeps its width, tools wrap right). fix 3 done (tree end column = letter or capped count, words in hover). fix 4 done (+/- on line 2 right). fixes 5-6 done (Docker identity: trigger + ready, one where-line, counts line, facts in the disclosure; local trigger radius dropped). split meta no-wrap, tree chevron 24px. full check passes again (0 missing, no fails); touched places shot, reviewed and deleted. Review 1 complete.
 no fails) with --shots. Fixed after shots: glass bar symbols lose their backdrop blur (tiles everywhere), friendly tile tint. Shots reviewed and deleted. Title flights now measured before any animation (verified exact start/end both ways). NieR slice fill fixed (delayed slices sat on screen). Next: motion polish (verify NieR slices render), report. Files: 00-b.js engine, 10-files.js, 20-source.js, 30-docker.js,
 40-bar.js, 90-register.js, b.css.
 

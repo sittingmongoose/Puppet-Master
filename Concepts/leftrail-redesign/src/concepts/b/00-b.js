@@ -363,7 +363,7 @@ class Stack {
       const title = h('h2.pmr-b-ptitle.pmr-title', { text: this.panel.title });
       if (this.panel.hover) PMR.hover(title, this.panel.hover.label, this.panel.hover.detail);
       top.titleEl = title;
-      nav.appendChild(h('div.pmr-b-navl', title, this.mod.state ? this.mod.state(this) : null));
+      nav.appendChild(h('div.pmr-b-navl', title));
     } else {
       const parent = this.pages[d - 2];
       const back = h('button', { type: 'button', class: 'pmr-b-back pmr-cur', 'data-pmr-nav': 'back', 'data-pmr-nav-id': 'back|' + desc.key, 'aria-label': 'Back to ' + parent.desc.title },

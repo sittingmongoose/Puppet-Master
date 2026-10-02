@@ -21,15 +21,15 @@ function itemRow(st, it, list, cfg) {
   if (it.time && !cfg.meta) metaParts.push(it.time);
   const folder = folderOf(it);
   const metaEl = fileish
-    ? h('span.pmr-b-meta', h('span.pmr-b-meta-path', { text: folder || asList(it.meta)[0] || '' }))
+    ? h('span.pmr-b-meta.is-split', h('span.pmr-b-meta-path', { text: folder || asList(it.meta)[0] || '' }), it.diff ? diffEl(it.diff) : null)
     : statusLead ? h('span.pmr-b-meta', h('span.pmr-b-word', { 'data-state': it.status.state, text: it.status.word }), metaParts.filter(Boolean).length ? h('span.pmr-b-meta-rest', { text: metaParts.filter(Boolean).join(' · ') }) : null, cfg.diffInMeta && it.diff ? diffEl(it.diff) : null)
     : metaWith(cfg.statusEnd ? null : it.status, metaParts);
   if (cfg.diffInMeta && it.diff && !statusLead && metaEl) metaEl.appendChild(diffEl(it.diff));
   const extra = it.blocked && cfg.blockedLine !== false ? h('span.pmr-b-rowblock', PMR.glyph('blocked'), h('span', { text: it.blocked.reason })) : null;
-  const end = [it.diff && !cfg.diffInMeta ? diffEl(it.diff) : null, cfg.statusEnd && it.status ? PMR.statusEl(it.status) : null, cfg.end ? cfg.end(it) : null];
+  const end = [it.diff && !cfg.diffInMeta && !fileish ? diffEl(it.diff) : null, cfg.statusEnd && it.status ? PMR.statusEl(it.status) : null, cfg.end ? cfg.end(it) : null];
   const prim = fileish ? asList(it.actions).find(a => a.primary && !a.disabled) : null;
   return row({
-    key: st.panel.id + ':' + it.id, lead, name: it.name, nameText: it.mono && fileish ? U.midName(it.name, it.diff ? 22 : 28) : null, mono: it.mono, path: it.path,
+    key: st.panel.id + ':' + it.id, lead, name: it.name, nameText: it.mono && fileish ? U.midName(it.name, 30) : null, mono: it.mono, path: it.path,
     metaEl, extra, end, primary: prim || null, attrs: Object.assign({}, it.attrs || {}, { 'data-canon': it.canon || null }),
     drill: hasMore(it) ? () => itemDesc(st, it, list, cfg) : null,
     hover: !prim && !hasMore(it) && it.name && it.name.length > 34 ? { label: it.name } : null,
