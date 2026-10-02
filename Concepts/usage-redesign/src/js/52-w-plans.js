@@ -20,14 +20,17 @@
      hidden data blocks (b.t, the block's words) and its hover tag lists them; else r.folded goes to the caller's root
      hover tag. Blocks without words (a meter, the action buttons) are not counted. */
   /* gap: the container's flex gap, counted once per block (limit, alert, free and cache stack with 6 px) */
-  function fitBlocks(blocks, budget, prefix, word, short, gap) {
+  function fitBlocks(blocks, budget, prefix, word, short, gap, head) {
     var g = gap == null ? 6 : gap, dataOf = function (b) { return b && b.t; };
     blocks = blocks.map(function (b) { return b && b.html ? Object.assign({}, b, { h: b.h + g }) : b; });
     var r = stack(blocks, budget, prefix), hid = r.hidden.filter(dataOf);
     if (!hid.length) return { html: r.html, folded: [], more: false, used: r.used };
-    if (budget >= 21 + g) {
-      var r2 = stack(blocks, budget - 21 - g, prefix), hid2 = r2.hidden.filter(dataOf);
-      return { html: r2.html + C.more(hid2.length, word || 'facts', short, hid2.map(dataOf)), folded: [], more: true, used: r2.used + 21 + g };
+    /* a small card counts what it folds in its head (C.headMore): no line, the room stays with the blocks */
+    if (head) return { html: r.html, folded: [], head: hid.map(dataOf), more: false, used: r.used };
+    /* round 3: the count row (a glyph and "+N", 18 px) instead of a "N more facts" line (no wall of words lines) */
+    if (budget >= 18 + g) {
+      var r2 = stack(blocks, budget - 18 - g, prefix), hid2 = r2.hidden.filter(dataOf);
+      return { html: r2.html + C.countRow(hid2.map(dataOf)), folded: [], more: true, used: r2.used + 18 + g };
     }
     return { html: r.html, folded: hid.map(dataOf), more: false, used: r.used };
   }
@@ -57,8 +60,10 @@
       var xl = ctx.tier.w === 'xl' && C.h(ctx, 'h3');
       /* the foot (pace and source) takes two lines when it does not fit the card's width on one */
       var footText = m.foot ? String(m.foot).replace(/<[^>]+>/g, '').replace(/&[a-z]+;/g, ' ') : '';
-      var footLines = footText && PMU.charts && PMU.charts.textW ? Math.min(2, Math.ceil((PMU.charts.textW(footText, 12.5) * 1.06 + 26) / Math.max(80, ctx.tier.bw))) : 1;
-      var bh = ctx.tier.bh, footH = m.foot ? (footLines > 1 ? 52 : 34) : 0;
+      /* the foot's lines by its wrapped words (measured: 34 px one line, 52 two, about 18 a line more; the Gemini API foot
+         takes five lines at 4 tracks: its old two-line estimate let the card run 30 px past its body until the settled fit) */
+      var footLines = footText ? Math.max(1, Math.min(6, C.wrapLines(footText, Math.max(80, ctx.tier.bw - 26), 12.5))) : 1;
+      var bh = ctx.tier.bh, footH = m.foot ? (footLines > 1 ? 16 + 18 * footLines : 34) : 0;
       if (ctx.tier.h === 'h0') {
         var b = m.binding || wins[0];
         body.innerHTML = '<div class="pmu-limit is-h0"><span class="pmu-limitinline">' + (b ? esc(b.short) + ' <b>' + esc(b.pct === null ? PMU.roster.vsWord(b) : C.fmt(b.pct, 'pct')) + '</b>' + (b.pct === null ? '' : ' used · ' + esc(PMU.fmt.resetLine(b).text)) : esc('No plan windows')) + '</span></div>';
@@ -67,7 +72,7 @@
       if (wins.length * mh + footH > bh + 2) footH = 0;   /* every window stays visible before the foot does (R-PLAN-01) */
       var meterRoom = Math.max(1, C.fit(bh - footH, mh));
       var shownWins = wins.slice(0, meterRoom), hiddenWins = wins.length - shownWins.length;
-      var meters = '<div class="pmu-limitmeters">' + shownWins.map(function (w, i) { return '<div class="pmu-limitmeter" data-i="' + i + '"></div>'; }).join('') +
+      var meters = '<div class="pmu-limitmeters">' + shownWins.map(function (w, i) { return '<div class="pmu-limitmeter" data-i="' + i + '"' + (m.account ? C.shareAttr('win:' + m.account.key + '/' + w.key) : '') + '></div>'; }).join('') +
         (hiddenWins ? '<div class="pmu-more"' + C.foldHover(wins.slice(shownWins.length).map(function (w) { return w.label + ' ' + (w.pct === null ? PMU.roster.vsWord(w) : C.fmt(w.pct, 'pct') + ' used · ' + PMU.fmt.resetLine(w).text); })) + '>' + esc(hiddenWins + ' more ' + (hiddenWins === 1 ? 'window' : 'windows') + ' at a larger size') + '</div>' : '') +
         (!wins.length ? '<div class="pmu-limitnone">' + C.vs('not_exposed', 'Quota not exposed') + '</div>' : '') + '</div>';
       /* the meters block: 44 px meters 8 px apart (measured), its own "N more windows" line (21 + 4) */
@@ -85,7 +90,8 @@
       var facts = (m.facts || []).map(function (f) { return { t: C.factText(f), h: C.factH(f, ctx.tier.bw), html: C.facts([f]) }; });
       var side = '', footFold = m.foot && !footH ? [String(m.foot).replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/g, ' ').replace(/\s+/g, ' ').trim()] : [];
       if (xl) {
-        var right = fitBlocks([planLine].concat(lines).concat(facts), bh - footH, true, 'facts');
+        var right = fitBlocks([planLine].concat(lines).concat(facts), bh - footH, true, 'facts', false, null, C.smallCard(ctx));
+        C.headMore(ctx, body, right.head || []);
         side = '<div class="pmu-limitside">' + right.html + '</div>';
         body.innerHTML = '<div class="pmu-limit is-xl"' + C.foldHover(right.folded.concat(footFold)) + '><div class="pmu-limitmain">' + meters + '</div>' + side + '</div>' + (m.foot && footH ? C.foot(m.foot, m.footGlyph) : '');
       } else {
@@ -93,8 +99,9 @@
            and the facts then fill what is left, each that does not fit counted on the "N more" line (CONTENT-3: the
            plan cards showed no fact over an 86 px band at 1920) */
         var amt = stack(lines.map(function (x) { return Object.assign({}, x, { h: x.h + 6 }); }), bh - footH - used, true);
-        var rest = fitBlocks([planLine].concat(facts), bh - footH - used - amt.used, false, 'facts', ctx.tier.bw < 260);
-        body.innerHTML = '<div class="pmu-limit"' + C.foldHover(amt.hidden.map(function (x) { return x.t; }).concat(rest.folded, footFold)) + '>' + meters + amt.html + rest.html + '</div>' + (m.foot && footH ? C.foot(m.foot, m.footGlyph) : '');
+        var rest = fitBlocks([planLine].concat(facts), bh - footH - used - amt.used, false, 'facts', ctx.tier.bw < 260, null, C.smallCard(ctx));
+        C.headMore(ctx, body, rest.head ? rest.head.concat(amt.hidden.map(function (x) { return x.t; })) : []);
+        body.innerHTML = '<div class="pmu-limit"' + C.foldHover((rest.head ? [] : amt.hidden.map(function (x) { return x.t; })).concat(rest.folded, footFold)) + '>' + meters + amt.html + rest.html + '</div>' + (m.foot && footH ? C.foot(m.foot, m.footGlyph) : '');
       }
       shownWins.forEach(function (w, i) {
         C.chart(body, 'meter', body.querySelector('.pmu-limitmeter[data-i="' + i + '"]'), C.meterSpec(w, { size: w.pct === null ? 'k' : size, effective: true, prov: m.settingsId, stale: m.account && m.account.fresh.stale, age: m.account ? m.account.ageText : '', hoverName: m.name }),
@@ -126,7 +133,8 @@
       }).join('') + '</div>' };
       var blocks = [meter, actions].concat(facts.map(function (f) { return { t: C.factText(f), h: C.factH(f, ctx.tier.bw), html: C.facts([f]) }; }));
       var footOk = m.foot && C.h(ctx, 'h3');
-      var rest = fitBlocks(blocks, bh - detailH - (footOk ? 34 : 0), false, 'facts', narrow);
+      var rest = fitBlocks(blocks, bh - detailH - (footOk ? 34 : 0), false, 'facts', narrow, null, C.smallCard(ctx));
+      C.headMore(ctx, body, rest.head || []);
       body.innerHTML = '<div class="pmu-alert"' + C.foldHover(rest.folded.concat(m.foot && !footOk ? [m.foot] : [])) + '>' + top + rest.html + '</div>' + (footOk ? C.foot(esc(m.foot), m.sev === 'ok' ? 'checkCircle' : 'info') : '');
       var host = body.querySelector('.pmu-alertmeter');
       if (host) C.chart(body, 'meter', host, { label: 'Current pressure', pct: m.score, suffix: 'pressure score', noPct: true, tone: m.score >= m.raise ? 'warn' : 'calm', size: 'k', notch: { at: m.raise, faint: false, off: false },
@@ -172,13 +180,14 @@
          are counted on one "N more facts" line whose hover tag lists them (CONTENT-3) */
       var priceH = 30, facts = [['Context window', m.context]].concat((m.facts || []).filter(function (f) { return f[0] !== 'Capacity note' || f[1] !== m.capacity; }));
       var priceOk = bh - headH >= priceH, lay = C.factLayout(facts, bw), room = bh - headH - (priceOk ? priceH + 6 : 0) - 4;   /* .pmu-free stacks with 6 px gaps; 2 px of rounding */
-      var fr = lay.fit(room), moreLine = false;
-      if (fr.n < facts.length && room >= 25) { fr = lay.fit(room - 25); moreLine = true; }
+      var fr = lay.fit(room), moreLine = false, headF = C.smallCard(ctx);
+      if (fr.n < facts.length && room >= 18 && !headF) { fr = lay.fit(room - 18); moreLine = true; }
       var hidden = facts.slice(fr.n);
       var folded = hidden.map(C.factText).concat(priceOk ? [] : [m.price + ' ' + m.priceSource]);
+      if (headF) { C.headMore(ctx, body, folded); if (folded.length) folded = []; }
       body.innerHTML = '<div class="pmu-free' + (lay.cols === 2 ? ' is-wide' : '') + '"' + (!moreLine && folded.length ? C.foldHover(folded) : '') + '>' + head +
         (priceOk ? '<div class="pmu-freeprice"><b>' + esc(m.price) + '</b><span>' + esc(m.priceSource) + '</span></div>' : '') + (fr.n ? lay.html(fr.n) : '') + '</div>' +
-        (moreLine && hidden.length ? C.more(hidden.length, 'facts', bw < 260, folded) : '');
+        (moreLine && hidden.length ? C.countRow(folded) : '');
       if (ringPx) C.chart(body, 'ring', body.querySelector('.pmu-freering'), { segments: [{ name: cool ? 'Wait done' : 'Available', value: av.pct || 0, tone: cool ? 'warn' : 'calm' }], limit: 100,
         centre: cool ? (av.pct || 0) + '%' : 'Ready', caption: cool ? 'waited' : '' }, { label: m.state + ' · ' + (av.detail || '') });
     }
@@ -206,10 +215,11 @@
          on the small form; whatever does not fit is counted on one "N more facts" line (CONTENT-3) */
       var cfacts = (big ? [] : [['Savings', C.money(m.savings) + ' est.', { tone: 'good' }]]).concat([['Read', m.read], ['Write', m.write, m.writeVs ? { vs: m.writeVs, word: m.write } : {}], ['Authority', m.authority], ['Age', m.age]]);
       var splitOk = !big && C.h(ctx, 'h2') && bh - topH >= 46, clay = C.factLayout(cfacts, bw), croom = C.h(ctx, 'h2') ? bh - topH - (big ? 8 : 6) - (splitOk ? 46 : 0) - 2 : 0;
-      var cfr = clay.fit(croom), cmore = false;
-      if (cfr.n < cfacts.length && croom >= 25) { cfr = clay.fit(croom - 25); cmore = true; }
+      var cfr = clay.fit(croom), cmore = false, headC = C.smallCard(ctx);
+      if (cfr.n < cfacts.length && croom >= 18 && !headC) { cfr = clay.fit(croom - 18); cmore = true; }
       var chid = cfacts.slice(cfr.n).map(C.factText).concat(!big && !splitOk ? ['Reads ' + m.read + ' · Writes ' + m.write] : []);
-      var rest = { html: (splitOk ? '<div class="pmu-cachesplit"></div>' : '') + (cfr.n ? clay.html(cfr.n) : '') + (cmore ? C.more(cfacts.length - cfr.n, 'facts', bw < 260, chid) : ''), folded: cmore ? [] : chid };
+      if (headC) { C.headMore(ctx, body, chid); chid = []; }
+      var rest = { html: (splitOk ? '<div class="pmu-cachesplit"></div>' : '') + (cfr.n ? clay.html(cfr.n) : '') + (cmore ? C.countRow(chid) : ''), folded: cmore ? [] : chid };
       body.innerHTML = '<div class="pmu-cache' + (big ? ' is-hero' : '') + '"' + C.foldHover(rest.folded) + '>' + top + rest.html + '</div>';
       var ringHost = body.querySelector('.pmu-cachering');
       if (ringHost && big) C.chart(body, 'ring', ringHost, { segments: [{ name: 'Reads', value: m.readN || 0, tk: 'cr', est: !!m.est }, { name: 'Writes', value: m.writeN || 0, tk: 'cw', est: !!m.est || /est/.test(m.write) }],

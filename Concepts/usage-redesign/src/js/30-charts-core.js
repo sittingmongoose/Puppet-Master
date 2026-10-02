@@ -109,17 +109,79 @@
   }
   /* sliding-window reveal: wrap and inner move in opposite directions (transform only) so the inner content stays
      put while the clip edge sweeps across it. dir 'x' (left to right) or 'y' (top to bottom). */
-  function reveal(wrap, inner, dur, delay, dir, easing) {
+  /* o.quiet (WOW-SPEC-3 3.3, C3-3): a supporting plot draws without the comet and its light front */
+  function reveal(wrap, inner, dur, delay, dir, easing, o) {
     if (reduced() || !wrap || !inner) return null;
     var ax = dir === 'y' ? 'Y' : 'X';
     var e = easing || voice('draw');
-    anim(wrap, [{ transform: 'translate' + ax + '(-100%)' }, { transform: 'translate' + ax + '(0)' }], dur, delay, e, 'backwards');
+    var aw = anim(wrap, [{ transform: 'translate' + ax + '(-100%)' }, { transform: 'translate' + ax + '(0)' }], dur, delay, e, 'backwards');
     var a = anim(inner, [{ transform: 'translate' + ax + '(100%)' }, { transform: 'translate' + ax + '(0)' }], dur, delay, e, 'backwards');
+    wrap._pmuRv = [aw, a];
     /* the comet: a light riding the primary line on the reveal edge (WOW-SPEC 3.1 Phase C, 3.3; PMU.film.comet) */
-    if (ax === 'X' && PMU.film && PMU.film.comet) PMU.film.comet(wrap, inner, { dur: dur, delay: delay, easing: e });
+    if (ax === 'X' && !(o && o.quiet) && PMU.film && PMU.film.comet) PMU.film.comet(wrap, inner, { dur: dur, delay: delay, easing: e, noFront: o && o.noFront });
     return a;
   }
   charts.motion = { fam: fam, reduced: reduced, EASE: EASE, voice: voice, curve: curve, anim: anim, tween: tw, reveal: reveal };
+
+  /* ---------- round 3 (WOW-SPEC-3 3.3, 5 Phase C; WOW-TASKS-3 C3-3): quiet entrances. A supporting plate's charts arrive
+     quiet and already true: plots draw 600 DRAW without a comet or light front (their marks appear at draw end), meters
+     fill 520 ROLL without a head glow and write their value final, rows / columns / rings grow without light; on the
+     no-GPU profile a quiet chart shows final. The engine's quiet reveal runs the card's entrance inside
+     PMU.charts.quietly(fn) (or sets PMU.film.quietNow); the state is captured when chart.enter() is called. ---------- */
+  var quietDepth = 0;
+  function soft() { return !!(PMU.film && PMU.film.soft ? PMU.film.soft() : document.documentElement.hasAttribute('data-pmu-soft')); }
+  function quietNow() {
+    if (quietDepth > 0) return true;
+    var q = PMU.film && PMU.film.quietNow;
+    return typeof q === 'function' ? !!q() : q === true;
+  }
+  charts.quietly = function (fn) { quietDepth++; try { return fn(); } finally { quietDepth--; } };
+  charts.motion.quiet = quietNow;
+  charts.motion.soft = soft;
+  /* the light a chart may carry in its entrance (WOW-SPEC-3 3.3): never when quiet; the engine's light budget also drops
+     comet and head-glow layers for cards outside it (PMU.film.comet / headGlow return null there) */
+  charts.motion.lit = function (c) { return !(c && c._quiet); };
+  /* the card a chart sits in, and whether it is the room's hero (data-hero, E3-5) */
+  function cardOf(el) { return el && el.closest ? el.closest('.pmu-card') : null; }
+  charts.cardOf = cardOf;
+  charts.isHero = function (c) { var k = cardOf(c && (c.host || c.el)); return !!(k && k.hasAttribute('data-hero')); };
+  /* in view (no layout read: the board's cached grid geometry); a chart outside the viewport never animates (PERF-3 rule 3) */
+  charts.inView = function (c) {
+    var k = cardOf(c && (c.host || c.el));
+    if (!k || !PMU.board || !PMU.board.inView) return true;
+    try { return PMU.board.inView(k); } catch (error) { return true; }
+  };
+  /* PMU.charts.of(el): the chart object of a chart root or of the chart that holds el (live hooks, flyers) */
+  charts.of = function (el) {
+    if (!el) return null;
+    if (el._pmuChart) return el._pmuChart;
+    var r = el.closest ? el.closest('[data-pmu-chart]') : null;
+    return r && r._pmuChart ? r._pmuChart : null;
+  };
+
+  /* ---------- the calm ramp (WOW-SPEC-3 4.5, WOW-TASKS-3 C3-1): the step of a "% used" reading on the severity ramp and
+     its value. Step 0 below 50 and 1 for 50-79 shade continuously by --v (indigo -> cyan -> mint, 30-charts.css, behind
+     the spectrum flag); 2 warn, 3 crit / switch, 4 exhausted, 5 over follow the Settings thresholds through the tone.
+     A missing reading has no step (missing never draws as zero). ---------- */
+  var RAMP = { warn: 2, crit: 3, hot: 3, exhausted: 4, over: 5 };
+  function toneFor(pct, tone) {
+    var tn = tone || (PMU.roster && PMU.roster.tone ? PMU.roster.tone(pct) : null) || 'calm';
+    if (tn === 'hot') tn = 'crit';
+    if (tn === 'watch') tn = 'calm';
+    if (pct > 100 && tn !== 'over') tn = 'over';
+    if (pct >= 100 && tn === 'calm') tn = 'exhausted';
+    return tn;
+  }
+  function rampStep(tone, pct) { return RAMP[tone] != null ? RAMP[tone] : pct >= 50 ? 1 : 0; }
+  charts.ramp = function (pct, tone) {
+    if (!finite(pct)) return { ramp: null, v: null, tone: 'missing' };
+    var tn = toneFor(pct, tone);
+    return { ramp: rampStep(tn, pct), v: r1(clamp(pct, 0, 100)), tone: tn };
+  };
+  charts.rampAttr = function (pct, tone) { var r = charts.ramp(pct, tone); return r.ramp == null ? '' : ' data-ramp="' + r.ramp + '"'; };
+  charts.rampVar = function (pct) { return finite(pct) ? '--v:' + r1(clamp(pct, 0, 100)) : ''; };
+  charts.rampTone = toneFor;
+  charts.rampStep = rampStep;
 
   /* ---------- HTML marks (WOW-TASKS C-9): every mark that animates on its own (end dots, NOW halos, cost dots, the
      TODAY marker, the budget rule) is an HTML element in a layer over the plot, never an SVG child: an animation of an
@@ -212,7 +274,8 @@
     var from = first ? (opts.from != null ? opts.from : 0) : shown;
     if (!finite(to)) { el.textContent = opts.missing || '-'; el.removeAttribute('data-shown'); return null; }
     el.setAttribute('data-shown', String(to));
-    if (reduced() || from === to || opts.instant) { el.textContent = opts.finalText != null ? opts.finalText : format(to); return null; }
+    /* a quiet entrance writes its numbers final (WOW-SPEC-3 3.3: supporting values never roll on an entrance) */
+    if (reduced() || from === to || opts.instant || opts.quiet || (first && quietNow())) { el.textContent = opts.finalText != null ? opts.finalText : format(to); return null; }
     /* every roll is an odometer since the WOW round (WOW-SPEC 3.1, 3.6; PMU.film.odometer): digit columns on the compositor */
     if (opts.finalText == null && PMU.film && PMU.film.odometer) {
       el._pmuRoll = PMU.film.odometer(el, to, format, { from: first ? null : from, change: !first, delay: opts.delay || 0, dur: opts.dur, spins: opts.spins });
@@ -239,20 +302,26 @@
   function flush() {
     scheduled = false;
     var list = pending; pending = [];
-    var sizes = list.map(function (c) { return c._dead ? null : { w: c.host.clientWidth, h: c.host.clientHeight }; });
+    /* opts.size {w, h} (round 3): a kind that knows its plot's box passes it, so the first draw forces no layout of the
+       body that was just built (the flush's size read was most of the "chart flush" in the room-change profiles); the
+       ResizeObserver corrects a wrong hint after the frame's own layout */
+    var sizes = list.map(function (c) { if (c._dead) return null; var hz = c._first && c.opts.size; return hz && hz.w > 0 ? { w: hz.w, h: hz.h || 0 } : { w: c.host.clientWidth, h: c.host.clientHeight }; });
     list.forEach(function (c, i) {
       if (!sizes[i]) return;
       c._w = sizes[i].w; c._h = sizes[i].h;
       /* a chart re-created in the same card in the same task (a content update or resize re-renders the body) morphs from
          the one it replaces instead of appearing in its final state (WOW-SPEC 3.4) */
-      var carried = c._carry && c._first && !c._entered && c._pendingEnter == null && !reduced() && !charts.noCarry ? c._carry : null;
+      /* never during an entrance for a chart outside the light budget (a supporting card re-rendered by the release's
+         re-measure shows final, WOW-SPEC-3 3.3; the soft arrival probe caught a meter morphing with its heat layer) */
+      var carried = c._carry && c._first && !c._entered && c._pendingEnter == null && !reduced() && !charts.noCarry &&
+        !(PMU.film && PMU.film.isQuiet && PMU.film.isQuiet(c.el)) ? c._carry : null;
       c._carry = null;
       try {
         if (carried && c._impl.carry) { Object.assign(c, carried.state || {}); c._impl.carry(c, carried); c._drawn = true; }
         else c._draw(c._first, !c._first);
       } catch (error) { console.error('[pm-usage] chart draw', c.name, error); }
       c._first = false;
-      if (c._pendingEnter != null && c._drawn) { var d = c._pendingEnter; c._pendingEnter = null; c._enter(d); }
+      if (c._pendingEnter != null && c._drawn) { var d = c._pendingEnter; c._pendingEnter = null; c._enter(d, c._pendingQuiet); }
     });
   }
   function schedule(c) {
@@ -282,6 +351,8 @@
       var w = entry.contentRect.width, h = entry.contentRect.height;
       if (Math.abs(w - c._cw) < 1 && (c._flow || Math.abs(h - c._ch) < 1)) return;
       c._cw = w; c._ch = h;
+      /* the box the chart was drawn for (a size hint, or the first read): nothing to do, and no read in the next frame */
+      if (Math.abs(w - c._w) < 1 && (c._flow || Math.abs(h - c._h) < 1)) return;
       if (resizeQ.indexOf(c) < 0) resizeQ.push(c);
     });
     if (resizeQ.length && !resizeRaf) resizeRaf = requestAnimationFrame(runResizes);
@@ -317,17 +388,23 @@
     if (impl.flow) root.setAttribute('data-flow', '1');
     host.appendChild(root);
     var c = { name: name, host: host, el: root, spec: spec || {}, opts: opts, _w: 0, _h: 0, _cw: -1, _ch: -1, _first: true, _drawn: false, _pendingEnter: null,
-      _dead: false, _entered: false, _flow: !!impl.flow, _impl: impl };
+      _dead: false, _entered: false, _flow: !!impl.flow, _impl: impl, _quiet: false };
+    root._pmuChart = c;
     if (impl.carry) { var ck = carryKey(c); if (ck && carry[ck] && carry[ck].name === name) { c._carry = carry[ck]; delete carry[ck]; } }
     c._draw = function (first, resized) {
       if (c._dead) return;
       impl.draw(c, first, !!resized);
       c._drawn = true;
     };
-    c._enter = function (delay) {
+    /* quiet (round 3): a quiet chart on the no-GPU profile shows final (impl.still cleans up whatever the entrance would
+       have revealed); otherwise impl.enter reads c._quiet and plays its quiet form */
+    c._enter = function (delay, quiet) {
       if (c._entered) return;
       c._entered = true;
-      if (!reduced() && impl.enter && !charts.noEnter) impl.enter(c, delay || 0);
+      c._quiet = !!quiet;
+      if (reduced() || !impl.enter || charts.noEnter) return;
+      if (c._quiet && soft()) { if (impl.still) impl.still(c); return; }
+      impl.enter(c, delay || 0);
     };
     c.update = function (next, nextOpts) {
       if (c._dead) return;
@@ -337,12 +414,30 @@
       if (!c._drawn) { schedule(c); return; }
       if (impl.update) impl.update(c, prev); else c._draw(false, false);
     };
-    c.resize = function () { if (!c._dead) schedule(c); };
-    c.enter = function (delay) {
-      if (c._dead) return;
-      if (!c._drawn) { c._pendingEnter = delay || 0; return; }
-      c._enter(delay || 0);
+    /* a live change (WOW-SPEC-3 8.4, WOW-TASKS-3 C3-4): in place, only what changed; o.lead carries the light. A chart
+       outside the viewport, under Reduce Motion or not yet drawn takes its final state without motion. Returns the
+       number of animations it created (the engine counts the beat's budget). */
+    c.live = function (next, lo) {
+      if (c._dead) return { anims: 0 };
+      lo = lo || {};
+      var prev = c.spec;
+      c.spec = next || c.spec;
+      if (!c._drawn) { schedule(c); return { anims: 0 }; }
+      var still = reduced() || !charts.inView(c) || lo.still;
+      if (impl.live) return impl.live(c, prev, { lead: !!lo.lead, delay: lo.delay || 0, still: still, soft: soft() }) || { anims: 0 };
+      if (still) { c._draw(false, false); return { anims: 0 }; }
+      if (impl.update) impl.update(c, prev); else c._draw(false, false);
+      return { anims: 0 };
     };
+    c.resize = function () { if (!c._dead) schedule(c); };
+    c.enter = function (delay, eo) {
+      if (c._dead) return;
+      var q = eo && eo.quiet != null ? !!eo.quiet : quietNow() || !!(PMU.film && PMU.film.isQuiet && PMU.film.isQuiet(c.el));
+      if (!c._drawn) { c._pendingEnter = delay || 0; c._pendingQuiet = q; return; }
+      c._enter(delay || 0, q);
+    };
+    /* the chart side of a room's signature beat (C3-6); impl.beat returns the ms (after delay) at which it ends */
+    c.beat = function (delay) { if (c._dead || reduced() || !impl.beat) return 0; return impl.beat(c, delay || 0) || 0; };
     c.destroy = function () {
       if (impl.carry && c._drawn && !c._dead && !reduced()) {
         var ck = carryKey(c);
@@ -711,13 +806,80 @@
     for (var j = 0; j < el.childNodes.length; j++) copyInto(el.childNodes[j], next.childNodes[j]);
   }
   charts.patchHtml = patchHtml;
+  /* the same for an SVG root's content (parsed in the SVG namespace): a live change patches attributes and text in place */
+  var tplSvg = null;
+  function patchSvg(svg, html) {
+    if (!tplSvg) tplSvg = document.createElementNS(NS, 'svg');
+    tplSvg.innerHTML = html;
+    var same = svg.childNodes.length === tplSvg.childNodes.length;
+    for (var i = 0; same && i < svg.childNodes.length; i++) same = sameShape(svg.childNodes[i], tplSvg.childNodes[i]);
+    if (!same) { svg.innerHTML = html; return false; }
+    for (var j = 0; j < svg.childNodes.length; j++) copyInto(svg.childNodes[j], tplSvg.childNodes[j]);
+    return true;
+  }
+  charts.patchSvg = patchSvg;
+  /* a live patch of an SVG root (WOW-SPEC-3 8.4): the same shape -> every attribute is written in place except the path
+     data that changed, which morphs in ONE tween (numbers interpolated where both paths have the same command skeleton:
+     the quota row's last segment, the budget's last point, the cone); a different shape -> plain patch. Returns the tween
+     (or null). */
+  function pathSkel(d) { var nums = []; var sk = String(d || '').replace(/-?\d*\.?\d+(?:e-?\d+)?/gi, function (m) { nums.push(+m); return '#'; }); return { sk: sk, n: nums }; }
+  function pathFrom(sk, nums) { var i = 0; return sk.replace(/#/g, function () { var v = nums[i++]; return String(Math.round(v * 10) / 10); }); }
+  charts.livePatchSvg = function (svg, html, dur, delay) {
+    if (!tplSvg) tplSvg = document.createElementNS(NS, 'svg');
+    tplSvg.innerHTML = html;
+    var same = svg.childNodes.length === tplSvg.childNodes.length;
+    for (var i = 0; same && i < svg.childNodes.length; i++) same = sameShape(svg.childNodes[i], tplSvg.childNodes[i]);
+    if (!same || reduced()) { patchSvg(svg, html); return null; }
+    var jobs = [];
+    var walk = function (a, b) {
+      if (a.nodeType !== 1) { if (a.nodeType === 3 && a.data !== b.data) a.data = b.data; return; }
+      var d0 = a.getAttribute('d'), d1 = b.getAttribute('d');
+      if (d0 != null && d1 != null && d0 !== d1) {
+        var p0 = pathSkel(d0), p1 = pathSkel(d1);
+        b.removeAttribute('d');
+        copyAttrs(a, b);
+        if (p0.sk === p1.sk && p0.n.length === p1.n.length) jobs.push({ el: a, sk: p1.sk, a: p0.n, b: p1.n, d1: d1 }); else a.setAttribute('d', d1);
+      } else copyAttrs(a, b);
+      for (var k = 0; k < a.childNodes.length; k++) walk(a.childNodes[k], b.childNodes[k]);
+    };
+    var copyAttrs = function (a, b) {
+      var at, j;
+      for (j = a.attributes.length - 1; j >= 0; j--) { at = a.attributes[j]; if (at.name !== 'd' && !b.hasAttribute(at.name)) a.removeAttribute(at.name); }
+      for (j = 0; j < b.attributes.length; j++) { at = b.attributes[j]; if (a.getAttribute(at.name) !== at.value) a.setAttribute(at.name, at.value); }
+    };
+    for (var q = 0; q < svg.childNodes.length; q++) walk(svg.childNodes[q], tplSvg.childNodes[q]);
+    if (!jobs.length) return null;
+    return PMU.motion.tween({ from: 0, to: 1, dur: dur || 420, delay: delay || 0, ease: 'linear',
+      step: function (v, t) {
+        var x = t == null ? v : t, k = 1 - Math.pow(1 - x, 3);
+        jobs.forEach(function (j) { j.el.setAttribute('d', pathFrom(j.sk, j.a.map(function (a0, i) { return a0 + (j.b[i] - a0) * k; }))); });
+      },
+      done: function () { jobs.forEach(function (j) { j.el.setAttribute('d', j.d1); }); } });
+  };
+  /* round 3 (PERF-3 open item "crosshair first move"): the first move into a plot no longer flushes style twice. The
+     state classes sit on the few elements that change (line, band, dots, card), never on the plot box (a class on the
+     box restyled its whole subtree: axes, marks, layers); the dots are built when the chart binds its hover (never a
+     child-list change on the pointer frame); one readout card is shared by every chart (only one crosshair shows at a
+     time), so a first move usually patches its words in place; the reads come first (the plot's rect, then the card's
+     size after its words changed), the writes after; the "appear in place" class is lifted in the next frame instead of
+     a forced style flush (void offsetWidth). */
+  var sharedCard = null, cardOwner = null;
+  function readoutCard() {
+    if (sharedCard && sharedCard.isConnected) return sharedCard;
+    sharedCard = H('div', 'pmu-readout', layer());
+    return sharedCard;
+  }
+  charts.crosshairOn = function () { return openCards.size > 0; };
   charts.hover = function (box, cfg) {
-    var band = H('div', 'pmu-xband', box), xh = H('div', 'pmu-xh', box), card = H('div', 'pmu-readout', layer()), dotEls = [];
-    var on = false, last = -1, api, side = 1, hotKey = null, py = -1, lastSwap = 0;
-    /* layout reads in a sweep (PERF-3): the plot's rect and scale are read once per 120 ms (the plate may still be
-       lifting) and the card's size only after its content changed, so a pointer frame that changes nothing on the page
-       forces no layout */
+    var band = H('div', 'pmu-xband', box), xh = H('div', 'pmu-xh', box), dotEls = [];
+    var on = false, last = -1, api, side = 1, hotKey = null, py = -1, lastSwap = 0, instantT = 0;
     var geo = null, geoAt = 0, cardSize = null;
+    function ensureDots() {
+      var n = 0;
+      try { n = cfg.n && cfg.dots ? (cfg.dots(Math.max(0, cfg.n - 1)) || []).length : 0; } catch (error) { n = 0; }
+      while (dotEls.length < n) dotEls.push(H('i', 'pmu-xdot', box));
+    }
+    ensureDots();
     function boxGeo() {
       var now = performance.now();
       if (!geo || now - geoAt > 120) { var r = box.getBoundingClientRect(); geo = { r: r, cw: box.clientWidth || r.width || 1 }; geoAt = now; }
@@ -734,8 +896,27 @@
       var root = box.parentNode || box;
       $$('.pmu-mark[data-key]', root).forEach(function (m) { m.classList.toggle('is-cold', !!k && m.getAttribute('data-key') !== k); });
     }
+    function parts() { return [xh, band, readoutCard()].concat(dotEls); }
     function place(i, instant) {
+      var card = readoutCard();
+      /* reads first: the plot's rect (cached for 120 ms), then the card's size once its words changed */
+      var g = boxGeo(), r = g.r, k2 = r.width / g.cw;
       var x = cfg.xAt(i), top = cfg.pad.t;
+      var olds = null;
+      if (last !== i || cardOwner !== api) {
+        var nowT = performance.now(), calm = nowT - lastSwap > 90 * (PMU.motion.speed ? PMU.motion.speed() : 1);
+        lastSwap = nowT;
+        olds = calm && last >= 0 && !instant && cardOwner === api ? $$('.pmu-ro-row', card).map(function (rw) { var n = rw.querySelector('span'), b = rw.querySelector('b'); return [n ? n.textContent : '', b ? b.textContent : '']; }) : null;
+        patchHtml(card, cfg.html(i)); cardSize = null;
+        cardOwner = api;
+      }
+      if (!cardSize) cardSize = { w: card.offsetWidth, h: card.offsetHeight };
+      /* then the writes */
+      if (olds && !charts.noRoll) $$('.pmu-ro-row', card).forEach(function (rw, k) {
+        var n = rw.querySelector('span'), b = rw.querySelector('b');
+        if (b && olds[k] && n && olds[k][0] === n.textContent) rollText(b, olds[k][1], b.textContent);
+      });
+      last = i;
       xh.style.height = cfg.pad.h + 'px';
       xh.style.transform = 'translate(' + r1(x) + 'px,' + r1(top) + 'px)';
       var bw = Math.max(4, bandW());
@@ -746,9 +927,9 @@
       while (dotEls.length < dots.length) dotEls.push(H('i', 'pmu-xdot', box));
       dotEls.forEach(function (d, k) {
         var p = dots[k];
-        if (!p || !finite(p.y)) { d.style.visibility = 'hidden'; return; }
-        d.style.visibility = '';
-        ['data-tk', 'data-vendor', 'data-series-index', 'data-tone', 'data-dot'].forEach(function (a) { d.removeAttribute(a); });
+        if (!p || !finite(p.y)) { if (d.style.visibility !== 'hidden') d.style.visibility = 'hidden'; return; }
+        if (d.style.visibility) d.style.visibility = '';
+        ['data-tk', 'data-vendor', 'data-series-index', 'data-tone', 'data-dot'].forEach(function (a) { if (d.hasAttribute(a)) d.removeAttribute(a); });
         key(d, p.key);
         if (p.ink) d.setAttribute('data-dot', 'ink');
         d.style.transform = 'translate(' + r1(x) + 'px,' + r1(p.y) + 'px)';
@@ -756,21 +937,7 @@
       });
       dotEls.forEach(function (d, k) { d.classList.toggle('is-hot', dots.length < 2 || k === nearest); });
       setHot(dots.length > 1 && nearest >= 0 && dots[nearest].dk ? dots[nearest].dk : null);
-      if (last !== i) {
-        /* values roll only when the pointer has settled on a bucket (a fast sweep would roll every row of every bucket) */
-        var nowT = performance.now(), calm = nowT - lastSwap > 90 * (PMU.motion.speed ? PMU.motion.speed() : 1);
-        lastSwap = nowT;
-        var olds = calm ? $$('.pmu-ro-row', card).map(function (r) { var n = r.querySelector('span'), b = r.querySelector('b'); return [n ? n.textContent : '', b ? b.textContent : '']; }) : [];
-        patchHtml(card, cfg.html(i)); cardSize = null;
-        if (last >= 0 && !instant && calm && !charts.noRoll) $$('.pmu-ro-row', card).forEach(function (r, k) {
-          var n = r.querySelector('span'), b = r.querySelector('b');
-          if (b && olds[k] && n && olds[k][0] === n.textContent) rollText(b, olds[k][1], b.textContent);
-        });
-      }
-      last = i;
-      var g = boxGeo(), r = g.r, k2 = r.width / g.cw;
       var sx = r.left + x * k2, sy = r.top + (top + 4) * k2;
-      if (!cardSize) cardSize = { w: card.offsetWidth, h: card.offsetHeight };
       var cw = cardSize.w, ch = cardSize.h, vw = window.innerWidth, vh = window.innerHeight;
       var limit = Math.min(vw, r.right) - 6, roomR = limit - (sx + 16 + cw), roomL = (sx - 16 - cw) - Math.max(4, r.left - 40);
       /* keep the side; flip only when the current side does not fit and the other is 48 px better (hysteresis) */
@@ -794,36 +961,41 @@
       var best = 0, bd = Infinity;
       for (var i = 0; i < cfg.n; i++) { var d = Math.abs(cfg.xAt(i) - mx); if (d < bd) { bd = d; best = i; } }
       var first = !on;
-      if (first) { box.classList.add('pmu-xh-instant'); card.classList.add('is-instant'); }
-      place(best, first);
-      if (first) {
-        void box.offsetWidth;
-        box.classList.remove('pmu-xh-instant'); card.classList.remove('is-instant');
-        box.classList.add('pmu-xh-on'); card.classList.add('is-on'); on = true; openCards.add(api);
+      if (first) show(best, true); else place(best, false);
+      if (cfg.onIndex) cfg.onIndex(best);
+    }
+    function show(i, instant) {
+      if (cardOwner && cardOwner !== api && cardOwner.hide) cardOwner.hide();
+      var card = readoutCard();
+      if (instant) parts().forEach(function (el) { el.classList.add('is-instant'); });
+      place(i, instant);
+      parts().forEach(function (el) { el.classList.add('is-on'); });
+      /* a marker only (no rule reads it, so it restyles nothing): the engine's live holds see a crosshair shown */
+      box.classList.add('pmu-xh-on');
+      on = true; openCards.add(api);
+      if (instant) {
+        cancelAnimationFrame(instantT);
+        instantT = requestAnimationFrame(function () { instantT = 0; parts().forEach(function (el) { el.classList.remove('is-instant'); }); });
         if (!reduced()) anim(card, [{ scale: '.96', opacity: 0 }, { scale: '1', opacity: 1 }], 120, 0, 'cubic-bezier(.22,.8,.28,1)', 'backwards');
       }
-      if (cfg.onIndex) cfg.onIndex(best);
     }
     function hide() {
       if (!on) return;
       on = false; last = -1;
       setHot(null);
-      box.classList.remove('pmu-xh-on'); card.classList.remove('is-on'); openCards.delete(api);
+      [xh, band].concat(dotEls).forEach(function (el) { el.classList.remove('is-on'); });
+      box.classList.remove('pmu-xh-on');
+      if (cardOwner === api) readoutCard().classList.remove('is-on');
+      openCards.delete(api);
       if (cfg.onIndex) cfg.onIndex(null);
     }
     box.addEventListener('pointermove', move);
     box.addEventListener('pointerleave', hide);
     api = {
-      set: function (next) { Object.assign(cfg, next); last = -1; geo = null; cardSize = null; if (on) hide(); },
+      set: function (next) { Object.assign(cfg, next); last = -1; geo = null; cardSize = null; if (on) hide(); ensureDots(); },
       hide: hide,
-      showAt: function (i) {
-        if (!cfg.n) return;
-        box.classList.add('pmu-xh-instant'); card.classList.add('is-instant');
-        place(clamp(i, 0, cfg.n - 1), true); void box.offsetWidth;
-        box.classList.remove('pmu-xh-instant'); card.classList.remove('is-instant');
-        box.classList.add('pmu-xh-on'); card.classList.add('is-on'); on = true; openCards.add(api);
-      },
-      destroy: function () { hide(); box.removeEventListener('pointermove', move); box.removeEventListener('pointerleave', hide); band.remove(); xh.remove(); card.remove(); dotEls.forEach(function (d) { d.remove(); }); }
+      showAt: function (i) { if (!cfg.n) return; show(clamp(i, 0, cfg.n - 1), true); },
+      destroy: function () { hide(); if (cardOwner === api) cardOwner = null; box.removeEventListener('pointermove', move); box.removeEventListener('pointerleave', hide); band.remove(); xh.remove(); dotEls.forEach(function (d) { d.remove(); }); }
     };
     return api;
   };
@@ -836,6 +1008,73 @@
     },
     sep: function () { return '<div class="pmu-ro-sep"></div>'; },
     foot: function (text) { return text ? '<p>' + esc(text) + '</p>' : ''; }
+  };
+
+  /* ---------- chart flyers (WOW-SPEC-3 6.3 "chart:", WOW-TASKS-3 C3-5): a chart that repeats in the next room flies from
+     its plot to the target's. The flyer is an SVG whose viewBox is the source's DATA BOX (the plot area of its domain, in
+     the source's plot px) holding copies of the primary line and its area (colours inlined, non-scaling strokes); the
+     engine scales it non-uniformly from the source's data box to the box the SAME domain occupies on the target, so the
+     line lands on the target's line when both show the same data. Rings fly as their picture, scaled uniformly. ---------- */
+  function shareOf(el) { var c = charts.of(el && el.querySelector && !el.hasAttribute('data-pmu-chart') && !el._pmuChart ? (el.querySelector('[data-pmu-chart]') || el) : el); return c && c._fly ? c : null; }
+  function clientBox(c, box, rect) {
+    var ref = c._fly.ref, r = rect || ref.getBoundingClientRect(), w = ref.clientWidth || r.width || 1, k = r.width / w;
+    return { left: r.left + box.l * k, top: r.top + box.t * k, width: box.w * k, height: box.h * k };
+  }
+  var INLINE = ['stroke', 'fill', 'stroke-width', 'stroke-linecap', 'stroke-linejoin', 'stroke-dasharray', 'opacity', 'fill-opacity', 'stroke-opacity'];
+  charts.flyClone = function (shareEl, rect) {
+    var c = shareOf(shareEl);
+    if (!c || c._dead) return null;
+    var F = c._fly, box = F.box;
+    var svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('class', 'pmu-flychart');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.setAttribute('viewBox', F.vb || [box.l, box.t, box.w, box.h].map(r1).join(' '));
+    svg.setAttribute('preserveAspectRatio', F.ring ? 'xMidYMid meet' : 'none');
+    svg.style.overflow = 'visible';
+    (F.paths ? F.paths() : []).forEach(function (src) {
+      if (!src || !src.getAttribute) return;
+      var cs = getComputedStyle(src), cl = src.cloneNode(false);
+      Array.prototype.slice.call(cl.attributes).forEach(function (a) { if (a.name !== 'd' && a.name !== 'cx' && a.name !== 'cy' && a.name !== 'r') cl.removeAttribute(a.name); });
+      INLINE.forEach(function (k) { var v = cs.getPropertyValue(k); if (v) cl.style.setProperty(k, v); });
+      if (!F.ring) cl.setAttribute('vector-effect', 'non-scaling-stroke');
+      svg.appendChild(cl);
+    });
+    var cr = clientBox(c, box, rect);
+    svg.setAttribute('width', r1(cr.width)); svg.setAttribute('height', r1(cr.height));
+    return { el: svg, rect: cr, domain: F.domain, ring: !!F.ring, key: F.key };
+  };
+  charts.flyTarget = function (shareEl, domain, rect) {
+    var c = shareOf(shareEl);
+    if (!c || c._dead) return null;
+    var F = c._fly;
+    return clientBox(c, F.boxOf ? F.boxOf(domain || F.domain) : F.box, rect);
+  };
+  /* a chart whose shared part arrives by flight (WOW-SPEC-3 6.2: "its shared parts arrive by flight") never draws it
+     again under the flyer: when its share element is (or becomes, during the entrance) a flight target
+     ([data-pmu-fly-target], set by the engine's pairing), the reveal is finished at once under the target's hold, so the
+     flyer lands on the finished picture; the marks and beats timed after the landing still play */
+  charts.flightTarget = function (c) { var r = c && c._fly && c._fly.share; return !!(r && r.hasAttribute('data-pmu-fly-target')); };
+  charts.watchFlight = function (c, finish) {
+    var r = c && c._fly && c._fly.share;
+    if (!r || typeof MutationObserver !== 'function') return;
+    if (c._flyMo) c._flyMo.disconnect();
+    var mo = c._flyMo = new MutationObserver(function () { if (r.hasAttribute('data-pmu-fly-target')) { mo.disconnect(); c._flyMo = null; try { finish(); } catch (error) {} } });
+    mo.observe(r, { attributes: true, attributeFilter: ['data-pmu-fly-target'] });
+    setTimeout(function () { if (c._flyMo === mo) { mo.disconnect(); c._flyMo = null; } }, 2500);
+  };
+  charts.finishReveal = function (rv) {
+    (rv && rv._pmuRv || []).forEach(function (a) { if (a) try { a.finish(); } catch (error) {} });
+    var box = rv && rv.parentNode;
+    if (box) $$(':scope > .pmu-film-comet, :scope > .pmu-film-front', box).forEach(function (el) { el.remove(); });
+  };
+  /* charts call this when they draw: where their data box sits and how a domain maps into it */
+  /* the share attribute sits on the element that FLIES (the line layer .pmu-rv, the ring's svg), never on the whole plot:
+     the engine holds a flight target at opacity 0 and finishes every animation inside it (settleTarget), so the axes,
+     markers, cone and rule outside it keep their own entrance and the room's beat; o.ref stays the geometry reference */
+  charts.setFly = function (c, ref, key, o) {
+    c._fly = Object.assign({ ref: ref, key: key }, o);
+    var sh = c._fly.share = (o && o.shareEl) || ref;
+    if (key && sh) { var k = 'chart:' + key; if (sh.getAttribute('data-share') !== k) sh.setAttribute('data-share', k); }
   };
 
   /* ---------- the empty sentence (never a zero line) ---------- */

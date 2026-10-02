@@ -40,7 +40,7 @@
     },
     /* relative under 24 h, weekday under 7 d, date beyond */
     until: function (ms) {
-      var dt = ms - Date.now();
+      var dt = ms - PMU.clock.now();
       if (dt < DAY) return 'in ' + fmt.span(dt);
       if (dt < 7 * DAY) return fmt.day(ms) + ' ' + fmt.clock(ms);
       return fmt.date(ms);
@@ -48,9 +48,9 @@
     /* reset copy with reset truth (R-PLAN-07): win = WindowView */
     reset: function (win) {
       if (!win || win.truth === 'unknown' || missing(win.resetAt)) return { text: 'Reset unknown', short: 'unknown', truth: 'unknown' };
-      if (win.truth === 'pending_recheck' || win.resetAt <= Date.now()) return { text: 'Pending recheck', short: 'recheck', truth: 'pending_recheck' };
+      if (win.truth === 'pending_recheck' || win.resetAt <= PMU.clock.now()) return { text: 'Pending recheck', short: 'recheck', truth: 'pending_recheck' };
       var inferred = win.truth === 'locally_inferred', pre = inferred ? '≈ ' : '';
-      var dt = win.resetAt - Date.now();
+      var dt = win.resetAt - PMU.clock.now();
       var abs = dt < DAY ? fmt.clock(win.resetAt) : dt < 7 * DAY ? fmt.day(win.resetAt) + ' ' + fmt.clock(win.resetAt) : fmt.date(win.resetAt);
       var text = pre + 'Resets ' + abs + (dt < 7 * DAY ? ' · ' + (dt < DAY ? 'in ' : '') + fmt.span(dt) : '');
       return { text: text, short: pre + (dt < DAY ? fmt.span(dt) : abs), truth: win.truth };
@@ -77,20 +77,20 @@
        soon = within the hour (rendered 12 / 560 ink-2). */
     resetLine: function (win) {
       if (!win || win.truth === 'unknown' || missing(win.resetAt)) return { text: 'reset unknown', truth: 'unknown', soon: false };
-      if (win.truth === 'pending_recheck' || win.resetAt <= Date.now()) return { text: 'pending recheck', truth: 'pending_recheck', soon: false };
-      var dt = win.resetAt - Date.now(), pre = win.truth === 'locally_inferred' ? '≈ ' : '';
+      if (win.truth === 'pending_recheck' || win.resetAt <= PMU.clock.now()) return { text: 'pending recheck', truth: 'pending_recheck', soon: false };
+      var dt = win.resetAt - PMU.clock.now(), pre = win.truth === 'locally_inferred' ? '≈ ' : '';
       var when = dt < DAY ? 'in ' + fmt.span(dt) : dt < 7 * DAY ? fmt.day(win.resetAt) + ' ' + fmt.clock(win.resetAt) : fmt.date(win.resetAt);
       return { text: 'resets ' + pre + when, truth: win.truth, soon: dt < HOUR };
     },
     /* [A1 7.10] agenda day heads: {label: 'Today' | 'Tomorrow' | 'Sat, Oct 3', note: 'Thu, Oct 1' | 'in 1d 8h'} */
     dayHead: function (ms) {
-      var d = new Date(ms), now = new Date(), start = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+      var d = new Date(ms), now = PMU.clock.date(), start = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
       var dayIdx = Math.floor((new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime() - start) / DAY + 0.5);
       var full = WEEKDAY[d.getDay()] + ', ' + MONTH[d.getMonth()] + ' ' + d.getDate();
       if (dayIdx === 0) return { label: 'Today', note: full, offset: 0 };
       if (dayIdx === 1) return { label: 'Tomorrow', note: full, offset: 1 };
       if (dayIdx === -1) return { label: 'Yesterday', note: full, offset: -1 };
-      return { label: full, note: ms > Date.now() ? 'in ' + fmt.span(ms - Date.now()) : fmt.span(Date.now() - ms) + ' ago', offset: dayIdx };
+      return { label: full, note: ms > PMU.clock.now() ? 'in ' + fmt.span(ms - PMU.clock.now()) : fmt.span(PMU.clock.now() - ms) + ' ago', offset: dayIdx };
     }
   };
 

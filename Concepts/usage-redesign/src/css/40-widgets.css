@@ -25,7 +25,10 @@
 #panel-usage .pmu-wswitch.on .pmu-wswitch-track > i { transform: translateX(12px); }
 #panel-usage .pmu-wswitch:hover { color: var(--pmu-ink); }
 #panel-usage .pmu-textbtn { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px; border: 1px solid color-mix(in srgb, var(--pmu-accent) 55%, transparent); border-radius: 8px;
-  background: transparent; color: var(--pmu-accent); font: inherit; font-size: 12.5px; font-weight: 600; white-space: nowrap; cursor: pointer; transition: background-color 160ms, border-color 160ms; }
+  background: transparent; color: var(--pmu-accent); font: inherit; font-size: 12.5px; font-weight: 600; white-space: nowrap; cursor: pointer; transition: none; }
+/* E7 (census HARD: the app's late hover-tag binding restyled pager buttons and their border transition ran after the settle):
+   the colour eases only while the pointer or focus is on the button */
+#panel-usage .pmu-textbtn:is(:hover, :focus-visible) { transition: background-color calc(160ms * var(--pmu-speed, 1)), border-color calc(160ms * var(--pmu-speed, 1)); }
 #panel-usage .pmu-textbtn:hover:not([disabled]) { background: color-mix(in srgb, var(--pmu-accent) 10%, transparent); }
 #panel-usage .pmu-textbtn[disabled] { border-color: var(--pmu-rule); color: var(--pmu-ink-3); cursor: default; }
 #panel-usage .pmu-textbtn.is-primary { background: color-mix(in srgb, var(--pmu-accent) 12%, transparent); }
@@ -447,6 +450,23 @@ html[data-motion="reduced"] #panel-usage :is(.pmu-wswitch-track, .pmu-wswitch-tr
 #panel-usage .pmu-budgethero.is-hero .pmu-heronum { font-size: 52px; }
 html[data-theme^="retro"] #panel-usage .pmu-heronum { letter-spacing: -.01em; }
 html[data-theme^="retro"] #panel-usage .pmu-heronum::after { border-radius: 0; background: var(--pmu-s0); height: 2px; }
+/* WOW-SPEC-3 4.4 / WOW-TASKS-3 N3-8: gradient ink on the hero numbers (static; painted once). A vertical gradient that
+   repeats per text line (1lh), so a glyph row is inked the same at rest and while the odometer's strips roll (the engine's
+   strips take the same background, E3-10); Friendly runs rose to teal across the number. Warn / crit heroes heat their
+   foot. KPI tile values keep solid ink (the gradient is the hero's). Retro: a static phosphor glow (Retro Dark only);
+   NieR: unchanged. The unit takes the same ink. */
+html:not([data-theme^="retro"]):not([data-o55-nier="on"]) #panel-usage .pmu-heronum {
+  background: linear-gradient(180deg, var(--pmu-l-ink-top, var(--pmu-ink)) 18%, var(--pmu-l-ink-bot, var(--pmu-ink)) 96%) 0 0 / 100% 1lh repeat-y;
+  -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
+html:not([data-theme^="retro"]):not([data-o55-nier="on"]) #panel-usage .pmu-heronum :is(.pmu-u, .pmu-num) { color: transparent; -webkit-text-fill-color: transparent; }
+html[data-theme^="friendly"]:not([data-o55-nier="on"]) #panel-usage .pmu-heronum {
+  background-image: linear-gradient(100deg, var(--pmu-l-ink-top, var(--pmu-ink)), var(--pmu-l-ink-bot, var(--pmu-ink))); background-size: 100% 100%; background-repeat: no-repeat; }
+html:not([data-theme^="retro"]):not([data-o55-nier="on"]) #panel-usage .pmu-herohead[data-tone="warn"] .pmu-heronum { --pmu-l-ink-bot: var(--pmu-warn); }
+html:not([data-theme^="retro"]):not([data-o55-nier="on"]) #panel-usage .pmu-herohead[data-tone="crit"] .pmu-heronum { --pmu-l-ink-bot: var(--pmu-crit); }
+html:not([data-theme^="retro"]):not([data-o55-nier="on"]) #panel-usage .pmu-heronum::after {
+  background: linear-gradient(90deg, var(--pmu-l-key, var(--pmu-accent)), transparent); box-shadow: 0 0 8px color-mix(in srgb, var(--pmu-l-key, var(--pmu-accent)) 55%, transparent); }
+html[data-theme$="-light"]:not([data-o55-nier="on"]) #panel-usage .pmu-heronum::after { box-shadow: none; }
+html[data-theme="retro-dark"] #panel-usage .pmu-heronum { text-shadow: 0 0 1px var(--pmu-s0), 0 0 9px color-mix(in srgb, var(--pmu-s0) 55%, transparent); }
 html[data-o55-nier="on"] #panel-usage .pmu-heronum { font-family: "PM NieR Mono", var(--pmu-mono); letter-spacing: .02em; }
 html[data-o55-nier="on"] #panel-usage .pmu-heronum::after { background: var(--o55-nier-ink, var(--pmu-ink)); border-radius: 0; }
 
@@ -456,6 +476,20 @@ html[data-o55-nier="on"] #panel-usage .pmu-heronum::after { background: var(--o5
 #panel-usage .pmu-skycol { display: grid; grid-template-rows: 20px var(--sky-h) 22px 18px; row-gap: 2px; justify-items: center; min-width: 0; cursor: pointer; --c: var(--pmu-calm); }
 #panel-usage .pmu-skycol[data-ramp="1"] { --c: color-mix(in srgb, var(--pmu-calm) 50%, #3BB8F2); }
 html[data-theme$="-light"] #panel-usage .pmu-skycol[data-ramp="1"] { --c: color-mix(in srgb, var(--pmu-calm) 50%, #0A76B6); }
+/* the calm ramp as a spectrum (WOW-SPEC-3 4.5, Q4; flag spectrum): the skyline columns carry --v and data-ramp; charts'
+   30-charts.css paints ramps 0 and 1 by --v (indigo -> cyan -> mint) for every ramp host; the thresholds keep these tones */
+#panel-usage .pmu-skycol { --cb: color-mix(in srgb, #fff 55%, var(--c)); }
+html[data-theme$="-light"] #panel-usage .pmu-skycol { --cb: color-mix(in srgb, #fff 30%, var(--c)); }
+/* the heat layer of a live heat-up carries the column's previous colour (its own data-ramp and --v) */
+#panel-usage .pmu-skyheat[data-ramp="0"] { --c: var(--pmu-calm); }
+#panel-usage .pmu-skyheat[data-ramp="1"] { --c: color-mix(in srgb, var(--pmu-calm) 50%, #3BB8F2); }
+html[data-theme$="-light"] #panel-usage .pmu-skyheat[data-ramp="1"] { --c: color-mix(in srgb, var(--pmu-calm) 50%, #0A76B6); }
+html:not([data-o55-nier="on"]) #pmuApp:not([data-pmu-f-spectrum="0"]) .pmu-skyheat[data-ramp="0"] { --c: color-mix(in oklch, var(--pmu-l-r1, #27BEE8) calc(var(--v, 25) * 2%), var(--pmu-l-r0, #6F7BFF)); }
+html:not([data-o55-nier="on"]) #pmuApp:not([data-pmu-f-spectrum="0"]) .pmu-skyheat[data-ramp="1"] { --c: color-mix(in oklch, var(--pmu-l-r2, #34E0A6) calc((var(--v, 65) - 50) * 3.4%), var(--pmu-l-r1, #27BEE8)); }
+#panel-usage .pmu-skyheat[data-ramp="2"] { --c: var(--pmu-warn); }
+#panel-usage .pmu-skyheat[data-ramp="3"] { --c: var(--pmu-crit); }
+#panel-usage .pmu-skyheat[data-ramp="4"] { --c: var(--pmu-tone-exhausted, var(--pmu-crit)); }
+#panel-usage .pmu-skyheat[data-ramp="5"] { --c: var(--pmu-over); }
 #panel-usage .pmu-skycol[data-ramp="2"] { --c: var(--pmu-warn); }
 #panel-usage .pmu-skycol[data-ramp="3"] { --c: var(--pmu-crit); }
 #panel-usage .pmu-skycol[data-ramp="4"] { --c: var(--pmu-tone-exhausted, var(--pmu-crit)); }
@@ -463,32 +497,58 @@ html[data-theme$="-light"] #panel-usage .pmu-skycol[data-ramp="1"] { --c: color-
 #panel-usage .pmu-skyval { display: inline-flex; align-items: baseline; font-size: 13.5px; font-weight: 640; color: var(--pmu-ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
 #panel-usage .pmu-skyval i { margin-left: 1px; font-style: normal; font-size: 11px; font-weight: 540; color: var(--pmu-ink-3); }   /* labels >= 11 px (census: .78em was 10.5 px) */
 #panel-usage .pmu-skycol[data-ramp="2"] .pmu-skyval b, #panel-usage .pmu-skycol[data-ramp="3"] .pmu-skyval b, #panel-usage .pmu-skycol[data-ramp="4"] .pmu-skyval b { color: var(--c); }
-#panel-usage .pmu-skytrack { position: relative; width: clamp(14px, 42%, 26px); height: 100%; overflow: hidden; border-radius: 7px; background-color: var(--pmu-card-3, rgba(127,127,127,.12));
+/* WOW-SPEC-3 4.5-4.6 / WOW-TASKS-3 N3-7: the tower at rest. The track is recessed; the fill is a full-height lit column
+   in a clipped inner (.pmu-skyclip), moved by transform: translateY((100 - v) %) (never by height), so a live change and
+   the entrance are compositor-only; the cap (::before) and its flare ride the fill (one animation per tower), and the
+   clip cuts only the bottom, so the cap's glow shows around the tower. The flare and heat layers are pre-painted at opacity 0 (the beat and a live heat-up fade
+   them; nothing animates at rest). */
+#panel-usage .pmu-skytrack { position: relative; width: clamp(14px, 42%, 26px); height: 100%; border-radius: 7px 7px 2px 2px; background-color: var(--pmu-card-3, rgba(127,127,127,.12));
   background-image: linear-gradient(to top, transparent calc(25% - 1px), var(--pmu-rule-2) calc(25% - 1px) 25%, transparent 25% calc(50% - 1px), var(--pmu-rule-2) calc(50% - 1px) 50%,
-    transparent 50% calc(75% - 1px), var(--pmu-rule-2) calc(75% - 1px) 75%, transparent 75%); }
-#panel-usage .pmu-skyfill { position: absolute; left: 0; right: 0; bottom: 0; border-radius: 7px 7px 0 0;
-  background: linear-gradient(to top, color-mix(in srgb, var(--c) 42%, transparent), color-mix(in srgb, var(--c) 82%, transparent) 70%, var(--c));
-  box-shadow: inset 0 0 12px -2px color-mix(in srgb, var(--cb, #fff) 45%, transparent); }
-#panel-usage .pmu-skyfill::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; border-radius: 2px; background: color-mix(in srgb, #fff 55%, var(--c));
-  box-shadow: 0 0 8px 2px color-mix(in srgb, var(--c) 70%, transparent); }
-html[data-theme$="-light"] #panel-usage .pmu-skyfill::before { background: color-mix(in srgb, #fff 25%, var(--c)); box-shadow: 0 0 6px 1px color-mix(in srgb, var(--c) 45%, transparent); }
-#panel-usage .pmu-skytrack.is-est .pmu-skyfill { background: repeating-linear-gradient(-45deg, color-mix(in srgb, var(--c) 70%, transparent) 0 3px, transparent 3px 6px); box-shadow: none; }
-#panel-usage .pmu-skytrack.is-est .pmu-skyfill::before { box-shadow: none; }
+    transparent 50% calc(75% - 1px), var(--pmu-rule-2) calc(75% - 1px) 75%, transparent 75%);
+  box-shadow: var(--pmu-l-track-in, none); }
+/* the clip cuts the fill vertically at the track (where the translated fill waits below; overflow clip, so the waiting
+   part never counts as the body's overflow) and lets the cap's glow and flare out sideways. The tower stands on the
+   floor with square feet. */
+#panel-usage .pmu-skyclip { position: absolute; inset: 0; overflow-x: visible; overflow-y: clip; }
+#panel-usage .pmu-skyfill { position: absolute; left: 0; right: 0; top: 0; height: 100%; }
+#panel-usage .pmu-skyfill { border-radius: 7px 7px 0 0;
+  background: linear-gradient(to top, color-mix(in srgb, var(--c) 18%, transparent) 0, color-mix(in srgb, var(--c) 70%, transparent) 62%, var(--c) 96%, var(--cb, var(--c)) 100%),
+    linear-gradient(90deg, rgba(255,255,255,.18), transparent 42%, transparent 70%, rgba(0,0,0,.18)); }
+#panel-usage .pmu-skyfill::before { content: ""; position: absolute; z-index: 1; left: 0; right: 0; top: 0; height: 3px; border-radius: 2px; background: var(--cb, var(--c));
+  box-shadow: 0 0 12px 3px color-mix(in srgb, var(--c) 80%, transparent); }
+html[data-theme$="-light"] #panel-usage .pmu-skyfill::before { box-shadow: 0 1px 3px 0 color-mix(in srgb, var(--c) 55%, transparent); }
+#panel-usage .pmu-skyflare { position: absolute; z-index: 2; left: -6px; right: -6px; top: -6px; height: 14px; border-radius: 7px; opacity: 0; pointer-events: none;
+  background: radial-gradient(60% 60% at 50% 50%, color-mix(in srgb, var(--cb, var(--c)) 90%, transparent), color-mix(in srgb, var(--c) 45%, transparent) 55%, transparent 100%); }
+#panel-usage .pmu-skyheat { position: absolute; inset: 0; opacity: 0; border-radius: inherit; pointer-events: none; z-index: 0;
+  background: linear-gradient(to top, color-mix(in srgb, var(--c) 18%, transparent) 0, color-mix(in srgb, var(--c) 70%, transparent) 62%, var(--c) 96%); }
+#panel-usage .pmu-skytrack.is-est .pmu-skyfill { background: repeating-linear-gradient(-45deg, color-mix(in srgb, var(--c) 70%, transparent) 0 3px, transparent 3px 6px); }
+#panel-usage .pmu-skytrack.is-est .pmu-skyfill::before { box-shadow: none; background: color-mix(in srgb, var(--c) 70%, transparent); }
+#panel-usage .pmu-skytrack.is-est .pmu-skyflare { display: none; }
 #panel-usage .pmu-skyfoot { display: inline-flex; align-items: center; gap: 4px; height: 22px; }
 #panel-usage .pmu-skyfoot b { font-family: var(--pmu-mono); font-size: 11px; font-weight: 600; letter-spacing: .04em; color: var(--pmu-ink-2); }
 #panel-usage .pmu-skyreset { max-width: 100%; font-size: 11px; line-height: 18px; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: clip; }
-#panel-usage .pmu-skycol:hover .pmu-skytrack { box-shadow: 0 0 0 1px color-mix(in srgb, var(--c) 55%, transparent); }
-/* the plot keeps a 40 px gutter on the right for the auto-switch level, so its word never sits on a gauge's value */
+#panel-usage .pmu-skycol:hover .pmu-skytrack { box-shadow: var(--pmu-l-track-in, none), 0 0 0 1px color-mix(in srgb, var(--c) 55%, transparent); }
+/* the plot keeps a 40 px gutter on the right for the auto-switch level, so its word never sits on a gauge's value; the
+   floor is one lit rule the towers stand on */
 #panel-usage .pmu-skyplot { padding-right: 40px; }
+html:not([data-o55-nier="on"]) #panel-usage .pmu-skyplot { background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--pmu-l-key, var(--pmu-accent)) 55%, transparent) 30%,
+  color-mix(in srgb, var(--pmu-l-key, var(--pmu-accent)) 55%, transparent) 70%, transparent) 0 calc(100% - var(--sky-foot) + 1px) / 100% 1px no-repeat; }
 #panel-usage .pmu-skyswitch { position: absolute; left: -4px; right: 34px; height: 0; border-top: 2px dashed color-mix(in srgb, var(--pmu-warn) 78%, transparent); transform-origin: 0 50%; pointer-events: none;
-  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--pmu-warn) 45%, transparent)); }
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--pmu-warn) 60%, transparent)); }
 html[data-pmu-soft] #panel-usage .pmu-skyswitch { filter: none; }
 #panel-usage .pmu-skyplot .pmu-skyswitch span { color: var(--pmu-ink-warn); font-weight: 600; }
 #panel-usage .pmu-skyswitch span { position: absolute; left: calc(100% + 6px); top: -8px; font-family: var(--pmu-mono); font-size: 11px; letter-spacing: .04em; line-height: 16px; color: var(--pmu-ink-2); white-space: nowrap; }
-html[data-theme^="retro"] #panel-usage :is(.pmu-skytrack, .pmu-skyfill, .pmu-skyfill::before) { border-radius: 0; }
-html[data-o55-nier="on"] #panel-usage .pmu-skyfill { background: repeating-linear-gradient(to top, var(--o55-nier-ink) 0 5px, transparent 5px 7px); box-shadow: none; }
-html[data-o55-nier="on"] #panel-usage .pmu-skyfill::before { background: var(--o55-nier-ink); box-shadow: none; }
-html[data-o55-nier="on"] #panel-usage .pmu-skytrack { border-radius: 0; background-color: rgba(var(--o55-nier-ink-rgb, 72, 69, 58), .08); }
+/* the light front of the scan and of the auto-switch toggle: a 30 px soft band in the warn tone riding the line's end
+   (moved by translateX; opacity 0 at rest) */
+#panel-usage .pmu-skyfront { position: absolute; left: -4px; width: 34px; height: 12px; margin-bottom: -7px; opacity: 0; pointer-events: none; border-radius: 6px;
+  background: radial-gradient(50% 50% at 70% 50%, color-mix(in srgb, #fff 55%, var(--pmu-warn)), color-mix(in srgb, var(--pmu-warn) 55%, transparent) 45%, transparent 100%); }
+html[data-theme^="retro"] #panel-usage :is(.pmu-skytrack, .pmu-skyfill, .pmu-skyfill::before, .pmu-skyflare, .pmu-skyfront) { border-radius: 0; }
+html[data-theme^="retro"] #panel-usage .pmu-skyfill { background: color-mix(in srgb, var(--c) 78%, transparent); }
+html[data-o55-nier="on"] #panel-usage .pmu-skyfill { background: repeating-linear-gradient(to top, var(--o55-nier-ink) 0 5px, transparent 5px 7px); }
+html[data-o55-nier="on"] #panel-usage .pmu-skyfill::before { background: var(--o55-nier-ink); box-shadow: none; border-radius: 0; }
+html[data-o55-nier="on"] #panel-usage :is(.pmu-skyflare, .pmu-skyheat) { display: none; }
+html[data-o55-nier="on"] #panel-usage .pmu-skyfront { background: var(--o55-nier-ink); height: 4px; margin-bottom: -3px; border-radius: 0; width: 10px; }
+html[data-o55-nier="on"] #panel-usage .pmu-skytrack { border-radius: 0; background-color: rgba(var(--o55-nier-ink-rgb, 72, 69, 58), .08); box-shadow: none; }
 
 /* the Ledger attempt timeline (hero): one dot per attempt on its provider's lane, sized by its recorded value */
 #panel-usage .pmu-attl { display: flex; flex-direction: column; min-width: 0; flex: 1 1 auto; }
@@ -626,3 +686,16 @@ html[data-o55-nier="on"] #panel-usage .pmu-wmk em { border-radius: 0; background
 #panel-usage .pmu-list.is-stack > .pmu-lrow { align-items: start; height: auto; min-height: 44px; padding-top: 5px; padding-bottom: 5px; }
 #panel-usage .pmu-list.is-stack .pmu-lval { grid-column: -2 / -1; grid-row: 2; justify-self: start; text-align: left; white-space: normal; font-size: 12.5px; }
 #panel-usage .pmu-list.is-stack .pmu-llead { grid-row: 1 / span 2; align-self: start; padding-top: 2px; }
+
+/* round 3: the quiet count of a small card's folded readings, in its head ("+6", layers glyph, 12 px ink-3; the hover tag
+   lists them). It sits in the head tools slot, before any tool. */
+#panel-usage .pmu-headmore { display: inline-flex; align-items: center; gap: 4px; flex: none; height: 20px; padding: 0 2px; font-size: 12px; line-height: 1; color: var(--pmu-ink-3); cursor: default; white-space: nowrap; }
+#panel-usage .pmu-headmore .pmu-glyph { width: 13px; height: 13px; opacity: .8; }
+#panel-usage .pmu-headmore .pmu-glyph svg { width: 13px; height: 13px; }
+#panel-usage .pmu-headmore b { font-weight: 600; font-variant-numeric: tabular-nums; }
+#panel-usage .pmu-headmore:hover { color: var(--pmu-ink-2); }
+html[data-o55-nier="on"] #panel-usage .pmu-headmore { font-family: var(--pmu-mono); letter-spacing: .04em; }
+#panel-usage .pmu-headmore.is-inline { margin-left: auto; align-self: center; padding-left: 4px; }
+#panel-usage .pmu-kpi .pmu-kpiline.has-count-row { flex-wrap: wrap; row-gap: 0; }
+#panel-usage .pmu-kpiline.has-count-row .pmu-headmore.is-inline { height: 18px; }
+#panel-usage .pmu-headmore.is-row { display: flex; justify-content: flex-end; width: 100%; height: 18px; margin: 0; padding: 0; flex: none; grid-column: 1 / -1; }

@@ -82,6 +82,30 @@ html[data-theme^="glass"] #panel-usage .pmu-card:not([data-head="band"])::after 
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
 html[data-theme="glass-light"] #panel-usage .pmu-card:not([data-head="band"])::after { background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.4) 40%, rgba(23,34,42,.08)); }
 html[data-theme^="glass"] #panel-usage .pmu-board > .pmu-card[data-hero] { background-image: linear-gradient(118deg, rgba(255,255,255,.10), rgba(255,255,255,.02) 34%, transparent 52%, rgba(255,255,255,.05) 78%, transparent); }
+/* ---- WOW round 3 at rest (WOW-SPEC-3 4.3; tokens --pmu-l-* in 00-base.css): every plate except bands takes a neutral
+   luminance at its top and real depth; a rim of the key light on ::after (not Glass, which keeps its own rim there, not
+   Retro, not NieR); the hero plate gets the key light's spot at its top-left (flag heroLight, Q5) and a brighter rim.
+   All static paint: nothing here animates, and hovering a plate repaints only that plate. ---- */
+html:not([data-theme^="retro"]):not([data-o55-nier="on"]) #panel-usage .pmu-card:not([data-head="band"]) {
+  background-image: linear-gradient(180deg, var(--pmu-l-plate-hi), transparent 46%); box-shadow: var(--pmu-l-shadow); }
+html:not([data-theme^="glass"]):not([data-theme^="retro"]):not([data-o55-nier="on"]) #panel-usage .pmu-card:not([data-head="band"])::after {
+  content: ""; position: absolute; inset: calc(-1 * var(--pmu-bw)); border-radius: inherit; pointer-events: none; padding: 1px;
+  background: radial-gradient(70% 120% at 32% 0%, color-mix(in srgb, var(--pmu-l-key) var(--pmu-l-rim-key), #fff) 0, var(--pmu-l-rim) 46%, transparent 78%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: .9; }
+html:not([data-theme^="glass"]):not([data-theme^="retro"]):not([data-o55-nier="on"]) #panel-usage .pmu-board > .pmu-card[data-hero]::after { opacity: 1; }
+html:not([data-theme^="retro"]):not([data-o55-nier="on"]) #panel-usage .pmu-shell[data-pmu-f-herolight="1"] .pmu-board > .pmu-card[data-hero] {
+  background-image: radial-gradient(70% 90% at 18% -10%, color-mix(in srgb, var(--pmu-l-key) var(--pmu-l-hero-spot), transparent), transparent 70%),
+    linear-gradient(180deg, var(--pmu-l-plate-hi), transparent 46%); }
+/* Glass: the hero keeps its specular sheet (round 2) under the key light's spot */
+html[data-theme^="glass"]:not([data-o55-nier="on"]) #panel-usage .pmu-shell .pmu-board > .pmu-card[data-hero] {
+  background-image: linear-gradient(118deg, rgba(255,255,255,.10), rgba(255,255,255,.02) 34%, transparent 52%, rgba(255,255,255,.05) 78%, transparent),
+    linear-gradient(180deg, var(--pmu-l-plate-hi), transparent 46%); }
+html[data-theme^="glass"]:not([data-o55-nier="on"]) #panel-usage .pmu-shell[data-pmu-f-herolight="1"] .pmu-board > .pmu-card[data-hero] {
+  background-image: radial-gradient(70% 90% at 18% -10%, color-mix(in srgb, var(--pmu-l-key) var(--pmu-l-hero-spot), transparent), transparent 70%),
+    linear-gradient(118deg, rgba(255,255,255,.10), rgba(255,255,255,.02) 34%, transparent 52%, rgba(255,255,255,.05) 78%, transparent),
+    linear-gradient(180deg, var(--pmu-l-plate-hi), transparent 46%); }
+/* Basic Dark plate edges */
+html[data-theme="basic-dark"]:not([data-o55-nier="on"]) #panel-usage .pmu-card:not([data-head="band"]) { border-color: rgba(255,255,255,.075); }
 /* ---- head forms (A1 3.1) ---- */
 #panel-usage .pmu-cardhead { position: relative; display: flex; align-items: center; gap: 8px; flex: none; min-width: 0; height: var(--pmu-head-line); padding: 0 14px;
   cursor: grab; user-select: none; -webkit-user-select: none; touch-action: none; }
@@ -201,7 +225,8 @@ html[data-theme^="retro"] #panel-usage .pmu-irow { border-radius: 0; }
 #panel-usage .pmu-card:hover > .pmu-h[data-edge="s"] { bottom: -10px; height: 14px; }
 #panel-usage .pmu-card:hover > .pmu-h:is([data-edge="se"], [data-edge="sw"]) { bottom: -10px; height: 22px; }
 #panel-usage .pmu-card:hover > .pmu-h[data-edge="se"]::after { bottom: 13px; }
-#panel-usage .pmu-board[data-op="resize"] { cursor: default; }
+/* (PERF-3 open item: no board cursor during a resize; the captured handle keeps its own edge cursor, so an inherited
+   cursor on the board no longer restyles its ~650 elements at the start and the end of a resize) */
 
 /* ---- previews (DESIGN-SPEC 6.2, 6.3): the landing slot and the resize outline, placed in the grid by the engine ---- */
 #panel-usage .pmu-landing, #panel-usage .pmu-outline { position: relative; z-index: 2; box-sizing: border-box; border-radius: var(--pmu-r-card); pointer-events: none; transform-origin: 0 0; }
@@ -225,7 +250,9 @@ html[data-theme^="retro"] #panel-usage :is(.pmu-landing, .pmu-outline, .pmu-outl
 #panel-usage .pmu-board > .pmu-card[data-lifted]::before { box-shadow: var(--pmu-plate-lift); opacity: 1; transition: opacity calc(140ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1); }
 #panel-usage .pmu-board > .pmu-card[data-settling]::before { box-shadow: var(--pmu-plate-lift); opacity: 0; transition: opacity calc(200ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
 html[data-theme^="retro"] #panel-usage .pmu-card[data-lifted]::before { transition-timing-function: steps(2, jump-start); }
-#panel-usage .pmu-card[data-lifted], #panel-usage .pmu-card[data-lifted] * { cursor: grabbing !important; }
+/* the lifted card holds the pointer capture, so its own cursor is the one shown: no rule on its descendants (PERF-3: the
+   `*` part restyled the lifted card's whole subtree at pick-up and drop) */
+#panel-usage .pmu-card[data-lifted] { cursor: grabbing !important; }
 #panel-usage .pmu-board > .pmu-card[data-settling] { z-index: 20; }
 /* grabbing an edge (WOW-SPEC 3.12): the card lifts 2 px onto its hover shadow while the outline shows the snapped size */
 #panel-usage .pmu-board > .pmu-card[data-resizing] { z-index: 6; }

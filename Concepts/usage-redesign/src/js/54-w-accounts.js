@@ -68,13 +68,21 @@
 
   /* ================================================================== provider: group plate (A1 10.1) and single plate (A1 10.2) */
   /* every meter of a plate is recorded with its spec (C.recMeter); a Settings change patches the plate in place (C.patch) */
-  function meter(body, key, host, spec, opts) { C.recMeter(body, key, host, spec, opts); }
+  function meter(body, key, host, spec, opts, make) { C.recMeter(body, key, host, spec, opts); var rs = body._pmuMeterRecs; if (rs && rs.length) rs[rs.length - 1].make = make || null; }
   function sealPlate(body) { C.seal(body, '.pmu-acc', '.pmu-accfoot, .pmu-accsfoot'); }
   function renderPlate(body, ctx, p) {
     body._pmuMeterRecs = []; body._pmuSig = null;
     if (p.accounts.length > 1) group(body, ctx, p); else single(body, ctx, p, p.accounts[0]);
+    if (!body._pmuDry) body._pmuPlateShape = plateShape(p);
+  }
+  /* what a plate shows, as one string (a live beat that leaves it unchanged leaves the plate alone) */
+  function plateSig(p) {
+    var th = PMU.roster.thresholds();
+    return p ? JSON.stringify([th.auto, th.switchLeft, th.warnLeft, p.accounts.map(function (a) { return [a.key, a.shownState, a.stateWord, a.effective, a.override, a.eligible.ok, a.ageText, a.windows.map(function (w) { return [w.pct, w.resetAt ? Math.round(w.resetAt / 60000) : null, w.truth]; })]; })]) : '';
   }
   C.kind('provider', {
+    liveSig: function (ctx) { return plateSig(PMU.roster.provider(ctx.id.replace(/^acct-/, ''))); },
+    live: function (body, ctx) { return plateLive(body, ctx); },
     /* a single plate whose meters all show grows its facts into a free band (its meters keep their size) */
     grow: function (body) { return !!body.querySelector('.pmu-acc.is-single') && !body._pmuWinHidden; },
     render: function (body, ctx) {
@@ -85,10 +93,91 @@
     update: function (body, ctx) {
       var p = PMU.roster.provider(ctx.id.replace(/^acct-/, ''));
       if (!p || !p.accounts.length) return false;
-      return C.patch(body, function (dry) { renderPlate(dry, ctx, p); }, '.pmu-accfoot, .pmu-accsfoot');
+      var fn = function (dry) { renderPlate(dry, ctx, p); };
+      if (C.patch(body, fn, '.pmu-accfoot, .pmu-accsfoot', ctx)) { body._pmuPlateShape = plateShape(p); return true; }
+      return platePatch(body, fn, ctx);
     }
   });
+  /* WOW-SPEC-3 9.1 / N3-6: a plate whose rows changed state (Use this account, a cooldown ending, a reset passing) keeps
+     its columns and patches only what changed in place: each row's class and state, its identity and action cells
+     (small trees, PMU.charts.patchHtml), its meters through charts (a meter whose spec is the same is not touched, so an
+     unchanged reading never moves or rolls), the foot and the "N more" line. The active light is pre-painted in every
+     row (CSS shows it on the effective row), so no element is added or removed. */
+  function platePatch(body, fn, ctx) {
+    var dry = document.createElement('div'); dry._pmuDry = true; dry._pmuMeterRecs = [];
+    try { fn(dry); } catch (error) { return false; }
+    var live = body._pmuMeterRecs, next = dry._pmuMeterRecs || [];
+    if (!live || next.length !== live.length || next.some(function (r, i) { return r.key !== live[i].key || !live[i].chart; })) return false;
+    var a0 = body.querySelector('.pmu-acc'), a1 = dry.querySelector('.pmu-acc');
+    if (!a0 || !a1 || a0.className !== a1.className || a0.getAttribute('data-mode') !== a1.getAttribute('data-mode')) return false;
+    if (a0.classList.contains('is-single')) { if (!C.livePatch(body, dry, ctx)) return false; }
+    else {
+      var r0 = a0.querySelectorAll('.pmu-accrow'), r1 = a1.querySelectorAll('.pmu-accrow');
+      if (r0.length !== r1.length) return false;
+      for (var i = 0; i < r0.length; i++) {
+        if (r0[i].getAttribute('data-acct') !== r1[i].getAttribute('data-acct') || r0[i].querySelectorAll('.pmu-acccell').length !== r1[i].querySelectorAll('.pmu-acccell').length) return false;
+        var w0 = Array.prototype.map.call(r0[i].querySelectorAll('.pmu-acccell'), function (c) { return c.getAttribute('data-win') + (c.classList.contains('is-merged') ? 'm' : ''); }).join(',');
+        var w1 = Array.prototype.map.call(r1[i].querySelectorAll('.pmu-acccell'), function (c) { return c.getAttribute('data-win') + (c.classList.contains('is-merged') ? 'm' : ''); }).join(',');
+        if (w0 !== w1) return false;
+      }
+      Array.prototype.forEach.call(r0, function (row, k) {
+        var nx = r1[k];
+        ['class', 'data-state', 'data-flash-sig', 'style', 'data-pm-hover-label', 'data-pm-hover-detail'].forEach(function (an) { var v = nx.getAttribute(an); if (v === null) row.removeAttribute(an); else if (row.getAttribute(an) !== v) row.setAttribute(an, v); });
+        /* the state words cross-fade (160) and a Use button that becomes available fades in (200), WOW-SPEC-3 8.4 */
+        var g0 = row.querySelector('.pmu-accglyph'), g1 = nx.querySelector('.pmu-accglyph'), glyphChanged = g0 && g1 && g0.innerHTML !== g1.innerHTML;
+        ['.pmu-accid', '.pmu-accactcell'].forEach(function (sel) {
+          var e0 = row.querySelector(sel), e1 = nx.querySelector(sel); if (!e0 || !e1 || e0.innerHTML === e1.innerHTML) return;
+          C.setHtml(e0, e1.innerHTML);
+          /* a state glyph that changes (a cooldown ending: hourglass -> standby check) draws in with a pop (260) */
+          if (sel === '.pmu-accid' && glyphChanged && !ctx.liveFinal && !(PMU.motion.reduced && PMU.motion.reduced())) {
+            var ng = e0.querySelector('.pmu-accglyph'); if (ng) PMU.motion.animate(ng, [{ transform: 'scale(.3)', opacity: 0 }, { transform: 'scale(1.2)', opacity: 1, offset: 0.6 }, { transform: 'none', opacity: 1 }], { dur: 260, easing: PMU.motion.family && /retro|nier/.test(PMU.motion.family()) ? 'steps(3,jump-start)' : 'cubic-bezier(.34,1.45,.64,1)' });
+          }
+          if (!ctx.liveFinal && !(PMU.motion.reduced && PMU.motion.reduced())) PMU.motion.animate(e0, [{ opacity: 0.25 }, { opacity: 1 }], { dur: sel === '.pmu-accactcell' ? 200 : 160, easing: 'cubic-bezier(.22,.8,.28,1)' });
+        });
+        Array.prototype.forEach.call(row.querySelectorAll('.pmu-acccell.is-merged'), function (c0, j) { var c1 = nx.querySelectorAll('.pmu-acccell.is-merged')[j]; if (c1 && c0.innerHTML !== c1.innerHTML) C.setHtml(c0, c1.innerHTML); });
+      });
+      var m0 = a0.querySelector(':scope > .pmu-more:not([data-auto])'), m1 = a1.querySelector(':scope > .pmu-more');
+      if (m0 && m1) { if (m0.textContent !== m1.textContent && !m0.hasAttribute('data-base')) m0.textContent = m1.textContent; ['data-pm-hover-label', 'data-pm-hover-detail'].forEach(function (an) { if (m1.hasAttribute(an)) m0.setAttribute(an, m1.getAttribute(an)); }); }
+      else if (!!m0 !== !!m1) return true;   /* the line comes or goes with an account; the next idle refresh lays it out */
+    }
+    next.forEach(function (r, i) { var same = false; try { same = JSON.stringify(r.spec) === JSON.stringify(live[i].spec); } catch (error) {} if (!same) C.chartTo(live[i].chart, r.spec, ctx); live[i].spec = r.spec; });
+    var f0 = body.querySelector('.pmu-accfoot, .pmu-accsfoot'), f1 = dry.querySelector('.pmu-accfoot, .pmu-accsfoot');
+    if (f0 && f1 && f0.innerHTML !== f1.innerHTML) C.setHtml(f0, f1.innerHTML);
+    body._pmuSig = dry._pmuSig; body._pmuFoot = dry._pmuFoot;
+    var pv = PMU.roster.provider(ctx.id.replace(/^acct-/, '')); if (pv) body._pmuPlateShape = plateShape(pv);
+    return true;
+  }
 
+  function footLinesOf(p, th) {
+    var footLines = [];
+    var fb = fallbackSentence(p); if (fb) footLines.push({ glyph: 'alert', tone: 'warn', html: esc(fb) });
+    var mr = mostRoom(p); if (mr && p.windows.length) footLines.push({ glyph: 'info', html: esc(t('accounts.most_room', { name: mr.account.nickname, left: Math.round(mr.left) + '%' })) + (mr.account.fresh.stale ? ' <em>(' + esc(mr.account.ageText) + ')</em>' : '') });
+    var evs = switchEvents(p, 2);
+    if (!fb && evs.length) footLines.push({ glyph: 'refresh', html: esc((th.auto ? 'Auto-switch on' : 'Auto-switch off') + ' · ' + evs.map(function (e) { return whenText(e.at) + ' ' + e.text; }).join(' · ')) });
+    return footLines;
+  }
+  /* what a plate shows apart from its window readings (a live beat that only moves readings keeps this) */
+  function plateShape(p) {
+    var th = PMU.roster.thresholds();
+    return JSON.stringify([th.auto, th.switchLeft, th.warnLeft, p.accounts.map(function (a) { return [a.key, a.shownState, a.stateWord, a.effective, a.override, a.eligible.ok, a.ageText, a.binding ? a.binding.key : '', a.windows.map(function (w) { return w.pct === null ? 'n' : w.resetAt ? Math.round(w.resetAt / 60000) : 0; })]; })]);
+  }
+  /* a live beat on a plate: the readings move, nothing else did -> each meter takes its next spec through charts'
+     chart.live (an unchanged meter is not touched), the foot lines patch their words; no dry render (E3-7 budget) */
+  function plateLive(body, ctx) {
+    var p = PMU.roster.provider(ctx.id.replace(/^acct-/, '')), recs = body._pmuMeterRecs;
+    if (!p || !recs || !recs.length || body._pmuPlateShape !== plateShape(p) || recs.some(function (r) { return !r.make || !r.chart; })) return false;
+    var acc = {}; p.accounts.forEach(function (a) { acc[a.key] = a; });
+    recs.forEach(function (r) {
+      var k = r.key.split('|'), a = acc[k[0]]; if (!a) return;
+      var w = k[1] === 'binding' ? a.binding || a.windows[0] : a.windows.filter(function (x) { return x.key === k[1]; })[0]; if (!w) return;
+      var spec = r.make(a, w), same = false;
+      try { same = JSON.stringify(spec) === JSON.stringify(r.spec); } catch (error) {}
+      if (!same) { C.chartTo(r.chart, spec, ctx); r.spec = spec; }
+    });
+    var lines = footLinesOf(p, PMU.roster.thresholds()), shown = body.querySelectorAll('.pmu-accfootline > span');
+    Array.prototype.forEach.call(shown, function (sp, i) { if (lines[i] && sp.innerHTML !== lines[i].html) C.setHtml(sp, lines[i].html); });
+    return true;
+  }
   /* the action word of a row, for the action column's width: Use / Sign in / Set up / Active / Active · override */
   function actText(a, full) {
     if (a.effective && (a.shownState === 'active' || a.override)) return { t: a.override ? 'Active · override' : 'Active', btn: false };
@@ -111,9 +200,21 @@
     var bw = ctx.tier.bw, n = p.windows.length, GAP = 16;
     var bh = ctx.tier.bh;
     var acts = p.accounts.map(function (a) { return actText(a, false); });
-    var actW = Math.ceil(Math.max(48, Math.max.apply(null, acts.map(function (x) { return x.t ? tw(x.t, 12.5, x.btn ? 600 : 640) + (x.btn ? 22 : 2) : 0; }))));
+    /* WOW-SPEC-3 9.1 / N3-6: the column is as wide as the widest word ANY row can show in any state it can reach by a
+       click (Use, Active, Active · override), so "Use this account" never re-lays the plate (5-hour / weekly columns ->
+       binding window) and an unchanged reading never re-rolls */
+    /* "Active · override" takes two lines in that column rather than widen it (a wider column would cost the plate its
+       window columns at 1920: Codex) */
+    var canWords = function (a, full) {
+      var cur = actText(a, full), w = [cur.t === 'Active · override' ? { t: 'Active', btn: false } : cur];
+      if (a.supportsManual) { w.push({ t: 'Active', btn: false }); w.push({ t: full ? t('accounts.use_override') : 'Use', btn: true }); }
+      return w;
+    };
+    /* the word's measure plus its padding; a state word keeps 8 px (Mac film: "Active · override" wrapped at +2) */
+    var wOf = function (x) { return x.t ? tw(x.t, 12.5, x.btn ? 600 : 640) * 1.04 + (x.btn ? 22 : 8) : 0; };
+    var actW = Math.ceil(Math.max(48, Math.max.apply(null, p.accounts.map(function (a) { return Math.max.apply(null, canWords(a, false).map(wOf)); }))));
     var fullAct = n && bw >= 150 + n * 112 + 176 + GAP * (n + 1);
-    if (fullAct) actW = Math.ceil(Math.max(actW, Math.max.apply(null, p.accounts.map(function (a) { var x = actText(a, true); return x.t ? tw(x.t, 12.5, 600) + (x.btn ? 22 : 2) : 0; }))));
+    if (fullAct) actW = Math.ceil(Math.max(actW, Math.max.apply(null, p.accounts.map(function (a) { return Math.max.apply(null, canWords(a, true).map(wOf)); }))));
     /* a window column keeps "78% used" and "resets in 1h 41m" on one line each from about 104 px */
     var IDENT = 112, WIN = 104;
     var mode = !n ? 'none' : bw >= IDENT + n * WIN + actW + GAP * (n + 1) ? 'full' : bw >= 100 + WIN + actW + GAP * 2 ? 'binding' : 'narrow';
@@ -125,11 +226,7 @@
       (mode === 'binding' ? '<span class="pmu-cap">BINDING WINDOW</span>' : p.windows.map(function (w) { return '<span class="pmu-cap">' + esc(w.label.replace(/ window$/i, '').toUpperCase()) + '</span>'; }).join('')) +
       '<span></span></div>';
     /* foot copy (R-ACCT-10), most room, Codex: auto-switch state and the last two switch events */
-    var th = PMU.roster.thresholds(), footLines = [];
-    var fb = fallbackSentence(p); if (fb) footLines.push({ glyph: 'alert', tone: 'warn', html: esc(fb) });
-    var mr = mostRoom(p); if (mr && p.windows.length) footLines.push({ glyph: 'info', html: esc(t('accounts.most_room', { name: mr.account.nickname, left: Math.round(mr.left) + '%' })) + (mr.account.fresh.stale ? ' <em>(' + esc(mr.account.ageText) + ')</em>' : '') });
-    var evs = switchEvents(p, 2);
-    if (!fb && evs.length) footLines.push({ glyph: 'refresh', html: esc((th.auto ? 'Auto-switch on' : 'Auto-switch off') + ' · ' + evs.map(function (e) { return whenText(e.at) + ' ' + e.text; }).join(' · ')) });
+    var th = PMU.roster.thresholds(), footLines = footLinesOf(p, th);
     var bandH = band ? 26 : 0, rowsN = p.accounts.length;
     /* the grid's own share of the width (fr columns above their minimums), for the wrap-aware row heights */
     var free = bw - actW - GAP * ((mode === 'full' ? n : mode === 'narrow' ? 0 : 1) + 1);
@@ -189,7 +286,7 @@
       var line2 = [!stateInAct && longState && a.plan ? esc(a.plan) : '', a.host ? esc(a.host) : '', a.fresh.stale ? '<span class="pmu-stale">' + C.glyph('clockCircle') + esc(a.ageText) + '</span>' : esc(a.ageText)].filter(Boolean).join('<i class="pmu-dot"> · </i>');
       var amountsLine = a.amounts.length && !hidden && n ? '<span class="pmu-amounts">' + a.amounts.slice(0, 1).map(function (x) { return esc(x.label) + ' <b>' + esc(x.value || x.word) + '</b>' + (x.suffix ? ' ' + esc(x.suffix) : ''); }).join('') + '</span>' : '';
       var ident = '<span class="pmu-accid"><span class="pmu-accglyph">' + (a.stateGlyph ? C.glyph(a.stateGlyph) : '') + '</span>' +
-        '<span class="pmu-acctext"><b class="pmu-ident' + (a.effective ? ' is-eff' : p.effective ? ' is-other' : '') + '">' + esc(a.nickname) + '</b>' +
+        '<span class="pmu-acctext"><b class="pmu-ident' + (a.effective ? ' is-eff' : p.effective ? ' is-other' : '') + '"' + C.shareAttr('acct:' + a.key) + '>' + esc(a.nickname) + '</b>' +
         (comfy ? (line1 ? '<span class="pmu-identmeta">' + line1 + '</span>' : '') + '<span class="pmu-identmeta is-2">' + line2 + '</span>' + amountsLine
           : '<span class="pmu-identmeta">' + (stateInAct ? esc(a.plan || '') : stateHtml(a, { glyph: false })) + '</span>') + '</span></span>';
       var cells;
@@ -197,11 +294,11 @@
         var word = !n ? a.noWindowsWord || 'Quota not exposed' : (a.windows[0].note && /limit/.test(a.windows[0].note) ? 'Limit not exposed' : 'Quota not exposed');
         cells = ['<span class="pmu-acccell is-merged"' + (mode === 'full' && n > 1 ? ' style="grid-column:span ' + n + '"' : '') + '>' + (a.amounts.length ? amountLines(a, 2, bw < 420) : '') +
           (!n && a.amounts.length ? '' : '<span class="pmu-accna">' + C.vs('not_exposed', word) + '</span>') + '</span>'];
-      } else if (mode === 'full') cells = p.windows.map(function (w) { return '<span class="pmu-acccell" data-win="' + esc(w.key) + '"></span>'; });
-      else cells = ['<span class="pmu-acccell" data-win="binding"></span>'];
+      } else if (mode === 'full') cells = p.windows.map(function (w) { return '<span class="pmu-acccell" data-win="' + esc(w.key) + '"' + C.shareAttr('win:' + a.key + '/' + w.key) + '></span>'; });
+      else { var bwin = a.binding || a.windows[0]; cells = ['<span class="pmu-acccell" data-win="binding"' + (bwin ? C.shareAttr('win:' + a.key + '/' + bwin.key) : '') + '></span>']; }
       var actCell = '<span class="pmu-accactcell">' + useBtn(a, fullAct) + '</span>';
       var sig = a.shownState + '|' + a.effective + '|' + a.windows.map(function (w) { return w.pct; }).join(',');
-      var parts = mode === 'narrow' ? ident + actCell + cells.join('') : ident + cells.join('') + actCell;
+      var parts = '<i class="pmu-acclight" aria-hidden="true"></i>' + (mode === 'narrow' ? ident + actCell + cells.join('') : ident + cells.join('') + actCell);
       return '<div class="pmu-row pmu-accrow' + (comfy ? ' is-comfy' : ' is-compact') + (a.effective ? ' is-eff' : '') + '" data-reveal data-flash-key="' + esc(a.key) + '" data-flash-sig="' + esc(sig) + '" data-acct="' + esc(a.key) + '" data-state="' + a.shownState + '" data-pmu-act="acct-inspect" data-value="' + esc(a.key) + '" role="button" tabindex="0"' +
         ' style="grid-template-columns:' + tmpl + '"' + C.hover(a.nickname, a.identity + (a.routeRole ? ' · ' + a.routeRole : '') + ' · priority ' + a.priority) + '>' + parts + '</div>';
     }).join('');
@@ -218,14 +315,16 @@
       if (mode !== 'full') {
         var b = a.binding || a.windows[0];
         var host = row.querySelector('[data-win="binding"]');
-        if (b) meter(body, a.key + '|binding', host, Object.assign(meterOpts(a, p, size, b, true, !comfy), { label: b.short }), { label: a.nickname + ' ' + b.label });
+        var mkB = function (a2, w2) { return Object.assign(meterOpts(a2, p, size, w2, true, !comfy), { label: w2.short }); };
+        if (b) meter(body, a.key + '|binding', host, mkB(a, b), { label: a.nickname + ' ' + b.label }, mkB);
         return;
       }
+      var mkW = function (a2, w2) { return Object.assign(meterOpts(a2, p, size, w2, true, !comfy), { noLabel: true }); };
       a.windows.forEach(function (w) {
         var h = row.querySelector('[data-win="' + w.key + '"]');
         /* a window column names its window in the column head, so a missing reading says "Not exposed" at every width
            (NieR Light at 1440: "Quota not exposed" ran into the next column's "17%") */
-        meter(body, a.key + '|' + w.key, h, Object.assign(meterOpts(a, p, size, w, true, !comfy), { noLabel: true }), { label: a.nickname + ' ' + w.label });
+        meter(body, a.key + '|' + w.key, h, mkW(a, w), { label: a.nickname + ' ' + w.label }, mkW);
       });
     });
     sealPlate(body);
@@ -249,33 +348,49 @@
       spend = Object.assign({}, spend, { suffix: (spend.suffix ? spend.suffix + ' · ' : '') + (gone.note || 'limit not exposed') });
       a = Object.assign({}, a, { amounts: a.amounts.map(function (x) { return x.label === spend.label ? spend : x; }) });
     }
-    wins.forEach(function (w, i) { blocks.push({ h: mh, html: '<div class="pmu-accmeter" data-win="' + esc(w.key) + '"></div>', win: w }); });
+    wins.forEach(function (w, i) { blocks.push({ h: mh, html: '<div class="pmu-accmeter" data-win="' + esc(w.key) + '"' + C.shareAttr('win:' + a.key + '/' + w.key) + '></div>', win: w }); });
     if (!p.windows.length && (a.noWindowsWord || !a.amounts.length)) blocks.push({ h: 58, html: '<div class="pmu-accmeter is-na"><div class="pmu-natrack"></div>' + C.vs('not_exposed', a.noWindowsWord ? a.noWindowsWord.charAt(0).toUpperCase() + a.noWindowsWord.slice(1) : 'Quota not exposed') + '</div>' });
     a.amounts.forEach(function (x) { var nar = ctx.tier.bw < 260; blocks.push({ h: x.suffix && nar ? 50 : 32, html: amountLines({ amounts: [x] }, 1, nar) }); });
     /* the plate's facts in priority order, each hidden whole when it does not fit (a tall plate shows them all instead
-       of an empty band); a fact's height follows its wrapped label and value */
-    [['Plan', a.planLine || a.plan], ['Route role', a.routeRole], ['Auth', a.auth], ['Source', a.fresh.source], ['Default', a.isDefault ? 'yes' : 'no']]
+       of an empty band); a fact's height follows its wrapped label and value. A wide plate (a 10 x 5 strip) lays them
+       out in columns under its meters (C.factLayout) instead of one per line (round 3: OpenCode Go at 1920 showed no fact
+       over a 75 px band) */
+    var plateFacts = [['Plan', a.planLine || a.plan], ['Route role', a.routeRole], ['Auth', a.auth], ['Source', a.fresh.source], ['Default', a.isDefault ? 'yes' : 'no']]
       .concat(a.legacy ? [['Billing', a.legacy.billing_basis], ['Entitlement', a.legacy.entitlement_class], ['Settlement', a.legacy.settlement_status]] : [])
-      .forEach(function (f) { if (f[1]) blocks.push({ h: C.factH(f, ctx.tier.bw), html: C.facts([f]) }); });
+      .filter(function (f) { return f[1]; });
+    var wideFacts = ctx.tier.bw >= 360 && plateFacts.length > 1;
+    if (!wideFacts) plateFacts.forEach(function (f) { blocks.push({ h: C.factH(f, ctx.tier.bw), html: C.facts([f]) }); });
     /* the single plate spaces its blocks 12 px apart (consecutive facts sit flush, separated by their hairline): the
        budget counts those gaps, so the last block never slides under the footer */
     var prevFact = false;
     blocks.forEach(function (b, i) { var isFact = !b.win && b.html.indexOf('pmu-facts') >= 0; b.h += i === 0 || (isFact && prevFact) ? 0 : 12; prevFact = isFact; });
-    var res = C.stack(blocks, bh - footH - 8);
+    var res = C.stack(blocks, bh - footH - 8), headP = C.smallCard(ctx);
+    if (wideFacts) {
+      /* the meters and amounts first (as stacked), then the facts in columns in the room they leave */
+      var lay = C.factLayout(plateFacts, ctx.tier.bw, 0, 3), roomF = bh - footH - 8 - res.used - (res.used ? 12 : 0);
+      var frF = lay.fit(roomF), moreF = false;
+      if (frF.n < plateFacts.length && !headP && roomF - 30 >= 27) { frF = lay.fit(roomF - 30); moreF = true; }
+      var hidF = plateFacts.slice(frF.n);
+      if (frF.n) { res.html += lay.html(frF.n); res.used += (res.used ? 12 : 0) + frF.used; }
+      hidF.forEach(function (f) { res.hidden.push({ h: 27, html: C.facts([f]) }); });
+      if (!moreF && !headP && hidF.length && roomF < 60) headP = true;   /* no room even for the line: the head counts them */
+    }
     /* anything that does not fit is counted on the plate's own "N more" line (inside the plate, above its footer; its
        hover tag lists them) and the line's 33 px come off the budget (CONTENT-3: the fit pass's line used to land under
-       the footer after it trimmed two facts) */
-    if (res.hidden.length) res = C.stack(blocks, bh - footH - 8 - 33);
+       the footer after it trimmed two facts); a narrow plate counts them in its head instead (round 3) */
+    if (res.hidden.length && !headP && !wideFacts) res = C.stack(blocks, bh - footH - 8 - 30);
     var hiddenWins = res.hidden.filter(function (b) { return b.win; }).length, hiddenN = res.hidden.length;
     body._pmuWinHidden = hiddenWins;
     var foot = '<div class="pmu-accsfoot"><span class="pmu-sampled' + (a.fresh.stale ? ' is-stale' : '') + '">' + (a.fresh.stale ? C.glyph('clockCircle') : '') + esc(a.fresh.ageS === null ? 'no reading yet' : 'sampled ' + a.ageText.replace(/^cached /, '')) + '</span>' +
       (ctx.tier.bw < 200 && actText(a).btn ? '' : '<span class="pmu-host">' + esc(a.host || '') + '</span>') + (actText(a).btn ? useBtn(a, false) : '') + '</div>';
     /* the windows and facts the plate has no room for: listed in the "N more" line's hover tag, or the plate's (CONTENT-3) */
     var oneFold = res.hidden.map(function (b) { return b.win ? b.win.label + ' ' + (b.win.pct === null ? PMU.roster.vsWord(b.win) : C.fmt(b.win.pct, 'pct') + ' used · ' + PMU.fmt.resetLine(b.win).text) : String(b.html || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(); }).filter(Boolean);
-    body.innerHTML = '<div class="pmu-acc is-single" data-acct="' + esc(a.key) + '" data-state="' + a.shownState + '">' + res.html + (hiddenN ? C.more(hiddenN, hiddenWins === hiddenN ? 'windows' : 'facts', ctx.tier.bw < 200, oneFold) : '') + '</div>' + foot;
+    C.headMore(ctx, body, headP ? oneFold : []);
+    body.innerHTML = '<div class="pmu-acc is-single" data-acct="' + esc(a.key) + '" data-state="' + a.shownState + '">' + res.html + (hiddenN && !headP ? C.countRow(oneFold) : '') + '</div>' + foot;
+    var mkS = function (a2, w2) { return Object.assign(meterOpts(a2, p, size === 'i' && w2.pct !== null ? 'i' : 'k', w2, true), { label: w2.label }); };
     wins.forEach(function (w) {
       var h = body.querySelector('.pmu-accmeter[data-win="' + w.key + '"]');
-      meter(body, a.key + '|' + w.key, h, Object.assign(meterOpts(a, p, size === 'i' && w.pct !== null ? 'i' : 'k', w, true), { label: w.label }), { label: p.name + ' ' + w.label });
+      meter(body, a.key + '|' + w.key, h, mkS(a, w), { label: p.name + ' ' + w.label }, mkS);
     });
     sealPlate(body);
   }
@@ -298,16 +413,46 @@
     var group = ctx.model && ctx.model.group, ro = PMU.roster.read(), g = ro.groups.filter(function (x) { return x.id === group; })[0];
     return g ? g.providers.filter(function (p) { return !p.accounts.length; }).map(function (p) { return [p.name, p.statusWord + ' · ' + (p.windows.length ? p.windows.map(function (w) { return w.label; }).join(', ') : 'no plan windows') + ' · ' + p.product]; }) : [];
   };
+  /* a live beat on the ladder (a binding window moved): same rows in the same order -> each row's bar, value and ramp move
+     in place (ladMove), the hero number rolls and its sub follows; anything else -> the dry-render update */
+  function ladderLive(body, ctx) {
+    var lad = body.querySelector('.pmu-ladder'); if (!lad) return false;
+    var L = C.ladderRows(), rows = lad.querySelectorAll('.pmu-ladrow'), th = PMU.roster.thresholds();
+    var byAcct = {}; L.rows.forEach(function (r) { byAcct[r.a.key] = r; });
+    var order = L.rows.map(function (r) { return r.a.key; }).slice(0, rows.length).join(',');
+    var shown = Array.prototype.slice.call(rows).sort(function (a, z) { return (a.style.order !== '' ? +a.style.order : 0) - (z.style.order !== '' ? +z.style.order : 0); });
+    if (shown.map(function (r) { return r.getAttribute('data-acct'); }).join(',') !== order) return false;
+    Array.prototype.forEach.call(rows, function (r0) {
+      var r = byAcct[r0.getAttribute('data-acct')]; if (!r) return;
+      var usedV = Math.max(0, Math.min(100, 100 - r.left)), tone = r.w.tone || 'calm';
+      var tmp = document.createElement('div');
+      tmp.innerHTML = '<div class="pmu-ladrow"' + (PMU.charts && PMU.charts.rampAttr ? PMU.charts.rampAttr(usedV, tone) : '') + ' style="--v:' + (+usedV.toFixed(1)) + '"><span class="pmu-ladtrack"><i class="pmu-ladfill" style="transform:translateX(' + ladOff(r.left) + '%)"></i></span><b class="pmu-ladval"><span class="pmu-num" data-v="' + Math.round(r.left) + '">' + esc(C.numOnly(Math.round(r.left), 'pct')) + '</span>%</b></div>';
+      var r1 = tmp.firstChild;
+      if (r0.getAttribute('data-tone') !== tone) r0.setAttribute('data-tone', tone);
+      ladMove(r0, r1, ctx);
+    });
+    var top = L.rows[0], hn = lad.querySelector('.pmu-herohead .pmu-num[data-k]');
+    if (top && hn) { var o = parseFloat(hn.getAttribute('data-v')), z = Math.round(top.left); if (isFinite(o) && o !== z) { hn.setAttribute('data-v', String(z)); if (ctx.liveFinal) hn.textContent = C.numOnly(z, 'pct'); else PMU.motion.countUp(hn, o, z, function (v) { return C.numOnly(v, 'pct'); }, { dur: 'value' }); } }
+    var past = L.rows.filter(function (r) { return r.left <= th.switchLeft; }).length, sub = lad.querySelector('.pmu-herosub');
+    if (sub) { var sh = (th.auto ? 'switch at ' + b((100 - th.switchLeft) + '%') + ' used' : 'auto-switch ' + b('off')) + (past ? ' · ' + b(past) + ' past the line' : ''); if (sub.innerHTML !== sh) C.setHtml(sub, sh); }
+    return true;
+  }
   C.kind('switch', switchImpl = {
+    live: function (body, ctx) { return body._pmuSw && body._pmuSw.form === 'ladder' ? ladderLive(body, ctx) : false; },
+    liveSig: function () {
+      var th = PMU.roster.thresholds();
+      return JSON.stringify([th.auto, th.switchLeft, th.warnLeft, C.ladderRows().rows.map(function (r) { return [r.a.key, r.left, r.a.effective, r.w.tone]; }),
+        PMU.roster.read().providers.map(function (p) { var mr = p.accounts.length > 1 ? mostRoom(p) : null; return mr ? [p.id, mr.account.key, mr.left] : 0; })]);
+    },
     render: function (body, ctx) {
       var th = PMU.roster.thresholds(), ok = th.available;
       var used = 100 - th.switchLeft, warnUsed = 100 - th.warnLeft;
       var panel = ctx.tier.w === 'xs' || ctx.tier.w === 's' || (ctx.tier.bw < 470 && ctx.tier.bh >= 96);   /* the one-line controls need about 450 px */
       var dis = ok ? '' : ' disabled';
       var reason = ok ? '' : 'Settings is not available';
-      var toggle = '<button type="button" class="pmu-toggle' + (th.auto ? ' on' : '') + '" role="switch" aria-checked="' + th.auto + '" data-pmu-act="auto"' + dis +
+      var toggle = '<button type="button" class="pmu-toggle' + (th.auto ? ' on' : '') + '" role="switch" aria-checked="' + th.auto + '" data-pmu-act="auto" data-share="ctl:auto-switch"' + dis +
         C.hover('Auto-switch', reason || 'Shared with Settings > AI > Providers & Accounts (ai.accounts.multi-account-switching). ' + t('accounts.not_consent')) + '></button><span class="pmu-swlabel">Auto-switch</span>';
-      var stepper = '<span class="pmu-swat">at</span><span class="pmu-stepper"' + C.hover('Switch level', reason || 'ai.accounts.hard-switch-level: switch at ' + used + '% used (' + th.switchLeft + '% left)') + '>' +
+      var stepper = '<span class="pmu-swat">at</span><span class="pmu-stepper" data-share="ctl:threshold"' + C.hover('Switch level', reason || 'ai.accounts.hard-switch-level: switch at ' + used + '% used (' + th.switchLeft + '% left)') + '>' +
         '<button type="button" data-pmu-act="sw-step" data-value="1" aria-label="Switch earlier"' + (ok && th.switchLeft < 30 ? '' : ' disabled') + '>' + SVG.minus + '</button>' +
         '<button type="button" class="pmu-stepval" data-pmu-act="sw-pick" aria-haspopup="menu"' + dis + '>' + used + '%</button>' +
         '<button type="button" data-pmu-act="sw-step" data-value="-1" aria-label="Switch later"' + (ok && th.switchLeft > 5 ? '' : ' disabled') + '>' + SVG.plus + '</button></span><span class="pmu-swat">used</span>';
@@ -367,11 +512,20 @@
         var c = root.cloneNode(true);
         Array.prototype.forEach.call(c.querySelectorAll('[data-pmu-chart]'), function (el) { el.remove(); });
         Array.prototype.forEach.call(c.querySelectorAll('.pmu-stepval, .pmu-swwarn b, .pmu-herosub, .pmu-heronum, .pmu-ladval'), function (el) { el.textContent = ''; });
+        /* the ladder's rows compared as a set per column (a re-rank moves them in place, ladRerank) */
+        Array.prototype.forEach.call(c.querySelectorAll('.pmu-ladcol'), function (col) {
+          var rs = Array.prototype.slice.call(col.querySelectorAll(':scope > .pmu-ladrow')).sort(function (x, y) { return x.getAttribute('data-acct') < y.getAttribute('data-acct') ? -1 : 1; });
+          var line = col.querySelector(':scope > .pmu-ladline'); rs.forEach(function (r) { col.insertBefore(r, line); });
+        });
         /* the app's hover-tag controller adds its own attributes to live nodes (data-pm-hover-*, aria-describedby) */
-        return c.innerHTML.replace(/ (?:aria-checked|aria-label|aria-describedby|data-pm-hover-[a-z-]+|style|data-tone|data-off|disabled)(?:="[^"]*")?/g, '').replace(/ on"/g, '"');
+        return c.innerHTML.replace(/ (?:aria-checked|aria-label|aria-describedby|data-pm-hover-[a-z-]+|style|data-tone|data-ramp|data-v|data-off|disabled)(?:="[^"]*")?/g, '').replace(/ on"/g, '"');
       };
       var next = dry.querySelector('.pmu-switch, .pmu-ladder');
-      if (!next || (dry._pmuSw || {}).form !== body._pmuSw.form || norm(next) !== norm(live)) { body._pmuPatchMiss = next ? [norm(live), norm(next)] : null; return false; }
+      var order = function (root) { return Array.prototype.map.call(root.querySelectorAll('.pmu-ladrow'), function (r) { return r.getAttribute('data-acct'); }).join(','); };
+      if (!next || (dry._pmuSw || {}).form !== body._pmuSw.form) return false;
+      /* a re-rank (the order of the ladder changed): rows FLIP to their new places (WOW-SPEC-3 8.4) */
+      if (order(next) !== order(live) && !ladRerank(live, next, ctx)) return false;
+      if (norm(next) !== norm(live)) { body._pmuPatchMiss = [norm(live), norm(next)]; return false; }
       var f = PMU.motion.family ? PMU.motion.family() : 'basic', st = f === 'retro' || f === 'nier';
       /* toggle */
       var t0 = live.querySelector('.pmu-toggle'), t1 = next.querySelector('.pmu-toggle');
@@ -388,7 +542,7 @@
       /* words cross-fade */
       ['.pmu-swwarn', '.pmu-herosub', '.pmu-herolabel'].forEach(function (sel) {
         var a0 = live.querySelector(sel), a1 = next.querySelector(sel);
-        if (a0 && a1 && a0.innerHTML !== a1.innerHTML) { a0.innerHTML = a1.innerHTML; copyHover(a1, a0); PMU.motion.animate(a0, [{ opacity: 0.25 }, { opacity: 1 }], { dur: 160, easing: 'cubic-bezier(.22,.8,.28,1)' }); }
+        if (a0 && a1 && a0.innerHTML !== a1.innerHTML) { C.setHtml(a0, a1.innerHTML); copyHover(a1, a0); if (ctx.reason !== 'live') PMU.motion.animate(a0, [{ opacity: 0.25 }, { opacity: 1 }], { dur: 160, easing: 'cubic-bezier(.22,.8,.28,1)' }); }
       });
       /* the ladder's switch line slides to the new level (or dims when auto-switch is off); rows take their new tone */
       var cols0 = live.querySelectorAll('.pmu-ladcol'), cols1 = next.querySelectorAll('.pmu-ladcol');
@@ -406,15 +560,65 @@
           ln.toggleAttribute('data-off', off);
           ln._pmuSlides = (ln._pmuSlides || []).concat([PMU.motion.animate(ln, off ? [{ opacity: 1 }, { opacity: 0.25 }] : [{ opacity: 0.25 }, { opacity: 1 }], { dur: st ? 120 : 240, easing: st ? 'steps(3,jump-start)' : 'cubic-bezier(.2,.8,.2,1)' })]);
         }
-        Array.prototype.forEach.call(c1.querySelectorAll('.pmu-ladrow'), function (r1, k) {
-          var r0 = c0.querySelectorAll('.pmu-ladrow')[k]; if (!r0) return;
-          if (r0.getAttribute('data-tone') !== r1.getAttribute('data-tone')) { r0.setAttribute('data-tone', r1.getAttribute('data-tone')); C.flashRow(r0); }
+        Array.prototype.forEach.call(c1.querySelectorAll('.pmu-ladrow'), function (r1) {
+          var r0 = c0.querySelector('.pmu-ladrow[data-acct="' + r1.getAttribute('data-acct') + '"]'); if (!r0) return;
+          var toneChanged = r0.getAttribute('data-tone') !== r1.getAttribute('data-tone');
+          if (toneChanged) r0.setAttribute('data-tone', r1.getAttribute('data-tone'));
+          ladMove(r0, r1, ctx);
+          if (toneChanged && ctx.reason !== 'live') C.flashRow(r0);
         });
       });
-      (dry._pmuSwCharts || []).forEach(function (r, i) { var lc = (body._pmuSwCharts || [])[i]; if (lc && lc.chart) { lc.chart.update(r.spec); lc.spec = r.spec; } });
+      (dry._pmuSwCharts || []).forEach(function (r, i) { var lc = (body._pmuSwCharts || [])[i]; if (lc && lc.chart && JSON.stringify(lc.spec) !== JSON.stringify(r.spec)) { C.chartTo(lc.chart, r.spec, ctx); lc.spec = r.spec; } });
       return true;
     }
   });
+  /* one ladder row takes a new reading in place: the bar slides (520 ROLL, transform), the colour follows the ramp (--v,
+     data-ramp), the value rolls only its changed digits; live off screen writes final */
+  function ladMove(r0, r1, ctx) {
+    var f0 = r0.querySelector('.pmu-ladfill'), f1 = r1.querySelector('.pmu-ladfill');
+    var n0 = r0.querySelector('.pmu-ladval .pmu-num'), n1 = r1.querySelector('.pmu-ladval .pmu-num');
+    var fin = ctx.liveFinal || (PMU.motion.reduced && PMU.motion.reduced()), st = PMU.motion.family && /retro|nier/.test(PMU.motion.family());
+    if (r1.hasAttribute('data-ramp')) r0.setAttribute('data-ramp', r1.getAttribute('data-ramp'));
+    var v1 = r1.style.getPropertyValue('--v'); if (v1 && r0.style.getPropertyValue('--v') !== v1) r0.style.setProperty('--v', v1);
+    copyHover(r1, r0);
+    if (f0 && f1 && f0.style.transform !== f1.style.transform) {
+      var from = f0.style.transform; f0.style.transform = f1.style.transform;
+      if (!fin) PMU.motion.animate(f0, [{ transform: from }, { transform: f1.style.transform }], { dur: 520, easing: st ? 'steps(5,jump-start)' : 'cubic-bezier(.16,1,.3,1)' });
+    }
+    if (n0 && n1) {
+      var a = parseFloat(n0.getAttribute('data-v')), z = parseFloat(n1.getAttribute('data-v'));
+      if (isFinite(a) && isFinite(z) && a !== z) { n0.setAttribute('data-v', String(z)); if (fin) n0.textContent = n1.textContent; else PMU.motion.countUp(n0, a, z, function (v) { return String(Math.round(v)); }, { dur: 'value' }); }
+    }
+  }
+  /* the ladder re-ranks in place: inside each column the rows take their new order through CSS order (no child-list
+     change) and FLIP from their old slots (24 px rows, no layout read), 420 SLIDE 20 apart, the moved row carrying a soft
+     highlight; a row that changes column cannot move in place (false: re-render) */
+  function ladRerank(live, next, ctx) {
+    var c0 = live.querySelectorAll('.pmu-ladcol'), c1 = next.querySelectorAll('.pmu-ladcol');
+    if (c0.length !== c1.length) return false;
+    for (var i = 0; i < c0.length; i++) {
+      var a0 = Array.prototype.map.call(c0[i].querySelectorAll('.pmu-ladrow'), function (r) { return r.getAttribute('data-acct'); });
+      var a1 = Array.prototype.map.call(c1[i].querySelectorAll('.pmu-ladrow'), function (r) { return r.getAttribute('data-acct'); });
+      if (a0.slice().sort().join(',') !== a1.slice().sort().join(',')) return false;
+    }
+    var fin = ctx.liveFinal || (PMU.motion.reduced && PMU.motion.reduced()), st = PMU.motion.family && /retro|nier/.test(PMU.motion.family()), k = 0;
+    Array.prototype.forEach.call(c0, function (col, ci) {
+      var rows = Array.prototype.slice.call(col.querySelectorAll('.pmu-ladrow'));
+      var want = Array.prototype.map.call(c1[ci].querySelectorAll('.pmu-ladrow'), function (r) { return r.getAttribute('data-acct'); });
+      col.style.display = 'flex'; col.style.flexDirection = 'column';
+      rows.forEach(function (r, oldI) {
+        var newI = want.indexOf(r.getAttribute('data-acct'));
+        r.style.order = String(newI);
+        if (newI !== oldI && !fin) {
+          PMU.motion.animate(r, [{ transform: 'translateY(' + ((oldI - newI) * 24) + 'px)' }, { transform: 'none' }], { dur: st ? 200 : 420, delay: 20 * (k++), easing: st ? 'steps(4,jump-start)' : 'cubic-bezier(.22,1,.36,1)' });
+          if (PMU.film && PMU.film.flash && Math.abs(newI - oldI) > 0) PMU.film.flash(r, { noSweep: true, delay: 20 * k });
+        }
+      });
+    });
+    /* the live rows now read in the new order: the dry render's comparison runs against it */
+    Array.prototype.forEach.call(c1, function (col, ci) { Array.prototype.forEach.call(col.querySelectorAll('.pmu-ladrow'), function (r, j) { r.style.order = String(j); }); c1[ci].style.display = 'flex'; c1[ci].style.flexDirection = 'column'; });
+    return true;
+  }
   function copyHover(from, to) { ['data-pm-hover-label', 'data-pm-hover-detail'].forEach(function (a) { var v = from.getAttribute(a); if (v == null) to.removeAttribute(a); else to.setAttribute(a, v); }); }
 
   /* the Accounts hero (WOW-SPEC 4, LOOK-REVIEW-2 2): the auto-switch strip as a "most room now" ladder. Every account of
@@ -429,6 +633,9 @@
     rows.sort(function (x, y) { return (y.left - x.left) || (x.a.priority - y.a.priority); });
     return { rows: rows, none: none };
   };
+  /* a ladder bar is full width and translated (transform, so a live change runs on the compositor) */
+  function ladOff(left) { return -(100 - Math.max(0.5, Math.min(100, left))).toFixed(1); }
+  C.ladOff = ladOff;
   function ladderHtml(ctx, th, toggle, stepper, warn) {
     var L = C.ladderRows(), rows = L.rows, bw = ctx.tier.bw, bh = ctx.tier.bh;
     /* a narrow card stacks the number and the controls above the ladder */
@@ -465,11 +672,12 @@
     var rowHtml = function (r, i) {
       var winWord = winWordOf(r);
       var tone = r.w.tone || 'calm', eff = r.a.effective;
-      return '<div class="pmu-ladrow' + (eff ? ' is-eff' : '') + '" data-tone="' + tone + '" data-acct="' + esc(r.a.key) + '" data-pmu-act="acct-inspect" data-value="' + esc(r.a.key) + '" role="button" tabindex="0"' +
+      var usedV = Math.max(0, Math.min(100, 100 - r.left)), rk = PMU.charts && PMU.charts.rampAttr ? PMU.charts.rampAttr(usedV, tone) : '';
+      return '<div class="pmu-ladrow' + (eff ? ' is-eff' : '') + '" data-tone="' + tone + '"' + rk + ' style="--v:' + (+usedV.toFixed(1)) + '" data-acct="' + esc(r.a.key) + '" data-pmu-act="acct-inspect" data-value="' + esc(r.a.key) + '" role="button" tabindex="0"' +
         C.hover(r.p.name + ' · ' + r.a.nickname, C.fmt(r.left, 'pct') + ' left in the ' + r.w.short.toLowerCase() + ' window · ' + PMU.fmt.resetLine(r.w).text + ' · ' + r.a.stateWord + ' · ' + r.a.ageText) + '>' +
-        PMU.mark(r.p.id, 16) + '<span class="pmu-ladname"><b>' + esc(r.a.nickname) + '</b><em>' + esc((seen[r.a.nickname] > 1 ? famShort(r.p) + ' ' : '') + winWord) + '</em></span>' +
-        '<span class="pmu-ladtrack"><i class="pmu-ladfill" style="width:' + Math.max(0.5, Math.min(100, r.left)).toFixed(1) + '%"></i></span>' +
-        '<b class="pmu-ladval">' + esc(C.fmt(Math.round(r.left), 'pct')) + '</b>' + (eff ? '<span class="pmu-ladact">' + C.glyph('checkCircle') + '</span>' : '<span class="pmu-ladact"></span>') + '</div>';
+        PMU.mark(r.p.id, 16) + '<span class="pmu-ladname"><b' + C.shareAttr('acct:' + r.a.key) + '>' + esc(r.a.nickname) + '</b><em>' + esc((seen[r.a.nickname] > 1 ? famShort(r.p) + ' ' : '') + winWord) + '</em></span>' +
+        '<span class="pmu-ladtrack"' + C.shareAttr('win:' + r.a.key + '/' + r.w.key) + '><i class="pmu-ladfill" style="transform:translateX(' + ladOff(r.left) + '%)"></i></span>' +
+        '<b class="pmu-ladval" data-share-v="win:' + esc(r.a.key + '/' + r.w.key) + '"><span class="pmu-num" data-v="' + Math.round(r.left) + '">' + esc(C.numOnly(Math.round(r.left), 'pct')) + '</span>%</b>' + (eff ? '<span class="pmu-ladact">' + C.glyph('checkCircle') + '</span>' : '<span class="pmu-ladact"></span>') + '</div>';
     };
     return '<div class="pmu-ladder' + (stacked ? ' is-stacked' : '') + '" style="grid-template-columns:' + (stacked ? 'minmax(0,1fr)' : sideW + 'px minmax(0,1fr)') + ';--ln:' + nameCol + 'px">' +
       '<div class="pmu-ladside">' + head + '<div class="pmu-swctl pmu-ladctl">' + toggle + stepper + '</div><div class="pmu-ladwarn">' + warn + '</div></div>' +
@@ -487,7 +695,7 @@
     C.enterAll(body, ctx, d);
     Array.prototype.forEach.call(body.querySelectorAll('.pmu-ladrow'), function (row, i) {
       var fill = row.querySelector('.pmu-ladfill');
-      if (fill) PMU.motion.animate(fill, [{ transform: 'translateX(-100%)' }, { transform: 'translateX(0)' }], { dur: 900, delay: d + 36 * i, easing: st ? 'steps(6,jump-start)' : 'cubic-bezier(.16,1,.3,1)', fill: 'backwards' });
+      if (fill) PMU.motion.animate(fill, [{ transform: 'translateX(-100%)' }, { transform: fill.style.transform || 'translateX(0)' }], { dur: 900, delay: d + 36 * i, easing: st ? 'steps(6,jump-start)' : 'cubic-bezier(.16,1,.3,1)', fill: 'backwards' });
       PMU.motion.animate(row, [{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { dur: 280, delay: d + 36 * i, easing: st ? 'steps(3,jump-start)' : 'cubic-bezier(.22,.8,.28,1)', fill: 'backwards' });
     });
     Array.prototype.forEach.call(body.querySelectorAll('.pmu-ladline'), function (ln) {

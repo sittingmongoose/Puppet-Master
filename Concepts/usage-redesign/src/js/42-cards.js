@@ -65,11 +65,17 @@
      html, or {swatch: 'tk-in'} | {line: 'tk-cost'} | {half: ['tk-cw', 'tk-cr']} (token colours) | {mark: id}; default:
      the widget's provider (def.prov, or the provider of an acct-<providerId> plate) in plates and tiles */
   function swatch(tok, cls) { return '<i class="pmu-keysw' + (cls ? ' ' + cls : '') + '" style="--k:var(--pmu-' + esc(String(tok).replace(/^--pmu-/, '')) + ')"></i>'; }
+  /* a provider mark in a card head is a shared element of the flight (WOW-SPEC-3 6.3 prov:<p.id>, N3-1): it flies between
+     rooms that both show it */
+  function markHtml(id, size) {
+    var html = PMU.mark(id, size);
+    return id && html ? String(html).replace(/^(\s*<[a-zA-Z][\w-]*)/, '$1 data-share="prov:' + esc(id) + '"') : html;
+  }
   function keyHtml(def, ctx, form) {
     var size = form === 'plate' ? 24 : form === 'tile' ? 16 : 18;
     var k = def.key ? (typeof def.key === 'function' ? def.key(Object.assign({ form: form }, ctx)) : def.key) : null;
     if (k && typeof k === 'object') {
-      if (k.mark) return PMU.mark(k.mark, size);
+      if (k.mark) return markHtml(k.mark, size);
       if (k.swatch) return swatch(k.swatch);
       if (k.line) return swatch(k.line, 'is-line');
       if (k.half) return (k.half || []).map(function (h) { return swatch(h, 'is-half'); }).join('');
@@ -78,10 +84,10 @@
     }
     if (typeof k === 'string' && k) return k;
     var m = def.mark ? text(def.mark, ctx) : '';
-    if (m) return PMU.mark(m, size);
+    if (m) return markHtml(m, size);
     var acct = def.kind === 'provider' && /^acct-/.test(ctx.id) ? ctx.id.slice(5) : '';
     var prov = def.prov || acct;
-    if (prov && (form !== 'line' || acct)) return PMU.mark(prov, size);   /* provider widgets keep their mark in a line head too */
+    if (prov && (form !== 'line' || acct)) return markHtml(prov, size);   /* provider widgets keep their mark in a line head too */
     return '';
   }
   /* does the whole title fit its head line? Measured without a layout read: the card width from its grid rect and the
@@ -291,6 +297,8 @@
       card.setAttribute('aria-roledescription', 'panel');
       card.setAttribute('data-pm-hover-exempt', 'panel');   /* the title carries the panel's hover tag; the plate itself shows none (no tag over a keyboard move) */
       if (def.prov) card.setAttribute('data-prov', def.prov);
+      /* live readings this card shows without a share key on screen yet (an arriving alert): share-key prefixes */
+      if (def.live) card.setAttribute('data-live', [].concat(def.live).join(' '));
       var base = ctxBase(id, room), title = text(def.title, base), sub = text(def.meta, base);
       card.setAttribute('aria-label', title);
       card.innerHTML = '<header class="pmu-cardhead"><span class="pmu-cardkey" hidden></span>' +
@@ -375,7 +383,8 @@
   };
 
   /* tool clicks (delegated on the board) */
-  var boardEl = document.getElementById('pmuBoard');
+  /* delegated on the scroll pane: the board element is swapped on a room change (the old one leaves as the ghost) */
+  var boardEl = document.getElementById('pmuScroll') || document.getElementById('pmuBoard');
   if (boardEl) boardEl.addEventListener('click', function (event) {
     var tool = event.target.closest('.pmu-cardtools [data-tool]');
     if (!tool) return;

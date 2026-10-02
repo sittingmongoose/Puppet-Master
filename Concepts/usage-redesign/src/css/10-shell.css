@@ -11,14 +11,14 @@ html[data-theme^="retro"] #panel-usage .pmu-shell { --pmu-font: "IBM Plex Mono",
 html[data-o55-nier="on"] #panel-usage .pmu-shell { --pmu-font: "PM NieR Sans", var(--body-font, inherit); --pmu-mono: "PM NieR Mono", var(--mono-font, ui-monospace, monospace); }
 
 /* rail */
-#panel-usage .pmu-rail { display: flex; flex-direction: column; gap: 10px; width: 172px; min-width: 0; min-height: 0; padding: 14px 8px; border-right: 1px solid var(--pmu-rule);
+#panel-usage .pmu-rail { display: flex; flex-direction: column; gap: 10px; width: 182px; min-width: 0; min-height: 0; padding: 14px 8px; border-right: 1px solid var(--pmu-rule);
   background: var(--pmu-card); overflow: auto; scrollbar-width: none; }
-@container (min-width: 1000px) { #panel-usage .pmu-rail { width: 184px; } }
+@container (min-width: 1000px) { #panel-usage .pmu-rail { width: 188px; } }
 #panel-usage .pmu-brand h1 { margin: 2px 8px 4px; font-size: 15px; font-weight: 650; letter-spacing: -.01em; color: var(--pmu-ink); }
 #panel-usage .pmu-nav { position: relative; display: flex; flex-direction: column; gap: 1px; }
 #panel-usage .pmu-navink { position: absolute; left: 0; top: 0; width: 0; height: 0; border-radius: 8px; background: var(--pmu-row-hover); pointer-events: none;
   box-shadow: inset 2px 0 0 0 transparent; }
-#panel-usage .pmu-navbtn { position: relative; z-index: 1; display: flex; align-items: center; gap: 10px; width: 100%; height: 30px; padding: 0 10px; border: 0; border-radius: 8px;
+#panel-usage .pmu-navbtn { position: relative; z-index: 1; display: flex; align-items: center; gap: 8px; width: 100%; height: 30px; padding: 0 8px; border: 0; border-radius: 8px;
   background: transparent; color: var(--pmu-ink-2); font: inherit; font-size: 13px; text-align: left; cursor: pointer; transition: color calc(140ms * var(--pmu-speed, 1)); }
 #panel-usage .pmu-navbtn:hover { color: var(--pmu-ink); }
 #panel-usage .pmu-navbtn.active { color: var(--pmu-ink); font-weight: 600; }
@@ -36,15 +36,25 @@ html[data-theme^="retro"] #panel-usage .pmu-navbtn { font-size: 12.5px; gap: 8px
 /* stage and head (A1 2.2: room title 18 / 640) */
 #panel-usage .pmu-stage { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 0; overflow: hidden; }
 #panel-usage .pmu-stagehead { position: relative; z-index: 5; display: flex; align-items: center; gap: 12px; height: 52px; padding: 0 14px 0 18px; flex: none;
-  border-bottom: 1px solid var(--pmu-rule); background: var(--pmu-ground); }
-#panel-usage .pmu-titleblock { display: flex; align-items: baseline; gap: 12px; min-width: 0; flex: 1 1 auto; }
+  border-bottom: 1px solid var(--pmu-rule); background: transparent; }   /* WOW-SPEC-3 4.2: the key light shows behind the title */
+/* the title and its one-line subtitle stacked (E3-11): the subtitle gets the title block's whole width and shows whole or
+   not at all (fitDesc); 22 + 1 + 15 px inside the 52 px head */
+#panel-usage .pmu-titleblock { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 1px; min-width: 0; flex: 1 1 auto; }
 /* the old room's title leaving over the new one (46-shell.js titleGhost) */
 #panel-usage .pmu-titleblock.pmu-titleghost { position: absolute; z-index: 1; margin: 0; overflow: hidden; pointer-events: none; }
-#panel-usage .pmu-titleghost .pmu-roomdesc { flex: 1 1 0; }
+#panel-usage .pmu-titleghost .pmu-roomdesc { flex: none; }
 /* the title keeps its whole name; the one-line description takes what is left (and ellipsizes first) */
 #panel-usage #pmuRoomTitle { margin: 0; min-width: 72px; overflow: hidden; text-overflow: ellipsis; font-size: 18px; font-weight: 640; line-height: 22px; letter-spacing: -.015em;
   white-space: nowrap; outline: none; flex: 0 1 auto; max-width: 100%; }
-#panel-usage .pmu-roomdesc { margin: 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--pmu-ink-3); font-size: 12.5px; flex: 1 1 0; }
+/* E4 (NOTES3-content): a narrow head (Glass 1440 left the title 22 px short) shows the panel count without its word; the
+   grid icon and the hover tag "Panels in this room" carry it */
+#panel-usage .pmu-detlead { display: none; }
+@container (max-width: 800px) { #panel-usage .pmu-pcw { display: none; } #panel-usage .pmu-headctl { gap: 4px; }
+  #panel-usage .pmu-detlead { display: inline-grid; } #panel-usage #pmuDetailBtn .pmu-ctltext { display: none; } }
+#panel-usage .pmu-roomdesc { margin: 0; min-width: 0; max-width: 100%; overflow: hidden; text-overflow: clip; white-space: nowrap; color: var(--pmu-ink-3); font-size: 12px; line-height: 15px; flex: none; }
+/* E3-11: shown whole or not at all (46-shell.js fitDesc measures it); the demo hour's clock reads in the mono */
+#panel-usage .pmu-roomdesc[hidden] { display: none; }
+#panel-usage .pmu-roomdesc.is-demo { font-family: var(--pmu-mono); font-size: 12px; letter-spacing: .02em; color: var(--pmu-ink-2); }
 #panel-usage .pmu-headctl { display: flex; align-items: center; gap: 6px; flex: none; }
 #panel-usage .pmu-ctlbtn { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 8px 0 10px; border: 1px solid var(--pmu-rule); border-radius: 9px;
   background: transparent; color: var(--pmu-ink-2); font: inherit; font-size: 12.5px; cursor: pointer; white-space: nowrap; outline: none;
@@ -180,3 +190,44 @@ html[data-motion="reduced"] #panel-usage :is(.pmu-seg-ink, .pmu-toggle, .pmu-tog
   #panel-usage #pmuRoomTitle { font-size: 16.5px; letter-spacing: -.02em; }
   #panel-usage #pmuDetailLabel { max-width: 84px; }
 }
+
+/* ---- the Live control in the rail head beside "Usage" (WOW-SPEC-3 8.5, E3-8): a 6 px dot + "Live" (12.5 px, ink-2) /
+   a hollow ring + "Paused"; the chevron opens the Live menu. No pill, no tinted box; every glyph is inline SVG. Per family:
+   Basic mint dot, Friendly rose -> teal dot, Glass a dot with its own static glow, Retro [LIVE] / [HOLD] with a block
+   cursor, NieR a diamond + LIVE / STANDBY. ---- */
+#panel-usage .pmu-brand { display: flex; align-items: center; justify-content: space-between; gap: 6px; min-width: 0; }
+#panel-usage .pmu-brand h1 { flex: none; }
+#panel-usage .pmu-livectl { display: inline-flex; align-items: center; gap: 0; flex: none; margin: 2px 2px 4px 0; --pmu-live-c: var(--pmu-l-r2, var(--pmu-accent)); }
+#panel-usage .pmu-livectl[hidden] { display: none; }
+#panel-usage .pmu-livebtn, #panel-usage .pmu-livechev { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 4px; border: 0; border-radius: 6px; background: transparent;
+  color: var(--pmu-ink-2); font: inherit; font-size: 12.5px; cursor: pointer; outline: none; transition: color calc(140ms * var(--pmu-speed, 1)); }
+#panel-usage .pmu-livebtn:hover, #panel-usage .pmu-livechev:hover { color: var(--pmu-ink); }
+#panel-usage .pmu-livebtn:focus-visible, #panel-usage .pmu-livechev:focus-visible { outline: 2px solid var(--pmu-accent); outline-offset: 1px; }
+#panel-usage .pmu-livechev { width: 18px; padding: 0; justify-content: center; color: var(--pmu-ink-3); }
+#panel-usage .pmu-livechev .pmu-ico { width: 12px; height: 12px; }
+#panel-usage .pmu-livedot { position: relative; display: inline-grid; place-items: center; width: 12px; height: 12px; flex: none; }
+#panel-usage .pmu-livedot svg { display: block; width: 12px; height: 12px; overflow: visible; }
+#panel-usage .pmu-livedot svg > :not(defs) { display: none; }   /* the defs stay rendered: a gradient inside display:none paints nothing */
+#panel-usage .pmu-ld-dot { display: inline !important; fill: var(--pmu-live-c); }
+#panel-usage .pmu-livectl[data-state="paused"] .pmu-ld-dot { display: none !important; }
+#panel-usage .pmu-livectl[data-state="paused"] .pmu-ld-ring { display: inline !important; fill: none; stroke: var(--pmu-ink-3); stroke-width: 1.4; }
+#panel-usage .pmu-livectl[data-state="paused"] .pmu-liveword { color: var(--pmu-ink-3); }
+#panel-usage .pmu-livepulse { position: absolute; left: 0; top: 0; width: 12px; height: 12px; border-radius: 50%; box-shadow: 0 0 0 1.5px var(--pmu-live-c); opacity: 0; pointer-events: none; }
+#panel-usage .pmu-liveword { white-space: nowrap; }
+html[data-theme^="friendly"] #panel-usage .pmu-ld-dot { fill: url(#pmuLiveGrad); }
+html[data-theme^="friendly"] #panel-usage .pmu-livectl { --pmu-live-c: #C2557A; }
+html[data-theme^="glass"] #panel-usage .pmu-livectl[data-state="on"] .pmu-livedot svg { filter: drop-shadow(0 0 3px var(--pmu-live-c)); }
+html[data-theme^="retro"] #panel-usage .pmu-livectl { --pmu-live-c: var(--pmu-s0); }
+html[data-theme^="retro"] #panel-usage .pmu-livebtn { gap: 3px; font-family: var(--pmu-mono); font-size: 12px; letter-spacing: .02em; }
+html[data-theme^="retro"] #panel-usage .pmu-livedot { order: 2; width: 7px; }
+html[data-theme^="retro"] #panel-usage .pmu-livedot svg { width: 7px; }
+html[data-theme^="retro"] #panel-usage .pmu-ld-dot, html[data-theme^="retro"] #panel-usage .pmu-livectl[data-state="paused"] .pmu-ld-ring { display: none !important; }
+html[data-theme^="retro"] #panel-usage .pmu-ld-cur { display: inline !important; fill: var(--pmu-live-c); }
+html[data-theme^="retro"] #panel-usage .pmu-livectl[data-state="paused"] .pmu-ld-cur { fill: var(--pmu-ink-3); }
+html[data-theme^="retro"] #panel-usage .pmu-livepulse { border-radius: 0; }
+html[data-o55-nier="on"] #panel-usage .pmu-livectl { --pmu-live-c: var(--pmu-ink); }
+html[data-o55-nier="on"] #panel-usage .pmu-livebtn { font-family: var(--pmu-mono); font-size: 11.5px; letter-spacing: .08em; }
+html[data-o55-nier="on"] #panel-usage .pmu-ld-dot, html[data-o55-nier="on"] #panel-usage .pmu-livectl[data-state="paused"] .pmu-ld-ring { display: none !important; }
+html[data-o55-nier="on"] #panel-usage .pmu-ld-dia { display: inline !important; fill: var(--pmu-ink); stroke: var(--pmu-ink); stroke-width: 1; }
+html[data-o55-nier="on"] #panel-usage .pmu-livectl[data-state="paused"] .pmu-ld-dia { fill: none; }
+html[data-o55-nier="on"] #panel-usage .pmu-livepulse { border-radius: 0; transform: rotate(45deg) scale(.8); }

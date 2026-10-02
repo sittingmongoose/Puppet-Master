@@ -184,5 +184,20 @@
     { "at_min_ago": 421, "provider": "claude-code", "from": "studio-claude", "to": null, "code": "credentials_expired", "text": "Studio skipped: sign-in expired", "outcome": "blocked" },
     { "at_min_ago": 1072, "provider": "claude-code", "from": "lab-claude", "to": "work-claude", "code": "preferred_recovered", "text": "Preferred account Work Claude recovered (priority 1)", "outcome": "switched" },
     { "at_min_ago": 1226, "provider": "openai-codex", "from": "team-codex", "to": "jared", "code": "manual_pin", "text": "You chose Jared (override)", "outcome": "switched" }
-  ]
+  ],
+  "live": {
+    "_note": "concept_fixture_only: the demo readings that change while Usage is open (WOW-SPEC-3 8.3, flag live). Deltas are added to an overlay (PMU.live.overlay); DATA and PM7_USAGE.data never change; missing or unknown readings never move; Settings values never change. Keys: win:<provider>/<account>/<window> (% points), spend.month and value.window (USD), tok:<legacy provider> (tokens of the running work, NOW bucket), attempts (count), cache.read (tokens), cache.saved (USD). A window beat plays in the first loop only; beat 7 (the warn line) once per page load.",
+    "loop": [
+      {"beat": 1, "lead": ["num:spend.month", "num:value.window"], "deltas": {"spend.month": 0.04, "value.window": 0.04}},
+      {"beat": 2, "lead": ["num:tokens.total", "chart:tokens", "num:attempts.count"], "deltas": {"tok:claude": 12100, "tok:codex": 6100, "attempts": 1}},
+      {"beat": 3, "firstLoop": true, "lead": ["win:claude-code/work-claude/fiveHour"], "deltas": {"win:claude-code/work-claude/fiveHour": 1}},
+      {"beat": 4, "lead": ["num:spend.month", "num:value.window", "num:cache.saved"], "deltas": {"spend.month": 0.06, "value.window": 0.06, "cache.read": 20000, "cache.saved": 0.01}},
+      {"beat": 5, "firstLoop": true, "lead": ["win:openai-codex/jared/fiveHour"], "deltas": {"win:openai-codex/jared/fiveHour": 1}},
+      {"beat": 6, "lead": ["num:tokens.total", "chart:tokens", "num:attempts.count"], "deltas": {"tok:codex": 21400, "attempts": 1}},
+      {"beat": 7, "once": true, "lead": ["win:claude-code/work-claude/fiveHour", "alert:claude-5h-80"], "deltas": {"win:claude-code/work-claude/fiveHour": 1}, "alert": {"id": "claude-5h-80", "title": "Claude 5-hour window crossed 80%", "detail": "Work Claude 5-hour window crossed the 80% warn line (demo reading).", "state": "warn", "provider_id": "claude", "owner": "Claude Code", "account": "claude-code/work-claude", "score": 80}},
+      {"beat": 8, "lead": ["num:spend.month", "num:value.window"], "deltas": {"spend.month": 0.05, "value.window": 0.05, "tok:claude": 9800}},
+      {"beat": 9, "firstLoop": true, "lead": ["win:qwen-coding/qwen-cn/weekly"], "deltas": {"win:qwen-coding/qwen-cn/weekly": 1}},
+      {"beat": 10, "lead": ["num:tokens.total", "chart:tokens", "num:attempts.count"], "deltas": {"tok:qwen": 12600, "attempts": 1, "cache.read": 10000}}
+    ]
+  }
 }

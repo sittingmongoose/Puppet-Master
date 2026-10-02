@@ -344,7 +344,7 @@ def build_script(ctx_js: str) -> str:
         raise ValueError('; '.join(problems))
     copy = json.dumps(merged, ensure_ascii=False, separators=(',', ':'))
     roster = roster_json()
-    facts = {k: roster[k] for k in ('version', 'seed', 'facts', 'switch_log') if k in roster}
+    facts = {k: roster[k] for k in ('version', 'seed', 'facts', 'switch_log', 'live') if k in roster}
     roster_js = json.dumps(facts, ensure_ascii=False, separators=(',', ':'))
     js = read_parts(SRC / 'js', '.js')
     return (f'window.PM_USAGE_COPY={copy};\n'
@@ -435,8 +435,48 @@ def apply(text: str, need) -> tuple[str, dict]:
     for old, new, label in NIER_SELECTOR_PATCHES:
         text = replace_once(need, text, old, new, label)
     notes['nier selector patches'] = [label for _, _, label in NIER_SELECTOR_PATCHES]
+
+    # 7. app patches for performance that act only while Usage is the active page (DECISIONS, coordinator defaults item 7;
+    #    listed with numbers in design/final/PERF-3.md "App patches (round 3)")
+    for old, new, label in APP_PATCHES:
+        text = patch_once(need, text, old, new, label)
+    notes['app patches'] = [label for _, _, label in APP_PATCHES]
     notes['bytes_out'] = len(text.encode('utf-8'))
     return text, notes
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+# app patches (WOW round 3, engine): each anchors on text no other patch uses, acts only while Usage is the active page
+# (body.pmu-page-active, set by 90-api.js; html[data-pmu-moment] while a Usage arrival or room change runs), and is
+# idempotent (patch_once leaves text that already carries the patch unchanged).
+
+def patch_once(need, text: str, old: str, new: str, label: str) -> str:
+    if new in text and old not in text:
+        return text
+    return replace_once(need, text, old, new, 'app patch ' + label)
+
+
+APP_PATCHES = [
+    # A1: the app's scrollbar reveal wrote --pm6-sb-ink on EVERY hovered element; Chrome then restyled the hovered element's
+    # whole subtree on each hover change (pointer entering the Usage board: 1,595 elements, 51-96 ms in one frame on the
+    # CPU-only VM). While Usage shows, the hover half stands down; scroll panes still reveal their bar while scrolling
+    # (.pm6-sb-active). Every other page keeps the hover reveal.
+    ('    :is(.pm6-sb-active, :hover) { --pm6-sb-ink: var(--pm6-sb-thumb); }\n',
+     '    .pm6-sb-active, body:not(.pmu-page-active) :hover { --pm6-sb-ink: var(--pm6-sb-thumb); } /* usage layer A1: no hover reveal while Usage shows */\n',
+     'A1 scrollbar hover reveal'),
+    # A3: the PM8 pointer field reads the rect of every PM8_SEL box and writes inherited custom properties per frame; during
+    # a Usage arrival or room change (html[data-pmu-moment]) it rests like it does for a resizer drag and restarts on the
+    # next pointer event.
+    ('      if (document.body.classList.contains(\'pm-resizing\')) {\n        baseDirty = true;\n        requestAnimationFrame(tick);\n        return;\n      }\n',
+     '      if (document.documentElement.hasAttribute(\'data-pmu-moment\')) { baseDirty = true; running = false; return; } /* usage layer A3 */\n'
+     '      if (document.body.classList.contains(\'pm-resizing\')) {\n        baseDirty = true;\n        requestAnimationFrame(tick);\n        return;\n      }\n',
+     'A3 pointer field rests during a Usage moment'),
+    # A6: the NieR scan sweep crosses the window every 12 s on every page (45-104 compositor draws in 3 s of idle); while
+    # Usage shows it waits (Usage's own live beats are the only idle motion there).
+    ('    sweepTimer = 0; if (!sweep) return;\n    if (!document.hidden && !still() && !onboarding()) {\n',
+     '    sweepTimer = 0; if (!sweep) return;\n    if (!document.hidden && !still() && !onboarding() && !document.body.classList.contains(\'pmu-page-active\')) { /* usage layer A6 */\n',
+     'A6 NieR sweep waits while Usage shows'),
+]
 
 
 # ---------------------------------------------------------------------------------------------------------------------

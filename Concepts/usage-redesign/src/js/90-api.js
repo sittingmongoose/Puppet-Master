@@ -100,6 +100,8 @@ function softwareRendered() {
   } catch (error) { softRendered = true; }
   return softRendered;
 }
+/* the no-GPU detection (a WebGL context) runs once at idle after boot, never inside the click that opens Usage (A2) */
+try { (window.requestIdleCallback || function (fn) { return setTimeout(fn, 1200); })(function () { softwareRendered(); }, { timeout: 4000 }); } catch (error) {}
 /* While the Usage page shows, Home's workspace layer takes no pointer events (the old page's T21 rule, kept). */
 function syncUsageLayer() {
   if (!usagePanel) return;
@@ -156,7 +158,11 @@ window.PM7_USAGE = {
   injectIcons: injectIcons,
   appendUsageAttempt: appendUsageAttempt, appendLedger: appendUsageAttempt,
   cooldown_seconds: 0,
-  setCooldown: function (seconds) { this.cooldown_seconds = Math.max(0, Number(seconds) || 0); },
+  setCooldown: function (seconds) {
+    var prev = this.cooldown_seconds; this.cooldown_seconds = Math.max(0, Number(seconds) || 0);
+    /* a cooldown that reaches 0 while Usage shows is a live change (WOW-SPEC-3 8.1): the cards that show it patch in place */
+    if (prev > 0 && this.cooldown_seconds === 0 && PMU.live && PMU.live.on && PMU.live.on() && PMU.board) { try { PMU.board.refresh('live'); } catch (error) {} }
+  },
   pm7FlushCooldown: function () { return this.cooldown_seconds || 0; },
   /* The bridge's usage.switch_account writes active_account_id; the Accounts room reads it. */
   active_account_id: null,
@@ -189,6 +195,17 @@ window.PM7_USAGE = {
   get migration_receipt() { return PMU.board ? PMU.board.envelope().migration_receipt : null; },
   get workspace_envelope() { return PMU.board ? PMU.board.envelope() : null; },
   get board() { return PMU.board; },
+  /* WOW-SPEC-3 8.5: the live readings (state, pause, resume, beat(i) for harnesses, log, reset) */
+  get live() {
+    if (!PMU.live) return null;
+    return { state: PMU.live.state, pause: PMU.live.pause, resume: PMU.live.resume, log: PMU.live.log, reset: PMU.live.reset, flush: PMU.live.flush,
+      /* beat(n): play script beat n now, numbered as in WOW-SPEC-3 8.3 (1-10; beat 7 is the warn-line crossing) */
+      beat: function (n) {
+        var L = PMU.data && PMU.data.live, list = L && L.script ? L.script() : [], idx = -1;
+        list.forEach(function (b, i) { if (idx < 0 && b && +b.beat === +n) idx = i; });
+        return PMU.live.beat(idx >= 0 ? idx : Math.max(0, (+n || 1) - 1));
+      } };
+  },
   get roster() { return PMU.roster; },
   command: command, completeCommandReceipt: completeCommandReceipt, usageEvent: usageEvent, viewAction: viewAction,
   command_log: COMMANDS, receipt_log: RECEIPTS, event_log: EVENTS, view_action_log: VIEW_ACTIONS,

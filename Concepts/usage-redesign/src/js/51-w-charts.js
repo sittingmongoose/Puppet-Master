@@ -56,14 +56,15 @@
       if (cavAt === 'legend') { var lg = body.querySelector('.pmu-trendlegend'); if (lg) lg.insertAdjacentHTML('beforeend', cav); }
       /* no facts row, hero row or legend line: the icon sits in the card head (CONTENT-3) */
       if (cav && !cavAt) C.headNote(ctx, body, cav);
-      C.chart(body, m.chart || 'area', body.querySelector('.pmu-trendplot'), m.spec, { label: m.label || ctx.def.title, tier: ctx.tier, readout: true, fmt: m.fmt });
+      var plotH = m.chart === 'rangebars' ? Math.max(MINP, hostH(ctx, reserve)) : hostH(ctx, reserve);
+      C.chart(body, m.chart || 'area', body.querySelector('.pmu-trendplot'), m.spec, { label: m.label || ctx.def.title, tier: ctx.tier, readout: true, fmt: m.fmt, size: { w: ctx.tier.bw, h: plotH } });
       C.bag(body).sig = sig(ctx);
     },
     /* same tier and same structure: morph the plot in place (paths tween, axes cross-fade) instead of rebuilding it */
     update: function (body, ctx) {
       var b = body._pmu, m = ctx.model;
       if (!b || b.charts.length !== 1 || !m || !m.spec || b.sig !== sig(ctx) || !body.querySelector('.pmu-trendplot')) return false;
-      try { b.charts[0].update(m.spec); } catch (error) { return false; }
+      try { C.chartTo(b.charts[0], m.spec, ctx); } catch (error) { return false; }
       var legend = body.querySelector('.pmu-trendlegend');
       if (legend && m.legendOwn) { legend.textContent = ''; try { PMU.charts.legend(legend, m.legendOwn, { inline: true }); } catch (error) {} }
       var cvT = cavText(m, !!body.querySelector('.pmu-factrow')), cv = body.querySelector('.pmu-caveat') || (ctx.head && ctx.head.querySelector('.pmu-caveat'));
@@ -81,19 +82,19 @@
           tmp.innerHTML = C.heroHead(ctx, { value: m.headline.value, fmt: m.headline.fmt, label: m.headline.label, sub: m.heroSub, tone: m.heroTone, note: C.w(ctx, 'xl') ? m.heroNote : '', noteTone: m.heroTone });
           var ns = tmp.querySelector('.pmu-herosub');
           /* patched in place where the shape is the same (NOTES3-perf C5: no innerHTML child-list change in an update) */
-          if (ns && ns.innerHTML !== hs.innerHTML) { if (PMU.charts.patchHtml) PMU.charts.patchHtml(hs, ns.innerHTML); else hs.innerHTML = ns.innerHTML; PMU.motion.animate(hs, [{ opacity: 0.2 }, { opacity: 1 }], { dur: 320, easing: 'cubic-bezier(.22,.8,.28,1)' }); }
+          if (ns && ns.innerHTML !== hs.innerHTML) { if (PMU.charts.patchHtml) PMU.charts.patchHtml(hs, ns.innerHTML); else hs.innerHTML = ns.innerHTML; if (ctx.reason !== 'live') PMU.motion.animate(hs, [{ opacity: 0.2 }, { opacity: 1 }], { dur: 320, easing: 'cubic-bezier(.22,.8,.28,1)' }); }
         }
         if (isFinite(oldV) && isFinite(to) && oldV !== to) {
           hn.setAttribute('data-v', String(to));
-          PMU.motion.countUp(hn, oldV, to, function (v) { return C.numOnly(v, f); }, { dur: 'value' });
-          C.flashRow(hn.closest('.pmu-herohead'));
+          if (ctx.liveFinal) hn.textContent = C.numOnly(to, f); else PMU.motion.countUp(hn, oldV, to, function (v) { return C.numOnly(v, f); }, { dur: 'value' });
+          if (ctx.reason !== 'live') C.flashRow(hn.closest('.pmu-herohead'));
         }
       }
       /* the facts under the chart follow the range with the chart (REVIEW-jared must-fix 4: they stayed at 24 hours) */
       var fr = body.querySelector('.pmu-factrow');
       if (fr && m.facts) {
         var fh = factSpans(m.facts) + (fr.querySelector('.pmu-caveat') && m.note ? caveat(cavText(m, true)) : '');
-        if (fr.innerHTML !== fh) { if (PMU.charts.patchHtml) PMU.charts.patchHtml(fr, fh); else fr.innerHTML = fh; if (PMU.motion && PMU.motion.animate) PMU.motion.animate(fr, [{ opacity: 0.25 }, { opacity: 1 }], { dur: 420, ease: 'out' }); }
+        if (fr.innerHTML !== fh) { if (PMU.charts.patchHtml) PMU.charts.patchHtml(fr, fh); else fr.innerHTML = fh; if (ctx.reason !== 'live' && PMU.motion && PMU.motion.animate) PMU.motion.animate(fr, [{ opacity: 0.25 }, { opacity: 1 }], { dur: 420, ease: 'out' }); }
       }
       return true;
     }
@@ -166,7 +167,7 @@
       var compact = !C.w(ctx, 'm') || !C.h(ctx, 'h2');
       var pct = m.budget ? Math.round(100 * m.spent / m.budget) : null;
       var big = C.isHero(ctx);
-      var hero = '<div class="pmu-budgethero' + (big ? ' is-hero' : '') + '">' + C.valHtml(m.spent, 'money2', big ? 'pmu-heronum' : 'pmu-bigval', ctx.id + ':spent').replace('class="pmu-num"', 'class="pmu-num" data-count="kpi"') +
+      var hero = '<div class="pmu-budgethero' + (big ? ' is-hero' : '') + '">' + C.share(C.valHtml(m.spent, 'money2', big ? 'pmu-heronum' : 'pmu-bigval', ctx.id + ':spent').replace('class="pmu-num"', 'class="pmu-num" data-count="kpi"'), m.share || 'num:spend.month') +
         '<span class="pmu-budgetof">' + (m.budget ? 'of ' + esc(C.money(m.budget)) + ' budget · ' + pct + '%' : 'No budget set') + '</span>' +
         '<span class="pmu-budgetest">est. ' + esc(C.money(m.projection.to)) + (m.periodEnd ? ' by ' + esc(PMU.fmt.date(m.periodEnd)) : ' month end') + '</span></div>';
       /* the facts row from about 300 px (it wraps; the plot takes what is left); narrower, the info icon in the hero row
@@ -181,11 +182,32 @@
       body.innerHTML = '<div class="pmu-budget' + (compact ? ' is-compact' : '') + '">' + hero + '<div class="pmu-budgetplot pmu-fillplot"></div>' +
         (factsOk ? '<div class="pmu-factrow">' + m.facts.map(function (f) { return '<span><em>' + esc(f[0]) + '</em> <b>' + esc(f[1]) + '</b></span>'; }).join('') + '</div>' : '') +
         (mixOk ? '<div class="pmu-budgetmix"></div>' : '') + '</div>';
-      C.chart(body, 'budget', body.querySelector('.pmu-budgetplot'), { days: m.days, today: m.today, cumulative: m.cumulative, projection: m.projection, budget: m.budget || 0, unit: 'usd', compact: compact, monthStart: m.periodStart },
+      C.chart(body, 'budget', body.querySelector('.pmu-budgetplot'), budgetSpec(m, compact),
         { label: 'Budget projection: ' + C.money(m.spent) + ' of ' + C.money(m.budget), tier: ctx.tier, readout: true });
       if (mixOk) C.chart(body, 'mix', body.querySelector('.pmu-budgetmix'), { segments: m.mix, legend: true }, { label: 'Plan allocation versus metered' });
+    },
+    /* a live beat (spend): the number rolls its changed digits, the "of budget" words and the facts row patch in place,
+       the line takes its next point through charts' chart.live; no dry render (E3-7 budget) */
+    live: function (body, ctx) {
+      var m = ctx.model, b = body._pmu, hero = body.querySelector('.pmu-budgethero');
+      if (!m || !b || !b.objs || !b.objs.length || b.objs[0].name !== 'budget' || !hero) return false;
+      var num = hero.querySelector('.pmu-num[data-k]'), from = num ? parseFloat(num.getAttribute('data-v')) : NaN;
+      if (num && isFinite(from) && from !== m.spent) {
+        num.setAttribute('data-v', String(m.spent));
+        if (ctx.liveFinal) num.textContent = C.numOnly(m.spent, 'money2'); else PMU.motion.countUp(num, from, m.spent, function (v) { return C.numOnly(v, 'money2'); }, { dur: 'value' });
+      }
+      var pct = m.budget ? Math.round(100 * m.spent / m.budget) : null, of = hero.querySelector('.pmu-budgetof');
+      var ofT = m.budget ? 'of ' + C.money(m.budget) + ' budget · ' + pct + '%' : 'No budget set'; if (of && of.textContent !== ofT) of.textContent = ofT;
+      var fr = body.querySelector('.pmu-factrow');
+      if (fr && m.facts) { var fh = m.facts.map(function (f) { return '<span><em>' + esc(f[0]) + '</em> <b>' + esc(f[1]) + '</b></span>'; }).join(''); if (fr.innerHTML !== fh) C.setHtml(fr, fh); }
+      var compact = body.querySelector('.pmu-budget.is-compact') !== null, spec = budgetSpec(m, compact), o = b.objs[0], same = false;
+      try { same = JSON.stringify(spec) === JSON.stringify(o.spec); } catch (error) {}
+      if (!same && o.chart) C.chartTo(o.chart, spec, ctx);
+      o.spec = spec;
+      return true;
     }
   });
+  function budgetSpec(m, compact) { return { days: m.days, today: m.today, cumulative: m.cumulative, projection: m.projection, budget: m.budget || 0, unit: 'usd', compact: compact, monthStart: m.periodStart }; }
 
   /* ================================================================== heat: weekday x hour (A1 7.7) */
   C.kind('heat', {

@@ -15,12 +15,19 @@
   var STATE_WORD = { active: 'Active', standby: 'Standby', exhausted: 'Usage exhausted', cooldown: 'Cooldown', 'signed-out': 'Signed out', 'needs-seat': 'Needs a seat', unknown: 'Usage unknown' };
   var STATE_GLYPH = { active: 'checkCircle', exhausted: 'alert', cooldown: 'hourglass', 'signed-out': 'key', 'needs-seat': 'minusCircle', unknown: 'dashedCircle' };
   var STATE_TONE = { active: 'good', exhausted: 'crit', cooldown: 'warn', 'signed-out': 'warn', 'needs-seat': 'muted', standby: 'muted', unknown: 'muted' };
-  var loadedAt = Date.now();
+  var loadedAt = clockNow();
   var cache = null, memo = {};
   var st = PMU.core.state;
 
+  /* WOW-TASKS-3 P3-1: every "now" of the model goes through the engine's demo clock */
+  function clockNow() { return PMU.clock && PMU.clock.now ? PMU.clock.now() : Date.now(); }
   function series() { return typeof PMU_SERIES === 'object' ? PMU_SERIES : {}; }
-  function nextMonthStart() { var d = new Date(); return new Date(d.getFullYear(), d.getMonth() + 1, 1, 0, 0, 0).getTime(); }
+  /* the live overlay (WOW-SPEC-3 8.1, WOW-TASKS-3 N3-3): deltas the live script added while Usage is open (engine-owned
+     object PMU.live.overlay; content reads it in every projection that feeds a shown reading). DATA never changes. */
+  function OV() { return (PMU.live && PMU.live.overlay) || null; }
+  function ov(key) { var o = OV(), v = o ? o[key] : 0; return typeof v === 'number' && isFinite(v) ? v : 0; }
+  function round2(v) { return Math.round(v * 100) / 100; }
+  function nextMonthStart() { var d = new Date(clockNow()); return new Date(d.getFullYear(), d.getMonth() + 1, 1, 0, 0, 0).getTime(); }
   function num(v) { return typeof v === 'number' && isFinite(v) ? v : null; }
   function sum(a) { var s = 0; (a || []).forEach(function (v) { if (typeof v === 'number') s += v; }); return s; }
 
@@ -58,7 +65,7 @@
     var resetAt = num(fact.reset_in_min) !== null ? loadedAt + fact.reset_in_min * MIN : fact.reset_rule === 'next_month' ? nextMonthStart() : null;
     var winMin = fact.win_min || WINDOW_MIN[key] || null;
     var truth = fact.truth || 'unknown';
-    var pace = resetAt && winMin ? Math.max(0, Math.min(1, 1 - (resetAt - Date.now()) / (winMin * MIN))) : null;
+    var pace = resetAt && winMin ? Math.max(0, Math.min(1, 1 - (resetAt - clockNow()) / (winMin * MIN))) : null;
     var vsState = fact.vs && fact.vs !== 'ok' && fact.vs !== 'estimated' ? fact.vs : pct === null ? 'unknown' : (pct === 0 && fact.zero ? 'zero' : 'ok');
     return { key: key, label: label, short: shortLabel(key, label), pct: pct, left: pct === null ? null : Math.max(0, 100 - pct), used: num(fact.used), limit: num(fact.limit),
       unit: fact.unit || '', amount: amountText(fact), resetAt: resetAt, truth: truth, conf: fact.conf || '', vs: vsState, est: fact.vs === 'estimated',
@@ -129,6 +136,11 @@
         var wins = view.windows.map(function (w) {
           var fact = f && f.windows ? f.windows[w.key] : null;
           if (!fact && !f && a.usage && a.usage.windows && a.usage.windows[w.key] && typeof a.usage.windows[w.key].pct === 'number') fact = { pct: a.usage.windows[w.key].pct, truth: 'unknown' };
+          var dw = ov('win:' + key + '/' + w.key);
+          if (dw && fact && num(fact.pct) !== null) {
+            fact = Object.assign({}, fact, { pct: Math.max(0, Math.round((fact.pct + dw) * 10) / 10) });
+            if (num(fact.used) !== null && num(fact.limit) !== null) fact.used = Math.round(fact.used + dw / 100 * fact.limit);
+          }
           return windowView(w.key, w.label, fact, governed);
         });
         var known = wins.filter(function (w) { return w.pct !== null; });
@@ -137,14 +149,14 @@
         var state = f && f.state ? f.state : (a.active === false ? 'signed-out' : /limit/i.test(a.health || '') ? 'exhausted' : f ? 'standby' : 'unknown');
         var effective = key === eff;
         var cooldown = f && f.cooldown ? { untilAt: loadedAt + (f.cooldown.until_in_min || 0) * MIN, reason: f.cooldown.reason, source: f.cooldown.source, retry: f.cooldown.retry_budget } : null;
-        if (cooldown && window.PM7_USAGE && Number(window.PM7_USAGE.cooldown_seconds) > 0) cooldown.untilAt = Date.now() + Number(window.PM7_USAGE.cooldown_seconds) * 1000;
-        if (cooldown && cooldown.untilAt <= Date.now()) { cooldown = null; if (state === 'cooldown') state = 'standby'; }
+        if (cooldown && window.PM7_USAGE && Number(window.PM7_USAGE.cooldown_seconds) > 0) cooldown.untilAt = clockNow() + Number(window.PM7_USAGE.cooldown_seconds) * 1000;
+        if (cooldown && cooldown.untilAt <= clockNow()) { cooldown = null; if (state === 'cooldown') state = 'standby'; }
         var supports = !!(f && f.supports_manual_set_active) && accs.length > 1;
         var exhaustedWin = wins.filter(function (w) { return w.pct !== null && w.pct >= 100; })[0];
         var eligible = !supports ? { ok: false, reason: accs.length > 1 ? 'Manual choice not supported' : 'Only account' }
           : effective ? { ok: false, reason: 'Already in use' }
           : state === 'exhausted' ? { ok: false, reason: exhaustedWin && exhaustedWin.resetAt ? 'Usage exhausted until ' + PMU.fmt.clock(exhaustedWin.resetAt) : 'Usage exhausted' }
-          : state === 'cooldown' ? { ok: false, reason: 'Cooldown until ' + PMU.fmt.clock(cooldown ? cooldown.untilAt : Date.now()) }
+          : state === 'cooldown' ? { ok: false, reason: 'Cooldown until ' + PMU.fmt.clock(cooldown ? cooldown.untilAt : clockNow()) }
           : state === 'signed-out' ? { ok: false, reason: 'Signed out' }
           : state === 'needs-seat' ? { ok: false, reason: 'Needs a seat' } : { ok: true };
         var fresh = f && f.fresh ? { ageS: f.fresh.age_s, source: f.fresh.source, stale: !!f.fresh.stale } : { ageS: null, source: 'no reading yet', stale: false };
@@ -219,16 +231,18 @@
     var p = String(hms || '').split(':').map(Number); if (p.length < 2 || !isFinite(p[0]) || !isFinite(p[1])) return null;
     return loadedAt + ((p[0] * 60 + p[1] + (p[2] || 0) / 60) - FIXTURE_NOW_MIN) * MIN;
   }
-  PMU.clock = {
+  /* the engine's demo clock (00-core.js PMU.clock: now / date / offset / advance / reset / demo, WOW-TASKS-3 P3-1) is
+     extended here, never replaced */
+  PMU.clock = Object.assign(PMU.clock || {}, {
     loadedAt: loadedAt,
     fixtureAt: fixtureAt,
     /* "16:48" -> the page clock time; "16:05:42" -> "HH:MM" */
     clock: function (hms) { var at = fixtureAt(hms); return at === null ? String(hms) : PMU.fmt.clock(at); },
     /* replace every HH:MM(:SS) in a fixture sentence with its page clock time */
     text: function (str) { return String(str == null ? '' : str).replace(/\b(\d\d):(\d\d)(?::\d\d)?\b/g, function (m0) { return PMU.clock.clock(m0); }); },
-    ago: function (hms) { var at = fixtureAt(hms); return at === null ? '' : PMU.fmt.age(Math.max(0, (Date.now() - at) / 1000)); },
-    until: function (hms) { var at = fixtureAt(hms); return at === null ? '' : PMU.fmt.span(Math.max(0, at - Date.now())); }
-  };
+    ago: function (hms) { var at = fixtureAt(hms); return at === null ? '' : PMU.fmt.age(Math.max(0, (clockNow() - at) / 1000)); },
+    until: function (hms) { var at = fixtureAt(hms); return at === null ? '' : PMU.fmt.span(Math.max(0, at - clockNow())); }
+  });
 
   /* ---------------------------------------------------------------- PMU.data */
   function rangeKey(range) { return range || st.range || '24h'; }
@@ -249,7 +263,7 @@
   /* bucket geometry per range: the last bucket ends at the newest reading (partial) */
   function buckets(range) {
     var tk = (series().tokens || {})[rangeKey(range)] || { bucket_min: 60, input: [] };
-    var n = (tk.input || []).length, bm = tk.bucket_min * MIN, now = Date.now();
+    var n = (tk.input || []).length, bm = tk.bucket_min * MIN, now = clockNow();
     var lastStart = Math.floor(now / bm) * bm;
     if (tk.bucket_min >= 1440) { var d = new Date(now); lastStart = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime(); }
     else if (tk.bucket_min >= 60) { var h = new Date(now); h.setMinutes(0, 0, 0); var hs = h.getTime(); lastStart = hs - ((h.getHours() % (tk.bucket_min / 60)) * 3600000); }
@@ -277,6 +291,18 @@
     var share = scopeShare(range), b = buckets(range);
     function sc(arr) { return (arr || []).map(function (v, i) { return v == null ? null : Math.round(v * (share ? share[i] : 1)); }); }
     var out = { x: b.x, buckets: b, input: sc(tk.input), output: sc(tk.output), reasoning: sc(tk.reasoning), cacheWrite: sc(tk.cacheWrite), cacheRead: sc(tk.cacheRead) };
+    /* live: the running work's tokens (tok:<provider>, split 3 : 1 into input and output) and cache reads land in the NOW
+       (last) bucket; a missing bucket stays missing */
+    var o = OV(), last = out.input.length - 1;
+    if (o && last >= 0) {
+      Object.keys(o).forEach(function (k) {
+        if (k.indexOf('tok:') !== 0 || !inScope(k.slice(4)) || !(o[k] > 0)) return;
+        var dIn = Math.round(o[k] * 0.75);
+        if (out.input[last] !== null) out.input[last] += dIn;
+        if (out.output[last] !== null) out.output[last] += o[k] - dIn;
+      });
+      if (ov('cache.read') > 0 && (st.scope || 'all') === 'all' && out.cacheRead[last] !== null) out.cacheRead[last] += Math.round(ov('cache.read'));
+    }
     out.noCache = out.input.map(function (v, i) { return (v || 0) + (out.output[i] || 0) + (out.reasoning[i] || 0) + (out.cacheWrite[i] || 0); });
     out.all = out.noCache.map(function (v, i) { return v + (out.cacheRead[i] || 0); });
     out.totals = { input: sum(out.input), output: sum(out.output), reasoning: sum(out.reasoning), cacheWrite: sum(out.cacheWrite), cacheRead: sum(out.cacheRead) };
@@ -300,7 +326,9 @@
       vals[i] = (vals[i] || 0) + v;
       split[i][a.provider_id] = (split[i][a.provider_id] || 0) + v;
     });
-    return { values: vals.map(function (v) { return v === null ? null : Math.round(v * 100) / 100; }), split: split, total: sum(vals), attempts: list.length };
+    var dv = (st.scope || 'all') === 'all' ? ov('value.window') : 0;
+    if (dv && vals.length) { var li = vals.length - 1; vals[li] = (vals[li] || 0) + dv; split[li].live = (split[li].live || 0) + dv; }
+    return { values: vals.map(function (v) { return v === null ? null : Math.round(v * 100) / 100; }), split: split, total: sum(vals), attempts: list.length + ((st.scope || 'all') === 'all' ? ov('attempts') : 0) };
   }
   /* split one attempt into the five disjoint buckets (R-DATA-03) with the provider's counting basis */
   function attemptBuckets(a) {
@@ -365,6 +393,11 @@
       p.attempts += 1; p.requests += a.request_count || 0; p.settled += a.charge || 0; p.plan += a.plan_allocation_estimate || 0; p.cache += a.cache_avoided_estimate || 0;
       p.input += a.input_tokens || 0; p.output += a.output_tokens || 0; p.cacheRead += a.cache_read_tokens || 0; if (/pending/.test(a.settlement_status)) p.pending += 1;
     });
+    /* live: the running work's value (plan estimate), attempts and cache facts (WOW-SPEC-3 8.3) */
+    if (OV() && (st.scope || 'all') === 'all') {
+      out.plan = round2(out.plan + ov('value.window')); out.attempts += ov('attempts'); out.settledAttempts += ov('attempts'); out.planAttempts += ov('attempts');
+      out.cacheRead += Math.round(ov('cache.read')); out.cache = round2(out.cache + ov('cache.saved'));
+    }
     out.selected = out.settled + out.plan; out.providers = Object.keys(seen).length;
     out.dayEquivalent = out.hours ? out.selected * 24 / out.hours : 0;
     return out;
@@ -377,7 +410,7 @@
     var order = (PMU.settings.providers() || []).map(function (p) { return p.id; });
     ids.sort(function (a, b) { return (order.indexOf(a) < 0 ? 99 : order.indexOf(a)) - (order.indexOf(b) < 0 ? 99 : order.indexOf(b)); });
     ids = ids.filter(settingsInScope);
-    var n = spend.values.length, take = r === '7d' || r === '24h' || r === '5h' ? 7 : n, start = n - take, today = new Date(); today.setHours(0, 0, 0, 0);
+    var n = spend.values.length, take = r === '7d' || r === '24h' || r === '5h' ? 7 : n, start = n - take, today = new Date(clockNow()); today.setHours(0, 0, 0, 0);
     var labels = [], xs = [];
     for (var d = start; d < n; d++) { var ms = today.getTime() - (n - 1 - d) * DAY; xs.push(ms); labels.push(PMU.fmt.date(ms)); }
     var stacks = ids.map(function (id) {
@@ -391,8 +424,8 @@
 
   /* weekday x hour (A1 7.7): rows oldest day first, today last; hours after now are outside the range */
   function heat(mode) {
-    var h = series().heat7x24 || { values: [] }, rows = [], today = new Date(); today.setHours(0, 0, 0, 0);
-    var nowH = new Date().getHours();
+    var h = series().heat7x24 || { values: [] }, rows = [], today = new Date(clockNow()); today.setHours(0, 0, 0, 0);
+    var nowH = new Date(clockNow()).getHours();
     var useValue = mode === 'cost' && !!h.value;
     var grid = useValue ? h.value : h.values;
     var max = 0;
@@ -411,7 +444,7 @@
 
   /* resets and expiries (A1 7.10) */
   function agenda(horizon) {
-    var hz = { '24h': DAY, '7d': 7 * DAY, '30d': 30 * DAY }[horizon || '7d'] || 7 * DAY, now = Date.now();
+    var hz = { '24h': DAY, '7d': 7 * DAY, '30d': 30 * DAY }[horizon || '7d'] || 7 * DAY, now = clockNow();
     var ro = PMU.roster.read(), events = [], unknown = [], passed = [], beyond = [];
     ro.providers.forEach(function (p) {
       if (!settingsInScope(p.id)) return;
@@ -471,9 +504,10 @@
         var withHist = a.windows.filter(function (w) { return qh[a.key + '/' + w.key]; });
         var main = withHist.slice().sort(byLength)[0] || a.windows.slice().sort(byLength)[0];
         var pts = main ? qh[a.key + '/' + main.key] || null : null;
+        if (pts && main && ov('win:' + a.key + '/' + main.key) && main.pct !== null) { pts = pts.slice(); pts[pts.length - 1] = main.pct; }
         /* the reset shown on the row is the plotted (main) window's own reset, never another window's (R-PLAN-07);
            the soonest reset of any window stays in the hover */
-        var known = function (w) { return w && w.resetAt && w.resetAt > Date.now() && w.truth !== 'unknown'; };
+        var known = function (w) { return w && w.resetAt && w.resetAt > clockNow() && w.truth !== 'unknown'; };
         var upcoming = a.windows.filter(known).sort(function (x, y) { return x.resetAt - y.resetAt; })[0] || null;
         return { account: a, main: main, points: pts, runs: pts ? runsOf(pts) : [], next: known(main) ? main : null, soonest: upcoming,
           focus: a.windows.map(function (w) { return { label: w.short, key: w.key, points: qh[a.key + '/' + w.key] || null, resetAt: w.resetAt, pct: w.pct }; }) };
@@ -482,7 +516,7 @@
       groups.push({ providerId: p.id, name: p.name, vendor: p.vendor, windowLabel: String((p.windows.filter(function (w) { return w.key === mainKey; })[0] || p.windows[0]).label).toLowerCase(), rows: rows, provider: p });
     });
     /* now on the minute: the rows read the same within a minute, so a refresh that changes nothing keeps them */
-    return { groups: groups, noWindows: noWindows, points: 42, bucketMs: bucketMs, now: Math.floor(Date.now() / 60000) * 60000 };
+    return { groups: groups, noWindows: noWindows, points: 42, bucketMs: bucketMs, now: Math.floor(clockNow() / 60000) * 60000 };
   }
 
   /* a plan card (Plans & limits, Overview): one of the six legacy providers, with the windows of the provider's effective
@@ -518,6 +552,81 @@
     sum: sum,
     rangeLabel: function (range) { return { '5h': '5 hours', '24h': '24 hours', '7d': '7 days', '30d': '30 days' }[rangeKey(range)] || range; },
     scopeText: function () { var s = st.scope || 'all'; return s === 'all' ? 'All providers' : PMU.shell && PMU.shell.scopeLabel ? PMU.shell.scopeLabel(s) : s; },
-    invalidate: function () { memo = {}; cache = null; }
+    invalidate: function () { memo = {}; cache = null; },
+    ov: ov,
+    /* tokens of one legacy provider in the range, the live NOW bucket included (the token tiles) */
+    provTokens: function (range, legacyId) {
+      var by = (series().tokensByProvider || {})[rangeKey(range)] || {}, arr = by[legacyId];
+      if (!arr) return null;
+      return sum(arr) + (ov('tok:' + legacyId) > 0 ? ov('tok:' + legacyId) : 0);
+    },
+    provSeries: function (range, legacyId) {
+      var by = (series().tokensByProvider || {})[rangeKey(range)] || {}, arr = by[legacyId];
+      if (!arr) return null;
+      var d = ov('tok:' + legacyId); if (!(d > 0) || !arr.length) return arr;
+      arr = arr.slice(); arr[arr.length - 1] = (arr[arr.length - 1] || 0) + d; return arr;
+    },
+    /* the live alerts (beat 7), newest first: {id, title, detail, state, provider_id, owner, account, at} */
+    liveAlerts: function () {
+      var o = OV(); if (!o) return [];
+      return Object.keys(o).filter(function (k) { return k.indexOf('alert:') === 0 && o[k] && typeof o[k] === 'object'; }).map(function (k) { return o[k]; })
+        .sort(function (a, b) { return (b.at || 0) - (a.at || 0); });
+    },
+    live: liveApi()
   };
+  /* ---------------------------------------------------------------- the live script (WOW-SPEC-3 8.3, roster.json live)
+     PMU.data.live.apply(overlay, i) adds beat i's deltas into the engine's overlay object and returns the share keys that
+     changed and the lead keys (in preference order). The 1x loop: window beats in the first loop only, beat 7 (the warn
+     line) once per page load; later loops play the spend and token beats. */
+  function liveApi() {
+    function script() { var L = (window.PM_USAGE_ROSTER && window.PM_USAGE_ROSTER.live) || ROSTER.live || null; return (L && L.loop) || []; }
+    var SHARE_OF = { 'spend.month': ['num:spend.month', 'chart:budget'], 'value.window': ['num:value.window'], attempts: ['num:attempts.count'],
+      'cache.read': ['num:cache.read'], 'cache.saved': ['num:cache.saved'] };
+    function sharesOf(beat) {
+      var out = [];
+      Object.keys(beat.deltas || {}).forEach(function (k) {
+        if (k.indexOf('win:') === 0) { out.push(k); out.push('acct:' + k.slice(4).split('/').slice(0, 2).join('/')); }
+        else if (k.indexOf('tok:') === 0) { out.push('num:tokens.total'); out.push('chart:tokens'); out.push('num:tokens.' + k.slice(4)); }
+        else (SHARE_OF[k] || ['num:' + k]).forEach(function (x) { out.push(x); });
+      });
+      if (beat.alert) out.push('alert:' + beat.alert.id);
+      return out.filter(function (x, i) { return out.indexOf(x) === i; });
+    }
+    function playable(o, i) {
+      var b = script()[i]; if (!b) return false;
+      var played = o._played || {};
+      if (b.once && played[b.beat]) return false;
+      if (b.firstLoop && (o._loop || 0) > 0) return false;
+      return true;
+    }
+    return {
+      script: script,
+      size: function () { return script().length; },
+      sharesOf: function (i) { var b = script()[i]; return b ? sharesOf(b) : []; },
+      /* the next playable beat from the overlay's cursor (advances the cursor and the loop count) */
+      next: function (o) {
+        var n = script().length; if (!n || !o) return -1;
+        for (var k = 0; k < n * 2; k++) {
+          var i = o._cursor || 0;
+          o._cursor = (i + 1) % n; if (o._cursor === 0) o._loop = (o._loop || 0) + 1;
+          if (playable(o, i)) return i;
+        }
+        return -1;
+      },
+      apply: function (o, i) {
+        var b = script()[i]; if (!b || !o) return null;
+        Object.keys(b.deltas || {}).forEach(function (k) {
+          var d = b.deltas[k]; if (typeof d !== 'number' || !isFinite(d)) return;
+          /* a window that has no reading never moves (missing never becomes a number) */
+          if (k.indexOf('win:') === 0) { var parts = k.slice(4).split('/'), acc = PMU.roster.account(parts[0] + '/' + parts[1]); var w = acc && acc.windows.filter(function (x) { return x.key === parts[2]; })[0]; if (!w || w.pct === null) return; }
+          o[k] = Math.round(((o[k] || 0) + d) * 1e6) / 1e6;
+        });
+        if (b.alert) o['alert:' + b.alert.id] = Object.assign({}, b.alert, { at: clockNow(), time: 'now', live: true });
+        o._played = o._played || {}; o._played[b.beat] = (o._played[b.beat] || 0) + 1;
+        memo = {}; cache = null;
+        return { beat: i, n: b.beat, shares: sharesOf(b), lead: (b.lead || []).slice() };
+      },
+      reset: function (o) { if (!o) return; Object.keys(o).forEach(function (k) { delete o[k]; }); memo = {}; cache = null; }
+    };
+  }
 })();

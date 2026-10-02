@@ -40,7 +40,7 @@
   } });
   C.act('policy-settings', function () { var r = command('cmd.settings.open', { category: 'ai', setting_id: 'ai.accounts.soft-warning-level' }, { opened: true }); if (r.dispatch_accepted !== false) PMU.settings.open(null, 'ai.accounts.soft-warning-level'); });
   def('anom', 'attention', { meta: function () { return 'Hourly · 24 hours · score versus the 24-hour norm'; }, model: function () {
-    var A = D.series('anomaly24h'), B = D.series('anomalyBaseline24h'), n = A.values.length, now = new Date(); now.setMinutes(0, 0, 0);
+    var A = D.series('anomaly24h'), B = D.series('anomalyBaseline24h'), n = A.values.length, now = new Date(PMU.clock.now()); now.setMinutes(0, 0, 0);
     var x = A.values.map(function (v, i) { return now.getTime() - (n - 1 - i) * 3600000; });
     /* the peak's hour is the plotted hump's own hour (one clock: it moves with the series, never a frozen hour) */
     var pk = 0; A.values.forEach(function (v, i) { if (v > A.values[pk]) pk = i; });
@@ -56,7 +56,7 @@
       note: 'The spike is limited to vision-helper traffic. Scores belong to timestamped identity-bound attempt fixtures.' };
   } });
   def('attention-history', 'attention', { meta: function () { return 'Daily · 7 days · actionable provider and pricing signals'; }, model: function () {
-    var H = D.series('attentionHistory7d'), today = new Date(); today.setHours(0, 0, 0, 0);
+    var H = D.series('attentionHistory7d'), today = new Date(PMU.clock.now()); today.setHours(0, 0, 0, 0);
     var labels = H.raised.map(function (v, i) { return F.day(today.getTime() - (H.raised.length - 1 - i) * 86400000); });
     return { labels: labels, unit: 'count', stacks: [{ providerId: 'raised', name: 'Raised', idx: 2, settled: H.raised, estimate: H.raised.map(function () { return 0; }) },
       { providerId: 'resolved', name: 'Resolved', idx: 1, settled: H.resolved, estimate: H.resolved.map(function () { return 0; }) }],
@@ -83,7 +83,7 @@
       }, inspect: function () { return C.insp(legName(r.provider_id) + ' prompt cache', [['Read share', r[1] + ' (read share, not a hit rate)'], ['Savings', r[2] + ' (estimate)'], ['Read', r[3]], ['Write', r[4]], ['Reporting', x.reporting], ['Authority', x.authority], ['Age', '20s'], ['Scope', 'current route']]); } });
   });
   def('cache-trend', 'cache', { meta: function () { return 'Daily · 30 days · cache reads with the saved estimate'; }, model: function () {
-    var S = D.series('cacheDaily30'), n = S.read.length, today = new Date(); today.setHours(0, 0, 0, 0);
+    var S = D.series('cacheDaily30'), n = S.read.length, today = new Date(PMU.clock.now()); today.setHours(0, 0, 0, 0);
     var x = S.read.map(function (v, i) { return today.getTime() - (n - 1 - i) * 86400000; });
     var c = D.costs();
     return { chart: 'area', spec: { x: x, unit: 'tokens', series: [{ name: 'Cache read', idx: 7, values: S.read }],
@@ -181,7 +181,7 @@
     return { rows: DATA.signals.map(function (r, i) { return { name: r[0], sub: r[3], value: r[1], tone: r[2] === 'warn' ? 'warn' : null, glyph: r[2] === 'warn' ? 'alert' : 'checkCircle', note: SIG[i].authority === 'provider' ? 'provider authority' : 'PM authority' }; }) };
   } });
   def('signal-history', 'signals', { meta: function () { return 'Hourly · 24 hours · % of provider readings healthy (90 to 100 axis)'; }, model: function () {
-    var S = D.series('signalHealth24h'), n = S.values.length, now = new Date(); now.setMinutes(0, 0, 0);
+    var S = D.series('signalHealth24h'), n = S.values.length, now = new Date(PMU.clock.now()); now.setMinutes(0, 0, 0);
     var x = S.values.map(function (v, i) { return now.getTime() - (n - 1 - i) * 3600000; });
     var lo = 0; S.values.forEach(function (v, i) { if (v < S.values[lo]) lo = i; });
     return { chart: 'line', spec: { x: x, unit: 'pct', unitTitle: '% HEALTHY', yMin: 90, yMax: 100, series: [{ name: 'Healthy readings', idx: 1, values: S.values, area: true }] }, headline: { value: S.values[n - 1], fmt: 'pct', label: 'of provider readings healthy now' }, spark: { values: S.values, idx: 1 },
@@ -255,51 +255,51 @@
   });
   /* every widget's Details lists every reading its card holds (CONTENT-3: nothing is ever hidden silently; a fact the
      card folds at its size is in its "N more" hover tag and here) */
+  /* Live (WOW-SPEC-3 8, engine E3-7): a beat patches the cards that hold one of its share keys; these cards also show a
+     live reading derived from them without carrying the key, so they declare the key prefixes they follow (the engine
+     writes them as data-live on the card) */
+  var LIVE = {
+    'month': ['num:value', 'num:attempts'], 'cost-month': ['num:value', 'num:attempts'], 'cache-saved': ['num:cache'], 'plan-value-now': ['num:value'],
+    'an-totals': ['num:tokens', 'num:value', 'num:cache'], 'token-trend': ['num:tokens', 'chart:tokens'], 'next-reset': ['win:'], 'route-pressure': ['win:'],
+    'ov-headroom': ['win:'], 'acct-switch': ['win:'], 'ov-resets': ['win:'], 'reset-map': ['win:'], 'acct-resets': ['win:'], 'an-resets': ['win:'],
+    'attention-now': ['alert:'], 'ledger-count': ['num:attempts'], 'ledger-routes': ['num:attempts'], 'budget-now': ['num:spend', 'chart:budget'], 'budget': ['num:spend', 'chart:budget'],
+    'quota-history': ['win:'], 'an-quota-history': ['win:'], 'plans-timeline': ['win:'], 'ov-skyline': ['win:']
+  };
+  Object.keys(LIVE).forEach(function (id) { if (PMU.widgets.get(id)) PMU.widgets.define(id, { live: LIVE[id] }); });
+  ['claude', 'codex', 'qwen', 'gemini', 'kimi', 'copilot'].forEach(function (id) { if (PMU.widgets.get('tok-' + id)) PMU.widgets.define('tok-' + id, { live: ['num:tokens.' + id] }); });
   C.inspectAll(Object.keys(PMU_BOARDS.widgets).concat.apply(Object.keys(PMU_BOARDS.widgets), Object.keys(PMU_BOARDS.rooms).map(function (room) { return PMU.widgets.list(room); })));
 
-  /* ================================================================== room beats (WOW-SPEC 4, WOW-TASKS N-1) */
+  /* ================================================================== room beats (WOW-SPEC-3 7, WOW-TASKS-3 N3-5; see 70-rooms-a.js) */
   if (PMU.film && PMU.film.beat) {
-    var FB = PMU.film;
-    /* Attention: the anomaly line draws with its comet (the chart's own entrance); the spike's annotation then unfolds
-       from its line (scaleY, 260 SETTLE) and the hero number takes the light */
+    var FB = PMU.film, M = PMU.motion;
+    var stepped = function () { return M.family && /retro|nier/.test(M.family()); };
+    /* Attention: the ring swells on the spike and its label unfolds (the hero chart's own entrance); then the three alert
+       cards' severity glyphs pop 60 apart (POP 260): the alerts answer the spike */
     FB.beat('attention', function (b) {
-      var an = C.beatCard(b, 'anom'); if (!an) return;
-      /* the spike's ring and label are the line chart's own entrance (spec.callout: they open when the comet reaches the
-         spike); the beat lights the hero number and flashes the warn alerts */
-      C.sweepHero(b, an, 1150);
-      C.byPos(C.beatCards(b, function (c) { return c.getAttribute('data-kind') === 'alert' && c.querySelector('.pmu-alerttop[data-tone="warn"]'); }))
-        .forEach(function (c, i) { FB.flash(c.querySelector('.pmu-alerttop') || c, { tone: 'warn', delay: C.beatAt(b, an, 1400 + 90 * i), noSweep: true }); });
-    });
-    /* Prompt cache: the read arcs sweep, then the write arcs (the rings' own entrance); one light then crosses the four
-       rings left to right and the savings roll */
-    FB.beat('cache', function (b) {
-      C.byPos(C.beatCards(b, function (c) { return c.getAttribute('data-kind') === 'cache'; })).forEach(function (c, i) {
-        var ring = c.querySelector('.pmu-cachering'); if (ring) FB.sweep(ring, { delay: C.beatAt(b, c, 1000 + 70 * i), dur: 600 });
+      var an = C.beatCard(b, 'anom'), at = C.beatT(b, an);
+      C.byPos(C.beatCards(b, function (c) { return c.getAttribute('data-kind') === 'alert' && (!PMU.board.inView || PMU.board.inView(c)); })).slice(0, 6).forEach(function (c, i) {
+        var g = c.querySelector('.pmu-alerttop .pmu-ico, .pmu-alerttop svg'); if (!g) return;
+        if (FB.budget) FB.budget(c);
+        M.animate(g, [{ transform: 'scale(.2)', opacity: 0 }, { transform: 'scale(1.25)', opacity: 1, offset: 0.6 }, { transform: 'none', opacity: 1 }], { dur: 260, delay: at + 320 + 60 * i, easing: stepped() ? 'steps(3,jump-start)' : 'cubic-bezier(.34,1.45,.64,1)', fill: 'backwards' });
       });
     });
-    /* Tools: the p50 dots pop and the p95 bars grow with their head glows (the ladder's own entrance); the light then
-       crosses the hero number and the five tool tiles */
-    FB.beat('tools', function (b) {
-      var lat = C.beatCard(b, 'tool-latency'); C.sweepHero(b, lat, 1100);
-      var tiles = C.byPos(C.beatCards(b, function (c) { return /^tool-\d$/.test(c.getAttribute('data-widget') || ''); }));
-      var t0 = 0; tiles.forEach(function (c) { t0 = Math.max(t0, C.beatAt(b, c, 900)); });
-      tiles.forEach(function (c, i) { FB.sweep(c, { delay: t0 + 70 * i }); });
+    /* Prompt cache: the savings trend's last point gets the NOW halo (the trend chart's own beat part) */
+    FB.beat('cache', function (b) {
+      var heroes = C.byPos(C.beatCards(b, function (c) { return c.getAttribute('data-kind') === 'cache'; })), at = C.beatT(b, heroes[heroes.length - 1]);
+      var tr = C.beatCard(b, 'cache-trend'), plot = tr && tr.querySelector('[data-pmu-chart]'), ch = plot && PMU.charts && PMU.charts.of ? PMU.charts.of(plot) : null;
+      if (ch && typeof ch.beat === 'function' && (!PMU.board.inView || PMU.board.inView(tr))) { if (FB.budget) FB.budget(tr); try { ch.beat(at); } catch (error) {} }
     });
-    /* Signals: the health history paints with its light front (the chart's own entrance); the signals that need review
-       flash once */
-    FB.beat('signals', function (b) {
-      var h = C.beatCard(b, 'signal-history'); C.sweepHero(b, h, 1100);
-      C.beatCards(b, function (c) { return /^signal-\d$/.test(c.getAttribute('data-widget') || '') && c.querySelector('.pmu-kpiline[data-tone="warn"]'); })
-        .forEach(function (c) { FB.flash(c.querySelector('.pmu-kpiline'), { tone: 'warn', delay: C.beatAt(b, h, 1300) }); });
-      var list = C.beatCard(b, 'signal-list');
-      if (list) Array.prototype.forEach.call(list.querySelectorAll('.pmu-lrow[data-tone="warn"]'), function (row) { FB.flash(row, { tone: 'warn', delay: C.beatAt(b, h, 1400) }); });
-    });
-    /* Source authority: the bands flow left to right (the flow's own entrance); a light then crosses the authority and
-       label boxes 80 ms apart */
+    /* Tools: the slowest tool above its budget rings once in the warn tone (the hero chart's own entrance, charts C3-6) */
+    FB.beat('tools', function () {});
+    /* Signals: incident cells flash once in time order 40 apart (the hero chart's own entrance, charts C3-6) */
+    FB.beat('signals', function () {});
+    /* Source authority: the estimate band's label rolls its count */
     FB.beat('authority', function (b) {
       var fl = C.beatCard(b, 'auth-flow'); if (!fl) return;
-      Array.prototype.forEach.call(fl.querySelectorAll('.pmu-flowmid, .pmu-flowlab'), function (bx, i) { FB.sweep(bx, { delay: C.beatAt(b, fl, 1000 + 80 * i), dur: 600 }); });
-      C.sweepHero(b, fl, 1300);
+      var at = C.beatT(b, fl), est = fl.querySelector('.pmu-flowmid[data-k="est"] b'); if (!est) return;
+      var n = parseFloat(est.textContent); if (!isFinite(n) || n <= 0) return;
+      if (FB.odometer) FB.odometer(est, n, function (v) { return String(Math.round(v)); }, { from: 0, delay: at, dur: 520 });
+      FB.flash(est.parentNode, { delay: at + 520 });
     });
   }
 })();

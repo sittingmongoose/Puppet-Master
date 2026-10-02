@@ -595,3 +595,41 @@ html[data-o55-nier="on"] #panel-usage .pmu-shell {
   --pmu-heat-4: rgba(var(--o55-nier-ink-rgb), .48); --pmu-heat-5: rgba(var(--o55-nier-ink-rgb), .66); --pmu-heat-6: rgba(var(--o55-nier-ink-rgb), .86);
   --pmu-r-card: 0px;
 }
+
+/* ---- WOW round 3 at-rest light tokens (WOW-SPEC-3 4.1; values chosen in infra/wow3/proto-final.css with --w3-* renamed
+   --pmu-l-*). Engine owns the tokens; the key light (05-film.css) and the plates (20-board.css) read them here, charts read
+   the ramp, track and tip tokens (30-charts.css), content the ink tokens (40-widgets.css .pmu-heronum). Static values:
+   nothing here animates. ---- */
+#panel-usage .pmu-shell {
+  --pmu-l-key: var(--pmu-accent); --pmu-l-key-a: 40%; --pmu-l-key-b: 18%;
+  --pmu-l-plate-hi: rgba(255,255,255,.06);
+  --pmu-l-rim: rgba(255,255,255,.10); --pmu-l-rim-key: 78%;
+  --pmu-l-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 1px 2px rgba(0,0,0,.55), 0 26px 50px -26px rgba(0,0,0,.85);
+  --pmu-l-hero-spot: 16%;
+  --pmu-l-ink-top: #FFFFFF; --pmu-l-ink-bot: color-mix(in oklab, var(--pmu-accent) 52%, #fff);
+  --pmu-l-r0: #6F7BFF; --pmu-l-r1: #27BEE8; --pmu-l-r2: #34E0A6;
+  --pmu-l-track-in: inset 0 1px 2px rgba(0,0,0,.55);
+  --pmu-l-tip: 0 0 10px 3px;
+}
+html[data-theme$="-light"] #panel-usage .pmu-shell {
+  --pmu-l-key-a: 20%; --pmu-l-key-b: 12%;
+  --pmu-l-plate-hi: rgba(255,255,255,0);
+  --pmu-l-rim: rgba(255,255,255,.95); --pmu-l-rim-key: 40%;
+  --pmu-l-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 1px 2px rgba(21,32,43,.08), 0 18px 36px -20px rgba(21,32,43,.28);
+  --pmu-l-hero-spot: 9%;
+  --pmu-l-ink-top: color-mix(in oklab, var(--pmu-ink) 92%, var(--pmu-accent)); --pmu-l-ink-bot: color-mix(in oklab, var(--pmu-accent) 78%, #000);
+  --pmu-l-r0: #7C83E6; --pmu-l-r1: #1593BD; --pmu-l-r2: #0E9A6C;
+  --pmu-l-track-in: inset 0 1px 2px rgba(21,32,43,.12);
+  --pmu-l-tip: 0 0 4px 0;
+}
+html[data-theme="friendly-light"] #panel-usage .pmu-shell {
+  --pmu-l-key: #FF8F6B; --pmu-l-key-a: 30%; --pmu-l-key-b: 22%;
+  --pmu-l-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 1px 2px rgba(120,72,52,.08), 0 20px 38px -20px rgba(150,86,60,.30);
+  --pmu-l-ink-top: #C2557A; --pmu-l-ink-bot: #2E8F86;
+  --pmu-l-r0: #9A86E8; --pmu-l-r1: #3AA7D6; --pmu-l-r2: #2FB38B;
+}
+html[data-theme="friendly-dark"] #panel-usage .pmu-shell { --pmu-l-key: #FF9F7A; --pmu-l-ink-top: #FF9DC0; --pmu-l-ink-bot: #7FE0D2; }
+html[data-theme^="glass"] #panel-usage .pmu-shell { --pmu-l-key-a: 26%; --pmu-l-ink-top: #FFFFFF; --pmu-l-ink-bot: #B9E6FF; --pmu-l-r0: #8D7BFF; --pmu-l-r1: #4FD2FF; --pmu-l-r2: #6CF5C2; }
+html[data-theme="glass-light"] #panel-usage .pmu-shell { --pmu-l-key-a: 20%; --pmu-l-ink-top: #17222A; --pmu-l-ink-bot: #2F5FC4; --pmu-l-r0: #6E62D8; --pmu-l-r1: #0F86C6; --pmu-l-r2: #0A8A66; }
+html[data-theme^="retro"] #panel-usage .pmu-shell { --pmu-l-key: var(--pmu-s0); --pmu-l-key-a: 10%; --pmu-l-key-b: 6%; --pmu-l-plate-hi: transparent; --pmu-l-hero-spot: 0%;
+  --pmu-l-r0: var(--pmu-s1); --pmu-l-r1: var(--pmu-s4); --pmu-l-r2: var(--pmu-s0); --pmu-l-track-in: none; --pmu-l-tip: 0 0 8px 1px; }

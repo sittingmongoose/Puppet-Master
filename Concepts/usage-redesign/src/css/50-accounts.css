@@ -186,7 +186,7 @@ html[data-theme^="retro"] #panel-usage .pmu-provrow.is-setup { border-radius: 0;
 #panel-usage .pmu-ladname em { font-style: normal; font-size: 12px; color: var(--pmu-ink-3); flex: none; }
 #panel-usage .pmu-ladname b { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 #panel-usage .pmu-ladtrack { position: relative; height: 8px; overflow: hidden; border-radius: 4px; background: var(--pmu-card-3, rgba(127,127,127,.14)); }
-#panel-usage .pmu-ladfill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px;
+#panel-usage .pmu-ladfill { position: absolute; left: 0; right: 0; top: 0; bottom: 0; border-radius: 4px;
   background: linear-gradient(90deg, color-mix(in srgb, var(--c) 55%, transparent), var(--c)); }
 #panel-usage .pmu-ladrow.is-eff .pmu-ladfill { box-shadow: 0 0 10px 1px color-mix(in srgb, var(--c) 55%, transparent); }
 #panel-usage .pmu-ladrow.is-eff .pmu-ladfill::after { content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 2px; background: color-mix(in srgb, #fff 60%, var(--c)); }
@@ -220,3 +220,19 @@ html[data-theme^="retro"] #panel-usage .pmu-actlight, html[data-o55-nier="on"] #
 /* an amount's label never breaks inside a word (Retro 2026-10-02: "Credi / ts"): its column keeps the longest word and
    the value beside it wraps instead */
 #panel-usage .pmu-amt { grid-template-columns: 18px minmax(min-content, 1fr) auto; }
+
+/* WOW-TASKS-3 N3-4 / N3-7: the ladder bar is full width and translated (a live change moves it on the compositor); the
+   track lets the lit head's glow out above, below and to the right, never to the left where the translated bar waits */
+html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-ladrow .pmu-ladtrack { clip-path: inset(-12px -14px -12px 0 round 4px); }
+html[data-theme^="retro"] #panel-usage .pmu-ladtrack, html[data-o55-nier="on"] #panel-usage .pmu-ladtrack { overflow: hidden; }
+/* WOW-SPEC-3 7 Accounts / 9.1: the active light, pre-painted in every row of a provider plate and shown on the effective
+   row only (no element is added or removed when the active account changes): a soft backlight from the row's left edge
+   in the room's key light, gone by two thirds of the row. Static; the Accounts beat fades it in plate by plate. */
+#panel-usage .pmu-accrow { position: relative; }
+#panel-usage .pmu-acclight { position: absolute; inset: 0; pointer-events: none; opacity: 0; z-index: 0;
+  background: radial-gradient(70% 130% at 0% 50%, color-mix(in srgb, var(--pmu-l-key, var(--pmu-accent)) 13%, transparent), transparent 68%); }
+html[data-theme$="-light"] #panel-usage .pmu-acclight { background: radial-gradient(70% 130% at 0% 50%, color-mix(in srgb, var(--pmu-l-key, var(--pmu-accent)) 8%, transparent), transparent 68%); }
+#panel-usage .pmu-accrow.is-eff .pmu-acclight { opacity: 1; }
+#panel-usage .pmu-accrow > :not(.pmu-acclight) { position: relative; z-index: 1; }
+html[data-theme^="retro"] #panel-usage .pmu-acclight { background: linear-gradient(90deg, color-mix(in srgb, var(--pmu-s0) 10%, transparent), transparent 60%); }
+html[data-o55-nier="on"] #panel-usage .pmu-acclight { display: none; }

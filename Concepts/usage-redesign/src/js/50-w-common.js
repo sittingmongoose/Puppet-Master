@@ -79,8 +79,60 @@
     return true;
   };
 
+  /* the quiet count of what a small card folds (round 3: rows of tiles each printing "6 more facts" read as a wall): the
+     count sits in the card head ("+6" with a layers glyph, 12 px ink-3) and its hover tag lists every folded reading;
+     Details lists them too (C.inspectAll). The body gets the line's room back. Idempotent per render; a dry render never
+     touches the live head. */
+  C.headMore = function (ctx, body, items) {
+    if (!ctx || !ctx.head || ctx._dry || (body && body._pmuDry)) return false;
+    var old = ctx.head.querySelector('.pmu-headmore'); if (old) old.remove();
+    items = (items || []).filter(Boolean);
+    if (!items.length) return false;
+    ctx.head.insertAdjacentHTML('afterbegin', C.countHtml(items));
+    ctx.head.firstChild._pmuItems = items;
+    return true;
+  };
+  /* the same quiet count as a short row in the body (18 px, right-aligned, no words) where the head has no room */
+  C.countRow = function (items) { items = (items || []).filter(Boolean); return items.length ? '<div class="pmu-headmore is-inline is-row"' + C.foldHover(items) + ' data-n="' + items.length + '">' + C.glyph('layers') + '<b>+' + items.length + '</b></div>' : ''; };
+  C.countHtml = function (items, inline) { return '<span class="pmu-headmore' + (inline ? ' is-inline' : '') + '"' + C.foldHover(items) + ' data-n="' + items.length + '">' + C.glyph('layers') + '<b>+' + items.length + '</b></span>'; };
+  /* small cards use the head count (a tile row, a plan card, an alert, a free or cache card, a single provider plate) */
+  C.smallCard = function (ctx) {
+    if (!ctx || !ctx.tier || ctx.tier.bw >= 420 || !ctx.head) return false;   /* a dry render decides the same (its markup must match) */
+    /* only where the count fits the head beside the title, its key (mark) and its aside (a title never breaks inside a
+       word: "OpenCod / e Go", "Claud / e"); a tile's title may take its two lines at word breaks. The engine's own
+       titleFits measure (42-cards.js), less the count's 46 px. Canvas measure, no layout read. */
+    var card = ctx.head.closest ? ctx.head.closest('.pmu-card') : null, cls = PMU.board && PMU.board.cls ? PMU.board.cls() : null;
+    if (!card || !cls || !cls.pitchX || !PMU.charts || !PMU.charts.textW) return false;
+    var form = card.getAttribute('data-head') || 'line', nier = document.documentElement.getAttribute('data-o55-nier') === 'on';
+    var thm = document.documentElement.getAttribute('data-theme') || '', wide = nier || /^retro/.test(thm), k = wide ? 1.2 : /^glass/.test(thm) ? 1.12 : 1.08;
+    var title = ((card.querySelector('.pmu-cardtitle') || {}).textContent || '').replace(/\u2011/g, '-'), aside = ((card.querySelector('.pmu-cardmeta') || {}).textContent || '').trim();
+    if (nier) title = title.toUpperCase();
+    var px = form === 'plate' ? 15 : form === 'tile' ? 13 : 13.5;
+    var tw = function (x) { return (PMU.charts.textW(x, px, false, 640) + (nier ? x.length * px * 0.05 : 0)) * k; };
+    /* measured (VM 1920, plan card): head padding 28, the key 18 + its 8 px gap, the count about 44 + its 8 px gap */
+    var avail = (+card.dataset.w || 0) * cls.pitchX - 8 - 28 - (card.querySelector('.pmu-cardkey:not([hidden])') ? 26 : 0) - 4
+      - (aside ? PMU.charts.textW(aside, 12.5, false, 500) * k + 10 : 0) - 52;
+    if (tw(title) <= avail) return true;
+    if (form !== 'tile') return false;
+    var words = title.split(/\s+/), lines = 1, cur = 0;
+    for (var i = 0; i < words.length; i++) {
+      var ww = tw(words[i]); if (ww > avail) return false;
+      if (cur && cur + tw(' ') + ww > avail) { lines += 1; cur = ww; } else cur += (cur ? tw(' ') : 0) + ww;
+    }
+    return lines <= 2;
+  };
+
   /* ------------------------------------------------------------------ formatting */
   C.b = function (v) { return '<b>' + esc(v) + '</b>'; };
+  /* WOW-SPEC-3 6.3 / WOW-TASKS-3 N3-1: shared ids. data-share="<kind>:<key>" on the smallest element that holds a thing the
+     page shows in more than one room (the meter, not the row; the mark, not the head); a window's value text carries
+     data-share-v with the same key (the flight's number flyer). Keys: win:<a.key>/<w.key>, acct:<a.key>, prov:<p.id>,
+     reset:<ev.key>, num:<metric>, ctl:auto-switch|threshold, chart:budget|context|tokens. */
+  C.shareAttr = function (key) { return key ? ' data-share="' + esc(key) + '"' : ''; };
+  C.share = function (html, key) { return key && html ? String(html).replace(/^(\s*<[a-zA-Z][\w-]*)/, '$1 data-share="' + esc(key) + '"') : html; };
+  C.shareMark = function (pid, size, opts) { return C.share(PMU.mark(pid, size, opts), 'prov:' + pid); };
+  /* in-place html of a small tree (NOTES3-perf C5: no innerHTML where the shape is unchanged) */
+  C.setHtml = function (el, html) { if (!el) return; if (PMU.charts && PMU.charts.patchHtml) PMU.charts.patchHtml(el, html); else el.innerHTML = html; };
   C.money = function (v, o) {
     if (v === null || v === undefined || (typeof v === 'number' && !isFinite(v))) return '-';
     var a = Math.abs(v), d = a === 0 ? 2 : a < 0.01 ? 6 : a < 1 ? 4 : 2, parts = a.toFixed(d).split('.');
@@ -274,7 +326,8 @@
     try { renderFn(dry); } catch (error) { return false; }
     var live = body._pmuMeterRecs, next = dry._pmuMeterRecs || [];
     if (dry._pmuSig !== body._pmuSig || next.length !== live.length || next.some(function (r, i) { return r.key !== live[i].key || !live[i].chart; })) return false;
-    next.forEach(function (r, i) { live[i].chart.update(r.spec); live[i].spec = r.spec; });
+    var ctxP = arguments[3] || null;
+    next.forEach(function (r, i) { if (JSON.stringify(live[i].spec) !== JSON.stringify(r.spec)) C.chartTo(live[i].chart, r.spec, ctxP); live[i].spec = r.spec; });
     if (footSel && dry._pmuFoot !== body._pmuFoot) {
       var foot = body.querySelector(footSel);
       if (foot) { if (PMU.charts && PMU.charts.patchHtml) PMU.charts.patchHtml(foot, dry._pmuFoot); else foot.innerHTML = dry._pmuFoot; PMU.motion.animate(foot, [{ opacity: 0.2 }, { opacity: 1 }], { dur: 160, easing: 'cubic-bezier(.22,.8,.28,1)' }); }
@@ -282,7 +335,7 @@
     }
     Array.prototype.forEach.call(dry.querySelectorAll('[data-flash-key]'), function (el) {
       var k = el.getAttribute('data-flash-key'), row = body.querySelector('[data-flash-key="' + k + '"]');
-      if (row && row.getAttribute('data-flash-sig') !== el.getAttribute('data-flash-sig')) { row.setAttribute('data-flash-sig', el.getAttribute('data-flash-sig')); flashRow(row); }
+      if (row && row.getAttribute('data-flash-sig') !== el.getAttribute('data-flash-sig')) { row.setAttribute('data-flash-sig', el.getAttribute('data-flash-sig')); if (!(ctxP && ctxP.reason === 'live')) flashRow(row); }
     });
     return true;
   };
@@ -358,14 +411,16 @@
   C.bag = bag;
   C.chart = function (body, name, host, spec, opts) {
     /* every chart's spec is kept as text, so the in-place checks see a change that lives only in a chart */
-    var b0 = bag(body); b0.specs = b0.specs || [];
+    var b0 = bag(body); b0.specs = b0.specs || []; b0.objs = b0.objs || [];
     try { b0.specs.push(name + ':' + JSON.stringify(spec)); } catch (error) { b0.specs.push(name + ':?' + Math.random()); }
+    var rec = { name: name, spec: spec, chart: null }; b0.objs.push(rec);
     if (body && body._pmuDry) return null;   /* a dry render (the in-place checks) creates no chart */
     var fn = PMU.charts && PMU.charts[name];
     if (typeof fn !== 'function') return null;
     try {
       var c = fn(host, spec, Object.assign({ enter: false }, opts || {}));
       if (c) bag(body).charts.push(c);
+      rec.chart = c || null;
       return c;
     } catch (error) { console.error('[pm-usage] chart ' + name, error); return null; }
   };
@@ -426,7 +481,10 @@
     if (!fitScheduled && !C.fitDefer) { fitScheduled = true; (window.queueMicrotask || function (f) { Promise.resolve().then(f); })(function () { fitScheduled = false; fitFlush(); }); }
     /* once more in the next frame: meters and charts finish their own layout after the render, and wrapped text can then
        push a foot past the body (a one-off frame, never a loop) */
-    if (!fitAgainScheduled) { fitAgainScheduled = true; requestAnimationFrame(function () { fitAgainScheduled = false; var list = fitAgain.splice(0); list.forEach(function (b) { b._pmuFitDone = false; }); fitFlush(list); }); }
+    /* (engine 21:26Z request: during an arrival or room change this frame is the next slice's frame and its read forced a
+       21.7 ms style recalc on the VM: while a moment runs the again-pass waits for the settled pass below) */
+    var inMoment = PMU.film && PMU.film.moment && PMU.film.moment();
+    if (!fitAgainScheduled && !inMoment) { fitAgainScheduled = true; requestAnimationFrame(function () { fitAgainScheduled = false; var list = fitAgain.splice(0); list.forEach(function (b) { b._pmuFitDone = false; }); fitFlush(list); }); }
     /* and once when the moment is over: a count that rolls up from 0 is narrower than its final text while the first
        passes run, so a hero line can wrap only when the roll lands ("1,420 calls left" in NieR pushed "4 more facts"
        past the card). One batched read of the board's bodies 2.4 s after the last render, never a loop. */
@@ -434,6 +492,12 @@
     fitSettleT = setTimeout(fitSettled, 2000 * (PMU.motion && PMU.motion.speed ? PMU.motion.speed() : 1));
   }
   var fitSettleT = 0;
+  /* the again-pass held during a moment runs once when the moment ends (one batched pass) */
+  if (PMU.film && PMU.film.onMoment) PMU.film.onMoment(function (what) {
+    if ((what !== 'end' && what !== 'finish') || !fitAgain.length || fitAgainScheduled) return;
+    /* in the moment's end task itself (no frame callback after the moment: the page is idle from here) */
+    var list = fitAgain.splice(0); list.forEach(function (b) { b._pmuFitDone = false; }); fitFlush(list);
+  });
   /* the settled pass runs in idle slices of about 8 ms (NOTES3-perf C1: never a whole-board pass in a moment) */
   function fitSettled() {
     fitSettleT = 0;
@@ -452,7 +516,7 @@
   C.fitDefer = false;
   C.fitSlice = function () { fitScheduled = false; if (fitQueue.length) fitFlush(); };
   /* the per-render fit record of a body (C.kind resets it before each render) */
-  function fitReset(b) { b._pmuHidden = 0; b._pmuFitDone = false; b._pmuPre = null; b._pmuFolded = []; b._pmuFoldedNotes = []; b._pmuGrown = false; b._pmuMoreHome = null; }
+  function fitReset(b) { b._pmuHeadFold = false; b._pmuHidden = 0; b._pmuFitDone = false; b._pmuPre = null; b._pmuFolded = []; b._pmuFoldedNotes = []; b._pmuGrown = false; b._pmuMoreHome = null; }
   C.fitReset = fitReset;
   var NOT_ROW = /pmu-(cfoot|note|factrow|efflegend|effspark|kpitrend|kpifoot|agbeyond|setupnote|effcost|swfam)/;
   function fitFlush(list) {
@@ -534,6 +598,16 @@
               .replace(/^(\d+ more )(?!(?:at|in|after)\b)(\w+)/, function (m0, a, w) { return a + (/s$/.test(w) ? w : /y$/.test(w) ? w.replace(/y$/, 'ies') : w + 's'); });
             return;
           }
+          /* a small card counts the rows the fit pass removes in its head (C.headMore, round 3), not on a line */
+          var hsl = headSlotOf(b); if ((hsl && hsl.querySelector('.pmu-headmore')) || b.querySelector('.pmu-headmore.is-inline')) { b._pmuHeadFold = true; return; }
+          /* a small card gets the quiet count row instead of an auto "N more" words line (round 3) */
+          if (b.clientWidth < 420) {
+            var host0 = b._pmuMoreHome && b._pmuMoreHome.isConnected && b.contains(b._pmuMoreHome) ? b._pmuMoreHome : b;
+            var row = document.createElement('div'); row.className = 'pmu-headmore is-inline is-row'; row.setAttribute('data-auto', ''); row.innerHTML = C.glyph('layers') + '<b>+0</b>'; row._pmuItems = [];
+            var foot0 = host0.querySelector(':scope > .pmu-cardfoot, :scope > .pmu-kpifoot, :scope > .pmu-accsfoot, :scope > .pmu-cfoot');
+            if (foot0) host0.insertBefore(row, foot0); else host0.appendChild(row);
+            b._pmuHeadFold = true; return;
+          }
           var more = b.querySelector('.pmu-more[data-auto]');
           if (!more) {
             more = document.createElement('div'); more.className = 'pmu-more'; more.setAttribute('data-auto', '');
@@ -589,10 +663,23 @@
   }
   /* a "N more" line lists the rows it counts (the fit pass's, then the kind's own); notes and foots that gave way join
      it, or, where no such line shows, the body's own hover tag carries them */
+  function headSlotOf(b) { var card = b.parentNode; return card && card.classList && card.classList.contains('pmu-card') ? card.querySelector('.pmu-headtools') : null; }
   function foldTags(b) {
     if (!b.isConnected) return;
     var rows = b._pmuFolded || [], notes = b._pmuFoldedNotes || [];
     if (!rows.length && !notes.length) return;
+    var hs = b._pmuHeadFold ? headSlotOf(b) : null, inl = b._pmuHeadFold ? b.querySelector('.pmu-headmore.is-inline') : null;
+    if (inl) {
+      var baseI = inl._pmuItems || String(inl.getAttribute('data-pm-hover-detail') || '').split('; ').filter(Boolean), all = baseI.concat(rows, notes);
+      inl._pmuItems = all; inl.setAttribute('data-pm-hover-label', C.FOLD_LABEL); inl.setAttribute('data-pm-hover-detail', all.join('; ')); inl.setAttribute('data-n', String(all.length));
+      var bb = inl.querySelector('b'); if (bb) bb.textContent = '+' + all.length;
+      return;
+    }
+    if (hs && hs.querySelector('.pmu-headmore')) {
+      var hm = hs.querySelector('.pmu-headmore'), base = hm && hm._pmuItems ? hm._pmuItems : [];
+      C.headMore({ head: hs, tier: { bw: b.clientWidth } }, null, base.concat(rows, notes));
+      return;
+    }
     var line = Array.prototype.filter.call(b.querySelectorAll('.pmu-more'), function (e) { return /^\d+ /.test(e.textContent); }).pop();
     if (line) {
       if (!line.hasAttribute('data-pm-hover-foldbase')) line.setAttribute('data-pm-hover-foldbase', line.getAttribute('data-pm-hover-detail') || '');
@@ -655,15 +742,158 @@
     } else if (PMU.motion.flash) PMU.motion.flash(el);
   }
   C.flashRow = flashRow;
+  /* ------------------------------------------------------------------ live readings (WOW-SPEC-3 8, WOW-TASKS-3 N3-4)
+     A live beat (PMU.data.live.apply, then PMU.cards.update(card, 'live')) patches each card IN PLACE: the changed digit
+     columns roll (the odometer leaves an unchanged text alone), meters and charts move through charts' chart.live, text
+     that changed is written in place; no flash (the beat's lead flash and sweep are the engine's), no child-list change
+     and no innerHTML while the card is in view. A card off screen (or under Reduce Motion) is written final. A card whose
+     change needs a new structure while it is in view is re-rendered quietly after the beat, in an idle slice. */
+  function liveFinalOf(body) {
+    if (PMU.motion.reduced && PMU.motion.reduced()) return true;
+    var card = body.closest ? body.closest('.pmu-card') : null;
+    if (card && PMU.board && PMU.board.inView) { try { return !PMU.board.inView(card); } catch (error) { return false; } }
+    return false;
+  }
+  C.liveFinalOf = liveFinalOf;
+  /* a chart takes its next spec: chart.live on a live beat (charts C3-4: in place, only what changed), else update */
+  C.chartTo = function (chart, spec, ctx, o) {
+    if (!chart) return;
+    if (ctx && ctx.reason === 'live' && typeof chart.live === 'function') { try { chart.live(spec, Object.assign({ lead: false }, o || {})); return; } catch (error) { console.error('[pm-usage] chart live', error); } }
+    chart.update(spec);
+  };
+  /* live trees are compared child by child: chart roots and film layers are left out, a rolling number is one leaf, and
+     the live body may lack rows the fit pass removed (a dry child that the fit pass can remove is skipped) and carry the
+     fit pass's own "N more" line. pairKids returns the matched pairs or null when the shapes differ. */
+  var SKIP_LIVE = function (el) { var c = typeof el.className === 'string' ? el.className : ''; return el.hasAttribute('data-pmu-chart') || /(^|\s)pmu-film-/.test(c) || (el.classList.contains('pmu-more') && el.hasAttribute('data-auto')); };
+  function kidsOf(el) { var out = []; for (var c = el.firstChild; c; c = c.nextSibling) { if (c.nodeType === 3) { if (/\S/.test(c.nodeValue)) out.push(c); } else if (c.nodeType === 1 && !SKIP_LIVE(c)) out.push(c); } return out; }
+  function shapeOf(el) { return el.nodeType === 3 ? '#' : el.tagName + '.' + (typeof el.className === 'string' ? el.className.replace(/\s*\bpmu-odo\b/g, '').trim() : ''); }
+  function trimmable(el) { return el.nodeType === 1 && (el.matches(FIT_SEL) || el.classList.contains('pmu-agday') || el.classList.contains('pmu-facts')); }
+  function pairKids(l, d) {
+    var lc = kidsOf(l), dc = kidsOf(d), pairs = [], j = 0;
+    for (var i = 0; i < lc.length; i++) {
+      var sh = shapeOf(lc[i]);
+      while (j < dc.length && shapeOf(dc[j]) !== sh) { if (!trimmable(dc[j])) return null; j++; }
+      if (j >= dc.length) return null;
+      pairs.push([lc[i], dc[j]]); j++;
+    }
+    for (; j < dc.length; j++) if (!trimmable(dc[j])) return null;
+    return pairs;
+  }
+  function sameTree(l, d) {
+    if (l.nodeType === 3 || l.classList.contains('pmu-num') || l.classList.contains('pmu-more')) return true;
+    var pairs = pairKids(l, d); if (!pairs) return false;
+    for (var i = 0; i < pairs.length; i++) if (pairs[i][0].nodeType === 1 && !sameTree(pairs[i][0], pairs[i][1])) return false;
+    return true;
+  }
+  var KEEP_ATTR = /^(aria-describedby|data-pmu-chart|tabindex|role|data-base|data-auto)$/;
+  function copyLive(live, dry, nums, root) {
+    var a, i;
+    if (live.classList.contains('pmu-more')) return;   /* the counts the fit pass wrote stay */
+    if (root) { (pairKids(live, dry) || []).forEach(function (pr) { if (pr[0].nodeType === 3) { if (pr[0].nodeValue !== pr[1].nodeValue) pr[0].nodeValue = pr[1].nodeValue; } else copyLive(pr[0], pr[1], nums); }); return; }
+    for (i = 0; i < dry.attributes.length; i++) { a = dry.attributes[i]; if (live.getAttribute(a.name) !== a.value) live.setAttribute(a.name, a.value); }
+    for (i = live.attributes.length - 1; i >= 0; i--) { a = live.attributes[i]; if (!dry.hasAttribute(a.name) && !KEEP_ATTR.test(a.name) && !/^data-pm-hover/.test(a.name)) live.removeAttribute(a.name); }
+    if (live.classList.contains('pmu-num')) {
+      var t1 = dry.textContent;
+      if (live.getAttribute('data-k') && nums) nums.push({ el: live, text: t1 });
+      else if (live.textContent !== t1 && !live.querySelector('.pmu-odo')) live.textContent = t1;
+      return;
+    }
+    (pairKids(live, dry) || []).forEach(function (pr) { if (pr[0].nodeType === 3) { if (pr[0].nodeValue !== pr[1].nodeValue) pr[0].nodeValue = pr[1].nodeValue; } else copyLive(pr[0], pr[1], nums); });
+  }
+  /* body takes dry's words and attributes in place when both have the same shape; returns false (and changes nothing)
+     when they differ. The numbers that carry a data-k roll from their shown value (no flash). */
+  C.livePatch = function (body, dry, ctx) {
+    if (!sameTree(body, dry)) return false;
+    var nums = [], old = snapshot(body);
+    copyLive(body, dry, nums, true);   /* the body's own attributes (class, the engine's) stay */
+    var fin = ctx && ctx.liveFinal;
+    nums.forEach(function (n) {
+      var el = n.el, k = el.getAttribute('data-k'), to = parseFloat(el.getAttribute('data-v')), f = el.getAttribute('data-f');
+      if (!(k in old) || !isFinite(to) || old[k] === to || fin) { if (el.textContent !== n.text && !el.querySelector('.pmu-odo')) el.textContent = n.text; return; }
+      PMU.motion.countUp(el, old[k], to, function (v) { return C.numOnly(v, v === to || f !== 'money' ? f : 'money2'); }, { dur: 'value' });
+    });
+    return true;
+  };
+  /* what a card shows, as one string (a kind's own liveSig, else its model): a live beat that leaves it unchanged leaves
+     the card alone (no dry render) */
+  function msig(impl, ctx) {
+    try {
+      var th = PMU.roster.thresholds(), pre = [th.auto, th.switchLeft, th.warnLeft, ctx.tier ? ctx.tier.bw + 'x' + ctx.tier.bh : ''].join('|') + '|';
+      return impl.liveSig ? pre + String(impl.liveSig(ctx)) : ctx.model && typeof ctx.model === 'object' ? pre + JSON.stringify(ctx.model) : null;
+    } catch (error) { return null; }
+  }
+  C.msig = msig;
+  var liveQ = [], liveQT = 0;
+  function liveIdle(body) {
+    if (liveQ.indexOf(body) < 0) liveQ.push(body);
+    if (liveQT) return;
+    var idle = window.requestIdleCallback || function (f) { return setTimeout(function () { f({ timeRemaining: function () { return 8; } }); }, 400); };
+    liveQT = idle(function step(deadline) {
+      liveQT = 0;
+      var t0 = performance.now();
+      while (liveQ.length && performance.now() - t0 < 6) {
+        var b = liveQ.shift(), card = b.isConnected && b.closest('.pmu-card');
+        if (card && PMU.cards && PMU.cards.update) { b._pmuLiveNow = true; try { PMU.cards.update(card, 'live'); } finally { b._pmuLiveNow = false; } }
+      }
+      if (liveQ.length) liveQT = idle(step, { timeout: 2000 });
+    }, { timeout: 2000 });
+  }
+  var liveLater = [], liveLaterT = 0;
+  function reRenderLater(body) {
+    if (liveLater.indexOf(body) < 0) liveLater.push(body);
+    if (liveLaterT) return;
+    var idle = window.requestIdleCallback || function (f) { return setTimeout(function () { f({ timeRemaining: function () { return 8; } }); }, 1200); };
+    liveLaterT = idle(function () {
+      liveLaterT = 0;
+      var list = liveLater.splice(0);
+      list.forEach(function (b) { var card = b.isConnected && b.closest('.pmu-card'); if (card && PMU.cards && PMU.cards.update) PMU.cards.update(card, 'data'); });
+    }, { timeout: 2500 });
+  }
+  function liveUpdate(body, ctx, impl) {
+    var fin = liveFinalOf(body);
+    /* a card outside the viewport takes the beat later, in an idle slice, written final (nothing animates there and the
+       beat's own task stays under its 8 ms budget) */
+    if (fin && !body._pmuLiveNow && !(PMU.motion.reduced && PMU.motion.reduced())) { liveIdle(body); return; }
+    var sg = msig(impl, ctx);
+    if (sg !== null && sg === body._pmuMSig) return;
+    body._pmuMSig = sg;
+    ctx = Object.assign({}, ctx, { liveFinal: fin });
+    if (impl.live) { try { if (impl.live(body, ctx) !== false) return; } catch (error) { console.error('[pm-usage] live ' + ctx.id, error); } }
+    if (impl.update) { try { if (impl.update(body, ctx) !== false) { body._pmuPre = null; return; } } catch (error) { console.error('[pm-usage] live update ' + ctx.id, error); } }
+    var dry = document.createElement('div'); dry._pmuDry = true;
+    try { impl.render(dry, Object.assign({}, ctx, { _dry: true })); moreAtMaxDry(dry, body); } catch (error) { dry = null; }
+    if (dry && C.liveSig(dry) === C.liveSig(body) && ((dry._pmu && dry._pmu.specs) || []).join('\n') === ((body._pmu && body._pmu.specs) || []).join('\n')) return;
+    /* the same shape: the words patch in place and each chart takes its next spec (charts' chart.live) */
+    var lo = (body._pmu && body._pmu.objs) || [], dob = (dry && dry._pmu && dry._pmu.objs) || [];
+    if (dry && lo.length === dob.length && lo.every(function (o, i) { return o.name === dob[i].name; }) && C.livePatch(body, dry, ctx)) {
+      lo.forEach(function (o, i) {
+        var ns = dob[i].spec, same = false;
+        try { same = JSON.stringify(ns) === JSON.stringify(o.spec); } catch (error) { same = false; }
+        if (!same && o.chart) C.chartTo(o.chart, ns, ctx);
+        o.spec = ns;
+      });
+      if (body._pmu && dry._pmu) body._pmu.specs = (dry._pmu.specs || []).slice();
+      body._pmuPre = null; return;
+    }
+    /* a new structure: off screen it is written final now; in view it waits for the beat to end (an idle slice) */
+    if (ctx.liveFinal) { var old = snapshot(body); C.destroy(body); fitReset(body); body._pmuImpl = impl; body._pmuCtxK = ctx; impl.render(body, ctx); moreAtMax(body); fitLater(body); void old; return; }
+    reRenderLater(body);
+  }
   C.kind = function (name, impl) {
     PMU.widgets.kind(name, {
-      render: function (body, ctx) { ctx = inner(ctx); C.destroy(body); fitReset(body); body._pmuBand = 0; body.removeAttribute('data-pm-hover-label'); body.removeAttribute('data-pm-hover-detail'); body._pmuImpl = impl; body._pmuCtxK = ctx; impl.render(body, ctx); moreAtMax(body); fitLater(body); },
+      render: function (body, ctx) { ctx = inner(ctx); C.destroy(body); fitReset(body); body._pmuBand = 0; body.removeAttribute('data-pm-hover-label'); body.removeAttribute('data-pm-hover-detail'); body._pmuImpl = impl; body._pmuCtxK = ctx; impl.render(body, ctx); body._pmuMSig = msig(impl, ctx); moreAtMax(body); fitLater(body); },
       update: function (body, ctx) {
         ctx = inner(ctx);
         /* a body the grow step widened keeps that budget for its updates at the same size (its in-place patch and its
            dry render then match what is shown) */
         var band = body._pmuBand && body._pmuBandKey === ctx.tier.bw + 'x' + ctx.tier.bh ? body._pmuBand : 0, bandKey = ctx.tier.bw + 'x' + ctx.tier.bh;
         if (band) ctx = Object.assign({}, ctx, { tier: Object.assign({}, ctx.tier, { bh: ctx.tier.bh + band }) });
+        if (ctx.reason === 'live') { liveUpdate(body, ctx, impl); return; }
+        /* NOTES3-perf C3: a Settings ripple or a data refresh that leaves what this card shows unchanged (its model, or its
+           kind's liveSig, with the thresholds) costs one signature, not a dry render */
+        var sg0 = msig(impl, ctx);
+        if ((ctx.reason === 'settings' || ctx.reason === 'data') && sg0 !== null && sg0 === body._pmuMSig) return;
+        body._pmuMSig = sg0;
         if (impl.update && impl.update(body, ctx) !== false) { body._pmuPre = null; return; }   /* patched in place: the pre-fit record is stale */
         /* a Settings change (auto-switch, switch level, the account used) touches few cards: a card whose content is the
            same after the change keeps its DOM, its running motion and its fit (WOW-SPEC 3.9: never a re-render) */
@@ -814,6 +1044,7 @@
       var valueHtml = m.vs ? '<span class="pmu-kpivs">' + C.vs(m.vs, m.word) + '</span>'
         : m.text != null ? '<b class="pmu-kpivalue"><span class="pmu-num">' + esc(m.text) + '</span>' + (m.unit ? '<span class="pmu-u">' + esc(m.unit) + '</span>' : '') + '</b>'
         : C.valHtml(m.value, m.fmt, 'pmu-kpivalue', ctx.id + ':v').replace('class="pmu-num"', 'class="pmu-num" data-count="kpi"');
+      if (m.share && !m.vs) valueHtml = C.share(valueHtml, m.share);   /* N3-1: the headline number's shared id */
       var delta = '';
       if (m.delta && !m.vs) {
         var d = PMU.fmt.delta(m.delta.v, { goodWhen: m.delta.goodWhen || 'up' });
@@ -851,7 +1082,14 @@
         return { html: hh, lines: Math.max(1, Math.min(n, C.wrapLines(hh.replace(/<[^>]+>/g, ''), bw, 12.5))) };
       };
       var lay = C.factLayout(facts, wide ? Math.max(120, bw * 0.42) : bw, wide ? 1 : 0);
-      var MORE_H = 25;
+      /* the folded facts' quiet count: in the head where it fits, else at the right end of the value line (a narrow tile
+         whose title fills its head: the token tiles at 1920) */
+      var MORE_H = 25, headCount = C.smallCard(ctx), inlineCount = !headCount && !m.vs;
+      /* the inline count beside the value (about 40 px with its gap) or, where the value leaves no room, on its own short
+         row under it (18 px: a glyph and a number, no words) */
+      var vPx = ctx.tier.w === 'xs' ? 20 : ctx.tier.w === 's' ? 22 : 26, numTxt = m.text != null ? String(m.text) + (m.unit || '') : C.fmt(m.value, m.fmt);
+      var inlineWrap = inlineCount && (PMU.charts && PMU.charts.textW ? PMU.charts.textW(numTxt, vPx, false, 620) * 1.08 : numTxt.length * vPx * 0.6) + (m.delta ? 64 : 0) + 8 + 40 > bw;
+      if (inlineWrap) MORE_H = 18;
       /* measured: the value line and the gap under it take 34 px (22 px value, xs / s) or 39 px (26 px value) */
       var LINE_H = ctx.tier.w === 'xs' || ctx.tier.w === 's' ? 34 : 39;
       /* one share-out for a given foot height (0 when the foot gives way) */
@@ -862,8 +1100,9 @@
         /* the side column of the wide form keeps 6 px (census 1440: its facts ran 3 px past the tile) */
         var rm = wide ? bh - 6 : base - sb.lines * 17;
         var f = lay.fit(rm), ml = false;
-        /* some facts stay folded: the "N more" line takes its place under the facts that still fit */
-        if (f.n < facts.length && rm >= MORE_H) { f = lay.fit(rm - MORE_H); ml = true; }
+        /* some facts stay folded: the "N more" line takes its place under the facts that still fit (a tile with a head
+           slot counts them in its head instead: round 3) */
+        if (f.n < facts.length && rm >= MORE_H && !headCount && (!inlineCount || inlineWrap)) { f = lay.fit(rm - MORE_H); ml = !inlineCount; }
         return { base: base, sub: sb, room: rm, fr: f, moreLine: ml };
       };
       var A = alloc(footRoom), footShown = !!footRoom;
@@ -885,9 +1124,11 @@
       var factsHtml = maxFacts ? lay.html(maxFacts) : '';
       var folded = hiddenFacts.map(C.factText).concat(m.foot && !footShown && footText ? [footText] : []);
       var moreHtml = hiddenFacts.length && moreLine ? C.more(hiddenFacts.length, 'facts', bw < 260, folded) : '';
+      if (headCount && folded.length) C.headMore(ctx, body, folded); else C.headMore(ctx, body, []);
+      if (inlineCount && folded.length && !moreHtml) head = head.replace(/^<div class="pmu-kpiline"/, '<div class="pmu-kpiline' + (inlineWrap ? ' has-count-row' : '') + '"').replace(/<\/div>$/, C.countHtml(folded, true) + '</div>');
       /* no room even for the line (or only the foot gave way): the tile's hover tag lists what folded (and Details has
          it) */
-      var tileHover = folded.length && !(hiddenFacts.length && moreLine) ? C.foldHover(folded) : '';
+      var tileHover = folded.length && !(hiddenFacts.length && moreLine) && !headCount && !inlineCount ? C.foldHover(folded) : '';
       var foot = m.foot && footShown ? '<div class="pmu-kpifoot' + (hasBtn ? ' has-act' : '') + '">' + m.foot + '</div>' : '';
       if (wide) {
         body.innerHTML = '<div class="pmu-kpi is-wide"' + tileHover + '><div class="pmu-kpimain">' + head + subEl + (trend ? '<div class="pmu-kpitrend"></div>' : '') + foot + '</div>' +
@@ -911,7 +1152,7 @@
         var key = c.key ? (c.key.half ? '<i class="pmu-key" data-sw="half" data-tk="' + c.key.half[0] + '"></i><i class="pmu-key" data-sw="half" data-tk="' + c.key.half[1] + '"></i>'
           : c.key.line ? '<i class="pmu-key" data-sw="line" data-tk="' + c.key.line + '"></i>' : '<i class="pmu-key" data-sw="box" data-tk="' + c.key.swatch + '"></i>') : '';
         return '<div class="pmu-kpicell"' + C.hover(c.label, c.hover || '') + '><span class="pmu-kpicell-l">' + key + esc(c.label) + '</span>' +
-          C.valHtml(c.value, c.fmt, 'pmu-kpivalue', ctx.id + ':' + i).replace('class="pmu-num"', 'class="pmu-num" data-count="kpi"') +
+          C.share(C.valHtml(c.value, c.fmt, 'pmu-kpivalue', ctx.id + ':' + i).replace('class="pmu-num"', 'class="pmu-num" data-count="kpi"'), c.share) +
           (onlyValues ? '' : '<span class="pmu-kpisub">' + ((short && c.subShort) || c.sub || '') + '</span>') + '</div>';
       }).join('') + '</div>';
     }
@@ -929,7 +1170,9 @@
     return r.mark ? 18 : r.glyph ? 16 : 0;
   }
   function valText(r) { return r.vs ? String(r.word || '') : r.valueHtml != null ? String(r.valueHtml).replace(/<[^>]+>/g, '') : r.value != null ? String(r.value) : ''; }
-  C.kind('list', {
+  var listImpl;
+  C.kind('list', listImpl = {
+    live: function (body, ctx) { return C.listLive(listImpl)(body, ctx); },
     grow: true,
     render: function (body, ctx) {
       var m = ctx.model || { rows: [] }, rows = m.rows || [];
@@ -979,7 +1222,7 @@
         var lead = leadOf(r);
         var val = r.vs ? C.vs(r.vs, r.word) : r.valueHtml != null ? r.valueHtml : r.value != null ? esc(r.value) : '';
         var hov = r.hover ? C.hover(r.name, r.hover) : !two && r.sub ? C.hover(r.name, r.sub + (r.note ? ' · ' + r.note : '')) : !extra && r.note ? C.hover(r.name, r.note) : '';
-        return '<div class="pmu-lrow' + (r.onClick ? ' is-click' : '') + (anyLead ? '' : ' no-lead') + '" data-reveal' + (r.tone ? ' data-tone="' + r.tone + '"' : '') + (r.prov ? ' data-prov="' + esc(r.prov) + '"' : '') +
+        return '<div class="pmu-lrow' + (r.onClick ? ' is-click' : '') + (anyLead ? '' : ' no-lead') + '" data-reveal data-lkey="' + esc(r.key || r.name) + '" data-lh="' + rowHOf(r) + '"' + C.shareAttr(r.share) + (r.tone ? ' data-tone="' + r.tone + '"' : '') + (r.prov ? ' data-prov="' + esc(r.prov) + '"' : '') +
           (r.vs ? ' data-vs="' + esc(r.vs) + '"' : '') + (r.onClick ? ' data-pmu-row="' + i + '" role="button" tabindex="0"' : '') + hov + '>' +
           (anyLead ? '<span class="pmu-llead">' + lead + '</span>' : '') +
           '<span class="pmu-lname"><b>' + esc(r.name) + '</b>' + (two && r.sub ? '<span>' + esc(r.sub) + '</span>' : '') + '</span>' +
@@ -994,6 +1237,37 @@
       }
     }
   });
+
+  /* the list's live hook (WOW-SPEC-3 8.4, an alert arriving): the same rows -> in-place words; one new row at the top ->
+     it is inserted (one child-list change, the only one of the beat), the rows below FLIP down (250 SLIDE), the new row
+     rises 8 px with its opacity (260 OUT) and its severity glyph pops (POP 260); a row pushed past the card leaves and
+     the "N more" line counts it. Anything else waits for an idle re-render. */
+  C.listLive = function (impl) {
+    return function (body, ctx) {
+      var list = body.querySelector('.pmu-list'); if (!list) return false;
+      var dry = document.createElement('div'); dry._pmuDry = true;
+      try { impl.render(dry, Object.assign({}, ctx, { _dry: true })); } catch (error) { return false; }
+      var dl = dry.querySelector('.pmu-list'); if (!dl) return false;
+      var keysOf = function (root) { return Array.prototype.map.call(root.querySelectorAll(':scope > .pmu-lrow'), function (r) { return r.getAttribute('data-lkey'); }); };
+      var k0 = keysOf(list), k1 = keysOf(dl);
+      if (k0.join('\n') === k1.join('\n')) return C.livePatch(body, dry, ctx) ? true : false;
+      if (k1.length < 1 || k0.indexOf(k1[0]) >= 0 || k1.slice(1).join('\n') !== k0.slice(0, k1.length - 1).join('\n')) return false;
+      var rows0 = Array.prototype.slice.call(list.querySelectorAll(':scope > .pmu-lrow')), nr = dl.querySelector(':scope > .pmu-lrow');
+      var fin = ctx.liveFinal, st = PMU.motion.family && /retro|nier/.test(PMU.motion.family());
+      list.insertBefore(nr, rows0[0] || list.firstChild);
+      for (var i = k1.length - 1; i < rows0.length; i++) rows0[i].remove();
+      var m0 = list.querySelector(':scope > .pmu-more'), m1 = dl.querySelector(':scope > .pmu-more');
+      if (m0 && m1) { m0.textContent = m1.textContent; ['data-pm-hover-label', 'data-pm-hover-detail'].forEach(function (a) { if (m1.hasAttribute(a)) m0.setAttribute(a, m1.getAttribute(a)); }); }
+      else if (m1 && !m0) list.appendChild(m1);
+      if (fin) return true;
+      var dy = +nr.getAttribute('data-lh') || 44;   /* the row's height from the render's own estimate (no layout read) */
+      rows0.slice(0, k1.length - 1).forEach(function (r) { PMU.motion.animate(r, [{ transform: 'translateY(' + (-dy) + 'px)' }, { transform: 'none' }], { dur: st ? 160 : 250, easing: st ? 'steps(4,jump-start)' : 'cubic-bezier(.22,1,.36,1)' }); });
+      PMU.motion.animate(nr, [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { dur: 260, delay: 120, easing: st ? 'steps(3,jump-start)' : 'cubic-bezier(.22,.8,.28,1)', fill: 'backwards' });
+      var g = nr.querySelector('.pmu-llead .pmu-ico, .pmu-llead svg');
+      if (g) PMU.motion.animate(g, [{ transform: 'scale(.2)' }, { transform: 'scale(1.25)', offset: 0.6 }, { transform: 'none' }], { dur: 260, delay: 300, easing: st ? 'steps(3,jump-start)' : 'cubic-bezier(.34,1.45,.64,1)', fill: 'backwards' });
+      return true;
+    };
+  };
 
   /* ================================================================== table: data tables (ledger and others) */
   /* model: {cols: [{key, label, align?, min?: tier, w?: css, fmt?}], rows: [{cells: {key: text|{html}}, tone?, onClick?, id?}],
@@ -1306,7 +1580,7 @@
         body.insertAdjacentHTML('beforeend', '<div class="pmu-ctxfacts is-below">' + (belowN ? belowLay.html(belowN) : '') + (belowMore ? C.more(hidF.length, 'facts', false, hidF.map(C.factText)) : '') + '</div>');
       } else if (below) { body.firstChild.setAttribute('data-pm-hover-label', C.FOLD_LABEL); body.firstChild.setAttribute('data-pm-hover-detail', m.facts.map(C.factText).join('; ')); }
       C.chart(body, 'ring', body.querySelector('.pmu-ctxring'), { segments: m.segments.map(function (s) { return { name: s.name, value: s.tokens, idx: s.idx }; }).concat([{ name: 'Reserved output', value: m.reserved, idx: 7, hatched: true }]),
-        limit: m.limit, value: m.used, max: m.limit, centre: m.pct + '%', caption: PMU.fmt.tok(m.used) + ' / ' + PMU.fmt.tok(m.limit), token: 'in' }, { label: 'Context window ' + m.pct + '% used' });
+        limit: m.limit, value: m.used, max: m.limit, centre: m.pct + '%', caption: PMU.fmt.tok(m.used) + ' / ' + PMU.fmt.tok(m.limit), token: 'in', share: 'context', centreShare: 'num:context.pct' }, { label: 'Context window ' + m.pct + '% used' });
       if (mixOk) C.chart(body, 'mix', body.querySelector('.pmu-ctxmix'), { segments: m.segments.map(function (s) { return { name: s.name, value: s.tokens, idx: s.idx }; }), total: m.used, legend: false }, { label: 'Context composition' });
     }
   });

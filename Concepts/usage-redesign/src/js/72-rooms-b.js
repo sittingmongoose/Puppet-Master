@@ -39,14 +39,14 @@
     return { rows: DATA.free.map(function (r) { var cool = /Cooldown/.test(r[1]); return { name: r[0], sub: r[3] + ' context · ' + (r[2] === 'local' ? 'local' : '$0 · catalog'), value: cool ? 'wait ' + PMU.clock.until('16:48') : 'eligible', tone: cool ? 'warn' : 'good', note: PMU.clock.text(r[4]) }; }) };
   } });
   def('free-throughput', 'free', { meta: function () { return '2-hour buckets · 24 hours · free and local routes'; }, model: function () {
-    var S = D.series('freeThroughput24h'), n = S.requests.length, now = Date.now(), x = [];
+    var S = D.series('freeThroughput24h'), n = S.requests.length, now = PMU.clock.now(), x = [];
     for (var i = 0; i < n; i++) x.push(now - (n - i) * S.bucket_min * 60000);
     return { chart: 'line', spec: { x: x, series: [{ name: 'Requests', idx: 1, values: S.requests }], unit: 'count', unitTitle: 'REQUESTS' }, headline: { value: 188, fmt: 'int', label: 'free-route requests' },
       spark: { values: S.requests, idx: 1 }, facts: [['Requests', '188'], ['Tokens', '1.42M'], ['Cooldowns', '1'], ['Local share', '23%'], ['Ready routes', '3'], ['Blocked', '0']],
       note: 'Provider free allowances and local inference are separated from paid usage.' };
   } });
   def('free-history', 'free', { meta: function () { return 'Daily · 7 days · free routes'; }, model: function () {
-    var S = D.series('freeHistory7d'), today = new Date(); today.setHours(0, 0, 0, 0);
+    var S = D.series('freeHistory7d'), today = new Date(PMU.clock.now()); today.setHours(0, 0, 0, 0);
     var x = S.calls.map(function (v, i) { return today.getTime() - (S.calls.length - 1 - i) * 86400000; });
     return { chart: 'line', spec: { x: x, series: [{ name: 'Calls', idx: 4, values: S.calls }], unit: 'count', unitTitle: 'CALLS' }, headline: { value: 318, fmt: 'int', label: 'calls in 7 days' }, spark: { values: S.calls, idx: 4 },
       facts: [['Calls', '318'], ['Tokens', '2.4M'], ['Avoided', '$31.20 est.'], ['Cooldowns', '4']], note: 'No metered charge does not imply a free entitlement; billing and entitlement remain separate axes.' };
@@ -84,7 +84,12 @@
   } });
   /* the window's room by source family: each family against the whole window (not the used part, which the Current
      window ring shows), so the bars read as how much of the 128k each one takes (LOOK-REVIEW-2 16: no third copy) */
-  def('ctx-sources', 'context', { meta: function () { return 'share of the ' + F.tok(DATA.context.limit) + ' window · by source family'; }, model: function () {
+  def('ctx-sources', 'context', { meta: function () { return 'share of the ' + F.tok(DATA.context.limit) + ' window · by source family'; },
+    /* Details: the families in one line, then each family's tokens and share (parity: the family list reads whole) */
+    inspect: function () {
+      var X = DATA.context;
+      return C.insp('Source mix', [['Families', X.labels.join(' · ')]].concat(X.labels.map(function (l, i) { var tk = Math.round(X.used * X.segments[i] / 100); return [l, F.tok(tk) + ' · ' + (100 * tk / X.limit).toFixed(1) + '% of the window · ' + (i === 0 ? 'conversation history' : 'loaded context')]; })));
+    }, model: function () {
     var X = DATA.context;
     return { rows: X.labels.map(function (l, i) { var tk = Math.round(X.used * X.segments[i] / 100); return { id: l, name: l, role: i === 0 ? 'conversation history' : 'loaded context', value: tk, valueText: F.tok(tk) + ' · ' + (100 * tk / X.limit).toFixed(1) + '%', valueShort: (100 * tk / X.limit).toFixed(1) + '%', share: X.segments[i], idx: i }; }),
       scale: X.limit, foot: F.tok(X.limit - X.used) + ' of the window free · ' + F.tok(X.reserved) + ' held for the response.' };
@@ -120,10 +125,10 @@
     var tk = D.tokens(), c = D.costs(), vt = D.valueByType();
     var cacheV = vt.cacheRead + vt.cacheWrite;
     return { cells: [
-      { label: 'Total tokens', value: tk.totals.all, fmt: 'tok', sub: b(F.tok(tk.totals.input)) + ' in · ' + b(F.tok(tk.totals.output + tk.totals.reasoning)) + ' out · ' + b(F.tok(tk.totals.cacheRead + tk.totals.cacheWrite)) + ' cache',
+      { label: 'Total tokens', value: tk.totals.all, fmt: 'tok', share: 'num:tokens.total', sub: b(F.tok(tk.totals.input)) + ' in · ' + b(F.tok(tk.totals.output + tk.totals.reasoning)) + ' out · ' + b(F.tok(tk.totals.cacheRead + tk.totals.cacheWrite)) + ' cache',
         subShort: b(F.tok(tk.totals.input + tk.totals.output + tk.totals.reasoning)) + ' in + out · ' + b(F.tok(tk.totals.cacheRead + tk.totals.cacheWrite)) + ' cache',
         hover: 'Reasoning ' + F.tok(tk.totals.reasoning) + ' is inside out · token series, ' + tk.buckets.label.toLowerCase() },
-      { label: 'Estimated value', key: { line: 'cost' }, value: c.selected, fmt: 'money', sub: b(money(c.settled)) + ' settled · ' + b(money(c.plan)) + ' plan estimate', subShort: b(money(c.settled)) + ' settled · ' + b(money(c.plan)) + ' est.', hover: 'Recorded attempts · PM estimate for plan work, never $0.00 for covered work' },
+      { label: 'Estimated value', key: { line: 'cost' }, value: c.selected, fmt: 'money', share: 'num:value.window', sub: b(money(c.settled)) + ' settled · ' + b(money(c.plan)) + ' plan estimate', subShort: b(money(c.settled)) + ' settled · ' + b(money(c.plan)) + ' est.', hover: 'Recorded attempts · PM estimate for plan work, never $0.00 for covered work' },
       { label: 'Cache tokens', key: { half: ['cw', 'cr'] }, value: tk.totals.cacheRead + tk.totals.cacheWrite, fmt: 'tok', sub: b(money(cacheV)) + ' cache value · ' + b(vt.total ? Math.round(100 * cacheV / vt.total) + '%' : '-') + ' of value', subShort: b(money(cacheV)) + ' value · ' + b(vt.total ? Math.round(100 * cacheV / vt.total) + '%' : '-'), hover: 'PM estimate · catalog pricing' },
       { label: 'Input value', key: { swatch: 'in' }, value: vt.input, fmt: 'money', sub: b(F.tok(tk.totals.input)) + ' uncached input tokens', subShort: b(F.tok(tk.totals.input)) + ' uncached in', hover: 'PM estimate · catalog pricing' },
       { label: 'Output value', key: { swatch: 'out' }, value: vt.output + vt.reasoning, fmt: 'money', sub: b(F.tok(tk.totals.output)) + ' output · ' + b(F.tok(tk.totals.reasoning)) + ' reasoning', subShort: b(F.tok(tk.totals.output + tk.totals.reasoning)) + ' out incl. reasoning', hover: 'PM estimate · catalog pricing' }] };
@@ -136,13 +141,14 @@
         if (!D.inScope(id)) return { vs: 'unknown', word: 'Not in scope', sub: 'outside the selected scope' };
         var p = DATA.providers.filter(function (x) { return x.id === id; })[0];
         var by = (D.series('tokensByProvider') || {})[ctx.state.range] || {};
-        var tok = D.sum(by[id] || []);
+        /* the live NOW bucket included (WOW-SPEC-3 8.3) */
+        var tok = D.provTokens ? D.provTokens(ctx.state.range, id) : D.sum(by[id] || []); if (tok === null) tok = 0;
         var c = D.costs().byProvider[id] || { attempts: 0, requests: 0 };
         /* the in / out / calls split is the provider's 24-hour reading: at any other range it says so (REVIEW-jared 4) */
         var day = ctx.state.range === '24h', pre = day ? '' : '<span class="pmu-cap">24H</span> ';
         return { value: tok, fmt: 'tok', sub: pre + b(F.tok(p.input)) + ' in · ' + b(F.tok(p.output)) + ' out · ' + b(p.requests) + ' calls', subText: F.tok(p.input) + ' in · ' + F.tok(p.output) + ' out · ' + p.requests + ' calls (24h reading)',
           facts: [['Input (24h)', F.tok(p.input)], ['Output (24h)', F.tok(p.output)], ['Attempts', String(c.attempts)], ['Requests', String(c.requests)], ['Output ratio', (100 * p.output / p.tokens).toFixed(1) + '%'],
-            ['Authority', p.allowance_authority + ' · ' + p.allowance_freshness]], spark: by[id] ? { values: by[id], vendor: PMU.markOf(PMU.roster.legacyProvider(id)).vendor, idx: 0 } : null };
+            ['Authority', p.allowance_authority + ' · ' + p.allowance_freshness]], share: 'num:tokens.' + id, spark: by[id] ? { values: D.provSeries ? D.provSeries(ctx.state.range, id) : by[id], vendor: PMU.markOf(PMU.roster.legacyProvider(id)).vendor, idx: 0 } : null };
       } });
   });
   /* the old page's static intent of these cards (PARITY 158-160) is kept, labelled, in their Details (DECISIONS
@@ -166,7 +172,7 @@
       '<span data-key="cacheReads">' + C.switchBtn('tt-cr', cr, 'Cache reads', 'Cache reads dwarf the other types, so they start hidden') + '</span>';
     return { chart: 'area', sig: (split ? 's' : '') + (cr ? 'c' : ''), tools: tools, toolsMin: 'm', hero: true,
       heroSub: 'peak ' + b(peakText(tk, cr)) + ' · ' + b(F.tok(tk.totals.input)) + ' in · ' + b(F.tok(tk.totals.output)) + ' out',
-      spec: { x: tk.x, unit: 'tokens', split: split, cacheReads: cr, now: Date.now(), peak: true, bucketMs: tk.buckets.bucketMs,
+      spec: { x: tk.x, unit: 'tokens', split: split, cacheReads: cr, now: PMU.clock.now(), peak: true, bucketMs: tk.buckets.bucketMs,
         series: [{ name: 'Input', tk: 'in', values: tk.input }, { name: 'Output', tk: 'out', values: tk.output }, { name: 'Reasoning', tk: 'rsn', values: tk.reasoning }, { name: 'Cache write', tk: 'cw', values: tk.cacheWrite }, { name: 'Cache read', tk: 'cr', values: tk.cacheRead }],
         cost: { values: cost.values, unit: 'usd', pending: cost.split.map(function (sp) { return (sp && sp._pending) || 0; }) }, source: 'token series · estimated cost from recorded attempts', notes: 'Input and output are summed only from selected identity-bound attempts.',
         readoutFoot: function (i) {
@@ -231,7 +237,7 @@
     } });
   def('reasoning-mix', 'analytics', { meta: function (ctx) { return 'Visible output and reasoning · ' + D.tokens().buckets.label.toLowerCase() + ' · reported buckets'; }, model: function () {
     var tk = D.tokens();
-    return { chart: 'area', spec: { x: tk.x, unit: 'tokens', stacked: true, now: Date.now(), series: [{ name: 'Visible output', tk: 'out', values: tk.output }, { name: 'Reasoning', tk: 'rsn', values: tk.reasoning }] },
+    return { chart: 'area', spec: { x: tk.x, unit: 'tokens', stacked: true, now: PMU.clock.now(), series: [{ name: 'Visible output', tk: 'out', values: tk.output }, { name: 'Reasoning', tk: 'rsn', values: tk.reasoning }] },
       headline: { value: tk.totals.reasoning, fmt: 'tok', label: 'reasoning tokens' }, spark: { values: tk.reasoning, tk: 'rsn' },
       facts: [['Visible output', F.tok(tk.totals.output)], ['Reasoning', F.tok(tk.totals.reasoning)], ['Unknown', '2 routes'], ['Coverage', '67%'], ['Inclusive', '4 providers'], ['Additive', '0'], ['Attempts', String(D.costs().attempts)]],
       note: 'Reasoning is an explicit fixture field and is not added to inclusive output.' };
@@ -274,7 +280,7 @@
   def('ledger-timeline', 'ledger', { kind: 'attempts', meta: function (ctx) { return D.rangeLabel(ctx.state.range) + ' · one dot per attempt, sized by its recorded value · hollow while a receipt is pending'; } });
   def('ledger-count', 'ledger', { meta: function (ctx) { return D.rangeLabel(ctx.state.range) + ' · selected records'; }, model: function () {
     var c = D.costs(), acc = {}; D.attempts().forEach(function (a) { acc[a.account_id] = 1; });
-    return { value: c.attempts, fmt: 'int', sub: 'identity-bound usage attempts', facts: [['Settled', String(c.settledAttempts)], ['Pending', String(c.pending), c.pending ? { tone: 'warn' } : {}], ['Providers', String(c.providers)], ['Accounts', String(Object.keys(acc).length)]],
+    return { value: c.attempts, fmt: 'int', share: 'num:attempts.count', sub: 'identity-bound usage attempts', facts: [['Settled', String(c.settledAttempts)], ['Pending', String(c.pending), c.pending ? { tone: 'warn' } : {}], ['Providers', String(c.providers)], ['Accounts', String(Object.keys(acc).length)]],
       foot: 'Projection · selected records' };
   } });
   def('ledger-errors', 'ledger', { meta: function (ctx) { return D.rangeLabel(ctx.state.range) + ' · receipts not final'; }, model: function () {
@@ -340,37 +346,39 @@
     return { rows: Object.keys(st).map(function (k) { return { name: k.charAt(0).toUpperCase() + k.slice(1), sub: 'attempt receipt authority', value: String(st[k]), note: 'never inferred from billing or entitlement' }; }), empty: 'No attempts in range', emptyFacts: 'No settlement inferred' };
   } });
 
-  /* ================================================================== room beats (WOW-SPEC 4, WOW-TASKS N-1) */
+  /* ================================================================== room beats (WOW-SPEC-3 7, WOW-TASKS-3 N3-5; see 70-rooms-a.js) */
   if (PMU.film && PMU.film.beat) {
-    var FB = PMU.film;
-    /* Free models: the capacity arcs sweep (their own entrance); a light then crosses the gauges 40 ms apart and the
-       cooling route's progress catches it once more */
+    var FB = PMU.film, M = PMU.motion;
+    var outE = function () { return M.family && /retro|nier/.test(M.family()) ? 'steps(3,jump-start)' : 'cubic-bezier(.22,.8,.28,1)'; };
+    /* Free models: a cooling-down gauge's progress glints once, then its "Cooldown until" word fades in (200 OUT) */
     FB.beat('free', function (b) {
-      var cards = C.byPos(C.beatCards(b, function (c) { return c.getAttribute('data-kind') === 'free'; }));
-      cards.forEach(function (c, i) {
-        var ring = c.querySelector('.pmu-freering'); if (!ring) return;
-        FB.sweep(ring, { delay: C.beatAt(b, c, 900 + 40 * i), dur: 600 });
-        if (c.querySelector('.pmu-freestate[data-tone="warn"]')) FB.flash(ring, { tone: 'warn', delay: C.beatAt(b, c, 1500), noSweep: true });
+      var cards = C.byPos(C.beatCards(b, function (c) { return c.getAttribute('data-kind') === 'free'; })), at = C.beatT(b, cards[0]);
+      cards.forEach(function (c) {
+        var stEl = c.querySelector('.pmu-freestate[data-tone="warn"]'); if (!stEl) return;
+        var ring = c.querySelector('.pmu-freering');
+        if (ring && FB.glint) FB.glint(ring, at); else if (ring) FB.sweep(ring, { delay: at, dur: 500 });
+        M.animate(stEl, [{ opacity: 0 }, { opacity: 1 }], { dur: 200, delay: at + 420, easing: outE(), fill: 'backwards' });
       });
     });
-    /* Context: the composition sweeps round the hero ring (its own entrance); the light then crosses the ring and the
-       compactable tile flashes once */
+    /* Context: the limit tick drops onto the ring (the hero ring's own entrance, charts C3-6); the composition legend's
+       largest row flashes once */
     FB.beat('context', function (b) {
       var w = C.beatCard(b, 'ctx-window'); if (!w) return;
-      var ring = w.querySelector('.pmu-ctxring'); if (ring) FB.sweep(ring, { delay: C.beatAt(b, w, 1000), dur: 700 });
-      var rc = C.beatCard(b, 'ctx-reclaim'); if (rc) FB.flash(rc.querySelector('.pmu-kpiline') || rc, { delay: C.beatAt(b, w, 1300) });
+      var at = C.beatT(b, w), best = null, bv = -1;
+      Array.prototype.forEach.call(w.querySelectorAll('.pmu-ctxleg'), function (row) { var v = parseFloat((row.querySelector('em') || {}).textContent); if (v > bv) { bv = v; best = row; } });
+      if (best) FB.flash(best, { delay: at + 260 });
     });
-    /* Analytics: the token volume draws with its comet and the cost dots pop (the chart's own entrance); the hero number
-       then catches the light */
-    FB.beat('analytics', function (b) { C.sweepHero(b, C.beatCard(b, 'token-trend'), 1300); });
-    /* Ledger: the attempts pop in time order (the timeline's own entrance); the light then crosses the hero number and
-       the pending tile flashes in its warn tone */
+    /* Analytics: cost dots pop, then the NOW halo swells and the peak label drops (the hero chart's own entrance, charts
+       C3-6); the KPI strip and the provider tiles are supporting (quiet) */
+    FB.beat('analytics', function () {});
+    /* Ledger: the newest attempt gets one halo and the first row of the ledger table flashes once */
     FB.beat('ledger', function (b) {
       var tl = C.beatCard(b, 'ledger-timeline'); if (!tl) return;
-      var n = tl.querySelectorAll('.pmu-atdot').length;
-      C.sweepHero(b, tl, 600 + 12 * n);
-      var pend = C.beatCard(b, 'ledger-errors');
-      if (pend && pend.querySelector('.pmu-kpiline[data-tone="warn"]')) FB.flash(pend.querySelector('.pmu-kpiline'), { tone: 'warn', delay: C.beatAt(b, tl, 900 + 12 * n) });
+      var at = C.beatT(b, tl), newest = null, nx = -1;
+      Array.prototype.forEach.call(tl.querySelectorAll('.pmu-atdot'), function (d) { var x = parseFloat(d.style.left); if (x > nx) { nx = x; newest = d; } });
+      if (newest) FB.halo(newest, { delay: at });
+      var main = C.beatCard(b, 'ledger-main'), row = main && main.querySelector('.pmu-tbody > .pmu-trow');
+      if (row && (!PMU.board.inView || PMU.board.inView(main))) { if (FB.budget) FB.budget(main); FB.flash(row, { delay: at + 180 }); }
     });
   }
 })();
