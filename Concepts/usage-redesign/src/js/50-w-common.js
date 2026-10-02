@@ -370,7 +370,9 @@
         }
         var cands = Array.prototype.slice.call(b.querySelectorAll(FIT_SEL)).filter(function (el) { return !el.closest('.pmu-chart') && !el.closest('.pmu-headtools'); });
         /* rows and facts go before a card's foot (the foot names the source and freshness of what the card shows) */
-        var rows = cands.filter(function (el) { return !/pmu-(cfoot|kpifoot)/.test(String(el.className)); });
+        /* a card's own "N more" / "after" line is never the row that goes (final fix: the resets agenda lost its
+           "3 more · 15 after Oct 3" line to the fit pass while a line above it stayed) */
+        var rows = cands.filter(function (el) { return !/pmu-(cfoot|kpifoot|agbeyond|more)\b/.test(String(el.className)); });
         var last = rows.length ? rows[rows.length - 1] : cands[cands.length - 1];
         if (!last) { b._pmuFitDone = true; return; }
         var parent = last.parentNode;
@@ -555,6 +557,13 @@
       var rows = h === 'h1' ? 0 : C.fit(ctx.tier.bh - trend - (wide ? 0 : reserve), 27);
       var facts = m.facts || [];
       var maxFacts = Math.min(facts.length, rows * cols);
+      /* one column: each fact takes its own wrapped height (final fix, Mac stills: a 3-track 6-row tile showed "Input (24h)"
+         on two lines under "1 more at a taller size"); a fact that would wrap counts 46 px, not 27 */
+      if (cols === 1 && !wide && maxFacts) {
+        var roomF = ctx.tier.bh - trend - reserve, nF = 0;
+        while (nF < maxFacts && (roomF -= C.factH(facts[nF], ctx.tier.bw)) >= 0) nF++;
+        maxFacts = nF;
+      }
       var factsHtml = maxFacts ? C.facts(facts, maxFacts, { cols: cols }) : '';
       var foot = m.foot && C.h(ctx, 'h2') ? '<div class="pmu-kpifoot' + (m.foot.indexOf('<button') >= 0 ? ' has-act' : '') + '">' + m.foot + '</div>' : '';
       if (wide) {

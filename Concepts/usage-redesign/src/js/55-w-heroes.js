@@ -241,7 +241,9 @@
       /* a source box names its reading by its Settings name with its age when both fit, the name alone when only the
          name fits (the age stays in the hover tag), else the short word with the age (final fix M8) */
       var srcName = function (r) {
-        var room = colW - 20 - 16 - 8, ageW = tight ? 0 : C.wrapW(r.age, 11) + 8;
+        /* padding 2 x 10, the 16 px mark and two 8 px gaps; the age is in the mono face (Mac stills: "ChatGPT / Code" was
+           cut beside "31s old" when the age was measured in the text face) and 6 px of margin */
+        var room = colW - 20 - 16 - 8 - 6, ageW = tight ? 0 : (PMU.charts && PMU.charts.textW ? PMU.charts.textW(r.age, 11, true) * 1.12 : r.age.length * 7) + 8;
         if (C.fitsW(r.name, room - ageW, 12.5, 560)) return { name: r.name, age: !tight };
         if (C.fitsW(r.name, room, 12.5, 560)) return { name: r.name, age: false };
         return { name: r.short, age: !tight };
