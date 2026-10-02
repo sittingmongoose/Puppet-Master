@@ -441,8 +441,9 @@ html[data-o55-nier="on"][data-motion="reduced"] .nx-st::after { animation: none 
 :where(.event-card.danger) > .event-icon { color: var(--danger); }
 /* a menu row's glyph takes the row's ink: muted at rest, the text ink on hover, where it ignites (section 8) */
 .menu-item .menu-icon { color: inherit; }
-/* a toggled icon button reads as on by its lit glyph, not by an accent tile */
-.icon-button.active { color: var(--text); background: var(--surface-3); }
+/* a toggled icon button reads as on by its lit glyph on the raised neutral tile (the pins' idiom, composer.css), not
+   by an accent tile, and never by the hover tile (--surface-3) */
+.icon-button.active { color: var(--text); border-color: var(--border-strong); background: var(--surface-4); }
 .icon-button.active > svg.nx { --nx-hiv: visible; --nx-hi-a: var(--nx-h-concept-i); }
 /* Activity lines name their tone (data-tone), never an inline colour. */
 .activity-line [data-tone="blocked"] { color: var(--danger); }

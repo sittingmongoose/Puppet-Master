@@ -845,6 +845,80 @@ body:has(.resizer.dragging), body:has(.panel-resize.dragging) {
   .mini-graph i{ animation:none !important; }
   .status-orbit::after{ transform:translateY(-7.5px); }
 }
+/* The other two reduced routes (neon 3E2, fix cycle 2, 2026-10-02): body.pm56-reduced (the Demo Studio switch, the
+   same policy as the media query: app.js F0b) and html[data-motion="reduced"] (the PMConcept7 contract) restate the
+   block above rule for rule. Without them the shimmer band ran forever on the class routes (Step Rail Simple's verb,
+   the v0 verbs) and the word entrances kept their 90 ms. */
+body.pm56-reduced *,
+body.pm56-reduced *::before,
+body.pm56-reduced *::after,
+html[data-motion="reduced"] *,
+html[data-motion="reduced"] *::before,
+html[data-motion="reduced"] *::after{ animation-iteration-count:1 !important; }
+body.pm56-reduced .pm-shimmer,
+html[data-motion="reduced"] .pm-shimmer{ animation:none; background:none; color:var(--text); }
+body.pm56-reduced .pm-materialize,
+body.pm56-reduced .pm-stream .pm-word,
+html[data-motion="reduced"] .pm-materialize,
+html[data-motion="reduced"] .pm-stream .pm-word{ animation-duration:1ms; animation-delay:0ms; filter:none; }
+body.pm56-reduced .pm-leaving,
+body.pm56-reduced .overlay-menu.pm-leaving,
+body.pm56-reduced .hover-card.pm-leaving,
+body.pm56-reduced .drawer.pm-leaving,
+body.pm56-reduced .dialog.pm-leaving,
+body.pm56-reduced .history-flyout.pm-leaving,
+body.pm56-reduced .activity-panel.pm-leaving,
+html[data-motion="reduced"] .pm-leaving,
+html[data-motion="reduced"] .overlay-menu.pm-leaving,
+html[data-motion="reduced"] .hover-card.pm-leaving,
+html[data-motion="reduced"] .drawer.pm-leaving,
+html[data-motion="reduced"] .dialog.pm-leaving,
+html[data-motion="reduced"] .history-flyout.pm-leaving,
+html[data-motion="reduced"] .activity-panel.pm-leaving{
+  animation-duration:1ms; filter:none;
+}
+body.pm56-reduced .pm-rail-item,
+html[data-motion="reduced"] .pm-rail-item{ transition-duration:120ms; }
+body.pm56-reduced .status-dot.working,
+body.pm56-reduced .status-dot.reviewing,
+body.pm56-reduced .status-ring,
+body.pm56-reduced .status-bars i,
+body.pm56-reduced .status-branch,
+body.pm56-reduced .status-orbit::after,
+body.pm56-reduced .status-clock::before,
+body.pm56-reduced .status-underline,
+body.pm56-reduced .orbit-track,
+body.pm56-reduced .orbit-core,
+body.pm56-reduced .calm-glyph,
+body.pm56-reduced .bench-scan,
+body.pm56-reduced .lane-wave i,
+body.pm56-reduced .fast-bolt,
+body.pm56-reduced .activity-bar[data-variant="6"]::before,
+body.pm56-reduced .working-variant-0 .phase-dot.current,
+body.pm56-reduced .calm-dots i.current,
+body.pm56-reduced .activity-goal-tree .tree-child.live,
+body.pm56-reduced .mini-graph i,
+html[data-motion="reduced"] .status-dot.working,
+html[data-motion="reduced"] .status-dot.reviewing,
+html[data-motion="reduced"] .status-ring,
+html[data-motion="reduced"] .status-bars i,
+html[data-motion="reduced"] .status-branch,
+html[data-motion="reduced"] .status-orbit::after,
+html[data-motion="reduced"] .status-clock::before,
+html[data-motion="reduced"] .status-underline,
+html[data-motion="reduced"] .orbit-track,
+html[data-motion="reduced"] .orbit-core,
+html[data-motion="reduced"] .calm-glyph,
+html[data-motion="reduced"] .bench-scan,
+html[data-motion="reduced"] .lane-wave i,
+html[data-motion="reduced"] .fast-bolt,
+html[data-motion="reduced"] .activity-bar[data-variant="6"]::before,
+html[data-motion="reduced"] .working-variant-0 .phase-dot.current,
+html[data-motion="reduced"] .calm-dots i.current,
+html[data-motion="reduced"] .activity-goal-tree .tree-child.live,
+html[data-motion="reduced"] .mini-graph i{ animation:none !important; }
+body.pm56-reduced .status-orbit::after,
+html[data-motion="reduced"] .status-orbit::after{ transform:translateY(-7.5px); }
 
 /* ---- Theme cross-fade -----------------------------------------------
    Armed by applyTheme() only for the duration of a swap, so nothing else
@@ -1541,6 +1615,22 @@ html[data-motion="reduced"] .working-variant-8 .rail8-item.current::before { ani
     animation:dt-retire 1ms linear 1ms both; filter:none; transform:none;
   }
   .working-variant-11 .dt-row.retired { animation-duration:1ms, 1ms; animation-delay:0ms, 1ms; }
+}
+/* The two class routes (neon 3E2, fix cycle 2): the three loops this file adds stop as under the media query, and
+   the two shimmers drop back to painted text (motion.css restates its own block for these routes). */
+body.pm56-reduced .working-variant-9 .ws-caret,
+html[data-motion="reduced"] .working-variant-9 .ws-caret { animation:none; opacity:.75; }
+body.pm56-reduced .working-variant-11 .dt-feed,
+html[data-motion="reduced"] .working-variant-11 .dt-feed { animation:none; opacity:.75; }
+body.pm56-reduced .working-variant-8 .rail8-verb.pm-shimmer,
+body.pm56-reduced .working-variant-8 .rail8-verb.pm-shimmer.pm-settled,
+body.pm56-reduced .working-variant-10 .tc10-line b.pm-shimmer,
+body.pm56-reduced .working-variant-10 .tc10-line b.pm-shimmer.pm-settled,
+html[data-motion="reduced"] .working-variant-8 .rail8-verb.pm-shimmer,
+html[data-motion="reduced"] .working-variant-8 .rail8-verb.pm-shimmer.pm-settled,
+html[data-motion="reduced"] .working-variant-10 .tc10-line b.pm-shimmer,
+html[data-motion="reduced"] .working-variant-10 .tc10-line b.pm-shimmer.pm-settled {
+  animation:none; background:none; color:var(--text);
 }
 
 /* Chat WOW M4 -- Step Rail parity with Orbit: status flags, clusters, narration. */
@@ -7132,7 +7222,8 @@ html:not([data-o55-nier="on"]) body[data-theme="retro-light"] .orbit-core { --po
 body.pm56-reduced .orbit-strip-item::before { animation: none !important; }
 /* The other two reduced routes (3E2, fix cycle 1, 2026-10-02): body.pm56-reduced (the Demo Studio switch, which
    PM56_PMX.reduced() also reads) and html[data-motion="reduced"] (the PMConcept7 contract) restate every declaration
-   the media query makes for the Orbit, rule for rule: PART 1's rail entrance in 1ms, PART 2's travel in 1ms (the
+   the media query makes for the Orbit, rule for rule: PART 1's trail scroll without the glide (fix cycle 2) and its rail
+   entrance in 1ms, PART 2's travel in 1ms (the
    420 ms collapse orbit-verify caught), the pulse pip, the dashed track's spin and the strip's loops stopped, the
    entrances in 1ms, the failed node, the more chip and the narration still, and PART 3's strip ring stopped. The
    end state is unchanged. The live glyph loops (.orbit-node.live > svg .nx-p) are svg.nx parts: neon-icons.css
@@ -7148,6 +7239,7 @@ html[data-motion="reduced"] .orbit-sat, html[data-motion="reduced"] .orbit-core-
 body.pm56-reduced .orbit-node.failed, body.pm56-reduced .orbit-core-more, body.pm56-reduced .orbit-narration,
 html[data-motion="reduced"] .orbit-node.failed, html[data-motion="reduced"] .orbit-core-more, html[data-motion="reduced"] .orbit-narration { animation: none; }
 body.pm56-reduced .pm-rail-item.enter, html[data-motion="reduced"] .pm-rail-item.enter { animation-duration: 1ms; }
+body.pm56-reduced .wa-track, html[data-motion="reduced"] .wa-track { scroll-behavior: auto; }
 
 /* threadops.css — feature module styles.  OWNER: Wave 4 — Thread Ops (item 13).
  *
@@ -16794,26 +16886,30 @@ textarea[data-input="composer"]::placeholder { transition: color 220ms ease; }
 }
 .hh-plus-glyph { --nx-stroke-base: 2.6; }
 /* Neon icons (3E2, 2026-10-02; fix cycle 1): a toggled header or panel button (the history pin, the Activity
-   panel's pressed pin) reads as on by a raised neutral tile -- --surface-4 with the strong hairline, a step past
+   panel's pinned pin and pressed filter, fix cycle 2) reads as on by a raised neutral tile -- --surface-4 with the strong hairline, a step past
    both the resting tile (--surface-3) and the hover, which keeps --surface-3 -- and its glyph lit steady (the text
    ink with the concept bloom). Not an accent tile: colour is reserved for status (plan §4). Hover still ignites it.
    Under NieR the on-state is NieR's own idiom, the ink block (the checked Plug-in Chip): ink tile, on-ink glyph.
    The Lens trigger keeps its tone rules (lens.css); the sound toggle says on/off by its own glyph (chat-sound). */
 .history-head .icon-button.is-pinned,
+.activity-panel-head .icon-button.is-pinned,
 .activity-panel-head .icon-button[aria-pressed="true"] {
   color: var(--text);
   border-color: var(--border-strong);
   background: var(--surface-4);
 }
 html[data-o55-nier="on"] .history-head .icon-button.is-pinned,
+html[data-o55-nier="on"] .activity-panel-head .icon-button.is-pinned,
 html[data-o55-nier="on"] .activity-panel-head .icon-button[aria-pressed="true"] {
   color: var(--o55-nier-on-ink);
   border-color: var(--o55-nier-ink);
   background: var(--o55-nier-ink);
 }
 .history-head .icon-button.is-pinned > svg.nx,
+.activity-panel-head .icon-button.is-pinned > svg.nx,
 .activity-panel-head .icon-button[aria-pressed="true"] > svg.nx { --nx-hiv: visible; --nx-hi-a: var(--nx-h-concept-i); }
 .history-head .icon-button.is-pinned:is(:hover, :focus-visible) > svg.nx,
+.activity-panel-head .icon-button.is-pinned:is(:hover, :focus-visible) > svg.nx,
 .activity-panel-head .icon-button[aria-pressed="true"]:is(:hover, :focus-visible) > svg.nx { --nx-hi-a: var(--nx-h-hover-i); }
 .history-head .soft-button {
   height: 28px; min-height: 28px;
@@ -17321,8 +17417,9 @@ html[data-o55-nier="on"][data-motion="reduced"] .nx-st::after { animation: none 
 :where(.event-card.danger) > .event-icon { color: var(--danger); }
 /* a menu row's glyph takes the row's ink: muted at rest, the text ink on hover, where it ignites (section 8) */
 .menu-item .menu-icon { color: inherit; }
-/* a toggled icon button reads as on by its lit glyph, not by an accent tile */
-.icon-button.active { color: var(--text); background: var(--surface-3); }
+/* a toggled icon button reads as on by its lit glyph on the raised neutral tile (the pins' idiom, composer.css), not
+   by an accent tile, and never by the hover tile (--surface-3) */
+.icon-button.active { color: var(--text); border-color: var(--border-strong); background: var(--surface-4); }
 .icon-button.active > svg.nx { --nx-hiv: visible; --nx-hi-a: var(--nx-h-concept-i); }
 /* Activity lines name their tone (data-tone), never an inline colour. */
 .activity-line [data-tone="blocked"] { color: var(--danger); }
@@ -70768,7 +70865,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const pinLabel=(state.activity.pinned?'Unpin':'Pin')+' Activity Detail';
     const filterButton=`<button class="icon-button activity-head-filter" data-action="toggle-activity-filter" aria-pressed="${state.activity.filterVisible?'true':'false'}"${hoverAttrs('act-filter','Show or hide category filter')}>${icon('filter',13)}</button>`;
     const overflow=`<details class="activity-head-overflow"><summary class="icon-button" aria-label="More Activity Detail actions">${icon('more',13)}</summary><div class="activity-head-menu"><button data-action="toggle-activity-filter" aria-pressed="${state.activity.filterVisible?'true':'false'}">${icon('filter',12)} ${state.activity.filterVisible?'Hide':'Show'} domains</button></div></details>`;
-    return `<aside class="activity-panel ${transient?'transient':''}" data-variant="${state.variants[4]}" data-scope="${allScope?'all':'focus'}" data-domain="${esc(d)}" data-pinned="${activityPinnedInLayout()?'true':'false'}" ${transient?'role="dialog" aria-modal="false"':'role="region"'} aria-label="Activity Detail"><div class="activity-panel-head"><span class="event-icon activity-head-icon">${icon(headDef.icon,13,'nx-t-'+(headDef.tone||'idle'))}</span><strong>Activity Detail</strong><span class="spacer"></span>${filterButton}${overflow}<button class="icon-button" data-action="${pinAction}"${hoverAttrs('act-pin',pinLabel)}>${icon(state.activity.pinned?'unpin':'pin',13)}</button><button class="icon-button" data-action="close-activity"${hoverAttrs('act-close','Close Activity Detail')}>${icon('close',13)}</button></div><div class="activity-filter ${state.activity.filterVisible?'':'hidden'}" style="--activity-n:${n}" role="toolbar" aria-label="Activity domains">${live.map(id=>{const x=defs[id],active=!allScope&&d===id;return `<button class="${active?'active':''}" data-action="focus-activity" data-domain="${id}" aria-label="${esc(x.label)} activity, ${esc(x.count)}" aria-pressed="${active?'true':'false'}">${icon(x.icon,13,'nx-t-'+(x.tone||'idle'))}<span>${x.label}</span></button>`;}).join('')}</div><div class="activity-scroll" data-scroll-key="activity">${extReplace('activityPanelBody',{domain:d,transient},sections.map(renderActivitySection).join(''))}</div>${transient?'':'<div class="panel-resize" data-resize="activity" aria-hidden="true"></div>'}</aside>`;
+    return `<aside class="activity-panel ${transient?'transient':''}" data-variant="${state.variants[4]}" data-scope="${allScope?'all':'focus'}" data-domain="${esc(d)}" data-pinned="${activityPinnedInLayout()?'true':'false'}" ${transient?'role="dialog" aria-modal="false"':'role="region"'} aria-label="Activity Detail"><div class="activity-panel-head"><span class="event-icon activity-head-icon">${icon(headDef.icon,13,'nx-t-'+(headDef.tone||'idle'))}</span><strong>Activity Detail</strong><span class="spacer"></span>${filterButton}${overflow}<button class="icon-button${state.activity.pinned?' is-pinned':''}" data-action="${pinAction}" aria-pressed="${state.activity.pinned?'true':'false'}"${hoverAttrs('act-pin',pinLabel)}>${icon(state.activity.pinned?'unpin':'pin',13)}</button><button class="icon-button" data-action="close-activity"${hoverAttrs('act-close','Close Activity Detail')}>${icon('close',13)}</button></div><div class="activity-filter ${state.activity.filterVisible?'':'hidden'}" style="--activity-n:${n}" role="toolbar" aria-label="Activity domains">${live.map(id=>{const x=defs[id],active=!allScope&&d===id;return `<button class="${active?'active':''}" data-action="focus-activity" data-domain="${id}" aria-label="${esc(x.label)} activity, ${esc(x.count)}" aria-pressed="${active?'true':'false'}">${icon(x.icon,13,'nx-t-'+(x.tone||'idle'))}<span>${x.label}</span></button>`;}).join('')}</div><div class="activity-scroll" data-scroll-key="activity">${extReplace('activityPanelBody',{domain:d,transient},sections.map(renderActivitySection).join(''))}</div>${transient?'':'<div class="panel-resize" data-resize="activity" aria-hidden="true"></div>'}</aside>`;
   }
 
   function renderActivitySection(id){
