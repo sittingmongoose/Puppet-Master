@@ -1,0 +1,116 @@
+{
+  "schema": "er7.same_continuous_blind_stager_final_state.v1",
+  "epoch": 1790900938.3824668,
+  "boundary_receipt_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/root-global-execution-boundary-v1.json",
+  "boundary_receipt_sha256": "4f15f3d0e57f8e998df31147cc59590ecfb2eff91120ae87e7f141851eac84b8",
+  "status": "CLOSED at actualrootglobalexecutionboundary; no newcandidate/helper/task/clock/sourcekeyrelease",
+  "last_opaque_report_id": "R036",
+  "next_free_unassigned_id": "R037",
+  "continuous_state_next_id": 37,
+  "watcher": {
+    "exec_session_id": 42815,
+    "stopped_only_own_process": true,
+    "observed_exit_code": 130,
+    "reason": "root globalboundary; CtrlC ownresidentwatcher only"
+  },
+  "latest_current_queues": {
+    "ome": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current-queue.json",
+      "sha256": "834e1693089fa960c3a54780ef36420a5d08e5e33088d1a4ddb3c3c64b72ce6a"
+    },
+    "repo": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-repo-current-v1/current-queue.json",
+      "sha256": "aa368aaeaeb1e4b59f44daa459a73fc6f0946339287432e3d9c39f11702af5b4"
+    },
+    "discovery": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-discovery-current-v1/current-queue.json",
+      "sha256": "a647296ffc007e51595520d5effb4b40eacdb1588d5ed06483c8c86aeadf5972"
+    },
+    "integrated": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-integrated-current-v1/current-queue.json",
+      "sha256": "470e72af1ed13607f8356aba40066d4b2953c58689071013783477a8c1826169"
+    }
+  },
+  "last_current_intake_integrity_receipt_sha256": "321cdbb6a8307d23f3670248304e754fed1c6170fa5c56d7586a16febc51f367",
+  "last_closed_current_review_json_sha256": "55bd9421394071ee6f713637d318ed9666690546acb0e35f882bd19a482acc71",
+  "closed_latest_current_exact_ids": [
+    "R034",
+    "R035",
+    "R036"
+  ],
+  "closed_latest_current_only_no_phase2_assignment": true,
+  "phase2_frozen_scoped_complete_partial_hold_workflow_receipts": {
+    "repo4": {
+      "frozen_receipt_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-acquisition-preservation-v7/FROZEN_RECEIPT.json",
+      "frozen_receipt_sha256": "3ffc02b9d561e75702cb9a7854bdae1b8725c341625f3c19ccd2bc3f7cffa0be",
+      "positive_workflow_metadata": {
+        "all_available_history_authentication_complete": true,
+        "all_exact_current_reports_unchanged": true,
+        "old_current_grades_unchanged": true,
+        "private_native_provider_modelIO_read": false
+      },
+      "semantic_grade_or_efficiency_not_inferred_by_stager": true
+    },
+    "normative5_discovery2": {
+      "frozen_receipt_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/normative-discovery-preservation-v7/FREEZE.json",
+      "frozen_receipt_sha256": "792773414c07ec018ef811e4d4fa1d0a69e22c85ee571ddc837cca61f8c85435",
+      "positive_workflow_metadata": {
+        "status": "INCOMPLETE",
+        "all_current_rows_included": true,
+        "whole_cohort_source_history_semantic_review_complete": false,
+        "original_grades_unchanged": true,
+        "clock_resets": 0
+      },
+      "semantic_grade_or_efficiency_not_inferred_by_stager": true
+    },
+    "closed_ome_diagnostic5": {
+      "frozen_receipt_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/closed-ome-preservation-v7/final-freeze.json",
+      "frozen_receipt_sha256": "b1da5d16644683cfeda0a43491236afcd2c6da9efc200e9d0d6ad68f605b7dd9",
+      "positive_workflow_metadata": {
+        "status": "PARTIAL_ATOMIC_SOURCE_SUPPORT_REVIEW_WITH_COMPLETE_AVAILABLE_ARTIFACT_AND_COMPOSITE_MATERIAL_INVENTORY",
+        "semantic_completion_from_hashes": false,
+        "current_grades_changed": false,
+        "native_goals_started": false,
+        "clock_reset": false,
+        "raw_native_private_provider_modelio_read": false
+      },
+      "semantic_grade_or_efficiency_not_inferred_by_stager": true
+    },
+    "original_expanded_diagnostic2": {
+      "frozen_receipt_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/phase2-R018-R019.FREEZE.v1.json",
+      "frozen_receipt_sha256": "114d08c25a641da8fdd120bb28545c7fc265d9e52a02c97b29008346bc6f26f8",
+      "positive_workflow_metadata": {
+        "status": "FROZEN_DIAGNOSTIC_ONLY",
+        "complete_original_semantic_coverage": "UNASSESSED",
+        "all12_seed_segments_and_actual_literal_units_retained_and_assessed": true,
+        "all_current_material_units_and_original8_conditions_retained": true,
+        "all_actual_available_version_changes_assessed": true,
+        "missing_required_source_authority_explicit": true,
+        "whole125_body_serial_reading": "PARTIAL_DISCLOSED_NOT_HASHING_OR_TRUNCATION_CREDIT",
+        "native_execution_or_private_receipt_read": false
+      },
+      "semantic_grade_or_efficiency_not_inferred_by_stager": true
+    },
+    "early8_hold": {
+      "frozen_receipt_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/early-research-preservation-v7/source-only-binding-final-addendum-v004.receipt.json",
+      "frozen_receipt_sha256": "34db27fe7dc1658bd44d3c3d303ffae370bcf74012896b0c14e7705c07becfb0",
+      "positive_workflow_metadata": {},
+      "semantic_grade_or_efficiency_not_inferred_by_stager": true,
+      "status": "SOURCE_ONLY_HOLD;48 source preparation rows, actual CURRENT assertion/graded-condition rows unadmitted, no phase2 verdict",
+      "conservative_response_events": 118,
+      "response_cap": 120,
+      "no_followup_or_new_clock": true
+    }
+  },
+  "early8_conditional_bundle_still_LOCKED_UNASSESSED": {
+    "seal_sha256": "a292d8a6f42a06f4b13868b22fa55a191ee0c1196baaa7016087d2e5ab8b888f",
+    "no_new_phase2_unlock": true
+  },
+  "integrated_six_unstarted_receipt_sha256": "a08205722f9d433e2fcc21bc95dce4486be045f7a8aea762aa0fe658a022fb84",
+  "unstarted_unadmitted_partial_scope_user_pauses_not_candidate_failure": true,
+  "qualified_report_bytes_stages_old_grade_editions_unchanged": true,
+  "no_raw_native_provider_modelIO_auth_privateclient_sourcekeyrelease_git_or_canon_changes": true,
+  "stager_billable_tokens_and_unmetered_overheads": "UNKNOWN; positive copybytes/times and accepted scalar native meters retained in named ownreceipts",
+  "recursive_artifactchain_followed_during_closeout": false,
+  "remaining_authorized_root_work": "publisher deliveryverification/managementcloseout only"
+}

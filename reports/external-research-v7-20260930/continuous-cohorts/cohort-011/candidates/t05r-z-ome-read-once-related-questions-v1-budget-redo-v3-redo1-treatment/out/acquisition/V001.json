@@ -1,0 +1,77 @@
+{
+  "schema": "slide-scout-acquisition-ledger.v1",
+  "case_id": "ome-normative-dev-v1",
+  "ledger_version": "V001",
+  "goal_scope": "Single native Goal covering Q1 then Q2 over the same full assignment and source corpus.",
+  "admitted_sources": [
+    {
+      "handle": "S003",
+      "input_path": "inputs/sources/S003.txt",
+      "admitted_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "admitted_bytes": 36980,
+      "view_kind": "original_bytes",
+      "cache_path": "out/cache/S003.txt",
+      "cache_operation": "mechanical cache_source (byte-exact copy; not model exposure)",
+      "cache_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "cache_bytes": 36980,
+      "cache_lines": 896,
+      "hash_verified_against_read": true,
+      "identity": "OME-Zarr specification, Final Community Group Report, 8 September 2026, https://ngff.openmicroscopy.org/0.5/",
+      "aliases": [
+        {"source_id": "SRC-2b11c54af373e1979af8cbb3", "uri": "https://ngff.openmicroscopy.org/0.5/"},
+        {"source_id": "SRC-e59af1d3eedfb618a7ce766f", "uri": "local-capture (origin URL not recorded)"},
+        {"source_id": "SRC-bf327c82f5ee6b5d1b754d8c", "uri": "local-capture (origin URL not recorded)"},
+        {"source_id": "SRC-da65296ca0490aebb780c237", "uri": "local-capture (origin URL not recorded)"}
+      ]
+    }
+  ],
+  "assignment_context_reads": [
+    {"path": "TASK.md", "sha256": "72102977aa5d6110930b4e5e72b12f1319de19206e5ade43cf11e342d72f71e0", "bytes": 6437, "lines": 40},
+    {"path": "inputs/TASK.md", "sha256": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9", "bytes": 1367, "lines": 11},
+    {"path": "inputs/brief.md", "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a", "bytes": 905, "lines": 5},
+    {"path": "inputs/catalog.json", "sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a", "bytes": 1563, "lines": 40},
+    {"path": "inputs/plan/Viewer.md", "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d", "bytes": 1498, "lines": 11}
+  ],
+  "source_read_records": [
+    {"seq": 1, "source": "S003", "path": "out/cache/S003.txt", "line_start": 1, "line_end": 300, "lines_requested": 300, "lines_returned": 300, "question": "Q1", "purpose": "first full read, part 1 of 3"},
+    {"seq": 2, "source": "S003", "path": "out/cache/S003.txt", "line_start": 301, "line_end": 600, "lines_requested": 300, "lines_returned": 300, "question": "Q1", "purpose": "first full read, part 2 of 3"},
+    {"seq": 3, "source": "S003", "path": "out/cache/S003.txt", "line_start": 601, "line_end": 896, "lines_requested": 296, "lines_returned": 296, "question": "Q1", "purpose": "first full read, part 3 of 3"}
+  ],
+  "source_read_coverage": {
+    "total_lines": 896,
+    "lines_covered_once": 896,
+    "gaps": [],
+    "targeted_rereads": [],
+    "reread_count": 0,
+    "note": "Whole cached source read once covering all 896 lines; Q2 reused the same read-once context with no second full expansion and no targeted rereads (no missing context, governing condition, counterevidence, uncertainty or changed dependency required one)."
+  },
+  "finding_ids": {
+    "q1_supported_findings": ["F01", "F02", "F03", "F04", "F05", "F06", "F07", "F08", "F09", "F10", "F11", "F12", "F13", "F14", "F15"],
+    "unresolved_areas": ["U01", "U02", "U03", "U04"],
+    "q2_plan_implications": ["P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08", "P09", "P10", "P11", "P12"],
+    "proposed_validation": ["V-1", "V-2", "V-3", "V-4", "V-5", "V-6", "V-7", "V-8", "V-9", "V-10", "V-11"]
+  },
+  "finding_id_stability": "Finding IDs are assigned once and shared between Q1 and Q2; Q2 items cite Q1 finding IDs rather than redefining evidence.",
+  "coverage_limits": [
+    "Single admitted source only (S003, OME-Zarr 0.5 capture dated 2026-09-08, 896 lines); no live fetching was performed.",
+    "No reader implementation, Tools page, OME-XML spec, OMERO WebGateway doc, RFC 2119 text, or UDUNITS-2 registry was admitted or inspected; S003 section 4 reads only 'See Tools.' (S003 813-814).",
+    "No real OME-Zarr fileset was opened or examined; all interoperability statements derive from the normative text and its examples.",
+    "All negative claims (e.g., 'no normative error semantics', 'no level-selection rule') are scoped to this capture, this version, these 896 lines.",
+    "No test, build, or validation was executed in this Goal; all proposed validation is UNEXECUTED."
+  ],
+  "undeveloped_leads": [
+    "NGFF 'Tools' implementations page referenced by S003 section 4 (not admitted).",
+    "OME-XML specification, required for OME/METADATA.ome.xml validation (referenced S003 257-259).",
+    "OMERO WebGateway documentation for omero render semantics (referenced S003 424-425).",
+    "UDUNITS-2 registry for unit validation/conversion (referenced S003 170).",
+    "0.4-to-0.5 migration scripts mentioned at S003 25-26 (not admitted).",
+    "Enumerated values for plate 'version' (S003 550-551) and image-label 'version' (S003 459-460) MUST-strings.",
+    "Whether real writers emit path-form (binary) scale/translation vectors (S003 285-289).",
+    "Whether real plate writers copy the examples and omit the MUST 'version' key (F14 discrepancy)."
+  ],
+  "source_links": {
+    "S003": "https://ngff.openmicroscopy.org/0.5/ (capture-only; verified by byte hash, no live fetch performed)",
+    "S003_citing_reference": "J. Moore, et al., NGFF specifications, 8 February 2022, doi:10.5281/zenodo.4282107 (as recorded in S003 815-820)"
+  },
+  "no_invented_records_note": "Every read record above corresponds to an actual bounded read_file or cache_source call made in this Goal; nothing was retro-modeled."
+}

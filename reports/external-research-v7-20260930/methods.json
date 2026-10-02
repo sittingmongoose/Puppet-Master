@@ -14,9 +14,9 @@
     "comparison": "fresh matched control/treatment; per-instance prospective execution card required",
     "terminal_assessment": "quality failure",
     "historical_status": "independent current review complete; quality failure",
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "future_execution": "No new execution authorized; original grades and prepared artifacts retained",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
     "inclusive_native_cap_verification": "UNESTABLISHED source-only",
     "current_readout_dimensions": {
@@ -31,7 +31,14 @@
       "Original case scope / eligibility": "Full case eligibility UNKNOWN",
       "Efficiency": "No same-quality win"
     },
-    "current_readout_source": "cohort010 frozen metadata; original evidence/grades unchanged"
+    "current_readout_source": "cohort011 frozen boundary, reviews, and cost metadata; historical editions byte archived",
+    "historical_terminal_assessment": "quality failure",
+    "terminal_assessment_contract": [
+      "quality failure",
+      "unassessed",
+      "infrastructure-limited"
+    ],
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "id": "T02",
@@ -48,9 +55,9 @@
     "comparison": "fresh matched control/treatment; per-instance prospective execution card required",
     "terminal_assessment": "quality failure",
     "historical_status": "independent current review complete; quality failure",
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "future_execution": "No new execution authorized; original grades and prepared artifacts retained",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
     "inclusive_native_cap_verification": "UNESTABLISHED source-only",
     "current_readout_dimensions": {
@@ -65,7 +72,14 @@
       "Original case scope / eligibility": "Full case eligibility UNKNOWN",
       "Efficiency": "No same-quality win"
     },
-    "current_readout_source": "cohort010 frozen metadata; original evidence/grades unchanged"
+    "current_readout_source": "cohort011 frozen boundary, reviews, and cost metadata; historical editions byte archived",
+    "historical_terminal_assessment": "quality failure",
+    "terminal_assessment_contract": [
+      "quality failure",
+      "unassessed",
+      "infrastructure-limited"
+    ],
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "id": "T03",
@@ -80,28 +94,35 @@
     "class": "substantive",
     "discovery_or_repo": false,
     "comparison": "fresh matched control/treatment; per-instance prospective execution card required",
-    "terminal_assessment": "unassessed",
+    "terminal_assessment": "quality failure",
     "historical_status": "structural output failure; no final reports",
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "future_execution": "No new execution authorized; original grades and prepared artifacts retained",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "actual_redo_status": "treatment scoped R025 quality failure; control v3 delivery still HOLD/error; evaluator-only finding-body joins no native credit",
     "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
     "inclusive_native_cap_verification": "UNESTABLISHED source-only",
     "startup_repeat_status": "2 new admissions, zero observedGoal; startup infrastructure HOLD; no pause failures",
     "current_readout_dimensions": {
-      "Actual screen status": "Original defects + ABI native attempts + startup release",
-      "Current grade / coverage": "Old R025 scoped failure; new ABI quality UNASSESSED",
+      "Actual screen status": "Original defects; zero-Goal startup admissions; ABI treatment complete, control own cap",
+      "Current grade / coverage": "R036 complete assigned six-facet CURRENT quality failure; matched control unqualified",
       "Native observations / caps": "ABI treatment complete; control own cap/completion UNESTABLISHED; inclusive caps UNKNOWN",
-      "Original file delivery": "ABI treatment readonlyINPUTMODE host copy failure; original control HOLD",
-      "Evaluator carrier / companion": "R025 evaluator-only body joins;0native credit",
+      "Original file delivery": "ABI treatment accepted input-mode-only restoration; unchanged whole delivery PASS; control cap unqualified",
+      "Evaluator carrier / companion": "R036 all14 required finding bodies joined; carrier adds no native operations credit",
       "Structural status": "ZeroGoal startup releases/costs; actual new cap/copy failures distinct",
       "Acquisition": "UNKNOWN",
-      "Preservation": "Whole-only control copy is preservation, not delivery",
+      "Preservation": "Actual artifacts retained; source acquisition-to-final UNKNOWN",
       "Original case scope / eligibility": "Full case eligibility UNKNOWN",
       "Efficiency": "No qualifying delivery comparison/win"
     },
-    "current_readout_source": "cohort010 frozen metadata; original evidence/grades unchanged"
+    "current_readout_source": "cohort011 frozen boundary, reviews, and cost metadata; historical editions byte archived",
+    "historical_terminal_assessment": "unassessed",
+    "terminal_assessment_contract": [
+      "quality failure",
+      "unassessed",
+      "infrastructure-limited"
+    ],
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "id": "T04",
@@ -116,11 +137,11 @@
     "class": "protocol",
     "discovery_or_repo": false,
     "comparison": "fresh matched control/treatment; per-instance prospective execution card required",
-    "terminal_assessment": null,
+    "terminal_assessment": "unassessed",
     "historical_status": "queued",
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "future_execution": "No new execution authorized; original grades and prepared artifacts retained",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "replacement_actual_status": "T04R redo both complete/measured whole delivery; R023/R024 full current quality failures; original capped attempts preserved",
     "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
     "inclusive_native_cap_verification": "UNESTABLISHED source-only",
@@ -136,7 +157,14 @@
       "Original case scope / eligibility": "Original eligibility unestablished",
       "Efficiency": "No execution credit; T04R distinct"
     },
-    "current_readout_source": "cohort010 frozen metadata; original evidence/grades unchanged"
+    "current_readout_source": "cohort011 frozen boundary, reviews, and cost metadata; historical editions byte archived",
+    "historical_terminal_assessment": null,
+    "terminal_assessment_contract": [
+      "quality failure",
+      "unassessed",
+      "infrastructure-limited"
+    ],
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "id": "T05",
@@ -151,16 +179,16 @@
     "class": "protocol",
     "discovery_or_repo": false,
     "comparison": "fresh matched control/treatment; per-instance prospective execution card required",
-    "terminal_assessment": null,
+    "terminal_assessment": "unassessed",
     "historical_status": "queued",
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "future_execution": "No new execution authorized; original grades and prepared artifacts retained",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "replacement_actual_status": "T05R original both complete/measured whole delivery; R020/R022 full current quality failures",
     "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
     "inclusive_native_cap_verification": "UNESTABLISHED source-only",
     "current_readout_dimensions": {
-      "Actual screen status": "Original hypothesis prepared only; separate new1500 T05R pair actualGoals",
+      "Actual screen status": "Original hypothesis unexecuted; T05R declared variant separate",
       "Current grade / coverage": "UNASSESSED original",
       "Native observations / caps": "No original execution",
       "Original file delivery": "No original delivery",
@@ -171,7 +199,14 @@
       "Original case scope / eligibility": "Original eligibility unestablished",
       "Efficiency": "No execution credit; T05R distinct"
     },
-    "current_readout_source": "cohort010 frozen metadata; original evidence/grades unchanged"
+    "current_readout_source": "cohort011 frozen boundary, reviews, and cost metadata; historical editions byte archived",
+    "historical_terminal_assessment": null,
+    "terminal_assessment_contract": [
+      "quality failure",
+      "unassessed",
+      "infrastructure-limited"
+    ],
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "id": "T06",
@@ -188,9 +223,9 @@
     "comparison": "fresh matched control/treatment; per-instance prospective execution card required",
     "terminal_assessment": "quality failure",
     "historical_status": "independent current review complete; quality failure",
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "future_execution": "No new execution authorized; original grades and prepared artifacts retained",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
     "inclusive_native_cap_verification": "UNESTABLISHED source-only",
     "current_readout_dimensions": {
@@ -205,7 +240,14 @@
       "Original case scope / eligibility": "Full case eligibility UNKNOWN",
       "Efficiency": "No same-quality win"
     },
-    "current_readout_source": "cohort010 frozen metadata; original evidence/grades unchanged"
+    "current_readout_source": "cohort011 frozen boundary, reviews, and cost metadata; historical editions byte archived",
+    "historical_terminal_assessment": "quality failure",
+    "terminal_assessment_contract": [
+      "quality failure",
+      "unassessed",
+      "infrastructure-limited"
+    ],
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "id": "T07",
@@ -223,9 +265,9 @@
     "terminal_assessment": "quality failure",
     "prospective_resume_preparation": "accepted machinery/card inventory; no candidate execution; inherited runtime admissions held",
     "historical_status": "queued",
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "future_execution": "No new execution authorized; original grades and prepared artifacts retained",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "actual_execution_cohort": "continuous-cohorts/cohort-001",
     "current_review_summary": "continuous-cohorts/cohort-002/T07-current-pair-summary.json",
     "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
@@ -238,11 +280,18 @@
       "Evaluator carrier / companion": "No extra carrier credit",
       "Structural status": "Frozen versions retained",
       "Acquisition": "UNKNOWN",
-      "Preservation": "Mechanism/history assessment pending",
+      "Preservation": "Five-case diagnostic partial; available retention assessed, acquisition UNKNOWN",
       "Original case scope / eligibility": "Full original eligibility distinct/UNKNOWN",
       "Efficiency": "No same-quality win"
     },
-    "current_readout_source": "cohort010 frozen metadata; original evidence/grades unchanged"
+    "current_readout_source": "cohort011 frozen boundary, reviews, and cost metadata; historical editions byte archived",
+    "historical_terminal_assessment": "quality failure",
+    "terminal_assessment_contract": [
+      "quality failure",
+      "unassessed",
+      "infrastructure-limited"
+    ],
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "id": "T08",
@@ -257,16 +306,16 @@
     "class": "substantive",
     "discovery_or_repo": true,
     "comparison": "fresh matched control/treatment; per-instance prospective execution card required",
-    "terminal_assessment": "infrastructure-limited",
+    "terminal_assessment": "quality failure",
     "prospective_resume_preparation": "accepted machinery/card inventory; no candidate execution; inherited runtime admissions held",
     "historical_status": "L quarantined; finite repairs exhausted",
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "future_execution": "No new execution authorized; original grades and prepared artifacts retained",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "replacement_actual_status": "Z repair1 both own assignment caps; native Goal terminal NULL; source acquisition unknown; all original failures preserved",
     "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
     "inclusive_native_cap_verification": "UNESTABLISHED source-only",
-    "actual_new_redo_status": "new pair native complete/measured whole delivery; R032/R033 pending; acquisition UNKNOWN; original caps unchanged",
+    "actual_new_redo_status": "New Z pair complete; full original R032/R033 quality failures; historical L infrastructure and own caps separate",
     "current_readout_dimensions": {
       "Actual screen status": "L route infrastructure-limited; Z capped + new completed pair",
       "Current grade / coverage": "R032/R033 full original7facet/21condition current quality failures",
@@ -275,11 +324,18 @@
       "Evaluator carrier / companion": "No extra carrier credit",
       "Structural status": "Original caps preserved; new streams complete",
       "Acquisition": "UNKNOWN",
-      "Preservation": "Pending; all versions retained",
+      "Preservation": "Frozen diagnostic partial; all available versions retained; acquisition UNKNOWN",
       "Original case scope / eligibility": "Complete evaluator scope; actual native/delivery/source qualification independent",
       "Efficiency": "No timing-based quality win"
     },
-    "current_readout_source": "cohort010 frozen metadata; original evidence/grades unchanged"
+    "current_readout_source": "cohort011 frozen boundary, reviews, and cost metadata; historical editions byte archived",
+    "historical_terminal_assessment": "infrastructure-limited",
+    "terminal_assessment_contract": [
+      "quality failure",
+      "unassessed",
+      "infrastructure-limited"
+    ],
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "id": "T09",
@@ -296,9 +352,9 @@
     "comparison": "fresh matched control/treatment; per-instance prospective execution card required",
     "terminal_assessment": "quality failure",
     "historical_status": "independent current review complete; quality failure",
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "future_execution": "No new execution authorized; original grades and prepared artifacts retained",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
     "inclusive_native_cap_verification": "UNESTABLISHED source-only",
     "current_readout_dimensions": {
@@ -313,7 +369,14 @@
       "Original case scope / eligibility": "Full case eligibility UNKNOWN",
       "Efficiency": "No same-quality win"
     },
-    "current_readout_source": "cohort010 frozen metadata; original evidence/grades unchanged"
+    "current_readout_source": "cohort011 frozen boundary, reviews, and cost metadata; historical editions byte archived",
+    "historical_terminal_assessment": "quality failure",
+    "terminal_assessment_contract": [
+      "quality failure",
+      "unassessed",
+      "infrastructure-limited"
+    ],
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "id": "T10",
@@ -331,9 +394,9 @@
     "terminal_assessment": "quality failure",
     "prospective_resume_preparation": "accepted machinery/card inventory; no candidate execution; inherited runtime admissions held",
     "historical_status": "queued",
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "future_execution": "No new execution authorized; original grades and prepared artifacts retained",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "actual_execution_cohort": "continuous-cohorts/cohort-002",
     "review_complete_coverage": true,
     "current_reviews": [
@@ -350,11 +413,18 @@
       "Evaluator carrier / companion": "No extra carrier credit",
       "Structural status": "Original grade/errata immutable",
       "Acquisition": "0eligible capture records; acquisition UNKNOWN",
-      "Preservation": "History/mechanism assessment pending",
+      "Preservation": "Frozen normative/discovery follow-up incomplete; source-validity and complete temporal assessment remain UNASSESSED",
       "Original case scope / eligibility": "Full original eligibility distinct/UNKNOWN",
       "Efficiency": "No same-quality win"
     },
-    "current_readout_source": "cohort010 frozen metadata; original evidence/grades unchanged"
+    "current_readout_source": "cohort011 frozen boundary, reviews, and cost metadata; historical editions byte archived",
+    "historical_terminal_assessment": "quality failure",
+    "terminal_assessment_contract": [
+      "quality failure",
+      "unassessed",
+      "infrastructure-limited"
+    ],
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "id": "T11",
@@ -369,12 +439,12 @@
     "class": "substantive",
     "discovery_or_repo": true,
     "comparison": "fresh matched control/treatment; per-instance prospective execution card required",
-    "terminal_assessment": null,
+    "terminal_assessment": "quality failure",
     "prospective_resume_preparation": "accepted machinery/card inventory; no candidate execution; inherited runtime admissions held",
     "historical_status": "queued",
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "future_execution": "No new execution authorized; original grades and prepared artifacts retained",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "actual_execution_cohort": "continuous-cohorts/cohort-003",
     "actual_current_status": "original Z control incomplete/unqualified; treatment R017 complete current quality failure; source capture unknown",
     "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
@@ -388,11 +458,18 @@
       "Evaluator carrier / companion": "No extra carrier credit",
       "Structural status": "Original incomplete + malformed redo JSON retained",
       "Acquisition": "UNKNOWN",
-      "Preservation": "Pending; all versions retained",
+      "Preservation": "Frozen four-repository available inventory authenticated; partial semantic transitions assessed; no acquisition proof",
       "Original case scope / eligibility": "Actual2families/shared asks +6opportunities;16derived rows; no22key",
       "Efficiency": "No same-quality win"
     },
-    "current_readout_source": "cohort010 frozen metadata; original evidence/grades unchanged"
+    "current_readout_source": "cohort011 frozen boundary, reviews, and cost metadata; historical editions byte archived",
+    "historical_terminal_assessment": null,
+    "terminal_assessment_contract": [
+      "quality failure",
+      "unassessed",
+      "infrastructure-limited"
+    ],
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "id": "T12",
@@ -407,15 +484,15 @@
     "class": "substantive",
     "discovery_or_repo": true,
     "comparison": "fresh matched control/treatment; per-instance prospective execution card required",
-    "terminal_assessment": null,
+    "terminal_assessment": "quality failure",
     "prospective_resume_preparation": "accepted machinery/card inventory; no candidate execution; inherited runtime admissions held",
     "historical_status": "queued",
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "future_execution": "No new execution authorized; original grades and prepared artifacts retained",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
     "inclusive_native_cap_verification": "UNESTABLISHED source-only",
-    "actual_new_redo_status": "both native-complete/measured whole/current delivery; all4 R028-R031 current reviews pending; original grades unchanged",
+    "actual_new_redo_status": "Historical observation; current closure is frozen in current dimensions and cohort011",
     "current_readout_dimensions": {
       "Actual screen status": "Executed redo pair",
       "Current grade / coverage": "R030/R031 actual original2family/shared scope complete quality failures",
@@ -424,11 +501,19 @@
       "Evaluator carrier / companion": "No extra carrier credit",
       "Structural status": "Frozen versions retained",
       "Acquisition": "UNKNOWN",
-      "Preservation": "Pending; all versions retained",
+      "Preservation": "Frozen four-repository available inventory authenticated; partial semantic transitions assessed; no acquisition proof",
       "Original case scope / eligibility": "Actual2families/shared asks +6opportunities;16derived rows; no22key",
       "Efficiency": "No same-quality win"
     },
-    "current_readout_source": "cohort010 frozen metadata; original evidence/grades unchanged"
+    "current_readout_source": "cohort011 frozen boundary, reviews, and cost metadata; historical editions byte archived",
+    "historical_terminal_assessment": null,
+    "terminal_assessment_contract": [
+      "quality failure",
+      "unassessed",
+      "infrastructure-limited"
+    ],
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00",
+    "historical_actual_new_redo_status": "both native-complete/measured whole/current delivery; all4 R028-R031 current reviews pending; original grades unchanged"
   },
   {
     "id": "T13",
@@ -443,11 +528,11 @@
     "class": "substantive",
     "discovery_or_repo": false,
     "comparison": "fresh matched control/treatment; per-instance prospective execution card required",
-    "terminal_assessment": "infrastructure-limited",
+    "terminal_assessment": "quality failure",
     "historical_status": "native blocked; all required outputs missing",
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "future_execution": "No new execution authorized; original grades and prepared artifacts retained",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
     "inclusive_native_cap_verification": "UNESTABLISHED source-only",
     "actual_redo_status": "both native complete/measured v3 delivery; R026/R027 assigned current scopes complete quality failures; original case eligibility separate",
@@ -459,11 +544,18 @@
       "Evaluator carrier / companion": "Required companion scope assessed;0extra native credit",
       "Structural status": "Original defects and redo versions retained",
       "Acquisition": "UNKNOWN",
-      "Preservation": "Full temporal assessment pending",
+      "Preservation": "Frozen normative/discovery follow-up incomplete; source-validity and complete temporal assessment remain UNASSESSED",
       "Original case scope / eligibility": "Full original eligibility distinct/UNKNOWN",
       "Efficiency": "No same-quality win"
     },
-    "current_readout_source": "cohort010 frozen metadata; original evidence/grades unchanged"
+    "current_readout_source": "cohort011 frozen boundary, reviews, and cost metadata; historical editions byte archived",
+    "historical_terminal_assessment": "infrastructure-limited",
+    "terminal_assessment_contract": [
+      "quality failure",
+      "unassessed",
+      "infrastructure-limited"
+    ],
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "id": "T14",
@@ -478,14 +570,14 @@
     "class": "substantive",
     "discovery_or_repo": false,
     "comparison": "fresh matched control/treatment; per-instance prospective execution card required",
-    "terminal_assessment": "quality failure",
+    "terminal_assessment": "unassessed",
     "review_complete_coverage": false,
     "material_coverage_complete": true,
     "historical_status": "both current artifact sets graded quality failure; partial capped certification",
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
-    "additive_review": "R018/R019 scoped6facet current quality failures; original8-key expanded eligibility pending; old partial reviews unchanged",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "future_execution": "No new execution authorized; original grades and prepared artifacts retained",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "additive_review": "Historical observation; current closure is frozen in current dimensions and cohort011",
     "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
     "inclusive_native_cap_verification": "UNESTABLISHED source-only",
     "current_readout_dimensions": {
@@ -496,11 +588,19 @@
       "Evaluator carrier / companion": "No native credit from additive review",
       "Structural status": "Original grade bytes immutable",
       "Acquisition": "UNKNOWN",
-      "Preservation": "No preservation benefit established",
+      "Preservation": "12 actual seed/version/assertion components retained with qualifications; full original semantic coverage/quality UNASSESSED",
       "Original case scope / eligibility": "Literal296/848units,8criteria; unresolved material source authorities; units not claims",
       "Efficiency": "No same-quality win"
     },
-    "current_readout_source": "cohort010 frozen metadata; original evidence/grades unchanged"
+    "current_readout_source": "cohort011 frozen boundary, reviews, and cost metadata; historical editions byte archived",
+    "historical_terminal_assessment": "quality failure",
+    "terminal_assessment_contract": [
+      "quality failure",
+      "unassessed",
+      "infrastructure-limited"
+    ],
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00",
+    "historical_additive_review": "R018/R019 scoped6facet current quality failures; original8-key expanded eligibility pending; old partial reviews unchanged"
   },
   {
     "id": "T15",
@@ -515,11 +615,11 @@
     "class": "substantive",
     "discovery_or_repo": false,
     "comparison": "fresh matched control/treatment; per-instance prospective execution card required",
-    "terminal_assessment": "semantic quality unassessed",
+    "terminal_assessment": "unassessed",
     "historical_status": "queued",
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "future_execution": "No new execution authorized; original grades and prepared artifacts retained",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "actual_execution_cohort": "continuous-cohorts/cohort-003",
     "actual_current_status": "redo1 seed R021 complete current quality failure; witness own assignment cap/native terminal NULL; no reuse benefit established",
     "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
@@ -536,7 +636,14 @@
       "Original case scope / eligibility": "Full original reuse eligibility unestablished",
       "Efficiency": "No matched reuse or efficiency win"
     },
-    "current_readout_source": "cohort010 frozen metadata; original evidence/grades unchanged"
+    "current_readout_source": "cohort011 frozen boundary, reviews, and cost metadata; historical editions byte archived",
+    "historical_terminal_assessment": "semantic quality unassessed",
+    "terminal_assessment_contract": [
+      "quality failure",
+      "unassessed",
+      "infrastructure-limited"
+    ],
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "id": "T16",
@@ -551,11 +658,11 @@
     "class": "substantive",
     "discovery_or_repo": false,
     "comparison": "fresh matched control/treatment; per-instance prospective execution card required",
-    "terminal_assessment": null,
+    "terminal_assessment": "infrastructure-limited",
     "historical_status": "queued",
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "future_execution": "same extended campaign; exact admission required",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "future_execution": "No new execution authorized; original grades and prepared artifacts retained",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "original_case_complete_eligibility": "UNKNOWN unless independently established; scoped review completeness is separate",
     "inclusive_native_cap_verification": "UNESTABLISHED source-only",
     "current_readout_dimensions": {
@@ -570,6 +677,13 @@
       "Original case scope / eligibility": "Original eligibility unestablished",
       "Efficiency": "No screen/integration credit"
     },
-    "current_readout_source": "cohort010 frozen metadata; original evidence/grades unchanged"
+    "current_readout_source": "cohort011 frozen boundary, reviews, and cost metadata; historical editions byte archived",
+    "historical_terminal_assessment": null,
+    "terminal_assessment_contract": [
+      "quality failure",
+      "unassessed",
+      "infrastructure-limited"
+    ],
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   }
 ]

@@ -1,0 +1,157 @@
+{
+  "schema": "er7.candidate_case.v1/acquisition-ledger",
+  "case_id": "ome-normative-dev-v1",
+  "version": "V001",
+  "goal": "single fresh native Goal covering Q1 and Q2 (no host context reset claimed)",
+  "candidate_author": true,
+  "self_report_label": "SELF_REPORT",
+  "admitted_namespaces": ["inputs/", "TASK.md", "out/"],
+  "sources": [
+    {
+      "handle": "S003",
+      "file": "inputs/sources/S003.txt",
+      "description": "Frozen OME-Zarr 0.5 normative capture (Final Community Group Report, 8 September 2026)",
+      "original_sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "view_sha256_observed_on_every_read": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 36980,
+      "total_lines": 896,
+      "source_links": [
+        {
+          "source_id": "SRC-2b11c54af373e1979af8cbb3",
+          "uri": "https://ngff.openmicroscopy.org/0.5/",
+          "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+          "note": "alias from inputs/catalog.json; no live GET performed, origin not fetched in this Goal"
+        },
+        {
+          "source_id": "SRC-e59af1d3eedfb618a7ce766f",
+          "uri": "local-capture (origin URL not recorded)",
+          "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        {
+          "source_id": "SRC-bf327c82f5ee6b5d1b754d8c",
+          "uri": "local-capture (origin URL not recorded)",
+          "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        },
+        {
+          "source_id": "SRC-da65296ca0490aebb780c237",
+          "uri": "local-capture (origin URL not recorded)",
+          "version": "capture-only:5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"
+        }
+      ]
+    }
+  ],
+  "auxiliary_inputs_read": [
+    {"file": "TASK.md", "lines": "1-40", "purpose": "session task card (workflow instructions, not format evidence)"},
+    {"file": "inputs/TASK.md", "lines": "1-11", "purpose": "assignment: scope, groups, report duties"},
+    {"file": "inputs/brief.md", "lines": "1-5", "purpose": "product brief"},
+    {"file": "inputs/catalog.json", "lines": "1-40", "purpose": "admitted source identity and hashes"},
+    {"file": "inputs/plan/Viewer.md", "lines": "1-11", "purpose": "thin viewer plan under research"}
+  ],
+  "read_records": [
+    {
+      "phase": "Q1-fresh-source-expansion",
+      "tool": "mcp__pm_boundary__read_file",
+      "path": "inputs/sources/S003.txt",
+      "requested": {"line_start": 1, "line_count": 300},
+      "requested_self_report": true,
+      "returned_line_start": 1,
+      "returned_lines": 300,
+      "coverage": "1-300",
+      "sha256_in_response": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "purpose": "Q1 full-source acquisition (chunk 1/3)"
+    },
+    {
+      "phase": "Q1-fresh-source-expansion",
+      "tool": "mcp__pm_boundary__read_file",
+      "path": "inputs/sources/S003.txt",
+      "requested": {"line_start": 301, "line_count": 300},
+      "requested_self_report": true,
+      "returned_line_start": 301,
+      "returned_lines": 300,
+      "coverage": "301-600",
+      "sha256_in_response": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "purpose": "Q1 full-source acquisition (chunk 2/3)"
+    },
+    {
+      "phase": "Q1-fresh-source-expansion",
+      "tool": "mcp__pm_boundary__read_file",
+      "path": "inputs/sources/S003.txt",
+      "requested": {"line_start": 601, "line_count": 300},
+      "requested_self_report": true,
+      "returned_line_start": 601,
+      "returned_lines": 296,
+      "coverage": "601-896 (EOF)",
+      "sha256_in_response": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "purpose": "Q1 full-source acquisition (chunk 3/3)"
+    },
+    {
+      "phase": "Q2-fresh-source-expansion-reread",
+      "tool": "mcp__pm_boundary__read_file",
+      "path": "inputs/sources/S003.txt",
+      "requested": {"line_start": 1, "line_count": 300},
+      "requested_self_report": true,
+      "returned_line_start": 1,
+      "returned_lines": 300,
+      "coverage": "1-300",
+      "sha256_in_response": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "purpose": "Q2 mandatory full reread from same inputs path; not substituted from notes or cache (chunk 1/3)"
+    },
+    {
+      "phase": "Q2-fresh-source-expansion-reread",
+      "tool": "mcp__pm_boundary__read_file",
+      "path": "inputs/sources/S003.txt",
+      "requested": {"line_start": 301, "line_count": 300},
+      "requested_self_report": true,
+      "returned_line_start": 301,
+      "returned_lines": 300,
+      "coverage": "301-600",
+      "sha256_in_response": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "purpose": "Q2 mandatory full reread (chunk 2/3)"
+    },
+    {
+      "phase": "Q2-fresh-source-expansion-reread",
+      "tool": "mcp__pm_boundary__read_file",
+      "path": "inputs/sources/S003.txt",
+      "requested": {"line_start": 601, "line_count": 300},
+      "requested_self_report": true,
+      "returned_line_start": 601,
+      "returned_lines": 296,
+      "coverage": "601-896 (EOF)",
+      "sha256_in_response": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "purpose": "Q2 mandatory full reread (chunk 3/3)"
+    }
+  ],
+  "coverage": {
+    "S003": {
+      "lines_covered": "1-896 complete",
+      "complete_reads": 2,
+      "phases": ["Q1-fresh-source-expansion", "Q2-fresh-source-expansion-reread"],
+      "line_map_verified": "returned line_start/line counts of the three chunks partition 1-896 with no gap (1-300, 301-600, 601-896)",
+      "coverage_limits": [
+        "Capture is a flat-text rendering of the HTML spec; class=\"example\"/class=\"note\" markers are not visible, so example-vs-normative boundaries were judged from wording (recorded in report F020).",
+        "Chunk-level content hashes are not exposed by the tool; only a whole-file sha256 appears in each response and matched the catalog on all six S003 reads.",
+        "No live fetch of https://ngff.openmicroscopy.org/0.5/ or any other URI was performed (none permitted)."
+      ]
+    },
+    "assignment_scope": "Both brief-derived groups (opening/listing/navigation; channel-time-plane/coordinates/label overlays) were evaluated against the full corpus in the single report; question order Q1 then Q2; finding IDs F0xx/F1xx shared across both questions.",
+    "searches": "No keyword sampling; coverage is by complete sequential reads of all lines, so absence claims (report F026) are scoped to the fully inspected S003 capture only."
+  },
+  "finding_id_index": {
+    "Q1_findings": ["F001", "F002", "F003", "F004", "F005", "F006", "F007", "F008", "F009", "F010", "F011", "F012", "F013", "F014", "F015", "F016", "F017", "F018", "F019", "F020", "F021", "F022", "F023", "F024", "F025", "F026"],
+    "Q2_findings": ["F101", "F102", "F103", "F104", "F105", "F106", "F107", "F108", "F109", "F110", "F111", "F112"],
+    "note": "IDs are stable across questions; F024 (sparse/empty structure handling) is cited in both parts of the report; F109-F112 appear in the report's Q2 part and unresolved list."
+  },
+  "coverage_limits_global": [
+    "No evidence about real reader/writer implementations exists in the corpus (S003 section 4 is 'See Tools.'); all interop claims are unresolved.",
+    "OMERO WebGateway documentation, OME-XML, UDUNITS-2, the Zarr v3 spec and the NGFF Tools page are referenced by S003 but not admitted; semantics delegated to them are unresolved."
+  ],
+  "undeveloped_leads": [
+    "Zarr v3 specification details (chunk key encodings, storage transformers, sharding) that S003 incorporates by reference (S003:68-72).",
+    "OMERO WebGateway documentation for full omero field semantics (S003:424-425).",
+    "UDUNITS-2 grammar behind the unit lists (S003:170-172).",
+    "Upcoming NGFF specification intended to replace bioformats2raw.layout with explicit metadata (S003:181).",
+    "NGFF Tools page listing implementations (S003:813-814).",
+    "Migration scripts between numbered versions promised by the spec status section (S003:25-26)."
+  ],
+  "invented_read_records": false
+}

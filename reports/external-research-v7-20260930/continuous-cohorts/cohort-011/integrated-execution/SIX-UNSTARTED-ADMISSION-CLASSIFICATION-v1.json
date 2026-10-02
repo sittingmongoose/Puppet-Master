@@ -1,0 +1,176 @@
+{
+  "schema": "er7.integrated.six_unstarted.classification.v1",
+  "created_epoch": 1790899898.9423635,
+  "root_directive": "All6nullbirth/no firstpartiallaunch; status UNSTARTED_INFRASTRUCTURE_AND_CAMPAIGN_ADMISSION_LIMITED, notcandidatefailed/notpausefailure. No cap reduction or wait-budget reset. Root continues useful allowed lanes.",
+  "cells": [
+    {
+      "diagnostic_execution_id": "iz4-source-unknown-z-log-control",
+      "original_budget_owner_id": "iz2-z-log-control",
+      "status": "UNSTARTED_INFRASTRUCTURE_AND_CAMPAIGN_ADMISSION_LIMITED",
+      "actual_birth": null,
+      "first_case_started_epoch": null,
+      "native_stages_started": [],
+      "native_stages_completed": [],
+      "required_stages": [
+        "discovery",
+        "proposal",
+        "flash",
+        "correction"
+      ],
+      "whole_case_executed": false,
+      "candidate_failed": false,
+      "pause_failure": false,
+      "full_source_qualified_handoff": "HOLD_UNKNOWN",
+      "promotion_eligible": false,
+      "chronology": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/integrated-execution-states-v1/iz4-source-unknown-z-log-control/chronology.json",
+        "sha256": "3940ce171f40a80cd8566663b58ac397096ee2a890f0b91cdead2b6268c900c9"
+      }
+    },
+    {
+      "diagnostic_execution_id": "iz4-source-unknown-z-log-recipe-a",
+      "original_budget_owner_id": "iz2-z-log-recipe-a",
+      "status": "UNSTARTED_INFRASTRUCTURE_AND_CAMPAIGN_ADMISSION_LIMITED",
+      "actual_birth": null,
+      "first_case_started_epoch": null,
+      "native_stages_started": [],
+      "native_stages_completed": [],
+      "required_stages": [
+        "discovery",
+        "proposal",
+        "flash",
+        "correction"
+      ],
+      "whole_case_executed": false,
+      "candidate_failed": false,
+      "pause_failure": false,
+      "full_source_qualified_handoff": "HOLD_UNKNOWN",
+      "promotion_eligible": false,
+      "chronology": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/integrated-execution-states-v1/iz4-source-unknown-z-log-recipe-a/chronology.json",
+        "sha256": "868dddb2302de0d94be2f2b0ce1d599565e63514ae8e4348d13cf94245d65ed4"
+      }
+    },
+    {
+      "diagnostic_execution_id": "iz4-source-unknown-z-log-recipe-b",
+      "original_budget_owner_id": "iz2-z-log-recipe-b",
+      "status": "UNSTARTED_INFRASTRUCTURE_AND_CAMPAIGN_ADMISSION_LIMITED",
+      "actual_birth": null,
+      "first_case_started_epoch": null,
+      "native_stages_started": [],
+      "native_stages_completed": [],
+      "required_stages": [
+        "discovery",
+        "proposal",
+        "flash",
+        "correction"
+      ],
+      "whole_case_executed": false,
+      "candidate_failed": false,
+      "pause_failure": false,
+      "full_source_qualified_handoff": "HOLD_UNKNOWN",
+      "promotion_eligible": false,
+      "chronology": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/integrated-execution-states-v1/iz4-source-unknown-z-log-recipe-b/chronology.json",
+        "sha256": "8b7f16cc20a522f8e415394db5d4df14c6f955a899341a48dc5cdee704ab174c"
+      }
+    },
+    {
+      "diagnostic_execution_id": "iz4-source-unknown-z-ome-control",
+      "original_budget_owner_id": "iz2-z-ome-control",
+      "status": "UNSTARTED_INFRASTRUCTURE_AND_CAMPAIGN_ADMISSION_LIMITED",
+      "actual_birth": null,
+      "first_case_started_epoch": null,
+      "native_stages_started": [],
+      "native_stages_completed": [],
+      "required_stages": [
+        "discovery",
+        "proposal",
+        "flash",
+        "correction"
+      ],
+      "whole_case_executed": false,
+      "candidate_failed": false,
+      "pause_failure": false,
+      "full_source_qualified_handoff": "HOLD_UNKNOWN",
+      "promotion_eligible": false,
+      "chronology": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/integrated-execution-states-v1/iz4-source-unknown-z-ome-control/chronology.json",
+        "sha256": "8c73af26d200c97c4d801f4e354aff2d26b3c8a55100adf8e8c44654c299ed5e"
+      }
+    },
+    {
+      "diagnostic_execution_id": "iz4-source-unknown-z-ome-recipe-a",
+      "original_budget_owner_id": "iz2-z-ome-recipe-a",
+      "status": "UNSTARTED_INFRASTRUCTURE_AND_CAMPAIGN_ADMISSION_LIMITED",
+      "actual_birth": null,
+      "first_case_started_epoch": null,
+      "native_stages_started": [],
+      "native_stages_completed": [],
+      "required_stages": [
+        "discovery",
+        "proposal",
+        "flash",
+        "correction"
+      ],
+      "whole_case_executed": false,
+      "candidate_failed": false,
+      "pause_failure": false,
+      "full_source_qualified_handoff": "HOLD_UNKNOWN",
+      "promotion_eligible": false,
+      "chronology": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/integrated-execution-states-v1/iz4-source-unknown-z-ome-recipe-a/chronology.json",
+        "sha256": "6fb6756824092cdf132ce78cc8e22db804bfbc9460e68285b6ad4e2b303e3d67"
+      }
+    },
+    {
+      "diagnostic_execution_id": "iz4-source-unknown-z-ome-recipe-b",
+      "original_budget_owner_id": "iz2-z-ome-recipe-b",
+      "status": "UNSTARTED_INFRASTRUCTURE_AND_CAMPAIGN_ADMISSION_LIMITED",
+      "actual_birth": null,
+      "first_case_started_epoch": null,
+      "native_stages_started": [],
+      "native_stages_completed": [],
+      "required_stages": [
+        "discovery",
+        "proposal",
+        "flash",
+        "correction"
+      ],
+      "whole_case_executed": false,
+      "candidate_failed": false,
+      "pause_failure": false,
+      "full_source_qualified_handoff": "HOLD_UNKNOWN",
+      "promotion_eligible": false,
+      "chronology": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/integrated-execution-states-v1/iz4-source-unknown-z-ome-recipe-b/chronology.json",
+        "sha256": "c35f44e6ffd89c6171bf16de860557428f2aa07890c5445893d444d1ccc61fb0"
+      }
+    }
+  ],
+  "cell_count": 6,
+  "candidate_goals_started": 0,
+  "whole_cases_executed": 0,
+  "infrastructure_and_campaign_limited": 6,
+  "candidate_failures": 0,
+  "pause_failures": 0,
+  "current_final_assessments_available": 0,
+  "actual_semantic_quality": "unassessed; no candidate final exists",
+  "cold_preparation_and_coordination_economics": "campaign costs preserved; totals/tokenusage unknown here, never zeroed",
+  "no_first_partial_launch": true,
+  "no_birth_or_reset": true,
+  "no_caps_reduced": true,
+  "source_only_final_profile": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/integrated-execution-states-v1/INTEGRATED-FINAL-CURRENT-SEALED-PROFILE-v2.json",
+    "sha256": "590f90421d38472a4ac2cbb45312817babe90727a0522543c0a0f4d2f3de2a33"
+  },
+  "campaign_time_hold": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/integrated-execution-states-v1/UNASSIGNED-CAMPAIGN-TIME-HOLD-v1.json",
+    "sha256": "885fdb8ceba36bb42f6f5bc6cb75a481f84cd915579fb97bc641de6d1f05911a"
+  },
+  "inclusive_boundary_hold": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/integrated-execution-states-v1/INCLUSIVE-NATIVE-PREDICATE-HOLD-v1.json",
+    "sha256": "cb961c0b1776cfe75292ec05af4c005c0fd6c14924d10886d1928aa5c36bdb45"
+  },
+  "task_continues_until_explicit_root_global_boundary": true
+}

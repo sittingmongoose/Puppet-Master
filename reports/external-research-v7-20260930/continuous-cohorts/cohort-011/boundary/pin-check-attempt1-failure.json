@@ -1,0 +1,11 @@
+{
+  "schema": "er7.root_positive_pin_check_failure.v1",
+  "observed_epoch": 1790900757.0578635,
+  "cause": "Root mistyped expected helper97 receipt hash by omitting characters; independently frozen actual receipt unchanged",
+  "expected_typo": "3ffc02b9d561e75702cb9a7854bdae1b8725c341625f3c7cffa0be",
+  "actual": "3ffc02b9d561e75702cb9a7854bdae1b8725c341625f3c19ccd2bc3f7cffa0be",
+  "authority_created_on_failure": false,
+  "candidate_or_grade_mutations": false,
+  "shell_reported_wall_seconds": 5.5147e-05,
+  "total_operator_cost_seconds": null
+}

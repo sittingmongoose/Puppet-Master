@@ -1,5 +1,5 @@
 {
-  "status": "ACTIVE; continuing publisher available for next frozen cohort",
+  "status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
   "as_of_utc": "2026-10-01T20:39:56.044982+00:00",
   "deadline_edt": "October 1,2026 9:29:01 p.m. EDT",
   "authority_sha256": "ca4afed46dc1218bd449b3ef34f67f6c6245efbbbc73bb66e86d592102d36567",
@@ -62,5 +62,21 @@
   "publication_as_of_utc": "2026-10-01T23:52:33.602175+00:00",
   "native_inclusive_cap_verification": "UNESTABLISHED source-only8403cbcf review; no actual native qualification credit",
   "current_consolidated_edition": "current-editions/edition-010",
-  "helper100_extension_authority": "continuous-cohorts/cohort-010/helper100-authority.json"
+  "helper100_extension_authority": "continuous-cohorts/cohort-010/helper100-authority.json",
+  "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00",
+  "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+  "global_execution_boundary": "continuous-cohorts/cohort-011/boundary/global-execution-boundary.json",
+  "publication_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+  "candidate_admissions_closed": true,
+  "global_deadline_elapsed": false,
+  "source_key_retirement_authorized": false,
+  "counted_launch_admissions": 53,
+  "known_native_goal_starts": 49,
+  "occupied_slot_seconds_as_of_snapshot": 37984.16749429703,
+  "reported_candidate_output_tokens_lower_bound": 1677375,
+  "known_helper_starts": 100,
+  "helper_start_ceiling": 100,
+  "unknown_usage_is_not_zero": true,
+  "qualified_recipe": null,
+  "integrated_actual_executions": 0
 }

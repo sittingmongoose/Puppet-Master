@@ -1,0 +1,162 @@
+{
+  "schema": "immutable-review-receipt/v3",
+  "frozen_at_utc": "2026-10-01T23:58:24.075666Z",
+  "status": "EXACT_SOURCE_PROFILE_AUTHENTICATED; CURRENT_SEMANTIC_CLOSURE_UNKNOWN_HOLD",
+  "output_files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/early-research-preservation-v7/source-only-original-scope-audit-v003.json",
+      "sha256": "257d7af259ec60d0cc28eec7b559a5207737adb8b5d5bbe8dea466795695337d",
+      "bytes": 172410
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/early-research-preservation-v7/source-only-original-scope-audit-v003.md",
+      "sha256": "c68da90f5c16fabbdbac41026a714930c75f7a8dc978df1a504a84299001a7e7",
+      "bytes": 6556
+    }
+  ],
+  "input_evidence": [
+    {
+      "kind": "seal",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/blind-stager-v5/source-capsules/EARLY8-original-current-source-v1/SEAL.json",
+      "sha256": "66f723df5b959bdfc1668362e2a3ddf385f64b9ef3e3e722361d2afe5f6c9760",
+      "bytes": 349
+    },
+    {
+      "kind": "manifest",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/blind-stager-v5/source-capsules/EARLY8-original-current-source-v1/MANIFEST.json",
+      "sha256": "a0b1d9bb366f888342d7ce1e188e42f024b56d3b822394e682ef06d778a1ea9a",
+      "bytes": 12494
+    },
+    {
+      "kind": "source_profile",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/blind-stager-v5/source-capsules/EARLY8-original-current-source-v1/SOURCE_PROFILE.json",
+      "sha256": "2468921a8cbec1f13d814ce2478f66d71c7f349374fb8ba196f32f92a16c729f",
+      "bytes": 10777
+    },
+    {
+      "kind": "all_source_authentication",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/early-research-preservation-v7/source-only-intake-authentication-v003.json",
+      "sha256": "dcf4044f01c15811c906cc6918c5dc2ed8c45fd7f625341f8361d3ba687426ef",
+      "bytes": 19674
+    },
+    {
+      "kind": "safe_primary_prefix_inventory",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/early-research-preservation-v7/safe-primary-prefix-inventory-v003.json",
+      "sha256": "ac1a4199d114ef523e5a4852f990966c886174a44143bf7042b4543067b6e488",
+      "bytes": 17411
+    },
+    {
+      "kind": "positive_task_map_metadata",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/early-research-preservation-v7/positive-task-map-v003.json",
+      "sha256": "997ffba9590a6b4b7e3378f291342ef0e2881d6a7384259d9a00bba7f50e2877",
+      "bytes": 855
+    },
+    {
+      "kind": "immutable_prior_receipt",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/early-research-preservation-v7/source-only-eligibility-v002.receipt.json",
+      "sha256": "283e17b064da56dbc6366c5c36c9ce8b4b9d7f899c9ac72ab928dc9e4e802631",
+      "bytes": 2509
+    },
+    {
+      "kind": "original_clock",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/early-research-preservation-v7/original-clock.json",
+      "sha256": "7f5cb7089badf72557d8394b2146fd346f7b76f6079a0fd83086a2b9c7a17dc9",
+      "bytes": 874
+    },
+    {
+      "kind": "original_scope_input",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/blind-stager-v5/source-capsules/EARLY8-original-current-source-v1/R001/ORIGINAL_MANIFEST.sha256.json",
+      "sha256": "43564ebb344d6c535357ea05065100b01a32afc15e69fcbc724f6b67f4cec8f4"
+    },
+    {
+      "kind": "original_scope_input",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/blind-stager-v5/source-capsules/EARLY8-original-current-source-v1/R001/eligibility.json",
+      "sha256": "1dbb0006ccbc12ad4b31eb1c52e3e2e30abf304fcffb2f3938e0609079c42531"
+    },
+    {
+      "kind": "original_scope_input",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/blind-stager-v5/source-capsules/EARLY8-original-current-source-v1/R001/original-source/README.md",
+      "sha256": "a6a9ef62b54fa3b56ee47637b8cbe23033d13cea710181b048bea996afa02c98"
+    },
+    {
+      "kind": "original_scope_input",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/blind-stager-v5/source-capsules/EARLY8-original-current-source-v1/R001/original-source/brief.md",
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a"
+    },
+    {
+      "kind": "original_scope_input",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/blind-stager-v5/source-capsules/EARLY8-original-current-source-v1/R001/original-source/catalog.json",
+      "sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a"
+    },
+    {
+      "kind": "original_scope_input",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/blind-stager-v5/source-capsules/EARLY8-original-current-source-v1/R001/original-source/plan/Viewer.md",
+      "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d"
+    },
+    {
+      "kind": "original_scope_input",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/blind-stager-v5/source-capsules/EARLY8-original-current-source-v1/R005/ORIGINAL_MANIFEST.sha256.json",
+      "sha256": "9a509cb61b5382c4a80b4fb7906404448c392afe3b35dc317c5a3023333982f6"
+    },
+    {
+      "kind": "original_scope_input",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/blind-stager-v5/source-capsules/EARLY8-original-current-source-v1/R005/eligibility.json",
+      "sha256": "f00da22ac79d8ae081f4e9accca2e15438329992015c4655afe469e9b11ed039"
+    },
+    {
+      "kind": "original_scope_input",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/blind-stager-v5/source-capsules/EARLY8-original-current-source-v1/R005/original-source/brief.md",
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a"
+    },
+    {
+      "kind": "original_scope_input",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/blind-stager-v5/source-capsules/EARLY8-original-current-source-v1/R005/original-source/plan/Viewer.md",
+      "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d"
+    },
+    {
+      "kind": "original_scope_input",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/blind-stager-v5/source-capsules/EARLY8-original-current-source-v1/R005/original-source/source-universe.json",
+      "sha256": "649fe959793cb5eb825bc5a83f48ec16436fe3bebddf08016ea9defd0a45fdee"
+    },
+    {
+      "kind": "original_scope_input",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/blind-stager-v5/source-capsules/EARLY8-original-current-source-v1/R007/ORIGINAL_MANIFEST.sha256.json",
+      "sha256": "460b9c0a7ed0f4d25c86170d0f633e367db0368ed7a00e9f0929cd904c0351db"
+    },
+    {
+      "kind": "original_scope_input",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/blind-stager-v5/source-capsules/EARLY8-original-current-source-v1/R007/eligibility.json",
+      "sha256": "bb1dd95eee458ae9667b23554f5453bb3988d46fafe825ebb960a77cf1928274"
+    },
+    {
+      "kind": "original_scope_input",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/blind-stager-v5/source-capsules/EARLY8-original-current-source-v1/R007/original-source/brief.md",
+      "sha256": "b6190d58238b5a0471d1870d0de60b300a6c481c8d1719a7f229cdd840278607"
+    },
+    {
+      "kind": "original_scope_input",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/blind-stager-v5/source-capsules/EARLY8-original-current-source-v1/R007/original-source/source-universe.json",
+      "sha256": "505fae05b9f42781687e3236eea226a19cda1b7c7434415441e2caebb2ba6399"
+    }
+  ],
+  "original_clock": {
+    "schema": "early-research-preservation-original-clock/v1",
+    "start_exposed_utc": "2026-10-01T23:37:40Z",
+    "start_exposed_epoch": 1790897860,
+    "original_wall_clock_seconds": 5400,
+    "original_deadline_epoch": 1790903260,
+    "finalization_reserve_begins_epoch": 1790902060,
+    "campaign_deadline_epoch": 1790904541,
+    "hard_deadline_epoch": 1790903260,
+    "model_requested": "gpt-6.1-sol",
+    "effort_requested": "Max",
+    "actual_model_effort_verification": "UNKNOWN",
+    "response_event_limit": 120,
+    "conservative_response_events_through_this_write": 15,
+    "response_event_rule": "Conservative counter includes assistant model messages, tool calls and tool responses; compound tool returns count each nested response and enclosing response. Exact provider events are unexposed. Original clock/counter never reset.",
+    "generated_input_cache_reasoning_usage": "UNKNOWN"
+  },
+  "conservative_response_count_including_delivery": 100,
+  "all_original_current_scope_closed": false,
+  "phase2_unlocked": false
+}

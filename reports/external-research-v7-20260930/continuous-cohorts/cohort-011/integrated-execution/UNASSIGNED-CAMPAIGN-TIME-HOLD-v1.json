@@ -1,0 +1,66 @@
+{
+  "schema": "er7.integrated.unassigned.campaign_time_hold.v1",
+  "observed_epoch": 1790899282.6619892,
+  "campaign_deadline_epoch": 1790904541,
+  "campaign_closeout_reserve_seconds": 3600,
+  "last_execution_epoch_preserving_closeout": 1790900941,
+  "remaining_campaign_seconds_before_closeout": 1658.3380107879639,
+  "unchanged_required_native_stage_seconds": 3000,
+  "prospective_outside_reserve_seconds": 300,
+  "full_case_cannot_fit_even_without_overhead": true,
+  "cases": [
+    {
+      "diagnostic_execution_id": "iz4-source-unknown-z-log-control",
+      "original_budget_owner_id": "iz2-z-log-control",
+      "actual_case_birth": null,
+      "clock": null,
+      "status": "HOLD_UNSTARTED_INSUFFICIENT_FULL_CASE_CAMPAIGN_TIME_AND_UNESTABLISHED_INCLUSIVE_BOUNDARY",
+      "whole_case_credit": false
+    },
+    {
+      "diagnostic_execution_id": "iz4-source-unknown-z-log-recipe-a",
+      "original_budget_owner_id": "iz2-z-log-recipe-a",
+      "actual_case_birth": null,
+      "clock": null,
+      "status": "HOLD_UNSTARTED_INSUFFICIENT_FULL_CASE_CAMPAIGN_TIME_AND_UNESTABLISHED_INCLUSIVE_BOUNDARY",
+      "whole_case_credit": false
+    },
+    {
+      "diagnostic_execution_id": "iz4-source-unknown-z-log-recipe-b",
+      "original_budget_owner_id": "iz2-z-log-recipe-b",
+      "actual_case_birth": null,
+      "clock": null,
+      "status": "HOLD_UNSTARTED_INSUFFICIENT_FULL_CASE_CAMPAIGN_TIME_AND_UNESTABLISHED_INCLUSIVE_BOUNDARY",
+      "whole_case_credit": false
+    },
+    {
+      "diagnostic_execution_id": "iz4-source-unknown-z-ome-control",
+      "original_budget_owner_id": "iz2-z-ome-control",
+      "actual_case_birth": null,
+      "clock": null,
+      "status": "HOLD_UNSTARTED_INSUFFICIENT_FULL_CASE_CAMPAIGN_TIME_AND_UNESTABLISHED_INCLUSIVE_BOUNDARY",
+      "whole_case_credit": false
+    },
+    {
+      "diagnostic_execution_id": "iz4-source-unknown-z-ome-recipe-a",
+      "original_budget_owner_id": "iz2-z-ome-recipe-a",
+      "actual_case_birth": null,
+      "clock": null,
+      "status": "HOLD_UNSTARTED_INSUFFICIENT_FULL_CASE_CAMPAIGN_TIME_AND_UNESTABLISHED_INCLUSIVE_BOUNDARY",
+      "whole_case_credit": false
+    },
+    {
+      "diagnostic_execution_id": "iz4-source-unknown-z-ome-recipe-b",
+      "original_budget_owner_id": "iz2-z-ome-recipe-b",
+      "actual_case_birth": null,
+      "clock": null,
+      "status": "HOLD_UNSTARTED_INSUFFICIENT_FULL_CASE_CAMPAIGN_TIME_AND_UNESTABLISHED_INCLUSIVE_BOUNDARY",
+      "whole_case_credit": false
+    }
+  ],
+  "native_start_authority": false,
+  "clock_created": false,
+  "caps_reduced": false,
+  "pause_marked_failure": false,
+  "global_boundary": "Root explicit boundary not inferred; coordinator stays same task awaiting root closure."
+}

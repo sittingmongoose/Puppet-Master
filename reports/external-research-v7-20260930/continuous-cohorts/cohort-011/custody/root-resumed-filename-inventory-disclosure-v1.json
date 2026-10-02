@@ -1,0 +1,13 @@
+{
+  "schema": "er7.operator_filename_inventory_exposure.v1",
+  "captured_epoch": 1790899754.3484085,
+  "operation": "Filename-only inventory for historical-preservation-baseline/closeout locator",
+  "unintended_exposure": "Private-client/native pathnames appeared in inventory output",
+  "raw_file_bodies_opened": false,
+  "raw_native_receipts_or_stdout_opened": false,
+  "credentials_or_keys_opened": false,
+  "candidate_research_facts_or_rescue_answers_supplied": false,
+  "candidate_or_route_edits": false,
+  "correction": "Subsequent accesses restricted to exact named positive metadata/review/publication paths",
+  "publication": "Publish this positive disclosure only; do not publish inventory pathnames or raw private contents."
+}

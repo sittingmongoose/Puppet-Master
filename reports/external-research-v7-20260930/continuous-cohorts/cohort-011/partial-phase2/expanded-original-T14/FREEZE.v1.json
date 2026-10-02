@@ -1,0 +1,43 @@
+{
+  "schema": "er7.full_original_phase2_diagnostic_freeze.v1",
+  "status": "FROZEN_DIAGNOSTIC_ONLY",
+  "common": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/phase2-R018-R019.common-diagnostic.v1.json",
+    "sha256": "1fa1f7fd3b1f67692bd0f4fc86ddf6dbf854f145c36dfe9840d21ac0f9c89885",
+    "bytes": 367924
+  },
+  "profiles": {
+    "R018": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/R018.phase2-full-original-preservation.diagnostic.v1.json",
+      "sha256": "0cbbe6e4c50c7b2c7829838672daf9111cabdffa9ffaa52ab422c4c9b10039fe",
+      "bytes": 1707873
+    },
+    "R019": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/R019.phase2-full-original-preservation.diagnostic.v1.json",
+      "sha256": "9c474c796f8cb5f4474133ca0fd4390d49ebba330e2ef45446297f269bc9f21a",
+      "bytes": 3931158
+    }
+  },
+  "unlock_sha256": "7dc5277d476a08f0a516509ac2e356356ba052376017018a2c54b4e6c9bef654",
+  "current_freeze_sha256": "7f2f8eeb18dca045cd21a28857dfbee18b492346901363b382411ca9ea56102e",
+  "source_capture": "UNKNOWN",
+  "full_original_quality": "UNASSESSED",
+  "complete_original_semantic_coverage": "UNASSESSED",
+  "all12_seed_segments_and_actual_literal_units_retained_and_assessed": true,
+  "all_current_material_units_and_original8_conditions_retained": true,
+  "all_actual_available_version_changes_assessed": true,
+  "missing_required_source_authority_explicit": true,
+  "whole125_body_serial_reading": "PARTIAL_DISCLOSED_NOT_HASHING_OR_TRUNCATION_CREDIT",
+  "old_grade_cost_current_freezes_unchanged": true,
+  "native_execution_or_private_receipt_read": false,
+  "original_start_epoch": 1790891744.9263375,
+  "freeze_epoch": 1790899741.5535228,
+  "wall_seconds_since_original_start": 7996.62718629837,
+  "generated_tokens": "UNKNOWN",
+  "exact_cumulative_harness_responses": "UNKNOWN_NOT_EXPOSED",
+  "fixed_task_cap_seconds": 10800,
+  "fixed_response_cap": 120,
+  "protected_final_from_epoch": 1790901344.9263375,
+  "global_candidate_final_hour_from_epoch": 1790900941,
+  "reviewer_source_sha256": "31222e72ad1f785c3db6beb4fb4469b8bc086718e9acbe7ef80d9da0e9fde01e"
+}

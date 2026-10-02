@@ -1,0 +1,187 @@
+{
+  "review_id": "closed-ome-preservation-v7",
+  "helper_ordinal": 99,
+  "status": "PARTIAL_ATOMIC_SUPPORT_REVIEW_WITH_COMPLETE_AVAILABLE_ARTIFACT_AND_COMPOSITE_STATEMENT_INVENTORY",
+  "owned_phase2_scope": [
+    "R013",
+    "R014",
+    "R020",
+    "R021",
+    "R022"
+  ],
+  "excluded_owned_by_original_reader93": [
+    "R018",
+    "R019"
+  ],
+  "root_unlock": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/phase2-old-ome7-diagnostic-root-unlock-v2.json",
+    "sha256": "7dc5277d476a08f0a516509ac2e356356ba052376017018a2c54b4e6c9bef654",
+    "bytes": 1917
+  },
+  "controlling_original_current_freeze_sha256": "7f2f8eeb18dca045cd21a28857dfbee18b492346901363b382411ca9ea56102e",
+  "guide": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/phase2-independent-review-guide-v1.md",
+    "sha256": "a24dd9432901d430eb9df3527e213311507c411b8aad810000fd5ed723600a09",
+    "bytes": 5590
+  },
+  "bundle_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/phase2/closed-ome-cohort-v4/MANIFEST.json",
+    "sha256": "b57af7816940c0346d1c75c77ca55d222de20e8ecb372cc2d6bd85fd1305cf2e",
+    "bytes": 42508
+  },
+  "bundle_seal": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/phase2/closed-ome-cohort-v4/SEAL.json",
+    "sha256": "63725da100518a6cbc7eec6017067b9af1d3950ac3f72bbc26605bb16a954263",
+    "bytes": 783
+  },
+  "cases": [
+    {
+      "case_id": "R013",
+      "available_output_files": 4,
+      "admitted_input_files": 6,
+      "current_report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/phase2/closed-ome-cohort-v4/R013/frozen-current/current-report.md",
+        "sha256": "10bfa79d5a5860075b86df56757d1a97b378e06614cbcad50bcdb233ed4a011b",
+        "bytes": 24142
+      },
+      "selected_final_report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/phase2/closed-ome-cohort-v4/R013/whole-original-companion/out/report.md",
+        "sha256": "10bfa79d5a5860075b86df56757d1a97b378e06614cbcad50bcdb233ed4a011b",
+        "bytes": 24142
+      },
+      "all_selected_current_bytes_equal": true,
+      "supplied_seed_segments": "NONE_ADMITTED; APPLICABILITY_UNBOUND_UNASSESSED",
+      "source_scope": "S003_FROZEN_NORMATIVE_CAPTURE_896_LINES; IMPLEMENTATION_RESEARCH_UNAVAILABLE_IN_BOUNDED_INPUT",
+      "all_original_125_source_semantic_coverage": "UNASSESSED",
+      "expanded_original_8_criterion_completion": "UNASSESSED",
+      "semantic_acquisition": "CANDIDATE_ARTIFACT_CONTAINS_SOURCE_SUPPORTED_COMPONENTS_WITH_EXPLICIT_QUALIFICATIONS; SUPPLIED_SOURCE_NOT_NEWLY_DISCOVERED_RESEARCH",
+      "history_preservation": "AVAILABLE_DRAFT_IDENTITIES_AND_KNOWN_DIFF_ONLY; UNKNOWN_EARLIER_VERSIONS",
+      "wholecase_or_method_success": "UNASSESSED_NOT_PROMOTED"
+    },
+    {
+      "case_id": "R014",
+      "available_output_files": 6,
+      "admitted_input_files": 6,
+      "current_report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/phase2/closed-ome-cohort-v4/R014/frozen-current/current-report.md",
+        "sha256": "019a1411d13a02f0af52da097452dd3bc44622bc9263ced0d52f7a8e43d313c1",
+        "bytes": 19893
+      },
+      "selected_final_report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/phase2/closed-ome-cohort-v4/R014/whole-original-companion/out/report.md",
+        "sha256": "019a1411d13a02f0af52da097452dd3bc44622bc9263ced0d52f7a8e43d313c1",
+        "bytes": 19893
+      },
+      "all_selected_current_bytes_equal": true,
+      "supplied_seed_segments": "NONE_ADMITTED; APPLICABILITY_UNBOUND_UNASSESSED",
+      "source_scope": "S003_FROZEN_NORMATIVE_CAPTURE_896_LINES; IMPLEMENTATION_RESEARCH_UNAVAILABLE_IN_BOUNDED_INPUT",
+      "all_original_125_source_semantic_coverage": "UNASSESSED",
+      "expanded_original_8_criterion_completion": "UNASSESSED",
+      "semantic_acquisition": "CANDIDATE_ARTIFACT_CONTAINS_SOURCE_SUPPORTED_COMPONENTS_WITH_EXPLICIT_QUALIFICATIONS; SUPPLIED_SOURCE_NOT_NEWLY_DISCOVERED_RESEARCH",
+      "history_preservation": "AVAILABLE_DRAFT_IDENTITIES_AND_KNOWN_DIFF_ONLY; UNKNOWN_EARLIER_VERSIONS",
+      "wholecase_or_method_success": "UNASSESSED_NOT_PROMOTED"
+    },
+    {
+      "case_id": "R020",
+      "available_output_files": 4,
+      "admitted_input_files": 5,
+      "current_report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/phase2/closed-ome-cohort-v4/R020/frozen-current/current-report.md",
+        "sha256": "9d43cf6076ddc2aec0b9fb489a7cdb60620c8cccc3885f4d725ce437fcb7575d",
+        "bytes": 31672
+      },
+      "selected_final_report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/phase2/closed-ome-cohort-v4/R020/whole-original-companion/out/reports/V001.md",
+        "sha256": "9d43cf6076ddc2aec0b9fb489a7cdb60620c8cccc3885f4d725ce437fcb7575d",
+        "bytes": 31672
+      },
+      "all_selected_current_bytes_equal": true,
+      "supplied_seed_segments": "NONE_ADMITTED; APPLICABILITY_UNBOUND_UNASSESSED",
+      "source_scope": "S003_FROZEN_NORMATIVE_CAPTURE_896_LINES; IMPLEMENTATION_RESEARCH_UNAVAILABLE_IN_BOUNDED_INPUT",
+      "all_original_125_source_semantic_coverage": "UNASSESSED",
+      "expanded_original_8_criterion_completion": "UNASSESSED",
+      "semantic_acquisition": "CANDIDATE_ARTIFACT_CONTAINS_SOURCE_SUPPORTED_COMPONENTS_WITH_EXPLICIT_QUALIFICATIONS; SUPPLIED_SOURCE_NOT_NEWLY_DISCOVERED_RESEARCH",
+      "history_preservation": "AVAILABLE_DRAFT_IDENTITIES_AND_KNOWN_DIFF_ONLY; UNKNOWN_EARLIER_VERSIONS",
+      "wholecase_or_method_success": "UNASSESSED_NOT_PROMOTED"
+    },
+    {
+      "case_id": "R021",
+      "available_output_files": 7,
+      "admitted_input_files": 5,
+      "current_report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/phase2/closed-ome-cohort-v4/R021/frozen-current/current-report.md",
+        "sha256": "3136fd9d07ff7ff6d2edfc71ed0dcc46f90035ea01e4acee62d2476c1103d89f",
+        "bytes": 18838
+      },
+      "selected_final_report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/phase2/closed-ome-cohort-v4/R021/whole-original-companion/out/report.md",
+        "sha256": "3136fd9d07ff7ff6d2edfc71ed0dcc46f90035ea01e4acee62d2476c1103d89f",
+        "bytes": 18838
+      },
+      "all_selected_current_bytes_equal": true,
+      "supplied_seed_segments": "NONE_ADMITTED; APPLICABILITY_UNBOUND_UNASSESSED",
+      "source_scope": "S003_FROZEN_NORMATIVE_CAPTURE_896_LINES; IMPLEMENTATION_RESEARCH_UNAVAILABLE_IN_BOUNDED_INPUT",
+      "all_original_125_source_semantic_coverage": "UNASSESSED",
+      "expanded_original_8_criterion_completion": "UNASSESSED",
+      "semantic_acquisition": "CANDIDATE_ARTIFACT_CONTAINS_SOURCE_SUPPORTED_COMPONENTS_WITH_EXPLICIT_QUALIFICATIONS; SUPPLIED_SOURCE_NOT_NEWLY_DISCOVERED_RESEARCH",
+      "history_preservation": "AVAILABLE_DRAFT_IDENTITIES_AND_KNOWN_DIFF_ONLY; UNKNOWN_EARLIER_VERSIONS",
+      "wholecase_or_method_success": "UNASSESSED_NOT_PROMOTED"
+    },
+    {
+      "case_id": "R022",
+      "available_output_files": 5,
+      "admitted_input_files": 5,
+      "current_report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/phase2/closed-ome-cohort-v4/R022/frozen-current/current-report.md",
+        "sha256": "4ae4228ad305422f6cb011f8b64a261be19dfcbf29083f997cc958339a332aa5",
+        "bytes": 42039
+      },
+      "selected_final_report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/phase2/closed-ome-cohort-v4/R022/whole-original-companion/out/reports/V001.md",
+        "sha256": "4ae4228ad305422f6cb011f8b64a261be19dfcbf29083f997cc958339a332aa5",
+        "bytes": 42039
+      },
+      "all_selected_current_bytes_equal": true,
+      "supplied_seed_segments": "NONE_ADMITTED; APPLICABILITY_UNBOUND_UNASSESSED",
+      "source_scope": "S003_FROZEN_NORMATIVE_CAPTURE_896_LINES; IMPLEMENTATION_RESEARCH_UNAVAILABLE_IN_BOUNDED_INPUT",
+      "all_original_125_source_semantic_coverage": "UNASSESSED",
+      "expanded_original_8_criterion_completion": "UNASSESSED",
+      "semantic_acquisition": "CANDIDATE_ARTIFACT_CONTAINS_SOURCE_SUPPORTED_COMPONENTS_WITH_EXPLICIT_QUALIFICATIONS; SUPPLIED_SOURCE_NOT_NEWLY_DISCOVERED_RESEARCH",
+      "history_preservation": "AVAILABLE_DRAFT_IDENTITIES_AND_KNOWN_DIFF_ONLY; UNKNOWN_EARLIER_VERSIONS",
+      "wholecase_or_method_success": "UNASSESSED_NOT_PROMOTED"
+    }
+  ],
+  "available_output_file_count": 26,
+  "admitted_input_file_count": 27,
+  "complete_available_material_statement_inventory": true,
+  "complete_atomic_semantic_review": false,
+  "original_full125_source_quality": "UNASSESSED",
+  "original8_criterion_complete_coverage": "UNASSESSED_REQUIRED_MATERIAL_OBLIGATIONS_UNRESOLVED",
+  "standalone_seed_baseline": "NONE_ADMITTED_FOR_FIVE; UNBOUND_UNASSESSED; ORIGINAL12_SEGMENTS_BELONG_TO_R018_R019_OTHER_OWNER",
+  "no_assumed_numeric_grid": true,
+  "sourcecapture": "UNKNOWN",
+  "native_acquisition": "UNKNOWN",
+  "actual_method_mechanism": "UNASSESSED",
+  "tests": "PROPOSED_UNEXECUTED",
+  "older_grade_edits": false,
+  "wholecase_success_promotion": false,
+  "same_quality_efficiency_credit": false,
+  "preservation_conclusion": "Exact available draft/current reports for R014/R021 retain all text; R021 structured change is F03 punctuation. R013/R020/R022 earlier predecessor history unknown. Unsupported/inherited overclaims are not supported preservation opportunities.",
+  "limitations": [
+    "Composite report lines are retained completely but not all atomic propositions/conditions independently separated and adjudicated. All-row inventory is not an all-atom quality grade.",
+    "Only the supplied S003 bounded cases are source-grounded here. Actual implementation behavior and original expanded criteria/source-authority obligations remain unresolved.",
+    "No seed predecessor exists in admitted five-case inventories; native overwrite history unknown. Do not substitute these five cases for the two actual 12-segment seed cases.",
+    "Current-attempt costs are positive lower bounds; old capped/redo/harness/partial-review costs and complete usage unavailable, preserved as UNKNOWN.",
+    "Clock/response accounting is reviewer administrative boundary, not a candidate failure."
+  ],
+  "inventory_rows": 2267,
+  "structured_full_findings": 14,
+  "response_boundary": "FINALIZATION_AT_CONSERVATIVE_RESPONSE_EVENT_ALLOWANCE; NO_WALL_CLOCK_RESET",
+  "all_report_heading_contexts_retained": true,
+  "costs_prior_complete_projection": "STAGER_CONFIRMED_UNAVAILABLE_UNKNOWN_NOT_ZERO",
+  "freeze_epoch": 1790899585.8721378,
+  "frozen_status": "HONEST_PARTIAL_ATOMIC_SOURCE_SUPPORT_REVIEW; COMPLETE_COMPOSITE_AND_ARTIFACT_INVENTORY",
+  "no_further_work_under_this_response_allowance": true,
+  "clock_file": "clock-accounting.json",
+  "validation_file": "review-validation.json"
+}

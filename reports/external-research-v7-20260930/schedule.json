@@ -1,6 +1,6 @@
 {
   "as_of_utc": "2026-09-30T16:24:47.383306+00:00",
-  "status": "ACTIVE user-authorized extension; Z exact rolling queue, M/L held",
+  "status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
   "deadline_epoch": 1790904541,
   "deadline_utc": "2026-10-02T01:29:01+00:00",
   "max_simultaneous_helpers": 23,
@@ -95,7 +95,7 @@
   "requires_explicit_user_resume": false,
   "pause_receipt": "second-pause/operator-pause.json",
   "native_canary_independent_qualification": "historical passed; exact host/context route accepted; perproductiveattempt verification required",
-  "publication_status": "ACTIVE user-authorized extension; Z exact rolling queue, M/L held",
+  "publication_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
   "original_wall_deadline_epoch": 1790820406,
   "deadline_edt": "2026-10-01T21:29:01-04:00",
   "extension_authority": "work-clock-extension/authority.json",
@@ -140,5 +140,20 @@
   "snapshot_is_live_current": false,
   "helper_extension_authority": "continuous-cohorts/cohort-004/helper-authority.json",
   "native_inclusive_cap_verification": "UNESTABLISHED source-only8403cbcf review; no actual native qualification credit",
-  "helper100_extension_authority": "continuous-cohorts/cohort-010/helper100-authority.json"
+  "helper100_extension_authority": "continuous-cohorts/cohort-010/helper100-authority.json",
+  "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00",
+  "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+  "global_execution_boundary": "continuous-cohorts/cohort-011/boundary/global-execution-boundary.json",
+  "candidate_admissions_closed": true,
+  "global_deadline_elapsed": false,
+  "source_key_retirement_authorized": false,
+  "counted_launch_admissions": 53,
+  "known_native_goal_starts": 49,
+  "occupied_slot_seconds_as_of_snapshot": 37984.16749429703,
+  "reported_candidate_output_tokens_lower_bound": 1677375,
+  "known_helper_starts": 100,
+  "unknown_usage_is_not_zero": true,
+  "qualified_recipe": null,
+  "integrated_actual_executions": 0,
+  "historical_fields_notice": "Earlier dated route/hold/usage observations are history; current boundary and counters are explicit current_edition fields"
 }

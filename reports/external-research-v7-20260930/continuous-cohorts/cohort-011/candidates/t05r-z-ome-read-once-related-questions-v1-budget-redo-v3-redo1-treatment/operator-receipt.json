@@ -1,0 +1,21 @@
+{
+  "epoch": 1790898787.7969348,
+  "label": "t05r-z-ome-read-once-related-questions-v1-budget-redo-v3-redo1-treatment",
+  "status": "frozen-for-independent-evaluation",
+  "native_goal_status": "complete",
+  "output_integrity_sha256": "e2a705226749e14954aa68ff7e31bb2ccf2bdcd80d3ab965144592e77fb5fbdd",
+  "accounting": {
+    "candidate_admissions": 53,
+    "occupied_slot_seconds": 37984.16749429703,
+    "remaining_committed_slot_seconds": 0,
+    "reported_generated_tokens_lower_bound": 1677375,
+    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "active_by_family": {
+      "M": 0,
+      "Z": 0,
+      "L": 0
+    },
+    "overdue_jobs": [],
+    "active_jobs": []
+  }
+}

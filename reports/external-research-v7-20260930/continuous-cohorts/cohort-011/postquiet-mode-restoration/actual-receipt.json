@@ -1,0 +1,92 @@
+{
+  "schema": "er7.exact.postquiet.input_mode_restoration.v1",
+  "epoch": 1790898692.411721,
+  "label": "t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-treatment-structural-repeat1-abi-repair1",
+  "acceptance_sha256": "8ca31094f082f4a7f23d37ddcdc4c8914454fff85796409dddd1a7d271595290",
+  "method_config_sha256": "ec9271d5fbfa227fd1a1ddc1521bcc2b7a5f636b31efe16cc97076ec4b83cbd0",
+  "only_five_declared_inputs_changed_modes": true,
+  "records": [
+    {
+      "target": "brief.md",
+      "dev": 64512,
+      "ino": 19924400,
+      "uid": 1000,
+      "nlink": 1,
+      "bytes": 905,
+      "sha256_before": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "mode_before": "0o664",
+      "expected_mode_after": "0o400",
+      "mode_after": "0o400",
+      "sha256_after": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "fd_and_path_identity_stable": true
+    },
+    {
+      "target": "TASK.md",
+      "dev": 64512,
+      "ino": 19924580,
+      "uid": 1000,
+      "nlink": 1,
+      "bytes": 1367,
+      "sha256_before": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9",
+      "mode_before": "0o664",
+      "expected_mode_after": "0o400",
+      "mode_after": "0o400",
+      "sha256_after": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9",
+      "fd_and_path_identity_stable": true
+    },
+    {
+      "target": "catalog.json",
+      "dev": 64512,
+      "ino": 19924401,
+      "uid": 1000,
+      "nlink": 1,
+      "bytes": 1563,
+      "sha256_before": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+      "mode_before": "0o664",
+      "expected_mode_after": "0o400",
+      "mode_after": "0o400",
+      "sha256_after": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+      "fd_and_path_identity_stable": true
+    },
+    {
+      "target": "sources/S003.txt",
+      "dev": 64512,
+      "ino": 19924399,
+      "uid": 1000,
+      "nlink": 1,
+      "bytes": 36980,
+      "sha256_before": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "mode_before": "0o664",
+      "expected_mode_after": "0o400",
+      "mode_after": "0o400",
+      "sha256_after": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "fd_and_path_identity_stable": true
+    },
+    {
+      "target": "plan/Viewer.md",
+      "dev": 64512,
+      "ino": 19924403,
+      "uid": 1000,
+      "nlink": 1,
+      "bytes": 1498,
+      "sha256_before": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "mode_before": "0o664",
+      "expected_mode_after": "0o400",
+      "mode_after": "0o400",
+      "sha256_after": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "fd_and_path_identity_stable": true
+    }
+  ],
+  "all_known_owned_groups_absent_before_and_after": [
+    "2148718",
+    "2148722",
+    "2148708"
+  ],
+  "output_integrity_and_outmap_unchanged": true,
+  "task_goal_config_closure_runtime_and_candidate_bytes_unchanged": true,
+  "native_completed_inventory_context_qualified": true,
+  "elapsed_restoration_proof_seconds": 0.851073550991714,
+  "release_to_restoration_elapsed_seconds": 1056.7118792533875,
+  "prior_whole_failure_cost_retained": true,
+  "control_unqualified_modes_untouched": true
+}

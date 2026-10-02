@@ -1,0 +1,142 @@
+{
+  "schema": "er7.postquiet.input_mode_restoration.source_acceptance.v1",
+  "decision": "accepted_exact_declared_postquiet_mode_restoration_procedure_only",
+  "scope": "Completed exact T03 treatment ABI-repair1; five cfg-pinned input files only. Sole operator must perform all actual qualification/quiescence and prospective procedure checks. Reviewer changes only owned synthetic fixture files; no actual input chmod, native raw receipt or candidate output body read.",
+  "method_config_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t03-structural-repeat1-abi-repair1-v1/treatment.method-config.json",
+  "method_config_sha256": "ec9271d5fbfa227fd1a1ddc1521bcc2b7a5f636b31efe16cc97076ec4b83cbd0",
+  "prior_config_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t03-structural-repeat1-v1/treatment.method-config.json",
+  "prior_config_sha256": "99d48c8afbe314d08d2d9624bdac6570c619173255e4726cd46376ed1f229154",
+  "whole_delivery_source_sha256": "65ad3579038e5c9adbabd12a578def056f40b9e1f7ce31f6e14d112dff64d930",
+  "output_integrity_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-treatment-structural-repeat1-abi-repair1/output-integrity.json",
+  "output_integrity_sha256": "1b9efc969f7a07931d51f90c662b9f60d4e77e8987c40cfb1c64d1da419d619c",
+  "preflight_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-treatment-structural-repeat1-abi-repair1/preflight.json",
+  "preflight_sha256": "d73b8811b2e6d7efa988bebca121e3c7e197c474012baa8fe7cc1d65d1bf995d",
+  "positive_integrity_metadata": {
+    "label": "t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-treatment-structural-repeat1-abi-repair1",
+    "native_quiescent": true,
+    "future_native_context": "qualified",
+    "native_outcome": "passed",
+    "inventory_verified": true,
+    "own_driver_pgid": 2148708,
+    "only_known_driver_group_absent_observed": true,
+    "all_other_native_groups_actual_independent_proof": "Root/operator responsibility; not read or inferred here"
+  },
+  "observed_five_targets": [
+    {
+      "target": "brief.md",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t03-structural-repeat1-abi-repair1-v1/treatment/workspace/inputs/brief.md",
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "bytes": 905,
+      "current_mode": "0o664",
+      "exact_prior_mode": "0o400",
+      "dev": 64512,
+      "ino": 19924400,
+      "uid": 1000,
+      "nlink": 1,
+      "prior_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t03-structural-repeat1-v1/treatment/workspace/inputs/brief.md"
+    },
+    {
+      "target": "TASK.md",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t03-structural-repeat1-abi-repair1-v1/treatment/workspace/inputs/TASK.md",
+      "sha256": "b0d394c4ed15a2ac8a3c30a7242b289d095d2cd342f93ae3e11f893b3fc56bd9",
+      "bytes": 1367,
+      "current_mode": "0o664",
+      "exact_prior_mode": "0o400",
+      "dev": 64512,
+      "ino": 19924580,
+      "uid": 1000,
+      "nlink": 1,
+      "prior_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t03-structural-repeat1-v1/treatment/workspace/inputs/TASK.md"
+    },
+    {
+      "target": "catalog.json",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t03-structural-repeat1-abi-repair1-v1/treatment/workspace/inputs/catalog.json",
+      "sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+      "bytes": 1563,
+      "current_mode": "0o664",
+      "exact_prior_mode": "0o400",
+      "dev": 64512,
+      "ino": 19924401,
+      "uid": 1000,
+      "nlink": 1,
+      "prior_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t03-structural-repeat1-v1/treatment/workspace/inputs/catalog.json"
+    },
+    {
+      "target": "sources/S003.txt",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t03-structural-repeat1-abi-repair1-v1/treatment/workspace/inputs/sources/S003.txt",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 36980,
+      "current_mode": "0o664",
+      "exact_prior_mode": "0o400",
+      "dev": 64512,
+      "ino": 19924399,
+      "uid": 1000,
+      "nlink": 1,
+      "prior_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t03-structural-repeat1-v1/treatment/workspace/inputs/sources/S003.txt"
+    },
+    {
+      "target": "plan/Viewer.md",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t03-structural-repeat1-abi-repair1-v1/treatment/workspace/inputs/plan/Viewer.md",
+      "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "bytes": 1498,
+      "current_mode": "0o664",
+      "exact_prior_mode": "0o400",
+      "dev": 64512,
+      "ino": 19924403,
+      "uid": 1000,
+      "nlink": 1,
+      "prior_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t03-structural-repeat1-v1/treatment/workspace/inputs/plan/Viewer.md"
+    }
+  ],
+  "tests": [
+    {
+      "target": "brief.md",
+      "write_enabled_rejected_then_exact_prior_readonly_accepted": true,
+      "bytes_unchanged": true
+    },
+    {
+      "target": "TASK.md",
+      "write_enabled_rejected_then_exact_prior_readonly_accepted": true,
+      "bytes_unchanged": true
+    },
+    {
+      "target": "catalog.json",
+      "write_enabled_rejected_then_exact_prior_readonly_accepted": true,
+      "bytes_unchanged": true
+    },
+    {
+      "target": "sources/S003.txt",
+      "write_enabled_rejected_then_exact_prior_readonly_accepted": true,
+      "bytes_unchanged": true
+    },
+    {
+      "target": "plan/Viewer.md",
+      "write_enabled_rejected_then_exact_prior_readonly_accepted": true,
+      "bytes_unchanged": true
+    },
+    {
+      "unsafe_symlink_rejected": true
+    },
+    {
+      "multiply_linked_rejected": true
+    }
+  ],
+  "required_sole_operator_procedure": [
+    "Reauthenticate exact config/preflight/output-integrity pins and completed qualified same attempt; no active control/unqualified Goal.",
+    "Reprove absence of ALL previously registered OWN driver/native/guard groups from qualified native proof before any restoration; no broad enumeration or inferred native quiet from only driver absence.",
+    "Require each positively cfg-declared target and every ancestor regular/nonlink path, file nlink1/expected owner/identity; exact byte SHA+size match cfg and exact prior immutable mode400; full input map exactly five targets.",
+    "Open each existing target with O_NOFOLLOW, fstat identity(dev/ino/uid/nlink/type) and expected SHA; fchmod only to exact prior400 mode, verify same FD bytes/identity/mode afterward and current path still same file; fail held on drift.",
+    "Reauthenticate unchanged output-integrity and complete output byte map, unchanged config/Goal/TASK/runtime/caps/output requirements; reprove ALL known owned native group absences after restoration. Do not mutate output/source bytes, renderer or candidate semantics.",
+    "Retain failed whole-v3 .927097s attempt and all prior costs/failures; invoke unchanged whole-v3 into a new exclusive companion/delivery/receipt destination; charge restoration, proof checks, copy/renderer/writes separately. Required current invalid remains rejected; no skip/threshold weakening."
+  ],
+  "source_predicate": "safe immutable rejects ANYwrite bit; exact400 prior mode satisfies unchanged predicate. This is host filesystem metadata restoration after completed/qualified quiescence, not research/content correction or permission to launch.",
+  "actual_native_qualification_by_reviewer": false,
+  "actual_native_raw_receipt_reads": 0,
+  "actual_candidate_output_body_reads": 0,
+  "actual_targets_modified_by_reviewer": 0,
+  "earlier_costs_failure_preserved": true,
+  "epoch": 1790898477.989494,
+  "original_task_start_epoch": 1790891744.9263375,
+  "generated_tokens": "UNKNOWN",
+  "exact_harness_responses": "UNKNOWN_NOT_EXPOSED"
+}

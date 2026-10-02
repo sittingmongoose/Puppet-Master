@@ -1,0 +1,128 @@
+{
+  "schema": "independent_phase2_immutable_review_receipt.v1",
+  "whole_reviewed_ids": [
+    "R028",
+    "R029",
+    "R030",
+    "R031"
+  ],
+  "reviewer": "/root/repo_acquisition_preservation_v7",
+  "helper_ordinal": 97,
+  "freeze_epoch": 1790900218.4845238,
+  "root_unlock_sha256": "aac248044932db7940fbe7a664250764cfc9a96aabc90c3b587fe981a2631eb1",
+  "base_seal_sha256": "81c43ac504acd56c68b719806168acebaa14cae6cdf8bc6633c77560c1534712",
+  "base_manifest_sha256": "f781edf22ebf7f667e82b38fe4446d85081a5ec07fd409c3b0d24e53f34eff3e",
+  "metrics_addendum_sha256": "94ec8537fd8cc6e01c56512cab6e575b257c5e205466da47f821484e8303f9b7",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-acquisition-preservation-v7/assertion-tables.md",
+      "sha256": "68cabb62f3ab96c21d36eedfd6ee54b77eac61c70661e26a23bc28059840519f",
+      "bytes": 1272308
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-acquisition-preservation-v7/build_review.py",
+      "sha256": "18162e6fa1cb3f2850f7973a5fddf0588959ec947bf5afde9686d03c1883e049",
+      "bytes": 92994
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-acquisition-preservation-v7/clock.json",
+      "sha256": "c211e31057eb61a70932289e88d441f9a5c516420e295a5409332c51278612bc",
+      "bytes": 1424
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-acquisition-preservation-v7/condition-decisions.json",
+      "sha256": "9aa0911759e6be3e62e7eeddeb53b872e0a9e966039c186e1192158dcc2e9e40",
+      "bytes": 118348
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-acquisition-preservation-v7/exact-history-diffs.json",
+      "sha256": "4fee8b17743b748cd9685d19d8fe9feee9059e8d0ccb1a93de96f10e7f578c0d",
+      "bytes": 103226
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-acquisition-preservation-v7/final-validation.json",
+      "sha256": "1dde07cf6d5b57c4242db269960efe4eb29c9c17172be0ef9213fe221b954f88",
+      "bytes": 1872
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-acquisition-preservation-v7/finalize_review.py",
+      "sha256": "8eb7ace05e00514af6af543eebf1048ba5540684894bc37bedb5993a7749d9ed",
+      "bytes": 21115
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-acquisition-preservation-v7/integrity-check.json",
+      "sha256": "0f31421e82046ff114b778693ebfd5a4e0f40c16259743b3ec242689ebcea088",
+      "bytes": 668
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-acquisition-preservation-v7/material-adjudications.json",
+      "sha256": "e7fe9eb46015e0be3803efa7a9eb2fc2e6c383f6a0b363f0b455514537fe1101",
+      "bytes": 831759
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-acquisition-preservation-v7/review.json",
+      "sha256": "a3dbbe4fb65b18180deb7b194c2257846d8599d0b73cef1143a4e4f37c501472",
+      "bytes": 8501358
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-acquisition-preservation-v7/review.md",
+      "sha256": "5ed2738e2cdbe06760bb0df82c0469b176a32375089e13262ecdfce29c01868a",
+      "bytes": 56790
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-acquisition-preservation-v7/source-scope-pre-output.json",
+      "sha256": "bbdbea3f4f2795194361cc5d27106b515760ca06b2b11dbc947af17956921f2c",
+      "bytes": 13062
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-acquisition-preservation-v7/validate_and_freeze.py",
+      "sha256": "c6df3fa7fef0106ab04f82c6a11b222493f80488209427cdaeb201d4c113d9c2",
+      "bytes": 8337
+    }
+  ],
+  "counts": {
+    "all_available_output_versions": 31,
+    "assertion_line_or_primitive_field_rows": 4281,
+    "actual_top_level_records": 652,
+    "available_transition_rows": 401,
+    "original_derived_criterion_rows": 56,
+    "original_opportunity_rows": 24,
+    "independent_primary_context_pin_rows": 60,
+    "source_supported_component_rows": 92,
+    "current_material_line_adjudication_rows": 331
+  },
+  "all_exact_current_reports_unchanged": true,
+  "all_available_history_authentication_complete": true,
+  "source_capture": "UNKNOWN",
+  "old_current_grades_unchanged": true,
+  "no_recipe_or_semantic_efficiency_success": true,
+  "original_clock": {
+    "task": "repo-acquisition-preservation-v7",
+    "helper_ordinal": 97,
+    "start_epoch": 1790897690.0416684,
+    "original_deadline_epoch": 1790903090.0416684,
+    "finalization_reserve_starts_epoch": 1790901890.0416684,
+    "global_deadline_epoch": 1790904541,
+    "response_event_limit": 120,
+    "response_event_count_at_record": 2,
+    "input_cache_reasoning_usage": "UNKNOWN",
+    "guide_sha256": "a24dd9432901d430eb9df3527e213311507c411b8aad810000fd5ed723600a09",
+    "conservative_event_charge_at_checkpoint": 90,
+    "event_count_basis": "Conservative upper accounting including pre-compaction estimate; exact unexposed harness count UNKNOWN. Finalization must fit remaining 30 charged events.",
+    "checkpoint_epoch": 1790898773.3171852,
+    "freeze_generation_epoch": 1790899609.7068503,
+    "conservative_response_event_charge_reserved_through_final": 116,
+    "budget_rule": "All further validation/freeze/root reporting fits final reserved charged events; exact harness model/tool count unexposed. Original clock never reset.",
+    "evaluation_input_output_cache_reasoning_tokens": "UNKNOWN",
+    "clock_limit_candidate_failure": false,
+    "freeze_finalization_epoch": 1790899977.305376,
+    "finished_epoch": 1790900218.4845238,
+    "elapsed_inclusive_seconds": 2528.442855358124,
+    "remaining_original_seconds_at_freeze": 2871.557144641876,
+    "original_deadline_observed": true,
+    "finalization_started_before_reserved_last20_minutes": true
+  },
+  "private_native_provider_modelIO_read": false,
+  "publication_authority": "root only",
+  "freeze_rule": "All owned review files sealed by exact SHA-256 and made read-only; receipt is final additive evaluation, never candidate rescue or grade rewrite."
+}

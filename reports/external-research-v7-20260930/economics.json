@@ -3,8 +3,8 @@
   "counted_launch_admissions": 53,
   "known_native_goal_starts": 49,
   "pre_goal_failures": 4,
-  "occupied_slot_seconds_as_of_snapshot": 37930.71948885918,
-  "reported_candidate_output_tokens_lower_bound": 1646504,
+  "occupied_slot_seconds_as_of_snapshot": 37984.16749429703,
+  "reported_candidate_output_tokens_lower_bound": 1677375,
   "generated_output_completeness": "unknown; all figures partial, native children/cancellation/unexposed fields retained unknown",
   "parent_sol_usage": "includes input; generated component unknown",
   "helper_generated_tokens": null,
@@ -25,7 +25,7 @@
     "quality": "both quality failure; treatment lower elapsed observed, no same-quality speedup claim",
     "current_summary": "reviews/R003-R004-current-only-summary.json"
   },
-  "as_of_utc": "2026-10-01T23:52:14.347828+00:00",
+  "as_of_utc": "2026-10-02T00:25:57.058845+00:00",
   "same_quality_efficiency_claim": false,
   "new_terminal_attempt_metrics": "cohort-evidence/terminal-attempts.json",
   "post_snapshot_final_hold_accounting": {
@@ -122,7 +122,7 @@
     "reported_candidate_output_tokens_lower_bound": 297249,
     "as_of_utc": "2026-09-30T16:24:47.383306+00:00"
   },
-  "publication_status": "ACTIVE explicit work-clock extension; totals unchanged",
+  "publication_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
   "administrative_closeout_as_of_utc": "2026-10-01T17:29:11.818480+00:00",
   "extension_authority": "work-clock-extension/authority.json",
   "known_conservative_helper_task_start_events": 100,
@@ -370,5 +370,22 @@
     "reserve_starts_at_least": 19,
     "uncommitted_slot_seconds_remaining": 133960.9518043995,
     "reserve_slot_seconds_at_least": 26792.1903608799
-  }
+  },
+  "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00",
+  "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+  "global_execution_boundary": "continuous-cohorts/cohort-011/boundary/global-execution-boundary.json",
+  "status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+  "candidate_admissions_closed": true,
+  "global_deadline_elapsed": false,
+  "source_key_retirement_authorized": false,
+  "known_helper_starts": 100,
+  "helper_start_ceiling": 100,
+  "qualified_recipe": null,
+  "integrated_actual_executions": 0,
+  "cost_authority": "continuous-cohorts/cohort-011/accounting/publisher-cost-freeze-v1.json",
+  "postquiet_delivery_hold_seconds": 1056.711879,
+  "postquiet_hold_accounting": "End-to-end/delivery time, not occupied slots after quiescence; overlapping intervals not summed",
+  "pre_native_slot_seconds": 756.9323682785034,
+  "phase2_tokens": "Normative/discovery total9788512 input/cache-inclusive, not generated output; cache overlaps input",
+  "exact_total_setup_render_evaluation_management_money": "UNKNOWN"
 }

@@ -1,0 +1,44 @@
+{
+  "schema": "er7.operator_final_quiet_closeout.v1",
+  "operator": "codex-er7-ops",
+  "observed_epoch": 1790900846.3831685,
+  "observed_utc": "2026-10-02T00:27:26.383168+00:00",
+  "root_boundary": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/root-global-execution-boundary-v1.json",
+    "sha256": "4f15f3d0e57f8e998df31147cc59590ecfb2eff91120ae87e7f141851eac84b8"
+  },
+  "accounting": {
+    "candidate_admissions": 53,
+    "occupied_slot_seconds": 37984.16749429703,
+    "remaining_committed_slot_seconds": 0,
+    "reported_generated_tokens_lower_bound": 1677375,
+    "generated_token_completeness": "unknown; omitted native children/cancellation meters remain unknown",
+    "active_by_family": {
+      "M": 0,
+      "Z": 0,
+      "L": 0
+    },
+    "overdue_jobs": [],
+    "active_jobs": []
+  },
+  "observed_actual_native_goal_total": 49,
+  "owned_z_admissions": 38,
+  "all_owned_leases_released": true,
+  "known_owned_pid_count": 71,
+  "known_owned_pid_present": [],
+  "candidate_admissions_closed": true,
+  "management_monitor_closed": true,
+  "unstarted_hold_count": 23,
+  "unstarted_holds_are_candidate_failures": false,
+  "user_pauses_are_candidate_failures": false,
+  "unknown_usage_remains_unknown": true,
+  "scope": "Scalar registry/PID metadata only; no native, sibling, installed-system or candidate-output change. Final publication/read-only delivery remains root-owned.",
+  "audit": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/final-unadmitted-readyqueue-audit-v1.json",
+    "sha256": "814ee6ac4f6a4f8d9d3933286ada2e3e482ef880ead83485bc6b5125dda4c4de"
+  },
+  "prior_quiet": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/final-unadmitted-readyqueue-fresh-quiet-v1.json",
+    "sha256": "6d248a262794783d10a942b158b1dbeb72c09d95d070c7d6da8488dca66c056a"
+  }
+}

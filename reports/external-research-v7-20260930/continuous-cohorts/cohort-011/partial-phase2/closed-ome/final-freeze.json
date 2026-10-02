@@ -1,0 +1,163 @@
+{
+  "schema": "er7.independent_closed_ome_diagnostic_review_freeze.v1",
+  "review_id": "closed-ome-preservation-v7",
+  "helper_ordinal": 99,
+  "scope": [
+    "R013",
+    "R014",
+    "R020",
+    "R021",
+    "R022"
+  ],
+  "r018_r019_owner": "/root/full_preservation_review_v6 original reader93",
+  "status": "PARTIAL_ATOMIC_SOURCE_SUPPORT_REVIEW_WITH_COMPLETE_AVAILABLE_ARTIFACT_AND_COMPOSITE_MATERIAL_INVENTORY",
+  "freeze_epoch": 1790899585.8721378,
+  "freeze_utc": "2026-10-02T00:06:25.872138+00:00",
+  "original_start_epoch": 1790897772,
+  "original_deadline_epoch": 1790903172,
+  "campaign_deadline_epoch": 1790904541,
+  "clock_reset": false,
+  "response_upper_bound_through_final": 120,
+  "entry_count": 21,
+  "entries_canonical_json_sha256": "5a41d50aed998f7f8f6403bca22b91a24e3170c00c637be82ba12e9c923bec40",
+  "entries": [
+    {
+      "file": "all-available-artifact-transitions.json",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/closed-ome-preservation-v7/all-available-artifact-transitions.json",
+      "sha256": "fe4c9843b0e10559971668a5df1dd5e8467e52d6c0ee356feed2b8a7df9201b0",
+      "bytes": 22543
+    },
+    {
+      "file": "all-material-statement-units.json",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/closed-ome-preservation-v7/all-material-statement-units.json",
+      "sha256": "7bf06074e5e4aa75b2a14680d3b23699a4a698281a33601852a06078b2837123",
+      "bytes": 2357520
+    },
+    {
+      "file": "clock-accounting.json",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/closed-ome-preservation-v7/clock-accounting.json",
+      "sha256": "39b65f0d680bdd20e3158afa8d37c3d969d848d17682ae9800e64b864e5f1579",
+      "bytes": 2456
+    },
+    {
+      "file": "evidence-pins.json",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/closed-ome-preservation-v7/evidence-pins.json",
+      "sha256": "88c80958775036f908f9d4a71e292480f334cb06cd5d00b13daf10ff409e2ad6",
+      "bytes": 41974
+    },
+    {
+      "file": "five-case-diagnostic-review.json",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/closed-ome-preservation-v7/five-case-diagnostic-review.json",
+      "sha256": "786ea2b032b93e737cc449dd4f40194972498196de8d2458093ea2f2ebbc95b7",
+      "bytes": 11165
+    },
+    {
+      "file": "five-case-diagnostic-review.md",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/closed-ome-preservation-v7/five-case-diagnostic-review.md",
+      "sha256": "a408d2618aa9b6e75b71b718d0bf8e77f2268ad9cc9639e077d4e2f99a37947b",
+      "bytes": 545485
+    },
+    {
+      "file": "governing-source-contexts.json",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/closed-ome-preservation-v7/governing-source-contexts.json",
+      "sha256": "1504ef0f428aa8c650b557f877dd5534e3e04e882eed109c2ed0b904bba53903",
+      "bytes": 50674
+    },
+    {
+      "file": "inclusive-costs.json",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/closed-ome-preservation-v7/inclusive-costs.json",
+      "sha256": "c79c6287ae918d0b666629bf3700f3156e743d656c7760c6f2c63486e875a843",
+      "bytes": 14516
+    },
+    {
+      "file": "mechanical-artifact-fidelity.json",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/closed-ome-preservation-v7/mechanical-artifact-fidelity.json",
+      "sha256": "477777f1f370f783968ab9727b185d207d368f1590954551ca378a202a9c986a",
+      "bytes": 6466
+    },
+    {
+      "file": "native-dimensions.json",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/closed-ome-preservation-v7/native-dimensions.json",
+      "sha256": "961f4d4186e4e9f2efbd76a9b32b581e2cf19a26f4fab7b4220481d58d1e7378",
+      "bytes": 22674
+    },
+    {
+      "file": "owned-phase2-metadata-pins.json",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/closed-ome-preservation-v7/owned-phase2-metadata-pins.json",
+      "sha256": "5494a4024280e1e20c2936b781150fb2bc1300b1ce91dbe1e00f789b48cbd945",
+      "bytes": 2423
+    },
+    {
+      "file": "phase2-bundle-authentication.json",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/closed-ome-preservation-v7/phase2-bundle-authentication.json",
+      "sha256": "2e9df9e44a7889ead22789b3884902a0f0e391936de09a6657d11d96cb891384",
+      "bytes": 165101
+    },
+    {
+      "file": "phase2-unlock-authentication.json",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/closed-ome-preservation-v7/phase2-unlock-authentication.json",
+      "sha256": "a130a62afefc95033deda6ccd620864c167aaa61ee37656c65f1d43707c8b51a",
+      "bytes": 2297
+    },
+    {
+      "file": "r021-all-structured-findings-transitions.json",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/closed-ome-preservation-v7/r021-all-structured-findings-transitions.json",
+      "sha256": "7e6a98dec45c6bb508cfeb9dfd3572724da2055dce7ba41b9eb9244a36c89271",
+      "bytes": 105469
+    },
+    {
+      "file": "r022-finding-index-diagnostic.json",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/closed-ome-preservation-v7/r022-finding-index-diagnostic.json",
+      "sha256": "a29f522ce907b238ec5d6f8e92506b52fbce80b39e6d75c95b4c2cfa8d760762",
+      "bytes": 21914
+    },
+    {
+      "file": "review-validation.json",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/closed-ome-preservation-v7/review-validation.json",
+      "sha256": "79641e35f6c54e9285bce297ae79b42ab1beafc1c4580c7539b2acdfa681c3a5",
+      "bytes": 985
+    },
+    {
+      "file": "source-grounding-preparation.json",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/closed-ome-preservation-v7/source-grounding-preparation.json",
+      "sha256": "d01fea49a0b18cb4e5b775400e19ba1152df763ecdccaf4f7f9542da51ac5481",
+      "bytes": 14259
+    },
+    {
+      "file": "source-grounding-preparation.md",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/closed-ome-preservation-v7/source-grounding-preparation.md",
+      "sha256": "a7e35cf2b23551f7e75aabc102863fe7aeab5c51c190d20caa78713081c4c3fd",
+      "bytes": 5837
+    },
+    {
+      "file": "source-only-authentication.json",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/closed-ome-preservation-v7/source-only-authentication.json",
+      "sha256": "0e580f12c01fd1410d396af363b2205365ab25bf103ebdc3c2272ed8bcdd5a0b",
+      "bytes": 369
+    },
+    {
+      "file": "source-only-input-pins.json",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/closed-ome-preservation-v7/source-only-input-pins.json",
+      "sha256": "ecc967cc77188d1331efa4208832ef45eb5513ec0357d1b21e2480e01db08f93",
+      "bytes": 93607
+    },
+    {
+      "file": "source-only-short-capture-notes.json",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/closed-ome-preservation-v7/source-only-short-capture-notes.json",
+      "sha256": "bad08f9e7645f0fc0fe196c22e949cffed263307a45181e1bf30901a23e3b042",
+      "bytes": 8464
+    }
+  ],
+  "semantic_completion_from_hashes": false,
+  "current_grades_changed": false,
+  "native_goals_started": false,
+  "raw_native_private_provider_modelio_read": false,
+  "candidate_artifacts_changed": false,
+  "sourcecapture": "UNKNOWN",
+  "all_prior_capped_redo_harness_partial_review_costs": "UNKNOWN_STAGER_CONFIRMED_NO_COMPLETE_POSITIVE_PROJECTION",
+  "seed_baseline_for_five": "NONE_ADMITTED_UNBOUND_UNASSESSED; ORIGINAL12_SEGMENTS_ONLY_R018_R019",
+  "native_acquisition_and_method_mechanism": "UNKNOWN_UNASSESSED",
+  "wholecase_or_samequality_win": "NOT_AUTHORIZED",
+  "quality_assertion": "FULL_ORIGINAL_125_SOURCE_8_CRITERION_QUALITY_AND_COMPLETE_ATOMIC_COVERAGE_UNASSESSED",
+  "validation_errors": []
+}

@@ -1,0 +1,114 @@
+{
+  "schema": "er7.phase2_review_exact_freeze.v1",
+  "helper_ordinal": 98,
+  "cohort": [
+    "R023",
+    "R024",
+    "R025",
+    "R026",
+    "R027",
+    "R032",
+    "R033"
+  ],
+  "frozen_at_utc": "2026-10-02T00:05:56.172899+00:00",
+  "status": "INCOMPLETE",
+  "all_current_rows_included": true,
+  "whole_cohort_source_history_semantic_review_complete": false,
+  "original_grades_unchanged": true,
+  "sourcecapture_all": "UNKNOWN",
+  "native_operation_observation_all": "UNKNOWN",
+  "guide_sha256": "a24dd9432901d430eb9df3527e213311507c411b8aad810000fd5ed723600a09",
+  "root_unlock_sha256": "f8aeed5f2c03295d6e82f1a88c889bd062ae876172f3cd32dfd70808ee69d22d",
+  "input_manifest_checks": [
+    {
+      "bundle": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/phase2/closed-normative-discovery-cohort-v7",
+      "manifest": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/phase2/closed-normative-discovery-cohort-v7/MANIFEST.json",
+        "sha256": "e2a10923720c24f06ae65eb0a8bc3868a8f57f9f2916d532eae0931481be7670",
+        "bytes": 27776
+      },
+      "files_reauthenticated": 233,
+      "all_pins_match": true
+    },
+    {
+      "bundle": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/phase2/closed-normative-discovery-cohort-v7-bindings-addendum-v1",
+      "manifest": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/phase2/closed-normative-discovery-cohort-v7-bindings-addendum-v1/MANIFEST.json",
+        "sha256": "f023e514668a67d726e2ade75874ca2bc15292d1deb97d32819f7fd260af2d1e",
+        "bytes": 2191
+      },
+      "files_reauthenticated": 19,
+      "all_pins_match": true
+    },
+    {
+      "bundle": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/phase2/closed-normative-discovery-cohort-v7-evaluator-primary-addendum-v1",
+      "manifest": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/phase2/closed-normative-discovery-cohort-v7-evaluator-primary-addendum-v1/MANIFEST.json",
+        "sha256": "4a9372828eeba41ffd6876fae679b8ec24ed936b340a6d81b1f8c225dc62d551",
+        "bytes": 8322
+      },
+      "files_reauthenticated": 92,
+      "all_pins_match": true
+    }
+  ],
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/normative-discovery-preservation-v7/R024-current-history-exact.diff",
+      "sha256": "9af123207f134f2381eceb5f64674c1e0e330c2f03f81a7b1eb470d55a4bf10e",
+      "bytes": 3597
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/normative-discovery-preservation-v7/assessment.json",
+      "sha256": "0affe44d855eaaa4978ec11aba06e54b2b6f3ee305839a1040e8e6f686eb04ae",
+      "bytes": 8100568
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/normative-discovery-preservation-v7/assessment.md",
+      "sha256": "eddfb6e6f0924c85a3c6d47bd9f5addea03b079501cdf96428aacb15274f63ff",
+      "bytes": 272713
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/normative-discovery-preservation-v7/intake-receipt.json",
+      "sha256": "5e5869f550dce2403fbf86b0104fb538ff7d93a96bfc7720a0c533bb269f2b6a",
+      "bytes": 102742
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/normative-discovery-preservation-v7/primary-addendum-authentication.json",
+      "sha256": "3f2107c03176904e3830e31bf3d6a0d67e8875acb26abd5c391320a8eace6b08",
+      "bytes": 1122
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/normative-discovery-preservation-v7/source-preparation.json",
+      "sha256": "7cc036dc7a24b56b27ca9f74b2c9b96638ed9379bdee5d2096164f5d94ba717a",
+      "bytes": 8457
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/normative-discovery-preservation-v7/start-receipt.json",
+      "sha256": "78811bb5dfd7b77c323b13bd1dbab1a244647c79d83c2d541330e5c51bc0afba",
+      "bytes": 1260
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/normative-discovery-preservation-v7/verification.json",
+      "sha256": "386450cc765bb4d83219fd2abfe48c25d3c8cfe2261b8f6db9cd0994d1d83ae3",
+      "bytes": 17224
+    }
+  ],
+  "clock_resets": 0,
+  "original_start_epoch": 1790897745.0296981,
+  "original_deadline_epoch": 1790903145.0296981,
+  "response_cap": 120,
+  "conservative_count_through_freeze_tool": 116,
+  "remaining_handoff_plus_final_reserved": 3,
+  "final_event_upper_bound": 120,
+  "limitations": [
+    "Independent phase2 semantic evaluation is INCOMPLETE for the whole cohort. Full immutable indexing is not a complete source/preservation adjudication.",
+    "All actual supplied JSON literals and original current decisions are preserved/indexed; this does not make every JSON field a finding or grant semantic/operational credit.",
+    "Broad public source capsule has92 authenticated files. Four sources were fully semantically read; three partial/truncated; remaining sources unreviewed. E001/E009 original overstatement of full reading corrected in owned authentication file.",
+    "Every available output/history artifact is inventoried and actual JSON bodies retained; all protocol receipts/scheduling history conditions and137 probe assertions were not individually source/timing adjudicated. Unknown rows remain unknown.",
+    "No qualified complete actual candidate source capture or correlated native read/GET/probe sequence is available. Source capture UNKNOWN for all seven.",
+    "Exact seed bodies were read and component boundary notes made at original12-section granularity. No new atomic seed-denominator, precision preservation score or blanket all-supported decision is inferred.",
+    "Unavailable standalone upstream attempts, original failed/capped/pre-native attempt bodies, children/cancel/wait/other overhead meters remain UNKNOWN. Supplied accepted configs retain any administrative histories verbatim.",
+    "Original90-minute clock and120 conservative response-event cap were never reset; finalization now preserves remaining response allowance. Unfinished review is evaluator incompleteness, not candidate quality failure.",
+    "All seven original current quality failures remain unchanged; no independent new case-quality grades, winner, same-quality speedup or invoice comparison is established."
+  ]
+}

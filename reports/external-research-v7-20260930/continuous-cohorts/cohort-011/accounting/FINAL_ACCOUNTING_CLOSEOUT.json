@@ -1,0 +1,321 @@
+{
+  "schema": "final-accounting-closeout-metadata-v1",
+  "frozen_epoch": 1790900880.045023,
+  "frozen_utc": "2026-10-02T00:27:23.250330+00:00",
+  "root_global_execution_boundary": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/root-global-execution-boundary-v1.json",
+    "sha256": "4f15f3d0e57f8e998df31147cc59590ecfb2eff91120ae87e7f141851eac84b8",
+    "root_observed_utc": "2026-10-02T00:25:57Z",
+    "deadline_elapsed": false,
+    "remaining_scope": "Publication verification and own management closeout only"
+  },
+  "final_counters": {
+    "helper_conservative_known_starts": 100,
+    "helper_cap": 100,
+    "new_helper_starts_remaining": 0,
+    "candidate_admissions": 53,
+    "observed_native_goals": 49,
+    "candidate_occupied_slot_seconds": 37984.16749429703,
+    "candidate_reported_generated_output_lower_bound": 1677375,
+    "candidate_generated_output_complete": false,
+    "candidate_true_generated_total": null,
+    "helper_true_generated_total": null,
+    "helper_generated_output_complete": false,
+    "active_by_family": {
+      "M": 0,
+      "Z": 0,
+      "L": 0
+    },
+    "committed_slot_seconds": 0
+  },
+  "deadline_and_reserves": {
+    "deadline_epoch": 1790904541,
+    "deadline_utc": "2026-10-02T01:29:01+00:00",
+    "final_hour_start_epoch": 1790900941,
+    "final_hour_start_utc": "2026-10-02T00:29:01+00:00",
+    "remaining_work_seconds": 3697.7496695518494,
+    "excluded_user_idle_seconds": 84135,
+    "excluded_seconds_immutable_expected": 84135
+  },
+  "candidate_reserved_capacity_metadata": {
+    "remaining_admission_starts": 91,
+    "reserve_starts_at_least": 19,
+    "uncommitted_slot_seconds_remaining": 134815.83250570297,
+    "reserve_slot_seconds_at_least": 26963.166501140597
+  },
+  "reviewer_original_clock_and_reserve_metadata": [
+    {
+      "reviewer": "OME",
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-ome-grading-v4/task-state.json",
+        "sha256": "e8d8345705947e11ee8e5b69b7d66fdc013c79ea06265d99b1b5d56a6d19cdd2"
+      },
+      "start_epoch": 1790883246.820051,
+      "deadline_epoch": 1790892246.820051,
+      "final_reserve_start_epoch": 1790891346.820051,
+      "remaining_seconds": 0,
+      "in_final_reserve": true,
+      "metadata_state": "complete-current-cohort-phase2-authorized-unperformed",
+      "response_counter": 118,
+      "response_counter_basis": "conservative model-emission upper bound at third watch activation; actual subsequent wait calls reconciled after watch ends; async monitor outputs are not model responses",
+      "response_limit": 120,
+      "response_counter_is_exposed_lower_bound": true,
+      "response_limit_reached": false,
+      "response_reserve_reached": true
+    },
+    {
+      "reviewer": "repo",
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-repo-grading-v4/task-state.json",
+        "sha256": "be8731bd49fed5cb9a048b160e0004e3d28bae6aeac0e5abdd6f01b85a91fa6d"
+      },
+      "start_epoch": 1790883332.9388366,
+      "deadline_epoch": 1790892332.9388366,
+      "final_reserve_start_epoch": 1790891432.9388366,
+      "remaining_seconds": 0,
+      "in_final_reserve": true,
+      "metadata_state": "closed_current_only_handoff",
+      "response_counter": null,
+      "response_counter_basis": "unknown",
+      "response_limit": 120,
+      "response_counter_is_exposed_lower_bound": true,
+      "response_limit_reached": false,
+      "response_reserve_reached": false
+    },
+    {
+      "reviewer": "discovery",
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/current-discovery-grading-v4/task-state.json",
+        "sha256": "633bcb65b185d8fbdf89cacff9a6ed11ab44afe9c0d43f214d3cb281baa0802e"
+      },
+      "start_epoch": 1790883364,
+      "deadline_epoch": 1790894164,
+      "final_reserve_start_epoch": 1790893264,
+      "remaining_seconds": 0,
+      "in_final_reserve": true,
+      "metadata_state": "stopped_at_original_active_elapsed_cap_available_current_complete_cohort_intake_incomplete",
+      "response_counter": 114,
+      "response_counter_basis": "unknown",
+      "response_limit": 120,
+      "response_counter_is_exposed_lower_bound": true,
+      "response_limit_reached": false,
+      "response_reserve_reached": true
+    },
+    {
+      "reviewer": "dynamic",
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/dynamic-binding-checker-v4/timer.json",
+        "sha256": "7b032d5c05aa0ee5e016586016b1a9b15dc09d11b816739fbea11f2243c99c52"
+      },
+      "start_epoch": 1790885852.2008212,
+      "deadline_epoch": 1790888552.2008212,
+      "final_reserve_start_epoch": 1790888072.2008212,
+      "remaining_seconds": 0,
+      "in_final_reserve": true,
+      "metadata_state": "unknown",
+      "response_counter": 90,
+      "response_counter_basis": "Conservative count of all assistant tool and commentary responses; earlier provisional counts superseded.",
+      "response_limit": 120,
+      "response_counter_is_exposed_lower_bound": true,
+      "response_limit_reached": false,
+      "response_reserve_reached": false
+    },
+    {
+      "reviewer": "preservation-v6",
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/review-start.json",
+        "sha256": "166785dbcdd383a2259616ee31a89dd2e6a9b6b0d8bb015b6c8b477f31ba6f0b"
+      },
+      "start_epoch": 1790891744.9263375,
+      "deadline_epoch": 1790902544.9263375,
+      "final_reserve_start_epoch": 1790901344.9263375,
+      "remaining_seconds": 1701.6760070323944,
+      "in_final_reserve": false,
+      "metadata_state": "fresh authorized task93; bounded original scope",
+      "response_counter": null,
+      "response_counter_basis": "unknown; not inferred",
+      "response_limit": 120,
+      "response_counter_is_exposed_lower_bound": true,
+      "response_limit_reached": false,
+      "response_reserve_reached": false
+    },
+    {
+      "reviewer": "repo-v6",
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-current-grading-v6/session.json",
+        "sha256": "dcdd86c36d4656bae3e66735f4b39dac31f5f6835b10549bcf26bc54926a40b7"
+      },
+      "start_epoch": 1790892059.8490512,
+      "deadline_epoch": 1790902859.8490512,
+      "final_reserve_start_epoch": 1790901659.8490512,
+      "remaining_seconds": 2016.5987207889557,
+      "in_final_reserve": false,
+      "metadata_state": "closed_exact_four_CURRENT_cohort_frozen",
+      "response_counter": 47,
+      "response_counter_basis": "own session metadata",
+      "response_limit": 120,
+      "response_counter_is_exposed_lower_bound": true,
+      "response_limit_reached": false,
+      "response_reserve_reached": false
+    },
+    {
+      "reviewer": "discovery-log-v6",
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/discovery-log-current-grading-v6/task-limit-receipt.json",
+        "sha256": "5a6e05d8bba8a7116cda32bd1146216f405e043ebac38e745ba366e882905807"
+      },
+      "start_epoch": 1790892142.0,
+      "deadline_epoch": 1790902942.0,
+      "final_reserve_start_epoch": 1790901742.0,
+      "remaining_seconds": 2098.7496695518494,
+      "in_final_reserve": false,
+      "metadata_state": "fresh authorized task95 original bound",
+      "response_counter": 2,
+      "response_counter_basis": "own limit receipt scalar",
+      "response_limit": 120,
+      "response_counter_is_exposed_lower_bound": true,
+      "response_limit_reached": false,
+      "response_reserve_reached": false
+    },
+    {
+      "reviewer": "integrated-OME-v6",
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/integrated-ome-current-grading-v6/reviewer-boundaries.json",
+        "sha256": "25c0319454e4cecc93b528084b7da2a67e1370f7d4cd97780a6c454fcf80687d"
+      },
+      "start_epoch": 1790892169,
+      "deadline_epoch": 1790902969,
+      "final_reserve_start_epoch": 1790901769,
+      "remaining_seconds": 2125.7496695518494,
+      "in_final_reserve": false,
+      "metadata_state": "fresh authorized task96 original bound",
+      "response_counter": 51,
+      "response_counter_basis": "own boundary receipt scalar",
+      "response_limit": 120,
+      "response_counter_is_exposed_lower_bound": true,
+      "response_limit_reached": false,
+      "response_reserve_reached": false
+    },
+    {
+      "reviewer": "repo-acq-v7",
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/repo-acquisition-preservation-v7/clock.json",
+        "sha256": "c211e31057eb61a70932289e88d441f9a5c516420e295a5409332c51278612bc"
+      },
+      "start_epoch": 1790897690.0416684,
+      "deadline_epoch": 1790903090.0416684,
+      "final_reserve_start_epoch": 1790901890.0416684,
+      "remaining_seconds": 2246.791337966919,
+      "in_final_reserve": false,
+      "metadata_state": "fresh authorized100-scope90min reviewer; original bound",
+      "response_counter": 2,
+      "response_counter_basis": "exposed receipt counter at record; lower bound, not live guaranteed headroom",
+      "response_limit": 120,
+      "response_counter_is_exposed_lower_bound": true,
+      "response_limit_reached": false,
+      "response_reserve_reached": false
+    },
+    {
+      "reviewer": "normative-discovery-v7",
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/normative-discovery-preservation-v7/start-receipt.json",
+        "sha256": "78811bb5dfd7b77c323b13bd1dbab1a244647c79d83c2d541330e5c51bc0afba"
+      },
+      "start_epoch": 1790897745.0296981,
+      "deadline_epoch": 1790903145.0296981,
+      "final_reserve_start_epoch": 1790901945.0296981,
+      "remaining_seconds": 2301.779367685318,
+      "in_final_reserve": false,
+      "metadata_state": "fresh authorized100-scope90min reviewer; original bound",
+      "response_counter": 12,
+      "response_counter_basis": "exposed receipt counter at record; lower bound, not live guaranteed headroom",
+      "response_limit": 120,
+      "response_counter_is_exposed_lower_bound": true,
+      "response_limit_reached": false,
+      "response_reserve_reached": false
+    },
+    {
+      "reviewer": "closed-OME-v7",
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/closed-ome-preservation-v7/clock-accounting.json",
+        "sha256": "39b65f0d680bdd20e3158afa8d37c3d969d848d17682ae9800e64b864e5f1579"
+      },
+      "start_epoch": 1790897772,
+      "deadline_epoch": 1790903172,
+      "final_reserve_start_epoch": 1790901972,
+      "remaining_seconds": 2328.7496695518494,
+      "in_final_reserve": false,
+      "metadata_state": "fresh authorized100-scope90min reviewer; original bound",
+      "response_counter": 120,
+      "response_counter_basis": "exposed receipt counter at record; lower bound, not live guaranteed headroom",
+      "response_limit": 120,
+      "response_counter_is_exposed_lower_bound": true,
+      "response_limit_reached": true,
+      "response_reserve_reached": true
+    },
+    {
+      "reviewer": "early-research-v7",
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/early-research-preservation-v7/original-clock.json",
+        "sha256": "7f5cb7089badf72557d8394b2146fd346f7b76f6079a0fd83086a2b9c7a17dc9"
+      },
+      "start_epoch": 1790897860,
+      "deadline_epoch": 1790903260,
+      "final_reserve_start_epoch": 1790902060,
+      "remaining_seconds": 2416.7496695518494,
+      "in_final_reserve": false,
+      "metadata_state": "fresh authorized100-scope90min reviewer; original bound",
+      "response_counter": 15,
+      "response_counter_basis": "exposed receipt counter at record; lower bound, not live guaranteed headroom",
+      "response_limit": 120,
+      "response_counter_is_exposed_lower_bound": true,
+      "response_limit_reached": false,
+      "response_reserve_reached": false
+    }
+  ],
+  "final_reviewer_counter_overrides_from_root": {
+    "helper93": {
+      "cumulative_responses": null,
+      "generated_tokens": null,
+      "reason": "Final metadata unknown; no counter reset"
+    },
+    "helper96": {
+      "cumulative_responses": 54,
+      "response_cap": 120,
+      "current_report_count": 3,
+      "current_claim_rows": 871,
+      "current_condition_rows": 102,
+      "current_facets": 18,
+      "scope": "Original CURRENT-only scope; no new phase2 scope"
+    },
+    "helper98": {
+      "final_response_events": 120,
+      "response_cap": 120,
+      "boundary": "Partial indexing; broad-source and history completion not inferred"
+    },
+    "helper99": {
+      "final_response_events": 120,
+      "response_cap": 120,
+      "boundary": "Partial atomic support; whole semantic pass not inferred"
+    },
+    "helper100": {
+      "final_response_events": 118,
+      "response_cap": 120,
+      "boundary": "48 source/facet preparation rows only; 115 source hash matches; actual current assertion/condition rows not admitted. No phase2 verdict inferred"
+    }
+  },
+  "unknown_usage_boundary": "Response events, inventory counts and source hash matches do not establish generated-token headroom, semantic completion or equivalent-quality economics. Input/cache-inclusive meter is not generated output. Unknown values are not zero.",
+  "cost_artifact": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/expansion-accounting-v5/publisher-cost-freeze-v1.json",
+    "sha256": "451075a4b390672f7ebe2c14a4a650d5dcee7d8427475808ed4dcf401ace9eb0"
+  },
+  "final_snapshot_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/expansion-accounting-v5/snapshots/1790900843250330.json",
+    "sha256": "ac27284eb504925121d2facd96d7dad095eb1b5330d1ba34730a9ba074ef55a6",
+    "observed_epoch": 1790900843.2503304
+  },
+  "failure_cost_preservation": "All observed admissions retained and charged admission through release, including 756.9323682785034 seconds for two pre-native metadata failures; optional current-source admission wait is management/evaluation-limited, not candidate failure or source absence. User idle84135 remains excluded and is not a failure.",
+  "metadata_monitor_stopped": true,
+  "same_task_no_clock_or_counter_reset": true,
+  "no_sibling_or_native_actions": true
+}

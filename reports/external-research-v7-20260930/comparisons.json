@@ -15,8 +15,8 @@
     "saved_history_preservation": "no demonstrated saved source-supported temporal loss; all available history reviewed",
     "acquisition_to_final_preservation": "unassessed; acquisition semantics unknown",
     "preservation_summary": "reviews/first-pair-preservation-summary.json",
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "current_eligibility_metadata": {
       "original_case_key_coverage": null,
       "original_case_source_coverage": null,
@@ -31,8 +31,18 @@
       "current_delivery_qualification": "UNKNOWN unless measured in frozen receipt",
       "source_acquisition": "UNKNOWN",
       "integrated_execution_credit": false,
-      "scope": "original frozen current review scope; original case key/source eligibility not re-adjudicated"
-    }
+      "scope": "original frozen current review scope; original case key/source eligibility not re-adjudicated",
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification"
+    },
+    "historical_assessment": "quality failure",
+    "historical_boolean_flags": {
+      "interpretable": true,
+      "independent_current_review_complete": true
+    },
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "method": "T06",
@@ -53,8 +63,8 @@
     "available_history_summary": "reviews/R003-R004-phase2-summary.json",
     "available_temporal_semantic_losses": 0,
     "current_grade_unchanged": true,
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "current_eligibility_metadata": {
       "original_case_key_coverage": null,
       "original_case_source_coverage": null,
@@ -69,8 +79,21 @@
       "current_delivery_qualification": "UNKNOWN unless measured in frozen receipt",
       "source_acquisition": "UNKNOWN",
       "integrated_execution_credit": false,
-      "scope": "original frozen current review scope; original case key/source eligibility not re-adjudicated"
-    }
+      "scope": "original frozen current review scope; original case key/source eligibility not re-adjudicated",
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification"
+    },
+    "historical_assessment": "quality failure",
+    "historical_boolean_flags": {
+      "current_outputs_frozen": true,
+      "independent_current_review_complete": true,
+      "all_material_claims_reviewed": true,
+      "all_six_eligible_facets_evaluated": true,
+      "current_grade_unchanged": true
+    },
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "method": "T01",
@@ -95,8 +118,8 @@
     "available_semantic_losses": 0,
     "unobserved_reasoning": "unknown; no never-acquired inference",
     "current_grade_unchanged": true,
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "current_eligibility_metadata": {
       "original_case_key_coverage": null,
       "original_case_source_coverage": null,
@@ -111,8 +134,21 @@
       "current_delivery_qualification": "UNKNOWN unless measured in frozen receipt",
       "source_acquisition": "UNKNOWN",
       "integrated_execution_credit": false,
-      "scope": "original frozen current review scope; original case key/source eligibility not re-adjudicated"
-    }
+      "scope": "original frozen current review scope; original case key/source eligibility not re-adjudicated",
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification"
+    },
+    "historical_assessment": "quality failure",
+    "historical_boolean_flags": {
+      "aggregate_control_preserves_original_capped_opening": true,
+      "independent_current_review_complete": true,
+      "all_material_claims_reviewed": true,
+      "all_six_eligible_facets_evaluated": true,
+      "current_grade_unchanged": true
+    },
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "method": "T08",
@@ -121,8 +157,8 @@
     "launch_admissions": 4,
     "native_goal_starts": 2,
     "adapter_finite_repairs": "two recorded versions exhausted; final independent carrier adjudication NO launch authority; L remains quarantined",
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "current_eligibility_metadata": {
       "original_case_key_coverage": null,
       "original_case_source_coverage": null,
@@ -136,8 +172,16 @@
       "inclusive_native_cap_verification": "UNESTABLISHED source-only review",
       "current_delivery_qualification": "UNKNOWN unless measured in frozen receipt",
       "source_acquisition": "UNKNOWN",
-      "integrated_execution_credit": false
-    }
+      "integrated_execution_credit": false,
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification",
+      "scoped_current_assessment": "Frozen complete current scopes; both quality failures; route/native/delivery dimensions independent"
+    },
+    "historical_assessment": "infrastructure-limited",
+    "historical_boolean_flags": {},
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "method": "T03",
@@ -146,8 +190,8 @@
     "current_outputs_frozen": true,
     "semantic_review": "unassessed at terminal closeout; no new evaluation admitted",
     "structural_status": "required outputs missing",
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "current_eligibility_metadata": {
       "original_case_key_coverage": null,
       "original_case_source_coverage": null,
@@ -161,8 +205,20 @@
       "inclusive_native_cap_verification": "UNESTABLISHED source-only review",
       "current_delivery_qualification": "UNKNOWN unless measured in frozen receipt",
       "source_acquisition": "UNKNOWN",
-      "integrated_execution_credit": false
-    }
+      "integrated_execution_credit": false,
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification",
+      "current_single_arm_review": "R036 six-facet quality failure",
+      "matched_delivery_qualification": "UNESTABLISHED: control own assignment cap",
+      "treatment_delivery": "unchanged mode-restored whole PASS"
+    },
+    "historical_assessment": "unassessed",
+    "historical_boolean_flags": {
+      "current_outputs_frozen": true
+    },
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "method": "T09",
@@ -187,8 +243,8 @@
     "unreviewed_lead_and_search_snippet_semantics": "enumerated in frozen summary",
     "phase2_overrun_seconds": 54.088638,
     "current_grade_unchanged": true,
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "current_eligibility_metadata": {
       "original_case_key_coverage": null,
       "original_case_source_coverage": null,
@@ -203,8 +259,22 @@
       "current_delivery_qualification": "UNKNOWN unless measured in frozen receipt",
       "source_acquisition": "UNKNOWN",
       "integrated_execution_credit": false,
-      "scope": "original frozen current review scope; original case key/source eligibility not re-adjudicated"
-    }
+      "scope": "original frozen current review scope; original case key/source eligibility not re-adjudicated",
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification"
+    },
+    "historical_assessment": "quality failure",
+    "historical_boolean_flags": {
+      "current_outputs_frozen": true,
+      "independent_current_review_complete": true,
+      "all_material_claims_reviewed": true,
+      "all_six_eligible_facets_evaluated": true,
+      "preservation_complete_coverage": false,
+      "current_grade_unchanged": true
+    },
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "method": "T13",
@@ -213,8 +283,8 @@
     "current_outputs_frozen": true,
     "semantic_review": "unassessed at terminal closeout; no new evaluation admitted",
     "structural_status": "required outputs missing",
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "current_eligibility_metadata": {
       "original_case_key_coverage": null,
       "original_case_source_coverage": null,
@@ -228,8 +298,18 @@
       "inclusive_native_cap_verification": "UNESTABLISHED source-only review",
       "current_delivery_qualification": "UNKNOWN unless measured in frozen receipt",
       "source_acquisition": "UNKNOWN",
-      "integrated_execution_credit": false
-    }
+      "integrated_execution_credit": false,
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification",
+      "scoped_current_assessment": "Frozen complete current scopes; both quality failures; route/native/delivery dimensions independent"
+    },
+    "historical_assessment": "infrastructure-limited",
+    "historical_boolean_flags": {
+      "current_outputs_frozen": true
+    },
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "method": "T14",
@@ -251,8 +331,8 @@
     "unreviewed_material_scope": [],
     "final_save_elapsed_seconds": 1338.528707,
     "assessment_limit": "final consistency validation/save exceeded20minute cap after initial drafts saved19m51s",
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "additive_current_review": "R018/R019 full current quality failure; old partial edition immutable; no source-delivery qualification inferred",
     "current_eligibility_metadata": {
       "original_case_key_coverage": "All8criteria literal296/848units reviewed; source-authority obligations unresolved; old scoped grades unchanged",
@@ -270,8 +350,24 @@
       "integrated_execution_credit": false,
       "scope": "additive scoped current review distinct from original partial capped edition",
       "expanded_original_case_quality": "UNASSESSED",
-      "expanded_original_case_current_coverage": "UNASSESSED_REQUIRED_MATERIAL_OBLIGATIONS_UNRESOLVED"
-    }
+      "expanded_original_case_current_coverage": "UNASSESSED_REQUIRED_MATERIAL_OBLIGATIONS_UNRESOLVED",
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification",
+      "expanded_original_quality": "UNASSESSED",
+      "expanded_original_coverage": "UNASSESSED",
+      "historical_scoped_grades": "unchanged quality failures"
+    },
+    "historical_assessment": "quality failure",
+    "historical_boolean_flags": {
+      "native_goal_complete_both": true,
+      "structural_outputs_complete_both": true,
+      "same_quality_efficiency_win": false,
+      "complete_coverage": false,
+      "material_coverage_complete": true
+    },
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "method": "T07",
@@ -279,10 +375,10 @@
     "assessment": "unassessed",
     "candidate_executions": 0,
     "machinery": "accepted preparation only",
-    "native_admissions": "held pending exact native qualification and operator binding within extended campaign",
+    "native_admissions": "Historical observation; current closure is frozen in current dimensions and cohort011",
     "inventory": "cohort-grading/prepared-method-inventory.json",
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "current_eligibility_metadata": {
       "original_case_key_coverage": null,
       "original_case_source_coverage": null,
@@ -296,8 +392,16 @@
       "inclusive_native_cap_verification": "UNESTABLISHED source-only review",
       "current_delivery_qualification": "UNKNOWN unless measured in frozen receipt",
       "source_acquisition": "UNKNOWN",
-      "integrated_execution_credit": false
-    }
+      "integrated_execution_credit": false,
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification"
+    },
+    "historical_assessment": "unassessed",
+    "historical_boolean_flags": {},
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00",
+    "historical_native_admissions": "held pending exact native qualification and operator binding within extended campaign"
   },
   {
     "method": "T08",
@@ -305,10 +409,10 @@
     "assessment": "unassessed",
     "candidate_executions": 0,
     "machinery": "accepted preparation only",
-    "native_admissions": "held pending exact native qualification and operator binding within extended campaign",
+    "native_admissions": "Historical observation; current closure is frozen in current dimensions and cohort011",
     "inventory": "cohort-grading/prepared-method-inventory.json",
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "current_eligibility_metadata": {
       "original_case_key_coverage": null,
       "original_case_source_coverage": null,
@@ -322,8 +426,17 @@
       "inclusive_native_cap_verification": "UNESTABLISHED source-only review",
       "current_delivery_qualification": "UNKNOWN unless measured in frozen receipt",
       "source_acquisition": "UNKNOWN",
-      "integrated_execution_credit": false
-    }
+      "integrated_execution_credit": false,
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification",
+      "scoped_current_assessment": "Frozen complete current scopes; both quality failures; route/native/delivery dimensions independent"
+    },
+    "historical_assessment": "unassessed",
+    "historical_boolean_flags": {},
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00",
+    "historical_native_admissions": "held pending exact native qualification and operator binding within extended campaign"
   },
   {
     "method": "T10",
@@ -331,10 +444,10 @@
     "assessment": "unassessed",
     "candidate_executions": 0,
     "machinery": "accepted preparation only",
-    "native_admissions": "held pending exact native qualification and operator binding within extended campaign",
+    "native_admissions": "Historical observation; current closure is frozen in current dimensions and cohort011",
     "inventory": "cohort-grading/prepared-method-inventory.json",
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "current_eligibility_metadata": {
       "original_case_key_coverage": null,
       "original_case_source_coverage": null,
@@ -348,8 +461,16 @@
       "inclusive_native_cap_verification": "UNESTABLISHED source-only review",
       "current_delivery_qualification": "UNKNOWN unless measured in frozen receipt",
       "source_acquisition": "UNKNOWN",
-      "integrated_execution_credit": false
-    }
+      "integrated_execution_credit": false,
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification"
+    },
+    "historical_assessment": "unassessed",
+    "historical_boolean_flags": {},
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00",
+    "historical_native_admissions": "held pending exact native qualification and operator binding within extended campaign"
   },
   {
     "method": "T11",
@@ -357,25 +478,36 @@
     "assessment": "unassessed",
     "candidate_executions": 0,
     "machinery": "accepted preparation only",
-    "native_admissions": "held pending exact native qualification and operator binding within extended campaign",
+    "native_admissions": "Historical observation; current closure is frozen in current dimensions and cohort011",
     "inventory": "cohort-grading/prepared-method-inventory.json",
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "current_eligibility_metadata": {
       "original_case_key_coverage": null,
       "original_case_source_coverage": null,
       "original_case_current_coverage": null,
       "full_original_case_eligible": null,
       "missing_boolean_policy": "UNKNOWN, never inferred false",
-      "matched_scoped_semantic_review_complete": null,
+      "matched_scoped_semantic_review_complete": true,
       "semantic_comparison_interpretable_for_scoped_review": null,
       "quality_pass": null,
       "native_context_inventory_qualification": "see frozen per-attempt receipts; not inferred from grade",
       "inclusive_native_cap_verification": "UNESTABLISHED source-only review",
       "current_delivery_qualification": "UNKNOWN unless measured in frozen receipt",
       "source_acquisition": "UNKNOWN",
-      "integrated_execution_credit": false
-    }
+      "integrated_execution_credit": false,
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification",
+      "scoped_current_assessment": "quality failure both; R028/R029 or R030/R031 frozen",
+      "original_scope": "Two actual admitted families/shared questions;16 derived criterion rows; six opportunity families are not six mandatory deliverables",
+      "preservation_review": "Available frozen four-repo inventory authenticated; semantic transition assessment bounded"
+    },
+    "historical_assessment": "unassessed",
+    "historical_boolean_flags": {},
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00",
+    "historical_native_admissions": "held pending exact native qualification and operator binding within extended campaign"
   },
   {
     "method": "T12",
@@ -383,25 +515,36 @@
     "assessment": "unassessed",
     "candidate_executions": 0,
     "machinery": "accepted preparation only",
-    "native_admissions": "held pending exact native qualification and operator binding within extended campaign",
+    "native_admissions": "Historical observation; current closure is frozen in current dimensions and cohort011",
     "inventory": "cohort-grading/prepared-method-inventory.json",
-    "campaign_terminal_status": "historical expired-closeout status superseded by explicit work-clock extension",
-    "campaign_current_status": "ACTIVE; qualification/dispatch gates held",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
     "current_eligibility_metadata": {
       "original_case_key_coverage": null,
       "original_case_source_coverage": null,
       "original_case_current_coverage": null,
       "full_original_case_eligible": null,
       "missing_boolean_policy": "UNKNOWN, never inferred false",
-      "matched_scoped_semantic_review_complete": null,
+      "matched_scoped_semantic_review_complete": true,
       "semantic_comparison_interpretable_for_scoped_review": null,
       "quality_pass": null,
       "native_context_inventory_qualification": "see frozen per-attempt receipts; not inferred from grade",
       "inclusive_native_cap_verification": "UNESTABLISHED source-only review",
       "current_delivery_qualification": "UNKNOWN unless measured in frozen receipt",
       "source_acquisition": "UNKNOWN",
-      "integrated_execution_credit": false
-    }
+      "integrated_execution_credit": false,
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification",
+      "scoped_current_assessment": "quality failure both; R028/R029 or R030/R031 frozen",
+      "original_scope": "Two actual admitted families/shared questions;16 derived criterion rows; six opportunity families are not six mandatory deliverables",
+      "preservation_review": "Available frozen four-repo inventory authenticated; semantic transition assessment bounded"
+    },
+    "historical_assessment": "unassessed",
+    "historical_boolean_flags": {},
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00",
+    "historical_native_admissions": "held pending exact native qualification and operator binding within extended campaign"
   },
   {
     "method": "T07",
@@ -422,7 +565,7 @@
       74
     ],
     "all_six_facets_assessed": true,
-    "preservation_mechanism": "pending",
+    "preservation_mechanism": "Historical observation; current closure is frozen in current dimensions and cohort011",
     "current_summary": "continuous-cohorts/cohort-002/T07-current-pair-summary.json",
     "current_eligibility_metadata": {
       "original_case_key_coverage": null,
@@ -437,8 +580,25 @@
       "inclusive_native_cap_verification": "UNESTABLISHED source-only review",
       "current_delivery_qualification": "UNKNOWN unless measured in frozen receipt",
       "source_acquisition": "UNKNOWN",
-      "integrated_execution_credit": false
-    }
+      "integrated_execution_credit": false,
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification"
+    },
+    "historical_assessment": "quality failure",
+    "historical_boolean_flags": {
+      "native_both_complete": true,
+      "context_qualified": true,
+      "current_before_history": true,
+      "same_quality_efficiency_claim": false,
+      "independent_current_review_complete": true,
+      "all_six_facets_assessed": true
+    },
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00",
+    "historical_preservation_mechanism": "pending"
   },
   {
     "method": "T15",
@@ -451,7 +611,7 @@
       "findings.json"
     ],
     "source_qualification": "unqualified",
-    "redo": "pending; original preserved",
+    "redo": "Historical observation; current closure is frozen in current dimensions and cohort011",
     "comparison_complete": false,
     "cohort": "continuous-cohorts/cohort-001",
     "current_eligibility_metadata": {
@@ -467,8 +627,21 @@
       "inclusive_native_cap_verification": "UNESTABLISHED source-only review",
       "current_delivery_qualification": "UNKNOWN unless measured in frozen receipt",
       "source_acquisition": "UNKNOWN",
-      "integrated_execution_credit": false
-    }
+      "integrated_execution_credit": false,
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification"
+    },
+    "historical_assessment": "unassessed",
+    "historical_boolean_flags": {
+      "native_cap_incomplete": true,
+      "comparison_complete": false
+    },
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00",
+    "historical_redo": "pending; original preserved"
   },
   {
     "method": "T10",
@@ -496,8 +669,20 @@
       "inclusive_native_cap_verification": "UNESTABLISHED source-only review",
       "current_delivery_qualification": "UNKNOWN unless measured in frozen receipt",
       "source_acquisition": "UNKNOWN",
-      "integrated_execution_credit": false
-    }
+      "integrated_execution_credit": false,
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification"
+    },
+    "historical_assessment": "both complete current quality failures",
+    "historical_boolean_flags": {
+      "native_context_inventory_complete": true,
+      "same_quality_efficiency_claim": false
+    },
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "method": "T04R",
@@ -520,8 +705,20 @@
       "inclusive_native_cap_verification": "UNESTABLISHED source-only review",
       "current_delivery_qualification": "both measured exact receipts; quality verdict independent",
       "source_acquisition": "UNKNOWN",
-      "integrated_execution_credit": false
-    }
+      "integrated_execution_credit": false,
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification"
+    },
+    "historical_assessment": "unassessed",
+    "historical_boolean_flags": {
+      "current_delivery_complete": false,
+      "comparison_complete": false
+    },
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "method": "T11",
@@ -538,7 +735,7 @@
       "original_case_current_coverage": null,
       "full_original_case_eligible": null,
       "missing_boolean_policy": "UNKNOWN, never inferred false",
-      "matched_scoped_semantic_review_complete": null,
+      "matched_scoped_semantic_review_complete": true,
       "semantic_comparison_interpretable_for_scoped_review": null,
       "quality_pass": null,
       "native_context_inventory_qualification": "see frozen per-attempt receipts; not inferred from grade",
@@ -549,8 +746,23 @@
       "current_arm_reviews": {
         "control": "incomplete/unqualified; ungraded",
         "treatment": "R017 scoped current quality failure"
-      }
-    }
+      },
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification",
+      "scoped_current_assessment": "quality failure both; R028/R029 or R030/R031 frozen",
+      "original_scope": "Two actual admitted families/shared questions;16 derived criterion rows; six opportunity families are not six mandatory deliverables",
+      "preservation_review": "Available frozen four-repo inventory authenticated; semantic transition assessment bounded"
+    },
+    "historical_assessment": "unassessed",
+    "historical_boolean_flags": {
+      "comparison_complete": false,
+      "same_quality_efficiency_claim": false
+    },
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "method": "T15",
@@ -576,8 +788,22 @@
       "current_delivery_qualification": "UNKNOWN unless measured in frozen receipt",
       "source_acquisition": "UNKNOWN",
       "integrated_execution_credit": false,
-      "current_arm_review": "R021 seed scoped current quality failure; witness capped; reuse comparison unestablished"
-    }
+      "current_arm_review": "R021 seed scoped current quality failure; witness capped; reuse comparison unestablished",
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification"
+    },
+    "historical_assessment": "unassessed",
+    "historical_boolean_flags": {
+      "native_complete": true,
+      "matched_comparison": false,
+      "original_seed_preserved": true,
+      "same_quality_efficiency_claim": false
+    },
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "method": "T05R",
@@ -602,8 +828,23 @@
       "current_delivery_qualification": "both measured exact receipts; quality verdict independent",
       "source_acquisition": "UNKNOWN",
       "integrated_execution_credit": false,
-      "current_arm_review": "R020 control quality failure; single-arm historical row"
-    }
+      "current_arm_review": "R020 control quality failure; single-arm historical row",
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification",
+      "new_1500_current_review": "R034 authoritativev2/R035 complete assigned scopes; both quality failures",
+      "original_T05_execution_credit": false
+    },
+    "historical_assessment": "unassessed",
+    "historical_boolean_flags": {
+      "native_complete": true,
+      "matched_comparison": false,
+      "same_quality_efficiency_claim": false
+    },
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "method": "T05R",
@@ -630,8 +871,22 @@
       "inclusive_native_cap_verification": "UNESTABLISHED source-only review",
       "current_delivery_qualification": "both measured exact receipts; quality verdict independent",
       "source_acquisition": "UNKNOWN",
-      "integrated_execution_credit": false
-    }
+      "integrated_execution_credit": false,
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification",
+      "new_1500_current_review": "R034 authoritativev2/R035 complete assigned scopes; both quality failures",
+      "original_T05_execution_credit": false
+    },
+    "historical_assessment": "R020/R022 full current quality failures",
+    "historical_boolean_flags": {
+      "native_context_inventory_complete": true,
+      "same_quality_efficiency_claim": false
+    },
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "method": "T04R",
@@ -653,8 +908,19 @@
       "inclusive_native_cap_verification": "UNESTABLISHED source-only review",
       "current_delivery_qualification": "both measured exact receipts; quality verdict independent",
       "source_acquisition": "UNKNOWN",
-      "integrated_execution_credit": false
-    }
+      "integrated_execution_credit": false,
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification"
+    },
+    "historical_assessment": "R023/R024 full current quality failures",
+    "historical_boolean_flags": {
+      "same_quality_efficiency_claim": false
+    },
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "method": "T03",
@@ -678,8 +944,23 @@
       "inclusive_native_cap_verification": "UNESTABLISHED source-only review",
       "current_delivery_qualification": "control HOLD: combined delivery error remains; treatment measured",
       "source_acquisition": "UNKNOWN",
-      "integrated_execution_credit": false
-    }
+      "integrated_execution_credit": false,
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification",
+      "current_single_arm_review": "R036 six-facet quality failure",
+      "matched_delivery_qualification": "UNESTABLISHED: control own assignment cap",
+      "treatment_delivery": "unchanged mode-restored whole PASS"
+    },
+    "historical_assessment": "unassessed",
+    "historical_boolean_flags": {
+      "native_complete": true,
+      "same_quality_efficiency_claim": false
+    },
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "method": "T11",
@@ -701,12 +982,26 @@
       "inclusive_native_cap_verification": "UNESTABLISHED source-only review",
       "current_delivery_qualification": "both measured exact receipts; inclusive cap proof separate",
       "source_acquisition": "UNKNOWN",
-      "integrated_execution_credit": false
+      "integrated_execution_credit": false,
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification",
+      "scoped_current_assessment": "quality failure both; R028/R029 or R030/R031 frozen",
+      "original_scope": "Two actual admitted families/shared questions;16 derived criterion rows; six opportunity families are not six mandatory deliverables",
+      "preservation_review": "Available frozen four-repo inventory authenticated; semantic transition assessment bounded"
     },
     "current_reviews": [
       "R028",
       "R029"
-    ]
+    ],
+    "historical_assessment": "R028/R029 complete actual original scoped current quality failures",
+    "historical_boolean_flags": {
+      "same_quality_efficiency_claim": false
+    },
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "method": "T12",
@@ -716,7 +1011,7 @@
     "same_quality_efficiency_claim": false,
     "cohort": "continuous-cohorts/cohort-008",
     "current_eligibility_metadata": {
-      "original_case_key_coverage": "original literal6 opportunity families/TWO coherent families/shared asks/full corpus; fresh review pending",
+      "original_case_key_coverage": "Actual TWO admitted families/shared obligations;16 derived criterion rows; six opportunity families; R028\u2013R031 current reviews complete quality failures; full original source eligibility UNKNOWN",
       "original_case_source_coverage": null,
       "original_case_current_coverage": true,
       "full_original_case_eligible": null,
@@ -728,8 +1023,22 @@
       "inclusive_native_cap_verification": "UNESTABLISHED source-only review",
       "current_delivery_qualification": "both measured exact receipts; inclusive cap proof separate",
       "source_acquisition": "UNKNOWN",
-      "integrated_execution_credit": false
-    }
+      "integrated_execution_credit": false,
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification",
+      "scoped_current_assessment": "quality failure both; R028/R029 or R030/R031 frozen",
+      "original_scope": "Two actual admitted families/shared questions;16 derived criterion rows; six opportunity families are not six mandatory deliverables",
+      "preservation_review": "Available frozen four-repo inventory authenticated; semantic transition assessment bounded"
+    },
+    "historical_assessment": "R030/R031 actual original scope complete current quality failures",
+    "historical_boolean_flags": {
+      "same_quality_efficiency_claim": false
+    },
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "method": "T13",
@@ -750,8 +1059,20 @@
       "inclusive_native_cap_verification": "UNESTABLISHED source-only review",
       "current_delivery_qualification": "both measured v3 receipt scopes; inclusive native caps separate",
       "source_acquisition": "UNKNOWN",
-      "integrated_execution_credit": false
-    }
+      "integrated_execution_credit": false,
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification",
+      "scoped_current_assessment": "Frozen complete current scopes; both quality failures; route/native/delivery dimensions independent"
+    },
+    "historical_assessment": "R026/R027 complete assigned-scope current quality failures",
+    "historical_boolean_flags": {
+      "same_quality_efficiency_claim": false
+    },
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   },
   {
     "method": "T08",
@@ -773,7 +1094,19 @@
       "inclusive_native_cap_verification": "UNESTABLISHED source-only review",
       "current_delivery_qualification": "both measured exact receipts; native inclusive-cap proof separate",
       "source_acquisition": "UNKNOWN",
-      "integrated_execution_credit": false
-    }
+      "integrated_execution_credit": false,
+      "inclusive_whole_case_cap_verification": "UNESTABLISHED",
+      "acquisition": "UNKNOWN",
+      "same_quality_efficiency_win": false,
+      "current_source": "cohort011 frozen assessment scopes; historical flags not current qualification",
+      "scoped_current_assessment": "Frozen complete current scopes; both quality failures; route/native/delivery dimensions independent"
+    },
+    "historical_assessment": "R032/R033 complete full original7facet/21condition current quality failures",
+    "historical_boolean_flags": {
+      "same_quality_efficiency_claim": false
+    },
+    "campaign_current_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "campaign_terminal_status": "GLOBAL EXECUTION CLOSED; consolidated publication and delivery verification only",
+    "current_edition_as_of_utc": "2026-10-02T00:25:57.058845+00:00"
   }
 ]

@@ -1,0 +1,32 @@
+{
+  "schema": "er7.root_new_candidate_admissions_closed.v1",
+  "observed_epoch": 1790900529.3006144,
+  "deadline_epoch": 1790904541,
+  "protected_review_hour_epoch": 1790900941,
+  "seconds_before_review_hour": 411.69938564300537,
+  "pins": {
+    "ops/final-unadmitted-readyqueue-audit-v1.json": "814ee6ac4f6a4f8d9d3933286ada2e3e482ef880ead83485bc6b5125dda4c4de",
+    "ops/final-unadmitted-readyqueue-fresh-quiet-v1.json": "6d248a262794783d10a942b158b1dbeb72c09d95d070c7d6da8488dca66c056a",
+    "ops/integrated-execution-states-v1/SIX-UNSTARTED-ADMISSION-CLASSIFICATION-v1.json": "a08205722f9d433e2fcc21bc95dce4486be045f7a8aea762aa0fe658a022fb84",
+    "ops/expansion-accounting-v5/publisher-cost-freeze-v1.json": "451075a4b390672f7ebe2c14a4a650d5dcee7d8427475808ed4dcf401ace9eb0"
+  },
+  "new_candidate_admissions": "CLOSED",
+  "campaign_evaluation_and_publication": "CONTINUE under SAME authority, clocks, caps and deadline",
+  "boundary_reasons": [
+    "All 23 frozen unadmitted queue labels fail current admission: six legacy 900-second labels cannot fit before the protected hour; remaining conditional jobs retain rejected boundary/ancestry/source/whole-case guards.",
+    "All six integrated cases remain unstarted with null birth clocks; unchanged 3000 native seconds cannot fit before the protected hour, even with zero overhead.",
+    "The M/L routes and inclusive execution-boundary adapter have exhausted their independently rejected finite repair versions. No extra repair proposal is deployed.",
+    "Known helper task starts equal the explicitly authorized cap 100; no distinct new reviewer/development task is admitted."
+  ],
+  "candidate_cost_snapshot": {
+    "admissions": 53,
+    "observed_native_goals": 49,
+    "occupied_slot_seconds": 37984.16749429703,
+    "reported_output_token_lower_bound": 1677375,
+    "usage_complete": false
+  },
+  "quality_or_efficiency_promotion": false,
+  "unstarted_jobs_are_candidate_failures": false,
+  "user_pauses_are_candidate_failures": false,
+  "scope_of_action": "Prospective candidate admission closure only. Already-bound current reviews and evidence publication continue; this record does not claim the original breadth/integrated targets were achieved, or renew any reviewer cap."
+}

@@ -1,0 +1,142 @@
+{
+  "schema": "metadata-only-cost-freeze-v1",
+  "observed_utc": "2026-10-02T00:08:06.123873+00:00",
+  "snapshot_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/expansion-accounting-v5/snapshots/1790899686123872.json",
+    "sha256": "098daf1d897de52a67dfa47e0e22b3ea28f42079c7f94191164731feefe982b4",
+    "observed_epoch": 1790899686.1238725
+  },
+  "candidate": {
+    "admissions": 53,
+    "operator_native_goals_pin": 49,
+    "derived_native_goal_lower_bound": 49,
+    "derived_count_post_pin_explicit_activation_labels": [],
+    "derived_count_basis": "Operator native counter plus explicit slot-ledger activation flags for admissions strictly after operator pin epoch; never traverse native receipts",
+    "operator_epoch": 1790899578.651149,
+    "operator_staleness_seconds": 107.4727234840393,
+    "occupied_slot_seconds": 37984.16749429703,
+    "committed_remaining_seconds": 0,
+    "active_by_family": {
+      "M": 0,
+      "Z": 0,
+      "L": 0
+    },
+    "active_caps": {
+      "M": 2,
+      "Z": 2,
+      "L": 2
+    },
+    "M_L": "held original repair cap; no implicit route reopening",
+    "generated_output_lower_bound": 1677375,
+    "generated_output_complete": false,
+    "true_headroom": null,
+    "warning": 2400000,
+    "output_stop": 3000000,
+    "start_cap": 144,
+    "slot_seconds_cap": 172800,
+    "Z_slot_seconds_before_final_hour_upper_bound": 2509.752254962921,
+    "Z_clock_capacity_basis": "At most2Zslots, M/Lheld, stops routine admission before protected final hour; queue/service delays only lower realized capacity",
+    "remaining_admission_starts": 91,
+    "reserve_starts_at_least": 19,
+    "uncommitted_slot_seconds_remaining": 134815.83250570297,
+    "reserve_slot_seconds_at_least": 26963.166501140597
+  },
+  "helper_known_starts": 100,
+  "helper_start_cap": 100,
+  "helper_generated_output_lower_bound": 0,
+  "helper_generated_output_complete": false,
+  "helper_true_headroom": null,
+  "literal_status_cost_aggregates": {
+    "frozen-for-independent-evaluation": {
+      "admissions": 34,
+      "charged_slot_seconds": 26280.966980934143,
+      "reported_output_lower_bound": 1324204,
+      "labelled_status_only": true
+    },
+    "infrastructure_error": {
+      "admissions": 2,
+      "charged_slot_seconds": 1.2232534885406494,
+      "reported_output_lower_bound": 0,
+      "labelled_status_only": true
+    },
+    "infrastructure_error_reconciled": {
+      "admissions": 2,
+      "charged_slot_seconds": 1159.4372186660767,
+      "reported_output_lower_bound": 428,
+      "labelled_status_only": true
+    },
+    "failed-or-incomplete-preserved": {
+      "admissions": 12,
+      "charged_slot_seconds": 9448.598692178726,
+      "reported_output_lower_bound": 342775,
+      "labelled_status_only": true
+    },
+    "frozen-for-independent-canary-evaluation": {
+      "admissions": 1,
+      "charged_slot_seconds": 337.0089807510376,
+      "reported_output_lower_bound": 9968,
+      "labelled_status_only": true
+    },
+    "pre-native-metadata-infrastructure-failure": {
+      "admissions": 2,
+      "charged_slot_seconds": 756.9323682785034,
+      "reported_output_lower_bound": 0,
+      "labelled_status_only": true
+    }
+  },
+  "positive_cost_scalars": {
+    "admissions": 53,
+    "observed_native_goals": 49,
+    "cumulative_occupied_slot_seconds": 37984.16749429703,
+    "cumulative_occupied_slot_hours": 10.55115763730473,
+    "committed_slot_seconds": 0,
+    "candidate_reported_generated_output_lower_bound": 1677375,
+    "pre_native_failed_admissions": 2,
+    "pre_native_failure_occupied_seconds": 756.9323682785034,
+    "t15_case_wall_seconds": 2613.935077905655,
+    "t15_measured_candidate_occupied_seconds": 1323.6632299423218,
+    "t15_wall_complement_overhead_upper_bound_seconds": 1290.2718479633331,
+    "t15_known_generated_output_lower_bound": 80397
+  },
+  "t15_metadata_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/t15-redo1-incomplete-final-costs.json",
+    "sha256": "94ea7ef3d7d3b3ab4ad0ed5906eea3ade6d6031bb88a396a216c6845f50b7f8b"
+  },
+  "queue_visibility_interval_samples": {
+    "last_epoch": 1790899686.1238725,
+    "last_classification": "Z-free-blocked-queue",
+    "sampled_seconds_by_classification": {
+      "Z-full-ready-queue": 6311.218453168869,
+      "Z-occupied-no-ready-queue": 2805.2569575309753,
+      "Z-free-ready-queue": 400.728150844574,
+      "Z-free-blocked-queue": 1703.1800107955933
+    },
+    "sample_count": 225,
+    "basis": "Observed metadata intervals charged to previous observed state; approximate visibility/delay view, not source/candidate elapsed subtraction"
+  },
+  "unknown_exact_cost_fields": {
+    "setup_seconds": null,
+    "render_seconds": null,
+    "evaluation_seconds": null,
+    "management_seconds": null,
+    "exact_native_service_wait_seconds": null,
+    "helper_generated_output_total": null,
+    "candidate_generated_output_total": null,
+    "input_token_total": null,
+    "cache_token_total": null,
+    "monetary_cost": null
+  },
+  "attribution_boundary": "Sampled queue visibility and measured T15 wall-complement bound do not allocate exact setup/render/management/evaluation categories and are not added to occupied-slot totals. Optional current-source admission wait is management/evaluation-limited; no candidate failure or source absence inferred. All failed/pre-native admissions remain charged admission through release.",
+  "authority_deadline": {
+    "deadline_epoch": 1790904541,
+    "deadline_utc": "2026-10-02T01:29:01+00:00",
+    "final_hour_start_epoch": 1790900941,
+    "final_hour_start_utc": "2026-10-02T00:29:01+00:00",
+    "remaining_work_seconds": 4854.876127481461,
+    "excluded_user_idle_seconds": 84135,
+    "excluded_seconds_immutable_expected": 84135
+  },
+  "coverage_completion_not_inferred": true,
+  "unknown_is_not_zero": true,
+  "continuing_same_accounting_task": true
+}

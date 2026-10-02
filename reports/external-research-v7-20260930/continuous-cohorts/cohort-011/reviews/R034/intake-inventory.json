@@ -1,0 +1,99 @@
+{
+  "report_id": "R034",
+  "case_id": "C061",
+  "verified_epoch": 1790898680.7384453,
+  "stage_sha256": "b83775d05962211956a596207373a618a8f90dad919e8e1cd22d1a5f6f20c163",
+  "manifest_sha256": "00844568fd397d28b4bfb09fb6d27194156a8b075a5c0341542f0f63ddae3725",
+  "verified_files": [
+    {
+      "relative_path": "PROTOCOL.md",
+      "absolute_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R034/PROTOCOL.md",
+      "sha256": "f0427cc8d1495e368b8b79cb9ead18cc65d4b0b2e8b509e338b86923ee5b1e15",
+      "bytes": 6471,
+      "mode": "0o400",
+      "device": 64512,
+      "inode": 13765089,
+      "nlink": 1,
+      "symlink": false
+    },
+    {
+      "relative_path": "auxiliary-prebound-inputs-v1/ADDENDUM.json",
+      "absolute_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R034/auxiliary-prebound-inputs-v1/ADDENDUM.json",
+      "sha256": "f1825af35c061606497a9e21748fe839a98f44daf8f8573337f6f908fbb1e9a6",
+      "bytes": 244,
+      "mode": "0o400",
+      "device": 64512,
+      "inode": 13765098,
+      "nlink": 1,
+      "symlink": false
+    },
+    {
+      "relative_path": "auxiliary-prebound-inputs-v1/catalog.json",
+      "absolute_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R034/auxiliary-prebound-inputs-v1/catalog.json",
+      "sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+      "bytes": 1563,
+      "mode": "0o400",
+      "device": 64512,
+      "inode": 13765093,
+      "nlink": 1,
+      "symlink": false
+    },
+    {
+      "relative_path": "current-report.md",
+      "absolute_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R034/current-report.md",
+      "sha256": "b41b3ef16e08d0578f1473673f87436ff611b6e7a45d1f241b628330101dffc0",
+      "bytes": 36758,
+      "mode": "0o400",
+      "device": 64512,
+      "inode": 13765088,
+      "nlink": 1,
+      "symlink": false
+    },
+    {
+      "relative_path": "eligibility.json",
+      "absolute_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R034/eligibility.json",
+      "sha256": "1dbb0006ccbc12ad4b31eb1c52e3e2e30abf304fcffb2f3938e0609079c42531",
+      "bytes": 8325,
+      "mode": "0o400",
+      "device": 64512,
+      "inode": 13765099,
+      "nlink": 1,
+      "symlink": false
+    },
+    {
+      "relative_path": "inputs/brief.md",
+      "absolute_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R034/inputs/brief.md",
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "bytes": 905,
+      "mode": "0o400",
+      "device": 64512,
+      "inode": 13765091,
+      "nlink": 1,
+      "symlink": false
+    },
+    {
+      "relative_path": "inputs/plan/Viewer.md",
+      "absolute_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R034/inputs/plan/Viewer.md",
+      "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "bytes": 1498,
+      "mode": "0o400",
+      "device": 64512,
+      "inode": 13765097,
+      "nlink": 1,
+      "symlink": false
+    },
+    {
+      "relative_path": "inputs/sources/S003.txt",
+      "absolute_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R034/inputs/sources/S003.txt",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 36980,
+      "mode": "0o400",
+      "device": 64512,
+      "inode": 13765095,
+      "nlink": 1,
+      "symlink": false
+    }
+  ],
+  "phase_two_opened": false,
+  "native_execution_identity": "UNKNOWN; not inferred from current structural metadata"
+}

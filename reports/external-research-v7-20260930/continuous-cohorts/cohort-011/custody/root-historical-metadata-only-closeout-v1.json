@@ -1,0 +1,18 @@
+{
+  "schema": "er7.historical_preservation_metadata_only_closeout.v1",
+  "captured_epoch": 1790899754.3419244,
+  "baseline_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/historical-preservation-baseline.json",
+  "baseline_manifest_sha256": "643293db2793f1a806b840c6b9e8d863bd8fb6c668fca89854bb344cad34f61d",
+  "counts": {
+    "original_rows": 8311,
+    "regular_same_bytes": 8311,
+    "size_changed": 0,
+    "missing": 0,
+    "non_regular": 0,
+    "unsafe_path": 0
+  },
+  "elapsed_seconds": 0.33072638511657715,
+  "content_reads": 0,
+  "full_content_hash_verification": "NOT_PERFORMED; raw native/private contents excluded by current privacy authority",
+  "conclusion": "Metadata sizes alone do not prove byte or semantic preservation. Original baseline retained unchanged; no historical file mutations performed by this check."
+}

@@ -1,0 +1,5308 @@
+{
+  "schema": "er7.independent.current.semantic.assessment.v1",
+  "report_id": "R035",
+  "reviewer": "integrated_ome_current_grading_v6",
+  "frozen_epoch": 1790899827.7179847,
+  "report_sha256": "29b6f7be23ae4271553c9da86305292037ec348285b521443a62d1290080a3f7",
+  "stage_sha256": "4111234d731bd0f74aa8cd3fbd3b0f06d7e2d9c29b2d8cd497f07c03d1b187de",
+  "manifest_sha256": "002c0c5e878abd3302765bc6139913d722dedb3f899cfdd7d3a1264105624f40",
+  "input_pins": [
+    {
+      "relative_path": "PROTOCOL.md",
+      "absolute_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R035/PROTOCOL.md",
+      "sha256": "f0427cc8d1495e368b8b79cb9ead18cc65d4b0b2e8b509e338b86923ee5b1e15",
+      "bytes": 6471,
+      "mode": "0o400",
+      "device": 64512,
+      "inode": 13765108,
+      "nlink": 1,
+      "symlink": false
+    },
+    {
+      "relative_path": "auxiliary-prebound-inputs-v1/ADDENDUM.json",
+      "absolute_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R035/auxiliary-prebound-inputs-v1/ADDENDUM.json",
+      "sha256": "f1825af35c061606497a9e21748fe839a98f44daf8f8573337f6f908fbb1e9a6",
+      "bytes": 244,
+      "mode": "0o400",
+      "device": 64512,
+      "inode": 13765117,
+      "nlink": 1,
+      "symlink": false
+    },
+    {
+      "relative_path": "auxiliary-prebound-inputs-v1/catalog.json",
+      "absolute_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R035/auxiliary-prebound-inputs-v1/catalog.json",
+      "sha256": "c8ece69004061096eecdfe5cbcf909c05ac0f3ed85f9bab45704c270f723658a",
+      "bytes": 1563,
+      "mode": "0o400",
+      "device": 64512,
+      "inode": 13765112,
+      "nlink": 1,
+      "symlink": false
+    },
+    {
+      "relative_path": "current-report.md",
+      "absolute_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R035/current-report.md",
+      "sha256": "29b6f7be23ae4271553c9da86305292037ec348285b521443a62d1290080a3f7",
+      "bytes": 35319,
+      "mode": "0o400",
+      "device": 64512,
+      "inode": 13765107,
+      "nlink": 1,
+      "symlink": false
+    },
+    {
+      "relative_path": "eligibility.json",
+      "absolute_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R035/eligibility.json",
+      "sha256": "1dbb0006ccbc12ad4b31eb1c52e3e2e30abf304fcffb2f3938e0609079c42531",
+      "bytes": 8325,
+      "mode": "0o400",
+      "device": 64512,
+      "inode": 13765118,
+      "nlink": 1,
+      "symlink": false
+    },
+    {
+      "relative_path": "inputs/brief.md",
+      "absolute_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R035/inputs/brief.md",
+      "sha256": "f4f88faef06f7cc95c6935e2e43afe562bbdfc29ee85d984f8c59f0232c8556a",
+      "bytes": 905,
+      "mode": "0o400",
+      "device": 64512,
+      "inode": 13765110,
+      "nlink": 1,
+      "symlink": false
+    },
+    {
+      "relative_path": "inputs/plan/Viewer.md",
+      "absolute_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R035/inputs/plan/Viewer.md",
+      "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "bytes": 1498,
+      "mode": "0o400",
+      "device": 64512,
+      "inode": 13765116,
+      "nlink": 1,
+      "symlink": false
+    },
+    {
+      "relative_path": "inputs/sources/S003.txt",
+      "absolute_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/continuous-ome-current-v1/current/R035/inputs/sources/S003.txt",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "bytes": 36980,
+      "mode": "0o400",
+      "device": 64512,
+      "inode": 13765114,
+      "nlink": 1,
+      "symlink": false
+    }
+  ],
+  "source_scope": {
+    "fixed_case": "ome-normative-dev-v1",
+    "count": 1,
+    "bytes": 36980,
+    "lines": 896,
+    "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+    "all_original_source_bytes_hash_verified": true,
+    "all_source_lines_semantically_reviewed": true,
+    "identical_source_product_protocol_pins_reused_from_current_case": "R034",
+    "not_expanded_original_OME_case": true,
+    "live_fetch": false
+  },
+  "current_semantic_companions": [],
+  "complete_coverage": true,
+  "material_claims": [
+    {
+      "id": "R035-C0001",
+      "claim_label": "META",
+      "report_locator": "current-report.md:3",
+      "assertion": "The current report declares V001",
+      "kind": "report-status",
+      "outcome": "supported",
+      "evidence_locators": [
+        "current-report.md:3"
+      ],
+      "reason": "Current declared version, not proof of its version history."
+    },
+    {
+      "id": "R035-C0002",
+      "claim_label": "META",
+      "report_locator": "current-report.md:4",
+      "assertion": "The fixed case is ome-normative-dev-v1",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "catalog.json:2-4"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0003",
+      "claim_label": "META",
+      "report_locator": "current-report.md:7",
+      "assertion": "Only S003 is admitted",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:1-10",
+        "catalog.json:4-20",
+        "intake-inventory.json"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0004",
+      "claim_label": "META",
+      "report_locator": "current-report.md:7",
+      "assertion": "Header date is 8 September 2026",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:1-10",
+        "catalog.json:4-20",
+        "intake-inventory.json"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0005",
+      "claim_label": "META",
+      "report_locator": "current-report.md:7",
+      "assertion": "Edition URL matches the first-party alias",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:1-10",
+        "catalog.json:4-20",
+        "intake-inventory.json"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0006",
+      "claim_label": "META",
+      "report_locator": "current-report.md:7",
+      "assertion": "Source has 36980 bytes and 896 lines",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:1-10",
+        "catalog.json:4-20",
+        "intake-inventory.json"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0007",
+      "claim_label": "META",
+      "report_locator": "current-report.md:7",
+      "assertion": "Source SHA matches the sealed catalog",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:1-10",
+        "catalog.json:4-20",
+        "intake-inventory.json"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0008",
+      "claim_label": "META",
+      "report_locator": "current-report.md:6",
+      "assertion": "Both questions occurred in one native Goal",
+      "kind": "native-execution-self-report",
+      "outcome": "unresolved",
+      "evidence_locators": [
+        "current-report.md:6"
+      ],
+      "reason": "Native Goal/execution evidence remains inaccessible."
+    },
+    {
+      "id": "R035-C0009",
+      "claim_label": "META",
+      "report_locator": "current-report.md:7",
+      "assertion": "The author cache is byte-identical to the admitted source",
+      "kind": "acquisition-self-report",
+      "outcome": "unresolved",
+      "evidence_locators": [
+        "current-report.md:7,14"
+      ],
+      "reason": "Author cache/acquisition carrier is outside the current allowlist; report strings are not execution qualification."
+    },
+    {
+      "id": "R035-C0010",
+      "claim_label": "META",
+      "report_locator": "current-report.md:8",
+      "assertion": "Every proposed validation is UNEXECUTED",
+      "kind": "report-status",
+      "outcome": "supported",
+      "evidence_locators": [
+        "current-report.md:8,163-177"
+      ],
+      "reason": "Current report status is verified; no execution credit given."
+    },
+    {
+      "id": "R035-C0011",
+      "claim_label": "META",
+      "report_locator": "current-report.md:8",
+      "assertion": "The current report presents no empirical validation result",
+      "kind": "report-status",
+      "outcome": "supported",
+      "evidence_locators": [
+        "current-report.md:8,163-177"
+      ],
+      "reason": "Current report status is verified; no execution credit given."
+    },
+    {
+      "id": "R035-C0012",
+      "claim_label": "META",
+      "report_locator": "current-report.md:8",
+      "assertion": "No test, fileset opening or library exercise occurred",
+      "kind": "native-execution-self-report",
+      "outcome": "unresolved",
+      "evidence_locators": [
+        "current-report.md:8"
+      ],
+      "reason": "Actual native operations are phase-two evidence."
+    },
+    {
+      "id": "R035-C0013",
+      "claim_label": "METHOD",
+      "report_locator": "current-report.md:14",
+      "assertion": "cache_source copied S003 and emitted the stated hash/byte count",
+      "kind": "acquisition-self-report",
+      "outcome": "unresolved",
+      "evidence_locators": [
+        "current-report.md:14"
+      ],
+      "reason": "Acquisition self-report, no receipt inspected."
+    },
+    {
+      "id": "R035-C0014",
+      "claim_label": "METHOD",
+      "report_locator": "current-report.md:15",
+      "assertion": "Three reads covered lines 1-896 once with matching hashes",
+      "kind": "acquisition-self-report",
+      "outcome": "unresolved",
+      "evidence_locators": [
+        "current-report.md:15-16,184"
+      ],
+      "reason": "Read counts/history are not independently established in the current phase."
+    },
+    {
+      "id": "R035-C0015",
+      "claim_label": "METHOD",
+      "report_locator": "current-report.md:15",
+      "assertion": "Q2 reused the context without full expansion or targeted reread",
+      "kind": "acquisition-self-report",
+      "outcome": "unresolved",
+      "evidence_locators": [
+        "current-report.md:15-16,184"
+      ],
+      "reason": "Read counts/history are not independently established in the current phase."
+    },
+    {
+      "id": "R035-C0016",
+      "claim_label": "METHOD",
+      "report_locator": "current-report.md:17",
+      "assertion": "RFC2119 rules apply despite lowercase terms",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:24-27,56-66,867-888"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0017",
+      "claim_label": "METHOD",
+      "report_locator": "current-report.md:17",
+      "assertion": "Prose is normative except marked non-normative sections/examples/notes",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:24-27,56-66,867-888"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0018",
+      "claim_label": "METHOD",
+      "report_locator": "current-report.md:17",
+      "assertion": "The capture says released version 0.5",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:24-27,56-66,867-888"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0019",
+      "claim_label": "METHOD",
+      "report_locator": "current-report.md:17",
+      "assertion": "Later draft changes may be unsupported",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:24-27,56-66,867-888"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0020",
+      "claim_label": "METHOD",
+      "report_locator": "current-report.md:18",
+      "assertion": "Fixed scope contains one source/version/capture",
+      "kind": "authority-classification",
+      "outcome": "supported",
+      "evidence_locators": [
+        "catalog.json:4-20",
+        "S003:1-10"
+      ],
+      "reason": "Correct evidence boundary, distinct from whether the author actually inspected it."
+    },
+    {
+      "id": "R035-C0021",
+      "claim_label": "METHOD",
+      "report_locator": "current-report.md:18",
+      "assertion": "Scoped absence cannot establish ecosystem-wide absence",
+      "kind": "authority-classification",
+      "outcome": "supported",
+      "evidence_locators": [
+        "catalog.json:4-20",
+        "S003:1-10"
+      ],
+      "reason": "Correct evidence boundary, distinct from whether the author actually inspected it."
+    },
+    {
+      "id": "R035-C0022",
+      "claim_label": "METHOD",
+      "report_locator": "current-report.md:18",
+      "assertion": "No additional page, implementation or real fileset was examined",
+      "kind": "acquisition-self-report",
+      "outcome": "unresolved",
+      "evidence_locators": [
+        "current-report.md:18"
+      ],
+      "reason": "Acquisition history is closed."
+    },
+    {
+      "id": "R035-C0023",
+      "claim_label": "METHOD",
+      "report_locator": "current-report.md:20",
+      "assertion": "Finding IDs are shared identically with acquisition JSON",
+      "kind": "acquisition-self-report",
+      "outcome": "unresolved",
+      "evidence_locators": [
+        "current-report.md:20"
+      ],
+      "reason": "Acquisition JSON not admitted for current meaning; no identity inferred from this statement."
+    },
+    {
+      "id": "R035-C0024",
+      "claim_label": "F01",
+      "report_locator": "current-report.md:29",
+      "assertion": "0.5 storage uses Zarr v3",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:67-72,87-100"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0025",
+      "claim_label": "F01",
+      "report_locator": "current-report.md:29",
+      "assertion": "The listed Zarr features may be used unless explicitly disallowed",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:67-72,87-100"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0026",
+      "claim_label": "F01",
+      "report_locator": "current-report.md:29",
+      "assertion": "Group attributes reside in zarr.json",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:67-72,87-100"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0027",
+      "claim_label": "F01",
+      "report_locator": "current-report.md:29",
+      "assertion": "Chunks follow array metadata",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:67-72,87-100"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0028",
+      "claim_label": "F01",
+      "report_locator": "current-report.md:29",
+      "assertion": "No separate disallow-list appears, so the whole feature surface is in scope",
+      "kind": "source-fact",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:67-72,438-439"
+      ],
+      "reason": "There is no standalone disallow-list, but the label integer-only rule is an explicit feature restriction. The conforming-writer/unsupported-reader qualifier prevents treating arbitrary float labels as valid."
+    },
+    {
+      "id": "R035-C0029",
+      "claim_label": "F01",
+      "report_locator": "current-report.md:29",
+      "assertion": "A reader should support chosen conforming features or clearly explain refusal",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:67-72",
+        "Viewer.md:7,11"
+      ],
+      "reason": "App capability/failure policy, not a format-defined error behavior."
+    },
+    {
+      "id": "R035-C0030",
+      "claim_label": "F02",
+      "report_locator": "current-report.md:32",
+      "assertion": "Metadata is under attributes.ome",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:87-89,149-165,320-326,476-482,563-569"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0031",
+      "claim_label": "F02",
+      "report_locator": "current-report.md:32",
+      "assertion": "Metadata version is a string",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:87-89,149-165,320-326,476-482,563-569"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0032",
+      "claim_label": "F02",
+      "report_locator": "current-report.md:32",
+      "assertion": "Versions agree within a hierarchy",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:87-89,149-165,320-326,476-482,563-569"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0033",
+      "claim_label": "F02",
+      "report_locator": "current-report.md:32",
+      "assertion": "Different filesets can declare different versions",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:87-89,149-165,320-326,476-482,563-569"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0034",
+      "claim_label": "F02",
+      "report_locator": "current-report.md:32",
+      "assertion": "multiscales/omero are namespaced, despite the overview shorthand",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:87-89,149-165,320-326,476-482,563-569"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0035",
+      "claim_label": "F02",
+      "report_locator": "current-report.md:32",
+      "assertion": "A reader using only top-level multiscales can miss 0.5 metadata",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:87-89,149-165,320-326,476-482,563-569"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0036",
+      "claim_label": "F03",
+      "report_locator": "current-report.md:35",
+      "assertion": "RFC2119 terms retain force when lowercased",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:56-66,341,351,370,867-888"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0037",
+      "claim_label": "F03",
+      "report_locator": "current-report.md:35",
+      "assertion": "Examples and notes are not normative",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:56-66,341,351,370,867-888"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0038",
+      "claim_label": "F03",
+      "report_locator": "current-report.md:35",
+      "assertion": "JSON comments are disallowed",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:56-66,341,351,370,867-888"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0039",
+      "claim_label": "F03",
+      "report_locator": "current-report.md:35",
+      "assertion": "Commented examples are explanatory",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:56-66,341,351,370,867-888"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0040",
+      "claim_label": "F03",
+      "report_locator": "current-report.md:35",
+      "assertion": "Tree/code blocks are illustrative unless surrounding normative prose governs them",
+      "kind": "source-presentation-interpretation",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:388-397,877-888"
+      ],
+      "reason": "A labeled interpretive inference; flat capture loses example/note class markers, and descriptive normative assertions need not contain a keyword."
+    },
+    {
+      "id": "R035-C0041",
+      "claim_label": "F03",
+      "report_locator": "current-report.md:35",
+      "assertion": "Selection prose is governing while pseudocode/comment is illustrative",
+      "kind": "source-presentation-interpretation",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:388-397,877-888"
+      ],
+      "reason": "A labeled interpretive inference; flat capture loses example/note class markers, and descriptive normative assertions need not contain a keyword."
+    },
+    {
+      "id": "R035-C0042",
+      "claim_label": "F04",
+      "report_locator": "current-report.md:40",
+      "assertion": "Images are groups of groups/arrays",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:78-100,299-303"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0043",
+      "claim_label": "F04",
+      "report_locator": "current-report.md:40",
+      "assertion": "Each resolution level is a separate array",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:78-100,299-303"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0044",
+      "claim_label": "F04",
+      "report_locator": "current-report.md:40",
+      "assertion": "Rank is two to five",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:78-100,299-303"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0045",
+      "claim_label": "F04",
+      "report_locator": "current-report.md:40",
+      "assertion": "Axis names are arbitrary",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:78-100,299-303"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0046",
+      "claim_label": "F04",
+      "report_locator": "current-report.md:40",
+      "assertion": "Time precedes channel/custom then space",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:78-100,299-303"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0047",
+      "claim_label": "F04",
+      "report_locator": "current-report.md:40",
+      "assertion": "Array names are arbitrary and metadata defines order",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:78-100,299-303"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0048",
+      "claim_label": "F04",
+      "report_locator": "current-report.md:40",
+      "assertion": "zyx is a spatial SHOULD for the stated anisotropic case",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:78-100,299-303"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0049",
+      "claim_label": "F05",
+      "report_locator": "current-report.md:43",
+      "assertion": "Axis names are required and unique",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:166-174,825-827"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0050",
+      "claim_label": "F05",
+      "report_locator": "current-report.md:43",
+      "assertion": "Axis type is SHOULD-level",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:166-174,825-827"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0051",
+      "claim_label": "F05",
+      "report_locator": "current-report.md:43",
+      "assertion": "Custom type strings are legal",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:166-174,825-827"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0052",
+      "claim_label": "F05",
+      "report_locator": "current-report.md:43",
+      "assertion": "Unit is SHOULD-level",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:166-174,825-827"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0053",
+      "claim_label": "F05",
+      "report_locator": "current-report.md:43",
+      "assertion": "Recommended units are listed space/time strings",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:166-174,825-827"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0054",
+      "claim_label": "F05",
+      "report_locator": "current-report.md:43",
+      "assertion": "Axis count matches array rank",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:166-174,825-827"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0055",
+      "claim_label": "F05",
+      "report_locator": "current-report.md:43",
+      "assertion": "dimension_names is required and matches names",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:166-174,825-827"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0056",
+      "claim_label": "F05",
+      "report_locator": "current-report.md:43",
+      "assertion": "0.5.2 history clarifies this requirement",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:166-174,825-827"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0057",
+      "claim_label": "F05",
+      "report_locator": "current-report.md:43",
+      "assertion": "The clarification proves the requirement does not apply to earlier versions",
+      "kind": "source-fact",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:825-827"
+      ],
+      "reason": "A clarification in the 0.5 history does not alone establish the contents of unadmitted prior versions. The 0.5 requirement itself is supported."
+    },
+    {
+      "id": "R035-C0058",
+      "claim_label": "F06",
+      "report_locator": "current-report.md:46",
+      "assertion": "multiscales requires axes",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:294-309"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0059",
+      "claim_label": "F06",
+      "report_locator": "current-report.md:46",
+      "assertion": "Axis count is two through five",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:294-309"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0060",
+      "claim_label": "F06",
+      "report_locator": "current-report.md:46",
+      "assertion": "Two or three spatial axes are required",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:294-309"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0061",
+      "claim_label": "F06",
+      "report_locator": "current-report.md:46",
+      "assertion": "At most one time and one channel/null/custom axis are permitted",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:294-309"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0062",
+      "claim_label": "F06",
+      "report_locator": "current-report.md:46",
+      "assertion": "datasets is required",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:294-309"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0063",
+      "claim_label": "F06",
+      "report_locator": "current-report.md:46",
+      "assertion": "Each dataset has a group-relative path",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:294-309"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0064",
+      "claim_label": "F06",
+      "report_locator": "current-report.md:46",
+      "assertion": "Dataset order is highest-to-lowest",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:294-309"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0065",
+      "claim_label": "F06",
+      "report_locator": "current-report.md:46",
+      "assertion": "Arrays match axes rank/order and are at most five-dimensional",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:294-309"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0066",
+      "claim_label": "F06",
+      "report_locator": "current-report.md:46",
+      "assertion": "Dataset transformations are required and allow only scale/translation",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:294-309"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0067",
+      "claim_label": "F06",
+      "report_locator": "current-report.md:47",
+      "assertion": "Exactly one scale is required",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:310"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0068",
+      "claim_label": "F06",
+      "report_locator": "current-report.md:47",
+      "assertion": "When physical/time scaling is unavailable the scale is a relative-to-first-level ratio",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:310"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0069",
+      "claim_label": "F06",
+      "report_locator": "current-report.md:47",
+      "assertion": "No-downsampling fallback is 1.0",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:310"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0070",
+      "claim_label": "F06",
+      "report_locator": "current-report.md:47",
+      "assertion": "Scale also encodes time duration",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:310"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0071",
+      "claim_label": "F06",
+      "report_locator": "current-report.md:47",
+      "assertion": "Scale is absolute at level zero and relative ratios at every later level",
+      "kind": "source-fact",
+      "outcome": "contradicted",
+      "evidence_locators": [
+        "S003:310,339-363"
+      ],
+      "reason": "The ratio rule is conditional on unavailable/inapplicable calibration. Calibrated levels independently supply physical voxel size; the example gives 0.5,1.0,2.0 micrometer scales, not a universal level-zero-plus-ratio interpretation."
+    },
+    {
+      "id": "R035-C0072",
+      "claim_label": "F06",
+      "report_locator": "current-report.md:48",
+      "assertion": "Translation is optional, at most one and follows scale",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:311"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0073",
+      "claim_label": "F06",
+      "report_locator": "current-report.md:49",
+      "assertion": "Scale and translation lengths equal axes count",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:312"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0074",
+      "claim_label": "F06",
+      "report_locator": "current-report.md:50",
+      "assertion": "Optional multiscales transforms follow dataset transforms and share rules",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:314-316,368-374"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0075",
+      "claim_label": "F06",
+      "report_locator": "current-report.md:50",
+      "assertion": "The example has a shared time-unit scale",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:314-316,368-374"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0076",
+      "claim_label": "F06",
+      "report_locator": "current-report.md:51",
+      "assertion": "name, downscaling type and metadata are SHOULD-level",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:317-319"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0077",
+      "claim_label": "F06",
+      "report_locator": "current-report.md:52",
+      "assertion": "The text describes sole-entry use, name choice and first-entry fallback",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:388-389"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0078",
+      "claim_label": "F06",
+      "report_locator": "current-report.md:53",
+      "assertion": "Sibling independent image groups are shown",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:82-85"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0079",
+      "claim_label": "F07",
+      "report_locator": "current-report.md:56",
+      "assertion": "Transformation entries require type",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:276-293"
+      ],
+      "reason": "Representation support limits are explicit; no binary encoding is invented."
+    },
+    {
+      "id": "R035-C0080",
+      "claim_label": "F07",
+      "report_locator": "current-report.md:56",
+      "assertion": "General types are identity, translation and scale",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:276-293"
+      ],
+      "reason": "Representation support limits are explicit; no binary encoding is invented."
+    },
+    {
+      "id": "R035-C0081",
+      "claim_label": "F07",
+      "report_locator": "current-report.md:56",
+      "assertion": "Identity is default/typically implicit",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:276-293"
+      ],
+      "reason": "Representation support limits are explicit; no binary encoding is invented."
+    },
+    {
+      "id": "R035-C0082",
+      "claim_label": "F07",
+      "report_locator": "current-report.md:56",
+      "assertion": "Vectors can be inline floats or binary data at a container path",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:276-293"
+      ],
+      "reason": "Representation support limits are explicit; no binary encoding is invented."
+    },
+    {
+      "id": "R035-C0083",
+      "claim_label": "F07",
+      "report_locator": "current-report.md:56",
+      "assertion": "Transformations apply sequentially",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:276-293"
+      ],
+      "reason": "Representation support limits are explicit; no binary encoding is invented."
+    },
+    {
+      "id": "R035-C0084",
+      "claim_label": "F07",
+      "report_locator": "current-report.md:56",
+      "assertion": "Inline-only vector support declines a permitted representation",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:276-293"
+      ],
+      "reason": "Representation support limits are explicit; no binary encoding is invented."
+    },
+    {
+      "id": "R035-C0085",
+      "claim_label": "F08",
+      "report_locator": "current-report.md:61",
+      "assertion": "omero is optional and transitional",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:60-64,398-430,828-830"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0086",
+      "claim_label": "F08",
+      "report_locator": "current-report.md:61",
+      "assertion": "Transitional reading may be MUST/SHOULD and writing usually MAY",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:60-64,398-430,828-830"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0087",
+      "claim_label": "F08",
+      "report_locator": "current-report.md:61",
+      "assertion": "If omero is present channels is required",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:60-64,398-430,828-830"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0088",
+      "claim_label": "F08",
+      "report_locator": "current-report.md:61",
+      "assertion": "Channel color is six-digit RGB",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:60-64,398-430,828-830"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0089",
+      "claim_label": "F08",
+      "report_locator": "current-report.md:61",
+      "assertion": "Window requires min/max/start/end",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:60-64,398-430,828-830"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0090",
+      "claim_label": "F08",
+      "report_locator": "current-report.md:61",
+      "assertion": "id/name/active/coefficient/family/inverted/label/rdefs occur in the example",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:60-64,398-430,828-830"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0091",
+      "claim_label": "F08",
+      "report_locator": "current-report.md:61",
+      "assertion": "rdefs defaultT/defaultZ/model is not a required field",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:60-64,398-430,828-830"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0092",
+      "claim_label": "F08",
+      "report_locator": "current-report.md:61",
+      "assertion": "The improved description returned in 0.5.1",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:60-64,398-430,828-830"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0093",
+      "claim_label": "F08",
+      "report_locator": "current-report.md:61",
+      "assertion": "Channels array must match c dimension size",
+      "kind": "source-fact",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:403,877-888"
+      ],
+      "reason": "The factual correspondence is shown in an example comment, not an independently established unconditional MUST. The report cites the comment without preserving that qualifier."
+    },
+    {
+      "id": "R035-C0094",
+      "claim_label": "F09",
+      "report_locator": "current-report.md:66",
+      "assertion": "labels is nested under the image group",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:431-514"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0095",
+      "claim_label": "F09",
+      "report_locator": "current-report.md:66",
+      "assertion": "Pixels have eight signed/unsigned integer dtypes",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:431-514"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0096",
+      "claim_label": "F09",
+      "report_locator": "current-report.md:66",
+      "assertion": "Intermediate groups are allowed without metadata",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:431-514"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0097",
+      "claim_label": "F09",
+      "report_locator": "current-report.md:66",
+      "assertion": "labels requires a paths array",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:431-514"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0098",
+      "claim_label": "F09",
+      "report_locator": "current-report.md:66",
+      "assertion": "All label images SHOULD be listed",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:431-514"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0099",
+      "claim_label": "F09",
+      "report_locator": "current-report.md:66",
+      "assertion": "Label images implement multiscales",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:431-514"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0100",
+      "claim_label": "F09",
+      "report_locator": "current-report.md:66",
+      "assertion": "Label level count matches original image",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:431-514"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0101",
+      "claim_label": "F09",
+      "report_locator": "current-report.md:66",
+      "assertion": "image-label is SHOULD-level",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:431-514"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0102",
+      "claim_label": "F09",
+      "report_locator": "current-report.md:66",
+      "assertion": "colors/version are SHOULD-level with required types when present",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:431-514"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0103",
+      "claim_label": "F09",
+      "report_locator": "current-report.md:66",
+      "assertion": "Readers SHOULD honor specified label colors",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:431-514"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0104",
+      "claim_label": "F09",
+      "report_locator": "current-report.md:66",
+      "assertion": "Color entries require integer label-value",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:431-514"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0105",
+      "claim_label": "F09",
+      "report_locator": "current-report.md:66",
+      "assertion": "rgba is optional, four 0..255 integers with alpha fourth",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:431-514"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0106",
+      "claim_label": "F09",
+      "report_locator": "current-report.md:66",
+      "assertion": "Property entries require label-value and may carry different arbitrary keys",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:431-514"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0107",
+      "claim_label": "F09",
+      "report_locator": "current-report.md:66",
+      "assertion": "Source is optional and an object",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:431-514"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0108",
+      "claim_label": "F09",
+      "report_locator": "current-report.md:66",
+      "assertion": "Source.image is an optional relative path with ../../ default",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:431-514"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0109",
+      "claim_label": "F09",
+      "report_locator": "current-report.md:66",
+      "assertion": "The example shows half-blue/half-opacity",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:431-514"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0110",
+      "claim_label": "F09",
+      "report_locator": "current-report.md:66",
+      "assertion": "Every label dimension MUST equal image dimension or one",
+      "kind": "source-fact",
+      "outcome": "contradicted",
+      "evidence_locators": [
+        "S003:104-108,877-888"
+      ],
+      "reason": "This is a should statement in a layout example/comment, not the asserted hard requirement. The report elsewhere classifies diagrams as illustrative."
+    },
+    {
+      "id": "R035-C0111",
+      "claim_label": "F09",
+      "report_locator": "current-report.md:66",
+      "assertion": "Absent image-label/colors has no source-specified palette and fallback is a product choice",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:456-474",
+        "S003:1-896"
+      ],
+      "reason": "Reader SHOULD guidance is conditional on supplied colors."
+    },
+    {
+      "id": "R035-C0112",
+      "claim_label": "F10",
+      "report_locator": "current-report.md:71",
+      "assertion": "HCS has well, row and plate groups above images",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:118-148,641-739"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0113",
+      "claim_label": "F10",
+      "report_locator": "current-report.md:71",
+      "assertion": "Well and plate implement their metadata",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:118-148,641-739"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0114",
+      "claim_label": "F10",
+      "report_locator": "current-report.md:71",
+      "assertion": "Empty well/row groups SHOULD NOT exist",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:118-148,641-739"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0115",
+      "claim_label": "F10",
+      "report_locator": "current-report.md:71",
+      "assertion": "Sparse plates are exemplified by two wells of 96",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:118-148,641-739"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0116",
+      "claim_label": "F10",
+      "report_locator": "current-report.md:72",
+      "assertion": "Plate columns/rows are required",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:515-560"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0117",
+      "claim_label": "F10",
+      "report_locator": "current-report.md:72",
+      "assertion": "Physical row/column names are listed even when empty",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:515-560"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0118",
+      "claim_label": "F10",
+      "report_locator": "current-report.md:72",
+      "assertion": "Names are alphanumeric, case-sensitive and unique",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:515-560"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0119",
+      "claim_label": "F10",
+      "report_locator": "current-report.md:72",
+      "assertion": "Case-insensitive collision avoidance is SHOULD",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:515-560"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0120",
+      "claim_label": "F10",
+      "report_locator": "current-report.md:72",
+      "assertion": "Plate version is a required string",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:515-560"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0121",
+      "claim_label": "F10",
+      "report_locator": "current-report.md:72",
+      "assertion": "Wells paths are row/column with no extra directories",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:515-560"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0122",
+      "claim_label": "F10",
+      "report_locator": "current-report.md:72",
+      "assertion": "Indices are zero-based and agree with path",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:515-560"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0123",
+      "claim_label": "F10",
+      "report_locator": "current-report.md:72",
+      "assertion": "field_count is SHOULD with positive integer type",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:515-560"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0124",
+      "claim_label": "F10",
+      "report_locator": "current-report.md:72",
+      "assertion": "Plate name is SHOULD",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:515-560"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0125",
+      "claim_label": "F10",
+      "report_locator": "current-report.md:72",
+      "assertion": "acquisitions is optional",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:515-560"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0126",
+      "claim_label": "F10",
+      "report_locator": "current-report.md:72",
+      "assertion": "Acquisition ids are unique nonnegative integers",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:515-560"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0127",
+      "claim_label": "F10",
+      "report_locator": "current-report.md:72",
+      "assertion": "Acquisition name/maxfieldcount is SHOULD",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:515-560"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0128",
+      "claim_label": "F10",
+      "report_locator": "current-report.md:72",
+      "assertion": "Description/start/end is optional with integer timestamps",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:515-560"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0129",
+      "claim_label": "F10",
+      "report_locator": "current-report.md:73",
+      "assertion": "Well images is required and lists FOVs",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:740-752"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0130",
+      "claim_label": "F10",
+      "report_locator": "current-report.md:73",
+      "assertion": "FOV paths are required, alphanumeric, case-sensitive and unique",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:740-752"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0131",
+      "claim_label": "F10",
+      "report_locator": "current-report.md:73",
+      "assertion": "Multiple acquisitions require matching acquisition identifiers",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:740-752"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0132",
+      "claim_label": "F10",
+      "report_locator": "current-report.md:73",
+      "assertion": "Well version is SHOULD with string value",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:740-752"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0133",
+      "claim_label": "F11",
+      "report_locator": "current-report.md:78",
+      "assertion": "bioformats2raw.layout is transitional",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:175-275"
+      ],
+      "reason": "Collection fallback remains within the described bioformats2raw context."
+    },
+    {
+      "id": "R035-C0134",
+      "claim_label": "F11",
+      "report_locator": "current-report.md:78",
+      "assertion": "It was introduced in 0.4",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:175-275"
+      ],
+      "reason": "Collection fallback remains within the described bioformats2raw context."
+    },
+    {
+      "id": "R035-C0135",
+      "claim_label": "F11",
+      "report_locator": "current-report.md:78",
+      "assertion": "Its future replacement is planned",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:175-275"
+      ],
+      "reason": "Collection fallback remains within the described bioformats2raw context."
+    },
+    {
+      "id": "R035-C0136",
+      "claim_label": "F11",
+      "report_locator": "current-report.md:78",
+      "assertion": "Top-level value three is required",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:175-275"
+      ],
+      "reason": "Collection fallback remains within the described bioformats2raw context."
+    },
+    {
+      "id": "R035-C0137",
+      "claim_label": "F11",
+      "report_locator": "current-report.md:78",
+      "assertion": "OME-XML file is SHOULD",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:175-275"
+      ],
+      "reason": "Collection fallback remains within the described bioformats2raw context."
+    },
+    {
+      "id": "R035-C0138",
+      "claim_label": "F11",
+      "report_locator": "current-report.md:78",
+      "assertion": "If present OME-XML uses MetadataOnly not binary/TiffData",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:175-275"
+      ],
+      "reason": "Collection fallback remains within the described bioformats2raw context."
+    },
+    {
+      "id": "R035-C0139",
+      "claim_label": "F11",
+      "report_locator": "current-report.md:78",
+      "assertion": "Plate takes precedence and supplies locations",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:175-275"
+      ],
+      "reason": "Collection fallback remains within the described bioformats2raw context."
+    },
+    {
+      "id": "R035-C0140",
+      "claim_label": "F11",
+      "report_locator": "current-report.md:78",
+      "assertion": "Collections and plates cannot mix in this layout",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:175-275"
+      ],
+      "reason": "Collection fallback remains within the described bioformats2raw context."
+    },
+    {
+      "id": "R035-C0141",
+      "claim_label": "F11",
+      "report_locator": "current-report.md:78",
+      "assertion": "OME.series is optional and a string path list",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:175-275"
+      ],
+      "reason": "Collection fallback remains within the described bioformats2raw context."
+    },
+    {
+      "id": "R035-C0142",
+      "claim_label": "F11",
+      "report_locator": "current-report.md:78",
+      "assertion": "Series order matches supplied OME-XML",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:175-275"
+      ],
+      "reason": "Collection fallback remains within the described bioformats2raw context."
+    },
+    {
+      "id": "R035-C0143",
+      "claim_label": "F11",
+      "report_locator": "current-report.md:78",
+      "assertion": "The collection fallback is consecutive zero-based groups",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:175-275"
+      ],
+      "reason": "Collection fallback remains within the described bioformats2raw context."
+    },
+    {
+      "id": "R035-C0144",
+      "claim_label": "F11",
+      "report_locator": "current-report.md:78",
+      "assertion": "Readers SHOULD surface multiple images",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:175-275"
+      ],
+      "reason": "Collection fallback remains within the described bioformats2raw context."
+    },
+    {
+      "id": "R035-C0145",
+      "claim_label": "F11",
+      "report_locator": "current-report.md:78",
+      "assertion": "Readers MAY use series, show all/offer choice, and ignore other root nodes",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:175-275"
+      ],
+      "reason": "Collection fallback remains within the described bioformats2raw context."
+    },
+    {
+      "id": "R035-C0146",
+      "claim_label": "F12",
+      "report_locator": "current-report.md:83",
+      "assertion": "Format hierarchy can be local, HTTP or object storage",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:73-77",
+        "brief.md:5",
+        "Viewer.md:9"
+      ],
+      "reason": "brief.md:4 is blank; the actual boundary is at line five."
+    },
+    {
+      "id": "R035-C0147",
+      "claim_label": "F12",
+      "report_locator": "current-report.md:83",
+      "assertion": "Local-only scope is a product boundary",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:73-77",
+        "brief.md:5",
+        "Viewer.md:9"
+      ],
+      "reason": "brief.md:4 is blank; the actual boundary is at line five."
+    },
+    {
+      "id": "R035-C0148",
+      "claim_label": "F13",
+      "report_locator": "current-report.md:86",
+      "assertion": "camelCase is naming-style guidance",
+      "kind": "engineering-inference",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:524,538,557-559,456,809-812"
+      ],
+      "reason": "Exact-key lookup is a sound implication."
+    },
+    {
+      "id": "R035-C0149",
+      "claim_label": "F13",
+      "report_locator": "current-report.md:86",
+      "assertion": "Existing inconsistent spellings are acknowledged",
+      "kind": "engineering-inference",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:524,538,557-559,456,809-812"
+      ],
+      "reason": "Exact-key lookup is a sound implication."
+    },
+    {
+      "id": "R035-C0150",
+      "claim_label": "F13",
+      "report_locator": "current-report.md:86",
+      "assertion": "rowIndex/columnIndex, field_count, maximumfieldcount and image-label illustrate the mix",
+      "kind": "engineering-inference",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:524,538,557-559,456,809-812"
+      ],
+      "reason": "Exact-key lookup is a sound implication."
+    },
+    {
+      "id": "R035-C0151",
+      "claim_label": "F13",
+      "report_locator": "current-report.md:86",
+      "assertion": "Parsers need the specified literal keys",
+      "kind": "engineering-inference",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:524,538,557-559,456,809-812"
+      ],
+      "reason": "Exact-key lookup is a sound implication."
+    },
+    {
+      "id": "R035-C0152",
+      "claim_label": "F14",
+      "report_locator": "current-report.md:89",
+      "assertion": "Plate version is a MUST",
+      "kind": "counterevidence-and-product-option",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:550-551,563-640,643-739,877-888"
+      ],
+      "reason": "Useful source-supported counterevidence and a labeled possibility; no actual writer behavior or tolerance result is credited."
+    },
+    {
+      "id": "R035-C0153",
+      "claim_label": "F14",
+      "report_locator": "current-report.md:89",
+      "assertion": "Both plate metadata examples omit version",
+      "kind": "counterevidence-and-product-option",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:550-551,563-640,643-739,877-888"
+      ],
+      "reason": "Useful source-supported counterevidence and a labeled possibility; no actual writer behavior or tolerance result is credited."
+    },
+    {
+      "id": "R035-C0154",
+      "claim_label": "F14",
+      "report_locator": "current-report.md:89",
+      "assertion": "Examples do not override normative requirements",
+      "kind": "counterevidence-and-product-option",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:550-551,563-640,643-739,877-888"
+      ],
+      "reason": "Useful source-supported counterevidence and a labeled possibility; no actual writer behavior or tolerance result is credited."
+    },
+    {
+      "id": "R035-C0155",
+      "claim_label": "F14",
+      "report_locator": "current-report.md:89",
+      "assertion": "A writer might copy the incomplete example",
+      "kind": "counterevidence-and-product-option",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:550-551,563-640,643-739,877-888"
+      ],
+      "reason": "Useful source-supported counterevidence and a labeled possibility; no actual writer behavior or tolerance result is credited."
+    },
+    {
+      "id": "R035-C0156",
+      "claim_label": "F14",
+      "report_locator": "current-report.md:89",
+      "assertion": "Missing-version tolerance needs an explicit product decision",
+      "kind": "counterevidence-and-product-option",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:550-551,563-640,643-739,877-888"
+      ],
+      "reason": "Useful source-supported counterevidence and a labeled possibility; no actual writer behavior or tolerance result is credited."
+    },
+    {
+      "id": "R035-C0157",
+      "claim_label": "F15",
+      "report_locator": "current-report.md:92",
+      "assertion": "The capture says release 0.5",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:24-27,180-181,825-842"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0158",
+      "claim_label": "F15",
+      "report_locator": "current-report.md:92",
+      "assertion": "Migration scripts are promised",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:24-27,180-181,825-842"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0159",
+      "claim_label": "F15",
+      "report_locator": "current-report.md:92",
+      "assertion": "Draft changes may be unsupported",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:24-27,180-181,825-842"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0160",
+      "claim_label": "F15",
+      "report_locator": "current-report.md:92",
+      "assertion": "0.5.0 records v3",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:24-27,180-181,825-842"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0161",
+      "claim_label": "F15",
+      "report_locator": "current-report.md:92",
+      "assertion": "0.5.1 records omero",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:24-27,180-181,825-842"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0162",
+      "claim_label": "F15",
+      "report_locator": "current-report.md:92",
+      "assertion": "0.5.2 records dimension_names",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:24-27,180-181,825-842"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0163",
+      "claim_label": "F15",
+      "report_locator": "current-report.md:92",
+      "assertion": "Earlier history records bioformats2raw and axes units/transforms",
+      "kind": "source-fact",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:24-27,180-181,825-842"
+      ],
+      "reason": "Verified against the complete admitted source/product text at these locators."
+    },
+    {
+      "id": "R035-C0164",
+      "claim_label": "U01",
+      "report_locator": "current-report.md:97",
+      "assertion": "Implementation section only says See Tools",
+      "kind": "scoped-unresolved",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:813-814",
+        "catalog.json:4",
+        "brief.md:5"
+      ],
+      "reason": "Research requirement is at brief line five rather than the cited line four."
+    },
+    {
+      "id": "R035-C0165",
+      "claim_label": "U01",
+      "report_locator": "current-report.md:97",
+      "assertion": "No actual implementation behavior is evidenced here",
+      "kind": "scoped-unresolved",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:813-814",
+        "catalog.json:4",
+        "brief.md:5"
+      ],
+      "reason": "Research requirement is at brief line five rather than the cited line four."
+    },
+    {
+      "id": "R035-C0166",
+      "claim_label": "U01",
+      "report_locator": "current-report.md:97",
+      "assertion": "Real interop remains unresolved",
+      "kind": "scoped-unresolved",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:813-814",
+        "catalog.json:4",
+        "brief.md:5"
+      ],
+      "reason": "Research requirement is at brief line five rather than the cited line four."
+    },
+    {
+      "id": "R035-C0167",
+      "claim_label": "U01",
+      "report_locator": "current-report.md:97",
+      "assertion": "Tools is an undeveloped external lead",
+      "kind": "scoped-unresolved",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:813-814",
+        "catalog.json:4",
+        "brief.md:5"
+      ],
+      "reason": "Research requirement is at brief line five rather than the cited line four."
+    },
+    {
+      "id": "R035-C0168",
+      "claim_label": "U01",
+      "report_locator": "current-report.md:97",
+      "assertion": "The brief requested actual-reader research",
+      "kind": "scoped-unresolved",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:813-814",
+        "catalog.json:4",
+        "brief.md:5"
+      ],
+      "reason": "Research requirement is at brief line five rather than the cited line four."
+    },
+    {
+      "id": "R035-C0169",
+      "claim_label": "U02",
+      "report_locator": "current-report.md:100",
+      "assertion": "No view-fitting pyramid selection rule was found",
+      "kind": "scoped-negative",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:306,388-397",
+        "S003:1-896"
+      ],
+      "reason": "Complete-source scoped absence; does not establish absence in external ecosystem documents."
+    },
+    {
+      "id": "R035-C0170",
+      "claim_label": "U02",
+      "report_locator": "current-report.md:100",
+      "assertion": "The chunk-size hint is an illustrative comment",
+      "kind": "scoped-negative",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:306,388-397",
+        "S003:1-896"
+      ],
+      "reason": "Complete-source scoped absence; does not establish absence in external ecosystem documents."
+    },
+    {
+      "id": "R035-C0171",
+      "claim_label": "U02",
+      "report_locator": "current-report.md:100",
+      "assertion": "No reader error-handling semantics were found",
+      "kind": "scoped-negative",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:306,388-397",
+        "S003:1-896"
+      ],
+      "reason": "Complete-source scoped absence; does not establish absence in external ecosystem documents."
+    },
+    {
+      "id": "R035-C0172",
+      "claim_label": "U02",
+      "report_locator": "current-report.md:100",
+      "assertion": "No performance/responsiveness requirements were found",
+      "kind": "scoped-negative",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:306,388-397",
+        "S003:1-896"
+      ],
+      "reason": "Complete-source scoped absence; does not establish absence in external ecosystem documents."
+    },
+    {
+      "id": "R035-C0173",
+      "claim_label": "U02",
+      "report_locator": "current-report.md:100",
+      "assertion": "These decisions remain product-owned",
+      "kind": "scoped-negative",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:306,388-397",
+        "S003:1-896"
+      ],
+      "reason": "Complete-source scoped absence; does not establish absence in external ecosystem documents."
+    },
+    {
+      "id": "R035-C0174",
+      "claim_label": "U03",
+      "report_locator": "current-report.md:103",
+      "assertion": "Required plate-version and conditionally required image-label version values are strings",
+      "kind": "scoped-unresolved",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:459-460,550-551",
+        "S003:1-896"
+      ],
+      "reason": "image-label version presence remains SHOULD; its supplied value must be a string."
+    },
+    {
+      "id": "R035-C0175",
+      "claim_label": "U03",
+      "report_locator": "current-report.md:103",
+      "assertion": "The capture does not enumerate accepted version values",
+      "kind": "scoped-unresolved",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:459-460,550-551",
+        "S003:1-896"
+      ],
+      "reason": "image-label version presence remains SHOULD; its supplied value must be a string."
+    },
+    {
+      "id": "R035-C0176",
+      "claim_label": "U04",
+      "report_locator": "current-report.md:106",
+      "assertion": "OME-XML, WebGateway, RFC2119, UDUNITS-2 and Tools are external leads beyond fixed S003",
+      "kind": "authority-classification",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:170,257-259,424-425,813-814,896",
+        "catalog.json:4"
+      ],
+      "reason": "Source-authority scope is retained."
+    },
+    {
+      "id": "R035-C0177",
+      "claim_label": "U04",
+      "report_locator": "current-report.md:106",
+      "assertion": "No external-document factual content is supplied",
+      "kind": "authority-classification",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:170,257-259,424-425,813-814,896",
+        "catalog.json:4"
+      ],
+      "reason": "Source-authority scope is retained."
+    },
+    {
+      "id": "R035-C0178",
+      "claim_label": "U04",
+      "report_locator": "current-report.md:106",
+      "assertion": "Those external authorities were not inspected",
+      "kind": "acquisition-self-report",
+      "outcome": "unresolved",
+      "evidence_locators": [
+        "current-report.md:106"
+      ],
+      "reason": "Acquisition history remains locked."
+    },
+    {
+      "id": "R035-C0179",
+      "claim_label": "SCOPE",
+      "report_locator": "current-report.md:108",
+      "assertion": "Editing/export/remote services/clinical interpretation are product exclusions",
+      "kind": "product-scope",
+      "outcome": "supported",
+      "evidence_locators": [
+        "brief.md:5",
+        "Viewer.md:9",
+        "S003:73-77"
+      ],
+      "reason": "brief.md:4 is a wrong locator. No omitted assigned normative facet is reclassified inapplicable."
+    },
+    {
+      "id": "R035-C0180",
+      "claim_label": "SCOPE",
+      "report_locator": "current-report.md:108",
+      "assertion": "Format can still support remote media",
+      "kind": "product-scope",
+      "outcome": "supported",
+      "evidence_locators": [
+        "brief.md:5",
+        "Viewer.md:9",
+        "S003:73-77"
+      ],
+      "reason": "brief.md:4 is a wrong locator. No omitted assigned normative facet is reclassified inapplicable."
+    },
+    {
+      "id": "R035-C0181",
+      "claim_label": "TRANSITIONAL",
+      "report_locator": "current-report.md:110",
+      "assertion": "omero and bioformats2raw are transitional",
+      "kind": "engineering-risk",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:60-64,175-181,398-400"
+      ],
+      "reason": "Removal/change is intended or possible; not proof of a particular future release outcome."
+    },
+    {
+      "id": "R035-C0182",
+      "claim_label": "TRANSITIONAL",
+      "report_locator": "current-report.md:110",
+      "assertion": "Hard-wired capability carries future version risk",
+      "kind": "engineering-risk",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:60-64,175-181,398-400"
+      ],
+      "reason": "Removal/change is intended or possible; not proof of a particular future release outcome."
+    },
+    {
+      "id": "R035-C0183",
+      "claim_label": "P01",
+      "report_locator": "current-report.md:117",
+      "assertion": "Thin plan needs plain/collection/HCS discovery dispositions",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:82-85,118-148,204-206,243-275,552-560,641-750",
+        "Viewer.md:5"
+      ],
+      "reason": "Product capability breadth can be explicitly limited; the proposed extension does not supply real-tool evidence."
+    },
+    {
+      "id": "R035-C0184",
+      "claim_label": "P01",
+      "report_locator": "current-report.md:117",
+      "assertion": "Collection series/OME-XML ordering matters",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:82-85,118-148,204-206,243-275,552-560,641-750",
+        "Viewer.md:5"
+      ],
+      "reason": "Product capability breadth can be explicitly limited; the proposed extension does not supply real-tool evidence."
+    },
+    {
+      "id": "R035-C0185",
+      "claim_label": "P01",
+      "report_locator": "current-report.md:117",
+      "assertion": "Plate precedence and no-mixing remain",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:82-85,118-148,204-206,243-275,552-560,641-750",
+        "Viewer.md:5"
+      ],
+      "reason": "Product capability breadth can be explicitly limited; the proposed extension does not supply real-tool evidence."
+    },
+    {
+      "id": "R035-C0186",
+      "claim_label": "P01",
+      "report_locator": "current-report.md:117",
+      "assertion": "Multiple images SHOULD be surfaced",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:82-85,118-148,204-206,243-275,552-560,641-750",
+        "Viewer.md:5"
+      ],
+      "reason": "Product capability breadth can be explicitly limited; the proposed extension does not supply real-tool evidence."
+    },
+    {
+      "id": "R035-C0187",
+      "claim_label": "P01",
+      "report_locator": "current-report.md:117",
+      "assertion": "Absent empty rows/wells and sparse plates must be handled",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:82-85,118-148,204-206,243-275,552-560,641-750",
+        "Viewer.md:5"
+      ],
+      "reason": "Product capability breadth can be explicitly limited; the proposed extension does not supply real-tool evidence."
+    },
+    {
+      "id": "R035-C0188",
+      "claim_label": "P02",
+      "report_locator": "current-report.md:120",
+      "assertion": "Navigation controls use metadata rather than fixed positions",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:168-174,299-303",
+        "Viewer.md:5"
+      ],
+      "reason": "Absent dimensions are recognized, but absent-versus-length-one identity is not made explicit."
+    },
+    {
+      "id": "R035-C0189",
+      "claim_label": "P02",
+      "report_locator": "current-report.md:120",
+      "assertion": "Unique names and recommended/custom types matter",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:168-174,299-303",
+        "Viewer.md:5"
+      ],
+      "reason": "Absent dimensions are recognized, but absent-versus-length-one identity is not made explicit."
+    },
+    {
+      "id": "R035-C0190",
+      "claim_label": "P02",
+      "report_locator": "current-report.md:120",
+      "assertion": "Null/custom axes need a policy",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:168-174,299-303",
+        "Viewer.md:5"
+      ],
+      "reason": "Absent dimensions are recognized, but absent-versus-length-one identity is not made explicit."
+    },
+    {
+      "id": "R035-C0191",
+      "claim_label": "P02",
+      "report_locator": "current-report.md:120",
+      "assertion": "Runtime axis order/rank governs controls",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:168-174,299-303",
+        "Viewer.md:5"
+      ],
+      "reason": "Absent dimensions are recognized, but absent-versus-length-one identity is not made explicit."
+    },
+    {
+      "id": "R035-C0192",
+      "claim_label": "P02",
+      "report_locator": "current-report.md:120",
+      "assertion": "A 2D file can lack time/channel/third-space controls",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:168-174,299-303",
+        "Viewer.md:5"
+      ],
+      "reason": "Absent dimensions are recognized, but absent-versus-length-one identity is not made explicit."
+    },
+    {
+      "id": "R035-C0193",
+      "claim_label": "P03",
+      "report_locator": "current-report.md:123",
+      "assertion": "Dataset transforms precede multiscales transforms",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:170-174,285-289,308-316,368-374"
+      ],
+      "reason": "Correct conditions except the independently graded scale interpretation."
+    },
+    {
+      "id": "R035-C0194",
+      "claim_label": "P03",
+      "report_locator": "current-report.md:123",
+      "assertion": "Dataset has exactly one scale and optional following translation",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:170-174,285-289,308-316,368-374"
+      ],
+      "reason": "Correct conditions except the independently graded scale interpretation."
+    },
+    {
+      "id": "R035-C0195",
+      "claim_label": "P03",
+      "report_locator": "current-report.md:123",
+      "assertion": "Vector lengths match axes",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:170-174,285-289,308-316,368-374"
+      ],
+      "reason": "Correct conditions except the independently graded scale interpretation."
+    },
+    {
+      "id": "R035-C0196",
+      "claim_label": "P03",
+      "report_locator": "current-report.md:123",
+      "assertion": "Units are recommended",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:170-174,285-289,308-316,368-374"
+      ],
+      "reason": "Correct conditions except the independently graded scale interpretation."
+    },
+    {
+      "id": "R035-C0197",
+      "claim_label": "P03",
+      "report_locator": "current-report.md:123",
+      "assertion": "Scales include time duration",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:170-174,285-289,308-316,368-374"
+      ],
+      "reason": "Correct conditions except the independently graded scale interpretation."
+    },
+    {
+      "id": "R035-C0198",
+      "claim_label": "P03",
+      "report_locator": "current-report.md:123",
+      "assertion": "Binary path representation requires support or explicit refusal",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:170-174,285-289,308-316,368-374"
+      ],
+      "reason": "Correct conditions except the independently graded scale interpretation."
+    },
+    {
+      "id": "R035-C0199",
+      "claim_label": "P03",
+      "report_locator": "current-report.md:123",
+      "assertion": "Per-level scales are ratios to level zero, defaulting to one on nondownsampled axes",
+      "kind": "plan-implication",
+      "outcome": "contradicted",
+      "evidence_locators": [
+        "S003:310,339-363"
+      ],
+      "reason": "The quoted ratio/default rule applies only when physical/time calibration is unavailable or inapplicable; applying it universally changes calibrated geometry."
+    },
+    {
+      "id": "R035-C0200",
+      "claim_label": "P04",
+      "report_locator": "current-report.md:126",
+      "assertion": "datasets order controls levels",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:93-94,306,388-397",
+        "Viewer.md:5"
+      ],
+      "reason": "Correctly separates multiscales-entry choice from pyramid-level heuristic."
+    },
+    {
+      "id": "R035-C0201",
+      "claim_label": "P04",
+      "report_locator": "current-report.md:126",
+      "assertion": "Array names are arbitrary",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:93-94,306,388-397",
+        "Viewer.md:5"
+      ],
+      "reason": "Correctly separates multiscales-entry choice from pyramid-level heuristic."
+    },
+    {
+      "id": "R035-C0202",
+      "claim_label": "P04",
+      "report_locator": "current-report.md:126",
+      "assertion": "Multiple multiscales need a chosen entry/fallback policy",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:93-94,306,388-397",
+        "Viewer.md:5"
+      ],
+      "reason": "Correctly separates multiscales-entry choice from pyramid-level heuristic."
+    },
+    {
+      "id": "R035-C0203",
+      "claim_label": "P04",
+      "report_locator": "current-report.md:126",
+      "assertion": "View-fitting is product-owned",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:93-94,306,388-397",
+        "Viewer.md:5"
+      ],
+      "reason": "Correctly separates multiscales-entry choice from pyramid-level heuristic."
+    },
+    {
+      "id": "R035-C0204",
+      "claim_label": "P05",
+      "report_locator": "current-report.md:128",
+      "assertion": "Equal scale-level counts guarantee structural overlay alignment",
+      "kind": "plan-implication",
+      "outcome": "contradicted",
+      "evidence_locators": [
+        "S003:433,454-455,472-474"
+      ],
+      "reason": "Count equality does not guarantee common sampling transforms or actual relative source-image association. The source only says dimensions/transforms are usually the same."
+    },
+    {
+      "id": "R035-C0205",
+      "claim_label": "P05",
+      "report_locator": "current-report.md:129",
+      "assertion": "Label levels match the original source count",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:431-474"
+      ],
+      "reason": "Necessary format facts, but no relative source-resolution mechanism or exact categorical pipeline is proposed."
+    },
+    {
+      "id": "R035-C0206",
+      "claim_label": "P05",
+      "report_locator": "current-report.md:129",
+      "assertion": "Label pixels are integers",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:431-474"
+      ],
+      "reason": "Necessary format facts, but no relative source-resolution mechanism or exact categorical pipeline is proposed."
+    },
+    {
+      "id": "R035-C0207",
+      "claim_label": "P05",
+      "report_locator": "current-report.md:129",
+      "assertion": "Declared labels list is required but SHOULD-complete",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:431-474"
+      ],
+      "reason": "Necessary format facts, but no relative source-resolution mechanism or exact categorical pipeline is proposed."
+    },
+    {
+      "id": "R035-C0208",
+      "claim_label": "P05",
+      "report_locator": "current-report.md:129",
+      "assertion": "Readers SHOULD use supplied rgba/alpha",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:431-474"
+      ],
+      "reason": "Necessary format facts, but no relative source-resolution mechanism or exact categorical pipeline is proposed."
+    },
+    {
+      "id": "R035-C0209",
+      "claim_label": "P05",
+      "report_locator": "current-report.md:129",
+      "assertion": "Source.image has ../../ default",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:431-474"
+      ],
+      "reason": "Necessary format facts, but no relative source-resolution mechanism or exact categorical pipeline is proposed."
+    },
+    {
+      "id": "R035-C0210",
+      "claim_label": "P05",
+      "report_locator": "current-report.md:129",
+      "assertion": "Missing colors need a product fallback",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:431-474"
+      ],
+      "reason": "Necessary format facts, but no relative source-resolution mechanism or exact categorical pipeline is proposed."
+    },
+    {
+      "id": "R035-C0211",
+      "claim_label": "P05",
+      "report_locator": "current-report.md:129",
+      "assertion": "Level registration is possible by construction solely from equal counts",
+      "kind": "plan-implication",
+      "outcome": "contradicted",
+      "evidence_locators": [
+        "S003:104-108,433,454-455"
+      ],
+      "reason": "Neither a level-count equality nor the illustrative should comment establishes the asserted geometry/mandatory broadcasting."
+    },
+    {
+      "id": "R035-C0212",
+      "claim_label": "P05",
+      "report_locator": "current-report.md:129",
+      "assertion": "Broadcasting is required from the dimension-or-one overview comment",
+      "kind": "plan-implication",
+      "outcome": "contradicted",
+      "evidence_locators": [
+        "S003:104-108,433,454-455"
+      ],
+      "reason": "Neither a level-count equality nor the illustrative should comment establishes the asserted geometry/mandatory broadcasting."
+    },
+    {
+      "id": "R035-C0213",
+      "claim_label": "P06",
+      "report_locator": "current-report.md:132",
+      "assertion": "omero rendering metadata is optional/transitional",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:60-64,398-430",
+        "Viewer.md:5"
+      ],
+      "reason": "No empirical rendering or format-mandated fallback is asserted."
+    },
+    {
+      "id": "R035-C0214",
+      "claim_label": "P06",
+      "report_locator": "current-report.md:132",
+      "assertion": "Required channel color/window fields are conditional",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:60-64,398-430",
+        "Viewer.md:5"
+      ],
+      "reason": "No empirical rendering or format-mandated fallback is asserted."
+    },
+    {
+      "id": "R035-C0215",
+      "claim_label": "P06",
+      "report_locator": "current-report.md:132",
+      "assertion": "rdefs are example fields",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:60-64,398-430",
+        "Viewer.md:5"
+      ],
+      "reason": "No empirical rendering or format-mandated fallback is asserted."
+    },
+    {
+      "id": "R035-C0216",
+      "claim_label": "P06",
+      "report_locator": "current-report.md:132",
+      "assertion": "Absent omero needs a chosen fallback",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:60-64,398-430",
+        "Viewer.md:5"
+      ],
+      "reason": "No empirical rendering or format-mandated fallback is asserted."
+    },
+    {
+      "id": "R035-C0217",
+      "claim_label": "P06",
+      "report_locator": "current-report.md:132",
+      "assertion": "Grayscale/data-driven window is a product option",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:60-64,398-430",
+        "Viewer.md:5"
+      ],
+      "reason": "No empirical rendering or format-mandated fallback is asserted."
+    },
+    {
+      "id": "R035-C0218",
+      "claim_label": "P06",
+      "report_locator": "current-report.md:132",
+      "assertion": "The only render metadata in the format is omero",
+      "kind": "scoped-negative",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:456-466"
+      ],
+      "reason": "This is true only if read as channel-specific context; literal whole-format wording overlooks image-label colors/rgba."
+    },
+    {
+      "id": "R035-C0219",
+      "claim_label": "P07",
+      "report_locator": "current-report.md:135",
+      "assertion": "Local-only support is a product limit",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:73-77",
+        "Viewer.md:9"
+      ],
+      "reason": "Correct transfer boundary."
+    },
+    {
+      "id": "R035-C0220",
+      "claim_label": "P07",
+      "report_locator": "current-report.md:135",
+      "assertion": "HTTP/S3/GCS storage is permitted by the format",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:73-77",
+        "Viewer.md:9"
+      ],
+      "reason": "Correct transfer boundary."
+    },
+    {
+      "id": "R035-C0221",
+      "claim_label": "P08",
+      "report_locator": "current-report.md:138",
+      "assertion": "Using an existing v3 library is an engineering option",
+      "kind": "engineering-option",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:67-72,813-814",
+        "current-report.md:137-138"
+      ],
+      "reason": "Good retained implementation uncertainty; no outside library fact credited."
+    },
+    {
+      "id": "R035-C0222",
+      "claim_label": "P08",
+      "report_locator": "current-report.md:138",
+      "assertion": "This corpus proves no available/mature library or 0.5 coverage",
+      "kind": "engineering-option",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:67-72,813-814",
+        "current-report.md:137-138"
+      ],
+      "reason": "Good retained implementation uncertainty; no outside library fact credited."
+    },
+    {
+      "id": "R035-C0223",
+      "claim_label": "P08",
+      "report_locator": "current-report.md:138",
+      "assertion": "Library availability is an explicit assumption needing validation",
+      "kind": "engineering-option",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:67-72,813-814",
+        "current-report.md:137-138"
+      ],
+      "reason": "Good retained implementation uncertainty; no outside library fact credited."
+    },
+    {
+      "id": "R035-C0224",
+      "claim_label": "P09",
+      "report_locator": "current-report.md:141",
+      "assertion": "The plan targets released 0.5",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:24-27,149-174,825-842",
+        "Viewer.md:9,11"
+      ],
+      "reason": "Foreseeable compatibility risk, not an observed reader failure."
+    },
+    {
+      "id": "R035-C0225",
+      "claim_label": "P09",
+      "report_locator": "current-report.md:141",
+      "assertion": "0.5 v3/namespace/dimension_names need version discipline",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:24-27,149-174,825-842",
+        "Viewer.md:9,11"
+      ],
+      "reason": "Foreseeable compatibility risk, not an observed reader failure."
+    },
+    {
+      "id": "R035-C0226",
+      "claim_label": "P09",
+      "report_locator": "current-report.md:141",
+      "assertion": "Older filesets need explicit support/refusal policy",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:24-27,149-174,825-842",
+        "Viewer.md:9,11"
+      ],
+      "reason": "Foreseeable compatibility risk, not an observed reader failure."
+    },
+    {
+      "id": "R035-C0227",
+      "claim_label": "P09",
+      "report_locator": "current-report.md:141",
+      "assertion": "Migration scripts are noted but not admitted",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:24-27,149-174,825-842",
+        "Viewer.md:9,11"
+      ],
+      "reason": "Foreseeable compatibility risk, not an observed reader failure."
+    },
+    {
+      "id": "R035-C0228",
+      "claim_label": "P09",
+      "report_locator": "current-report.md:141",
+      "assertion": "Unsupported-version feedback fits the product failure requirement",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:24-27,149-174,825-842",
+        "Viewer.md:9,11"
+      ],
+      "reason": "Foreseeable compatibility risk, not an observed reader failure."
+    },
+    {
+      "id": "R035-C0229",
+      "claim_label": "P10",
+      "report_locator": "current-report.md:144",
+      "assertion": "Format has no reader failure semantics",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:128-129,206,272,426,467",
+        "S003:1-896",
+        "Viewer.md:7,11"
+      ],
+      "reason": "Correct distinction; this does not repair the label alignment or scale interpretation."
+    },
+    {
+      "id": "R035-C0230",
+      "claim_label": "P10",
+      "report_locator": "current-report.md:144",
+      "assertion": "Optional metadata absence is not automatically malformed",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:128-129,206,272,426,467",
+        "S003:1-896",
+        "Viewer.md:7,11"
+      ],
+      "reason": "Correct distinction; this does not repair the label alignment or scale interpretation."
+    },
+    {
+      "id": "R035-C0231",
+      "claim_label": "P10",
+      "report_locator": "current-report.md:144",
+      "assertion": "Empty rows/wells can be absent",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:128-129,206,272,426,467",
+        "S003:1-896",
+        "Viewer.md:7,11"
+      ],
+      "reason": "Correct distinction; this does not repair the label alignment or scale interpretation."
+    },
+    {
+      "id": "R035-C0232",
+      "claim_label": "P10",
+      "report_locator": "current-report.md:144",
+      "assertion": "Layout mixing violates the collection rule",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:128-129,206,272,426,467",
+        "S003:1-896",
+        "Viewer.md:7,11"
+      ],
+      "reason": "Correct distinction; this does not repair the label alignment or scale interpretation."
+    },
+    {
+      "id": "R035-C0233",
+      "claim_label": "P10",
+      "report_locator": "current-report.md:144",
+      "assertion": "Multiple-image reduction should not silently hide images",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:128-129,206,272,426,467",
+        "S003:1-896",
+        "Viewer.md:7,11"
+      ],
+      "reason": "Correct distinction; this does not repair the label alignment or scale interpretation."
+    },
+    {
+      "id": "R035-C0234",
+      "claim_label": "P10",
+      "report_locator": "current-report.md:144",
+      "assertion": "Reader capability refusal differs from malformed input",
+      "kind": "plan-implication",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:128-129,206,272,426,467",
+        "S003:1-896",
+        "Viewer.md:7,11"
+      ],
+      "reason": "Correct distinction; this does not repair the label alignment or scale interpretation."
+    },
+    {
+      "id": "R035-C0235",
+      "claim_label": "P11",
+      "report_locator": "current-report.md:147",
+      "assertion": "Acceptance should cover series choice",
+      "kind": "acceptance-proposal",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:169,272,285-289,301,388-389,426,550-551,641-739",
+        "Viewer.md:11"
+      ],
+      "reason": "Reasonable unexecuted additions, with missing original facet-specific oracles recorded separately."
+    },
+    {
+      "id": "R035-C0236",
+      "claim_label": "P11",
+      "report_locator": "current-report.md:147",
+      "assertion": "Sparse HCS browsing",
+      "kind": "acceptance-proposal",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:169,272,285-289,301,388-389,426,550-551,641-739",
+        "Viewer.md:11"
+      ],
+      "reason": "Reasonable unexecuted additions, with missing original facet-specific oracles recorded separately."
+    },
+    {
+      "id": "R035-C0237",
+      "claim_label": "P11",
+      "report_locator": "current-report.md:147",
+      "assertion": "Custom/null axes",
+      "kind": "acceptance-proposal",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:169,272,285-289,301,388-389,426,550-551,641-739",
+        "Viewer.md:11"
+      ],
+      "reason": "Reasonable unexecuted additions, with missing original facet-specific oracles recorded separately."
+    },
+    {
+      "id": "R035-C0238",
+      "claim_label": "P11",
+      "report_locator": "current-report.md:147",
+      "assertion": "Missing-omero fallback",
+      "kind": "acceptance-proposal",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:169,272,285-289,301,388-389,426,550-551,641-739",
+        "Viewer.md:11"
+      ],
+      "reason": "Reasonable unexecuted additions, with missing original facet-specific oracles recorded separately."
+    },
+    {
+      "id": "R035-C0239",
+      "claim_label": "P11",
+      "report_locator": "current-report.md:147",
+      "assertion": "Earlier-version behavior",
+      "kind": "acceptance-proposal",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:169,272,285-289,301,388-389,426,550-551,641-739",
+        "Viewer.md:11"
+      ],
+      "reason": "Reasonable unexecuted additions, with missing original facet-specific oracles recorded separately."
+    },
+    {
+      "id": "R035-C0240",
+      "claim_label": "P11",
+      "report_locator": "current-report.md:147",
+      "assertion": "Path-vector behavior",
+      "kind": "acceptance-proposal",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:169,272,285-289,301,388-389,426,550-551,641-739",
+        "Viewer.md:11"
+      ],
+      "reason": "Reasonable unexecuted additions, with missing original facet-specific oracles recorded separately."
+    },
+    {
+      "id": "R035-C0241",
+      "claim_label": "P11",
+      "report_locator": "current-report.md:147",
+      "assertion": "Missing-plate-version tolerance",
+      "kind": "acceptance-proposal",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:169,272,285-289,301,388-389,426,550-551,641-739",
+        "Viewer.md:11"
+      ],
+      "reason": "Reasonable unexecuted additions, with missing original facet-specific oracles recorded separately."
+    },
+    {
+      "id": "R035-C0242",
+      "claim_label": "P12",
+      "report_locator": "current-report.md:150",
+      "assertion": "Chunk semantics can enable partial/deferred loading",
+      "kind": "engineering-option",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:70-72,91-100",
+        "S003:1-896",
+        "Viewer.md:7"
+      ],
+      "reason": "Feasibility depends on chosen codec/grid/storage behavior; no performance guarantee or implementation proof."
+    },
+    {
+      "id": "R035-C0243",
+      "claim_label": "P12",
+      "report_locator": "current-report.md:150",
+      "assertion": "Async/cancellation is a product commitment rather than format duty",
+      "kind": "engineering-option",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:70-72,91-100",
+        "S003:1-896",
+        "Viewer.md:7"
+      ],
+      "reason": "Feasibility depends on chosen codec/grid/storage behavior; no performance guarantee or implementation proof."
+    },
+    {
+      "id": "R035-C0244",
+      "claim_label": "OPTION",
+      "report_locator": "current-report.md:154",
+      "assertion": "Existing v3 I/O library behind a reversible interface",
+      "kind": "unexecuted-engineering-option",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:67-72,813-814"
+      ],
+      "reason": "Library existence/completeness is explicitly unverified."
+    },
+    {
+      "id": "R035-C0245",
+      "claim_label": "OPTION",
+      "report_locator": "current-report.md:155",
+      "assertion": "UDUNITS-style conversion with graceful missing/unknown-unit display",
+      "kind": "unexecuted-engineering-option",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:170-172"
+      ],
+      "reason": "Conversion dependency/semantics are external; strings are recommendations."
+    },
+    {
+      "id": "R035-C0246",
+      "claim_label": "OPTION",
+      "report_locator": "current-report.md:156",
+      "assertion": "View-fitting scale heuristic",
+      "kind": "unexecuted-engineering-option",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:306,388-397"
+      ],
+      "reason": "A product option, not a normative selection rule."
+    },
+    {
+      "id": "R035-C0247",
+      "claim_label": "OPTION",
+      "report_locator": "current-report.md:157",
+      "assertion": "Chunk-aligned viewport pipeline and cancellation",
+      "kind": "unexecuted-engineering-option",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:91-100",
+        "Viewer.md:7"
+      ],
+      "reason": "An unexecuted engineering option, not promised performance."
+    },
+    {
+      "id": "R035-C0248",
+      "claim_label": "OPTION",
+      "report_locator": "current-report.md:158",
+      "assertion": "Metadata validation for names, rank, vector lengths, dimension_names, version, order and label dtype",
+      "kind": "unexecuted-engineering-option",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:156,168,173-174,306,312,438"
+      ],
+      "reason": "Cheap metadata policy; tolerance is explicit, not changed source validity."
+    },
+    {
+      "id": "R035-C0249",
+      "claim_label": "OPTION",
+      "report_locator": "current-report.md:159",
+      "assertion": "Sparse HCS plate map/acquisition bookkeeping",
+      "kind": "unexecuted-engineering-option",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:515-808",
+        "Viewer.md:5"
+      ],
+      "reason": "Useful product option."
+    },
+    {
+      "id": "R035-C0250",
+      "claim_label": "OPTION",
+      "report_locator": "current-report.md:160",
+      "assertion": "Grayscale/window and neutral label-color fallbacks",
+      "kind": "unexecuted-engineering-option",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:398-474"
+      ],
+      "reason": "Product-owned optional metadata fallbacks."
+    },
+    {
+      "id": "R035-C0251",
+      "claim_label": "OPTION",
+      "report_locator": "current-report.md:161",
+      "assertion": "Named unsupported limits for path vectors, older versions and missing codecs",
+      "kind": "unexecuted-engineering-option",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:67-72,285-289",
+        "Viewer.md:7"
+      ],
+      "reason": "Explicit refusal limits; no unknown source fact invented."
+    },
+    {
+      "id": "R035-C0252",
+      "claim_label": "VALIDATION",
+      "report_locator": "current-report.md:167",
+      "assertion": "Minimal 2D fixture with coordinates index times scale",
+      "kind": "unexecuted-test-proposal",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:299-312"
+      ],
+      "reason": "Valid only for zero-translation/no extra group transform fixture; it does not test composition offsets."
+    },
+    {
+      "id": "R035-C0253",
+      "claim_label": "VALIDATION",
+      "report_locator": "current-report.md:168",
+      "assertion": "5D fixture with group time scaling and chosen default behavior",
+      "kind": "unexecuted-test-proposal",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:320-387"
+      ],
+      "reason": "No numerical composition/offset oracle is provided."
+    },
+    {
+      "id": "R035-C0254",
+      "claim_label": "VALIDATION",
+      "report_locator": "current-report.md:169",
+      "assertion": "Bioformats collection with series/OME-XML and multiple-image choice",
+      "kind": "unexecuted-test-proposal",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:182-275"
+      ],
+      "reason": "Valid proposal; external OME-XML schema details are not established here."
+    },
+    {
+      "id": "R035-C0255",
+      "claim_label": "VALIDATION",
+      "report_locator": "current-report.md:170",
+      "assertion": "Sparse multi-acquisition HCS browsing",
+      "kind": "unexecuted-test-proposal",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:641-785"
+      ],
+      "reason": "Valid proposed metadata/UX check."
+    },
+    {
+      "id": "R035-C0256",
+      "claim_label": "VALIDATION",
+      "report_locator": "current-report.md:171",
+      "assertion": "Integer labels, equal levels, dimension-one sample, rgba colors and missing-image-label fallback",
+      "kind": "unexecuted-test-proposal",
+      "outcome": "qualified",
+      "evidence_locators": [
+        "S003:104-108,433-514"
+      ],
+      "reason": "Valid proposed fixture, but level equality alone cannot establish registration and exact IDs/resampling are untested."
+    },
+    {
+      "id": "R035-C0257",
+      "claim_label": "VALIDATION",
+      "report_locator": "current-report.md:172",
+      "assertion": "Missing-omero fallback",
+      "kind": "unexecuted-test-proposal",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:426",
+        "Viewer.md:5"
+      ],
+      "reason": "Valid proposal."
+    },
+    {
+      "id": "R035-C0258",
+      "claim_label": "VALIDATION",
+      "report_locator": "current-report.md:173",
+      "assertion": "Missing zarr.json/version/vector-size/float-label/order/duplicate-name negative fixtures",
+      "kind": "unexecuted-test-proposal",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:87-100,156,168,306,312,438",
+        "Viewer.md:11"
+      ],
+      "reason": "Valid proposed invalid inputs; no executed result."
+    },
+    {
+      "id": "R035-C0259",
+      "claim_label": "VALIDATION",
+      "report_locator": "current-report.md:174",
+      "assertion": "Large-load navigation/cancellation soak",
+      "kind": "unexecuted-test-proposal",
+      "outcome": "supported",
+      "evidence_locators": [
+        "Viewer.md:7,11"
+      ],
+      "reason": "No measured latency/result or threshold."
+    },
+    {
+      "id": "R035-C0260",
+      "claim_label": "VALIDATION",
+      "report_locator": "current-report.md:175",
+      "assertion": "0.4 fixture with declared unsupported response",
+      "kind": "unexecuted-test-proposal",
+      "outcome": "supported",
+      "evidence_locators": [
+        "Viewer.md:9,11",
+        "S003:825-842"
+      ],
+      "reason": "Tests chosen support boundary; older source content not admitted."
+    },
+    {
+      "id": "R035-C0261",
+      "claim_label": "VALIDATION",
+      "report_locator": "current-report.md:176",
+      "assertion": "Binary path vector support/refusal",
+      "kind": "unexecuted-test-proposal",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:285-289"
+      ],
+      "reason": "Encoding remains unknown; proposed future fixture needs its own valid bytes."
+    },
+    {
+      "id": "R035-C0262",
+      "claim_label": "VALIDATION",
+      "report_locator": "current-report.md:177",
+      "assertion": "Chosen-language v3 library probe",
+      "kind": "unexecuted-test-proposal",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:813-814",
+        "current-report.md:138"
+      ],
+      "reason": "A future empirical check, not evidence of a library today."
+    },
+    {
+      "id": "R035-C0263",
+      "claim_label": "VALIDATION",
+      "report_locator": "current-report.md:165",
+      "assertion": "Every listed test remains a proposal rather than an executed result",
+      "kind": "report-status",
+      "outcome": "supported",
+      "evidence_locators": [
+        "current-report.md:163-177"
+      ],
+      "reason": "No empirical validation credit."
+    },
+    {
+      "id": "R035-C0264",
+      "claim_label": "COVERAGE",
+      "report_locator": "current-report.md:181",
+      "assertion": "Fixed source identity/date/count is retained",
+      "kind": "authority-classification",
+      "outcome": "supported",
+      "evidence_locators": [
+        "catalog.json:4-20",
+        "S003:1-10"
+      ],
+      "reason": "Original fixed six-facet source remains complete and distinct from expanded OME."
+    },
+    {
+      "id": "R035-C0265",
+      "claim_label": "COVERAGE",
+      "report_locator": "current-report.md:181",
+      "assertion": "External referenced documents stay outside the case",
+      "kind": "authority-classification",
+      "outcome": "supported",
+      "evidence_locators": [
+        "catalog.json:4-20",
+        "S003:1-10"
+      ],
+      "reason": "Original fixed six-facet source remains complete and distinct from expanded OME."
+    },
+    {
+      "id": "R035-C0266",
+      "claim_label": "COVERAGE",
+      "report_locator": "current-report.md:182",
+      "assertion": "Real-reader claims are not empirical implementation evidence",
+      "kind": "authority-classification",
+      "outcome": "supported",
+      "evidence_locators": [
+        "S003:175-275,813-814"
+      ],
+      "reason": "The limitation is retained."
+    },
+    {
+      "id": "R035-C0267",
+      "claim_label": "COVERAGE",
+      "report_locator": "current-report.md:183",
+      "assertion": "Negative statements are scoped to this captured edition",
+      "kind": "report-status",
+      "outcome": "supported",
+      "evidence_locators": [
+        "current-report.md:18,99-108,183"
+      ],
+      "reason": "Scope qualifier is present; it does not make an incorrect inference supported."
+    },
+    {
+      "id": "R035-C0268",
+      "claim_label": "COVERAGE",
+      "report_locator": "current-report.md:184",
+      "assertion": "Read-once reuse, zero rereads and accounting are actual",
+      "kind": "acquisition-self-report",
+      "outcome": "unresolved",
+      "evidence_locators": [
+        "current-report.md:184"
+      ],
+      "reason": "No acquisition/protocol log opened."
+    },
+    {
+      "id": "R035-C0269",
+      "claim_label": "BINDING",
+      "report_locator": "current-report.md:188",
+      "assertion": "Final/acquisition/protocol artifacts are selected and immutable as described",
+      "kind": "carrier-self-report",
+      "outcome": "unresolved",
+      "evidence_locators": [
+        "current-report.md:188"
+      ],
+      "reason": "Only this exact delivered report is admitted as current; other author artifacts are not opened or promoted."
+    }
+  ],
+  "eligible_facets": [
+    {
+      "id": "OME05-C01",
+      "title": "Versioned metadata admission",
+      "coverage": "full",
+      "atomic_conditions": [
+        {
+          "condition_id": "OME05-C01.A01",
+          "required_condition": "0.5 uses Zarr v3",
+          "coverage": "full",
+          "report_locators": [
+            "F01/F02 at 28-32",
+            "P09 at 140-141",
+            "V9 at 175"
+          ],
+          "reason": "The corresponding current format condition/proposal is present."
+        },
+        {
+          "condition_id": "OME05-C01.A02",
+          "required_condition": "Metadata belongs under attributes.ome with version",
+          "coverage": "full",
+          "report_locators": [
+            "F01/F02 at 28-32",
+            "P09 at 140-141",
+            "V9 at 175"
+          ],
+          "reason": "The corresponding current format condition/proposal is present."
+        },
+        {
+          "condition_id": "OME05-C01.A03",
+          "required_condition": "Hierarchy versions are consistent",
+          "coverage": "full",
+          "report_locators": [
+            "F01/F02 at 28-32",
+            "P09 at 140-141",
+            "V9 at 175"
+          ],
+          "reason": "The corresponding current format condition/proposal is present."
+        },
+        {
+          "condition_id": "OME05-C01.A04",
+          "required_condition": "Legacy/version distinction is tied to admission or truthful unsupported status",
+          "coverage": "full",
+          "report_locators": [
+            "F01/F02 at 28-32",
+            "P09 at 140-141",
+            "V9 at 175"
+          ],
+          "reason": "The corresponding current format condition/proposal is present."
+        }
+      ]
+    },
+    {
+      "id": "OME05-C02",
+      "title": "Axis-to-array identity",
+      "coverage": "partial",
+      "atomic_conditions": [
+        {
+          "condition_id": "OME05-C02.A01",
+          "required_condition": "Axis rank/order matches arrays",
+          "coverage": "full",
+          "report_locators": [
+            "F04/F05 at 39-43",
+            "P02 at 119-120",
+            "validation at 158,167-173"
+          ],
+          "reason": "The corresponding current format condition/proposal is present."
+        },
+        {
+          "condition_id": "OME05-C02.A02",
+          "required_condition": "Unique axes and dimension_names matching",
+          "coverage": "full",
+          "report_locators": [
+            "F04/F05 at 39-43",
+            "P02 at 119-120",
+            "validation at 158,167-173"
+          ],
+          "reason": "The corresponding current format condition/proposal is present."
+        },
+        {
+          "condition_id": "OME05-C02.A03",
+          "required_condition": "Arbitrary names cannot dictate conventional positions",
+          "coverage": "full",
+          "report_locators": [
+            "F04/F05 at 39-43",
+            "P02 at 119-120",
+            "validation at 158,167-173"
+          ],
+          "reason": "The corresponding current format condition/proposal is present."
+        },
+        {
+          "condition_id": "OME05-C02.A04",
+          "required_condition": "Optional/absent dimensions remain distinct from length-one dimensions",
+          "coverage": "omitted",
+          "report_locators": [
+            "F04/F05 at 39-43",
+            "P02 at 119-120",
+            "validation at 158,167-173"
+          ],
+          "reason": "A 2D file can lack t/c/third-space is explicit, but absence versus length-one identity is still omitted."
+        },
+        {
+          "condition_id": "OME05-C02.A05",
+          "required_condition": "Do not invent sliders/coordinates for absent or unclassified dimensions",
+          "coverage": "partial",
+          "report_locators": [
+            "F04/F05 at 39-43",
+            "P02 at 119-120",
+            "validation at 158,167-173"
+          ],
+          "reason": "Custom/null policy is required, but absent type and singleton dimensions are not settled."
+        },
+        {
+          "condition_id": "OME05-C02.A06",
+          "required_condition": "Mismatches produce truthful refusal/feedback",
+          "coverage": "full",
+          "report_locators": [
+            "F04/F05 at 39-43",
+            "P02 at 119-120",
+            "validation at 158,167-173"
+          ],
+          "reason": "The corresponding current format condition/proposal is present."
+        }
+      ]
+    },
+    {
+      "id": "OME05-C03",
+      "title": "Declared pyramid selection",
+      "coverage": "partial",
+      "atomic_conditions": [
+        {
+          "condition_id": "OME05-C03.A01",
+          "required_condition": "Dataset paths are group-relative",
+          "coverage": "full",
+          "report_locators": [
+            "F04/F06 at 39-53",
+            "P04 at 125-126",
+            "options at 156,158"
+          ],
+          "reason": "The corresponding current format condition/proposal is present."
+        },
+        {
+          "condition_id": "OME05-C03.A02",
+          "required_condition": "Highest-to-lowest declared order controls selection",
+          "coverage": "full",
+          "report_locators": [
+            "F04/F06 at 39-53",
+            "P04 at 125-126",
+            "options at 156,158"
+          ],
+          "reason": "The corresponding current format condition/proposal is present."
+        },
+        {
+          "condition_id": "OME05-C03.A03",
+          "required_condition": "Array names are arbitrary rather than numeric/lexicographic authority",
+          "coverage": "full",
+          "report_locators": [
+            "F04/F06 at 39-53",
+            "P04 at 125-126",
+            "options at 156,158"
+          ],
+          "reason": "The corresponding current format condition/proposal is present."
+        },
+        {
+          "condition_id": "OME05-C03.A04",
+          "required_condition": "Geometry uses the selected level transformations",
+          "coverage": "partial",
+          "report_locators": [
+            "F04/F06 at 39-53",
+            "P04 at 125-126",
+            "options at 156,158"
+          ],
+          "reason": "Per-level transforms are named, but the universal relative-ratio interpretation corrupts calibrated level geometry."
+        },
+        {
+          "condition_id": "OME05-C03.A05",
+          "required_condition": "Nonuniform/non-power-of-two reductions do not use a fixed formula",
+          "coverage": "full",
+          "report_locators": [
+            "F04/F06 at 39-53",
+            "P04 at 125-126",
+            "options at 156,158"
+          ],
+          "reason": "The corresponding current format condition/proposal is present."
+        },
+        {
+          "condition_id": "OME05-C03.A06",
+          "required_condition": "Missing declared level receives explicit handling",
+          "coverage": "partial",
+          "report_locators": [
+            "F04/F06 at 39-53",
+            "P04 at 125-126",
+            "options at 156,158"
+          ],
+          "reason": "Generic unavailable input handling lacks a declared-but-missing dataset-path rule/test."
+        }
+      ]
+    },
+    {
+      "id": "OME05-C04",
+      "title": "Composed coordinate calibration",
+      "coverage": "partial",
+      "atomic_conditions": [
+        {
+          "condition_id": "OME05-C04.A01",
+          "required_condition": "Transformations apply in listed order",
+          "coverage": "full",
+          "report_locators": [
+            "F06/F07 at 45-56",
+            "P03 at 122-123",
+            "options at 155",
+            "V1/V2 at 167-168"
+          ],
+          "reason": "The corresponding current format condition/proposal is present."
+        },
+        {
+          "condition_id": "OME05-C04.A02",
+          "required_condition": "Scale precedes optional translation",
+          "coverage": "full",
+          "report_locators": [
+            "F06/F07 at 45-56",
+            "P03 at 122-123",
+            "options at 155",
+            "V1/V2 at 167-168"
+          ],
+          "reason": "The corresponding current format condition/proposal is present."
+        },
+        {
+          "condition_id": "OME05-C04.A03",
+          "required_condition": "Dataset transformations precede multiscales transformations",
+          "coverage": "full",
+          "report_locators": [
+            "F06/F07 at 45-56",
+            "P03 at 122-123",
+            "options at 155",
+            "V1/V2 at 167-168"
+          ],
+          "reason": "The corresponding current format condition/proposal is present."
+        },
+        {
+          "condition_id": "OME05-C04.A04",
+          "required_condition": "Missing recommended units/unknown calibration do not authorize invented physical coordinates",
+          "coverage": "partial",
+          "report_locators": [
+            "F06/F07 at 45-56",
+            "P03 at 122-123",
+            "options at 155",
+            "V1/V2 at 167-168"
+          ],
+          "reason": "Unitless fallback exists, but physical scale versus conditional relative scale is misinterpreted."
+        },
+        {
+          "condition_id": "OME05-C04.A05",
+          "required_condition": "Concrete coordinate check exposes reversed composition or omitted offsets",
+          "coverage": "omitted",
+          "report_locators": [
+            "F06/F07 at 45-56",
+            "P03 at 122-123",
+            "options at 155",
+            "V1/V2 at 167-168"
+          ],
+          "reason": "Neither a two-stage offset composition nor numerical coordinate oracle is proposed."
+        },
+        {
+          "condition_id": "OME05-C04.A06",
+          "required_condition": "Transform vector dimension validation is retained",
+          "coverage": "full",
+          "report_locators": [
+            "F06/F07 at 45-56",
+            "P03 at 122-123",
+            "options at 155",
+            "V1/V2 at 167-168"
+          ],
+          "reason": "The corresponding current format condition/proposal is present."
+        }
+      ]
+    },
+    {
+      "id": "OME05-C05",
+      "title": "Associated label discovery and registration",
+      "coverage": "partial",
+      "atomic_conditions": [
+        {
+          "condition_id": "OME05-C05.A01",
+          "required_condition": "Discover declared labels paths, including permitted intermediate hierarchy",
+          "coverage": "full",
+          "report_locators": [
+            "F09 at 65-66",
+            "P05 at 128-129",
+            "V5 at 171"
+          ],
+          "reason": "The corresponding current format condition/proposal is present."
+        },
+        {
+          "condition_id": "OME05-C05.A02",
+          "required_condition": "Label images implement multiscales and match source level count",
+          "coverage": "full",
+          "report_locators": [
+            "F09 at 65-66",
+            "P05 at 128-129",
+            "V5 at 171"
+          ],
+          "reason": "The corresponding current format condition/proposal is present."
+        },
+        {
+          "condition_id": "OME05-C05.A03",
+          "required_condition": "Relative source references and conventional default are recognized",
+          "coverage": "full",
+          "report_locators": [
+            "F09 at 65-66",
+            "P05 at 128-129",
+            "V5 at 171"
+          ],
+          "reason": "The corresponding current format condition/proposal is present."
+        },
+        {
+          "condition_id": "OME05-C05.A04",
+          "required_condition": "Resolve actual source-image association before overlay rather than plausible sibling/basename/shape",
+          "coverage": "partial",
+          "report_locators": [
+            "F09 at 65-66",
+            "P05 at 128-129",
+            "V5 at 171"
+          ],
+          "reason": "Relative source/default is quoted, but actual association resolution before overlay is absent."
+        },
+        {
+          "condition_id": "OME05-C05.A05",
+          "required_condition": "Level and coordinate relationship is checked, with unsupported geometry explicit",
+          "coverage": "partial",
+          "report_locators": [
+            "F09 at 65-66",
+            "P05 at 128-129",
+            "V5 at 171"
+          ],
+          "reason": "Overlay alignment is asserted guaranteed by count; transforms/source-origin verification is missing."
+        },
+        {
+          "condition_id": "OME05-C05.A06",
+          "required_condition": "Different source origins or intermediate hierarchy cannot silently change association",
+          "coverage": "omitted",
+          "report_locators": [
+            "F09 at 65-66",
+            "P05 at 128-129",
+            "V5 at 171"
+          ],
+          "reason": "No explicit current mechanism or test covers this required condition."
+        }
+      ]
+    },
+    {
+      "id": "OME05-C06",
+      "title": "Categorical label identity",
+      "coverage": "partial",
+      "atomic_conditions": [
+        {
+          "condition_id": "OME05-C06.A01",
+          "required_condition": "Label pixels have integer categorical identity",
+          "coverage": "full",
+          "report_locators": [
+            "F09 at 65-66",
+            "P05 at 128-129",
+            "V5/V7 at 171-173"
+          ],
+          "reason": "The corresponding current format condition/proposal is present."
+        },
+        {
+          "condition_id": "OME05-C06.A02",
+          "required_condition": "Metadata keys use label-value rather than entry position",
+          "coverage": "partial",
+          "report_locators": [
+            "F09 at 65-66",
+            "P05 at 128-129",
+            "V5/V7 at 171-173"
+          ],
+          "reason": "label-value fields are described without an order-invariant lookup rule/test."
+        },
+        {
+          "condition_id": "OME05-C06.A03",
+          "required_condition": "Sparse IDs remain exact through decoding/lookup",
+          "coverage": "omitted",
+          "report_locators": [
+            "F09 at 65-66",
+            "P05 at 128-129",
+            "V5/V7 at 171-173"
+          ],
+          "reason": "No explicit current mechanism or test covers this required condition."
+        },
+        {
+          "condition_id": "OME05-C06.A04",
+          "required_condition": "uint64 values above binary64 exact range are preserved or explicitly unsupported",
+          "coverage": "omitted",
+          "report_locators": [
+            "F09 at 65-66",
+            "P05 at 128-129",
+            "V5/V7 at 171-173"
+          ],
+          "reason": "No explicit current mechanism or test covers this required condition."
+        },
+        {
+          "condition_id": "OME05-C06.A05",
+          "required_condition": "Resampling/interpolation cannot invent new label identities",
+          "coverage": "omitted",
+          "report_locators": [
+            "F09 at 65-66",
+            "P05 at 128-129",
+            "V5/V7 at 171-173"
+          ],
+          "reason": "No explicit current mechanism or test covers this required condition."
+        },
+        {
+          "condition_id": "OME05-C06.A06",
+          "required_condition": "Specified colors remain a reader SHOULD/recommendation rather than a universal styling mandate",
+          "coverage": "full",
+          "report_locators": [
+            "F09 at 65-66",
+            "P05 at 128-129",
+            "V5/V7 at 171-173"
+          ],
+          "reason": "The corresponding current format condition/proposal is present."
+        }
+      ]
+    }
+  ],
+  "facet_summary": {
+    "assigned": 6,
+    "assessed": 6,
+    "full": 1,
+    "partial": 5,
+    "omitted_facets": 0,
+    "unreviewed_facets": 0,
+    "atomic_conditions_assessed": 34
+  },
+  "all_original_atomic_conditions_assessed": true,
+  "counterevidence": [
+    {
+      "source": "S003:310,339-363",
+      "decision": "Physical scales apply at each calibrated level; relative ratios are a conditional fallback, not a universal post-level-zero encoding."
+    },
+    {
+      "source": "S003:433,454-455,472-474",
+      "decision": "Equal level count does not guarantee registration or actual source-image association."
+    },
+    {
+      "source": "S003:104-108,877-888",
+      "decision": "Dimension-or-one should in a layout example is not an unconditional MUST/broadcasting mandate."
+    },
+    {
+      "source": "S003:438-439",
+      "decision": "All-features wording needs the integer-label restriction."
+    },
+    {
+      "source": "S003:456-466",
+      "decision": "A literal only-render-metadata-is-omero assertion overlooks image-label rendering."
+    }
+  ],
+  "citation_rows": [
+    {
+      "report_line": 17,
+      "source_locator": "S003:869-878",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 17,
+      "source_locator": "S003:24-27",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 29,
+      "source_locator": "S003:67-69",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 29,
+      "source_locator": "S003:70-72",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 29,
+      "source_locator": "S003:87-89",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 29,
+      "source_locator": "S003:99-100",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 32,
+      "source_locator": "S003:149-156",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 32,
+      "source_locator": "S003:87-89",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 32,
+      "source_locator": "S003:320-326",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 35,
+      "source_locator": "S003:869-878",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 35,
+      "source_locator": "S003:65-66",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 35,
+      "source_locator": "S003:341-341",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 35,
+      "source_locator": "S003:388-389",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 40,
+      "source_locator": "S003:78-100",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 40,
+      "source_locator": "S003:81-81",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 40,
+      "source_locator": "S003:96-97",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 40,
+      "source_locator": "S003:91-94",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 40,
+      "source_locator": "S003:301-302",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 40,
+      "source_locator": "S003:303-303",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 43,
+      "source_locator": "S003:168-168",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 43,
+      "source_locator": "S003:169-169",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 43,
+      "source_locator": "S003:171-171",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 43,
+      "source_locator": "S003:172-172",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 43,
+      "source_locator": "S003:173-173",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 43,
+      "source_locator": "S003:174-174",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 43,
+      "source_locator": "S003:825-827",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 46,
+      "source_locator": "S003:299-302",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 46,
+      "source_locator": "S003:304-304",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 46,
+      "source_locator": "S003:305-306",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 46,
+      "source_locator": "S003:307-307",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 46,
+      "source_locator": "S003:308-309",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 47,
+      "source_locator": "S003:310-310",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 47,
+      "source_locator": "S003:310-310",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 48,
+      "source_locator": "S003:311-311",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 49,
+      "source_locator": "S003:312-312",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 50,
+      "source_locator": "S003:314-316",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 50,
+      "source_locator": "S003:368-374",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 51,
+      "source_locator": "S003:317-319",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 52,
+      "source_locator": "S003:388-389",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 53,
+      "source_locator": "S003:82-85",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 56,
+      "source_locator": "S003:276-293",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 56,
+      "source_locator": "S003:293-293",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 61,
+      "source_locator": "S003:398-400",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 61,
+      "source_locator": "S003:60-64",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 61,
+      "source_locator": "S003:426-426",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 61,
+      "source_locator": "S003:427-427",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 61,
+      "source_locator": "S003:428-430",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 61,
+      "source_locator": "S003:401-423",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 61,
+      "source_locator": "S003:403-403",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 61,
+      "source_locator": "S003:828-830",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 66,
+      "source_locator": "S003:437-437",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 66,
+      "source_locator": "S003:438-439",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 66,
+      "source_locator": "S003:439-440",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 66,
+      "source_locator": "S003:441-442",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 66,
+      "source_locator": "S003:454-455",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 66,
+      "source_locator": "S003:106-108",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 66,
+      "source_locator": "S003:456-460",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 66,
+      "source_locator": "S003:461-461",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 66,
+      "source_locator": "S003:462-466",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 66,
+      "source_locator": "S003:467-474",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 66,
+      "source_locator": "S003:513-514",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 71,
+      "source_locator": "S003:118-127",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 71,
+      "source_locator": "S003:128-129",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 71,
+      "source_locator": "S003:641-739",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 72,
+      "source_locator": "S003:530-537",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 72,
+      "source_locator": "S003:542-549",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 72,
+      "source_locator": "S003:550-551",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 72,
+      "source_locator": "S003:552-560",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 72,
+      "source_locator": "S003:538-539",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 72,
+      "source_locator": "S003:540-541",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 72,
+      "source_locator": "S003:518-529",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 73,
+      "source_locator": "S003:744-752",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 78,
+      "source_locator": "S003:175-181",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 78,
+      "source_locator": "S003:256-256",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 78,
+      "source_locator": "S003:257-260",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 78,
+      "source_locator": "S003:204-206",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 78,
+      "source_locator": "S003:243-253",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 78,
+      "source_locator": "S003:268-270",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 78,
+      "source_locator": "S003:271-275",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 83,
+      "source_locator": "S003:73-77",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 86,
+      "source_locator": "S003:809-812",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 86,
+      "source_locator": "S003:557-559",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 86,
+      "source_locator": "S003:538-538",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 86,
+      "source_locator": "S003:524-524",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 86,
+      "source_locator": "S003:456-456",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 89,
+      "source_locator": "S003:550-551",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 89,
+      "source_locator": "S003:563-640",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 89,
+      "source_locator": "S003:877-878",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 92,
+      "source_locator": "S003:24-27",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 92,
+      "source_locator": "S003:831-833",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 92,
+      "source_locator": "S003:828-830",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 92,
+      "source_locator": "S003:825-827",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 92,
+      "source_locator": "S003:180-181",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 92,
+      "source_locator": "S003:842-842",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 97,
+      "source_locator": "S003:813-814",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 99,
+      "source_locator": "S003:0-0",
+      "within_admitted_source": false,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 100,
+      "source_locator": "S003:306-306",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 100,
+      "source_locator": "S003:396-396",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 103,
+      "source_locator": "S003:550-551",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 103,
+      "source_locator": "S003:459-460",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 106,
+      "source_locator": "S003:257-259",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 106,
+      "source_locator": "S003:424-425",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 106,
+      "source_locator": "S003:896-896",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 106,
+      "source_locator": "S003:170-170",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 106,
+      "source_locator": "S003:813-814",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 110,
+      "source_locator": "S003:60-64",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 117,
+      "source_locator": "S003:82-85",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 117,
+      "source_locator": "S003:243-270",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 117,
+      "source_locator": "S003:118-148",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 117,
+      "source_locator": "S003:204-206",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 117,
+      "source_locator": "S003:272-272",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 117,
+      "source_locator": "S003:128-129",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 120,
+      "source_locator": "S003:168-169",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 120,
+      "source_locator": "S003:301-301",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 120,
+      "source_locator": "S003:302-302",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 120,
+      "source_locator": "S003:300-300",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 123,
+      "source_locator": "S003:308-316",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 123,
+      "source_locator": "S003:312-312",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 123,
+      "source_locator": "S003:310-310",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 123,
+      "source_locator": "S003:170-172",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 123,
+      "source_locator": "S003:310-310",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 123,
+      "source_locator": "S003:285-289",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 126,
+      "source_locator": "S003:306-306",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 126,
+      "source_locator": "S003:93-94",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 126,
+      "source_locator": "S003:388-389",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 129,
+      "source_locator": "S003:454-455",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 129,
+      "source_locator": "S003:106-108",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 129,
+      "source_locator": "S003:438-439",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 129,
+      "source_locator": "S003:441-442",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 129,
+      "source_locator": "S003:461-466",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 129,
+      "source_locator": "S003:472-474",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 132,
+      "source_locator": "S003:426-426",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 132,
+      "source_locator": "S003:427-430",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 132,
+      "source_locator": "S003:419-423",
+      "within_admitted_source": true,
+      "outcome": "qualified",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 135,
+      "source_locator": "S003:73-77",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 138,
+      "source_locator": "S003:67-72",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 141,
+      "source_locator": "S003:831-833",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 141,
+      "source_locator": "S003:174-174",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 141,
+      "source_locator": "S003:180-181",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 141,
+      "source_locator": "S003:842-842",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 141,
+      "source_locator": "S003:25-26",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 144,
+      "source_locator": "S003:426-426",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 144,
+      "source_locator": "S003:467-467",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 144,
+      "source_locator": "S003:128-129",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 144,
+      "source_locator": "S003:206-206",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 144,
+      "source_locator": "S003:272-272",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 147,
+      "source_locator": "S003:272-272",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 147,
+      "source_locator": "S003:641-739",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 147,
+      "source_locator": "S003:169-169",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 150,
+      "source_locator": "S003:91-100",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 150,
+      "source_locator": "S003:70-72",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 155,
+      "source_locator": "S003:170-172",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 156,
+      "source_locator": "S003:306-306",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 156,
+      "source_locator": "S003:396-396",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 157,
+      "source_locator": "S003:91-100",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 158,
+      "source_locator": "S003:168-168",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 158,
+      "source_locator": "S003:173-173",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 158,
+      "source_locator": "S003:312-312",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 158,
+      "source_locator": "S003:174-174",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 158,
+      "source_locator": "S003:156-156",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 158,
+      "source_locator": "S003:306-306",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 158,
+      "source_locator": "S003:438-438",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 159,
+      "source_locator": "S003:744-750",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 161,
+      "source_locator": "S003:285-289",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 168,
+      "source_locator": "S003:320-387",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 169,
+      "source_locator": "S003:182-270",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 169,
+      "source_locator": "S003:272-272",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 170,
+      "source_locator": "S003:641-739",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 170,
+      "source_locator": "S003:753-785",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 171,
+      "source_locator": "S003:476-514",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 173,
+      "source_locator": "S003:156-156",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    },
+    {
+      "report_line": 176,
+      "source_locator": "S003:285-289",
+      "within_admitted_source": true,
+      "outcome": "supported",
+      "note": "Positive cited text checked; the claim-level interpretation and qualifiers are independently graded."
+    }
+  ],
+  "citation_exceptions": [
+    {
+      "lines": [
+        83,
+        97,
+        108
+      ],
+      "issue": "brief.md:4 is blank; local/excluded scope and actual-reader research are at brief.md:5."
+    },
+    {
+      "lines": [
+        47,
+        123
+      ],
+      "issue": "S003:310 is accurately quoted but its conditional fallback is interpreted universally."
+    },
+    {
+      "lines": [
+        66,
+        129
+      ],
+      "issue": "S003:106-108 is an illustrative should comment, not the asserted MUST."
+    }
+  ],
+  "omitted_required_scope": [
+    {
+      "condition_id": "OME05-C02.A04",
+      "required_condition": "Optional/absent dimensions remain distinct from length-one dimensions",
+      "coverage": "omitted",
+      "report_locators": [
+        "F04/F05 at 39-43",
+        "P02 at 119-120",
+        "validation at 158,167-173"
+      ],
+      "reason": "A 2D file can lack t/c/third-space is explicit, but absence versus length-one identity is still omitted."
+    },
+    {
+      "condition_id": "OME05-C02.A05",
+      "required_condition": "Do not invent sliders/coordinates for absent or unclassified dimensions",
+      "coverage": "partial",
+      "report_locators": [
+        "F04/F05 at 39-43",
+        "P02 at 119-120",
+        "validation at 158,167-173"
+      ],
+      "reason": "Custom/null policy is required, but absent type and singleton dimensions are not settled."
+    },
+    {
+      "condition_id": "OME05-C03.A04",
+      "required_condition": "Geometry uses the selected level transformations",
+      "coverage": "partial",
+      "report_locators": [
+        "F04/F06 at 39-53",
+        "P04 at 125-126",
+        "options at 156,158"
+      ],
+      "reason": "Per-level transforms are named, but the universal relative-ratio interpretation corrupts calibrated level geometry."
+    },
+    {
+      "condition_id": "OME05-C03.A06",
+      "required_condition": "Missing declared level receives explicit handling",
+      "coverage": "partial",
+      "report_locators": [
+        "F04/F06 at 39-53",
+        "P04 at 125-126",
+        "options at 156,158"
+      ],
+      "reason": "Generic unavailable input handling lacks a declared-but-missing dataset-path rule/test."
+    },
+    {
+      "condition_id": "OME05-C04.A04",
+      "required_condition": "Missing recommended units/unknown calibration do not authorize invented physical coordinates",
+      "coverage": "partial",
+      "report_locators": [
+        "F06/F07 at 45-56",
+        "P03 at 122-123",
+        "options at 155",
+        "V1/V2 at 167-168"
+      ],
+      "reason": "Unitless fallback exists, but physical scale versus conditional relative scale is misinterpreted."
+    },
+    {
+      "condition_id": "OME05-C04.A05",
+      "required_condition": "Concrete coordinate check exposes reversed composition or omitted offsets",
+      "coverage": "omitted",
+      "report_locators": [
+        "F06/F07 at 45-56",
+        "P03 at 122-123",
+        "options at 155",
+        "V1/V2 at 167-168"
+      ],
+      "reason": "Neither a two-stage offset composition nor numerical coordinate oracle is proposed."
+    },
+    {
+      "condition_id": "OME05-C05.A04",
+      "required_condition": "Resolve actual source-image association before overlay rather than plausible sibling/basename/shape",
+      "coverage": "partial",
+      "report_locators": [
+        "F09 at 65-66",
+        "P05 at 128-129",
+        "V5 at 171"
+      ],
+      "reason": "Relative source/default is quoted, but actual association resolution before overlay is absent."
+    },
+    {
+      "condition_id": "OME05-C05.A05",
+      "required_condition": "Level and coordinate relationship is checked, with unsupported geometry explicit",
+      "coverage": "partial",
+      "report_locators": [
+        "F09 at 65-66",
+        "P05 at 128-129",
+        "V5 at 171"
+      ],
+      "reason": "Overlay alignment is asserted guaranteed by count; transforms/source-origin verification is missing."
+    },
+    {
+      "condition_id": "OME05-C05.A06",
+      "required_condition": "Different source origins or intermediate hierarchy cannot silently change association",
+      "coverage": "omitted",
+      "report_locators": [
+        "F09 at 65-66",
+        "P05 at 128-129",
+        "V5 at 171"
+      ],
+      "reason": "No explicit current mechanism or test covers this required condition."
+    },
+    {
+      "condition_id": "OME05-C06.A02",
+      "required_condition": "Metadata keys use label-value rather than entry position",
+      "coverage": "partial",
+      "report_locators": [
+        "F09 at 65-66",
+        "P05 at 128-129",
+        "V5/V7 at 171-173"
+      ],
+      "reason": "label-value fields are described without an order-invariant lookup rule/test."
+    },
+    {
+      "condition_id": "OME05-C06.A03",
+      "required_condition": "Sparse IDs remain exact through decoding/lookup",
+      "coverage": "omitted",
+      "report_locators": [
+        "F09 at 65-66",
+        "P05 at 128-129",
+        "V5/V7 at 171-173"
+      ],
+      "reason": "No explicit current mechanism or test covers this required condition."
+    },
+    {
+      "condition_id": "OME05-C06.A04",
+      "required_condition": "uint64 values above binary64 exact range are preserved or explicitly unsupported",
+      "coverage": "omitted",
+      "report_locators": [
+        "F09 at 65-66",
+        "P05 at 128-129",
+        "V5/V7 at 171-173"
+      ],
+      "reason": "No explicit current mechanism or test covers this required condition."
+    },
+    {
+      "condition_id": "OME05-C06.A05",
+      "required_condition": "Resampling/interpolation cannot invent new label identities",
+      "coverage": "omitted",
+      "report_locators": [
+        "F09 at 65-66",
+        "P05 at 128-129",
+        "V5/V7 at 171-173"
+      ],
+      "reason": "No explicit current mechanism or test covers this required condition."
+    }
+  ],
+  "useful_supported_novelty": [
+    "Plate-version MUST versus both omitted-version examples; explicit tolerance decision without writer evidence",
+    "Namespace admission detail",
+    "HCS sparse plate/acquisition navigation",
+    "Exact key-spelling and JSON hygiene",
+    "Explicit library availability uncertainty and planned probe",
+    "Malformed versus unsupported distinction"
+  ],
+  "unexecuted_tests": "All proposed tests reviewed as UNEXECUTED; no execution credit. Missing coordinate/registration/exact-ID oracles are omissions, not failed executed tests.",
+  "material_failure_identities": [
+    "R035-conditional-scale-ratio-made-universal",
+    "R035-label-registration-guaranteed-by-count",
+    "R035-overview-should-made-MUST",
+    "R035-C02-absent-v-singleton",
+    "R035-C03-declared-missing-level",
+    "R035-C04-concrete-composition-oracle",
+    "R035-C05-source-association-registration",
+    "R035-C06-exact-categorical-identity"
+  ],
+  "current_report_verdict": "quality failure",
+  "verdict_reason": "Consequential false coordinate-scale interpretation and guaranteed-alignment inference, plus five partially covered required facets, outweigh useful supported novelty.",
+  "native_source_execution_identity": "UNKNOWN; no qualification inferred from cache/read/Goal self-reports",
+  "expanded_full_source_gate": "HOLD/UNKNOWN unchanged; fixed normative component cannot establish expanded original OME qualification",
+  "comparative_quality_preservation_economics_recipe_promotion": "UNASSESSED",
+  "phase_two_authorized": false,
+  "history_or_economics_opened": false,
+  "blinding_limitations": [
+    "Mechanical cache/read operation names and Goal/accounting claims are embedded in the current report; actual receipts/history are not opened or credited."
+  ],
+  "unreviewed_current_material": []
+}

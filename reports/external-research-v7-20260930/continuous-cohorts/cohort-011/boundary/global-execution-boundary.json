@@ -1,0 +1,50 @@
+{
+  "schema": "er7.root_global_execution_boundary.v1",
+  "observed_epoch": 1790900757.0588453,
+  "observed_utc": "2026-10-02T00:25:57.058845+00:00",
+  "pins": {
+    "ops/root-new-candidate-admissions-closed-v1.json": "4bf9ccbf312e74b9f48f0b4c4c2bd86e8656cef249ecf9ac1d66fbeba79ad199",
+    "evaluation/reviews/integrated-ome-current-grading-v6/CLOSED_CURRENT_COHORT.json": "55bd9421394071ee6f713637d318ed9666690546acb0e35f882bd19a482acc71",
+    "evaluation/reviews/repo-acquisition-preservation-v7/FROZEN_RECEIPT.json": "3ffc02b9d561e75702cb9a7854bdae1b8725c341625f3c19ccd2bc3f7cffa0be",
+    "evaluation/reviews/normative-discovery-preservation-v7/FREEZE.json": "792773414c07ec018ef811e4d4fa1d0a69e22c85ee571ddc837cca61f8c85435",
+    "evaluation/reviews/closed-ome-preservation-v7/final-freeze.json": "b1da5d16644683cfeda0a43491236afcd2c6da9efc200e9d0d6ad68f605b7dd9",
+    "evaluation/reviews/early-research-preservation-v7/source-only-binding-final-addendum-v004.receipt.json": "34db27fe7dc1658bd44d3c3d303ffae370bcf74012896b0c14e7705c07becfb0",
+    "evaluation/reviews/full-preservation-review-v6/phase2-R018-R019.FREEZE.v1.json": "114d08c25a641da8fdd120bb28545c7fc265d9e52a02c97b29008346bc6f26f8"
+  },
+  "global_execution_status": "CLOSED_AT_AUTHORIZED_ADMISSION_AND_REPAIR_ENVELOPE",
+  "remaining_authorized_work": [
+    "Consolidated evidence publication",
+    "Read-only delivery, scope and accounting verification",
+    "Final management-task shutdown and user report"
+  ],
+  "deadline_epoch": 1790904541,
+  "deadline_has_not_elapsed": true,
+  "excluded_user_idle_seconds": 84135,
+  "helper_task_starts_used": 100,
+  "helper_task_start_cap": 100,
+  "candidate_admissions": 53,
+  "observed_native_goals": 49,
+  "occupied_candidate_slot_seconds": 37984.16749429703,
+  "candidate_output_token_lower_bound": 1677375,
+  "generated_usage_complete": false,
+  "root_basis": [
+    "Every frozen queued new candidate has an authenticated admission HOLD; none is eligible. Remaining unchanged 900-second repeats and 3000-second integrated cases do not fit before protected final-hour admission cutoff.",
+    "Native M/L privacy/carrier routes and whole-case inclusive execution adapter have exhausted their finite independent repairs. No unsafe extra proposal is deployed.",
+    "The global helper start cap100 is used; distinct additional development/evaluation tasks are not authorized. Original CURRENT-only helper96 scope cannot be silently extended to Sol history/acquisition grading.",
+    "Every already-bound review is now frozen. Partial response-capped phase2 assessments and source-only preparation are retained honestly; their incomplete semantic work cannot be renewed inside a fresh unauthorized task."
+  ],
+  "target_outcomes": {
+    "all_16_original_hypotheses_screened": false,
+    "at_least_12_fully_qualified_interpretable_original_comparisons_established": false,
+    "six_integrated_case_executions": 0,
+    "qualified_one_account_recipe": null,
+    "same_quality_efficiency_win": false
+  },
+  "qualification_boundary": "Negative and partial experimental evidence is delivered. Current review completion, original-source eligibility, source acquisition, temporal preservation, native context, exact carrier rendering/delivery and total cost remain separate dimensions.",
+  "user_pauses_are_failures": false,
+  "unstarted_holds_are_candidate_failures": false,
+  "historical_outputs_grades_costs_rewritten": false,
+  "automatic_second_campaign_authorized": false,
+  "source_keys_retired_or_released": false,
+  "goal_completion_claim": "NOT made by this execution boundary; final publication/verification remains required."
+}

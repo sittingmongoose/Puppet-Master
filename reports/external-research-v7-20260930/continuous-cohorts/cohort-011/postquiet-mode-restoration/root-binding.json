@@ -1,0 +1,28 @@
+{
+  "schema": "er7.root.exact_alternate_current_delivery_binding.v1",
+  "epoch": 1790899076.2304432,
+  "status": "authorized",
+  "label": "t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-treatment-structural-repeat1-abi-repair1",
+  "method_config_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/methods-t03-structural-repeat1-abi-repair1-v1/treatment.method-config.json",
+  "method_config_sha256": "ec9271d5fbfa227fd1a1ddc1521bcc2b7a5f636b31efe16cc97076ec4b83cbd0",
+  "independent_mode_review_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/full-preservation-review-v6/t03-treatment-postquiet-input-mode-restoration.acceptance.json",
+  "independent_mode_review_sha256": "8ca31094f082f4a7f23d37ddcdc4c8914454fff85796409dddd1a7d271595290",
+  "mode_restoration_receipt_sha256": "8d7fe0ddd90a6efada2743c7127c198bfa8927da23d8205b8b87ebafa9fda5d0",
+  "alternate_whole_receipt_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-treatment-structural-repeat1-abi-repair1/whole-companion-v3-mode-restored-v1-receipt.json",
+  "alternate_whole_receipt_sha256": "655c348733e441780acbd36d1d6df23e9e85ec22cd29c223d3b2c2b7cf200e0b",
+  "alternate_whole_workspace": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-treatment-structural-repeat1-abi-repair1/whole-frozen-workspace-v3-mode-restored-v1",
+  "alternate_delivered_current": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/ops/productive-z-v1/t03-z-ome-preservation-delivery-v3-repair2-budget-redo-v3-edition2-redo1-treatment-structural-repeat1-abi-repair1/delivered-current-v3-mode-restored-v1",
+  "native_receipt_sha256": "0486fb958d4025c937171b0ac129f652e806a3cf9ac51b88b39978996bf78acf",
+  "output_integrity_sha256": "1b9efc969f7a07931d51f90c662b9f60d4e77e8987c40cfb1c64d1da419d619c",
+  "unchanged_whole_helper_sha256": "65ad3579038e5c9adbabd12a578def056f40b9e1f7ce31f6e14d112dff64d930",
+  "unchanged_all_native_and_whole_current_guard_predicates": true,
+  "semantic_current_role": "Highest positively selected treatment findings current version plus renderer report, all reasons/conditions included; current-first before acquisition/history",
+  "source_capture": "UNKNOWN",
+  "prior_failure_and_hold_costs_preserved": {
+    "first_whole_failure_seconds": 0.927097,
+    "mode_proof_restoration_seconds": 0.851074,
+    "release_to_restoration_hold_seconds": 1056.711879,
+    "whole_retest_seconds": 0.53905
+  },
+  "scope": "Only this completed qualified quiet treatment alternate carrier path; no capped-control promotion, native/running version/bytes/grades/caps change"
+}

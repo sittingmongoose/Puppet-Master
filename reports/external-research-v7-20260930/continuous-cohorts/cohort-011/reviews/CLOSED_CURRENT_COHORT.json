@@ -1,0 +1,136 @@
+{
+  "schema": "er7.closed_current_cohort.v1",
+  "status": "CLOSED_CURRENT_COHORT",
+  "frozen_epoch": 1790900543.560645,
+  "reviewer": "integrated_ome_current_grading_v6",
+  "exact_admitted_reports": [
+    "R034",
+    "R035",
+    "R036"
+  ],
+  "prospective_unadmitted_slots": "Unreviewed and not quality failures; no further slots authorized by latest root/stager assignment",
+  "actual_original_start_epoch": 1790892169,
+  "actual_original_start_utc": "2026-10-01T22:02:49Z",
+  "original_cap_epoch": 1790902969,
+  "original_cap_utc": "2026-10-02T01:02:49Z",
+  "original_reserve_start_epoch": 1790901769,
+  "original_reserve_start_utc": "2026-10-02T00:42:49Z",
+  "hard_global_epoch": 1790904541,
+  "response_cap": 120,
+  "response_count_at_cohort_freeze": 51,
+  "response_count_definition": "One sampled assistant response per tool-roundtrip block; initial tool block=1; this block=2. Count advanced at every subsequent assistant tool block or final delivery.",
+  "generated_tokens": "UNKNOWN",
+  "clock_reset_or_extension": false,
+  "reports": [
+    {
+      "report_id": "R034",
+      "json_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/integrated-ome-current-grading-v6/R034/current-assessment.v2.json",
+      "json_sha256": "7aded5ccbf694971111e7d3184cc58021f9825fdd50014c5d8243ce3cadf43c6",
+      "md_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/integrated-ome-current-grading-v6/R034/current-assessment.v2.md",
+      "md_sha256": "415174ec8844a57b8e7fb4a75b8f2db61c31cf1a1cb2f9131b0684ceedeb4b92",
+      "complete_coverage": true,
+      "material_claim_rows": 318,
+      "all_original_atomic_condition_rows": 34,
+      "facet_summary": {
+        "assigned": 6,
+        "assessed": 6,
+        "full": 1,
+        "partial": 5,
+        "omitted_facets": 0,
+        "unreviewed_facets": 0,
+        "atomic_conditions_assessed": 34
+      },
+      "current_report_verdict": "quality failure",
+      "native_source_execution_identity": "UNKNOWN",
+      "phase_two_opened": false
+    },
+    {
+      "report_id": "R035",
+      "json_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/integrated-ome-current-grading-v6/R035/current-assessment.json",
+      "json_sha256": "ad66fa0fa88266ba332923192cb1630bad5d3e355fe611eefbd055fea70bfc24",
+      "md_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/integrated-ome-current-grading-v6/R035/current-assessment.md",
+      "md_sha256": "2fa95cf32cb7227f5472ae5e414b78b104f31602fdbd228f17b61531f685bcd9",
+      "complete_coverage": true,
+      "material_claim_rows": 269,
+      "all_original_atomic_condition_rows": 34,
+      "facet_summary": {
+        "assigned": 6,
+        "assessed": 6,
+        "full": 1,
+        "partial": 5,
+        "omitted_facets": 0,
+        "unreviewed_facets": 0,
+        "atomic_conditions_assessed": 34
+      },
+      "current_report_verdict": "quality failure",
+      "native_source_execution_identity": "UNKNOWN",
+      "phase_two_opened": false
+    },
+    {
+      "report_id": "R036",
+      "json_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/integrated-ome-current-grading-v6/R036/current-assessment.json",
+      "json_sha256": "a069731f29b1831d1f768f7df8d666ac006911bd5d0b9e2312d0f41fcc726e82",
+      "md_path": "/home/sittingmongoose/PM-Experiments/external-research-v7-20260930/evaluation/reviews/integrated-ome-current-grading-v6/R036/current-assessment.md",
+      "md_sha256": "eaba7e0b48dca39475add541fddc578012cb24a5f0e2280ee8d06bcf8ab45b88",
+      "complete_coverage": true,
+      "material_claim_rows": 284,
+      "all_original_atomic_condition_rows": 34,
+      "facet_summary": {
+        "assigned": 6,
+        "assessed": 6,
+        "full": 0,
+        "partial": 5,
+        "omitted_facets": 1,
+        "unreviewed_facets": 0,
+        "atomic_conditions_assessed": 34
+      },
+      "current_report_verdict": "quality failure",
+      "native_source_execution_identity": "UNKNOWN",
+      "phase_two_opened": false
+    }
+  ],
+  "aggregate_assessed_material_claim_rows": 871,
+  "aggregate_assessed_original_atomic_condition_rows": 102,
+  "aggregate_assigned_facets": 18,
+  "aggregate_assessed_facets": 18,
+  "current_semantic_companion_scope": {
+    "R034": [],
+    "R035": [],
+    "R036": [
+      {
+        "path": "findings/V001.json",
+        "sha256": "44099c3be9f4c77b851b91e52c203db26eecdf85bfd46441174722184ada646c",
+        "body_count": 14,
+        "all_body_fields_reviewed": true,
+        "exact_body_concat_matches_report": true
+      }
+    ]
+  },
+  "source_scope": "Original fixed normative six-facet S003 case only, all 36980 original bytes/896 lines; distinct from expanded original OME eight-criterion/125-source corpus. Alias handles do not create independent acquisitions.",
+  "source_transport_hashes_and_read_only_identities_verified": true,
+  "native_source_execution_qualification": "UNKNOWN; no inference from report strings, booleans or format pass",
+  "expanded_original_full_source_gate": "HOLD/UNKNOWN unchanged",
+  "history_acquisition_economics_or_native_raw_receipts_opened": false,
+  "phase_two_authorized": false,
+  "original_scope_adjudication": {
+    "basis": "Initial parent reviewer assignment received at task activation, read together with later sole-stager positive current allowlists",
+    "bound_scope": "CURRENT semantic grading and full current freezes",
+    "same_report_preservation_history_acquisition_phase_prebound": false,
+    "reason": "The initial task names CURRENT cohort review and locks history until a current freeze plus root authority. It references separate native FLASH/current-critic-disposition checks rather than expressly assigning a Sol preservation/history/acquisition semantic phase. Generic PROTOCOL Stage 2 describes conditional workflow and does not supply task authorization.",
+    "candidate_TASK_card_opened": false,
+    "this_closure_does_not_authorize_new_scope": true
+  },
+  "R034_initial_frozen_bytes_preserved": {
+    "current-assessment.json": "7db151ad7025f28624433d2ea6e938ed965fd4af83fdeda372da997695d3e990",
+    "current-assessment.md": "f7d942002149b82bd9856e73eda2723ef7e8af85f6b0aa24f1f2e8346de7e629"
+  },
+  "R034_v2_change": "Unique row-ID clarification before history; semantic judgments/evidence/coverage unchanged.",
+  "comparative_quality_preservation_economics_recipe_promotion": "UNASSESSED",
+  "new_jobs_native_goals_subhelpers_agent_listing_git_canonical_edits": false,
+  "material_risks": [
+    "R034 has contradicted absolute source negatives and partially covered viewer conditions.",
+    "R035 misreads conditional relative scaling as universal and overstates label registration from equal level count.",
+    "R036 retains discovery uncertainty but does not research the original required conditions; actual acquisition/infrastructure cause is unassessed.",
+    "Proposed validation is UNEXECUTED throughout; no empirical claim or candidate acquisition credit is created by evaluator semantic verification."
+  ]
+}
