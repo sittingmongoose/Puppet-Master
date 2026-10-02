@@ -8,7 +8,7 @@
     'af-title-race-demo','af-debug-start','af-debug-advance','af-debug-recover','bc-open',
     'collab-build-with-crew']);
   var groups=[['assist','Assistance','goal'],['work','Workflows','users'],
-    ['schedule','Scheduling','history'],['memory','Memory & teaching','brain'],
+    ['schedule','Scheduling','kind-schedule'],['memory','Memory & teaching','kind-memory'],
     ['preferences','Preferences','settings']];
   function template(html){var t=document.createElement('template');t.innerHTML=html;return t;}
   function groupFor(el){

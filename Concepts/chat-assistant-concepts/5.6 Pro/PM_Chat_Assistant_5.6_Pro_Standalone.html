@@ -17023,8 +17023,10 @@ html[data-o55-nier="on"][data-motion="reduced"] .nx-st::after { animation: none 
    comes only from .event-card.danger/.warning, [data-tone], a status mark's own tone (--nx-ink, section 5) and the
    owners' .is-danger rules (higher specificity, untouched). */
 .event-icon { background: var(--surface-3); color: var(--text); }
-.event-card.warning > .event-icon { color: var(--warning); }
-.event-card.danger > .event-icon { color: var(--danger); }
+/* (0,1,0) on purpose: the transcript's own family rules (the Needs-you medallion's canon accent, the neutral ledger)
+   stay above it */
+:where(.event-card.warning) > .event-icon { color: var(--warning); }
+:where(.event-card.danger) > .event-icon { color: var(--danger); }
 /* a menu row's glyph takes the row's ink: muted at rest, the text ink on hover, where it ignites (section 8) */
 .menu-item .menu-icon { color: inherit; }
 /* a toggled icon button reads as on by its lit glyph, not by an accent tile */
@@ -55651,7 +55653,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     'af-title-race-demo','af-debug-start','af-debug-advance','af-debug-recover','bc-open',
     'collab-build-with-crew']);
   var groups=[['assist','Assistance','goal'],['work','Workflows','users'],
-    ['schedule','Scheduling','history'],['memory','Memory & teaching','brain'],
+    ['schedule','Scheduling','kind-schedule'],['memory','Memory & teaching','kind-memory'],
     ['preferences','Preferences','settings']];
   function template(html){var t=document.createElement('template');t.innerHTML=html;return t;}
   function groupFor(el){
