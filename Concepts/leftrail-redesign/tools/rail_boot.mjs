@@ -72,7 +72,20 @@ const PAGE_LIB = () => {
             const sk = 'sub|' + sub.textContent.trim(); if (clicked.has(sk)) continue; clicked.add(sk);
             sub.click(); await L.sleep(260); L.pairs(panel).forEach((p) => seen.add(p));
           }
+          /* menu items that navigate (data-pmr-nav: a view in an overflow menu, a sibling page): reopen the menu for
+             each one, choose it, and collect what the new view shows; later passes crawl that view's own nav */
+          const navLabels = [...document.querySelectorAll('.pmr-menu .pmr-mi[data-pmr-nav]')].map((m) => m.textContent.trim()).filter((t) => !clicked.has('mnav|' + t));
           window.PMR.menu.closeAll(); await L.sleep(300);
+          for (const label of navLabels) {
+            if (steps >= budget || !el.isConnected || !L.visible(el)) break;
+            clicked.add('mnav|' + label); steps++;
+            el.click(); await L.sleep(360);
+            const item = [...document.querySelectorAll('.pmr-menu .pmr-mi[data-pmr-nav]')].find((m) => m.textContent.trim() === label);
+            if (!item) { window.PMR.menu.closeAll(); await L.sleep(300); continue; }
+            item.click(); await L.sleep(420);
+            L.pairs(panel).forEach((p) => seen.add(p));
+            if (document.querySelector('.pmr-menu')) { window.PMR.menu.closeAll(); await L.sleep(300); }
+          }
         }
       }
       if (!progressed) break;
