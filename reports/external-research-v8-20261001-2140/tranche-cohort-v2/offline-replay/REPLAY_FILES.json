@@ -1,0 +1,48 @@
+{
+  "scope": "Standalone offline accounting metadata test replay. Not accepted native runtime/evidence; no lab state or launches.",
+  "files": [
+    {
+      "public_source": "AUTHORIZATION.json",
+      "replay_path": "AUTHORIZATION.json",
+      "replay_sha256": "25609fc787d622958fd62afa5df218a1e4789f61595a4152865ceb0c143304f2",
+      "source_public_sha256": "25609fc787d622958fd62afa5df218a1e4789f61595a4152865ceb0c143304f2",
+      "rebindings": "Local directory layout supplied. No pin literal/body changes; metadata fixture already path-tokenized."
+    },
+    {
+      "public_source": "ops/accounting-v1/slot_ledger.py",
+      "replay_path": "ops/accounting-v1/slot_ledger.py",
+      "replay_sha256": "5590fdc09936005e09b2de7aa4ac4113bbe0ddeefa4a8caf3548d78b0e3045af",
+      "source_public_sha256": "5590fdc09936005e09b2de7aa4ac4113bbe0ddeefa4a8caf3548d78b0e3045af",
+      "rebindings": "Local directory layout supplied. No pin literal/body changes; metadata fixture already path-tokenized."
+    },
+    {
+      "public_source": "ops/recovery-v1/ledger_overlay.py",
+      "replay_path": "ops/recovery-v1/ledger_overlay.py",
+      "replay_sha256": "597a3d3349154fbb4614ed7ece864f1cd77ecfea145fbfddaefc79fe0a1cd618",
+      "source_public_sha256": "597a3d3349154fbb4614ed7ece864f1cd77ecfea145fbfddaefc79fe0a1cd618",
+      "rebindings": "Local directory layout supplied. No pin literal/body changes; metadata fixture already path-tokenized."
+    },
+    {
+      "public_source": "ops/recovery-v1/AUTHORITY_AMENDMENT.json",
+      "replay_path": "ops/recovery-v1/AUTHORITY_AMENDMENT.json",
+      "replay_sha256": "1479c0b44869d13878b90ccd2f02d5fb2d755cfa0f0b17315105dc48d57616ec",
+      "source_public_sha256": "1479c0b44869d13878b90ccd2f02d5fb2d755cfa0f0b17315105dc48d57616ec",
+      "rebindings": "Local directory layout supplied. No pin literal/body changes; metadata fixture already path-tokenized."
+    },
+    {
+      "public_source": "ops/recovery-v1/state.before-policy-amendment.json",
+      "replay_path": "ops/recovery-v1/state.before-policy-amendment.json",
+      "replay_sha256": "14d492bc84235495773ede1859c957c2b6c53fc22f16ecc65561ef24ea774d7f",
+      "source_public_sha256": "14d492bc84235495773ede1859c957c2b6c53fc22f16ecc65561ef24ea774d7f",
+      "rebindings": "Local directory layout supplied. No pin literal/body changes; metadata fixture already path-tokenized."
+    },
+    {
+      "public_source": "ops/recovery-v1/test_ledger_overlay.py",
+      "replay_path": "ops/recovery-v1/test_ledger_overlay.py",
+      "replay_sha256": "29c1fcd85c9731b9480e863f9a45f75360bd2987fe3eb6e8910037f5f5139e06",
+      "source_public_sha256": "29c1fcd85c9731b9480e863f9a45f75360bd2987fe3eb6e8910037f5f5139e06",
+      "rebindings": "Local directory layout supplied. No pin literal/body changes; metadata fixture already path-tokenized."
+    }
+  ],
+  "command": "python3 -B -m unittest discover -s ops/recovery-v1 -p test_ledger_overlay.py -v"
+}

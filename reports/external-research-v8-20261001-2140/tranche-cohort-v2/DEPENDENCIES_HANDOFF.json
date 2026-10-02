@@ -1,0 +1,16 @@
+{
+  "schema": "pm.er8.positive-publication-handoff.v1",
+  "scope": "PreviouslyqualifiedpublicaccountingpurePython dependency plus byteexactoriginalauthority only; no native/private/modelIO/credentials",
+  "created_utc": "2026-10-02T03:54:35.510340+00:00",
+  "positive_files": [
+    {
+      "path": "LAB_ROOT/ops/accounting-v1/slot_ledger.py",
+      "sha256": "5590fdc09936005e09b2de7aa4ac4113bbe0ddeefa4a8caf3548d78b0e3045af"
+    },
+    {
+      "path": "LAB_ROOT/AUTHORIZATION.json",
+      "sha256": "25609fc787d622958fd62afa5df218a1e4789f61595a4152865ceb0c143304f2"
+    }
+  ],
+  "restriction": "Use declared distinct offline replaylayout with selectedtranchesource and fixture; preservepin/hash distinction and no nativeacceptance/regradeclaim."
+}

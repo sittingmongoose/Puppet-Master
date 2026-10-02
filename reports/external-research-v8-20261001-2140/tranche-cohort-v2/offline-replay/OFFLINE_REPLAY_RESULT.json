@@ -1,0 +1,13 @@
+{
+  "schema": "pm.er8.public-offline-replay-result.v1",
+  "observed_utc": "2026-10-02T03:55:45.443106+00:00",
+  "command": "python3 -B -m unittest discover -s ops/recovery-v1 -p test_ledger_overlay.py -v",
+  "tests_run": 7,
+  "tests_passed": 7,
+  "native_or_provider_calls": 0,
+  "campaign_state_mutations": 0,
+  "research_credit": false,
+  "scope": "Actual local publisher replay of selected metadata software checks, not native acceptance or a candidate research result.",
+  "output_path": "OFFLINE_REPLAY_TESTS.txt",
+  "output_sha256": "e61026f4c1b079f9e5a3d6bbb4cacf6c9d57d457b8081b290efb10f9b87768d5"
+}

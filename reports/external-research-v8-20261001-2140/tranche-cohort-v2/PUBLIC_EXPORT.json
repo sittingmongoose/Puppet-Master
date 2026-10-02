@@ -626,6 +626,30 @@
       "public_sha256": "14d492bc84235495773ede1859c957c2b6c53fc22f16ecc65561ef24ea774d7f",
       "bytes": 22238,
       "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/PUBLICATION_HANDOFF_DEPENDENCIES.json",
+      "public_path": "DEPENDENCIES_HANDOFF.json",
+      "original_sha256": "2a206ad56b4d8040d58fe79803aca35fbc19c8464a2157dbfc060bbb72f71a96",
+      "public_sha256": "19047a7c690915ec82606ce9915c7d9bb156a280948b9a56466e30442196de41",
+      "bytes": 749,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/accounting-v1/slot_ledger.py",
+      "public_path": "ops/accounting-v1/slot_ledger.py",
+      "original_sha256": "5590fdc09936005e09b2de7aa4ac4113bbe0ddeefa4a8caf3548d78b0e3045af",
+      "public_sha256": "5590fdc09936005e09b2de7aa4ac4113bbe0ddeefa4a8caf3548d78b0e3045af",
+      "bytes": 21974,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/AUTHORIZATION.json",
+      "public_path": "AUTHORIZATION.json",
+      "original_sha256": "25609fc787d622958fd62afa5df218a1e4789f61595a4152865ceb0c143304f2",
+      "public_sha256": "25609fc787d622958fd62afa5df218a1e4789f61595a4152865ceb0c143304f2",
+      "bytes": 2294,
+      "sanitized": false
     }
   ],
   "research_results": "NOT_RUN",

@@ -972,14 +972,24 @@
       "bytes": 2662
     },
     {
+      "path": "tranche-cohort-v2/AUTHORIZATION.json",
+      "sha256": "25609fc787d622958fd62afa5df218a1e4789f61595a4152865ceb0c143304f2",
+      "bytes": 2294
+    },
+    {
+      "path": "tranche-cohort-v2/DEPENDENCIES_HANDOFF.json",
+      "sha256": "19047a7c690915ec82606ce9915c7d9bb156a280948b9a56466e30442196de41",
+      "bytes": 749
+    },
+    {
       "path": "tranche-cohort-v2/PUBLIC_EXPORT.json",
-      "sha256": "68867569114050afc59caad70a792b5e2414cf6b985e4f61d9678bc3ee48f229",
-      "bytes": 32645
+      "sha256": "a7c4c2e66235690f947a5b23129d03d6b9577cba9e8ad653e245ea3e27387b7b",
+      "bytes": 33746
     },
     {
       "path": "tranche-cohort-v2/README.md",
-      "sha256": "235e10fd60b83c12f98ba18ec2ce861bf3d8f26da74f38c7d9f4028eb57e270f",
-      "bytes": 2334
+      "sha256": "568e2263467c5b3234be2b4269cad249266744a50f72673a3e34e9a231d1a441",
+      "bytes": 2689
     },
     {
       "path": "tranche-cohort-v2/ROOT_HANDOFF.json",
@@ -1330,6 +1340,61 @@
       "path": "tranche-cohort-v2/cases/tranche-v2/templates/research.TASK.md",
       "sha256": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3",
       "bytes": 1586
+    },
+    {
+      "path": "tranche-cohort-v2/offline-replay/AUTHORIZATION.json",
+      "sha256": "25609fc787d622958fd62afa5df218a1e4789f61595a4152865ceb0c143304f2",
+      "bytes": 2294
+    },
+    {
+      "path": "tranche-cohort-v2/offline-replay/OFFLINE_REPLAY_RESULT.json",
+      "sha256": "1d34e9d88165f7cd63ed1d68b57f99e882ce26ac0c7fd8b7113f85e5b8d910f1",
+      "bytes": 608
+    },
+    {
+      "path": "tranche-cohort-v2/offline-replay/OFFLINE_REPLAY_TESTS.txt",
+      "sha256": "e61026f4c1b079f9e5a3d6bbb4cacf6c9d57d457b8081b290efb10f9b87768d5",
+      "bytes": 1000
+    },
+    {
+      "path": "tranche-cohort-v2/offline-replay/README.md",
+      "sha256": "28ddae478bfa75e95d783c3137f1cd867dd1eef58e593c4df93d54572b85ce74",
+      "bytes": 1153
+    },
+    {
+      "path": "tranche-cohort-v2/offline-replay/REPLAY_FILES.json",
+      "sha256": "51b8ce4a079d943737ed1366f25e65c06fae520e05dbb7f8d9157eec15b82c31",
+      "bytes": 2942
+    },
+    {
+      "path": "tranche-cohort-v2/offline-replay/ops/accounting-v1/slot_ledger.py",
+      "sha256": "5590fdc09936005e09b2de7aa4ac4113bbe0ddeefa4a8caf3548d78b0e3045af",
+      "bytes": 21974
+    },
+    {
+      "path": "tranche-cohort-v2/offline-replay/ops/recovery-v1/AUTHORITY_AMENDMENT.json",
+      "sha256": "1479c0b44869d13878b90ccd2f02d5fb2d755cfa0f0b17315105dc48d57616ec",
+      "bytes": 1717
+    },
+    {
+      "path": "tranche-cohort-v2/offline-replay/ops/recovery-v1/ledger_overlay.py",
+      "sha256": "597a3d3349154fbb4614ed7ece864f1cd77ecfea145fbfddaefc79fe0a1cd618",
+      "bytes": 5863
+    },
+    {
+      "path": "tranche-cohort-v2/offline-replay/ops/recovery-v1/state.before-policy-amendment.json",
+      "sha256": "14d492bc84235495773ede1859c957c2b6c53fc22f16ecc65561ef24ea774d7f",
+      "bytes": 22238
+    },
+    {
+      "path": "tranche-cohort-v2/offline-replay/ops/recovery-v1/test_ledger_overlay.py",
+      "sha256": "29c1fcd85c9731b9480e863f9a45f75360bd2987fe3eb6e8910037f5f5139e06",
+      "bytes": 5019
+    },
+    {
+      "path": "tranche-cohort-v2/ops/accounting-v1/slot_ledger.py",
+      "sha256": "5590fdc09936005e09b2de7aa4ac4113bbe0ddeefa4a8caf3548d78b0e3045af",
+      "bytes": 21974
     },
     {
       "path": "tranche-cohort-v2/ops/recovery-v1/AUTHORITY_AMENDMENT.json",

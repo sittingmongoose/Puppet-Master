@@ -1,0 +1,12 @@
+test_explicit_authority_required (test_ledger_overlay.OverlayTests.test_explicit_authority_required) ... ok
+test_guard_uses_144_not_48 (test_ledger_overlay.OverlayTests.test_guard_uses_144_not_48) ... ok
+test_helper_cumulative_removed_six_live_boundary (test_ledger_overlay.OverlayTests.test_helper_cumulative_removed_six_live_boundary) ... ok
+test_new_admission_after_old_deadline_preserves_old_caps (test_ledger_overlay.OverlayTests.test_new_admission_after_old_deadline_preserves_old_caps) ... ok
+test_preserves_history_and_usage (test_ledger_overlay.OverlayTests.test_preserves_history_and_usage) ... ok
+test_tranche_cannot_displace_history_or_exceed_envelope (test_ledger_overlay.OverlayTests.test_tranche_cannot_displace_history_or_exceed_envelope) ... ok
+test_tranche_reserves_holdouts_preserves_old_six (test_ledger_overlay.OverlayTests.test_tranche_reserves_holdouts_preserves_old_six) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.017s
+
+OK
