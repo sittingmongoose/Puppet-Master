@@ -43429,7 +43429,9 @@ var PMU_SERIES = {
       }
       a.windows.forEach(function (w) {
         var h = row.querySelector('[data-win="' + w.key + '"]');
-        meter(body, a.key + '|' + w.key, h, Object.assign(meterOpts(a, p, size, w, bw < 520, !comfy), { noLabel: true }), { label: a.nickname + ' ' + w.label });
+        /* a window column names its window in the column head, so a missing reading says "Not exposed" at every width
+           (NieR Light at 1440: "Quota not exposed" ran into the next column's "17%") */
+        meter(body, a.key + '|' + w.key, h, Object.assign(meterOpts(a, p, size, w, true, !comfy), { noLabel: true }), { label: a.nickname + ' ' + w.label });
       });
     });
     sealPlate(body);
