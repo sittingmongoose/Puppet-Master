@@ -33,10 +33,10 @@
       var c = C.chart(body, 'stackbar', host, { rows: rows.map(function (m) {
         return { id: m.id, name: m.name, providerId: m.providerId, vendor: m.vendor, fill: Math.max(0.004, m.value.total / maxV),
           segments: TK.map(function (t) { return { type: t[0], value: m.value[t[0]], tokens: m.tokens[t[0]] }; }),
-          tokensText: PMU.fmt.tok(m.tokens.total), valueText: C.money(m.value.total), shareText: shareText(m.valueShare), attemptsText: m.attempts + ' · ' + m.requests + ' requests',
+          tokensText: PMU.fmt.tok(m.tokens.total), valueText: C.money(m.value.total), shareText: shareText(m.valueShare), attemptsText: m.attempts + ' · ' + C.plural(m.requests, 'request'),
           hover: m.role + (m.requested && m.requested !== m.effective ? ' · requested ' + m.requested + ', effective ' + m.effective : ' · requested and effective match') };
       }) }, { label: 'Estimated cost by model and token type', onRow: function (id, el) { C.modelPop(rows.filter(function (m) { return m.id === id; })[0], el); } });
-      if (!c) host.innerHTML = rows.map(function (m) { return '<div class="pmu-lrow"><span class="pmu-lname"><b>' + esc(m.name) + '</b></span><span class="pmu-lval">' + esc(C.money(m.value.total)) + '</span></div>'; }).join('');
+      if (!c && !body._pmuDry) host.innerHTML = rows.map(function (m) { return '<div class="pmu-lrow"><span class="pmu-lname"><b>' + esc(m.name) + '</b></span><span class="pmu-lval">' + esc(C.money(m.value.total)) + '</span></div>'; }).join('');
     }
   });
   /* the model popover (A1 7.3.1) through the shared menu component (custom body) */
@@ -54,7 +54,7 @@
       }).join('') +
       '<div class="pmu-cap">INPUT TO OUTPUT RATIO</div><div class="pmu-mpratio"><b>' + (ratio === null ? '-' : ratio.toFixed(1) + ' to 1') + '</b><span>' +
       esc(ratio === null ? 'No output recorded.' : ratio >= 3 ? 'More input than output: a reading-heavy workload.' : ratio >= 1 ? 'Input and output are close: a balanced workload.' : 'More output than input: a writing-heavy workload.') + '</span></div>' +
-      '<div class="pmu-cap">ATTEMPTS</div><p class="pmu-mpline">' + esc(m.attempts + ' attempts · ' + m.requests + ' requests · settled ' + C.money(m.settled) + ' · plan estimate ' + C.money(m.planEstimate)) + '</p>' +
+      '<div class="pmu-cap">ATTEMPTS</div><p class="pmu-mpline">' + esc(C.plural(m.attempts, 'attempt') + ' · ' + C.plural(m.requests, 'request') + ' · settled ' + C.money(m.settled) + ' · plan estimate ' + C.money(m.planEstimate)) + '</p>' +
       '<p class="pmu-mpline">' + esc('Requested ' + m.requested + ' · effective ' + m.effective + ' · ' + m.role) + '</p>' +
       '<p class="pmu-mprates">' + esc('Catalog rates: $' + m.rates.in.toFixed(2) + ' in, $' + m.rates.out.toFixed(2) + ' out, $' + m.rates.cw.toFixed(2) + ' cache write, $' + m.rates.cr.toFixed(3).replace(/0$/, '') + ' cache read per million tokens') + '</p>' +
       '<button type="button" class="pmu-textbtn" data-mp-details>Details</button></div>';
@@ -102,7 +102,7 @@
       var footOk = m.foot && need + 50 <= ctx.tier.bh + 12;
       body.innerHTML = '<div class="pmu-breakw">' + tools + '<div class="pmu-breakhost"></div></div>' + (footOk ? C.foot(esc(m.foot), 'info') : '');
       var c = C.chart(body, 'sharebars', body.querySelector('.pmu-breakhost'), { rows: rows, narrow: narrow }, { label: 'Token breakdown' });
-      if (!c) body.querySelector('.pmu-breakhost').innerHTML = rows.map(function (r) { return '<div class="pmu-lrow"><span class="pmu-lname"><b>' + esc(r.name) + '</b></span><span class="pmu-lval">' + esc(PMU.fmt.tok(r.tokens) + ' · ' + C.money(r.value)) + '</span></div>'; }).join('');
+      if (!c && !body._pmuDry) body.querySelector(".pmu-breakhost").innerHTML = rows.map(function (r) { return '<div class="pmu-lrow"><span class="pmu-lname"><b>' + esc(r.name) + '</b></span><span class="pmu-lval">' + esc(PMU.fmt.tok(r.tokens) + ' · ' + C.money(r.value)) + '</span></div>'; }).join('');
     }
   });
 
@@ -151,7 +151,7 @@
       var budget = ctx.tier.bh - 22 - (q.noWindows.length ? 34 : 0) - (open ? focusH : 0);
       var used = 0, hiddenRows = 0, out = [], rowsDrawn = [];
       var tlW = wide ? bw * 0.66 - 230 : mid ? bw * 0.64 - 200 : bw * 0.6 - 110;
-      var axis = axisTicks(q, Math.max(1, Math.ceil(7 * 34 / Math.max(60, tlW))));
+      var axis = axisTicks(q, Math.max(1, Math.ceil(7 * 34 / Math.max(60, tlW))), tlW);
       out.push('<div class="pmu-qrow pmu-qaxis" style="grid-template-columns:' + tmpl + '"><span></span><span class="pmu-qticks">' + axis.map(function (t) { return '<i style="left:' + t.x + '%"' + (t.now ? ' class="is-now"' : '') + '>' + esc(t.label) + '</i>'; }).join('') +
         '</span><span class="pmu-cap" data-align="r">USED</span>' + (mid ? '<span class="pmu-cap" data-align="r">NEXT RESET</span>' : '') + '<span></span></div>');
       q.groups.forEach(function (g) {
@@ -198,7 +198,7 @@
         var r = rowsDrawn.filter(function (x) { return x.account.key === open; })[0], fh = body.querySelector('.pmu-qfocushost');
         if (r && fh) {
           var th = PMU.roster.thresholds();
-          C.chart(body, 'qspark', fh, { windows: r.focus.filter(function (f) { return f.points; }).map(function (f, i) { return { label: f.label, dash: ['', '9 4', '9 3 2 3'][i % 3], points: f.points }; }),
+          body._pmuFocusChart = C.chart(body, 'qspark', fh, { windows: r.focus.filter(function (f) { return f.points; }).map(function (f, i) { return { label: f.label, dash: ['', '9 4', '9 3 2 3'][i % 3], points: f.points }; }),
             thresholds: { warn: 100 - th.warnLeft, switch: 100 - th.switchLeft }, resets: r.focus.map(function (f) { return f.resetAt; }).filter(Boolean), now: q.now, bucketMs: q.bucketMs, n: q.points },
             { label: r.account.nickname + ', every window, 7 days', readout: true });
         }
@@ -207,9 +207,10 @@
   });
   function listWords(a) { return a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1]; }
   C.listWords = listWords;
-  function axisTicks(q, every) {
+  function axisTicks(q, every, tlW) {
     var n = q.points, span = n * q.bucketMs, start = q.now - span, out = [], d = new Date(start), k = 0; d.setHours(0, 0, 0, 0); d = d.getTime() + 86400000;
-    var last = q.now - (every > 1 ? 12 : 3) * 3600000;
+    /* a day tick closer than 48 px to NOW is dropped (LOOK-REVIEW-2 7: "NOW" printed over "FRI") */
+    var last = q.now - Math.max((every > 1 ? 12 : 3) * 3600000, tlW ? 48 / Math.max(60, tlW) * span : 0);
     for (; d < last; d += 86400000, k++) if (k % (every || 1) === 0) out.push({ x: (100 * (d - start) / span).toFixed(2), label: PMU.fmt.day(d) });
     out.push({ x: 100, label: 'Now', now: true });
     return out;
@@ -218,13 +219,26 @@
     var cur = (C.view(id, 'collapsed', '') || '').split(',').filter(Boolean), v = el.getAttribute('data-value');
     C.setView(id, { collapsed: (cur.indexOf(v) >= 0 ? cur.filter(function (x) { return x !== v; }) : cur.concat([v])).join(',') });
   });
+  /* opening a row grows it to its focus chart (WOW-SPEC 3.10): the rows below slide to their new places (FLIP 250
+     SLIDE), the focus opens top-down and its chart draws with its comet */
   C.act('qrow', function (el, id) {
     var v = el.getAttribute('data-value');
     openRows[id] = openRows[id] === v ? '' : v;
     viewAction('view.usage.quota_row_toggled', { widget_id: id, account: v, open: !!openRows[id] });
-    var card = PMU.board.card(id); if (card) PMU.cards.updateAll([card], 'config');
-    var focus = card && card.querySelector('.pmu-qfocus');
-    if (focus && PMU.motion.clipReveal) PMU.motion.clipReveal(focus, { dur: 520, dir: 'y' });
+    var card = PMU.board.card(id); if (!card) return;
+    var before = {};
+    Array.prototype.forEach.call(card.querySelectorAll('.pmu-qhist > [data-value], .pmu-qhist > .pmu-qgroup'), function (r) { before[r.getAttribute('data-value') + '|' + r.className.split(' ')[0]] = r.getBoundingClientRect().top; });
+    PMU.cards.updateAll([card], 'config');
+    var reduced = PMU.motion.reduced && PMU.motion.reduced();
+    if (!reduced) Array.prototype.forEach.call(card.querySelectorAll('.pmu-qhist > [data-value], .pmu-qhist > .pmu-qgroup'), function (r) {
+      var k = r.getAttribute('data-value') + '|' + r.className.split(' ')[0], top0 = before[k]; if (top0 == null) return;
+      var dy = top0 - r.getBoundingClientRect().top;
+      if (Math.abs(dy) > 0.5) PMU.motion.animate(r, [{ transform: 'translateY(' + dy.toFixed(1) + 'px)' }, { transform: 'none' }], { dur: 250, easing: 'cubic-bezier(.22,1,.36,1)' });
+    });
+    var focus = card.querySelector('.pmu-qfocus');
+    if (focus && PMU.motion.clipReveal) PMU.motion.clipReveal(focus, { dur: 250, dir: 'y' });
+    var body = card.querySelector('.pmu-cardbody');
+    if (focus && body && body._pmuFocusChart && body._pmuFocusChart.enter) { try { body._pmuFocusChart.enter(120); } catch (error) {} }
   });
 
   C.qhistMeta = function () {
@@ -248,34 +262,55 @@
       ag.days.forEach(function (d) { groups.push(d); });
       if (ag.unknown.length) groups.push({ label: 'Reset unknown', note: '', events: ag.unknown, unknown: true });
       if (!groups.length) { body.innerHTML = C.empty('Nothing resets or expires in the ' + ({ '24h': 'next 24 hours', '7d': 'next 7 days', '30d': 'next 30 days' }[hz]) + '.'); return; }
-      var bw = ctx.tier.bw, colsN = bw >= 900 ? 3 : bw >= 600 ? 2 : 1, narrow = bw < 300;
-      var lineH = narrow ? 48 : 42, headH = 32;
-      /* fit by columns: fill column after column with whole day groups and whole lines; one quiet foot line says what
-         is hidden at this size and what lies beyond the horizon */
-      var capacity = ctx.tier.bh - 26, colsUsed = [0], col = 0, out = [], hidden = 0, done = false;
+      /* explicit columns, filled in reading order by each line's own wrapped height (LOOK-REVIEW-2 10: CSS columns laid
+         days out in a hidden fourth column and printed "continued" under its own day). Two columns from 520 px, three from
+         900; a day that runs into the next column carries its head there ("continued", only at a column top); the foot line
+         counts what was actually laid out. */
+      var bw = ctx.tier.bw, colsN = bw >= 900 ? 3 : bw >= 520 ? 2 : 1, GAP = 28;
+      var colW = (bw - GAP * (colsN - 1)) / colsN, narrow = colW < 300;
+      var minLine = narrow ? 48 : 42, headH = 32;
+      /* the text column: the line's grid (time 46 / 52 px, mark 18, the used column as wide as its widest value) */
+      var usedW = 0; groups.forEach(function (g) { g.events.forEach(function (ev) { var u = ev.used.filter(function (x) { return x !== null && x !== undefined; }); usedW = Math.max(usedW, PMU.charts && PMU.charts.textW ? PMU.charts.textW(u.length ? C.fmt(u[0], 'pct') : '', 12.5, false, 600) : 30); }); });
+      /* a few px of tolerance: the estimate leans long, and the fit pass still removes a line that does not fit */
+      var textW = colW - (narrow ? 46 : 52) - 18 - Math.ceil(usedW) - 3 * (narrow ? 8 : 10) + 4;
+      var lineHOf = function (ev) {
+        var a = ev.account;
+        var bl = C.wrapLines(a.nickname + (narrow ? '' : '  ' + a.providerName), textW, 13, 540), sl = C.wrapLines(ev.what + (ev.stale ? ' · ' + a.ageText : ''), textW, 12.5);
+        return Math.max(minLine, Math.ceil(9 + 17.6 * bl + 17 * sl)) + 1;
+      };
+      var total = 0; groups.forEach(function (g) { total += headH; g.events.forEach(function (ev) { total += lineHOf(ev); }); });
+      var footNeed = ag.beyond || total > (ctx.tier.bh - 4) * colsN;
+      var capacity = ctx.tier.bh - (footNeed ? 24 : 2), cols = [[]], used = [0], col = 0, hidden = 0, done = false, laid = 0;
       groups.forEach(function (g) {
         if (done) { hidden += g.events.length; return; }
-        var need = headH + lineH;
-        if (colsUsed[col] + need > capacity) { if (col + 1 < colsN) { col += 1; colsUsed[col] = 0; } else { done = true; hidden += g.events.length; return; } }
-        colsUsed[col] += headH;
+        if (used[col] + headH + lineHOf(g.events[0]) > capacity) {
+          if (col + 1 < colsN && used[col] > 0) { col += 1; cols.push([]); used.push(0); } else { done = true; hidden += g.events.length; return; }
+        }
+        used[col] += headH;
         var lines = [], cont = false;
         g.events.forEach(function (ev) {
-          if (!done && colsUsed[col] + lineH > capacity && col + 1 < colsN && lines.length) {
-            /* the day runs on into the next column under its own head, so no column starts headless */
-            out.push(groupHtml(cont ? Object.assign({}, g, { note: 'continued' }) : g, lines, narrow));
-            lines = []; cont = true; col += 1; colsUsed[col] = headH;
+          if (done) { hidden += 1; return; }
+          var lh = lineHOf(ev);
+          if (used[col] + lh > capacity && lines.length && col + 1 < colsN) {
+            cols[col].push(groupHtml(cont ? Object.assign({}, g, { note: 'continued' }) : g, lines, narrow));
+            lines = []; cont = true; col += 1; cols.push([]); used.push(headH);
           }
-          if (done || colsUsed[col] + lineH > capacity) { done = true; hidden += 1; return; }
-          colsUsed[col] += lineH; lines.push(ev);
+          if (used[col] + lh > capacity) { done = true; hidden += 1; return; }
+          used[col] += lh; lines.push(ev); laid += 1;
         });
-        if (lines.length) out.push(groupHtml(cont ? Object.assign({}, g, { note: 'continued' }) : g, lines, narrow));
+        if (lines.length) cols[col].push(groupHtml(cont ? Object.assign({}, g, { note: 'continued' }) : g, lines, narrow));
       });
       var parts = [];
-      if (hidden) parts.push(hidden + (ag.beyond ? ' more here' : ' more at a taller size'));
+      if (hidden) parts.push(hidden + ' more ' + (C.atMax(body) ? 'in Details' : 'at a taller size'));
       if (ag.beyond) parts.push(ag.beyond + (hidden ? ' after ' : ' more after ') + PMU.fmt.date(Date.now() + ({ '24h': 1, '7d': 7, '30d': 30 }[hz]) * 86400000));
-      var beyond = parts.length ? '<p class="pmu-agbeyond"' + (ag.beyond ? C.hover(ag.beyond + ' more after this horizon', ag.beyondList.slice(0, 8).map(function (e) { return e.account.nickname + ' ' + e.what + ' ' + PMU.fmt.date(e.at); }).join(' · ')) : '') + '>' +
+      /* one whole line: the "after" part gives way when both do not fit (Retro: "4 more at a taller size · 15 af...");
+         its count stays in the line's hover tag */
+      if (parts.length > 1 && C.wrapLines(parts.join(' · ') + ' 0', ctx.tier.bw, 12) > 1) parts.pop();
+      /* the line is also the card's "N more" line, so a line the fit pass removes is counted in it */
+      var beyond = parts.length ? '<p class="pmu-agbeyond' + (hidden ? ' pmu-more' : '') + '"' + (ag.beyond ? C.hover(ag.beyond + ' more after this horizon', ag.beyondList.slice(0, 8).map(function (e) { return e.account.nickname + ' ' + e.what + ' ' + PMU.fmt.date(e.at); }).join(' · ')) : '') + '>' +
         esc(parts.join(' · ')) + '</p>' : '';
-      body.innerHTML = '<div class="pmu-agenda" style="column-count:' + colsN + (colsN > 1 ? ';height:' + Math.max(80, capacity) + 'px;flex:none' : '') + '">' + out.join('') + '</div>' + beyond;
+      body.innerHTML = '<div class="pmu-agenda is-cols" style="grid-template-columns:repeat(' + colsN + ',minmax(0,1fr))">' + cols.map(function (c) { return '<div class="pmu-agcol">' + c.join('') + '</div>'; }).join('') + '</div>' + beyond;
+      body._pmuAgenda = { hidden: hidden, beyond: ag.beyond, hz: hz };
       body.querySelector('.pmu-agenda').addEventListener('click', function (event) {
         var row = event.target.closest('[data-key]'); if (!row) return;
         var acct = PMU.roster.account(row.getAttribute('data-acct')); if (acct && PMU.accounts) PMU.accounts.inspect(acct.key, row);

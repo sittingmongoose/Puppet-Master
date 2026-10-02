@@ -1,8 +1,17 @@
 /* The inspector drawer (owner: engine; DESIGN-SPEC section 12, DESIGN-SPEC-ATLAS 8.1: 520 ms panel spring). */
+/* WOW-SPEC 3.15 (E-7): the drawer slides in from the right 420 (.32,1.12,.52,1) while its pre-rendered shadow layer fades
+   in over 200; it closes 260 IN. A 24 px strip of its own colour to the right covers the spring's overshoot. */
 #panel-usage .pmu-inspector { position: absolute; z-index: 50; top: 52px; right: 0; bottom: 0; width: 400px; max-width: 92%; display: flex; flex-direction: column;
-  border-left: 1px solid var(--pmu-rule); background: var(--pmu-menu-bg, var(--pmu-card)); box-shadow: var(--pmu-shadow-pop); transform: translateX(104%); opacity: 0; pointer-events: none;
-  visibility: hidden; transition: transform var(--pmu-dur-insp) var(--pmu-ease-panel), opacity 260ms var(--pmu-ease-out), visibility 0s linear var(--pmu-dur-insp); }
-#panel-usage .pmu-inspector.open { transform: none; opacity: 1; pointer-events: auto; visibility: visible; transition: transform var(--pmu-dur-insp) var(--pmu-ease-panel), opacity 260ms var(--pmu-ease-out); }
+  border-left: 1px solid var(--pmu-rule); background: var(--pmu-menu-bg, var(--pmu-card)); box-shadow: 24px 0 0 0 var(--pmu-menu-bg, var(--pmu-card));
+  transform: translateX(104%); opacity: 0; pointer-events: none; visibility: hidden;
+  transition: transform calc(260ms * var(--pmu-speed, 1)) cubic-bezier(.4,0,1,1), opacity calc(120ms * var(--pmu-speed, 1)) linear calc(140ms * var(--pmu-speed, 1)),
+    visibility 0s linear calc(260ms * var(--pmu-speed, 1)); }
+#panel-usage .pmu-inspector::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; box-shadow: var(--pmu-shadow-pop), -1px 0 0 0 var(--pmu-rule);
+  opacity: 0; transition: opacity calc(160ms * var(--pmu-speed, 1)) linear; }
+#panel-usage .pmu-inspector.open { transform: none; opacity: 1; pointer-events: auto; visibility: visible;
+  transition: transform calc(420ms * var(--pmu-speed, 1)) cubic-bezier(.32,1.12,.52,1), opacity calc(140ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
+#panel-usage .pmu-inspector.open::before { opacity: 1; transition: opacity calc(200ms * var(--pmu-speed, 1)) var(--pmu-ease-out) calc(60ms * var(--pmu-speed, 1)); }
+html[data-theme^="retro"] #panel-usage .pmu-inspector.open { transition-timing-function: steps(4, jump-start), steps(2, jump-start); }
 #panel-usage .pmu-insphead { display: flex; align-items: center; gap: 10px; min-height: 56px; padding: 8px 8px 8px 18px; flex: none; border-bottom: 1px solid var(--pmu-rule); }
 #panel-usage .pmu-insptitles { display: flex; flex-direction: column; min-width: 0; flex: 1 1 auto; }
 #panel-usage .pmu-insphead h3 { margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 15px; font-weight: 640; line-height: 20px; }
@@ -12,7 +21,7 @@
 #panel-usage .pmu-inspactions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 18px; border-bottom: 1px solid var(--pmu-rule-2); flex: none; }
 #panel-usage .pmu-inspactions[hidden] { display: none; }
 #panel-usage .pmu-inspact { height: 28px; padding: 0 10px; border: 1px solid var(--pmu-rule); border-radius: 8px; background: transparent; color: var(--pmu-ink); font: inherit;
-  font-size: 12.5px; font-weight: 600; cursor: pointer; transition: background-color 140ms, border-color 140ms; }
+  font-size: 12.5px; font-weight: 600; cursor: pointer; transition: background-color calc(140ms * var(--pmu-speed, 1)), border-color calc(140ms * var(--pmu-speed, 1)); }
 #panel-usage .pmu-inspact:hover { background: var(--pmu-row-hover); }
 #panel-usage .pmu-inspact.primary { border-color: color-mix(in srgb, var(--pmu-accent) 55%, transparent); color: var(--pmu-accent); }
 #panel-usage .pmu-inspact.primary:hover { background: color-mix(in srgb, var(--pmu-accent) 10%, transparent); }

@@ -6,7 +6,7 @@
   var st = PMU.core.state;
   var app = document.getElementById('pmuApp');
   var nav = document.getElementById('pmuNav'), ink = document.getElementById('pmuNavInk');
-  var inkCtl = null, inkReady = false, lastRoom = null;
+  var inkCtl = null, inkReady = false, lastRoom = null, lastRange = null;
   var ROOM_ORDER = Object.keys(ROOM);
   /* DATA.providers -> the Settings catalog names and ids (PROVIDERS.md; every provider name on the page is the Settings name) */
   var SETTINGS_OF = { claude: 'claude-code', codex: 'openai-codex', qwen: 'qwen-coding', gemini: 'gemini-direct', kimi: 'kimi-coding', copilot: 'github-copilot' };
@@ -62,31 +62,76 @@
     });
     return out;
   }
+  /* a copy of the old title block (no ids, no hover tags) over the real one, leaving upward */
+  function titleGhost(tb) {
+    var head = tb.parentNode; if (!head) return;
+    var old = head.querySelector(':scope > .pmu-titleghost'); if (old) old.remove();
+    var g = tb.cloneNode(true);
+    g.classList.add('pmu-titleghost'); g.setAttribute('aria-hidden', 'true');
+    /* the title's look comes from its id: the copy takes the computed face (the layout is clean at this point) */
+    var src = tb.querySelector('#pmuRoomTitle'), dst = g.querySelector('h2');
+    if (src && dst) { var cs = getComputedStyle(src); dst.style.cssText = 'margin:0;white-space:nowrap;overflow:hidden;font:' + cs.font + ';letter-spacing:' + cs.letterSpacing + ';text-transform:' + cs.textTransform + ';color:' + cs.color; }
+    Array.prototype.forEach.call([g].concat(Array.prototype.slice.call(g.querySelectorAll('*'))), function (n) {
+      n.removeAttribute('id'); n.removeAttribute('data-pm-hover-label'); n.removeAttribute('data-pm-hover-detail'); n.removeAttribute('tabindex');
+    });
+    g.style.left = tb.offsetLeft + 'px'; g.style.top = tb.offsetTop + 'px'; g.style.width = tb.offsetWidth + 'px'; g.style.height = tb.offsetHeight + 'px';
+    head.appendChild(g);
+    var stepped = PMU.motion.family() === 'retro';
+    var a = PMU.motion.animate(g, [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-8px)' }],
+      { dur: 120, easing: stepped ? 'steps(2,jump-start)' : 'cubic-bezier(.4,0,1,1)', fill: 'forwards' });
+    if (a) a.finished.then(function () { g.remove(); }, function () { g.remove(); }); else g.remove();
+  }
+  /* the Animation speed for CSS (WOW-SPEC 9, E-10): every Usage transition duration reads calc(<ms> * var(--pmu-speed)) */
+  var speedKey = null;
+  function syncSpeed() {
+    if (!app || !PMU.motion) return;
+    var v = String(PMU.motion.speed());
+    if (v !== speedKey) { speedKey = v; app.style.setProperty('--pmu-speed', v); }
+  }
+  if (PMU.theme && PMU.theme.onChange) PMU.theme.onChange(function () { syncSpeed(); });
   function render() {
     if (!app) return;
+    syncSpeed();
     var room = ROOM[st.room] ? st.room : 'overview';
     app.setAttribute('data-room', room);
     PMU.core.$$('.pmu-navbtn[data-room]', app).forEach(function (button) {
-      var chosen = button.getAttribute('data-room') === room;
+      var rk = button.getAttribute('data-room'), chosen = rk === room;
+      /* the rail's hover tag names the room's purpose (MOTION-REVIEW-2 item 13: it read "Choose this option") */
+      if (ROOM[rk] && !button.hasAttribute('data-pm-hover-detail')) { button.setAttribute('data-pm-hover-label', ROOM[rk].title); button.setAttribute('data-pm-hover-detail', ROOM[rk].desc); }
       button.classList.toggle('active', chosen);
       if (chosen) button.setAttribute('aria-current', 'page'); else button.removeAttribute('aria-current');
     });
     var title = document.getElementById('pmuRoomTitle'), desc = document.getElementById('pmuRoomDesc');
     var changed = lastRoom !== null && lastRoom !== room;
+    /* the room title carries the cut (WOW-SPEC 3.2): the old title slides up 8 px and fades (120 IN) while the new one
+       rises 10 px (260 OUT, from 60); NieR decodes instead (the app's page-title decode on #pmuRoomTitle) */
+    var tb = title && title.closest('.pmu-titleblock'), animTitle = changed && tb && PMU.motion && !PMU.motion.reduced() && !PMU.theme.look().nier;
+    if (animTitle) titleGhost(tb);
     if (title && title.textContent !== ROOM[room].title) title.textContent = ROOM[room].title;   /* one text node (NieR decode) */
     if (title) { title.setAttribute('data-pm-hover-label', ROOM[room].title); title.setAttribute('data-pm-hover-detail', ROOM[room].desc); }
     if (desc && desc.textContent !== ROOM[room].desc) desc.textContent = ROOM[room].desc;
-    /* head title change: cross-fade + 6 px slide, 220 ms (NieR decodes instead) */
-    if (changed && PMU.motion && !PMU.theme.look().nier) {
-      [title, desc].forEach(function (el, i) { if (el) PMU.motion.animate(el, [{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { dur: 'title', delay: i * 40, ease: 'out', fill: 'backwards' }); });
+    /* the chosen room's rail icon answers the click: one small pop (POP, 320; Retro and NieR step) while the ink travels */
+    if (changed && PMU.motion && !PMU.motion.reduced()) {
+      var navOn = app.querySelector('.pmu-navbtn[data-room="' + room + '"] .pmu-navicon'), ff = PMU.motion.family();
+      if (navOn) PMU.motion.animate(navOn, [{ transform: 'scale(.82)' }, { transform: 'scale(1.14)', offset: 0.45 }, { transform: 'none' }],
+        { dur: 320, easing: ff === 'retro' || ff === 'nier' ? 'steps(3,jump-start)' : 'cubic-bezier(.34,1.45,.64,1)' });
+    }
+    if (animTitle) {
+      var f = PMU.motion.family(), stepped = f === 'retro';
+      [title, desc].forEach(function (el, i) {
+        if (el) PMU.motion.animate(el, [{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }],
+          { dur: 260, delay: 60 + i * 40, easing: stepped ? 'steps(3,jump-start)' : 'cubic-bezier(.22,.8,.28,1)', fill: 'backwards' });
+      });
     }
     lastRoom = room;
     PMU.core.$$('.pmu-range button[data-range]', app).forEach(function (button) {
       var on = button.getAttribute('data-range') === st.range;
       button.classList.toggle('active', on); button.setAttribute('aria-pressed', on ? 'true' : 'false');
     });
-    syncSegInk(document.getElementById('pmuRange'));
-    var rl = document.getElementById('pmuRangeLabel'); if (rl) rl.textContent = st.range;
+    /* the range underline is measured only when the range changed (a layout read in every room click otherwise) */
+    var rangeEl = document.getElementById('pmuRange'), segInk = rangeEl && rangeEl.querySelector('.pmu-seg-ink');
+    if (lastRange !== st.range || !(segInk && segInk._pmuPlaced)) { syncSegInk(rangeEl); lastRange = st.range; }
+    var rl = document.getElementById('pmuRangeLabel'); if (rl && rl.textContent !== st.range) rl.textContent = st.range;
     var detail = document.getElementById('pmuDetailLabel'); if (detail) detail.textContent = DETAIL[st.detail].label;
     var scope = document.getElementById('pmuScopeLabel'); if (scope) scope.textContent = scopeLabel(st.scope);
     var lead = document.getElementById('pmuScopeLead');
@@ -112,7 +157,8 @@
     render();
     if (PMU.board) {
       /* a room change re-reads the Settings roster first (Settings may have changed it since the last read) */
-      if (roomChange && PMU.settings) { PMU.settings.invalidate(); if (PMU.roster) PMU.roster.invalidate(); if (PMU.data && PMU.data.invalidate) PMU.data.invalidate(); }
+      /* (the Settings roster is re-read when the page is entered and after every write: a room click never pays for a
+         fresh copy of the Settings state, 10 ms on the CPU-only VM) */
       if (roomChange) PMU.board.mount(st.room, { dir: ROOM_ORDER.indexOf(st.room) < ROOM_ORDER.indexOf(prevRoom) ? -1 : 1, transition: true });
       else if (changed.indexOf('detail') >= 0) PMU.board.relevel();
       else PMU.board.refresh(changed[0]);

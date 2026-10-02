@@ -140,3 +140,83 @@
 #panel-usage .pmu-provrow.is-setup { cursor: pointer; border-radius: 6px; margin: 0 -6px; padding: 2px 6px; transition: background-color 160ms; }
 #panel-usage .pmu-provrow.is-setup:hover { background: var(--pmu-row-hover); }
 html[data-theme^="retro"] #panel-usage .pmu-provrow.is-setup { border-radius: 0; }
+
+/* ------------------------------------------------------------------ POLISH2 content (WOW round, 2026-10-02) */
+/* the action column at every width (LOOK-REVIEW-2 5); a row whose windows are all "not exposed" says it once across
+   the window columns, with its spend (LOOK-REVIEW-2 6); a narrow plate puts the binding meter under the identity */
+#panel-usage .pmu-acccell.is-merged { display: flex; flex-direction: column; justify-content: center; gap: 2px; min-width: 0; }
+#panel-usage .pmu-acccell.is-merged .pmu-amount { min-height: 26px; }
+#panel-usage .pmu-acccell.is-merged .pmu-accna { font-size: 12.5px; }
+#panel-usage .pmu-acc[data-mode="narrow"] .pmu-accrow { grid-template-rows: auto auto; row-gap: 6px; }
+#panel-usage .pmu-acc[data-mode="narrow"] .pmu-acccell { grid-column: 1 / -1; }
+#panel-usage .pmu-accactcell { align-self: center; }
+#panel-usage .pmu-accact.is-active { white-space: normal; text-align: right; line-height: 1.25; }
+/* the identity's lines: the name and its meta lines never cut a word (LOOK-REVIEW-2 13: "Max · Mac · 2m ago ...") */
+#panel-usage .pmu-accrow .pmu-identmeta { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: break-word; }
+#panel-usage .pmu-accrow .pmu-ident { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: break-word; }
+/* compact provider rows: a narrow column stacks the state word under the name; words never break inside */
+#panel-usage .pmu-provtext { display: flex; flex-direction: column; flex: 1 1 auto; min-width: 0; gap: 1px; }
+#panel-usage .pmu-provrow .pmu-provname { overflow-wrap: break-word; word-break: normal; }
+#panel-usage .pmu-provrow .pmu-provword { overflow-wrap: normal; word-break: normal; white-space: nowrap; flex: none; }
+#panel-usage .pmu-provrow.is-stacked { min-height: 44px; }
+#panel-usage .pmu-provrow.is-stacked .pmu-provword { text-align: left; font-size: 12px; }
+/* the plate's rows never shrink under the foot: an overrun moves whole rows to "N more" (the fit pass) */
+#panel-usage .pmu-acc.is-group { flex: 0 0 auto; }
+
+/* the Accounts hero: the "most room now" ladder (WOW-SPEC 4, LOOK-REVIEW-2 2) */
+#panel-usage .pmu-ladder { display: grid; column-gap: 28px; min-width: 0; flex: 1 1 auto; }
+#panel-usage .pmu-ladside { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+#panel-usage .pmu-ladside .pmu-herohead { height: auto; min-height: 60px; flex-wrap: wrap; }
+#panel-usage .pmu-ladctl { flex-wrap: wrap; column-gap: 7px; }
+#panel-usage .pmu-ladctl .pmu-swlabel { margin-right: 0; }
+#panel-usage .pmu-ladwarn { font-size: 12.5px; }
+#panel-usage .pmu-ladwarn .pmu-swwarn { margin-left: 0; }
+#panel-usage .pmu-ladmain { display: flex; flex-direction: column; min-width: 0; }
+#panel-usage .pmu-ladcap { display: flex; justify-content: space-between; height: 22px; align-items: center; }
+#panel-usage .pmu-ladcols { display: grid; column-gap: 28px; min-width: 0; }
+#panel-usage .pmu-ladcol { position: relative; display: flex; flex-direction: column; min-width: 0; }
+#panel-usage .pmu-ladrow { position: relative; display: grid; grid-template-columns: 16px var(--ln, 110px) minmax(48px, 1fr) 40px 16px; align-items: center; column-gap: 8px; height: 24px; min-width: 0; cursor: pointer;
+  --c: var(--pmu-calm); }
+#panel-usage .pmu-ladrow[data-tone="warn"] { --c: var(--pmu-warn); }
+#panel-usage .pmu-ladrow[data-tone="crit"] { --c: var(--pmu-crit); }
+#panel-usage .pmu-ladrow[data-tone="exhausted"] { --c: var(--pmu-tone-exhausted, var(--pmu-crit)); }
+#panel-usage .pmu-ladname { display: flex; align-items: baseline; gap: 6px; min-width: 0; white-space: nowrap; overflow: hidden; }
+#panel-usage .pmu-ladname b { font-size: 13px; font-weight: 540; color: var(--pmu-ink); }
+#panel-usage .pmu-ladrow.is-eff .pmu-ladname b { font-weight: 680; }
+#panel-usage .pmu-ladname em { font-style: normal; font-size: 12px; color: var(--pmu-ink-3); flex: none; }
+#panel-usage .pmu-ladname b { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-ladtrack { position: relative; height: 8px; overflow: hidden; border-radius: 4px; background: var(--pmu-card-3, rgba(127,127,127,.14)); }
+#panel-usage .pmu-ladfill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--c) 55%, transparent), var(--c)); }
+#panel-usage .pmu-ladrow.is-eff .pmu-ladfill { box-shadow: 0 0 10px 1px color-mix(in srgb, var(--c) 55%, transparent); }
+#panel-usage .pmu-ladrow.is-eff .pmu-ladfill::after { content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 2px; background: color-mix(in srgb, #fff 60%, var(--c)); }
+#panel-usage .pmu-ladval { font-size: 13px; font-weight: 640; text-align: right; color: var(--pmu-ink); font-variant-numeric: tabular-nums; }
+#panel-usage .pmu-ladrow[data-tone="warn"] .pmu-ladval, #panel-usage .pmu-ladrow[data-tone="crit"] .pmu-ladval, #panel-usage .pmu-ladrow[data-tone="exhausted"] .pmu-ladval { color: var(--c); }
+#panel-usage .pmu-ladact .pmu-glyph { color: var(--pmu-ink-good); }
+#panel-usage .pmu-ladrow:hover .pmu-ladtrack { box-shadow: 0 0 0 1px color-mix(in srgb, var(--c) 50%, transparent); }
+/* the switch line: at the switch level of every track (16 + 8 + the measured name column + 8: it lives in the track
+   column's coordinates; 104 px = the fixed columns and the four gaps) */
+#panel-usage .pmu-ladline { position: absolute; top: -4px; bottom: -2px; width: 0; pointer-events: none; border-left: 1.5px dashed color-mix(in srgb, var(--pmu-ink) 60%, transparent);
+  left: calc(32px + var(--ln, 110px) + (100% - 104px - var(--ln, 110px)) * var(--swf, .1)); }
+#panel-usage .pmu-ladline[data-off] { opacity: .25; }
+#panel-usage .pmu-ladfoot { margin: 4px 0 0; font-size: 12px; color: var(--pmu-ink-3); }
+html[data-theme^="retro"] #panel-usage :is(.pmu-ladtrack, .pmu-ladfill) { border-radius: 0; }
+html[data-o55-nier="on"] #panel-usage .pmu-ladfill { background: repeating-linear-gradient(90deg, var(--o55-nier-ink) 0 5px, transparent 5px 7px); box-shadow: none; }
+/* the active light that travels to the newly used account (one transient layer in the board, removed at its end) */
+#panel-usage .pmu-actlight { position: absolute; z-index: 30; pointer-events: none; border-radius: 10px; transform-origin: 0 0; will-change: transform, opacity;
+  background: radial-gradient(70% 140% at 30% 50%, color-mix(in srgb, var(--pmu-accent) 24%, transparent), transparent 72%);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--pmu-accent) 45%, transparent), 0 0 22px -4px color-mix(in srgb, var(--pmu-accent) 55%, transparent); }
+html[data-theme^="retro"] #panel-usage .pmu-actlight, html[data-o55-nier="on"] #panel-usage .pmu-actlight { border-radius: 0; }
+#panel-usage .pmu-accglyph { position: relative; border-radius: 50%; }
+/* the switch panel's family rows keep the provider word whole: the bar gives way first */
+#panel-usage .pmu-switch.is-panel .pmu-swfam { grid-template-columns: 16px minmax(54px, 1fr) minmax(44px, 46%); column-gap: 6px; }
+#panel-usage .pmu-switch.is-panel .pmu-swbar { width: auto; min-width: 0; }
+#panel-usage .pmu-ladder.is-stacked { row-gap: 6px; }
+#panel-usage .pmu-ladder.is-stacked .pmu-ladside { flex-direction: row; flex-wrap: wrap; align-items: flex-end; gap: 4px 18px; }
+#panel-usage .pmu-ladder.is-stacked .pmu-ladside .pmu-herohead { flex: 1 1 100%; }
+/* a long state word wraps inside the identity column instead of running under the window cell (Mac stills
+   2026-10-02: "Cooldown until 08:33" over "Not exposed"); a compact row grows by the wrapped line (70-wrap.css) */
+#panel-usage .pmu-accrow .pmu-identmeta .pmu-acstate b { white-space: normal; }
+/* an amount's label never breaks inside a word (Retro 2026-10-02: "Credi / ts"): its column keeps the longest word and
+   the value beside it wraps instead */
+#panel-usage .pmu-amt { grid-template-columns: 18px minmax(min-content, 1fr) auto; }

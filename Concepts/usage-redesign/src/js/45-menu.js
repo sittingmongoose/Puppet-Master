@@ -19,7 +19,7 @@
    PMU.menu.toggle(anchor, spec); PMU.menu.close(); PMU.menu.isOpen(); PMU.menu.choice(anchor, opts). */
 (function () {
   var app = document.getElementById('pmuApp');
-  var GAP = 6, EDGE = 8, OPEN_MS = 300, CLOSE_MS = 260, SPRING_MS = 360;
+  var GAP = 6, EDGE = 8, OPEN_MS = 300, CLOSE_MS = 200, SPRING_MS = 360;
   var current = null;          /* the open handle */
   var seq = 0;
 
@@ -302,6 +302,7 @@
       el.setAttribute('data-mstate', 'open');
       el.classList.add('open');
       h.settleT = setTimeout(function () { h.settled = true; }, OPEN_MS * speed() + 40);
+      materialize(h);
     }
     el.classList.add('open');
     if (anchor && anchor.setAttribute) { anchor.setAttribute('aria-expanded', 'true'); anchor.classList.add('pmu-menu-anchor-open'); }
@@ -316,6 +317,24 @@
     current = h;
     requestAnimationFrame(function () { if (h.open) focusFirst(h); });
     return h;
+  }
+  /* the rows materialize (WOW-SPEC 3.14, E-6): opacity 0 -> 1 with a 3 px rise, 110 OUT, 18 ms apart from 60 (at most ten
+     rows move; the rest come with the tenth); the active row's check draws itself (stroke 160 POP) as its row lands */
+  var POP = 'linear(0,.028,.111 8%,.412 20%,.686 30%,.867 40%,.964 50%,1.012 62%,1.014 74%,1.003 88%,1)';
+  function materialize(h) {
+    if (reduced() || !PMU.motion) return;
+    var nier = PMU.theme && PMU.theme.look && PMU.theme.look().nier;
+    var rows = Array.prototype.slice.call(h.el.querySelectorAll('.pmu-msec, .pmu-mitem, .pmu-mblock'));
+    rows.forEach(function (r, i) {
+      var d = 60 + 18 * Math.min(i, 9);
+      PMU.motion.animate(r, [{ opacity: 0, transform: 'translateY(3px)' }, { opacity: 1, transform: 'none' }],
+        { dur: 110, delay: d, easing: nier ? 'steps(2,jump-start)' : 'cubic-bezier(.22,.8,.28,1)', fill: 'backwards' });
+      var path = r.classList.contains('active') || r.classList.contains('is-on') ? r.querySelector('.pmu-mcheck svg path, .pmu-mcheck svg polyline') : null;
+      if (path) {
+        path.setAttribute('pathLength', '1'); path.style.strokeDasharray = '1';
+        PMU.motion.animate(path, [{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { dur: 160, delay: d + 60, easing: nier ? 'steps(3,jump-start)' : POP, fill: 'backwards' });
+      }
+    });
   }
   function refresh(h) {
     if (!h || !h.open) return;

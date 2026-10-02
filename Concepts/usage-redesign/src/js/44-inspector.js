@@ -46,8 +46,26 @@
     (s.sections || []).forEach(function (sec) { (sec.rows || []).forEach(function (r) { out[sec.title + ' · ' + r[0]] = String(r[1] == null ? '' : r[1]).replace(/<[^>]+>/g, ''); }); });
     return out;
   }
+  /* the card that opened the drawer keeps a 1 px accent rim while it is open (WOW-SPEC 3.15); the rim fades 160 on close */
+  var rimCard = null;
+  function holdRim(card) {
+    if (rimCard === card) return;
+    dropRim();
+    if (!card || !card.classList || !card.classList.contains('pmu-card')) return;
+    var r = card.querySelector(':scope > .pmu-rim');
+    if (!r) { r = document.createElement('i'); r.className = 'pmu-rim'; r.setAttribute('aria-hidden', 'true'); card.appendChild(r); }
+    rimCard = card;
+    requestAnimationFrame(function () { if (rimCard === card) r.classList.add('is-held'); });
+  }
+  function dropRim() {
+    var card = rimCard; rimCard = null;
+    var r = card && card.querySelector(':scope > .pmu-rim'); if (!r) return;
+    r.classList.remove('is-held');
+    setTimeout(function () { if (!r.classList.contains('is-held') && r.isConnected && !r.getAnimations().length) r.remove(); }, 220 * (PMU.motion ? PMU.motion.speed() : 1));
+  }
   function close(quiet) {
     if (!el || !el.classList.contains('open')) return;
+    dropRim();
     el.classList.remove('open'); el.setAttribute('aria-hidden', 'true');
     if (quiet !== true && opener && opener.isConnected && typeof opener.focus === 'function') { try { opener.focus({ preventScroll: true }); } catch (e) {} }
     opener = null;
@@ -69,7 +87,13 @@
     }
     paint(true);
     el.classList.add('open'); el.setAttribute('aria-hidden', 'false');
-    if (!wasOpen && PMU.motion) PMU.motion.reveal(body.querySelectorAll('.pmu-inspsec'), { delay: 120, step: 40, cap: 320 });
+    holdRim(from && from.closest ? from.closest('.pmu-card') : null);
+    /* opening: the sections rise 22 apart from 120; switching panels while open: the content cross-fades 160 with a 6 px
+       slide and the drawer stays where it is */
+    if (!wasOpen && PMU.motion) PMU.motion.reveal(body.querySelectorAll('.pmu-inspsec'), { delay: 120, step: 22, cap: 320 });
+    else if (wasOpen && PMU.motion) [el.querySelector('.pmu-insphead'), actions, body].forEach(function (part) {
+      if (part && !part.hidden) PMU.motion.animate(part, [{ opacity: 0, transform: 'translateX(6px)' }, { opacity: 1, transform: 'none' }], { dur: 160, easing: 'cubic-bezier(.22,.8,.28,1)' });
+    });
     var closeBtn = document.getElementById('pmuInspClose');
     setTimeout(function () { if (closeBtn && el.classList.contains('open')) closeBtn.focus({ preventScroll: true }); }, 30);
   }
