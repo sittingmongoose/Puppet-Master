@@ -54,7 +54,7 @@ KINDS = {
     'mix':       (4, None, 3, 12, [('Compact', 4, 4), ('Standard', 6, 5), ('Wide', 10, 5)]),
     'list':      (4, None, 3, 20, [('Compact', 4, 5), ('Standard', 5, 7), ('Wide', 8, 6), ('Full', 12, 7)]),
     'table':     (6, None, 5, 30, [('Standard', 10, 10), ('Wide', 14, 10), ('Tall', 10, 16), ('Full', 20, 12)]),
-    'alert':     (4, 10, 4, 9, [('Compact', 4, 6), ('Standard', 5, 7), ('Wide', 8, 6)]),
+    'alert':     (4, 10, 4, 10, [('Compact', 4, 6), ('Standard', 5, 7), ('Wide', 8, 6)]),
     'free':      (3, 12, 4, 16, [('Compact', 4, 6), ('Standard', 4, 7), ('Wide', 6, 6)]),
     'cache':     (3, 8, 4, 14, [('Compact', 4, 6), ('Standard', 4, 7), ('Wide', 6, 6)]),
     'gauge':     (3, 8, 4, 12, [('Compact', 4, 5), ('Standard', 5, 6), ('Tall', 5, 10), ('Wide', 8, 5)]),
@@ -246,21 +246,26 @@ W = {
 }
 
 # Room boards per class: ordered "id wxh" (G first, then D, then X, so every level is a prefix with no hole).
+# CONTENT-3 (2026-10-02, version h): the Overview's capacity tiles 6 tracks wide and 8-9 rows (Queued, Reserved tokens,
+# Reserved spend, Longest wave, Requested and Admitted all show at the default size), Active runs 7 rows (Oldest and
+# Projected show; its band 13 rows), and the Attention row 10 rows tall (the policy tile shows its four rules and the
+# last review). S (1440): the four Context tiles 6 x 6 (Output reserve shows Hard stop 112k), the Ledger tiles 6 x 8 in two
+# by two (their four facts pair side by side; Settlement states keeps its three rows), the Attention row 6 x 9 (the policy tile shows Last review 2d).
 B = {
     # WOW round (POLISH2 content, 2026-10-02): each room leads with its hero (LOOK-REVIEW-2 2) and fills its first screen at
     # 767 (S) and 1145 (M) without hiding data (LOOK-REVIEW-2 11); the Overview's plan cards live in Plans & limits, the
     # skyline shows the same windows lit side by side
     'overview': {
-        'S': 'ov-skyline 12x10 health 4x4 month 4x4 cache-saved 4x4 next-reset 4x5 active-runs 4x5 plan-value-now 4x5 '
+        'S': 'ov-skyline 12x10 health 4x4 month 4x4 cache-saved 4x4 next-reset 4x7 active-runs 4x7 plan-value-now 4x7 '
              'budget-now 7x12 attention-now 5x12 ov-resets 7x12 route-pressure 5x12 context-now 6x9 ov-headroom 6x9 '
-             'forecast 12x7 completion-capacity 6x5 capacity-reservations 6x5 run-attribution 12x12',
+             'forecast 12x7 completion-capacity 6x8 capacity-reservations 6x8 run-attribution 12x12',
         'M': 'ov-skyline 12x11 health 4x5 month 4x5 next-reset 4x6 cache-saved 4x6 '
              'budget-now 8x13 attention-now 6x13 ov-resets 6x13 '
-             'context-now 5x11 route-pressure 6x11 plan-value-now 5x6 ov-headroom 4x11 active-runs 5x5 '
-             'forecast 10x7 completion-capacity 5x7 capacity-reservations 5x7 run-attribution 20x9',
+             'context-now 5x13 route-pressure 6x13 plan-value-now 5x6 ov-headroom 4x13 active-runs 5x7 '
+             'forecast 8x9 completion-capacity 6x9 capacity-reservations 6x9 run-attribution 20x9',
         'L': 'ov-skyline 14x11 health 5x5 month 5x5 next-reset 5x6 cache-saved 5x6 '
              'budget-now 9x13 attention-now 7x13 ov-resets 8x13 '
-             'context-now 6x11 route-pressure 7x11 plan-value-now 6x6 ov-headroom 5x11 active-runs 6x5 '
+             'context-now 6x13 route-pressure 7x13 plan-value-now 6x6 ov-headroom 5x13 active-runs 6x7 '
              'forecast 12x7 completion-capacity 6x7 capacity-reservations 6x7 run-attribution 24x9',
     },
     'plans': {
@@ -314,7 +319,7 @@ B = {
              'free-history 12x9 free-source-state 12x9',
     },
     'context': {
-        'S': 'ctx-window 12x10 ctx-cache 6x4 ctx-reclaim 6x4 ctx-output 6x4 ctx-route 6x4 ctx-sources 12x9 ctx-limits 12x9 '
+        'S': 'ctx-window 12x10 ctx-cache 6x6 ctx-reclaim 6x6 ctx-output 6x6 ctx-route 6x6 ctx-sources 12x9 ctx-limits 12x9 '
              'ctx-maint 12x9 ctx-routing 12x9 compaction-history 12x9 context-composition 12x9',
         'M': 'ctx-window 12x12 ctx-cache 4x6 ctx-reclaim 4x6 ctx-output 4x6 ctx-route 4x6 ctx-sources 10x11 ctx-limits 10x11 '
              'ctx-maint 7x10 ctx-routing 7x10 compaction-history 6x10 context-composition 20x9',
@@ -336,16 +341,16 @@ B = {
              'reasoning-mix 24x10 token-counting-basis 14x13 unknown-token-buckets 10x10',
     },
     'ledger': {
-        'S': 'ledger-timeline 12x10 ledger-count 4x4 ledger-errors 4x4 ledger-routes 4x4 settlement-states 12x8 ledger-main 12x17 '
-             'ledger-events 12x14 attempt-lineage 12x22 ledger-coverage 6x4 ledger-export 6x4 usage-record-state 12x8',
+        'S': 'ledger-timeline 12x10 ledger-count 6x8 ledger-errors 6x8 ledger-routes 6x8 settlement-states 6x8 ledger-main 12x17 '
+             'ledger-events 12x14 attempt-lineage 12x22 ledger-coverage 6x8 ledger-export 6x8 usage-record-state 12x8',
         'M': 'ledger-timeline 20x12 ledger-count 5x7 ledger-errors 5x7 ledger-routes 5x7 settlement-states 5x7 ledger-main 20x18 '
              'ledger-events 20x14 attempt-lineage 20x15 ledger-coverage 5x8 ledger-export 5x8 usage-record-state 10x8',
         'L': 'ledger-timeline 24x12 ledger-count 6x5 ledger-errors 6x5 ledger-routes 6x5 settlement-states 6x5 ledger-main 16x17 '
              'ledger-events 8x17 attempt-lineage 24x15 ledger-coverage 6x7 ledger-export 6x7 usage-record-state 12x7',
     },
     'attention': {
-        'S': 'anom 12x12 alert-0 6x8 alert-1 6x8 alert-2 6x8 attention-policy 6x8 attention-history 12x9',
-        'M': 'anom 20x14 alert-0 5x9 alert-1 5x9 alert-2 5x9 attention-policy 5x9 attention-history 20x10',
+        'S': 'anom 12x12 alert-0 6x9 alert-1 6x9 alert-2 6x9 attention-policy 6x9 attention-history 12x9',
+        'M': 'anom 20x14 alert-0 5x10 alert-1 5x10 alert-2 5x10 attention-policy 5x10 attention-history 20x10',
         'L': 'anom 24x14 alert-0 6x9 alert-1 6x9 alert-2 6x9 attention-policy 6x9 attention-history 24x10',
     },
     'cache': {
@@ -506,7 +511,7 @@ def js(boards) -> str:
     rooms = {}
     for room in ROOMS:
         rooms[room] = {cls: [[e['id'], e['x'], e['y'], e['w'], e['h']] for e in boards[room][cls]] for cls in CLASSES}
-    data = {'version': 'pmu-b2-boards-2026-10-02-g', 'classes': CLASSES, 'kinds': kinds, 'widgets': widgets, 'rooms': rooms,
+    data = {'version': 'pmu-b2-boards-2026-10-02-h', 'classes': CLASSES, 'kinds': kinds, 'widgets': widgets, 'rooms': rooms,
             'migrate': MIGRATE, 'promoted_from': PROMOTED}
     body = json.dumps(data, ensure_ascii=False, separators=(',', ':'))
     return ('/* Usage default boards (B v2), generated by tools/boards.py; do not edit by hand: change tools/boards.py and run it.\n'

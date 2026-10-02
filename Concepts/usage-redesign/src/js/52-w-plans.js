@@ -16,6 +16,22 @@
     return { html: out.join(''), hidden: hidden, used: used };
   }
   C.stack = stack;
+  /* blocks that do not fit are never dropped silently (CONTENT-3): where the room allows it one "N more" line counts the
+     hidden data blocks (b.t, the block's words) and its hover tag lists them; else r.folded goes to the caller's root
+     hover tag. Blocks without words (a meter, the action buttons) are not counted. */
+  /* gap: the container's flex gap, counted once per block (limit, alert, free and cache stack with 6 px) */
+  function fitBlocks(blocks, budget, prefix, word, short, gap) {
+    var g = gap == null ? 6 : gap, dataOf = function (b) { return b && b.t; };
+    blocks = blocks.map(function (b) { return b && b.html ? Object.assign({}, b, { h: b.h + g }) : b; });
+    var r = stack(blocks, budget, prefix), hid = r.hidden.filter(dataOf);
+    if (!hid.length) return { html: r.html, folded: [], more: false, used: r.used };
+    if (budget >= 21 + g) {
+      var r2 = stack(blocks, budget - 21 - g, prefix), hid2 = r2.hidden.filter(dataOf);
+      return { html: r2.html + C.more(hid2.length, word || 'facts', short, hid2.map(dataOf)), folded: [], more: true, used: r2.used + 21 + g };
+    }
+    return { html: r.html, folded: hid.map(dataOf), more: false, used: r.used };
+  }
+  C.fitBlocks = fitBlocks;
 
   /* one meter spec for a WindowView (A1 6) */
   C.meterSpec = function (w, opts) {
@@ -29,7 +45,7 @@
       source: (w.truth ? PMU.fmt.truth(w.truth) + (opts.age ? ' · ' + opts.age : '') : '') + (w.pacePts !== null && w.pacePts !== undefined ? ' · ' + (w.pacePts > 0 ? '+' : '') + w.pacePts + ' pts vs norm' : ''), thresholds: { warn: 100 - th.warnLeft, switch: 100 - th.switchLeft },
       hover: { label: (opts.hoverName ? opts.hoverName + ' · ' : '') + w.label } };
   };
-  var METER_H = { c: 58, i: 58, k: 50 };
+  var METER_H = { c: 58, i: 58, k: 44 };   /* measured k: 44 (CONTENT-3, VM 1920 and 1440) */
 
   /* ================================================================== limit: provider plan cards */
   /* model: planView + {facts, pace, foot, plan, requests, tokens} (defined in 70-rooms-a.js) */
@@ -52,29 +68,33 @@
       var meterRoom = Math.max(1, C.fit(bh - footH, mh));
       var shownWins = wins.slice(0, meterRoom), hiddenWins = wins.length - shownWins.length;
       var meters = '<div class="pmu-limitmeters">' + shownWins.map(function (w, i) { return '<div class="pmu-limitmeter" data-i="' + i + '"></div>'; }).join('') +
-        (hiddenWins ? '<div class="pmu-more">' + esc(hiddenWins + ' more ' + (hiddenWins === 1 ? 'window' : 'windows') + ' at a larger size') + '</div>' : '') +
+        (hiddenWins ? '<div class="pmu-more"' + C.foldHover(wins.slice(shownWins.length).map(function (w) { return w.label + ' ' + (w.pct === null ? PMU.roster.vsWord(w) : C.fmt(w.pct, 'pct') + ' used · ' + PMU.fmt.resetLine(w).text); })) + '>' + esc(hiddenWins + ' more ' + (hiddenWins === 1 ? 'window' : 'windows') + ' at a larger size') + '</div>' : '') +
         (!wins.length ? '<div class="pmu-limitnone">' + C.vs('not_exposed', 'Quota not exposed') + '</div>' : '') + '</div>';
-      var used = shownWins.length * mh + (hiddenWins ? 24 : 0) + (wins.length ? 0 : 30);
+      /* the meters block: 44 px meters 8 px apart (measured), its own "N more windows" line (21 + 4) */
+      var used = Math.max(0, shownWins.length * mh - 8) + (hiddenWins ? 25 : 0) + (wins.length ? 0 : 30);
       var lines = (m.amounts || []).map(function (a) {
         var nar = ctx.tier.bw < 260, label = nar && /^Spend/.test(a.label) ? 'Spend' : a.label, vsA = a.vs && a.vs !== 'ok';
         /* a state word that does not fit beside its label stacks under it (OWNER-REVIEW 4: "Chat (vs) disabled by" was
            cut at the card edge) */
         var stackIt = vsA && C.wrapLines(label + '      ' + (a.word || ''), ctx.tier.bw - 26, 12.5) > 1;
-        return { h: stackIt ? 18 + 18 * C.wrapLines(a.word || '', ctx.tier.bw - 44, 12.5) + 8 : 32, html: '<div class="pmu-amount pmu-amt' + (stackIt ? ' is-stack' : '') + '"' + C.hover(a.label + (a.value ? ' ' + a.value : ''), [a.suffix, a.word, a.hover].filter(Boolean).join(' · ')) + '>' + (vsA ? '<span></span>' : C.glyph(a.glyph || 'info')) + '<span>' + esc(label) + '</span>' +
+        return { t: a.label + ' ' + (vsA ? a.word || '' : (a.value || '') + (a.suffix ? ' ' + a.suffix : '')), h: stackIt ? 18 + 18 * C.wrapLines(a.word || '', ctx.tier.bw - 44, 12.5) + 8 : 32, html: '<div class="pmu-amount pmu-amt' + (stackIt ? ' is-stack' : '') + '"' + C.hover(a.label + (a.value ? ' ' + a.value : ''), [a.suffix, a.word, a.hover].filter(Boolean).join(' · ')) + '>' + (vsA ? '<span></span>' : C.glyph(a.glyph || 'info')) + '<span>' + esc(label) + '</span>' +
           (vsA ? '<span class="pmu-amtv">' + C.vs(a.vs, a.word) + '</span>' : '<b>' + esc(a.value) + (a.suffix && !nar ? ' <em>' + esc(a.suffix) + '</em>' : '') + '</b>') + '</div>' };
       });
       var planText = (m.plan || '') + (m.requests != null ? ' · ' + PMU.fmt.num(m.requests) + ' requests' : '') + (m.tokens != null ? ' · ' + PMU.fmt.tok(m.tokens) + ' tokens' : '');
-      var planLine = { h: 6 + 18 * C.textLines(planText, ctx.tier.bw, 12.5), html: '<div class="pmu-limitplan"><b>' + esc(m.plan) + '</b>' + (m.requests != null ? ' · ' + esc(PMU.fmt.num(m.requests)) + ' requests' : '') + (m.tokens != null ? ' · ' + esc(PMU.fmt.tok(m.tokens)) + ' tokens' : '') + '</div>' };
-      var facts = (m.facts || []).map(function (f) { return { h: C.factH(f, ctx.tier.bw), html: C.facts([f]) }; });
-      var side = '';
+      var planLine = { t: planText, h: 6 + 18 * C.textLines(planText, ctx.tier.bw, 12.5), html: '<div class="pmu-limitplan"><b>' + esc(m.plan) + '</b>' + (m.requests != null ? ' · ' + esc(PMU.fmt.num(m.requests)) + ' requests' : '') + (m.tokens != null ? ' · ' + esc(PMU.fmt.tok(m.tokens)) + ' tokens' : '') + '</div>' };
+      var facts = (m.facts || []).map(function (f) { return { t: C.factText(f), h: C.factH(f, ctx.tier.bw), html: C.facts([f]) }; });
+      var side = '', footFold = m.foot && !footH ? [String(m.foot).replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/g, ' ').replace(/\s+/g, ' ').trim()] : [];
       if (xl) {
-        var right = stack([planLine].concat(lines).concat(facts), bh - footH, true);
+        var right = fitBlocks([planLine].concat(lines).concat(facts), bh - footH, true, 'facts');
         side = '<div class="pmu-limitside">' + right.html + '</div>';
-        body.innerHTML = '<div class="pmu-limit is-xl"><div class="pmu-limitmain">' + meters + '</div>' + side + '</div>' + (m.foot && footH ? C.foot(m.foot, m.footGlyph) : '');
+        body.innerHTML = '<div class="pmu-limit is-xl"' + C.foldHover(right.folded.concat(footFold)) + '><div class="pmu-limitmain">' + meters + '</div>' + side + '</div>' + (m.foot && footH ? C.foot(m.foot, m.footGlyph) : '');
       } else {
-        /* a short amount (Spend $14.82) goes before the long plan line, so a narrow card keeps the figure */
-        var rest = stack(lines.concat([planLine]).concat(C.h(ctx, 'h3') || C.w(ctx, 'm') ? facts : []), bh - footH - used - 4, true);
-        body.innerHTML = '<div class="pmu-limit">' + meters + rest.html + '</div>' + (m.foot && footH ? C.foot(m.foot, m.footGlyph) : '');
+        /* a short amount (Spend $14.82) goes before the long plan line, so a narrow card keeps the figure; the plan line
+           and the facts then fill what is left, each that does not fit counted on the "N more" line (CONTENT-3: the
+           plan cards showed no fact over an 86 px band at 1920) */
+        var amt = stack(lines.map(function (x) { return Object.assign({}, x, { h: x.h + 6 }); }), bh - footH - used, true);
+        var rest = fitBlocks([planLine].concat(facts), bh - footH - used - amt.used, false, 'facts', ctx.tier.bw < 260);
+        body.innerHTML = '<div class="pmu-limit"' + C.foldHover(amt.hidden.map(function (x) { return x.t; }).concat(rest.folded, footFold)) + '>' + meters + amt.html + rest.html + '</div>' + (m.foot && footH ? C.foot(m.foot, m.footGlyph) : '');
       }
       shownWins.forEach(function (w, i) {
         C.chart(body, 'meter', body.querySelector('.pmu-limitmeter[data-i="' + i + '"]'), C.meterSpec(w, { size: w.pct === null ? 'k' : size, effective: true, prov: m.settingsId, stale: m.account && m.account.fresh.stale, age: m.account ? m.account.ageText : '', hoverName: m.name }),
@@ -93,19 +113,21 @@
         '<p class="pmu-alertdetail">' + esc(m.detail) + '</p>';
       /* the detail's lines from its measured width in the theme's face (Retro's mono runs wider), plus a word-wrap margin */
       var tw = PMU.charts && PMU.charts.textW ? PMU.charts.textW(m.detail, 13) * 1.1 : m.detail.length * 6.6;
-      var detailH = 26 + Math.ceil(tw / Math.max(120, ctx.tier.bw)) * 19;
+      /* measured: the state line 18, a 6 px gap, the detail 19 a line, a 6 px gap */
+      var detailH = 30 + Math.ceil(tw / Math.max(120, ctx.tier.bw)) * 19;
       /* the meter's own reset line wraps on a narrow card ("baseline 24-hour norm · raise at / 70"): its height counts it */
-      var meter = { h: 48 + 16 * Math.min(3, C.wrapLines('baseline ' + m.baseline + ' · raise at ' + m.raise, ctx.tier.bw, 12)), html: '<div class="pmu-alertmeter"></div>' };
+      /* measured (VM 1920 / 1440): the pressure meter is 52 px with a one-line reset line, 15 px more a wrapped line */
+      var meter = { t: 'Current pressure ' + m.score + ' · baseline ' + m.baseline + ' · raise at ' + m.raise, h: 37 + 15 * Math.min(3, C.wrapLines('baseline ' + m.baseline + ' · raise at ' + m.raise, ctx.tier.bw, 12)), html: '<div class="pmu-alertmeter"></div>' };
       /* the time and the owner are the subtitle's (each said once, LOOK-REVIEW-2 16) */
       var facts = [['Disposition', m.disposition], ['Scope', m.scope], ['Threshold', m.threshold], ['Receipt', m.receipt]];
       var actions = !(m.actions || []).length ? null : { h: narrow ? 68 : 38, html: '<div class="pmu-alertacts">' + m.actions.map(function (a) {
         return '<button type="button" class="pmu-textbtn' + (a.primary ? ' is-primary' : '') + '"' + (a.act ? ' data-pmu-act="' + esc(a.act) + '" data-value="' + esc(a.value || '') + '"' : '') +
           (a.demo ? ' data-demo-action="' + esc(a.demo) + '" data-demo-arg="' + esc(a.arg || '') + '"' : '') + (a.disabled ? ' disabled' : '') + C.hover(a.label, a.hover || '') + '>' + esc(a.label) + '</button>';
       }).join('') + '</div>' };
-      var blocks = [meter, actions].concat(facts.map(function (f) { return { h: 27, html: C.facts([f]) }; }));
+      var blocks = [meter, actions].concat(facts.map(function (f) { return { t: C.factText(f), h: C.factH(f, ctx.tier.bw), html: C.facts([f]) }; }));
       var footOk = m.foot && C.h(ctx, 'h3');
-      var rest = stack(blocks, bh - detailH - (footOk ? 34 : 0));
-      body.innerHTML = '<div class="pmu-alert">' + top + rest.html + '</div>' + (footOk ? C.foot(esc(m.foot), m.sev === 'ok' ? 'checkCircle' : 'info') : '');
+      var rest = fitBlocks(blocks, bh - detailH - (footOk ? 34 : 0), false, 'facts', narrow);
+      body.innerHTML = '<div class="pmu-alert"' + C.foldHover(rest.folded.concat(m.foot && !footOk ? [m.foot] : [])) + '>' + top + rest.html + '</div>' + (footOk ? C.foot(esc(m.foot), m.sev === 'ok' ? 'checkCircle' : 'info') : '');
       var host = body.querySelector('.pmu-alertmeter');
       if (host) C.chart(body, 'meter', host, { label: 'Current pressure', pct: m.score, suffix: 'pressure score', noPct: true, tone: m.score >= m.raise ? 'warn' : 'calm', size: 'k', notch: { at: m.raise, faint: false, off: false },
         /* "raise at 70" never breaks before its number (a lone "70" on the third line) */
@@ -123,6 +145,8 @@
     return { text: String(m.capacity || '').replace(/ capacity$/, ''), unit: /capacity$/.test(m.capacity || '') ? 'capacity' : '' };
   }
   C.kind('free', {
+    /* a tall card's facts grow into a free band (the ring keeps its size from 200 px up) */
+    grow: function (body) { var c = body._pmuCtxK; return !!c && c.tier.bh >= 220; },
     /* a capacity gauge leads the card (WOW-SPEC 4, Free models; LOOK-REVIEW-2 2): the ring is the route's availability
        (a cooling route shows how much of its wait is done), the big number its published capacity; the facts follow
        in two columns where the card is wide, each hidden whole when it does not fit */
@@ -138,16 +162,23 @@
         '<div class="pmu-freetop"><span class="pmu-freestate" data-tone="' + m.stateTone + '">' + C.glyph(m.stateGlyph) + esc(m.state) + '</span>' +
         '<span class="pmu-freecapline"' + C.hover('Capacity', m.capacitySource) + '>' + capHtml + '</span>' +
         '<span class="pmu-freeprov">' + esc(m.provider) + '</span></div></div>';
-      var headH = Math.max(ringPx, 78) + 8;
-      var blocks = [
-        { h: 30, html: '<div class="pmu-freeprice"><b>' + esc(m.price) + '</b><span>' + esc(m.priceSource) + '</span></div>' },
-        { h: 27, html: C.facts([['Context window', m.context]]) }
-      ];
-      var two = bw >= 400, facts = (m.facts || []).filter(function (f) { return f[0] !== 'Capacity note' || f[1] !== m.capacity; });
-      if (two) for (var fi = 0; fi < facts.length; fi += 2) blocks.push({ h: Math.max(C.factH(facts[fi], bw / 2), facts[fi + 1] ? C.factH(facts[fi + 1], bw / 2) : 27), html: C.facts(facts.slice(fi, fi + 2), null, { cols: 2 }) });
-      else blocks = blocks.concat(facts.map(function (f) { return { h: C.factH(f, bw), html: C.facts([f]) }; }));
-      var rest = stack(blocks, bh - headH, true);
-      body.innerHTML = '<div class="pmu-free' + (two ? ' is-wide' : '') + '">' + head + rest.html + '</div>' + (rest.hidden.length ? C.more(rest.hidden.length, 'facts') : '');
+      /* the hero's height from its wrapped words beside the ring (the state line wrapped to four lines in a 102 px column
+         and the facts were placed under an 87 px estimate of a 188 px hero) */
+      var topW = Math.max(60, ringPx ? bw - ringPx - 16 : bw);
+      var capH = cap.vs ? 20 * C.wrapLines(cap.word, topW - 22, 14, 560) : 29 + (cap.value != null && C.wrapW(String(cap.value), 28, 640) + 8 + C.wrapW(cap.unit || '', 12.5) > topW ? 18 : 0);
+      var topH = 20 * C.wrapLines(m.state, topW - 22, 14, 640) + 4 + capH + 4 + 17 * C.wrapLines(m.provider, topW, 12);
+      var headH = Math.max(ringPx, topH) + 6 + 6;
+      /* the price line, then the facts placed by C.factLayout (two columns where a pair fits); the facts that do not fit
+         are counted on one "N more facts" line whose hover tag lists them (CONTENT-3) */
+      var priceH = 30, facts = [['Context window', m.context]].concat((m.facts || []).filter(function (f) { return f[0] !== 'Capacity note' || f[1] !== m.capacity; }));
+      var priceOk = bh - headH >= priceH, lay = C.factLayout(facts, bw), room = bh - headH - (priceOk ? priceH + 6 : 0) - 4;   /* .pmu-free stacks with 6 px gaps; 2 px of rounding */
+      var fr = lay.fit(room), moreLine = false;
+      if (fr.n < facts.length && room >= 25) { fr = lay.fit(room - 25); moreLine = true; }
+      var hidden = facts.slice(fr.n);
+      var folded = hidden.map(C.factText).concat(priceOk ? [] : [m.price + ' ' + m.priceSource]);
+      body.innerHTML = '<div class="pmu-free' + (lay.cols === 2 ? ' is-wide' : '') + '"' + (!moreLine && folded.length ? C.foldHover(folded) : '') + '>' + head +
+        (priceOk ? '<div class="pmu-freeprice"><b>' + esc(m.price) + '</b><span>' + esc(m.priceSource) + '</span></div>' : '') + (fr.n ? lay.html(fr.n) : '') + '</div>' +
+        (moreLine && hidden.length ? C.more(hidden.length, 'facts', bw < 260, folded) : '');
       if (ringPx) C.chart(body, 'ring', body.querySelector('.pmu-freering'), { segments: [{ name: cool ? 'Wait done' : 'Available', value: av.pct || 0, tone: cool ? 'warn' : 'calm' }], limit: 100,
         centre: cool ? (av.pct || 0) + '%' : 'Ready', caption: cool ? 'waited' : '' }, { label: m.state + ' · ' + (av.detail || '') });
     }
@@ -169,15 +200,17 @@
         : '<div class="pmu-cachetop">' + (ringPx ? '<div class="pmu-cachering" style="width:' + ringPx + 'px;height:' + ringPx + 'px"></div>' : '') +
           '<div class="pmu-cachehead">' + C.valHtml(m.share, 'pct1', 'pmu-kpivalue', ctx.id + ':s').replace('class="pmu-num"', 'class="pmu-num" data-count="kpi"') + '<span class="pmu-cacheword">read share' + (m.est ? ' · est.' : '') + '</span>' +
           '<span class="pmu-cacherep">' + (m.reportingVs ? C.vs(m.reportingVs, m.reporting) : esc(m.reporting)) + '</span></div></div>';
-      var topH = big ? ringPx + 70 : Math.max(ringPx, 54) + 6;
-      var blocks = (big ? [] : [{ h: 40, html: '<div class="pmu-cachesplit"></div>' }, { h: 27, html: C.facts([['Savings', C.money(m.savings) + ' est.', { tone: 'good' }]]) }]).concat([
-        { h: 27, html: C.facts([['Read', m.read]]) },
-        { h: 27, html: C.facts([['Write', m.write, m.writeVs ? { vs: m.writeVs, word: m.write } : {}]]) },
-        { h: 27, html: C.facts([['Authority', m.authority]]) },
-        { h: 27, html: C.facts([['Age', m.age]]) }
-      ]);
-      var rest = C.h(ctx, 'h2') ? stack(blocks, bh - topH) : { html: '' };
-      body.innerHTML = '<div class="pmu-cache' + (big ? ' is-hero' : '') + '">' + top + rest.html + '</div>';
+      /* measured: the big hero is the ring, 6 px, the savings line 26, 4 px, the reporting line 17 a line (VM 1440) */
+      var topH = big ? ringPx + 36 + 17 * C.wrapLines(m.reporting, bw, 12.5) : Math.max(ringPx, 54) + 6;
+      /* the facts in one block placed by C.factLayout (Read and Write side by side where they fit); the split bar first
+         on the small form; whatever does not fit is counted on one "N more facts" line (CONTENT-3) */
+      var cfacts = (big ? [] : [['Savings', C.money(m.savings) + ' est.', { tone: 'good' }]]).concat([['Read', m.read], ['Write', m.write, m.writeVs ? { vs: m.writeVs, word: m.write } : {}], ['Authority', m.authority], ['Age', m.age]]);
+      var splitOk = !big && C.h(ctx, 'h2') && bh - topH >= 46, clay = C.factLayout(cfacts, bw), croom = C.h(ctx, 'h2') ? bh - topH - (big ? 8 : 6) - (splitOk ? 46 : 0) - 2 : 0;
+      var cfr = clay.fit(croom), cmore = false;
+      if (cfr.n < cfacts.length && croom >= 25) { cfr = clay.fit(croom - 25); cmore = true; }
+      var chid = cfacts.slice(cfr.n).map(C.factText).concat(!big && !splitOk ? ['Reads ' + m.read + ' · Writes ' + m.write] : []);
+      var rest = { html: (splitOk ? '<div class="pmu-cachesplit"></div>' : '') + (cfr.n ? clay.html(cfr.n) : '') + (cmore ? C.more(cfacts.length - cfr.n, 'facts', bw < 260, chid) : ''), folded: cmore ? [] : chid };
+      body.innerHTML = '<div class="pmu-cache' + (big ? ' is-hero' : '') + '"' + C.foldHover(rest.folded) + '>' + top + rest.html + '</div>';
       var ringHost = body.querySelector('.pmu-cachering');
       if (ringHost && big) C.chart(body, 'ring', ringHost, { segments: [{ name: 'Reads', value: m.readN || 0, tk: 'cr', est: !!m.est }, { name: 'Writes', value: m.writeN || 0, tk: 'cw', est: !!m.est || /est/.test(m.write) }],
         centre: C.fmt(m.share, 'pct1'), caption: 'read share' + (m.est ? ' est.' : '') }, { label: 'Reads ' + m.read + ', writes ' + m.write + ', read share ' + m.share + '%' });

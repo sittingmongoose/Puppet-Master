@@ -682,9 +682,47 @@
     PMU.film.odometer(el, to, function (v) { return v === to ? newText : oldText; }, { from: from, change: true, dur: 160 });
   }
   charts.rollText = rollText;
+  /* the readout's content changes in place when its shape is the same (PERF-3): a new child list on every bucket made the
+     app's document observers re-scan (its pointer field re-queried every box of the page on the next pointer frame,
+     about 10 ms on the VM, and its hover-tag controller bound the new nodes); text and attributes are patched instead,
+     and a different shape falls back to innerHTML */
+  var tpl = document.createElement('template');
+  function sameShape(a, b) {
+    if (a.nodeType !== b.nodeType) return false;
+    if (a.nodeType !== 1) return a.nodeType === 3;
+    if (a.tagName !== b.tagName || a.childNodes.length !== b.childNodes.length) return false;
+    for (var i = 0; i < a.childNodes.length; i++) if (!sameShape(a.childNodes[i], b.childNodes[i])) return false;
+    return true;
+  }
+  function copyInto(a, b) {
+    if (a.nodeType === 3) { if (a.data !== b.data) a.data = b.data; return; }
+    if (a.nodeType !== 1) return;
+    var i, at;
+    for (i = a.attributes.length - 1; i >= 0; i--) { at = a.attributes[i]; if (!b.hasAttribute(at.name)) a.removeAttribute(at.name); }
+    for (i = 0; i < b.attributes.length; i++) { at = b.attributes[i]; if (a.getAttribute(at.name) !== at.value) a.setAttribute(at.name, at.value); }
+    for (i = 0; i < a.childNodes.length; i++) copyInto(a.childNodes[i], b.childNodes[i]);
+  }
+  function patchHtml(el, html) {
+    tpl.innerHTML = html;
+    var next = tpl.content;
+    var same = el.childNodes.length === next.childNodes.length;
+    for (var i = 0; same && i < el.childNodes.length; i++) same = sameShape(el.childNodes[i], next.childNodes[i]);
+    if (!same) { el.innerHTML = html; return; }
+    for (var j = 0; j < el.childNodes.length; j++) copyInto(el.childNodes[j], next.childNodes[j]);
+  }
+  charts.patchHtml = patchHtml;
   charts.hover = function (box, cfg) {
     var band = H('div', 'pmu-xband', box), xh = H('div', 'pmu-xh', box), card = H('div', 'pmu-readout', layer()), dotEls = [];
     var on = false, last = -1, api, side = 1, hotKey = null, py = -1, lastSwap = 0;
+    /* layout reads in a sweep (PERF-3): the plot's rect and scale are read once per 120 ms (the plate may still be
+       lifting) and the card's size only after its content changed, so a pointer frame that changes nothing on the page
+       forces no layout */
+    var geo = null, geoAt = 0, cardSize = null;
+    function boxGeo() {
+      var now = performance.now();
+      if (!geo || now - geoAt > 120) { var r = box.getBoundingClientRect(); geo = { r: r, cw: box.clientWidth || r.width || 1 }; geoAt = now; }
+      return geo;
+    }
     function bandW() {
       if (cfg.bw) return cfg.bw;
       if (cfg.n > 1) return Math.abs(cfg.xAt(1) - cfg.xAt(0));
@@ -723,16 +761,17 @@
         var nowT = performance.now(), calm = nowT - lastSwap > 90 * (PMU.motion.speed ? PMU.motion.speed() : 1);
         lastSwap = nowT;
         var olds = calm ? $$('.pmu-ro-row', card).map(function (r) { var n = r.querySelector('span'), b = r.querySelector('b'); return [n ? n.textContent : '', b ? b.textContent : '']; }) : [];
-        card.innerHTML = cfg.html(i);
+        patchHtml(card, cfg.html(i)); cardSize = null;
         if (last >= 0 && !instant && calm && !charts.noRoll) $$('.pmu-ro-row', card).forEach(function (r, k) {
           var n = r.querySelector('span'), b = r.querySelector('b');
           if (b && olds[k] && n && olds[k][0] === n.textContent) rollText(b, olds[k][1], b.textContent);
         });
       }
       last = i;
-      var r = box.getBoundingClientRect(), k2 = r.width / (box.clientWidth || r.width || 1);
+      var g = boxGeo(), r = g.r, k2 = r.width / g.cw;
       var sx = r.left + x * k2, sy = r.top + (top + 4) * k2;
-      var cw = card.offsetWidth, ch = card.offsetHeight, vw = window.innerWidth, vh = window.innerHeight;
+      if (!cardSize) cardSize = { w: card.offsetWidth, h: card.offsetHeight };
+      var cw = cardSize.w, ch = cardSize.h, vw = window.innerWidth, vh = window.innerHeight;
       var limit = Math.min(vw, r.right) - 6, roomR = limit - (sx + 16 + cw), roomL = (sx - 16 - cw) - Math.max(4, r.left - 40);
       /* keep the side; flip only when the current side does not fit and the other is 48 px better (hysteresis) */
       var was = side;
@@ -748,9 +787,10 @@
     }
     function move(e) {
       if (!cfg.n) return;
-      var r = box.getBoundingClientRect(), sc = box.clientWidth / (r.width || 1), mx = (e.clientX - r.left) * sc;
+      if (!on) geo = null;   /* a fresh read on entry */
+      var g = boxGeo(), r = g.r, sc = g.cw / (r.width || 1), mx = (e.clientX - r.left) * sc;
       py = (e.clientY - r.top) * sc;
-      if (mx < cfg.pad.l - 10 || mx > box.clientWidth - cfg.pad.r + 10) { hide(); return; }
+      if (mx < cfg.pad.l - 10 || mx > g.cw - cfg.pad.r + 10) { hide(); return; }
       var best = 0, bd = Infinity;
       for (var i = 0; i < cfg.n; i++) { var d = Math.abs(cfg.xAt(i) - mx); if (d < bd) { bd = d; best = i; } }
       var first = !on;
@@ -774,7 +814,7 @@
     box.addEventListener('pointermove', move);
     box.addEventListener('pointerleave', hide);
     api = {
-      set: function (next) { Object.assign(cfg, next); last = -1; if (on) hide(); },
+      set: function (next) { Object.assign(cfg, next); last = -1; geo = null; cardSize = null; if (on) hide(); },
       hide: hide,
       showAt: function (i) {
         if (!cfg.n) return;

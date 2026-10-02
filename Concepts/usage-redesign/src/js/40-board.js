@@ -271,8 +271,16 @@
 
   /* ---- cards: placement, head form, tiers ---- */
   /* cards leaving the board (a room change fading out in place, a hidden panel) are not the board's cards any more */
-  function cardOf(id) { return boardEl ? boardEl.querySelector(':scope > .pmu-card[data-widget="' + (window.CSS && CSS.escape ? CSS.escape(id) : id) + '"]:not([data-leaving])') : null; }
-  function cardsNow() { return boardEl ? Array.prototype.slice.call(boardEl.querySelectorAll(':scope > .pmu-card:not([data-leaving])')) : []; }
+  /* a card of the old room is leaving: data-leaving, or (without a GPU) only the _pmuLeaving flag, since the attribute's
+     z-index change repainted the whole old board in the click's frame (50 ms of raster, a 48 ms software draw, PERF-3) */
+  function isLeaving(c) { return !!c._pmuLeaving || c.hasAttribute('data-leaving'); }
+  function cardOf(id) {
+    if (!boardEl) return null;
+    var list = boardEl.querySelectorAll(':scope > .pmu-card[data-widget="' + (window.CSS && CSS.escape ? CSS.escape(id) : id) + '"]');
+    for (var i = 0; i < list.length; i++) if (!isLeaving(list[i])) return list[i];
+    return null;
+  }
+  function cardsNow() { return boardEl ? Array.prototype.filter.call(boardEl.querySelectorAll(':scope > .pmu-card'), function (c) { return !isLeaving(c); }) : []; }
   function gridPlace(el, r) {
     var col = (r.x + 1) + ' / span ' + r.w, row = (r.y + 1) + ' / span ' + r.h;
     if (el.style.gridColumn !== col) el.style.gridColumn = col;
@@ -302,8 +310,10 @@
   /* one batched read of every body, then the writes and renders (DESIGN-SPEC 8.4) */
   function tierPass(cards, mode) {
     var reads = cards.map(function (card) { var body = card.querySelector('.pmu-cardbody'); return { card: card, body: body, bw: body ? body.clientWidth : 0, bh: body ? body.clientHeight : 0 }; });
+    /* a body measured while its old content was set aside (data-pmu-stale, morphResize) gets it back before any write */
+    reads.forEach(function (r) { if (r.body && r.body.hasAttribute('data-pmu-stale')) r.body.removeAttribute('data-pmu-stale'); });
     reads.forEach(function (r) {
-      if (!r.body) return;
+      if (!r.body || mode === 'held' && r.card.hasAttribute('data-late')) return;
       var tier = innerTier(r.card, r.bw, r.bh);
       var changed = r.card.getAttribute('data-tw') !== tier.w || r.card.getAttribute('data-th') !== tier.h;
       if (changed) { r.card.setAttribute('data-tw', tier.w); r.card.setAttribute('data-th', tier.h); emit('tier', { id: r.card.getAttribute('data-widget'), tier: tier }); }
@@ -316,6 +326,19 @@
       else if (sized) PMU.cards.resizeBody(r.card, tier);
     });
   }
+  /* ---- the scroll viewport without layout reads in a moment (PERF-3): the height from the ResizeObserver entry, the
+     top from scroll events and the board's own scroll writes; a card is in view when its grid rows meet it ---- */
+  var view = { top: 0, h: 0 };
+  function viewNow(fresh) {
+    if ((fresh || !view.h) && scroll) { view.top = scroll.scrollTop; view.h = scroll.clientHeight; }
+    return view;
+  }
+  function inView(card) {
+    if (!view.h || !card || !card.dataset) return true;
+    var t = (padCache ? padCache.t : 0) + (+card.dataset.y || 0) * ROW, h = (+card.dataset.h || 0) * ROW;
+    return t + h > view.top - 24 && t < view.top + view.h + 24;
+  }
+  if (scroll) scroll.addEventListener('scroll', function () { view.top = scroll.scrollTop; if (streaming && streaming.late) streaming.late(); if (lateHeld) lateHeld(true); }, { passive: true });
   function readingOrder(cards) { return cards.slice().sort(function (a, b) { return (+a.dataset.y - +b.dataset.y) || (+a.dataset.x - +b.dataset.x); }); }
   /* the diagonal wave of the film core (WOW-SPEC 3.1 Phase B): 45 ms per top row, 25 ms per column, cap 640 */
   function setEntranceDelays(cards) {
@@ -325,9 +348,15 @@
   /* the held build (WOW-SPEC 3.1 Phase A): bodies render in reading order in slices of at most 8 ms per frame while the
      board is held (data-held: nothing visible), so the click and every frame stay short; each body's inner entrance is
      queued by PMU.film.cue and released with the wave. A newer mount supersedes a running build. */
-  var buildToken = 0;
+  var buildToken = 0, lateHeld = null;
   function buildSliced(cards, onBuilt) {
-    var token = ++buildToken, queue = readingOrder(cards);
+    /* reading order, the hero first (WOW-SPEC-3 5); without a GPU the bodies outside the viewport wait until the moment
+       is over (data-late: never measured or entered by the release; PERF-3) */
+    var token = ++buildToken, all = readingOrder(cards).sort(function (a, b) { return b.hasAttribute('data-hero') - a.hasAttribute('data-hero'); });
+    var soft = softGpu();
+    if (soft) viewNow(true);   /* the mount just read the board's width: the layout is clean */
+    var queue = soft ? all.filter(inView) : all, later = soft ? all.filter(function (c) { return !inView(c); }) : [];
+    later.forEach(function (c) { c.setAttribute('data-late', ''); });
     function slice() {
       if (token !== buildToken) return;
       var t0 = performance.now();
@@ -337,6 +366,21 @@
       }
       if (queue.length) { requestAnimationFrame(slice); return; }
       if (onBuilt) { try { onBuilt(cards); } catch (error) { console.error('[pm-usage] board built', error); } }
+      if (later.length) {
+        var lateT = setTimeout(function () { lateHeld && lateHeld(false); }, 1700 * speed());   /* about when the hero's instruments end */
+        lateHeld = function (now) {
+          clearTimeout(lateT);
+          if (token !== buildToken) { lateHeld = null; return; }
+          var t1 = performance.now();
+          while (later.length && (now || performance.now() - t1 < 8)) {
+            var c2 = later.shift();
+            if (!c2.isConnected) continue;
+            c2.removeAttribute('data-late');
+            tierPass([c2], false);
+          }
+          if (later.length) requestAnimationFrame(function () { lateHeld && lateHeld(false); }); else lateHeld = null;
+        };
+      }
     }
     requestAnimationFrame(slice);
   }
@@ -377,12 +421,13 @@
       /* no inert, no aria-hidden and no getAnimations() here: inert restyles the whole subtree, getAnimations() flushes the style
          once per card (84 ms of style recalc in one click on the VM); a card still entering leaves from its entrance:
          the exit animations are created later, so they win over it */
-      c.setAttribute('data-leaving', 'room');
+      c._pmuLeaving = true;
       if (c._pmuSlide) { c._pmuSlide.cancel(); c._pmuSlide = null; }
+      if (!softGpu()) c.setAttribute('data-leaving', 'room');
       /* without a GPU (data-pmu-soft) the old room goes at once: fading it would first re-raster every old card into its
          own layer on the CPU (190 ms on the VM before the first frame of the change could be drawn); the new plates'
          entrance carries the change there */
-      if (instant || c.hasAttribute('data-pending') || reduced() || softGpu()) { leaving.push({ card: c, done: true }); return; }
+      if (instant || c.hasAttribute('data-pending') || c.hasAttribute('data-body-wait') || reduced() || softGpu()) { leaving.push({ card: c, done: true }); return; }
       /* the scroll goes back to the top for the new room: the old cards keep their place on screen (translateY by the old
          scroll), then leave: opacity 1 -> 0 on (.33,0,.67,1), translateY(-28 px x dir) scale(.985) on IN, 160 ms */
       var t0 = 'translateY(' + (-sTop) + 'px)', t1 = 'translateY(' + (-sTop + ty) + 'px) scale(.985)';
@@ -396,7 +441,9 @@
       leaving.push(rec);
       if (a) a.finished.then(function () { rec.done = true; queueLeaveFlush(); }, function () { rec.done = true; queueLeaveFlush(); });
     });
-    if (!leaving.some(function (l) { return !l.done; })) flushLeaving(true);
+    /* without a GPU the old room stays (inert, static) until the first rAF swaps it for the new frames in one batch, so
+       no frame shows an empty board (PERF-3) */
+    if (!softGpu() && !leaving.some(function (l) { return !l.done; })) flushLeaving(true);
     return reuse;
   }
   /* the room's key light changes tint by a cross-fade (the old light, cloned, fades out over the new one, 420 OUT;
@@ -421,16 +468,68 @@
      8 ms per frame; each plate enters as soon as it exists. plans: [{id, rect, card?}] (card = a shared widget's card) */
   var filmEndT = 0;
   function streamBuild(plans, o) {
-    var token = ++buildToken, t0 = o.t0, sp = speed(), first = true, built = [];
+    var token = ++buildToken, t0 = o.t0, sp = speed(), first = true, built = [], soft = softGpu();
     /* the wave on the whole new layout (grid rows and columns from the rects; no element needed yet) */
     var proxies = plans.map(function (pl) { return { plan: pl, dataset: { x: pl.rect.x, y: pl.rect.y } }; });
     var fresh = proxies.filter(function (q) { return !q.plan.card; });
     if (PMU.film && PMU.film.wave) PMU.film.wave(fresh, {});
     else readingOrder(fresh).forEach(function (q, i) { q._pmuEnterDelay = Math.min(480, 32 * i); });
     proxies.forEach(function (q) { q.plan.at = q.plan.card ? 0 : (q._pmuEnterDelay || 0) + o.base; });
-    var queue = proxies.map(function (q) { return q.plan; }).sort(function (a, b) { return (a.rect.y - b.rect.y) || (a.rect.x - b.rect.x); });
+    /* reading order, the hero first (WOW-SPEC-3 5: the hero is never the plate that is late), then the cards outside the
+       viewport (the board is at its top after a room change; their rects say where they are, no layout read) */
+    var order = proxies.map(function (q) { return q.plan; }).sort(function (a, b) { return ((b.id === o.hero) - (a.id === o.hero)) || (a.rect.y - b.rect.y) || (a.rect.x - b.rect.x); });
+    var queue = order.filter(function (pl) { return pl.card || rectInView(pl.rect); });
+    /* without a GPU the bodies outside the viewport are built after the moment (PERF-3: a heavy body is one 50-100 ms
+       task on the VM; while the entrance runs only what can be seen is built); a scroll, a gesture or a re-class builds
+       them at once (completeStream) */
+    var later = order.filter(function (pl) { return queue.indexOf(pl) < 0; });
+    if (!soft) { queue = queue.concat(later); later = []; }
+    /* every new card's chrome in one batch in the first rAF after the click (PERF-3): inserting cards one slice at a time
+       changed the board's child list every frame, and the app's positional rules (:nth-child with a descendant part) then
+       restyled every card already on the board (500-1,000 elements, 20-57 ms per slice on the VM); inside the click task
+       the clicked button's focus forced the chrome's layout (31 ms). Without a GPU the old room is swapped out in the
+       same batch (it stays, inert, through the click's frame) and only the first screen's chrome is built. */
+    var chromes = false;
+    function buildChromes() {
+      if (chromes || token !== buildToken) return;
+      chromes = true;
+      if (soft) { keyShift(o.room); boardEl.setAttribute('data-film', ''); }
+      if (soft) flushLeaving(false);
+      var frag = document.createDocumentFragment();
+      /* without a GPU only the chrome of what can be seen is built now; the rest comes with its body after the moment */
+      /* the DOM keeps reading order (Tab order, reduced-motion parity); only the build order puts the hero first */
+      var made = [], dom = (soft ? queue : order).slice().sort(function (a, b) { return (a.rect.y - b.rect.y) || (a.rect.x - b.rect.x); });
+      dom.forEach(function (pl) { if (chrome(pl, frag)) made.push(pl); });
+      boardEl.insertBefore(frag, landing && landing.parentNode === boardEl ? landing : null);
+      /* frames first (VERIFY-3: the new room came up as empty skeletons after a gap; WOW-SPEC-3 6.2): the plates enter now
+         in the wave, the board is never empty, and each body is revealed when it is built */
+      var elapsed = (performance.now() - t0) / sp, cards = [];
+      made.forEach(function (pl) { pl.el._pmuEnterDelay = Math.max(0, pl.at - elapsed); cards.push(pl.el); });
+      if (cards.length) {
+        if (PMU.film && PMU.film.enterPlates) PMU.film.enterPlates(cards, { dir: o.dir, base: 0, scan: true, board: boardEl, from: soft ? 0.35 : 0 });
+        else PMU.motion.enter(cards, { base: 0, dir: o.dir });
+      }
+    }
+    function chrome(pl, frag) {
+      if (pl.card || pl.el) return false;
+      var c = PMU.cards.build(pl.id, o.room, pl.rect);
+      if (pl.id === o.hero) c.setAttribute('data-hero', '');
+      c.setAttribute('data-body-wait', '');
+      pl.el = c; frag.appendChild(c);
+      return true;
+    }
+    /* a body built after its frame: one opacity animation (200 OUT) from its plate's delay, its instruments 160 later
+       (cued by the body's render) */
+    function revealBody(c) {
+      c.removeAttribute('data-body-wait');
+      if (reduced() || !inView(c)) return;
+      var body = c.querySelector(':scope > .pmu-cardbody');
+      var f = PMU.motion.family(), stepped = f === 'retro' || f === 'nier';
+      if (body) PMU.motion.animate(body, [{ opacity: 0 }, { opacity: 1 }], { dur: stepped ? 120 : 200, delay: c._pmuEnterDelay || 0, easing: stepped ? 'steps(3,jump-start)' : filmE('out', 'cubic-bezier(.22,.8,.28,1)'), fill: 'backwards' });
+    }
     function slice(all) {
       if (token !== buildToken || !queue.length && finished) return;
+      buildChromes();
       flushLeaving(!!all);
       try { performance.mark('pmu-room-slice'); } catch (error) {}
       /* the style and layout the frame owes already (the inner entrances of the plates built last frame) are flushed
@@ -439,54 +538,74 @@
       void boardEl.offsetWidth;
       var start = performance.now(), now = [], entering = [];
       while (queue.length && (all || !now.length || performance.now() - start < 8)) {
-        var pl = queue.shift(), c = pl.card;
+        var pl = queue.shift(), c = pl.card || pl.el;
         if (c && !c.isConnected) continue;
-        if (!c) {
-          c = PMU.cards.build(pl.id, o.room, pl.rect);
-          if (pl.id === o.hero) c.setAttribute('data-hero', '');
-          boardEl.insertBefore(c, landing && landing.parentNode === boardEl ? landing : null);
-          entering.push(c);
-        }
         c._pmuPlan = pl.at;
         c._pmuEnterDelay = Math.max(0, pl.at - (performance.now() - t0) / sp);
-        if (pl.card) tierPass([c], false); else tierPass([c], 'enter');
+        if (pl.card) tierPass([c], false); else { tierPass([c], 'enter'); revealBody(c); }
         now.push(c); built.push(c);
-      }
-      if (entering.length) {
-        if (PMU.film && PMU.film.enterPlates) PMU.film.enterPlates(entering, { dir: o.dir, base: 0, scan: first, board: boardEl });
-        else PMU.motion.enter(entering, { base: 0, dir: o.dir });
-        first = false;
       }
       if (queue.length) { requestAnimationFrame(function () { slice(false); }); return; }
       finish();
+      if (all) buildLater(true);
     }
-    var finished = false;
+    var finished = false, lateT = 0;
     function finish() {
       if (finished) return;
       finished = true;
-      if (streaming && streaming.token === token) streaming = null;
       var elapsed = (performance.now() - t0) / sp, last = 0;
       var live = built.filter(function (c) { return c.isConnected; });
       live.forEach(function (c) { c._pmuEnterDelay = Math.max(0, (c._pmuPlan || 0) - elapsed); last = Math.max(last, c._pmuEnterDelay); });
       var shared = {}; plans.forEach(function (pl) { if (pl.card) shared[pl.id] = true; });
       try { if (PMU.film && PMU.film.playBeat) PMU.film.playBeat(o.room, live.filter(function (c) { return !shared[c.getAttribute('data-widget')]; })); } catch (error) { console.error('[pm-usage] room beat', error); }
-      if (!live.length && !boardEl.querySelector(':scope > .pmu-board-empty')) boardEl.appendChild(PMU.cards.empty(o.room));
+      if (!live.length && !later.length && !boardEl.querySelector(':scope > .pmu-board-empty')) boardEl.appendChild(PMU.cards.empty(o.room));
       var endAt = last + 160 + 1500;
       deferHover(endAt);
       clearTimeout(filmEndT);
       filmEndT = setTimeout(function () { filmEndT = 0; if (token === buildToken) boardEl.removeAttribute('data-film'); }, endAt * sp);
       try { performance.mark('pmu-room-built'); } catch (error) {}
+      if (later.length) { lateT = setTimeout(function () { lateT = 0; buildLater(false); }, (last + 160 + 1100) * sp); return; }
+      if (streaming && streaming.token === token) streaming = null;
       emit('built', { room: o.room, cards: live.length, ms: Math.round(performance.now() - t0) });
     }
-    /* the first slice waits one frame: the click's own frame paints the exit, the title and the light first */
-    streaming = { token: token, complete: function () { slice(true); } };
-    requestAnimationFrame(function () { requestAnimationFrame(function () { slice(false); }); });
+    /* the bodies outside the viewport, after the moment: one card per frame (no entrance, they are not seen) */
+    function buildLater(all) {
+      clearTimeout(lateT); lateT = 0;
+      if (token !== buildToken) return;
+      if (later.some(function (pl) { return !pl.el; })) {
+        var frag = document.createDocumentFragment();
+        later.forEach(function (pl) { chrome(pl, frag); });
+        boardEl.insertBefore(frag, landing && landing.parentNode === boardEl ? landing : null);
+      }
+      var start = performance.now();
+      while (later.length && (all || performance.now() - start < 8)) {
+        var pl = later.shift(), c = pl.el;
+        if (!c || !c.isConnected) continue;
+        c.removeAttribute('data-body-wait');
+        tierPass([c], false);
+        built.push(c);
+      }
+      if (later.length) { requestAnimationFrame(function () { buildLater(false); }); return; }
+      if (streaming && streaming.token === token) streaming = null;
+      emit('built', { room: o.room, cards: built.filter(function (c) { return c.isConnected; }).length, ms: Math.round(performance.now() - t0) });
+    }
+    /* the click's own frame paints the exit, the title and the light (a rAF registered in the click task runs in that
+       same frame, so the chrome waits for the next one); the frame after lays out the new room's chrome (one batch: inside
+       the click task the button's focus forced its layout, 31 ms on the VM); the bodies follow from the frame after */
+    streaming = { token: token, complete: function () { slice(true); if (!queue.length) buildLater(true); }, late: function () { if (finished && later.length) buildLater(true); } };
+    requestAnimationFrame(function () { requestAnimationFrame(function () { buildChromes(); requestAnimationFrame(function () { slice(false); }); }); });
+  }
+  function rectInView(r) {
+    if (!view.h) return true;
+    var t = (padCache ? padCache.t : 0) + r.y * ROW, h = r.h * ROW;
+    return t + h > view.top - 24 && t < view.top + view.h + 24;
   }
   /* a gesture, a layout change or a re-class while a room is still being built finishes the build at once, so every
      card of the room exists (at its planned rect) before anything moves */
   var streaming = null;
   function completeStream() {
     flushRefresh();
+    if (lateHeld && !(PMU.film && PMU.film.holding && PMU.film.holding())) lateHeld(true);
     var sm = streaming;
     if (sm && sm.token === buildToken) { try { sm.complete(); } catch (error) { console.error('[pm-usage] complete build', error); } }
     streaming = null;
@@ -495,7 +614,10 @@
     var body = card.querySelector('.pmu-cardbody');
     if (body && body._pmuKind && body._pmuKind.destroy) { try { body._pmuKind.destroy(body, body._pmuCtx); } catch (error) {} }
   }
+  var morphEl = null;
   function ensurePreviews() {
+    if (!morphEl) { morphEl = document.createElement('div'); morphEl.className = 'pmu-morph'; morphEl.hidden = true; morphEl.setAttribute('aria-hidden', 'true'); }
+    if (morphEl.parentNode !== boardEl) boardEl.insertBefore(morphEl, boardEl.firstChild);
     if (!landing || !landing.isConnected) { landing = document.createElement('div'); landing.className = 'pmu-landing'; landing.hidden = true; landing.setAttribute('aria-hidden', 'true'); }
     if (!outline || !outline.isConnected) {
       outline = document.createElement('div'); outline.className = 'pmu-outline'; outline.hidden = true; outline.setAttribute('aria-hidden', 'true');
@@ -550,14 +672,18 @@
       var wasHeld = boardEl.hasAttribute('data-held');
       if (PMU.film && PMU.film.holding && PMU.film.holding()) PMU.film.cancelHold();
       deferHover(4000);
-      keyShift(room);
+      /* the key light's tint is a full-stage repaint: without a GPU it changes with the new chrome (frame B, which repaints
+         the board anyway) instead of in the click's frame, whose raster delayed the first frame by ~50 ms (PERF-3) */
+      if (!softGpu()) keyShift(room);
       var reuse = leaveCards(wasHeld ? [] : ids, opts.dir || 1, sTop, wasHeld);
       boardEl.removeAttribute('data-held');
+      boardEl.removeAttribute('data-hold-bodies');
       boardEl.setAttribute('data-room', room);
       setBoardClass();
       boardEl.removeAttribute('data-op');
-      Array.prototype.slice.call(boardEl.children).forEach(function (n) { if (!n.classList.contains('pmu-card')) n.remove(); });
+      Array.prototype.slice.call(boardEl.children).forEach(function (n) { if (!n.classList.contains('pmu-card') && n !== morphEl && n !== landing && n !== outline) n.remove(); });
       if (sTop) scroll.scrollTop = 0;
+      view.top = 0;
       ensurePreviews();
       /* the click frame builds no card: the plans go to the slices; a shared widget's card is placed now and glides from
          its old place on screen to its new rect (no layout read: grid geometry) */
@@ -572,7 +698,9 @@
         }
         return { id: id, rect: byId[id], card: old || null };
       });
-      boardEl.setAttribute('data-film', '');
+      /* the plates' film layers (data-film): without a GPU from the new chrome on, since in the click's frame they would
+         promote and re-raster every card of the old room (PERF-3) */
+      if (!softGpu()) boardEl.setAttribute('data-film', '');
       current.mounted = true;
       var hero = heroOf(rects, ids);
       plans.forEach(function (pl) { if (pl.card) markHero(pl.card, hero); });
@@ -583,20 +711,28 @@
     flushLeaving(true);
     cardsNow().forEach(destroyCard);
     boardEl.setAttribute('data-held', '');
+    boardEl.removeAttribute('data-hold-bodies');
     boardEl.setAttribute('data-room', room);
     setBoardClass();
     boardEl.removeAttribute('data-op');
     boardEl.textContent = '';
-    if (roomChanged) scroll.scrollTop = 0;
+    if (roomChanged) { scroll.scrollTop = 0; view.top = 0; }
     var heroId = heroOf(rects, ids);
     var cards = ids.map(function (id) { var card = PMU.cards.build(id, room, byId[id]); markHero(card, heroId); boardEl.appendChild(card); return card; });
     ensurePreviews();
     if (!cards.length) boardEl.appendChild(PMU.cards.empty(room));
     if (opts.held && !reduced()) {
-      /* the first arrival: chrome now, bodies in slices, PMU.film releases the board (data-held stays until then) */
+      /* the first arrival: the plates (chrome) are on screen from the first frame and enter now in the wave (VERIFY-3: the
+         board was an empty dark panel for 200 ms; WOW-SPEC-3 5 Phase A); only their BODIES wait, hidden by opacity
+         (data-hold-bodies, never visibility: an animation created under visibility: hidden runs on the main thread),
+         are built in slices and are revealed by PMU.film at the release */
       buildToken++;
       setEntranceDelays(cards);
       current.mounted = true;
+      boardEl.removeAttribute('data-held');
+      boardEl.setAttribute('data-hold-bodies', '');
+      viewNow(true);
+      if (PMU.film && PMU.film.enterPlates) { PMU.film.enterPlates(cards, { base: 40, board: boardEl }); boardEl.setAttribute('data-film', ''); }
       buildSliced(cards, opts.onBuilt);
       emit('mount', { room: room, cls: current.cls.name, widgets: ids, held: true });
       return;
@@ -621,6 +757,9 @@
     if (!current.mounted) return;
     if (refreshQ) { refreshQ.cancelled = true; refreshQ = null; }
     var cards = cardsNow();
+    /* a Settings ripple re-renders some bodies in place: the app's hover-tag controller would bind every new node in the
+       next frame (35-57 ms on the VM after an Auto-switch toggle); it scans the panel once when the ripple is over */
+    if (reason === 'settings' && !reduced()) deferHover(1200);
     if ((reason !== 'range' && reason !== 'scope') || reduced() || cards.length < 4) { PMU.cards.updateAll(cards, reason); return; }
     var top = scroll ? scroll.scrollTop : 0, vh = scroll ? scroll.clientHeight : 900, pitch = ROW;
     var inView = function (c) { var y = (+c.dataset.y || 0) * pitch, h = (+c.dataset.h || 0) * pitch; return y + h > top && y < top + vh; };
@@ -1105,24 +1244,41 @@
   function morphResize(g, instant) {
     var card = g.card;
     var o = px(g.me), n = px(g.target);
+    /* the old content is set aside (display: none) while the new size is measured (PERF-3): the measure otherwise
+       restyled the whole old subtree at the new size (45 ms, 650 elements, for the budget plate on the VM) just before
+       the body renders again */
+    var oldBody = card.querySelector(':scope > .pmu-cardbody');
+    if (oldBody && oldBody.firstChild) oldBody.setAttribute('data-pmu-stale', '');
     card.removeAttribute('data-resizing');
     place(card, g.target);
     tierPass([card], false);
     if (instant || reduced() || !n.w || !n.h || !o.w || !o.h) return 0;
     var nier = PMU.theme.look().nier, dur = nier ? 120 : 220, easing = nier ? 'steps(2,jump-start)' : filmE('settle', 'cubic-bezier(.17,.84,.29,.99)');
-    var m = document.createElement('div');
-    m.className = 'pmu-morph';
-    m.setAttribute('aria-hidden', 'true');
+    /* the surface is one kept element, the board's first child (PERF-3: inserting a new first child on every release
+       shifted every card's :nth-child position, and the app's positional rules restyled the whole board) */
+    ensurePreviews();
+    var m = morphEl;
+    if (m._pmuMorph) { try { m._pmuMorph.cancel(); } catch (e) {} }
+    if (m._pmuCard && m._pmuCard !== card) m._pmuCard.removeAttribute('data-morphing');
+    m.hidden = false; m._pmuCard = card;
     m.style.left = n.l + 'px'; m.style.top = n.t + 'px'; m.style.width = n.w + 'px'; m.style.height = n.h + 'px';
-    boardEl.insertBefore(m, boardEl.firstChild);
     card.setAttribute('data-morphing', '');
-    var a = PMU.motion.animate(m, [{ transform: 'translate(' + (o.l - n.l) + 'px,' + (o.t - n.t) + 'px) scale(' + (o.w / n.w) + ',' + (o.h / n.h) + ')' }, { transform: 'none' }],
+    var a = m._pmuMorph = PMU.motion.animate(m, [{ transform: 'translate(' + (o.l - n.l) + 'px,' + (o.t - n.t) + 'px) scale(' + (o.w / n.w) + ',' + (o.h / n.h) + ')' }, { transform: 'none' }],
       { dur: dur, easing: easing, fill: 'forwards' });
-    var r = getComputedStyle(card).borderTopLeftRadius || '0px';
+    /* the content's clip reveal is a main-thread animation: with a GPU only (without one the content shows at its new
+       size at once while the surface morphs) */
     var it = Math.max(0, o.t - n.t), il = Math.max(0, o.l - n.l), ir = Math.max(0, (n.l + n.w) - (o.l + o.w)), ib = Math.max(0, (n.t + n.h) - (o.t + o.h));
-    if (it || il || ir || ib) PMU.motion.animate(card, [{ clipPath: 'inset(' + it + 'px ' + ir + 'px ' + ib + 'px ' + il + 'px round ' + r + ')' }, { clipPath: 'inset(0px 0px 0px 0px round ' + r + ')' }],
-      { dur: dur, easing: easing });
-    var done = function () { m.remove(); card.removeAttribute('data-morphing'); };
+    if ((it || il || ir || ib) && !softGpu()) {
+      var r = getComputedStyle(card).borderTopLeftRadius || '0px';
+      PMU.motion.animate(card, [{ clipPath: 'inset(' + it + 'px ' + ir + 'px ' + ib + 'px ' + il + 'px round ' + r + ')' }, { clipPath: 'inset(0px 0px 0px 0px round ' + r + ')' }],
+        { dur: dur, easing: easing });
+    }
+    var done = function () {
+      if (m._pmuMorph !== a) return;
+      m._pmuMorph = null; m._pmuCard = null; m.hidden = true;
+      try { if (a) a.cancel(); } catch (e) {}
+      card.removeAttribute('data-morphing');
+    };
     if (a) a.finished.then(done, done); else done();
     return dur;
   }
@@ -1137,7 +1293,7 @@
   function onPointerDown(event) {
     if (event.button !== 0 || gesture || !current.mounted) return;
     var card = event.target.closest('.pmu-card');
-    if (!card || card.parentNode !== boardEl || card.hasAttribute('data-leaving')) return;
+    if (!card || card.parentNode !== boardEl || isLeaving(card)) return;
     var handle = event.target.closest('.pmu-h');
     var g = { id: card.getAttribute('data-widget'), card: card, pointerId: event.pointerId, sx: event.clientX, sy: event.clientY, px: event.clientX, py: event.clientY, started: false };
     g.onMove = function (e) { if (e.pointerId !== g.pointerId) return; g.px = e.clientX; g.py = e.clientY;
@@ -1250,12 +1406,14 @@
   /* ---- the pointer sheen (WOW-SPEC 3.17): a 280 px radial light inside the hovered plate, under its content, moved by
      transform only (one rAF write per pointer frame, the card's rect read once on entry), fading out 200 on leave ---- */
   var sheen = { card: null, el: null, rect: null, x: 0, y: 0, raf: 0 };
+  /* the sheen layer is made once per card, on its first hover, and kept (PERF-3): inserting it on every hover changed
+     the card's child list, and the app's positional rules then restyled the card's whole subtree (14 ms per hover on the
+     VM); leaving only turns it off */
   function sheenOff() {
     var el = sheen.el;
     sheen.card = null; sheen.rect = null; sheen.el = null;
     if (!el) return;
     el.classList.remove('on');
-    setTimeout(function () { el.remove(); }, 240 * speed());
   }
   function sheenMove() {
     sheen.raf = 0;
@@ -1266,13 +1424,16 @@
   function onSheen(e) {
     if (e.pointerType === 'touch') return;
     var card = gesture || reduced() ? null : (e.target.closest ? e.target.closest('.pmu-card') : null);
-    if (card && (card.parentNode !== boardEl || card.hasAttribute('data-leaving') || card.hasAttribute('data-pending') || card.getAttribute('data-head') === 'band')) card = null;
+    if (card && (card.parentNode !== boardEl || isLeaving(card) || card.hasAttribute('data-pending') || card.getAttribute('data-head') === 'band')) card = null;
     if (card !== sheen.card) {
       sheenOff();
       if (card && PMU.theme.look().nier) card = null;
       if (card) {
-        var el = document.createElement('i'); el.className = 'pmu-sheen'; el.setAttribute('aria-hidden', 'true'); el.appendChild(document.createElement('i'));
-        card.insertBefore(el, card.firstChild);
+        var el = card._pmuSheen;
+        if (!el || el.parentNode !== card) {
+          el = card._pmuSheen = document.createElement('i'); el.className = 'pmu-sheen'; el.setAttribute('aria-hidden', 'true'); el.appendChild(document.createElement('i'));
+          card.insertBefore(el, card.firstChild);
+        }
         sheen.card = card; sheen.el = el; sheen.x = e.clientX; sheen.y = e.clientY;
         /* the rect is read in the next frame's rAF, never in the pointer event (a read here forced the hover's style
            recalc into the event: 14 ms on the VM) */
@@ -1468,7 +1629,8 @@
   var roTimer = 0;
   if (scroll && window.ResizeObserver) {
     var roPending = 0;
-    new ResizeObserver(function () {
+    new ResizeObserver(function (entries) {
+      if (entries && entries[0] && entries[0].contentRect) view.h = entries[0].contentRect.height;
       if (roPending) return;
       roPending = requestAnimationFrame(function () {
         roPending = 0;
@@ -1507,7 +1669,7 @@
     config: config, setConfig: setConfig, keyboard: keyboard,
     gesture: function () { return gesture ? { type: gesture.type, id: gesture.id, edge: gesture.edge || null, kb: !!gesture.kb, target: gesture.target, me: gesture.me } : null; },
     cancel: function () { if (gesture) endGesture(gesture, 'cancel'); },
-    card: cardOf,
+    card: cardOf, inView: inView, viewNow: viewNow, isLeaving: isLeaving,
     on: function (evt, fn) { (listeners[evt] = listeners[evt] || []).push(fn); return function () { listeners[evt] = listeners[evt].filter(function (f) { return f !== fn; }); }; },
     envelope: function () { ensure(); var e = JSON.parse(JSON.stringify(envelope)); e.view = { room: st.room, detail: st.detail, range: st.range, scope: st.scope, more: !!st.more }; e.records = recordsNow(); return e; }
   };

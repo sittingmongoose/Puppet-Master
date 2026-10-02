@@ -71,6 +71,14 @@
     return '<div class="pmu-bodytools">' + html + '</div>';
   };
 
+  /* a note icon (a chart's caveat) that has no line in the body goes into the card head beside the title (CONTENT-3: the
+     forecast's caveat was nowhere at 10 x 7); a dry render never touches the live head */
+  C.headNote = function (ctx, body, html) {
+    if (!html || !ctx.head || ctx._dry || (body && body._pmuDry)) return false;
+    ctx.head.insertAdjacentHTML('beforeend', html);
+    return true;
+  };
+
   /* ------------------------------------------------------------------ formatting */
   C.b = function (v) { return '<b>' + esc(v) + '</b>'; };
   C.money = function (v, o) {
@@ -107,15 +115,54 @@
   };
   C.vs = function (state, word) { return PMU.vs.html(state, word); };
   C.glyph = function (name, cls) { return name ? PMU.icon(name, cls || 'pmu-glyph') : ''; };
-  /* short: narrow cards drop "at a taller size" so the line stays one line */
-  C.more = function (n, what, short) { var w = what ? (n === 1 ? String(what).replace(/s$/, '') : what) : (n === 1 ? 'row' : 'rows'); return n > 0 ? '<div class="pmu-more">' + esc(n + ' more ' + w + (short ? '' : ' at a taller size')) + '</div>' : ''; };
+  /* short: narrow cards drop "at a taller size" so the line stays one line. items: the folded readings (one short text
+     each); the line's hover tag lists them, so nothing a card holds is ever hidden silently (CONTENT-3) */
+  C.more = function (n, what, short, items) {
+    var w = what ? (n === 1 ? String(what).replace(/s$/, '') : what) : (n === 1 ? 'row' : 'rows');
+    return n > 0 ? '<div class="pmu-more"' + C.foldHover(items) + '>' + esc(n + ' more ' + w + (short ? '' : ' at a taller size')) + '</div>' : '';
+  };
+  /* the hover tag of a "N more" line: every folded reading, in reading order */
+  C.FOLD_LABEL = 'Not shown at this size';
+  C.foldHover = function (items) {
+    var list = (items || []).map(function (x) { return String(x == null ? '' : x).replace(/\s+/g, ' ').trim(); }).filter(Boolean);
+    return list.length ? C.hover(C.FOLD_LABEL, list.join('; ')) : '';
+  };
+  /* one reading as one line of text: [label, value] facts, list rows, segments */
+  C.factText = function (f) { if (!f) return ''; var o = f[2] || {}; return String(f[0] == null ? '' : f[0]) + ' ' + String(o.vs ? (o.word || f[1]) : f[1] == null ? '' : f[1]).replace(/<[^>]+>/g, ''); };
+  /* the text of a rendered row as one line (the hover tag of the fit pass's "N more" line): its text nodes joined by a
+     space; a rolling number reads its final value; icons, marks and film layers are skipped */
+  C.textOf = function (el) {
+    var parts = [];
+    (function walk(n) {
+      if (n.nodeType === 3) { var tx = n.nodeValue.replace(/\s+/g, ' ').trim(); if (tx) parts.push(tx); return; }
+      if (n.nodeType !== 1) return;
+      var cls = typeof n.className === 'string' ? n.className : '';
+      if (/^svg$/i.test(n.tagName) || n.getAttribute('aria-hidden') === 'true' || /\bpmu-(ico|glyph|film-|odo-layer|pmark)/.test(cls)) return;
+      var v = n.getAttribute('data-v');
+      if (/\bpmu-num\b/.test(cls) && v != null && v !== '' && isFinite(+v)) { parts.push(C.numOnly(+v, n.getAttribute('data-f') || '')); return; }
+      for (var c = n.firstChild; c; c = c.nextSibling) walk(c);
+    })(el);
+    return parts.join(' ').replace(/ %/g, '%').replace(/\s+/g, ' ').trim();
+  };
   /* wrap-aware heights for stacked blocks (values wrap instead of ellipsizing): a fact whose label and value do not fit
      the width on one line takes two (46 px); a free text line takes as many 18 px lines as its measured width needs */
   C.textLines = function (text, bw, px) {
     var w = PMU.charts && PMU.charts.textW ? PMU.charts.textW(String(text || ''), px || 12.5) * 1.06 : String(text || '').length * 7;
     return Math.max(1, Math.ceil(w / Math.max(60, bw)));
   };
-  C.factH = function (f, bw) { return C.textLines(String(f[0]) + '    ' + String(f[1]), bw - 16, 12.5) > 1 ? 46 : 27; };
+  /* a fact is one 27 px line when its label keeps to its 52 % (70-wrap.css) and the value fits beside it (8 px gap,
+     600 weight), measured in the theme face; else two lines (CONTENT-3: the old 4-space text estimate called "Settled 9"
+     two lines in a 90 px column) */
+  /* wrapped, each line is 17 px with 4 px padding above and below (measured: 2 lines 42, 3 lines 60, 4 lines 76) */
+  C.factH = function (f, bw, labelShare) {
+    var l = PMU.theme.look(), k = l.nier || l.family === 'retro' ? 1.12 : 1, share = labelShare || 0.52;
+    var o = f[2] || {}, label = String(f[0] == null ? '' : f[0]), val = String(o.vs ? (o.word || f[1]) : f[1] == null ? '' : f[1]).replace(/<[^>]+>/g, '');
+    var lw = k * C.wrapW(label, 12.5), vw = k * C.wrapW(val, 12.5, 600) + (o.vs ? 20 : 0) + (o.glyph ? 18 : 0);
+    if (lw <= bw * share && lw + 8 + vw <= bw - 2) return 27;
+    var lBox = Math.min(lw, bw * share), lLines = lw <= bw * share ? 1 : C.wrapLines(label, bw * share / k, 12.5);
+    var vLines = C.wrapLines(val, Math.max(30, (bw - lBox - 8 - (o.vs ? 20 : 0)) / k), 12.5, 600);
+    return Math.max(42, 9 + 17 * Math.max(lLines, vLines, 2));
+  };
   /* greedy word wrap in the theme face (POLISH2 content): how many lines a text takes in a column of `width` px. Breaks
      on spaces, "·", "/", "_" and ":" like the page does; a single word wider than the column counts its own lines. */
   var wrapMemo = {}, wrapN = 0;
@@ -166,7 +213,7 @@
     var bw = ctx && ctx.tier ? ctx.tier.bw : 600;
     var twOf = function (str, px, wt) { str = String(str || '').replace(/<[^>]+>/g, '').replace(/&[a-z]+;/g, ' '); return PMU.charts && PMU.charts.textW ? PMU.charts.textW(str, px, false, wt || 400) * 1.06 : str.length * px * 0.58; };
     var numText = h.text != null ? String(h.text) + (h.unit || '') : C.fmt(h.value, h.fmt);
-    var textW = bw - twOf(numText, 48, 640) - 14;
+    var textW = bw - twOf(numText, 48, 640) - 14, fullSub = h.sub, fullNote = h.note;
     if (h.note) {
       var noteW = 26 + Math.max.apply(null, String(h.note).split(/<\/(?:b|span)>/).map(function (x) { return twOf(x, 12.5, 600); }));
       if (textW - noteW - 14 < 240) h = Object.assign({}, h, { note: '' }); else textW -= noteW + 14;
@@ -180,7 +227,11 @@
     }
     var num = h.text != null ? '<b class="pmu-heronum"><span class="pmu-num">' + esc(h.text) + '</span>' + (h.unit ? '<span class="pmu-u">' + esc(h.unit) + '</span>' : '') + '</b>'
       : C.valHtml(h.value, h.fmt, 'pmu-heronum', ctx.id + ':hero').replace('class="pmu-num"', 'class="pmu-num" data-count="kpi"');
-    return '<div class="pmu-herohead"' + (h.tone ? ' data-tone="' + h.tone + '"' : '') + '>' + num + '<span class="pmu-herotext"><span class="pmu-herolabel">' + esc(h.label || '') + '</span>' +
+    /* what gave way (trailing parts of the sub line, the callout) stays in the head's hover tag (CONTENT-3) */
+    var dropped = [];
+    if (fullSub && h.sub !== fullSub) dropped.push(String(fullSub).replace(/<[^>]+>/g, ''));
+    if (fullNote && !h.note) dropped.push(String(fullNote).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim());
+    return '<div class="pmu-herohead"' + (h.tone ? ' data-tone="' + h.tone + '"' : '') + (dropped.length ? C.hover(String(numText) + ' ' + (h.label || ''), dropped.join(' · ')) : '') + '>' + num + '<span class="pmu-herotext"><span class="pmu-herolabel">' + esc(h.label || '') + '</span>' +
       (h.sub ? '<span class="pmu-herosub">' + h.sub + '</span>' : '') + '</span>' + (h.note ? '<span class="pmu-heronote"' + (h.noteTone ? ' data-tone="' + h.noteTone + '"' : '') + '>' + h.note + '</span>' : '') + '</div>';
   };
   /* room beats (WOW-SPEC 4, WOW-TASKS N-1): helpers for the one-shot signature beat each room file registers with
@@ -226,7 +277,7 @@
     next.forEach(function (r, i) { live[i].chart.update(r.spec); live[i].spec = r.spec; });
     if (footSel && dry._pmuFoot !== body._pmuFoot) {
       var foot = body.querySelector(footSel);
-      if (foot) { foot.innerHTML = dry._pmuFoot; PMU.motion.animate(foot, [{ opacity: 0.2 }, { opacity: 1 }], { dur: 160, easing: 'cubic-bezier(.22,.8,.28,1)' }); }
+      if (foot) { if (PMU.charts && PMU.charts.patchHtml) PMU.charts.patchHtml(foot, dry._pmuFoot); else foot.innerHTML = dry._pmuFoot; PMU.motion.animate(foot, [{ opacity: 0.2 }, { opacity: 1 }], { dur: 160, easing: 'cubic-bezier(.22,.8,.28,1)' }); }
       body._pmuFoot = dry._pmuFoot;
     }
     Array.prototype.forEach.call(dry.querySelectorAll('[data-flash-key]'), function (el) {
@@ -250,11 +301,44 @@
   C.facts = function (list, max, opts) {
     opts = opts || {};
     var rows = (list || []).slice(0, max == null ? 99 : max);
-    return rows.length ? '<div class="pmu-facts' + (opts.cols === 2 ? ' is-2col' : '') + '">' + rows.map(function (f) {
+    return rows.length ? '<div class="pmu-facts' + (opts.cols === 2 ? ' is-2col' : '') + (opts.spans ? ' is-lay' : '') + '"' + (opts.cols > 2 ? ' style="grid-template-columns:repeat(' + opts.cols + ',minmax(0,1fr))"' : '') + '>' + rows.map(function (f, i) {
       var o = f[2] || {}, val = o.vs ? C.vs(o.vs, o.word || f[1]) : o.html ? f[1] : esc(f[1]);
-      return '<div class="pmu-fact"' + (o.hover ? C.hover(f[0], o.hover) : '') + (o.tone ? ' data-tone="' + o.tone + '"' : '') + '>' + (o.glyph ? C.glyph(o.glyph) : '') +
+      return '<div class="pmu-fact' + (opts.tops && opts.tops[i] ? ' is-top' : '') + '"' + (opts.spans && opts.spans[i] ? ' style="grid-column:1/-1"' : '') + (o.hover ? C.hover(f[0], o.hover) : '') + (o.tone ? ' data-tone="' + o.tone + '"' : '') + '>' + (o.glyph ? C.glyph(o.glyph) : '') +
         '<span class="pmu-factl">' + esc(f[0]) + '</span><b class="pmu-factv">' + val + '</b></div>';
     }).join('') + '</div>' : '';
+  };
+  /* fact placement (CONTENT-3): two columns wherever a pair fits side by side (a tile shows "Inferred 0 · Dropped 0" on
+     one line instead of folding the second), one column where that saves no height; a fact whose label and value do
+     not fit half the width spans its row. fit(budget) -> {n, used}: the facts of the whole rows that fit (the block's
+     4 px gap counted once); html(n) the markup of the first n. */
+  C.factLayout = function (facts, bw, forceCols, maxCols) {
+    facts = facts || [];
+    /* columns: two by default; maxCols (the context hero) lets a wide card take three or four of at least 150 px */
+    var nCols = forceCols === 1 ? 1 : Math.max(2, Math.min(maxCols || 2, Math.floor((bw + 18) / 168)));
+    var place = function (k) {
+      var cw = (bw - 18 * (k - 1)) / k;
+      var cellOk = facts.map(function (f) { return k > 1 && C.factH(f, cw, 0.72) === 27; });
+      var rows = [], spans = [], tops = [], open = null;
+      facts.forEach(function (f, i) {
+        if (cellOk[i]) {
+          if (open && open.n < k) { open.n += 1; open.end = i; if (open.n === k) open = null; }
+          else { open = { h: 27, n: 1, end: i }; rows.push(open); if (k === 1) open = null; }
+          spans.push(false);
+        } else { open = null; rows.push({ h: C.factH(f, bw, 0.72), n: k, end: i }); spans.push(k > 1); }
+        tops.push(rows.length === 1);
+      });
+      return { k: k, rows: rows, spans: spans, tops: tops, total: rows.reduce(function (a, r) { return a + r.h; }, 0) };
+    };
+    var p = bw >= 170 ? place(nCols) : place(1);
+    /* fewer columns where they save no height (a narrow tile keeps one column unless pairs really fit) */
+    for (var k = p.k - 1; k >= 1 && bw < 380 * (p.k - 1); k--) { var q = place(k); if (q.total <= p.total) p = q; }
+    if (!p.rows.some(function (r) { return r.n > 1 && r.h === 27; }) && p.k > 1 && bw < 380) p = place(1);
+    return {
+      cols: p.k,
+      /* 3 px of tolerance: the estimates lean long, and the fit pass still removes a row that does not fit */
+      fit: function (budget) { var used = 4, n = 0; for (var r = 0; r < p.rows.length && used + p.rows[r].h <= budget + 3; r++) { used += p.rows[r].h; n = p.rows[r].end + 1; } return { n: n, used: n ? used : 0 }; },
+      html: function (n) { return C.facts(facts, n, { cols: p.k, spans: p.spans, tops: p.tops }); }
+    };
   };
   C.tools = function (html) { return html ? '<div class="pmu-bodytools">' + html + '</div>' : ''; };
   /* a two-way text segmented control (no pills): [{value, label}], current */
@@ -333,10 +417,13 @@
   var FIT_SEL = '.pmu-lrow, .pmu-lday, .pmu-fact, .pmu-tbody > .pmu-trow, .pmu-agline, .pmu-qrow:not(.pmu-qaxis), .pmu-qgroup, .pmu-mixrow, .pmu-ctxleg, ' +
     '.pmu-amount, .pmu-limitplan, .pmu-accrow, .pmu-provrow, .pmu-swfam, .pmu-setupnote, .pmu-factrow, .pmu-note, .pmu-agbeyond, .pmu-effsave > em, .pmu-effcost, .pmu-efflegend, .pmu-effspark, .pmu-kpitrend, .pmu-kpifoot, .pmu-cfoot';
   var fitQueue = [], fitScheduled = false, fitAgain = [], fitAgainScheduled = false;
+  /* NOTES3-perf C1: while the engine builds a room in slices it may set PMU.content.fitDefer = true and call
+     PMU.content.fitSlice() at the end of each slice (one batched read for the cards of that slice, inside the slice's
+     budget); otherwise the cards of a task are fitted in one microtask after it, as before */
   function fitLater(body) {
     if (fitQueue.indexOf(body) < 0) fitQueue.push(body);
     if (fitAgain.indexOf(body) < 0) fitAgain.push(body);
-    if (!fitScheduled) { fitScheduled = true; (window.queueMicrotask || function (f) { Promise.resolve().then(f); })(function () { fitScheduled = false; fitFlush(); }); }
+    if (!fitScheduled && !C.fitDefer) { fitScheduled = true; (window.queueMicrotask || function (f) { Promise.resolve().then(f); })(function () { fitScheduled = false; fitFlush(); }); }
     /* once more in the next frame: meters and charts finish their own layout after the render, and wrapped text can then
        push a foot past the body (a one-off frame, never a loop) */
     if (!fitAgainScheduled) { fitAgainScheduled = true; requestAnimationFrame(function () { fitAgainScheduled = false; var list = fitAgain.splice(0); list.forEach(function (b) { b._pmuFitDone = false; }); fitFlush(list); }); }
@@ -347,61 +434,175 @@
     fitSettleT = setTimeout(fitSettled, 2000 * (PMU.motion && PMU.motion.speed ? PMU.motion.speed() : 1));
   }
   var fitSettleT = 0;
+  /* the settled pass runs in idle slices of about 8 ms (NOTES3-perf C1: never a whole-board pass in a moment) */
   function fitSettled() {
     fitSettleT = 0;
     var bodies = Array.prototype.slice.call(document.querySelectorAll('#pmuBoard > .pmu-card > .pmu-cardbody'));
-    bodies.forEach(function (b) { b._pmuFitDone = false; });
-    if (bodies.length) fitFlush(bodies);
+    var idle = window.requestIdleCallback || function (f) { return setTimeout(function () { f({ timeRemaining: function () { return 8; } }); }, 16); };
+    (function step(deadline) {
+      var t0 = performance.now();
+      while (bodies.length && performance.now() - t0 < 8 && (!deadline || deadline.timeRemaining() > 1 || performance.now() - t0 < 2)) {
+        var chunk = bodies.splice(0, 6).filter(function (b) { return b.isConnected; });
+        chunk.forEach(function (b) { b._pmuFitDone = false; });
+        if (chunk.length) fitFlush(chunk);
+      }
+      if (bodies.length) idle(step, { timeout: 1000 });
+    })(null);
   }
+  C.fitDefer = false;
+  C.fitSlice = function () { fitScheduled = false; if (fitQueue.length) fitFlush(); };
+  /* the per-render fit record of a body (C.kind resets it before each render) */
+  function fitReset(b) { b._pmuHidden = 0; b._pmuFitDone = false; b._pmuPre = null; b._pmuFolded = []; b._pmuFoldedNotes = []; b._pmuGrown = false; b._pmuMoreHome = null; }
+  C.fitReset = fitReset;
+  var NOT_ROW = /pmu-(cfoot|note|factrow|efflegend|effspark|kpitrend|kpifoot|agbeyond|setupnote|effcost|swfam)/;
   function fitFlush(list) {
-    var items = list || fitQueue.splice(0);
+    var items = list || fitQueue.splice(0), touched = [], items0 = items;
     for (var pass = 0; pass < 12 && items.length; pass++) {
-      var over = items.filter(function (b) { return b.isConnected && b.clientHeight > 0 && b.scrollHeight > b.clientHeight + 2; });
-      over.forEach(function (b) {
+      /* one read phase over every body of the pass (overflow and the rows each one gives up), then the writes */
+      var over = items.filter(function (b) { return b.isConnected && b.clientHeight > 0 && b.scrollHeight > b.clientHeight + 1; });   /* the census flags more than 1 px */
+      var plans = over.map(function (b) {
         /* a kind may name lines that give way before its rows ([data-fit-first]; final fix M4: a provider plate's foot notes
            go before an account row, so the Claude plate never hides Studio behind "1 more" over an empty band) */
         var firsts = b.querySelectorAll('[data-fit-first]');
-        if (firsts.length) {
-          var ff = firsts[firsts.length - 1], fp = ff.parentNode;
-          if (b._pmuPre == null && b._pmu) b._pmuPre = C.liveSig(b);
-          ff.remove();
-          if (fp && fp !== b && fp.nodeType === 1 && !fp.children.length) fp.remove();
-          return;
-        }
+        if (firsts.length) return { b: b, first: firsts[firsts.length - 1] };
         var cands = Array.prototype.slice.call(b.querySelectorAll(FIT_SEL)).filter(function (el) { return !el.closest('.pmu-chart') && !el.closest('.pmu-headtools'); });
         /* rows and facts go before a card's foot (the foot names the source and freshness of what the card shows) */
         /* a card's own "N more" / "after" line is never the row that goes (final fix: the resets agenda lost its
            "3 more · 15 after Oct 3" line to the fit pass while a line above it stayed) */
         var rows = cands.filter(function (el) { return !/pmu-(cfoot|kpifoot|agbeyond|more)\b/.test(String(el.className)); });
-        var last = rows.length ? rows[rows.length - 1] : cands[cands.length - 1];
-        if (!last) { b._pmuFitDone = true; return; }
-        var parent = last.parentNode;
+        if (!rows.length) return { b: b, gone: cands.length ? [cands[cands.length - 1]] : [] };
+        /* CONTENT-3: rows stacked in one column give up as many trailing rows as the overflow (and the "N more" line it
+           then needs) takes in one pass, measured; anything else gives up one row a pass, as before */
+        /* the row that goes is the last one that actually runs past the body (a two-column agenda overflows in its first
+           column while its second ends higher: trimming the last row in reading order emptied the second column on the
+           Windows rig), else the last row */
+        /* ... and where none does (a line under the rows is what runs out), the row that ends lowest: the tallest column
+           sets the height */
+        var bb = b.getBoundingClientRect().bottom - (parseFloat(getComputedStyle(b).paddingBottom) || 0), li = -1, low = -1e9, lowI = rows.length - 1;
+        for (var q = rows.length - 1; q >= 0; q--) {
+          var qb = rows[q].getBoundingClientRect().bottom;
+          if (li < 0 && qb > bb + 1) li = q;
+          if (qb > low + 0.5) { low = qb; lowI = q; }
+        }
+        if (li < 0) li = lowI;
+        var lastEl = rows[li], gone = [lastEl], need = b.scrollHeight - b.clientHeight + (b.querySelector('.pmu-more') ? 0 : 22);
+        if (!NOT_ROW.test(String(lastEl.className))) {
+          var rl = lastEl.getBoundingClientRect(), x0 = Math.round(rl.left), prev = rl;
+          for (var i = li - 1; i >= 0; i--) {
+            var ri = rows[i].getBoundingClientRect();
+            if (Math.round(ri.left) !== x0 || ri.bottom > prev.top + 1) break;   /* a second column or an overlap: one a pass */
+            if (rl.bottom - ri.bottom >= need || NOT_ROW.test(String(rows[i].className))) break;   /* the rows gone so far free enough */
+            gone.push(rows[i]); prev = ri;
+          }
+        }
+        return { b: b, gone: gone };
+      });
+      plans.forEach(function (p) {
+        var b = p.b;
         /* the body as its render left it, before the first row this pass hides: an update compares its dry render with
            this, so a card the fit pass trimmed still keeps its DOM when nothing changed (Settings toggle at 1440: the
            resets agenda rendered again on every toggle) */
         if (b._pmuPre == null && b._pmu) b._pmuPre = C.liveSig(b);
-        last.remove();
-        if (parent && parent.classList && (parent.classList.contains('pmu-agday') || parent.classList.contains('pmu-facts')) && !parent.querySelector(FIT_SEL)) parent.remove();
-        var isRow = !/pmu-(cfoot|note|factrow|efflegend|effspark|kpitrend|kpifoot|agbeyond|setupnote|effcost|swfam)/.test(String(last.className)) && last.tagName !== 'EM';
-        if (!isRow) return;
-        b._pmuHidden = (b._pmuHidden || 0) + 1;
-        /* a kind's own "N more ..." line absorbs the rows this pass hides (one line, one count), else one auto line */
-        var own = Array.prototype.filter.call(b.querySelectorAll('.pmu-more:not([data-auto])'), function (e) { return /^\d+ /.test(e.textContent); }).pop();
-        if (own) {
-          if (!own.hasAttribute('data-base')) own.setAttribute('data-base', String(parseInt(own.textContent, 10)));
-          own.textContent = own.textContent.replace(/^\d+/, String(+own.getAttribute('data-base') + b._pmuHidden))
-            .replace(/^(\d+ more )(?!(?:at|in|after)\b)(\w+)/, function (m0, a, w) { return a + (/s$/.test(w) ? w : /y$/.test(w) ? w.replace(/y$/, 'ies') : w + 's'); });
+        if (touched.indexOf(b) < 0) touched.push(b);
+        if (!b._pmuFolded) { b._pmuFolded = []; b._pmuFoldedNotes = []; }
+        if (p.first) {
+          var ff = p.first, fp = ff.parentNode, ft = C.textOf(ff);
+          ff.remove();
+          if (ft) b._pmuFoldedNotes.unshift(ft);
+          if (fp && fp !== b && fp.nodeType === 1 && !fp.children.length) fp.remove();
           return;
         }
-        var more = b.querySelector('.pmu-more[data-auto]');
-        if (!more) {
-          more = document.createElement('div'); more.className = 'pmu-more'; more.setAttribute('data-auto', '');
-          var foot = b.querySelector(':scope > .pmu-cardfoot'); if (foot) b.insertBefore(more, foot); else b.appendChild(more);
-        }
-        more.textContent = b._pmuHidden + (atMax(b) ? ' more in Details' : ' more at a taller size');
+        if (!p.gone.length) { b._pmuFitDone = true; return; }
+        p.gone.forEach(function (last) {
+          var parent = last.parentNode, text = C.textOf(last);
+          /* where an auto "N more" line goes: the rows' own container (above a plate's or tile's foot), never under it */
+          var home = parent;
+          while (home && home !== b && home.classList && (home.classList.contains('pmu-facts') || home.classList.contains('pmu-agday'))) home = home.parentNode;
+          if (!b._pmuMoreHome || !b._pmuMoreHome.isConnected) b._pmuMoreHome = home;
+          last.remove();
+          if (parent && parent.classList && (parent.classList.contains('pmu-agday') || parent.classList.contains('pmu-facts')) && !parent.querySelector(FIT_SEL)) parent.remove();
+          var isRow = !NOT_ROW.test(String(last.className)) && last.tagName !== 'EM';
+          /* a hidden note or foot is folded too: its words go to the "N more" line's hover tag (or the body's), never lost */
+          if (!isRow) { if (text) b._pmuFoldedNotes.unshift(text); return; }
+          if (text) b._pmuFolded.unshift(text);
+          b._pmuHidden = (b._pmuHidden || 0) + 1;
+          /* a kind's own "N more ..." line absorbs the rows this pass hides (one line, one count), else one auto line */
+          var own = Array.prototype.filter.call(b.querySelectorAll('.pmu-more:not([data-auto])'), function (e) { return /^\d+ /.test(e.textContent); }).pop();
+          if (own) {
+            if (!own.hasAttribute('data-base')) own.setAttribute('data-base', String(parseInt(own.textContent, 10)));
+            own.textContent = own.textContent.replace(/^\d+/, String(+own.getAttribute('data-base') + b._pmuHidden))
+              .replace(/^(\d+ more )(?!(?:at|in|after)\b)(\w+)/, function (m0, a, w) { return a + (/s$/.test(w) ? w : /y$/.test(w) ? w.replace(/y$/, 'ies') : w + 's'); });
+            return;
+          }
+          var more = b.querySelector('.pmu-more[data-auto]');
+          if (!more) {
+            more = document.createElement('div'); more.className = 'pmu-more'; more.setAttribute('data-auto', '');
+            var host = b._pmuMoreHome && b._pmuMoreHome.isConnected && b.contains(b._pmuMoreHome) ? b._pmuMoreHome : b;
+            var foot = host.querySelector(':scope > .pmu-cardfoot, :scope > .pmu-kpifoot, :scope > .pmu-accsfoot, :scope > .pmu-cfoot');
+            if (foot) host.insertBefore(more, foot); else host.appendChild(more);
+          }
+          more.textContent = b._pmuHidden + (atMax(b) ? ' more in Details' : ' more at a taller size');
+        });
       });
       items = over.filter(function (b) { return !b._pmuFitDone; });
     }
+    /* the hover tags of what the passes folded (one write per body) */
+    touched.forEach(foldTags);
+    /* CONTENT-3: a "N more" line never sits over room for another row. A kind that stacks rows (impl.grow: list, agenda,
+       providers) and printed such a line over a free band of at least a row renders once more with the band added to
+       its height budget; the passes above then trim whatever its estimate let through, exactly. Once per render; one
+       batched read, then the writes. */
+    var all = list || items0;
+    var cands = all.filter(function (b) { var g = b._pmuImpl && b._pmuImpl.grow; return b.isConnected && !b._pmuGrown && g && (typeof g !== 'function' || g(b)) && b._pmuCtxK && hasMore(b); });
+    if (!cands.length) return;
+    var grow = cands.map(function (b) { return { b: b, band: freeBand(b) }; }).filter(function (g) { return g.band >= 24; });
+    grow.forEach(function (g) { regrow(g.b, g.band); });
+    if (grow.length) fitFlush(grow.map(function (g) { return g.b; }));
+  }
+  function hasMore(b) { return Array.prototype.some.call(b.querySelectorAll('.pmu-more'), function (e) { return /^\d+ more\b/.test(e.textContent) && e.getClientRects().length; }); }
+  /* the largest empty vertical band inside the body's content box, between or under its leaves (a leaf: an element with
+     its own words, a mark or an svg) */
+  function freeBand(b) {
+    var br = b.getBoundingClientRect(), cs = getComputedStyle(b), top0 = br.top + (parseFloat(cs.paddingTop) || 0), bot0 = br.bottom - (parseFloat(cs.paddingBottom) || 0);
+    var iv = [];
+    Array.prototype.forEach.call(b.querySelectorAll('*'), function (el) {
+      if (el.closest('svg') && !/^svg$/i.test(el.tagName)) return;
+      var leaf = /^svg$/i.test(el.tagName) || !el.children.length || Array.prototype.some.call(el.childNodes, function (n) { return n.nodeType === 3 && n.nodeValue.trim(); });
+      if (!leaf) return;
+      var r = el.getBoundingClientRect(); if (!r.height || !r.width) return;
+      iv.push([Math.max(top0, r.top), Math.min(bot0, r.bottom)]);
+    });
+    iv.sort(function (x, y) { return x[0] - y[0]; });
+    var cur = top0, band = 0;
+    iv.forEach(function (v) { if (v[0] > cur) band = Math.max(band, v[0] - cur); cur = Math.max(cur, v[1]); });
+    return Math.floor(Math.max(band, bot0 - cur));
+  }
+  function regrow(b, band) {
+    var impl = b._pmuImpl, ctx = b._pmuCtxK;
+    var ctx2 = Object.assign({}, ctx, { tier: Object.assign({}, ctx.tier, { bh: ctx.tier.bh + band }) });
+    C.destroy(b); fitReset(b); b.removeAttribute('data-pm-hover-label'); b.removeAttribute('data-pm-hover-detail');
+    try { impl.render(b, ctx2); } catch (error) { console.error('[pm-usage] regrow', error); }
+    moreAtMax(b);
+    /* updates at this size render with the same budget (the kind wrapper's update), so the pre-fit record is this
+       render's */
+    b._pmuGrown = true; b._pmuBand = band; b._pmuBandKey = ctx.tier.bw + 'x' + ctx.tier.bh; b._pmuCtxK = ctx;
+  }
+  /* a "N more" line lists the rows it counts (the fit pass's, then the kind's own); notes and foots that gave way join
+     it, or, where no such line shows, the body's own hover tag carries them */
+  function foldTags(b) {
+    if (!b.isConnected) return;
+    var rows = b._pmuFolded || [], notes = b._pmuFoldedNotes || [];
+    if (!rows.length && !notes.length) return;
+    var line = Array.prototype.filter.call(b.querySelectorAll('.pmu-more'), function (e) { return /^\d+ /.test(e.textContent); }).pop();
+    if (line) {
+      if (!line.hasAttribute('data-pm-hover-foldbase')) line.setAttribute('data-pm-hover-foldbase', line.getAttribute('data-pm-hover-detail') || '');
+      var base = line.getAttribute('data-pm-hover-foldbase');
+      line.setAttribute('data-pm-hover-label', line.getAttribute('data-pm-hover-label') && base ? line.getAttribute('data-pm-hover-label') : C.FOLD_LABEL);
+      line.setAttribute('data-pm-hover-detail', rows.concat(base ? [base] : [], notes).join('; '));
+      return;
+    }
+    b.setAttribute('data-pm-hover-label', C.FOLD_LABEL);
+    b.setAttribute('data-pm-hover-detail', rows.concat(notes).join('; '));
   }
   C.fitLater = fitLater;
   /* a web font that finishes loading after the render (NieR's mono, Retro's face) can push a row or a foot past the body:
@@ -456,9 +657,13 @@
   C.flashRow = flashRow;
   C.kind = function (name, impl) {
     PMU.widgets.kind(name, {
-      render: function (body, ctx) { ctx = inner(ctx); C.destroy(body); body._pmuHidden = 0; body._pmuFitDone = false; body._pmuPre = null; impl.render(body, ctx); moreAtMax(body); fitLater(body); },
+      render: function (body, ctx) { ctx = inner(ctx); C.destroy(body); fitReset(body); body._pmuBand = 0; body.removeAttribute('data-pm-hover-label'); body.removeAttribute('data-pm-hover-detail'); body._pmuImpl = impl; body._pmuCtxK = ctx; impl.render(body, ctx); moreAtMax(body); fitLater(body); },
       update: function (body, ctx) {
         ctx = inner(ctx);
+        /* a body the grow step widened keeps that budget for its updates at the same size (its in-place patch and its
+           dry render then match what is shown) */
+        var band = body._pmuBand && body._pmuBandKey === ctx.tier.bw + 'x' + ctx.tier.bh ? body._pmuBand : 0, bandKey = ctx.tier.bw + 'x' + ctx.tier.bh;
+        if (band) ctx = Object.assign({}, ctx, { tier: Object.assign({}, ctx.tier, { bh: ctx.tier.bh + band }) });
         if (impl.update && impl.update(body, ctx) !== false) { body._pmuPre = null; return; }   /* patched in place: the pre-fit record is stale */
         /* a Settings change (auto-switch, switch level, the account used) touches few cards: a card whose content is the
            same after the change keeps its DOM, its running motion and its fit (WOW-SPEC 3.9: never a re-render) */
@@ -470,7 +675,9 @@
           try { impl.render(dry, Object.assign({}, ctx, { _dry: true })); moreAtMaxDry(dry, body); } catch (error) { dry = null; }
           if (dry && ((dry._pmu && dry._pmu.specs) || []).join('\n') === (body._pmu.specs || []).join('\n') && C.liveSig(dry) === (liveS || C.liveSig(body))) return;
         }
-        var old = snapshot(body), sigs = flashSigs(body); C.destroy(body); body._pmuHidden = 0; body._pmuFitDone = false; body._pmuPre = null; impl.render(body, ctx); moreAtMax(body); fitLater(body); C.countFrom(body, old);
+        var old = snapshot(body), sigs = flashSigs(body); C.destroy(body); fitReset(body); body.removeAttribute('data-pm-hover-label'); body.removeAttribute('data-pm-hover-detail'); body._pmuImpl = impl; body._pmuCtxK = ctx; impl.render(body, ctx); moreAtMax(body);
+        if (band) { body._pmuBand = band; body._pmuBandKey = bandKey; body._pmuGrown = true; }
+        fitLater(body); C.countFrom(body, old);
         /* a row whose reading changed flashes once (A1 3.3, 8.2); nothing flashes on the first render */
         Array.prototype.slice.call(body.querySelectorAll('[data-flash-key]')).forEach(function (el) {
           var k = el.getAttribute('data-flash-key'); if (k in sigs && sigs[k] !== el.getAttribute('data-flash-sig')) flashRow(el);
@@ -478,7 +685,7 @@
       },
       resize: function (body, ctx) {
         ctx = inner(ctx);
-        var old = snapshot(body); C.destroy(body); body._pmuHidden = 0; body._pmuFitDone = false; body._pmuPre = null; impl.render(body, ctx); moreAtMax(body); fitLater(body);
+        var old = snapshot(body); C.destroy(body); fitReset(body); body._pmuBand = 0; body.removeAttribute('data-pm-hover-label'); body.removeAttribute('data-pm-hover-detail'); body._pmuImpl = impl; body._pmuCtxK = ctx; impl.render(body, ctx); moreAtMax(body); fitLater(body);
         Array.prototype.slice.call(body.querySelectorAll('.pmu-num[data-k]')).forEach(function (el) { var k = el.getAttribute('data-k'); if (k in old) { el.setAttribute('data-v', String(parseFloat(el.getAttribute('data-v')))); } });
       },
       enter: function (body, ctx, delay) { ctx = inner(ctx); if (impl.enter) impl.enter(body, ctx, delay); else C.enterAll(body, ctx, delay || 0); },
@@ -489,6 +696,89 @@
   /* inspector rows helper */
   C.insp = function (title, rows, opts) {
     return Object.assign({ kind: 'panel', title: title, sections: [{ title: 'Reading', rows: rows.map(function (r) { return [r[0], esc(r[1])]; }) }] }, opts || {});
+  };
+
+  /* ------------------------------------------------------------------ every reading reaches Details (CONTENT-3) */
+  /* C.readings(model): every reading a widget model holds, as [label, text] rows: the value and its line, facts, rows,
+     segments, cells, notes, captions and foots. A kind whose content does not come from its model registers
+     C.kindReadings[kind](ctx, def) instead. */
+  var strip = function (v) { return String(v == null ? '' : v).replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&[a-z]+;/g, ' ').replace(/\s+/g, ' ').trim(); };
+  C.kindReadings = {};
+  C.readings = function (m) {
+    var out = [], seen = {};
+    var add = function (k, v) {
+      k = strip(k); v = strip(v);
+      if (!k && !v) return;
+      var key = (k + '|' + v).toLowerCase(); if (seen[key]) return; seen[key] = 1;
+      out.push([k || 'Note', v]);
+    };
+    if (!m || typeof m !== 'object') return out;
+    var val = function (o) { return o.vs ? (o.word || PMU.vs.STATES && PMU.vs.STATES[o.vs] && PMU.vs.STATES[o.vs].word || '') : o.valueText != null ? o.valueText : o.text != null ? String(o.text) + (o.unit || '') : o.value != null && o.fmt ? C.fmt(o.value, o.fmt) : o.valueHtml != null ? o.valueHtml : o.value != null && typeof o.value !== 'object' ? String(o.value) : ''; };
+    var mainV = val(m); if (mainV) add('Value', mainV + (m.delta && m.delta.text ? ' (' + m.delta.text + ')' : ''));
+    if (m.headline) add(m.headline.label || 'Headline', val(m.headline));
+    ['sub', 'subText'].forEach(function (k) { if (typeof m[k] === 'string' && m[k]) add('Reading', m[k]); });
+    if (m.projection && m.projection.label) add('Projection', m.projection.label);
+    ['facts', 'routeFacts'].forEach(function (k) { (Array.isArray(m[k]) ? m[k] : []).forEach(function (f) { if (Array.isArray(f)) { var o = f[2] || {}; add(f[0], (o.vs ? o.word || f[1] : f[1]) + (o.hover ? ' · ' + o.hover : '')); } }); });
+    ['caption', 'note', 'caveat', 'foot'].forEach(function (k) { if (typeof m[k] === 'string' && m[k]) add(k === 'caption' ? 'Caption' : 'Note', m[k]); });
+    (Array.isArray(m.rows) ? m.rows : []).forEach(function (r) {
+      if (!r || typeof r !== 'object' || r.cells) return;   /* table rows page instead of folding */
+      if (r.day) return;
+      add(r.name || r.label || '', [val(r), r.role, r.sub, r.note, r.hover && typeof r.hover === 'string' ? r.hover : ''].filter(Boolean).join(' · '));
+    });
+    (Array.isArray(m.segments) ? m.segments : []).forEach(function (s) { if (s && s.name) add(s.name, [s.valueText != null ? s.valueText : s.value != null ? (m.fmt ? C.fmt(s.value, m.fmt) : s.tokens != null ? PMU.fmt.tok(s.tokens) : String(s.value)) : '', s.pct != null ? s.pct + '%' : '', s.sub].filter(Boolean).join(' · ')); });
+    (Array.isArray(m.cells) ? m.cells : []).forEach(function (c) { if (c && c.label) add(c.label, [val(c), c.sub, c.hover].filter(Boolean).join(' · ')); });
+    (Array.isArray(m.notes) ? m.notes : []).forEach(function (n) { add('Note', n); });
+    (Array.isArray(m.legend) ? m.legend : []).forEach(function (l) { if (l && typeof l === 'object' && l.name) add(l.name, l.valueText || l.sub || ''); });
+    return out;
+  };
+  /* the words an inspector spec already shows, normalized like the page's parity check (separators as spaces) */
+  var normT = function (s) { return strip(s).toLowerCase().replace(/\s*[·|/;:,]\s*/g, ' ').replace(/\s+/g, ' ').trim(); };
+  function specText(spec) {
+    var parts = [spec.title, spec.subtitle];
+    (spec.sections || []).forEach(function (sec) { if (sec.html != null) parts.push(sec.html); (sec.rows || []).forEach(function (r) { parts.push(r[0] + ' ' + (r[1] == null ? '' : r[1])); }); });
+    return ' ' + normT(parts.join(' | ')) + ' ';
+  }
+  /* wrap a widget's Details: the readings its model holds and its spec does not show yet are added as one section; a
+     widget with no Details of its own gets one built from its readings */
+  C.withReadings = function (spec, rows, title) {
+    var have = spec ? specText(spec) : ' ';
+    var seenV = {};
+    var extra = rows.filter(function (r) {
+      var lv = normT(r[0] + ' ' + r[1]), v = normT(r[1]);
+      /* a value already said (in the spec, or by an earlier added row) is not repeated */
+      var generic = /^(Value|Note|Reading|Caption)$/.test(r[0]);
+      if (v.length >= 8 && seenV[v] && generic) return false;
+      var keep = have.indexOf(lv) < 0 && !(v.length > 12 && have.indexOf(v) >= 0) && !(generic && v.length >= 4 && have.indexOf(' ' + v + ' ') >= 0) && !(!v && have.indexOf(normT(r[0])) >= 0);
+      if (keep) seenV[v] = 1;
+      return keep;
+    });
+    if (!extra.length) return spec;
+    var sec = { title: spec ? 'Also on the card' : 'Reading', rows: extra.map(function (r) { return [r[0], esc(r[1] || '-')]; }) };
+    if (!spec) return { kind: 'panel', title: title || '', sections: [sec] };
+    return Object.assign({}, spec, { sections: (spec.sections || []).concat([sec]) });
+  };
+  var wrapped = {};
+  C.inspectAll = function (ids) {
+    (ids || []).forEach(function (id) {
+      if (wrapped[id]) return;
+      var d = PMU.widgets.get(id); if (!d || d.kind === 'group') return;
+      var own = typeof d.inspect === 'function' ? d.inspect : null, kr = C.kindReadings[d.kind];
+      if (!own && typeof d.model !== 'function' && !kr) return;
+      wrapped[id] = true;
+      PMU.widgets.define(id, { inspect: function (ctx) {
+        var spec = own ? own.call(this, ctx) : null;
+        if (own && !spec) return spec;   /* it opened its own drawer (an account) */
+        var def = PMU.widgets.get(id) || d, model = null, rows = [];
+        try { model = typeof def.model === 'function' ? def.model(ctx) : null; } catch (error) { model = null; }
+        rows = C.readings(model);
+        if (kr) { try { rows = rows.concat(kr(Object.assign({ model: model }, ctx), def) || []); } catch (error) { console.error('[pm-usage] readings ' + id, error); } }
+        var title = typeof def.title === 'function' ? def.title(ctx) : def.title, sub = '';
+        try { sub = typeof def.meta === 'function' ? def.meta(ctx) : def.meta || ''; } catch (error) { sub = ''; }
+        var out = C.withReadings(spec, rows, title);
+        if (out && !spec && sub) out.subtitle = strip(sub);
+        return out || { kind: 'panel', title: title || '', subtitle: strip(sub), sections: [{ title: 'Reading', rows: [['Readings', esc(model && model.empty ? model.empty : 'None in the selected scope and range')]] }] };
+      } });
+    });
   };
 
   /* delegated clicks for every content control inside a card body ([data-pmu-act]) */
@@ -531,46 +821,79 @@
       }
       var sparkOk = m.spark && m.spark.values && ctx.tier.bw >= 230;
       var head = '<div class="pmu-kpiline"' + (m.tone ? ' data-tone="' + m.tone + '"' : '') + '>' + valueHtml + delta + (sparkOk && h === 'h1' ? '<span class="pmu-kpispark" data-spark="inline"></span>' : '') + '</div>';
-      if (h === 'h0') { body.innerHTML = '<div class="pmu-kpi is-h0"' + C.hover(m.subText || '', '') + '>' + head + '</div>'; return; }
+      if (h === 'h0') {
+        var h0Fold = (m.facts || []).map(C.factText).concat(m.foot ? [String(m.foot).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()] : []).filter(Boolean);
+        body.innerHTML = '<div class="pmu-kpi is-h0"' + C.hover(m.subText || (m.sub ? String(m.sub).replace(/<[^>]+>/g, '') : '') || C.FOLD_LABEL, h0Fold.join('; ')) + '>' + head + '</div>'; return;
+      }
       /* the second line shows the whole lines that fit under the value and nothing partial (LOOK-REVIEW-2 9: a third
          line's glyph tops showed under the tile's edge); a clamped line keeps its full text in the hover tag */
       var subText = m.sub ? String(m.sub).replace(/<[^>]+>/g, '').replace(/&[a-z]+;/g, ' ') : '';
-      /* the foot's own wrapped height (Mac stills 2026-10-02: a two-line foot ran over the "N more" line) */
+      /* CONTENT-3: the tile's height is shared out in this order, so a fact shows wherever it fits (the h1 tier used to
+         show none over an empty band): the value line, the sub line's first two lines, the facts (C.factLayout: two
+         columns where a pair fits side by side), the "N more facts" line when any fact is left (its hover tag lists
+         them), then the sub line's other lines where every fact shows. Measured (VM 1920): value line 22-29 + 4, sub 17 a
+         line + 4, facts block + 4, "N more" line 21 + 4, foot 17 a line (12 px; a text button 26) + 4 under its auto
+         margin. */
+      var bw = ctx.tier.bw, bh = ctx.tier.bh, facts = m.facts || [];
+      var hasBtn = !!m.foot && m.foot.indexOf('<button') >= 0;
       var footText = m.foot ? String(m.foot).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() : '';
-      var footRoom = m.foot && C.h(ctx, 'h2') ? 8 + 22 * Math.min(2, C.wrapLines(footText, ctx.tier.bw - (m.foot.indexOf('<button') >= 0 ? 24 : 0), 12.5, 600)) : 0;
-      var subAvail = Math.max(0, Math.floor((ctx.tier.bh - 31 - 4 - footRoom) / 17));
-      var subLines = subText ? Math.min(4, C.wrapLines(subText, ctx.tier.bw, 12.5)) : 0, subShow = Math.min(subLines, subAvail), subHtml = m.sub || '';
-      if (subShow && subShow < subLines) {
-        /* drop whole trailing " · " parts until the rest fits; only a first part that cannot fit is clamped */
-        var segs = String(m.sub).split(' · ');
-        while (segs.length > 1 && C.wrapLines(segs.join(' · ').replace(/<[^>]+>/g, ''), ctx.tier.bw, 12.5) > subShow) segs.pop();
-        subHtml = segs.join(' · ');
-        for (var openB = (subHtml.match(/<b>/g) || []).length - (subHtml.match(/<\/b>/g) || []).length; openB > 0; openB--) subHtml += '</b>';
-      }
-      /* the clamp is the room (whole lines that fit), not the estimate: a line the estimate thought shorter still shows */
-      var sub = subShow ? '<div class="pmu-kpisub" style="-webkit-line-clamp:' + Math.max(subShow, Math.min(4, subAvail)) + '"' + (subHtml !== m.sub ? C.hover(subText, '') : '') + '>' + subHtml + '</div>' : '';
-      var reserve = 38 + subShow * 17 + footRoom;
+      var footRoom = m.foot && C.h(ctx, 'h2') ? 4 + (hasBtn ? 26 : 17 * Math.min(2, C.wrapLines(footText, bw, 12, 400))) : 0;
       var trend = sparkOk && C.h(ctx, 'h3') ? 48 : 0;
-      /* two fact columns only where each keeps ~180 px (label and value both readable), else one */
-      var cols = ctx.tier.bw >= 380 ? 2 : 1;
-      if (wide) cols = 1;
-      var rows = h === 'h1' ? 0 : C.fit(ctx.tier.bh - trend - (wide ? 0 : reserve), 27);
-      var facts = m.facts || [];
-      var maxFacts = Math.min(facts.length, rows * cols);
-      /* one column: each fact takes its own wrapped height (final fix, Mac stills: a 3-track 6-row tile showed "Input (24h)"
-         on two lines under "1 more at a taller size"); a fact that would wrap counts 46 px, not 27 */
-      if (cols === 1 && !wide && maxFacts) {
-        var roomF = ctx.tier.bh - trend - reserve, nF = 0;
-        while (nF < maxFacts && (roomF -= C.factH(facts[nF], ctx.tier.bw)) >= 0) nF++;
-        maxFacts = nF;
+      var subLines = subText ? Math.min(4, C.wrapLines(subText, bw, 12.5)) : 0;
+      /* the sub line at most n lines: whole trailing " · " parts give way; only a first part that cannot fit is clamped */
+      var subAt = function (n) {
+        if (!n || !subLines) return { html: '', lines: 0 };
+        if (subLines <= n) return { html: m.sub, lines: subLines };
+        var segs = String(m.sub).split(' · ');
+        while (segs.length > 1 && C.wrapLines(segs.join(' · ').replace(/<[^>]+>/g, ''), bw, 12.5) > n) segs.pop();
+        var hh = segs.join(' · ');
+        for (var openB = (hh.match(/<b>/g) || []).length - (hh.match(/<\/b>/g) || []).length; openB > 0; openB--) hh += '</b>';
+        return { html: hh, lines: Math.max(1, Math.min(n, C.wrapLines(hh.replace(/<[^>]+>/g, ''), bw, 12.5))) };
+      };
+      var lay = C.factLayout(facts, wide ? Math.max(120, bw * 0.42) : bw, wide ? 1 : 0);
+      var MORE_H = 25;
+      /* measured: the value line and the gap under it take 34 px (22 px value, xs / s) or 39 px (26 px value) */
+      var LINE_H = ctx.tier.w === 'xs' || ctx.tier.w === 's' ? 34 : 39;
+      /* one share-out for a given foot height (0 when the foot gives way) */
+      var alloc = function (fRoom) {
+        var base = wide ? bh : bh - LINE_H - fRoom - (trend ? trend + 4 : 0);
+        var sb = wide ? subAt(Math.min(subLines, Math.max(0, Math.floor((bh - LINE_H - fRoom - (trend ? trend + 4 : 0)) / 17)))) : subAt(Math.min(subLines, 2));
+        if (!wide) while (sb.lines && sb.lines * 17 > base) sb = subAt(sb.lines - 1);
+        /* the side column of the wide form keeps 6 px (census 1440: its facts ran 3 px past the tile) */
+        var rm = wide ? bh - 6 : base - sb.lines * 17;
+        var f = lay.fit(rm), ml = false;
+        /* some facts stay folded: the "N more" line takes its place under the facts that still fit */
+        if (f.n < facts.length && rm >= MORE_H) { f = lay.fit(rm - MORE_H); ml = true; }
+        return { base: base, sub: sb, room: rm, fr: f, moreLine: ml };
+      };
+      var A = alloc(footRoom), footShown = !!footRoom;
+      /* a quiet foot line (source, policy) gives way to a fact it would hide; its words join the "N more" line's hover
+         tag and Details. A foot with an action stays. */
+      if (footRoom && !hasBtn && !wide && A.fr.n < facts.length) { var A0 = alloc(0); if (A0.fr.n > A.fr.n) { A = A0; footShown = false; } }
+      var base = A.base, sub = A.sub, room = A.room, fr = A.fr, moreLine = A.moreLine;
+      var maxFacts = fr.n;
+      /* every fact shows: the sub line takes the rest of the room, up to four lines */
+      if (!wide && maxFacts >= facts.length && subLines > sub.lines) {
+        var spare = room - fr.used, more2 = Math.floor(spare / 17);
+        if (more2 > 0) sub = subAt(Math.min(4, sub.lines + more2));
       }
-      var factsHtml = maxFacts ? C.facts(facts, maxFacts, { cols: cols }) : '';
-      var foot = m.foot && C.h(ctx, 'h2') ? '<div class="pmu-kpifoot' + (m.foot.indexOf('<button') >= 0 ? ' has-act' : '') + '">' + m.foot + '</div>' : '';
+      /* the clamp is the line count the facts were placed under (a sub that wraps one line more than its estimate is
+         clamped, its full words in the hover tag, instead of pushing a fact out) */
+      var clampN = maxFacts || moreLine ? sub.lines : Math.max(sub.lines, Math.min(4, Math.floor(Math.max(0, base) / 17)));
+      var subEl = sub.lines ? '<div class="pmu-kpisub" style="-webkit-line-clamp:' + clampN + '"' + (sub.html !== m.sub || sub.lines < subLines ? C.hover(subText, '') : '') + '>' + sub.html + '</div>' : '';
+      var hiddenFacts = facts.slice(maxFacts);
+      var factsHtml = maxFacts ? lay.html(maxFacts) : '';
+      var folded = hiddenFacts.map(C.factText).concat(m.foot && !footShown && footText ? [footText] : []);
+      var moreHtml = hiddenFacts.length && moreLine ? C.more(hiddenFacts.length, 'facts', bw < 260, folded) : '';
+      /* no room even for the line (or only the foot gave way): the tile's hover tag lists what folded (and Details has
+         it) */
+      var tileHover = folded.length && !(hiddenFacts.length && moreLine) ? C.foldHover(folded) : '';
+      var foot = m.foot && footShown ? '<div class="pmu-kpifoot' + (hasBtn ? ' has-act' : '') + '">' + m.foot + '</div>' : '';
       if (wide) {
-        body.innerHTML = '<div class="pmu-kpi is-wide"><div class="pmu-kpimain">' + head + sub + (trend ? '<div class="pmu-kpitrend"></div>' : '') + foot + '</div>' +
-          '<div class="pmu-kpiside">' + C.facts(facts, Math.min(facts.length, C.fit(ctx.tier.bh, 27))) + '</div></div>';
+        body.innerHTML = '<div class="pmu-kpi is-wide"' + tileHover + '><div class="pmu-kpimain">' + head + subEl + (trend ? '<div class="pmu-kpitrend"></div>' : '') + foot + '</div>' +
+          '<div class="pmu-kpiside">' + factsHtml + moreHtml + '</div></div>';
       } else {
-        body.innerHTML = '<div class="pmu-kpi">' + head + sub + factsHtml + (trend ? '<div class="pmu-kpitrend"></div>' : '') + foot + '</div>';
+        body.innerHTML = '<div class="pmu-kpi"' + tileHover + '>' + head + subEl + factsHtml + moreHtml + (trend ? '<div class="pmu-kpitrend"></div>' : '') + foot + '</div>';
       }
       var sp = body.querySelector('.pmu-kpispark, .pmu-kpitrend');
       if (sp) C.chart(body, 'spark', sp, { values: m.spark.values, idx: m.spark.idx || 0, tk: m.spark.tk }, { label: ctx.def.title + ' trend' });
@@ -607,6 +930,7 @@
   }
   function valText(r) { return r.vs ? String(r.word || '') : r.valueHtml != null ? String(r.valueHtml).replace(/<[^>]+>/g, '') : r.value != null ? String(r.value) : ''; }
   C.kind('list', {
+    grow: true,
     render: function (body, ctx) {
       var m = ctx.model || { rows: [] }, rows = m.rows || [];
       if (!rows.length) { body.innerHTML = C.empty(m.empty || 'No results for current filter', m.emptyFacts); return; }
@@ -661,7 +985,7 @@
           '<span class="pmu-lname"><b>' + esc(r.name) + '</b>' + (two && r.sub ? '<span>' + esc(r.sub) + '</span>' : '') + '</span>' +
           (extra ? '<span class="pmu-lnote"' + (r.noteTone ? ' data-tone="' + r.noteTone + '"' : '') + '>' + esc(r.note || '') + '</span>' : '') +
           '<span class="pmu-lval">' + val + '</span></div>';
-      }).join('') + C.more(hidden) + '</div>' + (m.foot ? C.foot(m.foot, m.footGlyph) : '');
+      }).join('') + C.more(hidden, null, false, rows.filter(function (r) { return !r.day && shown.indexOf(r) < 0; }).map(function (r) { return r.name + ' ' + valText(r) + (r.sub ? ' · ' + r.sub : '') + (r.note ? ' · ' + r.note : ''); })) + '</div>' + (m.foot ? C.foot(m.foot, m.footGlyph) : '');
       if (shown.some(function (r) { return r.onClick; })) {
         body.querySelector('.pmu-list').addEventListener('click', function (event) {
           var row = event.target.closest('[data-pmu-row]'); if (!row) return;
@@ -814,22 +1138,37 @@
          the last row 7 px under the tile's edge) */
       var bwI = ctx.tier.bw;
       /* a narrow tile names a segment by its short word where the model gives one ("Pending" for "Pending provider receipt") */
-      var nm = function (sg) { return bwI < 240 && sg.short ? sg.short : sg.name; };
+      /* (CONTENT-3: from 280 px down, so the 6-track Settlement states tile at 1440 keeps its three rows on one line each;
+         the full name is the row's hover tag) */
+      var nm = function (sg) { return bwI < 280 && sg.short ? sg.short : sg.name; };
       var vt = function (sg) { return bwI < 240 && sg.valueShort ? sg.valueShort : sg.valueText || C.fmt(sg.value, m.fmt); };
       /* the head's number (bigval) and its label share a line; a label that does not fit beside it wraps under it */
       /* measured: the one-line head and the bar take 54 px with the gaps (30 + the 24 below); the fit pass keeps any
          optimism whole */
       var headH = !head ? 0 : 30 + ((C.wrapW(C.fmt(m.headline.value, m.headline.fmt), 22, 640) + 8 + C.wrapW(hLab, 12.5)) / 1.06 > bwI ? 18 : 0);
+      /* a column under 190 px stacks each row: the name, then its value and share under it (CONTENT-3: the chart's legend
+         put "Plan estimate" on four lines in a 32 px column and ran the 4 x 7 tile 5 px past its edge at 1440) */
+      var stackRows = bwI < 190;
       var rowHOf = function (sg) {
+        if (stackRows) return 9 + 17 * (1 + Math.min(2, C.wrapLines(nm(sg), bwI - 18, 12.5))) + 2;
         var nameW = bwI - 10 - 36 - 24 - C.wrapW(vt(sg), 12.5, 600);
         return 30 + 17 * Math.max(0, Math.min(3, C.wrapLines(nm(sg) + (sg.sub && C.w(ctx, 'l') ? ' ' + sg.sub : ''), nameW, 12.5)) - 1);
       };
-      var fit = 0, roomR = ctx.tier.bh - headH - 24 - (m.foot && C.h(ctx, 'h2') ? 8 + 22 * Math.min(2, C.wrapLines(String(m.foot).replace(/<[^>]+>/g, ''), ctx.tier.bw - 24, 12.5)) : 0), usedR = 0;
-      for (var si = 0; si < segs.length; si++) {
-        var hR = rowHOf(segs[si]);
-        if (usedR + hR + (si < segs.length - 1 ? 22 : 0) > roomR && !(si === segs.length - 1 && usedR + hR <= roomR)) break;
-        usedR += hR; fit += 1;
-      }
+      if (stackRows && C.h(ctx, 'h2')) rowsOk = true;
+      var footRoom = m.foot && C.h(ctx, 'h2') ? 8 + 22 * Math.min(2, C.wrapLines(String(m.foot).replace(/<[^>]+>/g, ''), ctx.tier.bw - 24, 12.5)) : 0;
+      var fitRowsM = function (fRoom) {
+        var n = 0, roomR = ctx.tier.bh - headH - 24 - fRoom, usedR = 0;
+        for (var si = 0; si < segs.length; si++) {
+          var hR = rowHOf(segs[si]);
+          if (usedR + hR + (si < segs.length - 1 ? 22 : 0) > roomR && !(si === segs.length - 1 && usedR + hR <= roomR)) break;
+          usedR += hR; n += 1;
+        }
+        return n;
+      };
+      var fit = fitRowsM(footRoom), footShown = !!footRoom;
+      /* the foot gives way to a row it would hide; its words join the "N more" hover tag or the card's (CONTENT-3) */
+      if (footRoom && fit < segs.length && fitRowsM(0) > fit) { fit = fitRowsM(0); footShown = false; }
+      var footFold = m.foot && !footShown ? [String(m.foot).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()] : [];
       /* the chart's legend rows (name, count and share) where they fit whole; where their wrapped names would run under
          the tile's edge (Glass Light 2026-10-02: "Adjusted / and / settled" 9 px under it) the rows form with its "N more"
          line, which the fit pass keeps whole */
@@ -837,10 +1176,11 @@
       if (!rowsOk && fit && C.h(ctx, 'h2') && headH + 30 + legH > ctx.tier.bh) rowsOk = true;
       /* no whole row fits: the chart's own legend rows name the segments instead of an empty "N more" */
       if (rowsOk && !fit) rowsOk = false;
-      body.innerHTML = '<div class="pmu-mix">' + head + '<div class="pmu-mixhost"></div>' + (rowsOk ? '<div class="pmu-mixrows">' + segs.slice(0, fit).map(function (s) {
-        return '<div class="pmu-mixrow" data-reveal' + (s.prov ? ' data-prov="' + esc(s.prov) + '"' : '') + '><i class="pmu-swatch" data-sw="' + (s.est ? 'hatch' : 'box') + '"' + C.keyAttrs(s) + '></i><span class="pmu-mixname"' + (nm(s) !== s.name ? C.hover(s.name, '') : '') + '>' + esc(nm(s)) +
+      var segFold = segs.slice(rowsOk ? fit : segs.length).map(function (s) { return s.name + ' ' + vt(s) + ' · ' + C.fmt(100 * s.value / total, 'pct') + (s.sub ? ' · ' + s.sub : ''); });
+      body.innerHTML = '<div class="pmu-mix"' + (rowsOk && fit < segs.length ? '' : C.foldHover((rowsOk ? [] : segs.filter(function (s) { return s.sub; }).map(function (s) { return s.name + ' · ' + s.sub; })).concat(footFold))) + '>' + head + '<div class="pmu-mixhost"></div>' + (rowsOk ? '<div class="pmu-mixrows' + (stackRows ? ' is-stack' : '') + '">' + segs.slice(0, fit).map(function (s) {
+        return '<div class="pmu-mixrow" data-reveal' + (s.prov ? ' data-prov="' + esc(s.prov) + '"' : '') + '><i class="pmu-swatch" data-sw="' + (s.est ? 'hatch' : 'box') + '"' + C.keyAttrs(s) + '></i><span class="pmu-mixname"' + (nm(s) !== s.name || (s.sub && !C.w(ctx, 'l')) ? C.hover(s.name, s.sub && !C.w(ctx, 'l') ? s.sub : '') : '') + '>' + esc(nm(s)) +
           (s.sub && C.w(ctx, 'l') ? '<em>' + esc(s.sub) + '</em>' : '') + '</span><b>' + esc(vt(s)) + '</b><span class="pmu-mixpct">' + esc(C.fmt(100 * s.value / total, 'pct')) + '</span></div>';
-      }).join('') + C.more(segs.length - Math.min(fit, segs.length)) + '</div>' : '') + '</div>' + (m.foot && C.h(ctx, 'h2') ? C.foot(m.foot) : '');
+      }).join('') + C.more(segs.length - Math.min(fit, segs.length), null, false, segFold.concat(footFold)) + '</div>' : '') + '</div>' + (m.foot && footShown ? C.foot(m.foot) : '');
       /* a short mix keeps an inline swatch legend with the counts (the segment names never live only in hover tags) */
       C.chart(body, 'mix', body.querySelector('.pmu-mixhost'), { segments: segs.map(function (s) { return { name: nm(s), value: s.value, idx: s.idx, tk: s.tk, vendor: s.vendor, est: !!s.est, valueText: bwI < 240 && s.valueShort ? s.valueShort : s.valueText }; }), total: total, legend: rowsOk ? false : C.h(ctx, 'h2') ? 'rows' : false },
         { label: ctx.def.title });
@@ -862,7 +1202,10 @@
       var footOk = m.foot && C.fit(ctx.tier.bh, rowH, 38) >= rows.length;
       var fit = C.fit(ctx.tier.bh, rowH, (footOk ? 38 : 0) + 4);
       var shown = rows.length > fit ? rows.slice(0, Math.max(1, fit * rowH + 22 + 4 <= ctx.tier.bh ? fit : fit - 1)) : rows;
-      body.innerHTML = '<div class="pmu-rankedhost' + (inline ? ' is-inline' : '') + '"></div>' + C.more(rows.length - shown.length) + (footOk ? C.foot(m.foot) : '');
+      /* the rows past the card and a foot that gave way are listed in the "N more" line's hover tag, or the host's (CONTENT-3) */
+      var rankFold = rows.slice(shown.length).map(function (r) { return r.name + ' ' + (r.valueText || '') + (r.role ? ' · ' + r.role : ''); });
+      var footFold = m.foot && !footOk ? [String(m.foot).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()] : [];
+      body.innerHTML = '<div class="pmu-rankedhost' + (inline ? ' is-inline' : '') + '"' + (rankFold.length ? '' : C.foldHover(footFold)) + '></div>' + C.more(rows.length - shown.length, null, false, rankFold.concat(footFold)) + (footOk ? C.foot(m.foot) : '');
       var host = body.querySelector('.pmu-rankedhost');
       
       /* a narrow card shows a provider's short word (its full Settings name in the hover) instead of a name on three
@@ -872,7 +1215,24 @@
       var valW = 0; shown.forEach(function (r) { valW = Math.max(valW, C.wrapW(inline && r.valueShort ? r.valueShort : r.valueText || '', 13, 640)); });
       var nameAvail = ctx.tier.bw - 16 - 20 - 48 - valW - 24;
       var narrowName = function (r) { return r.short && r.short !== r.name && !C.fitsW(r.name, nameAvail, 13, 560); };
-      var c = C.chart(body, 'ranked', host, { rows: inline || !C.w(ctx, 'l') ? shown.map(function (r) { return Object.assign({}, r, inline && r.valueShort ? { valueText: r.valueShort } : {}, narrowName(r) ? { name: r.short, hover: r.hover || r.name } : {}); }) : shown, scale: m.scale, inline: inline }, { label: ctx.def.title, tier: ctx.tier });
+      /* a row's second words (its role) keep whole " · " parts that fit beside the name and the value, measured; the
+         whole role stays in the row's hover tag (CONTENT-3, census: "Gemini vision helper route · counts against API
+         budget" and "subscription · covered · 2 attempts" ended in an ellipsis at 1920) */
+      var fitRole = function (r) {
+        /* the one-line form draws no role: its words go to the row's hover tag (CONTENT-3: "conversation history" and
+           "loaded context" of Source mix were only in Details at the S board) */
+        if (inline && (r.role || r.valueFull)) return Object.assign({}, r, { hover: [r.valueFull && r.valueFull !== r.valueText ? r.valueFull : '', r.role, r.hover].filter(Boolean).join(' · ') });
+        if (inline || !r.role) return r;
+        var nm = narrowName(r) ? r.short : r.name, vt = inline && r.valueShort ? r.valueShort : r.valueText || '';
+        /* the row: 10 px padding each side, the mark and its 8 px gap, the name, 8 px, the role, the 10 px column gap, the value */
+        var avail = ctx.tier.bw - 20 - (r.mark ? 24 : 0) - C.wrapW(nm, 13, 560) - 8 - C.wrapW(vt, 13, 620) - (isFinite(r.share) ? C.wrapW('100%', 12) + 6 : 0) - 14;
+        var k = PMU.theme.look().nier || PMU.theme.look().family === 'retro' ? 1.12 : 1;
+        var segs = String(r.role).split(' · ');
+        while (segs.length && C.wrapW(segs.join(' · '), 12) * k > avail) segs.pop();
+        var role = segs.join(' · ');
+        return role === r.role ? r : Object.assign({}, r, { role: role, hover: [r.role, r.hover].filter(Boolean).join(' · ') });
+      };
+      var c = C.chart(body, 'ranked', host, { rows: (inline || !C.w(ctx, 'l') ? shown.map(function (r) { return Object.assign({}, r, inline && r.valueShort ? { valueText: r.valueShort, valueFull: r.valueText } : {}, narrowName(r) ? { name: r.short, hover: r.hover || r.name } : {}); }) : shown).map(fitRole), scale: m.scale, inline: inline }, { label: ctx.def.title, tier: ctx.tier });
       if (!c && !body._pmuDry) host.innerHTML = shown.map(function (r) { return '<div class="pmu-lrow"><span class="pmu-lname"><b>' + esc(r.name) + '</b></span><span class="pmu-lval">' + esc(r.valueText) + '</span></div>'; }).join('');
     }
   });
@@ -914,25 +1274,37 @@
       var ringPx, mixOk, avail;
       /* the Context room's hero: one large ring (WOW-SPEC 4, Context) */
       var heroRing = C.isHero(ctx) && side;
+      /* CONTENT-3: the hero ring without a facts column runs its facts under the ring and the legend at the card's full
+         width (three or four columns); the ring keeps the legend's height (at least 120 px), so the band under the ring
+         holds facts instead of air ("4 more at a taller size" over free space at 1920) */
+      var below = heroRing && !factsRoom && m.facts && m.facts.length, belowLay = null, belowN = 0, belowMore = false;
       if (side) { mixOk = true; ringPx = heroRing ? Math.round(Math.max(120, Math.min(168, bh - 8, ctx.tier.bw * 0.36))) : C.w(ctx, 'm') ? 96 : 68; avail = bh - 18; }
       else if (bh - 84 - 10 - 18 >= needRows * LEG) { mixOk = true; ringPx = 84; avail = bh - 84 - 10 - 18; }
       else { mixOk = false; ringPx = 68; avail = bh - 68 - 10; }
+      if (below) {
+        var legBlock = 18 + n * LEG;
+        ringPx = Math.round(Math.max(120, Math.min(ringPx, legBlock)));
+        var topH = Math.max(ringPx, legBlock), roomB = bh - topH - 4;   /* the body's 8 px gap less the block's own 4 (fitRows) */
+        belowLay = C.factLayout(m.facts, ctx.tier.bw, 0, 4);
+        var frB = belowLay.fit(roomB);
+        if (frB.n < m.facts.length && roomB >= 25) { frB = belowLay.fit(roomB - 25); belowMore = true; }
+        belowN = frB.n;
+        avail = topH - 18;
+      }
       var legFit = C.fit(avail, LEG);
       var factFit = factsRoom ? C.fit(bh, 26) : 0;
       /* two legend columns only where a family name and its count both fit (about 145 px a column); every family shows or
          the hidden ones are counted on one line (complete or hidden) */
       var legCap = legFit * per;
       if (legCap < n) legCap = Math.max(per, C.fit(avail - MORE, LEG) * per);
-      body.innerHTML = '<div class="pmu-ctx' + (side ? ' is-side' : '') + (heroRing ? ' is-hero' : '') + (factsRoom ? ' has-facts' : '') + (ctx.tier.bw < 300 ? ' is-narrow' : '') + '">' +
+      body.innerHTML = '<div class="pmu-ctx' + (side ? ' is-side' : '') + (heroRing ? ' is-hero' : '') + (factsRoom ? ' has-facts' : '') + (below ? ' has-below' : '') + (ctx.tier.bw < 300 ? ' is-narrow' : '') + '">' +
         '<div class="pmu-ctxring" style="width:' + ringPx + 'px;height:' + ringPx + 'px"></div>' +
-        '<div class="pmu-ctxmain">' + (mixOk ? '<div class="pmu-ctxmix"></div>' : '') + '<div class="pmu-ctxlegs' + (oneCol ? '' : ' is-2col') + '">' + legendRows.slice(0, legCap).join('') + '</div>' + (legCap < legendRows.length ? C.more(legendRows.length - legCap, legendRows.length - legCap === 1 ? 'family' : 'families', ctx.tier.bw < 260) : '') + '</div>' +
+        '<div class="pmu-ctxmain">' + (mixOk ? '<div class="pmu-ctxmix"></div>' : '') + '<div class="pmu-ctxlegs' + (oneCol ? '' : ' is-2col') + '">' + legendRows.slice(0, legCap).join('') + '</div>' + (legCap < legendRows.length ? C.more(legendRows.length - legCap, legendRows.length - legCap === 1 ? 'family' : 'families', ctx.tier.bw < 260, m.segments.slice(legCap).map(function (s) { return s.name + ' ' + PMU.fmt.tok(s.tokens) + ' · ' + s.pct + '%'; })) : '') + '</div>' +
         (factsRoom ? '<div class="pmu-ctxfacts">' + C.facts(m.facts, factFit) + '</div>' : '') + '</div>';
-      /* the hero ring without a facts column puts its facts under the legend, two to a line, as many as fit */
-      if (heroRing && !factsRoom && m.facts && m.facts.length) {
-        var used0 = (mixOk ? 18 : 0) + Math.min(legCap, legendRows.length) * LEG + 12;
-        var pairs = Math.max(0, Math.floor((bh - used0) / 28)), nF = Math.min(m.facts.length, pairs * 2);
-        if (nF) body.querySelector('.pmu-ctxmain').insertAdjacentHTML('beforeend', '<div class="pmu-ctxfacts is-under">' + C.facts(m.facts, nF, { cols: 2 }) + '</div>');
-      }
+      if (below && (belowN || belowMore)) {
+        var hidF = m.facts.slice(belowN);
+        body.insertAdjacentHTML('beforeend', '<div class="pmu-ctxfacts is-below">' + (belowN ? belowLay.html(belowN) : '') + (belowMore ? C.more(hidF.length, 'facts', false, hidF.map(C.factText)) : '') + '</div>');
+      } else if (below) { body.firstChild.setAttribute('data-pm-hover-label', C.FOLD_LABEL); body.firstChild.setAttribute('data-pm-hover-detail', m.facts.map(C.factText).join('; ')); }
       C.chart(body, 'ring', body.querySelector('.pmu-ctxring'), { segments: m.segments.map(function (s) { return { name: s.name, value: s.tokens, idx: s.idx }; }).concat([{ name: 'Reserved output', value: m.reserved, idx: 7, hatched: true }]),
         limit: m.limit, value: m.used, max: m.limit, centre: m.pct + '%', caption: PMU.fmt.tok(m.used) + ' / ' + PMU.fmt.tok(m.limit), token: 'in' }, { label: 'Context window ' + m.pct + '% used' });
       if (mixOk) C.chart(body, 'mix', body.querySelector('.pmu-ctxmix'), { segments: m.segments.map(function (s) { return { name: s.name, value: s.tokens, idx: s.idx }; }), total: m.used, legend: false }, { label: 'Context composition' });

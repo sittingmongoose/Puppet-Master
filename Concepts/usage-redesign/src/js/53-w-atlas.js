@@ -28,7 +28,7 @@
       var fit = C.fit(ctx.tier.bh, rowH, reserve);
       var rows = shown.length > fit ? shown.slice(0, Math.max(1, fit * rowH + 22 + reserve <= ctx.tier.bh ? fit : fit - 1)) : shown;
       var maxV = Math.max.apply(null, shown.map(function (m) { return m.value.total; }).concat([1e-9]));
-      body.innerHTML = '<div class="pmu-models">' + tools + '<div class="pmu-modelshost"></div>' + C.more(shown.length - rows.length, 'models') + '</div>' + C.foot(esc(footText), 'info');
+      body.innerHTML = '<div class="pmu-models">' + tools + '<div class="pmu-modelshost"></div>' + C.more(shown.length - rows.length, 'models', false, shown.slice(rows.length).map(function (m) { return m.name + ' ' + PMU.fmt.tok(m.tokens.total) + ' · ' + C.money(m.value.total); })) + '</div>' + C.foot(esc(footText), 'info');
       var host = body.querySelector('.pmu-modelshost');
       var c = C.chart(body, 'stackbar', host, { rows: rows.map(function (m) {
         return { id: m.id, name: m.name, providerId: m.providerId, vendor: m.vendor, fill: Math.max(0.004, m.value.total / maxV),
@@ -85,7 +85,8 @@
       var total = PMU.data.sum(list.map(val));
       var fmt = mode === 'cost' ? function (v) { return C.money(v); } : function (v) { return PMU.fmt.tok(v); };
       var tools = C.headTools(ctx, C.w(ctx, 'm') ? '<span data-key="mode">' + C.seg('seg', [{ value: 'tokens', label: 'Tokens' }, { value: 'cost', label: 'Cost' }], mode, 'Measure') + '</span>' : '');
-      body.innerHTML = '<div class="pmu-donutw">' + tools + '<div class="pmu-donuthost" style="height:' + Math.max(120, ctx.tier.bh - (tools ? 34 : 0)) + 'px"></div></div>';
+      /* 4 px under the body: the chart's legend rows round up (census: +2 px at 1440 in Friendly, Glass and Retro) */
+      body.innerHTML = '<div class="pmu-donutw">' + tools + '<div class="pmu-donuthost" style="height:' + Math.max(120, ctx.tier.bh - (tools ? 34 : 0) - 4) + 'px"></div></div>';
       C.chart(body, 'donut', body.querySelector('.pmu-donuthost'), { segments: list.map(function (m) { return { id: m.id, name: m.name, value: val(m), vendor: m.vendor, shade: m.shade || 1, prov: m.providerId, sub: m.role }; }),
         centre: { value: fmt(total), caption: mode === 'cost' ? 'estimated cost, all models' : 'tokens, all models' }, mode: mode, fmt: fmt }, { label: 'Model usage by ' + mode });
     }
@@ -123,9 +124,17 @@
       var footOk = used + footH <= bh; if (footOk) used += footH;
       var sparkOk = m.spark && used + sparkH <= bh; if (sparkOk) used += sparkH;
       var foot2 = C.w(ctx, 'm');
+      /* the notes (and the explanation, the split) the card has no line for at this size: one info icon beside "Estimated
+         savings" carries them (CONTENT-3: "Cache fields are explicit facts on selected attempt fixtures." was nowhere) */
+      var notes = m.notes || [], unseen = [];
+      if (!explOk) unseen.push('Cache reads priced at the cache-read rate instead of the input rate · PM estimate');
+      if (!splitOk) unseen.push('Reads ' + PMU.fmt.tok(m.read) + ' · Writes ' + (m.write ? PMU.fmt.tok(m.write) : 'none recorded'));
+      if (!costOk) unseen.push('Cache cost ' + C.money(m.cost) + ' · writes ' + C.money(m.costWrite) + ' · reads ' + C.money(m.costRead));
+      notes.forEach(function (n, i) { if (!footOk || (i > 0 && !foot2)) unseen.push(n); });
+      var cav = unseen.length && C.caveat ? C.caveat(unseen.join(' ')) : '';
       body.innerHTML = '<div class="pmu-eff' + (narrow ? ' is-narrow' : '') + '">' +
         '<div class="pmu-efftop"><div class="pmu-effring" style="width:' + ring + 'px;height:' + ring + 'px"></div><div class="pmu-efffacts">' +
-        '<div class="pmu-effsave"><span>Estimated savings</span>' + C.valHtml(m.savings, 'money2', 'pmu-factv big', ctx.id + ':sv').replace('class="pmu-num"', 'class="pmu-num" data-count="1"') +
+        '<div class="pmu-effsave"><span>Estimated savings' + cav + '</span>' + C.valHtml(m.savings, 'money2', 'pmu-factv big', ctx.id + ':sv').replace('class="pmu-num"', 'class="pmu-num" data-count="1"') +
         (explOk ? '<em>Cache reads priced at the cache-read rate instead of the input rate · PM estimate</em>' : '') + '</div>' +
         (costOk ? '<div class="pmu-effcost"><span>Cache cost</span>' + C.valHtml(m.cost, 'money2', 'pmu-factv', ctx.id + ':cc') +
           '<em>writes ' + esc(C.money(m.costWrite)) + ' · reads ' + esc(C.money(m.costRead)) + '</em></div>' : '') + '</div></div>' +
@@ -140,6 +149,15 @@
 
   /* ================================================================== qhist: quota history rows (A1 7.9) */
   var openRows = {};
+  /* Details of the quota history (CONTENT-3): each account's main window now and its next reset */
+  C.kindReadings.qhist = function (ctx) {
+    var q = ctx.model, rows = [];
+    ((q && q.groups) || []).forEach(function (g) { g.rows.forEach(function (r) {
+      var mw = r.main; rows.push([g.name + ' · ' + r.account.nickname, (mw ? mw.label + ' ' + (mw.pct === null ? PMU.roster.vsWord(mw) : C.fmt(mw.pct, 'pct') + ' used') : 'no main window') + (r.next ? ' · next reset ' + PMU.fmt.date(r.next.resetAt) + ' ' + PMU.fmt.clock(r.next.resetAt) : '')]);
+    }); });
+    ((q && q.noWindows) || []).forEach(function (x) { rows.push([x.name || String(x), 'no quota windows']); });
+    return rows;
+  };
   C.kind('qhist', {
     render: function (body, ctx) {
       var q = ctx.model; if (!q || !q.groups.length) { body.innerHTML = C.empty('No provider in scope reports quota windows.'); return; }
@@ -150,7 +168,7 @@
       var open = openRows[ctx.id] || '';
       var rowH = mid ? 36 : 40, headH = 36, focusH = 236;
       var budget = ctx.tier.bh - 22 - (q.noWindows.length ? 34 : 0) - (open ? focusH : 0);
-      var used = 0, hiddenRows = 0, out = [], rowsDrawn = [];
+      var used = 0, hiddenRows = 0, out = [], rowsDrawn = [], hiddenNames = [];
       var tlW = wide ? bw * 0.66 - 230 : mid ? bw * 0.64 - 200 : bw * 0.6 - 110;
       var axis = axisTicks(q, Math.max(1, Math.ceil(7 * 34 / Math.max(60, tlW))), tlW);
       out.push('<div class="pmu-qrow pmu-qaxis" style="grid-template-columns:' + tmpl + '"><span></span><span class="pmu-qticks">' + axis.map(function (t) { return '<i style="left:' + t.x + '%"' + (t.now ? ' class="is-now"' : '') + '>' + esc(t.label) + '</i>'; }).join('') +
@@ -158,7 +176,7 @@
       q.groups.forEach(function (g) {
         var single = g.rows.length === 1, isCol = collapsed.indexOf(g.providerId) >= 0;
         if (!single) {
-          if (used + headH > budget) { hiddenRows += g.rows.length; return; }
+          if (used + headH > budget) { hiddenRows += g.rows.length; g.rows.forEach(function (r) { hiddenNames.push(g.name + ' · ' + r.account.nickname + (r.main && r.main.pct !== null ? ' ' + C.fmt(r.main.pct, 'pct') + ' used' : '')); }); return; }
           used += headH;
           out.push('<button type="button" class="pmu-qgroup" data-reveal data-pmu-act="qgroup" data-value="' + esc(g.providerId) + '" aria-expanded="' + !isCol + '" data-prov="' + esc(g.providerId) + '">' +
             '<span class="pmu-qchev' + (isCol ? ' is-col' : '') + '">' + SVG.chevronDown + '</span>' + PMU.mark(g.providerId, 20) + '<b>' + esc(g.name) + '</b><span>' + esc(g.rows.length + ' accounts · ' + g.windowLabel) + '</span></button>');
@@ -166,7 +184,7 @@
         if (isCol && !single) return;
         g.rows.forEach(function (r) {
           var a = r.account, key = a.key, isOpen = open === key;
-          if (used + rowH > budget) { hiddenRows += 1; return; }
+          if (used + rowH > budget) { hiddenRows += 1; hiddenNames.push(g.name + ' · ' + a.nickname + (r.main && r.main.pct !== null ? ' ' + C.fmt(r.main.pct, 'pct') + ' used' : '')); return; }
           used += rowH;
           var main = r.main, pct = main ? main.pct : null;
           var usedHtml = pct === null ? C.vs(main && main.vs === 'not_exposed' ? 'not_exposed' : 'unknown', main ? PMU.roster.vsWord(main) : 'Usage unknown')
@@ -187,7 +205,7 @@
           if (isOpen) out.push('<div class="pmu-qfocus" data-key="' + esc(key) + '"><div class="pmu-qfocushost"></div></div>');
         });
       });
-      if (hiddenRows) out.push(C.more(hiddenRows, hiddenRows === 1 ? 'account' : 'accounts'));
+      if (hiddenRows) out.push(C.more(hiddenRows, hiddenRows === 1 ? 'account' : 'accounts', false, hiddenNames));
       body.innerHTML = '<div class="pmu-qhist">' + out.join('') + '</div>' + (q.noWindows.length ? C.foot(esc(listWords(q.noWindows) + (q.noWindows.length > 1 ? ' expose' : ' exposes') + ' no quota windows.'), 'info') : '');
       rowsDrawn.forEach(function (r) {
         var host = body.querySelector('.pmu-qline[data-key="' + r.account.key + '"]');
@@ -255,6 +273,8 @@
 
   /* ================================================================== agenda: resets and expiries (A1 7.10) */
   C.kind('agenda', {
+    /* one column only: a wider budget lets every column run long and the fit pass then trims the last column first */
+    grow: function (body) { return (body._pmuAgCols || 1) === 1; },
     render: function (body, ctx) {
       var hz = C.cfg(ctx.id, 'horizon', ctx.def.horizon || '7d');
       var ag = PMU.data.agenda(hz);
@@ -281,22 +301,22 @@
       };
       var total = 0; groups.forEach(function (g) { total += headH; g.events.forEach(function (ev) { total += lineHOf(ev); }); });
       var footNeed = ag.beyond || total > (ctx.tier.bh - 4) * colsN;
-      var capacity = ctx.tier.bh - (footNeed ? 24 : 2), cols = [[]], used = [0], col = 0, hidden = 0, done = false, laid = 0;
+      var capacity = ctx.tier.bh - (footNeed ? 24 : 2), cols = [[]], used = [0], col = 0, hidden = 0, done = false, laid = 0, hiddenEv = [];
       groups.forEach(function (g) {
-        if (done) { hidden += g.events.length; return; }
+        if (done) { hidden += g.events.length; hiddenEv = hiddenEv.concat(g.events); return; }
         if (used[col] + headH + lineHOf(g.events[0]) > capacity) {
-          if (col + 1 < colsN && used[col] > 0) { col += 1; cols.push([]); used.push(0); } else { done = true; hidden += g.events.length; return; }
+          if (col + 1 < colsN && used[col] > 0) { col += 1; cols.push([]); used.push(0); } else { done = true; hidden += g.events.length; hiddenEv = hiddenEv.concat(g.events); return; }
         }
         used[col] += headH;
         var lines = [], cont = false;
         g.events.forEach(function (ev) {
-          if (done) { hidden += 1; return; }
+          if (done) { hidden += 1; hiddenEv.push(ev); return; }
           var lh = lineHOf(ev);
           if (used[col] + lh > capacity && lines.length && col + 1 < colsN) {
             cols[col].push(groupHtml(cont ? Object.assign({}, g, { note: 'continued' }) : g, lines, narrow));
             lines = []; cont = true; col += 1; cols.push([]); used.push(headH);
           }
-          if (used[col] + lh > capacity) { done = true; hidden += 1; return; }
+          if (used[col] + lh > capacity) { done = true; hidden += 1; hiddenEv.push(ev); return; }
           used[col] += lh; lines.push(ev); laid += 1;
         });
         if (lines.length) cols[col].push(groupHtml(cont ? Object.assign({}, g, { note: 'continued' }) : g, lines, narrow));
@@ -308,16 +328,30 @@
          its count stays in the line's hover tag */
       if (parts.length > 1 && C.wrapLines(parts.join(' · ') + ' 0', ctx.tier.bw, 12) > 1) parts.pop();
       /* the line is also the card's "N more" line, so a line the fit pass removes is counted in it */
-      var beyond = parts.length ? '<p class="pmu-agbeyond' + (hidden ? ' pmu-more' : '') + '"' + (ag.beyond ? C.hover(ag.beyond + ' more after this horizon', ag.beyondList.slice(0, 8).map(function (e) { return e.account.nickname + ' ' + e.what + ' ' + PMU.fmt.date(e.at); }).join(' · ')) : '') + '>' +
+      /* the hover tag lists the lines this card has no room for, then the ones after its horizon (CONTENT-3) */
+      var evText = function (e) { return (C.nickRepeats(e.account.nickname, e.account.providerName) ? e.account.providerName : e.account.providerName + ' · ' + e.account.nickname) + ' ' + e.what + ' ' + (e.at ? PMU.fmt.date(e.at) + ' ' + PMU.fmt.clock(e.at) : 'reset unknown'); };
+      var agFold = hiddenEv.map(evText).concat(ag.beyond ? ag.beyondList.slice(0, 12).map(function (e) { return 'after the horizon: ' + evText(e); }) : []);
+      var beyond = parts.length ? '<p class="pmu-agbeyond' + (hidden ? ' pmu-more' : '') + '"' + (agFold.length ? C.hover(hidden ? C.FOLD_LABEL : ag.beyond + ' more after this horizon', agFold.join('; ')) : '') + '>' +
         esc(parts.join(' · ')) + '</p>' : '';
       body.innerHTML = '<div class="pmu-agenda is-cols" style="grid-template-columns:repeat(' + colsN + ',minmax(0,1fr))">' + cols.map(function (c) { return '<div class="pmu-agcol">' + c.join('') + '</div>'; }).join('') + '</div>' + beyond;
-      body._pmuAgenda = { hidden: hidden, beyond: ag.beyond, hz: hz };
+      body._pmuAgenda = { hidden: hidden, beyond: ag.beyond, hz: hz }; body._pmuAgCols = colsN;
       body.querySelector('.pmu-agenda').addEventListener('click', function (event) {
         var row = event.target.closest('[data-key]'); if (!row) return;
         var acct = PMU.roster.account(row.getAttribute('data-acct')); if (acct && PMU.accounts) PMU.accounts.inspect(acct.key, row);
       });
     }
   });
+  /* Details of a resets card: every line of its horizon, then the ones after it (CONTENT-3) */
+  C.kindReadings.agenda = function (ctx, def) {
+    var ag = PMU.data.agenda(C.cfg(ctx.id, 'horizon', def.horizon || '7d')), rows = [];
+    var line = function (e, k) { rows.push([k || (e.at ? PMU.fmt.date(e.at) + ' ' + PMU.fmt.clock(e.at) : 'Reset unknown'), e.account.providerName + ' · ' + e.account.nickname + ' · ' + e.what +
+      (e.used && e.used.filter(function (u) { return u != null; }).length ? ' · ' + e.used.filter(function (u) { return u != null; }).map(function (u) { return C.fmt(u, 'pct'); }).join(' / ') + ' used' : '')]); };
+    ag.passed.forEach(function (e) { line(e, 'Passed · pending recheck'); });
+    ag.days.forEach(function (d) { d.events.forEach(function (e) { line(e); }); });
+    ag.unknown.forEach(function (e) { line(e, 'Reset unknown'); });
+    (ag.beyondList || []).forEach(function (e) { line(e, 'After the horizon · ' + PMU.fmt.date(e.at)); });
+    return rows;
+  };
   function groupHtml(g, lines, narrow) {
     return '<section class="pmu-agday" data-reveal><header><b>' + esc(g.label) + '</b><span>' + esc(g.note || '') + '</span></header>' + lines.map(function (ev) {
       var a = ev.account, time = ev.at ? (ev.inferred ? '≈ ' : '') + PMU.fmt.clock(ev.at) : '-';

@@ -14,6 +14,13 @@ body.pmu-page-active #panel-dashboard.pm-home-owned.pm8-page-out { position: abs
 /* ---- the held board (3.1 Phase A): held cards are laid out (the build measures every body) but not painted, so the
    slices cost the frame no paint and no layerization; the release animates them in from their first keyframe ---- */
 #panel-usage .pmu-board[data-held] > .pmu-card { visibility: hidden; }
+/* the first arrival (PERF-3): the plates show and enter from the first frame, their bodies wait unseen by opacity until
+   the release reveals them */
+#panel-usage .pmu-board[data-hold-bodies] > .pmu-card > .pmu-cardbody { opacity: 0; }
+/* a room change builds every new card's chrome in one batch (one child-list change of the board: no sibling restyles in
+   the later slices, PERF-3); the frames enter at once and each body waits unseen by opacity until it is built (never
+   by visibility: an animation created under visibility: hidden runs on the main thread) */
+#panel-usage .pmu-board > .pmu-card[data-body-wait] > .pmu-cardbody { opacity: 0; }
 /* while a film moment runs (data-film, set at the release and removed once at its end) each plate keeps its layer */
 #panel-usage .pmu-board[data-film] > .pmu-card { will-change: transform, opacity; }
 

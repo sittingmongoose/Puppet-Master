@@ -28,6 +28,10 @@ html[data-theme^="retro"] #panel-usage .pmu-shell { --pmu-r-menu: 0px; --pmu-r-m
   --pmu-m-sx: .72; --pmu-m-sy: .48; --pmu-m-ty: 10px;
   transition: opacity calc(160ms * var(--pmu-msp, 1)) var(--pmu-m-ease), transform calc(300ms * var(--pmu-msp, 1)) cubic-bezier(.22, 1.55, .36, 1); }
 #panel-usage .pmu-menu.has-rail { padding: 0; }
+/* the app's Glass rule for [role="menu"] gives the panel a 30 px backdrop blur and a half-transparent fill (!important);
+   without a GPU every frame of the sprout then re-blurred the board behind it in software (40 ms draws, 25 fps, PERF-3):
+   the panel keeps its own near-opaque fill there */
+html[data-pmu-soft] #panel-usage .pmu-menu { background: var(--pmu-menu-bg) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
 /* closed nudge: toward the trigger (a menu below its trigger starts 10 px up, one above starts 10 px down) */
 #panel-usage .pmu-menu[data-side="below"] { --pmu-m-ty: -10px; }
 #panel-usage .pmu-menu[data-mstate="measure"] { visibility: hidden; opacity: 0; transform: none; transition: none; }

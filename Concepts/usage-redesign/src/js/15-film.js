@@ -23,7 +23,13 @@
     roll: 700, rollStep: 28, rollChange: 420, rollChangeStep: 20, fill: 900, draw: 900, grow: 760, notch: 240, drop: 260, sweep: 650,
     flash: 620, ring: 700, key: 900, hover: 220, lift: 140, settle: 160, slide: 250 };
   function reduced() { return M.reduced(); }
+  /* the no-GPU motion profile (PERF-3): html[data-pmu-soft], set by 90-api.js when Usage first shows on a software-
+     rendered machine, forced on by ?pmu-soft=1 (a GPU film of what the VM plays) and off by ?pmu-soft=0 */
   function soft() { return root.hasAttribute('data-pmu-soft'); }
+  function inView(card) { return !card || !PMU.board || !PMU.board.inView ? true : PMU.board.inView(card); }
+  /* the cards that keep their inner entrance in a moment: on the no-GPU profile only the hero (WOW-SPEC-3 3.3: light
+     and rolls belong to the hero; supporting plates arrive final); on any profile never a card outside the viewport */
+  function innerOn(card) { return !!card && inView(card) && (!soft() || card.hasAttribute('data-hero')); }
   function fam() { return M.family(); }
   function anim(el, frames, o) {
     o = o || {};
@@ -93,11 +99,24 @@
   function enterPlates(cards, o) {
     if (reduced() || M.paused() || !cards || !cards.length || off.plates) return;
     o = o || {};
-    var f = fam(), v = voice(f), dir = o.dir || 1, base = o.base || 0;
+    var f = fam(), v = voice(f), dir = o.dir || 1, base = o.base || 0, sp = soft();
     var fill = 'backwards';   /* never hold a plate's transform after its entrance: drag and resize write inline transforms */
     cards.forEach(function (card) {
+      /* a plate outside the scroll viewport gets no entrance (PERF-3 rule 2): it is final when scrolled to, and Chrome
+         would run its animations on the main thread ("no visible change") for their whole life */
+      if (!inView(card)) return;
       var d = base + (card._pmuEnterDelay || 0);
-      if (f === 'nier') { bootPlate(card, d); return; }
+      if (f === 'nier') { bootPlate(card, d, sp && !card.hasAttribute('data-hero')); return; }
+      /* the no-GPU profile (PERF-3): one opacity animation per plate, no travel (a moving plate damages the union of its
+         old and new rects every frame, and the software compositor redraws the damage's bounding box); the hero keeps
+         the Glass glint */
+      if (sp) {
+        /* o.from: a room change starts its frames part-way in (0.35), so the frame that swaps the rooms already shows the
+           new structure (no empty board between the old room and the new one) */
+        anim(card, [{ opacity: o.from || 0 }, { opacity: 1 }], { dur: v.fade + 60, delay: d, easing: v.fadeEase, fill: fill });
+        if (f === 'glass' && card.hasAttribute('data-hero')) glint(card, d + 120);
+        return;
+      }
       anim(card, [{ opacity: 0 }, { opacity: 1 }], { dur: v.fade, delay: d, easing: v.fadeEase, fill: fill });
       var from = dir < 0 && v.dist ? v.from.replace(/translateY\((\d+)px\)/, function (m0, n) { return 'translateY(-' + n + 'px)'; }) : v.from;
       var a = [{ transform: from }, { transform: 'none' }];
@@ -107,10 +126,24 @@
     });
     if (f === 'retro' && o.scan !== false) scanBar(o.board || (cards[0] && cards[0].parentNode), base);
   }
+  /* the release of the first arrival: every built body seen fades in at its wave delay (created before the hold is lifted
+     in the same task, fill backwards: no frame shows it early); NieR steps it */
+  function revealBodies(cards) {
+    if (reduced() || M.paused()) return;
+    var f = fam(), stepped = f === 'retro' || f === 'nier';
+    cards.forEach(function (card) {
+      if (card.hasAttribute('data-late') || !inView(card)) return;
+      var body = card.querySelector(':scope > .pmu-cardbody'); if (!body) return;
+      anim(body, [{ opacity: 0 }, { opacity: 1 }], { dur: stepped ? 120 : 200, delay: card._pmuEnterDelay || 0, easing: stepped ? 'steps(3,jump-start)' : E.out });
+    });
+  }
   /* NieR: the frame first (opacity in three steps), then the content unfolds top-down in five steps with an ink scanline
      on the edge; clip-path in steps is five paints, not a continuous main-thread animation */
-  function bootPlate(card, d) {
+  function bootPlate(card, d, quiet) {
     anim(card, [{ opacity: 0 }, { opacity: 1 }], { dur: 120, delay: d, easing: 'steps(3,jump-start)' });
+    /* the no-GPU profile boots supporting plates frame-first only (three opacity steps): the clip unfold is a main-thread
+       animation and the title decode a JS tween */
+    if (quiet) return;
     var parts = card.querySelectorAll(':scope > .pmu-cardhead, :scope > .pmu-cardbody');
     Array.prototype.forEach.call(parts, function (p) {
       anim(p, [{ clipPath: 'inset(0 0 100% 0)' }, { clipPath: 'inset(0 0 0% 0)' }], { dur: 300, delay: d + 120, easing: 'steps(5,jump-start)' });
@@ -461,13 +494,17 @@
       hold.queue.push({ card: card, fn: fn });
       return;
     }
+    if (card && !innerOn(card)) return;   /* final as rendered (PERF-3: quiet supporting plate, or outside the viewport) */
     try { fn((card && card._pmuEnterDelay || 0) + T.inner); } catch (error) { console.error('[pm-usage] film cue', error); }
   }
   /* the queued inner entrances run in reading order in chunks of about 10 ms per frame (the release frame stays short on
      the CPU-only VM); a cue that runs a frame or two after the release takes the elapsed time off its delay, so the
      choreography keeps its timeline */
   function flushCues(list, t0) {
-    var q = list.slice(), start0 = t0 || performance.now();
+    var q = list.filter(function (c) { return innerOn(c.card); }), start0 = t0 || performance.now();
+    /* the no-GPU profile releases every queued entrance in the release task (only the hero's remain): no JS in the
+       frames of the moment, so the compositor runs it without main frames */
+    if (soft()) { q.forEach(function (c) { if (c.card.isConnected) try { c.fn((c.card._pmuEnterDelay || 0) + T.inner); } catch (error) { console.error('[pm-usage] film cue', error); } }); return; }
     function chunk() {
       var start = performance.now(), elapsed = (start - start0) / M.speed();
       while (q.length && performance.now() - start < 10) {
@@ -500,7 +537,9 @@
   function shellIntro(app) {
     if (off.shell) return;
     var f = fam(), stepped = f === 'retro' || f === 'nier', ease = stepped ? 'steps(3,jump-start)' : E.out;
-    key({ bloom: true });
+    /* the key light blooms only with a GPU: it is the one full-stage layer, and its bloom alone costs the software
+       compositor 11-15 ms per frame (PERF-3, vizlab); without a GPU it shows at rest */
+    key({ bloom: !soft() });
     var brand = app.querySelector('.pmu-brand');
     if (brand) anim(brand, [{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { dur: T.title, delay: 40, easing: ease });
     Array.prototype.forEach.call(app.querySelectorAll('#pmuNav > .pmu-navbtn'), function (b, i) {
@@ -526,15 +565,20 @@
     try { if (PMU.board && PMU.board.tierPass) PMU.board.tierPass(Array.prototype.slice.call(h.board.querySelectorAll(':scope > .pmu-card')), 'held'); } catch (error) { console.error('[pm-usage] film re-measure', error); }
     hold = null;
     try { performance.mark('pmu-film-release'); } catch (error) {}
+    if (PMU.board && PMU.board.viewNow) PMU.board.viewNow(true);   /* the layout is clean here (the re-measure just read it) */
     var board = h.board, t0 = performance.now();
     var cards = Array.prototype.slice.call(board.querySelectorAll(':scope > .pmu-card'));
-    wave(cards, {});
-    enterPlates(cards, { board: board });
+    /* the plates entered at the click (40-board.js mount held); the release reveals the bodies in a faster wave (30 ms per
+       row, 16 per column, cap 300): each body fades in (200 OUT, one animation per body seen, PERF-3) and its instruments
+       follow 160 later, so data lands on plates that are already in place */
+    wave(cards, { row: 30, col: 16, cap: 300 });
+    revealBodies(cards);
     flushCues(h.queue, t0);
     /* while the moment runs every plate keeps its own compositor layer (data-film, 05-film.css), so sixteen staggered
        animation ends never each drop a layer and repaint a plate into the board; the layers go once, at the end */
     board.setAttribute('data-film', '');
     board.removeAttribute('data-held');
+    board.removeAttribute('data-hold-bodies');
     board.removeAttribute('data-pm-hover-exempt');
     playBeat(h.room, cards);
     /* the moment ends about 1.75 s after the release; the hover tags scan the panel then */
@@ -617,10 +661,11 @@
     var h = hold;
     return function () { if (hold === h) h.built = true; if (onBuilt) onBuilt(); };
   }
-  function cancelHold() { releaseHoverTags(); if (hold) { var h = hold; hold = null; h.board.removeAttribute('data-held'); h.board.removeAttribute('data-pm-hover-exempt'); flushCues([]); } }
+  function cancelHold() { releaseHoverTags(); if (hold) { var h = hold; hold = null; h.board.removeAttribute('data-held'); h.board.removeAttribute('data-hold-bodies'); h.board.removeAttribute('data-pm-hover-exempt'); flushCues([]); } }
 
   PMU.film = { E: E, T: T, VOICES: VOICES, voice: voice, at: at, sequence: sequence, stagger: stagger, wave: wave, enterPlates: enterPlates,
     odometer: odometer, decode: decode, comet: comet, headGlow: headGlow, drop: drop, sweep: sweep, flash: flash, ring: ring, halo: halo, spring: spring,
     key: key, edgeAt: edgeAt, cue: cue, holding: holding, rehold: rehold, cancelHold: cancelHold, beat: beat, playBeat: playBeat, arrive: arrive,
-    deferHoverTags: deferHoverTags, last: function () { return last; }, off: off, parsePath: parsePath, yAt: yAt };
+    deferHoverTags: deferHoverTags, last: function () { return last; }, off: off, parsePath: parsePath, yAt: yAt,
+    soft: soft, innerOn: innerOn };
 })();
