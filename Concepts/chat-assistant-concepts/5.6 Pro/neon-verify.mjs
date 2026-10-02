@@ -205,7 +205,10 @@ async function closeOverlays(p) {
 }
 
 /* ------------------------------------------------------------- colours */
+/* color-mix() results serialise as color(srgb r g b / a) (a selected thread row's tint): normalised to rgba first */
+const norm = c => { const k = /color\(srgb\s+([\d.e-]+)\s+([\d.e-]+)\s+([\d.e-]+)(?:\s*\/\s*([\d.]+))?\s*\)/.exec(String(c || '')); return k ? `rgba(${k[1] * 255}, ${k[2] * 255}, ${k[3] * 255}, ${k[4] === undefined ? 1 : k[4]})` : String(c || ''); };
 function parseCss(c) {
+  c = norm(c);
   let m = /rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)(?:[,\s/]+([\d.]+))?\s*\)/.exec(String(c || ''));
   if (m) return [+m[1], +m[2], +m[3], m[4] === undefined ? 1 : +m[4]];
   m = /^#([0-9a-f]{6})$/.exec(String(c || '').trim());
@@ -794,7 +797,8 @@ for (const theme of LIGHT) {
           let base = [255, 255, 255];
           for (let n = el; n; n = n.parentElement) {
             const bg = getComputedStyle(n).backgroundColor;
-            const m = /rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)(?:[,\s/]+([\d.]+))?\s*\)/.exec(bg);
+            const norm = c => { const k = /color\(srgb\s+([\d.e-]+)\s+([\d.e-]+)\s+([\d.e-]+)(?:\s*\/\s*([\d.]+))?\s*\)/.exec(String(c || '')); return k ? `rgba(${k[1] * 255}, ${k[2] * 255}, ${k[3] * 255}, ${k[4] === undefined ? 1 : k[4]})` : String(c || ''); };
+            const m = /rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)(?:[,\s/]+([\d.]+))?\s*\)/.exec(norm(bg));
             if (!m) continue;
             const a = m[4] === undefined ? 1 : +m[4];
             if (a >= 0.99) { base = [+m[1], +m[2], +m[3]]; break; }
@@ -807,7 +811,8 @@ for (const theme of LIGHT) {
           return `rgb(${base.map(v => v.toFixed(2)).join(', ')})`;
         };
         for (const s of ['idle', ...live]) {
-          let el = document.querySelector(`.ph-status[data-status="${s}"]`);
+          /* at rest = on an unselected row (the selected row's tint is 11c's) */
+          let el = document.querySelector(`.thread-row:not(.active) .ph-status[data-status="${s}"]`);
           let row = el && el.closest('.thread-row');
           if (!el) {
             /* Not every live status has a thread (waiting-dep is not one of
@@ -842,14 +847,15 @@ for (const theme of LIGHT) {
       const liveMin = Math.min(...LIVE.map(s => cr[s]));
       const ok = cr.idle >= 3 && cr.idle < liveMin;
       check(ok, `11 light-theme idle contrast [${theme}]: idle ${cr.idle}:1 (want >= 3 and below every live tone, min ${liveMin}:1)`, cr);
-      /* 11b: the same idle row hovered, selected, and selected + hovered (the row tints change the field). */
+      /* 11b/11c: the same idle row hovered (11b), then selected and selected + hovered (11c): the row tints change the field. */
       const idleOn = () => p.evaluate(() => {
         const el = document.querySelector('.thread-row[data-nx-probe] .ph-status[data-status="idle"]');
         const tube = el && el.querySelector('.nx-c');
         if (!tube) return null;
         const comp = n0 => { const L = []; let b = [255, 255, 255];
           for (let n = n0; n; n = n.parentElement) {
-            const m = /rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)(?:[,\s/]+([\d.]+))?\s*\)/.exec(getComputedStyle(n).backgroundColor);
+            const norm = c => { const k = /color\(srgb\s+([\d.e-]+)\s+([\d.e-]+)\s+([\d.e-]+)(?:\s*\/\s*([\d.]+))?\s*\)/.exec(String(c || '')); return k ? `rgba(${k[1] * 255}, ${k[2] * 255}, ${k[3] * 255}, ${k[4] === undefined ? 1 : k[4]})` : String(c || ''); };
+            const m = /rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)(?:[,\s/]+([\d.]+))?\s*\)/.exec(norm(getComputedStyle(n).backgroundColor));
             if (!m) continue; const a = m[4] === undefined ? 1 : +m[4];
             if (a >= 0.99) { b = [+m[1], +m[2], +m[3]]; break; } if (a > 0) L.push([+m[1], +m[2], +m[3], a]); }
           for (let i = L.length - 1; i >= 0; i--) { const [r, g, bb, a] = L[i]; b = [r * a + b[0] * (1 - a), g * a + b[1] * (1 - a), bb * a + b[2] * (1 - a)]; }
@@ -863,7 +869,7 @@ for (const theme of LIGHT) {
         row.setAttribute('data-nx-probe', '1');
         return row.getAttribute('data-id') || '';
       });
-      if (id === null) { check(false, `11b light-theme idle contrast, hovered/selected [${theme}]: no idle row`, null); return; }
+      if (id === null) { check(false, `11b/11c light-theme idle contrast, hovered/selected [${theme}]: no idle row`, null); return; }
       const states = {};
       const row = p.locator('.thread-row[data-nx-probe]').first();
       await row.hover(); await p.waitForTimeout(450);
@@ -877,9 +883,11 @@ for (const theme of LIGHT) {
         await p.locator('.thread-row[data-nx-probe]').first().hover(); await p.waitForTimeout(450);
         states.selectedHover = crOf(await idleOn());
       }
-      const vals = Object.values(states);
-      check(vals.length >= 1 && vals.every(v => v !== null && v >= 3),
-        `11b light-theme idle contrast, hovered/selected [${theme}]: ${JSON.stringify(states)} (want every state >= 3)`, states);
+      check(states.hover !== null && states.hover >= 3,
+        `11b light-theme idle contrast, hovered row [${theme}]: idle ${states.hover}:1 on the hover tint (want >= 3)`, states);
+      /* 11c: the selected row's tint (history.css: the accent at 16%, 21% hovered, over --surface-3) */
+      check(!!id && states.selected !== null && states.selected >= 3 && states.selectedHover !== null && states.selectedHover >= 3,
+        `11c light-theme idle contrast, selected row [${theme}]: idle ${states.selected}:1, hovered ${states.selectedHover}:1 on the selection tint (want >= 3)`, states);
     } finally { await shut(p); }
   });
 }
