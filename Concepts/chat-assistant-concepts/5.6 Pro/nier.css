@@ -239,6 +239,44 @@ html[data-o55-nier="on"] body[data-theme="basic-dark"] {
   --o55-nier-umber: #b69072; /* derived */
   --o55-nier-dim: #757365; /* derived */
 }
+/* the Square pointer part, light */
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-light"] { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 1.5H12.5V8.5H8.5V12.5H1.5Z' fill='%23211f1b' stroke='%23dcd8c2' stroke-width='1'/%3E%3C/svg%3E") 1 1, auto; }
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-light"] button,
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-light"] a[href],
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-light"] summary,
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-light"] select,
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-light"] label[for],
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-light"] [role="button"],
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-light"] [role="tab"],
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-light"] [role="menuitem"],
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-light"] [role="option"],
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-light"] [role="switch"],
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-light"] [data-action],
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-light"] input[type="checkbox"],
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-light"] input[type="radio"],
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-light"] input[type="range"],
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-light"] input[type="button"],
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-light"] input[type="submit"] { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 1.5H12.5V8.5H8.5V12.5H1.5Z' fill='%23211f1b' stroke='%23dcd8c2' stroke-width='1'/%3E%3Cpath d='M4 4H8V8H4Z' fill='%23dcd8c2'/%3E%3C/svg%3E") 1 1, pointer; }
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-light"] textarea, html[data-o55-nier-parts~="pointer"] body[data-theme="basic-light"] input:not([type]), html[data-o55-nier-parts~="pointer"] body[data-theme="basic-light"] input[type="text"], html[data-o55-nier-parts~="pointer"] body[data-theme="basic-light"] input[type="search"], html[data-o55-nier-parts~="pointer"] body[data-theme="basic-light"] [contenteditable="true"] { cursor: text; }
+/* the Square pointer part, dark */
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 1.5H12.5V8.5H8.5V12.5H1.5Z' fill='%23d1cdb7' stroke='%232f2d26' stroke-width='1'/%3E%3C/svg%3E") 1 1, auto; }
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] button,
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] a[href],
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] summary,
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] select,
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] label[for],
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] [role="button"],
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] [role="tab"],
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] [role="menuitem"],
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] [role="option"],
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] [role="switch"],
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] [data-action],
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] input[type="checkbox"],
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] input[type="radio"],
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] input[type="range"],
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] input[type="button"],
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] input[type="submit"] { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 1.5H12.5V8.5H8.5V12.5H1.5Z' fill='%23d1cdb7' stroke='%232f2d26' stroke-width='1'/%3E%3Cpath d='M4 4H8V8H4Z' fill='%232f2d26'/%3E%3C/svg%3E") 1 1, pointer; }
+html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] textarea, html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] input:not([type]), html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] input[type="text"], html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] input[type="search"], html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] [contenteditable="true"] { cursor: text; }
 /* ---- end of generated block ---- */
 
 /* ------------------------------------------------------------------ the ground */

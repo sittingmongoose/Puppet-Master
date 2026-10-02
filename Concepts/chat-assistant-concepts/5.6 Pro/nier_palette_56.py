@@ -22,8 +22,9 @@ concept's own body[data-theme] blocks (0,1,1):
   the Chat WOW --tx-* / --fam-* tokens of turn-stage.css;
   the pmx literal tokens of module-shell.css (3.3 and the A1-15 precomputed set, seat fills included);
   the six context source inks of context.css (--ctxseg-*, which the pmx seat hues reuse);
-  the NieR helpers PMConcept7's parts code against (--o55-nier-ink, -ink-rgb, -on-ink, -paper ... -shadow-rgb).
-nier.css's hand-written rules below the block may use only these tokens (rgba(var(--o55-nier-ink-rgb), a) and
+  the NieR helpers PMConcept7's parts code against (--o55-nier-ink, -ink-rgb, -on-ink, -paper ... -shadow-rgb);
+and the Square pointer part's cursor images (data URIs must carry literal colours; the part's other rules are in
+nier-parts.css). nier.css's hand-written rules below the block may use only these tokens (rgba(var(--o55-nier-ink-rgb), a) and
 var(--...)); --check fails on a colour literal anywhere outside the block.
 """
 from __future__ import annotations
@@ -188,6 +189,28 @@ def fonts() -> str:
     return '\n'.join(out)
 
 
+PRESS = ('button', 'a[href]', 'summary', 'select', 'label[for]', '[role="button"]', '[role="tab"]', '[role="menuitem"]',
+         '[role="option"]', '[role="switch"]', '[data-action]', 'input[type="checkbox"]', 'input[type="radio"]',
+         'input[type="range"]', 'input[type="button"]', 'input[type="submit"]')
+TYPE = ('textarea', 'input:not([type])', 'input[type="text"]', 'input[type="search"]', '[contenteditable="true"]')
+
+
+def pointer(mode: str, c: dict) -> str:
+    """The Square pointer part [pointer] (PMConcept7 styles.d/14-nier-parts.css): a small ink square with a notch, a
+    hollow one over things you can press; the images are data URIs, so their colours are written out here. One selector
+    per pressable kind (shell-selfcheck: no rightmost :is() list); text fields keep the text cursor."""
+    ink, rim = c['text'], c['accentForeground']
+    enc = lambda h: h.replace('#', '%23')
+    head = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E"
+    square = f"%3Cpath d='M1.5 1.5H12.5V8.5H8.5V12.5H1.5Z' fill='{enc(ink)}' stroke='{enc(rim)}' stroke-width='1'/%3E"
+    notch = f"%3Cpath d='M4 4H8V8H4Z' fill='{enc(rim)}'/%3E"
+    base = f'html[data-o55-nier-parts~="pointer"] body[data-theme="basic-{mode}"]'
+    out = [f'{base} {{ cursor: url("{head}{square}%3C/svg%3E") 1 1, auto; }}',
+           ',\n'.join(f'{base} {x}' for x in PRESS) + f' {{ cursor: url("{head}{square}{notch}%3C/svg%3E") 1 1, pointer; }}',
+           ', '.join(f'{base} {x}' for x in TYPE) + ' { cursor: text; }']
+    return '\n'.join(out)
+
+
 def generate() -> str:
     t = theme()
     out = [BEGIN,
@@ -200,6 +223,9 @@ def generate() -> str:
             (f'{mode}: base tokens (styles.css)', r['base']), ('Chat WOW (turn-stage.css)', r['tx']),
             ('pmx literal tokens (module-shell.css 3.3, A1-15)', r['pmx']), ('context source inks (context.css), the pmx seats', r['ctx']),
             ('NieR helpers (PMConcept7 contract names)', r['helpers'])]))
+    for mode in ('light', 'dark'):
+        out.append(f'/* the Square pointer part, {mode} */')
+        out.append(pointer(mode, t[mode]))
     out.append(END)
     return '\n'.join(out)
 
