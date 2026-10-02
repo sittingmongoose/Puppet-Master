@@ -114,7 +114,10 @@
     var ax = dir === 'y' ? 'Y' : 'X';
     var e = easing || voice('draw');
     anim(wrap, [{ transform: 'translate' + ax + '(-100%)' }, { transform: 'translate' + ax + '(0)' }], dur, delay, e, 'backwards');
-    return anim(inner, [{ transform: 'translate' + ax + '(100%)' }, { transform: 'translate' + ax + '(0)' }], dur, delay, e, 'backwards');
+    var a = anim(inner, [{ transform: 'translate' + ax + '(100%)' }, { transform: 'translate' + ax + '(0)' }], dur, delay, e, 'backwards');
+    /* the comet: a light riding the primary line on the reveal edge (WOW-SPEC 3.1 Phase C, 3.3; PMU.film.comet) */
+    if (ax === 'X' && PMU.film && PMU.film.comet) PMU.film.comet(wrap, inner, { dur: dur, delay: delay, easing: e });
+    return a;
   }
   charts.motion = { fam: fam, reduced: reduced, EASE: EASE, voice: voice, curve: curve, anim: anim, tween: tw, reveal: reveal };
 
@@ -131,6 +134,11 @@
     if (!finite(to)) { el.textContent = opts.missing || '-'; el.removeAttribute('data-shown'); return null; }
     el.setAttribute('data-shown', String(to));
     if (reduced() || from === to || opts.instant) { el.textContent = opts.finalText != null ? opts.finalText : format(to); return null; }
+    /* every roll is an odometer since the WOW round (WOW-SPEC 3.1, 3.6; PMU.film.odometer): digit columns on the compositor */
+    if (opts.finalText == null && PMU.film && PMU.film.odometer) {
+      el._pmuRoll = PMU.film.odometer(el, to, format, { from: first ? null : from, change: !first, delay: opts.delay || 0, dur: opts.dur, spins: opts.spins });
+      return el._pmuRoll;
+    }
     el.textContent = format(from);
     el._pmuRoll = tw(opts.dur || (first ? 1000 : 520), 'count', function (k) { el.textContent = format(k >= 1 ? to : from + (to - from) * k); },
       function () { el._pmuRoll = null; el.textContent = opts.finalText != null ? opts.finalText : format(to); }, opts.delay || 0);

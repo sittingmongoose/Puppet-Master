@@ -25,13 +25,16 @@ Concepts/usage-redesign/
   src/copy.json           shell strings; src/copy.d/*.json one file per owner (merged; a key in two files fails the build)
   src/roster.json         the review roster: Settings fixture accounts + Usage facts + switch log (ARCHITECTURE section 7)
   src/css/*.css           sorted, concatenated into <style id="pm-usage-css">; owners in ARCHITECTURE section 2.2
-                          (15-menu.css: the dropdown menu, engine; 70-wrap.css: values wrap instead of ellipsizing,
-                          titles before meta, fixer 2026-10-02)
+                          (05-film.css: the film layers and key light of PMU.film, WOW round; 15-menu.css: the
+                          dropdown menu, engine; 70-wrap.css: values wrap instead of ellipsizing, titles before meta,
+                          fixer 2026-10-02)
   src/js/*.js             sorted, concatenated into one strict wrapper in <script id="pm-usage-js">; owners in section 2.1
     00-core.js            helpers, copy lookup t(), STORE, icons, state, the command/receipt/event/view-action seam, window.PMU
     05-data.js            every fixture of the old page's DATA object and its constants, unchanged (frozen)
     07-series-data.js     explicit chart series (data only)
     10-fmt.js .. 16-settings.js    formatters and value states, theme, motion, the Settings bridge (engine)
+    15-film.js            PMU.film: the film vocabulary (voices, wave, odometer, comet, head glow, sweeps, springs, the
+                          held-then-release entrance and the first arrival); design/final/WOW-SPEC.md section 10
     18-model.js           PMU.data and PMU.roster (content)
     30-34-charts-*.js     the chart kit (charts)
     40-board.js .. 46-shell.js     board engine, cards and widget registry, inspector, shell (engine)

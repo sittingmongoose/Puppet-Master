@@ -463,11 +463,17 @@
     var draw = dur || 900;
     Mo.anim(f.axes, [{ opacity: 0 }, { opacity: 1 }], 260, delay, Mo.EASE.out);
     Mo.reveal(f.rv, f.rvin, draw, delay, 'x');
+    /* a mark on the line lights up when the reveal edge (and its comet) reaches it (WOW-SPEC 3.3; PMU.film.edgeAt) */
+    var pw = +f.plot.getAttribute('width') || 0, de = Mo.voice('draw');
+    var at = function (el, fallback) {
+      var x = +(el.getAttribute('cx') || 0);
+      return PMU.film && PMU.film.edgeAt && pw > 0 && x > 0 ? delay + draw * PMU.film.edgeAt(x / pw, de) - 20 : delay + draw - fallback;
+    };
     $$('[data-mark="dot"]', f.plot).forEach(function (d) {
-      Mo.anim(d, [{ transform: 'scale(0)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }], 260, delay + draw - 80, Mo.voice('pop'));
+      Mo.anim(d, [{ transform: 'scale(0)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }], 260, at(d, 80), Mo.voice('pop'));
     });
     $$('.pmu-halo', f.plot).forEach(function (d) {
-      Mo.anim(d, [{ transform: 'scale(.2)', opacity: 0 }, { transform: 'scale(1.35)', opacity: .5, offset: 0.45 }, { transform: 'scale(1)', opacity: .18 }], 620, delay + draw - 60, Mo.EASE.out);
+      Mo.anim(d, [{ transform: 'scale(.2)', opacity: 0 }, { transform: 'scale(1.35)', opacity: .5, offset: 0.45 }, { transform: 'scale(1)', opacity: .18 }], 620, at(d, 60), Mo.EASE.out);
     });
     if (f.over.firstChild) Mo.anim(f.over, [{ opacity: 0 }, { opacity: 1 }], 260, delay + draw - 40, Mo.EASE.out);
     if (f.legendHost.firstChild) Mo.anim(f.legendHost, [{ opacity: 0, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }], 420, delay, Mo.EASE.out);
@@ -844,10 +850,21 @@
       enter: function (c, delay) {
         enterPlot(c, delay);
         var f = c.f;
+        /* Overview's signature beat (WOW-SPEC 3.1 Phase D): the comet reaches today, the TODAY marker drops onto it from
+           the top of the plot (label 40 ms later), the projection opens from the last point, the budget rule draws */
+        var W = +f.axes.getAttribute('width') || 0, hgt = +f.axes.getAttribute('height') || 120, de = Mo.voice('draw');
+        var nowEl = f.axes.querySelector('.pmu-now');
+        var xNow = nowEl ? parseFloat(String(nowEl.getAttribute('d') || '').replace(/^M\s*/, '')) : NaN;
+        var tNow = PMU.film && PMU.film.edgeAt && W > 0 && finite(xNow) ? delay + 900 * PMU.film.edgeAt(xNow / W, de) : delay + 900;
         var pr = $$('[data-mark="forecast"], [data-mark="band"]', f.plot);
-        pr.forEach(function (el) { Mo.anim(el, [{ opacity: 0 }, { opacity: 1 }], 420, delay + 900, Mo.EASE.out); });
+        pr.forEach(function (el) { Mo.anim(el, [{ opacity: 0 }, { opacity: 1 }], 420, tNow + 60, Mo.EASE.out); });
         var rule = f.axes.querySelector('.pmu-limit[data-role="budget"]');
-        if (rule) Mo.anim(rule, [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], 360, delay + 1000, Mo.EASE.out);
+        if (rule) Mo.anim(rule, [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], 360, tNow + 200, Mo.EASE.out);
+        if (nowEl && PMU.film && PMU.film.drop) {
+          var lab = nowEl.nextElementSibling && nowEl.nextElementSibling.matches('text') ? nowEl.nextElementSibling : null;
+          PMU.film.drop(nowEl, { from: Math.round(hgt * 0.6), delay: tNow + 40 });
+          if (lab) PMU.film.drop(lab, { from: Math.round(hgt * 0.6), delay: tNow + 80 });
+        }
       }
     });
   };
