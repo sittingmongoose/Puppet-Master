@@ -21,9 +21,11 @@
       !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   };
   var frames = function (n) { return new Promise(function (res) { var step = function () { if (--n <= 0) res(); else window.requestAnimationFrame(step); }; window.requestAnimationFrame(step); }); };
-  function layer(id) {
+  /* a fixed overlay layer on <body>; each part names its layer with a literal id (tests/orphan-gate.mjs reads id
+     literals to match the stylesheet's #o55np-* rules) */
+  function layer() {
     var e = document.createElement('div');
-    e.id = id; e.setAttribute('aria-hidden', 'true');
+    e.setAttribute('aria-hidden', 'true');
     document.body.appendChild(e);
     return e;
   }
@@ -78,7 +80,7 @@
   }
   PARTS.cursor = {
     on: function () {
-      cur = layer('o55np-cursor'); cur.innerHTML = '<i></i>';
+      cur = layer(); cur.id = 'o55np-cursor'; cur.innerHTML = '<i></i>';
       document.addEventListener('pointerover', curOver, true);
       document.addEventListener('focusin', curFocus, true);
     },
@@ -133,7 +135,7 @@
   function retKey(e) { if (retT && (e.key === 'Tab' || /^Arrow/.test(e.key)) && !retT.isConnected) retOff(); }
   PARTS.brackets = {
     on: function () {
-      ret = layer('o55np-reticle'); ret.innerHTML = '<i></i><i></i><i></i><i></i>';
+      ret = layer(); ret.id = 'o55np-reticle'; ret.innerHTML = '<i></i><i></i><i></i><i></i>';
       document.addEventListener('focusin', retFocus, true);
       document.addEventListener('focusout', retBlur, true);
       document.addEventListener('click', retChoose, true);

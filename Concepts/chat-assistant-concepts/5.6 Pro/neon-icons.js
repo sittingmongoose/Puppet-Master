@@ -579,7 +579,8 @@
       var whole = !stat.length && live.length === 1;
       live.forEach(function (it) {
         var p = it.p, m = p.m, st = partStyle(n, it.j, m, d.origin);
-        var pcls = 'nx-p nx-p' + i + (m.n ? ' nx-pn' : '') + (m.o === 'c' ? ' nx-pf' : '') + (statusWrap ? ' nx-st-move' : '');
+        /* nx-pc marks a reveal (clip) part, as the header says; NieR Mode (neon-icons.css section 11) restyles it */
+        var pcls = 'nx-p nx-p' + i + (m.n ? ' nx-pn' : '') + (m.o === 'c' ? ' nx-pf' : '') + (m.ac ? ' nx-pc' : '') + (statusWrap ? ' nx-st-move' : '');
         if (!whole && !m.ac && (role === 'control' || (!lit && !travels(m)))) {
           core = core.concat(p.els);
           if (p.els.length === 1) {

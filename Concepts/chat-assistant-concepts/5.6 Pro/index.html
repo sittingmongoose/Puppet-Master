@@ -17488,8 +17488,6 @@ html[data-o55-nier-parts~="cursor"] .menu-item:hover .menu-icon,
 html[data-o55-nier-parts~="cursor"] .menu-item.active .menu-icon,
 html[data-o55-nier-parts~="cursor"] .menu-item:focus-visible .menu-icon { background: transparent !important; box-shadow: none !important; }
 /* a count or badge inside the bar turns over again: paper with ink */
-html[data-o55-nier-parts~="cursor"] .thread-row:hover .thread-badge,
-html[data-o55-nier-parts~="cursor"] .thread-row.active .thread-badge,
 html[data-o55-nier-parts~="cursor"] .menu-item:hover kbd,
 html[data-o55-nier-parts~="cursor"] .menu-item:hover .meta-pill {
   background: var(--o55-nier-on-ink) !important; color: var(--o55-nier-ink) !important; border-color: var(--o55-nier-on-ink) !important;
@@ -22836,7 +22834,8 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
       var whole = !stat.length && live.length === 1;
       live.forEach(function (it) {
         var p = it.p, m = p.m, st = partStyle(n, it.j, m, d.origin);
-        var pcls = 'nx-p nx-p' + i + (m.n ? ' nx-pn' : '') + (m.o === 'c' ? ' nx-pf' : '') + (statusWrap ? ' nx-st-move' : '');
+        /* nx-pc marks a reveal (clip) part, as the header says; NieR Mode (neon-icons.css section 11) restyles it */
+        var pcls = 'nx-p nx-p' + i + (m.n ? ' nx-pn' : '') + (m.o === 'c' ? ' nx-pf' : '') + (m.ac ? ' nx-pc' : '') + (statusWrap ? ' nx-st-move' : '');
         if (!whole && !m.ac && (role === 'control' || (!lit && !travels(m)))) {
           core = core.concat(p.els);
           if (p.els.length === 1) {
@@ -23131,9 +23130,11 @@ window.PM56_NIER_FACES = [
       !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   };
   var frames = function (n) { return new Promise(function (res) { var step = function () { if (--n <= 0) res(); else window.requestAnimationFrame(step); }; window.requestAnimationFrame(step); }); };
-  function layer(id) {
+  /* a fixed overlay layer on <body>; each part names its layer with a literal id (tests/orphan-gate.mjs reads id
+     literals to match the stylesheet's #o55np-* rules) */
+  function layer() {
     var e = document.createElement('div');
-    e.id = id; e.setAttribute('aria-hidden', 'true');
+    e.setAttribute('aria-hidden', 'true');
     document.body.appendChild(e);
     return e;
   }
@@ -23188,7 +23189,7 @@ window.PM56_NIER_FACES = [
   }
   PARTS.cursor = {
     on: function () {
-      cur = layer('o55np-cursor'); cur.innerHTML = '<i></i>';
+      cur = layer(); cur.id = 'o55np-cursor'; cur.innerHTML = '<i></i>';
       document.addEventListener('pointerover', curOver, true);
       document.addEventListener('focusin', curFocus, true);
     },
@@ -23243,7 +23244,7 @@ window.PM56_NIER_FACES = [
   function retKey(e) { if (retT && (e.key === 'Tab' || /^Arrow/.test(e.key)) && !retT.isConnected) retOff(); }
   PARTS.brackets = {
     on: function () {
-      ret = layer('o55np-reticle'); ret.innerHTML = '<i></i><i></i><i></i><i></i>';
+      ret = layer(); ret.id = 'o55np-reticle'; ret.innerHTML = '<i></i><i></i><i></i><i></i>';
       document.addEventListener('focusin', retFocus, true);
       document.addEventListener('focusout', retBlur, true);
       document.addEventListener('click', retChoose, true);
