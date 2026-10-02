@@ -533,8 +533,9 @@
       var lit = role === 'status' || !!LIT[n] || litTok;
       /* Halo layout. The core band (.nx-h) of the static parts is one merged path. A moving part carries its own
          core copy, so the glow moves with its tube, only where the halo is the point: lit glyphs (status, the bar's
-         domains, nx-lit) and concept parts that travel. A control's parts (its halo shows on hover only) and a
-         concept part that only fades or draws in keep their core in the merged path, and a one-element part is then
+         domains, nx-lit), parts that draw in by clip (the clip must hide the glow with the stroke, or the halo
+         shows the shape before it is drawn) and concept parts that travel. A control's other parts (its halo shows
+         on hover only) and a concept part that only fades keep their core in the merged path, and a one-element part is then
          the bare tube itself: one element instead of three (`more` alone appears dozens of times in a thread list).
          The mid and wide bands, when emitted, are each ONE merged path for the whole glyph at rest, so they never
          stack; a glyph that is all one moving part gives that part its bands so they turn with it. */
@@ -551,7 +552,7 @@
         var p = it.p, m = p.m, st = partStyle(n, it.j, m, d.origin);
         var pcls = 'nx-p nx-p' + i + (m.n ? ' nx-pn' : '') + (m.o === 'c' ? ' nx-pf' : '') + (statusWrap ? ' nx-st-move' : '');
         all = all.concat(p.els);
-        if (!selfWide && (role === 'control' || (!lit && !travels(m)))) {
+        if (!selfWide && !m.ac && (role === 'control' || (!lit && !travels(m)))) {
           core = core.concat(p.els);
           if (p.els.length === 1) {
             var e1 = p.els[0], c1 = 'nx-c ' + pcls + (e1.f || d.fill ? ' nx-f' : '') + (e1.cls ? ' ' + e1.cls : '');
