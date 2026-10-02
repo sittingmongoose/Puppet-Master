@@ -28,19 +28,27 @@ ROOMS = ['overview', 'plans', 'costs', 'accounts', 'free', 'context', 'analytics
 LEVELS = {'G': 'glance', 'D': 'detailed', 'X': 'diagnostics'}
 
 # kind: (wMin, wMax, hMin, hMax, presets)   wMax None = board width
+# Amendment A1 (DESIGN-SPEC-ATLAS.md, 2026-10-02): new kinds kpis, models, donut, breakdown, efficiency, qhist and agenda
+# (agenda replaces the lane timeline); provider plates are taller (Atlas rows, 66 px comfortable rows).
 KINDS = {
     'kpi':       (3, 12, 3, 8, [('Strip', 4, 3), ('Compact', 3, 4), ('Standard', 4, 4), ('Wide', 6, 4), ('Tall', 4, 6), ('Expanded', 6, 6), ('Maximum', 8, 6)]),
+    'kpis':      (6, None, 3, 8, [('Strip', 12, 3), ('Row', 20, 4), ('Wide', 24, 4), ('Two rows', 12, 7)]),
     'limit':     (3, 10, 3, 12, [('Strip', 6, 3), ('Compact', 4, 6), ('Standard', 4, 8), ('Wide', 6, 7), ('Expanded', 8, 9), ('Maximum', 10, 11)]),
-    'provider':  (3, None, 3, 16, [('Strip', 6, 3), ('Compact', 4, 5), ('Standard', 4, 7), ('Wide', 6, 6), ('Expanded', 8, 9), ('Group', 10, 10), ('Group wide', 14, 10), ('Group full', 20, 10)]),
+    'provider':  (3, None, 3, 20, [('Strip', 6, 3), ('Compact', 4, 5), ('Standard', 4, 7), ('Wide', 6, 7), ('Expanded', 8, 9), ('Group', 10, 11), ('Group wide', 14, 11), ('Group full', 20, 11)]),
     'switch':    (4, None, 3, 8, [('Strip', 12, 3), ('Wide', 20, 3), ('Two lines', 10, 4), ('Panel', 4, 8)]),
     'providers': (4, 10, 3, 9, [('Compact', 4, 4), ('Standard', 6, 5), ('Wide', 10, 4)]),
-    'setup':     (4, 16, 3, 8, [('Strip', 6, 3), ('Standard', 5, 6), ('Wide', 8, 5)]),
+    'setup':     (4, 16, 3, 10, [('Strip', 6, 3), ('Standard', 5, 7), ('Wide', 8, 7)]),
     'context':   (4, 12, 5, 10, [('Compact', 4, 6), ('Tall', 4, 8), ('Standard', 6, 6), ('Wide', 9, 6), ('Expanded', 12, 7)]),
     'trend':     (4, None, 4, 14, [('Compact', 5, 5), ('Standard', 8, 7), ('Wide', 12, 7), ('Tall', 8, 10), ('Full', 20, 8)]),
     'columns':   (4, None, 4, 12, [('Compact', 5, 5), ('Standard', 8, 7), ('Wide', 12, 6)]),
     'budget':    (5, None, 5, 12, [('Compact', 5, 6), ('Standard', 8, 8), ('Wide', 12, 8)]),
-    'heat':      (6, None, 5, 10, [('Compact', 6, 6), ('Standard', 10, 7), ('Wide', 14, 7)]),
-    'timeline':  (5, None, 4, 14, [('Compact', 5, 8), ('Standard', 8, 8), ('Wide', 12, 8)]),
+    'heat':      (6, None, 5, 10, [('Compact', 6, 6), ('Standard', 10, 7), ('Wide', 14, 9)]),
+    'agenda':    (4, None, 4, 30, [('Compact', 4, 8), ('Standard', 8, 10), ('Wide', 12, 12), ('Full', 24, 12)]),
+    'qhist':     (6, None, 5, 40, [('Compact', 8, 10), ('Standard', 12, 16), ('Wide', 20, 27), ('Full', 24, 27)]),
+    'models':    (6, None, 5, 16, [('Compact', 6, 8), ('Standard', 10, 10), ('Wide', 16, 11), ('Full', 24, 11)]),
+    'donut':     (5, 14, 6, 12, [('Compact', 5, 10), ('Standard', 8, 11), ('Wide', 12, 9)]),
+    'breakdown': (5, 16, 5, 12, [('Compact', 5, 10), ('Standard', 8, 10), ('Wide', 12, 9)]),
+    'efficiency': (4, 14, 5, 12, [('Compact', 4, 9), ('Standard', 6, 10), ('Wide', 12, 8)]),
     'ranked':    (4, 14, 4, 12, [('Compact', 4, 6), ('Standard', 5, 7), ('Wide', 8, 6), ('Tall', 5, 10)]),
     'mix':       (4, None, 3, 9, [('Compact', 4, 4), ('Standard', 6, 5), ('Wide', 10, 5)]),
     'list':      (4, None, 3, 14, [('Compact', 4, 5), ('Standard', 5, 7), ('Wide', 8, 6), ('Full', 12, 7)]),
@@ -70,15 +78,15 @@ W = {
     'plan-value-now': ('mix', 'G', 'Plan allocation', 'range'),
     'attention-now': ('list', 'G', 'Attention', '2 current'),
     'route-pressure': ('ranked', 'G', 'Route pressure', 'current pace'),
-    'ov-resets': ('timeline', 'G', 'Upcoming resets', 'next 24 hours'),
+    'ov-resets': ('agenda', 'G', 'Upcoming resets', 'Next 24 hours · local time · from the latest readings'),
     'ov-headroom': ('switch', 'G', 'Headroom and auto-switch', 'shared with Settings'),
     'forecast': ('columns', 'D', 'Spend projection', 'range basis'),
     'completion-capacity': ('kpi', 'D', 'Completion capacity', 'current window'),
     'capacity-reservations': ('kpi', 'D', 'Capacity reservations', 'current runs'),
     'run-attribution': ('table', 'X', 'Run attribution', 'current work'),
     # Plans & limits
-    'reset-map': ('timeline', 'G', 'Upcoming resets', 'next 7 days'),
-    'quota-history': ('trend', 'G', 'Quota history', 'per account window'),
+    'reset-map': ('agenda', 'G', 'Upcoming resets', 'Next 7 days · local time · from the latest readings'),
+    'quota-history': ('qhist', 'G', 'Quota history', "Each account's main window · 7 days · select a row for every window"),
     'plan-settlement': ('table', 'G', 'Billing, entitlement, settlement', 'range'),
     'plan-pressure': ('ranked', 'X', 'Pressure order', 'current pace'),
     'plan-authority': ('list', 'X', 'Allowance authority', 'diagnostics'),
@@ -98,11 +106,11 @@ W = {
     'pricing-confidence': ('list', 'X', 'Value authority', 'range'),
     'burn-basis': ('kpi', 'X', 'Burn basis', 'forecast inputs'),
     # Accounts (review roster; the engine derives provider widgets from the Settings roster at runtime)
-    'acct-switch': ('switch', 'G', 'Auto-switch', 'shared with Settings'),
-    'acct-claude-code': ('provider', 'G', 'Claude', '4 accounts'),
-    'acct-openai-codex': ('provider', 'G', 'ChatGPT / Codex', '3 accounts'),
-    'acct-github-copilot': ('provider', 'G', 'GitHub Copilot', '2 accounts'),
-    'acct-qwen-coding': ('provider', 'G', 'Qwen Coding Plan', '2 accounts'),
+    'acct-switch': ('switch', 'G', 'Auto-switch', 'Shared with Settings > AI > Providers & Accounts'),
+    'acct-claude-code': ('provider', 'G', 'Claude', '4 accounts · Work Claude active'),
+    'acct-openai-codex': ('provider', 'G', 'ChatGPT / Codex', '3 accounts · Jared active'),
+    'acct-github-copilot': ('provider', 'G', 'GitHub Copilot', '2 accounts · GitHub Work active'),
+    'acct-qwen-coding': ('provider', 'G', 'Qwen Coding Plan', '2 accounts · Qwen Global active'),
     'acct-kimi-coding': ('provider', 'G', 'Kimi Code', 'Active'),
     'acct-muse': ('provider', 'G', 'Muse Code', 'Standby'),
     'acct-antigravity': ('provider', 'G', 'Google Antigravity', 'Standby'),
@@ -116,7 +124,7 @@ W = {
     'acct-more-own': ('providers', 'G', 'Free and your own', 'routes and servers'),
     'acct-opencode-personal-setup': ('setup', 'G', 'OpenCode on your computer', 'Needs setup'),
     'acct-history': ('list', 'G', 'Switch history', 'last 48 hours'),
-    'acct-resets': ('timeline', 'G', 'Account resets', 'next 7 days'),
+    'acct-resets': ('agenda', 'G', 'Account resets', 'Next 7 days · local time · from the latest readings'),
     'routing': ('list', 'D', 'Account routing', 'current'),
     'account-fallbacks': ('list', 'D', 'Fallback reasons', 'last 24h'),
     'route-mismatches': ('table', 'D', 'Requested versus effective', 'fallback evidence'),
@@ -151,12 +159,17 @@ W = {
     'tok-gemini': ('kpi', 'G', 'Gemini tokens', 'range'),
     'tok-kimi': ('kpi', 'G', 'Kimi tokens', 'range'),
     'tok-copilot': ('kpi', 'G', 'Copilot tokens', 'range'),
-    'token-trend': ('trend', 'G', 'Token volume', 'range'),
-    'model-mix': ('ranked', 'G', 'Model mix', 'attempts'),
-    'activity-heat': ('heat', 'G', 'Activity by hour', 'last 7 days'),
-    'cache-read-share': ('trend', 'D', 'Cache-read share', 'range'),
-    'reasoning-mix': ('trend', 'D', 'Reasoning mix', 'reported buckets'),
-    'an-quota-history': ('trend', 'D', 'Quota history', 'per account window'),
+    'an-totals': ('kpis', 'G', 'Range totals', 'Selected range · every provider in scope'),
+    'token-trend': ('trend', 'G', 'Token volume', 'Hourly buckets · tokens left axis, estimated cost right axis'),
+    'model-mix': ('models', 'G', 'Model mix', 'Estimated cost by token type · selected range · select a model for detail'),
+    'an-model-donut': ('donut', 'G', 'Model usage', 'Share of tokens · selected range'),
+    'an-token-breakdown': ('breakdown', 'G', 'Token breakdown', 'Share of tokens and of estimated cost · selected range'),
+    'activity-heat': ('heat', 'G', 'Activity by hour', 'Tokens per hour, local time · last 7 days'),
+    'an-daily-cost': ('columns', 'G', 'Daily cost by provider', 'Settled charges and plan estimates, USD · 30 days'),
+    'cache-read-share': ('efficiency', 'G', 'Cache-read share', 'Read share and savings · PM estimate, catalog pricing'),
+    'reasoning-mix': ('trend', 'D', 'Reasoning mix', 'Visible output and reasoning · reported buckets'),
+    'an-quota-history': ('qhist', 'G', 'Quota history', "Each account's main window · 7 days · select a row for every window"),
+    'an-resets': ('agenda', 'G', 'Resets and expiries', 'Next 30 days · local time · from the latest readings'),
     'token-counting-basis': ('list', 'X', 'Token counting basis', 'provider semantics'),
     'unknown-token-buckets': ('kpi', 'X', 'Unknown token buckets', 'current range'),
     # Ledger
@@ -237,13 +250,13 @@ B = {
     },
     'plans': {
         'S': 'plan-claude 4x8 plan-codex 4x8 plan-qwen 4x8 plan-gemini 4x8 plan-kimi 4x8 plan-copilot 4x8 '
-             'reset-map 12x8 quota-history 12x8 plan-settlement 12x8 '
+             'reset-map 12x12 quota-history 12x16 plan-settlement 12x8 '
              'plan-pressure 6x7 plan-authority 6x7 allowance-attribution 12x5 counting-basis 6x8 native-allowance-units 6x8',
         'M': 'plan-claude 4x8 plan-codex 4x8 plan-qwen 4x8 plan-gemini 4x8 plan-kimi 4x8 '
-             'plan-copilot 4x8 reset-map 8x8 quota-history 8x8 plan-settlement 20x7 '
+             'plan-copilot 4x12 reset-map 6x12 quota-history 10x12 plan-settlement 20x7 '
              'plan-pressure 7x7 plan-authority 7x7 allowance-attribution 6x7 counting-basis 10x7 native-allowance-units 10x7',
         'L': 'plan-claude 4x8 plan-codex 4x8 plan-qwen 4x8 plan-gemini 4x8 plan-kimi 4x8 plan-copilot 4x8 '
-             'reset-map 12x8 quota-history 12x8 plan-settlement 24x7 '
+             'reset-map 9x14 quota-history 15x14 plan-settlement 24x7 '
              'plan-pressure 8x7 plan-authority 8x7 allowance-attribution 8x7 counting-basis 12x7 native-allowance-units 12x7',
     },
     'costs': {
@@ -255,20 +268,21 @@ B = {
              'cost-authority 10x7 cost-trend 14x7 pricing-confidence 12x6 burn-basis 12x6',
     },
     'accounts': {
-        'S': 'acct-switch 12x4 acct-claude-code 12x10 acct-openai-codex 12x10 acct-github-copilot 12x6 acct-qwen-coding 12x6 '
-             'acct-kimi-coding 4x6 acct-muse 4x6 acct-antigravity 4x6 acct-zai-coding 4x6 acct-opencode-go 4x6 acct-more-plan 4x6 '
-             'acct-anthropic-api 4x6 acct-gemini-direct 4x6 acct-cursor-cli 4x6 acct-more-use 6x7 acct-more-own 6x7 '
-             'acct-opencode-personal-setup 12x5 acct-history 12x8 acct-resets 12x8 '
+        'S': 'acct-switch 12x4 acct-claude-code 12x13 acct-openai-codex 12x13 acct-qwen-coding 12x9 '
+             'acct-github-copilot 6x9 acct-kimi-coding 6x9 '
+             'acct-muse 4x7 acct-antigravity 4x7 acct-zai-coding 4x7 acct-opencode-go 4x7 acct-more-plan 4x7 '
+             'acct-anthropic-api 4x7 acct-gemini-direct 4x7 acct-cursor-cli 4x7 acct-more-use 4x7 acct-more-own 4x7 '
+             'acct-opencode-personal-setup 8x7 acct-history 12x9 acct-resets 12x12 '
              'routing 12x7 account-fallbacks 12x7 route-mismatches 12x8 credential-ownership 12x7 connection-authority 12x8',
-        'M': 'acct-switch 20x3 acct-claude-code 10x10 acct-openai-codex 10x10 acct-github-copilot 10x6 acct-qwen-coding 10x6 '
-             'acct-kimi-coding 4x6 acct-muse 4x6 acct-antigravity 4x6 acct-zai-coding 4x6 acct-opencode-go 4x6 '
+        'M': 'acct-switch 20x3 acct-claude-code 10x13 acct-openai-codex 10x13 acct-github-copilot 8x9 acct-qwen-coding 12x9 '
+             'acct-kimi-coding 4x7 acct-muse 4x7 acct-antigravity 4x7 acct-zai-coding 4x7 acct-opencode-go 4x7 '
              'acct-more-plan 4x7 acct-anthropic-api 4x7 acct-gemini-direct 4x7 acct-cursor-cli 4x7 acct-more-use 4x7 '
-             'acct-more-own 5x5 acct-opencode-personal-setup 15x5 acct-history 10x8 acct-resets 10x8 '
+             'acct-more-own 4x9 acct-opencode-personal-setup 6x9 acct-history 10x9 acct-resets 20x10 '
              'routing 10x7 account-fallbacks 10x7 route-mismatches 20x7 credential-ownership 10x7 connection-authority 10x7',
-        'L': 'acct-switch 24x3 acct-claude-code 12x10 acct-openai-codex 12x10 acct-github-copilot 8x6 acct-qwen-coding 8x6 '
-             'acct-kimi-coding 4x6 acct-muse 4x6 acct-antigravity 4x6 acct-zai-coding 4x6 acct-opencode-go 4x6 acct-more-plan 4x6 '
-             'acct-anthropic-api 4x6 acct-gemini-direct 4x6 acct-cursor-cli 4x6 acct-more-use 8x6 acct-more-own 4x6 '
-             'acct-opencode-personal-setup 8x6 acct-history 12x8 acct-resets 12x8 '
+        'L': 'acct-switch 24x3 acct-claude-code 12x13 acct-openai-codex 12x13 acct-github-copilot 12x9 acct-qwen-coding 12x9 '
+             'acct-kimi-coding 4x7 acct-muse 4x7 acct-antigravity 4x7 acct-zai-coding 4x7 acct-opencode-go 4x7 acct-more-plan 4x7 '
+             'acct-anthropic-api 4x7 acct-gemini-direct 4x7 acct-cursor-cli 4x7 acct-more-use 4x7 acct-more-own 4x7 '
+             'acct-opencode-personal-setup 4x7 acct-history 12x10 acct-resets 12x10 '
              'routing 8x7 account-fallbacks 8x7 route-mismatches 8x7 credential-ownership 12x7 connection-authority 12x7',
     },
     'free': {
@@ -288,15 +302,18 @@ B = {
              'context-composition 24x5 ctx-maint 8x7 ctx-routing 8x7 compaction-history 8x7',
     },
     'analytics': {
-        'S': 'tok-claude 4x4 tok-codex 4x4 tok-qwen 4x4 tok-gemini 4x4 tok-kimi 4x4 tok-copilot 4x4 token-trend 12x8 '
-             'model-mix 12x8 activity-heat 12x6 cache-read-share 6x6 reasoning-mix 6x6 an-quota-history 12x6 '
-             'token-counting-basis 12x7 unknown-token-buckets 12x6',
-        'M': 'tok-claude 5x4 tok-codex 5x4 tok-qwen 5x4 tok-gemini 5x4 tok-kimi 5x4 token-trend 15x8 tok-copilot 5x4 '
-             'model-mix 10x8 activity-heat 10x8 cache-read-share 7x6 reasoning-mix 7x6 an-quota-history 6x6 '
-             'token-counting-basis 10x7 unknown-token-buckets 10x7',
-        'L': 'tok-claude 4x4 tok-codex 4x4 tok-qwen 4x4 tok-gemini 4x4 tok-kimi 4x4 tok-copilot 4x4 token-trend 16x8 '
-             'model-mix 8x8 activity-heat 24x6 cache-read-share 8x6 reasoning-mix 8x6 an-quota-history 8x6 '
-             'token-counting-basis 12x7 unknown-token-buckets 12x7',
+        'S': 'an-totals 12x7 tok-claude 4x4 tok-codex 4x4 tok-qwen 4x4 tok-gemini 4x4 tok-kimi 4x4 tok-copilot 4x4 '
+             'token-trend 12x10 model-mix 12x11 an-model-donut 6x12 an-token-breakdown 6x12 '
+             'cache-read-share 6x9 an-daily-cost 6x9 activity-heat 12x9 an-quota-history 12x27 an-resets 12x24 '
+             'reasoning-mix 12x7 token-counting-basis 12x7 unknown-token-buckets 12x6',
+        'M': 'an-totals 20x4 token-trend 14x12 tok-claude 3x4 tok-codex 3x4 tok-qwen 3x4 tok-gemini 3x4 tok-kimi 3x4 '
+             'tok-copilot 3x4 model-mix 20x10 an-model-donut 7x10 an-token-breakdown 7x10 cache-read-share 6x10 '
+             'activity-heat 12x10 an-daily-cost 8x10 an-quota-history 20x27 an-resets 20x14 '
+             'reasoning-mix 10x7 token-counting-basis 10x7 unknown-token-buckets 10x7',
+        'L': 'an-totals 24x4 tok-claude 4x4 tok-codex 4x4 tok-qwen 4x4 tok-gemini 4x4 tok-kimi 4x4 tok-copilot 4x4 '
+             'token-trend 24x11 model-mix 16x11 an-model-donut 8x11 an-token-breakdown 8x10 cache-read-share 8x10 '
+             'an-daily-cost 8x10 activity-heat 24x9 an-quota-history 24x27 an-resets 24x12 '
+             'reasoning-mix 12x7 token-counting-basis 12x7 unknown-token-buckets 12x7',
     },
     'ledger': {
         'S': 'ledger-count 4x4 ledger-errors 4x4 ledger-routes 4x4 settlement-states 12x4 ledger-main 12x12 ledger-events 12x9 '
@@ -353,7 +370,8 @@ MIGRATE = {
 PROMOTED = {'next-reset': 'D', 'route-pressure': 'D', 'reset-map': 'D', 'plan-settlement': 'D', 'provider-cost': 'X',
             'cost-authority': 'D', 'cost-trend': 'D', 'free-route': 'D', 'cooldown-eligibility': 'D', 'free-history': 'X',
             'ctx-sources': 'D', 'ctx-limits': 'D', 'token-trend': 'D', 'model-mix': 'D', 'settlement-states': 'D',
-            'attention-policy': 'D', 'cache-trend': 'D', 'tool-list': 'D', 'tool-latency': 'X'}
+            'attention-policy': 'D', 'cache-trend': 'D', 'tool-list': 'D', 'tool-latency': 'X',
+            'cache-read-share': 'D', 'an-quota-history': 'D'}   # the last two: Amendment A1 (Atlas analytics at G)
 
 
 def parse(spec: str):
@@ -457,7 +475,7 @@ def js(boards) -> str:
     rooms = {}
     for room in ROOMS:
         rooms[room] = {cls: [[e['id'], e['x'], e['y'], e['w'], e['h']] for e in boards[room][cls]] for cls in CLASSES}
-    data = {'version': 'pmu-b2-boards-2026-10-02', 'classes': CLASSES, 'kinds': kinds, 'widgets': widgets, 'rooms': rooms,
+    data = {'version': 'pmu-b2-boards-2026-10-02-a1', 'classes': CLASSES, 'kinds': kinds, 'widgets': widgets, 'rooms': rooms,
             'migrate': MIGRATE, 'promoted_from': PROMOTED}
     body = json.dumps(data, ensure_ascii=False, separators=(',', ':'))
     return ('/* Usage default boards (B v2), generated by tools/boards.py; do not edit by hand: change tools/boards.py and run it.\n'
@@ -471,7 +489,9 @@ def md(boards) -> str:
              'Each line: `widget_id kind x,y w x h level`. x and w in tracks, y and h in rows (row pitch 30 px, card height '
              '`30h - 8`). S = 12 tracks (767 panel), M = 20 tracks (1145 panel), L = 24 tracks (~1400 panel). The boards '
              'are packed first-fit in the order shown, G first, then D, then X, so each disclosure level is a prefix with '
-             'no hole (the generator checks it). Levels marked `^` were promoted from their canon level (DESIGN-SPEC 17.2).', '']
+             'no hole (the generator checks it). Levels marked `^` were promoted from their canon level (DESIGN-SPEC 17.2 and '
+             'DESIGN-SPEC-ATLAS 9.6). Amendment A1 (Daylight Atlas, 2026-10-02) rebuilt Analytics and Accounts and changed the '
+             'resets and quota-history kinds (agenda, qhist); see DESIGN-SPEC-ATLAS.md.', '']
     for room in ROOMS:
         lines.append(f'## {room}')
         lines.append('')
@@ -485,7 +505,7 @@ def md(boards) -> str:
             for e in entries:
                 k, lv, t, _ = W[e['id']]
                 mark = '^' if e['id'] in PROMOTED else ''
-                lines.append(f"{e['id']:<30} {k:<9} {e['x']:>2},{e['y']:<3} {e['w']:>2} x {e['h']:<3} {lv}{mark}")
+                lines.append(f"{e['id']:<30} {k:<10} {e['x']:>2},{e['y']:<3} {e['w']:>2} x {e['h']:<3} {lv}{mark}")
             lines.append('```')
             lines.append('')
     return '\n'.join(lines)
