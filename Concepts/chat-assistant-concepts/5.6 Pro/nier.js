@@ -219,6 +219,7 @@
   };
   function studio() {
     if (!painted) return '';
+    if (window.PM56_NIER_SCENES) window.PM56_NIER_SCENES.thumbs();
     var have = prefs.parts, n = have.length, pre = '';
     PRESETS.forEach(function (p) { if (!pre && p.keys().join(' ') === have.join(' ')) pre = p.id; });
     var on = function (k) { return have.indexOf(k) >= 0; };

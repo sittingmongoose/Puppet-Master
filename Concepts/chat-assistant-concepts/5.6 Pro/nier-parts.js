@@ -348,7 +348,7 @@
     if (split) {
       [['inset(0 0 54% 0)', [0, -8, 6, -3, 0]], ['inset(46% 0 0 0)', [0, 7, -5, 2, 0]]].forEach(function (s, n) {
         var b = box(r, 'o55np-glitch-slice'), c = el.cloneNode(true);
-        c.removeAttribute('data-o55-pod'); c.querySelectorAll('[data-k]').forEach(function (x) { x.removeAttribute('data-k'); });
+        c.removeAttribute('data-k'); c.querySelectorAll('[data-k]').forEach(function (x) { x.removeAttribute('data-k'); });
         b.appendChild(c); b.style.clipPath = s[0];
         drop(b, b.animate(s[1].map(function (x) { return { transform: 'translateX(' + x + 'px)' }; }), { duration: 260, delay: n * 30, easing: 'steps(5, end)', fill: 'both' }));
       });
@@ -395,11 +395,12 @@
   function podDeliver() {
     if (!pod || still() || document.hidden) return;
     var body = pod.querySelector('.o55np-pod-body');
-    /* the toasts arrive below and to the right: the Pod dips toward them and sends three signals down */
-    body.animate([{ transform: 'rotate(0deg) translate(0, 0)' }, { transform: 'rotate(16deg) translate(2px, 3px)', offset: 0.22 },
-      { transform: 'rotate(16deg) translate(2px, 3px)', offset: 0.7 }, { transform: 'rotate(0deg) translate(0, 0)' }], { duration: 1000, easing: 'cubic-bezier(.3, .7, .3, 1)' });
+    /* the toasts arrive at the top right, above the Pod: it turns up toward them and sends three signals (PMConcept7's
+       own moves, whose notices sit the same way) */
+    body.animate([{ transform: 'rotate(0deg) translate(0, 0)' }, { transform: 'rotate(-16deg) translate(-2px, -4px)', offset: 0.22 },
+      { transform: 'rotate(-16deg) translate(-2px, -4px)', offset: 0.7 }, { transform: 'rotate(0deg) translate(0, 0)' }], { duration: 1000, easing: 'cubic-bezier(.3, .7, .3, 1)' });
     pod.querySelectorAll('.o55np-pod-signal').forEach(function (s, i) {
-      s.animate([{ transform: 'translate(0, 0)', opacity: 0 }, { opacity: 1, offset: 0.15 }, { transform: 'translate(' + (10 + i * 8) + 'px, ' + (40 + i * 16) + 'px)', opacity: 0 }],
+      s.animate([{ transform: 'translate(0, 0)', opacity: 0 }, { opacity: 1, offset: 0.15 }, { transform: 'translate(' + (-14 - i * 8) + 'px, ' + (-40 - i * 18) + 'px)', opacity: 0 }],
         { duration: 520, delay: 200 + i * 90, easing: 'steps(6, end)', fill: 'backwards' });
     });
   }

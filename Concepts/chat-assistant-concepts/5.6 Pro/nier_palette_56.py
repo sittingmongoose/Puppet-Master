@@ -320,7 +320,7 @@ def generate() -> str:
     return '\n'.join(out)
 
 
-COLOR_LITERAL = re.compile(r'#[0-9a-fA-F]{3,8}\b|\brgba?\(\s*\d|\bhsla?\(|\b(white|black)\b')
+COLOR_LITERAL = re.compile(r'#[0-9a-fA-F]{3,8}\b|\brgba?\(\s*\d|\bhsla?\(|(?<![-\w])(white|black)(?![-\w])')  # not white-space
 
 
 def check() -> list[str]:

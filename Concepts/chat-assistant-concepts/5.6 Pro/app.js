@@ -485,6 +485,7 @@
   let activityPinLayout=activityPinnedInLayout();
   function savePrefs() {
     safeStorage.set('pm56-prefs', JSON.stringify({theme:state.theme,historyMode:state.historyMode,historyWidth:state.historyWidth,editorWidth:state.editorWidth,activityWidth:state.activityWidth,model:state.model,effort:state.effort||'',effortChosen:!!state.effort,fast:state.fast,capabilities:state.capabilities}));
+    if(window.PM56_NIER_SAVED) window.PM56_NIER_SAVED();   /* NieR Mode's Save signal part (nier-world.js) */
   }
   function loadPrefs() {
     const raw = safeStorage.get('pm56-prefs'); if (!raw) return;
@@ -3161,7 +3162,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const m=state.menu;
     let content='';
     if(m.type==='choice')content=renderSharedChoice();
-    else if(m.type==='persona') content=renderSimpleMenu('Persona',PERSONA_CATALOG,pickerSelection().persona,'set-persona');
+    else if(m.type==='persona') content=renderSimpleMenu('Persona',window.PM56_NIER_PERSONAS?PERSONA_CATALOG.concat(window.PM56_NIER_PERSONAS()):PERSONA_CATALOG,pickerSelection().persona,'set-persona');
     else if(m.type==='permissions') content=renderSimpleMenu('Permissions',[['Ask for approval','Pause before edits, commands, and external effects'],['Auto accept edits','Accept file edits but ask for other effects'],['Auto','Use policy-aware automatic approval'],['Full Access','Allow all permitted actions without prompting']],state.permissions,'set-permissions');
     /* Rows come from D.operational.worktrees, not from four string literals:
        the fixture covers unbound / bound-clean / bound-dirty / bound-conflict

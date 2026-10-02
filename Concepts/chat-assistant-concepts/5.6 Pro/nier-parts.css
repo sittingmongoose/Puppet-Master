@@ -296,16 +296,17 @@ html[data-o55-nier-parts~="particles"]:not([data-motion="reduced"]) body:not(.pm
 /* =============================================================================================== Sound & voice */
 
 /* ---- Pod voice [voice]: Report / Alert / Proposal leads on toasts and cards, the POD 042 band on toasts ---- */
-/* a toast's kind is written at arrival (nier-parts.js: data-o55-pod alert | proposal | report, data-o55-sev) */
-html[data-o55-nier-parts~="voice"] #pmOverlayRoot .toast > strong::before { content: "Report: "; font-weight: 500; }
-html[data-o55-nier-parts~="voice"] #pmOverlayRoot .toast[data-o55-pod="alert"] > strong::before { content: "Alert: "; }
-html[data-o55-nier-parts~="voice"] #pmOverlayRoot .toast[data-o55-pod="proposal"] > strong::before { content: "Proposal: "; }
-html[data-o55-nier-parts~="voice"] #pmOverlayRoot .toast::before {
+/* a toast's kind is written at arrival (nier-parts.js: data-o55-pod alert | proposal | report, data-o55-sev); the
+   glitch's split copies in #o55np-fx keep it, so the split shows the same band */
+html[data-o55-nier-parts~="voice"] :is(#pmOverlayRoot, #o55np-fx) .toast > strong::before { content: "Report: "; font-weight: 500; }
+html[data-o55-nier-parts~="voice"] :is(#pmOverlayRoot, #o55np-fx) .toast[data-o55-pod="alert"] > strong::before { content: "Alert: "; }
+html[data-o55-nier-parts~="voice"] :is(#pmOverlayRoot, #o55np-fx) .toast[data-o55-pod="proposal"] > strong::before { content: "Proposal: "; }
+html[data-o55-nier-parts~="voice"] :is(#pmOverlayRoot, #o55np-fx) .toast::before {
   content: "POD 042"; display: block; margin: -9px -11px 6px; padding: 3px 11px 2px; background: var(--o55-nier-ink); color: var(--o55-nier-on-ink);
   font: 500 9px/1.4 var(--font-mono); letter-spacing: .28em;
 }
-html[data-o55-nier-parts~="voice"] #pmOverlayRoot .toast[data-o55-sev="error"]::before { background: var(--o55-nier-error); }
-html[data-o55-nier-parts~="voice"] #pmOverlayRoot .toast[data-o55-sev="warn"]::before { background: var(--o55-nier-warn-text); }
+html[data-o55-nier-parts~="voice"] :is(#pmOverlayRoot, #o55np-fx) .toast[data-o55-sev="error"]::before { background: var(--o55-nier-error); }
+html[data-o55-nier-parts~="voice"] :is(#pmOverlayRoot, #o55np-fx) .toast[data-o55-sev="warn"]::before { background: var(--o55-nier-warn-text); }
 /* the transcript: system cards report, plan cards and decisions propose, danger and warning cards alert */
 html[data-o55-nier-parts~="voice"] .system-card-head .title::before { content: "Report: "; font-weight: 500; }
 html[data-o55-nier-parts~="voice"] .system-card.plan-card .system-card-head .title::before { content: "Proposal: "; }
@@ -318,7 +319,7 @@ html[data-o55-nier-parts~="voice"] .event-card.warning .event-copy > strong::bef
    Anchored to the chat's composer (the anchor name exists only under this part), so it rides every composer height. */
 html[data-o55-nier-parts~="pod"] .chat-stage > .composer { anchor-name: --o55np-composer; }
 #o55np-pod { position: fixed; position-anchor: --o55np-composer; right: calc(anchor(right, 14px) + 8px); bottom: calc(anchor(top, 58px) + 6px);
-  width: 40px; height: 52px; z-index: 1190; pointer-events: none; contain: layout style; color: var(--o55-nier-ink); display: none; }
+  width: 40px; height: 52px; z-index: 60; pointer-events: none; contain: layout style; color: var(--o55-nier-ink); display: none; }
 html[data-o55-nier-parts~="pod"] #o55np-pod { display: block; }
 #o55np-pod .o55np-pod-bob, #o55np-pod .o55np-pod-body, #o55np-pod .o55np-pod-shadow { position: absolute; left: 0; top: 0; width: 40px; height: 52px; will-change: transform; }
 #o55np-pod svg { display: block; width: 40px; height: 52px; overflow: visible; }
@@ -326,7 +327,7 @@ html[data-o55-nier-parts~="pod"] #o55np-pod { display: block; }
 #o55np-pod .o55np-pod-ink { fill: currentColor; }
 #o55np-pod .o55np-pod-shadow { transform-origin: 20px 48px; }
 #o55np-pod .o55np-pod-body { transform-origin: 20px 22px; }
-#o55np-pod .o55np-pod-signal { position: absolute; left: 30px; top: 30px; width: 4px; height: 4px; background: currentColor; opacity: 0; will-change: transform, opacity; }
+#o55np-pod .o55np-pod-signal { position: absolute; left: 6px; top: 10px; width: 4px; height: 4px; background: currentColor; opacity: 0; will-change: transform, opacity; }
 html:not([data-motion="reduced"]) body:not(.pm56-reduced) #o55np-pod:not([data-idle]) .o55np-pod-bob { animation: o55np-bob 3.6s ease-in-out infinite alternate; }
 html:not([data-motion="reduced"]) body:not(.pm56-reduced) #o55np-pod:not([data-idle]) .o55np-pod-shadow { animation: o55np-bob-shadow 3.6s ease-in-out infinite alternate; }
 @keyframes o55np-bob { from { transform: translateY(0); } to { transform: translateY(-6px); } }
