@@ -137,7 +137,8 @@
   border-color: color-mix(in srgb, var(--accent) 26%, transparent);
 }
 .message-meta .meta-model b { color: var(--accent); }
-.message-meta .meta-fast { color: var(--warning); opacity: 1; }
+/* the Fast bolt is lit and strikes (neon-icons.css 8b): full strength, not the chips' .8 glyph dim */
+.message-meta .meta-chip svg.meta-fast { color: var(--warning); opacity: 1; }
 .message-meta .meta-worked { color: var(--muted); }
 .message-meta .meta-worked.is-live { color: var(--warning); font-weight: 650; }
 .message-meta .meta-quiet { color: var(--subtle); font-style: italic; }

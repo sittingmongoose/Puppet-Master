@@ -169,43 +169,56 @@
 }
 @keyframes pm-lens-card-in { from { opacity: 0; transform: translateY(-6px) scaleY(.94); transform-origin: top; } to { opacity: 1; transform: none; } }
 .pm-lens-card-head { display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 700; }
-.pm-lens-card-head svg { color: var(--accent); flex: 0 0 auto; }
+/* the subcompact card's glyph wears the Subcompact tone (changed), through --nx-ink (the transcript's accent stays
+   on live work and needs-you) */
+.pm-lens-card-head svg { --nx-ink: var(--accent-2); flex: 0 0 auto; }
 .pm-lens-card-head .meta-pill { margin-left: auto; }
 .pm-lens-card p { margin: 6px 0 0; font-size: 11.5px; line-height: 1.55; color: var(--muted); }
 .pm-lens-card-note { font-style: italic; }
 .pm-lens-card-actions { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
 
 /* ---- 6. header trigger ------------------------------------------------- */
-.pm-lens-trigger { position: relative; }
+/* Neon icons (step 3D, 2026-10-02). The trigger's lens glyph is self-lit (neon-icons.css leaves .pm-lens-trigger out
+   of its generic hover rules). Off, it is a control: unlit at rest, it ignites on hover and plays its act once. On,
+   it is lit in its mode's tone like an activity bar domain: Mute is attention (the warning ink, the bar's 3.2 s
+   attention breathe), Focus is working (the accent, the 2.2 s working breathe), Subcompact is changed (accent-2,
+   steady). The tone's halo blooms on the tube and a radial backlight (the trigger's ::before) is the soft tail; they
+   replace the old drop-shadow filter. The ink goes through --nx-ink and every strength is a neon token, so NieR
+   Mode's tokens drop the glow. The tile stays neutral: the lit glyph says the Lens is on. */
+.pm-lens-trigger { position: relative; isolation: isolate; }
 .pm-lens-trigger svg {
   flex: 0 0 auto;
-  stroke-width: 1.8;
-  transition: color 200ms var(--ease, ease), filter 200ms var(--ease, ease), opacity 200ms var(--ease, ease);
+  --nx-stroke-base: 1.8;
+  --nx-hi-a: 0;
+  transition: color 200ms var(--ease, ease), opacity 200ms var(--ease, ease);
+}
+.pm-lens-trigger:hover svg.nx, .pm-lens-trigger:focus-visible svg.nx {
+  --nx-hi-a: var(--nx-h-hover-i); --nx-1: var(--nx-d1) var(--nx-ease) backwards;
 }
 .pm-lens-trigger.is-on svg {
-  color: var(--lens-ink, var(--accent));
-  filter: var(--lens-shadow, none) saturate(1.15);
+  --nx-ink: var(--lens-ink, var(--accent));
+  --nx-tone-k: var(--lens-k, 1);
+  --nx-hi-a: var(--lens-hi, 0);
   animation: var(--lens-anim, none);
 }
+.pm-lens-trigger.is-on::before {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 34px; height: 34px; translate: -50% -50%;
+  border-radius: 50%; pointer-events: none; z-index: -1;
+  background: radial-gradient(closest-side, var(--lens-ink, var(--accent)), transparent);
+  opacity: var(--lens-bl, 0);
+}
+.chat-header .pm-lens-trigger.icon-button.is-on { color: var(--text); border-color: var(--border-strong); background: var(--surface-3); }
 .pm-lens-trigger[data-lens-mode="mute"] {
-  --lens-ink: var(--warning);
-  --lens-shadow: drop-shadow(0 0 5px color-mix(in srgb, var(--warning) 60%, transparent));
-  --lens-anim: lens-mute-pulse 2.4s ease-in-out infinite;
+  --lens-ink: var(--warning); --lens-k: 1.17; --lens-hi: var(--nx-h-attention-i); --lens-bl: var(--nx-bl-attention);
+  --lens-anim: ab-breathe 3200ms ease-in-out infinite;
 }
 .pm-lens-trigger[data-lens-mode="focus"] {
-  --lens-ink: var(--accent);
-  --lens-shadow: drop-shadow(0 0 5px color-mix(in srgb, var(--accent) 65%, transparent));
-  --lens-anim: ab-breathe 1.8s ease-in-out infinite;
+  --lens-ink: var(--accent); --lens-k: 1.17; --lens-hi: var(--nx-h-working-i); --lens-bl: var(--nx-bl-working);
+  --lens-anim: ab-breathe 2200ms ease-in-out infinite;
 }
 .pm-lens-trigger[data-lens-mode="subcompact"] {
-  --lens-ink: var(--accent-2);
-  --lens-shadow: drop-shadow(0 0 5px color-mix(in srgb, var(--accent-2) 65%, transparent));
-  --lens-anim: lens-subcompact-pulse 1.2s ease-in-out infinite;
-}
-@keyframes lens-mute-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .42; } }
-@keyframes lens-subcompact-pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(.86); opacity: .72; }
+  --lens-ink: var(--accent-2); --lens-k: 1; --lens-hi: var(--nx-h-changed-i); --lens-bl: var(--nx-bl-changed);
+  --lens-anim: none;
 }
 .pm-lens-badge {
   position: absolute;

@@ -21,7 +21,7 @@
  *                                         animation-delay: calc(var(--ad, 0) * <stagger> * 1ms - <period>); }
  * Each moving part carries --k1 (its one-shot keyframes) and --kl (its loop keyframes), literal keyframes that
  * neon-icons.js generates from the part's pose (transform and opacity only, so they composite).
- * Nothing here sets an svg's own `animation` on hover (one requested exception: the Fast bolt re-strikes), so the
+ * Nothing here sets an svg's own `animation` on hover (the Fast bolt's re-strike, 8b, plays on its parts and halo), so the
  * bar's and the status wrappers' rhythms (ab-breathe, ab-alert) are never touched by hover.
  * Colour: every ink is a theme token (--danger, --warning, --accent, --accent-2, --positive, --subtle, --muted) and
  * every halo or backlight strength is a body token (--nx-h-*, --nx-bl-*), so a theme layer (NieR Mode, next step,
@@ -39,6 +39,8 @@ body {
   --nx-h-quiet-i: .10;
   /* concept "lit steady": a visible bloom on dark; hover ignite (controls, and concepts inside a host) */
   --nx-h-concept-i: .17; --nx-h-hover-i: .30; --nx-h-swell-i: .30;
+  /* the Fast bolt's flash peak (8b): its halo rests at .32 of this, the attention strength */
+  --nx-h-bolt-i: .62;
   --nx-bl-blocked: .086; --nx-bl-attention: .08; --nx-bl-working: .082; --nx-bl-changed: .042;
   /* voices (plan §1): one easing token per theme family; timing and order never change */
   --nx-ease: cubic-bezier(.2, .75, .25, 1);
@@ -53,6 +55,7 @@ body[data-theme$="-light"] {
   --nx-h-blocked-i: .08; --nx-h-attention-i: .08; --nx-h-working-i: .08; --nx-h-changed-i: .07;
   --nx-h-quiet-i: .06;
   --nx-h-concept-i: 0; --nx-h-hover-i: 0; --nx-h-swell-i: 0;
+  --nx-h-bolt-i: .26;
   --nx-bl-blocked: .12; --nx-bl-attention: .095; --nx-bl-working: .10; --nx-bl-changed: .05;
 }
 /* Friendly overshoots, Glass glides, Retro steps. */
@@ -174,18 +177,60 @@ svg:where(.nx-z0) .nx-p { animation: none; }
 /* Filled chips (Send, Stop, primary buttons) already carry their own fill: the act plays, the halo stays off. */
 .send-button > svg.nx, .primary-button > svg.nx, .soft-button.primary > svg.nx { --nx-hiv: hidden; --nx-fl: none; }
 
-/* ------------------------------------------------------------------ 8b. Fast mode (Jared, G1 item 15) */
-/* The Fast bolt is drawn only while Fast mode is on (the composer model button .fast-bolt, model rows, the
-   transcript meta .meta-fast), so the class is the ON state: the bolt is lit in the warning tone with its core
-   halo, and strikes: it drops 1.5 px with a quick double flicker, then holds; one cycle is 3.2 s and outside the
-   flicker beat its opacity never dips below .6. It moves as a whole on the svg root (composited at any size, so the
-   10-11 px bolt is not stopped by the part size gate), replacing the old drop-shadow `bolt` keyframes. Hovering its
-   button re-strikes it (a renamed copy restarts the cycle): the one place hover touches an svg's own animation,
-   on request. Reduced motion: lit and static. */
-svg.fast-bolt, svg.meta-fast { --nx-ink: var(--warning); --nx-hiv: visible; --nx-hi-a: var(--nx-h-attention-i); animation: nx-fast-strike 3200ms linear infinite; }
-:where(button, [data-action]):where(:hover, :focus-visible) > svg.fast-bolt { animation-name: nx-fast-strike-h; }
-@keyframes nx-fast-strike { 0% { transform: translateY(0); opacity: 1; animation-timing-function: cubic-bezier(.5, 0, .9, .5); } 5% { transform: translateY(1.5px); opacity: 1; } 7% { opacity: .35; } 9% { opacity: 1; } 11% { opacity: .4; } 13% { opacity: 1; animation-timing-function: cubic-bezier(.2, .7, .3, 1); } 24%, 100% { transform: translateY(0); opacity: 1; } }
-@keyframes nx-fast-strike-h { 0% { transform: translateY(0); opacity: 1; animation-timing-function: cubic-bezier(.5, 0, .9, .5); } 5% { transform: translateY(1.5px); opacity: 1; } 7% { opacity: .35; } 9% { opacity: 1; } 11% { opacity: .4; } 13% { opacity: 1; animation-timing-function: cubic-bezier(.2, .7, .3, 1); } 24%, 100% { transform: translateY(0); opacity: 1; } }
+/* ------------------------------------------------------------------ 8b. Fast mode (Jared, G1 item 15; the strike, 3D) */
+/* OWNER of this block: Neon icons, surface step 3D (2026-10-02). The Fast bolt is drawn only while Fast mode is on
+   (the composer model chip and the picker's model row .fast-bolt, the transcript meta .meta-fast, the model sidecar's
+   Fast row .fast-row-bolt), so the class is the ON state: the bolt is lit in the warning tone, and it STRIKES like
+   lightning, never shaking or moving as a whole (Jared, 2026-10-02: "think of lightning being a crack, like you see
+   lightning coming down from the sky"):
+     1. the crack: the lit bolt snaps dark and its four bands (neon-icons.js lightning: spike, zig, neck, point) light
+        top to bottom, 40 ms apart, so the whole bolt cracks down in about 130 ms;
+     2. the flash: the halo and the backlight spike, dip, and flash again, like a real strike's return stroke;
+     3. the afterglow: both settle to the steady lit state over about 0.7 s;
+     4. the hold: about 4.2 s of steady light until the next strike (a 5.2 s cycle).
+   Everything animates opacity only (the bands, the merged halo path, the host's backlight), so it composites; there
+   is no clip, dash or stroke-opacity in the loop. The halo's stroke-opacity is a strong token (--nx-h-bolt-i) and its
+   element opacity carries the curve (.32 at rest = the attention tone's strength). The backlight is the ::before of
+   the .nx-bolt wrapper the hosts draw round the svg. Hovering the host re-strikes once: a one-shot copy joins the
+   animation list (the loop keeps running underneath, so leaving the host does not strike again). The keyframes are
+   generated from one timeline in milliseconds. Reduced motion: lit and static. NieR: an ink crack in steps, no flash. */
+.nx-bolt { position: relative; isolation: isolate; display: inline-flex; flex: none; line-height: 0; vertical-align: middle; }
+.nx-bolt > svg.nx { display: block; }
+.nx-bolt::before {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 200%; height: 200%; translate: -50% -50%;
+  border-radius: 50%; pointer-events: none; z-index: -1;
+  background: radial-gradient(closest-side, var(--warning), transparent);
+  opacity: var(--nx-bl-attention); animation: nx-bolt-bl 5200ms linear infinite;
+}
+body[data-theme$="-light"] .nx-bolt::before { animation-name: nx-bolt-bl-l; }
+svg.fast-bolt, svg.meta-fast, svg.fast-row-bolt { --nx-ink: var(--warning); --nx-hiv: visible; --nx-hi-a: var(--nx-h-bolt-i); animation: none; opacity: 1; }
+svg.fast-bolt .nx-h, svg.meta-fast .nx-h, svg.fast-row-bolt .nx-h { opacity: .32; animation: nx-bolt-halo 5200ms linear infinite; }
+svg.fast-bolt .nx-p0, svg.meta-fast .nx-p0, svg.fast-row-bolt .nx-p0 { animation: nx-bolt-0 5200ms linear infinite; }
+svg.fast-bolt .nx-p1, svg.meta-fast .nx-p1, svg.fast-row-bolt .nx-p1 { animation: nx-bolt-1 5200ms linear infinite; }
+svg.fast-bolt .nx-p2, svg.meta-fast .nx-p2, svg.fast-row-bolt .nx-p2 { animation: nx-bolt-2 5200ms linear infinite; }
+svg.fast-bolt .nx-p3, svg.meta-fast .nx-p3, svg.fast-row-bolt .nx-p3 { animation: nx-bolt-3 5200ms linear infinite; }
+/* hover re-strikes once (hosts: a button, a [data-action] row, the transcript's model chip) */
+:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt::before { animation: nx-bolt-bl 5200ms linear infinite, nx-bolt-bl-h 1100ms linear 1; }
+body[data-theme$="-light"] :where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt::before { animation-name: nx-bolt-bl-l, nx-bolt-bl-lh; }
+:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-h { animation: nx-bolt-halo 5200ms linear infinite, nx-bolt-halo-h 1100ms linear 1; }
+:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-p0 { animation: nx-bolt-0 5200ms linear infinite, nx-bolt-0h 1100ms linear 1; }
+:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-p1 { animation: nx-bolt-1 5200ms linear infinite, nx-bolt-1h 1100ms linear 1; }
+:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-p2 { animation: nx-bolt-2 5200ms linear infinite, nx-bolt-2h 1100ms linear 1; }
+:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-p3 { animation: nx-bolt-3 5200ms linear infinite, nx-bolt-3h 1100ms linear 1; }
+@keyframes nx-bolt-0 { 0%, 1% { opacity: 0.12; } 1.23%, 100% { opacity: 1; } }
+@keyframes nx-bolt-0h { 0%, 4.73% { opacity: 0.12; } 5.82%, 100% { opacity: 1; } }
+@keyframes nx-bolt-1 { 0%, 1.77% { opacity: 0.12; } 2%, 100% { opacity: 1; } }
+@keyframes nx-bolt-1h { 0%, 8.36% { opacity: 0.12; } 9.45%, 100% { opacity: 1; } }
+@keyframes nx-bolt-2 { 0%, 2.54% { opacity: 0.12; } 2.77%, 100% { opacity: 1; } }
+@keyframes nx-bolt-2h { 0%, 12% { opacity: 0.12; } 13.09%, 100% { opacity: 1; } }
+@keyframes nx-bolt-3 { 0%, 3.31% { opacity: 0.12; } 3.54%, 100% { opacity: 1; } }
+@keyframes nx-bolt-3h { 0%, 15.64% { opacity: 0.12; } 16.73%, 100% { opacity: 1; } }
+@keyframes nx-bolt-halo { 0% { opacity: 0; } 3.54% { opacity: 0; } 3.81% { opacity: 1; } 4.73% { opacity: 0.45; } 5.5% { opacity: 0.95; } 7.04% { opacity: 0.7; } 20%, 100% { opacity: 0.32; } }
+@keyframes nx-bolt-halo-h { 0% { opacity: 0; } 16.73% { opacity: 0; } 18% { opacity: 1; } 22.36% { opacity: 0.45; } 26% { opacity: 0.95; } 33.27% { opacity: 0.7; } 94.55%, 100% { opacity: 0.32; } }
+@keyframes nx-bolt-bl { 0% { opacity: 0; } 3.54% { opacity: 0; } 3.81% { opacity: 0.42; } 4.73% { opacity: 0.12; } 5.5% { opacity: 0.34; } 7.04% { opacity: 0.2; } 20%, 100% { opacity: 0.08; } }
+@keyframes nx-bolt-bl-h { 0% { opacity: 0; } 16.73% { opacity: 0; } 18% { opacity: 0.42; } 22.36% { opacity: 0.12; } 26% { opacity: 0.34; } 33.27% { opacity: 0.2; } 94.55%, 100% { opacity: 0.08; } }
+@keyframes nx-bolt-bl-l { 0% { opacity: 0; } 3.54% { opacity: 0; } 3.81% { opacity: 0.36; } 4.73% { opacity: 0.1; } 5.5% { opacity: 0.28; } 7.04% { opacity: 0.17; } 20%, 100% { opacity: 0.095; } }
+@keyframes nx-bolt-bl-lh { 0% { opacity: 0; } 16.73% { opacity: 0; } 18% { opacity: 0.36; } 22.36% { opacity: 0.1; } 26% { opacity: 0.28; } 33.27% { opacity: 0.17; } 94.55%, 100% { opacity: 0.095; } }
 
 /* ------------------------------------------------------------------ 9. the status set (plan §3) */
 /* The wrapper carries the list rhythm; .nx-st-base is the static lit layer, .nx-st-move the moving part. Wired
@@ -243,9 +288,9 @@ body[data-theme$="-light"] .nx-st-waiting::before { animation-name: nx-bl-needs-
 /* Both routes (the media query and body.pm56-reduced) stop every neon animation and transition outright; the base
    style is the finished, lit pose, so ink, halo and weight still carry the state with no infinite animation. */
 @media (prefers-reduced-motion: reduce) {
-  svg.nx, svg.nx .nx-p, svg.nx .nx-h, .nx-st, .nx-st::before { animation: none !important; transition: none !important; }
+  svg.nx, svg.nx .nx-p, svg.nx .nx-h, .nx-st, .nx-st::before, .nx-bolt::before { animation: none !important; transition: none !important; }
 }
-body.pm56-reduced svg.nx, body.pm56-reduced svg.nx .nx-p, body.pm56-reduced svg.nx .nx-h, body.pm56-reduced .nx-st, body.pm56-reduced .nx-st::before { animation: none !important; transition: none !important; }
+body.pm56-reduced svg.nx, body.pm56-reduced svg.nx .nx-p, body.pm56-reduced svg.nx .nx-h, body.pm56-reduced .nx-st, body.pm56-reduced .nx-st::before, body.pm56-reduced .nx-bolt::before { animation: none !important; transition: none !important; }
 
 /* ------------------------------------------------------------------ 11. NieR Mode (PMConcept7 contract) */
 /* OWNER of this section: NieR Mode, step N-A (2026-10-02); the rest of the file is the foundation's. Every rule is
@@ -256,7 +301,7 @@ body.pm56-reduced svg.nx, body.pm56-reduced svg.nx .nx-p, body.pm56-reduced svg.
    Motion is stepped (the NieR voice), transform and opacity only. */
 html[data-o55-nier="on"] body {
   --nx-h-blocked-i: 0; --nx-h-attention-i: 0; --nx-h-working-i: 0; --nx-h-changed-i: 0; --nx-h-quiet-i: 0;
-  --nx-h-concept-i: 0; --nx-h-hover-i: 0; --nx-h-swell-i: 0;
+  --nx-h-concept-i: 0; --nx-h-hover-i: 0; --nx-h-swell-i: 0; --nx-h-bolt-i: 0;
   --nx-bl-blocked: 0; --nx-bl-attention: 0; --nx-bl-working: 0; --nx-bl-changed: 0;
   --nx-ease: steps(4, end); --nx-le: steps(6, end); --nx-ease-c: steps(3, end);
 }
@@ -286,11 +331,10 @@ html[data-o55-nier="on"] [data-action]:hover > :not([data-action]) > svg.nx-r-co
 html[data-o55-nier="on"] [role="button"]:hover > svg.nx-r-control .nx-c,
 html[data-o55-nier="on"] summary:hover > svg.nx-r-control .nx-c { animation: o55n-nx-flick 240ms steps(1, end); }
 @keyframes o55n-nx-flick { 0% { opacity: .45; } 33% { opacity: 1; } 66% { opacity: .45; } 100% { opacity: 1; } }
-/* The Fast bolt strikes in steps: the same drop and double flicker, every frame held (NieR's stepped motion). */
-html[data-o55-nier="on"] svg.fast-bolt, html[data-o55-nier="on"] svg.meta-fast { animation-name: o55n-nx-fast; animation-timing-function: steps(1, end); }
-html[data-o55-nier="on"] :where(button, [data-action]):where(:hover, :focus-visible) > svg.fast-bolt { animation-name: o55n-nx-fast-h; }
-@keyframes o55n-nx-fast { 0%, 24%, 100% { transform: translateY(0); opacity: 1; } 5% { transform: translateY(1.5px); opacity: 1; } 7% { transform: translateY(1.5px); opacity: .35; } 9% { opacity: 1; } 11% { opacity: .4; } 13% { opacity: 1; } }
-@keyframes o55n-nx-fast-h { 0%, 24%, 100% { transform: translateY(0); opacity: 1; } 5% { transform: translateY(1.5px); opacity: 1; } 7% { transform: translateY(1.5px); opacity: .35; } 9% { opacity: 1; } 11% { opacity: .4; } 13% { opacity: 1; } }
+/* The Fast bolt is an ink crack in steps (3D): the bands light top to bottom, every frame held; no flash, because the
+   halo and the backlight are gone. */
+html[data-o55-nier="on"] .nx-bolt > svg.nx .nx-p { animation-timing-function: steps(1, end); }
+html[data-o55-nier="on"] .nx-bolt::before { display: none; }
 /* The status set keeps every silhouette apart, because NieR's inks are close:
    needs-you is an inverted ink block with paper strokes and a paper "?" (it outshines everything); */
 html[data-o55-nier="on"] .nx-st-waiting { background: var(--nx-bk, var(--o55-nier-ink)); box-shadow: 0 0 0 2px var(--nx-bk, var(--o55-nier-ink)); }
@@ -382,3 +426,10 @@ html[data-o55-nier="on"] .working-head .work-phase-icon > svg.nx-r-status { anim
 .chat-state > .nx-st { margin-right: 1px; }
 /* the decision panel is needs-you: its head glyph keeps the canon accent (ACD-469) on the neutral tile */
 .decision-top > .event-icon { color: var(--accent); }
+
+/* ------------------------------------------------------------------ 13. 3D surfaces (step 3D) */
+/* OWNER of this section: Neon icons, surface step 3D (2026-10-02). The 3D surfaces keep their rules in their owner
+   sheets (composer.css, composer-state.css, lens.css, turn-stage.css, transcript.css, history.css) and the Fast
+   bolt's strike is block 8b; only the NieR restatement of an owner sheet's rhythm lives here, under the contract. */
+/* the Context Lens trigger's breathe (Mute, Focus) is stepped like every NieR rhythm */
+html[data-o55-nier="on"] .pm-lens-trigger.is-on svg.nx { animation-timing-function: steps(3, end); }

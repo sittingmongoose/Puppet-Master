@@ -128,8 +128,12 @@
   snapshotFixture();
 
   /* ------------------------------------------------------------ glyphs ---
-     app.js's icon set has no trash, link, passage or outbox glyph. Inline SVG
-     only — this project forbids emoji glyphs outright. */
+     The four glyphs this module once drew itself (trash, link, passage,
+     outbox) live in the neon glyph registry (neon-icons.js, window.PM56_NEON:
+     one drawing per concept; passage is the shared page glyph), so every
+     glyph here goes through it, read at call time. GLYPH is only the fallback
+     for a page where neon-icons.js failed to load. Inline SVG only — this
+     project forbids emoji glyphs outright. */
   var GLYPH = {
     trash: '<path d="M4 7h16M10 4h4"/><path d="M6 7l1 12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-12"/><path d="M10 11v6M14 11v6"/>',
     link: '<path d="M10.5 13.5a4 4 0 0 0 5.7 0l2.3-2.3a4 4 0 0 0-5.7-5.7l-1.2 1.2"/><path d="M13.5 10.5a4 4 0 0 0-5.7 0l-2.3 2.3a4 4 0 0 0 5.7 5.7l1.2-1.2"/>',
@@ -137,6 +141,8 @@
     outbox: '<path d="M3 14v5a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-5"/><path d="M7 14h3l1 2h2l1-2h3"/><path d="M12 3v8M8.5 7.5 12 11l3.5-3.5"/>'
   };
   function svg(name, size) {
+    var N = window.PM56_NEON;
+    if (N && typeof N.icon === 'function') return N.icon(name, size);
     return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor"' +
       ' stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (GLYPH[name] || '') + '</svg>';
   }

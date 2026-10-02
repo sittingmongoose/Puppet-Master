@@ -27,7 +27,8 @@
  *   (0 = rest, 1 = pose), so loop keyframes are literal and the rest pose is the finished, lit pose.
  *   One-shot kind per part: arrive (default, pose -> rest), bounce (nx-pb: rest -> pose -> rest), reveal (nx-pc:
  *   clip from --ac to --ae). nx-pn parts sit out loops. The glyph's loop shape is its act (root class nx-a-<act>).
- * - The size gate (plan §1), by the size argument: below 12 no part moves (all parts render static); 12-14 a
+ * - The size gate (plan §1), by the size argument: below 12 no part moves (all parts render static, except the
+ *   opacity-only reveal parts flagged x: the Fast bolt's crack at 10-11 px, on Jared's request); 12-14 a
  *   travel part needs >= 1.5 rendered px of travel and a reveal part (clip or opacity only) >= 1.5 px of length,
  *   otherwise it renders static; 15 and up everything moves. Context CSS corrects a context that renders an icon
  *   below its size argument by stopping .nx-p there.
@@ -139,7 +140,8 @@
     /* ======================================================================
        THE GLYPHS. Part poses: ax/ay translate and cr circle radius (user units), ar rotate (deg, + = clockwise),
        ao opacity at the pose, ad stagger (ms), ac/ae clip insets on the view box (user units, top right bottom
-       left), o pivot [x,y] or 'c' (fill-box centre), b bounce one-shot, n sits out loops.
+       left), o pivot [x,y] or 'c' (fill-box centre), b bounce one-shot, n sits out loops, x an opacity-only
+       reveal that stays a part below 12 px (the Fast bolt's crack only).
        Acts (loop shapes, neon-icons.css nx-L-*): strike, seq, fill, wave, swap, spin, hop, drop, ratchet, blink.
        ====================================================================== */
     var BUBBLE = 'M4.5 5.5h15A1.5 1.5 0 0 1 21 7v8.5a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 3.5V17h-1A1.5 1.5 0 0 1 3 15.5V7a1.5 1.5 0 0 1 1.5-1.5z';
@@ -274,7 +276,14 @@
       info: G([C(12, 12, 9), M(P('M12 11v5M12 8h.01'), { ao: .25, b: 1 })], 'seq'),
       check: G([M(P('m5 12 4 4L19 6'), { ao: .6, ac: '0 20 0 4', ae: '0 4 0 4' })], 'seq'),
       branch: G([P('M6 3v12a4 4 0 0 0 4 4h8'), C(6, 3, 2), C(18, 19, 2), P('M6 9h7a4 4 0 0 0 4-4V3'), M(C(17, 3, 2), { ao: .2, b: 1 })], 'seq', 'control'),
-      lightning: G([M(P('M13 2 4 14h7l-1 8 10-13h-7Z'), { ay: 2.6, b: 1 })], 'strike'),
+      /* lightning: a crack, never a shake (Jared, 2026-10-02: "think of lightning being a crack, like you see lightning
+         coming down from the sky"). The bolt's outline (M13 2 4 14h7l-1 8 10-13h-7Z) is cut into four bands, top to
+         bottom: the spike, the zig, the neck and the point, each its own part, so a crack can travel down it. The Fast
+         bolt's strike (neon-icons.css 8b) blanks the bolt and lights the bands top to bottom, then flashes the halo.
+         The parts are opacity-only reveals (x: they still render as parts below 12 px, where the Fast bolt lives) and
+         sit out the generic loops (n); in a button host the hover one-shot lights them in turn. */
+      lightning: G([M(P('M13 8V2L8.5 8'), { ao: .15, n: 1, x: 1 }), M(P('M8.5 8 4 14h7M13 8v1h7l-3.85 5'), { ao: .15, n: 1, x: 1, ad: 40 }),
+        M(P('M11 14l-.5 4M16.15 14l-3.07 4'), { ao: .15, n: 1, x: 1, ad: 80 }), M(P('M10.5 18 10 22l3.08-4'), { ao: .15, n: 1, x: 1, ad: 120 })], 'none'),
       star: G([M(P('m12 2 3 6 7 .9-5 4.8 1.3 6.8L12 17l-6.3 3.5L7 13.7 2 8.9 9 8Z'), { ar: 18, o: [12, 11.5], b: 1 })], 'wave'),
       image: G([R(3, 3, 18, 18, 2), P('m21 15-5-5L5 21'), M(C(8.5, 8.5, 1.5), { ao: .2, b: 1 })], 'seq'),
       code: G([M(P('m8 8-4 4 4 4'), { ax: -3, b: 1 }), M(P('M16 8l4 4-4 4'), { ax: 3, b: 1 }), P('M13.5 5.5l-3 13')], 'swap'),
@@ -455,7 +464,9 @@
     }
     /* the size gate for one moving part at `size` px (plan §1) */
     function moves(p, size, origin) {
-      if (size < 12) return false;
+      /* x: an opacity-only reveal that keeps its part below 12 px (the Fast bolt's crack, on Jared's request; it
+         travels nowhere, so nothing smears at 10-11 px) */
+      if (size < 12) return !!(p.m.x && !travels(p.m));
       if (size >= 15) return true;
       var m = p.m, k = size / 24, b = [1e9, 1e9, -1e9, -1e9];
       p.els.forEach(function (e) { var q = boxOf(e); b = [Math.min(b[0], q[0]), Math.min(b[1], q[1]), Math.max(b[2], q[2]), Math.max(b[3], q[3])]; });

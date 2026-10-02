@@ -329,7 +329,8 @@ body[data-ph-drawer="closing"] .history-flyout{
   overflow:hidden;
 }
 .history-head .hh-new-label { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0; }
-.hh-plus-glyph { stroke-width:2.6; }
+/* the new-thread plus keeps its heavier weight as the neon base weight (3D), never a stroke-width on the glyph */
+.hh-plus-glyph { --nx-stroke-base:2.6; }
 .history-head .ph-head-pin {
   margin-left:auto; flex:0 0 28px; width:28px; min-width:28px;
 }

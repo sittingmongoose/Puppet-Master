@@ -4996,7 +4996,8 @@ body[data-ph-drawer="closing"] .history-flyout{
   overflow:hidden;
 }
 .history-head .hh-new-label { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0; }
-.hh-plus-glyph { stroke-width:2.6; }
+/* the new-thread plus keeps its heavier weight as the neon base weight (3D), never a stroke-width on the glyph */
+.hh-plus-glyph { --nx-stroke-base:2.6; }
 .history-head .ph-head-pin {
   margin-left:auto; flex:0 0 28px; width:28px; min-width:28px;
 }
@@ -5636,7 +5637,8 @@ body[data-ph-resizing] .assistant-grid{ transition:none; }
   border-color: color-mix(in srgb, var(--accent) 26%, transparent);
 }
 .message-meta .meta-model b { color: var(--accent); }
-.message-meta .meta-fast { color: var(--warning); opacity: 1; }
+/* the Fast bolt is lit and strikes (neon-icons.css 8b): full strength, not the chips' .8 glyph dim */
+.message-meta .meta-chip svg.meta-fast { color: var(--warning); opacity: 1; }
 .message-meta .meta-worked { color: var(--muted); }
 .message-meta .meta-worked.is-live { color: var(--warning); font-weight: 650; }
 .message-meta .meta-quiet { color: var(--subtle); font-style: italic; }
@@ -5904,43 +5906,56 @@ body[data-ph-resizing] .assistant-grid{ transition:none; }
 }
 @keyframes pm-lens-card-in { from { opacity: 0; transform: translateY(-6px) scaleY(.94); transform-origin: top; } to { opacity: 1; transform: none; } }
 .pm-lens-card-head { display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 700; }
-.pm-lens-card-head svg { color: var(--accent); flex: 0 0 auto; }
+/* the subcompact card's glyph wears the Subcompact tone (changed), through --nx-ink (the transcript's accent stays
+   on live work and needs-you) */
+.pm-lens-card-head svg { --nx-ink: var(--accent-2); flex: 0 0 auto; }
 .pm-lens-card-head .meta-pill { margin-left: auto; }
 .pm-lens-card p { margin: 6px 0 0; font-size: 11.5px; line-height: 1.55; color: var(--muted); }
 .pm-lens-card-note { font-style: italic; }
 .pm-lens-card-actions { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
 
 /* ---- 6. header trigger ------------------------------------------------- */
-.pm-lens-trigger { position: relative; }
+/* Neon icons (step 3D, 2026-10-02). The trigger's lens glyph is self-lit (neon-icons.css leaves .pm-lens-trigger out
+   of its generic hover rules). Off, it is a control: unlit at rest, it ignites on hover and plays its act once. On,
+   it is lit in its mode's tone like an activity bar domain: Mute is attention (the warning ink, the bar's 3.2 s
+   attention breathe), Focus is working (the accent, the 2.2 s working breathe), Subcompact is changed (accent-2,
+   steady). The tone's halo blooms on the tube and a radial backlight (the trigger's ::before) is the soft tail; they
+   replace the old drop-shadow filter. The ink goes through --nx-ink and every strength is a neon token, so NieR
+   Mode's tokens drop the glow. The tile stays neutral: the lit glyph says the Lens is on. */
+.pm-lens-trigger { position: relative; isolation: isolate; }
 .pm-lens-trigger svg {
   flex: 0 0 auto;
-  stroke-width: 1.8;
-  transition: color 200ms var(--ease, ease), filter 200ms var(--ease, ease), opacity 200ms var(--ease, ease);
+  --nx-stroke-base: 1.8;
+  --nx-hi-a: 0;
+  transition: color 200ms var(--ease, ease), opacity 200ms var(--ease, ease);
+}
+.pm-lens-trigger:hover svg.nx, .pm-lens-trigger:focus-visible svg.nx {
+  --nx-hi-a: var(--nx-h-hover-i); --nx-1: var(--nx-d1) var(--nx-ease) backwards;
 }
 .pm-lens-trigger.is-on svg {
-  color: var(--lens-ink, var(--accent));
-  filter: var(--lens-shadow, none) saturate(1.15);
+  --nx-ink: var(--lens-ink, var(--accent));
+  --nx-tone-k: var(--lens-k, 1);
+  --nx-hi-a: var(--lens-hi, 0);
   animation: var(--lens-anim, none);
 }
+.pm-lens-trigger.is-on::before {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 34px; height: 34px; translate: -50% -50%;
+  border-radius: 50%; pointer-events: none; z-index: -1;
+  background: radial-gradient(closest-side, var(--lens-ink, var(--accent)), transparent);
+  opacity: var(--lens-bl, 0);
+}
+.chat-header .pm-lens-trigger.icon-button.is-on { color: var(--text); border-color: var(--border-strong); background: var(--surface-3); }
 .pm-lens-trigger[data-lens-mode="mute"] {
-  --lens-ink: var(--warning);
-  --lens-shadow: drop-shadow(0 0 5px color-mix(in srgb, var(--warning) 60%, transparent));
-  --lens-anim: lens-mute-pulse 2.4s ease-in-out infinite;
+  --lens-ink: var(--warning); --lens-k: 1.17; --lens-hi: var(--nx-h-attention-i); --lens-bl: var(--nx-bl-attention);
+  --lens-anim: ab-breathe 3200ms ease-in-out infinite;
 }
 .pm-lens-trigger[data-lens-mode="focus"] {
-  --lens-ink: var(--accent);
-  --lens-shadow: drop-shadow(0 0 5px color-mix(in srgb, var(--accent) 65%, transparent));
-  --lens-anim: ab-breathe 1.8s ease-in-out infinite;
+  --lens-ink: var(--accent); --lens-k: 1.17; --lens-hi: var(--nx-h-working-i); --lens-bl: var(--nx-bl-working);
+  --lens-anim: ab-breathe 2200ms ease-in-out infinite;
 }
 .pm-lens-trigger[data-lens-mode="subcompact"] {
-  --lens-ink: var(--accent-2);
-  --lens-shadow: drop-shadow(0 0 5px color-mix(in srgb, var(--accent-2) 65%, transparent));
-  --lens-anim: lens-subcompact-pulse 1.2s ease-in-out infinite;
-}
-@keyframes lens-mute-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .42; } }
-@keyframes lens-subcompact-pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(.86); opacity: .72; }
+  --lens-ink: var(--accent-2); --lens-k: 1; --lens-hi: var(--nx-h-changed-i); --lens-bl: var(--nx-bl-changed);
+  --lens-anim: none;
 }
 .pm-lens-badge {
   position: absolute;
@@ -15982,6 +15997,7 @@ body.pm56-reduced .pmx-view.room-discussion :is(.pmx-rv-msg[data-arrive], .pmx-r
  *    transcript item. Each family has its own silhouette, so a plan, a crew run,
  *    a scheduled message and a receipt no longer read as the same card. These
  *    rules are :where()-light so any lab take's own rules still win.
+ * (Neon icons, 3D: the ledger, deliverable and Needs-you glyph rules sit at the end of section 2, marked NEON.)
  * 3. The Stage take (transcript data-variant 16, the default): turn anatomy --
  *    a presence mark opens each assistant turn, a hairline spine runs through
  *    the turn's items and ends in a dot, items hang off it with a family tick,
@@ -16200,6 +16216,25 @@ body[data-theme$="-light"] .transcript-inner > [data-family="deliverable"] .arti
 .transcript-inner > [data-family="deliverable"] .system-card-head > .event-icon,
 .transcript-inner > [data-family="people"] .system-card-head > .event-icon,
 .transcript-inner > [data-family="people"] > .event-icon { background: color-mix(in srgb, var(--tx-fam, var(--fam-people)) 14%, transparent); }
+
+/* NEON (icons, step 3D, 2026-10-02; neon-icons.js / neon-icons.css). A ledger line's glyph and a deliverable's eyebrow
+   glyph sit at rest -- the line's ink, no bloom -- and ignite when their line is hovered or holds focus: the ink lifts
+   to the text ink, the halo swells (dark themes) and the glyph plays its act once. A work output's glyph sits in its
+   open button, which the neon hover rules already ignite. Status marks are lit in their tone through --nx-ink (never
+   `color`, so the accent budget is untouched) and stay lit. A warning or danger line's glyph takes its tone through
+   --nx-ink (the colour rules above lose to the neutral rule just above). The Needs-you medallion keeps the canon
+   accent (--needs) for every glyph in it, status marks included. */
+.transcript-inner > [data-family="ledger"] > .event-icon > svg.nx-r-concept,
+.transcript-inner > [data-family="deliverable"] .system-card-head > .event-icon > svg.nx-r-concept { --nx-hi-a: 0; }
+.transcript-inner > [data-family="ledger"] > .event-icon > svg.nx { --nx-u: 2; }
+.transcript-inner > [data-family="ledger"]:is(:hover, :focus-within) > .event-icon { color: var(--text); }
+.transcript-inner > [data-family="ledger"]:is(:hover, :focus-within) > .event-icon > svg.nx-r-concept,
+.transcript-inner > [data-family="deliverable"] .system-card-head:is(:hover, :focus-within) > .event-icon > svg.nx-r-concept {
+  --nx-hi-a: var(--nx-h-swell-i); --nx-1: var(--nx-d1) var(--nx-ease) backwards;
+}
+.transcript-inner > [data-family="ledger"].warning > .event-icon > svg.nx { --nx-ink: var(--warning); }
+.transcript-inner > [data-family="ledger"].danger > .event-icon > svg.nx { --nx-ink: var(--danger); }
+.transcript-inner > [data-family="needs"] > .event-icon > svg.nx { --nx-ink: var(--needs); }
 
 /* needs-you: the action sits at the far edge, the copy takes the room. In a
    narrow chat pane the actions wrap to their own row rather than push past
@@ -16526,11 +16561,13 @@ textarea[data-input="composer"]::placeholder { transition: color 220ms ease; }
   border: 1px solid var(--border);
   color: var(--subtle);
 }
+/* Neon icons (3D): a toggled tool (the wand while a capability is on) reads as on by its lit glyph -- the text ink
+   with its bloom -- not by an accent tile; colour is reserved for status (plan §4). */
 .composer-tools > .icon-button.active {
-  color: var(--accent);
-  border-color: color-mix(in srgb, var(--accent) 62%, transparent);
-  background: color-mix(in srgb, var(--accent) 15%, var(--surface-3));
+  color: var(--text);
+  border-color: var(--border-strong);
 }
+.composer-tools > .icon-button.active > svg.nx { --nx-hi-a: var(--nx-h-concept-i); }
 .composer-tools > .icon-button svg { width: 14px; height: 14px; }
 .selector-button {
   flex: none; min-width: max-content; max-width: none;
@@ -16552,7 +16589,7 @@ textarea[data-input="composer"]::placeholder { transition: color 220ms ease; }
 
 .composer-box.is-compact .selector-button .sel-icon { display: grid; }
 .composer-box.is-compact .selector-button .sel-label,
-.composer-box.is-compact .selector-button .fast-bolt { display: none; }
+.composer-box.is-compact .selector-button .nx-bolt { display: none; }
 .composer-box.is-compact .composer-hint { display: block; }
 .composer-box.is-compact .selector-button,
 .composer-box.is-compact .composer-tools > .icon-button {
@@ -16562,15 +16599,17 @@ textarea[data-input="composer"]::placeholder { transition: color 220ms ease; }
   border: 1px solid var(--border);
   color: var(--subtle);
 }
+/* (every picker carries .active; collapsed to its glyph it stays a neutral control, as it is uncollapsed) */
 .composer-box.is-compact .selector-button.active,
 .composer-box.is-compact .composer-tools > .icon-button.active {
-  color: var(--accent);
-  border-color: color-mix(in srgb, var(--accent) 62%, transparent);
-  background: color-mix(in srgb, var(--accent) 15%, var(--surface-3));
+  color: var(--text);
+  border-color: var(--border-strong);
+  background: var(--surface-3);
 }
 .composer-box.is-measuring .selector-button .sel-icon { display: none; }
-.composer-box.is-measuring .selector-button .sel-label,
-.composer-box.is-measuring .selector-button .fast-bolt { display: revert; }
+.composer-box.is-measuring .selector-button .sel-label { display: revert; }
+/* the Fast bolt's wrapper (neon-icons.css 8b) measures at its own display */
+.composer-box.is-measuring .selector-button .nx-bolt { display: inline-flex; }
 .composer-box.is-measuring .composer-hint { display: none; }
 .composer-box.is-measuring .selector-button {
   width: auto; height: 24px; min-height: 24px; padding: 0 8px;
@@ -16603,7 +16642,7 @@ textarea[data-input="composer"]::placeholder { transition: color 220ms ease; }
 @container composer (max-width: 320px) {
   .selector-button .sel-icon { display: grid; }
   .selector-button .sel-label,
-  .selector-button .fast-bolt { display: none; }
+  .selector-button .nx-bolt { display: none; }
   .composer-hint { display: block; }
   .chat-stage[data-shell="2"] .composer-hint { display: block; }
   .selector-button,
@@ -16650,6 +16689,12 @@ textarea[data-input="composer"]::placeholder { transition: color 220ms ease; }
   color: var(--subtle);
 }
 .send-queue-row .icon-button svg { width: 13px; height: 13px; }
+
+/* The model sidecar's Fast row (app.js): the bolt stands in for the row's dot -- lit and striking while Fast mode is
+   on (neon-icons.css 8b), a plain control glyph while it is off. Its 11 px box gives back 3 px so the label lines up
+   with the effort rows' 8 px dots. */
+.effort-row.fast-row > svg.nx, .effort-row.fast-row > .nx-bolt { margin: 0 -1.5px; }
+.effort-row.fast-row:not(.active) > svg.nx { color: var(--subtle); }
 
 .provider-mark {
   background: var(--surface-4);
@@ -16701,7 +16746,7 @@ textarea[data-input="composer"]::placeholder { transition: color 220ms ease; }
 .activity-panel-head .icon-button svg {
   width: 16px; height: 16px;
 }
-.hh-plus-glyph { stroke-width: 2.6; }
+.hh-plus-glyph { --nx-stroke-base: 2.6; }
 .chat-header .icon-button.active,
 .chat-header .icon-button.is-on,
 .history-head .icon-button.is-pinned,
@@ -16796,7 +16841,7 @@ textarea[data-input="composer"]::placeholder { transition: color 220ms ease; }
  *                                         animation-delay: calc(var(--ad, 0) * <stagger> * 1ms - <period>); }
  * Each moving part carries --k1 (its one-shot keyframes) and --kl (its loop keyframes), literal keyframes that
  * neon-icons.js generates from the part's pose (transform and opacity only, so they composite).
- * Nothing here sets an svg's own `animation` on hover (one requested exception: the Fast bolt re-strikes), so the
+ * Nothing here sets an svg's own `animation` on hover (the Fast bolt's re-strike, 8b, plays on its parts and halo), so the
  * bar's and the status wrappers' rhythms (ab-breathe, ab-alert) are never touched by hover.
  * Colour: every ink is a theme token (--danger, --warning, --accent, --accent-2, --positive, --subtle, --muted) and
  * every halo or backlight strength is a body token (--nx-h-*, --nx-bl-*), so a theme layer (NieR Mode, next step,
@@ -16814,6 +16859,8 @@ body {
   --nx-h-quiet-i: .10;
   /* concept "lit steady": a visible bloom on dark; hover ignite (controls, and concepts inside a host) */
   --nx-h-concept-i: .17; --nx-h-hover-i: .30; --nx-h-swell-i: .30;
+  /* the Fast bolt's flash peak (8b): its halo rests at .32 of this, the attention strength */
+  --nx-h-bolt-i: .62;
   --nx-bl-blocked: .086; --nx-bl-attention: .08; --nx-bl-working: .082; --nx-bl-changed: .042;
   /* voices (plan §1): one easing token per theme family; timing and order never change */
   --nx-ease: cubic-bezier(.2, .75, .25, 1);
@@ -16828,6 +16875,7 @@ body[data-theme$="-light"] {
   --nx-h-blocked-i: .08; --nx-h-attention-i: .08; --nx-h-working-i: .08; --nx-h-changed-i: .07;
   --nx-h-quiet-i: .06;
   --nx-h-concept-i: 0; --nx-h-hover-i: 0; --nx-h-swell-i: 0;
+  --nx-h-bolt-i: .26;
   --nx-bl-blocked: .12; --nx-bl-attention: .095; --nx-bl-working: .10; --nx-bl-changed: .05;
 }
 /* Friendly overshoots, Glass glides, Retro steps. */
@@ -16949,18 +16997,60 @@ svg:where(.nx-z0) .nx-p { animation: none; }
 /* Filled chips (Send, Stop, primary buttons) already carry their own fill: the act plays, the halo stays off. */
 .send-button > svg.nx, .primary-button > svg.nx, .soft-button.primary > svg.nx { --nx-hiv: hidden; --nx-fl: none; }
 
-/* ------------------------------------------------------------------ 8b. Fast mode (Jared, G1 item 15) */
-/* The Fast bolt is drawn only while Fast mode is on (the composer model button .fast-bolt, model rows, the
-   transcript meta .meta-fast), so the class is the ON state: the bolt is lit in the warning tone with its core
-   halo, and strikes: it drops 1.5 px with a quick double flicker, then holds; one cycle is 3.2 s and outside the
-   flicker beat its opacity never dips below .6. It moves as a whole on the svg root (composited at any size, so the
-   10-11 px bolt is not stopped by the part size gate), replacing the old drop-shadow `bolt` keyframes. Hovering its
-   button re-strikes it (a renamed copy restarts the cycle): the one place hover touches an svg's own animation,
-   on request. Reduced motion: lit and static. */
-svg.fast-bolt, svg.meta-fast { --nx-ink: var(--warning); --nx-hiv: visible; --nx-hi-a: var(--nx-h-attention-i); animation: nx-fast-strike 3200ms linear infinite; }
-:where(button, [data-action]):where(:hover, :focus-visible) > svg.fast-bolt { animation-name: nx-fast-strike-h; }
-@keyframes nx-fast-strike { 0% { transform: translateY(0); opacity: 1; animation-timing-function: cubic-bezier(.5, 0, .9, .5); } 5% { transform: translateY(1.5px); opacity: 1; } 7% { opacity: .35; } 9% { opacity: 1; } 11% { opacity: .4; } 13% { opacity: 1; animation-timing-function: cubic-bezier(.2, .7, .3, 1); } 24%, 100% { transform: translateY(0); opacity: 1; } }
-@keyframes nx-fast-strike-h { 0% { transform: translateY(0); opacity: 1; animation-timing-function: cubic-bezier(.5, 0, .9, .5); } 5% { transform: translateY(1.5px); opacity: 1; } 7% { opacity: .35; } 9% { opacity: 1; } 11% { opacity: .4; } 13% { opacity: 1; animation-timing-function: cubic-bezier(.2, .7, .3, 1); } 24%, 100% { transform: translateY(0); opacity: 1; } }
+/* ------------------------------------------------------------------ 8b. Fast mode (Jared, G1 item 15; the strike, 3D) */
+/* OWNER of this block: Neon icons, surface step 3D (2026-10-02). The Fast bolt is drawn only while Fast mode is on
+   (the composer model chip and the picker's model row .fast-bolt, the transcript meta .meta-fast, the model sidecar's
+   Fast row .fast-row-bolt), so the class is the ON state: the bolt is lit in the warning tone, and it STRIKES like
+   lightning, never shaking or moving as a whole (Jared, 2026-10-02: "think of lightning being a crack, like you see
+   lightning coming down from the sky"):
+     1. the crack: the lit bolt snaps dark and its four bands (neon-icons.js lightning: spike, zig, neck, point) light
+        top to bottom, 40 ms apart, so the whole bolt cracks down in about 130 ms;
+     2. the flash: the halo and the backlight spike, dip, and flash again, like a real strike's return stroke;
+     3. the afterglow: both settle to the steady lit state over about 0.7 s;
+     4. the hold: about 4.2 s of steady light until the next strike (a 5.2 s cycle).
+   Everything animates opacity only (the bands, the merged halo path, the host's backlight), so it composites; there
+   is no clip, dash or stroke-opacity in the loop. The halo's stroke-opacity is a strong token (--nx-h-bolt-i) and its
+   element opacity carries the curve (.32 at rest = the attention tone's strength). The backlight is the ::before of
+   the .nx-bolt wrapper the hosts draw round the svg. Hovering the host re-strikes once: a one-shot copy joins the
+   animation list (the loop keeps running underneath, so leaving the host does not strike again). The keyframes are
+   generated from one timeline in milliseconds. Reduced motion: lit and static. NieR: an ink crack in steps, no flash. */
+.nx-bolt { position: relative; isolation: isolate; display: inline-flex; flex: none; line-height: 0; vertical-align: middle; }
+.nx-bolt > svg.nx { display: block; }
+.nx-bolt::before {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 200%; height: 200%; translate: -50% -50%;
+  border-radius: 50%; pointer-events: none; z-index: -1;
+  background: radial-gradient(closest-side, var(--warning), transparent);
+  opacity: var(--nx-bl-attention); animation: nx-bolt-bl 5200ms linear infinite;
+}
+body[data-theme$="-light"] .nx-bolt::before { animation-name: nx-bolt-bl-l; }
+svg.fast-bolt, svg.meta-fast, svg.fast-row-bolt { --nx-ink: var(--warning); --nx-hiv: visible; --nx-hi-a: var(--nx-h-bolt-i); animation: none; opacity: 1; }
+svg.fast-bolt .nx-h, svg.meta-fast .nx-h, svg.fast-row-bolt .nx-h { opacity: .32; animation: nx-bolt-halo 5200ms linear infinite; }
+svg.fast-bolt .nx-p0, svg.meta-fast .nx-p0, svg.fast-row-bolt .nx-p0 { animation: nx-bolt-0 5200ms linear infinite; }
+svg.fast-bolt .nx-p1, svg.meta-fast .nx-p1, svg.fast-row-bolt .nx-p1 { animation: nx-bolt-1 5200ms linear infinite; }
+svg.fast-bolt .nx-p2, svg.meta-fast .nx-p2, svg.fast-row-bolt .nx-p2 { animation: nx-bolt-2 5200ms linear infinite; }
+svg.fast-bolt .nx-p3, svg.meta-fast .nx-p3, svg.fast-row-bolt .nx-p3 { animation: nx-bolt-3 5200ms linear infinite; }
+/* hover re-strikes once (hosts: a button, a [data-action] row, the transcript's model chip) */
+:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt::before { animation: nx-bolt-bl 5200ms linear infinite, nx-bolt-bl-h 1100ms linear 1; }
+body[data-theme$="-light"] :where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt::before { animation-name: nx-bolt-bl-l, nx-bolt-bl-lh; }
+:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-h { animation: nx-bolt-halo 5200ms linear infinite, nx-bolt-halo-h 1100ms linear 1; }
+:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-p0 { animation: nx-bolt-0 5200ms linear infinite, nx-bolt-0h 1100ms linear 1; }
+:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-p1 { animation: nx-bolt-1 5200ms linear infinite, nx-bolt-1h 1100ms linear 1; }
+:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-p2 { animation: nx-bolt-2 5200ms linear infinite, nx-bolt-2h 1100ms linear 1; }
+:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-p3 { animation: nx-bolt-3 5200ms linear infinite, nx-bolt-3h 1100ms linear 1; }
+@keyframes nx-bolt-0 { 0%, 1% { opacity: 0.12; } 1.23%, 100% { opacity: 1; } }
+@keyframes nx-bolt-0h { 0%, 4.73% { opacity: 0.12; } 5.82%, 100% { opacity: 1; } }
+@keyframes nx-bolt-1 { 0%, 1.77% { opacity: 0.12; } 2%, 100% { opacity: 1; } }
+@keyframes nx-bolt-1h { 0%, 8.36% { opacity: 0.12; } 9.45%, 100% { opacity: 1; } }
+@keyframes nx-bolt-2 { 0%, 2.54% { opacity: 0.12; } 2.77%, 100% { opacity: 1; } }
+@keyframes nx-bolt-2h { 0%, 12% { opacity: 0.12; } 13.09%, 100% { opacity: 1; } }
+@keyframes nx-bolt-3 { 0%, 3.31% { opacity: 0.12; } 3.54%, 100% { opacity: 1; } }
+@keyframes nx-bolt-3h { 0%, 15.64% { opacity: 0.12; } 16.73%, 100% { opacity: 1; } }
+@keyframes nx-bolt-halo { 0% { opacity: 0; } 3.54% { opacity: 0; } 3.81% { opacity: 1; } 4.73% { opacity: 0.45; } 5.5% { opacity: 0.95; } 7.04% { opacity: 0.7; } 20%, 100% { opacity: 0.32; } }
+@keyframes nx-bolt-halo-h { 0% { opacity: 0; } 16.73% { opacity: 0; } 18% { opacity: 1; } 22.36% { opacity: 0.45; } 26% { opacity: 0.95; } 33.27% { opacity: 0.7; } 94.55%, 100% { opacity: 0.32; } }
+@keyframes nx-bolt-bl { 0% { opacity: 0; } 3.54% { opacity: 0; } 3.81% { opacity: 0.42; } 4.73% { opacity: 0.12; } 5.5% { opacity: 0.34; } 7.04% { opacity: 0.2; } 20%, 100% { opacity: 0.08; } }
+@keyframes nx-bolt-bl-h { 0% { opacity: 0; } 16.73% { opacity: 0; } 18% { opacity: 0.42; } 22.36% { opacity: 0.12; } 26% { opacity: 0.34; } 33.27% { opacity: 0.2; } 94.55%, 100% { opacity: 0.08; } }
+@keyframes nx-bolt-bl-l { 0% { opacity: 0; } 3.54% { opacity: 0; } 3.81% { opacity: 0.36; } 4.73% { opacity: 0.1; } 5.5% { opacity: 0.28; } 7.04% { opacity: 0.17; } 20%, 100% { opacity: 0.095; } }
+@keyframes nx-bolt-bl-lh { 0% { opacity: 0; } 16.73% { opacity: 0; } 18% { opacity: 0.36; } 22.36% { opacity: 0.1; } 26% { opacity: 0.28; } 33.27% { opacity: 0.17; } 94.55%, 100% { opacity: 0.095; } }
 
 /* ------------------------------------------------------------------ 9. the status set (plan §3) */
 /* The wrapper carries the list rhythm; .nx-st-base is the static lit layer, .nx-st-move the moving part. Wired
@@ -17018,9 +17108,9 @@ body[data-theme$="-light"] .nx-st-waiting::before { animation-name: nx-bl-needs-
 /* Both routes (the media query and body.pm56-reduced) stop every neon animation and transition outright; the base
    style is the finished, lit pose, so ink, halo and weight still carry the state with no infinite animation. */
 @media (prefers-reduced-motion: reduce) {
-  svg.nx, svg.nx .nx-p, svg.nx .nx-h, .nx-st, .nx-st::before { animation: none !important; transition: none !important; }
+  svg.nx, svg.nx .nx-p, svg.nx .nx-h, .nx-st, .nx-st::before, .nx-bolt::before { animation: none !important; transition: none !important; }
 }
-body.pm56-reduced svg.nx, body.pm56-reduced svg.nx .nx-p, body.pm56-reduced svg.nx .nx-h, body.pm56-reduced .nx-st, body.pm56-reduced .nx-st::before { animation: none !important; transition: none !important; }
+body.pm56-reduced svg.nx, body.pm56-reduced svg.nx .nx-p, body.pm56-reduced svg.nx .nx-h, body.pm56-reduced .nx-st, body.pm56-reduced .nx-st::before, body.pm56-reduced .nx-bolt::before { animation: none !important; transition: none !important; }
 
 /* ------------------------------------------------------------------ 11. NieR Mode (PMConcept7 contract) */
 /* OWNER of this section: NieR Mode, step N-A (2026-10-02); the rest of the file is the foundation's. Every rule is
@@ -17031,7 +17121,7 @@ body.pm56-reduced svg.nx, body.pm56-reduced svg.nx .nx-p, body.pm56-reduced svg.
    Motion is stepped (the NieR voice), transform and opacity only. */
 html[data-o55-nier="on"] body {
   --nx-h-blocked-i: 0; --nx-h-attention-i: 0; --nx-h-working-i: 0; --nx-h-changed-i: 0; --nx-h-quiet-i: 0;
-  --nx-h-concept-i: 0; --nx-h-hover-i: 0; --nx-h-swell-i: 0;
+  --nx-h-concept-i: 0; --nx-h-hover-i: 0; --nx-h-swell-i: 0; --nx-h-bolt-i: 0;
   --nx-bl-blocked: 0; --nx-bl-attention: 0; --nx-bl-working: 0; --nx-bl-changed: 0;
   --nx-ease: steps(4, end); --nx-le: steps(6, end); --nx-ease-c: steps(3, end);
 }
@@ -17061,11 +17151,10 @@ html[data-o55-nier="on"] [data-action]:hover > :not([data-action]) > svg.nx-r-co
 html[data-o55-nier="on"] [role="button"]:hover > svg.nx-r-control .nx-c,
 html[data-o55-nier="on"] summary:hover > svg.nx-r-control .nx-c { animation: o55n-nx-flick 240ms steps(1, end); }
 @keyframes o55n-nx-flick { 0% { opacity: .45; } 33% { opacity: 1; } 66% { opacity: .45; } 100% { opacity: 1; } }
-/* The Fast bolt strikes in steps: the same drop and double flicker, every frame held (NieR's stepped motion). */
-html[data-o55-nier="on"] svg.fast-bolt, html[data-o55-nier="on"] svg.meta-fast { animation-name: o55n-nx-fast; animation-timing-function: steps(1, end); }
-html[data-o55-nier="on"] :where(button, [data-action]):where(:hover, :focus-visible) > svg.fast-bolt { animation-name: o55n-nx-fast-h; }
-@keyframes o55n-nx-fast { 0%, 24%, 100% { transform: translateY(0); opacity: 1; } 5% { transform: translateY(1.5px); opacity: 1; } 7% { transform: translateY(1.5px); opacity: .35; } 9% { opacity: 1; } 11% { opacity: .4; } 13% { opacity: 1; } }
-@keyframes o55n-nx-fast-h { 0%, 24%, 100% { transform: translateY(0); opacity: 1; } 5% { transform: translateY(1.5px); opacity: 1; } 7% { transform: translateY(1.5px); opacity: .35; } 9% { opacity: 1; } 11% { opacity: .4; } 13% { opacity: 1; } }
+/* The Fast bolt is an ink crack in steps (3D): the bands light top to bottom, every frame held; no flash, because the
+   halo and the backlight are gone. */
+html[data-o55-nier="on"] .nx-bolt > svg.nx .nx-p { animation-timing-function: steps(1, end); }
+html[data-o55-nier="on"] .nx-bolt::before { display: none; }
 /* The status set keeps every silhouette apart, because NieR's inks are close:
    needs-you is an inverted ink block with paper strokes and a paper "?" (it outshines everything); */
 html[data-o55-nier="on"] .nx-st-waiting { background: var(--nx-bk, var(--o55-nier-ink)); box-shadow: 0 0 0 2px var(--nx-bk, var(--o55-nier-ink)); }
@@ -17157,6 +17246,13 @@ html[data-o55-nier="on"] .working-head .work-phase-icon > svg.nx-r-status { anim
 .chat-state > .nx-st { margin-right: 1px; }
 /* the decision panel is needs-you: its head glyph keeps the canon accent (ACD-469) on the neutral tile */
 .decision-top > .event-icon { color: var(--accent); }
+
+/* ------------------------------------------------------------------ 13. 3D surfaces (step 3D) */
+/* OWNER of this section: Neon icons, surface step 3D (2026-10-02). The 3D surfaces keep their rules in their owner
+   sheets (composer.css, composer-state.css, lens.css, turn-stage.css, transcript.css, history.css) and the Fast
+   bolt's strike is block 8b; only the NieR restatement of an owner sheet's rhythm lives here, under the contract. */
+/* the Context Lens trigger's breathe (Mute, Focus) is stepped like every NieR rhythm */
+html[data-o55-nier="on"] .pm-lens-trigger.is-on svg.nx { animation-timing-function: steps(3, end); }
 
 /* nier.css — NieR Mode for the 5.6 Pro concept: the palette, the type and the base look. OWNER: NieR Mode, step N-A
  * (2026-10-02). Closes the sheet (build.py CSS_LAST, after neon-icons.css). The engine is nier.js; the parts are
@@ -22437,7 +22533,8 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
  *   (0 = rest, 1 = pose), so loop keyframes are literal and the rest pose is the finished, lit pose.
  *   One-shot kind per part: arrive (default, pose -> rest), bounce (nx-pb: rest -> pose -> rest), reveal (nx-pc:
  *   clip from --ac to --ae). nx-pn parts sit out loops. The glyph's loop shape is its act (root class nx-a-<act>).
- * - The size gate (plan §1), by the size argument: below 12 no part moves (all parts render static); 12-14 a
+ * - The size gate (plan §1), by the size argument: below 12 no part moves (all parts render static, except the
+ *   opacity-only reveal parts flagged x: the Fast bolt's crack at 10-11 px, on Jared's request); 12-14 a
  *   travel part needs >= 1.5 rendered px of travel and a reveal part (clip or opacity only) >= 1.5 px of length,
  *   otherwise it renders static; 15 and up everything moves. Context CSS corrects a context that renders an icon
  *   below its size argument by stopping .nx-p there.
@@ -22549,7 +22646,8 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
     /* ======================================================================
        THE GLYPHS. Part poses: ax/ay translate and cr circle radius (user units), ar rotate (deg, + = clockwise),
        ao opacity at the pose, ad stagger (ms), ac/ae clip insets on the view box (user units, top right bottom
-       left), o pivot [x,y] or 'c' (fill-box centre), b bounce one-shot, n sits out loops.
+       left), o pivot [x,y] or 'c' (fill-box centre), b bounce one-shot, n sits out loops, x an opacity-only
+       reveal that stays a part below 12 px (the Fast bolt's crack only).
        Acts (loop shapes, neon-icons.css nx-L-*): strike, seq, fill, wave, swap, spin, hop, drop, ratchet, blink.
        ====================================================================== */
     var BUBBLE = 'M4.5 5.5h15A1.5 1.5 0 0 1 21 7v8.5a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 3.5V17h-1A1.5 1.5 0 0 1 3 15.5V7a1.5 1.5 0 0 1 1.5-1.5z';
@@ -22684,7 +22782,14 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
       info: G([C(12, 12, 9), M(P('M12 11v5M12 8h.01'), { ao: .25, b: 1 })], 'seq'),
       check: G([M(P('m5 12 4 4L19 6'), { ao: .6, ac: '0 20 0 4', ae: '0 4 0 4' })], 'seq'),
       branch: G([P('M6 3v12a4 4 0 0 0 4 4h8'), C(6, 3, 2), C(18, 19, 2), P('M6 9h7a4 4 0 0 0 4-4V3'), M(C(17, 3, 2), { ao: .2, b: 1 })], 'seq', 'control'),
-      lightning: G([M(P('M13 2 4 14h7l-1 8 10-13h-7Z'), { ay: 2.6, b: 1 })], 'strike'),
+      /* lightning: a crack, never a shake (Jared, 2026-10-02: "think of lightning being a crack, like you see lightning
+         coming down from the sky"). The bolt's outline (M13 2 4 14h7l-1 8 10-13h-7Z) is cut into four bands, top to
+         bottom: the spike, the zig, the neck and the point, each its own part, so a crack can travel down it. The Fast
+         bolt's strike (neon-icons.css 8b) blanks the bolt and lights the bands top to bottom, then flashes the halo.
+         The parts are opacity-only reveals (x: they still render as parts below 12 px, where the Fast bolt lives) and
+         sit out the generic loops (n); in a button host the hover one-shot lights them in turn. */
+      lightning: G([M(P('M13 8V2L8.5 8'), { ao: .15, n: 1, x: 1 }), M(P('M8.5 8 4 14h7M13 8v1h7l-3.85 5'), { ao: .15, n: 1, x: 1, ad: 40 }),
+        M(P('M11 14l-.5 4M16.15 14l-3.07 4'), { ao: .15, n: 1, x: 1, ad: 80 }), M(P('M10.5 18 10 22l3.08-4'), { ao: .15, n: 1, x: 1, ad: 120 })], 'none'),
       star: G([M(P('m12 2 3 6 7 .9-5 4.8 1.3 6.8L12 17l-6.3 3.5L7 13.7 2 8.9 9 8Z'), { ar: 18, o: [12, 11.5], b: 1 })], 'wave'),
       image: G([R(3, 3, 18, 18, 2), P('m21 15-5-5L5 21'), M(C(8.5, 8.5, 1.5), { ao: .2, b: 1 })], 'seq'),
       code: G([M(P('m8 8-4 4 4 4'), { ax: -3, b: 1 }), M(P('M16 8l4 4-4 4'), { ax: 3, b: 1 }), P('M13.5 5.5l-3 13')], 'swap'),
@@ -22865,7 +22970,9 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
     }
     /* the size gate for one moving part at `size` px (plan §1) */
     function moves(p, size, origin) {
-      if (size < 12) return false;
+      /* x: an opacity-only reveal that keeps its part below 12 px (the Fast bolt's crack, on Jared's request; it
+         travels nowhere, so nothing smears at 10-11 px) */
+      if (size < 12) return !!(p.m.x && !travels(p.m));
       if (size >= 15) return true;
       var m = p.m, k = size / 24, b = [1e9, 1e9, -1e9, -1e9];
       p.els.forEach(function (e) { var q = boxOf(e); b = [Math.min(b[0], q[0]), Math.min(b[1], q[1]), Math.max(b[2], q[2]), Math.max(b[3], q[3])]; });
@@ -27949,7 +28056,7 @@ window.PM56_NIER_FACES = [
           ' · ' + labelFor('effort', rt.effort, 'effort ' + NOT_REPORTED) + ' effort' +
           (rt.persona ? ' · ' + rt.persona : '') +
           (rt.fast ? ' · fast route' : '')) + '>' +
-        (rt.fast ? icon('lightning', 10, 'meta-fast') : '') +
+        (rt.fast ? '<span class="nx-bolt">' + icon('lightning', 10, 'meta-fast') + '</span>' : '') +
         '<b>' + esc(rt.model || NOT_REPORTED) + '</b></span>');
 
       /* --- working for / worked for ---------------------------------------- */
@@ -29069,8 +29176,12 @@ window.PM56_NIER_FACES = [
   snapshotFixture();
 
   /* ------------------------------------------------------------ glyphs ---
-     app.js's icon set has no trash, link, passage or outbox glyph. Inline SVG
-     only — this project forbids emoji glyphs outright. */
+     The four glyphs this module once drew itself (trash, link, passage,
+     outbox) live in the neon glyph registry (neon-icons.js, window.PM56_NEON:
+     one drawing per concept; passage is the shared page glyph), so every
+     glyph here goes through it, read at call time. GLYPH is only the fallback
+     for a page where neon-icons.js failed to load. Inline SVG only — this
+     project forbids emoji glyphs outright. */
   var GLYPH = {
     trash: '<path d="M4 7h16M10 4h4"/><path d="M6 7l1 12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-12"/><path d="M10 11v6M14 11v6"/>',
     link: '<path d="M10.5 13.5a4 4 0 0 0 5.7 0l2.3-2.3a4 4 0 0 0-5.7-5.7l-1.2 1.2"/><path d="M13.5 10.5a4 4 0 0 0-5.7 0l-2.3 2.3a4 4 0 0 0 5.7 5.7l1.2-1.2"/>',
@@ -29078,6 +29189,8 @@ window.PM56_NIER_FACES = [
     outbox: '<path d="M3 14v5a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-5"/><path d="M7 14h3l1 2h2l1-2h3"/><path d="M12 3v8M8.5 7.5 12 11l3.5-3.5"/>'
   };
   function svg(name, size) {
+    var N = window.PM56_NEON;
+    if (N && typeof N.icon === 'function') return N.icon(name, size);
     return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor"' +
       ' stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (GLYPH[name] || '') + '</svg>';
   }
@@ -31031,7 +31144,7 @@ window.PM56_NIER_FACES = [
       type: 'plan',
       take: takeOf(ctx),
       key: 'plan:' + (revise ? 'revise' : 'review') + ':' + rev,
-      icon: 'document',
+      icon: 'plan',
       title: revise ? 'Revise the Plan' : 'Plan ready for review',
       subtitle: art.summary || '',
       /* `DEFAULT.planRevision` is a literal 3 while `artifacts[plan-query].version`
@@ -31083,7 +31196,7 @@ window.PM56_NIER_FACES = [
       type: 'permission',
       take: takeOf(ctx),
       key: 'perm:host',
-      icon: 'lock',
+      icon: 'shield',
       title: 'Permission required',
       subtitle: 'Execution host',
       meta: [{ text: 'Execution host', tone: 'need' }, { text: 'Once', tone: '' }],
@@ -31157,6 +31270,10 @@ window.PM56_NIER_FACES = [
   }
 
   /* ============================================================== FRAGMENTS */
+  /* Glyphs come from the neon registry through ctx.icon (one drawing per concept: the plan decision draws the plan's
+     folded map, the permission decision the shield, as the transcript cards do). They are concept or control glyphs
+     with no loop, so nothing inside a decision sheet runs an infinite animation; the morph's pill face remounts, so
+     it carries no neon act of its own (its orrery is a spinner in token colour). */
   function iconOf(ctx, name, size) { return ctx.icon(name, size || 12); }
 
   function pills(ctx, m) {
@@ -34440,22 +34557,22 @@ window.PM56_NIER_FACES = [
     items: [
       { id: 'bs-provider-arch', kind: 'workflow', destinationKind: 'brainstorm',
         label: 'BrainStorm · Provider Architecture', detail: '4 participants',
-        refId: 'bs-1', glyph: 'users' },
+        refId: 'bs-1', glyph: 'kind-brainstorm' },
       { id: 'bs-provider-arch:ana', kind: 'participant', destinationKind: 'brainstorm',
         label: 'Provider Architecture → Ana Ruiz', detail: 'direct to participant',
-        refId: 'bs-1', participantId: 'p-ana', glyph: 'users' },
+        refId: 'bs-1', participantId: 'p-ana', glyph: 'user' },
       { id: 'crew-query-perf', kind: 'workflow', destinationKind: 'crew',
         label: 'Crew · Query Performance', detail: '3 agents · coordinator',
-        refId: 'crew-1', glyph: 'users' },
+        refId: 'crew-1', glyph: 'kind-crew' },
       { id: 'review-0043', kind: 'workflow', destinationKind: 'review',
         label: 'Review · Migration 0043', detail: '2 reviewers · frozen',
-        refId: 'rev-1', glyph: 'eye' },
+        refId: 'rev-1', glyph: 'kind-review' },
       { id: 'room-release', kind: 'workflow', destinationKind: 'chat_room',
         label: 'Chat Room · Release War Room', detail: '6 present',
-        refId: 'room-1', glyph: 'brain' },
+        refId: 'room-1', glyph: 'kind-chat_room' },
       { id: 'plan-query-revise', kind: 'plan-revise', destinationKind: 'plan_revision',
         label: 'Revising Plan · V5', detail: 'feedback to the revision agent',
-        refId: 'plan-query', glyph: 'document' },
+        refId: 'plan-query', glyph: 'plan' },
       { id: 'components-migration', kind: 'component-list', destinationKind: 'assistant',
         label: 'Component list · Migration 0043', detail: '7 components selected',
         refId: 'cl-1', glyph: 'code' }
@@ -34498,6 +34615,16 @@ window.PM56_NIER_FACES = [
     return null;
   }
   function composerEl() { return document.querySelector('textarea[data-input="composer"]'); }
+
+  /* One glyph per concept (neon icons, plan §2): a destination shows its kind mark whoever supplied the row. The
+     four collaboration kinds draw their wand kind marks, one participant the person glyph, a plan revision the
+     plan's folded map; any other row keeps the glyph its provider named. This also ends the old swap (brainstorm
+     drew `users`, chat_room `brain`) and crew's generic `users`. */
+  var DEST_GLYPH = { brainstorm: 'kind-brainstorm', crew: 'kind-crew', review: 'kind-review', chat_room: 'kind-chat_room', plan_revision: 'plan' };
+  function destGlyph(d) {
+    if (d.kind === 'participant') return 'user';
+    return DEST_GLYPH[d.destinationKind] || d.glyph || 'users';
+  }
 
   function destAccentVar(kind) {
     /* Never a literal colour: every destination reuses an existing theme token. */
@@ -34740,7 +34867,7 @@ window.PM56_NIER_FACES = [
     var label = d.label || 'Destination';
     var detail = d.detail || '';
     var short = splitDetail(detail);
-    var glyph = d.glyph || 'users';
+    var glyph = destGlyph(d);
     var lead = (kind === 'plan-revise') ? '' : 'To:';
 
     return '<div class="cs-ribbon" data-k="cs-ribbon" data-kind="' + esc(kind) + '"' +
@@ -34748,7 +34875,7 @@ window.PM56_NIER_FACES = [
       '<button class="cs-ribbon-main" data-action="cs-open-destinations"' +
       ' data-hover-key="cs-dest" data-hover-tip="' + esc(label + (detail ? ' · ' + detail : '') + ' — open eligible destinations') + '"' +
       ' aria-label="' + esc('Destination: ' + label + '. Open eligible destinations.') + '">' +
-      '<span class="cs-ribbon-glyph">' + icon(glyph, 13) + '</span>' +
+      '<span class="cs-ribbon-glyph">' + icon(glyph, 16) + '</span>' +
       '<span class="cs-ribbon-copy">' +
       (lead ? '<span class="cs-ribbon-lead">' + lead + '</span> ' : '') +
       '<b>' + esc(label) + '</b>' +
@@ -34845,7 +34972,7 @@ window.PM56_NIER_FACES = [
         ((cur.participantId || null) === (r.participantId || null));
       return '<button class="cs-dest-row' + (on ? ' is-current' : '') + '" data-action="cs-pick-destination"' +
         ' data-id="' + esc(r.id) + '" style="--cs-dest:var(--' + destAccentVar(r.kind) + ')">' +
-        '<span class="cs-dest-glyph">' + icon(r.glyph || 'users', 14) + '</span>' +
+        '<span class="cs-dest-glyph">' + icon(destGlyph(r), 14) + '</span>' +
         '<span class="cs-dest-copy"><strong>' + esc(r.label) + '</strong>' +
         '<span>' + esc(r.detail || '') + ' · ' + esc(r.destinationKind || r.kind) + '</span></span>' +
         (on ? '<span class="cs-dest-check">' + icon('check', 13) + '</span>' : '') +
@@ -36805,9 +36932,13 @@ window.PM56_NIER_FACES = [
   };
   AT.MATERIALIZATION_LABELS = MATERIALIZATION_LABELS;
 
-  /* Custom inline icons for kinds/origins app.js's PATHS map does not carry.
-     Same convention as app.js's icon(): viewBox 0 0 24 24, stroked,
-     currentColor, stroke-width 1.8. */
+  /* The four kind/origin glyphs this module once drew itself (folder, upload,
+     clipboard, camera) live in the neon glyph registry (neon-icons.js,
+     window.PM56_NEON: one drawing per concept), so attIcon() is ctx.icon()
+     whenever the registry draws the name. CUSTOM_ICON_PATHS is only the
+     fallback for a page where neon-icons.js failed to load (app.js's own
+     fallback table has none of the four). Same convention as app.js's icon():
+     viewBox 0 0 24 24, stroked, currentColor, stroke-width 1.8. */
   var CUSTOM_ICON_PATHS = {
     folder: '<path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/>',
     upload: '<path d="M12 21V9M7 14l5-5 5 5"/><path d="M4 21h16"/>',
@@ -36815,7 +36946,8 @@ window.PM56_NIER_FACES = [
     camera: '<path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z"/><circle cx="12" cy="14" r="3.5"/>'
   };
   function attIcon(ctx, name, size, cls) {
-    var custom = CUSTOM_ICON_PATHS[name];
+    var N = window.PM56_NEON;
+    var custom = !(N && typeof N.has === 'function' && N.has(name)) && CUSTOM_ICON_PATHS[name];
     if (custom) {
       return '<svg class="' + (cls || '') + '" width="' + size + '" height="' + size +
         '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"' +
@@ -66999,10 +67131,18 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', observe); else setTimeout(observe, 0);
 
   /* ---- the header control ---------------------------------------------------- */
+  /* The speaker is the neon registry's speaker / speaker-off (neon-icons.js, window.PM56_NEON: one drawing per
+     concept, at the family stroke), read at call time. SPK is only the fallback for a page where neon-icons.js
+     failed to load. */
   var SPK = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/>';
+  function speakerGlyph(on) {
+    var N = window.PM56_NEON;
+    if (N && typeof N.icon === 'function') return N.icon(on ? 'speaker' : 'speaker-off', 14);
+    return SPK + (on ? '<path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/>' : '<path d="m16 9 5 6M21 9l-5 6"/>') + '</svg>';
+  }
   EXT.slot('headerExtras', function (ctx) {
     var on = !S.muted;
-    var glyph = SPK + (on ? '<path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/>' : '<path d="m16 9 5 6M21 9l-5 6"/>') + '</svg>';
+    var glyph = speakerGlyph(on);
     var tip = on ? 'Sound on · click to mute' : 'Sound off · click to turn on';
     return '<button class="icon-button tx-sound-btn' + (on ? '' : ' is-muted') + '" data-k="tx-sound" data-action="chat-sound-toggle" aria-pressed="' + (on ? 'true' : 'false') + '"'
       + ' data-hover-key="tx-sound" data-hover-tip="' + tip + '" aria-label="' + tip + '">' + glyph + '</button>';
@@ -68986,7 +69126,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const showDrafts=drafts.length&&!state.composer.trim();
     const capDots=renderCapabilityDots();
     const sendBtn=sendButtonHtml();
-    return `<div class="composer">${extRender('composerBelow',{position:'above'})}<div class="composer-box" data-k="composer-box">${extRender('composerRibbon',{})}${extRender('composerTray',{})}<div class="composer-field"><textarea class="composer-input" data-input="composer" placeholder="Ask Puppet Master, use natural language, or type / for commands…">${esc(state.composer)}</textarea><div class="composer-infield"><div class="composer-infield-l"><button class="icon-button" data-action="attach"${hoverAttrs('attach','Attach files or images')}>${icon('attach',16)}</button><span class="capability-indicators">${capDots}</span></div>${sendBtn}</div></div><div class="composer-tools"><button class="selector-button active" data-kind="persona" data-action="open-menu" data-menu="persona" data-menu-anchor="persona"${hoverAttrs('sel-persona','Persona · '+state.persona)}><span class="sel-icon">${icon('users',13)}</span><span class="sel-label">${esc(state.persona)}</span></button><button class="selector-button active" data-kind="model" data-action="open-menu" data-menu="model" data-menu-anchor="model"${hoverAttrs('sel-model','Model · '+m.name)}><span class="sel-icon">${providerMark(m.provider,13)}</span><span class="sel-label">${esc(m.name)}</span>${state.fast&&m.fast?icon('lightning',11,'fast-bolt'):''}</button><button class="selector-button active" data-kind="mode" data-action="open-menu" data-menu="mode" data-menu-anchor="mode"${hoverAttrs('sel-mode','Mode · '+state.mode)}><span class="sel-icon">${modeGlyph(state.mode,13)}</span><span class="sel-label">${esc(state.mode)}</span></button><button class="selector-button active" data-kind="permissions" data-action="open-menu" data-menu="permissions" data-menu-anchor="permissions"${hoverAttrs('sel-permissions','Permissions · '+state.permissions)}><span class="sel-icon">${icon('lock',13)}</span><span class="sel-label">${esc(state.permissions)}</span></button><button class="icon-button ${Object.values(state.capabilities).some(x=>x===true||x==='On'||x==='Focus'||x==='Expanded')?'active':''}" data-action="open-menu" data-menu="wand" data-menu-anchor="wand"${hoverAttrs('wand','Capabilities and Goal Mode')}>${icon('wand',14)}</button></div><div class="composer-hint">${esc(state.persona)} · ${esc(m.name)} · ${esc(state.mode)} · ${esc(state.permissions)}</div></div></div>`;
+    /* Neon (3D): one glyph per concept -- Persona is the person glyph, Permissions the shield (as on the permission
+       card); the picker glyphs are controls (unlit, they ignite on hover). The Fast bolt sits in its .nx-bolt
+       wrapper, whose backlight flashes with the strike (neon-icons.css 8b). */
+    return `<div class="composer">${extRender('composerBelow',{position:'above'})}<div class="composer-box" data-k="composer-box">${extRender('composerRibbon',{})}${extRender('composerTray',{})}<div class="composer-field"><textarea class="composer-input" data-input="composer" placeholder="Ask Puppet Master, use natural language, or type / for commands…">${esc(state.composer)}</textarea><div class="composer-infield"><div class="composer-infield-l"><button class="icon-button" data-action="attach"${hoverAttrs('attach','Attach files or images')}>${icon('attach',16)}</button><span class="capability-indicators">${capDots}</span></div>${sendBtn}</div></div><div class="composer-tools"><button class="selector-button active" data-kind="persona" data-action="open-menu" data-menu="persona" data-menu-anchor="persona"${hoverAttrs('sel-persona','Persona · '+state.persona)}><span class="sel-icon">${icon('user',13)}</span><span class="sel-label">${esc(state.persona)}</span></button><button class="selector-button active" data-kind="model" data-action="open-menu" data-menu="model" data-menu-anchor="model"${hoverAttrs('sel-model','Model · '+m.name)}><span class="sel-icon">${providerMark(m.provider,13)}</span><span class="sel-label">${esc(m.name)}</span>${state.fast&&m.fast?`<span class="nx-bolt">${icon('lightning',11,'fast-bolt')}</span>`:''}</button><button class="selector-button active" data-kind="mode" data-action="open-menu" data-menu="mode" data-menu-anchor="mode"${hoverAttrs('sel-mode','Mode · '+state.mode)}><span class="sel-icon">${modeGlyph(state.mode,13)}</span><span class="sel-label">${esc(state.mode)}</span></button><button class="selector-button active" data-kind="permissions" data-action="open-menu" data-menu="permissions" data-menu-anchor="permissions"${hoverAttrs('sel-permissions','Permissions · '+state.permissions)}><span class="sel-icon">${icon('shield',13)}</span><span class="sel-label">${esc(state.permissions)}</span></button><button class="icon-button ${Object.values(state.capabilities).some(x=>x===true||x==='On'||x==='Focus'||x==='Expanded')?'active':''}" data-action="open-menu" data-menu="wand" data-menu-anchor="wand"${hoverAttrs('wand','Capabilities and Goal Mode')}>${icon('wand',14)}</button></div><div class="composer-hint">${esc(state.persona)} · ${esc(m.name)} · ${esc(state.mode)} · ${esc(state.permissions)}</div></div></div>`;
   }
 
   function queueOf(){
@@ -70291,7 +70434,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   function groupModels(models){
     const by={};models.forEach(m=>(by[m.provider]??=[]).push(m));
-    return Object.entries(by).map(([p,list])=>`<div class="menu-section-label">${esc(p)}</div>${list.map(m=>`<div class="model-row ${pickerSelection().model===m.id?'active':''}" data-action="set-model" data-value="${esc(m.id)}" data-submenu="model:${esc(m.id)}"><span class="provider-mark">${providerMark(m.provider,16)}</span><span class="model-copy"><strong>${esc(m.name)} ${pickerSelection().model===m.id&&pickerSelection().fast&&m.fast?icon('lightning',10,'fast-bolt'):''}</strong><span class="model-sub"><span class="model-account">${esc(D.accountNick(m.accountId,m.account))}</span>${effortWords(m)}</span></span><button class="favorite ${isFavorite(m.id)?'active':''}" data-action="toggle-favorite" data-value="${esc(m.id)}" title="${isFavorite(m.id)?'Remove from':'Add to'} favorites">${icon('star',12)}</button></div>`).join('')}`).join('');
+    return Object.entries(by).map(([p,list])=>`<div class="menu-section-label">${esc(p)}</div>${list.map(m=>`<div class="model-row ${pickerSelection().model===m.id?'active':''}" data-action="set-model" data-value="${esc(m.id)}" data-submenu="model:${esc(m.id)}"><span class="provider-mark">${providerMark(m.provider,16)}</span><span class="model-copy"><strong>${esc(m.name)} ${pickerSelection().model===m.id&&pickerSelection().fast&&m.fast?`<span class="nx-bolt">${icon('lightning',10,'fast-bolt')}</span>`:''}</strong><span class="model-sub"><span class="model-account">${esc(D.accountNick(m.accountId,m.account))}</span>${effortWords(m)}</span></span><button class="favorite ${isFavorite(m.id)?'active':''}" data-action="toggle-favorite" data-value="${esc(m.id)}" title="${isFavorite(m.id)?'Remove from':'Add to'} favorites">${icon('star',12)}</button></div>`).join('')}`).join('');
   }
   /* Measured in-browser at 1440x900, not guessed: .model-row pitch is 44.03
      (min-height:44 with border-box, so its 5/6px padding is inside), a
@@ -70354,7 +70497,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function renderSubmenu(id){
     if(id.startsWith('model:')){
       const model=D.models.find(x=>x.id===id.slice(6))||selectedModel();
-      return `<div class="menu-head"><strong>${esc(model.name)}</strong><span class="spacer"></span><span class="chat-meta">Effort</span></div>${model.efforts.map(e=>`<button class="effort-row ${pickerSelection().model===model.id&&pickerSelection().effort===e?'active':''}" data-action="set-effort" data-model="${esc(model.id)}" data-value="${esc(e)}"><i class="effort-dot"></i><span style="flex:1">${esc(e)}</span>${pickerSelection().model===model.id&&pickerSelection().effort===e?icon('check',11):''}</button>`).join('')}${model.fast?`<div class="menu-divider"></div><button class="effort-row ${pickerSelection().model===model.id&&pickerSelection().fast?'active':''}" data-action="toggle-fast" data-model="${esc(model.id)}"><i class="effort-dot"></i><span style="flex:1">Fast mode</span>${pickerSelection().model===model.id&&pickerSelection().fast?icon('check',11):''}</button>`:''}`;
+      return `<div class="menu-head"><strong>${esc(model.name)}</strong><span class="spacer"></span><span class="chat-meta">Effort</span></div>${model.efforts.map(e=>`<button class="effort-row ${pickerSelection().model===model.id&&pickerSelection().effort===e?'active':''}" data-action="set-effort" data-model="${esc(model.id)}" data-value="${esc(e)}"><i class="effort-dot"></i><span style="flex:1">${esc(e)}</span>${pickerSelection().model===model.id&&pickerSelection().effort===e?icon('check',11):''}</button>`).join('')}${model.fast?`<div class="menu-divider"></div><button class="effort-row fast-row ${pickerSelection().model===model.id&&pickerSelection().fast?'active':''}" data-action="toggle-fast" data-model="${esc(model.id)}">${pickerSelection().model===model.id&&pickerSelection().fast?`<span class="nx-bolt">${icon('lightning',11,'fast-row-bolt')}</span>`:icon('lightning',11)}<span style="flex:1">Fast mode</span>${pickerSelection().model===model.id&&pickerSelection().fast?icon('check',11):''}</button>`:''}`;
     }
     /* SIX Plan choices, exactly: Plan Quick/Standard/Thorough and Deep Plan
        Thorough/Exhaustive/BrainStorm. Not four regular depths, and no legacy

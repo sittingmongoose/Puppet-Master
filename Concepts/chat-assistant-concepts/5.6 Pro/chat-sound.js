@@ -260,10 +260,18 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', observe); else setTimeout(observe, 0);
 
   /* ---- the header control ---------------------------------------------------- */
+  /* The speaker is the neon registry's speaker / speaker-off (neon-icons.js, window.PM56_NEON: one drawing per
+     concept, at the family stroke), read at call time. SPK is only the fallback for a page where neon-icons.js
+     failed to load. */
   var SPK = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/>';
+  function speakerGlyph(on) {
+    var N = window.PM56_NEON;
+    if (N && typeof N.icon === 'function') return N.icon(on ? 'speaker' : 'speaker-off', 14);
+    return SPK + (on ? '<path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/>' : '<path d="m16 9 5 6M21 9l-5 6"/>') + '</svg>';
+  }
   EXT.slot('headerExtras', function (ctx) {
     var on = !S.muted;
-    var glyph = SPK + (on ? '<path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/>' : '<path d="m16 9 5 6M21 9l-5 6"/>') + '</svg>';
+    var glyph = speakerGlyph(on);
     var tip = on ? 'Sound on · click to mute' : 'Sound off · click to turn on';
     return '<button class="icon-button tx-sound-btn' + (on ? '' : ' is-muted') + '" data-k="tx-sound" data-action="chat-sound-toggle" aria-pressed="' + (on ? 'true' : 'false') + '"'
       + ' data-hover-key="tx-sound" data-hover-tip="' + tip + '" aria-label="' + tip + '">' + glyph + '</button>';

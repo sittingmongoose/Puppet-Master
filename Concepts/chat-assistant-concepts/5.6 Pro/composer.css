@@ -90,11 +90,13 @@
   border: 1px solid var(--border);
   color: var(--subtle);
 }
+/* Neon icons (3D): a toggled tool (the wand while a capability is on) reads as on by its lit glyph -- the text ink
+   with its bloom -- not by an accent tile; colour is reserved for status (plan §4). */
 .composer-tools > .icon-button.active {
-  color: var(--accent);
-  border-color: color-mix(in srgb, var(--accent) 62%, transparent);
-  background: color-mix(in srgb, var(--accent) 15%, var(--surface-3));
+  color: var(--text);
+  border-color: var(--border-strong);
 }
+.composer-tools > .icon-button.active > svg.nx { --nx-hi-a: var(--nx-h-concept-i); }
 .composer-tools > .icon-button svg { width: 14px; height: 14px; }
 .selector-button {
   flex: none; min-width: max-content; max-width: none;
@@ -116,7 +118,7 @@
 
 .composer-box.is-compact .selector-button .sel-icon { display: grid; }
 .composer-box.is-compact .selector-button .sel-label,
-.composer-box.is-compact .selector-button .fast-bolt { display: none; }
+.composer-box.is-compact .selector-button .nx-bolt { display: none; }
 .composer-box.is-compact .composer-hint { display: block; }
 .composer-box.is-compact .selector-button,
 .composer-box.is-compact .composer-tools > .icon-button {
@@ -126,15 +128,17 @@
   border: 1px solid var(--border);
   color: var(--subtle);
 }
+/* (every picker carries .active; collapsed to its glyph it stays a neutral control, as it is uncollapsed) */
 .composer-box.is-compact .selector-button.active,
 .composer-box.is-compact .composer-tools > .icon-button.active {
-  color: var(--accent);
-  border-color: color-mix(in srgb, var(--accent) 62%, transparent);
-  background: color-mix(in srgb, var(--accent) 15%, var(--surface-3));
+  color: var(--text);
+  border-color: var(--border-strong);
+  background: var(--surface-3);
 }
 .composer-box.is-measuring .selector-button .sel-icon { display: none; }
-.composer-box.is-measuring .selector-button .sel-label,
-.composer-box.is-measuring .selector-button .fast-bolt { display: revert; }
+.composer-box.is-measuring .selector-button .sel-label { display: revert; }
+/* the Fast bolt's wrapper (neon-icons.css 8b) measures at its own display */
+.composer-box.is-measuring .selector-button .nx-bolt { display: inline-flex; }
 .composer-box.is-measuring .composer-hint { display: none; }
 .composer-box.is-measuring .selector-button {
   width: auto; height: 24px; min-height: 24px; padding: 0 8px;
@@ -167,7 +171,7 @@
 @container composer (max-width: 320px) {
   .selector-button .sel-icon { display: grid; }
   .selector-button .sel-label,
-  .selector-button .fast-bolt { display: none; }
+  .selector-button .nx-bolt { display: none; }
   .composer-hint { display: block; }
   .chat-stage[data-shell="2"] .composer-hint { display: block; }
   .selector-button,
@@ -214,6 +218,12 @@
   color: var(--subtle);
 }
 .send-queue-row .icon-button svg { width: 13px; height: 13px; }
+
+/* The model sidecar's Fast row (app.js): the bolt stands in for the row's dot -- lit and striking while Fast mode is
+   on (neon-icons.css 8b), a plain control glyph while it is off. Its 11 px box gives back 3 px so the label lines up
+   with the effort rows' 8 px dots. */
+.effort-row.fast-row > svg.nx, .effort-row.fast-row > .nx-bolt { margin: 0 -1.5px; }
+.effort-row.fast-row:not(.active) > svg.nx { color: var(--subtle); }
 
 .provider-mark {
   background: var(--surface-4);
@@ -265,7 +275,7 @@
 .activity-panel-head .icon-button svg {
   width: 16px; height: 16px;
 }
-.hh-plus-glyph { stroke-width: 2.6; }
+.hh-plus-glyph { --nx-stroke-base: 2.6; }
 .chat-header .icon-button.active,
 .chat-header .icon-button.is-on,
 .history-head .icon-button.is-pinned,

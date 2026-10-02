@@ -8,6 +8,7 @@
  *    transcript item. Each family has its own silhouette, so a plan, a crew run,
  *    a scheduled message and a receipt no longer read as the same card. These
  *    rules are :where()-light so any lab take's own rules still win.
+ * (Neon icons, 3D: the ledger, deliverable and Needs-you glyph rules sit at the end of section 2, marked NEON.)
  * 3. The Stage take (transcript data-variant 16, the default): turn anatomy --
  *    a presence mark opens each assistant turn, a hairline spine runs through
  *    the turn's items and ends in a dot, items hang off it with a family tick,
@@ -226,6 +227,25 @@ body[data-theme$="-light"] .transcript-inner > [data-family="deliverable"] .arti
 .transcript-inner > [data-family="deliverable"] .system-card-head > .event-icon,
 .transcript-inner > [data-family="people"] .system-card-head > .event-icon,
 .transcript-inner > [data-family="people"] > .event-icon { background: color-mix(in srgb, var(--tx-fam, var(--fam-people)) 14%, transparent); }
+
+/* NEON (icons, step 3D, 2026-10-02; neon-icons.js / neon-icons.css). A ledger line's glyph and a deliverable's eyebrow
+   glyph sit at rest -- the line's ink, no bloom -- and ignite when their line is hovered or holds focus: the ink lifts
+   to the text ink, the halo swells (dark themes) and the glyph plays its act once. A work output's glyph sits in its
+   open button, which the neon hover rules already ignite. Status marks are lit in their tone through --nx-ink (never
+   `color`, so the accent budget is untouched) and stay lit. A warning or danger line's glyph takes its tone through
+   --nx-ink (the colour rules above lose to the neutral rule just above). The Needs-you medallion keeps the canon
+   accent (--needs) for every glyph in it, status marks included. */
+.transcript-inner > [data-family="ledger"] > .event-icon > svg.nx-r-concept,
+.transcript-inner > [data-family="deliverable"] .system-card-head > .event-icon > svg.nx-r-concept { --nx-hi-a: 0; }
+.transcript-inner > [data-family="ledger"] > .event-icon > svg.nx { --nx-u: 2; }
+.transcript-inner > [data-family="ledger"]:is(:hover, :focus-within) > .event-icon { color: var(--text); }
+.transcript-inner > [data-family="ledger"]:is(:hover, :focus-within) > .event-icon > svg.nx-r-concept,
+.transcript-inner > [data-family="deliverable"] .system-card-head:is(:hover, :focus-within) > .event-icon > svg.nx-r-concept {
+  --nx-hi-a: var(--nx-h-swell-i); --nx-1: var(--nx-d1) var(--nx-ease) backwards;
+}
+.transcript-inner > [data-family="ledger"].warning > .event-icon > svg.nx { --nx-ink: var(--warning); }
+.transcript-inner > [data-family="ledger"].danger > .event-icon > svg.nx { --nx-ink: var(--danger); }
+.transcript-inner > [data-family="needs"] > .event-icon > svg.nx { --nx-ink: var(--needs); }
 
 /* needs-you: the action sits at the far edge, the copy takes the room. In a
    narrow chat pane the actions wrap to their own row rather than push past
