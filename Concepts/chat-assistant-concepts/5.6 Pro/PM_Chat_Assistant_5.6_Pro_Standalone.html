@@ -17338,6 +17338,11 @@ html[data-o55-nier="on"] .brand-mark { background: var(--o55-nier-ink); box-shad
 /* ------------------------------------------------------------------ surfaces that paint their own colour */
 /* Literal or gradient paint the token tables cannot reach, found by the palette audit (scratch nier-audit.mjs over
    the app views and every pmx-verify surface): each becomes ink on parchment. */
+/* the user's turn is PMConcept7's chat bubble under NieR: an ink block with paper words (it turns over with the mode,
+   like every chosen thing in NieR); what sits inside it reads in paper too */
+html[data-o55-nier="on"] .message-user .message-surface { background: var(--o55-nier-ink); border-color: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .transcript[data-variant="16"] .message-user .message-surface { background: var(--o55-nier-ink); border-color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .message-user .message-surface :where(*) { color: inherit; --nx-ink: var(--o55-nier-on-ink); }
 /* the history drawer's scrim over the chat is literal black; NieR veils in its own shadow ink */
 html[data-o55-nier="on"] .assistant-pane::after { background: rgba(var(--o55-nier-shadow-rgb), .34); }
 /* initials avatars: a two-hue gradient with white letters in every theme; here an ink tile with paper letters */
