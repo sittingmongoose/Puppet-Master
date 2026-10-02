@@ -5,12 +5,13 @@ The redesigned Usage page of the Puppet Master concept, built as a layer over th
 Prism Usage page replaced by the page in `src/`. It is generated. Never hand-edit it, and never hand-edit the Usage page
 inside `PMConcept7.html` either: change `src/` or `tools/usage_layer.py` and rebuild.
 
-Status: B v2 skeleton (2026-10-02). The design is `~/PM-Experiments/usage-redesign-20261001/design/final/DESIGN-SPEC.md`
-(with the generated `BOARDS.md`) and the module contract the three builders (engine, charts, content) code against is
-`ARCHITECTURE.md` in the same folder. Every file it names exists here with its namespace (`window.PMU`), stub signatures
-and a working shell: the rail of 13 rooms, the one-line head, the board engine placing every room's default board on
-12 / 20 / 24 / 30 tracks, the Settings bridge, the review roster in the Settings fixture, and placeholder bodies for the
-widget kinds that are not built yet.
+Status: WOW round, polish round 2 integrated (2026-10-02). The design is
+`~/PM-Experiments/usage-redesign-20261001/design/final/DESIGN-SPEC.md` with `DESIGN-SPEC-ATLAS.md` (wins over it),
+`WOW-SPEC.md` (the motion and look bar) and the generated `BOARDS.md`; the module contract the three owners (engine,
+charts, content) code against is `ARCHITECTURE.md` in the same folder. Every room is built: the rail of 13 rooms, the
+one-line head, the board engine placing every room's default board on 12 / 20 / 24 / 30 tracks with move and resize
+previews and gravity, the Settings bridge and the review roster, the chart kit, the widget kinds and the room heroes, and
+the film core (`PMU.film`). What each round changed and what is open: `INTEGRATION.md` and `INTEGRATION-2.md` there.
 
 ## Layout
 
