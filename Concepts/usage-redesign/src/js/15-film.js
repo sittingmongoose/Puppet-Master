@@ -212,6 +212,14 @@
       var a = anim(s, frames, { dur: dur, delay: dl, easing: easing, fill: 'both' });
       if (a) { anims.push(a); if (dl + dur >= end) { end = dl + dur; last = a; } }
     });
+    /* a first roll is not seen before it moves (integration 2, Mac films of the first arrival and a room change: a row of
+       "$ 0.00", "0.0%", "0.00M" stood still for 100-200 ms before the rolls began, a zero that is not a reading): the
+       digits fade in as their roll starts */
+    if (first && cols.length) {
+      var layer = el.querySelector('.pmu-odo-layer');
+      var fa = layer ? anim(layer, [{ opacity: 0 }, { opacity: 1 }], { dur: f === 'retro' ? 1 : 140, delay: base, easing: E.out, fill: 'backwards' }) : null;
+      if (fa) anims.push(fa);
+    }
     var handle = { cancel: function (keep) { anims.forEach(function (a) { try { a.cancel(); } catch (e) {} }); done(); } };
     function done() { if (el._pmuOdo !== handle) return; el._pmuOdo = null; el.classList.remove('pmu-odo'); el.textContent = fin; }
     el._pmuOdo = handle;

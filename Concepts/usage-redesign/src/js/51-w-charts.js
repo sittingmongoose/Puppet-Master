@@ -52,6 +52,15 @@
       if (hn && m.headline) {
         var oldV = parseFloat(hn.getAttribute('data-v')), f = hn.getAttribute('data-f'), to = m.headline.value;
         var lb = body.querySelector('.pmu-herohead .pmu-herolabel'); if (lb && lb.textContent !== (m.headline.label || '')) lb.textContent = m.headline.label || '';
+        /* the line under the label follows the range too (integration 2, Mac film: after 24h -> 7d it still read the
+           24-hour peak and in / out while the facts below had changed): it cross-fades to the new words */
+        var hs = body.querySelector('.pmu-herohead .pmu-herosub');
+        if (hs) {
+          var tmp = document.createElement('div');
+          tmp.innerHTML = C.heroHead(ctx, { value: m.headline.value, fmt: m.headline.fmt, label: m.headline.label, sub: m.heroSub, tone: m.heroTone, note: C.w(ctx, 'xl') ? m.heroNote : '', noteTone: m.heroTone });
+          var ns = tmp.querySelector('.pmu-herosub');
+          if (ns && ns.innerHTML !== hs.innerHTML) { hs.innerHTML = ns.innerHTML; PMU.motion.animate(hs, [{ opacity: 0.2 }, { opacity: 1 }], { dur: 320, easing: 'cubic-bezier(.22,.8,.28,1)' }); }
+        }
         if (isFinite(oldV) && isFinite(to) && oldV !== to) {
           hn.setAttribute('data-v', String(to));
           PMU.motion.countUp(hn, oldV, to, function (v) { return C.numOnly(v, f); }, { dur: 'value' });

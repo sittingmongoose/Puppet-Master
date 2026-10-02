@@ -31696,6 +31696,11 @@ html[data-theme^="retro"] #panel-usage .pmu-callout, html[data-o55-nier="on"] #p
 html[data-theme^="retro"] #panel-usage .pmu-callring, html[data-o55-nier="on"] #panel-usage .pmu-callring { border-radius: 0; box-shadow: none; }
 html[data-o55-nier="on"] #panel-usage .pmu-callout { border-color: var(--pmu-ink); }
 html[data-o55-nier="on"] #panel-usage .pmu-callring { border-color: var(--pmu-ink); }
+/* the readout names its rows whole (integration 2, NieR film: "Spend that..." / "Month to ..." / "Budget l..." in the mono
+   face): the card may grow to 268 px and a long name wraps under itself instead of ending in an ellipsis */
+#panel-usage .pmu-readout { max-width: 268px; }
+#panel-usage .pmu-ro-row { white-space: normal; }
+#panel-usage .pmu-ro-row > span { overflow: visible; text-overflow: clip; overflow-wrap: break-word; line-height: 1.3; }
 
 /* ---- css/40-widgets.css ---- */
 /* Widget body layouts by kind and tier (owner: content; DESIGN-SPEC 4 and 15, DESIGN-SPEC-ATLAS 2, 3, 7 and 11).
@@ -34519,6 +34524,14 @@ var PMU_SERIES = {
       var a = anim(s, frames, { dur: dur, delay: dl, easing: easing, fill: 'both' });
       if (a) { anims.push(a); if (dl + dur >= end) { end = dl + dur; last = a; } }
     });
+    /* a first roll is not seen before it moves (integration 2, Mac films of the first arrival and a room change: a row of
+       "$ 0.00", "0.0%", "0.00M" stood still for 100-200 ms before the rolls began, a zero that is not a reading): the
+       digits fade in as their roll starts */
+    if (first && cols.length) {
+      var layer = el.querySelector('.pmu-odo-layer');
+      var fa = layer ? anim(layer, [{ opacity: 0 }, { opacity: 1 }], { dur: f === 'retro' ? 1 : 140, delay: base, easing: E.out, fill: 'backwards' }) : null;
+      if (fa) anims.push(fa);
+    }
     var handle = { cancel: function (keep) { anims.forEach(function (a) { try { a.cancel(); } catch (e) {} }); done(); } };
     function done() { if (el._pmuOdo !== handle) return; el._pmuOdo = null; el.classList.remove('pmu-odo'); el.textContent = fin; }
     el._pmuOdo = handle;
@@ -36934,6 +36947,14 @@ var PMU_SERIES = {
       charts.popDot(d, at(d, 80));
     });
     $$('.pmu-hhalo', f.hl).forEach(function (d) { charts.swellHalo(d, at(d, 60)); });
+    /* the line's annotation (spec.callout): its ring swells when the comet reaches the point, then the label unfolds from
+       its leader (scaleX from the point's side); the chart owns the moment, so a re-draw never shows it early */
+    var cring = f.hl.querySelector('.pmu-callring'), cnote = f.hl.querySelector('.pmu-callout');
+    if (cring) {
+      var ct = at(cring, 60), stp = fm === 'nier' || fm === 'retro';
+      Mo.anim(cring, [{ transform: 'scale(.2)', opacity: 0 }, { transform: 'scale(1.35)', opacity: 1, offset: 0.55 }, { transform: 'scale(1)', opacity: 1 }], 420, ct, stp ? 'steps(3,jump-start)' : Mo.EASE.out);
+      if (cnote) Mo.anim(cnote, [{ transform: 'scaleX(.04)', opacity: 0 }, { opacity: 1, offset: 0.35 }, { transform: 'scaleX(1)', opacity: 1 }], 320, ct + 160, stp ? 'steps(3,jump-start)' : 'cubic-bezier(.17,.84,.29,.99)');
+    }
     costs.sort(function (a, b) { return parseFloat(a.style.left) - parseFloat(b.style.left); })
       .forEach(function (d, i) { charts.popDot(d, endAt + Math.min(600, 40 * i), 300); });
     pend.forEach(function (d, i) { Mo.anim(d, [{ opacity: 0 }, { opacity: 1 }], 260, endAt + Math.min(600, 40 * costs.length) + 120 + 30 * i, Mo.EASE.out); });
@@ -42515,6 +42536,15 @@ var PMU_SERIES = {
       if (hn && m.headline) {
         var oldV = parseFloat(hn.getAttribute('data-v')), f = hn.getAttribute('data-f'), to = m.headline.value;
         var lb = body.querySelector('.pmu-herohead .pmu-herolabel'); if (lb && lb.textContent !== (m.headline.label || '')) lb.textContent = m.headline.label || '';
+        /* the line under the label follows the range too (integration 2, Mac film: after 24h -> 7d it still read the
+           24-hour peak and in / out while the facts below had changed): it cross-fades to the new words */
+        var hs = body.querySelector('.pmu-herohead .pmu-herosub');
+        if (hs) {
+          var tmp = document.createElement('div');
+          tmp.innerHTML = C.heroHead(ctx, { value: m.headline.value, fmt: m.headline.fmt, label: m.headline.label, sub: m.heroSub, tone: m.heroTone, note: C.w(ctx, 'xl') ? m.heroNote : '', noteTone: m.heroTone });
+          var ns = tmp.querySelector('.pmu-herosub');
+          if (ns && ns.innerHTML !== hs.innerHTML) { hs.innerHTML = ns.innerHTML; PMU.motion.animate(hs, [{ opacity: 0.2 }, { opacity: 1 }], { dur: 320, easing: 'cubic-bezier(.22,.8,.28,1)' }); }
+        }
         if (isFinite(oldV) && isFinite(to) && oldV !== to) {
           hn.setAttribute('data-v', String(to));
           PMU.motion.countUp(hn, oldV, to, function (v) { return C.numOnly(v, f); }, { dur: 'value' });
@@ -42973,7 +43003,8 @@ var PMU_SERIES = {
     render: function (body, ctx) {
       var q = ctx.model; if (!q || !q.groups.length) { body.innerHTML = C.empty('No provider in scope reports quota windows.'); return; }
       var bw = ctx.tier.bw, wide = bw >= 760, mid = bw >= 560;
-      var tmpl = wide ? 'minmax(240px,34%) minmax(140px,1fr) 76px 110px 26px' : mid ? 'minmax(170px,36%) minmax(110px,1fr) 64px 96px 22px' : 'minmax(120px,40%) minmax(80px,1fr) 56px 20px';
+      /* the timeline takes the middle of the row (Atlas; coordinator review 1 item 3: a third of the row was too little) */
+      var tmpl = wide ? 'minmax(210px,26%) minmax(160px,1fr) 76px 110px 26px' : mid ? 'minmax(170px,36%) minmax(110px,1fr) 64px 96px 22px' : 'minmax(120px,40%) minmax(80px,1fr) 56px 20px';
       var collapsed = (C.view(ctx.id, 'collapsed', '') || '').split(',').filter(Boolean);
       var open = openRows[ctx.id] || '';
       var rowH = mid ? 36 : 40, headH = 36, focusH = 236;
@@ -45376,13 +45407,8 @@ var PMU_BOARDS = {"version":"pmu-b2-boards-2026-10-02-e","classes":{"S":12,"M":2
        from its line (scaleY, 260 SETTLE) and the hero number takes the light */
     FB.beat('attention', function (b) {
       var an = C.beatCard(b, 'anom'); if (!an) return;
-      /* the spike's ring swells on the point, then its label unfolds from the leader (scaleX from the point's side) */
-      var note = an.querySelector('.pmu-callout') || an.querySelector('.pmu-heronote'), ring = an.querySelector('.pmu-callring'), f = PMU.motion.family ? PMU.motion.family() : 'basic';
-      var stp = f === 'retro' || f === 'nier';
-      if (ring) PMU.motion.animate(ring, [{ transform: 'scale(.2)', opacity: 0 }, { transform: 'scale(1.35)', opacity: 1, offset: 0.55 }, { transform: 'scale(1)', opacity: 1 }],
-        { dur: 420, delay: C.beatAt(b, an, 900), easing: stp ? 'steps(3,jump-start)' : FB.E.out, fill: 'backwards' });
-      if (note) PMU.motion.animate(note, [{ transform: 'scaleX(.04)', opacity: 0 }, { opacity: 1, offset: 0.35 }, { transform: 'scaleX(1)', opacity: 1 }],
-        { dur: 320, delay: C.beatAt(b, an, 1080), easing: stp ? 'steps(3,jump-start)' : FB.E.settle, fill: 'backwards' });
+      /* the spike's ring and label are the line chart's own entrance (spec.callout: they open when the comet reaches the
+         spike); the beat lights the hero number and flashes the warn alerts */
       C.sweepHero(b, an, 1150);
       C.byPos(C.beatCards(b, function (c) { return c.getAttribute('data-kind') === 'alert' && c.querySelector('.pmu-alerttop[data-tone="warn"]'); }))
         .forEach(function (c, i) { FB.flash(c.querySelector('.pmu-alerttop') || c, { tone: 'warn', delay: C.beatAt(b, an, 1400 + 90 * i), noSweep: true }); });

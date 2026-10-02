@@ -260,13 +260,8 @@
        from its line (scaleY, 260 SETTLE) and the hero number takes the light */
     FB.beat('attention', function (b) {
       var an = C.beatCard(b, 'anom'); if (!an) return;
-      /* the spike's ring swells on the point, then its label unfolds from the leader (scaleX from the point's side) */
-      var note = an.querySelector('.pmu-callout') || an.querySelector('.pmu-heronote'), ring = an.querySelector('.pmu-callring'), f = PMU.motion.family ? PMU.motion.family() : 'basic';
-      var stp = f === 'retro' || f === 'nier';
-      if (ring) PMU.motion.animate(ring, [{ transform: 'scale(.2)', opacity: 0 }, { transform: 'scale(1.35)', opacity: 1, offset: 0.55 }, { transform: 'scale(1)', opacity: 1 }],
-        { dur: 420, delay: C.beatAt(b, an, 900), easing: stp ? 'steps(3,jump-start)' : FB.E.out, fill: 'backwards' });
-      if (note) PMU.motion.animate(note, [{ transform: 'scaleX(.04)', opacity: 0 }, { opacity: 1, offset: 0.35 }, { transform: 'scaleX(1)', opacity: 1 }],
-        { dur: 320, delay: C.beatAt(b, an, 1080), easing: stp ? 'steps(3,jump-start)' : FB.E.settle, fill: 'backwards' });
+      /* the spike's ring and label are the line chart's own entrance (spec.callout: they open when the comet reaches the
+         spike); the beat lights the hero number and flashes the warn alerts */
       C.sweepHero(b, an, 1150);
       C.byPos(C.beatCards(b, function (c) { return c.getAttribute('data-kind') === 'alert' && c.querySelector('.pmu-alerttop[data-tone="warn"]'); }))
         .forEach(function (c, i) { FB.flash(c.querySelector('.pmu-alerttop') || c, { tone: 'warn', delay: C.beatAt(b, an, 1400 + 90 * i), noSweep: true }); });
