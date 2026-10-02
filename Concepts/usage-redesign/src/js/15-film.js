@@ -288,7 +288,7 @@
     o = o || {};
     if (reduced() || !wrap || !inner || off.comet) return null;
     var box = wrap.parentNode, svg = inner.querySelector('svg');
-    var path = inner.querySelector('[data-mark="line"][data-primary="1"]') || inner.querySelector('[data-mark="line"]');
+    var path = inner.querySelector('[data-comet="1"]') || inner.querySelector('[data-mark="line"][data-primary="1"]') || inner.querySelector('[data-mark="line"]');
     if (!box || !svg || !path) return null;
     var W = +svg.getAttribute('width') || 0, Hh = +svg.getAttribute('height') || 0;
     if (W < 120 || Hh < 60) return null;   /* no comet on sparklines and compact plots */
@@ -380,18 +380,33 @@
     gone(a, r);
     return a;
   }
+  /* ---- the halo pulse (3.9 "Use this account": the new mark's halo): one pre-rendered circle centred on the element,
+     scale .8 -> 1.4 while it fades .5 -> 0 (600 OUT); Retro and NieR step it. The element must be positioned. ---- */
+  function halo(el, o) {
+    o = o || {};
+    if (reduced() || !el) return null;
+    var h = H('i', 'pmu-film-halo', el), f = fam(), stepped = f === 'retro' || f === 'nier';
+    h.setAttribute('aria-hidden', 'true');
+    if (o.tone) h.setAttribute('data-tone', o.tone);
+    var a = anim(h, [{ transform: 'translate(-50%,-50%) scale(.8)', opacity: 0.55 }, { transform: 'translate(-50%,-50%) scale(1.4)', opacity: 0 }],
+      { dur: o.dur || 600, delay: o.delay || 0, easing: stepped ? 'steps(4,jump-start)' : E.out, fill: 'both' });
+    gone(a, h);
+    return a;
+  }
 
   /* ---- a physical spring as a WAAPI linear() easing (3.11 drop, 3.13 gravity, Friendly) ---- */
   var springCache = {};
   function spring(o) {
     o = o || {};
-    var k = o.k || 520, c = o.c || 38, m = o.m || 1, v0 = o.v0 || 0, key = [k, c, m, v0].join(',');
+    /* until: the settle threshold (|x - 1| and |v| / 20 under it). 0.001 by default; a move across the board ends where the
+       eye sees it end with about 0.005 (NOTES2-engine 3: the 520 / 38 drop then lasts about 290 ms instead of 400) */
+    var k = o.k || 520, c = o.c || 38, m = o.m || 1, v0 = o.v0 || 0, until = o.until || 0.001, key = [k, c, m, v0, until].join(',');
     if (springCache[key]) return springCache[key];
     var x = 0, v = v0, dt = 1 / 600, t = 0, pts = [], settleAt = 0;
     while (t < 3) {
       var a = (-k * (x - 1) - c * v) / m; v += a * dt; x += v * dt; t += dt;
       pts.push([t, x]);
-      if (Math.abs(x - 1) < 0.001 && Math.abs(v) < 0.02) { settleAt = t; break; }
+      if (Math.abs(x - 1) < until && Math.abs(v) < until * 20) { settleAt = t; break; }
     }
     var total = settleAt || t, n = 40, out = [];
     for (var i = 0; i <= n; i++) {
@@ -584,7 +599,7 @@
   function cancelHold() { releaseHoverTags(); if (hold) { var h = hold; hold = null; h.board.removeAttribute('data-held'); h.board.removeAttribute('data-pm-hover-exempt'); flushCues([]); } }
 
   PMU.film = { E: E, T: T, VOICES: VOICES, voice: voice, at: at, sequence: sequence, stagger: stagger, wave: wave, enterPlates: enterPlates,
-    odometer: odometer, decode: decode, comet: comet, headGlow: headGlow, drop: drop, sweep: sweep, flash: flash, ring: ring, spring: spring,
+    odometer: odometer, decode: decode, comet: comet, headGlow: headGlow, drop: drop, sweep: sweep, flash: flash, ring: ring, halo: halo, spring: spring,
     key: key, edgeAt: edgeAt, cue: cue, holding: holding, rehold: rehold, cancelHold: cancelHold, beat: beat, playBeat: playBeat, arrive: arrive,
-    last: function () { return last; }, off: off, parsePath: parsePath, yAt: yAt };
+    deferHoverTags: deferHoverTags, last: function () { return last; }, off: off, parsePath: parsePath, yAt: yAt };
 })();

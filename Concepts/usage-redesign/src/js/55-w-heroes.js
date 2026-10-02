@@ -177,8 +177,9 @@
       var x = function (t) { return Math.max(0, Math.min(100, 100 * (t - t0) / (now - t0))); };
       var ticks = [], stepH = hrs <= 5 ? 1 : hrs <= 24 ? (bw >= 700 ? 3 : 6) : hrs <= 168 ? 24 : 24 * 7;
       var first = new Date(t0); first.setMinutes(0, 0, 0); var tt = first.getTime() + 3600000;
-      /* a tick closer than 52 px to NOW is dropped (its label would print over "NOW") */
-      var plotW = Math.max(60, bw - labW), guard = 52 / plotW * (now - t0);
+      /* a tick closer than 64 px to NOW is dropped (its label would print over "NOW": NOW is right-aligned, about 30 px, and a
+         clock label is centred, about 36 px) */
+      var plotW = Math.max(60, bw - labW), guard = 64 / plotW * (now - t0);
       for (; tt < now - Math.max(1800000, guard); tt += 3600000) { var h = new Date(tt).getHours(); if (stepH >= 24 ? h === 0 : h % stepH === 0) ticks.push(tt); }
       var dots = list.map(function (a, i) {
         var t = new Date(a.occurred_at).getTime(), v = value(a), pend = !(v > 0) && /pending/i.test(a.settlement_status || '');

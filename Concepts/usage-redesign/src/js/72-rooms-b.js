@@ -163,7 +163,7 @@
       heroSub: 'peak ' + b(peakText(tk, cr)) + ' · ' + b(F.tok(tk.totals.input)) + ' in · ' + b(F.tok(tk.totals.output)) + ' out',
       spec: { x: tk.x, unit: 'tokens', split: split, cacheReads: cr, now: Date.now(), peak: true, bucketMs: tk.buckets.bucketMs,
         series: [{ name: 'Input', tk: 'in', values: tk.input }, { name: 'Output', tk: 'out', values: tk.output }, { name: 'Reasoning', tk: 'rsn', values: tk.reasoning }, { name: 'Cache write', tk: 'cw', values: tk.cacheWrite }, { name: 'Cache read', tk: 'cr', values: tk.cacheRead }],
-        cost: { values: cost.values, unit: 'usd' }, source: 'token series · estimated cost from recorded attempts', notes: 'Input and output are summed only from selected identity-bound attempts.',
+        cost: { values: cost.values, unit: 'usd', pending: cost.split.map(function (sp) { return (sp && sp._pending) || 0; }) }, source: 'token series · estimated cost from recorded attempts', notes: 'Input and output are summed only from selected identity-bound attempts.',
         readoutFoot: function (i) {
           var sp = cost.split[i] || {}, ks = Object.keys(sp).filter(function (k) { return k !== '_pending'; });
           var out = ks.map(function (k) { return legName(k).replace('ChatGPT / ', '') + ' ' + money(sp[k]); });
@@ -219,7 +219,8 @@
     model: function (ctx) {
       var dp = D.dailyByProvider(ctx.state.range);
       return { labels: dp.labels, stacks: dp.stacks, totals: dp.totals, unit: 'usd', emptyText: 'No value recorded in this range.',
-        caption: '<span class="pmu-cap">SETTLED</span> <b>' + esc(money(dp.settled)) + '</b> · <span class="pmu-cap">PLAN ESTIMATE</span> <b>' + esc(money(dp.estimate)) + '</b>' };
+        /* each label keeps its value on its line when the caption wraps (NOTES2-charts 8: "$37.88" fell onto the legend) */
+        caption: '<span style="white-space:nowrap"><span class="pmu-cap">SETTLED</span> <b>' + esc(money(dp.settled)) + '</b></span> · <span style="white-space:nowrap"><span class="pmu-cap">PLAN ESTIMATE</span> <b>' + esc(money(dp.estimate)) + '</b></span>' };
     } });
   def('reasoning-mix', 'analytics', { meta: function (ctx) { return 'Visible output and reasoning · ' + D.tokens().buckets.label.toLowerCase() + ' · reported buckets'; }, model: function () {
     var tk = D.tokens();

@@ -197,6 +197,8 @@
     first.finished.then(function () { setTimeout(handle.cancel, 40); }, function () {});
     return handle;
   };
+  /* the film vocabulary carries the sweep too (NOTES2-charts engine 1): PMU.film.arcSweep is this function */
+  if (PMU.film && !PMU.film.arcSweep) PMU.film.arcSweep = charts.arcSweep;
 
   /* number roll: from the value on screen to the new one (first time from 0), tabular, no overshoot. The element keeps
      the shown value in data-shown so a later change counts from it (DESIGN-SPEC 8.5, A1 8.1). */
@@ -795,16 +797,22 @@
     return e;
   };
 
-  /* ---------- cross-highlight (DESIGN-SPEC 7.1): one attribute on the board after a 110 ms intent delay ---------- */
+  /* ---------- cross-highlight (DESIGN-SPEC 7.1): after a 110 ms intent delay the other providers' marks dim and the
+     provider's rows light. Only the elements that change get a class (a board attribute restyled every [data-prov]
+     descendant on each exit: about 1,700 elements, 75 ms on the CPU-only VM) ---------- */
   (function crossHighlight() {
     var root = document.getElementById('pmuApp');
     if (!root) return;
-    var timer = 0, clearTimer = 0, current = null;
+    var timer = 0, clearTimer = 0, current = null, lit = [];
     function set(id) {
       var b = document.getElementById('pmuBoard');
       if (!b) return;
-      if (id) b.setAttribute('data-hl', id); else b.removeAttribute('data-hl');
+      lit.forEach(function (el) { el.classList.remove('is-hl-dim', 'is-hl-on'); });
+      lit = [];
       current = id;
+      if (!id) return;
+      $$('.pmu-mark[data-prov]', b).forEach(function (el) { if (el.getAttribute('data-prov') !== id) { el.classList.add('is-hl-dim'); lit.push(el); } });
+      $$('.pmu-irow[data-prov]', b).forEach(function (el) { if (el.getAttribute('data-prov') === id) { el.classList.add('is-hl-on'); lit.push(el); } });
     }
     root.addEventListener('pointerover', function (e) {
       var el = e.target && e.target.closest ? e.target.closest('[data-prov]') : null;
