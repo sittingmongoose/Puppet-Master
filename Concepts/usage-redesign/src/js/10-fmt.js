@@ -1,4 +1,5 @@
-/* Formatters and the value-state language (owner: engine; ARCHITECTURE.md section 4.2, DESIGN-SPEC sections 11 and 14).
+/* Formatters, the value-state language and provider marks (owner: engine; ARCHITECTURE.md section 4.2, DESIGN-SPEC sections
+   11 and 14, DESIGN-SPEC-ATLAS sections 5 and 6).
    Every number on the page goes through PMU.fmt; every missing or qualified value through PMU.vs. Missing is never 0. */
 (function () {
   var MIN = 60000, HOUR = 3600000, DAY = 86400000;
@@ -12,7 +13,8 @@
     money: function (usd, opts) {
       if (missing(usd)) return '-';
       var a = Math.abs(usd), d = a === 0 ? 2 : a < 0.01 ? 6 : a < 1 ? 4 : 2;
-      var s = '$' + a.toFixed(d).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      var parts = a.toFixed(d).split('.');   /* thousands separators on the integer part only */
+      var s = '$' + parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (parts[1] ? '.' + parts[1] : '');
       return (usd < 0 ? '-' : '') + s + (opts && opts.est ? ' est.' : '');
     },
     tok: function (n) {
@@ -64,8 +66,69 @@
       return { text: (up ? '+' : '') + Number(v).toFixed(1).replace(/\.0$/, '') + '%', dir: up ? 'up' : 'down',
         tone: (up && good === 'up') || (!up && good === 'down') ? 'ok' : 'warn' };
     },
-    plural: function (n, word) { return n + ' ' + word + (n === 1 ? '' : 's'); }
+    plural: function (n, word) { return n + ' ' + word + (n === 1 ? '' : 's'); },
+    /* [A1 6] the meter reset line in lower case with the B v2 truth rules: "resets in 1h 42m" (< 24 h), "resets Thu 03:06"
+       (< 7 d), "resets Oct 1"; "≈" when locally inferred; "reset unknown"; "pending recheck" after a passed reset.
+       soon = within the hour (rendered 12 / 560 ink-2). */
+    resetLine: function (win) {
+      if (!win || win.truth === 'unknown' || missing(win.resetAt)) return { text: 'reset unknown', truth: 'unknown', soon: false };
+      if (win.truth === 'pending_recheck' || win.resetAt <= Date.now()) return { text: 'pending recheck', truth: 'pending_recheck', soon: false };
+      var dt = win.resetAt - Date.now(), pre = win.truth === 'locally_inferred' ? '≈ ' : '';
+      var when = dt < DAY ? 'in ' + fmt.span(dt) : dt < 7 * DAY ? fmt.day(win.resetAt) + ' ' + fmt.clock(win.resetAt) : fmt.date(win.resetAt);
+      return { text: 'resets ' + pre + when, truth: win.truth, soon: dt < HOUR };
+    },
+    /* [A1 7.10] agenda day heads: {label: 'Today' | 'Tomorrow' | 'Sat, Oct 3', note: 'Thu, Oct 1' | 'in 1d 8h'} */
+    dayHead: function (ms) {
+      var d = new Date(ms), now = new Date(), start = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+      var dayIdx = Math.floor((new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime() - start) / DAY + 0.5);
+      var full = WEEKDAY[d.getDay()] + ', ' + MONTH[d.getMonth()] + ' ' + d.getDate();
+      if (dayIdx === 0) return { label: 'Today', note: full, offset: 0 };
+      if (dayIdx === 1) return { label: 'Tomorrow', note: full, offset: 1 };
+      if (dayIdx === -1) return { label: 'Yesterday', note: full, offset: -1 };
+      return { label: full, note: ms > Date.now() ? 'in ' + fmt.span(ms - Date.now()) : fmt.span(Date.now() - ms) + ' ago', offset: dayIdx };
+    }
   };
+
+  /* [A1 5] provider marks: monogram tiles in vendor hues, unique letters across the 22 Settings providers. A provider
+     Settings adds later gets its first two letters (PM51.initials rule) and the community hue. */
+  var MARKS = {
+    'claude-code': ['Cl', 'anthropic'], 'openai-codex': ['Cx', 'openai'], antigravity: ['Ag', 'google'], grok: ['Gk', 'xai'],
+    muse: ['Mu', 'meta'], 'github-copilot': ['Cp', 'github'], 'qwen-coding': ['Qw', 'alibaba'], 'zai-coding': ['Z', 'zai'],
+    'kimi-coding': ['Ki', 'moonshot'], 'minimax-coding': ['Mx', 'minimax'], 'opencode-go': ['Go', 'opencode'],
+    'anthropic-api': ['An', 'anthropic'], 'gemini-direct': ['Gm', 'google'], vertex: ['Vx', 'google'], 'xai-api': ['Xa', 'xai'],
+    'meta-api': ['Me', 'meta'], 'cursor-cli': ['Cu', 'cursor'], 'qwen-token': ['Qt', 'alibaba'], 'opencode-zen': ['Zn', 'opencode'],
+    'free-models': ['Fr', 'community'], opencode: ['Oc', 'opencode'], 'local-endpoint': ['Lo', 'network']
+  };
+  /* the six legacy DATA.providers ids map onto their Settings providers */
+  var LEGACY_PROV = { claude: 'claude-code', codex: 'openai-codex', qwen: 'qwen-coding', gemini: 'gemini-direct', kimi: 'kimi-coding', copilot: 'github-copilot' };
+  function markOf(providerId) {
+    var id = LEGACY_PROV[providerId] || providerId;
+    var m = MARKS[id];
+    if (m) return { id: id, letters: m[0], vendor: m[1] };
+    var name = String(providerId || '?').replace(/[^A-Za-z0-9 ]+/g, ' ').trim();
+    var words = name.split(/\s+/).filter(Boolean);
+    var letters = words.length > 1 ? (words[0][0] + words[1][0]) : name.slice(0, 2);
+    letters = letters.charAt(0).toUpperCase() + letters.slice(1).toLowerCase();
+    return { id: id, letters: letters || '?', vendor: 'community' };
+  }
+  /* PMU.mark(providerId, size, opts): the provider's OFFICIAL mark (Jared 2026-10-02 "yes use the real provider logos",
+     DECISIONS.md) from the marks pack (06-marks.js window.PMU_MARKS: never recoloured, tinted or put on a plate; light /
+     dark variant by theme, optical scale per mark), wrapped in .pmu-pmark so callers keep one hook (data-prov). Free
+     Models and Local model server get the pack's neutral UI icons. A provider the pack does not know falls back to the
+     monogram tile of DESIGN-SPEC-ATLAS 5 (letters in its vendor hue). opts.label adds a hover tag. */
+  function mark(providerId, size, opts) {
+    var m = markOf(providerId), s = size || 20, label = opts && opts.label ? ' data-pm-hover-label="' + esc(opts.label) + '"' : '';
+    var P = window.PMU_MARKS, id = null;
+    try { id = P && P.idFor ? (P.idFor(m.id) || P.idFor(providerId)) : null; } catch (error) { id = null; }
+    if (id) {
+      var inner = '';
+      try { inner = P.html(id, s, 'auto'); } catch (error) { inner = ''; }
+      if (inner) return '<span class="pmu-pmark is-logo" data-prov="' + esc(m.id) + '" data-vendor="' + m.vendor + '" data-size="' + s + '" style="--s:' + s + 'px"' +
+        label + ' aria-hidden="true">' + inner + '</span>';
+    }
+    return '<span class="pmu-pmark" data-prov="' + esc(m.id) + '" data-vendor="' + m.vendor + '" data-size="' + s + '" style="--s:' + s + 'px"' +
+      label + ' aria-hidden="true">' + esc(m.letters) + '</span>';
+  }
 
   var STATES = {
     zero: { glyph: null, word: '0', tone: 'neutral' },
@@ -95,4 +158,7 @@
 
   PMU.fmt = fmt;
   PMU.vs = vs;
+  PMU.MARKS = MARKS;
+  PMU.markOf = markOf;
+  PMU.mark = mark;
 })();

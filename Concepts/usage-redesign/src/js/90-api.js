@@ -42,7 +42,10 @@ function rerender(room) {
   if (room && ROOM[room] && room !== state.room) return false;
   if (PMU.roster) PMU.roster.invalidate();
   PMU.shell.render();
-  if (PMU.board) PMU.board.refresh(room ? 'data' : 'page');
+  if (PMU.board) {
+    if (state.room === 'accounts') PMU.board.relevel();   /* a provider may have gained or lost its widget (Settings roster) */
+    PMU.board.refresh(room ? 'data' : 'page');
+  }
   return true;
 }
 
@@ -84,7 +87,10 @@ function syncUsageLayer() {
   var was = document.body.classList.contains('pmu-page-active');
   document.body.classList.toggle('pmu-page-active', active);
   /* Settings may have changed while Usage was hidden: re-read it on the way in (ARCHITECTURE section 6) */
-  if (active && !was && PMU.settings) { PMU.settings.invalidate('page'); if (PMU.roster) PMU.roster.invalidate(); if (state.room === 'accounts' && PMU.board) PMU.board.refresh('settings'); }
+  if (active && !was && PMU.settings) { PMU.settings.invalidate('page'); if (PMU.roster) PMU.roster.invalidate(); }
+  /* arriving on Usage replays the room entrance (plates rise in reading order, then charts draw); leaving closes menus */
+  if (active && !was && PMU.board) PMU.board.mount(state.room, {});
+  if (!active && was) { if (PMU.menu) PMU.menu.close(); if (PMU.board) PMU.board.cancel(); if (PMU.inspector) PMU.inspector.close(); }
 }
 
 if (app) {
@@ -161,6 +167,8 @@ window.PM7_USAGE = {
 };
 
 injectIcons();
-PMU.charts.defs();
-render();
+try { PMU.charts.defs(); } catch (error) { console.error('[pm-usage] chart defs', error); }
+if (PMU.board) PMU.board.init();
+PMU.shell.render();
+if (PMU.board) PMU.board.mount(state.room, {});
 syncUsageLayer();

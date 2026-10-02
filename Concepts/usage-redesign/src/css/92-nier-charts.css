@@ -1,6 +1,113 @@
-/* NieR Mode for charts and meters (owner: charts; DESIGN-SPEC section 13): blocks, charts, intel. Skeleton: the meter
-   cells; series patterns and the readout card come with the chart kit. */
-html[data-o55-nier-parts~="blocks"] #panel-usage .pmu-metertrack { border-radius: 0; background: transparent; box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .5); }
+/* NieR Mode for charts and meters (owner: charts; DESIGN-SPEC 13, DESIGN-SPEC-ATLAS 12). NieR is an overlay over Basic: the
+   tokens already turn every hue into ink (00-base.css), so these rules tell series apart by pattern instead of hue
+   (token types: input solid, output hatch, reasoning rules, cache write cross, cache read dots; slots and vendors by
+   index mod 5), flatten areas to ink at 14 %, dash lines, paint meters as ink cells (blocks), square every corner
+   (square) and turn the readout into the intel card (intel). Every rule is scoped by its part. */
+
+/* ---------- patterns (SVG defs and DOM backgrounds) ---------- */
+html[data-o55-nier="on"] #panel-usage .pmu-pat-bg { fill: transparent; }
+html[data-o55-nier="on"] #panel-usage .pmu-pat-ink { stroke: var(--o55-nier-ink); fill: none; }
+html[data-o55-nier="on"] #panel-usage .pmu-pat-dot, html[data-o55-nier="on"] #panel-usage .pmu-pat-full { fill: var(--o55-nier-ink); }
+#panel-usage .pmu-pat-est { stroke: var(--pmu-card); }
+html[data-o55-nier="on"] #panel-usage .pmu-chart, html[data-o55-nier="on"] #panel-usage .pmu-meter, html[data-o55-nier="on"] #panel-usage .pmu-legend {
+  --nw-solid: var(--o55nw-solid, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)));
+  --nw-hatch: var(--o55nw-hatch, repeating-linear-gradient(135deg, var(--o55-nier-ink) 0 1.5px, transparent 1.5px 4.5px));
+  --nw-rules: var(--o55nw-rules, repeating-linear-gradient(0deg, var(--o55-nier-ink) 0 1px, transparent 1px 3.5px));
+  --nw-cross: repeating-linear-gradient(45deg, var(--o55-nier-ink) 0 1px, transparent 1px 4px), repeating-linear-gradient(135deg, var(--o55-nier-ink) 0 1px, transparent 1px 4px);
+  --nw-dots: radial-gradient(circle at 2px 2px, var(--o55-nier-ink) 1.1px, transparent 1.4px) 0 0 / 4px 4px; }
+
+/* ---------- areas, bands and lines (charts) ---------- */
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-mark[data-mark="area"]:not([data-q]) { fill: rgba(var(--o55-nier-ink-rgb), .14) !important; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-mark[data-mark="band"] { fill-opacity: 1 !important; stroke: var(--o55-nier-ink); stroke-width: .75; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-mark[data-mark="band"][data-tk="in"] { fill: url(#pmu-pat-solid) !important; fill-opacity: .55 !important; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-mark[data-mark="band"][data-tk="out"] { fill: url(#pmu-pat-hatch) !important; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-mark[data-mark="band"][data-tk="rsn"] { fill: url(#pmu-pat-rules) !important; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-mark[data-mark="band"][data-tk="cw"] { fill: url(#pmu-pat-cross) !important; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-mark[data-mark="band"][data-tk="cr"] { fill: url(#pmu-pat-dots) !important; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-mark[data-mark="band"][data-series-role="forecast"] { fill: rgba(var(--o55-nier-ink-rgb), .08) !important; stroke: none; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-mark[data-mark="line"], html[data-o55-nier-parts~="charts"] #panel-usage .pmu-mark[data-mark="edge"] { stroke-linecap: butt; stroke-linejoin: miter; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-mark[data-mark="line"][data-series-index="1"] { stroke-dasharray: 6 3; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-mark[data-mark="line"][data-series-index="2"] { stroke-dasharray: 2 3; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-mark[data-mark="line"][data-series-index="3"] { stroke-dasharray: 8 3 2 3; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-mark[data-mark="line"][data-series-index="4"] { stroke-dasharray: 1 2; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-mark[data-mark="line"][data-role="cost"] { stroke-dasharray: 6 3; stroke-width: 2; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-mark[data-mark="dot"] { fill: var(--o55-nier-ink); stroke: var(--surface, var(--pmu-card)); }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-mark[data-q][data-mark="line"] { stroke: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-mark[data-q][data-mark="line"][data-tone="warn"] { stroke: var(--o55-nier-warn); }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-mark[data-q][data-mark="line"]:is([data-tone="crit"], [data-tone="exhausted"], [data-tone="over"]) { stroke: var(--o55-nier-error); }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-mark[data-q][data-mark="area"] { fill: var(--o55-nier-ink); fill-opacity: .14; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-mark[data-q][data-mark="area"][data-tone="warn"] { fill: var(--o55-nier-warn); }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-mark[data-q][data-mark="area"]:is([data-tone="crit"], [data-tone="exhausted"], [data-tone="over"]) { fill: var(--o55-nier-error); }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-chart path.pmu-grid { stroke: rgba(var(--o55-nier-ink-rgb), .16); }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-chart path.pmu-vgrid { stroke: rgba(var(--o55-nier-ink-rgb), .12); stroke-dasharray: 1 3; }
+
+/* ---------- DOM segments and bars by pattern: token types fixed, slots and vendors by index mod 5 ---------- */
+html[data-o55-nier-parts~="charts"] #panel-usage :is(.pmu-colstack, .pmu-sbfill, .pmu-mixbar, .pmu-splitbar, .pmu-rkfill) > i,
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-tb i, html[data-o55-nier-parts~="charts"] #panel-usage .pmu-swatch { background: var(--nw-solid) !important; opacity: 1; }
+html[data-o55-nier-parts~="charts"] #panel-usage :is(.pmu-colstack, .pmu-sbfill, .pmu-mixbar, .pmu-splitbar, .pmu-rkfill, .pmu-tb, .pmu-legend-item, .pmu-ro-row, .pmu-tbname, .pmu-splitleg span, .pmu-dl-row) [data-tk="out"],
+html[data-o55-nier-parts~="charts"] #panel-usage :is(.pmu-colstack, .pmu-sbfill, .pmu-mixbar, .pmu-splitbar, .pmu-rkfill) > [data-tk="out"] { background: var(--nw-hatch) !important; }
+html[data-o55-nier-parts~="charts"] #panel-usage [data-tk="rsn"]:is(i, .pmu-swatch) { background: var(--nw-rules) !important; }
+html[data-o55-nier-parts~="charts"] #panel-usage [data-tk="cw"]:is(i, .pmu-swatch) { background: var(--nw-cross) !important; }
+html[data-o55-nier-parts~="charts"] #panel-usage [data-tk="cr"]:is(i, .pmu-swatch) { background: var(--nw-dots) !important; }
+html[data-o55-nier-parts~="charts"] #panel-usage [data-tk="out"]:is(i, .pmu-swatch) { background: var(--nw-hatch) !important; }
+html[data-o55-nier-parts~="charts"] #panel-usage :is([data-series-index="1"], [data-series-index="6"], [data-vendor="openai"], [data-vendor="meta"], [data-vendor="cursor"]):is(.pmu-colstack > i, .pmu-mixseg, .pmu-rkfill > i, .pmu-swatch) { background: var(--nw-hatch) !important; }
+html[data-o55-nier-parts~="charts"] #panel-usage :is([data-series-index="2"], [data-series-index="7"], [data-vendor="google"], [data-vendor="xai"], [data-vendor="community"]):is(.pmu-colstack > i, .pmu-mixseg, .pmu-rkfill > i, .pmu-swatch) { background: var(--nw-cross) !important; }
+html[data-o55-nier-parts~="charts"] #panel-usage :is([data-series-index="3"], [data-vendor="alibaba"], [data-vendor="zai"], [data-vendor="network"]):is(.pmu-colstack > i, .pmu-mixseg, .pmu-rkfill > i, .pmu-swatch) { background: var(--nw-dots) !important; }
+html[data-o55-nier-parts~="charts"] #panel-usage :is([data-series-index="4"], [data-vendor="moonshot"], [data-vendor="minimax"]):is(.pmu-colstack > i, .pmu-mixseg, .pmu-rkfill > i, .pmu-swatch) { background: var(--nw-rules) !important; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-swatch[data-series-index="ink"], html[data-o55-nier-parts~="charts"] #panel-usage .pmu-swatch[data-sw="line"] { background: var(--nw-solid) !important; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-swatch[data-sw="dash"] { background: none !important; border-top-color: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-mark[data-est="1"] { background: var(--nw-hatch) !important; opacity: .7; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-tb.is-tok i { opacity: .45; }
+html[data-o55-nier-parts~="charts"] #panel-usage :is(.pmu-sbbar, .pmu-tb, .pmu-rkbar, .pmu-mixbar) { background: rgba(var(--o55-nier-ink-rgb), .08); box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .18); }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-colstack > i { background-image: none; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-col.is-zero .pmu-colstack { background: var(--o55-nier-ink); }
+
+/* ---------- donut and rings: SVG arcs (round under Square), pattern fills by index, track ink 12 % ---------- */
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-ringtrack { stroke: rgba(var(--o55-nier-ink-rgb), .12) !important; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-ringbox [data-mark="arc"] { stroke: var(--o55-nier-ink); stroke-linecap: butt; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-ringbox [data-mark="arc"]:nth-of-type(3n + 2) { stroke-dasharray: none; stroke-opacity: .6; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-donut [data-mark="arc"] { fill: url(#pmu-pat-solid); stroke: var(--o55-nier-ink); stroke-width: .75; }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-donut [data-mark="arc"]:is([data-vendor="openai"], [data-vendor="meta"], [data-vendor="cursor"]) { fill: url(#pmu-pat-hatch); }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-donut [data-mark="arc"]:is([data-vendor="google"], [data-vendor="xai"], [data-vendor="community"], [data-series-index="7"]) { fill: url(#pmu-pat-cross); }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-donut [data-mark="arc"]:is([data-vendor="alibaba"], [data-vendor="zai"], [data-vendor="network"]) { fill: url(#pmu-pat-dots); }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-donut [data-mark="arc"]:is([data-vendor="moonshot"], [data-vendor="minimax"]) { fill: url(#pmu-pat-rules); }
+html[data-o55-nier-parts~="charts"] #panel-usage :is(.pmu-donut [data-mark="arc"], .pmu-swatch)[data-shade="2"] { opacity: .62; }
+html[data-o55-nier-parts~="charts"] #panel-usage :is(.pmu-donut [data-mark="arc"], .pmu-swatch)[data-shade="3"] { opacity: .42; }
+html[data-o55-nier-parts~="charts"] #panel-usage :is(.pmu-donut [data-mark="arc"], .pmu-swatch)[data-shade="4"] { opacity: .28; }
+html[data-o55-nier-parts~="charts"] #panel-usage :is(.pmu-centre-v, .pmu-dc-v) { font-family: "PM NieR Mono", var(--pmu-mono); letter-spacing: .02em; }
+
+/* ---------- heat cells: ink opacity steps come from the tokens; square cells ---------- */
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-hc[data-step="-1"] { outline-color: rgba(var(--o55-nier-ink-rgb), .42); }
+html[data-o55-nier-parts~="charts"] #panel-usage .pmu-hc[data-peak] { box-shadow: inset 0 0 0 1.5px var(--surface, var(--pmu-card)), 0 0 0 1px var(--o55-nier-ink); }
+
+/* ---------- meters as ink cells (blocks): the segment ticks hide, warn and crit take the NieR inks ---------- */
+html[data-o55-nier-parts~="blocks"] #panel-usage .pmu-metertrack { border-radius: 0; background: transparent; box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .45); }
+html[data-o55-nier-parts~="blocks"] #panel-usage .pmu-metertrack::before, html[data-o55-nier-parts~="blocks"] #panel-usage .pmu-meterwash { display: none; }
+html[data-o55-nier-parts~="blocks"] #panel-usage .pmu-meterclip { inset: 2px; }
+html[data-o55-nier-parts~="blocks"] #panel-usage .pmu-meter[data-size="k"] .pmu-meterclip { inset: 1px; }
 html[data-o55-nier-parts~="blocks"] #panel-usage .pmu-meterfill { border-radius: 0; background: repeating-linear-gradient(90deg, var(--o55-nier-ink) 0 6px, transparent 6px 8px) !important; }
 html[data-o55-nier-parts~="blocks"] #panel-usage .pmu-meter[data-tone="warn"] .pmu-meterfill { background: repeating-linear-gradient(90deg, var(--o55-nier-warn) 0 6px, transparent 6px 8px) !important; }
-html[data-o55-nier-parts~="blocks"] #panel-usage .pmu-meter:is([data-tone="hot"], [data-tone="exhausted"]) .pmu-meterfill { background: repeating-linear-gradient(90deg, var(--o55-nier-error) 0 6px, transparent 6px 8px) !important; }
+html[data-o55-nier-parts~="blocks"] #panel-usage .pmu-meter:is([data-tone="crit"], [data-tone="exhausted"], [data-tone="over"]) .pmu-meterfill { background: repeating-linear-gradient(90deg, var(--o55-nier-error) 0 6px, transparent 6px 8px) !important; }
+html[data-o55-nier-parts~="blocks"] #panel-usage .pmu-meterover { border-radius: 0; background: var(--o55-nier-error); }
+html[data-o55-nier-parts~="blocks"] #panel-usage .pmu-notch { border-radius: 0; background: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="blocks"] #panel-usage .pmu-meter[data-tone="missing"] .pmu-metertrack { box-shadow: none; border: 1px dashed rgba(var(--o55-nier-ink-rgb), .42); }
+html[data-o55-nier="on"] #panel-usage .pmu-meter[data-tone="warn"] .pmu-meterval { color: var(--o55-nier-warn-text, var(--o55-nier-warn)); }
+html[data-o55-nier="on"] #panel-usage .pmu-meter:is([data-tone="crit"], [data-tone="exhausted"], [data-tone="over"]) .pmu-meterval { color: var(--o55-nier-error-text, var(--o55-nier-error)); }
+
+/* ---------- micro-labels and ticks in PM NieR Mono, tracked .10 em ---------- */
+html[data-o55-nier="on"] #panel-usage .pmu-chart text.pmu-tick { font-family: "PM NieR Mono", var(--pmu-mono); letter-spacing: .06em; }
+html[data-o55-nier="on"] #panel-usage .pmu-chart text.pmu-tick:is(.is-unit, .is-note, .is-peak, .is-limit),
+html[data-o55-nier="on"] #panel-usage :is(.pmu-cap, .pmu-hh, .pmu-colcaption, .pmu-readout strong, .pmu-raxis-t i) { font-family: "PM NieR Mono", var(--pmu-mono); letter-spacing: .10em; }
+
+/* ---------- the readout as the intel card (intel): ink title band, mono rows ---------- */
+html[data-o55-nier-parts~="intel"] #panel-usage .pmu-readout { border-radius: 0; padding: 0 0 8px; background: var(--surface, var(--pmu-card)); border: 1px solid var(--o55-nier-ink);
+  box-shadow: 4px 4px 0 rgba(var(--o55-nier-ink-rgb), .22); font-family: "PM NieR Mono", var(--pmu-mono); font-size: 12px; }
+html[data-o55-nier-parts~="intel"] #panel-usage .pmu-readout strong { margin: 0 0 6px; padding: 5px 10px; background: var(--o55-nier-ink); color: var(--o55-nier-on-ink, var(--surface)); }
+html[data-o55-nier-parts~="intel"] #panel-usage .pmu-readout .pmu-ro-row, html[data-o55-nier-parts~="intel"] #panel-usage .pmu-readout p { padding-left: 10px; padding-right: 10px; }
+html[data-o55-nier-parts~="intel"] #panel-usage .pmu-ro-sep { margin-left: 10px; margin-right: 10px; background: rgba(var(--o55-nier-ink-rgb), .3); }
+html[data-o55-nier-parts~="intel"] #panel-usage .pmu-xh { background: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="intel"] #panel-usage .pmu-xdot { border-radius: 0; border-color: var(--o55-nier-ink); }
+
+/* ---------- square: every chart corner is 0 (rings and dots are SVG, so they stay round) ---------- */
+html[data-o55-nier-parts~="square"] #panel-usage :is(.pmu-colstack, .pmu-sbbar, .pmu-sbfill, .pmu-mixbar, .pmu-tb, .pmu-tb i, .pmu-rkbar, .pmu-rkfill, .pmu-splitbar, .pmu-hc, .pmu-hs i,
+  .pmu-hs-key i, .pmu-swatch, .pmu-sbrow, .pmu-dl-row, .pmu-rk, .pmu-rrow, .pmu-rtrack, .pmu-rbar, .pmu-readout, .pmu-legend-item, .pmu-notch, .pmu-meterover) { border-radius: 0 !important; }

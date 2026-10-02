@@ -144,7 +144,7 @@
       "windows": { "fiveHour": { "pct": 12, "reset_in_min": 171, "truth": "provider_reported", "win_min": 300 },
                    "weekly": { "pct": 44, "reset_in_min": 3240, "truth": "provider_reported", "win_min": 10080, "pace_pts": -6 },
                    "monthly": { "pct": 31, "reset_rule": "next_month", "truth": "provider_reported" } },
-      "extra": [ { "label": "Credits", "vs": "ok", "text": "3 packs" } ],
+      "extra": [ { "label": "Credits", "vs": "ok", "text": "3 packs", "expires_in_min": 7330, "expires_text": "Credit pack expires" } ],
       "history": { "weekly": [20, 24, 29, 33, 37, 41, 44], "monthly": [18, 20, 22, 25, 27, 29, 31] } },
     "qwen-coding/qwen-cn": { "legacy_id": null, "state": "standby", "effective": false, "plan": "Lite", "plan_line": "Coding Plan · Lite", "host": "Mac", "auth": "Qwen login",
       "fresh": { "age_s": 900, "source": "provider reported", "stale": false }, "supports_manual_set_active": true, "route_role": "Standby",
@@ -174,6 +174,7 @@
       "history": { "monthly": [10, 13, 16, 19, 23, 26, 29] } },
     "cursor-cli/cursor-main": { "legacy_id": null, "state": "standby", "effective": true, "plan": "Pro", "plan_line": "Cursor Pro", "host": "Ubuntu", "auth": "Cursor login",
       "fresh": { "age_s": 7200, "source": "cached dashboard", "stale": true }, "supports_manual_set_active": false, "route_role": "Standby",
+      "spend": { "usd": 5.40, "state": "settled", "label": "Spend this month" },
       "extra": [ { "label": "Included usage", "vs": "not_exposed", "text": "usage not exposed" } ] }
   },
   "switch_log": [

@@ -1,20 +1,77 @@
-/* NieR Mode for the shell and board (owner: engine; DESIGN-SPEC section 13). Ported from opus-5.5
-   src/settings/styles.d/14-nier-parts.css, 15-nier-world.css and 16-nier-scenes.css onto the pmu- hooks, each rule
-   scoped by its part. Skeleton: ground, scenes, square-safe shapes, ticks and headers; the engine builder adds the rest. */
+/* NieR Mode for the shell, the board and the menus (owner: engine; DESIGN-SPEC section 13, DESIGN-SPEC-ATLAS section 12).
+   Ported from opus-5.5 src/settings/styles.d/14-nier-parts.css, 15-nier-world.css and 16-nier-scenes.css onto the pmu-
+   hooks, each rule scoped by its part. NieR is an overlay over Basic; with no parts ("Colors only") every state still
+   reads (glyph + word). */
 html[data-o55-nier-parts~="ground"] #pmuApp.pmu-shell { background-image: linear-gradient(rgba(var(--o55-nier-ink-rgb), .06) 1px, transparent 1px),
   linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .06) 1px, transparent 1px); background-size: 32px 32px; }
 html[data-o55-nier-scene] #pmuApp.pmu-shell { background-color: transparent; background-image: none; }
 html[data-o55-nier-scene] #pmuApp .pmu-rail, html[data-o55-nier-scene] #pmuApp .pmu-stagehead, html[data-o55-nier-scene] #pmuApp .pmu-card,
-html[data-o55-nier-scene] #pmuApp .pmu-inspector, html[data-o55-nier-scene] #pmuApp .pmu-pop { background-color: var(--surface); }
+html[data-o55-nier-scene] #pmuApp .pmu-inspector, html[data-o55-nier-scene] #pmuApp .pmu-pop, html[data-o55-nier-scene] #pmuApp .pmu-morph { background-color: var(--surface); }
+html[data-o55-nier="on"] #panel-usage .pmu-stagehead { background: transparent; }
+
+/* square: every element; rings and dots stay SVG so they stay round */
+html[data-o55-nier-parts~="square"] #panel-usage :is(.pmu-card, .pmu-morph, .pmu-landing, .pmu-outline, .pmu-outline-label, .pmu-ctlbtn, .pmu-iconbtn, .pmu-navbtn, .pmu-navink,
+  .pmu-menu, .pmu-mitem, .pmu-micon, .pmu-mrailbtn, .pmu-msearchwrap, .pmu-mback, .pmu-cardtools, .pmu-pmark, .pmu-toggle, .pmu-toggle::after, .pmu-stepper, .pmu-irow,
+  .pmu-inspact, .pmu-seg-ink) { border-radius: 0; }
+
+/* ticks: corner ticks and the U-nn coordinate on every card (account and group cards count like every widget) */
 html[data-o55-nier-parts~="ticks"] #panel-usage .pmu-board { counter-reset: pmu-nier-usage; }
 html[data-o55-nier-parts~="ticks"] #panel-usage .pmu-card { counter-increment: pmu-nier-usage; background-image: var(--o55nw-ticks) !important;
   background-size: var(--o55nw-ticks-size) !important; background-position: var(--o55nw-ticks-pos) !important; background-repeat: no-repeat !important; }
-html[data-o55-nier-parts~="ticks"] #panel-usage .pmu-card > .pmu-cardhead::after { content: "U-" counter(pmu-nier-usage, decimal-leading-zero); position: absolute; right: 14px; bottom: 4px;
-  z-index: 4; pointer-events: none; font: 500 8px/1 var(--mono-font); letter-spacing: .16em; color: var(--o55-nier-ink); opacity: .6; }
+html[data-o55-nier-parts~="ticks"] #panel-usage .pmu-card > .pmu-cardhead::after { content: "U-" counter(pmu-nier-usage, decimal-leading-zero); position: absolute; right: 14px; bottom: 2px;
+  z-index: 3; pointer-events: none; font: 500 8px/1 var(--mono-font); letter-spacing: .16em; color: var(--o55-nier-ink); opacity: .6; }
+
+/* headers: tracked capitals on titles, the head rule with square end caps, the ink title band of the inspector */
 html[data-o55-nier-parts~="headers"] #panel-usage :is(.pmu-cardtitle, #pmuRoomTitle, .pmu-brand h1) { text-transform: uppercase; letter-spacing: .07em; }
+html[data-o55-nier-parts~="headers"] #panel-usage .pmu-card[data-head="tile"] .pmu-cardtitle { letter-spacing: .05em; }
+html[data-o55-nier-parts~="headers"] #panel-usage .pmu-cardsub { text-transform: none; letter-spacing: 0; }
 html[data-o55-nier-parts~="headers"] #panel-usage .pmu-cardhead { background-image: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)), linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)),
   linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45)); background-size: 5px 5px, 5px 5px, calc(100% - 12px) 1px;
-  background-position: left bottom, right bottom, center calc(100% - 2px); background-repeat: no-repeat; }
+  background-position: left 6px bottom 0, right 6px bottom 0, center calc(100% - 2px); background-repeat: no-repeat; }
 html[data-o55-nier-parts~="headers"] #panel-usage .pmu-insphead { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="headers"] #panel-usage .pmu-insphead :is(.pmu-inspsub, .pmu-iconbtn, .pmu-seg button) { color: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="headers"] #panel-usage .pmu-colhead { background: rgba(var(--o55-nier-ink-rgb), .05); border-top-color: transparent;
+  border-bottom: 1px solid var(--o55-nier-ink); }
+html[data-o55-nier-parts~="headers"] #panel-usage .pmu-mhead strong { text-transform: uppercase; letter-spacing: .08em; }
+html[data-o55-nier="on"] #panel-usage :is(.pmu-cap, .pmu-msec, .pmu-range button, .pmu-rangetext, .pmu-colhead) { letter-spacing: .10em; }
+
+/* marks: a 1 px ink outline square with ink letters, no vendor hue (A1 12) */
+html[data-o55-nier="on"] #panel-usage .pmu-pmark:not(.is-logo) { background: transparent; color: var(--o55-nier-ink); box-shadow: inset 0 0 0 1px var(--o55-nier-ink); font-family: "PM NieR Mono", var(--pmu-mono); }
+
+/* the board under NieR: plates are ink-framed paper; hover draws the ink rule under the head instead of lifting */
+html[data-o55-nier="on"] #panel-usage .pmu-card { border-color: rgba(var(--o55-nier-ink-rgb), .38); box-shadow: none; }
+html[data-o55-nier="on"] #panel-usage .pmu-card:hover { transform: none; border-color: var(--o55-nier-ink); box-shadow: 3px 3px 0 rgba(var(--o55-nier-ink-rgb), .18); }
+html[data-o55-nier="on"] #panel-usage .pmu-landing { border: 1.5px dashed var(--o55-nier-ink); background: repeating-linear-gradient(135deg, rgba(var(--o55-nier-ink-rgb), .10) 0 2px, transparent 2px 7px); }
+html[data-o55-nier="on"] #panel-usage .pmu-outline { border: 1.5px solid var(--o55-nier-ink); background: rgba(var(--o55-nier-ink-rgb), .05); box-shadow: 4px 4px 0 rgba(var(--o55-nier-ink-rgb), .16); }
+html[data-o55-nier="on"] #panel-usage .pmu-outline-label { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-color: var(--o55-nier-ink); box-shadow: none;
+  text-transform: uppercase; letter-spacing: .08em; }
+html[data-o55-nier="on"] #panel-usage .pmu-outline-label .pmu-ol-note { color: var(--o55-nier-on-ink); opacity: .75; }
+/* the lift: brackets lock on around the card (B v2 8.3) */
+html[data-o55-nier="on"] #panel-usage .pmu-card[data-lifted] { box-shadow: 6px 6px 0 rgba(var(--o55-nier-ink-rgb), .22); outline: 1px solid var(--o55-nier-ink); outline-offset: 5px; }
+html[data-o55-nier="on"] #panel-usage .pmu-h:is([data-edge="e"], [data-edge="w"], [data-edge="s"])::before { background: var(--o55-nier-ink); border-radius: 0; }
+html[data-o55-nier="on"] #panel-usage .pmu-seg-ink { background: var(--o55-nier-ink); transition-timing-function: steps(4, end); }
+html[data-o55-nier="on"] #panel-usage .pmu-toggle[aria-checked="true"], html[data-o55-nier="on"] #panel-usage .pmu-toggle.on { background: var(--o55-nier-ink); }
+html[data-o55-nier="on"] #panel-usage .pmu-toggle::after { background: var(--surface); box-shadow: none; transition-timing-function: steps(3, end); }
+html[data-o55-nier="on"] #panel-usage .pmu-row:hover, html[data-o55-nier="on"] #panel-usage .pmu-irow:hover { background: rgba(var(--o55-nier-ink-rgb), .08); }
+
+/* menus under NieR: ink panel frame, ink highlight row with on-ink text, mono section labels */
+html[data-o55-nier="on"] #panel-usage .pmu-menu { --pmu-menu-bg: var(--surface); --pmu-menu-border: var(--o55-nier-ink); --pmu-menu-shadow: 5px 5px 0 rgba(var(--o55-nier-ink-rgb), .22);
+  --pmu-menu-hot: rgba(var(--o55-nier-ink-rgb), .10); --pmu-menu-active: rgba(var(--o55-nier-ink-rgb), .16); --pmu-menu-iconbg: transparent; }
+html[data-o55-nier="on"] #panel-usage .pmu-mitem.active { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] #panel-usage .pmu-mitem.active :is(.pmu-mcopy span, .pmu-mright, .pmu-mcheck, .pmu-micon) { color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] #panel-usage .pmu-micon { color: var(--o55-nier-ink); box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .5); }
+html[data-o55-nier="on"] #panel-usage .pmu-mcheck { color: var(--o55-nier-ink); }
+/* slice: the menu unfolds from a 1 px line with one flicker step and folds back (14-nier-parts.css o55np-slice) */
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #panel-usage .pmu-menu { transition: none; transform-origin: 50% 50%; }
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #panel-usage .pmu-menu[data-mstate="closed"] { opacity: 0; transform: none; }
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #panel-usage .pmu-menu[data-mstate="open"] { transform: none; animation: o55np-slice 300ms linear backwards; }
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #panel-usage .pmu-menu[data-mstate="leaving"] { opacity: 0; transform: none; scale: 1 .006;
+  transition: scale 150ms cubic-bezier(.6, 0, .85, .35), opacity 70ms linear 120ms; }
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #panel-usage .pmu-menu.pmu-m-spring { transition: height 340ms steps(5, end); }
+
+/* empty: the machine drawing above every empty state */
 html[data-o55-nier-parts~="empty"] #panel-usage .pmu-empty::before { content: ""; display: block; width: 44px; height: 44px; margin: 0 auto 8px;
   background: var(--o55nw-art-machine) center / contain no-repeat; opacity: .82; }
+/* diamonds: a turning hollow diamond during refresh */
+html[data-o55-nier-parts~="diamonds"] #panel-usage .pmu-iconbtn.spinning svg { animation: pmu-nier-diamond 650ms steps(6, end) 1; }
+@keyframes pmu-nier-diamond { from { transform: rotate(0deg) scale(1); } 50% { transform: rotate(90deg) scale(.82); } to { transform: rotate(180deg) scale(1); } }

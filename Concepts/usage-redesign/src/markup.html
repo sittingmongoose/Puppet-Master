@@ -1,5 +1,6 @@
-<!-- Usage redesign (B v2 skeleton; owner: engine). The DOM contract is ARCHITECTURE.md section 5. The rail lists the 13
-     rooms in canon order; icons are filled from the SVG map by PM7_USAGE.injectIcons(); the board by PMU.board.mount(). -->
+<!-- Usage redesign (B v2 + A1; owner: engine). The DOM contract is ARCHITECTURE.md section 5. The rail lists the 13
+     rooms in canon order; icons are filled from the SVG map by PM7_USAGE.injectIcons(); the board by PMU.board.mount().
+     Every head dropdown is a PMU.menu (src/js/45-menu.js) in the Chat Assistant 5.6 Pro menu style. -->
 <div class="pmu-shell" id="pmuApp" data-room="overview">
   <aside class="pmu-rail" aria-label="Usage rooms">
     <div class="pmu-brand"><h1>Usage</h1></div>
@@ -27,19 +28,23 @@
         <p class="pmu-roomdesc" id="pmuRoomDesc">Limits, costs, and run pressure at the current pace.</p>
       </div>
       <div class="pmu-headctl">
-        <button type="button" class="pmu-ctlbtn" id="pmuScopeBtn" aria-haspopup="menu"><span id="pmuScopeLabel">All current usage</span></button>
-        <div class="pmu-range pmu-seg" id="pmuRange" role="group" aria-label="Range"><button type="button" data-range="5h">5h</button><button type="button" data-range="24h" class="active" aria-pressed="true">24h</button><button type="button" data-range="7d">7d</button><button type="button" data-range="30d">30d</button></div>
-        <button type="button" class="pmu-ctlbtn" id="pmuDetailBtn" aria-haspopup="menu"><span id="pmuDetailLabel">At a glance</span></button>
-        <button type="button" class="pmu-ctlbtn" id="pmuCustomize" aria-haspopup="menu"><span id="pmuPanelCount">Panels</span></button>
+        <button type="button" class="pmu-ctlbtn pmu-ctlmenu" id="pmuScopeBtn" aria-haspopup="menu" aria-expanded="false"><span class="pmu-ctllead" id="pmuScopeLead" aria-hidden="true"></span><span class="pmu-ctltext" id="pmuScopeLabel">All current usage</span><span class="pmu-ico pmu-ctlchev" data-icon="chevronDown" aria-hidden="true"></span></button>
+        <div class="pmu-range pmu-seg" id="pmuRange" role="group" aria-label="Range"><button type="button" data-range="5h">5h</button><button type="button" data-range="24h" class="active" aria-pressed="true">24h</button><button type="button" data-range="7d">7d</button><button type="button" data-range="30d">30d</button><i class="pmu-seg-ink" aria-hidden="true"></i></div>
+        <button type="button" class="pmu-ctlbtn pmu-ctlmenu pmu-rangebtn" id="pmuRangeBtn" aria-haspopup="menu" aria-expanded="false" aria-label="Range"><span class="pmu-ctltext pmu-rangetext" id="pmuRangeLabel">24h</span><span class="pmu-ico pmu-ctlchev" data-icon="chevronDown" aria-hidden="true"></span></button>
+        <button type="button" class="pmu-ctlbtn pmu-ctlmenu" id="pmuDetailBtn" aria-haspopup="menu" aria-expanded="false"><span class="pmu-ctltext" id="pmuDetailLabel">At a glance</span><span class="pmu-ico pmu-ctlchev" data-icon="chevronDown" aria-hidden="true"></span></button>
+        <button type="button" class="pmu-ctlbtn pmu-ctlmenu" id="pmuCustomize" aria-haspopup="menu" aria-expanded="false" data-pm-hover-label="Panels in this room"><span class="pmu-ico pmu-ctlicon" data-icon="grid" aria-hidden="true"></span><span class="pmu-ctltext" id="pmuPanelCount">Panels</span><span class="pmu-ico pmu-ctlchev" data-icon="chevronDown" aria-hidden="true"></span></button>
         <button type="button" class="pmu-iconbtn" id="pmuRefresh" aria-label="Refresh usage" data-pm-hover-label="Refresh usage"><span class="pmu-ico" data-icon="refresh" aria-hidden="true"></span></button>
-        <button type="button" class="pmu-iconbtn" id="pmuExport" aria-label="Export usage" data-pm-hover-label="Export usage"><span class="pmu-ico" data-icon="export" aria-hidden="true"></span></button>
+        <button type="button" class="pmu-iconbtn" id="pmuExport" aria-label="Export usage" aria-haspopup="menu" aria-expanded="false" data-pm-hover-label="Export usage"><span class="pmu-ico" data-icon="export" aria-hidden="true"></span></button>
       </div>
     </header>
     <div class="pmu-scroll" id="pmuScroll">
       <div class="pmu-board" id="pmuBoard" data-room="overview"></div>
     </div>
     <aside class="pmu-inspector" id="pmuInspector" aria-hidden="true" aria-labelledby="pmuInspTitle">
-      <header class="pmu-insphead"><h3 id="pmuInspTitle">Details</h3><button type="button" class="pmu-iconbtn" id="pmuInspClose" aria-label="Close details"><span class="pmu-ico" data-icon="close" aria-hidden="true"></span></button></header>
+      <header class="pmu-insphead"><div class="pmu-insptitles"><h3 id="pmuInspTitle">Details</h3><p class="pmu-inspsub" id="pmuInspSub"></p></div>
+        <div class="pmu-seg pmu-inspmode" id="pmuInspMode" role="group" aria-label="View"><button type="button" data-insp-mode="curated" class="active" aria-pressed="true">Curated</button><button type="button" data-insp-mode="raw" aria-pressed="false">Raw</button><i class="pmu-seg-ink" aria-hidden="true"></i></div>
+        <button type="button" class="pmu-iconbtn" id="pmuInspClose" aria-label="Close details"><span class="pmu-ico" data-icon="close" aria-hidden="true"></span></button></header>
+      <div class="pmu-inspactions" id="pmuInspActions"></div>
       <div class="pmu-inspbody" id="pmuInspBody"></div>
     </aside>
   </section>

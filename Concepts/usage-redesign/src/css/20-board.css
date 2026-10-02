@@ -1,47 +1,158 @@
-/* Board and card chrome (owner: engine; DESIGN-SPEC sections 2, 3, 6 and 8). Explicit placement only: every card
-   carries grid-column / grid-row from the engine; nothing auto-flows. */
-#panel-usage .pmu-scroll { position: relative; flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain; }
+/* Board and card chrome (owner: engine; DESIGN-SPEC sections 2, 3, 6 and 8; DESIGN-SPEC-ATLAS sections 3 and 8).
+   Explicit placement only: every card carries grid-column / grid-row from the engine; nothing auto-flows. Plates: the
+   three head forms (plate 52 / line 34 / tile 30), the tools cluster at the top right, hairline rows, the move and
+   resize previews (landing, outline, morph), the lifted and settling states. Continuous motion is transform and opacity
+   only; nothing animates at idle. */
+#panel-usage .pmu-scroll { position: relative; flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain; scrollbar-gutter: stable; }
 #panel-usage .pmu-board { position: relative; display: grid; grid-template-columns: repeat(var(--pmu-tracks, 20), minmax(0, 1fr)); grid-auto-rows: var(--pmu-row);
   gap: var(--pmu-gap); padding: 10px 14px 28px; align-content: start; }
 #panel-usage .pmu-board[data-held] > .pmu-card { opacity: 0; }
-#panel-usage .pmu-card { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 0; border: var(--pmu-bw) solid var(--pmu-hairline);
-  border-radius: var(--pmu-r-card); background: var(--pmu-card); outline: none;
-  transition: transform var(--pmu-dur-hover) var(--pmu-ease-pop), box-shadow var(--pmu-dur-hover) var(--pmu-ease-pop); }
-#panel-usage .pmu-card:hover { transform: translateY(-2px); box-shadow: var(--pmu-elev-hover); }
-#panel-usage .pmu-card:focus-visible { box-shadow: 0 0 0 2px var(--pmu-accent); }
-#panel-usage .pmu-cardhead { position: relative; display: flex; align-items: center; gap: 6px; height: var(--pmu-head-h); padding: 0 10px 0 12px; flex: none; min-width: 0; cursor: grab; }
-#panel-usage .pmu-grip { display: inline-flex; width: 12px; height: 14px; margin-left: -6px; color: var(--pmu-ink-3); opacity: 0; transition: opacity 120ms; }
-#panel-usage .pmu-grip svg { width: 12px; height: 14px; }
-#panel-usage .pmu-cardtitle { margin: 0; min-width: 0; flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; font-weight: 600; color: var(--pmu-ink); }
-#panel-usage .pmu-cardmeta { flex: none; max-width: 50%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--pmu-ink-3); font-size: 11.5px; transition: opacity 120ms; }
-#panel-usage .pmu-cardtools { position: absolute; right: 6px; top: 4px; display: flex; gap: 2px; opacity: 0; transition: opacity 120ms; }
-#panel-usage .pmu-cardtools .pmu-iconbtn { width: 24px; height: 24px; }
-#panel-usage .pmu-card:hover .pmu-grip, #panel-usage .pmu-card:focus-visible .pmu-grip, #panel-usage .pmu-card:hover .pmu-cardtools, #panel-usage .pmu-card:focus-within .pmu-cardtools { opacity: 1; }
-#panel-usage .pmu-card:hover .pmu-cardmeta { opacity: 0; }
-/* narrow cards: the meta moves to the card's hover tag so the title keeps the head (DESIGN-SPEC 3) */
-#panel-usage .pmu-card:is([data-tw="xs"], [data-tw="s"]) .pmu-cardmeta { display: none; }
-#panel-usage .pmu-cardbody { position: relative; display: flex; flex-direction: column; gap: 8px; flex: 1 1 auto; min-height: 0; padding: 0 12px 10px; overflow: hidden; contain: layout paint; }
-#panel-usage .pmu-todo { margin: auto 0; color: var(--pmu-ink-3); font-size: 11.5px; }
-#panel-usage .pmu-empty { grid-column: 1 / -1; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 48px 16px; color: var(--pmu-ink-3); text-align: center; }
+#panel-usage .pmu-board-ghost { position: absolute; z-index: 1; overflow: hidden; pointer-events: none; }
+#panel-usage .pmu-board-ghost > .pmu-board { padding-top: 10px; }
 
-/* resize handles (DESIGN-SPEC 6.3): 7 zones, invisible until hover or focus */
-#panel-usage .pmu-h { position: absolute; z-index: 3; display: block; }
-#panel-usage .pmu-h[data-edge="e"] { top: 14px; bottom: 16px; right: -4px; width: 8px; cursor: ew-resize; }
-#panel-usage .pmu-h[data-edge="w"] { top: 14px; bottom: 16px; left: -4px; width: 8px; cursor: ew-resize; }
+/* ---- the plate (A1 3.2) ---- */
+#panel-usage .pmu-card { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 0; border: var(--pmu-bw) solid var(--pmu-rule);
+  border-radius: var(--pmu-r-card); background: var(--pmu-card); box-shadow: var(--pmu-shadow-1); outline: none;
+  transition: box-shadow var(--pmu-dur-hover) var(--pmu-ease-out), border-color var(--pmu-dur-hover) var(--pmu-ease-out), transform var(--pmu-dur-hover) var(--pmu-ease-spring); }
+#panel-usage .pmu-card:hover { box-shadow: var(--pmu-shadow-2); border-color: var(--pmu-rule-strong); }
+/* tiles lift 2 px with the spring; plates do not move (Atlas) */
+#panel-usage .pmu-card[data-head="tile"]:hover { transform: translateY(-2px); }
+html[data-theme^="friendly"] #panel-usage .pmu-card[data-head="tile"]:hover { transform: translateY(-3px); }
+html[data-theme^="glass"] #panel-usage .pmu-card:hover { border-color: rgba(255,255,255,.34); }
+html[data-theme^="retro"] #panel-usage .pmu-card:hover { transform: none; border-color: var(--pmu-accent); }
+#panel-usage .pmu-card:focus-visible { box-shadow: 0 0 0 2px var(--pmu-accent), var(--pmu-shadow-2); }
+#panel-usage .pmu-board[data-op] .pmu-card:not([data-lifted]):hover { transform: none; }
+/* during a gesture every card keeps its own layer, so peer slides starting and ending never re-layerize the page */
+#panel-usage .pmu-board[data-op] > .pmu-card, #panel-usage .pmu-board[data-op] > :is(.pmu-landing, .pmu-outline) { will-change: transform; }
+
+/* ---- head forms (A1 3.1) ---- */
+#panel-usage .pmu-cardhead { position: relative; display: flex; align-items: center; gap: 8px; flex: none; min-width: 0; height: var(--pmu-head-line); padding: 0 14px;
+  cursor: grab; user-select: none; -webkit-user-select: none; touch-action: none; }
+#panel-usage .pmu-card[data-head="plate"] > .pmu-cardhead { height: var(--pmu-head-plate); align-items: flex-start; padding: 12px 14px 0; gap: 10px; }
+#panel-usage .pmu-card[data-head="tile"] > .pmu-cardhead { height: var(--pmu-head-tile); align-items: flex-end; padding: 12px 14px 0; gap: 7px; }
+#panel-usage .pmu-cardkey { display: inline-flex; align-items: center; flex: none; }
+#panel-usage .pmu-cardkey[hidden] { display: none; }
+#panel-usage .pmu-card[data-head="plate"] .pmu-cardkey { margin-top: 2px; }
+/* tile keys (A1 3.1): a token swatch 10 x 10, a line swatch 14 x 3, or two half swatches 6 x 10 */
+#panel-usage .pmu-keysw { display: inline-block; flex: none; width: 10px; height: 10px; border-radius: 3px; background: var(--k, var(--pmu-ink-3)); }
+#panel-usage .pmu-keysw.is-line { width: 14px; height: 3px; border-radius: 2px; }
+#panel-usage .pmu-keysw.is-half { width: 6px; border-radius: 2px; }
+#panel-usage .pmu-keysw + .pmu-keysw { margin-left: 2px; }
+html[data-theme^="retro"] #panel-usage .pmu-keysw { border-radius: 0; }
+#panel-usage .pmu-cardtitles { display: flex; flex-direction: column; min-width: 0; flex: 1 1 auto; }
+#panel-usage .pmu-cardtitle { margin: 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13.5px; font-weight: 640; line-height: 18px;
+  letter-spacing: -.005em; color: var(--pmu-ink); }
+#panel-usage .pmu-card[data-head="plate"] .pmu-cardtitle { font-size: 15px; line-height: 20px; letter-spacing: -.01em; }
+#panel-usage .pmu-card[data-head="tile"] .pmu-cardtitle { font-size: 13px; font-weight: 560; line-height: 18px; color: var(--pmu-ink-2); letter-spacing: 0; }
+#panel-usage .pmu-cardsub { display: none; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 2px; font-size: 12px; line-height: 16px; color: var(--pmu-ink-3); }
+#panel-usage .pmu-card[data-head="plate"] .pmu-cardsub { display: block; }
+#panel-usage .pmu-cardsub:empty { display: none !important; }
+/* the short right meta of a line head (count, state word) from width tier s; plates keep it on the title line */
+#panel-usage .pmu-cardmeta { flex: none; max-width: 46%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--pmu-ink-3); font-size: 12px; line-height: 18px;
+  transition: opacity 140ms; }
+#panel-usage .pmu-cardmeta:empty { display: none; }
+#panel-usage .pmu-card[data-head="plate"] .pmu-cardmeta { margin-top: 1px; font-size: 12.5px; }
+#panel-usage .pmu-card[data-tw="xs"] .pmu-cardmeta { display: none; }
+#panel-usage .pmu-cardmeta [data-tone="good"], #panel-usage .pmu-cardmeta[data-tone="good"] { color: var(--pmu-ink-good); font-weight: 600; }
+#panel-usage .pmu-cardmeta [data-tone="warn"] { color: var(--pmu-ink-warn); font-weight: 600; }
+#panel-usage .pmu-cardmeta [data-tone="crit"] { color: var(--pmu-ink-crit); font-weight: 600; }
+/* head tools filled by a kind (inline legend, two-way switches); right-aligned on the title line */
+#panel-usage .pmu-headtools { display: flex; align-items: center; gap: 12px; flex: none; min-width: 0; transition: opacity 140ms; }
+#panel-usage .pmu-headtools:empty { display: none; }
+#panel-usage .pmu-card[data-head="plate"] .pmu-headtools { margin-top: 1px; }
+/* the tools cluster: grip, size, gear, menu at the top right; fades in on hover / focus and covers the head tools */
+#panel-usage .pmu-cardtools { position: absolute; z-index: 4; top: 5px; right: 6px; display: flex; gap: 1px; padding: 2px; border-radius: 9px; opacity: 0; pointer-events: none;
+  background: var(--pmu-menu-bg, var(--pmu-card)); transition: opacity 140ms var(--pmu-ease-out); }
+#panel-usage .pmu-card[data-head="plate"] .pmu-cardtools { top: 9px; right: 9px; }
+#panel-usage .pmu-cardtools .pmu-iconbtn { width: 24px; height: 24px; border-radius: 7px; }
+#panel-usage .pmu-cardtools .pmu-iconbtn svg { width: 14px; height: 14px; }
+#panel-usage .pmu-cardtools .pmu-grip { cursor: grab; }
+#panel-usage .pmu-card:hover .pmu-cardtools, #panel-usage .pmu-card:focus-within .pmu-cardtools { opacity: 1; pointer-events: auto; }
+#panel-usage .pmu-cardtools .pmu-menu-anchor-open { color: var(--pmu-ink); background: var(--pmu-row-hover); }
+#panel-usage .pmu-card:hover :is(.pmu-cardmeta, .pmu-headtools), #panel-usage .pmu-card:focus-within :is(.pmu-cardmeta, .pmu-headtools) { opacity: 0; }
+#panel-usage .pmu-card[data-tw="xs"] .pmu-cardtools .pmu-cardsize, #panel-usage .pmu-card[data-tw="xs"] .pmu-cardtools .pmu-cardgear { display: none; }
+#panel-usage .pmu-board[data-op] .pmu-cardtools { opacity: 0 !important; pointer-events: none !important; }
+html[data-theme^="retro"] #panel-usage .pmu-cardtools, html[data-theme^="retro"] #panel-usage .pmu-cardtools .pmu-iconbtn { border-radius: 0; }
+
+/* ---- body (A1 3.1: plate 4 14 12; line and tile 0 14 10) ---- */
+#panel-usage .pmu-cardbody { position: relative; display: flex; flex-direction: column; gap: 8px; flex: 1 1 auto; min-height: 0; padding: 0 14px 10px; overflow: hidden; contain: layout paint; }
+#panel-usage .pmu-card[data-head="plate"] > .pmu-cardbody { padding: 4px 14px 12px; }
+#panel-usage .pmu-todo { margin: auto 0; color: var(--pmu-ink-3); font-size: 12px; }
+
+/* ---- inside a plate (A1 3.3) ---- */
+#panel-usage .pmu-cap { font-family: var(--pmu-mono); font-size: 11px; font-weight: 400; letter-spacing: .06em; text-transform: uppercase; font-stretch: 87.5%; color: var(--pmu-ink-3); }
+#panel-usage .pmu-u { margin-left: .03em; font-size: .88em; }
+#panel-usage .pmu-suffix { margin-left: 4px; font-size: 12px; font-weight: 400; color: var(--pmu-ink-3); }
+#panel-usage .pmu-colhead { display: grid; align-items: center; min-height: 26px; margin: 0 -14px; padding: 6px 14px; background: var(--pmu-card-2);
+  border-top: 1px solid var(--pmu-rule-2); border-bottom: 1px solid var(--pmu-rule-2); font-family: var(--pmu-mono); font-size: 11px; letter-spacing: .05em;
+  text-transform: uppercase; font-stretch: 87.5%; color: var(--pmu-ink-3); }
+#panel-usage .pmu-row { margin: 0 -14px; padding: 0 14px; border-bottom: 1px solid var(--pmu-rule-2); transition: background-color 180ms; }
+#panel-usage .pmu-row:last-child { border-bottom: 0; }
+#panel-usage .pmu-row:hover { background: var(--pmu-row-hover); }
+#panel-usage .pmu-row[aria-selected="true"], #panel-usage .pmu-row.is-selected { background: var(--pmu-row-sel); }
+#panel-usage .pmu-irow { padding: 7px 10px; border-radius: 8px; transition: background-color 180ms; }
+#panel-usage .pmu-irow:hover { background: var(--pmu-row-hover); }
+#panel-usage .pmu-amount { display: grid; grid-template-columns: 18px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 7px 0; border-top: 1px dashed var(--pmu-rule); font-size: 12.5px; }
+#panel-usage .pmu-amount:first-child { border-top: 0; }
+#panel-usage .pmu-amount > :nth-child(2) { color: var(--pmu-ink-2); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#panel-usage .pmu-amount > :nth-child(3) { font-weight: 600; color: var(--pmu-ink); text-align: right; }
+#panel-usage .pmu-amount .pmu-ico { color: var(--pmu-ink-3); }
+#panel-usage .pmu-cardfoot { display: flex; align-items: center; gap: 8px; margin: auto -14px -10px; padding: 8px 14px; border-top: 1px solid var(--pmu-rule-2); font-size: 12.5px;
+  color: var(--pmu-ink-2); min-width: 0; }
+#panel-usage .pmu-card[data-head="plate"] > .pmu-cardbody > .pmu-cardfoot { margin-bottom: -12px; }
+#panel-usage .pmu-cardfoot .pmu-ico { color: var(--pmu-ink-3); }
+#panel-usage .pmu-cardfoot[data-tone="warn"] .pmu-ico { color: var(--pmu-ink-warn); }
+html[data-theme^="retro"] #panel-usage .pmu-irow { border-radius: 0; }
+#panel-usage .pmu-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; margin: auto; padding: 12px; color: var(--pmu-ink-3);
+  font-size: 13px; text-align: center; }
+#panel-usage .pmu-board-empty { grid-column: 1 / -1; grid-row: 1 / span 6; padding: 48px 16px; }
+
+/* ---- resize handles (DESIGN-SPEC 6.3): seven zones, invisible until hover or focus ---- */
+#panel-usage .pmu-h { position: absolute; z-index: 5; display: block; touch-action: none; }
+#panel-usage .pmu-h[data-edge="e"] { top: 16px; bottom: 16px; right: -4px; width: 8px; cursor: ew-resize; }
+#panel-usage .pmu-h[data-edge="w"] { top: 16px; bottom: 16px; left: -4px; width: 8px; cursor: ew-resize; }
 #panel-usage .pmu-h[data-edge="s"] { left: 16px; right: 16px; bottom: -4px; height: 8px; cursor: ns-resize; }
 #panel-usage .pmu-h[data-edge="se"] { right: -4px; bottom: -4px; width: 16px; height: 16px; cursor: nwse-resize; }
 #panel-usage .pmu-h[data-edge="sw"] { left: -4px; bottom: -4px; width: 16px; height: 16px; cursor: nesw-resize; }
 #panel-usage .pmu-h[data-edge="ne"] { right: -4px; top: -4px; width: 14px; height: 14px; cursor: nesw-resize; }
 #panel-usage .pmu-h[data-edge="nw"] { left: -4px; top: -4px; width: 14px; height: 14px; cursor: nwse-resize; }
+/* the se corner shows a two-stroke L at 50 % ink; an edge under the pointer shows a 2 x 28 px accent bar centred ON the edge */
 #panel-usage .pmu-h[data-edge="se"]::after { content: ""; position: absolute; right: 7px; bottom: 7px; width: 7px; height: 7px; border-right: 1.5px solid var(--pmu-ink-3);
-  border-bottom: 1.5px solid var(--pmu-ink-3); opacity: 0; transition: opacity 120ms; }
-#panel-usage .pmu-card:hover .pmu-h[data-edge="se"]::after { opacity: .7; }
+  border-bottom: 1.5px solid var(--pmu-ink-3); border-bottom-right-radius: 2px; opacity: 0; transition: opacity 140ms; }
+#panel-usage .pmu-card:hover > .pmu-h[data-edge="se"]::after, #panel-usage .pmu-card:focus-visible > .pmu-h[data-edge="se"]::after { opacity: .7; }
+#panel-usage .pmu-h:is([data-edge="e"], [data-edge="w"])::before { content: ""; position: absolute; top: 50%; left: 3px; width: 2px; height: 28px; margin-top: -14px; border-radius: 1px;
+  background: var(--pmu-accent); opacity: 0; transform: scaleY(.6); transition: opacity 100ms, transform 160ms var(--pmu-ease-out); }
+#panel-usage .pmu-h[data-edge="s"]::before { content: ""; position: absolute; left: 50%; top: 3px; width: 28px; height: 2px; margin-left: -14px; border-radius: 1px;
+  background: var(--pmu-accent); opacity: 0; transform: scaleX(.6); transition: opacity 100ms, transform 160ms var(--pmu-ease-out); }
+#panel-usage .pmu-h:hover::before, #panel-usage .pmu-card[data-resizing="e"] > .pmu-h[data-edge="e"]::before, #panel-usage .pmu-card[data-resizing="w"] > .pmu-h[data-edge="w"]::before,
+#panel-usage .pmu-card[data-resizing="s"] > .pmu-h[data-edge="s"]::before { opacity: 1; transform: none; }
+#panel-usage .pmu-board[data-op] .pmu-card:not([data-resizing]) > .pmu-h { pointer-events: none; }
+#panel-usage .pmu-board[data-op="resize"] { cursor: default; }
 
-/* previews (DESIGN-SPEC 6.2, 6.3): landing slot and resize outline; the engine places them in the grid */
-#panel-usage .pmu-landing, #panel-usage .pmu-outline { position: relative; z-index: 2; border: 1.5px dashed var(--pmu-accent); border-radius: var(--pmu-r-card); pointer-events: none; }
-#panel-usage .pmu-outline { border-style: solid; }
-#panel-usage .pmu-outline-label { position: absolute; right: 8px; bottom: 6px; padding: 2px 6px; border-radius: var(--pmu-r-sm); background: var(--pmu-card); color: var(--pmu-ink);
-  font-size: 11.5px; font-weight: 600; }
-#panel-usage .pmu-card[data-lifted] { z-index: 30; box-shadow: var(--pmu-elev-lift); cursor: grabbing; transition: none; }
-#panel-usage .pmu-card[data-morphing] { background: transparent; border-color: transparent; }
+/* ---- previews (DESIGN-SPEC 6.2, 6.3): the landing slot and the resize outline, placed in the grid by the engine ---- */
+#panel-usage .pmu-landing, #panel-usage .pmu-outline { position: relative; z-index: 2; box-sizing: border-box; border-radius: var(--pmu-r-card); pointer-events: none; transform-origin: 0 0; }
+#panel-usage .pmu-landing { border: 1.5px dashed color-mix(in srgb, var(--pmu-accent) 70%, transparent); background: color-mix(in srgb, var(--pmu-accent) 8%, transparent); }
+#panel-usage .pmu-outline { z-index: 25; border: 1.5px solid var(--pmu-accent); background: color-mix(in srgb, var(--pmu-accent) 6%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--pmu-accent) 10%, transparent); }
+#panel-usage .pmu-landing[hidden], #panel-usage .pmu-outline[hidden] { display: none; }
+#panel-usage .pmu-outline-label { position: absolute; right: 8px; bottom: 8px; display: inline-flex; align-items: baseline; gap: 6px; max-width: calc(100% - 16px); padding: 4px 8px;
+  border: 1px solid var(--pmu-rule); border-radius: 7px; background: var(--pmu-menu-bg, var(--pmu-card)); box-shadow: var(--pmu-shadow-1); color: var(--pmu-ink); font-size: 11.5px; font-weight: 600;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transform-origin: 100% 100%; font-variant-numeric: tabular-nums; }
+#panel-usage .pmu-outline-label .pmu-ol-name { font-weight: 650; }
+#panel-usage .pmu-outline-label .pmu-ol-size { font-family: var(--pmu-mono); font-weight: 500; letter-spacing: .02em; }
+#panel-usage .pmu-outline-label .pmu-ol-note { color: var(--pmu-ink-3); font-weight: 400; font-size: 11px; }
+#panel-usage .pmu-outline-label .pmu-ol-note:empty { display: none; }
+html[data-theme^="retro"] #panel-usage :is(.pmu-landing, .pmu-outline, .pmu-outline-label) { border-radius: 0; }
+
+/* ---- the lifted card, the settle and the resize morph ---- */
+#panel-usage .pmu-card[data-lifted] { z-index: 30; box-shadow: var(--pmu-shadow-pop); cursor: grabbing; transition: box-shadow 140ms var(--pmu-ease-out); will-change: transform; }
+#panel-usage .pmu-card[data-lifted], #panel-usage .pmu-card[data-lifted] * { cursor: grabbing !important; }
+html[data-theme^="retro"] #panel-usage .pmu-card[data-lifted] { box-shadow: 7px 7px 0 rgba(0,0,0,.35); }
+#panel-usage .pmu-card[data-settling] { z-index: 20; }
+#panel-usage .pmu-card[data-resizing] { z-index: 6; }
+#panel-usage .pmu-card[data-morphing] { background: transparent; border-color: transparent; box-shadow: none; transition: none; }
+#panel-usage .pmu-morph { position: absolute; z-index: 0; box-sizing: border-box; border: var(--pmu-bw) solid var(--pmu-rule); border-radius: var(--pmu-r-card);
+  background: var(--pmu-card); box-shadow: var(--pmu-shadow-2); transform-origin: 0 0; pointer-events: none; }
+#panel-usage .pmu-card[data-leaving] { z-index: 0; }
 html[data-motion="reduced"] #panel-usage .pmu-card { transition: none; }
+@media (prefers-reduced-motion: reduce) { #panel-usage .pmu-card { transition: none; } }
