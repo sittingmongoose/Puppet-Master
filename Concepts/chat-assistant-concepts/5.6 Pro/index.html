@@ -24986,7 +24986,10 @@ window.PM56_NIER_FACES = [
  * declined them); the Drifting particles part moves over the stage instead.
  *
  * The cross-fade (PMConcept7's o55ScnApply: a change between two scenes fades the new art in by opacity over 520 ms,
- * cubic-bezier(.22,.8,.24,1), the old one leaving when the fade ends or is interrupted). The stage background takes the
+ * cubic-bezier(.22,.8,.24,1), the old one leaving when the fade ends or is interrupted). This matches PMConcept7's
+ * duration and easing and draws the cross-dissolve PMConcept7 intends (old plus new weight stays 1); PMConcept7's own
+ * keyframes end at opacity 1 instead of its rest strength (--o55-nier-scene-a), so its new ink overshoots to about 5x
+ * and snaps back at the end, which is not copied here. The stage background takes the
  * new scene at once, and for those 520 ms the scene that leaves is drawn in the transcript's ::before, written through
  * a third sheet (#o55ns-leave) that exists only while a fade runs. That pseudo-element is position: fixed and anchored
  * to the transcript itself (position-anchor: auto, a pseudo-element's implicit anchor is its originating element), cut
@@ -25001,6 +25004,9 @@ window.PM56_NIER_FACES = [
  * transcript, the animation is carried over to the new element at the same time; the rule's own opacity is 0, so a lost
  * animation can only show the new scene, never a stale one. Rapid changes keep one leaving layer: the one of the two
  * scenes on screen that shows more stays (at the opacity it has) and fades out over the newest; the newest always wins.
+ * A change back to the leaving scene (A-B-A) keeps the arriving one, which fades out from its share, so it never snaps.
+ * A third scene within about 75 ms of a change (A-B-C, the leaving scene still the larger) swaps the middle scene for the
+ * newest in one frame: one leaving layer cannot hold both (PMConcept7 stacks its leaving scenes).
  * The new image is loaded before the fade starts, so the stage never shows bare ground. Instant (no fade) under every
  * reduced route (the system's reduced motion, html[data-motion="reduced"], body.pm56-reduced) and when no Motion part
  * is installed (the Still and Colors only presets: "Nothing moves"), as PMConcept7's o55Still() stops it there; turning
@@ -25185,6 +25191,9 @@ window.PM56_NIER_FACES = [
       thumbsFor = '';
       return;
     }
+    /* a still route switched on mid-fade (the Still or Colors only preset, every Motion chip off) ends the fade at once;
+       the reduced routes the leave rule's own conditions already hide */
+    if (leave && !canFade()) endLeave();
     var ink = paintedInk(), ground = stageGround(), alpha = dark() ? 0.24 : 0.19, sig = key + '|' + ink + '|' + ground + '|' + alpha;
     if (!ink || !ground) return;
     if (pending && pending.sig === sig) return;
@@ -25213,11 +25222,12 @@ window.PM56_NIER_FACES = [
   function crossFade(next) {
     var el = stage(), prev = cur;
     if (!prev || !el || !canFade()) { endLeave(); writeStage(next); letGo(prev); return; }
-    /* one leaving layer at most: of the two scenes on screen, the one that shows more stays at the opacity it has */
+    /* one leaving layer at most: of the two scenes on screen, the one that shows more stays at the opacity it has; a
+       change back to the leaving scene (A-B-A) always keeps the arriving one, which fades out from the share it has */
     var stay, from;
     if (leave) {
       var o = leaveOpacity();
-      if (o >= 0.5) { stay = leave; from = o; stopAnim(leave); leave = null; letGo(prev); }
+      if (o >= 0.5 && leave.key !== next.key) { stay = leave; from = o; stopAnim(leave); leave = null; letGo(prev); }
       else { stay = prev; from = 1 - o; endLeave(); }
     } else { stay = prev; from = 1; }
     if (stay.key === next.key) { letGo(stay); dropSheet('o55ns-leave'); writeStage(next); return; }
