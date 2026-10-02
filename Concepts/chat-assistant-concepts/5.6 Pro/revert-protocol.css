@@ -101,10 +101,8 @@ svg.pmx-revert-check{color:var(--positive);}
 /* ---- in chat: the reverted files row, and the outcome glyphs of the ledger lines (colour only inside glyphs) */
 .pmx-revert-did{color:var(--muted);}
 .pmx-revert-did b{font-weight:600;color:var(--text);}
-svg.pmx-revert-tone-ok{color:var(--positive);}
-svg.pmx-revert-tone-warn{color:var(--warning);}
-svg.pmx-revert-tone-bad{color:var(--danger);}
-svg.pmx-revert-tone-quiet, svg.pmx-revert-tlg{color:var(--muted);}
+/* outcome marks are the shared status set, lit in their own tone (neon step 3E: revert-protocol.js pmxStatus) */
+svg.pmx-revert-tlg{color:var(--muted);}
 
 /* An outcome line keeps its headline readable at every card width (R-21, J-2: drop, never squeeze). Below the L tier
    the kind word and mark go and "See what happened" reads "Open" (retro: below 640), at the same widths as on the files

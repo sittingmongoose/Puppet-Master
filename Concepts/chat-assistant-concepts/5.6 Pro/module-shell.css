@@ -696,8 +696,19 @@ body[data-theme^="retro"] .pmx-p-line{stroke-linecap:square;}
 .pmx-sentence[data-status="needs"] .pmx-st-glyph, .pmx-sentence[data-status="attention"] .pmx-st-glyph, .pmx-sentence[data-status="limit"] .pmx-st-glyph{color:var(--warning);}
 .pmx-sentence[data-status="failed"] .pmx-st-glyph, .pmx-sentence[data-status="failed"] b{color:var(--danger);}
 .pmx-sentence[data-status="done"] .pmx-st-glyph{color:var(--positive);}
-.pmx-sentence[data-status="yourmove"] .pmx-st-glyph svg{stroke:var(--accent);}
+.pmx-sentence[data-status="yourmove"] .pmx-st-glyph svg{stroke:var(--accent);--nx-ink:var(--accent);}
 .pmx-sentence[data-status="yourmove"] .pmx-st-glyph .pmx-g-dot{fill:var(--accent);}
+/* Neon step 3E (2026-10-02): the status mark is the shared set's, lit and still (module-shell.js pmxStatus, the
+   nx-still wrapper in neon-icons.css section 14); its ink is the set's tone (--nx-ink), the `color` rules above stay
+   for the fallback drawing. Your move is needs-you in the canon accent: stroke, "?" and backlight. A run's kind
+   badge and a dock line's mark are lit in the run's tone through --nx-ink (never `color`: the transcript accent
+   budget), a settled card's badge stays concept-lit in the muted ink. Static: nothing here loops. */
+.pmx-sentence[data-status="yourmove"] .pmx-st-glyph .nx-st{--nx-bl-ink:var(--accent);}
+.pmx-run:is([data-density="live"], [data-density="starting"]) .pmx-run-kind > svg.nx, .pmx-run[data-tone="accent"] .pmx-run-kind > svg.nx, .pmx-dock-line:is([data-tone="live"], [data-tone="yourmove"]) > svg.nx{--nx-ink:var(--accent);--nx-hi-a:var(--nx-h-working-i);}
+.pmx-run:is([data-density="waiting"], [data-density="attention"], [data-tone="warm"]):not([data-tone="accent"]) .pmx-run-kind > svg.nx, .pmx-dock-line[data-tone="needs"] > svg.nx{--nx-ink:var(--warning);--nx-hi-a:var(--nx-h-attention-i);}
+.pmx-run[data-density="failed"] .pmx-run-kind > svg.nx{--nx-ink:var(--danger);--nx-hi-a:var(--nx-h-blocked-i);}
+/* A sheet's head mark (and a run view's) is concept-lit in the head's accent and plays its act once as it mounts. */
+.pmx-head-mark > svg.nx, .pmx-view-kind > svg.nx{--nx-1:var(--nx-d1) var(--nx-ease) backwards;}
 
 /* C4 track: named stops, counted progress, never percent */
 .pmx-track{display:flex;align-items:center;gap:10px;height:20px;min-width:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);}

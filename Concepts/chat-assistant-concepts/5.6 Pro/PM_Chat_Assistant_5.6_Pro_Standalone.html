@@ -9243,8 +9243,19 @@ body[data-theme^="retro"] .pmx-p-line{stroke-linecap:square;}
 .pmx-sentence[data-status="needs"] .pmx-st-glyph, .pmx-sentence[data-status="attention"] .pmx-st-glyph, .pmx-sentence[data-status="limit"] .pmx-st-glyph{color:var(--warning);}
 .pmx-sentence[data-status="failed"] .pmx-st-glyph, .pmx-sentence[data-status="failed"] b{color:var(--danger);}
 .pmx-sentence[data-status="done"] .pmx-st-glyph{color:var(--positive);}
-.pmx-sentence[data-status="yourmove"] .pmx-st-glyph svg{stroke:var(--accent);}
+.pmx-sentence[data-status="yourmove"] .pmx-st-glyph svg{stroke:var(--accent);--nx-ink:var(--accent);}
 .pmx-sentence[data-status="yourmove"] .pmx-st-glyph .pmx-g-dot{fill:var(--accent);}
+/* Neon step 3E (2026-10-02): the status mark is the shared set's, lit and still (module-shell.js pmxStatus, the
+   nx-still wrapper in neon-icons.css section 14); its ink is the set's tone (--nx-ink), the `color` rules above stay
+   for the fallback drawing. Your move is needs-you in the canon accent: stroke, "?" and backlight. A run's kind
+   badge and a dock line's mark are lit in the run's tone through --nx-ink (never `color`: the transcript accent
+   budget), a settled card's badge stays concept-lit in the muted ink. Static: nothing here loops. */
+.pmx-sentence[data-status="yourmove"] .pmx-st-glyph .nx-st{--nx-bl-ink:var(--accent);}
+.pmx-run:is([data-density="live"], [data-density="starting"]) .pmx-run-kind > svg.nx, .pmx-run[data-tone="accent"] .pmx-run-kind > svg.nx, .pmx-dock-line:is([data-tone="live"], [data-tone="yourmove"]) > svg.nx{--nx-ink:var(--accent);--nx-hi-a:var(--nx-h-working-i);}
+.pmx-run:is([data-density="waiting"], [data-density="attention"], [data-tone="warm"]):not([data-tone="accent"]) .pmx-run-kind > svg.nx, .pmx-dock-line[data-tone="needs"] > svg.nx{--nx-ink:var(--warning);--nx-hi-a:var(--nx-h-attention-i);}
+.pmx-run[data-density="failed"] .pmx-run-kind > svg.nx{--nx-ink:var(--danger);--nx-hi-a:var(--nx-h-blocked-i);}
+/* A sheet's head mark (and a run view's) is concept-lit in the head's accent and plays its act once as it mounts. */
+.pmx-head-mark > svg.nx, .pmx-view-kind > svg.nx{--nx-1:var(--nx-d1) var(--nx-ease) backwards;}
 
 /* C4 track: named stops, counted progress, never percent */
 .pmx-track{display:flex;align-items:center;gap:10px;height:20px;min-width:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);}
@@ -11305,10 +11316,13 @@ body.pm56-reduced .pmx-run[data-density="live"] .pmx-stop[data-state="now"] + .p
 /* The status gutter is a PROJECTION of build progress. It marks a step without
    mutating one byte of the approved document. */
 .plan-doc .pd-step-active{ border-color:var(--accent); }
-.plan-doc .pd-step-active .pd-step-gutter{ border-color:var(--accent); color:var(--accent); }
-.plan-doc .pd-step-done .pd-step-gutter{
-  border-color:var(--accent); background:var(--accent); color:var(--on-accent);
+/* Neon step 3E (2026-10-02): a step with a state carries its status mark (plans.js stepMark,
+   the shared set), which is its own ring, check, lock or disc, lit in its tone: the gutter
+   drops its own circle and fill around it. A step with no state keeps the empty ring. */
+.plan-doc :is(.pd-step-active, .pd-step-done, .pd-step-blocked, .pd-step-skipped, .pd-step-mixed) .pd-step-gutter{
+  border-color:transparent; background:none;
 }
+.plan-doc .pd-step-gutter > .nx-st{ flex:none; }
 
 /* ------------------------------------------------------------- markdown */
 .plan-doc .pd-md-pre{
@@ -11343,12 +11357,15 @@ body.pm56-reduced .pmx-run[data-density="live"] .pmx-stop[data-state="now"] + .p
   background:var(--surface-2); color:var(--muted); border-color:var(--border);
   text-decoration:line-through; text-decoration-thickness:1px;
 }
-/* Building… breathes so "disabled" never reads as "stalled". */
+/* Building… breathes so "disabled" never reads as "stalled". Neon step 3E: the dot is a
+   small lit tube, a solid accent core whose glow fades out radially (the plain token, no
+   filter, no color-mix); NieR has no glow, so there it stays the flat ink dot. */
 .plan-doc .pd-build-building::after{
-  content:''; display:inline-block; width:5px; height:5px; margin-left:7px;
-  vertical-align:middle; border-radius:50%; background:var(--accent);
+  content:''; display:inline-block; width:9px; height:9px; margin:0 -2px 0 5px;
+  vertical-align:middle; border-radius:50%; background:radial-gradient(closest-side, var(--accent) 55%, transparent);
   animation:pd-breathe 1370ms var(--spring-soft-ease) infinite;
 }
+html[data-o55-nier="on"] .plan-doc .pd-build-building::after{ width:5px; height:5px; margin:0 0 0 7px; background:var(--accent); }
 @keyframes pd-breathe{ 0%,100%{opacity:.25} 50%{opacity:1} }
 
 /* Support copy sits BESIDE the control, never inside it — a paused build still
@@ -11369,7 +11386,7 @@ body.pm56-reduced .pmx-run[data-density="live"] .pmx-stop[data-state="now"] + .p
   flex:0 0 18px; height:18px; display:inline-flex; align-items:center; justify-content:center;
   border:1px solid var(--border-strong); border-radius:50%; color:var(--muted);
 }
-.pd-completed .pd-compact-dot{ border-color:var(--accent); background:var(--accent); color:var(--on-accent); }
+.pd-completed .pd-compact-dot{ border-color:transparent; background:none; color:var(--positive); }
 .plan-doc-compact .pd-compact-copy{ display:flex; flex-direction:column; gap:1px; min-width:0; }
 .plan-doc-compact .pd-compact-copy strong{ font:600 12.5px/1.35 var(--font-ui); color:var(--text); }
 .plan-doc-compact .pd-compact-copy span{ font:400 11px/1.3 var(--font-ui); color:var(--muted); }
@@ -11505,11 +11522,9 @@ body.pm56-reduced .pmx-run[data-density="live"] .pmx-stop[data-state="now"] + .p
    =========================================================================== */
 
 /* --- step states beyond active/done -------------------------------------- */
-.plan-doc .pd-step-blocked{ border-color:color-mix(in srgb, var(--warning) 45%, var(--border)); }
-.plan-doc .pd-step-blocked .pd-step-gutter{ border-color:var(--warning); color:var(--warning); }
-.plan-doc .pd-step-skipped .pd-step-gutter{ border-color:var(--border-strong); color:var(--subtle); }
+/* a blocked step is danger (it cannot go on); its mark is the status set's lock */
+.plan-doc .pd-step-blocked{ border-color:color-mix(in srgb, var(--danger) 45%, var(--border)); }
 .plan-doc .pd-step-skipped .pd-step-copy strong{ color:var(--muted); }
-.plan-doc .pd-step-mixed .pd-step-gutter{ border-color:var(--accent); color:var(--accent); opacity:.75; }
 .plan-doc .pd-step-none .pd-step-gutter{ border-style:dashed; color:transparent; }
 .plan-doc .pd-step-nested{ margin-left:18px; padding-left: 14px; }
 .plan-doc .pd-step-child,
@@ -11540,7 +11555,7 @@ body.pm56-reduced .pmx-run[data-density="live"] .pmx-stop[data-state="now"] + .p
 }
 .plan-doc .pd-md-mark-done{ color:var(--positive); }
 .plan-doc .pd-md-mark-active{ color:var(--accent); }
-.plan-doc .pd-md-mark-blocked{ color:var(--warning); }
+.plan-doc .pd-md-mark-blocked{ color:var(--danger); }
 .plan-doc .pd-md-mark-mixed{ color:var(--accent); opacity:.8; }
 
 /* --- the attention line beside the Build control ------------------------- */
@@ -12700,7 +12715,7 @@ body[data-theme^="retro"] .pmx-sheet.sched-dialog .pmx-promise > span{white-spac
 .sched-card .pmx-sched-line .pmx-run-head{height:auto;min-height:44px;align-items:flex-start;}
 .sched-card .pmx-sched-line .pmx-run-kind{margin-top:14px;}
 .sched-card .pmx-sched-line .pmx-receipt-say{align-items:flex-start;padding:12px 0;white-space:normal;overflow:visible;}
-.sched-card .pmx-sched-line .pmx-receipt-say > svg{margin-top:3px;}
+.sched-card .pmx-sched-line .pmx-receipt-say > svg, .sched-card .pmx-sched-line .pmx-receipt-say > .nx-st{margin-top:3px;}
 .sched-card .pmx-sched-line .pmx-receipt-headline{overflow:visible;text-overflow:clip;}
 .sched-card .pmx-sched-line .pmx-receipt-meta{display:none;}
 .sched-card .pmx-sched-line .pmx-run-foot{margin-top:6px;}
@@ -12723,7 +12738,7 @@ body[data-theme^="retro"] .pmx-sheet.sched-dialog .pmx-promise > span{white-spac
 }
 .pmx-sched-tshort{display:none;}
 @container pmxrun (max-width: 259.98px){
-  .sched-card .pmx-sched-line .pmx-run-kind, .sched-card .pmx-sched-line .pmx-receipt-say > svg, .pmx-sched-line .pmx-sched-go, .pmx-sched-line .pmx-sched-tlong{display:none;}
+  .sched-card .pmx-sched-line .pmx-run-kind, .sched-card .pmx-sched-line .pmx-receipt-say > svg, .sched-card .pmx-sched-line .pmx-receipt-say > .nx-st, .pmx-sched-line .pmx-sched-go, .pmx-sched-line .pmx-sched-tlong{display:none;}
   .pmx-sched-line .pmx-sched-tshort{display:inline;}
 }
 /* stacked receipts share one hairline between them, not two */
@@ -14445,7 +14460,7 @@ body[data-theme^="retro"] .pmx-teach-rule{font-size:15.5px;line-height:22.5px;le
 .pmx-teach-lock{flex:none;color:var(--muted);overflow:visible;}
 .pmx-teach-meta[data-state="locked"] .pmx-teach-lock{color:var(--text);}
 /* a draft is not saved yet: its shackle stands open; on Save it drops shut (WAAPI on the leaving sheet) */
-.pmx-teach-card[data-state="draft"] .pmx-teach-shackle{transform:translateY(-2.5px);}
+.pmx-teach-card[data-state="draft"] .pmx-teach-shackle, .pmx-teach-card[data-state="draft"] .pmx-teach-lock .nx-p{transform:translateY(-2.5px);}
 .pmx-teach-src{margin-top:8px;min-width:0;}
 .pmx-teach-sum{display:flex;align-items:center;gap:6px;width:max-content;max-width:100%;min-height:24px;list-style:none;cursor:pointer;font:600 12px/17.5px var(--font-ui);color:var(--muted);}
 .pmx-teach-sum::-webkit-details-marker{display:none;}
@@ -14720,6 +14735,7 @@ body[data-theme^="retro"] .pmx-mem-claim{font-size:15.5px;line-height:22.5px;let
 .pmx-mem-journey li > svg{flex:none;color:var(--subtle);}
 .pmx-mem-checked{margin:14px 0 0;display:flex;align-items:flex-start;gap:6px;font:var(--pmx-fs-help);color:var(--text);animation:pmx-swap-in var(--pmx-t-swap) var(--pmx-ease-out) backwards;}
 .pmx-mem-checked > svg{flex:none;margin-top:2px;color:var(--muted);}
+.pmx-mem-checked > .nx-st{margin-top:2px;}
 .pmx-mem-acts{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:16px;}
 .pmx-mem-acts > .primary-button{height:32px;min-height:32px;padding:0 14px;}
 .pmx-mem-acts-help{margin:8px 0 0;font:var(--pmx-fs-fine);color:var(--subtle);}
@@ -14977,10 +14993,8 @@ svg.pmx-revert-check{color:var(--positive);}
 /* ---- in chat: the reverted files row, and the outcome glyphs of the ledger lines (colour only inside glyphs) */
 .pmx-revert-did{color:var(--muted);}
 .pmx-revert-did b{font-weight:600;color:var(--text);}
-svg.pmx-revert-tone-ok{color:var(--positive);}
-svg.pmx-revert-tone-warn{color:var(--warning);}
-svg.pmx-revert-tone-bad{color:var(--danger);}
-svg.pmx-revert-tone-quiet, svg.pmx-revert-tlg{color:var(--muted);}
+/* outcome marks are the shared status set, lit in their own tone (neon step 3E: revert-protocol.js pmxStatus) */
+svg.pmx-revert-tlg{color:var(--muted);}
 
 /* An outcome line keeps its headline readable at every card width (R-21, J-2: drop, never squeeze). Below the L tier
    the kind word and mark go and "See what happened" reads "Open" (retro: below 640), at the same widths as on the files
@@ -17271,6 +17285,20 @@ html[data-o55-nier="on"] .working-head .work-phase-icon > svg.nx-r-status { anim
    bolt's strike is block 8b; only the NieR restatement of an owner sheet's rhythm lives here, under the contract. */
 /* the Context Lens trigger's breathe (Mute, Focus) is stepped like every NieR rhythm */
 html[data-o55-nier="on"] .pm-lens-trigger.is-on svg.nx { animation-timing-function: steps(3, end); }
+
+/* ------------------------------------------------------------------ 14. still status marks (step 3E) */
+/* OWNER of this section: Neon icons, surface step 3E (2026-10-02). A status mark whose wrapper carries nx-still is
+   lit and STILL: no list rhythm (the bead's orbit, the needs-you hop, the tip, the ratchet), no breathing backlight,
+   no blocked blink or failed stutter; its moving part plays the mark's one-shot act once as it mounts (the bead comes
+   round, the "?" hops in, the shackle drops, the check draws), and a status change remounts it (data-k="st:<s>").
+   module-shell.js pmxStatus() asks for it: every pmx host allows no loop of its own (pmx-verify loop-census; a live
+   card's two are the pmx-sheen loops). Ink, halo, weight and the static backlight still carry the state. The
+   body-qualified ::before rule outranks the light themes' backlight-breathe name (section 9). */
+.nx-st.nx-still { animation: none; }
+body .nx-st.nx-still::before { animation: none; }
+.nx-st.nx-still .nx-p { animation: var(--k1) var(--nx-d1) var(--nx-ease) backwards; animation-delay: calc(var(--ad, 0) * 1ms); }
+/* NieR: the working diamond holds its pose (no turn), like the pmx running mark of N-A */
+html[data-o55-nier-parts~="diamonds"] .nx-st-working.nx-still::after { animation: none; }
 
 /* nier.css — NieR Mode for the 5.6 Pro concept: the palette, the type and the base look. OWNER: NieR Mode, step N-A
  * (2026-10-02). Closes the sheet (build.py CSS_LAST, after neon-icons.css). The engine is nier.js; the parts are
@@ -33420,13 +33448,36 @@ window.PM56_NIER_FACES = [
       (o.cluster != null ? cluster(o.cluster, o.clusterMax) : '') +
       (o.clock != null ? '<span class="pmx-clock"' + k(o.clockKey) + '>' + o.clock + '</span>' : '') + str(o.extra);
   }
+  /* STATUS_GLYPH: the drawing each run status had before the neon family; pmxStatus() falls back to it when
+     PM56_NEON is absent (tests/shell-selfcheck.cjs evals this file bare). */
   var STATUS_GLYPH = { starting: 'ring', waiting: 'ring-dashed', running: 'arc', live: 'arc', needs: 'ring-dot', yourmove: 'ring-dot', paused: 'pause', done: 'check', cancelled: 'slash-circle', canceled: 'slash-circle', failed: 'warn', attention: 'warn', limit: 'warn' };
+  /* pmxStatus(status,size,cls) - neon step 3E (2026-10-02): a status mark from the shared status set (neon-icons.js
+     status()), lit and STILL. Its wrapper carries nx-still, so the set's list rhythms (the bead's orbit, the
+     needs-you hop, blocked's blink, failed's stutter, the breathing backlight) never run inside a pmx host and only
+     the one-shot act plays as the mark mounts: a live card's loop budget is spent by its two pmx-sheen loops and
+     every other pmx host allows none (pmx-verify loop-census). Run statuses map onto the set: a waiting run is
+     queued for its turn (waiting-dep, the hourglass), needs and yourmove are "needs you" (yourmove keeps the accent,
+     neon-icons.css section 14), cancelled is skipped. attention, limit and warn have no member of the set: they
+     are the warning triangle lit in the attention tone, in the same still wrapper. Any other name is a set name or
+     alias (scheduled, verified, stale, held, blocked...), which the module tables pass straight through. cls goes on the wrapper (the fallback drawing's svg). */
+  var PMX_STATUS = { starting: 'working', running: 'working', live: 'working', waiting: 'waiting-dep', needs: 'waiting', yourmove: 'waiting', paused: 'paused', done: 'complete', cancelled: 'skipped', canceled: 'skipped', failed: 'failed' };
+  var PMX_STATUS_WARN = { attention: 1, limit: 1, warn: 1 };
+  var PMX_STATUS_OLD = { complete: 'check', completed: 'check', sent: 'check', verified: 'check-circle', skipped: 'slash-circle', stale: 'slash-circle', expired: 'slash-circle', pending: 'ring-dashed', unverified: 'ring-dashed', scheduled: 'clock', 'waiting-dep': 'ring-dashed', held: 'warn', working: 'arc', blocked: 'lock', invalidated: 'warn', decide: 'hand' };
+  function pmxStatus(status, size, extraCls) {
+    status = str(status) || 'running'; size = num(size, 14);
+    var N = neon(), c = cls('nx-still', extraCls);
+    if (N && typeof N.status === 'function') {
+      if (PMX_STATUS_WARN[status]) return '<span class="nx-st nx-tn-attention ' + esc(c) + '" data-k="st:' + esc(status) + '" aria-hidden="true">' + N.icon('warning', size, 'nx-r-status nx-t-attention') + '</span>';
+      return N.status(PMX_STATUS[status] || status, size, c);
+    }
+    return pmxGlyph(STATUS_GLYPH[status] || PMX_STATUS_OLD[status] || 'ring', size, extraCls);
+  }
   function pmxSentence(o) {
     o = o || {};
     var status = str(o.status) || 'running';
     var word = str(o.word), reason = str(o.reason);
     return '<p class="' + cls('pmx-sentence', o.cls) + '"' + k(o.key) + ' data-status="' + esc(status) + '">' +
-      '<span class="pmx-st-glyph" data-k="stg:' + esc(status) + '">' + g(o.glyph || STATUS_GLYPH[status] || 'ring', 14) + '</span>' +
+      '<span class="pmx-st-glyph" data-k="stg:' + esc(status) + '">' + (o.glyph ? g(o.glyph, 14) : pmxStatus(status, 14)) + '</span>' +
       '<span class="pmx-st-text" data-k="st:' + pmxHash(word + '|' + reason) + '">' + (word ? '<b>' + word + '</b>' : '') + (word && reason ? ' · ' : '') + reason + '</span></p>';
   }
   var STOP_STATES = { done: 1, now: 1, next: 1, skipped: 1, failed: 1 };
@@ -33622,10 +33673,14 @@ window.PM56_NIER_FACES = [
   }
   var SEV_WORD = { critical: 'Critical', major: 'Major', minor: 'Minor', suggestion: 'Suggestion', nit: 'nit', concern: 'concern' };
   var SEV_GLYPH = { critical: 'sev-critical', major: 'sev-major', concern: 'sev-major', minor: 'sev-minor', nit: 'sev-minor', suggestion: 'sev-suggestion' };
+  /* neon step 3E: the severity marks keep their filled shapes and are lit (status role) in their tone: critical
+     blocked (danger), major attention (warning), minor the host's muted ink, a suggestion idle (subtle). The fill
+     stays on currentColor (module-shell.css .pmx-sev colours), the halo takes the tone ink; static, 11 px. */
+  var SEV_LIT = { critical: 'nx-r-status nx-t-blocked', major: 'nx-r-status nx-t-attention', concern: 'nx-r-status nx-t-attention', minor: 'nx-r-status', nit: 'nx-r-status', suggestion: 'nx-r-status nx-t-idle' };
   function pmxSeverity(level, word) {
     level = str(level).toLowerCase();
     var lv = SEV_WORD[level] ? level : 'minor';
-    return '<span class="pmx-sev" data-sev="' + lv + '">' + pmxGlyph(SEV_GLYPH[lv], 11) + (word != null ? word : SEV_WORD[lv]) + '</span>';
+    return '<span class="pmx-sev" data-sev="' + lv + '">' + pmxGlyph(SEV_GLYPH[lv], 11, SEV_LIT[lv]) + (word != null ? word : SEV_WORD[lv]) + '</span>';
   }
   function agreeDot(v) {
     var c = v.vote === 'agree' ? '<circle class="pmx-ag-fill" cx="6" cy="6" r="3.6"/>' : v.vote === 'disagree' ? '<circle class="pmx-ag-ring" cx="6" cy="6" r="3.6"/><path class="pmx-ag-ring" d="m3.4 8.6 5.2-5.2"/>' : '<circle class="pmx-ag-ring" cx="6" cy="6" r="3.6"/>';
@@ -34340,7 +34395,7 @@ window.PM56_NIER_FACES = [
     pmxShelf: pmxShelf, pmxStepper: pmxStepper, pmxSwitch: pmxSwitch, pmxCheck: pmxCheck, pmxWords: pmxWords, pmxPromise: pmxPromise, pmxPromises: pmxPromises,
     pmxAdvancedEntry: pmxAdvancedEntry, pmxAdvancedPage: pmxAdvancedPage, pmxSetting: pmxSetting, pmxPreview: pmxPreview, pmxReadback: pmxReadback, pmxEstimate: pmxEstimate,
     pmxRefusal: pmxRefusal, pmxFoot: pmxFoot, pmxConfirm: pmxConfirm, pmxTabs: pmxTabs,
-    pmxRun: pmxRun, pmxRunHead: pmxRunHead, pmxSentence: pmxSentence, pmxTrack: pmxTrack, pmxLane: pmxLane, pmxLanes: pmxLanes, pmxDecision: pmxDecision,
+    pmxRun: pmxRun, pmxRunHead: pmxRunHead, pmxSentence: pmxSentence, pmxStatus: pmxStatus, pmxTrack: pmxTrack, pmxLane: pmxLane, pmxLanes: pmxLanes, pmxDecision: pmxDecision,
     pmxResult: pmxResult, pmxOutput: pmxOutput, pmxCredits: pmxCredits, pmxMeta: pmxMeta, pmxActions: pmxActions, pmxReceipt: pmxReceipt,
     pmxDockLine: pmxDockLine, pmxDock: pmxDock, pmxFinding: pmxFinding, pmxFindings: pmxFindings, pmxSealed: pmxSealed, pmxSeverity: pmxSeverity, pmxAgree: pmxAgree, pmxVoteBoard: pmxVoteBoard,
     pmxQuote: pmxQuote, pmxWash: pmxWash, pmxNote: pmxNote, pmxTick: pmxTick, pmxDivider: pmxDivider, pmxFilesRow: pmxFilesRow, pmxCodeRow: pmxCodeRow, pmxMd: pmxMd, pmxGuide: pmxGuide,
@@ -39755,11 +39810,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
       ? '<span class="pd-step-par" title="">parallel · '+esc(b.parallel_group_id)+'</span>' : '';
     var kid = b.parent_step_id
       ? '<span class="pd-step-child">child of '+esc(b.parent_step_id)+'</span>' : '';
-    var glyph = st==='completed' ? ICON.check
-              : st==='in_progress' ? ICON.dot
-              : st==='blocked' ? ICON.warning
-              : st==='skipped' ? ICON.skip
-              : st==='mixed' ? ICON.mixed : '';
+    var glyph = stepMark(st);
     var why = (cell && cell.state==='blocked' && cell.reason)
       ? '<span class="pd-step-why">blocked · '+esc(cell.reason)+'</span>' : '';
     var stale = (pr && pr.stale)
@@ -39848,17 +39899,46 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     window.addEventListener('resize',scheduleRail);
   }
 
-  /* Inline SVG only -- the project forbids emoji glyphs outright. These are the
-     few marks app.js's icon() does not carry in the shape this card needs. */
-  var ICON = {
+  /* Inline SVG only -- the project forbids emoji glyphs outright. ICON_16 holds the
+     16-grid marks this card drew for itself; they are now only the fallback for a page
+     without the neon family. Neon step 3E (2026-10-02): every mark is the shared
+     registry's (neon-icons.js), read at call time (never at load), at the size the
+     16-grid mark rendered: the callout and attention marks (info, warning), the done
+     check of the compact card, the Plan kicker and receipt (plan: the folded map, not a
+     page) and the dialog close. Step marks are the status set (stepMark below). */
+  var ICON_16 = {
     check:'<svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5 6.2 12 13 4.5"/></svg>',
     dot:'<svg viewBox="0 0 16 16" width="10" height="10" fill="currentColor" stroke="none"><circle cx="8" cy="8" r="4"/></svg>',
     info:'<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="8" cy="8" r="6.4"/><path d="M8 7.2v4M8 4.8v.6"/></svg>',
     warning:'<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.2 14.6 13.4H1.4Z"/><path d="M8 6.6v3.1M8 11.6v.6"/></svg>',
     artifact:'<svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.2 2.6h6l3.6 3.6v7.2H3.2Z"/><path d="M9.2 2.6v3.6h3.6"/></svg>',
     skip:'<svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l5 4-5 4"/><path d="M11.5 4v8"/></svg>',
-    mixed:'<svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 8h4"/><path d="M9 5.2h4"/><path d="M9 10.8h4"/></svg>'
+    mixed:'<svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 8h4"/><path d="M9 5.2h4"/><path d="M9 10.8h4"/></svg>',
+    close:'<svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>'
   };
+  var ICON_NEON = { check:['check',12], info:['info',14], warning:['warning',14], plan:['plan',15], close:['close',13] };
+  var ICON = {};
+  Object.keys(ICON_NEON).forEach(function(k){
+    Object.defineProperty(ICON, k, { enumerable:true, get:function(){
+      var N=window.PM56_NEON, n=ICON_NEON[k];
+      return N && typeof N.icon==='function' ? N.icon(n[0], n[1]) : ICON_16[k==='plan'?'artifact':k];
+    }});
+  });
+  /* Plan step marks are the shared status set (neon-icons.js status(), plan §3), 14 px in
+     the gutter: done complete (the check draws once), in progress working (the bead goes
+     round its ring), blocked blocked (the lock, danger: a blocked step cannot go on, so it
+     is no longer the warning triangle), skipped, mixed (the half-filled disc). The plan
+     card is a transcript card, not a pmx host, so the set's list rhythms run; the mark
+     is deterministic and keyed by its status (data-k="st:<s>"), so a patch keeps it and a
+     state change replays its act. A step with no state (pending, never admitted) keeps
+     the gutter's empty ring. */
+  var STEP_STATUS = { completed:'complete', in_progress:'working', blocked:'blocked', skipped:'skipped', mixed:'mixed' };
+  var STEP_16 = { completed:'check', in_progress:'dot', blocked:'warning', skipped:'skip', mixed:'mixed' };
+  function stepMark(st){
+    var N=window.PM56_NEON;
+    if(!STEP_STATUS[st]) return '';
+    return N && typeof N.status==='function' ? N.status(STEP_STATUS[st], 14) : ICON_16[STEP_16[st]];
+  }
 
 
   /* =====================================================================
@@ -40304,7 +40384,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     var why = r.status==='canceled' && r.cancelReason ? '<p class="pd-compact-why">'+esc(r.cancelReason)+'</p>' : '';
     return '<article class="system-card plan-doc plan-doc-compact pd-'+esc(r.status)+'" data-k="pd-'+esc(r.plan_id)+'-c" data-plan-id="'+esc(r.plan_id)+'">'+
       '<div class="pd-compact-row">'+
-        '<span class="pd-compact-dot" aria-hidden="true">'+(r.status==='completed'?ICON.check:'')+'</span>'+
+        '<span class="pd-compact-dot" aria-hidden="true">'+(r.status==='completed'?stepMark('completed'):'')+'</span>'+
         '<div class="pd-compact-copy"><strong>'+esc(r.title)+'</strong>'+
           '<span>'+esc(r.strategy)+' · V'+r.version+'</span></div>'+
         '<div class="pd-compact-actions">'+buildControl(r)+
@@ -40335,7 +40415,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     var first=body(r).find(b=>b.t==='paragraph'),summary=first?first.text:'';
     var e=eligible(r),pr=progress(r);
     return '<article class="system-card plan-doc plan-preview pd-'+esc(r.status)+'" data-k="plan-preview-'+esc(r.plan_id)+'" data-plan-id="'+esc(r.plan_id)+'">'+
-      '<div class="plan-preview-kicker">'+ICON.artifact+'<span>Plan</span><span>V'+r.version+' · '+esc(r.strategy)+'</span></div>'+
+      '<div class="plan-preview-kicker">'+ICON.plan+'<span>Plan</span><span>V'+r.version+' · '+esc(r.strategy)+'</span></div>'+
       '<button class="plan-preview-open" data-action="pd-info" data-id="'+esc(r.plan_id)+'"><strong>'+esc(r.title)+'</strong>'+(summary?'<span>'+esc(summary)+'</span>':'')+'</button>'+
       (window.PM56_SCHED?.planSummary(r.plan_id)||'')+
       '<div class="plan-preview-meta"><span>'+steps(body(r)).length+(steps(body(r)).length===1?' step':' steps')+'</span><span>'+esc(r.status)+'</span></div>'+
@@ -40592,7 +40672,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
      only writes the destination. */
   function reviseTarget(r){
     return { kind:'plan-revision', label:'Revise Plan · V'+r.version, detail:r.title,
-             refId:r.plan_id, glyph:'document',expectedRevision:{thread_id:r.thread_id,version:r.version,hash:hashOf(body(r))},
+             refId:r.plan_id, glyph:'plan',expectedRevision:{thread_id:r.thread_id,version:r.version,hash:hashOf(body(r))},
              placeholder:'Describe what should change. The agent writes V'+(r.version+1)+'.' };
   }
 
@@ -40655,7 +40735,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     return '<div class="dialog pd-dialog" data-k="pd-dlg-'+esc(id)+'" role="dialog" aria-modal="true" aria-label="'+esc(title)+'">'+
       '<div class="pd-dlg-head"><div><strong>'+esc(title)+'</strong>'+(sub?'<span>'+esc(sub)+'</span>':'')+'</div>'+
       '<button type="button" class="pd-dlg-x" data-action="pd-dlg-close" aria-label="Close">'+
-      '<svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></div>'+
+      ICON.close+'</button></div>'+
       '<div class="pd-dlg-body">'+bodyHtml+'</div>'+
       '<div class="pd-dlg-foot">'+footHtml+'</div></div>';
   }
@@ -41353,7 +41433,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     if(m.type==='pd-wizard-receipt'){
       var w=rec(m.planId); if(!w || !w.wizard) return '';
       return '<article class="event-card pd-receipt" data-k="pdw-'+esc(w.plan_id)+'-'+w.wizard.version+'">'+
-        '<span class="event-icon">'+ICON.artifact+'</span>'+
+        '<span class="event-icon">'+ICON.plan+'</span>'+
         '<div class="event-copy"><strong>Sent to Planning Wizard</strong>'+
         '<p>'+esc(w.title)+' · V'+w.wizard.version+' · '+esc(w.wizard.hash)+'</p>'+
         '<p class="pd-attr">Receipt '+esc(w.wizard.receipt)+' · PRD Builder bypassed · Planning Wizard now owns the PlanningRun, Plan Pack, approval, Plan Compile and Orchestrator navigation.</p></div>'+
@@ -41437,7 +41517,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
  // A Plan receipt is a linked record, not a Goal state or generic work note.
  EXT.slot('transcriptMessage',c=>{
   const m=c.message||c.m;if(!m||!['plan-run-receipt','plan-revision-receipt'].includes(m.type))return '';
-  return '<div class="plan-run-line" data-k="plan-run:'+c.esc(m.id)+'">'+c.icon('document',14)+'<span>'+c.esc(m.title)+' <small>'+c.esc(m.detail)+'</small></span><button data-action="pd-info" data-id="'+c.esc(m.plan_id)+'">Open plan</button></div>';
+  return '<div class="plan-run-line" data-k="plan-run:'+c.esc(m.id)+'">'+c.icon('plan',14)+'<span>'+c.esc(m.title)+' <small>'+c.esc(m.detail)+'</small></span><button data-action="pd-info" data-id="'+c.esc(m.plan_id)+'">Open plan</button></div>';
  });
 
   EXT.action('pd-open-goal',(c,b)=>{const r=rec(b.dataset.id),g=r&&window.PM56_GOAL.bound(r.plan_id);if(g&&!window.PM56_GOAL.cancelled(g)){if(c.thread.id!==g.thread)c.switchThread(g.thread);c.state.activity.open=true;c.state.activity.domain='goal';c.state.activity.scope='focus';c.closeDialog();c.state.menu=null;if(innerWidth<=1100)c.state.editorRevealed=false;c.renderApp();}return true;});
@@ -46916,7 +46996,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
       '<div class="menu-divider"></div>' +
       '<label class="menu-item collab-auto-row" data-k="collab-auto-row"><input type="checkbox" data-action="collab-crew-auto-toggle"' + (autoChecked ? ' checked' : '') + '><span class="menu-copy"><strong>Crew Auto</strong><span>' + esc(autoSub) + '</span></span></label>' +
       '<button class="menu-item" data-action="collab-open-configure" data-kind="crew" data-auto="1"><span class="menu-icon">' + ctx.icon('settings', 13) + '</span><span class="menu-copy"><strong>Crew Auto settings…</strong><span>When the assistant calls a Crew, and which team</span></span></button>' +
-      '<button class="menu-item" data-action="collab-build-with-crew" data-plan-id="ap-index" data-plan-version="5"><span class="menu-icon">' + ctx.icon('document', 13) + '</span><span class="menu-copy"><strong>Build With Crew…</strong><span>Bind a Crew to Plan ap-index V5 and its To-Dos</span></span></button>';
+      '<button class="menu-item" data-action="collab-build-with-crew" data-plan-id="ap-index" data-plan-version="5"><span class="menu-icon">' + ctx.icon('plan', 13) + '</span><span class="menu-copy"><strong>Build With Crew…</strong><span>Bind a Crew to Plan ap-index V5 and its To-Dos</span></span></button>';
   });
 
   EXT.action('collab-crew-auto-toggle', function (ctx) {
@@ -50624,6 +50704,16 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     { value: 'quota', label: 'Resume & Safety Policy', help: 'What stops scheduled things from starting, and what happens at a usage limit.' },
     { value: 'events', label: 'Events & Automation', help: 'What scheduling did, newest first. Hover a line for its technical name.' }];
   var STATE_GLYPH = { scheduled: 'clock', held: 'warn', sent: 'check', canceled: 'slash-circle', failed: 'warn', expired: 'slash-circle' };
+  /* Neon step 3E (2026-10-02): a schedule's state is drawn from the shared status set, lit and still
+     (PM56_SHELL.pmxStatus): held waits on something (waiting-dep, the hourglass), sent and completed are complete,
+     canceled and expired are skipped, failed is failed, paused is paused, a build that needs updating is the
+     attention triangle. A schedule that is simply set (scheduled, active) keeps the clock, the concept every schedule
+     surface draws. STATE_GLYPH / BUILD_GLYPH stay as the drawings used when the neon family is absent. */
+  var STATE_MARK = { held: 'held', sent: 'complete', completed: 'complete', canceled: 'skipped', cancelled: 'skipped', expired: 'skipped', failed: 'failed', paused: 'paused', invalidated: 'attention' };
+  function schedMark(st, size, old) {
+    var s = STATE_MARK[st];
+    return s && SH.pmxStatus ? SH.pmxStatus(s, size) : SH.pmxGlyph(old || 'clock', size);
+  }
   function cssId(id) { return String(id || '').replace(/[^\w-]/g, '_'); }
   function managerFilter(tab) { var m = ui.managerFilters || (ui.managerFilters = {}); return m[tab] || (m[tab] = { status: 'all', query: '', sort: tab === 'events' ? 'time_desc' : 'time_asc' }); }
   function filterState(r, tab) {
@@ -50758,7 +50848,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     var focused = focusId === id, s = chatSentence(m, now), acts = focused ? '' : rowActs(m, past);
     var th = threadByIdRaw(m.thread_id), dest = destWords({ destination: m.destination_ref }, th);
     var head = '<div class="pmx-sched-row' + (past ? ' pmx-sched-row--past' : '') + '" data-k="schedule-' + eid + '" data-schedule-id="' + eid + '" data-sched-row="' + cssId(id) + '" data-state="' + st + '"' + (focused ? ' data-focused="1"' : '') + ' data-pmx-flip>' +
-      '<span class="pmx-sched-rowglyph">' + SH.pmxGlyph(STATE_GLYPH[st] || 'clock', 15) + '</span>';
+      '<span class="pmx-sched-rowglyph">' + schedMark(st, 15, STATE_GLYPH[st]) + '</span>';
     if (past) return head + '<span class="pmx-sched-rowtime">' + esc(dayMonth(t, zone) + ' · ' + hourWord(pad2((zp(zone, t) || {}).h || 0) + ':' + pad2((zp(zone, t) || {}).mi || 0))) + '</span>' +
       '<span class="pmx-sched-rowline">' + (st === 'sent' ? '<b class="pmx-sched-word">' + esc(s.word) + '</b>' : s.html) + (st === 'canceled' ? '' : ' · ' + esc(quoted(m.text, 60))) + '</span><span class="pmx-sched-rowacts">' + acts + '</span></div>';
     var today = zp(zone, now), tp = zp(zone, t), gap = today && tp ? Math.round((Date.UTC(tp.y, tp.mo - 1, tp.d) - Date.UTC(today.y, today.mo - 1, today.d)) / 86400000) : 9;
@@ -50855,7 +50945,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
       btn('pd-info', ' data-id="' + esc(b.target_id) + '"', 'Open plan') + (st === 'active' && !b.dispatchReceipt ? btn('sched-edit-build', ' data-id="' + id + '"', 'Change times') : '') + cancel;
     return '<div class="pmx-sched-brow" data-k="sched-bld-' + id + '" data-sched-row="' + cssId(b.schedule_id) + '" data-state="' + esc(st) + '" data-pmx-flip>' +
       '<div class="pmx-sched-bhead"><span class="pmx-sched-bmark">' + SH.pmxKindMark('build-at', 18) + '</span><p class="pmx-sched-btitle"><b>' + esc(plan && plan.title || b.target_id) + '</b> <span>V' + esc(b.exact_target_version) + '</span></p>' +
-      '<span class="mdl-chip pmx-sched-state" data-state="' + esc(st) + '">' + SH.pmxGlyph(BUILD_GLYPH[st] || 'clock', 13) + '<span>' + esc(word) + '</span></span><span class="pmx-sched-bacts">' + acts + '</span></div>' +
+      '<span class="mdl-chip pmx-sched-state" data-state="' + esc(st) + '">' + schedMark(st, 13, BUILD_GLYPH[st]) + '<span>' + esc(word) + '</span></span><span class="pmx-sched-bacts">' + acts + '</span></div>' +
       '<p class="pmx-sched-bwhen">' + esc(when) + ' · ' + esc(who) + '</p>' + (status ? '<p class="pmx-sched-bsay">' + status + '</p>' : '') +
       '<div class="pmx-sched-bbody">' + (!one || st === 'active' ? weekStrip(b, now) : '') + '<ul class="pmx-sched-journal">' + journal(b).map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ul></div>' +
       (st === 'active' ? '<p class="pmx-fine pmx-sched-demo">' + SH.pmxGlyph('play-ring', 13) + '<span>Demo:</span><button type="button" class="text-button" data-action="sched-advance-window" data-id="' + id + '">Jump to the next start or stop</button></p>' : '') + '</div>';
@@ -50922,7 +51012,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     var rows = visibleSchedules(P().events, 'events');
     return tools(ctx, 'events') + '<div class="pmx-sched-agenda" data-k="sched-agenda-events">' + (rows.length ? '<ol class="pmx-sched-events">' + rows.map(function (e) {
       var t = Date.parse(e.at), zone = deviceZone(), tip = e.type + (e.clause ? ' · ' + e.clause : '');
-      return '<li class="pmx-sched-event" data-k="sched-ev-' + esc(e.id) + '" data-state="' + eventState(e) + '"><span class="pmx-sched-rowglyph">' + SH.pmxGlyph(eventState(e) === 'held' || eventState(e) === 'failed' ? 'warn' : eventState(e) === 'completed' ? 'check' : 'clock', 14) + '</span>' +
+      return '<li class="pmx-sched-event" data-k="sched-ev-' + esc(e.id) + '" data-state="' + eventState(e) + '"><span class="pmx-sched-rowglyph">' + schedMark(eventState(e), 14, eventState(e) === 'held' || eventState(e) === 'failed' ? 'warn' : eventState(e) === 'completed' ? 'check' : 'clock') + '</span>' +
         '<span class="pmx-sched-rowtime">' + (isFinite(t) ? esc(dayMonth(t, zone) + ' · ' + clockAt(t, zone)) : '') + '</span>' +
         '<span class="pmx-sched-evsay" data-hover-key="sched-ev:' + esc(e.id) + '" data-hover-tip="' + esc(tip) + '">' + esc(eventSentence(e)) + '</span></li>';
     }).join('') + '</ol>' : emptyLine('Nothing has happened yet.')) + '</div>';
@@ -51236,7 +51326,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     var headline = st === 'failed' ? '<b class="pmx-sched-word">' + esc(s.word) + '</b> · ' + esc(failedWhy(m, true)) : s.html;
     var tip = st === 'failed' ? cap1(failedWhy(m)) + '. Edit it to retry.\n' + receiptTip(m, st, now) : null;
     var line = SH.pmxLedgerLine({ key: 'sched-line-' + id, cls: 'pmx-sched-line', attrs: 'data-state="' + st + '"', kind: 'schedule', markHtml: SH.pmxKindMark('schedule', 16), kindWord: '',
-      title: esc(snippet(m.text, 80)), headline: headline, glyph: RECEIPT_GLYPH[st] || 'clock', time: esc(receiptTip(m, st, now)), tip: tip, footHtml: foot });
+      title: esc(snippet(m.text, 80)), headline: headline, glyph: schedMark(st, 14, RECEIPT_GLYPH[st] || 'clock'), time: esc(receiptTip(m, st, now)), tip: tip, footHtml: foot });
     return '<article class="sched-card sched-card-' + st + '" data-k="sched-card-' + eid + '" data-schedule-id="' + eid + '" data-schedule-state="' + st + '" data-flip>' + line + (open ? recordHtml(m, now) : '') + '</article>';
   }
   function renderMessageCard(ctx, m) {
@@ -59615,10 +59705,14 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  const TRIES=['Always use pnpm, not npm','Keep answers under 200 words','Write tests before changing a public function'];
  const arriving=new Set(),disclosures=new Map();
  let shown={err:null,rel:null};
- /* the padlock is drawn here (body + a separate shackle), because the shackle closes on Save: an open shackle
-    (raised by CSS on a draft card) drops into the body (transform only, --pmx-t-lock) */
- const lockSvg=(size,cls)=>'<svg class="pmx-teach-lock'+(cls?' '+cls:'')+'" width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+
-  '<path class="pmx-teach-shackle" d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/><rect x="5" y="10.5" width="14" height="10" rx="2.2"/></svg>';
+ /* the padlock: its shackle closes on Save, so an open shackle (raised by CSS on a draft card) drops into the body
+    (transform only, --pmx-t-lock). Neon step 3E (2026-10-02): it is the shared registry's lock (neon-icons.js), whose
+    one moving part IS the shackle and whose act is that drop; read at call time, the drawing below is only the
+    fallback for a page without the neon family. The shackle is .nx-p in the registry's lock, .pmx-teach-shackle here. */
+ const lockSvg=(size,cls)=>{const N=window.PM56_NEON;
+  if(N&&typeof N.icon==='function')return N.icon('lock',size,'pmx-teach-lock'+(cls?' '+cls:''));
+  return '<svg class="pmx-teach-lock'+(cls?' '+cls:'')+'" width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+
+  '<path class="pmx-teach-shackle" d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/><rect x="5" y="10.5" width="14" height="10" rx="2.2"/></svg>';};
  function ruleWord(r){return r.supersededBy?W().replaced.replace('{n}',String(get(r.supersededBy)?.version||(r.version||1)+1)):r.revoked?W().off:r.locked?W().inUseLocked:W().inUse;}
  function status(r){return ruleWord(r);}
  function msgTime(s){if(!s||!s.messageId)return '';const m=messages(s.threadId).find(m=>m.id===s.messageId);return m?hm(m.time||m.sentAt||m.at||''):'';}
@@ -59794,7 +59888,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   const X=P();if(!X||X.reduced())return;
   const g=document.querySelector('body > .pmx-ghost .pmx-teach-card');if(!g)return;
   X.animate(g,[{transform:'none'},{transform:'scale(1.02)'}],{duration:X.t('lift'),easing:X.ease('out'),fill:'forwards'});
-  const sh=locked&&g.querySelector('.pmx-teach-shackle');
+  const sh=locked&&g.querySelector('.pmx-teach-lock .nx-p, .pmx-teach-shackle');
   if(sh)X.animate(sh,[{transform:'translateY(-3px)'},{transform:'none'}],{duration:X.t('lock'),easing:X.ease('pop'),fill:'forwards'});
  }
  /* the Save runs in one task: the flight is armed (or the save exit is named) before commit(), because commit() appends
@@ -60200,6 +60294,11 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
  function groupOf(g){return g.discarded?'discarded':g.teaching_proposal?'decide':g.verification_state==='Verified'?'verified':stale(g)?'stale':'unverified';}
  const GROUPS=[['decide','Needs your decision'],['unverified','Unverified'],['verified','Verified'],['stale','Out of date'],['discarded','Discarded']];
  const GLYPH={decide:'hand',unverified:'ring-dashed',verified:'check-circle',stale:'slash-circle',discarded:'trash'};
+ /* neon step 3E (2026-10-02): a group's state is the shared status set, lit and still (PM56_SHELL.pmxStatus): Needs your
+    decision is needs-you, Unverified pending, Verified complete, Out of date skipped; Discarded keeps the trash glyph
+    (an action's concept, not a state). GLYPH stays as the drawing used when the neon family is absent. */
+ const STATE_MARK={decide:'needs',unverified:'unverified',verified:'verified',stale:'stale'};
+ const mark=(k,size)=>STATE_MARK[k]&&S.pmxStatus?S.pmxStatus(STATE_MARK[k],size):S.pmxGlyph(GLYPH[k],size);
  const FILTER_HELP={All:'Everything, including forgotten notes.',Verified:'A test still backs it up, so it’s used.',Unverified:'Not proven yet. Kept for you to review; not used.'};
  const TAB_HELP={auto:'Saved by itself after a reply',taught:'Things you told it to always do'};
  function inFilter(g,f=filter){return f==='All'||(f==='Verified'?g.verification_state==='Verified':g.verification_state==='Unverified');}
@@ -60283,7 +60382,7 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
  function rowHtml(e,g,selId,i,af){
   const k=groupOf(g);
   return '<button type="button" class="pmx-mem-row" data-k="gist:'+e(g.id)+'" data-gist="'+e(g.id)+'" data-action="memory-select" data-id="'+e(g.id)+'" data-state="'+k+'" aria-pressed="'+(g.id===selId)+'"'+(k==='decide'?' data-tone="warm"':'')+(af&&g.id===selId?' data-pmx-autofocus':'')+' style="--i:'+Math.min(i,5)+'">'+
-   '<span class="pmx-mem-rglyph" data-k="mrg:'+e(g.id)+'">'+S.pmxGlyph(GLYPH[k],15)+'</span>'+
+   '<span class="pmx-mem-rglyph" data-k="mrg:'+e(g.id)+'">'+mark(k,15)+'</span>'+
    '<span class="pmx-mem-rcopy"><b>'+e(titleOf(g))+'</b><small>'+e(word(g))+' · '+e(coversOf(g))+(g.pinned&&!g.discarded?' · '+e(W.pinned):'')+'</small></span>'+
    '<span class="pmx-mem-time">'+e(hm(g.created_at||g.at))+'</span></button>';
  }
@@ -60308,7 +60407,7 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
   const k=lastCheck.get(g.id);if(!k)return '';
   const when=S.pmxTime.ago(k.at)||'just now',v=k.state==='Verified';
   const say=v?(k.used?'verified. It joins your next message.':'verified, but it didn’t fit in the space for notes.'):k.stale?'still out of date. The checks have to run again on the changed file.':'still not proven. Nothing backs it up yet.';
-  return '<p class="pmx-mem-checked" data-k="mchk:'+e(g.id)+':'+k.n+'" role="status">'+S.pmxGlyph(v?'check-circle':'ring-dashed',13)+'<span>Tested again '+e(when)+': '+say+'</span></p>';
+  return '<p class="pmx-mem-checked" data-k="mchk:'+e(g.id)+':'+k.n+'" role="status">'+(S.pmxStatus?S.pmxStatus(v?'verified':'unverified',13):S.pmxGlyph(v?'check-circle':'ring-dashed',13))+'<span>Tested again '+e(when)+': '+say+'</span></p>';
  }
  function decideHtml(e,g){
   const r=ruleOf(g),n=notices.get(g.id),id=e(g.id);
@@ -60333,7 +60432,7 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
  function detailHtml(e,g,doc){
   const k=groupOf(g),p=proofOf(g);
   return '<div class="pmx-mem-detail" data-k="md:'+e(g.id)+'">'+
-   '<p class="pmx-mem-state"><span class="pmx-mem-sglyph" data-k="mst:'+e(g.id)+'" data-state="'+k+'">'+S.pmxGlyph(GLYPH[k],15)+'</span><span><b>'+e(word(g))+'</b> · '+e(stateHelp(g))+(g.pinned&&!g.discarded?' · '+e(W.pinned):'')+'</span></p>'+
+   '<p class="pmx-mem-state"><span class="pmx-mem-sglyph" data-k="mst:'+e(g.id)+'" data-state="'+k+'">'+mark(k,15)+'</span><span><b>'+e(word(g))+'</b> · '+e(stateHelp(g))+(g.pinned&&!g.discarded?' · '+e(W.pinned):'')+'</span></p>'+
    '<h3 class="pmx-mem-claim">'+e(titleOf(g))+'</h3>'+
    (g.provenance==='recorded'?'<p class="pmx-mem-prov">'+S.pmxGlyph('play-ring',13)+'<span>'+e(S.PMX_COPY.cost.recorded)+'</span></p>':'')+
    (k==='decide'?decideHtml(e,g):'')+
@@ -60940,7 +61039,7 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
    :counts(mf.add,mf.del);
   const right=st==='changed'
    ?'<button type="button" class="text-button pmx-revert-block" data-action="revert-review-conflict" data-value="'+esc(token)+'" data-path="'+esc(f.path)+'">See what’s blocking it</button>'
-   :st==='done'||st==='past'&&r.state==='reverted'?'<span class="pmx-revert-state">'+S.pmxGlyph('check',14,'pmx-revert-check')+'<span class="pmx-revert-put">Put back</span></span>'
+   :st==='done'||st==='past'&&r.state==='reverted'?'<span class="pmx-revert-state">'+S.pmxStatus('complete',14,'pmx-revert-check')+'<span class="pmx-revert-put">Put back</span></span>'
    :st==='past'?''
    :'<span class="pmx-revert-state">'+STATE_WORD[st]+'</span>';
   const verb=st==='changed'?'<b>You changed this since</b>':st==='back'?BACK_VERB[f.kind]:st==='past'?DID[f.kind]+' by the assistant':VERB[f.kind];
@@ -61037,13 +61136,12 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
   const tip=r.provenance==='recorded'?' data-hover-key="rvfiles:'+esc(r.id)+'" data-hover-tip="'+esc(PROV())+'"':'';
   const o={key:m.id,cls:'pmx-revert-row',attrs:'data-turn-id="'+esc(r.id)+'" tabindex="-1"'+tip,count:t.n,add:t.add,del:t.del};
   const see=foldedAfter(c,m)?{action:'revert-open',attrs:tid,label:SEE}:null;
-  if(r.state==='reverted')return stateRow({...o,revert:see},S.pmxGlyph('check',13,'pmx-revert-check')+'<span class="pmx-revert-did"><b>'+WORD('reverted')+'</b> · '+esc(plural(t.n,'file'))+' put back</span>');
+  if(r.state==='reverted')return stateRow({...o,revert:see},S.pmxStatus('complete',13,'pmx-revert-check')+'<span class="pmx-revert-did"><b>'+WORD('reverted')+'</b> · '+esc(plural(t.n,'file'))+' put back</span>');
   /* " · nothing to revert" leaves a narrow row first, then "See what happened" reads "Open" (revert-protocol.css) */
-  if(r.state==='skipped')return stateRow({...o,revert:see},S.pmxGlyph('check',13,'pmx-revert-tone-quiet')+'<span class="pmx-revert-did"><b>'+WORD('alreadyBack')+'</b><span class="pmx-revert-did-more"> · nothing to revert</span></span>');
+  if(r.state==='skipped')return stateRow({...o,revert:see},S.pmxStatus('skipped',13)+'<span class="pmx-revert-did"><b>'+WORD('alreadyBack')+'</b><span class="pmx-revert-did-more"> · nothing to revert</span></span>');
   if(a.eligible){if(!retryOpen(r,a))o.revert={action:'af-revert-preview',attrs:tid};}else o.reason=why(a);
   return reasonSep(words(oneSide(S.pmxFilesRow(o),t)));
  }
- const TONE={ok:'pmx-revert-tone-ok',warn:'pmx-revert-tone-warn',bad:'pmx-revert-tone-bad',quiet:'pmx-revert-tone-quiet'};
  /* The headline keeps the outcome word and the file name at every width, and drops words from the end as the
     line narrows: .pmx-revert-hl-l shows only on a wide line, .pmx-revert-hl-m leaves the narrowest (S) line.
     The full sentence is the headline's hover card, after "Recorded example · no AI cost" on a recorded example. */
@@ -61054,20 +61152,20 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
   const t=totals(r),a=availability(r.id),tid='data-value="'+esc(r.id)+'"',see={action:'revert-open',attrs:tid,label:SEE};
   const retry=a.eligible&&r.attempts.at(-1)?.id===x.id&&!dismissed.has(x.id)?{action:'af-revert-retry',attrs:tid,label:'Retry'}:null;
   let glyph,headline,actions,tip='';
-  if(x.outcome==='restored_clean'){glyph=S.pmxGlyph('check',14,TONE.ok);tip=outcomeSentence(r,x);headline='<b>'+WORD('reverted')+'</b><span class="pmx-revert-hl-cnt">: '+esc(plural(t.n,'file'))+M(' restored')+'</span>';actions=[see];}
-  else if(x.outcome==='restore_skipped'){glyph=S.pmxGlyph('check',14,TONE.quiet);tip=WORD('alreadyBack')+': nothing to revert.';headline='<b>'+(esc(WORD('alreadyBack')).replace(/ to before$/,M(' to before')))+'</b>'+L(': nothing to revert');actions=[see];}
+  if(x.outcome==='restored_clean'){glyph=S.pmxStatus('complete',14);tip=outcomeSentence(r,x);headline='<b>'+WORD('reverted')+'</b><span class="pmx-revert-hl-cnt">: '+esc(plural(t.n,'file'))+M(' restored')+'</span>';actions=[see];}
+  else if(x.outcome==='restore_skipped'){glyph=S.pmxStatus('skipped',14);tip=WORD('alreadyBack')+': nothing to revert.';headline='<b>'+(esc(WORD('alreadyBack')).replace(/ to before$/,M(' to before')))+'</b>'+L(': nothing to revert');actions=[see];}
   /* a refusal names its reason at every width: "Couldn't revert: checkout.js changed" (and, while its Retry is open
      on a wide line, ". Nothing was touched."), or where it is narrow "Not reverted: checkout.js changed" and on the
      narrowest line "Not reverted · checkout.js" (never "block", DON'T 22 / 9.4): never a bare file
      name after "Couldn't revert", which would read as a partial result (A1-35, DON'T 16) */
-  else if(x.outcome==='restore_refused'&&x.reason==='target_changed'){const who='<span class="pmx-revert-who">'+esc(whoChanged(x.changedPaths||[]))+'</span>';glyph=S.pmxGlyph('warn',14,TONE.warn);
+  else if(x.outcome==='restore_refused'&&x.reason==='target_changed'){const who='<span class="pmx-revert-who">'+esc(whoChanged(x.changedPaths||[]))+'</span>';glyph=S.pmxStatus('attention',14);
    tip='Couldn’t revert: '+whoChanged(x.changedPaths||[])+' changed after the assistant’s edit. Nothing was touched.';
    headline='<span class="pmx-revert-hl-full"><b>Couldn’t revert:</b> '+who+' changed'+(retry?L('. Nothing was touched.'):'')+'</span><span class="pmx-revert-hl-short"><b>Not reverted</b>'+M(': '+who+' changed')+'<span class="pmx-revert-hl-s"> · '+who+'</span></span>';actions=[retry||see];}
-  else if(x.outcome==='restore_refused'){glyph=S.pmxGlyph('warn',14,TONE.warn);tip=WORD('refused')+': nothing changed ('+(x.reason||'refused')+').';headline='<b>'+WORD('refused')+'</b>'+M(': nothing changed')+L(' ('+esc(x.reason||'refused')+')');actions=[retry||see];}
-  else if(x.outcome==='restore_failed'){glyph=S.pmxGlyph('warn',14,TONE.bad);tip='Didn’t finish: your files are exactly as they were before trying.';headline='<b>'+WORD('unfinished')+'</b><span class="pmx-revert-hl-nl">'+M(': nothing changed')+'</span>'+L(': your files are exactly as they were before trying');actions=[retry||see];}
+  else if(x.outcome==='restore_refused'){glyph=S.pmxStatus('attention',14);tip=WORD('refused')+': nothing changed ('+(x.reason||'refused')+').';headline='<b>'+WORD('refused')+'</b>'+M(': nothing changed')+L(' ('+esc(x.reason||'refused')+')');actions=[retry||see];}
+  else if(x.outcome==='restore_failed'){glyph=S.pmxStatus('failed',14);tip='Didn’t finish: your files are exactly as they were before trying.';headline='<b>'+WORD('unfinished')+'</b><span class="pmx-revert-hl-nl">'+M(': nothing changed')+'</span>'+L(': your files are exactly as they were before trying');actions=[retry||see];}
   /* restore_recovery_required: the runtime recovery command comes from allowed_action_ids, and this concept has
      none, so Recover is disabled and its reason is printed in the headline */
-  else{const no=refusal('command_not_registered');glyph=S.pmxGlyph('warn',14,TONE.warn);tip=WORD('recovery')+'. Recover: '+no;headline='<b>'+WORD('recovery')+'</b>'+L(' · '+esc(no.charAt(0).toLowerCase()+no.slice(1).replace(/\.$/,'')));actions=[{label:'Recover',disabled:true,attrs:'data-failure="command_not_registered"'},see];}
+  else{const no=refusal('command_not_registered');glyph=S.pmxStatus('attention',14);tip=WORD('recovery')+'. Recover: '+no;headline='<b>'+WORD('recovery')+'</b>'+L(' · '+esc(no.charAt(0).toLowerCase()+no.slice(1).replace(/\.$/,'')));actions=[{label:'Recover',disabled:true,attrs:'data-failure="command_not_registered"'},see];}
   const time=clock(x.at);
   if(tip)headline='<span data-hover-key="rvtip:'+esc(x.id)+'" data-hover-tip="'+esc([r.provenance==='recorded'?RECORDED():'',tip+(time?' · '+time:'')].filter(Boolean).join('\n'))+'">'+headline+'</span>';
   return S.pmxLedgerLine({key:m.id,cls:'pmx-revert-line',kind:'revert',kindWord:'Revert',title:'Revert Last Agent Edit',attrs:'data-turn-id="'+esc(r.id)+'" data-outcome="'+esc(x.outcome)+'"'+(x.reason?' data-failure="'+esc(x.reason)+'"':''),
@@ -61100,8 +61198,10 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
   if(x.outcome==='restore_refused')return WORD('refused')+': nothing changed ('+(x.reason||'refused')+').';
   if(x.outcome==='restore_failed')return 'Didn’t finish: your files are exactly as they were before trying.';
   return WORD('recovery')+'.';}
- const OUT_GLYPH={restored_clean:'check',restore_skipped:'check',restore_refused:'warn',restore_failed:'warn',restore_recovery_required:'warn'};
- const OUT_TONE={restored_clean:TONE.ok,restore_skipped:TONE.quiet,restore_failed:TONE.bad};
+ /* neon step 3E (2026-10-02): an outcome is the shared status set, lit and still (PM56_SHELL.pmxStatus), here and on
+    the receipt line above: put back complete, already back skipped, refused and recovery the attention triangle,
+    failed failed. (It was a check or a warning glyph tinted by a tone class.) */
+ const OUT_STATUS={restored_clean:'complete',restore_skipped:'skipped',restore_refused:'attention',restore_failed:'failed',restore_recovery_required:'attention'};
  function render(c,id){const r=own(id);
   if(!r)return S.pmxView({key:'revert:'+id,cls:'revert-document',kind:'revert',kindWord:'Revert Last Agent Edit',title:'This change is no longer here',statusHtml:'Its chat was reset, so there is nothing to revert or show.'});
   const v=viewOf(id),a=availability(id),t=totals(r),x=r.attempts.at(-1),w=spaces.get(r.workspaceId);
@@ -61116,7 +61216,7 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
    .concat([{action:'revert-export',attrs:tid,label:'Download record (.json)'}]);
   const acts=S.pmxActions({key:'rv-acts:'+id,items});
   const entries=[{key:'rvt:'+id+':turn',mid:id+':turn',markHtml:S.pmxGlyph('file-edit',16,'pmx-revert-tlg'),who:'The assistant',when:esc(clock(r.createdAt)),bodyHtml:'It '+esc(didWords(r))+'.'}]
-   .concat(r.attempts.map(y=>({key:'rvt:'+y.id,mid:y.id,markHtml:S.pmxGlyph(OUT_GLYPH[y.outcome]||'warn',16,'pmx-revert-tlg '+(OUT_TONE[y.outcome]||TONE.warn)),who:'Revert',when:esc(clock(y.at)),bodyHtml:esc(outcomeSentence(r,y))})))
+   .concat(r.attempts.map(y=>({key:'rvt:'+y.id,mid:y.id,markHtml:S.pmxStatus(OUT_STATUS[y.outcome]||'attention',16,'pmx-revert-tlg'),who:'Revert',when:esc(clock(y.at)),bodyHtml:esc(outcomeSentence(r,y))})))
    .concat(later.length?[{key:'rvt:'+id+':later',mid:id+':later',markHtml:S.pmxGlyph('edit',16,'pmx-revert-tlg'),who:'Your files',when:'',bodyHtml:esc(whoChanged(later))+' changed after the assistant’s edit.'}]:[]);
   const techKey=id+':tech',techOpen=disclosures.has(techKey)?disclosures.get(techKey):false;
   const main=(window.PM56_REVERT_DEMOS?.guide(c,true)||'')+

@@ -3997,7 +3997,7 @@
       '<div class="menu-divider"></div>' +
       '<label class="menu-item collab-auto-row" data-k="collab-auto-row"><input type="checkbox" data-action="collab-crew-auto-toggle"' + (autoChecked ? ' checked' : '') + '><span class="menu-copy"><strong>Crew Auto</strong><span>' + esc(autoSub) + '</span></span></label>' +
       '<button class="menu-item" data-action="collab-open-configure" data-kind="crew" data-auto="1"><span class="menu-icon">' + ctx.icon('settings', 13) + '</span><span class="menu-copy"><strong>Crew Auto settings…</strong><span>When the assistant calls a Crew, and which team</span></span></button>' +
-      '<button class="menu-item" data-action="collab-build-with-crew" data-plan-id="ap-index" data-plan-version="5"><span class="menu-icon">' + ctx.icon('document', 13) + '</span><span class="menu-copy"><strong>Build With Crew…</strong><span>Bind a Crew to Plan ap-index V5 and its To-Dos</span></span></button>';
+      '<button class="menu-item" data-action="collab-build-with-crew" data-plan-id="ap-index" data-plan-version="5"><span class="menu-icon">' + ctx.icon('plan', 13) + '</span><span class="menu-copy"><strong>Build With Crew…</strong><span>Bind a Crew to Plan ap-index V5 and its To-Dos</span></span></button>';
   });
 
   EXT.action('collab-crew-auto-toggle', function (ctx) {

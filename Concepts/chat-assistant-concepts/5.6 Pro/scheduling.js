@@ -2052,6 +2052,16 @@
     { value: 'quota', label: 'Resume & Safety Policy', help: 'What stops scheduled things from starting, and what happens at a usage limit.' },
     { value: 'events', label: 'Events & Automation', help: 'What scheduling did, newest first. Hover a line for its technical name.' }];
   var STATE_GLYPH = { scheduled: 'clock', held: 'warn', sent: 'check', canceled: 'slash-circle', failed: 'warn', expired: 'slash-circle' };
+  /* Neon step 3E (2026-10-02): a schedule's state is drawn from the shared status set, lit and still
+     (PM56_SHELL.pmxStatus): held waits on something (waiting-dep, the hourglass), sent and completed are complete,
+     canceled and expired are skipped, failed is failed, paused is paused, a build that needs updating is the
+     attention triangle. A schedule that is simply set (scheduled, active) keeps the clock, the concept every schedule
+     surface draws. STATE_GLYPH / BUILD_GLYPH stay as the drawings used when the neon family is absent. */
+  var STATE_MARK = { held: 'held', sent: 'complete', completed: 'complete', canceled: 'skipped', cancelled: 'skipped', expired: 'skipped', failed: 'failed', paused: 'paused', invalidated: 'attention' };
+  function schedMark(st, size, old) {
+    var s = STATE_MARK[st];
+    return s && SH.pmxStatus ? SH.pmxStatus(s, size) : SH.pmxGlyph(old || 'clock', size);
+  }
   function cssId(id) { return String(id || '').replace(/[^\w-]/g, '_'); }
   function managerFilter(tab) { var m = ui.managerFilters || (ui.managerFilters = {}); return m[tab] || (m[tab] = { status: 'all', query: '', sort: tab === 'events' ? 'time_desc' : 'time_asc' }); }
   function filterState(r, tab) {
@@ -2186,7 +2196,7 @@
     var focused = focusId === id, s = chatSentence(m, now), acts = focused ? '' : rowActs(m, past);
     var th = threadByIdRaw(m.thread_id), dest = destWords({ destination: m.destination_ref }, th);
     var head = '<div class="pmx-sched-row' + (past ? ' pmx-sched-row--past' : '') + '" data-k="schedule-' + eid + '" data-schedule-id="' + eid + '" data-sched-row="' + cssId(id) + '" data-state="' + st + '"' + (focused ? ' data-focused="1"' : '') + ' data-pmx-flip>' +
-      '<span class="pmx-sched-rowglyph">' + SH.pmxGlyph(STATE_GLYPH[st] || 'clock', 15) + '</span>';
+      '<span class="pmx-sched-rowglyph">' + schedMark(st, 15, STATE_GLYPH[st]) + '</span>';
     if (past) return head + '<span class="pmx-sched-rowtime">' + esc(dayMonth(t, zone) + ' · ' + hourWord(pad2((zp(zone, t) || {}).h || 0) + ':' + pad2((zp(zone, t) || {}).mi || 0))) + '</span>' +
       '<span class="pmx-sched-rowline">' + (st === 'sent' ? '<b class="pmx-sched-word">' + esc(s.word) + '</b>' : s.html) + (st === 'canceled' ? '' : ' · ' + esc(quoted(m.text, 60))) + '</span><span class="pmx-sched-rowacts">' + acts + '</span></div>';
     var today = zp(zone, now), tp = zp(zone, t), gap = today && tp ? Math.round((Date.UTC(tp.y, tp.mo - 1, tp.d) - Date.UTC(today.y, today.mo - 1, today.d)) / 86400000) : 9;
@@ -2283,7 +2293,7 @@
       btn('pd-info', ' data-id="' + esc(b.target_id) + '"', 'Open plan') + (st === 'active' && !b.dispatchReceipt ? btn('sched-edit-build', ' data-id="' + id + '"', 'Change times') : '') + cancel;
     return '<div class="pmx-sched-brow" data-k="sched-bld-' + id + '" data-sched-row="' + cssId(b.schedule_id) + '" data-state="' + esc(st) + '" data-pmx-flip>' +
       '<div class="pmx-sched-bhead"><span class="pmx-sched-bmark">' + SH.pmxKindMark('build-at', 18) + '</span><p class="pmx-sched-btitle"><b>' + esc(plan && plan.title || b.target_id) + '</b> <span>V' + esc(b.exact_target_version) + '</span></p>' +
-      '<span class="mdl-chip pmx-sched-state" data-state="' + esc(st) + '">' + SH.pmxGlyph(BUILD_GLYPH[st] || 'clock', 13) + '<span>' + esc(word) + '</span></span><span class="pmx-sched-bacts">' + acts + '</span></div>' +
+      '<span class="mdl-chip pmx-sched-state" data-state="' + esc(st) + '">' + schedMark(st, 13, BUILD_GLYPH[st]) + '<span>' + esc(word) + '</span></span><span class="pmx-sched-bacts">' + acts + '</span></div>' +
       '<p class="pmx-sched-bwhen">' + esc(when) + ' · ' + esc(who) + '</p>' + (status ? '<p class="pmx-sched-bsay">' + status + '</p>' : '') +
       '<div class="pmx-sched-bbody">' + (!one || st === 'active' ? weekStrip(b, now) : '') + '<ul class="pmx-sched-journal">' + journal(b).map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ul></div>' +
       (st === 'active' ? '<p class="pmx-fine pmx-sched-demo">' + SH.pmxGlyph('play-ring', 13) + '<span>Demo:</span><button type="button" class="text-button" data-action="sched-advance-window" data-id="' + id + '">Jump to the next start or stop</button></p>' : '') + '</div>';
@@ -2350,7 +2360,7 @@
     var rows = visibleSchedules(P().events, 'events');
     return tools(ctx, 'events') + '<div class="pmx-sched-agenda" data-k="sched-agenda-events">' + (rows.length ? '<ol class="pmx-sched-events">' + rows.map(function (e) {
       var t = Date.parse(e.at), zone = deviceZone(), tip = e.type + (e.clause ? ' · ' + e.clause : '');
-      return '<li class="pmx-sched-event" data-k="sched-ev-' + esc(e.id) + '" data-state="' + eventState(e) + '"><span class="pmx-sched-rowglyph">' + SH.pmxGlyph(eventState(e) === 'held' || eventState(e) === 'failed' ? 'warn' : eventState(e) === 'completed' ? 'check' : 'clock', 14) + '</span>' +
+      return '<li class="pmx-sched-event" data-k="sched-ev-' + esc(e.id) + '" data-state="' + eventState(e) + '"><span class="pmx-sched-rowglyph">' + schedMark(eventState(e), 14, eventState(e) === 'held' || eventState(e) === 'failed' ? 'warn' : eventState(e) === 'completed' ? 'check' : 'clock') + '</span>' +
         '<span class="pmx-sched-rowtime">' + (isFinite(t) ? esc(dayMonth(t, zone) + ' · ' + clockAt(t, zone)) : '') + '</span>' +
         '<span class="pmx-sched-evsay" data-hover-key="sched-ev:' + esc(e.id) + '" data-hover-tip="' + esc(tip) + '">' + esc(eventSentence(e)) + '</span></li>';
     }).join('') + '</ol>' : emptyLine('Nothing has happened yet.')) + '</div>';
@@ -2664,7 +2674,7 @@
     var headline = st === 'failed' ? '<b class="pmx-sched-word">' + esc(s.word) + '</b> · ' + esc(failedWhy(m, true)) : s.html;
     var tip = st === 'failed' ? cap1(failedWhy(m)) + '. Edit it to retry.\n' + receiptTip(m, st, now) : null;
     var line = SH.pmxLedgerLine({ key: 'sched-line-' + id, cls: 'pmx-sched-line', attrs: 'data-state="' + st + '"', kind: 'schedule', markHtml: SH.pmxKindMark('schedule', 16), kindWord: '',
-      title: esc(snippet(m.text, 80)), headline: headline, glyph: RECEIPT_GLYPH[st] || 'clock', time: esc(receiptTip(m, st, now)), tip: tip, footHtml: foot });
+      title: esc(snippet(m.text, 80)), headline: headline, glyph: schedMark(st, 14, RECEIPT_GLYPH[st] || 'clock'), time: esc(receiptTip(m, st, now)), tip: tip, footHtml: foot });
     return '<article class="sched-card sched-card-' + st + '" data-k="sched-card-' + eid + '" data-schedule-id="' + eid + '" data-schedule-state="' + st + '" data-flip>' + line + (open ? recordHtml(m, now) : '') + '</article>';
   }
   function renderMessageCard(ctx, m) {

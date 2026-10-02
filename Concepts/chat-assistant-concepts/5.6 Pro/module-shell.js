@@ -786,13 +786,36 @@
       (o.cluster != null ? cluster(o.cluster, o.clusterMax) : '') +
       (o.clock != null ? '<span class="pmx-clock"' + k(o.clockKey) + '>' + o.clock + '</span>' : '') + str(o.extra);
   }
+  /* STATUS_GLYPH: the drawing each run status had before the neon family; pmxStatus() falls back to it when
+     PM56_NEON is absent (tests/shell-selfcheck.cjs evals this file bare). */
   var STATUS_GLYPH = { starting: 'ring', waiting: 'ring-dashed', running: 'arc', live: 'arc', needs: 'ring-dot', yourmove: 'ring-dot', paused: 'pause', done: 'check', cancelled: 'slash-circle', canceled: 'slash-circle', failed: 'warn', attention: 'warn', limit: 'warn' };
+  /* pmxStatus(status,size,cls) - neon step 3E (2026-10-02): a status mark from the shared status set (neon-icons.js
+     status()), lit and STILL. Its wrapper carries nx-still, so the set's list rhythms (the bead's orbit, the
+     needs-you hop, blocked's blink, failed's stutter, the breathing backlight) never run inside a pmx host and only
+     the one-shot act plays as the mark mounts: a live card's loop budget is spent by its two pmx-sheen loops and
+     every other pmx host allows none (pmx-verify loop-census). Run statuses map onto the set: a waiting run is
+     queued for its turn (waiting-dep, the hourglass), needs and yourmove are "needs you" (yourmove keeps the accent,
+     neon-icons.css section 14), cancelled is skipped. attention, limit and warn have no member of the set: they
+     are the warning triangle lit in the attention tone, in the same still wrapper. Any other name is a set name or
+     alias (scheduled, verified, stale, held, blocked...), which the module tables pass straight through. cls goes on the wrapper (the fallback drawing's svg). */
+  var PMX_STATUS = { starting: 'working', running: 'working', live: 'working', waiting: 'waiting-dep', needs: 'waiting', yourmove: 'waiting', paused: 'paused', done: 'complete', cancelled: 'skipped', canceled: 'skipped', failed: 'failed' };
+  var PMX_STATUS_WARN = { attention: 1, limit: 1, warn: 1 };
+  var PMX_STATUS_OLD = { complete: 'check', completed: 'check', sent: 'check', verified: 'check-circle', skipped: 'slash-circle', stale: 'slash-circle', expired: 'slash-circle', pending: 'ring-dashed', unverified: 'ring-dashed', scheduled: 'clock', 'waiting-dep': 'ring-dashed', held: 'warn', working: 'arc', blocked: 'lock', invalidated: 'warn', decide: 'hand' };
+  function pmxStatus(status, size, extraCls) {
+    status = str(status) || 'running'; size = num(size, 14);
+    var N = neon(), c = cls('nx-still', extraCls);
+    if (N && typeof N.status === 'function') {
+      if (PMX_STATUS_WARN[status]) return '<span class="nx-st nx-tn-attention ' + esc(c) + '" data-k="st:' + esc(status) + '" aria-hidden="true">' + N.icon('warning', size, 'nx-r-status nx-t-attention') + '</span>';
+      return N.status(PMX_STATUS[status] || status, size, c);
+    }
+    return pmxGlyph(STATUS_GLYPH[status] || PMX_STATUS_OLD[status] || 'ring', size, extraCls);
+  }
   function pmxSentence(o) {
     o = o || {};
     var status = str(o.status) || 'running';
     var word = str(o.word), reason = str(o.reason);
     return '<p class="' + cls('pmx-sentence', o.cls) + '"' + k(o.key) + ' data-status="' + esc(status) + '">' +
-      '<span class="pmx-st-glyph" data-k="stg:' + esc(status) + '">' + g(o.glyph || STATUS_GLYPH[status] || 'ring', 14) + '</span>' +
+      '<span class="pmx-st-glyph" data-k="stg:' + esc(status) + '">' + (o.glyph ? g(o.glyph, 14) : pmxStatus(status, 14)) + '</span>' +
       '<span class="pmx-st-text" data-k="st:' + pmxHash(word + '|' + reason) + '">' + (word ? '<b>' + word + '</b>' : '') + (word && reason ? ' · ' : '') + reason + '</span></p>';
   }
   var STOP_STATES = { done: 1, now: 1, next: 1, skipped: 1, failed: 1 };
@@ -988,10 +1011,14 @@
   }
   var SEV_WORD = { critical: 'Critical', major: 'Major', minor: 'Minor', suggestion: 'Suggestion', nit: 'nit', concern: 'concern' };
   var SEV_GLYPH = { critical: 'sev-critical', major: 'sev-major', concern: 'sev-major', minor: 'sev-minor', nit: 'sev-minor', suggestion: 'sev-suggestion' };
+  /* neon step 3E: the severity marks keep their filled shapes and are lit (status role) in their tone: critical
+     blocked (danger), major attention (warning), minor the host's muted ink, a suggestion idle (subtle). The fill
+     stays on currentColor (module-shell.css .pmx-sev colours), the halo takes the tone ink; static, 11 px. */
+  var SEV_LIT = { critical: 'nx-r-status nx-t-blocked', major: 'nx-r-status nx-t-attention', concern: 'nx-r-status nx-t-attention', minor: 'nx-r-status', nit: 'nx-r-status', suggestion: 'nx-r-status nx-t-idle' };
   function pmxSeverity(level, word) {
     level = str(level).toLowerCase();
     var lv = SEV_WORD[level] ? level : 'minor';
-    return '<span class="pmx-sev" data-sev="' + lv + '">' + pmxGlyph(SEV_GLYPH[lv], 11) + (word != null ? word : SEV_WORD[lv]) + '</span>';
+    return '<span class="pmx-sev" data-sev="' + lv + '">' + pmxGlyph(SEV_GLYPH[lv], 11, SEV_LIT[lv]) + (word != null ? word : SEV_WORD[lv]) + '</span>';
   }
   function agreeDot(v) {
     var c = v.vote === 'agree' ? '<circle class="pmx-ag-fill" cx="6" cy="6" r="3.6"/>' : v.vote === 'disagree' ? '<circle class="pmx-ag-ring" cx="6" cy="6" r="3.6"/><path class="pmx-ag-ring" d="m3.4 8.6 5.2-5.2"/>' : '<circle class="pmx-ag-ring" cx="6" cy="6" r="3.6"/>';
@@ -1706,7 +1733,7 @@
     pmxShelf: pmxShelf, pmxStepper: pmxStepper, pmxSwitch: pmxSwitch, pmxCheck: pmxCheck, pmxWords: pmxWords, pmxPromise: pmxPromise, pmxPromises: pmxPromises,
     pmxAdvancedEntry: pmxAdvancedEntry, pmxAdvancedPage: pmxAdvancedPage, pmxSetting: pmxSetting, pmxPreview: pmxPreview, pmxReadback: pmxReadback, pmxEstimate: pmxEstimate,
     pmxRefusal: pmxRefusal, pmxFoot: pmxFoot, pmxConfirm: pmxConfirm, pmxTabs: pmxTabs,
-    pmxRun: pmxRun, pmxRunHead: pmxRunHead, pmxSentence: pmxSentence, pmxTrack: pmxTrack, pmxLane: pmxLane, pmxLanes: pmxLanes, pmxDecision: pmxDecision,
+    pmxRun: pmxRun, pmxRunHead: pmxRunHead, pmxSentence: pmxSentence, pmxStatus: pmxStatus, pmxTrack: pmxTrack, pmxLane: pmxLane, pmxLanes: pmxLanes, pmxDecision: pmxDecision,
     pmxResult: pmxResult, pmxOutput: pmxOutput, pmxCredits: pmxCredits, pmxMeta: pmxMeta, pmxActions: pmxActions, pmxReceipt: pmxReceipt,
     pmxDockLine: pmxDockLine, pmxDock: pmxDock, pmxFinding: pmxFinding, pmxFindings: pmxFindings, pmxSealed: pmxSealed, pmxSeverity: pmxSeverity, pmxAgree: pmxAgree, pmxVoteBoard: pmxVoteBoard,
     pmxQuote: pmxQuote, pmxWash: pmxWash, pmxNote: pmxNote, pmxTick: pmxTick, pmxDivider: pmxDivider, pmxFilesRow: pmxFilesRow, pmxCodeRow: pmxCodeRow, pmxMd: pmxMd, pmxGuide: pmxGuide,

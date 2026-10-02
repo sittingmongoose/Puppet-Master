@@ -451,3 +451,17 @@ html[data-o55-nier="on"] .working-head .work-phase-icon > svg.nx-r-status { anim
    bolt's strike is block 8b; only the NieR restatement of an owner sheet's rhythm lives here, under the contract. */
 /* the Context Lens trigger's breathe (Mute, Focus) is stepped like every NieR rhythm */
 html[data-o55-nier="on"] .pm-lens-trigger.is-on svg.nx { animation-timing-function: steps(3, end); }
+
+/* ------------------------------------------------------------------ 14. still status marks (step 3E) */
+/* OWNER of this section: Neon icons, surface step 3E (2026-10-02). A status mark whose wrapper carries nx-still is
+   lit and STILL: no list rhythm (the bead's orbit, the needs-you hop, the tip, the ratchet), no breathing backlight,
+   no blocked blink or failed stutter; its moving part plays the mark's one-shot act once as it mounts (the bead comes
+   round, the "?" hops in, the shackle drops, the check draws), and a status change remounts it (data-k="st:<s>").
+   module-shell.js pmxStatus() asks for it: every pmx host allows no loop of its own (pmx-verify loop-census; a live
+   card's two are the pmx-sheen loops). Ink, halo, weight and the static backlight still carry the state. The
+   body-qualified ::before rule outranks the light themes' backlight-breathe name (section 9). */
+.nx-st.nx-still { animation: none; }
+body .nx-st.nx-still::before { animation: none; }
+.nx-st.nx-still .nx-p { animation: var(--k1) var(--nx-d1) var(--nx-ease) backwards; animation-delay: calc(var(--ad, 0) * 1ms); }
+/* NieR: the working diamond holds its pose (no turn), like the pmx running mark of N-A */
+html[data-o55-nier-parts~="diamonds"] .nx-st-working.nx-still::after { animation: none; }

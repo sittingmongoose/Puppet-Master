@@ -302,6 +302,9 @@ const B = (name, html) => { built.push([name, html]); return html; };
   pc('C3 text key is a content hash (same text same key, new text new key)', kOf(sen) === kOf(X.pmxSentence({ status: 'running', word: 'Running', reason: 'Two are working.' })) && kOf(sen) !== kOf(X.pmxSentence({ status: 'running', word: 'Running', reason: 'One is working.' })));
   const stGlyphs = ['starting', 'waiting', 'running', 'needs', 'yourmove', 'paused', 'done', 'cancelled', 'failed', 'attention'];
   pc('C3 every status draws a glyph (none missing)', stGlyphs.every(st => { const h = X.pmxSentence({ status: st, word: 'W' }); return has(h, 'data-status="' + st + '"', '<svg') && !h.includes('pmx-glyph-missing'); }));
+  /* neon step 3E: pmxStatus is the status primitive pmxSentence and the module tables use; evaluated here with no
+     PM56_NEON, it falls back to the drawing each status had (STATUS_GLYPH, else the old module-table drawing) */
+  pc('pmxStatus: without the neon family a run status draws its STATUS_GLYPH mark and a set name its old drawing', X.pmxStatus('done', 14) === X.pmxGlyph('check', 14) && X.pmxStatus('waiting', 15) === X.pmxGlyph('ring-dashed', 15) && X.pmxStatus('stale', 15) === X.pmxGlyph('slash-circle', 15) && !X.pmxStatus('no-such-status').includes('pmx-glyph-missing'));
 
   const tr = B('pmxTrack', X.pmxTrack({ key: 'tr', stops: [{ key: 's1', label: 'Split', state: 'done' }, { key: 's2', label: 'Do', state: 'now' }, { key: 's3', label: 'Combine', state: 'bogus' }], nowText: '<b>Do</b> · 1 of 3 checked' }));
   pc('C4 pmxTrack: named stops with state, nowText', has(tr, '<div class="pmx-track" data-k="tr" data-n="3"><ol class="pmx-track-line"><li class="pmx-stop" data-k="s1" data-state="done"><i class="pmx-stop-dot"></i><span class="pmx-stop-label">Split</span></li>', 'data-k="s2" data-state="now"', '<p class="pmx-track-now"><b>Do</b> · 1 of 3 checked</p></div>'));
