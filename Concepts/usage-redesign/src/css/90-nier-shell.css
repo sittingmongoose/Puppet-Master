@@ -22,11 +22,20 @@ html[data-o55-nier-parts~="ticks"] #panel-usage .pmu-card > .pmu-cardhead::after
   z-index: 3; pointer-events: none; font: 500 8px/1 var(--mono-font); letter-spacing: .16em; color: var(--o55-nier-ink); opacity: .6; }
 /* the subtitle line ends before the U-nn coordinate, so the two never print over each other */
 html[data-o55-nier-parts~="ticks"] #panel-usage .pmu-cardsub { padding-right: 34px; box-sizing: border-box; }
-html[data-o55-nier-parts~="ticks"] #panel-usage .pmu-card:is([data-head="tile"], [data-head="line"]) .pmu-cardtitle { padding-right: 30px; box-sizing: border-box; }
+/* the U-nn coordinate sits on the head rule under the title line (line and plate heads grow 6 px for it), at the top
+   right in tile heads, so it never takes width from a name (fixer: "CHATGPT /..." came from a 30 px reserve) */
+html[data-o55-nier-parts~="ticks"] #panel-usage .pmu-card[data-head="line"] > .pmu-cardhead { height: calc(var(--pmu-head-line) + 6px); padding-bottom: 6px; }
+html[data-o55-nier-parts~="ticks"] #panel-usage .pmu-card[data-head="plate"] > .pmu-cardhead { height: calc(var(--pmu-head-plate) + 6px); }
+html[data-o55-nier-parts~="ticks"] #panel-usage .pmu-card[data-head="tile"] > .pmu-cardhead::after { bottom: auto; top: 6px; }
+html[data-o55-nier-parts~="ticks"] #panel-usage .pmu-card[data-head="band"] > .pmu-cardhead::after { display: none; }
 
 /* headers: tracked capitals on titles, the head rule with square end caps, the ink title band of the inspector */
 html[data-o55-nier-parts~="headers"] #panel-usage :is(.pmu-cardtitle, #pmuRoomTitle, .pmu-brand h1) { text-transform: uppercase; letter-spacing: .07em; }
-html[data-o55-nier-parts~="headers"] #panel-usage .pmu-card[data-head="tile"] .pmu-cardtitle { letter-spacing: .05em; }
+html[data-o55-nier-parts~="headers"] #panel-usage .pmu-card .pmu-cardtitle { letter-spacing: .045em; }
+html[data-o55-nier-parts~="headers"] #panel-usage .pmu-card[data-head="tile"] .pmu-cardtitle { letter-spacing: .03em; }
+html[data-o55-nier-parts~="headers"] #panel-usage .pmu-card:is([data-tw="xs"], [data-tw="s"]) .pmu-cardtitle { letter-spacing: .02em; font-size: 12.5px; }
+/* the head rule sits 4 px under the subtitle's descenders (REVIEW-jared should-fix 5) */
+html[data-o55-nier-parts~="headers"] #panel-usage .pmu-card[data-head="plate"] > .pmu-cardhead { padding-bottom: 4px; }
 html[data-o55-nier-parts~="headers"] #panel-usage .pmu-cardsub { text-transform: none; letter-spacing: 0; }
 html[data-o55-nier-parts~="headers"] #panel-usage .pmu-cardhead { background-image: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)), linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)),
   linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45)); background-size: 5px 5px, 5px 5px, calc(100% - 12px) 1px;

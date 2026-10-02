@@ -15,8 +15,8 @@
   ];
   DATA.alerts.forEach(function (al, i) {
     var x = ALERT_X[i];
-    def('alert-' + i, 'attention', { title: al.title, mark: al.provider_id ? PMU.roster.legacyProvider(al.provider_id) : null, prov: al.provider_id ? PMU.roster.legacyProvider(al.provider_id) : null,
-      meta: function () { return (al.time === 'now' ? 'now' : al.time + ' ago') + ' · ' + al.owner; }, model: function () {
+    def('alert-' + i, 'attention', { title: (PMU_BOARDS.widgets['alert-' + i] || {}).title || al.title, mark: al.provider_id ? PMU.roster.legacyProvider(al.provider_id) : null, prov: al.provider_id ? PMU.roster.legacyProvider(al.provider_id) : null,
+      meta: function () { return (al.time === 'now' ? 'now' : al.time + ' ago') + ' · ' + C.oldName(al.owner); }, model: function () {
         if (al.provider_id && !D.inScope(al.provider_id)) return null;
         var warn = al.state === 'warn', acts = [];
         if (warn) acts.push({ label: 'Switch route', primary: true, act: 'alert-route', value: String(i), hover: 'cmd.provider.switch_route · moves new work to the next eligible route' });
@@ -24,8 +24,8 @@
         acts.push({ label: 'Snooze 1h', demo: 'usage.alert_snooze', arg: 'alert-' + i, hover: 'Snoozes the alert for one hour' });
         if (x.anomaly) { acts.push({ label: 'Keep guard', demo: 'usage.anomaly_keep', arg: 'alert-' + i }); acts.push({ label: 'Allow once', demo: 'usage.anomaly_allow', arg: 'alert-' + i }); }
         return { sev: warn ? 'warn' : 'ok', sevWord: warn ? 'Attention' : 'Healthy', when: al.time === 'now' ? 'now' : al.time + ' ago', detail: C.alertCopy[i], score: al.score, raise: 70, baseline: '24-hour norm',
-          owner: al.owner, observed: al.time === 'now' ? 'now' : al.time + ' ago', disposition: x.disposition, scope: x.scope, threshold: x.threshold, receipt: x.receipt, actions: acts, foot: x.foot };
-      }, inspect: function () { return C.insp(al.title, [['Detail', C.alertCopy[i]], ['Score', al.score + ' of 100 · raises at 70'], ['Owner', al.owner], ['Observed', al.time], ['Disposition', x.disposition], ['Scope', x.scope], ['Threshold', x.threshold], ['Receipt', x.receipt], ['Authority', 'provider reported · PM pace model for the comparison']]); } });
+          owner: C.oldName(al.owner), observed: al.time === 'now' ? 'now' : al.time + ' ago', disposition: x.disposition, scope: x.scope, threshold: x.threshold, receipt: x.receipt, actions: acts, foot: x.foot };
+      }, inspect: function () { return C.insp(al.title, [['Detail', C.alertCopy[i]], ['Score', al.score + ' of 100 · raises at 70'], ['Owner', C.oldName(al.owner)], ['Observed', al.time], ['Disposition', x.disposition], ['Scope', x.scope], ['Threshold', x.threshold], ['Receipt', x.receipt], ['Authority', 'provider reported · PM pace model for the comparison']]); } });
   });
   C.act('alert-route', function (el) {
     var al = DATA.alerts[+el.getAttribute('data-value')]; if (!al) return;
@@ -42,11 +42,14 @@
   def('anom', 'attention', { meta: function () { return 'Hourly · 24 hours · score versus the 24-hour norm'; }, model: function () {
     var A = D.series('anomaly24h'), B = D.series('anomalyBaseline24h'), n = A.values.length, now = new Date(); now.setMinutes(0, 0, 0);
     var x = A.values.map(function (v, i) { return now.getTime() - (n - 1 - i) * 3600000; });
+    /* the peak's hour is the plotted hump's own hour (one clock: it moves with the series, never a frozen hour) */
+    var pk = 0; A.values.forEach(function (v, i) { if (v > A.values[pk]) pk = i; });
+    var peakAt = F.clock(x[pk]);
     var list = D.attempts(), raised = list.filter(function (a) { return a.anomaly_score >= 50; }).length;
     return { chart: 'line', spec: { x: x, unit: 'count', unitTitle: 'SCORE', yMin: 0, yMax: 100, series: [{ name: 'Anomaly score', idx: 2, values: A.values }, { name: '24-hour norm', idx: 7, values: B.values, role: 'baseline' }],
-      limits: [{ value: A.raise, label: 'Raise at ' + A.raise, role: 'warn' }], notes: 'The 15:00 spike is vision-helper traffic.' },
-      headline: { value: Math.max.apply(null, A.values), fmt: 'int', label: 'peak score · 15:00' }, spark: { values: A.values, idx: 2 },
-      facts: [['Selected', String(list.length)], ['Raised', String(raised)], ['Current', '+18%'], ['Peak', '15:00'], ['Cause', 'vision calls'], ['Baseline', 'normal']],
+      limits: [{ value: A.raise, label: 'Raise at ' + A.raise, role: 'warn' }], notes: 'The ' + peakAt + ' spike is vision-helper traffic.' },
+      headline: { value: Math.max.apply(null, A.values), fmt: 'int', label: 'peak score · ' + peakAt }, spark: { values: A.values, idx: 2 },
+      facts: [['Selected', String(list.length)], ['Raised', String(raised)], ['Current', '+18%'], ['Peak', peakAt], ['Cause', 'vision calls'], ['Baseline', 'normal']],
       note: 'The spike is limited to vision-helper traffic. Scores belong to timestamped identity-bound attempt fixtures.' };
   } });
   def('attention-history', 'attention', { meta: function () { return 'Daily · 7 days · actionable provider and pricing signals'; }, model: function () {
@@ -139,7 +142,7 @@
   def('operations-window', 'tools', { meta: function () { return '24 hours · never token usage'; }, model: function () {
     return { rows: [{ name: 'CLI update', sub: 'Codex CLI · rolled back', value: '14:22', tone: 'warn', note: 'receipt ops-1' }, { name: 'Offline replay', sub: 'client outbox recovered', value: '12:06', note: '41 events' },
       { name: 'Server continuity', sub: 'Home Server kept running', value: '08:40', note: '3 jobs' }, { name: 'Project backup', sub: 'Project Vault snapshot', value: '03:15', note: 'verified' },
-      { name: 'Environment check', sub: 'cluster and WSL reachable', value: '00:41', note: '2 hosts' }] };
+      { name: 'Environment check', sub: 'cluster and WSL reachable', value: '00:41', note: '2 hosts' }].map(function (r) { return Object.assign({}, r, { value: PMU.clock.clock(r.value) }); }) };
   } });
   def('tool-allowance', 'tools', { meta: function () { return 'provider-bearing calls'; }, model: function () {
     var rows = [['browser_exec', 'Gemini vision helper route', 68, '68 calls', 'counts against API budget', 'warn'], ['run_shell_command', 'no provider usage', 284, '284 calls', 'local tool only'],
@@ -198,7 +201,7 @@
     return { value: 100, fmt: 'pct', sub: 'readings with named authority · ' + b('all labeled'), facts: [['Provider', '4'], ['PM', '2'], ['Unknown', '0'], ['Expired', '0']], foot: 'Policy · pass' };
   } });
   def('auth-list', 'authority', { meta: function () { return 'diagnostics · every current source'; }, model: function () {
-    return { rows: DATA.authority.map(function (r) { var est = /estimate/.test(r[1]); return { name: r[0], sub: r[1] + ' · ' + r[3], value: r[2], note: est ? 'derived reading' : 'direct authority', glyph: est ? 'pencil' : 'check', noteTone: est ? 'warn' : null }; }) };
+    return { rows: DATA.authority.map(function (r) { var est = /estimate/.test(r[1]); return { name: C.oldName(r[0]), sub: r[1] + ' · ' + r[3], value: r[2], note: est ? 'derived reading' : 'direct authority', glyph: est ? 'pencil' : 'check', noteTone: est ? 'warn' : null }; }) };
   } });
   def('pricing-provenance', 'authority', { meta: function (ctx) { return D.rangeLabel(ctx.state.range) + ' · pricing sources'; }, model: function () {
     var c = D.costs();

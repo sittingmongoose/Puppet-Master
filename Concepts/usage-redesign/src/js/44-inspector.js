@@ -46,10 +46,10 @@
     (s.sections || []).forEach(function (sec) { (sec.rows || []).forEach(function (r) { out[sec.title + ' · ' + r[0]] = String(r[1] == null ? '' : r[1]).replace(/<[^>]+>/g, ''); }); });
     return out;
   }
-  function close() {
+  function close(quiet) {
     if (!el || !el.classList.contains('open')) return;
     el.classList.remove('open'); el.setAttribute('aria-hidden', 'true');
-    if (opener && opener.isConnected && typeof opener.focus === 'function') { try { opener.focus({ preventScroll: true }); } catch (e) {} }
+    if (quiet !== true && opener && opener.isConnected && typeof opener.focus === 'function') { try { opener.focus({ preventScroll: true }); } catch (e) {} }
     opener = null;
   }
   function open(s, from) {
@@ -74,7 +74,7 @@
     setTimeout(function () { if (closeBtn && el.classList.contains('open')) closeBtn.focus({ preventScroll: true }); }, 30);
   }
   var closeBtn = document.getElementById('pmuInspClose');
-  if (closeBtn) closeBtn.addEventListener('click', close);
+  if (closeBtn) closeBtn.addEventListener('click', function () { close(); });
   if (el) {
     el.addEventListener('keydown', function (event) { if (event.key === 'Escape') { event.stopPropagation(); close(); } });
     el.addEventListener('click', function (event) {

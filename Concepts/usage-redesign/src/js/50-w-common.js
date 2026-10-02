@@ -51,9 +51,18 @@
     if (rerender !== false) { var card = PMU.board && PMU.board.card ? PMU.board.card(id) : null; if (card && PMU.cards && PMU.cards.updateAll) PMU.cards.updateAll([card], 'view'); }
   };
   /* head tools (A1 3.1): into the card head (ctx.head) from width tier l, else the first line of the body */
+  /* They go in the head only when the whole title, the head tools and the hover tools cluster (108 px) fit on the line,
+     measured in the theme face; otherwise they are the body's first line. A title is never squeezed by a legend. */
+  var TOOLS_RESERVE = 108;
   C.headTools = function (ctx, html, minTier) {
     if (!html) { if (ctx.head) ctx.head.innerHTML = ''; return ''; }
-    if (ctx.head && C.w(ctx, minTier || 'l')) { ctx.head.innerHTML = html; return ''; }
+    if (ctx.head && C.w(ctx, minTier || 'l')) {
+      ctx.head.innerHTML = html;
+      var card = ctx.head.closest('.pmu-card'), title = card && card.querySelector('.pmu-cardtitle'), key = card && card.querySelector('.pmu-cardkey:not([hidden])');
+      var avail = (card ? card.clientWidth : ctx.tier.bw + 28) - 28;
+      var need = (title ? title.scrollWidth : 0) + ctx.head.scrollWidth + TOOLS_RESERVE + 10 + (key ? key.offsetWidth + 10 : 0);
+      if (need <= avail) return '';
+    }
     if (ctx.head) ctx.head.innerHTML = '';
     return '<div class="pmu-bodytools">' + html + '</div>';
   };
@@ -215,12 +224,19 @@
           more = document.createElement('div'); more.className = 'pmu-more'; more.setAttribute('data-auto', '');
           var foot = b.querySelector(':scope > .pmu-cardfoot'); if (foot) b.insertBefore(more, foot); else b.appendChild(more);
         }
-        more.textContent = b._pmuHidden + ' more at a taller size';
+        more.textContent = b._pmuHidden + (atMax(b) ? ' more in Details' : ' more at a taller size');
       });
       items = over.filter(function (b) { return !b._pmuFitDone; });
     }
   }
   C.fitLater = fitLater;
+  /* a card at its kind's tallest size cannot show more rows: the line then points at Details (the inspector) */
+  function atMax(b) {
+    var card = b.closest('.pmu-card'); if (!card) return false;
+    var ks = PMU.widgets.spec(card.getAttribute('data-widget')) || {};
+    return ks.hMax != null && +card.dataset.h >= ks.hMax;
+  }
+  C.atMax = atMax;
 
   /* content works on the body's inner size (DESIGN-SPEC 2.3): the engine's tier carries the body's clientWidth /
      clientHeight, which include the body padding (plate 4 / 12 px, line and tile 0 / 10 px, 14 px each side), so the

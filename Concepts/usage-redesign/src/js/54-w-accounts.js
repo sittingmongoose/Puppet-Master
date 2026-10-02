@@ -131,7 +131,7 @@
       }
       a.windows.forEach(function (w) {
         var h = row.querySelector('[data-win="' + w.key + '"]');
-        if (h) C.chart(body, 'meter', h, meterOpts(a, p, size, w, mode !== 'full' || bw < 520, !comfy), { label: a.nickname + ' ' + w.label });
+        if (h) C.chart(body, 'meter', h, Object.assign(meterOpts(a, p, size, w, mode !== 'full' || bw < 520, !comfy), { noLabel: !!n }), { label: a.nickname + ' ' + w.label });
       });
     });
   }
@@ -235,12 +235,24 @@
       if (!list.length) { body.innerHTML = C.empty('Every provider here is set up.'); return; }
       var word = C.w(ctx, 's');
       /* narrow rows may wrap the name to two lines (38 px), wide rows stay one line (32 px) */
-      var fit = C.fit(ctx.tier.bh, word ? 32 : 38, 2);
+      /* a wide strip lays the lines out in columns (Free and your own: three providers on one line) */
+      var colsN = ctx.tier.bw >= 720 ? 3 : ctx.tier.bw >= 460 ? 2 : 1;
+      var fit = C.fit(ctx.tier.bh, word ? 32 : 38, 2) * colsN;
       var shown = list.length > fit ? list.slice(0, Math.max(1, fit - 1)) : list;
-      body.innerHTML = '<div class="pmu-provlist">' + shown.map(function (p) {
-        return '<div class="pmu-provrow" data-reveal data-prov="' + esc(p.id) + '"' + C.hover(p.name, p.statusWord + ' · ' + (p.windows.length ? p.windows.map(function (w) { return w.label; }).join(', ') : 'no plan windows') + ' · ' + p.product) + '>' +
-          PMU.mark(p.id, 18) + '<span class="pmu-provname">' + esc(p.name) + '</span>' + (word ? '<span class="pmu-provword">' + esc(p.statusWord) + '</span>' : '') +
-          '<button type="button" class="pmu-textbtn" data-pmu-act="prov-setup" data-value="' + esc(p.id) + '"' + C.hover('Set up ' + p.name, 'Opens Settings > AI > Providers & Accounts at ' + p.name) + '>' + esc(t('accounts.set_up')) + '</button></div>';
+      var setupAcct = DATA.accounts.filter(function (x) { return x.setup_required; })[0];
+      body.innerHTML = '<div class="pmu-provlist"' + (colsN > 1 ? ' data-cols="' + colsN + '" style="grid-template-columns:repeat(' + colsN + ',minmax(0,1fr))"' : '') + '>' + shown.map(function (p) {
+        /* three cases, one line each (DECISIONS "Provider catalog"): ready without accounts (Free Models routes: Manage),
+           the canon Provider Setup Required provider (OpenCode on your computer: Not installed, Set up = the canon
+           continuation; the row opens its setup facts), and not set up (Set up in Settings at that provider) */
+        var ready = p.status === 'active', setup = !ready && setupAcct && p.id === PMU.roster.legacyProvider(setupAcct.provider_id);
+        var wordText = setup ? (p.installed ? p.statusWord : 'Not installed') : p.statusWord;
+        var btn = ready ? '<button type="button" class="pmu-textbtn" data-pmu-act="prov-setup" data-value="' + esc(p.id) + '"' + C.hover('Manage ' + p.name, 'Opens Settings > AI > Providers & Accounts at ' + p.name) + '>' + esc(t('accounts.manage')) + '</button>'
+          : setup ? '<button type="button" class="pmu-textbtn" data-pmu-act="setup-open"' + C.hover(t('accounts.setup_required'), 'Opens Provider Connections · operation ' + setupAcct.operation_id + ' · continuation ' + setupAcct.continuation_id) + '>' + esc(t('accounts.set_up')) + '</button>'
+          : '<button type="button" class="pmu-textbtn" data-pmu-act="prov-setup" data-value="' + esc(p.id) + '"' + C.hover('Set up ' + p.name, 'Opens Settings > AI > Providers & Accounts at ' + p.name) + '>' + esc(t('accounts.set_up')) + '</button>';
+        var hover = setup ? C.hover(p.name, t('accounts.setup_required') + ' · ' + setupAcct.installation_status + ' · ' + setupAcct.authentication_status + ' · select for details')
+          : C.hover(p.name, p.statusWord + ' · ' + (p.windows.length ? p.windows.map(function (w) { return w.label; }).join(', ') : 'no plan windows') + ' · ' + p.product);
+        return '<div class="pmu-provrow' + (setup ? ' is-setup' : '') + '" data-reveal data-prov="' + esc(p.id) + '"' + (setup ? ' data-pmu-act="setup-details" role="button" tabindex="0"' : '') + hover + '>' +
+          PMU.mark(p.id, 18) + '<span class="pmu-provname">' + esc(p.name) + '</span>' + (word ? '<span class="pmu-provword"' + (ready ? ' data-tone="good"' : setup ? ' data-tone="warn"' : '') + '>' + esc(wordText) + '</span>' : '') + btn + '</div>';
       }).join('') + C.more(list.length - shown.length, 'providers') + '</div>';
     }
   });
@@ -331,7 +343,7 @@
           row('Availability', a.eligible.ok ? 'eligible' : a.eligible.reason), row('Pressure', a.binding ? a.binding.short + ' ' + C.fmt(a.binding.pct, 'pct') + ' used (' + (a.binding.tone || 'calm') + ')' : 'no reading'),
           row('Health', a.health), row('Usage availability', a.hasFacts ? a.fresh.source + ' · ' + a.ageText : 'Usage unknown · no reading yet')] },
         { title: 'Windows', rows: a.windows.length ? a.windows.map(function (w) {
-          return [w.label, esc(w.pct === null ? PMU.roster.vsWord(w) : C.fmt(w.pct, 'pct') + ' used · ' + C.fmt(100 - w.pct, 'pct') + ' left' + (w.amount ? ' · ' + w.amount : '') + ' · ' + PMU.fmt.reset(w).text + ' · ' + w.truth.replace(/_/g, ' ') + (w.est ? ' · estimated' : ''))];
+          return [w.label, esc(w.pct === null ? PMU.roster.vsWord(w) : C.fmt(w.pct, 'pct') + ' used · ' + C.fmt(100 - w.pct, 'pct') + ' left' + (w.amount ? ' · ' + w.amount : '') + ' · ' + PMU.fmt.reset(w).text + ' · ' + PMU.fmt.truth(w.truth) + (w.est ? ' · estimated' : ''))];
         }) : [row('Windows', a.noWindowsWord || 'This provider reports no plan windows')] }
       ];
       if (a.amounts.length) sections.push({ title: 'Credits and spend', rows: a.amounts.map(function (x) { return [x.label, x.vs && x.vs !== 'ok' ? C.vs(x.vs, x.word) : esc((x.value || '') + (x.suffix ? ' ' + x.suffix : ''))]; }) });
@@ -364,4 +376,10 @@
   C.act('acct-inspect', function (el) { PMU.accounts.inspect(el.getAttribute('data-value'), el); });
   C.act('prov-setup', function (el) { PMU.accounts.openSettings(el.getAttribute('data-value')); });
   C.act('setup-open', function () { PMU.accounts.openSetup(); });
+  /* the setup line's Details: every fact of the canon Provider Setup Required card (parity with the old card) */
+  C.act('setup-details', function (el) { var d = PMU.widgets.get('acct-opencode-personal-setup'); if (d && d.inspect) { var spec = d.inspect(); if (spec) PMU.inspector.open(spec, el); } });
+
+  /* ================================================================== group: a Settings group heading band (Subscriptions
+     and plans, Pay as you go, Free and your own) over the Accounts plates, in Settings order */
+  C.kind('group', { render: function (body) { body.innerHTML = ''; } });
 })();

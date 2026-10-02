@@ -24,7 +24,7 @@
       tone: w.tone, size: opts.size || 'c', window: w.key, binding: !!w.binding, estimated: !!w.est, dimmed: !!opts.stale, stale: !!opts.stale,
       notch: w.governed && w.pct !== null ? { at: 100 - th.switchLeft, faint: !opts.effective, off: !th.auto } : null,
       resetText: w.pct === null ? '' : rl.text, resetSoon: rl.soon, amount: opts.noAmount ? '' : (w.amount || (w.note && w.pct !== null ? w.note : '')), prov: opts.prov,
-      source: (w.truth ? w.truth.replace(/_/g, ' ') + (opts.age ? ' · ' + opts.age : '') : '') + (w.pacePts !== null && w.pacePts !== undefined ? ' · ' + (w.pacePts > 0 ? '+' : '') + w.pacePts + ' pts vs pace' : ''), thresholds: { warn: 100 - th.warnLeft, switch: 100 - th.switchLeft },
+      source: (w.truth ? PMU.fmt.truth(w.truth) + (opts.age ? ' · ' + opts.age : '') : '') + (w.pacePts !== null && w.pacePts !== undefined ? ' · ' + (w.pacePts > 0 ? '+' : '') + w.pacePts + ' pts vs pace' : ''), thresholds: { warn: 100 - th.warnLeft, switch: 100 - th.switchLeft },
       hover: { label: (opts.hoverName ? opts.hoverName + ' · ' : '') + w.label } };
   };
   var METER_H = { c: 58, i: 58, k: 50 };
@@ -110,9 +110,13 @@
         { h: 30, html: '<div class="pmu-freeprice"><b>' + esc(m.price) + '</b><span>' + esc(m.priceSource) + '</span></div>' },
         { h: 27, html: C.facts([['Context window', m.context]]) },
         { h: 27, html: C.facts([['Capacity', m.capacity, { hover: m.capacitySource }]]) }
-      ].concat((m.facts || []).map(function (f) { return { h: 27, html: C.facts([f]) }; }));
+      ];
+      /* a wide card sets its facts in two columns (pairs share a 27 px line), a narrow one in one */
+      var two = ctx.tier.bw >= 400, facts = m.facts || [];
+      if (two) for (var fi = 0; fi < facts.length; fi += 2) blocks.push({ h: 27, html: C.facts(facts.slice(fi, fi + 2), null, { cols: 2 }) });
+      else blocks = blocks.concat(facts.map(function (f) { return { h: 27, html: C.facts([f]) }; }));
       var rest = C.h(ctx, 'h2') ? stack(blocks, ctx.tier.bh - 46) : { html: '' };
-      body.innerHTML = '<div class="pmu-free">' + head + rest.html + '</div>';
+      body.innerHTML = '<div class="pmu-free' + (two ? ' is-wide' : '') + '">' + head + rest.html + '</div>';
     }
   });
 
