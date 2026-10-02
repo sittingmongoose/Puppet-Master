@@ -52,44 +52,56 @@ const PAGE_LIB = () => {
     await L.sleep(450);
     return { viewShown: L.visible(L.view(panel)), originalHidden: !L.visible(orig) };
   };
-  /* crawl: click every [data-pmr-nav] once (and every submenu item), collecting pairs; restore with Escape */
+  /* crawl (depth-first): click every visible [data-pmr-nav] once; after a click that shows something new (a tab, a
+     drill, a selection, a navigating menu item) crawl the new state to completion before moving on; after a drill,
+     go back once ([data-pmr-nav="back"]) so the parent page continues. Every submenu is opened and read. */
   L.crawl = async (panel, budget) => {
     const seen = L.pairs(panel), clicked = new Set(); let steps = 0;
     const key = (el) => el.getAttribute('data-pmr-nav-id') || (el.getAttribute('data-pmr-nav') + '|' + (el.textContent || '').trim().slice(0, 60) + '|' + (el.getAttribute('aria-label') || ''));
-    for (let pass = 0; pass < 6 && steps < budget; pass++) {
-      let progressed = false;
-      const cands = L.roots(panel).flatMap((r) => [...r.querySelectorAll('[data-pmr-nav], .pmr-mi.has-sub')]).filter(L.visible);
-      for (const el of cands) {
-        if (steps >= budget) break;
-        if (!el.isConnected || !L.visible(el)) continue;
-        const k = key(el); if (clicked.has(k)) continue;
-        clicked.add(k); steps++; progressed = true;
-        el.click();
-        await L.sleep(el.matches('.pmr-mi.has-sub') ? 260 : 360);
-        L.pairs(panel).forEach((p) => seen.add(p));
-        if (document.querySelector('.pmr-menu')) {           // a menu opened: read it (and its submenus), then close it
-          for (const sub of [...document.querySelectorAll('.pmr-menu .pmr-mi.has-sub')]) {
-            const sk = 'sub|' + sub.textContent.trim(); if (clicked.has(sk)) continue; clicked.add(sk);
-            sub.click(); await L.sleep(260); L.pairs(panel).forEach((p) => seen.add(p));
-          }
-          /* menu items that navigate (data-pmr-nav: a view in an overflow menu, a sibling page): reopen the menu for
-             each one, choose it, and collect what the new view shows; later passes crawl that view's own nav */
-          const navLabels = [...document.querySelectorAll('.pmr-menu .pmr-mi[data-pmr-nav]')].map((m) => m.textContent.trim()).filter((t) => !clicked.has('mnav|' + t));
-          window.PMR.menu.closeAll(); await L.sleep(300);
-          for (const label of navLabels) {
-            if (steps >= budget || !el.isConnected || !L.visible(el)) break;
-            clicked.add('mnav|' + label); steps++;
-            el.click(); await L.sleep(360);
-            const item = [...document.querySelectorAll('.pmr-menu .pmr-mi[data-pmr-nav]')].find((m) => m.textContent.trim() === label);
-            if (!item) { window.PMR.menu.closeAll(); await L.sleep(300); continue; }
-            item.click(); await L.sleep(420);
-            L.pairs(panel).forEach((p) => seen.add(p));
-            if (document.querySelector('.pmr-menu')) { window.PMR.menu.closeAll(); await L.sleep(300); }
-          }
-        }
+    const collect = () => L.pairs(panel).forEach((p) => seen.add(p));
+    const navs = () => L.roots(panel).flatMap((r) => [...r.querySelectorAll('[data-pmr-nav]')]).filter((e) => L.visible(e) && !e.closest('.pmr-menu') && !clicked.has(key(e)));
+    const goBack = async () => { const b = L.roots(panel).flatMap((r) => [...r.querySelectorAll('[data-pmr-nav="back"]')]).find(L.visible); if (b) { b.click(); await L.sleep(420); } };
+    async function readMenu(el, depth) {
+      for (const sub of [...document.querySelectorAll('.pmr-menu .pmr-mi.has-sub')]) {
+        const sk = 'sub|' + sub.textContent.trim(); if (clicked.has(sk)) continue; clicked.add(sk);
+        sub.click(); await L.sleep(260); collect();
       }
-      if (!progressed) break;
+      const labels = [...document.querySelectorAll('.pmr-menu .pmr-mi[data-pmr-nav]')].map((m) => ({ t: m.textContent.trim(), kind: m.getAttribute('data-pmr-nav') })).filter((x) => !clicked.has('mnav|' + x.t));
+      window.PMR.menu.closeAll(); await L.sleep(300);
+      for (const { t, kind } of labels) {
+        if (steps >= budget || !el.isConnected || !L.visible(el)) break;
+        clicked.add('mnav|' + t); steps++;
+        el.click(); await L.sleep(360);
+        const item = [...document.querySelectorAll('.pmr-menu .pmr-mi[data-pmr-nav]')].find((m) => m.textContent.trim() === t);
+        if (!item) { window.PMR.menu.closeAll(); await L.sleep(300); continue; }
+        item.click(); await L.sleep(420); collect();
+        if (document.querySelector('.pmr-menu')) { window.PMR.menu.closeAll(); await L.sleep(300); }
+        await explore(depth + 1);
+        if (kind === 'drill') await goBack();
+      }
     }
+    async function explore(depth) {
+      if (depth > 7) return;
+      for (let pass = 0; pass < 12 && steps < budget; pass++) {
+        const cands = navs();
+        if (!cands.length) return;
+        let progressed = false;
+        for (const el of cands) {
+          if (steps >= budget) return;
+          if (!el.isConnected || !L.visible(el)) continue;
+          const k = key(el); if (clicked.has(k)) continue;
+          const kind = el.getAttribute('data-pmr-nav');
+          clicked.add(k); steps++; progressed = true;
+          el.click(); await L.sleep(360); collect();
+          if (document.querySelector('.pmr-menu')) { await readMenu(el, depth); continue; }
+          if (kind === 'back') continue;
+          await explore(depth + 1);
+          if (kind === 'drill') await goBack();
+        }
+        if (!progressed) return;
+      }
+    }
+    await explore(0);
     return { pairs: [...seen], steps };
   };
   L.overflow = (panel) => {
@@ -199,7 +211,7 @@ async function runConcept(c, ref) {
       const pr = {};
       pr.open = await page.evaluate((x) => window.__railCheck.open(x), p);
       if (!QUICK) {
-        const cr = await page.evaluate((x, n) => window.__railCheck.crawl(x, n), p, 260);
+        const cr = await page.evaluate((x, n) => window.__railCheck.crawl(x, n), p, 900);
         const reached = new Set(cr.pairs);
         pr.reach = { steps: cr.steps, reached: cr.pairs.length, missing: (ref[p] || []).filter((x) => !reached.has(x)) };
         pr.reach.missingCount = pr.reach.missing.length;
