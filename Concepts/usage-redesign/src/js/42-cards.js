@@ -115,11 +115,14 @@
     while (parts.length > 1 && PMU.charts.textW(out, 12, false, 400) * k > avail) { parts.pop(); out = parts.join(' · '); }
     return out;
   }
+  /* a title never breaks at a word's own hyphen (final fix M9b: "Headroom and auto- / switch" in the 4-track tile): the
+     shown text joins hyphenated words with U+2011; the hover tag, the menus and search keep the plain hyphen */
+  function nbHyphen(s) { return String(s == null ? '' : s).replace(/(\S)-(?=\S)/g, '$1\u2011'); }
   function syncHead(card, ctx) {
     var def = ctx.def, form = card.getAttribute('data-head') || 'line', tier = ctx.tier || {};
     var titleEl = card.querySelector('.pmu-cardtitle'), subEl = card.querySelector('.pmu-cardsub'), asideEl = card.querySelector('.pmu-cardmeta'), keyEl = card.querySelector('.pmu-cardkey');
     var full = text(def.title, ctx), sub = text(def.meta, ctx);
-    var want = (tier.w === 'xs' || tier.w === 's') && def.short ? text(def.short, ctx) : full;
+    var want = nbHyphen((tier.w === 'xs' || tier.w === 's') && def.short ? text(def.short, ctx) : full);
     if (titleEl) {
       if (titleEl.textContent !== want) titleEl.textContent = want;
       if (titleEl.getAttribute('data-pm-hover-label') !== full) titleEl.setAttribute('data-pm-hover-label', full);
@@ -289,7 +292,7 @@
       var base = ctxBase(id, room), title = text(def.title, base), sub = text(def.meta, base);
       card.setAttribute('aria-label', title);
       card.innerHTML = '<header class="pmu-cardhead"><span class="pmu-cardkey" hidden></span>' +
-        '<div class="pmu-cardtitles"><h3 class="pmu-cardtitle" data-pm-hover-label="' + esc(title) + '" data-pm-hover-detail="' + esc(sub) + '">' + esc(title) + '</h3>' +
+        '<div class="pmu-cardtitles"><h3 class="pmu-cardtitle" data-pm-hover-label="' + esc(title) + '" data-pm-hover-detail="' + esc(sub) + '">' + esc(nbHyphen(title)) + '</h3>' +
         '<span class="pmu-cardsub">' + esc(sub) + '</span></div>' +
         '<span class="pmu-cardmeta"></span><span class="pmu-headtools"></span>' +
         '<span class="pmu-cardtools">' +

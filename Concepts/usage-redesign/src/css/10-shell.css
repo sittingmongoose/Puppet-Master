@@ -133,7 +133,9 @@ html[data-pmu-soft][data-theme^="glass"] body.pmu-page-active #pixelGrid { displ
 body.pmu-page-active #rsStage, body.pmu-page-active #rsStage .rs-card { pointer-events: none !important; }
 /* ... and they drop below the Usage head (LOOK-REVIEW-2 item 14: "Research run complete" and "Usage warning" sat over the
    range, detail and panels buttons for seconds); the individual translate property composes with the app's own motion */
-body.pmu-page-active #rsStage { translate: 0 58px; }
+/* final fix M2: the 58 px drop put them on the board's first row (the KPI tiles at the top right); PMU.shell.placeNotices
+   now anchors them at the bottom right of the Usage stage (--pmu-rs-x / --pmu-rs-y); 58 px stays only until it has measured */
+body.pmu-page-active #rsStage { translate: var(--pmu-rs-x, 0px) var(--pmu-rs-y, 58px); }
 /* the onboarding's concept-demo chip (fixed bottom-left, 318 px) poked 45 px into the Usage rail (LOOK-REVIEW-2 item 22):
    while Usage shows it is drawn at 80 % so it stays inside the app's own navigation column */
 body.pmu-page-active #o55-demo { transform-origin: 0 100%; scale: .8; }

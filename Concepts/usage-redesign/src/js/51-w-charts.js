@@ -5,6 +5,14 @@
   var C = PMU.content;
 
   function hostH(ctx, reserve) { return Math.max(40, Math.floor(ctx.tier.bh - reserve)); }
+  /* a chart's scope caveat sits behind ONE info icon (final fix M5, Atlas d: "Scope caveats sit behind ONE info icon
+     instead of paragraphs"): the icon ends the facts row, or sits in the hero row or the legend line, and its hover tag
+     carries the sentence; the plot takes the line the paragraph used to take */
+  function caveat(note) {
+    return note ? '<span class="pmu-caveat" tabindex="0" role="note" aria-label="' + esc(note) + '"' + C.hover('About this chart', note) + '>' + C.glyph('info') + '</span>' : '';
+  }
+  function factSpans(facts) { return facts.map(function (f) { return '<span><em>' + esc(f[0]) + '</em> <b>' + esc(f[1]) + '</b></span>'; }).join(''); }
+  C.caveat = caveat;
 
   /* ================================================================== trend: area, line and the spark form */
   /* model: {chart: 'area'|'line', spec, headline: {value, fmt, label}, legend: [items], facts: [[...]], note, tools?: html,
@@ -29,13 +37,15 @@
       var MINP = m.chart === 'rangebars' ? 22 + ((m.spec && m.spec.rows) || []).length * 30 : 120;
       var room = ctx.tier.bh - (tools ? 34 : 0) - (legendOk ? 24 : 0) - (heroH ? 66 : 0) - MINP;
       var factsOk = m.facts && m.facts.length && C.w(ctx, 'l') && room >= 28; if (factsOk) room -= 28;
-      var noteOk = m.note && C.w(ctx, 'm') && room >= 24; if (noteOk) room -= 24;
-      var reserve = (tools ? 34 : 0) + (legendOk ? 24 : 0) + (heroH ? 66 : 0) + (noteOk ? 24 : 0) + (factsOk ? 28 : 0) + 6;
+      var reserve = (tools ? 34 : 0) + (legendOk ? 24 : 0) + (heroH ? 66 : 0) + (factsOk ? 28 : 0) + 6;
+      /* the caveat icon: the facts row's end, else the hero row, else the legend line (final fix M5) */
+      var cav = m.note && C.w(ctx, 's') ? caveat(m.note) : '', cavAt = !cav ? '' : factsOk ? 'facts' : heroH ? 'hero' : legendOk ? 'legend' : '';
+      if (cavAt === 'hero') heroH = heroH.replace(/<\/div>$/, cav + '</div>');
       body.innerHTML = '<div class="pmu-trend' + (heroH ? ' is-hero' : '') + '">' + heroH + tools + (legendOk ? '<div class="pmu-trendlegend"></div>' : '') +
         '<div class="pmu-trendplot" style="height:' + (m.chart === 'rangebars' ? Math.max(MINP, hostH(ctx, reserve)) : hostH(ctx, reserve)) + 'px"></div>' +
-        (factsOk ? '<div class="pmu-factrow">' + m.facts.map(function (f) { return '<span><em>' + esc(f[0]) + '</em> <b>' + esc(f[1]) + '</b></span>'; }).join('') + '</div>' : '') +
-        (noteOk ? '<p class="pmu-note">' + esc(m.note) + '</p>' : '') + '</div>';
+        (factsOk ? '<div class="pmu-factrow">' + factSpans(m.facts) + (cavAt === 'facts' ? cav : '') + '</div>' : '') + '</div>';
       if (legendOk) { try { PMU.charts.legend(body.querySelector('.pmu-trendlegend'), m.legendOwn, { inline: true }); } catch (error) { console.error('[pm-usage] legend', error); } }
+      if (cavAt === 'legend') { var lg = body.querySelector('.pmu-trendlegend'); if (lg) lg.insertAdjacentHTML('beforeend', cav); }
       C.chart(body, m.chart || 'area', body.querySelector('.pmu-trendplot'), m.spec, { label: m.label || ctx.def.title, tier: ctx.tier, readout: true, fmt: m.fmt });
       C.bag(body).sig = sig(ctx);
     },
@@ -46,7 +56,7 @@
       try { b.charts[0].update(m.spec); } catch (error) { return false; }
       var legend = body.querySelector('.pmu-trendlegend');
       if (legend && m.legendOwn) { legend.textContent = ''; try { PMU.charts.legend(legend, m.legendOwn, { inline: true }); } catch (error) {} }
-      var note = body.querySelector('.pmu-note'); if (note && m.note) note.textContent = m.note;
+      var cv = body.querySelector('.pmu-caveat'); if (cv && m.note && cv.getAttribute('data-pm-hover-detail') !== m.note) { cv.setAttribute('data-pm-hover-detail', m.note); cv.setAttribute('aria-label', m.note); }
       /* the hero number rolls its changed digits and its row flashes (WOW-SPEC 3.6) */
       var hn = body.querySelector('.pmu-herohead .pmu-num[data-k]');
       if (hn && m.headline) {
@@ -70,7 +80,7 @@
       /* the facts under the chart follow the range with the chart (REVIEW-jared must-fix 4: they stayed at 24 hours) */
       var fr = body.querySelector('.pmu-factrow');
       if (fr && m.facts) {
-        var fh = m.facts.map(function (f) { return '<span><em>' + esc(f[0]) + '</em> <b>' + esc(f[1]) + '</b></span>'; }).join('');
+        var fh = factSpans(m.facts) + (fr.querySelector('.pmu-caveat') && m.note && C.w(ctx, 's') ? caveat(m.note) : '');
         if (fr.innerHTML !== fh) { fr.innerHTML = fh; if (PMU.motion && PMU.motion.animate) PMU.motion.animate(fr, [{ opacity: 0.25 }, { opacity: 1 }], { dur: 420, ease: 'out' }); }
       }
       return true;
@@ -118,14 +128,14 @@
       var capH = m.caption ? 22 + 18 * (Math.min(2, C.wrapLines(m.caption, ctx.tier.bw, 12.5, 600)) - 1) : 0;
       var capOk = m.caption && C.w(ctx, 's') && room >= capH; if (capOk) room -= capH;
       var factsOk = m.facts && m.facts.length && C.w(ctx, 'm') && room >= 28; if (factsOk) room -= 28;
-      var noteOk = m.note && C.w(ctx, 'm') && room >= 24; if (noteOk) room -= 24;
-      var reserve = (tools ? 34 : 0) + (capOk ? capH : 0) + (noteOk ? 24 : 0) + (factsOk ? 28 : 0) + 6;
+      var reserve = (tools ? 34 : 0) + (capOk ? capH : 0) + (factsOk ? 28 : 0) + 6;
+      /* the caveat icon ends the facts row, else the caption (final fix M5) */
+      var cav = m.note && C.w(ctx, 's') ? caveat(m.note) : '', cavAt = !cav ? '' : factsOk ? 'facts' : capOk ? 'cap' : '';
       var plotW = Math.max(80, ctx.tier.bw - 52);
       var spec = rebucket(m, Math.max(3, Math.floor(plotW / 28)));
-      body.innerHTML = '<div class="pmu-colsw">' + tools + (capOk ? '<div class="pmu-colscap">' + m.caption + '</div>' : '') + (legendOk ? '<div class="pmu-trendlegend"></div>' : '') +
+      body.innerHTML = '<div class="pmu-colsw">' + tools + (capOk ? '<div class="pmu-colscap">' + m.caption + (cavAt === 'cap' ? cav : '') + '</div>' : '') + (legendOk ? '<div class="pmu-trendlegend"></div>' : '') +
         '<div class="pmu-colsplot" style="height:' + hostH(ctx, reserve) + 'px"></div>' +
-        (factsOk ? '<div class="pmu-factrow">' + m.facts.map(function (f) { return '<span><em>' + esc(f[0]) + '</em> <b>' + esc(f[1]) + '</b></span>'; }).join('') + '</div>' : '') +
-        (noteOk ? '<p class="pmu-note">' + esc(m.note) + '</p>' : '') + '</div>';
+        (factsOk ? '<div class="pmu-factrow">' + factSpans(m.facts) + (cavAt === 'facts' ? cav : '') + '</div>' : '') + '</div>';
       if (legendOk) { try { PMU.charts.legend(body.querySelector('.pmu-trendlegend'), m.legend, { inline: true }); } catch (error) {} }
       var cs = Object.assign({ unit: m.unit || 'usd' }, spec); delete cs.caption; delete cs.facts; delete cs.note; delete cs.tools;
       C.chart(body, 'columns', body.querySelector('.pmu-colsplot'), cs, { label: ctx.def.title, tier: ctx.tier, readout: true, legend: m.legend !== false && (!m.stacks || C.w(ctx, 'l') || (C.w(ctx, 's') && ctx.tier.bh >= 190)) });

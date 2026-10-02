@@ -685,5 +685,8 @@ html[data-o55-nier="on"] #panel-usage .pmu-callring { border-color: var(--pmu-in
 /* the readout names its rows whole (integration 2, NieR film: "Spend that..." / "Month to ..." / "Budget l..." in the mono
    face): the card may grow to 268 px and a long name wraps under itself instead of ending in an ellipsis */
 #panel-usage .pmu-readout { max-width: 268px; }
+/* final fix M1: the card sits in a 0 x 0 fixed layer, so shrink-to-fit gave it only its 176 px min-width and a wide
+   value squeezed the minmax(0, 1fr) name column to 0 (one letter per line): size it by its content, up to 268 px */
+#panel-usage .pmu-readout { width: max-content; }
 #panel-usage .pmu-ro-row { white-space: normal; }
 #panel-usage .pmu-ro-row > span { overflow: visible; text-overflow: clip; overflow-wrap: break-word; line-height: 1.3; }

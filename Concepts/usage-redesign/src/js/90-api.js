@@ -106,6 +106,7 @@ function syncUsageLayer() {
   if (active && !was && softwareRendered()) document.documentElement.setAttribute('data-pmu-soft', '');
   /* Settings may have changed while Usage was hidden: re-read it on the way in (ARCHITECTURE section 6) */
   if (active && !was && PMU.settings) { PMU.settings.invalidate('page'); if (PMU.roster) PMU.roster.invalidate(); }
+  if (active && !was && PMU.shell && PMU.shell.placeNotices) PMU.shell.placeNotices();
   /* arriving on Usage replays the room entrance (plates rise in reading order, then charts draw); leaving closes menus */
   /* arriving on Usage plays the first arrival (PMU.film.arrive, WOW-SPEC 3.1): the shell powers on while the board is built
      held in slices, then the plates rise in one wave and every instrument comes alive */

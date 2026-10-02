@@ -40,7 +40,7 @@ KINDS = {
     'group':     (6, None, 2, 2, [('Band', 12, 2), ('Wide', 20, 2), ('Full', 24, 2)]),
     'setup':     (4, 16, 3, 14, [('Strip', 6, 3), ('Standard', 5, 7), ('Wide', 8, 7)]),
     'context':   (4, 14, 5, 14, [('Compact', 4, 6), ('Tall', 4, 8), ('Standard', 6, 6), ('Wide', 9, 6), ('Expanded', 12, 7)]),
-    'trend':     (4, None, 4, 16, [('Compact', 5, 5), ('Standard', 8, 7), ('Wide', 12, 7), ('Tall', 8, 10), ('Full', 20, 8)]),
+    'trend':     (4, None, 4, 20, [('Compact', 5, 5), ('Standard', 8, 7), ('Wide', 12, 7), ('Tall', 8, 10), ('Full', 20, 8)]),
     'columns':   (4, None, 4, 16, [('Compact', 5, 5), ('Standard', 8, 7), ('Wide', 12, 6)]),
     'budget':    (5, None, 5, 16, [('Compact', 5, 6), ('Standard', 8, 8), ('Wide', 12, 8)]),
     'heat':      (6, None, 5, 10, [('Compact', 6, 6), ('Standard', 10, 7), ('Wide', 14, 9)]),
@@ -55,7 +55,7 @@ KINDS = {
     'list':      (4, None, 3, 20, [('Compact', 4, 5), ('Standard', 5, 7), ('Wide', 8, 6), ('Full', 12, 7)]),
     'table':     (6, None, 5, 30, [('Standard', 10, 10), ('Wide', 14, 10), ('Tall', 10, 16), ('Full', 20, 12)]),
     'alert':     (4, 10, 4, 9, [('Compact', 4, 6), ('Standard', 5, 7), ('Wide', 8, 6)]),
-    'free':      (3, 12, 4, 14, [('Compact', 4, 6), ('Standard', 4, 7), ('Wide', 6, 6)]),
+    'free':      (3, 12, 4, 16, [('Compact', 4, 6), ('Standard', 4, 7), ('Wide', 6, 6)]),
     'cache':     (3, 8, 4, 14, [('Compact', 4, 6), ('Standard', 4, 7), ('Wide', 6, 6)]),
     'gauge':     (3, 8, 4, 12, [('Compact', 4, 5), ('Standard', 5, 6), ('Tall', 5, 10), ('Wide', 8, 5)]),
     # WOW round (POLISH2 content, 2026-10-02): the room heroes of the rooms that had no chart on their first screen
@@ -72,7 +72,7 @@ W = {
     'month': ('kpi', 'G', 'Selected window value', 'range'),
     'cache-saved': ('kpi', 'G', 'Cache savings', 'estimated'),
     'active-runs': ('kpi', 'G', 'Active runs', 'right now'),
-    'next-reset': ('kpi', 'G', 'Next reset', 'allowance clock'),
+    'next-reset': ('kpi', 'G', 'Active route reset', 'allowance clock'),
     'plan-claude': ('limit', 'G', 'Claude', '5-hour window'),
     'plan-codex': ('limit', 'G', 'ChatGPT / Codex', '5-hour window'),
     'plan-qwen': ('limit', 'G', 'Qwen Coding Plan', 'Weekly window'),
@@ -275,7 +275,7 @@ B = {
              'plan-pressure 8x12 plan-authority 8x12 allowance-attribution 8x12 counting-basis 12x13 native-allowance-units 12x13',
     },
     'costs': {
-        'S': 'cost-month 6x4 cost-api 6x4 cost-plan 6x4 cost-save 6x4 budget 12x11 cost-spend 6x11 provider-cost 6x11 '
+        'S': 'cost-month 6x4 cost-api 6x4 cost-plan 6x4 cost-save 6x4 budget 12x15 cost-spend 6x11 provider-cost 6x11 '
              'cost-authority 12x14 cost-trend 12x9 pricing-confidence 12x9 burn-basis 12x9',
         'M': 'cost-month 5x4 cost-api 5x4 cost-plan 5x4 cost-save 5x4 budget 13x14 cost-spend 7x14 '
              'provider-cost 10x16 cost-authority 10x16 cost-trend 20x9 pricing-confidence 10x11 burn-basis 10x10',
@@ -290,7 +290,7 @@ B = {
              'acct-group-own 12x2 acct-more-own 12x5 acct-history 12x18 acct-resets 12x16 '
              'routing 12x11 account-fallbacks 12x11 route-mismatches 12x27 '
              'credential-ownership 12x9 connection-authority 12x14 acct-opencode-personal-setup 12x9',
-        'M': 'acct-switch 20x9 acct-group-plan 20x2 acct-claude-code 10x17 acct-openai-codex 10x17 '
+        'M': 'acct-switch 20x9 acct-group-plan 20x2 acct-claude-code 10x19 acct-openai-codex 10x19 '
              'acct-antigravity 4x10 acct-muse 4x10 acct-github-copilot 12x10 acct-qwen-coding 12x10 acct-zai-coding 4x10 '
              'acct-kimi-coding 4x10 acct-opencode-go 10x5 acct-more-plan 10x5 '
              'acct-group-use 20x2 acct-anthropic-api 5x10 acct-gemini-direct 5x10 acct-cursor-cli 5x10 acct-more-use 5x10 '
@@ -308,7 +308,7 @@ B = {
     'free': {
         'S': 'free-0 6x12 free-1 6x12 free-2 6x12 free-3 6x12 free-throughput 12x9 free-route 12x9 cooldown-eligibility 12x9 '
              'free-history 12x7 free-source-state 12x9',
-        'M': 'free-0 5x13 free-1 5x13 free-2 5x13 free-3 5x13 free-throughput 20x10 free-route 10x9 cooldown-eligibility 10x9 '
+        'M': 'free-0 5x15 free-1 5x15 free-2 5x15 free-3 5x15 free-throughput 20x10 free-route 10x9 cooldown-eligibility 10x9 '
              'free-history 10x9 free-source-state 10x9',
         'L': 'free-0 6x13 free-1 6x13 free-2 6x13 free-3 6x13 free-throughput 24x10 free-route 12x9 cooldown-eligibility 12x9 '
              'free-history 12x9 free-source-state 12x9',
@@ -322,11 +322,11 @@ B = {
              'ctx-maint 8x10 ctx-routing 8x10 compaction-history 8x10 context-composition 24x9',
     },
     'analytics': {
-        'S': 'an-totals 12x9 tok-claude 4x5 tok-codex 4x5 tok-qwen 4x5 tok-gemini 4x5 tok-kimi 4x5 tok-copilot 4x5 '
-             'token-trend 12x14 model-mix 12x15 an-model-donut 6x13 an-token-breakdown 6x13 '
+        'S': 'an-totals 12x9 token-trend 12x14 tok-claude 4x5 tok-codex 4x5 tok-qwen 4x5 tok-gemini 4x5 tok-kimi 4x5 tok-copilot 4x5 '
+             'model-mix 12x15 an-model-donut 6x13 an-token-breakdown 6x13 '
              'cache-read-share 6x11 an-daily-cost 6x11 activity-heat 12x10 an-quota-history 12x32 an-resets 12x30 '
              'reasoning-mix 12x10 token-counting-basis 12x13 unknown-token-buckets 12x8',
-        'M': 'an-totals 20x5 token-trend 14x15 tok-claude 3x5 tok-codex 3x5 tok-qwen 3x5 tok-gemini 3x5 tok-kimi 3x5 '
+        'M': 'an-totals 20x5 token-trend 14x17 tok-claude 3x6 tok-codex 3x6 tok-qwen 3x6 tok-gemini 3x6 tok-kimi 3x5 '
              'tok-copilot 3x5 model-mix 20x15 an-model-donut 7x12 an-token-breakdown 7x12 cache-read-share 6x12 '
              'activity-heat 12x10 an-daily-cost 8x10 an-quota-history 20x30 an-resets 20x18 '
              'reasoning-mix 20x10 token-counting-basis 12x13 unknown-token-buckets 8x10',
@@ -365,7 +365,7 @@ B = {
              'tool-allowance 12x11 operations-window 12x11 tool-receipts 6x11 catalog-refresh 18x11',
     },
     'signals': {
-        'S': 'signal-history 12x11 signal-0 6x4 signal-1 6x4 signal-2 6x4 signal-3 6x4 signal-coverage 12x4 signal-list 12x9 '
+        'S': 'signal-history 12x13 signal-0 6x4 signal-1 6x4 signal-2 6x4 signal-3 6x4 signal-coverage 12x4 signal-list 12x9 '
              'signal-authority-map 12x11',
         'M': 'signal-history 20x14 signal-0 4x5 signal-1 4x5 signal-2 4x5 signal-3 4x5 signal-coverage 4x5 signal-list 10x11 '
              'signal-authority-map 10x11',
@@ -506,7 +506,7 @@ def js(boards) -> str:
     rooms = {}
     for room in ROOMS:
         rooms[room] = {cls: [[e['id'], e['x'], e['y'], e['w'], e['h']] for e in boards[room][cls]] for cls in CLASSES}
-    data = {'version': 'pmu-b2-boards-2026-10-02-f', 'classes': CLASSES, 'kinds': kinds, 'widgets': widgets, 'rooms': rooms,
+    data = {'version': 'pmu-b2-boards-2026-10-02-g', 'classes': CLASSES, 'kinds': kinds, 'widgets': widgets, 'rooms': rooms,
             'migrate': MIGRATE, 'promoted_from': PROMOTED}
     body = json.dumps(data, ensure_ascii=False, separators=(',', ':'))
     return ('/* Usage default boards (B v2), generated by tools/boards.py; do not edit by hand: change tools/boards.py and run it.\n'

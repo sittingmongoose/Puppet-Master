@@ -112,3 +112,5 @@ html[data-o55-nier="on"] #panel-usage .pmu-film-halo { border-radius: 0; backgro
   box-shadow: 0 0 12px 3px color-mix(in srgb, var(--pmu-s0) 35%, transparent); }
 
 /* Reduce Motion: PMU.film creates none of these layers; the key light shows at rest */
+/* a first NieR decode waits unseen through its delay (final fix M3; PMU.film decode) */
+#panel-usage .pmu-dec-wait { opacity: 0; }

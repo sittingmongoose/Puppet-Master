@@ -344,6 +344,16 @@
     for (var pass = 0; pass < 12 && items.length; pass++) {
       var over = items.filter(function (b) { return b.isConnected && b.clientHeight > 0 && b.scrollHeight > b.clientHeight + 2; });
       over.forEach(function (b) {
+        /* a kind may name lines that give way before its rows ([data-fit-first]; final fix M4: a provider plate's foot notes
+           go before an account row, so the Claude plate never hides Studio behind "1 more" over an empty band) */
+        var firsts = b.querySelectorAll('[data-fit-first]');
+        if (firsts.length) {
+          var ff = firsts[firsts.length - 1], fp = ff.parentNode;
+          if (b._pmuPre == null && b._pmu) b._pmuPre = C.liveSig(b);
+          ff.remove();
+          if (fp && fp !== b && fp.nodeType === 1 && !fp.children.length) fp.remove();
+          return;
+        }
         var cands = Array.prototype.slice.call(b.querySelectorAll(FIT_SEL)).filter(function (el) { return !el.closest('.pmu-chart') && !el.closest('.pmu-headtools'); });
         /* rows and facts go before a card's foot (the foot names the source and freshness of what the card shows) */
         var rows = cands.filter(function (el) { return !/pmu-(cfoot|kpifoot)/.test(String(el.className)); });

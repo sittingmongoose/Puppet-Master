@@ -203,7 +203,7 @@
       return '<div class="pmu-row pmu-accrow' + (comfy ? ' is-comfy' : ' is-compact') + (a.effective ? ' is-eff' : '') + '" data-reveal data-flash-key="' + esc(a.key) + '" data-flash-sig="' + esc(sig) + '" data-acct="' + esc(a.key) + '" data-state="' + a.shownState + '" data-pmu-act="acct-inspect" data-value="' + esc(a.key) + '" role="button" tabindex="0"' +
         ' style="grid-template-columns:' + tmpl + '"' + C.hover(a.nickname, a.identity + (a.routeRole ? ' · ' + a.routeRole : '') + ' · priority ' + a.priority) + '>' + parts + '</div>';
     }).join('');
-    var foot = footLines.slice(0, footCap).map(function (l) { return '<span class="pmu-accfootline"' + (l.tone ? ' data-tone="' + l.tone + '"' : '') + '>' + C.glyph(l.glyph) + '<span>' + l.html + '</span></span>'; }).join('');
+    var foot = footLines.slice(0, footCap).map(function (l) { return '<span class="pmu-accfootline" data-fit-first' + (l.tone ? ' data-tone="' + l.tone + '"' : '') + '>' + C.glyph(l.glyph) + '<span>' + l.html + '</span></span>'; }).join('');
     body.innerHTML = '<div class="pmu-acc is-group" data-mode="' + mode + '">' + band + '<div class="pmu-accrows">' + rows + '</div>' + C.more(rowsN - shown.length, rowsN - shown.length === 1 ? 'account' : 'accounts') + '</div>' +
       (foot ? '<div class="pmu-cardfoot pmu-accfoot">' + foot + '</div>' : '');
     shown.forEach(function (a) {

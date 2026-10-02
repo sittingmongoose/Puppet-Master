@@ -314,6 +314,32 @@
     if (window.ResizeObserver) { var head = app.querySelector('.pmu-headctl'); if (head) new ResizeObserver(function () { syncSegInk(document.getElementById('pmuRange'), true); }).observe(head); }
   }
 
-  PMU.shell = { render: render, setView: setView, pop: pop, closePop: closePop, toast: toastText, syncInk: syncInk, syncSegInk: syncSegInk,
+  /* the app's title-bar notices (#rsStage, final fix M2): while Usage shows they sit at the bottom right of the Usage stage,
+     anchored by their bottom edge 18 px above the stage's (the status bar sits below it), so a notice never covers the
+     board's first row (the KPI tiles at the top right); they still take no pointer and still join the inbox as before.
+     Their own place (under the title-bar bell) moves with the title bar, so it is read again whenever a notice arrives or
+     leaves (in the observer's microtask, before the frame paints) and when the stage resizes; the y offset subtracts
+     100 % of the stack's height, so the stack grows upward from its bottom edge */
+  var noticeRaf = 0;
+  function placeNotices() {
+    noticeRaf = 0;
+    var rs = document.getElementById('rsStage'), stage = document.getElementById('pmuStage');
+    if (!rs || !stage || !rs.firstElementChild || !document.body.classList.contains('pmu-page-active')) return;
+    var sr = stage.getBoundingClientRect();
+    if (!sr.width || !sr.height) return;
+    rs.style.translate = 'none';
+    var r = rs.getBoundingClientRect(), right = 0;
+    for (var c = rs.firstElementChild; c; c = c.nextElementSibling) right = Math.max(right, c.getBoundingClientRect().right);
+    rs.style.translate = '';
+    rs.style.setProperty('--pmu-rs-x', Math.round(sr.right - 18 - (right || r.right)) + 'px');
+    rs.style.setProperty('--pmu-rs-y', 'calc(' + Math.round(sr.bottom - 18 - r.top) + 'px - 100%)');
+  }
+  function queueNotices() { if (!noticeRaf) noticeRaf = requestAnimationFrame(placeNotices); }
+  var rsEl = document.getElementById('rsStage');
+  if (rsEl && window.MutationObserver) new MutationObserver(placeNotices).observe(rsEl, { childList: true });
+  if (window.ResizeObserver) { var stageEl = document.getElementById('pmuStage'); if (stageEl) new ResizeObserver(queueNotices).observe(stageEl); }
+  window.addEventListener('resize', queueNotices);
+
+  PMU.shell = { render: render, setView: setView, pop: pop, closePop: closePop, toast: toastText, syncInk: syncInk, syncSegInk: syncSegInk, placeNotices: queueNotices,
     scopeLabel: scopeLabel, providerName: providerName, counts: counts, menus: { scope: scopeMenu, range: rangeMenu, detail: detailMenu, panels: panelsSpec, export: exportMenu } };
 })();

@@ -236,19 +236,32 @@
     o = o || {};
     if (!el) return { cancel: function () {} };
     if (el._pmuDecode) el._pmuDecode.cancel();
-    if (reduced() || !text) { el.textContent = text; return { cancel: function () {} }; }
+    if (reduced() || !text) { el.classList.remove('pmu-dec-wait'); el.textContent = text; return { cancel: function () {} }; }
     var n = text.length, per = Math.min(35, 420 / Math.max(1, n)), total = per * n + 60, lastBucket = -1;
-    var handle = M.tween({ from: 0, to: total, dur: total, delay: o.delay || 0, ease: 'linear',
+    function glyphs(ms, bucket) {
+      var out = '';
+      for (var i = 0; i < n; i++) {
+        var ch = text[i];
+        out += ms >= (i + 1) * per || /\s/.test(ch) ? ch : GLYPHS[(i * 7 + bucket * 13) % GLYPHS.length];
+      }
+      return out;
+    }
+    /* final fix M3 (Mac film of the NieR first arrival: "0%", "$0.00" and "$0.00 of $250.00 budget" held 50-100 ms before
+       their glyphs cycled, the caller's start text shown during the delay): a first decode writes its bucket-0 glyphs at
+       once, so the start text is never painted and the line keeps its final length, and it stays unseen until its first
+       step, as a first odometer roll's digits appear only when the roll starts. A change decode (o.from) keeps the
+       previous reading on screen until it starts. */
+    var first = o.from == null, waiting = false;
+    if (first) { el.textContent = glyphs(-1, 0); if (o.delay > 0) { el.classList.add('pmu-dec-wait'); waiting = true; } }
+    function show() { if (waiting) { waiting = false; el.classList.remove('pmu-dec-wait'); } }
+    var tw = M.tween({ from: 0, to: total, dur: total, delay: o.delay || 0, ease: 'linear',
       step: function (ms) {
+        show();
         var bucket = Math.floor(ms / 30); if (bucket === lastBucket) return; lastBucket = bucket;
-        var out = '';
-        for (var i = 0; i < n; i++) {
-          var ch = text[i];
-          out += ms >= (i + 1) * per || /\s/.test(ch) ? ch : GLYPHS[(i * 7 + bucket * 13) % GLYPHS.length];
-        }
-        el.textContent = out;
+        el.textContent = glyphs(ms, bucket);
       },
-      done: function () { el.textContent = text; el._pmuDecode = null; } });
+      done: function () { show(); el.textContent = text; if (el._pmuDecode === handle) el._pmuDecode = null; } });
+    var handle = { cancel: function () { tw.cancel(); show(); if (el._pmuDecode === handle) el._pmuDecode = null; } };
     el._pmuDecode = handle;
     return handle;
   }
