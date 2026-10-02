@@ -17769,16 +17769,18 @@ html[data-o55-nier="on"][data-motion="reduced"] .working-variant-8 .rail8-item.c
 html[data-o55-nier="on"][data-motion="reduced"] .status-branch,
 html[data-o55-nier="on"] body.pm56-reduced .status-branch { animation: none !important; }
 
-/* nier-parts.css — NieR Mode parts for the 5.6 Pro concept (PMConcept7's 29-part contract). OWNER: NieR Mode, step
- * N-A (2026-10-02): the Look parts (square, cursor, headers, ground, brackets, diamonds), pointer and icons; step N-B
- * adds the Motion, Sound & voice and World parts here. The script half is nier-parts.js; the palette is nier.css.
+/* nier-parts.css — NieR Mode parts for the 5.6 Pro concept (PMConcept7's 29-part contract). OWNER: NieR Mode, steps
+ * N-A (2026-10-02: the Look parts square, cursor, headers, ground, brackets, diamonds, plus pointer and icons) and N-B
+ * (2026-10-02: the Motion parts reboot, slice, wipe, particles, sweep and the alert effects, and the Sound & voice parts
+ * voice and pod). The script half is nier-parts.js; the World parts are nier-world.css; the palette is nier.css.
  *
  * Every rule is scoped by html[data-o55-nier-parts~="<key>"], which nier.js writes only while a NieR theme is painted,
  * so nothing here applies while NieR Mode is off, and each part goes away when its key is switched off. The shared
- * layers keep PMConcept7's ids and look verbatim (#o55np-cursor, #o55np-reticle; styles.d/14-nier-parts.css), so the
+ * layers keep PMConcept7's ids and look verbatim (#o55np-cursor, -reticle, -reboot, -wipe, -ground, -sweep, -pod;
+ * styles.d/14-nier-parts.css; #o55np-fx, the alert effects, is the concept's own), so the
  * parts read the same in both apps; what is the concept's own is the selector lists (menus, pickers, thread rows,
- * wand rows, sheets, dialogs, transcript cards). Colours are the palette's helper tokens only (the pointer images,
- * which must carry literal colours, are in nier.css's generated block).
+ * wand rows, sheets, dialogs, transcript cards, toasts). Colours are the palette's helper tokens only (the pointer
+ * images and the reboot cover's inks, which must exist as literals, are in nier.css's generated block).
  * Motion rules (PMConcept7's): transform and opacity only, stepped; nothing animates a filter, clip-path, box-shadow
  * or background; every motion is off under reduced motion (the media query, html[data-motion="reduced"] and the
  * concept's body.pm56-reduced). Selector rules (tests/shell-selfcheck.cjs): one selector per class rather than a
@@ -18122,6 +18124,8 @@ html[data-o55-nier-parts~="icons"] svg ellipse { stroke-linecap: square; stroke-
 @media (prefers-reduced-motion: reduce) {
   #o55np-cursor, #o55np-cursor > i, #o55np-reticle, #o55np-reticle > i, #o55np-ground > .o55np-mote, #o55np-pod *, #o55np-wipe > i { animation: none !important; transition: none !important; }
   html[data-o55-nier-parts~="diamonds"] .ctx-spin, html[data-o55-nier-parts~="diamonds"] .qs-orbit { animation: none !important; }
+  html[data-o55-nier-parts~="slice"] #pmOverlayRoot .overlay-menu, html[data-o55-nier-parts~="slice"] #pmOverlayRoot .dialog,
+  html[data-o55-nier-parts~="slice"] #pmOverlayRoot .drawer, html[data-o55-nier-parts~="slice"] #pmOverlayRoot .pmx-sheet { animation: none !important; scale: none !important; }
 }
 
 /* nier-world.css — NieR Mode's World parts for the 5.6 Pro concept (13 of the 29; nier-world.js is the script half).
@@ -18437,11 +18441,10 @@ body.pm56-reduced #o55nw-save, body.pm56-reduced #o55nw-save > i { transition: n
  * stage's background under html[data-o55-nier-scene], #o55ns-thumbs: Demo Studio's picker tiles), because an image has
  * to carry the painted ink and ground as literal colours; the tiles' frame is nier.css's Demo Studio section. What is
  * left here is the stage itself while a scene shows: its cards, bubbles and composer keep their own surfaces, and the
- * prose that sits straight on the stage gets a thin ground-coloured halo so a line of the art never runs through a word.
+ * art stays faint enough (and fades out over the upper stage) that the prose on the stage reads over it without a halo.
  * Every rule is scoped by html[data-o55-nier-scene], which exists only while NieR Mode is painted and a scene shows.
  */
 html[data-o55-nier-scene] .chat-stage > .transcript { background-attachment: scroll; }
-html[data-o55-nier-scene] .chat-stage > .transcript .message-assistant .message-body { text-shadow: 0 0 2px var(--surface), 0 0 4px var(--surface); }
 </style>
 </head>
 <body>
@@ -24989,14 +24992,27 @@ window.PM56_NIER_FACES = [
   /* the chat stage's ground is --surface (styles.css .chat-stage); read as the token, never as a computed background,
      which lags behind a theme switch while the swap's colour fade runs */
   function stageGround() { return document.body ? (getComputedStyle(document.body).getPropertyValue('--surface') || '').trim() : ''; }
-  function image(key, ink, ground, alpha) {
+  function image(key, ink, ground, alpha, pool) {
     var svg = SVG[key]; if (!svg) return '';
     svg = svg.split('currentColor').join(ink).replace(/class="k"/g, 'fill="' + ground + '"');
     /* an image does not read the page's sheet: the scene brings its own non-scaling strokes, and its ink opacity is one
        group, so the knockouts still hide what is behind them */
     svg = svg.replace(/^(<svg[^>]*>)/, '$1<style>path,rect,circle,ellipse,line,polyline,polygon{vector-effect:non-scaling-stroke}</style><g opacity="' + alpha + '">')
       .replace(/<\/svg>$/, '</g></svg>');
+    /* a blob: URL, not a data: URL: the sheet then carries a short address, so a style recalc never re-reads a 50 KB
+       string (a body-wide restyle storm with a data: scene was measurably heavier); the old blobs are let go when a
+       sheet is rewritten */
+    if (window.Blob && window.URL && URL.createObjectURL) {
+      try { var u = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' })); pools[pool].next.push(u); return 'url("' + u + '")'; } catch (e) { /* fall back to data: */ }
+    }
     return 'url("data:image/svg+xml,' + encodeURIComponent(svg) + '")';
+  }
+  /* one pool per sheet: the addresses a sheet is written with become current, the ones it held are revoked */
+  var pools = { scene: { now: [], next: [] }, thumbs: { now: [], next: [] } };
+  function swap(pool, drop) {
+    var p = pools[pool];
+    p.now.forEach(function (u) { try { URL.revokeObjectURL(u); } catch (e) { /* gone */ } });
+    p.now = drop ? [] : p.next; p.next = [];
   }
   function sheetEl(id) {
     var s = document.getElementById(id);
@@ -25013,6 +25029,7 @@ window.PM56_NIER_FACES = [
       shown = null; built = '';
       if (html.hasAttribute('data-o55-nier-scene')) html.removeAttribute('data-o55-nier-scene');
       ['o55ns-scene', 'o55ns-thumbs'].forEach(function (id) { var s = document.getElementById(id); if (s) s.remove(); });
+      swap('scene', true); swap('thumbs', true);
       thumbsFor = '';
       return;
     }
@@ -25022,8 +25039,9 @@ window.PM56_NIER_FACES = [
       built = sig;
       sheetEl('o55ns-scene').textContent = 'html[data-o55-nier="on"][data-o55-nier-scene="' + key + '"] .chat-stage > .transcript {\n'
         + '  background-color: ' + ground + ';\n'
-        + '  background-image: linear-gradient(to bottom, ' + ground + ' 0%, ' + ground + ' 34%, transparent 82%), ' + image(key, ink, ground, alpha) + ';\n'
+        + '  background-image: linear-gradient(to bottom, ' + ground + ' 0%, ' + ground + ' 34%, transparent 82%), ' + image(key, ink, ground, alpha, 'scene') + ';\n'
         + '  background-size: 100% 64%, 100% 66%; background-position: center top, center bottom; background-repeat: no-repeat;\n}';
+      swap('scene');
     }
     shown = key;
     if (html.getAttribute('data-o55-nier-scene') !== key) html.setAttribute('data-o55-nier-scene', key);
@@ -25031,13 +25049,17 @@ window.PM56_NIER_FACES = [
   /* the picker's thumbnails, once per look */
   var thumbsFor = '';
   function thumbs() {
-    var n = N(); if (!n || !n.on()) return;
-    var ink = paintedInk(), ground = document.body ? getComputedStyle(document.body).getPropertyValue('--canvas').trim() : '', sig = ink + '|' + ground;
-    if (!ink || !ground || sig === thumbsFor) return;
+    var n = N(); if (!n || !n.on() || !document.body) return;
+    /* keyed by the painted look, so a render with the picker open reads no style */
+    var sig = document.body.getAttribute('data-theme') || '';
+    if (sig === thumbsFor) return;
+    var ink = paintedInk(), ground = getComputedStyle(document.body).getPropertyValue('--canvas').trim();
+    if (!ink || !ground) return;
     thumbsFor = sig;
     sheetEl('o55ns-thumbs').textContent = KEYS.map(function (k) {
-      return 'html[data-o55-nier="on"] .o55ns-thumb[data-scene="' + k + '"] { background-image: ' + image(k, ink, ground, 0.8) + '; }';
+      return 'html[data-o55-nier="on"] .o55ns-thumb[data-scene="' + k + '"] { background-image: ' + image(k, ink, ground, 0.8, 'thumbs') + '; }';
     }).join('\n');
+    swap('thumbs');
   }
 
   /* ---------- triggers ----------------------------------------------------------------------------------------------- */

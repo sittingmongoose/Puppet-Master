@@ -1,13 +1,15 @@
-/* nier-parts.css — NieR Mode parts for the 5.6 Pro concept (PMConcept7's 29-part contract). OWNER: NieR Mode, step
- * N-A (2026-10-02): the Look parts (square, cursor, headers, ground, brackets, diamonds), pointer and icons; step N-B
- * adds the Motion, Sound & voice and World parts here. The script half is nier-parts.js; the palette is nier.css.
+/* nier-parts.css — NieR Mode parts for the 5.6 Pro concept (PMConcept7's 29-part contract). OWNER: NieR Mode, steps
+ * N-A (2026-10-02: the Look parts square, cursor, headers, ground, brackets, diamonds, plus pointer and icons) and N-B
+ * (2026-10-02: the Motion parts reboot, slice, wipe, particles, sweep and the alert effects, and the Sound & voice parts
+ * voice and pod). The script half is nier-parts.js; the World parts are nier-world.css; the palette is nier.css.
  *
  * Every rule is scoped by html[data-o55-nier-parts~="<key>"], which nier.js writes only while a NieR theme is painted,
  * so nothing here applies while NieR Mode is off, and each part goes away when its key is switched off. The shared
- * layers keep PMConcept7's ids and look verbatim (#o55np-cursor, #o55np-reticle; styles.d/14-nier-parts.css), so the
+ * layers keep PMConcept7's ids and look verbatim (#o55np-cursor, -reticle, -reboot, -wipe, -ground, -sweep, -pod;
+ * styles.d/14-nier-parts.css; #o55np-fx, the alert effects, is the concept's own), so the
  * parts read the same in both apps; what is the concept's own is the selector lists (menus, pickers, thread rows,
- * wand rows, sheets, dialogs, transcript cards). Colours are the palette's helper tokens only (the pointer images,
- * which must carry literal colours, are in nier.css's generated block).
+ * wand rows, sheets, dialogs, transcript cards, toasts). Colours are the palette's helper tokens only (the pointer
+ * images and the reboot cover's inks, which must exist as literals, are in nier.css's generated block).
  * Motion rules (PMConcept7's): transform and opacity only, stepped; nothing animates a filter, clip-path, box-shadow
  * or background; every motion is off under reduced motion (the media query, html[data-motion="reduced"] and the
  * concept's body.pm56-reduced). Selector rules (tests/shell-selfcheck.cjs): one selector per class rather than a
@@ -351,4 +353,6 @@ html[data-o55-nier-parts~="icons"] svg ellipse { stroke-linecap: square; stroke-
 @media (prefers-reduced-motion: reduce) {
   #o55np-cursor, #o55np-cursor > i, #o55np-reticle, #o55np-reticle > i, #o55np-ground > .o55np-mote, #o55np-pod *, #o55np-wipe > i { animation: none !important; transition: none !important; }
   html[data-o55-nier-parts~="diamonds"] .ctx-spin, html[data-o55-nier-parts~="diamonds"] .qs-orbit { animation: none !important; }
+  html[data-o55-nier-parts~="slice"] #pmOverlayRoot .overlay-menu, html[data-o55-nier-parts~="slice"] #pmOverlayRoot .dialog,
+  html[data-o55-nier-parts~="slice"] #pmOverlayRoot .drawer, html[data-o55-nier-parts~="slice"] #pmOverlayRoot .pmx-sheet { animation: none !important; scale: none !important; }
 }

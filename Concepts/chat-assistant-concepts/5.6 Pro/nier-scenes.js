@@ -76,14 +76,27 @@
   /* the chat stage's ground is --surface (styles.css .chat-stage); read as the token, never as a computed background,
      which lags behind a theme switch while the swap's colour fade runs */
   function stageGround() { return document.body ? (getComputedStyle(document.body).getPropertyValue('--surface') || '').trim() : ''; }
-  function image(key, ink, ground, alpha) {
+  function image(key, ink, ground, alpha, pool) {
     var svg = SVG[key]; if (!svg) return '';
     svg = svg.split('currentColor').join(ink).replace(/class="k"/g, 'fill="' + ground + '"');
     /* an image does not read the page's sheet: the scene brings its own non-scaling strokes, and its ink opacity is one
        group, so the knockouts still hide what is behind them */
     svg = svg.replace(/^(<svg[^>]*>)/, '$1<style>path,rect,circle,ellipse,line,polyline,polygon{vector-effect:non-scaling-stroke}</style><g opacity="' + alpha + '">')
       .replace(/<\/svg>$/, '</g></svg>');
+    /* a blob: URL, not a data: URL: the sheet then carries a short address, so a style recalc never re-reads a 50 KB
+       string (a body-wide restyle storm with a data: scene was measurably heavier); the old blobs are let go when a
+       sheet is rewritten */
+    if (window.Blob && window.URL && URL.createObjectURL) {
+      try { var u = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' })); pools[pool].next.push(u); return 'url("' + u + '")'; } catch (e) { /* fall back to data: */ }
+    }
     return 'url("data:image/svg+xml,' + encodeURIComponent(svg) + '")';
+  }
+  /* one pool per sheet: the addresses a sheet is written with become current, the ones it held are revoked */
+  var pools = { scene: { now: [], next: [] }, thumbs: { now: [], next: [] } };
+  function swap(pool, drop) {
+    var p = pools[pool];
+    p.now.forEach(function (u) { try { URL.revokeObjectURL(u); } catch (e) { /* gone */ } });
+    p.now = drop ? [] : p.next; p.next = [];
   }
   function sheetEl(id) {
     var s = document.getElementById(id);
@@ -100,6 +113,7 @@
       shown = null; built = '';
       if (html.hasAttribute('data-o55-nier-scene')) html.removeAttribute('data-o55-nier-scene');
       ['o55ns-scene', 'o55ns-thumbs'].forEach(function (id) { var s = document.getElementById(id); if (s) s.remove(); });
+      swap('scene', true); swap('thumbs', true);
       thumbsFor = '';
       return;
     }
@@ -109,8 +123,9 @@
       built = sig;
       sheetEl('o55ns-scene').textContent = 'html[data-o55-nier="on"][data-o55-nier-scene="' + key + '"] .chat-stage > .transcript {\n'
         + '  background-color: ' + ground + ';\n'
-        + '  background-image: linear-gradient(to bottom, ' + ground + ' 0%, ' + ground + ' 34%, transparent 82%), ' + image(key, ink, ground, alpha) + ';\n'
+        + '  background-image: linear-gradient(to bottom, ' + ground + ' 0%, ' + ground + ' 34%, transparent 82%), ' + image(key, ink, ground, alpha, 'scene') + ';\n'
         + '  background-size: 100% 64%, 100% 66%; background-position: center top, center bottom; background-repeat: no-repeat;\n}';
+      swap('scene');
     }
     shown = key;
     if (html.getAttribute('data-o55-nier-scene') !== key) html.setAttribute('data-o55-nier-scene', key);
@@ -118,13 +133,17 @@
   /* the picker's thumbnails, once per look */
   var thumbsFor = '';
   function thumbs() {
-    var n = N(); if (!n || !n.on()) return;
-    var ink = paintedInk(), ground = document.body ? getComputedStyle(document.body).getPropertyValue('--canvas').trim() : '', sig = ink + '|' + ground;
-    if (!ink || !ground || sig === thumbsFor) return;
+    var n = N(); if (!n || !n.on() || !document.body) return;
+    /* keyed by the painted look, so a render with the picker open reads no style */
+    var sig = document.body.getAttribute('data-theme') || '';
+    if (sig === thumbsFor) return;
+    var ink = paintedInk(), ground = getComputedStyle(document.body).getPropertyValue('--canvas').trim();
+    if (!ink || !ground) return;
     thumbsFor = sig;
     sheetEl('o55ns-thumbs').textContent = KEYS.map(function (k) {
-      return 'html[data-o55-nier="on"] .o55ns-thumb[data-scene="' + k + '"] { background-image: ' + image(k, ink, ground, 0.8) + '; }';
+      return 'html[data-o55-nier="on"] .o55ns-thumb[data-scene="' + k + '"] { background-image: ' + image(k, ink, ground, 0.8, 'thumbs') + '; }';
     }).join('\n');
+    swap('thumbs');
   }
 
   /* ---------- triggers ----------------------------------------------------------------------------------------------- */
