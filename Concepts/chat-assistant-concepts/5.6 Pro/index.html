@@ -41490,12 +41490,15 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     mixed:'<svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 8h4"/><path d="M9 5.2h4"/><path d="M9 10.8h4"/></svg>',
     close:'<svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>'
   };
-  var ICON_NEON = { check:['check',12], info:['info',14], warning:['warning',14], plan:['plan',15], close:['close',13] };
+  /* warning is only ever drawn on a warning line (a warning callout, a warning attention row, Build blocked), so it is
+     the warning triangle lit as a status mark in the attention tone, as a pmx refusal's is (3E2), not a concept glyph
+     inked by the line's colour */
+  var ICON_NEON = { check:['check',12], info:['info',14], warning:['warning',14,'nx-r-status nx-t-attention'], plan:['plan',15], close:['close',13] };
   var ICON = {};
   Object.keys(ICON_NEON).forEach(function(k){
     Object.defineProperty(ICON, k, { enumerable:true, get:function(){
       var N=window.PM56_NEON, n=ICON_NEON[k];
-      return N && typeof N.icon==='function' ? N.icon(n[0], n[1]) : ICON_16[k==='plan'?'artifact':k];
+      return N && typeof N.icon==='function' ? N.icon(n[0], n[1], n[2]) : ICON_16[k==='plan'?'artifact':k];
     }});
   });
   /* Plan step marks are the shared status set (neon-icons.js status(), plan §3), 14 px in
