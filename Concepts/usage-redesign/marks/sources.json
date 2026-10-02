@@ -1,0 +1,1234 @@
+{
+ "generated": "2026-10-02T03:37:41.368Z",
+ "pack": "Puppet Master Usage redesign: official provider marks (Jared 2026-10-02: \"yes use the real provider logos\")",
+ "rebuild": "cd ~/PM-Experiments/usage-redesign-20261001/marks-work && node tools/build.mjs && node tools/pm-emit.mjs (headless Chrome; build.mjs is AAC marks-v2 tools/build.mjs with only the variant list and paths changed; writes out/ and tools/measure.json, then marks/out, marks/sources.json and src/js/06-marks.js here). Downloaded originals are kept in marks-work/src and marks-work/dl.",
+ "rules": "Official artwork only. No recolouring, redrawing or geometry changes. SVG edits are limited to dropping the XML prolog and editor comments, setting the root viewBox/width/height (the crop), and, for lockups, dropping wordmark elements that lie wholly outside the crop (each verified pixel-identical). Optical scale is metadata only.",
+ "opticalScaleMethod": "inkBox = alpha-weighted share of a square box covered by the mark when contained in it (measured at 512px). scale = (min inkBox / inkBox) ^ 0.25, rounded to 0.01; render at box * scale. Platform glyphs are normalised among themselves. PM pack: the reference inkBox stays AAC's (Meta symbol, 0.2907) so every copied AAC scale is unchanged; a new mark lighter than the reference clamps to 1 (Grok, MiniMax, Vertex AI). App-icon plates use AAC's plate value 0.9.",
+ "zips": {
+  "anthropic-press-kit.zip": {
+   "url": "https://www.anthropic.com/press-kit (302 to https://www-cdn.anthropic.com/ae59ca4ca194dac9c9dc3bc78c5829468cb0e8af.zip)",
+   "sha256": "c68ac92df86c825f95177e24016fcc9a8863a3fd4ca344fe6f0700b2c1e07151",
+   "note": "same zip, same sha256, as the AAC Claude Spark source"
+  },
+  "GitHub_Logos.zip": {
+   "url": "https://brand.github.com/GitHub_Logos.zip",
+   "sha256": "e2a67d6cc51d990a52c46c1cf6bcab688db4830982174bca50e0be7a5c2f3194",
+   "note": "linked from https://github.com/logos (GitHub logos and usage)"
+  },
+  "SpaceXAI_Grok_Assets.zip": {
+   "url": "https://data.x.ai/logos/SpaceXAI_Grok_Assets.zip",
+   "sha256": "db9129acd4efc4c2202d25afe31b70281a79f8507f75520ab5e6b3356895a7e9",
+   "note": "the \"Download Logos\" link of https://x.ai/legal/brand-guidelines (Cloudflare serves it only to a browser user agent)"
+  },
+  "core-products-icons.zip": {
+   "url": "https://services.google.com/fh/files/misc/core-products-icons.zip",
+   "sha256": "6531a10f58bc599c24d9a455d81dd757c1a03c3c43da9cddf639b859c1c1eece",
+   "note": "Google Cloud \"Core product icons\" download on https://cloud.google.com/icons"
+  }
+ },
+ "aacZipSha256": {
+  "anthropic-press-kit.zip": "c68ac92df86c825f95177e24016fcc9a8863a3fd4ca344fe6f0700b2c1e07151",
+  "openai-logos.zip": "c54e85ab5884228f89f0230dd8effa8d588cad78166fe954135f4afa553222db",
+  "cursor-brand-assets.zip": "97488a7751914e60f9ff532bc33810cdeaebdddc017548abe6ca2bc29bbc3928"
+ },
+ "providers": {
+  "claude-code": {
+   "name": "Claude",
+   "mark": "claude",
+   "kind": "mark"
+  },
+  "openai-codex": {
+   "name": "ChatGPT / Codex",
+   "mark": "openai",
+   "kind": "mark"
+  },
+  "antigravity": {
+   "name": "Google Antigravity",
+   "mark": "antigravity",
+   "kind": "mark"
+  },
+  "grok": {
+   "name": "Grok Build",
+   "mark": "grok",
+   "kind": "mark"
+  },
+  "muse": {
+   "name": "Muse Code",
+   "mark": "meta",
+   "kind": "mark"
+  },
+  "github-copilot": {
+   "name": "GitHub Copilot",
+   "mark": "copilot",
+   "kind": "mark"
+  },
+  "qwen-coding": {
+   "name": "Qwen Coding Plan",
+   "mark": "qwen",
+   "kind": "mark"
+  },
+  "zai-coding": {
+   "name": "Z.AI Coding Plan",
+   "mark": "zai",
+   "kind": "mark"
+  },
+  "kimi-coding": {
+   "name": "Kimi Code",
+   "mark": "kimi",
+   "kind": "mark"
+  },
+  "minimax-coding": {
+   "name": "MiniMax Coding Plan",
+   "mark": "minimax",
+   "kind": "mark"
+  },
+  "opencode-go": {
+   "name": "OpenCode Go",
+   "mark": "opencode",
+   "kind": "mark"
+  },
+  "anthropic-api": {
+   "name": "Anthropic API",
+   "mark": "anthropic",
+   "kind": "mark"
+  },
+  "gemini-direct": {
+   "name": "Gemini API",
+   "mark": "gemini",
+   "kind": "mark"
+  },
+  "vertex": {
+   "name": "Vertex AI",
+   "mark": "vertex-ai",
+   "kind": "mark"
+  },
+  "xai-api": {
+   "name": "xAI API",
+   "mark": "xai",
+   "kind": "mark"
+  },
+  "meta-api": {
+   "name": "Meta Model API",
+   "mark": "meta",
+   "kind": "mark"
+  },
+  "cursor-cli": {
+   "name": "Cursor",
+   "mark": "cursor",
+   "kind": "mark"
+  },
+  "qwen-token": {
+   "name": "Qwen Token Plan",
+   "mark": "qwen",
+   "kind": "mark"
+  },
+  "opencode-zen": {
+   "name": "OpenCode Zen",
+   "mark": "opencode",
+   "kind": "mark"
+  },
+  "free-models": {
+   "name": "Free Models",
+   "mark": "ui-free",
+   "kind": "ui-icon"
+  },
+  "opencode": {
+   "name": "OpenCode on your computer",
+   "mark": "opencode",
+   "kind": "mark"
+  },
+  "local-endpoint": {
+   "name": "Local model server",
+   "mark": "ui-local",
+   "kind": "ui-icon"
+  }
+ },
+ "legacy": {
+  "claude": "claude",
+  "codex": "openai",
+  "qwen": "qwen",
+  "gemini": "gemini",
+  "kimi": "kimi",
+  "copilot": "copilot",
+  "opencode": "opencode",
+  "claude code": "claude",
+  "gemini direct": "gemini",
+  "kimi coding plan": "kimi",
+  "opencode · local": "opencode",
+  "google ai studio": "gemini",
+  "anthropic · work": "claude",
+  "chatgpt": "openai",
+  "openai codex": "openai",
+  "github": "copilot",
+  "github copilot": "copilot",
+  "alibaba": "qwen",
+  "qwen cloud": "qwen",
+  "moonshot": "kimi",
+  "kimi code": "kimi",
+  "z.ai": "zai",
+  "zhipu": "zai",
+  "grok": "grok",
+  "grok build": "grok",
+  "x.ai": "xai",
+  "spacexai": "xai",
+  "muse": "meta",
+  "muse code": "meta",
+  "meta ai": "meta",
+  "vertex": "vertex-ai",
+  "vertex ai": "vertex-ai",
+  "google cloud vertex ai": "vertex-ai",
+  "gemini api": "gemini",
+  "anthropic api": "anthropic",
+  "xai api": "xai",
+  "cursor cli": "cursor",
+  "anysphere": "cursor",
+  "opencode go": "opencode",
+  "opencode zen": "opencode",
+  "free models": "ui-free",
+  "free": "ui-free",
+  "local": "ui-local",
+  "local model server": "ui-local",
+  "local endpoint": "ui-local",
+  "chatgpt / codex": "openai",
+  "google antigravity": "antigravity",
+  "qwen coding plan": "qwen",
+  "z.ai coding plan": "zai",
+  "minimax coding plan": "minimax",
+  "meta model api": "meta",
+  "cursor": "cursor",
+  "qwen token plan": "qwen",
+  "opencode on your computer": "opencode"
+ },
+ "uiIcons": {
+  "ui-free": {
+   "name": "Free Models",
+   "note": "Neutral UI icon (24 grid, stroke 2, currentColor), drawn for this page; not a provider mark.",
+   "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"8\" width=\"18\" height=\"4\" rx=\"1\"/><path d=\"M5 12v8h14v-8\"/><path d=\"M12 8v12\"/><path d=\"M12 8c-1.6-3.6-5-3.9-5-1.6C7 8 10.2 8 12 8zM12 8c1.6-3.6 5-3.9 5-1.6C17 8 13.8 8 12 8z\"/></svg>"
+  },
+  "ui-local": {
+   "name": "Local model server",
+   "note": "Neutral UI icon (24 grid, stroke 2, currentColor), drawn for this page; not a provider mark.",
+   "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"7\" rx=\"2\"/><rect x=\"3\" y=\"13\" width=\"18\" height=\"7\" rx=\"2\"/><path d=\"M7 7.5h.01M7 16.5h.01M11 7.5h6M11 16.5h6\"/></svg>"
+  }
+ },
+ "marks": {
+  "claude": {
+   "name": "Claude Spark",
+   "aac": {
+    "id": "claude",
+    "note": "copied from AI Account Center marks-v2 (claude-aac-redesign), 2026-10-02",
+    "sourcesJson": "/home/sittingmongoose/PM-Experiments/ccs-accounts-20260930/redesign-concepts-20261001/shared/marks-v2/sources.json"
+   },
+   "scale": 0.93,
+   "aspect": 1,
+   "plate": false,
+   "surfaces": "One artwork for both surfaces: the press kit ships the Spark only in Clay (#D97757), which reads on light and dark.",
+   "licenseNote": "Claude and the Claude Spark are Anthropic trademarks. Official press-kit artwork, shown unmodified to identify the provider.",
+   "sources": [
+    {
+     "url": "https://www.anthropic.com/press-kit",
+     "note": "Anthropic media resources zip (sha256 c68ac92df86c825f95177e24016fcc9a8863a3fd4ca344fe6f0700b2c1e07151), member \"Anthropic media resources/Anthropic logos/Claude logos/3 Claude Spark/SVG/Claude Spark - Clay.svg\"",
+     "files": [
+      {
+       "file": "src/claude-spark-clay.svg",
+       "sha256": "6d53db4be375e899c937c26cf16684a80d6e869b1928d72b37748bef2560e219"
+      }
+     ]
+    },
+    {
+     "url": "https://claude.ai/favicon.svg",
+     "note": "same Spark geometry, kept for reference only",
+     "files": [
+      {
+       "file": "src/claude-favicon.svg",
+       "sha256": "b150888bc7257af83e3b85d3c2be4294f88986026f8168f6c12fc1fde6697350"
+      }
+     ]
+    }
+   ],
+   "out": {
+    "dark": {
+     "file": "out/claude.svg",
+     "sha256": "520ca8c178848629bfc63a18b400dabb3e20a2aaff75b3727eec5fda58030210",
+     "viewBox": [
+      -0.3104,
+      -0.5062,
+      95.0125,
+      95.0125
+     ],
+     "aspect": 1,
+     "sourceViewBox": [
+      0,
+      0,
+      94,
+      94
+     ],
+     "wordmarkElementsDropped": 0,
+     "aacFile": "out/claude.svg"
+    },
+    "light": null
+   }
+  },
+  "openai": {
+   "name": "OpenAI Blossom",
+   "aac": {
+    "id": "codex",
+    "note": "copied from AI Account Center marks-v2 (claude-aac-redesign), 2026-10-02",
+    "sourcesJson": "/home/sittingmongoose/PM-Experiments/ccs-accounts-20260930/redesign-concepts-20261001/shared/marks-v2/sources.json"
+   },
+   "scale": 0.95,
+   "aspect": 1,
+   "plate": false,
+   "surfaces": "Official black Blossom on light surfaces, official white Blossom on dark surfaces.",
+   "licenseNote": "OpenAI and the Blossom are OpenAI trademarks. Official brand-pack artwork, unmodified. Codex publishes no separate product mark (developers.openai.com/codex uses only UI icons), so the OpenAI Blossom identifies it.",
+   "sources": [
+    {
+     "url": "https://cdn.openai.com/brand/openai-logos.zip",
+     "note": "OpenAI brand logo pack (zip sha256 c54e85ab5884228f89f0230dd8effa8d588cad78166fe954135f4afa553222db), members OpenAI-logos/SVGs/OAI_OpenAI-Blossom_White.svg and _Black.svg; identical geometry, fill white vs black",
+     "files": [
+      {
+       "file": "src/OAI_OpenAI-Blossom_White.svg",
+       "sha256": "01d158767c4eec0e47bd617e67759c33da0accd1438be1a8d29dfdb99ce87285"
+      },
+      {
+       "file": "src/OAI_OpenAI-Blossom_Black.svg",
+       "sha256": "75c1e9fffa5e8c437bec1d67197a73992bca45d166c6ff23215185dea8fae92a"
+      }
+     ]
+    }
+   ],
+   "out": {
+    "dark": {
+     "file": "out/openai.svg",
+     "sha256": "63755aecd4ad31a2477f35142f6acd79a5209e4cbeb39a871b09d0b430fbc7a8",
+     "viewBox": [
+      177.8313,
+      177.8313,
+      360.0391,
+      360.0391
+     ],
+     "aspect": 1,
+     "sourceViewBox": [
+      0,
+      0,
+      716,
+      716
+     ],
+     "wordmarkElementsDropped": 0,
+     "aacFile": "out/codex.svg"
+    },
+    "light": {
+     "file": "out/openai-light.svg",
+     "sha256": "58daec6ea251c78fd347454e2825ce9a612afeaa7f0d43820d8028b5e51f77eb",
+     "viewBox": [
+      177.8313,
+      177.8313,
+      360.0391,
+      360.0391
+     ],
+     "aspect": 1,
+     "sourceViewBox": [
+      0,
+      0,
+      716,
+      716
+     ],
+     "wordmarkElementsDropped": 0,
+     "aacFile": "out/codex-light.svg"
+    }
+   }
+  },
+  "antigravity": {
+   "name": "Google Antigravity",
+   "aac": {
+    "id": "antigravity",
+    "note": "copied from AI Account Center marks-v2 (claude-aac-redesign), 2026-10-02",
+    "sourcesJson": "/home/sittingmongoose/PM-Experiments/ccs-accounts-20260930/redesign-concepts-20261001/shared/marks-v2/sources.json"
+   },
+   "scale": 0.97,
+   "aspect": 1.0878,
+   "plate": false,
+   "surfaces": "One artwork for both surfaces (multicolour gradient, reads on light and dark). Not used: /assets/image/antigravity-logo.svg on the same site is a different, stepped-pixel \"A\" (the CLI splash art), not the site icon.",
+   "licenseNote": "Google Antigravity is a Google trademark. Official vector artwork from antigravity.google, unmodified; the lockup is cropped to its symbol and the wordmark paths that fall outside the crop are dropped (render verified pixel-identical).",
+   "sources": [
+    {
+     "url": "https://antigravity.google/",
+     "note": "inline header lockup SVG (viewBox 0 0 869 113) from the homepage HTML (saved as antigravity-home.html); the arch symbol is the masked group at x 13..98. Same mark as the site icon /assets/image/antigravity-logo.png (200x184) and /apple-touch-icon.png (180)",
+     "files": [
+      {
+       "file": "src/antigravity-header-lockup.svg",
+       "sha256": "c25e97252eec5fbd0230d2ef63a35ff0ea7713511e10537c4e3994e755ad01d0"
+      },
+      {
+       "file": "src/antigravity-home.html",
+       "sha256": "6e1942f9a280490151825cbc5cb1939922422cc7237bbd53b02bf4b623f63542"
+      },
+      {
+       "file": "src/antigravity-logo-200.png",
+       "sha256": "8f0b95d2d21dbf930b4d100e2fdc4505673e900a731aa56ea633a4b59c312799"
+      },
+      {
+       "file": "src/antigravity-apple-touch-icon.png",
+       "sha256": "81ff621394faed1deb9c5577c7d5b651c5759ce927c1594dc8f6f6382a434670"
+      }
+     ]
+    }
+   ],
+   "out": {
+    "dark": {
+     "file": "out/antigravity.svg",
+     "sha256": "fbd31e8a3c8360a386861a4f963819c3865f5fbc88ddc608b1ff17f5a8b5c5ec",
+     "viewBox": [
+      13.1291,
+      17.8362,
+      85.2634,
+      78.3838
+     ],
+     "aspect": 1.0878,
+     "sourceViewBox": [
+      0,
+      0,
+      869,
+      113
+     ],
+     "wordmarkElementsDropped": 17,
+     "aacFile": "out/antigravity.svg"
+    },
+    "light": null
+   }
+  },
+  "cursor": {
+   "name": "Cursor cube",
+   "aac": {
+    "id": "cursor",
+    "note": "copied from AI Account Center marks-v2 (claude-aac-redesign), 2026-10-02",
+    "sourcesJson": "/home/sittingmongoose/PM-Experiments/ccs-accounts-20260930/redesign-concepts-20261001/shared/marks-v2/sources.json"
+   },
+   "scale": 0.89,
+   "aspect": 0.8789,
+   "plate": false,
+   "surfaces": "CUBE_2D_LIGHT (dark ink) on light surfaces, CUBE_2D_DARK (light ink) on dark surfaces.",
+   "licenseNote": "Cursor is an Anysphere trademark. Official brand-kit SVGs, unmodified.",
+   "sources": [
+    {
+     "url": "https://ptht05hbb1ssoooe.public.blob.vercel-storage.com/assets/brand/cursor-brand-assets.zip",
+     "note": "Cursor brand assets (linked from cursor.com/brand), zip sha256 97488a7751914e60f9ff532bc33810cdeaebdddc017548abe6ca2bc29bbc3928, members \"General Logos/Cube/SVG/CUBE_2D_DARK.svg\" (fill #edecec) and \"CUBE_2D_LIGHT.svg\" (fill #26251e)",
+     "files": [
+      {
+       "file": "src/CUBE_2D_DARK.svg",
+       "sha256": "cd0e3e5d8991a4cdd4577f8896cd063105207665165c73e25a1ff918dd367eb7"
+      },
+      {
+       "file": "src/CUBE_2D_LIGHT.svg",
+       "sha256": "c483c02f78eb2619778fdd959e72a9adfac4844854472cd2653d4cbfd60e4d71"
+      }
+     ]
+    }
+   ],
+   "out": {
+    "dark": {
+     "file": "out/cursor.svg",
+     "sha256": "11685e18e8ec6e2119c6c3c4900a677d4b5654a8a845a5b02e42e390d4cdb18e",
+     "viewBox": [
+      -3.9907,
+      -3.9907,
+      474.6686,
+      540.0714
+     ],
+     "aspect": 0.8789,
+     "sourceViewBox": [
+      0,
+      0,
+      466.73,
+      532.09
+     ],
+     "wordmarkElementsDropped": 0,
+     "aacFile": "out/cursor.svg"
+    },
+    "light": {
+     "file": "out/cursor-light.svg",
+     "sha256": "c4bef195203f11544753d9c18d56fe0da1c27b16d1b6271bc6b34333da6632ec",
+     "viewBox": [
+      -3.9907,
+      -3.9907,
+      474.6686,
+      540.0714
+     ],
+     "aspect": 0.8789,
+     "sourceViewBox": [
+      0,
+      0,
+      466.73,
+      532.09
+     ],
+     "wordmarkElementsDropped": 0,
+     "aacFile": "out/cursor-light.svg"
+    }
+   }
+  },
+  "meta": {
+   "name": "Meta symbol",
+   "aac": {
+    "id": "muse",
+    "note": "copied from AI Account Center marks-v2 (claude-aac-redesign), 2026-10-02",
+    "sourcesJson": "/home/sittingmongoose/PM-Experiments/ccs-accounts-20260930/redesign-concepts-20261001/shared/marks-v2/sources.json"
+   },
+   "scale": 1,
+   "aspect": 1.491,
+   "plate": false,
+   "surfaces": "One artwork for both surfaces (Meta blue gradient reads on light and dark).",
+   "licenseNote": "Meta and the Meta symbol are Meta Platforms trademarks. The Muse Code product page publishes no separate Muse Code mark (its only images are the Meta lockups, a 64px favicon of the same symbol and a background), so Meta's publisher symbol identifies it. Vector, unmodified; wordmark paths outside the crop dropped (pixel-identical render).",
+   "sources": [
+    {
+     "url": "https://dev.meta.ai/logo/meta-logo-with-text.svg",
+     "note": "Meta lockup preloaded by https://dev.meta.ai/products/muse-code; symbol cropped out (same symbol in -dark.svg, whose only change is a white wordmark)",
+     "files": [
+      {
+       "file": "src/meta-logo-with-text.svg",
+       "sha256": "7a0430c375fc8563eafa7636869b5b132e6da4461711a81d384bc0044a20d039"
+      },
+      {
+       "file": "src/meta-logo-with-text-dark.svg",
+       "sha256": "764de926994a45e479f4db6c0b6b39a870ff73cc096f37cf7cc2adf879da330a"
+      }
+     ]
+    }
+   ],
+   "out": {
+    "dark": {
+     "file": "out/meta.svg",
+     "sha256": "d3f62f331df9a89d91182b4cb70f3be31b8e4f5dc29a6f6a82237dfd917df09e",
+     "viewBox": [
+      -0.0719,
+      -0.0719,
+      15.373,
+      10.3105
+     ],
+     "aspect": 1.491,
+     "sourceViewBox": [
+      0,
+      0,
+      50,
+      11
+     ],
+     "wordmarkElementsDropped": 4,
+     "aacFile": "out/muse.svg"
+    },
+    "light": null
+   }
+  },
+  "kimi": {
+   "name": "Kimi Code app icon",
+   "aac": {
+    "id": "kimi-code",
+    "note": "copied from AI Account Center marks-v2 (claude-aac-redesign), 2026-10-02",
+    "sourcesJson": "/home/sittingmongoose/PM-Experiments/ccs-accounts-20260930/redesign-concepts-20261001/shared/marks-v2/sources.json"
+   },
+   "scale": 0.9,
+   "aspect": 1,
+   "plate": true,
+   "surfaces": "One artwork on both surfaces: the official app icon on its own black rounded plate.",
+   "licenseNote": "Kimi is a Moonshot AI trademark. Official Kimi Code app icon, used as published (Jared chose the app icon with its plate, 2026-10-01).",
+   "decision": "2026-10-01 Jared: use the official Kimi Code app icon with its plate (docs Kimi.png); the bare K glyph is retired.",
+   "source": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/21406fb4c805cc8c715e6d1f16ad3fb5f25f4fe3/docs/.vitepress/theme/Kimi.png (sha256 c367897f22e26c917200dc6bd5e5cb1456d24bf5f6cf8dcb1524f9d34e336b6d)",
+   "out": {
+    "dark": {
+     "file": "out/kimi.png",
+     "sha256": "c367897f22e26c917200dc6bd5e5cb1456d24bf5f6cf8dcb1524f9d34e336b6d",
+     "from": "AAC src/kimi-code-docs-Kimi.png (bytes unchanged; 316x316 PNG)"
+    },
+    "light": null
+   },
+   "aacSourcesEntry": {
+    "sources": [
+     {
+      "url": "https://statics.moonshot.cn/kimi-web-seo/assets/kimi.icon-CElMvu4q.js",
+      "note": "kimi.com web app icon collection, glyph \"KforKimi_f\" (the K with its dot, 1024 grid, fill=currentColor). Extracted to kimi-web-iconset.json",
+      "files": [
+       {
+        "file": "src/kimi-web-iconset.json",
+        "sha256": "d4a87fb604ba36a9bd1c3a2097c715e72f91ebdff2a035008db073caf51c26f0"
+       }
+      ]
+     },
+     {
+      "url": "https://platform.kimi.com/",
+      "note": "official KIMI wordmark ships as logo-image-light fill #000 and logo-image-dark fill #fff; the same black/white pair is used for the K glyph",
+      "files": []
+     },
+     {
+      "url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/21406fb4c805cc8c715e6d1f16ad3fb5f25f4fe3/docs/.vitepress/theme/Kimi.png",
+      "note": "Kimi Code docs logo = the app icon (black rounded plate, white K, blue dot), not used because it is a plate",
+      "files": [
+       {
+        "file": "src/kimi-code-docs-Kimi.png",
+        "sha256": "c367897f22e26c917200dc6bd5e5cb1456d24bf5f6cf8dcb1524f9d34e336b6d"
+       }
+      ]
+     }
+    ],
+    "licenseNote": "Kimi is a Moonshot AI trademark. Kimi publishes its colour K (white K, blue dot) only as an app icon on a black plate (kimi.com pwa-192/512, favicons, Kimi Code docs and VS Code extension). The bare mark here is Kimi's own web-UI glyph, geometry unmodified; it is a currentColor glyph, rendered in the black/white pair Kimi uses for its official KIMI wordmark on light and dark. No blue dot exists in any bare official artwork.",
+    "surfaces": "Black K on light surfaces, white K on dark surfaces.",
+    "note": "AAC sources.json still describes the retired bare K; the app icon (and the licenseNote/surfaces above) come from AAC marks.js, patched by AAC tools/kimi-appicon.mjs"
+   }
+  },
+  "qwen": {
+   "name": "Qwen Cloud symbol",
+   "aac": {
+    "id": "qwen",
+    "note": "copied from AI Account Center marks-v2 (claude-aac-redesign), 2026-10-02",
+    "sourcesJson": "/home/sittingmongoose/PM-Experiments/ccs-accounts-20260930/redesign-concepts-20261001/shared/marks-v2/sources.json"
+   },
+   "scale": 0.93,
+   "aspect": 0.9722,
+   "plate": false,
+   "surfaces": "Official gradient symbol on light surfaces, official white symbol on dark surfaces.",
+   "licenseNote": "Qwen and Qwen Cloud are Alibaba Cloud trademarks. The Token Plan is a Qwen Cloud product (docs.qwencloud.com/token-plan; the collector reads home.qwencloud.com), so the Qwen Cloud symbol is used. Vector, unmodified; wordmark paths outside the crop dropped (pixel-identical render).",
+   "sources": [
+    {
+     "url": "https://docs.qwencloud.com/logo/light.svg",
+     "note": "Qwen Cloud docs nav logo for light mode (gradient #4F21FF to #D75BFE), symbol cropped from the lockup",
+     "files": [
+      {
+       "file": "src/qwencloud-docs-logo-light.svg",
+       "sha256": "6eb05b29b1564488e6f53534018804399e70ba3c0a097373dc4ca5b6ad732297"
+      }
+     ]
+    },
+    {
+     "url": "https://docs.qwencloud.com/logo/dark.svg",
+     "note": "Qwen Cloud docs nav logo for dark mode (white), symbol cropped from the lockup",
+     "files": [
+      {
+       "file": "src/qwencloud-docs-logo-dark.svg",
+       "sha256": "b1937ae9f28c04ca5179cb662e0b5357627d87b9dc7be4f0e67de7611b3e9458"
+      }
+     ]
+    },
+    {
+     "url": "https://img.alicdn.com/imgextra/i1/O1CN01OwlzsC1cRTnZrFfXa_!!6000000003597-2-tps-150-150.png",
+     "note": "alternative not used: qwen.ai blue Qwen (model) symbol, 150px raster only",
+     "files": [
+      {
+       "file": "src/qwen-ai-blue-150.png",
+       "sha256": "ea19f2ff6fc749ebd4fd9d7df3365d83ee333c2fd04a04596044ed3a09f4976d"
+      }
+     ]
+    }
+   ],
+   "out": {
+    "dark": {
+     "file": "out/qwen.svg",
+     "sha256": "280dce643f7ba3fb290c18496f33de6f83d8760c3905fff59df72b9c0d2300e6",
+     "viewBox": [
+      -0.2101,
+      -0.2101,
+      27.6473,
+      28.4384
+     ],
+     "aspect": 0.9722,
+     "sourceViewBox": [
+      0,
+      0,
+      158.21998596191406,
+      28
+     ],
+     "wordmarkElementsDropped": 9,
+     "aacFile": "out/qwen.svg"
+    },
+    "light": {
+     "file": "out/qwen-light.svg",
+     "sha256": "4599d4e1f8f5f0dc89233747c9a72241598a4f41246c5837e2006a2e4f216189",
+     "viewBox": [
+      -0.2101,
+      -0.2101,
+      27.6473,
+      28.4384
+     ],
+     "aspect": 0.9722,
+     "sourceViewBox": [
+      0,
+      0,
+      158.21998596191406,
+      28
+     ],
+     "wordmarkElementsDropped": 9,
+     "aacFile": "out/qwen-light.svg"
+    }
+   }
+  },
+  "zai": {
+   "name": "Z.ai Z",
+   "aac": {
+    "id": "zai",
+    "note": "copied from AI Account Center marks-v2 (claude-aac-redesign), 2026-10-02",
+    "sourcesJson": "/home/sittingmongoose/PM-Experiments/ccs-accounts-20260930/redesign-concepts-20261001/shared/marks-v2/sources.json"
+   },
+   "scale": 0.92,
+   "aspect": 1.1734,
+   "plate": false,
+   "surfaces": "Dark Z on light surfaces, white Z on dark surfaces.",
+   "licenseNote": "Z.ai is a Zhipu AI trademark. Official bare Z artwork from chat.z.ai, vector, unmodified.",
+   "sources": [
+    {
+     "url": "https://z-cdn.chatglm.cn/z-ai/static/logoLight.svg",
+     "note": "chat.z.ai light-theme logo (dark gradient Z, #070606 to #3b3b3b); identical to https://chat.z.ai/static/logoLight.svg",
+     "files": [
+      {
+       "file": "src/zai-logoLight.svg",
+       "sha256": "e11cb28e0fa0a4cbe11887c9a719d269957ef3c5198607a0036af799f94a7399"
+      }
+     ]
+    },
+    {
+     "url": "https://chat.z.ai/static/logoDark.svg",
+     "note": "chat.z.ai dark-theme logo (white Z). chat.z.ai picks logoLight for theme \"light\" and logoDark otherwise",
+     "files": [
+      {
+       "file": "src/zai-logoDark.svg",
+       "sha256": "69b26685f24975d74dfb566a4eb2c63f86f5302eb9bf7d6a77914bde39e70c4c"
+      }
+     ]
+    },
+    {
+     "url": "https://mintcdn.com/zhipu-32152247/B_E8wI-eiNa1QlPV/logo/dark.svg",
+     "note": "not used: docs.z.ai app-icon logo (white Z on a black rounded square plate)",
+     "files": [
+      {
+       "file": "src/zai-docs-logo-dark-plate.svg",
+       "sha256": "8007cd9e09717e42283db3591f82ed970a3200a0892ae91e1af9f2ef12e85642"
+      }
+     ]
+    }
+   ],
+   "out": {
+    "dark": {
+     "file": "out/zai.svg",
+     "sha256": "a427cb8f2552ae0da75717c3ae2891f3114c2f9a6690d5c9df3210a562507e97",
+     "viewBox": [
+      -15,
+      -15,
+      2030,
+      1730
+     ],
+     "aspect": 1.1734,
+     "sourceViewBox": [
+      0,
+      0,
+      2000,
+      1700
+     ],
+     "wordmarkElementsDropped": 0,
+     "aacFile": "out/zai.svg"
+    },
+    "light": {
+     "file": "out/zai-light.svg",
+     "sha256": "299716b08e890d75fa9d8be8f80958eaca39c60c3e75873a1b20613108a0140a",
+     "viewBox": [
+      -15,
+      -15,
+      2030,
+      1730
+     ],
+     "aspect": 1.1734,
+     "sourceViewBox": [
+      0,
+      0,
+      2000,
+      1700
+     ],
+     "wordmarkElementsDropped": 0,
+     "aacFile": "out/zai-light.svg"
+    }
+   }
+  },
+  "opencode": {
+   "name": "OpenCode mark",
+   "aac": {
+    "id": "opencode-go",
+    "note": "copied from AI Account Center marks-v2 (claude-aac-redesign), 2026-10-02",
+    "sourcesJson": "/home/sittingmongoose/PM-Experiments/ccs-accounts-20260930/redesign-concepts-20261001/shared/marks-v2/sources.json"
+   },
+   "scale": 0.84,
+   "aspect": 0.803,
+   "plate": false,
+   "surfaces": "logo-light (dark frame) on light surfaces, logo-dark (light frame) on dark surfaces.",
+   "licenseNote": "OpenCode marks belong to the OpenCode project (anomalyco/opencode, code under MIT). Official brand-page SVGs, unmodified.",
+   "sources": [
+    {
+     "url": "https://raw.githubusercontent.com/anomalyco/opencode/aa481b8f5652f5576c55f914a64ed270e7daa7e0/packages/console/app/src/asset/brand/opencode-logo-dark.svg",
+     "note": "brand asset served on opencode.ai/brand; light frame #F1ECEC, for dark surfaces",
+     "files": [
+      {
+       "file": "src/opencode-logo-dark.svg",
+       "sha256": "5dd4abb4de60204510edf140bbe74b3580d07ebdda79fdb0081cd45acb53d44b"
+      }
+     ]
+    },
+    {
+     "url": "https://raw.githubusercontent.com/anomalyco/opencode/aa481b8f5652f5576c55f914a64ed270e7daa7e0/packages/console/app/src/asset/brand/opencode-logo-light.svg",
+     "note": "dark frame #211E1E, for light surfaces",
+     "files": [
+      {
+       "file": "src/opencode-logo-light.svg",
+       "sha256": "b47a4fecc77599382e238868e74064bbe92307b0e253a32f0b1a026517a2d2a6"
+      }
+     ]
+    }
+   ],
+   "out": {
+    "dark": {
+     "file": "out/opencode.svg",
+     "sha256": "f9ea0248bbd474de03c3c814598ce5ef11a951c545699f46b7906f2d92cef786",
+     "viewBox": [
+      -2.25,
+      -2.25,
+      244.5,
+      304.5
+     ],
+     "aspect": 0.803,
+     "sourceViewBox": [
+      0,
+      0,
+      240,
+      300
+     ],
+     "wordmarkElementsDropped": 0,
+     "aacFile": "out/opencode-go.svg"
+    },
+    "light": {
+     "file": "out/opencode-light.svg",
+     "sha256": "c4758ed2b43701571b59068895717beb4c9b62a99464be64765231c98a86f036",
+     "viewBox": [
+      -2.25,
+      -2.25,
+      244.5,
+      304.5
+     ],
+     "aspect": 0.803,
+     "sourceViewBox": [
+      0,
+      0,
+      240,
+      300
+     ],
+     "wordmarkElementsDropped": 0,
+     "aacFile": "out/opencode-go-light.svg"
+    }
+   }
+  },
+  "anthropic": {
+   "name": "Anthropic symbol",
+   "scale": 0.97,
+   "aspect": 1.4192,
+   "plate": false,
+   "inkBox": 0.3299,
+   "surfaces": "Ivory symbol on dark surfaces, Slate symbol on light surfaces (the two inks the press kit publishes).",
+   "licenseNote": "Anthropic and the Anthropic \"A\\\" symbol are Anthropic trademarks. Official press-kit artwork, unmodified, used only to identify the Anthropic API provider.",
+   "sources": [
+    {
+     "url": "https://www.anthropic.com/press-kit",
+     "retrieved": "2026-10-02",
+     "note": "Anthropic media resources zip (sha256 c68ac92df86c825f95177e24016fcc9a8863a3fd4ca344fe6f0700b2c1e07151), members \"Anthropic media resources/Anthropic logos/Anthropic logos/2 Anthropic symbol/SVG/Anthropic symbol - Ivory.svg\" (fill #FAF9F5, ivory ink) and \"... - Slate.svg\" (fill #141413, slate ink). The press kit names each file by its ink colour.",
+     "files": [
+      {
+       "file": "marks-work/src/anthropic-symbol-ivory.svg",
+       "sha256": "38fc06d8e9390654cc4e96aa53691e2e78d929667c0034805b6d1b3891ba22dd"
+      },
+      {
+       "file": "marks-work/src/anthropic-symbol-slate.svg",
+       "sha256": "d55918884053460f24c958fca3fba8d10b48fdd86e73ba3cd1237713bc0a03bb"
+      }
+     ]
+    }
+   ],
+   "out": {
+    "dark": {
+     "file": "out/anthropic.svg",
+     "sha256": "1d056e72fe30f06dd9cc6622647c3670bc1e3fcc50f8ce361de4ac1233641cf2",
+     "viewBox": [
+      -0.6857,
+      -0.6857,
+      92.7964,
+      65.388
+     ],
+     "aspect": 1.4192,
+     "sourceViewBox": [
+      0,
+      0,
+      92,
+      64
+     ],
+     "wordmarkElementsDropped": 0
+    },
+    "light": {
+     "file": "out/anthropic-light.svg",
+     "sha256": "8e4dd8171717d6bbdc8fe0686c5018fba140b9f5918d1fa82d71c0a733e1b78c",
+     "viewBox": [
+      -0.1107,
+      -0.6857,
+      92.7964,
+      65.388
+     ],
+     "aspect": 1.4192,
+     "sourceViewBox": [
+      0,
+      0,
+      92,
+      64
+     ],
+     "wordmarkElementsDropped": 0
+    }
+   }
+  },
+  "copilot": {
+   "name": "GitHub Copilot icon",
+   "scale": 0.98,
+   "aspect": 1.1935,
+   "plate": false,
+   "inkBox": 0.3091,
+   "surfaces": "Copilot_Icon_White on dark surfaces, Copilot_Icon_Black on light surfaces.",
+   "licenseNote": "GitHub, GitHub Copilot and the Copilot icon are GitHub, Inc. trademarks. Official logo-pack artwork, unmodified, used only to identify the GitHub Copilot provider.",
+   "sources": [
+    {
+     "url": "https://github.com/logos",
+     "retrieved": "2026-10-02",
+     "note": "GitHub logos zip https://brand.github.com/GitHub_Logos.zip (sha256 e2a67d6cc51d990a52c46c1cf6bcab688db4830982174bca50e0be7a5c2f3194), members \"GitHub Logos/SVG/Copilot_Icon_White.svg\" and \"Copilot_Icon_Black.svg\" (identical geometry, white vs black ink). GitHub publishes a separate Copilot icon, so the Invertocat is not needed.",
+     "files": [
+      {
+       "file": "marks-work/src/Copilot_Icon_White.svg",
+       "sha256": "ae3ac7a6dc1415aeaf7064c7a749d9efd7f1ec49a68450590df7cf0da8d83781"
+      },
+      {
+       "file": "marks-work/src/Copilot_Icon_Black.svg",
+       "sha256": "d5aa364673444e6158fedb206efa2aa71886b465921d8911de3cb4e7a3a951bc"
+      }
+     ]
+    }
+   ],
+   "out": {
+    "dark": {
+     "file": "out/copilot.svg",
+     "sha256": "e0568cd49ccc2224bb6f71101ab13cdfd4e49020f99ff024795e6099e8f5134d",
+     "viewBox": [
+      -0.72,
+      7.16,
+      97.44,
+      81.64
+     ],
+     "aspect": 1.1935,
+     "sourceViewBox": [
+      0,
+      0,
+      96,
+      96
+     ],
+     "wordmarkElementsDropped": 0
+    },
+    "light": {
+     "file": "out/copilot-light.svg",
+     "sha256": "e919cb94373be20a3a08b061309263f36817702720d055f60d3796e0b65d0c76",
+     "viewBox": [
+      -0.72,
+      7.16,
+      97.44,
+      81.64
+     ],
+     "aspect": 1.1935,
+     "sourceViewBox": [
+      0,
+      0,
+      96,
+      96
+     ],
+     "wordmarkElementsDropped": 0
+    }
+   }
+  },
+  "grok": {
+   "name": "Grok logomark",
+   "scale": 1,
+   "aspect": 1.0366,
+   "plate": false,
+   "inkBox": 0.2197,
+   "surfaces": "Grok_Logomark_Light (white) on dark surfaces, Grok_Logomark_Dark (near black) on light surfaces.",
+   "licenseNote": "Grok and the Grok logomark are SpaceXAI (formerly xAI) trademarks. The guidelines allow the logos only \"exactly as provided ... without any alteration or adjustment\" and only to refer accurately to SpaceXAI or its services: shown unmodified (crop via viewBox only) to identify Grok Build.",
+   "sources": [
+    {
+     "url": "https://x.ai/legal/brand-guidelines",
+     "retrieved": "2026-10-02",
+     "note": "SpaceXAI (xAI) brand guidelines \"Download Logos\": https://data.x.ai/logos/SpaceXAI_Grok_Assets.zip (sha256 db9129acd4efc4c2202d25afe31b70281a79f8507f75520ab5e6b3356895a7e9), members \"SpaceXAI_Grok_Assets/Grok_Logomark_Light.svg\" (white) and \"Grok_Logomark_Dark.svg\" (#0A0A0A). The kit names each file by the surface style it belongs to: Light = light ink for dark surfaces.",
+     "files": [
+      {
+       "file": "marks-work/src/Grok_Logomark_Light.svg",
+       "sha256": "b20648e2f111d7fbc91f58b22d1e76e9885b68a163cb5a1010f7f11bf5840491"
+      },
+      {
+       "file": "marks-work/src/Grok_Logomark_Dark.svg",
+       "sha256": "a127a7cd42b0450f7d3827a331b0730aab49fd99c3fe920d172475b9ffc83992"
+      }
+     ]
+    }
+   ],
+   "out": {
+    "dark": {
+     "file": "out/grok.svg",
+     "sha256": "c2ce6938ee6c28b60dbf7ff1e81aa55ec75cbc238ad452019de064c8ee3c2eda",
+     "viewBox": [
+      -7.68,
+      -7.68,
+      1039.36,
+      1002.6667
+     ],
+     "aspect": 1.0366,
+     "sourceViewBox": [
+      0,
+      0,
+      1024,
+      1024
+     ],
+     "wordmarkElementsDropped": 0
+    },
+    "light": {
+     "file": "out/grok-light.svg",
+     "sha256": "da67d881d6fd07dfc017f713de689016d9ebafa811377ce53bb8b49a84bfe9b1",
+     "viewBox": [
+      -7.68,
+      -7.68,
+      1039.36,
+      1002.6667
+     ],
+     "aspect": 1.0366,
+     "sourceViewBox": [
+      0,
+      0,
+      1024,
+      1024
+     ],
+     "wordmarkElementsDropped": 0
+    }
+   }
+  },
+  "xai": {
+   "name": "xAI API console icon",
+   "scale": 0.9,
+   "aspect": 1,
+   "plate": true,
+   "inkBox": 0.9172,
+   "scaleTuned": "formula gives 0.75 for the solid plate; set to AAC's plate value 0.9",
+   "surfaces": "favicon-dark (dark plate) on dark surfaces, favicon-light (white plate) on light surfaces, as console.x.ai serves them per colour scheme.",
+   "licenseNote": "SpaceXAI (formerly xAI) and its symbol are SpaceXAI trademarks; the guidelines allow the logos only unaltered and only to refer accurately to SpaceXAI services. Shown unmodified to identify the xAI API.",
+   "sources": [
+    {
+     "url": "https://console.x.ai/",
+     "retrieved": "2026-10-02",
+     "note": "the xAI API console's own icons: https://console.x.ai/_next/static/media/favicon-dark.0-f2gt9doy0_1.svg (dark rounded plate #0A0A0A, white SpaceXAI symbol) and favicon-light.1u6watcuoe8mg.svg (white plate, black symbol). A published app-icon plate, used as published.",
+     "files": [
+      {
+       "file": "marks-work/src/xai-console-favicon-dark.svg",
+       "sha256": "986c5af775f7b550d41cf44e20d981407b30e7f24fa231e8434c5ec3db9c5307"
+      },
+      {
+       "file": "marks-work/src/xai-console-favicon-light.svg",
+       "sha256": "f441eef32955dabf2ded0bb66bf5674a53afb81557d9281c00735dd245dfdc86"
+      }
+     ]
+    },
+    {
+     "url": "https://x.ai/legal/brand-guidelines",
+     "retrieved": "2026-10-02",
+     "note": "not used: the bare SpaceXAI symbol from SpaceXAI_Grok_Assets.zip (\"spacexai - symbol - white - transparent.svg\", \"... black - transparent.svg\") is 2.56:1 wide; contained in a 16px box it is 6px tall and its four strokes merge, so the API console's own square icon is used instead",
+     "files": [
+      {
+       "file": "marks-work/src/spacexai-symbol-white-transparent.svg",
+       "sha256": "ce4ba444ff916e1f51cde773e69519bd9e5c7477b883a4bc1b7d39306075852f"
+      },
+      {
+       "file": "marks-work/src/spacexai-symbol-black-transparent.svg",
+       "sha256": "435f412250a243399c6af46c83dbbc720d55e29dc4570fc046d9bec254d998a2"
+      }
+     ]
+    }
+   ],
+   "out": {
+    "dark": {
+     "file": "out/xai.svg",
+     "sha256": "4ceec9b22b18f931b19f929b4e51ea6e4dde73adca264cc25b3a415938464010",
+     "viewBox": [
+      -3.84,
+      -3.84,
+      519.68,
+      519.68
+     ],
+     "aspect": 1,
+     "sourceViewBox": [
+      0,
+      0,
+      512,
+      512
+     ],
+     "wordmarkElementsDropped": 0
+    },
+    "light": {
+     "file": "out/xai-light.svg",
+     "sha256": "e12cfa16e71d2d5db4db355339cd3c4bbb3ae3d810053cbe42a0e7d01398afc1",
+     "viewBox": [
+      -3.84,
+      -3.84,
+      519.68,
+      519.68
+     ],
+     "aspect": 1,
+     "sourceViewBox": [
+      0,
+      0,
+      512,
+      512
+     ],
+     "wordmarkElementsDropped": 0
+    }
+   }
+  },
+  "minimax": {
+   "name": "MiniMax symbol",
+   "scale": 1,
+   "aspect": 1.1853,
+   "plate": false,
+   "inkBox": 0.2372,
+   "surfaces": "One artwork for both surfaces (pink to orange gradient symbol; the official dark variant changes only the wordmark).",
+   "licenseNote": "MiniMax and its symbol are MiniMax trademarks. Official vector artwork from MiniMax's own developer platform, unmodified, used only to identify the MiniMax Coding Plan provider. MiniMax publishes no separate press kit.",
+   "sources": [
+    {
+     "url": "https://platform.minimax.io/",
+     "retrieved": "2026-10-02",
+     "note": "MiniMax developer platform docs logo https://mintcdn.com/minimax-cac98058/XYzsL2L2ynonu2Q_/logo/light.svg (lockup: gradient symbol #E21680 to #FF633A plus #171717 wordmark); the symbol is cropped out and the wordmark paths outside the crop are dropped (render verified pixel-identical). logo/dark.svg has the same gradient symbol with a white wordmark, so one artwork serves both surfaces.",
+     "files": [
+      {
+       "file": "marks-work/src/minimax-docs-logo-light.svg",
+       "sha256": "90c43806b801dd6db9bf95613f9a5634cc83a1c7f303ea192eec37d985baa631"
+      },
+      {
+       "file": "marks-work/src/minimax-docs-logo-dark.svg",
+       "sha256": "fcbfb2a9f031756cbe6bbd630b8cfcc1519b6f7b0da99718b4df52c6b30a9507"
+      }
+     ]
+    }
+   ],
+   "out": {
+    "dark": {
+     "file": "out/minimax.svg",
+     "sha256": "ebd1ae0352ede2f84ed77dce61a7239f6ba125c444de3f256242fb8af0b84bb1",
+     "viewBox": [
+      -0.2769,
+      -0.2769,
+      37.4801,
+      31.6214
+     ],
+     "aspect": 1.1853,
+     "sourceViewBox": [
+      0,
+      0,
+      129,
+      32
+     ],
+     "wordmarkElementsDropped": 7
+    },
+    "light": null
+   }
+  },
+  "gemini": {
+   "name": "Gemini spark (2026)",
+   "scale": 0.96,
+   "aspect": 1,
+   "plate": false,
+   "inkBox": 0.3426,
+   "surfaces": "One artwork for both surfaces (full-colour spark).",
+   "licenseNote": "Gemini and the Gemini spark are Google LLC trademarks. Official product icon, unmodified, used only to identify the Gemini API (Gemini Direct) provider. 252 KB because Google ships the colour field as an embedded raster inside the SVG.",
+   "sources": [
+    {
+     "url": "https://www.gstatic.com/images/branding/productlogos/gemini_2026/v1/192px.svg",
+     "retrieved": "2026-10-02",
+     "note": "Google product-logo CDN, the current Gemini product icon (referenced by https://aistudio.google.com/, the Gemini API console). Vector spark outline clipping an embedded 384px colour field, as Google ships it. Not used: https://www.gstatic.com/images/branding/productlogos/gemini/v1/192px.svg (the previous gradient spark) and the monochrome spark in https://ai.google.dev/_static/googledevai/images/gemini-api-logo.svg / -dark-theme.svg (Gemini API lockup).",
+     "files": [
+      {
+       "file": "marks-work/src/gemini_2026-v1-192px.svg",
+       "sha256": "9a29ed5bb1428a000d4b3fa551c6f9fd4201684b46c55de140931d0632517d31"
+      },
+      {
+       "file": "marks-work/src/gemini-api-logo.svg",
+       "sha256": "807904a9ec0098fe5d2e29811ff5e99944b7f49308964447644abc6d57dee1b4"
+      },
+      {
+       "file": "marks-work/src/gemini-api-logo-dark-theme.svg",
+       "sha256": "c0f30c2cccfd9104d3baf87310754962b7d614d747e58ea1d8df88d75d7e728a"
+      }
+     ]
+    }
+   ],
+   "out": {
+    "dark": {
+     "file": "out/gemini.svg",
+     "sha256": "c4297aaf6046b412d6afd3b782400d5bec0400367c47ba43dd0b85e162e03d83",
+     "viewBox": [
+      5.6244,
+      5.6244,
+      180.7512,
+      180.7512
+     ],
+     "aspect": 1,
+     "sourceViewBox": [
+      0,
+      0,
+      192,
+      192
+     ],
+     "wordmarkElementsDropped": 0
+    },
+    "light": null
+   }
+  },
+  "vertex-ai": {
+   "name": "Vertex AI product icon",
+   "scale": 1,
+   "aspect": 1,
+   "plate": false,
+   "inkBox": 0.2491,
+   "surfaces": "One artwork for both surfaces (four-colour Google palette).",
+   "licenseNote": "Vertex AI and Google Cloud are Google LLC trademarks. Official Google Cloud product icon, unmodified, used only to identify the Vertex AI provider.",
+   "sources": [
+    {
+     "url": "https://cloud.google.com/icons",
+     "retrieved": "2026-10-02",
+     "note": "Google Cloud core product icons zip https://services.google.com/fh/files/misc/core-products-icons.zip (sha256 6531a10f58bc599c24d9a455d81dd757c1a03c3c43da9cddf639b859c1c1eece), member \"Unique Icons/Vertex AI/SVG/VertexAI-512-color.svg\"",
+     "files": [
+      {
+       "file": "marks-work/src/VertexAI-512-color.svg",
+       "sha256": "17922247f3110026fd637c531d0604c67a00c9a58a6e152030f2242b9fd48a8e"
+      }
+     ]
+    }
+   ],
+   "out": {
+    "dark": {
+     "file": "out/vertex-ai.svg",
+     "sha256": "cf493afcbb2ff75ad8e85f342defd3bcd02f91f054f878b392317e5c564d84f3",
+     "viewBox": [
+      50.9429,
+      50.9429,
+      410.1141,
+      410.1141
+     ],
+     "aspect": 1,
+     "sourceViewBox": [
+      0,
+      0,
+      512,
+      512
+     ],
+     "wordmarkElementsDropped": 0
+    },
+    "light": null
+   }
+  }
+ }
+}
