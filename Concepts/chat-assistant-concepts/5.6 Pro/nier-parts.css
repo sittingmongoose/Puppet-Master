@@ -109,7 +109,9 @@ html[data-o55-nier-parts~="headers"] .orbit-panel-title { text-transform: upperc
    their own background (the plan document's h2 trades its 6 px bottom margin for padding, so nothing moves); the
    sheet heads have none, so the rule is a pseudo-element just below them, in the gap the sheet already leaves. */
 html[data-o55-nier-parts~="headers"] .demo-section > h3,
-html[data-o55-nier-parts~="headers"] .pd-h2 {
+html[data-o55-nier-parts~="headers"] .pd-h2,
+html[data-o55-nier-parts~="headers"] .working-head,
+html[data-o55-nier-parts~="headers"] .system-card-head {
   background-image: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)), linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)),
     linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45));
   background-size: 5px 5px, 5px 5px, calc(100% - 12px) 1px;
@@ -117,6 +119,9 @@ html[data-o55-nier-parts~="headers"] .pd-h2 {
   background-repeat: no-repeat; background-origin: border-box;
 }
 html[data-o55-nier-parts~="headers"] .pd-h2 { padding-bottom: 6px; margin-bottom: 0; }
+/* card heads (the live work card, artifact and system cards): the rule stands in for their bottom border */
+html[data-o55-nier-parts~="headers"] .working-head { border-bottom-color: transparent; }
+html[data-o55-nier-parts~="headers"] .system-card-head { border-bottom-color: transparent; }
 html[data-o55-nier-parts~="headers"] .pmx-sheet .pmx-head { position: relative; }
 html[data-o55-nier-parts~="headers"] .pmx-sheet .pmx-q-head { position: relative; }
 html[data-o55-nier-parts~="headers"] .pmx-sheet .pmx-head::after,
