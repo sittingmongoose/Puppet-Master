@@ -253,6 +253,21 @@
       rows: sizeRows(id), foot: 'Drag any edge or corner for any size in between.', onPick: function (v) { applySize(id, v); return true; } };
   }
 
+  /* the heads follow the look: a NieR or Retro switch (or a web font that lands late) changes the face the subtitles and
+     titles are measured in, so every card's head is fitted again (Mac NieR 1920: a plate subtitle fitted in the Basic
+     face kept its third part and ended in an ellipsis) */
+  function resyncHeads() {
+    var board = document.getElementById('pmuBoard'); if (!board) return;
+    Array.prototype.forEach.call(board.querySelectorAll(':scope > .pmu-card'), function (card) {
+      var body = card.querySelector('.pmu-cardbody'), ctx = body && body._pmuCtx;
+      if (!ctx || !ctx.def) return;
+      try { withView(card.getAttribute('data-widget'), function () { syncHead(card, ctx); }); } catch (error) {}
+    });
+  }
+  var headT = 0;
+  function resyncSoon() { if (headT) return; headT = requestAnimationFrame(function () { headT = 0; resyncHeads(); }); }
+  if (PMU.theme && PMU.theme.onChange) PMU.theme.onChange(resyncSoon);
+  try { if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', resyncSoon); } catch (error) {}
   PMU.cards = {
     HEAD_PX: HEAD_PX,
     headForm: headForm,
