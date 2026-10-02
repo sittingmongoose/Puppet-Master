@@ -45,5 +45,9 @@
   },
   "observed_physical_canary_seconds": 450.307123673,
   "governing_authority_amendment": "canary-controller-cohort-v1/recovery-v1/AUTHORITY_AMENDMENT.json",
-  "observed_usage_scope": "Frozen first canary/recovery observation; not a live counter. Historical failures/caps retained without reset."
+  "observed_usage_scope": "Frozen first canary/recovery observation; not a live counter. Historical failures/caps retained without reset.",
+  "reserved_native_starts": 84,
+  "reserved_occupied_candidate_seconds": 151200,
+  "reservation_scope": "24 initial integrated and four fresh holdout whole pipelines; reservations are not starts/usage; root-selected overlay-v2 freeze",
+  "reservation_evidence": "tranche-cohort-v2/ops/recovery-v1/OVERLAY_V2.json"
 }

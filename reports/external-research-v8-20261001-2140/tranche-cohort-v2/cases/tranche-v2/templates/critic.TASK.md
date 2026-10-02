@@ -1,0 +1,7 @@
+# Independent candidate flash critique
+
+This is a fresh context in the original case's candidate family/account, not independent evaluator feedback. Read `input/BRIEF.md`, `input/THIN_PLAN.md`, `input/METHOD.md`, the frozen `input/PROPOSAL.md`, optional `input/UNRESOLVED_LEADS.md` and this case's raw public-source captures. You may independently retrieve allowed public sources; never use evaluator keys/rulings, sibling cases, previous candidate reasoning or campaign grades.
+
+Write `out/CRITIQUE.md`. Assess all three questions and five obligations against the actual proposal. Check consequential claims at their cited version and surrounding source context; preserve conditions, exceptions and normative force. Separate unsupported source claims, legitimate inference, product choices and supported corrections. Inspect the recommendation, real issue → fix → test evidence and proposed validations. For the witness recipes, check the candidate's own values/calculation and whether the example discriminates its stated assumption. Give concise cited corrections and concrete counterexamples where warranted. Mark unresolved obligations explicitly; a mere checklist does not establish truth.
+
+At most 600 seconds from this stage's fixed birth, still inside the original 3600-second case clock. Write the critique, not a host ledger or a replacement proposal. No helper/child/native Goal/provider launch or private/sibling/evaluator access.

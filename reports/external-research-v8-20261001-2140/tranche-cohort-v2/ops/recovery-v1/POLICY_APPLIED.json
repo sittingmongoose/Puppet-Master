@@ -1,0 +1,68 @@
+{
+  "applied_utc": "2026-10-02T03:43:56.618505+00:00",
+  "overlay_sha256": "ee7f9b79b25017e71bab6c09206de3fc29131ab57284925aaf30204e45c803e1",
+  "original_state_snapshot_sha256": "9670a1f7e67d4f9aaacd04d91aa4c61e95e1cb37b3bb0a8e0f749655dcf8737d",
+  "authority_amendment_sha256": "1479c0b44869d13878b90ccd2f02d5fb2d755cfa0f0b17315105dc48d57616ec",
+  "current_accounting": {
+    "elapsed_seconds": 7427.606600046158,
+    "deadline_epoch": 1790948409,
+    "admissions": 1,
+    "native_goal_starts": 1,
+    "pending_start_permits": 0,
+    "occupied_slot_seconds": 816.6492922306061,
+    "committed_slot_seconds": 0,
+    "reserved_or_committed_slot_seconds": 32400,
+    "reserved_or_committed_native_starts": 18,
+    "active_by_family": {
+      "M": 0,
+      "Z": 0,
+      "L": 0
+    },
+    "candidate_output_warning": false,
+    "candidate_output_stop": false,
+    "active_jobs": [],
+    "overdue_jobs": [],
+    "helper_task_starts": 19,
+    "active_helpers": 5,
+    "evaluator_helper_starts_remaining": 6,
+    "generated_output_tokens_lower_bound": 0,
+    "generated_usage": "unknown",
+    "outside_native_seconds_by_case": {
+      "v8-z-mechanical-route-canary-v1": 0.435632441
+    },
+    "category_seconds": {
+      "cancel": 0,
+      "cleanup": 0.190546614,
+      "evaluation": 0,
+      "handoff": 0,
+      "native": 449.871491232,
+      "retry": 0,
+      "setup": 0.245085827,
+      "source_capture": 0,
+      "wait": 0
+    },
+    "occupancy_reconciled": true,
+    "route_reviews": [
+      "v8-z-route-repair1-canary-v1",
+      "v8-z-route-repair1-caller2-canary-v2"
+    ],
+    "final_reserved_names": [
+      "V8-BIO-C-Z",
+      "V8-BIO-P-Z",
+      "V8-BIO-B-Z",
+      "V8-NB-C-Z",
+      "V8-NB-P-Z",
+      "V8-NB-B-Z"
+    ],
+    "evaluator_reserved_names": [
+      "V8-EVAL-BIO-C",
+      "V8-EVAL-BIO-P",
+      "V8-EVAL-BIO-B",
+      "V8-EVAL-NB-C",
+      "V8-EVAL-NB-P",
+      "V8-EVAL-NB-B"
+    ],
+    "closed": false
+  },
+  "historical_job_caps_rewritten": false
+}

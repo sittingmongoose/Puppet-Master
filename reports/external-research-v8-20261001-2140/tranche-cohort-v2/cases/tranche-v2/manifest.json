@@ -1,0 +1,75 @@
+{
+  "schema": "pm.external_research.v8.integration_tranche.v2",
+  "campaign_id": "external-research-v8-20261001-2140",
+  "status": "FROZEN_PROSPECTIVE_NOT_EXECUTED",
+  "frozen_at": "2026-10-02T03:45:58.672547+00:00",
+  "integration_first": true,
+  "initial_pipeline_count": 24,
+  "initial_pair_count": 12,
+  "reused_frozen_planning_cases": 6,
+  "new_pipeline_count": 18,
+  "domains": [
+    "bioimaging",
+    "notebook-workspace"
+  ],
+  "contrasts_per_domain": 6,
+  "minimum_required_real_brief_only_discovery_repository_pairs": 4,
+  "actual_reserved_real_brief_only_discovery_repository_pairs": 12,
+  "candidate_reservations": "reservations/candidates.json",
+  "matched_comparisons": "pairs.json",
+  "holdout_reservations": "reservations/holdouts.json",
+  "independent_evaluation_reserved_before_queue_fill": true,
+  "evaluation_reservations": "scoring-only/reservations.json",
+  "evaluator_only_scope": "scoring-only/evaluation-scope.json",
+  "source_access": "source-access.json",
+  "global_caps": {
+    "deadline_epoch": 1790948409,
+    "total_start_cap": 144,
+    "candidate_slot_seconds_cap": 172800,
+    "candidate_native_starts_reserved_initial_and_holdout": 84,
+    "candidate_slot_seconds_reserved_initial_and_holdout": 151200,
+    "remaining_candidate_slot_seconds": 21600,
+    "helper_starts_reserved_initial_and_holdout": 28,
+    "helper_seconds_separately_recorded_excluded_from_candidate_slot_cap": 67200
+  },
+  "common_effective_caps": {
+    "stage_seconds": [
+      1800,
+      600,
+      600
+    ],
+    "case_wall_seconds": 3600,
+    "case_occupied_seconds": 5400,
+    "host_overhead_seconds": 300,
+    "ours_active_per_family": {
+      "M": 2,
+      "Z": 2,
+      "L": 2
+    }
+  },
+  "old_manifest_compatibility": "Original old six manifests retain host600; new prospective source-admitted host binding tightens effective execution host cap to300 for both matched arms without editing old artifacts. Keep other stricter campaign caps too.",
+  "provisional_family_policy": "Family labels are scheduling reservations, not activation authority. If M/L unavailable, safe available family may carry an entire unstarted new pair. Freeze same account/model/mode/route/limits and both input hashes in a prospective host receipt before either case birth. No automatic fallback, reroute after preparation, or outcome-based rerun. Old/new pairs are Z unless a separately admissible prospective whole-pair binding exists.",
+  "launch_priority": [
+    "V8-BIO-CHECK",
+    "V8-NB-CHECK",
+    "V8-BIO-COND",
+    "V8-BIO-BATCH",
+    "V8-BIO-RETR",
+    "V8-BIO-AMEND",
+    "V8-BIO-BREADTH",
+    "V8-NB-COND",
+    "V8-NB-BATCH",
+    "V8-NB-RETR",
+    "V8-NB-AMEND",
+    "V8-NB-BREADTH"
+  ],
+  "no_launch_authority": true,
+  "candidate_input_allowlist": "Only assigned BRIEF.md, THIN_PLAN.md, METHOD.md and stage TASK; fresh critic/correction additionally permitted same-case frozen proposal/critique/current leads/raw admitted source captures. Never package the tranche directory, reservations, scoring-only, sibling cases, manifests, evaluator records or old campaign output.",
+  "artifact_policy": "Research PROPOSAL.md; fresh same-family CRITIQUE.md; fresh correction FINAL_PROPOSAL.md (complete actual artifact), consequential UNRESOLVED_LEADS.md when needed; host source/provenance/delivered ranges/timing/account/history/hash/cost receipts mechanically.",
+  "first_pair_ids": [
+    "V8-BIO-C-Z",
+    "V8-BIO-WIT-T-Z"
+  ],
+  "limitations": "Prompt-level incremental contrasts on declared shared backgrounds; no universal isolated main effects or replication/statistical generalization. Full pipeline outcome quality required; control spontaneous uptake and source difficulty may reduce contrast. Four unseen holdouts reserve a practical selected-recipe check.",
+  "pre_preparation_clarification": "Assigned additions override the generic ordinary-control no-imposed-technique sentence; no unassigned technique is prohibited. This clarification is frozen before preparation; use only the final SHA256 receipt."
+}

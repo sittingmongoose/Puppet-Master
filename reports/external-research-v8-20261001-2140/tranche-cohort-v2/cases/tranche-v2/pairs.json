@@ -1,0 +1,142 @@
+{
+  "schema": "pm.external_research.v8.tranche_pairs.v2",
+  "frozen_at": "2026-10-02T03:45:21.564916+00:00",
+  "pair_count": 12,
+  "pipeline_count": 24,
+  "reuse_count": 6,
+  "new_count": 18,
+  "pairs": [
+    {
+      "pair_id": "V8-BIO-CHECK",
+      "domain": "bioimaging",
+      "contrast": "concrete-discriminatory-checks",
+      "control_case": "V8-BIO-C-Z",
+      "treatment_case": "V8-BIO-WIT-T-Z",
+      "family_provisional": "Z",
+      "prospective_estimand": "One self-derived discriminating numerical witness added to ordinary complete pipeline.",
+      "claim_limit": "Instruction-level incremental comparison on the declared shared recipe background; not a universal independent main effect. One matched pair per domain/contrast, no statistical generalization. No candidate outputs or source discoveries may cross cases. Control may spontaneously use a technique; report observed separation."
+    },
+    {
+      "pair_id": "V8-BIO-COND",
+      "domain": "bioimaging",
+      "contrast": "conditions-propositions",
+      "control_case": "V8-BIO-COND-C-Z",
+      "treatment_case": "V8-BIO-P-Z",
+      "family_provisional": "Z",
+      "prospective_estimand": "Three proposition/condition checks added on a shared discriminating-witness background; old P keeps its complete frozen recipe.",
+      "claim_limit": "Instruction-level incremental comparison on the declared shared recipe background; not a universal independent main effect. One matched pair per domain/contrast, no statistical generalization. No candidate outputs or source discoveries may cross cases. Control may spontaneously use a technique; report observed separation."
+    },
+    {
+      "pair_id": "V8-BIO-BATCH",
+      "domain": "bioimaging",
+      "contrast": "coherent-batching",
+      "control_case": "V8-BIO-BATCH-C-Z",
+      "treatment_case": "V8-BIO-B-Z",
+      "family_provisional": "Z",
+      "prospective_estimand": "Coherent two/three research batches added on shared proposition/condition/witness/progressive-retrieval background; within-case source reuse access common.",
+      "claim_limit": "Instruction-level incremental comparison on the declared shared recipe background; not a universal independent main effect. One matched pair per domain/contrast, no statistical generalization. No candidate outputs or source discoveries may cross cases. Control may spontaneously use a technique; report observed separation."
+    },
+    {
+      "pair_id": "V8-BIO-RETR",
+      "domain": "bioimaging",
+      "contrast": "progressive-question-evidence-retrieval",
+      "control_case": "V8-BIO-RETR-C-M",
+      "treatment_case": "V8-BIO-RETR-T-M",
+      "family_provisional": "M",
+      "prospective_estimand": "Progressive source/context retrieval added on shared coherent-batching ordinary pipeline.",
+      "claim_limit": "Instruction-level incremental comparison on the declared shared recipe background; not a universal independent main effect. One matched pair per domain/contrast, no statistical generalization. No candidate outputs or source discoveries may cross cases. Control may spontaneously use a technique; report observed separation."
+    },
+    {
+      "pair_id": "V8-BIO-AMEND",
+      "domain": "bioimaging",
+      "contrast": "amendment-flash-critique",
+      "control_case": "V8-BIO-AMEND-C-L",
+      "treatment_case": "V8-BIO-AMEND-T-L",
+      "family_provisional": "L",
+      "prospective_estimand": "Prioritized amendment format added to existing fresh same-family full-scope critic; no model change or stronger evaluator feedback.",
+      "claim_limit": "Instruction-level incremental comparison on the declared shared recipe background; not a universal independent main effect. One matched pair per domain/contrast, no statistical generalization. No candidate outputs or source discoveries may cross cases. Control may spontaneously use a technique; report observed separation."
+    },
+    {
+      "pair_id": "V8-BIO-BREADTH",
+      "domain": "bioimaging",
+      "contrast": "breadth-analogy-discovery",
+      "control_case": "V8-BIO-BREADTH-C-M",
+      "treatment_case": "V8-BIO-BREADTH-T-M",
+      "family_provisional": "M",
+      "prospective_estimand": "Bounded 3/4 option shortlist with one independently discovered analogy added to ordinary complete discovery; whole-case requirements common.",
+      "claim_limit": "Instruction-level incremental comparison on the declared shared recipe background; not a universal independent main effect. One matched pair per domain/contrast, no statistical generalization. No candidate outputs or source discoveries may cross cases. Control may spontaneously use a technique; report observed separation."
+    },
+    {
+      "pair_id": "V8-NB-CHECK",
+      "domain": "notebook-workspace",
+      "contrast": "concrete-discriminatory-checks",
+      "control_case": "V8-NB-C-Z",
+      "treatment_case": "V8-NB-WIT-T-Z",
+      "family_provisional": "Z",
+      "prospective_estimand": "One self-derived discriminating numerical witness added to ordinary complete pipeline.",
+      "claim_limit": "Instruction-level incremental comparison on the declared shared recipe background; not a universal independent main effect. One matched pair per domain/contrast, no statistical generalization. No candidate outputs or source discoveries may cross cases. Control may spontaneously use a technique; report observed separation."
+    },
+    {
+      "pair_id": "V8-NB-COND",
+      "domain": "notebook-workspace",
+      "contrast": "conditions-propositions",
+      "control_case": "V8-NB-COND-C-Z",
+      "treatment_case": "V8-NB-P-Z",
+      "family_provisional": "Z",
+      "prospective_estimand": "Three proposition/condition checks added on a shared discriminating-witness background; old P keeps its complete frozen recipe.",
+      "claim_limit": "Instruction-level incremental comparison on the declared shared recipe background; not a universal independent main effect. One matched pair per domain/contrast, no statistical generalization. No candidate outputs or source discoveries may cross cases. Control may spontaneously use a technique; report observed separation."
+    },
+    {
+      "pair_id": "V8-NB-BATCH",
+      "domain": "notebook-workspace",
+      "contrast": "coherent-batching",
+      "control_case": "V8-NB-BATCH-C-Z",
+      "treatment_case": "V8-NB-B-Z",
+      "family_provisional": "Z",
+      "prospective_estimand": "Coherent two/three research batches added on shared proposition/condition/witness/progressive-retrieval background; within-case source reuse access common.",
+      "claim_limit": "Instruction-level incremental comparison on the declared shared recipe background; not a universal independent main effect. One matched pair per domain/contrast, no statistical generalization. No candidate outputs or source discoveries may cross cases. Control may spontaneously use a technique; report observed separation."
+    },
+    {
+      "pair_id": "V8-NB-RETR",
+      "domain": "notebook-workspace",
+      "contrast": "progressive-question-evidence-retrieval",
+      "control_case": "V8-NB-RETR-C-M",
+      "treatment_case": "V8-NB-RETR-T-M",
+      "family_provisional": "M",
+      "prospective_estimand": "Progressive source/context retrieval added on shared coherent-batching ordinary pipeline.",
+      "claim_limit": "Instruction-level incremental comparison on the declared shared recipe background; not a universal independent main effect. One matched pair per domain/contrast, no statistical generalization. No candidate outputs or source discoveries may cross cases. Control may spontaneously use a technique; report observed separation."
+    },
+    {
+      "pair_id": "V8-NB-AMEND",
+      "domain": "notebook-workspace",
+      "contrast": "amendment-flash-critique",
+      "control_case": "V8-NB-AMEND-C-L",
+      "treatment_case": "V8-NB-AMEND-T-L",
+      "family_provisional": "L",
+      "prospective_estimand": "Prioritized amendment format added to existing fresh same-family full-scope critic; no model change or stronger evaluator feedback.",
+      "claim_limit": "Instruction-level incremental comparison on the declared shared recipe background; not a universal independent main effect. One matched pair per domain/contrast, no statistical generalization. No candidate outputs or source discoveries may cross cases. Control may spontaneously use a technique; report observed separation."
+    },
+    {
+      "pair_id": "V8-NB-BREADTH",
+      "domain": "notebook-workspace",
+      "contrast": "breadth-analogy-discovery",
+      "control_case": "V8-NB-BREADTH-C-M",
+      "treatment_case": "V8-NB-BREADTH-T-M",
+      "family_provisional": "M",
+      "prospective_estimand": "Bounded 3/4 option shortlist with one independently discovered analogy added to ordinary complete discovery; whole-case requirements common.",
+      "claim_limit": "Instruction-level incremental comparison on the declared shared recipe background; not a universal independent main effect. One matched pair per domain/contrast, no statistical generalization. No candidate outputs or source discoveries may cross cases. Control may spontaneously use a technique; report observed separation."
+    }
+  ],
+  "brief_only_discovery_repository_investigation_pairs": 12,
+  "first_pair": {
+    "pair_id": "V8-BIO-CHECK",
+    "domain": "bioimaging",
+    "contrast": "concrete-discriminatory-checks",
+    "control_case": "V8-BIO-C-Z",
+    "treatment_case": "V8-BIO-WIT-T-Z",
+    "family_provisional": "Z",
+    "prospective_estimand": "One self-derived discriminating numerical witness added to ordinary complete pipeline.",
+    "claim_limit": "Instruction-level incremental comparison on the declared shared recipe background; not a universal independent main effect. One matched pair per domain/contrast, no statistical generalization. No candidate outputs or source discoveries may cross cases. Control may spontaneously use a technique; report observed separation."
+  },
+  "superseded_unexecuted_planning_comparison": "planning-v1 C versus P / P versus B schedule is superseded only as prospective tranche pairing; original frozen artifacts unchanged. No old combined treatment is relabeled as an isolated treatment: each old factor other than tested increment is shared by its explicitly new matched arm."
+}

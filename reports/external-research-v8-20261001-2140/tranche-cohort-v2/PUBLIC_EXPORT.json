@@ -1,0 +1,634 @@
+{
+  "schema": "pm.er8.tranche-public-export.v2",
+  "scope": "Prospective12pair24pipelinefreeze,4unseenholdoutnames,reservations, additiveauthorityoverlay/restart; NOTexecution/nativeacceptance/results",
+  "restriction": "Exclude scoring-only directory/evaluator-only keys. No rawcaptures/sourcebodies/nativeauth/logs/modelIO. Tokenizeabsoluteprivatehostlocatorswithoriginal/publichashes and disclose staticlayoutdeps. No fabricatedresult/semanticqualification. Historical accounting fixture is positively selected metadata only; tokenize lab/private locators and preserve original/public hashes; no reregradingfailure or caprewrite. Public source/path rebinds are replay copies, not accepted runtime pins.",
+  "artifacts": [
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/PUBLICATION_HANDOFF_TRANCHE_V2.json",
+      "public_path": "ROOT_HANDOFF.json",
+      "original_sha256": "19f08f09e87caf977a42078815162bc3e0910011edeb25d4860981627d201fd3",
+      "public_sha256": "f438f11973673440fde4e2c5197a0a07608fdbf733bb9b0a067f772cf20cacdd",
+      "bytes": 14391,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/planning-v1-preserved-hashes.json",
+      "public_path": "cases/tranche-v2/planning-v1-preserved-hashes.json",
+      "original_sha256": "a7fbf57b8cf547663b521e271bdb626b48b2ff456afb3c498c27dd51356cdf6f",
+      "public_sha256": "a7fbf57b8cf547663b521e271bdb626b48b2ff456afb3c498c27dd51356cdf6f",
+      "bytes": 4068,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/README.md",
+      "public_path": "cases/tranche-v2/README.md",
+      "original_sha256": "2bb755f483fcf701badffb2da5c21a4f037e31ac35c0011cb8131c04c23251bf",
+      "public_sha256": "2bb755f483fcf701badffb2da5c21a4f037e31ac35c0011cb8131c04c23251bf",
+      "bytes": 1425,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/source-access.json",
+      "public_path": "cases/tranche-v2/source-access.json",
+      "original_sha256": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df",
+      "public_sha256": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df",
+      "bytes": 1728,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/manifest.json",
+      "public_path": "cases/tranche-v2/manifest.json",
+      "original_sha256": "d1d0bc0c4efae38e34819f7cf245030ff78ba1b85e8de2c35342549f5db60152",
+      "public_sha256": "d1d0bc0c4efae38e34819f7cf245030ff78ba1b85e8de2c35342549f5db60152",
+      "bytes": 4017,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/methods.json",
+      "public_path": "cases/tranche-v2/methods.json",
+      "original_sha256": "b3ff7f1d2e37225871619770e5e86d3ff77dfd3fdc2281ec19ca7a1e76edda9f",
+      "public_sha256": "b3ff7f1d2e37225871619770e5e86d3ff77dfd3fdc2281ec19ca7a1e76edda9f",
+      "bytes": 10565,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/pairs.json",
+      "public_path": "cases/tranche-v2/pairs.json",
+      "original_sha256": "0b121d91420bc7dbb22f4dfdebbe6efe55f32088a73fa632fa98b799e0cd8d55",
+      "public_sha256": "0b121d91420bc7dbb22f4dfdebbe6efe55f32088a73fa632fa98b799e0cd8d55",
+      "bytes": 10248,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/sandbox-plans/bioimaging.md",
+      "public_path": "cases/tranche-v2/sandbox-plans/bioimaging.md",
+      "original_sha256": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30",
+      "public_sha256": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30",
+      "bytes": 959,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/sandbox-plans/notebook-workspace.md",
+      "public_path": "cases/tranche-v2/sandbox-plans/notebook-workspace.md",
+      "original_sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+      "public_sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+      "bytes": 920,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/templates/critic.TASK.md",
+      "public_path": "cases/tranche-v2/templates/critic.TASK.md",
+      "original_sha256": "fa635038ca75a96599f09d43eb289b89c25320eda9325fd836c6fef2878504b2",
+      "public_sha256": "fa635038ca75a96599f09d43eb289b89c25320eda9325fd836c6fef2878504b2",
+      "bytes": 1448,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/templates/research.TASK.md",
+      "public_path": "cases/tranche-v2/templates/research.TASK.md",
+      "original_sha256": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3",
+      "public_sha256": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3",
+      "bytes": 1586,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/templates/correction.TASK.md",
+      "public_path": "cases/tranche-v2/templates/correction.TASK.md",
+      "original_sha256": "9ef5b51a9b2e9db734e492f6be2978f277ec8ee7f456b310c1f793375f1997d5",
+      "public_sha256": "9ef5b51a9b2e9db734e492f6be2978f277ec8ee7f456b310c1f793375f1997d5",
+      "bytes": 1477,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/briefs/bioimaging.md",
+      "public_path": "cases/tranche-v2/briefs/bioimaging.md",
+      "original_sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+      "public_sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+      "bytes": 3352,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/briefs/notebook-workspace.md",
+      "public_path": "cases/tranche-v2/briefs/notebook-workspace.md",
+      "original_sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+      "public_sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+      "bytes": 3603,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/reservations/holdouts.json",
+      "public_path": "cases/tranche-v2/reservations/holdouts.json",
+      "original_sha256": "37d66ea286c8082f0248daee8459874284664eb3f39bf0b6e7ac9fcf9740ad68",
+      "public_sha256": "37d66ea286c8082f0248daee8459874284664eb3f39bf0b6e7ac9fcf9740ad68",
+      "bytes": 4334,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/reservations/candidates.json",
+      "public_path": "cases/tranche-v2/reservations/candidates.json",
+      "original_sha256": "d5339bf4ba7c550cae801fc63ba79e21a1b9ac6af1d2dad4298e60d8e5a795f3",
+      "public_sha256": "d5339bf4ba7c550cae801fc63ba79e21a1b9ac6af1d2dad4298e60d8e5a795f3",
+      "bytes": 9172,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-AMEND-C-L/METHOD.md",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-AMEND-C-L/METHOD.md",
+      "original_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "public_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "bytes": 473,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-AMEND-C-L/manifest.json",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-AMEND-C-L/manifest.json",
+      "original_sha256": "b54829bf3d92a7b92d060843da9034ab7a4a8e8fadaf3fe59a642e7d7ed7a0b9",
+      "public_sha256": "b54829bf3d92a7b92d060843da9034ab7a4a8e8fadaf3fe59a642e7d7ed7a0b9",
+      "bytes": 4668,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-AMEND-C-L/TASK.md",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-AMEND-C-L/TASK.md",
+      "original_sha256": "8ead252b9092443bbeb162d4a1290f8bfcd823fc9355715ab36767eadb4caa87",
+      "public_sha256": "8ead252b9092443bbeb162d4a1290f8bfcd823fc9355715ab36767eadb4caa87",
+      "bytes": 984,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-COND-C-Z/METHOD.md",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-COND-C-Z/METHOD.md",
+      "original_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+      "public_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+      "bytes": 1307,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-COND-C-Z/manifest.json",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-COND-C-Z/manifest.json",
+      "original_sha256": "c77ec419aa9c2879fcb5610b68c7d6a49d9fe4de8e9fa32038400f9422f68407",
+      "public_sha256": "c77ec419aa9c2879fcb5610b68c7d6a49d9fe4de8e9fa32038400f9422f68407",
+      "bytes": 4786,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-COND-C-Z/TASK.md",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-COND-C-Z/TASK.md",
+      "original_sha256": "b391ac44c5edf3462ea380144de3ecf8ce0e475dc1c99cd8dfe04eac8d1fe5a0",
+      "public_sha256": "b391ac44c5edf3462ea380144de3ecf8ce0e475dc1c99cd8dfe04eac8d1fe5a0",
+      "bytes": 982,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-RETR-T-M/METHOD.md",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-RETR-T-M/METHOD.md",
+      "original_sha256": "700f321706f86f2eb5e9debe5cabdef89e2433b24ca272eb0d13faee400221cf",
+      "public_sha256": "700f321706f86f2eb5e9debe5cabdef89e2433b24ca272eb0d13faee400221cf",
+      "bytes": 1440,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-RETR-T-M/manifest.json",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-RETR-T-M/manifest.json",
+      "original_sha256": "a5acd7dec272711a28fafd52188ea2e30a9a87042fffa3c0dca6d1c136f4affb",
+      "public_sha256": "a5acd7dec272711a28fafd52188ea2e30a9a87042fffa3c0dca6d1c136f4affb",
+      "bytes": 4770,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-RETR-T-M/TASK.md",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-RETR-T-M/TASK.md",
+      "original_sha256": "7f5dc6007172d24cde9b2801c6cc35cccfb97e3c0321d047778fc35ea48d205b",
+      "public_sha256": "7f5dc6007172d24cde9b2801c6cc35cccfb97e3c0321d047778fc35ea48d205b",
+      "bytes": 983,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-RETR-T-M/METHOD.md",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-RETR-T-M/METHOD.md",
+      "original_sha256": "700f321706f86f2eb5e9debe5cabdef89e2433b24ca272eb0d13faee400221cf",
+      "public_sha256": "700f321706f86f2eb5e9debe5cabdef89e2433b24ca272eb0d13faee400221cf",
+      "bytes": 1440,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-RETR-T-M/manifest.json",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-RETR-T-M/manifest.json",
+      "original_sha256": "74e0513916f5c2ffec7900b94fb215e85c9a88aab65fe0738f7a4b2b8b7114b8",
+      "public_sha256": "74e0513916f5c2ffec7900b94fb215e85c9a88aab65fe0738f7a4b2b8b7114b8",
+      "bytes": 4788,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-RETR-T-M/TASK.md",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-RETR-T-M/TASK.md",
+      "original_sha256": "3e8880be6ef929c150e0465a9e0c3c23a4c4397ba2b8de3b59744b95a8371164",
+      "public_sha256": "3e8880be6ef929c150e0465a9e0c3c23a4c4397ba2b8de3b59744b95a8371164",
+      "bytes": 982,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-AMEND-T-L/METHOD.md",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-AMEND-T-L/METHOD.md",
+      "original_sha256": "cb187544119249fdeef595b43cce64fd0f858e0cf1243264cf4bb7d59fad39b8",
+      "public_sha256": "cb187544119249fdeef595b43cce64fd0f858e0cf1243264cf4bb7d59fad39b8",
+      "bytes": 1482,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-AMEND-T-L/manifest.json",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-AMEND-T-L/manifest.json",
+      "original_sha256": "df929e7ee6c8c87106108b99fdfd8bcd93c8b00f4a517424d3c58912f16a7a26",
+      "public_sha256": "df929e7ee6c8c87106108b99fdfd8bcd93c8b00f4a517424d3c58912f16a7a26",
+      "bytes": 4772,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-AMEND-T-L/TASK.md",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-AMEND-T-L/TASK.md",
+      "original_sha256": "9ac6c99c891f09084ea43ea0677359acf59170ced55497bf9548bb9949639f22",
+      "public_sha256": "9ac6c99c891f09084ea43ea0677359acf59170ced55497bf9548bb9949639f22",
+      "bytes": 983,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-BREADTH-C-M/METHOD.md",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-BREADTH-C-M/METHOD.md",
+      "original_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "public_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "bytes": 473,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-BREADTH-C-M/manifest.json",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-BREADTH-C-M/manifest.json",
+      "original_sha256": "cb62ebc615a5203aa3796e9d3512091543425caabc7c59af2bf7254ef3819517",
+      "public_sha256": "cb62ebc615a5203aa3796e9d3512091543425caabc7c59af2bf7254ef3819517",
+      "bytes": 4680,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-BREADTH-C-M/TASK.md",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-BREADTH-C-M/TASK.md",
+      "original_sha256": "5a4da402edfebfaf851ac1ad33b7675e67fa150cd76abbbee69ef6b2ca242dfd",
+      "public_sha256": "5a4da402edfebfaf851ac1ad33b7675e67fa150cd76abbbee69ef6b2ca242dfd",
+      "bytes": 986,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-BREADTH-T-M/METHOD.md",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-BREADTH-T-M/METHOD.md",
+      "original_sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+      "public_sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+      "bytes": 1360,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-BREADTH-T-M/manifest.json",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-BREADTH-T-M/manifest.json",
+      "original_sha256": "e39d01106deca215e6b8c55eb8827c58b4d86924f5bcab258c8226e5c58d9788",
+      "public_sha256": "e39d01106deca215e6b8c55eb8827c58b4d86924f5bcab258c8226e5c58d9788",
+      "bytes": 4760,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-BREADTH-T-M/TASK.md",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-BREADTH-T-M/TASK.md",
+      "original_sha256": "e7016fa9f5674e07d9e2fb67c615bdd6d91ada443f92a7655febaf878a773f39",
+      "public_sha256": "e7016fa9f5674e07d9e2fb67c615bdd6d91ada443f92a7655febaf878a773f39",
+      "bytes": 986,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-COND-C-Z/METHOD.md",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-COND-C-Z/METHOD.md",
+      "original_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+      "public_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+      "bytes": 1307,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-COND-C-Z/manifest.json",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-COND-C-Z/manifest.json",
+      "original_sha256": "ea0b885d4bbcef2bda6d16ab10008aea78303e4e8ca796b60f57800a484be478",
+      "public_sha256": "ea0b885d4bbcef2bda6d16ab10008aea78303e4e8ca796b60f57800a484be478",
+      "bytes": 4768,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-COND-C-Z/TASK.md",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-COND-C-Z/TASK.md",
+      "original_sha256": "40190071b49087a9de939f72803e016ca2768a999d4d6987136ae669e4e0c9df",
+      "public_sha256": "40190071b49087a9de939f72803e016ca2768a999d4d6987136ae669e4e0c9df",
+      "bytes": 983,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-AMEND-C-L/METHOD.md",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-AMEND-C-L/METHOD.md",
+      "original_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "public_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "bytes": 473,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-AMEND-C-L/manifest.json",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-AMEND-C-L/manifest.json",
+      "original_sha256": "0949167d3c6bd00337755388ee3f8e40d13d297dc47a8a00d020238b7fc28b8f",
+      "public_sha256": "0949167d3c6bd00337755388ee3f8e40d13d297dc47a8a00d020238b7fc28b8f",
+      "bytes": 4686,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-AMEND-C-L/TASK.md",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-AMEND-C-L/TASK.md",
+      "original_sha256": "6c06bcb8c9e09eb644e43360f152ef66f29264342e2a40d8ec6ae84abc0dfb8b",
+      "public_sha256": "6c06bcb8c9e09eb644e43360f152ef66f29264342e2a40d8ec6ae84abc0dfb8b",
+      "bytes": 983,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-RETR-C-M/METHOD.md",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-RETR-C-M/METHOD.md",
+      "original_sha256": "6b617504d3749407e1a80d876bdce0c1117668326e6131a582e730c50b106d0a",
+      "public_sha256": "6b617504d3749407e1a80d876bdce0c1117668326e6131a582e730c50b106d0a",
+      "bytes": 982,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-RETR-C-M/manifest.json",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-RETR-C-M/manifest.json",
+      "original_sha256": "501c315b40001594d2792fba19cf5a3556ddd6d4dd475b41e3caf6a9091c899a",
+      "public_sha256": "501c315b40001594d2792fba19cf5a3556ddd6d4dd475b41e3caf6a9091c899a",
+      "bytes": 4707,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-RETR-C-M/TASK.md",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-RETR-C-M/TASK.md",
+      "original_sha256": "84df3345e83ec86b641c49c8513e40fcc7542df6a7b2bb28c80089934ece4a50",
+      "public_sha256": "84df3345e83ec86b641c49c8513e40fcc7542df6a7b2bb28c80089934ece4a50",
+      "bytes": 983,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-BATCH-C-Z/METHOD.md",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-BATCH-C-Z/METHOD.md",
+      "original_sha256": "222ad8739878a9dfc93d6e3ee533596ea2cd2f4cac673870c6c285c18dd2570c",
+      "public_sha256": "222ad8739878a9dfc93d6e3ee533596ea2cd2f4cac673870c6c285c18dd2570c",
+      "bytes": 2032,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-BATCH-C-Z/manifest.json",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-BATCH-C-Z/manifest.json",
+      "original_sha256": "96640dea4593af1319bdda14a47cde5c0f1973780e26703e86983d03171bb17b",
+      "public_sha256": "96640dea4593af1319bdda14a47cde5c0f1973780e26703e86983d03171bb17b",
+      "bytes": 4838,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-BATCH-C-Z/TASK.md",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-BATCH-C-Z/TASK.md",
+      "original_sha256": "b3109ea8dc06c27c99b3e1a4f1d3f2ff8c909aad7080ac7c900196556e9b5d18",
+      "public_sha256": "b3109ea8dc06c27c99b3e1a4f1d3f2ff8c909aad7080ac7c900196556e9b5d18",
+      "bytes": 984,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-BREADTH-C-M/METHOD.md",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-BREADTH-C-M/METHOD.md",
+      "original_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "public_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "bytes": 473,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-BREADTH-C-M/manifest.json",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-BREADTH-C-M/manifest.json",
+      "original_sha256": "73be13b284303ca52cf42e5bfc2f6557ae78fa8326a7ae30e3ef4e2a651bdeaf",
+      "public_sha256": "73be13b284303ca52cf42e5bfc2f6557ae78fa8326a7ae30e3ef4e2a651bdeaf",
+      "bytes": 4698,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-BREADTH-C-M/TASK.md",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-BREADTH-C-M/TASK.md",
+      "original_sha256": "1e8f4f31f437a20e112873c1e16cb38c8b741b80720fa32d08027a8483c4221e",
+      "public_sha256": "1e8f4f31f437a20e112873c1e16cb38c8b741b80720fa32d08027a8483c4221e",
+      "bytes": 985,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-WIT-T-Z/METHOD.md",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-WIT-T-Z/METHOD.md",
+      "original_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+      "public_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+      "bytes": 1307,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-WIT-T-Z/manifest.json",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-WIT-T-Z/manifest.json",
+      "original_sha256": "fd9d96ce1d9be01f3a88791a62e9d16fd504aa1090d625bf3af8b0361d13b064",
+      "public_sha256": "fd9d96ce1d9be01f3a88791a62e9d16fd504aa1090d625bf3af8b0361d13b064",
+      "bytes": 4784,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-WIT-T-Z/TASK.md",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-WIT-T-Z/TASK.md",
+      "original_sha256": "36c6433c67d8762783a58d06806b85d815fe529172ae6c922877feac94b00943",
+      "public_sha256": "36c6433c67d8762783a58d06806b85d815fe529172ae6c922877feac94b00943",
+      "bytes": 981,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-RETR-C-M/METHOD.md",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-RETR-C-M/METHOD.md",
+      "original_sha256": "6b617504d3749407e1a80d876bdce0c1117668326e6131a582e730c50b106d0a",
+      "public_sha256": "6b617504d3749407e1a80d876bdce0c1117668326e6131a582e730c50b106d0a",
+      "bytes": 982,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-RETR-C-M/manifest.json",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-RETR-C-M/manifest.json",
+      "original_sha256": "b34d15f40fc860db4e4aaf93157f3551ca691da9d91e9f690036d9d41bea02ef",
+      "public_sha256": "b34d15f40fc860db4e4aaf93157f3551ca691da9d91e9f690036d9d41bea02ef",
+      "bytes": 4725,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-RETR-C-M/TASK.md",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-RETR-C-M/TASK.md",
+      "original_sha256": "dd7bfc4f79f4178b8363420cfed925424f0e8f63f36596b705834b4ad58a6b9c",
+      "public_sha256": "dd7bfc4f79f4178b8363420cfed925424f0e8f63f36596b705834b4ad58a6b9c",
+      "bytes": 982,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-WIT-T-Z/METHOD.md",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-WIT-T-Z/METHOD.md",
+      "original_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+      "public_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+      "bytes": 1307,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-WIT-T-Z/manifest.json",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-WIT-T-Z/manifest.json",
+      "original_sha256": "05a9e5c6ce15c19fd9e5e726a8d12e1850551ba63989c9166b797e8096ea0ad7",
+      "public_sha256": "05a9e5c6ce15c19fd9e5e726a8d12e1850551ba63989c9166b797e8096ea0ad7",
+      "bytes": 4766,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-WIT-T-Z/TASK.md",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-WIT-T-Z/TASK.md",
+      "original_sha256": "02d16a86976a312e377cb4dd709e07673abf9cbcbed6e85f80cb5841d54021c5",
+      "public_sha256": "02d16a86976a312e377cb4dd709e07673abf9cbcbed6e85f80cb5841d54021c5",
+      "bytes": 982,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-BREADTH-T-M/METHOD.md",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-BREADTH-T-M/METHOD.md",
+      "original_sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+      "public_sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+      "bytes": 1360,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-BREADTH-T-M/manifest.json",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-BREADTH-T-M/manifest.json",
+      "original_sha256": "7750c4f83a3204370f42e1ff5c0eb087b44e442d5611bed9a95679fb947c91e4",
+      "public_sha256": "7750c4f83a3204370f42e1ff5c0eb087b44e442d5611bed9a95679fb947c91e4",
+      "bytes": 4778,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-BREADTH-T-M/TASK.md",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-BREADTH-T-M/TASK.md",
+      "original_sha256": "db62de752e6ec2e099ac735cd30212f80bab7a1ce41093f8c09bf74212dfbaa2",
+      "public_sha256": "db62de752e6ec2e099ac735cd30212f80bab7a1ce41093f8c09bf74212dfbaa2",
+      "bytes": 985,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-AMEND-T-L/METHOD.md",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-AMEND-T-L/METHOD.md",
+      "original_sha256": "cb187544119249fdeef595b43cce64fd0f858e0cf1243264cf4bb7d59fad39b8",
+      "public_sha256": "cb187544119249fdeef595b43cce64fd0f858e0cf1243264cf4bb7d59fad39b8",
+      "bytes": 1482,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-AMEND-T-L/manifest.json",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-AMEND-T-L/manifest.json",
+      "original_sha256": "e54800eff5ca692e80af2945e73f212be799edac12ed5274d856257b826489b8",
+      "public_sha256": "e54800eff5ca692e80af2945e73f212be799edac12ed5274d856257b826489b8",
+      "bytes": 4754,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-AMEND-T-L/TASK.md",
+      "public_path": "cases/tranche-v2/candidates/V8-BIO-AMEND-T-L/TASK.md",
+      "original_sha256": "228a058ce9d4bd4562d4feb9b0150987967d090aae43460c0a7ed00c542b70d4",
+      "public_sha256": "228a058ce9d4bd4562d4feb9b0150987967d090aae43460c0a7ed00c542b70d4",
+      "bytes": 984,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-BATCH-C-Z/METHOD.md",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-BATCH-C-Z/METHOD.md",
+      "original_sha256": "222ad8739878a9dfc93d6e3ee533596ea2cd2f4cac673870c6c285c18dd2570c",
+      "public_sha256": "222ad8739878a9dfc93d6e3ee533596ea2cd2f4cac673870c6c285c18dd2570c",
+      "bytes": 2032,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-BATCH-C-Z/manifest.json",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-BATCH-C-Z/manifest.json",
+      "original_sha256": "1289009d5f8b46e99c6a1e0a52fa575d7e5077a7cf5e9d3a219f0da62c7b2e11",
+      "public_sha256": "1289009d5f8b46e99c6a1e0a52fa575d7e5077a7cf5e9d3a219f0da62c7b2e11",
+      "bytes": 4856,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-BATCH-C-Z/TASK.md",
+      "public_path": "cases/tranche-v2/candidates/V8-NB-BATCH-C-Z/TASK.md",
+      "original_sha256": "95f2e189af32dbd55661c4b2ec907aa1bddfc280a4d699e19da4571d0b3a6361",
+      "public_sha256": "95f2e189af32dbd55661c4b2ec907aa1bddfc280a4d699e19da4571d0b3a6361",
+      "bytes": 983,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/AUTHORITY_AMENDMENT.json",
+      "public_path": "ops/recovery-v1/AUTHORITY_AMENDMENT.json",
+      "original_sha256": "1479c0b44869d13878b90ccd2f02d5fb2d755cfa0f0b17315105dc48d57616ec",
+      "public_sha256": "1479c0b44869d13878b90ccd2f02d5fb2d755cfa0f0b17315105dc48d57616ec",
+      "bytes": 1717,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/POLICY_APPLIED.json",
+      "public_path": "ops/recovery-v1/POLICY_APPLIED.json",
+      "original_sha256": "598763ad5bdafb146ef6c17255fee26d435faceb6a51dfe30a92ab7bcb3273a9",
+      "public_sha256": "598763ad5bdafb146ef6c17255fee26d435faceb6a51dfe30a92ab7bcb3273a9",
+      "bytes": 1971,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/OVERLAY_V2.json",
+      "public_path": "ops/recovery-v1/OVERLAY_V2.json",
+      "original_sha256": "0d6fcdc9600027025217932cf414ad39c20631ef6306307a3008d995fce9c0c2",
+      "public_sha256": "0d6fcdc9600027025217932cf414ad39c20631ef6306307a3008d995fce9c0c2",
+      "bytes": 2935,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/ledger_overlay.py",
+      "public_path": "ops/recovery-v1/ledger_overlay.py",
+      "original_sha256": "597a3d3349154fbb4614ed7ece864f1cd77ecfea145fbfddaefc79fe0a1cd618",
+      "public_sha256": "597a3d3349154fbb4614ed7ece864f1cd77ecfea145fbfddaefc79fe0a1cd618",
+      "bytes": 5863,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/test_ledger_overlay.py",
+      "public_path": "ops/recovery-v1/test_ledger_overlay.py",
+      "original_sha256": "29c1fcd85c9731b9480e863f9a45f75360bd2987fe3eb6e8910037f5f5139e06",
+      "public_sha256": "29c1fcd85c9731b9480e863f9a45f75360bd2987fe3eb6e8910037f5f5139e06",
+      "bytes": 5019,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/versions/ledger_overlay_v1.py",
+      "public_path": "ops/recovery-v1/versions/ledger_overlay_v1.py",
+      "original_sha256": "ee7f9b79b25017e71bab6c09206de3fc29131ab57284925aaf30204e45c803e1",
+      "public_sha256": "ee7f9b79b25017e71bab6c09206de3fc29131ab57284925aaf30204e45c803e1",
+      "bytes": 3198,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/RESTART.json",
+      "public_path": "ops/recovery-v1/RESTART.json",
+      "original_sha256": "36c3c66e0f30dd5dc6da750c06e82b17a945f8eeaee5201768f8a0618c01a4cf",
+      "public_sha256": "0000618887ed6088cbb061570ca9781c0ac4377886bf148dacf72f690916e83c",
+      "bytes": 5357,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/state.before-policy-amendment.json",
+      "public_path": "ops/recovery-v1/state.before-policy-amendment.json",
+      "original_sha256": "9670a1f7e67d4f9aaacd04d91aa4c61e95e1cb37b3bb0a8e0f749655dcf8737d",
+      "public_sha256": "14d492bc84235495773ede1859c957c2b6c53fc22f16ecc65561ef24ea774d7f",
+      "bytes": 22238,
+      "sanitized": true
+    }
+  ],
+  "research_results": "NOT_RUN",
+  "native_acceptance": "NOT_ESTABLISHED",
+  "replay_copy_status": "Projected source preserves original pins; local replay rebindings must be separately declared, not accepted native runtime."
+}

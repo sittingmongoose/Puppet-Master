@@ -29,5 +29,43 @@
       "quality": "UNASSESSED",
       "speedup": "NOT_ESTABLISHED"
     }
-  ]
+  ],
+  "historical_initial_comparisons": {
+    "schema": "pm.external_research.v8.public_comparisons.v1",
+    "comparisons": [
+      {
+        "domain": "BIO",
+        "pair": "C versus P",
+        "state": "NOT_RUN",
+        "quality": "UNASSESSED",
+        "speedup": "NOT_ESTABLISHED"
+      },
+      {
+        "domain": "BIO",
+        "pair": "P versus B",
+        "state": "NOT_RUN",
+        "quality": "UNASSESSED",
+        "speedup": "NOT_ESTABLISHED"
+      },
+      {
+        "domain": "NB",
+        "pair": "C versus P",
+        "state": "NOT_RUN",
+        "quality": "UNASSESSED",
+        "speedup": "NOT_ESTABLISHED"
+      },
+      {
+        "domain": "NB",
+        "pair": "P versus B",
+        "state": "NOT_RUN",
+        "quality": "UNASSESSED",
+        "speedup": "NOT_ESTABLISHED"
+      }
+    ]
+  },
+  "checkpoint": "ONGOING_TRANCHE_V2",
+  "prospective_pair_map": "tranche-cohort-v2/cases/tranche-v2/pairs.json",
+  "prospective_pair_count": 12,
+  "completed_comparisons": 0,
+  "current_scope_note": "Initial unexecuted planning comparisons are superseded prospectively by tranche pairs; historical source artifacts unchanged. No output quality/efficiency result."
 }

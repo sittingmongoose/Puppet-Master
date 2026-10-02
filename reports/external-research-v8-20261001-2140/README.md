@@ -14,3 +14,5 @@ V7 at `c8f9cbc9195602688702bbbf9b3ce23c14fa5586` remains closed with unmet outco
 [Route code and public dependency cohort](route-cohort-v1/README.md) adds the pinned source/config closure and two authorized historical public dependency copies. Caller repair2 has conditional source acceptance; first actual native canary remains HOLD.
 
 [Canary, controller and recovery cohort](canary-controller-cohort-v1/README.md) publishes the failed canary, independent conditional controller assessment and prospective authority amendment. Current deadline is **2026-10-02T13:40:09Z**, measured from the original start without reset. No integrated execution or research quality result is claimed.
+
+[Prospective tranche and accounting cohort v2](tranche-cohort-v2/README.md) publishes the 24-pipeline/12-pair scope, four reserved unseen holdout names and protected accounting reservations. These are prospective inputs; completed integrated executions and comparisons remain zero at the freeze.

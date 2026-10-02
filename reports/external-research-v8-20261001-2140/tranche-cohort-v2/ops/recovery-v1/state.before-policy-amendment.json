@@ -1,0 +1,585 @@
+{
+  "schema": "er8.accounting.v1",
+  "campaign_id": "external-research-v8-20261001-2140",
+  "authorization_sha256": "25609fc787d622958fd62afa5df218a1e4789f61595a4152865ceb0c143304f2",
+  "clock_start_epoch": 1790905209,
+  "deadline_epoch": 1790926809,
+  "legacy_excluded": {
+    "admissions": 53,
+    "native_goals": 49,
+    "occupied_seconds": 37984.167494
+  },
+  "jobs": {
+    "v8-z-mechanical-route-canary-v1": {
+      "job": "v8-z-mechanical-route-canary-v1",
+      "case": "v8-z-mechanical-route-canary-v1",
+      "family": "Z",
+      "route": "v8-z-route-repair1-caller2-canary-v2",
+      "pins": {
+        "runtime": "9455eaa5876e5627360c80ee98e41b554118205544b3244af3ba272b0d928668",
+        "config": "266b8c9930f26b00deb232d877f8f255c95630e4fc62f511f27e1aed6c7ca671",
+        "independent_acceptance": "054a3d15e4d317c71e1f0a1a8495f136f1c0cd584e28ede503d04f576e9e59f1"
+      },
+      "component_seconds": 480,
+      "component_responses": 64,
+      "case_wall_seconds": 480,
+      "case_occupied_seconds": 480,
+      "outside_native_cap_seconds": 300,
+      "source_access": {
+        "mode": "mechanical-public-example-domain-get-and-byte-range",
+        "url": "https://example.com/"
+      },
+      "current_stages": [
+        "mechanical-native-goal-canary"
+      ],
+      "birth_epoch": 1790909708.7675955,
+      "birth_monotonic": 131454.937365526,
+      "admitted_epoch": 1790909708.930137,
+      "hard_deadline_epoch": 1790910188.7675955,
+      "released_epoch": 1790910525.4168878,
+      "status": "released",
+      "goal_starts": [
+        {
+          "job": "v8-z-mechanical-route-canary-v1",
+          "receipt_id": "target_muqdejmd_568154ee-eeea-4beb-9169-f254edfc2aea",
+          "epoch": 1790909715,
+          "recorded_epoch": 1790909715.5315168,
+          "guard_violations": []
+        }
+      ],
+      "generated_output_tokens": null,
+      "quiescence": {
+        "native_quiescent": true,
+        "own_process_group_absent": true,
+        "outer_parent_exited": true,
+        "outer_parent_returncode": 126,
+        "receipt_id": "v8-z-mechanical-route-canary-v1-actual-late-failure-cleanup",
+        "proof_path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/FAILURE_CLEANUP_PROOF.json",
+        "qualified": false,
+        "late_cleanup": true
+      },
+      "launch_pending": null
+    }
+  },
+  "cases": {
+    "v8-z-mechanical-route-canary-v1": {
+      "birth_epoch": 1790909708.7675955,
+      "birth_monotonic": 131454.937365526,
+      "wall_seconds": 480,
+      "occupied_seconds": 480,
+      "outside_native_cap_seconds": 300,
+      "observed_outside_native_seconds": 0.435632441,
+      "birth_rule": "original outer-gate birth before any preparation"
+    }
+  },
+  "helpers": {
+    "/root/v8_execution_path_author": {
+      "helper": "/root/v8_execution_path_author",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "xhigh",
+      "started_epoch": 1790905457.0,
+      "original_start_utc": "2026-10-02T01:44:17Z",
+      "root_authority": "root message + ops/root-helper-starts.json accepted_start_events=8",
+      "usage": "UNKNOWN",
+      "ended_epoch": 1790907215.7021155,
+      "generated_output_tokens": null,
+      "end_observed_epoch": 1790907215.7021155,
+      "actual_end_epoch": 1790907100.0,
+      "end_receipt": {
+        "helper": "/root/v8_execution_path_author",
+        "root_authority": "root END + root-helper-starts metadata",
+        "actual_end_epoch": 1790907100.0
+      },
+      "root_summary_metadata": {
+        "task_name": "/root/v8_execution_path_author",
+        "reasoning_effort": "xhigh",
+        "original_start_utc": "2026-10-02T01:44:17Z",
+        "status": "done",
+        "reported_end_utc": "2026-10-02T02:11:40Z"
+      }
+    },
+    "/root/v8_case_pipeline_planner": {
+      "helper": "/root/v8_case_pipeline_planner",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "xhigh",
+      "started_epoch": 1790905481.0,
+      "original_start_utc": "2026-10-02T01:44:41Z",
+      "root_authority": "root message + ops/root-helper-starts.json accepted_start_events=8",
+      "usage": "UNKNOWN",
+      "ended_epoch": 1790906868.1626196,
+      "generated_output_tokens": null,
+      "root_summary_metadata": {
+        "task_name": "/root/v8_case_pipeline_planner",
+        "reasoning_effort": "xhigh",
+        "original_start_utc": "2026-10-02T01:44:41Z",
+        "status": "done"
+      }
+    },
+    "/root/v8_operations_accountant": {
+      "helper": "/root/v8_operations_accountant",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_epoch": 1790905504.0,
+      "original_start_utc": "2026-10-02T01:45:04Z",
+      "root_authority": "root message + ops/root-helper-starts.json accepted_start_events=8",
+      "usage": "UNKNOWN",
+      "ended_epoch": null,
+      "generated_output_tokens": null,
+      "root_summary_metadata": {
+        "task_name": "/root/v8_operations_accountant",
+        "reasoning_effort": "medium",
+        "original_start_utc": "2026-10-02T01:45:04Z",
+        "status": "running"
+      }
+    },
+    "/root/v8_execution_independent_check": {
+      "helper": "/root/v8_execution_independent_check",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "xhigh",
+      "started_epoch": 1790905732.0,
+      "original_start_utc": "2026-10-02T01:48:52Z",
+      "root_authority": "root message + ops/root-helper-starts.json accepted_start_events=8",
+      "usage": "UNKNOWN",
+      "ended_epoch": 1790908604.8481352,
+      "generated_output_tokens": null,
+      "end_observed_epoch": 1790908604.8481352,
+      "actual_end_epoch": null,
+      "end_receipt": {
+        "helper": "/root/v8_execution_independent_check",
+        "root_authority": "root checker END final02:33 or prior, exactactualendunknown",
+        "actual_end_epoch": null,
+        "reported_original_hard_utc": "2026-10-02T02:33:52Z",
+        "usage": "UNKNOWN"
+      },
+      "root_summary_metadata": {
+        "task_name": "/root/v8_execution_independent_check",
+        "reasoning_effort": "xhigh",
+        "original_start_utc": "2026-10-02T01:48:52Z",
+        "status": "done",
+        "end_observation_utc": "2026-10-02T02:39:13.332274+00:00",
+        "reported_end_utc": null
+      }
+    },
+    "/root/v8_source_capture_author": {
+      "helper": "/root/v8_source_capture_author",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "xhigh",
+      "started_epoch": null,
+      "original_start_utc": null,
+      "root_authority": "root message + ops/root-helper-starts.json accepted_start_events=8",
+      "usage": "UNKNOWN",
+      "ended_epoch": 1790907440.699435,
+      "generated_output_tokens": null,
+      "first_observed_utc": "2026-10-02T01:54:22Z",
+      "first_observed_epoch": 1790906062.0,
+      "actual_birth_unknown": true,
+      "end_observed_epoch": 1790907440.699435,
+      "actual_end_epoch": null,
+      "end_receipt": {
+        "helper": "/root/v8_source_capture_author",
+        "root_authority": "root END receivedFINAL, exactendunknown",
+        "actual_end_epoch": null,
+        "root_end_observed_utc": "2026-10-02T02:13:48Z",
+        "root_end_observed_epoch": 1790907228
+      },
+      "root_summary_metadata": {
+        "task_name": "/root/v8_source_capture_author",
+        "reasoning_effort": "xhigh",
+        "original_start_utc": null,
+        "status": "done",
+        "first_observed_utc": "2026-10-02T01:54:22Z",
+        "end_observation_utc": "2026-10-02T02:13:48.702651+00:00",
+        "reported_end_utc": null
+      }
+    },
+    "/root/v8_route_assembly": {
+      "helper": "/root/v8_route_assembly",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "xhigh",
+      "started_epoch": 1790906413.0,
+      "original_start_utc": "2026-10-02T02:00:13Z",
+      "root_authority": "root message + ops/root-helper-starts.json accepted_start_events=8",
+      "usage": "UNKNOWN",
+      "ended_epoch": 1790908074.6347525,
+      "generated_output_tokens": null,
+      "end_observed_epoch": 1790908074.6347525,
+      "actual_end_epoch": null,
+      "end_receipt": {
+        "helper": "/root/v8_route_assembly",
+        "root_authority": "root observed AUTHOR-CLOSEOUT at2026-10-02T02:26:01.372533Z",
+        "actual_end_epoch": null,
+        "author_closeout_observed_utc": "2026-10-02T02:26:01.372533Z",
+        "reported_original_elapsed_seconds": 1549,
+        "native_provider_public_get_calls": 0,
+        "usage": "UNKNOWN"
+      },
+      "root_summary_metadata": {
+        "task_name": "/root/v8_route_assembly",
+        "reasoning_effort": "xhigh",
+        "original_start_utc": "2026-10-02T02:00:13Z",
+        "status": "done",
+        "end_observation_utc": "2026-10-02T02:26:01.372533Z",
+        "reported_elapsed_seconds": 1549
+      }
+    },
+    "/root/v8_publisher": {
+      "helper": "/root/v8_publisher",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_epoch": null,
+      "original_start_utc": null,
+      "root_authority": "root message + ops/root-helper-starts.json accepted_start_events=8",
+      "usage": "UNKNOWN",
+      "ended_epoch": null,
+      "generated_output_tokens": null,
+      "root_summary_metadata": {
+        "task_name": "/root/v8_publisher",
+        "reasoning_effort": "medium",
+        "original_start_utc": null,
+        "status": "running"
+      }
+    },
+    "/root/v8_native_operator": {
+      "helper": "/root/v8_native_operator",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_epoch": null,
+      "original_start_utc": null,
+      "root_authority": "root message + ops/root-helper-starts.json accepted_start_events=8",
+      "usage": "UNKNOWN",
+      "ended_epoch": null,
+      "generated_output_tokens": null,
+      "first_observed_utc": "2026-10-02T02:06:25Z",
+      "first_observed_epoch": 1790906785.0,
+      "actual_birth_unknown": true,
+      "root_summary_metadata": {
+        "task_name": "/root/v8_native_operator",
+        "reasoning_effort": "medium",
+        "original_start_utc": null,
+        "status": "running",
+        "first_observed_utc": "2026-10-02T02:06:25Z"
+      }
+    },
+    "/root/v8_capture_independent_check": {
+      "helper": "/root/v8_capture_independent_check",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "xhigh",
+      "started_epoch": 1790906942.0,
+      "original_start_utc": "2026-10-02T02:09:02Z",
+      "root_authority": "root acceptedstart9 + root-helper-starts.json",
+      "usage": "UNKNOWN",
+      "ended_epoch": 1790907627.0941362,
+      "generated_output_tokens": null,
+      "start_refinement_authority": "root updated root-helper-starts.json",
+      "end_observed_epoch": 1790907627.0941362,
+      "actual_end_epoch": null,
+      "end_receipt": {
+        "helper": "/root/v8_capture_independent_check",
+        "root_authority": "root END freezechecked02:17:59 reportedclose~02:18 exactendunknown",
+        "actual_end_epoch": null,
+        "freeze_checked_utc": "2026-10-02T02:17:59Z",
+        "acceptance_receipt_sha256": "1480a8252d15bc811c4ca19621703b214321843ab37e166debe77ecb1994c9ae"
+      },
+      "root_summary_metadata": {
+        "task_name": "/root/v8_capture_independent_check",
+        "reasoning_effort": "xhigh",
+        "original_start_utc": "2026-10-02T02:09:02Z",
+        "status": "done",
+        "end_observation_utc": "2026-10-02T02:21:03.004409+00:00",
+        "reported_end_utc": null
+      }
+    },
+    "/root/v8_native_qualification_grader": {
+      "helper": "/root/v8_native_qualification_grader",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "xhigh",
+      "started_epoch": 1790908618,
+      "original_start_utc": "2026-10-02T02:36:58Z",
+      "hard_deadline_utc": "2026-10-02T03:16:58Z",
+      "hard_deadline_epoch": 1790911018,
+      "root_authority": "root accepted freshgrader10 sourcecaller2+actualcanaryproof",
+      "usage": "UNKNOWN",
+      "ended_epoch": 1790911567.8732228,
+      "generated_output_tokens": null,
+      "root_summary_metadata": {
+        "task_name": "/root/v8_native_qualification_grader",
+        "reasoning_effort": "xhigh",
+        "original_start_utc": "2026-10-02T02:36:58Z",
+        "status": "done",
+        "hard_deadline_utc": "2026-10-02T03:16:58Z",
+        "end_observation_utc": "2026-10-02T03:19:54.485642+00:00",
+        "actual_native_qualification": "HOLD"
+      },
+      "end_observed_epoch": 1790911567.8732228,
+      "actual_end_epoch": null,
+      "end_receipt": {
+        "helper": "/root/v8_native_qualification_grader",
+        "root_authority": "root-owned accepted helper metadata status done",
+        "actual_end_epoch": null,
+        "root_end_observation_utc": "2026-10-02T03:19:54.485642+00:00",
+        "reported_elapsed_seconds": null
+      }
+    },
+    "/root/v8_integrated_controller_author": {
+      "helper": "/root/v8_integrated_controller_author",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "xhigh",
+      "started_epoch": 1790909089.0,
+      "original_start_utc": "2026-10-02T02:44:49Z",
+      "hard_deadline_utc": "2026-10-02T03:29:49Z",
+      "final_reserve_start_utc": "2026-10-02T03:19:49Z",
+      "root_authority": "root accepted integrated controller author11 genericownedops/integrated-dispatch-v1",
+      "usage": "UNKNOWN",
+      "ended_epoch": 1790911567.8737175,
+      "generated_output_tokens": null,
+      "root_summary_metadata": {
+        "task_name": "/root/v8_integrated_controller_author",
+        "reasoning_effort": "xhigh",
+        "original_start_utc": "2026-10-02T02:44:49Z",
+        "hard_deadline_utc": "2026-10-02T03:29:49Z",
+        "status": "done",
+        "reported_elapsed_seconds": 1688.993,
+        "end_observation_utc": "2026-10-02T03:19:54.485642+00:00"
+      },
+      "end_observed_epoch": 1790911567.8737175,
+      "actual_end_epoch": null,
+      "end_receipt": {
+        "helper": "/root/v8_integrated_controller_author",
+        "root_authority": "root-owned accepted helper metadata status done",
+        "actual_end_epoch": null,
+        "root_end_observation_utc": "2026-10-02T03:19:54.485642+00:00",
+        "reported_elapsed_seconds": 1688.993
+      }
+    },
+    "/root/v8_controller_independent_check": {
+      "helper": "/root/v8_controller_independent_check",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "xhigh",
+      "started_epoch": 1790909928.0,
+      "original_start_utc": "2026-10-02T02:58:48Z",
+      "root_authority": "root-owned root-helper-starts.json accepted_start_events13",
+      "usage": "UNKNOWN",
+      "ended_epoch": 1790911567.8747165,
+      "generated_output_tokens": null,
+      "root_summary_metadata": {
+        "task_name": "/root/v8_controller_independent_check",
+        "reasoning_effort": "xhigh",
+        "original_start_utc": "2026-10-02T02:58:48Z",
+        "hard_deadline_utc": "2026-10-02T03:28:48Z",
+        "status": "done",
+        "reported_elapsed_seconds": 774.48,
+        "end_observation_utc": "2026-10-02T03:11:42Z"
+      },
+      "end_observed_epoch": 1790911567.8747165,
+      "actual_end_epoch": null,
+      "end_receipt": {
+        "helper": "/root/v8_controller_independent_check",
+        "root_authority": "root-owned accepted helper metadata status done",
+        "actual_end_epoch": null,
+        "root_end_observation_utc": "2026-10-02T03:11:42Z",
+        "reported_elapsed_seconds": 774.48
+      }
+    },
+    "/root/v8_native_route_diagnoser": {
+      "helper": "/root/v8_native_route_diagnoser",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "xhigh",
+      "started_epoch": null,
+      "original_start_utc": null,
+      "root_authority": "root-owned root-helper-starts.json accepted_start_events13",
+      "usage": "UNKNOWN",
+      "ended_epoch": null,
+      "generated_output_tokens": null,
+      "root_summary_metadata": {
+        "task_name": "/root/v8_native_route_diagnoser",
+        "reasoning_effort": "xhigh",
+        "original_start_utc": null,
+        "status": "running",
+        "hard_seconds": 1800
+      }
+    }
+  },
+  "events": [
+    {
+      "case": "v8-z-mechanical-route-canary-v1",
+      "job": "v8-z-mechanical-route-canary-v1",
+      "category": "setup",
+      "seconds": 0.229220165,
+      "outside_native_seconds": 0.229220165,
+      "interval_receipt_id": "v8-z-mechanical-route-canary-v1-outside-before-guard",
+      "outside_native_cap_exceeded": false,
+      "recorded_epoch": 1790909708.9977305
+    },
+    {
+      "case": "v8-z-mechanical-route-canary-v1",
+      "job": "v8-z-mechanical-route-canary-v1",
+      "category": "setup",
+      "seconds": 0.010964936,
+      "outside_native_seconds": 0.010964936,
+      "interval_receipt_id": "v8-z-mechanical-route-canary-v1-outside-guard-accounting",
+      "outside_native_cap_exceeded": false,
+      "recorded_epoch": 1790909709.0085497
+    },
+    {
+      "case": "v8-z-mechanical-route-canary-v1",
+      "job": "v8-z-mechanical-route-canary-v1",
+      "category": "setup",
+      "seconds": 0.004900726,
+      "outside_native_seconds": 0.004900726,
+      "interval_receipt_id": "v8-z-mechanical-route-canary-v1-outside-final-prelaunch-tail",
+      "outside_native_cap_exceeded": false,
+      "recorded_epoch": 1790909709.0141766
+    },
+    {
+      "case": "v8-z-mechanical-route-canary-v1",
+      "job": "v8-z-mechanical-route-canary-v1",
+      "category": "cleanup",
+      "seconds": 0.190546614,
+      "outside_native_seconds": 0.190546614,
+      "interval_receipt_id": "v8-z-mechanical-route-canary-v1-failure-all-parent-close-tail",
+      "intervals_monotonic_ns": [
+        [
+          131455182451353,
+          131455182451353
+        ],
+        [
+          131905053942585,
+          131905244489199
+        ]
+      ],
+      "original_deadline_monotonic_ns": 131934937365526,
+      "case_lifecycle_closed_monotonic_ns": 131905244489199,
+      "case_closed_by_original_deadline": true,
+      "later_global_cleanup_separate_management": true,
+      "outside_native_cap_exceeded": false,
+      "recorded_epoch": 1790910525.41857
+    },
+    {
+      "case": "v8-z-mechanical-route-canary-v1",
+      "job": "v8-z-mechanical-route-canary-v1",
+      "category": "native",
+      "seconds": 449.871491232,
+      "outside_native_seconds": 0,
+      "interval_receipt_id": "v8-z-mechanical-route-canary-v1-measured-native-owned-wrapper",
+      "interval_start_monotonic_ns": 131455182451353,
+      "interval_end_monotonic_ns": 131905053942585,
+      "overlaps_occupied_slot_and_case_wall": true,
+      "scope": "native-owned wrapper including setup/capture/retries/wait; not provider-work-only",
+      "outside_native_cap_exceeded": false,
+      "recorded_epoch": 1790910775.4420986
+    }
+  ],
+  "route_reviews": {
+    "v8-z-route-repair1-canary-v1": {
+      "route": "v8-z-route-repair1-canary-v1",
+      "root_authority": true,
+      "accepted": true,
+      "pins": {
+        "runtime": "9455eaa5876e5627360c80ee98e41b554118205544b3244af3ba272b0d928668",
+        "config": "266b8c9930f26b00deb232d877f8f255c95630e4fc62f511f27e1aed6c7ca671",
+        "independent_acceptance": "054a3d15e4d317c71e1f0a1a8495f136f1c0cd584e28ede503d04f576e9e59f1"
+      },
+      "qualification_scope": "CANARY_ONLY",
+      "allowed_jobs": [
+        "v8-z-mechanical-route-canary-v1"
+      ],
+      "max_component_seconds": 480,
+      "max_component_responses": 64,
+      "recorded_epoch": 1790908604.8485007
+    },
+    "v8-z-route-repair1-caller2-canary-v2": {
+      "route": "v8-z-route-repair1-caller2-canary-v2",
+      "root_authority": true,
+      "accepted": true,
+      "qualification_scope": "CANARY_ONLY",
+      "allowed_jobs": [
+        "v8-z-mechanical-route-canary-v1"
+      ],
+      "max_component_seconds": 480,
+      "max_component_responses": 64,
+      "pins": {
+        "runtime": "9455eaa5876e5627360c80ee98e41b554118205544b3244af3ba272b0d928668",
+        "config": "266b8c9930f26b00deb232d877f8f255c95630e4fc62f511f27e1aed6c7ca671",
+        "independent_acceptance": "054a3d15e4d317c71e1f0a1a8495f136f1c0cd584e28ede503d04f576e9e59f1"
+      },
+      "root_release_path": "LAB_ROOT/ops/root-canary-release-v2.json",
+      "root_release_sha256": "e28db4ff6156a7bd339b01c090fb6b3cab92f1ef0b7d5695970b7f0241fc24a8",
+      "recorded_epoch": 1790909651.5457692
+    }
+  },
+  "final_reserved_names": [
+    "V8-BIO-C-Z",
+    "V8-BIO-P-Z",
+    "V8-BIO-B-Z",
+    "V8-NB-C-Z",
+    "V8-NB-P-Z",
+    "V8-NB-B-Z"
+  ],
+  "occupancy_reconciliation": {
+    "known_registry_path": "EXTERNAL_LAB_ROOT/external-research-v7-20260930/ops/slots.json",
+    "root_authority": "root task instruction: read named v7 positive slot metadata once; no shared registry established",
+    "metadata": {
+      "old_campaign_id": "external-research-v7-20260930",
+      "old_admissions": 53,
+      "old_active": 0,
+      "old_positive_quiet_released": 53,
+      "shared_registry_exists": false,
+      "sibling_occupancy": "unknown; root coordinating known metadata path separately",
+      "v8_own_family_limits": {
+        "M": 2,
+        "Z": 2,
+        "L": 2
+      },
+      "sibling_quota": "independent; never borrowed"
+    },
+    "recorded_epoch": 1790905752.830389,
+    "scope": "external occupancy only; no borrowing/relabeling/termination"
+  },
+  "closed": false,
+  "reservation_by_case": {
+    "V8-BIO-C-Z": {
+      "native_starts": 3,
+      "occupied_seconds": 5400,
+      "completed": false,
+      "final_job": "V8-BIO-C-Z-final-correction"
+    },
+    "V8-BIO-P-Z": {
+      "native_starts": 3,
+      "occupied_seconds": 5400,
+      "completed": false,
+      "final_job": "V8-BIO-P-Z-final-correction"
+    },
+    "V8-BIO-B-Z": {
+      "native_starts": 3,
+      "occupied_seconds": 5400,
+      "completed": false,
+      "final_job": "V8-BIO-B-Z-final-correction"
+    },
+    "V8-NB-C-Z": {
+      "native_starts": 3,
+      "occupied_seconds": 5400,
+      "completed": false,
+      "final_job": "V8-NB-C-Z-final-correction"
+    },
+    "V8-NB-P-Z": {
+      "native_starts": 3,
+      "occupied_seconds": 5400,
+      "completed": false,
+      "final_job": "V8-NB-P-Z-final-correction"
+    },
+    "V8-NB-B-Z": {
+      "native_starts": 3,
+      "occupied_seconds": 5400,
+      "completed": false,
+      "final_job": "V8-NB-B-Z-final-correction"
+    }
+  },
+  "evaluator_reserved_names": [
+    "V8-EVAL-BIO-C",
+    "V8-EVAL-BIO-P",
+    "V8-EVAL-BIO-B",
+    "V8-EVAL-NB-C",
+    "V8-EVAL-NB-P",
+    "V8-EVAL-NB-B"
+  ]
+}

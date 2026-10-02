@@ -7,3 +7,5 @@ State: ONGOING_RECOVERY. Current prospective authority deadline is 2026-10-02T13
 Campaign continues with mechanical diagnosis before a fresh bounded retest; no productive route acceptance is asserted. Frozen code/route/caller history and earlier conditional acceptances remain historical evidence. Recovery process observations are timestamped, not current liveness guarantees.
 
 [Restart snapshot](canary-controller-cohort-v1/recovery-v1/RESTART.json) records the next route review/canary sequence and timestamped usage; future stages remain prospective.
+
+[Tranche cohort v2](tranche-cohort-v2/README.md): 24 initial complete pipelines, 12 prospective pairs, four unseen holdout reservations; 84 reserved starts and 151200 reserved occupied seconds. Observed usage remains one failed canary start and 816.6492922306061 occupied seconds, separate from reservations. No completed integrated executions or comparisons at this freeze.

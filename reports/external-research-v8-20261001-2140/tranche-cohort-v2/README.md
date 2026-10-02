@@ -1,0 +1,11 @@
+# Prospective tranche and accounting controls v2
+
+**Ongoing campaign; prospective inputs and software checks only. One retained failed native canary, zero completed integrated executions and zero matched comparisons at this freeze.**
+
+The [tranche manifest](cases/tranche-v2/manifest.json) and [pair map](cases/tranche-v2/pairs.json) reserve 24 complete pipelines in 12 matched pairs across two domains. Six original cases remain referenced unchanged; 18 new TASK/METHOD/manifest sets are selected. Four fresh unseen holdout names are reserved; holdout briefs and answers are not prepared or exported. Scoring-only keys and evaluator material are excluded. Candidate execution must receive only its assigned allowed inputs, never this entire research publication.
+
+The accounting [overlay v2](ops/recovery-v1/ledger_overlay.py), [preserved v1](ops/recovery-v1/versions/ledger_overlay_v1.py), [seven-test source](ops/recovery-v1/test_ledger_overlay.py) and [recorded overlay assessment](ops/recovery-v1/OVERLAY_V2.json) preserve historical failures, births and limits while reserving 84 native starts and 151200 occupied seconds for the 24 initial and four holdout pipelines. Reservations do not count as consumed starts or evidence of execution. The [policy application](ops/recovery-v1/POLICY_APPLIED.json) is separate from the byte-exact original authorization.
+
+All 77 root-selected source artifacts plus the handoff are hash-bound in [public export provenance](PUBLIC_EXPORT.json). Host locators use LAB_ROOT/WORKTREE_ROOT/EXTERNAL_LAB_ROOT/REPOSITORY_ROOT tokens; original/public hashes are distinct whenever changed. Projected sources retain original acceptance hash literals and therefore are not directly accepted runtime pins. Local replay copies require explicit local path/hash rebinding and must remain separately labeled. The historical accounting fixture is positively selected compact metadata only. No native auth/logs/model IO, source body captures, scoring-only keys, or evaluator answers are included.
+
+Current native route review and accepted source freeze are separate upcoming evidence; this scope batch provides no native launch authority, research result, quality grade or efficiency claim. The original canary remains HOLD with 816.6492922306061 occupied seconds retained against its original 480-second cap.

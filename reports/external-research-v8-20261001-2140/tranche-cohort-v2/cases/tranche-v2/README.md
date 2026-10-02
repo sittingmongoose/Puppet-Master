@@ -1,0 +1,7 @@
+# v8 integration-first tranche
+
+Frozen prospectively before candidate preparation: 12 matched pairs, 24 unique complete pipelines across two domains. Six existing NOT_RUN planning-v1 cases are referenced unchanged; 18 new cases live only in `candidates/`. Each arm independently discovers public primary sources and investigates a relevant real repository issue → fix → test chain, then critiques/corrects the actual thin-plan proposal through three fresh same-family stages.
+
+The first pair is `V8-BIO-C-Z` versus `V8-BIO-WIT-T-Z`. Existing C/P are not directly contrasted: old C is paired with witness-only; old P with a distinct fresh witness-only baseline; old B with proposition/condition/witness/progressive-only baseline. Thus combined old recipes are explicitly matched rather than relabeled. Other pairs isolate progressive retrieval, prioritized amendment critique and bounded breadth/analogy. Each contrast is conditional on its declared shared recipe background.
+
+`pairs.json` is the exact map. `scoring-only/` is evaluator-only and must never enter candidate sandboxes. Four named fresh unseen holdout executions and 28 independent evaluations are reserved before execution queue filling. Holdout briefs stay unprepared/unexposed until a promising independently evaluated complete recipe exists. No execution, admission, source research, answer, output scoring, or Git operation is performed by this bundle.

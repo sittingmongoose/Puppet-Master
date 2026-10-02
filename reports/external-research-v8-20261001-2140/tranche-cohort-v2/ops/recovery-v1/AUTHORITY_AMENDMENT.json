@@ -1,0 +1,41 @@
+{
+  "schema": "pm.er8.authority-amendment.v1",
+  "campaign_id": "external-research-v8-20261001-2140",
+  "amended_utc": "2026-10-02T03:41:18.505444+00:00",
+  "authority": "Jared current /goal takeover request and supplied ER8_RESTART_HANDOFF.md",
+  "handoff_sha256": "4904d27b98fa94300e30962170abbb80dd0fdd08772c5d5d4cb8758183fffac5",
+  "historical_authorization_sha256": "25609fc787d622958fd62afa5df218a1e4789f61595a4152865ceb0c143304f2",
+  "application": "Prospective governing campaign policy; preserves every frozen/running assignment cap, original birth, failed outcome and historical usage; no retroactive compliance",
+  "clock_start_epoch": 1790905209,
+  "deadline_epoch": 1790948409,
+  "explicit_user_pause_seconds": 0,
+  "limits": {
+    "elapsed_seconds": 43200,
+    "native_goal_starts": 144,
+    "occupied_candidate_slot_seconds": 172800,
+    "active_helpers": 6,
+    "active_candidates_by_family": {
+      "M": 2,
+      "Z": 2,
+      "L": 2
+    },
+    "helper_task_start_cap": null,
+    "repair_versions_per_boundary_cap": null
+  },
+  "roles": {
+    "orchestrator": "gpt-6.1-sol/ultra",
+    "development": "gpt-6.1-sol/high",
+    "mechanical": "gpt-6.1-sol/medium",
+    "independent_evaluation": "gpt-6.1-sol/xhigh",
+    "M": "Muse Code/Muse1.3Contributor/Max",
+    "Z": "zcode/GLM5.3Flash/Max",
+    "L": "gpt-6-luna/max fresh standalone native threads"
+  },
+  "targets": {
+    "matched_comparisons": 12,
+    "integrated_executions": 24,
+    "reserved_holdout_executions": 4,
+    "domains": 2
+  },
+  "scope": "Existing subscriptions, sandbox research/proposals only; GitHub research branch; no canon/main/sibling changes, credentials, private conversations or evaluator keys in candidate/public access."
+}

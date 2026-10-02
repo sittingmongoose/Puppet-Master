@@ -1,0 +1,78 @@
+{
+  "schema": "pm.external_research.v8.holdout_reservations.v2",
+  "count": 4,
+  "native_starts_reserved": 12,
+  "candidate_slot_seconds_reserved": 21600,
+  "reservations": [
+    {
+      "case_id": "V8-HOLDOUT-BIO-C",
+      "domain": "bioimaging",
+      "arm": "ordinary-complete-control",
+      "state": "RESERVED_UNSEEN_NOT_PREPARED",
+      "native_starts_reserved": 3,
+      "case_wall_hard_seconds": 3600,
+      "case_occupied_hard_seconds": 5400,
+      "host_overhead_hard_seconds": 300,
+      "stage_caps_seconds": [
+        1800,
+        600,
+        600
+      ],
+      "evaluator_id": "V8-EVAL-HOLDOUT-BIO-C",
+      "fresh_subject": "A new synthetic brief and thin plan in this domain, full three-question/five-obligation public-primary discovery + repository issue/fix/test scope; one identical unseen brief per domain pair. No holdout inputs are exposed or prepared now. Freeze the new matched brief/method/binding before either holdout case birth. No candidate or evaluator source answers supplied."
+    },
+    {
+      "case_id": "V8-HOLDOUT-BIO-R",
+      "domain": "bioimaging",
+      "arm": "selected-promising-recipe",
+      "state": "RESERVED_UNSEEN_NOT_PREPARED",
+      "native_starts_reserved": 3,
+      "case_wall_hard_seconds": 3600,
+      "case_occupied_hard_seconds": 5400,
+      "host_overhead_hard_seconds": 300,
+      "stage_caps_seconds": [
+        1800,
+        600,
+        600
+      ],
+      "evaluator_id": "V8-EVAL-HOLDOUT-BIO-R",
+      "fresh_subject": "A new synthetic brief and thin plan in this domain, full three-question/five-obligation public-primary discovery + repository issue/fix/test scope; one identical unseen brief per domain pair. No holdout inputs are exposed or prepared now. Freeze the new matched brief/method/binding before either holdout case birth. No candidate or evaluator source answers supplied."
+    },
+    {
+      "case_id": "V8-HOLDOUT-NB-C",
+      "domain": "notebook-workspace",
+      "arm": "ordinary-complete-control",
+      "state": "RESERVED_UNSEEN_NOT_PREPARED",
+      "native_starts_reserved": 3,
+      "case_wall_hard_seconds": 3600,
+      "case_occupied_hard_seconds": 5400,
+      "host_overhead_hard_seconds": 300,
+      "stage_caps_seconds": [
+        1800,
+        600,
+        600
+      ],
+      "evaluator_id": "V8-EVAL-HOLDOUT-NB-C",
+      "fresh_subject": "A new synthetic brief and thin plan in this domain, full three-question/five-obligation public-primary discovery + repository issue/fix/test scope; one identical unseen brief per domain pair. No holdout inputs are exposed or prepared now. Freeze the new matched brief/method/binding before either holdout case birth. No candidate or evaluator source answers supplied."
+    },
+    {
+      "case_id": "V8-HOLDOUT-NB-R",
+      "domain": "notebook-workspace",
+      "arm": "selected-promising-recipe",
+      "state": "RESERVED_UNSEEN_NOT_PREPARED",
+      "native_starts_reserved": 3,
+      "case_wall_hard_seconds": 3600,
+      "case_occupied_hard_seconds": 5400,
+      "host_overhead_hard_seconds": 300,
+      "stage_caps_seconds": [
+        1800,
+        600,
+        600
+      ],
+      "evaluator_id": "V8-EVAL-HOLDOUT-NB-R",
+      "fresh_subject": "A new synthetic brief and thin plan in this domain, full three-question/five-obligation public-primary discovery + repository issue/fix/test scope; one identical unseen brief per domain pair. No holdout inputs are exposed or prepared now. Freeze the new matched brief/method/binding before either holdout case birth. No candidate or evaluator source answers supplied."
+    }
+  ],
+  "activation_gate": "Promising recipe exists from complete independently evaluated initial-tranche artifact(s); select on whole-case quality first, then inclusive practical timing and known/unknown costs. Faster incomplete/failed cases are not promising quality-equivalent recipes. Freeze selected full recipe and common same-family/account/model/caps/access before holdout preparation. No exposed initial-case source selections/answers/critique/evaluator feedback accompany it. If no recipe qualifies, holdouts remain NOT_RUN; never spend them on a rescued known answer.",
+  "holdout_comparison": "Two new matched pairs: ordinary complete control versus selected full recipe, one fresh unseen brief each domain; four unique executions, no sibling/cross-case caches."
+}
