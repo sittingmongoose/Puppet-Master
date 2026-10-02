@@ -289,6 +289,14 @@
     renderWav: renderWav,
     EVENTS: EVENTS.slice(),
     FAMILIES: Object.keys(KITS),
+    /* NieR Mode's Menu sounds part (nier-parts.js) plays its own synth through this same switch: fn(ctx, out, t)
+       runs only when sound is on and armed by a gesture, on this context, into this master chain */
+    synth: function (fn) {
+      if (S.muted || !armed || typeof fn !== 'function') return false;
+      var ctx = ensure(); if (!ctx) return false;
+      try { fn(ctx, S.master, ctx.currentTime + 0.004); } catch (e) { return false; }
+      return true;
+    },
     get muted() { return S.muted; },
     setMuted: function (m) { S.muted = !!m; try { localStorage.setItem(KEY, S.muted ? 'off' : 'on'); } catch (e) { } },
     log: S.log
