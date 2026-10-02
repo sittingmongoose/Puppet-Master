@@ -42060,7 +42060,7 @@ var PMU_SERIES = {
         if (own) {
           if (!own.hasAttribute('data-base')) own.setAttribute('data-base', String(parseInt(own.textContent, 10)));
           own.textContent = own.textContent.replace(/^\d+/, String(+own.getAttribute('data-base') + b._pmuHidden))
-            .replace(/^(\d+ more )(\w+)/, function (m0, a, w) { return a + (/s$/.test(w) ? w : /y$/.test(w) ? w.replace(/y$/, 'ies') : w + 's'); });
+            .replace(/^(\d+ more )(?!(?:at|in|after)\b)(\w+)/, function (m0, a, w) { return a + (/s$/.test(w) ? w : /y$/.test(w) ? w.replace(/y$/, 'ies') : w + 's'); });
           return;
         }
         var more = b.querySelector('.pmu-more[data-auto]');
