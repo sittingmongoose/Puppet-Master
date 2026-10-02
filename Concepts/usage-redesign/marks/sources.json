@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-02T03:37:41.368Z",
+ "generated": "2026-10-02T03:55:36.175Z",
  "pack": "Puppet Master Usage redesign: official provider marks (Jared 2026-10-02: \"yes use the real provider logos\")",
  "rebuild": "cd ~/PM-Experiments/usage-redesign-20261001/marks-work && node tools/build.mjs && node tools/pm-emit.mjs (headless Chrome; build.mjs is AAC marks-v2 tools/build.mjs with only the variant list and paths changed; writes out/ and tools/measure.json, then marks/out, marks/sources.json and src/js/06-marks.js here). Downloaded originals are kept in marks-work/src and marks-work/dl.",
  "rules": "Official artwork only. No recolouring, redrawing or geometry changes. SVG edits are limited to dropping the XML prolog and editor comments, setting the root viewBox/width/height (the crop), and, for lockups, dropping wordmark elements that lie wholly outside the crop (each verified pixel-identical). Optical scale is metadata only.",
@@ -1016,7 +1016,7 @@
    "plate": true,
    "inkBox": 0.9172,
    "scaleTuned": "formula gives 0.75 for the solid plate; set to AAC's plate value 0.9",
-   "surfaces": "favicon-dark (dark plate) on dark surfaces, favicon-light (white plate) on light surfaces, as console.x.ai serves them per colour scheme.",
+   "surfaces": "favicon-dark (dark #0A0A0A plate, white symbol) on EVERY surface, like Kimi's black app-icon plate: console.x.ai serves a white plate for light schemes, but on light and NieR parchment surfaces it reads as an empty white square (decided 2026-10-02 on Jared's \"use your best judgement on xAI\"). The light favicon is kept in sources for provenance only.",
    "licenseNote": "SpaceXAI (formerly xAI) and its symbol are SpaceXAI trademarks; the guidelines allow the logos only unaltered and only to refer accurately to SpaceXAI services. Shown unmodified to identify the xAI API.",
    "sources": [
     {
@@ -1069,24 +1069,7 @@
      ],
      "wordmarkElementsDropped": 0
     },
-    "light": {
-     "file": "out/xai-light.svg",
-     "sha256": "e12cfa16e71d2d5db4db355339cd3c4bbb3ae3d810053cbe42a0e7d01398afc1",
-     "viewBox": [
-      -3.84,
-      -3.84,
-      519.68,
-      519.68
-     ],
-     "aspect": 1,
-     "sourceViewBox": [
-      0,
-      0,
-      512,
-      512
-     ],
-     "wordmarkElementsDropped": 0
-    }
+    "light": null
    }
   },
   "minimax": {
@@ -1143,8 +1126,19 @@
    "plate": false,
    "inkBox": 0.3426,
    "surfaces": "One artwork for both surfaces (full-colour spark).",
-   "licenseNote": "Gemini and the Gemini spark are Google LLC trademarks. Official product icon, unmodified, used only to identify the Gemini API (Gemini Direct) provider. 252 KB because Google ships the colour field as an embedded raster inside the SVG.",
+   "licenseNote": "Gemini and the Gemini spark are Google LLC trademarks. Official product icon (Google's own PNG export), unmodified, used only to identify the Gemini API (Gemini Direct) provider.",
    "sources": [
+    {
+     "url": "https://www.gstatic.com/images/branding/productlogos/gemini_2026/v1/web-96dp/logo_gemini_2026_color_2x_web_96dp.png",
+     "retrieved": "2026-10-02",
+     "note": "Embedded artwork (2026-10-02, Jared: \"use your best judgement on ... Gemini\"): Google's official 192x192 PNG of the same current Gemini icon (17.7 KB) instead of the 252 KB SVG, which is only a vector outline clipping an embedded raster colour field anyway. The Gemini spark is kept, not the Antigravity mark, because Gemini API and Google Antigravity are separate rows in Settings and must stay distinguishable.",
+     "files": [
+      {
+       "file": "marks-work/src/gemini_2026-v1-web-96dp-color-2x.png",
+       "sha256": "f6fb59688b764de4e418acc15844a2a743c3628102d7ae2f1fcf1e1da1e7d59b"
+      }
+     ]
+    },
     {
      "url": "https://www.gstatic.com/images/branding/productlogos/gemini_2026/v1/192px.svg",
      "retrieved": "2026-10-02",
@@ -1167,22 +1161,9 @@
    ],
    "out": {
     "dark": {
-     "file": "out/gemini.svg",
-     "sha256": "c4297aaf6046b412d6afd3b782400d5bec0400367c47ba43dd0b85e162e03d83",
-     "viewBox": [
-      5.6244,
-      5.6244,
-      180.7512,
-      180.7512
-     ],
-     "aspect": 1,
-     "sourceViewBox": [
-      0,
-      0,
-      192,
-      192
-     ],
-     "wordmarkElementsDropped": 0
+     "file": "out/gemini.png",
+     "sha256": "f6fb59688b764de4e418acc15844a2a743c3628102d7ae2f1fcf1e1da1e7d59b",
+     "from": "marks-work/src/gemini_2026-v1-web-96dp-color-2x.png (bytes unchanged; 192x192 PNG)"
     },
     "light": null
    }
