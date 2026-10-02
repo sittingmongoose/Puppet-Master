@@ -859,8 +859,14 @@
       }
     } else g.cand = null;
   }
+  /* the preview IS the board the release commits (final fix M7, Mac film: the peers were pushed down 390 px while
+     dragging, then gravity sent budget-now diagonally to a slot the preview never showed): each new slot runs the
+     resolver and then the post-gesture gravity on the candidate layout, and the peers slide there live, so the release
+     only settles the active card */
   function previewTo(g, rect) {
-    g.preview = resolve(g.snapshot, g.id, rect);
+    /* back on its own slot the release changes nothing, so the preview is the snapshot itself */
+    g.preview = sameRect(rect, g.me) ? g.snapshot : gravity(resolve(g.snapshot, g.id, rect), g.id, g.me, g.snapshot, current.cls.tracks);
+    g.previewFinal = true;
     var map = toMap(g.preview);
     if (g.type === 'move') glide(landing, rect, 'landing'); else showOutline(g, rect);
     slidePeers(map, g.id, 250, 'slide', g.kb ? 0 : 20);
@@ -950,7 +956,7 @@
       var snapMap = toMap(g.snapshot);
       /* coordinator decision 1: the committed layout is the resolver's preview plus gravity (displaced peers that fit the
          freed region move into it, every card floats up into the holes above it); one command carries every peer */
-      g.final = gravity(g.preview, g.id, g.me, g.snapshot, current.cls.tracks);
+      g.final = g.previewFinal ? g.preview : gravity(g.preview, g.id, g.me, g.snapshot, current.cls.tracks);
       var peers = g.final.filter(function (r) { return r.id !== g.id && !sameRect(r, snapMap[r.id]); });
       if (g.type === 'move') {
         receipt = command('cmd.widget.move', { room: room, widget_id: g.id, from: { x: g.me.x, y: g.me.y }, to: { x: g.target.x, y: g.target.y }, board_class: cls,
@@ -1296,7 +1302,8 @@
     if (!me) return null;
     var g = { id: id, card: card, type: type, kb: true, started: true, source: source || 'api', snapshot: snap, me: me, target: rect };
     if (sameRect(rect, me)) return null;
-    g.preview = resolve(snap, id, rect);
+    g.preview = gravity(resolve(snap, id, rect), id, me, snap, current.cls.tracks);
+    g.previewFinal = true;
     if (!card) {
       /* not on the board (another level): commit the layout without motion */
       var receipt = command(type === 'move' ? 'cmd.widget.move' : 'cmd.widget.resize', { room: current.room, widget_id: id, from: me, to: rect, board_class: current.cls.name, source: g.source }, type === 'move' ? { moved: true } : { resized: true });
