@@ -57,6 +57,11 @@
 [data-step-kind="complete"]   { --pm-step:#3fb27a; }
 [data-step-kind="mcp"] { --pm-step: #e06ea0; }
 [data-step-kind="skill"] { --pm-step: #d9b13b; }
+/* The goal, To-Do and plan work batches run `file` steps (making an output:
+   a lime, kin to the making greens) and `testing` steps (verifying it: an
+   orange, kin to test's amber); without a hue they fell back to the accent. */
+[data-step-kind="file"] { --pm-step: #84b84c; }
+[data-step-kind="testing"] { --pm-step: #e08e45; }
 
 /* ---- Materialize: the signature entrance ----------------------------
    Rows in the reference do not slide in. They resolve out of a blur,

@@ -647,6 +647,11 @@ body:has(.resizer.dragging), body:has(.panel-resize.dragging) {
 [data-step-kind="complete"]   { --pm-step:#3fb27a; }
 [data-step-kind="mcp"] { --pm-step: #e06ea0; }
 [data-step-kind="skill"] { --pm-step: #d9b13b; }
+/* The goal, To-Do and plan work batches run `file` steps (making an output:
+   a lime, kin to the making greens) and `testing` steps (verifying it: an
+   orange, kin to test's amber); without a hue they fell back to the accent. */
+[data-step-kind="file"] { --pm-step: #84b84c; }
+[data-step-kind="testing"] { --pm-step: #e08e45; }
 
 /* ---- Materialize: the signature entrance ----------------------------
    Rows in the reference do not slide in. They resolve out of a blur,
@@ -1016,28 +1021,52 @@ button.rail8-row {
    refills stop walking a bottom-pinned transcript up and down (repro R3). */
 .working-variant-8:not(.is-done) .rail8-under.rail8-live { min-height:96px; }
 .working-variant-8 .rail8-under:empty { min-height:0; margin-top:0; }
-/* Orbit-strip parity (wave 3): kind-tinted discs, a larger pulsing current
-   disc, and a slight hover grow. data-step-kind on each disc scopes
-   --pm-step exactly like the orbit ring. */
+/* Orbit-strip parity (wave 3): a larger pulsing current disc and a slight
+   hover grow. data-step-kind on each disc scopes --pm-step exactly like the
+   orbit ring. Neon icons (step 3C, orbit.css PART 3): the current disc is the
+   dark disc rimmed and inked in the phase hue, its glyph lit and acting while
+   the run runs (variants-a.js draws it with moving parts only then); done
+   discs are lit green on a neutral tile (Jared: "done steps are lit green").
+   A failed or waiting disc keeps its own flag colours (Chat WOW M4, below). */
 .working-variant-8 .rail8-item {
   transition: transform var(--pm-t-icon) var(--pm-ease-pop),
               background var(--pm-t-icon) var(--pm-ease-out),
               border-color var(--pm-t-icon) var(--pm-ease-out),
               color var(--pm-t-icon) var(--pm-ease-out);
 }
-.working-variant-8 .rail8-item.done {
+.working-variant-8 .rail8-item.done:not(.failed, .waiting) {
+  color: var(--positive);
+  border-color: var(--border);
+  background: var(--surface-3);
+}
+.working-variant-8 .rail8-item.done:not(.failed, .waiting) > svg { --nx-hi-a: var(--nx-h-quiet-i); }
+.working-variant-8 .rail8-item.current:not(.failed, .waiting) {
   color: var(--pm-step, var(--accent));
-  border-color: color-mix(in srgb, var(--pm-step, var(--accent)) 34%, var(--border));
-  background: color-mix(in srgb, var(--pm-step, var(--accent)) 9%, var(--surface-3));
+  border: 1.5px solid var(--pm-step, var(--accent));
+  background: var(--nx-disc);
+  /* inside the dark disc the dark themes' glow strengths apply on every theme */
+  --nx-hi-w: 3.6px; --nx-h-working-i: .20;
+}
+.working-variant-8 .rail8-item.current:not(.failed, .waiting) > svg { --nx-hi-a: var(--nx-h-working-i); }
+.working-variant-8 .rail8-item.current > svg .nx-p {
+  animation: var(--kl) 2200ms var(--nx-le) infinite;
+  animation-delay: calc(var(--ad, 0) * 2.2ms - 2200ms);
 }
 .working-variant-8 .rail8-item.current {
-  color: var(--pm-step, var(--accent));
-  border-color: color-mix(in srgb, var(--pm-step, var(--accent)) 62%, var(--border));
-  background: color-mix(in srgb, var(--pm-step, var(--accent)) 18%, var(--surface-3));
-  animation: pm-disc-in var(--pm-t-icon) var(--pm-ease-pop) both,
-             orbit-strip-pulse 1900ms var(--ease) infinite;
-  animation-delay: 65ms, 600ms;
+  animation: pm-disc-in var(--pm-t-icon) var(--pm-ease-pop) 65ms both;
 }
+/* The pulse is a ring on ::before that grows and fades (transform and
+   opacity, so it runs on the compositor; the old box-shadow pulse repainted
+   on the main thread every frame). */
+.working-variant-8 .rail8-item.current::before {
+  content: ""; position: absolute; inset: -1.5px; border-radius: 50%; pointer-events: none;
+  border: 1.5px solid var(--pm-step, var(--accent)); opacity: 0;
+  animation: orbit-strip-ring 1900ms var(--ease) 600ms infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .working-variant-8 .rail8-item.current::before { animation: none !important; }
+}
+body.pm56-reduced .working-variant-8 .rail8-item.current::before { animation: none !important; }
 .working-variant-8 .rail8-item:hover { transform: scale(1.12); }
 .working-variant-8 .rail8-item.current:hover { transform: scale(1.06); }
 /* A live rail collapsed to icons-only should not float in 122px of card. */
@@ -6063,12 +6092,21 @@ body[data-ph-resizing] .assistant-grid{ transition:none; }
  * sheets at equal specificity.  Prefer adding rules here to reopening
  * styles.css: after Wave 1 nobody edits styles.css again.
  *
- * Two independent things live in this file:
+ * Three things live in this file:
  *   PART 1 — the SHARED phase trail, fixed for every take that uses it.
  *   PART 2 — take 1 (Orbit) itself.
+ *   PART 3 — the working animation in the neon icon family (Neon icons,
+ *            surface step 3C, 2026-10-02): the dark disc of the live subject,
+ *            done steps lit green and the live glyph's act, for Orbit, its
+ *            strip, the shared trail, Step Rail Simple and the lab takes'
+ *            phase tiles.
  * Part 1 deliberately reaches outside take 1 (that is the requester's explicit
  * scope decision) but changes only stroke weight, icon size and transform —
- * never a box that another take lays out against.
+ * never a box that another take lays out against. Part 3 reaches the same
+ * discs for colour and lighting only.
+ * Icon weight goes through --nx-stroke-base (neon-icons.css multiplies it by
+ * the tone factor), never stroke-width on a glyph; the disc ink stays on
+ * `color`, which orbit-verify's strokeCore reads.
  */
 
 /* =====================================================================
@@ -6103,11 +6141,12 @@ body[data-ph-resizing] .assistant-grid{ transition:none; }
 /* (a) Icon size and stroke weight become variables, so each context can be
    tuned to land the painted stroke at ~1.35px — comfortably over the 1px
    floor at dpr 1 and still light enough to read as a line icon.
-   stroke-width here is in USER units: painted px = value * rendered/24. */
+   The weight is in USER units: painted px = value * rendered/24. It reaches
+   the glyph as --nx-stroke-base, the neon grammar's context weight. */
 .pm-rail-item svg {
   width: var(--rail-icon, 14px);
   height: var(--rail-icon, 14px);
-  stroke-width: var(--rail-stroke, 2.3);
+  --nx-stroke-base: var(--rail-stroke, 2.3);
   shape-rendering: geometricPrecision;
   overflow: visible;
 }
@@ -6407,17 +6446,18 @@ body[data-ph-resizing] .assistant-grid{ transition:none; }
   to   { opacity: 0; transform: translateY(-44px) scale(.45); }
 }
 /* 14px in a 22-28px node: 2.3 user units on a 0 0 24 24 viewBox paints
-   2.3 * 14/24 = 1.342px. The stock take drew icon(...,13) at 1.8 -> 0.975px. */
-.orbit-node svg { width: 14px; height: 14px; stroke-width: 2.3; }
-.orbit-node.done {
-  color: var(--positive);
-  border-color: color-mix(in srgb, var(--positive) 34%, var(--border));
-  background: color-mix(in srgb, var(--positive) 9%, var(--surface-3));
-}
+   2.3 * 14/24 = 1.342px. The stock take drew icon(...,13) at 1.8 -> 0.975px.
+   `>` so the corner flag's own svg is not resized by the density tiers. */
+.orbit-node > svg { width: 14px; height: 14px; --nx-stroke-base: 2.3; }
+/* (the done look is set in the Chat WOW M4 block below, which wins) */
+/* The live subject is a DARK DISC with a lit glyph (plan §4, Jared): an opaque
+   puck (--nx-disc, PART 3) rimmed in the phase hue, the glyph in the phase hue
+   on `color` with its neon bloom, plus the pop, the 22px glow and the pulse pip.
+   On light themes the puck is dark too, so the hue reads lit there as well. */
 .orbit-node.live {
-  color: var(--on-accent);
-  background: var(--pm-step, var(--accent));
-  border-color: var(--pm-step, var(--accent));
+  color: var(--pm-step, var(--accent));
+  background: var(--nx-disc);
+  border: 1.5px solid var(--pm-step, var(--accent));
   --pop: 1.2;
   box-shadow: 0 0 22px color-mix(in srgb, var(--pm-step, var(--accent)) 42%, transparent);
 }
@@ -6430,7 +6470,7 @@ body[data-ph-resizing] .assistant-grid{ transition:none; }
 }
 .orbit-node.open.live { --pop: 1.26; }
 .orbit-node:hover { --pop: 1.12; color: var(--pm-step, var(--accent)); }
-.orbit-node.live:hover { --pop: 1.28; color: var(--on-accent); }
+.orbit-node.live:hover { --pop: 1.28; color: var(--pm-step, var(--accent)); }
 .orbit-node:focus-visible { outline: 2px solid color-mix(in srgb, var(--accent) 72%, white); outline-offset: 2px; }
 
 .orbit-node-pip { display: none; }
@@ -6499,9 +6539,11 @@ body[data-ph-resizing] .assistant-grid{ transition:none; }
   z-index: 1;
   cursor: pointer;
   appearance: none; -webkit-appearance: none;
-  background: radial-gradient(circle at 35% 30%,
-    color-mix(in srgb, var(--pm-step, var(--accent)) 26%, var(--surface-2)), var(--surface-3));
-  border: 1px solid color-mix(in srgb, var(--pm-step, var(--accent)) 34%, var(--border));
+  /* the live subject's dark disc (PART 3): an opaque puck rimmed in the phase
+     hue; its label reads in the puck's own text ink */
+  background: var(--nx-disc);
+  border: 1.5px solid var(--pm-step, var(--accent));
+  color: var(--nx-disc-text);
   box-shadow: 0 0 45px color-mix(in srgb, var(--pm-step, var(--accent)) 15%, transparent);
   transition:
     background 520ms var(--pm-ease-out),
@@ -6546,7 +6588,7 @@ body[data-ph-resizing] .assistant-grid{ transition:none; }
   from { opacity: .35; transform: scale(.78); }
   to   { opacity: 1;   transform: scale(1); }
 }
-.orbit-core.done { border-color: color-mix(in srgb, var(--positive) 42%, var(--border)); }
+.orbit-core.done { border-color: var(--positive); }
 .orbit-core.done .orbit-core-icon { color: var(--positive); }
 @container orbitdial (max-width: 190px) {
   .orbit-core strong { font-size: 10px; }
@@ -6682,12 +6724,12 @@ body[data-ph-resizing] .assistant-grid{ transition:none; }
 .orbit-stage[data-orbit-tier] { --orbit-dial-w: clamp(150px, 52cqi, 232px); }
 .orbit-stage[data-orbit-tier] .orbit-dial { --orbit-node-sz: clamp(15px, 9.5cqi, 21px); }
 .orbit-stage[data-orbit-tier] .orbit-node { border-radius: 7px; }
-.orbit-stage[data-orbit-tier] .orbit-node svg { width: 11px; height: 11px; stroke-width: 2.9; }
+.orbit-stage[data-orbit-tier] .orbit-node > svg { width: 11px; height: 11px; --nx-stroke-base: 2.9; }
 .orbit-stage[data-orbit-tier] .orbit-node.live .orbit-node-pip { inset: -4px; border-radius: 10px; }
 .orbit-stage[data-orbit-tier="xl"] { --orbit-dial-w: clamp(160px, 56cqi, 248px); }
 .orbit-stage[data-orbit-tier="xl"] .orbit-dial { --orbit-node-sz: clamp(13px, 8cqi, 17px); }
 .orbit-stage[data-orbit-tier="xl"] .orbit-node { border-radius: 6px; }
-.orbit-stage[data-orbit-tier="xl"] .orbit-node svg { width: 9px; height: 9px; stroke-width: 3.4; }
+.orbit-stage[data-orbit-tier="xl"] .orbit-node > svg { width: 9px; height: 9px; --nx-stroke-base: 3.4; }
 
 /* ---- compact strip (a superseded card) -------------------------------
    The density of the shared chrome's shut state: one row of subject discs
@@ -6703,32 +6745,41 @@ body[data-ph-resizing] .assistant-grid{ transition:none; }
   overflow: visible;
   padding: 2px;
 }
-/* Kind-tinted at rest (double class beats the shared done/current colour
-   halves in motion.css), so a 22-subject strip reads as the run's real phase
-   spectrum at a glance rather than a row of identical gray discs. Discs are
-   uid-keyed, so each mounts exactly once — the entrance rides that. */
+/* Done subjects are lit green on a neutral tile (double class beats the
+   shared done/current colour halves in motion.css; neon icons, step 3C:
+   Jared's "done steps are lit green" replaces the kind tint), so a finished
+   strip reads as finished at a glance; the live subject's dark disc below
+   carries the phase hue. Discs are uid-keyed, so each mounts exactly once —
+   the entrance rides that. */
 .pm-rail-item.orbit-strip-item, .wa-disc.orbit-strip-item.done {
   cursor: pointer;
-  color: var(--pm-step, var(--accent));
-  border-color: color-mix(in srgb, var(--pm-step, var(--accent)) 34%, var(--border));
-  background: color-mix(in srgb, var(--pm-step, var(--accent)) 9%, var(--surface-3));
+  color: var(--positive);
+  border-color: var(--border);
+  background: var(--surface-3);
   animation: orbit-disc-in var(--pm-t-icon) var(--pm-ease-pop) backwards;
 }
-/* A LIVE strip's current subject pulses so a collapsed card still reads as
-   working (the rails reference look, icons only). */
+/* A LIVE strip's current subject is the dark disc (PART 3) and pulses so a
+   collapsed card still reads as working (the rails reference look, icons
+   only). The pulse is a ring on ::before that grows and fades (transform and
+   opacity, so it runs on the compositor; the old box-shadow pulse repainted
+   on the main thread every frame). */
 .pm-rail-item.orbit-strip-item.current {
   cursor: pointer;
   color: var(--pm-step, var(--accent));
-  border-color: color-mix(in srgb, var(--pm-step, var(--accent)) 62%, var(--border));
-  background: color-mix(in srgb, var(--pm-step, var(--accent)) 18%, var(--surface-3));
+  border: 1.5px solid var(--pm-step, var(--accent));
+  background: var(--nx-disc);
   --rail-pop: 1.25;
   transform: scale(var(--rail-pop));
-  animation: orbit-disc-in var(--pm-t-icon) var(--pm-ease-pop) backwards,
-             orbit-strip-pulse 1900ms var(--ease) 400ms infinite;
+  animation: orbit-disc-in var(--pm-t-icon) var(--pm-ease-pop) backwards;
 }
-@keyframes orbit-strip-pulse {
-  0%        { box-shadow: 0 0 0 0 color-mix(in srgb, var(--pm-step, var(--accent)) 45%, transparent); }
-  70%, 100% { box-shadow: 0 0 0 7px transparent; }
+.pm-rail-item.orbit-strip-item.current::before {
+  content: ""; position: absolute; inset: -1.5px; border-radius: 50%; pointer-events: none;
+  border: 1.5px solid var(--pm-step, var(--accent)); opacity: 0;
+  animation: orbit-strip-ring 1900ms var(--ease) 400ms infinite;
+}
+@keyframes orbit-strip-ring {
+  0%        { opacity: .5; transform: scale(1); }
+  70%, 100% { opacity: 0;  transform: scale(1.7); }
 }
 /* The completed strip's receipt row (the elapsed chip is omitted — the card
    head already prints the time). */
@@ -6794,7 +6845,7 @@ body[data-ph-resizing] .assistant-grid{ transition:none; }
   .orbit-strip-item {
     transition-duration: 1ms !important;
   }
-  .orbit-node-pip, .orbit-track, .orbit-strip-item { animation: none !important; }
+  .orbit-node-pip, .orbit-track, .orbit-strip-item, .orbit-strip-item::before { animation: none !important; }
   .orbit-sat, .orbit-core-icon, .orbit-node, .orbit-dial { animation-duration: 1ms !important; animation-delay: 0ms !important; }
 }
 .orbit-caption-label { color: var(--text); font-weight: 640; }
@@ -6856,18 +6907,17 @@ button.wa-row {
 /* ======================================================================
    Chat WOW M4 -- concurrency, status, clusters, narration.
    ====================================================================== */
-/* done subjects keep their kind's colour (muted) with a small completion pip,
-   so a finished ring still reads as the run it was, not a wall of green */
+/* Done subjects are lit green (Jared, neon icons: "done steps are lit green";
+   this replaces the muted kind colour): the positive ink with a faint done
+   halo on a neutral tile, so the colour belongs to the glyph. The green
+   corner pip that marked completion beside a kind-coloured glyph is retired:
+   beside a green glyph it only repeated it (judged on the 3C stills). Done
+   nodes never act (orbit.js draws them still). */
 .orbit-node.done {
-  color: color-mix(in srgb, var(--pm-step, var(--muted)) 80%, var(--text));
-  border-color: color-mix(in srgb, var(--pm-step, var(--muted)) 26%, var(--border));
-  background: color-mix(in srgb, var(--pm-step, var(--muted)) 10%, var(--surface-3));
+  color: var(--positive);
+  border-color: var(--border);
+  background: var(--surface-3);
 }
-.orbit-node.done::after {
-  content: ""; position: absolute; right: -3px; bottom: -3px; width: 7px; height: 7px; border-radius: 50%;
-  background: var(--positive); box-shadow: 0 0 0 2px var(--surface-2); pointer-events: none;
-}
-.orbit-node.done.failed::after, .orbit-node.failed::after { display: none; }
 /* several subjects live at once: each live node pulses, out of phase */
 .orbit-node.live:nth-child(3n+2) .orbit-node-pip { animation-delay: -.6s; }
 .orbit-node.live:nth-child(3n) .orbit-node-pip { animation-delay: -1.2s; }
@@ -6892,7 +6942,7 @@ button.wa-row {
   background: var(--danger); color: #fff; box-shadow: 0 0 0 2px var(--surface-2);
 }
 .orbit-node.waiting .orbit-node-flag { background: var(--warning); color: #1b1200; }
-.orbit-node-flag svg { width: 7px; height: 7px; stroke-width: 3.2; }
+.orbit-node-flag svg { width: 7px; height: 7px; --nx-stroke-base: 3.2; }
 /* clusters: a count badge; the Earlier fold is quieter */
 .orbit-node.cluster { border-style: solid; }
 .orbit-node-count {
@@ -6904,8 +6954,8 @@ button.wa-row {
 .orbit-node.earlier { opacity: .75; }
 .orbit-node.earlier .orbit-node-count { background: var(--surface-3); color: var(--muted); }
 .orbit-strip-item .orbit-node-count { bottom: -6px; font-size: 7.5px; line-height: 11px; }
-.orbit-strip-item.failed { color: var(--danger); }
-.orbit-strip-item.waiting { color: var(--warning); }
+.wa-disc.orbit-strip-item.failed { color: var(--danger); }
+.wa-disc.orbit-strip-item.waiting { color: var(--warning); }
 /* the core: +N when more than one subject is live; waiting for the reader */
 .orbit-core-more {
   position: absolute; right: 2px; top: 2px; min-width: 20px; padding: 1px 5px; border-radius: 999px;
@@ -6914,7 +6964,7 @@ button.wa-row {
   animation: orbit-more-in 260ms cubic-bezier(.34, 1.56, .64, 1) both;
 }
 @keyframes orbit-more-in { from { transform: scale(.4); opacity: 0; } to { transform: none; opacity: 1; } }
-.orbit-core.waiting { border-color: color-mix(in srgb, var(--warning) 60%, var(--border)); box-shadow: 0 0 40px color-mix(in srgb, var(--warning) 20%, transparent); }
+.orbit-core.waiting { border-color: var(--warning); box-shadow: 0 0 40px color-mix(in srgb, var(--warning) 20%, transparent); }
 .orbit-core.waiting .orbit-core-icon { color: var(--warning); }
 /* cluster panel: one line per member, then its rows */
 .orbit-member { display: block; margin: 8px 0 2px; font-size: 11px; color: var(--muted); }
@@ -6931,6 +6981,122 @@ button.wa-row {
 @keyframes orbit-narr-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 .orbit-narr-cap i { font-style: normal; color: color-mix(in srgb, var(--text) 82%, transparent); }
 @media (prefers-reduced-motion: reduce) { .orbit-node.failed, .orbit-core-more, .orbit-narration { animation: none; } }
+
+/* =====================================================================
+   PART 3 — the working animation in the neon icon family
+   ---------------------------------------------------------------------
+   OWNER: Neon icons, surface step 3C (2026-10-02). The glyphs themselves are
+   neon-icons.js drawings; this part says how the working animation lights
+   them (plan §4, Jared's decisions):
+   - the live subject is a DARK DISC with a lit glyph: Orbit's live node and
+     core (PART 2), the current disc of the strip and of the shared trail,
+     Step Rail Simple's current disc (variants-a.css) and the live step's tile
+     in the lab takes;
+   - done steps are lit green; pending steps sit at rest, unlit;
+   - only the live glyph acts, and only while the run runs. orbit.js, app.js
+     and variants-a.js draw it with its moving parts (size 14) only then and
+     every other node or disc still (size 11, below the registry's 12 px gate),
+     so a scrub that mounts 140 nodes starts no act at all.
+   NieR Mode repaints the discs as its ink blocks (nier.css). Reduced motion:
+   neon-icons.css section 10 stops every glyph act.
+   ===================================================================== */
+
+/* The disc. --nx-disc is opaque: the canvas on dark themes (glass included:
+   its canvas is solid), and on light themes a dark puck, the text ink itself,
+   so the phase hue reads lit on every theme. --nx-disc-text is the ink of the
+   disc's own words (the core label). */
+body { --nx-disc: var(--canvas); --nx-disc-text: var(--text); --nx-disc-positive: var(--positive); --nx-disc-warning: var(--warning); }
+body[data-theme$="-light"] { --nx-disc: var(--text); --nx-disc-text: var(--canvas); }
+/* The core shows status in its disc (a finished run's check and green rim, a
+   run waiting for the reader in the attention ink). A light theme's positive
+   and warning are dark inks for paper and sink into the dark puck (retro-light
+   measured about 2.2:1), so inside the core they are the theme family's dark
+   values (styles.css, the -dark sibling of each light theme). NieR keeps its
+   own inks (nier.css resets these). */
+body[data-theme="basic-light"] { --nx-disc-positive: #5cd69b; --nx-disc-warning: #f5bd55; }
+body[data-theme="friendly-light"] { --nx-disc-positive: #86d8a7; --nx-disc-warning: #ffd078; }
+body[data-theme="glass-light"] { --nx-disc-positive: #7be0af; --nx-disc-warning: #ffd074; }
+body[data-theme="retro-light"] { --nx-disc-positive: #74ffb0; --nx-disc-warning: #f2d35e; }
+.orbit-core { --positive: var(--nx-disc-positive); --warning: var(--nx-disc-warning); }
+/* Inside a dark disc the glow strengths of the dark themes apply on every
+   theme (neon-icons.css section 1 tunes the light-theme values for ink on
+   paper, where a bloom reads as a tinted sticker): restated on the disc, its
+   glyph and status marks inherit them. A waiting or failed live node keeps its
+   tinted tile (PART 2), so it keeps the theme's values. */
+.orbit-node.live:not(.waiting, .failed), .orbit-core, .wa-chrome .wa-disc.current, .pm-rail-item.orbit-strip-item.current,
+.working-variant-0 .reference-stage .work-phase-icon, .receipt-building .work-phase-icon, .stack-card.current .work-phase-icon {
+  --nx-hi-w: 3.6px;
+  --nx-h-working-i: .20; --nx-h-attention-i: .20; --nx-h-blocked-i: .24; --nx-h-quiet-i: .10;
+  --nx-bl-attention: .08;
+}
+
+/* Orbit. A node's glyph sits at rest unlit; the live one is lit in the phase
+   hue (its ink is the node's `color`); a done one carries a faint done halo; a
+   flagged one is lit in its tone. The corner flag's glyph is plain ink on its
+   chip. */
+.orbit-node > svg { --nx-hi-a: 0; }
+.orbit-node.done > svg { --nx-hi-a: var(--nx-h-quiet-i); }
+.orbit-node.live > svg { --nx-hi-a: var(--nx-h-working-i); }
+.orbit-node.waiting > svg { --nx-hi-a: var(--nx-h-attention-i); }
+.orbit-node.failed > svg { --nx-hi-a: var(--nx-h-blocked-i); }
+.orbit-node-flag > svg { --nx-hi-a: 0; }
+.orbit-core-icon > svg { --nx-hi-a: var(--nx-h-working-i); }
+
+/* The act: the bar's working loop (each part's own literal keyframes, --kl,
+   transform and opacity only so they composite, at 2200 ms with the stagger
+   scaled; the negative delay starts the act on the first frame, so it plays at
+   every handover: the node and the core glyph are keyed by subject). Only a
+   glyph drawn with moving parts can match, see the header. */
+.orbit-node.live > svg .nx-p,
+.orbit-core-icon.is-live > svg .nx-p,
+.wa-chrome .wa-disc.current > svg .nx-p,
+.pm-rail-item.orbit-strip-item.current > svg .nx-p {
+  animation: var(--kl) 2200ms var(--nx-le) infinite;
+  animation-delay: calc(var(--ad, 0) * 2.2ms - 2200ms);
+}
+/* The density tiers paint the node glyph at 11 and 9 px, under the 12 px
+   gate: its parts hold still there, and their halo copies convert at the
+   rendered size. The narrow core paints its glyph at 18 px. */
+.orbit-stage[data-orbit-tier] .orbit-node > svg { --nx-u: 2.1818; }
+.orbit-stage[data-orbit-tier="xl"] .orbit-node > svg { --nx-u: 2.6667; }
+.orbit-stage[data-orbit-tier] .orbit-node > svg .nx-p { animation: none; }
+@container orbitdial (max-width: 150px) { .orbit-core-icon svg { --nx-u: 1.3333; } }
+
+/* The shared trail (every take with the phase chrome): the current disc is
+   the dark disc, done discs are lit green on their plain ring. (The strip's
+   discs are PART 2's; Step Rail Simple's are variants-a.css's.) */
+.wa-chrome .wa-disc.current {
+  color: var(--pm-step, var(--accent));
+  background: var(--nx-disc);
+  border: 1.5px solid var(--pm-step, var(--accent));
+}
+.wa-chrome .wa-disc.done { color: var(--positive); }
+.wa-chrome .wa-disc.current > svg, .pm-rail-item.orbit-strip-item.current > svg { --nx-hi-a: var(--nx-h-working-i); }
+.wa-chrome .wa-disc.done > svg, .wa-disc.orbit-strip-item.done > svg { --nx-hi-a: var(--nx-h-quiet-i); }
+
+/* The lab takes' phase tiles (.work-phase-icon outside the card head: the
+   reference stage, the stack, the receipt, the work history) are neutral:
+   colour is reserved for status (plan §4). The live step's tile is the dark
+   disc, and its glyph plays its act once each time the step changes (the
+   reference and receipt tiles are keyed by step). A finished history step is
+   lit green. The card head's tile is neon-icons.css section 12's; a finished
+   card's tiles are turn-stage.css's. */
+.working-card .work-phase-icon { background: var(--surface-3); color: var(--muted); box-shadow: none; }
+.working-variant-0 .reference-stage .work-phase-icon, .receipt-building .work-phase-icon, .stack-card.current .work-phase-icon {
+  background: var(--nx-disc); color: var(--pm-step, var(--accent));
+  box-shadow: inset 0 0 0 1.5px var(--pm-step, var(--accent));
+}
+.working-variant-0 .reference-stage .work-phase-icon > svg, .receipt-building .work-phase-icon > svg, .stack-card.current .work-phase-icon > svg {
+  --nx-hi-a: var(--nx-h-working-i);
+  --nx-1: var(--nx-d1) var(--nx-ease) backwards;
+}
+.history-step.done .work-phase-icon { color: var(--positive); }
+.history-step.done .work-phase-icon > svg { --nx-hi-a: var(--nx-h-quiet-i); }
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-strip-item::before { animation: none !important; }
+}
+body.pm56-reduced .orbit-strip-item::before { animation: none !important; }
 
 /* threadops.css — feature module styles.  OWNER: Wave 4 — Thread Ops (item 13).
  *
@@ -17266,8 +17432,8 @@ html[data-o55-nier="on"] body { background: var(--canvas); }
    agents, skills and artifacts the umber; the shell and tools the muted ink. Failure keeps the rust to itself. */
 html[data-o55-nier="on"] [data-step-kind] { --pm-step: var(--accent); }
 html[data-o55-nier="on"] [data-step-kind]:is([data-step-kind="files"], [data-step-kind="web-search"], [data-step-kind="web-fetch"], [data-step-kind="browser"]) { --pm-step: var(--accent-2); }
-html[data-o55-nier="on"] [data-step-kind]:is([data-step-kind="edit"], [data-step-kind="app"], [data-step-kind="validate"], [data-step-kind="complete"]) { --pm-step: var(--o55-nier-ok); }
-html[data-o55-nier="on"] [data-step-kind]:is([data-step-kind="test"]) { --pm-step: var(--o55-nier-warn); }
+html[data-o55-nier="on"] [data-step-kind]:is([data-step-kind="edit"], [data-step-kind="app"], [data-step-kind="validate"], [data-step-kind="complete"], [data-step-kind="file"]) { --pm-step: var(--o55-nier-ok); }
+html[data-o55-nier="on"] [data-step-kind]:is([data-step-kind="test"], [data-step-kind="testing"]) { --pm-step: var(--o55-nier-warn); }
 html[data-o55-nier="on"] [data-step-kind]:is([data-step-kind="agents"], [data-step-kind="skill"], [data-step-kind="artifact"]) { --pm-step: var(--o55-nier-umber); }
 html[data-o55-nier="on"] [data-step-kind]:is([data-step-kind="bash"], [data-step-kind="mcp"]) { --pm-step: var(--muted); }
 
@@ -17361,16 +17527,24 @@ html[data-o55-nier="on"] .orbit-node.live:hover { color: var(--o55-nier-on-ink);
 html[data-o55-nier="on"] .orbit-node.live .orbit-node-pip { border-color: var(--o55-nier-ink); animation-timing-function: steps(4, end); }
 html[data-o55-nier="on"] .orbit-node.done { color: var(--positive); border-color: var(--o55-nier-ok); background: var(--surface-3); }
 html[data-o55-nier="on"] .orbit-node.failed { animation-timing-function: steps(5, end); }
+/* the core's status inks stay NieR's (orbit.css lifts a light theme's to its dark sibling's for the default dark puck) */
+html[data-o55-nier="on"] body { --nx-disc-positive: var(--positive); --nx-disc-warning: var(--warning); }
 /* the collapsed strip and Step Rail Simple: the current disc is the ink block, it blinks in one step instead of
-   throwing a box-shadow ring (NieR never animates a shadow); done discs take the olive ink */
+   growing a ring (NieR never animates a glow; the default themes' pulse ring on ::before is dropped); done discs take
+   the olive ink, unless a failed or waiting flag is up. The shared trail's current disc and the live step's tile in
+   the lab takes (the default themes' dark disc, orbit.css PART 3) are the ink block too, without the blink. */
 html[data-o55-nier="on"] .pm-rail-item.orbit-strip-item.current,
-html[data-o55-nier="on"] .working-variant-8 .rail8-item.current {
-  background: var(--o55-nier-ink); border-color: var(--o55-nier-ink); color: var(--o55-nier-on-ink);
-  animation-name: orbit-disc-in, o55n-blink; animation-timing-function: steps(3, end), steps(1, end);
-}
-html[data-o55-nier="on"] .working-variant-8 .rail8-item.current { animation-name: pm-disc-in, o55n-blink; }
-html[data-o55-nier="on"] .wa-disc.orbit-strip-item.done,
-html[data-o55-nier="on"] .working-variant-8 .rail8-item.done { color: var(--positive); border-color: var(--o55-nier-ok); background: var(--surface-3); }
+html[data-o55-nier="on"] .working-variant-8 .rail8-item.current,
+html[data-o55-nier="on"] .wa-chrome .wa-disc.current,
+html[data-o55-nier="on"] .working-variant-0 .reference-stage .work-phase-icon,
+html[data-o55-nier="on"] .receipt-building .work-phase-icon,
+html[data-o55-nier="on"] .stack-card.current .work-phase-icon { background: var(--o55-nier-ink); border-color: var(--o55-nier-ink); color: var(--o55-nier-on-ink); box-shadow: none; }
+html[data-o55-nier="on"] .pm-rail-item.orbit-strip-item.current { animation: orbit-disc-in var(--pm-t-icon) steps(3, end) backwards, o55n-blink 1900ms steps(1, end) 400ms infinite; }
+html[data-o55-nier="on"] .working-variant-8 .rail8-item.current { animation: pm-disc-in var(--pm-t-icon) steps(3, end) 65ms both, o55n-blink 1900ms steps(1, end) 600ms infinite; }
+html[data-o55-nier="on"] .pm-rail-item.orbit-strip-item.current::before,
+html[data-o55-nier="on"] .working-variant-8 .rail8-item.current::before { display: none; }
+html[data-o55-nier="on"] .wa-disc.orbit-strip-item.done:not(.failed, .waiting),
+html[data-o55-nier="on"] .working-variant-8 .rail8-item.done:not(.failed, .waiting) { color: var(--positive); border-color: var(--o55-nier-ok); background: var(--surface-3); }
 html[data-o55-nier="on"] body.pm56-reduced .pm-rail-item.orbit-strip-item.current,
 html[data-o55-nier="on"] body.pm56-reduced .working-variant-8 .rail8-item.current { animation: none; }
 
@@ -17832,7 +18006,10 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
     artifact:{verb:'Rendering',past:'Rendered',count:'2 artifacts'},
     complete:{verb:'Finishing',past:'Finished',count:'14 tools'},
     mcp:{verb:'Calling MCP tools',past:'Called MCP tools',count:'2 calls'},
-    skill:{verb:'Running a skill',past:'Ran a skill',count:'1 skill'}
+    skill:{verb:'Running a skill',past:'Ran a skill',count:'1 skill'},
+    /* the goal, To-Do and plan work batches (goal-work-batch15, todo-work-batch16, plan-work-batch17) */
+    file:{verb:'Writing files',past:'Wrote files',count:'1 file'},
+    testing:{verb:'Verifying',past:'Verified',count:'1 check'}
   };
 
   /* Concrete rows the chrome shows for each phase: a streamed thought
@@ -21170,6 +21347,9 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
     const sel = selItem.inst;
     const shut = completed && !expanded;
 
+    /* Neon icons (step 3C): the live disc's glyph is drawn with its moving parts (size 14) only while the run runs and
+       no flag is up, so it acts; every other disc is drawn still (11, below the registry's 12 px gate). The css sizes
+       both at the disc's icon size. */
     const track = items.map((it, i) => {
       const s = it.inst, cur = it.live;
       const cls = 'pm-rail-item rail8-item ' + (cur ? 'current enter' : 'done') + (i === selI && pinI != null ? ' pinned' : '')
@@ -21177,7 +21357,7 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
       const st = it.status === 'failed' ? 'failed' : it.status === 'waiting' ? 'waiting for you' : cur ? 'in progress' : 'completed';
       const label = (it.earlier ? 'Earlier' : s.label) + (it.count > 1 ? ' ×' + it.count : '');
       const statBit = it.count > 1 ? label : (s.stat ? `${s.label} · ${s.stat}` : s.label);
-      return `<button type="button" class="${cls}" data-k="ri:${esc(it.uid)}" data-action="rail8-pin" data-value="${i}" data-step-kind="${esc(s.kind)}" data-hover-key="${esc(ctx.cardId + ':r8:' + it.uid)}" data-hover-tip="${esc(statBit + '\n' + (it.count > 1 ? it.count + ' subjects' : s.verb) + ' (' + st + ')')}" aria-pressed="${i === selI && pinI != null ? 'true' : 'false'}" aria-label="${esc(label)}${s.stat && it.count === 1 ? ', ' + esc(s.stat) : ''}">${icon(it.earlier ? 'history' : s.icon, 11)}${it.count > 1 ? `<b class="orbit-node-count">${it.count}</b>` : ''}</button>`;
+      return `<button type="button" class="${cls}" data-k="ri:${esc(it.uid)}" data-action="rail8-pin" data-value="${i}" data-step-kind="${esc(s.kind)}" data-hover-key="${esc(ctx.cardId + ':r8:' + it.uid)}" data-hover-tip="${esc(statBit + '\n' + (it.count > 1 ? it.count + ' subjects' : s.verb) + ' (' + st + ')')}" aria-pressed="${i === selI && pinI != null ? 'true' : 'false'}" aria-label="${esc(label)}${s.stat && it.count === 1 ? ', ' + esc(s.stat) : ''}">${icon(it.earlier ? 'history' : s.icon, cur && running && !it.status ? 14 : 11)}${it.count > 1 ? `<b class="orbit-node-count">${it.count}</b>` : ''}</button>`;
     }).join('');
 
     const m = railMeta(sel);
@@ -28077,6 +28257,10 @@ window.PM56_NIER_FACES = [
  *     core / orbpanel), instance-uid keys where a replay IS wanted
  *     (`opin:<uid>` replays the row cascade on a subject change,
  *     `orow:<uid>:<j>` materializes each row exactly once as it streams in).
+ *   - Neon icons (step 3C): the live node and the core are dark discs whose
+ *     lit glyph acts while the run runs; done and pending glyphs are drawn
+ *     still (actSize); the flags and the core's waiting / complete marks come
+ *     from the status set (PM56_NEON.status). The look is orbit.css PART 3.
  */
 (function () {
   'use strict';
@@ -28259,6 +28443,17 @@ window.PM56_NIER_FACES = [
   }
   function itemIcon(it) { return it.earlier ? 'history' : it.inst.icon; }
   function itemLabel(it) { return it.earlier ? 'Earlier' : it.inst.label; }
+  /* Neon icons (step 3C): only the live subject's glyph acts, and only while the run runs (a subject flagged failed
+     or waiting for the reader shows its flag instead). The registry draws a
+     glyph's moving parts only at a size argument of 12 or more, so a node or disc that must stay still (done,
+     pending, paused) asks for 11: one merged halo, no part wrappers, nothing to start when a scrub mounts 140
+     nodes. orbit.css sizes the svg (14 px) either way. */
+  function actSize(acts) { return acts ? 14 : 11; }
+  /* the status set's mark (PM56_NEON.status), read at call time; without the registry, the plain glyph */
+  function statusMark(c, s, size) {
+    var N = window.PM56_NEON;
+    return N && N.status ? N.status(s, size) : c.icon(s === 'complete' ? 'check' : 'pause', size);
+  }
 
   /* ---- full stage ----------------------------------------------------- */
   function renderStage(c, ui) {
@@ -28313,9 +28508,10 @@ window.PM56_NIER_FACES = [
         + ' aria-pressed="' + (i === panelI && pinI != null ? 'true' : 'false') + '"'
         + tipAttrs(esc, w.cardId, it.uid, statBit, (it.count > 1 ? it.count + ' subjects' : sx.verb) + ' (' + st + ')')
         + ' aria-label="' + esc(label) + ', ' + st + '">'
-        + icon(itemIcon(it), 13) + '<i class="orbit-node-pip"></i>'
+        + icon(itemIcon(it), actSize(it.live && w.running && !it.status)) + '<i class="orbit-node-pip"></i>'
         + (it.count > 1 ? '<b class="orbit-node-count">' + (it.earlier ? it.count : '×' + it.count) + '</b>' : '')
-        + (it.status === 'failed' ? '<i class="orbit-node-flag">' + icon('close', 8) + '</i>' : it.status === 'waiting' ? '<i class="orbit-node-flag">' + icon('pause', 8) + '</i>' : '')
+        /* the flags use the status set: failed is the warning triangle, waiting for the reader is the needs-you bubble */
+        + (it.status === 'failed' ? '<i class="orbit-node-flag">' + icon('warning', 8) + '</i>' : it.status === 'waiting' ? '<i class="orbit-node-flag">' + icon('st-waiting', 8) + '</i>' : '')
         + '</button>';
     }).join('');
 
@@ -28342,7 +28538,11 @@ window.PM56_NIER_FACES = [
       + ' data-k="core" data-action="orbit-toggle" aria-pressed="' + (pinI == null ? 'true' : 'false') + '"'
       + tipAttrs(esc, w.cardId, 'core', coreTitle, pinI != null ? 'Return focus to the live subject' : 'The dial follows the live subject')
       + '>'
-      + '<span class="orbit-core-icon" data-k="coreicon:' + esc(live.uid) + '">' + icon(rec.completed ? 'check' : waiting ? 'pause' : live.icon, 22) + '</span>'
+      /* The core is the live subject's dark disc: its glyph acts while the run runs (is-live, orbit.css PART 3); a
+         finished run shows the status set's complete mark (it draws once), a run waiting for the reader the needs-you
+         mark in its own rhythm. */
+      + '<span class="orbit-core-icon' + (!rec.completed && !waiting && w.running ? ' is-live' : '') + '" data-k="coreicon:' + esc(live.uid) + '">'
+      + (rec.completed ? statusMark(c, 'complete', 22) : waiting ? statusMark(c, 'waiting', 22) : icon(live.icon, 22)) + '</span>'
       /* CONSTANT key on purpose: a subject key here remounted the label on
          every handover and the pm-materialize entrance blanked the core for
          ~40ms mid-rotation. */
@@ -28516,7 +28716,7 @@ window.PM56_NIER_FACES = [
         + ' data-action="orbit-reopen" data-value="' + i + '"'
         + tipAttrs(esc, w.cardId, 'sd-' + it.uid, statBit, (it.count > 1 ? it.count + ' subjects' : sx.verb) + ' (' + st + ') — reopen this subject')
         + ' aria-label="Reopen ' + esc(label) + '">'
-        + icon(itemIcon(it), 11) + (it.count > 1 ? '<b class="orbit-node-count">' + it.count + '</b>' : '') + '</button>';
+        + icon(itemIcon(it), actSize(cur && w.running && !it.status)) + (it.count > 1 ? '<b class="orbit-node-count">' + it.count + '</b>' : '') + '</button>';
     }).join('');
 
     return '<div class="orbit-strip" data-k="strip">'
@@ -68225,7 +68425,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       const meta=D.phaseMeta[g.first.kind]||{};
       const cls='pm-rail-item wa-disc '+(completed||i<activeIdx?'done':i===activeIdx?'current enter':'')+(open===g.phase?' open':'');
       const act=completed?` data-action="toggle-work-phase" data-value="${g.phase}"`:'';
-      return `<button type="button" class="${cls}" data-k="wa:${i}:${g.phase}"${act} title="${esc(meta.past||meta.verb||g.phase)} ${esc(meta.count||'')}" aria-label="${esc(meta.past||meta.verb||g.phase)}">${icon(g.first.icon,11)}</button>`;
+      /* neon icons (orbit.css PART 3): the current disc's glyph gets its moving parts (size 14) only while the run runs,
+         so it acts; every other disc is drawn still (11, under the registry's 12 px gate) */
+      return `<button type="button" class="${cls}" data-k="wa:${i}:${g.phase}"${act} title="${esc(meta.past||meta.verb||g.phase)} ${esc(meta.count||'')}" aria-label="${esc(meta.past||meta.verb||g.phase)}">${icon(g.first.icon,(running&&!completed&&i===activeIdx)?14:11)}</button>`;
     }).join('');
     /* `off` continues the entrance cascade across the steps of one opened
        phase, so rows always land top-to-bottom in document order. */

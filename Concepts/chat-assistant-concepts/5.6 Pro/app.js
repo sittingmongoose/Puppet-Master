@@ -1407,7 +1407,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       const meta=D.phaseMeta[g.first.kind]||{};
       const cls='pm-rail-item wa-disc '+(completed||i<activeIdx?'done':i===activeIdx?'current enter':'')+(open===g.phase?' open':'');
       const act=completed?` data-action="toggle-work-phase" data-value="${g.phase}"`:'';
-      return `<button type="button" class="${cls}" data-k="wa:${i}:${g.phase}"${act} title="${esc(meta.past||meta.verb||g.phase)} ${esc(meta.count||'')}" aria-label="${esc(meta.past||meta.verb||g.phase)}">${icon(g.first.icon,11)}</button>`;
+      /* neon icons (orbit.css PART 3): the current disc's glyph gets its moving parts (size 14) only while the run runs,
+         so it acts; every other disc is drawn still (11, under the registry's 12 px gate) */
+      return `<button type="button" class="${cls}" data-k="wa:${i}:${g.phase}"${act} title="${esc(meta.past||meta.verb||g.phase)} ${esc(meta.count||'')}" aria-label="${esc(meta.past||meta.verb||g.phase)}">${icon(g.first.icon,(running&&!completed&&i===activeIdx)?14:11)}</button>`;
     }).join('');
     /* `off` continues the entrance cascade across the steps of one opened
        phase, so rows always land top-to-bottom in document order. */

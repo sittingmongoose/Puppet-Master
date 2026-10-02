@@ -46,6 +46,10 @@
  *     core / orbpanel), instance-uid keys where a replay IS wanted
  *     (`opin:<uid>` replays the row cascade on a subject change,
  *     `orow:<uid>:<j>` materializes each row exactly once as it streams in).
+ *   - Neon icons (step 3C): the live node and the core are dark discs whose
+ *     lit glyph acts while the run runs; done and pending glyphs are drawn
+ *     still (actSize); the flags and the core's waiting / complete marks come
+ *     from the status set (PM56_NEON.status). The look is orbit.css PART 3.
  */
 (function () {
   'use strict';
@@ -228,6 +232,17 @@
   }
   function itemIcon(it) { return it.earlier ? 'history' : it.inst.icon; }
   function itemLabel(it) { return it.earlier ? 'Earlier' : it.inst.label; }
+  /* Neon icons (step 3C): only the live subject's glyph acts, and only while the run runs (a subject flagged failed
+     or waiting for the reader shows its flag instead). The registry draws a
+     glyph's moving parts only at a size argument of 12 or more, so a node or disc that must stay still (done,
+     pending, paused) asks for 11: one merged halo, no part wrappers, nothing to start when a scrub mounts 140
+     nodes. orbit.css sizes the svg (14 px) either way. */
+  function actSize(acts) { return acts ? 14 : 11; }
+  /* the status set's mark (PM56_NEON.status), read at call time; without the registry, the plain glyph */
+  function statusMark(c, s, size) {
+    var N = window.PM56_NEON;
+    return N && N.status ? N.status(s, size) : c.icon(s === 'complete' ? 'check' : 'pause', size);
+  }
 
   /* ---- full stage ----------------------------------------------------- */
   function renderStage(c, ui) {
@@ -282,9 +297,10 @@
         + ' aria-pressed="' + (i === panelI && pinI != null ? 'true' : 'false') + '"'
         + tipAttrs(esc, w.cardId, it.uid, statBit, (it.count > 1 ? it.count + ' subjects' : sx.verb) + ' (' + st + ')')
         + ' aria-label="' + esc(label) + ', ' + st + '">'
-        + icon(itemIcon(it), 13) + '<i class="orbit-node-pip"></i>'
+        + icon(itemIcon(it), actSize(it.live && w.running && !it.status)) + '<i class="orbit-node-pip"></i>'
         + (it.count > 1 ? '<b class="orbit-node-count">' + (it.earlier ? it.count : '×' + it.count) + '</b>' : '')
-        + (it.status === 'failed' ? '<i class="orbit-node-flag">' + icon('close', 8) + '</i>' : it.status === 'waiting' ? '<i class="orbit-node-flag">' + icon('pause', 8) + '</i>' : '')
+        /* the flags use the status set: failed is the warning triangle, waiting for the reader is the needs-you bubble */
+        + (it.status === 'failed' ? '<i class="orbit-node-flag">' + icon('warning', 8) + '</i>' : it.status === 'waiting' ? '<i class="orbit-node-flag">' + icon('st-waiting', 8) + '</i>' : '')
         + '</button>';
     }).join('');
 
@@ -311,7 +327,11 @@
       + ' data-k="core" data-action="orbit-toggle" aria-pressed="' + (pinI == null ? 'true' : 'false') + '"'
       + tipAttrs(esc, w.cardId, 'core', coreTitle, pinI != null ? 'Return focus to the live subject' : 'The dial follows the live subject')
       + '>'
-      + '<span class="orbit-core-icon" data-k="coreicon:' + esc(live.uid) + '">' + icon(rec.completed ? 'check' : waiting ? 'pause' : live.icon, 22) + '</span>'
+      /* The core is the live subject's dark disc: its glyph acts while the run runs (is-live, orbit.css PART 3); a
+         finished run shows the status set's complete mark (it draws once), a run waiting for the reader the needs-you
+         mark in its own rhythm. */
+      + '<span class="orbit-core-icon' + (!rec.completed && !waiting && w.running ? ' is-live' : '') + '" data-k="coreicon:' + esc(live.uid) + '">'
+      + (rec.completed ? statusMark(c, 'complete', 22) : waiting ? statusMark(c, 'waiting', 22) : icon(live.icon, 22)) + '</span>'
       /* CONSTANT key on purpose: a subject key here remounted the label on
          every handover and the pm-materialize entrance blanked the core for
          ~40ms mid-rotation. */
@@ -485,7 +505,7 @@
         + ' data-action="orbit-reopen" data-value="' + i + '"'
         + tipAttrs(esc, w.cardId, 'sd-' + it.uid, statBit, (it.count > 1 ? it.count + ' subjects' : sx.verb) + ' (' + st + ') — reopen this subject')
         + ' aria-label="Reopen ' + esc(label) + '">'
-        + icon(itemIcon(it), 11) + (it.count > 1 ? '<b class="orbit-node-count">' + it.count + '</b>' : '') + '</button>';
+        + icon(itemIcon(it), actSize(cur && w.running && !it.status)) + (it.count > 1 ? '<b class="orbit-node-count">' + it.count + '</b>' : '') + '</button>';
     }).join('');
 
     return '<div class="orbit-strip" data-k="strip">'

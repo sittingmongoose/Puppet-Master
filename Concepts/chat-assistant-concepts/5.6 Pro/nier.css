@@ -284,8 +284,8 @@ html[data-o55-nier="on"] body { background: var(--canvas); }
    agents, skills and artifacts the umber; the shell and tools the muted ink. Failure keeps the rust to itself. */
 html[data-o55-nier="on"] [data-step-kind] { --pm-step: var(--accent); }
 html[data-o55-nier="on"] [data-step-kind]:is([data-step-kind="files"], [data-step-kind="web-search"], [data-step-kind="web-fetch"], [data-step-kind="browser"]) { --pm-step: var(--accent-2); }
-html[data-o55-nier="on"] [data-step-kind]:is([data-step-kind="edit"], [data-step-kind="app"], [data-step-kind="validate"], [data-step-kind="complete"]) { --pm-step: var(--o55-nier-ok); }
-html[data-o55-nier="on"] [data-step-kind]:is([data-step-kind="test"]) { --pm-step: var(--o55-nier-warn); }
+html[data-o55-nier="on"] [data-step-kind]:is([data-step-kind="edit"], [data-step-kind="app"], [data-step-kind="validate"], [data-step-kind="complete"], [data-step-kind="file"]) { --pm-step: var(--o55-nier-ok); }
+html[data-o55-nier="on"] [data-step-kind]:is([data-step-kind="test"], [data-step-kind="testing"]) { --pm-step: var(--o55-nier-warn); }
 html[data-o55-nier="on"] [data-step-kind]:is([data-step-kind="agents"], [data-step-kind="skill"], [data-step-kind="artifact"]) { --pm-step: var(--o55-nier-umber); }
 html[data-o55-nier="on"] [data-step-kind]:is([data-step-kind="bash"], [data-step-kind="mcp"]) { --pm-step: var(--muted); }
 
@@ -379,16 +379,24 @@ html[data-o55-nier="on"] .orbit-node.live:hover { color: var(--o55-nier-on-ink);
 html[data-o55-nier="on"] .orbit-node.live .orbit-node-pip { border-color: var(--o55-nier-ink); animation-timing-function: steps(4, end); }
 html[data-o55-nier="on"] .orbit-node.done { color: var(--positive); border-color: var(--o55-nier-ok); background: var(--surface-3); }
 html[data-o55-nier="on"] .orbit-node.failed { animation-timing-function: steps(5, end); }
+/* the core's status inks stay NieR's (orbit.css lifts a light theme's to its dark sibling's for the default dark puck) */
+html[data-o55-nier="on"] body { --nx-disc-positive: var(--positive); --nx-disc-warning: var(--warning); }
 /* the collapsed strip and Step Rail Simple: the current disc is the ink block, it blinks in one step instead of
-   throwing a box-shadow ring (NieR never animates a shadow); done discs take the olive ink */
+   growing a ring (NieR never animates a glow; the default themes' pulse ring on ::before is dropped); done discs take
+   the olive ink, unless a failed or waiting flag is up. The shared trail's current disc and the live step's tile in
+   the lab takes (the default themes' dark disc, orbit.css PART 3) are the ink block too, without the blink. */
 html[data-o55-nier="on"] .pm-rail-item.orbit-strip-item.current,
-html[data-o55-nier="on"] .working-variant-8 .rail8-item.current {
-  background: var(--o55-nier-ink); border-color: var(--o55-nier-ink); color: var(--o55-nier-on-ink);
-  animation-name: orbit-disc-in, o55n-blink; animation-timing-function: steps(3, end), steps(1, end);
-}
-html[data-o55-nier="on"] .working-variant-8 .rail8-item.current { animation-name: pm-disc-in, o55n-blink; }
-html[data-o55-nier="on"] .wa-disc.orbit-strip-item.done,
-html[data-o55-nier="on"] .working-variant-8 .rail8-item.done { color: var(--positive); border-color: var(--o55-nier-ok); background: var(--surface-3); }
+html[data-o55-nier="on"] .working-variant-8 .rail8-item.current,
+html[data-o55-nier="on"] .wa-chrome .wa-disc.current,
+html[data-o55-nier="on"] .working-variant-0 .reference-stage .work-phase-icon,
+html[data-o55-nier="on"] .receipt-building .work-phase-icon,
+html[data-o55-nier="on"] .stack-card.current .work-phase-icon { background: var(--o55-nier-ink); border-color: var(--o55-nier-ink); color: var(--o55-nier-on-ink); box-shadow: none; }
+html[data-o55-nier="on"] .pm-rail-item.orbit-strip-item.current { animation: orbit-disc-in var(--pm-t-icon) steps(3, end) backwards, o55n-blink 1900ms steps(1, end) 400ms infinite; }
+html[data-o55-nier="on"] .working-variant-8 .rail8-item.current { animation: pm-disc-in var(--pm-t-icon) steps(3, end) 65ms both, o55n-blink 1900ms steps(1, end) 600ms infinite; }
+html[data-o55-nier="on"] .pm-rail-item.orbit-strip-item.current::before,
+html[data-o55-nier="on"] .working-variant-8 .rail8-item.current::before { display: none; }
+html[data-o55-nier="on"] .wa-disc.orbit-strip-item.done:not(.failed, .waiting),
+html[data-o55-nier="on"] .working-variant-8 .rail8-item.done:not(.failed, .waiting) { color: var(--positive); border-color: var(--o55-nier-ok); background: var(--surface-3); }
 html[data-o55-nier="on"] body.pm56-reduced .pm-rail-item.orbit-strip-item.current,
 html[data-o55-nier="on"] body.pm56-reduced .working-variant-8 .rail8-item.current { animation: none; }
 

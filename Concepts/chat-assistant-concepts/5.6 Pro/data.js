@@ -217,7 +217,10 @@
     artifact:{verb:'Rendering',past:'Rendered',count:'2 artifacts'},
     complete:{verb:'Finishing',past:'Finished',count:'14 tools'},
     mcp:{verb:'Calling MCP tools',past:'Called MCP tools',count:'2 calls'},
-    skill:{verb:'Running a skill',past:'Ran a skill',count:'1 skill'}
+    skill:{verb:'Running a skill',past:'Ran a skill',count:'1 skill'},
+    /* the goal, To-Do and plan work batches (goal-work-batch15, todo-work-batch16, plan-work-batch17) */
+    file:{verb:'Writing files',past:'Wrote files',count:'1 file'},
+    testing:{verb:'Verifying',past:'Verified',count:'1 check'}
   };
 
   /* Concrete rows the chrome shows for each phase: a streamed thought
