@@ -615,6 +615,17 @@
   /* model: {cols: [{key, label, align?, min?: tier, w?: css, fmt?}], rows: [{cells: {key: text|{html}}, tone?, onClick?, id?}],
              toolbar?: {search?: placeholder, filters?: [{key, label, options: [{value, label}], value}], export?: fn}, empty?, foot?} */
   C.kind('table', {
+    /* "Fit" in the card menu (NOTES2-engine, paging at S): the height in rows that shows every record without a pager,
+       at most the kind's tallest size; null when the card already shows them all */
+    autoH: function (ctx) {
+      var card = PMU.board && PMU.board.card ? PMU.board.card(ctx.id) : null, body = card && card.querySelector('.pmu-cardbody');
+      if (!card || !body || !(body._pmuTableNeed > 0)) return null;
+      var h = +card.dataset.h || 0, bh = body.clientHeight, extra = body._pmuTableNeed - bh;
+      if (!h || extra <= 0) return null;
+      var lim = (PMU_BOARDS.kinds && PMU_BOARDS.kinds.table && PMU_BOARDS.kinds.table.hMax) || 24;
+      var pitch = PMU.board.ROW || 30;   /* the row pitch: a 22 px row and the 8 px gap */
+      return Math.min(lim, h + Math.ceil(extra / pitch));
+    },
     render: function (body, ctx) {
       var m = ctx.model || { cols: [], rows: [] }, id = ctx.id;
       var cols = m.cols.map(function (c) { return c.key ? c : Object.assign({}, c, { key: c.id }); }).filter(function (c) { return !c.min || C.w(ctx, c.min); });
@@ -659,6 +670,7 @@
       var pageStarts = [0];
       (function () {
         var all = rows.map(rowHOf), sumAll = all.reduce(function (a, h) { return a + h; }, 0);
+        body._pmuTableNeed = sumAll + tb + headH + (m.foot ? 30 : 0);   /* the body height that shows every row (autoH, "Fit") */
         if (sumAll <= avail) return;
         var room = avail - pager, used = 0;
         for (var i = 0; i < all.length; i++) {

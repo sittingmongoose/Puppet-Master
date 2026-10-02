@@ -97,6 +97,22 @@
     var wide = nier || /^retro/.test(document.documentElement.getAttribute('data-theme') || '');
     return (PMU.charts.textW(tx, px, false, 640) + (nier ? tx.length * px * 0.05 : 0)) * (wide ? 1.25 : 1.1) <= w - 12;
   }
+  /* a plate's subtitle drops whole trailing " · " parts where it would end in an ellipsis beside the aside (NOTES2-content
+     engine 4: Retro and NieR fonts run wider); the full line stays in the title's hover tag. Canvas measure, no layout read. */
+  function fitSub(card, sub, asideText, form) {
+    if (form !== 'plate' || !sub || sub.indexOf(' · ') < 0 || !PMU.charts || !PMU.charts.textW) return sub;
+    var cls = PMU.board && PMU.board.cls ? PMU.board.cls() : null;
+    if (!cls || !cls.pitchX) return sub;
+    var cardW = (+card.dataset.w || 0) * cls.pitchX - 8;
+    var key = card.querySelector('.pmu-cardkey:not([hidden])') ? 34 : 0;
+    var wide = document.documentElement.getAttribute('data-o55-nier') === 'on' || /^retro/.test(document.documentElement.getAttribute('data-theme') || '');
+    var k = wide ? 1.22 : 1.08;
+    var aside = asideText ? Math.min(cardW * 0.46, PMU.charts.textW(String(asideText), 12.5, false, 500) * k) + 10 : 0;
+    var avail = cardW - 28 - key - aside - 4;
+    var parts = sub.split(' · '), out = sub;
+    while (parts.length > 1 && PMU.charts.textW(out, 12, false, 400) * k > avail) { parts.pop(); out = parts.join(' · '); }
+    return out;
+  }
   function syncHead(card, ctx) {
     var def = ctx.def, form = card.getAttribute('data-head') || 'line', tier = ctx.tier || {};
     var titleEl = card.querySelector('.pmu-cardtitle'), subEl = card.querySelector('.pmu-cardsub'), asideEl = card.querySelector('.pmu-cardmeta'), keyEl = card.querySelector('.pmu-cardkey');
@@ -107,10 +123,12 @@
       if (titleEl.getAttribute('data-pm-hover-label') !== full) titleEl.setAttribute('data-pm-hover-label', full);
       if ((titleEl.getAttribute('data-pm-hover-detail') || '') !== sub) titleEl.setAttribute('data-pm-hover-detail', sub);
     }
-    if (subEl && subEl.textContent !== sub) subEl.textContent = sub;
+    var asideV = text(def.aside || def.lineMeta, ctx);
+    var shown = fitSub(card, sub, asideV && typeof asideV === 'object' ? (asideV.text || String(asideV.html || '').replace(/<[^>]+>/g, '')) : asideV, form);
+    if (subEl && subEl.textContent !== shown) subEl.textContent = shown;
     var wrap = form === 'plate' && !titleFits(card, want, form);
     if (card.hasAttribute('data-title-wrap') !== wrap) card.toggleAttribute('data-title-wrap', wrap);
-    if (asideEl) { var a = asideHtml(text(def.aside || def.lineMeta, ctx)); if (asideEl._pmu !== a) { asideEl.innerHTML = a; asideEl._pmu = a; } }
+    if (asideEl) { var a = asideHtml(asideV); if (asideEl._pmu !== a) { asideEl.innerHTML = a; asideEl._pmu = a; } }
     if (keyEl) { var k = keyHtml(def, ctx, form); if (keyEl._pmu !== k) { keyEl.innerHTML = k; keyEl._pmu = k; keyEl.hidden = !k; } }
     var tone = def.tone ? text(def.tone, ctx) : '';
     if ((card.getAttribute('data-tone') || '') !== tone) { if (tone) card.setAttribute('data-tone', tone); else card.removeAttribute('data-tone'); }

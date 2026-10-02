@@ -588,63 +588,11 @@ html[data-theme^="retro"] #panel-usage .pmu-ringbox [data-mark="arc"] { stroke-l
 html[data-theme^="retro"] #panel-usage .pmu-xh { background: var(--pmu-ink-2); }
 html[data-theme^="retro"] #panel-usage .pmu-xdot { border-radius: 0; }
 
-/* ---------- cross-highlight (DESIGN-SPEC 7.1): the board's data-hl names one provider; its marks stay, the others drop to 35 % ---------- */
-#panel-usage .pmu-board[data-hl="claude-code"] .pmu-mark[data-prov]:not([data-prov="claude-code"]),
-#panel-usage .pmu-board[data-hl="openai-codex"] .pmu-mark[data-prov]:not([data-prov="openai-codex"]),
-#panel-usage .pmu-board[data-hl="antigravity"] .pmu-mark[data-prov]:not([data-prov="antigravity"]),
-#panel-usage .pmu-board[data-hl="grok"] .pmu-mark[data-prov]:not([data-prov="grok"]),
-#panel-usage .pmu-board[data-hl="muse"] .pmu-mark[data-prov]:not([data-prov="muse"]),
-#panel-usage .pmu-board[data-hl="github-copilot"] .pmu-mark[data-prov]:not([data-prov="github-copilot"]),
-#panel-usage .pmu-board[data-hl="qwen-coding"] .pmu-mark[data-prov]:not([data-prov="qwen-coding"]),
-#panel-usage .pmu-board[data-hl="zai-coding"] .pmu-mark[data-prov]:not([data-prov="zai-coding"]),
-#panel-usage .pmu-board[data-hl="kimi-coding"] .pmu-mark[data-prov]:not([data-prov="kimi-coding"]),
-#panel-usage .pmu-board[data-hl="minimax-coding"] .pmu-mark[data-prov]:not([data-prov="minimax-coding"]),
-#panel-usage .pmu-board[data-hl="opencode-go"] .pmu-mark[data-prov]:not([data-prov="opencode-go"]),
-#panel-usage .pmu-board[data-hl="anthropic-api"] .pmu-mark[data-prov]:not([data-prov="anthropic-api"]),
-#panel-usage .pmu-board[data-hl="gemini-direct"] .pmu-mark[data-prov]:not([data-prov="gemini-direct"]),
-#panel-usage .pmu-board[data-hl="vertex"] .pmu-mark[data-prov]:not([data-prov="vertex"]),
-#panel-usage .pmu-board[data-hl="xai-api"] .pmu-mark[data-prov]:not([data-prov="xai-api"]),
-#panel-usage .pmu-board[data-hl="meta-api"] .pmu-mark[data-prov]:not([data-prov="meta-api"]),
-#panel-usage .pmu-board[data-hl="cursor-cli"] .pmu-mark[data-prov]:not([data-prov="cursor-cli"]),
-#panel-usage .pmu-board[data-hl="qwen-token"] .pmu-mark[data-prov]:not([data-prov="qwen-token"]),
-#panel-usage .pmu-board[data-hl="opencode-zen"] .pmu-mark[data-prov]:not([data-prov="opencode-zen"]),
-#panel-usage .pmu-board[data-hl="free-models"] .pmu-mark[data-prov]:not([data-prov="free-models"]),
-#panel-usage .pmu-board[data-hl="opencode"] .pmu-mark[data-prov]:not([data-prov="opencode"]),
-#panel-usage .pmu-board[data-hl="local-endpoint"] .pmu-mark[data-prov]:not([data-prov="local-endpoint"]),
-#panel-usage .pmu-board[data-hl="claude"] .pmu-mark[data-prov]:not([data-prov="claude"]),
-#panel-usage .pmu-board[data-hl="codex"] .pmu-mark[data-prov]:not([data-prov="codex"]),
-#panel-usage .pmu-board[data-hl="qwen"] .pmu-mark[data-prov]:not([data-prov="qwen"]),
-#panel-usage .pmu-board[data-hl="gemini"] .pmu-mark[data-prov]:not([data-prov="gemini"]),
-#panel-usage .pmu-board[data-hl="kimi"] .pmu-mark[data-prov]:not([data-prov="kimi"]),
-#panel-usage .pmu-board[data-hl="copilot"] .pmu-mark[data-prov]:not([data-prov="copilot"]) { opacity: .35; }
-#panel-usage .pmu-board[data-hl="claude-code"] .pmu-irow[data-prov="claude-code"],
-#panel-usage .pmu-board[data-hl="openai-codex"] .pmu-irow[data-prov="openai-codex"],
-#panel-usage .pmu-board[data-hl="antigravity"] .pmu-irow[data-prov="antigravity"],
-#panel-usage .pmu-board[data-hl="grok"] .pmu-irow[data-prov="grok"],
-#panel-usage .pmu-board[data-hl="muse"] .pmu-irow[data-prov="muse"],
-#panel-usage .pmu-board[data-hl="github-copilot"] .pmu-irow[data-prov="github-copilot"],
-#panel-usage .pmu-board[data-hl="qwen-coding"] .pmu-irow[data-prov="qwen-coding"],
-#panel-usage .pmu-board[data-hl="zai-coding"] .pmu-irow[data-prov="zai-coding"],
-#panel-usage .pmu-board[data-hl="kimi-coding"] .pmu-irow[data-prov="kimi-coding"],
-#panel-usage .pmu-board[data-hl="minimax-coding"] .pmu-irow[data-prov="minimax-coding"],
-#panel-usage .pmu-board[data-hl="opencode-go"] .pmu-irow[data-prov="opencode-go"],
-#panel-usage .pmu-board[data-hl="anthropic-api"] .pmu-irow[data-prov="anthropic-api"],
-#panel-usage .pmu-board[data-hl="gemini-direct"] .pmu-irow[data-prov="gemini-direct"],
-#panel-usage .pmu-board[data-hl="vertex"] .pmu-irow[data-prov="vertex"],
-#panel-usage .pmu-board[data-hl="xai-api"] .pmu-irow[data-prov="xai-api"],
-#panel-usage .pmu-board[data-hl="meta-api"] .pmu-irow[data-prov="meta-api"],
-#panel-usage .pmu-board[data-hl="cursor-cli"] .pmu-irow[data-prov="cursor-cli"],
-#panel-usage .pmu-board[data-hl="qwen-token"] .pmu-irow[data-prov="qwen-token"],
-#panel-usage .pmu-board[data-hl="opencode-zen"] .pmu-irow[data-prov="opencode-zen"],
-#panel-usage .pmu-board[data-hl="free-models"] .pmu-irow[data-prov="free-models"],
-#panel-usage .pmu-board[data-hl="opencode"] .pmu-irow[data-prov="opencode"],
-#panel-usage .pmu-board[data-hl="local-endpoint"] .pmu-irow[data-prov="local-endpoint"],
-#panel-usage .pmu-board[data-hl="claude"] .pmu-irow[data-prov="claude"],
-#panel-usage .pmu-board[data-hl="codex"] .pmu-irow[data-prov="codex"],
-#panel-usage .pmu-board[data-hl="qwen"] .pmu-irow[data-prov="qwen"],
-#panel-usage .pmu-board[data-hl="gemini"] .pmu-irow[data-prov="gemini"],
-#panel-usage .pmu-board[data-hl="kimi"] .pmu-irow[data-prov="kimi"],
-#panel-usage .pmu-board[data-hl="copilot"] .pmu-irow[data-prov="copilot"] { background: var(--pmu-row-hover); }
+/* ---------- cross-highlight (DESIGN-SPEC 7.1): the marks of the other providers drop to 35 %, the hovered provider's rows
+   light. Classes on the marks that change (30-charts-core.js), never an attribute on the board: a board attribute that every
+   [data-prov] rule descends from restyled about 1,700 elements on each hover exit (75 ms on the CPU-only VM, NOTES2-engine) ---------- */
+#panel-usage .pmu-mark.is-hl-dim { opacity: .35; }
+#panel-usage .pmu-irow.is-hl-on { background: var(--pmu-row-hover); }
 
 /* ---------- chart gallery (review aid, PMU.charts.gallery() or ?usagegallery=1) ---------- */
 #panel-usage .pmu-gallery { position: fixed; inset: 0; z-index: 9000; overflow: auto; padding: 0 24px 48px; background: var(--background, var(--bg, #121212)); color: var(--pmu-ink); font-family: var(--pmu-font); }

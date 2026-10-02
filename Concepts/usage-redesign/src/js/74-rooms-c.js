@@ -85,7 +85,9 @@
     var S = D.series('cacheDaily30'), n = S.read.length, today = new Date(); today.setHours(0, 0, 0, 0);
     var x = S.read.map(function (v, i) { return today.getTime() - (n - 1 - i) * 86400000; });
     var c = D.costs();
-    return { chart: 'area', spec: { x: x, unit: 'tokens', stacked: true, series: [{ name: 'Cache read', idx: 7, values: S.read }, { name: 'Cache write', idx: 2, values: S.write }], source: 'provider reported reads and writes · savings are a PM estimate (catalog pricing)' },
+    return { chart: 'area', spec: { x: x, unit: 'tokens', series: [{ name: 'Cache read', idx: 7, values: S.read }],
+      /* cache writes on their own small right axis (LOOK-REVIEW-2 3): a 2 px band under an 8M area said nothing */
+      cost: { values: S.write, unit: 'tokens', name: 'Cache write', tk: 'cw' }, source: 'provider reported reads and writes · savings are a PM estimate (catalog pricing)' },
       headline: { value: D.sum(S.saved), fmt: 'money', label: 'saved in 30 days (estimate)' }, spark: { values: S.saved, tk: 'cr' },
       facts: [['Saved estimate', money(D.sum(S.saved))], ['Read', F.tok(D.sum(S.read))], ['Write', F.tok(D.sum(S.write))], ['Read share', '96.8%'], ['Selected attempts', String(c.attempts)]],
       note: 'No runtime price rate is inferred; savings use provider catalog prices where receipts do not expose them.' };

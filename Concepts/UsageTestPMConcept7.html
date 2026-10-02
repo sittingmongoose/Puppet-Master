@@ -30457,6 +30457,13 @@ html[data-o55-nier="on"] #panel-usage .pmu-film-sweep > i { width: 8%; backgroun
 html[data-o55-nier="on"] #panel-usage .pmu-film-flash { background: var(--pmu-ink); mix-blend-mode: difference; }
 #panel-usage .pmu-film-ring { position: absolute; inset: -3px; z-index: 5; border-radius: inherit; pointer-events: none; will-change: transform, opacity;
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--pmu-tone-exhausted) 55%, transparent), 0 0 18px 6px color-mix(in srgb, var(--pmu-tone-exhausted) 30%, transparent); }
+#panel-usage .pmu-film-halo { position: absolute; left: 50%; top: 50%; width: max(30px, 190%); aspect-ratio: 1; z-index: 5; border-radius: 50%; pointer-events: none;
+  will-change: transform, opacity; --pmu-halo: var(--pmu-accent);
+  background: radial-gradient(circle, transparent 46%, color-mix(in srgb, var(--pmu-halo) 55%, transparent) 58%, color-mix(in srgb, var(--pmu-halo) 18%, transparent) 70%, transparent 72%); }
+#panel-usage .pmu-film-halo[data-tone="good"] { --pmu-halo: var(--pmu-ink-good); }
+#panel-usage .pmu-film-halo[data-tone="warn"] { --pmu-halo: var(--pmu-tone-warn); }
+#panel-usage .pmu-film-halo[data-tone="crit"] { --pmu-halo: var(--pmu-tone-hot); }
+html[data-o55-nier="on"] #panel-usage .pmu-film-halo { border-radius: 0; background: none; box-shadow: 0 0 0 1px var(--pmu-ink); }
 
 /* ---- NieR boot scanline (5) and the Retro phosphor scan bar (7) ---- */
 #panel-usage .pmu-film-scan { position: absolute; left: 0; right: 0; top: 0; height: 100%; z-index: 7; pointer-events: none; will-change: transform, opacity; }
@@ -31595,63 +31602,11 @@ html[data-theme^="retro"] #panel-usage .pmu-ringbox [data-mark="arc"] { stroke-l
 html[data-theme^="retro"] #panel-usage .pmu-xh { background: var(--pmu-ink-2); }
 html[data-theme^="retro"] #panel-usage .pmu-xdot { border-radius: 0; }
 
-/* ---------- cross-highlight (DESIGN-SPEC 7.1): the board's data-hl names one provider; its marks stay, the others drop to 35 % ---------- */
-#panel-usage .pmu-board[data-hl="claude-code"] .pmu-mark[data-prov]:not([data-prov="claude-code"]),
-#panel-usage .pmu-board[data-hl="openai-codex"] .pmu-mark[data-prov]:not([data-prov="openai-codex"]),
-#panel-usage .pmu-board[data-hl="antigravity"] .pmu-mark[data-prov]:not([data-prov="antigravity"]),
-#panel-usage .pmu-board[data-hl="grok"] .pmu-mark[data-prov]:not([data-prov="grok"]),
-#panel-usage .pmu-board[data-hl="muse"] .pmu-mark[data-prov]:not([data-prov="muse"]),
-#panel-usage .pmu-board[data-hl="github-copilot"] .pmu-mark[data-prov]:not([data-prov="github-copilot"]),
-#panel-usage .pmu-board[data-hl="qwen-coding"] .pmu-mark[data-prov]:not([data-prov="qwen-coding"]),
-#panel-usage .pmu-board[data-hl="zai-coding"] .pmu-mark[data-prov]:not([data-prov="zai-coding"]),
-#panel-usage .pmu-board[data-hl="kimi-coding"] .pmu-mark[data-prov]:not([data-prov="kimi-coding"]),
-#panel-usage .pmu-board[data-hl="minimax-coding"] .pmu-mark[data-prov]:not([data-prov="minimax-coding"]),
-#panel-usage .pmu-board[data-hl="opencode-go"] .pmu-mark[data-prov]:not([data-prov="opencode-go"]),
-#panel-usage .pmu-board[data-hl="anthropic-api"] .pmu-mark[data-prov]:not([data-prov="anthropic-api"]),
-#panel-usage .pmu-board[data-hl="gemini-direct"] .pmu-mark[data-prov]:not([data-prov="gemini-direct"]),
-#panel-usage .pmu-board[data-hl="vertex"] .pmu-mark[data-prov]:not([data-prov="vertex"]),
-#panel-usage .pmu-board[data-hl="xai-api"] .pmu-mark[data-prov]:not([data-prov="xai-api"]),
-#panel-usage .pmu-board[data-hl="meta-api"] .pmu-mark[data-prov]:not([data-prov="meta-api"]),
-#panel-usage .pmu-board[data-hl="cursor-cli"] .pmu-mark[data-prov]:not([data-prov="cursor-cli"]),
-#panel-usage .pmu-board[data-hl="qwen-token"] .pmu-mark[data-prov]:not([data-prov="qwen-token"]),
-#panel-usage .pmu-board[data-hl="opencode-zen"] .pmu-mark[data-prov]:not([data-prov="opencode-zen"]),
-#panel-usage .pmu-board[data-hl="free-models"] .pmu-mark[data-prov]:not([data-prov="free-models"]),
-#panel-usage .pmu-board[data-hl="opencode"] .pmu-mark[data-prov]:not([data-prov="opencode"]),
-#panel-usage .pmu-board[data-hl="local-endpoint"] .pmu-mark[data-prov]:not([data-prov="local-endpoint"]),
-#panel-usage .pmu-board[data-hl="claude"] .pmu-mark[data-prov]:not([data-prov="claude"]),
-#panel-usage .pmu-board[data-hl="codex"] .pmu-mark[data-prov]:not([data-prov="codex"]),
-#panel-usage .pmu-board[data-hl="qwen"] .pmu-mark[data-prov]:not([data-prov="qwen"]),
-#panel-usage .pmu-board[data-hl="gemini"] .pmu-mark[data-prov]:not([data-prov="gemini"]),
-#panel-usage .pmu-board[data-hl="kimi"] .pmu-mark[data-prov]:not([data-prov="kimi"]),
-#panel-usage .pmu-board[data-hl="copilot"] .pmu-mark[data-prov]:not([data-prov="copilot"]) { opacity: .35; }
-#panel-usage .pmu-board[data-hl="claude-code"] .pmu-irow[data-prov="claude-code"],
-#panel-usage .pmu-board[data-hl="openai-codex"] .pmu-irow[data-prov="openai-codex"],
-#panel-usage .pmu-board[data-hl="antigravity"] .pmu-irow[data-prov="antigravity"],
-#panel-usage .pmu-board[data-hl="grok"] .pmu-irow[data-prov="grok"],
-#panel-usage .pmu-board[data-hl="muse"] .pmu-irow[data-prov="muse"],
-#panel-usage .pmu-board[data-hl="github-copilot"] .pmu-irow[data-prov="github-copilot"],
-#panel-usage .pmu-board[data-hl="qwen-coding"] .pmu-irow[data-prov="qwen-coding"],
-#panel-usage .pmu-board[data-hl="zai-coding"] .pmu-irow[data-prov="zai-coding"],
-#panel-usage .pmu-board[data-hl="kimi-coding"] .pmu-irow[data-prov="kimi-coding"],
-#panel-usage .pmu-board[data-hl="minimax-coding"] .pmu-irow[data-prov="minimax-coding"],
-#panel-usage .pmu-board[data-hl="opencode-go"] .pmu-irow[data-prov="opencode-go"],
-#panel-usage .pmu-board[data-hl="anthropic-api"] .pmu-irow[data-prov="anthropic-api"],
-#panel-usage .pmu-board[data-hl="gemini-direct"] .pmu-irow[data-prov="gemini-direct"],
-#panel-usage .pmu-board[data-hl="vertex"] .pmu-irow[data-prov="vertex"],
-#panel-usage .pmu-board[data-hl="xai-api"] .pmu-irow[data-prov="xai-api"],
-#panel-usage .pmu-board[data-hl="meta-api"] .pmu-irow[data-prov="meta-api"],
-#panel-usage .pmu-board[data-hl="cursor-cli"] .pmu-irow[data-prov="cursor-cli"],
-#panel-usage .pmu-board[data-hl="qwen-token"] .pmu-irow[data-prov="qwen-token"],
-#panel-usage .pmu-board[data-hl="opencode-zen"] .pmu-irow[data-prov="opencode-zen"],
-#panel-usage .pmu-board[data-hl="free-models"] .pmu-irow[data-prov="free-models"],
-#panel-usage .pmu-board[data-hl="opencode"] .pmu-irow[data-prov="opencode"],
-#panel-usage .pmu-board[data-hl="local-endpoint"] .pmu-irow[data-prov="local-endpoint"],
-#panel-usage .pmu-board[data-hl="claude"] .pmu-irow[data-prov="claude"],
-#panel-usage .pmu-board[data-hl="codex"] .pmu-irow[data-prov="codex"],
-#panel-usage .pmu-board[data-hl="qwen"] .pmu-irow[data-prov="qwen"],
-#panel-usage .pmu-board[data-hl="gemini"] .pmu-irow[data-prov="gemini"],
-#panel-usage .pmu-board[data-hl="kimi"] .pmu-irow[data-prov="kimi"],
-#panel-usage .pmu-board[data-hl="copilot"] .pmu-irow[data-prov="copilot"] { background: var(--pmu-row-hover); }
+/* ---------- cross-highlight (DESIGN-SPEC 7.1): the marks of the other providers drop to 35 %, the hovered provider's rows
+   light. Classes on the marks that change (30-charts-core.js), never an attribute on the board: a board attribute that every
+   [data-prov] rule descends from restyled about 1,700 elements on each hover exit (75 ms on the CPU-only VM, NOTES2-engine) ---------- */
+#panel-usage .pmu-mark.is-hl-dim { opacity: .35; }
+#panel-usage .pmu-irow.is-hl-on { background: var(--pmu-row-hover); }
 
 /* ---------- chart gallery (review aid, PMU.charts.gallery() or ?usagegallery=1) ---------- */
 #panel-usage .pmu-gallery { position: fixed; inset: 0; z-index: 9000; overflow: auto; padding: 0 24px 48px; background: var(--background, var(--bg, #121212)); color: var(--pmu-ink); font-family: var(--pmu-font); }
@@ -31929,7 +31884,7 @@ html[data-theme$="-light"] #panel-usage .pmu-mark[data-mark="core"], html[data-t
 #panel-usage .pmu-trendhead { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
 #panel-usage .pmu-trendlabel { font-size: 12.5px; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #panel-usage .pmu-trendspark { flex: none; min-width: 0; }
-#panel-usage .pmu-colscap { flex: none; height: 20px; font-size: 12.5px; color: var(--pmu-ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-colscap { flex: none; min-height: 20px; line-height: 18px; font-size: 12.5px; color: var(--pmu-ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #panel-usage .pmu-colscap b { font-weight: 640; color: var(--pmu-ink); }
 #panel-usage .pmu-colscap .pmu-cap { margin-right: 2px; }
 #panel-usage .pmu-budgetplot.pmu-fillplot { flex: 1 1 0; min-height: 64px; }
@@ -34604,7 +34559,7 @@ var PMU_SERIES = {
     o = o || {};
     if (reduced() || !wrap || !inner || off.comet) return null;
     var box = wrap.parentNode, svg = inner.querySelector('svg');
-    var path = inner.querySelector('[data-mark="line"][data-primary="1"]') || inner.querySelector('[data-mark="line"]');
+    var path = inner.querySelector('[data-comet="1"]') || inner.querySelector('[data-mark="line"][data-primary="1"]') || inner.querySelector('[data-mark="line"]');
     if (!box || !svg || !path) return null;
     var W = +svg.getAttribute('width') || 0, Hh = +svg.getAttribute('height') || 0;
     if (W < 120 || Hh < 60) return null;   /* no comet on sparklines and compact plots */
@@ -34696,18 +34651,33 @@ var PMU_SERIES = {
     gone(a, r);
     return a;
   }
+  /* ---- the halo pulse (3.9 "Use this account": the new mark's halo): one pre-rendered circle centred on the element,
+     scale .8 -> 1.4 while it fades .5 -> 0 (600 OUT); Retro and NieR step it. The element must be positioned. ---- */
+  function halo(el, o) {
+    o = o || {};
+    if (reduced() || !el) return null;
+    var h = H('i', 'pmu-film-halo', el), f = fam(), stepped = f === 'retro' || f === 'nier';
+    h.setAttribute('aria-hidden', 'true');
+    if (o.tone) h.setAttribute('data-tone', o.tone);
+    var a = anim(h, [{ transform: 'translate(-50%,-50%) scale(.8)', opacity: 0.55 }, { transform: 'translate(-50%,-50%) scale(1.4)', opacity: 0 }],
+      { dur: o.dur || 600, delay: o.delay || 0, easing: stepped ? 'steps(4,jump-start)' : E.out, fill: 'both' });
+    gone(a, h);
+    return a;
+  }
 
   /* ---- a physical spring as a WAAPI linear() easing (3.11 drop, 3.13 gravity, Friendly) ---- */
   var springCache = {};
   function spring(o) {
     o = o || {};
-    var k = o.k || 520, c = o.c || 38, m = o.m || 1, v0 = o.v0 || 0, key = [k, c, m, v0].join(',');
+    /* until: the settle threshold (|x - 1| and |v| / 20 under it). 0.001 by default; a move across the board ends where the
+       eye sees it end with about 0.005 (NOTES2-engine 3: the 520 / 38 drop then lasts about 290 ms instead of 400) */
+    var k = o.k || 520, c = o.c || 38, m = o.m || 1, v0 = o.v0 || 0, until = o.until || 0.001, key = [k, c, m, v0, until].join(',');
     if (springCache[key]) return springCache[key];
     var x = 0, v = v0, dt = 1 / 600, t = 0, pts = [], settleAt = 0;
     while (t < 3) {
       var a = (-k * (x - 1) - c * v) / m; v += a * dt; x += v * dt; t += dt;
       pts.push([t, x]);
-      if (Math.abs(x - 1) < 0.001 && Math.abs(v) < 0.02) { settleAt = t; break; }
+      if (Math.abs(x - 1) < until && Math.abs(v) < until * 20) { settleAt = t; break; }
     }
     var total = settleAt || t, n = 40, out = [];
     for (var i = 0; i <= n; i++) {
@@ -34900,9 +34870,9 @@ var PMU_SERIES = {
   function cancelHold() { releaseHoverTags(); if (hold) { var h = hold; hold = null; h.board.removeAttribute('data-held'); h.board.removeAttribute('data-pm-hover-exempt'); flushCues([]); } }
 
   PMU.film = { E: E, T: T, VOICES: VOICES, voice: voice, at: at, sequence: sequence, stagger: stagger, wave: wave, enterPlates: enterPlates,
-    odometer: odometer, decode: decode, comet: comet, headGlow: headGlow, drop: drop, sweep: sweep, flash: flash, ring: ring, spring: spring,
+    odometer: odometer, decode: decode, comet: comet, headGlow: headGlow, drop: drop, sweep: sweep, flash: flash, ring: ring, halo: halo, spring: spring,
     key: key, edgeAt: edgeAt, cue: cue, holding: holding, rehold: rehold, cancelHold: cancelHold, beat: beat, playBeat: playBeat, arrive: arrive,
-    last: function () { return last; }, off: off, parsePath: parsePath, yAt: yAt };
+    deferHoverTags: deferHoverTags, last: function () { return last; }, off: off, parsePath: parsePath, yAt: yAt };
 })();
 
 /* ---- js/16-settings.js ---- */
@@ -35688,6 +35658,8 @@ var PMU_SERIES = {
     first.finished.then(function () { setTimeout(handle.cancel, 40); }, function () {});
     return handle;
   };
+  /* the film vocabulary carries the sweep too (NOTES2-charts engine 1): PMU.film.arcSweep is this function */
+  if (PMU.film && !PMU.film.arcSweep) PMU.film.arcSweep = charts.arcSweep;
 
   /* number roll: from the value on screen to the new one (first time from 0), tabular, no overshoot. The element keeps
      the shown value in data-shown so a later change counts from it (DESIGN-SPEC 8.5, A1 8.1). */
@@ -36286,16 +36258,22 @@ var PMU_SERIES = {
     return e;
   };
 
-  /* ---------- cross-highlight (DESIGN-SPEC 7.1): one attribute on the board after a 110 ms intent delay ---------- */
+  /* ---------- cross-highlight (DESIGN-SPEC 7.1): after a 110 ms intent delay the other providers' marks dim and the
+     provider's rows light. Only the elements that change get a class (a board attribute restyled every [data-prov]
+     descendant on each exit: about 1,700 elements, 75 ms on the CPU-only VM) ---------- */
   (function crossHighlight() {
     var root = document.getElementById('pmuApp');
     if (!root) return;
-    var timer = 0, clearTimer = 0, current = null;
+    var timer = 0, clearTimer = 0, current = null, lit = [];
     function set(id) {
       var b = document.getElementById('pmuBoard');
       if (!b) return;
-      if (id) b.setAttribute('data-hl', id); else b.removeAttribute('data-hl');
+      lit.forEach(function (el) { el.classList.remove('is-hl-dim', 'is-hl-on'); });
+      lit = [];
       current = id;
+      if (!id) return;
+      $$('.pmu-mark[data-prov]', b).forEach(function (el) { if (el.getAttribute('data-prov') !== id) { el.classList.add('is-hl-dim'); lit.push(el); } });
+      $$('.pmu-irow[data-prov]', b).forEach(function (el) { if (el.getAttribute('data-prov') === id) { el.classList.add('is-hl-on'); lit.push(el); } });
     }
     root.addEventListener('pointerover', function (e) {
       var el = e.target && e.target.closest ? e.target.closest('[data-prov]') : null;
@@ -36709,6 +36687,8 @@ var PMU_SERIES = {
     f.plot.setAttribute('width', W); f.plot.setAttribute('height', Hh);
     f.over.setAttribute('width', W); f.over.setAttribute('height', Hh);
     f.plot.classList.toggle('is-split', split);
+    /* split token bands hide the total line: the comet then rides the top band's edge (the stack's top is the last series) */
+    P.edges.forEach(function (e, i) { if (split && m.token && i === P.edges.length - 1) e.setAttribute('data-comet', '1'); else e.removeAttribute('data-comet'); });
     var prev = c._geo;
     /* a re-render at another size (a resize release re-renders the body; charts.make carries the old chart over) morphs
        from the old shape scaled into the new plot, never from a blank (WOW-SPEC 3.12) */
@@ -38819,7 +38799,10 @@ var PMU_SERIES = {
   var CLASSES = [{ name: 'S', tracks: 12, min: 0 }, { name: 'M', tracks: 20, min: 820 }, { name: 'L', tracks: 24, min: 1100 }, { name: 'XL', tracks: 30, min: 1460 }];
   var GAP = 8, ROW = 30, HYST = 24, MOVE_THRESHOLD = 4, TARGET_HYST = 0.75, SCROLL_BAND = 48;
   var STORE_KEY = 'widget_layout:v1:usage';
-  var DEFAULT_SET = 'pmu-b2-2026-10-02c';   /* c: the fixer's default boards (fill the first screen, Settings order in Accounts) */
+  /* the default set follows the generated boards (tools/boards.py writes PMU_BOARDS.version): a saved layout from an
+     older set keeps its view and visibility and resets its geometry once (62-boards-data.js loads after this file, so it is
+     read when the store is, never at load) */
+  function defaultSet() { return 'pmu-b2:' + ((typeof PMU_BOARDS !== 'undefined' && PMU_BOARDS && PMU_BOARDS.version) || '2026-10-02c'); }
   var LEVEL_RANK = { glance: 0, detailed: 1, diagnostics: 2 };
   var st = PMU.core.state;
   var scroll = document.getElementById('pmuScroll');
@@ -38868,7 +38851,7 @@ var PMU_SERIES = {
   function parseRefs(list) { var out = {}; (list || []).forEach(function (s) { var i = String(s).indexOf('='); if (i > 0) out[s.slice(0, i)] = s.slice(i + 1); }); return out; }
   function emptyView() { return { room: 'overview', detail: 'glance', range: '24h', scope: 'all', more: false }; }
   function newEnvelope(view, receipt) {
-    return { schema_id: 'pm.usage.widget_layout.v1', layout_schema_version: 1, default_set_version: DEFAULT_SET, host_id: 'usage', project_id: 'tastebook',
+    return { schema_id: 'pm.usage.widget_layout.v1', layout_schema_version: 1, default_set_version: defaultSet(), host_id: 'usage', project_id: 'tastebook',
       view: view || emptyView(), records: [], migration_receipt: receipt || null };
   }
   function loadEnvelope() {
@@ -38892,10 +38875,10 @@ var PMU_SERIES = {
       env = newEnvelope(view, receipt);
       return { env: env, hidden: hidden, layout: layout, fresh: true };
     }
-    var keepGeometry = env.default_set_version === DEFAULT_SET;
+    var keepGeometry = env.default_set_version === defaultSet();
     if (!keepGeometry) {
       env.migration_receipt = { from: 'default_set_version ' + env.default_set_version, at: new Date().toISOString(), carried: ['view', 'visible', 'configuration_refs'], dropped: ['geometry'] };
-      env.default_set_version = DEFAULT_SET;
+      env.default_set_version = defaultSet();
     }
     /* the skeleton's interim maps (hidden / layouts) read once */
     if (env.hidden && typeof env.hidden === 'object') Object.keys(env.hidden).forEach(function (room) { hidden[room] = Object.assign({}, env.hidden[room]); });
@@ -39220,21 +39203,9 @@ var PMU_SERIES = {
     }
     if (PMU.film && PMU.film.key) PMU.film.key({ room: room }); else key.setAttribute('data-room', room);
   }
-  /* the hover tags wait for the moment to end (WOW-SPEC 3.2 budget): the app's hover-tag controller is held in its own
-     page-settling state and scans the Usage panel once when the entrance is over (PMU.film.deferHoverTags when the film
-     core offers it; the same rule here otherwise) */
-  var hoverT = 0;
-  function deferHover(ms) {
-    if (PMU.film && typeof PMU.film.deferHoverTags === 'function') { PMU.film.deferHoverTags(ms); return; }
-    var hc = window.PM_HOVER_TAG_CONTROLLER;
-    if (!hc || typeof hc.scheduleScan !== 'function' || reduced()) return;
-    try { clearTimeout(hc.pageScanTimer); hc.pageScanTimer = 0; hc.pageSettling = true; } catch (error) { return; }
-    clearTimeout(hoverT);
-    hoverT = setTimeout(function () {
-      hoverT = 0;
-      try { hc.pageSettling = false; hc.scheduleScan(document.getElementById('panel-usage') || document); } catch (error) {}
-    }, Math.max(0, ms) * speed());
-  }
+  /* the hover tags wait for the moment to end (WOW-SPEC 3.2 budget): PMU.film.deferHoverTags holds the app's hover-tag
+     controller in its page-settling state and scans the Usage panel once when the entrance is over */
+  function deferHover(ms) { if (PMU.film && typeof PMU.film.deferHoverTags === 'function') PMU.film.deferHoverTags(ms); }
   /* the streamed build of a room change: chrome and body together, card by card in reading order, in slices of at most
      8 ms per frame; each plate enters as soon as it exists. plans: [{id, rect, card?}] (card = a shared widget's card) */
   var filmEndT = 0;
@@ -39791,7 +39762,7 @@ var PMU_SERIES = {
     var f = PMU.motion.family(), dur, easing;
     if (back) { dur = 300; easing = PMU.motion.ease('cancel'); }
     else if (f === 'retro' || f === 'nier') { dur = 160; easing = 'steps(3,jump-start)'; }
-    else if (PMU.film && PMU.film.spring) { var sp = PMU.film.spring(f === 'friendly' ? { k: 380, c: 22 } : { k: 520, c: 38 }); dur = sp.duration; easing = sp.easing; }
+    else if (PMU.film && PMU.film.spring) { var sp = PMU.film.spring(f === 'friendly' ? { k: 380, c: 22, until: 0.005 } : { k: 520, c: 38, until: 0.005 }); dur = sp.duration; easing = sp.easing; }
     else { dur = 220; easing = PMU.motion.ease('settle'); }
     card._pmuSettle = PMU.motion.animate(card, [{ transform: 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')' + (Math.abs(tilt) > 0.01 ? ' rotate(' + tilt.toFixed(3) + 'deg)' : '') }, { transform: 'none' }],
       { dur: dur, easing: easing });
@@ -40262,7 +40233,7 @@ var PMU_SERIES = {
 
   PMU.board = {
     init: ensure,
-    CLASSES: CLASSES, STORE_KEY: STORE_KEY, DEFAULT_SET: DEFAULT_SET, ROW: ROW, GAP: GAP,
+    CLASSES: CLASSES, STORE_KEY: STORE_KEY, get DEFAULT_SET() { return defaultSet(); }, ROW: ROW, GAP: GAP,
     cls: function () { return current.cls || pickClass(boardWidth()); },
     mount: mount, refresh: refresh, relevel: relevel, layout: function (room) { return layoutFor(room || current.room || st.room); },
     visible: function (room) { return visibleIds(room || current.room || st.room); },
@@ -40378,6 +40349,22 @@ var PMU_SERIES = {
     var wide = nier || /^retro/.test(document.documentElement.getAttribute('data-theme') || '');
     return (PMU.charts.textW(tx, px, false, 640) + (nier ? tx.length * px * 0.05 : 0)) * (wide ? 1.25 : 1.1) <= w - 12;
   }
+  /* a plate's subtitle drops whole trailing " · " parts where it would end in an ellipsis beside the aside (NOTES2-content
+     engine 4: Retro and NieR fonts run wider); the full line stays in the title's hover tag. Canvas measure, no layout read. */
+  function fitSub(card, sub, asideText, form) {
+    if (form !== 'plate' || !sub || sub.indexOf(' · ') < 0 || !PMU.charts || !PMU.charts.textW) return sub;
+    var cls = PMU.board && PMU.board.cls ? PMU.board.cls() : null;
+    if (!cls || !cls.pitchX) return sub;
+    var cardW = (+card.dataset.w || 0) * cls.pitchX - 8;
+    var key = card.querySelector('.pmu-cardkey:not([hidden])') ? 34 : 0;
+    var wide = document.documentElement.getAttribute('data-o55-nier') === 'on' || /^retro/.test(document.documentElement.getAttribute('data-theme') || '');
+    var k = wide ? 1.22 : 1.08;
+    var aside = asideText ? Math.min(cardW * 0.46, PMU.charts.textW(String(asideText), 12.5, false, 500) * k) + 10 : 0;
+    var avail = cardW - 28 - key - aside - 4;
+    var parts = sub.split(' · '), out = sub;
+    while (parts.length > 1 && PMU.charts.textW(out, 12, false, 400) * k > avail) { parts.pop(); out = parts.join(' · '); }
+    return out;
+  }
   function syncHead(card, ctx) {
     var def = ctx.def, form = card.getAttribute('data-head') || 'line', tier = ctx.tier || {};
     var titleEl = card.querySelector('.pmu-cardtitle'), subEl = card.querySelector('.pmu-cardsub'), asideEl = card.querySelector('.pmu-cardmeta'), keyEl = card.querySelector('.pmu-cardkey');
@@ -40388,10 +40375,12 @@ var PMU_SERIES = {
       if (titleEl.getAttribute('data-pm-hover-label') !== full) titleEl.setAttribute('data-pm-hover-label', full);
       if ((titleEl.getAttribute('data-pm-hover-detail') || '') !== sub) titleEl.setAttribute('data-pm-hover-detail', sub);
     }
-    if (subEl && subEl.textContent !== sub) subEl.textContent = sub;
+    var asideV = text(def.aside || def.lineMeta, ctx);
+    var shown = fitSub(card, sub, asideV && typeof asideV === 'object' ? (asideV.text || String(asideV.html || '').replace(/<[^>]+>/g, '')) : asideV, form);
+    if (subEl && subEl.textContent !== shown) subEl.textContent = shown;
     var wrap = form === 'plate' && !titleFits(card, want, form);
     if (card.hasAttribute('data-title-wrap') !== wrap) card.toggleAttribute('data-title-wrap', wrap);
-    if (asideEl) { var a = asideHtml(text(def.aside || def.lineMeta, ctx)); if (asideEl._pmu !== a) { asideEl.innerHTML = a; asideEl._pmu = a; } }
+    if (asideEl) { var a = asideHtml(asideV); if (asideEl._pmu !== a) { asideEl.innerHTML = a; asideEl._pmu = a; } }
     if (keyEl) { var k = keyHtml(def, ctx, form); if (keyEl._pmu !== k) { keyEl.innerHTML = k; keyEl._pmu = k; keyEl.hidden = !k; } }
     var tone = def.tone ? text(def.tone, ctx) : '';
     if ((card.getAttribute('data-tone') || '') !== tone) { if (tone) card.setAttribute('data-tone', tone); else card.removeAttribute('data-tone'); }
@@ -42070,6 +42059,17 @@ var PMU_SERIES = {
   /* model: {cols: [{key, label, align?, min?: tier, w?: css, fmt?}], rows: [{cells: {key: text|{html}}, tone?, onClick?, id?}],
              toolbar?: {search?: placeholder, filters?: [{key, label, options: [{value, label}], value}], export?: fn}, empty?, foot?} */
   C.kind('table', {
+    /* "Fit" in the card menu (NOTES2-engine, paging at S): the height in rows that shows every record without a pager,
+       at most the kind's tallest size; null when the card already shows them all */
+    autoH: function (ctx) {
+      var card = PMU.board && PMU.board.card ? PMU.board.card(ctx.id) : null, body = card && card.querySelector('.pmu-cardbody');
+      if (!card || !body || !(body._pmuTableNeed > 0)) return null;
+      var h = +card.dataset.h || 0, bh = body.clientHeight, extra = body._pmuTableNeed - bh;
+      if (!h || extra <= 0) return null;
+      var lim = (PMU_BOARDS.kinds && PMU_BOARDS.kinds.table && PMU_BOARDS.kinds.table.hMax) || 24;
+      var pitch = PMU.board.ROW || 30;   /* the row pitch: a 22 px row and the 8 px gap */
+      return Math.min(lim, h + Math.ceil(extra / pitch));
+    },
     render: function (body, ctx) {
       var m = ctx.model || { cols: [], rows: [] }, id = ctx.id;
       var cols = m.cols.map(function (c) { return c.key ? c : Object.assign({}, c, { key: c.id }); }).filter(function (c) { return !c.min || C.w(ctx, c.min); });
@@ -42114,6 +42114,7 @@ var PMU_SERIES = {
       var pageStarts = [0];
       (function () {
         var all = rows.map(rowHOf), sumAll = all.reduce(function (a, h) { return a + h; }, 0);
+        body._pmuTableNeed = sumAll + tb + headH + (m.foot ? 30 : 0);   /* the body height that shows every row (autoH, "Fit") */
         if (sumAll <= avail) return;
         var room = avail - pager, used = 0;
         for (var i = 0; i < all.length; i++) {
@@ -42672,7 +42673,8 @@ var PMU_SERIES = {
       var ringHost = body.querySelector('.pmu-cachering');
       if (ringHost && big) C.chart(body, 'ring', ringHost, { segments: [{ name: 'Reads', value: m.readN || 0, tk: 'cr', est: !!m.est }, { name: 'Writes', value: m.writeN || 0, tk: 'cw', est: !!m.est || /est/.test(m.write) }],
         centre: C.fmt(m.share, 'pct1'), caption: 'read share' + (m.est ? ' est.' : '') }, { label: 'Reads ' + m.read + ', writes ' + m.write + ', read share ' + m.share + '%' });
-      else if (ringHost) C.chart(body, 'ring', ringHost, { value: m.share, max: 100, centre: '', caption: '', token: 'cr' }, { label: 'Read share ' + m.share + '%' });
+      else if (ringHost) C.chart(body, 'ring', ringHost, { segments: [{ name: 'Reads', value: m.readN || 0, tk: 'cr', est: !!m.est }, { name: 'Writes', value: m.writeN || 0, tk: 'cw', est: !!m.est || /est/.test(m.write) }],
+        centre: '', caption: '' }, { label: 'Reads ' + m.read + ', writes ' + m.write + ', read share ' + m.share + '%' });
       var sp = body.querySelector('.pmu-cachesplit');
       if (sp) C.chart(body, 'split', sp, { parts: [{ name: 'Reads', value: m.readN, token: 'cr' }, { name: 'Writes', value: m.writeN || 0, token: 'cw', vs: m.writeVs }] }, { label: 'Cache reads versus writes' });
     }
@@ -43860,8 +43862,9 @@ var PMU_SERIES = {
       var x = function (t) { return Math.max(0, Math.min(100, 100 * (t - t0) / (now - t0))); };
       var ticks = [], stepH = hrs <= 5 ? 1 : hrs <= 24 ? (bw >= 700 ? 3 : 6) : hrs <= 168 ? 24 : 24 * 7;
       var first = new Date(t0); first.setMinutes(0, 0, 0); var tt = first.getTime() + 3600000;
-      /* a tick closer than 52 px to NOW is dropped (its label would print over "NOW") */
-      var plotW = Math.max(60, bw - labW), guard = 52 / plotW * (now - t0);
+      /* a tick closer than 64 px to NOW is dropped (its label would print over "NOW": NOW is right-aligned, about 30 px, and a
+         clock label is centred, about 36 px) */
+      var plotW = Math.max(60, bw - labW), guard = 64 / plotW * (now - t0);
       for (; tt < now - Math.max(1800000, guard); tt += 3600000) { var h = new Date(tt).getHours(); if (stepH >= 24 ? h === 0 : h % stepH === 0) ticks.push(tt); }
       var dots = list.map(function (a, i) {
         var t = new Date(a.occurred_at).getTime(), v = value(a), pend = !(v > 0) && /pending/i.test(a.settlement_status || '');
@@ -44759,7 +44762,7 @@ var PMU_BOARDS = {"version":"pmu-b2-boards-2026-10-02-d","classes":{"S":12,"M":2
       heroSub: 'peak ' + b(peakText(tk, cr)) + ' · ' + b(F.tok(tk.totals.input)) + ' in · ' + b(F.tok(tk.totals.output)) + ' out',
       spec: { x: tk.x, unit: 'tokens', split: split, cacheReads: cr, now: Date.now(), peak: true, bucketMs: tk.buckets.bucketMs,
         series: [{ name: 'Input', tk: 'in', values: tk.input }, { name: 'Output', tk: 'out', values: tk.output }, { name: 'Reasoning', tk: 'rsn', values: tk.reasoning }, { name: 'Cache write', tk: 'cw', values: tk.cacheWrite }, { name: 'Cache read', tk: 'cr', values: tk.cacheRead }],
-        cost: { values: cost.values, unit: 'usd' }, source: 'token series · estimated cost from recorded attempts', notes: 'Input and output are summed only from selected identity-bound attempts.',
+        cost: { values: cost.values, unit: 'usd', pending: cost.split.map(function (sp) { return (sp && sp._pending) || 0; }) }, source: 'token series · estimated cost from recorded attempts', notes: 'Input and output are summed only from selected identity-bound attempts.',
         readoutFoot: function (i) {
           var sp = cost.split[i] || {}, ks = Object.keys(sp).filter(function (k) { return k !== '_pending'; });
           var out = ks.map(function (k) { return legName(k).replace('ChatGPT / ', '') + ' ' + money(sp[k]); });
@@ -44815,7 +44818,8 @@ var PMU_BOARDS = {"version":"pmu-b2-boards-2026-10-02-d","classes":{"S":12,"M":2
     model: function (ctx) {
       var dp = D.dailyByProvider(ctx.state.range);
       return { labels: dp.labels, stacks: dp.stacks, totals: dp.totals, unit: 'usd', emptyText: 'No value recorded in this range.',
-        caption: '<span class="pmu-cap">SETTLED</span> <b>' + esc(money(dp.settled)) + '</b> · <span class="pmu-cap">PLAN ESTIMATE</span> <b>' + esc(money(dp.estimate)) + '</b>' };
+        /* each label keeps its value on its line when the caption wraps (NOTES2-charts 8: "$37.88" fell onto the legend) */
+        caption: '<span style="white-space:nowrap"><span class="pmu-cap">SETTLED</span> <b>' + esc(money(dp.settled)) + '</b></span> · <span style="white-space:nowrap"><span class="pmu-cap">PLAN ESTIMATE</span> <b>' + esc(money(dp.estimate)) + '</b></span>' };
     } });
   def('reasoning-mix', 'analytics', { meta: function (ctx) { return 'Visible output and reasoning · ' + D.tokens().buckets.label.toLowerCase() + ' · reported buckets'; }, model: function () {
     var tk = D.tokens();
@@ -45049,7 +45053,9 @@ var PMU_BOARDS = {"version":"pmu-b2-boards-2026-10-02-d","classes":{"S":12,"M":2
     var S = D.series('cacheDaily30'), n = S.read.length, today = new Date(); today.setHours(0, 0, 0, 0);
     var x = S.read.map(function (v, i) { return today.getTime() - (n - 1 - i) * 86400000; });
     var c = D.costs();
-    return { chart: 'area', spec: { x: x, unit: 'tokens', stacked: true, series: [{ name: 'Cache read', idx: 7, values: S.read }, { name: 'Cache write', idx: 2, values: S.write }], source: 'provider reported reads and writes · savings are a PM estimate (catalog pricing)' },
+    return { chart: 'area', spec: { x: x, unit: 'tokens', series: [{ name: 'Cache read', idx: 7, values: S.read }],
+      /* cache writes on their own small right axis (LOOK-REVIEW-2 3): a 2 px band under an 8M area said nothing */
+      cost: { values: S.write, unit: 'tokens', name: 'Cache write', tk: 'cw' }, source: 'provider reported reads and writes · savings are a PM estimate (catalog pricing)' },
       headline: { value: D.sum(S.saved), fmt: 'money', label: 'saved in 30 days (estimate)' }, spark: { values: S.saved, tk: 'cr' },
       facts: [['Saved estimate', money(D.sum(S.saved))], ['Read', F.tok(D.sum(S.read))], ['Write', F.tok(D.sum(S.write))], ['Read share', '96.8%'], ['Selected attempts', String(c.attempts)]],
       note: 'No runtime price rate is inferred; savings use provider catalog prices where receipts do not expose them.' };

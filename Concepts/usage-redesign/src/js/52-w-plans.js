@@ -180,7 +180,8 @@
       var ringHost = body.querySelector('.pmu-cachering');
       if (ringHost && big) C.chart(body, 'ring', ringHost, { segments: [{ name: 'Reads', value: m.readN || 0, tk: 'cr', est: !!m.est }, { name: 'Writes', value: m.writeN || 0, tk: 'cw', est: !!m.est || /est/.test(m.write) }],
         centre: C.fmt(m.share, 'pct1'), caption: 'read share' + (m.est ? ' est.' : '') }, { label: 'Reads ' + m.read + ', writes ' + m.write + ', read share ' + m.share + '%' });
-      else if (ringHost) C.chart(body, 'ring', ringHost, { value: m.share, max: 100, centre: '', caption: '', token: 'cr' }, { label: 'Read share ' + m.share + '%' });
+      else if (ringHost) C.chart(body, 'ring', ringHost, { segments: [{ name: 'Reads', value: m.readN || 0, tk: 'cr', est: !!m.est }, { name: 'Writes', value: m.writeN || 0, tk: 'cw', est: !!m.est || /est/.test(m.write) }],
+        centre: '', caption: '' }, { label: 'Reads ' + m.read + ', writes ' + m.write + ', read share ' + m.share + '%' });
       var sp = body.querySelector('.pmu-cachesplit');
       if (sp) C.chart(body, 'split', sp, { parts: [{ name: 'Reads', value: m.readN, token: 'cr' }, { name: 'Writes', value: m.writeN || 0, token: 'cw', vs: m.writeVs }] }, { label: 'Cache reads versus writes' });
     }

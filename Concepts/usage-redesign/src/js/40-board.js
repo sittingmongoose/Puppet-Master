@@ -10,7 +10,10 @@
   var CLASSES = [{ name: 'S', tracks: 12, min: 0 }, { name: 'M', tracks: 20, min: 820 }, { name: 'L', tracks: 24, min: 1100 }, { name: 'XL', tracks: 30, min: 1460 }];
   var GAP = 8, ROW = 30, HYST = 24, MOVE_THRESHOLD = 4, TARGET_HYST = 0.75, SCROLL_BAND = 48;
   var STORE_KEY = 'widget_layout:v1:usage';
-  var DEFAULT_SET = 'pmu-b2-2026-10-02c';   /* c: the fixer's default boards (fill the first screen, Settings order in Accounts) */
+  /* the default set follows the generated boards (tools/boards.py writes PMU_BOARDS.version): a saved layout from an
+     older set keeps its view and visibility and resets its geometry once (62-boards-data.js loads after this file, so it is
+     read when the store is, never at load) */
+  function defaultSet() { return 'pmu-b2:' + ((typeof PMU_BOARDS !== 'undefined' && PMU_BOARDS && PMU_BOARDS.version) || '2026-10-02c'); }
   var LEVEL_RANK = { glance: 0, detailed: 1, diagnostics: 2 };
   var st = PMU.core.state;
   var scroll = document.getElementById('pmuScroll');
@@ -59,7 +62,7 @@
   function parseRefs(list) { var out = {}; (list || []).forEach(function (s) { var i = String(s).indexOf('='); if (i > 0) out[s.slice(0, i)] = s.slice(i + 1); }); return out; }
   function emptyView() { return { room: 'overview', detail: 'glance', range: '24h', scope: 'all', more: false }; }
   function newEnvelope(view, receipt) {
-    return { schema_id: 'pm.usage.widget_layout.v1', layout_schema_version: 1, default_set_version: DEFAULT_SET, host_id: 'usage', project_id: 'tastebook',
+    return { schema_id: 'pm.usage.widget_layout.v1', layout_schema_version: 1, default_set_version: defaultSet(), host_id: 'usage', project_id: 'tastebook',
       view: view || emptyView(), records: [], migration_receipt: receipt || null };
   }
   function loadEnvelope() {
@@ -83,10 +86,10 @@
       env = newEnvelope(view, receipt);
       return { env: env, hidden: hidden, layout: layout, fresh: true };
     }
-    var keepGeometry = env.default_set_version === DEFAULT_SET;
+    var keepGeometry = env.default_set_version === defaultSet();
     if (!keepGeometry) {
       env.migration_receipt = { from: 'default_set_version ' + env.default_set_version, at: new Date().toISOString(), carried: ['view', 'visible', 'configuration_refs'], dropped: ['geometry'] };
-      env.default_set_version = DEFAULT_SET;
+      env.default_set_version = defaultSet();
     }
     /* the skeleton's interim maps (hidden / layouts) read once */
     if (env.hidden && typeof env.hidden === 'object') Object.keys(env.hidden).forEach(function (room) { hidden[room] = Object.assign({}, env.hidden[room]); });
@@ -411,21 +414,9 @@
     }
     if (PMU.film && PMU.film.key) PMU.film.key({ room: room }); else key.setAttribute('data-room', room);
   }
-  /* the hover tags wait for the moment to end (WOW-SPEC 3.2 budget): the app's hover-tag controller is held in its own
-     page-settling state and scans the Usage panel once when the entrance is over (PMU.film.deferHoverTags when the film
-     core offers it; the same rule here otherwise) */
-  var hoverT = 0;
-  function deferHover(ms) {
-    if (PMU.film && typeof PMU.film.deferHoverTags === 'function') { PMU.film.deferHoverTags(ms); return; }
-    var hc = window.PM_HOVER_TAG_CONTROLLER;
-    if (!hc || typeof hc.scheduleScan !== 'function' || reduced()) return;
-    try { clearTimeout(hc.pageScanTimer); hc.pageScanTimer = 0; hc.pageSettling = true; } catch (error) { return; }
-    clearTimeout(hoverT);
-    hoverT = setTimeout(function () {
-      hoverT = 0;
-      try { hc.pageSettling = false; hc.scheduleScan(document.getElementById('panel-usage') || document); } catch (error) {}
-    }, Math.max(0, ms) * speed());
-  }
+  /* the hover tags wait for the moment to end (WOW-SPEC 3.2 budget): PMU.film.deferHoverTags holds the app's hover-tag
+     controller in its page-settling state and scans the Usage panel once when the entrance is over */
+  function deferHover(ms) { if (PMU.film && typeof PMU.film.deferHoverTags === 'function') PMU.film.deferHoverTags(ms); }
   /* the streamed build of a room change: chrome and body together, card by card in reading order, in slices of at most
      8 ms per frame; each plate enters as soon as it exists. plans: [{id, rect, card?}] (card = a shared widget's card) */
   var filmEndT = 0;
@@ -982,7 +973,7 @@
     var f = PMU.motion.family(), dur, easing;
     if (back) { dur = 300; easing = PMU.motion.ease('cancel'); }
     else if (f === 'retro' || f === 'nier') { dur = 160; easing = 'steps(3,jump-start)'; }
-    else if (PMU.film && PMU.film.spring) { var sp = PMU.film.spring(f === 'friendly' ? { k: 380, c: 22 } : { k: 520, c: 38 }); dur = sp.duration; easing = sp.easing; }
+    else if (PMU.film && PMU.film.spring) { var sp = PMU.film.spring(f === 'friendly' ? { k: 380, c: 22, until: 0.005 } : { k: 520, c: 38, until: 0.005 }); dur = sp.duration; easing = sp.easing; }
     else { dur = 220; easing = PMU.motion.ease('settle'); }
     card._pmuSettle = PMU.motion.animate(card, [{ transform: 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')' + (Math.abs(tilt) > 0.01 ? ' rotate(' + tilt.toFixed(3) + 'deg)' : '') }, { transform: 'none' }],
       { dur: dur, easing: easing });
@@ -1453,7 +1444,7 @@
 
   PMU.board = {
     init: ensure,
-    CLASSES: CLASSES, STORE_KEY: STORE_KEY, DEFAULT_SET: DEFAULT_SET, ROW: ROW, GAP: GAP,
+    CLASSES: CLASSES, STORE_KEY: STORE_KEY, get DEFAULT_SET() { return defaultSet(); }, ROW: ROW, GAP: GAP,
     cls: function () { return current.cls || pickClass(boardWidth()); },
     mount: mount, refresh: refresh, relevel: relevel, layout: function (room) { return layoutFor(room || current.room || st.room); },
     visible: function (room) { return visibleIds(room || current.room || st.room); },

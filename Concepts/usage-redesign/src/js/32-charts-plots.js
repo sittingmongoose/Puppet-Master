@@ -375,6 +375,8 @@
     f.plot.setAttribute('width', W); f.plot.setAttribute('height', Hh);
     f.over.setAttribute('width', W); f.over.setAttribute('height', Hh);
     f.plot.classList.toggle('is-split', split);
+    /* split token bands hide the total line: the comet then rides the top band's edge (the stack's top is the last series) */
+    P.edges.forEach(function (e, i) { if (split && m.token && i === P.edges.length - 1) e.setAttribute('data-comet', '1'); else e.removeAttribute('data-comet'); });
     var prev = c._geo;
     /* a re-render at another size (a resize release re-renders the body; charts.make carries the old chart over) morphs
        from the old shape scaled into the new plot, never from a blank (WOW-SPEC 3.12) */
