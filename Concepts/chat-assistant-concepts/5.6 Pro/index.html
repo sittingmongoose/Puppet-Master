@@ -16938,6 +16938,78 @@ html[data-o55-nier="on"] .activity-item[data-hover-domain]::after { display: non
 html[data-o55-nier="on"] svg:where(.nx-a-spin) { --nx-le: steps(12, end); }
 html[data-o55-nier="on"] svg:where(.nx-t-idle) { --nx-ink: rgba(var(--o55-nier-ink-rgb), .45); }
 html[data-o55-nier="on"] svg:where(.nx-t-paused) { --nx-ink: rgba(var(--o55-nier-ink-rgb), .45); }
+/* Square icon strokes [icons]: square caps and mitred joins, with a miter limit of 2 so a right angle stays sharp and
+   anything tighter (the bolt, the wand's sparkle, a chevron at 12 px) bevels instead of spiking. */
+html[data-o55-nier-parts~="icons"] svg.nx { stroke-linecap: square; stroke-linejoin: miter; stroke-miterlimit: 2; }
+/* NieR forbids animated clip-path: a part that draws in by clip appears by stepped opacity instead, from .4 so a
+   hover act never blanks it; the complete check appears in two steps. */
+html[data-o55-nier="on"] svg.nx .nx-pc { animation-name: o55n-nx-reveal; animation-timing-function: steps(3, end); }
+@keyframes o55n-nx-reveal { from { opacity: .4; } to { opacity: 1; } }
+html[data-o55-nier="on"] .nx-st-complete .nx-p { animation: o55n-nx-two 360ms steps(2, end) backwards; }
+@keyframes o55n-nx-two { from { opacity: 0; } to { opacity: 1; } }
+/* Hover ignite is a two-beat stepped flicker of the tube itself (there is no halo to light). One selector per host
+   kind (shell-selfcheck: no rightmost :is() list); the svg's own animation is never touched. */
+html[data-o55-nier="on"] button:hover > svg.nx-r-control .nx-c,
+html[data-o55-nier="on"] button:focus-visible > svg.nx-r-control .nx-c,
+html[data-o55-nier="on"] button:hover > :not(button) > svg.nx-r-control .nx-c,
+html[data-o55-nier="on"] [data-action]:hover > svg.nx-r-control .nx-c,
+html[data-o55-nier="on"] [data-action]:focus-visible > svg.nx-r-control .nx-c,
+html[data-o55-nier="on"] [data-action]:hover > :not([data-action]) > svg.nx-r-control .nx-c,
+html[data-o55-nier="on"] [role="button"]:hover > svg.nx-r-control .nx-c,
+html[data-o55-nier="on"] summary:hover > svg.nx-r-control .nx-c { animation: o55n-nx-flick 240ms steps(1, end); }
+@keyframes o55n-nx-flick { 0% { opacity: .45; } 33% { opacity: 1; } 66% { opacity: .45; } 100% { opacity: 1; } }
+/* The Fast bolt strikes in steps: the same drop and double flicker, every frame held (NieR's stepped motion). */
+html[data-o55-nier="on"] svg.fast-bolt, html[data-o55-nier="on"] svg.meta-fast { animation-name: o55n-nx-fast; animation-timing-function: steps(1, end); }
+html[data-o55-nier="on"] :where(button, [data-action]):where(:hover, :focus-visible) > svg.fast-bolt { animation-name: o55n-nx-fast-h; }
+@keyframes o55n-nx-fast { 0%, 24%, 100% { transform: translateY(0); opacity: 1; } 5% { transform: translateY(1.5px); opacity: 1; } 7% { transform: translateY(1.5px); opacity: .35; } 9% { opacity: 1; } 11% { opacity: .4; } 13% { opacity: 1; } }
+@keyframes o55n-nx-fast-h { 0%, 24%, 100% { transform: translateY(0); opacity: 1; } 5% { transform: translateY(1.5px); opacity: 1; } 7% { transform: translateY(1.5px); opacity: .35; } 9% { opacity: 1; } 11% { opacity: .4; } 13% { opacity: 1; } }
+/* The status set keeps every silhouette apart, because NieR's inks are close:
+   needs-you is an inverted ink block with paper strokes and a paper "?" (it outshines everything); */
+html[data-o55-nier="on"] .nx-st-waiting { background: var(--nx-bk, var(--o55-nier-ink)); box-shadow: 0 0 0 2px var(--nx-bk, var(--o55-nier-ink)); }
+html[data-o55-nier="on"] .nx-st-waiting > svg.nx { --nx-ink: var(--o55-nier-on-ink); }
+/* on an ink cursor bar the block turns over: paper with ink strokes */
+html[data-o55-nier-parts~="cursor"] .thread-row:hover .nx-st-waiting,
+html[data-o55-nier-parts~="cursor"] .thread-row.active .nx-st-waiting { --nx-bk: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="cursor"] .thread-row:hover .nx-st-waiting > svg.nx,
+html[data-o55-nier-parts~="cursor"] .thread-row.active .nx-st-waiting > svg.nx { --nx-ink: var(--o55-nier-ink); }
+/* blocked keeps the wrapper's hard double blink (ab-alert, already steps(1)); failed glitches once as it arrives
+   (the mark remounts on a change) instead of stuttering for ever; */
+html[data-o55-nier="on"] .nx-st-failed { animation: o55n-nx-glitch 320ms steps(4, end) 1; }
+@keyframes o55n-nx-glitch { 0% { transform: translateX(0); opacity: 1; } 25% { transform: translateX(2px); opacity: .4; } 50% { transform: translateX(-2px); opacity: 1; } 75% { transform: translateX(1px); opacity: .6; } 100% { transform: none; opacity: 1; } }
+/* working is PMConcept7's diamond loader while the diamonds part is on (a hollow diamond turning in depth, its ink
+   flipping to paper on a cursor bar), turned in six held steps of 60 degrees so it is never seen edge-on in a list;
+   otherwise the ink ring's satellite moves in steps (--nx-le above). */
+html[data-o55-nier-parts~="diamonds"] .nx-st-working > svg.nx { visibility: hidden; }
+html[data-o55-nier-parts~="diamonds"] .nx-st-working::after {
+  content: ""; position: absolute; inset: 18%; box-sizing: border-box; pointer-events: none;
+  border: 1.5px solid var(--nx-ink, var(--o55-nier-ink)); outline: 1px solid var(--nx-ink, var(--o55-nier-ink)); outline-offset: -4.5px;
+  transform: rotateY(0deg) rotate(45deg) scale(.82);
+  animation: o55n-nx-diamond 2.8s steps(6, end) infinite;
+}
+@keyframes o55n-nx-diamond { from { transform: rotateY(0deg) rotate(45deg) scale(.82); } to { transform: rotateY(360deg) rotate(45deg) scale(.82); } }
+/* The bar: ink glyphs with stepped acts (the tokens above); a working domain carries an ink underline under its
+   glyph, drawn by the item's anchored ::after (the backlight's slot, unused in NieR). */
+html[data-o55-nier="on"][data-ab-goal="working"] .activity-item[data-hover-domain="goal"]::after,
+html[data-o55-nier="on"][data-ab-todo="working"] .activity-item[data-hover-domain="todo"]::after,
+html[data-o55-nier="on"][data-ab-subagents="working"] .activity-item[data-hover-domain="subagents"]::after,
+html[data-o55-nier="on"][data-ab-crew="working"] .activity-item[data-hover-domain="crew"]::after,
+html[data-o55-nier="on"][data-ab-brainstorm="working"] .activity-item[data-hover-domain="brainstorm"]::after,
+html[data-o55-nier="on"][data-ab-review="working"] .activity-item[data-hover-domain="review"]::after,
+html[data-o55-nier="on"][data-ab-chat_room="working"] .activity-item[data-hover-domain="chat_room"]::after,
+html[data-o55-nier="on"][data-ab-changes="working"] .activity-item[data-hover-domain="changes"]::after,
+html[data-o55-nier="on"][data-ab-artifacts="working"] .activity-item[data-hover-domain="artifacts"]::after {
+  display: block; top: anchor(bottom); width: 12px; height: 2px; translate: -50% 3px; border-radius: 0; z-index: 0;
+  background: var(--o55-nier-ink); opacity: 1;
+}
+/* Reduced motion (the media query, html[data-motion], body.pm56-reduced): every NieR act and loop stops; the inverted
+   needs-you block, the diamond and the underline still carry the state. */
+@media (prefers-reduced-motion: reduce) {
+  html[data-o55-nier="on"] svg.nx .nx-c, html[data-o55-nier="on"] .nx-st::after { animation: none !important; }
+}
+html[data-o55-nier="on"] body.pm56-reduced svg.nx .nx-c, html[data-o55-nier="on"] body.pm56-reduced .nx-st::after { animation: none !important; }
+html[data-o55-nier="on"][data-motion="reduced"] svg.nx, html[data-o55-nier="on"][data-motion="reduced"] svg.nx .nx-p,
+html[data-o55-nier="on"][data-motion="reduced"] svg.nx .nx-c, html[data-o55-nier="on"][data-motion="reduced"] .nx-st,
+html[data-o55-nier="on"][data-motion="reduced"] .nx-st::after { animation: none !important; transition: none !important; }
 
 /* nier.css — NieR Mode for the 5.6 Pro concept: the palette, the type and the base look. OWNER: NieR Mode, step N-A
  * (2026-10-02). Closes the sheet (build.py CSS_LAST, after neon-icons.css). The engine is nier.js; the parts are
@@ -17299,6 +17371,36 @@ html[data-o55-nier="on"] .status-branch { animation-name: o55n-blink; animation-
 html[data-o55-nier="on"] .send-button { box-shadow: none; }
 html[data-o55-nier="on"] .composer-infield .send-button { box-shadow: none; }
 html[data-o55-nier="on"] .composer-infield .send-button.is-stop { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); box-shadow: none; }
+
+/* ------------------------------------------------------------------ the Orbit and the working animation */
+/* Decided beside PMConcept7's orchestrator ring (a round ink dial with square markers): the Orbit stays a round dial
+   (track and core keep their circle even under Square hairlines) with square nodes. The live node is the NieR
+   "chosen" idiom, an ink block with a paper glyph; the core is a paper disc with an ink rim; done nodes take the
+   olive ink; pending nodes rest as hollow ink-rimmed squares. Every motion steps: the spawn, the pulse pip, the
+   failure shake and the track's slow turn, which ticks rather than glides. No bloom anywhere (section above). */
+html[data-o55-nier="on"] .orbit-track { border-color: rgba(var(--o55-nier-ink-rgb), .32); animation-timing-function: steps(48, end); }
+html[data-o55-nier-parts~="square"] .orbit-track { border-radius: 50% !important; }
+html[data-o55-nier="on"] .orbit-core { background: var(--surface-2); border: 1.5px solid var(--o55-nier-ink); color: var(--text); }
+html[data-o55-nier-parts~="square"] .orbit-core { border-radius: 50% !important; }
+html[data-o55-nier="on"] .orbit-node { animation-timing-function: steps(4, end); }
+html[data-o55-nier="on"] .orbit-node.live,
+html[data-o55-nier="on"] .orbit-node.current { background: var(--o55-nier-ink); border-color: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .orbit-node.live:hover { color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .orbit-node.live .orbit-node-pip { border-color: var(--o55-nier-ink); animation-timing-function: steps(4, end); }
+html[data-o55-nier="on"] .orbit-node.done { color: var(--positive); border-color: var(--o55-nier-ok); background: var(--surface-3); }
+html[data-o55-nier="on"] .orbit-node.failed { animation-timing-function: steps(5, end); }
+/* the collapsed strip and Step Rail Simple: the current disc is the ink block, it blinks in one step instead of
+   throwing a box-shadow ring (NieR never animates a shadow); done discs take the olive ink */
+html[data-o55-nier="on"] .pm-rail-item.orbit-strip-item.current,
+html[data-o55-nier="on"] .working-variant-8 .rail8-item.current {
+  background: var(--o55-nier-ink); border-color: var(--o55-nier-ink); color: var(--o55-nier-on-ink);
+  animation-name: orbit-disc-in, o55n-blink; animation-timing-function: steps(3, end), steps(1, end);
+}
+html[data-o55-nier="on"] .working-variant-8 .rail8-item.current { animation-name: pm-disc-in, o55n-blink; }
+html[data-o55-nier="on"] .wa-disc.orbit-strip-item.done,
+html[data-o55-nier="on"] .working-variant-8 .rail8-item.done { color: var(--positive); border-color: var(--o55-nier-ok); background: var(--surface-3); }
+html[data-o55-nier="on"] body.pm56-reduced .pm-rail-item.orbit-strip-item.current,
+html[data-o55-nier="on"] body.pm56-reduced .working-variant-8 .rail8-item.current { animation: none; }
 
 /* nier-parts.css — NieR Mode parts for the 5.6 Pro concept (PMConcept7's 29-part contract). OWNER: NieR Mode, step
  * N-A (2026-10-02): the Look parts (square, cursor, headers, ground, brackets, diamonds), pointer and icons; step N-B

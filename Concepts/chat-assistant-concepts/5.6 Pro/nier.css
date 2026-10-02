@@ -358,3 +358,33 @@ html[data-o55-nier="on"] .status-branch { animation-name: o55n-blink; animation-
 html[data-o55-nier="on"] .send-button { box-shadow: none; }
 html[data-o55-nier="on"] .composer-infield .send-button { box-shadow: none; }
 html[data-o55-nier="on"] .composer-infield .send-button.is-stop { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); box-shadow: none; }
+
+/* ------------------------------------------------------------------ the Orbit and the working animation */
+/* Decided beside PMConcept7's orchestrator ring (a round ink dial with square markers): the Orbit stays a round dial
+   (track and core keep their circle even under Square hairlines) with square nodes. The live node is the NieR
+   "chosen" idiom, an ink block with a paper glyph; the core is a paper disc with an ink rim; done nodes take the
+   olive ink; pending nodes rest as hollow ink-rimmed squares. Every motion steps: the spawn, the pulse pip, the
+   failure shake and the track's slow turn, which ticks rather than glides. No bloom anywhere (section above). */
+html[data-o55-nier="on"] .orbit-track { border-color: rgba(var(--o55-nier-ink-rgb), .32); animation-timing-function: steps(48, end); }
+html[data-o55-nier-parts~="square"] .orbit-track { border-radius: 50% !important; }
+html[data-o55-nier="on"] .orbit-core { background: var(--surface-2); border: 1.5px solid var(--o55-nier-ink); color: var(--text); }
+html[data-o55-nier-parts~="square"] .orbit-core { border-radius: 50% !important; }
+html[data-o55-nier="on"] .orbit-node { animation-timing-function: steps(4, end); }
+html[data-o55-nier="on"] .orbit-node.live,
+html[data-o55-nier="on"] .orbit-node.current { background: var(--o55-nier-ink); border-color: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .orbit-node.live:hover { color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .orbit-node.live .orbit-node-pip { border-color: var(--o55-nier-ink); animation-timing-function: steps(4, end); }
+html[data-o55-nier="on"] .orbit-node.done { color: var(--positive); border-color: var(--o55-nier-ok); background: var(--surface-3); }
+html[data-o55-nier="on"] .orbit-node.failed { animation-timing-function: steps(5, end); }
+/* the collapsed strip and Step Rail Simple: the current disc is the ink block, it blinks in one step instead of
+   throwing a box-shadow ring (NieR never animates a shadow); done discs take the olive ink */
+html[data-o55-nier="on"] .pm-rail-item.orbit-strip-item.current,
+html[data-o55-nier="on"] .working-variant-8 .rail8-item.current {
+  background: var(--o55-nier-ink); border-color: var(--o55-nier-ink); color: var(--o55-nier-on-ink);
+  animation-name: orbit-disc-in, o55n-blink; animation-timing-function: steps(3, end), steps(1, end);
+}
+html[data-o55-nier="on"] .working-variant-8 .rail8-item.current { animation-name: pm-disc-in, o55n-blink; }
+html[data-o55-nier="on"] .wa-disc.orbit-strip-item.done,
+html[data-o55-nier="on"] .working-variant-8 .rail8-item.done { color: var(--positive); border-color: var(--o55-nier-ok); background: var(--surface-3); }
+html[data-o55-nier="on"] body.pm56-reduced .pm-rail-item.orbit-strip-item.current,
+html[data-o55-nier="on"] body.pm56-reduced .working-variant-8 .rail8-item.current { animation: none; }
