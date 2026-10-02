@@ -26,9 +26,10 @@ shell=(root/'shell.html').read_text(encoding=ENC)
 # the renderer and the status set) exists before any module or app.js draws a glyph. Its stylesheet is the
 # exception to "module CSS in MODULES order": neon-icons.css is appended after composer.css (see CSS_LAST).
 # NieR Mode (2026-10-02): nier loads right after neon-icons, so window.PM_NIER and the paint hook app.js asks for
-# <body data-theme> exist before the first render, then nier-parts (the parts, coded against PM_NIER); nier.css and
+# <body data-theme> exist before the first render (nier-fonts, its generated faces, just before it), then nier-parts
+# (the parts, coded against PM_NIER); nier.css and
 # nier-parts.css close the sheet after neon-icons.css (CSS_LAST).
-MODULES=['neon-icons','nier','nier-parts','command-transaction','activity-panel','activity-bar','goals','context','history','menus',
+MODULES=['neon-icons','nier-fonts','nier','nier-parts','command-transaction','activity-panel','activity-bar','goals','context','history','menus',
          'transcript','lens-protocol','lens','orbit','threadops','questions',
          # Assistant-redesign wave (2026-09-03). One owner per file; each registers
          # through window.PM56_EXT and owns a bounded feature family, so app.js does

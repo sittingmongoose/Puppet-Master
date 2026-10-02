@@ -29,6 +29,8 @@
  * the other prefs), all 29 parts installed by default. notePick is a no-op: a theme picked here IS the switch.
  * window.PM_THEME_PAINT_FAMILY(family) answers 'basic' while NieR Mode is painted (PMConcept7's paint hook).
  *
+ * Type: the two embedded faces (nier-fonts.js, generated) are added to document.fonts while NieR Mode is painted and
+ * deleted when it is not; nier.css maps the concept's --font-ui and --font-mono to them under the contract.
  * Motion voice: NieR moves in Retro's stepped voice (app.js motionVoice() maps the nier family to 'retro'); nier.css
  * strips Retro's phosphor glow under the contract, because NieR never glows.
  * Performance: no timer, no observer, no rAF; everything is attributes written during the render that changes them.
@@ -99,6 +101,23 @@
     });
   }
 
+  /* ---------- the faces (nier-fonts.js): in document.fonts only while NieR Mode is painted ------------------------ */
+  /* The default themes' font set never holds them (pmx-verify's theme-font check lists every face the document
+     carries); FontFace objects are made once and added or deleted with the paint. */
+  var faces = null;
+  function syncFaces() {
+    var F = window.PM56_NIER_FACES, set = document.fonts;
+    if (!F || !set || typeof window.FontFace !== 'function') return;
+    if (!faces) {
+      faces = [];
+      F.forEach(function (f) { try { faces.push(new window.FontFace(f.family, f.src, { weight: f.weight, style: 'normal', display: 'swap' })); } catch (e) { /* a face that will not parse falls back to the stack */ } });
+    }
+    faces.forEach(function (f) {
+      var has = set.has(f);
+      if (painted && !has) set.add(f); else if (!painted && has) set.delete(f);
+    });
+  }
+
   /* ---------- the paint hook app.js calls while it writes <body data-theme> ------------------------------------- */
   /* Returns the id to paint: basic-<mode> for a NieR theme, the id itself otherwise. Idempotent per render. */
   var transition = null, running = false;
@@ -107,6 +126,7 @@
     var turned = want !== painted;
     painted = want; mode = m;
     writeAttrs();
+    if (turned || (painted && !faces)) syncFaces();
     if (last === null) { last = snapshot(); if (painted) Promise.resolve().then(function () { emit('init'); }); }
     else Promise.resolve().then(function () { emit(); });
     if (turned && transition && !running) runTransition(want);
