@@ -1,6 +1,6 @@
 {
   "schema": "pm.external_research.v8.public_attempts.v1",
-  "checkpoint": "INTEGRATED_Z_TRANCHE_V3_RESEARCH_ACTIVE",
+  "checkpoint": "DURABLE_NEXT_PAIR_ACTIVE_AFTER_INTERRUPTED_CRITICS",
   "attempts": [
     {
       "id": "v8-z-mechanical-route-canary-v1",
@@ -82,22 +82,38 @@
     },
     {
       "id": "V8-BIO-COND-C-Z",
-      "scope": "integrated_case_research_stage",
-      "status": "NATIVE_ACTIVE_AT_SELECTED_OBSERVATION",
-      "native_goal_starts": 1,
-      "research_quality": "UNASSESSED",
-      "evidence": "running-tranche-cohort-v1/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/native-public/activation.json"
+      "scope": "incomplete integrated pipeline",
+      "status": "RESEARCH_COMPLETE_CRITIC_PIPELINE_INTERRUPTED",
+      "native_goal_starts": 2,
+      "research_quality": "UNASSESSED; independent INCOMPLETE/HOLD",
+      "evidence": "partial-research-cohort-v1/README.md"
     },
     {
       "id": "V8-BIO-P-Z",
-      "scope": "integrated_case_research_stage",
+      "scope": "incomplete integrated pipeline",
+      "status": "RESEARCH_COMPLETE_CRITIC_PIPELINE_INTERRUPTED",
+      "native_goal_starts": 2,
+      "research_quality": "UNASSESSED; independent INCOMPLETE/HOLD",
+      "evidence": "partial-research-cohort-v1/README.md"
+    },
+    {
+      "id": "V8-NB-COND-C-Z",
+      "scope": "integrated research stage",
       "status": "NATIVE_ACTIVE_AT_SELECTED_OBSERVATION",
       "native_goal_starts": 1,
       "research_quality": "UNASSESSED",
-      "evidence": "running-tranche-cohort-v1/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/native-public/activation.json"
+      "evidence": "partial-research-cohort-v1/OBSERVATION_AFTER_HELPER.json"
+    },
+    {
+      "id": "V8-NB-P-Z",
+      "scope": "integrated research stage",
+      "status": "NATIVE_ACTIVE_AT_SELECTED_OBSERVATION",
+      "native_goal_starts": 1,
+      "research_quality": "UNASSESSED",
+      "evidence": "partial-research-cohort-v1/OBSERVATION_AFTER_HELPER.json"
     }
   ],
-  "note": "V1/v2 failures preserved. V3 mechanically qualified independently; no research-quality result. Four failed host cases retained, two actual research Goals active at selected observation; 0/24 integrated executions and 0/12 comparisons complete.",
+  "note": "All canary and host failures preserved. BIOresearch partial outputs frozen; two critics activated and orphanclosed late, no final or wholequality result. Two fresh notebook researchGoals active; no best-of, originalclocks unchanged.",
   "native_qualification": "V3_MECHANICAL_PASSED_LIMITED_DELIVERY_INFERENCE",
   "native_qualification_evidence": "resume-qualified-v3-cohort/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json"
 }

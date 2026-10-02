@@ -1,0 +1,27 @@
+{
+  "schema": "er8.route.lease.v1",
+  "owned_unit": "er8-v8-bio-p-z-independent-candidate-critic.service",
+  "deadline_monotonic_ns": 204576981519716,
+  "native_stop_monotonic_ns": 204546981519716,
+  "case_authority": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-independent-candidate-critic/CASE_AUTHORITY.json",
+    "sha256": "a181d94a961370af881a3d651a32fad531575ad9d70999e3ad3bb2c6422ba35d",
+    "clock": {
+      "case_id": "V8-BIO-P-Z",
+      "case_start_monotonic_ns": 203187923811630,
+      "case_elapsed_cap_seconds": 3600,
+      "case_occupied_cap_seconds": 5400,
+      "outside_native_cap_seconds": 300,
+      "campaign_native_cutoff_monotonic_ns": 234777000143007,
+      "stages": {
+        "v8-bio-p-z-independent-candidate-critic": {
+          "stage_start_monotonic_ns": 203976981519716,
+          "cap_seconds": 600,
+          "response_cap": 160
+        }
+      }
+    }
+  },
+  "occupied_seconds_reserved": 600,
+  "outside_seconds_reserved": 300
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "V8-BIO-COND-C-Z",
+  "status": "FINAL_INCOMPLETE_HOLD",
+  "evaluative_disposition": "HOLD",
+  "observed_preparation_at": "2026-10-02T23:38:39.999864+00:00",
+  "original_evaluator_start": "UNKNOWN; conservative root observation 2026-10-02T23:03:29Z",
+  "actual_tokens": "UNKNOWN",
+  "wall_allowance_seconds": 2400,
+  "clock_reset_after_freeze": false,
+  "scope": "Entire FINAL_PROPOSAL.md and exported UNRESOLVED_LEADS; all assigned questions and five obligations, source/research claims, two implementations, issue-fix-test, preservation/calibration/version/context/normative force; prospective method duties after artifact/source verdict.",
+  "access_boundary": "No active candidate bodies, candidate feedback, private auth/native conversations, account reads, sibling cases, or canon/Git writes.",
+  "source_policy": "Frozen captures and delivered-range operation receipts; successful GET alone does not establish comprehension.",
+  "inputs_read_so_far": [
+    "/mnt/Cursor/PuppetMaster/AGENTS.md",
+    "/mnt/Cursor/PuppetMaster/Plans/00-plans-index.md"
+  ],
+  "limitations": [
+    "Original evaluator timing and actual tokens UNKNOWN; awaiting original clock anchor from parent."
+  ],
+  "conservative_root_birth_epoch": 1790982209,
+  "hard_deadline_epoch": 1790984609,
+  "hard_deadline_utc": "2026-10-02T23:43:29Z",
+  "clock_adopted_from": "LAB_ROOT/ops/recovery-v1/EVALUATOR_BIRTHS_INTEGRATED_V1.json",
+  "money": "UNKNOWN",
+  "finalized_at": "2026-10-02T23:43:12.834652+00:00",
+  "original_clock_elapsed_seconds": 2383.8365440368652,
+  "remaining_to_original_bound_seconds": 16.16345453262329,
+  "sources_read": "No frozen capture bodies or candidate outputs read"
+}

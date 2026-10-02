@@ -1,0 +1,36 @@
+{
+  "root_authority": true,
+  "job": "V8-BIO-COND-C-Z-independent-candidate-critic",
+  "case": "V8-BIO-COND-C-Z",
+  "source_observation": {
+    "path": "LAB_ROOT/ops/orphan-recovery-v1/z-tranche-v3-current-quiet-observation.json",
+    "sha256": "ecb1a381c56fa4e040c3c84baaf774799b294e6946ca1b2ba16b128746509bbe"
+  },
+  "actual_current_quiescence": {
+    "schema": "er8.execution.quiescence.v1",
+    "owned_unit": "er8-v8-bio-cond-c-z-independent-candidate-critic.service",
+    "owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-cond-c-z-independent-candidate-critic.service",
+    "enrollment": {
+      "schema": "er8.execution.enrollment.v1",
+      "owned_unit": "er8-v8-bio-cond-c-z-independent-candidate-critic.service",
+      "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-cond-c-z-independent-candidate-critic.service",
+      "enrolled_monotonic_ns": 203956516681470,
+      "original_deadline_monotonic_ns": 204555553420469
+    },
+    "absence_proof": "positively-enrolled-owned-cgroup-removed",
+    "owned_native_quiescent": true,
+    "quiescence_observed_monotonic_ns": 206498807065546,
+    "original_deadline_monotonic_ns": 204555553420469,
+    "inclusive_native_lifetime_established": false,
+    "occupancy_disposition": "held-until-positive-quiescence",
+    "native_goal_or_quality_qualification": "UNESTABLISHED; independent native receipt review mandatory"
+  },
+  "recorded_rolling_case_stage_groups_currently_absent": true,
+  "held_exit": "UNKNOWN; no fabricated waiter",
+  "on_time_quiescence": "UNKNOWN; observer inclusive_native_lifetime_established FALSE preserved",
+  "original_deadlines_unchanged": true,
+  "actual_current_observed_monotonic_ns": 206498807070816,
+  "actual_current_observed_epoch": 1790984752.6374142,
+  "previous_unobserved_native_to_quiet_interval": "UNKNOWN; full birth through current release occupancy counted",
+  "qualification": "cleanup only; INTERRUPTED/INCOMPLETE, no quality credit"
+}

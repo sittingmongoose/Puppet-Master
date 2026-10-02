@@ -1,0 +1,44 @@
+{
+  "immutable_inputs": {
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/TASK.md": "cbcc1f7588801742c880dcbf9f564a3de23bf9a66561aeababdda89afce16230",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/inputs/METHOD.md": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/inputs/BRIEF.md": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/inputs/TASK.md": "cbcc1f7588801742c880dcbf9f564a3de23bf9a66561aeababdda89afce16230",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/inputs/THIN_PLAN.md": "9a4a13328e3f3d4af25d13c371b79b918d898cb20fa2ec99e0901a70fe7be98f"
+  },
+  "prompt_sha256": "ad446401ed48c32c45ed3b4ab0935d6d642f810479a6f7744a079c53d02c4439",
+  "normalized_input_receipts": [
+    {
+      "source_path": "LAB_ROOT/cases/tranche-v2/briefs/bioimaging.md",
+      "source_sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+      "target_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/inputs/BRIEF.md",
+      "target_sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+      "path_delta": "none"
+    },
+    {
+      "source_path": "LAB_ROOT/cases/tranche-v2/sandbox-plans/bioimaging.md",
+      "source_sha256": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30",
+      "target_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/inputs/THIN_PLAN.md",
+      "target_sha256": "9a4a13328e3f3d4af25d13c371b79b918d898cb20fa2ec99e0901a70fe7be98f",
+      "path_delta": "input/ -> inputs/"
+    },
+    {
+      "source_path": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-COND-C-Z/METHOD.md",
+      "source_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+      "target_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/inputs/METHOD.md",
+      "target_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+      "path_delta": "none"
+    },
+    {
+      "source_path": "LAB_ROOT/cases/tranche-v2/templates/research.TASK.md",
+      "source_sha256": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3",
+      "target_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/inputs/TASK.md",
+      "target_sha256": "cbcc1f7588801742c880dcbf9f564a3de23bf9a66561aeababdda89afce16230",
+      "path_delta": "input/ -> inputs/"
+    }
+  ],
+  "normalization_authority": "root prospective input/ to inputs/ path-only authorization",
+  "case_start_monotonic_ns": 203187918086762,
+  "stage_start_monotonic_ns": 203187918086762,
+  "pack_complete_monotonic_ns": 203189857673323
+}

@@ -1,0 +1,23 @@
+{
+  "schema": "pm.er8.prospective-family-binding.v1",
+  "root_authority": true,
+  "pair_id": "V8-NB-AMEND",
+  "cases": [
+    "V8-NB-AMEND-C-L",
+    "V8-NB-AMEND-T-L"
+  ],
+  "original_family_provisional": "L",
+  "family": "Z",
+  "account_identity": "existing-authorized-zcode-account-v8-A",
+  "route": "v8-z-route-recovery-v2-native-bound-v2",
+  "pins": {
+    "runtime": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b",
+    "config": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d",
+    "independent_acceptance": "59b08282df39fe1c86e21eea06d1197a17f3ea30ef13b1569d6c34a31347a18c"
+  },
+  "created_epoch": 1790982321.9776525,
+  "basis": "Original Muse candidate route HOLD and Luna unfinished/unfrozen; user handoff authorizes continuing safe useful affordable-family work without waiting for all adapters. Both arms/stages use exact same accepted GLM family/account. Scope/tasks/scoring remain frozen; IDs retain original provisional suffix solely for lineage.",
+  "unstarted_pair_verified": true,
+  "prior_jobs_for_pair": [],
+  "no_candidate_body_or_evaluator_feedback_supplied": true
+}

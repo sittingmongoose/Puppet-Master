@@ -1,0 +1,407 @@
+{
+  "schema": "pm.er8.positive-publication-handoff.v1",
+  "created_utc": "2026-10-02T23:51:47.016079+00:00",
+  "scope": "Two frozen research-only proposals and actual source/capture/range provenance, interruptedcritic currentquiet/latecosts, independent incompleteHOLD qualitydispositions, durable supervision and futureunstartedwholepairbindings. No wholepipeline completion/qualitypass/winner. No .body/rawnative/evaluator keys selected.",
+  "positive_files": [
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/RESTART.json",
+      "sha256": "ddc1b496adc69fb923c42cd53c5144bc66648da559b48dec98e198c9f112c0f2"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/SUPERVISOR_DURABLE.json",
+      "sha256": "e0b37dcddefe3d6fcad80a913701cb69729b467bd0ffbf34b535f54dab3211b9"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/durable_holder_v1.py",
+      "sha256": "48907c8afa5b6a8699b61d01528466e4c5b838ac2bdb955f4420738dc2a12788"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/EVALUATOR_BIRTHS_INTEGRATED_V1.json",
+      "sha256": "c4bda651461001ebcdb68bccf04cb2ef942c1dd66c2cd9fafd74ed493f70c3c4"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/DURABLE_LAUNCH_V6.json",
+      "sha256": "a159a8e54053ab86e3867a6cabc3034d856a251c86bc837c09526b10ad5e1864"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/root-production-release-v4.json",
+      "sha256": "9d75023760362702fd91a3efa82e9dfbc8e12abe47a2d5ec093c40b76219c7d1"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/root-production-release-v6.json",
+      "sha256": "e15d0f1d8d7ce7a74dac72111df2848efe296e5fc605ab2e2f76f35c6f4d8aac"
+    },
+    {
+      "path": "LAB_ROOT/ops/orphan-recovery-v1/z-tranche-v3-current-quiet-observation.json",
+      "sha256": "ecb1a381c56fa4e040c3c84baaf774799b294e6946ca1b2ba16b128746509bbe"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/pair-bindings-v1/V8-BIO-RETR.json",
+      "sha256": "f319e7166b90e35d449b1d384d756cf1ee330eb9085a14d06b93b162972fff18"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/pair-bindings-v1/V8-BIO-AMEND.json",
+      "sha256": "2233343b885ab3222850dd0a70c898b4b833c7547882dbadb9764cf3ac3e6a38"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/pair-bindings-v1/V8-BIO-BREADTH.json",
+      "sha256": "7a31d262e0e8f34ca3b4ab24af06e3f1fedc2559327495a95678ca1abbd71636"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/pair-bindings-v1/V8-NB-RETR.json",
+      "sha256": "9c12d8055d310cf10acd5ba2b7a2d2bac5faaa7593d6e4f6e1c4cc35e5df5874"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/pair-bindings-v1/V8-NB-AMEND.json",
+      "sha256": "0884937953a3dc074f69013c21ffbc1ab8d4aa2f9e07c01633dd86adf9be08ae"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/pair-bindings-v1/V8-NB-BREADTH.json",
+      "sha256": "3046ea12c72fbbb1df56428ccf330a06308aae9520d4ab30c8c74eaa4808c871"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/COMPLETE.json",
+      "sha256": "3fdef49327409e5b1781f4a82c43215fe3f37e7bdf0f55a28d6886e709dadc4a"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/PUBLIC_ARTIFACT_FREEZE.json",
+      "sha256": "c6b817bde338c34cc6e32f9b7429eddb5e59d345f49da082a16d2ee76ddb4624"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/EXTERNAL_SETTLEMENT.json",
+      "sha256": "c6cd0456f2883c317723cc751a1a098c22d75ba5a2b59e74fa1cd1154451273b"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/QUIESCENCE.json",
+      "sha256": "6c2e515e0e60ca0d9b69cacbf69d5ad06ff09d56e77a74bd9f066f0faea384f8"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/PACKING.json",
+      "sha256": "84f21be827f694a20fcaec4d111be3bd45ba71686bf6b1bbaae43eab6163e053"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/BIRTH.json",
+      "sha256": "34afefc4ccf8b2486f134edd0b63d7e88ff9b23e179c19eceb74c29a11705624"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/LAUNCHED.json",
+      "sha256": "18b5f577069d488e774b2bd4b144e94dd2dd47863f675dce22e309b95eafc62a"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/native-public/public-metrics.json",
+      "sha256": "4d8f7b45b8e4b9dcff27e6ff595b86334df3ca3253904aa13c042430d2c444b2"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/native-public/receipt.json",
+      "sha256": "4d8f7b45b8e4b9dcff27e6ff595b86334df3ca3253904aa13c042430d2c444b2"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/out/PROPOSAL.md",
+      "sha256": "650603c1c0ff2ad369c589092f4ab47c1063dbadce1eb64078f4003c7e5dc82c"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/out/UNRESOLVED_LEADS.md",
+      "sha256": "4f25d256434645e10e0c4f79317f6d6d168f1f8db394ceb9175da0939927e1c0"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/TASK.md",
+      "sha256": "cbcc1f7588801742c880dcbf9f564a3de23bf9a66561aeababdda89afce16230"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/inputs/METHOD.md",
+      "sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/inputs/BRIEF.md",
+      "sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/inputs/TASK.md",
+      "sha256": "cbcc1f7588801742c880dcbf9f564a3de23bf9a66561aeababdda89afce16230"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/inputs/THIN_PLAN.md",
+      "sha256": "9a4a13328e3f3d4af25d13c371b79b918d898cb20fa2ec99e0901a70fe7be98f"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/public_captures/0bfb84c59c7d4df0bf18a3f4ad2d7168.json",
+      "sha256": "c3e11cf3e04840762205d7e907cc9f09aff1c5aea8d6aab50c1da636e1760696"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/public_captures/2bfbc9792f104678b3c1e235d0a620ec.json",
+      "sha256": "4dd649886eb47070a582daa16be2a68747796d46bd3a2f5035249e37a6d817c9"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/public_captures/41a5de93852f455d9c1634b76246d829.json",
+      "sha256": "3b15708f4f224296add21e6d6ca94fb0e4b6a962da0f5de08eea133724e81283"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/public_captures/45f7c04249c5406e9639cf7235d5cca4.json",
+      "sha256": "a0606f6b44cce7c63d9d552dba6575cc515c8b39c52ce1bbdebf1a8401abc3a2"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/public_captures/4851fa0a40364df5bf1a8bd655d01c85.json",
+      "sha256": "575eb933a25da7bdadf15881998f0280df6c1ea3fabd94c3e5a17578db6fbb01"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/public_captures/507a3e71cd1e4c768a66e72ee7eb829b.json",
+      "sha256": "6a3c44c8071eb7bf3bc5d465933c38e8029c6ef38b3c3be9aec2e13cf1b5e114"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/public_captures/673a4c7eed3d41c3a5c3f37626d7af62.json",
+      "sha256": "0bf5f00da077c6323098b555620d4c95db4fbb099e2b474e1d2eac0fd732457a"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/public_captures/72dc4e2d00414b3c8792623bba53da3f.json",
+      "sha256": "73941af48a536edb425269b97e309cebf1e48787b315cce7809ed8b5592b672f"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/public_captures/900a48b699d04d219b544cf81cc9be60.json",
+      "sha256": "9d08b71dab9a32abf59f4fbff552e237dd4e9ea446d364b58eee9a1f64ae1435"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/public_captures/a204fd0ef3144ac5aa9c37cf02671ffb.json",
+      "sha256": "d143de5996b0cbade1a7cc7f017fe67e085ab60855027ad66fb669460abaae36"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/public_captures/a9e1c9041f7a4807999129af1262e9e4.json",
+      "sha256": "9aafa76d187bd32d3f8ec5ca81d5baaf8bf4eeb6c35ba820f900b65d69f0c053"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/public_captures/e21b56645695475a8204a57a56a5fbfe.json",
+      "sha256": "c96730b509e7b2fbeb12f699a080e6fafd7d1f362835cc15b1e7c1c4a49db24e"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/public_captures/e3ff8b9e401043a2820191aff23f884c.json",
+      "sha256": "cb3f76ca211bd0d702648e527ef32d8ab8c7dbe7aeb6d2ac85773bc0fb5b84f3"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/workspace/public_captures/efb8762ed81b48ee9b0c1ab242fd00d7.json",
+      "sha256": "8c387a7a7437cec805e835bba39f7375d21c1710694aadfd51d904c149a300a1"
+    },
+    {
+      "path": "LAB_ROOT/ops/publication-partial-v1/V8-BIO-COND-C-Z-HOST_SOURCE_PROVENANCE.json",
+      "sha256": "1fdc0c25aa8a68078fa921849e1fab2a83c139b394000aa48e3e8996b2c377da"
+    },
+    {
+      "path": "LAB_ROOT/ops/orphan-recovery-v1/V8-BIO-COND-C-Z-independent-candidate-critic-root-current-release-proof.json",
+      "sha256": "64ab6b77fde7951f1c03b87ede9e4be78b49405faf7a2862d1bd31800b5baf3c"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-independent-candidate-critic/BIRTH.json",
+      "sha256": "c703a613ba9354ea9569c30afbb2f241f7cae3ba3514995aed7cf3dbe6f68a23"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-independent-candidate-critic/PLAN.json",
+      "sha256": "ad13e151f5e7cc13edd314bb22b8166fe361e32872873737c32ddf6008a098a7"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-independent-candidate-critic/PLAN.enrollment.json",
+      "sha256": "1e8b39e479a020a06688218b8dffbefba75a12e9677b287bb8242224c25a68c9"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-independent-candidate-critic/LAUNCHED.json",
+      "sha256": "1ba9fe91dd05a7b54b942b2ace1f901b1495f99354250b53f641ed0bb5bede3b"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-independent-candidate-critic/LEASE.json",
+      "sha256": "a33be92c42f2b96da37e8d4ee0ef6dd96fc8e9e78574c3a9fa29f3790da6686f"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-independent-candidate-critic/native-public/activation.json",
+      "sha256": "1f92a68e541ea29c74d0c30d4c85645c48487af66a278416459d2018f836db81"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-independent-candidate-critic/native-public/progress.jsonl",
+      "sha256": "191563d3480e0a52caebaef3fa4a4a423c6839fde0001f60d7136610f11db125"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v1/V8-BIO-COND-C-Z/quality-disposition.json",
+      "sha256": "d0f18d58e4aba39bc255ba2463eb69776f4318f578be181f0167061c242f7927"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v1/V8-BIO-COND-C-Z/scope-cost-provenance.json",
+      "sha256": "6020f4ff18d11801cb0abead0ad1a813a026b5f9432d2ae8c8b556275ef8d30b"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v1/V8-BIO-COND-C-Z/review-source-excerpts-draft.md",
+      "sha256": "e912ab6bd9802c623d1c3a1c73eed8f8cccb0e3811d52f369c656209a768ebdf"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/COMPLETE.json",
+      "sha256": "ed7e6e7bd2d0fa0024056358d6660809ed74b1b39e3a983e5c51d4543ffb9cef"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/PUBLIC_ARTIFACT_FREEZE.json",
+      "sha256": "3c5e3ddc984c31b6b15bf781fd7922cc08e0aa1c7cd59a325252cbb7f75c6480"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/EXTERNAL_SETTLEMENT.json",
+      "sha256": "316c7055f3cc8b359cebfe253e55ca6e64ccea1db8d30d762a9ddeb2355a162c"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/QUIESCENCE.json",
+      "sha256": "ae6d48128f02a34be0a91e1b38d2bdf508a63d2b8c47a21c140bd7f5ffa6eb7c"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/PACKING.json",
+      "sha256": "0b30dadbd5e2de7bb3adb70ab17f52613c452d52bf83c8dfe3bb79134cc20800"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/BIRTH.json",
+      "sha256": "24fbac784d98d412316da8df33b56b1bd6a5409cf5e0aa34692b162b295386f4"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/LAUNCHED.json",
+      "sha256": "158c042bedf5573ac5c39f44b7753fdaeedf3cf8ca44e846dd7f4b47e669fb31"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/native-public/public-metrics.json",
+      "sha256": "424cdc2d58ca343c13951525452c2ad6c56ee43b1b2104479d3506822615de72"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/native-public/receipt.json",
+      "sha256": "424cdc2d58ca343c13951525452c2ad6c56ee43b1b2104479d3506822615de72"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/out/PROPOSAL.md",
+      "sha256": "794bd573d6a9f03b4de64472d63e94028ddfd0b7f684818931a848a4c854ec2e"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/out/UNRESOLVED_LEADS.md",
+      "sha256": "6bd4c00ea922b6f1ee8619b68678bf7fa569bfa23a60effb607f44a79554ff46"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/TASK.md",
+      "sha256": "c35c81c39114025a5af0984d5b209cc9112e7c2596c3b25a8612d162bd71b317"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/inputs/METHOD.md",
+      "sha256": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/inputs/BRIEF.md",
+      "sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/inputs/TASK.md",
+      "sha256": "c35c81c39114025a5af0984d5b209cc9112e7c2596c3b25a8612d162bd71b317"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/inputs/THIN_PLAN.md",
+      "sha256": "9a4a13328e3f3d4af25d13c371b79b918d898cb20fa2ec99e0901a70fe7be98f"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/public_captures/1d6441acdae144d3ad3becfe59e5ff6b.json",
+      "sha256": "73ed224dc61265f219bef814c45bef3c384a355cd6fba1a77b544db22316dbf8"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/public_captures/23fecca069124de58712deffebc48287.json",
+      "sha256": "bf8c33d2c7129faa9fce2b1824f64541717bcf6c99f194aa454e9e2b00d8627c"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/public_captures/24bf6feb801b4fe2972410058ff1c889.json",
+      "sha256": "cef5b6945794944c9f937dfaa4cc9b4bec7ee4cd302ba3ff6e749c5ee5c1084c"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/public_captures/2c21f45539e44ce3a36acc4fb826f338.json",
+      "sha256": "85d7803c09634fa6c02f70cf597355d73f04bcb4506aef1c4124a09555bf944e"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/public_captures/30389ad3918a461d85098751ea50b791.json",
+      "sha256": "ddea5c88ad29ab3aaf9423988d7a46112d0242e95b8250fa52776d76f81303fd"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/public_captures/37cc04f86bcf4c7ca86421025d3ad255.json",
+      "sha256": "2d60cf4a1f964c288101f8d8317144b7221355b3f93605541fa8032ac45932cd"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/public_captures/670b1b71c71649968dda6dca1da0b9a7.json",
+      "sha256": "c5a523509ba600f4a3f50ecd71ec366ff279902594ca3d009a0bd63de2cd0d29"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/public_captures/6e56e405aa324ab1a2deb28f8bedd60f.json",
+      "sha256": "0376cf2e52cb83c7f591f8229bf48487aa336c91f828e377318787179ff9725d"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/public_captures/9166fe884e064efb89558217d387f958.json",
+      "sha256": "68bf8e82ae72bbf6111d139abf9b802d45760024bd729fe9b7d5f1ca7fb40a3b"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/public_captures/9338d43af430463096a25c80f4a21ef8.json",
+      "sha256": "fb4704aec7fe98f5bb2718ba857210c84e1fa5f8cb994b594dcd5934078ee0ef"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/public_captures/a316a9c99dba4c7a9c6f75821260ab51.json",
+      "sha256": "b15edd4bc2aa7e7f86a7756bbc4e661541d83893515151d4cdaa738b96b67a3b"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/public_captures/b98fcad5df1e4f0492ed2e05d9f8c082.json",
+      "sha256": "413cd092759bc0b5fdd93575511708d72579f7612836885ccbc486dda8d15174"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/public_captures/c487de73a9664e82b46bf76fae956194.json",
+      "sha256": "8a54c54af05c47d0cb37f5eab4333c7cdb177416698c8502e0b8c052f415a18b"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/public_captures/f7d2c3bef6264e5ea6e92742a811fa97.json",
+      "sha256": "598a1f2d9ef0413c1119b9c99213bd504658a20d979d5707de7313695b08c3e0"
+    },
+    {
+      "path": "LAB_ROOT/ops/publication-partial-v1/V8-BIO-P-Z-HOST_SOURCE_PROVENANCE.json",
+      "sha256": "0c728e4feeae6a44b54cc4fde0561b26e196e558291fc7ba2a3d898c959b1224"
+    },
+    {
+      "path": "LAB_ROOT/ops/orphan-recovery-v1/V8-BIO-P-Z-independent-candidate-critic-root-current-release-proof.json",
+      "sha256": "1a0b1f752040f6edbc14cd897d4b33dd174982e52242fe9e5277bc15528ef957"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-independent-candidate-critic/BIRTH.json",
+      "sha256": "b7785641478820cfde5a5a082df37b12d7d7f0066629b7e4809f1ad7cd586a51"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-independent-candidate-critic/PLAN.json",
+      "sha256": "40eb7015433040ff804b7b16e5766a034b606bd640992455b62ab8c23a7f15f6"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-independent-candidate-critic/PLAN.enrollment.json",
+      "sha256": "1bc9c221d8956727d920aeb12c08b3053bc2342529c0e9d1088bc463da3dd6d4"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-independent-candidate-critic/LAUNCHED.json",
+      "sha256": "3a2115dc15090b29b50f33eb93a42e9de6c90629e154e51458e7333514e4cfb6"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-independent-candidate-critic/LEASE.json",
+      "sha256": "df3e4aceed0f638850b817e47a62da0017838e0bba02d35912e946833ae07cc6"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-independent-candidate-critic/native-public/activation.json",
+      "sha256": "149e69dfaad8e4a1e3ed6bebb9b0f7332c5b6324d2357bdc96e236d6ab63a4de"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-independent-candidate-critic/native-public/progress.jsonl",
+      "sha256": "456b8713f79d5aa814ec97e282bc0b5fa700e71b019740dab81939145d6bdd86"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v1/V8-BIO-P-Z/quality-disposition.json",
+      "sha256": "af0c45d786bf951451f012bdfdecb4efaf9dd174c09e7d9890be525f3b2027fa"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v1/V8-BIO-P-Z/scope-cost-provenance.json",
+      "sha256": "8fde82667b57117d57ee4a20cc947bcd2c3171e2fb9c29b18b98995d1ac498ef"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v1/V8-BIO-P-Z/release-status.json",
+      "sha256": "3948de6b95a2a01a01d450da9f91aa15e253c51a806be8ab8ad9b9668970e628"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v1/V8-BIO-P-Z/REVIEW_DRAFT.md",
+      "sha256": "1f7c0ae2e87dad0e4b263e4676ad83aacf662768235e7b163fa46f2224e35225"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v1/V8-BIO-P-Z/SOURCE_EXCERPTS_DRAFT.md",
+      "sha256": "63a326027fa7c41d13b8f4ec9907d37603bbe367ced900a20197062bb9626f6a"
+    }
+  ]
+}

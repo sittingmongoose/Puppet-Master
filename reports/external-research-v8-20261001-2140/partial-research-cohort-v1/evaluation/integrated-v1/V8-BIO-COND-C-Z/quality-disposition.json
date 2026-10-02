@@ -1,0 +1,191 @@
+{
+  "schema": "er8.integrated.frozen-evaluation.v1",
+  "case_id": "V8-BIO-COND-C-Z",
+  "record_state": "FINAL",
+  "written_at": "2026-10-02T23:43:12.834652+00:00",
+  "quality_disposition": "HOLD",
+  "operational_completion": "INCOMPLETE",
+  "dominant_reason": "No positively complete frozen three-stage case was available before final write reserve under the original evaluator clock. Root confirmed quiet failure closure for the critic with heldexit/on-time-completion UNKNOWN and no final stage, and instructed evaluator finalization. Waiting/infrastructure availability is not a scored quality failure.",
+  "quality_failure_asserted": false,
+  "whole_case_pass_asserted": false,
+  "coverage": [
+    {
+      "facet": "question_1",
+      "status": "UNASSESSED",
+      "reason": "Complete frozen three-stage case unavailable; quality evaluation did not begin before original-clock reserve."
+    },
+    {
+      "facet": "question_2",
+      "status": "UNASSESSED",
+      "reason": "Complete frozen three-stage case unavailable; quality evaluation did not begin before original-clock reserve."
+    },
+    {
+      "facet": "question_3",
+      "status": "UNASSESSED",
+      "reason": "Complete frozen three-stage case unavailable; quality evaluation did not begin before original-clock reserve."
+    },
+    {
+      "facet": "obligation_1",
+      "status": "UNASSESSED",
+      "reason": "Complete frozen three-stage case unavailable; quality evaluation did not begin before original-clock reserve."
+    },
+    {
+      "facet": "obligation_2",
+      "status": "UNASSESSED",
+      "reason": "Complete frozen three-stage case unavailable; quality evaluation did not begin before original-clock reserve."
+    },
+    {
+      "facet": "obligation_3",
+      "status": "UNASSESSED",
+      "reason": "Complete frozen three-stage case unavailable; quality evaluation did not begin before original-clock reserve."
+    },
+    {
+      "facet": "obligation_4",
+      "status": "UNASSESSED",
+      "reason": "Complete frozen three-stage case unavailable; quality evaluation did not begin before original-clock reserve."
+    },
+    {
+      "facet": "obligation_5",
+      "status": "UNASSESSED",
+      "reason": "Complete frozen three-stage case unavailable; quality evaluation did not begin before original-clock reserve."
+    },
+    {
+      "facet": "all_final_source_and_research_claims",
+      "status": "UNASSESSED",
+      "reason": "Complete frozen three-stage case unavailable; quality evaluation did not begin before original-clock reserve."
+    },
+    {
+      "facet": "two_independently_discovered_implementations_or_components",
+      "status": "UNASSESSED",
+      "reason": "Complete frozen three-stage case unavailable; quality evaluation did not begin before original-clock reserve."
+    },
+    {
+      "facet": "relevant_issue_fix_test_trace",
+      "status": "UNASSESSED",
+      "reason": "Complete frozen three-stage case unavailable; quality evaluation did not begin before original-clock reserve."
+    },
+    {
+      "facet": "conditions_exceptions_and_normative_force",
+      "status": "UNASSESSED",
+      "reason": "Complete frozen three-stage case unavailable; quality evaluation did not begin before original-clock reserve."
+    },
+    {
+      "facet": "calibration_matching_recovery_interpretations",
+      "status": "UNASSESSED",
+      "reason": "Complete frozen three-stage case unavailable; quality evaluation did not begin before original-clock reserve."
+    },
+    {
+      "facet": "discriminating_validation_witnesses",
+      "status": "UNASSESSED",
+      "reason": "Complete frozen three-stage case unavailable; quality evaluation did not begin before original-clock reserve."
+    },
+    {
+      "facet": "declared_source_version_and_context",
+      "status": "UNASSESSED",
+      "reason": "Complete frozen three-stage case unavailable; quality evaluation did not begin before original-clock reserve."
+    },
+    {
+      "facet": "initial_to_final_current_artifact_preservation",
+      "status": "UNASSESSED",
+      "reason": "Complete frozen three-stage case unavailable; quality evaluation did not begin before original-clock reserve."
+    },
+    {
+      "facet": "capture_and_delivered_range_acquisition",
+      "status": "UNASSESSED",
+      "reason": "Complete frozen three-stage case unavailable; quality evaluation did not begin before original-clock reserve."
+    },
+    {
+      "facet": "prospective_method_duties",
+      "status": "UNASSESSED",
+      "reason": "Complete frozen three-stage case unavailable; quality evaluation did not begin before original-clock reserve."
+    }
+  ],
+  "final_proposal": {
+    "path": "UNKNOWN; final stage not present",
+    "sha256": "UNKNOWN",
+    "read": false
+  },
+  "unresolved_leads": {
+    "export_status": "UNKNOWN",
+    "read": false
+  },
+  "original_brief_thin_plan_tasks_read": false,
+  "method_identity_inspection": "DEFERRED; artifact/source quality disposition unavailable",
+  "sources": {
+    "frozen_capture_bodies_read": false,
+    "delivered_range_operation_receipts_read": false,
+    "independent_public_fetches": 0,
+    "successful_get_is_comprehension": false
+  },
+  "publication": {
+    "candidate_visible": false,
+    "private_scoring_keys_exported": false,
+    "source_excerpt_draft": "No consequential source excerpt: source assessment has not started.",
+    "winner_or_best_of": "NONE"
+  },
+  "clock": {
+    "conservative_root_birth_epoch": 1790982209,
+    "hard_deadline_epoch": 1790984609,
+    "allowance_seconds": 2400,
+    "actual_start": "UNKNOWN",
+    "actual_tokens": "UNKNOWN",
+    "money": "UNKNOWN",
+    "reset": false
+  },
+  "input_locators": [
+    {
+      "path": "LAB_ROOT/cases/tranche-v2/scoring-only/evaluation-scope.json",
+      "sha256": "6efed6cf4763f91b9674ffaaf35b5c9113decf27663fc38961fcfd140b6883af"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/EVALUATOR_BIRTHS_INTEGRATED_V1.json",
+      "sha256": "c4bda651461001ebcdb68bccf04cb2ef942c1dd66c2cd9fafd74ed493f70c3c4"
+    }
+  ],
+  "limitations": [
+    "Incomplete pipeline prevents quality assessment; waiting is not a scored candidate failure.",
+    "No historical corpus audit; no active candidate bodies read."
+  ],
+  "disposition": "INCOMPLETE/HOLD",
+  "final_observation": {
+    "at": "2026-10-02T23:43:12.834652+00:00",
+    "remaining_seconds": 16.165313482284546,
+    "case_complete": false,
+    "case_close": false,
+    "stages": [
+      {
+        "stage": "V8-BIO-COND-C-Z-independent-candidate-critic",
+        "complete": false,
+        "freeze": false
+      },
+      {
+        "stage": "V8-BIO-COND-C-Z-research-proposal",
+        "complete": true,
+        "freeze": true
+      }
+    ]
+  },
+  "parent_operational_report": {
+    "received_before_cutoff": true,
+    "enrolled_critic_cgroups_removed": "ROOT_REPORTED_POSITIVE",
+    "original_stage_and_case_pgids_absent": "ROOT_REPORTED_POSITIVE",
+    "heldexit_and_on_time_complete": "UNKNOWN",
+    "final_stage": "ABSENT",
+    "independent_evaluator_inspection": "NONE; root owns operational closure"
+  },
+  "source_excerpts": "NONE: no source-grounded substantive finding was assessed.",
+  "operational_metadata_locators": [
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/COMPLETE.json",
+      "bytes": 1246,
+      "sha256": "3fdef49327409e5b1781f4a82c43215fe3f37e7bdf0f55a28d6886e709dadc4a",
+      "content_scope": "metadata only; no artifact/capture body read"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-research-proposal/PUBLIC_ARTIFACT_FREEZE.json",
+      "bytes": 12285,
+      "sha256": "c6b817bde338c34cc6e32f9b7429eddb5e59d345f49da082a16d2ee76ddb4624",
+      "content_scope": "metadata only; no artifact/capture body read"
+    }
+  ]
+}

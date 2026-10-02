@@ -1,0 +1,41 @@
+{
+  "root_authority": true,
+  "supervisor_claim": {
+    "schema": "pm.er8.durable-supervisor.v1",
+    "root_authority": true,
+    "pid": 1969270,
+    "unit": "er8-v8-root-durable-20261002-2348.service",
+    "deadline_epoch": 1791013030.8303788,
+    "acquired_epoch": 1790984828.5959241,
+    "owner": "codex-er8-recovery",
+    "original_costs_and_births_preserved": true
+  },
+  "unit": "er8-v8-production-z-tranche-v6.service",
+  "command": [
+    "systemd-run",
+    "--user",
+    "--unit=er8-v8-production-z-tranche-v6",
+    "--property=RuntimeMaxSec=28158",
+    "--property=KillMode=control-group",
+    "--property=Restart=no",
+    "--working-directory=LAB_ROOT",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "LAB_ROOT/ops/execution-resume-v1/quiet_production_monitor.py",
+    "--root-release",
+    "LAB_ROOT/ops/execution-resume-v1/root-production-release-v6.json",
+    "--release-sha256",
+    "e15d0f1d8d7ce7a74dac72111df2848efe296e5fc605ab2e2f76f35c6f4d8aac",
+    "--source-root",
+    "LAB_ROOT/dev/resume-execution-v2",
+    "--run-root",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6"
+  ],
+  "runtime_max_seconds": 28158,
+  "original_global_deadline_epoch": 1791013030.8303788,
+  "created_epoch": 1790984871.37919,
+  "release_sha256": "e15d0f1d8d7ce7a74dac72111df2848efe296e5fc605ab2e2f76f35c6f4d8aac",
+  "prior_jobs_all_positive_current_quiet": true,
+  "new_native_source_input_caps_unchanged": true
+}

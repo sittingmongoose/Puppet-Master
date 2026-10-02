@@ -1,0 +1,332 @@
+{
+  "schema": "er8.dispatcher.root-release.v1",
+  "created_utc": "2026-10-02T23:05:21.987040+00:00",
+  "root_authority": true,
+  "accepted": true,
+  "draft_status": "PROSPECTIVE_REBOUND_WHOLE_UNSTARTED_PAIRS; launch only after current owned rolling queue quiet",
+  "mode": "PRODUCTION",
+  "qualification_scope": "NATIVE_ACCEPTED",
+  "route": "v8-z-route-recovery-v2-native-bound-v2",
+  "allowed_jobs": [
+    "V8-BIO-RETR-C-M-research-proposal",
+    "V8-BIO-RETR-C-M-independent-candidate-critic",
+    "V8-BIO-RETR-C-M-final-correction",
+    "V8-BIO-RETR-T-M-research-proposal",
+    "V8-BIO-RETR-T-M-independent-candidate-critic",
+    "V8-BIO-RETR-T-M-final-correction",
+    "V8-BIO-AMEND-C-L-research-proposal",
+    "V8-BIO-AMEND-C-L-independent-candidate-critic",
+    "V8-BIO-AMEND-C-L-final-correction",
+    "V8-BIO-AMEND-T-L-research-proposal",
+    "V8-BIO-AMEND-T-L-independent-candidate-critic",
+    "V8-BIO-AMEND-T-L-final-correction",
+    "V8-BIO-BREADTH-C-M-research-proposal",
+    "V8-BIO-BREADTH-C-M-independent-candidate-critic",
+    "V8-BIO-BREADTH-C-M-final-correction",
+    "V8-BIO-BREADTH-T-M-research-proposal",
+    "V8-BIO-BREADTH-T-M-independent-candidate-critic",
+    "V8-BIO-BREADTH-T-M-final-correction",
+    "V8-NB-RETR-C-M-research-proposal",
+    "V8-NB-RETR-C-M-independent-candidate-critic",
+    "V8-NB-RETR-C-M-final-correction",
+    "V8-NB-RETR-T-M-research-proposal",
+    "V8-NB-RETR-T-M-independent-candidate-critic",
+    "V8-NB-RETR-T-M-final-correction",
+    "V8-NB-AMEND-C-L-research-proposal",
+    "V8-NB-AMEND-C-L-independent-candidate-critic",
+    "V8-NB-AMEND-C-L-final-correction",
+    "V8-NB-AMEND-T-L-research-proposal",
+    "V8-NB-AMEND-T-L-independent-candidate-critic",
+    "V8-NB-AMEND-T-L-final-correction",
+    "V8-NB-BREADTH-C-M-research-proposal",
+    "V8-NB-BREADTH-C-M-independent-candidate-critic",
+    "V8-NB-BREADTH-C-M-final-correction",
+    "V8-NB-BREADTH-T-M-research-proposal",
+    "V8-NB-BREADTH-T-M-independent-candidate-critic",
+    "V8-NB-BREADTH-T-M-final-correction"
+  ],
+  "max_component_seconds": 1800,
+  "max_component_responses": 160,
+  "pins": {
+    "runtime": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b",
+    "config": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d",
+    "independent_acceptance": "59b08282df39fe1c86e21eea06d1197a17f3ea30ef13b1569d6c34a31347a18c"
+  },
+  "selected_positive_files": {
+    "LAB_ROOT/AUTHORIZATION.json": "25609fc787d622958fd62afa5df218a1e4789f61595a4152865ceb0c143304f2",
+    "LAB_ROOT/dev/route-recovery-v2/INPUT_MAP.json": "8015a3f0c21120cfef990d22b32b9d363fd8ac81c6f4ca212c4aac6017414233",
+    "LAB_ROOT/dev/route-recovery-v2/OBJECTIVES.json": "f80217252bc73b00a7050d2a8e49d61cf63ac4d810366900fe49b32d31fca116",
+    "LAB_ROOT/dev/route-recovery-v2/broker_exec.py": "3484668112269099bf59fdf1cdad5f0d515b80da9eb6675157cc5fb52795902a",
+    "LAB_ROOT/dev/route-recovery-v2/candidate_inputs.py": "213e1a6aea20e3e0499971b283e900e31956338cbe6c02fad5e16aa701445abf",
+    "LAB_ROOT/dev/route-recovery-v2/dispatcher/canary_runner.py": "e1e75362f33c7951ce98c90aa520fc5686e489b786a2328fcb28c2d11c45ba45",
+    "LAB_ROOT/dev/route-recovery-v2/dispatcher/dispatcher.py": "8cb8ea5b48b305f78a0ce3d04162ee298a95b1be5f5ef0acd56c891c9b2c705b",
+    "LAB_ROOT/dev/route-recovery-v2/dispatcher/external_close.py": "e57acbd7cca3b051a8f49298c67c54ddf91c91570e0cbd3395fc06e8ba0b8896",
+    "LAB_ROOT/dev/route-recovery-v2/dispatcher/parent_launcher.py": "1c5a98ef919b7651d0aa837fd628f55e1e2787c98229af44a8dd628a742965f2",
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/deadline_gate": "2575d0c5ea4fe0af283bb0a2f484c0309c9d27be210660d98986bdbcc01f7e58",
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/deadline_gate.c": "abde9b4b9d70bbfd7c97ed397733228707ad2e27ed9214b11185e371631029ee",
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/entry.py": "3160d2e6624731218ecf0a465c19ff71a6351ecc4a9fb08d7893c86f6f5b99ca",
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/make_plan.py": "542f2363c15c213bec422b8e63b62b16a545dbda950d0478d625d10719ccd78b",
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/observe.py": "e398276c666b50306aa408065d7397ff4ad63d594a1f35d1a4cf9deacc998816",
+    "LAB_ROOT/dev/route-recovery-v2/host_preflight.py": "bea86b191eae203707af24943c048169b418368b5115a4e2ae75d6605068f1f2",
+    "LAB_ROOT/dev/route-recovery-v2/proxy.py": "58ea8262a773b4dc15f1ab0167ebad7e81ac2f3c59c583873017dfc965717f41",
+    "LAB_ROOT/dev/route-recovery-v2/recovery-control.json": "201304db9f643fa48a8de74e4340e26717ac8af15c2a07d113d7cb88cceae1b7",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/adapter.py": "2f790fbe0245322b0b24613eb8cd4a0b24070b69728e7cf5ebb234593ddae826",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/admission.py": "e6250830d4e609bc3650024c81cb237fb5252f4d95a21411efa16f4e302d3858",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/boundary.py": "69db267d6cc9efb8cac73fb729b93d6c69b82e18b4eccaa321b8bfc9de3000be",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/canary/ECHO.txt": "f7e2e10edb3dc012fe1d7294b256b368bfb7ac9f96378f61f934e5cb912874df",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/canary/OBJECTIVE.md": "c46f27278a35b7e404e8f32d385b38ef011188789f4f14fbf9db2f3a1430e081",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/canary/TASK.md": "0f1ca17bd3a03ddd29ee8a537442824ba0cdce1907a6390bf4e4df483050b881",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/host_guard.py": "3aa60ec7c7a3886619835c2e5238579e415223041828775f9e226331c3faa438",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/launch.py": "8dec4108eacd3814d5b1fff069daaef87703f8466bc6d15c77607e1bcba1e0d4",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/native_runner.py": "9b8bf700a30a9a4be0add4f3161b69bf98c6068acef88d73606085c3b6d6caca",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/positive-output-contract.json": "e7cb63d0e50efdbc40ad863dba94e2b7b93b3e1095d3d2059991b5b95ebdb447",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/projector.py": "92ba648f160f2bec1296cf0a7510bebc6b6a61bcef1e0ccc7c69902610899fd2",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/root-config.json": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/run_goal.py": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/zcode_goal_driver.py": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633",
+    "LAB_ROOT/dev/route-recovery-v2/source-capture-v1/binding.json": "8dea681e5a43fa54cec4a8ae76e37fcd9c6db878e73576ef5611e76e0313ff99",
+    "LAB_ROOT/dev/route-recovery-v2/source-capture-v1/boundary.py": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+    "LAB_ROOT/dev/route-recovery-v2/source-capture-v1/tool_server.py": "9c25c1faaf7c4557aaeb22b0977061914a9fbba1a04d87d2a3a29851daa29846",
+    "LAB_ROOT/ops/accounting-v1/slot_ledger.py": "5590fdc09936005e09b2de7aa4ac4113bbe0ddeefa4a8caf3548d78b0e3045af",
+    "LAB_ROOT/ops/recovery-v1/AUTHORITY_AMENDMENT.json": "1479c0b44869d13878b90ccd2f02d5fb2d755cfa0f0b17315105dc48d57616ec",
+    "LAB_ROOT/ops/recovery-v1/ledger_overlay.py": "597a3d3349154fbb4614ed7ece864f1cd77ecfea145fbfddaefc79fe0a1cd618",
+    "LAB_ROOT/ops/recovery-v1/ledger_resume.py": "a98cf53c1826f1f4c9fa47a9e181eaae8beb971ea41e6564578a253059450b61",
+    "LAB_ROOT/ops/recovery-v1/RESUME_20261002.json": "9fc1c92a3b6074610b3b4026bd4d7500e0f0a135b506863965e2919fb640c02f",
+    "/usr/bin/python3.13": "efb29ce53d36ebaeee80e3aa44fd6c7f9d71bbded5fe1665240b2ed8ecaeee0e",
+    "USER_HOME/.local/bin/node": "81925c0995b5c1427b5d538e6a90ca2fdc4daffb786b09af749beaf7369d4e90",
+    "/usr/bin/bwrap": "7bbffeb19f312d5503232e1502f0f97f2ac4ffcb51dec47d9a58bffbad1f12d5",
+    "USER_HOME/.local/opt/zcode/app.backup-3.11.2.6792/resources/glm/zcode.cjs": "e9f1868c0fdb863537ed910ee3828b9be96b8c2fd805473f63b439e1113266b8",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/SNAPSHOT.json": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b",
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/SNAPSHOT.json": "667e9b86a7547c8e647142787637c34adfcc63eb52f33826e0f1f5453d379438",
+    "LAB_ROOT/dev/route-recovery-v2/FREEZE.json": "523cb6cc77df53d98045394cec894da6f0bffa313de613d4fe5f70d694bd8084",
+    "LAB_ROOT/dev/route-recovery-v2/dispatcher/SOURCE_FREEZE.json": "074e7563753b9d5f4dae6f2ec00ba253fd0d3f9503b47eeeeb1bf35b1f09a70d",
+    "LAB_ROOT/evaluation/recovery-route-v1/execution-v2-source-acceptance.json": "9702cfd12df7ad290f19dcae6e8134ec77b2fd45f7fff293746a483c1d22c8a7",
+    "LAB_ROOT/evaluation/recovery-route-v1/caller-v2-source-acceptance.json": "04cc0c7cad1ef7a41780ab236a6075959787214be8742d76ab24e69467ee76c3",
+    "LAB_ROOT/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json": "aba3336e6475d1eb50e00b66c3804e2747d7fef38be764ec53379614cfb68fc7",
+    "LAB_ROOT/evaluation/resume-execution-v1/route-native-acceptance-bound-execution.json": "59b08282df39fe1c86e21eea06d1197a17f3ea30ef13b1569d6c34a31347a18c",
+    "LAB_ROOT/dev/resume-execution-v2/integrated-controller/case_supervisor.py": "b35627e1bdbf914afb939a69959e6b09ac9bcbe5d54cd471d7319cbcf540f096",
+    "LAB_ROOT/dev/resume-execution-v2/integrated-controller/common.py": "dff47a78fcd86494b3c34e26833b08739211148c4f711e5ec8758e69735692e3",
+    "LAB_ROOT/dev/resume-execution-v2/integrated-controller/external_case_close.py": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c",
+    "LAB_ROOT/dev/resume-execution-v2/integrated-controller/external_stage_close.py": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4",
+    "LAB_ROOT/dev/resume-execution-v2/integrated-controller/parent_receipt.py": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea",
+    "LAB_ROOT/dev/resume-execution-v2/integrated-controller/rolling.py": "6f4f59862c963288eb0b514d8d943adfd6c7356681aded5c9b3b9fe45eb6a874",
+    "LAB_ROOT/dev/resume-execution-v2/integrated-controller/stage_actor.py": "ba3b13cd1209fd086ecd96e24d776deda92824063fc216cd7796e7b299ffb8cc",
+    "LAB_ROOT/dev/resume-execution-v2/recovery-control.json": "e41b7464eefa9c19ce57bda562bca015b09dc3a062e1cf272d146f65a2949e89",
+    "LAB_ROOT/dev/resume-execution-v2/integrated-controller/SOURCE_FREEZE.json": "c6b0e36b3d46562284d81ace42456a681741fd97a1c74d238c236f4b527d5779"
+  },
+  "config": {
+    "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/root-config.json",
+    "sha256": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d"
+  },
+  "route_snapshot": {
+    "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/SNAPSHOT.json",
+    "sha256": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b"
+  },
+  "execution_snapshot": {
+    "path": "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/SNAPSHOT.json",
+    "sha256": "667e9b86a7547c8e647142787637c34adfcc63eb52f33826e0f1f5453d379438"
+  },
+  "controller_snapshot": {
+    "path": "LAB_ROOT/dev/resume-execution-v2/integrated-controller/SOURCE_FREEZE.json",
+    "sha256": "c6b0e36b3d46562284d81ace42456a681741fd97a1c74d238c236f4b527d5779"
+  },
+  "caller_source_freeze": {
+    "path": "LAB_ROOT/dev/route-recovery-v2/dispatcher/SOURCE_FREEZE.json",
+    "sha256": "074e7563753b9d5f4dae6f2ec00ba253fd0d3f9503b47eeeeb1bf35b1f09a70d"
+  },
+  "source_freeze": {
+    "path": "LAB_ROOT/dev/route-recovery-v2/FREEZE.json",
+    "sha256": "523cb6cc77df53d98045394cec894da6f0bffa313de613d4fe5f70d694bd8084"
+  },
+  "route_acceptance": {
+    "path": "LAB_ROOT/evaluation/resume-execution-v1/route-native-acceptance-bound-execution.json",
+    "sha256": "59b08282df39fe1c86e21eea06d1197a17f3ea30ef13b1569d6c34a31347a18c"
+  },
+  "execution_acceptance": {
+    "path": "LAB_ROOT/evaluation/recovery-route-v1/execution-v2-source-acceptance.json",
+    "sha256": "9702cfd12df7ad290f19dcae6e8134ec77b2fd45f7fff293746a483c1d22c8a7"
+  },
+  "caller_acceptance": {
+    "path": "LAB_ROOT/evaluation/recovery-route-v1/caller-v2-source-acceptance.json",
+    "sha256": "04cc0c7cad1ef7a41780ab236a6075959787214be8742d76ab24e69467ee76c3"
+  },
+  "authorization": {
+    "path": "LAB_ROOT/AUTHORIZATION.json",
+    "sha256": "25609fc787d622958fd62afa5df218a1e4789f61595a4152865ceb0c143304f2"
+  },
+  "authority_amendment": {
+    "path": "LAB_ROOT/ops/recovery-v1/AUTHORITY_AMENDMENT.json",
+    "sha256": "1479c0b44869d13878b90ccd2f02d5fb2d755cfa0f0b17315105dc48d57616ec"
+  },
+  "caller_version": "caller-repair2",
+  "purpose": "Eight entirelyunborn frozenZintegratedpipelines acrossBIO/NBconditions+batching; previous rejectedcheckpairattempts preserved; queue-onlyMusehostrepair independentlyreviewed",
+  "campaign_start_epoch": 1790905209,
+  "campaign_deadline_epoch": 1791013030.8303788,
+  "predecessor_failed_attempt_preserved": true,
+  "outside_native_cap_seconds": 300,
+  "launch_authority": "Jared explicitcontinuedexecution; rootsupervisor exact firstpair release afterindependentv3nativeproof/hostsource review. No routineuserapproval required.",
+  "usage": "UNKNOWN",
+  "controller_acceptance": {
+    "path": "LAB_ROOT/evaluation/resume-execution-v1/controller-v2-queue-source-acceptance.json",
+    "sha256": "32473fd00aa9f1b83c37b61bc37e5b8c3df983a642e07603ec70e8e3a42cd72d"
+  },
+  "released_utc": "2026-10-02T22:50:25.726826+00:00",
+  "case_queue": [
+    "V8-BIO-RETR-C-M",
+    "V8-BIO-RETR-T-M",
+    "V8-BIO-AMEND-C-L",
+    "V8-BIO-AMEND-T-L",
+    "V8-BIO-BREADTH-C-M",
+    "V8-BIO-BREADTH-T-M",
+    "V8-NB-RETR-C-M",
+    "V8-NB-RETR-T-M",
+    "V8-NB-AMEND-C-L",
+    "V8-NB-AMEND-T-L",
+    "V8-NB-BREADTH-C-M",
+    "V8-NB-BREADTH-T-M"
+  ],
+  "canary_review": {
+    "path": "LAB_ROOT/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json",
+    "sha256": "aba3336e6475d1eb50e00b66c3804e2747d7fef38be764ec53379614cfb68fc7"
+  },
+  "planning_input_sha256": {
+    "LAB_ROOT/dev/route-recovery-v2/INPUT_MAP.json": "8015a3f0c21120cfef990d22b32b9d363fd8ac81c6f4ca212c4aac6017414233",
+    "LAB_ROOT/dev/route-recovery-v2/OBJECTIVES.json": "f80217252bc73b00a7050d2a8e49d61cf63ac4d810366900fe49b32d31fca116",
+    "LAB_ROOT/cases/planning-v1/cases/V8-NB-C-Z/manifest.json": "feabe7e17c01d50d74c5431ace0dcb41de0e409ac1ab7ede6489c4f0c0a37a81",
+    "LAB_ROOT/cases/planning-v1/briefs/notebook-workspace.md": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+    "LAB_ROOT/cases/planning-v1/sandbox-plans/notebook-workspace.md": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+    "LAB_ROOT/cases/planning-v1/source-access.json": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df",
+    "LAB_ROOT/cases/planning-v1/cases/V8-NB-C-Z/METHOD.md": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+    "LAB_ROOT/cases/planning-v1/cases/V8-NB-C-Z/TASK.md": "d9816fe920d7e06953d52572466f681d8d74d9fb494d03a6d62219269de36428",
+    "LAB_ROOT/cases/planning-v1/templates/research.TASK.md": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3",
+    "LAB_ROOT/cases/planning-v1/templates/critic.TASK.md": "fa635038ca75a96599f09d43eb289b89c25320eda9325fd836c6fef2878504b2",
+    "LAB_ROOT/cases/planning-v1/templates/correction.TASK.md": "9ef5b51a9b2e9db734e492f6be2978f277ec8ee7f456b310c1f793375f1997d5",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-WIT-T-Z/manifest.json": "fd9d96ce1d9be01f3a88791a62e9d16fd504aa1090d625bf3af8b0361d13b064",
+    "LAB_ROOT/cases/tranche-v2/briefs/notebook-workspace.md": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+    "LAB_ROOT/cases/tranche-v2/sandbox-plans/notebook-workspace.md": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+    "LAB_ROOT/cases/tranche-v2/source-access.json": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-WIT-T-Z/METHOD.md": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-WIT-T-Z/TASK.md": "36c6433c67d8762783a58d06806b85d815fe529172ae6c922877feac94b00943",
+    "LAB_ROOT/cases/tranche-v2/templates/research.TASK.md": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3",
+    "LAB_ROOT/cases/tranche-v2/templates/critic.TASK.md": "fa635038ca75a96599f09d43eb289b89c25320eda9325fd836c6fef2878504b2",
+    "LAB_ROOT/cases/tranche-v2/templates/correction.TASK.md": "9ef5b51a9b2e9db734e492f6be2978f277ec8ee7f456b310c1f793375f1997d5",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-COND-C-Z/manifest.json": "ea0b885d4bbcef2bda6d16ab10008aea78303e4e8ca796b60f57800a484be478",
+    "LAB_ROOT/cases/tranche-v2/briefs/bioimaging.md": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+    "LAB_ROOT/cases/tranche-v2/sandbox-plans/bioimaging.md": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-COND-C-Z/METHOD.md": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-COND-C-Z/TASK.md": "40190071b49087a9de939f72803e016ca2768a999d4d6987136ae669e4e0c9df",
+    "LAB_ROOT/cases/planning-v1/cases/V8-BIO-P-Z/manifest.json": "4642c8d7ebb2b925f3a2256db79c73070549a451ad2bc4235df1862a0c6cba0b",
+    "LAB_ROOT/cases/planning-v1/briefs/bioimaging.md": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+    "LAB_ROOT/cases/planning-v1/sandbox-plans/bioimaging.md": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30",
+    "LAB_ROOT/cases/planning-v1/cases/V8-BIO-P-Z/METHOD.md": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a",
+    "LAB_ROOT/cases/planning-v1/cases/V8-BIO-P-Z/TASK.md": "4c8c7e7e083d4788e4d5e7db27e3e8841c5073d51e46ae3b937a88dab4a6636f",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-COND-C-Z/manifest.json": "c77ec419aa9c2879fcb5610b68c7d6a49d9fe4de8e9fa32038400f9422f68407",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-COND-C-Z/METHOD.md": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-COND-C-Z/TASK.md": "b391ac44c5edf3462ea380144de3ecf8ce0e475dc1c99cd8dfe04eac8d1fe5a0",
+    "LAB_ROOT/cases/planning-v1/cases/V8-NB-P-Z/manifest.json": "081d67be0ab11b321add5f13ff70418833937c897873b2f7c2560131f362ba7c",
+    "LAB_ROOT/cases/planning-v1/cases/V8-NB-P-Z/METHOD.md": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a",
+    "LAB_ROOT/cases/planning-v1/cases/V8-NB-P-Z/TASK.md": "af2b57df7cbf964103c9c91b2396f34c1d924179de064c8ea9c2ff023e4a473e",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-BATCH-C-Z/manifest.json": "96640dea4593af1319bdda14a47cde5c0f1973780e26703e86983d03171bb17b",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-BATCH-C-Z/METHOD.md": "222ad8739878a9dfc93d6e3ee533596ea2cd2f4cac673870c6c285c18dd2570c",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-BATCH-C-Z/TASK.md": "b3109ea8dc06c27c99b3e1a4f1d3f2ff8c909aad7080ac7c900196556e9b5d18",
+    "LAB_ROOT/cases/planning-v1/cases/V8-BIO-B-Z/manifest.json": "bacf9033fa8af87aef92fb6c6ff4128135fab2159632a395c286b2a9425c74b7",
+    "LAB_ROOT/cases/planning-v1/cases/V8-BIO-B-Z/METHOD.md": "f6df08a280a4db79323bd96c9d816c34aee66a02e3f155602407f1290c599f5c",
+    "LAB_ROOT/cases/planning-v1/cases/V8-BIO-B-Z/TASK.md": "cb0f443bfa9daee35e3d30f6e7dfa27be5a1933a8097ef5b77175bffc2dcd551",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-BATCH-C-Z/manifest.json": "1289009d5f8b46e99c6a1e0a52fa575d7e5077a7cf5e9d3a219f0da62c7b2e11",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-BATCH-C-Z/METHOD.md": "222ad8739878a9dfc93d6e3ee533596ea2cd2f4cac673870c6c285c18dd2570c",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-BATCH-C-Z/TASK.md": "95f2e189af32dbd55661c4b2ec907aa1bddfc280a4d699e19da4571d0b3a6361",
+    "LAB_ROOT/cases/planning-v1/cases/V8-NB-B-Z/manifest.json": "8b4268c2b11ccccae378713bfa8c87ddea7bc03ee1e50c236ccd269b7bc50485",
+    "LAB_ROOT/cases/planning-v1/cases/V8-NB-B-Z/METHOD.md": "f6df08a280a4db79323bd96c9d816c34aee66a02e3f155602407f1290c599f5c",
+    "LAB_ROOT/cases/planning-v1/cases/V8-NB-B-Z/TASK.md": "3637535202f4e89c20924ce2938ca17d5761c5ebec07bf6c4c23fe23fb6ab822",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-RETR-C-M/manifest.json": "501c315b40001594d2792fba19cf5a3556ddd6d4dd475b41e3caf6a9091c899a",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-RETR-C-M/METHOD.md": "6b617504d3749407e1a80d876bdce0c1117668326e6131a582e730c50b106d0a",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-RETR-C-M/TASK.md": "84df3345e83ec86b641c49c8513e40fcc7542df6a7b2bb28c80089934ece4a50",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-RETR-T-M/manifest.json": "a5acd7dec272711a28fafd52188ea2e30a9a87042fffa3c0dca6d1c136f4affb",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-RETR-T-M/METHOD.md": "700f321706f86f2eb5e9debe5cabdef89e2433b24ca272eb0d13faee400221cf",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-RETR-T-M/TASK.md": "7f5dc6007172d24cde9b2801c6cc35cccfb97e3c0321d047778fc35ea48d205b",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-AMEND-C-L/manifest.json": "b54829bf3d92a7b92d060843da9034ab7a4a8e8fadaf3fe59a642e7d7ed7a0b9",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-AMEND-C-L/METHOD.md": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-AMEND-C-L/TASK.md": "8ead252b9092443bbeb162d4a1290f8bfcd823fc9355715ab36767eadb4caa87",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-AMEND-T-L/manifest.json": "e54800eff5ca692e80af2945e73f212be799edac12ed5274d856257b826489b8",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-AMEND-T-L/METHOD.md": "cb187544119249fdeef595b43cce64fd0f858e0cf1243264cf4bb7d59fad39b8",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-AMEND-T-L/TASK.md": "228a058ce9d4bd4562d4feb9b0150987967d090aae43460c0a7ed00c542b70d4",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-BREADTH-C-M/manifest.json": "cb62ebc615a5203aa3796e9d3512091543425caabc7c59af2bf7254ef3819517",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-BREADTH-C-M/METHOD.md": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-BREADTH-C-M/TASK.md": "5a4da402edfebfaf851ac1ad33b7675e67fa150cd76abbbee69ef6b2ca242dfd",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-BREADTH-T-M/manifest.json": "e39d01106deca215e6b8c55eb8827c58b4d86924f5bcab258c8226e5c58d9788",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-BREADTH-T-M/METHOD.md": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-BREADTH-T-M/TASK.md": "e7016fa9f5674e07d9e2fb67c615bdd6d91ada443f92a7655febaf878a773f39",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-RETR-C-M/manifest.json": "b34d15f40fc860db4e4aaf93157f3551ca691da9d91e9f690036d9d41bea02ef",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-RETR-C-M/METHOD.md": "6b617504d3749407e1a80d876bdce0c1117668326e6131a582e730c50b106d0a",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-RETR-C-M/TASK.md": "dd7bfc4f79f4178b8363420cfed925424f0e8f63f36596b705834b4ad58a6b9c",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-RETR-T-M/manifest.json": "74e0513916f5c2ffec7900b94fb215e85c9a88aab65fe0738f7a4b2b8b7114b8",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-RETR-T-M/METHOD.md": "700f321706f86f2eb5e9debe5cabdef89e2433b24ca272eb0d13faee400221cf",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-RETR-T-M/TASK.md": "3e8880be6ef929c150e0465a9e0c3c23a4c4397ba2b8de3b59744b95a8371164",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-AMEND-C-L/manifest.json": "0949167d3c6bd00337755388ee3f8e40d13d297dc47a8a00d020238b7fc28b8f",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-AMEND-C-L/METHOD.md": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-AMEND-C-L/TASK.md": "6c06bcb8c9e09eb644e43360f152ef66f29264342e2a40d8ec6ae84abc0dfb8b",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-AMEND-T-L/manifest.json": "df929e7ee6c8c87106108b99fdfd8bcd93c8b00f4a517424d3c58912f16a7a26",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-AMEND-T-L/METHOD.md": "cb187544119249fdeef595b43cce64fd0f858e0cf1243264cf4bb7d59fad39b8",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-AMEND-T-L/TASK.md": "9ac6c99c891f09084ea43ea0677359acf59170ced55497bf9548bb9949639f22",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-BREADTH-C-M/manifest.json": "73be13b284303ca52cf42e5bfc2f6557ae78fa8326a7ae30e3ef4e2a651bdeaf",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-BREADTH-C-M/METHOD.md": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-BREADTH-C-M/TASK.md": "1e8f4f31f437a20e112873c1e16cb38c8b741b80720fa32d08027a8483c4221e",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-BREADTH-T-M/manifest.json": "7750c4f83a3204370f42e1ff5c0eb087b44e442d5611bed9a95679fb947c91e4",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-BREADTH-T-M/METHOD.md": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-BREADTH-T-M/TASK.md": "db62de752e6ec2e099ac735cd30212f80bab7a1ce41093f8c09bf74212dfbaa2"
+  },
+  "production_entry": "LAB_ROOT/dev/resume-execution-v2/integrated-controller/rolling.py",
+  "resume_authority": {
+    "path": "LAB_ROOT/ops/recovery-v1/RESUME_20261002.json",
+    "sha256": "9fc1c92a3b6074610b3b4026bd4d7500e0f0a135b506863965e2919fb640c02f"
+  },
+  "resume_ledger": {
+    "path": "LAB_ROOT/ops/recovery-v1/ledger_resume.py",
+    "sha256": "a98cf53c1826f1f4c9fa47a9e181eaae8beb971ea41e6564578a253059450b61"
+  },
+  "operator_root": "LAB_ROOT/ops/execution-resume-v1",
+  "capture_binding": {
+    "path": "LAB_ROOT/dev/route-recovery-v2/source-capture-v1/binding.json",
+    "sha256": "8dea681e5a43fa54cec4a8ae76e37fcd9c6db878e73576ef5611e76e0313ff99"
+  },
+  "operator_monitor_acceptance": {
+    "path": "LAB_ROOT/evaluation/resume-execution-v1/operator-monitor-source-acceptance.json",
+    "sha256": "987bc81a8d2b43eb5b3b33a9d22b071cfa7c1a8773ba1b5d181ef5ed5a4ef0f2"
+  },
+  "operator_monitor": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/quiet_production_monitor.py",
+    "sha256": "44c3671a2f51d02e412ac5d0df1e719098a80a755ae192a4a07c7fae1d5ae042"
+  },
+  "failure_cleanup_authority": "Known held parent/actor groups absent plus own positively enrolled native/MCP cgroup quiet permits currenttime failurelease release; keep failedcosts and unknownclaims; no backdating",
+  "predecessor_release": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/root-production-release-v3.json",
+    "sha256": "2f1a432bff900fe0846d04391af17511e02f066fcaebcaac5a8053cc301cb545"
+  },
+  "pair_bindings": {
+    "V8-BIO-RETR": {
+      "path": "LAB_ROOT/ops/execution-resume-v1/pair-bindings-v1/V8-BIO-RETR.json",
+      "sha256": "f319e7166b90e35d449b1d384d756cf1ee330eb9085a14d06b93b162972fff18"
+    },
+    "V8-BIO-AMEND": {
+      "path": "LAB_ROOT/ops/execution-resume-v1/pair-bindings-v1/V8-BIO-AMEND.json",
+      "sha256": "2233343b885ab3222850dd0a70c898b4b833c7547882dbadb9764cf3ac3e6a38"
+    },
+    "V8-BIO-BREADTH": {
+      "path": "LAB_ROOT/ops/execution-resume-v1/pair-bindings-v1/V8-BIO-BREADTH.json",
+      "sha256": "7a31d262e0e8f34ca3b4ab24af06e3f1fedc2559327495a95678ca1abbd71636"
+    },
+    "V8-NB-RETR": {
+      "path": "LAB_ROOT/ops/execution-resume-v1/pair-bindings-v1/V8-NB-RETR.json",
+      "sha256": "9c12d8055d310cf10acd5ba2b7a2d2bac5faaa7593d6e4f6e1c4cc35e5df5874"
+    },
+    "V8-NB-AMEND": {
+      "path": "LAB_ROOT/ops/execution-resume-v1/pair-bindings-v1/V8-NB-AMEND.json",
+      "sha256": "0884937953a3dc074f69013c21ffbc1ab8d4aa2f9e07c01633dd86adf9be08ae"
+    },
+    "V8-NB-BREADTH": {
+      "path": "LAB_ROOT/ops/execution-resume-v1/pair-bindings-v1/V8-NB-BREADTH.json",
+      "sha256": "3046ea12c72fbbb1df56428ccf330a06308aae9520d4ab30c8c74eaa4808c871"
+    }
+  }
+}

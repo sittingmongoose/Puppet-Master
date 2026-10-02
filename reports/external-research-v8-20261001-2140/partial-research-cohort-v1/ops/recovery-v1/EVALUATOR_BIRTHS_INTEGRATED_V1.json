@@ -1,0 +1,11 @@
+{
+  "root_authority": true,
+  "observed_root_before_all_preparation_epoch": 1790982209,
+  "basis": "2026-10-02T23:03:29Z root clock receipt precedes all evaluator spawns/preparation. Conservative full2400 bound, actual spawn timestamps UNKNOWN; no reset.",
+  "hard_deadline_epoch": 1790984609,
+  "case_helpers": [
+    "er8-eval-bio-cond-v1",
+    "er8-eval-bio-p-v1"
+  ],
+  "current_active_helpers": 3
+}

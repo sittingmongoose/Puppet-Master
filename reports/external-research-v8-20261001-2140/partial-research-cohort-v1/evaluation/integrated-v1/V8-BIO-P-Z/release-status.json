@@ -1,0 +1,39 @@
+{
+  "checked_utc": "2026-10-02T23:43:31.738551+00:00",
+  "remaining_seconds": -2.7,
+  "case_receipts": {
+    "CASE_COMPLETE.json": {
+      "present": false
+    },
+    "EXTERNAL_CASE_CLOSE.json": {
+      "present": false
+    }
+  },
+  "stages": {
+    "V8-BIO-P-Z-independent-candidate-critic": {
+      "COMPLETE.json": {
+        "present": false
+      },
+      "PUBLIC_ARTIFACT_FREEZE.json": {
+        "present": false
+      },
+      "EXTERNAL_SETTLEMENT.json": {
+        "present": false
+      }
+    },
+    "V8-BIO-P-Z-research-proposal": {
+      "COMPLETE.json": {
+        "present": true,
+        "sha256": "ed7e6e7bd2d0fa0024056358d6660809ed74b1b39e3a983e5c51d4543ffb9cef"
+      },
+      "PUBLIC_ARTIFACT_FREEZE.json": {
+        "present": true,
+        "sha256": "3c5e3ddc984c31b6b15bf781fd7922cc08e0aa1c7cd59a325252cbb7f75c6480"
+      },
+      "EXTERNAL_SETTLEMENT.json": {
+        "present": true,
+        "sha256": "316c7055f3cc8b359cebfe253e55ca6e64ccea1db8d30d762a9ddeb2355a162c"
+      }
+    }
+  }
+}

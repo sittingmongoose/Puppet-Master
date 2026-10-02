@@ -1,0 +1,170 @@
+{
+  "schema": "pm.er8.orphan-public-observation.v1",
+  "actual_observed_epoch": 1790984537.4219809,
+  "actual_observed_monotonic_ns": 206283591750842,
+  "read_only_observation": true,
+  "signals_sent": false,
+  "ledger_mutated": false,
+  "scope": "z-tranche-v3 two independent critics only",
+  "rolling_launch": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/z-tranche-v3-rolling-parent-positive.launch.json",
+    "sha256": "13ec84c463d288e74caf19aeb6e3a9e7522fe2a834842e5973ce9854565e7f9e"
+  },
+  "rolling_group": {
+    "pgid": 1804488,
+    "observed_absent": true,
+    "probe": "killpg(signal=0):ESRCH"
+  },
+  "rolling_held_exit": "UNKNOWN",
+  "native_on_time_quiescence": "UNKNOWN",
+  "historical_exit_codes": "UNKNOWN",
+  "no_backdating": true,
+  "quality_credit": "NONE",
+  "recommendation": "Root may conservatively close the owned orphan attempts using actual current positive ownership/quiescence observation; preserve exit codes UNKNOWN, full failed-attempt cost, original birth/deadline, and incomplete outcome. Frozen monitor cannot synthesize missing held-Popen receipts. No cleanup signal needed because exact groups are currently absent. No lease or ledger release performed by this observer.",
+  "jobs": [
+    {
+      "job": "V8-BIO-COND-C-Z-independent-candidate-critic",
+      "public_receipt_evidence": [
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-independent-candidate-critic/BIRTH.json",
+          "sha256": "c703a613ba9354ea9569c30afbb2f241f7cae3ba3514995aed7cf3dbe6f68a23"
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-independent-candidate-critic/LAUNCHED.json",
+          "sha256": "1ba9fe91dd05a7b54b942b2ace1f901b1495f99354250b53f641ed0bb5bede3b"
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-independent-candidate-critic/LEASE.json",
+          "sha256": "a33be92c42f2b96da37e8d4ee0ef6dd96fc8e9e78574c3a9fa29f3790da6686f"
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-independent-candidate-critic/PLAN.json",
+          "sha256": "ad13e151f5e7cc13edd314bb22b8166fe361e32872873737c32ddf6008a098a7"
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/V8-BIO-COND-C-Z-independent-candidate-critic/PLAN.enrollment.json",
+          "sha256": "1e8b39e479a020a06688218b8dffbefba75a12e9677b287bb8242224c25a68c9"
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/HOST_LAUNCHES/V8-BIO-COND-C-Z/CASE_LAUNCHED.json",
+          "sha256": "4d7c3538be2b0abc59a27248a6c520f051d88e8c0338f3b3a24be8d87a059499"
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-COND-C-Z/HOST_LAUNCHES/V8-BIO-COND-C-Z-independent-candidate-critic/STAGE_LAUNCHED.json",
+          "sha256": "4f9a1afe3097ed002016c6f59b88aa6d47a11aa27371468ef6b5f0ad94573e80"
+        }
+      ],
+      "original_stage_start_monotonic_ns": 203955553420469,
+      "original_stage_deadline_monotonic_ns": 204555553420469,
+      "deadline_already_elapsed_at_observation": true,
+      "case_group": {
+        "pgid": 1804490,
+        "observed_absent": true,
+        "probe": "killpg(signal=0):ESRCH"
+      },
+      "stage_group": {
+        "pgid": 1841513,
+        "observed_absent": true,
+        "probe": "killpg(signal=0):ESRCH"
+      },
+      "case_proc_currently_absent": true,
+      "stage_proc_currently_absent": true,
+      "enrolled_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-cond-c-z-independent-candidate-critic.service",
+      "enrolled_cgroup_currently_removed": true,
+      "systemctl_show": {
+        "returncode": 0,
+        "properties": {
+          "MainPID": "0",
+          "Result": "success",
+          "ExecMainCode": "0",
+          "ExecMainStatus": "0",
+          "ControlGroup": "",
+          "LoadState": "not-found",
+          "ActiveState": "inactive",
+          "SubState": "dead"
+        },
+        "stderr": ""
+      },
+      "case_held_wait_present": false,
+      "stage_held_wait_present": false,
+      "native_quiescence_receipt_present": false,
+      "ownership_binding_valid": true,
+      "currently_enrolled_native_mcp_quiet": true,
+      "held_exit_code": "UNKNOWN",
+      "native_on_time_quiescence": "UNKNOWN",
+      "frozen_monitor_reconciliation": "BLOCKED_MISSING_CASE_AND_STAGE_HELD_WAIT_AND_ROLLING_HELD_EXIT"
+    },
+    {
+      "job": "V8-BIO-P-Z-independent-candidate-critic",
+      "public_receipt_evidence": [
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-independent-candidate-critic/BIRTH.json",
+          "sha256": "b7785641478820cfde5a5a082df37b12d7d7f0066629b7e4809f1ad7cd586a51"
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-independent-candidate-critic/LAUNCHED.json",
+          "sha256": "3a2115dc15090b29b50f33eb93a42e9de6c90629e154e51458e7333514e4cfb6"
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-independent-candidate-critic/LEASE.json",
+          "sha256": "df3e4aceed0f638850b817e47a62da0017838e0bba02d35912e946833ae07cc6"
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-independent-candidate-critic/PLAN.json",
+          "sha256": "40eb7015433040ff804b7b16e5766a034b606bd640992455b62ab8c23a7f15f6"
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-independent-candidate-critic/PLAN.enrollment.json",
+          "sha256": "1bc9c221d8956727d920aeb12c08b3053bc2342529c0e9d1088bc463da3dd6d4"
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/HOST_LAUNCHES/V8-BIO-P-Z/CASE_LAUNCHED.json",
+          "sha256": "5a9bdea5a1a99df3fa22bb0f9f4f74ec609af87038ec37f31949f4288bb6def8"
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/HOST_LAUNCHES/V8-BIO-P-Z-independent-candidate-critic/STAGE_LAUNCHED.json",
+          "sha256": "1e5a3e740d4a4d3baa5d5add64816bb8d06340060682d8a063c40b66ea0dea3e"
+        }
+      ],
+      "original_stage_start_monotonic_ns": 203976981519716,
+      "original_stage_deadline_monotonic_ns": 204576981519716,
+      "deadline_already_elapsed_at_observation": true,
+      "case_group": {
+        "pgid": 1804492,
+        "observed_absent": true,
+        "probe": "killpg(signal=0):ESRCH"
+      },
+      "stage_group": {
+        "pgid": 1847425,
+        "observed_absent": true,
+        "probe": "killpg(signal=0):ESRCH"
+      },
+      "case_proc_currently_absent": true,
+      "stage_proc_currently_absent": true,
+      "enrolled_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-p-z-independent-candidate-critic.service",
+      "enrolled_cgroup_currently_removed": true,
+      "systemctl_show": {
+        "returncode": 0,
+        "properties": {
+          "MainPID": "0",
+          "Result": "success",
+          "ExecMainCode": "0",
+          "ExecMainStatus": "0",
+          "ControlGroup": "",
+          "LoadState": "not-found",
+          "ActiveState": "inactive",
+          "SubState": "dead"
+        },
+        "stderr": ""
+      },
+      "case_held_wait_present": false,
+      "stage_held_wait_present": false,
+      "native_quiescence_receipt_present": false,
+      "ownership_binding_valid": true,
+      "currently_enrolled_native_mcp_quiet": true,
+      "held_exit_code": "UNKNOWN",
+      "native_on_time_quiescence": "UNKNOWN",
+      "frozen_monitor_reconciliation": "BLOCKED_MISSING_CASE_AND_STAGE_HELD_WAIT_AND_ROLLING_HELD_EXIT"
+    }
+  ]
+}

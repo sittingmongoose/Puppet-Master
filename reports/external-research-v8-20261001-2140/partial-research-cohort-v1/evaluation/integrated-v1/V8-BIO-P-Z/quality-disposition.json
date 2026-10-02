@@ -1,0 +1,124 @@
+{
+  "schema": "er8.independent.quality-disposition.v1",
+  "case_id": "V8-BIO-P-Z",
+  "evaluator": "codex-er8-bio-p-eval",
+  "quality_disposition": "HOLD",
+  "completion_class": "INCOMPLETE",
+  "phase": "TERMINAL",
+  "assessment_scope": "Full assigned scope; no partial PASS or winner",
+  "case_operational_completion": "INCOMPLETE / positive case completion NOT_VERIFIED",
+  "reason": "Whole-case completion and final artifact freeze prerequisites absent. Root instructed terminal HOLD after independent quiet confirmation; process quiet does not establish on-time critic completion or any quality credit.",
+  "clock": {
+    "conservative_start_epoch": 1790982209,
+    "hard_deadline_epoch": 1790984609,
+    "budget_seconds": 2400,
+    "includes_waiting": true,
+    "actual_start": "UNKNOWN",
+    "tokens": "UNKNOWN",
+    "money": "UNKNOWN",
+    "conservative_elapsed_seconds_at_finalization": 2402.74
+  },
+  "coverage": [
+    {
+      "facet": "Entire FINAL_PROPOSAL.md",
+      "status": "UNASSESSED",
+      "reason": "Frozen full-case release prerequisite absent."
+    },
+    {
+      "facet": "Entire exported UNRESOLVED_LEADS.md",
+      "status": "UNASSESSED",
+      "reason": "Frozen full-case release prerequisite absent."
+    },
+    {
+      "facet": "All assigned questions",
+      "status": "UNASSESSED",
+      "reason": "Frozen full-case release prerequisite absent."
+    },
+    {
+      "facet": "Five obligations",
+      "status": "UNASSESSED",
+      "reason": "Frozen full-case release prerequisite absent."
+    },
+    {
+      "facet": "Every consequential research/source claim",
+      "status": "UNASSESSED",
+      "reason": "Frozen full-case release prerequisite absent."
+    },
+    {
+      "facet": "Two implementation comparisons",
+      "status": "UNASSESSED",
+      "reason": "Frozen full-case release prerequisite absent."
+    },
+    {
+      "facet": "Relevant issue -> fix -> test evidence",
+      "status": "UNASSESSED",
+      "reason": "Frozen full-case release prerequisite absent."
+    },
+    {
+      "facet": "Initial-versus-final current-artifact preservation",
+      "status": "UNASSESSED",
+      "reason": "Frozen full-case release prerequisite absent."
+    },
+    {
+      "facet": "Calibration and unsupported-claim handling",
+      "status": "UNASSESSED",
+      "reason": "Frozen full-case release prerequisite absent."
+    },
+    {
+      "facet": "Version and date correctness",
+      "status": "UNASSESSED",
+      "reason": "Frozen full-case release prerequisite absent."
+    },
+    {
+      "facet": "Context boundaries",
+      "status": "UNASSESSED",
+      "reason": "Frozen full-case release prerequisite absent."
+    },
+    {
+      "facet": "Normative force",
+      "status": "UNASSESSED",
+      "reason": "Frozen full-case release prerequisite absent."
+    },
+    {
+      "facet": "Actual frozen capture content",
+      "status": "UNASSESSED",
+      "reason": "Frozen full-case release prerequisite absent."
+    },
+    {
+      "facet": "Delivered-range operation receipts and semantic acquisition",
+      "status": "UNASSESSED",
+      "reason": "Frozen full-case release prerequisite absent."
+    },
+    {
+      "facet": "Prospective method duties (METHOD inspected after artifact/source verdict)",
+      "status": "UNASSESSED",
+      "reason": "Frozen full-case release prerequisite absent."
+    }
+  ],
+  "source_checks": {
+    "actual_capture_content_reads": 0,
+    "delivered_range_receipt_reads": 0,
+    "independent_public_fetches": 0,
+    "semantic_acquisition": "UNKNOWN",
+    "successful_GET_is_comprehension": false
+  },
+  "candidate_body_reads": 0,
+  "method_body_read": false,
+  "original_brief_thin_plan_tasks_read": false,
+  "research_contribution": false,
+  "private_scoring_keys_published": false,
+  "decisive_quality_defect": null,
+  "candidate_artifact_hashes": {
+    "FINAL_PROPOSAL.md": "UNKNOWN—unreleased",
+    "final UNRESOLVED_LEADS.md": "UNKNOWN—unreleased"
+  },
+  "limitations": [
+    "No quality claim is supported by this record.",
+    "No candidate or source content was read while the case was active.",
+    "No prospective-method quality verdict was attempted.",
+    "No canon, ledger, Git or candidate changes."
+  ],
+  "written_utc": "2026-10-02T23:42:56.592723+00:00",
+  "finalized_utc": "2026-10-02T23:43:31.738551+00:00",
+  "finalization_authority": "Root instructed finalization after independent ops confirmed critic process/cgroup absence, no final stage, held exit/on-time completion UNKNOWN; metadata-only quality review remains unreleased."
+}

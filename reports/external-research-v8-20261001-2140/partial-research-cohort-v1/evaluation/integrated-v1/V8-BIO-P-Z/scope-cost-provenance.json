@@ -1,0 +1,41 @@
+{
+  "case_id": "V8-BIO-P-Z",
+  "evaluator": "codex-er8-bio-p-eval",
+  "ownership": "LAB_ROOT/evaluation/integrated-v1/V8-BIO-P-Z",
+  "phase": "TERMINAL",
+  "record_created_utc": "2026-10-02T23:38:31.426881+00:00",
+  "original_evaluator_budget_seconds": 2400,
+  "original_clock_start_utc": "UNKNOWN",
+  "original_deadline_utc": "2026-10-02T23:43:29Z",
+  "actual_evaluator_token_usage": "UNKNOWN",
+  "case_release": "POSITIVE_FULL_CASE_RELEASE_NOT_VERIFIED",
+  "quality_disposition": "HOLD",
+  "candidate_body_reads": 0,
+  "scope": [
+    "planning-v1 evaluation scope",
+    "continuing tranche-v2 scoring-only scope",
+    "all questions and five obligations",
+    "all consequential source and research claims",
+    "two implementations and relevant issue-fix-test",
+    "preservation calibration version context normative force",
+    "prospective method duties"
+  ],
+  "restrictions": [
+    "no candidate/native/provider calls",
+    "no active candidate bodies",
+    "no research hints or feedback",
+    "no canon/Git/ledger publication",
+    "no private scoring keys published"
+  ],
+  "limit": "Operational completion is not a quality PASS; no winner.",
+  "conservative_clock_start_epoch": 1790982209,
+  "conservative_clock_start_utc": "2026-10-02T23:03:29Z",
+  "original_deadline_epoch": 1790984609,
+  "actual_spawn_start_utc": "UNKNOWN",
+  "clock_provenance": "LAB_ROOT/ops/recovery-v1/EVALUATOR_BIRTHS_INTEGRATED_V1.json",
+  "actual_evaluator_money_cost": "UNKNOWN",
+  "last_checked_utc": "2026-10-02T23:43:31.738551+00:00",
+  "remaining_seconds_at_check": 130.9,
+  "completion_class": "INCOMPLETE",
+  "finalization_authority": "Root instructed early terminal HOLD after independent ops quiet check; no final stage and on-time completion UNKNOWN."
+}

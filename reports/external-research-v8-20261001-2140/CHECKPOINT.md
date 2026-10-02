@@ -1,5 +1,7 @@
 # Checkpoint
 
+Latest selected observation: 2026-10-02T23:58:39.440382+00:00. Nine native starts; first BIO pair interrupted after research, independently INCOMPLETE/HOLD. Two notebook research Goals active under durable supervision. Whole pipeline/comparison counts remain0/24 and0/12. See [actual output/failure cohort](partial-research-cohort-v1/README.md), which supersedes currentness of the older observations below.
+
 Current selected observation: 2026-10-02T22:58:57.540514+00:00. Five native starts, two active GLM research Goals, 0/24 integrated executions and 0/12 matched comparisons completed. The [running tranche checkpoint](running-tranche-cohort-v1/README.md) supersedes the older observations below. It preserves four host case failures and two separately accounted native Muse helpers. Active occupied time continues after the snapshot.
 
 Earlier published observation follows:

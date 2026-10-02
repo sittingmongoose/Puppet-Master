@@ -1,0 +1,44 @@
+{
+  "immutable_inputs": {
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/TASK.md": "c35c81c39114025a5af0984d5b209cc9112e7c2596c3b25a8612d162bd71b317",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/inputs/METHOD.md": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/inputs/BRIEF.md": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/inputs/TASK.md": "c35c81c39114025a5af0984d5b209cc9112e7c2596c3b25a8612d162bd71b317",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/inputs/THIN_PLAN.md": "9a4a13328e3f3d4af25d13c371b79b918d898cb20fa2ec99e0901a70fe7be98f"
+  },
+  "prompt_sha256": "9696c0a1126d02769031d8a75f26c4a09eb6cad3399e88ec8c3211d343d83058",
+  "normalized_input_receipts": [
+    {
+      "source_path": "LAB_ROOT/cases/planning-v1/briefs/bioimaging.md",
+      "source_sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+      "target_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/inputs/BRIEF.md",
+      "target_sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+      "path_delta": "none"
+    },
+    {
+      "source_path": "LAB_ROOT/cases/planning-v1/sandbox-plans/bioimaging.md",
+      "source_sha256": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30",
+      "target_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/inputs/THIN_PLAN.md",
+      "target_sha256": "9a4a13328e3f3d4af25d13c371b79b918d898cb20fa2ec99e0901a70fe7be98f",
+      "path_delta": "input/ -> inputs/"
+    },
+    {
+      "source_path": "LAB_ROOT/cases/planning-v1/cases/V8-BIO-P-Z/METHOD.md",
+      "source_sha256": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a",
+      "target_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/inputs/METHOD.md",
+      "target_sha256": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a",
+      "path_delta": "none"
+    },
+    {
+      "source_path": "LAB_ROOT/cases/planning-v1/templates/research.TASK.md",
+      "source_sha256": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3",
+      "target_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v3/V8-BIO-P-Z/V8-BIO-P-Z-research-proposal/workspace/inputs/TASK.md",
+      "target_sha256": "c35c81c39114025a5af0984d5b209cc9112e7c2596c3b25a8612d162bd71b317",
+      "path_delta": "input/ -> inputs/"
+    }
+  ],
+  "normalization_authority": "root prospective input/ to inputs/ path-only authorization",
+  "case_start_monotonic_ns": 203187923811630,
+  "stage_start_monotonic_ns": 203187923811630,
+  "pack_complete_monotonic_ns": 203189702877039
+}
