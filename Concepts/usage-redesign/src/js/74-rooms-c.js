@@ -47,10 +47,11 @@
     var peakAt = F.clock(x[pk]);
     var list = D.attempts(), raised = list.filter(function (a) { return a.anomaly_score >= 50; }).length;
     return { chart: 'line', spec: { x: x, unit: 'count', unitTitle: 'SCORE', yMin: 0, yMax: 100, series: [{ name: 'Anomaly score', idx: 2, values: A.values }, { name: '24-hour norm', idx: 7, values: B.values, role: 'baseline' }],
-      limits: [{ value: A.raise, label: 'Raise at ' + A.raise, role: 'warn' }], notes: 'The ' + peakAt + ' spike is vision-helper traffic.' },
+      limits: [{ value: A.raise, label: 'Raise at ' + A.raise, role: 'warn' }], notes: 'The ' + peakAt + ' spike is vision-helper traffic.',
+      /* the spike is named on the line itself, at its hour (it was a box in the head's corner, far from the spike) */
+      callout: { i: pk, title: peakAt + ' spike', sub: 'vision-helper traffic · ' + C.legName('gemini'), tone: 'warn' } },
       headline: { value: Math.max.apply(null, A.values), fmt: 'int', label: 'peak score · ' + peakAt }, spark: { values: A.values, idx: 2 },
       hero: true, heroTone: Math.max.apply(null, A.values) >= A.raise ? 'warn' : null, heroSub: 'raises at ' + b(A.raise) + ' · ' + b(raised) + (raised === 1 ? ' attempt raised · ' : ' attempts raised · ') + '24-hour norm ' + b('normal'),
-      heroNote: '<b>' + esc(peakAt) + ' spike</b><span>vision-helper traffic · ' + esc(C.legName('gemini')) + '</span>',
       facts: [['Selected', String(list.length)], ['Raised', String(raised)], ['Current', '+18 pts vs norm'], ['Peak', peakAt], ['Cause', 'vision calls'], ['Baseline', 'normal']],
       note: 'The spike is limited to vision-helper traffic. Scores belong to timestamped identity-bound attempt fixtures.' };
   } });
@@ -259,9 +260,13 @@
        from its line (scaleY, 260 SETTLE) and the hero number takes the light */
     FB.beat('attention', function (b) {
       var an = C.beatCard(b, 'anom'); if (!an) return;
-      var note = an.querySelector('.pmu-heronote'), f = PMU.motion.family ? PMU.motion.family() : 'basic';
-      if (note) PMU.motion.animate(note, [{ transform: 'scaleY(.02)', opacity: 0 }, { opacity: 1, offset: 0.3 }, { transform: 'scaleY(1)', opacity: 1 }],
-        { dur: 260, delay: C.beatAt(b, an, 1000), easing: f === 'retro' || f === 'nier' ? 'steps(3,jump-start)' : FB.E.settle, fill: 'backwards' });
+      /* the spike's ring swells on the point, then its label unfolds from the leader (scaleX from the point's side) */
+      var note = an.querySelector('.pmu-callout') || an.querySelector('.pmu-heronote'), ring = an.querySelector('.pmu-callring'), f = PMU.motion.family ? PMU.motion.family() : 'basic';
+      var stp = f === 'retro' || f === 'nier';
+      if (ring) PMU.motion.animate(ring, [{ transform: 'scale(.2)', opacity: 0 }, { transform: 'scale(1.35)', opacity: 1, offset: 0.55 }, { transform: 'scale(1)', opacity: 1 }],
+        { dur: 420, delay: C.beatAt(b, an, 900), easing: stp ? 'steps(3,jump-start)' : FB.E.out, fill: 'backwards' });
+      if (note) PMU.motion.animate(note, [{ transform: 'scaleX(.04)', opacity: 0 }, { opacity: 1, offset: 0.35 }, { transform: 'scaleX(1)', opacity: 1 }],
+        { dur: 320, delay: C.beatAt(b, an, 1080), easing: stp ? 'steps(3,jump-start)' : FB.E.settle, fill: 'backwards' });
       C.sweepHero(b, an, 1150);
       C.byPos(C.beatCards(b, function (c) { return c.getAttribute('data-kind') === 'alert' && c.querySelector('.pmu-alerttop[data-tone="warn"]'); }))
         .forEach(function (c, i) { FB.flash(c.querySelector('.pmu-alerttop') || c, { tone: 'warn', delay: C.beatAt(b, an, 1400 + 90 * i), noSweep: true }); });

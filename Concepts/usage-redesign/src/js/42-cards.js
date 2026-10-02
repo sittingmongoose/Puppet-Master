@@ -105,10 +105,12 @@
     if (!cls || !cls.pitchX) return sub;
     var cardW = (+card.dataset.w || 0) * cls.pitchX - 8;
     var key = card.querySelector('.pmu-cardkey:not([hidden])') ? 34 : 0;
-    var wide = document.documentElement.getAttribute('data-o55-nier') === 'on' || /^retro/.test(document.documentElement.getAttribute('data-theme') || '');
+    var nier = document.documentElement.getAttribute('data-o55-nier') === 'on';
+    var wide = nier || /^retro/.test(document.documentElement.getAttribute('data-theme') || '');
     var k = wide ? 1.22 : 1.08;
     var aside = asideText ? Math.min(cardW * 0.46, PMU.charts.textW(String(asideText), 12.5, false, 500) * k) + 10 : 0;
-    var avail = cardW - 28 - key - aside - 4;
+    /* NieR's plate ticks keep 34 px at the subtitle's right (90-nier-shell.css) */
+    var avail = cardW - 28 - key - aside - 4 - (nier ? 34 : 0);
     var parts = sub.split(' · '), out = sub;
     while (parts.length > 1 && PMU.charts.textW(out, 12, false, 400) * k > avail) { parts.pop(); out = parts.join(' · '); }
     return out;

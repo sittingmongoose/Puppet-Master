@@ -253,6 +253,8 @@
     if (!compact) {
       if (m.token) {
         if (split) TK_ORDER.forEach(function (tk) { if (m.byTk[tk] && include(tk)) items.push({ key: tk, name: TK_NAMES[tk], tk: tk }); });
+        /* one token series (the savings trend's cache reads) keeps its own name and colour */
+        else if (m.series.length === 1) items.push({ key: 'all', name: m.series[0].name, qual: spec.cost ? t('charts.left_axis') : '', tk: m.series[0]._tk });
         else items.push({ key: 'all', name: cacheReads ? t('charts.all_tokens') : t('charts.tokens_wo_cache'), qual: spec.cost ? t('charts.left_axis') : '', tk: 'all' });
         if (ov) items.push(Object.assign({ key: 'cost', name: ov.name, qual: ovQual, swatch: 'line' }, ov.key));
       } else {
@@ -351,13 +353,14 @@
       var gTot = P.gTot = S('g', { class: 'pmu-g-total' }, f.plot);
       var gBands = P.gBands = S('g', { class: 'pmu-g-bands' }, f.plot);
       if (m.token) {
-        P.total = S('path', { class: 'pmu-mark', 'data-mark': 'area', 'data-tk': 'all', 'data-key': 'all' }, gTot);
+        var totTk = m.series.length === 1 ? m.series[0]._tk : 'all';
+        P.total = S('path', { class: 'pmu-mark', 'data-mark': 'area', 'data-tk': totTk, 'data-key': 'all' }, gTot);
         /* the hero line is a line (the comet rides the primary line, WOW-SPEC 3.3) */
-        P.totalLine = S('path', { class: 'pmu-mark', 'data-mark': 'line', 'data-tk': 'all', 'data-key': 'all', 'data-primary': '1' }, gTot);
-        P.glow = S('path', { class: 'pmu-mark', 'data-mark': 'glow', 'data-tk': 'all', 'data-key': 'all' }, gTot);
+        P.totalLine = S('path', { class: 'pmu-mark', 'data-mark': 'line', 'data-tk': totTk, 'data-key': 'all', 'data-primary': '1' }, gTot);
+        P.glow = S('path', { class: 'pmu-mark', 'data-mark': 'glow', 'data-tk': totTk, 'data-key': 'all' }, gTot);
         gTot.insertBefore(P.glow, P.totalLine);
         /* a bright hairline core on the hero line: it reads as light, not ink (dark themes) */
-        P.core = S('path', { class: 'pmu-mark', 'data-mark': 'core', 'data-tk': 'all', 'data-key': 'all' }, gTot);
+        P.core = S('path', { class: 'pmu-mark', 'data-mark': 'core', 'data-tk': totTk, 'data-key': 'all' }, gTot);
       }
       incSeries.forEach(function (s, i) {
         var k = s._tk ? { tk: s._tk } : { idx: s.idx != null ? s.idx : s._i, vendor: s.vendor };
@@ -712,6 +715,18 @@
         var li = lastFinite(pts[j]);
         if (li >= 0 && !sr.dash && sr.role !== 'baseline') h += charts.dotHtml(xs[li], pts[j][li], { idx: sr.idx != null ? sr.idx : j, vendor: sr.vendor, tk: sr.tk, tone: sr.tone }, { key: 'S' + j, halo: j === 0 });
       });
+      /* an annotation on the line itself (spec.callout {i, title, sub, tone}: the anomaly's spike): a ring on the point and a
+         label beside it on a short leader, on the side with room; HTML over the plot, so the room's beat can unfold it */
+      var co = spec.callout;
+      if (co && !compact && W >= 360 && pts[0] && finite(pts[0][co.i])) {
+        var cx = xs[co.i], cy = pts[0][co.i], left = cx > pad.l + pw * 0.6;
+        var top = Math.max(2, Math.min(Hh - pad.b - 44, cy - 20));
+        h += '<i class="pmu-callring" data-tone="' + esc(co.tone || 'warn') + '" style="left:' + r1(cx) + 'px;top:' + r1(cy) + 'px"></i>' +
+          '<div class="pmu-callout" data-tone="' + esc(co.tone || 'warn') + '" data-side="' + (left ? 'l' : 'r') + '" style="' + (left ? 'right:' + r1(W - cx + 16) : 'left:' + r1(cx + 16)) + 'px;top:' + r1(top) + 'px;--stem-y:' + r1(cy - top) + 'px">' +
+          '<b>' + esc(co.title || '') + '</b>' + (co.sub ? '<span>' + esc(co.sub) + '</span>' : '') + '</div>';
+        f.hl.innerHTML = h;
+        return;
+      }
       f.hl.innerHTML = h;
     }
     if (c._tw) { c._tw.cancel(); c._tw = null; }

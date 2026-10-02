@@ -486,6 +486,7 @@
      card of the room exists (at its planned rect) before anything moves */
   var streaming = null;
   function completeStream() {
+    flushRefresh();
     var sm = streaming;
     if (sm && sm.token === buildToken) { try { sm.complete(); } catch (error) { console.error('[pm-usage] complete build', error); } }
     streaming = null;
@@ -527,6 +528,7 @@
   function mount(room, opts) {
     ensure();
     opts = opts || {};
+    if (refreshQ) { refreshQ.cancelled = true; refreshQ = null; }   /* the new room renders with the current view anyway */
     if (!boardEl || !scroll) return;
     if (gesture) endGesture(gesture, 'cancel', true);
     if (PMU.menu) PMU.menu.close();
@@ -610,10 +612,30 @@
     if (entering) PMU.motion.enter(readingOrder(cards), { base: transition ? 16 : 0, dir: transition ? (opts.dir || 1) : 0 });
     emit('mount', { room: room, cls: current.cls.name, widgets: ids });
   }
+  /* a range or scope change updates the cards in slices (charts / engine NOTES2 3: one task re-rendering every body was
+     100-256 ms on the CPU-only VM): the cards in view first, in reading order, then the rest; at most about 10 ms of
+     updates per frame, the first slice in the click task. Each card's morph starts in its own slice, so the board
+     changes as a quick cascade instead of a freeze. A newer refresh replaces the queue; other reasons stay synchronous. */
+  var refreshQ = null;
   function refresh(reason) {
     if (!current.mounted) return;
-    PMU.cards.updateAll(cardsNow(), reason);
+    if (refreshQ) { refreshQ.cancelled = true; refreshQ = null; }
+    var cards = cardsNow();
+    if ((reason !== 'range' && reason !== 'scope') || reduced() || cards.length < 4) { PMU.cards.updateAll(cards, reason); return; }
+    var top = scroll ? scroll.scrollTop : 0, vh = scroll ? scroll.clientHeight : 900, pitch = ROW;
+    var inView = function (c) { var y = (+c.dataset.y || 0) * pitch, h = (+c.dataset.h || 0) * pitch; return y + h > top && y < top + vh; };
+    var order = readingOrder(cards.filter(inView)).concat(readingOrder(cards.filter(function (c) { return !inView(c); })));
+    var q = refreshQ = { list: order, reason: reason, cancelled: false };
+    function slice() {
+      if (q.cancelled) return;
+      var t0 = performance.now();
+      while (q.list.length && (performance.now() - t0 < 10)) { var c = q.list.shift(); if (c.isConnected) PMU.cards.update(c, q.reason); }
+      if (q.list.length) requestAnimationFrame(slice); else if (refreshQ === q) refreshQ = null;
+    }
+    slice();
   }
+  /* a pending sliced refresh finishes at once (a gesture, a mount or a test that reads every card) */
+  function flushRefresh() { var q = refreshQ; if (!q) return; refreshQ = null; q.cancelled = true; q.list.forEach(function (c) { if (c.isConnected) PMU.cards.update(c, q.reason); }); }
   /* reconcile the board to a layout: leaving cards fade, staying cards slide (FLIP), new cards enter (B v2 8.2) */
   function reconcile(rects, opts) {
     opts = opts || {};
@@ -1446,7 +1468,7 @@
     init: ensure,
     CLASSES: CLASSES, STORE_KEY: STORE_KEY, get DEFAULT_SET() { return defaultSet(); }, ROW: ROW, GAP: GAP,
     cls: function () { return current.cls || pickClass(boardWidth()); },
-    mount: mount, refresh: refresh, relevel: relevel, layout: function (room) { return layoutFor(room || current.room || st.room); },
+    mount: mount, refresh: refresh, flushRefresh: flushRefresh, relevel: relevel, layout: function (room) { return layoutFor(room || current.room || st.room); },
     visible: function (room) { return visibleIds(room || current.room || st.room); },
     rect: function (id) { return layoutFor(current.room || st.room).filter(function (r) { return r.id === id; })[0] || null; },
     resolve: resolve, gravity: gravity, project: project, firstFit: firstFit, tierOf: tierOf, tierPass: tierPass, measure: measure,

@@ -59,7 +59,8 @@
     if (!ev) return { vs: 'unknown', word: 'Reset unknown', sub: 'No effective account reports a reset time' };
     var other = ev.a.windows.filter(function (w) { return w !== ev.w && w.resetAt; })[0];
     return { text: F.clock(ev.w.resetAt), sub: b(ev.p.name + ' ' + ev.w.short) + ' · ' + b(C.fmt(ev.w.pct, 'pct')) + ' used · ' + esc(F.resetLine(ev.w).text),
-      facts: [['Resets', F.resetLine(ev.w).text], ['Route', ev.p.name + ' · ' + ev.a.nickname], ['Plan', ev.a.planLine || ev.a.plan], other ? [other.short, F.resetLine(other).text + ' · ' + C.fmt(other.pct, 'pct') + ' used'] : ['Windows', String(ev.a.windows.length)],
+      /* the reset words are in the second line already (a "Resets: resets in 1h 41m" fact repeated them) */
+      facts: [['Route', ev.p.name + ' · ' + ev.a.nickname], ['Plan', ev.a.planLine || ev.a.plan], other ? [other.short, F.resetLine(other).text + ' · ' + C.fmt(other.pct, 'pct') + ' used'] : ['Windows', String(ev.a.windows.length)],
         ['Reset truth', PMU.fmt.truth(ev.w.truth)], ['After reset', 'pending recheck'], ['Source', ev.a.fresh.source + ' · ' + ev.a.ageText]] };
   } });
 

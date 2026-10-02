@@ -665,3 +665,20 @@ html[data-theme$="-light"] #panel-usage .pmu-meterheat[data-step="1"] { --c: col
 #panel-usage .pmu-mark[data-mark="core"] { fill: none; stroke: var(--cb); stroke-width: .9; opacity: .8; stroke-linejoin: round; stroke-linecap: round; pointer-events: none; }
 html[data-theme$="-light"] #panel-usage .pmu-mark[data-mark="core"], html[data-theme^="retro"] #panel-usage .pmu-mark[data-mark="core"], html[data-o55-nier="on"] #panel-usage .pmu-mark[data-mark="core"] { display: none; }
 #panel-usage .pmu-plot.is-split .pmu-mark[data-mark="core"] { display: none; }
+
+/* ---------- the line annotation (spec.callout, integration 2): a ring on the point and a label on a short leader ---------- */
+#panel-usage .pmu-callring { position: absolute; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; pointer-events: none;
+  border: 1.5px solid var(--pmu-ink-warn); box-shadow: 0 0 0 4px color-mix(in srgb, var(--pmu-ink-warn) 18%, transparent); }
+#panel-usage .pmu-callout { position: absolute; z-index: 3; display: flex; flex-direction: column; gap: 1px; padding: 5px 10px 6px; pointer-events: none;
+  white-space: nowrap; font-size: 12px; line-height: 16px; color: var(--pmu-ink-3); background: var(--pmu-card); border-radius: 8px;
+  border: 1px solid color-mix(in srgb, var(--pmu-ink-warn) 45%, var(--pmu-rule)); box-shadow: 0 10px 24px -14px rgba(0, 0, 0, .55);
+  transform-origin: left center; }
+#panel-usage .pmu-callout[data-side="l"] { transform-origin: right center; }
+#panel-usage .pmu-callout b { font-size: 12.5px; font-weight: 640; color: var(--pmu-ink); }
+#panel-usage .pmu-callout::before { content: ""; position: absolute; top: var(--stem-y, 50%); width: 10px; height: 1px; background: color-mix(in srgb, var(--pmu-ink-warn) 70%, transparent); }
+#panel-usage .pmu-callout[data-side="r"]::before { right: 100%; margin-right: 1px; }
+#panel-usage .pmu-callout[data-side="l"]::before { left: 100%; margin-left: 1px; }
+html[data-theme^="retro"] #panel-usage .pmu-callout, html[data-o55-nier="on"] #panel-usage .pmu-callout { border-radius: 0; }
+html[data-theme^="retro"] #panel-usage .pmu-callring, html[data-o55-nier="on"] #panel-usage .pmu-callring { border-radius: 0; box-shadow: none; }
+html[data-o55-nier="on"] #panel-usage .pmu-callout { border-color: var(--pmu-ink); }
+html[data-o55-nier="on"] #panel-usage .pmu-callring { border-color: var(--pmu-ink); }
