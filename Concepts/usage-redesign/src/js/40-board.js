@@ -613,8 +613,8 @@
     emit('mount', { room: room, cls: current.cls.name, widgets: ids });
   }
   /* a range or scope change updates the cards in slices (charts / engine NOTES2 3: one task re-rendering every body was
-     100-256 ms on the CPU-only VM): the cards in view first, in reading order, then the rest; at most about 10 ms of
-     updates per frame, the first slice in the click task. Each card's morph starts in its own slice, so the board
+     100-256 ms on the CPU-only VM): the cards in view first, in reading order, then the rest; at most about 6 ms of
+     updates (and their chart draws) per frame, at least one card, starting in the frame after the click. Each card's morph starts in its own slice, so the board
      changes as a quick cascade instead of a freeze. A newer refresh replaces the queue; other reasons stay synchronous. */
   var refreshQ = null;
   function refresh(reason) {
@@ -626,13 +626,24 @@
     var inView = function (c) { var y = (+c.dataset.y || 0) * pitch, h = (+c.dataset.h || 0) * pitch; return y + h > top && y < top + vh; };
     var order = readingOrder(cards.filter(inView)).concat(readingOrder(cards.filter(function (c) { return !inView(c); })));
     var q = refreshQ = { list: order, reason: reason, cancelled: false };
+    /* the app's hover-tag controller re-binds every new element of each re-rendered body in rAF batches (115 ms of its own
+       work in the frames of an Analytics range change on the VM): it waits until the morphs are over and then scans the
+       panel once, as after a room change */
+    deferHover(1600);
     function slice() {
       if (q.cancelled) return;
       var t0 = performance.now();
-      while (q.list.length && (performance.now() - t0 < 10)) { var c = q.list.shift(); if (c.isConnected) PMU.cards.update(c, q.reason); }
+      /* each card's charts are drawn inside its slice (the chart kit's flush would otherwise run after the slice, in the
+         task's microtasks, outside the budget) */
+      while (q.list.length && (performance.now() - t0 < 6)) {
+        var c = q.list.shift();
+        if (c.isConnected) { PMU.cards.update(c, q.reason); if (PMU.charts && PMU.charts.flush) PMU.charts.flush(); }
+      }
       if (q.list.length) requestAnimationFrame(slice); else if (refreshQ === q) refreshQ = null;
     }
-    slice();
+    /* the click task only starts the change: the control's own feedback (the range ink, the pressed state) draws in the
+       next frame, and the first cards change in the frame after it */
+    requestAnimationFrame(slice);
   }
   /* a pending sliced refresh finishes at once (a gesture, a mount or a test that reads every card) */
   function flushRefresh() { var q = refreshQ; if (!q) return; refreshQ = null; q.cancelled = true; q.list.forEach(function (c) { if (c.isConnected) PMU.cards.update(c, q.reason); }); }
@@ -1026,9 +1037,16 @@
     var snap = toMap(snapshot || []);
     var cur = rects.map(function (r) { return { id: r.id, x: r.x, y: r.y, w: r.w, h: r.h }; });
     var act = cur.filter(function (r) { return r.id === activeId; })[0] || null;
-    function hits(c) { for (var i = 0; i < cur.length; i++) { var p = cur[i]; if (p.id !== c.id && overlaps(c, p)) return true; } return false; }
+    /* only the panels on screen float and block (integration 2, real-pointer random test: a Detailed panel, invisible at
+       Glance, floated up into the hole a move left and held a visible panel below an empty band). The panels of a
+       deeper level and the hidden ones keep their places unless a floated panel lands on them; then they step down. */
+    var visSet = null;
+    try { if (current.room) { visSet = {}; visibleIds(current.room).forEach(function (id) { visSet[id] = true; }); } } catch (error) { visSet = null; }
+    var shown = visSet ? cur.filter(function (r) { return visSet[r.id] || r === act; }) : cur;
+    var unseen = visSet ? cur.filter(function (r) { return !(visSet[r.id] || r === act); }) : [];
+    function hits(c) { for (var i = 0; i < shown.length; i++) { var p = shown[i]; if (p.id !== c.id && overlaps(c, p)) return true; } return false; }
     function reading(a, b) { return a.y - b.y || a.x - b.x; }
-    var others = cur.filter(function (r) { return r !== act; });
+    var others = shown.filter(function (r) { return r !== act; });
     var displaced = others.filter(function (c) { var o = snap[c.id]; return o && (o.x !== c.x || o.y !== c.y); });
     for (var round = 0; round < 2; round++) {
       displaced.sort(reading).forEach(function (c) {
@@ -1047,6 +1065,12 @@
         while (c.y > 0) { c.y--; if (hits(c)) { c.y++; break; } }
       });
     }
+    var placed = shown.slice();
+    unseen.sort(reading).forEach(function (c) {
+      var clash = function () { for (var i = 0; i < placed.length; i++) if (placed[i].id !== c.id && overlaps(c, placed[i])) return true; return false; };
+      for (var guard = 0; clash() && guard < 400; guard++) c.y++;
+      placed.push(c);
+    });
     return cur;
   }
   var gravityT = 0, gravityMap = null;
