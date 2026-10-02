@@ -9305,6 +9305,9 @@ body[data-theme^="retro"] .pmx-p-line{stroke-linecap:square;}
 .pmx-decision-say > svg{flex:none;margin-top:2.25px;color:var(--warning);}
 .pmx-decision[data-tone="accent"] .pmx-decision-say > svg{color:var(--muted);stroke:var(--accent);}
 .pmx-decision[data-tone="accent"] .pmx-decision-say .pmx-g-dot{fill:var(--accent);}
+.pmx-decision-say > .nx-st{flex:none;margin-top:2.25px;}
+.pmx-decision[data-tone="accent"] .pmx-decision-say > .nx-st{--nx-bl-ink:var(--accent);}
+.pmx-decision[data-tone="accent"] .pmx-decision-say > .nx-st > svg.nx{--nx-ink:var(--accent);}
 .pmx-decision-say > span{min-width:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 .pmx-decision-say b{color:var(--text);font-weight:var(--pmx-w-650);}
 .pmx-decision-acts{display:flex;flex-wrap:wrap;gap:12px 10px;padding-left:22px;min-width:0;}
@@ -9315,6 +9318,7 @@ body[data-theme^="retro"] .pmx-p-line{stroke-linecap:square;}
 .pmx-result{display:flex;flex-direction:column;gap:8px;min-width:0;}
 .pmx-result-head{margin:0;display:flex;gap:8px;align-items:flex-start;}
 .pmx-result-head > svg{flex:none;margin-top:3px;color:var(--positive);}
+.pmx-result-head > .nx-st{margin-top:3px;}
 .pmx-result-headline{font:var(--pmx-fs-result);letter-spacing:var(--pmx-ls-result,-.012em);color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 .pmx-result-sub{margin:-2px 0 0 26px;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .pmx-output{border-radius:var(--pmx-r-sm);background:var(--code);padding:9px 12px;min-width:0;}
@@ -33328,7 +33332,7 @@ window.PM56_NIER_FACES = [
   function pmxRefusal(o) {
     o = o || {};
     var fix = o.fix;
-    return '<p class="' + cls('pmx-refusal', o.cls) + '" role="alert"' + at('data-failure', o.code) + raw(o.attrs) + '>' + pmxGlyph('warn', 15) + '<span><b>' + str(o.strong || 'Can’t start yet.') + '</b> ' + str(o.text) +
+    return '<p class="' + cls('pmx-refusal', o.cls) + '" role="alert"' + at('data-failure', o.code) + raw(o.attrs) + '>' + pmxGlyph('warn', 15, 'nx-r-status nx-t-attention') + '<span><b>' + str(o.strong || 'Can’t start yet.') + '</b> ' + str(o.text) +
       (fix ? ' <button type="button" class="text-button" data-action="' + esc(fix.action) + '"' + raw(fix.attrs) + '>' + str(fix.label || 'Fix') + '</button>' : '') + '</span></p>';
   }
   /* the number of top-level elements (and loose text runs) in an HTML string: one foot grid column each */
@@ -33533,20 +33537,28 @@ window.PM56_NIER_FACES = [
   /* review cycle 2 (7.2 below 260 px): a third answer that is only a text button (Details, Cancel ...) carries
      pmx-act-extra and leaves the decision row below 260 px when the card has a More menu, which lists it; the two
      answers stay. item.extra overrides. */
+  /* neon step 3E: a decision row leads with the status set's needs-you mark, still (pmxStatus): warm is needs
+     (attention), accent is your move (the canon accent); a caller's 'warn' is the attention triangle; any other glyph
+     (memory's hand) is drawn as given. */
+  function decisionMark(glyph, tone) {
+    if (!glyph || glyph === 'ring-dot') return pmxStatus(tone === 'accent' ? 'yourmove' : 'needs', 14);
+    return glyph === 'warn' ? pmxStatus('attention', 14) : g(glyph, 14);
+  }
   function pmxDecision(o) {
     o = o || {};
     var tone = o.tone === 'accent' ? 'accent' : 'warm';
     return '<div class="' + cls('pmx-decision', o.cls) + '"' + k(o.key) + ' data-tone="' + tone + '" role="group"' + raw(o.attrs) + '>' +
-      '<p class="pmx-decision-say">' + g(o.glyph || 'ring-dot', 14) + '<span>' + str(o.sentence) + '</span></p>' +
+      '<p class="pmx-decision-say">' + decisionMark(o.glyph, tone) + '<span>' + str(o.sentence) + '</span></p>' +
       '<div class="pmx-decision-acts">' + (o.actions || []).map(function (a, i) {
         a = a || {};
         var extra = a.extra != null ? !!a.extra : (i >= 2 && !a.primary && !a.soft && (!a.tone || a.tone === 'text'));
         return actButton(extra ? Object.assign({}, a, { cls: cls('pmx-act-extra', a.cls) }) : a, 'pmx-act');
       }).join('') + '</div>' + actReasons(o.actions) + '</div>';
   }
+  /* neon step 3E: a result's done mark is the status set's complete, still (pmxStatus); any other glyph is drawn as given */
   function pmxResult(o) {
     o = o || {};
-    return '<div class="' + cls('pmx-result', o.cls) + '"' + k(o.key) + raw(o.attrs) + '><p class="pmx-result-head">' + g(o.glyph || 'check', 18) + '<span class="pmx-result-headline">' + str(o.headline) + '</span></p>' +
+    return '<div class="' + cls('pmx-result', o.cls) + '"' + k(o.key) + raw(o.attrs) + '><p class="pmx-result-head">' + (!o.glyph || o.glyph === 'check' ? pmxStatus('done', 18) : g(o.glyph, 18)) + '<span class="pmx-result-headline">' + str(o.headline) + '</span></p>' +
       (o.sub ? '<p class="pmx-result-sub">' + o.sub + '</p>' : '') + str(o.outputHtml) + str(o.boardHtml) + str(o.creditsHtml) + '</div>';
   }
   function pmxOutput(o) {

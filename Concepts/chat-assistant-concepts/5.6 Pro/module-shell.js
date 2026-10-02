@@ -666,7 +666,7 @@
   function pmxRefusal(o) {
     o = o || {};
     var fix = o.fix;
-    return '<p class="' + cls('pmx-refusal', o.cls) + '" role="alert"' + at('data-failure', o.code) + raw(o.attrs) + '>' + pmxGlyph('warn', 15) + '<span><b>' + str(o.strong || 'Can’t start yet.') + '</b> ' + str(o.text) +
+    return '<p class="' + cls('pmx-refusal', o.cls) + '" role="alert"' + at('data-failure', o.code) + raw(o.attrs) + '>' + pmxGlyph('warn', 15, 'nx-r-status nx-t-attention') + '<span><b>' + str(o.strong || 'Can’t start yet.') + '</b> ' + str(o.text) +
       (fix ? ' <button type="button" class="text-button" data-action="' + esc(fix.action) + '"' + raw(fix.attrs) + '>' + str(fix.label || 'Fix') + '</button>' : '') + '</span></p>';
   }
   /* the number of top-level elements (and loose text runs) in an HTML string: one foot grid column each */
@@ -871,20 +871,28 @@
   /* review cycle 2 (7.2 below 260 px): a third answer that is only a text button (Details, Cancel ...) carries
      pmx-act-extra and leaves the decision row below 260 px when the card has a More menu, which lists it; the two
      answers stay. item.extra overrides. */
+  /* neon step 3E: a decision row leads with the status set's needs-you mark, still (pmxStatus): warm is needs
+     (attention), accent is your move (the canon accent); a caller's 'warn' is the attention triangle; any other glyph
+     (memory's hand) is drawn as given. */
+  function decisionMark(glyph, tone) {
+    if (!glyph || glyph === 'ring-dot') return pmxStatus(tone === 'accent' ? 'yourmove' : 'needs', 14);
+    return glyph === 'warn' ? pmxStatus('attention', 14) : g(glyph, 14);
+  }
   function pmxDecision(o) {
     o = o || {};
     var tone = o.tone === 'accent' ? 'accent' : 'warm';
     return '<div class="' + cls('pmx-decision', o.cls) + '"' + k(o.key) + ' data-tone="' + tone + '" role="group"' + raw(o.attrs) + '>' +
-      '<p class="pmx-decision-say">' + g(o.glyph || 'ring-dot', 14) + '<span>' + str(o.sentence) + '</span></p>' +
+      '<p class="pmx-decision-say">' + decisionMark(o.glyph, tone) + '<span>' + str(o.sentence) + '</span></p>' +
       '<div class="pmx-decision-acts">' + (o.actions || []).map(function (a, i) {
         a = a || {};
         var extra = a.extra != null ? !!a.extra : (i >= 2 && !a.primary && !a.soft && (!a.tone || a.tone === 'text'));
         return actButton(extra ? Object.assign({}, a, { cls: cls('pmx-act-extra', a.cls) }) : a, 'pmx-act');
       }).join('') + '</div>' + actReasons(o.actions) + '</div>';
   }
+  /* neon step 3E: a result's done mark is the status set's complete, still (pmxStatus); any other glyph is drawn as given */
   function pmxResult(o) {
     o = o || {};
-    return '<div class="' + cls('pmx-result', o.cls) + '"' + k(o.key) + raw(o.attrs) + '><p class="pmx-result-head">' + g(o.glyph || 'check', 18) + '<span class="pmx-result-headline">' + str(o.headline) + '</span></p>' +
+    return '<div class="' + cls('pmx-result', o.cls) + '"' + k(o.key) + raw(o.attrs) + '><p class="pmx-result-head">' + (!o.glyph || o.glyph === 'check' ? pmxStatus('done', 18) : g(o.glyph, 18)) + '<span class="pmx-result-headline">' + str(o.headline) + '</span></p>' +
       (o.sub ? '<p class="pmx-result-sub">' + o.sub + '</p>' : '') + str(o.outputHtml) + str(o.boardHtml) + str(o.creditsHtml) + '</div>';
   }
   function pmxOutput(o) {
