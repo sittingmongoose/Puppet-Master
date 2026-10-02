@@ -126,7 +126,9 @@
       { label: 'Output value', key: { swatch: 'out' }, value: vt.output + vt.reasoning, fmt: 'money', sub: b(F.tok(tk.totals.output)) + ' output · ' + b(F.tok(tk.totals.reasoning)) + ' reasoning', subShort: b(F.tok(tk.totals.output + tk.totals.reasoning)) + ' out incl. reasoning', hover: 'PM estimate · catalog pricing' }] };
   } });
   ['claude', 'codex', 'qwen', 'gemini', 'kimi', 'copilot'].forEach(function (id) {
-    def('tok-' + id, 'analytics', { title: function () { return legName(id); }, mark: PMU.roster.legacyProvider(id), prov: PMU.roster.legacyProvider(id),
+    /* narrow tiles take the provider's short word, so every tile's value sits on the same line ("ChatGPT / Codex" and
+       "Qwen Coding Plan" wrapped and pushed their values down) */
+    def('tok-' + id, 'analytics', { title: function () { return legName(id); }, short: ({ claude: 'Claude', codex: 'Codex', qwen: 'Qwen', gemini: 'Gemini', kimi: 'Kimi', copilot: 'Copilot' })[id], mark: PMU.roster.legacyProvider(id), prov: PMU.roster.legacyProvider(id),
       meta: function (ctx) { return legName(id) + ' tokens · ' + D.rangeLabel(ctx.state.range); }, model: function (ctx) {
         if (!D.inScope(id)) return { vs: 'unknown', word: 'Not in scope', sub: 'outside the selected scope' };
         var p = DATA.providers.filter(function (x) { return x.id === id; })[0];

@@ -326,6 +326,18 @@
     /* once more in the next frame: meters and charts finish their own layout after the render, and wrapped text can then
        push a foot past the body (a one-off frame, never a loop) */
     if (!fitAgainScheduled) { fitAgainScheduled = true; requestAnimationFrame(function () { fitAgainScheduled = false; var list = fitAgain.splice(0); list.forEach(function (b) { b._pmuFitDone = false; }); fitFlush(list); }); }
+    /* and once when the moment is over: a count that rolls up from 0 is narrower than its final text while the first
+       passes run, so a hero line can wrap only when the roll lands ("1,420 calls left" in NieR pushed "4 more facts"
+       past the card). One batched read of the board's bodies 2.4 s after the last render, never a loop. */
+    clearTimeout(fitSettleT);
+    fitSettleT = setTimeout(fitSettled, 2400 * (PMU.motion && PMU.motion.speed ? PMU.motion.speed() : 1));
+  }
+  var fitSettleT = 0;
+  function fitSettled() {
+    fitSettleT = 0;
+    var bodies = Array.prototype.slice.call(document.querySelectorAll('#pmuBoard > .pmu-card > .pmu-cardbody'));
+    bodies.forEach(function (b) { b._pmuFitDone = false; });
+    if (bodies.length) fitFlush(bodies);
   }
   function fitFlush(list) {
     var items = list || fitQueue.splice(0);
@@ -366,6 +378,15 @@
     }
   }
   C.fitLater = fitLater;
+  /* a web font that finishes loading after the render (NieR's mono, Retro's face) can push a row or a foot past the body:
+     the fit pass runs once more over the board when the fonts settle (NieR Light at 1440: "4 more facts" cut at the edge) */
+  try {
+    if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', function () {
+      var bodies = Array.prototype.slice.call(document.querySelectorAll('#pmuBoard > .pmu-card > .pmu-cardbody'));
+      if (!bodies.length) return;
+      requestAnimationFrame(fitSettled);
+    });
+  } catch (error) {}
   /* a card at its kind's tallest size cannot show more rows: the line then points at Details (the inspector) */
   function atMax(b) {
     var card = b.closest('.pmu-card'); if (!card) return false;
@@ -558,7 +579,9 @@
       if (!rows.length) { body.innerHTML = C.empty(m.empty || 'No results for current filter', m.emptyFacts); return; }
       var bw = ctx.tier.bw;
       var hasSub = rows.some(function (r) { return r.sub; });
-      var extra = C.w(ctx, 'l') && rows.some(function (r) { return r.note; });
+      /* a note column only for rows that carry a note (a day head's note is its date, not a column: Switch history kept an
+         empty 100 px column and wrapped every event to four lines) */
+      var extra = C.w(ctx, 'l') && rows.some(function (r) { return r.note && !r.day; });
       /* one column template for every row (LOOK-REVIEW-2 17: ragged middle columns): the lead and the value columns take
          the widest lead and value of the list, so names, notes and values line up down the card */
       var tw = function (s, px, wt) { return PMU.charts && PMU.charts.textW ? PMU.charts.textW(s, px, false, wt) : s.length * px * 0.55; };
