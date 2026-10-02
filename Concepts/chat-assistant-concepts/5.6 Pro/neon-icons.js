@@ -150,28 +150,33 @@
 
     var GLYPHS = {
       /* ---- the activity domains (the bar is the reference surface) ---- */
-      goal: G([C(12, 12, 8), C(12, 12, 3), M(P('M20 4 15 9'), { ax: -3, ay: 3, b: 1 })], 'strike'),
+      /* the arrow strikes two units in: it stops at the outer ring and never hides inside the rings */
+      goal: G([C(12, 12, 8), C(12, 12, 3), M(P('M20 4 15 9'), { ax: -2, ay: 2, b: 1 })], 'strike'),
       todo: G([P('M9 6h11M9 12h11M9 18h11'),
-        M(P('m3 6 1 1 2-2'), { ao: .6, ac: '0 22 0 2', ae: '0 16.6 0 2' }),
-        M(P('M3 12l1 1 2-2'), { ao: .6, ac: '0 22 0 2', ae: '0 16.6 0 2', ad: 140 }),
-        M(P('M3 18l1 1 2-2'), { ao: .6, ac: '0 22 0 2', ae: '0 16.6 0 2', ad: 280 })], 'fill'),
+        /* the ticks pop up 2.6 units in turn and hold (loop); they draw in from 40 % (one-shot) */
+        M(P('m3 6 1 1 2-2'), { ay: -2.6, ac: '0 22 0 2', ae: '0 16.6 0 2' }),
+        M(P('M3 12l1 1 2-2'), { ay: -2.6, ac: '0 22 0 2', ae: '0 16.6 0 2', ad: 140 }),
+        M(P('M3 18l1 1 2-2'), { ay: -2.6, ac: '0 22 0 2', ae: '0 16.6 0 2', ad: 280 })], 'fill'),
       users: G([M([P('M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2'), C(9, 7, 4)], { ay: -3, b: 1 }),
         M([P('M22 21v-2a4 4 0 0 0-3-3.87'), P('M16 3.13a4 4 0 0 1 0 7.75')], { ay: -3, b: 1, ad: 160 })], 'seq'),
       changes: G([M([P('M4 7h14'), P('m15 4 3 3-3 3')], { ax: 3, b: 1 }),
         M([P('M20 17H6'), P('m9 14-3 3 3 3')], { ax: -3, b: 1, ad: 60 })], 'swap'),
       page: G([P('M5 3h10l4 4v14H5z'), P('M15 3v4h4'),
-        M(P('M8 12h8'), { ao: .6, ac: '0 17 0 7', ae: '0 7 0 7' }),
-        M(P('M8 16h5'), { ao: .6, ac: '0 17 0 7', ae: '0 10 0 7', ad: 170 })], 'fill'),
+        /* the lines slide in from the left, .6 -> 1 (loop); they write in from 40 % (one-shot) */
+        M(P('M8 12h8'), { ax: -2.6, ao: .6, ac: '0 17 0 7', ae: '0 7 0 7' }),
+        M(P('M8 16h5'), { ax: -2.6, ao: .6, ac: '0 17 0 7', ae: '0 10 0 7', ad: 170 })], 'fill'),
 
       /* ---- kind marks: PMX geometry (module-shell.js PMX_GLYPHS), split into parts ---- */
-      'kind-crew': G([M(P(CREW[0]), { ao: .6, ac: '0 22 0 2', ae: '0 8 0 2' }), M(P(CREW[1]), { ao: .6, ac: '0 22 0 2', ae: '0 8 0 2', ad: 90 }),
-        M(P(CREW[2]), { ao: .6, ac: '0 22 0 2', ae: '0 8 0 2', ad: 180 }), M(C(18.5, 12, 2.6), { ao: .45, ad: 300 })], 'seq'),
+      /* the strands stay; the node pops in along them */
+      'kind-crew': G([P(CREW[0]), P(CREW[1]), P(CREW[2]), M(C(18.5, 12, 2.6), { ax: -2.6, ao: .6 })], 'seq'),
       'kind-crew-auto': G([P(CREW[0]), P(CREW[1]), P(CREW[2]), C(18.5, 12, 2.6), M(P('m20.6 2.5-2.2 3.2h2.8l-2.2 3.2'), { ao: .25, ay: -1.5, b: 1 })], 'seq'),
-      'kind-brainstorm': G([M(P('M4 4c4 0 6 4 8 8'), { ao: .55, ac: '12 12 12 12', ad: 0 }), M(P('M12 3v9'), { ao: .55, ac: '12 12 12 12', ad: 110 }),
-        M(P('M20 4c-4 0-6 4-8 8'), { ao: .55, ac: '12 12 12 12', ad: 220 }), P('M12 12v9')], 'seq'),
+      /* the stem stays; the two branches spark outward in turn */
+      'kind-brainstorm': G([P('M12 3v9'), P('M12 12v9'), M(P('M4 4c4 0 6 4 8 8'), { ax: 2, ay: 2, ao: .6, ac: '12 12 12 12', ad: 0 }),
+        M(P('M20 4c-4 0-6 4-8 8'), { ax: -2, ay: 2, ao: .6, ac: '12 12 12 12', ad: 140 })], 'seq'),
       'kind-review': G([P('M5 3h9l4 4v6'), P('M5 3v17h6'), M([C(16, 16, 3.6), P('m18.6 18.6 2.6 2.6')], { ax: -5, ay: -5, b: 1 })], 'wave'),
       'kind-chat_room': G([C(12, 13, 5), M([C(12, 4.5, 1.9), C(4.5, 15, 1.3), C(19.5, 15, 1.3), C(12, 21, 1.3)], { ar: 90, o: [12, 13], b: 1 })], 'wave'),
-      eye: G([M(P(EYE), { ac: '12 0 12 0', ae: '4.5 0 4.5 0', n: 1 }), M(C(12, 12, 3), { ax: 3, b: 1, ad: 120 })], 'wave'),
+      /* the outline stays; the pupil looks */
+      eye: G([P(EYE), M(C(12, 12, 3), { ax: 3, b: 1 })], 'wave'),
       'kind-bsd-auto': G([P(EYE), P('M4 11.2h16'), M(P('M9 11.8a3 3 0 0 0 6 0'), { ax: 3, b: 1 })], 'wave'),
       'kind-bsd-off': G([P('M3 10.5c2.5 3.6 5.5 5.3 9 5.3s6.5-1.7 9-5.3'),
         M(P('m6.2 14.2-1.6 2.4'), { ao: .2, ad: 0, b: 1 }), M(P('M12 15.9v2.9'), { ao: .2, ad: 90, b: 1 }), M(P('M17.8 14.2l1.6 2.4'), { ao: .2, ad: 180, b: 1 })], 'seq'),
@@ -192,24 +197,24 @@
         M(P('m19 14 .8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8Z'), { ao: .5, b: 1, ad: 170 }),
         M(P('m5 14 .8 1.7L8 16.5l-2.2.8L5 19l-.8-1.7L2 16.5l2.2-.8Z'), { ao: .5, b: 1, ad: 340 })], 'seq'),
       brain: G([P('M9.5 4A3.5 3.5 0 0 0 6 7.5v.4A3.5 3.5 0 0 0 4 11a3.5 3.5 0 0 0 2.2 3.25A3.5 3.5 0 0 0 9.5 19H11V4ZM14.5 4A3.5 3.5 0 0 1 18 7.5v.4a3.5 3.5 0 0 1 2 3.1 3.5 3.5 0 0 1-2.2 3.25A3.5 3.5 0 0 1 14.5 19H13V4Z'),
-        M(P('M7 10h4'), { ao: .45, ac: '0 18 0 6', ae: '0 12 0 6' }), M(P('M13 8h4'), { ao: .45, ac: '0 12 0 12', ae: '0 6 0 12', ad: 130 }),
-        M(P('M13 14h4'), { ao: .45, ac: '0 12 0 12', ae: '0 6 0 12', ad: 260 })], 'seq'),
+        M(P('M7 10h4'), { ax: -2.6, ao: .6, ac: '0 18 0 6', ae: '0 12 0 6' }), M(P('M13 8h4'), { ax: -2.6, ao: .6, ac: '0 12 0 12', ae: '0 6 0 12', ad: 130 }),
+        M(P('M13 14h4'), { ax: -2.6, ao: .6, ac: '0 12 0 12', ae: '0 6 0 12', ad: 260 })], 'seq'),
       'folder-search': G([P('M3 5h6l2 2h10v12H3z'), M([C(12, 13, 3), P('m14.5 15.5 2 2')], { cr: 1.6 })], 'spin'),
       search: G([M([C(11, 11, 7), P('m20 20-4-4')], { ar: -14, o: [20, 20], b: 1 })], 'wave'),
       download: G([P('M5 20h14'), M([P('M12 4v11'), P('M7 10.5l5 5 5-5')], { ay: -4, ao: .45 })], 'drop'),
       upload: G([P('M4 21h16'), M([P('M12 20V8'), P('M7 13l5-5 5 5')], { ay: 3, ao: .45 })], 'drop'),
       globe: G([C(12, 12, 9), P('M3 12h18'), M([P('M12 3a15 15 0 0 1 0 18'), P('M12 3a15 15 0 0 0 0 18')], { ar: 28, o: [12, 12], b: 1 })], 'wave'),
-      terminal: G([M(P('m4 7 5 5-5 5'), { ax: -3, ao: .4, n: 1 }), M(P('M11 17h9'), { ao: .6, ad: 160, b: 1 })], 'blink'),
+      terminal: G([M(P('m4 7 5 5-5 5'), { ax: -2.6, ao: .6 }), M(P('M11 17h9'), { ax: 2.6, ao: .6, ad: 160, b: 1 })], 'seq'),
       'file-edit': G([P('M6 3h8l4 4v5'), P('M6 3v18h5'), M(P('m14 20 6-6 2 2-6 6h-2z'), { ax: -3, ay: 1, b: 1 })], 'wave'),
-      'monitor-play': G([R(2, 3, 20, 14, 2), P('M8 21h8M12 17v4'), M(P('M10 7l5 3-5 3Z'), { ao: .3, b: 1 })], 'seq'),
+      'monitor-play': G([R(2, 3, 20, 14, 2), P('M8 21h8M12 17v4'), M(P('M10 7l5 3-5 3Z'), { ax: -2.6, ao: .6 })], 'fill'),
       flask: G([P('M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3'), P('M8 14h8'), M(C(13, 17.3, .9), { ay: 3, ao: .35 })], 'wave'),
       'check-circle': G([M(C(12, 12, 9), { ao: .5 }), M(P('m8 12 3 3 5-6'), { ao: .55, ac: '0 17 0 7', ae: '0 7 0 7', ad: 150 })], 'seq'),
       chart: G([P('M22 20H2'),
-        M(P('M4 20V10'), { ao: .55, ac: '21 0 3 0', ae: '9 0 3 0' }), M(P('M10 20V4'), { ao: .55, ac: '21 0 3 0', ae: '3 0 3 0', ad: 120 }),
-        M(P('M16 20v-7'), { ao: .55, ac: '21 0 3 0', ae: '12 0 3 0', ad: 240 })], 'seq'),
+        M(P('M4 20V10'), { ay: 2.6, ao: .6, ac: '21 0 3 0', ae: '9 0 3 0' }), M(P('M10 20V4'), { ay: 2.6, ao: .6, ac: '21 0 3 0', ae: '3 0 3 0', ad: 120 }),
+        M(P('M16 20v-7'), { ay: 2.6, ao: .6, ac: '21 0 3 0', ae: '12 0 3 0', ad: 240 })], 'seq'),
       plug: G([M([P('M9 7V2M15 7V2'), P('M6 7h12v4a6 6 0 0 1-12 0Z'), P('M12 17v5')], { ay: 3, b: 1 })], 'wave'),
       wand: G([P('m15 4 5 5L8 21H3v-5Z'), P('m14 5 5 5'),
-        M(P('M5 2v3M3.5 3.5h3'), { ao: .15, b: 1 }), M(P('M18.5 1v3M17 2.5h3'), { ao: .15, b: 1, ad: 120 }), M(P('M20.5 14.5v3M19 16h3'), { ao: .15, b: 1, ad: 240 })], 'seq'),
+        M(P('M5 2v3M3.5 3.5h3'), { ay: 2.6, ao: .6 }), M(P('M18.5 1v3M17 2.5h3'), { ay: 2.6, ao: .6, ad: 120 }), M(P('M20.5 14.5v3M19 16h3'), { ay: 2.6, ao: .6, ad: 240 })], 'seq'),
       history: G([P(BACK_ARC), P('M3 3v5h5'), M(P('M12 7v5l3 2'), { ar: 70, o: [12, 12] })], 'wave'),
 
       /* ---- controls (unlit at rest; act once on ignite) ---- */
@@ -220,7 +225,7 @@
       'chevron-down': G([M(P('m6 9 6 6 6-6'), { ay: 3, b: 1 })], 'strike', 'control'),
       'chevron-up': G([M(P('m6 15 6-6 6 6'), { ay: -3, b: 1 })], 'strike', 'control'),
       copy: G([R(8, 8, 12, 12, 2), M(P('M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2'), { ax: -3, ay: -3, b: 1 })], 'swap', 'control'),
-      send: G([M([P('m22 2-7 20-4-9-9-4Z'), P('M22 2 11 13')], { ax: 3, ay: -3, ao: .4, b: 1 })], 'strike', 'control'),
+      send: G([M([P('m22 2-7 20-4-9-9-4Z'), P('M22 2 11 13')], { ax: 3, ay: -3, b: 1 })], 'strike', 'control'),
       attach: G([M(P('m21 11-8.5 8.5a6 6 0 0 1-8.5-8.5L13 2a4 4 0 0 1 5.7 5.7l-9 9a2 2 0 0 1-2.8-2.8L15 5.8'), { ar: -14, o: [12, 12], b: 1 })], 'wave', 'control'),
       plus: G([P('M5 12h14'), M(P('M12 5v14'), { ao: .5, ac: '12 0 12 0', ae: '4 0 4 0' })], 'seq', 'control'),
       minus: G([M(P('M5 12h14'), { ao: .5, ac: '0 12 0 12', ae: '0 4 0 4' })], 'seq', 'control'),
@@ -230,7 +235,7 @@
       'eye-off': G([P('M10.6 5.6A9.8 9.8 0 0 1 12 5.5c6 0 9.5 6.5 9.5 6.5a17 17 0 0 1-2.8 3.6M6.4 6.6C3.9 8.3 2.5 12 2.5 12S6 18.5 12 18.5c1.8 0 3.3-.5 4.6-1.3'), P('M9.9 9.9a3 3 0 0 0 4.2 4.2'),
         M(P('M3 3l18 18'), { ao: .5, ac: '3 21 21 3', ae: '2 2 2 2' })], 'seq', 'control'),
       clock: G([C(12, 12, 8.5), M(P('M12 7.5V12l3 2'), { ar: -90, o: [12, 12] })], 'wave'),
-      pin: G([M([P('M12 17v5'), P('M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z')], { ay: -3, ao: .5 })], 'drop', 'control'),
+      pin: G([M([P('M12 17v5'), P('M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z')], { ay: -3 })], 'drop', 'control'),
       unpin: G([P('M12 17v5'), P('M9 9v1.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V17h12'), P('M15 9.34V6h1a2 2 0 0 0 0-4H7.89'),
         M(P('M2 2l20 20'), { ao: .5, ac: '2 22 22 2', ae: '1 1 1 1' })], 'seq', 'control'),
       archive: G([P('M4 7v13h16V7'), P('M9 11h6'), M(P('M3 3h18v4H3z'), { ay: -3, b: 1 })], 'strike', 'control'),
@@ -238,10 +243,10 @@
       trash: G([P('M6.5 7l1 13h9l1-13M10 11v5.5M14 11v5.5'), M(P('M4.5 7h15M9.5 7V4.5h5V7'), { ar: -14, o: [4.5, 7], b: 1 })], 'strike', 'control'),
       filter: G([P('M4 4h16l-6 7v6l-4 2v-8Z'), M(P('M12 21.6h.01'), { ay: -3, ao: 0 })], 'drop', 'control'),
       lock: G([R(5, 11, 14, 9, 2), M(P('M8 11V8a4 4 0 0 1 8 0v3'), { ay: -3 })], 'drop'),
-      play: G([M(P('M8 5.5v13l10.5-6.5z'), { ao: .35, b: 1 })], 'seq', 'control'),
-      pause: G([M(P('M9 6v12'), { ao: .35, b: 1 }), M(P('M15 6v12'), { ao: .35, b: 1, ad: 80 })], 'seq', 'control'),
-      step: G([M(P('m7 5 9 7-9 7z'), { ao: .35, b: 1 }), P('M18 5v14')], 'seq', 'control'),
-      stop: G([M(R(7.5, 7.5, 9, 9, 1.75, { f: 1 }), { ao: .35, b: 1 })], 'seq', 'control'),
+      play: G([M(P('M8 5.5v13l10.5-6.5z'), { ax: 2, b: 1 })], 'strike', 'control'),
+      pause: G([M(P('M9 6v12'), { ay: -2, b: 1 }), M(P('M15 6v12'), { ay: -2, b: 1, ad: 80 })], 'seq', 'control'),
+      step: G([M(P('m7 5 9 7-9 7z'), { ax: 2, b: 1 }), P('M18 5v14')], 'strike', 'control'),
+      stop: G([M(R(7.5, 7.5, 9, 9, 1.75, { f: 1 }), { ay: 2, b: 1 })], 'strike', 'control'),
       speaker: G([P('M11 5 6 9H3v6h3l5 4z'), M(P('M15.5 8.5a5 5 0 0 1 0 7'), { ao: .2, b: 1 }), M(P('M18.5 5.5a9 9 0 0 1 0 13'), { ao: .2, b: 1, ad: 110 })], 'seq', 'control'),
       'speaker-off': G([P('M11 5 6 9H3v6h3l5 4z')].concat(X_IN('m16 9 5 6', 'M21 9l-5 6', .5)), 'strike', 'control'),
       'arrow-right': G([M([P('M4.5 12h15'), P('M13.5 6l6 6-6 6')], { ax: 3, b: 1 })], 'strike', 'control'),
@@ -257,12 +262,14 @@
 
       /* ---- concepts and the rest of the app table ---- */
       user: G([M([C(12, 8, 4), P('M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6')], { ay: -3, b: 1 })], 'seq'),
-      chat: G([M(P(BUBBLE), { ay: -3, ao: .5, b: 1 })], 'seq'),
+      /* the shared bubble, opened at the tail so the tail can wag */
+      chat: G([P('M10 17h9.5a1.5 1.5 0 0 0 1.5-1.5V7a1.5 1.5 0 0 0-1.5-1.5h-15A1.5 1.5 0 0 0 3 7v8.5A1.5 1.5 0 0 0 4.5 17h1'),
+        M(P('M5.5 17v3.5L10 17'), { ar: -18, o: [7.75, 17], b: 1 })], 'wave'),
       info: G([C(12, 12, 9), M(P('M12 11v5M12 8h.01'), { ao: .25, b: 1 })], 'seq'),
       check: G([M(P('m5 12 4 4L19 6'), { ao: .6, ac: '0 20 0 4', ae: '0 4 0 4' })], 'seq'),
       branch: G([P('M6 3v12a4 4 0 0 0 4 4h8'), C(6, 3, 2), C(18, 19, 2), P('M6 9h7a4 4 0 0 0 4-4V3'), M(C(17, 3, 2), { ao: .2, b: 1 })], 'seq', 'control'),
-      lightning: G([M(P('M13 2 4 14h7l-1 8 10-13h-7Z'), { ao: .35, b: 1 })], 'blink'),
-      star: G([M(P('m12 2 3 6 7 .9-5 4.8 1.3 6.8L12 17l-6.3 3.5L7 13.7 2 8.9 9 8Z'), { ao: .4, b: 1 })], 'seq'),
+      lightning: G([M(P('M13 2 4 14h7l-1 8 10-13h-7Z'), { ay: 2.6, b: 1 })], 'strike'),
+      star: G([M(P('m12 2 3 6 7 .9-5 4.8 1.3 6.8L12 17l-6.3 3.5L7 13.7 2 8.9 9 8Z'), { ar: 18, o: [12, 11.5], b: 1 })], 'wave'),
       image: G([R(3, 3, 18, 18, 2), P('m21 15-5-5L5 21'), M(C(8.5, 8.5, 1.5), { ao: .2, b: 1 })], 'seq'),
       code: G([M(P('m8 8-4 4 4 4'), { ax: -3, b: 1 }), M(P('M16 8l4 4-4 4'), { ax: 3, b: 1 }), P('M13.5 5.5l-3 13')], 'swap'),
       warning: G([P('M12 4.2 21 19.5H3z'), M(P('M12 10v4.2M12 17.1v.1'), { ao: .25, b: 1 })], 'seq'),
@@ -277,24 +284,25 @@
          panels read as clutter at 14 px, so the map stays bare) */
       plan: G([P('M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z'),
         M(P('M9 4v13.5'), { ao: .5, ac: '3 0 21 0', ae: '3 0 2 0' }), M(P('M15 6.5V20'), { ao: .5, ac: '3 0 21 0', ae: '3 0 2 0', ad: 130 })], 'seq'),
-      shield: G([M(P('M12 3l7.5 3v5.5c0 4.6-3.2 8-7.5 9.5-4.3-1.5-7.5-4.9-7.5-9.5V6z'), { ao: .4, b: 1 })], 'seq'),
+      shield: G([M(P('M12 3l7.5 3v5.5c0 4.6-3.2 8-7.5 9.5-4.3-1.5-7.5-4.9-7.5-9.5V6z'), { ay: -2.6, b: 1 })], 'strike'),
       bug: G([P('M8 10a4 4 0 0 1 8 0v4.5a4 4 0 0 1-8 0z'), P('M8 11H4.5M8 14.5H4M8.6 17.5 6 19.5M16 11h3.5M16 14.5h4M15.4 17.5 18 19.5'),
         M(P('M9.6 6.8 8 4.6M14.4 6.8 16 4.6'), { ay: 2, ao: .3, b: 1 })], 'seq'),
       hourglass: G([M([P('M6.5 3h11M6.5 21h11'), P('M8 3v2.5c0 2.4 4 4 4 6.5s-4 4.1-4 6.5V21M16 3v2.5c0 2.4-4 4-4 6.5s4 4.1 4 6.5V21')], { ar: 16, o: [12, 12], b: 1 })], 'wave'),
       calendar: G([R(4, 5.5, 16, 14.5, 2), P('M4 10h16'), M(P('M8.5 3.5v4M15.5 3.5v4'), { ay: -2, ao: .4, b: 1 })], 'seq'),
       table: G([R(3.5, 5, 17, 14, 2), P('M3.5 10h17'), M(P('M3.5 14.5h17'), { ao: .5, ac: '0 21 0 3', ae: '0 3 0 3' }), P('M10 10v9')], 'seq'),
-      bookmark: G([M(P('M7 4h10v16l-5-4-5 4z'), { ay: -3, ao: .5 })], 'drop'),
+      bookmark: G([M(P('M7 4h10v16l-5-4-5 4z'), { ay: -3 })], 'drop'),
       notebook: G([P('M6 3.5h11a1.5 1.5 0 0 1 1.5 1.5v14a1.5 1.5 0 0 1-1.5 1.5H6z'), P('M9.5 3.5v17'),
         M(P('M12.5 8h3.5'), { ao: .5, ac: '0 12 0 11.5', ae: '0 7 0 11.5' }), M(P('M12.5 11.5h3.5'), { ao: .5, ac: '0 12 0 11.5', ae: '0 7 0 11.5', ad: 130 })], 'fill'),
-      quote: G([M(P('M10 7.5c-2.6.9-4 2.8-4 5.6V17h4.5v-4.5H8c0-1.9.8-3.1 2.6-3.9z'), { ao: .3, b: 1 }), M(P('M18.5 7.5c-2.6.9-4 2.8-4 5.6V17H19v-4.5h-2.5c0-1.9.8-3.1 2.6-3.9z'), { ao: .3, b: 1, ad: 110 })], 'seq'),
+      /* open strokes (solid blobs read as two dots at 14 px); the marks nudge in turn */
+      quote: G([M(P('M10 7c-2.5.6-4 2.6-4 5.5V17h4v-4.2H6.2'), { ax: -2, b: 1 }), M(P('M18 7c-2.5.6-4 2.6-4 5.5V17h4v-4.2h-3.8'), { ax: -2, b: 1, ad: 110 })], 'seq'),
       hand: G([M(P('M8 12.5V6.8a1.5 1.5 0 0 1 3 0V11M11 10.6V5.2a1.5 1.5 0 0 1 3 0v5.4M14 10.6V6.8a1.5 1.5 0 0 1 3 0V14c0 4-2.5 6.5-6 6.5-2.6 0-4.3-1.3-5.5-3.5L4 13.6a1.4 1.4 0 0 1 2.3-1.5L8 14.2'), { ar: -12, o: [11, 20], b: 1 })], 'wave'),
       'slash-circle': G([C(12, 12, 8.5), M(P('m6 6 12 12'), { ao: .5, ac: '6 18 18 6', ae: '5 5 5 5' })], 'seq'),
       ring: G([C(12, 12, 7)], 'none'),
       'ring-dashed': G([C(12, 12, 7, { dash: '2.5 3' })], 'none'),
       arc: G([C(12, 12, 7, { c: 'pmx-g-faint' }), M(P('M12 5a7 7 0 0 1 7 7', { c: 'pmx-g-accent' }), { ar: -90, o: [12, 12] })], 'spin'),
       'ring-dot': G([C(12, 12, 7), M(C(12, 12, 3, { c: 'pmx-g-dot' }), { ao: .3, b: 1 })], 'seq'),
-      'pin-lock': G([M([P('M9 3.5h6l-.8 5 3 3.2H6.8l3-3.2z'), P('M12 11.7V20.5')], { ay: -3, ao: .5 })], 'drop'),
-      sealed: G([R(3.5, 6, 17, 12, 2), M(P('m3.5 7.5 8.5 6 8.5-6'), { ay: -3, ao: .5, b: 1 })], 'seq'),
+      'pin-lock': G([M([P('M9 3.5h6l-.8 5 3 3.2H6.8l3-3.2z'), P('M12 11.7V20.5')], { ay: -3 })], 'drop'),
+      sealed: G([R(3.5, 6, 17, 12, 2), M(P('m3.5 7.5 8.5 6 8.5-6'), { ay: -2.6, b: 1 })], 'strike'),
       'spark-off': G([P('M12 3v4M12 17v4M3 12h4M17 12h4'), M(P('m4.5 4.5 15 15'), { ao: .5, ac: '4.5 19.5 19.5 4.5', ae: '3.5 3.5 3.5 3.5' })], 'seq'),
       'play-ring': G([C(12, 12, 8.5), M(P('M10.3 8.8v6.4l5-3.2z'), { ao: .3, b: 1 })], 'seq'),
 
@@ -486,13 +494,20 @@
       return list.map(function (st) { return fmt(st[0]) + '%{' + poseCss(m, st[1], floor) + lin + '}'; }).join('');
     }
     function insets(v) { return String(v || '0').split(/\s+/).map(function (x) { return fmt(+x) + 'px'; }).join(' '); }
+    function startInset(ac, ae) {
+      var a = String(ac).split(/\s+/).map(Number), e = String(ae || '0').split(/\s+/).map(Number);
+      while (e.length < 4) e.push(e[e.length > 1 ? e.length - 2 : 0] || 0);
+      return a.map(function (v, i) { return fmt(e[i] + (v - e[i]) * .6) + 'px'; }).join(' ');
+    }
     function actsCss(name, d) {
-      var css = '', j = 0, shape = SHAPES[d.act], f1 = d.role === 'control' ? .7 : .5;
+      /* one-shots never dim a glyph (G1): the opacity floor is .85; loops keep .6 */
+      var css = '', j = 0, shape = SHAPES[d.act], f1 = .85;
       d.parts.forEach(function (p) {
         if (!p.m) return;
         var m = p.m;
         if (shape && !m.n) css += '@keyframes ' + kfName(name, j, 'L') + '{' + frames(stops(m, shape), m, .6) + '}';
-        if (m.ac) css += '@keyframes ' + kfName(name, j, 'C') + '{from{clip-path:inset(' + insets(m.ac) + ') view-box}to{clip-path:inset(' + insets(m.ae) + ') view-box}}';
+        /* a draw-on starts at least 40 % drawn (G1: a clip from nothing blanks the glyph) */
+        if (m.ac) css += '@keyframes ' + kfName(name, j, 'C') + '{from{clip-path:inset(' + startInset(m.ac, m.ae) + ') view-box}to{clip-path:inset(' + insets(m.ae) + ') view-box}}';
         else if (m.b) css += '@keyframes ' + kfName(name, j, 'B') + '{' + frames(stops(m, [[0, 0], [42, 1], [100, 0]]), m, f1) + '}';
         else css += '@keyframes ' + kfName(name, j, 'A') + '{' + frames(stops(m, [[0, 1], [100, 0]]), m, f1) + '}';
         j++;
