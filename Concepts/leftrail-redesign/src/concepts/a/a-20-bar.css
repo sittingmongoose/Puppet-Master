@@ -1,0 +1,96 @@
+/* Concept A — the activity bar: a soft tile behind the active panel's icon (it glides, transform only), a faint tile on
+   hover, breathing room between groups, an expanded mode with names on one line, a 6 px attention dot. */
+html[data-rail-concept="a"] #activityBar.pmr-a-bar { position: relative; --a-tile: 28px; }
+html[data-theme^="glass"][data-rail-concept="a"] #activityBar.pmr-a-bar { --a-tile: 30px; }
+html[data-rail-concept="a"] #activityBar.pmr-a-bar > .icon { position: relative; z-index: 1; color: var(--pmr-text-2); }
+html[data-rail-concept="a"] #activityBar.pmr-a-bar > .icon:hover { color: var(--pmr-text); }
+html[data-rail-concept="a"] #activityBar.pmr-a-bar > .icon.active,
+html[data-rail-concept="a"][data-theme^="retro"] #activityBar.pmr-a-bar > .icon.active { color: var(--pmr-text); }
+html[data-rail-concept="a"] #activityBar.pmr-a-bar > .icon.pmr-a-on { color: var(--pmr-text); }
+html[data-rail-concept="a"][data-theme^="glass"] #activityBar.pmr-a-bar > .icon.active,
+html[data-rail-concept="a"][data-theme^="glass"] #activityBar.pmr-a-bar > .icon.pmr-a-on { color: var(--text-primary) !important; }
+html[data-rail-concept="a"] #activityBar.pmr-a-bar > .icon[data-pmr-a-gap] { margin-top: 10px !important; }
+html[data-rail-concept="a"] #activityBar.pmr-a-bar:not(.collapsed) > .icon[data-pmr-a-gap] { margin-top: 12px !important; }
+
+/* the tile */
+html[data-rail-concept="a"] .pmr-a-tile {
+  position: absolute; left: 0; top: 0; width: 28px; height: 28px; z-index: 0; pointer-events: none;
+  border-radius: var(--pmr-radius); background: var(--pmr-sel); will-change: transform;
+}
+html[data-rail-concept="a"][data-theme^="friendly"] .pmr-a-tile { border-radius: 10px; }
+html[data-rail-concept="a"][data-theme^="glass"] .pmr-a-tile { border-radius: 10px; background: var(--pmr-sel); }
+html[data-rail-concept="a"][data-theme^="retro"] .pmr-a-tile { border-radius: 0; background: var(--pmr-sel); }
+html[data-rail-concept="a"][data-o55-nier="on"] .pmr-a-tile { border-radius: 0; background: var(--o55-nier-ink, var(--pmr-text)); }
+html[data-rail-concept="a"][data-o55-nier="on"] #activityBar.pmr-a-bar > .icon.pmr-a-on,
+html[data-rail-concept="a"][data-o55-nier="on"] #activityBar.pmr-a-bar > .icon.pmr-a-on :where(*) { color: var(--o55-nier-on-ink, var(--pmr-bg)) !important; }
+
+/* collapsed: icons keep their place; the symbol is the hit target the tiles sit behind */
+html[data-rail-concept="a"] #activityBar.pmr-a-bar.collapsed > .icon .symbol {
+  width: var(--a-tile) !important; height: var(--a-tile) !important; min-width: 0 !important; min-height: 0 !important;
+  border-radius: var(--pmr-radius) !important; background: transparent !important; border-color: transparent !important; box-shadow: none !important;
+  transform: none !important; transition: background-color 120ms var(--pmr-ease) !important;
+}
+html[data-rail-concept="a"] #activityBar.pmr-a-bar.collapsed > .icon:not(.pmr-a-on):hover .symbol { background: var(--pmr-hover) !important; }
+html[data-rail-concept="a"][data-theme^="friendly"] #activityBar.pmr-a-bar.collapsed > .icon .symbol,
+html[data-rail-concept="a"][data-theme^="glass"] #activityBar.pmr-a-bar.collapsed > .icon .symbol { border-radius: 10px !important; }
+html[data-rail-concept="a"][data-theme^="retro"] #activityBar.pmr-a-bar > .icon .symbol { border-radius: 0 !important; }
+html[data-rail-concept="a"] #activityBar.pmr-a-bar > .icon.pmr-a-on .symbol { background: transparent !important; box-shadow: none !important; }
+html[data-rail-concept="a"][data-theme^="glass"] #activityBar.pmr-a-bar > .icon,
+html[data-rail-concept="a"][data-theme^="glass"] #activityBar.pmr-a-bar > .icon:hover,
+html[data-rail-concept="a"][data-theme^="glass"] #activityBar.pmr-a-bar > .icon.active { background: transparent !important; box-shadow: none !important; transform: none !important; }
+html[data-rail-concept="a"][data-theme^="glass"] #activityBar.pmr-a-bar > .icon .symbol { background: transparent !important; border-color: transparent !important; box-shadow: none !important; transform: none !important; }
+html[data-rail-concept="a"][data-theme^="glass"] #activityBar.pmr-a-bar > .icon:not(.pmr-a-on):hover .symbol { background: var(--pmr-hover) !important; }
+html[data-rail-concept="a"][data-theme^="friendly"] #activityBar.pmr-a-bar > .icon .symbol { background: transparent !important; box-shadow: none !important; transform: none !important; }
+html[data-rail-concept="a"][data-theme^="friendly"] #activityBar.pmr-a-bar.collapsed > .icon:not(.pmr-a-on):hover .symbol { background: var(--pmr-hover) !important; }
+
+/* attention: one 6 px dot at the icon's top right, only when the panel has a real attention item */
+html[data-rail-concept="a"] #activityBar.pmr-a-bar > .icon .symbol { position: relative; }
+html[data-rail-concept="a"] #activityBar.pmr-a-bar > .icon[data-pmr-a-attn] .symbol::after {
+  content: ''; position: absolute; top: 3px; right: 3px; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--pmr-st-warn); box-shadow: 0 0 0 2px var(--surface-alt, var(--surface));
+}
+html[data-rail-concept="a"] #activityBar.pmr-a-bar > .icon[data-pmr-a-attn="failed"] .symbol::after,
+html[data-rail-concept="a"] #activityBar.pmr-a-bar > .icon[data-pmr-a-attn="blocked"] .symbol::after { background: var(--pmr-st-failed); }
+html[data-rail-concept="a"] #activityBar.pmr-a-bar > .icon[data-pmr-a-attn="conflict"] .symbol::after { background: var(--pmr-st-conflict); }
+html[data-rail-concept="a"][data-theme^="glass"] #activityBar.pmr-a-bar > .icon[data-pmr-a-attn] .symbol::after { box-shadow: none; }
+html[data-rail-concept="a"][data-o55-nier="on"] #activityBar.pmr-a-bar > .icon[data-pmr-a-attn] .symbol::after { border-radius: 0; background: var(--o55-nier-ink, var(--pmr-text)); box-shadow: 0 0 0 1.5px var(--pmr-bg); }
+html[data-rail-concept="a"][data-o55-nier="on"] #activityBar.pmr-a-bar > .icon.pmr-a-on[data-pmr-a-attn] .symbol::after { background: var(--o55-nier-on-ink, var(--pmr-bg)); box-shadow: none; }
+html[data-rail-concept="a"]:not([data-o55-nier="on"]) #activityBar.pmr-a-bar:not(.collapsed) > .icon[data-pmr-a-attn] .symbol::after { top: 0; right: -2px; }
+
+/* expanded: about 168 px, icon and name on one line, the tile stretches to the full row */
+html[data-rail-concept="a"] #activityBar.pmr-a-bar:not(.collapsed) {
+  width: 168px !important; min-width: 168px !important; max-width: 168px !important; flex: 0 0 168px !important;
+  align-items: stretch !important; padding: 8px 8px !important; gap: 2px !important;
+}
+html[data-rail-concept="a"] #activityBar.pmr-a-bar:not(.collapsed) > .icon {
+  flex-direction: row !important; justify-content: flex-start !important; align-items: center !important; gap: 10px !important;
+  width: auto !important; min-width: 0 !important; height: 34px !important; min-height: 34px !important; padding: 0 10px !important; margin: 0 !important;
+  border-radius: var(--pmr-radius) !important; background: transparent !important; box-shadow: none !important;
+  transition: background-color 120ms var(--pmr-ease), color 120ms var(--pmr-ease) !important;
+}
+html[data-rail-concept="a"] #activityBar.pmr-a-bar:not(.collapsed) > .icon:not(.pmr-a-on):hover { background: var(--pmr-hover) !important; }
+html[data-rail-concept="a"] #activityBar.pmr-a-bar:not(.collapsed) > .icon .symbol {
+  width: 18px !important; height: 18px !important; min-width: 18px !important; min-height: 18px !important; background: transparent !important; border: 0 !important; box-shadow: none !important;
+}
+html[data-rail-concept="a"] #activityBar.pmr-a-bar:not(.collapsed) > .icon .icon-label {
+  display: block !important; flex: 1 1 auto; min-width: 0; margin: 0 !important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left !important;
+  font: 500 13px/1.2 var(--pmr-font) !important; letter-spacing: 0 !important; text-transform: lowercase; color: inherit;
+}
+html[data-rail-concept="a"] #activityBar.pmr-a-bar:not(.collapsed) > .icon .icon-label::first-letter { text-transform: uppercase; }
+html[data-rail-concept="a"][data-o55-nier-parts~="headers"] #activityBar.pmr-a-bar:not(.collapsed) > .icon .icon-label { text-transform: uppercase; letter-spacing: .1em !important; font-size: 12px !important; }
+html[data-rail-concept="a"][data-theme^="glass"] #activityBar.pmr-a-bar:not(.collapsed) > .icon { border-radius: 10px !important; }
+
+/* the expand / collapse button: a drawn chevron that turns, never a glyph character */
+html[data-rail-concept="a"] #activityBar.pmr-a-bar > #activityBarToggle {
+  position: relative; z-index: 1; display: inline-flex; align-items: center; justify-content: center; align-self: center;
+  width: 28px !important; height: 28px !important; min-height: 28px; padding: 0 !important; margin: auto auto 2px !important;
+  font-size: 0 !important; color: var(--pmr-text-2) !important; background: transparent !important; border: 0 !important; border-radius: var(--pmr-radius) !important; box-shadow: none !important;
+  transition: background-color 120ms var(--pmr-ease), color 120ms var(--pmr-ease);
+}
+html[data-rail-concept="a"] #activityBar.pmr-a-bar:not(.collapsed) > #activityBarToggle { align-self: flex-end; margin-right: 2px !important; }
+html[data-rail-concept="a"] #activityBar.pmr-a-bar > #activityBarToggle:hover { background: var(--pmr-hover) !important; color: var(--pmr-text) !important; }
+html[data-rail-concept="a"] #activityBar.pmr-a-bar > #activityBarToggle::before {
+  content: ''; width: 6px; height: 6px; margin-left: -3px; border-top: 1.6px solid currentColor; border-right: 1.6px solid currentColor;
+  transform: rotate(45deg); transition: transform var(--pmr-t-med) var(--pmr-spring);
+}
+html[data-rail-concept="a"] #activityBar.pmr-a-bar:not(.collapsed) > #activityBarToggle::before { transform: rotate(225deg); margin-left: 3px; }
