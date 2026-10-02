@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5338-L26459
+Source lines: L5338-L26460
 
-Source SHA256: `d87d918cefa5a3b031ccb7180c91e4537a7ea08fe53fd1a6499b1070af4ff311`
+Source SHA256: `1851dc94810cabbfc6c8c663f6cacee461a0570d6c0d782dfe34e7ab4482c3a5`
 
 ---
 
@@ -10328,6 +10328,7 @@ acceptance_criteria:
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "On the web GUI the terminal tracks its own selection in the terminal grid's data, not with the browser's selection, and a selection survives scrolling and new output (DL-139, SMPFS-072 web exception)."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
