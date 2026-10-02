@@ -18,10 +18,10 @@
 #panel-usage .pmu-tbody > .pmu-trow { min-height: 32px; height: auto; padding-top: 5px; padding-bottom: 5px; }
 
 /* feet, notes, captions, amounts and the account meta lines */
-#panel-usage :is(.pmu-cfoot-text, .pmu-note, .pmu-kpifoot, .pmu-kpicell .pmu-kpisub, .pmu-identmeta, .pmu-amounts, .pmu-accfootline > span, .pmu-amtv,
-  .pmu-amount > :nth-child(2), .pmu-amt > :nth-child(3), .pmu-amtsub, .pmu-amt .pmu-amtline2, .pmu-mixname, .pmu-ctxleg span, .pmu-trendlabel,
+#panel-usage :is(.pmu-cfoot-text, .pmu-note, .pmu-kpifoot, .pmu-kpicell .pmu-kpisub, .pmu-amounts, .pmu-accfootline > span, .pmu-amtv,
+  .pmu-amount > :nth-child(2), .pmu-amt > :nth-child(3), .pmu-amtsub, .pmu-amt .pmu-amtline2, .pmu-mixname, .pmu-ctxleg > span, .pmu-trendlabel,
   .pmu-colscap, .pmu-agtext > span, .pmu-agtext b, .pmu-limitplan, .pmu-freeprov, .pmu-cacherep, .pmu-provword, .pmu-sampled, .pmu-setupnote,
-  .pmu-mixhead span, .pmu-limitinline) {
+  .pmu-mixhead > span, .pmu-limitinline) {
   white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: anywhere; }
 #panel-usage .pmu-kpifoot.has-act > span { overflow: visible; text-overflow: clip; white-space: normal; }
 #panel-usage .pmu-limitplan { height: auto; min-height: 24px; line-height: 1.4; padding: 3px 0; }
@@ -54,3 +54,23 @@
 /* ranked rows: the provider name wraps instead of ending in "..." (narrow Route pressure, Provider value) */
 #panel-usage .pmu-rkt { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: break-word; line-height: 1.25; }
 #panel-usage .pmu-rkname { overflow: visible; }
+
+/* rows grow with wrapped text (their old heights are the minimum), so a wrapped second line never prints over the next row */
+#panel-usage .pmu-lrow { height: auto; min-height: 32px; padding-top: 4px; padding-bottom: 4px; }
+#panel-usage .pmu-list.is-two .pmu-lrow { height: auto; min-height: 44px; }
+#panel-usage .pmu-agline { height: auto; min-height: 42px; padding-top: 4px; padding-bottom: 4px; }
+#panel-usage .pmu-card:is([data-tw="xs"], [data-tw="s"]) .pmu-agline { height: auto; min-height: 48px; }
+#panel-usage .pmu-accrow.is-comfy { height: auto; min-height: 66px; }
+#panel-usage .pmu-accrow.is-compact { height: auto; min-height: 44px; }
+
+/* a plate whose title does not fit one line (42-cards.js titleFits) wraps it to two and lends it the subtitle line */
+#panel-usage .pmu-card[data-head="plate"][data-title-wrap] .pmu-cardtitle { white-space: normal; overflow: hidden; text-overflow: clip; display: -webkit-box;
+  -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-height: 18px; overflow-wrap: break-word; }
+#panel-usage .pmu-card[data-head="plate"][data-title-wrap] .pmu-cardsub { display: none; }
+/* tile titles may take three short lines ("Qwen / Coding / Plan" in a 3-track tile); the head grows and the body gives way */
+#panel-usage .pmu-card[data-head="tile"] > .pmu-cardhead { height: auto; min-height: var(--pmu-head-tile); }
+#panel-usage .pmu-card[data-head="tile"] .pmu-cardtitle { -webkit-line-clamp: 3; }
+/* Retro's mono and NieR's tracked capitals need a smaller room title in a narrow head */
+@container (max-width: 860px) {
+  html[data-theme^="retro"] #panel-usage #pmuRoomTitle { font-size: 14.5px; letter-spacing: -.01em; }
+}

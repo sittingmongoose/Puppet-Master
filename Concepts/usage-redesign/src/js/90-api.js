@@ -80,12 +80,30 @@ function appendUsageAttempt(attempt) {
   return true;
 }
 
+/* Software rendering (no GPU: no WebGL, or WebGL on SwiftShader / llvmpipe): the whole window is composited on the CPU,
+   and Glass's full-window backdrop blur under every Usage motion drops it to 4-6 fps (REVIEW-data must-fix 4). While
+   Usage shows on such a machine, html[data-pmu-soft] swaps the Glass pane's live blur for a solid pane (10-shell.css),
+   the onboarding's O55.solid answer to the same problem. Read once. */
+var softRendered = null;
+function softwareRendered() {
+  if (softRendered !== null) return softRendered;
+  try {
+    if (window.O55 && O55.motion && typeof O55.motion.softwareRendered === 'function') return (softRendered = !!O55.motion.softwareRendered());
+    var c = document.createElement('canvas'), gl = c.getContext('webgl') || c.getContext('experimental-webgl');
+    if (!gl) return (softRendered = true);
+    var ext = gl.getExtension('WEBGL_debug_renderer_info');
+    softRendered = /swiftshader|llvmpipe|softpipe|software|basic render/i.test(String(ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER)));
+    var lose = gl.getExtension('WEBGL_lose_context'); if (lose) lose.loseContext();
+  } catch (error) { softRendered = true; }
+  return softRendered;
+}
 /* While the Usage page shows, Home's workspace layer takes no pointer events (the old page's T21 rule, kept). */
 function syncUsageLayer() {
   if (!usagePanel) return;
   var active = usagePanel.classList.contains('active');
   var was = document.body.classList.contains('pmu-page-active');
   document.body.classList.toggle('pmu-page-active', active);
+  if (active && !was && softwareRendered()) document.documentElement.setAttribute('data-pmu-soft', '');
   /* Settings may have changed while Usage was hidden: re-read it on the way in (ARCHITECTURE section 6) */
   if (active && !was && PMU.settings) { PMU.settings.invalidate('page'); if (PMU.roster) PMU.roster.invalidate(); }
   /* arriving on Usage replays the room entrance (plates rise in reading order, then charts draw); leaving closes menus */

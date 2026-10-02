@@ -45,6 +45,12 @@
       var legend = body.querySelector('.pmu-trendlegend');
       if (legend && m.legendOwn) { legend.textContent = ''; try { PMU.charts.legend(legend, m.legendOwn, { inline: true }); } catch (error) {} }
       var note = body.querySelector('.pmu-note'); if (note && m.note) note.textContent = m.note;
+      /* the facts under the chart follow the range with the chart (REVIEW-jared must-fix 4: they stayed at 24 hours) */
+      var fr = body.querySelector('.pmu-factrow');
+      if (fr && m.facts) {
+        var fh = m.facts.map(function (f) { return '<span><em>' + esc(f[0]) + '</em> <b>' + esc(f[1]) + '</b></span>'; }).join('');
+        if (fr.innerHTML !== fh) { fr.innerHTML = fh; if (PMU.motion && PMU.motion.animate) PMU.motion.animate(fr, [{ opacity: 0.25 }, { opacity: 1 }], { dur: 420, ease: 'out' }); }
+      }
       return true;
     }
   });

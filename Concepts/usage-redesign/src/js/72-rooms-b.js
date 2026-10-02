@@ -168,7 +168,8 @@
     vals.forEach(function (v, i) { if (v != null && (best < 0 || v > vals[best])) best = i; });
     if (best < 0) return '-';
     var x = tk.x[best], bm = tk.buckets.bucketMs, multi = tk.x.length > 1 && tk.x[tk.x.length - 1] - tk.x[0] >= 86400000;
-    return (bm >= 86400000 ? F.date(x) : (multi ? F.day(x) + ' ' : '') + F.clock(x)) + ' · ' + F.tok(vals[best]);
+    var dayWord = PMU.charts && PMU.charts.time ? PMU.charts.time.day(x) : F.day(x);
+    return (bm >= 86400000 ? F.date(x) : (multi ? dayWord + ' ' : '') + F.clock(x)) + ' · ' + F.tok(vals[best]);
   }
   C.act('tt-split', function (el, id) { C.setCfg(id, 'split', C.cfg(id, 'split', 'off') === 'on' ? 'off' : 'on'); });
   C.act('tt-cr', function (el, id) { C.setCfg(id, 'cacheReads', C.cfg(id, 'cacheReads', 'off') === 'on' ? 'off' : 'on'); });

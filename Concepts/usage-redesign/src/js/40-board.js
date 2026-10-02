@@ -331,7 +331,7 @@
     Array.prototype.slice.call(boardEl.children).forEach(function (n) { if (!n.classList.contains('pmu-landing') && !n.classList.contains('pmu-outline')) n.remove(); });
     ghost.appendChild(inner);
     stage.appendChild(ghost);
-    var a = PMU.motion.animate(ghost, [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(' + (-6 * (dir || 1)) + 'px)' }], { dur: 'exit', ease: 'in', fill: 'forwards' });
+    var a = PMU.motion.animate(ghost, [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(' + (-22 * (dir || 1)) + 'px)' }], { dur: 'exit', ease: 'in', fill: 'forwards' });
     var done = function () { cards.forEach(destroyCard); ghost.remove(); };
     if (a) a.onfinish = done; else done();
     setTimeout(function () { if (ghost.isConnected) done(); }, 400);
@@ -382,7 +382,7 @@
     tierPass(cards, entering ? 'enter' : true);
     current.mounted = true;
     PMU.motion.release(boardEl);
-    if (entering) PMU.motion.enter(readingOrder(cards), { base: transition ? 40 : 0 });
+    if (entering) PMU.motion.enter(readingOrder(cards), { base: transition ? 16 : 0, dir: transition ? (opts.dir || 1) : 0 });
     emit('mount', { room: room, cls: current.cls.name, widgets: ids });
   }
   function refresh(reason) {

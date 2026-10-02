@@ -87,3 +87,10 @@ html[data-o55-nier-parts~="empty"] #panel-usage .pmu-empty::before { content: ""
 /* diamonds: a turning hollow diamond during refresh */
 html[data-o55-nier-parts~="diamonds"] #panel-usage .pmu-iconbtn.spinning svg { animation: pmu-nier-diamond 650ms steps(6, end) 1; }
 @keyframes pmu-nier-diamond { from { transform: rotate(0deg) scale(1); } 50% { transform: rotate(90deg) scale(.82); } to { transform: rotate(180deg) scale(1); } }
+
+/* group heading bands are not plates: no corner ticks, no ink frame */
+html[data-o55-nier="on"] #panel-usage .pmu-card[data-head="band"] { background-image: none !important; border-color: transparent; box-shadow: none; }
+html[data-o55-nier-parts~="headers"] #panel-usage .pmu-card[data-head="band"] > .pmu-cardhead { background-image: none; border-bottom-color: var(--o55-nier-ink); }
+/* the room title keeps its whole name in a narrow head: lighter tracking and a smaller size (REVIEW-data should-fix 5) */
+@container (max-width: 999px) { html[data-o55-nier-parts~="headers"] #panel-usage #pmuRoomTitle { letter-spacing: .03em; font-size: 16px; } }
+@container (max-width: 860px) { html[data-o55-nier-parts~="headers"] #panel-usage #pmuRoomTitle { font-size: 14px; letter-spacing: .02em; } }
