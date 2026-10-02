@@ -1,4 +1,5 @@
-/* nier-scenes.js — NieR Mode's scene backgrounds for the 5.6 Pro concept. OWNER: NieR Mode, step N-B (2026-10-02).
+/* nier-scenes.js — NieR Mode's scene backgrounds for the 5.6 Pro concept. OWNER: NieR Mode, step N-B (2026-10-02), the
+ * cross-fade between scenes added 2026-10-02 (Jared: "do 2 but not 1": the fade, not the ambient touches).
  * PMConcept7's six original ink-line panoramas (City Ruins, Bunker, Desert, Forest Castle, Amusement Park, Flooded City;
  * Concepts/onboarding/opus-5.5/src/settings/nier/scenes/*.svg, read only), embedded by nier_scenes_56.py in the block
  * below, behind the chat. The choice is PM_NIER.background() (Demo Studio's NieR section, nier.js): None, a scene, or
@@ -10,23 +11,44 @@
  * gradient, no mask), and the rest of the concept keeps its panels. No layer is added to the page, so the app's DOM
  * patch never meets one, and the stage scrolls over a background that stays put (a scroll container's own background).
  *
- * How. An image cannot read a CSS variable, so when a scene is shown this turns its SVG into a data: image with the
- * painted look's own ink (--o55-nier-ink) and the stage's ground (--surface, the chat stage's background), the ground also filling
- * the art's knockout shapes (class k) so nearer things hide farther ones, at PMConcept7's low ink opacity, and writes it
- * into one small sheet (#o55ns-scene) keyed by html[data-o55-nier-scene="<key>"]. No colour is in the source. The
- * thumbnails for Demo Studio's picker are a second sheet (#o55ns-thumbs), written the first time the picker shows in a
- * mode. A scene is painted once and stands still: PMConcept7's ambient touches (its wheel, birds, glints) need a layer
- * of their own, which this stage-background design does not have; the Drifting particles part moves over the stage
- * instead.
+ * How. An image cannot read a CSS variable, so when a scene is shown this turns its SVG into a blob: image with the
+ * painted look's own ink (--o55-nier-ink) and the stage's ground (--surface, the chat stage's background), the ground also
+ * filling the art's knockout shapes (class k) so nearer things hide farther ones, at PMConcept7's low ink opacity, and
+ * writes it into one small sheet (#o55ns-scene) keyed by html[data-o55-nier-scene="<key>"]. No colour is in the source.
+ * The thumbnails for Demo Studio's picker are a second sheet (#o55ns-thumbs), written the first time the picker shows in
+ * a mode. A scene stands still: PMConcept7's ambient touches (its wheel, birds, glints) are not built here (Jared
+ * declined them); the Drifting particles part moves over the stage instead.
+ *
+ * The cross-fade (PMConcept7's o55ScnApply: a change between two scenes fades the new art in by opacity over 520 ms,
+ * cubic-bezier(.22,.8,.24,1), the old one leaving when the fade ends or is interrupted). The stage background takes the
+ * new scene at once, and for those 520 ms the scene that leaves is drawn in the transcript's ::before, written through
+ * a third sheet (#o55ns-leave) that exists only while a fade runs. That pseudo-element is position: fixed and anchored
+ * to the transcript itself (position-anchor: auto, a pseudo-element's implicit anchor is its originating element), cut
+ * to the transcript's padding box (the box a scroll container's background is laid out in: the scrollbar gutter is
+ * measured when the fade starts), with the stage's own ground, gradient and sizes, so the two scenes line up exactly
+ * and the old one does not scroll with the conversation; z-index -1 inside the transcript's own stacking context
+ * (turn-stage.css isolates it) puts it over the stage background and under every message. Its opacity goes 1 -> 0
+ * with PMConcept7's easing, a compositor animation on a layer of its own (an opaque old scene fading out over the new
+ * one is the same picture as the new one fading in over the old). Why a pseudo-element: the app's DOM patch strips
+ * unknown children, attributes and classes inside #pmRoot on every render (the 500 ms work tick, a thread switch), and
+ * a body-level layer cannot sit between the stage's background and its messages. If the patch ever replaces the
+ * transcript, the animation is carried over to the new element at the same time; the rule's own opacity is 0, so a lost
+ * animation can only show the new scene, never a stale one. Rapid changes keep one leaving layer: the one of the two
+ * scenes on screen that shows more stays (at the opacity it has) and fades out over the newest; the newest always wins.
+ * The new image is loaded before the fade starts, so the stage never shows bare ground. Instant (no fade) under every
+ * reduced route (the system's reduced motion, html[data-motion="reduced"], body.pm56-reduced) and when no Motion part
+ * is installed (the Still and Colors only presets: "Nothing moves"), as PMConcept7's o55Still() stops it there; turning
+ * a scene on or off, NieR on or off, and a light or dark change (under the reboot cover) stay instant.
  *
  * Follow the page: the concept has no pages, so the scene follows what the chat is showing, on PMConcept7's own map
  * (the chat is the amusement park; a plan is briefed in the Bunker; the context window is the desert, where resources
  * run dry; running work is the flooded city, where every current meets; an open artifact is the forest kingdom).
  *
  * Contract: html[data-o55-nier-scene="city|bunker|desert|forest|park|flooded"] while a scene shows (PMConcept7's), absent
- * otherwise. window.PM56_NIER_SCENES = { keys, label(key), current(), thumbs(), refresh() }.
- * Performance: no timer, no observer, no animation; the image is rebuilt only when the scene, the mode or the ground
- * changes, and the follow check is a few state reads after each render.
+ * otherwise. window.PM56_NIER_SCENES = { keys, label(key), current(), fading(), thumbs(), refresh() }.
+ * Performance: no observer, no rAF; at rest no animation and no timer; the image is rebuilt only when the scene, the
+ * mode or the ground changes, and the follow check is a few state reads after each render. A fade is one opacity
+ * animation on the compositor, one image load before it and a 600 ms safety timer for that load.
  */
 (function () {
   'use strict';
@@ -76,59 +98,167 @@
   /* the chat stage's ground is --surface (styles.css .chat-stage); read as the token, never as a computed background,
      which lags behind a theme switch while the swap's colour fade runs */
   function stageGround() { return document.body ? (getComputedStyle(document.body).getPropertyValue('--surface') || '').trim() : ''; }
-  function image(key, ink, ground, alpha, pool) {
-    var svg = SVG[key]; if (!svg) return '';
+  /* { css: 'url("…")', blob: the blob: address to let go later, or '' } */
+  function image(key, ink, ground, alpha) {
+    var svg = SVG[key]; if (!svg) return null;
     svg = svg.split('currentColor').join(ink).replace(/class="k"/g, 'fill="' + ground + '"');
     /* an image does not read the page's sheet: the scene brings its own non-scaling strokes, and its ink opacity is one
        group, so the knockouts still hide what is behind them */
     svg = svg.replace(/^(<svg[^>]*>)/, '$1<style>path,rect,circle,ellipse,line,polyline,polygon{vector-effect:non-scaling-stroke}</style><g opacity="' + alpha + '">')
       .replace(/<\/svg>$/, '</g></svg>');
     /* a blob: URL, not a data: URL: the sheet then carries a short address, so a style recalc never re-reads a 50 KB
-       string (a body-wide restyle storm with a data: scene was measurably heavier); the old blobs are let go when a
-       sheet is rewritten */
+       string (a body-wide restyle storm with a data: scene was measurably heavier) */
     if (window.Blob && window.URL && URL.createObjectURL) {
-      try { var u = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' })); pools[pool].next.push(u); return 'url("' + u + '")'; } catch (e) { /* fall back to data: */ }
+      try { var u = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' })); return { css: 'url("' + u + '")', blob: u }; } catch (e) { /* fall back to data: */ }
     }
-    return 'url("data:image/svg+xml,' + encodeURIComponent(svg) + '")';
+    return { css: 'url("data:image/svg+xml,' + encodeURIComponent(svg) + '")', blob: '' };
   }
-  /* one pool per sheet: the addresses a sheet is written with become current, the ones it held are revoked */
-  var pools = { scene: { now: [], next: [] }, thumbs: { now: [], next: [] } };
-  function swap(pool, drop) {
-    var p = pools[pool];
-    p.now.forEach(function (u) { try { URL.revokeObjectURL(u); } catch (e) { /* gone */ } });
-    p.now = drop ? [] : p.next; p.next = [];
+  function letGo(rec) { if (rec && rec.blob) { try { URL.revokeObjectURL(rec.blob); } catch (e) { /* gone */ } rec.blob = ''; } }
+  /* the stage's layers, one string for the stage and for a leaving scene, so the two always line up */
+  function layers(ground, img) {
+    return '  background-color: ' + ground + ';\n'
+      + '  background-image: linear-gradient(to bottom, ' + ground + ' 0%, ' + ground + ' 34%, transparent 82%), ' + img + ';\n'
+      + '  background-size: 100% 64%, 100% 66%; background-position: center top, center bottom; background-repeat: no-repeat;\n';
+  }
+  /* the thumbnails' addresses: the ones a sheet is written with become current, the ones it held are let go */
+  var thumbUrls = { now: [], next: [] };
+  function swapThumbs(drop) {
+    thumbUrls.now.forEach(function (u) { letGo({ blob: u }); });
+    thumbUrls.now = drop ? [] : thumbUrls.next; thumbUrls.next = [];
   }
   function sheetEl(id) {
     var s = document.getElementById(id);
     if (!s) { s = document.createElement('style'); s.id = id; (document.head || html).appendChild(s); }
     return s;
   }
+  function dropSheet(id) { var s = document.getElementById(id); if (s) s.remove(); }
   var dark = function () { return !/-light$/.test((document.body && document.body.getAttribute('data-theme')) || ''); };
+  var stage = function () { return document.querySelector('.chat-stage > .transcript'); };
+
+  /* ---------- the cross-fade ----------------------------------------------------------------------------------------- */
+  var FADE = { duration: 520, easing: 'cubic-bezier(.22,.8,.24,1)' };
+  var still = function () {
+    return html.getAttribute('data-motion') === 'reduced' || (document.body && document.body.classList.contains('pm56-reduced')) ||
+      !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  };
+  /* "Nothing moves": no part of the Motion group installed (the Still and Colors only presets, or every Motion chip off) */
+  function motionParts() {
+    var n = N(); if (!n || !n.PARTS) return true;
+    var on = n.parts();
+    return n.PARTS.some(function (p) { return p.group === 'Motion' && on.indexOf(p.key) >= 0; });
+  }
+  var anchored = !!(window.CSS && CSS.supports && CSS.supports('position-anchor: auto') && CSS.supports('top: anchor(top)'));
+  function canFade() {
+    return anchored && !document.hidden && !still() && motionParts() && !!stage() && typeof Element.prototype.animate === 'function';
+  }
+  /* leave = { key, css, blob, el, anim } while a scene fades out over the stage, null otherwise */
+  var leave = null;
+  function leaveRule(ground, rec, el) {
+    /* the transcript's padding box: its borders and the scrollbar gutter (scrollbar-gutter: stable) come off the anchor */
+    var cs = getComputedStyle(el), bl = parseFloat(cs.borderLeftWidth) || 0, br = parseFloat(cs.borderRightWidth) || 0,
+      bt = parseFloat(cs.borderTopWidth) || 0, bb = parseFloat(cs.borderBottomWidth) || 0;
+    var gr = Math.max(0, el.offsetWidth - el.clientWidth - bl - br), gb = Math.max(0, el.offsetHeight - el.clientHeight - bt - bb);
+    return '@media (prefers-reduced-motion: no-preference) {\n'
+      + 'html[data-o55-nier="on"][data-o55-nier-scene]:not([data-motion="reduced"]) body:not(.pm56-reduced) .chat-stage > .transcript { isolation: isolate; }\n'
+      + 'html[data-o55-nier="on"][data-o55-nier-scene]:not([data-motion="reduced"]) body:not(.pm56-reduced) .chat-stage > .transcript::before {\n'
+      + '  content: ""; position: fixed; position-anchor: auto; z-index: -1; pointer-events: none; contain: strict; opacity: 0;\n'
+      + '  top: calc(anchor(top) + ' + bt + 'px); left: calc(anchor(left) + ' + bl + 'px);\n'
+      + '  right: calc(anchor(right) + ' + (br + gr) + 'px); bottom: calc(anchor(bottom) + ' + (bb + gb) + 'px);\n'
+      + layers(ground, rec.css) + '}\n}';
+  }
+  function play(el, from, at) {
+    var a = el.animate([{ opacity: from }, { opacity: 0 }], Object.assign({ pseudoElement: '::before' }, FADE));
+    if (at) a.currentTime = at;
+    a.onfinish = a.oncancel = function () { if (leave && leave.anim === a) endLeave(); };
+    return a;
+  }
+  function stopAnim(rec) { if (rec && rec.anim) { var a = rec.anim; rec.anim = null; a.onfinish = a.oncancel = null; try { a.cancel(); } catch (e) { /* gone */ } } }
+  function endLeave() {
+    if (!leave) return;
+    var rec = leave; leave = null;
+    stopAnim(rec);
+    dropSheet('o55ns-leave');
+    letGo(rec);
+  }
+  /* how much of the leaving scene shows now (one style read, only when a change lands during a fade) */
+  function leaveOpacity() {
+    if (!leave || !leave.el || !leave.el.isConnected) return 0;
+    var o = parseFloat(getComputedStyle(leave.el, '::before').opacity);
+    return isFinite(o) ? o : 0;
+  }
+  /* the pseudo-element follows the transcript: if the patch ever replaced it, carry the fade over at the same time */
+  function follower() {
+    if (!leave) return;
+    var el = stage();
+    if (!el) { endLeave(); return; }
+    if (el === leave.el) return;
+    var t = leave.anim ? leave.anim.currentTime : 0;
+    stopAnim(leave);
+    leave.el = el;
+    leave.anim = play(el, leave.from, t || 0);
+  }
 
   /* ---------- show the wanted scene ---------------------------------------------------------------------------------- */
-  var shown = null, built = '';
+  /* cur = the scene the stage shows { key, sig, css, blob, ground }; pending = the next one while its image loads */
+  var cur = null, pending = null;
+  function writeStage(rec) {
+    sheetEl('o55ns-scene').textContent = 'html[data-o55-nier="on"][data-o55-nier-scene="' + rec.key + '"] .chat-stage > .transcript {\n'
+      + layers(rec.ground, rec.css) + '}';
+    cur = rec;
+    if (html.getAttribute('data-o55-nier-scene') !== rec.key) html.setAttribute('data-o55-nier-scene', rec.key);
+  }
+  function dropPending() { if (pending) { letGo(pending); pending = null; } }
   function apply() {
     var key = wanted();
     if (!key || !SVG[key]) {
-      shown = null; built = '';
+      dropPending(); endLeave();
+      if (cur) { letGo(cur); cur = null; }
       if (html.hasAttribute('data-o55-nier-scene')) html.removeAttribute('data-o55-nier-scene');
-      ['o55ns-scene', 'o55ns-thumbs'].forEach(function (id) { var s = document.getElementById(id); if (s) s.remove(); });
-      swap('scene', true); swap('thumbs', true);
+      ['o55ns-scene', 'o55ns-thumbs'].forEach(dropSheet);
+      swapThumbs(true);
       thumbsFor = '';
       return;
     }
     var ink = paintedInk(), ground = stageGround(), alpha = dark() ? 0.24 : 0.19, sig = key + '|' + ink + '|' + ground + '|' + alpha;
     if (!ink || !ground) return;
-    if (sig !== built) {
-      built = sig;
-      sheetEl('o55ns-scene').textContent = 'html[data-o55-nier="on"][data-o55-nier-scene="' + key + '"] .chat-stage > .transcript {\n'
-        + '  background-color: ' + ground + ';\n'
-        + '  background-image: linear-gradient(to bottom, ' + ground + ' 0%, ' + ground + ' 34%, transparent 82%), ' + image(key, ink, ground, alpha, 'scene') + ';\n'
-        + '  background-size: 100% 64%, 100% 66%; background-position: center top, center bottom; background-repeat: no-repeat;\n}';
-      swap('scene');
+    if (pending && pending.sig === sig) return;
+    dropPending();
+    if (cur && cur.sig === sig) {
+      if (html.getAttribute('data-o55-nier-scene') !== key) html.setAttribute('data-o55-nier-scene', key);
+      return;
     }
-    shown = key;
-    if (html.getAttribute('data-o55-nier-scene') !== key) html.setAttribute('data-o55-nier-scene', key);
+    var img = image(key, ink, ground, alpha);
+    var next = { key: key, sig: sig, css: img.css, blob: img.blob, ground: ground };
+    /* a change between two scenes in the same look fades; anything else (a first scene, a new look) is instant */
+    if (!cur || cur.key === key || cur.sig.slice(cur.key.length) !== sig.slice(key.length) || !canFade()) {
+      endLeave();
+      var was = cur; writeStage(next); letGo(was);
+      return;
+    }
+    /* load the new image first, so the stage under the fading scene is never bare ground */
+    pending = next;
+    var go = function () { if (pending !== next) return; pending = null; crossFade(next); };
+    if (!next.blob || typeof Image !== 'function') { go(); return; }
+    var im = new Image(), t = window.setTimeout(go, 600);
+    var ready = function () { window.clearTimeout(t); go(); };
+    im.onload = im.onerror = function () { if (typeof im.decode === 'function') im.decode().then(ready, ready); else ready(); };
+    im.src = next.blob;
+  }
+  function crossFade(next) {
+    var el = stage(), prev = cur;
+    if (!prev || !el || !canFade()) { endLeave(); writeStage(next); letGo(prev); return; }
+    /* one leaving layer at most: of the two scenes on screen, the one that shows more stays at the opacity it has */
+    var stay, from;
+    if (leave) {
+      var o = leaveOpacity();
+      if (o >= 0.5) { stay = leave; from = o; stopAnim(leave); leave = null; letGo(prev); }
+      else { stay = prev; from = 1 - o; endLeave(); }
+    } else { stay = prev; from = 1; }
+    if (stay.key === next.key) { letGo(stay); dropSheet('o55ns-leave'); writeStage(next); return; }
+    sheetEl('o55ns-leave').textContent = leaveRule(next.ground, stay, el);
+    writeStage(next);
+    leave = { key: stay.key, css: stay.css, blob: stay.blob, el: el, from: from, anim: null };
+    leave.anim = play(el, from, 0);
   }
   /* the picker's thumbnails, once per look */
   var thumbsFor = '';
@@ -141,9 +271,10 @@
     if (!ink || !ground) return;
     thumbsFor = sig;
     sheetEl('o55ns-thumbs').textContent = KEYS.map(function (k) {
-      return 'html[data-o55-nier="on"] .o55ns-thumb[data-scene="' + k + '"] { background-image: ' + image(k, ink, ground, 0.8, 'thumbs') + '; }';
+      var img = image(k, ink, ground, 0.8); if (img.blob) thumbUrls.next.push(img.blob);
+      return 'html[data-o55-nier="on"] .o55ns-thumb[data-scene="' + k + '"] { background-image: ' + img.css + '; }';
     }).join('\n');
-    swap('thumbs');
+    swapThumbs();
   }
 
   /* ---------- triggers ----------------------------------------------------------------------------------------------- */
@@ -158,9 +289,10 @@
     EXT.slot('afterRender', function (c, info) {
       if (!info || info.phase !== 'app' || html.getAttribute('data-o55-nier') !== 'on') return;
       try {
+        if (leave) follower();
         var n = N(), f = viewScene(c), was = follow;
         follow = f;
-        if ((n && n.background() === 'Follow the page' && f !== was) || (!shown && wanted())) apply();
+        if ((n && n.background() === 'Follow the page' && f !== was) || (!cur && !pending && wanted())) apply();
       } catch (e) { /* decoration only */ }
     });
   }
@@ -168,7 +300,8 @@
   window.PM56_NIER_SCENES = Object.freeze({
     keys: KEYS.slice(),
     label: function (key) { return LABEL[key] || ''; },
-    current: function () { return shown; },
+    current: function () { return cur ? cur.key : null; },
+    fading: function () { return leave ? leave.key : null; },
     thumbs: thumbs,
     refresh: apply
   });
