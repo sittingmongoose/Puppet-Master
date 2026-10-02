@@ -23,9 +23,10 @@ python3 Concepts/onboarding/opus-5.5/tools/build.py --check  # markers, patches,
 ```
 
 `build.py` reads the pinned base page (SHA-256 `b3888fad…`), swaps the base's Settings managers for the fork in
-`src/settings` (see Settings below), strips the old onboarding and tour, splices `src/`
-between `<!-- O55:… -->` markers and applies a few guarded, exactly-once patches (hover-tag roots, labels, the Teacher
-persona, and two owner exposures: Settings Transfer preview/apply and the layout restore).
+`src/settings` (see Settings below), strips the old onboarding and tour, applies a few guarded, exactly-once patches
+(hover-tag roots, labels, the Teacher persona, and two owner exposures: Settings Transfer preview/apply and the layout
+restore), replaces the Prism Usage page with the redesign from `Concepts/usage-redesign` (step 2b, after the patches,
+because the usage-card patch needs the old rule present), and splices `src/` between `<!-- O55:… -->` markers.
 
 `Concepts/PMConcept7.html` is published only from this generator (2026-09-26 user direction): `--publish-pm7`
 writes the same built bytes to both outputs, and `--check` fails while `PMConcept7.html` is missing or differs by
@@ -48,6 +49,7 @@ old `build_pm7.py --out Concepts/PMConcept7.html` promotion now refuses by defau
 | `src/css/` | Window, components, motion, art. Colours come from the live theme tokens. |
 | `src/coverage.map.json` → `src/coverage.json` | Every setup-plan field (63) and conditional (26) mapped to the screen or control that sets it, plus screens → scenes and scenarios → drivers. |
 | `src/settings/` | The Settings layer, forked from the base's T50 Settings refresh and composed by `tools/settings_layer.py`: `kit.js` + `kit.d/*.js` (rows, controls, placement, plain pages, look settings, wizard, flows), `managers/*.js` (one per manager page), `styles.css` + `styles.d/*.css`, `data.json` + `data.d/`, `placement.json` + `o55/placement.d/*.json` (where every canonical setting id is drawn), `o55/rows.d/*.json` (per-row wording and behaviour). |
+| `Concepts/usage-redesign/` | The Usage page layer (sources outside this package): `tools/build.py` step 2b calls its `usage_layer.apply()` after the patches, and its `lint()` runs in `lint_sources()`. |
 
 ## Tools (all file:// with the local Chrome; outputs go to /tmp or the Evidence share, never the repository)
 

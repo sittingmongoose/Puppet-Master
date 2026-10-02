@@ -5,7 +5,9 @@ The redesigned Usage page of the Puppet Master concept, built as a layer over th
 Prism Usage page replaced by the page in `src/`. It is generated. Never hand-edit it, and never hand-edit the Usage page
 inside `PMConcept7.html` either: change `src/` or `tools/usage_layer.py` and rebuild.
 
-Status: B v2 skeleton (2026-10-02). The design is `~/PM-Experiments/usage-redesign-20261001/design/final/DESIGN-SPEC.md`
+Status: B v2 skeleton (2026-10-02), published through opus-5.5 `build.py` (Proposal B: `build_text()` step 2b
+applies the usage layer, so `TestOpus5.5PmConcept.html` and `PMConcept7.html` carry the redesigned page, and
+`build_usage.py` only retitles). The design is `~/PM-Experiments/usage-redesign-20261001/design/final/DESIGN-SPEC.md`
 (with the generated `BOARDS.md`) and the module contract the three builders (engine, charts, content) code against is
 `ARCHITECTURE.md` in the same folder. Every file it names exists here with its namespace (`window.PMU`), stub signatures
 and a working shell: the rail of 13 rooms, the one-line head, the board engine placing every room's default board on

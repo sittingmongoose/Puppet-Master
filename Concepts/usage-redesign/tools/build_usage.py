@@ -5,9 +5,9 @@ Usage:
   python3 Concepts/usage-redesign/tools/build_usage.py          # build and write Concepts/UsageTestPMConcept7.html
   python3 Concepts/usage-redesign/tools/build_usage.py --check  # rebuild in memory and verify the written file and guards
 
-The input is opus-5.5 build.build_text() (the exact bytes of TestOpus5.5PmConcept.html, base pin enforced there), so
-this review copy and a later publish through build.py (Proposal B) apply the same layer to the same text. The layer
-itself is tools/usage_layer.py. The output is generated: never hand-edit it.
+The input is opus-5.5 build.build_text() (the exact bytes of TestOpus5.5PmConcept.html, base pin enforced there),
+which already applies the usage layer (Proposal B); when its USAGE:BODY marker is present the layer is not applied
+twice and this tool only retitles. The layer itself is tools/usage_layer.py. The output is generated: never hand-edit it.
 """
 from __future__ import annotations
 
@@ -44,7 +44,11 @@ MARKERS = [usage_layer.BODY_START, usage_layer.BODY_END,
 def build_page() -> tuple[str, dict, bool]:
     base = build.build_text()
     input_current = INPUT_FILE.exists() and INPUT_FILE.read_bytes() == base.encode('utf-8')
-    text, notes = usage_layer.apply(base, build.need)
+    if usage_layer.BODY_START in base:
+        # Proposal B: build_text() already applied the layer; only its notes are reused, never applied twice.
+        text, notes = base, dict(build.SETTINGS_NOTES.get('usage', {}))
+    else:
+        text, notes = usage_layer.apply(base, build.need)
     text = build.replace_once(text, OLD_TITLE, NEW_TITLE, 'usage test title')
     return HEADER + text, notes, input_current
 

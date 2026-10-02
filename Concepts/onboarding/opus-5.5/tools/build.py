@@ -34,6 +34,9 @@ PM7_TARGET = CONCEPTS / 'PMConcept7.html'
 SRC = PKG / 'src'
 BASE_SHA256 = 'b3888fad4993f484ab4548e9ff212ec0042fa0a912947a7f316514db939326be'
 
+sys.path.insert(0, str(CONCEPTS / 'usage-redesign' / 'tools'))
+import usage_layer
+
 EMOJI = re.compile('[\U0001F000-\U0001FAFF☀-➿⬀-⯿️]')
 BANNED_COPY = re.compile(r'\b(repository|repositories|forge|runtime|adapter|endpoint|execution host|credential profile|'
                          r'unleash|supercharge|ai magic|shell)\b', re.I)
@@ -135,6 +138,7 @@ def lint_sources() -> list[str]:
         problems.append('NieR scene SVGs are stale; run tools/nier_scene_art.py --write')
     if nier_scenes.main(['--check']) != 0:
         problems.append('kit.d/21-nier-scenes.js is stale; run tools/nier_scenes.py --write')
+    problems.extend(usage_layer.lint())
     return problems
 
 
@@ -362,6 +366,10 @@ def build_text() -> str:
     text = replace_once(text, SETTINGS_ANCHOR, SETTINGS_EXPOSE + SETTINGS_ANCHOR, 'settings transfer exposure')
     text = replace_once(text, LAYOUT_ANCHOR, LAYOUT_EXPOSE + LAYOUT_ANCHOR, 'layout restore exposure')
 
+    # 2b. Usage: replace the Prism Usage page with the redesign in Concepts/usage-redesign. This runs after the
+    # PATCHES loop because the 'usage card cta :has restyle' patch needs the old rule present.
+    text, SETTINGS_NOTES['usage'] = usage_layer.apply(text, need)
+
     # 3. Splice the O55 modules.
     css = read_parts(SRC / 'css', '.css')
     js = read_parts(SRC / 'js', '.js')
@@ -381,10 +389,12 @@ def check(built: str) -> list[str]:
     problems = lint_sources() + syntax_check(built)
     for removed in ['id="pm7-onboarding"', 'id="pm7-guided-tour"', 'pm7-onboarding-js', 'pm7-guided-tour-js',
                     'pm7-onboarding-css', 'pm7-guided-tour-css', "'.pm7gt-callout", ".closest('.pm7gt')",
-                    "getElementById('pm7-onboarding')", "getElementById('pm7-guided-tour')"]:
+                    "getElementById('pm7-onboarding')", "getElementById('pm7-guided-tour')",
+                    'id="pm7UsageApp"', 'pm7-t31-usage-final', 'pm7-t24-usage-readability-and-fit']:
         if removed in built:
             problems.append(f'removed reference still present: {removed}')
-    for marker in ['<!-- O55:CSS:START -->', '<!-- O55:CSS:END -->', '<!-- O55:BODY:START -->', '<!-- O55:BODY:END -->']:
+    for marker in ['<!-- O55:CSS:START -->', '<!-- O55:CSS:END -->', '<!-- O55:BODY:START -->', '<!-- O55:BODY:END -->',
+                   '<!-- USAGE:BODY:START -->', '<!-- USAGE:BODY:END -->']:
         if built.count(marker) != 1:
             problems.append(f'marker {marker} appears {built.count(marker)} times')
     expected = built.encode('utf-8')
@@ -400,11 +410,12 @@ def check(built: str) -> list[str]:
 
 
 def syntax_check(built: str) -> list[str]:
-    """node --check the scripts this package writes (the Settings engine with its managers, and the O55 module)."""
+    """node --check the scripts this package writes (the Settings engine with its managers, the O55 module, and the
+    Usage page from Concepts/usage-redesign)."""
     import subprocess
     import tempfile
     out = []
-    for sid in ('pm4-settings-js', 'pm-o55-js'):
+    for sid in ('pm4-settings-js', 'pm-o55-js', 'pm-usage-js'):
         m = re.search(r'<script\b[^>]*\bid="' + sid + r'"[^>]*>(.*?)</script>', built, re.S)
         if not m:
             out.append(f'script {sid} missing')
