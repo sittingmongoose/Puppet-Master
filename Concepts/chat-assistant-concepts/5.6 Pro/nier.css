@@ -384,3 +384,15 @@ html[data-o55-nier="on"] .wa-disc.orbit-strip-item.done,
 html[data-o55-nier="on"] .working-variant-8 .rail8-item.done { color: var(--positive); border-color: var(--o55-nier-ok); background: var(--surface-3); }
 html[data-o55-nier="on"] body.pm56-reduced .pm-rail-item.orbit-strip-item.current,
 html[data-o55-nier="on"] body.pm56-reduced .working-variant-8 .rail8-item.current { animation: none; }
+
+/* ------------------------------------------------------------------ reduced motion */
+/* Every NieR loop in this sheet stops on all three routes (the media query, html[data-motion], body.pm56-reduced);
+   the ink block, the olive done ink and the still dial carry the state. */
+@media (prefers-reduced-motion: reduce) {
+  html[data-o55-nier="on"] .pm-rail-item.orbit-strip-item.current, html[data-o55-nier="on"] .working-variant-8 .rail8-item.current,
+  html[data-o55-nier="on"] .status-branch { animation: none !important; }
+}
+html[data-o55-nier="on"][data-motion="reduced"] .pm-rail-item.orbit-strip-item.current,
+html[data-o55-nier="on"][data-motion="reduced"] .working-variant-8 .rail8-item.current,
+html[data-o55-nier="on"][data-motion="reduced"] .status-branch,
+html[data-o55-nier="on"] body.pm56-reduced .status-branch { animation: none !important; }

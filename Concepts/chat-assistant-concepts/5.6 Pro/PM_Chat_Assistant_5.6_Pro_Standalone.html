@@ -17402,6 +17402,18 @@ html[data-o55-nier="on"] .working-variant-8 .rail8-item.done { color: var(--posi
 html[data-o55-nier="on"] body.pm56-reduced .pm-rail-item.orbit-strip-item.current,
 html[data-o55-nier="on"] body.pm56-reduced .working-variant-8 .rail8-item.current { animation: none; }
 
+/* ------------------------------------------------------------------ reduced motion */
+/* Every NieR loop in this sheet stops on all three routes (the media query, html[data-motion], body.pm56-reduced);
+   the ink block, the olive done ink and the still dial carry the state. */
+@media (prefers-reduced-motion: reduce) {
+  html[data-o55-nier="on"] .pm-rail-item.orbit-strip-item.current, html[data-o55-nier="on"] .working-variant-8 .rail8-item.current,
+  html[data-o55-nier="on"] .status-branch { animation: none !important; }
+}
+html[data-o55-nier="on"][data-motion="reduced"] .pm-rail-item.orbit-strip-item.current,
+html[data-o55-nier="on"][data-motion="reduced"] .working-variant-8 .rail8-item.current,
+html[data-o55-nier="on"][data-motion="reduced"] .status-branch,
+html[data-o55-nier="on"] body.pm56-reduced .status-branch { animation: none !important; }
+
 /* nier-parts.css — NieR Mode parts for the 5.6 Pro concept (PMConcept7's 29-part contract). OWNER: NieR Mode, step
  * N-A (2026-10-02): the Look parts (square, cursor, headers, ground, brackets, diamonds), pointer and icons; step N-B
  * adds the Motion, Sound & voice and World parts here. The script half is nier-parts.js; the palette is nier.css.
