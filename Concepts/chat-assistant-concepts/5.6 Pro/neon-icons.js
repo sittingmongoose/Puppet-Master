@@ -13,15 +13,17 @@
  *   PMX name (the kind marks, eye family, lock, ...), the geometry is PMX's, copied verbatim and only split into
  *   parts; if module-shell changes one of those drawings, mirror it here (see RECONCILED and the per-glyph notes).
  * - The neon anatomy (plan §1). Every glyph renders as
- *     1. the merged static halos: one wide <path class="nx-h nx-ho"> and one inner <path class="nx-h">, each a
- *        single d holding every static part's geometry (rect/circle/ellipse/line converted), so halos never stack;
+ *     1. the merged halos, each one <path> with a single d (rect/circle/ellipse/line converted) so halos never
+ *        stack: the wide band (.nx-h.nx-ho) and the mid band (.nx-h.nx-hm), both holding the whole glyph at rest,
+ *        then the core band (.nx-h) holding every static part;
  *     2. the static tubes (.nx-c), each keeping its original element (check keeps d="m5 12 4 4L19 6", copy keeps
  *        <rect x="8" y="8" ...>: transcript-verify pins both);
  *     3. each moving part as <g class="nx-p nx-p<i>" style="--ax:..;--ay:..;--ar:..;--ao:..;--ad:.."> holding its
- *        own halo copies and its tube(s).
- *   Two halo layers rather than one: the inner band is the neon core, the wide faint band is the 4-6 px tail the
- *   halo pixel metric asks for; neon-icons.css keeps the wide band visibility:hidden (no paint) except where a
- *   status or the bar lights it.
+ *        own inner halo copy and its tube(s) (and the wide band too when the part is the whole glyph).
+ *   Three bands rather than one: the core band hugs the tube (the neon itself); the mid and wide bands are the
+ *   faint falloff and the 4-6 px tail the halo pixel metric asks for, stepped in two so neither edge reads as a
+ *   plate. neon-icons.css keeps the outer two visibility:hidden (no paint) except where a status or the bar
+ *   lights them.
  * - Acts. A part carries its displaced pose (--ax/--ay translate, --ar rotate, --ao opacity, --cr circle radius,
  *   all in user units / degrees), a stagger (--ad, ms) and, for draw-ons, a clip (--ac start inset, --ae end
  *   inset, user units on the view box). neon-icons.css moves the part by animating one registered number, --nx-t
@@ -415,18 +417,15 @@
       var c = 'nx-c' + (e.f || filled ? ' nx-f' : '') + (e.cls ? ' ' + e.cls : '');
       return '<' + e.tag + ' class="' + c + '"' + attrs(e) + '/>';
     }
-    /* the two halo layers for a list of elements: merged into one d, except an element carrying a transform
-       attribute (role-orbit's ellipse), which keeps its own halo element so its geometry stays exact */
-    function halos(els) {
+    /* One halo layer for a list of elements: merged into one d, except an element carrying a transform attribute
+       (role-orbit's ellipse), which keeps its own halo element so its geometry stays exact. */
+    function halo(els, cls) {
       var ds = [], solo = '';
       els.forEach(function (e) {
-        if (e.attrs.transform) {
-          var a = attrs({ attrs: e.attrs });
-          solo += '<' + e.tag + ' class="nx-h nx-ho"' + a + '/><' + e.tag + ' class="nx-h"' + a + '/>';
-        } else ds.push(pathOf(e));
+        if (e.attrs.transform) solo += '<' + e.tag + ' class="' + cls + '"' + attrs({ attrs: e.attrs }) + '/>';
+        else ds.push(pathOf(e));
       });
-      var d = esc(ds.join(''));
-      return (d ? '<path class="nx-h nx-ho" d="' + d + '"/><path class="nx-h" d="' + d + '"/>' : '') + solo;
+      return (ds.length ? '<path class="' + cls + '" d="' + esc(ds.join('')) + '"/>' : '') + solo;
     }
     /* the size gate for one moving part at `size` px (plan §1) */
     function moves(p, size, origin) {
@@ -461,16 +460,26 @@
       if (!d) { miss(name); n = 'info'; d = GLYPHS.info; }
       var toks = String(cls || '').split(/\s+/).filter(Boolean), role = d.role;
       toks = toks.filter(function (t) { var m = /^nx-r-(status|concept|control|brand)$/.exec(t); if (m) { role = m[1]; return false; } return true; });
-      var stat = [], tubes = '', moving = '', i = 0;
+      /* The wide band is ONE merged path for the whole glyph at rest (static parts and moving parts alike), so wide
+         bands never stack; it stays put while a part moves (at a few percent alpha the eye reads it as the glyph's
+         glow, not the part's). Each moving part carries its own inner band, which moves with its tube. A glyph that
+         is all one moving part (spin, ratchet, tip) gives that part the wide band too, so it turns with it. */
+      var stat = [], wide = [], tubes = '', moving = '', i = 0, live = [];
       d.parts.forEach(function (p) {
         if (!p.m || !moves(p, size, d.origin)) { p.els.forEach(function (e) { stat.push(e); tubes += tube(e, d.fill); }); return; }
+        live.push(p);
+      });
+      var selfWide = !stat.length && live.length === 1;
+      wide = stat.slice();
+      live.forEach(function (p) {
         var m = p.m, kind = m.ac ? ' nx-pc' : (m.b ? ' nx-pb' : '');
         var gcls = 'nx-p nx-p' + i + kind + (m.n ? ' nx-pn' : '') + (m.o === 'c' ? ' nx-pf' : '') + (statusWrap ? ' nx-st-move' : '');
         var st = partStyle(m, d.origin);
-        moving += '<g class="' + gcls + '"' + (st ? ' style="' + st + '"' : '') + '>' + halos(p.els) + p.els.map(function (e) { return tube(e, d.fill); }).join('') + '</g>';
+        if (!selfWide) wide = wide.concat(p.els);
+        moving += '<g class="' + gcls + '"' + (st ? ' style="' + st + '"' : '') + '>' + (selfWide ? halo(p.els, 'nx-h nx-ho') + halo(p.els, 'nx-h nx-hm') : '') + halo(p.els, 'nx-h') + p.els.map(function (e) { return tube(e, d.fill); }).join('') + '</g>';
         i++;
       });
-      var base = halos(stat) + tubes;
+      var base = (wide.length && !selfWide ? halo(wide, 'nx-h nx-ho') + halo(wide, 'nx-h nx-hm') : '') + (stat.length ? halo(stat, 'nx-h') : '') + tubes;
       if (statusWrap) base = '<g class="nx-st-base">' + base + '</g>';
       var z = size < 12 ? ' nx-z0' : size < 15 ? ' nx-z1' : '';
       var tone = statusWrap ? ' nx-t-' + statusWrap.tone : '';

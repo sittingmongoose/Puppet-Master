@@ -28,10 +28,14 @@
 /* Dark themes: the halo recipe (plan §1), tuned against tools/glow-metric.mjs. Widths are screen px
    (vector-effect: non-scaling-stroke), so they read the same at 12 and 22 px and map to Slint px. */
 body {
-  --nx-hi-w: 3.6px; --nx-ho-w: 11px;
-  --nx-h-live-i: .24; --nx-h-live-o: .06;
-  --nx-h-chg-i: .16; --nx-h-chg-o: .04;
-  --nx-h-quiet-i: .10; --nx-h-quiet-o: 0;
+  --nx-hi-w: 3.6px; --nx-hm-w: 8px; --nx-ho-w: 14px;
+  /* per tone: the bar's filter glow was not one strength (blocked 62 %, attention 58 %, working 60 %, changed
+     44 % at 4 px), so each lit tone has its own inner (-i) and wide (-o) band, fitted to the metric */
+  --nx-h-blocked-i: .24; --nx-h-blocked-o: .031;
+  --nx-h-attention-i: .20; --nx-h-attention-o: .028;
+  --nx-h-working-i: .20; --nx-h-working-o: .029;
+  --nx-h-changed-i: .10; --nx-h-changed-o: .017;
+  --nx-h-quiet-i: .10;
   --nx-h-hover-i: .22; --nx-h-swell-i: .20;
   /* voices (plan §1): one easing token per theme family; timing and order never change */
   --nx-ease: cubic-bezier(.2, .75, .25, 1);
@@ -39,12 +43,15 @@ body {
   --nx-ease-c: cubic-bezier(.3, .6, .3, 1);
   --nx-d1: 440ms;
 }
-/* Light themes: one inner band (a dark halo on a light page reads as a smudge if it is wide or strong). */
+/* Light themes: a dark-on-light halo reads as a smudge when it is strong, so the bands are fainter; the bar's
+   drop-shadow threw more far tail on light pages, which the wide band carries. */
 body[data-theme$="-light"] {
-  --nx-hi-w: 3px; --nx-ho-w: 11px;
-  --nx-h-live-i: .14; --nx-h-live-o: .05;
-  --nx-h-chg-i: .13; --nx-h-chg-o: .035;
-  --nx-h-quiet-i: .12; --nx-h-quiet-o: 0;
+  --nx-hi-w: 3px; --nx-hm-w: 8px; --nx-ho-w: 14px;
+  --nx-h-blocked-i: .14; --nx-h-blocked-o: .035;
+  --nx-h-attention-i: .14; --nx-h-attention-o: .033;
+  --nx-h-working-i: .14; --nx-h-working-o: .034;
+  --nx-h-changed-i: .10; --nx-h-changed-o: .02;
+  --nx-h-quiet-i: .12;
   --nx-h-hover-i: .14; --nx-h-swell-i: .16;
 }
 /* Friendly overshoots, Glass glides, Retro steps. */
@@ -87,11 +94,14 @@ svg:where(.nx) .nx-h {
   transition: stroke-opacity 180ms ease-out, visibility 180ms;
   animation: var(--nx-fl);
 }
-svg:where(.nx) .nx-ho {
-  stroke-width: var(--nx-ho-w, 11px);
+/* The outer falloff: a mid band and a wide band at the same faint alpha, so the glow steps down twice (a dense
+   middle, a long thin tail) instead of ending in one visible edge. */
+svg:where(.nx) .nx-ho, svg:where(.nx) .nx-hm {
+  stroke-width: var(--nx-ho-w, 14px);
   stroke-opacity: var(--nx-ho-a, 0);
   visibility: var(--nx-hov, hidden);
 }
+svg:where(.nx) .nx-hm { stroke-width: var(--nx-hm-w, 8px); }
 
 /* ------------------------------------------------------------------ 4. roles (plan §1 table) */
 /* concept: the host's ink with a faint same-ink halo, lit steady. */
@@ -106,10 +116,10 @@ svg:where(.nx-r-brand) { --nx-hiv: hidden; --nx-hov: hidden; }
 /* ------------------------------------------------------------------ 5. tones (the bar's, verbatim) */
 /* Ink goes through --nx-ink (never `color`), so the transcript accent budget turn-verify counts is unchanged.
    The weight factor is the bar's TONE_STROKE over 1.8; live tones light both bands. */
-svg:where(.nx-t-blocked) { --nx-ink: var(--danger); --nx-tone-k: 1.22; --nx-hi-a: var(--nx-h-live-i); --nx-ho-a: var(--nx-h-live-o); --nx-hov: visible; }
-svg:where(.nx-t-attention) { --nx-ink: var(--warning); --nx-tone-k: 1.17; --nx-hi-a: var(--nx-h-live-i); --nx-ho-a: var(--nx-h-live-o); --nx-hov: visible; }
-svg:where(.nx-t-working) { --nx-ink: var(--accent); --nx-tone-k: 1.17; --nx-hi-a: var(--nx-h-live-i); --nx-ho-a: var(--nx-h-live-o); --nx-hov: visible; }
-svg:where(.nx-t-changed) { --nx-ink: var(--accent-2); --nx-tone-k: 1; --nx-hi-a: var(--nx-h-chg-i); --nx-ho-a: var(--nx-h-chg-o); --nx-hov: visible; }
+svg:where(.nx-t-blocked) { --nx-ink: var(--danger); --nx-tone-k: 1.22; --nx-hi-a: var(--nx-h-blocked-i); --nx-ho-a: var(--nx-h-blocked-o); --nx-hov: visible; }
+svg:where(.nx-t-attention) { --nx-ink: var(--warning); --nx-tone-k: 1.17; --nx-hi-a: var(--nx-h-attention-i); --nx-ho-a: var(--nx-h-attention-o); --nx-hov: visible; }
+svg:where(.nx-t-working) { --nx-ink: var(--accent); --nx-tone-k: 1.17; --nx-hi-a: var(--nx-h-working-i); --nx-ho-a: var(--nx-h-working-o); --nx-hov: visible; }
+svg:where(.nx-t-changed) { --nx-ink: var(--accent-2); --nx-tone-k: 1; --nx-hi-a: var(--nx-h-changed-i); --nx-ho-a: var(--nx-h-changed-o); --nx-hov: visible; }
 svg:where(.nx-t-done) { --nx-ink: var(--positive); --nx-tone-k: .83; --nx-hi-a: var(--nx-h-quiet-i); --nx-ho-a: 0; }
 svg:where(.nx-t-idle) { --nx-ink: var(--subtle); --nx-tone-k: .78; --nx-hi-a: var(--nx-h-quiet-i); --nx-ho-a: 0; }
 /* paused (and skipped): muted, no halo. */

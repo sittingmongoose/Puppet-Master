@@ -24,24 +24,33 @@
    `.state-mark` (styles.css:235) was a 5px dot whose value came from five
    object literals, so all five pulsed identically whether work was running,
    stalled or finished.  activity-bar.js publishes a derived six-value tone
-   per domain onto <body> as the --ab-ink, --ab-anim and --ab-shadow property
-   families; the five mapping rules below hand the right one to the right
-   button, and one paint rule lights the icon from it.
+   per domain onto <html> (data-ab-<id>) and <body> as the --ab-ink, --ab-anim,
+   --ab-hi, --ab-ho and --ab-stroke property families; the nine mapping rules
+   below hand the right one to the right button, and one rule lights the icon.
+   Neon icons (2026-10-02): the icon is an svg.nx (neon-icons.js) and its glow
+   is the neon halo (two merged stroke bands behind the tubes), not a CSS
+   filter: --ab-hi / --ab-ho are the inner and wide band strengths. The bar is
+   self-lit, so it sets every neon variable itself, which also keeps the
+   generic hover ignite (neon-icons.css section 8) off it.
    ===================================================================== */
 html[data-ab-ready] .activity-item .state-mark { display: none; }
 
-html[data-ab-ready] .activity-item[data-hover-domain="goal"]      { --ab-ink: var(--ab-ink-goal);      --ab-anim: var(--ab-anim-goal);      --ab-shadow: var(--ab-shadow-goal); --ab-stroke: var(--ab-stroke-goal); }
-html[data-ab-ready] .activity-item[data-hover-domain="todo"]      { --ab-ink: var(--ab-ink-todo);      --ab-anim: var(--ab-anim-todo);      --ab-shadow: var(--ab-shadow-todo); --ab-stroke: var(--ab-stroke-todo); }
-html[data-ab-ready] .activity-item[data-hover-domain="subagents"] { --ab-ink: var(--ab-ink-subagents); --ab-anim: var(--ab-anim-subagents); --ab-shadow: var(--ab-shadow-subagents); --ab-stroke: var(--ab-stroke-subagents); }
-html[data-ab-ready] .activity-item[data-hover-domain="crew"]      { --ab-ink: var(--ab-ink-crew);      --ab-anim: var(--ab-anim-crew);      --ab-shadow: var(--ab-shadow-crew); --ab-stroke: var(--ab-stroke-crew); }
-html[data-ab-ready] .activity-item[data-hover-domain="changes"]   { --ab-ink: var(--ab-ink-changes);   --ab-anim: var(--ab-anim-changes);   --ab-shadow: var(--ab-shadow-changes); --ab-stroke: var(--ab-stroke-changes); }
-html[data-ab-ready] .activity-item[data-hover-domain="artifacts"] { --ab-ink: var(--ab-ink-artifacts); --ab-anim: var(--ab-anim-artifacts); --ab-shadow: var(--ab-shadow-artifacts); --ab-stroke: var(--ab-stroke-artifacts); }
+html[data-ab-ready] .activity-item[data-hover-domain="goal"]       { --ab-ink: var(--ab-ink-goal);       --ab-anim: var(--ab-anim-goal);       --ab-hi: var(--ab-hi-goal);       --ab-ho: var(--ab-ho-goal);       --ab-stroke: var(--ab-stroke-goal); }
+html[data-ab-ready] .activity-item[data-hover-domain="todo"]       { --ab-ink: var(--ab-ink-todo);       --ab-anim: var(--ab-anim-todo);       --ab-hi: var(--ab-hi-todo);       --ab-ho: var(--ab-ho-todo);       --ab-stroke: var(--ab-stroke-todo); }
+html[data-ab-ready] .activity-item[data-hover-domain="subagents"]  { --ab-ink: var(--ab-ink-subagents);  --ab-anim: var(--ab-anim-subagents);  --ab-hi: var(--ab-hi-subagents);  --ab-ho: var(--ab-ho-subagents);  --ab-stroke: var(--ab-stroke-subagents); }
+html[data-ab-ready] .activity-item[data-hover-domain="crew"]       { --ab-ink: var(--ab-ink-crew);       --ab-anim: var(--ab-anim-crew);       --ab-hi: var(--ab-hi-crew);       --ab-ho: var(--ab-ho-crew);       --ab-stroke: var(--ab-stroke-crew); }
+html[data-ab-ready] .activity-item[data-hover-domain="brainstorm"] { --ab-ink: var(--ab-ink-brainstorm); --ab-anim: var(--ab-anim-brainstorm); --ab-hi: var(--ab-hi-brainstorm); --ab-ho: var(--ab-ho-brainstorm); --ab-stroke: var(--ab-stroke-brainstorm); }
+html[data-ab-ready] .activity-item[data-hover-domain="review"]     { --ab-ink: var(--ab-ink-review);     --ab-anim: var(--ab-anim-review);     --ab-hi: var(--ab-hi-review);     --ab-ho: var(--ab-ho-review);     --ab-stroke: var(--ab-stroke-review); }
+html[data-ab-ready] .activity-item[data-hover-domain="chat_room"]  { --ab-ink: var(--ab-ink-chat_room);  --ab-anim: var(--ab-anim-chat_room);  --ab-hi: var(--ab-hi-chat_room);  --ab-ho: var(--ab-ho-chat_room);  --ab-stroke: var(--ab-stroke-chat_room); }
+html[data-ab-ready] .activity-item[data-hover-domain="changes"]    { --ab-ink: var(--ab-ink-changes);    --ab-anim: var(--ab-anim-changes);    --ab-hi: var(--ab-hi-changes);    --ab-ho: var(--ab-ho-changes);    --ab-stroke: var(--ab-stroke-changes); }
+html[data-ab-ready] .activity-item[data-hover-domain="artifacts"]  { --ab-ink: var(--ab-ink-artifacts);  --ab-anim: var(--ab-anim-artifacts);  --ab-hi: var(--ab-hi-artifacts);  --ab-ho: var(--ab-ho-artifacts);  --ab-stroke: var(--ab-stroke-artifacts); }
 
 html[data-ab-ready] .activity-item > svg {
   /* 14px, not the emitted 12px: dropping the dot and its 6px gap returns 11px
      of width, and a 24-unit viewBox at 1.8 stroke gives ~1.05px strokes at 14
      instead of ~0.90px at 12 — the same sub-pixel problem item 12 documents
-     for the phase trail. */
+     for the phase trail. (neon-icons.js gates the acts by the emitted 12, and
+     every bar act travels at least 3 units, 1.75px at the rendered 14.) */
   width: 14px; height: 14px;
   /* PRE-EXISTING DEFECT, measured not assumed: the label and count spans are
      white-space:nowrap, so their automatic minimum size is their full text and
@@ -52,18 +61,55 @@ html[data-ab-ready] .activity-item > svg {
      indicator, so it is pinned; the container queries at the end of this file
      take the space back out of the labels instead. */
   flex: 0 0 auto;
+  /* The ink stays on `color` (abverify reads it); the tubes and halos inherit
+     it as currentColor. */
   color: var(--ab-ink, var(--subtle));
-  /* Static glow carries the tone with motion off; the keyframes only touch
-     opacity, so this declared filter is never fill-mode-clobbered. */
-  filter: var(--ab-shadow, none);
-  stroke-width: var(--ab-stroke, 1.8);
+  --nx-stroke-base: var(--ab-stroke, 1.8);
+  --nx-tone-k: 1;
+  /* The static glow carries the tone with motion off: the inner band always,
+     the wide band for the live and changed tones. */
+  --nx-hiv: visible; --nx-hi-a: var(--ab-hi, var(--nx-h-quiet-i));
+  --nx-hov: visible; --nx-ho-a: var(--ab-ho, 0);
+  /* Parts never fade below .6 (the rhythm on the svg does the breathing). No
+     act unless the domain is working or needing attention (rules below). */
+  --nx-of: .6;
+  --nx-lp: none;
+  /* The rhythm: the keyframes only touch opacity, so the halo is never
+     fill-mode-clobbered. */
   animation: var(--ab-anim, none);
-  transition: color 200ms var(--ease), filter 200ms var(--ease);
+  transition: color 200ms var(--ease);
 }
-/* Hover and press must still read as hover and press, so the lit icon steps
-   aside for the button's own foreground colour on interaction. */
+/* Each glyph plays its own act while its domain is live, keyed off the tone the
+   module already publishes: the goal arrow strikes, the To-Do ticks check in one
+   after another, the page lines write in, the people rise in turn, the kind marks
+   run their own. Acts are there-and-back (neon-icons.css loop shapes) and share
+   the rhythm's period; the stagger scales with it. Anything else sets none. */
+html[data-ab-goal="working"] .activity-item[data-hover-domain="goal"] > svg,
+html[data-ab-todo="working"] .activity-item[data-hover-domain="todo"] > svg,
+html[data-ab-subagents="working"] .activity-item[data-hover-domain="subagents"] > svg,
+html[data-ab-crew="working"] .activity-item[data-hover-domain="crew"] > svg,
+html[data-ab-brainstorm="working"] .activity-item[data-hover-domain="brainstorm"] > svg,
+html[data-ab-review="working"] .activity-item[data-hover-domain="review"] > svg,
+html[data-ab-chat_room="working"] .activity-item[data-hover-domain="chat_room"] > svg,
+html[data-ab-changes="working"] .activity-item[data-hover-domain="changes"] > svg,
+html[data-ab-artifacts="working"] .activity-item[data-hover-domain="artifacts"] > svg {
+  --nx-lp: var(--nx-L) 2200ms var(--nx-le) infinite; --nx-per: 2200ms; --nx-sk: 2.2;
+}
+html[data-ab-goal="attention"] .activity-item[data-hover-domain="goal"] > svg,
+html[data-ab-todo="attention"] .activity-item[data-hover-domain="todo"] > svg,
+html[data-ab-subagents="attention"] .activity-item[data-hover-domain="subagents"] > svg,
+html[data-ab-crew="attention"] .activity-item[data-hover-domain="crew"] > svg,
+html[data-ab-brainstorm="attention"] .activity-item[data-hover-domain="brainstorm"] > svg,
+html[data-ab-review="attention"] .activity-item[data-hover-domain="review"] > svg,
+html[data-ab-chat_room="attention"] .activity-item[data-hover-domain="chat_room"] > svg,
+html[data-ab-changes="attention"] .activity-item[data-hover-domain="changes"] > svg,
+html[data-ab-artifacts="attention"] .activity-item[data-hover-domain="artifacts"] > svg {
+  --nx-lp: var(--nx-L) 3200ms var(--nx-le) infinite; --nx-per: 3200ms; --nx-sk: 3.2;
+}
+/* Hover and press must still read as hover and press: the inner band brightens
+   a step while the button takes its own background. */
 html[data-ab-ready] .activity-item:hover > svg,
-html[data-ab-ready] .activity-item.active > svg { filter: var(--ab-shadow, none) saturate(1.15); }
+html[data-ab-ready] .activity-item.active > svg { --nx-hi-a: calc(var(--ab-hi, var(--nx-h-quiet-i)) + .06); }
 
 @keyframes ab-breathe { 0%, 100% { opacity: 1; } 50% { opacity: .48; } }
 /* Deliberately NOT the same shape as ab-breathe: a hard double blink, so a

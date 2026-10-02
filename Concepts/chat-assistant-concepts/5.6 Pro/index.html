@@ -3420,24 +3420,33 @@ body:has(.activity-panel.transient) .history-flyout {
    `.state-mark` (styles.css:235) was a 5px dot whose value came from five
    object literals, so all five pulsed identically whether work was running,
    stalled or finished.  activity-bar.js publishes a derived six-value tone
-   per domain onto <body> as the --ab-ink, --ab-anim and --ab-shadow property
-   families; the five mapping rules below hand the right one to the right
-   button, and one paint rule lights the icon from it.
+   per domain onto <html> (data-ab-<id>) and <body> as the --ab-ink, --ab-anim,
+   --ab-hi, --ab-ho and --ab-stroke property families; the nine mapping rules
+   below hand the right one to the right button, and one rule lights the icon.
+   Neon icons (2026-10-02): the icon is an svg.nx (neon-icons.js) and its glow
+   is the neon halo (two merged stroke bands behind the tubes), not a CSS
+   filter: --ab-hi / --ab-ho are the inner and wide band strengths. The bar is
+   self-lit, so it sets every neon variable itself, which also keeps the
+   generic hover ignite (neon-icons.css section 8) off it.
    ===================================================================== */
 html[data-ab-ready] .activity-item .state-mark { display: none; }
 
-html[data-ab-ready] .activity-item[data-hover-domain="goal"]      { --ab-ink: var(--ab-ink-goal);      --ab-anim: var(--ab-anim-goal);      --ab-shadow: var(--ab-shadow-goal); --ab-stroke: var(--ab-stroke-goal); }
-html[data-ab-ready] .activity-item[data-hover-domain="todo"]      { --ab-ink: var(--ab-ink-todo);      --ab-anim: var(--ab-anim-todo);      --ab-shadow: var(--ab-shadow-todo); --ab-stroke: var(--ab-stroke-todo); }
-html[data-ab-ready] .activity-item[data-hover-domain="subagents"] { --ab-ink: var(--ab-ink-subagents); --ab-anim: var(--ab-anim-subagents); --ab-shadow: var(--ab-shadow-subagents); --ab-stroke: var(--ab-stroke-subagents); }
-html[data-ab-ready] .activity-item[data-hover-domain="crew"]      { --ab-ink: var(--ab-ink-crew);      --ab-anim: var(--ab-anim-crew);      --ab-shadow: var(--ab-shadow-crew); --ab-stroke: var(--ab-stroke-crew); }
-html[data-ab-ready] .activity-item[data-hover-domain="changes"]   { --ab-ink: var(--ab-ink-changes);   --ab-anim: var(--ab-anim-changes);   --ab-shadow: var(--ab-shadow-changes); --ab-stroke: var(--ab-stroke-changes); }
-html[data-ab-ready] .activity-item[data-hover-domain="artifacts"] { --ab-ink: var(--ab-ink-artifacts); --ab-anim: var(--ab-anim-artifacts); --ab-shadow: var(--ab-shadow-artifacts); --ab-stroke: var(--ab-stroke-artifacts); }
+html[data-ab-ready] .activity-item[data-hover-domain="goal"]       { --ab-ink: var(--ab-ink-goal);       --ab-anim: var(--ab-anim-goal);       --ab-hi: var(--ab-hi-goal);       --ab-ho: var(--ab-ho-goal);       --ab-stroke: var(--ab-stroke-goal); }
+html[data-ab-ready] .activity-item[data-hover-domain="todo"]       { --ab-ink: var(--ab-ink-todo);       --ab-anim: var(--ab-anim-todo);       --ab-hi: var(--ab-hi-todo);       --ab-ho: var(--ab-ho-todo);       --ab-stroke: var(--ab-stroke-todo); }
+html[data-ab-ready] .activity-item[data-hover-domain="subagents"]  { --ab-ink: var(--ab-ink-subagents);  --ab-anim: var(--ab-anim-subagents);  --ab-hi: var(--ab-hi-subagents);  --ab-ho: var(--ab-ho-subagents);  --ab-stroke: var(--ab-stroke-subagents); }
+html[data-ab-ready] .activity-item[data-hover-domain="crew"]       { --ab-ink: var(--ab-ink-crew);       --ab-anim: var(--ab-anim-crew);       --ab-hi: var(--ab-hi-crew);       --ab-ho: var(--ab-ho-crew);       --ab-stroke: var(--ab-stroke-crew); }
+html[data-ab-ready] .activity-item[data-hover-domain="brainstorm"] { --ab-ink: var(--ab-ink-brainstorm); --ab-anim: var(--ab-anim-brainstorm); --ab-hi: var(--ab-hi-brainstorm); --ab-ho: var(--ab-ho-brainstorm); --ab-stroke: var(--ab-stroke-brainstorm); }
+html[data-ab-ready] .activity-item[data-hover-domain="review"]     { --ab-ink: var(--ab-ink-review);     --ab-anim: var(--ab-anim-review);     --ab-hi: var(--ab-hi-review);     --ab-ho: var(--ab-ho-review);     --ab-stroke: var(--ab-stroke-review); }
+html[data-ab-ready] .activity-item[data-hover-domain="chat_room"]  { --ab-ink: var(--ab-ink-chat_room);  --ab-anim: var(--ab-anim-chat_room);  --ab-hi: var(--ab-hi-chat_room);  --ab-ho: var(--ab-ho-chat_room);  --ab-stroke: var(--ab-stroke-chat_room); }
+html[data-ab-ready] .activity-item[data-hover-domain="changes"]    { --ab-ink: var(--ab-ink-changes);    --ab-anim: var(--ab-anim-changes);    --ab-hi: var(--ab-hi-changes);    --ab-ho: var(--ab-ho-changes);    --ab-stroke: var(--ab-stroke-changes); }
+html[data-ab-ready] .activity-item[data-hover-domain="artifacts"]  { --ab-ink: var(--ab-ink-artifacts);  --ab-anim: var(--ab-anim-artifacts);  --ab-hi: var(--ab-hi-artifacts);  --ab-ho: var(--ab-ho-artifacts);  --ab-stroke: var(--ab-stroke-artifacts); }
 
 html[data-ab-ready] .activity-item > svg {
   /* 14px, not the emitted 12px: dropping the dot and its 6px gap returns 11px
      of width, and a 24-unit viewBox at 1.8 stroke gives ~1.05px strokes at 14
      instead of ~0.90px at 12 — the same sub-pixel problem item 12 documents
-     for the phase trail. */
+     for the phase trail. (neon-icons.js gates the acts by the emitted 12, and
+     every bar act travels at least 3 units, 1.75px at the rendered 14.) */
   width: 14px; height: 14px;
   /* PRE-EXISTING DEFECT, measured not assumed: the label and count spans are
      white-space:nowrap, so their automatic minimum size is their full text and
@@ -3448,18 +3457,55 @@ html[data-ab-ready] .activity-item > svg {
      indicator, so it is pinned; the container queries at the end of this file
      take the space back out of the labels instead. */
   flex: 0 0 auto;
+  /* The ink stays on `color` (abverify reads it); the tubes and halos inherit
+     it as currentColor. */
   color: var(--ab-ink, var(--subtle));
-  /* Static glow carries the tone with motion off; the keyframes only touch
-     opacity, so this declared filter is never fill-mode-clobbered. */
-  filter: var(--ab-shadow, none);
-  stroke-width: var(--ab-stroke, 1.8);
+  --nx-stroke-base: var(--ab-stroke, 1.8);
+  --nx-tone-k: 1;
+  /* The static glow carries the tone with motion off: the inner band always,
+     the wide band for the live and changed tones. */
+  --nx-hiv: visible; --nx-hi-a: var(--ab-hi, var(--nx-h-quiet-i));
+  --nx-hov: visible; --nx-ho-a: var(--ab-ho, 0);
+  /* Parts never fade below .6 (the rhythm on the svg does the breathing). No
+     act unless the domain is working or needing attention (rules below). */
+  --nx-of: .6;
+  --nx-lp: none;
+  /* The rhythm: the keyframes only touch opacity, so the halo is never
+     fill-mode-clobbered. */
   animation: var(--ab-anim, none);
-  transition: color 200ms var(--ease), filter 200ms var(--ease);
+  transition: color 200ms var(--ease);
 }
-/* Hover and press must still read as hover and press, so the lit icon steps
-   aside for the button's own foreground colour on interaction. */
+/* Each glyph plays its own act while its domain is live, keyed off the tone the
+   module already publishes: the goal arrow strikes, the To-Do ticks check in one
+   after another, the page lines write in, the people rise in turn, the kind marks
+   run their own. Acts are there-and-back (neon-icons.css loop shapes) and share
+   the rhythm's period; the stagger scales with it. Anything else sets none. */
+html[data-ab-goal="working"] .activity-item[data-hover-domain="goal"] > svg,
+html[data-ab-todo="working"] .activity-item[data-hover-domain="todo"] > svg,
+html[data-ab-subagents="working"] .activity-item[data-hover-domain="subagents"] > svg,
+html[data-ab-crew="working"] .activity-item[data-hover-domain="crew"] > svg,
+html[data-ab-brainstorm="working"] .activity-item[data-hover-domain="brainstorm"] > svg,
+html[data-ab-review="working"] .activity-item[data-hover-domain="review"] > svg,
+html[data-ab-chat_room="working"] .activity-item[data-hover-domain="chat_room"] > svg,
+html[data-ab-changes="working"] .activity-item[data-hover-domain="changes"] > svg,
+html[data-ab-artifacts="working"] .activity-item[data-hover-domain="artifacts"] > svg {
+  --nx-lp: var(--nx-L) 2200ms var(--nx-le) infinite; --nx-per: 2200ms; --nx-sk: 2.2;
+}
+html[data-ab-goal="attention"] .activity-item[data-hover-domain="goal"] > svg,
+html[data-ab-todo="attention"] .activity-item[data-hover-domain="todo"] > svg,
+html[data-ab-subagents="attention"] .activity-item[data-hover-domain="subagents"] > svg,
+html[data-ab-crew="attention"] .activity-item[data-hover-domain="crew"] > svg,
+html[data-ab-brainstorm="attention"] .activity-item[data-hover-domain="brainstorm"] > svg,
+html[data-ab-review="attention"] .activity-item[data-hover-domain="review"] > svg,
+html[data-ab-chat_room="attention"] .activity-item[data-hover-domain="chat_room"] > svg,
+html[data-ab-changes="attention"] .activity-item[data-hover-domain="changes"] > svg,
+html[data-ab-artifacts="attention"] .activity-item[data-hover-domain="artifacts"] > svg {
+  --nx-lp: var(--nx-L) 3200ms var(--nx-le) infinite; --nx-per: 3200ms; --nx-sk: 3.2;
+}
+/* Hover and press must still read as hover and press: the inner band brightens
+   a step while the button takes its own background. */
 html[data-ab-ready] .activity-item:hover > svg,
-html[data-ab-ready] .activity-item.active > svg { filter: var(--ab-shadow, none) saturate(1.15); }
+html[data-ab-ready] .activity-item.active > svg { --nx-hi-a: calc(var(--ab-hi, var(--nx-h-quiet-i)) + .06); }
 
 @keyframes ab-breathe { 0%, 100% { opacity: 1; } 50% { opacity: .48; } }
 /* Deliberately NOT the same shape as ab-breathe: a hard double blink, so a
@@ -16636,10 +16682,14 @@ textarea[data-input="composer"]::placeholder { transition: color 220ms ease; }
 /* Dark themes: the halo recipe (plan §1), tuned against tools/glow-metric.mjs. Widths are screen px
    (vector-effect: non-scaling-stroke), so they read the same at 12 and 22 px and map to Slint px. */
 body {
-  --nx-hi-w: 3.6px; --nx-ho-w: 11px;
-  --nx-h-live-i: .24; --nx-h-live-o: .06;
-  --nx-h-chg-i: .16; --nx-h-chg-o: .04;
-  --nx-h-quiet-i: .10; --nx-h-quiet-o: 0;
+  --nx-hi-w: 3.6px; --nx-hm-w: 8px; --nx-ho-w: 14px;
+  /* per tone: the bar's filter glow was not one strength (blocked 62 %, attention 58 %, working 60 %, changed
+     44 % at 4 px), so each lit tone has its own inner (-i) and wide (-o) band, fitted to the metric */
+  --nx-h-blocked-i: .24; --nx-h-blocked-o: .031;
+  --nx-h-attention-i: .20; --nx-h-attention-o: .028;
+  --nx-h-working-i: .20; --nx-h-working-o: .029;
+  --nx-h-changed-i: .10; --nx-h-changed-o: .017;
+  --nx-h-quiet-i: .10;
   --nx-h-hover-i: .22; --nx-h-swell-i: .20;
   /* voices (plan §1): one easing token per theme family; timing and order never change */
   --nx-ease: cubic-bezier(.2, .75, .25, 1);
@@ -16647,12 +16697,15 @@ body {
   --nx-ease-c: cubic-bezier(.3, .6, .3, 1);
   --nx-d1: 440ms;
 }
-/* Light themes: one inner band (a dark halo on a light page reads as a smudge if it is wide or strong). */
+/* Light themes: a dark-on-light halo reads as a smudge when it is strong, so the bands are fainter; the bar's
+   drop-shadow threw more far tail on light pages, which the wide band carries. */
 body[data-theme$="-light"] {
-  --nx-hi-w: 3px; --nx-ho-w: 11px;
-  --nx-h-live-i: .14; --nx-h-live-o: .05;
-  --nx-h-chg-i: .13; --nx-h-chg-o: .035;
-  --nx-h-quiet-i: .12; --nx-h-quiet-o: 0;
+  --nx-hi-w: 3px; --nx-hm-w: 8px; --nx-ho-w: 14px;
+  --nx-h-blocked-i: .14; --nx-h-blocked-o: .035;
+  --nx-h-attention-i: .14; --nx-h-attention-o: .033;
+  --nx-h-working-i: .14; --nx-h-working-o: .034;
+  --nx-h-changed-i: .10; --nx-h-changed-o: .02;
+  --nx-h-quiet-i: .12;
   --nx-h-hover-i: .14; --nx-h-swell-i: .16;
 }
 /* Friendly overshoots, Glass glides, Retro steps. */
@@ -16695,11 +16748,14 @@ svg:where(.nx) .nx-h {
   transition: stroke-opacity 180ms ease-out, visibility 180ms;
   animation: var(--nx-fl);
 }
-svg:where(.nx) .nx-ho {
-  stroke-width: var(--nx-ho-w, 11px);
+/* The outer falloff: a mid band and a wide band at the same faint alpha, so the glow steps down twice (a dense
+   middle, a long thin tail) instead of ending in one visible edge. */
+svg:where(.nx) .nx-ho, svg:where(.nx) .nx-hm {
+  stroke-width: var(--nx-ho-w, 14px);
   stroke-opacity: var(--nx-ho-a, 0);
   visibility: var(--nx-hov, hidden);
 }
+svg:where(.nx) .nx-hm { stroke-width: var(--nx-hm-w, 8px); }
 
 /* ------------------------------------------------------------------ 4. roles (plan §1 table) */
 /* concept: the host's ink with a faint same-ink halo, lit steady. */
@@ -16714,10 +16770,10 @@ svg:where(.nx-r-brand) { --nx-hiv: hidden; --nx-hov: hidden; }
 /* ------------------------------------------------------------------ 5. tones (the bar's, verbatim) */
 /* Ink goes through --nx-ink (never `color`), so the transcript accent budget turn-verify counts is unchanged.
    The weight factor is the bar's TONE_STROKE over 1.8; live tones light both bands. */
-svg:where(.nx-t-blocked) { --nx-ink: var(--danger); --nx-tone-k: 1.22; --nx-hi-a: var(--nx-h-live-i); --nx-ho-a: var(--nx-h-live-o); --nx-hov: visible; }
-svg:where(.nx-t-attention) { --nx-ink: var(--warning); --nx-tone-k: 1.17; --nx-hi-a: var(--nx-h-live-i); --nx-ho-a: var(--nx-h-live-o); --nx-hov: visible; }
-svg:where(.nx-t-working) { --nx-ink: var(--accent); --nx-tone-k: 1.17; --nx-hi-a: var(--nx-h-live-i); --nx-ho-a: var(--nx-h-live-o); --nx-hov: visible; }
-svg:where(.nx-t-changed) { --nx-ink: var(--accent-2); --nx-tone-k: 1; --nx-hi-a: var(--nx-h-chg-i); --nx-ho-a: var(--nx-h-chg-o); --nx-hov: visible; }
+svg:where(.nx-t-blocked) { --nx-ink: var(--danger); --nx-tone-k: 1.22; --nx-hi-a: var(--nx-h-blocked-i); --nx-ho-a: var(--nx-h-blocked-o); --nx-hov: visible; }
+svg:where(.nx-t-attention) { --nx-ink: var(--warning); --nx-tone-k: 1.17; --nx-hi-a: var(--nx-h-attention-i); --nx-ho-a: var(--nx-h-attention-o); --nx-hov: visible; }
+svg:where(.nx-t-working) { --nx-ink: var(--accent); --nx-tone-k: 1.17; --nx-hi-a: var(--nx-h-working-i); --nx-ho-a: var(--nx-h-working-o); --nx-hov: visible; }
+svg:where(.nx-t-changed) { --nx-ink: var(--accent-2); --nx-tone-k: 1; --nx-hi-a: var(--nx-h-changed-i); --nx-ho-a: var(--nx-h-changed-o); --nx-hov: visible; }
 svg:where(.nx-t-done) { --nx-ink: var(--positive); --nx-tone-k: .83; --nx-hi-a: var(--nx-h-quiet-i); --nx-ho-a: 0; }
 svg:where(.nx-t-idle) { --nx-ink: var(--subtle); --nx-tone-k: .78; --nx-hi-a: var(--nx-h-quiet-i); --nx-ho-a: 0; }
 /* paused (and skipped): muted, no halo. */
@@ -21478,15 +21534,17 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
  *   PMX name (the kind marks, eye family, lock, ...), the geometry is PMX's, copied verbatim and only split into
  *   parts; if module-shell changes one of those drawings, mirror it here (see RECONCILED and the per-glyph notes).
  * - The neon anatomy (plan §1). Every glyph renders as
- *     1. the merged static halos: one wide <path class="nx-h nx-ho"> and one inner <path class="nx-h">, each a
- *        single d holding every static part's geometry (rect/circle/ellipse/line converted), so halos never stack;
+ *     1. the merged halos, each one <path> with a single d (rect/circle/ellipse/line converted) so halos never
+ *        stack: the wide band (.nx-h.nx-ho) and the mid band (.nx-h.nx-hm), both holding the whole glyph at rest,
+ *        then the core band (.nx-h) holding every static part;
  *     2. the static tubes (.nx-c), each keeping its original element (check keeps d="m5 12 4 4L19 6", copy keeps
  *        <rect x="8" y="8" ...>: transcript-verify pins both);
  *     3. each moving part as <g class="nx-p nx-p<i>" style="--ax:..;--ay:..;--ar:..;--ao:..;--ad:.."> holding its
- *        own halo copies and its tube(s).
- *   Two halo layers rather than one: the inner band is the neon core, the wide faint band is the 4-6 px tail the
- *   halo pixel metric asks for; neon-icons.css keeps the wide band visibility:hidden (no paint) except where a
- *   status or the bar lights it.
+ *        own inner halo copy and its tube(s) (and the wide band too when the part is the whole glyph).
+ *   Three bands rather than one: the core band hugs the tube (the neon itself); the mid and wide bands are the
+ *   faint falloff and the 4-6 px tail the halo pixel metric asks for, stepped in two so neither edge reads as a
+ *   plate. neon-icons.css keeps the outer two visibility:hidden (no paint) except where a status or the bar
+ *   lights them.
  * - Acts. A part carries its displaced pose (--ax/--ay translate, --ar rotate, --ao opacity, --cr circle radius,
  *   all in user units / degrees), a stagger (--ad, ms) and, for draw-ons, a clip (--ac start inset, --ae end
  *   inset, user units on the view box). neon-icons.css moves the part by animating one registered number, --nx-t
@@ -21880,18 +21938,15 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
       var c = 'nx-c' + (e.f || filled ? ' nx-f' : '') + (e.cls ? ' ' + e.cls : '');
       return '<' + e.tag + ' class="' + c + '"' + attrs(e) + '/>';
     }
-    /* the two halo layers for a list of elements: merged into one d, except an element carrying a transform
-       attribute (role-orbit's ellipse), which keeps its own halo element so its geometry stays exact */
-    function halos(els) {
+    /* One halo layer for a list of elements: merged into one d, except an element carrying a transform attribute
+       (role-orbit's ellipse), which keeps its own halo element so its geometry stays exact. */
+    function halo(els, cls) {
       var ds = [], solo = '';
       els.forEach(function (e) {
-        if (e.attrs.transform) {
-          var a = attrs({ attrs: e.attrs });
-          solo += '<' + e.tag + ' class="nx-h nx-ho"' + a + '/><' + e.tag + ' class="nx-h"' + a + '/>';
-        } else ds.push(pathOf(e));
+        if (e.attrs.transform) solo += '<' + e.tag + ' class="' + cls + '"' + attrs({ attrs: e.attrs }) + '/>';
+        else ds.push(pathOf(e));
       });
-      var d = esc(ds.join(''));
-      return (d ? '<path class="nx-h nx-ho" d="' + d + '"/><path class="nx-h" d="' + d + '"/>' : '') + solo;
+      return (ds.length ? '<path class="' + cls + '" d="' + esc(ds.join('')) + '"/>' : '') + solo;
     }
     /* the size gate for one moving part at `size` px (plan §1) */
     function moves(p, size, origin) {
@@ -21926,16 +21981,26 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
       if (!d) { miss(name); n = 'info'; d = GLYPHS.info; }
       var toks = String(cls || '').split(/\s+/).filter(Boolean), role = d.role;
       toks = toks.filter(function (t) { var m = /^nx-r-(status|concept|control|brand)$/.exec(t); if (m) { role = m[1]; return false; } return true; });
-      var stat = [], tubes = '', moving = '', i = 0;
+      /* The wide band is ONE merged path for the whole glyph at rest (static parts and moving parts alike), so wide
+         bands never stack; it stays put while a part moves (at a few percent alpha the eye reads it as the glyph's
+         glow, not the part's). Each moving part carries its own inner band, which moves with its tube. A glyph that
+         is all one moving part (spin, ratchet, tip) gives that part the wide band too, so it turns with it. */
+      var stat = [], wide = [], tubes = '', moving = '', i = 0, live = [];
       d.parts.forEach(function (p) {
         if (!p.m || !moves(p, size, d.origin)) { p.els.forEach(function (e) { stat.push(e); tubes += tube(e, d.fill); }); return; }
+        live.push(p);
+      });
+      var selfWide = !stat.length && live.length === 1;
+      wide = stat.slice();
+      live.forEach(function (p) {
         var m = p.m, kind = m.ac ? ' nx-pc' : (m.b ? ' nx-pb' : '');
         var gcls = 'nx-p nx-p' + i + kind + (m.n ? ' nx-pn' : '') + (m.o === 'c' ? ' nx-pf' : '') + (statusWrap ? ' nx-st-move' : '');
         var st = partStyle(m, d.origin);
-        moving += '<g class="' + gcls + '"' + (st ? ' style="' + st + '"' : '') + '>' + halos(p.els) + p.els.map(function (e) { return tube(e, d.fill); }).join('') + '</g>';
+        if (!selfWide) wide = wide.concat(p.els);
+        moving += '<g class="' + gcls + '"' + (st ? ' style="' + st + '"' : '') + '>' + (selfWide ? halo(p.els, 'nx-h nx-ho') + halo(p.els, 'nx-h nx-hm') : '') + halo(p.els, 'nx-h') + p.els.map(function (e) { return tube(e, d.fill); }).join('') + '</g>';
         i++;
       });
-      var base = halos(stat) + tubes;
+      var base = (wide.length && !selfWide ? halo(wide, 'nx-h nx-ho') + halo(wide, 'nx-h nx-hm') : '') + (stat.length ? halo(stat, 'nx-h') : '') + tubes;
       if (statusWrap) base = '<g class="nx-st-base">' + base + '</g>';
       var z = size < 12 ? ' nx-z0' : size < 15 ? ' nx-z1' : '';
       var tone = statusWrap ? ' nx-t-' + statusWrap.tone : '';
@@ -23278,24 +23343,28 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
     working: 'ab-breathe 2200ms ease-in-out infinite',
     changed: 'none', done: 'none', idle: 'none'
   };
-  /* Written as `var(--danger)` etc rather than a resolved colour, and set on
-     <body>, so a theme swap needs no re-sync — see setVar's note below. */
-  function glow(token, px, pct) {
-    return 'drop-shadow(0 0 ' + px + 'px color-mix(in srgb, var(' + token + ') ' + pct + '%, transparent))';
-  }
-  var TONE_SHADOW = {
-    blocked: glow('--danger', 5, 62), attention: glow('--warning', 5, 58),
-    working: glow('--accent', 5, 60), changed: glow('--accent-2', 4, 44),
-    done: 'none', idle: 'none'
+  /* The glow is the neon halo (neon-icons.js / neon-icons.css), not a CSS
+     filter: each tone names the halo strength tokens for the inner band and
+     the wide band. Written as `var(--nx-h-live-i)` etc rather than a number,
+     and set on <body>, so a theme swap (light themes carry their own token
+     values) needs no re-sync — see setVar's note below. Done and idle had no
+     glow under the filter; they keep a faint inner band, well under the live
+     tones, so a settled domain still reads as lit. */
+  var TONE_HALO = {
+    blocked: ['var(--nx-h-blocked-i)', 'var(--nx-h-blocked-o)'],
+    attention: ['var(--nx-h-attention-i)', 'var(--nx-h-attention-o)'],
+    working: ['var(--nx-h-working-i)', 'var(--nx-h-working-o)'],
+    changed: ['var(--nx-h-changed-i)', 'var(--nx-h-changed-o)'],
+    done: ['var(--nx-h-quiet-i)', '0'],
+    idle: ['var(--nx-h-quiet-i)', '0']
   };
   /* A FOURTH channel, and it is not decoration. Two themes make colour alone
      ambiguous: retro-light has --accent #19734c against --positive #16734c,
      and retro-dark has #60f39a against #74ffb0 — working and done are the same
      green. Motion separates them normally, but not under prefers-reduced-
-     motion, so weight and glow have to carry it too. stroke-width set in CSS
-     overrides the presentation attribute icon() writes, and it inherits from
-     the <svg> to the paths, so one property does it. */
-  var KIND_DOMAINS = { crew: 1, brainstorm: 1, review: 1, chat_room: 1 };
+     motion, so weight and glow have to carry it too. The weight reaches the
+     glyph as --nx-stroke-base (activity-bar.css), which neon-icons.css turns
+     into the svg's stroke-width, inherited by every tube. */
   var TONE_STROKE = {
     blocked: '2.2', attention: '2.1', working: '2.1',
     changed: '1.8', done: '1.5', idle: '1.4'
@@ -23444,7 +23513,8 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
         delAttr(root, 'data-ab-' + id);
         delVar(body, '--ab-ink-' + id);
         delVar(body, '--ab-anim-' + id);
-        delVar(body, '--ab-shadow-' + id);
+        delVar(body, '--ab-hi-' + id);
+        delVar(body, '--ab-ho-' + id);
         delVar(body, '--ab-stroke-' + id);
         continue;
       }
@@ -23456,13 +23526,14 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
          custom property's var() is substituted on the element that declares
          it. On <html> the token would not resolve. */
       setVar(body, '--ab-ink-' + id, TONE_INK[tone] || TONE_INK.idle);
-      /* The four collaboration domains draw a pmx kind glyph (svg.pmx-kind) in
-         the rail. A run can work for an hour: the pmx grammar allows no
-         breathing loop and no glow halo on it (5.6 DON'T 4). Working is carried
-         by the glyph's ink and stroke weight and the chip's count instead. */
-      var still = KIND_DOMAINS[id] && tone === 'working';
-      setVar(body, '--ab-anim-' + id, still ? 'none' : (TONE_ANIM[tone] || 'none'));
-      setVar(body, '--ab-shadow-' + id, still ? 'none' : (TONE_SHADOW[tone] || 'none'));
+      /* All nine domains animate alike (neon icons, Jared 2026-10-01): the four
+         collaboration kind marks are no longer held still while working. The
+         rhythm is TONE_ANIM on the svg; the glyph's own act is named in
+         activity-bar.css from html[data-ab-<id>]. */
+      var halo = TONE_HALO[tone] || TONE_HALO.idle;
+      setVar(body, '--ab-anim-' + id, TONE_ANIM[tone] || 'none');
+      setVar(body, '--ab-hi-' + id, halo[0]);
+      setVar(body, '--ab-ho-' + id, halo[1]);
       setVar(body, '--ab-stroke-' + id, TONE_STROKE[tone] || '1.8');
     }
     var t = diffTotals(ctx);

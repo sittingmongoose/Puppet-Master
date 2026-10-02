@@ -126,24 +126,28 @@
     working: 'ab-breathe 2200ms ease-in-out infinite',
     changed: 'none', done: 'none', idle: 'none'
   };
-  /* Written as `var(--danger)` etc rather than a resolved colour, and set on
-     <body>, so a theme swap needs no re-sync — see setVar's note below. */
-  function glow(token, px, pct) {
-    return 'drop-shadow(0 0 ' + px + 'px color-mix(in srgb, var(' + token + ') ' + pct + '%, transparent))';
-  }
-  var TONE_SHADOW = {
-    blocked: glow('--danger', 5, 62), attention: glow('--warning', 5, 58),
-    working: glow('--accent', 5, 60), changed: glow('--accent-2', 4, 44),
-    done: 'none', idle: 'none'
+  /* The glow is the neon halo (neon-icons.js / neon-icons.css), not a CSS
+     filter: each tone names the halo strength tokens for the inner band and
+     the wide band. Written as `var(--nx-h-live-i)` etc rather than a number,
+     and set on <body>, so a theme swap (light themes carry their own token
+     values) needs no re-sync — see setVar's note below. Done and idle had no
+     glow under the filter; they keep a faint inner band, well under the live
+     tones, so a settled domain still reads as lit. */
+  var TONE_HALO = {
+    blocked: ['var(--nx-h-blocked-i)', 'var(--nx-h-blocked-o)'],
+    attention: ['var(--nx-h-attention-i)', 'var(--nx-h-attention-o)'],
+    working: ['var(--nx-h-working-i)', 'var(--nx-h-working-o)'],
+    changed: ['var(--nx-h-changed-i)', 'var(--nx-h-changed-o)'],
+    done: ['var(--nx-h-quiet-i)', '0'],
+    idle: ['var(--nx-h-quiet-i)', '0']
   };
   /* A FOURTH channel, and it is not decoration. Two themes make colour alone
      ambiguous: retro-light has --accent #19734c against --positive #16734c,
      and retro-dark has #60f39a against #74ffb0 — working and done are the same
      green. Motion separates them normally, but not under prefers-reduced-
-     motion, so weight and glow have to carry it too. stroke-width set in CSS
-     overrides the presentation attribute icon() writes, and it inherits from
-     the <svg> to the paths, so one property does it. */
-  var KIND_DOMAINS = { crew: 1, brainstorm: 1, review: 1, chat_room: 1 };
+     motion, so weight and glow have to carry it too. The weight reaches the
+     glyph as --nx-stroke-base (activity-bar.css), which neon-icons.css turns
+     into the svg's stroke-width, inherited by every tube. */
   var TONE_STROKE = {
     blocked: '2.2', attention: '2.1', working: '2.1',
     changed: '1.8', done: '1.5', idle: '1.4'
@@ -292,7 +296,8 @@
         delAttr(root, 'data-ab-' + id);
         delVar(body, '--ab-ink-' + id);
         delVar(body, '--ab-anim-' + id);
-        delVar(body, '--ab-shadow-' + id);
+        delVar(body, '--ab-hi-' + id);
+        delVar(body, '--ab-ho-' + id);
         delVar(body, '--ab-stroke-' + id);
         continue;
       }
@@ -304,13 +309,14 @@
          custom property's var() is substituted on the element that declares
          it. On <html> the token would not resolve. */
       setVar(body, '--ab-ink-' + id, TONE_INK[tone] || TONE_INK.idle);
-      /* The four collaboration domains draw a pmx kind glyph (svg.pmx-kind) in
-         the rail. A run can work for an hour: the pmx grammar allows no
-         breathing loop and no glow halo on it (5.6 DON'T 4). Working is carried
-         by the glyph's ink and stroke weight and the chip's count instead. */
-      var still = KIND_DOMAINS[id] && tone === 'working';
-      setVar(body, '--ab-anim-' + id, still ? 'none' : (TONE_ANIM[tone] || 'none'));
-      setVar(body, '--ab-shadow-' + id, still ? 'none' : (TONE_SHADOW[tone] || 'none'));
+      /* All nine domains animate alike (neon icons, Jared 2026-10-01): the four
+         collaboration kind marks are no longer held still while working. The
+         rhythm is TONE_ANIM on the svg; the glyph's own act is named in
+         activity-bar.css from html[data-ab-<id>]. */
+      var halo = TONE_HALO[tone] || TONE_HALO.idle;
+      setVar(body, '--ab-anim-' + id, TONE_ANIM[tone] || 'none');
+      setVar(body, '--ab-hi-' + id, halo[0]);
+      setVar(body, '--ab-ho-' + id, halo[1]);
       setVar(body, '--ab-stroke-' + id, TONE_STROKE[tone] || '1.8');
     }
     var t = diffTotals(ctx);
