@@ -120,11 +120,26 @@
     if(state.capabilities.eli5) dots.push(capDot('eli5',kindMark('eli5',16,'chat'),'Simple explanations in this chat'));
     return dots.slice(0,5).join('');
   }
-  function modeGlyph(mode, size=13){
-    if(mode==='Ask') return icon('info', size);
-    if(String(mode).includes('Plan')) return icon('document', size);
-    if(mode==='Debug') return icon('warning', size);
-    return icon('sparkles', size);
+  /* One glyph per mode (neon cleanup, plan §2): the composer chip (modeGlyph) and the Mode menu read the same map.
+     Ask info, Plan and Deep Plan the folded map, Debug the bug (the warning triangle is a status mark now), Review
+     the review kind mark (page + lens), Agent sparkles. */
+  const MODE_GLYPH = {Ask:'info', Agent:'sparkles', Debug:'bug', Plan:'plan', 'Deep Plan':'plan', Review:'kind-review'};
+  function modeIconName(mode){ return MODE_GLYPH[mode] || (String(mode).includes('Plan') ? 'plan' : 'sparkles'); }
+  function modeGlyph(mode, size=13){ return icon(modeIconName(mode), size); }
+  /* The status set (neon-icons.js PM56_NEON.STATUS): a status word or alias -> its canonical key, or null. */
+  function neonStatusKey(s){
+    const S=window.PM56_NEON&&window.PM56_NEON.STATUS; if(!S) return null;
+    s=String(s==null?'':s); if(S[s]) return s;
+    for(const k of Object.keys(S)) if((S[k].aliases||[]).includes(s)) return k;
+    return null;
+  }
+  /* statusMark(s,size): the status mark lit in its tone, bare -- no rhythm wrapper and no loop -- for records that
+     stay on screen (event cards). A live status uses PM56_NEON.status() instead. */
+  function statusMark(s, size){
+    const k=neonStatusKey(s);
+    if(!k) return icon('info', size, 'nx-r-concept');
+    const S=window.PM56_NEON.STATUS[k];
+    return icon(S.glyph, size, 'nx-t-'+S.tone);
   }
 
   const DEFAULT = {
@@ -898,6 +913,13 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return String(t.title||'').split(/\s+/).filter(Boolean)
       .map((w,i)=>`<span class="pmx-chat-title-word" data-k="tw:${i}:${esc(w)}" style="--i:${i}">${esc(w)}</span>`).join(' ');
   }
+  /* The header's status: the thread's live status mark (PM56_NEON.status, keyed st:<status> so a change replays its
+     one-shot) beside the word. The .status-dot it replaces stays for the history takes that draw dots; without the
+     neon module the dot comes back. */
+  function headerStatusMark(s){
+    const N=window.PM56_NEON;
+    return N&&typeof N.status==='function' ? N.status(s,13) : `<i class="status-dot ${esc(s)}"></i>`;
+  }
   function renderChatHeader(t){
     /* Context ring percentage. The ring's value is an INLINE style attribute, so no
        module stylesheet can reach it -- it has to be resolved here. PM56_CTX comes from
@@ -907,7 +929,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<div class="chat-header">
       <button class="icon-button" data-action="toggle-history"${hoverAttrs('open-history','Open thread history')}>${icon('history',14)}</button>
       <button class="icon-button" data-action="new-thread"${hoverAttrs('new-thread','Start a new thread')}>${icon('plus',16,'hh-plus-glyph')}</button>
-      <div class="chat-title" data-pmx-title-state="${titleState(t)}"><span class="pmx-chat-title">${titleWords(t)}</span>${extRender('headerTitleAfter',{thread:t})}<span class="chat-state"><i class="status-dot ${t.status}"></i>${esc(statusLabel(t.status))}</span></div>
+      <div class="chat-title" data-pmx-title-state="${titleState(t)}"><span class="pmx-chat-title">${titleWords(t)}</span>${extRender('headerTitleAfter',{thread:t})}<span class="chat-state">${headerStatusMark(t.status)}${esc(statusLabel(t.status))}</span></div>
       <span class="chat-head-spacer"></span>
       ${extRender('headerLeading',{thread:t})}
       <button class="icon-button" data-action="thread-search" data-menu-anchor="thread-search"${hoverAttrs('thread-search','Search this thread or every thread')}>${icon('search',14)}</button>
@@ -1053,7 +1075,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
 
   function renderPlanCard(m){
     const art=D.artifacts.find(a=>a.id===m.artifactId)||D.artifacts[0];
-    return `<article class="system-card plan-card"><div class="system-card-head"><span class="event-icon">${icon('document',14)}</span><div><span class="title">${m.deep?'Deep Plan':'Created Plan'}</span><span class="sub"> · Revision ${state.planRevision}</span></div><span class="spacer"></span><span class="meta-pill">${esc(state.planStatus)}</span><span class="meta-pill">${m.deep?'Exhaustive':'Thorough'}</span></div><div class="system-card-body"><h3>${esc(art.title)}</h3><p>${esc(art.summary)}</p><div class="plan-actions"><button class="soft-button" data-action="open-artifact" data-id="${esc(art.id)}">${icon('eye',13)} View Plan</button><button class="soft-button" data-action="revise-plan" data-id="${esc(art.id)}">${icon('edit',13)} Revise</button><button class="primary-button" data-action="build-plan" data-id="${esc(art.id)}">${icon('play',13)} Build</button></div></div></article>`;
+    return `<article class="system-card plan-card"><div class="system-card-head"><span class="event-icon">${icon('plan',14)}</span><div><span class="title">${m.deep?'Deep Plan':'Created Plan'}</span><span class="sub"> · Revision ${state.planRevision}</span></div><span class="spacer"></span><span class="meta-pill">${esc(state.planStatus)}</span><span class="meta-pill">${m.deep?'Exhaustive':'Thorough'}</span></div><div class="system-card-body"><h3>${esc(art.title)}</h3><p>${esc(art.summary)}</p><div class="plan-actions"><button class="soft-button" data-action="open-artifact" data-id="${esc(art.id)}">${icon('eye',13)} View Plan</button><button class="soft-button" data-action="revise-plan" data-id="${esc(art.id)}">${icon('edit',13)} Revise</button><button class="primary-button" data-action="build-plan" data-id="${esc(art.id)}">${icon('play',13)} Build</button></div></div></article>`;
   }
 
   function renderArtifactMessage(m){
@@ -1074,12 +1096,18 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<button class="live-agent-row" data-action="open-agent" data-id="${esc(a.id)}" title="Open the read-only live child thread"><span class="agent-avatar">${esc(a.name.split(' ').map(x=>x[0]).join('').slice(0,2))}</span><span><span class="agent-name">${esc(a.name)}</span><span class="agent-now">${esc(a.current)}</span><span class="agent-progress"><i style="width:${a.progress}%"></i></span></span><span class="agent-state ${a.status}">${esc(lblOf('subagentStatus',a.status))}</span></button>`;
   }
 
+  const EVENT_STATUS={offline:'waiting-dep',waiting:'waiting-dep','tool-error':'failed',reconnected:'complete',blocked:'blocked'};
   function renderEventMessage(m){
     const record=extReplace('workRecord',{m},'');if(record)return record;
     const map={
-      'question-receipt':['todo','Questionnaire waiting','warning'],'bsd-evaluating':['search','BSD evaluating',''],'bsd-advice':['warning','Back Seat Driver','warning'],'context-focus':['filter','Context Lens · Focus','positive'],'context-mute':['eyeoff','Context Lens · Mute',''],'context-subcompact':['collapse','Context Lens · Subcompact',''],'offline':['warning','Offline queue','warning'],'reconnected':['refresh','Reconnected','positive'],'attachment':['attach','Attachment','positive'],'attachment-error':['warning','Attachment routing','warning'],'tool-error':['warning','Tool failure','danger'],'permission':['lock','Permission request','warning'],'goal-receipt':['goal','Goal state',''],'route-change':['changes','Route change',''],'crew':['users','Crew',''],'new-message':['down','New messages',''],'model-unavailable':['warning','Model availability','danger'],'agent-work':['artifact','Agent work',''],'blocked':['lock','Blocked','danger'],'waiting':['pause','Waiting','']
+      'question-receipt':['todo','Questionnaire waiting','warning'],'bsd-evaluating':['kind-bsd','BSD evaluating',''],'bsd-advice':['kind-bsd','Back Seat Driver','warning'],'context-focus':['filter','Context Lens · Focus','positive'],'context-mute':['eye-off','Context Lens · Mute',''],'context-subcompact':['collapse','Context Lens · Subcompact',''],'offline':['warning','Offline queue','warning'],'reconnected':['refresh','Reconnected','positive'],'attachment':['attach','Attachment','positive'],'attachment-error':['warning','Attachment routing','warning'],'tool-error':['warning','Tool failure','danger'],'permission':['shield','Permission request','warning'],'goal-receipt':['goal','Goal state',''],'route-change':['changes','Route change',''],'crew':['kind-crew','Crew',''],'new-message':['chevron-down','New messages',''],'model-unavailable':['warning','Model availability','danger'],'agent-work':['page','Agent work',''],'blocked':['lock','Blocked','danger'],'waiting':['pause','Waiting','']
     };
     const d=map[m.type]||['info',m.title||m.type,''];
+    /* Event icons are concept glyphs (lit steady, host ink). The status-like events show the status set's mark in its
+       tone instead: queued offline or behind a dependency waits (hourglass), a tool failure failed, a reconnect
+       complete, a blocked step blocked. Static: a record never loops. */
+    const st=EVENT_STATUS[m.type];
+    const glyph=st?statusMark(st,14):icon(d[0],14,'nx-r-concept');
     const actions=[];
     if(m.type==='question-receipt') actions.push(`<button class="soft-button" data-action="open-questionnaire">Resume</button>`);
     if(m.type==='bsd-advice') actions.push(`<button class="soft-button" data-action="open-bsd-details">${icon('eye',12)} Why?</button><button class="text-button" data-action="dismiss-event" data-id="${esc(m.id)}">Dismiss</button>`);
@@ -1089,7 +1117,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     /* The actions array is a fixed if-chain, so module-rendered system cards (restore
        points, rewound regions) could carry no buttons at all. Emits nothing unregistered. */
     const extActions=extRender('systemCardActions',{message:m}); if(extActions) actions.push(extActions);
-    return `<article class="event-card ${d[2]}" data-message-id="${esc(m.id||'')}"${m.dispatchId?` data-dispatch-id="${esc(m.dispatchId)}"`:''}${m.commandId?` data-command-id="${esc(m.commandId)}"`:''}${m.resultStatus?` data-result-status="${esc(m.resultStatus)}"`:''}><span class="event-icon">${icon(d[0],14)}</span><div class="event-copy">${m.title&&m.title!==d[1]?`<span class="event-kind">${esc(d[1])}</span>`:''}<strong>${esc(m.title||d[1])}</strong><p>${formatText(m.detail||'')}</p></div>${actions.length?`<div class="plan-actions">${actions.join('')}</div>`:''}</article>`;
+    return `<article class="event-card ${d[2]}" data-message-id="${esc(m.id||'')}"${m.dispatchId?` data-dispatch-id="${esc(m.dispatchId)}"`:''}${m.commandId?` data-command-id="${esc(m.commandId)}"`:''}${m.resultStatus?` data-result-status="${esc(m.resultStatus)}"`:''}><span class="event-icon">${glyph}</span><div class="event-copy">${m.title&&m.title!==d[1]?`<span class="event-kind">${esc(d[1])}</span>`:''}<strong>${esc(m.title||d[1])}</strong><p>${formatText(m.detail||'')}</p></div>${actions.length?`<div class="plan-actions">${actions.join('')}</div>`:''}</article>`;
   }
   function renderWorkingAnimation(m,ownedProjection){
     const rec=ownedProjection||workRecFor(m)||state.work;
@@ -1097,7 +1125,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const ctx=makeWorkCtx(rec,m), step=ctx.step, pct=ctx.pct;
     const co=CHROME_OPTS[v]||{}, shut=rec.completed&&rec.openPhase==null;
     const cardId=ctx.cardId, recId=(m&&m.workId)||'primary';
-    return `<article class="working-card ${rec.completed?'is-done ':''}working-variant-${v}" data-working-variant="${v}" data-step-kind="${esc(step.kind)}" data-card="${esc(recId)}" data-card-ui="${esc(cardId)}" data-k="workcard:${esc(cardId)}"><div class="working-head"><span class="work-phase-icon">${icon(step.icon,14)}</span><div><strong>${rec.ownerProjection?esc(rec.statusLabel||(rec.completed?'Completed':'Working')):(rec.completed?'Completed':'Working')}</strong>${extEach('workingHeadCaption',{message:m,rec,ctx})||''}<span class="sub"> · ${formatElapsed(rec.elapsed)}</span></div><span class="spacer"></span><div class="working-controls">${rec.ownerProjection?extRender('workingOwnerControls',{message:m,rec,ctx}):renderWorkDemoControls(rec,cardId)}</div></div><div class="working-body" data-flip data-k="wv:${v}:${esc(cardId)}">${co.noChrome?'':renderPhaseChrome(ctx,co)}${(shut&&!co.keepBody)?'':renderWorkingVariant(v,step,pct,ctx)}${renderLiveAgentInline(step)}${rec.expanded?renderWorkHistory(rec):''}</div>${renderOpenWorkTerminal(cardId,rec)}</article>`;
+    return `<article class="working-card ${rec.completed?'is-done ':''}working-variant-${v}" data-working-variant="${v}" data-step-kind="${esc(step.kind)}" data-card="${esc(recId)}" data-card-ui="${esc(cardId)}" data-k="workcard:${esc(cardId)}"><div class="working-head"><span class="work-phase-icon" data-k="wpi:${esc(step.id)}">${icon(step.icon,14,rec.running?'nx-r-status nx-t-working':'')}</span><div><strong>${rec.ownerProjection?esc(rec.statusLabel||(rec.completed?'Completed':'Working')):(rec.completed?'Completed':'Working')}</strong>${extEach('workingHeadCaption',{message:m,rec,ctx})||''}<span class="sub"> · ${formatElapsed(rec.elapsed)}</span></div><span class="spacer"></span><div class="working-controls">${rec.ownerProjection?extRender('workingOwnerControls',{message:m,rec,ctx}):renderWorkDemoControls(rec,cardId)}</div></div><div class="working-body" data-flip data-k="wv:${v}:${esc(cardId)}">${co.noChrome?'':renderPhaseChrome(ctx,co)}${(shut&&!co.keepBody)?'':renderWorkingVariant(v,step,pct,ctx)}${renderLiveAgentInline(step)}${rec.expanded?renderWorkHistory(rec):''}</div>${renderOpenWorkTerminal(cardId,rec)}</article>`;
   }
 
   /* Chat WOW M4: the lab controls (play/pause, step, complete, reset, history)
@@ -1818,14 +1846,19 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<section class="activity-section" data-domain-section="${id}"><button class="activity-section-head" data-action="toggle-activity-section" data-domain="${id}"><span class="event-icon" style="width:24px;height:24px">${icon(d.icon,12)}</span><strong>${d.label}</strong><span style="font-size:10px;color:var(--muted)">${esc(d.summary)}</span><span class="spacer"></span><span class="meta-pill">${d.count}</span>${icon(open?'up':'down',11)}</button>${open?`<div class="activity-section-body">${renderActivitySectionBody(id)}</div>`:''}</section>`;
   }
 
+  /* Activity lines carry their tone as data-tone (neon-icons.css colours the icon), never an inline colour. A To-Do's
+     mark is the status set's (complete check, blocked lock, working ring, pending dashed ring); an unknown status
+     keeps the domain glyph, untoned. */
+  function lineTone(s){ const k=neonStatusKey(s); const t=k&&window.PM56_NEON.STATUS[k].tone; return t?` data-tone="${t}"`:''; }
+  function lineMark(s,fallback){ const k=neonStatusKey(s); return k?icon(window.PM56_NEON.STATUS[k].glyph,10):icon(fallback,10); }
   function renderActivitySectionBody(id){
     const scope=activityScope();
     if(id==='goal') return extReplace('goalSection',{}, `<div class="activity-line"><span class="status-dot working"></span><div class="copy"><strong>Optimize analytics query performance</strong><span>Running · Phase 2/4 · 68% · Revision 4</span></div><span class="right">2m 06s</span></div><div class="activity-line"><span class="event-icon" style="width:20px;height:20px">${icon('warning',10)}</span><div class="copy"><strong>Exact blocker</strong><span>Production schema modification requires explicit approval.</span></div></div><div class="plan-actions"><button class="soft-button" data-action="open-goal">View Goal</button><button class="soft-button" data-action="edit-goal">Edit</button><button class="soft-button" data-action="pause-goal">Pause</button><button class="soft-button" data-action="resume-goal">Resume</button><button class="soft-button" data-action="stop-goal">Stop</button><button class="text-button danger" data-action="clear-goal">Clear</button></div>`);
-    if(id==='todo') return scope.todos.map(x=>`<div class="activity-line"><span class="event-icon" style="width:20px;height:20px;color:${x.status==='done'?'var(--positive)':x.status==='blocked'?'var(--danger)':'var(--accent)'}">${icon(x.status==='done'?'check':x.status==='blocked'?'lock':'todo',10)}</span><div class="copy"><strong>${esc(x.label)}</strong><span>${esc(x.source)}${x.blocker?` · ${esc(x.blocker)}`:''}</span></div><span class="right">${esc(x.status)}</span></div>`).join('');
+    if(id==='todo') return scope.todos.map(x=>`<div class="activity-line"><span class="event-icon" style="width:20px;height:20px"${lineTone(x.status)}>${lineMark(x.status,'todo')}</span><div class="copy"><strong>${esc(x.label)}</strong><span>${esc(x.source)}${x.blocker?` · ${esc(x.blocker)}`:''}</span></div><span class="right">${esc(x.status)}</span></div>`).join('');
     if(id==='subagents') return scope.subagents.map(a=>`<button class="activity-line" data-action="open-agent" data-id="${esc(a.id)}"><span class="agent-avatar" style="width:22px;height:22px;border-radius:7px">${esc(a.name.split(' ').map(x=>x[0]).join('').slice(0,2))}</span><span class="copy"><strong>${esc(a.name)} · ${esc(a.model)}</strong><span>${esc(a.current)}${a.blocker?` · ${esc(a.blocker)}`:''}</span></span><span class="right">${esc(lblOf('subagentStatus',a.status))} · ${esc(a.elapsed)}</span></button>`).join('');
     if(id==='crew') return `<div class="activity-line"><span class="copy"><strong>No Crews in this chat yet.</strong><span>A Crew you start in this chat shows up here.</span></span></div>`;
-    if(id==='changes') return scope.changes.map(c=>`<button class="activity-line" data-action="open-change" data-path="${esc(c.path)}"><span class="event-icon" style="width:20px;height:20px">${icon('file-edit',10)}</span><span class="copy"><strong>${esc(c.path)}:${c.line}</strong><span>${esc(c.summary)}</span></span><span class="right" style="color:var(--positive)">+${c.add} <i style="color:var(--danger)">−${c.del}</i></span></button>`).join('');
-    return scope.artifacts.map(a=>`<button class="activity-line" data-action="open-artifact" data-id="${esc(a.id)}" data-artifact-id="${esc(a.id)}"><span class="event-icon" style="width:20px;height:20px;color:${a.status==='error'?'var(--danger)':a.status==='stale'?'var(--warning)':'var(--accent)'}">${icon(a.kind==='image'?'image':a.kind==='mermaid'?'code':'artifact',10)}</span><span class="copy"><strong>${esc(a.title)}</strong><span>${esc(a.kind)} · version ${a.version} · ${esc(a.summary)}</span></span><span class="right">${esc(lblOf('artifactStatus',a.status))}</span></button>`).join('');
+    if(id==='changes') return scope.changes.map(c=>`<button class="activity-line" data-action="open-change" data-path="${esc(c.path)}"><span class="event-icon" style="width:20px;height:20px">${icon('file-edit',10)}</span><span class="copy"><strong>${esc(c.path)}:${c.line}</strong><span>${esc(c.summary)}</span></span><span class="right" data-tone="done">+${c.add} <i data-tone="blocked">−${c.del}</i></span></button>`).join('');
+    return scope.artifacts.map(a=>`<button class="activity-line" data-action="open-artifact" data-id="${esc(a.id)}" data-artifact-id="${esc(a.id)}"><span class="event-icon" style="width:20px;height:20px"${a.status==='error'?' data-tone="blocked"':a.status==='stale'?' data-tone="attention"':''}>${icon(a.kind==='image'?'image':a.kind==='mermaid'?'code':'artifact',10)}</span><span class="copy"><strong>${esc(a.title)}</strong><span>${esc(a.kind)} · version ${a.version} · ${esc(a.summary)}</span></span><span class="right">${esc(lblOf('artifactStatus',a.status))}</span></button>`).join('');
   }
   /* D1: .decision-host.empty transitions max-height, but only if children stay
      mounted for the collapse. Snapshot the last surface, render it under .empty,
@@ -1900,10 +1933,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
 
   function renderPlanDecision(){
     const revise=state.decision.mode==='revise';
-    return `<section class="decision-surface"><div class="decision-top"><span class="event-icon">${icon('document',13)}</span><strong>${revise?'Revise the Plan':'Plan ready for review'}</strong><span class="meta-pill">Revision ${state.planRevision}</span><span class="spacer"></span><button class="icon-button" data-action="close-decision">${icon('close',12)}</button></div><div class="decision-body"><strong>${esc(D.artifacts[0].title)}</strong><p style="color:var(--muted);font-size:11px;margin:4px 0 8px">${esc(D.artifacts[0].summary)}</p>${revise?`<textarea class="decision-textarea" data-input="plan-feedback" placeholder="Describe what the next immutable Plan revision should change…">${esc(state.decision.feedback||'')}</textarea>`:`<div class="decision-evidence"><strong>Material evidence</strong><p>p95 482 → 71 ms · 42 tests passed · write overhead +4.8% · rollback gate included</p></div>`}<div class="decision-actions"><button class="text-button" data-action="cancel-plan">Cancel</button><button class="soft-button" data-action="open-artifact" data-id="plan-query">${icon('eye',12)} View full Plan</button>${revise?`<button class="primary-button" data-action="submit-plan-revision">Create revision</button>`:`<button class="soft-button" data-action="revise-plan">${icon('edit',12)} Revise</button><button class="primary-button" data-action="approve-plan">Approve And Build</button>`}</div></div></section>`;
+    return `<section class="decision-surface"><div class="decision-top"><span class="event-icon">${icon('plan',13)}</span><strong>${revise?'Revise the Plan':'Plan ready for review'}</strong><span class="meta-pill">Revision ${state.planRevision}</span><span class="spacer"></span><button class="icon-button" data-action="close-decision">${icon('close',12)}</button></div><div class="decision-body"><strong>${esc(D.artifacts[0].title)}</strong><p style="color:var(--muted);font-size:11px;margin:4px 0 8px">${esc(D.artifacts[0].summary)}</p>${revise?`<textarea class="decision-textarea" data-input="plan-feedback" placeholder="Describe what the next immutable Plan revision should change…">${esc(state.decision.feedback||'')}</textarea>`:`<div class="decision-evidence"><strong>Material evidence</strong><p>p95 482 → 71 ms · 42 tests passed · write overhead +4.8% · rollback gate included</p></div>`}<div class="decision-actions"><button class="text-button" data-action="cancel-plan">Cancel</button><button class="soft-button" data-action="open-artifact" data-id="plan-query">${icon('eye',12)} View full Plan</button>${revise?`<button class="primary-button" data-action="submit-plan-revision">Create revision</button>`:`<button class="soft-button" data-action="revise-plan">${icon('edit',12)} Revise</button><button class="primary-button" data-action="approve-plan">Approve And Build</button>`}</div></div></section>`;
   }
 
-  function renderPermissionDecision(){ return `<section class="decision-surface"><div class="decision-top"><span class="event-icon">${icon('lock',13)}</span><strong>Permission required</strong><span class="meta-pill">Execution host</span><span class="spacer"></span><button class="icon-button" data-action="close-decision">${icon('close',12)}</button></div><div class="decision-body"><div class="question-prompt">Reconnect to Windows execution host and resume browser control?</div><p style="color:var(--muted);font-size:11px">The prior host connection dropped during step 7. The checkpoint is intact; no command will be replayed twice.</p><div class="decision-evidence"><strong>Command scope</strong><p>Reconnect host · restore browser session · continue from checkpoint · no schema mutation</p></div><div class="decision-actions"><button class="soft-button" data-action="deny-permission">Deny</button><button class="primary-button" data-action="approve-permission">Approve once</button></div></div></section>`; }
+  function renderPermissionDecision(){ return `<section class="decision-surface"><div class="decision-top"><span class="event-icon">${icon('shield',13)}</span><strong>Permission required</strong><span class="meta-pill">Execution host</span><span class="spacer"></span><button class="icon-button" data-action="close-decision">${icon('close',12)}</button></div><div class="decision-body"><div class="question-prompt">Reconnect to Windows execution host and resume browser control?</div><p style="color:var(--muted);font-size:11px">The prior host connection dropped during step 7. The checkpoint is intact; no command will be replayed twice.</p><div class="decision-evidence"><strong>Command scope</strong><p>Reconnect host · restore browser session · continue from checkpoint · no schema mutation</p></div><div class="decision-actions"><button class="soft-button" data-action="deny-permission">Deny</button><button class="primary-button" data-action="approve-permission">Approve once</button></div></div></section>`; }
 
   function renderConflictDecision(){ return `<section class="decision-surface"><div class="decision-top"><span class="event-icon">${icon('warning',13)}</span><strong>Resolve agent recommendation</strong><span class="spacer"></span><button class="icon-button" data-action="close-decision">${icon('close',12)}</button></div><div class="decision-body"><div class="question-prompt">Choose the next safe implementation path</div><div class="choice-grid"><button class="choice" data-action="resolve-conflict" data-value="indexes"><strong>Approve indexes</strong><br><span style="font-size:10px;color:var(--muted)">Fast, reversible first step</span></button><button class="choice" data-action="resolve-conflict" data-value="views"><strong>Use materialized views</strong><br><span style="font-size:10px;color:var(--muted)">Faster reads, refresh state</span></button><button class="choice" data-action="resolve-conflict" data-value="override"><strong>Override policy</strong><br><span style="font-size:10px;color:var(--muted)">Permit schema reviewer changes</span></button></div><div class="decision-evidence"><strong>Parent mediation</strong><p>Given the 95% read workload and modest write rate, the composite index is the safer first step. Materialized views remain a follow-up after measuring index performance.</p></div></div></section>`; }
 
@@ -3008,8 +3041,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       el.replaceWith(next);
       el=next;
     } else {
-      /* Same tip identity: refresh copy without remounting the card. */
-      el.innerHTML=next.innerHTML;
+      /* Same tip identity: refresh copy without remounting the card. A keyed patch, not innerHTML, so the nodes
+         (and the neon acts and rhythms running inside them) survive the work tick. */
+      pmPatchChildren(el,next);
     }
     positionHoverCard(el);
   }
@@ -3157,7 +3191,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
        Ask/Agent/Debug do not. Goal, BSD, ELI5, Crew and scheduling are ORTHOGONAL
        controls and deliberately absent here. */
     const items=[['Ask','Answer without making changes',''],['Agent','Execute the requested work',''],['Debug','Run an instrumented debugging workflow',''],['Plan','Create a read-only Plan document and To-Dos','plan'],['Deep Plan','Research through a scoped ledger, then plan','deep-plan'],['Review','Read-only review with fresh context','review']];
-    return `<div class="menu-head"><strong>Mode</strong><span class="spacer"></span><span class="chat-meta">/${state.mode.toLowerCase().replace(' ','-')}</span></div>${items.map(x=>`<button class="menu-item ${state.mode===x[0]?'active':''}" data-action="set-mode" data-value="${esc(x[0])}" ${x[2]?`data-submenu="${x[2]}"`:''}><span class="menu-icon">${icon(x[0]==='Ask'?'info':x[0].includes('Plan')?'document':x[0]==='Debug'?'warning':x[0]==='Review'?'eye':'sparkles',13)}</span><span class="menu-copy"><strong>${esc(x[0])}</strong><span>${esc(x[1])}</span></span>${x[2]?`<span class="chevron">${icon('chevron',11)}</span>`:state.mode===x[0]?`<span class="check">${icon('check',11)}</span>`:''}</button>`).join('')}`;
+    return `<div class="menu-head"><strong>Mode</strong><span class="spacer"></span><span class="chat-meta">/${state.mode.toLowerCase().replace(' ','-')}</span></div>${items.map(x=>`<button class="menu-item ${state.mode===x[0]?'active':''}" data-action="set-mode" data-value="${esc(x[0])}" ${x[2]?`data-submenu="${x[2]}"`:''}><span class="menu-icon">${icon(modeIconName(x[0]),13)}</span><span class="menu-copy"><strong>${esc(x[0])}</strong><span>${esc(x[1])}</span></span>${x[2]?`<span class="chevron">${icon('chevron',11)}</span>`:state.mode===x[0]?`<span class="check">${icon('check',11)}</span>`:''}</button>`).join('')}`;
   }
 
   function renderWandMenu(){
@@ -3165,7 +3199,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       ['goal','Goal Mode','Create and manage a durable goal','goal-menu',state.capabilities.goal?'On':'Off','goal'],
       /* F0b (d), D-2, E-02 (owner, 2026-09-27): the legacy Crew permission is this chat's Crew Auto override. Same
          submenu and values; the answer is Collaboration's (the Crew Auto check below reads the same flag). */
-      ['crew','Crew Auto in this chat','Lets the assistant call a Crew when a job needs one','crew-menu',crewAutoHere()?'On':'Off','users'],
+      ['crew','Crew Auto in this chat','Lets the assistant call a Crew when a job needs one','crew-menu',crewAutoHere()?'On':'Off','kind-crew'],
       /* Assistant-redesign wave: the BSD and ELI5 rows are gone from here.
          Both were superseded and both now have ONE owner that renders through
          `wandRows`, so leaving these produced two Back Seat Driver rows and two

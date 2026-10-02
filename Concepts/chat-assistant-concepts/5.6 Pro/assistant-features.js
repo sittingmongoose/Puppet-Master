@@ -1638,9 +1638,9 @@
   EXT.slot('wandRows', function(ctx){
     var icon=ctx.icon;
     return eli5WandRows(ctx) + revertWandRow(ctx) + debugWandRow(ctx) +
-      '<button class="menu-item af-wand-row" data-action="af-memory-open"><span class="menu-icon">'+icon('brain',13)+'</span>'+
+      '<button class="menu-item af-wand-row" data-action="af-memory-open"><span class="menu-icon">'+icon('kind-memory',13)+'</span>'+
       '<span class="menu-copy"><strong>Memory</strong><span>Taught (lock-aware) and automatic — two owners, one panel</span></span></button>'+
-      '<button class="menu-item af-wand-row" data-action="af-teach-open"><span class="menu-icon">'+icon('sparkles',13)+'</span>'+
+      '<button class="menu-item af-wand-row" data-action="af-teach-open"><span class="menu-icon">'+icon('kind-teach',13)+'</span>'+
       '<span class="menu-copy"><strong>Teach Puppet Master…</strong><span>Durable memory capture · /teach or natural language. Not the Teacher Persona.</span></span></button>'+
       /* New chat defaults (8.14): the defaults kind mark (a speech bubble with a small plus), never sparkles */
       '<button class="menu-item af-wand-row" data-action="af-settings-open"><span class="menu-icon">'+(window.PM56_SHELL&&window.PM56_SHELL.pmxKindMark?window.PM56_SHELL.pmxKindMark('defaults',13):icon('settings',13))+'</span>'+

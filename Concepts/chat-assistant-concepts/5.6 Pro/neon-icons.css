@@ -337,3 +337,45 @@ html[data-o55-nier="on"] body.pm56-reduced svg.nx .nx-c, html[data-o55-nier="on"
 html[data-o55-nier="on"][data-motion="reduced"] svg.nx, html[data-o55-nier="on"][data-motion="reduced"] svg.nx .nx-p,
 html[data-o55-nier="on"][data-motion="reduced"] svg.nx .nx-c, html[data-o55-nier="on"][data-motion="reduced"] .nx-st,
 html[data-o55-nier="on"][data-motion="reduced"] .nx-st::after { animation: none !important; transition: none !important; }
+
+/* ------------------------------------------------------------------ 12. app.js surfaces (step 3A) */
+/* OWNER of this section: Neon icons, surface step 3A (2026-10-02); the rest of the file is the foundation's and
+   NieR's. styles.css is closed and app.js has no sheet of its own, so the containers app.js draws round a glyph are
+   restated here at the specificity styles.css (or composer.css) gave them: this sheet loads after both.
+   Colour is reserved for status (plan §4): a container is neutral and its glyph is lit in the host ink. Coloured ink
+   comes only from .event-card.danger/.warning, [data-tone], a status mark's own tone (--nx-ink, section 5) and the
+   owners' .is-danger rules (higher specificity, untouched). */
+.event-icon { background: var(--surface-3); color: var(--text); }
+.event-card.warning > .event-icon { color: var(--warning); }
+.event-card.danger > .event-icon { color: var(--danger); }
+/* a menu row's glyph takes the row's ink: muted at rest, the text ink on hover, where it ignites (section 8) */
+.menu-item .menu-icon { color: inherit; }
+/* a toggled icon button reads as on by its lit glyph, not by an accent tile */
+.icon-button.active { color: var(--text); background: var(--surface-3); }
+.icon-button.active > svg.nx { --nx-hiv: visible; --nx-hi-a: var(--nx-h-concept-i); }
+/* Activity lines name their tone (data-tone), never an inline colour. */
+.activity-line [data-tone="blocked"] { color: var(--danger); }
+.activity-line [data-tone="attention"] { color: var(--warning); }
+.activity-line [data-tone="working"] { color: var(--accent); }
+.activity-line [data-tone="changed"] { color: var(--accent-2); }
+.activity-line [data-tone="done"] { color: var(--positive); }
+.activity-line [data-tone="idle"] { color: var(--subtle); }
+.activity-line [data-tone="paused"] { color: var(--muted); }
+/* Capability dots (the composer): a neutral tile; a dot is drawn only while its capability is on, so its glyph is
+   concept-lit (the text ink with its bloom) and plays its act when hovered. Back Seat Driver On (the open eye) is
+   lit; Auto (the lowered lid) is dim: bsd.css's muted ink and no bloom. */
+.capability-dot, .capability-dot.goal { color: var(--text); background: var(--surface-3); }
+.composer-infield .capability-dot, .composer-infield .capability-dot.goal { color: var(--text); background: var(--surface-3); border-color: var(--border); }
+.composer-infield .capability-dot.bsd > svg.nx[data-nx="eye"] { color: var(--text); }
+.capability-dot.bsd > svg.nx[data-nx="kind-bsd-auto"] { --nx-hi-a: 0; }
+.capability-dot:hover > svg.nx { --nx-hi-a: var(--nx-h-swell-i); --nx-1: var(--nx-d1) var(--nx-ease) backwards; }
+/* The working card's head: while the run runs, the step's glyph is a live status mark (working tone and bloom) that
+   breathes like the bar's working domain. It is keyed by step (wpi:<step.id>), so it remounts at every handover and
+   plays the step glyph's act once. The tile is neutral; a paused or finished run shows the glyph at rest. */
+.working-head .work-phase-icon { background: var(--surface-3); color: var(--muted); box-shadow: none; }
+.working-head .work-phase-icon > svg.nx-r-status { --nx-1: var(--nx-d1) var(--nx-ease) backwards; animation: ab-breathe 2200ms ease-in-out infinite; }
+html[data-o55-nier="on"] .working-head .work-phase-icon > svg.nx-r-status { animation-timing-function: steps(3, end); }
+/* The chat header's status: the thread's live mark beside the word. */
+.chat-state > .nx-st { margin-right: 1px; }
+/* the decision panel is needs-you: its head glyph keeps the canon accent (ACD-469) on the neutral tile */
+.decision-top > .event-icon { color: var(--accent); }
