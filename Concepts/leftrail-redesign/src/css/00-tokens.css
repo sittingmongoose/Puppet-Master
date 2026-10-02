@@ -30,6 +30,8 @@
   --pmr-sel-text: var(--text-primary);
   --pmr-focus: var(--accent-primary);
   --pmr-accent: var(--accent-primary);
+  --pmr-on-accent: var(--surface);          /* text on the accent fill: the surface tone reads on every theme's accent */
+  --pmr-bg-opaque: var(--surface-elevated); /* overlays beside the rail (Glass surfaces are translucent: see below) */
 
   /* status: shape + colour + word (src/js/10-glyphs.js) */
   --pmr-st-ok: var(--graph-passed);
@@ -68,6 +70,8 @@ html[data-theme^="glass"] {
   --pmr-radius: 9px; --pmr-radius-lg: 13px;
   --pmr-t-fast: 180ms; --pmr-t-med: 300ms; --pmr-t-slow: 420ms; --pmr-ease: cubic-bezier(.16, 1, .3, 1); --pmr-spring: cubic-bezier(.22, 1.2, .36, 1);
   --pmr-hover: color-mix(in srgb, var(--text-primary) 9%, transparent);
+  --pmr-on-accent: var(--bg, var(--surface));
+  --pmr-bg-opaque: color-mix(in srgb, var(--surface-elevated) 88%, var(--bg, #000));
 }
 /* Retro: IBM Plex Mono throughout is wide, so its steps are half a pixel smaller; square corners; motion snaps */
 html[data-theme^="retro"] {

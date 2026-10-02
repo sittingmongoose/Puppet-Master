@@ -237,6 +237,7 @@ C_SPECS.files = {
       cGlyph(st, { loud: true }),
       h('span.pmr-c-footline-t', { text: cancelled ? 'Copy cancelled after 3 of 50 files' : op.name }),
       cancelled ? null : cMeter(op.progress.done / op.progress.total * 100, 'running', 'Copy progress'));
+    opBtn.classList.add('is-op');
     PMR.hover(opBtn, ops.label, op.meta.join(' · '));
     opBtn.addEventListener('click', () => cLensShow(P, {
       key: '__ops', el: opBtn, kind: 'Operation', icon: 'copy', label: op.name,
@@ -252,7 +253,8 @@ C_SPECS.files = {
       if (n) {
         const selActs = P.panel.selection.actions;
         const trig = h('button', { type: 'button', class: 'pmr-btn pmr-btn-quiet pmr-c-seltrig', 'aria-haspopup': 'menu', 'data-pmr-nav': 'menu', 'data-pmr-nav-id': 'files:selection' },
-          h('span.pmr-btn-label', { text: 'Selection actions' }), PMR.icon('chevD', 'pmr-btn-ico'));
+          h('span.pmr-btn-label', { text: 'Actions' }), PMR.icon('chevD', 'pmr-btn-ico'));
+        PMR.hover(trig, 'Selection actions', 'Copy paths, cut, add to chat or delete the selected rows');
         trig.addEventListener('click', ev => {
           ev.preventDefault();
           const items = selActs.map(a => Object.assign({}, a));

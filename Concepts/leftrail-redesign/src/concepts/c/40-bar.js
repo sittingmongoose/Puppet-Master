@@ -68,12 +68,14 @@ function cMountBar(bar) {
   mo.observe(bar, { attributes: true, attributeFilter: ['class'], subtree: true });
   if (slot) mo.observe(slot, { attributes: true, attributeFilter: ['class'] });
   const ro = window.ResizeObserver ? new ResizeObserver(() => soon(false)) : null;
+  const themeMo = new MutationObserver(() => { setTimeout(() => sync(false), 60); setTimeout(() => sync(false), 450); });
+  themeMo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'data-o55-nier-parts'] });
   if (ro) ro.observe(bar);
   soon(false);
   return {
     panel() { soon(true); },
     destroy() {
-      mo.disconnect(); if (ro) ro.disconnect(); cancelAnimationFrame(raf);
+      mo.disconnect(); themeMo.disconnect(); if (ro) ro.disconnect(); cancelAnimationFrame(raf);
       added.forEach(n => n.remove());
       bar.querySelectorAll('[data-pmr-c-attention]').forEach(i => i.removeAttribute('data-pmr-c-attention'));
     },
