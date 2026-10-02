@@ -444,7 +444,8 @@
             var v = r.cells[c.key], html = v && typeof v === 'object' ? v.html : esc(v == null ? '' : v);
             return '<span class="pmu-tcell"' + (c.align === 'right' ? ' data-align="r"' : '') + (c.mono ? ' data-mono' : '') + '>' + html + '</span>';
           }).join('') + '</div>';
-      }).join('') : C.empty(m.empty || 'No results for current filter', m.emptyFacts);
+      }).join('') : (q || filters.some(function (f) { return C.view(id, 'f-' + f.key, 'all') !== 'all'; })) ? C.empty('No results for current filter', m.rows.length + ' records in the selected scope and range')
+        : C.empty(m.empty || 'No results for current filter', m.emptyFacts);
       var pg = pages > 1 ? '<div class="pmu-tpager"><button type="button" class="pmu-textbtn" data-pmu-act="tpage" data-value="' + (page - 1) + '"' + (page ? '' : ' disabled') + '>Previous</button><span>Page ' + (page + 1) + ' of ' + pages + '</span>' +
         '<button type="button" class="pmu-textbtn" data-pmu-act="tpage" data-value="' + (page + 1) + '"' + (page < pages - 1 ? '' : ' disabled') + '>Next</button></div>' : '';
       body.innerHTML = '<div class="pmu-table">' + toolbar + head + '<div class="pmu-tbody">' + bodyRows + '</div>' + pg + '</div>' + (m.foot ? C.foot(m.foot) : '');
@@ -494,7 +495,7 @@
           (s.sub && C.w(ctx, 'l') ? '<em>' + esc(s.sub) + '</em>' : '') + '</span><b>' + esc(s.valueText || C.fmt(s.value, m.fmt)) + '</b><span class="pmu-mixpct">' + esc(C.fmt(100 * s.value / total, 'pct')) + '</span></div>';
       }).join('') + C.more(segs.length - Math.min(fit, segs.length)) + '</div>' : '') + '</div>' + (m.foot && C.h(ctx, 'h2') ? C.foot(m.foot) : '');
       /* a short mix keeps an inline swatch legend with the counts (the segment names never live only in hover tags) */
-      C.chart(body, 'mix', body.querySelector('.pmu-mixhost'), { segments: segs.map(function (s) { return { name: s.name, value: s.value, idx: s.idx, tk: s.tk, vendor: s.vendor, est: !!s.est, valueText: s.valueText }; }), total: total, legend: rowsOk ? false : C.h(ctx, 'h2') ? 'rows' : ctx.tier.bw >= 150 },
+      C.chart(body, 'mix', body.querySelector('.pmu-mixhost'), { segments: segs.map(function (s) { return { name: s.name, value: s.value, idx: s.idx, tk: s.tk, vendor: s.vendor, est: !!s.est, valueText: s.valueText }; }), total: total, legend: rowsOk ? false : C.h(ctx, 'h2') ? 'rows' : false },
         { label: ctx.def.title });
     }
   });

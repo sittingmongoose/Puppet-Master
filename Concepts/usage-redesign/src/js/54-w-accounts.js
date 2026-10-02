@@ -81,8 +81,8 @@
     var mode = !n ? 'none' : bw >= minFull ? 'full' : bw >= minFold ? 'fold' : 'binding';
     var xlAct = bw >= 520 + n * 60 && mode === 'full';
     var cols = mode === 'binding' ? ['binding'] : p.windows.map(function (w) { return w.key; });
-    var tmpl = mode === 'full' ? 'minmax(130px,1.25fr) ' + cols.map(function () { return 'minmax(96px,1fr)'; }).join(' ') + ' ' + (xlAct ? '150px' : '64px')
-      : mode === 'fold' ? 'minmax(112px,1.25fr) ' + cols.map(function () { return 'minmax(88px,1fr)'; }).join(' ')
+    var tmpl = mode === 'full' ? 'minmax(130px,1.6fr) ' + cols.map(function () { return 'minmax(96px,1fr)'; }).join(' ') + ' ' + (xlAct ? '150px' : '64px')
+      : mode === 'fold' ? 'minmax(112px,1.6fr) ' + cols.map(function () { return 'minmax(88px,1fr)'; }).join(' ')
       : mode === 'binding' ? 'minmax(100px,1fr) minmax(88px,1fr)' : 'minmax(0,1fr) auto';
     var band = '<div class="pmu-colhead pmu-accband" style="grid-template-columns:' + tmpl + '"><span class="pmu-cap">ACCOUNT</span>' +
       (mode === 'binding' ? '<span class="pmu-cap">BINDING WINDOW</span>' : p.windows.map(function (w) { return '<span class="pmu-cap">' + esc(w.label.replace(/ window$/i, '').toUpperCase()) + '</span>'; }).join('')) +
@@ -112,7 +112,10 @@
         '<span class="pmu-acctext"><b class="pmu-ident' + (a.effective ? ' is-eff' : p.effective ? ' is-other' : '') + '">' + esc(a.nickname) + '</b>' +
         /* two short meta lines instead of one long one cut with "...": the state and plan, then host and reading age (and the
            Use button when the plate has no action column) */
-        (comfy ? '<span class="pmu-identmeta">' + metaLine(a, ['plan']) + '</span><span class="pmu-identmeta is-2">' + [a.host ? esc(a.host) : '', a.fresh.stale ? '<span class="pmu-stale">' + C.glyph('clockCircle') + esc(a.ageText) + '</span>' : esc(a.ageText)].filter(Boolean).join('<i class="pmu-dot"> · </i>') +
+        /* a long state word ("Cooldown until 04:31", "Usage exhausted") keeps line one to itself; the plan moves down */
+        (comfy ? (function () { var longState = String(a.stateWord || '').length > 12;
+          return '<span class="pmu-identmeta">' + (longState ? metaLine(a, []) : metaLine(a, ['plan'])) + '</span><span class="pmu-identmeta is-2">' +
+            [longState && a.plan ? esc(a.plan) : '', a.host ? esc(a.host) : '', a.fresh.stale ? '<span class="pmu-stale">' + C.glyph('clockCircle') + esc(a.ageText) + '</span>' : esc(a.ageText)].filter(Boolean).join('<i class="pmu-dot"> · </i>'); })() +
           (mode !== 'full' ? ' ' + useBtn(a, false) : '') + '</span>' +
           (a.amounts.length ? '<span class="pmu-amounts">' + a.amounts.slice(0, 1).map(function (x) { return esc(x.label) + ' <b>' + esc(x.value || x.word) + '</b>' + (x.suffix ? ' ' + esc(x.suffix) : ''); }).join('') + '</span>' : '')
           : '<span class="pmu-identmeta">' + stateHtml(a, { glyph: false }) + (mode !== 'full' ? ' ' + useBtn(a, false) : '') + '</span>') + '</span></span>';

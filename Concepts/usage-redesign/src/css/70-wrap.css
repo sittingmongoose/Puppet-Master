@@ -42,7 +42,10 @@
 #panel-usage .pmu-qrow { height: auto; min-height: 36px; }
 
 /* titles: the whole name first; the head's right meta (a count, a state word) shrinks and gives way before the title does */
-#panel-usage .pmu-cardtitles { flex: 1 1 auto; min-width: min(100%, max-content); }
+/* the titles block never shrinks below its title (the subtitle adds no intrinsic width: it fills whatever the block gets),
+   so the right meta gives way first; the block is capped at the head's width */
+#panel-usage .pmu-cardtitles { flex: 1 0 auto; max-width: 100%; min-width: 0; }
+#panel-usage .pmu-cardsub { width: 0; min-width: 100%; }
 #panel-usage .pmu-cardmeta { flex: 0 1 auto; max-width: none; min-width: 0; }
 /* a title longer than its head wraps to a second line in line and tile heads (two 15 px lines fit the 34 / 30 px head) */
 #panel-usage .pmu-card:is([data-head="line"], [data-head="tile"]) .pmu-cardtitle { white-space: normal; overflow: visible; text-overflow: clip; line-height: 15px;

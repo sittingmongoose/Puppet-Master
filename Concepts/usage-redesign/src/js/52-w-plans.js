@@ -69,7 +69,8 @@
         side = '<div class="pmu-limitside">' + right.html + '</div>';
         body.innerHTML = '<div class="pmu-limit is-xl"><div class="pmu-limitmain">' + meters + '</div>' + side + '</div>' + (m.foot && footH ? C.foot(m.foot, m.footGlyph) : '');
       } else {
-        var rest = stack([planLine].concat(lines).concat(C.h(ctx, 'h3') || C.w(ctx, 'm') ? facts : []), bh - footH - used - 4, true);
+        /* a short amount (Spend $14.82) goes before the long plan line, so a narrow card keeps the figure */
+        var rest = stack(lines.concat([planLine]).concat(C.h(ctx, 'h3') || C.w(ctx, 'm') ? facts : []), bh - footH - used - 4, true);
         body.innerHTML = '<div class="pmu-limit">' + meters + rest.html + '</div>' + (m.foot && footH ? C.foot(m.foot, m.footGlyph) : '');
       }
       shownWins.forEach(function (w, i) {
