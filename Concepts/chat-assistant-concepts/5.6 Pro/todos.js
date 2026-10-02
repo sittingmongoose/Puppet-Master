@@ -495,7 +495,16 @@
     work_admitted:'Work admitted', outcome_satisfied:'Outcome accepted', dependency_changed:'Dependency changed',
     external_block:'Blocked', explicit_skip:'Skipped', retry:'Unblocked', reopen:'Reopened', child_rollup:'Derived from children'
   };
+  /* NEON ICONS (step 3B, 2026-10-02): the five glyphs are the shared status set, PM56_NEON.status() (neon-icons.js,
+     plan §3) — complete's bold check, the working bead on its ring, the blocked lock, skipped's slash-circle, the
+     pending dashed ring — still five distinct SHAPES, lit in their tone. PM56_NEON is resolved at call time, never at
+     load: tests/b16 evaluates this file with no PM56_NEON, and then the bespoke drawings below remain the fallback.
+     The virtual list remounts its rows on every scroll (virtualRows -> innerHTML), so todos.css holds the marks
+     there static (no loop, no replayed one-shot); the hover card's rows are keyed and keep the list rhythm. */
+  var NEON_MARK = { completed:'complete', in_progress:'working', blocked:'blocked', skipped:'skipped', pending:'pending' };
   function glyph(status){
+    var N = typeof window !== 'undefined' ? window.PM56_NEON : null;
+    if(N && typeof N.status === 'function') return N.status(NEON_MARK[status] || 'pending', 14);
     if(status==='completed') return '<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6.2" fill="currentColor"/></svg>';
     if(status==='in_progress') return '<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6.2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle class="todo-glyph-pulse" cx="8" cy="8" r="2.6" fill="currentColor"/></svg>';
     if(status==='blocked') return '<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><rect x="4.3" y="7.1" width="7.4" height="6.1" rx="1.3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M6 7.1V5.6a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>';

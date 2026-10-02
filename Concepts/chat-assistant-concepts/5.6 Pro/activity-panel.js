@@ -42,7 +42,13 @@
      renders only in focused 'todo' scope. */
   var DOMAINS = ['goal', 'todo', 'subagents', 'crew', 'changes', 'artifacts'];
   var LABELS = { goal: 'Goal', todo: 'Todo', subagents: 'Subagents', crew: 'Crew', changes: 'Changes', artifacts: 'Artifacts' };
-  var ICONS = { goal: 'goal', todo: 'todo', subagents: 'users', crew: 'users', changes: 'changes', artifacts: 'artifact' };
+  /* Neon icons (step 3B): the collaborative domains draw their kind marks (one glyph per concept), and every domain
+     glyph in a head, chip, rail, branch or section is lit in its domain's tone (lit(), below): the tone ink with its
+     core halo, steady. Nothing here loops; a glyph inside a button plays its act once on hover, like every lit glyph. */
+  var ICONS = { goal: 'goal', todo: 'todo', subagents: 'users', crew: 'kind-crew', brainstorm: 'kind-brainstorm', review: 'kind-review', chat_room: 'kind-chat_room', changes: 'changes', artifacts: 'artifact' };
+  /* a tone (this panel's or the shared vocabulary's) -> the neon tone class that lights a glyph */
+  var NX_TONE = { blocked: 'blocked', attention: 'attention', waiting: 'attention', working: 'working', changed: 'changed', done: 'done', idle: 'idle', pending: 'idle', muted: 'paused', paused: 'paused' };
+  function lit(tone) { return 'nx-t-' + (NX_TONE[tone] || 'idle'); }
 
   /* ---------------------------------------------------------------- state
      Extra keys hang off state.activity.  globalReset() replaces `state`
@@ -434,7 +440,7 @@
       var on = scopeOf(ctx) === 'focus' && id === f;
       return '<button class="pmap-chip' + (on ? ' is-on' : '') + '" data-action="focus-activity" data-domain="' + id +
         '" aria-pressed="' + (on ? 'true' : 'false') + '" aria-label="Focus ' + esc(ctx, LABELS[id]) + '">' +
-        ctx.icon(ICONS[id], 11) + '<span>' + esc(ctx, LABELS[id]) + '</span><b>' + esc(ctx, countOf(ctx, id)) + '</b></button>';
+        ctx.icon(ICONS[id], 11, lit(domainTone(ctx, id))) + '<span>' + esc(ctx, LABELS[id]) + '</span><b>' + esc(ctx, countOf(ctx, id)) + '</b></button>';
     }).join('') + '</div>';
   }
   function emptyNote(ctx, text) {
@@ -546,7 +552,7 @@
       }
       return '<section class="activity-section pmap-section' + (focused ? ' is-focus' : '') + '" data-domain-section="' + id + '" data-k="pmap-sec:' + id + '">' +
         '<button class="activity-section-head" data-action="toggle-activity-section" data-domain="' + id + '">' +
-        '<span class="event-icon" style="width:24px;height:24px">' + ctx.icon(d.icon, 12) + '</span>' +
+        '<span class="event-icon" style="width:24px;height:24px">' + ctx.icon(d.icon, 12, lit(domainTone(ctx, id))) + '</span>' +
         '<strong>' + esc(ctx, d.label) + '</strong>' +
         '<span class="pmap-head-sub">' + esc(ctx, d.summary) + '</span><span class="spacer"></span>' +
         '<span class="meta-pill">' + esc(ctx, d.count) + '</span>' + ctx.icon(open ? 'up' : 'down', 11) + '</button>' + body + '</section>';
@@ -670,7 +676,7 @@
     var footStatus = slim ? '' : '<span>' + toneDot(state.tone, state.tone === 'working') + esc(ctx, state.label) + '</span>';
     return '<button class="pmap-tile' + (slim ? ' is-slim' : '') + '" data-k="pmap-tile:' + id + '" data-action="focus-activity" data-domain="' + id +
       '" data-tone="' + state.tone + '" aria-label="View ' + esc(ctx, d.label) + ' activity details">' +
-      '<span class="pmap-tile-head"><span class="pmap-tile-ident">' + ctx.icon(d.icon, 14) + '<span>' +
+      '<span class="pmap-tile-head"><span class="pmap-tile-ident">' + ctx.icon(d.icon, 14, lit(state.tone)) + '<span>' +
       esc(ctx, d.label) + '</span></span><strong>' + esc(ctx, d.count) + '</strong></span>' +
       '<span class="pmap-tile-sum">' + esc(ctx, d.summary) + '</span>' +
       facts + meterMarkup(ctx, slim ? null : p.meter) +
@@ -690,7 +696,7 @@
       : domainList(ctx, f);
     var summary = '';
     if (f !== 'goal') {
-      var head = '<div class="pmap-focus-head"><span class="pmap-focus-ident">' + ctx.icon(ICONS[f], 15) + '<strong>' +
+      var head = '<div class="pmap-focus-head"><span class="pmap-focus-ident">' + ctx.icon(ICONS[f], 15, lit(state.tone)) + '<strong>' +
         esc(ctx, LABELS[f]) + '</strong></span><span class="pmap-focus-count">' + esc(ctx, d.count || countOf(ctx, f)) + '</span></div>';
       if (f === 'artifacts') {
         summary = '<section class="pmap-focus-summary" data-k="pmap-focus-summary:' + f + '" data-tone="' + state.tone + '">' +
@@ -731,7 +737,7 @@
       var head = '<button class="tree-child tree-branch' + (id === f ? ' is-focus' : '') +
         '" data-k="pmap-b:' + id + '" data-action="activity-branch" data-domain="' + id + '">' +
         '<span class="pmap-twisty">' + ctx.icon(isOpen ? 'down' : 'chevron', 10) + '</span>' +
-        ctx.icon(d.icon, 11) + '<span class="pmap-tree-label">' + esc(ctx, d.label) + '</span>' +
+        ctx.icon(d.icon, 11, lit(domainTone(ctx, id))) + '<span class="pmap-tree-label">' + esc(ctx, d.label) + '</span>' +
         '<b>' + esc(ctx, d.count) + '</b></button>';
       if (!isOpen) return head;
       if (id === 'goal') {
@@ -750,7 +756,7 @@
     }).join('');
     var sel = selected(ctx);
     var root = g
-      ? '<button class="tree-root" data-action="open-goal" data-k="pmap-treeroot">' + ctx.icon('goal', 11) +
+      ? '<button class="tree-root" data-action="open-goal" data-k="pmap-treeroot">' + ctx.icon('goal', 11, lit(domainTone(ctx, 'goal'))) +
         '<span class="pmap-tree-label">' + esc(ctx, g.summary) + '</span>' +
         '<b>' + (gp.total ? gp.completed + '/' + gp.total : esc(ctx, g.count)) + '</b></button>'
       : '';
@@ -778,7 +784,7 @@
         var d = ctx.activityDefs()[id];
         return '<button class="pmap-md-btn' + (!all && id === f ? ' active' : '') + '" data-k="pmap-md:' + id +
           '" data-action="focus-activity" data-domain="' + id + '" title="' + esc(ctx, d.label) + ' · ' + esc(ctx, d.count) + '">' +
-          ctx.icon(d.icon, 11) + '<span>' + esc(ctx, d.label) + '</span></button>';
+          ctx.icon(d.icon, 11, lit(domainTone(ctx, id))) + '<span>' + esc(ctx, d.label) + '</span></button>';
       }).join('');
     /* The `.detail` box is used for exactly the shape styles.css:366 describes —
        one bold line plus one muted line.  The record list lives underneath it at
@@ -792,7 +798,7 @@
       ? live.map(function (id) {
         var d = ctx.activityDefs()[id];
         return '<div class="pmap-md-group" data-k="pmap-mdg:' + id + '">' +
-          '<div class="pmap-sub-head">' + ctx.icon(d.icon, 11) + '<strong>' + esc(ctx, d.label) +
+          '<div class="pmap-sub-head">' + ctx.icon(d.icon, 11, lit(domainTone(ctx, id))) + '<strong>' + esc(ctx, d.label) +
           '</strong><span class="spacer"></span><span class="meta-pill">' + esc(ctx, d.count) + '</span></div>' +
           domainList(ctx, id) + '</div>';
       }).join('')
@@ -813,13 +819,16 @@
      which is the one question the accordion cannot answer at a glance.
      "Blocked" reads as **stalled** in the copy, per the goal handoff's rule.
      ===================================================================== */
+  /* Lane marks are the shared status set (neon icons step 3B): the working mark, the blocked lock, the hourglass of
+     waiting on something, the dashed ring of queued, the done check; Changed keeps the changes glyph. Each is drawn
+     bare and lit in its lane's tone — static, so the lane head carries no loop (the mark replaces the tone dot). */
   var LANES = [
-    { tone: 'working', label: 'Working', icon: 'lightning' },
-    { tone: 'blocked', label: 'Stalled', icon: 'lock' },
-    { tone: 'waiting', label: 'Waiting', icon: 'pause' },
+    { tone: 'working', label: 'Working', icon: 'st-working' },
+    { tone: 'blocked', label: 'Stalled', icon: 'st-blocked' },
+    { tone: 'waiting', label: 'Waiting', icon: 'st-waiting-dep' },
     { tone: 'changed', label: 'Changed', icon: 'changes' },
-    { tone: 'pending', label: 'Queued', icon: 'todo' },
-    { tone: 'done', label: 'Settled', icon: 'check' }
+    { tone: 'pending', label: 'Queued', icon: 'st-pending' },
+    { tone: 'done', label: 'Settled', icon: 'st-complete' }
   ];
   function boardCard(ctx, it) {
     var on = isSelected(ctx, it.domain, it.id);
@@ -844,8 +853,8 @@
       var cards = pool.filter(function (it) { return it.tone === lane.tone; });
       if (!cards.length) return '';
       return '<section class="pmap-lane" data-k="pmap-lane:' + lane.tone + '">' +
-        '<div class="pmap-lane-head">' + toneDot(lane.tone, lane.tone === 'working') +
-        ctx.icon(lane.icon, 10) + '<strong>' + lane.label + '</strong><span class="spacer"></span>' +
+        '<div class="pmap-lane-head">' + ctx.icon(lane.icon, 12, lit(lane.tone)) +
+        '<strong>' + lane.label + '</strong><span class="spacer"></span>' +
         '<b>' + cards.length + '</b></div>' +
         '<div class="activity-agent-board">' + cards.map(function (it) { return boardCard(ctx, it); }).join('') + '</div>' +
         '</section>';
@@ -990,7 +999,7 @@
       '<div class="activity-dashboard">' + cells + '</div>' +
       '<div class="pmap-metrics" data-k="pmap-metrics">' + metrics + '</div>' +
       '<div class="pmap-dash-focus" data-k="pmap-dashfocus">' +
-      '<div class="pmap-sub-head">' + ctx.icon(ICONS[f], 11) + '<strong>' + esc(ctx, LABELS[f]) +
+      '<div class="pmap-sub-head">' + ctx.icon(ICONS[f], 11, lit(domainTone(ctx, f))) + '<strong>' + esc(ctx, LABELS[f]) +
       '</strong><span class="spacer"></span><span class="meta-pill">' + esc(ctx, countOf(ctx, f)) + '</span></div>' +
       domainList(ctx, f) + '</div></div>';
   }

@@ -121,7 +121,8 @@
 
   var KINDS = ['crew', 'brainstorm', 'review', 'chat_room'];
   var KIND_LABEL = { crew: 'Crew', brainstorm: 'BrainStorm', review: 'Review', chat_room: 'Chat Room' };
-  var KIND_ICON = { crew: 'users', brainstorm: 'brain', review: 'eye', chat_room: 'users' };
+  /* neon icons (step 3B): the kind marks are the concept glyphs everywhere (one glyph per concept) */
+  var KIND_ICON = { crew: 'kind-crew', brainstorm: 'kind-brainstorm', review: 'kind-review', chat_room: 'kind-chat_room' };
 
   /* =====================================================================
      1. DEFINITIONS — Settings-sourced defaults per kind (owner doc §14).

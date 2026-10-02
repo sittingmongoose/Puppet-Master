@@ -269,6 +269,20 @@ html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-bar[data-variant="2
 .ab-card [data-tone="done"]      { --ab-t: var(--positive); }
 .ab-card [data-tone="idle"]      { --ab-t: var(--subtle); }
 .ab-card [data-tone="muted"]     { --ab-t: var(--subtle); }
+/* The head glyph (Neon icons step 3B): lit in the domain's tone, the tone ink with its core halo, steady — no loop
+   (hovering the head plays its act once, like every lit glyph in a button). The glyph now carries the tone itself,
+   so the tile stays neutral and the corner dot is retired, as the bar retired its dots. The tone is the card's own
+   (data-tone on .hover-card.ab-card, the same barTone() as the head), so the To-Dos head that todos.js draws is lit
+   the same way. Separate names (--ab-ct, --ab-ch), so a row value without its own data-tone never inherits it. */
+.hover-card.ab-card[data-tone="blocked"]   { --ab-ct: var(--danger);   --ab-ch: var(--nx-h-blocked-i); }
+.hover-card.ab-card[data-tone="attention"] { --ab-ct: var(--warning);  --ab-ch: var(--nx-h-attention-i); }
+.hover-card.ab-card[data-tone="working"]   { --ab-ct: var(--accent);   --ab-ch: var(--nx-h-working-i); }
+.hover-card.ab-card[data-tone="changed"]   { --ab-ct: var(--accent-2); --ab-ch: var(--nx-h-changed-i); }
+.hover-card.ab-card[data-tone="done"]      { --ab-ct: var(--positive); --ab-ch: var(--nx-h-quiet-i); }
+.hover-card.ab-card[data-tone="idle"]      { --ab-ct: var(--subtle);   --ab-ch: var(--nx-h-quiet-i); }
+.ab-card .ab-head-icon > svg.nx,
+.ab-card .todo-hover-head-icon > svg.nx { --nx-ink: var(--ab-ct, var(--muted)); --nx-hiv: visible; --nx-hi-a: var(--ab-ch, var(--nx-h-quiet-i)); }
+.ab-card .ab-head-icon::after { display: none; }
 
 .ab-card .ab-body {
   display: flex; flex-direction: column; gap: 1px;
@@ -440,7 +454,12 @@ html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-bar[data-variant="2
 
 /* Scroll-to-bottom: overlay the transcript, right side, just above the bar.
    Absolute so it does not grow --thread-float-h. Hidden until the reader
-   leaves the bottom; working treatment is accent + breathe like the bar. */
+   leaves the bottom; working treatment is accent + breathe like the bar.
+   Neon icons (step 3B): the glow is the chevron's halo, not a filter, and while
+   work runs the chevron is live — its own strike act loops (the part drops and
+   returns, transform only) under the bar's working breathe. At rest it is a
+   control that ignites on hover (the generic ignite skips self-lit hosts, so the
+   rule is here). The weight goes through --nx-stroke-base. */
 .jump-bottom {
   position: absolute;
   right: 10px;
@@ -460,34 +479,38 @@ html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-bar[data-variant="2
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 160ms var(--ease, ease), visibility 0s linear 160ms, color 200ms var(--ease, ease), filter 200ms var(--ease, ease);
+  transition: opacity 160ms var(--ease, ease), visibility 0s linear 160ms, color 200ms var(--ease, ease);
 }
 .jump-bottom.is-visible {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 160ms var(--ease, ease), visibility 0s, color 200ms var(--ease, ease), filter 200ms var(--ease, ease);
+  transition: opacity 160ms var(--ease, ease), visibility 0s, color 200ms var(--ease, ease);
 }
 .jump-bottom > svg {
   width: 14px;
   height: 14px;
   flex: 0 0 auto;
-  stroke-width: 1.8;
+  --nx-stroke-base: 1.8;
+  /* drawn at 14, emitted at 12: the moving part's halo copy converts at 24/14 */
+  --nx-u: 1.7143;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+.jump-bottom:not(.is-working):is(:hover, :focus-visible) > svg {
+  --nx-hiv: visible; --nx-hi-a: var(--nx-h-hover-i);
+  --nx-1: var(--nx-d1) var(--nx-ease) backwards;
 }
 .jump-bottom.is-working {
   color: var(--accent);
 }
 .jump-bottom.is-working > svg {
-  stroke-width: 2.1;
-  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--accent) 60%, transparent));
-  animation: ab-breathe 2200ms ease-in-out infinite, jump-bounce 1400ms ease-in-out infinite;
+  --nx-stroke-base: 2.1;
+  --nx-hiv: visible; --nx-hi-a: var(--nx-h-working-i);
+  animation: ab-breathe 2200ms ease-in-out infinite;
 }
-@keyframes jump-bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(3px); }
-}
+.jump-bottom.is-working > svg .nx-p { animation: var(--kl) 1400ms var(--nx-le) infinite; }
+html[data-o55-nier="on"] .jump-bottom.is-working > svg { animation-timing-function: steps(3, end); }
 .jump-bottom:hover {
   color: var(--text);
   background: var(--surface-3);

@@ -6,8 +6,10 @@
  * tokens so all eight themes work; nothing here hard-codes a colour.
  *
  * STATUS IS NEVER COLOUR-ALONE. Five statuses, five distinct glyph SHAPES
- * drawn in todos.js (filled disc / ring+pulse / padlock / slashed ring /
- * dashed ring) — colour here is strictly the second channel, matching the
+ * drawn in todos.js (neon icons step 3B: the shared status set — bold check /
+ * working bead on its ring / padlock / slashed ring / dashed ring; the bespoke
+ * filled disc / ring+pulse drawings remain the fallback without PM56_NEON) —
+ * colour here is strictly the second channel, matching the
  * rule goals.css documents for its own phase glyphs. Completed rows carry a
  * THIRD channel, strike-through text, so status still reads with colour
  * removed entirely.
@@ -86,6 +88,12 @@
 .todo-glyph-completed{ color:var(--positive); }
 .todo-glyph-blocked{ color:var(--danger); }
 .todo-glyph-skipped{ color:var(--subtle); }
+/* Neon icons (step 3B): the glyph is a status mark (PM56_NEON.status(), lit in its tone). The virtual list remounts
+   its rows on every scroll, so a mark there is static: no loop and no one-shot replayed at each remount (the NieR
+   stepped arrivals and the diamond loader included, hence the specificity). The hover card's rows keep the list
+   rhythm. */
+.todo-virtual-row .todo-glyph .nx-st, .todo-virtual-row .todo-glyph .nx-st::before, .todo-virtual-row .todo-glyph .nx-st::after,
+.todo-virtual-row .todo-glyph .nx-st .nx-p { animation: none; }
 
 .todo-copy{ min-width:0; display:flex; flex-direction:column; gap:3px; }
 .todo-title{ font-size:12px; line-height:1.4; color:var(--text); overflow-wrap:anywhere; }

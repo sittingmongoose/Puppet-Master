@@ -3669,6 +3669,20 @@ html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-bar[data-variant="2
 .ab-card [data-tone="done"]      { --ab-t: var(--positive); }
 .ab-card [data-tone="idle"]      { --ab-t: var(--subtle); }
 .ab-card [data-tone="muted"]     { --ab-t: var(--subtle); }
+/* The head glyph (Neon icons step 3B): lit in the domain's tone, the tone ink with its core halo, steady — no loop
+   (hovering the head plays its act once, like every lit glyph in a button). The glyph now carries the tone itself,
+   so the tile stays neutral and the corner dot is retired, as the bar retired its dots. The tone is the card's own
+   (data-tone on .hover-card.ab-card, the same barTone() as the head), so the To-Dos head that todos.js draws is lit
+   the same way. Separate names (--ab-ct, --ab-ch), so a row value without its own data-tone never inherits it. */
+.hover-card.ab-card[data-tone="blocked"]   { --ab-ct: var(--danger);   --ab-ch: var(--nx-h-blocked-i); }
+.hover-card.ab-card[data-tone="attention"] { --ab-ct: var(--warning);  --ab-ch: var(--nx-h-attention-i); }
+.hover-card.ab-card[data-tone="working"]   { --ab-ct: var(--accent);   --ab-ch: var(--nx-h-working-i); }
+.hover-card.ab-card[data-tone="changed"]   { --ab-ct: var(--accent-2); --ab-ch: var(--nx-h-changed-i); }
+.hover-card.ab-card[data-tone="done"]      { --ab-ct: var(--positive); --ab-ch: var(--nx-h-quiet-i); }
+.hover-card.ab-card[data-tone="idle"]      { --ab-ct: var(--subtle);   --ab-ch: var(--nx-h-quiet-i); }
+.ab-card .ab-head-icon > svg.nx,
+.ab-card .todo-hover-head-icon > svg.nx { --nx-ink: var(--ab-ct, var(--muted)); --nx-hiv: visible; --nx-hi-a: var(--ab-ch, var(--nx-h-quiet-i)); }
+.ab-card .ab-head-icon::after { display: none; }
 
 .ab-card .ab-body {
   display: flex; flex-direction: column; gap: 1px;
@@ -3840,7 +3854,12 @@ html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-bar[data-variant="2
 
 /* Scroll-to-bottom: overlay the transcript, right side, just above the bar.
    Absolute so it does not grow --thread-float-h. Hidden until the reader
-   leaves the bottom; working treatment is accent + breathe like the bar. */
+   leaves the bottom; working treatment is accent + breathe like the bar.
+   Neon icons (step 3B): the glow is the chevron's halo, not a filter, and while
+   work runs the chevron is live — its own strike act loops (the part drops and
+   returns, transform only) under the bar's working breathe. At rest it is a
+   control that ignites on hover (the generic ignite skips self-lit hosts, so the
+   rule is here). The weight goes through --nx-stroke-base. */
 .jump-bottom {
   position: absolute;
   right: 10px;
@@ -3860,34 +3879,38 @@ html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-bar[data-variant="2
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 160ms var(--ease, ease), visibility 0s linear 160ms, color 200ms var(--ease, ease), filter 200ms var(--ease, ease);
+  transition: opacity 160ms var(--ease, ease), visibility 0s linear 160ms, color 200ms var(--ease, ease);
 }
 .jump-bottom.is-visible {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 160ms var(--ease, ease), visibility 0s, color 200ms var(--ease, ease), filter 200ms var(--ease, ease);
+  transition: opacity 160ms var(--ease, ease), visibility 0s, color 200ms var(--ease, ease);
 }
 .jump-bottom > svg {
   width: 14px;
   height: 14px;
   flex: 0 0 auto;
-  stroke-width: 1.8;
+  --nx-stroke-base: 1.8;
+  /* drawn at 14, emitted at 12: the moving part's halo copy converts at 24/14 */
+  --nx-u: 1.7143;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+.jump-bottom:not(.is-working):is(:hover, :focus-visible) > svg {
+  --nx-hiv: visible; --nx-hi-a: var(--nx-h-hover-i);
+  --nx-1: var(--nx-d1) var(--nx-ease) backwards;
 }
 .jump-bottom.is-working {
   color: var(--accent);
 }
 .jump-bottom.is-working > svg {
-  stroke-width: 2.1;
-  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--accent) 60%, transparent));
-  animation: ab-breathe 2200ms ease-in-out infinite, jump-bounce 1400ms ease-in-out infinite;
+  --nx-stroke-base: 2.1;
+  --nx-hiv: visible; --nx-hi-a: var(--nx-h-working-i);
+  animation: ab-breathe 2200ms ease-in-out infinite;
 }
-@keyframes jump-bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(3px); }
-}
+.jump-bottom.is-working > svg .nx-p { animation: var(--kl) 1400ms var(--nx-le) infinite; }
+html[data-o55-nier="on"] .jump-bottom.is-working > svg { animation-timing-function: steps(3, end); }
 .jump-bottom:hover {
   color: var(--text);
   background: var(--surface-3);
@@ -11459,8 +11482,10 @@ body.pm56-reduced .pmx-run[data-density="live"] .pmx-stop[data-state="now"] + .p
  * tokens so all eight themes work; nothing here hard-codes a colour.
  *
  * STATUS IS NEVER COLOUR-ALONE. Five statuses, five distinct glyph SHAPES
- * drawn in todos.js (filled disc / ring+pulse / padlock / slashed ring /
- * dashed ring) — colour here is strictly the second channel, matching the
+ * drawn in todos.js (neon icons step 3B: the shared status set — bold check /
+ * working bead on its ring / padlock / slashed ring / dashed ring; the bespoke
+ * filled disc / ring+pulse drawings remain the fallback without PM56_NEON) —
+ * colour here is strictly the second channel, matching the
  * rule goals.css documents for its own phase glyphs. Completed rows carry a
  * THIRD channel, strike-through text, so status still reads with colour
  * removed entirely.
@@ -11539,6 +11564,12 @@ body.pm56-reduced .pmx-run[data-density="live"] .pmx-stop[data-state="now"] + .p
 .todo-glyph-completed{ color:var(--positive); }
 .todo-glyph-blocked{ color:var(--danger); }
 .todo-glyph-skipped{ color:var(--subtle); }
+/* Neon icons (step 3B): the glyph is a status mark (PM56_NEON.status(), lit in its tone). The virtual list remounts
+   its rows on every scroll, so a mark there is static: no loop and no one-shot replayed at each remount (the NieR
+   stepped arrivals and the diamond loader included, hence the specificity). The hover card's rows keep the list
+   rhythm. */
+.todo-virtual-row .todo-glyph .nx-st, .todo-virtual-row .todo-glyph .nx-st::before, .todo-virtual-row .todo-glyph .nx-st::after,
+.todo-virtual-row .todo-glyph .nx-st .nx-p { animation: none; }
 
 .todo-copy{ min-width:0; display:flex; flex-direction:column; gap:3px; }
 .todo-title{ font-size:12px; line-height:1.4; color:var(--text); overflow-wrap:anywhere; }
@@ -23319,7 +23350,13 @@ window.PM56_NIER_FACES = [
      renders only in focused 'todo' scope. */
   var DOMAINS = ['goal', 'todo', 'subagents', 'crew', 'changes', 'artifacts'];
   var LABELS = { goal: 'Goal', todo: 'Todo', subagents: 'Subagents', crew: 'Crew', changes: 'Changes', artifacts: 'Artifacts' };
-  var ICONS = { goal: 'goal', todo: 'todo', subagents: 'users', crew: 'users', changes: 'changes', artifacts: 'artifact' };
+  /* Neon icons (step 3B): the collaborative domains draw their kind marks (one glyph per concept), and every domain
+     glyph in a head, chip, rail, branch or section is lit in its domain's tone (lit(), below): the tone ink with its
+     core halo, steady. Nothing here loops; a glyph inside a button plays its act once on hover, like every lit glyph. */
+  var ICONS = { goal: 'goal', todo: 'todo', subagents: 'users', crew: 'kind-crew', brainstorm: 'kind-brainstorm', review: 'kind-review', chat_room: 'kind-chat_room', changes: 'changes', artifacts: 'artifact' };
+  /* a tone (this panel's or the shared vocabulary's) -> the neon tone class that lights a glyph */
+  var NX_TONE = { blocked: 'blocked', attention: 'attention', waiting: 'attention', working: 'working', changed: 'changed', done: 'done', idle: 'idle', pending: 'idle', muted: 'paused', paused: 'paused' };
+  function lit(tone) { return 'nx-t-' + (NX_TONE[tone] || 'idle'); }
 
   /* ---------------------------------------------------------------- state
      Extra keys hang off state.activity.  globalReset() replaces `state`
@@ -23711,7 +23748,7 @@ window.PM56_NIER_FACES = [
       var on = scopeOf(ctx) === 'focus' && id === f;
       return '<button class="pmap-chip' + (on ? ' is-on' : '') + '" data-action="focus-activity" data-domain="' + id +
         '" aria-pressed="' + (on ? 'true' : 'false') + '" aria-label="Focus ' + esc(ctx, LABELS[id]) + '">' +
-        ctx.icon(ICONS[id], 11) + '<span>' + esc(ctx, LABELS[id]) + '</span><b>' + esc(ctx, countOf(ctx, id)) + '</b></button>';
+        ctx.icon(ICONS[id], 11, lit(domainTone(ctx, id))) + '<span>' + esc(ctx, LABELS[id]) + '</span><b>' + esc(ctx, countOf(ctx, id)) + '</b></button>';
     }).join('') + '</div>';
   }
   function emptyNote(ctx, text) {
@@ -23823,7 +23860,7 @@ window.PM56_NIER_FACES = [
       }
       return '<section class="activity-section pmap-section' + (focused ? ' is-focus' : '') + '" data-domain-section="' + id + '" data-k="pmap-sec:' + id + '">' +
         '<button class="activity-section-head" data-action="toggle-activity-section" data-domain="' + id + '">' +
-        '<span class="event-icon" style="width:24px;height:24px">' + ctx.icon(d.icon, 12) + '</span>' +
+        '<span class="event-icon" style="width:24px;height:24px">' + ctx.icon(d.icon, 12, lit(domainTone(ctx, id))) + '</span>' +
         '<strong>' + esc(ctx, d.label) + '</strong>' +
         '<span class="pmap-head-sub">' + esc(ctx, d.summary) + '</span><span class="spacer"></span>' +
         '<span class="meta-pill">' + esc(ctx, d.count) + '</span>' + ctx.icon(open ? 'up' : 'down', 11) + '</button>' + body + '</section>';
@@ -23947,7 +23984,7 @@ window.PM56_NIER_FACES = [
     var footStatus = slim ? '' : '<span>' + toneDot(state.tone, state.tone === 'working') + esc(ctx, state.label) + '</span>';
     return '<button class="pmap-tile' + (slim ? ' is-slim' : '') + '" data-k="pmap-tile:' + id + '" data-action="focus-activity" data-domain="' + id +
       '" data-tone="' + state.tone + '" aria-label="View ' + esc(ctx, d.label) + ' activity details">' +
-      '<span class="pmap-tile-head"><span class="pmap-tile-ident">' + ctx.icon(d.icon, 14) + '<span>' +
+      '<span class="pmap-tile-head"><span class="pmap-tile-ident">' + ctx.icon(d.icon, 14, lit(state.tone)) + '<span>' +
       esc(ctx, d.label) + '</span></span><strong>' + esc(ctx, d.count) + '</strong></span>' +
       '<span class="pmap-tile-sum">' + esc(ctx, d.summary) + '</span>' +
       facts + meterMarkup(ctx, slim ? null : p.meter) +
@@ -23967,7 +24004,7 @@ window.PM56_NIER_FACES = [
       : domainList(ctx, f);
     var summary = '';
     if (f !== 'goal') {
-      var head = '<div class="pmap-focus-head"><span class="pmap-focus-ident">' + ctx.icon(ICONS[f], 15) + '<strong>' +
+      var head = '<div class="pmap-focus-head"><span class="pmap-focus-ident">' + ctx.icon(ICONS[f], 15, lit(state.tone)) + '<strong>' +
         esc(ctx, LABELS[f]) + '</strong></span><span class="pmap-focus-count">' + esc(ctx, d.count || countOf(ctx, f)) + '</span></div>';
       if (f === 'artifacts') {
         summary = '<section class="pmap-focus-summary" data-k="pmap-focus-summary:' + f + '" data-tone="' + state.tone + '">' +
@@ -24008,7 +24045,7 @@ window.PM56_NIER_FACES = [
       var head = '<button class="tree-child tree-branch' + (id === f ? ' is-focus' : '') +
         '" data-k="pmap-b:' + id + '" data-action="activity-branch" data-domain="' + id + '">' +
         '<span class="pmap-twisty">' + ctx.icon(isOpen ? 'down' : 'chevron', 10) + '</span>' +
-        ctx.icon(d.icon, 11) + '<span class="pmap-tree-label">' + esc(ctx, d.label) + '</span>' +
+        ctx.icon(d.icon, 11, lit(domainTone(ctx, id))) + '<span class="pmap-tree-label">' + esc(ctx, d.label) + '</span>' +
         '<b>' + esc(ctx, d.count) + '</b></button>';
       if (!isOpen) return head;
       if (id === 'goal') {
@@ -24027,7 +24064,7 @@ window.PM56_NIER_FACES = [
     }).join('');
     var sel = selected(ctx);
     var root = g
-      ? '<button class="tree-root" data-action="open-goal" data-k="pmap-treeroot">' + ctx.icon('goal', 11) +
+      ? '<button class="tree-root" data-action="open-goal" data-k="pmap-treeroot">' + ctx.icon('goal', 11, lit(domainTone(ctx, 'goal'))) +
         '<span class="pmap-tree-label">' + esc(ctx, g.summary) + '</span>' +
         '<b>' + (gp.total ? gp.completed + '/' + gp.total : esc(ctx, g.count)) + '</b></button>'
       : '';
@@ -24055,7 +24092,7 @@ window.PM56_NIER_FACES = [
         var d = ctx.activityDefs()[id];
         return '<button class="pmap-md-btn' + (!all && id === f ? ' active' : '') + '" data-k="pmap-md:' + id +
           '" data-action="focus-activity" data-domain="' + id + '" title="' + esc(ctx, d.label) + ' · ' + esc(ctx, d.count) + '">' +
-          ctx.icon(d.icon, 11) + '<span>' + esc(ctx, d.label) + '</span></button>';
+          ctx.icon(d.icon, 11, lit(domainTone(ctx, id))) + '<span>' + esc(ctx, d.label) + '</span></button>';
       }).join('');
     /* The `.detail` box is used for exactly the shape styles.css:366 describes —
        one bold line plus one muted line.  The record list lives underneath it at
@@ -24069,7 +24106,7 @@ window.PM56_NIER_FACES = [
       ? live.map(function (id) {
         var d = ctx.activityDefs()[id];
         return '<div class="pmap-md-group" data-k="pmap-mdg:' + id + '">' +
-          '<div class="pmap-sub-head">' + ctx.icon(d.icon, 11) + '<strong>' + esc(ctx, d.label) +
+          '<div class="pmap-sub-head">' + ctx.icon(d.icon, 11, lit(domainTone(ctx, id))) + '<strong>' + esc(ctx, d.label) +
           '</strong><span class="spacer"></span><span class="meta-pill">' + esc(ctx, d.count) + '</span></div>' +
           domainList(ctx, id) + '</div>';
       }).join('')
@@ -24090,13 +24127,16 @@ window.PM56_NIER_FACES = [
      which is the one question the accordion cannot answer at a glance.
      "Blocked" reads as **stalled** in the copy, per the goal handoff's rule.
      ===================================================================== */
+  /* Lane marks are the shared status set (neon icons step 3B): the working mark, the blocked lock, the hourglass of
+     waiting on something, the dashed ring of queued, the done check; Changed keeps the changes glyph. Each is drawn
+     bare and lit in its lane's tone — static, so the lane head carries no loop (the mark replaces the tone dot). */
   var LANES = [
-    { tone: 'working', label: 'Working', icon: 'lightning' },
-    { tone: 'blocked', label: 'Stalled', icon: 'lock' },
-    { tone: 'waiting', label: 'Waiting', icon: 'pause' },
+    { tone: 'working', label: 'Working', icon: 'st-working' },
+    { tone: 'blocked', label: 'Stalled', icon: 'st-blocked' },
+    { tone: 'waiting', label: 'Waiting', icon: 'st-waiting-dep' },
     { tone: 'changed', label: 'Changed', icon: 'changes' },
-    { tone: 'pending', label: 'Queued', icon: 'todo' },
-    { tone: 'done', label: 'Settled', icon: 'check' }
+    { tone: 'pending', label: 'Queued', icon: 'st-pending' },
+    { tone: 'done', label: 'Settled', icon: 'st-complete' }
   ];
   function boardCard(ctx, it) {
     var on = isSelected(ctx, it.domain, it.id);
@@ -24121,8 +24161,8 @@ window.PM56_NIER_FACES = [
       var cards = pool.filter(function (it) { return it.tone === lane.tone; });
       if (!cards.length) return '';
       return '<section class="pmap-lane" data-k="pmap-lane:' + lane.tone + '">' +
-        '<div class="pmap-lane-head">' + toneDot(lane.tone, lane.tone === 'working') +
-        ctx.icon(lane.icon, 10) + '<strong>' + lane.label + '</strong><span class="spacer"></span>' +
+        '<div class="pmap-lane-head">' + ctx.icon(lane.icon, 12, lit(lane.tone)) +
+        '<strong>' + lane.label + '</strong><span class="spacer"></span>' +
         '<b>' + cards.length + '</b></div>' +
         '<div class="activity-agent-board">' + cards.map(function (it) { return boardCard(ctx, it); }).join('') + '</div>' +
         '</section>';
@@ -24267,7 +24307,7 @@ window.PM56_NIER_FACES = [
       '<div class="activity-dashboard">' + cells + '</div>' +
       '<div class="pmap-metrics" data-k="pmap-metrics">' + metrics + '</div>' +
       '<div class="pmap-dash-focus" data-k="pmap-dashfocus">' +
-      '<div class="pmap-sub-head">' + ctx.icon(ICONS[f], 11) + '<strong>' + esc(ctx, LABELS[f]) +
+      '<div class="pmap-sub-head">' + ctx.icon(ICONS[f], 11, lit(domainTone(ctx, f))) + '<strong>' + esc(ctx, LABELS[f]) +
       '</strong><span class="spacer"></span><span class="meta-pill">' + esc(ctx, countOf(ctx, f)) + '</span></div>' +
       domainList(ctx, f) + '</div></div>';
   }
@@ -24553,33 +24593,38 @@ window.PM56_NIER_FACES = [
      Live proof this matters: the fixture already carries `queued`, `retrying`,
      `fallback`, `verifying` and `replanned`, none of which are in
      FIXTURE_SCHEMA's enums. */
+  /* The icon column names the shared status set (neon icons step 3B, plan §2-§3): each status that IS a status
+     draws its status mark (st-*, neon-icons.js) — waiting on something is the hourglass, active the working mark,
+     a retry or replan the recovering ratchet, queued the dashed ring, skipped the slash-circle, done the check
+     (Ready stays done here; it is idle only for threads). Statuses that describe a change rather than a state
+     (deleted, added, modified, renamed, a fallback route, stale) keep their concept glyph. */
   var STATUS = {
-    blocked: { label: 'Blocked', tone: 'blocked', icon: 'lock' },
-    failed: { label: 'Failed', tone: 'blocked', icon: 'warning' },
-    error: { label: 'Needs retry', tone: 'attention', icon: 'refresh' },
+    blocked: { label: 'Blocked', tone: 'blocked', icon: 'st-blocked' },
+    failed: { label: 'Failed', tone: 'blocked', icon: 'st-failed' },
+    error: { label: 'Needs retry', tone: 'attention', icon: 'st-recovering' },
     deleted: { label: 'Deleted', tone: 'changed', icon: 'minus' },
-    retrying: { label: 'Retrying', tone: 'attention', icon: 'refresh' },
+    retrying: { label: 'Retrying', tone: 'attention', icon: 'st-recovering' },
     fallback: { label: 'Fallback route', tone: 'attention', icon: 'branch' },
-    replanned: { label: 'Replanned', tone: 'attention', icon: 'refresh' },
+    replanned: { label: 'Replanned', tone: 'attention', icon: 'st-recovering' },
     stale: { label: 'Stale', tone: 'attention', icon: 'history' },
-    waiting: { label: 'Waiting', tone: 'attention', icon: 'pause' },
+    waiting: { label: 'Waiting', tone: 'attention', icon: 'st-waiting-dep' },
     renamed: { label: 'Renamed', tone: 'changed', icon: 'fork' },
-    in_progress: { label: 'Active', tone: 'working', icon: 'play' },
-    doing: { label: 'Active', tone: 'working', icon: 'play' },
-    running: { label: 'Active', tone: 'working', icon: 'play' },
-    working: { label: 'Working', tone: 'working', icon: 'play' },
-    verifying: { label: 'Verifying', tone: 'working', icon: 'flask' },
-    loading: { label: 'Loading', tone: 'working', icon: 'refresh' },
+    in_progress: { label: 'Active', tone: 'working', icon: 'st-working' },
+    doing: { label: 'Active', tone: 'working', icon: 'st-working' },
+    running: { label: 'Active', tone: 'working', icon: 'st-working' },
+    working: { label: 'Working', tone: 'working', icon: 'st-working' },
+    verifying: { label: 'Verifying', tone: 'working', icon: 'st-reviewing' },
+    loading: { label: 'Loading', tone: 'working', icon: 'st-working' },
     modified: { label: 'Modified', tone: 'changed', icon: 'file-edit' },
-    pending: { label: 'Pending', tone: 'idle', icon: 'todo' },
-    next: { label: 'Queued', tone: 'idle', icon: 'todo' },
-    queued: { label: 'Queued', tone: 'idle', icon: 'todo' },
-    completed: { label: 'Done', tone: 'done', icon: 'check' },
-    done: { label: 'Done', tone: 'done', icon: 'check' },
-    complete: { label: 'Complete', tone: 'done', icon: 'check' },
-    ready: { label: 'Ready', tone: 'done', icon: 'check' },
+    pending: { label: 'Pending', tone: 'idle', icon: 'st-pending' },
+    next: { label: 'Queued', tone: 'idle', icon: 'st-pending' },
+    queued: { label: 'Queued', tone: 'idle', icon: 'st-pending' },
+    completed: { label: 'Done', tone: 'done', icon: 'st-complete' },
+    done: { label: 'Done', tone: 'done', icon: 'st-complete' },
+    complete: { label: 'Complete', tone: 'done', icon: 'st-complete' },
+    ready: { label: 'Ready', tone: 'done', icon: 'st-complete' },
     added: { label: 'Added', tone: 'changed', icon: 'plus' },
-    skipped: { label: 'Skipped', tone: 'muted', icon: 'minus' }
+    skipped: { label: 'Skipped', tone: 'muted', icon: 'st-skipped' }
   };
   /* Most-urgent first. A five-row preview of fourteen agents must show the
      stalled ones, not the first five ids in the array. */
@@ -24592,7 +24637,7 @@ window.PM56_NIER_FACES = [
     return s ? s.charAt(0).toUpperCase() + s.slice(1) : 'Unknown';
   }
   function st(status) {
-    return STATUS[status] || { label: humanize(status), tone: 'idle', icon: 'todo' };
+    return STATUS[status] || { label: humanize(status), tone: 'idle', icon: 'st-pending' };
   }
   window.PM56_ACTIVITY_STATUS = {
     get: function (status) {
@@ -41766,7 +41811,16 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     work_admitted:'Work admitted', outcome_satisfied:'Outcome accepted', dependency_changed:'Dependency changed',
     external_block:'Blocked', explicit_skip:'Skipped', retry:'Unblocked', reopen:'Reopened', child_rollup:'Derived from children'
   };
+  /* NEON ICONS (step 3B, 2026-10-02): the five glyphs are the shared status set, PM56_NEON.status() (neon-icons.js,
+     plan §3) — complete's bold check, the working bead on its ring, the blocked lock, skipped's slash-circle, the
+     pending dashed ring — still five distinct SHAPES, lit in their tone. PM56_NEON is resolved at call time, never at
+     load: tests/b16 evaluates this file with no PM56_NEON, and then the bespoke drawings below remain the fallback.
+     The virtual list remounts its rows on every scroll (virtualRows -> innerHTML), so todos.css holds the marks
+     there static (no loop, no replayed one-shot); the hover card's rows are keyed and keep the list rhythm. */
+  var NEON_MARK = { completed:'complete', in_progress:'working', blocked:'blocked', skipped:'skipped', pending:'pending' };
   function glyph(status){
+    var N = typeof window !== 'undefined' ? window.PM56_NEON : null;
+    if(N && typeof N.status === 'function') return N.status(NEON_MARK[status] || 'pending', 14);
     if(status==='completed') return '<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6.2" fill="currentColor"/></svg>';
     if(status==='in_progress') return '<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6.2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle class="todo-glyph-pulse" cx="8" cy="8" r="2.6" fill="currentColor"/></svg>';
     if(status==='blocked') return '<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><rect x="4.3" y="7.1" width="7.4" height="6.1" rx="1.3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M6 7.1V5.6a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>';
@@ -42619,7 +42673,8 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
 
   var KINDS = ['crew', 'brainstorm', 'review', 'chat_room'];
   var KIND_LABEL = { crew: 'Crew', brainstorm: 'BrainStorm', review: 'Review', chat_room: 'Chat Room' };
-  var KIND_ICON = { crew: 'users', brainstorm: 'brain', review: 'eye', chat_room: 'users' };
+  /* neon icons (step 3B): the kind marks are the concept glyphs everywhere (one glyph per concept) */
+  var KIND_ICON = { crew: 'kind-crew', brainstorm: 'kind-brainstorm', review: 'kind-review', chat_room: 'kind-chat_room' };
 
   /* =====================================================================
      1. DEFINITIONS — Settings-sourced defaults per kind (owner doc §14).
@@ -68519,7 +68574,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
        run) no longer lists invented members. A thread with Crew runs is projected by the
        COLLAB_DOMAINS loop below, which replaces this entry. */
     if(scope.live.crew){
-      out.crew={icon:'users',label:'Crew',count:'0',state:'changed',tone:'idle',
+      out.crew={icon:'kind-crew',label:'Crew',count:'0',state:'changed',tone:'idle',
         summary:'No Crews in this chat yet.',
         detail:'A Crew you start in this chat shows up here.'};
     }
@@ -68543,7 +68598,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       const failed=runs.filter(r=>r.status==='failed'||r.degraded);
       const done=runs.filter(r=>r.status==='completed');
       const latest=runs[runs.length-1]||{};
-      out[id]={icon:id==='review'?'eye':['crew','chat_room'].includes(id)?'users':'brain',label:COLLAB_DOMAINS[id],
+      /* neon 3B: each collaborative domain shows its kind mark (one glyph per concept: the bar, the hover card head and
+         Activity Detail all read this icon) */
+      out[id]={icon:'kind-'+id,label:COLLAB_DOMAINS[id],
         count:String(runs.length),
         state:running.length?'live':failed.length?'changed':'changed',
         tone:failed.length?'attention':running.length?'working':done.length?'done':'idle',
@@ -68567,11 +68624,14 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return out;
   }
 
+  /* The bar draws every domain glyph through icon(), the kind marks included (neon 3B): a bar glyph is the bar's own lit
+     icon, not a pmx surface, so it carries no pmx-glyph/pmx-kind class (pmx-verify's loop census would otherwise count
+     the bar's rhythm against a pmx host's zero-loop budget). kindMark() stays the fallback without the neon family. */
   function renderActivityBar(){
     const defs=activityDefs();
     const items=Object.entries(defs);
     if(!items.length) return '';
-    return `<div class="activity-wrap" data-k="activity-wrap"><div class="activity-bar" data-variant="${state.variants[3]}" data-domains="${items.length}" aria-label="Thread activity">${items.map(([id,d])=>{const active=state.activity.open&&state.activity.scope==='focus'&&state.activity.domain===id;return `<button class="activity-item ${active?'active':''}" data-action="open-activity" data-domain="${id}" data-hover-domain="${id}" aria-label="${esc(d.label)} activity, ${esc(d.count)}" aria-haspopup="dialog" aria-controls="activity-domain-preview" aria-expanded="${active?'true':'false'}"><i class="state-mark ${d.state}"></i>${COLLAB_DOMAINS[id]?kindMark(id,12,d.icon):icon(d.icon,12)}<span class="label">${d.label}</span><span class="count">${d.count}</span></button>`;}).join('')}</div></div>`;
+    return `<div class="activity-wrap" data-k="activity-wrap"><div class="activity-bar" data-variant="${state.variants[3]}" data-domains="${items.length}" aria-label="Thread activity">${items.map(([id,d])=>{const active=state.activity.open&&state.activity.scope==='focus'&&state.activity.domain===id;return `<button class="activity-item ${active?'active':''}" data-action="open-activity" data-domain="${id}" data-hover-domain="${id}" aria-label="${esc(d.label)} activity, ${esc(d.count)}" aria-haspopup="dialog" aria-controls="activity-domain-preview" aria-expanded="${active?'true':'false'}"><i class="state-mark ${d.state}"></i>${COLLAB_DOMAINS[id]&&!hasIcon(d.icon)?kindMark(id,12,'users'):icon(d.icon,12)}<span class="label">${d.label}</span><span class="count">${d.count}</span></button>`;}).join('')}</div></div>`;
   }
   function renderJumpBottom(){
     const working=turnBusy();
@@ -68600,7 +68660,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const pinLabel=(state.activity.pinned?'Unpin':'Pin')+' Activity Detail';
     const filterButton=`<button class="icon-button activity-head-filter" data-action="toggle-activity-filter" aria-pressed="${state.activity.filterVisible?'true':'false'}"${hoverAttrs('act-filter','Show or hide category filter')}>${icon('filter',13)}</button>`;
     const overflow=`<details class="activity-head-overflow"><summary class="icon-button" aria-label="More Activity Detail actions">${icon('more',13)}</summary><div class="activity-head-menu"><button data-action="toggle-activity-filter" aria-pressed="${state.activity.filterVisible?'true':'false'}">${icon('filter',12)} ${state.activity.filterVisible?'Hide':'Show'} domains</button></div></details>`;
-    return `<aside class="activity-panel ${transient?'transient':''}" data-variant="${state.variants[4]}" data-scope="${allScope?'all':'focus'}" data-domain="${esc(d)}" data-pinned="${activityPinnedInLayout()?'true':'false'}" ${transient?'role="dialog" aria-modal="false"':'role="region"'} aria-label="Activity Detail"><div class="activity-panel-head"><span class="event-icon activity-head-icon">${icon(headDef.icon,13)}</span><strong>Activity Detail</strong><span class="spacer"></span>${filterButton}${overflow}<button class="icon-button" data-action="${pinAction}"${hoverAttrs('act-pin',pinLabel)}>${icon(state.activity.pinned?'unpin':'pin',13)}</button><button class="icon-button" data-action="close-activity"${hoverAttrs('act-close','Close Activity Detail')}>${icon('close',13)}</button></div><div class="activity-filter ${state.activity.filterVisible?'':'hidden'}" style="--activity-n:${n}" role="toolbar" aria-label="Activity domains">${live.map(id=>{const x=defs[id],active=!allScope&&d===id;return `<button class="${active?'active':''}" data-action="focus-activity" data-domain="${id}" aria-label="${esc(x.label)} activity, ${esc(x.count)}" aria-pressed="${active?'true':'false'}">${icon(x.icon,13)}<span>${x.label}</span></button>`;}).join('')}</div><div class="activity-scroll" data-scroll-key="activity">${extReplace('activityPanelBody',{domain:d,transient},sections.map(renderActivitySection).join(''))}</div>${transient?'':'<div class="panel-resize" data-resize="activity" aria-hidden="true"></div>'}</aside>`;
+    return `<aside class="activity-panel ${transient?'transient':''}" data-variant="${state.variants[4]}" data-scope="${allScope?'all':'focus'}" data-domain="${esc(d)}" data-pinned="${activityPinnedInLayout()?'true':'false'}" ${transient?'role="dialog" aria-modal="false"':'role="region"'} aria-label="Activity Detail"><div class="activity-panel-head"><span class="event-icon activity-head-icon">${icon(headDef.icon,13,'nx-t-'+(headDef.tone||'idle'))}</span><strong>Activity Detail</strong><span class="spacer"></span>${filterButton}${overflow}<button class="icon-button" data-action="${pinAction}"${hoverAttrs('act-pin',pinLabel)}>${icon(state.activity.pinned?'unpin':'pin',13)}</button><button class="icon-button" data-action="close-activity"${hoverAttrs('act-close','Close Activity Detail')}>${icon('close',13)}</button></div><div class="activity-filter ${state.activity.filterVisible?'':'hidden'}" style="--activity-n:${n}" role="toolbar" aria-label="Activity domains">${live.map(id=>{const x=defs[id],active=!allScope&&d===id;return `<button class="${active?'active':''}" data-action="focus-activity" data-domain="${id}" aria-label="${esc(x.label)} activity, ${esc(x.count)}" aria-pressed="${active?'true':'false'}">${icon(x.icon,13)}<span>${x.label}</span></button>`;}).join('')}</div><div class="activity-scroll" data-scroll-key="activity">${extReplace('activityPanelBody',{domain:d,transient},sections.map(renderActivitySection).join(''))}</div>${transient?'':'<div class="panel-resize" data-resize="activity" aria-hidden="true"></div>'}</aside>`;
   }
 
   function renderActivitySection(id){

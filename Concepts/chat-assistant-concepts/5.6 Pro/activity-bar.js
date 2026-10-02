@@ -163,33 +163,38 @@
      Live proof this matters: the fixture already carries `queued`, `retrying`,
      `fallback`, `verifying` and `replanned`, none of which are in
      FIXTURE_SCHEMA's enums. */
+  /* The icon column names the shared status set (neon icons step 3B, plan §2-§3): each status that IS a status
+     draws its status mark (st-*, neon-icons.js) — waiting on something is the hourglass, active the working mark,
+     a retry or replan the recovering ratchet, queued the dashed ring, skipped the slash-circle, done the check
+     (Ready stays done here; it is idle only for threads). Statuses that describe a change rather than a state
+     (deleted, added, modified, renamed, a fallback route, stale) keep their concept glyph. */
   var STATUS = {
-    blocked: { label: 'Blocked', tone: 'blocked', icon: 'lock' },
-    failed: { label: 'Failed', tone: 'blocked', icon: 'warning' },
-    error: { label: 'Needs retry', tone: 'attention', icon: 'refresh' },
+    blocked: { label: 'Blocked', tone: 'blocked', icon: 'st-blocked' },
+    failed: { label: 'Failed', tone: 'blocked', icon: 'st-failed' },
+    error: { label: 'Needs retry', tone: 'attention', icon: 'st-recovering' },
     deleted: { label: 'Deleted', tone: 'changed', icon: 'minus' },
-    retrying: { label: 'Retrying', tone: 'attention', icon: 'refresh' },
+    retrying: { label: 'Retrying', tone: 'attention', icon: 'st-recovering' },
     fallback: { label: 'Fallback route', tone: 'attention', icon: 'branch' },
-    replanned: { label: 'Replanned', tone: 'attention', icon: 'refresh' },
+    replanned: { label: 'Replanned', tone: 'attention', icon: 'st-recovering' },
     stale: { label: 'Stale', tone: 'attention', icon: 'history' },
-    waiting: { label: 'Waiting', tone: 'attention', icon: 'pause' },
+    waiting: { label: 'Waiting', tone: 'attention', icon: 'st-waiting-dep' },
     renamed: { label: 'Renamed', tone: 'changed', icon: 'fork' },
-    in_progress: { label: 'Active', tone: 'working', icon: 'play' },
-    doing: { label: 'Active', tone: 'working', icon: 'play' },
-    running: { label: 'Active', tone: 'working', icon: 'play' },
-    working: { label: 'Working', tone: 'working', icon: 'play' },
-    verifying: { label: 'Verifying', tone: 'working', icon: 'flask' },
-    loading: { label: 'Loading', tone: 'working', icon: 'refresh' },
+    in_progress: { label: 'Active', tone: 'working', icon: 'st-working' },
+    doing: { label: 'Active', tone: 'working', icon: 'st-working' },
+    running: { label: 'Active', tone: 'working', icon: 'st-working' },
+    working: { label: 'Working', tone: 'working', icon: 'st-working' },
+    verifying: { label: 'Verifying', tone: 'working', icon: 'st-reviewing' },
+    loading: { label: 'Loading', tone: 'working', icon: 'st-working' },
     modified: { label: 'Modified', tone: 'changed', icon: 'file-edit' },
-    pending: { label: 'Pending', tone: 'idle', icon: 'todo' },
-    next: { label: 'Queued', tone: 'idle', icon: 'todo' },
-    queued: { label: 'Queued', tone: 'idle', icon: 'todo' },
-    completed: { label: 'Done', tone: 'done', icon: 'check' },
-    done: { label: 'Done', tone: 'done', icon: 'check' },
-    complete: { label: 'Complete', tone: 'done', icon: 'check' },
-    ready: { label: 'Ready', tone: 'done', icon: 'check' },
+    pending: { label: 'Pending', tone: 'idle', icon: 'st-pending' },
+    next: { label: 'Queued', tone: 'idle', icon: 'st-pending' },
+    queued: { label: 'Queued', tone: 'idle', icon: 'st-pending' },
+    completed: { label: 'Done', tone: 'done', icon: 'st-complete' },
+    done: { label: 'Done', tone: 'done', icon: 'st-complete' },
+    complete: { label: 'Complete', tone: 'done', icon: 'st-complete' },
+    ready: { label: 'Ready', tone: 'done', icon: 'st-complete' },
     added: { label: 'Added', tone: 'changed', icon: 'plus' },
-    skipped: { label: 'Skipped', tone: 'muted', icon: 'minus' }
+    skipped: { label: 'Skipped', tone: 'muted', icon: 'st-skipped' }
   };
   /* Most-urgent first. A five-row preview of fourteen agents must show the
      stalled ones, not the first five ids in the array. */
@@ -202,7 +207,7 @@
     return s ? s.charAt(0).toUpperCase() + s.slice(1) : 'Unknown';
   }
   function st(status) {
-    return STATUS[status] || { label: humanize(status), tone: 'idle', icon: 'todo' };
+    return STATUS[status] || { label: humanize(status), tone: 'idle', icon: 'st-pending' };
   }
   window.PM56_ACTIVITY_STATUS = {
     get: function (status) {
