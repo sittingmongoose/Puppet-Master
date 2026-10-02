@@ -330,7 +330,7 @@
        passes run, so a hero line can wrap only when the roll lands ("1,420 calls left" in NieR pushed "4 more facts"
        past the card). One batched read of the board's bodies 2.4 s after the last render, never a loop. */
     clearTimeout(fitSettleT);
-    fitSettleT = setTimeout(fitSettled, 2400 * (PMU.motion && PMU.motion.speed ? PMU.motion.speed() : 1));
+    fitSettleT = setTimeout(fitSettled, 2000 * (PMU.motion && PMU.motion.speed ? PMU.motion.speed() : 1));
   }
   var fitSettleT = 0;
   function fitSettled() {
