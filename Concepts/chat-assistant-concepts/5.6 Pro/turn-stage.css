@@ -122,6 +122,10 @@ body[data-theme$="-light"] .sp-comet { filter: none; }
 .transcript[data-voice="retro"] .sp-mark .sp-orbit { animation-timing-function: steps(8, end); }
 .transcript[data-voice="retro"] .sp-mark .sp-ring { stroke-width: 2; }
 @media (prefers-reduced-motion: reduce) { .sp-comet { display: none; } .sp-mark .sp-orbit, .sp-mark .sp-ring { animation: none !important; } }
+/* the other two reduced routes (3E2 fix cycle 1): the same stop, so the live mark's orbit and comet are still there too */
+body.pm56-reduced .sp-comet, html[data-motion="reduced"] .sp-comet { display: none; }
+body.pm56-reduced .sp-mark .sp-orbit, body.pm56-reduced .sp-mark .sp-ring,
+html[data-motion="reduced"] .sp-mark .sp-orbit, html[data-motion="reduced"] .sp-mark .sp-ring { animation: none !important; }
 
 /* ------------------------------------------------------- 2 item families */
 /* WORK -- a sunken instrument. The accent belongs to it only while it is live. */

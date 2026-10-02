@@ -312,12 +312,17 @@ body[data-theme$="-light"] .nx-st-waiting::before { animation-name: nx-bl-needs-
 .nx-st-pending > svg.nx { --nx-tone-k: 1; --nx-ink: var(--muted); }
 
 /* ------------------------------------------------------------------ 10. reduced motion */
-/* Both routes (the media query and body.pm56-reduced) stop every neon animation and transition outright; the base
-   style is the finished, lit pose, so ink, halo and weight still carry the state with no infinite animation. */
+/* All three routes (the media query, body.pm56-reduced and html[data-motion="reduced"], the PMConcept7 contract) stop
+   every neon animation and transition outright; the base style is the finished, lit pose, so ink, halo and weight
+   still carry the state with no infinite animation. This covers every host's loops on an svg.nx or a status wrapper:
+   the Orbit's live glyph parts, the bar's breathe and alert rhythms, the jump button's working breathe, the status
+   beads, the needs-you hop and backlight, blocked's blink and failed's stutter. (The data-motion route was missing
+   until 3E2 fix cycle 1: only NieR's section 11 had it.) */
 @media (prefers-reduced-motion: reduce) {
   svg.nx, svg.nx .nx-p, svg.nx .nx-h, .nx-st, .nx-st::before, .nx-bolt::before { animation: none !important; transition: none !important; }
 }
 body.pm56-reduced svg.nx, body.pm56-reduced svg.nx .nx-p, body.pm56-reduced svg.nx .nx-h, body.pm56-reduced .nx-st, body.pm56-reduced .nx-st::before, body.pm56-reduced .nx-bolt::before { animation: none !important; transition: none !important; }
+html[data-motion="reduced"] svg.nx, html[data-motion="reduced"] svg.nx .nx-p, html[data-motion="reduced"] svg.nx .nx-h, html[data-motion="reduced"] .nx-st, html[data-motion="reduced"] .nx-st::before, html[data-motion="reduced"] .nx-bolt::before { animation: none !important; transition: none !important; }
 
 /* ------------------------------------------------------------------ 11. NieR Mode (PMConcept7 contract) */
 /* OWNER of this section: NieR Mode, step N-A (2026-10-02); the rest of the file is the foundation's. Every rule is

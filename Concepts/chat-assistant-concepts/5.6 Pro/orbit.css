@@ -1022,11 +1022,21 @@ html:not([data-o55-nier="on"]) body[data-theme="retro-light"] .orbit-core { --po
   .orbit-strip-item::before { animation: none !important; }
 }
 body.pm56-reduced .orbit-strip-item::before { animation: none !important; }
-/* The other two reduced routes (3E2, 2026-10-02): body.pm56-reduced (the Demo Studio switch, which PM56_PMX.reduced()
-   also reads) and html[data-motion="reduced"] (the PMConcept7 contract) stop what the media query above and the
-   Orbit block (PART 2) stop: the live node's pulse pip, the dashed track's spin, the strip's entrance and its ring
-   loop, and the strip and rail8 entrances run in 1ms (their end state unchanged). Before, only the media query did. */
-body.pm56-reduced .orbit-node-pip, body.pm56-reduced .orbit-track, body.pm56-reduced .orbit-strip-item,
-html[data-motion="reduced"] .orbit-node-pip, html[data-motion="reduced"] .orbit-track, html[data-motion="reduced"] .orbit-strip-item,
-html[data-motion="reduced"] .orbit-strip-item::before { animation: none !important; }
+/* The other two reduced routes (3E2, fix cycle 1, 2026-10-02): body.pm56-reduced (the Demo Studio switch, which
+   PM56_PMX.reduced() also reads) and html[data-motion="reduced"] (the PMConcept7 contract) restate every declaration
+   the media query makes for the Orbit, rule for rule: PART 1's rail entrance in 1ms, PART 2's travel in 1ms (the
+   420 ms collapse orbit-verify caught), the pulse pip, the dashed track's spin and the strip's loops stopped, the
+   entrances in 1ms, the failed node, the more chip and the narration still, and PART 3's strip ring stopped. The
+   end state is unchanged. The live glyph loops (.orbit-node.live > svg .nx-p) are svg.nx parts: neon-icons.css
+   section 10 stops them on all three routes. */
+body.pm56-reduced .orbit-stage, body.pm56-reduced .orbit-layout, body.pm56-reduced .orbit-dial, body.pm56-reduced .orbit-core, body.pm56-reduced .orbit-node, body.pm56-reduced .orbit-panel, body.pm56-reduced .orbit-panel-in, body.pm56-reduced .orbit-agent, body.pm56-reduced .orbit-sat, body.pm56-reduced .orbit-close, body.pm56-reduced .orbit-strip-item,
+html[data-motion="reduced"] .orbit-stage, html[data-motion="reduced"] .orbit-layout, html[data-motion="reduced"] .orbit-dial, html[data-motion="reduced"] .orbit-core, html[data-motion="reduced"] .orbit-node, html[data-motion="reduced"] .orbit-panel, html[data-motion="reduced"] .orbit-panel-in, html[data-motion="reduced"] .orbit-agent, html[data-motion="reduced"] .orbit-sat, html[data-motion="reduced"] .orbit-close, html[data-motion="reduced"] .orbit-strip-item {
+  transition-duration: 1ms !important;
+}
+body.pm56-reduced .orbit-node-pip, body.pm56-reduced .orbit-track, body.pm56-reduced .orbit-strip-item, body.pm56-reduced .orbit-strip-item::before,
+html[data-motion="reduced"] .orbit-node-pip, html[data-motion="reduced"] .orbit-track, html[data-motion="reduced"] .orbit-strip-item, html[data-motion="reduced"] .orbit-strip-item::before { animation: none !important; }
+body.pm56-reduced .orbit-sat, body.pm56-reduced .orbit-core-icon, body.pm56-reduced .orbit-node, body.pm56-reduced .orbit-dial,
+html[data-motion="reduced"] .orbit-sat, html[data-motion="reduced"] .orbit-core-icon, html[data-motion="reduced"] .orbit-node, html[data-motion="reduced"] .orbit-dial { animation-duration: 1ms !important; animation-delay: 0ms !important; }
+body.pm56-reduced .orbit-node.failed, body.pm56-reduced .orbit-core-more, body.pm56-reduced .orbit-narration,
+html[data-motion="reduced"] .orbit-node.failed, html[data-motion="reduced"] .orbit-core-more, html[data-motion="reduced"] .orbit-narration { animation: none; }
 body.pm56-reduced .pm-rail-item.enter, html[data-motion="reduced"] .pm-rail-item.enter { animation-duration: 1ms; }

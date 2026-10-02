@@ -4056,6 +4056,9 @@ html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-item { padding: 0 8
   .hover-card.ab-card { animation: none !important; }
   .jump-bottom.is-working > svg { animation: none !important; }
 }
+/* The other two reduced routes (3E2 fix cycle 1): the bar's and jump button's svg.nx loops stop through
+   neon-icons.css section 10 on every route; the hover card's entrance stops here too. */
+body.pm56-reduced .hover-card.ab-card, html[data-motion="reduced"] .hover-card.ab-card { animation: none !important; }
 
 /* The transcript occupies the space under and around the floating pill. */
 .chat-stage > .transcript { grid-row:3; padding-top:18px; padding-bottom:calc(var(--thread-float-h,44px) + 36px); }
@@ -7126,13 +7129,23 @@ html:not([data-o55-nier="on"]) body[data-theme="retro-light"] .orbit-core { --po
   .orbit-strip-item::before { animation: none !important; }
 }
 body.pm56-reduced .orbit-strip-item::before { animation: none !important; }
-/* The other two reduced routes (3E2, 2026-10-02): body.pm56-reduced (the Demo Studio switch, which PM56_PMX.reduced()
-   also reads) and html[data-motion="reduced"] (the PMConcept7 contract) stop what the media query above and the
-   Orbit block (PART 2) stop: the live node's pulse pip, the dashed track's spin, the strip's entrance and its ring
-   loop, and the strip and rail8 entrances run in 1ms (their end state unchanged). Before, only the media query did. */
-body.pm56-reduced .orbit-node-pip, body.pm56-reduced .orbit-track, body.pm56-reduced .orbit-strip-item,
-html[data-motion="reduced"] .orbit-node-pip, html[data-motion="reduced"] .orbit-track, html[data-motion="reduced"] .orbit-strip-item,
-html[data-motion="reduced"] .orbit-strip-item::before { animation: none !important; }
+/* The other two reduced routes (3E2, fix cycle 1, 2026-10-02): body.pm56-reduced (the Demo Studio switch, which
+   PM56_PMX.reduced() also reads) and html[data-motion="reduced"] (the PMConcept7 contract) restate every declaration
+   the media query makes for the Orbit, rule for rule: PART 1's rail entrance in 1ms, PART 2's travel in 1ms (the
+   420 ms collapse orbit-verify caught), the pulse pip, the dashed track's spin and the strip's loops stopped, the
+   entrances in 1ms, the failed node, the more chip and the narration still, and PART 3's strip ring stopped. The
+   end state is unchanged. The live glyph loops (.orbit-node.live > svg .nx-p) are svg.nx parts: neon-icons.css
+   section 10 stops them on all three routes. */
+body.pm56-reduced .orbit-stage, body.pm56-reduced .orbit-layout, body.pm56-reduced .orbit-dial, body.pm56-reduced .orbit-core, body.pm56-reduced .orbit-node, body.pm56-reduced .orbit-panel, body.pm56-reduced .orbit-panel-in, body.pm56-reduced .orbit-agent, body.pm56-reduced .orbit-sat, body.pm56-reduced .orbit-close, body.pm56-reduced .orbit-strip-item,
+html[data-motion="reduced"] .orbit-stage, html[data-motion="reduced"] .orbit-layout, html[data-motion="reduced"] .orbit-dial, html[data-motion="reduced"] .orbit-core, html[data-motion="reduced"] .orbit-node, html[data-motion="reduced"] .orbit-panel, html[data-motion="reduced"] .orbit-panel-in, html[data-motion="reduced"] .orbit-agent, html[data-motion="reduced"] .orbit-sat, html[data-motion="reduced"] .orbit-close, html[data-motion="reduced"] .orbit-strip-item {
+  transition-duration: 1ms !important;
+}
+body.pm56-reduced .orbit-node-pip, body.pm56-reduced .orbit-track, body.pm56-reduced .orbit-strip-item, body.pm56-reduced .orbit-strip-item::before,
+html[data-motion="reduced"] .orbit-node-pip, html[data-motion="reduced"] .orbit-track, html[data-motion="reduced"] .orbit-strip-item, html[data-motion="reduced"] .orbit-strip-item::before { animation: none !important; }
+body.pm56-reduced .orbit-sat, body.pm56-reduced .orbit-core-icon, body.pm56-reduced .orbit-node, body.pm56-reduced .orbit-dial,
+html[data-motion="reduced"] .orbit-sat, html[data-motion="reduced"] .orbit-core-icon, html[data-motion="reduced"] .orbit-node, html[data-motion="reduced"] .orbit-dial { animation-duration: 1ms !important; animation-delay: 0ms !important; }
+body.pm56-reduced .orbit-node.failed, body.pm56-reduced .orbit-core-more, body.pm56-reduced .orbit-narration,
+html[data-motion="reduced"] .orbit-node.failed, html[data-motion="reduced"] .orbit-core-more, html[data-motion="reduced"] .orbit-narration { animation: none; }
 body.pm56-reduced .pm-rail-item.enter, html[data-motion="reduced"] .pm-rail-item.enter { animation-duration: 1ms; }
 
 /* threadops.css — feature module styles.  OWNER: Wave 4 — Thread Ops (item 13).
@@ -16138,6 +16151,10 @@ body[data-theme$="-light"] .sp-comet { filter: none; }
 .transcript[data-voice="retro"] .sp-mark .sp-orbit { animation-timing-function: steps(8, end); }
 .transcript[data-voice="retro"] .sp-mark .sp-ring { stroke-width: 2; }
 @media (prefers-reduced-motion: reduce) { .sp-comet { display: none; } .sp-mark .sp-orbit, .sp-mark .sp-ring { animation: none !important; } }
+/* the other two reduced routes (3E2 fix cycle 1): the same stop, so the live mark's orbit and comet are still there too */
+body.pm56-reduced .sp-comet, html[data-motion="reduced"] .sp-comet { display: none; }
+body.pm56-reduced .sp-mark .sp-orbit, body.pm56-reduced .sp-mark .sp-ring,
+html[data-motion="reduced"] .sp-mark .sp-orbit, html[data-motion="reduced"] .sp-mark .sp-ring { animation: none !important; }
 
 /* ------------------------------------------------------- 2 item families */
 /* WORK -- a sunken instrument. The accent belongs to it only while it is live. */
@@ -17170,12 +17187,17 @@ body[data-theme$="-light"] .nx-st-waiting::before { animation-name: nx-bl-needs-
 .nx-st-pending > svg.nx { --nx-tone-k: 1; --nx-ink: var(--muted); }
 
 /* ------------------------------------------------------------------ 10. reduced motion */
-/* Both routes (the media query and body.pm56-reduced) stop every neon animation and transition outright; the base
-   style is the finished, lit pose, so ink, halo and weight still carry the state with no infinite animation. */
+/* All three routes (the media query, body.pm56-reduced and html[data-motion="reduced"], the PMConcept7 contract) stop
+   every neon animation and transition outright; the base style is the finished, lit pose, so ink, halo and weight
+   still carry the state with no infinite animation. This covers every host's loops on an svg.nx or a status wrapper:
+   the Orbit's live glyph parts, the bar's breathe and alert rhythms, the jump button's working breathe, the status
+   beads, the needs-you hop and backlight, blocked's blink and failed's stutter. (The data-motion route was missing
+   until 3E2 fix cycle 1: only NieR's section 11 had it.) */
 @media (prefers-reduced-motion: reduce) {
   svg.nx, svg.nx .nx-p, svg.nx .nx-h, .nx-st, .nx-st::before, .nx-bolt::before { animation: none !important; transition: none !important; }
 }
 body.pm56-reduced svg.nx, body.pm56-reduced svg.nx .nx-p, body.pm56-reduced svg.nx .nx-h, body.pm56-reduced .nx-st, body.pm56-reduced .nx-st::before, body.pm56-reduced .nx-bolt::before { animation: none !important; transition: none !important; }
+html[data-motion="reduced"] svg.nx, html[data-motion="reduced"] svg.nx .nx-p, html[data-motion="reduced"] svg.nx .nx-h, html[data-motion="reduced"] .nx-st, html[data-motion="reduced"] .nx-st::before, html[data-motion="reduced"] .nx-bolt::before { animation: none !important; transition: none !important; }
 
 /* ------------------------------------------------------------------ 11. NieR Mode (PMConcept7 contract) */
 /* OWNER of this section: NieR Mode, step N-A (2026-10-02); the rest of the file is the foundation's. Every rule is

@@ -626,6 +626,9 @@ html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-item { padding: 0 8
   .hover-card.ab-card { animation: none !important; }
   .jump-bottom.is-working > svg { animation: none !important; }
 }
+/* The other two reduced routes (3E2 fix cycle 1): the bar's and jump button's svg.nx loops stop through
+   neon-icons.css section 10 on every route; the hover card's entrance stops here too. */
+body.pm56-reduced .hover-card.ab-card, html[data-motion="reduced"] .hover-card.ab-card { animation: none !important; }
 
 /* The transcript occupies the space under and around the floating pill. */
 .chat-stage > .transcript { grid-row:3; padding-top:18px; padding-bottom:calc(var(--thread-float-h,44px) + 36px); }

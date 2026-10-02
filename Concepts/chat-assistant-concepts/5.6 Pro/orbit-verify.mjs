@@ -793,8 +793,16 @@ await safe('Orbit: renders in all 8 themes with no overflow and no console noise
 /* =====================================================================
    8 — prefers-reduced-motion: the state still arrives
    ===================================================================== */
-await safe('Orbit: reduced motion reaches the same end state with no perpetual loops', async () => {
-  const p3 = await newPage({ reducedMotion: 'reduce' });
+/* All three reduced routes (3E2 fix cycle 1): the media query, the Demo Studio switch body.pm56-reduced and the
+   PMConcept7 contract html[data-motion="reduced"] must each land the same end state, stop every loop inside the
+   stage (the glyph parts' included) and run the travel in 1ms (the 420 ms collapse once leaked on a route). */
+for (const route of ['media', 'class', 'data-motion']) {
+await safe('Orbit: reduced motion (' + route + ') reaches the same end state with no perpetual loops', async () => {
+  const p3 = await newPage(route === 'media' ? { reducedMotion: 'reduce' } : {});
+  await p3.evaluate(r => {
+    if (r === 'class') document.body.classList.add('pm56-reduced');
+    if (r === 'data-motion') document.documentElement.setAttribute('data-motion', 'reduced');
+  }, route);
   await orbit(p3, 7);
   await p3.click('.orbit-node[data-value="4"]');
   await p3.waitForTimeout(180);
@@ -803,18 +811,31 @@ await safe('Orbit: reduced motion reaches the same end state with no perpetual l
     const pr = st.querySelector('.orbit-panel').getBoundingClientRect();
     const loops = [...st.querySelectorAll('*')].filter(e => {
       const cs = getComputedStyle(e);
-      return cs.animationName !== 'none' && cs.animationIterationCount === 'infinite';
+      return cs.animationName !== 'none' && cs.animationIterationCount === 'infinite' && cs.display !== 'none';
     }).map(e => e.className.toString().slice(0, 24) + ':' + getComputedStyle(e).animationName);
-    return { open: st.dataset.orbitOpen, focus: st.dataset.orbitFocus, area: +(pr.width * pr.height).toFixed(0), loops };
+    const running = document.getAnimations().filter(a => {
+      const t = a.effect && a.effect.target; if (!t || !st.contains(t) || a.playState !== 'running') return false;
+      /* every loop, and the Orbit's own entrances (the media block's 1ms list); motion.css's shared row and word
+         entrances (pm-materialize) are the app's motion layer, honoured by the media query only (not this check) */
+      const tm = a.effect.getComputedTiming();
+      const own = /(^|\s)orbit-(sat|core-icon|node|dial|strip-item|node-pip|track|narration|core-more)(\s|$)/.test(String(t.className.baseVal ?? t.className));
+      return tm.iterations === Infinity || (own && tm.activeDuration > 20);
+    }).map(a => (a.animationName || a.transitionProperty || 'waapi') + ':' + String(a.effect.target.className.baseVal ?? a.effect.target.className).slice(0, 24));
+    const slow = [...st.querySelectorAll('.orbit-layout, .orbit-dial, .orbit-core, .orbit-node, .orbit-panel, .orbit-panel-in, .orbit-sat, .orbit-close')]
+      .concat([st]).filter(e => getComputedStyle(e).transitionDuration.split(',').some(d => parseFloat(d) > .001))
+      .map(e => e.className.toString().slice(0, 24) + ':' + getComputedStyle(e).transitionDuration);
+    return { open: st.dataset.orbitOpen, focus: st.dataset.orbitFocus, area: +(pr.width * pr.height).toFixed(0), loops, running, slow };
   });
-  check('reduced motion: the panel still opens, and fast', m.open === '1' && m.area > 4000, m);
-  check('reduced motion: nothing inside the orbit loops forever', m.loops.length === 0, m.loops);
+  check('reduced motion (' + route + '): the panel still opens, and fast', m.open === '1' && m.area > 4000, m);
+  check('reduced motion (' + route + '): nothing inside the orbit loops forever', m.loops.length === 0 && m.running.length === 0, { loops: m.loops, running: m.running });
+  check('reduced motion (' + route + '): the stage travel runs in 1ms', m.slow.length === 0, m.slow);
   await p3.click('.orbit-core');
   await p3.waitForTimeout(180);
   const m2 = await p3.evaluate(() => { const st = document.querySelector('.orbit-stage'); return { open: st.dataset.orbitOpen, focus: st.dataset.orbitFocus }; });
-  check('reduced motion: the stage stays open after unpin (no collapse path exists)', m2.open === '1', m2);
+  check('reduced motion (' + route + '): the stage stays open after unpin (no collapse path exists)', m2.open === '1', m2);
   await p3.close();
 });
+}
 
 /* =====================================================================
    9 — the multi-orbit turn: sequencing, compaction, two-beat reopen
