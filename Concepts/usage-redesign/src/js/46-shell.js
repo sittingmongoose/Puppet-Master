@@ -1,23 +1,66 @@
-/* The rail, the head and the popovers (owner: engine; ARCHITECTURE.md section 4.10, DESIGN-SPEC sections 2.1 and 16).
-   Room, range, scope and detail are local view state: each change is one view action, never a command (R-SHELL-08). */
+/* The rail, the head and its menus (owner: engine; ARCHITECTURE.md section 4.10, DESIGN-SPEC sections 2.1 and 16,
+   DESIGN-SPEC-ATLAS 2.2). Room, range, scope and detail are local view state: each change is one view action, never a
+   command (R-SHELL-08). Every head dropdown is a PMU.menu (45-menu.js, the Chat Assistant 5.6 Pro menu): scope (search,
+   icon rail, sections), range overflow (narrow heads), detail, panels (Customize), export. */
 (function () {
   var st = PMU.core.state;
   var app = document.getElementById('pmuApp');
   var nav = document.getElementById('pmuNav'), ink = document.getElementById('pmuNavInk');
-  var inkCtl = null, inkReady = false, popEl = null;
-  var SCOPES = [['all', 'All current usage', 'Every configured route'], ['work', 'Work accounts', 'Company and team credentials'],
-    ['personal', 'Personal accounts', 'Personal plans and keys']].concat(DATA.providers.map(function (p) { return ['provider:' + p.id, p.name + ' only', 'Only ' + p.name + ' records']; }));
-
+  var inkCtl = null, inkReady = false, lastRoom = null;
+  var ROOM_ORDER = Object.keys(ROOM);
+  /* DATA.providers -> the Settings catalog names and ids (PROVIDERS.md; every provider name on the page is the Settings name) */
+  var SETTINGS_OF = { claude: 'claude-code', codex: 'openai-codex', qwen: 'qwen-coding', gemini: 'gemini-direct', kimi: 'kimi-coding', copilot: 'github-copilot' };
+  var SETTINGS_NAME = { 'claude-code': 'Claude', 'openai-codex': 'ChatGPT / Codex', 'qwen-coding': 'Qwen Coding Plan', 'gemini-direct': 'Gemini API',
+    'kimi-coding': 'Kimi Code', 'github-copilot': 'GitHub Copilot' };
+  function providerName(legacyId) {
+    var sid = SETTINGS_OF[legacyId] || legacyId, p = null;
+    try { p = PMU.roster && PMU.roster.provider ? PMU.roster.provider(sid) : null; } catch (e) { p = null; }
+    return (p && p.name) || SETTINGS_NAME[sid] || (DATA.providers.filter(function (x) { return x.id === legacyId; })[0] || {}).name || legacyId;
+  }
+  var VIEWS = [['all', 'All current usage', 'Every configured route', 'grid'], ['work', 'Work accounts', 'Company and team credentials', 'briefcase'],
+    ['personal', 'Personal accounts', 'Personal plans and keys', 'user']];
+  function scopeRows() {
+    return VIEWS.map(function (s) { return [s[0], s[1], s[2], s[3]]; }).concat(DATA.providers.map(function (p) {
+      var n = providerName(p.id); return ['provider:' + p.id, n + ' only', 'Only ' + n + ' records', null, p.id];
+    }));
+  }
   function scopeLabel(scope) {
-    var row = SCOPES.filter(function (s) { return s[0] === scope; })[0];
+    var row = scopeRows().filter(function (s) { return s[0] === scope; })[0];
     return row ? row[1] : 'Validated Usage scope';
   }
+  var RANGES = [['5h', 'Last 5 hours', '15-minute buckets'], ['24h', 'Last 24 hours', 'Hourly buckets'], ['7d', 'Last 7 days', '4-hour buckets'], ['30d', 'Last 30 days', 'Daily buckets']];
+
   function syncInk(animate) {
     if (!inkCtl && window.PM6_LIQUID_INK && nav && ink) {
       try { inkCtl = window.PM6_LIQUID_INK.attach({ strip: nav, ink: ink, axis: 'v', getActive: function () { return nav.querySelector('.pmu-navbtn[data-room].active'); } }); } catch (error) { inkCtl = null; }
     }
     if (!inkCtl) return;
     requestAnimationFrame(function () { try { inkCtl.resync(!!animate && inkReady); inkReady = true; } catch (error) {} });
+  }
+  /* the segmented underline slides between buttons (A1 8.1: 520 ms spring); transform only */
+  function syncSegInk(seg, instant) {
+    if (!seg) return;
+    var on = seg.querySelector('button.active'), bar = seg.querySelector('.pmu-seg-ink');
+    if (!bar) return;
+    if (!on || !on.offsetWidth) { bar.style.opacity = '0'; return; }
+    var x = on.offsetLeft + 8, w = Math.max(6, on.offsetWidth - 16);
+    var first = instant || !bar._pmuPlaced;
+    if (first) bar.style.transition = 'none';
+    bar.style.opacity = '1';
+    bar.style.transform = 'translateX(' + x + 'px) scaleX(' + (w / 100) + ')';
+    if (first) { void bar.offsetWidth; bar.style.transition = ''; }
+    bar._pmuPlaced = true;
+  }
+  function counts(room) {
+    var out = { glance: 0, detailed: 0, diagnostics: 0 };
+    if (!PMU.board) return out;
+    var hidden = st.hidden[room] || {};
+    PMU.board.layout(room).forEach(function (r) {
+      if (hidden[r.id]) return;
+      var lv = ((PMU.widgets.get(r.id) || {}).level) || 'glance', rank = (DETAIL[lv] || DETAIL.glance).rank;
+      Object.keys(out).forEach(function (k) { if (rank <= DETAIL[k].rank) out[k]++; });
+    });
+    return out;
   }
   function render() {
     if (!app) return;
@@ -29,20 +72,36 @@
       if (chosen) button.setAttribute('aria-current', 'page'); else button.removeAttribute('aria-current');
     });
     var title = document.getElementById('pmuRoomTitle'), desc = document.getElementById('pmuRoomDesc');
+    var changed = lastRoom !== null && lastRoom !== room;
     if (title && title.textContent !== ROOM[room].title) title.textContent = ROOM[room].title;   /* one text node (NieR decode) */
-    if (desc) desc.textContent = ROOM[room].desc;
+    if (title) { title.setAttribute('data-pm-hover-label', ROOM[room].title); title.setAttribute('data-pm-hover-detail', ROOM[room].desc); }
+    if (desc && desc.textContent !== ROOM[room].desc) desc.textContent = ROOM[room].desc;
+    /* head title change: cross-fade + 6 px slide, 220 ms (NieR decodes instead) */
+    if (changed && PMU.motion && !PMU.theme.look().nier) {
+      [title, desc].forEach(function (el, i) { if (el) PMU.motion.animate(el, [{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { dur: 'title', delay: i * 40, ease: 'out', fill: 'backwards' }); });
+    }
+    lastRoom = room;
     PMU.core.$$('.pmu-range button[data-range]', app).forEach(function (button) {
       var on = button.getAttribute('data-range') === st.range;
       button.classList.toggle('active', on); button.setAttribute('aria-pressed', on ? 'true' : 'false');
     });
+    syncSegInk(document.getElementById('pmuRange'));
+    var rl = document.getElementById('pmuRangeLabel'); if (rl) rl.textContent = st.range;
     var detail = document.getElementById('pmuDetailLabel'); if (detail) detail.textContent = DETAIL[st.detail].label;
     var scope = document.getElementById('pmuScopeLabel'); if (scope) scope.textContent = scopeLabel(st.scope);
+    var lead = document.getElementById('pmuScopeLead');
+    if (lead) {
+      var pid = st.scope.indexOf('provider:') === 0 ? st.scope.slice(9) : null;
+      var want = pid ? PMU.mark(pid, 16) : PMU.icon(st.scope === 'work' ? 'briefcase' : st.scope === 'personal' ? 'user' : 'grid');
+      if (lead._pmu !== want) { lead.innerHTML = want; lead._pmu = want; }
+    }
     var count = document.getElementById('pmuPanelCount'); if (count && PMU.board) count.textContent = t('head.panels', { n: PMU.board.visible(room).length });
     syncInk(true);
   }
   function setView(patch, source) {
     var changed = Object.keys(patch).filter(function (k) { return patch[k] !== undefined && st[k] !== patch[k]; });
     if (!changed.length) return false;
+    if (PMU.menu) PMU.menu.close();
     var roomChange = changed.indexOf('room') >= 0, prevRoom = st.room;
     changed.forEach(function (k) { st[k] = patch[k]; });
     var type = roomChange ? 'view.usage.room_selected' : 'view.usage.' + changed[0] + '_selected';
@@ -50,69 +109,135 @@
     viewAction(type, payload);
     render();
     if (PMU.board) {
-      if (roomChange || changed.indexOf('detail') >= 0) PMU.board.mount(st.room, { dir: roomChange && ROOM_ORDER.indexOf(st.room) < ROOM_ORDER.indexOf(prevRoom) ? -1 : 1 });
+      if (roomChange) PMU.board.mount(st.room, { dir: ROOM_ORDER.indexOf(st.room) < ROOM_ORDER.indexOf(prevRoom) ? -1 : 1, transition: true });
+      else if (changed.indexOf('detail') >= 0) PMU.board.relevel();
       else PMU.board.refresh(changed[0]);
       PMU.board.persist();
     }
     if (changed.indexOf('detail') >= 0) PMU.shell.toast(t('toast.detail', { level: DETAIL[st.detail].label, n: PMU.board ? PMU.board.visible(st.room).length : 0 }));
+    if (changed.indexOf('range') >= 0 && source === 'range-menu') PMU.shell.toast(t('toast.range', { range: st.range }));
     return true;
   }
-  var ROOM_ORDER = Object.keys(ROOM);
-  function closePop() { if (popEl) { popEl.remove(); popEl = null; } }
-  function pop(anchor, spec) {
-    closePop();
-    popEl = document.createElement('div');
-    popEl.className = 'pmu-pop open';
-    popEl.setAttribute('role', 'menu');
-    popEl.innerHTML = (spec.title ? '<div class="pmu-poptitle">' + esc(spec.title) + '</div>' : '') + spec.rows.map(function (r) {
-      return '<button type="button" class="pmu-poprow' + (r.active ? ' active' : '') + '" role="menuitem" data-value="' + esc(r.value) + '"' + (r.disabled ? ' aria-disabled="true"' : '') + '>' +
-        '<span class="pmu-poptext"><b>' + esc(r.label) + '</b>' + (r.sub ? '<span>' + esc(r.sub) + '</span>' : '') + '</span>' + (r.active ? PMU.icon('check', 'pmu-popcheck') : '') + '</button>';
-    }).join('');
-    app.appendChild(popEl);
-    var a = anchor.getBoundingClientRect(), host = app.getBoundingClientRect();
-    popEl.style.top = (a.bottom - host.top + 6) + 'px';
-    popEl.style.left = Math.max(8, Math.min(host.width - popEl.offsetWidth - 8, (spec.align === 'left' ? a.left : a.right - popEl.offsetWidth) - host.left)) + 'px';
-    popEl.addEventListener('click', function (event) {
-      var row = event.target.closest('.pmu-poprow'); if (!row || row.getAttribute('aria-disabled') === 'true') return;
-      var value = row.getAttribute('data-value'); closePop(); spec.onPick(value);
+
+  /* ---- the head menus ---- */
+  function scopeMenu(anchor) {
+    var rows = scopeRows();
+    return PMU.menu.toggle(anchor, {
+      id: 'scope', title: 'Scope', current: scopeLabel(st.scope), search: { placeholder: 'Find a scope…' }, width: 340, align: 'start',
+      railLabel: 'Scope groups',
+      rail: [{ value: 'all', label: 'Every scope', icon: 'grid' }, { value: 'views', label: 'Account groups', icon: 'users' }].concat(DATA.providers.map(function (p) {
+        return { value: p.id, label: providerName(p.id), mark: p.id };
+      })),
+      sections: [
+        { label: 'Accounts', group: 'views', rows: rows.slice(0, 3).map(function (s) { return { value: s[0], label: s[1], sub: s[2], icon: s[3], active: st.scope === s[0] }; }) },
+        { label: 'Providers', group: 'providers', rows: rows.slice(3).map(function (s) { return { value: s[0], label: s[1], sub: s[2], mark: s[4], group: s[4], active: st.scope === s[0] }; }) }
+      ],
+      foot: st.scope && !rows.some(function (s) { return s[0] === st.scope; }) ? 'Current scope: Validated Usage scope' : null,
+      onPick: function (v) { if (setView({ scope: v }, 'scope')) PMU.shell.toast(t('toast.scope', { scope: scopeLabel(v) })); }
     });
-    return { close: closePop };
   }
+  function rangeMenu(anchor) {
+    return PMU.menu.toggle(anchor, {
+      id: 'range', title: 'Range', current: st.range, align: 'end', width: 260,
+      rows: RANGES.map(function (r) { return { value: r[0], label: r[1], sub: r[2], right: r[0], active: st.range === r[0] }; }),
+      onPick: function (v) { setView({ range: v }, 'range-menu'); }
+    });
+  }
+  function detailMenu(anchor) {
+    var c = counts(st.room);
+    return PMU.menu.toggle(anchor, {
+      id: 'detail', title: 'Detail', current: DETAIL[st.detail].label, align: 'end', width: 300,
+      rows: Object.keys(DETAIL).map(function (k) {
+        return { value: k, label: DETAIL[k].label, sub: DETAIL[k].desc, right: t('head.panels', { n: c[k] }), active: st.detail === k,
+          icon: k === 'glance' ? 'grid' : k === 'detailed' ? 'list' : 'tool' };
+      }),
+      onPick: function (v) { setView({ detail: v }, 'detail'); }
+    });
+  }
+  function panelsSpec() {
+    var room = st.room, hidden = st.hidden[room] || {};
+    var rank = DETAIL[st.detail].rank, lay = PMU.board ? PMU.board.layout(room) : [];
+    var byLevel = { glance: [], detailed: [], diagnostics: [] };
+    lay.slice().sort(function (a, b) { return a.y - b.y || a.x - b.x; }).forEach(function (r) {
+      var d = PMU.widgets.get(r.id) || { title: r.id }, lv = d.level || 'glance';
+      var title = typeof d.title === 'function' ? d.title({ id: r.id, room: room, state: st }) : (d.title || r.id);
+      (byLevel[lv] || byLevel.glance).push({ value: r.id, label: title, sub: (DETAIL[lv].rank > rank ? 'Shows at ' + DETAIL[lv].label + ' · ' : '') + r.w + ' x ' + r.h,
+        toggle: true, active: !hidden[r.id], keywords: r.id });
+    });
+    var shown = PMU.board ? PMU.board.visible(room).length : 0;
+    return {
+      id: 'panels', title: 'Panels in ' + ROOM[room].label, current: t('head.panels', { n: shown }), search: { placeholder: 'Find a panel…' }, align: 'end', width: 340,
+      keepOpen: true, focusSearch: false,
+      sections: Object.keys(byLevel).filter(function (k) { return byLevel[k].length; }).map(function (k) { return { label: DETAIL[k].label, rows: byLevel[k] }; }).concat([{
+        label: 'Layout', rows: [
+          { value: '__tidy', label: t('customize.tidy'), sub: t('customize.tidy_sub'), icon: 'tidy', action: true },
+          { value: '__reset_room', label: t('customize.reset_room'), sub: t('customize.reset_room_sub'), icon: 'refresh', action: true },
+          { value: '__reset_all', label: t('customize.reset_all'), sub: t('customize.reset_all_sub'), icon: 'refresh', action: true, danger: true }] }]),
+      onPick: function (v, row, h) {
+        if (v === '__tidy') { PMU.board.tidy(); return true; }
+        if (v === '__reset_room') { PMU.board.reset('room'); PMU.shell.toast(t('toast.reset')); return true; }
+        if (v === '__reset_all') { PMU.board.reset('all'); PMU.shell.toast(t('toast.reset')); return true; }
+        PMU.board.setVisible(v, !!(st.hidden[st.room] || {})[v]);
+        render();
+        h.spec = panelsSpec();
+        return false;
+      }
+    };
+  }
+  function exportMenu(anchor) {
+    return PMU.menu.toggle(anchor, {
+      id: 'export', title: 'Export', current: 'JSON', align: 'end', width: 320,
+      rows: [{ value: 'snapshot', label: t('export.snapshot'), sub: t('export.snapshot_sub'), icon: 'file', action: true },
+        { value: 'ledger', label: t('export.ledger'), sub: t('export.ledger_sub'), icon: 'list', action: true }],
+      onPick: function (v) {
+        var ok = window.PM7_USAGE && window.PM7_USAGE.exportJson(v);
+        PMU.shell.toast(ok ? t('toast.exported', { file: v === 'ledger' ? 'puppet-master-usage-ledger.json' : 'puppet-master-usage.json' }) : t('toast.export_failed'));
+      }
+    });
+  }
+
+  /* PMU.shell.pop: the skeleton's popover helper, kept for callers; it is a PMU.menu now */
+  function pop(anchor, spec) {
+    /* rows may carry section: 'ANTHROPIC' (a small-caps label before the first row that carries it) */
+    var sections = [], cur = null;
+    (spec.rows || []).forEach(function (r) {
+      if (!cur || (r.section && r.section !== cur.label)) { cur = { label: r.section || null, rows: [] }; sections.push(cur); }
+      cur.rows.push({ value: r.value, label: r.label, sub: r.sub, active: r.active, icon: r.glyph || r.icon, mark: r.mark, swatch: r.swatch, disabled: r.disabled,
+        reason: r.reason, right: r.right, toggle: r.toggle, keywords: r.keywords });
+    });
+    var h = PMU.menu.toggle(anchor, { id: spec.id || ('pop:' + (spec.title || '')), title: spec.title, current: spec.current, meta: spec.meta, search: spec.search, foot: spec.foot,
+      width: spec.width, keepOpen: spec.keepOpen, align: spec.align === 'left' ? 'start' : spec.align === 'right' ? 'end' : spec.align,
+      sections: sections, onPick: spec.onPick });
+    return { close: function () { if (h) h.close(); } };
+  }
+  function closePop() { if (PMU.menu) PMU.menu.close(); }
   function toastText(text) { toast(text); }
 
   if (app) {
     app.addEventListener('click', function (event) {
       var target = event.target;
-      if (popEl && !popEl.contains(target) && !target.closest('[aria-haspopup]')) closePop();
       var range = target.closest('.pmu-range button[data-range]');
       if (range) { setView({ range: range.getAttribute('data-range') }, 'range'); return; }
-      if (target.closest('#pmuDetailBtn')) {
-        pop(target.closest('#pmuDetailBtn'), { title: 'Workspace detail', rows: Object.keys(DETAIL).map(function (k) { return { value: k, label: DETAIL[k].label, sub: DETAIL[k].desc, active: st.detail === k }; }),
-          onPick: function (v) { setView({ detail: v }, 'detail'); } });
-        return;
-      }
-      if (target.closest('#pmuScopeBtn')) {
-        pop(target.closest('#pmuScopeBtn'), { title: 'Scope', align: 'left', rows: SCOPES.map(function (s) { return { value: s[0], label: s[1], sub: s[2], active: st.scope === s[0] }; }),
-          onPick: function (v) { setView({ scope: v }, 'scope'); toastText(t('toast.scope', { scope: scopeLabel(v) })); } });
-        return;
-      }
-      if (target.closest('#pmuCustomize') && PMU.board) {
-        var hidden = st.hidden[st.room] || {};
-        pop(target.closest('#pmuCustomize'), { title: 'Panels in ' + ROOM[st.room].label, rows: PMU.board.layout(st.room).map(function (r) {
-          var d = PMU.widgets.get(r.id) || { title: r.id }; return { value: r.id, label: d.title, sub: hidden[r.id] ? 'Hidden' : DETAIL[d.level || 'glance'].label, active: !hidden[r.id] };
-        }).concat([{ value: '__reset_room', label: 'Reset this room' }, { value: '__reset_all', label: 'Reset every room' }]),
-          onPick: function (v) {
-            if (v === '__reset_room') { PMU.board.reset('room'); toastText(t('toast.reset')); return; }
-            if (v === '__reset_all') { PMU.board.reset('all'); toastText(t('toast.reset')); return; }
-            PMU.board.setVisible(v, !!hidden[v]); render();
-          } });
-        return;
-      }
+      var b;
+      if ((b = target.closest('#pmuScopeBtn'))) { scopeMenu(b); return; }
+      if ((b = target.closest('#pmuRangeBtn'))) { rangeMenu(b); return; }
+      if ((b = target.closest('#pmuDetailBtn'))) { detailMenu(b); return; }
+      if ((b = target.closest('#pmuCustomize')) && PMU.board) { PMU.menu.toggle(b, panelsSpec()); return; }
       if (target.closest('#pmuRefresh') && window.PM7_USAGE) { window.PM7_USAGE.refresh(); return; }
-      if (target.closest('#pmuExport') && window.PM7_USAGE) { window.PM7_USAGE.exportJson('snapshot'); return; }
+      if ((b = target.closest('#pmuExport'))) { exportMenu(b); return; }
     });
-    document.addEventListener('keydown', function (event) { if (event.key === 'Escape' && popEl) closePop(); });
+    /* the range strip: arrows move the choice (a segmented control) */
+    var rangeEl = document.getElementById('pmuRange');
+    if (rangeEl) rangeEl.addEventListener('keydown', function (event) {
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+      var keys = RANGES.map(function (r) { return r[0]; }), i = keys.indexOf(st.range);
+      var next = keys[Math.max(0, Math.min(keys.length - 1, i + (event.key === 'ArrowRight' ? 1 : -1)))];
+      event.preventDefault(); setView({ range: next }, 'range');
+      var btn = rangeEl.querySelector('button[data-range="' + next + '"]'); if (btn) btn.focus();
+    });
+    if (window.ResizeObserver) { var head = app.querySelector('.pmu-headctl'); if (head) new ResizeObserver(function () { syncSegInk(document.getElementById('pmuRange'), true); }).observe(head); }
   }
 
-  PMU.shell = { render: render, setView: setView, pop: pop, closePop: closePop, toast: toastText, syncInk: syncInk, scopeLabel: scopeLabel };
+  PMU.shell = { render: render, setView: setView, pop: pop, closePop: closePop, toast: toastText, syncInk: syncInk, syncSegInk: syncSegInk,
+    scopeLabel: scopeLabel, providerName: providerName, counts: counts, menus: { scope: scopeMenu, range: rangeMenu, detail: detailMenu, panels: panelsSpec, export: exportMenu } };
 })();

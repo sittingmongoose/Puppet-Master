@@ -13,6 +13,17 @@ var PMU_SERIES = {
     values: [6.10, 7.42, 8.05, 5.88, 3.10, 2.75, 7.90, 8.40, 7.85, 8.12, 6.95, 3.40, 2.30, 8.65, 9.02, 8.70, 7.48, 7.95, 3.05, 2.62, 9.30, 10.20, 11.40, 9.90, 13.31, 0.00, 3.29, 1.53],
     settled: [1.22, 1.48, 1.61, 1.18, 0.62, 0.55, 1.58, 1.68, 1.57, 1.62, 1.39, 0.68, 0.46, 1.73, 1.80, 1.74, 1.50, 1.59, 0.61, 0.52, 1.86, 2.04, 2.28, 1.98, 4.68, 0.00, 0.66, 0.11]
   },
+  spendDailyByProvider30: {
+    _note: 'concept_fixture_only; spendDaily30 split by Settings provider id (28 days, oldest first); per day the providers sum to spendDaily30.values[d] and their settled parts to spendDaily30.settled[d]; month: settled 38.74 = DATA.costs.api (Gemini API 14.82, Anthropic API 12.40, ChatGPT / Codex API key 6.12, Cursor 5.40), estimate 145.88 = DATA.costs.plans (plan providers by token share); day 26 stays a provider-reported zero',
+    'claude-code': { settled: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], estimate: [1.64,2.19,1.91,1.56,0.8,0.74,1.96,2.33,1.98,2.58,1.69,0.95,0.54,2.4,2.48,2.52,1.95,2.23,0.87,0.77,2.38,2.42,3.29,2.82,3,0,0.78,0.5] },
+    'openai-codex': { settled: [0.23,0.2,0.2,0.22,0.09,0.11,0.22,0.26,0.24,0.25,0.23,0.12,0.05,0.31,0.35,0.36,0.23,0.26,0.08,0.08,0.23,0.4,0.32,0.29,0.69,0,0.09,0.01], estimate: [1.36,1.51,1.83,1.1,0.69,0.5,1.65,1.82,1.4,1.21,1.74,0.67,0.48,1.87,1.9,1.78,1.79,1.59,0.74,0.46,2.19,2.19,2.17,2.02,2.08,0,0.58,0.34] },
+    'qwen-coding': { settled: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], estimate: [0.72,0.97,1.11,1.12,0.48,0.45,1.4,1.21,1.06,1.3,0.85,0.5,0.4,1.26,1.09,1.16,0.93,1.07,0.41,0.34,1.29,1.75,1.49,1.71,1.54,0,0.69,0.33] },
+    'kimi-coding': { settled: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], estimate: [0.75,0.66,1.05,0.56,0.29,0.35,0.79,0.88,1.21,0.86,0.79,0.37,0.29,0.92,1.05,0.98,0.94,0.97,0.25,0.35,1.09,1.24,1.31,0.89,1.23,0,0.32,0.15] },
+    'github-copilot': { settled: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], estimate: [0.41,0.61,0.54,0.36,0.22,0.16,0.52,0.48,0.63,0.55,0.49,0.23,0.13,0.47,0.7,0.52,0.37,0.5,0.17,0.18,0.49,0.56,0.86,0.48,0.78,0,0.26,0.1] },
+    'gemini-direct': { settled: [0.45,0.6,0.66,0.39,0.25,0.22,0.61,0.61,0.62,0.65,0.56,0.28,0.21,0.74,0.59,0.58,0.59,0.71,0.21,0.2,0.79,0.71,0.75,0.9,1.63,0,0.26,0.05], estimate: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
+    'anthropic-api': { settled: [0.37,0.47,0.55,0.43,0.2,0.15,0.49,0.57,0.51,0.51,0.42,0.19,0.15,0.47,0.62,0.51,0.48,0.4,0.22,0.17,0.57,0.61,0.91,0.56,1.6,0,0.23,0.04], estimate: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
+    'cursor-cli': { settled: [0.17,0.21,0.2,0.14,0.08,0.07,0.26,0.24,0.2,0.21,0.18,0.09,0.05,0.21,0.24,0.29,0.2,0.22,0.1,0.07,0.27,0.32,0.3,0.23,0.76,0,0.08,0.01], estimate: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] }
+  },
   budgetProjection: { _note: 'concept_fixture_only; PM estimate, local-time pace, 87% confidence', to: 201.30, lo: 195.40, hi: 208.90, confidence: 87 },
   tokens: {
     _note: 'concept_fixture_only; token buckets per range; input = uncached input, output = visible output (inclusive input = input + cacheRead + cacheWrite; inclusive output = output + reasoning)',
@@ -55,8 +66,42 @@ var PMU_SERIES = {
       [2,1,1,0,0,1,2,4,10,15,15,21,13,12,16,18,15,15,13,8,8,6,4,3],
       [5,2,2,1,1,3,6,7,25,31,33,28,35,33,50,14,44,41,30,23,20,12,13,8]
     ],
+    value: [
+      [0.12,0.07,0.03,0.03,0.04,0.05,0.1,0.23,0.37,0.58,0.89,0.27,0.18,0.93,0.82,1.25,0.89,1.06,0.62,0.55,0.14,0.45,0.32,0.21],
+      [0.08,0.07,0.03,0.02,0.02,0.05,0.12,0.28,0.38,0.61,0.67,0.87,0.9,0.16,1.18,1.46,0.97,0.93,0.71,0.6,0.37,0.42,0.33,0.17],
+      [0.07,0.06,0.04,0.03,0.03,0.05,0.08,0.15,0.44,0.75,0.73,0.97,0.74,0.65,0.73,0.74,0.73,0.66,0.63,0.6,0.32,0.31,0.26,0.13],
+      [0.15,0.09,0.05,0.04,0.04,0.05,0.15,0.24,0.64,0.89,0.84,1.12,0.19,1.24,0.94,1.39,1.25,1.1,0.75,0.52,0.59,0.49,0.33,0.22],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0.04,0.01,0.01,0.01,0.01,0.01,0.03,0.05,0.15,0.21,0.23,0.31,0.22,0.19,0.31,0.29,0.25,0.26,0.19,0.16,0.13,0.09,0.08,0.05],
+      [0.02,0.01,0,0,0,0.01,0.02,0.03,0.08,0.09,0.11,0.11,0.11,0.11,0.17,0.04,0.16,0.12,0.09,0.07,0.06,0.05,0.04,0.03]
+    ],
+    valueNote: 'concept_fixture_only; USD per hour (settled + plan estimate), each day row sums to spendDaily30.values[21 + row] (row 4 is the provider-reported zero day)',
     peak: [1,15],
     topModel: ["Qwen3 Coder","Qwen3 Coder","Qwen3 Coder","Qwen3 Coder","Qwen3 Coder","Qwen3 Coder","Qwen3 Coder","Sonnet 4.6","Sonnet 4.6","GPT-5.4","GPT-5.4","Sonnet 4.6","Sonnet 4.6","Sonnet 4.6","Sonnet 4.6","Sonnet 4.6","Sonnet 4.6","GPT-5.4","GPT-5.4","Sonnet 4.6","Sonnet 4.6","Sonnet 4.6","Sonnet 4.6","Sonnet 4.6"]
+  },
+  models: {
+    _note: 'concept_fixture_only; display names of the effective model ids the attempts carry, the requested model where it differs, and the route role (DATA.accounts route); ctx-limits and ctx-route name the same models',
+    'model:claude:effective': { name: 'Sonnet 4.6', id: 'claude-sonnet-4-6', requested: 'Opus 4.6', role: 'primary code' },
+    'model:codex:effective': { name: 'GPT-5.4', id: 'gpt-5.4', requested: 'GPT-5.4', role: 'fast edit fallback' },
+    'model:qwen:effective': { name: 'Qwen3 Coder', id: 'qwen3-coder', requested: 'Qwen3 Coder', role: 'long context' },
+    'model:gemini:effective': { name: 'Gemini 3.1 Pro', id: 'gemini-3.1-pro', requested: 'Gemini 3.1 Pro', role: 'vision helper' },
+    'model:kimi:effective': { name: 'Kimi K2', id: 'kimi-k2', requested: 'Kimi K2', role: 'secondary code' },
+    'model:copilot:effective': { name: 'Copilot completion', id: 'copilot-completion', requested: 'Copilot completion', role: 'completion fallback' }
+  },
+  catalogRates: {
+    _note: 'concept_fixture_only; catalog pricing (price catalog 2 hours old, DATA.signals); USD per million tokens by bucket: in = uncached input, out = visible output, rsn = reasoning, cw = cache write, cr = cache read; used only to split a recorded value by token type (a PM estimate, normalised so the parts add up to the recorded value)',
+    'model:claude:effective': { in: 3.00, out: 15.00, rsn: 15.00, cw: 3.75, cr: 0.30 },
+    'model:codex:effective': { in: 1.25, out: 10.00, rsn: 10.00, cw: 1.25, cr: 0.125 },
+    'model:qwen:effective': { in: 1.00, out: 5.00, rsn: 5.00, cw: 1.00, cr: 0.10 },
+    'model:gemini:effective': { in: 2.00, out: 12.00, rsn: 12.00, cw: 2.50, cr: 0.20 },
+    'model:kimi:effective': { in: 0.60, out: 2.50, rsn: 2.50, cw: 0.60, cr: 0.15 },
+    'model:copilot:effective': { in: 1.25, out: 10.00, rsn: 10.00, cw: 1.25, cr: 0.125 }
+  },
+  countingBasis: {
+    _note: 'concept_fixture_only; per legacy provider id: whether cache tokens are inside the reported input (inclusive) or reported beside it (additive), and whether reasoning is inside the reported output; the same facts the counting-basis panel shows',
+    claude: { cache: 'inclusive', reasoning: 'inclusive' }, codex: { cache: 'inclusive', reasoning: 'inclusive' },
+    qwen: { cache: 'additive', reasoning: 'additive' }, gemini: { cache: 'inclusive', reasoning: 'inclusive', partial: true },
+    kimi: { cache: 'inclusive', reasoning: 'inclusive' }, copilot: { cache: 'inclusive', reasoning: 'inclusive', partial: true }
   },
   cacheDaily30: {
     _note: 'concept_fixture_only; prompt cache per day, 30 days; saved is the PM estimate (catalog pricing) and sums to 312.40',
@@ -93,6 +138,18 @@ var PMU_SERIES = {
     'qwen-coding/qwen-global/weekly': [60,62,63,65,66,68,69,71,72,74,75,77,78,80,81,83,84,86,87,89,90,92,0,2,5,7,9,12,14,16,19,21,23,25,28,30,32,35,37,39,42,44],
     'kimi-coding/kimi-main/weekly': [60,64,67,71,74,78,81,85,88,92,0,2,3,5,7,8,10,12,13,15,17,18,20,22,23,25,27,29,30,32,34,35,37,39,40,42,44,45,47,49,50,52],
     'github-copilot/copilot-work/monthly': [14,15,15,16,16,17,17,18,18,19,19,20,20,21,21,22,22,23,23,24,24,25,25,26,26,27,27,28,28,29,29,30,30,31,31,32,32,33,33,34,34,35],
-    'openai-codex/team-codex/weekly': [60,61,63,64,65,66,68,69,70,72,73,74,75,77,78,79,80,82,83,84,86,87,88,89,91,92,0,1,2,3,5,6,7,8,9,10,11,12,14,15,null,null]
+    'openai-codex/team-codex/weekly': [60,61,63,64,65,66,68,69,70,72,73,74,75,77,78,79,80,82,83,84,86,87,88,89,91,92,0,1,2,3,5,6,7,8,9,10,11,12,14,15,16,17],
+    'claude-code/personal-claude/weekly': [69,71,73,76,78,80,82,85,87,1,2,3,5,6,8,10,11,13,15,17,19,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,53,55,57,59,61],
+    'claude-code/lab-claude/weekly': [42,44,46,48,50,52,53,55,57,59,61,63,65,67,69,70,73,0,1,2,3,4,5,7,7,9,10,12,13,14,16,17,18,19,21,23,24,25,27,28,29,31],
+    'claude-code/lab-claude/fiveHour': [0,11,25,44,44,0,12,22,33,40,0,10,26,45,40,0,15,24,34,42,0,14,23,35,37,0,9,24,42,39,0,15,26,41,39,0,10,28,32,47,0,12],
+    'qwen-coding/qwen-global/fiveHour': [0,14,28,47,55,0,13,23,39,70,0,15,28,39,44,0,16,33,39,64,0,15,30,47,52,0,12,28,48,61,0,17,30,44,42,0,12,30,41,65,0,12],
+    'qwen-coding/qwen-global/monthly': [0,1,1,2,3,3,4,5,5,6,7,7,8,9,10,10,11,12,13,13,14,15,16,16,17,18,19,20,20,21,22,23,23,24,25,26,27,28,28,29,30,31],
+    'qwen-coding/qwen-cn/fiveHour': [0,5,12,17,25,0,5,14,14,23,0,6,10,21,22,0,6,10,18,22,0,7,14,17,28,0,6,10,19,25,0,7,13,17,29,0,5,12,19,20,0,0],
+    'qwen-coding/qwen-cn/weekly': [14.8,15.4,15.9,16.5,17.4,17.6,18.6,19.1,19.5,19.8,20.9,21.1,21.7,0.1,0.3,0.5,0.8,1.1,1.4,1.6,1.9,2.1,2.7,3.1,3.1,3.5,3.7,4.4,4.6,4.6,5,5.3,6.1,6.1,6.6,6.8,7.3,7.6,8.1,8.1,8.8,9],
+    'qwen-coding/qwen-cn/monthly': [0.1,0.2,0.3,0.4,0.5,0.6,0.8,0.9,1,1.2,1.3,1.4,1.6,1.7,1.8,2,2.1,2.3,2.4,2.6,2.7,2.9,3,3.1,3.3,3.4,3.6,3.8,3.9,4.1,4.3,4.4,4.5,4.7,4.9,5,5.2,5.4,5.5,5.7,5.8,6],
+    'kimi-coding/kimi-main/monthly': [0,1,2,3,3,4,4,5,6,7,8,8,9,10,11,12,13,13,14,15,16,17,18,19,20,21,22,23,23,24,25,26,27,28,29,30,31,32,33,34,35,36],
+    'muse/muse-main/weekly': [4.8,6,6.8,8,8.7,9.7,10.4,11.6,12.3,13.6,14.4,15.2,16.2,17.3,18.5,19.2,20.5,21.5,22.2,23.5,24.2,25.2,26.6,27.4,28.8,29.6,30.6,31.9,32.5,33.9,34.6,35.7,37.3,38.2,39,40,0.2,1.2,2.6,3.4,5,6.3],
+    'opencode-go/go-main/monthly': [0,1,1,1,2,2,2,3,3,3,4,4,5,5,6,6,6,7,7,8,8,9,9,9,10,10,11,11,12,12,13,13,14,14,15,15,15,16,16,17,17,18],
+    'gemini-direct/ai-studio/monthly': [0,1,1,2,3,3,4,4,5,6,6,7,8,8,9,9,10,11,12,12,13,14,14,15,16,17,17,18,19,20,20,21,22,23,23,24,25,26,27,28,28,29]
   }
 };

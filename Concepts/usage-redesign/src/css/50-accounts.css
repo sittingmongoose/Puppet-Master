@@ -1,22 +1,122 @@
-/* Accounts room (owner: content; DESIGN-SPEC section 10). Skeleton: the minimal provider rows and switch strip. */
-#panel-usage .pmu-acclist { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
-#panel-usage .pmu-accrow { display: grid; grid-template-columns: minmax(96px, 34%) minmax(0, 1fr); gap: 10px; align-items: start; min-width: 0; }
-#panel-usage .pmu-card[data-tw="xs"] .pmu-accrow, #panel-usage .pmu-card[data-tw="s"] .pmu-accrow { grid-template-columns: minmax(0, 1fr); gap: 4px; }
-#panel-usage .pmu-accid { display: flex; flex-direction: column; min-width: 0; }
-#panel-usage .pmu-accid b { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-#panel-usage .pmu-accmeters { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-#panel-usage .pmu-accline { display: block; color: var(--pmu-ink-2); font-size: 12.5px; }
-#panel-usage .pmu-acstate { display: inline-flex; align-items: center; gap: 4px; color: var(--pmu-ink-3); font-size: 11.5px; }
-#panel-usage .pmu-acstate .pmu-ico { width: 12px; height: 12px; }
-#panel-usage .pmu-acstate[data-state="active"] { color: var(--pmu-ink-ok); }
-#panel-usage .pmu-acstate[data-state="exhausted"] { color: var(--pmu-ink-error); }
-#panel-usage .pmu-acstate[data-state="cooldown"], #panel-usage .pmu-acstate[data-state="signed-out"] { color: var(--pmu-ink-warn); }
-#panel-usage .pmu-switch { display: flex; align-items: center; gap: 10px; min-width: 0; flex-wrap: wrap; }
-#panel-usage .pmu-switchtext { min-width: 0; font-size: 13px; color: var(--pmu-ink-2); }
-#panel-usage .pmu-switchtext b { color: var(--pmu-ink); }
-#panel-usage .pmu-switchmeta { margin-left: auto; color: var(--pmu-ink-3); font-size: 11.5px; }
-#panel-usage .pmu-toggle { position: relative; width: 34px; height: 20px; padding: 0; border: 1px solid var(--pmu-hairline); border-radius: 10px; background: var(--pmu-track); cursor: pointer; }
-#panel-usage .pmu-toggle i { position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: var(--pmu-ink-3);
-  transition: transform var(--pmu-dur-hover) var(--pmu-ease-pop), background var(--pmu-dur-hover); }
-#panel-usage .pmu-toggle.on { background: linear-gradient(90deg, var(--pmu-accent), var(--pmu-accent-b)); border-color: transparent; }
-#panel-usage .pmu-toggle.on i { transform: translateX(14px); background: var(--pmu-card); }
+/* Accounts room (owner: content; DESIGN-SPEC 10, DESIGN-SPEC-ATLAS 10): provider plates with aligned window columns,
+   single plates, the bound auto-switch strip, compact provider rows, the setup card. The effective account is said by
+   its check glyph, its 680 name and the "Active" word: no fill, no side bar (A1 10.1). */
+
+/* ------------------------------------------------------------------ states and words */
+#panel-usage .pmu-acstate { display: inline-flex; align-items: center; gap: 4px; min-width: 0; color: var(--pmu-ink-3); }
+#panel-usage .pmu-acstate b { font-weight: 600; white-space: nowrap; }
+#panel-usage .pmu-acstate[data-tone="good"] { color: var(--pmu-ink-good); }
+#panel-usage .pmu-acstate[data-tone="warn"] { color: var(--pmu-ink-warn); }
+#panel-usage .pmu-acstate[data-tone="crit"] { color: var(--pmu-ink-crit); }
+#panel-usage .pmu-acstate .pmu-glyph { color: inherit; }
+#panel-usage .pmu-dot { font-style: normal; color: var(--pmu-ink-3); }
+#panel-usage .pmu-stale { display: inline-flex; align-items: center; gap: 3px; color: var(--pmu-ink-warn); }
+#panel-usage .pmu-stale .pmu-glyph { width: 12px; height: 12px; color: inherit; }
+#panel-usage .pmu-stale .pmu-glyph svg { width: 11px; height: 11px; }
+#panel-usage .pmu-asw { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--pmu-ink-3); white-space: nowrap; }
+#panel-usage .pmu-asw svg { width: 6px; height: 14px; color: var(--pmu-ink); }
+
+/* ------------------------------------------------------------------ provider plate, two or more accounts (A1 10.1) */
+#panel-usage .pmu-acc { display: flex; flex-direction: column; min-width: 0; min-height: 0; flex: 1 1 auto; }
+#panel-usage .pmu-accband { column-gap: 16px; }
+#panel-usage .pmu-accband .pmu-cap { letter-spacing: .05em; line-height: 13px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+#panel-usage .pmu-accrows { display: flex; flex-direction: column; min-width: 0; }
+#panel-usage .pmu-accrow { display: grid; align-items: center; column-gap: 16px; min-width: 0; cursor: pointer; }
+#panel-usage .pmu-accrow.is-comfy { height: 66px; padding-top: 9px; padding-bottom: 9px; }
+#panel-usage .pmu-accrow.is-compact { height: 44px; }
+#panel-usage .pmu-acc[data-mode="fold"] .pmu-accrow, #panel-usage .pmu-acc[data-mode="binding"] .pmu-accrow { column-gap: 14px; }
+#panel-usage .pmu-accid { display: flex; align-items: center; gap: 8px; min-width: 0; }
+#panel-usage .pmu-accglyph { display: inline-grid; place-items: center; flex: none; width: 16px; height: 16px; color: var(--pmu-ink-3); }
+#panel-usage .pmu-accglyph .pmu-glyph { width: 16px; height: 16px; color: inherit; }
+#panel-usage .pmu-accrow[data-state="active"] .pmu-accglyph { color: var(--pmu-ink-good); }
+#panel-usage .pmu-accrow[data-state="exhausted"] .pmu-accglyph { color: var(--pmu-ink-crit); }
+#panel-usage .pmu-accrow[data-state="cooldown"] .pmu-accglyph, #panel-usage .pmu-accrow[data-state="signed-out"] .pmu-accglyph { color: var(--pmu-ink-warn); }
+#panel-usage .pmu-acctext { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+#panel-usage .pmu-ident { font-size: 13.5px; font-weight: 520; color: var(--pmu-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-ident.is-eff { font-weight: 680; }
+#panel-usage .pmu-ident.is-other { color: var(--pmu-ink-2); }
+#panel-usage .pmu-identmeta { display: block; min-width: 0; font-size: 12px; line-height: 16px; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-identmeta .pmu-acstate { display: inline; }
+#panel-usage .pmu-identmeta .pmu-acstate b { font-size: 12px; }
+#panel-usage .pmu-identmeta .pmu-textbtn { height: 22px; margin-left: 6px; padding: 0 8px; font-size: 12px; }
+#panel-usage .pmu-amounts { font-size: 12px; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-amounts b { font-weight: 560; color: var(--pmu-ink-2); }
+#panel-usage .pmu-acccell { min-width: 0; }
+#panel-usage .pmu-accnone { min-width: 0; font-size: 12.5px; }
+#panel-usage .pmu-accactcell { display: flex; justify-content: flex-end; min-width: 0; }
+#panel-usage .pmu-accact.is-active { font-size: 12.5px; font-weight: 640; color: var(--pmu-ink-good); white-space: nowrap; }
+#panel-usage .pmu-accbtn { height: 28px; }
+#panel-usage .pmu-accfoot { flex-direction: column; align-items: stretch; gap: 3px; margin-top: auto; }
+#panel-usage .pmu-accfootline { display: flex; align-items: flex-start; gap: 8px; min-width: 0; font-size: 12.5px; line-height: 1.4; color: var(--pmu-ink-2); }
+#panel-usage .pmu-accfootline > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#panel-usage .pmu-accfootline em { font-style: normal; color: var(--pmu-ink-3); }
+#panel-usage .pmu-accfootline .pmu-glyph { margin-top: 1px; }
+#panel-usage .pmu-accfootline[data-tone="warn"] .pmu-glyph { color: var(--pmu-ink-warn); }
+#panel-usage .pmu-card[data-tw="l"] .pmu-accfootline > span, #panel-usage .pmu-card[data-tw="xl"] .pmu-accfootline > span { white-space: normal; }
+
+/* ------------------------------------------------------------------ single plate (A1 10.2) */
+#panel-usage .pmu-acc.is-single { gap: 12px; }
+#panel-usage .pmu-acc.is-single > .pmu-facts + .pmu-facts { margin-top: -12px; }
+#panel-usage .pmu-acc.is-single > .pmu-facts + .pmu-facts > .pmu-fact { border-top: 1px dashed var(--pmu-rule); }
+#panel-usage .pmu-accmeter { min-width: 0; }
+#panel-usage .pmu-accmeter.is-na { display: flex; flex-direction: column; gap: 5px; }
+#panel-usage .pmu-natrack { height: 8px; border: 1px dashed var(--pmu-rule-strong); border-radius: 4px; }
+#panel-usage .pmu-accmeter.is-na .pmu-vs { font-size: 13px; font-weight: 520; }
+#panel-usage .pmu-naplan { font-size: 12px; color: var(--pmu-ink-3); }
+#panel-usage .pmu-amtv { display: block; min-width: 0; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-amtv .pmu-vs { display: inline; }
+#panel-usage .pmu-amtv .pmu-vs .pmu-ico { display: inline-block; vertical-align: -2px; margin-right: 4px; }
+#panel-usage .pmu-accsfoot { display: flex; align-items: center; gap: 8px; min-width: 0; margin-top: auto; padding-top: 4px; flex: none; height: 30px; font-size: 12px; color: var(--pmu-ink-3); }
+#panel-usage .pmu-sampled { display: inline-flex; align-items: center; gap: 4px; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-sampled.is-stale { color: var(--pmu-ink-warn); }
+#panel-usage .pmu-sampled .pmu-glyph { width: 12px; height: 12px; color: inherit; }
+#panel-usage .pmu-host { margin-left: auto; white-space: nowrap; }
+#panel-usage .pmu-accsfoot .pmu-textbtn, #panel-usage .pmu-accsfoot .pmu-accact { flex: none; }
+#panel-usage .pmu-accsfoot .pmu-textbtn { height: 26px; }
+
+/* ------------------------------------------------------------------ the auto-switch strip (A1 10.3) */
+#panel-usage .pmu-switch { display: flex; align-items: center; gap: 10px 24px; min-width: 0; flex: 1 1 auto; font-size: 12.5px; }
+#panel-usage .pmu-switch.is-two { flex-direction: column; align-items: stretch; justify-content: center; gap: 8px; }
+#panel-usage .pmu-swctl { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; min-width: 0; flex: none; }
+#panel-usage .pmu-swlabel { font-size: 12.5px; font-weight: 540; color: var(--pmu-ink); margin-right: 4px; }
+#panel-usage .pmu-swat { font-size: 12.5px; color: var(--pmu-ink-2); }
+#panel-usage .pmu-stepval { border: 0; background: transparent; color: var(--pmu-ink); font: inherit; cursor: pointer; }
+#panel-usage .pmu-stepval:hover { background: var(--pmu-row-hover); }
+#panel-usage .pmu-stepper button[disabled] { opacity: .35; cursor: default; }
+#panel-usage .pmu-swwarn { margin-left: 6px; color: var(--pmu-ink-3); white-space: nowrap; }
+#panel-usage .pmu-swwarn b { font-weight: 600; color: var(--pmu-ink-2); }
+#panel-usage .pmu-swfams { display: flex; align-items: center; flex-wrap: nowrap; gap: 8px 18px; min-width: 0; overflow: hidden; }
+#panel-usage .pmu-switch.is-two .pmu-swfams { flex-wrap: wrap; overflow: visible; }
+#panel-usage .pmu-swfams > .pmu-cap { flex: none; }
+#panel-usage .pmu-swfam { display: inline-flex; align-items: center; gap: 6px; flex: none; min-width: 0; white-space: nowrap; }
+#panel-usage .pmu-swfamname { color: var(--pmu-ink-2); }
+#panel-usage .pmu-swfam b { font-weight: 600; color: var(--pmu-ink); }
+#panel-usage .pmu-swbar { display: inline-block; width: 110px; flex: none; }
+#panel-usage .pmu-switch.is-panel { flex-direction: column; align-items: stretch; gap: 4px; }
+#panel-usage .pmu-switch.is-panel .pmu-swrow { display: flex; align-items: center; gap: 8px; min-height: 30px; }
+#panel-usage .pmu-switch.is-panel .pmu-swwarn { margin-left: 0; }
+#panel-usage .pmu-switch.is-panel .pmu-swcap { margin-top: 6px; }
+#panel-usage .pmu-switch.is-panel .pmu-swfam { display: grid; grid-template-columns: 16px minmax(0, 1fr) 110px; height: 30px; border-top: 1px solid var(--pmu-rule-2); }
+#panel-usage .pmu-switch.is-panel .pmu-swfamname { overflow: hidden; text-overflow: ellipsis; }
+
+/* ------------------------------------------------------------------ compact provider rows (A1 10.4) */
+#panel-usage .pmu-provlist { display: flex; flex-direction: column; min-width: 0; }
+#panel-usage .pmu-provrow { display: flex; align-items: center; gap: 8px; min-height: 32px; padding: 2px 0; min-width: 0; }
+/* a narrow card keeps the whole provider name: it wraps to a second line instead of ending in an ellipsis */
+#panel-usage .pmu-provname { flex: 1 1 auto; min-width: 0; font-size: 13px; line-height: 1.22; font-weight: 540; color: var(--pmu-ink); overflow: hidden;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow-wrap: anywhere; }
+#panel-usage .pmu-provword { flex: none; max-width: 40%; font-size: 12px; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-provrow .pmu-textbtn { flex: none; height: 24px; padding: 0 6px; border-color: transparent; font-size: 12.5px; }
+#panel-usage .pmu-provrow .pmu-textbtn:hover { border-color: color-mix(in srgb, var(--pmu-accent) 55%, transparent); }
+
+/* ------------------------------------------------------------------ the setup card (A1 10.6) */
+#panel-usage .pmu-setup { display: flex; flex-direction: column; min-width: 0; }
+#panel-usage .pmu-setuphead { display: flex; align-items: center; gap: 8px; height: 30px; font-size: 13px; color: var(--pmu-ink-warn); }
+#panel-usage .pmu-setuphead b { font-weight: 640; }
+#panel-usage .pmu-setuphead .pmu-glyph { color: inherit; }
+#panel-usage .pmu-setupcta-row { display: flex; align-items: center; height: 36px; }
+#panel-usage .pmu-setupnote { margin: 0; height: 22px; font-size: 12px; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-amtsub { margin: -4px 0 0 26px; font-size: 12px; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-setupcta { height: auto; min-height: 28px; padding: 4px 10px; white-space: normal; text-align: left; line-height: 1.3; }
+#panel-usage .pmu-setupcta-row { height: auto; min-height: 36px; }
+#panel-usage .pmu-amt .pmu-amtline2 { display: block; flex-basis: 100%; font-style: normal; font-weight: 400; font-size: 12px; text-align: right; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

@@ -40,6 +40,9 @@
     });
   }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'data-o55-nier-parts', 'data-motion', 'style'] });
 
+  /* official marks swap their light / dark artwork with the theme (06-marks.js refresh) */
+  listeners.push(function () { try { if (window.PMU_MARKS && window.PMU_MARKS.refresh) window.PMU_MARKS.refresh(document.getElementById('pmuApp')); } catch (error) {} });
+
   PMU.theme = {
     look: look,
     has: function (part) { var l = look(); return l.nier && l.parts.has(part); },
