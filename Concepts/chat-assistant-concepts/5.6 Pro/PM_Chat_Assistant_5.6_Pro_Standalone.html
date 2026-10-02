@@ -16200,7 +16200,11 @@ body[data-theme="retro-light"] { --fam-deliverable: #166d83; --fam-people: #9a4b
   width: 17px; height: 17px; border-radius: 50%;
   background: var(--surface); box-shadow: 0 0 0 3px var(--surface);
 }
-.transcript[data-variant="16"] .transcript-inner > [data-family="ledger"] { padding-left: 0; }
+/* the line's text clears the icon by the gap a ledger line keeps everywhere (its 12 px glyph ends 8.5 px before the
+   text): at the 24 px gutter the icon and its 3 px surface ring end 6 px and 3 px short of the text; the narrow pane's
+   18 px gutter ended the icon on the text, so its ring painted over the first letter ("Back" read "3ack"). The line
+   takes back what the gutter gave away (fpfix F-4). */
+.transcript[data-variant="16"] .transcript-inner > [data-family="ledger"] { padding-left: max(0px, calc(24px - var(--tx-gutter))); }
 
 /* the spine layer (turn-stage.js draws it): marks, hairlines, ticks, end dots,
    and the comet that runs to whatever is live. It sits behind the items. */
