@@ -1,0 +1,49 @@
+{
+  "schema": "er8.dispatcher.job-birth.v1",
+  "case": "v8-z-mechanical-route-canary-v1",
+  "job": "v8-z-mechanical-route-canary-v1",
+  "original_case": {
+    "birth_epoch": 1790909708.7675955,
+    "birth_monotonic": 131454.937365526,
+    "wall_seconds": 480,
+    "occupied_seconds": 480,
+    "outside_native_cap_seconds": 300,
+    "observed_outside_native_seconds": 0,
+    "birth_rule": "original outer-gate birth before any preparation"
+  },
+  "stage_start_monotonic_ns": 131454937365526,
+  "stage_start_epoch": 1790909708.7675955,
+  "admission": {
+    "job": "v8-z-mechanical-route-canary-v1",
+    "case": "v8-z-mechanical-route-canary-v1",
+    "family": "Z",
+    "route": "v8-z-route-repair1-caller2-canary-v2",
+    "pins": {
+      "runtime": "9455eaa5876e5627360c80ee98e41b554118205544b3244af3ba272b0d928668",
+      "config": "266b8c9930f26b00deb232d877f8f255c95630e4fc62f511f27e1aed6c7ca671",
+      "independent_acceptance": "054a3d15e4d317c71e1f0a1a8495f136f1c0cd584e28ede503d04f576e9e59f1"
+    },
+    "component_seconds": 480,
+    "component_responses": 64,
+    "case_wall_seconds": 480,
+    "case_occupied_seconds": 480,
+    "outside_native_cap_seconds": 300,
+    "source_access": {
+      "mode": "mechanical-public-example-domain-get-and-byte-range",
+      "url": "https://example.com/"
+    },
+    "current_stages": [
+      "mechanical-native-goal-canary"
+    ],
+    "birth_epoch": 1790909708.7675955,
+    "birth_monotonic": 131454.937365526,
+    "admitted_epoch": 1790909708.930137,
+    "hard_deadline_epoch": 1790910188.7675955,
+    "released_epoch": null,
+    "status": "admitted",
+    "goal_starts": [],
+    "generated_output_tokens": null,
+    "quiescence": null,
+    "launch_pending": null
+  }
+}

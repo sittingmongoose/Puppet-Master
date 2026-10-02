@@ -1,0 +1,13 @@
+{
+  "schema": "er8.dispatcher.failure-cost.v1",
+  "job": "v8-z-mechanical-route-canary-v1",
+  "admission_birth_epoch": 1790909708.7675955,
+  "actual_release_epoch": 1790910525.4168878,
+  "actual_occupied_seconds": 816.6492922306061,
+  "prospective_occupied_cap_seconds": 480,
+  "occupied_overrun_retained": true,
+  "observed_native_goal_starts": 1,
+  "generated_usage": "UNKNOWN",
+  "original_case_lifecycle_seconds": 450.307123673,
+  "outside_native_seconds_observed": 0.435632441
+}

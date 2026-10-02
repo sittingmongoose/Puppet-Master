@@ -1,6 +1,6 @@
 # Current results
 
-Initial scope checkpoint only. All six named cases are **NOT_RUN** in this publication; no native activation, acquired source, completed candidate pipeline, independent pass, qualified recipe or same-quality speedup is claimed.
+Ongoing campaign; frozen recovery checkpoint. All six named cases are **NOT_RUN** in this publication; no qualified native route, acquired source, completed candidate pipeline, independent pass, qualified recipe or same-quality speedup is claimed.
 
 | Case | Method | Actual pipeline | Quality | Acquisition | Preservation |
 |---|---|---|---|---|---|
@@ -12,3 +12,5 @@ Initial scope checkpoint only. All six named cases are **NOT_RUN** in this publi
 | V8-NB-B-Z | B | NOT_RUN | UNASSESSED | UNKNOWN | UNASSESSED |
 
 Runtime qualification, software checks and proposed validation are not research results. A diagnostic counterexample can establish failure within its declared scope; a pass requires full declared coverage. Exact source/version, conditions, exceptions and normative force matter independently of byte retention.
+
+The mechanical native canary activated one Goal but remains HOLD, with no terminal result or established delivery/tool inventory. The [independent proof](canary-controller-cohort-v1/evaluation/native-qualification-v1/native-canary-proof.json) is infrastructure evidence only. The controller has conditional source acceptance and has not executed an integrated research case.

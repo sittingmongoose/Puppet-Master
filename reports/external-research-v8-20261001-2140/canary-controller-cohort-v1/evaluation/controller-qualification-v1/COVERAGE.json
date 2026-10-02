@@ -1,0 +1,107 @@
+{
+  "schema": "er8.controller.independent-coverage.v1",
+  "scope": "changed generic controller source only",
+  "checks": {
+    "exact_frozen_source_closure": {
+      "result": "passed",
+      "files": 12
+    },
+    "prospective_assigned_input_pins": {
+      "result": "passed",
+      "files": 30,
+      "evaluation_registry_or_scope": false
+    },
+    "original_case_birth_before_prep": {
+      "result": "source_verified",
+      "evidence": [
+        "rolling.py:original birth before case Popen",
+        "case_supervisor.py:original case gate before release/planning/admission/pack",
+        "stage_actor.py:prepare-admission before adapter"
+      ]
+    },
+    "original_stage_and_case_ancestry": {
+      "result": "source_verified",
+      "caps": [
+        1800,
+        600,
+        600
+      ],
+      "responses": [
+        160,
+        160,
+        160
+      ],
+      "case_wall": 3600,
+      "case_occupied": 5400,
+      "outside": 300,
+      "native_quiet_reserve": 30
+    },
+    "root_actual_acceptance_gate": {
+      "result": "source_verified",
+      "requires": "fresh same-snapshot actual passed native review; productive independent route acceptance bound to exact review; current NATIVE_ACCEPTED ledger pins; controller full closure; six literal correction reservations"
+    },
+    "own_two_slot_rolling_order": {
+      "result": "source_verified",
+      "queue": [
+        "V8-BIO-C-Z",
+        "V8-NB-C-Z",
+        "V8-BIO-P-Z",
+        "V8-NB-P-Z",
+        "V8-BIO-B-Z",
+        "V8-NB-B-Z"
+      ],
+      "first": [
+        "V8-BIO-C-Z",
+        "V8-NB-C-Z"
+      ],
+      "family": "Z",
+      "our_max": 2,
+      "external_account_load": "UNKNOWN"
+    },
+    "distinct_stage_process_and_native_identity": {
+      "result": "source_verified",
+      "requires": "fresh stage namespace, distinct stage actor PGID, fresh native unit/output/HOME/XDG/session from accepted route; three distinct positive Goal target IDs"
+    },
+    "actor_cannot_release_own_lease": {
+      "result": "source_verified",
+      "external_checks": "held actor Popen exit; PGID0; same original-deadline enrolled cgroup native/MCP quiet; release externally only"
+    },
+    "whole_case_closure": {
+      "result": "source_verified_and_fixture_tested",
+      "requires": "actual case supervisor then finalizer exit from held Popen; original deadline; exact outside complement through finalizer tail; occupied<=5400 before root case disposition"
+    },
+    "artifact_chain_and_stage_delivery": {
+      "result": "source_verified",
+      "requires": "native wrapper rc0; component passed; native Goal complete and startedTurn; inventory verified; positive activation; nonempty required stage artifact; quiet; original proposal export0 and critique export1; actual FINAL_PROPOSAL"
+    },
+    "same_case_candidate_input_isolation": {
+      "result": "source_verified_using_preaccepted_adapter",
+      "requires": "assigned brief/thin plan/METHOD/TASK; path-only normalization and target true hashes; same-case frozen PROPOSAL/unresolved captures; CRITIQUE added only for correction; no reasoning/evaluator/sibling input"
+    },
+    "public_only_host_metadata": {
+      "result": "source_verified",
+      "native_reads": [
+        "native-public/activation.json",
+        "native-public/public-metrics.json"
+      ],
+      "raw_reads_hashes_copies": 0
+    },
+    "unknown_failure_conservation": {
+      "result": "source_verified_conditioned_on_operator_reconciliation",
+      "requires": "no retries/relabeling; failed or late unknown permits/leases remain held; operator records later positive public activation receipts for failed stages; no inferred absence"
+    },
+    "native_semantic_quality": {
+      "result": "NOT_ASSESSED",
+      "actual_candidate_quality_or_source_credit": false,
+      "actual_canary_grade": "separate helper obligation, not duplicated"
+    }
+  },
+  "offline_tests_record": {
+    "path": "LAB_ROOT/evaluation/controller-qualification-v1/offline-tests.json",
+    "sha256": "6761c06a53729f5f55c1dba7f93e10a150015e34dc877d88789278a5ea96d023"
+  },
+  "handoff_adversarial_record": {
+    "path": "LAB_ROOT/evaluation/controller-qualification-v1/HANDOFF_BASELINE_REPRODUCER.json",
+    "sha256": "526783329eb7889929095869267757fe3996a70e0644a9e527a56f89e73645ae"
+  }
+}

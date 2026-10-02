@@ -1,0 +1,158 @@
+{
+  "schema": "er8.native-qualification.caller2-independent-offline.v1",
+  "created_utc": "2026-10-02T02:50:15.006522+00:00",
+  "source_freeze_sha256": "709553bca241150c0efe06c8ca81c13396a781f31cef374a4434eb2c5d61872f",
+  "exact_frozen_diff_matches_actual": true,
+  "closure_hash_checks": {
+    "LAB_ROOT/ops/dispatcher-v1/dispatcher.py": true,
+    "LAB_ROOT/ops/dispatcher-v1/canary_runner.py": true,
+    "LAB_ROOT/ops/dispatcher-v1/external_close.py": true,
+    "LAB_ROOT/ops/dispatcher-v1/parent_launcher.py": true,
+    "LAB_ROOT/ops/dispatcher-v1/CALLER2_OFFLINE.json": true,
+    "LAB_ROOT/ops/dispatcher-v1/CALLER2_DIFF.patch": true
+  },
+  "validation_fixture_results": [
+    {
+      "test": "valid_unique_held_parent_after_exit",
+      "expected_valid": true,
+      "observed_valid": true,
+      "pass": true,
+      "outside_seconds": 11.0
+    },
+    {
+      "test": "live_parent_process_group",
+      "expected_valid": false,
+      "observed_valid": false,
+      "pass": true,
+      "outside_seconds": null
+    },
+    {
+      "test": "nonzero_held_wait_result",
+      "expected_valid": false,
+      "observed_valid": false,
+      "pass": true,
+      "outside_seconds": null
+    },
+    {
+      "test": "deadline_extension",
+      "expected_valid": false,
+      "observed_valid": false,
+      "pass": true,
+      "outside_seconds": null
+    },
+    {
+      "test": "exit_after_observation",
+      "expected_valid": false,
+      "observed_valid": false,
+      "pass": true,
+      "outside_seconds": null
+    },
+    {
+      "test": "settlement_past_original_cutoff",
+      "expected_valid": false,
+      "observed_valid": false,
+      "pass": true,
+      "outside_seconds": null
+    },
+    {
+      "test": "invalid_pid",
+      "expected_valid": false,
+      "observed_valid": false,
+      "pass": true,
+      "outside_seconds": null
+    },
+    {
+      "test": "unknown_returncode",
+      "expected_valid": false,
+      "observed_valid": false,
+      "pass": true,
+      "outside_seconds": null
+    },
+    {
+      "test": "owned_cgroup_not_quiet",
+      "expected_valid": false,
+      "observed_valid": false,
+      "pass": true,
+      "outside_seconds": null
+    },
+    {
+      "test": "unknown_owned_lifetime",
+      "expected_valid": false,
+      "observed_valid": false,
+      "pass": true,
+      "outside_seconds": null
+    },
+    {
+      "test": "quiet_wrong_cutoff",
+      "expected_valid": false,
+      "observed_valid": false,
+      "pass": true,
+      "outside_seconds": null
+    },
+    {
+      "test": "quiet_late",
+      "expected_valid": false,
+      "observed_valid": false,
+      "pass": true,
+      "outside_seconds": null
+    },
+    {
+      "test": "caller_not_deferred",
+      "expected_valid": false,
+      "observed_valid": false,
+      "pass": true,
+      "outside_seconds": null
+    },
+    {
+      "test": "caller_already_released",
+      "expected_valid": false,
+      "observed_valid": false,
+      "pass": true,
+      "outside_seconds": null
+    },
+    {
+      "test": "wrong_job",
+      "expected_valid": false,
+      "observed_valid": false,
+      "pass": true,
+      "outside_seconds": null
+    },
+    {
+      "test": "wrong_original_start",
+      "expected_valid": false,
+      "observed_valid": false,
+      "pass": true,
+      "outside_seconds": null
+    },
+    {
+      "test": "caller_whole_case_hold",
+      "expected_valid": false,
+      "observed_valid": false,
+      "pass": true,
+      "outside_seconds": null
+    },
+    {
+      "test": "outside_cap_exactly300",
+      "expected_valid": false,
+      "observed_valid": false,
+      "pass": true,
+      "outside_seconds": null
+    }
+  ],
+  "validation_fixtures_passed": 18,
+  "static_checks": {
+    "held_Popen_unique_session": true,
+    "exit_observed_after_held_wait": true,
+    "finalizer_same_original_absolute_gate": true,
+    "nonzero_and_late_outer_rejected": true,
+    "caller_diff_no_lease_release_added": true,
+    "external_quiet_before_release": true,
+    "external_second_cutoff_check_before_release": true
+  },
+  "native_calls": 0,
+  "provider_calls": 0,
+  "ledger_mutations": 0,
+  "private_reads": 0,
+  "scope": "Pinned new validate_close function extracted by AST; pure synthetic values only; source delta review only; no earlier boundary re-audit or actual lifetime claim",
+  "remaining_actual_tail_requirement": "Actual parent finalizer-close and final metadata tail after charged settlement must be measured and charged as a distinct nonoverlapping original-clock interval; source field alone does not prove all case costs."
+}

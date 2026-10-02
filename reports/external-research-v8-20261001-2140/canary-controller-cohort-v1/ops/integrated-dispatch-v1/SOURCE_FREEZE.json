@@ -1,0 +1,80 @@
+{
+  "schema": "er8.integrated.source-freeze.v1",
+  "version": "repair1-metadata-only",
+  "repair_count": 1,
+  "repair_limit": 2,
+  "status": "FROZEN_GENERIC_CODE_REQUIRES_INDEPENDENT_SOURCE_ACCEPTANCE_AND_ROOT_NATIVE_ACCEPTED",
+  "author_start_utc": "2026-10-02T02:44:49Z",
+  "author_hard_deadline_utc": "2026-10-02T03:29:49Z",
+  "author_final_reserve_start_utc": "2026-10-02T03:19:49Z",
+  "author_cap_seconds": 2700,
+  "author_response_cap": 120,
+  "clock_reset": false,
+  "frozen_epoch": 1790910367.390378,
+  "closure_sha256": {
+    "LAB_ROOT/ops/integrated-dispatch-v1/case_supervisor.py": "7324813b6b96f07ea31840de842092fd32b7ea13f63cf25ff766cc65e1a95983",
+    "LAB_ROOT/ops/integrated-dispatch-v1/common.py": "5937a5e8b8dc502aa69c040f2d9eedf596bedf05a83451ad89a268a3d1395101",
+    "LAB_ROOT/ops/integrated-dispatch-v1/external_case_close.py": "a30c12ecb4b5c323e5a0872df22e8b0207cf0ad34f4430db1bc9f1e377e0d77c",
+    "LAB_ROOT/ops/integrated-dispatch-v1/external_stage_close.py": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4",
+    "LAB_ROOT/ops/integrated-dispatch-v1/parent_receipt.py": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea",
+    "LAB_ROOT/ops/integrated-dispatch-v1/rolling.py": "e17025c6fa6868222e77dd20b1eeab9f58d9c4d906805c06b6bad5faf894ee4b",
+    "LAB_ROOT/ops/integrated-dispatch-v1/stage_actor.py": "b622144b79a79f77fe7f1d8aaf360245573be4e42ff4c0d420061430969eee09",
+    "LAB_ROOT/ops/integrated-dispatch-v1/tests/test_controller.py": "d001322b05dd4b25e4326e16a1ec6a13fab31c471eb4c430b57a7f2c86827425",
+    "LAB_ROOT/ops/integrated-dispatch-v1/README.md": "0b0d8e3534892a1f2075c3c9472da3aeff76a41bac10e1b211e8bb5443c0ddd9",
+    "LAB_ROOT/ops/integrated-dispatch-v1/PLANNING_INPUT_PINS.json": "438b85345e27512006beeb4f90e2fe072a0e58876c797637047e098ed044cdb8",
+    "LAB_ROOT/ops/integrated-dispatch-v1/ROOT_RELEASE_INTERFACE.json": "e2cd417c1442e6793ce988a00aaf5331e9062f9846badcdb092643b89ed10518",
+    "LAB_ROOT/ops/integrated-dispatch-v1/OFFLINE_CHECKS.json": "93bcc80171814034dc2d5ddebaf48f3ec3b920441b628477f42ef2d929431515"
+  },
+  "exact_dependency_pins": {
+    "execution_snapshot": "4dd65e644807179250dac5735fbc58f57d5336647989075cc864405efef424ed",
+    "route_snapshot": "9455eaa5876e5627360c80ee98e41b554118205544b3244af3ba272b0d928668",
+    "root_config": "266b8c9930f26b00deb232d877f8f255c95630e4fc62f511f27e1aed6c7ca671",
+    "accounting_source": "5590fdc09936005e09b2de7aa4ac4113bbe0ddeefa4a8caf3548d78b0e3045af",
+    "native_engine": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31"
+  },
+  "first_controls": [
+    "V8-BIO-C-Z",
+    "V8-NB-C-Z"
+  ],
+  "reserved_cases": [
+    "V8-BIO-C-Z",
+    "V8-NB-C-Z",
+    "V8-BIO-P-Z",
+    "V8-NB-P-Z",
+    "V8-BIO-B-Z",
+    "V8-NB-B-Z"
+  ],
+  "stage_caps": [
+    1800,
+    600,
+    600
+  ],
+  "response_caps": [
+    160,
+    160,
+    160
+  ],
+  "case_wall_seconds": 3600,
+  "case_occupied_seconds": 5400,
+  "outside_native_seconds": 300,
+  "process_roles": {
+    "rolling_manager": "GLOBAL_OPS",
+    "case_supervisor": "HOSTMANAGEMENT_ORIGINAL_WHOLECASE_GATE",
+    "stage_actor": "LEASED_PER_STAGE_OUTER_PARENT_MUST_EXIT",
+    "native_unit": "INNER_OWNED_CGROUP_AND_NATIVE_MCP_CHILDREN_MUST_QUIET",
+    "stage_external_observer": "AFTER_ACTUAL_STAGE_ACTOR_EXIT",
+    "case_external_observer": "AFTER_ACTUAL_CASE_SUPERVISOR_EXIT",
+    "global_parent_receipt": "AFTER_ACTUAL_CASE_FINALIZER_EXIT; remaining publication/global metadata separate"
+  },
+  "actual_native_goals_by_author": 0,
+  "actual_case_births_by_author": 0,
+  "actual_account_bindings_by_author": 0,
+  "actual_case_packs_by_author": 0,
+  "private_native_reads_hashes_copies": 0,
+  "evaluator_content_reads": 0,
+  "independent_native_qualification": "UNESTABLISHED_HOLD_UNTIL_FRESH_ROOT_RELEASE",
+  "usage_generated_output": "UNKNOWN",
+  "author_elapsed_seconds_at_freeze": 1278.390439748764,
+  "prior_source_freeze_sha256": "6d3f2a678cc7f4b22a867b84801ab788d94d2bf9596a94251ea02443a14e6fc9",
+  "repair_reason": "Initial unpublished frozen metadata expanded a short dependency SHA incorrectly; corrected from actual positive snapshot bytes. Controller source unchanged; original incorrect metadata preserved."
+}

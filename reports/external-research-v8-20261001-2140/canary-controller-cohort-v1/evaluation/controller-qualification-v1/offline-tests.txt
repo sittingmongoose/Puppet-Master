@@ -1,0 +1,24 @@
+test_only_current_same_case_artifacts (authored_controller_tests.MetadataTests.test_only_current_same_case_artifacts) ... ok
+test_original_case_and_campaign_clip (authored_controller_tests.MetadataTests.test_original_case_and_campaign_clip) ... ok
+test_original_stage_close_accept_and_each_negative (authored_controller_tests.MetadataTests.test_original_stage_close_accept_and_each_negative) ... ok
+test_path_alias_refused (authored_controller_tests.MetadataTests.test_path_alias_refused) ... ok
+test_public_native_only (authored_controller_tests.MetadataTests.test_public_native_only) ... ok
+test_root_canary_and_hold_refused_before_record_access (authored_controller_tests.MetadataTests.test_root_canary_and_hold_refused_before_record_access) ... ok
+test_three_original_caps_and_final_artifact (authored_controller_tests.MetadataTests.test_three_original_caps_and_final_artifact) ... ok
+test_accepted_static_gate_stops_synthetic_prep (authored_controller_tests.OSFixtures.test_accepted_static_gate_stops_synthetic_prep) ... ok
+test_actual_held_stage_parent_exit_is_required (authored_controller_tests.OSFixtures.test_actual_held_stage_parent_exit_is_required) ... ok
+test_below_300_passes (__main__.ParentReceiptFixtures.test_below_300_passes) ... ok
+test_case_end_at_original_cutoff_cannot_complete (__main__.ParentReceiptFixtures.test_case_end_at_original_cutoff_cannot_complete) ... ok
+test_failed_finalizer_cannot_complete (__main__.ParentReceiptFixtures.test_failed_finalizer_cannot_complete) ... ok
+test_live_finalizer_group_cannot_complete (__main__.ParentReceiptFixtures.test_live_finalizer_group_cannot_complete) ... ok
+test_occupied_cap_excess_cannot_complete (__main__.ParentReceiptFixtures.test_occupied_cap_excess_cannot_complete) ... ok
+test_occupied_cap_inclusive_5400_passes (__main__.ParentReceiptFixtures.test_occupied_cap_inclusive_5400_passes) ... ok
+test_outside_cap_at_300_cannot_complete (__main__.ParentReceiptFixtures.test_outside_cap_at_300_cannot_complete) ... ok
+test_overlapping_native_intervals_cannot_hide_outside (__main__.ParentReceiptFixtures.test_overlapping_native_intervals_cannot_hide_outside) ... ok
+test_parent_positive_end_and_finalizer_tail (__main__.ParentReceiptFixtures.test_parent_positive_end_and_finalizer_tail) ... ok
+test_unreconciled_host_gap_cannot_complete (__main__.ParentReceiptFixtures.test_unreconciled_host_gap_cannot_complete) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.414s
+
+OK

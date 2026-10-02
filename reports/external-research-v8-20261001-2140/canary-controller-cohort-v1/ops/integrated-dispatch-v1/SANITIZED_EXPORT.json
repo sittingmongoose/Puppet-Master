@@ -1,0 +1,32 @@
+{
+  "schema": "er8.integrated.sanitized-export.v1",
+  "positive_files": {
+    "LAB_ROOT/ops/integrated-dispatch-v1/case_supervisor.py": "7324813b6b96f07ea31840de842092fd32b7ea13f63cf25ff766cc65e1a95983",
+    "LAB_ROOT/ops/integrated-dispatch-v1/common.py": "5937a5e8b8dc502aa69c040f2d9eedf596bedf05a83451ad89a268a3d1395101",
+    "LAB_ROOT/ops/integrated-dispatch-v1/external_case_close.py": "a30c12ecb4b5c323e5a0872df22e8b0207cf0ad34f4430db1bc9f1e377e0d77c",
+    "LAB_ROOT/ops/integrated-dispatch-v1/external_stage_close.py": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4",
+    "LAB_ROOT/ops/integrated-dispatch-v1/parent_receipt.py": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea",
+    "LAB_ROOT/ops/integrated-dispatch-v1/rolling.py": "e17025c6fa6868222e77dd20b1eeab9f58d9c4d906805c06b6bad5faf894ee4b",
+    "LAB_ROOT/ops/integrated-dispatch-v1/stage_actor.py": "b622144b79a79f77fe7f1d8aaf360245573be4e42ff4c0d420061430969eee09",
+    "LAB_ROOT/ops/integrated-dispatch-v1/tests/test_controller.py": "d001322b05dd4b25e4326e16a1ec6a13fab31c471eb4c430b57a7f2c86827425",
+    "LAB_ROOT/ops/integrated-dispatch-v1/README.md": "0b0d8e3534892a1f2075c3c9472da3aeff76a41bac10e1b211e8bb5443c0ddd9",
+    "LAB_ROOT/ops/integrated-dispatch-v1/PLANNING_INPUT_PINS.json": "438b85345e27512006beeb4f90e2fe072a0e58876c797637047e098ed044cdb8",
+    "LAB_ROOT/ops/integrated-dispatch-v1/ROOT_RELEASE_INTERFACE.json": "e2cd417c1442e6793ce988a00aaf5331e9062f9846badcdb092643b89ed10518",
+    "LAB_ROOT/ops/integrated-dispatch-v1/OFFLINE_CHECKS.json": "93bcc80171814034dc2d5ddebaf48f3ec3b920441b628477f42ef2d929431515",
+    "LAB_ROOT/ops/integrated-dispatch-v1/SOURCE_FREEZE.json": "0acd0e7954bd31c05f066f4580b3c79643fa0d82328a6424d1dfd1d48cb56e8d",
+    "LAB_ROOT/ops/integrated-dispatch-v1/AUTHOR_CLOSEOUT.json": "32a2da91c265c2c40fd48360bac04a680f2f8bab08fbb386724826bfdade1df6"
+  },
+  "source_freeze_sha256": "0acd0e7954bd31c05f066f4580b3c79643fa0d82328a6424d1dfd1d48cb56e8d",
+  "no_raw_runtime_or_candidate_or_credentials": true,
+  "research_credit": false,
+  "independent_acceptance_required": true,
+  "preserved_initial_metadata_freeze": {
+    "path": "LAB_ROOT/ops/integrated-dispatch-v1/versions/baseline-v1/SOURCE_FREEZE.json",
+    "sha256": "6d3f2a678cc7f4b22a867b84801ab788d94d2bf9596a94251ea02443a14e6fc9"
+  },
+  "independent_source_acceptance": {
+    "path": "LAB_ROOT/evaluation/controller-qualification-v1/ACCEPTANCE.json",
+    "sha256": "8cae12702bc3d65dd38cc05dcffe4becbace086fc64b01fecc59b9fc988820a9"
+  },
+  "author_closeout_sha256": "32a2da91c265c2c40fd48360bac04a680f2f8bab08fbb386724826bfdade1df6"
+}

@@ -1,0 +1,38 @@
+{
+  "verified": true,
+  "allowed_event_rows": [
+    {
+      "event": "bootstrap.app.startup.started",
+      "fields": {
+        "resume": false,
+        "hasInjectedModelAdapter": false
+      }
+    },
+    {
+      "event": "bootstrap.app.startup.plugins.completed",
+      "fields": {
+        "pluginCount": 0,
+        "enabledPluginCount": 0,
+        "hookCount": 0,
+        "commandRootCount": 0,
+        "skillRootCount": 0,
+        "mcpServerCount": 0
+      }
+    },
+    {
+      "event": "bootstrap.app.startup.runtime_config.completed",
+      "fields": {
+        "memoryEnabled": false,
+        "memoryUse": false,
+        "memoryExtractionEnabled": true,
+        "runtimeFeatureBrowserUse": false,
+        "runtimeFeatureNodeRepl": false,
+        "mcpEnabled": true,
+        "mode": "build"
+      }
+    }
+  ],
+  "all_memory_off_claim": false,
+  "global_hooks_disabled_claim": false,
+  "raw_file_hash_or_copy": false
+}

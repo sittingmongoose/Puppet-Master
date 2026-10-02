@@ -1,0 +1,82 @@
+{
+  "schema": "er8.integrated.controller-source-acceptance.v1",
+  "verdict": "accepted",
+  "qualification_scope": "SOURCE_ONLY_CONDITIONAL",
+  "productive_release_authorized": false,
+  "actual_native_qualification_granted": false,
+  "native_candidate_or_provider_calls_by_reviewer": 0,
+  "reviewed_utc": "2026-10-02T03:11:42.477500+00:00",
+  "reviewer": "codex-v8-controller-review",
+  "scope": "Frozen changed generic integrated controller only; accepted core/caller infrastructure reused without reopening its audit or duplicating actual canary grade",
+  "controller_snapshot": {
+    "path": "LAB_ROOT/ops/integrated-dispatch-v1/SOURCE_FREEZE.json",
+    "sha256": "0acd0e7954bd31c05f066f4580b3c79643fa0d82328a6424d1dfd1d48cb56e8d"
+  },
+  "snapshot_sha256": "0acd0e7954bd31c05f066f4580b3c79643fa0d82328a6424d1dfd1d48cb56e8d",
+  "controller_version": "repair1-metadata-only",
+  "repair_count_consumed": 1,
+  "repair_limit": 2,
+  "source_repairs_requested_by_this_review": 0,
+  "closure_files_verified": 12,
+  "assigned_prospective_input_pins_verified": 30,
+  "exact_dependency_pins": {
+    "execution_snapshot": "4dd65e644807179250dac5735fbc58f57d5336647989075cc864405efef424ed",
+    "route_snapshot": "9455eaa5876e5627360c80ee98e41b554118205544b3244af3ba272b0d928668",
+    "root_config": "266b8c9930f26b00deb232d877f8f255c95630e4fc62f511f27e1aed6c7ca671",
+    "accounting_source": "5590fdc09936005e09b2de7aa4ac4113bbe0ddeefa4a8caf3548d78b0e3045af",
+    "native_engine": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31"
+  },
+  "offline_tests": {
+    "path": "LAB_ROOT/evaluation/controller-qualification-v1/offline-tests.json",
+    "sha256": "6761c06a53729f5f55c1dba7f93e10a150015e34dc877d88789278a5ea96d023",
+    "passed": true,
+    "count": 19,
+    "authored_count": 9,
+    "independent_finalizer_count": 10
+  },
+  "source_pins": {
+    "path": "LAB_ROOT/evaluation/controller-qualification-v1/SOURCE_PINS.json",
+    "sha256": "813264a3ce9af9298a64e7de3b05d19aa2d2c4fe1e6cc270e0ec151ff31b238c"
+  },
+  "coverage": {
+    "path": "LAB_ROOT/evaluation/controller-qualification-v1/COVERAGE.json",
+    "sha256": "a0e1a43b82088fb90d98782f9a2d21b3e42af7e6a8cf9dc71734702549e4343f"
+  },
+  "handoff_adversarial_proof": {
+    "path": "LAB_ROOT/evaluation/controller-qualification-v1/HANDOFF_BASELINE_REPRODUCER.json",
+    "sha256": "526783329eb7889929095869267757fe3996a70e0644a9e527a56f89e73645ae",
+    "research_proposal_preserved": true
+  },
+  "unresolved_frozen_source_failures": [],
+  "conditions": [
+    "No productive activation from this source verdict. Separate actual native canary qualification must pass on the exact existing route/config/core pins, followed by explicit root NATIVE_ACCEPTED same-snapshot scope expansion and current matching ledger pins.",
+    "Actual root release selects complete frozen route and controller closures, exact source/config/acceptance records, all assigned prospective planning pins, and original immutable birth/deadline ancestry. Same authorized account role remains fixed; underlying account identity and external load remain UNKNOWN.",
+    "All late/failed actual activations must be recorded from positive public activation or public-metrics evidence even if the stage actor failed before final fallback. Unknown activation/quiet keeps permits and leases held; no inferred start absence or release. Operator reconciles later public evidence without native/raw reads, retries, reset, cost erasure or relabeling.",
+    "Source checks grant no semantic research credit, no actual input/source-delivery completeness claim, no actual fresh context/model/tool proof and no whole-case operational completion; those require actual per-stage receipts, external closure, independent evaluation and the original caps."
+  ],
+  "outside_native_definition": "Original case birth through actual case finalizer exit minus nonoverlapping native-owned wrapper-begin through first positive all-owned quiet intervals; inside-native bootstrap/retry/waits/tool/cleanup remain occupied original stage cost, never free or twice charged",
+  "caps": {
+    "research_seconds": 1800,
+    "critic_seconds": 600,
+    "correction_seconds": 600,
+    "responses_per_stage": 160,
+    "case_wall_seconds": 3600,
+    "case_occupied_seconds": 5400,
+    "outside_native_seconds": 300,
+    "inclusive_native_quiet_reserve_seconds": 30,
+    "our_active_Z": 2
+  },
+  "clock": {
+    "original_birth_utc": "2026-10-02T02:58:48Z",
+    "hard_cutoff_utc": "2026-10-02T03:28:48Z",
+    "final_reserve_start_utc": "2026-10-02T03:23:48Z",
+    "elapsed_seconds": 774.4792828559875,
+    "conservative_event_cap": 120,
+    "events_observed_upper_bound": 70,
+    "clock_reset": false
+  },
+  "unknown_generated_usage": "UNKNOWN",
+  "private_native_or_auth_reads_hashes_copies": 0,
+  "canonical_or_main_or_old_v7_edits": 0,
+  "pre_freeze_observations": "Finalizer tail, failed native stage guards and mandatory controller closure were addressed before exact source freeze; alleged proposal override was retracted against exact pinned code and reproduced as preserved."
+}

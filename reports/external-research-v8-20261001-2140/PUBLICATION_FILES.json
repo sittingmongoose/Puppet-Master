@@ -1,5 +1,5 @@
 {
-  "checkpoint": "INITIAL_SCOPE_PLUS_CODE_AND_ROUTE_COHORTS",
+  "checkpoint": "ONGOING_RECOVERY_CANARY_CONTROLLER",
   "files": [
     {
       "path": "BEST_RECIPE.md",
@@ -8,28 +8,28 @@
     },
     {
       "path": "CHECKPOINT.md",
-      "sha256": "dcd5a99d4b941be6f5048038b362d6fe7992f9da82bcb185a5405cab5ce7af9e",
-      "bytes": 1388
+      "sha256": "7d8f0c6f75133b8b1b1a7aa816e46c0354bf8dfdc0430aa705ed4915d26e0fd8",
+      "bytes": 1346
     },
     {
       "path": "FAILURES.md",
-      "sha256": "96b7f52016040fb520ebe9de3e417492fe52ccc0da205c21a844332df3de1c6a",
-      "bytes": 1089
+      "sha256": "000d82d265888a4219717fbeee317090145f9b33df77a0b40be5e414df2160a8",
+      "bytes": 1818
     },
     {
       "path": "README.md",
-      "sha256": "761f3bd2c5a4832efb4f661fb42742ba662d60c9270cd68c7ed9cf42b7d0fab6",
-      "bytes": 1972
+      "sha256": "eb1471cb316393f7fed77bace706a8f2934af28deeb87b4f87ebf36f87dd7fc4",
+      "bytes": 2332
     },
     {
       "path": "REPRODUCE.md",
-      "sha256": "fe12aaed6492486ac76b38c67f20ef354015858fa604fe6862f422075d60db1d",
-      "bytes": 2179
+      "sha256": "a141374c7a40f157cccbf4b74d0daaa3b39be9fd8b8937cad29e2e1833f567fb",
+      "bytes": 2620
     },
     {
       "path": "RESULTS.md",
-      "sha256": "807b9f43b6c97c7d2170801dab75ad7b6871affcd80b6411b15468d45b942f47",
-      "bytes": 1048
+      "sha256": "b5382e8185aa571c47692dd852d22bbe2c3dbeeee86d60a1ca14da5a4ad6d28f",
+      "bytes": 1444
     },
     {
       "path": "REVIEW_RECONCILIATION.md",
@@ -38,13 +38,303 @@
     },
     {
       "path": "attempts.json",
-      "sha256": "df321453d09553e036f63b1f1a6ae2d3f2bde30b97ee6a7814d1696efe3c1416",
-      "bytes": 279
+      "sha256": "8cb944178efc8d24f676b8213628aab12334d69000e1a655958356e02c822f91",
+      "bytes": 766
     },
     {
       "path": "authority/AUTHORIZATION.json",
       "sha256": "25609fc787d622958fd62afa5df218a1e4789f61595a4152865ceb0c143304f2",
       "bytes": 2294
+    },
+    {
+      "path": "canary-controller-cohort-v1/PUBLIC_EXPORT.json",
+      "sha256": "9f7017f177c05622982d1e053fda1811ab4d78a920d25bcdcb936da87ca998b9",
+      "bytes": 26197
+    },
+    {
+      "path": "canary-controller-cohort-v1/README.md",
+      "sha256": "264a568f226b22dc6d7901cfef1281ec89f0bb87452afbb16db252a578034a32",
+      "bytes": 2645
+    },
+    {
+      "path": "canary-controller-cohort-v1/ROOT_HANDOFF.json",
+      "sha256": "bc87709a93b6a9883d09ad5eb8d8cb4eac8de6f2bb9e92bfe216f793f31d80bb",
+      "bytes": 1871
+    },
+    {
+      "path": "canary-controller-cohort-v1/evaluation/controller-qualification-v1/ACCEPTANCE.json",
+      "sha256": "b7143ad97f7b25c316b2417c75e45f33cf678c1c520666ad58bc1549e8d12e3d",
+      "bytes": 5074
+    },
+    {
+      "path": "canary-controller-cohort-v1/evaluation/controller-qualification-v1/CLOCK.json",
+      "sha256": "2e74df6a00930e5cc9df91868875cca0d5255d02344f1557da02dae5220a8b55",
+      "bytes": 542
+    },
+    {
+      "path": "canary-controller-cohort-v1/evaluation/controller-qualification-v1/COVERAGE.json",
+      "sha256": "adb1a29f585e86b4bf696e4a88bd534670a05e9c696d51a2dfc7416a5b822ce1",
+      "bytes": 4278
+    },
+    {
+      "path": "canary-controller-cohort-v1/evaluation/controller-qualification-v1/HANDOFF_BASELINE_REPRODUCER.json",
+      "sha256": "526783329eb7889929095869267757fe3996a70e0644a9e527a56f89e73645ae",
+      "bytes": 1673
+    },
+    {
+      "path": "canary-controller-cohort-v1/evaluation/controller-qualification-v1/SANITIZED_EXPORT.json",
+      "sha256": "03d1eabe024078f7eda8891df591b5e91006a083c360c9005854d539537f09b6",
+      "bytes": 1557
+    },
+    {
+      "path": "canary-controller-cohort-v1/evaluation/controller-qualification-v1/SOURCE_PINS.json",
+      "sha256": "fde6e6a06da1cad7fa9e6009f9fa53e07875a32950c249b2fb236a7642e95b4e",
+      "bytes": 6406
+    },
+    {
+      "path": "canary-controller-cohort-v1/evaluation/controller-qualification-v1/offline-tests.json",
+      "sha256": "6761c06a53729f5f55c1dba7f93e10a150015e34dc877d88789278a5ea96d023",
+      "bytes": 319
+    },
+    {
+      "path": "canary-controller-cohort-v1/evaluation/controller-qualification-v1/offline-tests.txt",
+      "sha256": "fb0bc14f7ee4245e4d0cba125d3f3f0fba08b93cc136d79c759d0dd9c489ca38",
+      "bytes": 2494
+    },
+    {
+      "path": "canary-controller-cohort-v1/evaluation/controller-qualification-v1/test_independent.py",
+      "sha256": "e9e5b026297e457c5be1e25f4a6a71341b23e07ab1e904f6d857dc4778e857fa",
+      "bytes": 5714
+    },
+    {
+      "path": "canary-controller-cohort-v1/evaluation/native-qualification-v1/CURRENT_ASSESSMENT.json",
+      "sha256": "4e0fe5f7fae028e39c8de97f01d318a33bbda7b75710690843d9b807d4c0c2d4",
+      "bytes": 1417
+    },
+    {
+      "path": "canary-controller-cohort-v1/evaluation/native-qualification-v1/CURRENT_COVERAGE.json",
+      "sha256": "d4cdc077770e952f8ade359a10b1c45ec06957fa948570d7bd0f12d37f5d6883",
+      "bytes": 13834
+    },
+    {
+      "path": "canary-controller-cohort-v1/evaluation/native-qualification-v1/SANITIZED_EXPORT.json",
+      "sha256": "ce756c4d937e0d450a0dac15b8946ca2f25702b3946f5146fc93a4c78c36de7d",
+      "bytes": 1543
+    },
+    {
+      "path": "canary-controller-cohort-v1/evaluation/native-qualification-v1/caller2-independent-offline.json",
+      "sha256": "5ef527a90a9f1d572eda4ee6c5e211a1da75d70960b71d0ae00165660b697731",
+      "bytes": 4532
+    },
+    {
+      "path": "canary-controller-cohort-v1/evaluation/native-qualification-v1/caller2-source-acceptance.json",
+      "sha256": "9785b791febb56a07c917244e2de7907fc1e5780fddf7f580f6daa72b990dd55",
+      "bytes": 4965
+    },
+    {
+      "path": "canary-controller-cohort-v1/evaluation/native-qualification-v1/native-canary-proof.json",
+      "sha256": "9f66421cfccc9aa71cd407c9b4a9beca946b1b6697e6a5c31c946b756a62d781",
+      "bytes": 21892
+    },
+    {
+      "path": "canary-controller-cohort-v1/evaluation/native-qualification-v1/review-events.jsonl",
+      "sha256": "941a5c18b75bf8d4f4e347bca2c68c27fe000e646612c74d75966f5c5df42889",
+      "bytes": 812
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/dispatcher-v1/CANARY_TERMINAL_FREEZE.json",
+      "sha256": "0e594cf43a8f935935495b4c34f49623226c25953816b8ed4d29e8515c87ae24",
+      "bytes": 4804
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/ACCOUNTING_PUBLIC_SNAPSHOT.json",
+      "sha256": "c6a9aaf9216a24d2b2816f77efe31f69ea9440705ec83df72b16927cc8e7dec7",
+      "bytes": 5385
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/ACTIVATION_POSITIVE.json",
+      "sha256": "380fd91f0db5ac1301a80bf1b9e117d8c05df39fdf7a472daa17d6efeb6bdf7d",
+      "bytes": 331
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/BIRTH.json",
+      "sha256": "8f2a11a93f1446941c86714259ea0767ce56a792b0459d34d0275abec169b3a8",
+      "bytes": 1712
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/CANDIDATE_INPUTS_FREEZE.json",
+      "sha256": "bed8610cc4e88a93ff4a3021d3fcad4f7deecea3b5e49c9a9d594846c7f809fe",
+      "bytes": 728
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/CASE_AUTHORITY.json",
+      "sha256": "19414a08afd17038ecad92260020fb18a71fd718ff7a49f90909f14877516072",
+      "bytes": 431
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/CASE_BINDING.json",
+      "sha256": "0e2786980bb4055890d4f28e3643b5f36d5d4ddb33de6855832a70494c739afb",
+      "bytes": 1521
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/FAILURE_CLEANUP_PROOF.json",
+      "sha256": "3b75b77f0a97b0e874b90e5b4f6eb3e38bbd09061e58fbbda02e199a70f6417e",
+      "bytes": 1657
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/FAILURE_COST.json",
+      "sha256": "19a1069ae9b813bc9fbd374197e2c42cd258bf4ad27098f131cfd14fa0a25784",
+      "bytes": 484
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/GLOBAL_COST_TAIL.json",
+      "sha256": "5b06801af7ebea6a67f07cad4c63c5310605016342d04a5880693844891a8a15",
+      "bytes": 630
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/GLOBAL_PARENT_CLOSE.json",
+      "sha256": "bbf072eaed81a6668e06b47e1974803e6bdccce08350538b8f59fbc3e0579a7e",
+      "bytes": 1279
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/LAUNCHED.json",
+      "sha256": "a7edd8df0e49e36df8b26f265c0d3ce5ecf97d704d4c1aa8c6fa9d708844e1e1",
+      "bytes": 260
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/LEASE.json",
+      "sha256": "b0570916b156731f3d50ab361fbc68e06919eca29c4e45a03940a6f35f8ca780",
+      "bytes": 1002
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/PLAN.json",
+      "sha256": "04316d72b51031b7c8c3f1b8fe80061ac2abf3ad3e8c78c49ee0998e31eccb99",
+      "bytes": 4976
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/POSTMORTEM_STARTUP_POSITIVE.json",
+      "sha256": "5cddb423082720abe816606ec281771f2d436ccfe4ce600c584d0fe333d41ea9",
+      "bytes": 922
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/PUBLIC_ARTIFACT_FREEZE.json",
+      "sha256": "39336de9ae975fb525fe6702fa8a8cc92ed21d8f269006a026a1e9b3dcb32a26",
+      "bytes": 410
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/QUIESCENCE.json",
+      "sha256": "8f51f1c734327c387687b9d0ecc948abad20de89ab05777fc8fbf83aeb2d447f",
+      "bytes": 991
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/TERMINAL_HOLD.json",
+      "sha256": "ff5766507ae88e5b937b397cf070115cbe7d84ed46cede97f377e191f2f9bafc",
+      "bytes": 110
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/native-public/activation.json",
+      "sha256": "380fd91f0db5ac1301a80bf1b9e117d8c05df39fdf7a472daa17d6efeb6bdf7d",
+      "bytes": 331
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/native-public/progress.jsonl",
+      "sha256": "27140fd49ce8aa75076002ffb1e0bc48f3288c1e0247418997e8d080e685963f",
+      "bytes": 4575
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/integrated-dispatch-v1/AUTHOR_CLOSEOUT.json",
+      "sha256": "841fd977e8b7ff3fdeec6a64b8ae80cd8a3c14cc8f1a2911d84b7fc21b8a8c95",
+      "bytes": 1591
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/integrated-dispatch-v1/OFFLINE_CHECKS.json",
+      "sha256": "93bcc80171814034dc2d5ddebaf48f3ec3b920441b628477f42ef2d929431515",
+      "bytes": 507
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/integrated-dispatch-v1/PLANNING_INPUT_PINS.json",
+      "sha256": "b07296c3d94eb6835d9b8460c491d2c14ad62d3f8fcaa7d2c24003a085e54432",
+      "bytes": 4005
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/integrated-dispatch-v1/README.md",
+      "sha256": "0b0d8e3534892a1f2075c3c9472da3aeff76a41bac10e1b211e8bb5443c0ddd9",
+      "bytes": 8106
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/integrated-dispatch-v1/ROOT_RELEASE_INTERFACE.json",
+      "sha256": "e2cd417c1442e6793ce988a00aaf5331e9062f9846badcdb092643b89ed10518",
+      "bytes": 1470
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/integrated-dispatch-v1/SANITIZED_EXPORT.json",
+      "sha256": "d79722cff13d2a631a96eb7bf265efab29c36b43849efd0c05bf84551b331232",
+      "bytes": 2636
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/integrated-dispatch-v1/SOURCE_FREEZE.json",
+      "sha256": "50ce862a98fa58ea898fac859ae2839fdcb24a2849c9a752ca3580e5aa061892",
+      "bytes": 4207
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/integrated-dispatch-v1/case_supervisor.py",
+      "sha256": "7324813b6b96f07ea31840de842092fd32b7ea13f63cf25ff766cc65e1a95983",
+      "bytes": 5565
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/integrated-dispatch-v1/common.py",
+      "sha256": "5937a5e8b8dc502aa69c040f2d9eedf596bedf05a83451ad89a268a3d1395101",
+      "bytes": 11542
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/integrated-dispatch-v1/external_case_close.py",
+      "sha256": "a30c12ecb4b5c323e5a0872df22e8b0207cf0ad34f4430db1bc9f1e377e0d77c",
+      "bytes": 3568
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/integrated-dispatch-v1/external_stage_close.py",
+      "sha256": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4",
+      "bytes": 3512
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/integrated-dispatch-v1/parent_receipt.py",
+      "sha256": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea",
+      "bytes": 4114
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/integrated-dispatch-v1/rolling.py",
+      "sha256": "e17025c6fa6868222e77dd20b1eeab9f58d9c4d906805c06b6bad5faf894ee4b",
+      "bytes": 5069
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/integrated-dispatch-v1/stage_actor.py",
+      "sha256": "b622144b79a79f77fe7f1d8aaf360245573be4e42ff4c0d420061430969eee09",
+      "bytes": 12814
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/integrated-dispatch-v1/tests/test_controller.py",
+      "sha256": "d001322b05dd4b25e4326e16a1ec6a13fab31c471eb4c430b57a7f2c86827425",
+      "bytes": 5853
+    },
+    {
+      "path": "canary-controller-cohort-v1/ops/integrated-dispatch-v1/versions/baseline-v1/SOURCE_FREEZE.json",
+      "sha256": "f4f630269aac675a0839137f6453d3c8303114788a435a6f86104aaf96a7543d",
+      "bytes": 3881
+    },
+    {
+      "path": "canary-controller-cohort-v1/recovery-v1/AUTHORITY_AMENDMENT.json",
+      "sha256": "1479c0b44869d13878b90ccd2f02d5fb2d755cfa0f0b17315105dc48d57616ec",
+      "bytes": 1717
+    },
+    {
+      "path": "canary-controller-cohort-v1/recovery-v1/SUPERVISOR_OBSERVATION.json",
+      "sha256": "8c5b9306801eb5ed9502a97af46c9d9f1c3df0cfbbdf92a5464059a9beb04d48",
+      "bytes": 1160
+    },
+    {
+      "path": "canary-controller-cohort-v1/recovery-v1/recovery.json",
+      "sha256": "54e533a319557a565400f71c5931a104e18a9a85f6b0723951990303f9e5c814",
+      "bytes": 6018
     },
     {
       "path": "code-cohort-v1/PUBLIC_EXPORT.json",
@@ -333,8 +623,8 @@
     },
     {
       "path": "economics.json",
-      "sha256": "04f8364561649f66416f18b4a13f44e521f99ddd8875be612ad5108ce586fe1d",
-      "bytes": 1042
+      "sha256": "a9e57595fd64b8deb70e8ca2335f74693a9408c14615cb11f9e8835e04d4fb85",
+      "bytes": 1699
     },
     {
       "path": "methods.json",
@@ -673,9 +963,9 @@
     },
     {
       "path": "schedule.json",
-      "sha256": "8698512ad2944a1d57558961dbd0d791ec180fab13e27669adf94efabc8e7cf4",
-      "bytes": 2374
+      "sha256": "af2157afa7513eb1704d978af2056e879b7b28b50bd04b3adadaeadfe20bdffd",
+      "bytes": 2662
     }
   ],
-  "scope": "Positive whitelist: public authorization, candidate planning inputs, sanitized reservation metadata and publisher summaries. No private/raw/evaluator-key files read. Plus authorized selected published-number arithmetic script/input/output and deterministic replay checksums."
+  "scope": "Existing public history plus root-authorized positive frozen native/controller and recovery metadata; no raw/private/native auth/modelIO/corpora/evaluator keys."
 }

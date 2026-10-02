@@ -1,8 +1,7 @@
 {
-  "checkpoint": "INITIAL_SCOPE",
+  "checkpoint": "ONGOING_RECOVERY",
   "accepted_utc": "2026-10-02T01:40:09+00:00",
-  "deadline_utc": "2026-10-02T07:40:09Z",
-  "protected_final_hour_utc": "2026-10-02T06:40:09Z",
+  "deadline_utc": "2026-10-02T13:40:09Z",
   "cases": [
     {
       "case_id": "V8-BIO-C-Z",
@@ -77,7 +76,7 @@
       "evaluator": "V8-EVAL-NB-B"
     }
   ],
-  "policy": "Run complete controls early on a qualified route; no sixteen-method prerequisite; original births never reset; ordinary boundary repairs remain bounded.",
+  "policy": "Run complete controls early on a qualified route; no sixteen-method prerequisite; original births never reset; ordinary boundary repairs remain bounded. Prospective amendment supersedes cumulative helper/fixed repair limits only; preserve frozen caps and original birth.",
   "prospective_runtime_overlay": {
     "outside_native_cap_seconds": 300,
     "applies_to": [
@@ -90,6 +89,9 @@
     ],
     "scope": "All six cases; narrower than original planner 600 allowance; original birth/caps unchanged",
     "code_qualification": "CONDITIONAL_CANARY_ONLY",
-    "native_qualification": "PENDING"
-  }
+    "native_qualification": "HOLD_FIRST_CANARY"
+  },
+  "historical_deadline_utc": "2026-10-02T07:40:09Z",
+  "historical_protected_final_hour_utc": "2026-10-02T06:40:09Z",
+  "authority_amendment": "canary-controller-cohort-v1/recovery-v1/AUTHORITY_AMENDMENT.json"
 }

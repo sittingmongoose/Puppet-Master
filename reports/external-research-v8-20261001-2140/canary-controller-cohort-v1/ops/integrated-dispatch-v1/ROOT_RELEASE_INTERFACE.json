@@ -1,0 +1,46 @@
+{
+  "schema": "er8.integrated.root-release-interface.v1",
+  "root_release_schema": "er8.dispatcher.root-release.v1",
+  "required_values": {
+    "root_authority": true,
+    "accepted": true,
+    "mode": "PRODUCTION",
+    "qualification_scope": "NATIVE_ACCEPTED"
+  },
+  "path_hash_records": [
+    "config",
+    "route_snapshot",
+    "execution_acceptance",
+    "route_acceptance",
+    "canary_review",
+    "controller_snapshot"
+  ],
+  "route_acceptance_values": {
+    "verdict": "accepted",
+    "allowed_modes": [
+      "productive"
+    ],
+    "native_review": "EXACT {path,sha256} equal release.canary_review"
+  },
+  "canary_review_values": {
+    "verdict": "passed",
+    "inclusive_native_lifetime_verified": true,
+    "native_goal_activation_continuation_completion_verified": true,
+    "privacy_and_actual_tool_inventory_verified": true,
+    "source_capture_and_delivered_range_verified": true
+  },
+  "pins": {
+    "runtime": "route_snapshot.sha256",
+    "config": "config.sha256",
+    "independent_acceptance": "FRESH route_acceptance.sha256"
+  },
+  "required_additional_maps": [
+    "selected_positive_files exact route+controller closures",
+    "planning_input_sha256 assigned-only prospective original sources"
+  ],
+  "account_role": "existing-authorized-zcode-account-v8-A",
+  "underlying_account_id": "UNKNOWN",
+  "external_load": "UNKNOWN",
+  "entry": "rolling.py --root-release ABS --run-root ABS-FRESH-INSIDE-ops/dispatcher-v1",
+  "launch_authority": false
+}

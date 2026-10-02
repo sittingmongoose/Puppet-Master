@@ -1,0 +1,31 @@
+{
+  "schema": "er8.dispatcher.failure-cleanup-positive.v1",
+  "job": "v8-z-mechanical-route-canary-v1",
+  "outer_parent_exited": true,
+  "outer_process_group_absent": true,
+  "held_outer_pgid": 2610299,
+  "parent_launcher_exit_observed_monotonic_ns": 131905244489199,
+  "actual_parent_launcher_returncode": 126,
+  "historical_original_quiet_receipt": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/QUIESCENCE.json",
+  "current_owned_quiescence": {
+    "schema": "er8.execution.quiescence.v1",
+    "owned_unit": "er8-v8-z-mechanical-route-canary-v1.service",
+    "owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-z-mechanical-route-canary-v1.service",
+    "enrollment": {
+      "schema": "er8.execution.enrollment.v1",
+      "owned_unit": "er8-v8-z-mechanical-route-canary-v1.service",
+      "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-z-mechanical-route-canary-v1.service",
+      "enrolled_monotonic_ns": 131455379411561,
+      "original_deadline_monotonic_ns": 131934937365526
+    },
+    "absence_proof": "positively-enrolled-owned-cgroup-removed",
+    "owned_native_quiescent": true,
+    "quiescence_observed_monotonic_ns": 132271577059660,
+    "original_deadline_monotonic_ns": 131934937365526,
+    "inclusive_native_lifetime_established": false,
+    "occupancy_disposition": "held-until-positive-quiescence",
+    "native_goal_or_quality_qualification": "UNESTABLISHED; independent native receipt review mandatory"
+  },
+  "qualification": "HOLD; missing terminal metrics/artifact; late lease cleanup retained",
+  "no_backdated_release": true
+}

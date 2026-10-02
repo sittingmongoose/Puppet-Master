@@ -1,0 +1,279 @@
+{
+  "schema": "er8.native-qualification.coverage.v1",
+  "created_utc": "2026-10-02T03:15:00.547758+00:00",
+  "state": "FROZEN_HOLD",
+  "obligations": [
+    {
+      "obligation": "source_closure_and_original_case_admission",
+      "status": "VERIFIED_SCOPED",
+      "finding": "Fresh rootv2 and exact seven principal accepted pins + caller2 six-file closure; earlier source audit reused, not converted to actual success",
+      "evidence": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/BIRTH.json",
+          "sha256": "8f2a11a93f1446941c86714259ea0767ce56a792b0459d34d0275abec169b3a8"
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/PLAN.json",
+          "sha256": "f93f0042b765902516a7c8ec69cb6fe0f3312c97a32284387bf3cfb4c2477763"
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/CASE_BINDING.json",
+          "sha256": "dab74f29312227f8d1d43787a9548c65fed1f96251e909ce15b5728a25d0f825"
+        }
+      ]
+    },
+    {
+      "obligation": "actual_canary_input_and_lease_bytes",
+      "status": "VERIFIED",
+      "finding": "Actual two assigned mechanical inputs and objective hash match hash-bound case; lease hash matches. No semantic METHOD.md assigned in this canary",
+      "evidence": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/CANDIDATE_INPUTS_FREEZE.json",
+          "sha256": "bf315673d715a401200c98a4816da1181dc2edee687cc7435e933db824acb3da"
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/CASE_BINDING.json",
+          "sha256": "dab74f29312227f8d1d43787a9548c65fed1f96251e909ce15b5728a25d0f825"
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/LEASE.json",
+          "sha256": "339e0b271f631f59002bb9f5e2cf13d78f69434809b154470426ffe6caf0c67a"
+        }
+      ]
+    },
+    {
+      "obligation": "requested_GLM5_3Flash_max",
+      "status": "VERIFIED_REQUESTED_ONLY",
+      "finding": "Exact frozen root-config request; observed per-request model/effort missing",
+      "evidence": []
+    },
+    {
+      "obligation": "observed_GLM5_3Flash_max_every_request_attempt",
+      "status": "UNOBSERVED",
+      "finding": "Final receipt and all logical request/attempt inventory unavailable; requests, attempts, errors and cancellations are not assumed zero",
+      "evidence": []
+    },
+    {
+      "obligation": "native_goal_activation",
+      "status": "VERIFIED",
+      "finding": "Actual activation acknowledgement on fresh target at original birth +6.505617199 seconds",
+      "evidence": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/native-public/activation.json",
+          "sha256": "380fd91f0db5ac1301a80bf1b9e117d8c05df39fdf7a472daa17d6efeb6bdf7d"
+        }
+      ]
+    },
+    {
+      "obligation": "automatic_continuation",
+      "status": "PARTIAL_OBSERVATION",
+      "finding": "Repeated active running/idle positive progress and response counters observed; no complete Goal/verifier sequence established",
+      "evidence": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/native-public/progress.jsonl",
+          "sha256": "27140fd49ce8aa75076002ffb1e0bc48f3288c1e0247418997e8d080e685963f"
+        }
+      ]
+    },
+    {
+      "obligation": "verifier_and_same_target_completion",
+      "status": "UNESTABLISHED",
+      "finding": "Only active status observed; last public row idle/responses51; terminal receipt and actual result artifact absent",
+      "evidence": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/native-public/progress.jsonl",
+          "sha256": "27140fd49ce8aa75076002ffb1e0bc48f3288c1e0247418997e8d080e685963f"
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/TERMINAL_HOLD.json",
+          "sha256": "ff5766507ae88e5b937b397cf070115cbe7d84ed46cede97f377e191f2f9bafc"
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/PUBLIC_ARTIFACT_FREEZE.json",
+          "sha256": "6ed5de64fbd1437c045d34bf464f5cf4aa69482a0478c7e8d6c2fcb5368039f2"
+        }
+      ]
+    },
+    {
+      "obligation": "startup_plugin_hook_memory_flags",
+      "status": "VERIFIED_SCOPED",
+      "finding": "Existing approved startup projector: resume=false; plugin/enabledPlugin/hook/commandRoot/skillRoot=0; memoryUse=false, memoryEnabled=false, memoryExtractionEnabled=true. No all-memory-off/global-hooks-disabled claim",
+      "evidence": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/POSTMORTEM_STARTUP_POSITIVE.json",
+          "sha256": "5cddb423082720abe816606ec281771f2d436ccfe4ce600c584d0fe333d41ea9"
+        }
+      ]
+    },
+    {
+      "obligation": "actual_fresh_HOME_XDG_instruction_roots_and_all_request_context",
+      "status": "UNESTABLISHED",
+      "finding": "Source policy exact and startup subset observed, but full local_context and all-request context proof unavailable",
+      "evidence": []
+    },
+    {
+      "obligation": "actual_tool_allowlist_inventory_all_requests_attempts",
+      "status": "UNOBSERVED",
+      "finding": "No terminal inventory projection; operation receipts unavailable; absent artifact export does not establish zero tool requests",
+      "evidence": []
+    },
+    {
+      "obligation": "public_GET_body_status_version_completeness",
+      "status": "UNESTABLISHED",
+      "finding": "Frozen public export contains no captured body; HTTP request/body/status/completeness unknown, not a zero-request finding",
+      "evidence": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/PUBLIC_ARTIFACT_FREEZE.json",
+          "sha256": "6ed5de64fbd1437c045d34bf464f5cf4aa69482a0478c7e8d6c2fcb5368039f2"
+        }
+      ]
+    },
+    {
+      "obligation": "native_logical_range_delivery_join_operation_hash_metadata",
+      "status": "UNESTABLISHED",
+      "finding": "No actual logical result inventory, capture body or operation receipts; no stdout-only or model-read inference",
+      "evidence": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/PUBLIC_ARTIFACT_FREEZE.json",
+          "sha256": "6ed5de64fbd1437c045d34bf464f5cf4aa69482a0478c7e8d6c2fcb5368039f2"
+        }
+      ]
+    },
+    {
+      "obligation": "exact_echo_result_artifact",
+      "status": "NOT_PRODUCED",
+      "finding": "Frozen canary output artifact list empty; assigned input echo preserved",
+      "evidence": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/PUBLIC_ARTIFACT_FREEZE.json",
+          "sha256": "6ed5de64fbd1437c045d34bf464f5cf4aa69482a0478c7e8d6c2fcb5368039f2"
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/CANDIDATE_INPUTS_FREEZE.json",
+          "sha256": "bf315673d715a401200c98a4816da1181dc2edee687cc7435e933db824acb3da"
+        }
+      ]
+    },
+    {
+      "obligation": "owned_native_MCP_cgroup_original_lifetime",
+      "status": "VERIFIED_SCOPED",
+      "finding": "Positive enrollment and owned-cgroup removal at +450.116577059 seconds before unchanged +480 cutoff",
+      "evidence": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/PLAN.json",
+          "sha256": "f93f0042b765902516a7c8ec69cb6fe0f3312c97a32284387bf3cfb4c2477763"
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/QUIESCENCE.json",
+          "sha256": "8f51f1c734327c387687b9d0ecc948abad20de89ab05777fc8fbf83aeb2d447f"
+        }
+      ]
+    },
+    {
+      "obligation": "held_outer_and_global_parent_process_exit",
+      "status": "VERIFIED_SCOPED",
+      "finding": "Held outer wait exit0 at +450.145023807 seconds; finalizer and global parent exit126; global parent closed +450.307123673 before cutoff",
+      "evidence": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/GLOBAL_PARENT_CLOSE.json",
+          "sha256": "bbf072eaed81a6668e06b47e1974803e6bdccce08350538b8f59fbc3e0579a7e"
+        }
+      ]
+    },
+    {
+      "obligation": "outer_PGID_absence_before_original_cutoff_and_release",
+      "status": "UNESTABLISHED_ORIGINAL_CUTOFF",
+      "finding": "Current failure cleanup proves PGID absent before actual late release; first positive current quiet is after original D, so not backdated into on-time full proof",
+      "evidence": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/FAILURE_CLEANUP_PROOF.json",
+          "sha256": "f73bb03e8490aacd05458adb4101c8543ba62af2576aee6929f7e8620f56d322"
+        }
+      ]
+    },
+    {
+      "obligation": "whole_case_physical_elapsed_fixed480",
+      "status": "VERIFIED_SCOPED",
+      "finding": "Actual all-parent lifecycle450.307123673 seconds; no original cutoff reset",
+      "evidence": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/GLOBAL_PARENT_CLOSE.json",
+          "sha256": "bbf072eaed81a6668e06b47e1974803e6bdccce08350538b8f59fbc3e0579a7e"
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/GLOBAL_COST_TAIL.json",
+          "sha256": "5b06801af7ebea6a67f07cad4c63c5310605016342d04a5880693844891a8a15"
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/FAILURE_COST.json",
+          "sha256": "19a1069ae9b813bc9fbd374197e2c42cd258bf4ad27098f131cfd14fa0a25784"
+        }
+      ]
+    },
+    {
+      "obligation": "outside_native_actual_measurement_nonoverlap",
+      "status": "VERIFIED_MEASURED_SCOPE",
+      "finding": "Five single-case events reconcile setup0.245085827 + owned-native449.871491232 + cleanup0.190546614 = original physical lifecycle450.307123673; native overlaps slot/wall and is not double charged. Outside0.435632441; no blanket hard-real-time300 claim",
+      "evidence": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/GLOBAL_COST_TAIL.json",
+          "sha256": "5b06801af7ebea6a67f07cad4c63c5310605016342d04a5880693844891a8a15"
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/FAILURE_COST.json",
+          "sha256": "19a1069ae9b813bc9fbd374197e2c42cd258bf4ad27098f131cfd14fa0a25784"
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/ACCOUNTING_PUBLIC_SNAPSHOT.json",
+          "sha256": "42a3cea814c63d42f812ea721fa3737878286d09be695f7fa4015602ed4de85f"
+        }
+      ]
+    },
+    {
+      "obligation": "original_occupied_slot_cap480",
+      "status": "FAILED_RETAINED",
+      "finding": "Actual occupied816.6492922306061 seconds exceeded480; late held cleanup retained and release not backdated",
+      "evidence": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/FAILURE_COST.json",
+          "sha256": "19a1069ae9b813bc9fbd374197e2c42cd258bf4ad27098f131cfd14fa0a25784"
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/FAILURE_CLEANUP_PROOF.json",
+          "sha256": "f73bb03e8490aacd05458adb4101c8543ba62af2576aee6929f7e8620f56d322"
+        }
+      ]
+    },
+    {
+      "obligation": "start_permit_and_actual_activation_counters",
+      "status": "COUNTERS_VERIFIED_START_PERMIT_NOT_PRESERVED",
+      "finding": "Positive single-case snapshot proves admissions1/actual Goal starts1 with matching target acknowledgement; original guard receipt not preserved, declared permit ID/source ordering not promoted to actual permit proof",
+      "evidence": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/ACCOUNTING_PUBLIC_SNAPSHOT.json",
+          "sha256": "42a3cea814c63d42f812ea721fa3737878286d09be695f7fa4015602ed4de85f"
+        }
+      ]
+    }
+  ],
+  "unknowns": [
+    "actual observed model/effort",
+    "all request and attempt inventory",
+    "tool/context inventory",
+    "GET/delivery/acquisition",
+    "actual account ID/external provider load",
+    "generated usage",
+    "original actual start permit receipt NOT_PRESERVED"
+  ],
+  "review_clock": {
+    "original_start_utc": "2026-10-02T02:36:58Z",
+    "hard_deadline_utc": "2026-10-02T03:16:58Z",
+    "final_reserve_starts_utc": "2026-10-02T03:11:58Z",
+    "clock_reset": false,
+    "hard_seconds": 2400,
+    "maximum_conservative_events": 120,
+    "conservative_events_so_far": 115,
+    "generated_usage": "UNKNOWN",
+    "exact_response_usage": "UNKNOWN"
+  }
+}

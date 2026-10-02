@@ -1,0 +1,13 @@
+{
+  "schema": "er8.independent-controller-review-clock.v1",
+  "original_birth_utc": "2026-10-02T02:58:48Z",
+  "hard_deadline_utc": "2026-10-02T03:28:48Z",
+  "final_reserve_start_utc": "2026-10-02T03:23:48Z",
+  "hard_seconds": 1800,
+  "conservative_event_cap": 120,
+  "clock_reset": false,
+  "scope": "Changed generic controller source only; no actual native canary grade or core infrastructure re-audit",
+  "ownership": "evaluation/controller-qualification-v1 only",
+  "recursive_helpers": false,
+  "native_provider_candidate_calls": false
+}

@@ -1,0 +1,47 @@
+{
+  "schema": "er8.controller.independent-handoff-reproducer.v1",
+  "observed_epoch": 1790910457.5495923,
+  "models_called": false,
+  "source_freeze_sha256": "0acd0e7954bd31c05f066f4580b3c79643fa0d82328a6424d1dfd1d48cb56e8d",
+  "common_sha256": "5937a5e8b8dc502aa69c040f2d9eedf596bedf05a83451ad89a268a3d1395101",
+  "fixture": [
+    {
+      "case_id": "fixture-case",
+      "artifacts": [
+        {
+          "path": "/synthetic/research/out/PROPOSAL.md",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      ]
+    },
+    {
+      "case_id": "fixture-case",
+      "artifacts": [
+        {
+          "path": "/synthetic/critic/out/CRITIQUE.md",
+          "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        {
+          "path": "/synthetic/critic/out/PROPOSAL.md",
+          "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        }
+      ]
+    }
+  ],
+  "actual_result": {
+    "PROPOSAL.md": {
+      "path": "/synthetic/research/out/PROPOSAL.md",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "case_id": "fixture-case"
+    },
+    "CRITIQUE.md": {
+      "path": "/synthetic/critic/out/CRITIQUE.md",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "case_id": "fixture-case"
+    }
+  },
+  "required_proposal": "/synthetic/research/out/PROPOSAL.md",
+  "frozen_research_proposal_preserved": true,
+  "outcome": "passed: research proposal preserved despite critic proposal duplicate",
+  "pre-freeze concern": "retracted after exact frozen-source reread; no repair required"
+}

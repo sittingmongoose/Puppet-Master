@@ -1,0 +1,22 @@
+{
+  "case": "v8-z-mechanical-route-canary-v1",
+  "job": "v8-z-mechanical-route-canary-v1",
+  "category": "cleanup",
+  "seconds": 0.190546614,
+  "outside_native_seconds": 0.190546614,
+  "interval_receipt_id": "v8-z-mechanical-route-canary-v1-failure-all-parent-close-tail",
+  "intervals_monotonic_ns": [
+    [
+      131455182451353,
+      131455182451353
+    ],
+    [
+      131905053942585,
+      131905244489199
+    ]
+  ],
+  "original_deadline_monotonic_ns": 131934937365526,
+  "case_lifecycle_closed_monotonic_ns": 131905244489199,
+  "case_closed_by_original_deadline": true,
+  "later_global_cleanup_separate_management": true
+}

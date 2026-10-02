@@ -1,0 +1,34 @@
+{
+  "schema": "er8.native-qualification.sanitized-export.v1",
+  "created_utc": "2026-10-02T03:15:00.547758+00:00",
+  "state": "FROZEN",
+  "exact_public_whitelist": [
+    {
+      "path": "LAB_ROOT/evaluation/native-qualification-v1/CURRENT_ASSESSMENT.json",
+      "sha256": "95eba79d75d7afa5437edf95ac6f0da5711ee53816851743c17f4a53d254780c"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/native-qualification-v1/CURRENT_COVERAGE.json",
+      "sha256": "eae027f7cea821ab7fc0867e99b48d1645d3659dc3760a116c49fbf07ad8f04e"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/native-qualification-v1/review-events.jsonl",
+      "sha256": "941a5c18b75bf8d4f4e347bca2c68c27fe000e646612c74d75966f5c5df42889"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/native-qualification-v1/caller2-independent-offline.json",
+      "sha256": "75c5f9e9a970a419af5aa60005e14cacac5773808ccbcefd1ba85ae38709fa52"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/native-qualification-v1/caller2-source-acceptance.json",
+      "sha256": "62560db7d7e1f0a2724fe5b3dd9da28276499023879c9e51727eda9e6fabf081"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/native-qualification-v1/native-canary-proof.json",
+      "sha256": "62427b5e67da918998fc4bb64d7292018c724b803acc86f5cb89e15538d9906e"
+    }
+  ],
+  "actual_host_public_evidence_manifest_in_proof": true,
+  "excluded": "No raw SDK/native stdout/stderr/model IO/auth/headers/private-runtime or evaluator corpus; no successful productive route acceptance issued",
+  "authority": "Publisher only after root positive handoff"
+}

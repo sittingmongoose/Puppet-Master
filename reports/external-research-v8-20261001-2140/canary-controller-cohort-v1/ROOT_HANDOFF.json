@@ -1,0 +1,37 @@
+{
+  "schema": "pm.er8.positive-publication-handoff.v1",
+  "created_utc": "2026-10-02T03:19:54.485642+00:00",
+  "scope": "Actual firstnativecanary HOLD pluscompletedcontrollerSOURCE_ONLYCONDITIONAL. NOTquality/modelrejection. Zerointegratedscoredcases yet.",
+  "positive_export_manifests": [
+    {
+      "path": "LAB_ROOT/evaluation/native-qualification-v1/SANITIZED_EXPORT.json",
+      "sha256": "95c18e43cd85e6779d9e4d298feb9b10ccbeaa3d764efb93e6ca0fa1c8739d20"
+    },
+    {
+      "path": "LAB_ROOT/ops/integrated-dispatch-v1/SANITIZED_EXPORT.json",
+      "sha256": "e4f0a28e2d622bdfe1f9f07b18932a688752b74b7ccc19f90e561fb94fd174c8"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/controller-qualification-v1/SANITIZED_EXPORT.json",
+      "sha256": "bf73aa4caf9d6b4d9b73fef0ad54f9c98709b0196ff2e1027e0fa4022696acb1"
+    }
+  ],
+  "operator_terminal_manifest": {
+    "path": "LAB_ROOT/ops/dispatcher-v1/CANARY_TERMINAL_FREEZE.json",
+    "sha256": "7c1cceccab0d8ce9efbb903909c135f10d01b296d63209ddf76f1a8c9aaadc71",
+    "restriction": "UseonlypositivelywhitelistedfrozenPUBLICexistingfiles, missingrequiredfilesremainmissing. No nativeprivate/raw/stdout/modelIO/capturedsecrets orbodycopy."
+  },
+  "reported_costs": {
+    "native_goals_observed": 1,
+    "canary_case_physical_seconds": 450.307123673,
+    "canary_occupied_slot_seconds": 816.649292,
+    "declared_inclusive_cap_seconds": 480,
+    "unknown_generated_usage": "UNKNOWN",
+    "requested_model": "GLM5.3Flash/Max",
+    "observed_model_effort": "UNESTABLISHED",
+    "source_get_range_delivery": "UNESTABLISHED",
+    "native_same_target_completion": "UNESTABLISHED",
+    "original_start_permit_receipt": "NOT_PRESERVED"
+  },
+  "next_status": "ACTIVEspecificmechanicaldiagnosisbeforefreshboundedretest; no fullcasesunderHOLD. Preservefirstfailure/cost/currentgrades immutable. No native-route-acceptance issued."
+}

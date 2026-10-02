@@ -1,0 +1,21 @@
+{
+  "schema": "er8.controller.independent-sanitized-export.v1",
+  "positive_files": {
+    "LAB_ROOT/evaluation/controller-qualification-v1/CLOCK.json": "2e74df6a00930e5cc9df91868875cca0d5255d02344f1557da02dae5220a8b55",
+    "LAB_ROOT/evaluation/controller-qualification-v1/SOURCE_PINS.json": "813264a3ce9af9298a64e7de3b05d19aa2d2c4fe1e6cc270e0ec151ff31b238c",
+    "LAB_ROOT/evaluation/controller-qualification-v1/COVERAGE.json": "a0e1a43b82088fb90d98782f9a2d21b3e42af7e6a8cf9dc71734702549e4343f",
+    "LAB_ROOT/evaluation/controller-qualification-v1/offline-tests.json": "6761c06a53729f5f55c1dba7f93e10a150015e34dc877d88789278a5ea96d023",
+    "LAB_ROOT/evaluation/controller-qualification-v1/offline-tests.txt": "fb0bc14f7ee4245e4d0cba125d3f3f0fba08b93cc136d79c759d0dd9c489ca38",
+    "LAB_ROOT/evaluation/controller-qualification-v1/test_independent.py": "e9e5b026297e457c5be1e25f4a6a71341b23e07ab1e904f6d857dc4778e857fa",
+    "LAB_ROOT/evaluation/controller-qualification-v1/HANDOFF_BASELINE_REPRODUCER.json": "526783329eb7889929095869267757fe3996a70e0644a9e527a56f89e73645ae",
+    "LAB_ROOT/evaluation/controller-qualification-v1/ACCEPTANCE.json": "8cae12702bc3d65dd38cc05dcffe4becbace086fc64b01fecc59b9fc988820a9"
+  },
+  "controller_snapshot": {
+    "path": "LAB_ROOT/ops/integrated-dispatch-v1/SOURCE_FREEZE.json",
+    "sha256": "0acd0e7954bd31c05f066f4580b3c79643fa0d82328a6424d1dfd1d48cb56e8d"
+  },
+  "source_only_conditional": true,
+  "no_raw_native_model_auth_or_candidate_content": true,
+  "research_credit": false,
+  "sole_publisher_only": true
+}

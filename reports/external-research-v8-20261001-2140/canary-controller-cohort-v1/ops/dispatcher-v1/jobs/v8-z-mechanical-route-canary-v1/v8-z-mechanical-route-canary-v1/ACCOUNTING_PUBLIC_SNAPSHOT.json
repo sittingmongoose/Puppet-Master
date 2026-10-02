@@ -1,0 +1,138 @@
+{
+  "schema": "er8.dispatcher.single-case-accounting-snapshot.v1",
+  "case": "v8-z-mechanical-route-canary-v1",
+  "job_metadata": {
+    "job": "v8-z-mechanical-route-canary-v1",
+    "case": "v8-z-mechanical-route-canary-v1",
+    "family": "Z",
+    "route": "v8-z-route-repair1-caller2-canary-v2",
+    "pins": {
+      "runtime": "9455eaa5876e5627360c80ee98e41b554118205544b3244af3ba272b0d928668",
+      "config": "266b8c9930f26b00deb232d877f8f255c95630e4fc62f511f27e1aed6c7ca671",
+      "independent_acceptance": "054a3d15e4d317c71e1f0a1a8495f136f1c0cd584e28ede503d04f576e9e59f1"
+    },
+    "component_seconds": 480,
+    "component_responses": 64,
+    "case_wall_seconds": 480,
+    "case_occupied_seconds": 480,
+    "outside_native_cap_seconds": 300,
+    "birth_epoch": 1790909708.7675955,
+    "admitted_epoch": 1790909708.930137,
+    "hard_deadline_epoch": 1790910188.7675955,
+    "released_epoch": 1790910525.4168878,
+    "status": "released",
+    "goal_starts": [
+      {
+        "job": "v8-z-mechanical-route-canary-v1",
+        "receipt_id": "target_muqdejmd_568154ee-eeea-4beb-9169-f254edfc2aea",
+        "epoch": 1790909715,
+        "recorded_epoch": 1790909715.5315168,
+        "guard_violations": []
+      }
+    ],
+    "generated_output_tokens": null,
+    "launch_pending": null,
+    "quiescence": {
+      "native_quiescent": true,
+      "own_process_group_absent": true,
+      "outer_parent_exited": true,
+      "outer_parent_returncode": 126,
+      "receipt_id": "v8-z-mechanical-route-canary-v1-actual-late-failure-cleanup",
+      "proof_path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/FAILURE_CLEANUP_PROOF.json",
+      "qualified": false,
+      "late_cleanup": true
+    }
+  },
+  "case_metadata": {
+    "birth_epoch": 1790909708.7675955,
+    "birth_monotonic": 131454.937365526,
+    "wall_seconds": 480,
+    "occupied_seconds": 480,
+    "outside_native_cap_seconds": 300,
+    "observed_outside_native_seconds": 0.435632441,
+    "birth_rule": "original outer-gate birth before any preparation"
+  },
+  "case_events": [
+    {
+      "case": "v8-z-mechanical-route-canary-v1",
+      "job": "v8-z-mechanical-route-canary-v1",
+      "category": "setup",
+      "seconds": 0.229220165,
+      "outside_native_seconds": 0.229220165,
+      "interval_receipt_id": "v8-z-mechanical-route-canary-v1-outside-before-guard",
+      "outside_native_cap_exceeded": false,
+      "recorded_epoch": 1790909708.9977305
+    },
+    {
+      "case": "v8-z-mechanical-route-canary-v1",
+      "job": "v8-z-mechanical-route-canary-v1",
+      "category": "setup",
+      "seconds": 0.010964936,
+      "outside_native_seconds": 0.010964936,
+      "interval_receipt_id": "v8-z-mechanical-route-canary-v1-outside-guard-accounting",
+      "outside_native_cap_exceeded": false,
+      "recorded_epoch": 1790909709.0085497
+    },
+    {
+      "case": "v8-z-mechanical-route-canary-v1",
+      "job": "v8-z-mechanical-route-canary-v1",
+      "category": "setup",
+      "seconds": 0.004900726,
+      "outside_native_seconds": 0.004900726,
+      "interval_receipt_id": "v8-z-mechanical-route-canary-v1-outside-final-prelaunch-tail",
+      "outside_native_cap_exceeded": false,
+      "recorded_epoch": 1790909709.0141766
+    },
+    {
+      "case": "v8-z-mechanical-route-canary-v1",
+      "job": "v8-z-mechanical-route-canary-v1",
+      "category": "cleanup",
+      "seconds": 0.190546614,
+      "outside_native_seconds": 0.190546614,
+      "interval_receipt_id": "v8-z-mechanical-route-canary-v1-failure-all-parent-close-tail",
+      "intervals_monotonic_ns": [
+        [
+          131455182451353,
+          131455182451353
+        ],
+        [
+          131905053942585,
+          131905244489199
+        ]
+      ],
+      "original_deadline_monotonic_ns": 131934937365526,
+      "case_lifecycle_closed_monotonic_ns": 131905244489199,
+      "case_closed_by_original_deadline": true,
+      "later_global_cleanup_separate_management": true,
+      "outside_native_cap_exceeded": false,
+      "recorded_epoch": 1790910525.41857
+    },
+    {
+      "case": "v8-z-mechanical-route-canary-v1",
+      "job": "v8-z-mechanical-route-canary-v1",
+      "category": "native",
+      "seconds": 449.871491232,
+      "outside_native_seconds": 0,
+      "interval_receipt_id": "v8-z-mechanical-route-canary-v1-measured-native-owned-wrapper",
+      "interval_start_monotonic_ns": 131455182451353,
+      "interval_end_monotonic_ns": 131905053942585,
+      "overlaps_occupied_slot_and_case_wall": true,
+      "scope": "native-owned wrapper including setup/capture/retries/wait; not provider-work-only",
+      "outside_native_cap_exceeded": false,
+      "recorded_epoch": 1790910775.4420986
+    }
+  ],
+  "observed_admissions": 1,
+  "observed_native_goal_starts": 1,
+  "activation_receipt_path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/ACTIVATION_POSITIVE.json",
+  "start_guard": {
+    "declared_permit_id": "v8-z-mechanical-route-canary-v1-permit-1",
+    "provenance": "accepted caller2 source ordered guard-start before Popen; consumed at actualgoal-start",
+    "persisted_original_guard_receipt": "NOT_PRESERVED",
+    "no_retrospective_guard_receipt_fabricated": true
+  },
+  "actual_provider_request_count": "UNKNOWN",
+  "generated_usage": "UNKNOWN",
+  "qualified": false,
+  "private_ledger_or_native_files_exported": false
+}

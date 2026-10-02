@@ -1,6 +1,6 @@
 # External research v8 — current campaign checkpoint
 
-**INITIAL SCOPE CHECKPOINT — execution and research results NOT_RUN in this publication.** This entry declares the fresh authorized integration-first campaign; it is not campaign completion or evidence of a qualified recipe. The [code qualification cohort](code-cohort-v1/README.md) supplies conditional source/offline acceptances and retained finite repairs; native qualification remains pending. Later cohort batches will publish actual full-pipeline outputs and independent current assessments together.
+**ONGOING CAMPAIGN — one failed mechanical native canary; integrated research results NOT_RUN.** This entry declares the fresh authorized integration-first campaign; it is not campaign completion or evidence of a qualified recipe. The [code qualification cohort](code-cohort-v1/README.md) supplies conditional source/offline acceptances and retained finite repairs; native qualification is HOLD after the first canary. Later cohort batches will publish actual full-pipeline outputs and independent current assessments together.
 
 - [Current results](RESULTS.md), [methods](methods.json), [attempts](attempts.json), [comparisons](comparisons.json)
 - [Economics](economics.json), [schedule](schedule.json), [failures](FAILURES.md)
@@ -11,4 +11,6 @@ The six reserved complete cases are BIO-C/P/B and NB-C/P/B on the same declared 
 
 V7 at `c8f9cbc9195602688702bbbf9b3ce23c14fa5586` remains closed with unmet outcomes. No unused v7 starts transfer here.
 
-[Route code and public dependency cohort](route-cohort-v1/README.md) adds the pinned source/config closure and two authorized historical public dependency copies. Current operator startup remains held pending caller repair2 review; native qualification is pending.
+[Route code and public dependency cohort](route-cohort-v1/README.md) adds the pinned source/config closure and two authorized historical public dependency copies. Caller repair2 has conditional source acceptance; first actual native canary remains HOLD.
+
+[Canary, controller and recovery cohort](canary-controller-cohort-v1/README.md) publishes the failed canary, independent conditional controller assessment and prospective authority amendment. Current deadline is **2026-10-02T13:40:09Z**, measured from the original start without reset. No integrated execution or research quality result is claimed.

@@ -1,0 +1,13 @@
+# Canary, controller and recovery cohort v1
+
+**Ongoing campaign. Original native canary HOLD; controller SOURCE_ONLY_CONDITIONAL. Zero integrated research executions at this frozen observation.**
+
+The [independent native assessment](evaluation/native-qualification-v1/native-canary-proof.json) retains the failed first mechanical canary. It observed one native Goal start, 450.307123673 seconds of physical lifecycle and 816.6492922306061 occupied slot seconds against the original 480-second occupied cap. Native terminal completion, requested model/effort realization, source GET/range delivery and actual tool inventory remain unestablished. Underlying cause and generated usage remain UNKNOWN. Missing result and terminal receipts remain missing. This is infrastructure qualification evidence, not a model quality rejection.
+
+The [controller acceptance](evaluation/controller-qualification-v1/ACCEPTANCE.json), source and offline test outputs establish conditional source coverage only. They do not establish integrated execution, native-route acceptance, semantic quality or a qualified recipe. Historical earlier caller/route findings remain retained in previous cohorts.
+
+The separate [authority amendment](recovery-v1/AUTHORITY_AMENDMENT.json) prospectively extends the campaign from its original 2026-10-02T01:40:09Z start to 2026-10-02T13:40:09Z, with 144 native starts, 172800 occupied candidate slot seconds and six simultaneous helpers. Prior cumulative 32-helper and fixed two-repair caps are prospectively superseded. Frozen assignments, historical caps, failures and usage remain unchanged; no clock or usage reset. [Recovery observation](recovery-v1/recovery.json) is a timestamped historical reconciliation, not a live process guarantee. The original authorization remains byte exact in the parent authority directory.
+
+[Public export provenance](PUBLIC_EXPORT.json) binds every selected source to original SHA-256 and public projection SHA-256. LAB_ROOT/EXTERNAL_LAB_ROOT/REPOSITORY_ROOT replace host locators. Those projected files are not accepted runtime pins. Source replay requires the existing route/caller/code cohorts and authorized native environment; credentials, proprietary native application and evaluator keys are not bundled. Public metadata references to unexported artifacts do not authorize reading or copying them.
+
+The later [supervisor lock observation](recovery-v1/SUPERVISOR_OBSERVATION.json) supersedes the initial recovery lock discovery: it observes a campaign-specific held FLOCK matching the replacement supervisor claim. This is bounded observation evidence, not an indefinite liveness guarantee.

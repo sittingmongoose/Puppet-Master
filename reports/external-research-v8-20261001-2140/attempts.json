@@ -1,6 +1,20 @@
 {
   "schema": "pm.external_research.v8.public_attempts.v1",
-  "checkpoint": "INITIAL_SCOPE",
-  "attempts": [],
-  "note": "No actual candidate execution is claimed by this initial scope checkpoint. Reservations are not starts; later authorized receipts will populate attempts."
+  "checkpoint": "ONGOING_RECOVERY",
+  "attempts": [
+    {
+      "id": "v8-z-mechanical-route-canary-v1",
+      "scope": "mechanical_native_canary",
+      "status": "HOLD",
+      "native_goal_starts": 1,
+      "retries": 0,
+      "physical_lifecycle_seconds": 450.307123673,
+      "occupied_slot_seconds": 816.6492922306061,
+      "original_occupied_cap_seconds": 480,
+      "generated_usage": "UNKNOWN",
+      "research_quality": "UNASSESSED",
+      "evidence": "canary-controller-cohort-v1/evaluation/native-qualification-v1/native-canary-proof.json"
+    }
+  ],
+  "note": "First failed mechanical canary retained; no integrated research cases executed at this observation. Reservations are not starts."
 }

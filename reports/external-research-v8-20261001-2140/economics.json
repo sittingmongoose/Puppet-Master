@@ -1,6 +1,14 @@
 {
-  "checkpoint": "INITIAL_SCOPE",
-  "planned_limits": {
+  "checkpoint": "ONGOING_RECOVERY",
+  "observed_native_starts": 1,
+  "occupied_candidate_seconds": 816.6492922306061,
+  "candidate_generated_tokens": null,
+  "management_tokens": null,
+  "evaluation_tokens": null,
+  "total_tokens": null,
+  "money": null,
+  "note": "Unknown is not zero. Planning reservations are not observed usage; failures, retries, waits and repairs must remain in later accounting.",
+  "historical_planned_limits": {
     "elapsed_seconds": 21600,
     "native_goal_starts": 48,
     "occupied_candidate_slot_seconds": 57600,
@@ -22,12 +30,20 @@
     "repair_versions_per_boundary": 2,
     "final_review_reserve_seconds": 3600
   },
-  "observed_native_starts": null,
-  "occupied_candidate_seconds": null,
-  "candidate_generated_tokens": null,
-  "management_tokens": null,
-  "evaluation_tokens": null,
-  "total_tokens": null,
-  "money": null,
-  "note": "Unknown is not zero. Planning reservations are not observed usage; failures, retries, waits and repairs must remain in later accounting."
+  "current_prospective_limits": {
+    "elapsed_seconds": 43200,
+    "native_goal_starts": 144,
+    "occupied_candidate_slot_seconds": 172800,
+    "active_helpers": 6,
+    "active_candidates_by_family": {
+      "M": 2,
+      "Z": 2,
+      "L": 2
+    },
+    "helper_task_start_cap": null,
+    "repair_versions_per_boundary_cap": null
+  },
+  "observed_physical_canary_seconds": 450.307123673,
+  "governing_authority_amendment": "canary-controller-cohort-v1/recovery-v1/AUTHORITY_AMENDMENT.json",
+  "observed_usage_scope": "Frozen first canary/recovery observation; not a live counter. Historical failures/caps retained without reset."
 }

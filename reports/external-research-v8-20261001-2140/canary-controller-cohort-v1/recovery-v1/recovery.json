@@ -1,0 +1,132 @@
+{
+  "schema": "pm.er8.additive-recovery.v1",
+  "observed_epoch": 1790912478.7518926,
+  "campaign_id": "external-research-v8-20261001-2140",
+  "scope": "campaign-owned controls and public positive metadata only; existing records unchanged",
+  "authority": {
+    "replacement_root": "/root",
+    "superseding_user_handoff": "12 hours from original epoch;144 native starts;172800 occupied candidate slot seconds;6 simultaneous Sol helpers;no cumulative helper or fixed repair cap",
+    "clock_start_epoch": 1790905209,
+    "deadline_epoch": 1790948409,
+    "native_start_cap": 144,
+    "occupied_seconds_cap": 172800,
+    "simultaneous_helper_cap": 6,
+    "historical_limits_and_outcomes_retained": true,
+    "legacy_AUTHORIZATION_and_ledger_are_historical_not_updated": true
+  },
+  "supervisors": {
+    "prior_root_thread": "01a0f2a2-9e6f-7301-bcd8-e10aa5650cc1",
+    "prior_root_host": "remote-ssh-discovered:pm-dev",
+    "prior_root_status": "idle per root app receipt",
+    "live_campaign_owned_runtime_supervisors_observed": 0,
+    "campaign_path_process_observation": "only observation process; no runtime supervisor/worker path match",
+    "single_supervisor_exclusion": {
+      "existing_accounting_lock": "LAB_ROOT/ops/accounting-v1/state.lock",
+      "mechanism": "fcntl.flock LOCK_EX per transaction; released when context ends",
+      "lifetime_supervisor_lock_found": false,
+      "held_campaign_path_locks": [
+        {
+          "pid": 2774121,
+          "command": "python3",
+          "type": "FLOCK",
+          "path": "LAB_ROOT/ops/recovery-v1/supervisor.lock"
+        }
+      ],
+      "claim": "replacement root owns supervision per parent delegation; no lifetime OS lock established by this recovery",
+      "required_before_launch": "root must establish single-supervisor lifetime exclusion; accounting transaction lock alone insufficient"
+    }
+  },
+  "native_jobs": {
+    "recorded_jobs": 1,
+    "active_jobs": 0,
+    "pending_start_permits": 0,
+    "job": "v8-z-mechanical-route-canary-v1",
+    "status": "released;failed/HOLD;not qualified",
+    "unit": "er8-v8-z-mechanical-route-canary-v1.service",
+    "current_systemd_show_returncode": 0,
+    "current_systemd_properties": {
+      "MainPID": "0",
+      "ControlGroup": "",
+      "LoadState": "not-found",
+      "ActiveState": "inactive",
+      "SubState": "dead"
+    },
+    "recorded_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-z-mechanical-route-canary-v1.service",
+    "current_exact_cgroup_exists": false,
+    "recorded_outer_pid": 2610299,
+    "current_outer_pid_exists": false,
+    "positive_historical_cleanup_receipt": "ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/FAILURE_CLEANUP_PROOF.json",
+    "absence_scope": "exact enrolled campaign unit/cgroup and recorded outer PID; no sibling inference"
+  },
+  "helpers": {
+    "legacy_running_record_count": 4,
+    "legacy_live_count": 0,
+    "legacy_status_authority": "parent root verified wait_threads receipts; all completedAt1790911585,status interrupted,current idle",
+    "legacy_threads": [
+      {
+        "role": "accountant",
+        "thread_id": "01a0fa49-3324-70a3-bd62-7917e998294d",
+        "completed_at_epoch": 1790911585,
+        "status": "interrupted",
+        "current_status": "idle"
+      },
+      {
+        "role": "operator",
+        "thread_id": "01a0fa5c-65b9-7d60-a499-59d5f8c5c5e6",
+        "completed_at_epoch": 1790911585,
+        "status": "interrupted",
+        "current_status": "idle"
+      },
+      {
+        "role": "publisher",
+        "thread_id": "01a0fa57-d1e5-7910-80e7-a94aa076364d",
+        "completed_at_epoch": 1790911585,
+        "status": "interrupted",
+        "current_status": "idle"
+      },
+      {
+        "role": "diagnoser",
+        "thread_id": "01a0fa9f-436f-7f90-8d0a-f38678204fba",
+        "completed_at_epoch": 1790911585,
+        "status": "interrupted",
+        "current_status": "idle"
+      }
+    ],
+    "replacement_live_count": 2,
+    "replacement_helpers": [
+      "/root/v8_recovery_accounting",
+      "replacement route author per parent"
+    ],
+    "simultaneous_slots_available_at_observation": 4,
+    "historical_accepted_helper_starts": 13,
+    "generated_usage": "UNKNOWN",
+    "usage_clocks_reset": false
+  },
+  "usage": {
+    "native_goal_starts": 1,
+    "native_goal_starts_remaining": 143,
+    "occupied_slot_seconds": 816.6492922306061,
+    "occupied_slot_seconds_remaining": 171983.3507077694,
+    "physical_original_case_lifecycle_seconds": 450.307123673,
+    "occupied_overrun_retained": true,
+    "generated_usage": "UNKNOWN",
+    "generated_output_tokens_lower_bound": 0,
+    "all_six_prepared_cases": "NOT_RUN",
+    "production_cases_started": 0,
+    "prior_campaign_usage_excluded_not_transferred": {
+      "admissions": 53,
+      "native_goals": 49,
+      "occupied_seconds": 37984.167494
+    }
+  },
+  "source_sha256": {
+    "LAB_ROOT/ops/accounting-v1/state.json": "9670a1f7e67d4f9aaacd04d91aa4c61e95e1cb37b3bb0a8e0f749655dcf8737d",
+    "LAB_ROOT/ops/accounting-v1/heartbeat.json": "b8999f35978760f0e3cdd0c7e07c5fd7d7e2a705b6e251969c05115effab0362",
+    "LAB_ROOT/ops/root-helper-starts.json": "6fac90edb978fad9cb3116c3417a4ac0647e7b30246c778e16cdb1f573a38be1",
+    "LAB_ROOT/ops/dispatcher-v1/CANARY_TERMINAL_FREEZE.json": "7c1cceccab0d8ce9efbb903909c135f10d01b296d63209ddf76f1a8c9aaadc71",
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/FAILURE_CLEANUP_PROOF.json": "f73bb03e8490aacd05458adb4101c8543ba62af2576aee6929f7e8620f56d322",
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/FAILURE_COST.json": "19a1069ae9b813bc9fbd374197e2c42cd258bf4ad27098f131cfd14fa0a25784",
+    "LAB_ROOT/ops/accounting-v1/slot_ledger.py": "5590fdc09936005e09b2de7aa4ac4113bbe0ddeefa4a8caf3548d78b0e3045af",
+    "LAB_ROOT/ops/integrated-dispatch-v1/rolling.py": "e17025c6fa6868222e77dd20b1eeab9f58d9c4d906805c06b6bad5faf894ee4b"
+  }
+}

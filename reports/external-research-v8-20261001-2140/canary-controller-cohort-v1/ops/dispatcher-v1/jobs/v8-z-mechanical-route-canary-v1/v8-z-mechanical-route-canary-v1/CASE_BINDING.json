@@ -1,0 +1,24 @@
+{
+  "schema": "er8.route.case-binding.v1",
+  "case_id": "v8-z-mechanical-route-canary-v1",
+  "case_start_monotonic_ns": 131454937365526,
+  "stage_id": "v8-z-mechanical-route-canary-v1",
+  "stage_start_monotonic_ns": 131454937365526,
+  "max_seconds": 480,
+  "max_responses": 64,
+  "workspace": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/workspace",
+  "prompt_file": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/OBJECTIVE.md",
+  "prompt_sha256": "c46f27278a35b7e404e8f32d385b38ef011188789f4f14fbf9db2f3a1430e081",
+  "native_out": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/native-public",
+  "label": "v8-z-mechanical-route-canary-v1",
+  "mode": "canary",
+  "public_get": true,
+  "immutable_inputs": {
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/workspace/TASK.md": "0f1ca17bd3a03ddd29ee8a537442824ba0cdce1907a6390bf4e4df483050b881",
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/workspace/inputs/ECHO.txt": "f7e2e10edb3dc012fe1d7294b256b368bfb7ac9f96378f61f934e5cb912874df"
+  },
+  "immutable_capture_inputs": {},
+  "config_sha256": "266b8c9930f26b00deb232d877f8f255c95630e4fc62f511f27e1aed6c7ca671",
+  "lease_sha256": "339e0b271f631f59002bb9f5e2cf13d78f69434809b154470426ffe6caf0c67a",
+  "account_identity": "existing-authorized-zcode-account-v8-A"
+}

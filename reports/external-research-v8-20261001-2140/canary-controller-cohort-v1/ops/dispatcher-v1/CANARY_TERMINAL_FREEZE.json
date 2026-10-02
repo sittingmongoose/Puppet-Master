@@ -1,0 +1,42 @@
+{
+  "schema": "er8.dispatcher.canary-terminal-freeze.v1",
+  "case": "v8-z-mechanical-route-canary-v1",
+  "status": "HOLD_MISSING_TERMINAL_METRICS_AND_ARTIFACT",
+  "native_goal_starts": 1,
+  "attempts": 1,
+  "retries": 0,
+  "qualified": false,
+  "generated_usage": "UNKNOWN",
+  "public_scope_sha256": {
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/BIRTH.json": "8f2a11a93f1446941c86714259ea0767ce56a792b0459d34d0275abec169b3a8",
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/CASE_AUTHORITY.json": "19414a08afd17038ecad92260020fb18a71fd718ff7a49f90909f14877516072",
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/CASE_BINDING.json": "dab74f29312227f8d1d43787a9548c65fed1f96251e909ce15b5728a25d0f825",
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/PLAN.json": "f93f0042b765902516a7c8ec69cb6fe0f3312c97a32284387bf3cfb4c2477763",
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/LAUNCHED.json": "a7edd8df0e49e36df8b26f265c0d3ce5ecf97d704d4c1aa8c6fa9d708844e1e1",
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/ACTIVATION_POSITIVE.json": "380fd91f0db5ac1301a80bf1b9e117d8c05df39fdf7a472daa17d6efeb6bdf7d",
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/TERMINAL_HOLD.json": "ff5766507ae88e5b937b397cf070115cbe7d84ed46cede97f377e191f2f9bafc",
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/QUIESCENCE.json": "8f51f1c734327c387687b9d0ecc948abad20de89ab05777fc8fbf83aeb2d447f",
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/GLOBAL_PARENT_CLOSE.json": "bbf072eaed81a6668e06b47e1974803e6bdccce08350538b8f59fbc3e0579a7e",
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/GLOBAL_COST_TAIL.json": "5b06801af7ebea6a67f07cad4c63c5310605016342d04a5880693844891a8a15",
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/FAILURE_CLEANUP_PROOF.json": "f73bb03e8490aacd05458adb4101c8543ba62af2576aee6929f7e8620f56d322",
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/FAILURE_COST.json": "19a1069ae9b813bc9fbd374197e2c42cd258bf4ad27098f131cfd14fa0a25784",
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/PUBLIC_ARTIFACT_FREEZE.json": "6ed5de64fbd1437c045d34bf464f5cf4aa69482a0478c7e8d6c2fcb5368039f2",
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/POSTMORTEM_STARTUP_POSITIVE.json": "5cddb423082720abe816606ec281771f2d436ccfe4ce600c584d0fe333d41ea9",
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/CANDIDATE_INPUTS_FREEZE.json": "bf315673d715a401200c98a4816da1181dc2edee687cc7435e933db824acb3da",
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/ACCOUNTING_PUBLIC_SNAPSHOT.json": "42a3cea814c63d42f812ea721fa3737878286d09be695f7fa4015602ed4de85f",
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/native-public/activation.json": "380fd91f0db5ac1301a80bf1b9e117d8c05df39fdf7a472daa17d6efeb6bdf7d",
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/native-public/progress.jsonl": "27140fd49ce8aa75076002ffb1e0bc48f3288c1e0247418997e8d080e685963f"
+  },
+  "required_missing_positive_files": [
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/native-public/receipt.json",
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/native-public/public-metrics.json",
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/workspace/out/RESULT.md",
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/COMPLETE.json",
+    "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/EXTERNAL_SETTLEMENT.json"
+  ],
+  "raw_private_paths_hashed_or_copied": false,
+  "source_acquisition": "UNESTABLISHED; no request-zero inference",
+  "failure_cost_receipt": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/FAILURE_COST.json",
+  "production_cases_started": 0,
+  "recorded_epoch": 1790910911.5544755
+}

@@ -1,0 +1,83 @@
+{
+  "schema": "er8.caller.source-qualification.v1",
+  "verdict": "accepted",
+  "decision": "PASSREVIEW_CALLER2_SOURCE_CANARY_ONLY_CONDITIONAL",
+  "allowed_modes": [
+    "canary"
+  ],
+  "qualification_scope": "CANARY_ONLY",
+  "created_utc": "2026-10-02T02:51:55.226394+00:00",
+  "reviewer": "codex-v8-native-qualification",
+  "caller_version": "caller-repair2",
+  "source_freeze": {
+    "path": "LAB_ROOT/ops/dispatcher-v1/SOURCE_FREEZE.json",
+    "sha256": "709553bca241150c0efe06c8ca81c13396a781f31cef374a4434eb2c5d61872f"
+  },
+  "closure_sha256": {
+    "LAB_ROOT/ops/dispatcher-v1/dispatcher.py": "f2ea1c012485db97da65553b374e3ec6d9243132e0433afe1300c1a12b6c7c7f",
+    "LAB_ROOT/ops/dispatcher-v1/canary_runner.py": "0b05225737551790c053d7c852f7172f98fdefc9f80998713388d9efcfa84210",
+    "LAB_ROOT/ops/dispatcher-v1/external_close.py": "577f59e75e2e523dc6a43295e5d5d2b0e2c9cbe96a17d115c4f7a5ed3c89c8be",
+    "LAB_ROOT/ops/dispatcher-v1/parent_launcher.py": "e5be48c868362bfec0b3079d26a11c2685d1ff66ec7c5b206426a76cd6075072",
+    "LAB_ROOT/ops/dispatcher-v1/CALLER2_OFFLINE.json": "b5bd5f01a138837756093d06f82dce5d53ebdae9562f4c475a95eeb7a64aea0b",
+    "LAB_ROOT/ops/dispatcher-v1/CALLER2_DIFF.patch": "9746d521eee8e261fb0ac9a466e1e54c1adc3ee515e6fc7c94190734c3fdf382"
+  },
+  "execution_snapshot_sha256": "4dd65e644807179250dac5735fbc58f57d5336647989075cc864405efef424ed",
+  "route_snapshot_sha256": "9455eaa5876e5627360c80ee98e41b554118205544b3244af3ba272b0d928668",
+  "route_acceptance_sha256": "054a3d15e4d317c71e1f0a1a8495f136f1c0cd584e28ede503d04f576e9e59f1",
+  "root_config_sha256": "266b8c9930f26b00deb232d877f8f255c95630e4fc62f511f27e1aed6c7ca671",
+  "accounting_sha256": "5590fdc09936005e09b2de7aa4ac4113bbe0ddeefa4a8caf3548d78b0e3045af",
+  "prior_source_acceptance": {
+    "path": "LAB_ROOT/evaluation/execution-qualification-v1/caller-source-acceptance.json",
+    "sha256": "5de94d6fbda4ece9c4a920cc49afc8c3ae05446ec715ab3f371b473265eac5be",
+    "scope": "Exact earlier execution/route/capture/caller boundary reused; caller lease release ordering superseded narrowly"
+  },
+  "independent_evidence": {
+    "path": "LAB_ROOT/evaluation/native-qualification-v1/caller2-independent-offline.json",
+    "sha256": "75c5f9e9a970a419af5aa60005e14cacac5773808ccbcefd1ba85ae38709fa52",
+    "validation_fixtures_passed": 18,
+    "static_checks_passed": 7,
+    "exact_diff_verified": true,
+    "public_closure_files_verified": 6
+  },
+  "reviewed_delta": [
+    "Caller does not release the lease and rejects stale root release lacking caller-repair2",
+    "Fresh global parent holds unique-session Popen handle and records wait exit before external observer",
+    "External observer rechecks same original absolute 480-second deadline, exact owned-unit quiet and outer process-group absence before release",
+    "External settlement rejected on failed/nonexit/late/mismatched/outside-cap evidence and lease remains held"
+  ],
+  "mandatory_actual_obligations": [
+    "Fresh root v2 exact caller2 release before case birth and any native action",
+    "Original first case birth before all case setup/packing/admission, with global manager initialization costs reported as campaign work",
+    "Join actual held Popen launch/exit/settlement records, exact inner owned-unit proof, original lease/case/plan clocks and external close receipt",
+    "Measure and preserve all original nonoverlapping costs including the final tail after external settlement accounting endpoint through actual parent finalizer-close and output/cleanup",
+    "Only actual parent closure and slot/cost ledger timestamps within unchanged original cutoff can establish lifetime/accounting qualification",
+    "All previously required native Goal/context/request-attempt/public GET/range-delivery proofs remain pending"
+  ],
+  "limitations": [
+    "Source acceptance alone does not establish native completion, exposure, semantic acquisition or account identity",
+    "Separate outside-native 300-second cap requires actual measured accounting; no blanket hard-real-time proof from an output field",
+    "The lease-release and final metadata tail requires actual positive observation/accounting; no zero-cost assumption",
+    "All actual qualification and productive execution remain HOLD until fresh independent actual receipt"
+  ],
+  "finite_repairs": {
+    "caller_used": 2,
+    "caller_limit": 2,
+    "execution_used": 2,
+    "execution_limit": 2,
+    "route_used": 1,
+    "route_limit": 2,
+    "caller_further_repair": "HOLD; finite ordinary limit exhausted"
+  },
+  "actual_native_qualification": "UNESTABLISHED",
+  "productive_dispatch": "HOLD",
+  "native_calls_by_reviewer": 0,
+  "provider_calls_by_reviewer": 0,
+  "private_sdk_reads_by_reviewer": 0,
+  "review_clock": {
+    "original_start_utc": "2026-10-02T02:36:58Z",
+    "hard_deadline_utc": "2026-10-02T03:16:58Z",
+    "final_reserve_starts_utc": "2026-10-02T03:11:58Z",
+    "clock_reset": false,
+    "generated_usage": "UNKNOWN"
+  }
+}

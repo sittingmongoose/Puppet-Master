@@ -1,0 +1,65 @@
+{
+  "schema": "er8.controller.independent-source-pins.v1",
+  "controller_snapshot": {
+    "path": "LAB_ROOT/ops/integrated-dispatch-v1/SOURCE_FREEZE.json",
+    "sha256": "0acd0e7954bd31c05f066f4580b3c79643fa0d82328a6424d1dfd1d48cb56e8d"
+  },
+  "author_sanitized_export": {
+    "path": "LAB_ROOT/ops/integrated-dispatch-v1/SANITIZED_EXPORT.json",
+    "sha256": "e4b2b32c37d33230b3b51b0d4640c38a30e2775e2c4fd415312ea3d8e552d4ac"
+  },
+  "closure_sha256": {
+    "LAB_ROOT/ops/integrated-dispatch-v1/case_supervisor.py": "7324813b6b96f07ea31840de842092fd32b7ea13f63cf25ff766cc65e1a95983",
+    "LAB_ROOT/ops/integrated-dispatch-v1/common.py": "5937a5e8b8dc502aa69c040f2d9eedf596bedf05a83451ad89a268a3d1395101",
+    "LAB_ROOT/ops/integrated-dispatch-v1/external_case_close.py": "a30c12ecb4b5c323e5a0872df22e8b0207cf0ad34f4430db1bc9f1e377e0d77c",
+    "LAB_ROOT/ops/integrated-dispatch-v1/external_stage_close.py": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4",
+    "LAB_ROOT/ops/integrated-dispatch-v1/parent_receipt.py": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea",
+    "LAB_ROOT/ops/integrated-dispatch-v1/rolling.py": "e17025c6fa6868222e77dd20b1eeab9f58d9c4d906805c06b6bad5faf894ee4b",
+    "LAB_ROOT/ops/integrated-dispatch-v1/stage_actor.py": "b622144b79a79f77fe7f1d8aaf360245573be4e42ff4c0d420061430969eee09",
+    "LAB_ROOT/ops/integrated-dispatch-v1/tests/test_controller.py": "d001322b05dd4b25e4326e16a1ec6a13fab31c471eb4c430b57a7f2c86827425",
+    "LAB_ROOT/ops/integrated-dispatch-v1/README.md": "0b0d8e3534892a1f2075c3c9472da3aeff76a41bac10e1b211e8bb5443c0ddd9",
+    "LAB_ROOT/ops/integrated-dispatch-v1/PLANNING_INPUT_PINS.json": "438b85345e27512006beeb4f90e2fe072a0e58876c797637047e098ed044cdb8",
+    "LAB_ROOT/ops/integrated-dispatch-v1/ROOT_RELEASE_INTERFACE.json": "e2cd417c1442e6793ce988a00aaf5331e9062f9846badcdb092643b89ed10518",
+    "LAB_ROOT/ops/integrated-dispatch-v1/OFFLINE_CHECKS.json": "93bcc80171814034dc2d5ddebaf48f3ec3b920441b628477f42ef2d929431515"
+  },
+  "planning_input_sha256": {
+    "LAB_ROOT/cases/planning-v1/briefs/bioimaging.md": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+    "LAB_ROOT/cases/planning-v1/briefs/notebook-workspace.md": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+    "LAB_ROOT/cases/planning-v1/cases/V8-BIO-B-Z/METHOD.md": "f6df08a280a4db79323bd96c9d816c34aee66a02e3f155602407f1290c599f5c",
+    "LAB_ROOT/cases/planning-v1/cases/V8-BIO-B-Z/TASK.md": "cb0f443bfa9daee35e3d30f6e7dfa27be5a1933a8097ef5b77175bffc2dcd551",
+    "LAB_ROOT/cases/planning-v1/cases/V8-BIO-B-Z/manifest.json": "bacf9033fa8af87aef92fb6c6ff4128135fab2159632a395c286b2a9425c74b7",
+    "LAB_ROOT/cases/planning-v1/cases/V8-BIO-C-Z/METHOD.md": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+    "LAB_ROOT/cases/planning-v1/cases/V8-BIO-C-Z/TASK.md": "af4401598f65effb4271b0cc1fb24c757d2b331d71b7bb35f73ed5df03d17ff9",
+    "LAB_ROOT/cases/planning-v1/cases/V8-BIO-C-Z/manifest.json": "8e7640a9e34d166a97e4c22f732cb56e5ee516bec47327da605324e5608a5447",
+    "LAB_ROOT/cases/planning-v1/cases/V8-BIO-P-Z/METHOD.md": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a",
+    "LAB_ROOT/cases/planning-v1/cases/V8-BIO-P-Z/TASK.md": "4c8c7e7e083d4788e4d5e7db27e3e8841c5073d51e46ae3b937a88dab4a6636f",
+    "LAB_ROOT/cases/planning-v1/cases/V8-BIO-P-Z/manifest.json": "4642c8d7ebb2b925f3a2256db79c73070549a451ad2bc4235df1862a0c6cba0b",
+    "LAB_ROOT/cases/planning-v1/cases/V8-NB-B-Z/METHOD.md": "f6df08a280a4db79323bd96c9d816c34aee66a02e3f155602407f1290c599f5c",
+    "LAB_ROOT/cases/planning-v1/cases/V8-NB-B-Z/TASK.md": "3637535202f4e89c20924ce2938ca17d5761c5ebec07bf6c4c23fe23fb6ab822",
+    "LAB_ROOT/cases/planning-v1/cases/V8-NB-B-Z/manifest.json": "8b4268c2b11ccccae378713bfa8c87ddea7bc03ee1e50c236ccd269b7bc50485",
+    "LAB_ROOT/cases/planning-v1/cases/V8-NB-C-Z/METHOD.md": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+    "LAB_ROOT/cases/planning-v1/cases/V8-NB-C-Z/TASK.md": "d9816fe920d7e06953d52572466f681d8d74d9fb494d03a6d62219269de36428",
+    "LAB_ROOT/cases/planning-v1/cases/V8-NB-C-Z/manifest.json": "feabe7e17c01d50d74c5431ace0dcb41de0e409ac1ab7ede6489c4f0c0a37a81",
+    "LAB_ROOT/cases/planning-v1/cases/V8-NB-P-Z/METHOD.md": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a",
+    "LAB_ROOT/cases/planning-v1/cases/V8-NB-P-Z/TASK.md": "af2b57df7cbf964103c9c91b2396f34c1d924179de064c8ea9c2ff023e4a473e",
+    "LAB_ROOT/cases/planning-v1/cases/V8-NB-P-Z/manifest.json": "081d67be0ab11b321add5f13ff70418833937c897873b2f7c2560131f362ba7c",
+    "LAB_ROOT/cases/planning-v1/manifest.json": "b755069cd2e0926819e1a9157c5007aee4c08470dafa60203e73a29d7ac3e9aa",
+    "LAB_ROOT/cases/planning-v1/methods.json": "682b81210e7cef1dfc53e18dabe4bfdaec3374f24981d24945a1fe2028c4b810",
+    "LAB_ROOT/cases/planning-v1/native-objectives.json": "79773937d8a2e11ac66fe31568477af450d142692d8a09dbcf683f13876c575c",
+    "LAB_ROOT/cases/planning-v1/reservations/candidates.json": "a28c20f83fcc472c85583f8f478bc61c7497932e0093189ee26c6ffe55834017",
+    "LAB_ROOT/cases/planning-v1/sandbox-plans/bioimaging.md": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30",
+    "LAB_ROOT/cases/planning-v1/sandbox-plans/notebook-workspace.md": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+    "LAB_ROOT/cases/planning-v1/source-access.json": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df",
+    "LAB_ROOT/cases/planning-v1/templates/correction.TASK.md": "9ef5b51a9b2e9db734e492f6be2978f277ec8ee7f456b310c1f793375f1997d5",
+    "LAB_ROOT/cases/planning-v1/templates/critic.TASK.md": "fa635038ca75a96599f09d43eb289b89c25320eda9325fd836c6fef2878504b2",
+    "LAB_ROOT/cases/planning-v1/templates/research.TASK.md": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3"
+  },
+  "exact_dependency_pins": {
+    "execution_snapshot": "4dd65e644807179250dac5735fbc58f57d5336647989075cc864405efef424ed",
+    "route_snapshot": "9455eaa5876e5627360c80ee98e41b554118205544b3244af3ba272b0d928668",
+    "root_config": "266b8c9930f26b00deb232d877f8f255c95630e4fc62f511f27e1aed6c7ca671",
+    "accounting_source": "5590fdc09936005e09b2de7aa4ac4113bbe0ddeefa4a8caf3548d78b0e3045af",
+    "native_engine": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31"
+  },
+  "closure_drift": false
+}

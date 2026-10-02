@@ -1,0 +1,34 @@
+{
+  "schema": "er8.native-qualification.current-assessment.v1",
+  "created_utc": "2026-10-02T03:15:00.547758+00:00",
+  "state": "FROZEN_HOLD_ACTUAL_CANARY_FAILED_QUALIFICATION",
+  "decision": "HOLD_ACTUAL_NATIVE_COMPLETION_DELIVERY_INVENTORY_UNESTABLISHED_AND_OCCUPIED_CAP_EXCEEDED",
+  "native_canary_proof": {
+    "path": "LAB_ROOT/evaluation/native-qualification-v1/native-canary-proof.json",
+    "sha256": "62427b5e67da918998fc4bb64d7292018c724b803acc86f5cb89e15538d9906e"
+  },
+  "productive_dispatch": "HOLD",
+  "native_route_acceptance_issued": false,
+  "actual_goal_starts": 1,
+  "actual_occupied_seconds": 816.6492922306061,
+  "physical_case_lifecycle_seconds": 450.307123673,
+  "outside_native_measured_seconds": 0.435632441,
+  "underlying_defect": "UNKNOWN; no source repair requested from absent observations",
+  "semantic_acquisition": "UNOBSERVED",
+  "model_read": "UNOBSERVED",
+  "account_id": "UNKNOWN",
+  "external_account_load": "UNKNOWN",
+  "review_clock": {
+    "original_start_utc": "2026-10-02T02:36:58Z",
+    "hard_deadline_utc": "2026-10-02T03:16:58Z",
+    "final_reserve_starts_utc": "2026-10-02T03:11:58Z",
+    "clock_reset": false,
+    "hard_seconds": 2400,
+    "maximum_conservative_events": 120,
+    "conservative_events_so_far": 115,
+    "generated_usage": "UNKNOWN",
+    "exact_response_usage": "UNKNOWN"
+  },
+  "observed_admissions": 1,
+  "actual_start_guard_receipt": "NOT_PRESERVED"
+}

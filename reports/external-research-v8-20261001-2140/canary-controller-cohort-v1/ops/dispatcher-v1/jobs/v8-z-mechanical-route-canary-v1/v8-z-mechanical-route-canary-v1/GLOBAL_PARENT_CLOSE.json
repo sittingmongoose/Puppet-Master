@@ -1,0 +1,33 @@
+{
+  "schema": "er8.dispatcher.global-parent-close.v1",
+  "parent_launcher_held_pid": 2610295,
+  "parent_launcher_wait_returncode": 126,
+  "parent_launcher_exit_observed_monotonic_ns": 131905244489199,
+  "approved_parent_records": [
+    {
+      "schema": "er8.dispatcher.parent-launch-positive.v1",
+      "original_start_monotonic_ns": 131454937365526,
+      "original_birth_epoch": 1790909708.7675955,
+      "original_deadline_monotonic_ns": 131934937365526,
+      "held_outer_pid": 2610299,
+      "held_outer_pgid": 2610299
+    },
+    {
+      "schema": "er8.dispatcher.parent-exit-positive.v1",
+      "held_outer_pid": 2610299,
+      "held_Popen_wait_returncode": 0,
+      "outer_exit_observed_monotonic_ns": 131905082389333,
+      "original_deadline_monotonic_ns": 131934937365526
+    },
+    {
+      "schema": "er8.dispatcher.parent-settlement-positive.v1",
+      "settlement_returncode": 126,
+      "parent_observed_settlement_close_monotonic_ns": 131905230576290,
+      "original_deadline_monotonic_ns": 131934937365526,
+      "all_required_close_on_time": false,
+      "native_semantic_qualification": "PENDING_INDEPENDENT_REVIEW"
+    }
+  ],
+  "native_semantic_qualification": "PENDING",
+  "actual_native_attempts": "projected activation receipts only; no silent retries"
+}

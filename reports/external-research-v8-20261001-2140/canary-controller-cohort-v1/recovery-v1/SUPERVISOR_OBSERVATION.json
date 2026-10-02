@@ -1,0 +1,28 @@
+{
+  "schema": "pm.er8.supervisor-lock-observation.v1",
+  "observed_epoch": 1790912499.2402308,
+  "supersedes_recovery_json_lifetime_lock_discovery": true,
+  "claim": {
+    "owner": "codex-er8-recovery",
+    "thread_id": "01a0fab0-e24a-7221-8f34-1cc0c4faecdb",
+    "pid": 2774121,
+    "claim_epoch": 1790912478.6829562,
+    "deadline_epoch": 1790948409,
+    "historical_root": "idle/interrupted; no running children"
+  },
+  "claim_path": "LAB_ROOT/ops/recovery-v1/SUPERVISOR.json",
+  "claim_sha256": "31fc492deb16ae4e6bb62e133ce4f3d31685636f0afdb40935e3be44d11294f6",
+  "lock_path": "LAB_ROOT/ops/recovery-v1/supervisor.lock",
+  "observed_kernel_locks": [
+    {
+      "pid": 2774121,
+      "command": "python3",
+      "type": "FLOCK",
+      "path": "LAB_ROOT/ops/recovery-v1/supervisor.lock"
+    }
+  ],
+  "claim_pid_exists": true,
+  "claim_matches_held_lock_pid": true,
+  "single_supervisor_exclusion": "campaign-specific held FLOCK; lock owner matches replacement supervisor claim",
+  "note": "Accounting state.lock remains transaction-only. Supervisor claim and held lock were created concurrently with initial recovery observation; neither modified here."
+}
