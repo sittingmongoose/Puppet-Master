@@ -35,14 +35,14 @@
   def('free-throughput', 'free', { meta: function () { return '2-hour buckets · 24 hours · free and local routes'; }, model: function () {
     var S = D.series('freeThroughput24h'), n = S.requests.length, now = Date.now(), x = [];
     for (var i = 0; i < n; i++) x.push(now - (n - i) * S.bucket_min * 60000);
-    return { chart: 'line', spec: { x: x, series: [{ name: 'Requests', idx: 1, values: S.requests }], unit: 'count' }, headline: { value: 188, fmt: 'int', label: 'free-route requests' },
+    return { chart: 'line', spec: { x: x, series: [{ name: 'Requests', idx: 1, values: S.requests }], unit: 'count', unitTitle: 'REQUESTS' }, headline: { value: 188, fmt: 'int', label: 'free-route requests' },
       spark: { values: S.requests, idx: 1 }, facts: [['Requests', '188'], ['Tokens', '1.42M'], ['Cooldowns', '1'], ['Local share', '23%'], ['Ready routes', '3'], ['Blocked', '0']],
       note: 'Provider free allowances and local inference are separated from paid usage.' };
   } });
   def('free-history', 'free', { meta: function () { return 'Daily · 7 days · free routes'; }, model: function () {
     var S = D.series('freeHistory7d'), today = new Date(); today.setHours(0, 0, 0, 0);
     var x = S.calls.map(function (v, i) { return today.getTime() - (S.calls.length - 1 - i) * 86400000; });
-    return { chart: 'line', spec: { x: x, series: [{ name: 'Calls', idx: 4, values: S.calls }], unit: 'count' }, headline: { value: 318, fmt: 'int', label: 'calls in 7 days' }, spark: { values: S.calls, idx: 4 },
+    return { chart: 'line', spec: { x: x, series: [{ name: 'Calls', idx: 4, values: S.calls }], unit: 'count', unitTitle: 'CALLS' }, headline: { value: 318, fmt: 'int', label: 'calls in 7 days' }, spark: { values: S.calls, idx: 4 },
       facts: [['Calls', '318'], ['Tokens', '2.4M'], ['Avoided', '$31.20 est.'], ['Cooldowns', '4']], note: 'No metered charge does not imply a free entitlement; billing and entitlement remain separate axes.' };
   } });
   def('free-source-state', 'free', { meta: function () { return 'catalog versus local'; }, model: function () {
@@ -144,7 +144,12 @@
       spec: { x: tk.x, unit: 'tokens', split: split, cacheReads: cr, now: Date.now(), peak: true, bucketMs: tk.buckets.bucketMs,
         series: [{ name: 'Input', tk: 'in', values: tk.input }, { name: 'Output', tk: 'out', values: tk.output }, { name: 'Reasoning', tk: 'rsn', values: tk.reasoning }, { name: 'Cache write', tk: 'cw', values: tk.cacheWrite }, { name: 'Cache read', tk: 'cr', values: tk.cacheRead }],
         cost: { values: cost.values, unit: 'usd' }, source: 'token series · estimated cost from recorded attempts', notes: 'Input and output are summed only from selected identity-bound attempts.',
-        readoutFoot: function (i) { var sp = cost.split[i] || {}, ks = Object.keys(sp); return ks.length ? ks.map(function (k) { return legName(k).replace('ChatGPT / ', '') + ' ' + money(sp[k]); }).join(' · ') : 'no attempts recorded in this bucket'; } },
+        readoutFoot: function (i) {
+          var sp = cost.split[i] || {}, ks = Object.keys(sp).filter(function (k) { return k !== '_pending'; });
+          var out = ks.map(function (k) { return legName(k).replace('ChatGPT / ', '') + ' ' + money(sp[k]); });
+          if (sp._pending) out.push(sp._pending + (sp._pending === 1 ? ' receipt' : ' receipts') + ' pending, value not known yet');
+          return out.length ? out.join(' · ') : 'no attempts recorded in this bucket';
+        } },
       headline: { value: cr ? tk.totals.all : tk.totals.noCache, fmt: 'tok', label: cr ? 'tokens' : 'tokens without cache reads' }, spark: { values: tk.noCache, tk: 'all' },
       facts: [['Input', F.tok(tk.totals.input)], ['Output', F.tok(tk.totals.output)], ['Cache read', F.tok(tk.totals.cacheRead)], ['Peak', F.clock(tk.peak.x) + ' · ' + F.tok(tk.peak.v)]],
       note: 'Input and output are summed only from selected identity-bound attempts; the cost line is recorded value (settled + plan estimate).' };
@@ -238,7 +243,7 @@
     var list = D.attempts().slice().sort(function (a, c) { return new Date(c.occurred_at) - new Date(a.occurred_at); });
     var names = D.series('models') || {};
     return { toolbar: { search: 'Search attempts', export: function () { if (window.PM7_USAGE) window.PM7_USAGE.exportJson('ledger'); },
-      filters: [{ id: 'prov', label: 'Provider', options: DATA.providers.map(function (p) { return { value: p.id, label: legName(p.id) }; }) },
+      filters: [{ id: 'prov', label: 'Provider', options: DATA.providers.map(function (p) { return { value: p.id, label: legName(p.id), mark: PMU.roster.legacyProvider(p.id) }; }) },
         { id: 'set', label: 'Settlement', options: [{ value: 'settled', label: 'Settled' }, { value: 'pending provider receipt', label: 'Pending receipt' }, { value: 'adjusted and settled', label: 'Adjusted' }] }] },
       cols: [{ id: 'time', label: 'TIME', w: '62px', mono: true }, { id: 'id', label: 'ATTEMPT', w: 'minmax(64px,.8fr)', mono: true }, { id: 'prov', label: 'PROVIDER', w: 'minmax(96px,1.2fr)' },
         { id: 'model', label: 'MODEL', w: 'minmax(90px,1fr)', min: 'l' }, { id: 'io', label: 'IN / OUT', w: '96px', align: 'right', min: 'l' }, { id: 'acct', label: 'ACCOUNT', w: 'minmax(96px,1fr)', min: 'xl' },

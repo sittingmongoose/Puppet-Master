@@ -170,7 +170,8 @@
   def('forecast', 'overview', { meta: function (ctx) { return D.rangeLabel(ctx.state.range) + ' basis · labelled estimate'; }, model: function () {
     var list = D.attempts().slice().sort(function (a, c) { return new Date(a.occurred_at) - new Date(c.occurred_at); });
     var c = D.costs(), P = D.series('budgetProjection');
-    return { labels: list.map(function (a) { return a.attempt_id; }), values: list.map(function (a) { return Math.round(((a.charge || 0) + (a.plan_allocation_estimate || 0)) * 100) / 100; }),
+    return { labels: list.map(function (a) { return a.attempt_id; }), values: list.map(function (a) { return pendingZero(a) ? null : Math.round(((a.charge || 0) + (a.plan_allocation_estimate || 0)) * 100) / 100; }),
+      states: list.map(function (a) { return pendingZero(a) ? 'pending' : null; }),
       est: list.map(function (a) { return Math.round((a.plan_allocation_estimate || 0) * 100) / 100; }),
       labelsLong: list.map(function (a) { return a.attempt_id + ' · ' + C.legName(a.provider_id) + (a.plan_allocation_estimate ? ' · plan estimate hatched' : ''); }), idx: 0, unit: 'usd', highlightLast: true,
       caption: 'SELECTED <b>' + esc(money(c.selected)) + '</b> · MONTH END EST. <b>' + esc(money(P.to)) + '</b> · BUDGET <b>' + esc(money(DATA.costs.budget)) + '</b>',
@@ -292,14 +293,17 @@
       { name: 'Missing identities', sub: 'rejected before append', value: '0', note: 'fail closed', glyph: 'xCircle' },
       { name: 'Spending limit', sub: 'user controlled · not a provider allowance', value: money(DATA.costs.budget), note: 'Settings', glyph: 'gear' }] };
   } });
+  function pendingZero(a) { return !((a.charge || 0) + (a.plan_allocation_estimate || 0) > 0) && /pending/i.test(a.settlement_status || ''); }
   def('cost-trend', 'costs', { meta: rangeMeta('per attempt'), model: function () {
     var list = D.attempts().slice().sort(function (a, c) { return new Date(a.occurred_at) - new Date(c.occurred_at); });
     var provs = []; list.forEach(function (a) { if (provs.indexOf(a.provider_id) < 0) provs.push(a.provider_id); });
     var c = D.costs();
     return { labels: list.map(function (a) { return a.attempt_id; }), unit: 'usd',
       stacks: provs.map(function (pid) { var sid = PMU.roster.legacyProvider(pid); return { providerId: sid, vendor: PMU.markOf(sid).vendor, name: legName(pid),
-        settled: list.map(function (a) { return a.provider_id === pid ? a.charge || 0 : 0; }), estimate: list.map(function (a) { return a.provider_id === pid ? a.plan_allocation_estimate || 0 : 0; }) }; }),
-      totals: list.map(function (a) { return Math.round(((a.charge || 0) + (a.plan_allocation_estimate || 0)) * 100) / 100; }),
+        settled: list.map(function (a) { return a.provider_id === pid && !pendingZero(a) ? a.charge || 0 : null; }), estimate: list.map(function (a) { return a.provider_id === pid && !pendingZero(a) ? a.plan_allocation_estimate || 0 : null; }) }; }),
+      /* a receipt still pending with no value is unknown, never $0.00: its column is a gap labelled "Pending receipt" */
+      states: list.map(function (a) { return pendingZero(a) ? 'pending' : null; }),
+      totals: list.map(function (a) { return pendingZero(a) ? null : Math.round(((a.charge || 0) + (a.plan_allocation_estimate || 0)) * 100) / 100; }),
       caption: 'SELECTED <b>' + esc(money(c.selected)) + '</b> · 24H EQUIVALENT <b>' + esc(money(c.dayEquivalent)) + '</b> · MONTH END EST. <b>' + esc(money(D.series('budgetProjection').to)) + '</b>',
       note: 'Settled charges and labeled allocation estimates remain separate fields.', emptyText: 'No attempts in this range.' };
   } });

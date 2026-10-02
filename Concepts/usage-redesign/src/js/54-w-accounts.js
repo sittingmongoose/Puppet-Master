@@ -137,7 +137,8 @@
   }
 
   function single(body, ctx, p, a) {
-    var bh = ctx.tier.bh, size = ctx.tier.bw >= 220 ? 'i' : 'k', mh = size === 'i' ? 66 : 54;
+    /* measured meter heights (Mac, Basic): inline 52 px, compact 44 px; 2 px of slack each */
+    var bh = ctx.tier.bh, size = ctx.tier.bw >= 220 ? 'i' : 'k', mh = size === 'i' ? 54 : 46;
     var big = C.w(ctx, 'l') && C.h(ctx, 'h3');
     var footH = 30;
     if (ctx.tier.h === 'h0') {
@@ -168,7 +169,7 @@
        budget counts those gaps, so the last block never slides under the footer */
     var prevFact = false;
     blocks.forEach(function (b, i) { var isFact = !b.win && b.html.indexOf('pmu-facts') >= 0; b.h += i === 0 || (isFact && prevFact) ? 0 : 12; prevFact = isFact; });
-    var res = C.stack(blocks, bh - footH - 12);
+    var res = C.stack(blocks, bh - footH - 8);
     var hiddenWins = res.hidden.filter(function (b) { return b.win; }).length;
     var foot = '<div class="pmu-accsfoot"><span class="pmu-sampled' + (a.fresh.stale ? ' is-stale' : '') + '">' + (a.fresh.stale ? C.glyph('clockCircle') : '') + esc(a.fresh.ageS === null ? 'no reading yet' : 'sampled ' + a.ageText.replace(/^cached /, '')) + '</span>' +
       (ctx.tier.bw < 200 && (a.effective || a.eligible.ok) ? '' : '<span class="pmu-host">' + esc(a.host || '') + '</span>') + useBtn(a, false) + '</div>';

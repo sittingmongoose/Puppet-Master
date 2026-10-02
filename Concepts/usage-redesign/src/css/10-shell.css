@@ -35,9 +35,10 @@ html[data-theme^="retro"] #panel-usage :is(.pmu-navink, .pmu-navbtn) { border-ra
 #panel-usage .pmu-stagehead { position: relative; z-index: 5; display: flex; align-items: center; gap: 12px; height: 52px; padding: 0 14px 0 18px; flex: none;
   border-bottom: 1px solid var(--pmu-rule); background: var(--pmu-ground); }
 #panel-usage .pmu-titleblock { display: flex; align-items: baseline; gap: 12px; min-width: 0; flex: 1 1 auto; }
+/* the title keeps its whole name; the one-line description takes what is left (and ellipsizes first) */
 #panel-usage #pmuRoomTitle { margin: 0; min-width: 72px; overflow: hidden; text-overflow: ellipsis; font-size: 18px; font-weight: 640; line-height: 22px; letter-spacing: -.015em;
-  white-space: nowrap; outline: none; flex: 0 0 auto; max-width: 62%; }
-#panel-usage .pmu-roomdesc { margin: 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--pmu-ink-3); font-size: 12.5px; flex: 1 1 auto; }
+  white-space: nowrap; outline: none; flex: 0 1 auto; max-width: 100%; }
+#panel-usage .pmu-roomdesc { margin: 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--pmu-ink-3); font-size: 12.5px; flex: 1 1 0; }
 #panel-usage .pmu-headctl { display: flex; align-items: center; gap: 6px; flex: none; }
 #panel-usage .pmu-ctlbtn { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 8px 0 10px; border: 1px solid var(--pmu-rule); border-radius: 9px;
   background: transparent; color: var(--pmu-ink-2); font: inherit; font-size: 12.5px; cursor: pointer; white-space: nowrap; outline: none;

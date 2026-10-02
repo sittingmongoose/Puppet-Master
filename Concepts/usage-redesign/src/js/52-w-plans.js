@@ -81,7 +81,9 @@
       var bh = ctx.tier.bh, narrow = ctx.tier.bw < 300;
       var top = '<div class="pmu-alerttop" data-tone="' + (m.sev === 'ok' ? 'good' : 'warn') + '">' + C.glyph(m.sev === 'ok' ? 'checkCircle' : 'alert') + '<b>' + esc(m.sevWord) + '</b><span>' + esc(m.when) + '</span></div>' +
         '<p class="pmu-alertdetail">' + esc(m.detail) + '</p>';
-      var detailH = 26 + Math.ceil(m.detail.length * 6.6 / Math.max(120, ctx.tier.bw)) * 19;
+      /* the detail's lines from its measured width in the theme's face (Retro's mono runs wider), plus a word-wrap margin */
+      var tw = PMU.charts && PMU.charts.textW ? PMU.charts.textW(m.detail, 13) * 1.1 : m.detail.length * 6.6;
+      var detailH = 26 + Math.ceil(tw / Math.max(120, ctx.tier.bw)) * 19;
       var meter = { h: 64, html: '<div class="pmu-alertmeter"></div>' };
       var facts = [['Owner', m.owner], ['Observed', m.observed], ['Disposition', m.disposition], ['Scope', m.scope], ['Threshold', m.threshold], ['Receipt', m.receipt]];
       var actions = { h: narrow ? 68 : 38, html: '<div class="pmu-alertacts">' + m.actions.map(function (a) {
