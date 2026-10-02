@@ -51304,7 +51304,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     var face;
     if (st === 'held') {
       var missed = missedAt(m) != null || pauseHeld(m);
-      face = SH.pmxDecision({ key: 'sched-dec-' + id, cls: 'pmx-bubble-decision', tone: 'warm', glyph: 'warn', sentence: s.html, actions: (missed
+      face = SH.pmxDecision({ key: 'sched-dec-' + id, cls: 'pmx-bubble-decision', tone: 'warm', glyph: schedMark('held', 14, 'warn'), sentence: s.html, actions: (missed
         ? [{ action: 'sched-card-send-now', attrs: token, label: 'Send now', primary: true }, { action: 'sched-card-edit', attrs: 'data-id="' + eid + '"', label: 'Reschedule', soft: true }, { action: 'sched-card-cancel', attrs: token, label: 'Cancel', extra: false }]
         : [{ action: 'sched-card-edit', attrs: 'data-id="' + eid + '"', label: 'Edit and send', primary: true }, { action: 'sched-card-cancel', attrs: token, label: 'Cancel', extra: false }]).concat([more]) });
     } else {
