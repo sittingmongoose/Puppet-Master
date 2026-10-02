@@ -170,7 +170,11 @@
       var pending = list.filter(function (a) { return !(value(a) > 0) && /pending/i.test(a.settlement_status || ''); }).length;
       var head = heroOk ? C.heroHead(ctx, { value: list.length, fmt: 'int', label: (list.length === 1 ? 'attempt' : 'attempts') + ' · ' + D.rangeLabel(ctx.state.range),
         sub: b(C.money(c.selected)) + ' recorded value · ' + b(C.money(c.settled)) + ' settled' + (pending ? ' · ' + b(pending) + ' pending ' + (pending === 1 ? 'receipt' : 'receipts') : '') }) : '';
-      var labW = bw >= 420 ? 96 : 30, axisH = 22;
+      /* the lane labels take the Settings names when they fit (final fix M8): the column grows to the longest name, up
+         to a fifth of the card; a name that still does not fit keeps its short word */
+      var nameW = 0; lanes.forEach(function (pid) { nameW = Math.max(nameW, C.wrapW(C.legName(pid), 12.5, 560)); });
+      var labW = bw >= 420 ? Math.max(96, Math.min(Math.round(bw * 0.2), Math.ceil(nameW * 1.1 + 16 + 7 + 8))) : 30, axisH = 22;
+      var laneName = function (pid) { return C.fitsW(C.legName(pid), labW - 8 - 16 - 7, 12.5, 560) ? C.legName(pid) : SHORT[pid] || C.legName(pid); };
       var laneH = Math.max(20, Math.min(46, Math.floor((bh - (heroOk ? 66 : 0) - axisH - 8) / lanes.length)));
       var rMax = Math.max(5, Math.floor(laneH / 2) - 2);
       var maxV = Math.max.apply(null, list.map(value).concat([0.01]));
@@ -191,7 +195,7 @@
       body.innerHTML = '<div class="pmu-attl">' + head + '<div class="pmu-atplot" style="--lab:' + labW + 'px;height:' + (lanes.length * laneH + axisH) + 'px">' +
         '<div class="pmu-atlanes">' + lanes.map(function (pid, k) {
           var sid = PMU.roster.legacyProvider(pid);
-          return '<div class="pmu-atlane" style="top:' + (k * laneH) + 'px;height:' + laneH + 'px"><span class="pmu-atlab"' + C.hover(C.legName(pid), '') + '>' + PMU.mark(sid, 16) + (labW > 60 ? '<span>' + esc(SHORT[pid] || C.legName(pid)) + '</span>' : '') + '</span></div>';
+          return '<div class="pmu-atlane" style="top:' + (k * laneH) + 'px;height:' + laneH + 'px"><span class="pmu-atlab"' + C.hover(C.legName(pid), '') + '>' + PMU.mark(sid, 16) + (labW > 60 ? '<span>' + esc(laneName(pid)) + '</span>' : '') + '</span></div>';
         }).join('') + '</div>' +
         '<div class="pmu-atarea" style="height:' + (lanes.length * laneH) + 'px">' + ticks.map(function (t) { return '<i class="pmu-attick" style="left:' + x(t).toFixed(2) + '%"></i>'; }).join('') +
         '<i class="pmu-atnow"></i>' + dots + '</div>' +
@@ -234,6 +238,14 @@
       var H = Math.max(120, bh - (heroOk ? 66 : 0) - 26 - 6);
       var colW = Math.max(110, Math.min(200, Math.floor(bw * 0.26))), gapW = Math.max(40, Math.floor((bw - 3 * colW) / 2)), tight = colW < 170;
       var leftH = Math.floor((H - 6 * (rows.length - 1)) / rows.length);
+      /* a source box names its reading by its Settings name with its age when both fit, the name alone when only the
+         name fits (the age stays in the hover tag), else the short word with the age (final fix M8) */
+      var srcName = function (r) {
+        var room = colW - 20 - 16 - 8, ageW = tight ? 0 : C.wrapW(r.age, 11) + 8;
+        if (C.fitsW(r.name, room - ageW, 12.5, 560)) return { name: r.name, age: !tight };
+        if (C.fitsW(r.name, room, 12.5, 560)) return { name: r.name, age: false };
+        return { name: r.short, age: !tight };
+      };
       var sorted = rows.filter(function (r) { return !r.est; }).concat(rows.filter(function (r) { return r.est; }));
       var midTot = H - 12, repH = Math.round(midTot * nRep / rows.length), estH = midTot - repH;
       var mid = [{ key: 'rep', label: 'Provider reported', n: nRep, y: 0, h: repH }, { key: 'est', label: 'PM estimate', n: nEst, y: repH + 12, h: estH }];
@@ -254,7 +266,7 @@
         }).join('') + '</svg>' +
         sorted.map(function (r, i) {
           return '<div class="pmu-flowsrc" data-k="' + (r.est ? 'est' : 'rep') + '" style="top:' + (i * (leftH + 6)) + 'px;height:' + leftH + 'px;width:' + colW + 'px"' + C.hover(r.name, (r.est ? 'PM estimate' : 'provider reported') + ' · ' + r.what + ' · ' + r.age) + '>' +
-            (r.prov ? PMU.mark(r.prov, 16) : C.glyph(r.est ? 'pencil' : 'check')) + '<span>' + esc(tight || (PMU.charts && PMU.charts.textW && PMU.charts.textW(r.name, 12.5, false, 560) > colW - 100) ? r.short : r.name) + '</span>' + (tight ? '' : '<em>' + esc(r.age) + '</em>') + '</div>';
+            (r.prov ? PMU.mark(r.prov, 16) : C.glyph(r.est ? 'pencil' : 'check')) + '<span>' + esc(srcName(r).name) + '</span>' + (srcName(r).age ? '<em>' + esc(r.age) + '</em>' : '') + '</div>';
         }).join('') +
         mid.map(function (m0) { return m0.n ? '<div class="pmu-flowmid" data-k="' + m0.key + '" style="left:' + x2 + 'px;top:' + m0.y + 'px;height:' + m0.h + 'px;width:' + colW + 'px"><b>' + m0.n + '</b><span>' + esc(m0.label) + '</span></div>' : ''; }).join('') +
         '<div class="pmu-flowlab" style="left:' + x4 + 'px;top:0;height:' + (repH + estH + 12) + 'px;width:' + colW + 'px"><b>' + rows.length + ' of ' + rows.length + '</b><span>labelled</span><em>0 stale · 0 unknown · freshness policy 5m</em></div>' +

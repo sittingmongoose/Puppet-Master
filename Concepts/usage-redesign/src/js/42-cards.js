@@ -122,7 +122,9 @@
     var def = ctx.def, form = card.getAttribute('data-head') || 'line', tier = ctx.tier || {};
     var titleEl = card.querySelector('.pmu-cardtitle'), subEl = card.querySelector('.pmu-cardsub'), asideEl = card.querySelector('.pmu-cardmeta'), keyEl = card.querySelector('.pmu-cardkey');
     var full = text(def.title, ctx), sub = text(def.meta, ctx);
-    var want = nbHyphen((tier.w === 'xs' || tier.w === 's') && def.short ? text(def.short, ctx) : full);
+    /* the short title only where the whole title does not fit its line (final fix M8: provider tiles keep their Settings
+       names wherever they fit) */
+    var want = nbHyphen((tier.w === 'xs' || tier.w === 's') && def.short && !titleFits(card, full, form) ? text(def.short, ctx) : full);
     if (titleEl) {
       if (titleEl.textContent !== want) titleEl.textContent = want;
       if (titleEl.getAttribute('data-pm-hover-label') !== full) titleEl.setAttribute('data-pm-hover-label', full);

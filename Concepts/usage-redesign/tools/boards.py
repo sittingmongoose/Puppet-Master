@@ -43,7 +43,7 @@ KINDS = {
     'trend':     (4, None, 4, 20, [('Compact', 5, 5), ('Standard', 8, 7), ('Wide', 12, 7), ('Tall', 8, 10), ('Full', 20, 8)]),
     'columns':   (4, None, 4, 16, [('Compact', 5, 5), ('Standard', 8, 7), ('Wide', 12, 6)]),
     'budget':    (5, None, 5, 16, [('Compact', 5, 6), ('Standard', 8, 8), ('Wide', 12, 8)]),
-    'heat':      (6, None, 5, 10, [('Compact', 6, 6), ('Standard', 10, 7), ('Wide', 14, 9)]),
+    'heat':      (6, None, 5, 11, [('Compact', 6, 6), ('Standard', 10, 7), ('Wide', 14, 9)]),
     'agenda':    (4, None, 4, 30, [('Compact', 4, 8), ('Standard', 8, 10), ('Wide', 12, 12), ('Full', 24, 12)]),
     'qhist':     (6, None, 5, 40, [('Compact', 8, 10), ('Standard', 12, 16), ('Wide', 20, 27), ('Full', 24, 27)]),
     'models':    (6, None, 5, 16, [('Compact', 6, 8), ('Standard', 10, 10), ('Wide', 16, 11), ('Full', 24, 11)]),
@@ -324,11 +324,11 @@ B = {
     'analytics': {
         'S': 'an-totals 12x9 token-trend 12x14 tok-claude 4x5 tok-codex 4x5 tok-qwen 4x5 tok-gemini 4x5 tok-kimi 4x5 tok-copilot 4x5 '
              'model-mix 12x15 an-model-donut 6x13 an-token-breakdown 6x13 '
-             'cache-read-share 6x11 an-daily-cost 6x11 activity-heat 12x10 an-quota-history 12x32 an-resets 12x30 '
+             'cache-read-share 6x12 an-daily-cost 6x12 activity-heat 12x10 an-quota-history 12x32 an-resets 12x30 '
              'reasoning-mix 12x10 token-counting-basis 12x13 unknown-token-buckets 12x8',
         'M': 'an-totals 20x5 token-trend 14x17 tok-claude 3x6 tok-codex 3x6 tok-qwen 3x6 tok-gemini 3x6 tok-kimi 3x5 '
              'tok-copilot 3x5 model-mix 20x15 an-model-donut 7x12 an-token-breakdown 7x12 cache-read-share 6x12 '
-             'activity-heat 12x10 an-daily-cost 8x10 an-quota-history 20x30 an-resets 20x18 '
+             'activity-heat 12x11 an-daily-cost 8x11 an-quota-history 20x30 an-resets 20x18 '
              'reasoning-mix 20x10 token-counting-basis 12x13 unknown-token-buckets 8x10',
         'L': 'an-totals 24x5 tok-claude 4x5 tok-codex 4x5 tok-qwen 4x5 tok-gemini 4x5 tok-kimi 4x5 tok-copilot 4x5 '
              'token-trend 24x12 model-mix 16x14 an-model-donut 8x14 an-token-breakdown 8x11 cache-read-share 8x11 '
