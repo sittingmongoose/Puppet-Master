@@ -16687,7 +16687,7 @@ body {
   /* per tone: the bar's filter glow was not one strength (blocked 62 %, attention 58 %, working 60 %, changed
      44 % at 4 px), so each lit tone has its own inner (-i) and wide (-o) band, fitted to the metric */
   --nx-h-blocked-i: .24; --nx-h-blocked-o: .031;
-  --nx-h-attention-i: .20; --nx-h-attention-o: .028;
+  --nx-h-attention-i: .18; --nx-h-attention-o: .028;
   --nx-h-working-i: .20; --nx-h-working-o: .029;
   --nx-h-changed-i: .10; --nx-h-changed-o: .017;
   --nx-h-quiet-i: .10;
@@ -16701,11 +16701,11 @@ body {
 /* Light themes: a dark-on-light halo reads as a smudge when it is strong, so the bands are fainter; the bar's
    drop-shadow threw more far tail on light pages, which the wide band carries. */
 body[data-theme$="-light"] {
-  --nx-hi-w: 3px; --nx-hm-w: 8px; --nx-ho-w: 14px;
+  --nx-hi-w: 3.4px; --nx-hm-w: 8px; --nx-ho-w: 14px;
   --nx-h-blocked-i: .14; --nx-h-blocked-o: .035;
   --nx-h-attention-i: .14; --nx-h-attention-o: .033;
   --nx-h-working-i: .14; --nx-h-working-o: .034;
-  --nx-h-changed-i: .10; --nx-h-changed-o: .02;
+  --nx-h-changed-i: .12; --nx-h-changed-o: .016;
   --nx-h-quiet-i: .12;
   --nx-h-hover-i: .14; --nx-h-swell-i: .16;
 }
