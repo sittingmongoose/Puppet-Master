@@ -75,7 +75,7 @@ svg:where(.nx) {
 }
 /* Filled parts (stop, status satellites) paint the ink as fill and carry no tube stroke. */
 svg:where(.nx) .nx-f { fill: var(--nx-ink, currentColor); stroke: none; }
-/* The quieter half of a two-level drawing (working's ring under its bright satellite). */
+/* The quieter half of a two-level drawing (working's ring under the bright bead that orbits on it). */
 svg:where(.nx) .nx-dim { opacity: .65; }
 /* module-shell's picker chevron (CHEVRON) keeps the 2-unit weight it was drawn with. */
 svg.pmx-chevron { --nx-stroke-base: 2; }
@@ -207,7 +207,8 @@ svg.fast-bolt, svg.meta-fast { --nx-ink: var(--warning); --nx-hiv: visible; --nx
 .nx-tn-changed { --nx-bl-ink: var(--accent-2); --nx-bl-a: var(--nx-bl-changed); }
 /* the quiet tones are unlit: no backlight box at all */
 .nx-tn-done::before, .nx-tn-idle::before, .nx-tn-paused::before { display: none; }
-/* working: a slow satellite orbit (9 s: the quietest live mark, below reviewing), no breathe, no backlight */
+/* working: the bead orbits slowly on the ring (9 s: the quietest live mark, below reviewing), no breathe, no
+   backlight (the inner halo only) */
 .nx-st-working::before { display: none; }
 .nx-st-working .nx-p { animation: var(--kl) 9000ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 9ms - 9000ms); }
 /* reviewing: the lens sweeps the page; no outer glow, so it stays below needs-you */
@@ -305,7 +306,7 @@ html[data-o55-nier="on"] .nx-st-failed { animation: o55n-nx-glitch 320ms steps(4
 @keyframes o55n-nx-glitch { 0% { transform: translateX(0); opacity: 1; } 25% { transform: translateX(2px); opacity: .4; } 50% { transform: translateX(-2px); opacity: 1; } 75% { transform: translateX(1px); opacity: .6; } 100% { transform: none; opacity: 1; } }
 /* working is PMConcept7's diamond loader while the diamonds part is on (a hollow diamond turning in depth, its ink
    flipping to paper on a cursor bar), turned in six held steps of 60 degrees so it is never seen edge-on in a list;
-   otherwise the ink ring's satellite moves in steps (--nx-le above). */
+   otherwise it is the ink bead on the ring, going round in steps (--nx-le above). */
 html[data-o55-nier-parts~="diamonds"] .nx-st-working > svg.nx { visibility: hidden; }
 html[data-o55-nier-parts~="diamonds"] .nx-st-working::after {
   content: ""; position: absolute; inset: 18%; box-sizing: border-box; pointer-events: none;

@@ -5,7 +5,8 @@
  * registered here is live on the very first render — no re-render, no flash.
  *
  * Registered through window.PM56_EXT rather than by editing app.js:
- *   slot('threadRowStatus')  — item 3, the nine take-6 status indicators
+ *   slot('threadRowStatus')  — item 3, the nine take-6 status indicators (neon icons step 3B, 2026-10-02:
+ *                              the marks are the shared status set, PM56_NEON.status())
  *   slot('historyChrome')    — item 4, the drawer's pin control
  *   slot('headerExtras')     — item 4, a no-markup per-render heartbeat (see SYNC)
  *   action(...)              — item 4, the open / pin / close state machine
@@ -21,42 +22,46 @@
      The Demo Studio labels this take "6. Preview Rows"; it is
      state.variants[1] === 5 (app.js:1301, zero-based).  renderStatus()
      returns `.status-orbit` for it — the same working spinner for all nine
-     statuses in statusLabel().  The orbit is kept for `working` (it matches
-     the Orbit working animation, the requester's current top pick) and the
-     other eight get their own motion signature in the same family; the CSS
-     lives in history.css.
+     statuses in statusLabel() — so this take is overridden here.
+
+     NEON ICONS (step 3B, 2026-10-02).  The nine marks are the shared status
+     set, PM56_NEON.status(s, 15) (neon-icons.js, plan §3): one drawing per
+     status, lit in its tone, with the list rhythm on its wrapper —
+     needs-you (waiting) leads with a full halo and a hopping "?", blocked
+     takes the bar's hard double blink, working is the quietest live mark (a
+     bead orbiting slowly on its ring, inner halo only), complete draws its
+     check once, and idle (Ready) and paused stand still.  The old CSS ring
+     and satellite (`.ph-ring` / `.ph-mark`, the nine ph-* loops in
+     history.css) are retired; neon-icons.css owns the motion and its
+     reduced-motion stop.  The `.ph-status` host keeps its contract:
+     `.ph-s-<s>`, data-status, the thread-keyed data-k, role=img, the label.
 
      Only this take is overridden.  Returning '' makes extReplace() fall back
-     to the built-in renderStatus(), so the other seven takes are untouched.
+     to the built-in renderStatus(), so the other seven takes are untouched —
+     and so is this one if neon-icons.js ever failed to load.
 
      data-k: the slot renders inside `.thread-row`, which survives the 2s work
      tick, so it MUST be keyed or pmPatch remounts it twice a second and
-     restarts every animation.  The key is the THREAD id, not the status: a
-     status change then patches the class on the same node — restarting only
-     the incoming status's animation, which is what makes `complete` draw its
-     check exactly when the thread completes — instead of remounting the node.
+     restarts every animation.  The host's key is the THREAD id; the mark
+     inside carries its own key, data-k="st:<status>", so a status change
+     remounts just the mark — which replays the incoming status's one-shot,
+     the moment `complete` draws its check — while the host node stays.
      ===================================================================== */
   var TAKE_PREVIEW_ROWS = 5;
 
-  /* Check / pause / X are 15×15 SVGs whose geometry is centered on 7.5,7.5 —
-     CSS rotated capsules could not hit that grid. Working / reviewing keep the
-     empty .ph-mark satellite. */
-  var MARK_SVG = {
-    complete: '<svg viewBox="0 0 15 15" aria-hidden="true"><path d="M4.45 7.7 6.45 9.8 10.45 5.3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-    paused: '<svg viewBox="0 0 15 15" aria-hidden="true"><rect x="4" y="4" width="2" height="7" rx="1"/><rect x="9" y="4" width="2" height="7" rx="1"/></svg>',
-    failed: '<svg viewBox="0 0 15 15" aria-hidden="true"><path d="M5 5 10 10 M10 5 5 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>'
-  };
-
   EXT.slot('threadRowStatus', function(ctx){
     if(ctx.variant !== TAKE_PREVIEW_ROWS) return '';
+    /* resolved at call time, never at load (neon-icons.js loads first, but a
+       build without it must still render the stock indicator) */
+    var N = window.PM56_NEON;
+    if(!N || typeof N.status !== 'function') return '';
     var t = ctx.thread || {};
     var s = String(t.status || 'idle');
     var label = ctx.statusLabel(s);
-    var inner = MARK_SVG[s] || '';
     return '<span class="ph-status ph-s-' + ctx.esc(s) + '" data-status="' + ctx.esc(s) + '"'
          + ' data-k="tstat:' + ctx.esc(t.id || '') + '" role="img"'
          + ' aria-label="' + ctx.esc(label) + '" title="' + ctx.esc(label) + '">'
-         + '<i class="ph-ring"></i><i class="ph-mark">' + inner + '</i></span>';
+         + N.status(s, 15) + '</span>';
   });
 
 

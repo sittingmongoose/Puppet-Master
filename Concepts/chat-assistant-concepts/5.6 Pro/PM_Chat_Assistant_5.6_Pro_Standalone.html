@@ -4629,136 +4629,26 @@ body[data-theme="retro-light"] {
    ---------------------------------------------------------------------
    Take 6 "Preview Rows" (state.variants[1] === 5) used `.status-orbit` for
    every thread, so eight of the nine statuses in statusLabel() rendered the
-   same working spinner.  The orbit is the one the requester likes — it is
-   reproduced here byte-for-byte in geometry (15px ring, 4px satellite at
-   left:5/top:-2, transform-origin 2px 9px, spin 1.7s linear) — and the other
-   eight are built in the same family: one 15px ring, one mark, one motion
-   signature each.
+   same working spinner.
 
-   Every loop below is stopped in the reduced-motion block at the bottom of
-   this section, and every stopped state is still legible: the declared
-   (non-animated) value of each element IS its end state, so `animation:none`
-   leaves a drawn check, a drawn cross, a parked satellite — never a blank box.
+   NEON ICONS (step 3B, 2026-10-02).  The marks are now the shared status
+   set, PM56_NEON.status(s, 15), drawn inside the same `.ph-status` host
+   (history.js).  This sheet only sizes the host and gives `.ph-s-<s>` the
+   tone its mark is lit in, so anything that reads `color` agrees with the
+   paint.  The CSS ring and satellite (`.ph-ring` / `.ph-mark`), the nine
+   ph-* loops and the `spin` ring are retired: the motion is neon-icons.css
+   section 9 (the list salience of plan §3 — working is a bead orbiting slowly
+   on its ring with the inner halo only, needs-you a full halo and a hopping
+   "?", blocked the bar's hard double blink, complete a check drawn once,
+   Ready and paused still), and its section 10 stops every loop under reduced
+   motion, where ink, halo, weight and silhouette still carry the state.
    ===================================================================== */
 .ph-status{ position:relative; display:block; width:15px; height:15px; color:var(--subtle); }
-.ph-status .ph-ring{ position:absolute; inset:0; border-radius:50%; border:1px solid var(--border-strong); box-sizing:border-box; }
-.ph-status .ph-mark{ position:absolute; left:50%; top:50%; width:5px; height:5px; margin:-2.5px 0 0 -2.5px; border-radius:50%; background:currentColor; }
-
-/* working / reviewing satellites. The 15px ring is centered at 7.5,7.5; the
-   old left:5 / top:-2 / origin 2px 9px orbited around 7,7, so the pip drifted
-   on and off the stroke. Park the 4px pip on the ring center, then
-   translateY(-7.5px) onto the outer edge and rotate — radius stays constant. */
-.ph-s-working{ color:var(--accent); }
-.ph-s-working .ph-mark{
-  left:50%; top:50%; width:4px; height:4px; margin:-2px 0 0 -2px;
-  transform-origin:center; transform:rotate(0deg) translateY(-7.5px);
-  animation:ph-orbit 1.7s linear infinite;
-}
-@keyframes ph-orbit{
-  from{ transform:rotate(0deg) translateY(-7.5px) }
-  to{ transform:rotate(360deg) translateY(-7.5px) }
-}
-
-/* reviewing — the same outer satellite, sweeping BACK AND FORTH over the top
-   arc instead of running the full circle: going back over ground already
-   covered.  `alternate` + a symmetric ease is the whole signature. */
-.ph-s-reviewing{ color:var(--accent-2); }
-.ph-s-reviewing .ph-ring{ border-color:color-mix(in srgb,var(--accent-2) 55%,var(--border-strong)); }
-.ph-s-reviewing .ph-mark{
-  left:50%; top:50%; width:4px; height:4px; margin:-2px 0 0 -2px;
-  transform-origin:center; transform:rotate(-125deg) translateY(-7.5px);
-  animation:ph-sweep 1.9s cubic-bezier(.42,0,.58,1) infinite alternate;
-}
-@keyframes ph-sweep{
-  from{ transform:rotate(-125deg) translateY(-7.5px) }
-  to{ transform:rotate(125deg) translateY(-7.5px) }
-}
-
-/* waiting — a dashed ring turning slowly (six seconds for one revolution)
-   around a dot that breathes.  Patient, not busy. */
-.ph-s-waiting{ color:var(--accent-2); }
-.ph-s-waiting .ph-ring{ border-style:dashed; border-color:color-mix(in srgb,var(--accent-2) 50%,var(--border-strong)); animation:spin 6s linear infinite; }
-.ph-s-waiting .ph-mark{ animation:ph-pulse 2.4s ease-in-out infinite; }
-@keyframes ph-pulse{ 0%,100%{ opacity:.4; transform:scale(.78) } 50%{ opacity:1; transform:scale(1) } }
-
-/* idle ("Ready") — quietest of the nine: nothing travels, the whole glyph
-   just breathes once every 3.2s. */
-.ph-s-idle{ color:var(--positive); }
-.ph-s-idle .ph-ring{ border-color:color-mix(in srgb,var(--positive) 40%,var(--border)); animation:ph-breathe 3.2s ease-in-out infinite; }
-@keyframes ph-breathe{ 0%,100%{ transform:scale(.86); opacity:.55 } 50%{ transform:scale(1); opacity:1 } }
-
-/* complete / paused / failed — 15×15 SVGs. Higher specificity than the
-   default .ph-status .ph-mark (left:50% / 5px) so the box cannot drift. */
-.ph-status.ph-s-complete .ph-mark,
-.ph-status.ph-s-paused .ph-mark,
-.ph-status.ph-s-failed .ph-mark{
-  inset:0; left:0; top:0; right:0; bottom:0;
-  width:15px; height:15px; margin:0;
-  background:none; border-radius:0; overflow:visible; line-height:0;
-}
-.ph-status.ph-s-complete .ph-mark svg,
-.ph-status.ph-s-paused .ph-mark svg,
-.ph-status.ph-s-failed .ph-mark svg{
-  display:block; width:15px; height:15px; overflow:visible;
-}
-.ph-status.ph-s-complete .ph-mark::before, .ph-status.ph-s-complete .ph-mark::after,
-.ph-status.ph-s-paused .ph-mark::before, .ph-status.ph-s-paused .ph-mark::after,
-.ph-status.ph-s-failed .ph-mark::before, .ph-status.ph-s-failed .ph-mark::after{
-  content:none; display:none;
-}
-
-/* complete — terminal draw-once check. */
+.ph-s-working, .ph-s-reviewing{ color:var(--accent); }
+.ph-s-waiting, .ph-s-recovering{ color:var(--warning); }
 .ph-s-complete{ color:var(--positive); }
-.ph-s-complete .ph-ring{ border-color:color-mix(in srgb,var(--positive) 62%,var(--border)); background:color-mix(in srgb,var(--positive) 16%,transparent); }
-.ph-s-complete .ph-mark path{ stroke-dasharray:14; stroke-dashoffset:14; animation:ph-draw-check 320ms var(--pm-ease-out) both; }
-@keyframes ph-draw-check{ to{ stroke-dashoffset:0 } }
-
-/* blocked — full closed danger ring + a centered halt bar (refused, not
-   broken).  Mostly still, with one short nudge at the end of a 2.8s cycle. */
-.ph-s-blocked{ color:var(--danger); }
-.ph-s-blocked .ph-ring{ border-color:color-mix(in srgb,var(--danger) 62%,var(--border)); animation:ph-nudge 2.8s var(--pm-ease-out) infinite; }
-.ph-s-blocked .ph-mark{ left:50%; top:50%; width:9px; height:1.8px; margin:-.9px 0 0 -4.5px; border-radius:2px; background:var(--danger); }
-@keyframes ph-nudge{ 0%,74%,100%{ transform:none } 80%{ transform:translateX(-1.6px) } 86%{ transform:translateX(1.6px) } 92%{ transform:translateX(-1px) } }
-
-/* failed — a filled danger disc with a cross, hard-blinking on steps() so it
-   reads as an alarm rather than a fade.  Nothing moves: that is what keeps it
-   apart from `blocked`, which moves but does not blink. */
-.ph-s-failed{ color:var(--danger); }
-.ph-s-failed .ph-ring{ border-color:var(--danger); background:color-mix(in srgb,var(--danger) 16%,transparent); }
-.ph-s-failed .ph-mark{ animation:ph-blink 1.6s steps(1,end) infinite; }
-@keyframes ph-blink{ 0%{ opacity:1 } 50%{ opacity:.3 } }
-
-/* paused — the pause glyph, dimming and returning on a slow 2.6s cycle.
-   Suspended but still alive; opacity only, nothing moves. */
+.ph-s-blocked, .ph-s-failed{ color:var(--danger); }
 .ph-s-paused{ color:var(--muted); }
-.ph-s-paused .ph-ring{ border-color:var(--border-strong); }
-.ph-s-paused .ph-mark{ color:var(--accent-2); animation:ph-dim 2.6s ease-in-out infinite; }
-.ph-s-paused .ph-mark rect{ fill:currentColor; }
-@keyframes ph-dim{ 0%,100%{ opacity:1 } 50%{ opacity:.36 } }
-
-/* recovering — an arc sweeping COUNTER-CLOCKWISE with a stuttering ease: the
-   retry.  Direction alone separates it from `working` at a glance. */
-.ph-s-recovering{ color:var(--warning); }
-.ph-s-recovering .ph-ring{ border-color:color-mix(in srgb,var(--border-strong) 88%,transparent); }
-/* The base ring is deliberately NEUTRAL so the amber half-arc reads as a shape,
-   not as a tint: standing still under reduced motion, `recovering` and `idle`
-   would otherwise be the same ring-plus-dot separated only by hue, which is no
-   distinction at all for a colour-blind reader.  Half the ring, and a hollow
-   centre, are the differences that survive with the motion switched off. */
-.ph-s-recovering .ph-ring::after{ content:""; position:absolute; inset:-1.5px; border-radius:50%; border:1.5px solid transparent; border-top-color:var(--warning); border-right-color:var(--warning); animation:ph-recover 2.2s cubic-bezier(.62,0,.3,1) infinite; }
-.ph-s-recovering .ph-mark{ width:5px; height:5px; margin:-2.5px 0 0 -2.5px; background:none; border:1.5px solid var(--warning); box-sizing:border-box; }
-@keyframes ph-recover{ from{ transform:rotate(0deg) } to{ transform:rotate(-360deg) } }
-
-/* prefers-reduced-motion is SELECTIVE in this project (motion.css:238-...):
-   its blanket rule only caps loops at one iteration, so every loop above would
-   still play a full pass.  Stop them here, scoped to this module.  Each glyph's
-   declared value is its end state, so the nine stay distinguishable. */
-@media (prefers-reduced-motion: reduce){
-  .ph-status .ph-ring, .ph-status .ph-ring::after, .ph-status .ph-mark,
-  .ph-status .ph-mark::before, .ph-status .ph-mark::after, .ph-status .ph-mark path{ animation:none !important; }
-  .ph-s-complete .ph-mark path{ stroke-dashoffset:0; }
-  .ph-s-working .ph-mark, .ph-s-reviewing .ph-mark{ transform:translateY(-7.5px); }
-}
 
 /* =====================================================================
    FLAGGED BY WAVE 1B — `.thread-row.active::before` is a coloured left-edge
@@ -4832,9 +4722,8 @@ body[data-theme="retro-light"] {
    ===================================================================== */
 .history-panel[data-history-variant="5"] .thread-row,
 .history-flyout[data-history-variant="5"] .thread-row{ min-height:44px; align-items:start; padding:3px 1px 3px 3px; }
-/* Status orbit satellites (ph-mark top:-2 / spin) sit outside the 15px box —
-   row overflow:visible keeps them from clipping. Check / pause / failed marks
-   are optically centered inside the ring. */
+/* A status mark's halo and backlight paint past its 15px box —
+   row overflow:visible keeps them from clipping. */
 .history-flyout .thread-row,
 .history-panel .thread-row{ overflow:visible; }
 .history-flyout .thread-lead,
@@ -16752,7 +16641,7 @@ svg:where(.nx) {
 }
 /* Filled parts (stop, status satellites) paint the ink as fill and carry no tube stroke. */
 svg:where(.nx) .nx-f { fill: var(--nx-ink, currentColor); stroke: none; }
-/* The quieter half of a two-level drawing (working's ring under its bright satellite). */
+/* The quieter half of a two-level drawing (working's ring under the bright bead that orbits on it). */
 svg:where(.nx) .nx-dim { opacity: .65; }
 /* module-shell's picker chevron (CHEVRON) keeps the 2-unit weight it was drawn with. */
 svg.pmx-chevron { --nx-stroke-base: 2; }
@@ -16884,7 +16773,8 @@ svg.fast-bolt, svg.meta-fast { --nx-ink: var(--warning); --nx-hiv: visible; --nx
 .nx-tn-changed { --nx-bl-ink: var(--accent-2); --nx-bl-a: var(--nx-bl-changed); }
 /* the quiet tones are unlit: no backlight box at all */
 .nx-tn-done::before, .nx-tn-idle::before, .nx-tn-paused::before { display: none; }
-/* working: a slow satellite orbit (9 s: the quietest live mark, below reviewing), no breathe, no backlight */
+/* working: the bead orbits slowly on the ring (9 s: the quietest live mark, below reviewing), no breathe, no
+   backlight (the inner halo only) */
 .nx-st-working::before { display: none; }
 .nx-st-working .nx-p { animation: var(--kl) 9000ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 9ms - 9000ms); }
 /* reviewing: the lens sweeps the page; no outer glow, so it stays below needs-you */
@@ -16982,7 +16872,7 @@ html[data-o55-nier="on"] .nx-st-failed { animation: o55n-nx-glitch 320ms steps(4
 @keyframes o55n-nx-glitch { 0% { transform: translateX(0); opacity: 1; } 25% { transform: translateX(2px); opacity: .4; } 50% { transform: translateX(-2px); opacity: 1; } 75% { transform: translateX(1px); opacity: .6; } 100% { transform: none; opacity: 1; } }
 /* working is PMConcept7's diamond loader while the diamonds part is on (a hollow diamond turning in depth, its ink
    flipping to paper on a cursor bar), turned in six held steps of 60 degrees so it is never seen edge-on in a list;
-   otherwise the ink ring's satellite moves in steps (--nx-le above). */
+   otherwise it is the ink bead on the ring, going round in steps (--nx-le above). */
 html[data-o55-nier-parts~="diamonds"] .nx-st-working > svg.nx { visibility: hidden; }
 html[data-o55-nier-parts~="diamonds"] .nx-st-working::after {
   content: ""; position: absolute; inset: 18%; box-sizing: border-box; pointer-events: none;
@@ -22613,9 +22503,12 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
       'play-ring': G([C(12, 12, 8.5), M(P('M10.3 8.8v6.4l5-3.2z'), { ao: .3, b: 1 })], 'seq'),
 
       /* ---- the status marks (plan §3); status() wraps them, icon('st-<s>') draws them bare ---- */
-      /* working: a ring at .65 and a bright satellite (r2.4, its own halo) orbiting OUTSIDE it (radius 9.5), so it
-         reads on the accent-tinted selected row and never looks like mixed's half disc */
-      'st-working': G([C(12, 12, 7.5, { c: 'nx-dim' }), M(C(12, 2.5, 2.4, { f: 1 }), { ar: 360, o: [12, 12] })], 'spin', 'status'),
+      /* working: a bead that orbits ON the ring (Jared, 2026-10-02: "the ball should be orbiting on the circle, not on
+         the outside of it"): its centre travels exactly on the ring's radius (7.5). The ring sits at .65 and opens a
+         small gap either side of the bead (1 unit clear of it, round caps included), and the filled bead (r2.7, a
+         little wider than the tube) carries its own core halo, so it still reads on the accent-tinted selected row.
+         Ring and bead are one moving part: turning a gapped ring IS the gap travelling with the bead. */
+      'st-working': G([M([P('M16.44 5.95A7.5 7.5 0 1 1 7.56 5.95', { c: 'nx-dim' }), C(12, 4.5, 2.7, { f: 1 })], { ar: 360, o: [12, 12] })], 'spin', 'status'),
       /* reviewing: the lens sweeps half as far and rests (it must stay below needs-you) */
       'st-reviewing': G([P('M5 3h9l4 4v6'), P('M5 3v17h6'), M([C(16, 16, 3.6), P('m18.6 18.6 2.6 2.6')], { ax: -2.5, ay: -2.5, b: 1 })], 'calm', 'status'),
       'st-waiting': G([P('M5 3h14a2.5 2.5 0 0 1 2.5 2.5v10.5a2.5 2.5 0 0 1-2.5 2.5h-6.5L8 21.8v-3.3H5A2.5 2.5 0 0 1 2.5 16V5.5A2.5 2.5 0 0 1 5 3z'),
@@ -22674,7 +22567,7 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
        STATUS (plan §3): canonical status -> mark, tone and list motion, with every alias the surfaces use.
        ====================================================================== */
     var STATUS = {
-      working: { glyph: 'st-working', tone: 'working', motion: 'satellite orbit outside the ring, 9 s, its core halo only', aliases: ['running', 'in_progress', 'doing', 'live', 'active', 'loading', 'starting'] },
+      working: { glyph: 'st-working', tone: 'working', motion: 'bead orbits on the ring, 9 s, its core halo only', aliases: ['running', 'in_progress', 'doing', 'live', 'active', 'loading', 'starting'] },
       reviewing: { glyph: 'st-reviewing', tone: 'working', motion: 'lens sweeps 2.5 units and rests; no backlight', aliases: ['verifying', 'review'] },
       waiting: { glyph: 'st-waiting', tone: 'attention', motion: 'full steady halo, backlight breathes .6-1, "?" hops 3.4 units (two beats every 2.4 s)', aliases: ['needs', 'needs_you', 'needs-you', 'yourmove', 'input', 'decide'] },
       'waiting-dep': { glyph: 'st-waiting-dep', tone: 'attention', motion: 'tips once, holds 60 % of 3.6 s', aliases: ['waiting_dep', 'dependency', 'blocked_on', 'held'] },
@@ -26445,7 +26338,8 @@ window.PM56_NIER_FACES = [
  * registered here is live on the very first render — no re-render, no flash.
  *
  * Registered through window.PM56_EXT rather than by editing app.js:
- *   slot('threadRowStatus')  — item 3, the nine take-6 status indicators
+ *   slot('threadRowStatus')  — item 3, the nine take-6 status indicators (neon icons step 3B, 2026-10-02:
+ *                              the marks are the shared status set, PM56_NEON.status())
  *   slot('historyChrome')    — item 4, the drawer's pin control
  *   slot('headerExtras')     — item 4, a no-markup per-render heartbeat (see SYNC)
  *   action(...)              — item 4, the open / pin / close state machine
@@ -26461,42 +26355,46 @@ window.PM56_NIER_FACES = [
      The Demo Studio labels this take "6. Preview Rows"; it is
      state.variants[1] === 5 (app.js:1301, zero-based).  renderStatus()
      returns `.status-orbit` for it — the same working spinner for all nine
-     statuses in statusLabel().  The orbit is kept for `working` (it matches
-     the Orbit working animation, the requester's current top pick) and the
-     other eight get their own motion signature in the same family; the CSS
-     lives in history.css.
+     statuses in statusLabel() — so this take is overridden here.
+
+     NEON ICONS (step 3B, 2026-10-02).  The nine marks are the shared status
+     set, PM56_NEON.status(s, 15) (neon-icons.js, plan §3): one drawing per
+     status, lit in its tone, with the list rhythm on its wrapper —
+     needs-you (waiting) leads with a full halo and a hopping "?", blocked
+     takes the bar's hard double blink, working is the quietest live mark (a
+     bead orbiting slowly on its ring, inner halo only), complete draws its
+     check once, and idle (Ready) and paused stand still.  The old CSS ring
+     and satellite (`.ph-ring` / `.ph-mark`, the nine ph-* loops in
+     history.css) are retired; neon-icons.css owns the motion and its
+     reduced-motion stop.  The `.ph-status` host keeps its contract:
+     `.ph-s-<s>`, data-status, the thread-keyed data-k, role=img, the label.
 
      Only this take is overridden.  Returning '' makes extReplace() fall back
-     to the built-in renderStatus(), so the other seven takes are untouched.
+     to the built-in renderStatus(), so the other seven takes are untouched —
+     and so is this one if neon-icons.js ever failed to load.
 
      data-k: the slot renders inside `.thread-row`, which survives the 2s work
      tick, so it MUST be keyed or pmPatch remounts it twice a second and
-     restarts every animation.  The key is the THREAD id, not the status: a
-     status change then patches the class on the same node — restarting only
-     the incoming status's animation, which is what makes `complete` draw its
-     check exactly when the thread completes — instead of remounting the node.
+     restarts every animation.  The host's key is the THREAD id; the mark
+     inside carries its own key, data-k="st:<status>", so a status change
+     remounts just the mark — which replays the incoming status's one-shot,
+     the moment `complete` draws its check — while the host node stays.
      ===================================================================== */
   var TAKE_PREVIEW_ROWS = 5;
 
-  /* Check / pause / X are 15×15 SVGs whose geometry is centered on 7.5,7.5 —
-     CSS rotated capsules could not hit that grid. Working / reviewing keep the
-     empty .ph-mark satellite. */
-  var MARK_SVG = {
-    complete: '<svg viewBox="0 0 15 15" aria-hidden="true"><path d="M4.45 7.7 6.45 9.8 10.45 5.3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-    paused: '<svg viewBox="0 0 15 15" aria-hidden="true"><rect x="4" y="4" width="2" height="7" rx="1"/><rect x="9" y="4" width="2" height="7" rx="1"/></svg>',
-    failed: '<svg viewBox="0 0 15 15" aria-hidden="true"><path d="M5 5 10 10 M10 5 5 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>'
-  };
-
   EXT.slot('threadRowStatus', function(ctx){
     if(ctx.variant !== TAKE_PREVIEW_ROWS) return '';
+    /* resolved at call time, never at load (neon-icons.js loads first, but a
+       build without it must still render the stock indicator) */
+    var N = window.PM56_NEON;
+    if(!N || typeof N.status !== 'function') return '';
     var t = ctx.thread || {};
     var s = String(t.status || 'idle');
     var label = ctx.statusLabel(s);
-    var inner = MARK_SVG[s] || '';
     return '<span class="ph-status ph-s-' + ctx.esc(s) + '" data-status="' + ctx.esc(s) + '"'
          + ' data-k="tstat:' + ctx.esc(t.id || '') + '" role="img"'
          + ' aria-label="' + ctx.esc(label) + '" title="' + ctx.esc(label) + '">'
-         + '<i class="ph-ring"></i><i class="ph-mark">' + inner + '</i></span>';
+         + N.status(s, 15) + '</span>';
   });
 
 
