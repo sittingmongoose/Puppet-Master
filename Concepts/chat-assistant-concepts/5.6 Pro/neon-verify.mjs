@@ -542,31 +542,38 @@ await sec('forbidden props', async () => {
     await setTheme(p, 'basic-dark');
     const bad = await p.evaluate(() => {
       const out = [];
-      const has = css => {
+      const HOST_SVG = /(pm-lens-trigger|jump-bottom|activity-item|orbit-node|orbit-core|wa-disc|rail8-item|pm-rail-item)[^,]*\bsvg\b/;
+      /* a filter that paints (filter: none only resets one, as the pmx sheet's buttons do), any stroke-dashoffset
+         declaration, color-mix() anywhere in the rule */
+      const has = st => {
         const f = [];
-        if (/filter\s*:/i.test(css)) f.push('filter');
-        if (/stroke-dashoffset/i.test(css)) f.push('stroke-dashoffset');
-        if (/color-mix\s*\(/i.test(css)) f.push('color-mix(');
+        const fv = (st.getPropertyValue('filter') || '').trim();
+        if (fv && fv !== 'none') f.push('filter');
+        if ((st.getPropertyValue('stroke-dashoffset') || '').trim() || /(^|[;\s])stroke-dashoffset\s*:/i.test(st.cssText)) f.push('stroke-dashoffset');
+        if (/color-mix\s*\(/i.test(st.cssText)) f.push('color-mix(');
         return f;
       };
       const walk = rules => {
         for (const r of rules) {
           try {
             if (r.type === CSSRule.STYLE_RULE) {
-              if ((r.selectorText || '').includes('.nx') || (r.selectorText || '').includes('nx-')) {
-                const f = has(r.style.cssText);
+              /* neon rules (.nx / nx- selectors), every pmx rule, and the neon rules written on a host's svg
+                 (the Lens trigger, jump-bottom, the bar, the Orbit discs and rails) */
+              const st = r.selectorText || '';
+              if (st.includes('.nx') || st.includes('nx-') || /pmx/i.test(st) || HOST_SVG.test(st)) {
+                const f = has(r.style);
                 if (f.length) out.push({ sel: r.selectorText.slice(0, 160), props: f });
               }
             } else if (r.type === CSSRule.KEYFRAMES_RULE) {
               if ((r.name || '').startsWith('nx')) {
                 if (/pmx/i.test(r.name)) out.push({ sel: '@keyframes ' + r.name, props: ['pmx in an nx keyframe name'] });
                 for (const k of r.cssRules) {
-                  const f = has(k.style.cssText);
+                  const f = has(k.style);
                   if (f.length) out.push({ sel: '@keyframes ' + r.name + ' ' + k.keyText, props: f });
                 }
               }
             } else if (r.cssRules) walk(r.cssRules);
-          } catch (e) {}
+          } catch (e) { out.push({ sel: '(a rule threw while read: ' + String(e && e.message || e).slice(0, 80) + ')', props: ['?'] }); }
         }
       };
       for (const sh of document.styleSheets) {
@@ -574,7 +581,7 @@ await sec('forbidden props', async () => {
       }
       return out.slice(0, 20);
     });
-    check(bad.length === 0, '5 no forbidden properties (filter, stroke-dashoffset, color-mix() in .nx/nx- rules or nx* keyframes; no pmx in an nx keyframe name)', bad);
+    check(bad.length === 0, '5 no forbidden properties (filter, stroke-dashoffset, color-mix() in .nx/nx-, pmx and neon host-svg rules or nx* keyframes; no pmx in an nx keyframe name; no rule unreadable)', bad);
   } finally { await shut(p); }
 });
 
@@ -700,7 +707,7 @@ await sec('old keyframes', async () => {
   } finally { await shut(p); }
 });
 
-/* ------------------------------------------------------------- check 10: reduced motion, both routes */
+/* ------------------------------------------------------------- check 10: reduced motion, all three routes */
 async function reducedState(p) {
   return p.evaluate(() => {
     let host = document.getElementById('nx-test-matrix');
@@ -717,7 +724,7 @@ async function reducedState(p) {
     const running = [];
     for (const a of document.getAnimations()) {
       const t = a.effect && a.effect.target;
-      if (t && t.closest && t.closest('svg.nx, .nx-st') && a.playState === 'running') running.push('running');
+      if (t && t.closest && t.closest('svg.nx, .nx-st') && a.playState === 'running') running.push(a.animationName || a.transitionProperty || 'waapi');
     }
     const done = host.querySelector('.nx-st-complete .nx-pc');
     /* the lit state must survive: halos still paint (idle's is hidden by design) */
@@ -726,9 +733,18 @@ async function reducedState(p) {
       const cs = getComputedStyle(h);
       if (cs.display !== 'none' && cs.visibility !== 'hidden' && parseFloat(cs.strokeOpacity) > 0) halos++;
     }
-    return { running: running.length, halos, completeClip: done ? getComputedStyle(done).clipPath : '(no .nx-pc)' };
+    return { running: running.length, names: [...new Set(running)].slice(0, 12), halos, completeClip: done ? getComputedStyle(done).clipPath : '(no .nx-pc)' };
   });
 }
+/* Each route runs with a live scene: the Query thread working with its Orbit open (the live node's glyph loops, the
+   bar's rhythm, the jump button), plus the 13-member matrix. 10c is the PMConcept7 contract html[data-motion]. */
+async function liveScene(p) {
+  await p.evaluate(() => { window.PM56_DEMO.selectThread('query'); window.PM56_DEMO.startWorking(); });
+  await p.waitForTimeout(2500);
+  return p.evaluate(() => !!document.querySelector('.orbit-node.live'));
+}
+const reducedMsg = (k, route, r, orbit) =>
+  `${k} reduced motion (${route}): ${r.running} running on svg.nx/.nx-st with the Orbit ${orbit ? 'open' : 'MISSING'}, ${r.halos} halos paint (want >= 5), complete clip-path ${r.completeClip}`;
 await sec('reduced media', async () => {
   const ctx = await browser.newContext({
     viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1, reducedMotion: 'reduce'
@@ -739,22 +755,27 @@ await sec('reduced media', async () => {
     await p.goto(pathToFileURL(FILE).href, { waitUntil: 'load' });
     await boot(p);
     await setTheme(p, 'basic-dark');
+    const orbit = await liveScene(p);
     const r = await reducedState(p);
-    check(r.running === 0 && r.completeClip === 'none' && r.halos >= 5,
-      `10a reduced motion (media): ${r.running} running on svg.nx/.nx-st, ${r.halos} halos paint (want >= 5), complete clip-path ${r.completeClip}`, r);
+    check(orbit && r.running === 0 && r.completeClip === 'none' && r.halos >= 5, reducedMsg('10a', 'media', r, orbit), r);
   } finally { try { await p.close(); await ctx.close(); } catch (e) {} }
 });
-await sec('reduced class', async () => {
-  const p = await newPage({ reducedMotion: 'no-preference' });
-  try {
-    await setTheme(p, 'basic-dark');
-    await p.evaluate(() => document.body.classList.add('pm56-reduced'));
-    await p.waitForTimeout(300);
-    const r = await reducedState(p);
-    check(r.running === 0 && r.completeClip === 'none' && r.halos >= 5,
-      `10b reduced motion (body.pm56-reduced): ${r.running} running on svg.nx/.nx-st, ${r.halos} halos paint (want >= 5), complete clip-path ${r.completeClip}`, r);
-  } finally { await shut(p); }
-});
+for (const [k, route] of [['10b', 'body.pm56-reduced'], ['10c', 'html[data-motion="reduced"]']]) {
+  await sec('reduced ' + route, async () => {
+    const p = await newPage({ reducedMotion: 'no-preference' });
+    try {
+      await setTheme(p, 'basic-dark');
+      await p.evaluate(k => {
+        if (k === '10b') document.body.classList.add('pm56-reduced');
+        else document.documentElement.setAttribute('data-motion', 'reduced');
+      }, k);
+      await p.waitForTimeout(300);
+      const orbit = await liveScene(p);
+      const r = await reducedState(p);
+      check(orbit && r.running === 0 && r.completeClip === 'none' && r.halos >= 5, reducedMsg(k, route, r, orbit), r);
+    } finally { await shut(p); }
+  });
+}
 
 /* ------------------------------------------------------------- check 11: light-theme idle contrast */
 for (const theme of LIGHT) {
@@ -766,13 +787,24 @@ for (const theme of LIGHT) {
       await p.waitForTimeout(400);
       const rows = await p.evaluate(live => {
         const out = {};
+        /* The backdrop as painted: every translucent layer from the tube up, composited down onto the first
+           opaque one (a row's hover or selection tint is translucent in several themes). */
         const opaque = el => {
+          const layers = [];
+          let base = [255, 255, 255];
           for (let n = el; n; n = n.parentElement) {
             const bg = getComputedStyle(n).backgroundColor;
             const m = /rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)(?:[,\s/]+([\d.]+))?\s*\)/.exec(bg);
-            if (m && (m[4] === undefined || +m[4] >= 0.99)) return bg;
+            if (!m) continue;
+            const a = m[4] === undefined ? 1 : +m[4];
+            if (a >= 0.99) { base = [+m[1], +m[2], +m[3]]; break; }
+            if (a > 0) layers.push([+m[1], +m[2], +m[3], a]);
           }
-          return 'rgb(255, 255, 255)';
+          for (let i = layers.length - 1; i >= 0; i--) {
+            const [r, g, b, a] = layers[i];
+            base = [r * a + base[0] * (1 - a), g * a + base[1] * (1 - a), b * a + base[2] * (1 - a)];
+          }
+          return `rgb(${base.map(v => v.toFixed(2)).join(', ')})`;
         };
         for (const s of ['idle', ...live]) {
           let el = document.querySelector(`.ph-status[data-status="${s}"]`);
@@ -810,6 +842,44 @@ for (const theme of LIGHT) {
       const liveMin = Math.min(...LIVE.map(s => cr[s]));
       const ok = cr.idle >= 3 && cr.idle < liveMin;
       check(ok, `11 light-theme idle contrast [${theme}]: idle ${cr.idle}:1 (want >= 3 and below every live tone, min ${liveMin}:1)`, cr);
+      /* 11b: the same idle row hovered, selected, and selected + hovered (the row tints change the field). */
+      const idleOn = () => p.evaluate(() => {
+        const el = document.querySelector('.thread-row[data-nx-probe] .ph-status[data-status="idle"]');
+        const tube = el && el.querySelector('.nx-c');
+        if (!tube) return null;
+        const comp = n0 => { const L = []; let b = [255, 255, 255];
+          for (let n = n0; n; n = n.parentElement) {
+            const m = /rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)(?:[,\s/]+([\d.]+))?\s*\)/.exec(getComputedStyle(n).backgroundColor);
+            if (!m) continue; const a = m[4] === undefined ? 1 : +m[4];
+            if (a >= 0.99) { b = [+m[1], +m[2], +m[3]]; break; } if (a > 0) L.push([+m[1], +m[2], +m[3], a]); }
+          for (let i = L.length - 1; i >= 0; i--) { const [r, g, bb, a] = L[i]; b = [r * a + b[0] * (1 - a), g * a + b[1] * (1 - a), bb * a + b[2] * (1 - a)]; }
+          return `rgb(${b.map(v => v.toFixed(2)).join(', ')})`; };
+        return { ink: getComputedStyle(tube).stroke, bg: comp(tube) };
+      });
+      const crOf = v => { if (!v) return null; const fg = parseCss(v.ink), bg = parseCss(v.bg); return +ratio(fg[3] < 1 ? over(fg, bg) : fg, bg).toFixed(3); };
+      const id = await p.evaluate(() => {
+        const row = [...document.querySelectorAll('.thread-row')].find(r => r.querySelector('.ph-status[data-status="idle"]') && !r.classList.contains('active'));
+        if (!row) return null;
+        row.setAttribute('data-nx-probe', '1');
+        return row.getAttribute('data-id') || '';
+      });
+      if (id === null) { check(false, `11b light-theme idle contrast, hovered/selected [${theme}]: no idle row`, null); return; }
+      const states = {};
+      const row = p.locator('.thread-row[data-nx-probe]').first();
+      await row.hover(); await p.waitForTimeout(450);
+      states.hover = crOf(await idleOn());
+      await p.mouse.move(5, 1075); await p.waitForTimeout(300);
+      if (id) {
+        await p.evaluate(i => window.PM56_DEMO.selectThread(i), id); await p.waitForTimeout(700);
+        await p.evaluate(i => { const r = [...document.querySelectorAll('.thread-row')].find(x => x.getAttribute('data-id') === i); if (r) r.setAttribute('data-nx-probe', '1'); }, id);
+        await p.mouse.move(5, 1075); await p.waitForTimeout(300);
+        states.selected = crOf(await idleOn());
+        await p.locator('.thread-row[data-nx-probe]').first().hover(); await p.waitForTimeout(450);
+        states.selectedHover = crOf(await idleOn());
+      }
+      const vals = Object.values(states);
+      check(vals.length >= 1 && vals.every(v => v !== null && v >= 3),
+        `11b light-theme idle contrast, hovered/selected [${theme}]: ${JSON.stringify(states)} (want every state >= 3)`, states);
     } finally { await shut(p); }
   });
 }
@@ -941,14 +1011,16 @@ else await sec('salience', async () => {
    bar, the Lens trigger, jump-bottom, the Orbit discs, the Fast bolt), [data-tone], .is-danger, warning and danger
    event cards, and the Needs-you medallion (its canon accent). Menu check marks keep the accent as a selection and
    are not in these views. */
-const TONE_HOSTS = '.nx-st, .nx-self, .nx-bolt, .activity-item, .pm-lens-trigger, .jump-bottom, .af-chip-pending, .orbit-node, .orbit-core, .wa-disc, .rail8-item, .pm-rail-item, [data-tone], .is-danger, .event-card.danger, .event-card.warning, [data-family="needs"]';
-for (const theme of ['basic-dark', 'friendly-dark']) {
+const TONE_HOSTS = '.nx-st, .nx-self, .nx-bolt, .activity-item, .pm-lens-trigger, .jump-bottom, .af-chip-pending, .orbit-node, .orbit-core, .wa-disc, .rail8-item, .pm-rail-item, [data-tone], .is-danger, .event-card.danger, .event-card.warning, .event-card.positive, [data-family="ledger"].warning, [data-family="ledger"].danger, [data-family="ledger"].positive, [data-family="needs"]';
+/* The Query thread in two dark themes, and the attachments thread (toned ledger lines: positive, warning) in a dark
+   and a light theme (fix cycle 1: a positive line's concept glyph is inked --positive, a tone host). */
+for (const [theme, thread] of [['basic-dark', 'query'], ['friendly-dark', 'query'], ['basic-dark', 'attachments'], ['basic-light', 'attachments'], ['retro-light', 'query']]) {
   if (!THEMES.includes(theme)) continue;
-  await sec(`status ink ${theme}`, async () => {
+  await sec(`status ink ${theme} ${thread}`, async () => {
     const p = await newWidePage();
     try {
       await setTheme(p, theme, true);
-      await p.evaluate(() => { window.PM56_DEMO.selectThread('query'); window.PM56_DEMO.setVariant(1, 5); });
+      await p.evaluate(t => { window.PM56_DEMO.selectThread(t); window.PM56_DEMO.setVariant(1, 5); }, thread);
       await p.waitForTimeout(800);
       await p.mouse.move(5, 1075);
       await p.waitForTimeout(400);
@@ -956,6 +1028,14 @@ for (const theme of ['basic-dark', 'friendly-dark']) {
         const rgb = c => { c = String(c || '').trim(); if (c[0] === '#') return [1, 3, 5].map(i => parseInt(c.slice(i, i + 2), 16)); const m = /rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)/.exec(c); return m ? [+m[1], +m[2], +m[3]] : null; };
         const bs = getComputedStyle(document.body), tones = {};
         for (const t of ['danger', 'warning', 'positive', 'accent', 'accent-2']) tones[t] = rgb(bs.getPropertyValue('--' + t));
+        /* Turn Stage family hues (the deliverable kicker's --fam-deliverable) are canon item-family inks, not status;
+           in retro-light --fam-deliverable is the same colour as --accent-2, so a glyph in its family ink is skipped */
+        const fams = [];
+        for (const host of document.querySelectorAll('.transcript-inner > [data-family]')) {
+          const v = rgb(getComputedStyle(host).getPropertyValue('--fam-' + host.dataset.family));
+          if (v) fams.push(v);
+        }
+        const isFam = (ink, s) => !!s.closest('.transcript-inner > [data-family]') && fams.some(v => Math.hypot(ink[0] - v[0], ink[1] - v[1], ink[2] - v[2]) < 3);
         const bad = [];
         let n = 0;
         for (const s of document.querySelectorAll('svg.nx')) {
@@ -964,6 +1044,7 @@ for (const theme of ['basic-dark', 'friendly-dark']) {
           const tube = s.querySelector('.nx-c'), ink = tube && rgb(getComputedStyle(tube).stroke);
           if (!ink) continue;
           n++;
+          if (isFam(ink, s)) continue;
           for (const [t, v] of Object.entries(tones)) {
             if (v && Math.hypot(ink[0] - v[0], ink[1] - v[1], ink[2] - v[2]) < 10) {
               const up = [s.parentElement, s.parentElement && s.parentElement.parentElement].filter(Boolean)
@@ -973,9 +1054,10 @@ for (const theme of ['basic-dark', 'friendly-dark']) {
             }
           }
         }
-        return { n, bad: bad.slice(0, 12) };
+        const toned = document.querySelectorAll('.transcript-inner > [data-family="ledger"]:is(.positive, .warning, .danger) > .event-icon > svg.nx').length;
+        return { n, toned, bad: bad.slice(0, 12) };
       }, TONE_HOSTS);
-      check(r.n >= 20 && r.bad.length === 0, `14 no status ink on concept/control glyphs [${theme}] (${r.n} glyphs read at rest)`, r.bad);
+      check(r.n >= 20 && r.bad.length === 0, `14 no status ink on concept/control glyphs [${theme}, ${thread}] (${r.n} glyphs read at rest, ${r.toned} in toned ledger lines skipped)`, r.bad);
     } finally { await shut(p); }
   });
 }
