@@ -1,0 +1,40 @@
+{
+  "job": "v8-z-mechanical-route-canary-v2",
+  "case": "v8-z-mechanical-route-canary-v2",
+  "family": "Z",
+  "route": "v8-z-route-recovery-v1-canary-v2",
+  "pins": {
+    "runtime": "0fb15bb7e5ce30f0e485c6342cd2f4c347833b220b513ff74b661a83a4175f87",
+    "config": "db1ecc2db638725dd814e19bbf502884646e2f17e49b38f56bd88ee26bdbabbd",
+    "independent_acceptance": "934d67b21544c633cb139ffb0588a5bd83aaf3bca0225e131c7df76819337f90"
+  },
+  "birth_epoch": 1790913405.8900976,
+  "admitted_epoch": 1790913406.0128517,
+  "hard_deadline_epoch": 1790913885.8900976,
+  "released_epoch": 1790913943.6157796,
+  "status": "released",
+  "goal_starts": [
+    {
+      "job": "v8-z-mechanical-route-canary-v2",
+      "receipt_id": "target_muqflsn4_db8cef65-648b-489f-b201-299814b59ecb",
+      "epoch": 1790913413,
+      "recorded_epoch": 1790913413.13563,
+      "guard_violations": []
+    }
+  ],
+  "launch_pending": null,
+  "generated_output_tokens": null,
+  "quiescence": {
+    "native_quiescent": true,
+    "own_process_group_absent": true,
+    "root_authority": true,
+    "outer_parent_exited": true,
+    "receipt_id": "v8-z-mechanical-route-canary-v2-failure-all-owned-quiet",
+    "proof_path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/FAILURE_CLEANUP_PROOF.json",
+    "qualification": "FAILED missingmetrics; releasecleanup only"
+  },
+  "schema": "pm.er8.selected-job-accounting-projection.v1",
+  "projected_epoch": 1790913978.7554348,
+  "occupied_seconds": 537.7256820201874,
+  "actual_native_goal_starts": 1
+}

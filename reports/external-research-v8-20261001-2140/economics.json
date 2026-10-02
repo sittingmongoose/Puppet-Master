@@ -1,7 +1,7 @@
 {
-  "checkpoint": "ONGOING_RECOVERY",
-  "observed_native_starts": 1,
-  "occupied_candidate_seconds": 816.6492922306061,
+  "checkpoint": "ONGOING_RECOVERY_V2",
+  "observed_native_starts": 2,
+  "occupied_candidate_seconds": 1354.3749742507935,
   "candidate_generated_tokens": null,
   "management_tokens": null,
   "evaluation_tokens": null,
@@ -45,9 +45,22 @@
   },
   "observed_physical_canary_seconds": 450.307123673,
   "governing_authority_amendment": "canary-controller-cohort-v1/recovery-v1/AUTHORITY_AMENDMENT.json",
-  "observed_usage_scope": "Frozen first canary/recovery observation; not a live counter. Historical failures/caps retained without reset.",
+  "observed_usage_scope": "Frozen first+second failed canaries, failure-inclusive late cleanup; not live counter",
   "reserved_native_starts": 84,
   "reserved_occupied_candidate_seconds": 151200,
   "reservation_scope": "24 initial integrated and four fresh holdout whole pipelines; reservations are not starts/usage; root-selected overlay-v2 freeze",
-  "reservation_evidence": "tranche-cohort-v2/ops/recovery-v1/OVERLAY_V2.json"
+  "reservation_evidence": "tranche-cohort-v2/ops/recovery-v1/OVERLAY_V2.json",
+  "failed_canaries": [
+    {
+      "case": "v8-z-mechanical-route-canary-v1",
+      "occupied_seconds": 816.6492922306061,
+      "original_cap_seconds": 480
+    },
+    {
+      "case": "v8-z-mechanical-route-canary-v2",
+      "occupied_seconds": 537.7256820201874,
+      "original_cap_seconds": 480
+    }
+  ],
+  "current_evidence": "recovery-results-cohort-v2/evaluation/recovery-route-v1/canary-v2-review.json"
 }

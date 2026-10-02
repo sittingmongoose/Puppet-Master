@@ -1,0 +1,15 @@
+{
+  "schema": "er8.exact-sdk-pure-functions.synthetic.v1",
+  "auto_uses_disposable_sibling": true,
+  "probe_closed_before_final_connect": true,
+  "legacy_selects_direct_mode": true,
+  "events": [
+    "constructed:configured-final",
+    "constructed:disposable-sibling",
+    "disposable-probe",
+    "disposed:disposable-sibling"
+  ],
+  "native_calls": 0,
+  "provider_calls": 0,
+  "network_calls": 0
+}

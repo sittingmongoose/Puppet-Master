@@ -1,0 +1,22 @@
+{
+  "schema": "pm.er8.actual-v2-cleanup-public-closure.v1",
+  "observed_epoch": 1790913988.4920232,
+  "addendum": {
+    "path": "LAB_ROOT/ops/execution-recovery-v1/CANARY_V2_CLEANUP_ADDENDUM.json",
+    "sha256": "ef2af518aa79f2b188f7675d9fd1b0b542db004cdbbad4f469586560ad37b832"
+  },
+  "rows": [
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/FAILURE_CLEANUP_PROOF.json",
+      "sha256": "2bae7b91c6b32dca28bffc30b631be142cbd7fc4f26d4eb6d77a6f262babeb10",
+      "match": true
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/FAILURE_LEASE_RELEASE.json",
+      "sha256": "fc9780945ba3c86b712e98b698519fba1964a77d9c6b36a478786927a3a9f155",
+      "match": true
+    }
+  ],
+  "all_match": true,
+  "native_raw_private_modelio_or_auth_reads": 0
+}

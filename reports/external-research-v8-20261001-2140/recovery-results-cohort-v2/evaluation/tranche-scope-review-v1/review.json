@@ -1,0 +1,542 @@
+{
+  "schema": "pm.external_research.v8.tranche_scope_review.v1",
+  "reviewer": "codex-v8-pair-scope",
+  "completed_at": "2026-10-02T03:58:06.057502+00:00",
+  "status": "CLEAR_PROMPT_SCOPE_WITH_DECLARED_EXECUTION_BINDING_PRECONDITIONS",
+  "manifest_sha256": "d1d0bc0c4efae38e34819f7cf245030ff78ba1b85e8de2c35342549f5db60152",
+  "first_pair_status": "CLEAR_PROMPT_SCOPE",
+  "launch_authority": false,
+  "stop_defects": [],
+  "counts": {
+    "pairs": 12,
+    "unique_initial_pipelines": 24,
+    "preserved_old_cases": 6,
+    "new_cases": 18,
+    "unseen_holdouts": 4
+  },
+  "scope": "Independent method-card/template/manifest/pair-map review. Generic scoring only; no source fact research, source rulings, candidate outputs, answer-bearing ground truth, model/provider/native candidate calls, execution qualification or old lifetime/privacy re-audit.",
+  "common_artifacts": [
+    {
+      "relative_path": "briefs/bioimaging.md",
+      "planning_v1_sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+      "tranche_v2_sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+      "byte_identical": true
+    },
+    {
+      "relative_path": "briefs/notebook-workspace.md",
+      "planning_v1_sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+      "tranche_v2_sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+      "byte_identical": true
+    },
+    {
+      "relative_path": "sandbox-plans/bioimaging.md",
+      "planning_v1_sha256": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30",
+      "tranche_v2_sha256": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30",
+      "byte_identical": true
+    },
+    {
+      "relative_path": "sandbox-plans/notebook-workspace.md",
+      "planning_v1_sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+      "tranche_v2_sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+      "byte_identical": true
+    },
+    {
+      "relative_path": "templates/research.TASK.md",
+      "planning_v1_sha256": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3",
+      "tranche_v2_sha256": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3",
+      "byte_identical": true
+    },
+    {
+      "relative_path": "templates/critic.TASK.md",
+      "planning_v1_sha256": "fa635038ca75a96599f09d43eb289b89c25320eda9325fd836c6fef2878504b2",
+      "tranche_v2_sha256": "fa635038ca75a96599f09d43eb289b89c25320eda9325fd836c6fef2878504b2",
+      "byte_identical": true
+    },
+    {
+      "relative_path": "templates/correction.TASK.md",
+      "planning_v1_sha256": "9ef5b51a9b2e9db734e492f6be2978f277ec8ee7f456b310c1f793375f1997d5",
+      "tranche_v2_sha256": "9ef5b51a9b2e9db734e492f6be2978f277ec8ee7f456b310c1f793375f1997d5",
+      "byte_identical": true
+    },
+    {
+      "relative_path": "source-access.json",
+      "planning_v1_sha256": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df",
+      "tranche_v2_sha256": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df",
+      "byte_identical": true
+    }
+  ],
+  "pair_findings": [
+    {
+      "pair_id": "V8-BIO-CHECK",
+      "domain": "bioimaging",
+      "status": "CLEAR_PROMPT_SCOPE",
+      "shared_background": "ordinary complete pipeline",
+      "assigned_increment": "one self-derived discriminating numerical witness",
+      "finding": "WIT card embeds verbatim ordinary C instruction plus witness. The pre-preparation clarification makes assigned additions take precedence; useful unassigned techniques stay optional.",
+      "arms": [
+        {
+          "role": "control_case",
+          "case_id": "V8-BIO-C-Z",
+          "origin": "planning-v1-preserved",
+          "method_id": "C",
+          "method_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+          "manifest_sha256": "8e7640a9e34d166a97e4c22f732cb56e5ee516bec47327da605324e5608a5447",
+          "family_provisional": "Z",
+          "declared_model": "GLM5.3Flash",
+          "declared_mode": "Max",
+          "host_overhead_manifest_seconds": 600,
+          "effective_host_overhead_seconds": 300,
+          "full_stages_reserved": true
+        },
+        {
+          "role": "treatment_case",
+          "case_id": "V8-BIO-WIT-T-Z",
+          "origin": "tranche-v2-new",
+          "method_id": "WIT",
+          "method_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+          "manifest_sha256": "05a9e5c6ce15c19fd9e5e726a8d12e1850551ba63989c9166b797e8096ea0ad7",
+          "family_provisional": "Z",
+          "declared_model": "GLM5.3Flash",
+          "declared_mode": "Max",
+          "host_overhead_manifest_seconds": 300,
+          "effective_host_overhead_seconds": 300,
+          "full_stages_reserved": true
+        }
+      ]
+    },
+    {
+      "pair_id": "V8-BIO-COND",
+      "domain": "bioimaging",
+      "status": "CLEAR_PROMPT_SCOPE",
+      "shared_background": "one self-derived discriminating witness",
+      "assigned_increment": "exactly three proposition/condition checks, one per question",
+      "finding": "Old P witness sentence is verbatim in fresh WIT control. Each COND control has its own fresh case id; it is not the CHECK treatment reused. The three-proposition check explicitly supplements whole-case coverage.",
+      "arms": [
+        {
+          "role": "control_case",
+          "case_id": "V8-BIO-COND-C-Z",
+          "origin": "tranche-v2-new",
+          "method_id": "WIT",
+          "method_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+          "manifest_sha256": "ea0b885d4bbcef2bda6d16ab10008aea78303e4e8ca796b60f57800a484be478",
+          "family_provisional": "Z",
+          "declared_model": "GLM5.3Flash",
+          "declared_mode": "Max",
+          "host_overhead_manifest_seconds": 300,
+          "effective_host_overhead_seconds": 300,
+          "full_stages_reserved": true
+        },
+        {
+          "role": "treatment_case",
+          "case_id": "V8-BIO-P-Z",
+          "origin": "planning-v1-preserved",
+          "method_id": "P",
+          "method_sha256": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a",
+          "manifest_sha256": "4642c8d7ebb2b925f3a2256db79c73070549a451ad2bc4235df1862a0c6cba0b",
+          "family_provisional": "Z",
+          "declared_model": "GLM5.3Flash",
+          "declared_mode": "Max",
+          "host_overhead_manifest_seconds": 600,
+          "effective_host_overhead_seconds": 300,
+          "full_stages_reserved": true
+        }
+      ]
+    },
+    {
+      "pair_id": "V8-BIO-BATCH",
+      "domain": "bioimaging",
+      "status": "CLEAR_PROMPT_SCOPE",
+      "shared_background": "three proposition/condition checks + witness + progressive retrieval",
+      "assigned_increment": "coherent two or three research batches",
+      "finding": "Old B card includes full old P text; P-R control reproduces it verbatim. Both include the same progressive-retrieval paragraph and short research-order note. Neither fixes a number of retrieval waves. Within-case source reuse access is common; only B organizes coherent 2/3 batches.",
+      "arms": [
+        {
+          "role": "control_case",
+          "case_id": "V8-BIO-BATCH-C-Z",
+          "origin": "tranche-v2-new",
+          "method_id": "P-R",
+          "method_sha256": "222ad8739878a9dfc93d6e3ee533596ea2cd2f4cac673870c6c285c18dd2570c",
+          "manifest_sha256": "96640dea4593af1319bdda14a47cde5c0f1973780e26703e86983d03171bb17b",
+          "family_provisional": "Z",
+          "declared_model": "GLM5.3Flash",
+          "declared_mode": "Max",
+          "host_overhead_manifest_seconds": 300,
+          "effective_host_overhead_seconds": 300,
+          "full_stages_reserved": true
+        },
+        {
+          "role": "treatment_case",
+          "case_id": "V8-BIO-B-Z",
+          "origin": "planning-v1-preserved",
+          "method_id": "B",
+          "method_sha256": "f6df08a280a4db79323bd96c9d816c34aee66a02e3f155602407f1290c599f5c",
+          "manifest_sha256": "bacf9033fa8af87aef92fb6c6ff4128135fab2159632a395c286b2a9425c74b7",
+          "family_provisional": "Z",
+          "declared_model": "GLM5.3Flash",
+          "declared_mode": "Max",
+          "host_overhead_manifest_seconds": 600,
+          "effective_host_overhead_seconds": 300,
+          "full_stages_reserved": true
+        }
+      ]
+    },
+    {
+      "pair_id": "V8-BIO-RETR",
+      "domain": "bioimaging",
+      "status": "CLEAR_PROMPT_SCOPE",
+      "shared_background": "ordinary complete pipeline + coherent two or three research batches",
+      "assigned_increment": "progressive identity/section-first then consequential-context expansion",
+      "finding": "C-B and C-B-R share verbatim batching instruction and ordinary C background. Progressive context expansion is the sole added required procedure; control can retrieve progressively spontaneously.",
+      "arms": [
+        {
+          "role": "control_case",
+          "case_id": "V8-BIO-RETR-C-M",
+          "origin": "tranche-v2-new",
+          "method_id": "C-B",
+          "method_sha256": "6b617504d3749407e1a80d876bdce0c1117668326e6131a582e730c50b106d0a",
+          "manifest_sha256": "501c315b40001594d2792fba19cf5a3556ddd6d4dd475b41e3caf6a9091c899a",
+          "family_provisional": "M",
+          "declared_model": null,
+          "declared_mode": null,
+          "host_overhead_manifest_seconds": 300,
+          "effective_host_overhead_seconds": 300,
+          "full_stages_reserved": true
+        },
+        {
+          "role": "treatment_case",
+          "case_id": "V8-BIO-RETR-T-M",
+          "origin": "tranche-v2-new",
+          "method_id": "C-B-R",
+          "method_sha256": "700f321706f86f2eb5e9debe5cabdef89e2433b24ca272eb0d13faee400221cf",
+          "manifest_sha256": "a5acd7dec272711a28fafd52188ea2e30a9a87042fffa3c0dca6d1c136f4affb",
+          "family_provisional": "M",
+          "declared_model": null,
+          "declared_mode": null,
+          "host_overhead_manifest_seconds": 300,
+          "effective_host_overhead_seconds": 300,
+          "full_stages_reserved": true
+        }
+      ]
+    },
+    {
+      "pair_id": "V8-BIO-AMEND",
+      "domain": "bioimaging",
+      "status": "CLEAR_PROMPT_SCOPE",
+      "shared_background": "ordinary complete pipeline with fresh same-family full-scope critic and correction",
+      "assigned_increment": "prioritized up-to-three warranted amendment format",
+      "finding": "C-A retains all three questions/five obligations, source checking, extra consequential unresolved obligations, exact same 600-second critic cap and complete fresh correction. No forced defect count, evaluator feedback, or stronger critic model.",
+      "arms": [
+        {
+          "role": "control_case",
+          "case_id": "V8-BIO-AMEND-C-L",
+          "origin": "tranche-v2-new",
+          "method_id": "C",
+          "method_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+          "manifest_sha256": "b54829bf3d92a7b92d060843da9034ab7a4a8e8fadaf3fe59a642e7d7ed7a0b9",
+          "family_provisional": "L",
+          "declared_model": null,
+          "declared_mode": null,
+          "host_overhead_manifest_seconds": 300,
+          "effective_host_overhead_seconds": 300,
+          "full_stages_reserved": true
+        },
+        {
+          "role": "treatment_case",
+          "case_id": "V8-BIO-AMEND-T-L",
+          "origin": "tranche-v2-new",
+          "method_id": "C-A",
+          "method_sha256": "cb187544119249fdeef595b43cce64fd0f858e0cf1243264cf4bb7d59fad39b8",
+          "manifest_sha256": "e54800eff5ca692e80af2945e73f212be799edac12ed5274d856257b826489b8",
+          "family_provisional": "L",
+          "declared_model": null,
+          "declared_mode": null,
+          "host_overhead_manifest_seconds": 300,
+          "effective_host_overhead_seconds": 300,
+          "full_stages_reserved": true
+        }
+      ]
+    },
+    {
+      "pair_id": "V8-BIO-BREADTH",
+      "domain": "bioimaging",
+      "status": "CLEAR_PROMPT_SCOPE",
+      "shared_background": "ordinary complete independent source discovery and two-option comparison",
+      "assigned_increment": "bounded three/four shortlist with neighboring-use-case analogy",
+      "finding": "C-D adds bounded option/analogy discovery and a retained/rejected disposition; all existing options, tradeoff, issue-fix-test and whole-case obligations remain. C is efficient and is free to use extra options/analogy spontaneously.",
+      "arms": [
+        {
+          "role": "control_case",
+          "case_id": "V8-BIO-BREADTH-C-M",
+          "origin": "tranche-v2-new",
+          "method_id": "C",
+          "method_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+          "manifest_sha256": "cb62ebc615a5203aa3796e9d3512091543425caabc7c59af2bf7254ef3819517",
+          "family_provisional": "M",
+          "declared_model": null,
+          "declared_mode": null,
+          "host_overhead_manifest_seconds": 300,
+          "effective_host_overhead_seconds": 300,
+          "full_stages_reserved": true
+        },
+        {
+          "role": "treatment_case",
+          "case_id": "V8-BIO-BREADTH-T-M",
+          "origin": "tranche-v2-new",
+          "method_id": "C-D",
+          "method_sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+          "manifest_sha256": "e39d01106deca215e6b8c55eb8827c58b4d86924f5bcab258c8226e5c58d9788",
+          "family_provisional": "M",
+          "declared_model": null,
+          "declared_mode": null,
+          "host_overhead_manifest_seconds": 300,
+          "effective_host_overhead_seconds": 300,
+          "full_stages_reserved": true
+        }
+      ]
+    },
+    {
+      "pair_id": "V8-NB-CHECK",
+      "domain": "notebook-workspace",
+      "status": "CLEAR_PROMPT_SCOPE",
+      "shared_background": "ordinary complete pipeline",
+      "assigned_increment": "one self-derived discriminating numerical witness",
+      "finding": "WIT card embeds verbatim ordinary C instruction plus witness. The pre-preparation clarification makes assigned additions take precedence; useful unassigned techniques stay optional.",
+      "arms": [
+        {
+          "role": "control_case",
+          "case_id": "V8-NB-C-Z",
+          "origin": "planning-v1-preserved",
+          "method_id": "C",
+          "method_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+          "manifest_sha256": "feabe7e17c01d50d74c5431ace0dcb41de0e409ac1ab7ede6489c4f0c0a37a81",
+          "family_provisional": "Z",
+          "declared_model": "GLM5.3Flash",
+          "declared_mode": "Max",
+          "host_overhead_manifest_seconds": 600,
+          "effective_host_overhead_seconds": 300,
+          "full_stages_reserved": true
+        },
+        {
+          "role": "treatment_case",
+          "case_id": "V8-NB-WIT-T-Z",
+          "origin": "tranche-v2-new",
+          "method_id": "WIT",
+          "method_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+          "manifest_sha256": "fd9d96ce1d9be01f3a88791a62e9d16fd504aa1090d625bf3af8b0361d13b064",
+          "family_provisional": "Z",
+          "declared_model": "GLM5.3Flash",
+          "declared_mode": "Max",
+          "host_overhead_manifest_seconds": 300,
+          "effective_host_overhead_seconds": 300,
+          "full_stages_reserved": true
+        }
+      ]
+    },
+    {
+      "pair_id": "V8-NB-COND",
+      "domain": "notebook-workspace",
+      "status": "CLEAR_PROMPT_SCOPE",
+      "shared_background": "one self-derived discriminating witness",
+      "assigned_increment": "exactly three proposition/condition checks, one per question",
+      "finding": "Old P witness sentence is verbatim in fresh WIT control. Each COND control has its own fresh case id; it is not the CHECK treatment reused. The three-proposition check explicitly supplements whole-case coverage.",
+      "arms": [
+        {
+          "role": "control_case",
+          "case_id": "V8-NB-COND-C-Z",
+          "origin": "tranche-v2-new",
+          "method_id": "WIT",
+          "method_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+          "manifest_sha256": "c77ec419aa9c2879fcb5610b68c7d6a49d9fe4de8e9fa32038400f9422f68407",
+          "family_provisional": "Z",
+          "declared_model": "GLM5.3Flash",
+          "declared_mode": "Max",
+          "host_overhead_manifest_seconds": 300,
+          "effective_host_overhead_seconds": 300,
+          "full_stages_reserved": true
+        },
+        {
+          "role": "treatment_case",
+          "case_id": "V8-NB-P-Z",
+          "origin": "planning-v1-preserved",
+          "method_id": "P",
+          "method_sha256": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a",
+          "manifest_sha256": "081d67be0ab11b321add5f13ff70418833937c897873b2f7c2560131f362ba7c",
+          "family_provisional": "Z",
+          "declared_model": "GLM5.3Flash",
+          "declared_mode": "Max",
+          "host_overhead_manifest_seconds": 600,
+          "effective_host_overhead_seconds": 300,
+          "full_stages_reserved": true
+        }
+      ]
+    },
+    {
+      "pair_id": "V8-NB-BATCH",
+      "domain": "notebook-workspace",
+      "status": "CLEAR_PROMPT_SCOPE",
+      "shared_background": "three proposition/condition checks + witness + progressive retrieval",
+      "assigned_increment": "coherent two or three research batches",
+      "finding": "Old B card includes full old P text; P-R control reproduces it verbatim. Both include the same progressive-retrieval paragraph and short research-order note. Neither fixes a number of retrieval waves. Within-case source reuse access is common; only B organizes coherent 2/3 batches.",
+      "arms": [
+        {
+          "role": "control_case",
+          "case_id": "V8-NB-BATCH-C-Z",
+          "origin": "tranche-v2-new",
+          "method_id": "P-R",
+          "method_sha256": "222ad8739878a9dfc93d6e3ee533596ea2cd2f4cac673870c6c285c18dd2570c",
+          "manifest_sha256": "1289009d5f8b46e99c6a1e0a52fa575d7e5077a7cf5e9d3a219f0da62c7b2e11",
+          "family_provisional": "Z",
+          "declared_model": "GLM5.3Flash",
+          "declared_mode": "Max",
+          "host_overhead_manifest_seconds": 300,
+          "effective_host_overhead_seconds": 300,
+          "full_stages_reserved": true
+        },
+        {
+          "role": "treatment_case",
+          "case_id": "V8-NB-B-Z",
+          "origin": "planning-v1-preserved",
+          "method_id": "B",
+          "method_sha256": "f6df08a280a4db79323bd96c9d816c34aee66a02e3f155602407f1290c599f5c",
+          "manifest_sha256": "8b4268c2b11ccccae378713bfa8c87ddea7bc03ee1e50c236ccd269b7bc50485",
+          "family_provisional": "Z",
+          "declared_model": "GLM5.3Flash",
+          "declared_mode": "Max",
+          "host_overhead_manifest_seconds": 600,
+          "effective_host_overhead_seconds": 300,
+          "full_stages_reserved": true
+        }
+      ]
+    },
+    {
+      "pair_id": "V8-NB-RETR",
+      "domain": "notebook-workspace",
+      "status": "CLEAR_PROMPT_SCOPE",
+      "shared_background": "ordinary complete pipeline + coherent two or three research batches",
+      "assigned_increment": "progressive identity/section-first then consequential-context expansion",
+      "finding": "C-B and C-B-R share verbatim batching instruction and ordinary C background. Progressive context expansion is the sole added required procedure; control can retrieve progressively spontaneously.",
+      "arms": [
+        {
+          "role": "control_case",
+          "case_id": "V8-NB-RETR-C-M",
+          "origin": "tranche-v2-new",
+          "method_id": "C-B",
+          "method_sha256": "6b617504d3749407e1a80d876bdce0c1117668326e6131a582e730c50b106d0a",
+          "manifest_sha256": "b34d15f40fc860db4e4aaf93157f3551ca691da9d91e9f690036d9d41bea02ef",
+          "family_provisional": "M",
+          "declared_model": null,
+          "declared_mode": null,
+          "host_overhead_manifest_seconds": 300,
+          "effective_host_overhead_seconds": 300,
+          "full_stages_reserved": true
+        },
+        {
+          "role": "treatment_case",
+          "case_id": "V8-NB-RETR-T-M",
+          "origin": "tranche-v2-new",
+          "method_id": "C-B-R",
+          "method_sha256": "700f321706f86f2eb5e9debe5cabdef89e2433b24ca272eb0d13faee400221cf",
+          "manifest_sha256": "74e0513916f5c2ffec7900b94fb215e85c9a88aab65fe0738f7a4b2b8b7114b8",
+          "family_provisional": "M",
+          "declared_model": null,
+          "declared_mode": null,
+          "host_overhead_manifest_seconds": 300,
+          "effective_host_overhead_seconds": 300,
+          "full_stages_reserved": true
+        }
+      ]
+    },
+    {
+      "pair_id": "V8-NB-AMEND",
+      "domain": "notebook-workspace",
+      "status": "CLEAR_PROMPT_SCOPE",
+      "shared_background": "ordinary complete pipeline with fresh same-family full-scope critic and correction",
+      "assigned_increment": "prioritized up-to-three warranted amendment format",
+      "finding": "C-A retains all three questions/five obligations, source checking, extra consequential unresolved obligations, exact same 600-second critic cap and complete fresh correction. No forced defect count, evaluator feedback, or stronger critic model.",
+      "arms": [
+        {
+          "role": "control_case",
+          "case_id": "V8-NB-AMEND-C-L",
+          "origin": "tranche-v2-new",
+          "method_id": "C",
+          "method_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+          "manifest_sha256": "0949167d3c6bd00337755388ee3f8e40d13d297dc47a8a00d020238b7fc28b8f",
+          "family_provisional": "L",
+          "declared_model": null,
+          "declared_mode": null,
+          "host_overhead_manifest_seconds": 300,
+          "effective_host_overhead_seconds": 300,
+          "full_stages_reserved": true
+        },
+        {
+          "role": "treatment_case",
+          "case_id": "V8-NB-AMEND-T-L",
+          "origin": "tranche-v2-new",
+          "method_id": "C-A",
+          "method_sha256": "cb187544119249fdeef595b43cce64fd0f858e0cf1243264cf4bb7d59fad39b8",
+          "manifest_sha256": "df929e7ee6c8c87106108b99fdfd8bcd93c8b00f4a517424d3c58912f16a7a26",
+          "family_provisional": "L",
+          "declared_model": null,
+          "declared_mode": null,
+          "host_overhead_manifest_seconds": 300,
+          "effective_host_overhead_seconds": 300,
+          "full_stages_reserved": true
+        }
+      ]
+    },
+    {
+      "pair_id": "V8-NB-BREADTH",
+      "domain": "notebook-workspace",
+      "status": "CLEAR_PROMPT_SCOPE",
+      "shared_background": "ordinary complete independent source discovery and two-option comparison",
+      "assigned_increment": "bounded three/four shortlist with neighboring-use-case analogy",
+      "finding": "C-D adds bounded option/analogy discovery and a retained/rejected disposition; all existing options, tradeoff, issue-fix-test and whole-case obligations remain. C is efficient and is free to use extra options/analogy spontaneously.",
+      "arms": [
+        {
+          "role": "control_case",
+          "case_id": "V8-NB-BREADTH-C-M",
+          "origin": "tranche-v2-new",
+          "method_id": "C",
+          "method_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+          "manifest_sha256": "73be13b284303ca52cf42e5bfc2f6557ae78fa8326a7ae30e3ef4e2a651bdeaf",
+          "family_provisional": "M",
+          "declared_model": null,
+          "declared_mode": null,
+          "host_overhead_manifest_seconds": 300,
+          "effective_host_overhead_seconds": 300,
+          "full_stages_reserved": true
+        },
+        {
+          "role": "treatment_case",
+          "case_id": "V8-NB-BREADTH-T-M",
+          "origin": "tranche-v2-new",
+          "method_id": "C-D",
+          "method_sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+          "manifest_sha256": "7750c4f83a3204370f42e1ff5c0eb087b44e442d5611bed9a95679fb947c91e4",
+          "family_provisional": "M",
+          "declared_model": null,
+          "declared_mode": null,
+          "host_overhead_manifest_seconds": 300,
+          "effective_host_overhead_seconds": 300,
+          "full_stages_reserved": true
+        }
+      ]
+    }
+  ],
+  "execution_binding_preconditions": [
+    "Bind common effective host overhead300 to preserved host600 and new host300 cases before preparation; preserve old artifacts rather than edit them.",
+    "Same authorized account, exact model/mode/route/limits and immutable input/method hashes must be frozen for both arms before either birth; route qualification is separate.",
+    "M/L are provisional unbound reservations. A safe family may carry an entire unborn pair only through a prospective whole-pair receipt before either case birth; no post-preparation reroute or outcome-based retry.",
+    "No sibling/cross-case source selections, captures, discoveries, proposals, critiques or evaluator feedback; stage inputs remain same-case only."
+  ],
+  "practical_controls": "Ordinary C explicitly chooses efficient research order and permits observable spontaneous uptake. P-R permits useful source reuse and does not force full-corpus retrieval or waste. Batching/progressive/breadth procedures are bounded; no scope truncation.",
+  "generic_scoring": "Score complete frozen final proposal across all three questions/five obligations and all current asserted claims before paired timing/cost comparisons. Required witness truth applies to witness-assigned methods; useful spontaneous uptake stays observable rather than disallowed. Failed/incomplete cases do not count as quality-equivalent speedups.",
+  "holdout_finding": "Four fresh executions form two unseen matched brief pairs. Inputs stay unprepared/unexposed until a independently evaluated complete promising recipe is selected; freeze shared brief and complete recipe/binding prospectively.",
+  "claim_limit": "Instruction-level incremental contrasts on declared shared backgrounds; changed wording/order in preserved old-vs-new cards is visible and prevents universal main-effect attribution. One pair per domain/contrast; no statistical generalization. Control spontaneous uptake/source discovery difficulty can reduce observed separation.",
+  "cost_statement": "No cost measurement or price inference in this review. Real/native token/cost components and helper lifetime accounting remain recorded by host; unknown components must remain unknown.",
+  "freeze_validation": {
+    "tranche_sha_entries_checked": 71,
+    "preserved_planning_sha_entries_checked": 35,
+    "mismatches": []
+  }
+}

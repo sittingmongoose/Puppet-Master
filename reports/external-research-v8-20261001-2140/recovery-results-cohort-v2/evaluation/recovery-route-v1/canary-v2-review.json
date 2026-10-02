@@ -1,0 +1,103 @@
+{
+  "schema": "er8.native-canary-review.v1",
+  "verdict": "HOLD",
+  "decision": "FROZEN_FAILED_INFRASTRUCTURE_UNESTABLISHED_NATIVE_QUALIFICATION",
+  "created_utc": "2026-10-02T04:07:29.379924+00:00",
+  "reviewer": "/root/v8_route_independent",
+  "job": "v8-z-mechanical-route-canary-v2",
+  "snapshot_sha256": "dd89caedcbdc321325728bb39d1693e89f72eb6fb48cf2601f2a9e46aee2b001",
+  "route_snapshot_sha256": "0fb15bb7e5ce30f0e485c6342cd2f4c347833b220b513ff74b661a83a4175f87",
+  "root_config_sha256": "db1ecc2db638725dd814e19bbf502884646e2f17e49b38f56bd88ee26bdbabbd",
+  "source_freeze2_sha256": "f944dfc36e9d2fe407e0f8211d1b1e6a8391261cfa96b5db3589ec98063c7e0f",
+  "inclusive_native_lifetime_verified": false,
+  "native_inner_owned_cgroup_quiet_before_original_deadline_verified": true,
+  "native_goal_activation_verified": true,
+  "native_goal_activation_continuation_completion_verified": false,
+  "privacy_and_actual_tool_inventory_verified": false,
+  "source_capture_and_delivered_range_verified": false,
+  "whole_case_cost_compliant": false,
+  "native_goal_or_model_quality_rejection": false,
+  "native_route_productive_acceptance_issued": false,
+  "checks": {
+    "public16terminalpinsmatch": true,
+    "cleanup2pinsmatch": true,
+    "accounting_projection_matches_expected_hash": true,
+    "original_birthday_and480_cutoff_join": true,
+    "activation_matches_counted_goal_start": true,
+    "same_owned_enrollment_and_firstquiet_before_cutoff": true,
+    "held_outer_parent_exited_before_cutoff": true,
+    "outer_group_absent_at_late_failure_cleanup": true,
+    "externalsettlement_failed": true,
+    "late_failure_lease_release_preserved": true
+  },
+  "actual_native_goal_starts_this_canary": 1,
+  "actual_native_goal_starts_campaign_total": 2,
+  "projected_response_lower_bound": 47,
+  "last_projected_goal_status": "active",
+  "actual_model_effort": "UNESTABLISHED",
+  "actual_request_attempt_and_tool_inventory": "UNESTABLISHED",
+  "source_GET_body_capture_range_native_delivery_join": "UNESTABLISHED",
+  "same_target_completion": "UNESTABLISHED",
+  "native_automatic_continuation_and_verifier": "UNESTABLISHED",
+  "original_start_permit_receipt": "NOT_PRESERVED_IN_PUBLIC_WHITELIST;goal-start projection has guard_violations=[]",
+  "missing_positive_receipts": [
+    "COMPLETE.json",
+    "EXTERNAL_CLOSE.json",
+    "PUBLIC_METRICS_FREEZE.json",
+    "PUBLIC_ARTIFACT_FREEZE.json",
+    "native-public/receipt.json",
+    "native-public/public-metrics.json",
+    "workspace/operation_receipts/events.jsonl",
+    "workspace/out/RESULT.md"
+  ],
+  "reason": "Fresh native Goal activated and remained active; allrequest/model/context/tool/sourceoperation/range/RESULT/terminalreceipt proofs missing. Parent settlement failed; failurecleanup and slot release happened after original480s cap. No semantic/modelquality conclusion is supported.",
+  "costs": {
+    "original_birth_epoch": 1790913405.8900976,
+    "original_deadline_epoch": 1790913885.8900976,
+    "parent_end_elapsed_seconds": 450.33003837,
+    "native_wrapper_through_first_positive_quiet_seconds": 449.993576701,
+    "original_occupied_cap_seconds": 480,
+    "actual_occupied_seconds_through_failure_lease_release": 537.7256820201874,
+    "actual_slot_cap_overrun_seconds": 57.72568202018738,
+    "outside_native_seconds_through_cleanup_observation": 87.708301406,
+    "outside_seconds_through_failure_lease_release_arithmetic": 87.73210531918738,
+    "outside_native_cap_seconds": 300,
+    "original_v1_occupied_slot_seconds_retained": 816.6492922306061,
+    "cumulative_occupied_slot_seconds_failure_inclusive": 1354.3749742507935,
+    "generated_tokens": "UNKNOWN",
+    "after_release_publication_or_evaluation_campaign_cost": "UNKNOWN;not declared zero",
+    "no_backdating_or_clock_reset": true
+  },
+  "proof_artifacts": [
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/CANARY_V2_TERMINAL_MANIFEST.json",
+      "sha256": "d758715f16f4edd01cd8b59795a68a0cbc2d300d9cdc5a6cd3d2eb5f22680298"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/CANARY_V2_CLEANUP_ADDENDUM.json",
+      "sha256": "ef2af518aa79f2b188f7675d9fd1b0b542db004cdbbad4f469586560ad37b832"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/CANARY_V2_ACCOUNTING_PROJECTION.json",
+      "sha256": "9044a2c35731238a3ffa2fda67107e02a4b647c257c344d6f747df69935fbe0e"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/recovery-route-v1/canary-v2-public-closure-check.json",
+      "sha256": "12b9d50ba10c5c04f2a52ab1cd55c138b785fc569d8c4aef9729ab4731af4b8f"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/recovery-route-v1/canary-v2-cleanup-closure-check.json",
+      "sha256": "f6276e33cb70004dbec6dd86b6bf5d7f382cb0ade8c6a56047e7d18d23d1123d"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/recovery-route-v1/actual-canary-admission.json",
+      "sha256": "ab6af77ce63b648b51473ab230a9afbe50ae6ac131e4f363b6804cf9a533d51e"
+    }
+  ],
+  "native_calls_by_reviewer": 0,
+  "provider_calls_by_reviewer": 0,
+  "public_network_calls_by_reviewer": 0,
+  "private_native_raw_modelio_auth_reads_by_reviewer": 0,
+  "review_original_birth_epoch": 1790912570.2871778,
+  "review_original_deadline_epoch": 1790915270.2871778
+}

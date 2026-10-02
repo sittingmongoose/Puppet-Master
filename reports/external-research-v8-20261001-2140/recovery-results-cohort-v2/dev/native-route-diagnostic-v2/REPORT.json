@@ -1,0 +1,57 @@
+{
+  "schema": "er8.native-route-diagnostic-v2.report.v1",
+  "verdict": "CONCRETE_SYNTHETIC_TRANSPORT_FAILURE_REPRODUCED",
+  "finding": "Selected native SDK auto mode uses a disposable stdio sibling server/discover probe, closes it, then opens real transport for legacy initialize. Broker accepts one connection; probing consumes it and terminates its sandbox stdin. Second proxy fails126 before any tool operation.",
+  "discover_response": "Existing server returns result.isError=true with boundary failure:ValueError for unsupported server/discover. Exact SDK TBo: invalid discover result is classified legacy.",
+  "env_scrub_finding": "PM_BOUND_MCP_SOCKET is not used. Frozen boundary serializes socket+deadline+cgroup into proxy argv in host runner before native env scrub. Scrubbed-env legacy reproducer passes; scrub alone is not blocker.",
+  "selected_config_protocol": "auto",
+  "selected_server_protocol": "2024-11-05 legacy initialize",
+  "legacy_one_transport_control_passed": true,
+  "auto_two_transport_failed": true,
+  "auto_nested_operation_event_delta": 0,
+  "fresh_synthetic_original_deadlines_preserved": true,
+  "owned_synthetic_units_quiet_on_time": true,
+  "all_frozen45_source_pins_unchanged": true,
+  "records": {
+    "legacy": {
+      "path": "LAB_ROOT/dev/native-route-diagnostic-v2/synthetic-sdk-legacy-f26f8a82/REPORT.json",
+      "sha256": "2c1a102762769feeea584f1a8589d2f4cfdbaacb6c6d3794fad653b1c94972c8"
+    },
+    "auto": {
+      "path": "LAB_ROOT/dev/native-route-diagnostic-v2/synthetic-sdk-auto-86719b2e/REPORT.json",
+      "sha256": "efe9bf937d538f0b35ead50f1e5e14ecb20ae75cf4a4541929586fcca2d1c927"
+    },
+    "exact_sdk_source": {
+      "path": "USER_HOME/.local/opt/zcode/app.backup-3.11.2.6792/resources/glm/zcode.cjs",
+      "sha256": "e9f1868c0fdb863537ed910ee3828b9be96b8c2fd805473f63b439e1113266b8"
+    },
+    "exact_function_evidence": {
+      "path": "LAB_ROOT/dev/native-route-diagnostic-v2/exact-negotiation-excerpts.json",
+      "sha256": "bfe7edfd25484a8d2854cf561ad2a474cc4b4a73153869627e3abbe80420cfee"
+    },
+    "discover_classifier_evidence": {
+      "path": "LAB_ROOT/dev/native-route-diagnostic-v2/discover-value-classifier.excerpt.txt",
+      "sha256": "cae6b18e7ca841176bdbe3b1be23c6999633480bbd1441a53778d179d3042f2d"
+    },
+    "pure_function_result": {
+      "path": "LAB_ROOT/dev/native-route-diagnostic-v2/pure-sdk-result.json",
+      "sha256": "d7cdc9623791e9c995d3717d40a4b530627f6203d0d03ca9861245e5872ae498"
+    },
+    "prospective_patch": {
+      "path": "LAB_ROOT/dev/native-route-diagnostic-v2/prospective-legacy-only.patch",
+      "sha256": "e3ca7ceb664501c11ff3570b50ccd86503017974f36a71b8a6712be074e5409b"
+    }
+  },
+  "native_calls": 0,
+  "provider_calls": 0,
+  "network_calls": 0,
+  "private_native_or_auth_or_modelIO_reads": 0,
+  "actual_canary_failure_cause": "INFERENCE_FROM_EXACT_SELECTED_SOURCE_AND_SYNTHETIC_REPRO; actual independent terminal receipt review remains required",
+  "prospective_delta": "Only native MCP configuration protocolVersion auto -> legacy in a NEW successor; keep tool server/broker/socket single use/privacy/clocks/model/native Goal unchanged.",
+  "next_steps": [
+    "Allow active v2 canary to reach its original terminal/deadline; preserve actual failed outcome if unqualified.",
+    "Create new additive selected source/config snapshot with legacy mode and existing narrow production required_files fix owned by root; no editing45frozen source.",
+    "Independently review exact delta/pins, then authorize fresh canary with original480s64response birth beforeprep.",
+    "Require actual MCP initialize/list/operations/source delivery/RESULT and nativecontext/completion/cleanup proof before immediate firstpair production."
+  ]
+}

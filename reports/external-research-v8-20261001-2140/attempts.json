@@ -1,6 +1,6 @@
 {
   "schema": "pm.external_research.v8.public_attempts.v1",
-  "checkpoint": "ONGOING_RECOVERY",
+  "checkpoint": "ONGOING_RECOVERY_V2",
   "attempts": [
     {
       "id": "v8-z-mechanical-route-canary-v1",
@@ -14,7 +14,19 @@
       "generated_usage": "UNKNOWN",
       "research_quality": "UNASSESSED",
       "evidence": "canary-controller-cohort-v1/evaluation/native-qualification-v1/native-canary-proof.json"
+    },
+    {
+      "id": "v8-z-mechanical-route-canary-v2",
+      "scope": "mechanical_native_canary",
+      "status": "HOLD",
+      "native_goal_starts": 1,
+      "physical_parent_lifecycle_seconds": 450.33003837,
+      "occupied_slot_seconds": 537.7256820201874,
+      "original_occupied_cap_seconds": 480,
+      "generated_usage": "UNKNOWN",
+      "research_quality": "UNASSESSED",
+      "evidence": "recovery-results-cohort-v2/evaluation/recovery-route-v1/canary-v2-review.json"
     }
   ],
-  "note": "First failed mechanical canary retained; no integrated research cases executed at this observation. Reservations are not starts."
+  "note": "Both failed mechanical canaries retained; 0/24 integrated executions and 0/12 comparisons at frozen observation. Reservations are not starts."
 }

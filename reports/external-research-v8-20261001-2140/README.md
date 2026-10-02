@@ -1,6 +1,6 @@
 # External research v8 — current campaign checkpoint
 
-**ONGOING CAMPAIGN — one failed mechanical native canary; integrated research results NOT_RUN.** This entry declares the fresh authorized integration-first campaign; it is not campaign completion or evidence of a qualified recipe. The [code qualification cohort](code-cohort-v1/README.md) supplies conditional source/offline acceptances and retained finite repairs; native qualification is HOLD after the first canary. Later cohort batches will publish actual full-pipeline outputs and independent current assessments together.
+**ONGOING CAMPAIGN — two failed mechanical native canaries; integrated research results NOT_RUN.** This entry declares the fresh authorized integration-first campaign; it is not campaign completion or evidence of a qualified recipe. The [code qualification cohort](code-cohort-v1/README.md) supplies conditional source/offline acceptances and retained finite repairs; native qualification is HOLD after the first canary. Later cohort batches will publish actual full-pipeline outputs and independent current assessments together.
 
 - [Current results](RESULTS.md), [methods](methods.json), [attempts](attempts.json), [comparisons](comparisons.json)
 - [Economics](economics.json), [schedule](schedule.json), [failures](FAILURES.md)
@@ -16,3 +16,5 @@ V7 at `c8f9cbc9195602688702bbbf9b3ce23c14fa5586` remains closed with unmet outco
 [Canary, controller and recovery cohort](canary-controller-cohort-v1/README.md) publishes the failed canary, independent conditional controller assessment and prospective authority amendment. Current deadline is **2026-10-02T13:40:09Z**, measured from the original start without reset. No integrated execution or research quality result is claimed.
 
 [Prospective tranche and accounting cohort v2](tranche-cohort-v2/README.md) publishes the 24-pipeline/12-pair scope, four reserved unseen holdout names and protected accounting reservations. These are prospective inputs; completed integrated executions and comparisons remain zero at the freeze.
+
+[Native canary v2 and recovery evidence](recovery-results-cohort-v2/README.md) retains the second failed activation and late cleanup: two counted native starts and 1354.3749742507935 cumulative occupied seconds. Integrated executions remain **0/24**, matched comparisons **0/12** at this freeze; no qualified productive route or winner is claimed.

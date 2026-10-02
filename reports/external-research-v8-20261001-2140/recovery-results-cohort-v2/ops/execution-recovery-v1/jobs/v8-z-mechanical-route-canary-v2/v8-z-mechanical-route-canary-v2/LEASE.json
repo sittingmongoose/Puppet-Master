@@ -1,0 +1,27 @@
+{
+  "schema": "er8.route.lease.v1",
+  "owned_unit": "er8-v8-z-mechanical-route-canary-v2.service",
+  "deadline_monotonic_ns": 135632059869799,
+  "native_stop_monotonic_ns": 135602059869799,
+  "case_authority": {
+    "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/CASE_AUTHORITY.json",
+    "sha256": "87e08639d00e6c945969203cd0a9dd07fcaff794f943e97160651e9d404d0d49",
+    "clock": {
+      "case_id": "v8-z-mechanical-route-canary-v2",
+      "case_start_monotonic_ns": 135152059869799,
+      "case_elapsed_cap_seconds": 480,
+      "case_occupied_cap_seconds": 480,
+      "outside_native_cap_seconds": 300,
+      "campaign_native_cutoff_monotonic_ns": 170155169761536,
+      "stages": {
+        "v8-z-mechanical-route-canary-v2": {
+          "stage_start_monotonic_ns": 135152059869799,
+          "cap_seconds": 480,
+          "response_cap": 64
+        }
+      }
+    }
+  },
+  "occupied_seconds_reserved": 480,
+  "outside_seconds_reserved": 300
+}

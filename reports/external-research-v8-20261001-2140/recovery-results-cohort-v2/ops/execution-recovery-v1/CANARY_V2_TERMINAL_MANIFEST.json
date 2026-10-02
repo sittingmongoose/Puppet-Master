@@ -1,0 +1,112 @@
+{
+  "schema": "pm.er8.positive-terminal-manifest.v1",
+  "frozen_epoch": 1790913902.3371706,
+  "job": "v8-z-mechanical-route-canary-v2",
+  "status": "HOLD_POSITIVE_TERMINAL_METRICS_MISSING",
+  "original_birth_epoch": 1790913405.8900976,
+  "original_birth_monotonic_ns": 135152059869799,
+  "original_deadline_monotonic_ns": 135632059869799,
+  "actual_native_activation_observed": true,
+  "actual_native_starts_this_attempt": 1,
+  "positive_native_quiet": true,
+  "lease_release": "HELD_PENDING_ROOT_ACCOUNTING_SETTLEMENT",
+  "generated_usage": "UNKNOWN",
+  "mechanical_operations": "MISSING_RECEIPTS",
+  "artifact_result": "MISSING",
+  "private_native_raw_modelio_reads": 0,
+  "records": [
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/BIRTH.json",
+      "sha256": "b4849febc381930816db8e44fbfe15a52029543b9d97acdc0b4cc22323bc9bbb",
+      "bytes": 1709
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/CASE_AUTHORITY.json",
+      "sha256": "87e08639d00e6c945969203cd0a9dd07fcaff794f943e97160651e9d404d0d49",
+      "bytes": 431
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/LEASE.json",
+      "sha256": "53cc0ff87bba9111ecf0f176447c351a4fa6b1335425e0d94a468a8fabf238e5",
+      "bytes": 1073
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/CASE_BINDING.json",
+      "sha256": "17b4b101a7fb53fee7ac279213cac8079a731879b64e1e74e3cffc69dda8c5ec",
+      "bytes": 1876
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/PLAN.json",
+      "sha256": "43b53ae084d34be35121df11b88b42915ec32d5e9aa38a2bd0a74da1977e4336",
+      "bytes": 7527
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/PLAN.enrollment.json",
+      "sha256": "3abf4c50794f9f1977a357915be5939595fe528dd8677d622ccb66c642a13868",
+      "bytes": 308
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/LAUNCHED.json",
+      "sha256": "bc7b8e25e210376cd0d026b84b58a06fb4121f039c40dc4932db0a9b14b4d01b",
+      "bytes": 260
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/IMMEDIATE_PRELAUNCH_PINS.json",
+      "sha256": "ed7d229a3d8aefd67544cd6cf9df04892da4260151eb01b065f8321a162bf57b",
+      "bytes": 10900
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/ACTIVATION_POSITIVE.json",
+      "sha256": "c3ab133283f1436b3b0512ae096a6aef65929164f9de8fc3735d1d53cdfc4202",
+      "bytes": 331
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/QUIESCENCE.json",
+      "sha256": "74bc9cecfe784df6ff0b800b4d9413424fa26286dbc295a34fa471347f01b8c1",
+      "bytes": 991
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/TERMINAL_HOLD.json",
+      "sha256": "ff5766507ae88e5b937b397cf070115cbe7d84ed46cede97f377e191f2f9bafc",
+      "bytes": 110
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/native-public/activation.json",
+      "sha256": "c3ab133283f1436b3b0512ae096a6aef65929164f9de8fc3735d1d53cdfc4202",
+      "bytes": 331
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/native-public/progress.jsonl",
+      "sha256": "9d8bd0e7a1075f3bd088c0af358a63757b26b93b0daa6bbda9133a43095acfc6",
+      "bytes": 4674
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/PARENT_LAUNCH_POSITIVE.json",
+      "sha256": "630007fe45d3fd8078b6de903df6543ff0602c8ab29d8ae99b4dcbd0efbb8aa4",
+      "bytes": 267
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/PARENT_TERMINAL_POSITIVE.json",
+      "sha256": "b99df8b97b4cd4d8ed69a56b65cfcc0509e9123e468581cb6fe0ea5b3958ec9c",
+      "bytes": 422
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/root-canary-release-v3.json",
+      "sha256": "fcdae500d056f684871f352168481304f59ae10869345709f48664e8f3cec3e6",
+      "bytes": 14957
+    }
+  ],
+  "missing_positive_receipts": [
+    "COMPLETE.json",
+    "EXTERNAL_CLOSE.json",
+    "PUBLIC_METRICS_FREEZE.json",
+    "PUBLIC_ARTIFACT_FREEZE.json",
+    "native-public/receipt.json",
+    "native-public/public-metrics.json",
+    "workspace/operation_receipts/events.jsonl",
+    "workspace/out/RESULT.md"
+  ],
+  "parent_actual_end_monotonic_ns": 135602389908169,
+  "observed_elapsed_seconds_through_parent_end": 450.33003837,
+  "observed_native_quiescence_monotonic_ns": 135602265503661
+}

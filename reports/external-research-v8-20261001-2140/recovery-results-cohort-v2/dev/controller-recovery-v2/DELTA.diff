@@ -1,0 +1,40 @@
+--- route-recovery-v1/common.py
++++ controller-recovery-v2/common.py
+@@ -99,7 +99,7 @@
+     if time.time() >= STOP_EPOCH:
+         raise ValueError('original campaign exhausted')
+     selected_queue=release.get('case_queue',CONTROL['default_queue'])
+-    inputs=load('assigned_inputs',HERE.parent/'candidate_inputs.py')
++    inputs=load('assigned_inputs',Path(CONTROL['planning_map']).parent/'candidate_inputs.py')
+     if not isinstance(selected_queue,list) or not selected_queue or len(set(selected_queue))!=len(selected_queue): raise ValueError('prospective queue required')
+     for case in selected_queue:
+         assigned=inputs.case_record(case,release.get('case_sources'))
+@@ -161,10 +161,15 @@
+     pins = release.get('planning_input_sha256')
+     if not isinstance(pins, dict):
+         raise ValueError('prospective exact planning input pins required')
+-    inputs=load('assigned_inputs',HERE.parent/'candidate_inputs.py')
++    inputs=load('assigned_inputs',Path(CONTROL['planning_map']).parent/'candidate_inputs.py')
+     item=inputs.case_record(case,release.get('case_sources'))
+     manifest_path=Path(item['manifest']);manifest=read_json(manifest_path)
+-    needed=inputs.required_files(case,release.get('case_sources'))
++    root=Path(item['root']);directory=Path(item['case_dir'])
++    # Equivalent assigned-input inventory; only template path joining is repaired.
++    needed=[Path(CONTROL['planning_map']),Path(item['objectives']),manifest_path,
++            root/manifest['brief'],root/manifest['thin_plan'],root/manifest['source_access'],
++            directory/'METHOD.md',directory/'TASK.md',
++            *(root/stage['task_template'] for stage in manifest['stages'])]
+     for p in needed:
+         if pins.get(str(p)) != sha(p):
+             raise ValueError('assigned prospective planning source drift')
+--- route-recovery-v1/stage_actor.py
++++ controller-recovery-v2/stage_actor.py
+@@ -27,7 +27,7 @@
+     request = {'job': job, 'case': args.case, 'family': 'Z', 'route': release['route'],
+         'pins': release['pins'], 'component_seconds': args.cap, 'component_responses': 160,
+         'case_wall_seconds': 3600, 'case_occupied_seconds': 5400, 'outside_native_cap_seconds': 300,
+-        'source_access': read_json(load('assigned_inputs',HERE.parent/'candidate_inputs.py').source_access(args.case,release.get('case_sources'))), 'current_stages': [args.role],
++        'source_access': read_json(load('assigned_inputs',Path(CONTROL['planning_map']).parent/'candidate_inputs.py').source_access(args.case,release.get('case_sources'))), 'current_stages': [args.role],
+         'birth_epoch': args.stage_epoch, 'birth_monotonic': args.stage_ns/10**9}
+     module = ledger_module()
+     with module.transaction() as state:

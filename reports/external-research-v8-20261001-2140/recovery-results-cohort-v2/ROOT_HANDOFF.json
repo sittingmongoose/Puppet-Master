@@ -1,0 +1,201 @@
+{
+  "schema": "pm.er8.positive-publication-handoff.v1",
+  "created_utc": "2026-10-02T04:09:50.291738+00:00",
+  "scope": "Actual failed nativecanaryv2, failureinclusive cleanup/cost, independent HOLD, pure hostcontroller fix/acceptance, independent12pair scope, prospective transport diagnosis; zero quality/method results",
+  "positive_files": [
+    {
+      "path": "LAB_ROOT/dev/controller-recovery-v2/DELTA.diff",
+      "sha256": "a1e333518d2029bca94769c085d21e606b76750bc3dc51dc7aeb9a41eebd95ff"
+    },
+    {
+      "path": "LAB_ROOT/dev/controller-recovery-v2/REGRESSION.json",
+      "sha256": "3496b7a35098fb28c55238d0528983ba0271cd3bae0e271e7e2371fa6e883bc6"
+    },
+    {
+      "path": "LAB_ROOT/dev/controller-recovery-v2/integrated-controller/SOURCE_FREEZE.json",
+      "sha256": "7906c6b23ff34d83f102270d812d687a50b9c1bc97c8628d1ac6cb78368b6b7c"
+    },
+    {
+      "path": "LAB_ROOT/dev/controller-recovery-v2/integrated-controller/case_supervisor.py",
+      "sha256": "7324813b6b96f07ea31840de842092fd32b7ea13f63cf25ff766cc65e1a95983"
+    },
+    {
+      "path": "LAB_ROOT/dev/controller-recovery-v2/integrated-controller/common.py",
+      "sha256": "dff47a78fcd86494b3c34e26833b08739211148c4f711e5ec8758e69735692e3"
+    },
+    {
+      "path": "LAB_ROOT/dev/controller-recovery-v2/integrated-controller/external_case_close.py",
+      "sha256": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c"
+    },
+    {
+      "path": "LAB_ROOT/dev/controller-recovery-v2/integrated-controller/external_stage_close.py",
+      "sha256": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4"
+    },
+    {
+      "path": "LAB_ROOT/dev/controller-recovery-v2/integrated-controller/parent_receipt.py",
+      "sha256": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea"
+    },
+    {
+      "path": "LAB_ROOT/dev/controller-recovery-v2/integrated-controller/rolling.py",
+      "sha256": "b6f1130def532020bdfaede92275ca72cd3b66a13ae83479270684b3c0128b9a"
+    },
+    {
+      "path": "LAB_ROOT/dev/controller-recovery-v2/integrated-controller/stage_actor.py",
+      "sha256": "ba3b13cd1209fd086ecd96e24d776deda92824063fc216cd7796e7b299ffb8cc"
+    },
+    {
+      "path": "LAB_ROOT/dev/controller-recovery-v2/recovery-control.json",
+      "sha256": "ab38dea05c3b09acdb4dd249bf0317dbc06cd209ed5353e6a3e0d44b96d8151a"
+    },
+    {
+      "path": "LAB_ROOT/dev/controller-recovery-v2/test_planning.py",
+      "sha256": "9fd9ba055d69323758706fb410b13bcb9c3b02a841d2f0735f0b2297142534bf"
+    },
+    {
+      "path": "LAB_ROOT/dev/native-route-diagnostic-v2/REPORT.json",
+      "sha256": "f12b8f812b0cfff35d9ab2867d93b08f30fdaf0309550b6013a64cd8ea43f939"
+    },
+    {
+      "path": "LAB_ROOT/dev/native-route-diagnostic-v2/prospective-legacy-only.patch",
+      "sha256": "e3ca7ceb664501c11ff3570b50ccd86503017974f36a71b8a6712be074e5409b"
+    },
+    {
+      "path": "LAB_ROOT/dev/native-route-diagnostic-v2/pure-sdk-result.json",
+      "sha256": "d7cdc9623791e9c995d3717d40a4b530627f6203d0d03ca9861245e5872ae498"
+    },
+    {
+      "path": "LAB_ROOT/dev/native-route-diagnostic-v2/synthetic-sdk-auto-86719b2e/REPORT.json",
+      "sha256": "efe9bf937d538f0b35ead50f1e5e14ecb20ae75cf4a4541929586fcca2d1c927"
+    },
+    {
+      "path": "LAB_ROOT/dev/native-route-diagnostic-v2/synthetic-sdk-legacy-f26f8a82/REPORT.json",
+      "sha256": "2c1a102762769feeea584f1a8589d2f4cfdbaacb6c6d3794fad653b1c94972c8"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/recovery-route-v1/canary-v2-cleanup-closure-check.json",
+      "sha256": "f6276e33cb70004dbec6dd86b6bf5d7f382cb0ade8c6a56047e7d18d23d1123d"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/recovery-route-v1/canary-v2-public-closure-check.json",
+      "sha256": "12b9d50ba10c5c04f2a52ab1cd55c138b785fc569d8c4aef9729ab4731af4b8f"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/recovery-route-v1/canary-v2-review.json",
+      "sha256": "76744b3babf28dfd016cf8314528c6272c304a037d0e2a7216ccd8c61e9fb8cc"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/recovery-route-v1/controller-v2-source-acceptance.json",
+      "sha256": "38460b01963d25e25c9ec8db83ddcedbc1c53d1088f075856434bf3ac856fb32"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/tranche-scope-review-v1/SHA256.json",
+      "sha256": "c27d2ddc70ef12b93a1141dc413d0d54cad40abe5aa77773614f324ce0c1c12a"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/tranche-scope-review-v1/evidence-paths-and-sha256.json",
+      "sha256": "f8873e46db956bfd455e954ca2daf1b1d0629973f235a2e6a256a1df3447b64c"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/tranche-scope-review-v1/initial-first-pair.json",
+      "sha256": "4d32b1df87b39d9a0886ab239b8418cf81d17f311664af6a27b125c2af70ddc5"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/tranche-scope-review-v1/review.json",
+      "sha256": "d1a153b607ea98ac5bd998f8b555baf97425d7a9f8afdd6854dd10a73ee5dbdb"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/tranche-scope-review-v1/review.md",
+      "sha256": "bb928fad555129e546e9132d09bfbb514853871f224a0a4a304df3af9ad5a065"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/CANARY_V2_ACCOUNTING_PROJECTION.json",
+      "sha256": "9044a2c35731238a3ffa2fda67107e02a4b647c257c344d6f747df69935fbe0e"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/CANARY_V2_CLEANUP_ADDENDUM.json",
+      "sha256": "ef2af518aa79f2b188f7675d9fd1b0b542db004cdbbad4f469586560ad37b832"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/CANARY_V2_TERMINAL_MANIFEST.json",
+      "sha256": "d758715f16f4edd01cd8b59795a68a0cbc2d300d9cdc5a6cd3d2eb5f22680298"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/PARENT_LAUNCH_POSITIVE.json",
+      "sha256": "630007fe45d3fd8078b6de903df6543ff0602c8ab29d8ae99b4dcbd0efbb8aa4"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/PARENT_TERMINAL_POSITIVE.json",
+      "sha256": "b99df8b97b4cd4d8ed69a56b65cfcc0509e9123e468581cb6fe0ea5b3958ec9c"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/ACTIVATION_POSITIVE.json",
+      "sha256": "c3ab133283f1436b3b0512ae096a6aef65929164f9de8fc3735d1d53cdfc4202"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/BIRTH.json",
+      "sha256": "b4849febc381930816db8e44fbfe15a52029543b9d97acdc0b4cc22323bc9bbb"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/CASE_AUTHORITY.json",
+      "sha256": "87e08639d00e6c945969203cd0a9dd07fcaff794f943e97160651e9d404d0d49"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/CASE_BINDING.json",
+      "sha256": "17b4b101a7fb53fee7ac279213cac8079a731879b64e1e74e3cffc69dda8c5ec"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/FAILURE_CLEANUP_PROOF.json",
+      "sha256": "2bae7b91c6b32dca28bffc30b631be142cbd7fc4f26d4eb6d77a6f262babeb10"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/FAILURE_LEASE_RELEASE.json",
+      "sha256": "fc9780945ba3c86b712e98b698519fba1964a77d9c6b36a478786927a3a9f155"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/IMMEDIATE_PRELAUNCH_PINS.json",
+      "sha256": "ed7d229a3d8aefd67544cd6cf9df04892da4260151eb01b065f8321a162bf57b"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/LAUNCHED.json",
+      "sha256": "bc7b8e25e210376cd0d026b84b58a06fb4121f039c40dc4932db0a9b14b4d01b"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/LEASE.json",
+      "sha256": "53cc0ff87bba9111ecf0f176447c351a4fa6b1335425e0d94a468a8fabf238e5"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/PLAN.enrollment.json",
+      "sha256": "3abf4c50794f9f1977a357915be5939595fe528dd8677d622ccb66c642a13868"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/PLAN.json",
+      "sha256": "43b53ae084d34be35121df11b88b42915ec32d5e9aa38a2bd0a74da1977e4336"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/QUIESCENCE.json",
+      "sha256": "74bc9cecfe784df6ff0b800b4d9413424fa26286dbc295a34fa471347f01b8c1"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/TERMINAL_HOLD.json",
+      "sha256": "ff5766507ae88e5b937b397cf070115cbe7d84ed46cede97f377e191f2f9bafc"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/native-public/activation.json",
+      "sha256": "c3ab133283f1436b3b0512ae096a6aef65929164f9de8fc3735d1d53cdfc4202"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/native-public/progress.jsonl",
+      "sha256": "9d8bd0e7a1075f3bd088c0af358a63757b26b93b0daa6bbda9133a43095acfc6"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/root-canary-release-v3.json",
+      "sha256": "fcdae500d056f684871f352168481304f59ae10869345709f48664e8f3cec3e6"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/RESTART.json",
+      "sha256": "c0ef6d730e7f8430376bb094c2112c0c19b3a9e19f40583e55ff2659f51544a4"
+    }
+  ],
+  "exclude": "Raw private native journals/modelIO/auth, evaluator keys/scoring-only, proprietary installed SDK/application source or its extracted function excerpts; no automatic recursive copy",
+  "sanitization": "Use existing public path/session sanitizer and preserve exact original source SHA plus public byte SHA; runtime snapshots are original-host proof, not portable native bundles"
+}

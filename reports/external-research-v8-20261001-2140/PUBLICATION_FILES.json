@@ -1,5 +1,5 @@
 {
-  "checkpoint": "ONGOING_RECOVERY_TRANCHE_V2",
+  "checkpoint": "ONGOING_RECOVERY_RESULTS_V2",
   "files": [
     {
       "path": "BEST_RECIPE.md",
@@ -8,18 +8,18 @@
     },
     {
       "path": "CHECKPOINT.md",
-      "sha256": "2503fc22d88d2bd967203d2966322763ec3ebab79176b49f1a200874f35c72f5",
-      "bytes": 1899
+      "sha256": "28f4b4b21ec4ff87f7ee16ef8546faf27cfd481b255e1695f524070f9a8fa656",
+      "bytes": 2496
     },
     {
       "path": "FAILURES.md",
-      "sha256": "000d82d265888a4219717fbeee317090145f9b33df77a0b40be5e414df2160a8",
-      "bytes": 1818
+      "sha256": "c9ccf7e590aa74ca292fbd99807d83f72b03b8ca8332dea39455703289cb7ae8",
+      "bytes": 2555
     },
     {
       "path": "README.md",
-      "sha256": "87217bbbb027cade36b5bad8bbb4440c444dfa16cff2a15fcff0d36943350a1c",
-      "bytes": 2629
+      "sha256": "84e6c7c12f0badc1163b1583bce476395c4e5cdb561e4e4c8a856eff9098392c",
+      "bytes": 2980
     },
     {
       "path": "REPRODUCE.md",
@@ -28,8 +28,8 @@
     },
     {
       "path": "RESULTS.md",
-      "sha256": "b5382e8185aa571c47692dd852d22bbe2c3dbeeee86d60a1ca14da5a4ad6d28f",
-      "bytes": 1444
+      "sha256": "ff9ffd429527c116677788e0b9c90cb91f9eb02182487329cf85c07072d77194",
+      "bytes": 1870
     },
     {
       "path": "REVIEW_RECONCILIATION.md",
@@ -38,8 +38,8 @@
     },
     {
       "path": "attempts.json",
-      "sha256": "8cb944178efc8d24f676b8213628aab12334d69000e1a655958356e02c822f91",
-      "bytes": 766
+      "sha256": "9c3984dc55c61d089c9d00da50fb86c0458723c7aeb2e78ec3cd3a7a1734e768",
+      "bytes": 1265
     },
     {
       "path": "authority/AUTHORIZATION.json",
@@ -623,13 +623,13 @@
     },
     {
       "path": "comparisons.json",
-      "sha256": "0c9a6e41bcc78a945a3a06cd9f9194224e4bc780c0b1742a1f2e98e1797ff292",
-      "bytes": 1884
+      "sha256": "e4ec2e0eed29203a1074e279e14d9af205a8b542d29ca5085b1c81feeed0e31f",
+      "bytes": 2045
     },
     {
       "path": "economics.json",
-      "sha256": "0718f617f3fc851e46ef0ab069d4da848d9216d93a13fc2b53c8459c93e74137",
-      "bytes": 2014
+      "sha256": "56561c573eaaccd6803cfe51aa72d3ea90faf1bbecb3dc92b68dad38ac06ff96",
+      "bytes": 2405
     },
     {
       "path": "methods.json",
@@ -795,6 +795,261 @@
       "path": "protocol/templates/research.TASK.md",
       "sha256": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3",
       "bytes": 1586
+    },
+    {
+      "path": "recovery-results-cohort-v2/PUBLIC_EXPORT.json",
+      "sha256": "9983cccf167a3bf392ae083699f596d2d0c308192cc4de5e2c45028f15402f9d",
+      "bytes": 23367
+    },
+    {
+      "path": "recovery-results-cohort-v2/README.md",
+      "sha256": "821c2f60bc3b1613f039475c11a3e9c1132e47d11622eb0d6755c58d1bd79b83",
+      "bytes": 2931
+    },
+    {
+      "path": "recovery-results-cohort-v2/ROOT_HANDOFF.json",
+      "sha256": "3d90275ad86690c0c11e01fe8d2213561f77bdfcdbcc763232ab688deece8739",
+      "bytes": 10222
+    },
+    {
+      "path": "recovery-results-cohort-v2/dev/controller-recovery-v2/DELTA.diff",
+      "sha256": "a1e333518d2029bca94769c085d21e606b76750bc3dc51dc7aeb9a41eebd95ff",
+      "bytes": 2751
+    },
+    {
+      "path": "recovery-results-cohort-v2/dev/controller-recovery-v2/REGRESSION.json",
+      "sha256": "d0d875426afd932dcbae4b140c7123572014b087e944a37a0b0144f45358157d",
+      "bytes": 5547
+    },
+    {
+      "path": "recovery-results-cohort-v2/dev/controller-recovery-v2/integrated-controller/SOURCE_FREEZE.json",
+      "sha256": "a24d3727ed949874df8e6c865252db2f1d63ed163daf7fe50668ed4a292b9646",
+      "bytes": 9294
+    },
+    {
+      "path": "recovery-results-cohort-v2/dev/controller-recovery-v2/integrated-controller/case_supervisor.py",
+      "sha256": "7324813b6b96f07ea31840de842092fd32b7ea13f63cf25ff766cc65e1a95983",
+      "bytes": 5565
+    },
+    {
+      "path": "recovery-results-cohort-v2/dev/controller-recovery-v2/integrated-controller/common.py",
+      "sha256": "d8993a239bf56979b3993af0b20d9e845378bf2c3cba6f50dbac4362c845076e",
+      "bytes": 12756
+    },
+    {
+      "path": "recovery-results-cohort-v2/dev/controller-recovery-v2/integrated-controller/external_case_close.py",
+      "sha256": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c",
+      "bytes": 3590
+    },
+    {
+      "path": "recovery-results-cohort-v2/dev/controller-recovery-v2/integrated-controller/external_stage_close.py",
+      "sha256": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4",
+      "bytes": 3512
+    },
+    {
+      "path": "recovery-results-cohort-v2/dev/controller-recovery-v2/integrated-controller/parent_receipt.py",
+      "sha256": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea",
+      "bytes": 4114
+    },
+    {
+      "path": "recovery-results-cohort-v2/dev/controller-recovery-v2/integrated-controller/rolling.py",
+      "sha256": "b6f1130def532020bdfaede92275ca72cd3b66a13ae83479270684b3c0128b9a",
+      "bytes": 5080
+    },
+    {
+      "path": "recovery-results-cohort-v2/dev/controller-recovery-v2/integrated-controller/stage_actor.py",
+      "sha256": "ba3b13cd1209fd086ecd96e24d776deda92824063fc216cd7796e7b299ffb8cc",
+      "bytes": 12965
+    },
+    {
+      "path": "recovery-results-cohort-v2/dev/controller-recovery-v2/recovery-control.json",
+      "sha256": "f9db4a514561c07dda7a14b24b543254ebbfaeb171b19ec8ad0eb0fce45bce78",
+      "bytes": 798
+    },
+    {
+      "path": "recovery-results-cohort-v2/dev/controller-recovery-v2/test_planning.py",
+      "sha256": "9fd9ba055d69323758706fb410b13bcb9c3b02a841d2f0735f0b2297142534bf",
+      "bytes": 4017
+    },
+    {
+      "path": "recovery-results-cohort-v2/dev/native-route-diagnostic-v2/REPORT.json",
+      "sha256": "f7c54c1bba1ba89da57f47d2a13c88542dde2a736b3118e5cb32888bb35c7d9f",
+      "bytes": 3738
+    },
+    {
+      "path": "recovery-results-cohort-v2/dev/native-route-diagnostic-v2/prospective-legacy-only.patch",
+      "sha256": "e3ca7ceb664501c11ff3570b50ccd86503017974f36a71b8a6712be074e5409b",
+      "bytes": 450
+    },
+    {
+      "path": "recovery-results-cohort-v2/dev/native-route-diagnostic-v2/pure-sdk-result.json",
+      "sha256": "4b5767bcec43b62c788a69d0df535cc5e46670def2da0b3c2b0652d7baea0f52",
+      "bytes": 400
+    },
+    {
+      "path": "recovery-results-cohort-v2/dev/native-route-diagnostic-v2/synthetic-sdk-auto-86719b2e/REPORT.json",
+      "sha256": "4acb6c788eee28381f0a78969ce551b50c25aa4714e69963838ea8001964279f",
+      "bytes": 7410
+    },
+    {
+      "path": "recovery-results-cohort-v2/dev/native-route-diagnostic-v2/synthetic-sdk-legacy-f26f8a82/REPORT.json",
+      "sha256": "d92e0f8727e68344b48af1b806ca4983a7242fdccf9ca675b2a9ffb89315f105",
+      "bytes": 7051
+    },
+    {
+      "path": "recovery-results-cohort-v2/evaluation/recovery-route-v1/canary-v2-cleanup-closure-check.json",
+      "sha256": "b0079202ec0d72e3e6fff495bb2b8d33fd4a4b593742d41abc6b14c43762b6b7",
+      "bytes": 901
+    },
+    {
+      "path": "recovery-results-cohort-v2/evaluation/recovery-route-v1/canary-v2-public-closure-check.json",
+      "sha256": "c0893385a44d328856f195e9cff23514289b0ce2a89f0f3ea72489655f388597",
+      "bytes": 4665
+    },
+    {
+      "path": "recovery-results-cohort-v2/evaluation/recovery-route-v1/canary-v2-review.json",
+      "sha256": "9636cccfad4fb702eb56868269269b10407a1e08fdc093c176cbda91d61e90a7",
+      "bytes": 5175
+    },
+    {
+      "path": "recovery-results-cohort-v2/evaluation/recovery-route-v1/controller-v2-source-acceptance.json",
+      "sha256": "ec24fbae0b510f676292fb78bcf28c693247ca68c2e17a74a26b22b44257ab0c",
+      "bytes": 4800
+    },
+    {
+      "path": "recovery-results-cohort-v2/evaluation/tranche-scope-review-v1/SHA256.json",
+      "sha256": "c27d2ddc70ef12b93a1141dc413d0d54cad40abe5aa77773614f324ce0c1c12a",
+      "bytes": 372
+    },
+    {
+      "path": "recovery-results-cohort-v2/evaluation/tranche-scope-review-v1/evidence-paths-and-sha256.json",
+      "sha256": "f8873e46db956bfd455e954ca2daf1b1d0629973f235a2e6a256a1df3447b64c",
+      "bytes": 33169
+    },
+    {
+      "path": "recovery-results-cohort-v2/evaluation/tranche-scope-review-v1/initial-first-pair.json",
+      "sha256": "4d32b1df87b39d9a0886ab239b8418cf81d17f311664af6a27b125c2af70ddc5",
+      "bytes": 1454
+    },
+    {
+      "path": "recovery-results-cohort-v2/evaluation/tranche-scope-review-v1/review.json",
+      "sha256": "d1a153b607ea98ac5bd998f8b555baf97425d7a9f8afdd6854dd10a73ee5dbdb",
+      "bytes": 26760
+    },
+    {
+      "path": "recovery-results-cohort-v2/evaluation/tranche-scope-review-v1/review.md",
+      "sha256": "bb928fad555129e546e9132d09bfbb514853871f224a0a4a304df3af9ad5a065",
+      "bytes": 3399
+    },
+    {
+      "path": "recovery-results-cohort-v2/ops/execution-recovery-v1/CANARY_V2_ACCOUNTING_PROJECTION.json",
+      "sha256": "76ead03728321984ad1f285d4792684d77a2b2dc625fd5efb9a2c91877df9ba4",
+      "bytes": 1563
+    },
+    {
+      "path": "recovery-results-cohort-v2/ops/execution-recovery-v1/CANARY_V2_CLEANUP_ADDENDUM.json",
+      "sha256": "cef125a7c8ade27130ef921192ed66cfb93bf044d6c2b1cc9439cc44740dbc9f",
+      "bytes": 1099
+    },
+    {
+      "path": "recovery-results-cohort-v2/ops/execution-recovery-v1/CANARY_V2_TERMINAL_MANIFEST.json",
+      "sha256": "af971988e65f00da0ac78b74f98eeed4ae11e00cfbf338efcbf74f8c96719625",
+      "bytes": 5114
+    },
+    {
+      "path": "recovery-results-cohort-v2/ops/execution-recovery-v1/PARENT_LAUNCH_POSITIVE.json",
+      "sha256": "630007fe45d3fd8078b6de903df6543ff0602c8ab29d8ae99b4dcbd0efbb8aa4",
+      "bytes": 267
+    },
+    {
+      "path": "recovery-results-cohort-v2/ops/execution-recovery-v1/PARENT_TERMINAL_POSITIVE.json",
+      "sha256": "b99df8b97b4cd4d8ed69a56b65cfcc0509e9123e468581cb6fe0ea5b3958ec9c",
+      "bytes": 422
+    },
+    {
+      "path": "recovery-results-cohort-v2/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/ACTIVATION_POSITIVE.json",
+      "sha256": "c3ab133283f1436b3b0512ae096a6aef65929164f9de8fc3735d1d53cdfc4202",
+      "bytes": 331
+    },
+    {
+      "path": "recovery-results-cohort-v2/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/BIRTH.json",
+      "sha256": "b4849febc381930816db8e44fbfe15a52029543b9d97acdc0b4cc22323bc9bbb",
+      "bytes": 1709
+    },
+    {
+      "path": "recovery-results-cohort-v2/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/CASE_AUTHORITY.json",
+      "sha256": "87e08639d00e6c945969203cd0a9dd07fcaff794f943e97160651e9d404d0d49",
+      "bytes": 431
+    },
+    {
+      "path": "recovery-results-cohort-v2/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/CASE_BINDING.json",
+      "sha256": "a9d882572eaf0d8bf1e3b462c02a7355c51956302053792b964efc007aea05ee",
+      "bytes": 1561
+    },
+    {
+      "path": "recovery-results-cohort-v2/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/FAILURE_CLEANUP_PROOF.json",
+      "sha256": "2bae7b91c6b32dca28bffc30b631be142cbd7fc4f26d4eb6d77a6f262babeb10",
+      "bytes": 1903
+    },
+    {
+      "path": "recovery-results-cohort-v2/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/FAILURE_LEASE_RELEASE.json",
+      "sha256": "fc9780945ba3c86b712e98b698519fba1964a77d9c6b36a478786927a3a9f155",
+      "bytes": 328
+    },
+    {
+      "path": "recovery-results-cohort-v2/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/IMMEDIATE_PRELAUNCH_PINS.json",
+      "sha256": "253adc86ce99f7e666f1a23c3f9c96f0fe7be034d92493c4570701fea6bbe31c",
+      "bytes": 7498
+    },
+    {
+      "path": "recovery-results-cohort-v2/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/LAUNCHED.json",
+      "sha256": "bc7b8e25e210376cd0d026b84b58a06fb4121f039c40dc4932db0a9b14b4d01b",
+      "bytes": 260
+    },
+    {
+      "path": "recovery-results-cohort-v2/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/LEASE.json",
+      "sha256": "4a105557fb0e7f22a1f74d23f993361802eb6e7205a7101f519e6c1f640d0e07",
+      "bytes": 1010
+    },
+    {
+      "path": "recovery-results-cohort-v2/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/PLAN.enrollment.json",
+      "sha256": "52e59f98372621fa6489e20446915d07b76eb51e67dd16a78f3295a7007f1ea1",
+      "bytes": 321
+    },
+    {
+      "path": "recovery-results-cohort-v2/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/PLAN.json",
+      "sha256": "44fe08759ae74c00d306f924c254572fba4af544ed0781ae745c901eb37631f9",
+      "bytes": 6015
+    },
+    {
+      "path": "recovery-results-cohort-v2/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/QUIESCENCE.json",
+      "sha256": "74bc9cecfe784df6ff0b800b4d9413424fa26286dbc295a34fa471347f01b8c1",
+      "bytes": 991
+    },
+    {
+      "path": "recovery-results-cohort-v2/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/TERMINAL_HOLD.json",
+      "sha256": "ff5766507ae88e5b937b397cf070115cbe7d84ed46cede97f377e191f2f9bafc",
+      "bytes": 110
+    },
+    {
+      "path": "recovery-results-cohort-v2/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/native-public/activation.json",
+      "sha256": "c3ab133283f1436b3b0512ae096a6aef65929164f9de8fc3735d1d53cdfc4202",
+      "bytes": 331
+    },
+    {
+      "path": "recovery-results-cohort-v2/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/native-public/progress.jsonl",
+      "sha256": "9d8bd0e7a1075f3bd088c0af358a63757b26b93b0daa6bbda9133a43095acfc6",
+      "bytes": 4674
+    },
+    {
+      "path": "recovery-results-cohort-v2/ops/execution-recovery-v1/root-canary-release-v3.json",
+      "sha256": "846cada57db1151192dd664ace7a09ca7b13a74610fab957f029d0f5291a2411",
+      "bytes": 10799
+    },
+    {
+      "path": "recovery-results-cohort-v2/ops/recovery-v1/RESTART.json",
+      "sha256": "6391741aafbe64948821e6c166390ecfedf4cbedbb4c6d8c0d97a532e93ece97",
+      "bytes": 8110
     },
     {
       "path": "review-arithmetic/README.md",
@@ -968,8 +1223,8 @@
     },
     {
       "path": "schedule.json",
-      "sha256": "af2157afa7513eb1704d978af2056e879b7b28b50bd04b3adadaeadfe20bdffd",
-      "bytes": 2662
+      "sha256": "db8622ebe903d624fbf53295259c097a765c7bc7bd7a7126dcdb1207763d04a6",
+      "bytes": 2669
     },
     {
       "path": "tranche-cohort-v2/AUTHORIZATION.json",

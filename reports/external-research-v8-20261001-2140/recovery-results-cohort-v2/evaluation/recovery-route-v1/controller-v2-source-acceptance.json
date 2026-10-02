@@ -1,0 +1,83 @@
+{
+  "verdict": "accepted",
+  "decision": "PASSREVIEW_CONTROLLER_V2_SOURCE_ONLY_CONDITIONAL",
+  "reviewer": "/root/v8_route_independent",
+  "created_utc": "2026-10-02T04:04:08.345920+00:00",
+  "source_freeze2": {
+    "path": "LAB_ROOT/dev/route-recovery-v1/FREEZE2.json",
+    "sha256": "f944dfc36e9d2fe407e0f8211d1b1e6a8391261cfa96b5db3589ec98063c7e0f"
+  },
+  "qualification_scope": "SOURCE_ONLY_CONDITIONAL",
+  "actual_native_qualification": "UNESTABLISHED",
+  "productive_release_authorized": false,
+  "native_calls_by_reviewer": 0,
+  "provider_calls_by_reviewer": 0,
+  "public_network_calls_by_reviewer": 0,
+  "private_or_auth_reads_by_reviewer": 0,
+  "native_cli_not_opened_or_hashed_by_reviewer": true,
+  "generated_usage": "UNKNOWN",
+  "clock_reset": false,
+  "proof_artifacts": [
+    {
+      "path": "LAB_ROOT/evaluation/recovery-route-v1/controller-v2-independent-review.json",
+      "sha256": "8a47b2e8b3625a4e26b44bcdf12d14ec945457c449de00d339978ab9be83b72b"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/recovery-route-v1/controller-v2-independent-delta.patch",
+      "sha256": "78fc54b95adf6bf07115fdd0468ac0d5e2cd8df664e65b0dc11602707ea3d826"
+    },
+    {
+      "path": "LAB_ROOT/dev/controller-recovery-v2/REGRESSION.json",
+      "sha256": "3496b7a35098fb28c55238d0528983ba0271cd3bae0e271e7e2371fa6e883bc6"
+    }
+  ],
+  "findings_closed_by_successor": [
+    "RR-001 original authority/four ABI/argv/scope before MCP",
+    "RR-002 positive ownedcgroup enrollment before MCP; native PID1 entry checks exact same receipt"
+  ],
+  "conditions": [
+    "Root issues exact freshv2 CANARY_ONLY release before birth/allcaseprep and actualnative start; one counted480s/64 mechanicalcanary only",
+    "Exact source/config/acceptance/overlay/amendment hashes and immutable original authority/case/stage/lease/plan binding must remain current",
+    "Original firstnativecanary failure and1Goal816.649292slotsec remain immutable; this verdict grants no retroactive qualification",
+    "Fresh SAMEclosure actualnative Goal activation/autocontinuation/sametargetcomplete, GLM5.3Flash/max allrequestattempt context/inventory, sourceGET/body/range host/native receiptjoin required",
+    "Original heldparent launch/exit/externalsettlement, positiveallownedcgroup quiet and originalinclusivedeadline/fullcost/startpermit proof required; UNKNOWN remainsheld",
+    "Productive mode needs separate independentfreshcanary passed record and root exactsame-snapshot scopeexpansion; sourceacceptance alone cannot dispatchresearch"
+  ],
+  "review_scope": "narrow frozen recoverydelta; exact accepted core/capture/caller2/genericcontroller reused without reopening audits",
+  "schema": "er8.integrated.controller-source-acceptance.v1",
+  "snapshot_path": "LAB_ROOT/dev/controller-recovery-v2/integrated-controller/SOURCE_FREEZE.json",
+  "snapshot_sha256": "7906c6b23ff34d83f102270d812d687a50b9c1bc97c8628d1ac6cb78368b6b7c",
+  "source_freeze": {
+    "path": "LAB_ROOT/dev/controller-recovery-v2/integrated-controller/SOURCE_FREEZE.json",
+    "sha256": "7906c6b23ff34d83f102270d812d687a50b9c1bc97c8628d1ac6cb78368b6b7c"
+  },
+  "allowed_modes": [
+    "canary"
+  ],
+  "execution_snapshot_sha256": "dd89caedcbdc321325728bb39d1693e89f72eb6fb48cf2601f2a9e46aee2b001",
+  "route_snapshot_sha256": "0fb15bb7e5ce30f0e485c6342cd2f4c347833b220b513ff74b661a83a4175f87",
+  "root_config_sha256": "db1ecc2db638725dd814e19bbf502884646e2f17e49b38f56bd88ee26bdbabbd",
+  "accounting_sha256": "597a3d3349154fbb4614ed7ece864f1cd77ecfea145fbfddaefc79fe0a1cd618",
+  "controller_snapshot": {
+    "path": "LAB_ROOT/dev/controller-recovery-v2/integrated-controller/SOURCE_FREEZE.json",
+    "sha256": "7906c6b23ff34d83f102270d812d687a50b9c1bc97c8628d1ac6cb78368b6b7c"
+  },
+  "controller_version": "controller-recovery-v2-host-planning-join",
+  "scope": "Only pure host planning-path join and assigned-input import wiring repair; original45 native route/config/core/capture/Goal/lifetime unchanged",
+  "supersedes_for_controller_selection": {
+    "path": "LAB_ROOT/evaluation/recovery-route-v1/controller-source-acceptance.json",
+    "sha256": "83bb77366b92486ee1e7849211f65dc7d55011db0eb6a449c9ec35ec56e5216a"
+  },
+  "controller_finding_closed": [
+    "RR-003 root/stage.task_template join fails in original required_files; corrected inline original assigned inventory path join"
+  ],
+  "old_45_native_closure_unchanged": true,
+  "independent_first_pair_checks_passed": 24,
+  "authored_registered_case_regression_count": 24,
+  "authored_missing_pin_rejections": 264,
+  "closure_files_verified": 53,
+  "actual_native_qualification_granted": false,
+  "fresh_native_canary_required_for_this_pure_host_delta": false,
+  "native_candidate_or_provider_calls_by_reviewer": 0,
+  "case_specific_research_or_proposal_or_evaluator_key_content_reads": 0
+}

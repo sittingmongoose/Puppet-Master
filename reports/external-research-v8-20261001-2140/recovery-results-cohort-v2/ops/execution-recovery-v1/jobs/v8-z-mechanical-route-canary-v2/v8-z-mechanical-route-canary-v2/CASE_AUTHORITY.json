@@ -1,0 +1,15 @@
+{
+  "case_id": "v8-z-mechanical-route-canary-v2",
+  "case_start_monotonic_ns": 135152059869799,
+  "case_elapsed_cap_seconds": 480,
+  "case_occupied_cap_seconds": 480,
+  "outside_native_cap_seconds": 300,
+  "campaign_native_cutoff_monotonic_ns": 170155169761536,
+  "stages": {
+    "v8-z-mechanical-route-canary-v2": {
+      "stage_start_monotonic_ns": 135152059869799,
+      "cap_seconds": 480,
+      "response_cap": 64
+    }
+  }
+}

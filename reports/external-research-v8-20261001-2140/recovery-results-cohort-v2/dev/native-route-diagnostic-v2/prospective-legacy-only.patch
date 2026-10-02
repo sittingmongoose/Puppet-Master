@@ -1,0 +1,8 @@
+--- prospective-successor/route-assembly-v1/boundary.py
++++ prospective-successor/route-assembly-v1/boundary.py
+@@ -21,4 +21,4 @@
+ def mcp_config(workspace,public_get=False):
+     cmd=command(workspace,public_get)
+     return {'name':'pm_boundary','command':cmd[0],'args':cmd[1:],'env':[],
+-            'isolation':'session','protocolVersion':'auto','timeoutMs':20000}
++            'isolation':'session','protocolVersion':'legacy','timeoutMs':20000}

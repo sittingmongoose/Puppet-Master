@@ -1,0 +1,170 @@
+{
+  "schema": "er8.controller-planning-regression.v1",
+  "verdict": "passed",
+  "registered_cases": [
+    {
+      "case": "V8-BIO-C-Z",
+      "assigned_pin_count": 11,
+      "passed": true
+    },
+    {
+      "case": "V8-BIO-WIT-T-Z",
+      "assigned_pin_count": 11,
+      "passed": true
+    },
+    {
+      "case": "V8-BIO-COND-C-Z",
+      "assigned_pin_count": 11,
+      "passed": true
+    },
+    {
+      "case": "V8-BIO-P-Z",
+      "assigned_pin_count": 11,
+      "passed": true
+    },
+    {
+      "case": "V8-BIO-BATCH-C-Z",
+      "assigned_pin_count": 11,
+      "passed": true
+    },
+    {
+      "case": "V8-BIO-B-Z",
+      "assigned_pin_count": 11,
+      "passed": true
+    },
+    {
+      "case": "V8-BIO-RETR-C-M",
+      "assigned_pin_count": 11,
+      "passed": true
+    },
+    {
+      "case": "V8-BIO-RETR-T-M",
+      "assigned_pin_count": 11,
+      "passed": true
+    },
+    {
+      "case": "V8-BIO-AMEND-C-L",
+      "assigned_pin_count": 11,
+      "passed": true
+    },
+    {
+      "case": "V8-BIO-AMEND-T-L",
+      "assigned_pin_count": 11,
+      "passed": true
+    },
+    {
+      "case": "V8-BIO-BREADTH-C-M",
+      "assigned_pin_count": 11,
+      "passed": true
+    },
+    {
+      "case": "V8-BIO-BREADTH-T-M",
+      "assigned_pin_count": 11,
+      "passed": true
+    },
+    {
+      "case": "V8-NB-C-Z",
+      "assigned_pin_count": 11,
+      "passed": true
+    },
+    {
+      "case": "V8-NB-WIT-T-Z",
+      "assigned_pin_count": 11,
+      "passed": true
+    },
+    {
+      "case": "V8-NB-COND-C-Z",
+      "assigned_pin_count": 11,
+      "passed": true
+    },
+    {
+      "case": "V8-NB-P-Z",
+      "assigned_pin_count": 11,
+      "passed": true
+    },
+    {
+      "case": "V8-NB-BATCH-C-Z",
+      "assigned_pin_count": 11,
+      "passed": true
+    },
+    {
+      "case": "V8-NB-B-Z",
+      "assigned_pin_count": 11,
+      "passed": true
+    },
+    {
+      "case": "V8-NB-RETR-C-M",
+      "assigned_pin_count": 11,
+      "passed": true
+    },
+    {
+      "case": "V8-NB-RETR-T-M",
+      "assigned_pin_count": 11,
+      "passed": true
+    },
+    {
+      "case": "V8-NB-AMEND-C-L",
+      "assigned_pin_count": 11,
+      "passed": true
+    },
+    {
+      "case": "V8-NB-AMEND-T-L",
+      "assigned_pin_count": 11,
+      "passed": true
+    },
+    {
+      "case": "V8-NB-BREADTH-C-M",
+      "assigned_pin_count": 11,
+      "passed": true
+    },
+    {
+      "case": "V8-NB-BREADTH-T-M",
+      "assigned_pin_count": 11,
+      "passed": true
+    }
+  ],
+  "registered_case_count": 24,
+  "missing_pin_rejections": 264,
+  "prospective_nonnative_Z_source_rebinds": [
+    "V8-BIO-RETR-C-M",
+    "V8-BIO-RETR-T-M"
+  ],
+  "first_pair": [
+    "V8-BIO-C-Z",
+    "V8-BIO-WIT-T-Z"
+  ],
+  "first_pair_exact_pin_count": 20,
+  "first_pair_exact_pins": {
+    "LAB_ROOT/dev/route-recovery-v1/INPUT_MAP.json": "f4bfd8d41d83228421e64f729c9d331e22c9b86532c904ffcaf0fb4837dc260e",
+    "LAB_ROOT/dev/route-recovery-v1/OBJECTIVES.json": "f80217252bc73b00a7050d2a8e49d61cf63ac4d810366900fe49b32d31fca116",
+    "LAB_ROOT/cases/planning-v1/cases/V8-BIO-C-Z/manifest.json": "8e7640a9e34d166a97e4c22f732cb56e5ee516bec47327da605324e5608a5447",
+    "LAB_ROOT/cases/planning-v1/briefs/bioimaging.md": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+    "LAB_ROOT/cases/planning-v1/sandbox-plans/bioimaging.md": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30",
+    "LAB_ROOT/cases/planning-v1/source-access.json": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df",
+    "LAB_ROOT/cases/planning-v1/cases/V8-BIO-C-Z/METHOD.md": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+    "LAB_ROOT/cases/planning-v1/cases/V8-BIO-C-Z/TASK.md": "af4401598f65effb4271b0cc1fb24c757d2b331d71b7bb35f73ed5df03d17ff9",
+    "LAB_ROOT/cases/planning-v1/templates/research.TASK.md": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3",
+    "LAB_ROOT/cases/planning-v1/templates/critic.TASK.md": "fa635038ca75a96599f09d43eb289b89c25320eda9325fd836c6fef2878504b2",
+    "LAB_ROOT/cases/planning-v1/templates/correction.TASK.md": "9ef5b51a9b2e9db734e492f6be2978f277ec8ee7f456b310c1f793375f1997d5",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-WIT-T-Z/manifest.json": "05a9e5c6ce15c19fd9e5e726a8d12e1850551ba63989c9166b797e8096ea0ad7",
+    "LAB_ROOT/cases/tranche-v2/briefs/bioimaging.md": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+    "LAB_ROOT/cases/tranche-v2/sandbox-plans/bioimaging.md": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30",
+    "LAB_ROOT/cases/tranche-v2/source-access.json": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-WIT-T-Z/METHOD.md": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+    "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-WIT-T-Z/TASK.md": "02d16a86976a312e377cb4dd709e07673abf9cbcbed6e85f80cb5841d54021c5",
+    "LAB_ROOT/cases/tranche-v2/templates/research.TASK.md": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3",
+    "LAB_ROOT/cases/tranche-v2/templates/critic.TASK.md": "fa635038ca75a96599f09d43eb289b89c25320eda9325fd836c6fef2878504b2",
+    "LAB_ROOT/cases/tranche-v2/templates/correction.TASK.md": "9ef5b51a9b2e9db734e492f6be2978f277ec8ee7f456b310c1f793375f1997d5"
+  },
+  "original_45_file_closure_verified": 45,
+  "native_starts": 0,
+  "provider_calls": 0,
+  "case_births": 0,
+  "control_copy_byte_identical": true,
+  "mechanics_caps_unchanged": [
+    1800,
+    600,
+    600
+  ],
+  "host_cap_seconds": 300
+}

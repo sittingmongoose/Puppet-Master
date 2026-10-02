@@ -1,0 +1,38 @@
+{
+  "schema": "pm.er8.failure-cleanup-proof.v1",
+  "root_authority": true,
+  "job": "v8-z-mechanical-route-canary-v2",
+  "held_outer_pid": 2867254,
+  "held_outer_returncode": 0,
+  "outer_group_absent": true,
+  "settlement_held_wait_returncode": 126,
+  "settlement_exited": true,
+  "settlement_pid_or_pgid": "UNKNOWN parent launcher did not expose identity; heldPopen.wait completed",
+  "parent_launcher_exec_session": 75143,
+  "parent_launcher_actual_exec_exit_code": 126,
+  "native_and_mcp_enrolled_cgroup_quiet": {
+    "schema": "er8.execution.quiescence.v1",
+    "owned_unit": "er8-v8-z-mechanical-route-canary-v2.service",
+    "owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-z-mechanical-route-canary-v2.service",
+    "enrollment": {
+      "schema": "er8.execution.enrollment.v1",
+      "owned_unit": "er8-v8-z-mechanical-route-canary-v2.service",
+      "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-z-mechanical-route-canary-v2.service",
+      "enrolled_monotonic_ns": 135152424831783,
+      "original_deadline_monotonic_ns": 135632059869799
+    },
+    "absence_proof": "positively-enrolled-owned-cgroup-removed",
+    "owned_native_quiescent": true,
+    "quiescence_observed_monotonic_ns": 135689761720874,
+    "original_deadline_monotonic_ns": 135632059869799,
+    "inclusive_native_lifetime_established": false,
+    "occupancy_disposition": "held-until-positive-quiescence",
+    "native_goal_or_quality_qualification": "UNESTABLISHED; independent native receipt review mandatory"
+  },
+  "original_deadline_monotonic_ns": 135632059869799,
+  "cleanup_observed_monotonic_ns": 135689761747906,
+  "cleanup_observed_on_time": false,
+  "outside_native_seconds_through_cleanup_observation": 87.708301406,
+  "semantic_and_mechanical_outcome": "HOLD missing terminalmetrics operations artifact; cleanup cannot qualify",
+  "no_backdating": true
+}
