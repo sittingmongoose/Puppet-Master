@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L3670-L17594
+Source lines: L3670-L17596
 
-Source SHA256: `b2cd72f8d549e82bfb3ab1f67c0691822ea18ce280946b3a75b4eda07f28962c`
+Source SHA256: `ad950c7324da0d72952a48627bbafe6ba37541c473ebc6fd9a74c8feb05d99f7`
 
 ---
 
@@ -8971,17 +8971,18 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  The Slint rewrite implements UI scale through Slint native global/window scale
-  factor as the only app-level scaling path; per-token manual scaling and
-  Iced-era ScaledTokens multiplication layers are prohibited, and editor text
-  zoom remains independent.
+  The Slint rewrite implements UI scale on the native desktop through Slint native
+  global/window scale factor as the only app-level scaling path, and the Leptos web
+  GUI applies the same setting through one root-level CSS scale (DL-139, F3-583);
+  per-token manual scaling and Iced-era ScaledTokens multiplication layers are
+  prohibited on both, and editor text zoom remains independent.
 gui_related: true
 gui_classification_reason: This unit constrains GUI implementation scaling behavior.
 split_recommended: false
 depends_on: [CV-187]
 unblocks: []
 acceptance_criteria:
-  - "Slint native global/window scale factor is the only app-level UI scaling path."
+  - "Slint native global/window scale factor is the only app-level UI scaling path on the desktop, and one root-level CSS scale is the only one in the Leptos web GUI."
   - "Per-token manual scaling and Iced-era ScaledTokens multiplication are not ported."
   - "Editor text zoom remains independent of app-level UI scale."
 validation_surfaces:
@@ -8998,13 +8999,14 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0065
+  - "Plans/Decision_Log.md#DL-139 (owner answer on web UI scale, 2026-10-02)"
 preserved_exact_tokens:
   - "Slint native scale factor"
   - "Per-token manual scaling"
   - "`ScaledTokens`"
   - "PolicyRule:Plans/rewrite-tie-in-memo.md#ui-scaling-migration"
 negative_constraints:
-  - "Per-token manual scaling or Iced-era ScaledTokens multiplication layers must not be ported to Slint view code."
+  - "Per-token manual scaling or Iced-era ScaledTokens multiplication layers must not be ported to Slint view code or Leptos view code/CSS."
 owner_hints:
   - Plans/Contracts_V0.md
   - Plans/FinalGUISpec.md

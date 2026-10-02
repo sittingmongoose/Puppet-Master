@@ -198,7 +198,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Sec
 | Language | Rust stable 1.96.1 | All logic, state management, and Slint bridge code; verified current stable on 2026-07-02 |
 | UI Framework | Slint 1.17.1 | `.slint` markup files compiled via `slint_build` in `build.rs`; selected by owner decision on 2026-07-07 |
 | Default Renderer | Winit + Skia (GPU) | Skia is the only renderer compiled into Windows, Linux, and macOS native desktop builds; it draws on the GPU (Metal, Direct3D, Vulkan, or OpenGL) by default and carries Puppet Master's Skia renderer extensions (F3-582) |
-| Fallback Renderer | Winit + Skia CPU (`winit-skia-software`) | Skia's own CPU raster, used when no GPU surface can be created after explicit override and persisted-preference resolution; also the headless, CI, and emergency-recovery renderer. Backdrop blur is not drawn on this path and frosted surfaces draw solid |
+| Fallback Renderer | Winit + Skia CPU (`winit-skia-software`) | Skia's own CPU raster, used when no GPU surface can be created after explicit override and persisted-preference resolution, and always when the GPU adapter is a software implementation (llvmpipe or lavapipe, WARP, SwiftShader), even over an explicit GPU choice (§2.2); also the headless, CI, and emergency-recovery renderer, and a supported, tested path (§2.2). Backdrop blur is not drawn on this path and frosted surfaces draw solid; motion is unchanged |
 | Retired Renderers | Winit + FemtoVG-wgpu, Winit software renderer | Not compiled or shipped (DL-139); the names remain source lineage only |
 | Web GUI | Leptos 0.8 (client-side rendered) | Rust compiled to WebAssembly, drawn with browser elements and CSS, served by the trusted local daemon (§2.3, F3-583) |
 | Persistence (layout) | redb | Durable KV store for layout state, preferences, editor state |
@@ -209,7 +209,11 @@ Toolchain currentness is a certification input, not PMConcept evidence. Runtime 
 
 ### 2.2 Native Desktop Renderer Contract
 
-Native desktop targets Windows, Linux, and macOS through the Slint Winit backend. Skia is the only compiled renderer (DL-139). The renderer availability order is Winit + Skia on the GPU (`winit-skia`), then Winit + Skia CPU raster (`winit-skia-software`). Runtime selection resolves in this order: `SLINT_BACKEND` explicit override, persisted renderer preference, Skia GPU default, then Skia CPU fallback. FemtoVG and Slint's separate software renderer are not compiled; a `SLINT_BACKEND` value or persisted preference naming them is an unavailable backend that emits a startup diagnostic and falls through. `SLINT_BACKEND` remains valid for debugging, CI, and operator override, but persisted preferences must not silently override an explicit environment override. Startup diagnostics record the requested backend, effective backend, fallback reason, platform, GPU/driver summary when available, whether the fallback was operator-selected or automatic, and whether the Skia renderer extensions run in their GPU or CPU form.
+Native desktop targets Windows, Linux, and macOS through the Slint Winit backend. Skia is the only compiled renderer (DL-139). The renderer availability order is Winit + Skia on the GPU (`winit-skia`), then Winit + Skia CPU raster (`winit-skia-software`). Runtime selection resolves in this order: `SLINT_BACKEND` explicit override, persisted renderer preference, Skia GPU default, then Skia CPU fallback. Slint itself falls back only when no GPU surface can be created, so Puppet Master also checks the GPU adapter at startup: when it is a software implementation (llvmpipe or lavapipe, WARP, SwiftShader), Puppet Master always uses Skia's CPU raster instead of running Skia on the software GPU, even when the Graphics Engine setting or the `SLINT_BACKEND` override asks for the GPU, and in that case it warns the user that no GPU was detected. When it switches to the CPU raster because of a software adapter, it shows one quiet, non-blocking, one-time notice explaining why frosted panels look solid, and never repeats it. The startup diagnostic records the requested and effective renderer and the reason. Apart from this software-adapter rule, explicit choices keep their precedence. FemtoVG and Slint's separate software renderer are not compiled; a `SLINT_BACKEND` value or persisted preference naming them is an unavailable backend that emits a startup diagnostic and falls through. `SLINT_BACKEND` remains valid for debugging, CI, and operator override, but persisted preferences must not silently override an explicit environment override. Startup diagnostics record the requested backend, effective backend, fallback reason, platform, GPU/driver summary when available, whether the fallback was operator-selected or automatic, and whether the Skia renderer extensions run in their GPU or CPU form.
+
+Slint remains the native UI framework: layout, input, focus, text editing, clipboard, drag and drop, and windows stay Slint's (DL-139). The Skia renderer extensions are a fixed property set implemented in one place (F3-582); screens use those `.slint` properties and never call the renderer or Skia directly. Replacing Slint as the native framework needs a new owner decision.
+
+The Skia CPU raster is a supported, tested path. The app starts on it when no GPU renderer can initialize and stays fully usable there with every control and behavior present. Motion is unchanged on the CPU raster; the only reductions there are that backdrop blur is not drawn and frosted surfaces draw solid. After a GPU device or surface loss, a GPU driver update or crash, or suspend and resume, Puppet Master rebuilds its drawing surface without losing interface state, may run on the CPU raster in between, and returns to the GPU automatically once it works again, unless the Graphics Engine setting or the `SLINT_BACKEND` override chose the CPU raster.
 
 #### Skia renderer extensions (DL-139)
 
@@ -217,9 +221,9 @@ Puppet Master extends Slint's Skia renderer with its own code; F3-582 owns the c
 
 ### 2.3 Web/WASM GUI Contract
 
-The first GUI implementation includes both the native desktop target and a web GUI (DL-139). The web GUI is a Leptos client written in Rust, compiled to WebAssembly, and rendered in the browser (client-side rendering). It draws its interface with browser elements and CSS, so it uses the browser's own text rendering, text selection, and CSS effects. It pins the Leptos 0.8 line until 0.9 is stable and is served as a static web route by the trusted local daemon. The web target does not use React, Tauri, or TypeScript; browser JavaScript is limited to generated glue (such as `wasm-bindgen` output) and the minimal bootstrap needed to load the WASM module, route static assets, and connect to approved local services. The Slint/WASM canvas web GUI is retired. F3-583 owns the web-client contract.
+The first GUI implementation includes both the native desktop target and a web GUI (DL-139). The web GUI is a Leptos client written in Rust, compiled to WebAssembly, and rendered in the browser (client-side rendering). It draws its interface with browser elements and CSS, so it uses the browser's own text rendering, text selection, and CSS effects; the one exception is the web terminal, which tracks its own selection in the terminal grid's data (§11.3). Browser text carries no ClearType guarantee, because layers, masks, transparency and transitions can switch it to grayscale, so web text readability, selection, and caret behavior are checked on Windows at the expected display scaling, at rest and during transitions, including text under masks. It pins the Leptos 0.8 line until 0.9 is stable and is served as a static web route by the trusted local daemon. The web target does not use React, Tauri, or TypeScript; browser JavaScript is limited to generated glue (such as `wasm-bindgen` output) and the minimal bootstrap needed to load the WASM module, route static assets, and connect to approved local services. The Slint/WASM canvas web GUI is retired. F3-583 owns the web-client contract.
 
-Desktop and web stay in step through one shared Rust interface-model crate that owns state, commands, formatting, and validation and that both the Slint desktop and the Leptos web client bind to; one design-token source that generates both the Slint theme globals and the CSS custom properties for every theme; and the same fixtures run through both interfaces, with screenshots of each.
+Desktop and web share behavior, not pixels. They stay in step through one shared Rust interface-model crate that owns shared commands, typed requests and results, domain state and validation, document and editing models, and formatting, and that both the Slint desktop and the Leptos web client bind to; one design-token source that generates both the Slint theme globals and the CSS custom properties for every theme; and the same behavioral scenarios and fixtures run through both interfaces, with screenshots of each checked against that interface's own visual baselines. Presentation (components, layout, rendering, caret and input integration, Skia versus CSS effects) stays per interface. Concept HTML is a design reference for appearance and interaction, not script to run under Leptos, and each stateful page region has one owner, never Leptos and hand-written JavaScript together.
 
 Browser-only WASM is not allowed to pretend it owns OS capabilities. It must not claim direct ownership of PTY, project filesystem mutation or watching, process/container execution, CEF-class browser embedding, system tray, native windows, native child windows, or raw native OS drag/drop. When a capability is unavailable in the browser sandbox, the UI shows the capability state, degraded reason, and the approved native or daemon-mediated route.
 
@@ -250,7 +254,7 @@ The local SVG manifest includes `icon_id`, file path, semantic label, theme beha
 
 ### 2.7 GUI Web Dev/Test Workflow
 
-The web GUI development workflow uses a local trusted daemon plus a static web route, fixture mode, browser automation smoke tests, screenshots/state capture, deterministic state hooks, and fast rebuild/reload loops. Development preview controls may expose reload, fixture-mode selection, screenshot/state capture, and daemon capability inspection only in configured development or automated-test builds. Production builds must not enable dev/test, MCP, live-preview, fixture, or browser automation controls unless an explicit production configuration authorizes that capability and records the permission/audit surface.
+The web GUI development workflow uses a local trusted daemon plus a static web route, fixture mode, browser automation smoke tests, screenshots/state capture, deterministic state hooks, and fast rebuild/reload loops. Development preview controls may expose reload, fixture-mode selection, screenshot/state capture, and daemon capability inspection only in configured development or automated-test builds. Production builds must not enable dev/test, MCP, live-preview, fixture, or browser automation controls unless an explicit production configuration authorizes that capability and records the permission/audit surface. Development and test builds of both the Slint desktop and the Leptos web GUI also expose test-build observability to test agents (`Plans/Automated_Testing_System.md#ATS-067`); production builds never include it, and no production configuration can enable it.
 
 ### 2.8 What Is NOT Used
 
@@ -1476,6 +1480,7 @@ Deterministic selection order:
 1. Explicit valid `SLINT_BACKEND` override wins.
 2. Otherwise use the persisted app preference if it maps to a compiled-in backend.
 3. Otherwise use compiled default order: `winit + Skia` on the GPU (`winit-skia`) → `winit + Skia CPU` (`winit-skia-software`).
+4. Whatever steps 1 to 3 chose, when the GPU adapter is a software implementation (llvmpipe or lavapipe, WARP, SwiftShader) the effective backend is `winit + Skia CPU`: an override or preference asking for the GPU is not honoured, the user is warned that no GPU was detected, and the startup diagnostic records the requested and effective backend and the reason (§2.2). In every other case steps 1 and 2 keep their precedence.
 
 Failure handling:
 - An invalid override or unavailable preferred backend MUST emit a startup diagnostic and fall through deterministically to the next compiled-in backend.
@@ -2835,13 +2840,13 @@ Catalog rules:
 
 ## 9. State Management
 
-State management follows a reactive state tree with observable projections consumed by Slint models and shell surfaces.
+State management follows a reactive state tree with observable projections held in the shared Rust interface-model crate (F3-583) and consumed by Slint models and shell surfaces on the desktop and by Leptos reactive bindings in the web GUI.
 
 ### 9.1 State architecture
 
 - canonical runtime and durable state live in Rust-owned records/projections
-- Slint surfaces subscribe to observable projections rather than polling
-- UI models update through batched `invoke_from_event_loop` mutations
+- Slint surfaces and Leptos web views subscribe to observable projections rather than polling
+- desktop UI models update through batched `invoke_from_event_loop` mutations; the web client applies the same projection updates through Leptos signals
 
 ### 9.2 State categories
 
@@ -3068,7 +3073,7 @@ The GUI must never visually "jump" or "flicker" when background data updates arr
 
 ### 11.3 Terminal-Specific Anti-Flickering
 
-- Live terminal rendering follows the Section 15 terminal-core architecture: terminal output is a high-frequency mutable grid, DOM/React/webview-style document-UI terminal cores are non-ship, and the core centers native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer ingestion and processing. The web GUI's terminal (DL-139) draws the same Rust terminal grid as a fixed, reused set of visible page-text rows updated by diff; it never adds one element per output line or treats output as a growing document, and it ships only after passing the heavy-output speed tests.
+- Live terminal rendering follows the Section 15 terminal-core architecture: terminal output is a high-frequency mutable grid, DOM/React/webview-style document-UI terminal cores are non-ship, and the core centers native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer ingestion and processing. The web GUI's terminal (DL-139) draws the same Rust terminal grid as a fixed, reused set of visible page-text rows updated by diff; it never adds one element per output line or treats output as a growing document, and it ships only after passing the heavy-output speed tests. Its selection is tracked in the terminal grid's own data, like the desktop terminal, not with the browser's selection, so a selection survives scrolling and new output; this is the one exception to the web GUI's use of browser selection (F3-583).
 - Bounded terminal transcript or plain-log projections may expose a visible row window in `VecModel`/`ListView`, but those projections are derived views rather than the live terminal core.
 - When output arrives rapidly, throttle GUI projection updates to max 30fps and batch rows arriving within 33ms; PTY/buffer ingestion and diff computation remain off the UI thread.
 - Ring buffers stay in Rust; the GUI holds only the visible transcript or plain-log projection window.
@@ -3167,7 +3172,7 @@ puppet-master-rs/
 +-- build.rs                          # slint_build::compile("ui/app.slint")
 +-- ui/                               # All .slint files
 |   +-- app.slint                     # Root component, imports all views
-|   +-- theme.slint                   # Theme global + token definitions
+|   +-- theme.slint                   # Theme global, generated from the shared design-token source (F3-583); not hand-edited
 |   +-- widgets/                      # Reusable .slint widgets
 |   |   +-- panel_card.slint
 |   |   +-- status_badge.slint
@@ -3241,7 +3246,7 @@ puppet-master-rs/
     +-- theme/                        # Theme definitions (Rust side)
     |   +-- mod.rs
     |   +-- palette.rs                # Color palettes (ported from current)
-    |   +-- tokens.rs                 # Design tokens (spacing, borders, fonts, sizes)
+    |   +-- tokens.rs                 # Generated Rust token bindings from the shared design-token source (F3-583)
     |   +-- variants.rs               # ThemeVariant enum + apply_to
     |   +-- custom_loader.rs          # NEW - Load custom themes from TOML files
     +-- browser/                      # NEW - Browser tab webview integration
@@ -3280,6 +3285,8 @@ puppet-master-rs/
     |   +-- builder.rs                # Build command execution
     +-- ... (remaining app modules unchanged)
 ```
+
+This tree shows the Slint desktop crate only. The shared Rust interface-model crate (state, commands, formatting, validation), the single design-token source that generates the Slint theme globals and the CSS custom properties, and the Leptos web client are separate workspace crates; see section 2.3 and F3-583.
 
 ### 14.2 View Switching in Slint
 
@@ -4055,8 +4062,8 @@ LF-007 stale-reference cleanup applies to this appendix and to `Plans/assistant-
 
 These decisions are final and must not be revisited during implementation:
 
-1. **Rust stable 1.96.1 verified 2026-07-02; Slint 1.17.1 selected/currentness decision 2026-07-07** -- no other native UI framework; reverify official stable releases before coding/build work
-2. **winit + Skia only** -- Skia on the GPU by default, Skia's own CPU raster as the only fallback, extended by Puppet Master's Skia renderer extensions (F3-582); FemtoVG and Slint's separate software renderer are retired (DL-139)
+1. **Rust stable 1.96.1 verified 2026-07-02; Slint 1.17.1 selected/currentness decision 2026-07-07** -- no other native UI framework: Slint owns layout, input, focus, text editing, clipboard, drag and drop and windows, and replacing it needs a new owner decision (DL-139; a GPUI fork was considered and rejected on 2026-10-02); reverify official stable releases before coding/build work
+2. **winit + Skia only** -- Skia on the GPU by default, Skia's own CPU raster as the only fallback, extended by Puppet Master's Skia renderer extensions (F3-582); FemtoVG and Slint's separate software renderer are retired (DL-139); on a software GPU adapter the CPU raster is always used, even over an explicit GPU choice, with a warning that no GPU was detected
 3. **No React/Tauri product UI** -- native desktop is Rust + Slint `.slint` markup; the web GUI is a Rust Leptos client drawn with browser elements and CSS, with JavaScript limited to generated or minimal glue (DL-139, F3-583)
 4. **IDE shell layout** -- Activity Bar + Primary Content + Side Panel + Bottom Panel
 5. **Four theme families / eight built-in themes** -- Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, Basic Dark, Basic Light (built-in variants + custom themes via TOML). The untouched first-open/fresh-project factory default is Basic Dark; explicit saved project theme/layout customization survives, and a copied project receives a detached snapshot. This supersedes the Friendly Dark default and the earlier three-family lock while preserving both as historical lineage.
@@ -4303,7 +4310,7 @@ These editors should also allow platform/model selection per mapping and show co
 
 ## Rendering Surface Addendum (2026-03-07)
 
-This addendum locks how Markdown, Mermaid, HTML, SVG, and image rendering appear in the Slint GUI.
+This addendum locks how Markdown, Mermaid, HTML, SVG, and image rendering appear in the Slint desktop GUI and, as the same behaviour through the shared interface model and fixtures, in the Leptos web GUI (F3-583, DL-139); surfaces that need OS-owned capabilities, such as CEF-class browser embedding and native detached windows, appear in the web GUI only as the Web Capability Matrix allows.
 
 ### Surface inventory impact
 
@@ -7070,6 +7077,18 @@ canonical_text: >-
   Slint backend selection uses SLINT_BACKEND, persisted app preference, compiled default order,
   deterministic fallback, startup diagnostics, and setup surfaces that show the selected backend. Only the
   Skia renderer is compiled; the default order is Skia on the GPU, then Skia's own CPU raster (DL-139).
+  When the GPU adapter is a software implementation (llvmpipe or lavapipe, WARP, SwiftShader), Puppet Master always uses
+  Skia's CPU raster instead of running Skia on the software GPU, because Slint itself falls back only when no GPU
+  surface can be created; this holds even when the Graphics Engine setting or the SLINT_BACKEND override asks for the
+  GPU, and then the user is warned that no GPU was detected. Switching for this reason shows one quiet, non-blocking,
+  one-time notice explaining why frosted panels look solid, never repeated, and the startup diagnostic records the
+  requested and effective renderer and the reason. In every other case the explicit override and persisted
+  preference keep their precedence. The Skia CPU raster is a supported, tested path: the app starts on it when no GPU
+  renderer can initialize and stays fully usable there with motion unchanged, its only reductions being that backdrop
+  blur is not drawn and frosted surfaces draw solid. After GPU device or surface loss, a GPU driver update or crash,
+  or suspend and resume, the app rebuilds its drawing surface without losing interface state, may run on the CPU
+  raster in between, and returns to the GPU automatically once it works again, unless the CPU raster was chosen
+  explicitly.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -7080,6 +7099,8 @@ acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "On a machine whose only GPU adapter is a software implementation, Skia's CPU raster runs even when the Graphics Engine setting or SLINT_BACKEND asks for the GPU; the user is warned that no GPU was detected, a one-time notice explains why frosted panels look solid, and the startup diagnostic records the requested and effective renderer and the reason."
+- "Tests prove start without any working GPU; recovery from GPU device or surface loss, a driver update or crash, and suspend and resume without lost interface state, followed by an automatic return to the GPU once it works; and full usability on the CPU raster with motion unchanged and only backdrop blur and frosted surfaces reduced."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -7094,7 +7115,9 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0027"
-- "Plans/Decision_Log.md#DL-139 (owner answers, 2026-10-01)"
+- "Plans/Decision_Log.md#DL-139 (owner answers, 2026-10-01 and 2026-10-02)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/CRITIQUE-RESPONSE-20261001.md, SHA-256 76047abe87b2488f52b3e6df94160aa9da09ec1883d3a91876b20d3e1741a1da"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/ANSWERS-20261002.md, SHA-256 6a4c9f58ef4439d0a1882b7306c0b8d446a94e5f45f2346ab4430b66f13f2e84"
 preserved_exact_tokens:
 - "SLINT_BACKEND"
 - "slint::BackendSelector"
@@ -7105,6 +7128,8 @@ preserved_exact_tokens:
 - "selected backend"
 negative_constraints:
 - "Do not enable renderer-femtovg, renderer-femtovg-wgpu, or renderer-software in desktop builds."
+- "Do not run Skia on a software GPU adapter, even when the Graphics Engine setting or SLINT_BACKEND asks for the GPU."
+- "Do not repeat the software-adapter notice once it has been shown."
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "DL-139 retires the winit + FemtoVG-wgpu fallback and the emergency software renderer from the selection order; a SLINT_BACKEND value or preference naming them is an unavailable backend."
@@ -13723,8 +13748,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  State management follows a reactive state tree with observable projections consumed by Slint
-  models and shell surfaces.
+  State management follows a reactive state tree with observable projections held in the shared Rust
+  interface-model crate (F3-583) and consumed by Slint models and shell surfaces on the desktop and by
+  Leptos reactive bindings in the web GUI.
 gui_related: true
 gui_classification_reason: This unit defines GUI-facing Slint model and shell surface state behavior.
 split_recommended: false
@@ -13770,8 +13796,9 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Canonical runtime and durable state live in Rust-owned records and projections; Slint surfaces
-  subscribe to observable projections rather than polling, and UI models update through batched
-  invoke_from_event_loop mutations.
+  and Leptos web views subscribe to observable projections rather than polling, desktop UI models
+  update through batched invoke_from_event_loop mutations, and the web client applies the same
+  projection updates through Leptos signals.
 gui_related: true
 gui_classification_reason: This unit defines GUI model update behavior and Slint projection subscriptions.
 split_recommended: false
@@ -13801,7 +13828,7 @@ preserved_exact_tokens:
 - "polling"
 - "invoke_from_event_loop"
 negative_constraints:
-- "Slint surfaces subscribe to observable projections rather than polling."
+- "Slint surfaces and Leptos web views subscribe to observable projections rather than polling."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
@@ -15614,7 +15641,8 @@ canonical_text: >-
   mutable grid, native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer
   ingestion and processing, while DOM/React/webview-style document-UI terminal cores are
   non-ship. On the web GUI, the terminal grid is drawn as a fixed, reused set of visible page-text
-  rows updated by diff (DL-139, SMPFS-072 web exception).
+  rows updated by diff (DL-139, SMPFS-072 web exception), and the web terminal tracks its own selection in the
+  terminal grid's data, not with the browser's selection, so a selection survives scrolling and new output.
 gui_related: true
 gui_classification_reason: >-
   This unit constrains terminal rendering architecture and excludes non-ship web-style
@@ -15641,6 +15669,7 @@ node_compile_hint:
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0128"
 - "Plans/Decision_Log.md#DL-139 (web terminal answer, 2026-10-01)"
+- "Plans/Decision_Log.md#DL-139 (web terminal selection answer, 2026-10-02)"
 preserved_exact_tokens:
 - "Section 15 terminal-core architecture"
 - "high-frequency mutable grid"
@@ -15652,7 +15681,7 @@ preserved_exact_tokens:
 negative_constraints:
 - "DOM/React/webview-style document-UI terminal cores are non-ship."
 compatibility_only_notes:
-- "DL-139 web exception: reused visible page-text rows fed by the Rust terminal grid are not a document-UI terminal core; they ship only after the heavy-output speed tests."
+- "DL-139 web exception: reused visible page-text rows fed by the Rust terminal grid are not a document-UI terminal core; they ship only after the heavy-output speed tests, and the web terminal tracks its own selection in the grid's data rather than with the browser's selection."
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -19915,7 +19944,9 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Implementation decisions are final for Slint 1.17.1 on Rust stable 1.96.1, winit+Skia only with Skia's own CPU
-  raster as the fallback and Puppet Master's Skia renderer extensions (DL-139), no React or Tauri product UI with the
+  raster as the fallback (also always used on a software GPU adapter, even over an explicit GPU choice, with a
+  warning that no GPU was detected), Slint as the only native UI framework (replacing it needs a new owner decision;
+  a GPUI fork was rejected on 2026-10-02), and Puppet Master's Skia renderer extensions (DL-139), no React or Tauri product UI with the
   web GUI a Rust Leptos client (DL-139), IDE shell layout, four theme families (eight built-in themes,
   untouched first-open/fresh-project factory default Basic Dark; the former Friendly Dark and
   prior three-family defaults remain superseded lineage), Settings owned by `Plans/Settings_System.md`,
@@ -19947,6 +19978,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0158"
+- "Plans/Decision_Log.md#DL-139 (owner answer, 2026-10-02)"
 preserved_exact_tokens:
 - "Rust stable 1.96.1"
 - "Slint 1.17.1"
@@ -21348,10 +21380,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Rendering surface scope covers Markdown, Mermaid, HTML, SVG, and images in the Slint GUI and
+  Rendering surface scope covers Markdown, Mermaid, HTML, SVG, and images in the Slint desktop GUI and the Leptos web GUI (F3-583) and
   treats browser-capable rendering as shared across Chat Panel, File Editor, Embedded Document
   Pane, editor-tab Browser, detached preview/browser windows, ordinary automation browser windows,
-  and bottom-panel browser-adjacent surfaces. Protected AuthBrowserSession is a separate foreground
+  and bottom-panel browser-adjacent surfaces; surfaces that need OS-owned capabilities, such as CEF-class browser
+  embedding and native detached windows, appear in the web GUI only as the Web Capability Matrix allows. Protected
+  AuthBrowserSession is a separate foreground
   human-only security surface and is excluded from this shared rendering/capture inventory.
 gui_related: true
 gui_classification_reason: >-
@@ -28927,7 +28961,9 @@ canonical_text: >-
   Puppet Master targets Slint 1.17.1 for the active GUI platform. Native desktop uses Slint Winit with Skia as the
   only compiled renderer on Windows, Linux, and macOS, extended by Puppet Master's Skia renderer extensions (F3-582);
   selection order is explicit SLINT_BACKEND override, persisted preference, Winit + Skia on the GPU, then Winit +
-  Skia CPU (winit-skia-software), and FemtoVG and Slint's separate software renderer are retired (DL-139). The first
+  Skia CPU (winit-skia-software), and FemtoVG and Slint's separate software renderer are retired (DL-139); on a
+  software GPU adapter the Skia CPU raster is always used, even over an explicit GPU choice, with a warning that no
+  GPU was detected, and the CPU raster is a supported, tested path (F3-033). The first
   GUI build includes native desktop plus a Rust Leptos web GUI compiled to WebAssembly, rendered in the browser with
   browser elements and CSS, and served by the trusted local daemon, rather than React, Tauri, or TypeScript (F3-583).
   Browser-only WASM cannot claim PTY, filesystem, process/container, CEF, tray, native-window, or raw OS drag/drop
@@ -28949,7 +28985,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Active Slint toolkit references in live owner docs and Spec_Lock use Slint 1.17.1, while old versions remain only in audit/source-lineage history.
-- Native renderer fallback order is explicit and preserves SLINT_BACKEND override authority before persisted preference and compiled defaults.
+- Native renderer fallback order is explicit and preserves SLINT_BACKEND override authority before persisted preference and compiled defaults, except that a software GPU adapter always gets the Skia CPU raster with a no-GPU warning (F3-033).
 - Web GUI capability claims use the approved capability states and route OS-owned capabilities through the trusted local daemon.
 - Production icons use bundled SVG icon_id manifest entries, accessible labels, fallback text, and non-icon state text; emoji/pictographic pseudo-icons and remote icon sources are forbidden.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this decision.
@@ -30071,9 +30107,9 @@ preserved_exact_tokens:
 - "mix-blend-mode"
 - "mask-composite"
 negative_constraints:
-- "No arbitrary-content backdrop blur; no SVG filters; no runtime color math."
+- "No arbitrary-content backdrop blur except the setup-popup sheet blur that DL-139 admits on the Skia GPU path only (F3-566); no SVG filters; no runtime color math."
 compatibility_only_notes:
-- "Slint portability: this unit is the family-wide remediation contract; no arbitrary-content backdrop blur, no SVG filters, color math is precomputed rather than runtime-mixed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
+- "Slint portability (updated for DL-139): this unit is the family-wide remediation contract. Blur, backdrop blur, masks, blend modes and filter effects are no longer banned for portability, because Puppet Master's Skia renderer extensions draw them (F3-582); this unit's closed backdrop-filter budget still limits backdrop blur. The note's other guidance (color math precomputed rather than runtime-mixed, and glass treatment as a single blur over a known wallpaper baked as a pre-blurred asset) remains a performance option."
 stale_retired_dispositions:
 - "DL-139 opens the closed budget by exactly one entry, the setup-popup sheet blur on the Skia GPU path, replacing the 2026-09-27 outcome of DL-114 that kept it closed."
 owner_boundary_notes:
@@ -30608,6 +30644,7 @@ Companion editor treatments carried in the same span (04-css-glass-b.part.html:1
 | Friendly themes | `.bottom-panel` | `blur(14px)` | 10x-pm6-css-global.part.html:172-173 |
 | Settings modal (all themes) | `.s4-bloom-backdrop` scrim | `blur(6px)` | 10-css-settings.part.html:585-586 |
 | Settings modal (glass themes) | `.s4-panel`, `.s4-psm` slabs | `blur(34px) saturate(160%)` | 10-css-settings.part.html:933-934 |
+| Setup popups (all themes, Skia GPU path only) | wand-module configuration sheets (F3-566) | backdrop blur drawn by the Skia renderer extensions (F3-582); not drawn on the Skia CPU raster, where the sheet is solid; the scrim is never blurred | DL-139 (no PMConcept6 source) |
 
 #### Glass background mode layer inventory (02-css-tokens.part.html:554-733; baked per F3-431)
 
@@ -32781,8 +32818,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The concept family's web motion idioms map to Slint primitives one-for-one, and
-  implementations use only the Slint side of the map: (1) CSS grid-rows expansion spring
+  The concept family's web motion idioms map to Slint primitives one-for-one, and the Slint
+  desktop interface uses only the Slint side of the map; the Leptos web client (F3-583)
+  implements the same semantic rows in CSS, using transform and opacity where the design
+  allows, animating to the measured content height rather than a max-height cap, running
+  the entrance stagger once, and keeping the same reduced-motion parity: (1) CSS grid-rows expansion spring
   maps to an animated height property on a clipped rect; (2) max-height tween maps to an
   animation toward the measured content height, never an arbitrary cap; (3) box-shadow
   attention pulse maps to an opacity/scale ring overlay element; (4) underline width ink
@@ -32798,7 +32838,7 @@ split_recommended: false
 depends_on: [F3-472]
 unblocks: []
 acceptance_criteria:
-- "Each web idiom in the map (grid-rows spring, max-height tween, box-shadow pulse, width ink, sprout menu, scroll-reveal) has exactly the stated Slint primitive and no DOM-shaped emulation."
+- "Each web idiom in the map (grid-rows spring, max-height tween, box-shadow pulse, width ink, sprout menu, scroll-reveal) has exactly the stated Slint primitive on the Slint desktop interface and no DOM-shaped emulation there; the Leptos web client uses the CSS equivalent of the same row."
 - "Entrance stagger runs once on first model paint and never re-triggers on scroll."
 - "Reduced motion completes all mapped animations instantly with zero transition-delay equivalents."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
@@ -32820,9 +32860,9 @@ preserved_exact_tokens:
 - "PopupWindow"
 - "scaleX"
 negative_constraints:
-- "Do not port web motion idioms literally (no max-height caps, no shadow-blur animation, no scroll-linked reveal); only the Slint column of the map ships."
+- "Do not port web motion idioms literally (no max-height caps, no shadow-blur animation, no scroll-linked reveal); on the desktop only the Slint column of the map ships, and the web client follows the same semantic rows in CSS."
 compatibility_only_notes:
-- "Slint portability: all mapped motions are property animations on opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+- "Slint portability (updated for DL-139): all mapped motions are property animations. The bans on blur, backdrop blur, masks, blend modes and filter effects no longer bind for the effects Puppet Master's Skia renderer extensions add (F3-582); opaque precomputed surfaces and precomputed rather than runtime-mixed color math remain a performance option."
 stale_retired_dispositions: []
 owner_boundary_notes:
 - "F3-472 owns what the expander shows; this unit owns only how its state changes move."
@@ -38700,7 +38740,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Defines the grammar, sizes, typography and spacing of every wand module sheet."
 split_recommended: false
-depends_on: [DL-109, DL-113, DL-114, DL-115, ACD-475, F3-431, F3-531, F3-534]
+depends_on: [DL-109, DL-113, DL-114, DL-115, DL-139, ACD-475, F3-431, F3-531, F3-534, F3-582]
 unblocks: [F3-567, F3-568, F3-569, F3-570, F3-573, F3-574, F3-576, F3-579, DR-044]
 acceptance_criteria:
   - "Theme timing never overrides the shared timing or order of a transcript entrance."
@@ -39824,7 +39864,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-484, ContractName:P
 
 ## DL-139 — Skia Only Desktop And Leptos Web Client (2026-10-01)
 
-This addendum compiles the owner decision DL-139. Sections 2.1 to 2.4, 2.8, and Appendix B carry the matching prose. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks.
+This addendum compiles the owner decision DL-139. Sections 2.1 to 2.4, 2.7, 2.8, 9, 11.3, 14.1, the Rendering Surface Addendum, the Theme Token Tables backdrop-filter budget, and Appendix B carry the matching prose. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks.
 
 ### F3-582 — Skia Renderer Extensions
 
@@ -39850,18 +39890,22 @@ canonical_text: >-
   blur on the GPU path and stay solid on the CPU raster, and F3-431's blur budget admits that sheet blur and nothing
   more. Motion that needs no renderer
   work, such as multi-step keyframes, stepped easing, and path draw-on, is built from Slint animations,
-  animation-tick(), and timers rather than from these extensions.
+  animation-tick(), and timers rather than from these extensions. Slint remains the native UI framework (layout,
+  input, focus, text editing, clipboard, drag and drop, windows); the extensions are this fixed property set,
+  implemented centrally in the Cargo [patch], and screens use only these .slint properties and never call the
+  renderer or Skia directly. Replacing Slint needs a new owner decision.
 gui_related: true
 gui_classification_reason: Defines the visual capabilities the desktop renderer adds beyond stock Slint.
 split_recommended: false
 depends_on: [DL-139, F3-026, F3-029, F3-033, F3-417]
-unblocks: []
+unblocks: [F3-566]
 acceptance_criteria:
   - "Each listed effect is reachable as a .slint property and drawn by Skia on both the GPU and CPU paths, except backdrop blur, whose surfaces draw solid in their own fill on the CPU path."
   - "On Windows with ClearType on, static text over an opaque background draws with subpixel edging in the system's RGB or BGR order; text in fading or cached layers, scaled or rotated text, and transparent windows draw grayscale."
   - "StyledText supports mouse and keyboard selection and copy, and the application can read and set its selection offsets."
   - "The extensions live in a Cargo [patch] of Slint's crates with a recorded upstream issue or pull request for each, and each Slint upgrade re-applies them and re-runs their screenshot checks."
   - "Slint-portability bans on these effects no longer bind; sheets are frosted on the GPU path and solid on the CPU raster, and F3-431 admits only that sheet blur."
+  - "No screen or view calls the renderer or Skia directly; every effect is reached through the fixed extension properties."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -39876,8 +39920,10 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-139 (owner answers, 2026-10-01)"
+  - "Plans/Decision_Log.md#DL-139 (owner answers, 2026-10-01 and 2026-10-02)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/ANSWERS-20261001.md, SHA-256 9ca1e2ab54c77a744d629eb4c6dcc1aa8c9d206c6256efbce8b66230a0961ad6"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/CRITIQUE-RESPONSE-20261001.md, SHA-256 76047abe87b2488f52b3e6df94160aa9da09ec1883d3a91876b20d3e1741a1da"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/ANSWERS-20261002.md, SHA-256 6a4c9f58ef4439d0a1882b7306c0b8d446a94e5f45f2346ab4430b66f13f2e84"
 preserved_exact_tokens:
   - "Skia renderer extensions"
   - "backdrop blur"
@@ -39888,6 +39934,7 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not draw backdrop blur on the Skia CPU raster; draw those surfaces solid in their own fill."
   - "Do not widen F3-431's blur budget beyond the sheet blur DL-139 admits."
+  - "Do not let a screen or view call the renderer or Skia directly, and do not add effects outside this unit's fixed property set."
 compatibility_only_notes: []
 stale_retired_dispositions:
   - "DL-139 lifts Slint-portability bans on blur, backdrop blur, masks, blend modes and filter effects that existed only because stock Slint could not draw them; the individual notes are updated when their units are next edited."
@@ -39907,15 +39954,22 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The web GUI is a Leptos client written in Rust, compiled to WebAssembly, and rendered in the browser (client-side
   rendering). It draws its interface with browser elements and CSS, so it uses the browser's own text rendering, text
-  selection, and CSS effects (DL-139). It pins the Leptos 0.8 line until 0.9 is stable and is served as a static web
+  selection, and CSS effects (DL-139), except that the web terminal tracks its own selection in the terminal grid's
+  data rather than with the browser's selection, so a selection survives scrolling and new output. It pins the Leptos 0.8 line until 0.9 is stable and is served as a static web
   route by the trusted local daemon; first paint may later move to server rendering from the daemon if load time needs
   it. It uses no React, Tauri, or TypeScript; JavaScript is limited to generated glue and the minimal bootstrap needed
   to load the WASM module, route static assets, and connect to approved local services. The trusted local daemon
   contract and the web capability states (the Trusted Local Daemon Contract and Web Capability Matrix sections) apply
-  unchanged. Desktop and web stay in step through
-  one shared Rust interface-model crate that owns state, commands, formatting, and validation and that both interfaces
-  bind to; one design-token source that generates the Slint theme globals and the CSS custom properties for every
-  theme; and the same fixtures run through both interfaces, with screenshots of each. Web animations keep to transform
+  unchanged. Desktop and web share behavior, not pixels. They stay in step through one shared Rust interface-model
+  crate that owns shared commands, typed requests and results, domain state and validation, document and editing
+  models, and formatting, and that both interfaces bind to; one design-token source that generates the Slint theme
+  globals and the CSS custom properties for every theme; and the same behavioral scenarios and fixtures run through
+  both interfaces, with screenshots of each checked against that interface's own visual baselines. Presentation
+  stays per interface; concept HTML is a design reference, not script to run under Leptos; and each stateful page
+  region has one owner. Browser text carries no ClearType guarantee, so web text readability, selection, and caret
+  behavior are checked on Windows at the expected display scaling, at rest and during transitions, including text
+  under masks. The UI Scale setting applies to the whole page through one root-level CSS scale (Contracts_V0
+  CV-188). Development and test builds expose the test-build observability of ATS-067. Web animations keep to transform
   and opacity where the design allows, long lists render only their visible rows, and long transcripts are trimmed or
   kept as page text rather than held in WebAssembly memory. The web terminal draws the same Rust terminal grid as a
   fixed, reused set of visible page-text rows updated by diff (the SMPFS-072 web exception) and ships only after the
@@ -39928,8 +39982,9 @@ unblocks: []
 acceptance_criteria:
   - "The web GUI is built from Rust Leptos components and CSS, pinned to the Leptos 0.8 line until 0.9 is stable, with no React, Tauri, or TypeScript product code."
   - "The web GUI reaches OS-owned capabilities only through the trusted local daemon and reports the web capability states of the Web Capability Matrix section."
-  - "Desktop and web bind the same interface-model crate and the same generated design tokens, and the shared fixtures produce screenshots on both."
-  - "Web text is browser-rendered and selectable with the browser's own selection."
+  - "Desktop and web bind the same interface-model crate (shared commands, typed requests and results, domain state and validation, document and editing models) and the same generated design tokens, and the shared behavioral scenarios produce screenshots on both, each checked against its own interface's visual baselines."
+  - "Web text is browser-rendered and selectable with the browser's own selection, with no ClearType guarantee; its readability, selection, and caret behavior are checked on Windows at the expected display scaling, at rest and during transitions, including text under masks."
+  - "The web terminal tracks its own selection in the terminal grid's data, not with the browser's selection, and a selection survives scrolling and new output."
   - "The web terminal renders only its visible rows as reused page-text rows from the Rust terminal grid and passes the heavy-output speed tests before it ships."
   - "Web animations keep to transform and opacity where the design allows, long lists render only their visible rows, and long transcripts are trimmed or kept as page text."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
@@ -39947,8 +40002,10 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-139 (owner answers, 2026-10-01)"
+  - "Plans/Decision_Log.md#DL-139 (owner answers, 2026-10-01 and 2026-10-02)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/ANSWERS-20261001.md, SHA-256 9ca1e2ab54c77a744d629eb4c6dcc1aa8c9d206c6256efbce8b66230a0961ad6"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/CRITIQUE-RESPONSE-20261001.md, SHA-256 76047abe87b2488f52b3e6df94160aa9da09ec1883d3a91876b20d3e1741a1da"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/ANSWERS-20261002.md, SHA-256 6a4c9f58ef4439d0a1882b7306c0b8d446a94e5f45f2346ab4430b66f13f2e84"
 preserved_exact_tokens:
   - "Leptos"
   - "Leptos 0.8"
@@ -39960,11 +40017,13 @@ negative_constraints:
   - "Do not use React, Tauri, or TypeScript in web product code."
   - "Do not let the web client claim OS-owned capabilities directly."
   - "Do not fork interface state or theme tokens between desktop and web."
+  - "Do not run concept HTML scripts under Leptos or let Leptos and hand-written JavaScript own the same stateful page region."
+  - "Do not compare desktop and web screenshots pixel for pixel; each interface has its own visual baselines."
 stale_retired_dispositions:
   - "DL-139 retires the Slint/WASM canvas web GUI, its cdylib canvas client, and its minimal HTML/canvas bootstrap; those names remain source lineage only."
 compatibility_only_notes: []
 owner_boundary_notes:
-  - "FinalGUISpec owns the web-client contract; Automated_Testing_System owns the web dev/test workflow (ATS-023)."
+  - "FinalGUISpec owns the web-client contract; Automated_Testing_System owns the web dev/test workflow (ATS-023) and test-build observability (ATS-067)."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Automated_Testing_System.md

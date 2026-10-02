@@ -2261,7 +2261,7 @@ The canonical-vs-internal split is audit-visible: requested/effective identity, 
 ## 8. UI Scaling
 
 The application exposes a user-facing UI scale setting (Settings → General tab).
-In the Slint rewrite this MUST be implemented via Slint's native window/global scale-factor mechanism.
+In the Slint rewrite the native desktop MUST implement this via Slint's native window/global scale-factor mechanism; the Leptos web GUI applies the same setting through one root-level CSS scale (F3-583, DL-139).
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#7.4, ContractName:Plans/FinalGUISpec.md#16.2
 
@@ -2272,12 +2272,12 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#7.4, ContractName:Plans/FinalGUI
 | `scale_range` | `[0.75, 1.5]` (clamped) |
 | `presets` | `[0.75, 0.9, 1.0, 1.1]` |
 | `default` | `1.0` |
-| `mechanism` | Slint native scale factor (window-level) |
+| `mechanism` | Desktop: Slint native scale factor (window-level); web: one root-level CSS scale (F3-583) |
 | `prohibited` | Per-token manual scaling / Iced-era `ScaledTokens` multiplication layers |
 
 Rules:
-- UI scale MUST use Slint's native global/window scale factor as the **only** scaling path.
-- Per-token manual scaling (e.g. the legacy Iced `ScaledTokens` multiplication approach) MUST NOT be ported to Slint view code.
+- On the native desktop, UI scale MUST use Slint's native global/window scale factor as the **only** scaling path. The Leptos web GUI (F3-583, DL-139) MUST apply the same setting to the whole page through one root-level CSS scale, with the same range (0.75–1.5), presets (75 % to 110 %) and default, and never scales tokens one by one; browser zoom still applies on top of it.
+- Per-token manual scaling (e.g. the legacy Iced `ScaledTokens` multiplication approach) MUST NOT be ported to Slint view code or Leptos view code/CSS.
 - The same four preset buttons (75 %, 90 %, 100 %, 110 %) MUST appear in Settings → General.
 - Editor text zoom (Ctrl+= / Ctrl+−) is independent of app-level UI scale.
 
@@ -12630,17 +12630,18 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  The Slint rewrite implements UI scale through Slint native global/window scale
-  factor as the only app-level scaling path; per-token manual scaling and
-  Iced-era ScaledTokens multiplication layers are prohibited, and editor text
-  zoom remains independent.
+  The Slint rewrite implements UI scale on the native desktop through Slint native
+  global/window scale factor as the only app-level scaling path, and the Leptos web
+  GUI applies the same setting through one root-level CSS scale (DL-139, F3-583);
+  per-token manual scaling and Iced-era ScaledTokens multiplication layers are
+  prohibited on both, and editor text zoom remains independent.
 gui_related: true
 gui_classification_reason: This unit constrains GUI implementation scaling behavior.
 split_recommended: false
 depends_on: [CV-187]
 unblocks: []
 acceptance_criteria:
-  - "Slint native global/window scale factor is the only app-level UI scaling path."
+  - "Slint native global/window scale factor is the only app-level UI scaling path on the desktop, and one root-level CSS scale is the only one in the Leptos web GUI."
   - "Per-token manual scaling and Iced-era ScaledTokens multiplication are not ported."
   - "Editor text zoom remains independent of app-level UI scale."
 validation_surfaces:
@@ -12657,13 +12658,14 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0065
+  - "Plans/Decision_Log.md#DL-139 (owner answer on web UI scale, 2026-10-02)"
 preserved_exact_tokens:
   - "Slint native scale factor"
   - "Per-token manual scaling"
   - "`ScaledTokens`"
   - "PolicyRule:Plans/rewrite-tie-in-memo.md#ui-scaling-migration"
 negative_constraints:
-  - "Per-token manual scaling or Iced-era ScaledTokens multiplication layers must not be ported to Slint view code."
+  - "Per-token manual scaling or Iced-era ScaledTokens multiplication layers must not be ported to Slint view code or Leptos view code/CSS."
 owner_hints:
   - Plans/Contracts_V0.md
   - Plans/FinalGUISpec.md

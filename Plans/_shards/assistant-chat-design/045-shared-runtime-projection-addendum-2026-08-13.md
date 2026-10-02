@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L3606-L22257
 
-Source SHA256: `2af0f35217dcf661b0a9eabfeb6be5109c8ed9c0b1366778c1368a117cad2823`
+Source SHA256: `b38665e5d3190ade988857f21bfa0bc3b98cb9bbb5c33de6ef6d147506aad9c6`
 
 ---
 
@@ -10980,14 +10980,14 @@ plan_unit_id: ACD-235
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Long chat thread performance requirements apply to chat message list and thread content on Rust + Slint with advanced renderer assumptions.
+canonical_text: Long chat thread performance requirements apply to the chat message list and thread content on both frontends, the Rust + Slint desktop on the Skia renderer (winit + Skia, GPU or CPU raster; DL-139) and the Leptos web client (F3-583); the behavior is shared, and the Slint ListView details are the desktop presentation.
 gui_related: true
 gui_classification_reason: Long-thread performance applies to visible chat message list rendering.
 depends_on: [ACD-224]
 unblocks: [ACD-236]
 acceptance_criteria:
   - Long chat thread requirements cover message list and related thread content.
-  - Rust + Slint and advanced renderer assumptions remain explicit.
+  - Both frontends remain explicit, Rust + Slint on the Skia renderer (winit + Skia, GPU or CPU raster) and the Leptos web client (F3-583).
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate

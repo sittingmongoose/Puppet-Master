@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L293-L651
+Source lines: L295-L653
 
-Source SHA256: `fa43d9361dda3ce4cd412ce1e7674eee93e0e688c776493bfa6810d2137ad51f`
+Source SHA256: `a5089d10b477d9b486a516736032822cf7a94224768678daacde72ba94adbe2b`
 
 ---
 
@@ -292,7 +292,7 @@ PROC-008 is closed only by the exact owner text and machine contracts cited abov
 | `interview-subagent-integration.md` | Interview phases + subagent use | `Plans/interview-subagent-integration.md` owns interview-phase subagent use. Phase assignments use the registry-driven Persona set; cross-phase (`ux-researcher`, `knowledge-synthesizer`, `explorer`, `requirements-quality-reviewer`, etc.). Mirrors orchestrator patterns at interview-phase boundaries. Persona injection per `Plans/Personas.md` §5.2. `context-manager` is source-lineage/import seed vocabulary, not a PM Persona catalog entry. |
 | `assistant-chat-design.md` | Assistant/Chat UX and modes | Canonical for chat/thread/session navigation, PM-native Ask/Plan semantics, slash-command behavior, shared question flows, activity transparency, `/web`, `/skill`, and plan/TODO semantics. |
 | `assistant-memory-subsystem.md` | Assistant-only memory continuity subsystem | Canonical SSOT for Assistant memory boundary, per-project memory stores (`assistant_memory.redb` + lexical/semantic indexes), decay scoring, capsule/retrieval budgets, and maintenance operations. Explicitly separate from rules pipeline contracts. |
-| `FinalGUISpec.md` | Shared Slint GUI and theme contract | Canonical UI source for application shell/layout/view placement, shared theme palettes/tokens, provider-neutral Actions & Pipelines, Backup/Recovery and PM-connector projections, chat widgets/activity cards/plan tracker, Agent Config placement, browser/terminal surfaces, and Expert/ELI5 presentation. Domain owners retain runtime truth; `Settings_System.md` owns the Settings shell and routing. |
+| `FinalGUISpec.md` | Shared GUI contract (Slint desktop, Leptos web) and theme contract | Canonical UI source for application shell/layout/view placement, shared theme palettes/tokens (one design-token source generating Slint theme globals and CSS custom properties), the Skia renderer extensions (F3-582), the Leptos web client (F3-583), provider-neutral Actions & Pipelines, Backup/Recovery and PM-connector projections, chat widgets/activity cards/plan tracker, Agent Config placement, browser/terminal surfaces, and Expert/ELI5 presentation. Domain owners retain runtime truth; `Settings_System.md` owns the Settings shell and routing. |
 | `Settings_System.md` | Canonical Settings System | Sole owner for exact K3 Tome Tabs Settings geometry, project-bound ordinary-setting persistence, 828-ID inventory consumption, search/facets/virtualization, atomic mutation/default restore, detached Project transfer, manager grammar, and provider/backup/connector owner projections. Retained domain owners keep runtime truth. |
 | `Project_System.md` | Project identity and lifecycle | Owns Project registration, create/open/archive/remove/restore/delete-data boundaries, typed Project records, and Project-facing backup/history/restore-as-new consumption; it does not own source-control engines, Vault movement, or backup execution. |
 | `Server_System.md` | Server identity, catalog, trust, pairing, endpoints, and lifecycle | Sole Server identity and trust owner, including backup-continuity and remote-endpoint provenance consumption; discovery never implies consent or trust. |

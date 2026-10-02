@@ -34,7 +34,7 @@ This plan's **UX requirements** remain authoritative. Implementation should targ
 
 - **Core:** providers + unified event model + deterministic agent loop remain the base architecture.
 - **Storage/search:** seglog/redb/Tantivy projections remain the persistence/search stack; JSONL mirror is derived only.
-- **UI:** Rust + Slint remain the intended shell implementation.
+- **UI:** Rust + Slint (Skia renderer) remain the intended native desktop shell implementation; the web GUI is the Rust Leptos client (`Plans/FinalGUISpec.md` F3-583, DL-139). The behavior and data contracts in this plan apply to both frontends.
 - **Tooling:** tool registry, approvals, and results normalize through the unified event stream and shared permission/runtime contracts.
 - **Auth/runtime taxonomy:** subscription-first remains the default posture. Gemini Direct (`gemini`) is the active direct API route; Antigravity CLI is the active Google-owned CLI-runtime route; Gemini CLI (`gemini_cli`) is retired/source-lineage only. Consumers MAY group related entries under a provider family, but chat/runtime surfaces MUST display the concrete requested/effective provider entry instead of collapsing them into a single generic provider badge.
 - **Identity disclosure:** requested/effective runtime identity, account binding, and auth state are imported from the shared runtime contracts. Assistant Chat must not invent a parallel provider/auth field set.
@@ -2293,7 +2293,7 @@ The competitive-comparison traceability stays intact.
 ## 24. Chat thread performance, virtualization, and flicker avoidance
 
 
-This section addresses **long chat threads**: keeping them performant, using **virtualized rendering**, and **avoiding flicker**. The UI stack is **Rust + Slint** with an advanced renderer (e.g. winit + Skia per rewrite-tie-in-memo and Composergui5); the following requirements apply to the chat message list and related thread content.
+This section addresses **long chat threads**: keeping them performant, using **virtualized rendering**, and **avoiding flicker**. The desktop UI stack is **Rust + Slint**, drawn only by Slint's Skia renderer (winit + Skia on the GPU, then Skia's own CPU raster) per rewrite-tie-in-memo, Composergui5 and DL-139, and the web GUI is the Leptos client (FinalGUISpec F3-583). The following requirements apply to the chat message list and related thread content in both. Virtualization, stable IDs, in-place streaming updates without full list rebuilds, scroll-anchor preservation and the in-memory cap are shared behavior; the Slint notes below are the desktop presentation, and the web client meets the same contracts with its own rendering of visible rows and trimmed long transcripts.
 
 ### 24.1 Virtualized rendering
 
@@ -14575,14 +14575,14 @@ plan_unit_id: ACD-235
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Long chat thread performance requirements apply to chat message list and thread content on Rust + Slint with advanced renderer assumptions.
+canonical_text: Long chat thread performance requirements apply to the chat message list and thread content on both frontends, the Rust + Slint desktop on the Skia renderer (winit + Skia, GPU or CPU raster; DL-139) and the Leptos web client (F3-583); the behavior is shared, and the Slint ListView details are the desktop presentation.
 gui_related: true
 gui_classification_reason: Long-thread performance applies to visible chat message list rendering.
 depends_on: [ACD-224]
 unblocks: [ACD-236]
 acceptance_criteria:
   - Long chat thread requirements cover message list and related thread content.
-  - Rust + Slint and advanced renderer assumptions remain explicit.
+  - Both frontends remain explicit, Rust + Slint on the Skia renderer (winit + Skia, GPU or CPU raster) and the Leptos web client (F3-583).
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate

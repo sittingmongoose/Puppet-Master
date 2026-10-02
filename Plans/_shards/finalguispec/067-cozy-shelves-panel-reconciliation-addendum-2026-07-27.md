@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32641-L33319
+Source lines: L32678-L33359
 
-Source SHA256: `b736820447eba84072c609db2a772aa2344069730c5b1b0ee52a845267a71ec4`
+Source SHA256: `d87d918cefa5a3b031ccb7180c91e4537a7ea08fe53fd1a6499b1070af4ff311`
 
 ---
 
@@ -151,8 +151,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The concept family's web motion idioms map to Slint primitives one-for-one, and
-  implementations use only the Slint side of the map: (1) CSS grid-rows expansion spring
+  The concept family's web motion idioms map to Slint primitives one-for-one, and the Slint
+  desktop interface uses only the Slint side of the map; the Leptos web client (F3-583)
+  implements the same semantic rows in CSS, using transform and opacity where the design
+  allows, animating to the measured content height rather than a max-height cap, running
+  the entrance stagger once, and keeping the same reduced-motion parity: (1) CSS grid-rows expansion spring
   maps to an animated height property on a clipped rect; (2) max-height tween maps to an
   animation toward the measured content height, never an arbitrary cap; (3) box-shadow
   attention pulse maps to an opacity/scale ring overlay element; (4) underline width ink
@@ -168,7 +171,7 @@ split_recommended: false
 depends_on: [F3-472]
 unblocks: []
 acceptance_criteria:
-- "Each web idiom in the map (grid-rows spring, max-height tween, box-shadow pulse, width ink, sprout menu, scroll-reveal) has exactly the stated Slint primitive and no DOM-shaped emulation."
+- "Each web idiom in the map (grid-rows spring, max-height tween, box-shadow pulse, width ink, sprout menu, scroll-reveal) has exactly the stated Slint primitive on the Slint desktop interface and no DOM-shaped emulation there; the Leptos web client uses the CSS equivalent of the same row."
 - "Entrance stagger runs once on first model paint and never re-triggers on scroll."
 - "Reduced motion completes all mapped animations instantly with zero transition-delay equivalents."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
@@ -190,9 +193,9 @@ preserved_exact_tokens:
 - "PopupWindow"
 - "scaleX"
 negative_constraints:
-- "Do not port web motion idioms literally (no max-height caps, no shadow-blur animation, no scroll-linked reveal); only the Slint column of the map ships."
+- "Do not port web motion idioms literally (no max-height caps, no shadow-blur animation, no scroll-linked reveal); on the desktop only the Slint column of the map ships, and the web client follows the same semantic rows in CSS."
 compatibility_only_notes:
-- "Slint portability: all mapped motions are property animations on opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+- "Slint portability (updated for DL-139): all mapped motions are property animations. The bans on blur, backdrop blur, masks, blend modes and filter effects no longer bind for the effects Puppet Master's Skia renderer extensions add (F3-582); opaque precomputed surfaces and precomputed rather than runtime-mixed color math remain a performance option."
 stale_retired_dispositions: []
 owner_boundary_notes:
 - "F3-472 owns what the expander shows; this unit owns only how its state changes move."

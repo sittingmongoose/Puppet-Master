@@ -4,13 +4,13 @@ Source: `Plans/Automated_Testing_System.md`
 
 Source lines: L111-L335
 
-Source SHA256: `7c23a9e8f84adeec86fafde0e777511b54325d99a92a6d8f107365a4185b4105`
+Source SHA256: `316c41314a852e5f6618fe0e9c76723bfdcccb3d0db19ac9d181cd624a1c4e4b`
 
 ---
 
 ## GUI web development and smoke-test workflow addendum (2026-07-07)
 
-The Leptos web GUI development workflow (DL-139; it replaces the Slint/WASM web GUI) uses a trusted local daemon plus a static web route, fixture mode, browser automation smoke tests, screenshots/state capture, deterministic state hooks, and fast rebuild/reload loops. Because the web GUI is drawn with browser elements, smoke tests and state capture drive and read the page's own elements, and the same fixtures also run through the Slint desktop so screenshots of both can be compared (F3-583). The test harness must prove daemon capability probes, pairing/origin/CSRF protections, degraded reasons when the daemon is absent or narrowed, screenshot and state-capture evidence, and reload behavior for the static web route. Production builds must not enable dev/test, MCP, live-preview, fixture, or browser automation controls unless explicit configuration enables the capability and records permission/audit receipts.
+The Leptos web GUI development workflow (DL-139; it replaces the Slint/WASM web GUI) uses a trusted local daemon plus a static web route, fixture mode, browser automation smoke tests, screenshots/state capture, deterministic state hooks, and fast rebuild/reload loops. Because the web GUI is drawn with browser elements, smoke tests and state capture drive and read the page's own elements, and the same fixtures and behavioral scenarios also run through the Slint desktop, with each interface's screenshots checked against its own visual baselines, because the two share behavior, not pixels (F3-583). The test harness must prove daemon capability probes, pairing/origin/CSRF protections, degraded reasons when the daemon is absent or narrowed, screenshot and state-capture evidence, and reload behavior for the static web route. Production builds must not enable dev/test, MCP, live-preview, fixture, or browser automation controls unless explicit configuration enables the capability and records permission/audit receipts.
 
 ### ATS-023 - Web GUI Dev Preview And Smoke Tests
 
@@ -22,8 +22,8 @@ owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
   Leptos web GUI development (DL-139, F3-583) uses a trusted local daemon plus static web route, fixture mode, browser
   automation smoke test that drives and reads the page's own elements, screenshots/state-capture, deterministic state
-  hooks, and fast rebuild/reload; the same fixtures also run through the Slint desktop so screenshots of both can be
-  compared. Production builds must not
+  hooks, and fast rebuild/reload; the same fixtures and behavioral scenarios also run through the Slint desktop, and
+  each interface's screenshots are checked against its own visual baselines. Production builds must not
   enable dev/test, MCP, live-preview, fixture, or browser automation features unless explicit configuration enables the
   capability and records permission/audit receipts.
 gui_related: true
@@ -36,7 +36,7 @@ unblocks:
 - F3-417
 acceptance_criteria:
 - The local daemon plus static web route workflow has fixture mode, browser automation smoke test, screenshots/state-capture, state hooks, and fast reload coverage.
-- The shared fixtures also run through the Slint desktop, and screenshots of the web and desktop interfaces are captured for comparison.
+- The shared fixtures and behavioral scenarios also run through the Slint desktop, and screenshots of the web and desktop interfaces are captured and each is checked against its own interface's visual baselines.
 - Smoke tests prove authenticated local origin or pairing, origin/CSRF protection, capability probe, degraded reason, and permission/audit receipt projection.
 - Production builds keep dev/test, MCP, live-preview, fixture, and browser automation controls disabled unless explicit configuration enables the capability.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this spec.

@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L10681-L11318
+Source lines: L10682-L11322
 
-Source SHA256: `392c144bb51082c70927de6d00c95e1ccabef12ccf6de00c335a3ae85aba6f04`
+Source SHA256: `bd4a2ef95f38b65034382ae6e0d557c69f483859ef154805e1b03d6626b38c8c`
 
 ---
 
@@ -55,13 +55,16 @@ acceptance_criteria:
   from CSI > flags u push/enable, and test query/set/push/pop sequences (?, =, >, <) split at every byte. Push/pop
   storage is bounded, normal and alternate screen stacks are independent, and return/reset behavior follows the
   admitted profile.
-- The end-to-end OS/backend to Slint/Winit to PM encoder to transport field matrix distinguishes physical/produced
-  key identity, modifiers, repeat/release, layout/dead-key and committed text. Never synthesize physical keys from
+- The end-to-end field matrix covers each input path, native OS/backend to Slint/Winit to PM encoder to transport
+  and, for the Leptos web GUI terminal (DL-139, F3-583), browser keyboard and composition events to PM encoder to
+  transport; for each path it distinguishes physical/produced key identity, modifiers, repeat/release,
+  layout/dead-key and committed text. Never synthesize physical keys from
   IME text or dispatch both a raw key text and its duplicate IME commit.
 - Acceptance covers modifiers, repeat/release, Enter/Tab/Backspace, dead keys, non-US layout changes, numpad, Unicode/IME
   composition/commit/cancel, focus loss, nested TUIs, independent and overflow/empty stacks, app crash/reset, unsupported
   queries and DA1 ordering. One input has one eligible owner; read-only Chat previews gain no input ownership.
-- Exercise actual supported native Windows/WSL, macOS, Linux and admitted remote/SSH/tmux paths. A capable PM encoder
+- Exercise actual supported native Windows/WSL, macOS, Linux, admitted remote/SSH/tmux and Leptos web GUI terminal
+  (supported browser) paths. A capable PM encoder
   alone cannot prove a host/toolkit path supports every field; disclose partial/unavailable behavior and never advertise
   more than tested.
 - The feature is accepted for planning; selected enhancement extent and pinned Slint/platform feasibility must be

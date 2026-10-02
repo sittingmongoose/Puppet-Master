@@ -2367,6 +2367,8 @@ Jared chose neither option as written and made the answer conditional. The solid
 
 **Check recorded (2026-09-27):** the lead applied Jared's rule. Slint 1.18.1 (released 2026-09-21) still has no backdrop or background blur: none is listed in the 1.18 release notes or the release list, the backdrop-filter request slint-ui/slint#13502 was closed as a duplicate of the open #612 (compositing and effects), and #2066 (blur what is underneath a Rectangle) is still open. The limitation therefore still exists, and the setup popups are solid over a flat scrim, as built; the Glass theme keeps its near-opaque glass-coloured panel, and F3-431's blur budget stays closed. Sources: https://slint.dev/blog/slint-1.18-released, https://github.com/slint-ui/slint/releases, https://github.com/slint-ui/slint/issues/13502, https://github.com/slint-ui/slint/issues/2066, as recorded in the `resolution` field of answer record `n05` (the ANSWERS.json cited below). Agent-relayed; not verifiable from inside this repository. FinalGUISpec F3-566 carries the result.
 
+**Replaced on 2026-10-01 by DL-139:** the setup popups (the sheets of `Plans/FinalGUISpec.md#F3-566`) are frosted glass on the Skia GPU path, drawn by Puppet Master's own Skia renderer extensions (F3-582), and solid on the Skia CPU raster; the scrim stays a flat tint, and F3-431's blur budget admits this one sheet blur only.
+
 SourceRef: decision card `n05` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `ae42601afbd6e76ed542336e1afd1390e2ecf54021bd4c6012740f8c9c3f6881` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `n05` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
 
 ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/FinalGUISpec.md
@@ -2901,6 +2903,8 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/S
 
 Also checked: Slint's newer experimental drawing engine (Vello) cannot yet blur or draw ClearType, so it was not chosen; it is worth another look once it is finished. For the web, a JavaScript-based toolkit was the runner-up; switching to one later would need a new decision.
 
+Also checked (2026-10-02): forking GPUI, the Zed editor's interface toolkit, for the desktop. It has ClearType and full text input today, but it lacks the layer drawing that blur, masks, blend modes and group fades need (a renderer redesign), has no processor renderer and no released versions, does not accept contributions from agents so every change would stay ours, and nobody has measured it faster on a real graphics card; on our VM's software graphics card it used two to three times the processor of Slint with Skia. Rejected; the desktop stays on Slint.
+
 **Owner answers, verbatim (2026-10-01, in chat):**
 - "ok sounds like we are doing custom skia work and only using skia for desktop.  For web, you said we should use a browser-native web client, what would you recommend?"
 - "I told the other thread to drop the slint requirements since we are going to do custom code on skia to alleviate the shortcomings."
@@ -2922,9 +2926,23 @@ Also checked: Slint's newer experimental drawing engine (Vello) cannot yet blur 
 7. **Web terminal** (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-072`, `Plans/FinalGUISpec.md#F3-583`): the web version draws the same Rust terminal grid as a fixed, reused set of visible page-text rows updated by diff, never one element per output line, and it ships only after passing the heavy-output speed tests.
 8. **Unchanged:** the Slint and Rust version pins (kept as they are until build time), "no React, no Tauri", the trusted local daemon contract, and "in-canvas" as the name of the in-app floating layer on both targets.
 
-SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/ANSWERS-20261001.md`, SHA-256 `9ca1e2ab54c77a744d629eb4c6dcc1aa8c9d206c6256efbce8b66230a0961ad6`; confirmations in `/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/CONFIRMATIONS-20261001.md`, SHA-256 `104cfdda63686a6abe243b83d1c5863cf92929b755993cd87314cd264e44f83a`.
+**What the spec now says, added after the external critique (2026-10-01), the GPUI research and the answers of 2026-10-02:**
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Release_Supply_Chain.md, ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/settings_inventory.json, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+On the critique Jared chose, in the question form, "No, port normally" (no trial build before the port) and "Yes, require it in test builds (Recommended)" (test agents can see what the interface is doing). After the GPUI research he said, verbatim (2026-10-02, in chat): "Lets stick to Leptos for web, Slint for native, and keep the skia cpu fallback.  Your recommendation." In the question form that followed he chose the recommended option for the web page size, the one-time notice, going back to the graphics card, motion, and the web terminal, and typed two answers of his own: "ignore the switch and warn the user that there is no gpu detected." (software graphics cards) and "I have a license." (licensing).
+
+1. **Slint stays the desktop framework.** Slint keeps layout, input, focus, text editing, clipboard, drag and drop and windows. Our Skia additions are a fixed set of properties built in one place; screens use those properties and never call the drawing engine directly. Replacing Slint would need a new decision (`Plans/FinalGUISpec.md#F3-582`).
+2. **Software graphics cards.** Some machines (remote desktops, virtual machines, our own agent VM) have only a software stand-in for a graphics card (llvmpipe or lavapipe, WARP, SwiftShader). Slint only falls back when no graphics card can be used at all, so Puppet Master checks for these stand-ins itself and always draws with Skia on the processor there, even when the Graphics Engine setting or the override asks for the graphics card; in that case it warns that no graphics card was detected. When it switches for this reason it shows one quiet notice, once and never again, explaining why frosted panels look solid (`Plans/FinalGUISpec.md#F3-033`).
+3. **The processor path is fully supported.** The app starts on it when no graphics card works and stays fully usable there. After a lost graphics card, a driver update or crash, or sleep and wake, it rebuilds its drawing without losing what is on screen and goes back to the graphics card by itself once it works again. Motion is the same as on a graphics card; the only difference is that frosted panels go solid.
+4. **Web text.** Browser text has no ClearType guarantee, so its readability, selection and cursor are checked on Windows at normal display scaling, still and during animations, including text under faded edges (`Plans/FinalGUISpec.md#F3-583`).
+5. **Share behavior, not pixels.** Desktop and web share commands, typed requests and results, data and validation, document and editing models, theme tokens and test scenarios; each draws its own way and is checked against its own reference screenshots. The concept HTML is a design reference, not code to run, and each stateful part of a page has one owner.
+6. **Test builds show agents what is happening** (`Plans/Automated_Testing_System.md#ATS-067`): the active screen, focused control, text selection, scroll position, commands sent and their results, frame timing, redraws, memory growth, and which renderer was asked for and which is running, with the reason for any fallback. Never in production builds.
+7. **Web terminal selection** (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-072`, `Plans/FinalGUISpec.md#F3-193`, `#F3-583`): the web terminal keeps track of its own text selection, like the desktop terminal, instead of using the browser's, so a selection survives scrolling and new output. It is the one web panel that does this.
+8. **Web page size** (`Plans/Contracts_V0.md#CV-188`): the UI Scale setting scales the whole web page at once, with the same presets (75 to 110 percent), allowed range (0.75 to 1.5) and default as on the desktop; browser zoom still works on top.
+9. **Licensing.** Jared holds a Slint license, so no separate license cards are opened for the licensing questions the GPUI research raised. This answer does not cover Puppet Master's own license.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/ANSWERS-20261001.md`, SHA-256 `9ca1e2ab54c77a744d629eb4c6dcc1aa8c9d206c6256efbce8b66230a0961ad6`; confirmations in `/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/CONFIRMATIONS-20261001.md`, SHA-256 `104cfdda63686a6abe243b83d1c5863cf92929b755993cd87314cd264e44f83a`; the critique and its owner answers in `/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/CRITIQUE-RESPONSE-20261001.md`, SHA-256 `76047abe87b2488f52b3e6df94160aa9da09ec1883d3a91876b20d3e1741a1da`; the GPUI research memo `/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/GPUI-RESEARCH-20261002.md`, SHA-256 `119cfe4383311d15f0285b236a995c48e33c5bc5b41125b701e16c7534a33ec9`; the 2026-10-02 owner answer in `/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/ANSWERS-20261002.md`, SHA-256 `6a4c9f58ef4439d0a1882b7306c0b8d446a94e5f45f2346ab4430b66f13f2e84`.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Release_Supply_Chain.md, ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/settings_inventory.json, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Settings_System.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Decision_Log.md#DL-114
 
 ## Owner / Consumer Map
 
@@ -9048,7 +9066,10 @@ canonical_text: >-
   are solid if it still does. The check was recorded on 2026-09-27 (resolved: solid): Slint 1.18.1
   still cannot draw a blur behind a popup (slint-ui/slint#13502 closed as a duplicate of the open
   #612; #2066 still open), so the setup popups are solid over a flat scrim, Glass keeps its
-  near-opaque glass-coloured panel, and F3-431's blur budget stays closed (FinalGUISpec F3-566).
+  near-opaque glass-coloured panel, and F3-431's blur budget stays closed (FinalGUISpec F3-566). Outcome replaced on
+  2026-10-01 by DL-139: the setup popups (F3-566 sheets) are frosted glass on the Skia GPU path through Puppet
+  Master's own Skia renderer extension (F3-582) and solid on the Skia CPU raster; the scrim stays a flat tint and
+  F3-431's blur budget admits this one sheet blur only.
 gui_related: true
 gui_classification_reason: Records an owner decision about popup surfaces presentation or behaviour.
 split_recommended: false
@@ -9057,7 +9078,7 @@ unblocks: []
 acceptance_criteria:
   - A recorded check states whether Slint 1.18.1 can draw a blur behind a popup.
   - The setup popups are blurred if the check passes and solid if it fails.
-  - As recorded on 2026-09-27 the check failed, so no setup popup or scrim uses a backdrop blur.
+  - As recorded on 2026-09-27 the check failed; DL-139 (2026-10-01) replaces that outcome, so setup popups are frosted on the Skia GPU path and solid on the Skia CPU raster, and no scrim uses a backdrop blur.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -9080,8 +9101,8 @@ preserved_exact_tokens:
   - "Slint 1.18.1"
 negative_constraints:
   - Do not canonize blurred or solid popups before the Slint 1.18.1 check is recorded.
-  - Do not add a backdrop blur to a setup popup while Slint cannot draw one.
-  - "Do not read the recorded check as permanent: a later Slint release that can draw a backdrop blur reopens it under Jared's rule."
+  - Do not add a backdrop blur to the scrim, or to a setup popup on the Skia CPU raster (DL-139).
+  - "Do not read the recorded check as permanent: DL-139 reopened it on 2026-10-01 through Puppet Master's own Skia extension (F3-582)."
 owner_hints:
   - Plans/Collaborative_Workflows.md
   - Plans/FinalGUISpec.md
@@ -10472,7 +10493,7 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  DL-139 records the owner decision of 2026-10-01. The native desktop GUI compiles and ships only Slint's Skia
+  DL-139 records the owner decision of 2026-10-01, completed on 2026-10-02. The native desktop GUI compiles and ships only Slint's Skia
   renderer. Selection runs SLINT_BACKEND override, persisted preference, Skia on the GPU (winit-skia), then Skia's
   own CPU raster (winit-skia-software); FemtoVG and Slint's separate software renderer are not compiled or shipped.
   Puppet Master carries its own extensions to Slint's Skia renderer for element blur, backdrop blur, gradient and
@@ -10486,6 +10507,23 @@ canonical_text: >-
   rows updated by diff (SMPFS-072 web exception), subject to the heavy-output speed tests. The web GUI is a
   Leptos client drawn with browser elements and CSS and served by the trusted local daemon (F3-583); it replaces the
   Slint/WASM canvas web GUI. Both interfaces bind one shared Rust interface-model crate and one design-token source.
+  Added 2026-10-01/02: Slint remains the native UI framework (layout, input, focus, text editing, clipboard, drag and
+  drop, windows); the Skia extensions are a fixed, centrally implemented property set that screens use without
+  calling the renderer, and replacing Slint needs a new decision. When the GPU adapter is a software implementation
+  (llvmpipe or lavapipe, WARP, SwiftShader), Puppet Master always uses Skia's CPU raster, even when the Graphics
+  Engine setting or the SLINT_BACKEND override asks for the GPU, and then warns the user that no GPU was detected;
+  switching for this reason shows one quiet, non-blocking, one-time notice explaining why frosted panels look solid
+  (F3-033). The Skia CPU raster is a supported, tested path that starts without a GPU and stays fully usable with
+  motion unchanged, its only reductions being that backdrop blur is not drawn and frosted surfaces draw solid. After
+  GPU device or surface loss, a driver update or crash, or suspend and resume, Puppet Master rebuilds its drawing
+  surface without losing interface state and returns to the GPU automatically once it works again. Web text has no
+  ClearType guarantee and is checked on Windows for readability, selection and caret behavior at rest and during
+  transitions. The interfaces share behavior, not pixels, each with its own visual baselines (F3-583); the web
+  terminal tracks its own selection in the terminal grid's data, not with the browser's selection; and the web GUI
+  applies the UI Scale setting through one root-level CSS scale (CV-188). Development and test builds of both expose
+  test-build observability, never production builds (ATS-067). A GPUI fork was researched and rejected on
+  2026-10-02. Jared holds a Slint license, so no separate license cards are opened from the GPUI research's
+  licensing questions; this does not address Puppet Master's own license.
   Jared said: "ok sounds like we are doing custom skia work and only using skia for desktop.  For web, you said we
   should use a browser-native web client, what would you recommend?", then "I told the other thread to drop the
   slint requirements since we are going to do custom code on skia to alleviate the shortcomings.", then "ok go with
@@ -10493,21 +10531,26 @@ canonical_text: >-
   cpu(skia has cpu)." Jared then confirmed in the question form, choosing the recommended option each time: "Yes,
   Skia only (Recommended)" (Slint's own software renderer goes too), "Yes, lift them now (Recommended)" (the
   Slint-portability bans), "Frosted on GPU, solid on CPU (Recommended)" (setup popups) and "Reused rows of page text
-  (Recommended)" (web terminal). The Slint and Rust version pins, the no-React and no-Tauri rule, the trusted local
+  (Recommended)" (web terminal). On the critique Jared chose "No, port normally" and "Yes, require it in test builds
+  (Recommended)"; on 2026-10-02 he said: "Lets stick to Leptos for web, Slint for native, and keep the skia cpu fallback.  Your recommendation.",
+  and in the question form typed "ignore the switch and warn the user that there is no gpu detected." and "I have a
+  license." The Slint and Rust version pins, the no-React and no-Tauri rule, the trusted local
   daemon contract and the in-canvas float-layer name are unchanged.
 gui_related: true
 gui_classification_reason: Records the owner decision on the desktop renderer set, the visual capabilities added to
   it, and the technology of the web GUI.
 split_recommended: false
 depends_on: []
-unblocks: [F3-582, F3-583]
+unblocks: [F3-566, F3-582, F3-583, ATS-067]
 acceptance_criteria:
   - "Every live owner and consumer statement of the desktop renderer order names Skia on the GPU then Skia's CPU raster, with FemtoVG and Slint's separate software renderer retired."
   - "The Skia extension set and the Leptos web client each have one owning FinalGUISpec PlanUnit."
   - "Slint-portability bans on the F3-582 effects no longer bind; setup popups are frosted on the GPU path and solid on the CPU raster, and F3-431 admits only that sheet blur."
   - "The web terminal follows the SMPFS-072 web exception: reused visible page-text rows from the Rust grid, shipped only after the heavy-output speed tests."
   - "The trusted local daemon contract, web capability states, Slint version pins and the no-React and no-Tauri rule are unchanged."
-  - "The three owner answers are preserved verbatim with their source hash."
+  - "The owner answers of 2026-10-01 and 2026-10-02 are preserved verbatim with their source hashes."
+  - "Software-GPU routing, the supported CPU raster, the Slint framework boundary, web text checks, behavior-not-pixels parity, web terminal selection, web UI scale and test-build observability each have an owning PlanUnit (F3-033, F3-582, F3-583, CV-188, ATS-067)."
+  - "Jared's Slint license is recorded without stating its type, and no separate license card is opened for the GPUI research's licensing questions."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -10522,6 +10565,9 @@ implementation_surfaces:
   - Plans/settings_inventory.json
   - Plans/Section15_MVP_Promoted_Features_Spec.md
   - Plans/00-plans-index.md
+  - Plans/Contracts_V0.md
+  - Plans/Settings_System.md
+  - Plans/assistant-chat-design.md
 node_compile_hint:
   mode: owner_decision_record
   create_worknodes: false
@@ -10529,6 +10575,9 @@ node_compile_hint:
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/ANSWERS-20261001.md, SHA-256 9ca1e2ab54c77a744d629eb4c6dcc1aa8c9d206c6256efbce8b66230a0961ad6"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/CONFIRMATIONS-20261001.md, SHA-256 104cfdda63686a6abe243b83d1c5863cf92929b755993cd87314cd264e44f83a"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/CRITIQUE-RESPONSE-20261001.md, SHA-256 76047abe87b2488f52b3e6df94160aa9da09ec1883d3a91876b20d3e1741a1da"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/GPUI-RESEARCH-20261002.md, SHA-256 119cfe4383311d15f0285b236a995c48e33c5bc5b41125b701e16c7534a33ec9"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/ANSWERS-20261002.md, SHA-256 6a4c9f58ef4439d0a1882b7306c0b8d446a94e5f45f2346ab4430b66f13f2e84"
 preserved_exact_tokens:
   - "DL-139"
   - "winit-skia"
@@ -10538,6 +10587,9 @@ preserved_exact_tokens:
   - "dropping FemtoVG then cpu(skia has cpu)"
   - "Frosted on GPU, solid on CPU (Recommended)"
   - "Reused rows of page text (Recommended)"
+  - "GPUI"
+  - "Lets stick to Leptos for web, Slint for native, and keep the skia cpu fallback."
+  - "ignore the switch and warn the user that there is no gpu detected."
 negative_constraints:
   - "Do not compile or ship FemtoVG or Slint's separate software renderer in desktop builds."
   - "Do not use React, Tauri or TypeScript for the web GUI; JavaScript is limited to generated or minimal glue."

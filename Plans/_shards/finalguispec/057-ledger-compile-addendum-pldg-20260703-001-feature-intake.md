@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L28547-L29010
+Source lines: L28581-L29046
 
-Source SHA256: `b736820447eba84072c609db2a772aa2344069730c5b1b0ee52a845267a71ec4`
+Source SHA256: `d87d918cefa5a3b031ccb7180c91e4537a7ea08fe53fd1a6499b1070af4ff311`
 
 ---
 
@@ -391,7 +391,9 @@ canonical_text: >-
   Puppet Master targets Slint 1.17.1 for the active GUI platform. Native desktop uses Slint Winit with Skia as the
   only compiled renderer on Windows, Linux, and macOS, extended by Puppet Master's Skia renderer extensions (F3-582);
   selection order is explicit SLINT_BACKEND override, persisted preference, Winit + Skia on the GPU, then Winit +
-  Skia CPU (winit-skia-software), and FemtoVG and Slint's separate software renderer are retired (DL-139). The first
+  Skia CPU (winit-skia-software), and FemtoVG and Slint's separate software renderer are retired (DL-139); on a
+  software GPU adapter the Skia CPU raster is always used, even over an explicit GPU choice, with a warning that no
+  GPU was detected, and the CPU raster is a supported, tested path (F3-033). The first
   GUI build includes native desktop plus a Rust Leptos web GUI compiled to WebAssembly, rendered in the browser with
   browser elements and CSS, and served by the trusted local daemon, rather than React, Tauri, or TypeScript (F3-583).
   Browser-only WASM cannot claim PTY, filesystem, process/container, CEF, tray, native-window, or raw OS drag/drop
@@ -413,7 +415,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Active Slint toolkit references in live owner docs and Spec_Lock use Slint 1.17.1, while old versions remain only in audit/source-lineage history.
-- Native renderer fallback order is explicit and preserves SLINT_BACKEND override authority before persisted preference and compiled defaults.
+- Native renderer fallback order is explicit and preserves SLINT_BACKEND override authority before persisted preference and compiled defaults, except that a software GPU adapter always gets the Skia CPU raster with a no-GPU warning (F3-033).
 - Web GUI capability claims use the approved capability states and route OS-owned capabilities through the trusted local daemon.
 - Production icons use bundled SVG icon_id manifest entries, accessible labels, fallback text, and non-icon state text; emoji/pictographic pseudo-icons and remote icon sources are forbidden.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this decision.

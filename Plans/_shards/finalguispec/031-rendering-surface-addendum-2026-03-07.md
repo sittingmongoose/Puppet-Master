@@ -2,15 +2,15 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L4304-L4432
+Source lines: L4311-L4439
 
-Source SHA256: `b736820447eba84072c609db2a772aa2344069730c5b1b0ee52a845267a71ec4`
+Source SHA256: `d87d918cefa5a3b031ccb7180c91e4537a7ea08fe53fd1a6499b1070af4ff311`
 
 ---
 
 ## Rendering Surface Addendum (2026-03-07)
 
-This addendum locks how Markdown, Mermaid, HTML, SVG, and image rendering appear in the Slint GUI.
+This addendum locks how Markdown, Mermaid, HTML, SVG, and image rendering appear in the Slint desktop GUI and, as the same behaviour through the shared interface model and fixtures, in the Leptos web GUI (F3-583, DL-139); surfaces that need OS-owned capabilities, such as CEF-class browser embedding and native detached windows, appear in the web GUI only as the Web Capability Matrix allows.
 
 ### Surface inventory impact
 

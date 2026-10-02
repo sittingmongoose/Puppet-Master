@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L1031-L8605
+Source lines: L1031-L8606
 
-Source SHA256: `392c144bb51082c70927de6d00c95e1ccabef12ccf6de00c335a3ae85aba6f04`
+Source SHA256: `bd4a2ef95f38b65034382ae6e0d557c69f483859ef154805e1b03d6626b38c8c`
 
 ---
 
@@ -4245,6 +4245,7 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0042
 - "Plans/Decision_Log.md#DL-139 (web terminal answer, 2026-10-01)"
+- "Plans/Decision_Log.md#DL-139 (web terminal selection answer, 2026-10-02)"
 preserved_exact_tokens:
 - DOM-style
 - document-style
@@ -4262,7 +4263,7 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md'
 - 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md'
 compatibility_only_notes:
-- "DL-139 web exception: the Leptos web GUI draws the Rust terminal grid as a fixed, reused set of visible page-text rows updated by diff; this is not a DOM-style or line-widget-per-output core, and it ships only after the heavy-output speed tests."
+- "DL-139 web exception: the Leptos web GUI draws the Rust terminal grid as a fixed, reused set of visible page-text rows updated by diff; this is not a DOM-style or line-widget-per-output core, and it ships only after the heavy-output speed tests. The web terminal tracks its own selection in the terminal grid's data, not with the browser's selection, so a selection survives scrolling and new output."
 stale_retired_dispositions: []
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md

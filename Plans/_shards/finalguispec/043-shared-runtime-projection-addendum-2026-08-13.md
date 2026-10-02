@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5331-L26425
+Source lines: L5338-L26459
 
-Source SHA256: `b736820447eba84072c609db2a772aa2344069730c5b1b0ee52a845267a71ec4`
+Source SHA256: `d87d918cefa5a3b031ccb7180c91e4537a7ea08fe53fd1a6499b1070af4ff311`
 
 ---
 
@@ -1750,6 +1750,18 @@ canonical_text: >-
   Slint backend selection uses SLINT_BACKEND, persisted app preference, compiled default order,
   deterministic fallback, startup diagnostics, and setup surfaces that show the selected backend. Only the
   Skia renderer is compiled; the default order is Skia on the GPU, then Skia's own CPU raster (DL-139).
+  When the GPU adapter is a software implementation (llvmpipe or lavapipe, WARP, SwiftShader), Puppet Master always uses
+  Skia's CPU raster instead of running Skia on the software GPU, because Slint itself falls back only when no GPU
+  surface can be created; this holds even when the Graphics Engine setting or the SLINT_BACKEND override asks for the
+  GPU, and then the user is warned that no GPU was detected. Switching for this reason shows one quiet, non-blocking,
+  one-time notice explaining why frosted panels look solid, never repeated, and the startup diagnostic records the
+  requested and effective renderer and the reason. In every other case the explicit override and persisted
+  preference keep their precedence. The Skia CPU raster is a supported, tested path: the app starts on it when no GPU
+  renderer can initialize and stays fully usable there with motion unchanged, its only reductions being that backdrop
+  blur is not drawn and frosted surfaces draw solid. After GPU device or surface loss, a GPU driver update or crash,
+  or suspend and resume, the app rebuilds its drawing surface without losing interface state, may run on the CPU
+  raster in between, and returns to the GPU automatically once it works again, unless the CPU raster was chosen
+  explicitly.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -1760,6 +1772,8 @@ acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "On a machine whose only GPU adapter is a software implementation, Skia's CPU raster runs even when the Graphics Engine setting or SLINT_BACKEND asks for the GPU; the user is warned that no GPU was detected, a one-time notice explains why frosted panels look solid, and the startup diagnostic records the requested and effective renderer and the reason."
+- "Tests prove start without any working GPU; recovery from GPU device or surface loss, a driver update or crash, and suspend and resume without lost interface state, followed by an automatic return to the GPU once it works; and full usability on the CPU raster with motion unchanged and only backdrop blur and frosted surfaces reduced."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -1774,7 +1788,9 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0027"
-- "Plans/Decision_Log.md#DL-139 (owner answers, 2026-10-01)"
+- "Plans/Decision_Log.md#DL-139 (owner answers, 2026-10-01 and 2026-10-02)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/CRITIQUE-RESPONSE-20261001.md, SHA-256 76047abe87b2488f52b3e6df94160aa9da09ec1883d3a91876b20d3e1741a1da"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/gui-stack-20261001/ANSWERS-20261002.md, SHA-256 6a4c9f58ef4439d0a1882b7306c0b8d446a94e5f45f2346ab4430b66f13f2e84"
 preserved_exact_tokens:
 - "SLINT_BACKEND"
 - "slint::BackendSelector"
@@ -1785,6 +1801,8 @@ preserved_exact_tokens:
 - "selected backend"
 negative_constraints:
 - "Do not enable renderer-femtovg, renderer-femtovg-wgpu, or renderer-software in desktop builds."
+- "Do not run Skia on a software GPU adapter, even when the Graphics Engine setting or SLINT_BACKEND asks for the GPU."
+- "Do not repeat the software-adapter notice once it has been shown."
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "DL-139 retires the winit + FemtoVG-wgpu fallback and the emergency software renderer from the selection order; a SLINT_BACKEND value or preference naming them is an unavailable backend."
@@ -8403,8 +8421,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  State management follows a reactive state tree with observable projections consumed by Slint
-  models and shell surfaces.
+  State management follows a reactive state tree with observable projections held in the shared Rust
+  interface-model crate (F3-583) and consumed by Slint models and shell surfaces on the desktop and by
+  Leptos reactive bindings in the web GUI.
 gui_related: true
 gui_classification_reason: This unit defines GUI-facing Slint model and shell surface state behavior.
 split_recommended: false
@@ -8450,8 +8469,9 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Canonical runtime and durable state live in Rust-owned records and projections; Slint surfaces
-  subscribe to observable projections rather than polling, and UI models update through batched
-  invoke_from_event_loop mutations.
+  and Leptos web views subscribe to observable projections rather than polling, desktop UI models
+  update through batched invoke_from_event_loop mutations, and the web client applies the same
+  projection updates through Leptos signals.
 gui_related: true
 gui_classification_reason: This unit defines GUI model update behavior and Slint projection subscriptions.
 split_recommended: false
@@ -8481,7 +8501,7 @@ preserved_exact_tokens:
 - "polling"
 - "invoke_from_event_loop"
 negative_constraints:
-- "Slint surfaces subscribe to observable projections rather than polling."
+- "Slint surfaces and Leptos web views subscribe to observable projections rather than polling."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
@@ -10294,7 +10314,8 @@ canonical_text: >-
   mutable grid, native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer
   ingestion and processing, while DOM/React/webview-style document-UI terminal cores are
   non-ship. On the web GUI, the terminal grid is drawn as a fixed, reused set of visible page-text
-  rows updated by diff (DL-139, SMPFS-072 web exception).
+  rows updated by diff (DL-139, SMPFS-072 web exception), and the web terminal tracks its own selection in the
+  terminal grid's data, not with the browser's selection, so a selection survives scrolling and new output.
 gui_related: true
 gui_classification_reason: >-
   This unit constrains terminal rendering architecture and excludes non-ship web-style
@@ -10321,6 +10342,7 @@ node_compile_hint:
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0128"
 - "Plans/Decision_Log.md#DL-139 (web terminal answer, 2026-10-01)"
+- "Plans/Decision_Log.md#DL-139 (web terminal selection answer, 2026-10-02)"
 preserved_exact_tokens:
 - "Section 15 terminal-core architecture"
 - "high-frequency mutable grid"
@@ -10332,7 +10354,7 @@ preserved_exact_tokens:
 negative_constraints:
 - "DOM/React/webview-style document-UI terminal cores are non-ship."
 compatibility_only_notes:
-- "DL-139 web exception: reused visible page-text rows fed by the Rust terminal grid are not a document-UI terminal core; they ship only after the heavy-output speed tests."
+- "DL-139 web exception: reused visible page-text rows fed by the Rust terminal grid are not a document-UI terminal core; they ship only after the heavy-output speed tests, and the web terminal tracks its own selection in the grid's data rather than with the browser's selection."
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -14595,7 +14617,9 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Implementation decisions are final for Slint 1.17.1 on Rust stable 1.96.1, winit+Skia only with Skia's own CPU
-  raster as the fallback and Puppet Master's Skia renderer extensions (DL-139), no React or Tauri product UI with the
+  raster as the fallback (also always used on a software GPU adapter, even over an explicit GPU choice, with a
+  warning that no GPU was detected), Slint as the only native UI framework (replacing it needs a new owner decision;
+  a GPUI fork was rejected on 2026-10-02), and Puppet Master's Skia renderer extensions (DL-139), no React or Tauri product UI with the
   web GUI a Rust Leptos client (DL-139), IDE shell layout, four theme families (eight built-in themes,
   untouched first-open/fresh-project factory default Basic Dark; the former Friendly Dark and
   prior three-family defaults remain superseded lineage), Settings owned by `Plans/Settings_System.md`,
@@ -14627,6 +14651,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0158"
+- "Plans/Decision_Log.md#DL-139 (owner answer, 2026-10-02)"
 preserved_exact_tokens:
 - "Rust stable 1.96.1"
 - "Slint 1.17.1"
@@ -16028,10 +16053,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Rendering surface scope covers Markdown, Mermaid, HTML, SVG, and images in the Slint GUI and
+  Rendering surface scope covers Markdown, Mermaid, HTML, SVG, and images in the Slint desktop GUI and the Leptos web GUI (F3-583) and
   treats browser-capable rendering as shared across Chat Panel, File Editor, Embedded Document
   Pane, editor-tab Browser, detached preview/browser windows, ordinary automation browser windows,
-  and bottom-panel browser-adjacent surfaces. Protected AuthBrowserSession is a separate foreground
+  and bottom-panel browser-adjacent surfaces; surfaces that need OS-owned capabilities, such as CEF-class browser
+  embedding and native detached windows, appear in the web GUI only as the Web Capability Matrix allows. Protected
+  AuthBrowserSession is a separate foreground
   human-only security surface and is excluded from this shared rendering/capture inventory.
 gui_related: true
 gui_classification_reason: >-

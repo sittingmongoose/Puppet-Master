@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L32-L47
 
-Source SHA256: `2af0f35217dcf661b0a9eabfeb6be5109c8ed9c0b1366778c1368a117cad2823`
+Source SHA256: `b38665e5d3190ade988857f21bfa0bc3b98cb9bbb5c33de6ef6d147506aad9c6`
 
 ---
 
@@ -13,7 +13,7 @@ This plan's **UX requirements** remain authoritative. Implementation should targ
 
 - **Core:** providers + unified event model + deterministic agent loop remain the base architecture.
 - **Storage/search:** seglog/redb/Tantivy projections remain the persistence/search stack; JSONL mirror is derived only.
-- **UI:** Rust + Slint remain the intended shell implementation.
+- **UI:** Rust + Slint (Skia renderer) remain the intended native desktop shell implementation; the web GUI is the Rust Leptos client (`Plans/FinalGUISpec.md` F3-583, DL-139). The behavior and data contracts in this plan apply to both frontends.
 - **Tooling:** tool registry, approvals, and results normalize through the unified event stream and shared permission/runtime contracts.
 - **Auth/runtime taxonomy:** subscription-first remains the default posture. Gemini Direct (`gemini`) is the active direct API route; Antigravity CLI is the active Google-owned CLI-runtime route; Gemini CLI (`gemini_cli`) is retired/source-lineage only. Consumers MAY group related entries under a provider family, but chat/runtime surfaces MUST display the concrete requested/effective provider entry instead of collapsing them into a single generic provider badge.
 - **Identity disclosure:** requested/effective runtime identity, account binding, and auth state are imported from the shared runtime contracts. Assistant Chat must not invent a parallel provider/auth field set.

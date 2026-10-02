@@ -4,7 +4,7 @@ Source: `Plans/rewrite-tie-in-memo.md`
 
 Source lines: L13-L87
 
-Source SHA256: `ffac41c33959b2a15d4ef54158a98f7e5deab29e9ce7f0cc4543a998c59afc36`
+Source SHA256: `db91bb8fa752f4e91bf52c3d75a6b41c1728acd0509585a238a4e864ad31c204`
 
 ---
 
@@ -73,7 +73,7 @@ ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipe
 
 ### Implementation directives (required now)
 - Implement features against the locked interfaces: **unified event model**, **Provider trait**, **tool registry**, and **event-sourced session store** (seglog -> projections). [web:69][web:88][web:90]
-- UI updates must flow through the Slint event loop boundary and must not rely on delayed or ad-hoc polling paths.
+- Desktop UI updates must flow through the Slint event loop boundary, and the Leptos web GUI applies streamed updates through its own reactive runtime; neither relies on delayed or ad-hoc polling paths (DL-139).
 - New plan text and implementation notes must use **Provider** terminology for execution integration; do not introduce new platform-runner phrasing in updated sections.
 - Persistence and search paths must use seglog/redb/Tantivy contracts directly; do not add SQLite-based alternatives in edited sections.
 - The Slint rewrite MUST remove all per-platform experimental settings: Settings > Advanced MUST NOT include an "Experimental features" section or per-platform "Enable Codex/Gemini/Copilot Experimental" toggles, config schemas MUST NOT include per-platform `experimentalEnabled` (or equivalent) keys, and provider invocations MUST NOT rely on provider-side experimental toggles (e.g., Copilot `--experimental` CLI flag, or legacy Gemini experimental settings) for runtime behavior. DirectApi providers (Codex, Copilot, Gemini) MUST expose only stable capabilities through their APIs, and CliBridge providers (Cursor, Claude Code) MUST NOT grow experimental toggles in the GUI or config.

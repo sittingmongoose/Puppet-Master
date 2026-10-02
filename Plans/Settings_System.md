@@ -36,7 +36,7 @@ ContractRef: ContractName:Plans/DRY_Rules.md, ContractName:Plans/Plan_Document_S
 - the semantic request/result/availability contracts for `cmd.settings.open`, `cmd.settings.transaction.preview`, `cmd.settings.transaction.apply`, `cmd.settings.transaction.rollback`, and `cmd.settings.export`, while central command/catalog/wiring owners retain registration and dispatch custody;
 - the Settings snapshot, transaction, export, route/return, UI-action, owner-projection, Doctor-projection, migration-preview, appearance-preview, and concept-boundary record shapes;
 - the exact boundary between ordinary settings, manager actions, owner status projections, diagnostics, and operational work; and
-- the production acceptance obligations for a future Rust + Slint Settings implementation.
+- the production acceptance obligations for a future Rust Settings implementation (the Slint desktop and the Leptos web client, DL-139).
 
 ### 1.2 Retained owners
 
@@ -753,8 +753,12 @@ canonical_text: >-
   fixture state, local browser storage, simulated receipts, and JavaScript handlers are not runtime proof. Production
   targets Rust stable and Slint 1.17.1 using typed models, host-width layout states, variable-height virtualization,
   explicit properties and focus state, precomputed theme tokens, native animations, and opaque or pre-blurred known
-  assets. DOM selectors, :has, viewport-width CSS, localStorage, color-mix, arbitrary backdrop blur, and CSS/JS motion
-  are translation inputs, not production dependencies. This direction makes no portability, build, runtime, visual,
+  assets where they help performance; blur, backdrop blur, masks, blend modes and filter effects drawn by Puppet
+  Master's Skia renderer extensions (FinalGUISpec F3-582, DL-139) are no longer excluded for portability. DOM
+  selectors, :has, viewport-width CSS, localStorage, color-mix, arbitrary backdrop blur, and CSS/JS motion in the
+  concept are translation inputs, not production dependencies of the Slint desktop; the Leptos web GUI (F3-583,
+  DL-139) draws Settings with its own DOM and CSS from the shared interface-model crate and design-token source, and
+  the concept HTML is a design reference there, not script to run under Leptos. This direction makes no portability, build, runtime, visual,
   performance, accessibility, or certification claim.
 gui_related: true
 gui_classification_reason: This unit governs the visual concept lineage and future Slint implementation direction.
@@ -762,7 +766,7 @@ depends_on: [SSYS-003, SSYS-010]
 unblocks: [SSYS-017]
 acceptance_criteria:
   - PMConcept7 is reproducibly generated from authored transforms and is labeled concept_fixture_only.
-  - Production implementation does not hand-port browser persistence or DOM/CSS-only mechanisms as runtime architecture.
+  - Production implementation does not hand-port the concept's browser persistence, JavaScript handlers or DOM/CSS-only mechanisms as runtime architecture; the Leptos web GUI (F3-583) uses its own DOM and CSS presentation over the shared interface model.
   - Any Slint acceptance claim requires fresh build/runtime/visual/accessibility/performance evidence under SSYS-017.
 validation_surfaces: [future PM7 source/generated reproducibility check, future Slint build and runtime evidence]
 risk_class: concept_fixture_promoted_as_runtime_proof
@@ -793,7 +797,9 @@ canonical_text: >-
   fuzzy search/facets, variable-height virtualization, transfer preview/apply/rollback and secret exclusion, provider
   action availability/continuation and no Uninstall, Server/Project/SSH/backup routes, Browser/SCM/container boundaries,
   Onboarding/Doctor projection-only behavior, keyboard/pointer/focus/accessibility parity, reduced motion, truthful
-  loading, and Slint 1.17.1 build/runtime behavior. Schema/text/static checks are findings only and cannot prove runtime,
+  loading, Slint 1.17.1 build/runtime behavior on the desktop, and Leptos web-client build/runtime behavior, with the
+  same shared fixtures run through both interfaces and screenshots of each checked against that interface's own visual
+  baselines (F3-583, DL-139). Schema/text/static checks are findings only and cannot prove runtime,
   visual, performance, accessibility, or implementation readiness. Open owner, command, wiring, inventory-scope, Event
   Authority, PNC-019, or backup command/handler/wiring/runtime gaps remain named blockers or residual risks rather than
   being erased by a concept pass.
@@ -1299,7 +1305,7 @@ Deferred:
 - register the five accepted Settings commands and five route-only UI actions without token drift in Commands, Catalog, UI Wiring, production Wiring Matrix, handlers, selectors, reverse wiring, and fixtures;
 - admit required EventRecord families individually, if their owners require persisted events;
 - integrate the `Plans/Backup_Restore_System.md` command families through central registration, sole handlers, production wiring, storage/event admission, and runtime backup/restore drills; and
-- implement and independently verify the Rust + Slint Settings system.
+- implement and independently verify the Rust Settings system on the Slint desktop and the Leptos web client (DL-139).
 
 Retired or compatibility-only:
 

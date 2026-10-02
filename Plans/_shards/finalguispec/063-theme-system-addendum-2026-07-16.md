@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L29605-L30640
+Source lines: L29641-L30677
 
-Source SHA256: `b736820447eba84072c609db2a772aa2344069730c5b1b0ee52a845267a71ec4`
+Source SHA256: `d87d918cefa5a3b031ccb7180c91e4537a7ea08fe53fd1a6499b1070af4ff311`
 
 ---
 
@@ -477,9 +477,9 @@ preserved_exact_tokens:
 - "mix-blend-mode"
 - "mask-composite"
 negative_constraints:
-- "No arbitrary-content backdrop blur; no SVG filters; no runtime color math."
+- "No arbitrary-content backdrop blur except the setup-popup sheet blur that DL-139 admits on the Skia GPU path only (F3-566); no SVG filters; no runtime color math."
 compatibility_only_notes:
-- "Slint portability: this unit is the family-wide remediation contract; no arbitrary-content backdrop blur, no SVG filters, color math is precomputed rather than runtime-mixed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
+- "Slint portability (updated for DL-139): this unit is the family-wide remediation contract. Blur, backdrop blur, masks, blend modes and filter effects are no longer banned for portability, because Puppet Master's Skia renderer extensions draw them (F3-582); this unit's closed backdrop-filter budget still limits backdrop blur. The note's other guidance (color math precomputed rather than runtime-mixed, and glass treatment as a single blur over a known wallpaper baked as a pre-blurred asset) remains a performance option."
 stale_retired_dispositions:
 - "DL-139 opens the closed budget by exactly one entry, the setup-popup sheet blur on the Skia GPU path, replacing the 2026-09-27 outcome of DL-114 that kept it closed."
 owner_boundary_notes:
@@ -1014,6 +1014,7 @@ Companion editor treatments carried in the same span (04-css-glass-b.part.html:1
 | Friendly themes | `.bottom-panel` | `blur(14px)` | 10x-pm6-css-global.part.html:172-173 |
 | Settings modal (all themes) | `.s4-bloom-backdrop` scrim | `blur(6px)` | 10-css-settings.part.html:585-586 |
 | Settings modal (glass themes) | `.s4-panel`, `.s4-psm` slabs | `blur(34px) saturate(160%)` | 10-css-settings.part.html:933-934 |
+| Setup popups (all themes, Skia GPU path only) | wand-module configuration sheets (F3-566) | backdrop blur drawn by the Skia renderer extensions (F3-582); not drawn on the Skia CPU raster, where the sheet is solid; the scrim is never blurred | DL-139 (no PMConcept6 source) |
 
 #### Glass background mode layer inventory (02-css-tokens.part.html:554-733; baked per F3-431)
 

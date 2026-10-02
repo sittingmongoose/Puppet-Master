@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L1374-L1495
+Source lines: L1378-L1500
 
-Source SHA256: `b736820447eba84072c609db2a772aa2344069730c5b1b0ee52a845267a71ec4`
+Source SHA256: `d87d918cefa5a3b031ccb7180c91e4537a7ea08fe53fd1a6499b1070af4ff311`
 
 ---
 
@@ -113,6 +113,7 @@ Deterministic selection order:
 1. Explicit valid `SLINT_BACKEND` override wins.
 2. Otherwise use the persisted app preference if it maps to a compiled-in backend.
 3. Otherwise use compiled default order: `winit + Skia` on the GPU (`winit-skia`) → `winit + Skia CPU` (`winit-skia-software`).
+4. Whatever steps 1 to 3 chose, when the GPU adapter is a software implementation (llvmpipe or lavapipe, WARP, SwiftShader) the effective backend is `winit + Skia CPU`: an override or preference asking for the GPU is not honoured, the user is warned that no GPU was detected, and the startup diagnostic records the requested and effective backend and the reason (§2.2). In every other case steps 1 and 2 keep their precedence.
 
 Failure handling:
 - An invalid override or unavailable preferred backend MUST emit a startup diagnostic and fall through deterministically to the next compiled-in backend.

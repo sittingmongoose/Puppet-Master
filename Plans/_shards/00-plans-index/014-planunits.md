@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L921-L4472
+Source lines: L923-L4474
 
-Source SHA256: `fa43d9361dda3ce4cd412ce1e7674eee93e0e688c776493bfa6810d2137ad51f`
+Source SHA256: `a5089d10b477d9b486a516736032822cf7a94224768678daacde72ba94adbe2b`
 
 ---
 
@@ -542,12 +542,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/00-plans-index.md
 canonical_text: >-
-  The rewrite tie-in preserves Rust + Slint UI rewrite, subscription-first auth, Gemini Direct as active direct API,
+  The rewrite tie-in preserves the Rust UI rewrite (Rust + Slint native desktop on Slint's Skia renderer and a Leptos web GUI, DL-139), subscription-first auth, Gemini Direct as active direct API,
   Antigravity CLI as the active Google-owned CLI-runtime route, retired Gemini CLI split vocabulary as source-lineage
   only, key-exception lineage, and requested/effective auth, account identity, account/plan UI, quota, and usage labels
   carrying across storage, runtime, setup/health, media capabilities, and usage.
 gui_related: true
-gui_classification_reason: The unit covers Rust + Slint UI rewrite, account/plan UI, and visible auth/quota/usage labels.
+gui_classification_reason: The unit covers the Rust UI rewrite (Rust + Slint desktop, Leptos web GUI per DL-139), account/plan UI, and visible auth/quota/usage labels.
 split_recommended: false
 depends_on: []
 unblocks: []
