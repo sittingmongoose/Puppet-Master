@@ -23,8 +23,10 @@ concept's own body[data-theme] blocks (0,1,1):
   the pmx literal tokens of module-shell.css (3.3 and the A1-15 precomputed set, seat fills included);
   the six context source inks of context.css (--ctxseg-*, which the pmx seat hues reuse);
   the NieR helpers PMConcept7's parts code against (--o55-nier-ink, -ink-rgb, -on-ink, -paper ... -shadow-rgb);
-and the Square pointer part's cursor images (data URIs must carry literal colours; the part's other rules are in
-nier-parts.css). nier.css's hand-written rules below the block may use only these tokens (rgba(var(--o55-nier-ink-rgb), a) and
+and the literal-carrying bits of the parts: the Square pointer part's cursor images (data URIs must carry literal
+colours; the part's other rules are in nier-parts.css), the Reboot moment cover's inks per tone (#o55np-reboot: it is
+drawn before the palette is painted) and the World parts' line art (--o55nw-art-pod / machine / flower / glyphs:
+PMConcept7's original drawings from kit.d/20-nier-world.js, the glyph strip from the same seeded generator). nier.css's hand-written rules below the block may use only these tokens (rgba(var(--o55-nier-ink-rgb), a) and
 var(--...)); --check fails on a colour literal anywhere outside the block.
 """
 from __future__ import annotations
@@ -222,6 +224,80 @@ def pointer(mode: str, c: dict) -> str:
     return '\n'.join(out)
 
 
+def reboot(t: dict) -> str:
+    """The Reboot moment part's cover (nier-parts.css, PMConcept7 styles.d/14-nier-parts.css): it is drawn before the
+    palette is painted (turning NieR Mode on), so its inks are written here per tone, keyed by the look it covers: the
+    theme's text on its on-ink paper, and a near-black for the band's scanlines."""
+    L, D = t['light'], t['dark']
+    return '\n'.join([
+        f'#o55np-reboot {{ --rb-ink: {L["text"]}; --rb-paper: {L["accentForeground"]}; --rb-ink-rgb: {trip(L["text"])}; --rb-shade-rgb: {trip(L["text"])}; }}',
+        f'#o55np-reboot[data-tone="dark"] {{ --rb-ink: {D["text"]}; --rb-paper: {D["accentForeground"]}; --rb-ink-rgb: {trip(D["text"])}; --rb-shade-rgb: {trip(D["canvas"])}; }}'])
+
+
+def _js_num(n: float) -> str:
+    return str(int(n)) if float(n).is_integer() else repr(round(n, 4))
+
+
+def glyph_strip() -> str:
+    """PMConcept7's machine glyphs (kit.d/20-nier-world.js glyphStrip): twenty-one cells of 4 x 4 strokes with small word
+    gaps, from the same fixed seed and the same 32-bit generator, so the strip is the same drawing in both apps."""
+    def to32(x):
+        x &= 0xffffffff
+        return x - (1 << 32) if x & 0x80000000 else x
+    def imul(a, b):
+        return to32((a & 0xffffffff) * (b & 0xffffffff))
+    def urs(x, n):
+        return (x & 0xffffffff) >> n
+    st = {'s': 0x5eed042}
+    def rnd():
+        st['s'] = to32(st['s'] + 0x6d2b79f5)
+        s_ = st['s']
+        t_ = imul(s_ ^ urs(s_, 15), 1 | s_)
+        t_ = to32(to32(t_ + imul(t_ ^ urs(t_, 7), 61 | t_)) ^ t_)
+        return ((t_ ^ urs(t_, 14)) & 0xffffffff) / 4294967296
+    d = ''
+    for k in range(21):
+        if k % 5 == 4:
+            continue
+        x = k * 6 + 0.5
+        j = _js_num
+        strokes = [f'M{j(x)} .5V4.5', f'M{j(x + 3)} .5V4.5', f'M{j(x + 1.5)} .5V4.5', f'M{j(x)} .5H{j(x + 3)}', f'M{j(x)} 2.5H{j(x + 3)}',
+                   f'M{j(x)} 4.5H{j(x + 3)}', f'M{j(x + 1)} 1.5H{j(x + 2)}V2.5H{j(x + 1)}Z', f'M{j(x)} 4.5L{j(x + 3)} .5']
+        n = 2 + int(rnd() * 2)
+        used = []
+        while len(used) < n:
+            i = int(rnd() * len(strokes))
+            if i not in used:
+                used.append(i)
+        d += ''.join(strokes[i] for i in used)
+    return ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 126 5" fill="none" stroke="INK" stroke-width="1" stroke-opacity=".42" '
+            f'stroke-linecap="square"><path d="{d}"/></svg>')
+
+
+def art(mode: str, c: dict) -> str:
+    """The World parts' line art (nier-world.css: Machine glyphs under the YoRHa headers, Ink empty states), PMConcept7's
+    original drawings (kit.d/20-nier-world.js ART) as data: SVG custom properties per mode: an image cannot read a CSS
+    variable, so the ink (the theme's text colour) is written into each."""
+    from urllib.parse import quote
+    open_ = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="INK" stroke-width="1.6" '
+             'stroke-linecap="square" stroke-linejoin="miter">')
+    petals = ''.join(f'<path transform="rotate({r} 32 22)" d="M32 22C28.5 17 28.5 11 32 6C35.5 11 35.5 17 32 22Z"/>' for r in (0, 72, 144, 216, 288))
+    drawings = {
+        'pod': open_ + '<path d="M22 12H42L46 16V40L41 45H23L18 40V16Z M20 19.5H44 M22 36H42 M22 39.5H42 M25 45L27 50H37L39 45"/>'
+        + '<path d="M10 20H16V38H10Z M48 20H54V38H48Z M16 25H18 M46 25H48 M13 15V20 M51 15V20"/>'
+        + '<path d="M25 25H39V29H25Z" fill="INK" stroke="none"/><path d="M24 57H40" stroke-opacity=".4"/></svg>',
+        'machine': open_ + '<path d="M20 11H44V28H20Z M32 11V6 M29 6H35 M28 28V31 M36 28V31 M18 31H46V49H18Z M24 36H40V44H24Z M24 40H40"/>'
+        + '<circle cx="27" cy="19.5" r="3"/><circle cx="37" cy="19.5" r="3"/><path d="M26.5 19.5H27.5 M36.5 19.5H37.5"/>'
+        + '<path d="M18 35H12V46 M46 35H52V46 M10 46H14 M50 46H54 M23 49V56H29V49 M35 49V56H41V49 M20 56H31 M33 56H44"/></svg>',
+        'flower': open_ + '<g>' + petals + '</g><circle cx="32" cy="22" r="2.2" fill="INK" stroke="none"/><path d="M32 25C31 35 33 46 32 58 M22 58H42"/>'
+        + '<path d="M31.8 44C26 42.5 22 38 21 33.5C27 34.5 30.5 38.5 31.8 44Z M32.2 50.5C38 49 42 44.5 43 40C37 41 33.5 45 32.2 50.5Z"/></svg>',
+        'glyphs': glyph_strip(),
+    }
+    ink = c['text']
+    rows = [f'  --o55nw-art-{k}: url("data:image/svg+xml,{quote(v.replace("INK", ink), safe=chr(45) + "_.!~*()")}");' for k, v in drawings.items()]
+    return SEL.format(mode=mode) + ' {\n  /* the World parts\' line art, ' + mode + ' (PMConcept7 kit.d/20-nier-world.js ART) */\n' + '\n'.join(rows) + '\n}'
+
+
 def generate() -> str:
     t = theme()
     out = [BEGIN,
@@ -236,6 +312,10 @@ def generate() -> str:
     for mode in ('light', 'dark'):
         out.append(f'/* the Square pointer part, {mode} */')
         out.append(pointer(mode, t[mode]))
+    out.append("/* the Reboot moment part's cover inks, per tone (it is drawn before the palette is painted) */")
+    out.append(reboot(t))
+    for mode in ('light', 'dark'):
+        out.append(art(mode, t[mode]))
     out.append(END)
     return '\n'.join(out)
 

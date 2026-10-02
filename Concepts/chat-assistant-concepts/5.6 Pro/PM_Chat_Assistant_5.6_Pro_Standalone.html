@@ -17288,7 +17288,9 @@ html[data-o55-nier="on"] .pm-lens-trigger.is-on svg.nx { animation-timing-functi
  * data: URIs, OFL notice inside) and, per mode, every token family the concept paints with: the base tokens
  * (styles.css), the Chat WOW tx and fam tokens (turn-stage.css), the pmx literals and seat fills (module-shell.css,
  * no color-mix: pmx-verify forbidden-props), the six context source inks (context.css, which the pmx seats reuse),
- * and PMConcept7's helper names (--o55-nier-ink, -ink-rgb, -on-ink, -paper ... -shadow-rgb) the parts code against.
+ * and PMConcept7's helper names (--o55-nier-ink, -ink-rgb, -on-ink, -paper ... -shadow-rgb) the parts code against;
+ * after them the literal-carrying bits of the parts: the Square pointer images, the Reboot moment cover's inks (drawn
+ * before the palette is painted) and the World parts' line art as data: SVG custom properties (--o55nw-art-*).
  * The rules after the block use only those tokens: var(--…) or rgba(var(--o55-nier-ink-rgb), a).
  *
  * Status in NieR is muted ink: the accent is the ink, success the olive, attention the warning ink, failure the rust.
@@ -17547,6 +17549,23 @@ html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] input[type="r
 html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] input[type="button"],
 html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] input[type="submit"] { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 1.5H12.5V8.5H8.5V12.5H1.5Z' fill='%23d1cdb7' stroke='%232f2d26' stroke-width='1'/%3E%3Cpath d='M4 4H8V8H4Z' fill='%232f2d26'/%3E%3C/svg%3E") 1 1, pointer; }
 html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] textarea, html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] input:not([type]), html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] input[type="text"], html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] input[type="search"], html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] [contenteditable="true"] { cursor: text; }
+/* the Reboot moment part's cover inks, per tone (it is drawn before the palette is painted) */
+#o55np-reboot { --rb-ink: #211f1b; --rb-paper: #dcd8c2; --rb-ink-rgb: 33,31,27; --rb-shade-rgb: 33,31,27; }
+#o55np-reboot[data-tone="dark"] { --rb-ink: #d1cdb7; --rb-paper: #2f2d26; --rb-ink-rgb: 209,205,183; --rb-shade-rgb: 47,45,38; }
+html[data-o55-nier="on"] body[data-theme="basic-light"] {
+  /* the World parts' line art, light (PMConcept7 kit.d/20-nier-world.js ART) */
+  --o55nw-art-pod: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%20fill%3D%22none%22%20stroke%3D%22%23211f1b%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22square%22%20stroke-linejoin%3D%22miter%22%3E%3Cpath%20d%3D%22M22%2012H42L46%2016V40L41%2045H23L18%2040V16Z%20M20%2019.5H44%20M22%2036H42%20M22%2039.5H42%20M25%2045L27%2050H37L39%2045%22%2F%3E%3Cpath%20d%3D%22M10%2020H16V38H10Z%20M48%2020H54V38H48Z%20M16%2025H18%20M46%2025H48%20M13%2015V20%20M51%2015V20%22%2F%3E%3Cpath%20d%3D%22M25%2025H39V29H25Z%22%20fill%3D%22%23211f1b%22%20stroke%3D%22none%22%2F%3E%3Cpath%20d%3D%22M24%2057H40%22%20stroke-opacity%3D%22.4%22%2F%3E%3C%2Fsvg%3E");
+  --o55nw-art-machine: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%20fill%3D%22none%22%20stroke%3D%22%23211f1b%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22square%22%20stroke-linejoin%3D%22miter%22%3E%3Cpath%20d%3D%22M20%2011H44V28H20Z%20M32%2011V6%20M29%206H35%20M28%2028V31%20M36%2028V31%20M18%2031H46V49H18Z%20M24%2036H40V44H24Z%20M24%2040H40%22%2F%3E%3Ccircle%20cx%3D%2227%22%20cy%3D%2219.5%22%20r%3D%223%22%2F%3E%3Ccircle%20cx%3D%2237%22%20cy%3D%2219.5%22%20r%3D%223%22%2F%3E%3Cpath%20d%3D%22M26.5%2019.5H27.5%20M36.5%2019.5H37.5%22%2F%3E%3Cpath%20d%3D%22M18%2035H12V46%20M46%2035H52V46%20M10%2046H14%20M50%2046H54%20M23%2049V56H29V49%20M35%2049V56H41V49%20M20%2056H31%20M33%2056H44%22%2F%3E%3C%2Fsvg%3E");
+  --o55nw-art-flower: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%20fill%3D%22none%22%20stroke%3D%22%23211f1b%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22square%22%20stroke-linejoin%3D%22miter%22%3E%3Cg%3E%3Cpath%20transform%3D%22rotate(0%2032%2022)%22%20d%3D%22M32%2022C28.5%2017%2028.5%2011%2032%206C35.5%2011%2035.5%2017%2032%2022Z%22%2F%3E%3Cpath%20transform%3D%22rotate(72%2032%2022)%22%20d%3D%22M32%2022C28.5%2017%2028.5%2011%2032%206C35.5%2011%2035.5%2017%2032%2022Z%22%2F%3E%3Cpath%20transform%3D%22rotate(144%2032%2022)%22%20d%3D%22M32%2022C28.5%2017%2028.5%2011%2032%206C35.5%2011%2035.5%2017%2032%2022Z%22%2F%3E%3Cpath%20transform%3D%22rotate(216%2032%2022)%22%20d%3D%22M32%2022C28.5%2017%2028.5%2011%2032%206C35.5%2011%2035.5%2017%2032%2022Z%22%2F%3E%3Cpath%20transform%3D%22rotate(288%2032%2022)%22%20d%3D%22M32%2022C28.5%2017%2028.5%2011%2032%206C35.5%2011%2035.5%2017%2032%2022Z%22%2F%3E%3C%2Fg%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2222%22%20r%3D%222.2%22%20fill%3D%22%23211f1b%22%20stroke%3D%22none%22%2F%3E%3Cpath%20d%3D%22M32%2025C31%2035%2033%2046%2032%2058%20M22%2058H42%22%2F%3E%3Cpath%20d%3D%22M31.8%2044C26%2042.5%2022%2038%2021%2033.5C27%2034.5%2030.5%2038.5%2031.8%2044Z%20M32.2%2050.5C38%2049%2042%2044.5%2043%2040C37%2041%2033.5%2045%2032.2%2050.5Z%22%2F%3E%3C%2Fsvg%3E");
+  --o55nw-art-glyphs: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20126%205%22%20fill%3D%22none%22%20stroke%3D%22%23211f1b%22%20stroke-width%3D%221%22%20stroke-opacity%3D%22.42%22%20stroke-linecap%3D%22square%22%3E%3Cpath%20d%3D%22M2%20.5V4.5M3.5%20.5V4.5M0.5%202.5H3.5M6.5%204.5H9.5M7.5%201.5H8.5V2.5H7.5ZM14%20.5V4.5M12.5%20.5V4.5M18.5%204.5H21.5M18.5%202.5H21.5M20%20.5V4.5M30.5%20.5V4.5M33.5%20.5V4.5M30.5%204.5L33.5%20.5M38%20.5V4.5M39.5%20.5V4.5M37.5%201.5H38.5V2.5H37.5ZM43.5%201.5H44.5V2.5H43.5ZM42.5%202.5H45.5M48.5%204.5L51.5%20.5M48.5%202.5H51.5M60.5%202.5H63.5M60.5%204.5H63.5M63.5%20.5V4.5M66.5%204.5H69.5M69.5%20.5V4.5M68%20.5V4.5M72.5%20.5V4.5M75.5%20.5V4.5M72.5%204.5H75.5M78.5%204.5H81.5M78.5%202.5H81.5M90.5%202.5H93.5M90.5%204.5L93.5%20.5M92%20.5V4.5M96.5%202.5H99.5M98%20.5V4.5M96.5%204.5L99.5%20.5M102.5%202.5H105.5M102.5%20.5V4.5M109.5%201.5H110.5V2.5H109.5ZM108.5%20.5H111.5M111.5%20.5V4.5M121.5%201.5H122.5V2.5H121.5ZM122%20.5V4.5%22%2F%3E%3C%2Fsvg%3E");
+}
+html[data-o55-nier="on"] body[data-theme="basic-dark"] {
+  /* the World parts' line art, dark (PMConcept7 kit.d/20-nier-world.js ART) */
+  --o55nw-art-pod: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%20fill%3D%22none%22%20stroke%3D%22%23d1cdb7%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22square%22%20stroke-linejoin%3D%22miter%22%3E%3Cpath%20d%3D%22M22%2012H42L46%2016V40L41%2045H23L18%2040V16Z%20M20%2019.5H44%20M22%2036H42%20M22%2039.5H42%20M25%2045L27%2050H37L39%2045%22%2F%3E%3Cpath%20d%3D%22M10%2020H16V38H10Z%20M48%2020H54V38H48Z%20M16%2025H18%20M46%2025H48%20M13%2015V20%20M51%2015V20%22%2F%3E%3Cpath%20d%3D%22M25%2025H39V29H25Z%22%20fill%3D%22%23d1cdb7%22%20stroke%3D%22none%22%2F%3E%3Cpath%20d%3D%22M24%2057H40%22%20stroke-opacity%3D%22.4%22%2F%3E%3C%2Fsvg%3E");
+  --o55nw-art-machine: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%20fill%3D%22none%22%20stroke%3D%22%23d1cdb7%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22square%22%20stroke-linejoin%3D%22miter%22%3E%3Cpath%20d%3D%22M20%2011H44V28H20Z%20M32%2011V6%20M29%206H35%20M28%2028V31%20M36%2028V31%20M18%2031H46V49H18Z%20M24%2036H40V44H24Z%20M24%2040H40%22%2F%3E%3Ccircle%20cx%3D%2227%22%20cy%3D%2219.5%22%20r%3D%223%22%2F%3E%3Ccircle%20cx%3D%2237%22%20cy%3D%2219.5%22%20r%3D%223%22%2F%3E%3Cpath%20d%3D%22M26.5%2019.5H27.5%20M36.5%2019.5H37.5%22%2F%3E%3Cpath%20d%3D%22M18%2035H12V46%20M46%2035H52V46%20M10%2046H14%20M50%2046H54%20M23%2049V56H29V49%20M35%2049V56H41V49%20M20%2056H31%20M33%2056H44%22%2F%3E%3C%2Fsvg%3E");
+  --o55nw-art-flower: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%20fill%3D%22none%22%20stroke%3D%22%23d1cdb7%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22square%22%20stroke-linejoin%3D%22miter%22%3E%3Cg%3E%3Cpath%20transform%3D%22rotate(0%2032%2022)%22%20d%3D%22M32%2022C28.5%2017%2028.5%2011%2032%206C35.5%2011%2035.5%2017%2032%2022Z%22%2F%3E%3Cpath%20transform%3D%22rotate(72%2032%2022)%22%20d%3D%22M32%2022C28.5%2017%2028.5%2011%2032%206C35.5%2011%2035.5%2017%2032%2022Z%22%2F%3E%3Cpath%20transform%3D%22rotate(144%2032%2022)%22%20d%3D%22M32%2022C28.5%2017%2028.5%2011%2032%206C35.5%2011%2035.5%2017%2032%2022Z%22%2F%3E%3Cpath%20transform%3D%22rotate(216%2032%2022)%22%20d%3D%22M32%2022C28.5%2017%2028.5%2011%2032%206C35.5%2011%2035.5%2017%2032%2022Z%22%2F%3E%3Cpath%20transform%3D%22rotate(288%2032%2022)%22%20d%3D%22M32%2022C28.5%2017%2028.5%2011%2032%206C35.5%2011%2035.5%2017%2032%2022Z%22%2F%3E%3C%2Fg%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2222%22%20r%3D%222.2%22%20fill%3D%22%23d1cdb7%22%20stroke%3D%22none%22%2F%3E%3Cpath%20d%3D%22M32%2025C31%2035%2033%2046%2032%2058%20M22%2058H42%22%2F%3E%3Cpath%20d%3D%22M31.8%2044C26%2042.5%2022%2038%2021%2033.5C27%2034.5%2030.5%2038.5%2031.8%2044Z%20M32.2%2050.5C38%2049%2042%2044.5%2043%2040C37%2041%2033.5%2045%2032.2%2050.5Z%22%2F%3E%3C%2Fsvg%3E");
+  --o55nw-art-glyphs: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20126%205%22%20fill%3D%22none%22%20stroke%3D%22%23d1cdb7%22%20stroke-width%3D%221%22%20stroke-opacity%3D%22.42%22%20stroke-linecap%3D%22square%22%3E%3Cpath%20d%3D%22M2%20.5V4.5M3.5%20.5V4.5M0.5%202.5H3.5M6.5%204.5H9.5M7.5%201.5H8.5V2.5H7.5ZM14%20.5V4.5M12.5%20.5V4.5M18.5%204.5H21.5M18.5%202.5H21.5M20%20.5V4.5M30.5%20.5V4.5M33.5%20.5V4.5M30.5%204.5L33.5%20.5M38%20.5V4.5M39.5%20.5V4.5M37.5%201.5H38.5V2.5H37.5ZM43.5%201.5H44.5V2.5H43.5ZM42.5%202.5H45.5M48.5%204.5L51.5%20.5M48.5%202.5H51.5M60.5%202.5H63.5M60.5%204.5H63.5M63.5%20.5V4.5M66.5%204.5H69.5M69.5%20.5V4.5M68%20.5V4.5M72.5%20.5V4.5M75.5%20.5V4.5M72.5%204.5H75.5M78.5%204.5H81.5M78.5%202.5H81.5M90.5%202.5H93.5M90.5%204.5L93.5%20.5M92%20.5V4.5M96.5%202.5H99.5M98%20.5V4.5M96.5%204.5L99.5%20.5M102.5%202.5H105.5M102.5%20.5V4.5M109.5%201.5H110.5V2.5H109.5ZM108.5%20.5H111.5M111.5%20.5V4.5M121.5%201.5H122.5V2.5H121.5ZM122%20.5V4.5%22%2F%3E%3C%2Fsvg%3E");
+}
 /* ---- end of generated block ---- */
 
 /* ------------------------------------------------------------------ the ground */
@@ -17882,6 +17901,142 @@ html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] .qs-orbit { animati
 html[data-o55-nier-parts~="diamonds"] body.pm56-reduced .ctx-spin,
 html[data-o55-nier-parts~="diamonds"] body.pm56-reduced .qs-orbit { animation: none !important; }
 
+/* ====================================================================================================== Motion */
+
+/* ---- Reboot moment [reboot]: the cover (nier-parts.js runs it inside PM_NIER.setTransition) ----
+   The cover exists before the palette is painted (turning NieR Mode on), so its two inks are custom properties written
+   by nier_palette_56.py into nier.css's generated block, keyed by the cover's own tone (the look it covers). */
+#o55np-reboot { position: fixed; inset: 0; z-index: 2147483600; pointer-events: none; overflow: hidden; contain: strict; }
+#o55np-reboot > .o55np-rb-band { position: absolute; inset: 0; background: var(--rb-ink); transform: translateY(-101%); will-change: transform; }
+#o55np-reboot > .o55np-rb-band::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 1px; background: var(--rb-ink); box-shadow: 0 -3px 0 var(--rb-ink); }
+#o55np-reboot > .o55np-rb-band > .o55np-rb-lines { position: absolute; inset: 0;
+  background: repeating-linear-gradient(to bottom, rgba(var(--rb-ink-rgb), 0) 0 2px, rgba(var(--rb-shade-rgb), .09) 2px 3px); opacity: .9; }
+#o55np-reboot .o55np-rb-copy { position: absolute; left: 50%; top: 50%; width: 360px; margin: -44px 0 0 -180px; color: var(--rb-paper);
+  font: 500 11px/1.7 "PM NieR Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .22em; text-transform: uppercase; }
+#o55np-reboot .o55np-rb-title { font: 600 15px/1.4 "PM NieR Sans", "Inter", system-ui, sans-serif; letter-spacing: .3em; margin-bottom: 10px;
+  padding-bottom: 8px; background: linear-gradient(var(--rb-paper), var(--rb-paper)) left bottom / 5px 5px no-repeat, linear-gradient(var(--rb-paper), var(--rb-paper)) right bottom / 5px 5px no-repeat,
+  linear-gradient(var(--rb-paper), var(--rb-paper)) center calc(100% - 2px) / calc(100% - 12px) 1px no-repeat; }
+#o55np-reboot .o55np-rb-meter { position: relative; height: 6px; margin-top: 12px; border: 1px solid var(--rb-paper); }
+#o55np-reboot .o55np-rb-meter > i { position: absolute; left: 1px; top: 1px; bottom: 1px; right: 1px; background: repeating-linear-gradient(90deg, var(--rb-paper) 0 10px, transparent 10px 13px);
+  transform-origin: left center; transform: scaleX(0); will-change: transform; }
+#o55np-reboot .o55np-rb-line { display: flex; gap: 10px; }
+#o55np-reboot .o55np-rb-line::after { content: "- - -"; margin-left: auto; opacity: .6; }
+#o55np-reboot .o55np-rb-line[data-ok]::after { content: "OK"; opacity: 1; }
+
+/* ---- Slice open [slice]: menus, pickers, dialogs, the context drawer and wand sheets unfold from a 1px line, one
+   flicker step. They mount once per opening (the app's patch keeps an open overlay's node), so the animation runs once.
+   Centred dialogs are placed by translate(-50%, -50%): their slice scales about the box's corner so the line opens at
+   the dialog's own centre; everything else scales about its middle. ---- */
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .overlay-menu,
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .dialog,
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .drawer,
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .pmx-sheet {
+  animation: o55np-slice 300ms linear backwards !important; transform-origin: 50% 50% !important;
+}
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .dialog:not(.demo-dialog):not(.pmx-sheet) { transform-origin: 0 0 !important; }
+@keyframes o55np-slice {
+  0% { scale: 1 .006; opacity: 1; animation-timing-function: cubic-bezier(.2, .85, .25, 1); }
+  58% { scale: 1 1; opacity: 1; animation-timing-function: step-end; }
+  66% { scale: 1 1; opacity: .3; animation-timing-function: step-end; }
+  74% { scale: 1 1; opacity: 1; }
+  100% { scale: 1 1; opacity: 1; }
+}
+
+/* ---- Page wipe [wipe]: an ink-edged band over the transcript while a switched-to thread draws (nier-parts.js) ---- */
+#o55np-wipe { position: fixed; z-index: 900; pointer-events: none; overflow: hidden; contain: strict; display: none; }
+#o55np-wipe > i { position: absolute; inset: 0; display: block; will-change: transform;
+  background:
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) left top / 3px 100% no-repeat,
+    repeating-linear-gradient(to bottom, transparent 0 22px, rgba(var(--o55-nier-ink-rgb), .12) 22px 23px),
+    var(--canvas); }
+#o55np-wipe > i::before { content: ""; position: absolute; top: 0; bottom: 0; left: 7px; width: 1px; background: var(--o55-nier-ink); opacity: .55; }
+
+/* ---- Drifting particles [particles]: a dozen small ink squares drifting over the transcript ----
+   The layer is anchored to the transcript (the anchor name exists only under this part), so it covers the stage through
+   every layout change; it never takes a click and sits under the overlays. */
+html[data-o55-nier-parts~="particles"] .chat-stage > .transcript { anchor-name: --o55np-stage; }
+#o55np-ground { position: fixed; position-anchor: --o55np-stage; top: anchor(top, 0px); left: anchor(left, 0px); right: anchor(right, 0px); bottom: anchor(bottom, 0px);
+  z-index: 5; pointer-events: none; overflow: hidden; contain: strict; }
+#o55np-ground > .o55np-mote { position: absolute; display: block; width: 4px; height: 4px; background: rgba(var(--o55-nier-ink-rgb), .3); will-change: transform; }
+#o55np-ground > .o55np-mote:nth-of-type(3n) { width: 6px; height: 6px; background: transparent; box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .34); }
+#o55np-ground > .o55np-mote:nth-of-type(4n + 1) { width: 3px; height: 3px; }
+#o55np-ground > .o55np-mote:nth-of-type(1) { left: 8%; top: 22%; --d: 61s; --dl: -12s; }
+#o55np-ground > .o55np-mote:nth-of-type(2) { left: 17%; top: 71%; --d: 83s; --dl: -40s; }
+#o55np-ground > .o55np-mote:nth-of-type(3) { left: 29%; top: 38%; --d: 72s; --dl: -5s; }
+#o55np-ground > .o55np-mote:nth-of-type(4) { left: 37%; top: 86%; --d: 95s; --dl: -60s; }
+#o55np-ground > .o55np-mote:nth-of-type(5) { left: 46%; top: 14%; --d: 68s; --dl: -30s; }
+#o55np-ground > .o55np-mote:nth-of-type(6) { left: 55%; top: 57%; --d: 88s; --dl: -18s; }
+#o55np-ground > .o55np-mote:nth-of-type(7) { left: 63%; top: 29%; --d: 76s; --dl: -52s; }
+#o55np-ground > .o55np-mote:nth-of-type(8) { left: 71%; top: 78%; --d: 64s; --dl: -9s; }
+#o55np-ground > .o55np-mote:nth-of-type(9) { left: 79%; top: 45%; --d: 91s; --dl: -71s; }
+#o55np-ground > .o55np-mote:nth-of-type(10) { left: 86%; top: 12%; --d: 70s; --dl: -26s; }
+#o55np-ground > .o55np-mote:nth-of-type(11) { left: 92%; top: 63%; --d: 84s; --dl: -44s; }
+#o55np-ground > .o55np-mote:nth-of-type(12) { left: 23%; top: 8%; --d: 99s; --dl: -80s; }
+html[data-o55-nier-parts~="particles"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #o55np-ground > .o55np-mote { animation: o55np-drift var(--d, 70s) linear var(--dl, 0s) infinite; }
+html[data-o55-nier-parts~="particles"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #o55np-ground > .o55np-mote:nth-of-type(even) { animation-name: o55np-drift-b; }
+#o55np-ground[data-idle] > .o55np-mote { animation-play-state: paused !important; }
+@keyframes o55np-drift { 0% { transform: translate(0, 0) rotate(0deg); } 25% { transform: translate(38px, -64px) rotate(90deg); } 50% { transform: translate(84px, -22px) rotate(180deg); }
+  75% { transform: translate(40px, 40px) rotate(270deg); } 100% { transform: translate(0, 0) rotate(360deg); } }
+@keyframes o55np-drift-b { 0% { transform: translate(0, 0); } 33% { transform: translate(-52px, 30px); } 66% { transform: translate(-18px, -70px); } 100% { transform: translate(0, 0); } }
+
+/* ---- Scan sweep [sweep]: one faint line crossing the window every twelve seconds (a one-shot Web Animation) ---- */
+#o55np-sweep { position: fixed; left: 0; right: 0; top: 0; height: 56px; z-index: 2147481000; pointer-events: none; opacity: 0; will-change: transform, opacity;
+  background: linear-gradient(to bottom, rgba(var(--o55-nier-ink-rgb), 0), rgba(var(--o55-nier-ink-rgb), .028) 90%, rgba(var(--o55-nier-ink-rgb), .12) 98.2%, rgba(var(--o55-nier-ink-rgb), 0)); }
+
+/* ---- Alerts [glitch, sweep, particles]: the effects layer over an arriving warning or error toast, a refusal or a
+   failed card. Each child is placed on the alert's box by the script and removed when its one-shot animation ends. ---- */
+#o55np-fx { position: fixed; inset: 0; z-index: 1300; pointer-events: none; overflow: hidden; contain: strict; }
+#o55np-fx > * { position: absolute; pointer-events: none; will-change: transform, opacity; }
+/* glitch: the two clipped copies of a toast that split apart (the copy stands still inside them) */
+#o55np-fx > .o55np-glitch-slice { overflow: visible; }
+#o55np-fx > .o55np-glitch-slice > * { position: static !important; margin: 0 !important; width: 100% !important; height: 100% !important; box-sizing: border-box;
+  max-width: none !important; animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; }
+/* glitch: the tear of a card in the transcript, two ink strips */
+#o55np-fx > .o55np-tear { background: var(--o55-nier-ink); opacity: .78; }
+/* sweep: one scan line down the alert */
+#o55np-fx > .o55np-scan { background: linear-gradient(to bottom, rgba(var(--o55-nier-ink-rgb), 0), rgba(var(--o55-nier-ink-rgb), .1) 80%, rgba(var(--o55-nier-ink-rgb), .45) 96%, rgba(var(--o55-nier-ink-rgb), 0)); }
+/* particles: the ink squares thrown off it */
+#o55np-fx > .o55np-shard { background: var(--o55-nier-ink); }
+
+/* =============================================================================================== Sound & voice */
+
+/* ---- Pod voice [voice]: Report / Alert / Proposal leads on toasts and cards, the POD 042 band on toasts ---- */
+/* a toast's kind is written at arrival (nier-parts.js: data-o55-pod alert | proposal | report, data-o55-sev) */
+html[data-o55-nier-parts~="voice"] #pmOverlayRoot .toast > strong::before { content: "Report: "; font-weight: 500; }
+html[data-o55-nier-parts~="voice"] #pmOverlayRoot .toast[data-o55-pod="alert"] > strong::before { content: "Alert: "; }
+html[data-o55-nier-parts~="voice"] #pmOverlayRoot .toast[data-o55-pod="proposal"] > strong::before { content: "Proposal: "; }
+html[data-o55-nier-parts~="voice"] #pmOverlayRoot .toast::before {
+  content: "POD 042"; display: block; margin: -9px -11px 6px; padding: 3px 11px 2px; background: var(--o55-nier-ink); color: var(--o55-nier-on-ink);
+  font: 500 9px/1.4 var(--font-mono); letter-spacing: .28em;
+}
+html[data-o55-nier-parts~="voice"] #pmOverlayRoot .toast[data-o55-sev="error"]::before { background: var(--o55-nier-error); }
+html[data-o55-nier-parts~="voice"] #pmOverlayRoot .toast[data-o55-sev="warn"]::before { background: var(--o55-nier-warn-text); }
+/* the transcript: system cards report, plan cards and decisions propose, danger and warning cards alert */
+html[data-o55-nier-parts~="voice"] .system-card-head .title::before { content: "Report: "; font-weight: 500; }
+html[data-o55-nier-parts~="voice"] .system-card.plan-card .system-card-head .title::before { content: "Proposal: "; }
+html[data-o55-nier-parts~="voice"] .qs-head .qs-title::before { content: "Proposal: "; font-weight: 500; }
+html[data-o55-nier-parts~="voice"] .decision-top > strong::before { content: "Proposal: "; font-weight: 500; }
+html[data-o55-nier-parts~="voice"] .event-card.danger .event-copy > strong::before { content: "Alert: "; font-weight: 500; }
+html[data-o55-nier-parts~="voice"] .event-card.warning .event-copy > strong::before { content: "Alert: "; font-weight: 500; }
+
+/* ---- Pod companion [pod]: a small ink-line Pod hovering above the composer's top-right corner ----
+   Anchored to the chat's composer (the anchor name exists only under this part), so it rides every composer height. */
+html[data-o55-nier-parts~="pod"] .chat-stage > .composer { anchor-name: --o55np-composer; }
+#o55np-pod { position: fixed; position-anchor: --o55np-composer; right: calc(anchor(right, 14px) + 8px); bottom: calc(anchor(top, 58px) + 6px);
+  width: 40px; height: 52px; z-index: 1190; pointer-events: none; contain: layout style; color: var(--o55-nier-ink); display: none; }
+html[data-o55-nier-parts~="pod"] #o55np-pod { display: block; }
+#o55np-pod .o55np-pod-bob, #o55np-pod .o55np-pod-body, #o55np-pod .o55np-pod-shadow { position: absolute; left: 0; top: 0; width: 40px; height: 52px; will-change: transform; }
+#o55np-pod svg { display: block; width: 40px; height: 52px; overflow: visible; }
+#o55np-pod .o55np-pod-fill { fill: var(--o55-nier-paper); }
+#o55np-pod .o55np-pod-ink { fill: currentColor; }
+#o55np-pod .o55np-pod-shadow { transform-origin: 20px 48px; }
+#o55np-pod .o55np-pod-body { transform-origin: 20px 22px; }
+#o55np-pod .o55np-pod-signal { position: absolute; left: 30px; top: 30px; width: 4px; height: 4px; background: currentColor; opacity: 0; will-change: transform, opacity; }
+html:not([data-motion="reduced"]) body:not(.pm56-reduced) #o55np-pod:not([data-idle]) .o55np-pod-bob { animation: o55np-bob 3.6s ease-in-out infinite alternate; }
+html:not([data-motion="reduced"]) body:not(.pm56-reduced) #o55np-pod:not([data-idle]) .o55np-pod-shadow { animation: o55np-bob-shadow 3.6s ease-in-out infinite alternate; }
+@keyframes o55np-bob { from { transform: translateY(0); } to { transform: translateY(-6px); } }
+@keyframes o55np-bob-shadow { from { transform: scaleX(1); opacity: .9; } to { transform: scaleX(.7); opacity: .5; } }
+
 /* ===================================================================================================== Pointer */
 /* ---- Square pointer [pointer]: the images (literal colours) are in nier.css's generated block ---- */
 
@@ -17898,7 +18053,7 @@ html[data-o55-nier-parts~="icons"] svg ellipse { stroke-linecap: square; stroke-
 
 /* ============================================================================================ Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  #o55np-cursor, #o55np-cursor > i, #o55np-reticle, #o55np-reticle > i { animation: none !important; transition: none !important; }
+  #o55np-cursor, #o55np-cursor > i, #o55np-reticle, #o55np-reticle > i, #o55np-ground > .o55np-mote, #o55np-pod *, #o55np-wipe > i { animation: none !important; transition: none !important; }
   html[data-o55-nier-parts~="diamonds"] .ctx-spin, html[data-o55-nier-parts~="diamonds"] .qs-orbit { animation: none !important; }
 }
 </style>
@@ -23196,7 +23351,8 @@ window.PM56_NIER_FACES = [
 ];
 
 /* nier.js — NieR Mode for the 5.6 Pro concept: the engine, PMConcept7's contract, and the Demo Studio wiring.
- * OWNER: NieR Mode, step N-A (2026-10-02). Loads right after neon-icons.js (build.py MODULES), before app.js.
+ * OWNER: NieR Mode, steps N-A (2026-10-02: engine, contract, paint hook) and N-B (2026-10-02: the transition path and
+ * Demo Studio's parts manager and scene picker). Loads right after neon-icons.js (build.py MODULES), before app.js.
  *
  * Jared (2026-10-02): NieR Light and NieR Dark are Demo Studio themes for the whole concept, built on PMConcept7's
  * NieR Mode contract so that every rule ports to PMConcept7 unchanged. PMConcept7 is the source of truth (read only):
@@ -23220,17 +23376,25 @@ window.PM56_NIER_FACES = [
  *
  * window.PM_NIER (PMConcept7's API, the one the parts code against):
  *   on() · parts() · has(key) · PARTS · keyFor(label) · labelFor(key) · set(on) · setParts(keys) · background() ·
- *   onChange(cb) · setTransition(fn) · replay() · notePick(family)
+ *   onChange(cb) · setTransition(fn) · replay() · notePick(family), plus the concept's switchTo(themeId) and
+ *   BACKGROUNDS / setBackground(label)
  * Here set(true) picks NieR in the current light or dark (Demo Studio's theme list is the real switch), set(false)
  * goes back to Basic in the same mode; parts and the background are kept in localStorage `pm56-nier` (per viewer, like
  * the other prefs), all 29 parts installed by default. notePick is a no-op: a theme picked here IS the switch.
+ * Transition: setTransition(fn) registers fn(repaint, { on, reason }) (the reboot part); a person's switch across NieR
+ * Mode's edge (Demo Studio's theme list, set(), switchTo()) runs it around the real repaint, the theme picked inside
+ * repaint(); replay() runs it over an unchanged look. PM56_DEMO.setTheme (harnesses) stays instant and never covers.
+ * Demo Studio: window.PM56_NIER_STUDIO(ctx) is the NieR section app.js puts under the theme list (the 29 parts as
+ * PMConcept7's Plug-in Chips, presets, Play reboot moment, the background scenes), '' unless a NieR theme is painted;
+ * its clicks are the PM56_EXT actions nier-part, nier-preset, nier-bg and nier-replay.
  * window.PM_THEME_PAINT_FAMILY(family) answers 'basic' while NieR Mode is painted (PMConcept7's paint hook).
  *
  * Type: the two embedded faces (nier-fonts.js, generated) are added to document.fonts while NieR Mode is painted and
  * deleted when it is not; nier.css maps the concept's --font-ui and --font-mono to them under the contract.
  * Motion voice: NieR moves in Retro's stepped voice (app.js motionVoice() maps the nier family to 'retro'); nier.css
  * strips Retro's phosphor glow under the contract, because NieR never glows.
- * Performance: no timer, no observer, no rAF; everything is attributes written during the render that changes them.
+ * Performance: no timer, no observer, no rAF; everything is attributes written during the render that changes them
+ * (and one capture-phase change listener for Demo Studio's theme list).
  */
 (function () {
   'use strict';
@@ -23326,19 +23490,35 @@ window.PM56_NIER_FACES = [
     if (turned || (painted && !faces)) syncFaces();
     if (last === null) { last = snapshot(); if (painted) Promise.resolve().then(function () { emit('init'); }); }
     else Promise.resolve().then(function () { emit(); });
-    if (turned && transition && !running) runTransition(want);
     return want ? 'basic-' + m : id;
   };
-  /* A registered transition (the reboot part, step N-B) animates around a repaint that has already happened here: the
-     concept repaints inside its own render, so the transition's repaint() is a no-op kept for PMConcept7's shape. */
-  function runTransition(on) {
+  /* The transition (the reboot part, nier-parts.js) runs around a REAL repaint, PMConcept7's shape: switchTo() hands it
+     repaint(), which picks the theme (Demo Studio's own setTheme + savePrefs), so the cover lands over the old look and
+     the new one is painted under it. Only a person's switch goes through here (Demo Studio's theme list, PM_NIER.set,
+     the manager's Play reboot moment); PM56_DEMO.setTheme stays instant, so harnesses that walk the themes never meet
+     a cover. A transition that throws or never calls repaint() still repaints when it settles. */
+  function runTransition(on, reason, repaint) {
     running = true;
     var done = false;
-    var repaint = function () { done = true; };
-    Promise.resolve().then(function () { return transition(repaint, { on: on, reason: on ? 'on' : 'off' }); })
+    var once = function () { if (done) return; done = true; repaint(); };
+    return Promise.resolve().then(function () { return transition(once, { on: on, reason: reason }); })
       .catch(function () { /* decoration only */ })
-      .then(function () { running = false; if (!done) repaint(); });
+      .then(function () { running = false; once(); });
   }
+  function switchTo(id) {
+    var want = isNier(id);
+    if (want === painted || !transition || running) return Promise.resolve(pick(id));
+    return runTransition(want, want ? 'on' : 'off', function () { pick(id); });
+  }
+  /* Demo Studio's theme list (app.js handleInput, k === 'theme'): a pick that crosses NieR Mode's edge is taken here in
+     the capture phase and run through the transition; every other pick goes on to app.js unchanged. */
+  document.addEventListener('change', function (e) {
+    var t = e.target;
+    if (!t || !t.matches || !t.matches('select[data-input="theme"]') || !transition) return;
+    if (isNier(t.value) === painted) return;
+    e.stopImmediatePropagation();
+    switchTo(t.value);
+  }, true);
 
   function ctx() { try { return window.PM56_EXT && window.PM56_EXT.ctx ? window.PM56_EXT.ctx() : null; } catch (e) { return null; } }
   function pick(id) {
@@ -23352,6 +23532,105 @@ window.PM56_NIER_FACES = [
     return /-light$/.test(t) ? 'light' : 'dark';
   }
 
+  /* ---------- Demo Studio: the parts manager (PMConcept7's Plug-in Chips) and the scene picker ---------------------- */
+  /* Shown in Demo Studio, under the theme list, only while a NieR theme is painted (app.js renderDemoDialog asks
+     window.PM56_NIER_STUDIO(ctx); '' otherwise, so the default themes' dialog is byte-identical). Each of the 29 parts
+     is a chip in its group, a click installs or removes it at once (PM_NIER.setParts, saved per viewer with the theme),
+     four presets, Play reboot moment, and the background scenes as thumbnails (nier-scenes.js paints them). The styles
+     are nier.css's Demo Studio section. The section is plain markup re-rendered with the dialog; actions are PM56_EXT
+     actions, so app.js's click delegation reaches them before its own. */
+  var HELP = {
+    square: ['Square corners and fine ink lines everywhere.', 4], cursor: ['The row under the pointer becomes an ink bar with a small cursor.', 5],
+    headers: ['Section titles in wide capitals over a ruled line.', 4], ground: ['A faint grid behind the whole concept.', 3],
+    brackets: ['Four corner brackets mark keyboard focus and the chosen thread.', 5], diamonds: ['Spinners and the working mark become a turning diamond.', 3],
+    reboot: ['An ink band sweeps over the window when NieR Mode turns on or off.', 8], slice: ['Menus, pickers, dialogs and sheets open from a thin line.', 4],
+    decode: ['Thread titles and new replies resolve from scrambled letters.', 5], wipe: ['A quick band crosses the chat when you switch threads.', 4],
+    particles: ['Small ink squares drift over the chat; alerts throw a few off.', 3], sweep: ['A faint scan line crosses the screen, and every alert.', 2],
+    glitch: ['Warnings, refusals and failures arrive with a short jitter.', 4], sounds: ['Soft ticks and tones when you move and choose.', 5],
+    voice: ['Notices and cards begin with Report, Alert or Proposal.', 3], pod: ['A small Pod hovers by the composer and delivers notices.', 6],
+    pointer: ['The mouse pointer becomes a small ink square.', 2], boot: ['A short boot log when the concept opens in NieR Mode.', 5],
+    readouts: ['The status bar reads like a unit’s status panel.', 4], blocks: ['The context meter, work and Orbit progress fill in blocks.', 3],
+    charts: ['Charts in ink, told apart by patterns instead of colour.', 4], ticks: ['Map corner ticks and grid labels on cards.', 2],
+    glyphs: ['A faint strip of machine script under headers.', 2], intel: ['Hover cards and tips become small intel cards.', 3],
+    icons: ['Icons draw with square line ends.', 1], pod042: ['Adds Pod 042 to the personas in the composer.', 7],
+    quests: ['A wide band when a plan is approved, a build finishes or a goal completes.', 5], empty: ['Small ink drawings on empty lists.', 4],
+    save: ['Saving… and Data saved in the corner when a setting changes.', 2]
+  };
+  var PRESETS = [
+    { id: 'full', label: 'Full install', help: 'Every part', keys: function () { return KEYS.slice(); } },
+    { id: 'quiet', label: 'Quiet', help: 'No sounds, no Pod', keys: function () { return KEYS.filter(function (k) { return ['sounds', 'voice', 'pod', 'pod042'].indexOf(k) < 0; }); } },
+    { id: 'still', label: 'Still', help: 'Nothing moves', keys: function () { return PARTS.filter(function (p) { return p.group !== 'Motion' && p.key !== 'pod' && p.key !== 'boot'; }).map(function (p) { return p.key; }); } },
+    { id: 'colors', label: 'Colors only', help: 'Just ink and parchment', keys: function () { return []; } }
+  ];
+  var SCENE_KEY = { 'None': 'none', 'City Ruins': 'city', 'Bunker': 'bunker', 'Desert': 'desert', 'Forest Castle': 'forest',
+    'Amusement Park': 'park', 'Flooded City': 'flooded', 'Follow the page': 'follow' };
+  var esc = function (v) { return String(v == null ? '' : v).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var still = function () {
+    return document.documentElement.getAttribute('data-motion') === 'reduced' || (document.body && document.body.classList.contains('pm56-reduced')) ||
+      !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  };
+  function studio() {
+    if (!painted) return '';
+    var have = prefs.parts, n = have.length, pre = '';
+    PRESETS.forEach(function (p) { if (!pre && p.keys().join(' ') === have.join(' ')) pre = p.id; });
+    var on = function (k) { return have.indexOf(k) >= 0; };
+    var why = !on('reboot') ? 'Install Reboot moment to play it.' : still() ? 'Reduce motion is on, so it does not play.' : '';
+    var chip = function (p) {
+      var h = HELP[p.key] || ['', 1], inst = on(p.key);
+      return '<button type="button" class="o55nc-chip" role="switch" aria-checked="' + inst + '" data-action="nier-part" data-key="' + p.key + '" aria-label="' + esc(p.label) + '">'
+        + '<span class="o55nc-chip-pins" aria-hidden="true"><i></i><i></i><i></i></span><span class="o55nc-chip-copy"><span class="o55nc-chip-name">' + esc(p.label)
+        + '</span><span class="o55nc-chip-help">' + esc(h[0]) + '</span><span class="o55nc-chip-foot"><span>Size ' + h[1] + '</span><span class="o55nc-chip-state">'
+        + (inst ? 'Installed' : 'Removed') + '</span></span></span></button>';
+    };
+    var groups = ['Look', 'Motion', 'Sound & voice', 'Pointer', 'World'].map(function (g) {
+      var ps = PARTS.filter(function (p) { return p.group === g; });
+      var note = g === 'Motion' && still() ? '<p class="o55nc-note">Reduce motion is on, so these parts stay still. Your choices are kept for when it is off.</p>' : '';
+      return '<section class="o55nc-group"><header class="o55nc-ghead"><h4>' + esc(g) + '</h4><span>' + ps.filter(function (p) { return on(p.key); }).length + ' / ' + ps.length
+        + '</span></header>' + note + '<div class="o55nc-chips">' + ps.map(chip).join('') + '</div></section>';
+    }).join('');
+    var tiles = BACKGROUNDS.map(function (label) {
+      var k = SCENE_KEY[label] || 'none';
+      return '<button type="button" class="o55nc-scene" role="radio" aria-checked="' + (prefs.background === label) + '" data-action="nier-bg" data-value="' + esc(label) + '" data-key="' + k + '">'
+        + '<span class="o55nc-scene-art o55ns-thumb" data-scene="' + k + '"></span><span class="o55nc-scene-name">' + esc(label) + '</span></button>';
+    }).join('');
+    return '<section class="demo-section o55nc-studio" style="margin-bottom:8px"><h3>NieR Mode · Plug-in Chips</h3><div class="demo-section-body o55nc" data-parts="' + have.join(' ') + '">'
+      + '<div class="o55nc-top"><div class="o55nc-meter"><div class="o55nc-meter-head"><span>Storage</span><b>Installed ' + n + ' / ' + PARTS.length + '</b></div><div class="o55nc-meter-cells">'
+      + PARTS.map(function (p, i) { return '<i' + (i < n ? ' class="on"' : '') + '></i>'; }).join('') + '</div></div>'
+      + '<div class="o55nc-presets" role="group" aria-label="Presets">' + PRESETS.map(function (p) {
+        return '<button type="button" class="o55nc-preset" aria-pressed="' + (p.id === pre) + '" data-action="nier-preset" data-value="' + p.id + '"><span>' + esc(p.label) + '</span><small>' + esc(p.help) + '</small></button>';
+      }).join('') + '</div><div class="o55nc-replay-wrap"><button type="button" class="soft-button o55nc-replay" data-action="nier-replay" aria-disabled="' + (!!why) + '">Play reboot moment</button>'
+      + (why ? '<p class="o55nc-replay-why">' + esc(why) + '</p>' : '') + '</div></div>'
+      + groups
+      + '<section class="o55nc-group o55nc-bg"><header class="o55nc-ghead"><h4>Background</h4><span>Behind the chat while NieR Mode is on</span></header><div class="o55nc-scenes" role="radiogroup" aria-label="NieR background">' + tiles + '</div></section>'
+      + '</div></section>';
+  }
+  window.PM56_NIER_STUDIO = function () { try { return studio(); } catch (e) { return ''; } };
+  var EXT = window.PM56_EXT;
+  if (EXT && typeof EXT.action === 'function') {
+    var rerender = function (c) { if (c && typeof c.renderOverlays === 'function') c.renderOverlays(); };
+    EXT.action('nier-part', function (c, btn) {
+      var k = btn && btn.dataset.key; if (KEYS.indexOf(k) < 0) return true;
+      var want = prefs.parts.slice(), i = want.indexOf(k);
+      if (i >= 0) want.splice(i, 1); else want.push(k);
+      window.PM_NIER.setParts(want); rerender(c);
+      return true;
+    });
+    EXT.action('nier-preset', function (c, btn) {
+      var p = PRESETS.filter(function (x) { return x.id === (btn && btn.dataset.value); })[0];
+      if (p) { window.PM_NIER.setParts(p.keys()); rerender(c); }
+      return true;
+    });
+    EXT.action('nier-bg', function (c, btn) {
+      var v = btn && btn.dataset.value;
+      if (v && v !== prefs.background && window.PM_NIER.setBackground(v)) rerender(c);
+      return true;
+    });
+    EXT.action('nier-replay', function (c, btn) {
+      if (btn && btn.getAttribute('aria-disabled') !== 'true') window.PM_NIER.replay();
+      return true;
+    });
+  }
+
   window.PM_THEME_PAINT_FAMILY = function (family) { return painted ? 'basic' : family; };
   window.PM_THEME_PAINT_LABEL = function () { return painted ? LABEL : ''; };
   window.PM_NIER = Object.freeze({
@@ -23362,7 +23641,8 @@ window.PM56_NIER_FACES = [
     has: function (key) { return painted && prefs.parts.indexOf(key) >= 0; },
     keyFor: function (label) { var p = PARTS.filter(function (x) { return x.label === String(label); })[0]; return p ? p.key : null; },
     labelFor: function (key) { var p = PARTS.filter(function (x) { return x.key === String(key); })[0]; return p ? p.label : null; },
-    set: function (on) { return pick((on ? 'nier-' : 'basic-') + currentMode()); },
+    set: function (on) { switchTo((on ? 'nier-' : 'basic-') + currentMode()); return true; },
+    switchTo: function (id) { return switchTo(String(id || '')); },
     setParts: function (keys) {
       var want = Array.isArray(keys) ? keys.map(String) : [];
       prefs.parts = KEYS.filter(function (k) { return want.indexOf(k) >= 0; });
@@ -23383,36 +23663,60 @@ window.PM56_NIER_FACES = [
     setTransition: function (fn) { var prev = transition; transition = typeof fn === 'function' ? fn : null; return prev; },
     replay: function () {
       if (!transition || running) return Promise.resolve();
-      runTransition(painted);
-      return Promise.resolve();
+      return runTransition(painted, 'replay', function () { /* nothing changes: the cover plays over the same look */ });
     },
     notePick: function () { /* a theme picked in Demo Studio is itself the switch */ }
   });
 })();
 
-/* nier-parts.js — NieR Mode parts for the 5.6 Pro concept, the script half. OWNER: NieR Mode, step N-A (2026-10-02);
- * step N-B adds the Motion, Sound & voice and World parts here. The styles are nier-parts.css; the contract and
- * window.PM_NIER are nier.js. Ported from PMConcept7's kit.d/19-nier-parts.js (the same layer ids, timings and
- * placement rules), with the concept's own selector lists.
+/* nier-parts.js — NieR Mode parts for the 5.6 Pro concept, the script half: Look, Motion, Sound & voice and Pointer.
+ * OWNER: NieR Mode, steps N-A (2026-10-02: the Look parts) and N-B (2026-10-02: Motion, Sound & voice). The World parts
+ * are nier-world.js, the scenes nier-scenes.js; the styles are nier-parts.css; the contract and window.PM_NIER are
+ * nier.js. Ported from PMConcept7's kit.d/19-nier-parts.js (the same layer ids, timings, copy and synth), with the
+ * concept's own surfaces.
  *
  * A part is live while PM_NIER.has(key); each part installs when its key arrives and removes everything it added when
  * the key goes (PM_NIER.onChange), so every part is silent while NieR Mode is off.
- *   square, headers, ground, diamonds, pointer, icons   CSS only (the parts attribute)
+ *   square, headers, ground, diamonds, slice, pointer, icons   CSS only (the parts attribute)
  *   cursor     one shared cursor (#o55np-cursor) beside the hovered or keyboard-focused menu item, picker row, thread
  *              row or wand row, placed by transform on pointerover and focusin
  *   brackets   one reticle of four corners (#o55np-reticle) on keyboard focus, and for 1.2 s on a chosen thread or tab
+ *   reboot     PM_NIER.setTransition: an ink band down over the old look, the theme picked under full cover, a stepped
+ *              flicker back (Demo Studio's theme list, PM_NIER.set, Play reboot moment; nier.js switchTo)
+ *   decode     the thread title on a thread switch, the head of an arriving assistant turn or card, arriving toasts
+ *   wipe       a band over the transcript while a switched-to thread draws, sliding off (#o55np-wipe)
+ *   particles  twelve ink motes drifting over the transcript (#o55np-ground, CSS-anchored to it), and a burst of six
+ *              thrown off an arriving alert
+ *   sweep      one faint scan line down the window every 12 s (#o55np-sweep, a timer and a one-shot animation), and
+ *              one across each arriving alert
+ *   glitch     an arriving alert jitters in steps: a warning or error toast splits in two (clones in #o55np-fx), a
+ *              refusal or a failed card tears (two ink strips in #o55np-fx)
+ *   sounds     PMConcept7's small synth (ticks, select, confirm, cancel, the Pod's chirp, the alert, the reboot sweep),
+ *              played through chat-sound.js (PM56_SOUND.synth), so its mute and gesture rules hold
+ *   voice      CSS leads (Report / Alert / Proposal) and the POD 042 band; a toast's kind is written at arrival
+ *   pod        #o55np-pod bobbing by CSS above the composer's corner; it turns toward each arriving toast
+ * Alerts are warning and error toasts (by their words; the concept's toasts carry no severity), refusals (.pmx-refusal
+ * appearing anywhere) and failed events (an arriving card in a failed, blocked or danger state; an Orbit step failing).
+ * Arrivals are read from the concept's own afterRender observer slot (app.js: after every renderApp, renderOverlays and
+ * work-tick patch), which hands this the state it just drew, so no observer watches the page.
  * Performance (PMConcept7's rules): no requestAnimationFrame loop, no MutationObserver; rects are read only on input
- * events, before any write; motion is CSS or a one-shot Web Animation of transform and opacity.
+ * events or once per arrival, before any write; motion is CSS or a one-shot Web Animation of transform and opacity.
+ * Every layer is a child of <body>, outside #pmRoot, so the app's DOM patch never meets it.
  */
 (function () {
   'use strict';
+  var html = document.documentElement;
   var N = function () { return window.PM_NIER || null; };
   var has = function (key) { var n = N(); try { return !!(n && n.has(key)); } catch (e) { return false; } };
+  /* installed whether or not NieR Mode is painted (the reboot runs before the repaint when it turns on) */
+  var installed = function (key) { var n = N(); try { return !!(n && n.parts().indexOf(key) >= 0); } catch (e) { return false; } };
   var still = function () {
-    return document.documentElement.getAttribute('data-motion') === 'reduced' || (document.body && document.body.classList.contains('pm56-reduced')) ||
+    return html.getAttribute('data-motion') === 'reduced' || (document.body && document.body.classList.contains('pm56-reduced')) ||
       !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   };
+  var tone = function () { return /-light$/.test((document.body && document.body.getAttribute('data-theme')) || '') ? 'light' : 'dark'; };
   var frames = function (n) { return new Promise(function (res) { var step = function () { if (--n <= 0) res(); else window.requestAnimationFrame(step); }; window.requestAnimationFrame(step); }); };
+  var esc = function (v) { return String(v == null ? '' : v).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   /* a fixed overlay layer on <body>; each part names its layer with a literal id (tests/orphan-gate.mjs reads id
      literals to match the stylesheet's #o55np-* rules) */
   function layer() {
@@ -23434,6 +23738,51 @@ window.PM56_NIER_FACES = [
       try { PARTS[key][want ? 'on' : 'off'](); } catch (e) { /* a part never breaks the app */ }
     });
     listen();
+    if (fx && !live.glitch && !live.sweep && !live.particles) { fx.remove(); fx = null; }
+  }
+
+  /* ---------- sounds: PMConcept7's synth of the game's menu blips, through chat-sound.js ------------------------------ */
+  var buses = typeof WeakMap !== 'undefined' ? new WeakMap() : null, lastTick = 0, sfxLog = [];
+  function busFor(ctx, out) {
+    /* the synth's own level (PMConcept7's 0.6) into chat-sound's master chain, one per audio context */
+    var b = buses && buses.get(ctx);
+    if (!b) { b = ctx.createGain(); b.gain.value = 0.6; b.connect(out); if (buses) buses.set(ctx, b); }
+    return b;
+  }
+  function blip(c, bus, t, f, dur, gain, type, f2) {
+    var o = c.createOscillator(), g = c.createGain();
+    o.type = type || 'sine'; o.frequency.setValueAtTime(f, t);
+    if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + dur);
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(gain, t + 0.004); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(g); g.connect(bus); o.start(t); o.stop(t + dur + 0.03);
+  }
+  function sweepTone(c, bus, t, up) {
+    var o = c.createOscillator(), f = c.createBiquadFilter(), g = c.createGain();
+    o.type = 'sawtooth'; o.frequency.setValueAtTime(up ? 98 : 196, t); o.frequency.exponentialRampToValueAtTime(up ? 196 : 98, t + 0.55);
+    f.type = 'lowpass'; f.Q.value = 7; f.frequency.setValueAtTime(up ? 260 : 3400, t); f.frequency.exponentialRampToValueAtTime(up ? 3400 : 260, t + 0.5);
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.05, t + 0.04); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.62);
+    o.connect(f); f.connect(g); g.connect(bus); o.start(t); o.stop(t + 0.66);
+    blip(c, bus, t + (up ? 0.5 : 0.02), up ? 1760 : 880, 0.12, 0.03);
+  }
+  var SFX = {
+    tick: function (c, b, t) { blip(c, b, t, 2640, 0.026, 0.028); },
+    select: function (c, b, t) { blip(c, b, t, 1480, 0.05, 0.045, 'triangle'); blip(c, b, t + 0.038, 2220, 0.07, 0.035); },
+    confirm: function (c, b, t) { blip(c, b, t, 988, 0.08, 0.05, 'triangle'); blip(c, b, t + 0.07, 1480, 0.17, 0.05, 'triangle'); },
+    cancel: function (c, b, t) { blip(c, b, t, 1318, 0.07, 0.045, 'triangle'); blip(c, b, t + 0.06, 880, 0.16, 0.045, 'triangle'); },
+    pod: function (c, b, t) { blip(c, b, t, 1760, 0.05, 0.03); blip(c, b, t + 0.06, 2350, 0.05, 0.026); blip(c, b, t + 0.12, 1975, 0.09, 0.026); },
+    alert: function (c, b, t) { blip(c, b, t, 523, 0.09, 0.05, 'triangle'); blip(c, b, t + 0.1, 523, 0.09, 0.05, 'triangle'); blip(c, b, t + 0.2, 392, 0.2, 0.05, 'triangle'); },
+    sweepOn: function (c, b, t) { sweepTone(c, b, t, true); },
+    sweepOff: function (c, b, t) { sweepTone(c, b, t, false); }
+  };
+  /* force: the reboot plays while NieR Mode is still off (turning on), so it asks for the installed part instead */
+  function sfx(name, force) {
+    if (!(force ? installed('sounds') : live.sounds) || !SFX[name]) return false;
+    var S = window.PM56_SOUND; if (!S || typeof S.synth !== 'function') return false;
+    var now = performance.now();
+    if (name === 'tick') { if (now - lastTick < 45) return false; lastTick = now; }
+    var ok = S.synth(function (c, out, t) { SFX[name](c, busFor(c, out), t); });
+    if (ok) { sfxLog.push({ name: name, t: Math.round(now) }); if (sfxLog.length > 60) sfxLog.shift(); }
+    return ok;
   }
 
   /* ---------- menu cursor ------------------------------------------------------------------------------------------- */
@@ -23464,11 +23813,12 @@ window.PM56_NIER_FACES = [
     if (!t) { if (!curHide && curT) curHide = window.setTimeout(function () { curHide = 0; curOff(); }, 90); return; }
     if (curHide) { window.clearTimeout(curHide); curHide = 0; }
     curT = t; curPlace(t);
+    sfx('tick');
   }
   function curFocus(e) {
     var t = targetOf(e); if (!t) return;
     var fv = false; try { fv = e.target.matches(':focus-visible'); } catch (x) { fv = false; }
-    if (fv) { curT = t; curPlace(t); }
+    if (fv) { curT = t; curPlace(t); sfx('tick'); }
   }
   PARTS.cursor = {
     on: function () {
@@ -23563,9 +23913,342 @@ window.PM56_NIER_FACES = [
     if (want) { window.addEventListener('scroll', onScroll, { capture: true, passive: true }); window.addEventListener('resize', onScroll, { passive: true }); }
     else { window.removeEventListener('scroll', onScroll, { capture: true }); window.removeEventListener('resize', onScroll); }
   }
-  var n = N();
-  if (n && typeof n.onChange === 'function') n.onChange(sync);
+
+  /* ---------- drifting particles: twelve motes over the transcript ---------------------------------------------------- */
+  /* PMConcept7's #o55np-ground layer (its still grid is the concept's .pm-shell ground, nier-parts.css), here holding the
+     motes only. It is anchored to the transcript in CSS (anchor-name under the part's own attribute), so it follows the
+     stage through every resize and layout change with no script. */
+  var ground = null;
+  PARTS.particles = {
+    on: function () { ground = layer(); ground.id = 'o55np-ground'; ground.innerHTML = new Array(13).join('<i class="o55np-mote"></i>'); idle(); },
+    off: function () { if (ground) ground.remove(); ground = null; }
+  };
+  /* a hidden tab holds every loop still */
+  function idle() {
+    var hidden = !!document.hidden;
+    [ground, pod].forEach(function (e) { if (e && e.hasAttribute('data-idle') !== hidden) e.toggleAttribute('data-idle', hidden); });
+  }
+  document.addEventListener('visibilitychange', idle);
+
+  /* ---------- scan sweep ------------------------------------------------------------------------------------------------ */
+  var sweep = null, sweepTimer = 0;
+  function sweepNext(ms) { if (sweepTimer) window.clearTimeout(sweepTimer); sweepTimer = window.setTimeout(sweepRun, ms); }
+  function sweepRun() {
+    sweepTimer = 0; if (!sweep) return;
+    if (!document.hidden && !still()) {
+      sweep.animate([{ transform: 'translateY(-72px)', opacity: 0 }, { opacity: 1, offset: 0.06 }, { opacity: 1, offset: 0.9 }, { transform: 'translateY(' + Math.round(window.innerHeight) + 'px)', opacity: 0 }], { duration: 2600, easing: 'linear' });
+    }
+    sweepNext(12000);
+  }
+  PARTS.sweep = {
+    on: function () { sweep = layer(); sweep.id = 'o55np-sweep'; sweepNext(2600); },
+    off: function () { if (sweepTimer) window.clearTimeout(sweepTimer); sweepTimer = 0; if (sweep) sweep.remove(); sweep = null; }
+  };
+
+  /* ---------- text decode ------------------------------------------------------------------------------------------------ */
+  var GLYPH = { upper: 'ABCDEFGHJKLMNPQRSTUVWXYZ', lower: 'abcdefghjkmnopqrstuvwxyz', digit: '0123456789', mark: '#%&*+=/<>' };
+  var decoding = typeof WeakMap !== 'undefined' ? new WeakMap() : null;
+  function scramble(text, shown) {
+    var out = '';
+    for (var k = 0; k < text.length; k++) {
+      var ch = text[k];
+      if (k < shown || /\s/.test(ch)) { out += ch; continue; }
+      var set = /[A-Z]/.test(ch) ? GLYPH.upper : /[a-z]/.test(ch) ? GLYPH.lower : /[0-9]/.test(ch) ? GLYPH.digit : GLYPH.mark;
+      out += set[(Math.random() * set.length) | 0];
+    }
+    return out;
+  }
+  /* a text node of at most 64 characters resolves from scrambled glyphs, left to right, in eight steps; if anything
+     else writes it meanwhile (the app's patch restoring its words), it stops and leaves that write alone */
+  function decodeNode(node) {
+    if (!node || node.nodeType !== 3 || !node.isConnected || still() || !decoding) return false;
+    var text = node.nodeValue;
+    if (!text || !text.trim() || text.length > 64) return false;
+    var prev = decoding.get(node); if (prev) prev.stop();
+    var steps = 8, dt = Math.max(20, Math.min(40, (110 + text.length * 9) / steps));
+    var i = 0, last = '', timer = 0, stopped = false;
+    var stop = function () { if (stopped) return; stopped = true; window.clearTimeout(timer); decoding.delete(node); if (node.isConnected && node.nodeValue === last) node.nodeValue = text; };
+    var tick = function () {
+      if (stopped) return;
+      if (!node.isConnected || node.nodeValue !== last) { stopped = true; decoding.delete(node); return; }
+      if (++i >= steps) { node.nodeValue = text; last = text; stop(); return; }
+      last = scramble(text, Math.floor(text.length * i / steps)); node.nodeValue = last;
+      timer = window.setTimeout(tick, dt);
+    };
+    decoding.set(node, { stop: stop });
+    last = scramble(text, 0); node.nodeValue = last;
+    timer = window.setTimeout(tick, dt);
+    return true;
+  }
+  /* an element whose words are one text node, or the last text node of a head that starts with an icon */
+  function decode(el) {
+    if (!el || !el.isConnected) return false;
+    if (el.childNodes.length === 1 && el.firstChild.nodeType === 3) return decodeNode(el.firstChild);
+    var t = el.lastChild; return t && t.nodeType === 3 && el.childNodes.length <= 3 ? decodeNode(t) : false;
+  }
+  PARTS.decode = { on: function () {}, off: function () {} };
+
+  /* ---------- page wipe: a band over the transcript on a thread switch ---------------------------------------------------- */
+  var wipe = null, wipeAnim = null;
+  function threadWipe(r) {
+    if (!document.body) return;
+    if (!wipe) { wipe = layer(); wipe.id = 'o55np-wipe'; wipe.innerHTML = '<i></i>'; }
+    wipe.style.cssText = 'left:' + r.left + 'px;top:' + r.top + 'px;width:' + r.width + 'px;height:' + r.height + 'px;display:block';
+    if (wipeAnim) wipeAnim.cancel();
+    var a = wipeAnim = wipe.firstChild.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(0)', offset: 0.2 }, { transform: 'translateX(101%)' }],
+      { duration: 400, easing: 'cubic-bezier(.65, 0, .3, 1)', fill: 'both' });
+    a.onfinish = function () { if (wipeAnim !== a) return; wipeAnim = null; if (wipe) wipe.style.display = 'none'; a.cancel(); };
+  }
+  PARTS.wipe = { on: function () {}, off: function () { if (wipeAnim) wipeAnim.cancel(); wipeAnim = null; if (wipe) wipe.remove(); wipe = null; } };
+
+  /* ---------- alerts: glitch, scan and burst, in one effects layer ------------------------------------------------------- */
+  var fx = null;
+  function fxLayer() { if (!fx || !fx.isConnected) { fx = layer(); fx.id = 'o55np-fx'; } return fx; }
+  function box(r, cls) {
+    var b = document.createElement('div'); b.className = cls;
+    b.style.cssText = 'left:' + Math.round(r.left) + 'px;top:' + Math.round(r.top) + 'px;width:' + Math.round(r.width) + 'px;height:' + Math.round(r.height) + 'px';
+    fxLayer().appendChild(b);
+    return b;
+  }
+  var drop = function (el, a) { var end = function () { el.remove(); }; a.onfinish = end; a.oncancel = end; };
+  /* glitch: the element jitters in five steps; a toast (plain markup, top-level styles) splits into two clipped copies
+     that slide apart, PMConcept7's slices; anything in the transcript tears with two ink strips (its styles live under
+     the transcript, so a copy outside it would not look like it) */
+  function glitch(el, r, split) {
+    if (typeof el.animate === 'function') el.animate([{ translate: '0px 0px' }, { translate: '4px 0px' }, { translate: '-3px 0px' }, { translate: '2px 0px' }, { translate: '0px 0px' }], { duration: 240, easing: 'steps(5, end)' });
+    if (split) {
+      [['inset(0 0 54% 0)', [0, -8, 6, -3, 0]], ['inset(46% 0 0 0)', [0, 7, -5, 2, 0]]].forEach(function (s, n) {
+        var b = box(r, 'o55np-glitch-slice'), c = el.cloneNode(true);
+        c.removeAttribute('data-o55-pod'); c.querySelectorAll('[data-k]').forEach(function (x) { x.removeAttribute('data-k'); });
+        b.appendChild(c); b.style.clipPath = s[0];
+        drop(b, b.animate(s[1].map(function (x) { return { transform: 'translateX(' + x + 'px)' }; }), { duration: 260, delay: n * 30, easing: 'steps(5, end)', fill: 'both' }));
+      });
+    } else {
+      [[0.28, 3, [0, 9, -6, 3, 0]], [0.66, 2, [0, -7, 5, -2, 0]]].forEach(function (s, n) {
+        var b = box({ left: r.left, top: r.top + r.height * s[0], width: r.width, height: s[1] }, 'o55np-tear');
+        drop(b, b.animate(s[2].map(function (x, i) { return { transform: 'translateX(' + x + 'px)', opacity: i === 4 ? 0 : 1 }; }), { duration: 260, delay: n * 40, easing: 'steps(5, end)', fill: 'both' }));
+      });
+    }
+  }
+  /* sweep across an alert: one scan line down its box */
+  function alertScan(r) {
+    var b = box({ left: r.left, top: r.top, width: r.width, height: 18 }, 'o55np-scan');
+    drop(b, b.animate([{ transform: 'translateY(-18px)', opacity: 0 }, { opacity: 1, offset: 0.12 }, { opacity: 1, offset: 0.85 }, { transform: 'translateY(' + Math.round(r.height) + 'px)', opacity: 0 }], { duration: 520, easing: 'steps(8, end)' }));
+  }
+  /* particles from an alert: six ink squares thrown off its edge, in steps */
+  function alertBurst(r) {
+    for (var i = 0; i < 6; i++) {
+      var ang = (-150 + i * 24 + (i % 2 ? 6 : -6)) * Math.PI / 180, d = 26 + (i % 3) * 10;
+      var b = box({ left: r.left + r.width * (0.2 + i * 0.12), top: r.top + 2, width: 4, height: 4 }, 'o55np-shard');
+      drop(b, b.animate([{ transform: 'translate(0, 0) rotate(0deg)', opacity: 1 }, { transform: 'translate(' + Math.round(Math.cos(ang) * d) + 'px, ' + Math.round(Math.sin(ang) * d) + 'px) rotate(' + (90 + i * 30) + 'deg)', opacity: 0 }],
+        { duration: 560, delay: i * 18, easing: 'steps(6, end)', fill: 'backwards' }));
+    }
+  }
+  function alertFx(el, split) {
+    if (!el || !el.isConnected || still() || document.hidden) return;
+    var r = el.getBoundingClientRect();
+    if (r.width < 8 || r.height < 8 || r.bottom < 0 || r.top > window.innerHeight) return;
+    if (live.glitch) glitch(el, r, split);
+    if (live.sweep) alertScan(r);
+    if (live.particles) alertBurst(r);
+  }
+  PARTS.glitch = { on: function () {}, off: function () {} };
+
+  /* ---------- Pod companion ------------------------------------------------------------------------------------------------ */
+  /* PMConcept7's original ink-line Pod: a chamfered box with a sensor slit, two side arms and a skirt; a shadow dash below.
+     It hovers above the composer's top-right corner (CSS anchor), and turns toward a toast arriving below it. */
+  var POD_SVG = '<svg viewBox="0 0 40 52" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="miter" stroke-linecap="square" aria-hidden="true">'
+    + '<path class="o55np-pod-fill" d="M3.5 13.5H8.5V30.5H3.5Z M31.5 13.5H36.5V30.5H31.5Z"/><path d="M3.5 13.5H8.5V30.5H3.5Z M31.5 13.5H36.5V30.5H31.5Z M8.5 18H9.5 M30.5 18H31.5 M6 10.5V13.5 M34 10.5V13.5"/>'
+    + '<path class="o55np-pod-fill" d="M12.5 6.5H27.5L30.5 9.5V33.5L26.5 37.5H13.5L9.5 33.5V9.5Z"/><path d="M12.5 6.5H27.5L30.5 9.5V33.5L26.5 37.5H13.5L9.5 33.5V9.5Z M11 12.5H29 M13 27.5H27 M13 30.5H27 M15.5 37.5L17 41.5H23L24.5 37.5"/>'
+    + '<path class="o55np-pod-ink" stroke="none" d="M15 18H25V21H15Z"/><path class="o55np-pod-ink" stroke="none" d="M22 18H25V21H22Z" opacity=".35"/></svg>';
+  var POD_SHADOW = '<svg viewBox="0 0 40 52" aria-hidden="true"><path class="o55np-pod-ink" d="M13 47.3H27V48.7H13Z" opacity=".32"/></svg>';
+  var pod = null;
+  function podDeliver() {
+    if (!pod || still() || document.hidden) return;
+    var body = pod.querySelector('.o55np-pod-body');
+    /* the toasts arrive below and to the right: the Pod dips toward them and sends three signals down */
+    body.animate([{ transform: 'rotate(0deg) translate(0, 0)' }, { transform: 'rotate(16deg) translate(2px, 3px)', offset: 0.22 },
+      { transform: 'rotate(16deg) translate(2px, 3px)', offset: 0.7 }, { transform: 'rotate(0deg) translate(0, 0)' }], { duration: 1000, easing: 'cubic-bezier(.3, .7, .3, 1)' });
+    pod.querySelectorAll('.o55np-pod-signal').forEach(function (s, i) {
+      s.animate([{ transform: 'translate(0, 0)', opacity: 0 }, { opacity: 1, offset: 0.15 }, { transform: 'translate(' + (10 + i * 8) + 'px, ' + (40 + i * 16) + 'px)', opacity: 0 }],
+        { duration: 520, delay: 200 + i * 90, easing: 'steps(6, end)', fill: 'backwards' });
+    });
+  }
+  PARTS.pod = {
+    on: function () {
+      pod = layer(); pod.id = 'o55np-pod';
+      pod.innerHTML = '<div class="o55np-pod-shadow">' + POD_SHADOW + '</div><div class="o55np-pod-bob"><div class="o55np-pod-body">' + POD_SVG + '</div></div>' + new Array(4).join('<i class="o55np-pod-signal"></i>');
+      idle();
+    },
+    off: function () { if (pod) pod.remove(); pod = null; }
+  };
+
+  PARTS.voice = { on: function () {}, off: function () {} };
+
+  /* ---------- menu sounds: select, confirm and cancel by delegation (ticks come with the cursor) -------------------- */
+  /* Send has its own sound in chat-sound.js; it is left to it. */
+  var CONFIRM_SEL = '.primary-button:not([data-action="send"]), button[type="submit"], [data-action="approve-plan"]';
+  var CANCEL_SEL = '[data-action="close-dialog"], [data-action="close-decision"], [data-action="close-editor"], [data-action="close-context-details"], [data-action="close-history"], [data-action="close-activity"], [data-action^="cancel-"], [data-action="dismiss-event"], .pmx-close, [aria-label="Close"], [aria-label="Dismiss"]';
+  var TOGGLE_SEL = '[role="switch"], [role="checkbox"], [role="radio"], input[type="checkbox"], input[type="radio"], .selector-button, .editor-tab, .demo-trigger';
+  function soundClick(e) {
+    var t = e.target; if (!t || !t.closest) return;
+    if (t.closest(CANCEL_SEL)) sfx('cancel');
+    else if (t.closest(CONFIRM_SEL)) sfx('confirm');
+    else if (t.closest(CURSOR_SEL) || t.closest(TOGGLE_SEL)) sfx('select');
+  }
+  function soundKey(e) { if (e.key === 'Escape') sfx('cancel'); else if (e.key === 'Enter' && e.target && e.target.closest && e.target.closest(CURSOR_SEL)) sfx('select'); }
+  PARTS.sounds = {
+    on: function () { document.addEventListener('click', soundClick, true); document.addEventListener('keydown', soundKey, true); },
+    off: function () { document.removeEventListener('click', soundClick, true); document.removeEventListener('keydown', soundKey, true); }
+  };
+
+  /* ---------- reboot moment ---------------------------------------------------------------------------------------------- */
+  var REBOOT_COPY = {
+    on: ['NieR Mode', 'Rebooting the interface', 'Ink and parchment loaded'],
+    off: ['NieR Mode', 'Shutting down the unit', 'Your theme restored'],
+    replay: ['NieR Mode', 'Rebooting the interface', 'All parts reinstalled']
+  };
+  var rebooting = false;
+  function reboot(repaint, info) {
+    var on = !!(info && info.on), reason = info && info.reason;
+    if (rebooting || !installed('reboot') || still() || document.hidden || !document.body) { repaint(); sync(); return Promise.resolve(); }
+    rebooting = true;
+    var copy = REBOOT_COPY[reason === 'replay' ? 'replay' : on ? 'on' : 'off'];
+    var cover = document.createElement('div');
+    cover.id = 'o55np-reboot'; cover.setAttribute('aria-hidden', 'true'); cover.dataset.tone = tone();
+    cover.innerHTML = '<div class="o55np-rb-band"><div class="o55np-rb-lines"></div><div class="o55np-rb-copy"><div class="o55np-rb-title">' + esc(copy[0]) + '</div>'
+      + '<div class="o55np-rb-line">' + esc(copy[1]) + '</div><div class="o55np-rb-line">' + esc(copy[2]) + '</div><div class="o55np-rb-meter"><i></i></div></div></div>';
+    document.body.appendChild(cover);
+    var band = cover.firstElementChild, meter = cover.querySelector('.o55np-rb-meter > i'), lines = cover.querySelectorAll('.o55np-rb-line'), fill = null;
+    var finish = function () { cover.remove(); rebooting = false; };
+    sfx(on || reason === 'replay' ? 'sweepOn' : 'sweepOff', true);
+    return band.animate([{ transform: 'translateY(-101%)' }, { transform: 'translateY(0)' }], { duration: 320, easing: 'cubic-bezier(.6, 0, .3, 1)', fill: 'forwards' }).finished
+      .then(function () {
+        fill = meter.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 560, easing: 'steps(12, end)', fill: 'forwards' });
+        lines[0].setAttribute('data-ok', '');
+        repaint();
+        sync();
+        return frames(2); /* the repaint's long frame is drawn here, under full cover; the meter runs on the compositor */
+      })
+      .then(function () { return fill.finished; })
+      .then(function () {
+        lines[1].setAttribute('data-ok', '');
+        return cover.animate([{ opacity: 1, easing: 'step-end' }, { opacity: 0, offset: 0.16, easing: 'step-end' }, { opacity: 0.85, offset: 0.3, easing: 'step-end' },
+          { opacity: 0, offset: 0.46, easing: 'step-end' }, { opacity: 0.4, offset: 0.6, easing: 'step-end' }, { opacity: 0, offset: 0.74 }, { opacity: 0 }],
+        { duration: 480, fill: 'forwards' }).finished;
+      })
+      .then(finish, function () { repaint(); sync(); finish(); });
+  }
+  PARTS.reboot = { on: function () {}, off: function () {} };
+
+  /* ---------- arrivals: what the concept just drew (its afterRender observer slot) -------------------------------------- */
+  /* Toasts carry no severity: their words decide. Errors are failures and refusals; warnings are what could not happen
+     yet or was held; a proposal asks the reader to act. */
+  var ERR = /\b(fail(ed|s|ure)?|error|refused|denied|blocked|rolled back|lost|crash)/i;
+  var WARN = /\b(not |can.?t|cannot|held|stale|unable|limit|queue full|stop before|unavailable|offline|interrupted|paused)/i;
+  var ASK = /^(approve|review|confirm|choose|decide|allow|grant)\b/i;
+  function toastKind(t) { var s = String((t && t.title) || '') + ' ' + String((t && t.detail) || ''); return ERR.test(t && t.title || '') ? 'error' : (ERR.test(s) || WARN.test(t && t.title || '')) ? 'warn' : ASK.test(t && t.title || '') ? 'proposal' : 'report'; }
+  var seenToast = {}, seenRefusal = typeof WeakSet !== 'undefined' ? new WeakSet() : null, seenFail = typeof WeakSet !== 'undefined' ? new WeakSet() : null;
+  var lastTid = null, seenMsg = null;
+  /* arriving cards in these states are failed events */
+  var FAILED_SEL = '.event-card.danger, .event-card.warning, [data-state="failed"], [data-state="blocked"], .sched-card-failed, .tx-terminal-error, .is-failed';
+  function onToasts(c) {
+    var root = document.getElementById('pmOverlayRoot'), stack = root && root.querySelector(':scope > .toast-stack');
+    var list = ((c.state && c.state.toast) || []).slice(-3), nodes = stack ? stack.children : [];
+    var ids = {};
+    list.forEach(function (t, i) {
+      var el = nodes[i]; ids[t.id] = 1; if (!el) return;
+      var kind = toastKind(t), pod = kind === 'error' || kind === 'warn' ? 'alert' : kind;
+      /* the app's patch rewrites every attribute it does not know: the kind is written again after each one */
+      if (el.getAttribute('data-o55-pod') !== pod) el.setAttribute('data-o55-pod', pod);
+      if (el.getAttribute('data-o55-sev') !== kind) el.setAttribute('data-o55-sev', kind);
+      if (seenToast[t.id]) return;
+      seenToast[t.id] = 1;
+      /* the split copies are taken before the words scramble */
+      if (pod === 'alert') alertFx(el, true);
+      if (live.decode) { decode(el.querySelector('strong')); decode(el.querySelector('span')); }
+      if (live.pod) podDeliver();
+      sfx(pod === 'alert' ? 'alert' : 'pod');
+    });
+    Object.keys(seenToast).forEach(function (id) { if (!ids[id]) delete seenToast[id]; });
+    /* a refusal that appears in a sheet or a menu */
+    if (root && seenRefusal && (live.glitch || live.sweep || live.particles)) {
+      root.querySelectorAll('.pmx-refusal').forEach(function (el) { if (!seenRefusal.has(el)) { seenRefusal.add(el); alertFx(el, false); sfx('alert'); } });
+    }
+  }
+  function onApp(c) {
+    var t = c.thread, tid = c.state && c.state.selectedThread, msgs = (t && t.messages) || [];
+    if (tid !== lastTid || !seenMsg) {
+      var switched = lastTid !== null && seenMsg;
+      lastTid = tid; seenMsg = {};
+      msgs.forEach(function (m) { seenMsg[m.id] = 1; });
+      if (!switched) return;
+      var tr = document.querySelector('.chat-stage .transcript');
+      if (live.wipe && tr && !still() && !document.hidden) { var r = tr.getBoundingClientRect(); if (r.width > 40 && r.height > 40) threadWipe(r); }
+      if (live.decode) {
+        var go = function () { document.querySelectorAll('.chat-header .pmx-chat-title-word').forEach(function (w, i) { if (i < 6) decode(w); }); };
+        if (live.wipe) window.setTimeout(go, 110); else go();
+      }
+      /* refusals and failures already in a thread you open are not arrivals */
+      document.querySelectorAll('.transcript-inner .pmx-refusal').forEach(function (el) { if (seenRefusal) seenRefusal.add(el); });
+      return;
+    }
+    var fresh = [];
+    for (var i = 0; i < msgs.length; i++) if (!seenMsg[msgs[i].id]) { seenMsg[msgs[i].id] = 1; fresh.push(msgs[i]); }
+    if (!fresh.length) return;
+    var inner = document.querySelector('.transcript-inner');
+    fresh.forEach(function (m, n) {
+      var el = document.querySelector('.transcript-inner [data-message-id="' + (window.CSS && CSS.escape ? CSS.escape(m.id) : m.id) + '"]')
+        || (inner && fresh.length === 1 ? inner.lastElementChild : null);
+      if (!el) return;
+      if (live.decode) {
+        var head = el.querySelector(':scope .message-role, :scope .system-card-head .title, :scope .pmx-run-head .pmx-receipt-title');
+        if (head) decode(head);
+      }
+      var bad = el.matches(FAILED_SEL) ? el : el.querySelector(FAILED_SEL);
+      var refusal = el.querySelector('.pmx-refusal');
+      if (refusal && seenRefusal) seenRefusal.add(refusal);
+      if (bad || refusal) { alertFx(bad || refusal, false); sfx('alert'); }
+    });
+  }
+  function onScope(info) {
+    /* the work tick: an Orbit step or a rail step that fails */
+    var sc = info && info.scope; if (!sc || !sc.querySelectorAll || !seenFail || !(live.glitch || live.sweep || live.particles)) return;
+    sc.querySelectorAll('.orbit-node.failed, .rail8-item.failed').forEach(function (el) { if (!seenFail.has(el)) { seenFail.add(el); alertFx(el, false); } });
+  }
+  var EXT = window.PM56_EXT;
+  if (EXT && typeof EXT.slot === 'function') {
+    EXT.slot('afterRender', function (c, info) {
+      if (html.getAttribute('data-o55-nier') !== 'on') { lastTid = null; seenMsg = null; return; }
+      try {
+        var phase = info && info.phase;
+        if (phase === 'overlay') onToasts(c);
+        else if (phase === 'app') onApp(c);
+        else if (phase === 'scope') onScope(info);
+      } catch (e) { /* decoration only */ }
+    });
+  }
+
+  /* ---------- wiring ------------------------------------------------------------------------------------------------------ */
+  function start() {
+    var n = N(); if (!n || typeof n.onChange !== 'function') return false;
+    n.setTransition(reboot);
+    n.onChange(function () { sync(); });
+    return true;
+  }
+  if (!start()) window.setTimeout(start, 0);
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', sync); else window.setTimeout(sync, 0);
+
+  /* test hooks: which script parts are live, what sounded, a decode or an alert on demand; play() is the synth for the
+     World parts (nier-world.js), heard only while Menu sounds is live and sound is on */
+  window.PM_NIER_PARTS = Object.freeze({
+    live: function () { return Object.keys(live).filter(function (k) { return live[k]; }); },
+    sounds: function () { return sfxLog.slice(); },
+    decode: function (el) { return decode(el); },
+    alert: function (el, split) { alertFx(el, !!split); },
+    play: function (name) { return sfx(name); },
+    sync: sync
+  });
 })();
 
 /* Shared synchronous concept command transaction.
@@ -67185,6 +67868,14 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     renderWav: renderWav,
     EVENTS: EVENTS.slice(),
     FAMILIES: Object.keys(KITS),
+    /* NieR Mode's Menu sounds part (nier-parts.js) plays its own synth through this same switch: fn(ctx, out, t)
+       runs only when sound is on and armed by a gesture, on this context, into this master chain */
+    synth: function (fn) {
+      if (S.muted || !armed || typeof fn !== 'function') return false;
+      var ctx = ensure(); if (!ctx) return false;
+      try { fn(ctx, S.master, ctx.currentTime + 0.004); } catch (e) { return false; }
+      return true;
+    },
     get muted() { return S.muted; },
     setMuted: function (m) { S.muted = !!m; try { localStorage.setItem(KEY, S.muted ? 'off' : 'on'); } catch (e) { } },
     log: S.log
@@ -70630,7 +71321,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
     const triggerGroups=demoTriggerGroups();
     const g=clampDemoGeom(state.dialog.geom||lastDemoGeom||defaultDemoGeom());
     state.dialog.geom=g;
-    return `<section class="dialog demo-dialog" style="left:${g.left}px;top:${g.top}px;width:${g.width}px;height:${g.height}px;transform:none"><div class="drawer-head" data-dialog-drag><span class="event-icon">${icon('sparkles',13)}</span><strong>Demo Studio</strong><span class="meta-pill">${D.workingTakes.length} working takes · 7 families</span><span class="spacer"></span><button class="soft-button" data-action="reset-all">${icon('reset',12)} Reset all</button><button class="icon-button" data-action="close-dialog">${icon('close',13)}</button></div><div class="dialog-body"><section class="demo-section" style="margin-bottom:8px"><h3>Curated complete recipes and themes</h3><div class="demo-section-body" style="display:grid;grid-template-columns:1fr 1fr;gap:7px"><div class="mixer-row"><label>Recipe</label><select data-input="recipe"><option value="-1" ${state.recipe<0?'selected':''}>Custom mix</option>${D.recipes.map((r,i)=>`<option value="${i}" ${state.recipe===i?'selected':''}>${esc(r.name)}</option>`).join('')}</select></div><div class="mixer-row"><label>Theme</label><select data-input="theme">${D.themes.map(t=>`<option value="${t.id}" ${state.theme===t.id?'selected':''}>${esc(t.name)}</option>`).join('')}</select></div><p style="grid-column:1/-1;color:var(--muted);font-size:11px;margin:0">${esc(D.recipes[state.recipe]?.desc||'Custom mix')}</p></div></section><section class="demo-section" style="margin-bottom:8px"><h3>Assistant chat</h3><div class="demo-section-body" style="display:block"><div class="mixer-row"><label>Working activity</label><select data-input="variant" data-family="2">${(()=>{const v=state.variants[2];const opts=[[1,'Orbit · Default'],[8,'Step Rail Simple']];let h=opts.map(([val,name])=>`<option value="${val}" ${v===val?'selected':''}>${name}</option>`).join('');if(v!==1&&v!==8)h+=`<option value="${v}" selected>Lab take ${v+1}</option>`;return h;})()}</select></div><p style="color:var(--muted);font-size:12px;margin:6px 0 0">Default: Orbit. Simplified: Step Rail Simple.</p><div class="mixer-row"><label>Motion voice</label><select data-input="motion-voice">${[['auto','Follow the theme'],['basic','Basic · ink'],['friendly','Friendly · hop'],['glass','Glass · depth'],['retro','Retro · type']].map(([v,n])=>`<option value="${v}" ${(state.motionVoice||'auto')===v?'selected':''}>${n}</option>`).join('')}</select></div><p style="color:var(--muted);font-size:12px;margin:6px 0 0">Every theme family moves with its own voice; pick one here to judge it on any theme.</p></div></section><section class="demo-section" style="margin-bottom:8px"><h3>Independently swappable concept families</h3><div class="demo-section-body" style="display:block">${families.map((f,i)=>`<div class="mixer-row"><label>${esc(f)}</label><select data-input="variant" data-family="${i}">${optionNames[i].map((n,j)=>`<option value="${j}" ${state.variants[i]===j?'selected':''}>${j+1}. ${esc(n)}</option>`).join('')}</select></div>`).join('')}</div></section>${window.PM56_POLISH?window.PM56_POLISH.gallery(EXT.ctx()):''}<div class="demo-grid">${Object.entries(triggerGroups).map(([name,items])=>`<section class="demo-section"><h3>${esc(name)}</h3><div class="demo-section-body">${items.map(x=>`<button class="demo-trigger" data-action="demo-trigger" data-trigger="${esc(x)}">${esc(x)}</button>`).join('')}</div></section>`).join('')}</div></div>${demoResizeHandles()}</section>`;
+    return `<section class="dialog demo-dialog" style="left:${g.left}px;top:${g.top}px;width:${g.width}px;height:${g.height}px;transform:none"><div class="drawer-head" data-dialog-drag><span class="event-icon">${icon('sparkles',13)}</span><strong>Demo Studio</strong><span class="meta-pill">${D.workingTakes.length} working takes · 7 families</span><span class="spacer"></span><button class="soft-button" data-action="reset-all">${icon('reset',12)} Reset all</button><button class="icon-button" data-action="close-dialog">${icon('close',13)}</button></div><div class="dialog-body"><section class="demo-section" style="margin-bottom:8px"><h3>Curated complete recipes and themes</h3><div class="demo-section-body" style="display:grid;grid-template-columns:1fr 1fr;gap:7px"><div class="mixer-row"><label>Recipe</label><select data-input="recipe"><option value="-1" ${state.recipe<0?'selected':''}>Custom mix</option>${D.recipes.map((r,i)=>`<option value="${i}" ${state.recipe===i?'selected':''}>${esc(r.name)}</option>`).join('')}</select></div><div class="mixer-row"><label>Theme</label><select data-input="theme">${D.themes.map(t=>`<option value="${t.id}" ${state.theme===t.id?'selected':''}>${esc(t.name)}</option>`).join('')}</select></div><p style="grid-column:1/-1;color:var(--muted);font-size:11px;margin:0">${esc(D.recipes[state.recipe]?.desc||'Custom mix')}</p></div></section>${window.PM56_NIER_STUDIO?window.PM56_NIER_STUDIO(EXT.ctx()):''}<section class="demo-section" style="margin-bottom:8px"><h3>Assistant chat</h3><div class="demo-section-body" style="display:block"><div class="mixer-row"><label>Working activity</label><select data-input="variant" data-family="2">${(()=>{const v=state.variants[2];const opts=[[1,'Orbit · Default'],[8,'Step Rail Simple']];let h=opts.map(([val,name])=>`<option value="${val}" ${v===val?'selected':''}>${name}</option>`).join('');if(v!==1&&v!==8)h+=`<option value="${v}" selected>Lab take ${v+1}</option>`;return h;})()}</select></div><p style="color:var(--muted);font-size:12px;margin:6px 0 0">Default: Orbit. Simplified: Step Rail Simple.</p><div class="mixer-row"><label>Motion voice</label><select data-input="motion-voice">${[['auto','Follow the theme'],['basic','Basic · ink'],['friendly','Friendly · hop'],['glass','Glass · depth'],['retro','Retro · type']].map(([v,n])=>`<option value="${v}" ${(state.motionVoice||'auto')===v?'selected':''}>${n}</option>`).join('')}</select></div><p style="color:var(--muted);font-size:12px;margin:6px 0 0">Every theme family moves with its own voice; pick one here to judge it on any theme.</p></div></section><section class="demo-section" style="margin-bottom:8px"><h3>Independently swappable concept families</h3><div class="demo-section-body" style="display:block">${families.map((f,i)=>`<div class="mixer-row"><label>${esc(f)}</label><select data-input="variant" data-family="${i}">${optionNames[i].map((n,j)=>`<option value="${j}" ${state.variants[i]===j?'selected':''}>${j+1}. ${esc(n)}</option>`).join('')}</select></div>`).join('')}</div></section>${window.PM56_POLISH?window.PM56_POLISH.gallery(EXT.ctx()):''}<div class="demo-grid">${Object.entries(triggerGroups).map(([name,items])=>`<section class="demo-section"><h3>${esc(name)}</h3><div class="demo-section-body">${items.map(x=>`<button class="demo-trigger" data-action="demo-trigger" data-trigger="${esc(x)}">${esc(x)}</button>`).join('')}</div></section>`).join('')}</div></div>${demoResizeHandles()}</section>`;
   }
 
   function positionOverlays(){

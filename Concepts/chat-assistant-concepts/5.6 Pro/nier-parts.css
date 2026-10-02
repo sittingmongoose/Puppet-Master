@@ -196,6 +196,142 @@ html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] .qs-orbit { animati
 html[data-o55-nier-parts~="diamonds"] body.pm56-reduced .ctx-spin,
 html[data-o55-nier-parts~="diamonds"] body.pm56-reduced .qs-orbit { animation: none !important; }
 
+/* ====================================================================================================== Motion */
+
+/* ---- Reboot moment [reboot]: the cover (nier-parts.js runs it inside PM_NIER.setTransition) ----
+   The cover exists before the palette is painted (turning NieR Mode on), so its two inks are custom properties written
+   by nier_palette_56.py into nier.css's generated block, keyed by the cover's own tone (the look it covers). */
+#o55np-reboot { position: fixed; inset: 0; z-index: 2147483600; pointer-events: none; overflow: hidden; contain: strict; }
+#o55np-reboot > .o55np-rb-band { position: absolute; inset: 0; background: var(--rb-ink); transform: translateY(-101%); will-change: transform; }
+#o55np-reboot > .o55np-rb-band::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 1px; background: var(--rb-ink); box-shadow: 0 -3px 0 var(--rb-ink); }
+#o55np-reboot > .o55np-rb-band > .o55np-rb-lines { position: absolute; inset: 0;
+  background: repeating-linear-gradient(to bottom, rgba(var(--rb-ink-rgb), 0) 0 2px, rgba(var(--rb-shade-rgb), .09) 2px 3px); opacity: .9; }
+#o55np-reboot .o55np-rb-copy { position: absolute; left: 50%; top: 50%; width: 360px; margin: -44px 0 0 -180px; color: var(--rb-paper);
+  font: 500 11px/1.7 "PM NieR Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .22em; text-transform: uppercase; }
+#o55np-reboot .o55np-rb-title { font: 600 15px/1.4 "PM NieR Sans", "Inter", system-ui, sans-serif; letter-spacing: .3em; margin-bottom: 10px;
+  padding-bottom: 8px; background: linear-gradient(var(--rb-paper), var(--rb-paper)) left bottom / 5px 5px no-repeat, linear-gradient(var(--rb-paper), var(--rb-paper)) right bottom / 5px 5px no-repeat,
+  linear-gradient(var(--rb-paper), var(--rb-paper)) center calc(100% - 2px) / calc(100% - 12px) 1px no-repeat; }
+#o55np-reboot .o55np-rb-meter { position: relative; height: 6px; margin-top: 12px; border: 1px solid var(--rb-paper); }
+#o55np-reboot .o55np-rb-meter > i { position: absolute; left: 1px; top: 1px; bottom: 1px; right: 1px; background: repeating-linear-gradient(90deg, var(--rb-paper) 0 10px, transparent 10px 13px);
+  transform-origin: left center; transform: scaleX(0); will-change: transform; }
+#o55np-reboot .o55np-rb-line { display: flex; gap: 10px; }
+#o55np-reboot .o55np-rb-line::after { content: "- - -"; margin-left: auto; opacity: .6; }
+#o55np-reboot .o55np-rb-line[data-ok]::after { content: "OK"; opacity: 1; }
+
+/* ---- Slice open [slice]: menus, pickers, dialogs, the context drawer and wand sheets unfold from a 1px line, one
+   flicker step. They mount once per opening (the app's patch keeps an open overlay's node), so the animation runs once.
+   Centred dialogs are placed by translate(-50%, -50%): their slice scales about the box's corner so the line opens at
+   the dialog's own centre; everything else scales about its middle. ---- */
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .overlay-menu,
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .dialog,
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .drawer,
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .pmx-sheet {
+  animation: o55np-slice 300ms linear backwards !important; transform-origin: 50% 50% !important;
+}
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .dialog:not(.demo-dialog):not(.pmx-sheet) { transform-origin: 0 0 !important; }
+@keyframes o55np-slice {
+  0% { scale: 1 .006; opacity: 1; animation-timing-function: cubic-bezier(.2, .85, .25, 1); }
+  58% { scale: 1 1; opacity: 1; animation-timing-function: step-end; }
+  66% { scale: 1 1; opacity: .3; animation-timing-function: step-end; }
+  74% { scale: 1 1; opacity: 1; }
+  100% { scale: 1 1; opacity: 1; }
+}
+
+/* ---- Page wipe [wipe]: an ink-edged band over the transcript while a switched-to thread draws (nier-parts.js) ---- */
+#o55np-wipe { position: fixed; z-index: 900; pointer-events: none; overflow: hidden; contain: strict; display: none; }
+#o55np-wipe > i { position: absolute; inset: 0; display: block; will-change: transform;
+  background:
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) left top / 3px 100% no-repeat,
+    repeating-linear-gradient(to bottom, transparent 0 22px, rgba(var(--o55-nier-ink-rgb), .12) 22px 23px),
+    var(--canvas); }
+#o55np-wipe > i::before { content: ""; position: absolute; top: 0; bottom: 0; left: 7px; width: 1px; background: var(--o55-nier-ink); opacity: .55; }
+
+/* ---- Drifting particles [particles]: a dozen small ink squares drifting over the transcript ----
+   The layer is anchored to the transcript (the anchor name exists only under this part), so it covers the stage through
+   every layout change; it never takes a click and sits under the overlays. */
+html[data-o55-nier-parts~="particles"] .chat-stage > .transcript { anchor-name: --o55np-stage; }
+#o55np-ground { position: fixed; position-anchor: --o55np-stage; top: anchor(top, 0px); left: anchor(left, 0px); right: anchor(right, 0px); bottom: anchor(bottom, 0px);
+  z-index: 5; pointer-events: none; overflow: hidden; contain: strict; }
+#o55np-ground > .o55np-mote { position: absolute; display: block; width: 4px; height: 4px; background: rgba(var(--o55-nier-ink-rgb), .3); will-change: transform; }
+#o55np-ground > .o55np-mote:nth-of-type(3n) { width: 6px; height: 6px; background: transparent; box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .34); }
+#o55np-ground > .o55np-mote:nth-of-type(4n + 1) { width: 3px; height: 3px; }
+#o55np-ground > .o55np-mote:nth-of-type(1) { left: 8%; top: 22%; --d: 61s; --dl: -12s; }
+#o55np-ground > .o55np-mote:nth-of-type(2) { left: 17%; top: 71%; --d: 83s; --dl: -40s; }
+#o55np-ground > .o55np-mote:nth-of-type(3) { left: 29%; top: 38%; --d: 72s; --dl: -5s; }
+#o55np-ground > .o55np-mote:nth-of-type(4) { left: 37%; top: 86%; --d: 95s; --dl: -60s; }
+#o55np-ground > .o55np-mote:nth-of-type(5) { left: 46%; top: 14%; --d: 68s; --dl: -30s; }
+#o55np-ground > .o55np-mote:nth-of-type(6) { left: 55%; top: 57%; --d: 88s; --dl: -18s; }
+#o55np-ground > .o55np-mote:nth-of-type(7) { left: 63%; top: 29%; --d: 76s; --dl: -52s; }
+#o55np-ground > .o55np-mote:nth-of-type(8) { left: 71%; top: 78%; --d: 64s; --dl: -9s; }
+#o55np-ground > .o55np-mote:nth-of-type(9) { left: 79%; top: 45%; --d: 91s; --dl: -71s; }
+#o55np-ground > .o55np-mote:nth-of-type(10) { left: 86%; top: 12%; --d: 70s; --dl: -26s; }
+#o55np-ground > .o55np-mote:nth-of-type(11) { left: 92%; top: 63%; --d: 84s; --dl: -44s; }
+#o55np-ground > .o55np-mote:nth-of-type(12) { left: 23%; top: 8%; --d: 99s; --dl: -80s; }
+html[data-o55-nier-parts~="particles"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #o55np-ground > .o55np-mote { animation: o55np-drift var(--d, 70s) linear var(--dl, 0s) infinite; }
+html[data-o55-nier-parts~="particles"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #o55np-ground > .o55np-mote:nth-of-type(even) { animation-name: o55np-drift-b; }
+#o55np-ground[data-idle] > .o55np-mote { animation-play-state: paused !important; }
+@keyframes o55np-drift { 0% { transform: translate(0, 0) rotate(0deg); } 25% { transform: translate(38px, -64px) rotate(90deg); } 50% { transform: translate(84px, -22px) rotate(180deg); }
+  75% { transform: translate(40px, 40px) rotate(270deg); } 100% { transform: translate(0, 0) rotate(360deg); } }
+@keyframes o55np-drift-b { 0% { transform: translate(0, 0); } 33% { transform: translate(-52px, 30px); } 66% { transform: translate(-18px, -70px); } 100% { transform: translate(0, 0); } }
+
+/* ---- Scan sweep [sweep]: one faint line crossing the window every twelve seconds (a one-shot Web Animation) ---- */
+#o55np-sweep { position: fixed; left: 0; right: 0; top: 0; height: 56px; z-index: 2147481000; pointer-events: none; opacity: 0; will-change: transform, opacity;
+  background: linear-gradient(to bottom, rgba(var(--o55-nier-ink-rgb), 0), rgba(var(--o55-nier-ink-rgb), .028) 90%, rgba(var(--o55-nier-ink-rgb), .12) 98.2%, rgba(var(--o55-nier-ink-rgb), 0)); }
+
+/* ---- Alerts [glitch, sweep, particles]: the effects layer over an arriving warning or error toast, a refusal or a
+   failed card. Each child is placed on the alert's box by the script and removed when its one-shot animation ends. ---- */
+#o55np-fx { position: fixed; inset: 0; z-index: 1300; pointer-events: none; overflow: hidden; contain: strict; }
+#o55np-fx > * { position: absolute; pointer-events: none; will-change: transform, opacity; }
+/* glitch: the two clipped copies of a toast that split apart (the copy stands still inside them) */
+#o55np-fx > .o55np-glitch-slice { overflow: visible; }
+#o55np-fx > .o55np-glitch-slice > * { position: static !important; margin: 0 !important; width: 100% !important; height: 100% !important; box-sizing: border-box;
+  max-width: none !important; animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; }
+/* glitch: the tear of a card in the transcript, two ink strips */
+#o55np-fx > .o55np-tear { background: var(--o55-nier-ink); opacity: .78; }
+/* sweep: one scan line down the alert */
+#o55np-fx > .o55np-scan { background: linear-gradient(to bottom, rgba(var(--o55-nier-ink-rgb), 0), rgba(var(--o55-nier-ink-rgb), .1) 80%, rgba(var(--o55-nier-ink-rgb), .45) 96%, rgba(var(--o55-nier-ink-rgb), 0)); }
+/* particles: the ink squares thrown off it */
+#o55np-fx > .o55np-shard { background: var(--o55-nier-ink); }
+
+/* =============================================================================================== Sound & voice */
+
+/* ---- Pod voice [voice]: Report / Alert / Proposal leads on toasts and cards, the POD 042 band on toasts ---- */
+/* a toast's kind is written at arrival (nier-parts.js: data-o55-pod alert | proposal | report, data-o55-sev) */
+html[data-o55-nier-parts~="voice"] #pmOverlayRoot .toast > strong::before { content: "Report: "; font-weight: 500; }
+html[data-o55-nier-parts~="voice"] #pmOverlayRoot .toast[data-o55-pod="alert"] > strong::before { content: "Alert: "; }
+html[data-o55-nier-parts~="voice"] #pmOverlayRoot .toast[data-o55-pod="proposal"] > strong::before { content: "Proposal: "; }
+html[data-o55-nier-parts~="voice"] #pmOverlayRoot .toast::before {
+  content: "POD 042"; display: block; margin: -9px -11px 6px; padding: 3px 11px 2px; background: var(--o55-nier-ink); color: var(--o55-nier-on-ink);
+  font: 500 9px/1.4 var(--font-mono); letter-spacing: .28em;
+}
+html[data-o55-nier-parts~="voice"] #pmOverlayRoot .toast[data-o55-sev="error"]::before { background: var(--o55-nier-error); }
+html[data-o55-nier-parts~="voice"] #pmOverlayRoot .toast[data-o55-sev="warn"]::before { background: var(--o55-nier-warn-text); }
+/* the transcript: system cards report, plan cards and decisions propose, danger and warning cards alert */
+html[data-o55-nier-parts~="voice"] .system-card-head .title::before { content: "Report: "; font-weight: 500; }
+html[data-o55-nier-parts~="voice"] .system-card.plan-card .system-card-head .title::before { content: "Proposal: "; }
+html[data-o55-nier-parts~="voice"] .qs-head .qs-title::before { content: "Proposal: "; font-weight: 500; }
+html[data-o55-nier-parts~="voice"] .decision-top > strong::before { content: "Proposal: "; font-weight: 500; }
+html[data-o55-nier-parts~="voice"] .event-card.danger .event-copy > strong::before { content: "Alert: "; font-weight: 500; }
+html[data-o55-nier-parts~="voice"] .event-card.warning .event-copy > strong::before { content: "Alert: "; font-weight: 500; }
+
+/* ---- Pod companion [pod]: a small ink-line Pod hovering above the composer's top-right corner ----
+   Anchored to the chat's composer (the anchor name exists only under this part), so it rides every composer height. */
+html[data-o55-nier-parts~="pod"] .chat-stage > .composer { anchor-name: --o55np-composer; }
+#o55np-pod { position: fixed; position-anchor: --o55np-composer; right: calc(anchor(right, 14px) + 8px); bottom: calc(anchor(top, 58px) + 6px);
+  width: 40px; height: 52px; z-index: 1190; pointer-events: none; contain: layout style; color: var(--o55-nier-ink); display: none; }
+html[data-o55-nier-parts~="pod"] #o55np-pod { display: block; }
+#o55np-pod .o55np-pod-bob, #o55np-pod .o55np-pod-body, #o55np-pod .o55np-pod-shadow { position: absolute; left: 0; top: 0; width: 40px; height: 52px; will-change: transform; }
+#o55np-pod svg { display: block; width: 40px; height: 52px; overflow: visible; }
+#o55np-pod .o55np-pod-fill { fill: var(--o55-nier-paper); }
+#o55np-pod .o55np-pod-ink { fill: currentColor; }
+#o55np-pod .o55np-pod-shadow { transform-origin: 20px 48px; }
+#o55np-pod .o55np-pod-body { transform-origin: 20px 22px; }
+#o55np-pod .o55np-pod-signal { position: absolute; left: 30px; top: 30px; width: 4px; height: 4px; background: currentColor; opacity: 0; will-change: transform, opacity; }
+html:not([data-motion="reduced"]) body:not(.pm56-reduced) #o55np-pod:not([data-idle]) .o55np-pod-bob { animation: o55np-bob 3.6s ease-in-out infinite alternate; }
+html:not([data-motion="reduced"]) body:not(.pm56-reduced) #o55np-pod:not([data-idle]) .o55np-pod-shadow { animation: o55np-bob-shadow 3.6s ease-in-out infinite alternate; }
+@keyframes o55np-bob { from { transform: translateY(0); } to { transform: translateY(-6px); } }
+@keyframes o55np-bob-shadow { from { transform: scaleX(1); opacity: .9; } to { transform: scaleX(.7); opacity: .5; } }
+
 /* ===================================================================================================== Pointer */
 /* ---- Square pointer [pointer]: the images (literal colours) are in nier.css's generated block ---- */
 
@@ -212,6 +348,6 @@ html[data-o55-nier-parts~="icons"] svg ellipse { stroke-linecap: square; stroke-
 
 /* ============================================================================================ Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  #o55np-cursor, #o55np-cursor > i, #o55np-reticle, #o55np-reticle > i { animation: none !important; transition: none !important; }
+  #o55np-cursor, #o55np-cursor > i, #o55np-reticle, #o55np-reticle > i, #o55np-ground > .o55np-mote, #o55np-pod *, #o55np-wipe > i { animation: none !important; transition: none !important; }
   html[data-o55-nier-parts~="diamonds"] .ctx-spin, html[data-o55-nier-parts~="diamonds"] .qs-orbit { animation: none !important; }
 }
