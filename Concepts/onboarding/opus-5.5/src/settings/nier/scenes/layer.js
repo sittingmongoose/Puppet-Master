@@ -99,6 +99,11 @@ function o55ScnArt(key) {
   });
   return art;
 }
+/* The art's opacity as painted now: its resting value at rest, its mid-fade value mid-fade. */
+function o55ScnOpacity(el) {
+  const v = Number(getComputedStyle(el).opacity);
+  return Number.isFinite(v) ? Math.min(Math.max(v, 0), 1) : 0.2;
+}
 /* Put the wanted scene up (or take the layer down). A change between two scenes cross-fades by opacity. */
 function o55ScnApply() {
   o55ScnTimer = 0;
@@ -121,10 +126,22 @@ function o55ScnApply() {
   if (html.getAttribute('data-o55-nier-scene') !== key) html.setAttribute('data-o55-nier-scene', key);
   const still = typeof o55Still === 'function' ? o55Still() : html.getAttribute('data-motion') === 'reduced';
   if (!olds.length || still || typeof art.animate !== 'function') { olds.forEach(o => o.remove()); return; }
-  olds.forEach(o => { o.classList.add('is-leaving'); });
-  const a = art.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 520, easing: 'cubic-bezier(.22,.8,.24,1)' });
-  const done = () => olds.forEach(o => o.remove());
-  a.onfinish = done; a.oncancel = done;
+  /* A true cross-dissolve: the arriving art climbs 0 -> resting, the leaving art falls to 0 then is removed.
+     The resting opacity comes from the CSS (.15 light, .2 dark), read off the arriving art, so neither layer ever
+     exceeds it (the old 0 -> 1 climbed ~5x past it, then snapped back). Rapid A-B-C: only the newest old layer fades
+     out, from its current opacity; older ones go at once, so there is at most one leaving layer and the newest scene
+     always wins. */
+  const leaving = olds[olds.length - 1];
+  olds.forEach(o => { if (o !== leaving) o.remove(); });
+  const from = o55ScnOpacity(leaving);
+  leaving.getAnimations().forEach(x => { try { x.cancel(); } catch (e) { /* already gone */ } });
+  leaving.classList.add('is-leaving');
+  const rest = o55ScnOpacity(art);
+  const timing = { duration: 520, easing: 'cubic-bezier(.22,.8,.24,1)' };
+  art.animate([{ opacity: 0 }, { opacity: rest }], timing);
+  const l = leaving.animate([{ opacity: from }, { opacity: 0 }], timing);
+  const done = () => leaving.remove();
+  l.onfinish = done; l.oncancel = done;
 }
 /* Coalesce every trigger into one apply; while a page change is animating, wait for it to finish. */
 function o55ScnSoon(delay) {
