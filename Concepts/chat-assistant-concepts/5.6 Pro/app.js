@@ -1977,6 +1977,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function sendButtonHtml(){
     const liveGoal=window.PM56_GOAL?.get(activeThread().id),livePlan=window.PM56_PLANS?.current(activeThread().id);const busy=turnBusy()||!!(liveGoal?.status==='active'&&liveGoal.workRef&&(liveGoal.workRef.kind==='order_export'||livePlan?.workRef))||!!(livePlan?.workRef&&livePlan.status==='building'&&!livePlan.attention);
     const qlen=(state.sendQueue[state.selectedThread]||[]).length;
+    /* Send/Stop is send-stop.js's (step SS, "solid-living"): one button patched in place, so the plane lifts off,
+       morphs into the square and back as CSS transitions. The two lines below are its no-module fallback. */
+    if(window.PM56_SENDSTOP) return window.PM56_SENDSTOP.html({busy,text:state.composer,qlen,tid:state.selectedThread},hoverAttrs);
     const queueFull=busy&&qlen>=2;
     if(busy && !state.composer.trim()){
       return `<button class="send-button is-stop" data-k="send-btn" data-action="stop-run"${hoverAttrs('send-btn','Stop the current run')}>${icon('stop',13)}</button>`;
@@ -1988,11 +1991,11 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(!host) return;
     const cur=host.querySelector('[data-k="send-btn"]');
     if(!cur) return;
-    const wrap=document.createElement('div');
-    wrap.innerHTML=sendButtonHtml();
-    const neu=wrap.firstElementChild;
-    if(cur.getAttribute('data-action')===neu.getAttribute('data-action') && cur.className===neu.className && cur.disabled===neu.disabled) return;
-    cur.replaceWith(neu);
+    const tpl=document.createElement('template');
+    tpl.innerHTML=sendButtonHtml();
+    const neu=tpl.content.firstElementChild;
+    /* patched, never replaced: a replaced button would cut the Send/Stop morph (send-stop.js) */
+    if(neu) pmPatchNode(cur,neu);
   }
 
   function renderStatusBar(){ return `<footer class="status-bar"><span>${icon('check-circle',10)} Agent · ${esc(selectedModel().name)} · ${formatElapsed(state.work.elapsed)}</span><span class="center">${esc(state.worktree)} · Local server</span><span class="right">Ready · ${state.context.compacted?'Context compacted':`Context ${(window.PM56_CTX&&window.PM56_CTX.ringPct)?window.PM56_CTX.ringPct():64}%`} ${icon('info',10)}</span></footer>`; }
@@ -3785,17 +3788,23 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(el && el.value!=='') el.value='';
   }
   function handleSend(){
-    const raw=state.composer.trim();if(!raw)return;
+    /* Send/Stop one-shots (send-stop.js): a click with nothing to send, or with the queue full, sputters; a send
+       or a queue launches the plane; a send a pre-send validator refuses shakes and flashes. */
+    const SS=window.PM56_SENDSTOP;
+    const raw=state.composer.trim();if(!raw){SS?.sputter();syncSendStop();return;}
     if(turnBusy()){
       const q=queueOf();
-      if(q.length>=2){ toast('Queue full','Send, edit, or cancel a queued message before adding another.'); return; }
+      if(q.length>=2){ SS?.sputter();syncSendStop(); toast('Queue full','Send, edit, or cancel a queued message before adding another.'); return; }
+      SS?.launch('queue');
       q.push({id:uid('q'), text:raw});
       state.composer='';
       clearComposerField();   /* enqueue empties the field too; same focus reason */
       renderApp();
       return;
     }
-    deliverSend(raw);
+    SS?.launch('send');
+    const out=deliverSend(raw);
+    if(out&&out.admitted===false&&/^validator/.test(out.reason||'')){SS?.fail();syncSendStop();}
   }
   function maybeFlushQueue(){
     if(turnBusy() || seqTimer) return;
@@ -4032,6 +4041,11 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(sub&&state.menu&&!btn){ e.stopPropagation(); setSubmenu(sub.dataset.submenu); return; }
     if(!btn){if(state.menu&&!e.target.closest('.overlay-menu,.lens-dock'))closeMenu();return;}
     const a=btn.dataset.action;
+    /* Stop (send-stop.js): the second click of a double-click on Send lands on the Stop it became, so a click with
+       detail > 1 is never a stop (a time window would also swallow a fast deliberate stop); a stop-run click is the
+       one "stopped" signal (a turn, goal or plan that ends any other way has "finished"). Before the module actions,
+       so goals.js's chained stop-run never sees the double-click either. */
+    if(a==='stop-run'){if(e.detail>1)return;window.PM56_SENDSTOP?.halt();}
     if(a==='return-to-chat'){state.editorRevealed=false;renderApp();return;}
     if(handleScopedPickerAction(a,btn,e)) return;
     const preview=btn.closest('.ab-card');
@@ -4225,7 +4239,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
 
   document.addEventListener('input',e=>{
     const k=e.target.dataset.input;if(!k)return;
-    if(k==='composer'){state.composer=e.target.value;state.drafts[state.selectedThread]=state.composer;syncSendStop();return;}
+    if(k==='composer'){const had=!!state.composer.trim();state.composer=e.target.value;state.drafts[state.selectedThread]=state.composer;if(!had&&state.composer.trim())window.PM56_SENDSTOP?.ignite();syncSendStop();return;}
         if(k==='history-search'){state.historySearch=e.target.value;renderApp();return;}
         if(k==='shared-choice-search'&&state.menu?.type==='choice'){state.menu.query=e.target.value;renderOverlays();return;}
     if(k==='model-search'){state.modelSearch=e.target.value;renderOverlays();return;}

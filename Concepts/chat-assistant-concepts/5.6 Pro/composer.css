@@ -31,20 +31,7 @@
   color: var(--subtle);
 }
 .composer-infield .icon-button svg { width: 16px; height: 16px; }
-.composer-infield .send-button {
-  width: 24px; height: 24px; flex: none; margin-left: auto;
-  border-radius: 8px; box-shadow: 0 4px 12px color-mix(in srgb, var(--accent) 28%, transparent);
-  display: grid; place-items: center;
-}
-.composer-infield .send-button svg { width: 13px; height: 13px; transform: translate(-0.5px, 0.5px); }
-.composer-infield .send-button.is-stop svg { width: 11px; height: 11px; transform: none; }
-.composer-infield .send-button.is-stop {
-  background: var(--danger);
-  box-shadow: 0 4px 12px color-mix(in srgb, var(--danger) 28%, transparent);
-}
-.composer-infield .send-button:disabled {
-  opacity: .45; cursor: not-allowed; transform: none; filter: none;
-}
+/* The Send / Stop chip in this row (.send-button.sendstop) is send-stop.css's (step SS, "solid-living"). */
 
 .composer-infield .capability-indicators { display: flex; align-items: center; gap: 2px; }
 .composer-infield .capability-dot {

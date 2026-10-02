@@ -375,11 +375,8 @@ html[data-o55-nier="on"] .working-variant-11 .dt-ok { animation-name: none; }
 html[data-o55-nier="on"] .working-variant-11 .dt-ms { animation-name: none; }
 html[data-o55-nier="on"] .status-branch { animation-name: o55n-blink; animation-timing-function: steps(1, end); }
 @keyframes o55n-blink { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
-/* Send carries an accent-tinted bloom under it, Stop a rust fill: in NieR both are flat ink squares with paper glyphs
-   (PMConcept7's chat send), Stop told apart by its glyph. */
-html[data-o55-nier="on"] .send-button { box-shadow: none; }
-html[data-o55-nier="on"] .composer-infield .send-button { box-shadow: none; }
-html[data-o55-nier="on"] .composer-infield .send-button.is-stop { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); box-shadow: none; }
+/* Send / Stop under NieR (an ink block with a paper plane or square, rust only under a hovering pointer) is
+   send-stop.css's NieR block (step SS). */
 
 /* ------------------------------------------------------------------ the Orbit and the working animation */
 /* Decided beside PMConcept7's orchestrator ring (a round ink dial with square markers): the Orbit stays a round dial

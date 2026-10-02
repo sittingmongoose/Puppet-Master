@@ -1,0 +1,335 @@
+/* send-stop.css — the composer's Send / Stop control, "solid-living" (step SS, 2026-10-02; Jared's pick of three).
+ * OWNER: Send/Stop (step SS). Markup, one-shots and the cadence switch: send-stop.js. Loaded in CSS_LAST right after
+ * neon-icons.css (build.py), so it settles ties with composer.css and the neon grammar; it replaces the composer.css
+ * send block, the styles.css .send-button hover lift (that rule now skips .sendstop) and nier.css's send rules.
+ *
+ * The chip stays SOLID: accent for Send and Queue, danger for Stop. It is the one primary action and must be found
+ * without looking; all the craft is in the glyph. One <path> is the plane outline in Send and the rounded square in
+ * Stop (CSS `d` interpolates point by point), the plane's fold becomes the square's inner tube highlight, two more
+ * layers carry the lift-off (ghost) and the queued plane (back). Layers in the chip (.ss-face, clipped to its radius):
+ * the accent fill, .ss-flood (the danger disc that floods out from the centre for Stop and drains back when it ends),
+ * the top sheen (::before), the failure flash (::after), the glyph svg. Behind the chip: two radial backlights
+ * (::before accent, ::after danger) at element opacity.
+ *
+ * The hero (Send click into a run), in order: 0-320 ms the plane lifts off along its heading (clipped by the chip);
+ * 140-480 ms a fresh plane slides in; 240-540 ms it morphs into the square ON THE ACCENT; from 420 ms the red floods
+ * out from under the square (half way at ~470 ms, when the square has formed), so a plane never sits on red; the
+ * breathe starts at 800 ms. Retro steps from accent to danger in one step as the square lands (a stepped flood would
+ * split the chip green and red). Leaving Stop the red drains first (fast, never overshooting), then the square opens.
+ * The run: the square breathes ~1 px (scale .88) at the activity bar's 2.2 s working cadence while words arrive, and
+ * .95 at 3.2 s while the model thinks or a tool runs; the danger backlight breathes .30/.18 (.10/.06 on light themes).
+ * Both loops animate transform or opacity on a box (the svg root, the ::after), so they run on the compositor.
+ *
+ * Family grammar: tubes are strokes in the host ink (on-accent), the bloom is a halo stroke (.nx-h, dark themes
+ * only), the glow is a radial gradient at element opacity; no filter, no color-mix(), no stroke-dashoffset. Voices:
+ * --ss-ease and --ss-le are the neon voice tokens (Friendly overshoots, Glass glides, Retro steps, NieR steps); they
+ * change the easing only, never the timing or the order. Reduced motion (the media query, body.pm56-reduced,
+ * html[data-motion="reduced"]): end states only. NieR Mode: ink and parchment, no light, square corners, stepped.
+ */
+
+/* ------------------------------------------------------------------ tokens */
+body {
+  --ss-size: 24px; --ss-r: 8px;
+  /* backlights (element opacity of a plain-token radial gradient) */
+  --ss-glow-a: .46; --ss-glow-stop-a: .3; --ss-glow-w: 260%;
+  /* the glyph's bloom (halo stroke, on-accent) */
+  --ss-halo-a: .22; --ss-halo-w: 3.4px;
+  /* the solid chip's crafted edge: a top rim light, a contact shadow and a sheen (tokens, so NieR can drop them) */
+  --ss-rim: rgb(255 255 255 / .2); --ss-drop: rgb(0 0 0 / .42); --ss-sheen: rgb(255 255 255 / .1);
+  --ss-idle-ink: .7; --ss-stop-fill: .9;
+  --ss-out: cubic-bezier(.3, .15, .65, .45);        /* lift-off: moves at once, accelerates away */
+  --ss-shake: cubic-bezier(.3, 0, .3, 1);
+  --ss-drain: cubic-bezier(.2, .75, .25, 1);        /* the red leaves fast, before the plane takes shape */
+  --ss-flood-e: var(--nx-ease, cubic-bezier(.2, .75, .25, 1));
+}
+/* light themes: no bloom on the glyph (a white halo on a coloured chip reads as a smudge) and a faint, tighter
+   backlight, so no accent or danger haze lies on the light field (G1) */
+body[data-theme$="-light"] {
+  --ss-glow-a: .1; --ss-glow-stop-a: .1; --ss-glow-w: 200%;
+  --ss-halo-a: 0;
+  --ss-rim: rgb(255 255 255 / .26); --ss-drop: rgb(20 20 60 / .2); --ss-sheen: rgb(255 255 255 / .12);
+  --ss-idle-ink: .76;
+}
+body[data-theme^="glass"] { --ss-drain: cubic-bezier(.4, 0, .1, 1); }
+body[data-theme^="retro"] { --ss-out: steps(4, end); --ss-shake: steps(4, end); --ss-drain: steps(1, start); --ss-flood-e: steps(1, start); }
+
+/* ------------------------------------------------------------------ the chip */
+.send-button.sendstop {
+  position: relative; isolation: isolate;
+  width: var(--ss-size); height: var(--ss-size); flex: none; margin-left: auto; padding: 0;
+  border: 0; border-radius: var(--ss-r); background: transparent; box-shadow: none;
+  color: var(--on-accent); cursor: pointer; display: block;
+  --ss-ease: var(--nx-ease, cubic-bezier(.2, .75, .25, 1));
+  --ss-le: var(--nx-le, cubic-bezier(.45, 0, .25, 1));
+  /* the morph into Stop and the flood: --ss-md delays the morph (a Send click: after the fresh plane arrives), the
+     flood follows it by 180 ms; --ss-ld, a constant, starts the loop once both have landed (a re-render that drops a
+     one-shot never shifts a running loop's phase) */
+  --ss-ld: 800ms;
+  transition: transform 200ms var(--ease);
+}
+/* Two backlights behind the chip: ::before in the accent (Send, Queue), ::after in the danger tone (Stop). They
+   cross-fade by opacity; hover swells them with `scale`; the Stop loop breathes the danger one's opacity. Centred a
+   little low, so it also does the old accent drop shadow's job. */
+.sendstop::before, .sendstop::after {
+  content: ""; position: absolute; left: 50%; top: 58%; width: var(--ss-glow-w); height: var(--ss-glow-w); translate: -50% -50%;
+  border-radius: 50%; pointer-events: none; z-index: -1; opacity: 0;
+  transition: opacity 260ms ease-out, scale 260ms var(--ease);
+}
+.sendstop::before { background: radial-gradient(closest-side, var(--accent), transparent); }
+.sendstop::after { background: radial-gradient(closest-side, var(--danger), transparent); }
+.sendstop[data-ss="ready"]::before, .sendstop[data-ss="queue"]::before { opacity: var(--ss-glow-a); }
+.sendstop[data-ss="stop"]::after { opacity: var(--ss-glow-stop-a); }
+
+.ss-face {
+  position: absolute; inset: 0; border-radius: inherit; overflow: hidden;
+  background: var(--accent);
+  box-shadow: inset 0 1px 0 var(--ss-rim), 0 1px 2px var(--ss-drop);
+  transition: background-color 300ms ease-out, box-shadow 300ms ease-out;
+}
+/* The run's colour FLOODS the chip from its centre (a disc that scales up behind the glyph) instead of blending:
+   accent-to-danger blends pass through mud (green to red is brown in Retro), a flood has a clean edge and says "this
+   started here". Transform only. Leaving Stop the red drains back behind the square first. */
+.ss-flood {
+  position: absolute; left: 50%; top: 50%; width: 36px; height: 36px; margin: -18px 0 0 -18px; border-radius: 50%;
+  background: var(--danger); scale: 0; pointer-events: none;
+  transition: scale 300ms var(--ss-drain) var(--ss-dd, 0ms);
+}
+.sendstop[data-ss="stop"] .ss-flood { scale: 1; transition: scale 360ms var(--ss-flood-e) calc(var(--ss-md, 0ms) + 180ms); }
+/* Retro: one step from accent to danger the moment the stepped morph lands (it ends at --ss-md + 300 ms) */
+body[data-theme^="retro"] .sendstop[data-ss="stop"] .ss-flood { transition: scale 300ms var(--ss-flood-e) calc(var(--ss-md, 0ms) + 300ms); }
+/* a faint top sheen: the solid chip reads as a lit tile, not a flat sticker */
+.ss-face::before {
+  content: ""; position: absolute; inset: 0 0 50% 0; pointer-events: none; z-index: 1;
+  background: linear-gradient(var(--ss-sheen), transparent);
+}
+/* the failure flash (danger, over the fill and under the glyph, so the plane stays readable) */
+.ss-face::after { content: ""; position: absolute; inset: 0; background: var(--danger); opacity: 0; pointer-events: none; z-index: 1; }
+.sendstop[data-ss="full"] .ss-face { background: var(--surface-3); box-shadow: inset 0 0 0 1px var(--border-strong); }
+.sendstop[data-ss="full"] { color: var(--muted); cursor: not-allowed; }
+
+/* ------------------------------------------------------------------ the glyph */
+.ss-g {
+  position: absolute; left: 0; top: 0; z-index: 2; width: 100%; height: 100%; overflow: visible;
+  fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round;
+  transition: opacity 220ms ease-out;
+}
+.sendstop[data-ss="idle"] .ss-g { opacity: var(--ss-idle-ink); }
+.sendstop[data-ss="full"] .ss-g { opacity: .8; }
+/* every moving layer turns about the chip centre in chip pixels */
+.ss-g g { transform-box: view-box; transform-origin: 12px 12px; }
+
+/* the body: plane outline (Send) <-> rounded square (Stop) <-> the smaller front plane (Queue). Into Stop the morph
+   takes 300 ms (the hero's timing above); back out of it 380 ms, after the red has begun to drain. */
+.sendstop .ss-body {
+  d: path("M5.6 10.86 L17.2 6.8 Q17.2 6.8 17.2 6.8 L13.14 18.4 Q13.14 18.4 13.14 18.4 L10.82 13.18 Q10.82 13.18 10.82 13.18 L5.6 10.86 Q5.6 10.86 5.6 10.86 Z");
+  stroke-width: 1.35px; fill: currentColor; fill-opacity: 0;
+  transition: d 380ms var(--ss-ease) var(--ss-md, 0ms), stroke-width 380ms var(--ss-ease) var(--ss-md, 0ms),
+    fill-opacity 300ms ease-out var(--ss-md, 0ms);
+}
+/* the fold line, which becomes the square's inner tube highlight */
+.sendstop .ss-fold {
+  d: path("M17.2 6.8 L14.01 9.99 L10.82 13.18");
+  stroke-width: 1.2px;
+  transition: d 380ms var(--ss-ease) var(--ss-md, 0ms), stroke-width 380ms var(--ss-ease) var(--ss-md, 0ms), opacity 300ms ease-out var(--ss-md, 0ms);
+}
+/* the bloom: a wider, faint copy of the body's own outline (dark themes) */
+.sendstop .ss-g .nx-h {
+  d: path("M5.6 10.86 L17.2 6.8 Q17.2 6.8 17.2 6.8 L13.14 18.4 Q13.14 18.4 13.14 18.4 L10.82 13.18 Q10.82 13.18 10.82 13.18 L5.6 10.86 Q5.6 10.86 5.6 10.86 Z");
+  stroke-width: var(--ss-halo-w); stroke-opacity: var(--ss-halo-a); vector-effect: none; visibility: visible;
+  transition: d 380ms var(--ss-ease) var(--ss-md, 0ms), stroke-width 380ms var(--ss-ease) var(--ss-md, 0ms), stroke-opacity 260ms ease-out;
+}
+.sendstop[data-ss="idle"] .ss-g .nx-h { stroke-opacity: 0; }
+/* the queue's knock-out: chip-coloured, under the front plane, so the queued plane passes BEHIND it */
+.sendstop .ss-knock {
+  d: path("M5.6 10.86 L17.2 6.8 Q17.2 6.8 17.2 6.8 L13.14 18.4 Q13.14 18.4 13.14 18.4 L10.82 13.18 Q10.82 13.18 10.82 13.18 L5.6 10.86 Q5.6 10.86 5.6 10.86 Z");
+  stroke: var(--accent); fill: var(--accent); stroke-width: 3.4px; opacity: 0;
+  transition: d 380ms var(--ss-ease) var(--ss-md, 0ms), opacity 200ms ease-out;
+}
+
+.sendstop[data-ss="stop"] .ss-body {
+  d: path("M10.6 8.6 L13.4 8.6 Q15.4 8.6 15.4 10.6 L15.4 13.4 Q15.4 15.4 13.4 15.4 L10.6 15.4 Q8.6 15.4 8.6 13.4 L8.6 10.6 Q8.6 8.6 10.6 8.6 Z");
+  stroke-width: 1.6px; fill-opacity: var(--ss-stop-fill);
+  transition: d 300ms var(--ss-ease) var(--ss-md, 0ms), stroke-width 300ms var(--ss-ease) var(--ss-md, 0ms),
+    fill-opacity 240ms ease-out calc(var(--ss-md, 0ms) + 60ms);
+}
+.sendstop[data-ss="stop"] .ss-g .nx-h {
+  d: path("M10.6 8.6 L13.4 8.6 Q15.4 8.6 15.4 10.6 L15.4 13.4 Q15.4 15.4 13.4 15.4 L10.6 15.4 Q8.6 15.4 8.6 13.4 L8.6 10.6 Q8.6 8.6 10.6 8.6 Z");
+  stroke-width: 5px; stroke-opacity: calc(var(--ss-halo-a) * .8);
+  transition: d 300ms var(--ss-ease) var(--ss-md, 0ms), stroke-width 300ms var(--ss-ease) var(--ss-md, 0ms), stroke-opacity 260ms ease-out;
+}
+.sendstop[data-ss="stop"] .ss-knock {
+  d: path("M10.6 8.6 L13.4 8.6 Q15.4 8.6 15.4 10.6 L15.4 13.4 Q15.4 15.4 13.4 15.4 L10.6 15.4 Q8.6 15.4 8.6 13.4 L8.6 10.6 Q8.6 8.6 10.6 8.6 Z");
+  transition: d 300ms var(--ss-ease) var(--ss-md, 0ms), opacity 200ms ease-out;
+}
+.sendstop[data-ss="stop"] .ss-fold {
+  d: path("M13.3 10.35 L10.35 10.35 L10.35 13.3");
+  stroke-width: .95px;
+  transition: d 300ms var(--ss-ease) var(--ss-md, 0ms), stroke-width 300ms var(--ss-ease) var(--ss-md, 0ms), opacity 300ms ease-out var(--ss-md, 0ms);
+}
+
+.sendstop[data-ss="queue"] .ss-body, .sendstop[data-ss="full"] .ss-body,
+.sendstop[data-ss="queue"] .ss-knock, .sendstop[data-ss="full"] .ss-knock,
+.sendstop[data-ss="queue"] .ss-g .nx-h, .sendstop[data-ss="full"] .ss-g .nx-h {
+  d: path("M7.9 9.6 L17.9 6.1 Q17.9 6.1 17.9 6.1 L14.4 16.1 Q14.4 16.1 14.4 16.1 L12.4 11.6 Q12.4 11.6 12.4 11.6 L7.9 9.6 Q7.9 9.6 7.9 9.6 Z");
+}
+.sendstop[data-ss="queue"] .ss-fold, .sendstop[data-ss="full"] .ss-fold { d: path("M17.9 6.1 L15.15 8.85 L12.4 11.6"); }
+.sendstop[data-ss="queue"] .ss-knock, .sendstop[data-ss="full"] .ss-knock { opacity: 1; }
+.sendstop[data-ss="full"] .ss-knock { stroke: var(--surface-3); fill: var(--surface-3); }
+.sendstop[data-ss="full"] .ss-g .nx-h { stroke-opacity: 0; }
+
+/* the queued plane behind (Queue / Full) */
+.ss-back {
+  opacity: 0; translate: 2.4px -2.4px;
+  transition: opacity 240ms ease-out var(--ss-bd, 0ms), translate 340ms var(--ss-ease) var(--ss-bd, 0ms);
+}
+.ss-back path { stroke-width: 1.2px; }
+.sendstop[data-ss="queue"] .ss-back, .sendstop[data-ss="full"] .ss-back { opacity: .62; translate: 0 0; --ss-bd: 90ms; }
+.sendstop[data-ss="full"] .ss-back { opacity: .5; }
+
+/* the departing plane (only during a launch) */
+.ss-ghost { opacity: 0; }
+.ss-ghost .ss-gb { d: path("M5.6 10.86 L17.2 6.8 Q17.2 6.8 17.2 6.8 L13.14 18.4 Q13.14 18.4 13.14 18.4 L10.82 13.18 Q10.82 13.18 10.82 13.18 L5.6 10.86 Q5.6 10.86 5.6 10.86 Z"); stroke-width: 1.35px; }
+.ss-ghost .ss-trail { stroke-width: 1px; opacity: 0; }
+.ss-ghost .ss-gf { d: path("M17.2 6.8 L14.01 9.99 L10.82 13.18"); stroke-width: 1.2px; }
+.sendstop[data-launch="queue"] .ss-ghost .ss-gb { d: path("M7.9 9.6 L17.9 6.1 Q17.9 6.1 17.9 6.1 L14.4 16.1 Q14.4 16.1 14.4 16.1 L12.4 11.6 Q12.4 11.6 12.4 11.6 L7.9 9.6 Q7.9 9.6 7.9 9.6 Z"); }
+.sendstop[data-launch="queue"] .ss-ghost .ss-gf { d: path("M17.9 6.1 L15.15 8.85 L12.4 11.6"); }
+
+/* ------------------------------------------------------------------ count badge (Queue / Full) */
+.ss-count {
+  position: absolute; right: -5px; top: -5px; z-index: 4;
+  min-width: 13px; height: 13px; padding: 0 3px; border-radius: 7px;
+  font: 700 8.5px/13px var(--font-ui); font-variant-numeric: tabular-nums; letter-spacing: 0; text-align: center;
+  background: var(--text); color: var(--surface-2);
+  box-shadow: 0 0 0 1.5px var(--surface-2);
+  opacity: 0; scale: .4; pointer-events: none;
+  transition: opacity 160ms ease-out, scale 160ms ease-in;
+}
+.sendstop[data-ss="queue"]:not([data-q="0"]) .ss-count, .sendstop[data-ss="full"]:not([data-q="0"]) .ss-count {
+  opacity: 1; scale: 1; transition: opacity 200ms ease-out 160ms, scale 320ms var(--ss-ease) 160ms;
+}
+.sendstop[data-ss="full"] .ss-count { background: var(--muted); }
+
+/* ------------------------------------------------------------------ hover and press */
+/* Send / Queue: the chip lifts a pixel, its backlight swells, the plane leans 1.3 px up its heading ("ready to go").
+   Press: the chip settles, the plane pulls back. Stop: the square swells a touch and holds ("press me"); press
+   squeezes it. */
+.ss-hov { transition: translate 240ms var(--ss-ease), scale 200ms var(--ss-ease); }
+.sendstop:not([data-ss="full"]):hover { transform: translateY(-1px); }
+.sendstop:hover::before, .sendstop:hover::after { scale: 1.16; }
+.sendstop[data-ss="ready"]:hover .ss-hov, .sendstop[data-ss="queue"]:hover .ss-hov, .sendstop[data-ss="idle"]:hover .ss-hov { translate: .92px -.92px; }
+.sendstop[data-ss="ready"]:hover .ss-g .nx-h, .sendstop[data-ss="queue"]:hover .ss-g .nx-h { stroke-opacity: calc(var(--ss-halo-a) * 1.5); }
+.sendstop:not([data-ss="full"]):active { transform: translateY(0) scale(.93); transition-duration: 90ms; }
+.sendstop[data-ss="ready"]:active .ss-hov, .sendstop[data-ss="queue"]:active .ss-hov { translate: -.49px .49px; transition-duration: 90ms; }
+.sendstop[data-ss="stop"]:hover .ss-hov { scale: 1.09; }
+.sendstop[data-ss="stop"]:active .ss-hov { scale: .84; transition-duration: 90ms; }
+
+/* ------------------------------------------------------------------ Stop: breathing with the stream */
+/* One loop on the glyph (transform on the svg root, a box, so the compositor runs it) and one on the danger
+   backlight (opacity), same period. Flowing (words arriving): 2200 ms, the activity bar's working breathe, ~1 px;
+   waiting (thinking, a tool running): 3200 ms, the attention cadence, shallower. send-stop.js switches the mode only
+   at an iteration boundary (scale 1), and once it has switched the next loop starts at once (data-flowed). */
+.sendstop[data-ss="stop"] .ss-g { animation: ss-breathe 2200ms var(--ss-le) var(--ss-ld) infinite; }
+.sendstop[data-ss="stop"]::after { animation: ss-glow 2200ms var(--ss-le) var(--ss-ld) infinite; }
+.sendstop[data-ss="stop"][data-flow="waiting"] .ss-g { animation-name: ss-breathe-w; animation-duration: 3200ms; }
+.sendstop[data-ss="stop"][data-flow="waiting"]::after { animation-name: ss-glow-w; animation-duration: 3200ms; }
+.sendstop[data-ss="stop"][data-flowed] .ss-g, .sendstop[data-ss="stop"][data-flowed]::after { animation-delay: 0ms; }
+@keyframes ss-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(.88); } }
+@keyframes ss-breathe-w { 0%, 100% { transform: scale(1); } 50% { transform: scale(.95); } }
+/* literal values per theme brightness (no var() inside a loop's keyframes, so the compositor runs it) */
+@keyframes ss-glow { 0%, 100% { opacity: .3; } 50% { opacity: .18; } }
+@keyframes ss-glow-w { 0%, 100% { opacity: .3; } 50% { opacity: .24; } }
+@keyframes ss-glow-l { 0%, 100% { opacity: .1; } 50% { opacity: .06; } }
+@keyframes ss-glow-wl { 0%, 100% { opacity: .1; } 50% { opacity: .08; } }
+body[data-theme$="-light"] .sendstop[data-ss="stop"]::after { animation-name: ss-glow-l; }
+body[data-theme$="-light"] .sendstop[data-ss="stop"][data-flow="waiting"]::after { animation-name: ss-glow-wl; }
+
+/* ------------------------------------------------------------------ the launch (Send or Queue click) */
+/* 0-320 ms the plane lifts off along its heading and fades as it crosses the chip edge (the face clips it); from
+   140 ms a fresh plane slides in from behind (Send: from outside the chip; Queue: the queued plane moves up into the
+   front slot). If the click starts a run, the fresh plane morphs into the square from 240 ms and the red floods out
+   from under it from 420 ms (see the hero above). */
+.sendstop.ss-launch .ss-ghost { animation: ss-lift 320ms var(--ss-out) both; }
+.sendstop.ss-launch .ss-main { animation: ss-fresh 340ms var(--ss-ease) 140ms both; }
+.sendstop.ss-launch .ss-trail { animation: ss-trail 320ms linear both; }
+@keyframes ss-trail { 0%, 12% { opacity: 0; } 34% { opacity: .8; } 100% { opacity: 0; } }
+.sendstop.ss-launch[data-launch="queue"] .ss-main { animation-name: ss-fresh-q; animation-duration: 360ms; animation-delay: 60ms; }
+.sendstop.ss-launch[data-launch="queue"] .ss-back { transition: none; opacity: 0; }
+.sendstop.ss-launch[data-ss="stop"] { --ss-md: 240ms; }
+@keyframes ss-lift { 0% { opacity: 1; transform: translate(0, 0); } 55% { opacity: .85; } 100% { opacity: 0; transform: translate(10.61px, -10.61px); } }
+@keyframes ss-fresh { 0% { opacity: 0; transform: translate(-8.49px, 8.49px); } 35% { opacity: 1; } 100% { opacity: 1; transform: translate(0, 0); } }
+@keyframes ss-fresh-q { 0% { opacity: .62; transform: translate(-3.4px, 3.4px); } 100% { opacity: 1; transform: translate(0, 0); } }
+
+/* ------------------------------------------------------------------ ignite (idle -> ready) */
+/* The backlight comes on with the family's one-time flicker and the plane hops once up its heading. */
+.sendstop.ss-ignite::before { animation: ss-flick 320ms linear; }
+.sendstop.ss-ignite .ss-breath { animation: ss-hop 460ms var(--ss-ease); }
+@keyframes ss-flick { 0% { opacity: 0; } 18% { opacity: var(--ss-glow-a); } 30% { opacity: calc(var(--ss-glow-a) * .35); } 50% { opacity: var(--ss-glow-a); } 64% { opacity: calc(var(--ss-glow-a) * .6); } 100% { opacity: var(--ss-glow-a); } }
+@keyframes ss-hop { 0%, 100% { transform: translate(0, 0); } 40% { transform: translate(1.7px, -1.7px); } }
+
+/* ------------------------------------------------------------------ sputter (nothing to send, or the queue full) */
+/* The glyph tries to strike and doesn't: a 300 ms flicker that never lights (no backlight, no bloom, no hop). */
+.sendstop.ss-sputter .ss-all { animation: ss-sputter 300ms linear; }
+@keyframes ss-sputter { 0% { opacity: 1; } 16% { opacity: .2; } 32% { opacity: .95; } 50% { opacity: .35; } 100% { opacity: 1; } }
+
+/* ------------------------------------------------------------------ halt (the Stop click) */
+/* The square clunks down before it opens back into the plane; the red drains from 60 ms, the square opens from
+   200 ms, so a user's stop reads differently from a run that finished (which drains and morphs from 0, no clunk). */
+.sendstop.ss-halt .ss-hov { animation: ss-clunk 260ms var(--ss-ease); }
+.sendstop.ss-halt { --ss-md: 200ms; --ss-dd: 60ms; }
+@keyframes ss-clunk { 0% { scale: .84; } 45% { scale: .78; } 100% { scale: 1; } }
+
+/* ------------------------------------------------------------------ failure (a refused send) */
+/* One shake, one danger flash over the chip, the plane knocked back, then rest in the state it was in. */
+.sendstop.ss-fail { animation: ss-shake 440ms var(--ss-shake); }
+.sendstop.ss-fail .ss-face::after { animation: ss-flash 640ms ease-out; }
+.sendstop.ss-fail .ss-breath { animation: ss-bonk 440ms var(--ss-ease); }
+@keyframes ss-shake { 0%, 100% { translate: 0 0; } 18% { translate: -3px 0; } 38% { translate: 3px 0; } 58% { translate: -2px 0; } 78% { translate: 1px 0; } }
+@keyframes ss-flash { 0% { opacity: 0; } 10% { opacity: .95; } 38% { opacity: .95; } 100% { opacity: 0; } }
+/* Retro blinks hard: a fade from green to red passes through brown */
+body[data-theme^="retro"] .sendstop.ss-fail .ss-face::after { animation: ss-flash-r 720ms linear; }
+@keyframes ss-flash-r { 0%, 52% { opacity: 1; } 53%, 100% { opacity: 0; } }
+@keyframes ss-bonk { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-16deg) translate(-1px, 1px); } }
+/* under reduced motion: a static danger ring for 1.4 s */
+.sendstop.ss-fail-static .ss-face { box-shadow: inset 0 0 0 1.5px var(--danger), 0 0 0 2px var(--danger); }
+
+/* a state change that must not animate (a thread switch): send-stop.js sets ss-snap, flushes style, removes it */
+.sendstop.ss-snap, .sendstop.ss-snap *, .sendstop.ss-snap::before, .sendstop.ss-snap::after,
+.sendstop.ss-snap .ss-face::after { transition: none !important; animation: none !important; }
+
+/* ------------------------------------------------------------------ reduced motion */
+/* End states only: no transitions, no loops, no one-shots. The square, the stacked planes, the count and the colours
+   carry every state. Every route: the media query, the concept's body.pm56-reduced, NieR's html[data-motion]. */
+@media (prefers-reduced-motion: reduce) {
+  .sendstop, .sendstop *, .sendstop::before, .sendstop::after, .sendstop .ss-face::after { animation: none !important; transition: none !important; }
+}
+body.pm56-reduced .sendstop, body.pm56-reduced .sendstop *, body.pm56-reduced .sendstop::before, body.pm56-reduced .sendstop::after,
+body.pm56-reduced .sendstop .ss-face::after { animation: none !important; transition: none !important; }
+html[data-motion="reduced"] .sendstop, html[data-motion="reduced"] .sendstop *, html[data-motion="reduced"] .sendstop::before,
+html[data-motion="reduced"] .sendstop::after, html[data-motion="reduced"] .sendstop .ss-face::after { animation: none !important; transition: none !important; }
+
+/* ------------------------------------------------------------------ NieR Mode (html[data-o55-nier="on"]) */
+/* Flat ink on parchment, nothing glows (NieR's own rule). The NieR palette repaints the tokens (accent = ink,
+   on-accent = paper), so Send is an ink block with a paper plane by itself; this block drops every light (backlights,
+   bloom, rim, sheen, contact shadow, the square's inner highlight), squares the square (the Square hairlines part
+   squares the chip and the badge), and makes Stop PMConcept7's chosen idiom: an ink block with a paper square, told
+   from Send by its glyph, that turns to the NieR rust (error) block only under a hovering pointer (not the pointer
+   that just sent: data-hold). Folds and the flood step; the shared cursor (#o55np-cursor) and target brackets
+   (#o55np-reticle, on keyboard focus) from nier-parts.js are the only pointers; this control adds none. */
+html[data-o55-nier="on"] .sendstop {
+  --ss-r: 0px; --ss-halo-a: 0; --ss-rim: transparent; --ss-drop: transparent; --ss-sheen: transparent;
+  --ss-out: steps(3, end); --ss-shake: steps(4, end); --ss-drain: steps(1, start); --ss-flood-e: steps(1, start);
+}
+html[data-o55-nier="on"] .sendstop::before, html[data-o55-nier="on"] .sendstop::after { display: none; }
+html[data-o55-nier="on"] .sendstop .ss-face { box-shadow: none; }
+html[data-o55-nier="on"] .sendstop .ss-flood { background: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .sendstop[data-ss="stop"]:not([data-hold]):hover .ss-flood { background: var(--o55-nier-error); }
+html[data-o55-nier="on"] .sendstop[data-ss="full"] .ss-face { box-shadow: inset 0 0 0 1px var(--o55-nier-line-strong); }
+html[data-o55-nier="on"] .sendstop .ss-count { border-radius: 0; box-shadow: none; }
+html[data-o55-nier="on"] .sendstop .ss-g { stroke-linejoin: miter; }
+html[data-o55-nier="on"] .sendstop[data-ss="stop"] .ss-body, html[data-o55-nier="on"] .sendstop[data-ss="stop"] .ss-knock {
+  d: path("M8.6 8.6 L15.4 8.6 Q15.4 8.6 15.4 8.6 L15.4 15.4 Q15.4 15.4 15.4 15.4 L8.6 15.4 Q8.6 15.4 8.6 15.4 L8.6 8.6 Q8.6 8.6 8.6 8.6 Z");
+}
+html[data-o55-nier="on"] .sendstop[data-ss="stop"] .ss-body { fill-opacity: 1; }
+html[data-o55-nier="on"] .sendstop[data-ss="stop"] .ss-fold { opacity: 0; }
+html[data-o55-nier="on"] .sendstop.ss-sputter .ss-all { animation-timing-function: steps(1, end); }
+html[data-o55-nier="on"] .sendstop.ss-fail .ss-face::after { animation-timing-function: steps(2, end); }
