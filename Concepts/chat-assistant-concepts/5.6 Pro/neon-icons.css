@@ -21,8 +21,11 @@
  *                                         animation-delay: calc(var(--ad, 0) * <stagger> * 1ms - <period>); }
  * Each moving part carries --k1 (its one-shot keyframes) and --kl (its loop keyframes), literal keyframes that
  * neon-icons.js generates from the part's pose (transform and opacity only, so they composite).
- * Nothing here sets an svg's own `animation`, so the bar's and the status wrappers' rhythms (ab-breathe, ab-alert)
- * are never touched by hover.
+ * Nothing here sets an svg's own `animation` on hover (one requested exception: the Fast bolt re-strikes), so the
+ * bar's and the status wrappers' rhythms (ab-breathe, ab-alert) are never touched by hover.
+ * Colour: every ink is a theme token (--danger, --warning, --accent, --accent-2, --positive, --subtle, --muted) and
+ * every halo or backlight strength is a body token (--nx-h-*, --nx-bl-*), so a theme layer (NieR Mode, next step,
+ * on html[data-o55-nier="on"]) repaints the ink and drops the glow by restating tokens: no colour literal here.
  */
 
 /* ------------------------------------------------------------------ 1. tokens */
@@ -170,6 +173,19 @@ svg:where(.nx-z0) .nx-p { animation: none; }
 }
 /* Filled chips (Send, Stop, primary buttons) already carry their own fill: the act plays, the halo stays off. */
 .send-button > svg.nx, .primary-button > svg.nx, .soft-button.primary > svg.nx { --nx-hiv: hidden; --nx-fl: none; }
+
+/* ------------------------------------------------------------------ 8b. Fast mode (Jared, G1 item 15) */
+/* The Fast bolt is drawn only while Fast mode is on (the composer model button .fast-bolt, model rows, the
+   transcript meta .meta-fast), so the class is the ON state: the bolt is lit in the warning tone with its core
+   halo, and strikes: it drops 1.5 px with a quick double flicker, then holds; one cycle is 3.2 s and outside the
+   flicker beat its opacity never dips below .6. It moves as a whole on the svg root (composited at any size, so the
+   10-11 px bolt is not stopped by the part size gate), replacing the old drop-shadow `bolt` keyframes. Hovering its
+   button re-strikes it (a renamed copy restarts the cycle): the one place hover touches an svg's own animation,
+   on request. Reduced motion: lit and static. */
+svg.fast-bolt, svg.meta-fast { --nx-ink: var(--warning); --nx-hiv: visible; --nx-hi-a: var(--nx-h-attention-i); animation: nx-fast-strike 3200ms linear infinite; }
+:where(button, [data-action]):where(:hover, :focus-visible) > svg.fast-bolt { animation-name: nx-fast-strike-h; }
+@keyframes nx-fast-strike { 0% { transform: translateY(0); opacity: 1; animation-timing-function: cubic-bezier(.5, 0, .9, .5); } 5% { transform: translateY(1.5px); opacity: 1; } 7% { opacity: .35; } 9% { opacity: 1; } 11% { opacity: .4; } 13% { opacity: 1; animation-timing-function: cubic-bezier(.2, .7, .3, 1); } 24%, 100% { transform: translateY(0); opacity: 1; } }
+@keyframes nx-fast-strike-h { 0% { transform: translateY(0); opacity: 1; animation-timing-function: cubic-bezier(.5, 0, .9, .5); } 5% { transform: translateY(1.5px); opacity: 1; } 7% { opacity: .35; } 9% { opacity: 1; } 11% { opacity: .4; } 13% { opacity: 1; animation-timing-function: cubic-bezier(.2, .7, .3, 1); } 24%, 100% { transform: translateY(0); opacity: 1; } }
 
 /* ------------------------------------------------------------------ 9. the status set (plan §3) */
 /* The wrapper carries the list rhythm; .nx-st-base is the static lit layer, .nx-st-move the moving part. Wired

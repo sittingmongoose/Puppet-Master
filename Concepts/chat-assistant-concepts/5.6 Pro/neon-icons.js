@@ -161,7 +161,7 @@
         M([P('M22 21v-2a4 4 0 0 0-3-3.87'), P('M16 3.13a4 4 0 0 1 0 7.75')], { ay: -3, b: 1, ad: 160 })], 'seq'),
       changes: G([M([P('M4 7h14'), P('m15 4 3 3-3 3')], { ax: 3, b: 1 }),
         M([P('M20 17H6'), P('m9 14-3 3 3 3')], { ax: -3, b: 1, ad: 60 })], 'swap'),
-      page: G([P('M5 3h10l4 4v14H5z'), P('M15 3v4h4'),
+      page: G([P('M7 3h8l4 4v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z'), P('M15 3v4h4'),
         /* the lines slide in from the left, .6 -> 1 (loop); they write in from 40 % (one-shot) */
         M(P('M8 12h8'), { ax: -2.6, ao: .6, ac: '0 17 0 7', ae: '0 7 0 7' }),
         M(P('M8 16h5'), { ax: -2.6, ao: .6, ac: '0 17 0 7', ae: '0 10 0 7', ad: 170 })], 'fill'),
@@ -169,7 +169,8 @@
       /* ---- kind marks: PMX geometry (module-shell.js PMX_GLYPHS), split into parts ---- */
       /* the strands stay; the node pops in along them */
       'kind-crew': G([P(CREW[0]), P(CREW[1]), P(CREW[2]), M(C(18.5, 12, 2.6), { ax: -2.6, ao: .6 })], 'seq'),
-      'kind-crew-auto': G([P(CREW[0]), P(CREW[1]), P(CREW[2]), C(18.5, 12, 2.6), M(P('m20.6 2.5-2.2 3.2h2.8l-2.2 3.2'), { ao: .25, ay: -1.5, b: 1 })], 'seq'),
+      /* crew + a cleaner bolt, clear of the node (redrawn here: the registry's drawing wins over module-shell's) */
+      'kind-crew-auto': G([P(CREW[0]), P(CREW[1]), P(CREW[2]), C(18.5, 12, 2.6), M(P('M21.2 1l-2.4 3.6h3l-2.4 3.6'), { ay: 2, ao: .6, b: 1 })], 'seq'),
       /* the stem stays; the two branches spark outward in turn */
       'kind-brainstorm': G([P('M12 3v9'), P('M12 12v9'), M(P('M4 4c4 0 6 4 8 8'), { ax: 2, ay: 2, ao: .6, ac: '12 12 12 12', ad: 0 }),
         M(P('M20 4c-4 0-6 4-8 8'), { ax: -2, ay: 2, ao: .6, ac: '12 12 12 12', ad: 140 })], 'seq'),
@@ -180,10 +181,12 @@
       'kind-bsd-auto': G([P(EYE), P('M4 11.2h16'), M(P('M9 11.8a3 3 0 0 0 6 0'), { ax: 3, b: 1 })], 'wave'),
       'kind-bsd-off': G([P('M3 10.5c2.5 3.6 5.5 5.3 9 5.3s6.5-1.7 9-5.3'),
         M(P('m6.2 14.2-1.6 2.4'), { ao: .2, ad: 0, b: 1 }), M(P('M12 15.9v2.9'), { ao: .2, ad: 90, b: 1 }), M(P('M17.8 14.2l1.6 2.4'), { ao: .2, ad: 180, b: 1 })], 'seq'),
-      'kind-schedule': G([C(12, 13, 7.5), P('M12 2.2v2.4'), M(P('M12 9.2V13l2.6 1.6'), { ar: -90, o: [12, 13] })], 'wave'),
-      'kind-build-at': G([C(12, 10, 6.5), P('M5 20.5h14'), M(P('M12 7v3l2 1.5'), { ar: -90, o: [12, 10] })], 'wave'),
-      'kind-scheduled': G([C(12, 8.5, 5.5), M(P('M12 6.3v2.4l1.7 1'), { ar: -90, o: [12, 8.5] }),
-        M(P('M5 17.5h14'), { ao: .6, ac: '0 20 0 4', ae: '0 4 0 4', ad: 120 }), M(P('M5 21h9'), { ao: .6, ac: '0 20 0 4', ae: '0 9 0 4', ad: 220 })], 'wave'),
+      /* the five clock faces differ at 14 px: clock (plain), history (back arc), schedule (a stopwatch crown),
+         build-at (a clock on a stand), scheduled (a list with a clock badge) */
+      'kind-schedule': G([C(12, 13.5, 7), P('M10 2.5h4M12 2.5v4'), M(P('M12 10v3.5l2.4 1.5'), { ar: -90, o: [12, 13.5] })], 'wave'),
+      'kind-build-at': G([C(12, 9.5, 6), P('M5 20.5h14M8.5 16v4.5M15.5 16v4.5'), M(P('M12 6.8v2.7l1.8 1.2'), { ar: -90, o: [12, 9.5] })], 'wave'),
+      'kind-scheduled': G([C(7.5, 7.5, 4.5), P('M14.5 5.5h6M14.5 9.5h6'), M(P('M7.5 5.6v1.9l1.3.8'), { ar: -90, o: [7.5, 7.5] }),
+        M(P('M3.5 15h17'), { ao: .6, ac: '0 21 0 2.6', ae: '0 2.6 0 2.6', ad: 120 }), M(P('M3.5 19.5h11'), { ao: .6, ac: '0 21 0 2.6', ae: '0 8.6 0 2.6', ad: 220 })], 'wave'),
       'kind-memory': G([P('M6 3.5h11a1.5 1.5 0 0 1 1.5 1.5v14a1.5 1.5 0 0 1-1.5 1.5H6z'), P('M9.5 3.5v17'),
         M(P('M13 3.5v6.2l1.8-1.3 1.8 1.3V3.5'), { ay: -3, ao: .4 })], 'drop'),
       'kind-teach': G([R(4.5, 9, 15, 11.5, 2), P('M8.5 9V6.8a3.5 3.5 0 0 1 7 0V9'),
@@ -196,9 +199,10 @@
       sparkles: G([M(P('m12 3 1.2 3.8L17 8l-3.8 1.2L12 13l-1.2-3.8L7 8l3.8-1.2Z'), { ao: .5, b: 1 }),
         M(P('m19 14 .8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8Z'), { ao: .5, b: 1, ad: 170 }),
         M(P('m5 14 .8 1.7L8 16.5l-2.2.8L5 19l-.8-1.7L2 16.5l2.2-.8Z'), { ao: .5, b: 1, ad: 340 })], 'seq'),
-      brain: G([P('M9.5 4A3.5 3.5 0 0 0 6 7.5v.4A3.5 3.5 0 0 0 4 11a3.5 3.5 0 0 0 2.2 3.25A3.5 3.5 0 0 0 9.5 19H11V4ZM14.5 4A3.5 3.5 0 0 1 18 7.5v.4a3.5 3.5 0 0 1 2 3.1 3.5 3.5 0 0 1-2.2 3.25A3.5 3.5 0 0 1 14.5 19H13V4Z'),
-        M(P('M7 10h4'), { ax: -2.6, ao: .6, ac: '0 18 0 6', ae: '0 12 0 6' }), M(P('M13 8h4'), { ax: -2.6, ao: .6, ac: '0 12 0 12', ae: '0 6 0 12', ad: 130 }),
-        M(P('M13 14h4'), { ax: -2.6, ao: .6, ac: '0 12 0 12', ae: '0 6 0 12', ad: 260 })], 'seq'),
+      /* brain, simplified for 14 px: two bumpy halves, a seam, one fold per lobe (the folds slide in) */
+      brain: G([P('M12 5.5c-.8-1.6-3.6-2-4.8-.3-1.7-.2-3 1.4-2.6 3-1.6.6-2.3 2.6-1.3 4-.9 1.5-.1 3.6 1.7 3.8.6 1.5 2.4 2.3 4 1.7.9.8 2.2.8 3 .1'),
+        P('M12 5.5c.8-1.6 3.6-2 4.8-.3 1.7-.2 3 1.4 2.6 3 1.6.6 2.3 2.6 1.3 4 .9 1.5.1 3.6-1.7 3.8-.6 1.5-2.4 2.3-4 1.7-.9.8-2.2.8-3 .1'), P('M12 5.5v12.3'),
+        M(P('M6.6 11h3'), { ax: -2.6, ao: .6, ac: '0 18.3 0 5.7', ae: '0 13.5 0 5.7' }), M(P('M14.4 13h3'), { ax: 2.6, ao: .6, ac: '0 10.5 0 13.5', ae: '0 5.7 0 13.5', ad: 150 })], 'seq'),
       'folder-search': G([P('M3 5h6l2 2h10v12H3z'), M([C(12, 13, 3), P('m14.5 15.5 2 2')], { cr: 1.6 })], 'spin'),
       search: G([M([C(11, 11, 7), P('m20 20-4-4')], { ar: -14, o: [20, 20], b: 1 })], 'wave'),
       download: G([P('M5 20h14'), M([P('M12 4v11'), P('M7 10.5l5 5 5-5')], { ay: -4, ao: .45 })], 'drop'),
@@ -213,8 +217,10 @@
         M(P('M4 20V10'), { ay: 2.6, ao: .6, ac: '21 0 3 0', ae: '9 0 3 0' }), M(P('M10 20V4'), { ay: 2.6, ao: .6, ac: '21 0 3 0', ae: '3 0 3 0', ad: 120 }),
         M(P('M16 20v-7'), { ay: 2.6, ao: .6, ac: '21 0 3 0', ae: '12 0 3 0', ad: 240 })], 'seq'),
       plug: G([M([P('M9 7V2M15 7V2'), P('M6 7h12v4a6 6 0 0 1-12 0Z'), P('M12 17v5')], { ay: 3, b: 1 })], 'wave'),
-      wand: G([P('m15 4 5 5L8 21H3v-5Z'), P('m14 5 5 5'),
-        M(P('M5 2v3M3.5 3.5h3'), { ay: 2.6, ao: .6 }), M(P('M18.5 1v3M17 2.5h3'), { ay: 2.6, ao: .6, ad: 120 }), M(P('M20.5 14.5v3M19 16h3'), { ay: 2.6, ao: .6, ad: 240 })], 'seq'),
+      /* a magic wand, not a pencil: a thin straight rod (no nib) with a four-point star at its tip and sparkles
+         set apart around it; the rod flicks 8 degrees about the handle end and the sparkles pop in turn */
+      wand: G([M([P('M4 20 13.4 10.6'), P('M16 3.8l1.2 3 3 1.2-3 1.2-1.2 3-1.2-3-3-1.2 3-1.2z')], { ar: -8, o: [4, 20], b: 1 }),
+        M(P('M21 1.5v3M19.5 3h3'), { ay: 2, ao: .6, ad: 120 }), M(P('M21.5 12v3M20 13.5h3'), { ay: 2, ao: .6, ad: 240 }), M(P('M9.5 2v3M8 3.5h3'), { ay: 2, ao: .6, ad: 360 })], 'seq'),
       history: G([P(BACK_ARC), P('M3 3v5h5'), M(P('M12 7v5l3 2'), { ar: 70, o: [12, 12] })], 'wave'),
 
       /* ---- controls (unlit at rest; act once on ignite) ---- */
@@ -238,7 +244,7 @@
       pin: G([M([P('M12 17v5'), P('M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z')], { ay: -3 })], 'drop', 'control'),
       unpin: G([P('M12 17v5'), P('M9 9v1.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V17h12'), P('M15 9.34V6h1a2 2 0 0 0 0-4H7.89'),
         M(P('M2 2l20 20'), { ao: .5, ac: '2 22 22 2', ae: '1 1 1 1' })], 'seq', 'control'),
-      archive: G([P('M4 7v13h16V7'), P('M9 11h6'), M(P('M3 3h18v4H3z'), { ay: -3, b: 1 })], 'strike', 'control'),
+      archive: G([P('M4.5 7v11a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7'), P('M9.5 11h5'), M(R(3, 3, 18, 4, 1.5), { ay: -3, b: 1 })], 'strike', 'control'),
       edit: G([M(P('M12 20h9'), { ao: .5, ac: '0 13 0 11', ae: '0 2 0 11' }), M(P('M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z'), { ar: -10, o: [4, 19], b: 1, ad: 60 })], 'wave', 'control'),
       trash: G([P('M6.5 7l1 13h9l1-13M10 11v5.5M14 11v5.5'), M(P('M4.5 7h15M9.5 7V4.5h5V7'), { ar: -14, o: [4.5, 7], b: 1 })], 'strike', 'control'),
       filter: G([P('M4 4h16l-6 7v6l-4 2v-8Z'), M(P('M12 21.6h.01'), { ay: -3, ao: 0 })], 'drop', 'control'),
@@ -273,10 +279,10 @@
       image: G([R(3, 3, 18, 18, 2), P('m21 15-5-5L5 21'), M(C(8.5, 8.5, 1.5), { ao: .2, b: 1 })], 'seq'),
       code: G([M(P('m8 8-4 4 4 4'), { ax: -3, b: 1 }), M(P('M16 8l4 4-4 4'), { ax: 3, b: 1 }), P('M13.5 5.5l-3 13')], 'swap'),
       warning: G([P('M12 4.2 21 19.5H3z'), M(P('M12 10v4.2M12 17.1v.1'), { ao: .25, b: 1 })], 'seq'),
-      lens: G([C(12, 12, 7), M(L(8, 9, 16, 9), { ao: .4, ac: '0 17 0 7', ae: '0 7 0 7' }), M(L(8, 12, 16, 12), { ao: .4, ac: '0 17 0 7', ae: '0 7 0 7', ad: 110 }),
-        M(L(8, 15, 16, 15), { ao: .4, ac: '0 17 0 7', ae: '0 7 0 7', ad: 220 })], 'seq'),
-      effort: G([C(12, 12, 7)], 'none'),
-      folder: G([P('M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z')], 'none'),
+      /* the context lens: a ring and two lines (three read as a blob at 14 px); the lines draw in */
+      lens: G([C(12, 12, 7), M(L(8.5, 10, 15.5, 10), { ao: .6, ac: '0 16.4 0 7.6', ae: '0 7.6 0 7.6' }), M(L(8.5, 14, 15.5, 14), { ao: .6, ac: '0 16.4 0 7.6', ae: '0 7.6 0 7.6', ad: 120 })], 'seq'),
+      /* folder: the tab lifts */
+      folder: G([P('M3 8v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-8'), M(P('M11 6 9 4H5a2 2 0 0 0-2 2v2'), { ar: -12, o: [3, 8], b: 1 })], 'strike'),
       clipboard: G([R(6, 4, 12, 17, 2), P('M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1'),
         M(P('M9 11h6'), { ao: .5, ac: '0 16 0 8', ae: '0 8 0 8' }), M(P('M9 15h6'), { ao: .5, ac: '0 16 0 8', ae: '0 8 0 8', ad: 130 })], 'fill'),
       camera: G([P('M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z'), M(C(12, 14, 3.5), { ao: .3, b: 1 })], 'seq'),
@@ -285,8 +291,9 @@
       plan: G([P('M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z'),
         M(P('M9 4v13.5'), { ao: .5, ac: '3 0 21 0', ae: '3 0 2 0' }), M(P('M15 6.5V20'), { ao: .5, ac: '3 0 21 0', ae: '3 0 2 0', ad: 130 })], 'seq'),
       shield: G([M(P('M12 3l7.5 3v5.5c0 4.6-3.2 8-7.5 9.5-4.3-1.5-7.5-4.9-7.5-9.5V6z'), { ay: -2.6, b: 1 })], 'strike'),
-      bug: G([P('M8 10a4 4 0 0 1 8 0v4.5a4 4 0 0 1-8 0z'), P('M8 11H4.5M8 14.5H4M8.6 17.5 6 19.5M16 11h3.5M16 14.5h4M15.4 17.5 18 19.5'),
-        M(P('M9.6 6.8 8 4.6M14.4 6.8 16 4.6'), { ay: 2, ao: .3, b: 1 })], 'seq'),
+      /* bug, simplified for 14 px: body, four legs, antennae that twitch */
+      bug: G([P('M8 10a4 4 0 0 1 8 0v4a4 4 0 0 1-8 0z'), P('M8 11.5H4.5M16 11.5h3.5M8.3 15.5 5 17.5M15.7 15.5l3.3 2'),
+        M(P('M10 6.6 8.6 4.6M14 6.6l1.4-2'), { ay: 2, ao: .6, b: 1 })], 'seq'),
       hourglass: G([M([P('M6.5 3h11M6.5 21h11'), P('M8 3v2.5c0 2.4 4 4 4 6.5s-4 4.1-4 6.5V21M16 3v2.5c0 2.4-4 4-4 6.5s4 4.1 4 6.5V21')], { ar: 16, o: [12, 12], b: 1 })], 'wave'),
       calendar: G([R(4, 5.5, 16, 14.5, 2), P('M4 10h16'), M(P('M8.5 3.5v4M15.5 3.5v4'), { ay: -2, ao: .4, b: 1 })], 'seq'),
       table: G([R(3.5, 5, 17, 14, 2), P('M3.5 10h17'), M(P('M3.5 14.5h17'), { ao: .5, ac: '0 21 0 3', ae: '0 3 0 3' }), P('M10 10v9')], 'seq'),
@@ -359,7 +366,9 @@
       warn: 'warning', eyeoff: 'eye-off', chevron: 'chevron-right', down: 'chevron-down', up: 'chevron-up', left: 'chevron-left',
       restore: 'reset', rewind: 'reset', undo: 'reset', fork: 'branch', not: 'slash-circle',
       'kind-bsd': 'eye', 'kind-bsd-on': 'eye', 'eye-lid': 'kind-bsd-auto', 'eye-closed': 'kind-bsd-off', 'clock-bar': 'kind-build-at',
-      done: 'check', complete: 'check', completed: 'check', tick: 'check'
+      done: 'check', complete: 'check', completed: 'check', tick: 'check',
+      /* one drawing per concept: the plain ring and the ring with a dot */
+      effort: 'ring', 'role-circle': 'ring', 'role-lead': 'ring-dot'
     };
 
     /* ======================================================================
