@@ -107,8 +107,10 @@ function syncUsageLayer() {
   /* Settings may have changed while Usage was hidden: re-read it on the way in (ARCHITECTURE section 6) */
   if (active && !was && PMU.settings) { PMU.settings.invalidate('page'); if (PMU.roster) PMU.roster.invalidate(); }
   /* arriving on Usage replays the room entrance (plates rise in reading order, then charts draw); leaving closes menus */
-  if (active && !was && PMU.board) PMU.board.mount(state.room, {});
-  if (!active && was) { if (PMU.menu) PMU.menu.close(); if (PMU.board) PMU.board.cancel(); if (PMU.inspector) PMU.inspector.close(); }
+  /* arriving on Usage plays the first arrival (PMU.film.arrive, WOW-SPEC 3.1): the shell powers on while the board is built
+     held in slices, then the plates rise in one wave and every instrument comes alive */
+  if (active && !was && PMU.board) { if (PMU.film && PMU.film.arrive) PMU.film.arrive(); else PMU.board.mount(state.room, {}); }
+  if (!active && was) { if (PMU.film) PMU.film.cancelHold(); if (PMU.menu) PMU.menu.close(); if (PMU.board) PMU.board.cancel(); if (PMU.inspector) PMU.inspector.close(); }
 }
 
 if (app) {

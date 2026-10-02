@@ -104,11 +104,18 @@
     if (!raf) raf = requestAnimationFrame(frame);
     return handle;
   }
-  /* count-up: first render 1000 ms from 0 with an ease-out cubic; a change 520 ms from the old value (A1 8.1) */
+  /* count-up: since the WOW round every count is an odometer roll (PMU.film.odometer, WOW-SPEC 3.1 and 3.6): first render
+     spins the digit columns up from zero (rightmost first), a change rolls only the changed digits; compositor-only.
+     opts.plain keeps the old text tween (first render 1000 ms from 0 with an ease-out cubic; a change 520 ms). */
   function countUp(el, from, to, format, opts) {
     opts = opts || {};
     if (!el) return { cancel: function () {} };
     if (el._pmuCount) el._pmuCount.cancel();
+    if (!opts.plain && PMU.film && PMU.film.odometer) {
+      el._pmuCount = null;
+      return PMU.film.odometer(el, to, format, { from: from, delay: opts.delay, dur: typeof opts.dur === 'number' ? opts.dur : undefined,
+        change: from != null && opts.dur === 'value' });
+    }
     var fam = family(), stepped = fam === 'retro' || fam === 'nier';
     var handle = tween({ from: from == null ? 0 : from, to: to, dur: opts.dur || (from == null ? 'count' : 'value'), delay: opts.delay,
       ease: stepped ? undefined : function (t) { return 1 - Math.pow(1 - t, 3); },
@@ -126,8 +133,17 @@
       : f === 'retro' ? { transform: 'translateY(8px)' }
       : { transform: 'translateY(10px)' };
   }
+  /* since the WOW round the plates enter through PMU.film (WOW-SPEC 1.3, 3.1, 3.2): the diagonal wave delays
+     (PMU.film.wave, written on each card as _pmuEnterDelay before the bodies render) and the voice of the family; the
+     B v2 code below stays as the fallback when the film core is absent */
   function enter(cards, opts) {
     if (reduced() || paused()) return;
+    if (PMU.film && PMU.film.enterPlates) {
+      opts = opts || {};
+      if (cards.some(function (c) { return c._pmuEnterDelay == null; })) PMU.film.wave(cards, {});
+      PMU.film.enterPlates(cards, { base: opts.base || 0, dir: opts.dir || 1 });
+      return;
+    }
     var base = (opts && opts.base) || 0, f = family(), step = (opts && opts.step) || 32, cap = (opts && opts.cap) || 480;
     var from = enterFrom(f);
     /* a room change travels in the rail's direction: the new plates come up from below when the room is further down the

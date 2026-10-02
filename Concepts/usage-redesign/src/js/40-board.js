@@ -304,13 +304,36 @@
       if (changed) { r.card.setAttribute('data-tw', tier.w); r.card.setAttribute('data-th', tier.h); emit('tier', { id: r.card.getAttribute('data-widget'), tier: tier }); }
       var sized = r.body._pmuSize !== (r.card.dataset.w + 'x' + r.card.dataset.h + '@' + tier.bw + 'x' + tier.bh);
       if (mode === 'enter') PMU.cards.renderBody(r.card, tier, true);
+      /* 'held': the re-measure just before a held board is released: a card whose tier changed since its slice renders
+         again with its entrance (queued again by PMU.film.cue); the others keep their body */
+      else if (mode === 'held') { if (changed) PMU.cards.renderBody(r.card, tier, true); else if (sized) PMU.cards.resizeBody(r.card, tier); }
       else if (changed || mode === true || !r.body._pmuKind && !r.body.firstChild) PMU.cards.renderBody(r.card, tier, false);
       else if (sized) PMU.cards.resizeBody(r.card, tier);
     });
   }
   function readingOrder(cards) { return cards.slice().sort(function (a, b) { return (+a.dataset.y - +b.dataset.y) || (+a.dataset.x - +b.dataset.x); }); }
+  /* the diagonal wave of the film core (WOW-SPEC 3.1 Phase B): 45 ms per top row, 25 ms per column, cap 640 */
   function setEntranceDelays(cards) {
+    if (PMU.film && PMU.film.wave) { PMU.film.wave(cards, {}); return; }
     readingOrder(cards).forEach(function (card, rank) { card._pmuEnterDelay = reduced() || PMU.motion.paused() ? 0 : Math.min(480, 32 * rank); });
+  }
+  /* the held build (WOW-SPEC 3.1 Phase A): bodies render in reading order in slices of at most 8 ms per frame while the
+     board is held (data-held: nothing visible), so the click and every frame stay short; each body's inner entrance is
+     queued by PMU.film.cue and released with the wave. A newer mount supersedes a running build. */
+  var buildToken = 0;
+  function buildSliced(cards, onBuilt) {
+    var token = ++buildToken, queue = readingOrder(cards);
+    function slice() {
+      if (token !== buildToken) return;
+      var t0 = performance.now();
+      while (queue.length && performance.now() - t0 < 8) {
+        var c = queue.shift();
+        if (c.isConnected) tierPass([c], 'enter');
+      }
+      if (queue.length) { requestAnimationFrame(slice); return; }
+      if (onBuilt) { try { onBuilt(cards); } catch (error) { console.error('[pm-usage] board built', error); } }
+    }
+    requestAnimationFrame(slice);
   }
 
   /* ---- mount (held build, release, entrance) and the room transition ---- */
@@ -377,6 +400,17 @@
     var cards = ids.map(function (id) { var card = PMU.cards.build(id, room, byId[id]); boardEl.appendChild(card); return card; });
     ensurePreviews();
     if (!cards.length) boardEl.appendChild(PMU.cards.empty(room));
+    if (opts.held && !reduced()) {
+      /* the first arrival: chrome now, bodies in slices, PMU.film releases the board (data-held stays until then) */
+      buildToken++;
+      setEntranceDelays(cards);
+      current.mounted = true;
+      buildSliced(cards, opts.onBuilt);
+      emit('mount', { room: room, cls: current.cls.name, widgets: ids, held: true });
+      return;
+    }
+    buildToken++;
+    if (PMU.film && PMU.film.holding()) PMU.film.cancelHold();   /* a room click during the arrival takes over */
     var entering = !opts.instant && !reduced();
     setEntranceDelays(cards);
     tierPass(cards, entering ? 'enter' : true);
@@ -983,18 +1017,22 @@
       roPending = requestAnimationFrame(function () {
         roPending = 0;
         var W = boardWidth(); if (W <= 0) return;
-        if (current.pending || !current.mounted) { mount(current.room || st.room, {}); return; }
+        if (current.pending || !current.mounted) { mount(current.room || st.room, PMU.film && PMU.film.holding() ? { held: true, onBuilt: PMU.film.rehold() } : {}); return; }
         var next = pickClass(W);
         if (!current.cls || next.name !== current.cls.name) {
           if (gesture) endGesture(gesture, 'cancel', true);
           var prev = current.cls ? current.cls.name : null;
           current.cls = next;
-          mount(current.room, { instant: true });
+          /* while the first arrival holds the board, a class change rebuilds it held (never the instant remount that
+             cancelled the entrance, MOTION-REVIEW-2 item 1) */
+          if (PMU.film && PMU.film.holding()) mount(current.room, { held: true, onBuilt: PMU.film.rehold() });
+          else mount(current.room, { instant: true });
           emit('class', { cls: next.name, from: prev });
           return;
         }
         current.cls = next;
         if (!gesture) cardsNow().forEach(function (c) { place(c, rectOfCard(c)); });
+        if (PMU.film && PMU.film.holding()) return;   /* the held build measures each card in its own slice */
         clearTimeout(roTimer);
         roTimer = setTimeout(function () { if (!gesture) tierPass(cardsNow(), false); }, 120);
       });

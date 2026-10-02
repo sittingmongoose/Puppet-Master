@@ -123,17 +123,21 @@
     var f = Mo.fam(), easing = f === 'retro' || f === 'nier' ? Mo.voice('fill') : noOvershoot;
     var target = el._m.fill || 0;
     Mo.anim(fill, [{ transform: 'translateX(-100%)' }, { transform: 'translateX(' + (target - 100) + '%)' }], 900, delay, easing, 'backwards');
+    /* the head glow rides the fill's head (WOW-SPEC 3.1 Phase C, 3.8; PMU.film.headGlow) */
+    if (PMU.film && PMU.film.headGlow && target > 0.5) PMU.film.headGlow(fill.closest('.pmu-metertrack'), { to: target, dur: 900, delay: delay, easing: easing });
     var ov = el.querySelector('.pmu-meterover');
     if (el.hasAttribute('data-over')) Mo.anim(ov, [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], 260, delay + 820, Mo.EASE.out, 'backwards');
     if (rail && rail.style.display !== 'none') {
       var n = rail.querySelector('.pmu-notch');
       var fin = n.hasAttribute('data-off') ? 'scaleY(.7)' : n.hasAttribute('data-faint') ? 'scaleY(.7)' : 'scaleY(1)';
-      Mo.anim(n, [{ transform: 'scaleY(0)' }, { transform: fin }], 520, delay + 700, f === 'retro' || f === 'nier' ? 'steps(3,end)' : Mo.EASE.spring, 'backwards');
+      /* the notch drops 140 ms after its fill ends: 240 ms, zero overshoot (WOW-SPEC 3.1 Phase C) */
+      Mo.anim(n, [{ transform: 'scaleY(0)' }, { transform: fin }], 240, delay + 900 + 140, f === 'retro' || f === 'nier' ? 'steps(3,end)' : 'cubic-bezier(.17,.84,.29,.99)', 'backwards');
     }
     var num = el.querySelector('.pmu-num');
     if (num && finite(el._m.shown) && !c.spec.valueText) {
       num.removeAttribute('data-shown');
-      charts.roll(num, el._m.shown, function (v) { return String(pctText(v)); }, { dur: 900, delay: delay });
+      /* the number rolls with its fill (same 900 ms), digits straight to their place (no spin: the fill shows the value) */
+      charts.roll(num, el._m.shown, function (v) { return String(pctText(v)); }, { dur: 900, delay: delay, spins: 0 });
     }
   }
   charts.windowCell = function (host, spec, opts) { return charts.meter(host, Object.assign({ size: 'k' }, spec), opts); };

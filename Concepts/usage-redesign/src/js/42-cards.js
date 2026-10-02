@@ -280,7 +280,12 @@
         }
         try {
           kind.render(body, ctx);
-          if (entering && kind.enter) kind.enter(body, ctx, (card._pmuEnterDelay || 0) + 160);
+          /* the inner entrance runs through PMU.film.cue: at once (with the card's wave delay + 160), or, while the
+             first arrival holds the board, at its release (WOW-SPEC 3.1) */
+          if (entering && kind.enter) {
+            if (PMU.film && PMU.film.cue) PMU.film.cue(card, function (d) { withView(id, function () { kind.enter(body, ctx, d); }); });
+            else kind.enter(body, ctx, (card._pmuEnterDelay || 0) + 160);
+          }
         } catch (error) { console.error('[pm-usage] render ' + id, error); body.innerHTML = '<div class="pmu-todo">' + esc(id) + '</div>'; }
       });
     },
