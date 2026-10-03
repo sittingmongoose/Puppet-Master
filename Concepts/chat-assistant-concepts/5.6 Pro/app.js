@@ -921,6 +921,12 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const N=window.PM56_NEON;
     return N&&typeof N.status==='function' ? N.status(s,13) : `<i class="status-dot ${esc(s)}"></i>`;
   }
+  /* The word beside it takes the mark's tone (final review, 2026-10-03: it was the warning amber for every status, so
+     Ready, Paused and Complete read lit beside their unlit or green marks); neon-icons.css section 12 colours it. */
+  function headerStatusTone(s){
+    const k=neonStatusKey(s);
+    return k ? ` data-tone="${esc(window.PM56_NEON.STATUS[k].tone)}"` : '';
+  }
   function renderChatHeader(t){
     /* Context ring percentage. The ring's value is an INLINE style attribute, so no
        module stylesheet can reach it -- it has to be resolved here. PM56_CTX comes from
@@ -930,7 +936,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<div class="chat-header">
       <button class="icon-button" data-action="toggle-history"${hoverAttrs('open-history','Open thread history')}>${icon('history',14)}</button>
       <button class="icon-button" data-action="new-thread"${hoverAttrs('new-thread','Start a new thread')}>${icon('plus',16,'hh-plus-glyph')}</button>
-      <div class="chat-title" data-pmx-title-state="${titleState(t)}"><span class="pmx-chat-title">${titleWords(t)}</span>${extRender('headerTitleAfter',{thread:t})}<span class="chat-state">${headerStatusMark(t.status)}${esc(statusLabel(t.status))}</span></div>
+      <div class="chat-title" data-pmx-title-state="${titleState(t)}"><span class="pmx-chat-title">${titleWords(t)}</span>${extRender('headerTitleAfter',{thread:t})}<span class="chat-state"${headerStatusTone(t.status)}>${headerStatusMark(t.status)}${esc(statusLabel(t.status))}</span></div>
       <span class="chat-head-spacer"></span>
       ${extRender('headerLeading',{thread:t})}
       <button class="icon-button" data-action="thread-search" data-menu-anchor="thread-search"${hoverAttrs('thread-search','Search this thread or every thread')}>${icon('search',14)}</button>

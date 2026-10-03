@@ -522,8 +522,16 @@ html[data-o55-nier="on"][data-motion="reduced"] .nx-st::after { animation: none 
 .working-head .work-phase-icon { background: var(--surface-3); color: var(--muted); box-shadow: none; }
 .working-head .work-phase-icon > svg.nx-r-status { --nx-1: var(--nx-d1) var(--nx-ease) backwards; animation: ab-breathe 2200ms ease-in-out infinite; }
 html[data-o55-nier="on"] .working-head .work-phase-icon > svg.nx-r-status { animation-timing-function: steps(3, end); }
-/* The chat header's status: the thread's live mark beside the word. */
+/* The chat header's status: the thread's live mark beside the word, and the word in the mark's tone (app.js
+   headerStatusTone; styles.css gave every word the warning amber, so Ready, Paused and Complete read lit beside their
+   quiet marks and Waiting matched Working: final review, 2026-10-03). The quiet tones read muted. */
 .chat-state > .nx-st { margin-right: 1px; }
+.chat-state[data-tone="blocked"] { color: var(--danger); }
+.chat-state[data-tone="attention"] { color: var(--warning); }
+.chat-state[data-tone="working"] { color: var(--accent); }
+.chat-state[data-tone="changed"] { color: var(--accent-2); }
+.chat-state[data-tone="done"] { color: var(--positive); }
+.chat-state[data-tone="idle"], .chat-state[data-tone="paused"] { color: var(--muted); }
 /* the decision panel is needs-you: its head glyph keeps the canon accent (ACD-469) on the neutral tile */
 .decision-top > .event-icon { color: var(--accent); }
 
