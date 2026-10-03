@@ -166,8 +166,10 @@
     to the legacy "0 members" card in a chat that has Crews (7.13; COLLAB fix-cycle-1 request) */
  function activityRuns(c){return C.runsForThread(c.state.selectedThread).filter(r=>r.kind==='crew');}
  const LEGACY_STATUS={running:'working',working:'working',completed:'done',done:'done',failed:'blocked',blocked:'blocked'};
- /* the Activity chip's tone reads these (activity-bar worstTone): a helper waiting for the Coordinator's plan or
-    for its turn is queued, not "waiting" (which the chip paints as needing attention); only a blocked helper is */
+ /* these feed the Activity panel's Crew member rows only (activity-panel.js crew rows); the chip's tone no longer
+    reads them (fpfix cycle 1): it comes from each run's PM56_COLLAB.presentState through app.js activityDefs(). A
+    helper waiting for the Coordinator's plan or for its turn is queued, not "waiting"; only a blocked helper is
+    blocked */
  /* the members stay the protocol Crews' (the legacy crew list already carries the seeds' members) */
  function activityMembers(c){return activityRuns(c).filter(r=>owns(r.id)).flatMap(r=>{const vm=planVM(r),st=C.presentState?.(r);return r.participants.map(p=>{const x=vm?.parts.find(x=>x.owner.id===p.id);
   const status=st==='completed'||x?.checked?'done':p.status==='blocked'?'blocked':x?.status==='running'&&st==='running'?'working':'queued';

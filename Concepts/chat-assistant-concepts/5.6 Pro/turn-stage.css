@@ -81,7 +81,11 @@ body[data-theme="retro-light"] { --fam-deliverable: #166d83; --fam-people: #9a4b
 /* the line's text clears the icon by the gap a ledger line keeps everywhere (its 12 px glyph ends 8.5 px before the
    text): at the 24 px gutter the icon and its 3 px surface ring end 6 px and 3 px short of the text; the narrow pane's
    18 px gutter ended the icon on the text, so its ring painted over the first letter ("Back" read "3ack"). The line
-   takes back what the gutter gave away (fpfix F-4). */
+   takes back what the gutter gave away (fpfix F-4). Accepted trade-off (fpfix cycle 2): in the narrow pane a ledger
+   line's text therefore starts 6 px right of the prose column. Flush text cannot keep the gap there: the icon is
+   centred on the spine (turn-stage.js draws it at the item's left - gutter + 9.5 px), so its 12 px glyph ends 2.5 px
+   before flush text at the 18 px gutter whatever ring it wears; only moving the icon 6 px off the spine would, and an
+   icon off its hairline reads worse than a receipt line indented one step under the prose. */
 .transcript[data-variant="16"] .transcript-inner > [data-family="ledger"] { padding-left: max(0px, calc(24px - var(--tx-gutter))); }
 
 /* the spine layer (turn-stage.js draws it): marks, hairlines, ticks, end dots,
