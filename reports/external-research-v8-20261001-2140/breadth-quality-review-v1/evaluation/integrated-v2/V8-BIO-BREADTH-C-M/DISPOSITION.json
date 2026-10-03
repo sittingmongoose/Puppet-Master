@@ -1,0 +1,84 @@
+{
+  "schema": "er8.independent.case_disposition.v1",
+  "case_id": "V8-BIO-BREADTH-C-M",
+  "disposition": "FAILED_SCREEN",
+  "verification_status": "VERIFIED",
+  "scope": "Frozen final source-quality screen and post-freeze method/provenance/preservation checks. Not a whole-case PASS or exhaustive historical regrade.",
+  "quality_before_method_sha256": "017ddd48fffbce147d6dbaf5d38836ea4c14ee692bcb96cf8215a306a22df5cf",
+  "dominant_defect_id": "D1",
+  "secondary_defect_id": "D2",
+  "numeric_score": null,
+  "whole_case_pass": false,
+  "operational_pipeline": {
+    "three_unique_native_targets": true,
+    "same_projected_provider_model_effort": true,
+    "fresh_sessions": true,
+    "complete_statuses": true,
+    "native_quiescent_and_groups_absent": true,
+    "wrapper_returns_zero": true,
+    "external_stage_close_returns_zero_and_absent": true,
+    "stage_quiescence_before_original_stage_deadlines": true,
+    "finalizer_return_zero": true,
+    "whole_case_execution_closed_before_cutoff": true,
+    "actual_final_hash_matches_quality_frozen_artifact": true,
+    "held_zero_and_ledger_completed": "ROOT_ATTESTED; ledger not independently inspected",
+    "same_account": "ROOT_ATTESTED; independent verification UNKNOWN",
+    "case_supervisor_close_return_zero_and_absent": true
+  },
+  "prospective_method": "simple-complete-control",
+  "method_instruction_uptake": "Observed ordinary three-stage pipeline with useful spontaneous tables/counterexamples; no special executed witness duty imposed.",
+  "preservation": "Source-grounded corrections and supported findings preserved in bounded comparison. False old claims honestly withdrawn without penalty.",
+  "source_acquisition_transport": "Positive captured bytes and source-range receipts validated separately; frontend consumption and semantic acquisition UNKNOWN.",
+  "coverage": [
+    {
+      "id": "Q1",
+      "status": "ASSESSED_BOUNDED_SOURCE_CHECKED",
+      "detail": "napari Labels/scalar-field and vizarr source/README/package inspected at stated versions or exact captured bytes; two relevant components and a desktop/dependency tradeoff are present. The whole recommendation is not awarded PASS."
+    },
+    {
+      "id": "Q2",
+      "status": "FAILED_SCREEN",
+      "detail": "Spec axes, transform order, level ordering, label association/count and colors conditions inspected; transform composition is valid. D2 prevents full credit for calibration conditions."
+    },
+    {
+      "id": "Q3",
+      "status": "ASSESSED_BOUNDED_SOURCE_CHECKED",
+      "detail": "Issue #7962, PR #8098, added parametrized regression, v0.6.5 release, and PR-author residual translation limitation verified. A pytest.xfail declaration is not an evaluator-observed failing execution."
+    },
+    {
+      "id": "B1",
+      "status": "ASSESSED_WITH_BLOCKING_DEPENDENCY",
+      "detail": "Local Zarr-v2/read-only/two-level/optional-label/refusal contract exists; unbounded categorical input conflicts with unresolved rendering lead D1."
+    },
+    {
+      "id": "B2",
+      "status": "FAILED_SCREEN",
+      "detail": "Dataset-before-global affine formula and 0.7.1 scale-bar correction verified; D2 conflates optional units and applicability of calibration."
+    },
+    {
+      "id": "B3",
+      "status": "ASSESSED_WITH_BLOCKING_DEPENDENCY",
+      "detail": "Level lock, distinct image/label transforms, extent test, nearest categorical sampling and R states specified. D1 remains. Alignment checks for unknown/incomparable units and arbitrary per-level metadata are not certified by this screen."
+    },
+    {
+      "id": "B4",
+      "status": "ASSESSED_BOUNDED_SOURCE_CHECKED",
+      "detail": "Two independent candidate-selected implementations and traceable issue/fix/test present. Source facts, inferences and product choices mostly separated."
+    },
+    {
+      "id": "B5",
+      "status": "FAILED_SCREEN",
+      "detail": "Six concrete revised steps and ten planned fixture classes exist; no candidate execution is claimed. Consequential rendering uncertainty is still open, rather than bounded out of the contract or resolved."
+    }
+  ],
+  "unassessed": [
+    "Exhaustive truth check of every secondary source statement and every toolkit version >=0.7.1",
+    "Runtime behavior of DirectLabelColormap on the unrestricted label range",
+    "End-to-end rendering/readout/overlay under arbitrary per-level transforms",
+    "Every malformed/unsupported-input corner case",
+    "Candidate frontend consumption and semantic acquisition"
+  ],
+  "candidate_fixtures_execution": "UNEXECUTED_DECLARED",
+  "evaluator_diagnostic_execution": "Arithmetic only; no candidate or upstream runtime test executed.",
+  "comparison_inference": "No matched pair comparison or isolated treatment/speed main-effect inference made."
+}

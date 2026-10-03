@@ -1,0 +1,204 @@
+{
+  "schema": "pm.er8.root-observation.v1",
+  "root_authority": true,
+  "created_epoch": 1790996827.7503986,
+  "utc": "2026-10-03T03:07:07.750399+00:00",
+  "accounting": {
+    "elapsed_seconds": 26996.846643447876,
+    "deadline_epoch": 1791013030.8303788,
+    "admissions": 44,
+    "native_goal_starts": 42,
+    "pending_start_permits": 0,
+    "occupied_slot_seconds": 31345.022715091705,
+    "committed_slot_seconds": 1383.1918749809265,
+    "reserved_or_committed_slot_seconds": 100651.47591638565,
+    "reserved_or_committed_native_starts": 45,
+    "active_by_family": {
+      "M": 0,
+      "Z": 2,
+      "L": 0
+    },
+    "candidate_output_warning": false,
+    "candidate_output_stop": false,
+    "active_jobs": [
+      "V8-NB-RETR-C-M-independent-candidate-critic",
+      "V8-NB-RETR-T-M-independent-candidate-critic"
+    ],
+    "overdue_jobs": [],
+    "helper_task_starts": 78,
+    "active_helpers": 4,
+    "evaluator_helper_starts_remaining": 20,
+    "generated_output_tokens_lower_bound": 893764,
+    "generated_usage": "unknown",
+    "outside_native_seconds_by_case": {
+      "v8-z-mechanical-route-canary-v1": 0.435632441,
+      "v8-z-mechanical-route-canary-v2": 87.708301406,
+      "v8-z-mechanical-route-canary-v3": 0.416744337,
+      "V8-BIO-C-Z": 1.881573445,
+      "V8-BIO-WIT-T-Z": 1.93355986,
+      "V8-BIO-P-Z": 218.781088987,
+      "V8-BIO-COND-C-Z": 218.49114402,
+      "V8-NB-COND-C-Z": 2.5303710070000003,
+      "V8-NB-P-Z": 3.2356752049999997,
+      "V8-BIO-BATCH-C-Z": 2.876333539,
+      "V8-BIO-B-Z": 2.8616779529999996,
+      "V8-NB-BATCH-C-Z": 3.1170839940000006,
+      "V8-NB-B-Z": 4.301070160000001,
+      "V8-BIO-RETR-C-M": 6.115310880000001,
+      "V8-BIO-RETR-T-M": 5.4561728469999995,
+      "V8-BIO-AMEND-C-L": 5.3019250079999996,
+      "V8-BIO-AMEND-T-L": 5.596375739000001,
+      "V8-BIO-BREADTH-C-M": 5.069627012000001,
+      "V8-BIO-BREADTH-T-M": 5.222031248999999,
+      "V8-NB-RETR-C-M": 2.918189295,
+      "V8-NB-RETR-T-M": 2.929562887
+    },
+    "category_seconds": {
+      "cancel": 0,
+      "cleanup": 525.931295081,
+      "evaluation": 0,
+      "handoff": 2.9592188680000002,
+      "native": 972.478206129,
+      "retry": 0,
+      "setup": 58.288937322,
+      "source_capture": 0,
+      "wait": 0
+    },
+    "occupancy_reconciled": true,
+    "route_reviews": [
+      "v8-z-route-repair1-canary-v1",
+      "v8-z-route-repair1-caller2-canary-v2",
+      "v8-z-route-recovery-v1-canary-v2",
+      "v8-z-route-recovery-v2-canary-v3",
+      "v8-z-route-recovery-v2-native-accepted-v1",
+      "v8-z-route-recovery-v2-native-bound-v2"
+    ],
+    "final_reserved_names": [
+      "V8-BIO-C-Z",
+      "V8-BIO-P-Z",
+      "V8-BIO-B-Z",
+      "V8-NB-C-Z",
+      "V8-NB-P-Z",
+      "V8-NB-B-Z"
+    ],
+    "evaluator_reserved_names": [
+      "V8-EVAL-BIO-C",
+      "V8-EVAL-BIO-P",
+      "V8-EVAL-BIO-B",
+      "V8-EVAL-NB-C",
+      "V8-EVAL-NB-P",
+      "V8-EVAL-NB-B",
+      "V8-EVAL-V8-BIO-WIT-T-Z",
+      "V8-EVAL-V8-BIO-COND-C-Z",
+      "V8-EVAL-V8-BIO-BATCH-C-Z",
+      "V8-EVAL-V8-BIO-RETR-C-M",
+      "V8-EVAL-V8-BIO-RETR-T-M",
+      "V8-EVAL-V8-BIO-AMEND-C-L",
+      "V8-EVAL-V8-BIO-AMEND-T-L",
+      "V8-EVAL-V8-BIO-BREADTH-C-M",
+      "V8-EVAL-V8-BIO-BREADTH-T-M",
+      "V8-EVAL-V8-NB-WIT-T-Z",
+      "V8-EVAL-V8-NB-COND-C-Z",
+      "V8-EVAL-V8-NB-BATCH-C-Z",
+      "V8-EVAL-V8-NB-RETR-C-M",
+      "V8-EVAL-V8-NB-RETR-T-M",
+      "V8-EVAL-V8-NB-AMEND-C-L",
+      "V8-EVAL-V8-NB-AMEND-T-L",
+      "V8-EVAL-V8-NB-BREADTH-C-M",
+      "V8-EVAL-V8-NB-BREADTH-T-M",
+      "V8-EVAL-HOLDOUT-BIO-C",
+      "V8-EVAL-HOLDOUT-BIO-R",
+      "V8-EVAL-HOLDOUT-NB-C",
+      "V8-EVAL-HOLDOUT-NB-R"
+    ],
+    "closed": false,
+    "elapsed_seconds_including_user_pause": 91618.6770222187,
+    "authorized_user_pause_excluded_seconds": 64621.83037877083
+  },
+  "completed_operational_cases": [
+    "V8-BIO-RETR-C-M",
+    "V8-BIO-RETR-T-M",
+    "V8-BIO-AMEND-C-L",
+    "V8-BIO-AMEND-T-L",
+    "V8-BIO-BREADTH-C-M",
+    "V8-BIO-BREADTH-T-M"
+  ],
+  "operational_pipeline_count": 6,
+  "target_pipelines": 24,
+  "operational_pair_count": 3,
+  "target_pairs": 12,
+  "quality_reviewed_pairs": 2,
+  "independent_failed_screens": 4,
+  "full_quality_pass": 0,
+  "quality_qualified_efficiency_comparisons": 0,
+  "quality_pending_cases": [
+    "V8-BIO-BREADTH-C-M",
+    "V8-BIO-BREADTH-T-M"
+  ],
+  "stage_complete_counts": {
+    "research": 16,
+    "critic": 7,
+    "final": 6
+  },
+  "active_jobs": {
+    "V8-NB-RETR-C-M-independent-candidate-critic": {
+      "case": "V8-NB-RETR-C-M",
+      "status": "native-active",
+      "native_goal_starts": 1
+    },
+    "V8-NB-RETR-T-M-independent-candidate-critic": {
+      "case": "V8-NB-RETR-T-M",
+      "status": "native-active",
+      "native_goal_starts": 1
+    }
+  },
+  "active_helpers": [
+    "er8-quality-bio-breadth-c-v1",
+    "er8-quality-bio-breadth-t-v1",
+    "er8-helper-concurrency-review-v1",
+    "er8-breadth-pair-public-v1"
+  ],
+  "helper_concurrency": {
+    "previous": 6,
+    "selected_prospective": 12,
+    "explicit_user_authority": {
+      "path": "LAB_ROOT/ops/recovery-v1/HELPER_CONCURRENCY_AUTHORITY_20261003.json",
+      "sha256": "f1682a991232997556aed7fb88f167e706317259913d9365c5a1fb72fc572a79"
+    },
+    "installation": "SOURCE_FROZEN_INDEPENDENT_REVIEW_PENDING; current starts remainwithinold6 untilacceptedwrapperinstallation",
+    "candidate_slots_unchanged": {
+      "M": 2,
+      "Z": 2,
+      "L": 2
+    }
+  },
+  "native_muse_helpers": {
+    "invocations": 6,
+    "completed": 4,
+    "timed_out": 2,
+    "known_native_cli_elapsed_seconds": 911.7189729450283,
+    "candidate_goal_starts": 0,
+    "latest_source_result": {
+      "path": "LAB_ROOT/ops/muse-count-checker-source-v1/RESULT.py",
+      "sha256": "76ec7af07d0c3704e6fa9ec0e33097a63d5b42d071d555d2bc818caa1fefdf21"
+    },
+    "latest_source_acceptance": {
+      "path": "LAB_ROOT/ops/muse-count-checker-source-v1/ROOT_SOURCE_ACCEPTANCE.json",
+      "sha256": "a6eab7e6fe3eba121e0527cd8136d33781f704a68dc249801c45c84e61e08302"
+    },
+    "latest_native_elapsed_seconds": 36.76630740601104,
+    "latest_helper_birth_to_native_quiet_seconds": 202.74116897583008,
+    "root_late_extraction_tests": "Separate root management; source captured and nativequiet beforeoriginal300deadline, no renew/retry",
+    "tokens_money_realized_reasoning": "UNKNOWN"
+  },
+  "accounting_audit": {
+    "path": "LAB_ROOT/ops/current-accounting-audit-v1/REPORT.json",
+    "sha256": "2f7c5b7e06cdeb18a0fda309ac98358506bc9d332e871c6dbc691c0833a261a7",
+    "status": "LATE_HOLD_ADVISORY",
+    "lateness_seconds": 56.580358028411865,
+    "pinned_snapshot_reconstructed_exactly": true,
+    "fully_bounded_acceptance": false
+  },
+  "verified_github_commit": "d585489f81be78c671fcb3503d8f01591ecba182",
+  "cost_scope": "Allpriorstarts/failures/orphanbirth→latepositivecost retained; explicit64621.83037877083pauseonlyexcluded; totalgeneratedtokens/moneyUNKNOWN."
+}

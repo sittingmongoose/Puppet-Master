@@ -1,0 +1,51 @@
+test_accounting_status_and_unknown_actions_identical (review_author_tests.ConcurrencyTests.test_accounting_status_and_unknown_actions_identical) ... ok
+test_auth_only_helper_count_differs (review_author_tests.ConcurrencyTests.test_auth_only_helper_count_differs) ... ok
+test_before_receipt_starts_fail_closed (review_author_tests.ConcurrencyTests.test_before_receipt_starts_fail_closed) ... ok
+test_copy_fixture_has_no_live_ledger_state (review_author_tests.ConcurrencyTests.test_copy_fixture_has_no_live_ledger_state) ... ok
+test_default_birth_survives_later_clock_rollback (review_author_tests.ConcurrencyTests.test_default_birth_survives_later_clock_rollback) ... ok
+test_default_birth_survives_later_nan_clock (review_author_tests.ConcurrencyTests.test_default_birth_survives_later_nan_clock) ... ok
+test_default_birth_uses_forwarded_copy (review_author_tests.ConcurrencyTests.test_default_birth_uses_forwarded_copy) ... ok
+test_duplicate_install_no_mutation (review_author_tests.ConcurrencyTests.test_duplicate_install_no_mutation) ... ok
+test_explicit_birth_forwarded_unchanged_without_caller_mutation (review_author_tests.ConcurrencyTests.test_explicit_birth_forwarded_unchanged_without_caller_mutation) ... ok
+test_frozen_six_and_successor_twelve (review_author_tests.ConcurrencyTests.test_frozen_six_and_successor_twelve) ... ok
+test_helper_end_exact_old_semantics (review_author_tests.ConcurrencyTests.test_helper_end_exact_old_semantics) ... ok
+test_import_and_cli_status_readonly (review_author_tests.ConcurrencyTests.test_import_and_cli_status_readonly) ... ok
+test_install_changes_one_key_only (review_author_tests.ConcurrencyTests.test_install_changes_one_key_only) ... ok
+test_install_nonfinite_or_deadline_clock_rejected (review_author_tests.ConcurrencyTests.test_install_nonfinite_or_deadline_clock_rejected) ... ok
+test_native_admission_unchanged_with_twelve_helpers (review_author_tests.ConcurrencyTests.test_native_admission_unchanged_with_twelve_helpers) ... ok
+test_old_resume_validation_retained (review_author_tests.ConcurrencyTests.test_old_resume_validation_retained) ... ok
+test_pin_and_symlink_fail_closed (review_author_tests.ConcurrencyTests.test_pin_and_symlink_fail_closed) ... ok
+test_receipt_invalid_fields (review_author_tests.ConcurrencyTests.test_receipt_invalid_fields) ... ok
+test_wrong_authority_schema_root_nonfinite (review_author_tests.ConcurrencyTests.test_wrong_authority_schema_root_nonfinite) ... ok
+test_wrong_install_requests (review_author_tests.ConcurrencyTests.test_wrong_install_requests) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 4.467s
+
+OK
+test_actual_copy_dependency_symlink_fails_closed (__main__.IndependentTests.test_actual_copy_dependency_symlink_fails_closed) ... ok
+test_actual_copy_source_drift_fails_closed (__main__.IndependentTests.test_actual_copy_source_drift_fails_closed) ... ok
+test_all_clock_authority_fields_unchanged (__main__.IndependentTests.test_all_clock_authority_fields_unchanged) ... ok
+test_auth_mutation_isolated_and_old_module_unchanged (__main__.IndependentTests.test_auth_mutation_isolated_and_old_module_unchanged) ... ok
+test_birth_and_request_survive_multiclock_matrix (__main__.IndependentTests.test_birth_and_request_survive_multiclock_matrix) ... ok
+test_default_birth_survives_clock_rollback (__main__.IndependentTests.test_default_birth_survives_clock_rollback) ... ok
+test_default_birth_survives_nonfinite_later_clock (__main__.IndependentTests.test_default_birth_survives_nonfinite_later_clock) ... ok
+test_delegated_event_and_close_identical (__main__.IndependentTests.test_delegated_event_and_close_identical) ... ok
+test_every_dependency_pin_fails_closed (__main__.IndependentTests.test_every_dependency_pin_fails_closed) ... ok
+test_explicit_birth_type_value_and_forwarded_copy (__main__.IndependentTests.test_explicit_birth_type_value_and_forwarded_copy) ... ok
+test_helper_end_delegate_legacy_weak_proof_behavior_preserved (__main__.IndependentTests.test_helper_end_delegate_legacy_weak_proof_behavior_preserved) ... ok
+test_install_closed_and_types (__main__.IndependentTests.test_install_closed_and_types) ... ok
+test_other_action_passes_original_request_object (__main__.IndependentTests.test_other_action_passes_original_request_object) ... ok
+test_receipt_epoch_deadline_and_types (__main__.IndependentTests.test_receipt_epoch_deadline_and_types) ... ok
+test_receipt_missing_extra_and_wrong_numeric_types (__main__.IndependentTests.test_receipt_missing_extra_and_wrong_numeric_types) ... ok
+test_receipt_return_is_not_state_alias (__main__.IndependentTests.test_receipt_return_is_not_state_alias) ... ok
+test_semantic_authority_exactness_despite_hash_stub (__main__.IndependentTests.test_semantic_authority_exactness_despite_hash_stub) ... ok
+test_start_birth_finite_prospective_and_atomic_failures (__main__.IndependentTests.test_start_birth_finite_prospective_and_atomic_failures) ... ok
+test_start_deadline_and_root_rejected_without_mutation (__main__.IndependentTests.test_start_deadline_and_root_rejected_without_mutation) ... ok
+test_transaction_not_called_by_apply_status (__main__.IndependentTests.test_transaction_not_called_by_apply_status) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 1.880s
+
+OK
+{"author_compiled_wrapper_relocated_only": true, "author_success": true, "author_tests_run": 20, "independent_source_bytes_modified_for_execution": false, "independent_success": true, "independent_tests_run": 20, "live_transactions_executed": false, "read_only_virtual_mapping": true}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "root_authority",
+    "authority_path",
+    "authority_sha256",
+    "previous_active_helpers",
+    "active_helpers",
+    "effective_epoch"
+  ],
+  "properties": {
+    "schema": {
+      "const": "pm.er8.helper-concurrency-receipt.v1"
+    },
+    "root_authority": {
+      "const": true
+    },
+    "authority_path": {
+      "const": "LAB_ROOT/ops/recovery-v1/HELPER_CONCURRENCY_AUTHORITY_20261003.json"
+    },
+    "authority_sha256": {
+      "const": "f1682a991232997556aed7fb88f167e706317259913d9365c5a1fb72fc572a79"
+    },
+    "previous_active_helpers": {
+      "const": 6
+    },
+    "active_helpers": {
+      "const": 12
+    },
+    "effective_epoch": {
+      "type": "number",
+      "minimum": 1790996057.7366228,
+      "exclusiveMaximum": 1791013030.8303788
+    }
+  },
+  "$comment": "Runtime also checks exact bool/int types and finite epochs; schema alone is not authorization."
+}

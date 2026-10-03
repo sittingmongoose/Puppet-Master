@@ -1,0 +1,159 @@
+{
+  "schema": "er8.independent.artifact_preservation.v1",
+  "case_id": "V8-BIO-BREADTH-C-M",
+  "scope": "Actual same-case initial proposal/leads → candidate critique → final proposal/leads. Current-artifact source-grounded preservation only; no full reasoning-history or old-campaign regrade.",
+  "artifacts": [
+    {
+      "stage": "research-proposal",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-research-proposal/workspace/out/PROPOSAL.md",
+      "bytes": 27158,
+      "sha256": "5531b0049e2ea4fc26b24943bad6e09ddea87fef38c82c75e90a8402376d791b"
+    },
+    {
+      "stage": "research-proposal",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-research-proposal/workspace/out/UNRESOLVED_LEADS.md",
+      "bytes": 2394,
+      "sha256": "0852f094a9540f31993699b1b218b63384c7270d094af0e7bbfc595aa6845947"
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-independent-candidate-critic/workspace/out/CRITIQUE.md",
+      "bytes": 20133,
+      "sha256": "f94382d4240fe4bcacedc07706ef86a2c3222fb33738e2746f5a8bc2c041a969"
+    },
+    {
+      "stage": "final-correction",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "bytes": 41031,
+      "sha256": "7f86d0a5f12543a40bbe9f8ff94d2e038f0315fd06154e50f9d40dcc707bb91d"
+    },
+    {
+      "stage": "final-correction",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-final-correction/workspace/out/UNRESOLVED_LEADS.md",
+      "bytes": 3693,
+      "sha256": "eb7f3ddbf75267875672c82a224d4dd7993ecbd67bb7b12992b055c3de706ed9"
+    }
+  ],
+  "frozen_inputs_match_actual_predecessor_outputs": true,
+  "items": [
+    {
+      "id": "P1",
+      "finding": "Dataset transforms applied before shared multiscales transforms; composed cursor mapping",
+      "initial": "Q2 formula stated",
+      "critic": "Formula derivation checked against S1 order",
+      "final": "Q2 and B2 formula retained",
+      "disposition": "SUPPORTED_CONTENT_PRESERVED",
+      "source_id": "S1",
+      "source_lines": [
+        [
+          355,
+          355
+        ],
+        [
+          375,
+          385
+        ]
+      ]
+    },
+    {
+      "id": "P2",
+      "finding": "Label association is distinct from guaranteed alignment; label/image pyramid counts must agree",
+      "initial": "Q2/B3 distinction and count check",
+      "critic": "Checked S1 count and association; counterexample supplied",
+      "final": "Q2/B3 count/refusal and extent check retained",
+      "disposition": "SUPPORTED_CONTENT_PRESERVED_WITH_ALIGNMENT_CERTIFICATION_UNASSESSED",
+      "source_id": "S1",
+      "source_lines": [
+        [
+          453,
+          475
+        ],
+        [
+          495,
+          499
+        ]
+      ]
+    },
+    {
+      "id": "P3",
+      "finding": "Relevant issue #7962 → PR #8098 → test_make_label_from_shape_param → v0.6.5 release",
+      "initial": "Chain and translation xfail described",
+      "critic": "Chain verified; PR-author residual offset limitation added",
+      "final": "Chain retained with residual note",
+      "disposition": "SUPPORTED_CONTENT_PRESERVED",
+      "source_ids": [
+        "S5",
+        "S6-files",
+        "S6-PR",
+        "S7"
+      ],
+      "execution_scope": "Upstream patch/test declarations inspected; no runtime result independently executed."
+    },
+    {
+      "id": "P4",
+      "finding": "napari vs vizarr comparison and desktop tradeoff",
+      "initial": "Two components and bounded choice present",
+      "critic": "Both source bases checked",
+      "final": "Components/tradeoff retained; required napari floor made >=0.7.1",
+      "disposition": "SUPPORTED_CONTENT_PRESERVED_BOUNDED",
+      "source_ids": [
+        "S2",
+        "S3",
+        "S4",
+        "S8",
+        "S7-prime"
+      ]
+    },
+    {
+      "id": "C1",
+      "finding": "Units-aware scale-bar availability",
+      "initial": "Incorrectly attributed to 0.6.x/0.6.5",
+      "critic": "Corrected to v0.7.1 with cross-layer units-consistency condition",
+      "final": "Correct version/condition and F3 outcome adopted",
+      "disposition": "HONEST_SOURCE_GROUNDED_WITHDRAWAL_OF_FALSE_OLD_CLAIM; NO_PRESERVATION_PENALTY",
+      "source_id": "S7-prime"
+    },
+    {
+      "id": "C2-C3",
+      "finding": "vizarr locator and complete implementation quote",
+      "initial": "Mixed branch locator; quote omitted trailing clause",
+      "critic": "Provided consistent master locator and full quote",
+      "final": "Consistent verified master bytes and complete quote",
+      "disposition": "SOURCE_LOCATOR_AND_QUOTE_CORRECTED; NO_PRESERVATION_PENALTY",
+      "source_ids": [
+        "S1",
+        "S4"
+      ]
+    },
+    {
+      "id": "C4",
+      "finding": "1024-color caveat scope",
+      "initial": "General rendering limitation asserted",
+      "critic": "Scoped caveat to deprecated color mapping",
+      "final": "Deprecated scope restored; modern-path uncertainty remains explicit",
+      "disposition": "HONEST_SOURCE_GROUNDED_WITHDRAWAL; D1_IS_REMAINING_COMPLETENESS_DEFECT_NOT_PENALTY_FOR_WITHDRAWAL",
+      "source_id": "S8"
+    },
+    {
+      "id": "C5-C6",
+      "finding": "Root multiscales gate, axes bound and multiplicity labels",
+      "initial": "Some product/inference/lowercase source text labeled normative",
+      "critic": "Force and labeling precisions supplied",
+      "final": "Product gate and inference labels adopted",
+      "disposition": "SOURCE_FORCE_PRECISION_IMPROVED; NO_PRESERVATION_PENALTY",
+      "source_id": "S1"
+    },
+    {
+      "id": "D2-lineage",
+      "finding": "Unit absence equated with relative-factor fallback",
+      "initial": "Calibration conditionality stated without critic X2 claim",
+      "critic": "X2 states absent unit implies relative factor",
+      "final": "New inference repeated as verified source-conditioned interpretation",
+      "disposition": "SOURCE_FIDELITY_ERROR_INTRODUCED_AND_RETAINED; NOT_A_FAILURE_TO_PRESERVE_CORRECT_OLD_CONTENT",
+      "source_id": "S1"
+    }
+  ],
+  "preservation_disposition": "BOUNDED_SUPPORTED_CONTENT_PRESERVATION_ESTABLISHED; final research quality FAILED_SCREEN.",
+  "unassessed": "Every secondary claim over the full historical trace; semantic acquisition by frontend.",
+  "no_penalty_for_honest_withdrawal": true
+}

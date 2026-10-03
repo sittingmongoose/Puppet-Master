@@ -1,0 +1,40 @@
+{
+  "schema": "pm.er8.root-holder-successor-source-receipt.v2",
+  "status": "SOURCE_READY_RUNTIME_HOLD_PENDING_ROOT_REVIEW",
+  "author_birth_epoch": 1790993412.9046082,
+  "author_deadline_epoch": 1790994012.9046082,
+  "completed_epoch": 1790993882.2921708,
+  "completed_before_original_author_deadline": true,
+  "global_deadline_epoch": 1791013030.8303788,
+  "root_monotonic_cutoff": "root must copy unchanged from current known V7CASE_AUTHORITY",
+  "live_launch": false,
+  "live_lock_acquisition": false,
+  "live_request_write": false,
+  "live_claim_write": false,
+  "original_source_claim_unit_unchanged": true,
+  "native_calls": false,
+  "test_count": 18,
+  "tests_passed": 18,
+  "artifacts": {
+    "root_holder_successor_v2.py": {
+      "path": "LAB_ROOT/ops/root-holder-successor-v2/root_holder_successor_v2.py",
+      "sha256": "77f869fe33387d426fc0fe66e146e0fad3ebbca08b386650773587b6748d1e35"
+    },
+    "test_root_holder_successor_v2.py": {
+      "path": "LAB_ROOT/ops/root-holder-successor-v2/test_root_holder_successor_v2.py",
+      "sha256": "1af814fdfe23302a1e5f78c255505c7fdb6aab037bfc8407b4a44a3c64a4072d"
+    },
+    "TEST_RECEIPT.txt": {
+      "path": "LAB_ROOT/ops/root-holder-successor-v2/TEST_RECEIPT.txt",
+      "sha256": "5b53cf142478dd443c0d77dab626d95e4fcdfa4d49eddb5fcb0c54efbfc1685a"
+    }
+  },
+  "predecessor_source_sha256": "48907c8afa5b6a8699b61d01528466e4c5b838ac2bdb955f4420738dc2a12788",
+  "predecessor_claim_sha256": "e0b37dcddefe3d6fcad80a913701cb69729b467bd0ffbf34b535f54dab3211b9",
+  "known_unit_read_only_observation": {
+    "unit": "er8-v8-root-durable-20261002-2348.service",
+    "MainPID": 1969270,
+    "ActiveState": "active",
+    "RuntimeMaxUSec": "7h 46min 40s"
+  }
+}

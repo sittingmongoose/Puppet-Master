@@ -1,0 +1,145 @@
+{
+  "manifest_sha256": "85817378b706aac371bd6da50e427599491f8622f39fbdafdc279a222efeebba",
+  "source_manifest": {
+    "schema": "pm.er8.helper-concurrency-source-manifest.v2",
+    "actual_source_freeze_proof_filename": "MANIFEST.json",
+    "helper": "er8-helper-concurrency-source-v2",
+    "birth_epoch": 1790997047.233423,
+    "original_hard_deadline_epoch": 1790997647.233423,
+    "actual_end_epoch": 1790997327.9585238,
+    "source_only": true,
+    "live_install_performed": false,
+    "originals_modified": false,
+    "v1_source_and_manifest_preserved": true,
+    "production_delta": "Only forward validated helper-start birth through a copied request",
+    "tests_passed": 20,
+    "source_api_sha256": "eafb75b1a157a5b7e77f03f9fc52e298a7ef255e439730e22c4fde6a95dc0405",
+    "files": [
+      {
+        "path": "LAB_ROOT/ops/helper-concurrency-v2/ledger_helper_concurrency_v2.py",
+        "sha256": "eafb75b1a157a5b7e77f03f9fc52e298a7ef255e439730e22c4fde6a95dc0405",
+        "bytes": 9111
+      },
+      {
+        "path": "LAB_ROOT/ops/helper-concurrency-v2/test_helper_concurrency_v2.py",
+        "sha256": "86b0fc8337d48fe01ddd7cef44d60bc36c9948a83a31890fddb743ca1ae08d5e",
+        "bytes": 16092
+      },
+      {
+        "path": "LAB_ROOT/ops/helper-concurrency-v2/TEST_RESULTS.txt",
+        "sha256": "e965bb99d753b0517db0dd8594a795529ed391069756ac61e853e527ae493f3c",
+        "bytes": 2429
+      },
+      {
+        "path": "LAB_ROOT/ops/helper-concurrency-v2/HANDOFF.md",
+        "sha256": "426a867690a7f0a41b7f72779a9ca53db6908a1fcd86dd36b2bdbee79b355078",
+        "bytes": 6012
+      },
+      {
+        "path": "LAB_ROOT/ops/helper-concurrency-v2/SOURCE_DIFF.txt",
+        "sha256": "feb6f26293f9fc51cf3f80ba875243900d64911aced589625586fb60820cb700",
+        "bytes": 689
+      },
+      {
+        "path": "LAB_ROOT/ops/helper-concurrency-v2/INSTALL_REQUEST_EXAMPLE.json",
+        "sha256": "90df801b750c4b61e0ef79cabb287892ab127e98eecc5c0134e33baffa069d2c",
+        "bytes": 273
+      },
+      {
+        "path": "LAB_ROOT/ops/helper-concurrency-v2/INSTALL_REQUEST_SCHEMA.json",
+        "sha256": "a5cee083190b7ba475685b43b7da323162670ec2a555ff5e674ae312d3c786eb",
+        "bytes": 572
+      },
+      {
+        "path": "LAB_ROOT/ops/helper-concurrency-v2/RECEIPT_SCHEMA.json",
+        "sha256": "23a3ff06bac43cc0e219440f4bd82db85be93628de8968124dc13c3272ecab1c",
+        "bytes": 1095
+      }
+    ],
+    "root_authority_path": "LAB_ROOT/ops/recovery-v1/HELPER_CONCURRENCY_AUTHORITY_20261003.json",
+    "root_authority_sha256": "f1682a991232997556aed7fb88f167e706317259913d9365c5a1fb72fc572a79",
+    "unchanged_resume_api_sha256": "a98cf53c1826f1f4c9fa47a9e181eaae8beb971ea41e6564578a253059450b61",
+    "pending": "Independent review and root installation only",
+    "author_no_further_edits_after_freeze": true
+  },
+  "verified_files": [
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-v2/ledger_helper_concurrency_v2.py",
+      "sha256": "eafb75b1a157a5b7e77f03f9fc52e298a7ef255e439730e22c4fde6a95dc0405",
+      "bytes": 9111
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-v2/test_helper_concurrency_v2.py",
+      "sha256": "86b0fc8337d48fe01ddd7cef44d60bc36c9948a83a31890fddb743ca1ae08d5e",
+      "bytes": 16092
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-v2/TEST_RESULTS.txt",
+      "sha256": "e965bb99d753b0517db0dd8594a795529ed391069756ac61e853e527ae493f3c",
+      "bytes": 2429
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-v2/HANDOFF.md",
+      "sha256": "426a867690a7f0a41b7f72779a9ca53db6908a1fcd86dd36b2bdbee79b355078",
+      "bytes": 6012
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-v2/SOURCE_DIFF.txt",
+      "sha256": "feb6f26293f9fc51cf3f80ba875243900d64911aced589625586fb60820cb700",
+      "bytes": 689
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-v2/INSTALL_REQUEST_EXAMPLE.json",
+      "sha256": "90df801b750c4b61e0ef79cabb287892ab127e98eecc5c0134e33baffa069d2c",
+      "bytes": 273
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-v2/INSTALL_REQUEST_SCHEMA.json",
+      "sha256": "a5cee083190b7ba475685b43b7da323162670ec2a555ff5e674ae312d3c786eb",
+      "bytes": 572
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-v2/RECEIPT_SCHEMA.json",
+      "sha256": "23a3ff06bac43cc0e219440f4bd82db85be93628de8968124dc13c3272ecab1c",
+      "bytes": 1095
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/ledger_resume.py",
+      "sha256": "a98cf53c1826f1f4c9fa47a9e181eaae8beb971ea41e6564578a253059450b61"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/ledger_overlay.py",
+      "sha256": "597a3d3349154fbb4614ed7ece864f1cd77ecfea145fbfddaefc79fe0a1cd618"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/RESUME_20261002.json",
+      "sha256": "9fc1c92a3b6074610b3b4026bd4d7500e0f0a135b506863965e2919fb640c02f"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/AUTHORITY_AMENDMENT.json",
+      "sha256": "1479c0b44869d13878b90ccd2f02d5fb2d755cfa0f0b17315105dc48d57616ec"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/HELPER_CONCURRENCY_AUTHORITY_20261003.json",
+      "sha256": "f1682a991232997556aed7fb88f167e706317259913d9365c5a1fb72fc572a79"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/state.before-policy-amendment.json",
+      "sha256": "9670a1f7e67d4f9aaacd04d91aa4c61e95e1cb37b3bb0a8e0f749655dcf8737d"
+    },
+    {
+      "path": "LAB_ROOT/ops/accounting-v1/slot_ledger.py",
+      "sha256": "5590fdc09936005e09b2de7aa4ac4113bbe0ddeefa4a8caf3548d78b0e3045af"
+    },
+    {
+      "path": "LAB_ROOT/AUTHORIZATION.json",
+      "sha256": "25609fc787d622958fd62afa5df218a1e4789f61595a4152865ceb0c143304f2"
+    }
+  ],
+  "v1_source_sha256": "f8b0f9f984bbfe1b1fd62d46b956247961d09fdea01fabb83d759f631d75078d",
+  "v1_source_manifest_sha256": "becd3cb6f10ca259b2a9e4e282f028c3564d580aad51fb245203020c9f479e49",
+  "v1_review_freeze_sha256": "0948bf10e9fcef1f5ca0c9a0a4f9716c56e437706200e2c781c14dfd25edc95f",
+  "production_diff_exact": true
+}

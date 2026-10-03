@@ -1,0 +1,25 @@
+{
+  "schema": "pm.er8.public-muse-lifecycle-freeze.v1",
+  "frozen_epoch": 1790995323.6857033,
+  "original_birth_epoch": 1790995167.1806521,
+  "original_deadline_epoch": 1790995467.1806521,
+  "completed_before_original_deadline": true,
+  "positive_original_count": 6,
+  "manifest_artifact_count": 9,
+  "public_file_count": 12,
+  "base26_files_unchanged": true,
+  "files": {
+    "ROOT_HANDOFF.json": "251dc3f163f90a144d0139864f0d1c0389ee58fb9f655814d60749a738d8f4b2",
+    "README.md": "e9e7902a90eb6efc8e8dc21ca6f10c2ba241063614c431cb4b0a69c35cf153cc",
+    "VERIFICATION.json": "69faa52d8c5c1a4d79b270c5c431575ec1cb2702f8abc556b1405355bd71d7de",
+    "PUBLIC_EXPORT.json": "1538fe27f89b1aacc19b931f98cf6cf4acad1faf518e0d2daf2513556e5e4e28",
+    "verify_public.py": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+    "ops/muse-helper-handover-v1/BIRTH.json": "ae475d77c7ffa6b98c5ded88a982037f5fcfb4990ad7239d297169256c7ee9e3",
+    "ops/muse-helper-handover-v1/ROOT_LAUNCH.json": "ff7bdd36ff6fa399653d9ff05d749283339d6acc288d7b72f09b75c4ba431ae2",
+    "ops/muse-helper-handover-v1/QUIET.json": "0e3f5eda7ab2b3c3509c6e0a6934ec170b5676f0df607ad0ff74ff61ab5f6a18",
+    "ops/muse-helper-handover-v1/ORIGINAL_BIRTH.json": "a1d79158debdbc3b8cdae9a16ae36cc94e5e8b0ed3791dc94ad330ca3cabc626",
+    "ops/muse-helper-handover-v1/prompt.txt": "64abf630a171bc74f90a9adb6ea309603c8172199f11ba3dd4e08598e48a71ee",
+    "ops/muse-helper-handover-v1/INPUT_MANIFEST.json": "8c3f21b6026fff78b1028b465ed128c30046771ab1232ef121cfc3c216b81781"
+  },
+  "verification_returncode": 0
+}

@@ -1,0 +1,146 @@
+{
+  "schema": "pm.er8.current-state-positive-public-handoff.v1",
+  "original_birth_epoch": 1790997855.2147198,
+  "original_deadline_epoch": 1790998755.2147198,
+  "prepared_epoch": 1790998012.3534515,
+  "scope": "Exactly pinned immutable current-state root observations/authority/pointer correction, two named audits own REPORT.json/md and FREEZE only, sixth generic checker source/acceptance and safe lifecycle/prompt metadata. No raw accounting state/copies, native-events/stdout/stderr/context/session/SDK/private source/candidate answers/evaluator semantic keys.",
+  "positive_files": [
+    {
+      "path": "LAB_ROOT/ops/current-accounting-audit-v1/FREEZE.json",
+      "sha256": "3f1b7b9f28c29625ecdcba5f6ec44639793749974c95c533231e4dfb5b2d0501",
+      "bytes": 2264,
+      "pin_origin": "root named own audit freeze only; no transitive input export",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/ops/current-accounting-audit-v1/REPORT.json",
+      "sha256": "2f7c5b7e06cdeb18a0fda309ac98358506bc9d332e871c6dbc691c0833a261a7",
+      "bytes": 9769,
+      "pin_origin": "root named audit report pinned by own freeze; raw accounting projections excluded",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/ops/current-accounting-audit-v1/REPORT.md",
+      "sha256": "92c2a55d87f98feed00a57d4c5840b79b35fad5816115b6157546c853e7a6e96",
+      "bytes": 3433,
+      "pin_origin": "root named audit report pinned by own freeze; raw accounting projections excluded",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/ops/current-checkpoint-audit-v1/FREEZE.json",
+      "sha256": "7020b2759c438f5a72d02871e48924a01882220ae640afff6bccfeafd84f6fd1",
+      "bytes": 571,
+      "pin_origin": "root named own audit freeze only; no transitive input export",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/ops/current-checkpoint-audit-v1/REPORT.json",
+      "sha256": "010163e41a2acb506cd9d9bc5e108d38342dc86c2054d7807cbf14e14cd4aec7",
+      "bytes": 8059,
+      "pin_origin": "root named audit report pinned by own freeze; raw accounting projections excluded",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/ops/current-checkpoint-audit-v1/REPORT.md",
+      "sha256": "0524d6aeb46080da32562f1f6b5a3dfd554e31e13b01689ffd8fb6392ec5473d",
+      "bytes": 2859,
+      "pin_origin": "root named audit report pinned by own freeze; raw accounting projections excluded",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-count-checker-source-v1/BIRTH.json",
+      "sha256": "f2da009726b8af604830f8f3714346440850de4a48193b8b9ed6a439114436fa",
+      "bytes": 1136,
+      "pin_origin": "root exact named lifecycle output, original byte snapshot/pinned QUIET references",
+      "projection_kind": "safe-muse-lifecycle"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-count-checker-source-v1/INPUT_MANIFEST.json",
+      "sha256": "4fc84562dec2be41779081cceccb01c51dd2531fab675e8fdf855f889f95e7b3",
+      "bytes": 334,
+      "pin_origin": "root exact named lifecycle output, original byte snapshot/pinned QUIET references",
+      "projection_kind": "safe-muse-lifecycle"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-count-checker-source-v1/ORIGINAL_BIRTH.json",
+      "sha256": "f496304622264c7205adc9028f6f150bbc1eed97a305c804dc1b9b4c405ca614",
+      "bytes": 228,
+      "pin_origin": "root exact named lifecycle output, original byte snapshot/pinned QUIET references",
+      "projection_kind": "safe-muse-lifecycle"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-count-checker-source-v1/QUIET.json",
+      "sha256": "1a15122cf2d9eea96765ae9d656c4c5635f8bfe7d3f68022ae19ebc079aec774",
+      "bytes": 998,
+      "pin_origin": "root exact named lifecycle output, original byte snapshot/pinned QUIET references",
+      "projection_kind": "safe-muse-lifecycle"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-count-checker-source-v1/RESULT.py",
+      "sha256": "76ec7af07d0c3704e6fa9ec0e33097a63d5b42d071d555d2bc818caa1fefdf21",
+      "bytes": 2229,
+      "pin_origin": "root exact sixth generic native checker source pin",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-count-checker-source-v1/ROOT_LAUNCH.json",
+      "sha256": "fab8c94a18b5d1a87517e6bddbb05606cb9cf038a8f784e538c4d7591785614d",
+      "bytes": 887,
+      "pin_origin": "root exact named lifecycle output, original byte snapshot/pinned QUIET references",
+      "projection_kind": "safe-muse-lifecycle"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-count-checker-source-v1/ROOT_SOURCE_ACCEPTANCE.json",
+      "sha256": "a6eab7e6fe3eba121e0527cd8136d33781f704a68dc249801c45c84e61e08302",
+      "bytes": 1147,
+      "pin_origin": "root exact generic source acceptance pin",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-count-checker-source-v1/prompt.txt",
+      "sha256": "68968ab7994cf0fb5bb88d5f75b64bf839afe05f7904a07170921ab5720e8001",
+      "bytes": 608,
+      "pin_origin": "root allowed exact generic prompt via QUIET pin",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/HELPER_CONCURRENCY_AUTHORITY_20261003.json",
+      "sha256": "f1682a991232997556aed7fb88f167e706317259913d9365c5a1fb72fc572a79",
+      "bytes": 1136,
+      "pin_origin": "root exact immutable observation/authority/correction pin",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/HELPER_CONCURRENCY_PROOF_POINTER_CORRECTION_V1.json",
+      "sha256": "c14191faf9fa89f3d4091085af19c3083b8f474d0b0e0b54a227a9f7d0ac9c19",
+      "bytes": 899,
+      "pin_origin": "root exact immutable observation/authority/correction pin",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/OBSERVATION_20261003_0307.json",
+      "sha256": "d28cdf97d4501639016af323531b94a3540d81eb3067d7957bed0852cb1c3329",
+      "bytes": 7138,
+      "pin_origin": "root exact immutable observation/authority/correction pin",
+      "projection_kind": "sanitized"
+    }
+  ],
+  "historical_helper_installation": "PENDING at 03:07 observation; prospective helper selection12 does not rewrite this snapshot",
+  "late_accounting_audit": "HOLD_ADVISORY; 56.580358028411865 seconds late; not bounded PASS",
+  "native_helper_totals_root_reported": {
+    "invocations": 6,
+    "complete": 4,
+    "timeouts": 2,
+    "known_native_CLI_seconds": 911.7189729450283,
+    "candidate_Goals": 0,
+    "realized_reasoning": "UNKNOWN",
+    "tokens": "UNKNOWN",
+    "money": "UNKNOWN"
+  },
+  "source_replay_portable": false,
+  "portable_checker": {
+    "path": "WORKTREE_ROOT/reports/external-research-v8-20261001-2140/prospective-source-cohort-v3/ops/muse-helper-public-check-v1/root-repair-v1/verify_public.py",
+    "sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd"
+  },
+  "native_provider_ledger_unit_signal_git_actions": 0
+}

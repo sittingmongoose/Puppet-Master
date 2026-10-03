@@ -1,0 +1,40 @@
+{
+  "schema": "er8.integrated-evaluation-disposition.v1",
+  "case_id": "V8-BIO-BREADTH-T-M",
+  "quality_disposition": "FAILED_SCREEN",
+  "whole_case_pass": false,
+  "numeric_grade": null,
+  "grade_scope": "Decisive partial screen; unassessed facets are not zero and not PASS",
+  "dominant_defect": "Per-level-only equality gate admits unequal full image/label geometry due to omitted multiscales-level transformations",
+  "coverage": {
+    "Q1": "UNASSESSED",
+    "Q2": "FAILED_SCREEN_PARTIAL_group-transform-overlay-condition",
+    "Q3": "UNASSESSED",
+    "B1": "UNASSESSED",
+    "B2": "UNASSESSED",
+    "B3": "FAILED_SCREEN_PARTIAL_unsafe-overlay-admission",
+    "B4": "UNASSESSED",
+    "B5": "UNASSESSED"
+  },
+  "counterexample_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-T-M/diagnostic-counterexample.json",
+  "quality_freeze_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-T-M/QUALITY_FREEZE.json",
+  "quality_freeze_sha256": "7fe1cbba76eedd0e10fb7417a9e2fdc300ff3c117ad84fb5a589bdcbb2fffe71",
+  "final_artifact_sha256": "7572d6ebfd1916d33fafb209c2ad0bdc03d45ca2fcfe320d7cb3a7096d30eb29",
+  "positive_operational_pipeline": true,
+  "native_goal_responses": [
+    15,
+    12,
+    9
+  ],
+  "native_goal_targets_distinct": true,
+  "same_account": "Parent/root attestation only; credentials and ledger not inspected",
+  "ledger_stages_completed": "Parent/root attestation only",
+  "source_transport_ranges_verified": true,
+  "source_semantic_acquisition": "UNKNOWN",
+  "frontend_consumption": "UNKNOWN",
+  "candidate_or_upstream_tests_executed_by_evaluator": false,
+  "evaluator_arithmetic_diagnostic_executed": true,
+  "full_semantic_preservation": "UNASSESSED",
+  "all_remaining_quality_dependencies": "UNASSESSED after decisive screen",
+  "protocol_boundary_disclosure": "Initial recursive filename inventory emitted private-runtime filenames; no private content opened. Candidate artifacts leak case and method references before freeze."
+}

@@ -1,0 +1,34 @@
+test_both_expirations_before_acquire (test_root_holder_successor_v2.SuccessorTests.test_both_expirations_before_acquire) ... ok
+test_busy_lock_never_claims_or_renews (test_root_holder_successor_v2.SuccessorTests.test_busy_lock_never_claims_or_renews) ... ok
+test_changed_request_after_acquisition_rejected (test_root_holder_successor_v2.SuccessorTests.test_changed_request_after_acquisition_rejected) ... ok
+test_claim_collision_preserved (test_root_holder_successor_v2.SuccessorTests.test_claim_collision_preserved) ... ok
+test_claim_symlink_collision_preserved (test_root_holder_successor_v2.SuccessorTests.test_claim_symlink_collision_preserved) ... ok
+test_deadline_and_integer_drift (test_root_holder_successor_v2.SuccessorTests.test_deadline_and_integer_drift) ... ok
+test_duplicate_request_key_rejected (test_root_holder_successor_v2.SuccessorTests.test_duplicate_request_key_rejected) ... ok
+test_epoch_cutoff_after_acquisition_unchanged (test_root_holder_successor_v2.SuccessorTests.test_epoch_cutoff_after_acquisition_unchanged) ... ok
+test_inode_replacement_rejected (test_root_holder_successor_v2.SuccessorTests.test_inode_replacement_rejected) ... ok
+test_lock_replacement_during_wait_rejected (test_root_holder_successor_v2.SuccessorTests.test_lock_replacement_during_wait_rejected) ... ok
+test_parent_symlink_rejected (test_root_holder_successor_v2.SuccessorTests.test_parent_symlink_rejected) ... ok
+test_positive_one_acquisition_and_unchanged_cutoffs (test_root_holder_successor_v2.SuccessorTests.test_positive_one_acquisition_and_unchanged_cutoffs) ... ok
+test_predecessor_corruption (test_root_holder_successor_v2.SuccessorTests.test_predecessor_corruption) ... ok
+test_predecessor_deadline_drift_even_with_matching_hash_rejected (test_root_holder_successor_v2.SuccessorTests.test_predecessor_deadline_drift_even_with_matching_hash_rejected) ... ok
+test_request_corruption (test_root_holder_successor_v2.SuccessorTests.test_request_corruption) ... ok
+test_source_sha_corruption (test_root_holder_successor_v2.SuccessorTests.test_source_sha_corruption) ... ok
+test_symlink_inputs_rejected (test_root_holder_successor_v2.SuccessorTests.test_symlink_inputs_rejected) ... ok
+test_unknown_key_and_path_ambiguity_rejected (test_root_holder_successor_v2.SuccessorTests.test_unknown_key_and_path_ambiguity_rejected) ... ok
+test_epoch_expiry_after_flock_prevents_claim (__main__.IndependentTests.test_epoch_expiry_after_flock_prevents_claim) ... ok
+test_fifo_request_rejected_without_wait_or_claim (__main__.IndependentTests.test_fifo_request_rejected_without_wait_or_claim) ... ok
+test_fsync_failure_leaves_distinct_claim_and_releases_lock (__main__.IndependentTests.test_fsync_failure_leaves_distinct_claim_and_releases_lock) ... ok
+test_lock_inode_replaced_after_flock_before_claim_rejected (__main__.IndependentTests.test_lock_inode_replaced_after_flock_before_claim_rejected) ... ok
+test_monotonic_expiry_after_flock_prevents_claim (__main__.IndependentTests.test_monotonic_expiry_after_flock_prevents_claim) ... ok
+test_parent_inode_replaced_during_wait_even_same_lock_rejected (__main__.IndependentTests.test_parent_inode_replaced_during_wait_even_same_lock_rejected) ... ok
+test_predecessor_byte_mutation_during_wait_rejected (__main__.IndependentTests.test_predecessor_byte_mutation_during_wait_rejected) ... ok
+test_same_byte_predecessor_claim_inode_replacement_observation (__main__.IndependentTests.test_same_byte_predecessor_claim_inode_replacement_observation) ... ok
+test_same_byte_predecessor_source_inode_replacement_observation (__main__.IndependentTests.test_same_byte_predecessor_source_inode_replacement_observation) ... ok
+test_same_byte_request_inode_replacement_observation (__main__.IndependentTests.test_same_byte_request_inode_replacement_observation) ... ok
+test_write_failure_leaves_empty_claim_without_overwrite_and_releases_lock (__main__.IndependentTests.test_write_failure_leaves_empty_claim_without_overwrite_and_releases_lock) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 0.149s
+
+OK

@@ -1,0 +1,119 @@
+{
+  "case_id": "V8-BIO-AMEND-C-L",
+  "disposition": "VERIFIED_FAILED_SCREEN",
+  "whole_case_pass": false,
+  "quality_freeze_epoch": 1790994847.30172,
+  "dominant_findings": [
+    "F1",
+    "F3"
+  ],
+  "complete_pipeline": true,
+  "coverage": [
+    {
+      "facet": "Q1",
+      "status": "ASSESSED_FAILED_APPLICABILITY",
+      "checked": "Two distinct primary implementations napari and stackview, exact captured docs/release, bounded tradeoff; native pinned level lock independently verified.",
+      "remaining_unassessed": [
+        "Exhaustive absence of stackview capability beyond README documentation (candidate mostly qualifies this correctly).",
+        "Actual desktop packaging feasibility."
+      ],
+      "findings": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "facet": "Q2",
+      "status": "ASSESSED_FAILED_PROPAGATION",
+      "checked": "NGFF0.4 front matter/version/tree, Zarrv2, axes/units conditions, per-level and group transforms/order, scale fallback, dataset ordering, label association and count MUST; source declarations versus registration correctly distinguished in descriptive section.",
+      "remaining_unassessed": [
+        "No full NGFF implementation conformance or arbitrary producer-content alignment proof."
+      ],
+      "findings": [
+        "F1",
+        "F4"
+      ]
+    },
+    {
+      "facet": "Q3",
+      "status": "ASSESSED_BOUNDED_SOURCE_CHAIN_SUPPORTED",
+      "checked": "Issue403 metadata/body/code pointer; PR590 explicit fixes link/merge/head and diff; actual writer+test changes at same diff; relative-vs-absolute scale formula; current master byte match.",
+      "remaining_unassessed": [
+        "Upstream suite execution (not claimed).",
+        "First numbered release shipping590 (open final lead4).",
+        "All producer/resampling algorithms or frequency estimates."
+      ],
+      "findings": [
+        "F6"
+      ]
+    },
+    {
+      "facet": "B1",
+      "status": "ASSESSED_WITH_PLAN_GAPS",
+      "checked": "Local two-level Zarrv2 read-only plan, version declaration optionality, explicit v3 refusal, strict transform gates including foreign-type check, optional-label disabled state.",
+      "remaining_unassessed": [
+        "General unsupported declared-version branch behavior beyond named0.5 example.",
+        "Filesystem read-only enforcement and viewer editing exclusion at runtime."
+      ],
+      "findings": [
+        "F5"
+      ]
+    },
+    {
+      "facet": "B2",
+      "status": "ASSESSED_FAILED_COMPONENT_APPLICABILITY",
+      "checked": "Axiswise affine cursor equation, ordered composition in principle, unit absence/display fallbacks, last-axis scale-bar conditions, corrected numeric witnesses.",
+      "remaining_unassessed": [
+        "Exact embedded cursor API implementation/accessor.",
+        "Anisotropic calibrated display correctness, group-transform rendering and tests."
+      ],
+      "findings": [
+        "F2",
+        "F3",
+        "F5"
+      ]
+    },
+    {
+      "facet": "B3",
+      "status": "ASSESSED_FAILED_ALIGNMENT_JUSTIFICATION",
+      "checked": "Source ordering/auto+lock behavior, optional categorical nearest choice, association versus alignment, count/transform mismatch refusal, concrete written-gate counterexamples.",
+      "remaining_unassessed": [
+        "Any actual rendered overlay or native viewer execution.",
+        "Fixed tolerance and complete normalized-map matching implementation."
+      ],
+      "findings": [
+        "F1",
+        "F2",
+        "F3",
+        "F4"
+      ]
+    },
+    {
+      "facet": "B4",
+      "status": "ASSESSED_FAILED_COMPONENT_APPLICABILITY_CHAIN_SUPPORTED",
+      "checked": "Two independently candidate-discovered relevant repositories supported by own-stage host fetches; positive README analogs; choice/tradeoff; actual issue/fix/test history.",
+      "remaining_unassessed": [
+        "Whether dependency/packaging choice meets desired small deployment in practice."
+      ],
+      "findings": [
+        "F2",
+        "F6"
+      ]
+    },
+    {
+      "facet": "B5",
+      "status": "ASSESSED_FAILED_CONSEQUENTIAL_DEPENDENCIES",
+      "checked": "Concrete replacement steps, eight proposed fixtures, visible limits and honest unexecuted status, open-lead preservation. V1,V3,V5 arithmetic checked independently in evaluator-only diagnostics.",
+      "remaining_unassessed": [
+        "Execution of all proposed validations (not claimed).",
+        "Unspecified anisotropic/group-transform/no-transform fallback/tolerance cases."
+      ],
+      "findings": [
+        "F1",
+        "F3",
+        "F5",
+        "F6"
+      ]
+    }
+  ]
+}

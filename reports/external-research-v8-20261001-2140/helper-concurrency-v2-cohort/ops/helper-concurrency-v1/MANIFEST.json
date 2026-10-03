@@ -1,0 +1,53 @@
+{
+  "schema": "pm.er8.helper-concurrency-source-manifest.v1",
+  "helper": "er8-helper-concurrency-source-v1",
+  "birth_epoch": 1790996057.7366228,
+  "original_hard_deadline_epoch": 1790996657.7366228,
+  "actual_end_epoch": 1790996499.5636384,
+  "source_only": true,
+  "live_install_performed": false,
+  "originals_modified": false,
+  "tests_passed": 15,
+  "source_api_sha256": "f8b0f9f984bbfe1b1fd62d46b956247961d09fdea01fabb83d759f631d75078d",
+  "files": [
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-v1/ledger_helper_concurrency_v1.py",
+      "sha256": "f8b0f9f984bbfe1b1fd62d46b956247961d09fdea01fabb83d759f631d75078d",
+      "bytes": 8976
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-v1/test_helper_concurrency_v1.py",
+      "sha256": "2ea58743be970b012a9bd69e44157c2cce8dc368c6695cbd68081333179b5353",
+      "bytes": 12130
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-v1/TEST_RESULTS.txt",
+      "sha256": "4f37f791380e4a19a065720ce1711282899c21e04dd5d8f79ca64f5d6ae290b7",
+      "bytes": 1776
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-v1/HANDOFF.md",
+      "sha256": "0658211498fa589e3d19fcf8287b593f7dedb6d7bde11f7c888249e82d10c2b1",
+      "bytes": 4710
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-v1/INSTALL_REQUEST_EXAMPLE.json",
+      "sha256": "90df801b750c4b61e0ef79cabb287892ab127e98eecc5c0134e33baffa069d2c",
+      "bytes": 273
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-v1/INSTALL_REQUEST_SCHEMA.json",
+      "sha256": "a5cee083190b7ba475685b43b7da323162670ec2a555ff5e674ae312d3c786eb",
+      "bytes": 572
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-v1/RECEIPT_SCHEMA.json",
+      "sha256": "23a3ff06bac43cc0e219440f4bd82db85be93628de8968124dc13c3272ecab1c",
+      "bytes": 1095
+    }
+  ],
+  "root_authority_path": "LAB_ROOT/ops/recovery-v1/HELPER_CONCURRENCY_AUTHORITY_20261003.json",
+  "root_authority_sha256": "f1682a991232997556aed7fb88f167e706317259913d9365c5a1fb72fc572a79",
+  "unchanged_resume_api_sha256": "a98cf53c1826f1f4c9fa47a9e181eaae8beb971ea41e6564578a253059450b61",
+  "pending": "Independent XHigh review and root installation only"
+}

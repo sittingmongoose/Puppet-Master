@@ -1,0 +1,72 @@
+{
+  "schema": "pm.er8.helper-concurrency-review-freeze.v1",
+  "helper": "er8-helper-concurrency-review-v1",
+  "birth_epoch": 1790996548.060725,
+  "original_hard_deadline_epoch": 1790997148.060725,
+  "actual_end_epoch": 1790997113.12338,
+  "ended_before_original_deadline": true,
+  "remaining_deadline_seconds": 34.937345027923584,
+  "decision": "HOLD",
+  "source_api_sha256": "f8b0f9f984bbfe1b1fd62d46b956247961d09fdea01fabb83d759f631d75078d",
+  "source_manifest_sha256": "becd3cb6f10ca259b2a9e4e282f028c3564d580aad51fb245203020c9f479e49",
+  "findings_count": 1,
+  "author_tests_passed": 15,
+  "independent_tests_passed": 15,
+  "independent_tests_failed": 2,
+  "originals_modified": false,
+  "live_install_performed": false,
+  "live_transaction_performed": false,
+  "all_original_input_pins_reverified": true,
+  "files": [
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-review-v1/REVIEW.json",
+      "sha256": "b4709ce80c3a67902e3d4cfdc9861d24ddcb5c8b6b80d101984d954b5fe1df5e",
+      "bytes": 3770
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-review-v1/REVIEW.md",
+      "sha256": "4a58c934f98664cbd8d9d4c1ba1ec047fc8c2e3547822435d1c03bf2e721efb6",
+      "bytes": 2355
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-review-v1/run_review.py",
+      "sha256": "fd64a4c07da0912ae0b34cf40e8afd916a7e371eec6574d26d8efc89872d1c13",
+      "bytes": 13902
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-review-v1/input-pins.json",
+      "sha256": "9f66bf309d1ac694443f7dc5e9a3e06eb59f6558a4410b84ff41bac092f91467",
+      "bytes": 6521
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-review-v1/test-summary.json",
+      "sha256": "8151d91883ef8c15ddc884f3292cf44ce03ee3d19c4cb64e08ba99df7db9102c",
+      "bytes": 242
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-review-v1/TEST_RESULTS.txt",
+      "sha256": "a480ea32ce61c986692695cc5d1812a375635fa13619363c72e69595ae84302b",
+      "bytes": 6162
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-review-v1/CLOCK_ROLLBACK_EVIDENCE.json",
+      "sha256": "15199ddce82cd723743a21b96d5d2e799352733422898b19c44905ab354a3d72",
+      "bytes": 204
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-review-v1/CLOCK_NONFINITE_EVIDENCE.json",
+      "sha256": "cad11ad5c786d0869ede53c030b77361c50d2a2f1cd35558ad75aaa03d1890ce",
+      "bytes": 230
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-review-v1/PRE_EDGE_PASSING_RESULTS.txt",
+      "sha256": "d87d4a6f210adb8c198c480b8a862e2efe83c191338f1821af43cdb166681873",
+      "bytes": 4178
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-review-v1/ATTEMPT1_ISOLATION_GUARD_RESULTS.txt",
+      "sha256": "0ef349e165801853239d8fb5212dde4d783060403906b60e6ae02452af05c37d",
+      "bytes": 7628
+    }
+  ]
+}

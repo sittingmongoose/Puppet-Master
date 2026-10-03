@@ -1,0 +1,30 @@
+{
+  "schema": "pm.er8.latest-root-metadata-positive-handoff.v1",
+  "original_birth_epoch": 1790997855.2147198,
+  "original_deadline_epoch": 1790998755.2147198,
+  "prepared_epoch": 1790998446.466416,
+  "scope": "Three exact root-named immutable corrected/superseded observations and helper-v2 install/readback receipt only. Source/manifests/reviews are original locator/hash provenance, not transitive export.",
+  "positive_files": [
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/OBSERVATION_20261003_033042.json",
+      "sha256": "dae9e439aa894a15f039b11f8ca8508bad165662c3d335ef558bffafffc17fd4",
+      "bytes": 16029,
+      "pin_origin": "root exact named immutable post-base-freeze addition"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/HELPER_CONCURRENCY_ROOT_INSTALL_V2.json",
+      "sha256": "e9e743d89c34adb8c2d229cf985a57d663c0b027b7569ffbbb78bd8246ab87d0",
+      "bytes": 1740,
+      "pin_origin": "root exact named immutable post-base-freeze addition"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/OBSERVATION_20261003_032937.json",
+      "sha256": "007f29037e495309a708594b3479964413f37c43de43808c4ffadecd709dd555",
+      "bytes": 15281,
+      "pin_origin": "root exact named immutable post-base-freeze addition"
+    }
+  ],
+  "base24_files_unchanged": true,
+  "public_source_expansion": false,
+  "no_clock_reset": true
+}

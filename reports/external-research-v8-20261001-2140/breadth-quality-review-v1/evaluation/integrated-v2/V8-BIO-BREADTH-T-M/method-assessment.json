@@ -1,0 +1,26 @@
+{
+  "schema": "er8.separated-method-assessment.v1",
+  "quality_disposition_already_frozen": "FAILED_SCREEN",
+  "quality_freeze_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-T-M/QUALITY_FREEZE.json",
+  "quality_freeze_sha256": "7fe1cbba76eedd0e10fb7417a9e2fdc300ff3c117ad84fb5a589bdcbb2fffe71",
+  "method_first_read_after_quality_freeze": true,
+  "assigned_method": "ordinary-complete-plus-bounded-breadth-analogy-discovery",
+  "assigned_method_sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+  "visible_instruction_uptake": {
+    "shortlist_count": 4,
+    "shortlist": [
+      "napari + ome-zarr-py",
+      "vizarr / Viv",
+      "bigdataviewer-ome-zarr",
+      "OpenSeadragon analogy"
+    ],
+    "comparison": "napari + ome-zarr-py vs vizarr / Viv",
+    "bounded_tradeoff_and_analogy_rejection_present": true,
+    "actual_before_commitment_order": "UNKNOWN without native reasoning/history; not inspected",
+    "independent_discovery_truth": "UNASSESSED at early screen; own artifact and capture declarations do not prove semantic discovery",
+    "analogy_transfer_truth": "UNASSESSED at early screen"
+  },
+  "special_witness_assigned": false,
+  "required_validation_quality": "B3 group-transform counterexample not covered by declared F4–F6/C4; other discriminating validation claims remain unassessed",
+  "method_effect_comparison": "No sibling outcomes or matched-pair comparison inspected; no isolated treatment main-effect or quality-equivalent speedup claim"
+}

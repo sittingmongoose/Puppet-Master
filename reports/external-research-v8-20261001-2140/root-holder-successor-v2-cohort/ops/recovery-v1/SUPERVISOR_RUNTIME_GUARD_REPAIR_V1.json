@@ -1,0 +1,33 @@
+{
+  "schema": "pm.er8.supervisor-runtime-guard-repair-observation.v1",
+  "root_authority": true,
+  "observed_epoch": 1790992025.5141654,
+  "original_claim": {
+    "path": "LAB_ROOT/ops/recovery-v1/SUPERVISOR_DURABLE.json",
+    "sha256": "e0b37dcddefe3d6fcad80a913701cb69729b467bd0ffbf34b535f54dab3211b9"
+  },
+  "original_holder_source": {
+    "path": "LAB_ROOT/ops/recovery-v1/durable_holder_v1.py",
+    "sha256": "48907c8afa5b6a8699b61d01528466e4c5b838ac2bdb955f4420738dc2a12788"
+  },
+  "unchanged_global_deadline_epoch": 1791013030.8303788,
+  "original_unit": "er8-v8-root-durable-20261002-2348.service",
+  "original_pid": 1969270,
+  "observed_runtime_max_seconds": 28000,
+  "observed_active_enter_timestamp_monotonic_us": 206574696604,
+  "set_property_attempt": {
+    "argv": [
+      "systemctl",
+      "--user",
+      "set-property",
+      "--runtime",
+      "er8-v8-root-durable-20261002-2348.service",
+      "RuntimeMaxSec=28203s"
+    ],
+    "exit_code": 1,
+    "mutation_established": false,
+    "failure_reason_projection": "RuntimeMaxUSec property unsupported or unknown; setter exit code 1; mutation not established."
+  },
+  "postcheck": "Same MainPID1969270 active/running; RuntimeMaxUSec unchanged28000; no restart/clock/birth/claim mutation",
+  "next": "Supported bounded supervision/handover or finalcleanup arrangement before originaltimerexpiry; no unsupportedpropertyretry/profileedit/boundarywidening"
+}

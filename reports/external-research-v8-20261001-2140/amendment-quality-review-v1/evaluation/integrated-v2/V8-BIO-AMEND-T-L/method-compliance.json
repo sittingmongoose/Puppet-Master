@@ -1,0 +1,62 @@
+{
+  "schema": "er8.independent.method-duty-assessment.v1",
+  "case": "V8-BIO-AMEND-T-L",
+  "read_after_quality_freeze_utc": "2026-10-03T02:33:08.905639+00:00",
+  "quality_freeze_sha256": "6ae655f13c353088df5a9fada06ce942ff9c7c35971e66f461f1c7733fb3be75",
+  "method_identity": "ordinary-complete-plus-prioritized-amendment-flash-critique",
+  "local_METHOD_sha256": "cb187544119249fdeef595b43cce64fd0f858e0cf1243264cf4bb7d59fad39b8",
+  "native_accepted_method_receipt_sha256": "4f7a81f048c35a368bafcfad5fe49cee1bd8a1e14236aa445876b6f64f20ae17",
+  "different_hash_scope_note": "These are differently packaged method surfaces; no identity equivalence claimed from hash equality. No manifest or private method files read.",
+  "duties": [
+    {
+      "duty": "lean research → proposal → fresh candidate critique → final correction",
+      "status": "VERIFIED_UPTAKE",
+      "evidence": "Three distinct complete fresh Goal receipts; actual proposal/critique/final artifacts frozen."
+    },
+    {
+      "duty": "critic all three questions and five obligations",
+      "status": "STRUCTURALLY_PRESENT_TRUTH_FAILURE",
+      "evidence": "CRITIQUE final assessment lists all eight; B2/B3 PASS misses F-Q1 and B1 PASS misses F-Q3. Structural coverage cannot stand in for correct source applicability."
+    },
+    {
+      "duty": "up to three highest-consequence warranted amendments with exact affected passage, replacement/deletion, source/version/context, useful discriminator",
+      "status": "FORM_PRESENT_SUBSTANTIVE_PARTIAL",
+      "evidence": "A1–A3 are individually identifiable and source-grounded changes. A1’s proposed F4b is preserved but unsupported by final S5 predicate. No proof that A3 was deliberately invented; ranking alone not scored as violation."
+    },
+    {
+      "duty": "append additional consequential unresolved obligations",
+      "status": "VERIFIED_UPTAKE_WITH_UNRESOLVED_DEPENDENCIES",
+      "evidence": "Six appended notes plus U2–U7. Quality freeze records effect of unresolved chosen-stack dependency rather than suppressing it."
+    },
+    {
+      "duty": "fresh correction rechecks amendments and complete usable artifact",
+      "status": "ARTIFACT_AND_RECHECK_UPTAKE_VERIFIED_QUALITY_FAILED_SCREEN",
+      "evidence": "Final resolution log, direct own-stage re-fetches of reader/spec/diff/releases, full final proposal. Source quality remains F-Q1."
+    },
+    {
+      "duty": "same assigned candidate family/account/model/mode",
+      "status": "MODEL_EFFORT_FRESHNESS_RECEIPT_VERIFIED_ACCOUNT_PARENT_ATTESTED",
+      "evidence": "GLM-5.3-Flash/max all three; parent attests same root account; evaluator did not inspect account/auth/profiles."
+    },
+    {
+      "duty": "existing600-second critic cap",
+      "status": "LITERAL_CAP_EXCEEDED_PACKAGING_CONFLICT",
+      "evidence": "METHOD says600; TASK says1200. Critic native interval872.699725379s, therefore even native-only lowerbound exceeds600. Critic stage COMPLETE deadline uses1200 and returns before that deadline. No waiver read."
+    },
+    {
+      "duty": "no special witness/table/batching/retrieval-wave procedure imposed",
+      "status": "NOT_ASSIGNED",
+      "evidence": "METHOD explicitly leaves those optional. F3 hand-derived validation is spontaneous ordinary behavior; no failure for absent executed witness."
+    },
+    {
+      "duty": "source truth, conditions, no checklist substitution, no unexecuted-test-pass claim",
+      "status": "SOURCE_TRUTH_FAILED_SCREEN_EXECUTION_LABELING_VERIFIED",
+      "evidence": "F-Q1 applicability missed despite checklist PASS; artifacts consistently say no execution."
+    }
+  ],
+  "method_overall": "PARTIAL_UPTAKE; accuracy failure inherited from frozen quality; literal cap exceeded with contradictory1200-second TASK packaging",
+  "common_background": "All brief B1–B5 obligations, exact source scopes and three native stages are shared pipeline requirements. Amendment organization is the assigned addition. No isolated main-effect or matched-arm comparison inferred.",
+  "feedback_to_candidate": false,
+  "packaging_limitation": "Parent clarification after frozen quality: prospective source allocation changed only formerly unstarted cases to1200/1200/900; older METHOD600 cap prose was retained. Admitted TASK/runtime1200 lease remained unchanged and was not late.",
+  "admitted_critic_lease_compliance": "VERIFIED_WITHIN1200; literal METHOD600 exceeded independently of lease status"
+}

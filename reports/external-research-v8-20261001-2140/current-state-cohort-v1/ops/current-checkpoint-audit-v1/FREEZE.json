@@ -1,0 +1,14 @@
+{
+  "schema": "pm.er8.audit-freeze.v1",
+  "helper": "er8-current-checkpoint-audit-v1",
+  "birth_epoch": 1790995738.826653,
+  "original_deadline_epoch": 1790996338.826653,
+  "actual_end_epoch": 1790995996.0756226,
+  "elapsed_seconds": 257.2489695549011,
+  "ended_before_original_deadline": true,
+  "files": {
+    "REPORT.json": "010163e41a2acb506cd9d9bc5e108d38342dc86c2054d7807cbf14e14cd4aec7",
+    "REPORT.md": "0524d6aeb46080da32562f1f6b5a3dfd554e31e13b01689ffd8fb6392ec5473d",
+    "SHA256SUMS": "8acdd6afb0f94eac7c2736e11d0de4798dcafa99f6e63bf940b778d865245c2f"
+  }
+}

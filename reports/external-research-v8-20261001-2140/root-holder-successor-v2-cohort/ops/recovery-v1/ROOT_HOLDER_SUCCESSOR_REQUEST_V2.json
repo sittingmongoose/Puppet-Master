@@ -1,0 +1,19 @@
+{
+  "schema": "pm.er8.root-holder-successor-request.v2",
+  "root_authority": true,
+  "deadline_epoch": 1791013030.8303788,
+  "native_global_cutoff_monotonic_ns": 234777000142921,
+  "source_path": "LAB_ROOT/ops/root-holder-successor-v2/root_holder_successor_v2.py",
+  "source_sha256": "77f869fe33387d426fc0fe66e146e0fad3ebbca08b386650773587b6748d1e35",
+  "predecessor_source_path": "LAB_ROOT/ops/recovery-v1/durable_holder_v1.py",
+  "predecessor_source_sha256": "48907c8afa5b6a8699b61d01528466e4c5b838ac2bdb955f4420738dc2a12788",
+  "predecessor_claim_path": "LAB_ROOT/ops/recovery-v1/SUPERVISOR_DURABLE.json",
+  "predecessor_claim_sha256": "e0b37dcddefe3d6fcad80a913701cb69729b467bd0ffbf34b535f54dab3211b9",
+  "predecessor_pid": 1969270,
+  "predecessor_unit": "er8-v8-root-durable-20261002-2348.service",
+  "lock_path": "LAB_ROOT/ops/recovery-v1/supervisor.lock",
+  "lock_device": 64512,
+  "lock_inode": 11147325,
+  "successor_claim_path": "LAB_ROOT/ops/recovery-v1/SUPERVISOR_DURABLE_SUCCESSOR_V2.json",
+  "successor_unit": "er8-v8-root-durable-successor-v2.service"
+}

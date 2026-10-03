@@ -1,0 +1,68 @@
+{
+  "schema": "er8.independent.public_source_excerpt_locators.v1",
+  "case_id": "V8-BIO-BREADTH-C-M",
+  "rule": "At most 25 quoted words per distinct source; raw bodies remain external and are not publication outputs.",
+  "excerpts": [
+    {
+      "source_id": "S1",
+      "url": "https://raw.githubusercontent.com/ome/ngff-spec/a4c68004fdb8a8d822367205dc12f9574a32ddf8/index.md",
+      "sha256": "fc39309d1ea85bfcebd469008e3111951a605870cc8292301c0de165767b0211",
+      "raw_body_external_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-C-M/source-captures/S1-fc39309d1ea85bfcebd469008e3111951a605870cc8292301c0de165767b0211.body",
+      "lines": [
+        378,
+        378
+      ],
+      "excerpt": "[third-party verbatim source excerpt omitted; original locator/hash/range retained]",
+      "excerpt_word_count": 0,
+      "purpose": "Condition controlling the relative-factor fallback; axes unit presence is separately optional at lines 250-257.",
+      "original_excerpt_sha256": "2a6adcaffa9e4ac52160f67a4b27b605a72549548f09731bf243b9a795bc11c3",
+      "original_excerpt_word_count": 8
+    },
+    {
+      "source_id": "S8",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/labels/labels.py",
+      "sha256": "e10bf6b4f7e13ad73fc9adb5e15225a792f9fef52b3a00391d41a23da75808f6",
+      "raw_body_external_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-C-M/source-captures/S8-e10bf6b4f7e13ad73fc9adb5e15225a792f9fef52b3a00391d41a23da75808f6.body",
+      "lines": [
+        196,
+        201
+      ],
+      "excerpt": "[third-party verbatim source excerpt omitted; original locator/hash/range retained]",
+      "excerpt_word_count": 0,
+      "purpose": "Deprecated mapping scope of the nearby cap statement; modern range not established by this excerpt.",
+      "original_excerpt_sha256": "7cfd08c50d7aaffad7bebb6cf06e373d3ed939cb6345ff4039fefd32470f27b0",
+      "original_excerpt_word_count": 4
+    },
+    {
+      "source_id": "S4",
+      "url": "https://raw.githubusercontent.com/hms-dbmi/vizarr/master/src/ome.ts",
+      "sha256": "bb228cc5e442b1446ef8ec0e8aa8d6fe4557c6fb9d6a07935ad4b5748382cb86",
+      "raw_body_external_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-C-M/source-captures/S4-bb228cc5e442b1446ef8ec0e8aa8d6fe4557c6fb9d6a07935ad4b5748382cb86.body",
+      "lines": [
+        321,
+        347
+      ],
+      "excerpt": "[third-party verbatim source excerpt omitted; original locator/hash/range retained]",
+      "excerpt_word_count": 0,
+      "purpose": "Label loader assertion and absence-of-label fallback; whole file inspected for the scoped no-cross-check observation.",
+      "original_excerpt_sha256": "07f2ec9b03138aca4a07582b66f343aad9c67c554487ff0971f6eb84ff0e2dea",
+      "original_excerpt_word_count": 3
+    },
+    {
+      "source_id": "E1-scalar-field",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.7.1/src/napari/layers/_scalar_field/scalar_field.py",
+      "sha256": "d30861fc65e5c1a01f8b9898d172a56cf9ef3ed706dc4df96dd70a6ae47d4c20",
+      "raw_body_external_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-C-M/source-captures/E1-scalar-field-d30861fc65e5c1a01f8b9898d172a56cf9ef3ed706dc4df96dd70a6ae47d4c20.body",
+      "lines": [
+        579,
+        581
+      ],
+      "excerpt": "[third-party verbatim source excerpt omitted; original locator/hash/range retained]",
+      "excerpt_word_count": 0,
+      "purpose": "Toolkit downsample factors are shape-derived; arbitrary per-level metadata integration is not certified by this screen.",
+      "original_excerpt_sha256": "01603c24fb9400f2eb595ec9f4f16acb4c2ffaa160810b3c7aa68e9d919174c0",
+      "original_excerpt_word_count": 3
+    }
+  ],
+  "public_projection_quote_policy": "All direct third-party source-excerpt spans omitted; original count retained separately."
+}

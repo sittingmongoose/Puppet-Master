@@ -1,0 +1,14 @@
+{
+  "schema": "pm.er8.public-checkpoint-audit-integrity-check.v2",
+  "command": "python3 -I -B verify_public.py COHORT_ROOT",
+  "returncode": 0,
+  "result": {
+    "model_quality_assessed": false,
+    "native_replay_verified": false,
+    "scope": "offline artifact hashes and optional declarations only",
+    "timing_declarations_present_and_valid": false,
+    "verified_artifacts": 7
+  },
+  "public_export_sha256": "45467e6220bef9e5d5c1506232ae8a615639ece82ca8630fff9877ec61953e12",
+  "scope": "Public hashes only; map absent expected; no audit repetition/live-state/native/grade claims."
+}

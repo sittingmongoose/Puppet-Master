@@ -1,0 +1,35 @@
+{
+  "schema": "pm.er8.root-holder-successor-positive.v2",
+  "root_authority": true,
+  "observed_epoch": 1790994500.6652873,
+  "unit": "er8-v8-root-durable-successor-v2.service",
+  "main_pid": 2422357,
+  "properties": {
+    "RuntimeMaxUSec": "5h 9min 25s",
+    "MainPID": "2422357",
+    "ExecMainStartTimestampMonotonic": "216214596215",
+    "ExecStart": "{ path=/usr/bin/python3 ; argv[]=/usr/bin/python3 LAB_ROOT/ops/root-holder-successor-v2/root_holder_successor_v2.py --root-request LAB_ROOT/ops/recovery-v1/ROOT_HOLDER_SUCCESSOR_REQUEST_V2.json --request-sha256 3e251412e16c8fb9757261b50f1e3d7dba6e5090ff1b93654e4f4724ca88e01f ; ignore_errors=no ; start_time=[Sat 2026-10-03 02:27:48 UTC] ; stop_time=[n/a] ; pid=2422357 ; code=(null) ; status=0/0 }",
+    "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-root-durable-successor-v2.service",
+    "ActiveState": "active",
+    "SubState": "running"
+  },
+  "actual_argv": [
+    "/usr/bin/python3",
+    "LAB_ROOT/ops/root-holder-successor-v2/root_holder_successor_v2.py",
+    "--root-request",
+    "LAB_ROOT/ops/recovery-v1/ROOT_HOLDER_SUCCESSOR_REQUEST_V2.json",
+    "--request-sha256",
+    "3e251412e16c8fb9757261b50f1e3d7dba6e5090ff1b93654e4f4724ca88e01f"
+  ],
+  "same_open_lock_identity": true,
+  "lock_device": 64512,
+  "lock_inode": 11147325,
+  "distinct_successor_claim_absent": true,
+  "disposition": "ACTIVE_STANDBY_WAITER; PREDECESSOR_REMAINS_OWNER",
+  "exclusive_ownership_claimed": false,
+  "native_launch": false,
+  "cutoffs_unchanged": true,
+  "launch_intent_sha256": "d5867af30fad656133a5078778c155670619f00495e5f90c5bd5d7cd64a29b09",
+  "request_sha256": "3e251412e16c8fb9757261b50f1e3d7dba6e5090ff1b93654e4f4724ca88e01f",
+  "source_review_limit": "Same-byte replacement of content-pinned input inode accepted; lock/parent inode strict; live natural predecessor exit not yet observed."
+}

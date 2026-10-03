@@ -1,0 +1,66 @@
+{
+  "schema": "pm.er8.public-source-quotation-projection-audit.v1",
+  "policy": "<=25 direct third-party words per source across this cohort; conservative omission of every direct SOURCE_EXCERPTS quotation span. Review prose/verdicts otherwise unchanged. No raw source body reads/copies by publisher.",
+  "third_party_direct_verbatim_words_published": 0,
+  "reviews_explicit_quotation_spans": 0,
+  "candidate_own_quotes_permitted": true,
+  "original_source_locators_primary_URLs_ranges_preserved": true,
+  "artifacts": [
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-C-M/SOURCE_EXCERPTS.json",
+      "original_sha256": "c46064263e71ead6ec7512ece1928a014ab1514a4af334596b761dae67185c74",
+      "omitted_spans": [
+        {
+          "original_span_sha256": "2a6adcaffa9e4ac52160f67a4b27b605a72549548f09731bf243b9a795bc11c3",
+          "original_word_count": 8,
+          "public_verbatim_word_count": 0,
+          "json_source_id": "S1"
+        },
+        {
+          "original_span_sha256": "7cfd08c50d7aaffad7bebb6cf06e373d3ed939cb6345ff4039fefd32470f27b0",
+          "original_word_count": 4,
+          "public_verbatim_word_count": 0,
+          "json_source_id": "S8"
+        },
+        {
+          "original_span_sha256": "07f2ec9b03138aca4a07582b66f343aad9c67c554487ff0971f6eb84ff0e2dea",
+          "original_word_count": 3,
+          "public_verbatim_word_count": 0,
+          "json_source_id": "S4"
+        },
+        {
+          "original_span_sha256": "01603c24fb9400f2eb595ec9f4f16acb4c2ffaa160810b3c7aa68e9d919174c0",
+          "original_word_count": 3,
+          "public_verbatim_word_count": 0,
+          "json_source_id": "E1-scalar-field"
+        }
+      ],
+      "public_verbatim_source_quotation_words": 0,
+      "locator_hash_ranges_retained": true,
+      "finding_or_verdict_change": false
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-T-M/QUALITY_REVIEW.md",
+      "original_sha256": "dad9110d980a4f3773008fadf8cd0f3161e7183c256e8807edaaa2fc6664ac0a",
+      "omitted_spans": [
+        {
+          "original_span_sha256": "6a47af1c154d488e7fcc4dcdfd967b91fcbc0eca9a9babd0c023128726c213fb",
+          "original_word_count": 20,
+          "public_verbatim_word_count": 0,
+          "original_line": 32
+        }
+      ],
+      "public_verbatim_source_quotation_words": 0,
+      "locator_hash_ranges_retained": true,
+      "finding_or_verdict_change": false
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-T-M/SOURCE_EXCERPTS.md",
+      "original_sha256": "6bd19b27bb68ccf54c39e9456f6b4bba3c00bd8f30b8a535854acaa9931f0343",
+      "omitted_spans": [],
+      "public_verbatim_source_quotation_words": 0,
+      "locator_hash_ranges_retained": true,
+      "finding_or_verdict_change": false
+    }
+  ]
+}

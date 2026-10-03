@@ -1,0 +1,14 @@
+{
+  "schema": "pm.er8.muse-lifecycle-public-integrity-check.v1",
+  "command": "python3 -I -B verify_public.py COHORT_ROOT",
+  "returncode": 0,
+  "result": {
+    "model_quality_assessed": false,
+    "native_replay_verified": false,
+    "scope": "offline artifact hashes and optional declarations only",
+    "timing_declarations_present_and_valid": false,
+    "verified_artifacts": 9
+  },
+  "public_export_sha256": "1538fe27f89b1aacc19b931f98cf6cf4acad1faf518e0d2daf2513556e5e4e28",
+  "scope": "Public hashes only; map absent expected; no native/process/unit/model quality/source extraction/handoff proof."
+}

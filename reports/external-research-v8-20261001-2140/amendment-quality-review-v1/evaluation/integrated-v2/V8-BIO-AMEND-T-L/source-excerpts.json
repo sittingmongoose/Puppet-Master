@@ -1,0 +1,219 @@
+{
+  "schema": "er8.independent.public-source-excerpts.v1",
+  "case": "V8-BIO-AMEND-T-L",
+  "publication_rule": "At most25 quoted words per distinct source; raw captures external-only; locators and SHA retain surrounding context.",
+  "items": [
+    {
+      "id": "spec04",
+      "locator": "OME-NGFF0.4 §3.1 #axes-md; §3.4 #multiscale-md",
+      "ruling": "Units are conditional metadata; calibration-unavailable scale is relative to each pyramid’s first level. F6 supplies no common basis.",
+      "scope": "Calibration applicability only; no whole-format conformance verdict.",
+      "url": "https://ngff.openmicroscopy.org/0.4/",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/independent-primary/spec04.body",
+      "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+      "fetched_utc": "2026-10-03T02:25:26.838942+00:00",
+      "reviewed_ranges": [
+        {
+          "scope": "axes",
+          "byte_start": 81596,
+          "byte_end_exclusive": 90068,
+          "range_sha256": "4f567e8a8f321f865d1c49d917468c26671e5ab0cd00e9a81eb0e75c74975e91"
+        },
+        {
+          "scope": "transform-and-multiscales",
+          "byte_start": 97166,
+          "byte_end_exclusive": 109224,
+          "range_sha256": "4200778861a9bfdb8655f47066dd64dfb2b06c4516652806ce046311ec4a5345"
+        },
+        {
+          "scope": "labels",
+          "byte_start": 112411,
+          "byte_end_exclusive": 116856,
+          "range_sha256": "f1daeb5669796887ec03db5e09e8ffa37c73f1f6b039bf6125764255e6ec7ac4"
+        }
+      ],
+      "quoted_word_count": 0,
+      "published_excerpt": "Public verbatim source excerpt omitted; original source locator/hash/range retained.",
+      "original_quoted_word_count": 13
+    },
+    {
+      "id": "napari_reader_v0100",
+      "locator": "v0.10.0 ome_zarr_reader.py lines136–139,187–194,237–283,402–406,490–495",
+      "ruling": "Plain0.4 uses each layer’s own first transform. Parent-transform assignment shown is Scene-specific. Corrected A1 is supported.",
+      "scope": "Static reader mechanism only; does not prove all napari-layer capability.",
+      "url": "https://raw.githubusercontent.com/ome/napari-ome-zarr/v0.10.0/napari_ome_zarr/ome_zarr_reader.py",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/independent-primary/napari_reader_v0100.body",
+      "sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e",
+      "fetched_utc": "2026-10-03T02:25:26.841188+00:00",
+      "reviewed_ranges": [
+        {
+          "line_start": 136,
+          "line_end_inclusive": 140,
+          "byte_start": 5250,
+          "byte_end_exclusive": 5399,
+          "range_sha256": "727e9c209292a854e26b15e57c8634b4aaaf41378a6956b6edb5cab4d66fda4d"
+        },
+        {
+          "line_start": 169,
+          "line_end_inclusive": 202,
+          "byte_start": 6101,
+          "byte_end_exclusive": 7390,
+          "range_sha256": "7d17825917a271477ec21c7dab492edf2254cde5dfbcab322c38eb6cc9a5d5e2"
+        },
+        {
+          "line_start": 215,
+          "line_end_inclusive": 300,
+          "byte_start": 7888,
+          "byte_end_exclusive": 11997,
+          "range_sha256": "9b6051e348f99ae87e8f0252872292d748cb6f8f3a121acba68c953e27723a50"
+        },
+        {
+          "line_start": 402,
+          "line_end_inclusive": 407,
+          "byte_start": 15903,
+          "byte_end_exclusive": 16050,
+          "range_sha256": "750928f57c3541f9c4fc892bf25ac27fc6afb7acc148ed434e3de98221f0962e"
+        },
+        {
+          "line_start": 469,
+          "line_end_inclusive": 495,
+          "byte_start": 19549,
+          "byte_end_exclusive": 20837,
+          "range_sha256": "2b028b5de5ec4ae1c3e8a7303dd37953ac92bdcbe39d8cb3f42af923bcd20b05"
+        },
+        {
+          "line_start": 572,
+          "line_end_inclusive": 625,
+          "byte_start": 23431,
+          "byte_end_exclusive": 25470,
+          "range_sha256": "dd102a978394655bd687afc602e7134998a004c0f6b5734cc9b87f12e26b4d1c"
+        }
+      ],
+      "quoted_word_count": 0,
+      "published_excerpt": "Public verbatim source excerpt omitted; original source locator/hash/range retained.",
+      "original_quoted_word_count": 3
+    },
+    {
+      "id": "vizarr261_diff",
+      "locator": "PR261 .diff lines542–546,593–603",
+      "ruling": "Captured patch’s fit expression uses minX in vertical span; first dataset’s transform list is iterated. No test files occur in this nine-file diff.",
+      "scope": "Captured PR patch; not every current/released vizarr build.",
+      "url": "https://github.com/hms-dbmi/vizarr/pull/261.diff",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/independent-primary/vizarr261_diff.body",
+      "sha256": "22066be87be786e81fdde59143924d71c5eda932cbd57c3887b2949efc9ab9ee",
+      "fetched_utc": "2026-10-03T02:25:26.842806+00:00",
+      "reviewed_ranges": [
+        {
+          "line_start": 342,
+          "line_end_inclusive": 357,
+          "byte_start": 13777,
+          "byte_end_exclusive": 14397,
+          "range_sha256": "0daa4cfd40619f6addb4e57d820dfb87ce014755aec6599e243c42d539e0effa"
+        },
+        {
+          "line_start": 520,
+          "line_end_inclusive": 564,
+          "byte_start": 20111,
+          "byte_end_exclusive": 21665,
+          "range_sha256": "47df990fbe16c9d1c5e7103077084a5beabd92ef6e3c98cfb44fd8e540f7b97c"
+        },
+        {
+          "line_start": 577,
+          "line_end_inclusive": 628,
+          "byte_start": 22109,
+          "byte_end_exclusive": 24722,
+          "range_sha256": "2eb5fed4d863e8767e2fee589c6da013716e973cd2ee51dd9429ffd7f10b9677"
+        }
+      ],
+      "quoted_word_count": 0,
+      "published_excerpt": "Public verbatim source excerpt omitted; original source locator/hash/range retained.",
+      "original_quoted_word_count": 5
+    },
+    {
+      "id": "ome403",
+      "locator": "issue403 JSON /body,/created_at,/closed_at",
+      "ruling": "Real downsampling-origin failure is reported at an exact linked writer commit.",
+      "scope": "Issue report, not an unconditional theorem about every downsampler.",
+      "url": "https://api.github.com/repos/ome/ome-zarr-py/issues/403",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/independent-primary/ome403.body",
+      "sha256": "2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99",
+      "fetched_utc": "2026-10-03T02:25:26.844266+00:00",
+      "reviewed_ranges": [
+        {
+          "scope": "full JSON parsed and relevant top-level fields inspected",
+          "byte_start": 0,
+          "byte_end_exclusive": 3698,
+          "range_sha256": "2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99"
+        }
+      ],
+      "quoted_word_count": 0,
+      "published_excerpt": "Public verbatim source excerpt omitted; original source locator/hash/range retained.",
+      "original_quoted_word_count": 5
+    },
+    {
+      "id": "ome590",
+      "locator": "PR590 JSON /body,/merged_at,/head/sha",
+      "ruling": "Explicit upstream issue-to-fix link; merged2026-06-17T15:55:02Z, head db3d40e8f4596e39a38cabb355f871aa29bce3e2.",
+      "scope": "Exact captured PR context.",
+      "url": "https://api.github.com/repos/ome/ome-zarr-py/pulls/590",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/independent-primary/ome590.body",
+      "sha256": "2b797ae575b5aee3fd0087280eab97abb10177cff0078024b8c37354b7b17603",
+      "fetched_utc": "2026-10-03T02:25:26.845740+00:00",
+      "reviewed_ranges": [
+        {
+          "scope": "full JSON parsed and relevant top-level fields inspected",
+          "byte_start": 0,
+          "byte_end_exclusive": 16985,
+          "range_sha256": "2b797ae575b5aee3fd0087280eab97abb10177cff0078024b8c37354b7b17603"
+        }
+      ],
+      "quoted_word_count": 0,
+      "published_excerpt": "Public verbatim source excerpt omitted; original source locator/hash/range retained.",
+      "original_quoted_word_count": 2
+    },
+    {
+      "id": "ome590_diff",
+      "locator": "PR590 diff format.py hunk and tests/test_writer.py hunks",
+      "ruling": "Writer patch adds scale-plus-translation metadata. Related test changes expect two transforms and construct translations; physical and relative bases differ across files.",
+      "scope": "Static issue→fix→regression-test chain; no upstream test-run or candidate execution claimed.",
+      "url": "https://github.com/ome/ome-zarr-py/pull/590.diff",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/independent-primary/ome590_diff.body",
+      "sha256": "f0aa7ce9ce88fbfdb83214141942a8ae4d0c3aa206773ea523b9f38cc09ce565",
+      "fetched_utc": "2026-10-03T02:25:26.846981+00:00",
+      "reviewed_ranges": [
+        {
+          "line_start": 1,
+          "line_end_inclusive": 167,
+          "byte_start": 0,
+          "byte_end_exclusive": 6811,
+          "range_sha256": "f0aa7ce9ce88fbfdb83214141942a8ae4d0c3aa206773ea523b9f38cc09ce565"
+        }
+      ],
+      "quoted_word_count": 0,
+      "published_excerpt": "Public verbatim source excerpt omitted; original source locator/hash/range retained.",
+      "original_quoted_word_count": 15
+    },
+    {
+      "id": "ome0180release",
+      "locator": "release v0.18.0 JSON /body,/published_at",
+      "ruling": "Release body lists PR590; published2026-06-17T16:21:34Z. A2 release finding is supported.",
+      "scope": "Captured release; exhaustive first-release exclusivity not audited.",
+      "url": "https://api.github.com/repos/ome/ome-zarr-py/releases/tags/v0.18.0",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/independent-primary/ome0180release.body",
+      "sha256": "b52ee6e3e82ec88259b39a3e84bacb99384b1cacd04997bfee04bb47068446a7",
+      "fetched_utc": "2026-10-03T02:25:26.993368+00:00",
+      "reviewed_ranges": [
+        {
+          "scope": "full JSON parsed and relevant top-level fields inspected",
+          "byte_start": 0,
+          "byte_end_exclusive": 2062,
+          "range_sha256": "b52ee6e3e82ec88259b39a3e84bacb99384b1cacd04997bfee04bb47068446a7"
+        }
+      ],
+      "quoted_word_count": 0,
+      "published_excerpt": "Public verbatim source excerpt omitted; original source locator/hash/range retained.",
+      "original_quoted_word_count": 4
+    }
+  ],
+  "public_projection_quote_policy": "All direct third-party source-excerpt spans omitted; original count retained separately."
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "pm.er8.latest-root-metadata-hash-manifest.v1",
+  "scope": "Pre-map artifacts only; PUBLIC_EXPORT/FREEZE bind this map itself; original/public namespaces distinct.",
+  "artifacts": [
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/OBSERVATION_20261003_033042.json",
+      "public_path": "ops/recovery-v1/OBSERVATION_20261003_033042.json",
+      "original_sha256": "dae9e439aa894a15f039b11f8ca8508bad165662c3d335ef558bffafffc17fd4",
+      "original_bytes": 16029,
+      "public_sha256": "faf36c93a6fa39574d6429a7375b55e78c828090ed61c181c552c76e36b966fc",
+      "public_bytes": 14010,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/HELPER_CONCURRENCY_ROOT_INSTALL_V2.json",
+      "public_path": "ops/recovery-v1/HELPER_CONCURRENCY_ROOT_INSTALL_V2.json",
+      "original_sha256": "e9e743d89c34adb8c2d229cf985a57d663c0b027b7569ffbbb78bd8246ab87d0",
+      "original_bytes": 1740,
+      "public_sha256": "d6b84f30e1a6cfe58d0573a50d36d5eec5f24fa522ab3e01b5886a451f56b3dd",
+      "public_bytes": 1425,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/OBSERVATION_20261003_032937.json",
+      "public_path": "ops/recovery-v1/OBSERVATION_20261003_032937.json",
+      "original_sha256": "007f29037e495309a708594b3479964413f37c43de43808c4ffadecd709dd555",
+      "original_bytes": 15281,
+      "public_sha256": "157c1ba77539a141d8821168865bcf0d449bca2feb337f06691e63bf24687998",
+      "public_bytes": 13388,
+      "sanitized": true
+    },
+    {
+      "source_projection": "WORKTREE_ROOT/reports/external-research-v8-20261001-2140/prospective-source-cohort-v3/ops/muse-helper-public-check-v1/root-repair-v1/verify_public.py",
+      "public_path": "verify_public.py",
+      "original_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+      "original_bytes": 6851,
+      "public_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+      "public_bytes": 6851
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/publication-current-state-v1/latest-root-metadata-v1/ROOT_HANDOFF.json",
+      "public_path": "ROOT_HANDOFF.json",
+      "original_sha256": "76596d4605c32c01357436c130da6d6c4d3d311d8a1643dd4e984f6648e9a50d",
+      "original_bytes": 1536,
+      "public_sha256": "51d7c72096f9d86ebc4008fbdc21c164fd22f221d3e46844a1e8b748e8cf57ef",
+      "public_bytes": 1347
+    },
+    {
+      "source_projection": "publication-generated",
+      "public_path": "README.md",
+      "original_sha256": null,
+      "public_sha256": "619ba123a9861bc615e6b5a56477810120b25a985ce46b23825bd104f4d2f5d8",
+      "public_bytes": 2893
+    }
+  ]
+}

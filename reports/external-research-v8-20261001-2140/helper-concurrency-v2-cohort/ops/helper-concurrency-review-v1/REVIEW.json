@@ -1,0 +1,57 @@
+{
+  "schema": "pm.er8.helper-concurrency-independent-review.v1",
+  "helper": "er8-helper-concurrency-review-v1",
+  "decision": "HOLD",
+  "accepted": false,
+  "source_api_sha256": "f8b0f9f984bbfe1b1fd62d46b956247961d09fdea01fabb83d759f631d75078d",
+  "source_manifest_sha256": "becd3cb6f10ca259b2a9e4e282f028c3564d580aad51fb245203020c9f479e49",
+  "root_authority_sha256": "f1682a991232997556aed7fb88f167e706317259913d9365c5a1fb72fc572a79",
+  "original_resume_api_sha256": "a98cf53c1826f1f4c9fa47a9e181eaae8beb971ea41e6564578a253059450b61",
+  "test_summary": {
+    "author_tests_run": 15,
+    "author_success": true,
+    "independent_tests_run": 17,
+    "independent_success": false,
+    "read_only_virtual_mapping": true,
+    "source_bytes_modified_for_execution": false,
+    "live_transactions_executed": false
+  },
+  "independent_tests_passed": 15,
+  "independent_tests_failed": 2,
+  "findings": [
+    {
+      "id": "HC-V1-001",
+      "severity": "blocking",
+      "owner_scope": "helper-start wrapper only",
+      "source_lines": [
+        182,
+        189
+      ],
+      "title": "Validated default birth is discarded before delegation",
+      "trigger": "Omit started_epoch; later time.time reading rolls backward or becomes nonfinite after wrapper validation.",
+      "actual": "Wrapper validates default birth at its first clock read, then forwards unchanged request. Legacy apply reads the clock again and stores its later value as started_epoch.",
+      "expected": "The stored helper birth must be the validated finite prospective birth, at or after installed receipt effective_epoch.",
+      "evidence": [
+        "LAB_ROOT/ops/helper-concurrency-review-v1/CLOCK_ROLLBACK_EVIDENCE.json",
+        "LAB_ROOT/ops/helper-concurrency-review-v1/CLOCK_NONFINITE_EVIDENCE.json"
+      ],
+      "narrow_repair": "Carry the validated birth into a copied forwarded helper-start request. Preserve original request, frozen APIs, all other actions, original campaign clock/deadline, history, budgets and accounting."
+    }
+  ],
+  "verified_scope": [
+    "All exact input pins match before and after review.",
+    "All 15 author tests pass under unchanged source bytes and owned dependency-copy read mapping.",
+    "15 further independent tests pass: strict one-time installation, receipts/types, pins/symlink/source drift, prospective explicit births, auth isolation and deep copy, original clock/history preservation, helper-end old semantics, event/close/status delegation.",
+    "Old six-helper API remains isolated; successor accepts twelve and rejects thirteenth.",
+    "Native admission delegates unchanged; helper cap exists only at helper-start. No native controller change is required."
+  ],
+  "scoped_limitations": [
+    "No live transaction/save/apply, installation, native/provider/unit/profile/auth actions, candidate/source answers, canon or Git changes.",
+    "Clock-edge cases are controlled adversarial mocks, not an observation of a current live clock fault.",
+    "Original helper-end keeps its old proof-storage semantics; root must verify positive frozen source/manifest evidence before ending a helper.",
+    "Full source files were executed unchanged with campaign file reads mapped to owned exact copies. Mock helper/admission actions mutate copied in-memory states only.",
+    "The first isolation harness attempt blocked two author temporary writes outside the owned LAB. Harness tempfile placement was corrected; original failing output is retained.",
+    "No separate source FREEZE file existed; source MANIFEST.json supplies the pinned original source freeze."
+  ],
+  "repair_requires_separate_source_and_review": true
+}

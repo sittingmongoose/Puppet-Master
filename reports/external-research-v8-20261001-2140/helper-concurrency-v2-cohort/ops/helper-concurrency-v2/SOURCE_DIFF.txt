@@ -1,0 +1,11 @@
+--- LAB_ROOT/ops/helper-concurrency-v1/ledger_helper_concurrency_v1.py
++++ LAB_ROOT/ops/helper-concurrency-v2/ledger_helper_concurrency_v2.py
+@@ -186,6 +186,8 @@
+         if (not finite_epoch(now) or not finite_epoch(birth)
+                 or not receipt['effective_epoch'] <= birth <= now):
+             raise RuntimeError('prospective finite helper birth required')
++        # Carry the validated default across the frozen API's later clock reads.
++        request = {**request, 'started_epoch': birth}
+     return resume_api.apply(state, action, request)
+ 
+ 

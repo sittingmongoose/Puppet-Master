@@ -1,0 +1,2058 @@
+{
+  "schema": "er8.evaluator.provenance.v1",
+  "case": "V8-BIO-AMEND-T-L",
+  "generated_utc": "2026-10-03T02:26:39.021425+00:00",
+  "stages": [
+    {
+      "stage": "research-proposal",
+      "freeze_sha256": "ba7d786f6b78bac144a3a5949c457002dd8f51a95d2590ccea1e4add5a368838",
+      "frozen_file_checks": [
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/out/PROPOSAL.md",
+          "bytes": 25458,
+          "sha256": "0294200a3deac75ee1e18fe7bc23d0ced31581bf2ddbb2eec39dc82f73dfa3f8",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/out/UNRESOLVED_LEADS.md",
+          "bytes": 2743,
+          "sha256": "a1acec707f63c8a6e825ea79baaac3e05c1565ca673364b49bad3417a148e55c",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/120adbdee6b941c78814b709a996bdd9.json",
+          "bytes": 1191,
+          "sha256": "4cf112587c0572691a136eba8cd49a7d987b9a7456aa0075a75f016b49c4bd36",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/14c5740dc7ce4353a1daa21c75caa167.json",
+          "bytes": 1203,
+          "sha256": "66a6a447c7980024e240f7539d73fce686361bdc2ab0d93a73335e262b866ed6",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/1e6cd2abe9184ea7b279fd18c71f9b7e.json",
+          "bytes": 1214,
+          "sha256": "0d9c3fc640917dcdca052783a254ca83f2df127555d0c1d82a8260a707d166c1",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e.body",
+          "bytes": 29333,
+          "sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99.body",
+          "bytes": 3698,
+          "sha256": "2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/2b42fa5189ba48dda3c2516a6f78e162.json",
+          "bytes": 1189,
+          "sha256": "31568ab7b56961e4f69feedba534fb24c6c56977a6895eea6d6b7dd6c0f9ace6",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/2c5c5016b0ad4956a6e5eb5d149a253f.json",
+          "bytes": 1189,
+          "sha256": "b98f8e5d1b50f5c5768e5ea25c8cadf50f38759078a67ea8540bf0e1e5659199",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d.body",
+          "bytes": 2148,
+          "sha256": "4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/502fb1ae82a74852a59467ab8f5075c9.json",
+          "bytes": 1127,
+          "sha256": "5b0bb2b70cee19dec3e6c6aed28c18a3c513e44282613f71cbd78f69ec177662",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/58c1c4297762b9eadfbe9a55f0881f45ae6b39c6675fb17567f6ff882190c053.body",
+          "bytes": 61444,
+          "sha256": "58c1c4297762b9eadfbe9a55f0881f45ae6b39c6675fb17567f6ff882190c053",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/591f772f6c024b948e418c2e633ce681.json",
+          "bytes": 1206,
+          "sha256": "436654dd77316cce6907173dc83d2e2e5540ed4bba7db2e4300d50043ada4e5a",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/6252056bc9e4ae6abff9ceaba714e1b6ab124fb85304f4ebd473bf357e8aac1f.body",
+          "bytes": 5107,
+          "sha256": "6252056bc9e4ae6abff9ceaba714e1b6ab124fb85304f4ebd473bf357e8aac1f",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/7598661acaad16b624a71e81c0f81b28cdd8c7ed658373a22c7edc36748307f7.body",
+          "bytes": 8283,
+          "sha256": "7598661acaad16b624a71e81c0f81b28cdd8c7ed658373a22c7edc36748307f7",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/7803e24420b646f1866f212e98d44a2c.json",
+          "bytes": 1180,
+          "sha256": "15bf433c2c8f05a790745f73c5d449f4b5e392d98d7d70fc4747c1ba54d1fcce",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/aa41af494bd1fab074ad5581c0941343360f9c4269d99ce49f7093e805b094d6.body",
+          "bytes": 29031,
+          "sha256": "aa41af494bd1fab074ad5581c0941343360f9c4269d99ce49f7093e805b094d6",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/b09083d730e6477db17ff6b1001e5c08.json",
+          "bytes": 1251,
+          "sha256": "cf86f2d033f203ff565b96f76daf45b3c0265791e727dfe860d41211f376b08a",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5.body",
+          "bytes": 1265,
+          "sha256": "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body",
+          "bytes": 163120,
+          "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/cc98780df48c444ea90229aba15851b6.json",
+          "bytes": 1187,
+          "sha256": "8f45ab549be2e6b1d6722ea4644611be42a2c16d6dd4c9fdd8d7e551d6f4f516",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/cdcd72035059fb6485b9e9f30aa1f015bb19c6dbb01995e65612b122a49c0d25.body",
+          "bytes": 31959,
+          "sha256": "cdcd72035059fb6485b9e9f30aa1f015bb19c6dbb01995e65612b122a49c0d25",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed.body",
+          "bytes": 14,
+          "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/d9e37600354c1839f6b22cebde497e9d14750d2401a06c9a51b1619baf991613.body",
+          "bytes": 130,
+          "sha256": "d9e37600354c1839f6b22cebde497e9d14750d2401a06c9a51b1619baf991613",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/e45906ce02e79f16fb87a838d86bb4e497e37a9591f97608fa013bbcd8b9cbc2.body",
+          "bytes": 127,
+          "sha256": "e45906ce02e79f16fb87a838d86bb4e497e37a9591f97608fa013bbcd8b9cbc2",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/e719d2f315054f5baed6ad25b1d69bcf.json",
+          "bytes": 1103,
+          "sha256": "4dfb06ca13e8c4a2a8cdf3d1ab171e16d5ff23b22ed0a815ee826ec4f03b69cd",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/e86bb6aae48f48308df0c742f1c05268.json",
+          "bytes": 1202,
+          "sha256": "cf4a36b6fc2ba5421cede3ec6788641aaba40a5976f948c588600c74e64cfae8",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/f4b97eb3ebbd47fbb708837b2bf9e187.json",
+          "bytes": 1282,
+          "sha256": "03228c7240c3febf53fc2e058df881bcbc3830bcfbf175e3bd2523388286d26f",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/f690d0ac4833422e9429ab97345a5877.json",
+          "bytes": 1154,
+          "sha256": "4dce8069cc05ac7383b416af769a48d1141c9753d29b2036ae52283da5f5cc14",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/public_captures/fd0a656604962290560d9818549ecf94e5ca626b6f4271a7d5f5af5abfb71d50.body",
+          "bytes": 9694,
+          "sha256": "fd0a656604962290560d9818549ecf94e5ca626b6f4271a7d5f5af5abfb71d50",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/operation_receipts/events.jsonl",
+          "bytes": 72198,
+          "sha256": "87d5f87b4cef6c5ccad0b1389f2d3ee70896ab0a6d5a44e2ae4cd28bd6db08c2",
+          "matches_frozen": true
+        }
+      ],
+      "complete_sha256": "94b09a87fb5a656131c21d5724c1716a1d67a3a231d82249a5e076ce38a65498",
+      "complete_native_goal_status": "complete",
+      "native_receipt_sha256": "6d4041cc83c15c3896efa46c8a2f8db60b71386ff33a449c417e84e8ff4200fd",
+      "model_id": "GLM-5.3-Flash",
+      "effort_effective": "max",
+      "provider_id": "builtin:zai-coding-plan",
+      "fresh_session": true,
+      "goal_started_turn": true,
+      "goal_target_id": "target_murqc9yi_3d6fb974-2580-4684-b6cf-edc09f1ebc1d",
+      "goal_status_final": "complete",
+      "own_process_group_absent": true,
+      "native_quiescent": true,
+      "native_responses": 11,
+      "usage_requests_with_delta": 10,
+      "reported_usage_totals": {
+        "inputTokens": 702727,
+        "outputTokens": 28653,
+        "reasoningTokens": 0,
+        "cacheReadTokens": 562880,
+        "cacheWriteTokens": 0,
+        "totalTokens": 731380
+      },
+      "usage_fullness": "reported counters only; no independent complete-billing proof",
+      "mcp_tools": {
+        "mcp__pm_boundary__read_file": 8,
+        "mcp__pm_boundary__public_https_get": 14,
+        "mcp__pm_boundary__mechanical": 2,
+        "mcp__pm_boundary__write_file": 2
+      },
+      "metrics_freeze_matches": true,
+      "quiescence": {
+        "schema": "er8.execution.quiescence.v1",
+        "owned_unit": "er8-v8-bio-amend-t-l-research-proposal.service",
+        "owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-amend-t-l-research-proposal.service",
+        "enrollment": {
+          "schema": "er8.execution.enrollment.v1",
+          "owned_unit": "er8-v8-bio-amend-t-l-research-proposal.service",
+          "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-amend-t-l-research-proposal.service",
+          "enrolled_monotonic_ns": 213649972655028,
+          "original_deadline_monotonic_ns": 214847758106020
+        },
+        "absence_proof": "positively-enrolled-owned-cgroup-removed",
+        "owned_native_quiescent": true,
+        "quiescence_observed_monotonic_ns": 214280901564670,
+        "original_deadline_monotonic_ns": 214847758106020,
+        "inclusive_native_lifetime_established": true,
+        "occupancy_disposition": "releasable-native-only",
+        "native_goal_or_quality_qualification": "UNESTABLISHED; independent native receipt review mandatory"
+      },
+      "external_stage_close": {
+        "schema": "er8.integrated.external-stage-close.v1",
+        "case": "V8-BIO-AMEND-T-L",
+        "job": "V8-BIO-AMEND-T-L-research-proposal",
+        "stage_actor_pid": 2326906,
+        "stage_actor_pgid": 2326906,
+        "held_Popen_wait_returncode": 0,
+        "stage_actor_exited": true,
+        "stage_actor_group_absent": true,
+        "stage_actor_exit_observed_monotonic_ns": 214281062510627,
+        "case_supervisor_role": "HOSTMANAGEMENT_STILL_ALIVE_NOT_STAGE_ACTOR",
+        "original_deadline_monotonic_ns": 214847758106020,
+        "inner_quiescence": {
+          "schema": "er8.execution.quiescence.v1",
+          "owned_unit": "er8-v8-bio-amend-t-l-research-proposal.service",
+          "owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-amend-t-l-research-proposal.service",
+          "enrollment": {
+            "schema": "er8.execution.enrollment.v1",
+            "owned_unit": "er8-v8-bio-amend-t-l-research-proposal.service",
+            "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-amend-t-l-research-proposal.service",
+            "enrolled_monotonic_ns": 213649972655028,
+            "original_deadline_monotonic_ns": 214847758106020
+          },
+          "absence_proof": "positively-enrolled-owned-cgroup-removed",
+          "owned_native_quiescent": true,
+          "quiescence_observed_monotonic_ns": 214281161910401,
+          "original_deadline_monotonic_ns": 214847758106020,
+          "inclusive_native_lifetime_established": true,
+          "occupancy_disposition": "releasable-native-only",
+          "native_goal_or_quality_qualification": "UNESTABLISHED; independent native receipt review mandatory"
+        }
+      },
+      "native_owned_seconds": 631.080578377,
+      "operation_count": 78,
+      "public_capture_flushed_ranges": [
+        {
+          "operation_id": "a91a33a5e99e4230b56ac258393ab763",
+          "path": "public_captures/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body",
+          "source_url": "https://ngff.openmicroscopy.org/0.4/index.html",
+          "source_sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+          "range": [
+            0,
+            32768
+          ],
+          "range_sha256": "78eaa2fa1fa6b9a9cbc8fa2484fae2b114e8a48c75b61618bd53f74f54e7becd",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "185f00079f2549dc935a602d0b3af0c4",
+          "path": "public_captures/cdcd72035059fb6485b9e9f30aa1f015bb19c6dbb01995e65612b122a49c0d25.body",
+          "source_url": "https://api.github.com/search/issues?q=repo%3Ahms-dbmi%2Fvizarr+translation&per_page=20",
+          "source_sha256": "cdcd72035059fb6485b9e9f30aa1f015bb19c6dbb01995e65612b122a49c0d25",
+          "range": [
+            0,
+            31959
+          ],
+          "range_sha256": "cdcd72035059fb6485b9e9f30aa1f015bb19c6dbb01995e65612b122a49c0d25",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "53cb8cebde6844b5b956064fcc92c01b",
+          "path": "public_captures/58c1c4297762b9eadfbe9a55f0881f45ae6b39c6675fb17567f6ff882190c053.body",
+          "source_url": "https://api.github.com/search/issues?q=repo%3Aome%2Fome-zarr-py+translation&per_page=20",
+          "source_sha256": "58c1c4297762b9eadfbe9a55f0881f45ae6b39c6675fb17567f6ff882190c053",
+          "range": [
+            0,
+            32768
+          ],
+          "range_sha256": "625e8ce9c3499077cfa4bf333b30ad1b9de4b57d31bdbd8dbd346dd59c03b487",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "038297f0b89948b1ba1ddf4e4b59c6d9",
+          "path": "public_captures/2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99.body",
+          "source_url": "https://api.github.com/repos/ome/ome-zarr-py/issues/403",
+          "source_sha256": "2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99",
+          "range": [
+            0,
+            3698
+          ],
+          "range_sha256": "2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "ad94638deb7f4c3898e00ad6077e23ec",
+          "path": "public_captures/aa41af494bd1fab074ad5581c0941343360f9c4269d99ce49f7093e805b094d6.body",
+          "source_url": "https://api.github.com/repos/hms-dbmi/vizarr/pulls/261/files",
+          "source_sha256": "aa41af494bd1fab074ad5581c0941343360f9c4269d99ce49f7093e805b094d6",
+          "range": [
+            0,
+            29031
+          ],
+          "range_sha256": "aa41af494bd1fab074ad5581c0941343360f9c4269d99ce49f7093e805b094d6",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "90312be7096b421f9d1d8113c61b4668",
+          "path": "public_captures/7598661acaad16b624a71e81c0f81b28cdd8c7ed658373a22c7edc36748307f7.body",
+          "source_url": "https://api.github.com/repos/ome/ome-zarr-py/pulls/590/files",
+          "source_sha256": "7598661acaad16b624a71e81c0f81b28cdd8c7ed658373a22c7edc36748307f7",
+          "range": [
+            0,
+            8283
+          ],
+          "range_sha256": "7598661acaad16b624a71e81c0f81b28cdd8c7ed658373a22c7edc36748307f7",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "e7c071aa003e4ef891f953f323c4b351",
+          "path": "public_captures/d9e37600354c1839f6b22cebde497e9d14750d2401a06c9a51b1619baf991613.body",
+          "source_url": "https://api.github.com/repos/hms-dbmi/vizarr/releases/latest",
+          "source_sha256": "d9e37600354c1839f6b22cebde497e9d14750d2401a06c9a51b1619baf991613",
+          "range": [
+            0,
+            130
+          ],
+          "range_sha256": "d9e37600354c1839f6b22cebde497e9d14750d2401a06c9a51b1619baf991613",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "20490483926d4ec1a646bb5ca351b293",
+          "path": "public_captures/4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d.body",
+          "source_url": "https://api.github.com/repos/ome/napari-ome-zarr/releases/latest",
+          "source_sha256": "4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d",
+          "range": [
+            0,
+            2148
+          ],
+          "range_sha256": "4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "e6c19fd55e1f4821b5c27bb9e5fd330e",
+          "path": "public_captures/d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed.body",
+          "source_url": "https://raw.githubusercontent.com/ome/napari-ome-zarr/main/src/napari_ome_zarr/reader.py",
+          "source_sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+          "range": [
+            0,
+            14
+          ],
+          "range_sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "377b9ffec4c844fcbdb070d7c990fcb5",
+          "path": "public_captures/e45906ce02e79f16fb87a838d86bb4e497e37a9591f97608fa013bbcd8b9cbc2.body",
+          "source_url": "https://api.github.com/repos/ome/napari-ome-zarr/contents/src/napari_ome_zarr",
+          "source_sha256": "e45906ce02e79f16fb87a838d86bb4e497e37a9591f97608fa013bbcd8b9cbc2",
+          "range": [
+            0,
+            127
+          ],
+          "range_sha256": "e45906ce02e79f16fb87a838d86bb4e497e37a9591f97608fa013bbcd8b9cbc2",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "a00289393d1d497cb72c3c3e91ba770a",
+          "path": "public_captures/bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5.body",
+          "source_url": "https://raw.githubusercontent.com/hms-dbmi/vizarr/main/package.json",
+          "source_sha256": "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5",
+          "range": [
+            0,
+            1265
+          ],
+          "range_sha256": "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "ebf4f86ba9a247fc9866432a994e5973",
+          "path": "public_captures/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body",
+          "source_url": null,
+          "source_sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+          "range": [
+            40960,
+            73728
+          ],
+          "range_sha256": "3a8f3f56b94b8695091e10a3c0a94e1f58911c884856eba470374ee7324be748",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "read_file"
+        },
+        {
+          "operation_id": "69c10667ddbe4a05a62288996424e655",
+          "path": "public_captures/fd0a656604962290560d9818549ecf94e5ca626b6f4271a7d5f5af5abfb71d50.body",
+          "source_url": "https://api.github.com/repos/ome/napari-ome-zarr/contents/?ref=v0.10.0",
+          "source_sha256": "fd0a656604962290560d9818549ecf94e5ca626b6f4271a7d5f5af5abfb71d50",
+          "range": [
+            0,
+            9694
+          ],
+          "range_sha256": "fd0a656604962290560d9818549ecf94e5ca626b6f4271a7d5f5af5abfb71d50",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "d8e7efba2f5343aab41f0de50daa7c1c",
+          "path": "public_captures/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body",
+          "source_url": null,
+          "source_sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+          "range": [
+            73728,
+            106496
+          ],
+          "range_sha256": "4cc4201f87533f3b5f1a4ed8111e30051d27f11900177ea75c9038be3e4842f9",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "read_file"
+        },
+        {
+          "operation_id": "c39ced1d28564720b00fd6544ce42f49",
+          "path": "public_captures/6252056bc9e4ae6abff9ceaba714e1b6ab124fb85304f4ebd473bf357e8aac1f.body",
+          "source_url": "https://api.github.com/repos/ome/napari-ome-zarr/contents/napari_ome_zarr?ref=v0.10.0",
+          "source_sha256": "6252056bc9e4ae6abff9ceaba714e1b6ab124fb85304f4ebd473bf357e8aac1f",
+          "range": [
+            0,
+            5107
+          ],
+          "range_sha256": "6252056bc9e4ae6abff9ceaba714e1b6ab124fb85304f4ebd473bf357e8aac1f",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "5f2351bad3f84b3dae3506ff014233f4",
+          "path": "public_captures/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body",
+          "source_url": null,
+          "source_sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+          "range": [
+            106496,
+            139264
+          ],
+          "range_sha256": "7698b99100d415d0a4b6843541e5ba0c284798d00bf3dc4bde6010efc985dfe4",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "read_file"
+        },
+        {
+          "operation_id": "eb44226018e24bf7a79014dc11e5cfdc",
+          "path": "public_captures/255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e.body",
+          "source_url": "https://raw.githubusercontent.com/ome/napari-ome-zarr/v0.10.0/napari_ome_zarr/ome_zarr_reader.py",
+          "source_sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e",
+          "range": [
+            0,
+            29333
+          ],
+          "range_sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        }
+      ],
+      "range_count": 17,
+      "flushed_range_union_by_source_sha256": {
+        "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269": [
+          [
+            0,
+            32768
+          ],
+          [
+            40960,
+            139264
+          ]
+        ],
+        "cdcd72035059fb6485b9e9f30aa1f015bb19c6dbb01995e65612b122a49c0d25": [
+          [
+            0,
+            31959
+          ]
+        ],
+        "58c1c4297762b9eadfbe9a55f0881f45ae6b39c6675fb17567f6ff882190c053": [
+          [
+            0,
+            32768
+          ]
+        ],
+        "2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99": [
+          [
+            0,
+            3698
+          ]
+        ],
+        "aa41af494bd1fab074ad5581c0941343360f9c4269d99ce49f7093e805b094d6": [
+          [
+            0,
+            29031
+          ]
+        ],
+        "7598661acaad16b624a71e81c0f81b28cdd8c7ed658373a22c7edc36748307f7": [
+          [
+            0,
+            8283
+          ]
+        ],
+        "d9e37600354c1839f6b22cebde497e9d14750d2401a06c9a51b1619baf991613": [
+          [
+            0,
+            130
+          ]
+        ],
+        "4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d": [
+          [
+            0,
+            2148
+          ]
+        ],
+        "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed": [
+          [
+            0,
+            14
+          ]
+        ],
+        "e45906ce02e79f16fb87a838d86bb4e497e37a9591f97608fa013bbcd8b9cbc2": [
+          [
+            0,
+            127
+          ]
+        ],
+        "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5": [
+          [
+            0,
+            1265
+          ]
+        ],
+        "fd0a656604962290560d9818549ecf94e5ca626b6f4271a7d5f5af5abfb71d50": [
+          [
+            0,
+            9694
+          ]
+        ],
+        "6252056bc9e4ae6abff9ceaba714e1b6ab124fb85304f4ebd473bf357e8aac1f": [
+          [
+            0,
+            5107
+          ]
+        ],
+        "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e": [
+          [
+            0,
+            29333
+          ]
+        ]
+      }
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "freeze_sha256": "b3080ee6901fe3171dd43ff1e3a73a054cc1f4f4db381487870a53a2af3bb182",
+      "frozen_file_checks": [
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/out/CRITIQUE.md",
+          "bytes": 17194,
+          "sha256": "b60176ecb487023540bbce099168025bf39b73e62d11ecde1830e855b222548a",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/038a3d5c8a6228bb3380c2de35bd26ca4f6cb4400753d39010752d9cd25fac1c.body",
+          "bytes": 3402,
+          "sha256": "038a3d5c8a6228bb3380c2de35bd26ca4f6cb4400753d39010752d9cd25fac1c",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/120adbdee6b941c78814b709a996bdd9.json",
+          "bytes": 1191,
+          "sha256": "4cf112587c0572691a136eba8cd49a7d987b9a7456aa0075a75f016b49c4bd36",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/14c5740dc7ce4353a1daa21c75caa167.json",
+          "bytes": 1203,
+          "sha256": "66a6a447c7980024e240f7539d73fce686361bdc2ab0d93a73335e262b866ed6",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/1942048b1a0f453faaaf04d71f7dbc56.json",
+          "bytes": 1097,
+          "sha256": "e5369f4b6aa4fa10225890d8cdfc098f7b4d42c39709fe17e0ff1e19e341cf78",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/1e6cd2abe9184ea7b279fd18c71f9b7e.json",
+          "bytes": 1214,
+          "sha256": "0d9c3fc640917dcdca052783a254ca83f2df127555d0c1d82a8260a707d166c1",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/22066be87be786e81fdde59143924d71c5eda932cbd57c3887b2949efc9ab9ee.body",
+          "bytes": 24747,
+          "sha256": "22066be87be786e81fdde59143924d71c5eda932cbd57c3887b2949efc9ab9ee",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e.body",
+          "bytes": 29333,
+          "sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99.body",
+          "bytes": 3698,
+          "sha256": "2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/2b42fa5189ba48dda3c2516a6f78e162.json",
+          "bytes": 1189,
+          "sha256": "31568ab7b56961e4f69feedba534fb24c6c56977a6895eea6d6b7dd6c0f9ace6",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/2b72f725dea410179c7ba3b2c70e983b27c58fed9f848ccb483a60d133a9917c.body",
+          "bytes": 16747,
+          "sha256": "2b72f725dea410179c7ba3b2c70e983b27c58fed9f848ccb483a60d133a9917c",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/2b797ae575b5aee3fd0087280eab97abb10177cff0078024b8c37354b7b17603.body",
+          "bytes": 16985,
+          "sha256": "2b797ae575b5aee3fd0087280eab97abb10177cff0078024b8c37354b7b17603",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/2c359864b48b7b8c8801ab6cff8a920b979d16ec4bbb8b70558d1fdf63d44af5.body",
+          "bytes": 27263,
+          "sha256": "2c359864b48b7b8c8801ab6cff8a920b979d16ec4bbb8b70558d1fdf63d44af5",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/2c5c5016b0ad4956a6e5eb5d149a253f.json",
+          "bytes": 1189,
+          "sha256": "b98f8e5d1b50f5c5768e5ea25c8cadf50f38759078a67ea8540bf0e1e5659199",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d.body",
+          "bytes": 2148,
+          "sha256": "4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/4d4d920c55c04a47a88d698c86150c1a.json",
+          "bytes": 1282,
+          "sha256": "fe711d70bd779c47e47de362ea48e36f5776a5a703b33fbd902368456c07b15b",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/502fb1ae82a74852a59467ab8f5075c9.json",
+          "bytes": 1127,
+          "sha256": "5b0bb2b70cee19dec3e6c6aed28c18a3c513e44282613f71cbd78f69ec177662",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/585da153eb9d3d84eec10b523b357bdf4e034b20089a9a8c41a6503ff1f6dc40.body",
+          "bytes": 8016,
+          "sha256": "585da153eb9d3d84eec10b523b357bdf4e034b20089a9a8c41a6503ff1f6dc40",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/58c1c4297762b9eadfbe9a55f0881f45ae6b39c6675fb17567f6ff882190c053.body",
+          "bytes": 61444,
+          "sha256": "58c1c4297762b9eadfbe9a55f0881f45ae6b39c6675fb17567f6ff882190c053",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/591f772f6c024b948e418c2e633ce681.json",
+          "bytes": 1206,
+          "sha256": "436654dd77316cce6907173dc83d2e2e5540ed4bba7db2e4300d50043ada4e5a",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/6252056bc9e4ae6abff9ceaba714e1b6ab124fb85304f4ebd473bf357e8aac1f.body",
+          "bytes": 5107,
+          "sha256": "6252056bc9e4ae6abff9ceaba714e1b6ab124fb85304f4ebd473bf357e8aac1f",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/6f2de55e683b482d8d2e0f238a82f4a7.json",
+          "bytes": 1191,
+          "sha256": "32831dda5ef988f3dc7104f5c76104c4c0b4e8c42e5c237a1bc9a6764d31d826",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/7598661acaad16b624a71e81c0f81b28cdd8c7ed658373a22c7edc36748307f7.body",
+          "bytes": 8283,
+          "sha256": "7598661acaad16b624a71e81c0f81b28cdd8c7ed658373a22c7edc36748307f7",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/77dcbafd47184bb89577e01a0fa6886f.json",
+          "bytes": 1186,
+          "sha256": "03b25b6888b115f8f8544b1397d0a366b00e168e78c30eac4e3cd67bc77e1da5",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/7803e24420b646f1866f212e98d44a2c.json",
+          "bytes": 1180,
+          "sha256": "15bf433c2c8f05a790745f73c5d449f4b5e392d98d7d70fc4747c1ba54d1fcce",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/7c72e8e81dd44e8ca17dd475f6a269d8.json",
+          "bytes": 1187,
+          "sha256": "4555b22dc02020a11dbc10ce61c88ac80a2d402a060da7ac55dd1c14fde56a35",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/81f24a9882764ae181f33c5dd06f871c.json",
+          "bytes": 1232,
+          "sha256": "483969d435a6bacad6424bf64cdb19da1ba8b17c021aca02ea965d97c32b01e8",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/8ce524d0db134212e69e1f1ead70efbe35751cd1b1bf76a14f8658c30b4e7943.body",
+          "bytes": 4959,
+          "sha256": "8ce524d0db134212e69e1f1ead70efbe35751cd1b1bf76a14f8658c30b4e7943",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/9d816a864a1c4b34b99bb6521b4c420e.json",
+          "bytes": 1222,
+          "sha256": "ac718bc23cf7dd09026cad1e4caed722b203be77509a05ad44faf77116751194",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/a22b4ed4e5b74cad8b289479d0ddbec4.json",
+          "bytes": 1225,
+          "sha256": "cb8d87397d046c13f209dcff462ad5be3f68c84a80b4b5bd925b550ffa886800",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/aa41af494bd1fab074ad5581c0941343360f9c4269d99ce49f7093e805b094d6.body",
+          "bytes": 29031,
+          "sha256": "aa41af494bd1fab074ad5581c0941343360f9c4269d99ce49f7093e805b094d6",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/aba7b4b5ea234522bb3246409f6b2be2.json",
+          "bytes": 1186,
+          "sha256": "b4bd0cef28fdf527fd7ae89f5b36fdb94f074d1427eda6126b0497687d43b560",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/b09083d730e6477db17ff6b1001e5c08.json",
+          "bytes": 1251,
+          "sha256": "cf86f2d033f203ff565b96f76daf45b3c0265791e727dfe860d41211f376b08a",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/b6910be7ac3d4f199a4994985f8adeba.json",
+          "bytes": 1187,
+          "sha256": "159aea5f27de301b4e6da4480cc06e105eede9f41c877a04890b678fe7204465",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5.body",
+          "bytes": 1265,
+          "sha256": "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body",
+          "bytes": 163120,
+          "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/cc98780df48c444ea90229aba15851b6.json",
+          "bytes": 1187,
+          "sha256": "8f45ab549be2e6b1d6722ea4644611be42a2c16d6dd4c9fdd8d7e551d6f4f516",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/cdcd72035059fb6485b9e9f30aa1f015bb19c6dbb01995e65612b122a49c0d25.body",
+          "bytes": 31959,
+          "sha256": "cdcd72035059fb6485b9e9f30aa1f015bb19c6dbb01995e65612b122a49c0d25",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed.body",
+          "bytes": 14,
+          "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/d6f5d277a88d44099cb203067e10028f.json",
+          "bytes": 1194,
+          "sha256": "ab073b36f4bd4b8e150901b30a95ad0bd3a880b637d342bc65e9776b014662e4",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/d9e37600354c1839f6b22cebde497e9d14750d2401a06c9a51b1619baf991613.body",
+          "bytes": 130,
+          "sha256": "d9e37600354c1839f6b22cebde497e9d14750d2401a06c9a51b1619baf991613",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/dbb1e320027e4efa85665420f59119ed.json",
+          "bytes": 1187,
+          "sha256": "bfb55321d3dcaf1a22bf8fa7a3a6aaf8a0614811c47b6a904b0e0c221ed00071",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/e45906ce02e79f16fb87a838d86bb4e497e37a9591f97608fa013bbcd8b9cbc2.body",
+          "bytes": 127,
+          "sha256": "e45906ce02e79f16fb87a838d86bb4e497e37a9591f97608fa013bbcd8b9cbc2",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/e719d2f315054f5baed6ad25b1d69bcf.json",
+          "bytes": 1103,
+          "sha256": "4dfb06ca13e8c4a2a8cdf3d1ab171e16d5ff23b22ed0a815ee826ec4f03b69cd",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/e86bb6aae48f48308df0c742f1c05268.json",
+          "bytes": 1202,
+          "sha256": "cf4a36b6fc2ba5421cede3ec6788641aaba40a5976f948c588600c74e64cfae8",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/e9b492f8325744cea7b85215bf4dae9a.json",
+          "bytes": 1187,
+          "sha256": "3da0deb39c5fd6cd5e4749dcb5937218da9bba2f9d3488d2a634709abbfa31ff",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/f0aa7ce9ce88fbfdb83214141942a8ae4d0c3aa206773ea523b9f38cc09ce565.body",
+          "bytes": 6811,
+          "sha256": "f0aa7ce9ce88fbfdb83214141942a8ae4d0c3aa206773ea523b9f38cc09ce565",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/f4b97eb3ebbd47fbb708837b2bf9e187.json",
+          "bytes": 1282,
+          "sha256": "03228c7240c3febf53fc2e058df881bcbc3830bcfbf175e3bd2523388286d26f",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/f690d0ac4833422e9429ab97345a5877.json",
+          "bytes": 1154,
+          "sha256": "4dce8069cc05ac7383b416af769a48d1141c9753d29b2036ae52283da5f5cc14",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/public_captures/fd0a656604962290560d9818549ecf94e5ca626b6f4271a7d5f5af5abfb71d50.body",
+          "bytes": 9694,
+          "sha256": "fd0a656604962290560d9818549ecf94e5ca626b6f4271a7d5f5af5abfb71d50",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/operation_receipts/events.jsonl",
+          "bytes": 68770,
+          "sha256": "12e89fc1d6f933c84c84cf7ab936aa95e6d7077fc1be387814fad7720c0eb48a",
+          "matches_frozen": true
+        }
+      ],
+      "complete_sha256": "b40b2332153bdedcc86f17682718a7513826834cdff60b4bea0fd772c0a1a244",
+      "complete_native_goal_status": "complete",
+      "native_receipt_sha256": "f4d580e45ab1be5f4e6fb03b23335bd7c7207325b3d0e8e8fee94da1d6161c85",
+      "model_id": "GLM-5.3-Flash",
+      "effort_effective": "max",
+      "provider_id": "builtin:zai-coding-plan",
+      "fresh_session": true,
+      "goal_started_turn": true,
+      "goal_target_id": "target_murqpudg_bdb0820b-1e49-4250-8110-3062baf2fc54",
+      "goal_status_final": "complete",
+      "own_process_group_absent": true,
+      "native_quiescent": true,
+      "native_responses": 12,
+      "usage_requests_with_delta": 11,
+      "reported_usage_totals": {
+        "inputTokens": 903443,
+        "outputTokens": 34802,
+        "reasoningTokens": 0,
+        "cacheReadTokens": 743296,
+        "cacheWriteTokens": 0,
+        "totalTokens": 938245
+      },
+      "usage_fullness": "reported counters only; no independent complete-billing proof",
+      "mcp_tools": {
+        "mcp__pm_boundary__read_file": 10,
+        "mcp__pm_boundary__public_https_get": 13,
+        "mcp__pm_boundary__write_file": 1
+      },
+      "metrics_freeze_matches": true,
+      "quiescence": {
+        "schema": "er8.execution.quiescence.v1",
+        "owned_unit": "er8-v8-bio-amend-t-l-independent-candidate-critic.service",
+        "owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-amend-t-l-independent-candidate-critic.service",
+        "enrollment": {
+          "schema": "er8.execution.enrollment.v1",
+          "owned_unit": "er8-v8-bio-amend-t-l-independent-candidate-critic.service",
+          "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-amend-t-l-independent-candidate-critic.service",
+          "enrolled_monotonic_ns": 214282666508362,
+          "original_deadline_monotonic_ns": 215481248415552
+        },
+        "absence_proof": "positively-enrolled-owned-cgroup-removed",
+        "owned_native_quiescent": true,
+        "quiescence_observed_monotonic_ns": 215155202426288,
+        "original_deadline_monotonic_ns": 215481248415552,
+        "inclusive_native_lifetime_established": true,
+        "occupancy_disposition": "releasable-native-only",
+        "native_goal_or_quality_qualification": "UNESTABLISHED; independent native receipt review mandatory"
+      },
+      "external_stage_close": {
+        "schema": "er8.integrated.external-stage-close.v1",
+        "case": "V8-BIO-AMEND-T-L",
+        "job": "V8-BIO-AMEND-T-L-independent-candidate-critic",
+        "stage_actor_pid": 2345020,
+        "stage_actor_pgid": 2345020,
+        "held_Popen_wait_returncode": 0,
+        "stage_actor_exited": true,
+        "stage_actor_group_absent": true,
+        "stage_actor_exit_observed_monotonic_ns": 215155437875277,
+        "case_supervisor_role": "HOSTMANAGEMENT_STILL_ALIVE_NOT_STAGE_ACTOR",
+        "original_deadline_monotonic_ns": 215481248415552,
+        "inner_quiescence": {
+          "schema": "er8.execution.quiescence.v1",
+          "owned_unit": "er8-v8-bio-amend-t-l-independent-candidate-critic.service",
+          "owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-amend-t-l-independent-candidate-critic.service",
+          "enrollment": {
+            "schema": "er8.execution.enrollment.v1",
+            "owned_unit": "er8-v8-bio-amend-t-l-independent-candidate-critic.service",
+            "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-amend-t-l-independent-candidate-critic.service",
+            "enrolled_monotonic_ns": 214282666508362,
+            "original_deadline_monotonic_ns": 215481248415552
+          },
+          "absence_proof": "positively-enrolled-owned-cgroup-removed",
+          "owned_native_quiescent": true,
+          "quiescence_observed_monotonic_ns": 215155516952280,
+          "original_deadline_monotonic_ns": 215481248415552,
+          "inclusive_native_lifetime_established": true,
+          "occupancy_disposition": "releasable-native-only",
+          "native_goal_or_quality_qualification": "UNESTABLISHED; independent native receipt review mandatory"
+        }
+      },
+      "native_owned_seconds": 872.699725379,
+      "operation_count": 72,
+      "public_capture_flushed_ranges": [
+        {
+          "operation_id": "079c318a98064424b533ae763fa41507",
+          "path": "public_captures/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body",
+          "source_url": "https://ngff.openmicroscopy.org/0.4/",
+          "source_sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+          "range": [
+            0,
+            32768
+          ],
+          "range_sha256": "78eaa2fa1fa6b9a9cbc8fa2484fae2b114e8a48c75b61618bd53f74f54e7becd",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "f78e0271840c4f3585395654fb8b5aad",
+          "path": "public_captures/f0aa7ce9ce88fbfdb83214141942a8ae4d0c3aa206773ea523b9f38cc09ce565.body",
+          "source_url": "https://patch-diff.githubusercontent.com/raw/ome/ome-zarr-py/pull/590.diff",
+          "source_sha256": "f0aa7ce9ce88fbfdb83214141942a8ae4d0c3aa206773ea523b9f38cc09ce565",
+          "range": [
+            0,
+            6811
+          ],
+          "range_sha256": "f0aa7ce9ce88fbfdb83214141942a8ae4d0c3aa206773ea523b9f38cc09ce565",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "e454ac1b7e464dcfb7bd021926739a57",
+          "path": "public_captures/bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5.body",
+          "source_url": "https://raw.githubusercontent.com/hms-dbmi/vizarr/main/package.json",
+          "source_sha256": "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5",
+          "range": [
+            0,
+            1265
+          ],
+          "range_sha256": "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "a114a99b6dab4d6da4dea42e1ab923b3",
+          "path": "public_captures/255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e.body",
+          "source_url": "https://raw.githubusercontent.com/ome/napari-ome-zarr/v0.10.0/napari_ome_zarr/ome_zarr_reader.py",
+          "source_sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e",
+          "range": [
+            0,
+            29333
+          ],
+          "range_sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "3a59c73422564d4f92cbcfcdcc5a12e8",
+          "path": "public_captures/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body",
+          "source_url": null,
+          "source_sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+          "range": [
+            32768,
+            65536
+          ],
+          "range_sha256": "7d7ea1eb46d823d80fe47f6b9d6518aaf54b223861932cfcbe46a08a042ecfa7",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "read_file"
+        },
+        {
+          "operation_id": "4f518e75f02245ababdf7717787d4e48",
+          "path": "public_captures/22066be87be786e81fdde59143924d71c5eda932cbd57c3887b2949efc9ab9ee.body",
+          "source_url": "https://patch-diff.githubusercontent.com/raw/hms-dbmi/vizarr/pull/261.diff",
+          "source_sha256": "22066be87be786e81fdde59143924d71c5eda932cbd57c3887b2949efc9ab9ee",
+          "range": [
+            0,
+            24747
+          ],
+          "range_sha256": "22066be87be786e81fdde59143924d71c5eda932cbd57c3887b2949efc9ab9ee",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "0fec06c1a4ec415bb182fae7e0530365",
+          "path": "public_captures/2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99.body",
+          "source_url": "https://api.github.com/repos/ome/ome-zarr-py/issues/403",
+          "source_sha256": "2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99",
+          "range": [
+            0,
+            3698
+          ],
+          "range_sha256": "2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "2dc5bc5d0f0e4d529c3df7ea676e7834",
+          "path": "public_captures/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body",
+          "source_url": null,
+          "source_sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+          "range": [
+            65536,
+            98304
+          ],
+          "range_sha256": "c4be1c6456730bcd2d25d81558f44486e94a60789a7883790e8a377b5407228a",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "read_file"
+        },
+        {
+          "operation_id": "a61df2b2d38a4cc5b7ed4280d3b726ae",
+          "path": "public_captures/038a3d5c8a6228bb3380c2de35bd26ca4f6cb4400753d39010752d9cd25fac1c.body",
+          "source_url": "https://api.github.com/repos/hms-dbmi/vizarr/issues/271",
+          "source_sha256": "038a3d5c8a6228bb3380c2de35bd26ca4f6cb4400753d39010752d9cd25fac1c",
+          "range": [
+            0,
+            3402
+          ],
+          "range_sha256": "038a3d5c8a6228bb3380c2de35bd26ca4f6cb4400753d39010752d9cd25fac1c",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "c9b0758975df48a38d8bc4d0529423b7",
+          "path": "public_captures/8ce524d0db134212e69e1f1ead70efbe35751cd1b1bf76a14f8658c30b4e7943.body",
+          "source_url": "https://api.github.com/repos/hms-dbmi/vizarr/issues/297",
+          "source_sha256": "8ce524d0db134212e69e1f1ead70efbe35751cd1b1bf76a14f8658c30b4e7943",
+          "range": [
+            0,
+            4959
+          ],
+          "range_sha256": "8ce524d0db134212e69e1f1ead70efbe35751cd1b1bf76a14f8658c30b4e7943",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "7dc17cf0cc57438ba273ca3cda1f34e1",
+          "path": "public_captures/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body",
+          "source_url": null,
+          "source_sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+          "range": [
+            98304,
+            131072
+          ],
+          "range_sha256": "329e9a56881e1a23e084a4f4ca66707e72a83861af6beca3098a18c02d7cb2fd",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "read_file"
+        },
+        {
+          "operation_id": "228d461cee9a48efb3717890252aeeeb",
+          "path": "public_captures/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body",
+          "source_url": null,
+          "source_sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+          "range": [
+            131072,
+            163120
+          ],
+          "range_sha256": "e0c3d74c75f6ea9160b690a0fe58acc46374d6018e75b5976bf250edce8de097",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "read_file"
+        },
+        {
+          "operation_id": "06b68ce69670425ba07f1999ffb8b766",
+          "path": "public_captures/4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d.body",
+          "source_url": "https://api.github.com/repos/ome/napari-ome-zarr/releases/tags/v0.10.0",
+          "source_sha256": "4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d",
+          "range": [
+            0,
+            2148
+          ],
+          "range_sha256": "4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "9d63a9b137914c058551bac4f27270e7",
+          "path": "public_captures/2b797ae575b5aee3fd0087280eab97abb10177cff0078024b8c37354b7b17603.body",
+          "source_url": "https://api.github.com/repos/ome/ome-zarr-py/pulls/590",
+          "source_sha256": "2b797ae575b5aee3fd0087280eab97abb10177cff0078024b8c37354b7b17603",
+          "range": [
+            0,
+            16985
+          ],
+          "range_sha256": "2b797ae575b5aee3fd0087280eab97abb10177cff0078024b8c37354b7b17603",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "d1816940604d4f7999f4e30fc6d31bb2",
+          "path": "public_captures/2b72f725dea410179c7ba3b2c70e983b27c58fed9f848ccb483a60d133a9917c.body",
+          "source_url": "https://api.github.com/repos/hms-dbmi/vizarr/pulls/261",
+          "source_sha256": "2b72f725dea410179c7ba3b2c70e983b27c58fed9f848ccb483a60d133a9917c",
+          "range": [
+            0,
+            16747
+          ],
+          "range_sha256": "2b72f725dea410179c7ba3b2c70e983b27c58fed9f848ccb483a60d133a9917c",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "271728f0df4348c2b776a3e560c2c45a",
+          "path": "public_captures/585da153eb9d3d84eec10b523b357bdf4e034b20089a9a8c41a6503ff1f6dc40.body",
+          "source_url": "https://api.github.com/repos/ome/ome-zarr-py/releases?per_page=3",
+          "source_sha256": "585da153eb9d3d84eec10b523b357bdf4e034b20089a9a8c41a6503ff1f6dc40",
+          "range": [
+            0,
+            8016
+          ],
+          "range_sha256": "585da153eb9d3d84eec10b523b357bdf4e034b20089a9a8c41a6503ff1f6dc40",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "c0261391ee334d9a8da4a08ef2714870",
+          "path": "public_captures/2c359864b48b7b8c8801ab6cff8a920b979d16ec4bbb8b70558d1fdf63d44af5.body",
+          "source_url": "https://api.github.com/repos/ome/ome-zarr-py/releases?per_page=10",
+          "source_sha256": "2c359864b48b7b8c8801ab6cff8a920b979d16ec4bbb8b70558d1fdf63d44af5",
+          "range": [
+            0,
+            27263
+          ],
+          "range_sha256": "2c359864b48b7b8c8801ab6cff8a920b979d16ec4bbb8b70558d1fdf63d44af5",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        }
+      ],
+      "range_count": 17,
+      "flushed_range_union_by_source_sha256": {
+        "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269": [
+          [
+            0,
+            163120
+          ]
+        ],
+        "f0aa7ce9ce88fbfdb83214141942a8ae4d0c3aa206773ea523b9f38cc09ce565": [
+          [
+            0,
+            6811
+          ]
+        ],
+        "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5": [
+          [
+            0,
+            1265
+          ]
+        ],
+        "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e": [
+          [
+            0,
+            29333
+          ]
+        ],
+        "22066be87be786e81fdde59143924d71c5eda932cbd57c3887b2949efc9ab9ee": [
+          [
+            0,
+            24747
+          ]
+        ],
+        "2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99": [
+          [
+            0,
+            3698
+          ]
+        ],
+        "038a3d5c8a6228bb3380c2de35bd26ca4f6cb4400753d39010752d9cd25fac1c": [
+          [
+            0,
+            3402
+          ]
+        ],
+        "8ce524d0db134212e69e1f1ead70efbe35751cd1b1bf76a14f8658c30b4e7943": [
+          [
+            0,
+            4959
+          ]
+        ],
+        "4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d": [
+          [
+            0,
+            2148
+          ]
+        ],
+        "2b797ae575b5aee3fd0087280eab97abb10177cff0078024b8c37354b7b17603": [
+          [
+            0,
+            16985
+          ]
+        ],
+        "2b72f725dea410179c7ba3b2c70e983b27c58fed9f848ccb483a60d133a9917c": [
+          [
+            0,
+            16747
+          ]
+        ],
+        "585da153eb9d3d84eec10b523b357bdf4e034b20089a9a8c41a6503ff1f6dc40": [
+          [
+            0,
+            8016
+          ]
+        ],
+        "2c359864b48b7b8c8801ab6cff8a920b979d16ec4bbb8b70558d1fdf63d44af5": [
+          [
+            0,
+            27263
+          ]
+        ]
+      }
+    },
+    {
+      "stage": "final-correction",
+      "freeze_sha256": "2b4ca8d9c0618db5eab78ba0cdb8a955ccadb565ca605d13ba6fbf80e7c0c46b",
+      "frozen_file_checks": [
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/out/FINAL_PROPOSAL.md",
+          "bytes": 38964,
+          "sha256": "265934a0f6dbf8d9841853f253a982aaed1562360e95b12f18f49733120ab622",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/out/UNRESOLVED_LEADS.md",
+          "bytes": 3803,
+          "sha256": "1d8077e7716668d942d3a3ebb9cebd23dc75a49ddd54ebc67229f11b53b2d424",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/038a3d5c8a6228bb3380c2de35bd26ca4f6cb4400753d39010752d9cd25fac1c.body",
+          "bytes": 3402,
+          "sha256": "038a3d5c8a6228bb3380c2de35bd26ca4f6cb4400753d39010752d9cd25fac1c",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/120adbdee6b941c78814b709a996bdd9.json",
+          "bytes": 1191,
+          "sha256": "4cf112587c0572691a136eba8cd49a7d987b9a7456aa0075a75f016b49c4bd36",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/14c5740dc7ce4353a1daa21c75caa167.json",
+          "bytes": 1203,
+          "sha256": "66a6a447c7980024e240f7539d73fce686361bdc2ab0d93a73335e262b866ed6",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/1942048b1a0f453faaaf04d71f7dbc56.json",
+          "bytes": 1097,
+          "sha256": "e5369f4b6aa4fa10225890d8cdfc098f7b4d42c39709fe17e0ff1e19e341cf78",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/1e6cd2abe9184ea7b279fd18c71f9b7e.json",
+          "bytes": 1214,
+          "sha256": "0d9c3fc640917dcdca052783a254ca83f2df127555d0c1d82a8260a707d166c1",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/22066be87be786e81fdde59143924d71c5eda932cbd57c3887b2949efc9ab9ee.body",
+          "bytes": 24747,
+          "sha256": "22066be87be786e81fdde59143924d71c5eda932cbd57c3887b2949efc9ab9ee",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e.body",
+          "bytes": 29333,
+          "sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/27cba80f5df04bddb27574b1e686a99c.json",
+          "bytes": 1282,
+          "sha256": "da8a0144bfc4ff1a8b6b6c119ad992b3660238be6960e078e67f257a768621bf",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99.body",
+          "bytes": 3698,
+          "sha256": "2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/2b42fa5189ba48dda3c2516a6f78e162.json",
+          "bytes": 1189,
+          "sha256": "31568ab7b56961e4f69feedba534fb24c6c56977a6895eea6d6b7dd6c0f9ace6",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/2b72f725dea410179c7ba3b2c70e983b27c58fed9f848ccb483a60d133a9917c.body",
+          "bytes": 16747,
+          "sha256": "2b72f725dea410179c7ba3b2c70e983b27c58fed9f848ccb483a60d133a9917c",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/2b797ae575b5aee3fd0087280eab97abb10177cff0078024b8c37354b7b17603.body",
+          "bytes": 16985,
+          "sha256": "2b797ae575b5aee3fd0087280eab97abb10177cff0078024b8c37354b7b17603",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/2c359864b48b7b8c8801ab6cff8a920b979d16ec4bbb8b70558d1fdf63d44af5.body",
+          "bytes": 27263,
+          "sha256": "2c359864b48b7b8c8801ab6cff8a920b979d16ec4bbb8b70558d1fdf63d44af5",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/2c5c5016b0ad4956a6e5eb5d149a253f.json",
+          "bytes": 1189,
+          "sha256": "b98f8e5d1b50f5c5768e5ea25c8cadf50f38759078a67ea8540bf0e1e5659199",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/32356cf4e1b74c6eb1cb69ef20429adc.json",
+          "bytes": 1097,
+          "sha256": "aa71e8bd632efc61f164fbdb3daf32e2dd1fe4d24da93217c5e05f6abda50ef1",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d.body",
+          "bytes": 2148,
+          "sha256": "4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/4d4d920c55c04a47a88d698c86150c1a.json",
+          "bytes": 1282,
+          "sha256": "fe711d70bd779c47e47de362ea48e36f5776a5a703b33fbd902368456c07b15b",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/502fb1ae82a74852a59467ab8f5075c9.json",
+          "bytes": 1127,
+          "sha256": "5b0bb2b70cee19dec3e6c6aed28c18a3c513e44282613f71cbd78f69ec177662",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/585da153eb9d3d84eec10b523b357bdf4e034b20089a9a8c41a6503ff1f6dc40.body",
+          "bytes": 8016,
+          "sha256": "585da153eb9d3d84eec10b523b357bdf4e034b20089a9a8c41a6503ff1f6dc40",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/58c1c4297762b9eadfbe9a55f0881f45ae6b39c6675fb17567f6ff882190c053.body",
+          "bytes": 61444,
+          "sha256": "58c1c4297762b9eadfbe9a55f0881f45ae6b39c6675fb17567f6ff882190c053",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/591f772f6c024b948e418c2e633ce681.json",
+          "bytes": 1206,
+          "sha256": "436654dd77316cce6907173dc83d2e2e5540ed4bba7db2e4300d50043ada4e5a",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/6252056bc9e4ae6abff9ceaba714e1b6ab124fb85304f4ebd473bf357e8aac1f.body",
+          "bytes": 5107,
+          "sha256": "6252056bc9e4ae6abff9ceaba714e1b6ab124fb85304f4ebd473bf357e8aac1f",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/6f2de55e683b482d8d2e0f238a82f4a7.json",
+          "bytes": 1191,
+          "sha256": "32831dda5ef988f3dc7104f5c76104c4c0b4e8c42e5c237a1bc9a6764d31d826",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/7598661acaad16b624a71e81c0f81b28cdd8c7ed658373a22c7edc36748307f7.body",
+          "bytes": 8283,
+          "sha256": "7598661acaad16b624a71e81c0f81b28cdd8c7ed658373a22c7edc36748307f7",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/77dcbafd47184bb89577e01a0fa6886f.json",
+          "bytes": 1186,
+          "sha256": "03b25b6888b115f8f8544b1397d0a366b00e168e78c30eac4e3cd67bc77e1da5",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/7803e24420b646f1866f212e98d44a2c.json",
+          "bytes": 1180,
+          "sha256": "15bf433c2c8f05a790745f73c5d449f4b5e392d98d7d70fc4747c1ba54d1fcce",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/7c72e8e81dd44e8ca17dd475f6a269d8.json",
+          "bytes": 1187,
+          "sha256": "4555b22dc02020a11dbc10ce61c88ac80a2d402a060da7ac55dd1c14fde56a35",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/81f24a9882764ae181f33c5dd06f871c.json",
+          "bytes": 1232,
+          "sha256": "483969d435a6bacad6424bf64cdb19da1ba8b17c021aca02ea965d97c32b01e8",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/8ce524d0db134212e69e1f1ead70efbe35751cd1b1bf76a14f8658c30b4e7943.body",
+          "bytes": 4959,
+          "sha256": "8ce524d0db134212e69e1f1ead70efbe35751cd1b1bf76a14f8658c30b4e7943",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/9d816a864a1c4b34b99bb6521b4c420e.json",
+          "bytes": 1222,
+          "sha256": "ac718bc23cf7dd09026cad1e4caed722b203be77509a05ad44faf77116751194",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/a22b4ed4e5b74cad8b289479d0ddbec4.json",
+          "bytes": 1225,
+          "sha256": "cb8d87397d046c13f209dcff462ad5be3f68c84a80b4b5bd925b550ffa886800",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/a7c11f58674a4eb9a9d40ff935f9145f.json",
+          "bytes": 1191,
+          "sha256": "8c0e6ec24bc68eb15613c868711fde38da685debaad7a7ab3e579795629a95a0",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/aa41af494bd1fab074ad5581c0941343360f9c4269d99ce49f7093e805b094d6.body",
+          "bytes": 29031,
+          "sha256": "aa41af494bd1fab074ad5581c0941343360f9c4269d99ce49f7093e805b094d6",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/aba7b4b5ea234522bb3246409f6b2be2.json",
+          "bytes": 1186,
+          "sha256": "b4bd0cef28fdf527fd7ae89f5b36fdb94f074d1427eda6126b0497687d43b560",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/b09083d730e6477db17ff6b1001e5c08.json",
+          "bytes": 1251,
+          "sha256": "cf86f2d033f203ff565b96f76daf45b3c0265791e727dfe860d41211f376b08a",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/b6910be7ac3d4f199a4994985f8adeba.json",
+          "bytes": 1187,
+          "sha256": "159aea5f27de301b4e6da4480cc06e105eede9f41c877a04890b678fe7204465",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5.body",
+          "bytes": 1265,
+          "sha256": "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body",
+          "bytes": 163120,
+          "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/cc98780df48c444ea90229aba15851b6.json",
+          "bytes": 1187,
+          "sha256": "8f45ab549be2e6b1d6722ea4644611be42a2c16d6dd4c9fdd8d7e551d6f4f516",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/cdcd72035059fb6485b9e9f30aa1f015bb19c6dbb01995e65612b122a49c0d25.body",
+          "bytes": 31959,
+          "sha256": "cdcd72035059fb6485b9e9f30aa1f015bb19c6dbb01995e65612b122a49c0d25",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed.body",
+          "bytes": 14,
+          "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/d6f5d277a88d44099cb203067e10028f.json",
+          "bytes": 1194,
+          "sha256": "ab073b36f4bd4b8e150901b30a95ad0bd3a880b637d342bc65e9776b014662e4",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/d9e37600354c1839f6b22cebde497e9d14750d2401a06c9a51b1619baf991613.body",
+          "bytes": 130,
+          "sha256": "d9e37600354c1839f6b22cebde497e9d14750d2401a06c9a51b1619baf991613",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/dbb1e320027e4efa85665420f59119ed.json",
+          "bytes": 1187,
+          "sha256": "bfb55321d3dcaf1a22bf8fa7a3a6aaf8a0614811c47b6a904b0e0c221ed00071",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/e45906ce02e79f16fb87a838d86bb4e497e37a9591f97608fa013bbcd8b9cbc2.body",
+          "bytes": 127,
+          "sha256": "e45906ce02e79f16fb87a838d86bb4e497e37a9591f97608fa013bbcd8b9cbc2",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/e719d2f315054f5baed6ad25b1d69bcf.json",
+          "bytes": 1103,
+          "sha256": "4dfb06ca13e8c4a2a8cdf3d1ab171e16d5ff23b22ed0a815ee826ec4f03b69cd",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/e86bb6aae48f48308df0c742f1c05268.json",
+          "bytes": 1202,
+          "sha256": "cf4a36b6fc2ba5421cede3ec6788641aaba40a5976f948c588600c74e64cfae8",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/e9b492f8325744cea7b85215bf4dae9a.json",
+          "bytes": 1187,
+          "sha256": "3da0deb39c5fd6cd5e4749dcb5937218da9bba2f9d3488d2a634709abbfa31ff",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/ed67e47366b04701b67207442bd84540.json",
+          "bytes": 1225,
+          "sha256": "62f4838c531fd025524ce840c5ef30185991e399dff5d82bf59728d4e3f4cbaf",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/f0aa7ce9ce88fbfdb83214141942a8ae4d0c3aa206773ea523b9f38cc09ce565.body",
+          "bytes": 6811,
+          "sha256": "f0aa7ce9ce88fbfdb83214141942a8ae4d0c3aa206773ea523b9f38cc09ce565",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/f4b97eb3ebbd47fbb708837b2bf9e187.json",
+          "bytes": 1282,
+          "sha256": "03228c7240c3febf53fc2e058df881bcbc3830bcfbf175e3bd2523388286d26f",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/f690d0ac4833422e9429ab97345a5877.json",
+          "bytes": 1154,
+          "sha256": "4dce8069cc05ac7383b416af769a48d1141c9753d29b2036ae52283da5f5cc14",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/public_captures/fd0a656604962290560d9818549ecf94e5ca626b6f4271a7d5f5af5abfb71d50.body",
+          "bytes": 9694,
+          "sha256": "fd0a656604962290560d9818549ecf94e5ca626b6f4271a7d5f5af5abfb71d50",
+          "matches_frozen": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/operation_receipts/events.jsonl",
+          "bytes": 38937,
+          "sha256": "f015444fc946e80f166d9a3fe43f6f2c785c54e4516b7d02c86bc3258af60ea9",
+          "matches_frozen": true
+        }
+      ],
+      "complete_sha256": "be828fefd7f74b8122d6bcee5cc5db95309534a42730b543786cd4eeea69fa65",
+      "complete_native_goal_status": "complete",
+      "native_receipt_sha256": "c0e249d6ba77eb20fcb12a1b04467376d87fe1f346c4a288f04d213d9d3f84dd",
+      "model_id": "GLM-5.3-Flash",
+      "effort_effective": "max",
+      "provider_id": "builtin:zai-coding-plan",
+      "fresh_session": true,
+      "goal_started_turn": true,
+      "goal_target_id": "target_murr8kq6_ca0a895d-87aa-4071-b9ab-24d2a3b0d299",
+      "goal_status_final": "complete",
+      "own_process_group_absent": true,
+      "native_quiescent": true,
+      "native_responses": 9,
+      "usage_requests_with_delta": 8,
+      "reported_usage_totals": {
+        "inputTokens": 375299,
+        "outputTokens": 22983,
+        "reasoningTokens": 0,
+        "cacheReadTokens": 281024,
+        "cacheWriteTokens": 0,
+        "totalTokens": 398282
+      },
+      "usage_fullness": "reported counters only; no independent complete-billing proof",
+      "mcp_tools": {
+        "mcp__pm_boundary__read_file": 9,
+        "mcp__pm_boundary__public_https_get": 4,
+        "mcp__pm_boundary__write_file": 2
+      },
+      "metrics_freeze_matches": true,
+      "quiescence": {
+        "schema": "er8.execution.quiescence.v1",
+        "owned_unit": "er8-v8-bio-amend-t-l-final-correction.service",
+        "owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-amend-t-l-final-correction.service",
+        "enrollment": {
+          "schema": "er8.execution.enrollment.v1",
+          "owned_unit": "er8-v8-bio-amend-t-l-final-correction.service",
+          "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-amend-t-l-final-correction.service",
+          "enrolled_monotonic_ns": 215156676072321,
+          "original_deadline_monotonic_ns": 216055628727498
+        },
+        "absence_proof": "positively-enrolled-owned-cgroup-removed",
+        "owned_native_quiescent": true,
+        "quiescence_observed_monotonic_ns": 215574808422229,
+        "original_deadline_monotonic_ns": 216055628727498,
+        "inclusive_native_lifetime_established": true,
+        "occupancy_disposition": "releasable-native-only",
+        "native_goal_or_quality_qualification": "UNESTABLISHED; independent native receipt review mandatory"
+      },
+      "external_stage_close": {
+        "schema": "er8.integrated.external-stage-close.v1",
+        "case": "V8-BIO-AMEND-T-L",
+        "job": "V8-BIO-AMEND-T-L-final-correction",
+        "stage_actor_pid": 2380795,
+        "stage_actor_pgid": 2380795,
+        "held_Popen_wait_returncode": 0,
+        "stage_actor_exited": true,
+        "stage_actor_group_absent": true,
+        "stage_actor_exit_observed_monotonic_ns": 215575012593701,
+        "case_supervisor_role": "HOSTMANAGEMENT_STILL_ALIVE_NOT_STAGE_ACTOR",
+        "original_deadline_monotonic_ns": 216055628727498,
+        "inner_quiescence": {
+          "schema": "er8.execution.quiescence.v1",
+          "owned_unit": "er8-v8-bio-amend-t-l-final-correction.service",
+          "owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-amend-t-l-final-correction.service",
+          "enrollment": {
+            "schema": "er8.execution.enrollment.v1",
+            "owned_unit": "er8-v8-bio-amend-t-l-final-correction.service",
+            "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-amend-t-l-final-correction.service",
+            "enrolled_monotonic_ns": 215156676072321,
+            "original_deadline_monotonic_ns": 216055628727498
+          },
+          "absence_proof": "positively-enrolled-owned-cgroup-removed",
+          "owned_native_quiescent": true,
+          "quiescence_observed_monotonic_ns": 215575098073138,
+          "original_deadline_monotonic_ns": 216055628727498,
+          "inclusive_native_lifetime_established": true,
+          "occupancy_disposition": "releasable-native-only",
+          "native_goal_or_quality_qualification": "UNESTABLISHED; independent native receipt review mandatory"
+        }
+      },
+      "native_owned_seconds": 418.280742861,
+      "operation_count": 45,
+      "public_capture_flushed_ranges": [
+        {
+          "operation_id": "0c52587ddc8e407eb65e7cb20a0e040a",
+          "path": "public_captures/255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e.body",
+          "source_url": "https://raw.githubusercontent.com/ome/napari-ome-zarr/v0.10.0/napari_ome_zarr/ome_zarr_reader.py",
+          "source_sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e",
+          "range": [
+            0,
+            29333
+          ],
+          "range_sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "158cfc5de49b47c0b5cffa02844b5757",
+          "path": "public_captures/2c359864b48b7b8c8801ab6cff8a920b979d16ec4bbb8b70558d1fdf63d44af5.body",
+          "source_url": "https://api.github.com/repos/ome/ome-zarr-py/releases?per_page=10",
+          "source_sha256": "2c359864b48b7b8c8801ab6cff8a920b979d16ec4bbb8b70558d1fdf63d44af5",
+          "range": [
+            0,
+            27263
+          ],
+          "range_sha256": "2c359864b48b7b8c8801ab6cff8a920b979d16ec4bbb8b70558d1fdf63d44af5",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "f249bdfba92a44caa9f00a725a01027f",
+          "path": "public_captures/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body",
+          "source_url": "https://ngff.openmicroscopy.org/0.4/",
+          "source_sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+          "range": [
+            0,
+            32768
+          ],
+          "range_sha256": "78eaa2fa1fa6b9a9cbc8fa2484fae2b114e8a48c75b61618bd53f74f54e7becd",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "1931e9bbef5f40a38cd0267daab9e9d0",
+          "path": "public_captures/22066be87be786e81fdde59143924d71c5eda932cbd57c3887b2949efc9ab9ee.body",
+          "source_url": "https://patch-diff.githubusercontent.com/raw/hms-dbmi/vizarr/pull/261.diff",
+          "source_sha256": "22066be87be786e81fdde59143924d71c5eda932cbd57c3887b2949efc9ab9ee",
+          "range": [
+            0,
+            24747
+          ],
+          "range_sha256": "22066be87be786e81fdde59143924d71c5eda932cbd57c3887b2949efc9ab9ee",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "public_https_get"
+        },
+        {
+          "operation_id": "7d43c876cceb49faadfa0e2b90030f66",
+          "path": "public_captures/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body",
+          "source_url": null,
+          "source_sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+          "range": [
+            70000,
+            90000
+          ],
+          "range_sha256": "0efb395573179afd29073dd7fdd993bbfb55660f8c872d0008469b2fd4892719",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "read_file"
+        },
+        {
+          "operation_id": "c184dd5c4d084262b1d65028ec0b87d0",
+          "path": "public_captures/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body",
+          "source_url": null,
+          "source_sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+          "range": [
+            90000,
+            110000
+          ],
+          "range_sha256": "b849d76b366d378e5e7bdd173ff322231452d0b5f3296280ba009e2e79e31be7",
+          "range_hash_matches": true,
+          "source_hash_matches": true,
+          "receipt_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+          "llm_read": "UNOBSERVED",
+          "semantic_acquisition": "UNKNOWN",
+          "tool": "read_file"
+        }
+      ],
+      "range_count": 6,
+      "flushed_range_union_by_source_sha256": {
+        "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e": [
+          [
+            0,
+            29333
+          ]
+        ],
+        "2c359864b48b7b8c8801ab6cff8a920b979d16ec4bbb8b70558d1fdf63d44af5": [
+          [
+            0,
+            27263
+          ]
+        ],
+        "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269": [
+          [
+            0,
+            32768
+          ],
+          [
+            70000,
+            110000
+          ]
+        ],
+        "22066be87be786e81fdde59143924d71c5eda932cbd57c3887b2949efc9ab9ee": [
+          [
+            0,
+            24747
+          ]
+        ]
+      }
+    }
+  ],
+  "mismatch_count": 0,
+  "same_root_attested_account": "parent assignment attestation only; no auth/profile read",
+  "semantic_acquisition": "UNKNOWN",
+  "frontend_consumption": "UNOBSERVED",
+  "listing_boundary_note": "Initial rg listing traversed names in own case including private-runtime paths; no private file content was read. Subsequent paths restricted to admitted receipts, inputs, outputs, and public captures.",
+  "EXTERNAL_CASE_CLOSE.json": {
+    "sha256": "ce7d50b62d24358f562e6791be51b712adc7914ad0f25ead28ac2a943d88e7db",
+    "receipt": {
+      "schema": "er8.integrated.external-case-close.v1",
+      "case": "V8-BIO-AMEND-T-L",
+      "hostmanagement_supervisor_pid": 2326865,
+      "hostmanagement_supervisor_pgid": 2326865,
+      "held_Popen_wait_returncode": 0,
+      "case_supervisor_exited": true,
+      "case_supervisor_group_absent": true,
+      "case_supervisor_exit_observed_monotonic_ns": 215575253922544,
+      "original_case_start_monotonic_ns": 213647758106020,
+      "original_case_deadline_monotonic_ns": 217247758106020,
+      "external_case_observed_monotonic_ns": 215575366216359,
+      "actual_final_proposal": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/out/FINAL_PROPOSAL.md",
+        "bytes": 38964,
+        "sha256": "265934a0f6dbf8d9841853f253a982aaed1562360e95b12f18f49733120ab622"
+      },
+      "operational_pipeline": "THREE_FRESH_GOALS_AND_ACTUAL_FINAL_PROPOSAL",
+      "semantic_quality": "PENDING_INDEPENDENT_EVALUATION",
+      "source_semantic_acquisition": "UNKNOWN"
+    }
+  },
+  "GLOBAL_PARENT_FINAL_RECEIPT.json": {
+    "sha256": "b545797e05a2073010e6f124597721953edbe68f06e483abe61d1b335ce906aa",
+    "receipt": {
+      "schema": "er8.integrated.global-parent-final-receipt.v1",
+      "case": "V8-BIO-AMEND-T-L",
+      "held_finalizer_pid": 2397788,
+      "held_finalizer_returncode": 0,
+      "actual_case_end_monotonic_ns": 215575415528376,
+      "original_case_start_monotonic_ns": 213647758106020,
+      "original_case_deadline_monotonic_ns": 217247758106020,
+      "actual_case_wall_seconds": 1927.657422356,
+      "actual_occupied_stage_lease_seconds": 1927.3175687789917,
+      "whole_case_occupied_cap_seconds": 5400,
+      "actual_nonoverlapping_outside_native_seconds": 5.596375739,
+      "native_owned_intervals_monotonic_ns": [
+        [
+          213649820986293,
+          214280901564670
+        ],
+        [
+          214282502700909,
+          215155202426288
+        ],
+        [
+          215156527679368,
+          215574808422229
+        ]
+      ],
+      "all_case_execution_closed_before_cutoff": true,
+      "actual_final_proposal": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/out/FINAL_PROPOSAL.md",
+        "bytes": 38964,
+        "sha256": "265934a0f6dbf8d9841853f253a982aaed1562360e95b12f18f49733120ab622"
+      },
+      "subsequent_global_metadata_and_publication_cost": "SEPARATE_ROOT_MANAGEMENT",
+      "semantic_quality": "PENDING_INDEPENDENT_EVALUATION",
+      "source_semantic_acquisition": "UNKNOWN",
+      "generated_usage": "UNKNOWN except observed monotonic lower bounds"
+    }
+  }
+}

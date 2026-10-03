@@ -1,0 +1,105 @@
+{
+  "schema": "er8.independent.preservation.v1",
+  "case": "V8-BIO-AMEND-T-L",
+  "artifacts": [
+    {
+      "stage": "research-proposal",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/out/PROPOSAL.md",
+      "bytes": 25458,
+      "sha256": "0294200a3deac75ee1e18fe7bc23d0ced31581bf2ddbb2eec39dc82f73dfa3f8"
+    },
+    {
+      "stage": "research-proposal",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/out/UNRESOLVED_LEADS.md",
+      "bytes": 2743,
+      "sha256": "a1acec707f63c8a6e825ea79baaac3e05c1565ca673364b49bad3417a148e55c"
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/out/CRITIQUE.md",
+      "bytes": 17194,
+      "sha256": "b60176ecb487023540bbce099168025bf39b73e62d11ecde1830e855b222548a"
+    },
+    {
+      "stage": "final-correction",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "bytes": 38964,
+      "sha256": "265934a0f6dbf8d9841853f253a982aaed1562360e95b12f18f49733120ab622"
+    },
+    {
+      "stage": "final-correction",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/out/UNRESOLVED_LEADS.md",
+      "bytes": 3803,
+      "sha256": "1d8077e7716668d942d3a3ebb9cebd23dc75a49ddd54ebc67229f11b53b2d424"
+    }
+  ],
+  "frozen_transfer_integrity": [
+    {
+      "input": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/inputs/PROPOSAL.md",
+      "input_sha256": "0294200a3deac75ee1e18fe7bc23d0ced31581bf2ddbb2eec39dc82f73dfa3f8",
+      "source": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/out/PROPOSAL.md",
+      "byte_identical": true
+    },
+    {
+      "input": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/inputs/PROPOSAL.md",
+      "input_sha256": "0294200a3deac75ee1e18fe7bc23d0ced31581bf2ddbb2eec39dc82f73dfa3f8",
+      "source": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/out/PROPOSAL.md",
+      "byte_identical": true
+    },
+    {
+      "input": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/inputs/CRITIQUE.md",
+      "input_sha256": "b60176ecb487023540bbce099168025bf39b73e62d11ecde1830e855b222548a",
+      "source": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/workspace/out/CRITIQUE.md",
+      "byte_identical": true
+    }
+  ],
+  "scope": "Current findings/conditions/choices across own three public artifacts, not private reasoning history.",
+  "supported_corrections": [
+    {
+      "amendment": "A1",
+      "initial": "PROPOSAL line44 plain0.4 label-parent-transform attribution false",
+      "critic": "CRITIQUE A1 explains empty parent_transforms and Scene-only assignment",
+      "final": "FINAL §1 A1 and §3 accurately distinguish own-label first dataset transform and Scene context",
+      "disposition": "SUPPORTED_CORRECTION_PRESERVED",
+      "source": "napari_reader_v0100 exact hash255ca2c5..."
+    },
+    {
+      "amendment": "A2",
+      "initial": "U1 release containing PR590 not identified",
+      "critic": "A2 identifies v0.18.0 release listing PR590",
+      "final": "§5 release step and final leads U1 resolved",
+      "disposition": "SUPPORTED_RELEASE_FINDING_PRESERVED",
+      "source": "ome0180release independent hashb52ee6e3... and own candidate releases-list hash2c359864..."
+    },
+    {
+      "amendment": "A3",
+      "initial": "S2 selects multiscales[0] with no multi-entry behavior",
+      "critic": "A3 proposes persistent fallback note and F9",
+      "final": "S2 and F9 include fallback note",
+      "disposition": "PRODUCT_CHOICE_PRESERVED; choice is allowed, not uniquely mandated by format"
+    },
+    {
+      "amendment": "Additional notes",
+      "initial": "Readers described as layer-only; loose F3 wording",
+      "critic": "Distinguishes vizarr fullfirstlist from napari firstentry; corrects F3 continuous-point/floor arithmetic and formula basis",
+      "final": "§3,§5,F2,F3 retain these scoped precisions",
+      "disposition": "SUPPORTED_SCOPED_PRECISIONS_PRESERVED"
+    }
+  ],
+  "defects_preserved": [
+    {
+      "finding": "F-Q1",
+      "chain": "Initial S3/S5/F6 → critic B2/B3 PASS → final S3/S5/F6; absent common calibration/unit gate persists."
+    },
+    {
+      "finding": "F-Q3",
+      "chain": "Initial S2 extra time/channel/custom-axis slicing → critic B1 PASS → final S2 same exception."
+    },
+    {
+      "finding": "F-Q2",
+      "chain": "Critic A1 adds F4b → final preserves expected refusal without strengthening S5 beyond disjoint bboxes."
+    }
+  ],
+  "uncertainty_calibration": "Final leads honestly expose U2–U7, but declaring none blocks the proposal conflicts with the evaluation scope for unresolved consequential dependencies. U2 bears on the recommended napari workaround; U5 is prospective interoperability validation, not by itself evidence of a failed executed test. Rejected-alternative U3/U6 are conditional future-use issues. No blanket assertion that every open lead alone proves failure.",
+  "candidate_validation_execution": "Explicitly none in all three artifacts; evaluator arithmetic does not change that."
+}

@@ -1,0 +1,88 @@
+{
+  "schema": "pm.er8.root-frozen-comparison.v1",
+  "root_authority": true,
+  "created_epoch": 1790995410.0202265,
+  "pair": "BIO-AMEND-C/T",
+  "actual_provider": "GLM-5.3-Flash",
+  "reasoning": "max",
+  "same_opaque_account_binding": true,
+  "underlying_account_identity": "UNKNOWN",
+  "operational_matched_pair_complete": true,
+  "independent_quality_reviewed_pair": true,
+  "quality_qualified_efficiency_comparison": false,
+  "full_quality_pass_cases": 0,
+  "arms": [
+    {
+      "case": "V8-BIO-AMEND-C-L",
+      "original_quality_disposition": "VERIFIED_FAILED_SCREEN",
+      "aggregate_screen": "FAILED_SCREEN",
+      "whole_case_pass": false,
+      "freeze": {
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/FREEZE.json",
+        "sha256": "5b456efd61e1c07f3426a803f7143bc046ac698710509a3d58faf9b591025bba"
+      },
+      "manifest": {
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/MANIFEST.json",
+        "sha256": "d5c92ff8ac69cdf6e5b29b6a773b56cf093f1603dd7388129ebc54b1e5949b93"
+      },
+      "quality_disposition": {
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/quality-disposition.json",
+        "sha256": "3784c317bbf7ec3cb3b74ffb62a6680baa5b136dc3b831cea69970e7b70d842c"
+      },
+      "case_receipt": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-C-L/GLOBAL_PARENT_FINAL_RECEIPT.json",
+        "sha256": "a8a972b13e39365aa7ca8ad68b7ac6fe0d91d93eb5c446e373005cda0bdd0f75"
+      },
+      "wall_seconds": 2013.646116427,
+      "occupied_stage_lease_seconds": 2013.302515745163,
+      "outside_native_seconds": 5.301925008
+    },
+    {
+      "case": "V8-BIO-AMEND-T-L",
+      "original_quality_disposition": "FAILED_SCREEN",
+      "aggregate_screen": "FAILED_SCREEN",
+      "whole_case_pass": false,
+      "freeze": {
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/FREEZE.json",
+        "sha256": "b7fc61b902b80445e0d9c5437194f36eeeb376f62efb43e1a77048de73c01842"
+      },
+      "manifest": {
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/MANIFEST.json",
+        "sha256": "c9e9c9f0c2605662a5e9ea0af1539687061f335240d44919e5718f0e2cd18f7b"
+      },
+      "quality_disposition": {
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/quality-disposition.json",
+        "sha256": "014f8a3248c5dfb41c23bc6dbeb3b1749ee29645c5596368e4f29e86ab5bbf97"
+      },
+      "case_receipt": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/GLOBAL_PARENT_FINAL_RECEIPT.json",
+        "sha256": "b545797e05a2073010e6f124597721953edbe68f06e483abe61d1b335ce906aa"
+      },
+      "wall_seconds": 1927.657422356,
+      "occupied_stage_lease_seconds": 1927.3175687789917,
+      "outside_native_seconds": 5.596375739
+    }
+  ],
+  "root_checks": "Exact freeze/manifest/disposition pins checked. Independent analytic unit arithmetic and overlapping unequal bbox counterexamples recomputed. These are written-plan diagnostics; no candidate fixture or renderer execution. Source adjudications remain independent evaluator reports, no full regrade.",
+  "findings": {
+    "C": "Overlay shared-grid fallback for missing required label transforms lacks justified registration; unit compatibility and consequential calibration/API bridge dependencies remain deficient.",
+    "T": "Unconditional absent-label-unit overlay lacks common coordinate basis. Supporting written unequal-bbox discriminator and extra-axis scope inconsistencies."
+  },
+  "remaining_scope": "UNASSESSED beyond each frozen reviewed facet; no full completeness or truth certification.",
+  "method_quality_order": "Both source-quality rulings frozen before METHOD/TASK duty audit; candidate text/case identity exposed method, limitedblinding disclosed.",
+  "method_timing_conflict": {
+    "literal_METHOD_critic_seconds": 600,
+    "admitted_TASK_runtime_critic_seconds": 1200,
+    "T_critic_native_seconds": 872.699725379,
+    "admitted_lease_late": false,
+    "disposition": "Literal method conflict/noncompliance and packaging limitation; prospective allocation changed formerly unstarted cases, old METHOD cap prose retained; no method-effect isolation.",
+    "other_unstarted_packet": "NB-AMEND-T has same literal600versusadmitted1200 conflict; frozen/live packets are not silently rewritten."
+  },
+  "candidate_feedback": "NONE",
+  "recipe_holdout_ruling": "No full quality PASS/bestrecipe/qualityqualified speedup/winner/holdout release",
+  "cost_scope": "Pair descriptive wall/occupied/outside costs exclude Sol quality/root management, which remain separate; all earlier campaign failures retained.",
+  "observation": {
+    "path": "LAB_ROOT/ops/recovery-v1/OBSERVATION_20261003_0244.json",
+    "sha256": "6f1c8c4f1fcf895f13897588cfff1b4bd4b2910b5eb405726c21c74953f97097"
+  }
+}

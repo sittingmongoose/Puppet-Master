@@ -1,0 +1,23 @@
+{
+  "schema": "pm.er8.public-checkpoint-audit-publication-freeze.v2",
+  "frozen_epoch": 1790999113.3450348,
+  "original_birth_epoch": 1790998973.6454775,
+  "original_deadline_epoch": 1790999573.6454775,
+  "completed_before_original_deadline": true,
+  "positive_original_count": 3,
+  "manifest_artifact_count": 7,
+  "public_file_count": 10,
+  "prior_base24_and_current_child10_unchanged": true,
+  "files": {
+    "HASH_MANIFEST.json": "8ecad25ec0ebf40b882924955d0e2707034c3ab0d157477f1588b4e2145b12fd",
+    "ROOT_HANDOFF.json": "a2acde2ac901cd81221ce4d47330e52c19bcab2bddb301d497f7643305fe7be5",
+    "README.md": "e100a208fec3b4c5c4241b2e13f2ab1cbf87dd477335e4cf7268d777ca02fb75",
+    "VERIFICATION.json": "f7cdc561ca9de74ede576a5a8907ce25f4d15b195bf3ebb3095b7f34a7829f45",
+    "PUBLIC_EXPORT.json": "45467e6220bef9e5d5c1506232ae8a615639ece82ca8630fff9877ec61953e12",
+    "verify_public.py": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+    "ops/public-checkpoint-audit-v2/REPORT.json": "594dd48c3252f54ed0538a65ae3303530f36da82627a3b8364ebe77151beeff7",
+    "ops/public-checkpoint-audit-v2/REPORT.md": "5685fd6b8544affc46ecd8ed000f93fb3ac25f9aa2966fa23da232c102a08b39",
+    "ops/public-checkpoint-audit-v2/FREEZE.json": "731fc859d7dc0d5595e20386ba30321a29f11e7c8a533642fce7ea9a2ca43ddd"
+  },
+  "verification_returncode": 0
+}

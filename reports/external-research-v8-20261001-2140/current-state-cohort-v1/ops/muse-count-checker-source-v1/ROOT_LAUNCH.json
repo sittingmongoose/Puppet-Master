@@ -1,0 +1,24 @@
+{
+  "helper_source_sha256": "4908857cacb4b415edca136e79a9a6bad6cfacabe461264701a13af99d815bb5",
+  "original_birth_epoch": 1790995738.826653,
+  "launch_exit_code": 0,
+  "original_deadline_epoch": 1790996038.826653,
+  "argv": [
+    "systemd-run",
+    "--user",
+    "--quiet",
+    "--unit=er8-muse-count-checker-source-v1.service",
+    "--working-directory=LAB_ROOT/ops/muse-count-checker-source-v1",
+    "--property=Type=exec",
+    "--property=RuntimeMaxSec=134",
+    "--property=KillMode=control-group",
+    "--property=Restart=no",
+    "--property=StandardOutput=null",
+    "--property=StandardError=null",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "LAB_ROOT/ops/muse-count-checker-source-v1/run_helper.py"
+  ],
+  "root_authority": true
+}

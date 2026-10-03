@@ -1,0 +1,25 @@
+test_accounting_status_and_unknown_actions_identical (__main__.ConcurrencyTests.test_accounting_status_and_unknown_actions_identical) ... ok
+test_auth_only_helper_count_differs (__main__.ConcurrencyTests.test_auth_only_helper_count_differs) ... ok
+test_before_receipt_starts_fail_closed (__main__.ConcurrencyTests.test_before_receipt_starts_fail_closed) ... ok
+test_copy_fixture_has_no_live_ledger_state (__main__.ConcurrencyTests.test_copy_fixture_has_no_live_ledger_state) ... ok
+test_default_birth_survives_later_clock_rollback (__main__.ConcurrencyTests.test_default_birth_survives_later_clock_rollback) ... ok
+test_default_birth_survives_later_nan_clock (__main__.ConcurrencyTests.test_default_birth_survives_later_nan_clock) ... ok
+test_default_birth_uses_forwarded_copy (__main__.ConcurrencyTests.test_default_birth_uses_forwarded_copy) ... ok
+test_duplicate_install_no_mutation (__main__.ConcurrencyTests.test_duplicate_install_no_mutation) ... ok
+test_explicit_birth_forwarded_unchanged_without_caller_mutation (__main__.ConcurrencyTests.test_explicit_birth_forwarded_unchanged_without_caller_mutation) ... ok
+test_frozen_six_and_successor_twelve (__main__.ConcurrencyTests.test_frozen_six_and_successor_twelve) ... ok
+test_helper_end_exact_old_semantics (__main__.ConcurrencyTests.test_helper_end_exact_old_semantics) ... ok
+test_import_and_cli_status_readonly (__main__.ConcurrencyTests.test_import_and_cli_status_readonly) ... ok
+test_install_changes_one_key_only (__main__.ConcurrencyTests.test_install_changes_one_key_only) ... ok
+test_install_nonfinite_or_deadline_clock_rejected (__main__.ConcurrencyTests.test_install_nonfinite_or_deadline_clock_rejected) ... ok
+test_native_admission_unchanged_with_twelve_helpers (__main__.ConcurrencyTests.test_native_admission_unchanged_with_twelve_helpers) ... ok
+test_old_resume_validation_retained (__main__.ConcurrencyTests.test_old_resume_validation_retained) ... ok
+test_pin_and_symlink_fail_closed (__main__.ConcurrencyTests.test_pin_and_symlink_fail_closed) ... ok
+test_receipt_invalid_fields (__main__.ConcurrencyTests.test_receipt_invalid_fields) ... ok
+test_wrong_authority_schema_root_nonfinite (__main__.ConcurrencyTests.test_wrong_authority_schema_root_nonfinite) ... ok
+test_wrong_install_requests (__main__.ConcurrencyTests.test_wrong_install_requests) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.558s
+
+OK

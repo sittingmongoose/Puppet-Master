@@ -1,0 +1,23 @@
+{
+  "schema": "pm.er8.public-latest-root-metadata-freeze.v1",
+  "frozen_epoch": 1790998446.5635676,
+  "original_birth_epoch": 1790997855.2147198,
+  "original_deadline_epoch": 1790998755.2147198,
+  "completed_before_original_deadline": true,
+  "positive_original_count": 3,
+  "manifest_artifact_count": 7,
+  "public_file_count": 10,
+  "base24_files_unchanged": true,
+  "files": {
+    "HASH_MANIFEST.json": "2f97ef655f5d781ea30a081ad9d42bd0eb80baf6ebd6eeb6229568226aa7a542",
+    "ROOT_HANDOFF.json": "51d7c72096f9d86ebc4008fbdc21c164fd22f221d3e46844a1e8b748e8cf57ef",
+    "README.md": "619ba123a9861bc615e6b5a56477810120b25a985ce46b23825bd104f4d2f5d8",
+    "VERIFICATION.json": "47a7b96f5c00108396e32be5045202cc3e177cc19fc178ac8461e1ae1298a755",
+    "PUBLIC_EXPORT.json": "954a40861d9560058cd1c30fc19ad99b03126840b4804c951fbfe5537a265dfb",
+    "verify_public.py": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+    "ops/recovery-v1/HELPER_CONCURRENCY_ROOT_INSTALL_V2.json": "d6b84f30e1a6cfe58d0573a50d36d5eec5f24fa522ab3e01b5886a451f56b3dd",
+    "ops/recovery-v1/OBSERVATION_20261003_033042.json": "faf36c93a6fa39574d6429a7375b55e78c828090ed61c181c552c76e36b966fc",
+    "ops/recovery-v1/OBSERVATION_20261003_032937.json": "157c1ba77539a141d8821168865bcf0d449bca2feb337f06691e63bf24687998"
+  },
+  "verification_returncode": 0
+}

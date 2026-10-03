@@ -1,0 +1,43 @@
+{
+  "schema": "pm.er8.public-integrated-breadth-results.v1",
+  "operational_counts": {
+    "bundle_case_pipelines": 2,
+    "bundle_matched_pairs": 1,
+    "campaign_operational_cases_root_attested_at_preparation": 6,
+    "campaign_operational_pairs_root_attested_at_preparation": 3,
+    "case_target": 24,
+    "pair_target": 12,
+    "assigned_quality_reviewed_comparisons": 0
+  },
+  "quality": "PENDING_INDEPENDENT_EVALUATION",
+  "winner": null,
+  "case_summaries": {
+    "V8-BIO-BREADTH-C-M": {
+      "actual_case_wall_seconds": 1777.129042479,
+      "actual_occupied_stage_lease_seconds": 1776.650342464447,
+      "actual_nonoverlapping_outside_native_seconds": 5.069627012,
+      "all_case_execution_closed_before_cutoff": true,
+      "actual_final_proposal": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-final-correction/workspace/out/FINAL_PROPOSAL.md",
+        "bytes": 41031,
+        "sha256": "7f86d0a5f12543a40bbe9f8ff94d2e038f0315fd06154e50f9d40dcc707bb91d"
+      }
+    },
+    "V8-BIO-BREADTH-T-M": {
+      "actual_case_wall_seconds": 1959.349861717,
+      "actual_occupied_stage_lease_seconds": 1958.6851434707642,
+      "actual_nonoverlapping_outside_native_seconds": 5.222031249,
+      "all_case_execution_closed_before_cutoff": true,
+      "actual_final_proposal": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-final-correction/workspace/out/FINAL_PROPOSAL.md",
+        "bytes": 42558,
+        "sha256": "7572d6ebfd1916d33fafb209c2ad0bdc03d45ca2fcfe320d7cb3a7096d30eb29"
+      }
+    }
+  },
+  "immutable_root_observation": null,
+  "cost_scope": "Actual pair six stage intervals; historical failure-inclusive campaign costs separately observed; root management/publication/evaluation costs separate.",
+  "source_semantic_acquisition": "UNKNOWN",
+  "native_replay_portable": false,
+  "grader_findings_read": false
+}

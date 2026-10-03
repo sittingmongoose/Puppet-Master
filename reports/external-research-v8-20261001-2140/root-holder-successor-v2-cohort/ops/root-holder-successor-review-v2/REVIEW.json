@@ -1,0 +1,62 @@
+{
+  "schema": "pm.er8.root-holder-successor-review.v2",
+  "decision": "SOURCE_ACCEPTED_RUNTIME_HOLD",
+  "decisive_hold_finding": null,
+  "helper_ledger": "er8-root-holder-successor-review-v2",
+  "reviewer": "codex-er8-successor-review-v2",
+  "original_birth_epoch": 1790993997.2604625,
+  "original_deadline_epoch": 1790994597.2604625,
+  "completed_epoch": 1790994361.0443711,
+  "completed_before_original_deadline": true,
+  "no_clock_renewal": true,
+  "accepted_source_path": "LAB_ROOT/ops/root-holder-successor-v2/root_holder_successor_v2.py",
+  "accepted_source_sha256": "77f869fe33387d426fc0fe66e146e0fad3ebbca08b386650773587b6748d1e35",
+  "observed_artifact_hashes": {
+    "root_holder_successor_v2.py": "77f869fe33387d426fc0fe66e146e0fad3ebbca08b386650773587b6748d1e35",
+    "HANDOFF.md": "a7117f04ea9cf0ee7ff2788dce932483c1ebeed3bf95088d2e1f562d23d75242",
+    "SHA256SUMS": "8e938c87a208bec5313db6f0ed3950e3ae0091579c73cf89812040b4f7258a9c",
+    "TEST_RECEIPT.json": "b12186e235f87768fc1b5f11a6ec879078a6cba32c6c0fb84de0c59776a5d5ab",
+    "TEST_RECEIPT.txt": "5b53cf142478dd443c0d77dab626d95e4fcdfa4d49eddb5fcb0c54efbfc1685a",
+    "test_root_holder_successor_v2.py": "1af814fdfe23302a1e5f78c255505c7fdb6aab037bfc8407b4a44a3c64a4072d"
+  },
+  "original_source_and_test_copies_unchanged": true,
+  "tests": {
+    "original_tests": 18,
+    "independent_tests": 11,
+    "passed": 29,
+    "failed": 0,
+    "errors": 0,
+    "receipt_path": "LAB_ROOT/ops/root-holder-successor-review-v2/TEST_RECEIPT.json",
+    "receipt_sha256": "3903e937e5bee20c5b878ba281080f99fd1a38540b3b82825b1d96ff9fd5a164"
+  },
+  "static_imports": [
+    "argparse",
+    "fcntl",
+    "hashlib",
+    "json",
+    "math",
+    "os",
+    "pathlib",
+    "stat",
+    "time"
+  ],
+  "checks": {
+    "same_original_mutex": "Pinned path plus exact lock device/inode checked before acquisition, after acquisition before claim, and each holding iteration; parent identity checked in lock_identity.",
+    "root_request": "Exact path, CLI-pinned exact byte digest, exact 17-field key set, duplicate-key rejection, true boolean authority, fixed paths and metadata; no root request created or consumed live.",
+    "cutoffs": "Epoch 1791013030.8303788 is exact. Root-supplied integer monotonic cutoff is checked positive <=2**63-1, echoed unchanged, and shared by waiting and holding. No clock/budget reset.",
+    "predecessor": "Fixed source/claim paths, byte hashes, PID 1969270, unit er8-v8-root-durable-20261002-2348.service and exact predecessor metadata checked before waiting and again before claim; no predecessor writes/signals/unit operations.",
+    "symlink_and_inode": "O_NOFOLLOW on every opened parent component and input; lock/parent identities retained. Content-pinned request/predecessor reads check stability within each read, not permanent object provenance across reads.",
+    "ownership_and_claim": "LOCK_EX|LOCK_NB waits on original lock. Distinct O_EXCL/O_NOFOLLOW claim cannot overwrite existing claim or symlink. Claim says exclusive_flock_only, predecessor_exit_proven=false, native_case_activation=false.",
+    "bounded_sleep": "Every sleep is nonnegative min of 0.2 seconds and remaining original epoch/monotonic cutoffs; acquisition grants no new duration.",
+    "forbidden_operations": "Static import/call inspection found no subprocess, exec/eval, signal, fork, thread, unit launcher, provider/native activation, profile/auth/candidate/eval/ledger/sibling access. File operations are confined to fixed admitted inputs and distinct claim.",
+    "failure_handling": "Own descriptors close on expiry/failure. Write/fsync synthetic failures retain own incomplete/complete distinct claim for inspection, preserve collision on retry, and release flock."
+  },
+  "limitations": [
+    "This is exact source/test acceptance only. No live mutex/request/claim access, unit launch, MainPID proof, predecessor natural-exit proof, provider/native call, profile/candidate/ledger/sibling inspection, or canonical edit occurred.",
+    "Root must construct and hash its concrete request with the unchanged native_global_cutoff_monotonic_ns from its own original authority; the source cannot independently compare that value to an unread authority file.",
+    "Identical-byte atomic replacement of a request/predecessor source/predecessor claim at the same admitted path is accepted across separate validations. Tests observed changed input inode, unchanged byte digest/authority, unchanged parent/lock identity, and sole flock acquisition. This preserves content/path authority but does not establish permanent input-object provenance.",
+    "Tests use unchanged copied source and original test bytes with temp paths, mock predecessor hashes and clocks; no live predecessor bytes or original lock stat were independently verified.",
+    "Real service integration, real predecessor exit timing, real storage stalls/durability and service termination remain untested. Synthetic write/fsync exceptions were tested. Input/source/request validation occurs before waiting and again before claim, not continuously throughout holding."
+  ],
+  "live_actions_performed": false
+}

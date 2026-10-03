@@ -1,0 +1,19 @@
+{
+  "schema": "er8.independent.source-quality-before-method.v1",
+  "case": "V8-BIO-AMEND-T-L",
+  "quality_disposition": "FAILED_SCREEN",
+  "screen": "VERIFIED",
+  "source_quality_ruling_frozen_utc": "2026-10-03T02:30:31.779692+00:00",
+  "artifact": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/out/FINAL_PROPOSAL.md",
+    "bytes": 38964,
+    "sha256": "265934a0f6dbf8d9841853f253a982aaed1562360e95b12f18f49733120ab622"
+  },
+  "whole_case_pass": false,
+  "whole_history_regrade": false,
+  "numeric_score": null,
+  "unassessed_not_zero": true,
+  "semantic_acquisition": "UNKNOWN",
+  "dominant_defect": "F-Q1: overlay allowed with missing label unit/common coordinate basis",
+  "scope_record": "quality-before-method.json"
+}

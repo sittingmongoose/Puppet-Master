@@ -1,0 +1,67 @@
+{
+  "schema": "pm.er8.root-matched-comparison.v1",
+  "root_authority": true,
+  "created_epoch": 1790998242.1908948,
+  "comparison": "BIO breadth/analogy",
+  "case_results": [
+    {
+      "case_id": "V8-BIO-BREADTH-C-M",
+      "disposition": "FAILED_SCREEN",
+      "verification_status": "VERIFIED",
+      "freeze": {
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-C-M/FREEZE.json",
+        "sha256": "6d9e07c6032eb7672c99ded2b2b695ad08e006fb74d2c98433a5d1f55b1281a3"
+      },
+      "manifest": {
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-C-M/MANIFEST.json",
+        "sha256": "0b69c140b7b1a794134508c32b6a03650ee2b5f3cc8958bd04e23498187cdae5"
+      },
+      "case_receipt": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/GLOBAL_PARENT_FINAL_RECEIPT.json",
+        "sha256": "dcace370d7f1db63fcad2303643d1f0622241668365698339a3dc7a873037b30"
+      },
+      "wall_seconds": 1777.129042479,
+      "occupied_stage_lease_seconds": 1776.650342464447,
+      "outside_native_seconds": 5.069627012
+    },
+    {
+      "case_id": "V8-BIO-BREADTH-T-M",
+      "disposition": "FAILED_SCREEN",
+      "verification_status": "VERIFIED",
+      "freeze": {
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-T-M/FREEZE.json",
+        "sha256": "73570fa7afb201ca9f5a6691a6a61b60db0e5b7dc4e1e5ae9cefe5c4ada09771"
+      },
+      "manifest": {
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-T-M/MANIFEST.json",
+        "sha256": "7794993502997f4fe399fa68ed4068f2e8707802cd1b2a469f887951a85c9d61"
+      },
+      "case_receipt": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/GLOBAL_PARENT_FINAL_RECEIPT.json",
+        "sha256": "063f5334083145d5f71766b054d60338ed6db48bab14d4bcc8636db503888d69"
+      },
+      "wall_seconds": 1959.349861717,
+      "occupied_stage_lease_seconds": 1958.6851434707642,
+      "outside_native_seconds": 5.222031249
+    }
+  ],
+  "root_checks": "Exact original freeze/manifest/final pins and operational ledger completion checked. Evaluator arithmetic independently recomputed: T image[20,20], label[30,20], displacement[10,0]; C dataset-then-group[19,9.25]. Analytic plan diagnostics only; no candidate fixture, renderer or upstream execution and no whole-case regrade.",
+  "findings": {
+    "C": "Unresolved consequential modern categorical-rendering dependency lacks supported-input bound/refusal. Optional unit presence is conflated with availability of scaling information.",
+    "T": "Per-level-only overlay equality omits group transforms and admits a label displaced by 10 micrometers."
+  },
+  "remaining_scope": "UNASSESSED beyond each frozen reviewer facet; no numeric zero, full truth certification or full quality PASS.",
+  "method_quality_order": "Both source-quality freezes precede METHOD/TASK audit; artifact/case identity leakage disclosed. T initial recursive private filename-only inventory disclosed, no private bodies opened.",
+  "candidate_feedback": "NONE",
+  "recipe_holdout_ruling": "No full quality PASS, quality-qualified efficiency result, winner or holdout release.",
+  "cost_scope": "Descriptive pair wall/occupied/outside exclude separate Sol evaluation/root management, all earlier failures retained.",
+  "observation": {
+    "path": "LAB_ROOT/ops/recovery-v1/OBSERVATION_20261003_033042.json",
+    "sha256": "dae9e439aa894a15f039b11f8ca8508bad165662c3d335ef558bffafffc17fd4"
+  },
+  "supersedes_root_metadata_only": {
+    "path": "LAB_ROOT/ops/recovery-v1/ROOT_BREADTH_COMPARISON_V1.json",
+    "sha256": "13c234cbeafde660bf883757bbf2b460ddb6d0c1fa3ba2fe52c3d865378a70fc"
+  },
+  "correction": "Source-grade/diagnostic/cost rulings unchanged; observation reference corrected for two research-stage baseline double counts."
+}

@@ -1,0 +1,134 @@
+{
+  "schema": "er8.independent-evaluator-manifest.v1",
+  "case_id": "V8-BIO-BREADTH-T-M",
+  "evaluator": "er8-quality-bio-breadth-t-v1",
+  "owned_root": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-T-M",
+  "quality_disposition": "FAILED_SCREEN",
+  "quality_freeze_sha256": "7fe1cbba76eedd0e10fb7417a9e2fdc300ff3c117ad84fb5a589bdcbb2fffe71",
+  "original_birth_epoch": 1790996057.7366228,
+  "original_deadline_epoch": 1790998457.7366228,
+  "outputs": [
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-T-M/QUALITY_FREEZE.json",
+      "bytes": 3015,
+      "sha256": "7fe1cbba76eedd0e10fb7417a9e2fdc300ff3c117ad84fb5a589bdcbb2fffe71"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-T-M/QUALITY_REVIEW.md",
+      "bytes": 5332,
+      "sha256": "dad9110d980a4f3773008fadf8cd0f3161e7183c256e8807edaaa2fc6664ac0a"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-T-M/REVIEW.md",
+      "bytes": 6969,
+      "sha256": "e03ef1448da681ec4995d75f3cd37a40871b7eb7dc11caa6256c62a4b38215a0"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-T-M/SOURCE_EXCERPTS.md",
+      "bytes": 186,
+      "sha256": "6bd19b27bb68ccf54c39e9456f6b4bba3c00bd8f30b8a535854acaa9931f0343"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-T-M/case-method-identity.json",
+      "bytes": 1418,
+      "sha256": "d73422671305d33ced882561156e9eae3f233dcbfc1b89174e3e32a78f542f4d"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-T-M/cost-projection.json",
+      "bytes": 2525,
+      "sha256": "57b2958edcdcf4f7c2a4db9b1065ddc4526a770ab360d6071dfb39fd877cbcf9"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-T-M/diagnostic-counterexample.json",
+      "bytes": 3312,
+      "sha256": "136b4df9e5232f41c77ced2c9ce2b03d69cc79b3b4266530cd212faf8e3f1f6a"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-T-M/disposition.json",
+      "bytes": 2093,
+      "sha256": "9373fb27dce2e4409c5e7c60dfeca04ed97b82afd2f98344d89ff12a08a14ffd"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-T-M/method-assessment.json",
+      "bytes": 1575,
+      "sha256": "0b6f5d1c22640ca1507d5c585fac9c6eb970a2e2db9dc732a93a6fcbc6c1c437"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-T-M/preservation.json",
+      "bytes": 2121,
+      "sha256": "9aabd98ba6d14635fc5e878c933d4d8d7dd44c54fd3d508add7a6ac9c70f1864"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-T-M/provenance-projection.json",
+      "bytes": 13857,
+      "sha256": "baaceac72b422c49a70030a6f21d147d10be7e3af566279db00298fe8c04b359"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-T-M/raw-external/592413727ee8d42916bd98007262f48c6139273cb373839c6d285a0ba20b6406.body",
+      "bytes": 40372,
+      "sha256": "592413727ee8d42916bd98007262f48c6139273cb373839c6d285a0ba20b6406"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-T-M/source-acquisition-projection.json",
+      "bytes": 333172,
+      "sha256": "c69bb640f9d2bc0ccc0a991ce77a5a720f3055c121028b3ed4a515b694b18f36"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-T-M/source-fetch-001.json",
+      "bytes": 487,
+      "sha256": "bfb66d6f50cfc922a2fcbf59ec3834a4e9cce3130120593f6522c9ea925a321d"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-T-M/source-range-verification.json",
+      "bytes": 28617,
+      "sha256": "cc330e15d9271868e5b151a1035f33c67702d81ff44fb21d42db17fb3b73ea25"
+    }
+  ],
+  "admitted_current_artifacts": [
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-research-proposal/workspace/out/PROPOSAL.md",
+      "bytes": 30719,
+      "sha256": "d8d1c96be3f12ba6d46056eb7c26e58544621ac39ca6fcef494d3927e44d332d"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-research-proposal/workspace/out/UNRESOLVED_LEADS.md",
+      "bytes": 2981,
+      "sha256": "ef1acfafcaf731e1e3b0775dba2a8cfa550e23adf5426a11a6e335a1c3ce56ed"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-independent-candidate-critic/workspace/out/CRITIQUE.md",
+      "bytes": 23788,
+      "sha256": "90ebef792d7ec48a37b4faad267e388cff116af65d473b9d9ca59c2935eacb26"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "bytes": 42558,
+      "sha256": "7572d6ebfd1916d33fafb209c2ad0bdc03d45ca2fcfe320d7cb3a7096d30eb29"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-final-correction/workspace/out/UNRESOLVED_LEADS.md",
+      "bytes": 4821,
+      "sha256": "bda300efaf762008f641a93435d534dffb284edf59687aedd0da2bc4bc0156a5"
+    }
+  ],
+  "source_version_dependencies": [
+    {
+      "url": "https://raw.githubusercontent.com/ome/ngff/0.4.1/0.4/index.bs",
+      "sha256": "592413727ee8d42916bd98007262f48c6139273cb373839c6d285a0ba20b6406",
+      "bytes": 40372,
+      "lines": [
+        "331-348",
+        "358-378",
+        "457-484"
+      ]
+    }
+  ],
+  "native_provenance": "Exactly whitelisted receipt projections; parent/root same-account and ledger-completed attestation, no credential inspection",
+  "method_effect_claim": "NONE",
+  "verification": {
+    "frozen_artifact_hashes_match": true,
+    "native_targets_fresh_distinct_positive_complete_quiet": true,
+    "source_range_hashes_match": true,
+    "metadata_projections_no_forbidden_raw_keys": true
+  }
+}

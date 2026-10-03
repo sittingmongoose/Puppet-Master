@@ -1,0 +1,325 @@
+{
+  "schema": "er8.evaluator.method-audit.v1",
+  "case_id": "V8-BIO-AMEND-C-L",
+  "read_after_quality_freeze": true,
+  "first_card_read_utc": "2026-10-03T02:34:33.946153+00:00",
+  "quality_freeze_utc": "2026-10-03T02:34:07.301720+00:00",
+  "quality_sha256": "013f26b33e29664d857ff9b178f615fbfb73f15b5ee5edddceaee692829f9f28",
+  "method": "simple-complete-control",
+  "method_card_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+  "same_card_all_three_stages": true,
+  "cards": [
+    {
+      "stage": "research-proposal",
+      "name": "METHOD.md",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-C-L/V8-BIO-AMEND-C-L-research-proposal/workspace/inputs/METHOD.md",
+      "sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "bytes": 473,
+      "preserved_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-method-inputs/research-proposal/METHOD.md"
+    },
+    {
+      "stage": "research-proposal",
+      "name": "TASK.md",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-C-L/V8-BIO-AMEND-C-L-research-proposal/workspace/inputs/TASK.md",
+      "sha256": "ce5c59b688becce8fff1c377c365cfbbe9afd82eb4f1e216a2c216c6bcf1a34f",
+      "bytes": 2576,
+      "preserved_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-method-inputs/research-proposal/TASK.md"
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "name": "METHOD.md",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-C-L/V8-BIO-AMEND-C-L-independent-candidate-critic/workspace/inputs/METHOD.md",
+      "sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "bytes": 473,
+      "preserved_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-method-inputs/independent-candidate-critic/METHOD.md"
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "name": "TASK.md",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-C-L/V8-BIO-AMEND-C-L-independent-candidate-critic/workspace/inputs/TASK.md",
+      "sha256": "eefdabf2d0d893aa0df4244c7d196a44b6f1ff86297b05684cf6fd6f90297594",
+      "bytes": 2441,
+      "preserved_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-method-inputs/independent-candidate-critic/TASK.md"
+    },
+    {
+      "stage": "final-correction",
+      "name": "METHOD.md",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-C-L/V8-BIO-AMEND-C-L-final-correction/workspace/inputs/METHOD.md",
+      "sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "bytes": 473,
+      "preserved_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-method-inputs/final-correction/METHOD.md"
+    },
+    {
+      "stage": "final-correction",
+      "name": "TASK.md",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-C-L/V8-BIO-AMEND-C-L-final-correction/workspace/inputs/TASK.md",
+      "sha256": "34ad7d20326f95170b09263323b6f1e438782bade6acacd80919ef71950fc5ae",
+      "bytes": 2470,
+      "preserved_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-method-inputs/final-correction/TASK.md"
+    }
+  ],
+  "input_delivery_receipts": [
+    {
+      "stage": "research-proposal",
+      "operation_id": "cc90983992ff4451a30a5d450813f47b",
+      "input": "inputs/TASK.md",
+      "file_sha_matches": true,
+      "range_sha_matches": true,
+      "range_start": 0,
+      "range_end_exclusive": 2576,
+      "body_bytes": 2576,
+      "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+      "llm_read": "UNOBSERVED",
+      "semantic_acquisition": "UNKNOWN"
+    },
+    {
+      "stage": "research-proposal",
+      "operation_id": "fb42e95088ef44a79fe8fd6f2976349d",
+      "input": "inputs/BRIEF.md",
+      "file_sha_matches": true,
+      "range_sha_matches": true,
+      "range_start": 0,
+      "range_end_exclusive": 3352,
+      "body_bytes": 3352,
+      "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+      "llm_read": "UNOBSERVED",
+      "semantic_acquisition": "UNKNOWN"
+    },
+    {
+      "stage": "research-proposal",
+      "operation_id": "84dc51b2e84743328e757c3df66b8bcc",
+      "input": "inputs/THIN_PLAN.md",
+      "file_sha_matches": true,
+      "range_sha_matches": true,
+      "range_start": 0,
+      "range_end_exclusive": 960,
+      "body_bytes": 960,
+      "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+      "llm_read": "UNOBSERVED",
+      "semantic_acquisition": "UNKNOWN"
+    },
+    {
+      "stage": "research-proposal",
+      "operation_id": "b9f50f0b873948e981a029163b6d4466",
+      "input": "inputs/METHOD.md",
+      "file_sha_matches": true,
+      "range_sha_matches": true,
+      "range_start": 0,
+      "range_end_exclusive": 473,
+      "body_bytes": 473,
+      "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+      "llm_read": "UNOBSERVED",
+      "semantic_acquisition": "UNKNOWN"
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "operation_id": "70e86936a90546a98669d2b830918545",
+      "input": "inputs/TASK.md",
+      "file_sha_matches": true,
+      "range_sha_matches": true,
+      "range_start": 0,
+      "range_end_exclusive": 2441,
+      "body_bytes": 2441,
+      "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+      "llm_read": "UNOBSERVED",
+      "semantic_acquisition": "UNKNOWN"
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "operation_id": "03427fd4f2144e80b7de9ed4e6739944",
+      "input": "inputs/BRIEF.md",
+      "file_sha_matches": true,
+      "range_sha_matches": true,
+      "range_start": 0,
+      "range_end_exclusive": 3352,
+      "body_bytes": 3352,
+      "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+      "llm_read": "UNOBSERVED",
+      "semantic_acquisition": "UNKNOWN"
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "operation_id": "0de495278c844bea843e655ca876b5f6",
+      "input": "inputs/THIN_PLAN.md",
+      "file_sha_matches": true,
+      "range_sha_matches": true,
+      "range_start": 0,
+      "range_end_exclusive": 960,
+      "body_bytes": 960,
+      "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+      "llm_read": "UNOBSERVED",
+      "semantic_acquisition": "UNKNOWN"
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "operation_id": "e088e8f3c3784e03ad1200d36edcfa19",
+      "input": "inputs/METHOD.md",
+      "file_sha_matches": true,
+      "range_sha_matches": true,
+      "range_start": 0,
+      "range_end_exclusive": 473,
+      "body_bytes": 473,
+      "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+      "llm_read": "UNOBSERVED",
+      "semantic_acquisition": "UNKNOWN"
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "operation_id": "92308111d559477689e3593f6294deca",
+      "input": "inputs/PROPOSAL.md",
+      "file_sha_matches": true,
+      "range_sha_matches": true,
+      "range_start": 0,
+      "range_end_exclusive": 22102,
+      "body_bytes": 22102,
+      "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+      "llm_read": "UNOBSERVED",
+      "semantic_acquisition": "UNKNOWN"
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "operation_id": "2b44d01648b94f6a85ea74923b82b9b7",
+      "input": "inputs/UNRESOLVED_LEADS.md",
+      "file_sha_matches": true,
+      "range_sha_matches": true,
+      "range_start": 0,
+      "range_end_exclusive": 3630,
+      "body_bytes": 3630,
+      "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+      "llm_read": "UNOBSERVED",
+      "semantic_acquisition": "UNKNOWN"
+    },
+    {
+      "stage": "final-correction",
+      "operation_id": "2fb5b65b4c80445face3c14727abbcd3",
+      "input": "inputs/TASK.md",
+      "file_sha_matches": true,
+      "range_sha_matches": true,
+      "range_start": 0,
+      "range_end_exclusive": 2470,
+      "body_bytes": 2470,
+      "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+      "llm_read": "UNOBSERVED",
+      "semantic_acquisition": "UNKNOWN"
+    },
+    {
+      "stage": "final-correction",
+      "operation_id": "a07a5a4199fd4eb889c9cf9734821db4",
+      "input": "inputs/BRIEF.md",
+      "file_sha_matches": true,
+      "range_sha_matches": true,
+      "range_start": 0,
+      "range_end_exclusive": 3352,
+      "body_bytes": 3352,
+      "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+      "llm_read": "UNOBSERVED",
+      "semantic_acquisition": "UNKNOWN"
+    },
+    {
+      "stage": "final-correction",
+      "operation_id": "ac565375bef14874a648eeee7a8c1e74",
+      "input": "inputs/THIN_PLAN.md",
+      "file_sha_matches": true,
+      "range_sha_matches": true,
+      "range_start": 0,
+      "range_end_exclusive": 960,
+      "body_bytes": 960,
+      "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+      "llm_read": "UNOBSERVED",
+      "semantic_acquisition": "UNKNOWN"
+    },
+    {
+      "stage": "final-correction",
+      "operation_id": "f6a73e72c470432182f39a09eca38056",
+      "input": "inputs/METHOD.md",
+      "file_sha_matches": true,
+      "range_sha_matches": true,
+      "range_start": 0,
+      "range_end_exclusive": 473,
+      "body_bytes": 473,
+      "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+      "llm_read": "UNOBSERVED",
+      "semantic_acquisition": "UNKNOWN"
+    },
+    {
+      "stage": "final-correction",
+      "operation_id": "14a3393a937f4c10a52aeb36fc7b1c06",
+      "input": "inputs/PROPOSAL.md",
+      "file_sha_matches": true,
+      "range_sha_matches": true,
+      "range_start": 0,
+      "range_end_exclusive": 22102,
+      "body_bytes": 22102,
+      "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+      "llm_read": "UNOBSERVED",
+      "semantic_acquisition": "UNKNOWN"
+    },
+    {
+      "stage": "final-correction",
+      "operation_id": "ec714358d38a4c97b23b63ac45dfe972",
+      "input": "inputs/CRITIQUE.md",
+      "file_sha_matches": true,
+      "range_sha_matches": true,
+      "range_start": 0,
+      "range_end_exclusive": 22464,
+      "body_bytes": 22464,
+      "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+      "llm_read": "UNOBSERVED",
+      "semantic_acquisition": "UNKNOWN"
+    },
+    {
+      "stage": "final-correction",
+      "operation_id": "5d5690140e834346a61428916d67baff",
+      "input": "inputs/UNRESOLVED_LEADS.md",
+      "file_sha_matches": true,
+      "range_sha_matches": true,
+      "range_start": 0,
+      "range_end_exclusive": 3630,
+      "body_bytes": 3630,
+      "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved",
+      "llm_read": "UNOBSERVED",
+      "semantic_acquisition": "UNKNOWN"
+    }
+  ],
+  "duties": [
+    {
+      "duty": "Ordinary research→proposal→fresh independent same-family candidate critic→final correction",
+      "ruling": "STRUCTURAL_UPTAKE_OBSERVED",
+      "evidence": "Actual PROPOSAL,CRITIQUE,FINAL_PROPOSAL with distinct native Goal targets and fresh sessions; source re-capture and C1–C7 resolution visible."
+    },
+    {
+      "duty": "Choose efficient research order independently; no imposed proposition table/witness/batching/retrieval waves",
+      "ruling": "NO_SPECIAL_REQUIREMENT_ASSIGNED",
+      "evidence": "Exact473-byte card prescribes no witness table, proof-first procedure, batching or wave schedule; spontaneous arithmetic/correction ledger is permitted control behavior."
+    },
+    {
+      "duty": "All brief obligations and accurate source scope/conditions remain required",
+      "ruling": "NOT_FULLY_SATISFIED",
+      "evidence": "Frozen quality F1–F6 and all3Q/5B coverage. Structural instruction uptake does not erase unresolved consequential calibration/alignment dependencies."
+    },
+    {
+      "duty": "AMEND-specific amendment within own case",
+      "ruling": "NOT_ASSIGNED_BY_THIS_CARD",
+      "evidence": "AMEND-C is case lineage/name; exact control card imposes ordinary pipeline only. Initial self-generated ERRATA-C-L exists and final applies corrected value, but this is spontaneous control behavior, not treatment amendment duty."
+    },
+    {
+      "duty": "Fresh stages preserve correct evidence; address critique with source support; complete actual final artifact",
+      "ruling": "OBSERVED_BOUNDED_UPTAKE_WITH_QUALITY_FAILURE",
+      "evidence": "Correction dispositions explicit, frozen transfer hashes match; supported C1–C7 mostly incorporated; current final preserves invalid fallback and open leads."
+    },
+    {
+      "duty": "No helpers/private/sibling/evaluator/prior campaign access; no candidate provider/Goal launch",
+      "ruling": "BOUNDED_METADATA_COMPLIANCE_OBSERVED",
+      "evidence": "Only four allowed MCP tools in40 inventoried native request attempts, no unexpected tool counts, stage-owned public sources/current inputs/output paths. Raw reasoning/private journals not examined; do not infer unobservable semantic consumption."
+    },
+    {
+      "duty": "Fixed stage/case clocks and no unexecuted test success claims",
+      "ruling": "OBSERVED",
+      "evidence": "811.9716s/660.2894s/540.3896s stage charge intervals under1200/1200/900 caps; case2013.6461s under3600, occupied2013.3025s under5400, outside-native5.3019s under300. Artifacts repeatedly label tests proposed, not executed."
+    }
+  ],
+  "method_disposition": "STRUCTURAL_UPTAKE_OBSERVED_SUBSTANTIVE_ACCURACY_FAILED_SCREEN",
+  "not_a_method_effect_estimate": "One actual case; same-family/common-account root attestation and shared ordinary background acknowledged. No isolated method main effect, matched-pair speedup, or quality-equivalent timing claim.",
+  "source_consumption": "Host input/source bodies and stdout flush receipts only; no frontend/model receipt in inventory source_deliveries arrays; model reading UNOBSERVED and semantic acquisition UNKNOWN.",
+  "account": "ActualGLM-5.3-Flash/max all3 stages; same account root-attested. M/L suffixes are lineage, not actual observed model. No profiles/auth read."
+}

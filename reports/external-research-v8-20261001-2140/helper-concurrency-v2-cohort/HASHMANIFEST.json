@@ -1,0 +1,277 @@
+{
+  "schema": "er8.helper-concurrency-public-hash-manifest.v2",
+  "cohort": "helper-concurrency-v2-cohort",
+  "positive_selected_original_count": 25,
+  "all_selected_original_pins_checked_before_writes": true,
+  "artifacts": [
+    {
+      "source_locator": "LAB_ROOT/ops/helper-concurrency-v2/MANIFEST.json",
+      "original_sha256": "85817378b706aac371bd6da50e427599491f8622f39fbdafdc279a222efeebba",
+      "public_path": "ops/helper-concurrency-v2/MANIFEST.json",
+      "public_sha256": "6db1a69f6a061c8791139ae587fe0a2030697a61a7ff124496610bb34e953da3",
+      "original_bytes": 3157,
+      "public_bytes": 2590,
+      "projection": "literal-LAB-path-sanitization",
+      "native_source_portable": false
+    },
+    {
+      "source_locator": "LAB_ROOT/ops/helper-concurrency-v2/ledger_helper_concurrency_v2.py",
+      "original_sha256": "eafb75b1a157a5b7e77f03f9fc52e298a7ef255e439730e22c4fde6a95dc0405",
+      "public_path": "ops/helper-concurrency-v2/ledger_helper_concurrency_v2.py",
+      "public_sha256": "f9334a3a3a24b37a06c0ebab46b4e9a85dde02c308fe6e1b8b46fa66d551e5b8",
+      "original_bytes": 9111,
+      "public_bytes": 9048,
+      "projection": "literal-LAB-path-sanitization",
+      "native_source_portable": false
+    },
+    {
+      "source_locator": "LAB_ROOT/ops/helper-concurrency-review-v2/FREEZE.json",
+      "original_sha256": "d29e6b45870c44f4f89ab65fbe216a32b15dd2a47e05a05971f48a1535a8b6c3",
+      "public_path": "ops/helper-concurrency-review-v2/FREEZE.json",
+      "public_sha256": "66a34ab8e6c13cbd7bb68919aacd476e4032ee821a407604744204b13e0eb47b",
+      "original_bytes": 3496,
+      "public_bytes": 2866,
+      "projection": "literal-LAB-path-sanitization",
+      "native_source_portable": false
+    },
+    {
+      "source_locator": "LAB_ROOT/ops/helper-concurrency-review-v1/FREEZE.json",
+      "original_sha256": "0948bf10e9fcef1f5ca0c9a0a4f9716c56e437706200e2c781c14dfd25edc95f",
+      "public_path": "ops/helper-concurrency-review-v1/FREEZE.json",
+      "public_sha256": "aca1e233035581a983760990551d6eb9d74b80d9f811f77e1faf27ed8fe99e6b",
+      "original_bytes": 3428,
+      "public_bytes": 2798,
+      "projection": "literal-LAB-path-sanitization",
+      "native_source_portable": false
+    },
+    {
+      "source_locator": "LAB_ROOT/ops/recovery-v1/HELPER_CONCURRENCY_AUTHORITY_20261003.json",
+      "original_sha256": "f1682a991232997556aed7fb88f167e706317259913d9365c5a1fb72fc572a79",
+      "public_path": "ops/recovery-v1/HELPER_CONCURRENCY_AUTHORITY_20261003.json",
+      "public_sha256": "f1682a991232997556aed7fb88f167e706317259913d9365c5a1fb72fc572a79",
+      "original_bytes": 1136,
+      "public_bytes": 1136,
+      "projection": "literal-LAB-path-sanitization",
+      "native_source_portable": false
+    },
+    {
+      "source_locator": "LAB_ROOT/ops/recovery-v1/HELPER_CONCURRENCY_PROOF_POINTER_CORRECTION_V1.json",
+      "original_sha256": "c14191faf9fa89f3d4091085af19c3083b8f474d0b0e0b54a227a9f7d0ac9c19",
+      "public_path": "ops/recovery-v1/HELPER_CONCURRENCY_PROOF_POINTER_CORRECTION_V1.json",
+      "public_sha256": "2c1d5de3756808848399860d55c3de1cc2b9d716a4ec62cd35b734fada6f3831",
+      "original_bytes": 899,
+      "public_bytes": 773,
+      "projection": "literal-LAB-path-sanitization",
+      "native_source_portable": false
+    },
+    {
+      "source_locator": "LAB_ROOT/ops/recovery-v1/HELPER_CONCURRENCY_ROOT_INSTALL_V2.json",
+      "original_sha256": "e9e743d89c34adb8c2d229cf985a57d663c0b027b7569ffbbb78bd8246ab87d0",
+      "public_path": "ops/recovery-v1/HELPER_CONCURRENCY_ROOT_INSTALL_V2.json",
+      "public_sha256": "d6b84f30e1a6cfe58d0573a50d36d5eec5f24fa522ab3e01b5886a451f56b3dd",
+      "original_bytes": 1740,
+      "public_bytes": 1425,
+      "projection": "literal-LAB-path-sanitization",
+      "native_source_portable": false
+    },
+    {
+      "source_locator": "LAB_ROOT/ops/muse-helper-public-check-v1/root-repair-v1/verify_public.py",
+      "original_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+      "public_path": "verify_public.py",
+      "public_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+      "original_bytes": 6851,
+      "public_bytes": 6851,
+      "projection": "identity-portable-hash-checker",
+      "native_source_portable": true
+    },
+    {
+      "source_locator": "LAB_ROOT/ops/helper-concurrency-v2/test_helper_concurrency_v2.py",
+      "original_sha256": "86b0fc8337d48fe01ddd7cef44d60bc36c9948a83a31890fddb743ca1ae08d5e",
+      "public_path": "ops/helper-concurrency-v2/test_helper_concurrency_v2.py",
+      "public_sha256": "86b0fc8337d48fe01ddd7cef44d60bc36c9948a83a31890fddb743ca1ae08d5e",
+      "original_bytes": 16092,
+      "public_bytes": 16092,
+      "projection": "literal-LAB-path-sanitization",
+      "native_source_portable": false
+    },
+    {
+      "source_locator": "LAB_ROOT/ops/helper-concurrency-v2/TEST_RESULTS.txt",
+      "original_sha256": "e965bb99d753b0517db0dd8594a795529ed391069756ac61e853e527ae493f3c",
+      "public_path": "ops/helper-concurrency-v2/TEST_RESULTS.txt",
+      "public_sha256": "e965bb99d753b0517db0dd8594a795529ed391069756ac61e853e527ae493f3c",
+      "original_bytes": 2429,
+      "public_bytes": 2429,
+      "projection": "literal-LAB-path-sanitization",
+      "native_source_portable": false
+    },
+    {
+      "source_locator": "LAB_ROOT/ops/helper-concurrency-v2/HANDOFF.md",
+      "original_sha256": "426a867690a7f0a41b7f72779a9ca53db6908a1fcd86dd36b2bdbee79b355078",
+      "public_path": "ops/helper-concurrency-v2/HANDOFF.md",
+      "public_sha256": "6aba7a4a92ef6c13215251135d7edad06123144f5abf1c37abc0154fc7df9ad6",
+      "original_bytes": 6012,
+      "public_bytes": 5886,
+      "projection": "literal-LAB-path-sanitization",
+      "native_source_portable": false
+    },
+    {
+      "source_locator": "LAB_ROOT/ops/helper-concurrency-v2/SOURCE_DIFF.txt",
+      "original_sha256": "feb6f26293f9fc51cf3f80ba875243900d64911aced589625586fb60820cb700",
+      "public_path": "ops/helper-concurrency-v2/SOURCE_DIFF.txt",
+      "public_sha256": "74e84ea17f8ee2db54a07bf9d46dc433e6deeace32a42771e7fbffc5e8ed9dd6",
+      "original_bytes": 689,
+      "public_bytes": 563,
+      "projection": "literal-LAB-path-sanitization",
+      "native_source_portable": false
+    },
+    {
+      "source_locator": "LAB_ROOT/ops/helper-concurrency-v2/INSTALL_REQUEST_EXAMPLE.json",
+      "original_sha256": "90df801b750c4b61e0ef79cabb287892ab127e98eecc5c0134e33baffa069d2c",
+      "public_path": "ops/helper-concurrency-v2/INSTALL_REQUEST_EXAMPLE.json",
+      "public_sha256": "da9f481e2f2072fccfd6cfdfd6c95b9e95ad434d4f75465a96060efa0750237b",
+      "original_bytes": 273,
+      "public_bytes": 210,
+      "projection": "literal-LAB-path-sanitization",
+      "native_source_portable": false
+    },
+    {
+      "source_locator": "LAB_ROOT/ops/helper-concurrency-v2/INSTALL_REQUEST_SCHEMA.json",
+      "original_sha256": "a5cee083190b7ba475685b43b7da323162670ec2a555ff5e674ae312d3c786eb",
+      "public_path": "ops/helper-concurrency-v2/INSTALL_REQUEST_SCHEMA.json",
+      "public_sha256": "7720d5d03548d9f8626a49a280e2e9a76e112d2e637d1406fdeecccaf478106a",
+      "original_bytes": 572,
+      "public_bytes": 509,
+      "projection": "literal-LAB-path-sanitization",
+      "native_source_portable": false
+    },
+    {
+      "source_locator": "LAB_ROOT/ops/helper-concurrency-v2/RECEIPT_SCHEMA.json",
+      "original_sha256": "23a3ff06bac43cc0e219440f4bd82db85be93628de8968124dc13c3272ecab1c",
+      "public_path": "ops/helper-concurrency-v2/RECEIPT_SCHEMA.json",
+      "public_sha256": "a615db92e46edab041e26edc89bfaff966c381300257ac2435f82e1c29ea2e1b",
+      "original_bytes": 1095,
+      "public_bytes": 1032,
+      "projection": "literal-LAB-path-sanitization",
+      "native_source_portable": false
+    },
+    {
+      "source_locator": "LAB_ROOT/ops/helper-concurrency-review-v2/REVIEW.json",
+      "original_sha256": "e43ac4ec50acd6aeb090e7bea8ab1c7f0121ac72f82149141f2025c6992fbe77",
+      "public_path": "ops/helper-concurrency-review-v2/REVIEW.json",
+      "public_sha256": "5156c5f52ef2172018b1e4f092c1e093c2d575211cc3ff8397ffa81569ee5397",
+      "original_bytes": 4714,
+      "public_bytes": 4462,
+      "projection": "literal-LAB-path-sanitization",
+      "native_source_portable": false
+    },
+    {
+      "source_locator": "LAB_ROOT/ops/helper-concurrency-review-v2/REVIEW.md",
+      "original_sha256": "5d1abf0f621ef75981c75abae73113db2c0b307460e21fd0f0cf4e2874ff4b3b",
+      "public_path": "ops/helper-concurrency-review-v2/REVIEW.md",
+      "public_sha256": "5d1abf0f621ef75981c75abae73113db2c0b307460e21fd0f0cf4e2874ff4b3b",
+      "original_bytes": 2788,
+      "public_bytes": 2788,
+      "projection": "literal-LAB-path-sanitization",
+      "native_source_portable": false
+    },
+    {
+      "source_locator": "LAB_ROOT/ops/helper-concurrency-review-v2/test-summary.json",
+      "original_sha256": "d31d44a988ecacad9c09dddcfdc403c4b6b67d1cbe026579160b0cf46719e760",
+      "public_path": "ops/helper-concurrency-review-v2/test-summary.json",
+      "public_sha256": "d31d44a988ecacad9c09dddcfdc403c4b6b67d1cbe026579160b0cf46719e760",
+      "original_bytes": 303,
+      "public_bytes": 303,
+      "projection": "literal-LAB-path-sanitization",
+      "native_source_portable": false
+    },
+    {
+      "source_locator": "LAB_ROOT/ops/helper-concurrency-review-v2/TEST_RESULTS.txt",
+      "original_sha256": "a7e46613fd54a26f5b48b80288ebb7a7fb9a6a2b0d4ac9353ea08987af5fee6b",
+      "public_path": "ops/helper-concurrency-review-v2/TEST_RESULTS.txt",
+      "public_sha256": "a7e46613fd54a26f5b48b80288ebb7a7fb9a6a2b0d4ac9353ea08987af5fee6b",
+      "original_bytes": 5603,
+      "public_bytes": 5603,
+      "projection": "literal-LAB-path-sanitization",
+      "native_source_portable": false
+    },
+    {
+      "source_locator": "LAB_ROOT/ops/helper-concurrency-review-v2/input-pins.json",
+      "original_sha256": "7c3890582460cd606491a4aa10a010726ebfa098ee8a7c5abb021de55eaeeb19",
+      "public_path": "ops/helper-concurrency-review-v2/input-pins.json",
+      "public_sha256": "b5bce93a71964b7af6925f5a483a5ee61289a37c5830e41ee6ebd294b1e4402e",
+      "original_bytes": 7586,
+      "public_bytes": 6011,
+      "projection": "literal-LAB-path-sanitization",
+      "native_source_portable": false
+    },
+    {
+      "source_locator": "LAB_ROOT/ops/helper-concurrency-review-v2/run_review.py",
+      "original_sha256": "9b70ac1aa8656994bed00bd66aa3aa46ff7f77d435df7d002fc0ff14e0db44c2",
+      "public_path": "ops/helper-concurrency-review-v2/run_review.py",
+      "public_sha256": "6b2932a8ed12b0e2c93c61ecedd3db5a1b1137bbb5d26311931486b4da28bebf",
+      "original_bytes": 17654,
+      "public_bytes": 17591,
+      "projection": "literal-LAB-path-sanitization",
+      "native_source_portable": false
+    },
+    {
+      "source_locator": "LAB_ROOT/ops/helper-concurrency-v1/ledger_helper_concurrency_v1.py",
+      "original_sha256": "f8b0f9f984bbfe1b1fd62d46b956247961d09fdea01fabb83d759f631d75078d",
+      "public_path": "ops/helper-concurrency-v1/ledger_helper_concurrency_v1.py",
+      "public_sha256": "52033876e40cdb48dab5b4527e9a547df38b476dbb7355392d5951f0540d5d76",
+      "original_bytes": 8976,
+      "public_bytes": 8913,
+      "projection": "literal-LAB-path-sanitization",
+      "native_source_portable": false
+    },
+    {
+      "source_locator": "LAB_ROOT/ops/helper-concurrency-review-v1/REVIEW.json",
+      "original_sha256": "b4709ce80c3a67902e3d4cfdc9861d24ddcb5c8b6b80d101984d954b5fe1df5e",
+      "public_path": "ops/helper-concurrency-review-v1/REVIEW.json",
+      "public_sha256": "9817a683d04c949a2de935d25bb4e862c788fd4cf1fd41ae6500505b74768ec5",
+      "original_bytes": 3770,
+      "public_bytes": 3644,
+      "projection": "literal-LAB-path-sanitization",
+      "native_source_portable": false
+    },
+    {
+      "source_locator": "LAB_ROOT/ops/helper-concurrency-review-v1/REVIEW.md",
+      "original_sha256": "4a58c934f98664cbd8d9d4c1ba1ec047fc8c2e3547822435d1c03bf2e721efb6",
+      "public_path": "ops/helper-concurrency-review-v1/REVIEW.md",
+      "public_sha256": "4a58c934f98664cbd8d9d4c1ba1ec047fc8c2e3547822435d1c03bf2e721efb6",
+      "original_bytes": 2355,
+      "public_bytes": 2355,
+      "projection": "literal-LAB-path-sanitization",
+      "native_source_portable": false
+    },
+    {
+      "source_locator": "LAB_ROOT/ops/helper-concurrency-v1/MANIFEST.json",
+      "original_sha256": "becd3cb6f10ca259b2a9e4e282f028c3564d580aad51fb245203020c9f479e49",
+      "public_path": "ops/helper-concurrency-v1/MANIFEST.json",
+      "public_sha256": "250773334567a231cf069930e6054baecec2b0d0f392f18737706b9202651e2b",
+      "original_bytes": 2676,
+      "public_bytes": 2172,
+      "projection": "literal-LAB-path-sanitization",
+      "native_source_portable": false
+    },
+    {
+      "source_locator": "publication-generated/README.md",
+      "original_sha256": null,
+      "public_path": "README.md",
+      "public_sha256": "a95df8c11e5731ea5093684e5f845f40e32f5474238126187b362b4a731960bd",
+      "projection": "publication-summary"
+    }
+  ],
+  "excluded": [
+    "private ledger/state/events",
+    "credentials/auth keys",
+    "SDK/raw runtime",
+    "native journals",
+    "candidate/source answer bodies",
+    "review sandbox/tmp",
+    "failed nonfinite raw JSON evidence",
+    "unselected dependency bytes"
+  ],
+  "native_projections_nonportable": true,
+  "original_source_pins_preserved_external": true
+}

@@ -1,0 +1,94 @@
+{
+  "schema": "pm.er8.public-muse-handover-lifecycle-cohort.v1",
+  "positive_original_count": 6,
+  "scope": "Exact fifth generic native Muse helper lifecycle/input/launch/birth/prompt metadata only; no native events/stderr/runner/partial source extraction/raw conversation/private auth/context/candidate facts.",
+  "source_accepted_or_extracted": false,
+  "native_replay_verified": false,
+  "artifacts": [
+    {
+      "source_projection": "LAB_ROOT/ops/muse-helper-handover-v1/QUIET.json",
+      "public_path": "ops/muse-helper-handover-v1/QUIET.json",
+      "original_sha256": "0681900459c0744044c31ab61530bbeedd29da4668330722384fe62d22807412",
+      "original_bytes": 1006,
+      "public_sha256": "0e3f5eda7ab2b3c3509c6e0a6934ec170b5676f0df607ad0ff74ff61ab5f6a18",
+      "public_bytes": 1121,
+      "sanitized": true,
+      "projection": "Explicit safe lifecycle key whitelist and approved host-path/session/JSON-handle sanitizer"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/muse-helper-handover-v1/INPUT_MANIFEST.json",
+      "public_path": "ops/muse-helper-handover-v1/INPUT_MANIFEST.json",
+      "original_sha256": "9f39c1a1a420cb7b7eb8cc2ee69b2dc24fda40483c62e45d3011fa00c33440d8",
+      "original_bytes": 461,
+      "public_sha256": "8c3f21b6026fff78b1028b465ed128c30046771ab1232ef121cfc3c216b81781",
+      "public_bytes": 461,
+      "sanitized": true,
+      "projection": "Explicit safe lifecycle key whitelist and approved host-path/session/JSON-handle sanitizer"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/muse-helper-handover-v1/ROOT_LAUNCH.json",
+      "public_path": "ops/muse-helper-handover-v1/ROOT_LAUNCH.json",
+      "original_sha256": "a1dedf72b28da1c90e02f685da6e22de29f5566fe989277ce3d66a7715cba194",
+      "original_bytes": 782,
+      "public_sha256": "ff7bdd36ff6fa399653d9ff05d749283339d6acc288d7b72f09b75c4ba431ae2",
+      "public_bytes": 640,
+      "sanitized": true,
+      "projection": "Explicit safe lifecycle key whitelist and approved host-path/session/JSON-handle sanitizer"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/muse-helper-handover-v1/BIRTH.json",
+      "public_path": "ops/muse-helper-handover-v1/BIRTH.json",
+      "original_sha256": "05e143369d40d072a19229edf67e41600fd1fbeb7c7344a39b5eb2575e21aa05",
+      "original_bytes": 1131,
+      "public_sha256": "ae475d77c7ffa6b98c5ded88a982037f5fcfb4990ad7239d297169256c7ee9e3",
+      "public_bytes": 993,
+      "sanitized": true,
+      "projection": "Explicit safe lifecycle key whitelist and approved host-path/session/JSON-handle sanitizer"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/muse-helper-handover-v1/ORIGINAL_BIRTH.json",
+      "public_path": "ops/muse-helper-handover-v1/ORIGINAL_BIRTH.json",
+      "original_sha256": "79973aaa10639f7e465ca4572c12cc14129e7fdf4f77d65b86e5650499baf6f5",
+      "original_bytes": 249,
+      "public_sha256": "a1d79158debdbc3b8cdae9a16ae36cc94e5e8b0ed3791dc94ad330ca3cabc626",
+      "public_bytes": 249,
+      "sanitized": true,
+      "projection": "Explicit safe lifecycle key whitelist and approved host-path/session/JSON-handle sanitizer"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/muse-helper-handover-v1/prompt.txt",
+      "public_path": "ops/muse-helper-handover-v1/prompt.txt",
+      "original_sha256": "64abf630a171bc74f90a9adb6ea309603c8172199f11ba3dd4e08598e48a71ee",
+      "original_bytes": 2635,
+      "public_sha256": "64abf630a171bc74f90a9adb6ea309603c8172199f11ba3dd4e08598e48a71ee",
+      "public_bytes": 2635,
+      "sanitized": false,
+      "projection": "Explicit safe lifecycle key whitelist and approved host-path/session/JSON-handle sanitizer"
+    },
+    {
+      "source_projection": "WORKTREE_ROOT/reports/external-research-v8-20261001-2140/prospective-source-cohort-v3/ops/muse-helper-public-check-v1/root-repair-v1/verify_public.py",
+      "public_path": "verify_public.py",
+      "original_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+      "original_bytes": 6851,
+      "public_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+      "public_bytes": 6851,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/publication-muse-handover-lifecycle-v1/ROOT_HANDOFF.json",
+      "public_path": "ROOT_HANDOFF.json",
+      "original_sha256": "893563342b5c6894a6a5e583b96f8a90a62911fbc9529d07868da783ecd6a841",
+      "original_bytes": 3117,
+      "public_sha256": "251dc3f163f90a144d0139864f0d1c0389ee58fb9f655814d60749a738d8f4b2",
+      "public_bytes": 2683,
+      "sanitized": true
+    },
+    {
+      "source_projection": "publication-generated",
+      "public_path": "README.md",
+      "original_sha256": null,
+      "public_sha256": "e9e7902a90eb6efc8e8dc21ca6f10c2ba241063614c431cb4b0a69c35cf153cc",
+      "public_bytes": 2672
+    }
+  ]
+}

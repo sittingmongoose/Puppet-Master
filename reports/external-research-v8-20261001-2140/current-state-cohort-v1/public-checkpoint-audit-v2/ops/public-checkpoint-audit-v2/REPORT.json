@@ -1,0 +1,110 @@
+{
+  "schema": "pm.er8.public-checkpoint-audit.v2",
+  "helper": "er8-public-checkpoint-audit-v2",
+  "status": "PASS_MECHANICAL_SCOPE_NO_OPEN_ACTIONABLE_FINDINGS",
+  "birth_epoch": 1790998699.123081,
+  "original_deadline_epoch": 1790999299.123081,
+  "actual_end_epoch": 1790998883.3647313,
+  "actual_end_utc": "2026-10-03T03:41:23.364731+00:00",
+  "elapsed_birth_through_end_seconds": 184.24165034294128,
+  "ended_before_original_deadline": true,
+  "observation_original_sha256": "dae9e439aa894a15f039b11f8ca8508bad165662c3d335ef558bffafffc17fd4",
+  "observation_public_sha256": "faf36c93a6fa39574d6429a7375b55e78c828090ed61c181c552c76e36b966fc",
+  "findings": [],
+  "resolved_during_audit": [
+    {
+      "file": "FAILURES.md",
+      "line": 18,
+      "issue": "Old5Musehelper count",
+      "resolution": "Parent updated to6/4complete/2timeouts/911.7189729450283knownCLI; verifiedlatestbytes."
+    },
+    {
+      "file": "FAILURES.md",
+      "line": 22,
+      "issue": "NBAMENDT unstarted status lackedhistorical qualifier",
+      "resolution": "Parent labels unstarted atpacketfreeze and activeatcurrentobservation;verifiedlatestbytes."
+    }
+  ],
+  "checks": {
+    "headline": {
+      "native_starts": 47,
+      "occupied_seconds": 34172.320019483566,
+      "research_complete": 17,
+      "critics_complete": 9,
+      "finals_complete": 8,
+      "whole_pipelines": 8,
+      "operational_pairs": 4,
+      "reviewed_pairs": 3,
+      "FAILED_SCREENs": 6,
+      "full_PASS": 0,
+      "quality_qualified_efficiency": 0
+    },
+    "attempt_native_start_sum": 47,
+    "NB_AMEND_at_frozen_observation": "C researchcomplete/criticactive; T researchactive; no live-state proof",
+    "exact_prior_AMEND_dispositions": "C VERIFIED_FAILED_SCREEN; T FAILED_SCREEN",
+    "comparison_definition": "3 independently reviewed pairs separate from4operational pairs",
+    "helper_limit": "12 installed exactacceptedv2;20author+20independent frozen source tests; onlyhelpercapchanged, candidate/global ceilings retained",
+    "native_Muse_helpers": "6invocations4complete2timeout911.7189729450283knownCLI/0candidateGoals;usageUNKNOWN; late root extraction/tests separate",
+    "late_accounting_audit": "56.580358028411865seconds LATE_HOLD_ADVISORY; not fullyboundedPASS",
+    "root_erratum": "19→17 explicitly corrects duplicate metadata counter; prior bytes preserved and no starts/costs/caseoutcomes rewrite",
+    "historical_pending": "Old operational/cohort PENDING records retained as historical; no provisional scientific quality ruling imported",
+    "links": "All latest six current Markdown files plus six new cohort READMEs resolve; new NB-retrieval/helper amendment links included",
+    "portable_manifest_checks": {
+      "integrated-breadth-pair-v1": 384,
+      "breadth-quality-review-v1": 39,
+      "current-state-cohort-v1": 21,
+      "current-state-cohort-v1/latest-root-metadata-v1": 7,
+      "integrated-notebook-retrieval-pair-v1": 345,
+      "helper-concurrency-v2-cohort": 27
+    },
+    "projection_hashes": "Original observationSHA and differing publicSHA bound separately; original/public fields verified in new bundle manifests, helper cohort uses HASHMANIFEST.json rather than PUBLIC_EXPORT for original pins."
+  },
+  "publication_snapshot_hashes": [
+    {
+      "path": "README.md",
+      "sha256": "b23041986a6f6d5ab8939e2cbe190e924d15ac5adc941c2bf6c0d1a1bbf9bc44"
+    },
+    {
+      "path": "RESULTS.md",
+      "sha256": "06c3972a8c1c5662216701dd9f0ea43d6a301347f9f997548696cad2901b444f"
+    },
+    {
+      "path": "BEST_RECIPE.md",
+      "sha256": "7d1337d468a8957e38a6704849b655a42b0de1e02a12abb6c9927beae51105f6"
+    },
+    {
+      "path": "CHECKPOINT.md",
+      "sha256": "afeaac9e8c90d06db53c5ee876dec4a77c50d6e4ee33c2916ba978e83ae64d4e"
+    },
+    {
+      "path": "FAILURES.md",
+      "sha256": "b487c0685d39bf3ece87d43a04cbb6e17564bd7edd2d765267e52e4bd6a2a5f3"
+    },
+    {
+      "path": "REPRODUCE.md",
+      "sha256": "2663514be75c8fc179c86db9cd58a898dae873fa9d61f1fce6f29df9378e7f81"
+    },
+    {
+      "path": "attempts.json",
+      "sha256": "c754d327ff199ed756c9984df7b604a60626ed397f078ac87654d5078c1b52d1"
+    },
+    {
+      "path": "comparisons.json",
+      "sha256": "11e718f720dfa80a4f7b7a0f29489a517e75d43301c36f05e4004b256b5bc71d"
+    },
+    {
+      "path": "economics.json",
+      "sha256": "d3d488552cd50c6c09b0e269f5e585413c7d47ed3e87062c0c231b9b486ec128"
+    },
+    {
+      "path": "schedule.json",
+      "sha256": "9906be64b1f3d52f99a6abad7697d8a9e81201ae4d74b446d2c993b9199f21b1"
+    }
+  ],
+  "limits": [
+    "Mechanical publication consistency only; no scientific body/sourcequality regrade, native/private context reads, provider/native/unit/source execution or private ledger inspection.",
+    "Artifactcheckers read bytes forhashes only; modelquality/native replay false and optional timing declarations absent are expected.",
+    "Previously audited amendment44/rootstandby23/Musechild9notrerun; earlier audit frozen independently.",
+    "Only own LAB/ops/public-checkpoint-audit-v2 outputs written; root/public changes made by parent duringaudit and accommodated."
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "schema": "er8.public-export.v1",
+  "cohort": "helper-concurrency-v2-cohort",
+  "artifacts": [
+    {
+      "public_path": "ops/helper-concurrency-v2/MANIFEST.json",
+      "public_sha256": "6db1a69f6a061c8791139ae587fe0a2030697a61a7ff124496610bb34e953da3"
+    },
+    {
+      "public_path": "ops/helper-concurrency-v2/ledger_helper_concurrency_v2.py",
+      "public_sha256": "f9334a3a3a24b37a06c0ebab46b4e9a85dde02c308fe6e1b8b46fa66d551e5b8"
+    },
+    {
+      "public_path": "ops/helper-concurrency-review-v2/FREEZE.json",
+      "public_sha256": "66a34ab8e6c13cbd7bb68919aacd476e4032ee821a407604744204b13e0eb47b"
+    },
+    {
+      "public_path": "ops/helper-concurrency-review-v1/FREEZE.json",
+      "public_sha256": "aca1e233035581a983760990551d6eb9d74b80d9f811f77e1faf27ed8fe99e6b"
+    },
+    {
+      "public_path": "ops/recovery-v1/HELPER_CONCURRENCY_AUTHORITY_20261003.json",
+      "public_sha256": "f1682a991232997556aed7fb88f167e706317259913d9365c5a1fb72fc572a79"
+    },
+    {
+      "public_path": "ops/recovery-v1/HELPER_CONCURRENCY_PROOF_POINTER_CORRECTION_V1.json",
+      "public_sha256": "2c1d5de3756808848399860d55c3de1cc2b9d716a4ec62cd35b734fada6f3831"
+    },
+    {
+      "public_path": "ops/recovery-v1/HELPER_CONCURRENCY_ROOT_INSTALL_V2.json",
+      "public_sha256": "d6b84f30e1a6cfe58d0573a50d36d5eec5f24fa522ab3e01b5886a451f56b3dd"
+    },
+    {
+      "public_path": "verify_public.py",
+      "public_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd"
+    },
+    {
+      "public_path": "ops/helper-concurrency-v2/test_helper_concurrency_v2.py",
+      "public_sha256": "86b0fc8337d48fe01ddd7cef44d60bc36c9948a83a31890fddb743ca1ae08d5e"
+    },
+    {
+      "public_path": "ops/helper-concurrency-v2/TEST_RESULTS.txt",
+      "public_sha256": "e965bb99d753b0517db0dd8594a795529ed391069756ac61e853e527ae493f3c"
+    },
+    {
+      "public_path": "ops/helper-concurrency-v2/HANDOFF.md",
+      "public_sha256": "6aba7a4a92ef6c13215251135d7edad06123144f5abf1c37abc0154fc7df9ad6"
+    },
+    {
+      "public_path": "ops/helper-concurrency-v2/SOURCE_DIFF.txt",
+      "public_sha256": "74e84ea17f8ee2db54a07bf9d46dc433e6deeace32a42771e7fbffc5e8ed9dd6"
+    },
+    {
+      "public_path": "ops/helper-concurrency-v2/INSTALL_REQUEST_EXAMPLE.json",
+      "public_sha256": "da9f481e2f2072fccfd6cfdfd6c95b9e95ad434d4f75465a96060efa0750237b"
+    },
+    {
+      "public_path": "ops/helper-concurrency-v2/INSTALL_REQUEST_SCHEMA.json",
+      "public_sha256": "7720d5d03548d9f8626a49a280e2e9a76e112d2e637d1406fdeecccaf478106a"
+    },
+    {
+      "public_path": "ops/helper-concurrency-v2/RECEIPT_SCHEMA.json",
+      "public_sha256": "a615db92e46edab041e26edc89bfaff966c381300257ac2435f82e1c29ea2e1b"
+    },
+    {
+      "public_path": "ops/helper-concurrency-review-v2/REVIEW.json",
+      "public_sha256": "5156c5f52ef2172018b1e4f092c1e093c2d575211cc3ff8397ffa81569ee5397"
+    },
+    {
+      "public_path": "ops/helper-concurrency-review-v2/REVIEW.md",
+      "public_sha256": "5d1abf0f621ef75981c75abae73113db2c0b307460e21fd0f0cf4e2874ff4b3b"
+    },
+    {
+      "public_path": "ops/helper-concurrency-review-v2/test-summary.json",
+      "public_sha256": "d31d44a988ecacad9c09dddcfdc403c4b6b67d1cbe026579160b0cf46719e760"
+    },
+    {
+      "public_path": "ops/helper-concurrency-review-v2/TEST_RESULTS.txt",
+      "public_sha256": "a7e46613fd54a26f5b48b80288ebb7a7fb9a6a2b0d4ac9353ea08987af5fee6b"
+    },
+    {
+      "public_path": "ops/helper-concurrency-review-v2/input-pins.json",
+      "public_sha256": "b5bce93a71964b7af6925f5a483a5ee61289a37c5830e41ee6ebd294b1e4402e"
+    },
+    {
+      "public_path": "ops/helper-concurrency-review-v2/run_review.py",
+      "public_sha256": "6b2932a8ed12b0e2c93c61ecedd3db5a1b1137bbb5d26311931486b4da28bebf"
+    },
+    {
+      "public_path": "ops/helper-concurrency-v1/ledger_helper_concurrency_v1.py",
+      "public_sha256": "52033876e40cdb48dab5b4527e9a547df38b476dbb7355392d5951f0540d5d76"
+    },
+    {
+      "public_path": "ops/helper-concurrency-review-v1/REVIEW.json",
+      "public_sha256": "9817a683d04c949a2de935d25bb4e862c788fd4cf1fd41ae6500505b74768ec5"
+    },
+    {
+      "public_path": "ops/helper-concurrency-review-v1/REVIEW.md",
+      "public_sha256": "4a58c934f98664cbd8d9d4c1ba1ec047fc8c2e3547822435d1c03bf2e721efb6"
+    },
+    {
+      "public_path": "ops/helper-concurrency-v1/MANIFEST.json",
+      "public_sha256": "250773334567a231cf069930e6054baecec2b0d0f392f18737706b9202651e2b"
+    },
+    {
+      "public_path": "README.md",
+      "public_sha256": "a95df8c11e5731ea5093684e5f845f40e32f5474238126187b362b4a731960bd"
+    },
+    {
+      "public_path": "HASHMANIFEST.json",
+      "public_sha256": "bbe7d6b23a74e385bd8f59484732264f9c80b4e18663456f42f2e9d55770bc0f"
+    }
+  ],
+  "scope": "offline positive source/review/root-install publication; artifact hash verification only"
+}

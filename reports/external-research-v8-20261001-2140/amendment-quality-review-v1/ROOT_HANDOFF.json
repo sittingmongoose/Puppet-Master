@@ -1,0 +1,313 @@
+{
+  "schema": "pm.er8.amendment-quality-positive-public-handoff.v1",
+  "original_birth_epoch": 1790995167.1806521,
+  "original_deadline_epoch": 1790996067.1806521,
+  "prepared_epoch": 1790995465.7210732,
+  "scope": "Exactly authorized final-frozen reviewer OWN top metadata/reviews; optional exact root comparison/current observation. No independent-primary body reads, recursive/transitive/source-answer selection, native/private/SDK/key bodies, feedback or regrading.",
+  "status": "TWO_INDEPENDENT_FAILED_SCREEN_EARLY_REJECTIONS",
+  "rest": "UNASSESSED",
+  "whole_case_PASS": false,
+  "quality_qualified_pair": false,
+  "efficiency_or_winner_claim": false,
+  "source_freeze_pins": {
+    "V8-BIO-AMEND-T-L": {
+      "FREEZE.json": "b7fc61b902b80445e0d9c5437194f36eeeb376f62efb43e1a77048de73c01842",
+      "MANIFEST.json": "c9e9c9f0c2605662a5e9ea0af1539687061f335240d44919e5718f0e2cd18f7b",
+      "REVIEW.md": "4c66c6808780bba72f50afbd9dc698d4dce66c9f2bc39c9bd13d21031169da81",
+      "REVIEW.json": "56df3cbc11e38b68e30a51a415e67bfcbde3a74991ef993d3583b3a287f800ff"
+    },
+    "V8-BIO-AMEND-C-L": {
+      "FREEZE.json": "5b456efd61e1c07f3426a803f7143bc046ac698710509a3d58faf9b591025bba",
+      "MANIFEST.json": "d5c92ff8ac69cdf6e5b29b6a773b56cf093f1603dd7388129ebc54b1e5949b93",
+      "REVIEW.json": "0fdde16495da41e2a977710296d3e9d81417b8b1ef488950ee67d1f99fd65794"
+    }
+  },
+  "positive_files": [
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/FREEZE.json",
+      "sha256": "5b456efd61e1c07f3426a803f7143bc046ac698710509a3d58faf9b591025bba",
+      "bytes": 3301,
+      "pin_origin": "root explicit final freeze/manifest/review pin",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/MANIFEST.json",
+      "sha256": "d5c92ff8ac69cdf6e5b29b6a773b56cf093f1603dd7388129ebc54b1e5949b93",
+      "bytes": 19525,
+      "pin_origin": "root explicit final freeze/manifest/review pin",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/QUALITY_FREEZE.json",
+      "sha256": "04b10e7d9f666b632fbfb5051082f76ead50d364f8e65cd0d0714e39ed9bbeba",
+      "bytes": 771,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/QUALITY_MANIFEST.json",
+      "sha256": "e2743e0a6f200b1eac045c6e43a8b9424dcf303996f8a61a15445e02c73abbe0",
+      "bytes": 10484,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/REVIEW.json",
+      "sha256": "0fdde16495da41e2a977710296d3e9d81417b8b1ef488950ee67d1f99fd65794",
+      "bytes": 37651,
+      "pin_origin": "root explicit final freeze/manifest/review pin",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/REVIEW.md",
+      "sha256": "f1e7599d5eeb00b89be2af8b51093e652bbf8746c91d2a4b459cbe64acffceff",
+      "bytes": 6890,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/analytic-diagnostic.json",
+      "sha256": "c4d23c37cde6598cd0a8842a7547386001048db1b751c860bb7dae9b2953cb01",
+      "bytes": 2694,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/cost.json",
+      "sha256": "c0cde6a4291fb81f5c1eef14058c62a8436b55df793b3da9b972a7d69fee2ae9",
+      "bytes": 3561,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/method-audit.json",
+      "sha256": "020447bb9b63a02213383791934ef97e84e5fac7695f4c2c12482db55d92aebb",
+      "bytes": 15586,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/method-audit.md",
+      "sha256": "1fb532ee2594db2f860013b50ca4a2f5b43d1b3a2c245a716c30f82005ab890b",
+      "bytes": 1649,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/native-compliance-post-quality.json",
+      "sha256": "2e871bae42eed1bb19a631d23284ae98cd2e10da97affe7b11399db3da04eaf7",
+      "bytes": 1990,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preservation.json",
+      "sha256": "24d798bc1462e0ba15c9575103ac75dbf0d2200b99a77476005d36e94d43e929",
+      "bytes": 3914,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/provenance.json",
+      "sha256": "6c878c4d7dac68035eb78cea21da6e03049b3e8f703158e30ae77876bd5fa0c6",
+      "bytes": 268563,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/quality-before-method.json",
+      "sha256": "013f26b33e29664d857ff9b178f615fbfb73f15b5ee5edddceaee692829f9f28",
+      "bytes": 13835,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/quality-before-method.md",
+      "sha256": "18706fa3eac21c2ad45da108d5c26ef508cc6909d6e5661de3bc143b8547d170",
+      "bytes": 2904,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/quality-disposition.json",
+      "sha256": "3784c317bbf7ec3cb3b74ffb62a6680baa5b136dc3b831cea69970e7b70d842c",
+      "bytes": 4599,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-excerpts-current.md",
+      "sha256": "d0f6ee3b9d1d11bd1ed4b7f6151e38d913a7f782904fd69f21366f4282ab8cda",
+      "bytes": 2620,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "quotation-minimized-excerpts"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-excerpts.json",
+      "sha256": "aa347a42cfbea7c75b3786e7ab818bd2db2f114d0f4be28e3e7500a8aa20482f",
+      "bytes": 5334,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "quotation-metadata"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-manifest.json",
+      "sha256": "378865cfafb5d3e82281337c594cd740d35f017a2434eaa7ff0c406bd48c2318",
+      "bytes": 9292,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-rulings.json",
+      "sha256": "f5764dbf17e51cbf3d0ba304e08dd509076a7548a8fa3b78f01de1f256408dc3",
+      "bytes": 4212,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/verification.json",
+      "sha256": "2720d203c730107e94e5f4e2b14691ecac00cbb6cf5cfab8dcf00084e84f32cb",
+      "bytes": 454,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/FREEZE.json",
+      "sha256": "b7fc61b902b80445e0d9c5437194f36eeeb376f62efb43e1a77048de73c01842",
+      "bytes": 1328,
+      "pin_origin": "root explicit final freeze/manifest/review pin",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/MANIFEST.json",
+      "sha256": "c9e9c9f0c2605662a5e9ea0af1539687061f335240d44919e5718f0e2cd18f7b",
+      "bytes": 9609,
+      "pin_origin": "root explicit final freeze/manifest/review pin",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/QUALITY_BEFORE_METHOD_FREEZE.json",
+      "sha256": "81a7b03f15157ab98b84924f69da17c4575a37f0dbb97ae86b3418acf47abae7",
+      "bytes": 353,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/REVIEW.json",
+      "sha256": "56df3cbc11e38b68e30a51a415e67bfcbde3a74991ef993d3583b3a287f800ff",
+      "bytes": 6176,
+      "pin_origin": "root explicit final freeze/manifest/review pin",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/REVIEW.md",
+      "sha256": "4c66c6808780bba72f50afbd9dc698d4dce66c9f2bc39c9bd13d21031169da81",
+      "bytes": 8015,
+      "pin_origin": "root explicit final freeze/manifest/review pin",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/SHA256SUMS",
+      "sha256": "cc61314bf79e6f11d254f89cd1a7718b41d4f247004232b7810c1b406ee7204b",
+      "bytes": 2450,
+      "pin_origin": "final freeze exact own SHA256SUMS pin",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/alignment-diagnostic.json",
+      "sha256": "e8eba0fc50c7e76cbe8fdf477ab9d31d82eed3746b181680361d3c5951dd5d41",
+      "bytes": 1016,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/alignment-diagnostic.py",
+      "sha256": "24f9df6722ce2f134052e3cf7d210ab15ca1e6f749c8d9c425996918e54faf2c",
+      "bytes": 2658,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/cost.json",
+      "sha256": "0c620b64a0c1f612fbf8cfa799857c26dda14f2b171a8714188ba91e54e35532",
+      "bytes": 1104,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/method-compliance.json",
+      "sha256": "539f5e02f325011088a52e0817f6b19284664e3197b27429a3df3696944c5481",
+      "bytes": 4471,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/preservation.json",
+      "sha256": "f17fca3052aa4de63b895672a5ed52e5c48b8fe4c5052f37d9b6de077cba86c4",
+      "bytes": 6500,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/provenance.json",
+      "sha256": "2ea1945804224a512d9e3ce555d6faaddb761111841780474b88a8b119b0b705",
+      "bytes": 114658,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/quality-before-method.json",
+      "sha256": "6ae655f13c353088df5a9fada06ce942ff9c7c35971e66f461f1c7733fb3be75",
+      "bytes": 9187,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/quality-disposition.json",
+      "sha256": "014f8a3248c5dfb41c23bc6dbeb3b1749ee29645c5596368e4f29e86ab5bbf97",
+      "bytes": 867,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/source-excerpts.json",
+      "sha256": "af5d853cd3d97bf520ab34a63bca4abf0a2a4693e89fb10927b2e891daedb0e7",
+      "bytes": 10263,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "quotation-metadata"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/source-excerpts.md",
+      "sha256": "5570e76d4d7abb2d8d0babf6300ba8f20ed80ace37162a367ce51eee149e2f87",
+      "bytes": 3373,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "quotation-minimized-excerpts"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/verification.json",
+      "sha256": "6764bdd0b72db4260966267858446f99a6d8e0d28a3b6a3b9294a76619100e77",
+      "bytes": 2429,
+      "pin_origin": "final MANIFEST positive OWN top output map plus root exact filename allowlist",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/OBSERVATION_20261003_0244.json",
+      "sha256": "6f1c8c4f1fcf895f13897588cfff1b4bd4b2910b5eb405726c21c74953f97097",
+      "bytes": 4849,
+      "pin_origin": "root separate exact comparison/current observation pin",
+      "projection_kind": "sanitized"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/ROOT_AMENDMENT_COMPARISON_V1.json",
+      "sha256": "fca656e97ec2fb13ef567cb242e0187f29637202152ea37c1072028d01dd0c01",
+      "bytes": 5402,
+      "pin_origin": "root separate exact comparison/current observation pin",
+      "projection_kind": "sanitized"
+    }
+  ],
+  "quotation_policy": "Conservatively omit all third-party source-excerpt blockquote spans; preserve primary URLs/full hashes/ranges and assessment prose. Preserve evaluator findings/verdicts except approved host/session/internal-handle sanitization.",
+  "portable_checker": {
+    "path": "WORKTREE_ROOT/reports/external-research-v8-20261001-2140/prospective-source-cohort-v3/ops/muse-helper-public-check-v1/root-repair-v1/verify_public.py",
+    "sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd"
+  },
+  "pending_C_final_freeze": false
+}

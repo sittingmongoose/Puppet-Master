@@ -1,0 +1,15 @@
+# Unresolved leads — consequential dependencies/uncertainty only
+
+Scope: items below are consequential to the proposal in `out/PROPOSAL.md` and were not resolvable from this case's admitted captures. Everything else asserted in the proposal is source-backed or explicitly labeled inference/product choice/proposed test.
+
+1. **nbdime multilevel pass ordering not fully traced.** `nbdime/diffing/snakes.py` (`compute_snakes_multilevel`) was not captured; the proposal therefore states predicate *precedence* (low→high, `compare_cell_by_ids` highest) and the docstring-marked strict/moderate/approximate iterations, but does not assert which pass executes first when the id predicate is present. Impact: none on the prototype design (it defines its own order, Q2 step 3); would matter only if the prototype ported nbdime's exact pass schedule.
+
+2. **nbformat's announced "hard error in future nbformat versions" for missing cell ids is unscheduled.** `MissingIDFieldWarning`/`DuplicateCellId` are `FutureWarning` subclasses whose docstrings say "will be turned into an error at later point" (PR #282, `nbformat/warnings.py`); issue #359 ("Ambiguous warning about missing cell IDs", still open as of capture) keeps the transition unsettled. Dependency: the prototype should parse snapshot JSON itself and treat nbformat's read/validate layer as a library it pins (currently v5.11.1), not as a stable behavioral contract across upgrades.
+
+3. **Validator backend variance.** nbformat selects `jsonschema` vs `fastjsonschema` via `NBFORMAT_VALIDATOR`; nbformat's own tests parametrize over both, and 5.3.0 made fastjsonschema the default. Error-message shape and some edge behavior can differ between backends. Product decision pending: pin one backend for the prototype's validation gate so report wording is deterministic.
+
+4. **Rename inference beyond exact content equality.** The proposal fixes the equivalence rule at exact sha256 equality (product choice). A similarity-threshold rule (à la Git's rename detection) was deliberately not specified because no primary source for it was captured in this case; if exact matching proves too strict in practice, that rule needs its own source-backed design pass. Low impact with two text files.
+
+5. **nbdime licensing if code were copied.** GitHub API lists nbdime's license as `Other`/`NOASSERTION`. The proposal recommends re-implementing a small matcher modeled on nbdime's design, not embedding code; if that changes to copying source, license terms must be verified from the repository's license files before any reuse.
+
+6. **PR #282 file list captured partially.** The `pulls/282/files` capture covered 6 of 7 changed files within the byte cap (docs/changelog.rst, current.py, json_compat.py, validator.py, warnings.py, tests/test4.5.ipynb); the 7th file's diff (consistent with a `tests/test_validator.py` patch) was outside the captured range. The issue → fix → test chain does not depend on it — the surviving test functions were verified in `tests/test_validator.py` @ `main` (proposal source 10) — but the per-PR test-diff attribution is incomplete at byte level.

@@ -1,0 +1,356 @@
+{
+  "schema": "er8.evaluator.final-sha-manifest.v1",
+  "case_id": "V8-BIO-AMEND-C-L",
+  "records": [
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/QUALITY_FREEZE.json",
+      "relative_path": "QUALITY_FREEZE.json",
+      "bytes": 771,
+      "sha256": "04b10e7d9f666b632fbfb5051082f76ead50d364f8e65cd0d0714e39ed9bbeba"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/QUALITY_MANIFEST.json",
+      "relative_path": "QUALITY_MANIFEST.json",
+      "bytes": 10484,
+      "sha256": "e2743e0a6f200b1eac045c6e43a8b9424dcf303996f8a61a15445e02c73abbe0"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/REVIEW.json",
+      "relative_path": "REVIEW.json",
+      "bytes": 37651,
+      "sha256": "0fdde16495da41e2a977710296d3e9d81417b8b1ef488950ee67d1f99fd65794"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/REVIEW.md",
+      "relative_path": "REVIEW.md",
+      "bytes": 6890,
+      "sha256": "f1e7599d5eeb00b89be2af8b51093e652bbf8746c91d2a4b459cbe64acffceff"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/analytic-diagnostic.json",
+      "relative_path": "analytic-diagnostic.json",
+      "bytes": 2694,
+      "sha256": "c4d23c37cde6598cd0a8842a7547386001048db1b751c860bb7dae9b2953cb01"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/cost.json",
+      "relative_path": "cost.json",
+      "bytes": 3561,
+      "sha256": "c0cde6a4291fb81f5c1eef14058c62a8436b55df793b3da9b972a7d69fee2ae9"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/method-audit.json",
+      "relative_path": "method-audit.json",
+      "bytes": 15586,
+      "sha256": "020447bb9b63a02213383791934ef97e84e5fac7695f4c2c12482db55d92aebb"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/method-audit.md",
+      "relative_path": "method-audit.md",
+      "bytes": 1649,
+      "sha256": "1fb532ee2594db2f860013b50ca4a2f5b43d1b3a2c245a716c30f82005ab890b"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/native-compliance-post-quality.json",
+      "relative_path": "native-compliance-post-quality.json",
+      "bytes": 1990,
+      "sha256": "2e871bae42eed1bb19a631d23284ae98cd2e10da97affe7b11399db3da04eaf7"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preservation.json",
+      "relative_path": "preservation.json",
+      "bytes": 3914,
+      "sha256": "24d798bc1462e0ba15c9575103ac75dbf0d2200b99a77476005d36e94d43e929"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-artifacts/V8-BIO-AMEND-C-L-final-correction/FINAL_PROPOSAL.md",
+      "relative_path": "preserved-artifacts/V8-BIO-AMEND-C-L-final-correction/FINAL_PROPOSAL.md",
+      "bytes": 37553,
+      "sha256": "06153823f21ec7518c17f57857b86a394268c15cdd9c72bd2f3df364c9571b0b"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-artifacts/V8-BIO-AMEND-C-L-final-correction/UNRESOLVED_LEADS.md",
+      "relative_path": "preserved-artifacts/V8-BIO-AMEND-C-L-final-correction/UNRESOLVED_LEADS.md",
+      "bytes": 4103,
+      "sha256": "e6184c6b0bfc445fa9af59fd0bef5f0583a40f980918a926167f69681a194c2e"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-artifacts/V8-BIO-AMEND-C-L-independent-candidate-critic/CRITIQUE.md",
+      "relative_path": "preserved-artifacts/V8-BIO-AMEND-C-L-independent-candidate-critic/CRITIQUE.md",
+      "bytes": 22464,
+      "sha256": "0d4b43c136e870dad3773fab77a1ec231375cc6e41932206fc64e26697379e0f"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-artifacts/V8-BIO-AMEND-C-L-research-proposal/ERRATA-C-L.md",
+      "relative_path": "preserved-artifacts/V8-BIO-AMEND-C-L-research-proposal/ERRATA-C-L.md",
+      "bytes": 1120,
+      "sha256": "9836e5f4647537eb4570e5bacbff38044887f53f7addb998543d839bbcde13c4"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-artifacts/V8-BIO-AMEND-C-L-research-proposal/PROPOSAL.md",
+      "relative_path": "preserved-artifacts/V8-BIO-AMEND-C-L-research-proposal/PROPOSAL.md",
+      "bytes": 22102,
+      "sha256": "71ec23585eca750f970760fd4b4634c0759a269521b71ad317e196c1c53eb043"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-artifacts/V8-BIO-AMEND-C-L-research-proposal/UNRESOLVED_LEADS.md",
+      "relative_path": "preserved-artifacts/V8-BIO-AMEND-C-L-research-proposal/UNRESOLVED_LEADS.md",
+      "bytes": 3630,
+      "sha256": "b5148e3705525cca940ccd8adb61203e788cd1c250b777f0f3e7c1a94a56a453"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-inputs/BRIEF.md",
+      "relative_path": "preserved-inputs/BRIEF.md",
+      "bytes": 3352,
+      "sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-inputs/THIN_PLAN.md",
+      "relative_path": "preserved-inputs/THIN_PLAN.md",
+      "bytes": 960,
+      "sha256": "9a4a13328e3f3d4af25d13c371b79b918d898cb20fa2ec99e0901a70fe7be98f"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-inputs/evaluation-scope.json",
+      "relative_path": "preserved-inputs/evaluation-scope.json",
+      "bytes": 3849,
+      "sha256": "6efed6cf4763f91b9674ffaaf35b5c9113decf27663fc38961fcfd140b6883af"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-method-inputs/final-correction/METHOD.md",
+      "relative_path": "preserved-method-inputs/final-correction/METHOD.md",
+      "bytes": 473,
+      "sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-method-inputs/final-correction/TASK.md",
+      "relative_path": "preserved-method-inputs/final-correction/TASK.md",
+      "bytes": 2470,
+      "sha256": "34ad7d20326f95170b09263323b6f1e438782bade6acacd80919ef71950fc5ae"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-method-inputs/independent-candidate-critic/METHOD.md",
+      "relative_path": "preserved-method-inputs/independent-candidate-critic/METHOD.md",
+      "bytes": 473,
+      "sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-method-inputs/independent-candidate-critic/TASK.md",
+      "relative_path": "preserved-method-inputs/independent-candidate-critic/TASK.md",
+      "bytes": 2441,
+      "sha256": "eefdabf2d0d893aa0df4244c7d196a44b6f1ff86297b05684cf6fd6f90297594"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-method-inputs/research-proposal/METHOD.md",
+      "relative_path": "preserved-method-inputs/research-proposal/METHOD.md",
+      "bytes": 473,
+      "sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-method-inputs/research-proposal/TASK.md",
+      "relative_path": "preserved-method-inputs/research-proposal/TASK.md",
+      "bytes": 2576,
+      "sha256": "ce5c59b688becce8fff1c377c365cfbbe9afd82eb4f1e216a2c216c6bcf1a34f"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/provenance.json",
+      "relative_path": "provenance.json",
+      "bytes": 268563,
+      "sha256": "6c878c4d7dac68035eb78cea21da6e03049b3e8f703158e30ae77876bd5fa0c6"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/quality-before-method.json",
+      "relative_path": "quality-before-method.json",
+      "bytes": 13835,
+      "sha256": "013f26b33e29664d857ff9b178f615fbfb73f15b5ee5edddceaee692829f9f28"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/quality-before-method.md",
+      "relative_path": "quality-before-method.md",
+      "bytes": 2904,
+      "sha256": "18706fa3eac21c2ad45da108d5c26ef508cc6909d6e5661de3bc143b8547d170"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/quality-disposition.json",
+      "relative_path": "quality-disposition.json",
+      "bytes": 4599,
+      "sha256": "3784c317bbf7ec3cb3b74ffb62a6680baa5b136dc3b831cea69970e7b70d842c"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/S1-modules.body",
+      "relative_path": "source-captures/S1-modules.body",
+      "bytes": 865,
+      "sha256": "55a2e54ce6baa8900a2c53cef9de0cf21acc671301cbf998b7934a321c5625c2"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/S1-pin.body",
+      "relative_path": "source-captures/S1-pin.body",
+      "bytes": 760,
+      "sha256": "9999a8b7dc215c452568fbcc526416558da1776b461b2c14ca3b95653079ba7c"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/S1.body",
+      "relative_path": "source-captures/S1.body",
+      "bytes": 36817,
+      "sha256": "fc39309d1ea85bfcebd469008e3111951a605870cc8292301c0de165767b0211"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/S2.body",
+      "relative_path": "source-captures/S2.body",
+      "bytes": 3698,
+      "sha256": "2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/S3-diff.body",
+      "relative_path": "source-captures/S3-diff.body",
+      "bytes": 6811,
+      "sha256": "f0aa7ce9ce88fbfdb83214141942a8ae4d0c3aa206773ea523b9f38cc09ce565"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/S3-meta.body",
+      "relative_path": "source-captures/S3-meta.body",
+      "bytes": 16985,
+      "sha256": "2b797ae575b5aee3fd0087280eab97abb10177cff0078024b8c37354b7b17603"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/S4.body",
+      "relative_path": "source-captures/S4.body",
+      "bytes": 12703,
+      "sha256": "82b61d30f62d6eddd81ff63b43146fd4f7be93be767ae5561b74a99951c24eca"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/S5.body",
+      "relative_path": "source-captures/S5.body",
+      "bytes": 29784,
+      "sha256": "852916a1a1755917db0d1bca32791ef7761977839b23dcb16f352237a7faf9a8"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/S6.body",
+      "relative_path": "source-captures/S6.body",
+      "bytes": 20309,
+      "sha256": "2897310cc50d5ac6c920bc34cad61f001521842246af2444300603af75893963"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/S7.body",
+      "relative_path": "source-captures/S7.body",
+      "bytes": 4294,
+      "sha256": "ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/S8.body",
+      "relative_path": "source-captures/S8.body",
+      "bytes": 15311,
+      "sha256": "cf7b0d7e8446aed989ab392a0a7285c5fb3f9e5a425f18f18092841d71108b7e"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/napari-0.9.2-py3-none-any.whl",
+      "relative_path": "source-captures/napari-0.9.2-py3-none-any.whl",
+      "bytes": 3715060,
+      "sha256": "a67f7add584c8d2560096a0ae0b5322eceba046db42f4c130c8e622c5c72a04f"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/wheel-napari_layers__scalar_field__slice.py",
+      "relative_path": "source-captures/wheel-napari_layers__scalar_field__slice.py",
+      "bytes": 15547,
+      "sha256": "0e327552ef2d11eaa198f84e86cac2ddbdefd5fa2b10947c42c45956b1c61188"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/wheel-napari_layers__scalar_field_scalar_field.py",
+      "relative_path": "source-captures/wheel-napari_layers__scalar_field_scalar_field.py",
+      "bytes": 39508,
+      "sha256": "50d0f2c6adb4412589394dde4a55a8b156799b89ed55610a57496ef6d0d2a0b4"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/wheel-napari_layers_base_base.py",
+      "relative_path": "source-captures/wheel-napari_layers_base_base.py",
+      "bytes": 89848,
+      "sha256": "2c9e08f2cf0508fdf2399abf49eea42ecb545adb81ac4c8422b57103b57eefa4"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/wheel-napari_layers_image__slice.py",
+      "relative_path": "source-captures/wheel-napari_layers_image__slice.py",
+      "bytes": 1311,
+      "sha256": "f8b0e977572f7e769bdff90d04619d2f674ea7f091e8576a93d84b38da7fe968"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/wheel-napari_layers_image_image.py",
+      "relative_path": "source-captures/wheel-napari_layers_image_image.py",
+      "bytes": 32657,
+      "sha256": "73027b2f096445c6aea88689bbf29f8707a75847d1348fa3b80eaf867c728c56"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/wheel-napari_layers_labels_labels.py",
+      "relative_path": "source-captures/wheel-napari_layers_labels_labels.py",
+      "bytes": 89597,
+      "sha256": "8d5ac1e119018af7b49df29838a91273910df09c2d4e4e6ec7e58a3744e7a176"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-excerpts-current.md",
+      "relative_path": "source-excerpts-current.md",
+      "bytes": 2620,
+      "sha256": "d0f6ee3b9d1d11bd1ed4b7f6151e38d913a7f782904fd69f21366f4282ab8cda"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-excerpts.json",
+      "relative_path": "source-excerpts.json",
+      "bytes": 5334,
+      "sha256": "aa347a42cfbea7c75b3786e7ab818bd2db2f114d0f4be28e3e7500a8aa20482f"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-excerpts.md",
+      "relative_path": "source-excerpts.md",
+      "bytes": 2474,
+      "sha256": "772c5788658a6d830e740cccd223997db51da3c9ec136866421c8f85011cc475"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-manifest.json",
+      "relative_path": "source-manifest.json",
+      "bytes": 9292,
+      "sha256": "378865cfafb5d3e82281337c594cd740d35f017a2434eaa7ff0c406bd48c2318"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-rulings.json",
+      "relative_path": "source-rulings.json",
+      "bytes": 4212,
+      "sha256": "f5764dbf17e51cbf3d0ba304e08dd509076a7548a8fa3b78f01de1f256408dc3"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/verification.json",
+      "relative_path": "verification.json",
+      "bytes": 454,
+      "sha256": "2720d203c730107e94e5f4e2b14691ecac00cbb6cf5cfab8dcf00084e84f32cb"
+    }
+  ],
+  "publication_whitelist": [
+    "REVIEW.md",
+    "REVIEW.json",
+    "quality-before-method.md",
+    "quality-before-method.json",
+    "quality-disposition.json",
+    "method-audit.md",
+    "method-audit.json",
+    "native-compliance-post-quality.json",
+    "provenance.json",
+    "preservation.json",
+    "cost.json",
+    "analytic-diagnostic.json",
+    "source-rulings.json",
+    "source-manifest.json",
+    "source-excerpts.json",
+    "source-excerpts-current.md",
+    "verification.json",
+    "QUALITY_FREEZE.json",
+    "QUALITY_MANIFEST.json",
+    "MANIFEST.json",
+    "FREEZE.json"
+  ],
+  "private_do_not_publish": [
+    "source-captures/**",
+    "preserved-artifacts/**",
+    "preserved-inputs/**",
+    "preserved-method-inputs/**",
+    "source-excerpts.md"
+  ],
+  "publication_warning": "No raw public-source bodies, wheel/source extracts, or full original/current candidate artifacts are whitelisted for repository publication; preserve them externally and cite path plus hash.",
+  "quality_before_method_unchanged": true
+}

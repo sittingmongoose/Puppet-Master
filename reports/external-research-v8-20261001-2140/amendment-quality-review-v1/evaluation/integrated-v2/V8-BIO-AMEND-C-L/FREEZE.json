@@ -1,0 +1,78 @@
+{
+  "schema": "er8.evaluator.integrated-final-freeze.v2",
+  "case_id": "V8-BIO-AMEND-C-L",
+  "reservation": "V8-EVAL-V8-BIO-AMEND-C-L",
+  "quality_disposition": "VERIFIED_FAILED_SCREEN",
+  "pipeline_complete": true,
+  "whole_case_pass": false,
+  "method_disposition": "STRUCTURAL_UPTAKE_OBSERVED_SUBSTANTIVE_ACCURACY_FAILED_SCREEN",
+  "quality_before_method_preserved": true,
+  "evaluation_clock": {
+    "original_birth_epoch": 1790994119.8633728,
+    "original_birth_utc": "2026-10-03T02:21:59.863373+00:00",
+    "original_deadline_epoch": 1790996519.8633728,
+    "original_deadline_utc": "2026-10-03T03:01:59.863373+00:00",
+    "actual_final_freeze_epoch": 1790995280.337271,
+    "actual_final_freeze_utc": "2026-10-03T02:41:20.337271+00:00",
+    "inclusive_original_birth_to_actual_final_freeze_seconds": 1160.4738981723785,
+    "deadline_remaining_at_freeze_seconds": 1239.5261018276215,
+    "completed_within_original_deadline": true,
+    "clock_reset": false,
+    "management_after_freeze": "Final root notification/export only; no more diagnostics."
+  },
+  "manifest": {
+    "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/MANIFEST.json",
+    "relative_path": "MANIFEST.json",
+    "bytes": 19525,
+    "sha256": "d5c92ff8ac69cdf6e5b29b6a773b56cf093f1603dd7388129ebc54b1e5949b93"
+  },
+  "review_json": {
+    "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/REVIEW.json",
+    "relative_path": "REVIEW.json",
+    "bytes": 37651,
+    "sha256": "0fdde16495da41e2a977710296d3e9d81417b8b1ef488950ee67d1f99fd65794"
+  },
+  "review_md": {
+    "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/REVIEW.md",
+    "relative_path": "REVIEW.md",
+    "bytes": 6890,
+    "sha256": "f1e7599d5eeb00b89be2af8b51093e652bbf8746c91d2a4b459cbe64acffceff"
+  },
+  "quality_before_method_json": {
+    "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/quality-before-method.json",
+    "relative_path": "quality-before-method.json",
+    "bytes": 13835,
+    "sha256": "013f26b33e29664d857ff9b178f615fbfb73f15b5ee5edddceaee692829f9f28"
+  },
+  "quality_freeze": {
+    "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/QUALITY_FREEZE.json",
+    "relative_path": "QUALITY_FREEZE.json",
+    "bytes": 771,
+    "sha256": "04b10e7d9f666b632fbfb5051082f76ead50d364f8e65cd0d0714e39ed9bbeba"
+  },
+  "publication_whitelist": [
+    "REVIEW.md",
+    "REVIEW.json",
+    "quality-before-method.md",
+    "quality-before-method.json",
+    "quality-disposition.json",
+    "method-audit.md",
+    "method-audit.json",
+    "native-compliance-post-quality.json",
+    "provenance.json",
+    "preservation.json",
+    "cost.json",
+    "analytic-diagnostic.json",
+    "source-rulings.json",
+    "source-manifest.json",
+    "source-excerpts.json",
+    "source-excerpts-current.md",
+    "verification.json",
+    "QUALITY_FREEZE.json",
+    "QUALITY_MANIFEST.json",
+    "MANIFEST.json",
+    "FREEZE.json"
+  ],
+  "raw_evidence_kept_private": true,
+  "manifest_all_records_rechecked": true
+}

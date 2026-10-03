@@ -1,0 +1,153 @@
+{
+  "schema": "pm.er8.root-holder-successor-positive-public-handoff.v2",
+  "original_birth_epoch": 1790994780.2859552,
+  "original_deadline_epoch": 1790995380.2859552,
+  "prepared_epoch": 1790994911.5706298,
+  "scope": "Exactly pinned OWN author source/mock tests/receipts/inventory, independent source-review own outputs, root request/launch/positive/failed-setter structural receipts and original predecessor source/claim. No isolated-copies/tmp recursion, raw journal/stdout/native streams/process context/private profiles/auth/case answers/evaluator keys.",
+  "positive_files": [
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/ROOT_HOLDER_SUCCESSOR_LAUNCH_V2.json",
+      "sha256": "d5867af30fad656133a5078778c155670619f00495e5f90c5bd5d7cd64a29b09",
+      "bytes": 1949,
+      "pin_origin": "root explicit immutable source/runtime metadata pin"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/ROOT_HOLDER_SUCCESSOR_POSITIVE_V2.json",
+      "sha256": "e74ddeb77c90aea493ce1f343afa46422ccb3478dd72bda730a51d836dfc18cc",
+      "bytes": 2135,
+      "pin_origin": "root explicit immutable source/runtime metadata pin"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/ROOT_HOLDER_SUCCESSOR_REQUEST_V2.json",
+      "sha256": "3e251412e16c8fb9757261b50f1e3d7dba6e5090ff1b93654e4f4724ca88e01f",
+      "bytes": 1384,
+      "pin_origin": "root explicit immutable source/runtime metadata pin"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/SUPERVISOR_DURABLE.json",
+      "sha256": "e0b37dcddefe3d6fcad80a913701cb69729b467bd0ffbf34b535f54dab3211b9",
+      "bytes": 306,
+      "pin_origin": "root explicit immutable source/runtime metadata pin"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/SUPERVISOR_RUNTIME_GUARD_REPAIR_V1.json",
+      "sha256": "eec2a254796c9e7e34fa035e2feeb468572bd6ae3f300c30ad8fcb5b6da080e9",
+      "bytes": 1568,
+      "pin_origin": "root explicit immutable source/runtime metadata pin"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/durable_holder_v1.py",
+      "sha256": "48907c8afa5b6a8699b61d01528466e4c5b838ac2bdb955f4420738dc2a12788",
+      "bytes": 626,
+      "pin_origin": "root explicit immutable source/runtime metadata pin"
+    },
+    {
+      "path": "LAB_ROOT/ops/root-holder-successor-review-v2/FREEZE.json",
+      "sha256": "1c7a25fd011b4096142ce1dbee77b4f80211f69d6613beaf30af62fd55d97552",
+      "bytes": 2603,
+      "pin_origin": "root exact independent freeze pin"
+    },
+    {
+      "path": "LAB_ROOT/ops/root-holder-successor-review-v2/REVIEW.json",
+      "sha256": "444d1221ac4a523f454ed475fbf030cf85025f0b0969ac373697bed86b98161b",
+      "bytes": 5258,
+      "pin_origin": "root pinned independent freeze own artifact map, isolated-copies excluded"
+    },
+    {
+      "path": "LAB_ROOT/ops/root-holder-successor-review-v2/REVIEW.md",
+      "sha256": "2bde898b143315459efb70d09b7fea7378b578ad2ae2eb533653798786bed5f7",
+      "bytes": 2663,
+      "pin_origin": "root pinned independent freeze own artifact map, isolated-copies excluded"
+    },
+    {
+      "path": "LAB_ROOT/ops/root-holder-successor-review-v2/SHA256SUMS",
+      "sha256": "6b40ca51bdc3a54b655ffd374f1bb777c72ee3fd0885697b01b268bd2d2c9cd3",
+      "bytes": 790,
+      "pin_origin": "root positively named own independent SHA256SUMS; entries match exact frozen artifact pins"
+    },
+    {
+      "path": "LAB_ROOT/ops/root-holder-successor-review-v2/TEST_OUTPUT.txt",
+      "sha256": "22f5170b2fcd0a7eb6bef0e8e8ff5fcbb862e4e13c0e7fee0dffdb95fc2d78a3",
+      "bytes": 4078,
+      "pin_origin": "root pinned independent freeze own artifact map, isolated-copies excluded"
+    },
+    {
+      "path": "LAB_ROOT/ops/root-holder-successor-review-v2/TEST_RECEIPT.json",
+      "sha256": "3903e937e5bee20c5b878ba281080f99fd1a38540b3b82825b1d96ff9fd5a164",
+      "bytes": 1538,
+      "pin_origin": "root pinned independent freeze own artifact map, isolated-copies excluded"
+    },
+    {
+      "path": "LAB_ROOT/ops/root-holder-successor-review-v2/observed_hashes.json",
+      "sha256": "7a7756c402ab0cdeae962ebfad2972c557fec7680985219eed484456c82b7358",
+      "bytes": 1493,
+      "pin_origin": "root pinned independent freeze own artifact map, isolated-copies excluded"
+    },
+    {
+      "path": "LAB_ROOT/ops/root-holder-successor-review-v2/run_review.py",
+      "sha256": "0b7daa4a47ed2984d86e80a5e8bbd8acd8040c2ab28ced2ac1a15b15dc7b8bf1",
+      "bytes": 7974,
+      "pin_origin": "root pinned independent freeze own artifact map, isolated-copies excluded"
+    },
+    {
+      "path": "LAB_ROOT/ops/root-holder-successor-v2/HANDOFF.md",
+      "sha256": "a7117f04ea9cf0ee7ff2788dce932483c1ebeed3bf95088d2e1f562d23d75242",
+      "bytes": 5480,
+      "pin_origin": "root exact pinned author positive SHA256SUMS"
+    },
+    {
+      "path": "LAB_ROOT/ops/root-holder-successor-v2/SHA256SUMS",
+      "sha256": "8e938c87a208bec5313db6f0ed3950e3ae0091579c73cf89812040b4f7258a9c",
+      "bytes": 437,
+      "pin_origin": "root exact author inventory pin"
+    },
+    {
+      "path": "LAB_ROOT/ops/root-holder-successor-v2/TEST_RECEIPT.json",
+      "sha256": "b12186e235f87768fc1b5f11a6ec879078a6cba32c6c0fb84de0c59776a5d5ab",
+      "bytes": 1899,
+      "pin_origin": "root exact pinned author positive SHA256SUMS"
+    },
+    {
+      "path": "LAB_ROOT/ops/root-holder-successor-v2/TEST_RECEIPT.txt",
+      "sha256": "5b53cf142478dd443c0d77dab626d95e4fcdfa4d49eddb5fcb0c54efbfc1685a",
+      "bytes": 2055,
+      "pin_origin": "root exact pinned author positive SHA256SUMS"
+    },
+    {
+      "path": "LAB_ROOT/ops/root-holder-successor-v2/root_holder_successor_v2.py",
+      "sha256": "77f869fe33387d426fc0fe66e146e0fad3ebbca08b386650773587b6748d1e35",
+      "bytes": 11089,
+      "pin_origin": "root exact pinned author positive SHA256SUMS"
+    },
+    {
+      "path": "LAB_ROOT/ops/root-holder-successor-v2/test_root_holder_successor_v2.py",
+      "sha256": "1af814fdfe23302a1e5f78c255505c7fdb6aab037bfc8407b4a44a3c64a4072d",
+      "bytes": 11859,
+      "pin_origin": "root exact pinned author positive SHA256SUMS"
+    }
+  ],
+  "status": "SOURCE_ACCEPTED_RUNTIME_HOLD; HISTORICALLY_ACTIVE_STANDBY_WAITER_NO_EXCLUSIVE_CLAIM",
+  "mock_tests": {
+    "author": 18,
+    "independent": 11,
+    "total": 29,
+    "native_or_live_handoff_verified": false
+  },
+  "runtime_observation": {
+    "pid": 2422357,
+    "successor_claim": "ABSENT_WAITING",
+    "predecessor_pid": 1969270,
+    "predecessor_remains_owner_at_observation": true,
+    "deadline_epoch": 1791013030.8303788,
+    "native_global_cutoff_monotonic_ns": 234777000142921,
+    "once_only_runtime_seconds": 18565,
+    "native_activation": false,
+    "live_predecessor_exit_proven": false
+  },
+  "source_timer_replay_portable": false,
+  "portable_checker": {
+    "path": "WORKTREE_ROOT/reports/external-research-v8-20261001-2140/prospective-source-cohort-v3/ops/muse-helper-public-check-v1/root-repair-v1/verify_public.py",
+    "sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd"
+  },
+  "no_unit_ledger_native_provider_signal_git_actions": true
+}

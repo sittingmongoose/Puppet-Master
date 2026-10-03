@@ -1,0 +1,62 @@
+{
+  "schema": "pm.er8.helper-concurrency-source-manifest.v2",
+  "actual_source_freeze_proof_filename": "MANIFEST.json",
+  "helper": "er8-helper-concurrency-source-v2",
+  "birth_epoch": 1790997047.233423,
+  "original_hard_deadline_epoch": 1790997647.233423,
+  "actual_end_epoch": 1790997327.9585238,
+  "source_only": true,
+  "live_install_performed": false,
+  "originals_modified": false,
+  "v1_source_and_manifest_preserved": true,
+  "production_delta": "Only forward validated helper-start birth through a copied request",
+  "tests_passed": 20,
+  "source_api_sha256": "eafb75b1a157a5b7e77f03f9fc52e298a7ef255e439730e22c4fde6a95dc0405",
+  "files": [
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-v2/ledger_helper_concurrency_v2.py",
+      "sha256": "eafb75b1a157a5b7e77f03f9fc52e298a7ef255e439730e22c4fde6a95dc0405",
+      "bytes": 9111
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-v2/test_helper_concurrency_v2.py",
+      "sha256": "86b0fc8337d48fe01ddd7cef44d60bc36c9948a83a31890fddb743ca1ae08d5e",
+      "bytes": 16092
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-v2/TEST_RESULTS.txt",
+      "sha256": "e965bb99d753b0517db0dd8594a795529ed391069756ac61e853e527ae493f3c",
+      "bytes": 2429
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-v2/HANDOFF.md",
+      "sha256": "426a867690a7f0a41b7f72779a9ca53db6908a1fcd86dd36b2bdbee79b355078",
+      "bytes": 6012
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-v2/SOURCE_DIFF.txt",
+      "sha256": "feb6f26293f9fc51cf3f80ba875243900d64911aced589625586fb60820cb700",
+      "bytes": 689
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-v2/INSTALL_REQUEST_EXAMPLE.json",
+      "sha256": "90df801b750c4b61e0ef79cabb287892ab127e98eecc5c0134e33baffa069d2c",
+      "bytes": 273
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-v2/INSTALL_REQUEST_SCHEMA.json",
+      "sha256": "a5cee083190b7ba475685b43b7da323162670ec2a555ff5e674ae312d3c786eb",
+      "bytes": 572
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-v2/RECEIPT_SCHEMA.json",
+      "sha256": "23a3ff06bac43cc0e219440f4bd82db85be93628de8968124dc13c3272ecab1c",
+      "bytes": 1095
+    }
+  ],
+  "root_authority_path": "LAB_ROOT/ops/recovery-v1/HELPER_CONCURRENCY_AUTHORITY_20261003.json",
+  "root_authority_sha256": "f1682a991232997556aed7fb88f167e706317259913d9365c5a1fb72fc572a79",
+  "unchanged_resume_api_sha256": "a98cf53c1826f1f4c9fa47a9e181eaae8beb971ea41e6564578a253059450b61",
+  "pending": "Independent review and root installation only",
+  "author_no_further_edits_after_freeze": true
+}

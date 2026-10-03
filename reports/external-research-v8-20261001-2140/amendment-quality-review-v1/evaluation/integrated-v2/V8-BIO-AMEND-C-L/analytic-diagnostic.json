@@ -1,0 +1,54 @@
+{
+  "schema": "er8.evaluator.analytic-diagnostic.v1",
+  "execution": "Evaluator Fraction arithmetic and source code inspection only; NO candidate fixture, no upstream suite, no native provider, no viewer execution.",
+  "checks": {
+    "corrected_V1": {
+      "scale0": "1/2",
+      "scale1": "1",
+      "translation": "1/4",
+      "matches_final_025": true
+    },
+    "corrected_V3": {
+      "world": "65/4",
+      "level0_index": "65/2",
+      "level1_index": "16"
+    },
+    "corrected_V5": {
+      "level1_scale": "64/127",
+      "translation": "1/508",
+      "matches_final_1_508": true
+    },
+    "unit_mismatch_counterexample": {
+      "image_units": "micrometer",
+      "label_units": "nanometer",
+      "same_shape": true,
+      "same_axes_names_and_order": true,
+      "identical_raw_per_dataset_transforms": true,
+      "image_scale0_numeric": "0.5",
+      "label_scale0_numeric": "0.5",
+      "image_at_index_1_micrometer": "1/2",
+      "label_at_index_1_micrometer": "1/2000",
+      "ratio": "1000",
+      "interpretation": "The final five-check overlay chain compares raw per-level scale/translation, and does not require unit normalization or reject unit mismatch. These otherwise matching declarations differ physically by 1000x. This is a diagnostic of the written gate, not executed viewer code."
+    },
+    "missing_transform_counterexample": {
+      "label_shape_equals_image": true,
+      "label_levels_equals_image": true,
+      "label_has_image_label_and_multiscales": true,
+      "label_dataset_coordinateTransformations": null,
+      "normative_result": "Each label group MUST have multiscales; each datasets dictionary MUST contain coordinateTransformations. A dimension-layout comment supplies no calibration or registration proof.",
+      "final_result": "§7 check5 allows shared-pixel-grid fallback; it conflicts with the §6 strict missing-transform refusal or lacks alignment justification."
+    },
+    "napari_V1_default_path": {
+      "version": "0.9.2 wheel SHA a67f7add584c8d2560096a0ae0b5322eceba046db42f4c130c8e622c5c72a04f",
+      "layer_scale0": "1/2",
+      "layer_translate0": "0",
+      "native_level1_downsample_factor": "2",
+      "native_full_extent_tile_translate": "0",
+      "native_level1_origin_world": "0",
+      "declared_NGFF_level1_origin_world": "1/4",
+      "difference": "1/4",
+      "interpretation": "Pinned native multiscale implementation derives tile scale from shape ratio and tile translation from crop corner, while public layer scale/translate are one layer-wide transform. A custom bridge could fix this, but FINAL §3 claims the component supplies per-level transforms without specifying that bridge."
+    }
+  }
+}

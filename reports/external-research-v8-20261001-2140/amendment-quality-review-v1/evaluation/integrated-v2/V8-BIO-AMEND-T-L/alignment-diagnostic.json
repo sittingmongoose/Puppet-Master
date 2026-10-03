@@ -1,0 +1,33 @@
+{
+  "diagnostic_scope": "evaluator arithmetic only; candidate F1-F9 remain unexecuted",
+  "bbox_counterexample": {
+    "image_bbox": [
+      0,
+      499.5
+    ],
+    "label_bbox": [
+      0,
+      999.0
+    ],
+    "stated_disjoint_predicate": false,
+    "equal_extents": false,
+    "index500_image_um": 250.0,
+    "index500_label_um": 500.0
+  },
+  "absent_unit_ambiguity": {
+    "same_numeric_label_coordinate": 50.0,
+    "if_micrometer_um": 50.0,
+    "if_millimeter_um": 50000.0,
+    "note": "Neither unit is supplied by a missing unit field; values demonstrate why an additional common-basis contract is necessary."
+  },
+  "uncalibrated_relative_fallback": {
+    "image_first_scale": 1,
+    "label_first_scale": 1,
+    "same_numeric_coordinate": 100.0,
+    "example_image_um": 50.0,
+    "example_label_um": 100.0,
+    "note": "Physical numbers illustrate possible independent pyramids; they are not source-declared calibration."
+  },
+  "candidate_execution_claim": "NONE",
+  "runtime_or_rendering_test": "NONE"
+}

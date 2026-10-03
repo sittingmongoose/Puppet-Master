@@ -1,0 +1,106 @@
+{
+  "schema": "pm.er8.public-source-quotation-projection-audit.v1",
+  "policy": "<=25 direct third-party words per source across this cohort; conservative omission of every direct SOURCE_EXCERPTS quotation span. Review prose/verdicts otherwise unchanged. No raw source body reads/copies by publisher.",
+  "third_party_direct_verbatim_words_published": 0,
+  "reviews_explicit_quotation_spans": 0,
+  "candidate_own_quotes_permitted": true,
+  "original_source_locators_primary_URLs_ranges_preserved": true,
+  "artifacts": [
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-excerpts-current.md",
+      "original_sha256": "d0f6ee3b9d1d11bd1ed4b7f6151e38d913a7f782904fd69f21366f4282ab8cda",
+      "omitted_spans": [
+        {
+          "original_span_sha256": "1801d0a493721b3ac76fb70648431c2576caba90036bd283ff9f0fac4ac45d17",
+          "original_word_count": 9,
+          "public_verbatim_word_count": 0,
+          "original_line": 5
+        },
+        {
+          "original_span_sha256": "5b4677e8c0a7c5409f2ee64dce18925dbcc8caa92c64de92f9d299fa44980182",
+          "original_word_count": 5,
+          "public_verbatim_word_count": 0,
+          "original_line": 7
+        },
+        {
+          "original_span_sha256": "a034325c85fdbf8bc8d63e3c3b08c4eba9fbe879415f0cd83f1fadf0d2d91da2",
+          "original_word_count": 2,
+          "public_verbatim_word_count": 0,
+          "original_line": 9
+        },
+        {
+          "original_span_sha256": "63791e120b71bb7beac3c7f9cbcebc1bc2af0c127f0246f60ac15fef673328cd",
+          "original_word_count": 10,
+          "public_verbatim_word_count": 0,
+          "original_line": 17
+        },
+        {
+          "original_span_sha256": "496ec40ea030b28f8127b513924c52b1d47ccc294b98a103aaf46d1cc95f2ab0",
+          "original_word_count": 9,
+          "public_verbatim_word_count": 0,
+          "original_line": 19
+        },
+        {
+          "original_span_sha256": "4906ffd293e95bea6cb5e8c9b21fed56a503933c65cfb3ac3b72365ae51bbbea",
+          "original_word_count": 13,
+          "public_verbatim_word_count": 0,
+          "original_line": 21
+        }
+      ],
+      "public_verbatim_source_quotation_words": 0,
+      "locator_hash_ranges_retained": true,
+      "finding_or_verdict_change": false
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/source-excerpts.md",
+      "original_sha256": "5570e76d4d7abb2d8d0babf6300ba8f20ed80ace37162a367ce51eee149e2f87",
+      "omitted_spans": [
+        {
+          "original_span_sha256": "885787e9f4744a4a12491db59805f6e414e19e1e8529a039a1b4c4062e39b0c3",
+          "original_word_count": 14,
+          "public_verbatim_word_count": 0,
+          "original_line": 6
+        },
+        {
+          "original_span_sha256": "f769b4a246d51df0cb11d14b502d744c0eee1ffd8973fa8efa651d86d7aea3bb",
+          "original_word_count": 4,
+          "public_verbatim_word_count": 0,
+          "original_line": 12
+        },
+        {
+          "original_span_sha256": "fffa56837b750618d9afa208e89cb3daa63bc146e993864fceb753683794347a",
+          "original_word_count": 6,
+          "public_verbatim_word_count": 0,
+          "original_line": 18
+        },
+        {
+          "original_span_sha256": "c7e068f172f560b42af17f95e5b7b24fd62ecb7084cb0b2ca068ed0bbb834443",
+          "original_word_count": 6,
+          "public_verbatim_word_count": 0,
+          "original_line": 24
+        },
+        {
+          "original_span_sha256": "0170fb3e15ee799ecf2cb5663085537ac42fcf0fb356a87c940d6f023f1a75db",
+          "original_word_count": 3,
+          "public_verbatim_word_count": 0,
+          "original_line": 30
+        },
+        {
+          "original_span_sha256": "bf4afea8c0d9f35e27c86abc18344f7d119be93e4c9088d7bc69a329a329045f",
+          "original_word_count": 16,
+          "public_verbatim_word_count": 0,
+          "original_line": 36
+        },
+        {
+          "original_span_sha256": "d1d6f22520ddd2b3800256e01cb9bc9aac907793b8992418c29d595e0f974e24",
+          "original_word_count": 5,
+          "public_verbatim_word_count": 0,
+          "original_line": 42
+        }
+      ],
+      "public_verbatim_source_quotation_words": 0,
+      "locator_hash_ranges_retained": true,
+      "finding_or_verdict_change": false
+    }
+  ]
+}

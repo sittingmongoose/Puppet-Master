@@ -1,0 +1,809 @@
+{
+  "schema": "er8.independent.public_source_range_hash_check.v1",
+  "records": [
+    {
+      "stage": "research-proposal",
+      "source_sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "source_bytes": 14,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 14,
+          "range_sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          14
+        ]
+      ],
+      "full_source_range_coverage": true,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "research-proposal",
+      "source_sha256": "570b0e4681f2265a2c020cd4503927c7bf6c34a41c3bd851b91724a76a2df1f1",
+      "source_bytes": 24408,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 24408,
+          "range_sha256": "570b0e4681f2265a2c020cd4503927c7bf6c34a41c3bd851b91724a76a2df1f1",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          24408
+        ]
+      ],
+      "full_source_range_coverage": true,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "research-proposal",
+      "source_sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+      "source_bytes": 163120,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 32768,
+          "range_sha256": "78eaa2fa1fa6b9a9cbc8fa2484fae2b114e8a48c75b61618bd53f74f54e7becd",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          32768
+        ]
+      ],
+      "full_source_range_coverage": false,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "research-proposal",
+      "source_sha256": "935fd152a73ada6653b2bd3512b22810986952feece9440f3576d242680ffdb5",
+      "source_bytes": 103035,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 32768,
+          "range_sha256": "53c8d29af246c67d1ce1d9f375391c36be73ca88bd8a5683097dae494bdb2600",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          32768
+        ]
+      ],
+      "full_source_range_coverage": false,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "research-proposal",
+      "source_sha256": "e2b6135a8d325b7db4eb76dd2d3ca4e92d2d25d215045a6351d8264c8110cb03",
+      "source_bytes": 4462,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 4462,
+          "range_sha256": "e2b6135a8d325b7db4eb76dd2d3ca4e92d2d25d215045a6351d8264c8110cb03",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          4462
+        ]
+      ],
+      "full_source_range_coverage": true,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "research-proposal",
+      "source_sha256": "eb82e8d95342e89e638a324ac4db8d428a16bb1737f274a26a358d50da028d2e",
+      "source_bytes": 5156,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 5156,
+          "range_sha256": "eb82e8d95342e89e638a324ac4db8d428a16bb1737f274a26a358d50da028d2e",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          5156
+        ]
+      ],
+      "full_source_range_coverage": true,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "research-proposal",
+      "source_sha256": "7dabd78b0c839d1298c73fb4fa73f3fbfd7dc63c23d79bbda2d8bd8088067b48",
+      "source_bytes": 3273,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 3273,
+          "range_sha256": "7dabd78b0c839d1298c73fb4fa73f3fbfd7dc63c23d79bbda2d8bd8088067b48",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          3273
+        ]
+      ],
+      "full_source_range_coverage": true,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "research-proposal",
+      "source_sha256": "aa81ca44f0705970dc519ba6a2555c8f6c82ba7a09555537bb577b2b57f12a24",
+      "source_bytes": 16284,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 16284,
+          "range_sha256": "aa81ca44f0705970dc519ba6a2555c8f6c82ba7a09555537bb577b2b57f12a24",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          16284
+        ]
+      ],
+      "full_source_range_coverage": true,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "research-proposal",
+      "source_sha256": "dcd3b3138f02558ea740a4c7f057fbae74209744861a6bdf99795c6f1b4f6baa",
+      "source_bytes": 5656,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 5656,
+          "range_sha256": "dcd3b3138f02558ea740a4c7f057fbae74209744861a6bdf99795c6f1b4f6baa",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          5656
+        ]
+      ],
+      "full_source_range_coverage": true,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "research-proposal",
+      "source_sha256": "fc39309d1ea85bfcebd469008e3111951a605870cc8292301c0de165767b0211",
+      "source_bytes": 36817,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 32768,
+          "range_sha256": "c69ea8355a538bb5b2354992c10052826b2cba6cbb191d212cc499032f8ab002",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        },
+        {
+          "byte_start": 32768,
+          "byte_end_exclusive": 36817,
+          "range_sha256": "d416df6672d1d463c8968c57f5534f126488f40dcc8e686150d5c283b09ed80a",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          36817
+        ]
+      ],
+      "full_source_range_coverage": true,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "research-proposal",
+      "source_sha256": "5265faad007283ead9a033b7b24c7c70e38f00592ea6d4f9ac04e51eff2eb875",
+      "source_bytes": 37044,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 32768,
+          "range_sha256": "2e724e834562aec7b2cc3bd0f0caa6ac3a8b3a0cc0ce8d2ea7e21d3f629f78bb",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          32768
+        ]
+      ],
+      "full_source_range_coverage": false,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "research-proposal",
+      "source_sha256": "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5",
+      "source_bytes": 1265,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 1265,
+          "range_sha256": "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          1265
+        ]
+      ],
+      "full_source_range_coverage": true,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "research-proposal",
+      "source_sha256": "e10bf6b4f7e13ad73fc9adb5e15225a792f9fef52b3a00391d41a23da75808f6",
+      "source_bytes": 61353,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 32768,
+          "range_sha256": "a309b66db3960cabd729026f207a2f0d005905a7a887e160e22f31a4c17dc322",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          32768
+        ]
+      ],
+      "full_source_range_coverage": false,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "research-proposal",
+      "source_sha256": "b301149c86811b42142d0923d28ebc8553e6d04a9af07e4048870f604b30fe19",
+      "source_bytes": 6078,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 6078,
+          "range_sha256": "b301149c86811b42142d0923d28ebc8553e6d04a9af07e4048870f604b30fe19",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          6078
+        ]
+      ],
+      "full_source_range_coverage": true,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "research-proposal",
+      "source_sha256": "1085265c47e71e3e0cb90cfda90877fbdfdf516774a7060eac5fbee2efe6549e",
+      "source_bytes": 1991,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 1991,
+          "range_sha256": "1085265c47e71e3e0cb90cfda90877fbdfdf516774a7060eac5fbee2efe6549e",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          1991
+        ]
+      ],
+      "full_source_range_coverage": true,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "research-proposal",
+      "source_sha256": "682d6af1875b870d7e5cc50c2a3546dc9ed01ec25f34c3262405b8eaedfcc6df",
+      "source_bytes": 10167,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 10167,
+          "range_sha256": "682d6af1875b870d7e5cc50c2a3546dc9ed01ec25f34c3262405b8eaedfcc6df",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          10167
+        ]
+      ],
+      "full_source_range_coverage": true,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "research-proposal",
+      "source_sha256": "bb228cc5e442b1446ef8ec0e8aa8d6fe4557c6fb9d6a07935ad4b5748382cb86",
+      "source_bytes": 19611,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 19611,
+          "range_sha256": "bb228cc5e442b1446ef8ec0e8aa8d6fe4557c6fb9d6a07935ad4b5748382cb86",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          19611
+        ]
+      ],
+      "full_source_range_coverage": true,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "source_sha256": "fc39309d1ea85bfcebd469008e3111951a605870cc8292301c0de165767b0211",
+      "source_bytes": 36817,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 32768,
+          "range_sha256": "c69ea8355a538bb5b2354992c10052826b2cba6cbb191d212cc499032f8ab002",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        },
+        {
+          "byte_start": 32768,
+          "byte_end_exclusive": 36817,
+          "range_sha256": "d416df6672d1d463c8968c57f5534f126488f40dcc8e686150d5c283b09ed80a",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          36817
+        ]
+      ],
+      "full_source_range_coverage": true,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "source_sha256": "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5",
+      "source_bytes": 1265,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 1265,
+          "range_sha256": "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          1265
+        ]
+      ],
+      "full_source_range_coverage": true,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "source_sha256": "e2b6135a8d325b7db4eb76dd2d3ca4e92d2d25d215045a6351d8264c8110cb03",
+      "source_bytes": 4462,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 4462,
+          "range_sha256": "e2b6135a8d325b7db4eb76dd2d3ca4e92d2d25d215045a6351d8264c8110cb03",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          4462
+        ]
+      ],
+      "full_source_range_coverage": true,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "source_sha256": "bb228cc5e442b1446ef8ec0e8aa8d6fe4557c6fb9d6a07935ad4b5748382cb86",
+      "source_bytes": 19611,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 19611,
+          "range_sha256": "bb228cc5e442b1446ef8ec0e8aa8d6fe4557c6fb9d6a07935ad4b5748382cb86",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          19611
+        ]
+      ],
+      "full_source_range_coverage": true,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "source_sha256": "e10bf6b4f7e13ad73fc9adb5e15225a792f9fef52b3a00391d41a23da75808f6",
+      "source_bytes": 61353,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 32768,
+          "range_sha256": "a309b66db3960cabd729026f207a2f0d005905a7a887e160e22f31a4c17dc322",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          32768
+        ]
+      ],
+      "full_source_range_coverage": false,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "source_sha256": "eb82e8d95342e89e638a324ac4db8d428a16bb1737f274a26a358d50da028d2e",
+      "source_bytes": 5156,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 5156,
+          "range_sha256": "eb82e8d95342e89e638a324ac4db8d428a16bb1737f274a26a358d50da028d2e",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          5156
+        ]
+      ],
+      "full_source_range_coverage": true,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "source_sha256": "7dabd78b0c839d1298c73fb4fa73f3fbfd7dc63c23d79bbda2d8bd8088067b48",
+      "source_bytes": 3273,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 3273,
+          "range_sha256": "7dabd78b0c839d1298c73fb4fa73f3fbfd7dc63c23d79bbda2d8bd8088067b48",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          3273
+        ]
+      ],
+      "full_source_range_coverage": true,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "source_sha256": "5265faad007283ead9a033b7b24c7c70e38f00592ea6d4f9ac04e51eff2eb875",
+      "source_bytes": 37044,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 32768,
+          "range_sha256": "2e724e834562aec7b2cc3bd0f0caa6ac3a8b3a0cc0ce8d2ea7e21d3f629f78bb",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          32768
+        ]
+      ],
+      "full_source_range_coverage": false,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "source_sha256": "2b264cb02ed8a1653eab34300e8218c778ca2649094f74aa6984d000a9e81ce9",
+      "source_bytes": 22930,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 22930,
+          "range_sha256": "2b264cb02ed8a1653eab34300e8218c778ca2649094f74aa6984d000a9e81ce9",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          22930
+        ]
+      ],
+      "full_source_range_coverage": true,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "source_sha256": "3df623b1406c3b8f16dae8ce389c0e504116c40d94301ae2d4ca39005deadc3c",
+      "source_bytes": 21128,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 21128,
+          "range_sha256": "3df623b1406c3b8f16dae8ce389c0e504116c40d94301ae2d4ca39005deadc3c",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          21128
+        ]
+      ],
+      "full_source_range_coverage": true,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "source_sha256": "1085265c47e71e3e0cb90cfda90877fbdfdf516774a7060eac5fbee2efe6549e",
+      "source_bytes": 1991,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 1991,
+          "range_sha256": "1085265c47e71e3e0cb90cfda90877fbdfdf516774a7060eac5fbee2efe6549e",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          1991
+        ]
+      ],
+      "full_source_range_coverage": true,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "source_sha256": "9999a8b7dc215c452568fbcc526416558da1776b461b2c14ca3b95653079ba7c",
+      "source_bytes": 760,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 760,
+          "range_sha256": "9999a8b7dc215c452568fbcc526416558da1776b461b2c14ca3b95653079ba7c",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          760
+        ]
+      ],
+      "full_source_range_coverage": true,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "source_sha256": "8016c43e30cc87132fad2962d1cb3d3e7cc0f62db64596222c07052714d53fc8",
+      "source_bytes": 47977,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 32768,
+          "range_sha256": "523bab85096a870560e9808b77b2a0da3e9819595ecc45f0982b9465bc6de214",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          32768
+        ]
+      ],
+      "full_source_range_coverage": false,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "source_sha256": "ba020697a9019e61a757ca8ad6aaeac5d9afe8c7df7d406a11607c48491da27d",
+      "source_bytes": 21548,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 21548,
+          "range_sha256": "ba020697a9019e61a757ca8ad6aaeac5d9afe8c7df7d406a11607c48491da27d",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          21548
+        ]
+      ],
+      "full_source_range_coverage": true,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "final-correction",
+      "source_sha256": "8016c43e30cc87132fad2962d1cb3d3e7cc0f62db64596222c07052714d53fc8",
+      "source_bytes": 47977,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 32768,
+          "range_sha256": "523bab85096a870560e9808b77b2a0da3e9819595ecc45f0982b9465bc6de214",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          32768
+        ]
+      ],
+      "full_source_range_coverage": false,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "final-correction",
+      "source_sha256": "bb228cc5e442b1446ef8ec0e8aa8d6fe4557c6fb9d6a07935ad4b5748382cb86",
+      "source_bytes": 19611,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 19611,
+          "range_sha256": "bb228cc5e442b1446ef8ec0e8aa8d6fe4557c6fb9d6a07935ad4b5748382cb86",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          19611
+        ]
+      ],
+      "full_source_range_coverage": true,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    },
+    {
+      "stage": "final-correction",
+      "source_sha256": "fc39309d1ea85bfcebd469008e3111951a605870cc8292301c0de165767b0211",
+      "source_bytes": 36817,
+      "distinct_ranges": [
+        {
+          "byte_start": 0,
+          "byte_end_exclusive": 32768,
+          "range_sha256": "c69ea8355a538bb5b2354992c10052826b2cba6cbb191d212cc499032f8ab002",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        },
+        {
+          "byte_start": 32768,
+          "byte_end_exclusive": 36817,
+          "range_sha256": "d416df6672d1d463c8968c57f5534f126488f40dcc8e686150d5c283b09ed80a",
+          "range_hash_matches_capture": true,
+          "source_hash_matches_body": true
+        }
+      ],
+      "merged_ranges": [
+        [
+          0,
+          36817
+        ]
+      ],
+      "full_source_range_coverage": true,
+      "all_range_hash_checks_match": true,
+      "interpretation": "Capture/range equality only; frontend consumption and semantic acquisition UNKNOWN."
+    }
+  ],
+  "raw_native_or_tool_payload_inspected": false
+}

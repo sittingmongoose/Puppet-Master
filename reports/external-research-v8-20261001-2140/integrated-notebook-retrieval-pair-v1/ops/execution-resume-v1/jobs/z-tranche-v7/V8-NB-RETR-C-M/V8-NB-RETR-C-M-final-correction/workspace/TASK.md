@@ -1,0 +1,12 @@
+# V8-NB-RETR-C-M
+
+Complete the assigned brief and thin plan through source capture/discovery → repository investigation → sandbox-plan comparison → fresh same-family independent candidate critic → bounded final correction → complete actual proposal. All three questions and five obligations are required. Use only explicitly packaged assigned inputs, same-case admitted raw source captures and frozen current artifacts; no sibling, evaluator, campaign answer or private host content. Method: `METHOD.md`. The host packages `templates/research.TASK.md`, then fresh `templates/critic.TASK.md`, then fresh `templates/correction.TASK.md`. Research ≤1200s; critic ≤1200s; correction ≤900s; fixed inclusive case wall ≤3600s, occupied ≤5400s, host overhead ≤300s. Case/stage births precede actual preparation; no reset. Host account/model/mode/route binding must be common to both arms before either case birth. This reservation is not an execution/admission receipt.
+
+
+# Final correction and actual proposal
+
+This is a fresh context in the original case's candidate family/account. Read `inputs/BRIEF.md`, `inputs/THIN_PLAN.md`, `inputs/METHOD.md`, the frozen `inputs/PROPOSAL.md`, `inputs/CRITIQUE.md`, optional `inputs/UNRESOLVED_LEADS.md` and this case's raw public-source captures. You may retrieve allowed public primary sources to resolve a critique. Do not use evaluator rulings, sibling discoveries, earlier reasoning histories or prior campaign outputs.
+
+Write `out/FINAL_PROPOSAL.md`, the complete usable corrected research-to-plan artifact, and `out/UNRESOLVED_LEADS.md` if needed. Address all three questions and all five product obligations, preserve correct evidence, replace or reject false propositions with source support, and distinguish version/condition/exception/normative force/inference/product choice. State which critique points changed the plan and why; unresolved consequential dependencies remain visible. Include the chosen component tradeoff, real issue → fix → test investigation, implementation steps and discriminating validations. Check any required self-derived witness. A JSON status or response saying the plan was corrected is insufficient.
+
+At most 900 seconds from this stage's fixed birth, still inside the original 3600-second case clock; clocks are never reset. The host records captures/histories/hashes/cost. No host ledger, helper/child/native Goal/provider launch or private/sibling/evaluator access.

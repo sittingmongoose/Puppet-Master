@@ -1,0 +1,63 @@
+{
+  "schema": "er8.evaluator.native-compliance.v1",
+  "checked_after_quality_freeze": true,
+  "checked_utc": "2026-10-03T02:35:53.117495+00:00",
+  "rows": [
+    {
+      "stage": "research-proposal",
+      "inventory_rows": 16,
+      "nonempty_rows": true,
+      "all_same_session": true,
+      "all_model_provider_max_match": true,
+      "all_context_verified": true,
+      "unexpected_tool_count": 0,
+      "inventory_verified": true,
+      "missing_request_attempts": [],
+      "unreported_request_attempts": [],
+      "source_deliveries_array_count": 0,
+      "stage_seconds_to_charge_end": 811.971562143,
+      "cap_seconds": 1200,
+      "within_stage_deadline": true
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "inventory_rows": 14,
+      "nonempty_rows": true,
+      "all_same_session": true,
+      "all_model_provider_max_match": true,
+      "all_context_verified": true,
+      "unexpected_tool_count": 0,
+      "inventory_verified": true,
+      "missing_request_attempts": [],
+      "unreported_request_attempts": [],
+      "source_deliveries_array_count": 0,
+      "stage_seconds_to_charge_end": 660.289354475,
+      "cap_seconds": 1200,
+      "within_stage_deadline": true
+    },
+    {
+      "stage": "final-correction",
+      "inventory_rows": 10,
+      "nonempty_rows": true,
+      "all_same_session": true,
+      "all_model_provider_max_match": true,
+      "all_context_verified": true,
+      "unexpected_tool_count": 0,
+      "inventory_verified": true,
+      "missing_request_attempts": [],
+      "unreported_request_attempts": [],
+      "source_deliveries_array_count": 0,
+      "stage_seconds_to_charge_end": 540.389597803,
+      "cap_seconds": 900,
+      "within_stage_deadline": true
+    }
+  ],
+  "unknowns": [
+    "source semantic acquisition",
+    "model source reading",
+    "full generated usage",
+    "all-memory-off",
+    "private auth/profile state"
+  ],
+  "same_account": "root-attested from task; not independently re-read from profiles"
+}

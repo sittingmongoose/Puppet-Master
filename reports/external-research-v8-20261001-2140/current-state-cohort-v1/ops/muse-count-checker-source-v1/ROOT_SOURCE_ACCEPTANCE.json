@@ -1,0 +1,22 @@
+{
+  "schema": "pm.er8.mechanical-muse-source-review.v1",
+  "root_authority": true,
+  "review_epoch": 1790996329.1566365,
+  "native_source_completed_before_original_deadline": true,
+  "original_helper_birth_epoch": 1790995738.826653,
+  "original_helper_deadline_epoch": 1790996038.826653,
+  "native_source_end_epoch": 1790995941.567822,
+  "native_CLI_elapsed_seconds": 36.76630740601104,
+  "helper_birth_to_native_quiet_seconds": 202.74116897583008,
+  "root_extraction_and_review_after_helper_end": "Separate root management; no helper clock reset, no native retry.",
+  "source_sha256": "76ec7af07d0c3704e6fa9ec0e33097a63d5b42d071d555d2bc818caa1fefdf21",
+  "original_terminal_stream_sha256": "9f40554dbb58f5e5d3aa9e1f9060c5f03de344f2dca2cf4d008362a2e0f508f0",
+  "source_extraction": "Only completed terminal.text, not raw streams/context/reasoning",
+  "source_accepted": true,
+  "tests": {
+    "muse_authored_passed": 5,
+    "root_independent_conditions_passed": 41
+  },
+  "scope": "Generic known integer count consistency only; no candidate research quality, native provider or full campaign replay",
+  "no_case_answers_or_private_inputs": true
+}

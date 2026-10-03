@@ -1,0 +1,23 @@
+{
+  "launch_exit_code": 0,
+  "started_epoch": 1790992792.417627,
+  "root_authority": true,
+  "original_deadline_epoch": 1790993092.417627,
+  "argv": [
+    "systemd-run",
+    "--user",
+    "--quiet",
+    "--unit=er8-muse-supervisor-handover-source-v1.service",
+    "--working-directory=LAB_ROOT/ops/muse-helper-handover-v1",
+    "--property=Type=exec",
+    "--property=RuntimeMaxSec=299",
+    "--property=KillMode=control-group",
+    "--property=Restart=no",
+    "--property=StandardOutput=null",
+    "--property=StandardError=null",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "LAB_ROOT/ops/muse-helper-handover-v1/run_helper.py"
+  ]
+}

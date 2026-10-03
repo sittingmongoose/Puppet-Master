@@ -1,0 +1,164 @@
+{
+  "schema": "pm.er8.current-checkpoint-audit.v1",
+  "helper": "er8-current-checkpoint-audit-v1",
+  "birth_epoch": 1790995738.826653,
+  "original_deadline_epoch": 1790996338.826653,
+  "scope": "Independent mechanical publication audit only; no scientific case body/raw captures/native/private profiles, regrade, provider action, candidate feedback, public edits, Git or ledger writes.",
+  "input_pins": [
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/OBSERVATION_20261003_0244.json",
+      "sha256": "6f1c8c4f1fcf895f13897588cfff1b4bd4b2910b5eb405726c21c74953f97097"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/ROOT_AMENDMENT_COMPARISON_V1.json",
+      "sha256": "fca656e97ec2fb13ef567cb242e0187f29637202152ea37c1072028d01dd0c01"
+    }
+  ],
+  "publication_snapshot_hashes": [
+    {
+      "path": "README.md",
+      "sha256": "986c7ed0d3f3dcb10f61fdd590b2ef24d529170dc0ddb6724a03d0bf5e5e4604"
+    },
+    {
+      "path": "RESULTS.md",
+      "sha256": "b979bbc9486a7d4c425c0be86d93d2740c380e064b91399277c7cd920af576b7"
+    },
+    {
+      "path": "CHECKPOINT.md",
+      "sha256": "7d06ff9b155cca3b5782ffb66fb5f8dff13f69720a5c6e6d6b4efc36f1683564"
+    },
+    {
+      "path": "BEST_RECIPE.md",
+      "sha256": "074c4440cf034d215fb7d2449405e286f3aafa93e3c45e5619ebc6183935ff74"
+    },
+    {
+      "path": "FAILURES.md",
+      "sha256": "4433373804957037acdf128fa78c30a0ac249bc74933f814c263b755d50e1e72"
+    },
+    {
+      "path": "economics.json",
+      "sha256": "f7591a399438df29ead4f6d038f9f8ad57146aac20caa401f03a96c930e5507d"
+    },
+    {
+      "path": "attempts.json",
+      "sha256": "566e809457823d7099c7fe2c18cb124809d44f89e611def670b22fd1d5742cc7"
+    },
+    {
+      "path": "comparisons.json",
+      "sha256": "cb71fdf227cef2d7e2b8ca62aae8d9205c982f42815ed07a607cdf2a79d955ec"
+    },
+    {
+      "path": "schedule.json",
+      "sha256": "cf576545fca33e59444336514eb43ecd9590d6593edc0902cd2a972d8ea72878"
+    },
+    {
+      "path": "REPRODUCE.md",
+      "sha256": "9128fda97bacfe560f4cbeb2bb6da8cd8c48801172e8f0d8e234a3c66ccaba5d"
+    }
+  ],
+  "findings": [
+    {
+      "id": "CCA-001",
+      "severity": "fix_current_authority_label",
+      "file": "CHECKPOINT.md",
+      "line": 11,
+      "also": [
+        {
+          "file": "economics.json",
+          "line": 37
+        }
+      ],
+      "finding": "Current policy still says six concurrent helpers; economics.current_prospective_limits.active_helpers is 6. Root reports new user authorization for prospective12 is being recorded.",
+      "action": "Publish root-owned prospective12 authority metadata/limit; retain historical6 snapshots unchanged and do not retroactively apply new authority."
+    },
+    {
+      "id": "CCA-002",
+      "severity": "fix_stale_current_text",
+      "file": "REPRODUCE.md",
+      "line": 3,
+      "finding": "Unqualified this selected freeze says no completed integrated research output, contradicting current4 complete pipelines.",
+      "action": "Label that sentence explicitly as original planning freeze history, or state current completed-pair reproduction boundary."
+    },
+    {
+      "id": "CCA-003",
+      "severity": "fix_exact_disposition",
+      "file": "attempts.json",
+      "line": 185,
+      "finding": "AMEND-T research_quality spells VERIFIED_FAILED_SCREEN; exact root frozen T disposition is FAILED_SCREEN. C alone has VERIFIED_FAILED_SCREEN.",
+      "action": "Retain FAILED_SCREEN for T and VERIFIED_FAILED_SCREEN for C, with common aggregate FAILED_SCREEN unchanged."
+    },
+    {
+      "id": "CCA-004",
+      "severity": "fix_incomplete_current_inventory",
+      "file": "attempts.json",
+      "line": 3,
+      "finding": "Attempt native_goal_starts sum32 while current observation is38; the two BREADTH pipelines are absent despite both final Goals active at the checkpoint.",
+      "action": "Add both BREADTH rows with3 actual starts each and active-final/UNASSESSED state, or label the inventory non-exhaustive and bind missing6 starts explicitly."
+    },
+    {
+      "id": "CCA-005",
+      "severity": "fix_stale_row_labels",
+      "file": "attempts.json",
+      "line": 153,
+      "also": [
+        {
+          "file": "attempts.json",
+          "line": 158
+        },
+        {
+          "file": "attempts.json",
+          "line": 163
+        },
+        {
+          "file": "attempts.json",
+          "line": 168
+        }
+      ],
+      "finding": "RETR rows retain scope incomplete integrated pipeline and01:25:39 observation despite COMPLETE status and later frozen terminal completion.",
+      "action": "Use completed operational pipeline scope and the actual supported completion observation, or explicitly label old observation field as historical research-stage observation."
+    },
+    {
+      "id": "CCA-006",
+      "severity": "fix_historical_reservation_label",
+      "file": "schedule.json",
+      "line": 5,
+      "finding": "Top cases array presents all original six as NOT_RUN, including executed BIO-P/B and NB-P/B, without naming the array historical while current_observation and checkpoint are current.",
+      "action": "Rename or label original cases as historical reservation snapshot; preserve original caps and add current observed state separately."
+    },
+    {
+      "id": "CCA-007",
+      "severity": "fix_stale_pending_label",
+      "file": "REPRODUCE.md",
+      "line": 11,
+      "also": [
+        {
+          "file": "FAILURES.md",
+          "line": 7
+        }
+      ],
+      "finding": "Current caller repair2 is pending review conflicts with REPRODUCE13 published conditional source acceptance and subsequent qualified native-v3 cohort. FAILURES7 also retains pending without a local historical observation label.",
+      "action": "Frame pending statements as original route-cohort observations, retaining later source acceptance and narrow native qualification separately."
+    }
+  ],
+  "passed_checks": [
+    "Both immutable root input SHA pins match.",
+    "Current headline:38 starts,28511.346881866455 occupied seconds,14research/7critic/4final,4pipelines/2pairs,4FAILED_SCREENs/2independently reviewed pairs,0fullPASS/qualified efficiency; BREADTH finals active.",
+    "No pending AMEND review claim in current headline/results/bestrecipe/failures/schedule.",
+    "All checked current top Markdown and new amendment/rootstandby/lifecycle README links resolve to files.",
+    "New amendment quality public manifest44 artifacts, root standby23 artifacts and lifecycle9 artifacts all public SHA/byte checks pass; all original/public hashes have separate fields.",
+    "Standalone portable verifiers pass44/23/9 artifact hashes with model_quality_assessed=false, native_replay_verified=false, optional timing_declarations=false.",
+    "51new publicJSON scanned recursively for named forbidden context/raw payload/delivery_evidence/auth/internal-handle fields: no matches. C native summary uses positive fields and operations omit delivery_evidence.",
+    "Quotation audit declares0directthirdparty published words;13omitted spans; C6omission markers and T7blockquote lines all omission markers. Original quote bodies were not read.",
+    "Standby WAITING and distinctclaimABSENT remain separate from exclusiveownership/livehandoff/predecessorexitproof; original fixed cutoff1791013030.8303788 and monotonic cutoff preserved.",
+    "Historical cohort snapshots remain distinct in top publication; no historical mutation performed by auditor."
+  ],
+  "limitations": [
+    "Only selected current top files and manifest-listed metadata/new cohort README/source-locator structure audited. No whole-case source quality regrade or raw third-party capture inspection.",
+    "Prospective12helper authorization is parent-provided and root metadata still pending at audited snapshot; auditor did not edit policy.",
+    "Snapshot consistency finding, not live process observation or handoff proof."
+  ],
+  "actual_end_epoch": 1790995996.0756226,
+  "elapsed_birth_through_end_seconds": 257.2489695549011,
+  "ended_before_original_deadline": true,
+  "actual_end_utc": "2026-10-03T02:53:16.075623+00:00"
+}

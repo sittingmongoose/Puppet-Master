@@ -1,0 +1,174 @@
+{
+  "schema": "er8.independent.source-quality-before-method.v1",
+  "case": "V8-BIO-AMEND-T-L",
+  "evaluator": "er8-quality-bio-amend-t-v1",
+  "reservation": "V8-EVAL-V8-BIO-AMEND-T-L",
+  "quality_disposition": "FAILED_SCREEN",
+  "screen": "VERIFIED",
+  "source_quality_ruling_frozen_utc": "2026-10-03T02:30:31.779692+00:00",
+  "frozen_epoch": 1790994631.7797227,
+  "evaluator_birth_epoch": 1790994119.8633728,
+  "original_deadline_epoch": 1790996519.8633728,
+  "original_hard_seconds": 2400,
+  "clock_reset": false,
+  "method_read_before_quality_freeze": false,
+  "limited_blinding": "Case ID, assignment, proposal header and critique disclose amendment-style organization and top-three language. METHOD.md, TASK.md and any candidate method manifest were not read before this freeze. Native receipt exposes only accepted-method hash, not its text.",
+  "artifact": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/out/FINAL_PROPOSAL.md",
+    "bytes": 38964,
+    "sha256": "265934a0f6dbf8d9841853f253a982aaed1562360e95b12f18f49733120ab622"
+  },
+  "full_scope_requested": true,
+  "whole_case_pass": false,
+  "whole_history_regrade": false,
+  "numeric_score": null,
+  "unassessed_not_zero": true,
+  "findings": [
+    {
+      "id": "F-Q1",
+      "severity": "DECISIVE",
+      "status": "VERIFIED",
+      "obligations": [
+        "B2",
+        "B3",
+        "B5"
+      ],
+      "questions": [
+        "Q2"
+      ],
+      "locator": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/out/FINAL_PROPOSAL.md",
+        "sha256": "265934a0f6dbf8d9841853f253a982aaed1562360e95b12f18f49733120ab622",
+        "lines": [
+          144,
+          146,
+          156
+        ]
+      },
+      "title": "Missing label units are unconditionally accepted without a common coordinate basis",
+      "ruling": "F6 explicitly permits the overlay because association is independent of units. Association alone cannot supply the absent image-to-label unit/basis mapping. S3 always calls the composed result physical, while S5 has no common-unit or calibration-applicability gate. A numerical bbox comparison is not meaningful across an unknown unit/basis. Under the brief, that overlay needs an explicit compatibility contract or must be withheld.",
+      "primary_source_dependency": "independent-primary/spec04.body #axes-md/#multiscale-md; hash ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+      "source_context": "0.4 §3.1 unit SHOULD; §3.4 distinguishes physical pixel size from per-pyramid relative downsampling when calibration is unavailable/applicable.",
+      "diagnostic": "alignment-diagnostic.json absent_unit_ambiguity and uncalibrated_relative_fallback; evaluator arithmetic only",
+      "certainty": "high; no runtime test needed to establish the missing contract and unconditional F6 expectation",
+      "preservation": "Same F6 expectation and same missing gate occur in initial lines 123/125/134; critic passes B2/B3 and final retains them. A1 corrected reader inheritance but did not repair the coordinate-basis dependency."
+    },
+    {
+      "id": "F-Q2",
+      "severity": "SUPPORTING",
+      "status": "VERIFIED_INTERNAL_INCONSISTENCY",
+      "obligations": [
+        "B3",
+        "B5"
+      ],
+      "questions": [
+        "Q2"
+      ],
+      "locator": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/out/FINAL_PROPOSAL.md",
+        "lines": [
+          146,
+          154
+        ]
+      },
+      "title": "F4b refusal expectation is not entailed by the stated bbox refusal predicate",
+      "ruling": "With equal array shapes and zero offsets, scales 0.5 and 1.0 yield overlapping bboxes. The only geometric rejection specified in S5 is disjointness. F4b nevertheless requires refusal/flagging, and supplies no threshold or additional predicate. The diagnostic proves only this contract mismatch; different scales by themselves are not a general alignment failure.",
+      "diagnostic": "alignment-diagnostic.json bbox_counterexample",
+      "certainty": "high for written predicate mismatch; no claim about candidate renderer execution",
+      "preservation": "F4b is new after A1; final preserves the source correction but has not made its new prediction implementable."
+    },
+    {
+      "id": "F-Q3",
+      "severity": "SUPPORTING",
+      "status": "VERIFIED_BRIEF_CONTRADICTION",
+      "obligations": [
+        "B1",
+        "B5"
+      ],
+      "questions": [],
+      "locator": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/out/FINAL_PROPOSAL.md",
+        "lines": [
+          3,
+          143
+        ]
+      },
+      "title": "Contract extends to time/channel/custom-axis slicing despite strictly 2D brief",
+      "ruling": "The brief excludes time series and 3D, but S2 explicitly accepts an extra non-space time/channel/custom axis sliced at index 0 while still requiring transformation vectors of length 2. No singleton-only exception or projection contract is defined. This is an out-of-scope extension and a dimension-consistency ambiguity, not an NGFF prohibition.",
+      "certainty": "high for literal scope mismatch; no execution claim",
+      "preservation": "Initial S2 line122 already has this exception; critic B1 PASS and final line143 keep it."
+    }
+  ],
+  "coverage": [
+    {
+      "id": "Q1",
+      "status": "PARTIALLY_SOURCE_CHECKED_REMAINDER_UNASSESSED",
+      "checked": "Two relevant primary implementations independently re-fetched: napari-ome-zarr v0.10.0 reader and vizarr PR261 diff + captured main package0.3.0. Reader first-entry behavior and plain0.4 parent-transform correction supported. Whole napari capability is not established by plugin code; candidate itself leaves U2 open.",
+      "unassessed": "All current napari API/runtime compatibility and every broad component inference."
+    },
+    {
+      "id": "Q2",
+      "status": "FAILED_SCREEN",
+      "checked_findings": [
+        "F-Q1",
+        "F-Q2"
+      ],
+      "unassessed": "Full version-support and normative-claim inventory beyond examined calibration, transform, axes, and label contexts."
+    },
+    {
+      "id": "Q3",
+      "status": "SUPPORTED_SCOPED_REMAINDER_UNASSESSED",
+      "checked": "Issue403 → PR590 explicit linkage → three-file diff including test_writer.py → v0.18.0 release body confirmed. Dates/head hash and relative-vs-physical formula bases agree. Test updates are an upstream regression-test chain, not evidence that candidate tests ran.",
+      "unassessed": "First-release exclusivity against every older release, general validity of all sampling conventions, and whole future writer-version behavior."
+    },
+    {
+      "id": "B1",
+      "status": "FAILED_SCREEN_SCOPED",
+      "checked_findings": [
+        "F-Q3"
+      ],
+      "unassessed": "Path containment, malformed metadata, noninteger label type, zero/nonfinite transform cases, and all other support boundary details."
+    },
+    {
+      "id": "B2",
+      "status": "FAILED_SCREEN_SCOPED",
+      "checked_findings": [
+        "F-Q1"
+      ],
+      "unassessed": "Complete mixed-unit scale-bar policy and all cursor/rendering cases. F2 affine arithmetic agrees in the stated physical unit context."
+    },
+    {
+      "id": "B3",
+      "status": "FAILED_SCREEN",
+      "checked_findings": [
+        "F-Q1",
+        "F-Q2"
+      ],
+      "unassessed": "Complete sampling, extents, source-image identity resolution, and all array-shape/per-level combinations."
+    },
+    {
+      "id": "B4",
+      "status": "PARTIALLY_SOURCE_CHECKED_REMAINDER_UNASSESSED",
+      "checked": "Two component precedents and the primary issue/fix/test/release chain have primary evidence. Corrected A1 mechanics and A2 release are supported.",
+      "unassessed": "Every upstream behavior/capability assertion and dependencies that could alter the chosen stack."
+    },
+    {
+      "id": "B5",
+      "status": "FAILED_SCREEN_SCOPED",
+      "checked_findings": [
+        "F-Q1",
+        "F-Q2",
+        "F-Q3"
+      ],
+      "unassessed": "Full fixture adequacy beyond diagnostic contracts, and all product limits. Proposed fixtures are consistently marked unexecuted."
+    }
+  ],
+  "semantic_acquisition": "UNKNOWN",
+  "host_capture": "POSITIVE_REHASHED",
+  "tool_server_flushed_ranges": "POSITIVE_REHASHED; see provenance.json",
+  "frontend_consumption": "UNOBSERVED",
+  "operational_pipeline": "three complete fresh native Goals, positive MCP and ownPGID/cgroup/case closure receipts; same account parent-attested only",
+  "independent_primary_manifest": "independent-primary/fetch-manifest.json",
+  "candidate_feedback_sent": false,
+  "evaluator_research_supplied_to_candidate": false
+}

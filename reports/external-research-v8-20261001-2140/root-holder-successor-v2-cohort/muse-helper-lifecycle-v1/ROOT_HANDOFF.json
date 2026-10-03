@@ -1,0 +1,61 @@
+{
+  "schema": "pm.er8.muse-handover-lifecycle-positive-handoff.v1",
+  "original_birth_epoch": 1790995167.1806521,
+  "original_deadline_epoch": 1790995467.1806521,
+  "prepared_epoch": 1790995323.5848477,
+  "positive_files": [
+    {
+      "path": "LAB_ROOT/ops/muse-helper-handover-v1/QUIET.json",
+      "sha256": "0681900459c0744044c31ab61530bbeedd29da4668330722384fe62d22807412",
+      "bytes": 1006,
+      "pin_origin": "root explicit supplement positive filename/hash authorization"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-helper-handover-v1/INPUT_MANIFEST.json",
+      "sha256": "9f39c1a1a420cb7b7eb8cc2ee69b2dc24fda40483c62e45d3011fa00c33440d8",
+      "bytes": 461,
+      "pin_origin": "root explicit supplement positive filename/hash authorization"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-helper-handover-v1/ROOT_LAUNCH.json",
+      "sha256": "a1dedf72b28da1c90e02f685da6e22de29f5566fe989277ce3d66a7715cba194",
+      "bytes": 782,
+      "pin_origin": "root explicit supplement positive filename/hash authorization"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-helper-handover-v1/BIRTH.json",
+      "sha256": "05e143369d40d072a19229edf67e41600fd1fbeb7c7344a39b5eb2575e21aa05",
+      "bytes": 1131,
+      "pin_origin": "root explicit supplement positive filename/hash authorization"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-helper-handover-v1/ORIGINAL_BIRTH.json",
+      "sha256": "79973aaa10639f7e465ca4572c12cc14129e7fdf4f77d65b86e5650499baf6f5",
+      "bytes": 249,
+      "pin_origin": "root explicit supplement positive filename/hash authorization"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-helper-handover-v1/prompt.txt",
+      "sha256": "64abf630a171bc74f90a9adb6ea309603c8172199f11ba3dd4e08598e48a71ee",
+      "bytes": 2635,
+      "pin_origin": "root explicit supplement positive filename/hash authorization"
+    }
+  ],
+  "scope": "Exact fifth generic native Muse helper lifecycle/input/launch/birth/prompt metadata only; no native events/stderr/runner/partial source extraction/raw conversation/private auth/context/candidate facts.",
+  "source_accepted_or_extracted": false,
+  "base26_files_unchanged": true,
+  "aggregate_root_reported_helpers": {
+    "invocations": 5,
+    "complete": 3,
+    "timed_out": 2,
+    "known_elapsed_seconds": 874.9526655390172,
+    "candidate_Goals": 0,
+    "realized_reasoning": "UNKNOWN",
+    "tokens": "UNKNOWN",
+    "money": "UNKNOWN"
+  },
+  "portable_checker": {
+    "path": "WORKTREE_ROOT/reports/external-research-v8-20261001-2140/prospective-source-cohort-v3/ops/muse-helper-public-check-v1/root-repair-v1/verify_public.py",
+    "sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "pm.er8.helper-concurrency-independent-review.v2",
+  "helper": "er8-helper-concurrency-review-v2",
+  "decision": "ACCEPT",
+  "accepted": true,
+  "acceptance_scope": "Exact source-only v2 successor; no live installation performed or independently validated.",
+  "source_api_path": "LAB_ROOT/ops/helper-concurrency-v2/ledger_helper_concurrency_v2.py",
+  "source_api_sha256": "eafb75b1a157a5b7e77f03f9fc52e298a7ef255e439730e22c4fde6a95dc0405",
+  "source_manifest_path": "LAB_ROOT/ops/helper-concurrency-v2/MANIFEST.json",
+  "source_manifest_sha256": "85817378b706aac371bd6da50e427599491f8622f39fbdafdc279a222efeebba",
+  "root_authority_sha256": "f1682a991232997556aed7fb88f167e706317259913d9365c5a1fb72fc572a79",
+  "original_resume_api_sha256": "a98cf53c1826f1f4c9fa47a9e181eaae8beb971ea41e6564578a253059450b61",
+  "test_summary": {
+    "author_tests_run": 20,
+    "author_success": true,
+    "independent_tests_run": 20,
+    "independent_success": true,
+    "read_only_virtual_mapping": true,
+    "independent_source_bytes_modified_for_execution": false,
+    "author_compiled_wrapper_relocated_only": true,
+    "live_transactions_executed": false
+  },
+  "blocking_findings": [],
+  "resolved_v1_finding": {
+    "id": "HC-V1-001",
+    "resolved_in_exact_v2": true,
+    "v1_HOLD_and_frozen_source_preserved": true,
+    "resolution": "Validated birth is carried in a copied helper-start request; later clock readings cannot replace the stored default birth.",
+    "rollback_evidence": "LAB_ROOT/ops/helper-concurrency-review-v2/CLOCK_ROLLBACK_EVIDENCE.json",
+    "nonfinite_evidence": "LAB_ROOT/ops/helper-concurrency-review-v2/CLOCK_NONFINITE_EVIDENCE.json"
+  },
+  "verified_scope": [
+    "Exact production diff from pinned v1 is one explanatory comment plus request = {**request, started_epoch: birth}. No other production bytes differ.",
+    "All exact source-manifest inventory/dependency pins match before and after review. V1 source, manifest and HOLD freeze match original pins.",
+    "20 author tests pass in full owned fixtures. Independent execution uses unchanged pinned wrapper and complete frozen dependency bytes under an owned read mapping.",
+    "20 independent tests pass: malformed install/root/path/hash/schema/type requests, receipt integrity and one-time installation, prospective finite births, caller immutability/copy identity, explicit birth type/value, old-module isolation and auth deep copy, dependency symlink/source/hash rejection, unchanged clock/history, retained helper-end proof storage, event/close/status delegation.",
+    "Both prior failing clock sequences store validated birth 1790996060.0 at receipt effective_epoch 1790996060.0 and leave caller requests unchanged. Additional later clock matrix preserves birth or rejects under the frozen deadline check.",
+    "Old six-helper API remains isolated; successor accepts twelve and rejects thirteenth. Removed cumulative helper and repair caps remain removed.",
+    "Old/new authorization objects compare equal after normalizing active_helpers 12 back to 6. Original start 1790905209, deadline 1791013030.8303788, pause 64621.83037877083, family slots M/Z/L=2, native starts 144, occupied cap 172800 and all other authorization/accounting fields are preserved.",
+    "Every other action and native admission delegate unchanged. The old helper-count predicate exists only at helper-start, so native controllers require no change."
+  ],
+  "scoped_limitations": [
+    "Source/test review only: no live ledger state/lock mutation, transaction/save/apply, root installation, native/provider/unit/profile/auth actions, candidate/source answers, canon or Git changes. Mock helper/admission actions mutate owned in-memory fixture states only.",
+    "Clock-edge cases are controlled adversarial mocks, not observations of a current live clock fault.",
+    "Original helper-end retains proof-storage semantics; root must verify positive frozen source/manifest proof before ending a helper.",
+    "Author tests relocate only the wrapper campaign literal in a compiled fixture copy; independent tests additionally execute the exact original wrapper bytes with file reads mapped to exact owned copies.",
+    "The first matrix test assumed a later positive infinity clock should admit. The frozen inclusive deadline check correctly rejected it; only the harness expectation changed, and initial output is retained."
+  ],
+  "source_freeze_actual_proof_filename": "MANIFEST.json"
+}

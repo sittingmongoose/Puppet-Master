@@ -1,0 +1,37 @@
+{
+  "schema": "pm.er8.helper-concurrency-root-install.v2",
+  "root_authority": true,
+  "created_epoch": 1790998242.1615984,
+  "source": {
+    "path": "LAB_ROOT/ops/helper-concurrency-v2/ledger_helper_concurrency_v2.py",
+    "sha256": "eafb75b1a157a5b7e77f03f9fc52e298a7ef255e439730e22c4fde6a95dc0405"
+  },
+  "source_manifest": {
+    "path": "LAB_ROOT/ops/helper-concurrency-v2/MANIFEST.json",
+    "sha256": "85817378b706aac371bd6da50e427599491f8622f39fbdafdc279a222efeebba"
+  },
+  "independent_acceptance": {
+    "path": "LAB_ROOT/ops/helper-concurrency-review-v2/FREEZE.json",
+    "sha256": "d29e6b45870c44f4f89ab65fbe216a32b15dd2a47e05a05971f48a1535a8b6c3"
+  },
+  "installed_receipt": {
+    "schema": "pm.er8.helper-concurrency-receipt.v1",
+    "root_authority": true,
+    "authority_path": "LAB_ROOT/ops/recovery-v1/HELPER_CONCURRENCY_AUTHORITY_20261003.json",
+    "authority_sha256": "f1682a991232997556aed7fb88f167e706317259913d9365c5a1fb72fc572a79",
+    "previous_active_helpers": 6,
+    "active_helpers": 12,
+    "effective_epoch": 1790998242.1175647
+  },
+  "positive_readback": true,
+  "state_existing_fields_unchanged": true,
+  "auth_only_difference": {
+    "active_helpers": {
+      "before": 6,
+      "after": 12
+    }
+  },
+  "candidate_and_global_budgets_unchanged": true,
+  "future_helper_api": "LAB_ROOT/ops/helper-concurrency-v2/ledger_helper_concurrency_v2.py",
+  "legacy_native_controller_unchanged": true
+}

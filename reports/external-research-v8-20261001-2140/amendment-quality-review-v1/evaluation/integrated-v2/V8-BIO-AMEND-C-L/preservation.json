@@ -1,0 +1,72 @@
+{
+  "schema": "er8.evaluator.preservation.v1",
+  "artifacts": [
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-artifacts/V8-BIO-AMEND-C-L-final-correction/FINAL_PROPOSAL.md",
+      "bytes": 37553,
+      "sha256": "06153823f21ec7518c17f57857b86a394268c15cdd9c72bd2f3df364c9571b0b"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-artifacts/V8-BIO-AMEND-C-L-final-correction/UNRESOLVED_LEADS.md",
+      "bytes": 4103,
+      "sha256": "e6184c6b0bfc445fa9af59fd0bef5f0583a40f980918a926167f69681a194c2e"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-artifacts/V8-BIO-AMEND-C-L-independent-candidate-critic/CRITIQUE.md",
+      "bytes": 22464,
+      "sha256": "0d4b43c136e870dad3773fab77a1ec231375cc6e41932206fc64e26697379e0f"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-artifacts/V8-BIO-AMEND-C-L-research-proposal/ERRATA-C-L.md",
+      "bytes": 1120,
+      "sha256": "9836e5f4647537eb4570e5bacbff38044887f53f7addb998543d839bbcde13c4"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-artifacts/V8-BIO-AMEND-C-L-research-proposal/PROPOSAL.md",
+      "bytes": 22102,
+      "sha256": "71ec23585eca750f970760fd4b4634c0759a269521b71ad317e196c1c53eb043"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/preserved-artifacts/V8-BIO-AMEND-C-L-research-proposal/UNRESOLVED_LEADS.md",
+      "bytes": 3630,
+      "sha256": "b5148e3705525cca940ccd8adb61203e788cd1c250b777f0f3e7c1a94a56a453"
+    }
+  ],
+  "input_transfer_matches": {
+    "initial_to_critic": true,
+    "initial_to_final": true,
+    "critic_to_final": true
+  },
+  "corrections": [
+    {
+      "id": "C1",
+      "ruling": "False-16.0 replaced with correct+0.25. Original stage also has direct ERRATA-C-L.md correcting it; ERRATA was not in required-artifact freeze/transfer inputs."
+    },
+    {
+      "id": "C2",
+      "ruling": "Final re-scopes V1 as an actual corrected-vs-scale-only metadata discriminator and changes V5; odd-shape general motivation remains overbroad(F6)."
+    },
+    {
+      "id": "C3",
+      "ruling": "Foreign-transform restriction correctly carried into final reader gate and proposed fixture."
+    },
+    {
+      "id": "C4",
+      "ruling": "Translated inverse-map witness correctly carried; V1 no group transforms so worked formula applicable."
+    },
+    {
+      "id": "C5",
+      "ruling": "Scale-bar last-axis and dimensionality conditions restored."
+    },
+    {
+      "id": "C6",
+      "ruling": "Gitlink/submodule pin mechanism re-located. Independent contents response now labels type=submodule rather than candidate capture type=file; same sha and repository target preserved."
+    },
+    {
+      "id": "C7",
+      "ruling": "Pixel-center convention chosen explicitly with third-party-file limitation."
+    }
+  ],
+  "necessary_findings_current_disposition": "Source table, component choice/tradeoff, normative descriptions, issue chain and named refusal/lead structure survive. Current final still preserves an invalid no-transform overlay fallback and leaves implementation-dependent obligations unresolved. Preservation of content is separated from its quality. No false earlier claim is penalized merely for being corrected.",
+  "critic_quality_limit": "Critic called questions mostly Pass and missed overlay/calibration applicability defects; final accepting all C1–C7 is not independent quality certification."
+}

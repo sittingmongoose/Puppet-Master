@@ -1,0 +1,170 @@
+{
+  "schema": "er8.execution-stage.v1",
+  "stage_id": "v8-bio-breadth-c-m-research-proposal",
+  "stage_start_monotonic_ns": 215482212548993,
+  "deadline_monotonic_ns": 216682212548993,
+  "native_stop_monotonic_ns": 216652212548993,
+  "cleanup_reserve_seconds": 30,
+  "cap_seconds": 1200,
+  "response_cap": 160,
+  "runtime_path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/launch.py",
+  "runtime_argv": [
+    "--workspace",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-research-proposal/workspace",
+    "--prompt-file",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-research-proposal/OBJECTIVE.md",
+    "--out",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-research-proposal/native-public",
+    "--label",
+    "V8-BIO-BREADTH-C-M-research-proposal",
+    "--max-seconds",
+    "1200",
+    "--max-responses",
+    "160",
+    "--admission-file",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-research-proposal/CASE_BINDING.json",
+    "--public-get",
+    "--mode",
+    "productive"
+  ],
+  "route_snapshot": {
+    "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/SNAPSHOT.json",
+    "sha256": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b"
+  },
+  "route_acceptance": {
+    "path": "LAB_ROOT/evaluation/resume-execution-v1/route-native-acceptance-bound-execution.json",
+    "sha256": "59b08282df39fe1c86e21eea06d1197a17f3ea30ef13b1569d6c34a31347a18c"
+  },
+  "assembly_binding": {
+    "config": {
+      "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/root-config.json",
+      "sha256": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d"
+    },
+    "lease": {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-research-proposal/LEASE.json",
+      "sha256": "47390d4c6b3925633a54b2057aea0bfcedda9f35d085df3502af4b3d40562966"
+    },
+    "case_binding": {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-research-proposal/CASE_BINDING.json",
+      "sha256": "1ae47c6628d4a2c7320e5b94e0d289fecc029041671b954138d4fafb706683cc"
+    },
+    "acceptance": {
+      "path": "LAB_ROOT/evaluation/resume-execution-v1/route-native-acceptance-bound-execution.json",
+      "sha256": "59b08282df39fe1c86e21eea06d1197a17f3ea30ef13b1569d6c34a31347a18c"
+    }
+  },
+  "case_authority": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-research-proposal/CASE_AUTHORITY.json",
+    "sha256": "a927b3bb5d8e4e319b0677d928a1dd84ee47aaaacd6a006947b667caf7afafc0",
+    "clock": {
+      "case_id": "V8-BIO-BREADTH-C-M",
+      "case_start_monotonic_ns": 215482212548993,
+      "case_elapsed_cap_seconds": 3600,
+      "case_occupied_cap_seconds": 5400,
+      "outside_native_cap_seconds": 300,
+      "campaign_native_cutoff_monotonic_ns": 234777000143072,
+      "stages": {
+        "v8-bio-breadth-c-m-research-proposal": {
+          "stage_start_monotonic_ns": 215482212548993,
+          "cap_seconds": 1200,
+          "response_cap": 160
+        }
+      }
+    }
+  },
+  "v8_stage_role": "integrated",
+  "v8_canary_review": {
+    "path": "LAB_ROOT/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json",
+    "sha256": "aba3336e6475d1eb50e00b66c3804e2747d7fef38be764ec53379614cfb68fc7"
+  },
+  "enrollment_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-research-proposal/PLAN.enrollment.json",
+  "occupied_and_outside_cost_enforcement": "mandatory operator case/slot ledger; wrapper proves native lifetime only",
+  "boundary_acceptance": {
+    "path": "LAB_ROOT/evaluation/recovery-route-v1/execution-v2-source-acceptance.json",
+    "sha256": "9702cfd12df7ad290f19dcae6e8134ec77b2fd45f7fff293746a483c1d22c8a7"
+  },
+  "native_qualification": "UNESTABLISHED until actual on-time cgroup quiescence and native receipt review",
+  "recovery_namespace_command": [
+    "/usr/bin/bwrap",
+    "--unshare-user",
+    "--unshare-pid",
+    "--as-pid-1",
+    "--die-with-parent",
+    "--cap-drop",
+    "ALL",
+    "--bind",
+    "/",
+    "/",
+    "--proc",
+    "/proc",
+    "--dev-bind",
+    "/dev",
+    "/dev",
+    "--",
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/deadline_gate",
+    "--absolute-ns",
+    "216652212548993",
+    "--",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/entry.py",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-research-proposal/PLAN.json"
+  ],
+  "owned_unit": "er8-v8-bio-breadth-c-m-research-proposal.service",
+  "command": [
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/deadline_gate",
+    "--absolute-ns",
+    "216682212548993",
+    "--",
+    "/usr/bin/systemd-run",
+    "--user",
+    "--wait",
+    "--pipe",
+    "--collect",
+    "--unit=er8-v8-bio-breadth-c-m-research-proposal.service",
+    "--property=Type=exec",
+    "--property=KillMode=control-group",
+    "--property=KillSignal=SIGKILL",
+    "--property=SendSIGKILL=yes",
+    "--property=TimeoutStopSec=1s",
+    "--property=RuntimeMaxSec=1200s",
+    "--property=Restart=no",
+    "--",
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/deadline_gate",
+    "--absolute-ns",
+    "216652212548993",
+    "--",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "LAB_ROOT/dev/route-recovery-v2/broker_exec.py",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-research-proposal/PLAN.json",
+    "--",
+    "/usr/bin/bwrap",
+    "--unshare-user",
+    "--unshare-pid",
+    "--as-pid-1",
+    "--die-with-parent",
+    "--cap-drop",
+    "ALL",
+    "--bind",
+    "/",
+    "/",
+    "--proc",
+    "/proc",
+    "--dev-bind",
+    "/dev",
+    "/dev",
+    "--",
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/deadline_gate",
+    "--absolute-ns",
+    "216652212548993",
+    "--",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/entry.py",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-research-proposal/PLAN.json"
+  ]
+}

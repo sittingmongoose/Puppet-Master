@@ -1,0 +1,14 @@
+{
+  "schema": "pm.er8.current-state-public-integrity-check.v1",
+  "command": "python3 -I -B verify_public.py COHORT_ROOT",
+  "returncode": 0,
+  "result": {
+    "model_quality_assessed": false,
+    "native_replay_verified": false,
+    "scope": "offline artifact hashes and optional declarations only",
+    "timing_declarations_present_and_valid": false,
+    "verified_artifacts": 21
+  },
+  "public_export_sha256": "ca792e7ac8a21a005aa08d10c9b78e0c6d90e07e232c42326169be8974e3d1ae",
+  "scope": "Public artifact hashes only; map absent expected; no source/test execution, live-state assertion, bounded audit upgrade/native replay or regrade."
+}

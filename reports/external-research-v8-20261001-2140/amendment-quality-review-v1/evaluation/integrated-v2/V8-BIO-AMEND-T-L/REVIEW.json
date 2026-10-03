@@ -1,0 +1,116 @@
+{
+  "schema": "er8.integrated.independent-quality-review.v1",
+  "case": "V8-BIO-AMEND-T-L",
+  "reservation": "V8-EVAL-V8-BIO-AMEND-T-L",
+  "evaluator": "er8-quality-bio-amend-t-v1",
+  "disposition": "FAILED_SCREEN",
+  "verified_failed_screen": true,
+  "dominant_finding": "F-Q1",
+  "source_quality_frozen_before_method": true,
+  "source_quality_freeze_sha256": "6ae655f13c353088df5a9fada06ce942ff9c7c35971e66f461f1c7733fb3be75",
+  "limited_blinding": "Case ID, assignment, proposal header and critique disclose amendment-style organization and top-three language. METHOD.md, TASK.md and any candidate method manifest were not read before this freeze. Native receipt exposes only accepted-method hash, not its text.",
+  "actual_final_artifact": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/out/FINAL_PROPOSAL.md",
+    "bytes": 38964,
+    "sha256": "265934a0f6dbf8d9841853f253a982aaed1562360e95b12f18f49733120ab622"
+  },
+  "global_parent_receipt_sha256": "b545797e05a2073010e6f124597721953edbe68f06e483abe61d1b335ce906aa",
+  "full_scope_requested": true,
+  "entire_scope_source_truth_assessed": false,
+  "whole_case_pass": false,
+  "numeric_score": null,
+  "unassessed_not_zero": true,
+  "coverage": [
+    {
+      "id": "Q1",
+      "status": "PARTIALLY_SOURCE_CHECKED_REMAINDER_UNASSESSED",
+      "checked": "Two relevant primary implementations independently re-fetched: napari-ome-zarr v0.10.0 reader and vizarr PR261 diff + captured main package0.3.0. Reader first-entry behavior and plain0.4 parent-transform correction supported. Whole napari capability is not established by plugin code; candidate itself leaves U2 open.",
+      "unassessed": "All current napari API/runtime compatibility and every broad component inference."
+    },
+    {
+      "id": "Q2",
+      "status": "FAILED_SCREEN",
+      "checked_findings": [
+        "F-Q1",
+        "F-Q2"
+      ],
+      "unassessed": "Full version-support and normative-claim inventory beyond examined calibration, transform, axes, and label contexts."
+    },
+    {
+      "id": "Q3",
+      "status": "SUPPORTED_SCOPED_REMAINDER_UNASSESSED",
+      "checked": "Issue403 → PR590 explicit linkage → three-file diff including test_writer.py → v0.18.0 release body confirmed. Dates/head hash and relative-vs-physical formula bases agree. Test updates are an upstream regression-test chain, not evidence that candidate tests ran.",
+      "unassessed": "First-release exclusivity against every older release, general validity of all sampling conventions, and whole future writer-version behavior."
+    },
+    {
+      "id": "B1",
+      "status": "FAILED_SCREEN_SCOPED",
+      "checked_findings": [
+        "F-Q3"
+      ],
+      "unassessed": "Path containment, malformed metadata, noninteger label type, zero/nonfinite transform cases, and all other support boundary details."
+    },
+    {
+      "id": "B2",
+      "status": "FAILED_SCREEN_SCOPED",
+      "checked_findings": [
+        "F-Q1"
+      ],
+      "unassessed": "Complete mixed-unit scale-bar policy and all cursor/rendering cases. F2 affine arithmetic agrees in the stated physical unit context."
+    },
+    {
+      "id": "B3",
+      "status": "FAILED_SCREEN",
+      "checked_findings": [
+        "F-Q1",
+        "F-Q2"
+      ],
+      "unassessed": "Complete sampling, extents, source-image identity resolution, and all array-shape/per-level combinations."
+    },
+    {
+      "id": "B4",
+      "status": "PARTIALLY_SOURCE_CHECKED_REMAINDER_UNASSESSED",
+      "checked": "Two component precedents and the primary issue/fix/test/release chain have primary evidence. Corrected A1 mechanics and A2 release are supported.",
+      "unassessed": "Every upstream behavior/capability assertion and dependencies that could alter the chosen stack."
+    },
+    {
+      "id": "B5",
+      "status": "FAILED_SCREEN_SCOPED",
+      "checked_findings": [
+        "F-Q1",
+        "F-Q2",
+        "F-Q3"
+      ],
+      "unassessed": "Full fixture adequacy beyond diagnostic contracts, and all product limits. Proposed fixtures are consistently marked unexecuted."
+    }
+  ],
+  "findings_file": "quality-before-method.json",
+  "provenance_file": "provenance.json",
+  "preservation_file": "preservation.json",
+  "method_file": "method-compliance.json",
+  "cost_file": "cost.json",
+  "source_excerpt_file": "source-excerpts.md",
+  "independent_source_manifest": "independent-primary/fetch-manifest.json",
+  "diagnostic_file": "alignment-diagnostic.json",
+  "diagnostic_kind": "evaluator-only arithmetic; no candidate fixtures executed",
+  "source_semantic_acquisition": "UNKNOWN",
+  "frontend_model_consumption": "UNOBSERVED",
+  "host_capture_and_stdout_range_receipts": "positive and rehashed; no mismatches",
+  "three_stage_pipeline": "complete fresh native Goal/MCP/quiescence/stage-case closure receipts positive",
+  "candidate_account": "parent-attested same account; no auth/profile read",
+  "case_ledger_completion": "parent-attested only; ledger not read or mutated",
+  "method_uptake": "three-amendment structure observed; source applicability duty fails; literal600 timing conflict with admitted1200 lease",
+  "admitted_critic_lease_late": false,
+  "literal_METHOD_critic_cap_exceeded": true,
+  "method_packaging_limitation": "Parent clarification after frozen quality: prospective source allocation changed only formerly unstarted cases to1200/1200/900; older METHOD600 cap prose was retained. Admitted TASK/runtime1200 lease remained unchanged and was not late.",
+  "candidate_feedback_or_repairs_supplied": false,
+  "sibling_artifacts_or_prior_grades_read": false,
+  "raw_native_conversations_or_private_client_files_read": false,
+  "evaluator_birth_epoch": 1790994119.8633728,
+  "original_evaluator_deadline_epoch": 1790996519.8633728,
+  "report_written_utc": "2026-10-03T02:35:59.189732+00:00",
+  "report_written_epoch": 1790994959.1897743,
+  "original_clock_reset": false,
+  "final_actual_end_record": "FREEZE.json",
+  "evaluation_completion_kind": "authorized decisive failed screen with remainder explicitly UNASSESSED"
+}

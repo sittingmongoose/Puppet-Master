@@ -1,0 +1,18 @@
+{
+  "schema": "pm.er8.root-helper-proof-pointer-correction.v1",
+  "root_authority": true,
+  "created_epoch": 1790996827.6676,
+  "helper": "er8-helper-concurrency-source-v1",
+  "previous_helper_end_proof_path": "LAB_ROOT/ops/helper-concurrency-v1/FREEZE.json",
+  "previous_path_exists": false,
+  "correct_source_freeze_proof": {
+    "path": "LAB_ROOT/ops/helper-concurrency-v1/MANIFEST.json",
+    "sha256": "becd3cb6f10ca259b2a9e4e282f028c3564d580aad51fb245203020c9f479e49"
+  },
+  "actual_source_end_epoch": 1790996499.5636384,
+  "original_source_deadline_epoch": 1790996657.7366228,
+  "source_frozen_before_original_deadline": true,
+  "late_root_bookkeeping_only": true,
+  "ledger_helper_end_not_replayed_or_rewritten": true,
+  "original_files_and_costs_unchanged": true
+}

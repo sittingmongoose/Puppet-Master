@@ -1,0 +1,184 @@
+{
+  "kind": "independent_evaluator_analytic_diagnostic",
+  "candidate_fixtures_executed": false,
+  "upstream_tests_executed": false,
+  "product_implementation_test": false,
+  "description": "Mirror final B3 step4: equal per-level scale/translation admits different group translation. Association assumed verified to same image group, exactly two levels, matching axes/units/shapes.",
+  "image_multiscales": {
+    "axes": [
+      {
+        "name": "y",
+        "type": "space",
+        "unit": "micrometer"
+      },
+      {
+        "name": "x",
+        "type": "space",
+        "unit": "micrometer"
+      }
+    ],
+    "datasets": [
+      {
+        "path": "0",
+        "coordinateTransformations": [
+          {
+            "type": "scale",
+            "scale": [
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "type": "translation",
+            "translation": [
+              0.0,
+              0.0
+            ]
+          }
+        ]
+      },
+      {
+        "path": "1",
+        "coordinateTransformations": [
+          {
+            "type": "scale",
+            "scale": [
+              2.0,
+              2.0
+            ]
+          },
+          {
+            "type": "translation",
+            "translation": [
+              0.0,
+              0.0
+            ]
+          }
+        ]
+      }
+    ],
+    "version": "0.4",
+    "coordinateTransformations": [
+      {
+        "type": "scale",
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "type": "translation",
+        "translation": [
+          0.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "label_multiscales": {
+    "axes": [
+      {
+        "name": "y",
+        "type": "space",
+        "unit": "micrometer"
+      },
+      {
+        "name": "x",
+        "type": "space",
+        "unit": "micrometer"
+      }
+    ],
+    "datasets": [
+      {
+        "path": "0",
+        "coordinateTransformations": [
+          {
+            "type": "scale",
+            "scale": [
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "type": "translation",
+            "translation": [
+              0.0,
+              0.0
+            ]
+          }
+        ]
+      },
+      {
+        "path": "1",
+        "coordinateTransformations": [
+          {
+            "type": "scale",
+            "scale": [
+              2.0,
+              2.0
+            ]
+          },
+          {
+            "type": "translation",
+            "translation": [
+              0.0,
+              0.0
+            ]
+          }
+        ]
+      }
+    ],
+    "version": "0.4",
+    "coordinateTransformations": [
+      {
+        "type": "scale",
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "type": "translation",
+        "translation": [
+          10.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "image_label": {
+    "version": "0.4",
+    "source": {
+      "image": "../../"
+    }
+  },
+  "array_shapes": [
+    [
+      100,
+      100
+    ],
+    [
+      50,
+      50
+    ]
+  ],
+  "label_dtype": "uint8",
+  "level": 0,
+  "array_index_yx": [
+    20.0,
+    20.0
+  ],
+  "written_gate_show_overlay": true,
+  "image_world_yx": [
+    20.0,
+    20.0
+  ],
+  "label_world_yx": [
+    30.0,
+    20.0
+  ],
+  "misalignment_um_yx": [
+    10.0,
+    0.0
+  ]
+}

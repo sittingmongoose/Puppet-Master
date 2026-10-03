@@ -1,0 +1,27 @@
+{
+  "schema": "er8.route.lease.v1",
+  "owned_unit": "er8-v8-nb-retr-c-m-research-proposal.service",
+  "deadline_monotonic_ns": 218459649557177,
+  "native_stop_monotonic_ns": 218429649557177,
+  "case_authority": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-C-M/V8-NB-RETR-C-M-research-proposal/CASE_AUTHORITY.json",
+    "sha256": "b743f767aad6a308668e1cbf452e3d382dc33a5f8a85e9993324eebff88eb1b9",
+    "clock": {
+      "case_id": "V8-NB-RETR-C-M",
+      "case_start_monotonic_ns": 217259649557177,
+      "case_elapsed_cap_seconds": 3600,
+      "case_occupied_cap_seconds": 5400,
+      "outside_native_cap_seconds": 300,
+      "campaign_native_cutoff_monotonic_ns": 234777000142399,
+      "stages": {
+        "v8-nb-retr-c-m-research-proposal": {
+          "stage_start_monotonic_ns": 217259649557177,
+          "cap_seconds": 1200,
+          "response_cap": 160
+        }
+      }
+    }
+  },
+  "occupied_seconds_reserved": 1200,
+  "outside_seconds_reserved": 300
+}

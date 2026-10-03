@@ -1,0 +1,56 @@
+{
+  "schema": "pm.er8.public-checkpoint-audit-hash-manifest.v2",
+  "scope": "Pre-map artifacts only; PUBLIC_EXPORT/FREEZE bind this map itself; original/public namespaces distinct.",
+  "artifacts": [
+    {
+      "source_projection": "LAB_ROOT/ops/public-checkpoint-audit-v2/REPORT.json",
+      "public_path": "ops/public-checkpoint-audit-v2/REPORT.json",
+      "original_sha256": "89bcf72ddea7de8de0b81259f33c35c69ba651c8bece40b3ab48f6a0c2bed966",
+      "original_bytes": 5116,
+      "public_sha256": "594dd48c3252f54ed0538a65ae3303530f36da82627a3b8364ebe77151beeff7",
+      "public_bytes": 5113,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/public-checkpoint-audit-v2/REPORT.md",
+      "public_path": "ops/public-checkpoint-audit-v2/REPORT.md",
+      "original_sha256": "5685fd6b8544affc46ecd8ed000f93fb3ac25f9aa2966fa23da232c102a08b39",
+      "original_bytes": 932,
+      "public_sha256": "5685fd6b8544affc46ecd8ed000f93fb3ac25f9aa2966fa23da232c102a08b39",
+      "public_bytes": 932,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/public-checkpoint-audit-v2/FREEZE.json",
+      "public_path": "ops/public-checkpoint-audit-v2/FREEZE.json",
+      "original_sha256": "731fc859d7dc0d5595e20386ba30321a29f11e7c8a533642fce7ea9a2ca43ddd",
+      "original_bytes": 571,
+      "public_sha256": "731fc859d7dc0d5595e20386ba30321a29f11e7c8a533642fce7ea9a2ca43ddd",
+      "public_bytes": 571,
+      "sanitized": false
+    },
+    {
+      "source_projection": "WORKTREE_ROOT/reports/external-research-v8-20261001-2140/prospective-source-cohort-v3/ops/muse-helper-public-check-v1/root-repair-v1/verify_public.py",
+      "public_path": "verify_public.py",
+      "original_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+      "original_bytes": 6851,
+      "public_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+      "public_bytes": 6851
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/publication-public-checkpoint-audit-v2/ROOT_HANDOFF.json",
+      "public_path": "ROOT_HANDOFF.json",
+      "original_sha256": "6f0eb75c9b07fe308778e644067068c7fdbbb11dff70f8c7709fe21dffce4b6d",
+      "original_bytes": 1982,
+      "public_sha256": "a2acde2ac901cd81221ce4d47330e52c19bcab2bddb301d497f7643305fe7be5",
+      "public_bytes": 1737
+    },
+    {
+      "source_projection": "publication-generated",
+      "public_path": "README.md",
+      "original_sha256": null,
+      "public_sha256": "e100a208fec3b4c5c4241b2e13f2ab1cbf87dd477335e4cf7268d777ca02fb75",
+      "public_bytes": 2497
+    }
+  ]
+}

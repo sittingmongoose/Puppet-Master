@@ -1,0 +1,23 @@
+test_both_expirations_before_acquire (__main__.SuccessorTests.test_both_expirations_before_acquire) ... ok
+test_busy_lock_never_claims_or_renews (__main__.SuccessorTests.test_busy_lock_never_claims_or_renews) ... ok
+test_changed_request_after_acquisition_rejected (__main__.SuccessorTests.test_changed_request_after_acquisition_rejected) ... ok
+test_claim_collision_preserved (__main__.SuccessorTests.test_claim_collision_preserved) ... ok
+test_claim_symlink_collision_preserved (__main__.SuccessorTests.test_claim_symlink_collision_preserved) ... ok
+test_deadline_and_integer_drift (__main__.SuccessorTests.test_deadline_and_integer_drift) ... ok
+test_duplicate_request_key_rejected (__main__.SuccessorTests.test_duplicate_request_key_rejected) ... ok
+test_epoch_cutoff_after_acquisition_unchanged (__main__.SuccessorTests.test_epoch_cutoff_after_acquisition_unchanged) ... ok
+test_inode_replacement_rejected (__main__.SuccessorTests.test_inode_replacement_rejected) ... ok
+test_lock_replacement_during_wait_rejected (__main__.SuccessorTests.test_lock_replacement_during_wait_rejected) ... ok
+test_parent_symlink_rejected (__main__.SuccessorTests.test_parent_symlink_rejected) ... ok
+test_positive_one_acquisition_and_unchanged_cutoffs (__main__.SuccessorTests.test_positive_one_acquisition_and_unchanged_cutoffs) ... ok
+test_predecessor_corruption (__main__.SuccessorTests.test_predecessor_corruption) ... ok
+test_predecessor_deadline_drift_even_with_matching_hash_rejected (__main__.SuccessorTests.test_predecessor_deadline_drift_even_with_matching_hash_rejected) ... ok
+test_request_corruption (__main__.SuccessorTests.test_request_corruption) ... ok
+test_source_sha_corruption (__main__.SuccessorTests.test_source_sha_corruption) ... ok
+test_symlink_inputs_rejected (__main__.SuccessorTests.test_symlink_inputs_rejected) ... ok
+test_unknown_key_and_path_ambiguity_rejected (__main__.SuccessorTests.test_unknown_key_and_path_ambiguity_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.067s
+
+OK

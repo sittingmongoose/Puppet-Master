@@ -1,0 +1,21 @@
+{
+  "schema": "er8.integrated.external-case-close.v1",
+  "case": "V8-BIO-BREADTH-C-M",
+  "hostmanagement_supervisor_pid": 2393232,
+  "hostmanagement_supervisor_pgid": 2393232,
+  "held_Popen_wait_returncode": 0,
+  "case_supervisor_exited": true,
+  "case_supervisor_group_absent": true,
+  "case_supervisor_exit_observed_monotonic_ns": 217259118162422,
+  "original_case_start_monotonic_ns": 215482212548993,
+  "original_case_deadline_monotonic_ns": 219082212548993,
+  "external_case_observed_monotonic_ns": 217259234785592,
+  "actual_final_proposal": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-final-correction/workspace/out/FINAL_PROPOSAL.md",
+    "bytes": 41031,
+    "sha256": "7f86d0a5f12543a40bbe9f8ff94d2e038f0315fd06154e50f9d40dcc707bb91d"
+  },
+  "operational_pipeline": "THREE_FRESH_GOALS_AND_ACTUAL_FINAL_PROPOSAL",
+  "semantic_quality": "PENDING_INDEPENDENT_EVALUATION",
+  "source_semantic_acquisition": "UNKNOWN"
+}

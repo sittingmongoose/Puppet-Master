@@ -1,0 +1,189 @@
+{
+  "schema": "er8.evaluator.sha-manifest.v1",
+  "case": "V8-BIO-AMEND-T-L",
+  "files": [
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/QUALITY_BEFORE_METHOD_FREEZE.json",
+      "relative_path": "QUALITY_BEFORE_METHOD_FREEZE.json",
+      "bytes": 353,
+      "sha256": "81a7b03f15157ab98b84924f69da17c4575a37f0dbb97ae86b3418acf47abae7",
+      "publication": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/REVIEW.json",
+      "relative_path": "REVIEW.json",
+      "bytes": 6176,
+      "sha256": "56df3cbc11e38b68e30a51a415e67bfcbde3a74991ef993d3583b3a287f800ff",
+      "publication": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/REVIEW.md",
+      "relative_path": "REVIEW.md",
+      "bytes": 8015,
+      "sha256": "4c66c6808780bba72f50afbd9dc698d4dce66c9f2bc39c9bd13d21031169da81",
+      "publication": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/alignment-diagnostic.json",
+      "relative_path": "alignment-diagnostic.json",
+      "bytes": 1016,
+      "sha256": "e8eba0fc50c7e76cbe8fdf477ab9d31d82eed3746b181680361d3c5951dd5d41",
+      "publication": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/alignment-diagnostic.py",
+      "relative_path": "alignment-diagnostic.py",
+      "bytes": 2658,
+      "sha256": "24f9df6722ce2f134052e3cf7d210ab15ca1e6f749c8d9c425996918e54faf2c",
+      "publication": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/cost.json",
+      "relative_path": "cost.json",
+      "bytes": 1104,
+      "sha256": "0c620b64a0c1f612fbf8cfa799857c26dda14f2b171a8714188ba91e54e35532",
+      "publication": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/independent-primary/fetch-manifest.json",
+      "relative_path": "independent-primary/fetch-manifest.json",
+      "bytes": 11826,
+      "sha256": "2fec1047962cab8ef42e13399928ba21137b47878f9f2393d61edb1b257467a5",
+      "publication": false
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/independent-primary/napari0100release.body",
+      "relative_path": "independent-primary/napari0100release.body",
+      "bytes": 2148,
+      "sha256": "4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d",
+      "publication": false
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/independent-primary/napari_reader_v0100.body",
+      "relative_path": "independent-primary/napari_reader_v0100.body",
+      "bytes": 29333,
+      "sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e",
+      "publication": false
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/independent-primary/ome0180release.body",
+      "relative_path": "independent-primary/ome0180release.body",
+      "bytes": 2062,
+      "sha256": "b52ee6e3e82ec88259b39a3e84bacb99384b1cacd04997bfee04bb47068446a7",
+      "publication": false
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/independent-primary/ome403.body",
+      "relative_path": "independent-primary/ome403.body",
+      "bytes": 3698,
+      "sha256": "2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99",
+      "publication": false
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/independent-primary/ome590.body",
+      "relative_path": "independent-primary/ome590.body",
+      "bytes": 16985,
+      "sha256": "2b797ae575b5aee3fd0087280eab97abb10177cff0078024b8c37354b7b17603",
+      "publication": false
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/independent-primary/ome590_diff.body",
+      "relative_path": "independent-primary/ome590_diff.body",
+      "bytes": 6811,
+      "sha256": "f0aa7ce9ce88fbfdb83214141942a8ae4d0c3aa206773ea523b9f38cc09ce565",
+      "publication": false
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/independent-primary/spec04.body",
+      "relative_path": "independent-primary/spec04.body",
+      "bytes": 163120,
+      "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+      "publication": false
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/independent-primary/vizarr261_diff.body",
+      "relative_path": "independent-primary/vizarr261_diff.body",
+      "bytes": 24747,
+      "sha256": "22066be87be786e81fdde59143924d71c5eda932cbd57c3887b2949efc9ab9ee",
+      "publication": false
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/independent-primary/vizarr271.body",
+      "relative_path": "independent-primary/vizarr271.body",
+      "bytes": 3402,
+      "sha256": "038a3d5c8a6228bb3380c2de35bd26ca4f6cb4400753d39010752d9cd25fac1c",
+      "publication": false
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/independent-primary/vizarr297.body",
+      "relative_path": "independent-primary/vizarr297.body",
+      "bytes": 4959,
+      "sha256": "8ce524d0db134212e69e1f1ead70efbe35751cd1b1bf76a14f8658c30b4e7943",
+      "publication": false
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/independent-primary/vizarr_package.body",
+      "relative_path": "independent-primary/vizarr_package.body",
+      "bytes": 1265,
+      "sha256": "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5",
+      "publication": false
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/method-compliance.json",
+      "relative_path": "method-compliance.json",
+      "bytes": 4471,
+      "sha256": "539f5e02f325011088a52e0817f6b19284664e3197b27429a3df3696944c5481",
+      "publication": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/preservation.json",
+      "relative_path": "preservation.json",
+      "bytes": 6500,
+      "sha256": "f17fca3052aa4de63b895672a5ed52e5c48b8fe4c5052f37d9b6de077cba86c4",
+      "publication": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/provenance.json",
+      "relative_path": "provenance.json",
+      "bytes": 114658,
+      "sha256": "2ea1945804224a512d9e3ce555d6faaddb761111841780474b88a8b119b0b705",
+      "publication": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/quality-before-method.json",
+      "relative_path": "quality-before-method.json",
+      "bytes": 9187,
+      "sha256": "6ae655f13c353088df5a9fada06ce942ff9c7c35971e66f461f1c7733fb3be75",
+      "publication": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/quality-disposition.json",
+      "relative_path": "quality-disposition.json",
+      "bytes": 867,
+      "sha256": "014f8a3248c5dfb41c23bc6dbeb3b1749ee29645c5596368e4f29e86ab5bbf97",
+      "publication": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/source-excerpts.json",
+      "relative_path": "source-excerpts.json",
+      "bytes": 10263,
+      "sha256": "af5d853cd3d97bf520ab34a63bca4abf0a2a4693e89fb10927b2e891daedb0e7",
+      "publication": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/source-excerpts.md",
+      "relative_path": "source-excerpts.md",
+      "bytes": 3373,
+      "sha256": "5570e76d4d7abb2d8d0babf6300ba8f20ed80ace37162a367ce51eee149e2f87",
+      "publication": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/verification.json",
+      "relative_path": "verification.json",
+      "bytes": 2429,
+      "sha256": "6764bdd0b72db4260966267858446f99a6d8e0d28a3b6a3b9294a76619100e77",
+      "publication": true
+    }
+  ],
+  "raw_source_location_policy": "All raw bodies in independent-primary are external evaluation evidence only; prospective publication uses REVIEW, locators, metadata, and bounded source-excerpts.md."
+}

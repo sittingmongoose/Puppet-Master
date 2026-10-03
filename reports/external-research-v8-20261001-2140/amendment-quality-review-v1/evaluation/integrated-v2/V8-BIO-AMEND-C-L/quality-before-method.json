@@ -1,0 +1,251 @@
+{
+  "schema": "er8.evaluator.quality-before-method.v1",
+  "case_id": "V8-BIO-AMEND-C-L",
+  "quality_disposition": "VERIFIED_FAILED_SCREEN",
+  "whole_case_pass": false,
+  "quality_freeze_utc": "2026-10-03T02:34:07.301720+00:00",
+  "quality_freeze_epoch": 1790994847.30172,
+  "original_evaluator_birth_epoch": 1790994119.8633728,
+  "original_evaluator_deadline_epoch": 1790996519.8633728,
+  "elapsed_from_original_birth_seconds": 727.4383471012115,
+  "clock_reset": false,
+  "operational_pipeline": "COMPLETE_THREE_FRESH_NATIVE_GOALS_AND_ACTUAL_FINAL_ARTIFACT",
+  "quality_vs_completion": "Mechanical completion does not establish quality. All required final and closure hashes recomputed; method card unread at this freeze.",
+  "method_card_read_before_freeze": false,
+  "limited_blinding": "Assigned case ID contains AMEND-C; final first-page text expressly identifies simple-complete-control. Method identity therefore leaked through necessary artifact reading. METHOD.md, TASK.md and candidate manifest were not opened before this ruling.",
+  "artifacts": {
+    "final": {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-C-L/V8-BIO-AMEND-C-L-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "bytes": 37553,
+      "sha256": "06153823f21ec7518c17f57857b86a394268c15cdd9c72bd2f3df364c9571b0b"
+    },
+    "final_leads": {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-C-L/V8-BIO-AMEND-C-L-final-correction/workspace/out/UNRESOLVED_LEADS.md",
+      "bytes": 4103,
+      "sha256": "e6184c6b0bfc445fa9af59fd0bef5f0583a40f980918a926167f69681a194c2e"
+    },
+    "global_parent_final": {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-C-L/GLOBAL_PARENT_FINAL_RECEIPT.json",
+      "bytes": 1408,
+      "sha256": "a8a972b13e39365aa7ca8ad68b7ac6fe0d91d93eb5c446e373005cda0bdd0f75"
+    }
+  },
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "consequential",
+      "facets": [
+        "Q2",
+        "B3",
+        "B5"
+      ],
+      "disposition": "VERIFIED_FAILED_SCREEN",
+      "claim_locator": "FINAL_PROPOSAL.md line 154 (§7 B3 check 5), lines 149–156; initial PROPOSAL.md line 114",
+      "finding": "The written overlay gate permits labels without dataset coordinateTransformations to fall back to a shared grid from an informative equal-dimension-or-1 layout note. NGFF 0.4 requires coordinateTransformations on every datasets dictionary, including labels via required multiscales. The layout note supplies no transform or registration evidence. The fallback is both inconsistent with the strict missing-transform refusal elsewhere in the final plan and insufficient for the brief’s justify-or-withhold rule.",
+      "source_ids": [
+        "S1"
+      ],
+      "source_locator": "S1 lines 176–179 (informative layout), 375–385 (dataset transforms), 472–475 (image-label multiscales)",
+      "diagnostic": "Equal image/label shapes and equal level count plus image-label association, but absent label coordinateTransformations, is admitted by check5’s fallback without evidence of common origin, scale or units.",
+      "quality_effect": "Whole-case pass blocked even if all other claims were accurate."
+    },
+    {
+      "id": "F2",
+      "severity": "consequential",
+      "facets": [
+        "Q1",
+        "B2",
+        "B3",
+        "B4"
+      ],
+      "disposition": "VERIFIED_SOURCE_APPLICABILITY_GAP",
+      "claim_locator": "FINAL_PROPOSAL.md line 70 (napari supplies per-level world transforms), lines 164–165 (expose transforms + native auto/lock)",
+      "finding": "The pinned component’s public scale and translate are layer-wide. Native multiscale downsample factors are derived from shape ratios; tile translation comes from crop corners, not arbitrary NGFF per-level translations. The plan’s generic own interpretation layer does not specify the bridge required to render its own V1 declaration under native auto/lock mode. This is a gap in the research-to-plan applicability claim, not an assertion that no custom bridge could be built.",
+      "source_ids": [
+        "N5-wheel"
+      ],
+      "source_locator": "Wheel napari/layers/base/base.py 594–628,1044–1080; napari/layers/_scalar_field/scalar_field.py 598–600,990–1005; napari/layers/_scalar_field/_slice.py 259–285",
+      "diagnostic": "For V1 with base scale0.5, base translation0, native shape ratio2 and full-level crop corner0, native default origin is0µm; NGFF level1 origin is+0.25µm.",
+      "quality_effect": "B2/B3 behavior remains unspecified for the required per-level offsets."
+    },
+    {
+      "id": "F3",
+      "severity": "consequential",
+      "facets": [
+        "B3",
+        "B5"
+      ],
+      "disposition": "VERIFIED_UNRESOLVED_DEPENDENCY",
+      "claim_locator": "FINAL_PROPOSAL.md §9 leads1–3 and6; UNRESOLVED_LEADS.md leads1–3 and6",
+      "finding": "The current final artifacts explicitly leave consequential pinned-API/transform handling and matching tolerance/fallback dependencies unresolved. Identifying them is honest, but the brief and scope explicitly prevent a whole-case pass while they remain unresolved. Evaluator independent confirmation that locked_data_level exists does not retroactively repair the candidate’s frozen final artifact.",
+      "source_ids": [
+        "S6",
+        "S7",
+        "N5-wheel"
+      ],
+      "quality_effect": "Whole-case pass blocked by frozen current-artifact state."
+    },
+    {
+      "id": "F4",
+      "severity": "consequential",
+      "facets": [
+        "B3"
+      ],
+      "disposition": "VERIFIED_WRITTEN_GATE_COUNTEREXAMPLE",
+      "claim_locator": "FINAL_PROPOSAL.md lines153–154 (§7 overlay checks4–5)",
+      "finding": "The five-check gate compares per-level scale/translation and axes order/length without requiring unit normalization or checking complete group-plus-dataset maps. Identical numeric transforms and shapes can represent different physical grids if image units are micrometer and label units nanometer. The plan gives no condition that prevents this case from reaching a shown overlay.",
+      "source_ids": [
+        "S1",
+        "S7"
+      ],
+      "source_locator": "S1 axes250–257, transforms375–385; S7 units40–47 and60–68",
+      "diagnostic": "At index1, scale0.5µm gives0.5µm while scale0.5nm gives0.0005µm; raw numeric equality hides a1000x physical mismatch. Evaluator arithmetic only.",
+      "quality_effect": "B3’s alignment justification is incomplete."
+    },
+    {
+      "id": "F5",
+      "severity": "bounded",
+      "facets": [
+        "B1",
+        "B5"
+      ],
+      "disposition": "PLAN_GAPS",
+      "claim_locator": "FINAL_PROPOSAL.md §6 check6; §8 V1–V8; §9 lead3",
+      "finding": "The explicit dimensionality gate is the format’s2–5 bound without a concrete prototype-only2D rejection. All numeric fixtures use equal x/y scales; no anisotropic-axis fixture or group-transform fixture is specified, and the latter is explicitly still to be added. These are remaining product/validation gaps; no candidate fixture was executed.",
+      "source_ids": [
+        "S1"
+      ],
+      "quality_effect": "No whole-case validation-coverage pass."
+    },
+    {
+      "id": "F6",
+      "severity": "bounded",
+      "facets": [
+        "Q3",
+        "B5"
+      ],
+      "disposition": "UNSUPPORTED_GENERALIZATION",
+      "claim_locator": "FINAL_PROPOSAL.md §8 V5 motivation; §4b frequently absent in the wild",
+      "finding": "One reporter’s defect claim does not measure frequency in the wild. The noninteger-resampling assertion that true shift is position-dependent is not established by the cited affine translation formula or an identified resampling algorithm. Keep these claims limited to the traced implementation and declared metadata; generalized resampler behavior is unassessed.",
+      "source_ids": [
+        "S2",
+        "S3-diff"
+      ],
+      "quality_effect": "Unsupported calibration beyond the verified implementation lesson."
+    }
+  ],
+  "coverage": [
+    {
+      "facet": "Q1",
+      "status": "ASSESSED_FAILED_APPLICABILITY",
+      "checked": "Two distinct primary implementations napari and stackview, exact captured docs/release, bounded tradeoff; native pinned level lock independently verified.",
+      "remaining_unassessed": [
+        "Exhaustive absence of stackview capability beyond README documentation (candidate mostly qualifies this correctly).",
+        "Actual desktop packaging feasibility."
+      ],
+      "findings": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "facet": "Q2",
+      "status": "ASSESSED_FAILED_PROPAGATION",
+      "checked": "NGFF0.4 front matter/version/tree, Zarrv2, axes/units conditions, per-level and group transforms/order, scale fallback, dataset ordering, label association and count MUST; source declarations versus registration correctly distinguished in descriptive section.",
+      "remaining_unassessed": [
+        "No full NGFF implementation conformance or arbitrary producer-content alignment proof."
+      ],
+      "findings": [
+        "F1",
+        "F4"
+      ]
+    },
+    {
+      "facet": "Q3",
+      "status": "ASSESSED_BOUNDED_SOURCE_CHAIN_SUPPORTED",
+      "checked": "Issue403 metadata/body/code pointer; PR590 explicit fixes link/merge/head and diff; actual writer+test changes at same diff; relative-vs-absolute scale formula; current master byte match.",
+      "remaining_unassessed": [
+        "Upstream suite execution (not claimed).",
+        "First numbered release shipping590 (open final lead4).",
+        "All producer/resampling algorithms or frequency estimates."
+      ],
+      "findings": [
+        "F6"
+      ]
+    },
+    {
+      "facet": "B1",
+      "status": "ASSESSED_WITH_PLAN_GAPS",
+      "checked": "Local two-level Zarrv2 read-only plan, version declaration optionality, explicit v3 refusal, strict transform gates including foreign-type check, optional-label disabled state.",
+      "remaining_unassessed": [
+        "General unsupported declared-version branch behavior beyond named0.5 example.",
+        "Filesystem read-only enforcement and viewer editing exclusion at runtime."
+      ],
+      "findings": [
+        "F5"
+      ]
+    },
+    {
+      "facet": "B2",
+      "status": "ASSESSED_FAILED_COMPONENT_APPLICABILITY",
+      "checked": "Axiswise affine cursor equation, ordered composition in principle, unit absence/display fallbacks, last-axis scale-bar conditions, corrected numeric witnesses.",
+      "remaining_unassessed": [
+        "Exact embedded cursor API implementation/accessor.",
+        "Anisotropic calibrated display correctness, group-transform rendering and tests."
+      ],
+      "findings": [
+        "F2",
+        "F3",
+        "F5"
+      ]
+    },
+    {
+      "facet": "B3",
+      "status": "ASSESSED_FAILED_ALIGNMENT_JUSTIFICATION",
+      "checked": "Source ordering/auto+lock behavior, optional categorical nearest choice, association versus alignment, count/transform mismatch refusal, concrete written-gate counterexamples.",
+      "remaining_unassessed": [
+        "Any actual rendered overlay or native viewer execution.",
+        "Fixed tolerance and complete normalized-map matching implementation."
+      ],
+      "findings": [
+        "F1",
+        "F2",
+        "F3",
+        "F4"
+      ]
+    },
+    {
+      "facet": "B4",
+      "status": "ASSESSED_FAILED_COMPONENT_APPLICABILITY_CHAIN_SUPPORTED",
+      "checked": "Two independently candidate-discovered relevant repositories supported by own-stage host fetches; positive README analogs; choice/tradeoff; actual issue/fix/test history.",
+      "remaining_unassessed": [
+        "Whether dependency/packaging choice meets desired small deployment in practice."
+      ],
+      "findings": [
+        "F2",
+        "F6"
+      ]
+    },
+    {
+      "facet": "B5",
+      "status": "ASSESSED_FAILED_CONSEQUENTIAL_DEPENDENCIES",
+      "checked": "Concrete replacement steps, eight proposed fixtures, visible limits and honest unexecuted status, open-lead preservation. V1,V3,V5 arithmetic checked independently in evaluator-only diagnostics.",
+      "remaining_unassessed": [
+        "Execution of all proposed validations (not claimed).",
+        "Unspecified anisotropic/group-transform/no-transform fallback/tolerance cases."
+      ],
+      "findings": [
+        "F1",
+        "F3",
+        "F5",
+        "F6"
+      ]
+    }
+  ],
+  "unassessed_boundary": "All3 questions and5 obligations examined at final-plan outcome level. A decisive verified defect permits failed screening. Detailed remaining subfacets are explicitly UNASSESSED in coverage; no exhaustive source correctness, full-history grade or any positive whole-case PASS is claimed.",
+  "source_acquisition": "All admitted source/capture hashes recomputed. Prepared and stdout-flushed source ranges positively observed and hashes checked where byte ranges exist. MODEL_READ_UNOBSERVED;SEMANTIC_ACQUISITION_UNKNOWN.",
+  "stage_freshness": "Three distinct activation/Goal receipts, GLM-5.3-Flash/max provider metadata, positive own-group quiescence/external closure; same account root-attested without profile inspection.",
+  "artifact_preservation": "See preservation.json; original and current outputs preserved byte-for-byte.",
+  "proposed_tests": "Not executed by candidate. Evaluator arithmetic/source-only diagnostic is separate.",
+  "post_quality_next_step": "Read exact assigned method card and task for a separate compliance audit; no candidate feedback or repair."
+}

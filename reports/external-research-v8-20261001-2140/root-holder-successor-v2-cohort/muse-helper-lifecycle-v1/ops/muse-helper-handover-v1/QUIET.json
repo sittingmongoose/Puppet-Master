@@ -1,0 +1,29 @@
+{
+  "job": "muse-supervisor-handover-source-v1",
+  "started_epoch": 1790992792.613206,
+  "elapsed_seconds": 284.8689289239992,
+  "classification": "helper_not_candidate",
+  "requested_model": "muse-spark-1.3-contributor",
+  "requested_reasoning": "max",
+  "ended_epoch": 1790993077.4821415,
+  "generated_tokens": null,
+  "parent_reaped": true,
+  "money": null,
+  "timed_out": true,
+  "schema": "pm.er8.muse-helper-process-quiet.v1",
+  "exit_code": 143,
+  "own_process_group_absent": true,
+  "omitted_native_capture_locators": [
+    {
+      "path": "LAB_ROOT/ops/muse-helper-handover-v1/native-events.jsonl",
+      "bytes": 17988,
+      "sha256": "be043d5979b7c5b63d5e81dc4302c0c46822c0d1bb09c1d5ba54077bc84fdd0a"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-helper-handover-v1/native-stderr.txt",
+      "bytes": 316,
+      "sha256": "8520b8842bdd2760ccc9eacc73ef163b8644208227fa7c20b692c2b54ac6653b"
+    }
+  ],
+  "publication_projection_scope": "Safe lifecycle scalar/structured command metadata and omitted-capture path/hash locators only; no raw streams/conversations/context/arguments or partial generated source."
+}

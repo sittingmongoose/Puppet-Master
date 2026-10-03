@@ -1,0 +1,66 @@
+{
+  "schema": "er8.cost-numeric-whitelist.v1",
+  "token_whitelist": [
+    "inputTokens",
+    "outputTokens",
+    "reasoningTokens",
+    "cacheReadTokens",
+    "cacheWriteTokens",
+    "totalTokens"
+  ],
+  "stages": [
+    {
+      "stage": "research-proposal",
+      "receipt_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-research-proposal/native-public/receipt.json",
+      "receipt_sha256": "a368841e6e3f4584c7c3bcd9db1cbfaca9166ce29e4226893ed862e440d9e010",
+      "native_responses": 15,
+      "usage_totals": {
+        "inputTokens": 915615,
+        "outputTokens": 29590,
+        "reasoningTokens": 0,
+        "cacheReadTokens": 775488,
+        "cacheWriteTokens": 0,
+        "totalTokens": 945205
+      }
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "receipt_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-independent-candidate-critic/native-public/receipt.json",
+      "receipt_sha256": "2acad55d8be638db2c0afa1ab89c43e781f5981e959f64f3e8e5241d6b93a14b",
+      "native_responses": 12,
+      "usage_totals": {
+        "inputTokens": 700353,
+        "outputTokens": 32332,
+        "reasoningTokens": 0,
+        "cacheReadTokens": 582976,
+        "cacheWriteTokens": 0,
+        "totalTokens": 732685
+      }
+    },
+    {
+      "stage": "final-correction",
+      "receipt_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-final-correction/native-public/receipt.json",
+      "receipt_sha256": "3a8ddea3bc9e57964f3825e4833024a2c81779ec842f8ff528949d157f7078e9",
+      "native_responses": 9,
+      "usage_totals": {
+        "inputTokens": 351519,
+        "outputTokens": 31447,
+        "reasoningTokens": 0,
+        "cacheReadTokens": 262080,
+        "cacheWriteTokens": 0,
+        "totalTokens": 382966
+      }
+    }
+  ],
+  "sum_usage_totals": {
+    "inputTokens": 1967487,
+    "outputTokens": 93369,
+    "reasoningTokens": 0,
+    "cacheReadTokens": 1620544,
+    "cacheWriteTokens": 0,
+    "totalTokens": 2060856
+  },
+  "native_responses_total": 36,
+  "monetary_cost": "UNKNOWN; no price or billed-dollar receipt inspected",
+  "account_and_ledger": "Parent attests same account and all three stage ledger states completed; credentials and ledger were not inspected."
+}

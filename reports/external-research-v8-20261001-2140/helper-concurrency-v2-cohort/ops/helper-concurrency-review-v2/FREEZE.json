@@ -1,0 +1,74 @@
+{
+  "schema": "pm.er8.helper-concurrency-review-freeze.v2",
+  "helper": "er8-helper-concurrency-review-v2",
+  "birth_epoch": 1790997855.2147198,
+  "original_hard_deadline_epoch": 1790998455.2147198,
+  "actual_end_epoch": 1790998165.3848782,
+  "ended_before_original_deadline": true,
+  "remaining_deadline_seconds": 289.82984161376953,
+  "decision": "ACCEPT",
+  "accepted": true,
+  "source_api_sha256": "eafb75b1a157a5b7e77f03f9fc52e298a7ef255e439730e22c4fde6a95dc0405",
+  "source_manifest_sha256": "85817378b706aac371bd6da50e427599491f8622f39fbdafdc279a222efeebba",
+  "blocking_findings_count": 0,
+  "author_tests_passed": 20,
+  "independent_tests_passed": 20,
+  "independent_tests_failed": 0,
+  "originals_modified": false,
+  "v1_frozen_HOLD_preserved": true,
+  "live_install_performed": false,
+  "live_transaction_performed": false,
+  "all_original_input_pins_reverified": true,
+  "files": [
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-review-v2/REVIEW.json",
+      "sha256": "e43ac4ec50acd6aeb090e7bea8ab1c7f0121ac72f82149141f2025c6992fbe77",
+      "bytes": 4714
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-review-v2/REVIEW.md",
+      "sha256": "5d1abf0f621ef75981c75abae73113db2c0b307460e21fd0f0cf4e2874ff4b3b",
+      "bytes": 2788
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-review-v2/run_review.py",
+      "sha256": "9b70ac1aa8656994bed00bd66aa3aa46ff7f77d435df7d002fc0ff14e0db44c2",
+      "bytes": 17654
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-review-v2/input-pins.json",
+      "sha256": "7c3890582460cd606491a4aa10a010726ebfa098ee8a7c5abb021de55eaeeb19",
+      "bytes": 7586
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-review-v2/test-summary.json",
+      "sha256": "d31d44a988ecacad9c09dddcfdc403c4b6b67d1cbe026579160b0cf46719e760",
+      "bytes": 303
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-review-v2/TEST_RESULTS.txt",
+      "sha256": "a7e46613fd54a26f5b48b80288ebb7a7fb9a6a2b0d4ac9353ea08987af5fee6b",
+      "bytes": 5603
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-review-v2/CLOCK_ROLLBACK_EVIDENCE.json",
+      "sha256": "91e3415cf373021884a82cef731037a93477cb1a80f4e29cf3bac97013b48fd2",
+      "bytes": 224
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-review-v2/CLOCK_NONFINITE_EVIDENCE.json",
+      "sha256": "1ebfbd963d357a4b6938f348016ee6943e71033fdf3d7512e4fd518fc7b4ae8d",
+      "bytes": 221
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-review-v2/VERIFIED_SOURCE_DIFF.txt",
+      "sha256": "91a7f68578250aefe0517e56c901d35567bb871f11ec15f78f4d1b00caf2e6b6",
+      "bytes": 449
+    },
+    {
+      "path": "LAB_ROOT/ops/helper-concurrency-review-v2/ATTEMPT1_MATRIX_ASSUMPTION_RESULTS.txt",
+      "sha256": "0808ea2844b7c49824f1880a7c772d54dd03b2644a6a78ad2938ff2a2c966132",
+      "bytes": 7570
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "schema": "er8.independent.evaluator_publication_manifest.v1",
+  "case_id": "V8-BIO-BREADTH-C-M",
+  "helper": "er8-quality-bio-breadth-c-v1",
+  "reservation": "V8-EVAL-V8-BIO-BREADTH-C-M",
+  "publication_output_whitelist": [
+    "QUALITY_BEFORE_METHOD.json",
+    "QUALITY_BEFORE_METHOD_FREEZE.json",
+    "DISPOSITION.json",
+    "METHOD_DUTIES.json",
+    "REVIEW.md",
+    "PROVENANCE.json",
+    "PRESERVATION.json",
+    "COST.json",
+    "SOURCES.json",
+    "SOURCE_EXCERPTS.json",
+    "SOURCE_CHECKS.json",
+    "SOURCE_RANGE_RECEIPTS.json",
+    "SOURCE_RANGE_CHECK.json",
+    "DIAGNOSTICS.json",
+    "MANIFEST.json",
+    "FREEZE.json"
+  ],
+  "outputs": [
+    {
+      "name": "QUALITY_BEFORE_METHOD.json",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-C-M/QUALITY_BEFORE_METHOD.json",
+      "bytes": 8315,
+      "sha256": "017ddd48fffbce147d6dbaf5d38836ea4c14ee692bcb96cf8215a306a22df5cf"
+    },
+    {
+      "name": "QUALITY_BEFORE_METHOD_FREEZE.json",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-C-M/QUALITY_BEFORE_METHOD_FREEZE.json",
+      "bytes": 414,
+      "sha256": "8416545946d0729538b82c3343db474526fea3318bc14ca3ce10571a261bd912"
+    },
+    {
+      "name": "DISPOSITION.json",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-C-M/DISPOSITION.json",
+      "bytes": 4769,
+      "sha256": "81243e89fa41428eacedf60dbbb8b8d8d8913fa62aa1ad7c340c938a9e1be5bc"
+    },
+    {
+      "name": "METHOD_DUTIES.json",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-C-M/METHOD_DUTIES.json",
+      "bytes": 1567,
+      "sha256": "667b91db33740bc4dbb8cd69d645cbe8ceea9181897281e0d240627e7dc2aa61"
+    },
+    {
+      "name": "REVIEW.md",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-C-M/REVIEW.md",
+      "bytes": 5784,
+      "sha256": "832ad90987d62dfa2a2455c1fe50d0c0b7eb069bd1f689b9038143f1e0955089"
+    },
+    {
+      "name": "PROVENANCE.json",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-C-M/PROVENANCE.json",
+      "bytes": 18616,
+      "sha256": "9f1a65aa36fc95f4f082997da878840a875a6211ffe8de8823c062d7bf338522"
+    },
+    {
+      "name": "PRESERVATION.json",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-C-M/PRESERVATION.json",
+      "bytes": 6892,
+      "sha256": "2316986b7f2692339b8498b15e3bb02e97381dc00bfd76341786841a0e267108"
+    },
+    {
+      "name": "COST.json",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-C-M/COST.json",
+      "bytes": 3036,
+      "sha256": "39b93bb05671048745fc554f7dce82fb0ac8ee118a72a223c0d85d8517d829aa"
+    },
+    {
+      "name": "SOURCES.json",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-C-M/SOURCES.json",
+      "bytes": 12233,
+      "sha256": "8d3c1fb4e2ec6e8c5db81be373b70f56d4ac658d560ac1594147026eec73c3bc"
+    },
+    {
+      "name": "SOURCE_EXCERPTS.json",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-C-M/SOURCE_EXCERPTS.json",
+      "bytes": 3249,
+      "sha256": "c46064263e71ead6ec7512ece1928a014ab1514a4af334596b761dae67185c74"
+    },
+    {
+      "name": "SOURCE_CHECKS.json",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-C-M/SOURCE_CHECKS.json",
+      "bytes": 4243,
+      "sha256": "cb998bb066902323885b8ae62b432df382bc6c13533db6f67319fcdf79b3eb7e"
+    },
+    {
+      "name": "SOURCE_RANGE_RECEIPTS.json",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-C-M/SOURCE_RANGE_RECEIPTS.json",
+      "bytes": 190889,
+      "sha256": "36dd1505554263e2a0dc8b5ed6d66fd854ae8ffb9c3006f1983980a55a1091bd"
+    },
+    {
+      "name": "SOURCE_RANGE_CHECK.json",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-C-M/SOURCE_RANGE_CHECK.json",
+      "bytes": 26636,
+      "sha256": "e2398a66b84de417d80f3eb3037524681780277f7778c4cd01573defd396b6ab"
+    },
+    {
+      "name": "DIAGNOSTICS.json",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-BREADTH-C-M/DIAGNOSTICS.json",
+      "bytes": 790,
+      "sha256": "53f099342574fd398f87367d09bb2d52500a91e14b212ac4299946554a03a179"
+    }
+  ],
+  "excluded": "No source-captures directory, raw public-source .body files, numbered source dumps, scripts, native contexts, operation payloads, private credentials or native journals may be copied by the root publisher. Raw public evidence remains external, cited by path and SHA.",
+  "actual_final_proposal_sha256": "7f86d0a5f12543a40bbe9f8ff94d2e038f0315fd06154e50f9d40dcc707bb91d",
+  "global_parent_final_receipt_sha256": "dcace370d7f1db63fcad2303643d1f0622241668365698339a3dc7a873037b30"
+}

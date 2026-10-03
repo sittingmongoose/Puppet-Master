@@ -1,0 +1,21 @@
+{
+  "binding_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-final-correction/CASE_BINDING.json",
+  "binding_sha256": "8811b9dcbe2a70798fe9b3fbc46785f69dee550f6ca3a11338a4639890161c61",
+  "fields": {
+    "schema": "er8.route.case-binding.v1",
+    "case_id": "V8-BIO-BREADTH-T-M",
+    "stage_id": "v8-bio-breadth-t-m-final-correction",
+    "case_start_monotonic_ns": 215575801245221,
+    "stage_start_monotonic_ns": 216953516246689,
+    "max_seconds": 900,
+    "max_responses": 160,
+    "mode": "productive",
+    "label": "V8-BIO-BREADTH-T-M-final-correction",
+    "prompt_sha256": "ac1a5a1930ee4023f19201eb8e67c0105da45b7c8f156404ce61a36a47d76f82",
+    "capture_origin_case_id": "V8-BIO-BREADTH-T-M"
+  },
+  "method_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-final-correction/workspace/inputs/METHOD.md",
+  "method_sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+  "task_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-final-correction/workspace/inputs/TASK.md",
+  "task_sha256": "403d690602f98f58926c77f17d0067d4261f5d4d6552c594455be9ea927c31e4"
+}

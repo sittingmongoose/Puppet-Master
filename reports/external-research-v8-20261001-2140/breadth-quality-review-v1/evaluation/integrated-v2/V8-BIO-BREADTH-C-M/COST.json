@@ -1,0 +1,71 @@
+{
+  "schema": "er8.independent.case_cost.v1",
+  "case_id": "V8-BIO-BREADTH-C-M",
+  "native_usage_metadata": [
+    {
+      "stage": "research-proposal",
+      "outputTokens": 31103,
+      "cacheReadTokens": 1069248,
+      "reasoningTokens": 0,
+      "totalTokens": 1237156,
+      "inputTokens": 1206053,
+      "cacheWriteTokens": 0
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "outputTokens": 27696,
+      "cacheReadTokens": 665856,
+      "reasoningTokens": 0,
+      "totalTokens": 817234,
+      "inputTokens": 789538,
+      "cacheWriteTokens": 0
+    },
+    {
+      "stage": "final-correction",
+      "outputTokens": 21481,
+      "cacheReadTokens": 245952,
+      "reasoningTokens": 0,
+      "totalTokens": 337700,
+      "inputTokens": 316219,
+      "cacheWriteTokens": 0
+    }
+  ],
+  "summed_native_usage_metadata": {
+    "outputTokens": 80280,
+    "cacheReadTokens": 1981056,
+    "reasoningTokens": 0,
+    "totalTokens": 2392090,
+    "inputTokens": 2311810,
+    "cacheWriteTokens": 0
+  },
+  "global_parent_case_timing": {
+    "actual_case_end_monotonic_ns": 217259341591472,
+    "all_case_execution_closed_before_cutoff": true,
+    "original_case_deadline_monotonic_ns": 219082212548993,
+    "original_case_start_monotonic_ns": 215482212548993,
+    "schema": "er8.integrated.global-parent-final-receipt.v1",
+    "actual_occupied_stage_lease_seconds": 1776.650342464447,
+    "actual_nonoverlapping_outside_native_seconds": 5.069627012,
+    "held_finalizer_returncode": 0,
+    "whole_case_occupied_cap_seconds": 5400,
+    "actual_case_wall_seconds": 1777.129042479,
+    "actual_final_proposal": {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "bytes": 41031,
+      "sha256": "7f86d0a5f12543a40bbe9f8ff94d2e038f0315fd06154e50f9d40dcc707bb91d"
+    }
+  },
+  "money": "UNKNOWN; no monetary total is supplied by the allowed metadata fields inspected. No prices inferred.",
+  "interpretation": "Failure-inclusive current case operational costs. Not a quality-equivalent speedup or matched-pair effect. Token totals are projected host usage counters, not independently verified provider billing. Global metadata/publication overhead after native pipeline is not zeroed.",
+  "evaluator_inclusive_clock": {
+    "helper": "er8-quality-bio-breadth-c-v1",
+    "reservation": "V8-EVAL-V8-BIO-BREADTH-C-M",
+    "birth_epoch": 1790996057.7366228,
+    "original_deadline_epoch": 1790998457.7366228,
+    "seconds_at_report_finalization": 1158.5116729736328,
+    "includes": "All evaluator preparation, source fetching/reading, metadata checks, waits and report writing before this finalization. Final inclusive end is recorded in FREEZE.json. No clock reset.",
+    "native_journal_or_private_account_inspected": false,
+    "evaluator_generated_tokens": "UNKNOWN; not inferred from candidate counters.",
+    "evaluator_conservative_response_cap": 120
+  }
+}

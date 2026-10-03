@@ -1,0 +1,44 @@
+{
+  "schema": "pm.er8.root-holder-successor-review-freeze.v2",
+  "decision": "SOURCE_ACCEPTED_RUNTIME_HOLD",
+  "original_birth_epoch": 1790993997.2604625,
+  "original_deadline_epoch": 1790994597.2604625,
+  "freeze_completed_epoch": 1790994361.046343,
+  "completed_before_original_deadline": true,
+  "no_clock_renewal": true,
+  "accepted_source_sha256": "77f869fe33387d426fc0fe66e146e0fad3ebbca08b386650773587b6748d1e35",
+  "artifacts": {
+    "REVIEW.json": {
+      "path": "LAB_ROOT/ops/root-holder-successor-review-v2/REVIEW.json",
+      "sha256": "444d1221ac4a523f454ed475fbf030cf85025f0b0969ac373697bed86b98161b"
+    },
+    "REVIEW.md": {
+      "path": "LAB_ROOT/ops/root-holder-successor-review-v2/REVIEW.md",
+      "sha256": "2bde898b143315459efb70d09b7fea7378b578ad2ae2eb533653798786bed5f7"
+    },
+    "TEST_OUTPUT.txt": {
+      "path": "LAB_ROOT/ops/root-holder-successor-review-v2/TEST_OUTPUT.txt",
+      "sha256": "22f5170b2fcd0a7eb6bef0e8e8ff5fcbb862e4e13c0e7fee0dffdb95fc2d78a3"
+    },
+    "TEST_RECEIPT.json": {
+      "path": "LAB_ROOT/ops/root-holder-successor-review-v2/TEST_RECEIPT.json",
+      "sha256": "3903e937e5bee20c5b878ba281080f99fd1a38540b3b82825b1d96ff9fd5a164"
+    },
+    "isolated-copies/root_holder_successor_v2.py": {
+      "path": "LAB_ROOT/ops/root-holder-successor-review-v2/isolated-copies/root_holder_successor_v2.py",
+      "sha256": "77f869fe33387d426fc0fe66e146e0fad3ebbca08b386650773587b6748d1e35"
+    },
+    "isolated-copies/test_root_holder_successor_v2.py": {
+      "path": "LAB_ROOT/ops/root-holder-successor-review-v2/isolated-copies/test_root_holder_successor_v2.py",
+      "sha256": "1af814fdfe23302a1e5f78c255505c7fdb6aab037bfc8407b4a44a3c64a4072d"
+    },
+    "observed_hashes.json": {
+      "path": "LAB_ROOT/ops/root-holder-successor-review-v2/observed_hashes.json",
+      "sha256": "7a7756c402ab0cdeae962ebfad2972c557fec7680985219eed484456c82b7358"
+    },
+    "run_review.py": {
+      "path": "LAB_ROOT/ops/root-holder-successor-review-v2/run_review.py",
+      "sha256": "0b7daa4a47ed2984d86e80a5e8bbd8acd8040c2ab28ced2ac1a15b15dc7b8bf1"
+    }
+  }
+}

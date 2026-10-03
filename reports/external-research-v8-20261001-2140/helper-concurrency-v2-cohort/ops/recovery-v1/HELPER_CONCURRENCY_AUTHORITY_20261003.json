@@ -1,0 +1,25 @@
+{
+  "schema": "pm.er8.helper-concurrency-authority.v1",
+  "root_authority": true,
+  "campaign_id": "external-research-v8-20261001-2140",
+  "recorded_epoch": 1790996057.7366228,
+  "explicit_user_instruction": "You can use more than 6 concurrent helpers.",
+  "root_selected_prospective_active_helpers": 12,
+  "previous_active_helpers": 6,
+  "applies_to": "Prospective helper admissions only, including conservative native Muse helpers",
+  "original_start_epoch": 1790905209,
+  "campaign_deadline_epoch": 1791013030.8303788,
+  "authorized_pause_seconds_unchanged": 64621.83037877083,
+  "candidate_slots_by_family_unchanged": {
+    "M": 2,
+    "Z": 2,
+    "L": 2
+  },
+  "native_goal_start_ceiling_unchanged": 144,
+  "occupied_candidate_seconds_ceiling_unchanged": 172800,
+  "no_budget_reset": true,
+  "frozen_history_outcomes_job_caps_and_usage_unchanged": true,
+  "prior_resume_authority_sha256": "9fc1c92a3b6074610b3b4026bd4d7500e0f0a135b506863965e2919fb640c02f",
+  "prior_resume_api_sha256": "a98cf53c1826f1f4c9fa47a9e181eaae8beb971ea41e6564578a253059450b61",
+  "no_candidate_boundary_provider_tool_profile_authorization_change": true
+}

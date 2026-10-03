@@ -1,0 +1,332 @@
+{
+  "schema": "er8.independent.metadata_provenance.v1",
+  "case_id": "V8-BIO-BREADTH-C-M",
+  "projection_rule": "Exact scalar whitelist only. No native_metrics dictionary, local/startup contexts, native structure, conversation, tool argument bodies, raw stream or private profile data copied. Operation evidence is metadata plus source/range fields only; no arbitrary delivery evidence payload.",
+  "stages": [
+    {
+      "stage": "research-proposal",
+      "receipts": {
+        "native-public/receipt.json": {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-research-proposal/native-public/receipt.json",
+          "sha256": "7932e09910283c6825b35a26f5bf4f851954c3da1a582bc5a46c0a20b4fc438e",
+          "permitted_projection": {
+            "stop_reason": "goal_complete",
+            "original_case_start_monotonic_ns": 215482212548993,
+            "model_id": "GLM-5.3-Flash",
+            "schema": "er8.route.native-positive-receipt.v1",
+            "requested_model": "GLM-5.3-Flash",
+            "inclusive_pre_activation_milliseconds": 9361,
+            "original_native_stop_monotonic_ns": 216652212548993,
+            "original_deadline_monotonic_ns": 216682212548993,
+            "goal_status_final": "complete",
+            "native_responses": 17,
+            "requested_effort": "max",
+            "fresh_session": true,
+            "elapsed_milliseconds": 763489,
+            "host_groups_absent": true,
+            "original_stage_start_monotonic_ns": 215482212548993,
+            "own_process_group_absent": true,
+            "goal_target_id": "target_murrflp7_c1685d9e-5611-4fd4-8a84-1c00d0100e5d",
+            "goal_started_turn": true,
+            "provider_id": "builtin:zai-coding-plan",
+            "effort_effective": "max",
+            "native_quiescent": true,
+            "activation": {
+              "receipt_id": "target_murrflp7_c1685d9e-5611-4fd4-8a84-1c00d0100e5d",
+              "observed_activation_monotonic_ns": 215491574362109,
+              "goal_started_turn": true,
+              "schema": "er8.route.activation-positive.v1",
+              "native_activation_absent_proof": false,
+              "observed_activation_epoch": 1790993745,
+              "native_activation_observed": true
+            },
+            "cleanup_projection": {
+              "native_process_returned": true,
+              "native_process_group_remaining_count": 0
+            },
+            "publication_projection_scope": "Positive public scalar/quantified receipt metadata only; not complete original proof. No local/startup context, raw native structure, conversation, tool arguments or source delivery body."
+          }
+        },
+        "COMPLETE.json": {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-research-proposal/COMPLETE.json",
+          "sha256": "2ffc2a4067483d54c63402d56eec45fe7297e3120f42fb1144479f2338f296bf",
+          "permitted_projection": {
+            "native_goal_status": "complete",
+            "host_groups_absent": true,
+            "native_goal_target_id": "target_murrflp7_c1685d9e-5611-4fd4-8a84-1c00d0100e5d",
+            "original_case_start_monotonic_ns": 215482212548993,
+            "schema": "er8.integrated.stage-deferred-close.v1",
+            "native_quiescence_observed_monotonic_ns": 216246021010916,
+            "original_deadline_monotonic_ns": 216682212548993,
+            "stage_start_monotonic_ns": 215482212548993,
+            "wrapper_returncode": 0,
+            "native_responses": 17,
+            "fresh_session": true,
+            "native_goal_activation_observed": true,
+            "required_artifact": {
+              "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-research-proposal/workspace/out/PROPOSAL.md",
+              "bytes": 27158,
+              "sha256": "5531b0049e2ea4fc26b24943bad6e09ddea87fef38c82c75e90a8402376d791b"
+            }
+          }
+        },
+        "QUIESCENCE.json": {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-research-proposal/QUIESCENCE.json",
+          "sha256": "37e828a8cbb3d48906a1bd50f8d8d0c32bd5994711e37fdd8eabe6a9c9ada911",
+          "permitted_projection": {
+            "quiescence_observed_monotonic_ns": 216246021010916,
+            "schema": "er8.execution.quiescence.v1",
+            "owned_native_quiescent": true,
+            "original_deadline_monotonic_ns": 216682212548993,
+            "inclusive_native_lifetime_established": true
+          }
+        },
+        "EXTERNAL_STAGE_CLOSE.json": {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-research-proposal/EXTERNAL_STAGE_CLOSE.json",
+          "sha256": "c349e84a59f4f1621d7e699758a4648be70e71ee5645a3e7cfabcd4937737273",
+          "permitted_projection": {
+            "held_Popen_wait_returncode": 0,
+            "schema": "er8.integrated.external-stage-close.v1",
+            "stage_actor_group_absent": true,
+            "stage_actor_exited": true,
+            "original_deadline_monotonic_ns": 216682212548993,
+            "stage_actor_exit_observed_monotonic_ns": 216246212312409
+          }
+        }
+      }
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "receipts": {
+        "native-public/receipt.json": {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-independent-candidate-critic/native-public/receipt.json",
+          "sha256": "bb27ba51dbc45df3f6b868415c0bb5d7f4e21071a08bf70dafdeb5257d3dea10",
+          "permitted_projection": {
+            "stop_reason": "goal_complete",
+            "original_case_start_monotonic_ns": 215482212548993,
+            "model_id": "GLM-5.3-Flash",
+            "schema": "er8.route.native-positive-receipt.v1",
+            "requested_model": "GLM-5.3-Flash",
+            "inclusive_pre_activation_milliseconds": 7925,
+            "original_native_stop_monotonic_ns": 217416419787365,
+            "original_deadline_monotonic_ns": 217446419787365,
+            "goal_status_final": "complete",
+            "native_responses": 19,
+            "requested_effort": "max",
+            "fresh_session": true,
+            "elapsed_milliseconds": 571693,
+            "host_groups_absent": true,
+            "original_stage_start_monotonic_ns": 216246419787365,
+            "own_process_group_absent": true,
+            "goal_target_id": "target_murrvy36_9e9462ab-51eb-4a4a-ae66-86e97a81a6d6",
+            "goal_started_turn": true,
+            "provider_id": "builtin:zai-coding-plan",
+            "effort_effective": "max",
+            "native_quiescent": true,
+            "activation": {
+              "receipt_id": "target_murrvy36_9e9462ab-51eb-4a4a-ae66-86e97a81a6d6",
+              "observed_activation_monotonic_ns": 216254344975373,
+              "goal_started_turn": true,
+              "schema": "er8.route.activation-positive.v1",
+              "native_activation_absent_proof": false,
+              "observed_activation_epoch": 1790994508,
+              "native_activation_observed": true
+            },
+            "cleanup_projection": {
+              "native_process_returned": true,
+              "native_process_group_remaining_count": 0
+            },
+            "publication_projection_scope": "Positive public scalar/quantified receipt metadata only; not complete original proof. No local/startup context, raw native structure, conversation, tool arguments or source delivery body."
+          }
+        },
+        "COMPLETE.json": {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-independent-candidate-critic/COMPLETE.json",
+          "sha256": "d24db57223b4c4200e5fb5beaddb1161219b1ccd7362ad346a53d7bb7e7bbba5",
+          "permitted_projection": {
+            "native_goal_status": "complete",
+            "host_groups_absent": true,
+            "native_goal_target_id": "target_murrvy36_9e9462ab-51eb-4a4a-ae66-86e97a81a6d6",
+            "original_case_start_monotonic_ns": 215482212548993,
+            "schema": "er8.integrated.stage-deferred-close.v1",
+            "native_quiescence_observed_monotonic_ns": 216818261514424,
+            "original_deadline_monotonic_ns": 217446419787365,
+            "stage_start_monotonic_ns": 216246419787365,
+            "wrapper_returncode": 0,
+            "native_responses": 19,
+            "fresh_session": true,
+            "native_goal_activation_observed": true,
+            "required_artifact": {
+              "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-independent-candidate-critic/workspace/out/CRITIQUE.md",
+              "bytes": 20133,
+              "sha256": "f94382d4240fe4bcacedc07706ef86a2c3222fb33738e2746f5a8bc2c041a969"
+            }
+          }
+        },
+        "QUIESCENCE.json": {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-independent-candidate-critic/QUIESCENCE.json",
+          "sha256": "72e56109ce6bf974a8c3e3e7e3a587b5baae32280623778b47ce720d5e87f471",
+          "permitted_projection": {
+            "quiescence_observed_monotonic_ns": 216818261514424,
+            "schema": "er8.execution.quiescence.v1",
+            "owned_native_quiescent": true,
+            "original_deadline_monotonic_ns": 217446419787365,
+            "inclusive_native_lifetime_established": true
+          }
+        },
+        "EXTERNAL_STAGE_CLOSE.json": {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-independent-candidate-critic/EXTERNAL_STAGE_CLOSE.json",
+          "sha256": "a7e45f827ccb085f8ad8bbf78bf8e015cfe528315c320cbf3a251950aa604426",
+          "permitted_projection": {
+            "held_Popen_wait_returncode": 0,
+            "schema": "er8.integrated.external-stage-close.v1",
+            "stage_actor_group_absent": true,
+            "stage_actor_exited": true,
+            "original_deadline_monotonic_ns": 217446419787365,
+            "stage_actor_exit_observed_monotonic_ns": 216818436739344
+          }
+        }
+      }
+    },
+    {
+      "stage": "final-correction",
+      "receipts": {
+        "native-public/receipt.json": {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-final-correction/native-public/receipt.json",
+          "sha256": "69d4c6b27fb67ee86042e4b82d719a2bc9104306d4fa0188af95534958a7c140",
+          "permitted_projection": {
+            "stop_reason": "goal_complete",
+            "original_case_start_monotonic_ns": 215482212548993,
+            "model_id": "GLM-5.3-Flash",
+            "schema": "er8.route.native-positive-receipt.v1",
+            "requested_model": "GLM-5.3-Flash",
+            "inclusive_pre_activation_milliseconds": 7264,
+            "original_native_stop_monotonic_ns": 217688606123591,
+            "original_deadline_monotonic_ns": 217718606123591,
+            "goal_status_final": "complete",
+            "native_responses": 9,
+            "requested_effort": "max",
+            "fresh_session": true,
+            "elapsed_milliseconds": 439638,
+            "host_groups_absent": true,
+            "original_stage_start_monotonic_ns": 216818606123591,
+            "own_process_group_absent": true,
+            "goal_target_id": "target_murs87aq_002d1ec1-6045-4093-b346-11428738fb58",
+            "goal_started_turn": true,
+            "provider_id": "builtin:zai-coding-plan",
+            "effort_effective": "max",
+            "native_quiescent": true,
+            "activation": {
+              "receipt_id": "target_murs87aq_002d1ec1-6045-4093-b346-11428738fb58",
+              "observed_activation_monotonic_ns": 216825870669150,
+              "goal_started_turn": true,
+              "schema": "er8.route.activation-positive.v1",
+              "native_activation_absent_proof": false,
+              "observed_activation_epoch": 1790995079,
+              "native_activation_observed": true
+            },
+            "cleanup_projection": {
+              "native_process_returned": true,
+              "native_process_group_remaining_count": 0
+            },
+            "publication_projection_scope": "Positive public scalar/quantified receipt metadata only; not complete original proof. No local/startup context, raw native structure, conversation, tool arguments or source delivery body."
+          }
+        },
+        "COMPLETE.json": {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-final-correction/COMPLETE.json",
+          "sha256": "b45b7094a06c3a831acb0c70d910770b21776ac6b3f5785e8dc73c0558798cd0",
+          "permitted_projection": {
+            "native_goal_status": "complete",
+            "host_groups_absent": true,
+            "native_goal_target_id": "target_murs87aq_002d1ec1-6045-4093-b346-11428738fb58",
+            "original_case_start_monotonic_ns": 215482212548993,
+            "schema": "er8.integrated.stage-deferred-close.v1",
+            "native_quiescence_observed_monotonic_ns": 217258555823036,
+            "original_deadline_monotonic_ns": 217718606123591,
+            "stage_start_monotonic_ns": 216818606123591,
+            "wrapper_returncode": 0,
+            "native_responses": 9,
+            "fresh_session": true,
+            "native_goal_activation_observed": true,
+            "required_artifact": {
+              "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-final-correction/workspace/out/FINAL_PROPOSAL.md",
+              "bytes": 41031,
+              "sha256": "7f86d0a5f12543a40bbe9f8ff94d2e038f0315fd06154e50f9d40dcc707bb91d"
+            }
+          }
+        },
+        "QUIESCENCE.json": {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-final-correction/QUIESCENCE.json",
+          "sha256": "10464fe475878ccf799510719924d921f70a0b3384d175c85e0dabb92cc47ed0",
+          "permitted_projection": {
+            "quiescence_observed_monotonic_ns": 217258555823036,
+            "schema": "er8.execution.quiescence.v1",
+            "owned_native_quiescent": true,
+            "original_deadline_monotonic_ns": 217718606123591,
+            "inclusive_native_lifetime_established": true
+          }
+        },
+        "EXTERNAL_STAGE_CLOSE.json": {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-final-correction/EXTERNAL_STAGE_CLOSE.json",
+          "sha256": "6c0115337c1162b57dfb7721821a3c7ea46a25789f96bd711b83156631b3808e",
+          "permitted_projection": {
+            "held_Popen_wait_returncode": 0,
+            "schema": "er8.integrated.external-stage-close.v1",
+            "stage_actor_group_absent": true,
+            "stage_actor_exited": true,
+            "original_deadline_monotonic_ns": 217718606123591,
+            "stage_actor_exit_observed_monotonic_ns": 217258744809096
+          }
+        }
+      }
+    }
+  ],
+  "case_close": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/EXTERNAL_CASE_CLOSE.json",
+    "sha256": "9fb5f2517b06066bb744dfb2ce4e2ae1f95bd5c4063a913a05a84fe6e2586a39",
+    "permitted_projection": {
+      "case_supervisor_exited": true,
+      "original_case_deadline_monotonic_ns": 219082212548993,
+      "held_Popen_wait_returncode": 0,
+      "original_case_start_monotonic_ns": 215482212548993,
+      "schema": "er8.integrated.external-case-close.v1",
+      "case_supervisor_exit_observed_monotonic_ns": 217259118162422,
+      "case_supervisor_group_absent": true,
+      "external_case_observed_monotonic_ns": 217259234785592,
+      "actual_final_proposal": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-final-correction/workspace/out/FINAL_PROPOSAL.md",
+        "bytes": 41031,
+        "sha256": "7f86d0a5f12543a40bbe9f8ff94d2e038f0315fd06154e50f9d40dcc707bb91d"
+      }
+    }
+  },
+  "global_parent_final_receipt": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/GLOBAL_PARENT_FINAL_RECEIPT.json",
+    "sha256": "dcace370d7f1db63fcad2303643d1f0622241668365698339a3dc7a873037b30",
+    "matches_root_attested_hash": true,
+    "permitted_projection": {
+      "actual_case_end_monotonic_ns": 217259341591472,
+      "all_case_execution_closed_before_cutoff": true,
+      "original_case_deadline_monotonic_ns": 219082212548993,
+      "original_case_start_monotonic_ns": 215482212548993,
+      "schema": "er8.integrated.global-parent-final-receipt.v1",
+      "actual_occupied_stage_lease_seconds": 1776.650342464447,
+      "actual_nonoverlapping_outside_native_seconds": 5.069627012,
+      "held_finalizer_returncode": 0,
+      "whole_case_occupied_cap_seconds": 5400,
+      "actual_case_wall_seconds": 1777.129042479,
+      "actual_final_proposal": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-final-correction/workspace/out/FINAL_PROPOSAL.md",
+        "bytes": 41031,
+        "sha256": "7f86d0a5f12543a40bbe9f8ff94d2e038f0315fd06154e50f9d40dcc707bb91d"
+      }
+    }
+  },
+  "native_account_scope": "Root attests same account/family and completed ledger status. Evaluator did not inspect account credentials, ledger, provider/session private stores or journals. Same account independently verified: UNKNOWN.",
+  "source_acquisition": {
+    "positive_host_capture": "Available assigned public capture bodies and hashes; independently fetched primary bytes match stated stable source captures.",
+    "positive_source_range_delivery_receipts": "See SOURCE_RANGE_RECEIPTS.json exact source-range whitelist projection.",
+    "frontend_consumption": "UNKNOWN",
+    "semantic_acquisition": "UNKNOWN",
+    "interpretation": "Hash/capture/range/flush receipts establish transport and preserved bytes only. They do not establish frontend consumption or semantic acquisition."
+  }
+}

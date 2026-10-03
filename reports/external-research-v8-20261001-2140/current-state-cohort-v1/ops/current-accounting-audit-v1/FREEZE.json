@@ -1,0 +1,23 @@
+{
+  "schema": "pm.er8.audit-freeze.v1",
+  "result": "ACCOUNTING_RECONCILED_HELPER_CUTOFF_MISSED",
+  "first_current_read_epoch": 1790995899.1950128,
+  "core_report_generation_end_epoch": 1790996339.901974,
+  "actual_end_epoch": 1790996395.407011,
+  "actual_end_utc": "2026-10-03T02:59:55.407011+00:00",
+  "original_helper_birth_epoch": 1790995738.826653,
+  "original_helper_deadline_epoch": 1790996338.826653,
+  "all_prep_included_seconds": 656.5803580284119,
+  "deadline_exceeded_seconds": 56.580358028411865,
+  "scope": "Read-only metadata reconciliation; no native actions, state mutation or repeated settlement.",
+  "files_sha256": {
+    "LAB_ROOT/ops/current-accounting-audit-v1/FIRST_READ.json": "f74de64231b7c5b37797291dcf4402f2cea97ca0a2ebca92f7225b9cd9715e0d",
+    "LAB_ROOT/ops/current-accounting-audit-v1/CURRENT_METADATA_PROJECTION.json": "570af50bad2dc88bac2d01081edbc0ae845ba08c7d35c1b5768f5e664867af75",
+    "LAB_ROOT/ops/current-accounting-audit-v1/REPORT.json": "2f7c5b7e06cdeb18a0fda309ac98358506bc9d332e871c6dbc691c0833a261a7",
+    "LAB_ROOT/ops/current-accounting-audit-v1/SECONDARY_METADATA_PROJECTION.json": "aa0105a9e4c6db9692575831abc20f122ebf088a28f1ae53d524e08da4107a8d",
+    "LAB_ROOT/ops/current-accounting-audit-v1/REPORT.md": "92c2a55d87f98feed00a57d4c5840b79b35fad5816115b6157546c853e7a6e96",
+    "LAB_ROOT/ops/current-accounting-audit-v1/CASE_COMPLETION_METADATA.json": "893d3937977549d0ab01b0fff3b7d3272eb524942029b7587063f9cceca6a881",
+    "LAB_ROOT/ops/current-accounting-audit-v1/POSITIVE_METADATA_POINTERS.json": "ac9716472969bffd390065d8a8f056511f8e3b236a2c2955f745fad4933db4d2",
+    "LAB_ROOT/ops/current-accounting-audit-v1/GROUP_ACCOUNTING.json": "1d2d210107a2a96dfc11f4d62f9055e5e1362ee396f9658a296949b0f08c254f"
+  }
+}

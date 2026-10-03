@@ -1,0 +1,238 @@
+{
+  "schema": "pm.er8.public-root-holder-successor-cohort.v2",
+  "positive_original_count": 20,
+  "status": "SOURCE_ACCEPTED_RUNTIME_HOLD; HISTORICAL_STANDBY_WAITING",
+  "mock_tests_reported": 29,
+  "native_activation_verified": false,
+  "live_predecessor_exit_verified": false,
+  "source_timer_replay_portable": false,
+  "scope": "Exactly pinned OWN author source/mock tests/receipts/inventory, independent source-review own outputs, root request/launch/positive/failed-setter structural receipts and original predecessor source/claim. No isolated-copies/tmp recursion, raw journal/stdout/native streams/process context/private profiles/auth/case answers/evaluator keys.",
+  "projection": "Exact positive input pins before writes; approved path/session/internal-key sanitizer; structured failed-setter receipt omits original captured stderr. Original/public hashes distinct; embedded original pins preserved.",
+  "artifacts": [
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/ROOT_HOLDER_SUCCESSOR_LAUNCH_V2.json",
+      "public_path": "ops/recovery-v1/ROOT_HOLDER_SUCCESSOR_LAUNCH_V2.json",
+      "original_sha256": "d5867af30fad656133a5078778c155670619f00495e5f90c5bd5d7cd64a29b09",
+      "original_bytes": 1949,
+      "public_sha256": "16210cba8f08e66b5b8eb6e98ccc8d68fc630cc6cb0235534f45369a9d4a88ed",
+      "public_bytes": 1571,
+      "sanitized": true,
+      "projection_scope": "Approved source/metadata path/session/internal-JSON-key sanitizer"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/ROOT_HOLDER_SUCCESSOR_POSITIVE_V2.json",
+      "public_path": "ops/recovery-v1/ROOT_HOLDER_SUCCESSOR_POSITIVE_V2.json",
+      "original_sha256": "e74ddeb77c90aea493ce1f343afa46422ccb3478dd72bda730a51d836dfc18cc",
+      "original_bytes": 2135,
+      "public_sha256": "637a52b05aebb89bc572bc94cc7df761a2507990d429c2b3a3aed965db5a3b17",
+      "public_bytes": 1883,
+      "sanitized": true,
+      "projection_scope": "Approved source/metadata path/session/internal-JSON-key sanitizer"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/ROOT_HOLDER_SUCCESSOR_REQUEST_V2.json",
+      "public_path": "ops/recovery-v1/ROOT_HOLDER_SUCCESSOR_REQUEST_V2.json",
+      "original_sha256": "3e251412e16c8fb9757261b50f1e3d7dba6e5090ff1b93654e4f4724ca88e01f",
+      "original_bytes": 1384,
+      "public_sha256": "b4eec9e95c16d24a013813d100f74cbdb0c22e3c7e11ddbd1a6a51d65297ca04",
+      "public_bytes": 1069,
+      "sanitized": true,
+      "projection_scope": "Approved source/metadata path/session/internal-JSON-key sanitizer"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/SUPERVISOR_DURABLE.json",
+      "public_path": "ops/recovery-v1/SUPERVISOR_DURABLE.json",
+      "original_sha256": "e0b37dcddefe3d6fcad80a913701cb69729b467bd0ffbf34b535f54dab3211b9",
+      "original_bytes": 306,
+      "public_sha256": "e0b37dcddefe3d6fcad80a913701cb69729b467bd0ffbf34b535f54dab3211b9",
+      "public_bytes": 306,
+      "sanitized": false,
+      "projection_scope": "Approved source/metadata path/session/internal-JSON-key sanitizer"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/SUPERVISOR_RUNTIME_GUARD_REPAIR_V1.json",
+      "public_path": "ops/recovery-v1/SUPERVISOR_RUNTIME_GUARD_REPAIR_V1.json",
+      "original_sha256": "eec2a254796c9e7e34fa035e2feeb468572bd6ae3f300c30ad8fcb5b6da080e9",
+      "original_bytes": 1568,
+      "public_sha256": "cdabfe5cb463af8dd8a76eb1f53ef289ad90a5db42b0b1422af0ccfabef8d52b",
+      "public_bytes": 1422,
+      "sanitized": true,
+      "projection_scope": "Structured safe failed-setter observation; original captured stderr omitted"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/durable_holder_v1.py",
+      "public_path": "ops/recovery-v1/durable_holder_v1.py",
+      "original_sha256": "48907c8afa5b6a8699b61d01528466e4c5b838ac2bdb955f4420738dc2a12788",
+      "original_bytes": 626,
+      "public_sha256": "48907c8afa5b6a8699b61d01528466e4c5b838ac2bdb955f4420738dc2a12788",
+      "public_bytes": 626,
+      "sanitized": false,
+      "projection_scope": "Approved source/metadata path/session/internal-JSON-key sanitizer"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/root-holder-successor-review-v2/FREEZE.json",
+      "public_path": "ops/root-holder-successor-review-v2/FREEZE.json",
+      "original_sha256": "1c7a25fd011b4096142ce1dbee77b4f80211f69d6613beaf30af62fd55d97552",
+      "original_bytes": 2603,
+      "public_sha256": "62a11007d9c79d662ea41b14e68bfbfc44d025a153701d16148644325933c1de",
+      "public_bytes": 2099,
+      "sanitized": true,
+      "projection_scope": "Approved source/metadata path/session/internal-JSON-key sanitizer"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/root-holder-successor-review-v2/REVIEW.json",
+      "public_path": "ops/root-holder-successor-review-v2/REVIEW.json",
+      "original_sha256": "444d1221ac4a523f454ed475fbf030cf85025f0b0969ac373697bed86b98161b",
+      "original_bytes": 5258,
+      "public_sha256": "63bd02e157d02ab7910d025876149d17bc2d0497c385019d5b202c1294f2ecf4",
+      "public_bytes": 5132,
+      "sanitized": true,
+      "projection_scope": "Approved source/metadata path/session/internal-JSON-key sanitizer"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/root-holder-successor-review-v2/REVIEW.md",
+      "public_path": "ops/root-holder-successor-review-v2/REVIEW.md",
+      "original_sha256": "2bde898b143315459efb70d09b7fea7378b578ad2ae2eb533653798786bed5f7",
+      "original_bytes": 2663,
+      "public_sha256": "2bde898b143315459efb70d09b7fea7378b578ad2ae2eb533653798786bed5f7",
+      "public_bytes": 2663,
+      "sanitized": false,
+      "projection_scope": "Approved source/metadata path/session/internal-JSON-key sanitizer"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/root-holder-successor-review-v2/SHA256SUMS",
+      "public_path": "ops/root-holder-successor-review-v2/SHA256SUMS",
+      "original_sha256": "6b40ca51bdc3a54b655ffd374f1bb777c72ee3fd0885697b01b268bd2d2c9cd3",
+      "original_bytes": 790,
+      "public_sha256": "6b40ca51bdc3a54b655ffd374f1bb777c72ee3fd0885697b01b268bd2d2c9cd3",
+      "public_bytes": 790,
+      "sanitized": false,
+      "projection_scope": "Approved source/metadata path/session/internal-JSON-key sanitizer"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/root-holder-successor-review-v2/TEST_OUTPUT.txt",
+      "public_path": "ops/root-holder-successor-review-v2/TEST_OUTPUT.txt",
+      "original_sha256": "22f5170b2fcd0a7eb6bef0e8e8ff5fcbb862e4e13c0e7fee0dffdb95fc2d78a3",
+      "original_bytes": 4078,
+      "public_sha256": "22f5170b2fcd0a7eb6bef0e8e8ff5fcbb862e4e13c0e7fee0dffdb95fc2d78a3",
+      "public_bytes": 4078,
+      "sanitized": false,
+      "projection_scope": "Approved source/metadata path/session/internal-JSON-key sanitizer"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/root-holder-successor-review-v2/TEST_RECEIPT.json",
+      "public_path": "ops/root-holder-successor-review-v2/TEST_RECEIPT.json",
+      "original_sha256": "3903e937e5bee20c5b878ba281080f99fd1a38540b3b82825b1d96ff9fd5a164",
+      "original_bytes": 1538,
+      "public_sha256": "381aadbf910d974771a0bddf4c96c27568ed8b8d820caa31cbc61a9d1df315ed",
+      "public_bytes": 1475,
+      "sanitized": true,
+      "projection_scope": "Approved source/metadata path/session/internal-JSON-key sanitizer"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/root-holder-successor-review-v2/observed_hashes.json",
+      "public_path": "ops/root-holder-successor-review-v2/observed_hashes.json",
+      "original_sha256": "7a7756c402ab0cdeae962ebfad2972c557fec7680985219eed484456c82b7358",
+      "original_bytes": 1493,
+      "public_sha256": "2f22710097404353db76f63a047ff67ddc1fd59ea09bb18c795dcaba81cadb6f",
+      "public_bytes": 1115,
+      "sanitized": true,
+      "projection_scope": "Approved source/metadata path/session/internal-JSON-key sanitizer"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/root-holder-successor-review-v2/run_review.py",
+      "public_path": "ops/root-holder-successor-review-v2/run_review.py",
+      "original_sha256": "0b7daa4a47ed2984d86e80a5e8bbd8acd8040c2ab28ced2ac1a15b15dc7b8bf1",
+      "original_bytes": 7974,
+      "public_sha256": "0b7daa4a47ed2984d86e80a5e8bbd8acd8040c2ab28ced2ac1a15b15dc7b8bf1",
+      "public_bytes": 7974,
+      "sanitized": false,
+      "projection_scope": "Approved source/metadata path/session/internal-JSON-key sanitizer"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/root-holder-successor-v2/HANDOFF.md",
+      "public_path": "ops/root-holder-successor-v2/HANDOFF.md",
+      "original_sha256": "a7117f04ea9cf0ee7ff2788dce932483c1ebeed3bf95088d2e1f562d23d75242",
+      "original_bytes": 5480,
+      "public_sha256": "c251bce790e1253e888d586f0f7039aef25fab58e5eee820965b9c781a88fb25",
+      "public_bytes": 4976,
+      "sanitized": true,
+      "projection_scope": "Approved source/metadata path/session/internal-JSON-key sanitizer"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/root-holder-successor-v2/SHA256SUMS",
+      "public_path": "ops/root-holder-successor-v2/SHA256SUMS",
+      "original_sha256": "8e938c87a208bec5313db6f0ed3950e3ae0091579c73cf89812040b4f7258a9c",
+      "original_bytes": 437,
+      "public_sha256": "8e938c87a208bec5313db6f0ed3950e3ae0091579c73cf89812040b4f7258a9c",
+      "public_bytes": 437,
+      "sanitized": false,
+      "projection_scope": "Approved source/metadata path/session/internal-JSON-key sanitizer"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/root-holder-successor-v2/TEST_RECEIPT.json",
+      "public_path": "ops/root-holder-successor-v2/TEST_RECEIPT.json",
+      "original_sha256": "b12186e235f87768fc1b5f11a6ec879078a6cba32c6c0fb84de0c59776a5d5ab",
+      "original_bytes": 1899,
+      "public_sha256": "d7dafbd737ed16dd7e401cbb8948e5dced802fe18f1feeb3012d2588c2cd0cff",
+      "public_bytes": 1710,
+      "sanitized": true,
+      "projection_scope": "Approved source/metadata path/session/internal-JSON-key sanitizer"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/root-holder-successor-v2/TEST_RECEIPT.txt",
+      "public_path": "ops/root-holder-successor-v2/TEST_RECEIPT.txt",
+      "original_sha256": "5b53cf142478dd443c0d77dab626d95e4fcdfa4d49eddb5fcb0c54efbfc1685a",
+      "original_bytes": 2055,
+      "public_sha256": "5b53cf142478dd443c0d77dab626d95e4fcdfa4d49eddb5fcb0c54efbfc1685a",
+      "public_bytes": 2055,
+      "sanitized": false,
+      "projection_scope": "Approved source/metadata path/session/internal-JSON-key sanitizer"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/root-holder-successor-v2/root_holder_successor_v2.py",
+      "public_path": "ops/root-holder-successor-v2/root_holder_successor_v2.py",
+      "original_sha256": "77f869fe33387d426fc0fe66e146e0fad3ebbca08b386650773587b6748d1e35",
+      "original_bytes": 11089,
+      "public_sha256": "97abca78eac4839004b0e442f35dfbd40b9df1b218c989af6bd06538e11bd166",
+      "public_bytes": 11026,
+      "sanitized": true,
+      "projection_scope": "Approved source/metadata path/session/internal-JSON-key sanitizer"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/root-holder-successor-v2/test_root_holder_successor_v2.py",
+      "public_path": "ops/root-holder-successor-v2/test_root_holder_successor_v2.py",
+      "original_sha256": "1af814fdfe23302a1e5f78c255505c7fdb6aab037bfc8407b4a44a3c64a4072d",
+      "original_bytes": 11859,
+      "public_sha256": "1af814fdfe23302a1e5f78c255505c7fdb6aab037bfc8407b4a44a3c64a4072d",
+      "public_bytes": 11859,
+      "sanitized": false,
+      "projection_scope": "Approved source/metadata path/session/internal-JSON-key sanitizer"
+    },
+    {
+      "source_projection": "WORKTREE_ROOT/reports/external-research-v8-20261001-2140/prospective-source-cohort-v3/ops/muse-helper-public-check-v1/root-repair-v1/verify_public.py",
+      "public_path": "verify_public.py",
+      "original_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+      "original_bytes": 6851,
+      "public_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+      "public_bytes": 6851,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/publication-root-holder-successor-v2/ROOT_HANDOFF.json",
+      "public_path": "ROOT_HANDOFF.json",
+      "original_sha256": "d7bd2b405ca59c4014578cd373c59e1d0f10be684eb90fbd8fc4a3ed3d6430fa",
+      "original_bytes": 8345,
+      "public_sha256": "abf2e2976d834bc26a9a1c54f088d2fb33613ce9e74e8141d45f4bb6bfe29606",
+      "public_bytes": 7029,
+      "sanitized": true
+    },
+    {
+      "source_projection": "publication-generated",
+      "public_path": "README.md",
+      "original_sha256": null,
+      "public_sha256": "4a06bd3fb2be1abecdc121451eeb1ea498f4cfb8078adfbf6174956b675264e6",
+      "public_bytes": 4480
+    }
+  ]
+}

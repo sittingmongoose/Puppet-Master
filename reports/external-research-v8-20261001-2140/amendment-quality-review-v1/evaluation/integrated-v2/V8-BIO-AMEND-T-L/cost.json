@@ -1,0 +1,29 @@
+{
+  "schema": "er8.independent.cost.v1",
+  "case": "V8-BIO-AMEND-T-L",
+  "actual_case_wall_seconds": 1927.657422356,
+  "actual_occupied_stage_lease_seconds": 1927.3175687789917,
+  "actual_nonoverlapping_outside_native_seconds": 5.596375739,
+  "native_owned_seconds_by_stage": {
+    "research-proposal": 631.080578377,
+    "independent-candidate-critic": 872.699725379,
+    "final-correction": 418.280742861
+  },
+  "reported_usage_counter_totals": {
+    "inputTokens": 1981469,
+    "outputTokens": 86438,
+    "cacheReadTokens": 1587200,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 0,
+    "totalTokens": 2067907
+  },
+  "billing_completeness": "UNKNOWN; public reported counters are not independently audited provider billing",
+  "semantic_acquisition": "UNKNOWN",
+  "quality_equivalent_speedup": false,
+  "comparison": "NONE; one case only",
+  "evaluator_birth_epoch": 1790994119.8633728,
+  "evaluator_original_deadline_epoch": 1790996519.8633728,
+  "hard_seconds": 2400,
+  "reset": false,
+  "evaluator_end_record": "FREEZE.json written at completion; prep/fetch/waits/write/verification included"
+}

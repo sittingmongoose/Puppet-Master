@@ -1,0 +1,19 @@
+{
+  "schema": "er8.execution.quiescence.v1",
+  "owned_unit": "er8-v8-nb-retr-c-m-research-proposal.service",
+  "owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-nb-retr-c-m-research-proposal.service",
+  "enrollment": {
+    "schema": "er8.execution.enrollment.v1",
+    "owned_unit": "er8-v8-nb-retr-c-m-research-proposal.service",
+    "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-nb-retr-c-m-research-proposal.service",
+    "enrolled_monotonic_ns": 217261458328150,
+    "original_deadline_monotonic_ns": 218459649557177
+  },
+  "absence_proof": "positively-enrolled-owned-cgroup-removed",
+  "owned_native_quiescent": true,
+  "quiescence_observed_monotonic_ns": 218019311327941,
+  "original_deadline_monotonic_ns": 218459649557177,
+  "inclusive_native_lifetime_established": true,
+  "occupancy_disposition": "releasable-native-only",
+  "native_goal_or_quality_qualification": "UNESTABLISHED; independent native receipt review mandatory"
+}

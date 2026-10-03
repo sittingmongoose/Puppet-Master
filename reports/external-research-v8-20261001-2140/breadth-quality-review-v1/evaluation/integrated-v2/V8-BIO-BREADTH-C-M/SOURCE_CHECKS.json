@@ -1,0 +1,112 @@
+{
+  "schema": "er8.independent.assigned_source_comparison.v1",
+  "checks": [
+    {
+      "source_id": "S1",
+      "independent_sha256": "fc39309d1ea85bfcebd469008e3111951a605870cc8292301c0de165767b0211",
+      "exact_assigned_capture_bytes_match": true
+    },
+    {
+      "source_id": "S2",
+      "independent_sha256": "e2b6135a8d325b7db4eb76dd2d3ca4e92d2d25d215045a6351d8264c8110cb03",
+      "exact_assigned_capture_bytes_match": true
+    },
+    {
+      "source_id": "S3",
+      "independent_sha256": "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5",
+      "exact_assigned_capture_bytes_match": true
+    },
+    {
+      "source_id": "S4",
+      "independent_sha256": "bb228cc5e442b1446ef8ec0e8aa8d6fe4557c6fb9d6a07935ad4b5748382cb86",
+      "exact_assigned_capture_bytes_match": true
+    },
+    {
+      "source_id": "S5",
+      "independent_sha256": "eb82e8d95342e89e638a324ac4db8d428a16bb1737f274a26a358d50da028d2e",
+      "exact_assigned_capture_bytes_match": true
+    },
+    {
+      "source_id": "S6-files",
+      "independent_sha256": "7dabd78b0c839d1298c73fb4fa73f3fbfd7dc63c23d79bbda2d8bd8088067b48",
+      "exact_assigned_capture_bytes_match": true
+    },
+    {
+      "source_id": "S6-PR",
+      "independent_sha256": "a1efd0188af532181f25f20f7c1e41cb3aebb1a6e910b733970e50e5e86735b7",
+      "exact_assigned_capture_bytes_match": false
+    },
+    {
+      "source_id": "S7",
+      "independent_sha256": "5265faad007283ead9a033b7b24c7c70e38f00592ea6d4f9ac04e51eff2eb875",
+      "exact_assigned_capture_bytes_match": true
+    },
+    {
+      "source_id": "S7-prime",
+      "independent_sha256": "8016c43e30cc87132fad2962d1cb3d3e7cc0f62db64596222c07052714d53fc8",
+      "exact_assigned_capture_bytes_match": true
+    },
+    {
+      "source_id": "S8",
+      "independent_sha256": "e10bf6b4f7e13ad73fc9adb5e15225a792f9fef52b3a00391d41a23da75808f6",
+      "exact_assigned_capture_bytes_match": true
+    },
+    {
+      "source_id": "S9",
+      "independent_sha256": "b79c52aed72b91ea19bb80ed835f7da0170ad62b09fe92473c17dd5187a4e018",
+      "exact_assigned_capture_bytes_match": false
+    },
+    {
+      "source_id": "S10",
+      "independent_sha256": "0ffdf06b8c36c820b5e49a1fb139ca29bfab18af02e0016cc0d0a8555d5b9351",
+      "exact_assigned_capture_bytes_match": false
+    },
+    {
+      "source_id": "S11",
+      "independent_sha256": "1085265c47e71e3e0cb90cfda90877fbdfdf516774a7060eac5fbee2efe6549e",
+      "exact_assigned_capture_bytes_match": true
+    },
+    {
+      "source_id": "S6-PR",
+      "assigned_capture_sha256": "ba020697a9019e61a757ca8ad6aaeac5d9afe8c7df7d406a11607c48491da27d",
+      "independent_sha256": "a1efd0188af532181f25f20f7c1e41cb3aebb1a6e910b733970e50e5e86735b7",
+      "claim_field_comparisons": {
+        "title": true,
+        "body": true,
+        "state": true,
+        "created_at": true,
+        "merged_at": true,
+        "milestone_title": true
+      },
+      "note": "Mutable GitHub API response bytes differ; consequential title/body/state/dates/milestone compared, rather than declaring byte identity."
+    },
+    {
+      "source_id": "S9",
+      "assigned_capture_sha256": "2b264cb02ed8a1653eab34300e8218c778ca2649094f74aa6984d000a9e81ce9",
+      "independent_sha256": "b79c52aed72b91ea19bb80ed835f7da0170ad62b09fe92473c17dd5187a4e018",
+      "claim_field_comparisons": {
+        "title": true,
+        "body": true,
+        "state": true,
+        "created_at": true,
+        "merged_at": true,
+        "milestone_title": true
+      },
+      "note": "Mutable GitHub API response bytes differ; consequential title/body/state/dates/milestone compared, rather than declaring byte identity."
+    },
+    {
+      "source_id": "S10",
+      "assigned_capture_sha256": "3df623b1406c3b8f16dae8ce389c0e504116c40d94301ae2d4ca39005deadc3c",
+      "independent_sha256": "0ffdf06b8c36c820b5e49a1fb139ca29bfab18af02e0016cc0d0a8555d5b9351",
+      "claim_field_comparisons": {
+        "title": true,
+        "body": true,
+        "state": true,
+        "created_at": true,
+        "merged_at": true,
+        "milestone_title": true
+      },
+      "note": "Mutable GitHub API response bytes differ; consequential title/body/state/dates/milestone compared, rather than declaring byte identity."
+    }
+  ]
+}

@@ -1,0 +1,291 @@
+{
+  "native_and_closure_whitelists": {
+    "native": [
+      "provider_id",
+      "model_id",
+      "effort_effective",
+      "requested_model",
+      "requested_effort",
+      "fresh_session",
+      "goal_target_id",
+      "native_responses",
+      "goal_status_final",
+      "native_quiescent",
+      "own_process_group_absent",
+      "host_groups_absent",
+      "quiescence_group_remaining_counts",
+      "elapsed_milliseconds",
+      "inclusive_pre_activation_milliseconds",
+      "accepted_method_sha256"
+    ],
+    "complete": [
+      "native_goal_activation_observed",
+      "native_goal_target_id",
+      "fresh_session",
+      "native_responses",
+      "native_goal_status",
+      "wrapper_returncode",
+      "host_groups_absent",
+      "stage_start_monotonic_ns",
+      "original_case_start_monotonic_ns",
+      "original_deadline_monotonic_ns",
+      "native_wrapper_launch_monotonic_ns",
+      "native_quiescence_observed_monotonic_ns",
+      "last_charged_host_monotonic_ns"
+    ],
+    "stage": [
+      "held_Popen_wait_returncode",
+      "stage_actor_exited",
+      "stage_actor_group_absent",
+      "stage_actor_exit_observed_monotonic_ns"
+    ],
+    "quiescence": [
+      "owned_native_quiescent",
+      "quiescence_observed_monotonic_ns",
+      "inclusive_native_lifetime_established",
+      "occupancy_disposition"
+    ],
+    "global": [
+      "held_finalizer_returncode",
+      "actual_case_end_monotonic_ns",
+      "original_case_start_monotonic_ns",
+      "original_case_deadline_monotonic_ns",
+      "actual_case_wall_seconds",
+      "actual_occupied_stage_lease_seconds",
+      "whole_case_occupied_cap_seconds",
+      "actual_nonoverlapping_outside_native_seconds",
+      "all_case_execution_closed_before_cutoff"
+    ],
+    "external_case": [
+      "held_Popen_wait_returncode",
+      "case_supervisor_exited",
+      "case_supervisor_group_absent",
+      "case_supervisor_exit_observed_monotonic_ns",
+      "original_case_start_monotonic_ns",
+      "original_case_deadline_monotonic_ns",
+      "external_case_observed_monotonic_ns"
+    ]
+  },
+  "stages": [
+    {
+      "stage": "research-proposal",
+      "native_receipt": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-research-proposal/native-public/receipt.json",
+        "sha256": "a368841e6e3f4584c7c3bcd9db1cbfaca9166ce29e4226893ed862e440d9e010",
+        "fields": {
+          "provider_id": "builtin:zai-coding-plan",
+          "model_id": "GLM-5.3-Flash",
+          "effort_effective": "max",
+          "requested_model": "GLM-5.3-Flash",
+          "requested_effort": "max",
+          "fresh_session": true,
+          "goal_target_id": "target_murrhl19_95c04877-a077-4bf2-a713-f31b0dddcc2b",
+          "native_responses": 15,
+          "goal_status_final": "complete",
+          "native_quiescent": true,
+          "own_process_group_absent": true,
+          "host_groups_absent": true,
+          "elapsed_milliseconds": 701018,
+          "inclusive_pre_activation_milliseconds": 8230,
+          "accepted_method_sha256": "6d583e141c828b03f9578680cf466b555e6083c37bec4d2def62280a38e18c18",
+          "publication_projection_scope": "Positive public scalar/quantified receipt metadata only; not complete original proof. No local/startup context, raw native structure, conversation, tool arguments or source delivery body."
+        }
+      },
+      "complete": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-research-proposal/COMPLETE.json",
+        "sha256": "2831b8c120b1d68b142e6116daaa6819692b4b7b0c3b49c0a9cf4be5f90a0064",
+        "fields": {
+          "native_goal_activation_observed": true,
+          "native_goal_target_id": "target_murrhl19_95c04877-a077-4bf2-a713-f31b0dddcc2b",
+          "fresh_session": true,
+          "native_responses": 15,
+          "native_goal_status": "complete",
+          "wrapper_returncode": 0,
+          "host_groups_absent": true,
+          "stage_start_monotonic_ns": 215575801245221,
+          "original_case_start_monotonic_ns": 215575801245221,
+          "original_deadline_monotonic_ns": 216775801245221,
+          "native_wrapper_launch_monotonic_ns": 215577413545028,
+          "native_quiescence_observed_monotonic_ns": 216277074147900,
+          "last_charged_host_monotonic_ns": 216277157033581
+        }
+      },
+      "quiescence": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-research-proposal/QUIESCENCE.json",
+        "sha256": "a5c132f89e7518c6569703ce6f0d7f35bc62148a154d490b88e2eab67ce3fd2f",
+        "fields": {
+          "owned_native_quiescent": true,
+          "quiescence_observed_monotonic_ns": 216277074147900,
+          "inclusive_native_lifetime_established": true,
+          "occupancy_disposition": "releasable-native-only"
+        }
+      },
+      "stage_close": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-research-proposal/EXTERNAL_STAGE_CLOSE.json",
+        "sha256": "28b2f270fc1e1a8bea2e10c8530c22dc8f0f92d5ec6b5f935bd735de08eb60ab",
+        "fields": {
+          "held_Popen_wait_returncode": 0,
+          "stage_actor_exited": true,
+          "stage_actor_group_absent": true,
+          "stage_actor_exit_observed_monotonic_ns": 216277225067731
+        }
+      }
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "native_receipt": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-independent-candidate-critic/native-public/receipt.json",
+        "sha256": "2acad55d8be638db2c0afa1ab89c43e781f5981e959f64f3e8e5241d6b93a14b",
+        "fields": {
+          "provider_id": "builtin:zai-coding-plan",
+          "model_id": "GLM-5.3-Flash",
+          "effort_effective": "max",
+          "requested_model": "GLM-5.3-Flash",
+          "requested_effort": "max",
+          "fresh_session": true,
+          "goal_target_id": "target_murrwm20_6596245f-13e6-4747-8a51-b08035e83946",
+          "native_responses": 12,
+          "goal_status_final": "complete",
+          "native_quiescent": true,
+          "own_process_group_absent": true,
+          "host_groups_absent": true,
+          "elapsed_milliseconds": 675309,
+          "inclusive_pre_activation_milliseconds": 7829,
+          "accepted_method_sha256": "e1425ea9ab4d6e78508bb6ec52c294a2dcad8098a4f5370264e9c1dcddb637fc",
+          "publication_projection_scope": "Positive public scalar/quantified receipt metadata only; not complete original proof. No local/startup context, raw native structure, conversation, tool arguments or source delivery body."
+        }
+      },
+      "complete": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-independent-candidate-critic/COMPLETE.json",
+        "sha256": "05fa6d118d0b2d1c12172310ec8051947f92c94310b59def13a208dbe58a6940",
+        "fields": {
+          "native_goal_activation_observed": true,
+          "native_goal_target_id": "target_murrwm20_6596245f-13e6-4747-8a51-b08035e83946",
+          "fresh_session": true,
+          "native_responses": 12,
+          "native_goal_status": "complete",
+          "wrapper_returncode": 0,
+          "host_groups_absent": true,
+          "stage_start_monotonic_ns": 216277431742191,
+          "original_case_start_monotonic_ns": 215575801245221,
+          "original_deadline_monotonic_ns": 217477431742191,
+          "native_wrapper_launch_monotonic_ns": 216278357577603,
+          "native_quiescence_observed_monotonic_ns": 216953029320611,
+          "last_charged_host_monotonic_ns": 216953181381655
+        }
+      },
+      "quiescence": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-independent-candidate-critic/QUIESCENCE.json",
+        "sha256": "a510bac1e0774b8eb010e8e8713c57de29f7817237c09e33634e5b5e6f60fe12",
+        "fields": {
+          "owned_native_quiescent": true,
+          "quiescence_observed_monotonic_ns": 216953029320611,
+          "inclusive_native_lifetime_established": true,
+          "occupancy_disposition": "releasable-native-only"
+        }
+      },
+      "stage_close": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-independent-candidate-critic/EXTERNAL_STAGE_CLOSE.json",
+        "sha256": "578a73e20a495da359ce8b0523e39f05eb9e5c9b628e79f7cf6dd43ffa42f0dc",
+        "fields": {
+          "held_Popen_wait_returncode": 0,
+          "stage_actor_exited": true,
+          "stage_actor_group_absent": true,
+          "stage_actor_exit_observed_monotonic_ns": 216953247351377
+        }
+      }
+    },
+    {
+      "stage": "final-correction",
+      "native_receipt": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-final-correction/native-public/receipt.json",
+        "sha256": "3a8ddea3bc9e57964f3825e4833024a2c81779ec842f8ff528949d157f7078e9",
+        "fields": {
+          "provider_id": "builtin:zai-coding-plan",
+          "model_id": "GLM-5.3-Flash",
+          "effort_effective": "max",
+          "requested_model": "GLM-5.3-Flash",
+          "requested_effort": "max",
+          "fresh_session": true,
+          "goal_target_id": "target_mursb3cp_e4ddd3de-1f34-4774-9bd2-7c9672fe9d69",
+          "native_responses": 9,
+          "goal_status_final": "complete",
+          "native_quiescent": true,
+          "own_process_group_absent": true,
+          "host_groups_absent": true,
+          "elapsed_milliseconds": 580585,
+          "inclusive_pre_activation_milliseconds": 7204,
+          "accepted_method_sha256": "9b1d0dc7a773833cf4ae43d11833f5e537e0fa897d062fff747c1efefd239057",
+          "publication_projection_scope": "Positive public scalar/quantified receipt metadata only; not complete original proof. No local/startup context, raw native structure, conversation, tool arguments or source delivery body."
+        }
+      },
+      "complete": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-final-correction/COMPLETE.json",
+        "sha256": "9c6e6f246e27762035b1beb3b1073ae6241461af9b2e10fea16ffa4c7a3c38a9",
+        "fields": {
+          "native_goal_activation_observed": true,
+          "native_goal_target_id": "target_mursb3cp_e4ddd3de-1f34-4774-9bd2-7c9672fe9d69",
+          "fresh_session": true,
+          "native_responses": 9,
+          "native_goal_status": "complete",
+          "wrapper_returncode": 0,
+          "host_groups_absent": true,
+          "stage_start_monotonic_ns": 216953516246689,
+          "original_case_start_monotonic_ns": 215575801245221,
+          "original_deadline_monotonic_ns": 217853516246689,
+          "native_wrapper_launch_monotonic_ns": 216954436047482,
+          "native_quiescence_observed_monotonic_ns": 217534231532070,
+          "last_charged_host_monotonic_ns": 217534333449750
+        }
+      },
+      "quiescence": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-final-correction/QUIESCENCE.json",
+        "sha256": "2f8944157d21fecd6223041d94f4605ff5332e0cb357cef23229155a21dac35a",
+        "fields": {
+          "owned_native_quiescent": true,
+          "quiescence_observed_monotonic_ns": 217534231532070,
+          "inclusive_native_lifetime_established": true,
+          "occupancy_disposition": "releasable-native-only"
+        }
+      },
+      "stage_close": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-final-correction/EXTERNAL_STAGE_CLOSE.json",
+        "sha256": "b31425101be87793b84749382d9db460374e108e85a1db8ab0be898bc9b9e5a4",
+        "fields": {
+          "held_Popen_wait_returncode": 0,
+          "stage_actor_exited": true,
+          "stage_actor_group_absent": true,
+          "stage_actor_exit_observed_monotonic_ns": 217534391747649
+        }
+      }
+    }
+  ],
+  "global_parent_final": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/GLOBAL_PARENT_FINAL_RECEIPT.json",
+    "sha256": "063f5334083145d5f71766b054d60338ed6db48bab14d4bcc8636db503888d69",
+    "fields": {
+      "held_finalizer_returncode": 0,
+      "actual_case_end_monotonic_ns": 217535151106938,
+      "original_case_start_monotonic_ns": 215575801245221,
+      "original_case_deadline_monotonic_ns": 219175801245221,
+      "actual_case_wall_seconds": 1959.349861717,
+      "actual_occupied_stage_lease_seconds": 1958.6851434707642,
+      "whole_case_occupied_cap_seconds": 5400,
+      "actual_nonoverlapping_outside_native_seconds": 5.222031249,
+      "all_case_execution_closed_before_cutoff": true
+    }
+  },
+  "external_case_close": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/EXTERNAL_CASE_CLOSE.json",
+    "sha256": "e373445801957e36b0ffb1b952ea296e8b7ca260df39b1471bda4df5496d81d5",
+    "fields": {
+      "held_Popen_wait_returncode": 0,
+      "case_supervisor_exited": true,
+      "case_supervisor_group_absent": true,
+      "case_supervisor_exit_observed_monotonic_ns": 217534941827147,
+      "original_case_start_monotonic_ns": 215575801245221,
+      "original_case_deadline_monotonic_ns": 219175801245221,
+      "external_case_observed_monotonic_ns": 217535057211808
+    }
+  }
+}

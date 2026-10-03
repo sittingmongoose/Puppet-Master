@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "root_authority",
+    "authority_path",
+    "authority_sha256"
+  ],
+  "properties": {
+    "root_authority": {
+      "const": true
+    },
+    "authority_path": {
+      "const": "LAB_ROOT/ops/recovery-v1/HELPER_CONCURRENCY_AUTHORITY_20261003.json"
+    },
+    "authority_sha256": {
+      "const": "f1682a991232997556aed7fb88f167e706317259913d9365c5a1fb72fc572a79"
+    }
+  }
+}

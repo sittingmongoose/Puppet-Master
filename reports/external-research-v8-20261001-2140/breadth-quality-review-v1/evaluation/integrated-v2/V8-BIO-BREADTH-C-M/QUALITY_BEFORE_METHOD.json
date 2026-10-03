@@ -1,0 +1,141 @@
+{
+  "schema": "er8.independent.source_quality_before_method.v1",
+  "case_id": "V8-BIO-BREADTH-C-M",
+  "helper": "er8-quality-bio-breadth-c-v1",
+  "frozen_utc": "2026-10-03T03:02:03.804785+00:00",
+  "frozen_epoch": 1790996523.8047774,
+  "original_birth_epoch": 1790996057.7366228,
+  "original_deadline_epoch": 1790998457.7366228,
+  "method_task_manifest_identity_read_before_freeze": false,
+  "limited_blinding_disclosure": "Case ID and stage names are necessarily visible in the assigned path and candidate artifacts. No METHOD.md, TASK.md, case manifest, pair file, evaluator answer key, sibling output or private native context was read before this freeze.",
+  "final_artifact": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-final-correction/workspace/out/FINAL_PROPOSAL.md",
+    "bytes": 41031,
+    "sha256": "7f86d0a5f12543a40bbe9f8ff94d2e038f0315fd06154e50f9d40dcc707bb91d",
+    "root_admitted_sha256_match": true
+  },
+  "final_leads": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-final-correction/workspace/out/UNRESOLVED_LEADS.md",
+    "sha256": "eb7f3ddbf75267875672c82a224d4dd7993ecbd67bb7b12992b055c3de706ed9",
+    "bytes": 3693
+  },
+  "disposition": "FAILED_SCREEN",
+  "verification_status": "VERIFIED",
+  "screen_scope": "Frozen final research-to-plan artifact and companion leads, bounded source-grounded rejection; not an exhaustive claim-by-claim whole-history regrade.",
+  "dominant_defect": "Unresolved consequential categorical-rendering dependency survives without a corresponding supported-input bound or actionable refusal rule.",
+  "full_pass": false,
+  "numeric_score": null,
+  "findings": [
+    {
+      "id": "D1",
+      "status": "VERIFIED",
+      "severity": "blocking",
+      "obligations": [
+        "B1",
+        "B3",
+        "B5"
+      ],
+      "artifact_locators": [
+        "FINAL_PROPOSAL.md:B1 input contract and B3 four overlay admission checks",
+        "FINAL_PROPOSAL.md:B5 visible limits",
+        "UNRESOLVED_LEADS.md:lead 5"
+      ],
+      "claim": "The final leads explicitly leave modern DirectLabelColormap behavior at/above the deprecated mapping cap unverified and consequential for rendering large-id categorical labels. The input contract has no label-count/id bound, and overlay admission checks do not withhold that unsupported range.",
+      "independent_source_basis": {
+        "source_id": "S8",
+        "url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/labels/labels.py",
+        "sha256": "e10bf6b4f7e13ad73fc9adb5e15225a792f9fef52b3a00391d41a23da75808f6",
+        "lines": [
+          196,
+          201
+        ]
+      },
+      "ruling": "The captured statement concerns a deprecated mapping only. It does not establish the chosen modern path over the unrestricted admitted input range. Honest disclosure earns uncertainty credit, but cannot satisfy the brief and scope rule that an unresolved consequential source dependency prevents whole-case PASS. No assertion that the modern renderer actually fails is made."
+    },
+    {
+      "id": "D2",
+      "status": "VERIFIED",
+      "severity": "consequential source-condition error",
+      "obligations": [
+        "Q2",
+        "B2",
+        "B3"
+      ],
+      "artifact_locators": [
+        "FINAL_PROPOSAL.md:169-202 (Q2 axes/calibration and NOTE)",
+        "CRITIQUE.md:X2",
+        "FINAL_PROPOSAL.md:B2 unit interpretation"
+      ],
+      "claim": "The final treats an axis without a unit as necessarily carrying a relative scale factor, and repeatedly pairs unit presence with absolute calibration. This replaces the format condition about unavailable or inapplicable scaling information with a different condition about optional unit metadata.",
+      "independent_source_basis": {
+        "source_id": "S1",
+        "url": "https://raw.githubusercontent.com/ome/ngff-spec/a4c68004fdb8a8d822367205dc12f9574a32ddf8/index.md",
+        "sha256": "fc39309d1ea85bfcebd469008e3111951a605870cc8292301c0de165767b0211",
+        "lines": [
+          [
+            250,
+            257
+          ],
+          [
+            375,
+            385
+          ]
+        ]
+      },
+      "ruling": "Unit presence and scaling applicability must be distinguished. Optional unit metadata may be absent although physical pixel-size information is available. Conversely, the fallback rule is expressly triggered by unavailable/inapplicable scaling. Missing-unit readout markers are appropriate, but do not prove relative calibration or justify comparing image/label physical extents.",
+      "analytic_counterexample": "A producer knows a physical pixel size and stores level-0 scale [0.25,0.25] and level-1 scale [0.5,0.5], while omitting the optional unit on x. Both scales may still represent the known physical pixel size; omission of x.unit alone does not activate the relative-factor fallback. This is an evaluator-derived metadata counterexample, not a candidate fixture or executed upstream test."
+    }
+  ],
+  "coverage": [
+    {
+      "id": "Q1",
+      "status": "ASSESSED_BOUNDED_SOURCE_CHECKED",
+      "detail": "napari Labels/scalar-field and vizarr source/README/package inspected at stated versions or exact captured bytes; two relevant components and a desktop/dependency tradeoff are present. The whole recommendation is not awarded PASS."
+    },
+    {
+      "id": "Q2",
+      "status": "FAILED_SCREEN",
+      "detail": "Spec axes, transform order, level ordering, label association/count and colors conditions inspected; transform composition is valid. D2 prevents full credit for calibration conditions."
+    },
+    {
+      "id": "Q3",
+      "status": "ASSESSED_BOUNDED_SOURCE_CHECKED",
+      "detail": "Issue #7962, PR #8098, added parametrized regression, v0.6.5 release, and PR-author residual translation limitation verified. A pytest.xfail declaration is not an evaluator-observed failing execution."
+    },
+    {
+      "id": "B1",
+      "status": "ASSESSED_WITH_BLOCKING_DEPENDENCY",
+      "detail": "Local Zarr-v2/read-only/two-level/optional-label/refusal contract exists; unbounded categorical input conflicts with unresolved rendering lead D1."
+    },
+    {
+      "id": "B2",
+      "status": "FAILED_SCREEN",
+      "detail": "Dataset-before-global affine formula and 0.7.1 scale-bar correction verified; D2 conflates optional units and applicability of calibration."
+    },
+    {
+      "id": "B3",
+      "status": "ASSESSED_WITH_BLOCKING_DEPENDENCY",
+      "detail": "Level lock, distinct image/label transforms, extent test, nearest categorical sampling and R states specified. D1 remains. Alignment checks for unknown/incomparable units and arbitrary per-level metadata are not certified by this screen."
+    },
+    {
+      "id": "B4",
+      "status": "ASSESSED_BOUNDED_SOURCE_CHECKED",
+      "detail": "Two independent candidate-selected implementations and traceable issue/fix/test present. Source facts, inferences and product choices mostly separated."
+    },
+    {
+      "id": "B5",
+      "status": "FAILED_SCREEN",
+      "detail": "Six concrete revised steps and ten planned fixture classes exist; no candidate execution is claimed. Consequential rendering uncertainty is still open, rather than bounded out of the contract or resolved."
+    }
+  ],
+  "unassessed_after_decisive_screen": [
+    "Exhaustive truth check of every secondary source statement and every toolkit version >=0.7.1",
+    "Runtime behavior of DirectLabelColormap on the unrestricted label range",
+    "End-to-end rendering/readout/overlay under arbitrary per-level transforms",
+    "Every malformed/unsupported-input corner case",
+    "Candidate frontend consumption and semantic acquisition"
+  ],
+  "no_zero_for_unassessed": true,
+  "quality_not_method_rule": "These failures arise from the common brief and source facts, independently of prospective method identity or witness duties.",
+  "source_capture_scope": "All evaluator raw public-source captures reside only in own external evaluation directory; source URLs, full SHA-256 and line locators retained in SOURCES.json. No candidate rescue or source selection sent to candidates."
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "er8.evaluator.bundle-verification.v1",
+  "utc": "2026-10-03T02:37:32.212193+00:00",
+  "json_files_parsed": [
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/QUALITY_BEFORE_METHOD_FREEZE.json",
+      "json_valid": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/alignment-diagnostic.json",
+      "json_valid": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/provenance.json",
+      "json_valid": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/preservation.json",
+      "json_valid": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/method-compliance.json",
+      "json_valid": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/source-excerpts.json",
+      "json_valid": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/quality-before-method.json",
+      "json_valid": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/quality-disposition.json",
+      "json_valid": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/cost.json",
+      "json_valid": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-T-L/REVIEW.json",
+      "json_valid": true
+    }
+  ],
+  "source_quality_freeze_matches": true,
+  "admitted_final_hash_matches": true,
+  "capture_artifact_receipt_hash_mismatches": 0,
+  "flushed_range_mismatches": 0,
+  "independent_primary_body_and_range_hashes_match": true,
+  "transferred_public_artifacts_byte_identical": true,
+  "allowed_primary_quote_limit_met": true,
+  "candidate_files_mutated": false,
+  "candidate_diagnostics_executed": false
+}

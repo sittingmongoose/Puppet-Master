@@ -1,0 +1,40 @@
+{
+  "schema": "pm.er8.root-holder-successor-launch.v2",
+  "root_authority": true,
+  "created_epoch": 1790994468.4051783,
+  "once_only": true,
+  "source_review": {
+    "path": "LAB_ROOT/ops/root-holder-successor-review-v2/REVIEW.json",
+    "sha256": "444d1221ac4a523f454ed475fbf030cf85025f0b0969ac373697bed86b98161b"
+  },
+  "request": {
+    "path": "LAB_ROOT/ops/recovery-v1/ROOT_HOLDER_SUCCESSOR_REQUEST_V2.json",
+    "sha256": "3e251412e16c8fb9757261b50f1e3d7dba6e5090ff1b93654e4f4724ca88e01f"
+  },
+  "cutoff_authority": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-C-L/V8-BIO-AMEND-C-L-final-correction/CASE_AUTHORITY.json",
+    "sha256": "f47c193d3d70d69721dae8b5acd2ab454fb013681dfb6260745e912aef3a0d6b"
+  },
+  "argv": [
+    "systemd-run",
+    "--user",
+    "--unit=er8-v8-root-durable-successor-v2.service",
+    "--property=Type=exec",
+    "--property=RuntimeMaxSec=18565",
+    "--property=TimeoutStopSec=2",
+    "--property=KillMode=control-group",
+    "--working-directory=LAB_ROOT",
+    "--setenv=PYTHONDONTWRITEBYTECODE=1",
+    "--setenv=PYTHONUNBUFFERED=1",
+    "/usr/bin/python3",
+    "LAB_ROOT/ops/root-holder-successor-v2/root_holder_successor_v2.py",
+    "--root-request",
+    "LAB_ROOT/ops/recovery-v1/ROOT_HOLDER_SUCCESSOR_REQUEST_V2.json",
+    "--request-sha256",
+    "3e251412e16c8fb9757261b50f1e3d7dba6e5090ff1b93654e4f4724ca88e01f"
+  ],
+  "runtime_max_seconds": 18565,
+  "ownership": "standby_waiter_only until exclusive flock",
+  "native_launch": false,
+  "original_budgets_births_and_predecessor_unchanged": true
+}

@@ -1,0 +1,174 @@
+[
+  {
+    "id": "S1",
+    "url": "https://raw.githubusercontent.com/ome/ngff-spec/a4c68004fdb8a8d822367205dc12f9574a32ddf8/index.md",
+    "final_url": "https://raw.githubusercontent.com/ome/ngff-spec/a4c68004fdb8a8d822367205dc12f9574a32ddf8/index.md",
+    "http_status": 200,
+    "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/S1.body",
+    "bytes": 36817,
+    "sha256": "fc39309d1ea85bfcebd469008e3111951a605870cc8292301c0de165767b0211",
+    "captured_utc": "2026-10-03T02:24:19.623856+00:00",
+    "read_range": "full body independently read by evaluator; line ranges recorded separately"
+  },
+  {
+    "id": "S2",
+    "url": "https://api.github.com/repos/ome/ome-zarr-py/issues/403",
+    "final_url": "https://api.github.com/repos/ome/ome-zarr-py/issues/403",
+    "http_status": 200,
+    "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/S2.body",
+    "bytes": 3698,
+    "sha256": "2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99",
+    "captured_utc": "2026-10-03T02:24:19.741290+00:00",
+    "read_range": "full body independently read by evaluator; line ranges recorded separately"
+  },
+  {
+    "id": "S3-meta",
+    "url": "https://api.github.com/repos/ome/ome-zarr-py/pulls/590",
+    "final_url": "https://api.github.com/repos/ome/ome-zarr-py/pulls/590",
+    "http_status": 200,
+    "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/S3-meta.body",
+    "bytes": 16985,
+    "sha256": "2b797ae575b5aee3fd0087280eab97abb10177cff0078024b8c37354b7b17603",
+    "captured_utc": "2026-10-03T02:24:19.793587+00:00",
+    "read_range": "full body independently read by evaluator; line ranges recorded separately"
+  },
+  {
+    "id": "S3-diff",
+    "url": "https://github.com/ome/ome-zarr-py/pull/590.diff",
+    "final_url": "https://patch-diff.githubusercontent.com/raw/ome/ome-zarr-py/pull/590.diff",
+    "http_status": 200,
+    "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/S3-diff.body",
+    "bytes": 6811,
+    "sha256": "f0aa7ce9ce88fbfdb83214141942a8ae4d0c3aa206773ea523b9f38cc09ce565",
+    "captured_utc": "2026-10-03T02:24:19.882632+00:00",
+    "read_range": "full body independently read by evaluator; line ranges recorded separately"
+  },
+  {
+    "id": "S4",
+    "url": "https://raw.githubusercontent.com/ome/ome-zarr-py/master/ome_zarr/format.py",
+    "final_url": "https://raw.githubusercontent.com/ome/ome-zarr-py/master/ome_zarr/format.py",
+    "http_status": 200,
+    "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/S4.body",
+    "bytes": 12703,
+    "sha256": "82b61d30f62d6eddd81ff63b43146fd4f7be93be767ae5561b74a99951c24eca",
+    "captured_utc": "2026-10-03T02:24:19.651969+00:00",
+    "read_range": "full body independently read by evaluator; line ranges recorded separately"
+  },
+  {
+    "id": "S5",
+    "url": "https://api.github.com/repos/napari/napari/releases/tags/v0.9.2",
+    "final_url": "https://api.github.com/repos/napari/napari/releases/tags/v0.9.2",
+    "http_status": 200,
+    "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/S5.body",
+    "bytes": 29784,
+    "sha256": "852916a1a1755917db0d1bca32791ef7761977839b23dcb16f352237a7faf9a8",
+    "captured_utc": "2026-10-03T02:24:19.808981+00:00",
+    "read_range": "full body independently read by evaluator; line ranges recorded separately"
+  },
+  {
+    "id": "S6",
+    "url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/image.md",
+    "final_url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/image.md",
+    "http_status": 200,
+    "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/S6.body",
+    "bytes": 20309,
+    "sha256": "2897310cc50d5ac6c920bc34cad61f001521842246af2444300603af75893963",
+    "captured_utc": "2026-10-03T02:24:19.752017+00:00",
+    "read_range": "full body independently read by evaluator; line ranges recorded separately"
+  },
+  {
+    "id": "S7",
+    "url": "https://raw.githubusercontent.com/napari/docs/main/docs/guides/units.md",
+    "final_url": "https://raw.githubusercontent.com/napari/docs/main/docs/guides/units.md",
+    "http_status": 200,
+    "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/S7.body",
+    "bytes": 4294,
+    "sha256": "ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11",
+    "captured_utc": "2026-10-03T02:24:19.812731+00:00",
+    "read_range": "full body independently read by evaluator; line ranges recorded separately"
+  },
+  {
+    "id": "S8",
+    "url": "https://raw.githubusercontent.com/haesleinhuepf/stackview/main/README.md",
+    "final_url": "https://raw.githubusercontent.com/haesleinhuepf/stackview/main/README.md",
+    "http_status": 200,
+    "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/S8.body",
+    "bytes": 15311,
+    "sha256": "cf7b0d7e8446aed989ab392a0a7285c5fb3f9e5a425f18f18092841d71108b7e",
+    "captured_utc": "2026-10-03T02:24:19.835329+00:00",
+    "read_range": "full body independently read by evaluator; line ranges recorded separately"
+  },
+  {
+    "id": "N1-image-v092",
+    "url": "https://raw.githubusercontent.com/napari/napari/v0.9.2/napari/layers/image/image.py",
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "id": "N2-slice-v092",
+    "url": "https://raw.githubusercontent.com/napari/napari/v0.9.2/napari/layers/image/_slice.py",
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "id": "N3-labels-v092",
+    "url": "https://raw.githubusercontent.com/napari/napari/v0.9.2/napari/layers/labels/labels.py",
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "id": "N4-base-v092",
+    "url": "https://raw.githubusercontent.com/napari/napari/v0.9.2/napari/layers/base/base.py",
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "id": "S1-pin",
+    "url": "https://api.github.com/repos/ome/ngff/contents/specifications/0.4?ref=main",
+    "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/S1-pin.body",
+    "http_status": 200,
+    "bytes": 760,
+    "sha256": "9999a8b7dc215c452568fbcc526416558da1776b461b2c14ca3b95653079ba7c",
+    "captured_utc": "2026-10-03T02:24:59.760772+00:00"
+  },
+  {
+    "id": "S1-modules",
+    "url": "https://raw.githubusercontent.com/ome/ngff/main/.gitmodules",
+    "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/S1-modules.body",
+    "http_status": 200,
+    "bytes": 865,
+    "sha256": "55a2e54ce6baa8900a2c53cef9de0cf21acc671301cbf998b7934a321c5625c2",
+    "captured_utc": "2026-10-03T02:24:59.714415+00:00"
+  },
+  {
+    "id": "N5-wheel",
+    "url": "https://github.com/napari/napari/releases/download/v0.9.2/napari-0.9.2-py3-none-any.whl",
+    "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/napari-0.9.2-py3-none-any.whl",
+    "sha256": "a67f7add584c8d2560096a0ae0b5322eceba046db42f4c130c8e622c5c72a04f",
+    "bytes": 3715060,
+    "matches_release_digest": true,
+    "captured_utc": "2026-10-03T02:25:32.703320+00:00",
+    "members": [
+      {
+        "archive_member": "napari/layers/image/image.py",
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/wheel-napari_layers_image_image.py",
+        "sha256": "73027b2f096445c6aea88689bbf29f8707a75847d1348fa3b80eaf867c728c56",
+        "bytes": 32657
+      },
+      {
+        "archive_member": "napari/layers/image/_slice.py",
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/wheel-napari_layers_image__slice.py",
+        "sha256": "f8b0e977572f7e769bdff90d04619d2f674ea7f091e8576a93d84b38da7fe968",
+        "bytes": 1311
+      },
+      {
+        "archive_member": "napari/layers/labels/labels.py",
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/wheel-napari_layers_labels_labels.py",
+        "sha256": "8d5ac1e119018af7b49df29838a91273910df09c2d4e4e6ec7e58a3744e7a176",
+        "bytes": 89597
+      },
+      {
+        "archive_member": "napari/layers/base/base.py",
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-AMEND-C-L/source-captures/wheel-napari_layers_base_base.py",
+        "sha256": "2c9e08f2cf0508fdf2399abf49eea42ecb545adb81ac4c8422b57103b57eefa4",
+        "bytes": 89848
+      }
+    ]
+  }
+]

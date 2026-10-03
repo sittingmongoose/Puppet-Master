@@ -63,16 +63,16 @@
       }
     ]
   },
-  "checkpoint": "TWO_OPERATIONAL_PAIRS_RETRIEVAL_FAILED_SCREENS_AMENDMENT_REVIEW_PENDING",
+  "checkpoint": "FOUR_OPERATIONAL_PAIRS_THREE_REVIEWED_FAILED_SCREENS_NB_AMEND_ACTIVE",
   "prospective_pair_map": "tranche-cohort-v2/cases/tranche-v2/pairs.json",
   "prospective_pair_count": 12,
-  "completed_comparisons": 1,
-  "current_scope_note": "12 target pairs; 2 operational complete; retrieval screened and rejected; amendment quality pending. No full-PASS same-quality efficiency claim.",
+  "completed_comparisons": 3,
+  "current_scope_note": "12 target pairs; four operationally complete; first three independently screened/rejected, fourth final review pending. No full-PASS same-quality efficiency claim.",
   "scope_review": "recovery-results-cohort-v2/evaluation/tranche-scope-review-v1/review.json",
   "scope_review_status": "CLEAR_PROSPECTIVE_NO_LAUNCH_AUTHORITY",
-  "observation_utc": "2026-10-03T02:24:21.639997+00:00",
-  "completed_comparisons_definition": "One operational pair with both independent dispositions frozen; neither full quality PASS.",
-  "operational_matched_pairs_completed": 2,
+  "observation_utc": "2026-10-03T03:30:42.162151+00:00",
+  "completed_comparisons_definition": "Three operational pairs with both independent dispositions frozen; six FAILED_SCREENs. Fourth operational pair under review, no qualified efficiency result.",
+  "operational_matched_pairs_completed": 4,
   "quality_qualified_efficiency_comparisons": 0,
   "integrated_pair_results": [
     {
@@ -86,10 +86,26 @@
     {
       "pair": "BIO-AMEND-C/T",
       "operational_complete": true,
-      "independent_review": "PENDING",
+      "independent_review": "TWO_FAILED_SCREEN; remainder UNASSESSED",
       "quality_qualified_efficiency": false,
       "speedup": "NOT_ESTABLISHED",
-      "evidence": "integrated-amendment-pair-v1/README.md"
+      "evidence": "amendment-quality-review-v1/ops/recovery-v1/ROOT_AMENDMENT_COMPARISON_V1.json"
+    },
+    {
+      "pair": "BIO-BREADTH-C/T",
+      "operational_complete": true,
+      "independent_review": "TWO_FAILED_SCREEN; remainder UNASSESSED",
+      "quality_qualified_efficiency": false,
+      "speedup": "NOT_ESTABLISHED",
+      "evidence": "breadth-quality-review-v1/ops/recovery-v1/ROOT_BREADTH_COMPARISON_V2.json"
+    },
+    {
+      "pair": "NB-RETR-C/T",
+      "operational_complete": true,
+      "independent_review": "PENDING final freezes",
+      "quality_qualified_efficiency": false,
+      "speedup": "NOT_ESTABLISHED",
+      "evidence": "current-state-cohort-v1/latest-root-metadata-v1/ops/recovery-v1/OBSERVATION_20261003_033042.json"
     }
   ]
 }

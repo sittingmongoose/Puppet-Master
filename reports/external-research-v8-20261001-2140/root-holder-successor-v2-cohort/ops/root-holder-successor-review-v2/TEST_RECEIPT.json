@@ -1,0 +1,43 @@
+{
+  "schema": "pm.er8.root-holder-successor-independent-tests.v2",
+  "started_epoch": 1790994230.7477458,
+  "finished_epoch": 1790994230.896953,
+  "original_reviewer_deadline_epoch": 1790994597.2604625,
+  "before_original_deadline": true,
+  "original_tests": 18,
+  "independent_tests": 11,
+  "tests_run": 29,
+  "failures": 0,
+  "errors": 0,
+  "success": true,
+  "same_byte_inode_observations": [
+    {
+      "input": "SUPERVISOR_DURABLE.json",
+      "identical_bytes_replacement_accepted": true,
+      "old_inode": 11818634,
+      "new_inode": 11818637,
+      "sha256": "6f87e82c444c146588648f1966157d3d2f60fd7f232729314bfe0ca62835b412",
+      "lock_identity_unchanged": true
+    },
+    {
+      "input": "durable_holder_v1.py",
+      "identical_bytes_replacement_accepted": true,
+      "old_inode": 11818633,
+      "new_inode": 11818637,
+      "sha256": "1e9e180371e3811f9100aaf9b0cba88ee91b64ba79b0ae78c5b5407c6e8e2e02",
+      "lock_identity_unchanged": true
+    },
+    {
+      "input": "ROOT_HOLDER_SUCCESSOR_REQUEST_V2.json",
+      "identical_bytes_replacement_accepted": true,
+      "old_inode": 11818636,
+      "new_inode": 11818637,
+      "sha256": "bc07d5b32180204e4f347dfba047b26b1a87b3f3415eb591e3997f3fc3dd53e2",
+      "lock_identity_unchanged": true
+    }
+  ],
+  "live_mutex_request_claim_access": false,
+  "source_original_modified": false,
+  "bytecode_disabled": true,
+  "temporary_files_parent": "LAB_ROOT/ops/root-holder-successor-review-v2/isolated-copies"
+}

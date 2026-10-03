@@ -1,0 +1,38 @@
+{
+  "schema": "er8.independent.analytic_diagnostic.v1",
+  "case_id": "V8-BIO-BREADTH-C-M",
+  "computed_by": "Independent evaluator after quality freeze; not supplied to candidate",
+  "scope": "Arithmetic consistency check of an already source-grounded formula; not runtime behavior or new source-grade finding.",
+  "i": [
+    4,
+    6
+  ],
+  "dataset_scale": [
+    0.5,
+    2
+  ],
+  "dataset_translate": [
+    5,
+    -3
+  ],
+  "multiscales_scale": [
+    3,
+    0.25
+  ],
+  "multiscales_translate": [
+    -2,
+    7
+  ],
+  "dataset_then_multiscales": [
+    19.0,
+    9.25
+  ],
+  "swapped_order": [
+    10.0,
+    14.0
+  ],
+  "orders_discriminate": true,
+  "candidate_execution": "UNEXECUTED_DECLARED",
+  "upstream_execution": "NOT_EXECUTED_BY_EVALUATOR",
+  "semantic_acquisition": "UNKNOWN"
+}

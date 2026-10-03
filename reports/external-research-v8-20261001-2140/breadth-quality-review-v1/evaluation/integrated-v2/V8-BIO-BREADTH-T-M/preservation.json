@@ -1,0 +1,49 @@
+{
+  "schema": "er8.current-artifact-preservation.v1",
+  "scope": "Assigned actual initial→critic→final current artifacts only; no old histories",
+  "whole_artifact_semantic_preservation": "UNASSESSED after decisive source-grounded screen",
+  "scoped_dispositions": [
+    {
+      "finding": "Unsafe per-level-only label equality gate",
+      "initial": "PROPOSAL.md:136",
+      "critic": "CRITIQUE.md:82 calls B3 satisfied",
+      "final": "FINAL_PROPOSAL.md:159–160",
+      "disposition": "PRESERVED_DEFECT; group-transform condition remains absent from overlay gate"
+    },
+    {
+      "finding": "Cursor example (11.5,3.65)",
+      "initial": "PROPOSAL.md:168",
+      "critic": "CRITIQUE.md:72 corrects arithmetic",
+      "final": "FINAL_PROPOSAL.md:153,195 replaces with (11.5,16.25)",
+      "disposition": "CORRECTED_FALSE_INITIAL_CONTENT; not a preservation failure"
+    },
+    {
+      "finding": "F2 missing per-level definition",
+      "initial": "PROPOSAL.md:159,168",
+      "critic": "CRITIQUE.md:73",
+      "final": "FINAL_PROPOSAL.md:183,196",
+      "disposition": "REPAIRED; explicit per-level values retained, arithmetic checked as proposal mathematics only"
+    },
+    {
+      "finding": "NGFF0.6/Zarr3 test scoping",
+      "initial": "PROPOSAL.md:97–104",
+      "critic": "CRITIQUE.md:64",
+      "final": "FINAL_PROPOSAL.md:118–126,217",
+      "disposition": "SOURCE_SCOPE_QUALIFICATION_RETAINED; external history not fully independently adjudicated in this early screen"
+    },
+    {
+      "finding": "Group-level transforms apply after per-level transforms",
+      "initial": "PROPOSAL.md:63,69",
+      "critic": "CRITIQUE.md:48",
+      "final": "FINAL_PROPOSAL.md:81,87",
+      "disposition": "SOURCE_SUPPORTED_CONDITION_TEXT_PRESERVED; not operationalized by B3 gate"
+    },
+    {
+      "finding": "Float tolerance and visible limits",
+      "initial": "PROPOSAL.md:136,170",
+      "critic": "CRITIQUE.md:75,82",
+      "final": "FINAL_PROPOSAL.md:160,201",
+      "disposition": "CRITIC_REQUESTED_CLARIFICATIONS_PRESENT; other preservation facets remain unassessed"
+    }
+  ]
+}
