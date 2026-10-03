@@ -18,6 +18,23 @@
  * screenshotted, handed back to the page as a data URL, drawn to a canvas and
  * sampled with getImageData. No assertion in this file rests on a bounding box
  * alone, and none rests on a dispatch count.
+ *
+ * BOTH DESIGNS (neon icons, step 3C, 2026-10-02). This harness lands on main and
+ * must hold for main's standalone (the live node is a disc FILLED with the phase
+ * hue, its glyph in --on-accent) and for the neon build (the live node is a DARK
+ * DISC rimmed and inked in the phase hue, its glyph lit and acting). So:
+ *   - before any pixel read, every neon glyph animation (svg.nx parts and roots,
+ *     .nx-st status wrappers) is frozen at rest: paused at an iteration boundary
+ *     (currentTime 0 for the default one-period negative delay), one-shots
+ *     finished. A no-op on main, which draws no svg.nx.
+ *   - the live node passes four pixel claims that are true of both: (i) a rim
+ *     pixel within 30 of --pm-step at one of the four compass points, 1-2 px
+ *     inside the box; (ii) strokeCore at --pm-step >= 6; (iii) the fill band at
+ *     least 60 from --pm-step, skipped when the declared fill IS the phase hue
+ *     (main); (iv) the rim at least 40 from the card. All four run in every
+ *     theme of the list; under NieR (an ink block with a paper glyph, nier.css)
+ *     the rim target is the node's declared border and the glyph target its ink.
+ *   - the trail reader measures the painted tube (.nx-c) when there is one.
  */
 import { chromium } from 'playwright';
 import path from 'path';
@@ -47,6 +64,7 @@ async function safe(label, fn) {
    bytes. This is the only way to answer "is it painted": a rect is reported
    for elements that are clipped, occluded, transparent or mid-transition. */
 async function readPixels(page, clip) {
+  await freezeNx(page);
   const buf = await page.screenshot({ clip });
   const dataUrl = 'data:image/png;base64,' + buf.toString('base64');
   return page.evaluate(async (u) => {
@@ -93,6 +111,7 @@ async function readPixels(page, clip) {
    has a fully-covered core. Verified against the negative control, where the
    same crop scores ~0. */
 async function strokeCore(page, clip, fg, tol = 26) {
+  await freezeNx(page);
   const buf = await page.screenshot({ clip });
   const dataUrl = 'data:image/png;base64,' + buf.toString('base64');
   return page.evaluate(async ({ u, fg, tol }) => {
@@ -113,6 +132,83 @@ async function strokeCore(page, clip, fg, tol = 26) {
   }, { u: dataUrl, fg, tol });
 }
 const clipOf = r => ({ x: Math.max(0, Math.round(r.x)), y: Math.max(0, Math.round(r.y)), width: Math.max(1, Math.round(r.width)), height: Math.max(1, Math.round(r.height)) });
+/* ---- neon freeze -----------------------------------------------------
+   A glyph that acts (the live node's and the core's loop, a status mark's
+   rhythm) would put the pixel reads at a random pose. Pause every animation
+   inside svg.nx or a .nx-st wrapper at rest: a loop at an iteration boundary
+   (its keyframes start and end at the rest pose; with the default delay of
+   minus one period that is currentTime 0), a one-shot finished. */
+async function freezeNx(page) {
+  return page.evaluate(() => {
+    let n = 0;
+    for (const a of document.getAnimations()) {
+      const t = a.effect && a.effect.target;
+      if (!t || !t.closest || !t.closest('svg.nx, .nx-st')) continue;
+      a.pause();
+      const tm = a.effect.getTiming(), d = typeof tm.duration === 'number' ? tm.duration : 0;
+      if (tm.iterations === Infinity) { const k = d ? Math.ceil(Math.max(0, -tm.delay) / d) : 0; a.currentTime = tm.delay + k * d; }
+      else a.finish();
+      n++;
+    }
+    return n;
+  });
+}
+/* ---- the live-node reader -------------------------------------------
+   The four claims (header) for one live node, from one painted crop: the rim
+   pixel nearest the target at the four compass points 1-2 px inside the box,
+   the fill band, the declared fill, the card colour, and strokeCore at the
+   glyph target. NieR (nier.css) paints the live node as an ink block with a
+   paper glyph, so there the rim target is the declared border and the glyph
+   target the node's ink; everywhere else both are --pm-step. */
+async function liveNodeClaims(page, nier) {
+  await freezeNx(page);
+  const loc = page.locator('.orbit-node.live').first();
+  const box = await loc.boundingBox();
+  if (!box) return null;
+  const want = await page.evaluate(nier => {
+    const n = document.querySelector('.orbit-node.live');
+    /* any computed colour (rgb(), color(srgb ...) from a color-mix) to 0-255 rgb, through a canvas */
+    const g = document.createElement('canvas').getContext('2d', { willReadFrequently: true });
+    const rgb = c => { g.clearRect(0, 0, 1, 1); g.fillStyle = '#000'; g.fillStyle = c; g.fillRect(0, 0, 1, 1); const d = g.getImageData(0, 0, 1, 1).data; return [d[0], d[1], d[2]]; };
+    const probe = document.createElement('i'); probe.style.color = 'var(--pm-step, var(--accent))'; n.appendChild(probe);
+    const step = rgb(getComputedStyle(probe).color); probe.remove();
+    const cs = getComputedStyle(n);
+    return {
+      step, fill: rgb(cs.backgroundColor), border: rgb(cs.borderTopColor), ink: rgb(cs.color),
+      card: rgb(getComputedStyle(n.closest('.working-card')).backgroundColor),
+      rimT: nier ? rgb(cs.borderTopColor) : step, glyphT: nier ? rgb(cs.color) : step
+    };
+  }, nier);
+  const clip = clipOf(box);
+  const buf = await page.screenshot({ clip });
+  const px = await page.evaluate(async ({ u, rimT }) => {
+    const img = new Image();
+    await new Promise((res, rej) => { img.onload = res; img.onerror = rej; img.src = u; });
+    const c = document.createElement('canvas'); c.width = img.width; c.height = img.height;
+    const x = c.getContext('2d', { willReadFrequently: true }); x.drawImage(img, 0, 0);
+    const d = x.getImageData(0, 0, c.width, c.height).data, W = c.width, H = c.height;
+    const at = (X, Y) => { const i = (Y * W + X) * 4; return [d[i], d[i + 1], d[i + 2]]; };
+    const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+    const cx = Math.floor(W / 2), cy = Math.floor(H / 2), pts = [];
+    for (const o of [1, 2]) pts.push(['top', at(cx, o)], ['bottom', at(cx, H - 1 - o)], ['left', at(o, cy)], ['right', at(W - 1 - o, cy)]);
+    let best = null;
+    for (const [where, p] of pts) { const dd = dist(p, rimT); if (!best || dd < best.d) best = { where, p, d: dd }; }
+    /* the fill band: on the centre line, 3 px inside the top edge, clear of the
+       rim and of a 14px glyph with its bloom (a lit glyph's halo reaches 22 %
+       of the box, where readPixels samples a filled node) */
+    return { best, band: at(cx, Math.min(H - 1, Math.max(3, Math.round(H * 0.12)))) };
+  }, { u: 'data:image/png;base64,' + buf.toString('base64'), rimT: want.rimT });
+  const sc = await strokeCore(page, clip, want.glyphT);
+  const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+  const filled = dist(want.fill, want.glyphT) <= 12;
+  return {
+    rim: { pass: px.best.d <= 30, at: px.best.where, painted: px.best.p, target: want.rimT, delta: +px.best.d.toFixed(1) },
+    core: { pass: sc.core >= 6, core: sc.core, target: want.glyphT },
+    band: { pass: filled || dist(px.band, want.glyphT) >= 60, skipped: filled, painted: px.band, target: want.glyphT, delta: +dist(px.band, want.glyphT).toFixed(1) },
+    card: { pass: dist(px.best.p, want.card) >= 40, rim: px.best.p, card: want.card, delta: +dist(px.best.p, want.card).toFixed(1) },
+    fillBand: { declared: want.fill, painted: px.band, delta: +dist(px.band, want.fill).toFixed(1) }
+  };
+}
 
 /* ---- setup ---------------------------------------------------------- */
 if (!fs.existsSync(FILE)) { console.error('orbit-verify: no such file ' + FILE); process.exit(2); }
@@ -182,7 +278,12 @@ await safe('Shared trail: painted stroke is over 1px in every take that uses it'
         if (!el) return null;
         const svg = el.querySelector('svg'); if (!svg) return null;
         const r = svg.getBoundingClientRect();
-        const sw = parseFloat(getComputedStyle(svg).strokeWidth) || 1.8;
+        /* the painted tube when the glyph is a neon one (its weight is the
+           context's --nx-stroke-base times the tone factor), else the svg */
+        const tube = svg.querySelector('.nx-c:not(.nx-f)') || svg;
+        /* a computed calc() weight reads "calc(2.3px)": take its number */
+        const swm = /-?[\d.]+/.exec(getComputedStyle(tube).strokeWidth || '');
+        const sw = (swm && +swm[0]) || 1.8;
         return {
           box: +el.getBoundingClientRect().width.toFixed(2),
           svg: +r.width.toFixed(2),
@@ -332,11 +433,20 @@ await safe('Orbit: every node hit-tests to itself and paints', async () => {
     });
     const got = [1, 3, 5].map((i, k) => parseInt(px.band.slice(1 + k * 2, 3 + k * 2), 16));
     const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
-    check('the live node paints its declared phase fill (fill band, delta <= 12)',
-      dist(got, want.fill) <= 12, { painted: px.band, centre: px.centre, declared: want.fill, delta: +dist(got, want.fill).toFixed(1) });
-    check('the live node is visibly distinct from the card behind it (delta >= 40)',
-      dist(got, want.surface) >= 40, { painted: px.centre, surface: want.surface, delta: +dist(got, want.surface).toFixed(1) });
+    /* The node's identity is its phase hue, painted either as the whole fill
+       (main) or as the rim and the lit glyph of a dark disc (neon): the four
+       claims hold for both (header). "Distinct from the card" is asserted on
+       the rim, because a dark disc is meant to sit dark on a dark card. The
+       declared fill is read 3 px inside the top edge (liveNodeClaims), where
+       neither the rim nor a lit glyph's bloom reaches. */
+    const lc = await liveNodeClaims(page, false);
+    check('the live node paints its declared fill (fill band, delta <= 12)',
+      lc.fillBand.delta <= 12, { ...lc.fillBand, readPixelsBand: px.band, readPixelsVsDeclared: +dist(got, want.fill).toFixed(1) });
     check('the live node crop carries real ink, not a flat block', px.inkShare >= 0.08 && px.distinct >= 8, px);
+    check('(i) the live node has a rim pixel in its phase hue (delta <= 30, a compass point 1-2 px inside)', lc.rim.pass, lc.rim);
+    check('(ii) the live node paints its phase hue with a fully-covered core (strokeCore >= 6)', lc.core.pass, lc.core);
+    check('(iii) the fill band is not the phase hue (delta >= 60; skipped when the fill IS the hue)', lc.band.pass, lc.band);
+    check('(iv) the live node\'s rim stands off the card (delta >= 40)', lc.card.pass, lc.card);
   } else bad('no .orbit-node.live to sample');
 });
 
@@ -630,14 +740,21 @@ await safe('Orbit: geometry is derived from the container, not hardcoded', async
 });
 
 /* =====================================================================
-   7 — all 8 themes
+   7 — every theme in the list (8 on main, 10 with NieR Light and Dark)
    ===================================================================== */
 await safe('Orbit: renders in all 8 themes with no overflow and no console noise', async () => {
   const themes = await page.evaluate(() => window.PM56_DATA.themes.map(t => t.id));
-  const bad_ = [];
+  const bad_ = [], claims = { rim: [], core: [], band: [], card: [] };
   for (const t of themes) {
     await page.evaluate(id => window.PM56_DEMO.setTheme(id), t);
     await orbit(page, 7);
+    /* the live node's four pixel claims (header), read unpinned: a pinned
+       node takes the open look on main (an earlier section left node 7 pinned;
+       a core click follows the live subject again, then the pop settles) */
+    if (await page.evaluate(() => { const n = document.querySelector('.orbit-node.live.open'), c = document.querySelector('.orbit-core'); if (n && c) c.click(); return !!n; })) await page.waitForTimeout(700);
+    const lc = await liveNodeClaims(page, /^nier/.test(t));
+    if (!lc) claims.rim.push({ theme: t, missing: true });
+    else for (const k of ['rim', 'core', 'band', 'card']) if (!lc[k].pass) claims[k].push({ theme: t, ...lc[k] });
     await page.evaluate(() => { const b = document.querySelector('.orbit-node[data-value="7"]'); if (b) b.click(); });
     await page.waitForTimeout(520);
     /* Opening the panel grows the card by ~250px, which pushes the orbit past
@@ -666,14 +783,26 @@ await safe('Orbit: renders in all 8 themes with no overflow and no console noise
     if (m.missing || !m.hit || m.escapesCard || m.pageOverflow || px.inkShare < 0.05) bad_.push({ theme: t, ...m, px });
   }
   check('8 themes: node painted + hit-testable, nothing escapes the card, no page overflow', bad_.length === 0, bad_.length ? bad_ : themes.length + ' themes clean');
+  check(themes.length + ' themes: (i) the live node\'s rim reads its phase hue (NieR: its declared rim)', claims.rim.length === 0, claims.rim.length ? claims.rim : themes.join(','));
+  check(themes.length + ' themes: (ii) the live glyph has a fully-covered core in its phase hue (NieR: its ink)', claims.core.length === 0, claims.core.length ? claims.core : themes.join(','));
+  check(themes.length + ' themes: (iii) the fill band is not the glyph hue, unless the node is filled with it', claims.band.length === 0, claims.band.length ? claims.band : themes.join(','));
+  check(themes.length + ' themes: (iv) the live node\'s rim stands off the card (delta >= 40)', claims.card.length === 0, claims.card.length ? claims.card : themes.join(','));
   await page.evaluate(() => window.PM56_DEMO.setTheme('basic-dark'));
 });
 
 /* =====================================================================
    8 — prefers-reduced-motion: the state still arrives
    ===================================================================== */
-await safe('Orbit: reduced motion reaches the same end state with no perpetual loops', async () => {
-  const p3 = await newPage({ reducedMotion: 'reduce' });
+/* All three reduced routes (3E2 fix cycle 1): the media query, the Demo Studio switch body.pm56-reduced and the
+   PMConcept7 contract html[data-motion="reduced"] must each land the same end state, stop every loop inside the
+   stage (the glyph parts' included) and run the travel in 1ms (the 420 ms collapse once leaked on a route). */
+for (const route of ['media', 'class', 'data-motion']) {
+await safe('Orbit: reduced motion (' + route + ') reaches the same end state with no perpetual loops', async () => {
+  const p3 = await newPage(route === 'media' ? { reducedMotion: 'reduce' } : {});
+  await p3.evaluate(r => {
+    if (r === 'class') document.body.classList.add('pm56-reduced');
+    if (r === 'data-motion') document.documentElement.setAttribute('data-motion', 'reduced');
+  }, route);
   await orbit(p3, 7);
   await p3.click('.orbit-node[data-value="4"]');
   await p3.waitForTimeout(180);
@@ -682,18 +811,31 @@ await safe('Orbit: reduced motion reaches the same end state with no perpetual l
     const pr = st.querySelector('.orbit-panel').getBoundingClientRect();
     const loops = [...st.querySelectorAll('*')].filter(e => {
       const cs = getComputedStyle(e);
-      return cs.animationName !== 'none' && cs.animationIterationCount === 'infinite';
+      return cs.animationName !== 'none' && cs.animationIterationCount === 'infinite' && cs.display !== 'none';
     }).map(e => e.className.toString().slice(0, 24) + ':' + getComputedStyle(e).animationName);
-    return { open: st.dataset.orbitOpen, focus: st.dataset.orbitFocus, area: +(pr.width * pr.height).toFixed(0), loops };
+    const running = document.getAnimations().filter(a => {
+      const t = a.effect && a.effect.target; if (!t || !st.contains(t) || a.playState !== 'running') return false;
+      /* every loop, and the Orbit's own entrances (the media block's 1ms list); motion.css's shared row and word
+         entrances (pm-materialize) are the app's motion layer, honoured by the media query only (not this check) */
+      const tm = a.effect.getComputedTiming();
+      const own = /(^|\s)orbit-(sat|core-icon|node|dial|strip-item|node-pip|track|narration|core-more)(\s|$)/.test(String(t.className.baseVal ?? t.className));
+      return tm.iterations === Infinity || (own && tm.activeDuration > 20);
+    }).map(a => (a.animationName || a.transitionProperty || 'waapi') + ':' + String(a.effect.target.className.baseVal ?? a.effect.target.className).slice(0, 24));
+    const slow = [...st.querySelectorAll('.orbit-layout, .orbit-dial, .orbit-core, .orbit-node, .orbit-panel, .orbit-panel-in, .orbit-sat, .orbit-close')]
+      .concat([st]).filter(e => getComputedStyle(e).transitionDuration.split(',').some(d => parseFloat(d) > .001))
+      .map(e => e.className.toString().slice(0, 24) + ':' + getComputedStyle(e).transitionDuration);
+    return { open: st.dataset.orbitOpen, focus: st.dataset.orbitFocus, area: +(pr.width * pr.height).toFixed(0), loops, running, slow };
   });
-  check('reduced motion: the panel still opens, and fast', m.open === '1' && m.area > 4000, m);
-  check('reduced motion: nothing inside the orbit loops forever', m.loops.length === 0, m.loops);
+  check('reduced motion (' + route + '): the panel still opens, and fast', m.open === '1' && m.area > 4000, m);
+  check('reduced motion (' + route + '): nothing inside the orbit loops forever', m.loops.length === 0 && m.running.length === 0, { loops: m.loops, running: m.running });
+  check('reduced motion (' + route + '): the stage travel runs in 1ms', m.slow.length === 0, m.slow);
   await p3.click('.orbit-core');
   await p3.waitForTimeout(180);
   const m2 = await p3.evaluate(() => { const st = document.querySelector('.orbit-stage'); return { open: st.dataset.orbitOpen, focus: st.dataset.orbitFocus }; });
-  check('reduced motion: the stage stays open after unpin (no collapse path exists)', m2.open === '1', m2);
+  check('reduced motion (' + route + '): the stage stays open after unpin (no collapse path exists)', m2.open === '1', m2);
   await p3.close();
 });
+}
 
 /* =====================================================================
    9 — the multi-orbit turn: sequencing, compaction, two-beat reopen

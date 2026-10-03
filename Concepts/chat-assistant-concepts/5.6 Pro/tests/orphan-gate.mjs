@@ -44,7 +44,9 @@ export function staticTokens(src) {
      now asserted non-empty before any verdict is computed. */
   const files = fs.readdirSync(src)
     .filter(f => (f.endsWith('.js') || f.endsWith('.html')) && f !== 'index.html'
-                 && !f.startsWith('PM_Chat_Assistant'))
+                 && !f.startsWith('PM_Chat_Assistant')
+                 // TestPMChat*.html is a built test copy of index.html, not a source.
+                 && !f.startsWith('TestPMChat'))
     .map(f => path.join(src, f));
   const tokens = new Set(), patterns = [], ids = new Set();
   const SENTINEL = 'zzq9-orphan-sentinel-zzq9';

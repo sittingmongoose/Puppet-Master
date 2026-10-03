@@ -3,6 +3,18 @@
  * Every assertion that claims something is VISIBLE goes through
  * document.elementFromPoint() plus a painted-pixel read of a screenshot crop —
  * never getBoundingClientRect() alone.
+ *
+ * DESIGN-AGNOSTIC GLOW (neon icons step 3B, 2026-10-02).  The shipped bar lit
+ * its icons with a CSS `filter: drop-shadow(...)`; the neon build lights them
+ * with a halo stroke (`.nx-h`, neon-icons.js) and no filter at all.  So the
+ * glow is read from EITHER: a filter, or a halo path that paints (displayed,
+ * visible, stroke-opacity above 0 — and, once, painted pixels: hiding the
+ * halos must change the icon's crop).  The harness holds for both builds.
+ * KNOWN, NOT REPAIRED: section 7 (the 420px-tall flip) times out at its first
+ * waitForSelector on both builds.  It is not a stale selector: at 1440x420 the
+ * bar sits in the transcript stage, and the scroll Playwright makes to hover
+ * the Artifacts button moves the bar ~44px, so the pointer is no longer over
+ * the button and no hover card opens.
  */
 import fs from 'fs';
 import path from 'path';
@@ -94,6 +106,13 @@ async function hitTest(sel) {
   }, sel);
 }
 
+/* In-page glow reader for one icon: a filter, or a halo that paints. Returns
+   false, 'filter:<value>' or 'halo:<stroke-opacity>'. */
+const GLOW_FN = `(svg)=>{ const cs=getComputedStyle(svg); if(cs.filter && cs.filter!=='none') return 'filter:'+cs.filter;
+  const hs=[...svg.querySelectorAll('.nx-h')].map(h=>getComputedStyle(h)).filter(h=>h.display!=='none' && h.visibility!=='hidden'
+    && parseFloat(h.strokeOpacity)>0 && parseFloat(h.strokeWidth)>0);
+  return hs.length ? 'halo:'+Math.max(...hs.map(h=>parseFloat(h.strokeOpacity))) : false; }`;
+
 /* ===================================================================== 0
    Every rule this module ships actually PARSED. A stray comment terminator
    inside a CSS comment closes it early and the parser swallows the next rule with no
@@ -105,7 +124,10 @@ const rulesPresent = await page.evaluate(() => {
     'html[data-ab-ready] .activity-item > svg',
     'html[data-ab-ready] .activity-item[data-hover-domain="changes"] .count',
     '.hover-card.ab-card', '.ab-card .ab-head', '.ab-card .ab-row',
-    '.ab-card .ab-glyph', '.ab-card .ab-avatar', '.ab-card .ab-foot', '.activity-wrap'
+    /* '.ab-card .ab-glyph' left the list: the row glyph column was retired before
+       the neon work, and no source emits or styles .ab-glyph any more (the
+       check failed on the shipped standalone for that one stale entry) */
+    '.ab-card .ab-avatar', '.ab-card .ab-foot', '.activity-wrap'
   ];
   const seen = new Set();
   const walk = rules => { for (const r of rules) { if (r.selectorText) seen.add(r.selectorText); if (r.cssRules) walk(r.cssRules); } };
@@ -330,17 +352,33 @@ await page.evaluate(() => PM56_DEMO.setTheme('basic-dark'));
    Reduced motion: state still legible, no perpetual loops from this module. */
 await page.emulateMedia({ reducedMotion: 'reduce' });
 await page.waitForTimeout(300);
-const rm = await page.evaluate(() => {
+const rm = await page.evaluate((fn) => {
+  const glow = eval(fn);
   const out = [];
   document.querySelectorAll('.activity-item svg').forEach(s => {
     const cs = getComputedStyle(s);
-    out.push({ anim: cs.animationName, color: cs.color, filter: cs.filter !== 'none' });
+    out.push({ anim: cs.animationName, color: cs.color, glow: glow(s) });
   });
   const inf = document.getAnimations().filter(a => a.effect && a.effect.getTiming().iterations === Infinity).length;
   return { out, infinite: inf };
-});
-R(rm.out.every(o => o.anim === 'none') && rm.out.some(o => o.filter),
-  'reduced motion: icon loops stop, colour + glow still carry the state', rm);
+}, GLOW_FN);
+/* A halo only counts if it really paints: hide every halo and the lit icons'
+   crops must change.  (A filter glow is the shipped design's; its own pixels
+   were never re-proved here, and still are not.) */
+const haloPaint = {};
+if (rm.out.some(o => String(o.glow).startsWith('halo:'))) {
+  const boxes = await page.evaluate(() => [...document.querySelectorAll('.activity-item[data-hover-domain] > svg')].map(s => {
+    const r = s.getBoundingClientRect(); return { id: s.parentElement.dataset.hoverDomain, x: Math.round(r.left) - 4, y: Math.round(r.top) - 4, width: 22, height: 22 }; }));
+  const lit = [];
+  for (const b of boxes) lit.push(await shot({ x: b.x, y: b.y, width: b.width, height: b.height }));
+  await page.addStyleTag({ content: '.activity-item svg .nx-h{visibility:hidden!important}', }).then(h => h.evaluate(e => e.id = '__abNoHalo'));
+  await page.waitForTimeout(120);
+  for (let i = 0; i < boxes.length; i++) haloPaint[boxes[i].id] = await diffPct(lit[i], await shot({ x: boxes[i].x, y: boxes[i].y, width: boxes[i].width, height: boxes[i].height }));
+  await page.evaluate(() => document.getElementById('__abNoHalo')?.remove());
+}
+R(rm.out.every(o => o.anim === 'none') && rm.out.some(o => o.glow) &&
+  (!rm.out.some(o => String(o.glow).startsWith('halo:')) || Object.values(haloPaint).some(v => v > 0)),
+  'reduced motion: icon loops stop, colour + glow still carry the state', { ...rm, haloPaint });
 await page.emulateMedia({ reducedMotion: 'no-preference' });
 
 /* ===================================================================== 10
@@ -368,13 +406,14 @@ for (const theme of ['retro-light', 'retro-dark', 'basic-dark']) {
   for (const [tone, status] of Object.entries(TONE_BY_STATUS)) {
     await page.evaluate(st => { window.PM56_DATA.subagents.forEach(a => a.status = st); PM56_DEMO.setTheme(PM56_DEMO.getState().theme); }, status);
     await page.waitForTimeout(260);
-    const r = await page.evaluate(() => {
+    const r = await page.evaluate((fn) => {
+      const glow = eval(fn);
       const b = document.querySelector('.activity-item[data-hover-domain="subagents"]');
       const svg = b.querySelector('svg'), cs = getComputedStyle(svg), rect = svg.getBoundingClientRect();
       return { tone: document.documentElement.getAttribute('data-ab-subagents'), color: cs.color,
-        stroke: cs.strokeWidth, glow: cs.filter !== 'none', anim: cs.animationName,
+        stroke: cs.strokeWidth, glow: glow(svg), anim: cs.animationName,
         x: rect.left, y: rect.top };
-    });
+    }, GLOW_FN);
     const pix = await sample({ x: Math.round(r.x) - 2, y: Math.round(r.y) - 2, width: 18, height: 18 }, `tone-${theme}-${tone}.png`);
     r.expected = tone; r.rgb = pix.mostSaturated; r.sat = pix.saturation;
     delete r.x; delete r.y;
