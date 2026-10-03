@@ -1,0 +1,299 @@
+{
+  "schema": "pm.er8.v11-current-observation.v1",
+  "helper": "er8-v11-current-observation-v1",
+  "birth_epoch": 1791008701.6276536,
+  "original_cutoff_epoch": 1791009001.6276536,
+  "status": "TWO_POSITIVE_RESEARCH_ACTIVATIONS_ACTIVE_AT_BOUNDED_SNAPSHOT",
+  "accounting_observed_epoch": 1791008936.0137763,
+  "accounting_state_sha256": "58c5789aa4b034f86546274661b72cc5d6fac0f64a39ed028a37ef924b46cbe4",
+  "read_policy": "Exactstate sharedflock; only selected2case6job projections exported; no mutation.",
+  "root_release_pin_verified": true,
+  "root_once_launch_pin_verified": true,
+  "positive_native_activation_count": 2,
+  "activation_credit_scope": "Actual publicpositiveactivation receipts, not serviceMainPID/launch alone.",
+  "job_rows": {
+    "V8-BIO-P-Z-S8-research-proposal": {
+      "component_seconds": 1200,
+      "component_responses": 160,
+      "case_wall_seconds": 3600,
+      "case_occupied_seconds": 5400,
+      "outside_native_cap_seconds": 300,
+      "birth_epoch": 1791008419.26477,
+      "birth_monotonic": 230165.434533059,
+      "hard_deadline_epoch": 1791009619.26477,
+      "released_epoch": null,
+      "status": "native-active",
+      "generated_output_tokens": null,
+      "launch_pending": null,
+      "actual_recorded_goal_start_count": 1
+    },
+    "V8-BIO-COND-C-Z-S8-research-proposal": {
+      "component_seconds": 1200,
+      "component_responses": 160,
+      "case_wall_seconds": 3600,
+      "case_occupied_seconds": 5400,
+      "outside_native_cap_seconds": 300,
+      "birth_epoch": 1791008419.2595506,
+      "birth_monotonic": 230165.429321985,
+      "hard_deadline_epoch": 1791009619.2595506,
+      "released_epoch": null,
+      "status": "native-active",
+      "generated_output_tokens": null,
+      "launch_pending": null,
+      "actual_recorded_goal_start_count": 1
+    }
+  },
+  "case_rows": {
+    "V8-BIO-COND-C-Z-S8": {
+      "birth_epoch": 1791008419.2595506,
+      "birth_monotonic": 230165.429321985,
+      "wall_seconds": 3600,
+      "occupied_seconds": 5400,
+      "outside_native_cap_seconds": 300,
+      "observed_outside_native_seconds": 3.527590265,
+      "birth_rule": "original outer-gate birth before any preparation"
+    },
+    "V8-BIO-P-Z-S8": {
+      "birth_epoch": 1791008419.26477,
+      "birth_monotonic": 230165.434533059,
+      "wall_seconds": 3600,
+      "occupied_seconds": 5400,
+      "outside_native_cap_seconds": 300,
+      "observed_outside_native_seconds": 2.690161854,
+      "birth_rule": "original outer-gate birth before any preparation"
+    }
+  },
+  "stage_status": {
+    "V8-BIO-COND-C-Z-S8": {
+      "research-proposal": {
+        "ledger_row_present": true,
+        "stage_directory_present": true,
+        "positive_complete_receipt_present": false,
+        "activation": {
+          "native_activation_observed": true,
+          "goal_started_turn": true,
+          "native_activation_absent_proof": false,
+          "observed_activation_epoch": 1791008430,
+          "observed_activation_monotonic_ns": 230177062367444
+        },
+        "progress_scalar_rows": [
+          {
+            "JSONL_line": 1,
+            "goal_status": "active"
+          },
+          {
+            "JSONL_line": 2,
+            "goal_status": "active",
+            "run_state": "running",
+            "responses": 0
+          }
+        ],
+        "progress_scope": "Initial publicprogress snapshot; not finalcounter or modelsemantics proof."
+      },
+      "independent-candidate-critic": {
+        "ledger_row_present": false,
+        "stage_directory_present": false,
+        "positive_complete_receipt_present": false
+      },
+      "final-correction": {
+        "ledger_row_present": false,
+        "stage_directory_present": false,
+        "positive_complete_receipt_present": false
+      }
+    },
+    "V8-BIO-P-Z-S8": {
+      "research-proposal": {
+        "ledger_row_present": true,
+        "stage_directory_present": true,
+        "positive_complete_receipt_present": false,
+        "activation": {
+          "native_activation_observed": true,
+          "goal_started_turn": true,
+          "native_activation_absent_proof": false,
+          "observed_activation_epoch": 1791008428,
+          "observed_activation_monotonic_ns": 230174482083751
+        },
+        "progress_scalar_rows": [
+          {
+            "JSONL_line": 1,
+            "goal_status": "active"
+          },
+          {
+            "JSONL_line": 2,
+            "goal_status": "active",
+            "run_state": "running",
+            "responses": 0
+          }
+        ],
+        "progress_scope": "Initial publicprogress snapshot; not finalcounter or modelsemantics proof."
+      },
+      "independent-candidate-critic": {
+        "ledger_row_present": false,
+        "stage_directory_present": false,
+        "positive_complete_receipt_present": false
+      },
+      "final-correction": {
+        "ledger_row_present": false,
+        "stage_directory_present": false,
+        "positive_complete_receipt_present": false
+      }
+    }
+  },
+  "unit_observations": {
+    "er8-v8-production-z-tranche-v11.service": {
+      "observed_epoch": 1791008936.0504386,
+      "properties": {
+        "MainPID": "2853927",
+        "ExecMainCode": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "USER_CGROUP/app.slice/er8-v8-production-z-tranche-v11.service",
+        "Id": "er8-v8-production-z-tranche-v11.service",
+        "LoadState": "loaded",
+        "ActiveState": "active",
+        "SubState": "running"
+      },
+      "returncode": 0,
+      "cgroup_events": "populated 1\nfrozen 0"
+    },
+    "er8-v8-bio-cond-c-z-s8-research-proposal.service": {
+      "observed_epoch": 1791008936.0819178,
+      "properties": {
+        "MainPID": "2853976",
+        "ExecMainCode": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "USER_CGROUP/app.slice/er8-v8-bio-cond-c-z-s8-research-proposal.service",
+        "Id": "er8-v8-bio-cond-c-z-s8-research-proposal.service",
+        "LoadState": "loaded",
+        "ActiveState": "active",
+        "SubState": "running"
+      },
+      "returncode": 0,
+      "cgroup_events": "populated 1\nfrozen 0",
+      "positively_enrolled_cgroup_present": true
+    },
+    "er8-v8-bio-p-z-s8-research-proposal.service": {
+      "observed_epoch": 1791008936.110693,
+      "properties": {
+        "MainPID": "2853965",
+        "ExecMainCode": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "USER_CGROUP/app.slice/er8-v8-bio-p-z-s8-research-proposal.service",
+        "Id": "er8-v8-bio-p-z-s8-research-proposal.service",
+        "LoadState": "loaded",
+        "ActiveState": "active",
+        "SubState": "running"
+      },
+      "returncode": 0,
+      "cgroup_events": "populated 1\nfrozen 0",
+      "positively_enrolled_cgroup_present": true
+    }
+  },
+  "compact_positive_receipts": {
+    "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-research-proposal/PLAN.json": {
+      "stage_id": "v8-bio-cond-c-z-s8-research-proposal",
+      "stage_start_monotonic_ns": 230165429321985,
+      "deadline_monotonic_ns": 231365429321985,
+      "native_stop_monotonic_ns": 231335429321985,
+      "cap_seconds": 1200,
+      "response_cap": 160,
+      "owned_unit": "er8-v8-bio-cond-c-z-s8-research-proposal.service"
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-research-proposal/PLAN.enrollment.json": {
+      "schema": "er8.execution.enrollment.v1",
+      "owned_unit": "er8-v8-bio-cond-c-z-s8-research-proposal.service",
+      "cgroup": "USER_CGROUP/app.slice/er8-v8-bio-cond-c-z-s8-research-proposal.service",
+      "enrolled_monotonic_ns": 230169067848181,
+      "original_deadline_monotonic_ns": 231365429321985
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/HOST_LAUNCHES/V8-BIO-COND-C-Z-S8-research-proposal/STAGE_LAUNCHED.json": {
+      "case": "V8-BIO-COND-C-Z-S8",
+      "job": "V8-BIO-COND-C-Z-S8-research-proposal",
+      "stage_actor_pid": 2853944,
+      "stage_actor_pgid": 2853944,
+      "original_stage_start_monotonic_ns": 230165429321985,
+      "original_stage_birth_epoch": 1791008419.2595506,
+      "original_stage_deadline_monotonic_ns": 231365429321985
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v11/HOST_LAUNCHES/V8-BIO-COND-C-Z-S8/CASE_LAUNCHED.json": {
+      "case": "V8-BIO-COND-C-Z-S8",
+      "case_supervisor_pid": 2853940,
+      "case_supervisor_pgid": 2853940,
+      "original_case_start_monotonic_ns": 230165429321985,
+      "original_case_birth_epoch": 1791008419.2595506,
+      "original_case_deadline_monotonic_ns": 233765429321985
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-research-proposal/PLAN.json": {
+      "stage_id": "v8-bio-p-z-s8-research-proposal",
+      "stage_start_monotonic_ns": 230165434533059,
+      "deadline_monotonic_ns": 231365434533059,
+      "native_stop_monotonic_ns": 231335434533059,
+      "cap_seconds": 1200,
+      "response_cap": 160,
+      "owned_unit": "er8-v8-bio-p-z-s8-research-proposal.service"
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-research-proposal/PLAN.enrollment.json": {
+      "schema": "er8.execution.enrollment.v1",
+      "owned_unit": "er8-v8-bio-p-z-s8-research-proposal.service",
+      "cgroup": "USER_CGROUP/app.slice/er8-v8-bio-p-z-s8-research-proposal.service",
+      "enrolled_monotonic_ns": 230168292066868,
+      "original_deadline_monotonic_ns": 231365434533059
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/HOST_LAUNCHES/V8-BIO-P-Z-S8-research-proposal/STAGE_LAUNCHED.json": {
+      "case": "V8-BIO-P-Z-S8",
+      "job": "V8-BIO-P-Z-S8-research-proposal",
+      "stage_actor_pid": 2853946,
+      "stage_actor_pgid": 2853946,
+      "original_stage_start_monotonic_ns": 230165434533059,
+      "original_stage_birth_epoch": 1791008419.26477,
+      "original_stage_deadline_monotonic_ns": 231365434533059
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v11/HOST_LAUNCHES/V8-BIO-P-Z-S8/CASE_LAUNCHED.json": {
+      "case": "V8-BIO-P-Z-S8",
+      "case_supervisor_pid": 2853942,
+      "case_supervisor_pgid": 2853942,
+      "original_case_start_monotonic_ns": 230165434533059,
+      "original_case_birth_epoch": 1791008419.26477,
+      "original_case_deadline_monotonic_ns": 233765434533059
+    }
+  },
+  "current_output_guard": {
+    "warning": 1200000,
+    "stop": 2000000,
+    "version": "prospective-output-guard-v1",
+    "effective_epoch": 1791007019.4522629,
+    "previous_stop": 1500000,
+    "previous_warning": 1200000
+  },
+  "source_and_live_preflight": {
+    "author_source_tests": 4,
+    "independent_review_tests_run": 7,
+    "independent_negative_tests": 3,
+    "frozen_author_tests": 4,
+    "source_review_accepted": true,
+    "source_only": true,
+    "actual_common_preflight_passed": true,
+    "scope": "4author+3independent authfree mockfixtures SOURCE_ONLY; separately actualcommonpreflight checks realSDKdigest/actualstateinstalledreceipts. No7actualnativefixture claim; sourcepreflight is not currentquiet/completion proof."
+  },
+  "pending_permits": [],
+  "unreleased_leases": [
+    "V8-BIO-P-Z-S8-research-proposal",
+    "V8-BIO-COND-C-Z-S8-research-proposal"
+  ],
+  "output_usage": "Both charged generated_output_tokens null while ACTIVE; publicprogressresponses0initial notfinal. Totaltokens/money/semanticacquisitionUNKNOWN.",
+  "closure": "No COMPLETE/QUIESCENCE/heldstage/caseclose/globalparentfinal observed for currentstages. Wholecompletion not inferred from absence; original12whole6pairs unchanged per parentcontext.",
+  "root_initial_campaign_context": {
+    "native_starts": 61,
+    "admissions": 63,
+    "whole_pipelines": 12,
+    "operational_pairs": 6,
+    "scope": "Parentinitialsnapshot, not recomputed by narrowobserver."
+  },
+  "original_global_deadline_epoch": 1791013030.8303788,
+  "campaign_closed_declared": false,
+  "limits_and_history": "Original births/deadlines/stagecaps/responses/casecostlimits retained. Prospective current2mguard installation separatelypinned; old1.5m freezes/failures not relabeled. No renewal/refund/replay/capmutation.",
+  "scope": "No candidateoutputs/prompts/delivery/capturebodies/privatecontextvalues/nativeunderlyingconversation/auth/SDK/profile/eval/crosscasebody reads. No native/providerGoal/sdk/ledgertransaction/signals/Git/public/source edits.",
+  "actual_end_epoch": 1791008936.1154115,
+  "actual_end_utc": "2026-10-03T06:28:56.115412+00:00",
+  "inclusive_elapsed_seconds": 234.48775792121887,
+  "ended_before_original_cutoff": true
+}

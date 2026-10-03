@@ -1,0 +1,124 @@
+{
+  "schema": "pm.er8.v11-observation-manifest.v1",
+  "inputs": [
+    {
+      "path": "ops/execution-resume-v1/root-production-release-v11.json",
+      "sha256": "e4e2ff781a113bc6ade2fb722638e0ca35fe1aad805185b8bea2fde34d9ec575",
+      "bytes": 48659
+    },
+    {
+      "path": "ops/recovery-v1/ATTEMPT_BIO_COND_ONCE_LAUNCH_POSITIVE_V2.json",
+      "sha256": "2090903996b5ee3e047eccc860b3edacc0cb62da8ee9c20b5f9a17a7675c7800",
+      "bytes": 1400
+    },
+    {
+      "path": "ops/recovery-v1/ATTEMPT_BIO_COND_PREFLIGHT_POSITIVE_V2.json",
+      "sha256": "ba971e6f765dbf9536027c715e3ec44bd40a45b19690593c564cfcf236b16a85",
+      "bytes": 5672
+    },
+    {
+      "path": "ops/output-guard-binding-review-v2/REVIEW.json",
+      "sha256": "e3653fe69baf01fbbfc8e9fc0c78c9d7a3a50b74775bac892a2621b9f83a10d0",
+      "bytes": 3251
+    },
+    {
+      "path": "ops/output-guard-binding-review-v2/REPORT.json",
+      "sha256": "e53f464066baeb8ea508c783f383fb89d46566f20f8a0d12af2895088fd26bbd",
+      "bytes": 6468
+    },
+    {
+      "path": "ops/output-guard-binding-v2/VERIFICATION.json",
+      "sha256": "aab4efb7015be2833411f220f42b5e99c53910999f9b3230afa0178c1db8b7bc",
+      "bytes": 747
+    },
+    {
+      "path": "ops/recovery-v1/OUTPUT_GUARD_ROOT_AUTHORITY_V1.json",
+      "sha256": "2f25c97b0cd79aa3f9b302479fab78f7828d92772271bdf7fe4b3811c7147507",
+      "bytes": 3076
+    },
+    {
+      "path": "ops/recovery-v1/OUTPUT_GUARD_SOURCE_ACCEPTANCE_V1.json",
+      "sha256": "4a8ca71bd37a97260c1108a6e8d37643a69ae8919a651ec5b1019e244eaa5c36",
+      "bytes": 1573
+    },
+    {
+      "path": "ops/recovery-v1/OUTPUT_GUARD_INSTALL_RECEIPT_V1.json",
+      "sha256": "40e345c30086d3b881e036e22d2798dc16e347e627a9fc404b8f860204624fa0",
+      "bytes": 9444
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-research-proposal/PLAN.json",
+      "sha256": "6b8a7cc733245d4ecb14fa02c5be0c3f7b095a73c2b0e029def4f1e730309193",
+      "bytes": 7875
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-research-proposal/PLAN.enrollment.json",
+      "sha256": "2ee951e24a3e4e5c8638750685d63c307e05082c754685984e978e05fb827392",
+      "bytes": 318
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-research-proposal/native-public/activation.json",
+      "sha256": "b9b85d8bedcae7da9a22337caf33b309fd63b258f4f5322b5772f2434b3dbfa3",
+      "bytes": 331
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-research-proposal/native-public/progress.jsonl",
+      "sha256": "191563d3480e0a52caebaef3fa4a4a423c6839fde0001f60d7136610f11db125",
+      "bytes": 162
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/HOST_LAUNCHES/V8-BIO-COND-C-Z-S8-research-proposal/STAGE_LAUNCHED.json",
+      "sha256": "7642e7b3a49d6d3a8fa43be478097335e057c89325bfa105958e19f013f5c894",
+      "bytes": 312
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/HOST_LAUNCHES/V8-BIO-COND-C-Z-S8/CASE_LAUNCHED.json",
+      "sha256": "5d680a0106d4cc1a498a3ab20e9a127bf1c0479c891dbfcc72e54db3f0ac6917",
+      "bytes": 268
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-research-proposal/PLAN.json",
+      "sha256": "71261bed8846517c8f4b0352e0f3bf298aff7033d9bb6e33ba226e8b8c23d45e",
+      "bytes": 7735
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-research-proposal/PLAN.enrollment.json",
+      "sha256": "ceaf82b5167ca9c72a371247e78a8e72fafab87e05f0b48d83e0ba9d8a6f1b29",
+      "bytes": 308
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-research-proposal/native-public/activation.json",
+      "sha256": "d4560401e80a84e9b7842f3fac34c9d5360f52bec8b67725a07889bd37259b61",
+      "bytes": 331
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-research-proposal/native-public/progress.jsonl",
+      "sha256": "191563d3480e0a52caebaef3fa4a4a423c6839fde0001f60d7136610f11db125",
+      "bytes": 162
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/HOST_LAUNCHES/V8-BIO-P-Z-S8-research-proposal/STAGE_LAUNCHED.json",
+      "sha256": "485a1bcb35390839070463c52b55074be61626514d02780dc3bad5b553ed3ee8",
+      "bytes": 300
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/HOST_LAUNCHES/V8-BIO-P-Z-S8/CASE_LAUNCHED.json",
+      "sha256": "253b0ac1e6b2b85b50b5f9c53d68e6568f30b80b2a367c616d27b9099cf10314",
+      "bytes": 261
+    }
+  ],
+  "accounting_state_pin": {
+    "sha256": "58c5789aa4b034f86546274661b72cc5d6fac0f64a39ed028a37ef924b46cbe4",
+    "scope": "Onlyselectedsafeprojection exported."
+  },
+  "output_whitelist": [
+    "REPORT.json",
+    "REPORT.md",
+    "MANIFEST.json",
+    "FREEZE.json"
+  ],
+  "outputs": {
+    "REPORT.json": "ebd7e629144de02da009721ec18f502dc7ee9c00394161a14817f2addcc01dd4",
+    "REPORT.md": "a6e71e77bb82ba44c2c227cdeac3404493032731442808993631925d6abe7ea5"
+  }
+}

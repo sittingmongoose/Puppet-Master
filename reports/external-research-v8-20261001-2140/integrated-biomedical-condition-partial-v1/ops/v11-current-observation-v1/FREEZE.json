@@ -1,0 +1,14 @@
+{
+  "schema": "pm.er8.v11-observation-freeze.v1",
+  "helper": "er8-v11-current-observation-v1",
+  "birth_epoch": 1791008701.6276536,
+  "original_cutoff_epoch": 1791009001.6276536,
+  "actual_end_epoch": 1791008936.1154115,
+  "inclusive_elapsed_seconds": 234.48775792121887,
+  "ended_before_original_cutoff": true,
+  "outputs": {
+    "REPORT.json": "ebd7e629144de02da009721ec18f502dc7ee9c00394161a14817f2addcc01dd4",
+    "REPORT.md": "a6e71e77bb82ba44c2c227cdeac3404493032731442808993631925d6abe7ea5",
+    "MANIFEST.json": "644cef5d369246cc3f665715203289de2b61fc995e0195bb67e9758fb397c4f7"
+  }
+}
