@@ -49,14 +49,17 @@ body {
   --nx-d1: 440ms;
 }
 /* Light themes: a dark-on-light halo reads as a tinted sticker, so the core stays thin and faint, concept and
-   hover icons carry "lit" by ink alone (G1), and the backlight is lower. */
+   hover icons carry "lit" by ink alone (G1), and the backlight is lower. Final review (2026-10-03): at .12/.095/.10/.05
+   the backlights read as soft tinted discs 8.5-15 px out (CIE76 dE 25-40 % above main's filter glow on the bar: pink
+   behind Todo and Subagents on Basic Light, tan behind the collab marks on Retro Light's cream); 30 % lower matches
+   main's tint there. */
 body[data-theme$="-light"] {
   --nx-hi-w: 3.4px;
   --nx-h-blocked-i: .08; --nx-h-attention-i: .08; --nx-h-working-i: .08; --nx-h-changed-i: .07;
   --nx-h-quiet-i: .06;
   --nx-h-concept-i: 0; --nx-h-hover-i: 0; --nx-h-swell-i: 0;
   --nx-h-bolt-i: .2;
-  --nx-bl-blocked: .12; --nx-bl-attention: .095; --nx-bl-working: .10; --nx-bl-changed: .05;
+  --nx-bl-blocked: .085; --nx-bl-attention: .065; --nx-bl-working: .07; --nx-bl-changed: .035;
 }
 /* Idle (Ready) ink on paper (3E2, 2026-10-02): the theme's --subtle read under 3:1 on the thread rows (2.4-2.8), so
    each light theme's idle ink is precomputed (work/3E2/idlecalc.py): --subtle moved toward --muted in sRGB until it
@@ -322,9 +325,10 @@ body[data-theme$="-light"] .nx-st-waiting::before { animation-name: nx-bl-needs-
 .ph-status .nx-st-waiting:not(.nx-still)::before { animation-name: nx-bl-swell; }
 body[data-theme$="-light"] .ph-status .nx-st-waiting:not(.nx-still)::before { animation-name: nx-bl-swell-l; }
 @keyframes nx-bl-needs { 0%, 100% { opacity: .08; } 50% { opacity: .048; } }
-@keyframes nx-bl-needs-l { 0%, 100% { opacity: .095; } 50% { opacity: .057; } }
+@keyframes nx-bl-needs-l { 0%, 100% { opacity: .065; } 50% { opacity: .039; } }
 @keyframes nx-bl-swell { 0%, 100% { opacity: .085; transform: scale(1.12); } 50% { opacity: .025; transform: scale(.88); } }
-@keyframes nx-bl-swell-l { 0%, 100% { opacity: .11; transform: scale(1.12); } 50% { opacity: .035; transform: scale(.88); } }
+/* light themes' list swell peaks at .08 (final review: .11 read as a disc), the light attention backlight's swell */
+@keyframes nx-bl-swell-l { 0%, 100% { opacity: .08; transform: scale(1.12); } 50% { opacity: .025; transform: scale(.88); } }
 /* waiting on a dependency: the hourglass tips once, then holds */
 .nx-st-waiting-dep .nx-p { animation: var(--kl) 3600ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 3.6ms - 3600ms); }
 /* recovering: a counter-clockwise ratchet, one 90-degree tick every 2.4 s (two per 4.8 s cycle) */
