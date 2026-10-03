@@ -97,7 +97,7 @@
 .plan-doc .pd-callout p{ margin:0; font:400 12px/1.5 var(--font-ui); color:var(--text); }
 .plan-doc .pd-callout svg{ flex:0 0 auto; margin-top:1px; }
 .plan-doc .pd-callout-info{ border-color:var(--border); }
-.plan-doc .pd-callout-info svg{ color:var(--accent); }
+.plan-doc .pd-callout-info svg{ color:var(--text); } /* concept-lit: colour is reserved for status (integrate) */
 .plan-doc .pd-callout-warning{ border-color:var(--border); }
 .plan-doc .pd-callout-warning svg{ color:var(--warning); }
 
@@ -187,7 +187,9 @@ html[data-o55-nier="on"] .plan-doc .pd-build-building::after{ width:5px; height:
   display:inline-flex; align-items:center; gap:6px; margin-left:2px;
   font:400 11px/1.4 var(--font-ui); color:var(--muted);
 }
-.plan-doc .pd-wait svg{ flex:0 0 auto; color:var(--accent); }
+.plan-doc .pd-wait svg{ flex:0 0 auto; }
+/* the wait line's mark is a status mark (waiting-dep, paused; plans.js waitMark), inked by its tone, never the accent */
+.plan-doc .pd-wait > .nx-st{ flex:0 0 auto; }
 .plan-doc .pd-act{ white-space:nowrap; }
 
 /* --------------------------------------------------- historical compact */

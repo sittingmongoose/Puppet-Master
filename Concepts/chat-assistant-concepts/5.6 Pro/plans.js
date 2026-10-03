@@ -804,6 +804,15 @@
       return N && typeof N.icon==='function' ? N.icon(n[0], n[1], n[2]) : ICON_16[k==='plan'?'artifact':k];
     }});
   });
+  /* A Building… plan's support line marks a WAITING state: its wait copy (r.wait), Waiting for Usage, Outside execution
+     window. It carries the shared status set's waiting-dep mark (the hourglass, attention tone) and a paused run the
+     paused mark, through the registry, instead of the info glyph in the accent (integrate, 2026-10-02: colour is
+     reserved for status). An unknown info condition keeps the concept-lit info glyph. */
+  var WAIT_STATUS = { wait:'waiting-dep', quota:'waiting-dep', quota_wait:'waiting-dep', window:'waiting-dep', paused:'paused' };
+  function waitMark(kind){
+    var N=window.PM56_NEON, s=WAIT_STATUS[kind];
+    return s && N && typeof N.status==='function' ? N.status(s, 14) : ICON.info;
+  }
   /* Plan step marks are the shared status set (neon-icons.js status(), plan §3), 14 px in
      the gutter: done complete (the check draws once), in progress working (the bead goes
      round its ring), blocked blocked (the lock, danger: a blocked step cannot go on, so it
@@ -1105,13 +1114,13 @@
   function waitCopy(r){
     if(r.status!=='building') return '';
     var a=attention(r);
-    if(!a) return r.wait ? '<span class="pd-wait">'+ICON.info+esc(r.wait)+'</span>' : '';
+    if(!a) return r.wait ? '<span class="pd-wait">'+waitMark('wait')+esc(r.wait)+'</span>' : '';
     var acts=a.allowed_action_ids.map(function(id){
       return '<button type="button" class="soft-button pd-act pd-attn-act" data-action="pd-attn" data-id="'+esc(r.plan_id)+'" data-value="'+esc(id)+'" data-expected="'+esc(encodeURIComponent(JSON.stringify(recoverySnapshot(r.plan_id))))+'">'+esc(ATTN_LABEL[id]||id)+'</button>';
     }).join('');
     var att=a.attempt ? '<span class="pd-attn-attempt">attempt '+esc(a.attempt)+'</span>' : '';
     return '<span class="pd-wait pd-attn pd-attn-'+esc(a.tone)+'" data-condition="'+esc(a.condition_kind)+'">'+
-      (a.tone==='warning'?ICON.warning:ICON.info)+
+      (a.tone==='warning'?ICON.warning:waitMark(a.condition_kind))+
       '<span class="pd-attn-copy"><strong>'+esc(a.line)+'</strong><span>'+esc(a.reason)+'</span>'+att+'</span>'+
       acts+'</span>';
   }

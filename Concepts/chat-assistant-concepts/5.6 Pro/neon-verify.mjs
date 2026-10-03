@@ -32,9 +32,12 @@
  *      spin keyframe on a .ph-status descendant.
  *   10 reduced motion, the media query and body.pm56-reduced: 0 running animations on svg.nx and .nx-st, halos
  *      still paint, complete's check is drawn (no clip).
- *   11 light themes: the idle ring reads >= 3:1 on the thread-row field and below every live tone there.
+ *   11 every theme: the idle ring reads below every live tone on the thread-row field (light themes: and >= 3:1).
+ *      11b (hovered row) and 11c (selected, selected + hovered) test the order only: idle never reads above the lowest
+ *      live tone on the same row state; raw ratios under 3:1 are information (lead decision, 2026-10-02).
  *   12 a dark theme's backlight paints; NieR has no halo and no backlight.
- *   13 salience: waiting (needs you) has at least working's halo strength and frame-difference motion.
+ *   13 salience: waiting (needs you) has at least working's halo strength and frame-difference motion, on the real
+ *      marks of the wide thread list, in every theme.
  *   14 no status ink (danger, warning, positive, accent, accent-2) on a concept or control glyph at rest outside
  *      the hosts allowed to carry tone (basic-dark, friendly-dark, Query thread, wide list).
  *   15 transcript status glyphs: every halo is inked like its tube.
@@ -465,7 +468,7 @@ else await sec('satellite', async () => {
     }, sel);
     const a0 = await centre('#nx-test-sat .nx-st-move .nx-f');
     const p0 = await centre('#nx-test-sat .nx-st-move');
-    await p.waitForTimeout(2250); /* a quarter of the 9 s orbit */
+    await p.waitForTimeout(4000); /* a quarter of the 16 s orbit */
     const a1 = await centre('#nx-test-sat .nx-st-move .nx-f');
     const p1 = await centre('#nx-test-sat .nx-st-move');
     const d = Math.hypot(a1[0] - a0[0], a1[1] - a0[1]);
@@ -812,8 +815,11 @@ for (const [k, route] of [['10b', 'body.pm56-reduced'], ['10c', 'html[data-motio
   });
 }
 
-/* ------------------------------------------------------------- check 11: light-theme idle contrast */
-for (const theme of LIGHT) {
+/* ------------------------------------------------------------- check 11: idle contrast and order */
+/* Every theme: idle never reads above the lowest live tone on the same row state. Light themes also want idle at
+   >= 3:1 at rest (3E2's per-theme --nx-idle tokens). */
+for (const theme of THEMES) {
+  const isLight = theme.endsWith('-light');
   await sec(`contrast ${theme}`, async () => {
     const p = await newWidePage();
     try {
@@ -867,7 +873,7 @@ for (const theme of LIGHT) {
       }, LIVE);
       const missing = Object.entries(rows).filter(([, v]) => !v || !v.ink).map(([s]) => s);
       if (missing.length || !rows.idle) {
-        check(false, `11 light-theme idle contrast [${theme}]: missing marks`, { missing });
+        check(false, `11 idle contrast at rest [${theme}]: missing marks`, { missing });
         return;
       }
       const cr = {};
@@ -877,13 +883,24 @@ for (const theme of LIGHT) {
         cr[s] = +ratio(eff, bg).toFixed(3);
       }
       const liveMin = Math.min(...LIVE.map(s => cr[s]));
-      const ok = cr.idle >= 3 && cr.idle < liveMin;
-      check(ok, `11 light-theme idle contrast [${theme}]: idle ${cr.idle}:1 (want >= 3 and below every live tone, min ${liveMin}:1)`, cr);
-      /* 11b/11c: the same idle row hovered (11b), then selected and selected + hovered (11c): the row tints change the field. */
-      const idleOn = () => p.evaluate(() => {
-        const el = document.querySelector('.thread-row[data-nx-probe] .ph-status[data-status="idle"]');
-        const tube = el && el.querySelector('.nx-c');
-        if (!tube) return null;
+      const ok = (!isLight || cr.idle >= 3) && cr.idle < liveMin;
+      check(ok, `11 idle contrast at rest [${theme}]: idle ${cr.idle}:1 (want ${isLight ? '>= 3 and ' : ''}below every live tone, min ${liveMin}:1)`, cr);
+      /* 11b/11c: the same idle row hovered (11b), then selected and selected + hovered (11c): the row tints change the
+         field. What they test is the ORDER (integrate, lead decision 2026-10-02): on each row state idle reads no more
+         than the lowest live tone drawn on that same row (the live marks are rendered into the probe row, so the row's
+         own ink rules and tint apply to them too). Idle below 3:1 on a hovered or selected row is accepted (Jared: no
+         accessibility-only work in concepts); the raw ratios are printed as information. */
+      const rowInks = () => p.evaluate(live => {
+        const row = document.querySelector('.thread-row[data-nx-probe]');
+        if (!row) return null;
+        for (const s of live) {
+          if (row.querySelector(`[data-nx-test-st="${s}"]`)) continue;
+          const span = document.createElement('span');
+          span.setAttribute('data-nx-test-st', s);
+          span.style.cssText = 'position:absolute;left:-200px;top:0'; /* off the row's layout, still inside the row */
+          span.innerHTML = window.PM56_NEON.status(s, 15);
+          row.appendChild(span);
+        }
         const comp = n0 => { const L = []; let b = [255, 255, 255];
           for (let n = n0; n; n = n.parentElement) {
             const norm = c => { const k = /color\(srgb\s+([\d.e-]+)\s+([\d.e-]+)\s+([\d.e-]+)(?:\s*\/\s*([\d.]+))?\s*\)/.exec(String(c || '')); return k ? `rgba(${k[1] * 255}, ${k[2] * 255}, ${k[3] * 255}, ${k[4] === undefined ? 1 : k[4]})` : String(c || ''); };
@@ -892,34 +909,43 @@ for (const theme of LIGHT) {
             if (a >= 0.99) { b = [+m[1], +m[2], +m[3]]; break; } if (a > 0) L.push([+m[1], +m[2], +m[3], a]); }
           for (let i = L.length - 1; i >= 0; i--) { const [r, g, bb, a] = L[i]; b = [r * a + b[0] * (1 - a), g * a + b[1] * (1 - a), bb * a + b[2] * (1 - a)]; }
           return `rgb(${b.map(v => v.toFixed(2)).join(', ')})`; };
-        return { ink: getComputedStyle(tube).stroke, bg: comp(tube) };
-      });
+        const out = {};
+        const idle = row.querySelector('.ph-status[data-status="idle"] .nx-c');
+        out.idle = idle ? { ink: getComputedStyle(idle).stroke, bg: comp(idle) } : null;
+        for (const s of live) {
+          const t = row.querySelector(`[data-nx-test-st="${s}"] .nx-c`);
+          out[s] = t ? { ink: getComputedStyle(t).stroke, bg: comp(t) } : null;
+        }
+        return out;
+      }, LIVE);
       const crOf = v => { if (!v) return null; const fg = parseCss(v.ink), bg = parseCss(v.bg); return +ratio(fg[3] < 1 ? over(fg, bg) : fg, bg).toFixed(3); };
+      const crAll = o => { if (!o || !o.idle) return null; const r = {}; for (const [k, v] of Object.entries(o)) r[k] = crOf(v); return r; };
       const id = await p.evaluate(() => {
         const row = [...document.querySelectorAll('.thread-row')].find(r => r.querySelector('.ph-status[data-status="idle"]') && !r.classList.contains('active'));
         if (!row) return null;
         row.setAttribute('data-nx-probe', '1');
         return row.getAttribute('data-id') || '';
       });
-      if (id === null) { check(false, `11b/11c light-theme idle contrast, hovered/selected [${theme}]: no idle row`, null); return; }
+      if (id === null) { check(false, `11b/11c idle order, hovered/selected [${theme}]: no idle row`, null); return; }
       const states = {};
       const row = p.locator('.thread-row[data-nx-probe]').first();
       await row.hover(); await p.waitForTimeout(450);
-      states.hover = crOf(await idleOn());
+      states.hover = crAll(await rowInks());
       await p.mouse.move(5, 1075); await p.waitForTimeout(300);
       if (id) {
         await p.evaluate(i => window.PM56_DEMO.selectThread(i), id); await p.waitForTimeout(700);
         await p.evaluate(i => { const r = [...document.querySelectorAll('.thread-row')].find(x => x.getAttribute('data-id') === i); if (r) r.setAttribute('data-nx-probe', '1'); }, id);
         await p.mouse.move(5, 1075); await p.waitForTimeout(300);
-        states.selected = crOf(await idleOn());
+        states.selected = crAll(await rowInks());
         await p.locator('.thread-row[data-nx-probe]').first().hover(); await p.waitForTimeout(450);
-        states.selectedHover = crOf(await idleOn());
+        states.selectedHover = crAll(await rowInks());
       }
-      check(states.hover !== null && states.hover >= 3,
-        `11b light-theme idle contrast, hovered row [${theme}]: idle ${states.hover}:1 on the hover tint (want >= 3)`, states);
-      /* 11c: the selected row's tint (history.css: the accent at 16%, 21% hovered, over --surface-3) */
-      check(!!id && states.selected !== null && states.selected >= 3 && states.selectedHover !== null && states.selectedHover >= 3,
-        `11c light-theme idle contrast, selected row [${theme}]: idle ${states.selected}:1, hovered ${states.selectedHover}:1 on the selection tint (want >= 3)`, states);
+      const order = st => { if (!st) return { ok: false, idle: null, liveMin: null }; const lm = Math.min(...LIVE.map(s => st[s] == null ? Infinity : st[s])); return { ok: st.idle != null && isFinite(lm) && st.idle <= lm, idle: st.idle, liveMin: +lm.toFixed(3), lowest: LIVE.find(s => st[s] === lm) }; };
+      const oh = order(states.hover), os = order(states.selected), osh = order(states.selectedHover);
+      const info = o => `idle ${o.idle}:1 vs lowest live ${o.liveMin}:1 (${o.lowest})${o.idle != null && o.idle < 3 ? ', idle under 3:1 (accepted)' : ''}`;
+      check(oh.ok, `11b idle order, hovered row [${theme}]: ${info(oh)} (want idle <= lowest live)`, states.hover);
+      check(!!id && os.ok && osh.ok,
+        `11c idle order, selected row [${theme}]: ${info(os)}; selected + hovered ${info(osh)} (want idle <= lowest live on each)`, { selected: states.selected, selectedHover: states.selectedHover });
     } finally { await shut(p); }
   });
 }
@@ -1005,43 +1031,63 @@ for (const theme of ['nier-dark', 'nier-light']) {
 }
 
 /* ------------------------------------------------------------- check 13: salience */
-/* In lists, "needs you" outshines working (plan §3): waiting's core halo is at least working's, and over 6 s its
-   frame-difference energy (the "?" hop) is at least the working bead's slow orbit. Both marks at 15 px on the
-   thread-row field, dpr 2, sampled side by side in the same frames. */
+/* In lists, "needs you" outshines working (plan section 3): on the real marks of the wide take-6 thread list (two
+   unselected rows, pointer parked), waiting's core halo is at least working's and its frame-difference energy (the
+   "?" hop and the backlight's swell; under NieR the hop and the corner brackets) is at least the working bead's (the
+   diamond's under NieR), in every theme. Both marks are sampled in the same frames, 60 of them (about 20 s), dpr 2,
+   a 32 px box around each (the 15 px mark and its 33 px backlight). Integrate (2026-10-02): it read one synthetic
+   host in basic-dark only, which under NieR sat behind the page's own furniture. */
 if (REDUCED) skip('13 salience (needs motion; --reduced stops it)', null);
 else await sec('salience', async () => {
-  const p = await newPage({ deviceScaleFactor: 2 });
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 1080 }, deviceScaleFactor: 2, reducedMotion: 'no-preference' });
+  await ctx.addInitScript(() => { try { localStorage.setItem('pm56-history-w', '320'); } catch (e) {} });
+  const p = await ctx.newPage();
+  p.__ctx = ctx;
   try {
-    await setTheme(p, 'basic-dark', true);
-    const halo = await p.evaluate(() => {
-      const host = document.createElement('div');
-      host.id = 'nx-test-sal';
-      const row = document.querySelector('.thread-row');
-      host.style.cssText = 'position:fixed;left:0;top:0;width:96px;height:48px;z-index:99999;display:grid;grid-template-columns:48px 48px;place-items:center;background:' + (row ? getComputedStyle(row).backgroundColor : '#000');
-      host.innerHTML = '<span>' + window.PM56_NEON.status('waiting', 15) + '</span><span>' + window.PM56_NEON.status('working', 15) + '</span>';
-      document.body.appendChild(host);
-      const so = s => { const h = host.querySelector('.nx-st-' + s + ' svg.nx > .nx-h') || host.querySelector('.nx-st-' + s + ' .nx-h'); if (!h) return -1; const cs = getComputedStyle(h); return cs.display === 'none' || cs.visibility === 'hidden' ? 0 : parseFloat(cs.strokeOpacity); };
-      return { waiting: so('waiting'), working: so('working') };
-    });
-    let prev = null;
-    const e = { waiting: 0, working: 0 };
-    const N = 40;
-    for (let i = 0; i < N; i++) {
-      const f = await readClip(p, { x: 0, y: 0, width: 96, height: 48 });
-      if (prev) {
-        for (let y = 0; y < f.h; y++) for (let x = 0; x < f.w; x++) {
-          const k = (y * f.w + x) * 4;
-          const d = (Math.abs(f.px[k] - prev.px[k]) + Math.abs(f.px[k + 1] - prev.px[k + 1]) + Math.abs(f.px[k + 2] - prev.px[k + 2])) / 3;
-          if (x < f.w / 2) e.waiting += d; else e.working += d;
+    watch(p);
+    await p.goto(pathToFileURL(FILE).href, { waitUntil: 'load' });
+    await boot(p);
+    const B = 16, N = 60;
+    for (const theme of THEMES) {
+      await p.evaluate(t => { window.PM56_DEMO.setTheme(t); window.PM56_DEMO.setVariant(1, 5); }, theme);
+      await p.waitForTimeout(1200);
+      const pos = await p.evaluate(() => {
+        const out = {};
+        for (const s of ['waiting', 'working']) {
+          const el = document.querySelector(`.thread-row:not(.active) .ph-status[data-status="${s}"]`);
+          if (!el) { out[s] = null; continue; }
+          el.scrollIntoView({ block: 'center' });
         }
+        for (const s of ['waiting', 'working']) {
+          const el = document.querySelector(`.thread-row:not(.active) .ph-status[data-status="${s}"]`);
+          if (!el) continue;
+          const r = el.getBoundingClientRect();
+          const h = el.querySelector('.nx-st svg.nx > .nx-h') || el.querySelector('.nx-h');
+          const cs = h ? getComputedStyle(h) : null;
+          out[s] = { x: r.x + r.width / 2, y: r.y + r.height / 2, halo: !cs ? -1 : (cs.display === 'none' || cs.visibility === 'hidden' ? 0 : parseFloat(cs.strokeOpacity)) };
+        }
+        return out;
+      });
+      if (!pos.waiting || !pos.working) { check(false, `13 salience [${theme}]: no unselected waiting and working rows in the wide list`, pos); continue; }
+      await p.mouse.move(5, 1075);
+      await p.waitForTimeout(400);
+      const clip = k => ({ x: Math.round(pos[k].x - B), y: Math.round(pos[k].y - B), width: 2 * B, height: 2 * B });
+      const e = { waiting: 0, working: 0 }, prev = {};
+      for (let i = 0; i < N; i++) {
+        for (const k of ['waiting', 'working']) {
+          const f = await readClip(p, clip(k));
+          if (prev[k]) for (let q = 0; q < f.px.length; q += 4)
+            e[k] += (Math.abs(f.px[q] - prev[k].px[q]) + Math.abs(f.px[q + 1] - prev[k].px[q + 1]) + Math.abs(f.px[q + 2] - prev[k].px[q + 2])) / 3;
+          prev[k] = f;
+        }
+        await p.waitForTimeout(150);
       }
-      prev = f;
-      await p.waitForTimeout(150);
+      const px = prev.waiting.w * prev.waiting.h * (N - 1);
+      const ew = +(e.waiting / px).toFixed(3), ek = +(e.working / px).toFixed(3);
+      const halo = { waiting: pos.waiting.halo, working: pos.working.halo };
+      check(halo.waiting >= halo.working && halo.working >= 0 && ew >= ek && ek > 0,
+        `13 salience [${theme}]: waiting halo ${halo.waiting} >= working ${halo.working}, motion energy ${ew} >= ${ek} (wide list, ${N} frames, both moving)`, { halo, energy: { waiting: ew, working: ek } });
     }
-    const px = (prev.w / 2) * prev.h * (N - 1);
-    const ew = +(e.waiting / px).toFixed(3), ek = +(e.working / px).toFixed(3);
-    check(halo.waiting >= halo.working && halo.working >= 0 && ew >= ek && ek > 0,
-      `13 salience: waiting halo ${halo.waiting} >= working ${halo.working}, motion energy ${ew} >= ${ek} (6 s, both moving)`, { halo, energy: { waiting: ew, working: ek } });
   } finally { await shut(p); }
 });
 

@@ -371,8 +371,13 @@ body[data-ph-drawer] .history-flyout .history-head [data-action="pin-history"]{ 
   transition:background 160ms,color 160ms,box-shadow 160ms;
 }
 .ph-pin:hover{ background:var(--surface-4); color:var(--text); }
-/* pressed = accent tint, never a coloured edge bar */
-.ph-pin.is-pinned{ background:color-mix(in srgb,var(--accent) 20%,var(--surface-3)); color:var(--text); box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 45%,transparent); }
+/* pressed = the raised neutral tile with its glyph lit steady, like every pressed toggle (composer.css, 3E2), never an
+   accent tile (colour is reserved for status) and never a coloured edge bar; under NieR the ink block (integrate,
+   2026-10-02). Nothing emits .ph-pin today (history.js keeps the class name for the orphan gate), so this only keeps
+   the retired rule from bringing the accent back. */
+.ph-pin.is-pinned{ background:var(--surface-4); color:var(--text); box-shadow:inset 0 0 0 1px var(--border-strong); }
+.ph-pin.is-pinned > svg.nx{ --nx-hiv:visible; --nx-hi-a:var(--nx-h-concept-i); }
+html[data-o55-nier="on"] .ph-pin.is-pinned{ background:var(--o55-nier-ink); color:var(--o55-nier-on-ink); box-shadow:inset 0 0 0 1px var(--o55-nier-ink); }
 .ph-pin svg{ flex:0 0 auto; }
 
 /* ---- the pinned drawer's resize handle ----------------------------------

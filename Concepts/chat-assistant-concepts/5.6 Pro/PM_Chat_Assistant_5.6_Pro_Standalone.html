@@ -5132,8 +5132,13 @@ body[data-ph-drawer] .history-flyout .history-head [data-action="pin-history"]{ 
   transition:background 160ms,color 160ms,box-shadow 160ms;
 }
 .ph-pin:hover{ background:var(--surface-4); color:var(--text); }
-/* pressed = accent tint, never a coloured edge bar */
-.ph-pin.is-pinned{ background:color-mix(in srgb,var(--accent) 20%,var(--surface-3)); color:var(--text); box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 45%,transparent); }
+/* pressed = the raised neutral tile with its glyph lit steady, like every pressed toggle (composer.css, 3E2), never an
+   accent tile (colour is reserved for status) and never a coloured edge bar; under NieR the ink block (integrate,
+   2026-10-02). Nothing emits .ph-pin today (history.js keeps the class name for the orphan gate), so this only keeps
+   the retired rule from bringing the accent back. */
+.ph-pin.is-pinned{ background:var(--surface-4); color:var(--text); box-shadow:inset 0 0 0 1px var(--border-strong); }
+.ph-pin.is-pinned > svg.nx{ --nx-hiv:visible; --nx-hi-a:var(--nx-h-concept-i); }
+html[data-o55-nier="on"] .ph-pin.is-pinned{ background:var(--o55-nier-ink); color:var(--o55-nier-on-ink); box-shadow:inset 0 0 0 1px var(--o55-nier-ink); }
 .ph-pin svg{ flex:0 0 auto; }
 
 /* ---- the pinned drawer's resize handle ----------------------------------
@@ -11404,7 +11409,7 @@ body.pm56-reduced .pmx-run[data-density="live"] .pmx-stop[data-state="now"] + .p
 .plan-doc .pd-callout p{ margin:0; font:400 12px/1.5 var(--font-ui); color:var(--text); }
 .plan-doc .pd-callout svg{ flex:0 0 auto; margin-top:1px; }
 .plan-doc .pd-callout-info{ border-color:var(--border); }
-.plan-doc .pd-callout-info svg{ color:var(--accent); }
+.plan-doc .pd-callout-info svg{ color:var(--text); } /* concept-lit: colour is reserved for status (integrate) */
 .plan-doc .pd-callout-warning{ border-color:var(--border); }
 .plan-doc .pd-callout-warning svg{ color:var(--warning); }
 
@@ -11494,7 +11499,9 @@ html[data-o55-nier="on"] .plan-doc .pd-build-building::after{ width:5px; height:
   display:inline-flex; align-items:center; gap:6px; margin-left:2px;
   font:400 11px/1.4 var(--font-ui); color:var(--muted);
 }
-.plan-doc .pd-wait svg{ flex:0 0 auto; color:var(--accent); }
+.plan-doc .pd-wait svg{ flex:0 0 auto; }
+/* the wait line's mark is a status mark (waiting-dep, paused; plans.js waitMark), inked by its tone, never the accent */
+.plan-doc .pd-wait > .nx-st{ flex:0 0 auto; }
 .plan-doc .pd-act{ white-space:nowrap; }
 
 /* --------------------------------------------------- historical compact */
@@ -16964,7 +16971,7 @@ html[data-o55-nier="on"] .activity-panel-head .icon-button[aria-pressed="true"] 
 /* neon-icons.css — the neon lighting grammar for every svg.nx that neon-icons.js renders.
  * OWNER: Neon icons, step 2 Foundation (2026-10-02). Appended after composer.css (build.py), so it is the last
  * sheet; every generic rule here sits at specificity (0,0,1) (svg:where(...)) or (0,1,1) (svg:where(.nx) .part),
- * so ANY context rule (.send-button > svg, the bar's html[data-ab-ready] .activity-item > svg, ...) overrides it
+ * so ANY context rule (.primary-button > svg, the bar's html[data-ab-ready] .activity-item > svg, ...) overrides it
  * without !important. Only reduced motion uses !important.
  *
  * Forbidden here (plan §1, pmx-verify forbidden-props, portability to Slint): filter, color-mix(),
@@ -17028,12 +17035,12 @@ body[data-theme$="-light"] {
    themes keep --subtle. Literal colours, no color-mix(). */
 /* Fix cycle 1: the row's hover tint (--surface-3) is the darker field, so basic and retro take the ink that holds
    3.06-3.07:1 there (3.37 and 3.50 at rest, still under their live minimums 4.35 and 4.80). Friendly cannot: its
-   working ink (the theme accent) is only 3.22 at rest, so a darker idle at rest would read above working. Friendly
-   keeps 3.08 at rest and darkens only on a hovered row (3.08 on the tint, where working itself falls to 2.89; the
-   order there is the lead's call, see the 3E2 log). Glass holds 3.35+ on its tint. */
+   working ink (the theme accent) is only 3.22 at rest, so a darker idle would read above working. Friendly keeps
+   3.08 at rest on every row state (integrate, lead decision 2026-10-02: the hover-only darkening put idle above
+   working on a hovered row, and salience order wins; idle under 3:1 on a hovered or selected row is accepted). Glass
+   holds 3.35+ on its tint. */
 body[data-theme="basic-light"] { --nx-idle: #86868f; }
 body[data-theme="friendly-light"] { --nx-idle: #93838e; }
-body[data-theme="friendly-light"] .thread-row:hover { --nx-idle: #8b7b86; }
 body[data-theme="glass-light"] { --nx-idle: #857d98; }
 body[data-theme="retro-light"] { --nx-idle: #6e8174; }
 /* Friendly overshoots, Glass glides, Retro steps. */
@@ -17152,8 +17159,9 @@ svg:where(.nx-z0) .nx-p { animation: none; }
   --nx-hi-a: var(--nx-h-swell-i);
   --nx-1: var(--nx-d1) var(--nx-ease) backwards;
 }
-/* Filled chips (Send, Stop, primary buttons) already carry their own fill: the act plays, the halo stays off. */
-.send-button > svg.nx, .primary-button > svg.nx, .soft-button.primary > svg.nx { --nx-hiv: hidden; --nx-fl: none; }
+/* Filled chips (primary buttons) already carry their own fill: the act plays, the halo stays off. (Send/Stop is
+   send-stop.css's solid chip, its glyph inside .ss-face with its own lighting; the .send-button arm went with it.) */
+.primary-button > svg.nx, .soft-button.primary > svg.nx { --nx-hiv: hidden; --nx-fl: none; }
 
 /* ------------------------------------------------------------------ 8b. Fast mode (Jared, G1 item 15; the strike, 3D) */
 /* OWNER of this block: Neon icons, surface step 3D (2026-10-02). The Fast bolt is drawn only while Fast mode is on
@@ -17248,20 +17256,24 @@ svg.fast-bolt, svg.meta-fast, svg.fast-row-bolt { --nx-ink: var(--warning); --nx
 .nx-tn-changed { --nx-bl-ink: var(--accent-2); --nx-bl-a: var(--nx-bl-changed); }
 /* the quiet tones are unlit: no backlight box at all */
 .nx-tn-done::before, .nx-tn-idle::before, .nx-tn-paused::before { display: none; }
-/* working: the bead orbits slowly on the ring (9 s: the quietest live mark, below reviewing), no breathe, no
-   backlight (the inner halo only) */
+/* working: the bead orbits slowly on the ring (16 s, linear: the quietest live mark, below reviewing), no breathe, no
+   backlight (the inner halo only). Integrate (2026-10-02): 9 s -> 16 s, because since the bead sits ON the ring (3B) the
+   whole gapped ring turns, and at 9 s its frame-difference energy in a list was about 1.6-2x needs-you's (plan section 3:
+   needs-you outshines working; neon-verify 13). */
 .nx-st-working::before { display: none; }
-.nx-st-working .nx-p { animation: var(--kl) 9000ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 9ms - 9000ms); }
+.nx-st-working .nx-p { animation: var(--kl) 16000ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 16ms - 16000ms); }
 /* reviewing: the lens sweeps the page; no outer glow, so it stays below needs-you */
 .nx-st-reviewing::before { display: none; }
 .nx-st-reviewing .nx-p { animation: var(--kl) 2800ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 2.8ms - 2800ms); }
 /* waiting (needs you) leads every list: full steady halo, the "?" hops 3.4 units twice every 2.4 s and the
-   backlight breathes .6-1 (literal keyframes per theme brightness; opacity only, so it composites) */
+   backlight swells with the beat: brightest and widest (x1.12) on the hops, ebbing to a quarter and x.88 between them
+   (literal keyframes per theme brightness; opacity and transform only, so it composites). Integrate (2026-10-02): the
+   swell was opacity .6-1 only; the deeper, wider swell is what keeps needs-you above the working bead in every theme. */
 .nx-st-waiting .nx-p { animation: var(--kl) 2400ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 2.4ms - 2400ms); }
 .nx-st-waiting::before { animation: nx-bl-needs 2400ms ease-in-out infinite; }
 body[data-theme$="-light"] .nx-st-waiting::before { animation-name: nx-bl-needs-l; }
-@keyframes nx-bl-needs { 0%, 100% { opacity: .08; } 50% { opacity: .048; } }
-@keyframes nx-bl-needs-l { 0%, 100% { opacity: .095; } 50% { opacity: .057; } }
+@keyframes nx-bl-needs { 0%, 100% { opacity: .085; transform: scale(1.12); } 50% { opacity: .025; transform: scale(.88); } }
+@keyframes nx-bl-needs-l { 0%, 100% { opacity: .11; transform: scale(1.12); } 50% { opacity: .035; transform: scale(.88); } }
 /* waiting on a dependency: the hourglass tips once, then holds */
 .nx-st-waiting-dep .nx-p { animation: var(--kl) 3600ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 3.6ms - 3600ms); }
 /* recovering: a counter-clockwise ratchet, one 90-degree tick every 2.4 s (two per 4.8 s cycle) */
@@ -17351,19 +17363,33 @@ html[data-o55-nier-parts~="cursor"] .thread-row:hover .nx-st-waiting,
 html[data-o55-nier-parts~="cursor"] .thread-row.active .nx-st-waiting { --nx-bk: var(--o55-nier-on-ink); }
 html[data-o55-nier-parts~="cursor"] .thread-row:hover .nx-st-waiting > svg.nx,
 html[data-o55-nier-parts~="cursor"] .thread-row.active .nx-st-waiting > svg.nx { --nx-ink: var(--o55-nier-ink); }
+/* and, NieR's form of the needs-you swell (it has no backlight): four ink corner brackets lock on around the block
+   for the two "?" beats of each 2.4 s cycle, then let go (held frames, opacity only). Integrate (2026-10-02): without
+   them the slowed working diamond still out-moved needs-you in a NieR list (neon-verify 13). */
+html[data-o55-nier="on"] .nx-st-waiting::after {
+  content: ""; position: absolute; inset: -5px; pointer-events: none; opacity: 0; --nx-bk-c: var(--nx-bk, var(--o55-nier-ink));
+  background:
+    linear-gradient(var(--nx-bk-c), var(--nx-bk-c)) left top / 4px 1px no-repeat, linear-gradient(var(--nx-bk-c), var(--nx-bk-c)) left top / 1px 4px no-repeat,
+    linear-gradient(var(--nx-bk-c), var(--nx-bk-c)) right top / 4px 1px no-repeat, linear-gradient(var(--nx-bk-c), var(--nx-bk-c)) right top / 1px 4px no-repeat,
+    linear-gradient(var(--nx-bk-c), var(--nx-bk-c)) left bottom / 4px 1px no-repeat, linear-gradient(var(--nx-bk-c), var(--nx-bk-c)) left bottom / 1px 4px no-repeat,
+    linear-gradient(var(--nx-bk-c), var(--nx-bk-c)) right bottom / 4px 1px no-repeat, linear-gradient(var(--nx-bk-c), var(--nx-bk-c)) right bottom / 1px 4px no-repeat;
+  animation: o55n-nx-lock 2400ms steps(1, end) infinite;
+}
+@keyframes o55n-nx-lock { 0%, 31% { opacity: 1; } 32%, 100% { opacity: 0; } }
 /* blocked keeps the wrapper's hard double blink (ab-alert, already steps(1)); failed glitches once as it arrives
    (the mark remounts on a change) instead of stuttering for ever; */
 html[data-o55-nier="on"] .nx-st-failed { animation: o55n-nx-glitch 320ms steps(4, end) 1; }
 @keyframes o55n-nx-glitch { 0% { transform: translateX(0); opacity: 1; } 25% { transform: translateX(2px); opacity: .4; } 50% { transform: translateX(-2px); opacity: 1; } 75% { transform: translateX(1px); opacity: .6; } 100% { transform: none; opacity: 1; } }
 /* working is PMConcept7's diamond loader while the diamonds part is on (a hollow diamond turning in depth, its ink
-   flipping to paper on a cursor bar), turned in six held steps of 60 degrees so it is never seen edge-on in a list;
+   flipping to paper on a cursor bar), turned in six held steps of 60 degrees so it is never seen edge-on in a list,
+   one step every 1.4 s (8.4 s a turn; integrate, 2026-10-02: at 2.8 s it out-moved needs-you 3-4x in a list);
    otherwise it is the ink bead on the ring, going round in steps (--nx-le above). */
 html[data-o55-nier-parts~="diamonds"] .nx-st-working > svg.nx { visibility: hidden; }
 html[data-o55-nier-parts~="diamonds"] .nx-st-working::after {
   content: ""; position: absolute; inset: 18%; box-sizing: border-box; pointer-events: none;
   border: 1.5px solid var(--nx-ink, var(--o55-nier-ink)); outline: 1px solid var(--nx-ink, var(--o55-nier-ink)); outline-offset: -4.5px;
   transform: rotateY(0deg) rotate(45deg) scale(.82);
-  animation: o55n-nx-diamond 2.8s steps(6, end) infinite;
+  animation: o55n-nx-diamond 8.4s steps(6, end) infinite;
 }
 @keyframes o55n-nx-diamond { from { transform: rotateY(0deg) rotate(45deg) scale(.82); } to { transform: rotateY(360deg) rotate(45deg) scale(.82); } }
 /* The bar: ink glyphs with stepped acts (the tokens above); a working domain carries an ink underline under its
@@ -17455,6 +17481,8 @@ body .nx-st.nx-still::before { animation: none; }
 .nx-st.nx-still .nx-p { animation: var(--k1) var(--nx-d1) var(--nx-ease) backwards; animation-delay: calc(var(--ad, 0) * 1ms); }
 /* NieR: the working diamond holds its pose (no turn), like the pmx running mark of N-A */
 html[data-o55-nier-parts~="diamonds"] .nx-st-working.nx-still::after { animation: none; }
+/* NieR: a still needs-you mark keeps its ink block; the corner brackets stay let go (opacity 0) */
+html[data-o55-nier="on"] .nx-st-waiting.nx-still::after { animation: none; }
 
 /* send-stop.css — the composer's Send / Stop control, "solid-living" (step SS, 2026-10-02; Jared's pick of three).
  * OWNER: Send/Stop (step SS). Markup, one-shots and the cadence switch: send-stop.js. Loaded in CSS_LAST right after
@@ -24022,9 +24050,9 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
        STATUS (plan §3): canonical status -> mark, tone and list motion, with every alias the surfaces use.
        ====================================================================== */
     var STATUS = {
-      working: { glyph: 'st-working', tone: 'working', motion: 'bead orbits on the ring, 9 s, its core halo only', aliases: ['running', 'in_progress', 'doing', 'live', 'active', 'loading', 'starting'] },
+      working: { glyph: 'st-working', tone: 'working', motion: 'bead orbits on the ring, 16 s linear, its core halo only', aliases: ['running', 'in_progress', 'doing', 'live', 'active', 'loading', 'starting'] },
       reviewing: { glyph: 'st-reviewing', tone: 'working', motion: 'lens sweeps 2.5 units and rests; no backlight', aliases: ['verifying', 'review'] },
-      waiting: { glyph: 'st-waiting', tone: 'attention', motion: 'full steady halo, backlight breathes .6-1, "?" hops 3.4 units (two beats every 2.4 s)', aliases: ['needs', 'needs_you', 'needs-you', 'yourmove', 'input', 'decide'] },
+      waiting: { glyph: 'st-waiting', tone: 'attention', motion: 'full steady halo, backlight swells with the beat (.3-1, x.88-1.12), "?" hops 3.4 units (two beats every 2.4 s)', aliases: ['needs', 'needs_you', 'needs-you', 'yourmove', 'input', 'decide'] },
       'waiting-dep': { glyph: 'st-waiting-dep', tone: 'attention', motion: 'tips once, holds 60 % of 3.6 s', aliases: ['waiting_dep', 'dependency', 'blocked_on', 'held'] },
       idle: { glyph: 'st-idle', tone: 'idle', motion: 'none', aliases: ['ready'] },
       complete: { glyph: 'st-complete', tone: 'done', motion: 'clip-draws once', aliases: ['done', 'completed', 'sent', 'verified', 'restored'] },
@@ -42142,6 +42170,15 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
       return N && typeof N.icon==='function' ? N.icon(n[0], n[1], n[2]) : ICON_16[k==='plan'?'artifact':k];
     }});
   });
+  /* A Building… plan's support line marks a WAITING state: its wait copy (r.wait), Waiting for Usage, Outside execution
+     window. It carries the shared status set's waiting-dep mark (the hourglass, attention tone) and a paused run the
+     paused mark, through the registry, instead of the info glyph in the accent (integrate, 2026-10-02: colour is
+     reserved for status). An unknown info condition keeps the concept-lit info glyph. */
+  var WAIT_STATUS = { wait:'waiting-dep', quota:'waiting-dep', quota_wait:'waiting-dep', window:'waiting-dep', paused:'paused' };
+  function waitMark(kind){
+    var N=window.PM56_NEON, s=WAIT_STATUS[kind];
+    return s && N && typeof N.status==='function' ? N.status(s, 14) : ICON.info;
+  }
   /* Plan step marks are the shared status set (neon-icons.js status(), plan §3), 14 px in
      the gutter: done complete (the check draws once), in progress working (the bead goes
      round its ring), blocked blocked (the lock, danger: a blocked step cannot go on, so it
@@ -42443,13 +42480,13 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
   function waitCopy(r){
     if(r.status!=='building') return '';
     var a=attention(r);
-    if(!a) return r.wait ? '<span class="pd-wait">'+ICON.info+esc(r.wait)+'</span>' : '';
+    if(!a) return r.wait ? '<span class="pd-wait">'+waitMark('wait')+esc(r.wait)+'</span>' : '';
     var acts=a.allowed_action_ids.map(function(id){
       return '<button type="button" class="soft-button pd-act pd-attn-act" data-action="pd-attn" data-id="'+esc(r.plan_id)+'" data-value="'+esc(id)+'" data-expected="'+esc(encodeURIComponent(JSON.stringify(recoverySnapshot(r.plan_id))))+'">'+esc(ATTN_LABEL[id]||id)+'</button>';
     }).join('');
     var att=a.attempt ? '<span class="pd-attn-attempt">attempt '+esc(a.attempt)+'</span>' : '';
     return '<span class="pd-wait pd-attn pd-attn-'+esc(a.tone)+'" data-condition="'+esc(a.condition_kind)+'">'+
-      (a.tone==='warning'?ICON.warning:ICON.info)+
+      (a.tone==='warning'?ICON.warning:waitMark(a.condition_kind))+
       '<span class="pd-attn-copy"><strong>'+esc(a.line)+'</strong><span>'+esc(a.reason)+'</span>'+att+'</span>'+
       acts+'</span>';
   }
