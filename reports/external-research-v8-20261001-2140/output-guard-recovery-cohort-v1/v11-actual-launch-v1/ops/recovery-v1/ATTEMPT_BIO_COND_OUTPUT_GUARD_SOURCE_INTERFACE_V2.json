@@ -1,0 +1,296 @@
+{
+  "schema": "pm.er8.attempt-control-binding-interface.v1",
+  "accepted": false,
+  "root_authority": false,
+  "source_only": true,
+  "declaration_closure": {
+    "path": "LAB_ROOT/dev/attempt-successor-declarations-v1/DECLARATION_CLOSURE.json",
+    "sha256": "cb2fb0c8eacf1d3810f204c2f86ed812ee32684cf1924ba3d7c4dfd900778be8"
+  },
+  "predecessor_release": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/root-production-release-v7.json",
+    "sha256": "4d6593cff543755bd390c9682cbd9f8e76ff8a13f82451ee6821f96aedab4cf2"
+  },
+  "selected_pair_ids": [
+    "V8-BIO-COND"
+  ],
+  "not_a_resource_fit_or_native_authorization": true,
+  "opaque_source_boundary_hash_locators": [
+    {
+      "json_pointer": "/declaration_closure/sha256",
+      "opaque_sha256": "cb2fb0c8eacf1d3810f204c2f86ed812ee32684cf1924ba3d7c4dfd900778be8"
+    },
+    {
+      "json_pointer": "/predecessor_release/sha256",
+      "opaque_sha256": "4d6593cff543755bd390c9682cbd9f8e76ff8a13f82451ee6821f96aedab4cf2"
+    },
+    {
+      "json_pointer": "/pairs/0/common_binding/pins/runtime",
+      "opaque_sha256": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b"
+    },
+    {
+      "json_pointer": "/pairs/0/common_binding/pins/config",
+      "opaque_sha256": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d"
+    },
+    {
+      "json_pointer": "/pairs/0/common_binding/pins/independent_acceptance",
+      "opaque_sha256": "59b08282df39fe1c86e21eea06d1197a17f3ea30ef13b1569d6c34a31347a18c"
+    },
+    {
+      "json_pointer": "/pairs/0/common_binding/task_sha256",
+      "opaque_sha256": "18afa7322322621495c8c87ff1f1ee85f1bf895e04a7732f0ef6758b7db054e0"
+    },
+    {
+      "json_pointer": "/pairs/0/common_binding/brief_sha256",
+      "opaque_sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789"
+    },
+    {
+      "json_pointer": "/pairs/0/common_binding/thin_plan_sha256",
+      "opaque_sha256": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30"
+    },
+    {
+      "json_pointer": "/pairs/0/common_binding/source_access_sha256",
+      "opaque_sha256": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df"
+    },
+    {
+      "json_pointer": "/pairs/0/common_binding/scoring_contract_sha256",
+      "opaque_sha256": "6efed6cf4763f91b9674ffaaf35b5c9113decf27663fc38961fcfd140b6883af"
+    },
+    {
+      "json_pointer": "/pairs/0/arms/0/source_manifest/sha256",
+      "opaque_sha256": "d8cadb6c0e6ef1c2b676708a47a6ba8c8fb91f3895f628aefb55ecb8d4ccec4b"
+    },
+    {
+      "json_pointer": "/pairs/0/arms/0/method/sha256",
+      "opaque_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af"
+    },
+    {
+      "json_pointer": "/pairs/0/arms/0/original_manifest_sha256",
+      "opaque_sha256": "ea0b885d4bbcef2bda6d16ab10008aea78303e4e8ca796b60f57800a484be478"
+    },
+    {
+      "json_pointer": "/pairs/0/arms/0/original_method_sha256",
+      "opaque_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af"
+    },
+    {
+      "json_pointer": "/pairs/0/arms/1/source_manifest/sha256",
+      "opaque_sha256": "e31f89240c3631b40ab0b5e87f590adaefeb7a66b7d2783f9db6babf7070df12"
+    },
+    {
+      "json_pointer": "/pairs/0/arms/1/method/sha256",
+      "opaque_sha256": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a"
+    },
+    {
+      "json_pointer": "/pairs/0/arms/1/original_manifest_sha256",
+      "opaque_sha256": "4642c8d7ebb2b925f3a2256db79c73070549a451ad2bc4235df1862a0c6cba0b"
+    },
+    {
+      "json_pointer": "/pairs/0/arms/1/original_method_sha256",
+      "opaque_sha256": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/dev/attempt-successor-declarations-v1/INPUT_MAP.json",
+      "opaque_sha256": "da97cadb4436c5432f9dc071db840e0ac094e61a317072e5bbd6d31b59c2de3e"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/dev/prospective-timing-v3/INPUT_MAP.json",
+      "opaque_sha256": "6dd1abc0b8946f6edde57529628b989af03a8b8b9800e1cd30d02e0583c866bb"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/dev/attempt-successor-declarations-v1/OBJECTIVES.json",
+      "opaque_sha256": "490eb017d32c4217933d74f2bd29f6fe0f14a7b7b131678b856470cfe857de71"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-C-Z-S8/manifest.json",
+      "opaque_sha256": "1e3e164f807b404d5aa194f82ac085b342e22a1fab266eb64e5f4a3ba6e86e8f"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/briefs/bioimaging.md",
+      "opaque_sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/sandbox-plans/bioimaging.md",
+      "opaque_sha256": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/source-access.json",
+      "opaque_sha256": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-C-Z-S8/METHOD.md",
+      "opaque_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-C-Z-S8/TASK.md",
+      "opaque_sha256": "01033eabf39521eebbf5c4d073785a50f51d670a24363d7c85d45ea2cfb74fe1"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/templates/research.TASK.md",
+      "opaque_sha256": "dcfe7bea57da20811145ea5649464534ae3709b502284bdce754d8e7ae9f9802"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/templates/critic.TASK.md",
+      "opaque_sha256": "7e0d69c1a1c9e92ad37b8b8fa97863fbde211eb06563cb431f330849e48fb0d2"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/templates/correction.TASK.md",
+      "opaque_sha256": "1421e111351ebd35697394e93783cc85587d5ff21c003592982c20a75b9fb39e"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-WIT-T-Z-S8/manifest.json",
+      "opaque_sha256": "5b4027fada09e13d7ee5c701be2f4e51520b939ce3da3e6e929e2bb1404643a8"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-WIT-T-Z-S8/METHOD.md",
+      "opaque_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-WIT-T-Z-S8/TASK.md",
+      "opaque_sha256": "2f1a0bc8c359f8f21599cfcea988531b95e8368a9a72cfcf42288caa9e5daf97"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-COND-C-Z-S8/manifest.json",
+      "opaque_sha256": "d8cadb6c0e6ef1c2b676708a47a6ba8c8fb91f3895f628aefb55ecb8d4ccec4b"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-COND-C-Z-S8/METHOD.md",
+      "opaque_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-COND-C-Z-S8/TASK.md",
+      "opaque_sha256": "800d1b54049534e3f5a3d34e81d6840e064bb8f9f9649dc6b1ecbe6d69504c81"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-P-Z-S8/manifest.json",
+      "opaque_sha256": "e31f89240c3631b40ab0b5e87f590adaefeb7a66b7d2783f9db6babf7070df12"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-P-Z-S8/METHOD.md",
+      "opaque_sha256": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-P-Z-S8/TASK.md",
+      "opaque_sha256": "629dcd8e1d945b7bd5427f759da9227de7d0b27ccbee291fa7e00924506b678d"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-BATCH-C-Z-S8/manifest.json",
+      "opaque_sha256": "285beb8535e2d39759a1daafa37451f775afdd3d91862491da6363f7a1169336"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-BATCH-C-Z-S8/METHOD.md",
+      "opaque_sha256": "222ad8739878a9dfc93d6e3ee533596ea2cd2f4cac673870c6c285c18dd2570c"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-BATCH-C-Z-S8/TASK.md",
+      "opaque_sha256": "3d589b5dbfc6bb5f31846ed63fc1d7a203ca04d1c391c5543b775b9dec3a801e"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-B-Z-S8/manifest.json",
+      "opaque_sha256": "21ffb4e9fdf511c5d52fb2f10ed4d681a704fe7c7271406b356e58009a0ef04d"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-B-Z-S8/METHOD.md",
+      "opaque_sha256": "f6df08a280a4db79323bd96c9d816c34aee66a02e3f155602407f1290c599f5c"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-B-Z-S8/TASK.md",
+      "opaque_sha256": "3f9a20a4785a4cb4e5ca27015db857b569fe2c93915236590bf30c7e3fc17706"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-C-Z-S8/manifest.json",
+      "opaque_sha256": "fe58210488e2b24b2c013b340a36d70ffe0b2e9a5dc8b101780e176ad1a8b103"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/briefs/notebook-workspace.md",
+      "opaque_sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/sandbox-plans/notebook-workspace.md",
+      "opaque_sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-C-Z-S8/METHOD.md",
+      "opaque_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-C-Z-S8/TASK.md",
+      "opaque_sha256": "06d46af81346597e9a0d7d5f6a082e98f1e0507a538c2927e85e758e899181cc"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-WIT-T-Z-S8/manifest.json",
+      "opaque_sha256": "88c57485c2a99533633619fd49fa2def9a57d3e9b8c7a386f58cbfc44c0e8969"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-WIT-T-Z-S8/METHOD.md",
+      "opaque_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-WIT-T-Z-S8/TASK.md",
+      "opaque_sha256": "23d24487e083b9139867e9b6fb6aae0d2c95b3a5e84371c4bc993576811887a9"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-COND-C-Z-S8/manifest.json",
+      "opaque_sha256": "dd4b671a58ab95a660acad063e006be59e3e847e36a6e9b94dc434498417224f"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-COND-C-Z-S8/METHOD.md",
+      "opaque_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-COND-C-Z-S8/TASK.md",
+      "opaque_sha256": "cc03327404a96ce75ea56dd36e1aaec9487a4c45e8d201398274ec0ee0a190cd"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-P-Z-S8/manifest.json",
+      "opaque_sha256": "57bb104767173cff9285582f6d0b4f457495aa9ec2d0df67f1bd80b5e56b1fe1"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-P-Z-S8/METHOD.md",
+      "opaque_sha256": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-P-Z-S8/TASK.md",
+      "opaque_sha256": "fce771420bbab946b482f63c09d78f8f0d6edaa211cf96305754b6cf02f72628"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-BATCH-C-Z-S8/manifest.json",
+      "opaque_sha256": "755c5fc4d7c06cdbc64f78d803c3797e3573547ac91c8526d003a33d3d293506"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-BATCH-C-Z-S8/METHOD.md",
+      "opaque_sha256": "222ad8739878a9dfc93d6e3ee533596ea2cd2f4cac673870c6c285c18dd2570c"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-BATCH-C-Z-S8/TASK.md",
+      "opaque_sha256": "c571c11db31a0cc6579755a07251747525edd9b5c71d2e9546773600b514c7f0"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-B-Z-S8/manifest.json",
+      "opaque_sha256": "d4b5688448b80a96d4b64c3a7ec9827bba8eba3d2737c6e140b3c2d824c86e7b"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-B-Z-S8/METHOD.md",
+      "opaque_sha256": "f6df08a280a4db79323bd96c9d816c34aee66a02e3f155602407f1290c599f5c"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/planning_input_sha256/LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-B-Z-S8/TASK.md",
+      "opaque_sha256": "56b1410213e221f090e1fafa9dc4a76870e575513702950a1cdc64aaf23b40f9"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/resume_ledger/sha256",
+      "opaque_sha256": "f2f63bbfc7386186e51f79d00449fd0964821b1f0cb48e9d8d70b9ee7fe112b3"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/predecessor_release/sha256",
+      "opaque_sha256": "4d6593cff543755bd390c9682cbd9f8e76ff8a13f82451ee6821f96aedab4cf2"
+    },
+    {
+      "json_pointer": "/fields_for_root_release_after_separate_acceptance/controller_snapshot/sha256",
+      "opaque_sha256": "0a8fcb5855a59635570568dbf7be9cf2df29adf232b806851db11656138d6a40"
+    }
+  ],
+  "attempt_pair_ids": [
+    "V8-BIO-COND-S8"
+  ],
+  "scope": "Source interface metadata only. Private pair/protocol structures omitted; no append/install or native action by publisher."
+}

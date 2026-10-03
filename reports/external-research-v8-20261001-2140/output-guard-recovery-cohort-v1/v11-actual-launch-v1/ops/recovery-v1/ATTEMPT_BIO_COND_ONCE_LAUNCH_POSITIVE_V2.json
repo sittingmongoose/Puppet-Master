@@ -1,0 +1,28 @@
+{
+  "schema": "pm.er8.once-launch-positive.v1",
+  "root_authority": true,
+  "observed_epoch": 1791008493.0255945,
+  "intent": {
+    "path": "LAB_ROOT/ops/recovery-v1/ATTEMPT_BIO_COND_ONCE_LAUNCH_INTENT_V2.json",
+    "sha256": "464f7315b7dbb8aa33126df737aa921f27bc88083cb685c364e1ff68accd850d"
+  },
+  "unit": "er8-v8-production-z-tranche-v11.service",
+  "PID": 2853927,
+  "properties": {
+    "RuntimeMaxUSec": "1h 16min 43s",
+    "MainPID": "2853927",
+    "ControlGroup": "USER_CGROUP/app.slice/er8-v8-production-z-tranche-v11.service",
+    "Id": "er8-v8-production-z-tranche-v11.service",
+    "ActiveState": "active",
+    "SubState": "running"
+  },
+  "exact_proc_argv_verified": true,
+  "cgroup_contains_pid": true,
+  "release": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/root-production-release-v11.json",
+    "sha256": "e4e2ff781a113bc6ade2fb722638e0ca35fe1aad805185b8bea2fde34d9ec575"
+  },
+  "new_native_goal_start": "Must read activation receipts separately;unit launch alone no Goal credit",
+  "runtime_not_renewed": true,
+  "postlaunch_first_verification": "AssertionError after successful systemd launch; exact failing transient assertion/cause unobserved. No duplicate launch; current PID/argv/cgroup positively reverified."
+}

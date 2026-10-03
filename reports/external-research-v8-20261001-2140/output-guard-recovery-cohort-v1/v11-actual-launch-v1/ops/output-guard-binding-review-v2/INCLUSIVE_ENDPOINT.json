@@ -1,0 +1,24 @@
+{
+  "schema": "pm.er8.output-guard-binding-v2-independent-review-inclusive-endpoint.v1",
+  "actual_inclusive_endpoint_epoch": 1791008205.9203506,
+  "original_helper_birth_epoch": 1791007972.2023985,
+  "original_helper_deadline_epoch": 1791008272.2023985,
+  "elapsed_inclusive_seconds_at_capture": 233.71795201301575,
+  "helper_budget_seconds": 300,
+  "all_preparation_tests_reports_freeze_verification_completed_before_capture": true,
+  "completed_before_original_cutoff": true,
+  "final_review": {
+    "path": "LAB_ROOT/ops/output-guard-binding-review-v2/REVIEW.json",
+    "sha256": "e3653fe69baf01fbbfc8e9fc0c78c9d7a3a50b74775bac892a2621b9f83a10d0"
+  },
+  "final_manifest": {
+    "path": "LAB_ROOT/ops/output-guard-binding-review-v2/MANIFEST.json",
+    "sha256": "0fa19873f98a836f21004df29e67286a69bd37dccb89beac75c0a8538a3fc44f"
+  },
+  "final_freeze": {
+    "path": "LAB_ROOT/ops/output-guard-binding-review-v2/FREEZE.json",
+    "sha256": "9535949474377eda85bb8396181bf210d802013d45e90db39a02d03d0c2d0cec"
+  },
+  "final_return_tail": "UNKNOWN at capture; root actual helper-end bookkeeping must remain charged",
+  "no_clock_renewal": true
+}

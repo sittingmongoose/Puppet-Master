@@ -1,0 +1,89 @@
+{
+  "schema": "pm.er8.output-guard-binding-v2-independent-findings.v1",
+  "accepted_source_only": true,
+  "independent": true,
+  "narrow_scope_only": true,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "support",
+      "text": "The scope repair adds exactly four pinned required predecessor metadata paths and three V2-owned source/control/dependency paths. All prior allowed files remain. No wildcard, allowed-root expansion or SDK/private/native scope expansion occurs."
+    },
+    {
+      "id": "F2",
+      "severity": "support",
+      "text": "Every selected closure path passes the executed exact original common scope-filter AST with mocked digest lookup. Removing any added necessary exact path reproduces scope rejection; sibling/prefix/unlisted paths reject; forbidden private-runtime/jobs/auth paths reject even when explicitly whitelisted; wrong exact selected digests reject."
+    },
+    {
+      "id": "F3",
+      "severity": "support",
+      "text": "All six actors plus common.py are byte-identical to V1. Every control field except positive_binding_files is unchanged, including exact API f2f63 pin, empty default queue, original clock, account/route/config/planning resolver. Binder source changes exactly two V2 acceptance/review path constants."
+    },
+    {
+      "id": "F4",
+      "severity": "support",
+      "text": "BIOCOND retains exactly two S8 cases and six existing jobs, identical case_sources, planning and append/install semantics. Only production_entry/controller_snapshot paths vary. CLI remains repeated --pair only and explicitly unaccepted. V1 schema names remain unchanged while reviewer/root artifact paths use V2."
+    }
+  ],
+  "blocking_findings": [],
+  "limitations": [
+    "This independent acceptance covers only the frozen V2 scope-filter metadata repair. It does not re-review the API/native stack, certify live installation/quiet/current resources or authorize a Goal launch.",
+    "Real SDK/runtime digests were not read; all original scope-filter digest checks are explicit auth-free mocks. Root actual common.check_release and real production digest/quiet preflight remain required.",
+    "Existing API install and BIOCOND append success, un-born selected cases,99 starts/133557.2167 protected occupied seconds and actual V10 preflight HOLD0 added Goals are root-supplied context, not independently read live state. This review preserves that HOLD and does not reinstall/reappend.",
+    "Prior V1 PASS/LATE qualifications and unknown complete-helper tails remain unchanged. Author V2 source endpoint1791007748.4625602 precedes original author cutoff1791007787.4675505; its final return tail was not observed at capture and is not inferred.",
+    "Original campaign deadline1791013030.8303788 and all usage, starts, reservations, births/caps/outcomes/routes/accounts remain unchanged. Scientific declarations/casepack/evaluator bodies were not opened."
+  ],
+  "tests_run": 7,
+  "frozen_author_tests": 4,
+  "independent_negative_tests": 3,
+  "every_required_closure_scope_passed_with_mock_digests": true,
+  "seven_byte_identical_modules": [
+    "rolling.py",
+    "case_supervisor.py",
+    "stage_actor.py",
+    "external_stage_close.py",
+    "external_case_close.py",
+    "parent_receipt.py",
+    "common.py"
+  ],
+  "exact_added_whitelist_paths": [
+    "LAB_ROOT/ops/attempt-control-binding-v1/HANDOFF.md",
+    "LAB_ROOT/ops/attempt-control-binding-v1/MANIFEST.json",
+    "LAB_ROOT/ops/attempt-control-binding-v1/FREEZE.json",
+    "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/SOURCE_FREEZE.json",
+    "LAB_ROOT/ops/output-guard-binding-v2/control_binding.py",
+    "LAB_ROOT/ops/output-guard-binding-v2/DEPENDENCIES.json",
+    "LAB_ROOT/ops/output-guard-binding-v2/recovery-control.json"
+  ],
+  "supplied_pin_sha256": {
+    "LAB_ROOT/ops/output-guard-binding-v2/control_binding.py": "6e63298aa4611ed660be7d1125a0ba48e818193720fd0eed7dccaee09afe23c3",
+    "LAB_ROOT/ops/output-guard-binding-v2/MANIFEST.json": "8793c04bd222313691cf41eda060d9f5baa8640806ce38f25e7bba0daf29cb1d",
+    "LAB_ROOT/ops/output-guard-binding-v2/FREEZE.json": "3a45e202be2be41cfaab735ad18ea0c534ca3917759cfc8ff3bb7034f5f2ab82",
+    "LAB_ROOT/ops/output-guard-binding-v2/integrated-controller/SOURCE_FREEZE.json": "0a8fcb5855a59635570568dbf7be9cf2df29adf232b806851db11656138d6a40",
+    "LAB_ROOT/ops/output-guard-binding-v2/recovery-control.json": "094d8ddc2aa6393de87041b1f99e492f627a63c93f57d80bf1cdadad206eab0a"
+  },
+  "test_results": {
+    "path": "LAB_ROOT/ops/output-guard-binding-review-v2/TEST_RESULTS.txt",
+    "sha256": "e7b365be11963046246b43ccc06f7b97d14ddb38ae8435635bab9a06ee08cb59"
+  },
+  "fixture_source": {
+    "path": "LAB_ROOT/ops/output-guard-binding-review-v2/review_tests.py",
+    "sha256": "fd07da16b835f453519aaaea210396b0ebb1b93e492f4b597845c5c0155bfb1d"
+  },
+  "live_ledger_API_native_provider_actions": 0,
+  "private_runtime_SDK_auth_reads": 0,
+  "unit_signal_actions": 0,
+  "candidate_evaluation_body_reads": 0,
+  "Git_canon_actions": 0,
+  "author_or_V1_source_changes": 0,
+  "original_helper_birth_epoch": 1791007972.2023985,
+  "original_helper_deadline_epoch": 1791008272.2023985,
+  "helper_budget_seconds": 300,
+  "global_deadline_epoch": 1791013030.8303788,
+  "reviewed_epoch": 1791008205.9154806,
+  "author_endpoint": {
+    "path": "LAB_ROOT/ops/output-guard-binding-v2/INCLUSIVE_ENDPOINT.json",
+    "sha256": "da82c76f59ab9acada1f9e8886fd703f164280fff08ca1a0e753e6c6b9e72414"
+  },
+  "author_full_return_tail": "UNKNOWN at endpoint capture"
+}

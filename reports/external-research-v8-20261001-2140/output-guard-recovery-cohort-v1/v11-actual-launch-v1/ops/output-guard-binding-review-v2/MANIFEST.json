@@ -1,0 +1,78 @@
+{
+  "schema": "pm.er8.output-guard-binding-v2-independent-review-manifest.v1",
+  "status": "ACCEPTED_NARROW_SOURCE_ONLY",
+  "accepted": true,
+  "independent": true,
+  "source_only": true,
+  "live_install": false,
+  "native_release": false,
+  "owned_files": {
+    "REVIEW.json": {
+      "path": "LAB_ROOT/ops/output-guard-binding-review-v2/REVIEW.json",
+      "sha256": "e3653fe69baf01fbbfc8e9fc0c78c9d7a3a50b74775bac892a2621b9f83a10d0"
+    },
+    "REPORT.json": {
+      "path": "LAB_ROOT/ops/output-guard-binding-review-v2/REPORT.json",
+      "sha256": "e53f464066baeb8ea508c783f383fb89d46566f20f8a0d12af2895088fd26bbd"
+    },
+    "REPORT.md": {
+      "path": "LAB_ROOT/ops/output-guard-binding-review-v2/REPORT.md",
+      "sha256": "59fdf038868ace02228b88cd42c99a437c35f03f643c0293e6d9de9730d86963"
+    },
+    "review_tests.py": {
+      "path": "LAB_ROOT/ops/output-guard-binding-review-v2/review_tests.py",
+      "sha256": "fd07da16b835f453519aaaea210396b0ebb1b93e492f4b597845c5c0155bfb1d"
+    },
+    "TEST_RESULTS.txt": {
+      "path": "LAB_ROOT/ops/output-guard-binding-review-v2/TEST_RESULTS.txt",
+      "sha256": "e7b365be11963046246b43ccc06f7b97d14ddb38ae8435635bab9a06ee08cb59"
+    }
+  },
+  "reviewed_frozen_inputs": {
+    "control_binding.py": {
+      "path": "LAB_ROOT/ops/output-guard-binding-v2/control_binding.py",
+      "sha256": "6e63298aa4611ed660be7d1125a0ba48e818193720fd0eed7dccaee09afe23c3"
+    },
+    "MANIFEST.json": {
+      "path": "LAB_ROOT/ops/output-guard-binding-v2/MANIFEST.json",
+      "sha256": "8793c04bd222313691cf41eda060d9f5baa8640806ce38f25e7bba0daf29cb1d"
+    },
+    "FREEZE.json": {
+      "path": "LAB_ROOT/ops/output-guard-binding-v2/FREEZE.json",
+      "sha256": "3a45e202be2be41cfaab735ad18ea0c534ca3917759cfc8ff3bb7034f5f2ab82"
+    },
+    "integrated-controller/SOURCE_FREEZE.json": {
+      "path": "LAB_ROOT/ops/output-guard-binding-v2/integrated-controller/SOURCE_FREEZE.json",
+      "sha256": "0a8fcb5855a59635570568dbf7be9cf2df29adf232b806851db11656138d6a40"
+    },
+    "recovery-control.json": {
+      "path": "LAB_ROOT/ops/output-guard-binding-v2/recovery-control.json",
+      "sha256": "094d8ddc2aa6393de87041b1f99e492f627a63c93f57d80bf1cdadad206eab0a"
+    },
+    "HANDOFF.md": {
+      "path": "LAB_ROOT/ops/output-guard-binding-v2/HANDOFF.md",
+      "sha256": "8922b67a4cefc23baea9724da65378fba4ba20e5a59b9a5ab6104a6aea40f437"
+    },
+    "test_binding_v2.py": {
+      "path": "LAB_ROOT/ops/output-guard-binding-v2/test_binding_v2.py",
+      "sha256": "d77a37e058f77b64f3bf0de0d08eb739e2f7e5fc6971157fd00d849e884e5d21"
+    },
+    "INCLUSIVE_ENDPOINT.json": {
+      "path": "LAB_ROOT/ops/output-guard-binding-v2/INCLUSIVE_ENDPOINT.json",
+      "sha256": "da82c76f59ab9acada1f9e8886fd703f164280fff08ca1a0e753e6c6b9e72414"
+    }
+  },
+  "positive_publication_whitelist": [
+    "LAB_ROOT/ops/output-guard-binding-review-v2/REVIEW.json",
+    "LAB_ROOT/ops/output-guard-binding-review-v2/REPORT.json",
+    "LAB_ROOT/ops/output-guard-binding-review-v2/REPORT.md",
+    "LAB_ROOT/ops/output-guard-binding-review-v2/review_tests.py",
+    "LAB_ROOT/ops/output-guard-binding-review-v2/TEST_RESULTS.txt",
+    "LAB_ROOT/ops/output-guard-binding-review-v2/MANIFEST.json",
+    "LAB_ROOT/ops/output-guard-binding-review-v2/FREEZE.json",
+    "LAB_ROOT/ops/output-guard-binding-review-v2/INCLUSIVE_ENDPOINT.json"
+  ],
+  "original_helper_birth_epoch": 1791007972.2023985,
+  "original_helper_deadline_epoch": 1791008272.2023985,
+  "inclusive_endpoint_record": "LAB_ROOT/ops/output-guard-binding-review-v2/INCLUSIVE_ENDPOINT.json"
+}

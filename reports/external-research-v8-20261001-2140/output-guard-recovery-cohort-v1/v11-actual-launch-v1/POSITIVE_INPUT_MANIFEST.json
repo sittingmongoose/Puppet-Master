@@ -1,0 +1,81 @@
+{
+  "schema": "er8.v11.actual-launch.positive-selection.v1",
+  "source_inventory_original_sha256": "d8bc77c7a036011e69fd363efac6c00d070fbf6032361d5677fd24b114ecabb0",
+  "original_birth_epoch": 1791008562.0807009,
+  "original_cutoff_epoch": 1791009162.0807009,
+  "inputs": [
+    {
+      "path": "ops/output-guard-binding-review-v2/REVIEW.json",
+      "original_sha256": "e3653fe69baf01fbbfc8e9fc0c78c9d7a3a50b74775bac892a2621b9f83a10d0",
+      "original_bytes": 3251
+    },
+    {
+      "path": "ops/output-guard-binding-review-v2/REPORT.json",
+      "original_sha256": "e53f464066baeb8ea508c783f383fb89d46566f20f8a0d12af2895088fd26bbd",
+      "original_bytes": 6468
+    },
+    {
+      "path": "ops/output-guard-binding-review-v2/REPORT.md",
+      "original_sha256": "59fdf038868ace02228b88cd42c99a437c35f03f643c0293e6d9de9730d86963",
+      "original_bytes": 1830
+    },
+    {
+      "path": "ops/output-guard-binding-review-v2/MANIFEST.json",
+      "original_sha256": "0fa19873f98a836f21004df29e67286a69bd37dccb89beac75c0a8538a3fc44f",
+      "original_bytes": 4944
+    },
+    {
+      "path": "ops/output-guard-binding-review-v2/FREEZE.json",
+      "original_sha256": "9535949474377eda85bb8396181bf210d802013d45e90db39a02d03d0c2d0cec",
+      "original_bytes": 5042
+    },
+    {
+      "path": "ops/output-guard-binding-review-v2/INCLUSIVE_ENDPOINT.json",
+      "original_sha256": "f3551a6b55f29f72bde80cf1a1e397182142f0adce031df3dc380af82fc1975b",
+      "original_bytes": 1333
+    },
+    {
+      "path": "ops/recovery-v1/OUTPUT_GUARD_CONTROL_BINDING_ACCEPTANCE_V2.json",
+      "original_sha256": "035b8f52c1e44b9a05b552d689687fb217cdfe0904a27c1a2ac77cf599aaa8ed",
+      "original_bytes": 1129
+    },
+    {
+      "path": "ops/recovery-v1/ATTEMPT_BIO_COND_OUTPUT_GUARD_SOURCE_INTERFACE_V2.json",
+      "original_sha256": "0660310b2ed63abdf0c46ebef967de0cfc12c8e3b424ca937ac394de5d17a1cf",
+      "original_bytes": 17594
+    },
+    {
+      "path": "ops/recovery-v1/ATTEMPT_BIO_COND_PREFLIGHT_POSITIVE_V2.json",
+      "original_sha256": "ba971e6f765dbf9536027c715e3ec44bd40a45b19690593c564cfcf236b16a85",
+      "original_bytes": 5672
+    },
+    {
+      "path": "ops/recovery-v1/ATTEMPT_BIO_COND_ONCE_LAUNCH_INTENT_V2.json",
+      "original_sha256": "464f7315b7dbb8aa33126df737aa921f27bc88083cb685c364e1ff68accd850d",
+      "original_bytes": 1989
+    },
+    {
+      "path": "ops/recovery-v1/ATTEMPT_BIO_COND_ONCE_LAUNCH_POSITIVE_V2.json",
+      "original_sha256": "2090903996b5ee3e047eccc860b3edacc0cb62da8ee9c20b5f9a17a7675c7800",
+      "original_bytes": 1400
+    },
+    {
+      "path": "ops/recovery-v1/OBSERVATION_20261003_0615_GUARD_INSTALLED.json",
+      "original_sha256": "a6b9fb593cc4115b68739f1ca8fb7a82cb8846839365e851cd89e2e086be4ccf",
+      "original_bytes": 5072
+    },
+    {
+      "path": "ops/recovery-v1/OBSERVATION_20261003_0621_V11_ACTUAL_LAUNCH.json",
+      "original_sha256": "a646e8367548a3e17bda0b888afe4c94ed3e523f66b9246edfffd3e23987e54e",
+      "original_bytes": 5936
+    },
+    {
+      "path": "ops/execution-resume-v1/root-production-release-v11.json",
+      "original_sha256": "e4e2ff781a113bc6ade2fb722638e0ca35fe1aad805185b8bea2fde34d9ec575",
+      "original_bytes": 48659
+    }
+  ],
+  "parent_freeze_sha256": "57380d8b680aa1d54afb845c491afa562e7db7e24c62032ee9f5f2ed12443025",
+  "checker_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+  "authorization": "Exact 14 pinned sources; no followed references/private/runtime/candidate/evaluator reads."
+}

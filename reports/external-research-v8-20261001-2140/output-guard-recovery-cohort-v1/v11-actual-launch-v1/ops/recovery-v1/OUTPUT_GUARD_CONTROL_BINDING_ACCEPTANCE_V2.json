@@ -1,0 +1,20 @@
+{
+  "schema": "pm.er8.output-guard-control-binding-root-acceptance.v1",
+  "root_authority": true,
+  "accepted": true,
+  "accepted_epoch": 1791008363.4906647,
+  "controller_snapshot": {
+    "path": "LAB_ROOT/ops/output-guard-binding-v2/integrated-controller/SOURCE_FREEZE.json",
+    "sha256": "0a8fcb5855a59635570568dbf7be9cf2df29adf232b806851db11656138d6a40"
+  },
+  "control": {
+    "path": "LAB_ROOT/ops/output-guard-binding-v2/recovery-control.json",
+    "sha256": "094d8ddc2aa6393de87041b1f99e492f627a63c93f57d80bf1cdadad206eab0a"
+  },
+  "independent_review": {
+    "path": "LAB_ROOT/ops/output-guard-binding-review-v2/REVIEW.json",
+    "sha256": "e3653fe69baf01fbbfc8e9fc0c78c9d7a3a50b74775bac892a2621b9f83a10d0"
+  },
+  "qualification": "NARROW_SOURCE_ONLY; actual common release preflight separately required;7authfreefixtures; oldV1HOLD retained",
+  "full_helper_tail": "UNKNOWN; original233.718seconds source/freeze endpoint only"
+}

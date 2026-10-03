@@ -1,0 +1,25 @@
+{
+  "schema": "pm.er8.once-launch-intent.v1",
+  "root_authority": true,
+  "created_epoch": 1791008417.3141153,
+  "unit": "er8-v8-production-z-tranche-v11.service",
+  "runtime_max_seconds": 4603,
+  "original_campaign_deadline_epoch": 1791013030.8303788,
+  "release": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/root-production-release-v11.json",
+    "sha256": "e4e2ff781a113bc6ade2fb722638e0ca35fe1aad805185b8bea2fde34d9ec575"
+  },
+  "monitor": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/quiet_production_monitor.py",
+    "sha256": "44c3671a2f51d02e412ac5d0df1e719098a80a755ae192a4a07c7fae1d5ae042"
+  },
+  "preflight": {
+    "path": "LAB_ROOT/ops/recovery-v1/ATTEMPT_BIO_COND_PREFLIGHT_POSITIVE_V2.json",
+    "sha256": "ba971e6f765dbf9536027c715e3ec44bd40a45b19690593c564cfcf236b16a85"
+  },
+  "run_root": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11",
+  "new_native_goals_before_launch": 0,
+  "predecessor_v9_terminal": true,
+  "ownership_original_pid": 1969270,
+  "no_budget_or_clock_renewal": true
+}

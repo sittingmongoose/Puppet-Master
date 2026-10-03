@@ -1,0 +1,48 @@
+{
+  "schema": "pm.er8.output-guard-control-binding-independent-review.v1",
+  "accepted": true,
+  "independent": true,
+  "reviewer": "codex-er8-output-binding-v2-review",
+  "controller_snapshot": {
+    "path": "LAB_ROOT/ops/output-guard-binding-v2/integrated-controller/SOURCE_FREEZE.json",
+    "sha256": "0a8fcb5855a59635570568dbf7be9cf2df29adf232b806851db11656138d6a40"
+  },
+  "control": {
+    "path": "LAB_ROOT/ops/output-guard-binding-v2/recovery-control.json",
+    "sha256": "094d8ddc2aa6393de87041b1f99e492f627a63c93f57d80bf1cdadad206eab0a"
+  },
+  "source_only": true,
+  "narrow_scope_only": true,
+  "root_authority": false,
+  "live_install_accepted": false,
+  "native_release_accepted": false,
+  "binding_source": {
+    "path": "LAB_ROOT/ops/output-guard-binding-v2/control_binding.py",
+    "sha256": "6e63298aa4611ed660be7d1125a0ba48e818193720fd0eed7dccaee09afe23c3"
+  },
+  "source_manifest": {
+    "path": "LAB_ROOT/ops/output-guard-binding-v2/MANIFEST.json",
+    "sha256": "8793c04bd222313691cf41eda060d9f5baa8640806ce38f25e7bba0daf29cb1d"
+  },
+  "source_freeze": {
+    "path": "LAB_ROOT/ops/output-guard-binding-v2/FREEZE.json",
+    "sha256": "3a45e202be2be41cfaab735ad18ea0c534ca3917759cfc8ff3bb7034f5f2ab82"
+  },
+  "findings_report": {
+    "path": "LAB_ROOT/ops/output-guard-binding-review-v2/REPORT.json",
+    "sha256": "e53f464066baeb8ea508c783f383fb89d46566f20f8a0d12af2895088fd26bbd"
+  },
+  "blocking_findings": [],
+  "source_only_limitations": [
+    "This independent acceptance covers only the frozen V2 scope-filter metadata repair. It does not re-review the API/native stack, certify live installation/quiet/current resources or authorize a Goal launch.",
+    "Real SDK/runtime digests were not read; all original scope-filter digest checks are explicit auth-free mocks. Root actual common.check_release and real production digest/quiet preflight remain required.",
+    "Existing API install and BIOCOND append success, un-born selected cases,99 starts/133557.2167 protected occupied seconds and actual V10 preflight HOLD0 added Goals are root-supplied context, not independently read live state. This review preserves that HOLD and does not reinstall/reappend.",
+    "Prior V1 PASS/LATE qualifications and unknown complete-helper tails remain unchanged. Author V2 source endpoint1791007748.4625602 precedes original author cutoff1791007787.4675505; its final return tail was not observed at capture and is not inferred.",
+    "Original campaign deadline1791013030.8303788 and all usage, starts, reservations, births/caps/outcomes/routes/accounts remain unchanged. Scientific declarations/casepack/evaluator bodies were not opened."
+  ],
+  "tests_run": 7,
+  "original_helper_birth_epoch": 1791007972.2023985,
+  "original_helper_deadline_epoch": 1791008272.2023985,
+  "global_deadline_epoch": 1791013030.8303788,
+  "reviewed_epoch": 1791008205.9165747
+}
