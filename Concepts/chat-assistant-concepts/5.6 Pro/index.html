@@ -17441,6 +17441,22 @@ html[data-o55-nier-parts~="diamonds"] .nx-st-working::after {
 }
 html[data-o55-nier-parts~="diamonds"] .ph-status .nx-st-working::after { animation-duration: 8.4s; }
 @keyframes o55n-nx-diamond { from { transform: rotateY(0deg) rotate(45deg) scale(.82); } to { transform: rotateY(360deg) rotate(45deg) scale(.82); } }
+/* idle and pending are squares while the square part is on (final review, 2026-10-03): PMConcept7's NieR lists draw
+   an idle or draft row as a hollow square (its square part squares every round mark), and the idle ring was the one
+   round mark left in the NieR set. Idle is a hollow square the idle ring's size (its outer edge, 10.8 of 24 units) in
+   the idle ink; pending a dashed square the pending ring's size in its muted ink; both turn to paper at their own
+   alpha on a cursor bar, like the rings they replace. Drawn by the wrapper's ::after (the svg hides), like the diamond,
+   static. The needs-you ink block already matches PMConcept7's filled square. */
+html[data-o55-nier-parts~="square"] .nx-st-idle > svg.nx, html[data-o55-nier-parts~="square"] .nx-st-pending > svg.nx { visibility: hidden; }
+html[data-o55-nier-parts~="square"] .nx-st-idle::after, html[data-o55-nier-parts~="square"] .nx-st-pending::after {
+  content: ""; position: absolute; inset: 27.5%; box-sizing: border-box; pointer-events: none;
+  border: 1.2px solid rgba(var(--o55-nier-ink-rgb), var(--nx-idle-a, .45));
+}
+html[data-o55-nier-parts~="square"] .nx-st-pending::after { inset: 15%; border-style: dashed; border-color: var(--muted); }
+html[data-o55-nier-parts~="cursor"][data-o55-nier-parts~="square"] .thread-row:hover .nx-st-idle::after,
+html[data-o55-nier-parts~="cursor"][data-o55-nier-parts~="square"] .thread-row.active .nx-st-idle::after { border-color: rgba(var(--o55-nier-on-ink-rgb), var(--nx-idle-a, .45)); }
+html[data-o55-nier-parts~="cursor"][data-o55-nier-parts~="square"] .thread-row:hover .nx-st-pending::after,
+html[data-o55-nier-parts~="cursor"][data-o55-nier-parts~="square"] .thread-row.active .nx-st-pending::after { border-color: var(--o55-nier-on-ink); }
 /* The bar: ink glyphs with stepped acts (the tokens above); a working domain carries an ink underline under its
    glyph, drawn by the item's anchored ::after (the backlight's slot, unused in NieR). */
 html[data-o55-nier="on"][data-ab-goal="working"] .activity-item[data-hover-domain="goal"]::after,
