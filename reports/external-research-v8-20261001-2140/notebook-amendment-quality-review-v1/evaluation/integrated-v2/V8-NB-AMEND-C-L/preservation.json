@@ -1,0 +1,157 @@
+{
+  "case_id": "V8-NB-AMEND-C-L",
+  "audit_phase": "Post-source-quality-freeze only",
+  "disposition": "PRESERVATION_SUPPORTED_IN_INSPECTED_CURRENT_FINDINGS",
+  "full_semantic_preservation_grade": "UNASSESSED after decisive screen",
+  "original_artifacts": [
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-research-proposal/workspace/out/PROPOSAL.md",
+      "bytes": 25276,
+      "sha256": "f517a8014163def7eef4bd86ce48b3d3a760fe62b76627ac07dad89ec7e35208"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-independent-candidate-critic/workspace/out/CRITIQUE.md",
+      "bytes": 25849,
+      "sha256": "13da1909398c1ef113940c0ce68a5105cd3bcc49a442fd23889224655600340e"
+    }
+  ],
+  "input_copy_checks": [
+    {
+      "artifact": "PROPOSAL.md",
+      "actual": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-research-proposal/workspace/out/PROPOSAL.md",
+        "bytes": 25276,
+        "sha256": "f517a8014163def7eef4bd86ce48b3d3a760fe62b76627ac07dad89ec7e35208"
+      },
+      "final_input_copy": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-final-correction/workspace/inputs/PROPOSAL.md",
+        "bytes": 25276,
+        "sha256": "f517a8014163def7eef4bd86ce48b3d3a760fe62b76627ac07dad89ec7e35208"
+      },
+      "exact_byte_equal": true
+    },
+    {
+      "artifact": "CRITIQUE.md",
+      "actual": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-independent-candidate-critic/workspace/out/CRITIQUE.md",
+        "bytes": 25849,
+        "sha256": "13da1909398c1ef113940c0ce68a5105cd3bcc49a442fd23889224655600340e"
+      },
+      "final_input_copy": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-final-correction/workspace/inputs/CRITIQUE.md",
+        "bytes": 25849,
+        "sha256": "13da1909398c1ef113940c0ce68a5105cd3bcc49a442fd23889224655600340e"
+      },
+      "exact_byte_equal": true
+    }
+  ],
+  "brief_thin_plan_copy_checks": [
+    {
+      "name": "BRIEF.md",
+      "copies": [
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-research-proposal/workspace/inputs/BRIEF.md",
+          "bytes": 3603,
+          "sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3"
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-independent-candidate-critic/workspace/inputs/BRIEF.md",
+          "bytes": 3603,
+          "sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3"
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-final-correction/workspace/inputs/BRIEF.md",
+          "bytes": 3603,
+          "sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3"
+        }
+      ],
+      "all_exact_equal": true
+    },
+    {
+      "name": "THIN_PLAN.md",
+      "copies": [
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-research-proposal/workspace/inputs/THIN_PLAN.md",
+          "bytes": 920,
+          "sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999"
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-independent-candidate-critic/workspace/inputs/THIN_PLAN.md",
+          "bytes": 920,
+          "sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999"
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-final-correction/workspace/inputs/THIN_PLAN.md",
+          "bytes": 920,
+          "sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999"
+        }
+      ],
+      "all_exact_equal": true
+    }
+  ],
+  "findings": [
+    {
+      "finding": "Bounded saved-state capture; declared versions and unknown missing/unsaved data",
+      "original": "§3.1",
+      "final": "§3",
+      "disposition": "PRESERVED_WITH_PRECISION"
+    },
+    {
+      "finding": "Read-only workspace, repository metadata and snapshots; new-directory recovery",
+      "original": "§5",
+      "final": "§6",
+      "disposition": "PRESERVED"
+    },
+    {
+      "finding": "Version-conditioned ID join; missing/duplicate/invalid fallback and surfaced ambiguity",
+      "original": "§3.3",
+      "final": "§4.2",
+      "disposition": "PRESERVED_WITH_PRECISION"
+    },
+    {
+      "finding": "Independent source/output/metadata observations",
+      "original": "§3.2",
+      "final": "§4.1",
+      "disposition": "CORRECTED: distinct cell-level counter observation replaces incorrect folding into outputs"
+    },
+    {
+      "finding": "Exact-hash rename inference separate from observed delete/add",
+      "original": "§3.4",
+      "final": "§4.3",
+      "disposition": "PRESERVED"
+    },
+    {
+      "finding": "Selected-state recovery refusals and uncaptured-content limits",
+      "original": "§5",
+      "final": "§6",
+      "disposition": "PRESERVED_WITH_EXPLICIT_UNTRACKED_MISSING_CONTENT_OUTCOME"
+    },
+    {
+      "finding": "nbformat plus prototype-owned diff/recovery recommendation and tradeoff",
+      "original": "§2.2",
+      "final": "§2.2",
+      "disposition": "PRESERVED; this does not validate its source overstatement"
+    },
+    {
+      "finding": "Unmerged PR236 release attribution",
+      "original": "§4",
+      "final": "§0 C1 and §5",
+      "disposition": "LEGITIMATELY_RETRACTED_WITH_SOURCE_EVIDENCE; false content need not be preserved"
+    },
+    {
+      "finding": "Proposed discriminating fixtures and no execution claims",
+      "original": "§6 F1–F12",
+      "final": "§7.2 F1–F18 with F3 split",
+      "disposition": "PRESERVED_AND_EXPANDED; not execution proof"
+    },
+    {
+      "finding": "Open consequential leads",
+      "original": "separate original companion",
+      "final": "UNRESOLVED_LEADS.md leads1–6",
+      "disposition": "CARRIED_FORWARD_AND_EXPANDED; not resolution proof"
+    }
+  ],
+  "eight_critic_points": "C1–C8 are explicitly addressed in the final resolution ledger; supported corrections are valid preservation outcomes.",
+  "quality_disposition_unchanged": true,
+  "candidate_tests_executed": false
+}

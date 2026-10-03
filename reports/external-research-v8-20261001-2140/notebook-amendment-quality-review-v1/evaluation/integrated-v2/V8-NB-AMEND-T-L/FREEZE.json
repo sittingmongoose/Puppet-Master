@@ -1,0 +1,98 @@
+{
+  "schema": "inclusive-final-evaluator-freeze-v1",
+  "case_id": "V8-NB-AMEND-T-L",
+  "evaluator": "er8-quality-nb-amend-t-v1",
+  "source_quality_disposition": "FAILED_SCREEN",
+  "source_quality_freeze_unchanged": true,
+  "top_level_publication_whitelist": [
+    "REVIEW.md",
+    "disposition.json",
+    "coverage.json",
+    "provenance.json",
+    "cost.json",
+    "method.json",
+    "preservation.json",
+    "safe-primary-metadata.json",
+    "SOURCE_QUALITY.json",
+    "PRIMARY_SOURCES.json",
+    "SOURCE_QUALITY_FREEZE.json",
+    "SOURCE_FREEZE.json",
+    "MANIFEST.json",
+    "FREEZE.json"
+  ],
+  "original_birth_epoch": 1791000599.0972836,
+  "original_hard_deadline_epoch": 1791002999.0972836,
+  "actual_end_epoch": 1791001470.072272,
+  "actual_end_utc": "2026-10-03T04:24:30.072272+00:00",
+  "inclusive_elapsed_seconds": 870.9749884605408,
+  "inclusive_clock_scope": "Original helper reservation before all prep; all reads, public fetches, metadata audit, waits, writes and validation included; no clock reset. Final descriptor is the last atomic publication write.",
+  "deadline_met": true,
+  "files": [
+    {
+      "name": "REVIEW.md",
+      "bytes": 8548,
+      "sha256": "f1ac2dbcd51ccaa26e2c3c7b9fe5fbcd1ce5ab538b0e8908102e14fd81617c56"
+    },
+    {
+      "name": "disposition.json",
+      "bytes": 805,
+      "sha256": "4f0499ca765ef298b53a3be223340f6ed94cadf172bf44f14cbf6f5223c49784"
+    },
+    {
+      "name": "coverage.json",
+      "bytes": 6241,
+      "sha256": "72a6f02f667107d41b14f2d1eabadb69cc38adb3c3194036bac86aacd42cd6a8"
+    },
+    {
+      "name": "provenance.json",
+      "bytes": 28854,
+      "sha256": "9cba81a815dccd376c97b839e542e220790a5062383bb71d4088ad9af365cbb5"
+    },
+    {
+      "name": "cost.json",
+      "bytes": 5425,
+      "sha256": "4a6417e3fec12ba90364114aa40c310289e759db100e013cdd016618173ece71"
+    },
+    {
+      "name": "method.json",
+      "bytes": 2957,
+      "sha256": "52e61a272c8e05565f0ab5e0fdaa12cc0ddce0f28bf0317c8f8d8461e86f1641"
+    },
+    {
+      "name": "preservation.json",
+      "bytes": 4146,
+      "sha256": "5ec9259abe408ea477295ec45e78c0f92103a24791ac5467e03d4f4e91589879"
+    },
+    {
+      "name": "safe-primary-metadata.json",
+      "bytes": 198343,
+      "sha256": "f8173714cde81c4d0fac0d407e2230cb7b9c58cf9240028b437df7a92afa1853"
+    },
+    {
+      "name": "SOURCE_QUALITY.json",
+      "bytes": 9973,
+      "sha256": "093e265ed36af00aa4349f740dd38dc0c7fe1dcfaf8467a9ffd6e56df8786b0d"
+    },
+    {
+      "name": "PRIMARY_SOURCES.json",
+      "bytes": 4930,
+      "sha256": "61c09054bcc5938d4a0192aedcf783fa32d76a865166e5eda3599cec2d32cf07"
+    },
+    {
+      "name": "SOURCE_QUALITY_FREEZE.json",
+      "bytes": 635,
+      "sha256": "1755b5c0f5e6744e9882805d736357ba1714c46f78dd0ee64178fe1088a9a89a"
+    },
+    {
+      "name": "SOURCE_FREEZE.json",
+      "bytes": 777,
+      "sha256": "b91eed2b5bb9074fbf3c34e3f4384136a21c5660a8097f0a47f57738b73b49cb"
+    },
+    {
+      "name": "MANIFEST.json",
+      "bytes": 2948,
+      "sha256": "bae2817e799bbed6615d02b2034ba85bc874cc227e5a43c235b85618c73ca9dd"
+    }
+  ],
+  "validation": "Every manifest hash/byte count and original quality/source hash matches; named JSON parses; all 18 unchecked grades null; own artifact/metrics hashes match; distinct fresh complete targets; caps met; no prohibited nested exports."
+}

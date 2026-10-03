@@ -1,0 +1,21 @@
+{
+  "schema": "source-quality-freeze-v1",
+  "case_id": "V8-NB-AMEND-T-L",
+  "frozen_at_epoch": 1791000858.608422,
+  "frozen_at_utc": "2026-10-03T04:14:18.608422+00:00",
+  "original_birth_epoch": 1791000599.0972836,
+  "original_deadline_epoch": 1791002999.0972836,
+  "files": [
+    {
+      "name": "SOURCE_QUALITY.json",
+      "bytes": 9973,
+      "sha256": "093e265ed36af00aa4349f740dd38dc0c7fe1dcfaf8467a9ffd6e56df8786b0d"
+    },
+    {
+      "name": "PRIMARY_SOURCES.json",
+      "bytes": 4930,
+      "sha256": "61c09054bcc5938d4a0192aedcf783fa32d76a865166e5eda3599cec2d32cf07"
+    }
+  ],
+  "postfreeze_metadata_read_allowed": true
+}

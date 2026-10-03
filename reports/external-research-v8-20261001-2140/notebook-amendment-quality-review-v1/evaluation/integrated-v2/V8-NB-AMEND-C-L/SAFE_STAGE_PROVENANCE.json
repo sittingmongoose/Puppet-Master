@@ -1,0 +1,227 @@
+{
+  "case_id": "V8-NB-AMEND-C-L",
+  "stages": [
+    {
+      "stage": "research-proposal",
+      "complete_receipt": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-research-proposal/COMPLETE.json",
+        "bytes": 1245,
+        "sha256": "a40c1fe1dd4e7db978f67c617f6ed3ae937f63f6ca56a8bb0b1504038d39b24b"
+      },
+      "complete_selected": {
+        "stage_start_monotonic_ns": 219168386653503,
+        "original_case_start_monotonic_ns": 219168386653503,
+        "original_deadline_monotonic_ns": 220368386653503,
+        "native_wrapper_launch_monotonic_ns": 219170027499713,
+        "native_quiescence_observed_monotonic_ns": 219760821415572,
+        "last_charged_host_monotonic_ns": 219760952239834,
+        "host_groups_absent": true,
+        "native_goal_activation_observed": true,
+        "native_goal_target_id": "NATIVE_ID_fc8382817122a466",
+        "fresh_session": true,
+        "native_responses": 9,
+        "native_goal_status": "complete",
+        "wrapper_returncode": 0,
+        "required_artifact": {
+          "bytes": 25276,
+          "sha256": "f517a8014163def7eef4bd86ce48b3d3a760fe62b76627ac07dad89ec7e35208"
+        }
+      },
+      "quiescence_receipt": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-research-proposal/QUIESCENCE.json",
+        "bytes": 999,
+        "sha256": "1c25ab0432bdec47ace543af01a3e4b50499060eea0b3eb37bb284dacb12d42f"
+      },
+      "quiescence_selected": {
+        "owned_unit": "er8-v8-nb-amend-c-l-research-proposal.service",
+        "owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-nb-amend-c-l-research-proposal.service",
+        "absence_proof": "positively-enrolled-owned-cgroup-removed",
+        "owned_native_quiescent": true,
+        "quiescence_observed_monotonic_ns": 219760821415572,
+        "original_deadline_monotonic_ns": 220368386653503,
+        "inclusive_native_lifetime_established": true,
+        "enrollment": {
+          "owned_unit": "er8-v8-nb-amend-c-l-research-proposal.service",
+          "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-nb-amend-c-l-research-proposal.service",
+          "enrolled_monotonic_ns": 219170182492177
+        }
+      },
+      "external_close_receipt": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-research-proposal/EXTERNAL_STAGE_CLOSE.json",
+        "bytes": 1538,
+        "sha256": "f49e946e610e9f062613dcadab7961cced10bc5acda5415b155a07dfd5d4a051"
+      },
+      "external_close_selected": {
+        "held_Popen_wait_returncode": 0,
+        "stage_actor_exited": true,
+        "stage_actor_group_absent": true,
+        "stage_actor_exit_observed_monotonic_ns": 219761022422001,
+        "original_deadline_monotonic_ns": 220368386653503,
+        "inner_quiescence_clock": 219761107704326,
+        "inner_owned_native_quiescent": true
+      },
+      "inclusive_stage_observed_seconds": 592.721050823,
+      "updated_stage_cap_seconds": 1200,
+      "within_updated_cap": true
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "complete_receipt": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-independent-candidate-critic/COMPLETE.json",
+        "bytes": 1267,
+        "sha256": "9c3fc0e2172031ad5cd4d41a15f424403fb7f8dfd7bbc40f11e657d3315e198b"
+      },
+      "complete_selected": {
+        "stage_start_monotonic_ns": 219761236880288,
+        "original_case_start_monotonic_ns": 219168386653503,
+        "original_deadline_monotonic_ns": 220961236880288,
+        "native_wrapper_launch_monotonic_ns": 219762143731541,
+        "native_quiescence_observed_monotonic_ns": 220637568749919,
+        "last_charged_host_monotonic_ns": 220637703625973,
+        "host_groups_absent": true,
+        "native_goal_activation_observed": true,
+        "native_goal_target_id": "NATIVE_ID_90a3abd9126feae5",
+        "fresh_session": true,
+        "native_responses": 8,
+        "native_goal_status": "complete",
+        "wrapper_returncode": 0,
+        "required_artifact": {
+          "bytes": 25849,
+          "sha256": "13da1909398c1ef113940c0ce68a5105cd3bcc49a442fd23889224655600340e"
+        }
+      },
+      "quiescence_receipt": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-independent-candidate-critic/QUIESCENCE.json",
+        "bytes": 1043,
+        "sha256": "10ded2a64288bb195f5bf5c0c43b3306bd5b55273097938757ade88a4add8fbb"
+      },
+      "quiescence_selected": {
+        "owned_unit": "er8-v8-nb-amend-c-l-independent-candidate-critic.service",
+        "owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-nb-amend-c-l-independent-candidate-critic.service",
+        "absence_proof": "positively-enrolled-owned-cgroup-removed",
+        "owned_native_quiescent": true,
+        "quiescence_observed_monotonic_ns": 220637568749919,
+        "original_deadline_monotonic_ns": 220961236880288,
+        "inclusive_native_lifetime_established": true,
+        "enrollment": {
+          "owned_unit": "er8-v8-nb-amend-c-l-independent-candidate-critic.service",
+          "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-nb-amend-c-l-independent-candidate-critic.service",
+          "enrolled_monotonic_ns": 219762298619291
+        }
+      },
+      "external_close_receipt": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-independent-candidate-critic/EXTERNAL_STAGE_CLOSE.json",
+        "bytes": 1593,
+        "sha256": "f7e7a7d694608b2806b1b4c7c20d0c395b11c1caff62725c60ddaa51bd29f137"
+      },
+      "external_close_selected": {
+        "held_Popen_wait_returncode": 0,
+        "stage_actor_exited": true,
+        "stage_actor_group_absent": true,
+        "stage_actor_exit_observed_monotonic_ns": 220637772421943,
+        "original_deadline_monotonic_ns": 220961236880288,
+        "inner_quiescence_clock": 220637856054754,
+        "inner_owned_native_quiescent": true
+      },
+      "inclusive_stage_observed_seconds": 876.619174466,
+      "updated_stage_cap_seconds": 1200,
+      "within_updated_cap": true
+    },
+    {
+      "stage": "final-correction",
+      "complete_receipt": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-final-correction/COMPLETE.json",
+        "bytes": 1249,
+        "sha256": "b3bba0f3beb04f93fd82de82f85bfc1e660cfb80e0250cb7d91d5945cda075b9"
+      },
+      "complete_selected": {
+        "stage_start_monotonic_ns": 220638050567565,
+        "original_case_start_monotonic_ns": 219168386653503,
+        "original_deadline_monotonic_ns": 221538050567565,
+        "native_wrapper_launch_monotonic_ns": 220639209115093,
+        "native_quiescence_observed_monotonic_ns": 221420442967646,
+        "last_charged_host_monotonic_ns": 221420508846316,
+        "host_groups_absent": true,
+        "native_goal_activation_observed": true,
+        "native_goal_target_id": "NATIVE_ID_787642076546781c",
+        "fresh_session": true,
+        "native_responses": 9,
+        "native_goal_status": "complete",
+        "wrapper_returncode": 0,
+        "required_artifact": {
+          "bytes": 45736,
+          "sha256": "3bbc99d85c5e5631ebe17be9a8e39827850e8aa536e2108ffc477262de55e424"
+        }
+      },
+      "quiescence_receipt": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-final-correction/QUIESCENCE.json",
+        "bytes": 995,
+        "sha256": "887caa489f8b42f877e08fee383f954992f65e931598a8baf8ad9ca75196ec83"
+      },
+      "quiescence_selected": {
+        "owned_unit": "er8-v8-nb-amend-c-l-final-correction.service",
+        "owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-nb-amend-c-l-final-correction.service",
+        "absence_proof": "positively-enrolled-owned-cgroup-removed",
+        "owned_native_quiescent": true,
+        "quiescence_observed_monotonic_ns": 221420442967646,
+        "original_deadline_monotonic_ns": 221538050567565,
+        "inclusive_native_lifetime_established": true,
+        "enrollment": {
+          "owned_unit": "er8-v8-nb-amend-c-l-final-correction.service",
+          "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-nb-amend-c-l-final-correction.service",
+          "enrolled_monotonic_ns": 220639358836099
+        }
+      },
+      "external_close_receipt": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-final-correction/EXTERNAL_STAGE_CLOSE.json",
+        "bytes": 1533,
+        "sha256": "bac3cfdc6cd9a8864757cab140bddc20623a59eaa1a0215d80e9d87fe28bccec"
+      },
+      "external_close_selected": {
+        "held_Popen_wait_returncode": 0,
+        "stage_actor_exited": true,
+        "stage_actor_group_absent": true,
+        "stage_actor_exit_observed_monotonic_ns": 221420576710853,
+        "original_deadline_monotonic_ns": 221538050567565,
+        "inner_quiescence_clock": 221420667079400,
+        "inner_owned_native_quiescent": true
+      },
+      "inclusive_stage_observed_seconds": 782.616511835,
+      "updated_stage_cap_seconds": 900,
+      "within_updated_cap": true
+    }
+  ],
+  "case_close_receipt": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/EXTERNAL_CASE_CLOSE.json",
+    "bytes": 1037,
+    "sha256": "d2ece49ac12e773b794bfbf64d5e73c58ee536f5829ff40eef833ee1399f0a68"
+  },
+  "case_close_selected": {
+    "held_Popen_wait_returncode": 0,
+    "case_supervisor_exited": true,
+    "case_supervisor_group_absent": true,
+    "case_supervisor_exit_observed_monotonic_ns": 221421030704922,
+    "original_case_start_monotonic_ns": 219168386653503,
+    "original_case_deadline_monotonic_ns": 222768386653503,
+    "external_case_observed_monotonic_ns": 221421147135237
+  },
+  "parent_final_receipt": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/GLOBAL_PARENT_FINAL_RECEIPT.json",
+    "bytes": 1405,
+    "sha256": "495e7c698d23cbb0deb0dcca381fadeb7a024ac671912a1cb3baf4a6d050ed2f"
+  },
+  "parent_final_selected": {
+    "held_finalizer_returncode": 0,
+    "actual_case_end_monotonic_ns": 221421232180859,
+    "original_case_start_monotonic_ns": 219168386653503,
+    "original_case_deadline_monotonic_ns": 222768386653503,
+    "actual_case_wall_seconds": 2252.845527356,
+    "actual_occupied_stage_lease_seconds": 2252.287031173706,
+    "whole_case_occupied_cap_seconds": 5400,
+    "actual_nonoverlapping_outside_native_seconds": 5.392740566,
+    "all_case_execution_closed_before_cutoff": true
+  },
+  "goal_status_is_quality_proof": false,
+  "fresh_target_ids_distinct": true,
+  "account_binding_evidence": "Root attestation of three fresh distinct stages on same existing NativeZ/GLM5.3FlashMax account. No profile, SDK, account credential, native history, or live ledger read."
+}

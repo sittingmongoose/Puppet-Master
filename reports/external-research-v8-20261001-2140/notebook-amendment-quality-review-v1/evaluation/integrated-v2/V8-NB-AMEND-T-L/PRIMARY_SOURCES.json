@@ -1,0 +1,114 @@
+{
+  "capture_metadata": [
+    {
+      "id": "git-rename",
+      "url": "https://raw.githubusercontent.com/git/git/v2.43.0/diffcore-rename.c",
+      "resolved_url": "https://raw.githubusercontent.com/git/git/v2.43.0/diffcore-rename.c",
+      "status": 200,
+      "bytes": 52590,
+      "sha256": "a462b6cff4edd08606aa0079483adc1e51b912dc9759d76c1d459ed5c56581d0",
+      "line_count": 1721
+    },
+    {
+      "id": "git-diff-options",
+      "url": "https://raw.githubusercontent.com/git/git/v2.43.0/Documentation/diff-options.txt",
+      "resolved_url": "https://raw.githubusercontent.com/git/git/v2.43.0/Documentation/diff-options.txt",
+      "status": 200,
+      "bytes": 32436,
+      "sha256": "c7b3566f63b7869c0d73738c0edc3fdbd4c02872281a995a1c3c34c94241fab8",
+      "line_count": 883
+    },
+    {
+      "id": "nbdime-notebooks",
+      "url": "https://raw.githubusercontent.com/jupyter/nbdime/v4.0.4/nbdime/diffing/notebooks.py",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbdime/v4.0.4/nbdime/diffing/notebooks.py",
+      "status": 200,
+      "bytes": 18745,
+      "sha256": "bc9c5c5ad149661e7d3f6a99e43c657a91cce91ee1411611656df0dc61e837d2",
+      "line_count": 626
+    },
+    {
+      "id": "nbformat-validator",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/validator.py",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/validator.py",
+      "status": 200,
+      "bytes": 22349,
+      "sha256": "3db1fe48de1060981b13bcf828b8a5779ae30dd082ec06f712f066e90fbbfd46",
+      "line_count": 649
+    },
+    {
+      "id": "nbformat-schema",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/v4/nbformat.v4.5.schema.json",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/v4/nbformat.v4.5.schema.json",
+      "status": 200,
+      "bytes": 16104,
+      "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+      "line_count": 471
+    },
+    {
+      "id": "jep62",
+      "url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/cell-id.md",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/cell-id.md",
+      "status": 200,
+      "bytes": 20578,
+      "sha256": "7f52a9c224fd11509db187187f6e1bd760a329ba836a3b40945b47bcde463992",
+      "line_count": 334
+    },
+    {
+      "id": "nbdime-test",
+      "url": "https://raw.githubusercontent.com/jupyter/nbdime/v4.0.4/nbdime/tests/test_notebook_diff.py",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbdime/v4.0.4/nbdime/tests/test_notebook_diff.py",
+      "status": 200,
+      "bytes": 1984,
+      "sha256": "b5b4aaffe10b579092e5bc301215005967cb75a32e8b6cf33438ddf79c0eecde",
+      "line_count": 61
+    },
+    {
+      "id": "nbdime-pr566",
+      "url": "https://api.github.com/repos/jupyter/nbdime/pulls/566",
+      "resolved_url": "https://api.github.com/repos/jupyter/nbdime/pulls/566",
+      "status": 200,
+      "bytes": 18584,
+      "sha256": "966c1f3f4a53b3b1067f4865b6144a6d16c6be6de44568a493c6b6696fc2781f",
+      "line_count": 1
+    },
+    {
+      "id": "nbdime-pr639",
+      "url": "https://api.github.com/repos/jupyter/nbdime/pulls/639",
+      "resolved_url": "https://api.github.com/repos/jupyter/nbdime/pulls/639",
+      "status": 200,
+      "bytes": 18404,
+      "sha256": "724573ce004e0d3092b1ffb21f7c07a84a3167f374f8b1564f5cf6cca8901ca7",
+      "line_count": 1
+    },
+    {
+      "id": "nbdime-issue553",
+      "url": "https://api.github.com/repos/jupyter/nbdime/issues/553",
+      "resolved_url": "https://api.github.com/repos/jupyter/nbdime/issues/553",
+      "status": 200,
+      "bytes": 4308,
+      "sha256": "553e301eaf2ad5818b2ca9e309e59f84fd56631d6a145b7645353dc29c14d217",
+      "line_count": 1
+    },
+    {
+      "id": "nbdime-generic",
+      "url": "https://raw.githubusercontent.com/jupyter/nbdime/v4.0.4/nbdime/diffing/generic.py",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbdime/v4.0.4/nbdime/diffing/generic.py",
+      "status": 200,
+      "bytes": 8311,
+      "sha256": "7ed11454e7e944942e628c1b602cc1e24db026426e4f66adc3b1024f069cfa0a",
+      "line_count": 238
+    },
+    {
+      "id": "nbdime-snakes",
+      "url": "https://raw.githubusercontent.com/jupyter/nbdime/v4.0.4/nbdime/diffing/snakes.py",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbdime/v4.0.4/nbdime/diffing/snakes.py",
+      "status": 200,
+      "bytes": 2989,
+      "sha256": "1293a22f9952383235d617e3489a3c7df37e828a5bf124e1c90949d255e7155f",
+      "line_count": 97
+    }
+  ],
+  "raw_body_policy": "Raw independently fetched primary bodies remain solely in own external directory. Public metadata carries HTTPS URL, hash, bytes, status, and locator; no full bodies or private captures are exported.",
+  "published_source_excerpts": []
+}

@@ -1,0 +1,37 @@
+{
+  "case_id": "V8-NB-AMEND-C-L",
+  "read_after_source_freeze": true,
+  "method": {
+    "path": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-AMEND-C-L/METHOD.md",
+    "bytes": 473,
+    "sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e"
+  },
+  "task": {
+    "path": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-AMEND-C-L/TASK.md",
+    "bytes": 983,
+    "sha256": "6c06bcb8c9e09eb644e43360f152ef66f29264342e2a40d8ec6ae84abc0dfb8b"
+  },
+  "initial_reservation_manifest": {
+    "path": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-AMEND-C-L/manifest.json",
+    "bytes": 4686,
+    "sha256": "0949167d3c6bd00337755388ee3f8e40d13d297dc47a8a00d020238b7fc28b8f"
+  },
+  "updated_cap_manifest": {
+    "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-AMEND-C-L/manifest.json",
+    "bytes": 4688,
+    "sha256": "4b5ff563e7e6ae787821da756c0c84da56c07cd6966ad276138846bf709aef89"
+  },
+  "method_id": "C",
+  "method_name": "simple-complete-control",
+  "special_witness_required": false,
+  "special_proposition_table_required": false,
+  "observed_ordinary_pipeline": "Research proposal → fresh independent candidate critique → final correction; three distinct completed target IDs in allowed receipt fields.",
+  "method_uptake_disposition": "ORDINARY_PIPELINE_SUPPORTED; FULL_TRACE_UPTAKE_INDETERMINATE",
+  "classification_tables_and_resolution_ledger": "Spontaneous control behavior; no treatment or witness requirement inferred.",
+  "same_account_family": "ROOT_ATTESTED NativeZ/GLM5.3FlashMax existing subscription, three fresh contexts. L suffix/family in prospective reservation is planning lineage only.",
+  "credential_or_profile_access": false,
+  "native_context_or_history_access": false,
+  "no_source_quality_rewrite_on_method_reveal": true,
+  "witness_execution_claim": "None required and none verified; proposed fixtures remain designed-only.",
+  "paired_comparison_or_recipe_winner_inference": false
+}

@@ -1,6 +1,6 @@
 {
   "schema": "pm.external_research.v8.public_attempts.v1",
-  "checkpoint": "FOUR_REVIEWED_PAIRS_SEVEN_FAILED_SCREENS_ONE_HOLD_NINTH_PIPELINE_COMPLETE",
+  "checkpoint": "FIVE_REVIEWED_PAIRS_NINE_FAILED_SCREENS_ONE_HOLD_TEN_PIPELINES_COMPLETE",
   "attempts": [
     {
       "id": "v8-z-mechanical-route-canary-v1",
@@ -230,39 +230,65 @@
     },
     {
       "id": "V8-NB-AMEND-C-L",
-      "scope": "completed operational pipeline",
+      "scope": "completed operational integrated pipeline",
       "status": "COMPLETE_THREE_GOAL_OPERATIONAL_PIPELINE",
       "native_goal_starts": 3,
-      "research_quality": "PENDING independent review",
-      "evidence": "notebook-retrieval-quality-review-v1/ops/recovery-v1/OBSERVATION_20261003_035453.json",
-      "observation_utc": "2026-10-03T03:54:53.321786+00:00"
+      "research_quality": "FAILED_SCREEN; remainder UNASSESSED; canonical score null",
+      "evidence": "integrated-notebook-amendment-pair-v1/README.md",
+      "observation_utc": "2026-10-03T04:26:31.254280+00:00",
+      "independent_quality_evidence": "notebook-amendment-quality-review-v1/README.md"
     },
     {
       "id": "V8-NB-AMEND-T-L",
-      "scope": "active integrated pipeline",
-      "status": "FINAL_REVISION_ACTIVE_AT_OBSERVATION",
+      "scope": "completed operational integrated pipeline",
+      "status": "COMPLETE_THREE_GOAL_OPERATIONAL_PIPELINE",
       "native_goal_starts": 3,
-      "research_quality": "UNASSESSED",
-      "evidence": "notebook-retrieval-quality-review-v1/ops/recovery-v1/OBSERVATION_20261003_035453.json",
-      "observation_utc": "2026-10-03T03:54:53.321786+00:00"
+      "research_quality": "FAILED_SCREEN; remainder UNASSESSED; canonical score null",
+      "evidence": "integrated-notebook-amendment-pair-v1/README.md",
+      "observation_utc": "2026-10-03T04:26:31.254280+00:00",
+      "independent_quality_evidence": "notebook-amendment-quality-review-v1/README.md"
     },
     {
       "id": "V8-NB-BREADTH-C-M",
       "scope": "active integrated pipeline",
-      "status": "RESEARCH_ACTIVE_AT_OBSERVATION",
-      "native_goal_starts": 1,
+      "status": "FINAL_REVISION_ACTIVE_AT_OBSERVATION",
+      "native_goal_starts": 3,
       "research_quality": "UNASSESSED",
-      "evidence": "notebook-retrieval-quality-review-v1/ops/recovery-v1/OBSERVATION_20261003_035453.json",
-      "observation_utc": "2026-10-03T03:54:53.321786+00:00"
+      "evidence": "notebook-amendment-quality-review-v1/ops/recovery-v1/OBSERVATION_20261003_0425.json",
+      "observation_utc": "2026-10-03T04:26:31.254280+00:00"
+    },
+    {
+      "id": "V8-NB-BREADTH-T-M",
+      "scope": "active integrated pipeline",
+      "status": "FINAL_REVISION_ACTIVE_AT_OBSERVATION",
+      "native_goal_starts": 3,
+      "research_quality": "UNASSESSED",
+      "evidence": "notebook-amendment-quality-review-v1/ops/recovery-v1/OBSERVATION_20261003_0425.json",
+      "observation_utc": "2026-10-03T04:26:31.254280+00:00"
     }
   ],
   "note": "Current metadata observation; past frozen cohorts/grades retained. Failed native final responses/status/causal reasons UNKNOWN; no completed case or recipe PASS.",
   "native_qualification": "V3_MECHANICAL_PASSED_LIMITED_DELIVERY_INFERENCE",
   "native_qualification_evidence": "resume-qualified-v3-cohort/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json",
-  "observation_utc": "2026-10-03T03:54:53.321786+00:00",
+  "observation_utc": "2026-10-03T04:26:31.254280+00:00",
   "current_stage_counts": {
-    "research": 18,
-    "critic": 11,
-    "final": 9
+    "research": 20,
+    "critic": 13,
+    "final": 10
+  },
+  "current_observation_evidence": "notebook-amendment-quality-review-v1/ops/recovery-v1/OBSERVATION_20261003_0425.json",
+  "current_metadata_boundary": "Frozen actual UTC04:26:31.254280 despite observation filename0425; earlier03:30 audit does not cover this update. No present liveness inference.",
+  "current_outcomes": {
+    "operational_pipeline_count": 10,
+    "target_pipelines": 24,
+    "operational_pair_count": 5,
+    "target_pairs": 12,
+    "quality_reviewed_pairs": 5,
+    "independent_failed_screens": 9,
+    "independent_holds": 1,
+    "full_quality_pass": 0,
+    "quality_qualified_efficiency_comparisons": 0,
+    "winner": null,
+    "qualified_holdouts": 0
   }
 }

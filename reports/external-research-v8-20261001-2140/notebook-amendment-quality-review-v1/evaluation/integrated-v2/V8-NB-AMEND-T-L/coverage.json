@@ -1,0 +1,203 @@
+{
+  "schema": "postfreeze-coverage-crosswalk-v1",
+  "case_id": "V8-NB-AMEND-T-L",
+  "source_quality_freeze": {
+    "path": "evaluation/integrated-v2/V8-NB-AMEND-T-L/SOURCE_QUALITY_FREEZE.json",
+    "bytes": 635,
+    "sha256": "1755b5c0f5e6744e9882805d736357ba1714c46f78dd0ee64178fe1088a9a89a"
+  },
+  "source_quality_immutable": true,
+  "common_scope": {
+    "path": "cases/tranche-v2/scoring-only/evaluation-scope.json",
+    "bytes": 3849,
+    "sha256": "6efed6cf4763f91b9674ffaaf35b5c9113decf27663fc38961fcfd140b6883af"
+  },
+  "common_scope_no_canonical_18_facet_weights": true,
+  "canonical_numeric_grade": null,
+  "local_numeric_grade": null,
+  "local_numeric_grade_comparability": "NOT_COMPARABLE; no numeric grade assigned",
+  "scope": "Early decisive failed screen, not whole-history regrade or complete assurance. Descriptive postfreeze facet names are evaluator-derived from admitted own BRIEF and are not canonical weights.",
+  "questions": [
+    {
+      "id": "Q1",
+      "status": "PARTIAL_VERIFIED_ERROR",
+      "numeric_grade": null,
+      "finding": "SQ-F1"
+    },
+    {
+      "id": "Q2",
+      "status": "PARTIAL_VERIFIED_ERROR",
+      "numeric_grade": null,
+      "finding": "SQ-F1"
+    },
+    {
+      "id": "Q3",
+      "status": "UNASSESSED",
+      "numeric_grade": null
+    }
+  ],
+  "plan_obligations": [
+    {
+      "id": "N1",
+      "status": "UNASSESSED",
+      "numeric_grade": null,
+      "finding": null
+    },
+    {
+      "id": "N2",
+      "status": "UNASSESSED",
+      "numeric_grade": null,
+      "finding": null
+    },
+    {
+      "id": "N3",
+      "status": "PARTIAL_VERIFIED_ERROR",
+      "numeric_grade": null,
+      "finding": "SQ-F1"
+    },
+    {
+      "id": "N4",
+      "status": "UNASSESSED",
+      "numeric_grade": null,
+      "finding": null
+    },
+    {
+      "id": "N5",
+      "status": "UNASSESSED",
+      "numeric_grade": null,
+      "finding": null
+    }
+  ],
+  "facets": [
+    {
+      "ordinal": 1,
+      "evaluator_descriptive_name": "bounded capture contract and read-only comparison",
+      "assessment_status": "UNASSESSED",
+      "numeric_grade": null,
+      "frozen_failure_relevance": null
+    },
+    {
+      "ordinal": 2,
+      "evaluator_descriptive_name": "declared versions and unsupported inputs",
+      "assessment_status": "UNASSESSED",
+      "numeric_grade": null,
+      "frozen_failure_relevance": null
+    },
+    {
+      "ordinal": 3,
+      "evaluator_descriptive_name": "absent capture data and unsaved-state limits",
+      "assessment_status": "UNASSESSED",
+      "numeric_grade": null,
+      "frozen_failure_relevance": null
+    },
+    {
+      "ordinal": 4,
+      "evaluator_descriptive_name": "source/output/metadata separation",
+      "assessment_status": "UNASSESSED",
+      "numeric_grade": null,
+      "frozen_failure_relevance": null
+    },
+    {
+      "ordinal": 5,
+      "evaluator_descriptive_name": "absent/duplicate identifier and version conditions",
+      "assessment_status": "UNASSESSED",
+      "numeric_grade": null,
+      "frozen_failure_relevance": null
+    },
+    {
+      "ordinal": 6,
+      "evaluator_descriptive_name": "reorder and cell-identity ambiguity",
+      "assessment_status": "UNASSESSED",
+      "numeric_grade": null,
+      "frozen_failure_relevance": null
+    },
+    {
+      "ordinal": 7,
+      "evaluator_descriptive_name": "ordinary workspace text edits",
+      "assessment_status": "UNASSESSED",
+      "numeric_grade": null,
+      "frozen_failure_relevance": null
+    },
+    {
+      "ordinal": 8,
+      "evaluator_descriptive_name": "inferred rename and chosen equivalence/threshold rules",
+      "assessment_status": "UNASSESSED",
+      "numeric_grade": null,
+      "frozen_failure_relevance": "SQ-F1 affects this facet"
+    },
+    {
+      "ordinal": 9,
+      "evaluator_descriptive_name": "untracked observations and unresolved file identity",
+      "assessment_status": "UNASSESSED",
+      "numeric_grade": null,
+      "frozen_failure_relevance": null
+    },
+    {
+      "ordinal": 10,
+      "evaluator_descriptive_name": "explicitly selected saved state into a new destination",
+      "assessment_status": "UNASSESSED",
+      "numeric_grade": null,
+      "frozen_failure_relevance": null
+    },
+    {
+      "ordinal": 11,
+      "evaluator_descriptive_name": "existing-destination refusal",
+      "assessment_status": "UNASSESSED",
+      "numeric_grade": null,
+      "frozen_failure_relevance": null
+    },
+    {
+      "ordinal": 12,
+      "evaluator_descriptive_name": "missing content and no uncaptured recovery promise",
+      "assessment_status": "UNASSESSED",
+      "numeric_grade": null,
+      "frozen_failure_relevance": null
+    },
+    {
+      "ordinal": 13,
+      "evaluator_descriptive_name": "captured untracked-file recovery",
+      "assessment_status": "UNASSESSED",
+      "numeric_grade": null,
+      "frozen_failure_relevance": null
+    },
+    {
+      "ordinal": 14,
+      "evaluator_descriptive_name": "name collisions and destination safety",
+      "assessment_status": "UNASSESSED",
+      "numeric_grade": null,
+      "frozen_failure_relevance": null
+    },
+    {
+      "ordinal": 15,
+      "evaluator_descriptive_name": "two independently discovered components with version context",
+      "assessment_status": "UNASSESSED",
+      "numeric_grade": null,
+      "frozen_failure_relevance": null
+    },
+    {
+      "ordinal": 16,
+      "evaluator_descriptive_name": "bounded recommendation with a concrete tradeoff",
+      "assessment_status": "UNASSESSED",
+      "numeric_grade": null,
+      "frozen_failure_relevance": null
+    },
+    {
+      "ordinal": 17,
+      "evaluator_descriptive_name": "relevant issue-to-fix-to-test history and scoped lesson",
+      "assessment_status": "UNASSESSED",
+      "numeric_grade": null,
+      "frozen_failure_relevance": null
+    },
+    {
+      "ordinal": 18,
+      "evaluator_descriptive_name": "thin-plan revision and discriminating validations covering N1–N4",
+      "assessment_status": "UNASSESSED",
+      "numeric_grade": null,
+      "frozen_failure_relevance": "SQ-F1 affects this facet"
+    }
+  ],
+  "all_three_questions_fully_assessed": false,
+  "all_five_obligations_fully_assessed": false,
+  "all_eighteen_facets_fully_assessed": false,
+  "full_pass_eligible": false
+}

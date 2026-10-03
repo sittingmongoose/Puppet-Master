@@ -1,0 +1,276 @@
+{
+  "schema": "independent-frozen-source-quality-v1",
+  "case_id": "V8-NB-AMEND-T-L",
+  "evaluator": "er8-quality-nb-amend-t-v1",
+  "proposal": {
+    "path": "ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-T-L/V8-NB-AMEND-T-L-final-correction/workspace/out/FINAL_PROPOSAL.md",
+    "bytes": 50479,
+    "sha256": "b5598d87e0786b3ac69243af1f93c6bb1538d24c65f026db54c27849bc20427a"
+  },
+  "disposition": "FAILED_SCREEN",
+  "full_pass": false,
+  "canonical_score": null,
+  "local_numeric_score": null,
+  "screen_stopped_on_decisive_verified_error": true,
+  "blindness": {
+    "method_task_case_scope_cost_receipts_read_before_freeze": false,
+    "exposed_identity": [
+      "own case V8-NB-AMEND-T-L",
+      "final-correction filename",
+      "proposal self-described correction context and family/account/model",
+      "parent task explicitly names NativeZ/GLM5.3FlashMax and planning-lineage suffix"
+    ],
+    "limitation": "This is output-first and metadata-delayed evaluation, not complete identity blindness. No other arm or prior evaluator output was read."
+  },
+  "findings": [
+    {
+      "id": "SQ-F1",
+      "severity": "consequential",
+      "status": "VERIFIED_ERROR",
+      "proposal_locations": [
+        "section 0.1 critique note 1",
+        "section 2 Component 2 threshold boundary",
+        "section 3.3 boundary disclosure",
+        "section 5 N3",
+        "section 6 F7b2 and discriminating power check"
+      ],
+      "claim_paraphrase": "Git rejects a delete/add pair exactly at its rename threshold, so a 50 percent pair yields delete plus add; the prototype inclusion boundary differs and F7b2 discriminates that difference.",
+      "verdict": "The documentation says more than in an example, but the same-version implementation rejects similarity strictly below minimum_score. Equality remains eligible for matching; an unconditional delete/add result at equality is unsupported and contradicted. This also cannot be inferred from the prototype line-ratio score because Git uses a different byte-based metric.",
+      "why_consequential": "The false Git behavior is repeatedly presented as a source-backed correction, defines N3 boundary rationale, and supplies the proposed F7b2 failure oracle. It is enough to prevent a full research-quality pass.",
+      "evidence": [
+        {
+          "source_id": "git-rename",
+          "url": "https://raw.githubusercontent.com/git/git/v2.43.0/diffcore-rename.c",
+          "sha256": "a462b6cff4edd08606aa0079483adc1e51b912dc9759d76c1d459ed5c56581d0",
+          "lines_1based": [
+            1032,
+            1042
+          ],
+          "pointer": "find_basename_matches: score lower than threshold continues; equality reaches record_rename_pair"
+        },
+        {
+          "source_id": "git-rename",
+          "url": "https://raw.githubusercontent.com/git/git/v2.43.0/diffcore-rename.c",
+          "sha256": "a462b6cff4edd08606aa0079483adc1e51b912dc9759d76c1d459ed5c56581d0",
+          "lines_1based": [
+            1138,
+            1158
+          ],
+          "pointer": "find_renames: usable candidate loop breaks only below minimum_score, then records eligible pair"
+        },
+        {
+          "source_id": "git-rename",
+          "url": "https://raw.githubusercontent.com/git/git/v2.43.0/diffcore-rename.c",
+          "sha256": "a462b6cff4edd08606aa0079483adc1e51b912dc9759d76c1d459ed5c56581d0",
+          "lines_1based": [
+            193,
+            210
+          ],
+          "pointer": "score computed from source bytes copied divided by maximum file size"
+        },
+        {
+          "source_id": "git-diff-options",
+          "url": "https://raw.githubusercontent.com/git/git/v2.43.0/Documentation/diff-options.txt",
+          "sha256": "c7b3566f63b7869c0d73738c0edc3fdbd4c02872281a995a1c3c34c94241fab8",
+          "lines_1based": [
+            580,
+            590
+          ],
+          "pointer": "example prose and exact-only special case; prose alone does not establish executable strict boundary"
+        }
+      ],
+      "verification_type": "Independent same-tag public primary-source inspection and evaluator code-path inference; no fixture or Git command execution was performed."
+    }
+  ],
+  "coverage_policy": "Decisive failed screen. Unchecked questions, obligations and facets are UNASSESSED with numeric null, never zero. Capturing a source does not mean its entire content was verified.",
+  "questions": [
+    {
+      "id": "Q1",
+      "status": "PARTIAL_VERIFIED_ERROR",
+      "numeric_grade": null,
+      "finding": "SQ-F1"
+    },
+    {
+      "id": "Q2",
+      "status": "PARTIAL_VERIFIED_ERROR",
+      "numeric_grade": null,
+      "finding": "SQ-F1"
+    },
+    {
+      "id": "Q3",
+      "status": "UNASSESSED",
+      "numeric_grade": null
+    }
+  ],
+  "plan_obligations": [
+    {
+      "id": "N1",
+      "status": "UNASSESSED",
+      "numeric_grade": null,
+      "finding": null
+    },
+    {
+      "id": "N2",
+      "status": "UNASSESSED",
+      "numeric_grade": null,
+      "finding": null
+    },
+    {
+      "id": "N3",
+      "status": "PARTIAL_VERIFIED_ERROR",
+      "numeric_grade": null,
+      "finding": "SQ-F1"
+    },
+    {
+      "id": "N4",
+      "status": "UNASSESSED",
+      "numeric_grade": null,
+      "finding": null
+    },
+    {
+      "id": "N5",
+      "status": "UNASSESSED",
+      "numeric_grade": null,
+      "finding": null
+    }
+  ],
+  "semantic_facets": [
+    {
+      "ordinal": 1,
+      "status": "UNASSESSED",
+      "numeric_grade": null,
+      "canonical_name": null,
+      "note": "Canonical shared-scope facet mapping intentionally not read before quality freeze."
+    },
+    {
+      "ordinal": 2,
+      "status": "UNASSESSED",
+      "numeric_grade": null,
+      "canonical_name": null,
+      "note": "Canonical shared-scope facet mapping intentionally not read before quality freeze."
+    },
+    {
+      "ordinal": 3,
+      "status": "UNASSESSED",
+      "numeric_grade": null,
+      "canonical_name": null,
+      "note": "Canonical shared-scope facet mapping intentionally not read before quality freeze."
+    },
+    {
+      "ordinal": 4,
+      "status": "UNASSESSED",
+      "numeric_grade": null,
+      "canonical_name": null,
+      "note": "Canonical shared-scope facet mapping intentionally not read before quality freeze."
+    },
+    {
+      "ordinal": 5,
+      "status": "UNASSESSED",
+      "numeric_grade": null,
+      "canonical_name": null,
+      "note": "Canonical shared-scope facet mapping intentionally not read before quality freeze."
+    },
+    {
+      "ordinal": 6,
+      "status": "UNASSESSED",
+      "numeric_grade": null,
+      "canonical_name": null,
+      "note": "Canonical shared-scope facet mapping intentionally not read before quality freeze."
+    },
+    {
+      "ordinal": 7,
+      "status": "UNASSESSED",
+      "numeric_grade": null,
+      "canonical_name": null,
+      "note": "Canonical shared-scope facet mapping intentionally not read before quality freeze."
+    },
+    {
+      "ordinal": 8,
+      "status": "UNASSESSED",
+      "numeric_grade": null,
+      "canonical_name": null,
+      "note": "Canonical shared-scope facet mapping intentionally not read before quality freeze."
+    },
+    {
+      "ordinal": 9,
+      "status": "UNASSESSED",
+      "numeric_grade": null,
+      "canonical_name": null,
+      "note": "Canonical shared-scope facet mapping intentionally not read before quality freeze."
+    },
+    {
+      "ordinal": 10,
+      "status": "UNASSESSED",
+      "numeric_grade": null,
+      "canonical_name": null,
+      "note": "Canonical shared-scope facet mapping intentionally not read before quality freeze."
+    },
+    {
+      "ordinal": 11,
+      "status": "UNASSESSED",
+      "numeric_grade": null,
+      "canonical_name": null,
+      "note": "Canonical shared-scope facet mapping intentionally not read before quality freeze."
+    },
+    {
+      "ordinal": 12,
+      "status": "UNASSESSED",
+      "numeric_grade": null,
+      "canonical_name": null,
+      "note": "Canonical shared-scope facet mapping intentionally not read before quality freeze."
+    },
+    {
+      "ordinal": 13,
+      "status": "UNASSESSED",
+      "numeric_grade": null,
+      "canonical_name": null,
+      "note": "Canonical shared-scope facet mapping intentionally not read before quality freeze."
+    },
+    {
+      "ordinal": 14,
+      "status": "UNASSESSED",
+      "numeric_grade": null,
+      "canonical_name": null,
+      "note": "Canonical shared-scope facet mapping intentionally not read before quality freeze."
+    },
+    {
+      "ordinal": 15,
+      "status": "UNASSESSED",
+      "numeric_grade": null,
+      "canonical_name": null,
+      "note": "Canonical shared-scope facet mapping intentionally not read before quality freeze."
+    },
+    {
+      "ordinal": 16,
+      "status": "UNASSESSED",
+      "numeric_grade": null,
+      "canonical_name": null,
+      "note": "Canonical shared-scope facet mapping intentionally not read before quality freeze."
+    },
+    {
+      "ordinal": 17,
+      "status": "UNASSESSED",
+      "numeric_grade": null,
+      "canonical_name": null,
+      "note": "Canonical shared-scope facet mapping intentionally not read before quality freeze."
+    },
+    {
+      "ordinal": 18,
+      "status": "UNASSESSED",
+      "numeric_grade": null,
+      "canonical_name": null,
+      "note": "Canonical shared-scope facet mapping intentionally not read before quality freeze."
+    }
+  ],
+  "limits": [
+    "No full-pass or all-claims assurance.",
+    "No observed candidate fixture, upstream test run, or renderer claim.",
+    "No accuracy grade inferred from completion, tokens, method label, or preservation self-report.",
+    "No consequential source-quality dependency was solved by private account or native data."
+  ],
+  "frozen_at_epoch": 1791000858.608422,
+  "frozen_at_utc": "2026-10-03T04:14:18.608422+00:00",
+  "original_birth_epoch": 1791000599.0972836,
+  "original_deadline_epoch": 1791002999.0972836,
+  "inclusive_elapsed_seconds_at_freeze": 259.51113843917847
+}

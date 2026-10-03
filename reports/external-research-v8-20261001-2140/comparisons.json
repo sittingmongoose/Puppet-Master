@@ -63,16 +63,16 @@
       }
     ]
   },
-  "checkpoint": "FOUR_REVIEWED_PAIRS_SEVEN_FAILED_SCREENS_ONE_HOLD_NINTH_PIPELINE_COMPLETE",
+  "checkpoint": "FIVE_REVIEWED_PAIRS_NINE_FAILED_SCREENS_ONE_HOLD_TEN_PIPELINES_COMPLETE",
   "prospective_pair_map": "tranche-cohort-v2/cases/tranche-v2/pairs.json",
   "prospective_pair_count": 12,
-  "completed_comparisons": 4,
-  "current_scope_note": "12 target pairs; four operationally complete and independently reviewed, seven FAILED_SCREEN and one HOLD. Ninth whole pipeline awaits a matched arm/review. No full-PASS quality-qualified efficiency result.",
+  "completed_comparisons": 5,
+  "current_scope_note": "12 target pairs; five operationally complete and independently reviewed, nine FAILED_SCREEN and one HOLD. No full-PASS quality-qualified efficiency result.",
   "scope_review": "recovery-results-cohort-v2/evaluation/tranche-scope-review-v1/review.json",
   "scope_review_status": "CLEAR_PROSPECTIVE_NO_LAUNCH_AUTHORITY",
-  "observation_utc": "2026-10-03T03:54:53.321786+00:00",
-  "completed_comparisons_definition": "Four matched operational pairs with both independent dispositions frozen; no qualified efficiency result.",
-  "operational_matched_pairs_completed": 4,
+  "observation_utc": "2026-10-03T04:26:31.254280+00:00",
+  "completed_comparisons_definition": "Five matched operational pairs with both independent dispositions frozen; no qualified efficiency result.",
+  "operational_matched_pairs_completed": 5,
   "quality_qualified_efficiency_comparisons": 0,
   "integrated_pair_results": [
     {
@@ -106,6 +106,28 @@
       "quality_qualified_efficiency": false,
       "speedup": "NOT_ESTABLISHED",
       "evidence": "notebook-retrieval-quality-review-v1/ops/recovery-v1/ROOT_NB_RETRIEVAL_COMPARISON_V1.json"
+    },
+    {
+      "pair": "NB-AMEND-C/T",
+      "operational_complete": true,
+      "independent_review": "TWO_FAILED_SCREEN; remainder UNASSESSED/null",
+      "quality_qualified_efficiency": false,
+      "speedup": "NOT_ESTABLISHED",
+      "evidence": "notebook-amendment-quality-review-v1/ops/recovery-v1/ROOT_NB_AMENDMENT_COMPARISON_V1.json"
     }
-  ]
+  ],
+  "current_metadata_boundary": "Frozen actual UTC04:26:31.254280 despite observation filename0425; earlier03:30 audit does not cover this update. No present liveness inference.",
+  "current_outcomes": {
+    "operational_pipeline_count": 10,
+    "target_pipelines": 24,
+    "operational_pair_count": 5,
+    "target_pairs": 12,
+    "quality_reviewed_pairs": 5,
+    "independent_failed_screens": 9,
+    "independent_holds": 1,
+    "full_quality_pass": 0,
+    "quality_qualified_efficiency_comparisons": 0,
+    "winner": null,
+    "qualified_holdouts": 0
+  }
 }

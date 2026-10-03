@@ -1,0 +1,46 @@
+{
+  "case_id": "V8-NB-AMEND-C-L",
+  "frozen_final": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-final-correction/workspace/out/FINAL_PROPOSAL.md",
+    "bytes": 45736,
+    "sha256": "3bbc99d85c5e5631ebe17be9a8e39827850e8aa536e2108ffc477262de55e424"
+  },
+  "frozen_unresolved": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-final-correction/workspace/out/UNRESOLVED_LEADS.md",
+    "bytes": 4275,
+    "sha256": "41aeb4be76b940f9dac0f6bc87805ae8bc6a03effb2b1abda6a6c7a8ef93b9c7"
+  },
+  "matches_root_admitted_final_hash": true,
+  "source_quality_freeze": {
+    "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L/SOURCE_QUALITY_FREEZE.json",
+    "bytes": 23530,
+    "sha256": "4dad07b6561ee8c14ac8012e0a927ce98fd61efdec98732c97f7bc65358b25d0"
+  },
+  "stage_mechanics": "SAFE_STAGE_PROVENANCE.json",
+  "public_host_capture_and_range_lane": "PUBLIC_SOURCE_PROVENANCE.json",
+  "positive_capture_metadata_count": 27,
+  "all_capture_metadata_hashes_match_freeze": true,
+  "goal_completion_status_all_complete": true,
+  "three_fresh_distinct_target_ids": true,
+  "all_owned_native_quiescent": true,
+  "all_owned_actor_groups_absent": true,
+  "all_held_stage_wait_returns_zero": true,
+  "case_supervisor_group_absent": true,
+  "held_case_wait_returncode": 0,
+  "held_finalizer_returncode": 0,
+  "operational_completion": "SUPPORTED by whitelisted receipts and root attestation, separate from semantic FAILED_SCREEN",
+  "candidate_independent_source_discovery": "SELF_REPORTED; no full native histories audited",
+  "transport_frontend_consumption": "UNKNOWN",
+  "model_semantic_acquisition": "UNKNOWN",
+  "complete_goal_is_quality_pass": false,
+  "limited_blinding_disclosure": "The case ID and final-correction/critique references are present in the permitted frozen artifact. This is limited blinding, not method-neutral anonymity.",
+  "forbidden_access": {
+    "candidate_feedback": false,
+    "other_arm_or_evaluator_data": false,
+    "credentials_profiles_SDK": false,
+    "live_native_context": false,
+    "live_ledger": false,
+    "canonical_repository": false,
+    "provider_or_git_operations": false
+  }
+}

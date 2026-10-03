@@ -1,0 +1,101 @@
+{
+  "schema": "er8.independent-evaluator-publication-manifest.v1",
+  "case_id": "V8-NB-AMEND-C-L",
+  "output_directory": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L",
+  "disposition": "FAILED_SCREEN",
+  "exact_top_file_positive_publication_whitelist": [
+    "REVIEW.md",
+    "disposition.json",
+    "coverage.json",
+    "provenance.json",
+    "cost.json",
+    "method.json",
+    "preservation.json",
+    "primary-sources.json",
+    "PUBLIC_SOURCE_PROVENANCE.json",
+    "SAFE_STAGE_PROVENANCE.json",
+    "SOURCE_QUALITY_FREEZE.json",
+    "ERRATA.json",
+    "MANIFEST.json",
+    "FREEZE.json"
+  ],
+  "recursive_publication_allowed": false,
+  "payload_hashes": [
+    {
+      "filename": "REVIEW.md",
+      "bytes": 4372,
+      "sha256": "7d250b7de8922c4f8b420dd383f6339f9133c420bcbb617d6b7c6fba2b8d5e5f"
+    },
+    {
+      "filename": "disposition.json",
+      "bytes": 730,
+      "sha256": "bb29dea5847b8a6e19a9e17bee4884fc1087677cb100e5c315d855738eaa1501"
+    },
+    {
+      "filename": "coverage.json",
+      "bytes": 5407,
+      "sha256": "e157874df8675bb88cc8655c5a56ed00f7396d83e82d3f3e84394a873891aab2"
+    },
+    {
+      "filename": "provenance.json",
+      "bytes": 2405,
+      "sha256": "13ec898add9c76a870f525cb04d98d22dc6ede51c7715577585ba03d0d5a4833"
+    },
+    {
+      "filename": "cost.json",
+      "bytes": 2252,
+      "sha256": "36a3da806407f965bab1ae129c9767466efcb1285ba4dbc729772074cef00231"
+    },
+    {
+      "filename": "method.json",
+      "bytes": 2197,
+      "sha256": "8dd979972e8ba5bde0051bc00a76035bbaad61d826d23a7383df8ccbc1a98a07"
+    },
+    {
+      "filename": "preservation.json",
+      "bytes": 7389,
+      "sha256": "f1a54ba37cad0ee0e181cf3107aacfd16de744f8dbcc2fb80a92f2ced087de61"
+    },
+    {
+      "filename": "primary-sources.json",
+      "bytes": 10081,
+      "sha256": "acaa03de1a26dd7ec159920a25d71136b4ac8c825c21435e5aec323a8031fa92"
+    },
+    {
+      "filename": "PUBLIC_SOURCE_PROVENANCE.json",
+      "bytes": 45042,
+      "sha256": "83b5f475abc6b7d7b0a19de4fa14e89ab5a9ac8b81c9de87a4001cda05f8d645"
+    },
+    {
+      "filename": "SAFE_STAGE_PROVENANCE.json",
+      "bytes": 12131,
+      "sha256": "72b48931ac517227d2d22d96b71fe10e0c3ec62d2d89d1afd36a5e3a40369469"
+    },
+    {
+      "filename": "SOURCE_QUALITY_FREEZE.json",
+      "bytes": 23530,
+      "sha256": "4dad07b6561ee8c14ac8012e0a927ce98fd61efdec98732c97f7bc65358b25d0"
+    },
+    {
+      "filename": "ERRATA.json",
+      "bytes": 1246,
+      "sha256": "aadc33756029487413b904c5d792d7f20d258fedf385151568371aa70e230736"
+    }
+  ],
+  "manifest_hash_location": "FREEZE.json",
+  "freeze_hash_location": "Evaluator terminal handoff; no self-hash cycle",
+  "source_quality_freeze_sha256": "4dad07b6561ee8c14ac8012e0a927ce98fd61efdec98732c97f7bc65358b25d0",
+  "excluded_preliminary_top_files": [
+    "independent-source-acquisition.json",
+    "static-source-diagnostic.json",
+    "safe-stage-receipts.json",
+    "safe-public-capture-metadata.json"
+  ],
+  "excluded_directory": "independent-public",
+  "candidate_capture_bodies_exported": false,
+  "native_context_metrics_histories_tool_args_or_raw_streams_exported": false,
+  "canonical_score": null,
+  "local_numeric_score": null,
+  "canonical_comparability": false,
+  "whole_case_pass": false
+}

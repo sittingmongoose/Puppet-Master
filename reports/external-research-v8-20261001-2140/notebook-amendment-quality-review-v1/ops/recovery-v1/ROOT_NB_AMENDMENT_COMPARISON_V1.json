@@ -1,0 +1,55 @@
+{
+  "schema": "pm.er8.root-matched-comparison.v1",
+  "root_authority": true,
+  "created_epoch": 1791001669.7382326,
+  "comparison": "NB amendment-based flash critique C/T",
+  "case_results": [
+    {
+      "case_id": "V8-NB-AMEND-C-L",
+      "disposition": "FAILED_SCREEN",
+      "freeze": {
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L/FREEZE.json",
+        "sha256": "89edc1a0e5ea7320afb5515fecae1765771a681929355967634094eb2ad7fc81"
+      },
+      "manifest": {
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L/MANIFEST.json",
+        "sha256": "122e1dc1854e466f5c0e88df326bae814b9578c2bb6dd1ad1614216d75b2ae19"
+      },
+      "case_receipt": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/GLOBAL_PARENT_FINAL_RECEIPT.json",
+        "sha256": "495e7c698d23cbb0deb0dcca381fadeb7a024ac671912a1cb3baf4a6d050ed2f"
+      },
+      "wall_seconds": 2252.845527356,
+      "occupied_stage_lease_seconds": 2252.287031173706,
+      "outside_native_seconds": 5.392740566
+    },
+    {
+      "case_id": "V8-NB-AMEND-T-L",
+      "disposition": "FAILED_SCREEN",
+      "freeze": {
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-T-L/FREEZE.json",
+        "sha256": "af4332e44bd0a78b13d5a2297eb36ae5247e767d742682fa0ebec794f28f4148"
+      },
+      "manifest": {
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-T-L/MANIFEST.json",
+        "sha256": "bae2817e799bbed6615d02b2034ba85bc874cc227e5a43c235b85618c73ca9dd"
+      },
+      "case_receipt": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-T-L/GLOBAL_PARENT_FINAL_RECEIPT.json",
+        "sha256": "debdc1dd70d8cfc085aab3a7625d456d6b275258d4d85dd738e15440938e5c6f"
+      },
+      "wall_seconds": 2008.53208353,
+      "occupied_stage_lease_seconds": 2007.836809873581,
+      "outside_native_seconds": 5.168064165
+    }
+  ],
+  "root_checks": "Exact final/parent and independent evaluator freeze/manifest payload hashes matched; source-quality freezes precede METHOD metadata; original operational completions unchanged.",
+  "quality_ruling": "Both FAILED_SCREEN; no full quality PASS or qualified efficiency/winner/holdout.",
+  "remaining_scope": "UNASSESSED/null; no full truth certification.",
+  "candidate_feedback": "NONE",
+  "cost_scope": "Descriptive case costs separate from Sol/root management; all prior failure/start/occupied charges retained; full tokens/money/account/provider load UNKNOWN.",
+  "observation": {
+    "path": "LAB_ROOT/ops/recovery-v1/OBSERVATION_20261003_0425.json",
+    "sha256": "6c20274270378f4786dd4313290ca209439c2d80f7ce3b0591ab2ad12aab3a41"
+  }
+}

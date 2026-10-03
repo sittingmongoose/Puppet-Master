@@ -1,0 +1,66 @@
+{
+  "schema": "pm.er8.notebook-amendment-quotation-audit.v1",
+  "policy": "Omit all direct third-party excerpts; conservative MD code-span omissions; candidate own prose permitted. Primary URL/hash/range/JSON-pointer/source attribution retained.",
+  "published_third_party_verbatim_words": 0,
+  "omissions": [
+    {
+      "source": "evaluation/integrated-v2/V8-NB-AMEND-C-L/primary-sources.json",
+      "json_pointer": "/sources/22/excerpt",
+      "kind": "third-party excerpt",
+      "original_span_sha256": "e69e2d9f3dc1f1b1df79f6eafb2d8365d98dc98fa7f3ead0451dd963e0a5c2db",
+      "original_word_count": 3,
+      "public_verbatim_words": 0
+    },
+    {
+      "source": "evaluation/integrated-v2/V8-NB-AMEND-C-L/primary-sources.json",
+      "json_pointer": "/sources/23/excerpt",
+      "kind": "third-party excerpt",
+      "original_span_sha256": "2f335c0e30e6a5c8fe840f05b3e93d0842515e2dc451fa3b182304cd24cbd1c3",
+      "original_word_count": 1,
+      "public_verbatim_words": 0
+    },
+    {
+      "source": "evaluation/integrated-v2/V8-NB-AMEND-T-L/REVIEW.md",
+      "original_line_1based": 11,
+      "kind": "conservative markdown span omission",
+      "original_span_sha256": "7e56d077bd4911469c6582b115e61f0481945483c47e1e5a9659b8f648ff20c4",
+      "public_verbatim_words": 0
+    },
+    {
+      "source": "evaluation/integrated-v2/V8-NB-AMEND-T-L/REVIEW.md",
+      "original_line_1based": 20,
+      "kind": "conservative markdown span omission",
+      "original_span_sha256": "0c19184e0e37573c82e444ff44b4190e499a9b536890ed075d04b95a35ce0432",
+      "public_verbatim_words": 0
+    },
+    {
+      "source": "evaluation/integrated-v2/V8-NB-AMEND-T-L/REVIEW.md",
+      "original_line_1based": 32,
+      "kind": "conservative markdown span omission",
+      "original_span_sha256": "815a409697f755a6056c1f110b2aea5a65326f1afef569245a73362a75aebdfe",
+      "public_verbatim_words": 0
+    },
+    {
+      "source": "evaluation/integrated-v2/V8-NB-AMEND-T-L/REVIEW.md",
+      "original_line_1based": 46,
+      "kind": "conservative markdown span omission",
+      "original_span_sha256": "1b52311133c4015d71dc6b951829a6199a5464c68864b84528d2c6138b9b81cb",
+      "public_verbatim_words": 0
+    },
+    {
+      "source": "evaluation/integrated-v2/V8-NB-AMEND-T-L/REVIEW.md",
+      "original_line_1based": 48,
+      "kind": "conservative markdown span omission",
+      "original_span_sha256": "81f81d1cb38f91f8420d964d79383778c8ca75cc798fc7cd31ad177699390ce6",
+      "public_verbatim_words": 0
+    },
+    {
+      "source": "evaluation/integrated-v2/V8-NB-AMEND-T-L/REVIEW.md",
+      "original_line_1based": 48,
+      "kind": "conservative markdown span omission",
+      "original_span_sha256": "c31e8a412a20d0ffa393992c481a18c2921ac9a1a78e837ce8d060fa4a6df15f",
+      "public_verbatim_words": 0
+    }
+  ],
+  "candidate_own_prose_permitted": true
+}

@@ -1,0 +1,16 @@
+{
+  "schema": "additive-source-freeze-descriptor-v1",
+  "case_id": "V8-NB-AMEND-T-L",
+  "descriptor_written_at_epoch": 1791001414.6635344,
+  "original_sources_frozen_at_epoch": 1791000858.608422,
+  "original_sources_frozen_at_utc": "2026-10-03T04:14:18.608422+00:00",
+  "authority": "SOURCE_QUALITY_FREEZE.json already froze PRIMARY_SOURCES.json before metadata reveal. This additive descriptor preserves that original freeze; it is not a new source-quality grade.",
+  "source_metadata": {
+    "name": "PRIMARY_SOURCES.json",
+    "bytes": 4930,
+    "sha256": "61c09054bcc5938d4a0192aedcf783fa32d76a865166e5eda3599cec2d32cf07"
+  },
+  "independent_body_storage": "Own external/ only, not in top-level publication whitelist",
+  "body_exports": false,
+  "published_excerpts": []
+}

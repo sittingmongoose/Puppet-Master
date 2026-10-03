@@ -1,0 +1,99 @@
+{
+  "schema": "postfreeze-cost-v1",
+  "case_id": "V8-NB-AMEND-T-L",
+  "stage_costs": [
+    {
+      "stage": "research-proposal",
+      "hard_cap_seconds": 1200,
+      "stage_birth_monotonic_ns": 219595188887962,
+      "observed_fully_closed_monotonic_ns": 220293065443906,
+      "inclusive_stage_seconds": 697.876555944,
+      "within_updated_cap": true,
+      "native_responses": 11,
+      "derivation": "Evaluator-derived arithmetic from stage birth to latest admitted actor-close/native-absence/last-charge clock. Includes stage preparation.",
+      "input_tokens": null,
+      "output_tokens": null,
+      "reasoning_tokens": null,
+      "cache_tokens": null,
+      "total_tokens": null,
+      "usage_status": "Full input/output/reasoning/cache/total token usage UNKNOWN; only separately labeled observed output lower-bound scalar admitted.",
+      "money": null,
+      "admitted_observed_output_token_lower_bound": 28407,
+      "output_token_lower_bound_provenance": {
+        "public_metrics_sha256": "c7213149b8225715629b63424f7b9903ba48a91dee75895b6cd1173ac9f3b6a1",
+        "admission": "Explicit root authorization after source-quality freeze; only outputTokens scalar read, usage_totals dict not exported",
+        "type": "HOST_REPORTED_MONOTONIC_LOWER_BOUND; not complete billable/generated usage"
+      }
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "hard_cap_seconds": 1200,
+      "stage_birth_monotonic_ns": 220293261946037,
+      "observed_fully_closed_monotonic_ns": 221099345431466,
+      "inclusive_stage_seconds": 806.083485429,
+      "within_updated_cap": true,
+      "native_responses": 9,
+      "derivation": "Evaluator-derived arithmetic from stage birth to latest admitted actor-close/native-absence/last-charge clock. Includes stage preparation.",
+      "input_tokens": null,
+      "output_tokens": null,
+      "reasoning_tokens": null,
+      "cache_tokens": null,
+      "total_tokens": null,
+      "usage_status": "Full input/output/reasoning/cache/total token usage UNKNOWN; only separately labeled observed output lower-bound scalar admitted.",
+      "money": null,
+      "admitted_observed_output_token_lower_bound": 37028,
+      "output_token_lower_bound_provenance": {
+        "public_metrics_sha256": "834a1058eca0ff00ef59d441b2ddf9fddad05774316442dbf836b74c4bdcd0a6",
+        "admission": "Explicit root authorization after source-quality freeze; only outputTokens scalar read, usage_totals dict not exported",
+        "type": "HOST_REPORTED_MONOTONIC_LOWER_BOUND; not complete billable/generated usage"
+      }
+    },
+    {
+      "stage": "final-correction",
+      "hard_cap_seconds": 900,
+      "stage_birth_monotonic_ns": 221099487550837,
+      "observed_fully_closed_monotonic_ns": 221603019976254,
+      "inclusive_stage_seconds": 503.532425417,
+      "within_updated_cap": true,
+      "native_responses": 8,
+      "derivation": "Evaluator-derived arithmetic from stage birth to latest admitted actor-close/native-absence/last-charge clock. Includes stage preparation.",
+      "input_tokens": null,
+      "output_tokens": null,
+      "reasoning_tokens": null,
+      "cache_tokens": null,
+      "total_tokens": null,
+      "usage_status": "Full input/output/reasoning/cache/total token usage UNKNOWN; only separately labeled observed output lower-bound scalar admitted.",
+      "money": null,
+      "admitted_observed_output_token_lower_bound": 31949,
+      "output_token_lower_bound_provenance": {
+        "public_metrics_sha256": "286476fcfd918b9345ee3223880db716e2e37bf83f0ff51fa669267ad94df43c",
+        "admission": "Explicit root authorization after source-quality freeze; only outputTokens scalar read, usage_totals dict not exported",
+        "type": "HOST_REPORTED_MONOTONIC_LOWER_BOUND; not complete billable/generated usage"
+      }
+    }
+  ],
+  "updated_caps_manifest": {
+    "path": "cases/prospective-timing-v3/candidates/V8-NB-AMEND-T-L/manifest.json",
+    "bytes": 4774,
+    "sha256": "4ae1e22d314bc24f6c525838db4ee4bc2297511acb3487d2adac5ac61af48724"
+  },
+  "legacy_caps_warning": "METHOD/TASK/tranche-v2 historical 1800/600/600 wording is superseded for timing by the expressly assigned prospective-timing-v3 1200/1200/900 manifest. No clock was reset.",
+  "case_wall_seconds_reported": 2008.53208353,
+  "case_wall_seconds_evaluator_derived": 2008.53208353,
+  "case_occupied_stage_lease_seconds_reported": 2007.836809873581,
+  "nonoverlapping_outside_native_seconds_reported": 5.168064165,
+  "native_interval_seconds_evaluator_derived": 2003.3640193649999,
+  "case_wall_hard_cap_seconds": 3600,
+  "case_occupied_hard_cap_seconds": 5400,
+  "within_case_wall_and_occupied_caps": true,
+  "responses_total_evaluator_derived": 28,
+  "generated_usage": "UNKNOWN; separately admitted observed output lower bounds are not full usage.",
+  "provider_external_load": "UNKNOWN",
+  "money": null,
+  "efficiency_or_winner": "NOT_INFERRED; failed screens are not quality-equivalent speedups",
+  "evaluator_original_birth_epoch": 1791000599.0972836,
+  "evaluator_original_deadline_epoch": 1791002999.0972836,
+  "evaluator_final_end": "Recorded in FREEZE.json after all writing and checks; no prep reset",
+  "summed_output_token_lower_bound_evaluator_derived": 97384,
+  "output_lower_bound_sum_derivation": "Evaluator-derived sum of three admitted host-reported observed output lower bounds; not totalTokens, not complete usage, not a quality/efficiency grade."
+}

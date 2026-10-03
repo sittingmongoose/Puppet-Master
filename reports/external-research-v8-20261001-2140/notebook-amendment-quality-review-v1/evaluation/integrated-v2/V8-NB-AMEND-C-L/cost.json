@@ -1,0 +1,52 @@
+{
+  "case_id": "V8-NB-AMEND-C-L",
+  "source": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/GLOBAL_PARENT_FINAL_RECEIPT.json",
+    "bytes": 1405,
+    "sha256": "495e7c698d23cbb0deb0dcca381fadeb7a024ac671912a1cb3baf4a6d050ed2f"
+  },
+  "parent_scalar_costs": {
+    "actual_case_end_monotonic_ns": 221421232180859,
+    "original_case_start_monotonic_ns": 219168386653503,
+    "original_case_deadline_monotonic_ns": 222768386653503,
+    "actual_case_wall_seconds": 2252.845527356,
+    "actual_occupied_stage_lease_seconds": 2252.287031173706,
+    "whole_case_occupied_cap_seconds": 5400,
+    "actual_nonoverlapping_outside_native_seconds": 5.392740566,
+    "all_case_execution_closed_before_cutoff": true
+  },
+  "case_wall_cap_seconds": 3600,
+  "case_occupied_cap_seconds": 5400,
+  "updated_stage_cap_seconds": {
+    "research-proposal": 1200,
+    "independent-candidate-critic": 1200,
+    "final-correction": 900
+  },
+  "inclusive_stage_observed_seconds": {
+    "research-proposal": 592.721050823,
+    "independent-candidate-critic": 876.619174466,
+    "final-correction": 782.616511835
+  },
+  "within_stage_caps": true,
+  "within_case_wall_cap": true,
+  "within_case_occupied_cap": true,
+  "host_overhead_cap_seconds": 300,
+  "nonoverlapping_outside_native_seconds": 5.392740566,
+  "native_response_counts": {
+    "research-proposal": 9,
+    "independent-candidate-critic": 8,
+    "final-correction": 9
+  },
+  "native_response_count_total": 26,
+  "generated_native_tokens": null,
+  "generated_native_token_status": "UNKNOWN in allowed evidence lane; not zero",
+  "input_native_tokens": null,
+  "retrieval_or_cached_token_components": null,
+  "billing_cost": null,
+  "opaque_global_metadata_publication_cost": "UNKNOWN; not inferred zero. Parent receipt separates subsequent global metadata/publication work from the closed case.",
+  "provider_external_load": "UNKNOWN",
+  "comparison_claims": "No speedup, recipe effect, account advantage or winner inferred from a failed quality screen.",
+  "evaluator_birth_epoch": 1790999747.6170585,
+  "evaluator_original_deadline_epoch": 1791002147.6170585,
+  "evaluator_final_inclusive_cost_record": "FREEZE.json"
+}

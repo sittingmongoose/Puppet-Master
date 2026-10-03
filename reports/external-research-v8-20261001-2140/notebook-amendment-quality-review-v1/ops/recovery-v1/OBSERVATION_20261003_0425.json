@@ -1,0 +1,53 @@
+{
+  "schema": "pm.er8.root-observation.v1",
+  "root_authority": true,
+  "created_epoch": 1791001591.2542796,
+  "utc": "2026-10-03T04:26:31.254280+00:00",
+  "completed_operational_cases": [
+    "V8-BIO-RETR-C-M",
+    "V8-BIO-RETR-T-M",
+    "V8-BIO-AMEND-C-L",
+    "V8-BIO-AMEND-T-L",
+    "V8-BIO-BREADTH-C-M",
+    "V8-BIO-BREADTH-T-M",
+    "V8-NB-RETR-C-M",
+    "V8-NB-RETR-T-M",
+    "V8-NB-AMEND-C-L",
+    "V8-NB-AMEND-T-L"
+  ],
+  "operational_pipeline_count": 10,
+  "NATIVE_ID_7810a8ec704733bf": 24,
+  "operational_pair_count": 5,
+  "NATIVE_ID_e0f6c8cfc05e4e5b": 12,
+  "quality_reviewed_pairs": 5,
+  "independent_failed_screens": 9,
+  "full_quality_pass": 0,
+  "quality_qualified_efficiency_comparisons": 0,
+  "quality_pending_cases": [],
+  "stage_complete_counts": {
+    "research": 20,
+    "critic": 13,
+    "final": 10
+  },
+  "accounting": {
+    "elapsed_seconds": 31760.423900842667,
+    "deadline_epoch": 1791013030.8303788,
+    "admissions": 58,
+    "native_goal_starts": 56,
+    "pending_start_permits": 0,
+    "occupied_slot_seconds": 40868.37090468407,
+    "committed_slot_seconds": 1325.5170171260834,
+    "reserved_or_committed_slot_seconds": 77754.97761917114,
+    "reserved_or_committed_native_starts": 31,
+    "active_by_family": {
+      "M": 0,
+      "Z": 2,
+      "L": 0
+    },
+    "generated_output_tokens_lower_bound": 1374875,
+    "generated_usage": "unknown",
+    "occupancy_reconciled": true,
+    "elapsed_seconds_including_user_pause": 96382.2542796135,
+    "authorized_user_pause_excluded_seconds": 64621.83037877083
+  }
+}

@@ -1,7 +1,7 @@
 {
-  "checkpoint": "FOUR_REVIEWED_PAIRS_SEVEN_FAILED_SCREENS_ONE_HOLD_NINTH_PIPELINE_COMPLETE",
-  "observed_native_starts": 51,
-  "occupied_candidate_seconds": 37073.588742256165,
+  "checkpoint": "FIVE_REVIEWED_PAIRS_NINE_FAILED_SCREENS_ONE_HOLD_TEN_PIPELINES_COMPLETE",
+  "observed_native_starts": 56,
+  "occupied_candidate_seconds": 40868.37090468407,
   "candidate_generated_tokens": null,
   "management_tokens": null,
   "evaluation_tokens": null,
@@ -62,7 +62,7 @@
       "original_cap_seconds": 480
     }
   ],
-  "current_evidence": "notebook-retrieval-quality-review-v1/ops/recovery-v1/OBSERVATION_20261003_035453.json",
+  "current_evidence": "notebook-amendment-quality-review-v1/ops/recovery-v1/OBSERVATION_20261003_0425.json",
   "last_independently_reviewed_usage": {
     "native_starts": 2,
     "occupied_candidate_seconds": 1354.3749742507935,
@@ -72,10 +72,10 @@
   "pause_requested_epoch": 1790914502.1696212,
   "resume_epoch": 1790979124.0,
   "pause_duration_seconds": 64621.83037877083,
-  "generated_output_tokens_lower_bound": 1211449,
+  "generated_output_tokens_lower_bound": 1374875,
   "reported_output_lower_bound_scope": "Recorded public request/stage increments only; failed-stage counters and full campaign usage UNKNOWN",
   "prospective_deadline_epoch": 1791013030.8303788,
-  "observation_utc": "2026-10-03T03:54:53.321786+00:00",
+  "observation_utc": "2026-10-03T04:26:31.254280+00:00",
   "resume_evidence": "resume-cohort-v1/ops/recovery-v1/RESUME_20261002.json",
   "observed_physical_canary_seconds_scope": "Historical first canary only",
   "native_muse_mechanical_helper": {
@@ -104,8 +104,8 @@
   },
   "native_qualification": "V3_MECHANICAL_PASSED_LIMITED_DELIVERY_INFERENCE",
   "native_qualification_evidence": "resume-qualified-v3-cohort/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json",
-  "reserved_or_committed_native_starts_at_observation": 36,
-  "reserved_or_committed_slot_seconds_at_observation": 84941.92297172546,
+  "reserved_or_committed_native_starts_at_observation": 31,
+  "reserved_or_committed_slot_seconds_at_observation": 77754.97761917114,
   "active_by_family_at_observation": {
     "M": 0,
     "Z": 2,
@@ -167,6 +167,20 @@
       "wall_seconds": 2059.356413208,
       "occupied_stage_lease_seconds": 2058.8847460746765,
       "outside_native_seconds": 4.902850151
+    },
+    {
+      "case": "V8-NB-AMEND-C-L",
+      "quality_disposition": "FAILED_SCREEN",
+      "wall_seconds": 2252.845527356,
+      "occupied_stage_lease_seconds": 2252.287031173706,
+      "outside_native_seconds": 5.392740566
+    },
+    {
+      "case": "V8-NB-AMEND-T-L",
+      "quality_disposition": "FAILED_SCREEN",
+      "wall_seconds": 2008.53208353,
+      "occupied_stage_lease_seconds": 2007.836809873581,
+      "outside_native_seconds": 5.168064165
     }
   ],
   "quality_qualified_efficiency_comparisons": 0,
@@ -189,5 +203,24 @@
     "install_evidence": "current-state-cohort-v1/latest-root-metadata-v1/ops/recovery-v1/HELPER_CONCURRENCY_ROOT_INSTALL_V2.json"
   },
   "candidate_output_warning_at_observation": true,
-  "candidate_output_stop_at_observation": false
+  "candidate_output_stop_at_observation": false,
+  "current_metadata_boundary": "Frozen actual UTC04:26:31.254280 despite observation filename0425; earlier03:30 audit does not cover this update. No present liveness inference.",
+  "current_outcomes": {
+    "operational_pipeline_count": 10,
+    "target_pipelines": 24,
+    "operational_pair_count": 5,
+    "target_pairs": 12,
+    "quality_reviewed_pairs": 5,
+    "independent_failed_screens": 9,
+    "independent_holds": 1,
+    "full_quality_pass": 0,
+    "quality_qualified_efficiency_comparisons": 0,
+    "winner": null,
+    "qualified_holdouts": 0
+  },
+  "current_stage_counts": {
+    "research": 20,
+    "critic": 13,
+    "final": 10
+  }
 }

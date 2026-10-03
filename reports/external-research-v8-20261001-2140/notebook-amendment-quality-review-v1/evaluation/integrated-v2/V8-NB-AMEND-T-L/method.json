@@ -1,0 +1,54 @@
+{
+  "schema": "postfreeze-method-audit-v1",
+  "case_id": "V8-NB-AMEND-T-L",
+  "method_card": {
+    "path": "cases/tranche-v2/candidates/V8-NB-AMEND-T-L/METHOD.md",
+    "bytes": 1482,
+    "sha256": "cb187544119249fdeef595b43cce64fd0f858e0cf1243264cf4bb7d59fad39b8"
+  },
+  "task_card": {
+    "path": "cases/tranche-v2/candidates/V8-NB-AMEND-T-L/TASK.md",
+    "bytes": 983,
+    "sha256": "9ac6c99c891f09084ea43ea0677359acf59170ced55497bf9548bb9949639f22"
+  },
+  "case_manifest": {
+    "path": "cases/tranche-v2/candidates/V8-NB-AMEND-T-L/manifest.json",
+    "bytes": 4772,
+    "sha256": "df929e7ee6c8c87106108b99fdfd8bcd93c8b00f4a517424d3c58912f16a7a26"
+  },
+  "method_id": "C-A",
+  "method_name": "ordinary-complete-plus-prioritized-amendment-flash-critique",
+  "method_revealed_after_source_quality_freeze": true,
+  "artifact_uptake": [
+    {
+      "requirement": "fresh critic assesses three questions and five obligations",
+      "status": "ARTIFACT_STRUCTURE_PRESENT",
+      "evidence": "CRITIQUE sections 2 and 5 address Q1–Q3 and N1–N5; correctness of all assessments not established by early screen."
+    },
+    {
+      "requirement": "up to three prioritized warranted amendments with affected passage, replacement, source/context, discriminating check",
+      "status": "ARTIFACT_STRUCTURE_PRESENT",
+      "evidence": "CRITIQUE section 3 A1–A3 has ranked amendments with these fields. Warrantedness is not globally assured."
+    },
+    {
+      "requirement": "additional consequential unresolved obligations appended",
+      "status": "ARTIFACT_STRUCTURE_PRESENT",
+      "evidence": "CRITIQUE section 4 carries six precision notes and remaining leads."
+    },
+    {
+      "requirement": "critic does not write whole replacement proposal",
+      "status": "ARTIFACT_STRUCTURE_PRESENT",
+      "evidence": "CRITIQUE is amendment-oriented; final stage writes complete FINAL_PROPOSAL."
+    },
+    {
+      "requirement": "correction checks amendments and emits complete corrected proposal",
+      "status": "ARTIFACT_STRUCTURE_PRESENT_WITH_HOST_SOURCE_TRANSPORT",
+      "evidence": "FINAL section 0.1 records applied A1–A3 and notes; five newly timestamped capture records support fresh public retrieval. Transport does not prove semantic checking."
+    }
+  ],
+  "trace_level_method_uptake": "INDETERMINATE",
+  "trace_limit": "No arbitrary native streams, conversation, startup context, local context, native structure or tool arguments admitted/read. Self-reports and output structure do not establish actual process adherence.",
+  "fresh_stages": "Positive distinct activation/completion/fresh-session receipts plus root same-account attestation",
+  "source_check_success": "FAILED_SCREEN remains independently frozen; note 1 introduced an erroneous source-backed boundary claim",
+  "background": "Common ordinary pipeline, complete brief obligations, proposal/critic/correction stages. No isolated main effect or winner inferred."
+}

@@ -1,0 +1,21 @@
+{
+  "kind": "additive bookkeeping clarification; immutable source-quality freeze unchanged",
+  "source_quality_freeze_sha256": "4dad07b6561ee8c14ac8012e0a927ce98fd61efdec98732c97f7bc65358b25d0",
+  "corrections": [
+    {
+      "item": "safe-stage-receipts.json",
+      "disposition": "Preliminary broad scalar diagnostic is excluded from the exact publication whitelist. SAFE_STAGE_PROVENANCE.json is the explicit field-whitelisted publication projection. No native histories, entire metrics, contexts, tool arguments or raw streams were copied.",
+      "quality_effect": "none"
+    },
+    {
+      "item": "safe-public-capture-metadata.json",
+      "disposition": "Preliminary projection omitted capture-byte and completeness fields; PUBLIC_SOURCE_PROVENANCE.json supplies exact positively admitted capture/range/transport metadata and is the published projection.",
+      "quality_effect": "none"
+    },
+    {
+      "item": "preservation.json: open-lead row",
+      "disposition": "Carry-forward/expansion of leads is supported by the inspected proposal boundary and final/critic declarations. The original standalone lead companion was not separately byte-compared; that subclaim remains UNASSESSED.",
+      "quality_effect": "none"
+    }
+  ]
+}

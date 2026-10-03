@@ -1,0 +1,490 @@
+{
+  "schema_version": "independent-source-quality-freeze-v1",
+  "case_id": "V8-NB-AMEND-C-L",
+  "frozen_utc": "2026-10-03T04:02:01.321110+00:00",
+  "frozen_epoch": 1791000121.3211098,
+  "budget_birth_epoch": 1790999747.6170585,
+  "original_deadline_epoch": 1791002147.6170585,
+  "global_deadline_epoch": 1791013030.8303788,
+  "disposition": "FAILED_SCREEN",
+  "screen_basis": "SQ-F01 is a consequential primary-source-verified failure in the issue/fix/test account. Screening stops short of full-scope grading.",
+  "full_pass": false,
+  "canonical_numeric_score": null,
+  "canonical_facet_weights": null,
+  "local_numeric_score": null,
+  "pre_freeze_inputs": [
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "bytes": 45736,
+      "sha256": "3bbc99d85c5e5631ebe17be9a8e39827850e8aa536e2108ffc477262de55e424"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-final-correction/workspace/out/UNRESOLVED_LEADS.md",
+      "bytes": 4275,
+      "sha256": "41aeb4be76b940f9dac0f6bc87805ae8bc6a03effb2b1abda6a6c7a8ef93b9c7"
+    }
+  ],
+  "independent_public_sources": [
+    {
+      "id": "S1-schema45",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.schema.json",
+      "final_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.schema.json",
+      "http_status": 200,
+      "captured_utc": "2026-10-03T03:57:51.919520+00:00",
+      "bytes": 16104,
+      "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+      "local_path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L/independent-public/S1-schema45.body",
+      "elapsed_seconds": 0.10391759872436523
+    },
+    {
+      "id": "S2-nbformat-changelog",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md",
+      "final_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md",
+      "http_status": 200,
+      "captured_utc": "2026-10-03T03:57:51.922963+00:00",
+      "bytes": 28394,
+      "sha256": "414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab",
+      "local_path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L/independent-public/S2-nbformat-changelog.body",
+      "elapsed_seconds": 0.10551619529724121
+    },
+    {
+      "id": "S3-validator-tests",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/tests/test_validator.py",
+      "final_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/tests/test_validator.py",
+      "http_status": 200,
+      "captured_utc": "2026-10-03T03:57:51.887367+00:00",
+      "bytes": 13945,
+      "sha256": "1d5990ad23fba5ad6b048e6cddde5ed6d4ac8c1d4239e34650067d666173e6cc",
+      "local_path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L/independent-public/S3-validator-tests.body",
+      "elapsed_seconds": 0.06860756874084473
+    },
+    {
+      "id": "S5-issue235",
+      "url": "https://api.github.com/repos/jupyter/nbformat/issues/235",
+      "final_url": "https://api.github.com/repos/jupyter/nbformat/issues/235",
+      "http_status": 200,
+      "captured_utc": "2026-10-03T03:57:52.012328+00:00",
+      "bytes": 3393,
+      "sha256": "40420f0c01c3ebcc658bbce6a1178292440e58bbaf1395501b66829683cf5fe7",
+      "local_path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L/independent-public/S5-issue235.body",
+      "elapsed_seconds": 0.19199013710021973
+    },
+    {
+      "id": "S6a-pr236",
+      "url": "https://api.github.com/repos/jupyter/nbformat/issues/236",
+      "final_url": "https://api.github.com/repos/jupyter/nbformat/issues/236",
+      "http_status": 200,
+      "captured_utc": "2026-10-03T03:57:52.047208+00:00",
+      "bytes": 3357,
+      "sha256": "66c9810b5d307f1491932bc87791f77efd68f1d30c7e72538a6c62ae16d63fee",
+      "local_path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L/independent-public/S6a-pr236.body",
+      "elapsed_seconds": 0.2257843017578125
+    },
+    {
+      "id": "S6b-issue359",
+      "url": "https://api.github.com/repos/jupyter/nbformat/issues/359",
+      "final_url": "https://api.github.com/repos/jupyter/nbformat/issues/359",
+      "http_status": 200,
+      "captured_utc": "2026-10-03T03:57:52.001985+00:00",
+      "bytes": 4247,
+      "sha256": "3de53294b098cc1aa41a37ecc421f808de2bc293e3eb55133c4654c283c790f0",
+      "local_path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L/independent-public/S6b-issue359.body",
+      "elapsed_seconds": 0.17899203300476074
+    },
+    {
+      "id": "S6c-issue243",
+      "url": "https://api.github.com/repos/jupyter/nbformat/issues/243",
+      "final_url": "https://api.github.com/repos/jupyter/nbformat/issues/243",
+      "http_status": 200,
+      "captured_utc": "2026-10-03T03:57:52.032292+00:00",
+      "bytes": 3232,
+      "sha256": "882be9f73e27dfe956f70b0d6df50c0c6e871eff83a42078d868bdf229832cfa",
+      "local_path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L/independent-public/S6c-issue243.body",
+      "elapsed_seconds": 0.14479517936706543
+    },
+    {
+      "id": "S7a-nbdime-docs",
+      "url": "https://nbdime.readthedocs.io/en/latest/index.html",
+      "final_url": "https://nbdime.readthedocs.io/en/latest/index.html",
+      "http_status": 200,
+      "captured_utc": "2026-10-03T03:57:51.995017+00:00",
+      "bytes": 17996,
+      "sha256": "51cd3fa796e339d7375fe95e9f5315359a089def932fa67725ee28e2f4af8c69",
+      "local_path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L/independent-public/S7a-nbdime-docs.body",
+      "elapsed_seconds": 0.07540607452392578
+    },
+    {
+      "id": "S7b-nbdime-diff",
+      "url": "https://nbdime.readthedocs.io/en/latest/diffing.html",
+      "final_url": "https://nbdime.readthedocs.io/en/latest/diffing.html",
+      "http_status": 200,
+      "captured_utc": "2026-10-03T03:57:52.014137+00:00",
+      "bytes": 17391,
+      "sha256": "980eadb93d6e8fb04009492e26f6a8c784b083f84b47ae4e0cb271b160e19222",
+      "local_path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L/independent-public/S7b-nbdime-diff.body",
+      "elapsed_seconds": 0.09102201461791992
+    },
+    {
+      "id": "S8-nbdime-changelog",
+      "url": "https://raw.githubusercontent.com/jupyter/nbdime/main/CHANGELOG.md",
+      "final_url": "https://raw.githubusercontent.com/jupyter/nbdime/main/CHANGELOG.md",
+      "http_status": 200,
+      "captured_utc": "2026-10-03T03:57:52.050322+00:00",
+      "bytes": 18608,
+      "sha256": "1d3c90cd4292540d702c0917d1243120327bc1146f711958353e76dc0e0e98a3",
+      "local_path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L/independent-public/S8-nbdime-changelog.body",
+      "elapsed_seconds": 0.05526399612426758
+    },
+    {
+      "id": "S9-git-diff",
+      "url": "https://raw.githubusercontent.com/git/git/master/Documentation/diff-options.adoc",
+      "final_url": "https://raw.githubusercontent.com/git/git/master/Documentation/diff-options.adoc",
+      "http_status": 200,
+      "captured_utc": "2026-10-03T03:57:52.084822+00:00",
+      "bytes": 34303,
+      "sha256": "f12f2f624417476cf050ca067263be9f5122eb6dc800f09796044975d9046303",
+      "local_path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L/independent-public/S9-git-diff.body",
+      "elapsed_seconds": 0.08301281929016113
+    },
+    {
+      "id": "S10-schema-list",
+      "url": "https://api.github.com/repos/jupyter/nbformat/contents/nbformat/v4",
+      "final_url": "https://api.github.com/repos/jupyter/nbformat/contents/nbformat/v4",
+      "http_status": 200,
+      "captured_utc": "2026-10-03T03:57:52.144078+00:00",
+      "bytes": 10326,
+      "sha256": "b3385c61115d20914310949041828928f92593cfeaaa74dc6805695818e22012",
+      "local_path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L/independent-public/S10-schema-list.body",
+      "elapsed_seconds": 0.13182520866394043
+    },
+    {
+      "id": "E1-validator",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/validator.py",
+      "final_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/validator.py",
+      "http_status": 200,
+      "captured_utc": "2026-10-03T03:57:52.089922+00:00",
+      "bytes": 22349,
+      "sha256": "3db1fe48de1060981b13bcf828b8a5779ae30dd082ec06f712f066e90fbbfd46",
+      "local_path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L/independent-public/E1-validator.body",
+      "elapsed_seconds": 0.07575440406799316
+    },
+    {
+      "id": "E2-schema40",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.0.schema.json",
+      "final_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.0.schema.json",
+      "http_status": 200,
+      "captured_utc": "2026-10-03T03:57:52.124268+00:00",
+      "bytes": 12316,
+      "sha256": "573477534050198c20629c0dc2ef2b543479a41d5dbc87b3ba614e85a191c2de",
+      "local_path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L/independent-public/E2-schema40.body",
+      "elapsed_seconds": 0.09200096130371094
+    },
+    {
+      "id": "E3-nbdime-notebooks",
+      "url": "https://raw.githubusercontent.com/jupyter/nbdime/main/nbdime/diffing/notebooks.py",
+      "final_url": "https://raw.githubusercontent.com/jupyter/nbdime/main/nbdime/diffing/notebooks.py",
+      "http_status": 200,
+      "captured_utc": "2026-10-03T03:57:52.114895+00:00",
+      "bytes": 18981,
+      "sha256": "9f9739feb52db1673832af609c257dda1f3ac6b258ec4d81f64db8d93657fe37",
+      "local_path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L/independent-public/E3-nbdime-notebooks.body",
+      "elapsed_seconds": 0.06778931617736816
+    },
+    {
+      "id": "E4-validator-v5111",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/validator.py",
+      "http_status": 200,
+      "captured_utc": "2026-10-03T03:59:37.084590+00:00",
+      "bytes": 22349,
+      "sha256": "3db1fe48de1060981b13bcf828b8a5779ae30dd082ec06f712f066e90fbbfd46",
+      "local_path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L/independent-public/E4-validator-v5111.body"
+    },
+    {
+      "id": "E5-validator-v550",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.5.0/nbformat/validator.py",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "id": "E6-validator-v520",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.2.0/nbformat/validator.py",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "id": "E7-nbdime404",
+      "url": "https://raw.githubusercontent.com/jupyter/nbdime/4.0.4/nbdime/diffing/notebooks.py",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "id": "E8-release-nbformat",
+      "url": "https://api.github.com/repos/jupyter/nbformat/releases/latest",
+      "http_status": 200,
+      "captured_utc": "2026-10-03T03:59:37.142580+00:00",
+      "bytes": 10314,
+      "sha256": "4e7c7592aeae719f17b4a30fe6e7ec45ba0d3606445f586e121581d7d48d1452",
+      "local_path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L/independent-public/E8-release-nbformat.body"
+    },
+    {
+      "id": "E9-release-nbdime",
+      "url": "https://api.github.com/repos/jupyter/nbdime/releases/latest",
+      "http_status": 200,
+      "captured_utc": "2026-10-03T03:59:37.245993+00:00",
+      "bytes": 14523,
+      "sha256": "8bc19b5003338b7c8a6997191f98be5ec24422cfeec9e5e925426d292128276c",
+      "local_path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L/independent-public/E9-release-nbdime.body"
+    },
+    {
+      "id": "E10-fixtures",
+      "url": "https://api.github.com/repos/jupyter/nbformat/contents/tests",
+      "http_status": 200,
+      "captured_utc": "2026-10-03T03:59:37.206150+00:00",
+      "bytes": 25676,
+      "sha256": "6479f99c0e084c6a196438498a87aaa7b43c6b3bb7f22df42a6f997450aa155c",
+      "local_path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L/independent-public/E10-fixtures.body"
+    },
+    {
+      "id": "E11-validator550",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/5.5.0/nbformat/validator.py",
+      "http_status": 200,
+      "captured_utc": "2026-10-03T04:00:10.482291+00:00",
+      "bytes": 21382,
+      "sha256": "804419ed25174c7dbdc3532d6b198742953357deead393954c0bf78960b6471d",
+      "local_path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L/independent-public/E11-validator550.body"
+    },
+    {
+      "id": "E12-validator520",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/5.2.0/nbformat/validator.py",
+      "http_status": 200,
+      "captured_utc": "2026-10-03T04:00:10.463754+00:00",
+      "bytes": 13765,
+      "sha256": "06b5c6b26a5e45d321c6241bab31d4c9df8805c2279f41ba314d7ea5c9e4fc50",
+      "local_path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L/independent-public/E12-validator520.body"
+    },
+    {
+      "id": "E13-nbdimev404",
+      "url": "https://raw.githubusercontent.com/jupyter/nbdime/v4.0.4/nbdime/diffing/notebooks.py",
+      "http_status": 200,
+      "captured_utc": "2026-10-03T04:00:10.442129+00:00",
+      "bytes": 18745,
+      "sha256": "bc9c5c5ad149661e7d3f6a99e43c657a91cce91ee1411611656df0dc61e837d2",
+      "local_path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L/independent-public/E13-nbdimev404.body"
+    },
+    {
+      "id": "E14-git-status",
+      "url": "https://raw.githubusercontent.com/git/git/master/Documentation/git-status.adoc",
+      "http_status": 200,
+      "captured_utc": "2026-10-03T04:00:10.489443+00:00",
+      "bytes": 20045,
+      "sha256": "3d4ef22e3c74d417c7ba2fce01f6b1905ee8946a88e8e8610700ab09e9d9aa7f",
+      "local_path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-AMEND-C-L/independent-public/E14-git-status.body"
+    }
+  ],
+  "findings": [
+    {
+      "id": "SQ-F01",
+      "severity": "consequential",
+      "status": "SOURCE_VERIFIED_FAIL",
+      "proposal_lines": [
+        178,
+        179,
+        181
+      ],
+      "claim": "nbformat 5.2.0 shipped ask-first cell-id repair; current repair tests demonstrate repair only when asked.",
+      "primary_evidence": [
+        {
+          "source_id": "E12-validator520",
+          "lines": [
+            234,
+            290
+          ]
+        },
+        {
+          "source_id": "E11-validator550",
+          "lines": [
+            456,
+            491
+          ]
+        },
+        {
+          "source_id": "E4-validator-v5111",
+          "lines": [
+            388,
+            476
+          ]
+        },
+        {
+          "source_id": "S3-validator-tests",
+          "lines": [
+            304,
+            349
+          ]
+        }
+      ],
+      "finding": "The 5.2.0 public signature defaults repair_duplicate_cell_ids to True and repairs absent/duplicate IDs. 5.5.0 maps the omitted deprecated argument to True. 5.11.1 public validate delegates to _validate, whose default remains True and calls the mutating normalization routine. The cited repair tests call validate(nb) with no keywords; their docstrings cannot establish explicit opt-in. The proposal acknowledges continued default repair elsewhere, but that caveat does not make its contrary release/test claim true. The historical fix is partial/ongoing; a shipped public no-mutation boundary has not been established.",
+      "consequence": "The load-bearing issue-to-fix-to-test account overstates a safety-relevant dependency behavior and does not provide a consistent version-pinned public validation contract for the recommended layer.",
+      "needed_revision": "Describe the actual default repair behavior and partial mitigation without asserting ask-first default repair shipped; pin a side-effect-free public inspection path or validate a copy and independently preserve identifier failures."
+    },
+    {
+      "id": "SQ-F02",
+      "severity": "localized factual error",
+      "status": "SOURCE_VERIFIED_FAIL",
+      "proposal_lines": [
+        251
+      ],
+      "claim": "Missing/malformed ids are currently warning-level in nbformat.",
+      "primary_evidence": [
+        {
+          "source_id": "S3-validator-tests",
+          "lines": [
+            352,
+            358
+          ]
+        }
+      ],
+      "finding": "The malformed-id test expects ValidationError and false isvalid. Earlier sections correctly distinguish malformed IDs; the summary conflates them with missing IDs.",
+      "consequence": "The summary drops the error/warning condition for the input policy.",
+      "needed_revision": "Keep malformed-ID rejection separate from missing-ID warning/default repair."
+    },
+    {
+      "id": "SQ-F03",
+      "severity": "plan ambiguity",
+      "status": "OPEN_ANALYTIC_CONCERN",
+      "proposal_lines": [
+        119,
+        163,
+        166
+      ],
+      "claim": "A file present only in snapshot 2 is both added and untracked, while the declared manifest contract carries only path/hash/content.",
+      "primary_evidence": [
+        {
+          "source_id": "E14-git-status",
+          "lines": [
+            17,
+            23
+          ]
+        }
+      ],
+      "finding": "Git untracked status concerns tracking state; baseline absence alone does not distinguish newly tracked additions from untracked paths. The proposed capture contract does not declare a tracking-state field. This is a static evaluator concern, not a candidate or fixture execution.",
+      "consequence": "The two observation categories overlap unless a tracking-state input or intentionally redefined product term is specified.",
+      "needed_revision": "State the captured tracking-status information and separate file addition from untracked status, or explicitly define the product term and overlapping records."
+    },
+    {
+      "id": "SQ-F04",
+      "severity": "bounded comparison caveat",
+      "status": "SOURCE_VERIFIED_OVERSTATEMENT",
+      "proposal_lines": [
+        109
+      ],
+      "claim": "nbdime alignment is pre-4.0 heuristic versus 4.0+ id-based and changed silently.",
+      "primary_evidence": [
+        {
+          "source_id": "E13-nbdimev404",
+          "lines": [
+            294,
+            309
+          ]
+        },
+        {
+          "source_id": "E13-nbdimev404",
+          "lines": [
+            381,
+            384
+          ]
+        },
+        {
+          "source_id": "E13-nbdimev404",
+          "lines": [
+            524,
+            541
+          ]
+        },
+        {
+          "source_id": "S8-nbdime-changelog",
+          "lines": [
+            97,
+            109
+          ]
+        }
+      ],
+      "finding": "v4.0.4 retains approximate, moderate and strict predicates alongside the higher-precedence ID predicate. The changelog documents the ID support addition. Exclusive replacement or silence is not established. The recommendation can still rest on the explicitly bounded workspace/recovery gaps.",
+      "needed_revision": "Describe ID support as an added alignment predicate and leave exact fallback conditions unresolved unless read."
+    }
+  ],
+  "positive_verified_claims": [
+    "Captured 4.5 schema has minor minimum 5, three known cell branches, separately defined but unadmitted unrecognized branches, required IDs for raw/markdown/code, and separate cell/output execution counters.",
+    "Per-minor schema list and directly fetched 4.0 schema support version-conditioned ID requirements.",
+    "PR 236 is closed and unmerged; the proposal correctly retracts its release attribution.",
+    "Latest public release endpoints identify nbformat v5.11.1 and nbdime v4.0.4.",
+    "nbdime changelog records ID support in 4.0.0; the docs describe structural operations and generated-value conflict resolution.",
+    "Git documents exact rename detection at -M100% and the 50 percent default similarity threshold."
+  ],
+  "brief_question_screen": [
+    {
+      "id": "Q1",
+      "status": "PARTIALLY_CHECKED",
+      "numeric_score": null
+    },
+    {
+      "id": "Q2",
+      "status": "PARTIALLY_CHECKED",
+      "numeric_score": null
+    },
+    {
+      "id": "Q3",
+      "status": "FAILED_SCREEN",
+      "numeric_score": null
+    }
+  ],
+  "plan_obligation_screen": [
+    {
+      "id": "N1",
+      "status": "PARTIALLY_CHECKED",
+      "numeric_score": null
+    },
+    {
+      "id": "N2",
+      "status": "PARTIALLY_CHECKED",
+      "numeric_score": null
+    },
+    {
+      "id": "N3",
+      "status": "PARTIALLY_CHECKED",
+      "numeric_score": null
+    },
+    {
+      "id": "N4",
+      "status": "UNCHECKED",
+      "numeric_score": null
+    },
+    {
+      "id": "N5",
+      "status": "PARTIALLY_CHECKED",
+      "numeric_score": null
+    }
+  ],
+  "semantic_facet_screen": {
+    "required_facet_count": 18,
+    "canonical_facet_labels": "UNASSESSED before allowed scope metadata",
+    "facet_scores": null,
+    "unassessed_is_not_zero": true
+  },
+  "blinding": {
+    "method_read_before_freeze": false,
+    "task_read_before_freeze": false,
+    "candidate_manifest_read_before_freeze": false,
+    "timing_caps_read_before_freeze": false,
+    "common_scoring_metadata_read_before_freeze": false,
+    "native_cost_or_receipts_read_before_freeze": false,
+    "own_case_identity_leak": "The case ID and final-correction/critique references are present in the permitted frozen artifact. This is limited blinding, not method-neutral anonymity.",
+    "candidate_feedback": false,
+    "other_case_or_evaluator_access": false
+  },
+  "execution_claim_boundary": {
+    "candidate_checks_executed_by_evaluator": false,
+    "upstream_fixture_or_test_execution": false,
+    "evaluator_diagnostics": "Static parsing of independently acquired source AST only; no public source, candidate implementation, or fixtures executed.",
+    "transport_frontend_consumption": "UNKNOWN",
+    "model_semantic_acquisition": "UNKNOWN",
+    "self_reports_are_trace_proof": false
+  },
+  "quote_policy": "Published excerpts limited to at most 25 quoted words per public source; most findings use paraphrase and exact source line ranges."
+}

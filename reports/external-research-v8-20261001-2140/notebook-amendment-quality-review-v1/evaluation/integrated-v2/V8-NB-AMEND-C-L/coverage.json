@@ -1,0 +1,197 @@
+{
+  "case_id": "V8-NB-AMEND-C-L",
+  "grade_scope": "Diagnostic FAILED_SCREEN; incomplete whole-case assessment",
+  "scope_metadata": {
+    "path": "LAB_ROOT/cases/tranche-v2/scoring-only/evaluation-scope.json",
+    "bytes": 3849,
+    "sha256": "6efed6cf4763f91b9674ffaaf35b5c9113decf27663fc38961fcfd140b6883af"
+  },
+  "all_questions_required": 3,
+  "questions": [
+    {
+      "id": "Q1",
+      "status": "PARTIALLY_CHECKED",
+      "score": null,
+      "note": "Components/version anchors checked; full set of assertions not exhaustively graded."
+    },
+    {
+      "id": "Q2",
+      "status": "PARTIALLY_CHECKED",
+      "score": null,
+      "note": "Schema/field conditions screened; malformed-id summary error and untracked-status ambiguity recorded."
+    },
+    {
+      "id": "Q3",
+      "status": "FAILED_SCREEN",
+      "score": null,
+      "finding": "SQ-F01"
+    }
+  ],
+  "all_obligations_required": 5,
+  "obligations": [
+    {
+      "id": "N1",
+      "status": "PARTIALLY_CHECKED",
+      "score": null
+    },
+    {
+      "id": "N2",
+      "status": "PARTIALLY_CHECKED",
+      "score": null
+    },
+    {
+      "id": "N3",
+      "status": "PARTIALLY_CHECKED",
+      "score": null
+    },
+    {
+      "id": "N4",
+      "status": "UNASSESSED",
+      "score": null,
+      "note": "Separate preservation observations are not a complete quality grade."
+    },
+    {
+      "id": "N5",
+      "status": "FAILED_SCREEN",
+      "score": null,
+      "finding": "SQ-F01"
+    }
+  ],
+  "semantic_facets": [
+    {
+      "local_id": "LF01",
+      "label": "Bounded two-saved-state capture/input contract",
+      "owner_scope": "N1",
+      "status": "PARTIALLY_CHECKED",
+      "score": null
+    },
+    {
+      "local_id": "LF02",
+      "label": "Declared notebook versions and unsupported-input reporting",
+      "owner_scope": "N1",
+      "status": "PARTIALLY_CHECKED",
+      "score": null
+    },
+    {
+      "local_id": "LF03",
+      "label": "Absent capture data and unsaved-state limits",
+      "owner_scope": "N1",
+      "status": "UNASSESSED",
+      "score": null
+    },
+    {
+      "local_id": "LF04",
+      "label": "Separate notebook source/output/metadata observations",
+      "owner_scope": "N2",
+      "status": "PARTIALLY_CHECKED",
+      "score": null
+    },
+    {
+      "local_id": "LF05",
+      "label": "Version-conditioned identifier requirements and validity",
+      "owner_scope": "N2",
+      "status": "PARTIALLY_CHECKED",
+      "score": null
+    },
+    {
+      "local_id": "LF06",
+      "label": "Absent identifier fallback and visible ambiguity",
+      "owner_scope": "N2",
+      "status": "UNASSESSED",
+      "score": null
+    },
+    {
+      "local_id": "LF07",
+      "label": "Duplicate identifiers and non-repair ambiguity policy",
+      "owner_scope": "N2",
+      "status": "PARTIALLY_CHECKED",
+      "score": null
+    },
+    {
+      "local_id": "LF08",
+      "label": "Reordered cell observations",
+      "owner_scope": "N2",
+      "status": "UNASSESSED",
+      "score": null
+    },
+    {
+      "local_id": "LF09",
+      "label": "Ordinary text-edit observations",
+      "owner_scope": "N3",
+      "status": "UNASSESSED",
+      "score": null
+    },
+    {
+      "local_id": "LF10",
+      "label": "Observed delete/add versus inferred rename/equivalence",
+      "owner_scope": "N3",
+      "status": "PARTIALLY_CHECKED",
+      "score": null
+    },
+    {
+      "local_id": "LF11",
+      "label": "Untracked-file representation and captured tracking state",
+      "owner_scope": "N3",
+      "status": "PARTIALLY_CHECKED_OPEN_CONCERN",
+      "score": null
+    },
+    {
+      "local_id": "LF12",
+      "label": "Unresolved identity is exposed",
+      "owner_scope": "N3",
+      "status": "UNASSESSED",
+      "score": null
+    },
+    {
+      "local_id": "LF13",
+      "label": "Recovery from explicitly selected state to a new directory",
+      "owner_scope": "N4",
+      "status": "UNASSESSED",
+      "score": null
+    },
+    {
+      "local_id": "LF14",
+      "label": "Destination/content/collision refusal behavior",
+      "owner_scope": "N4",
+      "status": "UNASSESSED",
+      "score": null
+    },
+    {
+      "local_id": "LF15",
+      "label": "Recoverable contents and uncaptured/untracked limits",
+      "owner_scope": "N4",
+      "status": "UNASSESSED",
+      "score": null
+    },
+    {
+      "local_id": "LF16",
+      "label": "Two independently discovered components and version anchors",
+      "owner_scope": "N5/Q1",
+      "status": "PARTIALLY_CHECKED",
+      "score": null
+    },
+    {
+      "local_id": "LF17",
+      "label": "Bounded recommendation, tradeoff and revised concrete plan",
+      "owner_scope": "N5",
+      "status": "PARTIALLY_CHECKED",
+      "score": null
+    },
+    {
+      "local_id": "LF18",
+      "label": "Traceable issue→fix→test account, scoped lesson and discriminating validation",
+      "owner_scope": "N5/Q3",
+      "status": "FAILED_SCREEN",
+      "score": null
+    }
+  ],
+  "semantic_facet_definition": "18 evaluator-local descriptive facets derived from the actual brief after freeze; not a canonical weighted rubric.",
+  "canonical_18_facet_labels": null,
+  "canonical_facet_weights": null,
+  "canonical_score": null,
+  "local_numeric_score": null,
+  "canonical_comparability": false,
+  "unassessed_never_scored_zero": true,
+  "full_pass": false,
+  "whole_history_regrade": false
+}
