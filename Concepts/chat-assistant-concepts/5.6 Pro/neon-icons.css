@@ -189,6 +189,20 @@ svg:where(.nx-z0) .nx-p { animation: none; }
   --nx-hi-a: var(--nx-h-swell-i);
   --nx-1: var(--nx-d1) var(--nx-ease) backwards;
 }
+/* Ignite lights the tube itself (final review, 2026-10-03): a hovered or focused control, and a concept glyph inside a
+   host, takes the text ink. Many hosts restate their muted ink after styles.css's `.icon-button:hover{color:var(--text)}`
+   (the composer's attach, the header's search, the history close: (0,2,0), later), so the host's own hover never
+   reached the glyph: on light themes (no hover halo) a hovered control was pixel-identical to rest once its act ended,
+   and on dark ones the .30 halo was a grey blur round a dim tube. Now light themes light by ink alone (G1: about 2.5:1
+   rising to about 15:1) and the dark halo follows the brighter ink. Hosts that carry a tone or a selection keep their
+   ink (an active or pinned toggle, a danger or warning row or button, a primary chip, Orbit's core, a [data-tone] host), and so
+   does a glyph on a tinted tile (.work-output-icon, .event-icon) or one wearing a tone class (nx-t-*, also zero
+   specificity, so it is excluded rather than outranked); any rule that inks a glyph through --nx-ink at a specificity
+   above zero (the Fast bolt, a NieR cursor bar) still wins. neon-verify 17 holds both. */
+:where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .af-chip-pending, .orbit-node, .wa-disc, .rail8-item, .active, .is-on, .is-pinned, [class*="danger"], [class*="warn"], .primary-button, .primary, .orbit-core, [data-tone])) > svg:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [class*="nx-t-"])),
+:where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .af-chip-pending, .orbit-node, .wa-disc, .rail8-item, .active, .is-on, .is-pinned, [class*="danger"], [class*="warn"], .primary-button, .primary, .orbit-core, [data-tone])) > :where(:not(button, summary, [role="button"], [data-action], .work-output-icon, .event-icon)) > svg:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [class*="nx-t-"])) {
+  --nx-ink: var(--text);
+}
 /* Filled chips (primary buttons) already carry their own fill: the act plays, the halo stays off. (Send/Stop is
    send-stop.css's solid chip, its glyph inside .ss-face with its own lighting; the .send-button arm went with it.) */
 .primary-button > svg.nx, .soft-button.primary > svg.nx { --nx-hiv: hidden; --nx-fl: none; }
