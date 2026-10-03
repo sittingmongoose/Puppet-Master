@@ -1,0 +1,22 @@
+{
+  "actors_absent": true,
+  "campaign_id": "external-research-v8-20261001-2140",
+  "case_id": "V8-BIO-WIT-T-Z",
+  "ledger_jobs_sha256": "b60adc7f8fca1eafd443d4c95cf5b7def79521c8688db01bd19f2cd86000ea63",
+  "native_quiescent": true,
+  "no_v7_scheduler_for_case": true,
+  "observed_epoch": 1791001873.3436923,
+  "parents_absent": true,
+  "permits_settled": true,
+  "qualification": "Current exact positively enrolled campaign native/process/permit absence only; original costs/caps/failures and historical held-exit/on-time UNKNOWN preserved; no source quality or provider identity claim.",
+  "root_authority": true,
+  "root_verification": {
+    "path": "LAB_ROOT/ops/recovery-v1/ATTEMPT_PREDECESSOR_ROOT_VERIFICATION_V1.json",
+    "sha256": "14f9ce5c843cb5f8d7135b63b0cdfa7e68b75fcddc9d6feda06600856467bb18"
+  },
+  "schema": "pm.er8.attempt-predecessor-quiet.v1",
+  "supporting_independent_observation": {
+    "path": "LAB_ROOT/ops/attempt-predecessor-quiet-review-v1/REPORT.json",
+    "sha256": "279b4a87cb7a8939883067f40663e9b283bd9b6d0ec6f8ee2686f2765693ec40"
+  }
+}

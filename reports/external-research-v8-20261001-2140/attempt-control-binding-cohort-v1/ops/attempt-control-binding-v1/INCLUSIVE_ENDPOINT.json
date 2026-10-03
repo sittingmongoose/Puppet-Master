@@ -1,0 +1,19 @@
+{
+  "schema": "pm.er8.attempt-control-binding-inclusive-endpoint.v1",
+  "actual_inclusive_endpoint_epoch": 1791002021.5953054,
+  "original_helper_birth_epoch": 1791001272.397982,
+  "original_helper_deadline_epoch": 1791002472.397982,
+  "elapsed_inclusive_seconds_at_terminal_sample": 749.1973235607147,
+  "completed_source_and_post_freeze_verification_before_original_deadline": true,
+  "phase": "SOURCE_AND_POST_FREEZE_VERIFICATION_FINISHED",
+  "final_manifest": {
+    "path": "LAB_ROOT/ops/attempt-control-binding-v1/MANIFEST.json",
+    "sha256": "1a01d91c53aa9e6951d08e9f175316d2928a81346e756af6cd09fcf304f9a94c"
+  },
+  "final_freeze": {
+    "path": "LAB_ROOT/ops/attempt-control-binding-v1/FREEZE.json",
+    "sha256": "222a2ff185ca1d33c435ee6f47a4a250d8c6f2098071f1c48d295133b72833e9"
+  },
+  "source_author_edits_after_this_marker": false,
+  "endpoint_record_write_and_final_handoff_tail": "Root helper bookkeeping actual end is authoritative and must remain charged; no endpoint reset or backdating."
+}

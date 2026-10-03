@@ -1,0 +1,29 @@
+test_actual_boundary_dependencies_and_reuse_hashes (frozen_author_fixtures.BindingTests.test_actual_boundary_dependencies_and_reuse_hashes) ... ok
+test_all_subsets_consistent_stable_and_new_identity_only (frozen_author_fixtures.BindingTests.test_all_subsets_consistent_stable_and_new_identity_only) ... ok
+test_bad_empty_duplicate_alias_or_foreign_pairs_reject (frozen_author_fixtures.BindingTests.test_bad_empty_duplicate_alias_or_foreign_pairs_reject) ... ok
+test_dependency_drift_and_duplicate_metadata_reject (frozen_author_fixtures.BindingTests.test_dependency_drift_and_duplicate_metadata_reject) ... ok
+test_independent_and_root_acceptance_required (frozen_author_fixtures.BindingTests.test_independent_and_root_acceptance_required) ... ok
+test_missing_stale_negative_or_aliased_quiet_reject (frozen_author_fixtures.BindingTests.test_missing_stale_negative_or_aliased_quiet_reject) ... ok
+test_nonfinite_late_or_bool_clock_reject (frozen_author_fixtures.BindingTests.test_nonfinite_late_or_bool_clock_reject) ... ok
+test_positive_exact_release_and_append_at_ceiling (frozen_author_fixtures.BindingTests.test_positive_exact_release_and_append_at_ceiling) ... ok
+test_real_common_release_gate_with_explicit_mock_route_and_held_state (frozen_author_fixtures.BindingTests.test_real_common_release_gate_with_explicit_mock_route_and_held_state) ... ok
+test_real_unchanged_planning_gate_all12_and_pin_drift (frozen_author_fixtures.BindingTests.test_real_unchanged_planning_gate_all12_and_pin_drift) ... ok
+test_receipt_absent_changed_subset_refunded_or_overcap_reject (frozen_author_fixtures.BindingTests.test_receipt_absent_changed_subset_refunded_or_overcap_reject) ... ok
+test_split_or_wrong_queue_jobs_sources_control_and_caps_reject (frozen_author_fixtures.BindingTests.test_split_or_wrong_queue_jobs_sources_control_and_caps_reject) ... ok
+test_unchanged_quiet_monitor_accepts_new_source_root_convention (frozen_author_fixtures.BindingTests.test_unchanged_quiet_monitor_accepts_new_source_root_convention) ... ok
+test_whole_pair_interface_is_unaccepted_and_never_reserves (frozen_author_fixtures.BindingTests.test_whole_pair_interface_is_unaccepted_and_never_reserves) ... ok
+test_independent_control_delta_is_minimal (__main__.IndependentTests.test_independent_control_delta_is_minimal) ... ok
+test_independent_snapshot_preserves_all_inherited_pins (__main__.IndependentTests.test_independent_snapshot_preserves_all_inherited_pins) ... ok
+test_independent_all_63_subsets_exact_arms_jobs_and_original_caps (__main__.IndependentTests.test_independent_all_63_subsets_exact_arms_jobs_and_original_caps) ... ok
+test_independent_missing_quiet_cannot_be_inferred_from_absent_state (__main__.IndependentTests.test_independent_missing_quiet_cannot_be_inferred_from_absent_state) ... ok
+test_independent_root_and_review_snapshot_control_pins (__main__.IndependentTests.test_independent_root_and_review_snapshot_control_pins) ... ok
+test_independent_exact_binding_fields_and_source_inventory (__main__.IndependentTests.test_independent_exact_binding_fields_and_source_inventory) ... ok
+test_independent_receipt_request_pins_caps_and_identity (__main__.IndependentTests.test_independent_receipt_request_pins_caps_and_identity) ... ok
+test_independent_every_arm_lineage_token_required (__main__.IndependentTests.test_independent_every_arm_lineage_token_required) ... ok
+test_independent_old_births_costs_promises_output_survive_readonly_binding (__main__.IndependentTests.test_independent_old_births_costs_promises_output_survive_readonly_binding) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 2.122s
+
+OK
+{"tests_run": 23, "author_tests": 14, "independent_additional_tests": 9, "success": true, "blocked_prohibited_operations": 0, "native_launches": 0, "live_ledger_imports_reads_transactions": 0, "private_sdk_auth_reads": 0}

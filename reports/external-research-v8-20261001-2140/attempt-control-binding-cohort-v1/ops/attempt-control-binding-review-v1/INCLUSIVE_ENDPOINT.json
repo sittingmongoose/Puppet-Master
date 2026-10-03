@@ -1,0 +1,24 @@
+{
+  "schema": "pm.er8.attempt-control-binding-independent-review-inclusive-endpoint.v1",
+  "actual_inclusive_endpoint_epoch": 1791002568.4569428,
+  "original_helper_birth_epoch": 1791002156.7884085,
+  "original_helper_deadline_epoch": 1791002756.7884085,
+  "elapsed_inclusive_seconds_at_terminal_sample": 411.66853427886963,
+  "helper_budget_seconds": 600,
+  "completed_fixtures_reports_manifests_freeze_verification_before_original_deadline": true,
+  "phase": "SOURCE_REVIEW_REPORTS_AND_POST_FREEZE_VERIFICATION_FINISHED",
+  "final_review": {
+    "path": "LAB_ROOT/ops/attempt-control-binding-review-v1/REVIEW.json",
+    "sha256": "b9082d01c1de1f009a31c0699ac3beebae0542e5e05899fbf06e630e8ef70b05"
+  },
+  "final_manifest": {
+    "path": "LAB_ROOT/ops/attempt-control-binding-review-v1/MANIFEST.json",
+    "sha256": "51e8d8634e1a7e63f82d1525719cddbf63363706c1a0313099d06106b92246a0"
+  },
+  "final_freeze": {
+    "path": "LAB_ROOT/ops/attempt-control-binding-review-v1/FREEZE.json",
+    "sha256": "87d4861347be335a05bc8962f1e657509f48615602b8a233917587ae8229e70f"
+  },
+  "final_handoff_tail_endpoint": "UNKNOWN; root bookkeeping actual end must remain charged",
+  "clock_reset_or_backdating": false
+}

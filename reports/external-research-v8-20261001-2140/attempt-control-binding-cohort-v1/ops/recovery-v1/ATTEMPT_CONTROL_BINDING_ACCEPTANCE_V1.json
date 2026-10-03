@@ -1,0 +1,19 @@
+{
+  "accepted": true,
+  "accepted_epoch": 1791002690.6243553,
+  "control": {
+    "path": "LAB_ROOT/ops/attempt-control-binding-v1/recovery-control.json",
+    "sha256": "19c7033071c562fd4feecb846d1a921da41f77050fd62585bb923adc162fcd00"
+  },
+  "controller_snapshot": {
+    "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/SOURCE_FREEZE.json",
+    "sha256": "1c93bed6a9fd18a24a67746a0a87ab695b8486ec99936056a614f8ee06bf66c8"
+  },
+  "independent_review": {
+    "path": "LAB_ROOT/ops/attempt-control-binding-review-v1/REVIEW.json",
+    "sha256": "b9082d01c1de1f009a31c0699ac3beebae0542e5e05899fbf06e630e8ef70b05"
+  },
+  "root_authority": true,
+  "schema": "pm.er8.attempt-control-binding-root-acceptance.v1",
+  "scope": "Exact independently reviewed binding source only. Genuine quiet/root resource fit and once-only sameZlaunch remain separate root conditions; no budget reset/oldcommitment retirement."
+}

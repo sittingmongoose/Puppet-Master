@@ -1,0 +1,30 @@
+{
+  "V7_current_prelaunch": {
+    "ActiveState": "inactive",
+    "ControlGroup": "",
+    "MainPID": "0"
+  },
+  "finite_runtime_max_seconds": 10130,
+  "launch_outcome": "UNKNOWN_UNTIL_POSITIVE_QUERY",
+  "new_unit_prelaunch": {
+    "ControlGroup": "",
+    "LoadState": "not-found",
+    "MainPID": "0"
+  },
+  "no_duplicate_or_budget_reset": true,
+  "observed_epoch": 1791002890.6289904,
+  "original_global_deadline_epoch": 1791013030.8303788,
+  "root_actual_preflight": {
+    "path": "LAB_ROOT/ops/recovery-v1/ATTEMPT_BIO_CHECK_ACTUAL_PREFLIGHT_V1.json",
+    "sha256": "b92e1ca2437813bd11f2de9e70eb054daa2d112399342e4d5563e2d478585217"
+  },
+  "root_authority": true,
+  "root_release": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/root-production-release-v9.json",
+    "sha256": "6264e76ef8cefc71c9c83ddaed37008ffa9bbe707086483ec201a9f7faafb73d"
+  },
+  "run_root": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v9",
+  "schema": "pm.er8.root-one-shot-native-launch-intent.v1",
+  "source_root": "LAB_ROOT/ops/attempt-control-binding-v1",
+  "unit": "er8-v8-production-z-tranche-v9.service"
+}

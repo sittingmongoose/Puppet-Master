@@ -1,0 +1,19 @@
+{
+  "actors_absent": true,
+  "native_quiescent": true,
+  "no_lease_replay_or_budget_reset": true,
+  "observed_epoch": 1791002347.6663008,
+  "parents_absent": true,
+  "permits_settled": true,
+  "predecessor_release": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/root-production-release-v7.json",
+    "sha256": "4d6593cff543755bd390c9682cbd9f8e76ff8a13f82451ee6821f96aedab4cf2"
+  },
+  "root_authority": true,
+  "root_positive_proof": {
+    "path": "LAB_ROOT/ops/recovery-v1/V7_TERMINAL_CURRENT_QUIET_V1.json",
+    "sha256": "2cf6c066ba3c34fd4be6e5625c7b389cb3c64eda64e81a02f85025e1c1b1e0d8"
+  },
+  "scheduler_absent": true,
+  "schema": "pm.er8.attempt-v7-quiet.v1"
+}

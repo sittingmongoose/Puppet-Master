@@ -1,0 +1,131 @@
+{
+  "schema": "pm.er8.attempt-control-binding-source-freeze.v1",
+  "source_only": true,
+  "accepted": false,
+  "root_authority": false,
+  "manifest": {
+    "path": "LAB_ROOT/ops/attempt-control-binding-v1/MANIFEST.json",
+    "sha256": "1a01d91c53aa9e6951d08e9f175316d2928a81346e756af6cd09fcf304f9a94c"
+  },
+  "owned_files": {
+    "DEPENDENCIES.json": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/DEPENDENCIES.json",
+      "sha256": "349d5731d31f85bfc6ac7239ffad8939e380604f5c0fb4466d002b729d6f3c65"
+    },
+    "HANDOFF.md": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/HANDOFF.md",
+      "sha256": "7ed8a855740337e106595559bf59e7c8919161dba081ef4030e53f169625e15a"
+    },
+    "ONE_PAIR_INTERFACE.json": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/ONE_PAIR_INTERFACE.json",
+      "sha256": "bb01bb8dd9ed1a55df19de88c394d74d314728bfbd58f0d9166bb4124d88214b"
+    },
+    "SOURCE_DIFF.json": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/SOURCE_DIFF.json",
+      "sha256": "189060fb4d91729ed8a2d7d5c825a441ba0c2b23a2e227709fc1c8a9c7ba997f"
+    },
+    "TEST_RESULTS.txt": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/TEST_RESULTS.txt",
+      "sha256": "d09cef79401270db954fef4f5e78ca80152c8b8b0816ae49e1fb022e54f3c2ee"
+    },
+    "TEXT_DIFF.patch": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/TEXT_DIFF.patch",
+      "sha256": "92a197abeba15207bc20af7e4720202a1312f97fbd8fb2124cee93d2976d44bc"
+    },
+    "VERIFICATION.json": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/VERIFICATION.json",
+      "sha256": "4e1abb20ed452bf6d6cf456f8fb160e3d85fbc935e24d82b4f9a14b878b498bc"
+    },
+    "control_binding.py": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/control_binding.py",
+      "sha256": "619fa432d572d0ae3a662a43325a507814210ea8ea29bedd6d171f0f76a6905d"
+    },
+    "integrated-controller/SOURCE_FREEZE.json": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/SOURCE_FREEZE.json",
+      "sha256": "1c93bed6a9fd18a24a67746a0a87ab695b8486ec99936056a614f8ee06bf66c8"
+    },
+    "integrated-controller/case_supervisor.py": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/case_supervisor.py",
+      "sha256": "b35627e1bdbf914afb939a69959e6b09ac9bcbe5d54cd471d7319cbcf540f096"
+    },
+    "integrated-controller/common.py": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/common.py",
+      "sha256": "f2b15865f4355d66781edf495e6b23a356093112787636fa87eaebf0db5884e6"
+    },
+    "integrated-controller/external_case_close.py": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/external_case_close.py",
+      "sha256": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c"
+    },
+    "integrated-controller/external_stage_close.py": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/external_stage_close.py",
+      "sha256": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4"
+    },
+    "integrated-controller/parent_receipt.py": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/parent_receipt.py",
+      "sha256": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea"
+    },
+    "integrated-controller/rolling.py": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/rolling.py",
+      "sha256": "6f4f59862c963288eb0b514d8d943adfd6c7356681aded5c9b3b9fe45eb6a874"
+    },
+    "integrated-controller/stage_actor.py": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/stage_actor.py",
+      "sha256": "ba3b13cd1209fd086ecd96e24d776deda92824063fc216cd7796e7b299ffb8cc"
+    },
+    "recovery-control.json": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/recovery-control.json",
+      "sha256": "19c7033071c562fd4feecb846d1a921da41f77050fd62585bb923adc162fcd00"
+    },
+    "test_control_binding.py": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/test_control_binding.py",
+      "sha256": "53084f5729869be6a7cda19b1d8ec720778abbfc76fbed8e4e58d7317f4ff5ba"
+    }
+  },
+  "positive_publication_whitelist": [
+    "LAB_ROOT/ops/attempt-control-binding-v1/DEPENDENCIES.json",
+    "LAB_ROOT/ops/attempt-control-binding-v1/HANDOFF.md",
+    "LAB_ROOT/ops/attempt-control-binding-v1/ONE_PAIR_INTERFACE.json",
+    "LAB_ROOT/ops/attempt-control-binding-v1/SOURCE_DIFF.json",
+    "LAB_ROOT/ops/attempt-control-binding-v1/TEST_RESULTS.txt",
+    "LAB_ROOT/ops/attempt-control-binding-v1/TEXT_DIFF.patch",
+    "LAB_ROOT/ops/attempt-control-binding-v1/VERIFICATION.json",
+    "LAB_ROOT/ops/attempt-control-binding-v1/control_binding.py",
+    "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/SOURCE_FREEZE.json",
+    "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/case_supervisor.py",
+    "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/common.py",
+    "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/external_case_close.py",
+    "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/external_stage_close.py",
+    "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/parent_receipt.py",
+    "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/rolling.py",
+    "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/stage_actor.py",
+    "LAB_ROOT/ops/attempt-control-binding-v1/recovery-control.json",
+    "LAB_ROOT/ops/attempt-control-binding-v1/test_control_binding.py",
+    "LAB_ROOT/ops/attempt-control-binding-v1/MANIFEST.json",
+    "LAB_ROOT/ops/attempt-control-binding-v1/FREEZE.json",
+    "LAB_ROOT/ops/attempt-control-binding-v1/INCLUSIVE_ENDPOINT.json"
+  ],
+  "scoped_dependency_sha256": {
+    "LAB_ROOT/ops/attempt-reservation-api-v1/ledger_attempt_reservations_v1.py": "9bd4b17fe406cd20680c0c8eef16f96a6a45db727d977f1ba2cc42641c82d577",
+    "LAB_ROOT/ops/attempt-reservation-api-v1/MANIFEST.json": "2b4b54c140e211c300f1951d43e8f6119f2b86e6461bcd102f407e0d4441a196",
+    "LAB_ROOT/ops/attempt-reservation-review-v1/REVIEW.json": "d2ac456db3d31e15189f0d47441b2f74fc9b8accda1f62b1886376909a6e49ae",
+    "LAB_ROOT/ops/helper-concurrency-v2/ledger_helper_concurrency_v2.py": "eafb75b1a157a5b7e77f03f9fc52e298a7ef255e439730e22c4fde6a95dc0405",
+    "LAB_ROOT/ops/recovery-v1/HELPER_CONCURRENCY_AUTHORITY_20261003.json": "f1682a991232997556aed7fb88f167e706317259913d9365c5a1fb72fc572a79",
+    "LAB_ROOT/ops/recovery-v1/ATTEMPT_SUCCESSOR_DEVELOPMENT_AUTHORITY_V1.json": "64b40261010db33ce32871db4cb42900ae130d5dc02272ac92831594bd9e2f7e",
+    "LAB_ROOT/dev/attempt-successor-declarations-v1/DECLARATION_CLOSURE.json": "cb2fb0c8eacf1d3810f204c2f86ed812ee32684cf1924ba3d7c4dfd900778be8",
+    "LAB_ROOT/dev/attempt-successor-declarations-v1/ROOT_RELEASE_PATCH.json": "a3971b757b3c9655474037f6bbf279fb0579e43edb8a1bc6a683ffab1a96fc64",
+    "LAB_ROOT/dev/attempt-successor-declarations-v1/SOURCE_FREEZE.json": "d5427e1f467ab8495c4b35b94ca7528f8b1a9d893de1834bfaf9c662b48eb6a1",
+    "LAB_ROOT/dev/tranche-successor-v8/REMAINING_CELLS.json": "c4644d8bcacc68a499dc28d790fa584a6892eb508de4d1075656f096ae388585",
+    "LAB_ROOT/dev/tranche-successor-v8/SOURCE_FREEZE.json": "86b997375679047e3c7fede8df94ecfb3ceaa4e0745485159a6d430dbf1cbe1b",
+    "LAB_ROOT/dev/tranche-successor-v8/ADDITIVE_ACTION_SPEC.json": "b3cdb755dfa15e6116a056a3c0090b4edd9dca45971d5550b589d03b03005228",
+    "LAB_ROOT/ops/execution-resume-v1/root-production-release-v7.json": "4d6593cff543755bd390c9682cbd9f8e76ff8a13f82451ee6821f96aedab4cf2",
+    "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/SOURCE_FREEZE.json": "38f31e444c6dde29f2498a69ba2c1769506b0c4384a048afb25b7882df3f7cb2",
+    "LAB_ROOT/dev/prospective-timing-v3/recovery-control.json": "9f42d49be57a74ee744c0be41fa337471a3c441a340cde3e4bfc642926afb938",
+    "LAB_ROOT/dev/prospective-timing-v3/candidate_inputs.py": "213e1a6aea20e3e0499971b283e900e31956338cbe6c02fad5e16aa701445abf",
+    "LAB_ROOT/ops/execution-resume-v1/quiet_production_monitor.py": "44c3671a2f51d02e412ac5d0df1e719098a80a755ae192a4a07c7fae1d5ae042",
+    "LAB_ROOT/ops/recovery-v1/ATTEMPT_RESERVATION_SOURCE_ACCEPTANCE_V1.json": "118815780084618de3b62913aebd1141f8415b0eb7c9fd4f3a5bb1661b36f43c"
+  },
+  "original_helper_birth_epoch": 1791001272.397982,
+  "original_helper_deadline_epoch": 1791002472.397982,
+  "global_deadline_epoch": 1791013030.8303788,
+  "actual_inclusive_endpoint_record": "LAB_ROOT/ops/attempt-control-binding-v1/INCLUSIVE_ENDPOINT.json"
+}

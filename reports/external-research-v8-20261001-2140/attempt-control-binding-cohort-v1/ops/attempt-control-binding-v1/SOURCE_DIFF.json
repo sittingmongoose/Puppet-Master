@@ -1,0 +1,63 @@
+{
+  "schema": "pm.er8.attempt-control-binding-source-diff.v1",
+  "copied_sources": [
+    {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/recovery-control.json",
+      "sha256": "19c7033071c562fd4feecb846d1a921da41f77050fd62585bb923adc162fcd00",
+      "predecessor": "LAB_ROOT/dev/prospective-timing-v3/recovery-control.json",
+      "predecessor_sha256": "9f42d49be57a74ee744c0be41fa337471a3c441a340cde3e4bfc642926afb938",
+      "unchanged": false
+    },
+    {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/case_supervisor.py",
+      "sha256": "b35627e1bdbf914afb939a69959e6b09ac9bcbe5d54cd471d7319cbcf540f096",
+      "predecessor": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/case_supervisor.py",
+      "predecessor_sha256": "b35627e1bdbf914afb939a69959e6b09ac9bcbe5d54cd471d7319cbcf540f096",
+      "unchanged": true
+    },
+    {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/common.py",
+      "sha256": "f2b15865f4355d66781edf495e6b23a356093112787636fa87eaebf0db5884e6",
+      "predecessor": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/common.py",
+      "predecessor_sha256": "e06fe9bcb01fd7eb89999af74422e4e3f504f4601c76fc13df791dac54aedbd7",
+      "unchanged": false
+    },
+    {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/external_case_close.py",
+      "sha256": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c",
+      "predecessor": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/external_case_close.py",
+      "predecessor_sha256": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c",
+      "unchanged": true
+    },
+    {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/external_stage_close.py",
+      "sha256": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4",
+      "predecessor": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/external_stage_close.py",
+      "predecessor_sha256": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4",
+      "unchanged": true
+    },
+    {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/parent_receipt.py",
+      "sha256": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea",
+      "predecessor": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/parent_receipt.py",
+      "predecessor_sha256": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea",
+      "unchanged": true
+    },
+    {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/rolling.py",
+      "sha256": "6f4f59862c963288eb0b514d8d943adfd6c7356681aded5c9b3b9fe45eb6a874",
+      "predecessor": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/rolling.py",
+      "predecessor_sha256": "6f4f59862c963288eb0b514d8d943adfd6c7356681aded5c9b3b9fe45eb6a874",
+      "unchanged": true
+    },
+    {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/stage_actor.py",
+      "sha256": "ba3b13cd1209fd086ecd96e24d776deda92824063fc216cd7796e7b299ffb8cc",
+      "predecessor": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/stage_actor.py",
+      "predecessor_sha256": "ba3b13cd1209fd086ecd96e24d776deda92824063fc216cd7796e7b299ffb8cc",
+      "unchanged": true
+    }
+  ],
+  "only_controller_delta": "common.py binding calls and exact positive whitelist",
+  "native_route_deadline_scheduler_unchanged": true
+}

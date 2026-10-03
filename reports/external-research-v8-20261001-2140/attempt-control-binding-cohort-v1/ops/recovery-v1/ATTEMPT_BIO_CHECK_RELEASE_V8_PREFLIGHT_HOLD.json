@@ -1,0 +1,16 @@
+{
+  "actual_trigger": "Root replaced qualification_scope NATIVE_ACCEPTED literal with human-readable source/binding prose; existing accepted gate rejected it.",
+  "error": "CANARY_ONLY/HOLD cannot activate integrated cases",
+  "error_class": "ValueError",
+  "failed_release": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/root-production-release-v8.json",
+    "sha256": "8798e20370ab0388e338f1c4150781ad75f434df5dc0b14b2926ba8c4f05469d"
+  },
+  "ledger_admissions": 0,
+  "native_launches": 0,
+  "observed_epoch": 1791002837.4299958,
+  "repair_scope": "Prospective new release restores unchanged NATIVE_ACCEPTED route qualification literal; new-case quality stays UNKNOWN; old failed release bytes preserved.",
+  "reservation_retained": true,
+  "root_authority": true,
+  "schema": "pm.er8.root-attempt-preflight-hold.v1"
+}

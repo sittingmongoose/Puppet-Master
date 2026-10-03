@@ -1,0 +1,334 @@
+{
+  "accepted": true,
+  "allocation_authority": {
+    "path": "LAB_ROOT/ops/recovery-v1/ATTEMPT_SUCCESSOR_DEVELOPMENT_AUTHORITY_V1.json",
+    "sha256": "64b40261010db33ce32871db4cb42900ae130d5dc02272ac92831594bd9e2f7e"
+  },
+  "allowed_jobs": [
+    "V8-BIO-C-Z-S8-research-proposal",
+    "V8-BIO-C-Z-S8-independent-candidate-critic",
+    "V8-BIO-C-Z-S8-final-correction",
+    "V8-BIO-WIT-T-Z-S8-research-proposal",
+    "V8-BIO-WIT-T-Z-S8-independent-candidate-critic",
+    "V8-BIO-WIT-T-Z-S8-final-correction"
+  ],
+  "attempt_control_binding": {
+    "declaration_closure": {
+      "path": "LAB_ROOT/dev/attempt-successor-declarations-v1/DECLARATION_CLOSURE.json",
+      "sha256": "cb2fb0c8eacf1d3810f204c2f86ed812ee32684cf1924ba3d7c4dfd900778be8"
+    },
+    "pair_ids": [
+      "V8-BIO-CHECK"
+    ],
+    "predecessor_release": {
+      "path": "LAB_ROOT/ops/execution-resume-v1/root-production-release-v7.json",
+      "sha256": "4d6593cff543755bd390c9682cbd9f8e76ff8a13f82451ee6821f96aedab4cf2"
+    },
+    "reservation_receipt_id": "v8-s8-bio-check-reservation-v1",
+    "source_acceptance": {
+      "path": "LAB_ROOT/ops/recovery-v1/ATTEMPT_CONTROL_BINDING_ACCEPTANCE_V1.json",
+      "sha256": "0e4296a11f66bcdcb661e6e0d796e8ce97fefffaffffd9eb1319c584ce5cf8b9"
+    },
+    "v7_quiet": {
+      "path": "LAB_ROOT/ops/recovery-v1/ATTEMPT_V7_QUIET_V1.json",
+      "sha256": "40c99d30f8b600fbad30ab9d9fe1aae4235b0d03b02090d50a7385313d0080c6"
+    }
+  },
+  "authority_amendment": {
+    "path": "LAB_ROOT/ops/recovery-v1/AUTHORITY_AMENDMENT.json",
+    "sha256": "1479c0b44869d13878b90ccd2f02d5fb2d755cfa0f0b17315105dc48d57616ec"
+  },
+  "authorization": {
+    "path": "LAB_ROOT/AUTHORIZATION.json",
+    "sha256": "25609fc787d622958fd62afa5df218a1e4789f61595a4152865ceb0c143304f2"
+  },
+  "caller_acceptance": {
+    "path": "LAB_ROOT/evaluation/recovery-route-v1/caller-v2-source-acceptance.json",
+    "sha256": "04cc0c7cad1ef7a41780ab236a6075959787214be8742d76ab24e69467ee76c3"
+  },
+  "caller_source_freeze": {
+    "path": "LAB_ROOT/dev/route-recovery-v2/dispatcher/SOURCE_FREEZE.json",
+    "sha256": "074e7563753b9d5f4dae6f2ec00ba253fd0d3f9503b47eeeeb1bf35b1f09a70d"
+  },
+  "caller_version": "caller-repair2",
+  "campaign_deadline_epoch": 1791013030.8303788,
+  "campaign_start_epoch": 1790905209,
+  "canary_review": {
+    "path": "LAB_ROOT/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json",
+    "sha256": "aba3336e6475d1eb50e00b66c3804e2747d7fef38be764ec53379614cfb68fc7"
+  },
+  "capture_binding": {
+    "path": "LAB_ROOT/dev/route-recovery-v2/source-capture-v1/binding.json",
+    "sha256": "8dea681e5a43fa54cec4a8ae76e37fcd9c6db878e73576ef5611e76e0313ff99"
+  },
+  "case_queue": [
+    "V8-BIO-C-Z-S8",
+    "V8-BIO-WIT-T-Z-S8"
+  ],
+  "case_sources": {
+    "V8-BIO-C-Z-S8": {
+      "arm": "control",
+      "case_dir": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-C-Z-S8",
+      "family_provisional": "Z",
+      "manifest": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-C-Z-S8/manifest.json",
+      "objectives": "LAB_ROOT/dev/attempt-successor-declarations-v1/OBJECTIVES.json",
+      "pair_id": "V8-BIO-CHECK",
+      "root": "LAB_ROOT/cases/attempt-successors-v1"
+    },
+    "V8-BIO-WIT-T-Z-S8": {
+      "arm": "treatment",
+      "case_dir": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-WIT-T-Z-S8",
+      "family_provisional": "Z",
+      "manifest": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-WIT-T-Z-S8/manifest.json",
+      "objectives": "LAB_ROOT/dev/attempt-successor-declarations-v1/OBJECTIVES.json",
+      "pair_id": "V8-BIO-CHECK",
+      "root": "LAB_ROOT/cases/attempt-successors-v1"
+    }
+  },
+  "config": {
+    "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/root-config.json",
+    "sha256": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d"
+  },
+  "controller_acceptance": {
+    "path": "LAB_ROOT/ops/attempt-control-binding-review-v1/REVIEW.json",
+    "sha256": "b9082d01c1de1f009a31c0699ac3beebae0542e5e05899fbf06e630e8ef70b05"
+  },
+  "controller_snapshot": {
+    "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/SOURCE_FREEZE.json",
+    "sha256": "1c93bed6a9fd18a24a67746a0a87ab695b8486ec99936056a614f8ee06bf66c8"
+  },
+  "created_utc": "2026-10-03T04:47:17.432729+00:00",
+  "critic_response_counter_clarification": "Priorprogress0initialsnapshotonly; finalresponsecounts/cause/cureUNKNOWN",
+  "draft_status": "ROOT_ACCEPTED_RESOURCE_FITTING_SINGLE_S8_WHOLE_PAIR_AFTER_EXACT_SOURCE_REVIEWS_AND_V7_QUIET",
+  "execution_acceptance": {
+    "path": "LAB_ROOT/evaluation/recovery-route-v1/execution-v2-source-acceptance.json",
+    "sha256": "9702cfd12df7ad290f19dcae6e8134ec77b2fd45f7fff293746a483c1d22c8a7"
+  },
+  "execution_snapshot": {
+    "path": "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/SNAPSHOT.json",
+    "sha256": "667e9b86a7547c8e647142787637c34adfcc63eb52f33826e0f1f5453d379438"
+  },
+  "failure_cleanup_authority": "Known held parent/actor groups absent plus own positively enrolled native/MCP cgroup quiet permits currenttime failurelease release; keep failedcosts and unknownclaims; no backdating",
+  "launch_authority": "Jared explicitcontinuedexecution; rootsupervisor exact firstpair release afterindependentv3nativeproof/hostsource review. No routineuserapproval required.",
+  "launch_precondition": "Genuine V7/native/parent/actor/permit quiet plus positive oldcase quiet, exact independently accepted binder/source/declarations, successful append retaining oldspent/future commitments, current no-active-native slots/resource/outputstop preflight and one-shot exact-owned launch.",
+  "max_component_responses": 160,
+  "max_component_seconds": 1200,
+  "mode": "PRODUCTION",
+  "new_attempt_semantic_quality": "UNKNOWN; no native starts yet",
+  "operator_monitor": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/quiet_production_monitor.py",
+    "sha256": "44c3671a2f51d02e412ac5d0df1e719098a80a755ae192a4a07c7fae1d5ae042"
+  },
+  "operator_monitor_acceptance": {
+    "path": "LAB_ROOT/evaluation/resume-execution-v1/operator-monitor-source-acceptance.json",
+    "sha256": "987bc81a8d2b43eb5b3b33a9d22b071cfa7c1a8773ba1b5d181ef5ed5a4ef0f2"
+  },
+  "operator_root": "LAB_ROOT/ops/execution-resume-v1",
+  "outside_native_cap_seconds": 300,
+  "pair_bindings": {},
+  "pins": {
+    "config": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d",
+    "independent_acceptance": "59b08282df39fe1c86e21eea06d1197a17f3ea30ef13b1569d6c34a31347a18c",
+    "runtime": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b"
+  },
+  "planning_input_sha256": {
+    "LAB_ROOT/cases/attempt-successors-v1/briefs/bioimaging.md": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+    "LAB_ROOT/cases/attempt-successors-v1/briefs/notebook-workspace.md": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-B-Z-S8/METHOD.md": "f6df08a280a4db79323bd96c9d816c34aee66a02e3f155602407f1290c599f5c",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-B-Z-S8/TASK.md": "3f9a20a4785a4cb4e5ca27015db857b569fe2c93915236590bf30c7e3fc17706",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-B-Z-S8/manifest.json": "21ffb4e9fdf511c5d52fb2f10ed4d681a704fe7c7271406b356e58009a0ef04d",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-BATCH-C-Z-S8/METHOD.md": "222ad8739878a9dfc93d6e3ee533596ea2cd2f4cac673870c6c285c18dd2570c",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-BATCH-C-Z-S8/TASK.md": "3d589b5dbfc6bb5f31846ed63fc1d7a203ca04d1c391c5543b775b9dec3a801e",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-BATCH-C-Z-S8/manifest.json": "285beb8535e2d39759a1daafa37451f775afdd3d91862491da6363f7a1169336",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-C-Z-S8/METHOD.md": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-C-Z-S8/TASK.md": "01033eabf39521eebbf5c4d073785a50f51d670a24363d7c85d45ea2cfb74fe1",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-C-Z-S8/manifest.json": "1e3e164f807b404d5aa194f82ac085b342e22a1fab266eb64e5f4a3ba6e86e8f",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-COND-C-Z-S8/METHOD.md": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-COND-C-Z-S8/TASK.md": "800d1b54049534e3f5a3d34e81d6840e064bb8f9f9649dc6b1ecbe6d69504c81",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-COND-C-Z-S8/manifest.json": "d8cadb6c0e6ef1c2b676708a47a6ba8c8fb91f3895f628aefb55ecb8d4ccec4b",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-P-Z-S8/METHOD.md": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-P-Z-S8/TASK.md": "629dcd8e1d945b7bd5427f759da9227de7d0b27ccbee291fa7e00924506b678d",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-P-Z-S8/manifest.json": "e31f89240c3631b40ab0b5e87f590adaefeb7a66b7d2783f9db6babf7070df12",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-WIT-T-Z-S8/METHOD.md": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-WIT-T-Z-S8/TASK.md": "2f1a0bc8c359f8f21599cfcea988531b95e8368a9a72cfcf42288caa9e5daf97",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-WIT-T-Z-S8/manifest.json": "5b4027fada09e13d7ee5c701be2f4e51520b939ce3da3e6e929e2bb1404643a8",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-B-Z-S8/METHOD.md": "f6df08a280a4db79323bd96c9d816c34aee66a02e3f155602407f1290c599f5c",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-B-Z-S8/TASK.md": "56b1410213e221f090e1fafa9dc4a76870e575513702950a1cdc64aaf23b40f9",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-B-Z-S8/manifest.json": "d4b5688448b80a96d4b64c3a7ec9827bba8eba3d2737c6e140b3c2d824c86e7b",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-BATCH-C-Z-S8/METHOD.md": "222ad8739878a9dfc93d6e3ee533596ea2cd2f4cac673870c6c285c18dd2570c",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-BATCH-C-Z-S8/TASK.md": "c571c11db31a0cc6579755a07251747525edd9b5c71d2e9546773600b514c7f0",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-BATCH-C-Z-S8/manifest.json": "755c5fc4d7c06cdbc64f78d803c3797e3573547ac91c8526d003a33d3d293506",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-C-Z-S8/METHOD.md": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-C-Z-S8/TASK.md": "06d46af81346597e9a0d7d5f6a082e98f1e0507a538c2927e85e758e899181cc",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-C-Z-S8/manifest.json": "fe58210488e2b24b2c013b340a36d70ffe0b2e9a5dc8b101780e176ad1a8b103",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-COND-C-Z-S8/METHOD.md": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-COND-C-Z-S8/TASK.md": "cc03327404a96ce75ea56dd36e1aaec9487a4c45e8d201398274ec0ee0a190cd",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-COND-C-Z-S8/manifest.json": "dd4b671a58ab95a660acad063e006be59e3e847e36a6e9b94dc434498417224f",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-P-Z-S8/METHOD.md": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-P-Z-S8/TASK.md": "fce771420bbab946b482f63c09d78f8f0d6edaa211cf96305754b6cf02f72628",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-P-Z-S8/manifest.json": "57bb104767173cff9285582f6d0b4f457495aa9ec2d0df67f1bd80b5e56b1fe1",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-WIT-T-Z-S8/METHOD.md": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-WIT-T-Z-S8/TASK.md": "23d24487e083b9139867e9b6fb6aae0d2c95b3a5e84371c4bc993576811887a9",
+    "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-WIT-T-Z-S8/manifest.json": "88c57485c2a99533633619fd49fa2def9a57d3e9b8c7a386f58cbfc44c0e8969",
+    "LAB_ROOT/cases/attempt-successors-v1/sandbox-plans/bioimaging.md": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30",
+    "LAB_ROOT/cases/attempt-successors-v1/sandbox-plans/notebook-workspace.md": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+    "LAB_ROOT/cases/attempt-successors-v1/source-access.json": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df",
+    "LAB_ROOT/cases/attempt-successors-v1/templates/correction.TASK.md": "1421e111351ebd35697394e93783cc85587d5ff21c003592982c20a75b9fb39e",
+    "LAB_ROOT/cases/attempt-successors-v1/templates/critic.TASK.md": "7e0d69c1a1c9e92ad37b8b8fa97863fbde211eb06563cb431f330849e48fb0d2",
+    "LAB_ROOT/cases/attempt-successors-v1/templates/research.TASK.md": "dcfe7bea57da20811145ea5649464534ae3709b502284bdce754d8e7ae9f9802",
+    "LAB_ROOT/dev/attempt-successor-declarations-v1/INPUT_MAP.json": "da97cadb4436c5432f9dc071db840e0ac094e61a317072e5bbd6d31b59c2de3e",
+    "LAB_ROOT/dev/attempt-successor-declarations-v1/OBJECTIVES.json": "490eb017d32c4217933d74f2bd29f6fe0f14a7b7b131678b856470cfe857de71",
+    "LAB_ROOT/dev/prospective-timing-v3/INPUT_MAP.json": "6dd1abc0b8946f6edde57529628b989af03a8b8b9800e1cd30d02e0583c866bb"
+  },
+  "predecessor_failed_attempt_preserved": true,
+  "predecessor_release": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/root-production-release-v7.json",
+    "sha256": "4d6593cff543755bd390c9682cbd9f8e76ff8a13f82451ee6821f96aedab4cf2"
+  },
+  "predecessor_release_preserved": true,
+  "production_entry": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/rolling.py",
+  "purpose": "Prospective development successor for biomedical discriminatory derivation-check contrast; single unchanged Z family/account integrated C/T; old interrupted attempts preserved, not a fresh holdout.",
+  "qualification_scope": "NATIVE_ACCEPTED",
+  "released_utc": "2026-10-03T04:47:17.432729+00:00",
+  "resume_authority": {
+    "path": "LAB_ROOT/ops/recovery-v1/RESUME_20261002.json",
+    "sha256": "9fc1c92a3b6074610b3b4026bd4d7500e0f0a135b506863965e2919fb640c02f"
+  },
+  "resume_ledger": {
+    "path": "LAB_ROOT/ops/attempt-reservation-api-v1/ledger_attempt_reservations_v1.py",
+    "sha256": "9bd4b17fe406cd20680c0c8eef16f96a6a45db727d977f1ba2cc42641c82d577"
+  },
+  "root_authority": true,
+  "root_metadata_failed_preflight_preserved": {
+    "path": "LAB_ROOT/ops/recovery-v1/ATTEMPT_BIO_CHECK_RELEASE_V8_PREFLIGHT_HOLD.json",
+    "sha256": "68155025df032b9cc80454d63a99c233b22f362794e333760a564dfc30a4fc49"
+  },
+  "route": "v8-z-route-recovery-v2-native-bound-v2",
+  "route_acceptance": {
+    "path": "LAB_ROOT/evaluation/resume-execution-v1/route-native-acceptance-bound-execution.json",
+    "sha256": "59b08282df39fe1c86e21eea06d1197a17f3ea30ef13b1569d6c34a31347a18c"
+  },
+  "route_snapshot": {
+    "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/SNAPSHOT.json",
+    "sha256": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b"
+  },
+  "schema": "er8.dispatcher.root-release.v1",
+  "selected_positive_files": {
+    "USER_HOME/.local/bin/node": "81925c0995b5c1427b5d538e6a90ca2fdc4daffb786b09af749beaf7369d4e90",
+    "USER_HOME/.local/opt/zcode/app.backup-3.11.2.6792/resources/glm/zcode.cjs": "e9f1868c0fdb863537ed910ee3828b9be96b8c2fd805473f63b439e1113266b8",
+    "LAB_ROOT/AUTHORIZATION.json": "25609fc787d622958fd62afa5df218a1e4789f61595a4152865ceb0c143304f2",
+    "LAB_ROOT/dev/attempt-successor-declarations-v1/DECLARATION_CLOSURE.json": "cb2fb0c8eacf1d3810f204c2f86ed812ee32684cf1924ba3d7c4dfd900778be8",
+    "LAB_ROOT/dev/attempt-successor-declarations-v1/ROOT_RELEASE_PATCH.json": "a3971b757b3c9655474037f6bbf279fb0579e43edb8a1bc6a683ffab1a96fc64",
+    "LAB_ROOT/dev/attempt-successor-declarations-v1/SOURCE_FREEZE.json": "d5427e1f467ab8495c4b35b94ca7528f8b1a9d893de1834bfaf9c662b48eb6a1",
+    "LAB_ROOT/dev/prospective-timing-v3/INPUT_MAP.json": "6dd1abc0b8946f6edde57529628b989af03a8b8b9800e1cd30d02e0583c866bb",
+    "LAB_ROOT/dev/prospective-timing-v3/OBJECTIVES.json": "967e8b874948bb281a79198b5a8a5ac01eb8f6fa4e209e2d3e7d49b6747bbbf7",
+    "LAB_ROOT/dev/prospective-timing-v3/candidate_inputs.py": "213e1a6aea20e3e0499971b283e900e31956338cbe6c02fad5e16aa701445abf",
+    "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/SOURCE_FREEZE.json": "38f31e444c6dde29f2498a69ba2c1769506b0c4384a048afb25b7882df3f7cb2",
+    "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/case_supervisor.py": "b35627e1bdbf914afb939a69959e6b09ac9bcbe5d54cd471d7319cbcf540f096",
+    "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/common.py": "e06fe9bcb01fd7eb89999af74422e4e3f504f4601c76fc13df791dac54aedbd7",
+    "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/external_case_close.py": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c",
+    "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/external_stage_close.py": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4",
+    "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/parent_receipt.py": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea",
+    "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/rolling.py": "6f4f59862c963288eb0b514d8d943adfd6c7356681aded5c9b3b9fe45eb6a874",
+    "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/stage_actor.py": "ba3b13cd1209fd086ecd96e24d776deda92824063fc216cd7796e7b299ffb8cc",
+    "LAB_ROOT/dev/prospective-timing-v3/recovery-control.json": "9f42d49be57a74ee744c0be41fa337471a3c441a340cde3e4bfc642926afb938",
+    "LAB_ROOT/dev/resume-execution-v2/integrated-controller/SOURCE_FREEZE.json": "c6b0e36b3d46562284d81ace42456a681741fd97a1c74d238c236f4b527d5779",
+    "LAB_ROOT/dev/resume-execution-v2/integrated-controller/case_supervisor.py": "b35627e1bdbf914afb939a69959e6b09ac9bcbe5d54cd471d7319cbcf540f096",
+    "LAB_ROOT/dev/resume-execution-v2/integrated-controller/common.py": "dff47a78fcd86494b3c34e26833b08739211148c4f711e5ec8758e69735692e3",
+    "LAB_ROOT/dev/resume-execution-v2/integrated-controller/external_case_close.py": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c",
+    "LAB_ROOT/dev/resume-execution-v2/integrated-controller/external_stage_close.py": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4",
+    "LAB_ROOT/dev/resume-execution-v2/integrated-controller/parent_receipt.py": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea",
+    "LAB_ROOT/dev/resume-execution-v2/integrated-controller/rolling.py": "6f4f59862c963288eb0b514d8d943adfd6c7356681aded5c9b3b9fe45eb6a874",
+    "LAB_ROOT/dev/resume-execution-v2/integrated-controller/stage_actor.py": "ba3b13cd1209fd086ecd96e24d776deda92824063fc216cd7796e7b299ffb8cc",
+    "LAB_ROOT/dev/resume-execution-v2/recovery-control.json": "e41b7464eefa9c19ce57bda562bca015b09dc3a062e1cf272d146f65a2949e89",
+    "LAB_ROOT/dev/route-recovery-v2/FREEZE.json": "523cb6cc77df53d98045394cec894da6f0bffa313de613d4fe5f70d694bd8084",
+    "LAB_ROOT/dev/route-recovery-v2/INPUT_MAP.json": "8015a3f0c21120cfef990d22b32b9d363fd8ac81c6f4ca212c4aac6017414233",
+    "LAB_ROOT/dev/route-recovery-v2/OBJECTIVES.json": "f80217252bc73b00a7050d2a8e49d61cf63ac4d810366900fe49b32d31fca116",
+    "LAB_ROOT/dev/route-recovery-v2/broker_exec.py": "3484668112269099bf59fdf1cdad5f0d515b80da9eb6675157cc5fb52795902a",
+    "LAB_ROOT/dev/route-recovery-v2/candidate_inputs.py": "213e1a6aea20e3e0499971b283e900e31956338cbe6c02fad5e16aa701445abf",
+    "LAB_ROOT/dev/route-recovery-v2/dispatcher/SOURCE_FREEZE.json": "074e7563753b9d5f4dae6f2ec00ba253fd0d3f9503b47eeeeb1bf35b1f09a70d",
+    "LAB_ROOT/dev/route-recovery-v2/dispatcher/canary_runner.py": "e1e75362f33c7951ce98c90aa520fc5686e489b786a2328fcb28c2d11c45ba45",
+    "LAB_ROOT/dev/route-recovery-v2/dispatcher/dispatcher.py": "8cb8ea5b48b305f78a0ce3d04162ee298a95b1be5f5ef0acd56c891c9b2c705b",
+    "LAB_ROOT/dev/route-recovery-v2/dispatcher/external_close.py": "e57acbd7cca3b051a8f49298c67c54ddf91c91570e0cbd3395fc06e8ba0b8896",
+    "LAB_ROOT/dev/route-recovery-v2/dispatcher/parent_launcher.py": "1c5a98ef919b7651d0aa837fd628f55e1e2787c98229af44a8dd628a742965f2",
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/SNAPSHOT.json": "667e9b86a7547c8e647142787637c34adfcc63eb52f33826e0f1f5453d379438",
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/deadline_gate": "2575d0c5ea4fe0af283bb0a2f484c0309c9d27be210660d98986bdbcc01f7e58",
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/deadline_gate.c": "abde9b4b9d70bbfd7c97ed397733228707ad2e27ed9214b11185e371631029ee",
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/entry.py": "3160d2e6624731218ecf0a465c19ff71a6351ecc4a9fb08d7893c86f6f5b99ca",
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/make_plan.py": "542f2363c15c213bec422b8e63b62b16a545dbda950d0478d625d10719ccd78b",
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/observe.py": "e398276c666b50306aa408065d7397ff4ad63d594a1f35d1a4cf9deacc998816",
+    "LAB_ROOT/dev/route-recovery-v2/host_preflight.py": "bea86b191eae203707af24943c048169b418368b5115a4e2ae75d6605068f1f2",
+    "LAB_ROOT/dev/route-recovery-v2/proxy.py": "58ea8262a773b4dc15f1ab0167ebad7e81ac2f3c59c583873017dfc965717f41",
+    "LAB_ROOT/dev/route-recovery-v2/recovery-control.json": "201304db9f643fa48a8de74e4340e26717ac8af15c2a07d113d7cb88cceae1b7",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/SNAPSHOT.json": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/adapter.py": "2f790fbe0245322b0b24613eb8cd4a0b24070b69728e7cf5ebb234593ddae826",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/admission.py": "e6250830d4e609bc3650024c81cb237fb5252f4d95a21411efa16f4e302d3858",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/boundary.py": "69db267d6cc9efb8cac73fb729b93d6c69b82e18b4eccaa321b8bfc9de3000be",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/canary/ECHO.txt": "f7e2e10edb3dc012fe1d7294b256b368bfb7ac9f96378f61f934e5cb912874df",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/canary/OBJECTIVE.md": "c46f27278a35b7e404e8f32d385b38ef011188789f4f14fbf9db2f3a1430e081",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/canary/TASK.md": "0f1ca17bd3a03ddd29ee8a537442824ba0cdce1907a6390bf4e4df483050b881",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/host_guard.py": "3aa60ec7c7a3886619835c2e5238579e415223041828775f9e226331c3faa438",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/launch.py": "8dec4108eacd3814d5b1fff069daaef87703f8466bc6d15c77607e1bcba1e0d4",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/native_runner.py": "9b8bf700a30a9a4be0add4f3161b69bf98c6068acef88d73606085c3b6d6caca",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/positive-output-contract.json": "e7cb63d0e50efdbc40ad863dba94e2b7b93b3e1095d3d2059991b5b95ebdb447",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/projector.py": "92ba648f160f2bec1296cf0a7510bebc6b6a61bcef1e0ccc7c69902610899fd2",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/root-config.json": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/run_goal.py": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/zcode_goal_driver.py": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/zcode_native.py": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633",
+    "LAB_ROOT/dev/route-recovery-v2/source-capture-v1/binding.json": "8dea681e5a43fa54cec4a8ae76e37fcd9c6db878e73576ef5611e76e0313ff99",
+    "LAB_ROOT/dev/route-recovery-v2/source-capture-v1/boundary.py": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+    "LAB_ROOT/dev/route-recovery-v2/source-capture-v1/tool_server.py": "9c25c1faaf7c4557aaeb22b0977061914a9fbba1a04d87d2a3a29851daa29846",
+    "LAB_ROOT/dev/tranche-successor-v8/ADDITIVE_ACTION_SPEC.json": "b3cdb755dfa15e6116a056a3c0090b4edd9dca45971d5550b589d03b03005228",
+    "LAB_ROOT/dev/tranche-successor-v8/REMAINING_CELLS.json": "c4644d8bcacc68a499dc28d790fa584a6892eb508de4d1075656f096ae388585",
+    "LAB_ROOT/dev/tranche-successor-v8/SOURCE_FREEZE.json": "86b997375679047e3c7fede8df94ecfb3ceaa4e0745485159a6d430dbf1cbe1b",
+    "LAB_ROOT/evaluation/recovery-route-v1/caller-v2-source-acceptance.json": "04cc0c7cad1ef7a41780ab236a6075959787214be8742d76ab24e69467ee76c3",
+    "LAB_ROOT/evaluation/recovery-route-v1/execution-v2-source-acceptance.json": "9702cfd12df7ad290f19dcae6e8134ec77b2fd45f7fff293746a483c1d22c8a7",
+    "LAB_ROOT/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json": "aba3336e6475d1eb50e00b66c3804e2747d7fef38be764ec53379614cfb68fc7",
+    "LAB_ROOT/evaluation/resume-execution-v1/route-native-acceptance-bound-execution.json": "59b08282df39fe1c86e21eea06d1197a17f3ea30ef13b1569d6c34a31347a18c",
+    "LAB_ROOT/ops/accounting-v1/slot_ledger.py": "5590fdc09936005e09b2de7aa4ac4113bbe0ddeefa4a8caf3548d78b0e3045af",
+    "LAB_ROOT/ops/attempt-control-binding-v1/DEPENDENCIES.json": "349d5731d31f85bfc6ac7239ffad8939e380604f5c0fb4466d002b729d6f3c65",
+    "LAB_ROOT/ops/attempt-control-binding-v1/control_binding.py": "619fa432d572d0ae3a662a43325a507814210ea8ea29bedd6d171f0f76a6905d",
+    "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/case_supervisor.py": "b35627e1bdbf914afb939a69959e6b09ac9bcbe5d54cd471d7319cbcf540f096",
+    "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/common.py": "f2b15865f4355d66781edf495e6b23a356093112787636fa87eaebf0db5884e6",
+    "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/external_case_close.py": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c",
+    "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/external_stage_close.py": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4",
+    "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/parent_receipt.py": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea",
+    "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/rolling.py": "6f4f59862c963288eb0b514d8d943adfd6c7356681aded5c9b3b9fe45eb6a874",
+    "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/stage_actor.py": "ba3b13cd1209fd086ecd96e24d776deda92824063fc216cd7796e7b299ffb8cc",
+    "LAB_ROOT/ops/attempt-control-binding-v1/recovery-control.json": "19c7033071c562fd4feecb846d1a921da41f77050fd62585bb923adc162fcd00",
+    "LAB_ROOT/ops/attempt-reservation-api-v1/MANIFEST.json": "2b4b54c140e211c300f1951d43e8f6119f2b86e6461bcd102f407e0d4441a196",
+    "LAB_ROOT/ops/attempt-reservation-api-v1/ledger_attempt_reservations_v1.py": "9bd4b17fe406cd20680c0c8eef16f96a6a45db727d977f1ba2cc42641c82d577",
+    "LAB_ROOT/ops/attempt-reservation-review-v1/REVIEW.json": "d2ac456db3d31e15189f0d47441b2f74fc9b8accda1f62b1886376909a6e49ae",
+    "LAB_ROOT/ops/execution-resume-v1/quiet_production_monitor.py": "44c3671a2f51d02e412ac5d0df1e719098a80a755ae192a4a07c7fae1d5ae042",
+    "LAB_ROOT/ops/execution-resume-v1/root-production-release-v7.json": "4d6593cff543755bd390c9682cbd9f8e76ff8a13f82451ee6821f96aedab4cf2",
+    "LAB_ROOT/ops/helper-concurrency-v2/ledger_helper_concurrency_v2.py": "eafb75b1a157a5b7e77f03f9fc52e298a7ef255e439730e22c4fde6a95dc0405",
+    "LAB_ROOT/ops/recovery-v1/ATTEMPT_RESERVATION_SOURCE_ACCEPTANCE_V1.json": "118815780084618de3b62913aebd1141f8415b0eb7c9fd4f3a5bb1661b36f43c",
+    "LAB_ROOT/ops/recovery-v1/ATTEMPT_SUCCESSOR_DEVELOPMENT_AUTHORITY_V1.json": "64b40261010db33ce32871db4cb42900ae130d5dc02272ac92831594bd9e2f7e",
+    "LAB_ROOT/ops/recovery-v1/AUTHORITY_AMENDMENT.json": "1479c0b44869d13878b90ccd2f02d5fb2d755cfa0f0b17315105dc48d57616ec",
+    "LAB_ROOT/ops/recovery-v1/HELPER_CONCURRENCY_AUTHORITY_20261003.json": "f1682a991232997556aed7fb88f167e706317259913d9365c5a1fb72fc572a79",
+    "LAB_ROOT/ops/recovery-v1/RESUME_20261002.json": "9fc1c92a3b6074610b3b4026bd4d7500e0f0a135b506863965e2919fb640c02f",
+    "LAB_ROOT/ops/recovery-v1/ledger_overlay.py": "597a3d3349154fbb4614ed7ece864f1cd77ecfea145fbfddaefc79fe0a1cd618",
+    "LAB_ROOT/ops/recovery-v1/ledger_resume.py": "a98cf53c1826f1f4c9fa47a9e181eaae8beb971ea41e6564578a253059450b61",
+    "/usr/bin/bwrap": "7bbffeb19f312d5503232e1502f0f97f2ac4ffcb51dec47d9a58bffbad1f12d5",
+    "/usr/bin/python3.13": "efb29ce53d36ebaeee80e3aa44fd6c7f9d71bbded5fe1665240b2ed8ecaeee0e"
+  },
+  "source_bundle": {
+    "declaration_closure": {
+      "path": "LAB_ROOT/dev/attempt-successor-declarations-v1/DECLARATION_CLOSURE.json",
+      "sha256": "cb2fb0c8eacf1d3810f204c2f86ed812ee32684cf1924ba3d7c4dfd900778be8"
+    },
+    "original_source_inputs_preserved": true,
+    "snapshot": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/SOURCE_FREEZE.json",
+      "sha256": "1c93bed6a9fd18a24a67746a0a87ab695b8486ec99936056a614f8ee06bf66c8"
+    },
+    "source_root": "LAB_ROOT/ops/attempt-control-binding-v1"
+  },
+  "source_freeze": {
+    "path": "LAB_ROOT/dev/route-recovery-v2/FREEZE.json",
+    "sha256": "523cb6cc77df53d98045394cec894da6f0bffa313de613d4fe5f70d694bd8084"
+  },
+  "unstarted_rechecked_epoch": 1791002787.8888214,
+  "usage": "UNKNOWN"
+}

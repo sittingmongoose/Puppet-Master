@@ -1,0 +1,146 @@
+{
+  "schema": "pm.er8.attempt-control-binding-independent-review.v1",
+  "accepted": true,
+  "independent": true,
+  "reviewer": "codex-er8-binding-review",
+  "accepted_source": true,
+  "source_only": true,
+  "root_authority": false,
+  "live_install_accepted": false,
+  "native_release_accepted": false,
+  "controller_snapshot": {
+    "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/SOURCE_FREEZE.json",
+    "sha256": "1c93bed6a9fd18a24a67746a0a87ab695b8486ec99936056a614f8ee06bf66c8"
+  },
+  "control": {
+    "path": "LAB_ROOT/ops/attempt-control-binding-v1/recovery-control.json",
+    "sha256": "19c7033071c562fd4feecb846d1a921da41f77050fd62585bb923adc162fcd00"
+  },
+  "binding_source": {
+    "path": "LAB_ROOT/ops/attempt-control-binding-v1/control_binding.py",
+    "sha256": "619fa432d572d0ae3a662a43325a507814210ea8ea29bedd6d171f0f76a6905d"
+  },
+  "source_manifest": {
+    "path": "LAB_ROOT/ops/attempt-control-binding-v1/MANIFEST.json",
+    "sha256": "1a01d91c53aa9e6951d08e9f175316d2928a81346e756af6cd09fcf304f9a94c"
+  },
+  "source_freeze": {
+    "path": "LAB_ROOT/ops/attempt-control-binding-v1/FREEZE.json",
+    "sha256": "222a2ff185ca1d33c435ee6f47a4a250d8c6f2098071f1c48d295133b72833e9"
+  },
+  "declaration_closure": {
+    "path": "LAB_ROOT/dev/attempt-successor-declarations-v1/DECLARATION_CLOSURE.json",
+    "sha256": "cb2fb0c8eacf1d3810f204c2f86ed812ee32684cf1924ba3d7c4dfd900778be8"
+  },
+  "declaration_source_freeze": {
+    "path": "LAB_ROOT/dev/attempt-successor-declarations-v1/SOURCE_FREEZE.json",
+    "sha256": "d5427e1f467ab8495c4b35b94ca7528f8b1a9d893de1834bfaf9c662b48eb6a1"
+  },
+  "predecessor_release": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/root-production-release-v7.json",
+    "sha256": "4d6593cff543755bd390c9682cbd9f8e76ff8a13f82451ee6821f96aedab4cf2"
+  },
+  "accepted_reservation_api": {
+    "path": "LAB_ROOT/ops/attempt-reservation-api-v1/ledger_attempt_reservations_v1.py",
+    "sha256": "9bd4b17fe406cd20680c0c8eef16f96a6a45db727d977f1ba2cc42641c82d577"
+  },
+  "accepted_reservation_api_review": {
+    "path": "LAB_ROOT/ops/attempt-reservation-review-v1/REVIEW.json",
+    "sha256": "d2ac456db3d31e15189f0d47441b2f74fc9b8accda1f62b1886376909a6e49ae"
+  },
+  "reservation_source_root_acceptance": {
+    "path": "LAB_ROOT/ops/recovery-v1/ATTEMPT_RESERVATION_SOURCE_ACCEPTANCE_V1.json",
+    "sha256": "118815780084618de3b62913aebd1141f8415b0eb7c9fd4f3a5bb1661b36f43c"
+  },
+  "accepted_reservation_api_proof_tests_reused": 41,
+  "scoped_dependency_sha256": {
+    "LAB_ROOT/ops/attempt-reservation-api-v1/ledger_attempt_reservations_v1.py": "9bd4b17fe406cd20680c0c8eef16f96a6a45db727d977f1ba2cc42641c82d577",
+    "LAB_ROOT/ops/attempt-reservation-api-v1/MANIFEST.json": "2b4b54c140e211c300f1951d43e8f6119f2b86e6461bcd102f407e0d4441a196",
+    "LAB_ROOT/ops/attempt-reservation-review-v1/REVIEW.json": "d2ac456db3d31e15189f0d47441b2f74fc9b8accda1f62b1886376909a6e49ae",
+    "LAB_ROOT/ops/helper-concurrency-v2/ledger_helper_concurrency_v2.py": "eafb75b1a157a5b7e77f03f9fc52e298a7ef255e439730e22c4fde6a95dc0405",
+    "LAB_ROOT/ops/recovery-v1/HELPER_CONCURRENCY_AUTHORITY_20261003.json": "f1682a991232997556aed7fb88f167e706317259913d9365c5a1fb72fc572a79",
+    "LAB_ROOT/ops/recovery-v1/ATTEMPT_SUCCESSOR_DEVELOPMENT_AUTHORITY_V1.json": "64b40261010db33ce32871db4cb42900ae130d5dc02272ac92831594bd9e2f7e",
+    "LAB_ROOT/dev/attempt-successor-declarations-v1/DECLARATION_CLOSURE.json": "cb2fb0c8eacf1d3810f204c2f86ed812ee32684cf1924ba3d7c4dfd900778be8",
+    "LAB_ROOT/dev/attempt-successor-declarations-v1/ROOT_RELEASE_PATCH.json": "a3971b757b3c9655474037f6bbf279fb0579e43edb8a1bc6a683ffab1a96fc64",
+    "LAB_ROOT/dev/attempt-successor-declarations-v1/SOURCE_FREEZE.json": "d5427e1f467ab8495c4b35b94ca7528f8b1a9d893de1834bfaf9c662b48eb6a1",
+    "LAB_ROOT/dev/tranche-successor-v8/REMAINING_CELLS.json": "c4644d8bcacc68a499dc28d790fa584a6892eb508de4d1075656f096ae388585",
+    "LAB_ROOT/dev/tranche-successor-v8/SOURCE_FREEZE.json": "86b997375679047e3c7fede8df94ecfb3ceaa4e0745485159a6d430dbf1cbe1b",
+    "LAB_ROOT/dev/tranche-successor-v8/ADDITIVE_ACTION_SPEC.json": "b3cdb755dfa15e6116a056a3c0090b4edd9dca45971d5550b589d03b03005228",
+    "LAB_ROOT/ops/execution-resume-v1/root-production-release-v7.json": "4d6593cff543755bd390c9682cbd9f8e76ff8a13f82451ee6821f96aedab4cf2",
+    "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/SOURCE_FREEZE.json": "38f31e444c6dde29f2498a69ba2c1769506b0c4384a048afb25b7882df3f7cb2",
+    "LAB_ROOT/dev/prospective-timing-v3/recovery-control.json": "9f42d49be57a74ee744c0be41fa337471a3c441a340cde3e4bfc642926afb938",
+    "LAB_ROOT/dev/prospective-timing-v3/candidate_inputs.py": "213e1a6aea20e3e0499971b283e900e31956338cbe6c02fad5e16aa701445abf",
+    "LAB_ROOT/ops/execution-resume-v1/quiet_production_monitor.py": "44c3671a2f51d02e412ac5d0df1e719098a80a755ae192a4a07c7fae1d5ae042",
+    "LAB_ROOT/ops/recovery-v1/ATTEMPT_RESERVATION_SOURCE_ACCEPTANCE_V1.json": "118815780084618de3b62913aebd1141f8415b0eb7c9fd4f3a5bb1661b36f43c"
+  },
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "support",
+      "text": "The only controller code changes are the pure binding preflight, validation of already-held append receipt/arm lineage, and exact positive binding-file whitelist. All six scheduler/stage/case/finalizer modules are byte-identical to accepted prospective-timing-v3. Recovery control changes only ledger pin, empty default queue, and positive_binding_files; original planning resolver/map remain unchanged."
+    },
+    {
+      "id": "F2",
+      "severity": "support",
+      "text": "All63 nonempty exact whole-pair subsets preserve declaration order, exact two arms/six jobs per pair, S8 identities, case_sources and full original planning closure. Empty, split, duplicate, aliased, foreign or partial queues/jobs reject. Twelve source declarations do not reserve resources or promise all six outcomes."
+    },
+    {
+      "id": "F3",
+      "severity": "support",
+      "text": "Exact accepted independent binder review and distinct root binder acceptance must bind this controller snapshot/control. Accepted root production release, unchanged route/native/account/model pins, exact old V7 lineage, positive source inventory, fixed start/global end and original component limits remain required."
+    },
+    {
+      "id": "F4",
+      "severity": "support",
+      "text": "Already-stored successful append receipt must match exact selected declaration pairs, closure/V7 pins, root authority and original caps; selected arm lineage and literal final-correction promises must match. Missing/tampered/refunded/over-cap receipts reject with held fixture state unchanged. Accepted API proof is reused unchanged; binder neither imports nor invokes it."
+    },
+    {
+      "id": "F5",
+      "severity": "support",
+      "text": "Whole-V7 quiet record requires exact predecessor pin, finite campaign-bounded observation time and literal true scheduler/native/parents/actors/permits assertions. Missing, wrong, future, before-start, boolean or aliased metadata rejects; quiet is never inferred from absent ledger rows."
+    },
+    {
+      "id": "F6",
+      "severity": "support",
+      "text": "No fresh binding resets original births, old spent/future commitments, output thresholds/unknown usage, two Z slots, GLM5.3FlashMax/original opaque account,144 starts/172800 occupied seconds or original global deadline. Inherited accounting/admission still governs every actual stage."
+    }
+  ],
+  "blocking_findings": [],
+  "source_only_limitations": [
+    "This acceptance covers frozen source/metadata compatibility and auth-free fixtures only. No installation, append action, live ledger read/transaction, current subset feasibility or native qualification was performed.",
+    "Quiet validation proves metadata structure, exact pins and campaign-bounded timestamps, not genuine external/current quiet. Root must positively observe held scheduler/native/parent/actor/cgroup/permit settlement and retain actual evidence under serialization through one fresh launch. A historical campaign timestamp or metadata flag alone is insufficient operational evidence.",
+    "No binder lock prevents a second uncoordinated root launch; root campaign serialization remains mandatory.",
+    "Receipt aggregate nonnegativity, actual old-commitment retention and resource arithmetic are guarantees of the unchanged accepted API and stored successful transaction, whose41-test independent proof was reused. Mock receipt checks do not establish actual ledger state.",
+    "Inherited route/SDK/runtime/auth pins are copied/compared as metadata only; common release fixtures mock route digests and held state. No private SDK/auth contents or real native/provider calls were used.",
+    "All12 declarations remain source-only. Root must choose a currently resource-fitting nonempty wholepair subset and separately perform the already accepted append API; rejected append remains HOLD without retirement/refund/reset.",
+    "Author final handoff tail endpoint is UNKNOWN. Actual post-freeze source verification endpoint1791002021.5953054 is recorded; root completed positive harness upper bound1791002156.7884085 precedes original author deadline1791002472.397982. No helper clock was reset/backdated."
+  ],
+  "verification": {
+    "path": "LAB_ROOT/ops/attempt-control-binding-review-v1/VERIFICATION.json",
+    "sha256": "6a998e27e1f1d974409ec37cc64a86c26e4a41ed3abc1f44d75c7845f77b56bc"
+  },
+  "live_ledger_reads": 0,
+  "live_ledger_transactions": 0,
+  "native_provider_calls": 0,
+  "auth_private_sdk_reads": 0,
+  "candidate_evaluator_source_answer_reads": 0,
+  "author_source_changes": 0,
+  "upstream_source_changes": 0,
+  "original_helper_birth_epoch": 1791002156.7884085,
+  "original_helper_deadline_epoch": 1791002756.7884085,
+  "helper_budget_seconds": 600,
+  "global_deadline_epoch": 1791013030.8303788,
+  "reviewed_epoch": 1791002522.8646674,
+  "author_timing": {
+    "original_birth_epoch": 1791001272.397982,
+    "original_deadline_epoch": 1791002472.397982,
+    "actual_source_post_freeze_endpoint_epoch": 1791002021.5953054,
+    "source_endpoint_record": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/INCLUSIVE_ENDPOINT.json",
+      "sha256": "edc987514b42f5c7dabfce83cf9b77cd28ed66a15a5bd48d6f31332f21febc68"
+    },
+    "author_final_handoff_tail_endpoint": "UNKNOWN",
+    "root_positive_harness_completed_upper_bound_epoch": 1791002156.7884085,
+    "original_birth_cost_and_deadline_retained": true
+  }
+}

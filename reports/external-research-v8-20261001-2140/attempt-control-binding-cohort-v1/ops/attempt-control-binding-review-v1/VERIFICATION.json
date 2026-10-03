@@ -1,0 +1,105 @@
+{
+  "schema": "pm.er8.attempt-control-binding-independent-verification.v1",
+  "all_passed": true,
+  "tests_run": 23,
+  "frozen_author_fixtures": 14,
+  "independent_additional_tests": 9,
+  "nonempty_whole_pair_subsets": 63,
+  "actual_planning_gates_checked": 12,
+  "author_manifest_pin_verified": true,
+  "author_freeze_pin_verified": true,
+  "author_owned_files_checked": 18,
+  "scoped_dependencies_checked": 18,
+  "byte_identical_controller_modules": {
+    "rolling.py": {
+      "new": {
+        "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/rolling.py",
+        "sha256": "6f4f59862c963288eb0b514d8d943adfd6c7356681aded5c9b3b9fe45eb6a874"
+      },
+      "previous": {
+        "path": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/rolling.py",
+        "sha256": "6f4f59862c963288eb0b514d8d943adfd6c7356681aded5c9b3b9fe45eb6a874"
+      },
+      "byte_identical": true
+    },
+    "case_supervisor.py": {
+      "new": {
+        "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/case_supervisor.py",
+        "sha256": "b35627e1bdbf914afb939a69959e6b09ac9bcbe5d54cd471d7319cbcf540f096"
+      },
+      "previous": {
+        "path": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/case_supervisor.py",
+        "sha256": "b35627e1bdbf914afb939a69959e6b09ac9bcbe5d54cd471d7319cbcf540f096"
+      },
+      "byte_identical": true
+    },
+    "stage_actor.py": {
+      "new": {
+        "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/stage_actor.py",
+        "sha256": "ba3b13cd1209fd086ecd96e24d776deda92824063fc216cd7796e7b299ffb8cc"
+      },
+      "previous": {
+        "path": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/stage_actor.py",
+        "sha256": "ba3b13cd1209fd086ecd96e24d776deda92824063fc216cd7796e7b299ffb8cc"
+      },
+      "byte_identical": true
+    },
+    "external_stage_close.py": {
+      "new": {
+        "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/external_stage_close.py",
+        "sha256": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4"
+      },
+      "previous": {
+        "path": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/external_stage_close.py",
+        "sha256": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4"
+      },
+      "byte_identical": true
+    },
+    "external_case_close.py": {
+      "new": {
+        "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/external_case_close.py",
+        "sha256": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c"
+      },
+      "previous": {
+        "path": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/external_case_close.py",
+        "sha256": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c"
+      },
+      "byte_identical": true
+    },
+    "parent_receipt.py": {
+      "new": {
+        "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/parent_receipt.py",
+        "sha256": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea"
+      },
+      "previous": {
+        "path": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/parent_receipt.py",
+        "sha256": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea"
+      },
+      "byte_identical": true
+    }
+  },
+  "accepted_api_proof_reused": {
+    "path": "LAB_ROOT/ops/attempt-reservation-review-v1/REVIEW.json",
+    "sha256": "d2ac456db3d31e15189f0d47441b2f74fc9b8accda1f62b1886376909a6e49ae"
+  },
+  "accepted_api_independent_tests_previously_passed": 41,
+  "blocked_prohibited_operations": 0,
+  "live_ledger_imports": 0,
+  "live_ledger_reads": 0,
+  "live_transactions": 0,
+  "native_provider_calls": 0,
+  "auth_private_sdk_reads": 0,
+  "candidate_evaluator_source_answer_reads": 0,
+  "route_sdk_digests_explicitly_mocked": true,
+  "ledger_state_temporary_mock_only": true,
+  "monitor_Popen_fully_mocked": true,
+  "reviewed_epoch": 1791002522.863382,
+  "test_results": {
+    "path": "LAB_ROOT/ops/attempt-control-binding-review-v1/TEST_RESULTS.txt",
+    "sha256": "840bc2926f9d54f5f0ea414609a2327c08465837a619d7489bee5b88241a5d15"
+  },
+  "independent_fixture_source": {
+    "path": "LAB_ROOT/ops/attempt-control-binding-review-v1/review_tests.py",
+    "sha256": "576cc58c35db0e1e56fd10706a0e60d819d6dcaeff818e41e9eb999ce26ef440"
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "schema": "pm.er8.attempt-control-binding-independent-review-manifest.v1",
+  "status": "ACCEPTED_SOURCE_ONLY",
+  "accepted": true,
+  "independent": true,
+  "source_only": true,
+  "root_authority": false,
+  "live_install": false,
+  "native_release": false,
+  "owned_files": {
+    "REVIEW.json": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-review-v1/REVIEW.json",
+      "sha256": "b9082d01c1de1f009a31c0699ac3beebae0542e5e05899fbf06e630e8ef70b05"
+    },
+    "review_tests.py": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-review-v1/review_tests.py",
+      "sha256": "576cc58c35db0e1e56fd10706a0e60d819d6dcaeff818e41e9eb999ce26ef440"
+    },
+    "TEST_RESULTS.txt": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-review-v1/TEST_RESULTS.txt",
+      "sha256": "840bc2926f9d54f5f0ea414609a2327c08465837a619d7489bee5b88241a5d15"
+    },
+    "VERIFICATION.json": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-review-v1/VERIFICATION.json",
+      "sha256": "6a998e27e1f1d974409ec37cc64a86c26e4a41ed3abc1f44d75c7845f77b56bc"
+    },
+    "HANDOFF.md": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-review-v1/HANDOFF.md",
+      "sha256": "65b1ec47057b8e77ecbd8b43759eb807d074eac8d26969e781108efbcfb7e379"
+    }
+  },
+  "reviewed_frozen_inputs": {
+    "MANIFEST.json": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/MANIFEST.json",
+      "sha256": "1a01d91c53aa9e6951d08e9f175316d2928a81346e756af6cd09fcf304f9a94c"
+    },
+    "FREEZE.json": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/FREEZE.json",
+      "sha256": "222a2ff185ca1d33c435ee6f47a4a250d8c6f2098071f1c48d295133b72833e9"
+    },
+    "control_binding.py": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/control_binding.py",
+      "sha256": "619fa432d572d0ae3a662a43325a507814210ea8ea29bedd6d171f0f76a6905d"
+    },
+    "recovery-control.json": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/recovery-control.json",
+      "sha256": "19c7033071c562fd4feecb846d1a921da41f77050fd62585bb923adc162fcd00"
+    },
+    "integrated-controller/SOURCE_FREEZE.json": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/SOURCE_FREEZE.json",
+      "sha256": "1c93bed6a9fd18a24a67746a0a87ab695b8486ec99936056a614f8ee06bf66c8"
+    },
+    "INCLUSIVE_ENDPOINT.json": {
+      "path": "LAB_ROOT/ops/attempt-control-binding-v1/INCLUSIVE_ENDPOINT.json",
+      "sha256": "edc987514b42f5c7dabfce83cf9b77cd28ed66a15a5bd48d6f31332f21febc68"
+    }
+  },
+  "positive_publication_whitelist": [
+    "LAB_ROOT/ops/attempt-control-binding-review-v1/REVIEW.json",
+    "LAB_ROOT/ops/attempt-control-binding-review-v1/review_tests.py",
+    "LAB_ROOT/ops/attempt-control-binding-review-v1/TEST_RESULTS.txt",
+    "LAB_ROOT/ops/attempt-control-binding-review-v1/VERIFICATION.json",
+    "LAB_ROOT/ops/attempt-control-binding-review-v1/HANDOFF.md",
+    "LAB_ROOT/ops/attempt-control-binding-review-v1/MANIFEST.json",
+    "LAB_ROOT/ops/attempt-control-binding-review-v1/FREEZE.json",
+    "LAB_ROOT/ops/attempt-control-binding-review-v1/INCLUSIVE_ENDPOINT.json"
+  ],
+  "original_helper_birth_epoch": 1791002156.7884085,
+  "original_helper_deadline_epoch": 1791002756.7884085,
+  "global_deadline_epoch": 1791013030.8303788,
+  "inclusive_endpoint_record": "LAB_ROOT/ops/attempt-control-binding-review-v1/INCLUSIVE_ENDPOINT.json"
+}
