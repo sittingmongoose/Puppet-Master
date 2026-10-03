@@ -16,14 +16,18 @@
  *
  * WHAT IT CHECKS (numbers are the labels it prints)
  *   1  census: every <svg> outside the out-of-scope hosts is svg.nx (or a provider mark), PM56_NEON.misses is
- *      empty, no .pmx-glyph-missing; eight views (default, model menu, Demo Studio, a wand sheet, the wide thread
- *      list, and the Crew, Review and Chat Room configure sheets, whose run preview must be in the view: fpfix F-1,
- *      the preview's inert filter once stripped its kind badge and status mark bare) in every theme.
+ *      empty, no .pmx-glyph-missing; nine views (default, model menu, Demo Studio, a wand sheet, the wide thread
+ *      list, and the Crew, BrainStorm, Review and Chat Room configure sheets, whose run preview must be in the view
+ *      AND lit like the card: kind badge nx-r-concept with a painting halo, core stroke and the density's ink, status
+ *      marks in .nx-st.nx-still with their tone's ink; fpfix F-1 and cycle 1, the preview's inert filter once
+ *      stripped them bare) in every theme.
  *   2  status matrix: the 13 set members render their wrapper and tone; 7 animate, 5 stand still, complete's
  *      one-shot has iteration count 1 (every theme). 2b the bar: each item's root rhythm matches its
  *      html[data-ab-<domain>] tone (working/attention ab-breathe, blocked ab-alert, others none). 2c the nine
  *      thread statuses in the wide take-6 rows carry .nx-st-<status>. 2d To-Do rows (the bar's To-Do hover card)
  *      carry the set member of their status.
+ *   2e the bar's Crew, BrainStorm, Review and Chat Room tone is the worst of their runs' card state
+ *      (PM56_COLLAB.presentState) on every thread; recovery-collaboration's blocked runs read attention.
  *   3  the working bead moves >= 3 px in a quarter of its orbit.
  *   4  a clip reveal ran and left no residual clip-path after finish(); the page/document text lines paint.
  *   5  static scan: no filter, stroke-dashoffset or color-mix() in a .nx / nx- rule or an nx keyframe; no pmx in
@@ -295,9 +299,48 @@ async function openWandSheet(p) {
   }
   return await p.locator('.overlay-menu.sidecar').count() > 0;
 }
-/* wand > Workflows > Crew… / Review… / Chat Room… opens the collab configure sheet; its hero holds the run preview
-   (module-shell pmxPreview + pmxRun preview mode), which must render svgs, or the view measured nothing. */
-const CONFIGURE_KINDS = ['crew', 'review', 'chat_room'];
+/* wand > Workflows > Crew… / BrainStorm… / Review… / Chat Room… opens the collab configure sheet; its hero holds the
+   run preview (module-shell pmxPreview + pmxRun preview mode), which must render svgs, or the view measured nothing.
+   Being svg.nx is not enough (fpfix cycle 1: a filter that kept `nx` but dropped every `nx-*` class left the preview
+   as bare as F-1 and the census still passed), so the preview must also be lit like the card: the kind badge
+   (svg.pmx-kind) carries nx-r-concept, at least one .nx-h halo path that paints (outside NieR, which has no halo), a
+   core stroke and the density's ink (live/starting accent, waiting/attention/warm warning, failed danger); every
+   status mark sits in an .nx-st.nx-still wrapper (a preview runs no loop) with its tone's ink. */
+const CONFIGURE_KINDS = ['crew', 'brainstorm', 'review', 'chat_room'];
+async function previewLit(p) {
+  return p.evaluate(() => {
+    const card = document.querySelector('#pmOverlayRoot .pmx-sheet.collab-configure .pmx-preview-card');
+    if (!card) return ['no .pmx-preview-card'];
+    const bad = [], cs = e => getComputedStyle(e), nier = document.documentElement.getAttribute('data-o55-nier') === 'on';
+    const run = card.closest('[data-density]') || card.querySelector('[data-density]');
+    const density = run && run.dataset.density, tone = run && run.dataset.tone;
+    const want = tone === 'accent' || density === 'live' || density === 'starting' ? 'accent'
+      : density === 'waiting' || density === 'attention' || tone === 'warm' ? 'warning' : density === 'failed' ? 'danger' : null;
+    const k = card.querySelector('svg.pmx-kind');
+    if (!k) bad.push('no svg.pmx-kind');
+    else {
+      const ink = cs(k).getPropertyValue('--nx-ink').trim(), h = k.querySelectorAll('.nx-h'), c = k.querySelector('.nx-c');
+      if (!k.classList.contains('nx-r-concept')) bad.push('kind badge lacks nx-r-concept: ' + k.getAttribute('class'));
+      if (!ink) bad.push('kind badge has no --nx-ink');
+      if (!h.length) bad.push('kind badge has no .nx-h halo path');
+      else if (!nier && !(+cs(h[0]).opacity > 0)) bad.push('kind badge halo does not paint (opacity ' + cs(h[0]).opacity + ')');
+      if (!c || cs(c).stroke === 'none') bad.push('kind badge has no core stroke');
+      if (want && ink !== cs(k).getPropertyValue('--' + want).trim())
+        bad.push(`kind badge ink ${ink} is not the ${density} density's --${want} ${cs(k).getPropertyValue('--' + want).trim()}`);
+    }
+    const sts = [...card.querySelectorAll('.pmx-st-glyph svg')];
+    if (!sts.length) bad.push('no status mark (.pmx-st-glyph svg)');
+    const TN = { attention: 'warning', working: 'accent', blocked: 'danger' };
+    for (const s of sts) {
+      const w = s.parentElement, ink = cs(s).getPropertyValue('--nx-ink').trim();
+      if (!w.classList.contains('nx-st') || !w.classList.contains('nx-still')) { bad.push('status mark not in .nx-st.nx-still: ' + w.getAttribute('class')); continue; }
+      if (!ink) bad.push('status mark has no --nx-ink');
+      const tn = [...w.classList].find(c => c.startsWith('nx-tn-')), tok = tn && TN[tn.slice(6)];
+      if (tok && ink !== cs(s).getPropertyValue('--' + tok).trim()) bad.push(`status mark ink ${ink} is not ${tn}'s --${tok}`);
+    }
+    return bad;
+  });
+}
 async function openConfigureSheet(p, kind) {
   await openMenu(p, 'wand');
   const menu = p.locator('.overlay-menu[data-overlay="root-menu"]').first();
@@ -311,7 +354,9 @@ async function openConfigureSheet(p, kind) {
   await p.locator('#pmOverlayRoot .pmx-sheet.collab-configure').first().waitFor({ timeout: 5000 });
   await p.waitForTimeout(500);
   const pv = await p.evaluate(() => document.querySelectorAll('#pmOverlayRoot .pmx-sheet.collab-configure .pmx-preview-card svg').length);
-  return pv > 0 ? null : { skipped: kind + ' configure sheet has no run preview svg' };
+  if (!pv) return { skipped: kind + ' configure sheet has no run preview svg' };
+  const unlit = await previewLit(p);
+  return unlit.length ? { unlit } : null;
 }
 for (const theme of THEMES) {
   await sec(`census ${theme}`, async () => {
@@ -349,7 +394,7 @@ for (const theme of THEMES) {
     } finally { await shut(w); }
     const fails = {};
     for (const [v, r] of Object.entries(views)) {
-      if (r.skipped) { fails[v] = r; continue; }
+      if (r.skipped || r.unlit) { fails[v] = r; continue; }
       /* a view with no svg at all measured nothing (a page that failed to render passes vacuously otherwise) */
       if (r.nBad || r.misses.length || r.glyphMissing || !r.total) fails[v] = { total: r.total, offenders: r.bad, misses: r.misses, glyphMissing: r.glyphMissing };
     }
@@ -464,6 +509,41 @@ await sec('live surfaces', async () => {
     const todoBad = todoRows.filter(r => !r.ok);
     check(todoRows.length > 0 && todoBad.length === 0,
       `2d To-Do rows carry their status mark (${todoRows.length} rows in the hover card: ${[...new Set(todoRows.map(r => r.st))].join(', ')})`, { todoBad, todoRows: todoRows.slice(0, 8) });
+  } finally { await shut(p); }
+});
+
+/* ------------------------------------------------------------- check 2e: collab domains on the bar */
+/* The bar's Crew, BrainStorm, Review and Chat Room tone is the worst of its runs' own presentation state, the one the
+   cards read (PM56_COLLAB.presentState: attention, limit and failed need you, running and starting work, completed is
+   done, the rest idle). Every thread, basic-dark; the recovery-collaboration thread must read attention on Crew,
+   BrainStorm and Review (its blocked runs), so a coarser projection cannot pass by matching itself (fpfix F-2 cycle 1). */
+await sec('collab bar tones', async () => {
+  const p = await newPage();
+  try {
+    await setTheme(p, 'basic-dark');
+    const tids = await p.evaluate(() => window.PM56_EXT.ctx().D.threads.map(t => t.id));
+    const rows = [];
+    for (const t of tids) {
+      await p.evaluate(t => window.PM56_DEMO.selectThread(t), t);
+      await p.waitForTimeout(300);
+      rows.push(...await p.evaluate(t => {
+        const C = window.PM56_COLLAB, RANK = ['attention', 'working', 'done', 'idle'], out = [];
+        const MAP = { attention: 'attention', limit: 'attention', failed: 'attention', running: 'working', starting: 'working', completed: 'done' };
+        for (const k of ['crew', 'brainstorm', 'review', 'chat_room']) {
+          const runs = C.runsForThread(t).filter(r => r.kind === k);
+          if (!runs.length) continue;
+          const want = runs.map(r => r.degraded ? 'attention' : (MAP[C.presentState(r)] || 'idle')).reduce((w, x) => RANK.indexOf(x) < RANK.indexOf(w) ? x : w, 'idle');
+          out.push({ thread: t, domain: k, states: runs.map(r => C.presentState(r)), want, ab: document.documentElement.getAttribute('data-ab-' + k) });
+        }
+        return out;
+      }, t));
+    }
+    const bad = rows.filter(r => r.ab !== r.want);
+    const REC = { crew: 'attention', brainstorm: 'attention', review: 'attention' };
+    const rec = Object.entries(REC).map(([k, want]) => ({ domain: k, want, row: rows.find(r => r.thread === 'recovery-collaboration' && r.domain === k) }))
+      .filter(x => !x.row || x.row.ab !== x.want);
+    check(rows.length >= 6 && bad.length === 0 && rec.length === 0,
+      `2e bar collab tones follow the runs' card state (${rows.length} domains on ${tids.length} threads; recovery-collaboration Crew/BrainStorm/Review attention)`, { bad, rec });
   } finally { await shut(p); }
 });
 
