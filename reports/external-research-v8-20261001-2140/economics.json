@@ -1,7 +1,7 @@
 {
-  "checkpoint": "V7_RETRIEVAL_CRITICS_ACTIVE_V6_INCOMPLETE",
-  "observed_native_starts": 24,
-  "occupied_candidate_seconds": 19173.16780757904,
+  "checkpoint": "TWO_OPERATIONAL_PAIRS_RETRIEVAL_FAILED_SCREENS_AMENDMENT_REVIEW_PENDING",
+  "observed_native_starts": 34,
+  "occupied_candidate_seconds": 26214.657650232315,
   "candidate_generated_tokens": null,
   "management_tokens": null,
   "evaluation_tokens": null,
@@ -62,7 +62,7 @@
       "original_cap_seconds": 480
     }
   ],
-  "current_evidence": "batching-partial-cohort-v1/ops/recovery-v1/OBSERVATION_20261003_012605.json",
+  "current_evidence": "retrieval-quality-review-v1/ops/recovery-v1/OBSERVATION_20261003_0224.json",
   "last_independently_reviewed_usage": {
     "native_starts": 2,
     "occupied_candidate_seconds": 1354.3749742507935,
@@ -72,23 +72,23 @@
   "pause_requested_epoch": 1790914502.1696212,
   "resume_epoch": 1790979124.0,
   "pause_duration_seconds": 64621.83037877083,
-  "generated_output_tokens_lower_bound": 365360,
+  "generated_output_tokens_lower_bound": 663088,
   "reported_output_lower_bound_scope": "Recorded public request/stage increments only; failed-stage counters and full campaign usage UNKNOWN",
   "prospective_deadline_epoch": 1791013030.8303788,
-  "observation_utc": "2026-10-03T01:25:39.382829+00:00",
+  "observation_utc": "2026-10-03T02:24:21.639997+00:00",
   "resume_evidence": "resume-cohort-v1/ops/recovery-v1/RESUME_20261002.json",
   "observed_physical_canary_seconds_scope": "Historical first canary only",
   "native_muse_mechanical_helper": {
-    "invocations": 4,
+    "invocations": 5,
     "completed": 3,
-    "timed_out": 1,
-    "elapsed_seconds": 590.083736615018,
+    "timed_out": 2,
+    "elapsed_seconds": 874.9526655390172,
     "candidate_goal_starts": 0,
     "tokens": null,
     "money": null,
     "realized_reasoning": "UNKNOWN",
-    "evidence": "batching-partial-cohort-v1/README.md",
-    "scope": "Four native mechanical helper invocations; separate from scored candidate Goals; tokens/money/realizedreasoning UNKNOWN"
+    "evidence": "retrieval-quality-review-v1/ops/recovery-v1/OBSERVATION_20261003_0224.json",
+    "scope": "Five native mechanical invocations, three complete and two bounded timeouts. No completed source accepted from latest timeout. Separate from scored Goals; tokens/money/realized reasoning UNKNOWN."
   },
   "third_canary_reported_usage": {
     "usage": {
@@ -104,11 +104,33 @@
   },
   "native_qualification": "V3_MECHANICAL_PASSED_LIMITED_DELIVERY_INFERENCE",
   "native_qualification_evidence": "resume-qualified-v3-cohort/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json",
-  "reserved_or_committed_native_starts_at_observation": 63,
-  "reserved_or_committed_slot_seconds_at_observation": 133454.27154541016,
+  "reserved_or_committed_native_starts_at_observation": 53,
+  "reserved_or_committed_slot_seconds_at_observation": 112846.50549530983,
   "active_by_family_at_observation": {
     "M": 0,
     "Z": 2,
     "L": 0
+  },
+  "completed_pair_descriptive_costs": [
+    {
+      "case": "V8-BIO-RETR-C-M",
+      "quality_disposition": "FAILED_SCREEN",
+      "case_wall_seconds": 1957.311687573,
+      "occupied_stage_lease_seconds": 1956.7773969173431,
+      "outside_native_seconds": 6.11531088
+    },
+    {
+      "case": "V8-BIO-RETR-T-M",
+      "quality_disposition": "FAILED_SCREEN",
+      "case_wall_seconds": 2136.843008518,
+      "occupied_stage_lease_seconds": 2136.32631111145,
+      "outside_native_seconds": 5.456172847
+    }
+  ],
+  "quality_qualified_efficiency_comparisons": 0,
+  "independent_evaluator_elapsed_seconds": {
+    "BIO_RETR_C": 1022.9842467308044,
+    "BIO_RETR_T": 986.5457143783569,
+    "scope": "Original helper birth through frozen end, preparation included; separate from candidate cost, not a complete Sol management/token total."
   }
 }

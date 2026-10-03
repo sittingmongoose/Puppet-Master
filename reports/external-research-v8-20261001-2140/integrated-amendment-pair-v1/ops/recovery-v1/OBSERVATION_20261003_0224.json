@@ -1,0 +1,53 @@
+{
+  "schema": "pm.er8.root-observation.v1",
+  "root_authority": true,
+  "created_epoch": 1790994261.6399968,
+  "utc": "2026-10-03T02:24:21.639997+00:00",
+  "operational_cases_completed": [
+    "V8-BIO-RETR-C-M",
+    "V8-BIO-RETR-T-M",
+    "V8-BIO-AMEND-C-L",
+    "V8-BIO-AMEND-T-L"
+  ],
+  "operational_integrated_pipeline_count": 4,
+  "target_pipeline_count": 24,
+  "operational_matched_pair_count": 2,
+  "target_pair_count": 12,
+  "stage_complete_counts_v3_v6_v7": {
+    "research": 12,
+    "critic": 5,
+    "final": 4
+  },
+  "quality_pending_cases": [
+    "V8-BIO-AMEND-C-L",
+    "V8-BIO-AMEND-T-L"
+  ],
+  "cost_limits": "Includes all earlier failed starts and occupancy; only explicit user pause excluded; no budget reset. Sol evaluation/management elapsed separate from candidate pair cost; token totals/money UNKNOWN.",
+  "accounting": {
+    "elapsed_seconds": 24430.74156475067,
+    "deadline_epoch": 1791013030.8303788,
+    "admissions": 36,
+    "native_goal_starts": 34,
+    "pending_start_permits": 0,
+    "occupied_slot_seconds": 26214.657650232315,
+    "committed_slot_seconds": 1442.530378818512,
+    "reserved_or_committed_slot_seconds": 112846.50549530983,
+    "reserved_or_committed_native_starts": 53,
+    "active_by_family": {
+      "M": 0,
+      "Z": 2,
+      "L": 0
+    },
+    "active_jobs": [
+      "V8-BIO-BREADTH-C-M-research-proposal",
+      "V8-BIO-BREADTH-T-M-research-proposal"
+    ],
+    "overdue_jobs": [],
+    "generated_output_tokens_lower_bound": 663088,
+    "generated_usage": "unknown",
+    "occupancy_reconciled": true,
+    "elapsed_seconds_including_user_pause": 89052.5719435215,
+    "authorized_user_pause_excluded_seconds": 64621.83037877083
+  },
+  "publication_projection_scope": "Immutable root accounting observation; failure-inclusive historical campaign costs and active state at that observation. Distinct from matched-pair operational receipts and pending quality evaluation."
+}

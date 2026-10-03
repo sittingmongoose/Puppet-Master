@@ -1,0 +1,47 @@
+{
+  "schema": "pm.er8.public-integrated-retrieval-results.v1",
+  "operational_counts": {
+    "case_pipelines": 2,
+    "case_target": 24,
+    "paired_comparisons": 1,
+    "pair_target": 12,
+    "quality_reviewed_comparisons": 0
+  },
+  "quality": "PENDING_INDEPENDENT_FULL_SCOPE_EVALUATION",
+  "winner": null,
+  "case_summaries": {
+    "V8-BIO-RETR-C-M": {
+      "actual_case_wall_seconds": 1957.311687573,
+      "actual_occupied_stage_lease_seconds": 1956.7773969173431,
+      "actual_nonoverlapping_outside_native_seconds": 6.11531088,
+      "all_case_execution_closed_before_cutoff": true,
+      "actual_final_proposal": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/out/FINAL_PROPOSAL.md",
+        "bytes": 33890,
+        "sha256": "3ed2f8c5073ef17beaaf9f06dc32506af6841b3d81f3d10fe576f06e3cdfcb9e"
+      }
+    },
+    "V8-BIO-RETR-T-M": {
+      "actual_case_wall_seconds": 2136.843008518,
+      "actual_occupied_stage_lease_seconds": 2136.32631111145,
+      "actual_nonoverlapping_outside_native_seconds": 5.456172847,
+      "all_case_execution_closed_before_cutoff": true,
+      "actual_final_proposal": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-final-correction/workspace/out/FINAL_PROPOSAL.md",
+        "bytes": 45341,
+        "sha256": "56e701dc954dfe3d5a07fc9e5fc684e571a62c13423aeb8f012b78e0d4690525"
+      }
+    }
+  },
+  "immutable_root_observation": "ops/recovery-v1/OBSERVATION_20261003_0159_RETRIEVAL_COMPLETE.json",
+  "matched_pair_cost_scope": "Two case held receipts only; six native stage intervals. Campaign observation includes historical failures and other stages and remains separate.",
+  "source_semantic_acquisition": "UNKNOWN",
+  "native_replay_portable": false,
+  "evaluators": {
+    "in_progress_at_root_observation": true,
+    "original_birth_epoch": 1790992152.3068507,
+    "original_deadline_epoch": 1790994552.3068507,
+    "findings_read": false
+  },
+  "no_duplicate_settlement_or_native_replay": true
+}

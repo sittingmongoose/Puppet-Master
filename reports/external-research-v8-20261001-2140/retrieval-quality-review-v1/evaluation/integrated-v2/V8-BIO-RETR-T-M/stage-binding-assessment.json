@@ -1,0 +1,127 @@
+{
+  "rows": [
+    {
+      "stage": "research-proposal",
+      "case_id": "V8-BIO-RETR-T-M",
+      "capture_origin_case_id": "V8-BIO-RETR-T-M",
+      "account_identity": "existing-authorized-zcode-account-v8-A",
+      "case_start_monotonic_ns": 211510656659015,
+      "bound_stage_cap_seconds": 1200,
+      "binding_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-research-proposal/CASE_BINDING.json",
+      "binding_sha256": "b881ae48ae67d85349046c1070a3631b86954c187f47b280d1b821e7f1ec895b",
+      "immutable_inputs_checked": [
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-research-proposal/workspace/inputs/METHOD.md",
+          "expected_sha256": "700f321706f86f2eb5e9debe5cabdef89e2433b24ca272eb0d13faee400221cf",
+          "actual_sha256": "700f321706f86f2eb5e9debe5cabdef89e2433b24ca272eb0d13faee400221cf",
+          "matches": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-research-proposal/workspace/inputs/BRIEF.md",
+          "expected_sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+          "actual_sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+          "matches": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-research-proposal/workspace/inputs/THIN_PLAN.md",
+          "expected_sha256": "9a4a13328e3f3d4af25d13c371b79b918d898cb20fa2ec99e0901a70fe7be98f",
+          "actual_sha256": "9a4a13328e3f3d4af25d13c371b79b918d898cb20fa2ec99e0901a70fe7be98f",
+          "matches": true
+        }
+      ]
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "case_id": "V8-BIO-RETR-T-M",
+      "capture_origin_case_id": "V8-BIO-RETR-T-M",
+      "account_identity": "existing-authorized-zcode-account-v8-A",
+      "case_start_monotonic_ns": 211510656659015,
+      "bound_stage_cap_seconds": 1200,
+      "binding_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-independent-candidate-critic/CASE_BINDING.json",
+      "binding_sha256": "6b274bca5aebc9fecf06c3080ac0576e856fb53ca425a39e513a83b929e282ea",
+      "immutable_inputs_checked": [
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-independent-candidate-critic/workspace/inputs/METHOD.md",
+          "expected_sha256": "700f321706f86f2eb5e9debe5cabdef89e2433b24ca272eb0d13faee400221cf",
+          "actual_sha256": "700f321706f86f2eb5e9debe5cabdef89e2433b24ca272eb0d13faee400221cf",
+          "matches": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-independent-candidate-critic/workspace/inputs/UNRESOLVED_LEADS.md",
+          "expected_sha256": "ac51892b529a18811896d0a0b97fe474cb1778f207973766c0c96f90b84fa9e1",
+          "actual_sha256": "ac51892b529a18811896d0a0b97fe474cb1778f207973766c0c96f90b84fa9e1",
+          "matches": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-independent-candidate-critic/workspace/inputs/BRIEF.md",
+          "expected_sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+          "actual_sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+          "matches": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-independent-candidate-critic/workspace/inputs/THIN_PLAN.md",
+          "expected_sha256": "9a4a13328e3f3d4af25d13c371b79b918d898cb20fa2ec99e0901a70fe7be98f",
+          "actual_sha256": "9a4a13328e3f3d4af25d13c371b79b918d898cb20fa2ec99e0901a70fe7be98f",
+          "matches": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-independent-candidate-critic/workspace/inputs/PROPOSAL.md",
+          "expected_sha256": "63a53e9154ba6ec382a87f90beb1f17bb4bf19c8b8b5adfd022f1616db2dba3f",
+          "actual_sha256": "63a53e9154ba6ec382a87f90beb1f17bb4bf19c8b8b5adfd022f1616db2dba3f",
+          "matches": true
+        }
+      ]
+    },
+    {
+      "stage": "final-correction",
+      "case_id": "V8-BIO-RETR-T-M",
+      "capture_origin_case_id": "V8-BIO-RETR-T-M",
+      "account_identity": "existing-authorized-zcode-account-v8-A",
+      "case_start_monotonic_ns": 211510656659015,
+      "bound_stage_cap_seconds": 900,
+      "binding_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-final-correction/CASE_BINDING.json",
+      "binding_sha256": "153589fe2c05cc218a956cb22f90d8de8db09c7872f9d1b0039df368b4518b24",
+      "immutable_inputs_checked": [
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-final-correction/workspace/inputs/METHOD.md",
+          "expected_sha256": "700f321706f86f2eb5e9debe5cabdef89e2433b24ca272eb0d13faee400221cf",
+          "actual_sha256": "700f321706f86f2eb5e9debe5cabdef89e2433b24ca272eb0d13faee400221cf",
+          "matches": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-final-correction/workspace/inputs/UNRESOLVED_LEADS.md",
+          "expected_sha256": "ac51892b529a18811896d0a0b97fe474cb1778f207973766c0c96f90b84fa9e1",
+          "actual_sha256": "ac51892b529a18811896d0a0b97fe474cb1778f207973766c0c96f90b84fa9e1",
+          "matches": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-final-correction/workspace/inputs/BRIEF.md",
+          "expected_sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+          "actual_sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+          "matches": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-final-correction/workspace/inputs/CRITIQUE.md",
+          "expected_sha256": "68aae5c1ff9051de57e4f59955728ea2cc216555e4eef87056de425e837fcfd2",
+          "actual_sha256": "68aae5c1ff9051de57e4f59955728ea2cc216555e4eef87056de425e837fcfd2",
+          "matches": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-final-correction/workspace/inputs/THIN_PLAN.md",
+          "expected_sha256": "9a4a13328e3f3d4af25d13c371b79b918d898cb20fa2ec99e0901a70fe7be98f",
+          "actual_sha256": "9a4a13328e3f3d4af25d13c371b79b918d898cb20fa2ec99e0901a70fe7be98f",
+          "matches": true
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-final-correction/workspace/inputs/PROPOSAL.md",
+          "expected_sha256": "63a53e9154ba6ec382a87f90beb1f17bb4bf19c8b8b5adfd022f1616db2dba3f",
+          "actual_sha256": "63a53e9154ba6ec382a87f90beb1f17bb4bf19c8b8b5adfd022f1616db2dba3f",
+          "matches": true
+        }
+      ]
+    }
+  ],
+  "same_host_bound_account": true,
+  "all_checked_input_hashes_match": true,
+  "provider_identity_reauthentication": "UNASSESSED; safe host binding plus native public receipts, no profiles or auth inspected"
+}

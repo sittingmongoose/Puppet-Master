@@ -1,0 +1,867 @@
+[
+  {
+    "stage": "research-proposal",
+    "get_delivery_ranges_all_match": true,
+    "additional_capture_read_count": 2,
+    "read_ranges_all_match": true,
+    "gets": [
+      {
+        "operation_id": "6a75ca351a7e469dbf3bc6cb46d20cdd",
+        "utc": "2026-10-03T01:10:33.375817+00:00",
+        "url": "https://ngff.openmicroscopy.org/0.4/index.html",
+        "capture_sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          32768
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 32768,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "76ac653a62644978923915b3c8227fd9",
+        "utc": "2026-10-03T01:10:34.712614+00:00",
+        "url": "https://ngff.openmicroscopy.org/0.4/axes.html",
+        "capture_sha256": "537ac23c4ca83ccba2dfae8bcf5f1bf2e948cc272f16c094b09c48ef2a0b2a3f",
+        "body_complete": true,
+        "status": 404,
+        "delivered_byte_range": [
+          0,
+          2523
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 2523,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "a9d3c9bf170f45458fdb2f958646120f",
+        "utc": "2026-10-03T01:10:35.036599+00:00",
+        "url": "https://ngff.openmicroscopy.org/0.4/ml_multiscales.html",
+        "capture_sha256": "241117b47687a5681758b993db09925802332ae8974c13803985f0945af2b2e0",
+        "body_complete": true,
+        "status": 404,
+        "delivered_byte_range": [
+          0,
+          2533
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 2533,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "3cb3e1c4f7cb4436a2288146d8022bb3",
+        "utc": "2026-10-03T01:10:35.369258+00:00",
+        "url": "https://ngff.openmicroscopy.org/0.4/ml_labelgroups.html",
+        "capture_sha256": "ba1891a5e550be7d25e6ff45a02c2b15a8c7f756c7325f80c051245023d8fd0e",
+        "body_complete": true,
+        "status": 404,
+        "delivered_byte_range": [
+          0,
+          2533
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 2533,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "48720e7f64d44cd09f466c4c0b37dfbc",
+        "utc": "2026-10-03T01:11:24.880366+00:00",
+        "url": "https://api.github.com/repos/ome/ngff/contents/?ref=v0.4.0",
+        "capture_sha256": "a996b3b65ac56cad3c6c5cd273d65bd598974be36bfdd646f9c1cc4e6c955bbf",
+        "body_complete": true,
+        "status": 404,
+        "delivered_byte_range": [
+          0,
+          128
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 128,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "e20f025590824072922468f0be45bc44",
+        "utc": "2026-10-03T01:11:25.268151+00:00",
+        "url": "https://api.github.com/repos/ome/ngff/tags",
+        "capture_sha256": "6fa7034e809e59c3c23a34f72c3ffc2a4c2e7bede08ebab1fa50beb4f9bfc48d",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          3851
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 3851,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "3ac4426197a4455788743eaa249e4afe",
+        "utc": "2026-10-03T01:11:31.662175+00:00",
+        "url": "https://api.github.com/repos/ome/ngff/contents/?ref=0.4.0",
+        "capture_sha256": "18b508ff8c57fa0b011f1fc46f85d3d339a46f69a8015a819b4946f97cba3706",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          8176
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 8176,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "28f5bd5ba8c54da889bd775ca8067265",
+        "utc": "2026-10-03T01:11:38.143740+00:00",
+        "url": "https://api.github.com/repos/ome/ngff/contents/0.4?ref=0.4.0",
+        "capture_sha256": "02e12c699e57719e1b56e2d05a870ec4ff348af35853d1bb7113db9185e5aca0",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          2532
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 2532,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "30ddfb3e683146b8bc0d2f2c66c22f2a",
+        "utc": "2026-10-03T01:11:46.094192+00:00",
+        "url": "https://api.github.com/repos/ome/ngff/contents/latest?ref=0.4.0",
+        "capture_sha256": "8ba77f9fe40efcd7ece56982bb542af1122958d4819e0f527a1c718cf23cc3d7",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          2224
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 2224,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "45b086aac65044e6955c6c1d05498f3f",
+        "utc": "2026-10-03T01:11:53.525168+00:00",
+        "url": "https://raw.githubusercontent.com/ome/ngff/0.4.0/latest/index.bs",
+        "capture_sha256": "55976a60452f42b5194d21502443ffb3a334aec5764f8385fcb937db0aea5bf6",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          32768
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 32768,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "200df3b5cace4ffc99c948a78114d3e5",
+        "utc": "2026-10-03T01:12:20.652720+00:00",
+        "url": "https://raw.githubusercontent.com/ome/ngff/0.4.1/latest/index.bs",
+        "capture_sha256": "c01aeed8b58b3bac7b63cee6950b65b352a155748970382e1d6f167624eee75c",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          32768
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 32768,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "7e5ae00634124ddcb3d37403d804984d",
+        "utc": "2026-10-03T01:12:45.192366+00:00",
+        "url": "https://api.github.com/repos/napari/napari/releases/latest",
+        "capture_sha256": "f5bae88a5c65a0fe3987f1cf264025e0edbcda8d89cdfd0ceef342c367b4aeb2",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          29784
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 29784,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "edd795abd8314134a04c8319ad42cbe2",
+        "utc": "2026-10-03T01:12:45.606810+00:00",
+        "url": "https://api.github.com/repos/hms-dbmi/vizarr/tags",
+        "capture_sha256": "51edcab9c1b8f2dd16fed9dfdce1ddbe538bfec5680b493a352f379156d0f9b7",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          1637
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 1637,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "f2faf132c9664e76956b1221b88c2dad",
+        "utc": "2026-10-03T01:12:46.043465+00:00",
+        "url": "https://api.github.com/search/issues?q=repo:ome/ome-zarr-py+multiscale+labels&per_page=10",
+        "capture_sha256": "fd17e6ed7c7894cc4f164dcd227724acddeae82a06d11cbabeb2dc25c897f224",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          32768
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 32768,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "ac648036303e471d8c6b03ad6c4ee51a",
+        "utc": "2026-10-03T01:13:08.100015+00:00",
+        "url": "https://api.github.com/search/issues?q=repo:ome/ome-zarr-py+translation+in:title&per_page=10",
+        "capture_sha256": "c9938edecb99d754b2d039ac9eec320a94c769b6a6417921e2dcbef9e2fe01a0",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          79
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 79,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "80d28e5cffdc4235b9b1670b1e1b4fb2",
+        "utc": "2026-10-03T01:13:08.493004+00:00",
+        "url": "https://api.github.com/search/issues?q=repo:napari/napari+labels+scale+in:title&per_page=10",
+        "capture_sha256": "570b0e4681f2265a2c020cd4503927c7bf6c34a41c3bd851b91724a76a2df1f1",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          24408
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 24408,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "40eb24ee02044ff8a539960df920e8b4",
+        "utc": "2026-10-03T01:13:08.925388+00:00",
+        "url": "https://api.github.com/search/issues?q=repo:hms-dbmi/vizarr+coordinateTransformations&per_page=10",
+        "capture_sha256": "aea44bf1e3195e14c449fc62ad232899caf9e096ad7fc77ebc40a24571822caf",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          26945
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 26945,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "f388c6bf09504b0890105fd7171d10ba",
+        "utc": "2026-10-03T01:13:55.496978+00:00",
+        "url": "https://patch-diff.githubusercontent.com/raw/hms-dbmi/vizarr/pull/261.diff",
+        "capture_sha256": "22066be87be786e81fdde59143924d71c5eda932cbd57c3887b2949efc9ab9ee",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          24747
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 24747,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "7ebda637e3b44f43b8acd56816ecc023",
+        "utc": "2026-10-03T01:13:57.213578+00:00",
+        "url": "https://patch-diff.githubusercontent.com/raw/hms-dbmi/vizarr/pull/298.diff",
+        "capture_sha256": "f7a8b4620ef658d657af86c398040800660965b98516f5ce3c978182c7090752",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          1583
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 1583,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "c857c7df1e254ba8b57b465f4c1691eb",
+        "utc": "2026-10-03T01:13:57.412422+00:00",
+        "url": "https://raw.githubusercontent.com/hms-dbmi/vizarr/main/package.json",
+        "capture_sha256": "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          1265
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 1265,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "faa740010a024c70b8df8fe7e596a208",
+        "utc": "2026-10-03T01:14:41.806101+00:00",
+        "url": "https://api.github.com/repos/hms-dbmi/vizarr/contents/src?ref=main",
+        "capture_sha256": "682d6af1875b870d7e5cc50c2a3546dc9ed01ec25f34c3262405b8eaedfcc6df",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          10167
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 10167,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "05fc096da57542e59e35ad88f971a125",
+        "utc": "2026-10-03T01:14:42.527841+00:00",
+        "url": "https://api.github.com/repos/ome/ome-zarr-py/releases/latest",
+        "capture_sha256": "1085265c47e71e3e0cb90cfda90877fbdfdf516774a7060eac5fbee2efe6549e",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          1991
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 1991,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "0652f3110edb428fac368e55cf761438",
+        "utc": "2026-10-03T01:15:01.832685+00:00",
+        "url": "https://api.github.com/repos/hms-dbmi/vizarr/contents/?ref=main",
+        "capture_sha256": "facc51324fee346377c845aafd2d92f182b29c2672da99cb8401bbf5f4bd1ef3",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          13299
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 13299,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "1fbeef724afa44a5a926031ad670e0ee",
+        "utc": "2026-10-03T01:15:02.476741+00:00",
+        "url": "https://patch-diff.githubusercontent.com/raw/ome/ome-zarr-py/pull/652.diff",
+        "capture_sha256": "50b0c9834aa58e06195d4e10f236e71adeac89e87aee2f4a38cf83b14ae9cc4f",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          4613
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 4613,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "3814ccd9ca5847208d2058728e3996f1",
+        "utc": "2026-10-03T01:15:21.298748+00:00",
+        "url": "https://api.github.com/repos/hms-dbmi/vizarr/contents/__tests__?ref=main",
+        "capture_sha256": "1d40a41412b541c49a3e56ee08310695cadd2575ea54beae2d438560942f41a7",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          1631
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 1631,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "66a62bc406974c519e417644a12a4f01",
+        "utc": "2026-10-03T01:15:28.189968+00:00",
+        "url": "https://raw.githubusercontent.com/hms-dbmi/vizarr/main/__tests__/fixtures.test.ts",
+        "capture_sha256": "d92a0db293cec4ec0bdc4d4f722dc2fc42518dcc225208142686818d8be9f7d3",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          13968
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 13968,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "ce2e81ba6e3047aaa94764cedf669544",
+        "utc": "2026-10-03T01:16:24.935207+00:00",
+        "url": "https://raw.githubusercontent.com/ome/ome-zarr-py/v0.19.2/ome_zarr/reader.py",
+        "capture_sha256": "c46ba936598885a0119bb23452d9ed74f87258a5169daee615d028373c6a88f4",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          22327
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 22327,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "234090f2eb694b91a4d19c19756d0e43",
+        "utc": "2026-10-03T01:18:09.243735+00:00",
+        "url": "https://raw.githubusercontent.com/hms-dbmi/vizarr/main/src/utils.ts",
+        "capture_sha256": "8bc32cfe032fa3b0a334992284496dd49b0cd7b30d892a315530f5d4a098bf70",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          24073
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 24073,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      }
+    ],
+    "source_reads": [
+      {
+        "operation_id": "dfe4b01b05354a5d802e50c568aeaddd",
+        "utc": "2026-10-03T01:12:19.943577+00:00",
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-research-proposal/workspace/public_captures/55976a60452f42b5194d21502443ffb3a334aec5764f8385fcb937db0aea5bf6.body",
+        "source_sha256": "55976a60452f42b5194d21502443ffb3a334aec5764f8385fcb937db0aea5bf6",
+        "delivered_byte_range": [
+          32768,
+          38987
+        ],
+        "range_hash_matches_body": true,
+        "semantic_acquisition": "UNKNOWN"
+      },
+      {
+        "operation_id": "ad04814707374f32b0a51e2d1df465cd",
+        "utc": "2026-10-03T01:12:44.333221+00:00",
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-research-proposal/workspace/public_captures/c01aeed8b58b3bac7b63cee6950b65b352a155748970382e1d6f167624eee75c.body",
+        "source_sha256": "c01aeed8b58b3bac7b63cee6950b65b352a155748970382e1d6f167624eee75c",
+        "delivered_byte_range": [
+          32768,
+          40487
+        ],
+        "range_hash_matches_body": true,
+        "semantic_acquisition": "UNKNOWN"
+      }
+    ],
+    "get_operation_count": 28,
+    "successful_2xx_capture_count": 24
+  },
+  {
+    "stage": "independent-candidate-critic",
+    "get_delivery_ranges_all_match": true,
+    "additional_capture_read_count": 2,
+    "read_ranges_all_match": true,
+    "gets": [
+      {
+        "operation_id": "5cbe7bc4fc624ac3865047f5f5309124",
+        "utc": "2026-10-03T01:26:26.630113+00:00",
+        "url": "https://raw.githubusercontent.com/ome/ngff/0.4.0/latest/index.bs",
+        "capture_sha256": "55976a60452f42b5194d21502443ffb3a334aec5764f8385fcb937db0aea5bf6",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          32768
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 32768,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "66112f5b11b849bd83fba07b6694f337",
+        "utc": "2026-10-03T01:27:00.140984+00:00",
+        "url": "https://raw.githubusercontent.com/ome/ngff/0.4.1/latest/index.bs",
+        "capture_sha256": "c01aeed8b58b3bac7b63cee6950b65b352a155748970382e1d6f167624eee75c",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          32768
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 32768,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "5ac5fbce806f4865a8871d7cee50862f",
+        "utc": "2026-10-03T01:29:01.575580+00:00",
+        "url": "https://raw.githubusercontent.com/hms-dbmi/vizarr/main/__tests__/fixtures.test.ts",
+        "capture_sha256": "d92a0db293cec4ec0bdc4d4f722dc2fc42518dcc225208142686818d8be9f7d3",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          13968
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 13968,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "6eb82aa095a741e983e7c62f6b59ec96",
+        "utc": "2026-10-03T01:29:51.415642+00:00",
+        "url": "https://patch-diff.githubusercontent.com/raw/hms-dbmi/vizarr/pull/261.diff",
+        "capture_sha256": "22066be87be786e81fdde59143924d71c5eda932cbd57c3887b2949efc9ab9ee",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          24747
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 24747,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "0b45659fc9fb4f5f894c168da9630d5a",
+        "utc": "2026-10-03T01:29:51.687779+00:00",
+        "url": "https://raw.githubusercontent.com/hms-dbmi/vizarr/main/src/utils.ts",
+        "capture_sha256": "8bc32cfe032fa3b0a334992284496dd49b0cd7b30d892a315530f5d4a098bf70",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          24073
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 24073,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "502b0e55808841cfa4c2b233610b6dd4",
+        "utc": "2026-10-03T01:30:18.719693+00:00",
+        "url": "https://api.github.com/repos/napari/napari/releases/latest",
+        "capture_sha256": "f5bae88a5c65a0fe3987f1cf264025e0edbcda8d89cdfd0ceef342c367b4aeb2",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          29784
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 29784,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "94e025b501af44a3995475287a891630",
+        "utc": "2026-10-03T01:30:19.098319+00:00",
+        "url": "https://api.github.com/repos/hms-dbmi/vizarr/tags",
+        "capture_sha256": "51edcab9c1b8f2dd16fed9dfdce1ddbe538bfec5680b493a352f379156d0f9b7",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          1637
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 1637,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "8e1465e5fd434be4b3ca0d342fc33556",
+        "utc": "2026-10-03T01:30:35.288709+00:00",
+        "url": "https://raw.githubusercontent.com/ome/ome-zarr-py/v0.19.2/ome_zarr/reader.py",
+        "capture_sha256": "c46ba936598885a0119bb23452d9ed74f87258a5169daee615d028373c6a88f4",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          22327
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 22327,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "631ff644c6b443feb2f7e8dd4c906bfa",
+        "utc": "2026-10-03T01:30:35.661141+00:00",
+        "url": "https://api.github.com/repos/ome/ome-zarr-py/releases/latest",
+        "capture_sha256": "1085265c47e71e3e0cb90cfda90877fbdfdf516774a7060eac5fbee2efe6549e",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          1991
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 1991,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "db9b3c0abc984d3fb417edadb6c89051",
+        "utc": "2026-10-03T01:30:51.880068+00:00",
+        "url": "https://patch-diff.githubusercontent.com/raw/ome/ome-zarr-py/pull/652.diff",
+        "capture_sha256": "50b0c9834aa58e06195d4e10f236e71adeac89e87aee2f4a38cf83b14ae9cc4f",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          4613
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 4613,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "13dcf7c02630428184794de9bdac180b",
+        "utc": "2026-10-03T01:30:52.068556+00:00",
+        "url": "https://raw.githubusercontent.com/hms-dbmi/vizarr/main/package.json",
+        "capture_sha256": "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          1265
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 1265,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "c200193def1e4f5a9fed270eeacd2c66",
+        "utc": "2026-10-03T01:31:14.975471+00:00",
+        "url": "https://api.github.com/repos/hms-dbmi/vizarr/issues/271",
+        "capture_sha256": "038a3d5c8a6228bb3380c2de35bd26ca4f6cb4400753d39010752d9cd25fac1c",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          3402
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 3402,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "b0028da61af8447a8dadb154ac409671",
+        "utc": "2026-10-03T01:31:15.562737+00:00",
+        "url": "https://patch-diff.githubusercontent.com/raw/hms-dbmi/vizarr/pull/298.diff",
+        "capture_sha256": "f7a8b4620ef658d657af86c398040800660965b98516f5ce3c978182c7090752",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          1583
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 1583,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "c2f3e1d892ca42aeb2022c58974b32cd",
+        "utc": "2026-10-03T01:32:27.389595+00:00",
+        "url": "https://api.github.com/repos/hms-dbmi/vizarr/issues/297",
+        "capture_sha256": "8ce524d0db134212e69e1f1ead70efbe35751cd1b1bf76a14f8658c30b4e7943",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          4959
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 4959,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      }
+    ],
+    "source_reads": [
+      {
+        "operation_id": "6e30542a6044498c87bb65ed5c54dd6c",
+        "utc": "2026-10-03T01:26:59.410269+00:00",
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-independent-candidate-critic/workspace/public_captures/55976a60452f42b5194d21502443ffb3a334aec5764f8385fcb937db0aea5bf6.body",
+        "source_sha256": "55976a60452f42b5194d21502443ffb3a334aec5764f8385fcb937db0aea5bf6",
+        "delivered_byte_range": [
+          32768,
+          38987
+        ],
+        "range_hash_matches_body": true,
+        "semantic_acquisition": "UNKNOWN"
+      },
+      {
+        "operation_id": "0c9cf5001ec14080a174cb393fb54246",
+        "utc": "2026-10-03T01:28:58.352556+00:00",
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-independent-candidate-critic/workspace/public_captures/c01aeed8b58b3bac7b63cee6950b65b352a155748970382e1d6f167624eee75c.body",
+        "source_sha256": "c01aeed8b58b3bac7b63cee6950b65b352a155748970382e1d6f167624eee75c",
+        "delivered_byte_range": [
+          32768,
+          40487
+        ],
+        "range_hash_matches_body": true,
+        "semantic_acquisition": "UNKNOWN"
+      }
+    ],
+    "get_operation_count": 14,
+    "successful_2xx_capture_count": 14
+  },
+  {
+    "stage": "final-correction",
+    "get_delivery_ranges_all_match": true,
+    "additional_capture_read_count": 0,
+    "read_ranges_all_match": true,
+    "gets": [
+      {
+        "operation_id": "195c8a3ad6e04eb98bec0fc1a917791f",
+        "utc": "2026-10-03T01:38:31.743008+00:00",
+        "url": "https://raw.githubusercontent.com/ome/ngff/0.4.0/latest/index.bs",
+        "capture_sha256": "55976a60452f42b5194d21502443ffb3a334aec5764f8385fcb937db0aea5bf6",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          32768
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 32768,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "cec3d186bdda4e1395b49c61b7c0d8c0",
+        "utc": "2026-10-03T01:38:33.898412+00:00",
+        "url": "https://raw.githubusercontent.com/ome/ngff/0.4.1/latest/index.bs",
+        "capture_sha256": "c01aeed8b58b3bac7b63cee6950b65b352a155748970382e1d6f167624eee75c",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          32768
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 32768,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "632eabd0973d4391a2c87f4d5696a8d0",
+        "utc": "2026-10-03T01:38:34.201581+00:00",
+        "url": "https://api.github.com/repos/hms-dbmi/vizarr/issues/271",
+        "capture_sha256": "038a3d5c8a6228bb3380c2de35bd26ca4f6cb4400753d39010752d9cd25fac1c",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          3402
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 3402,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      },
+      {
+        "operation_id": "6a2eec149c754614add3238aa8b3c581",
+        "utc": "2026-10-03T01:38:34.476744+00:00",
+        "url": "https://api.github.com/repos/hms-dbmi/vizarr/issues/297",
+        "capture_sha256": "8ce524d0db134212e69e1f1ead70efbe35751cd1b1bf76a14f8658c30b4e7943",
+        "body_complete": true,
+        "status": 200,
+        "delivered_byte_range": [
+          0,
+          4959
+        ],
+        "delivery_range_hash_matches_body": true,
+        "delivery_bytes": 4959,
+        "semantic_acquisition": "UNKNOWN",
+        "llm_read": "UNOBSERVED",
+        "transport_witness_scope": "tool-server stdout flush only; frontend receipt/model consumption unobserved"
+      }
+    ],
+    "source_reads": [],
+    "get_operation_count": 4,
+    "successful_2xx_capture_count": 4
+  }
+]

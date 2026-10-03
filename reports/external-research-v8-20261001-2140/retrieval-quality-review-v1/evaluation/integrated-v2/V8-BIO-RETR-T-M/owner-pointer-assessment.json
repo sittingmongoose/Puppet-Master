@@ -1,0 +1,24 @@
+[
+  {
+    "owner_pointer": "LAB_ROOT/cases/tranche-v2/briefs/bioimaging.md",
+    "owner_sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+    "frozen_input": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-research-proposal/workspace/inputs/BRIEF.md",
+    "frozen_sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+    "byte_identical": true,
+    "observed_text_difference": null,
+    "same_declared_product_scope": true,
+    "owner_bytes": 3352,
+    "frozen_bytes": 3352
+  },
+  {
+    "owner_pointer": "LAB_ROOT/cases/tranche-v2/sandbox-plans/bioimaging.md",
+    "owner_sha256": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30",
+    "frozen_input": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-research-proposal/workspace/inputs/THIN_PLAN.md",
+    "frozen_sha256": "9a4a13328e3f3d4af25d13c371b79b918d898cb20fa2ec99e0901a70fe7be98f",
+    "byte_identical": false,
+    "observed_text_difference": "Step 1: local input/support becomes local inputs/support; no product-scope difference inferred.",
+    "same_declared_product_scope": true,
+    "owner_bytes": 959,
+    "frozen_bytes": 960
+  }
+]

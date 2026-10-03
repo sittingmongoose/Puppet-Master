@@ -1,0 +1,67 @@
+{
+  "schema": "er8.independent.method-compliance.v1",
+  "case_id": "V8-BIO-RETR-T-M",
+  "method": "ordinary-complete-plus-coherent-batching-progressive-retrieval",
+  "method_path": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-RETR-T-M/METHOD.md",
+  "method_sha256": "700f321706f86f2eb5e9debe5cabdef89e2433b24ca272eb0d13faee400221cf",
+  "source_quality_ruling_before_method_read": true,
+  "source_quality_ruling_epoch": 1790992423.6006954,
+  "source_quality_ruling_sha256": "8323d363e5a5cd97ba091c950c9f5eeb6cec72d1216881e5919b35f1e9141db4",
+  "quality_disposition_unchanged": "FAILED_SCREEN",
+  "perfect_blinding_claim": false,
+  "compliance_disposition": "PARTIALLY_ESTABLISHED",
+  "duties": [
+    {
+      "duty": "Lean research/proposal, independent native critic, final native correction",
+      "status": "ESTABLISHED_MECHANICAL",
+      "evidence": "Distinct complete/quiescent fresh Goal receipts and same host-bound account; actual same-case proposal/critic/final artifacts."
+    },
+    {
+      "duty": "Plan two or three coherent batches; reuse same-case source across obligations",
+      "status": "OBSERVED_UPTAKE",
+      "evidence": "Proposal short note declares three topical batches. Public URL operation sequence supports format identity/version, components, and issue/diff/test discovery. Common body hashes transferred same-case. Native semantic planning intent not independently known."
+    },
+    {
+      "duty": "Identify source identity/version first, then progressively expand consequential context",
+      "status": "PARTIALLY_ESTABLISHED",
+      "evidence": "Repository/tag/directory discovery precedes source retrieval; research/critic expand both spec tails beyond the GET preview. However source file own draft/version scope was misidentified; accurate source scope requirement fails."
+    },
+    {
+      "duty": "Complete bounded brief obligations before stopping, preserving conditions/exceptions",
+      "status": "NOT_ESTABLISHED",
+      "evidence": "Decisive final formula error and acknowledged consequential dependency prevent full completion; remaining facets unassessed."
+    },
+    {
+      "duty": "Short research-order note; no cross-case cache/discoveries",
+      "status": "SHORT_NOTE_PRESENT; CROSS_CASE_ABSENCE_UNASSESSED",
+      "evidence": "Short note present and same-case capture origin/binding checked. No private native histories inspected, so complete absence of other context is not inferred."
+    },
+    {
+      "duty": "Special proposition table or self-derived witness procedure",
+      "status": "NOT_ASSIGNED",
+      "evidence": "Method imposes coherent batching/progressive retrieval additions only; no separate witness execution requirement."
+    }
+  ],
+  "source_operations_by_stage": [
+    {
+      "stage": "research-proposal",
+      "get_operations": 28,
+      "successful_2xx": 24,
+      "additional_capture_reads": 2
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "get_operations": 14,
+      "successful_2xx": 14,
+      "additional_capture_reads": 2
+    },
+    {
+      "stage": "final-correction",
+      "get_operations": 4,
+      "successful_2xx": 4,
+      "additional_capture_reads": 0
+    }
+  ],
+  "isolate_method_main_effect_claim": false,
+  "comparison": "No sibling case or comparison read; root compares independently frozen reviews after release."
+}

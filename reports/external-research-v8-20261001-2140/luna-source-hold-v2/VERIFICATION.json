@@ -1,0 +1,26 @@
+{
+  "schema": "pm.er8.public-luna-offline-verification.v2",
+  "argv": [
+    "python3",
+    "-I",
+    "-B",
+    "verify_public.py",
+    "COHORT_ROOT"
+  ],
+  "returncode": 0,
+  "result": {
+    "model_quality_assessed": false,
+    "native_replay_verified": false,
+    "scope": "offline artifact hashes and optional declarations only",
+    "timing_declarations_present_and_valid": false,
+    "verified_artifacts": 40
+  },
+  "public_export_sha256": "2a22670b4c833a799f7473400ef90daf14b459543dc2d2b2a50a3e6caf7f05d6",
+  "source_author_tests": {
+    "reported_tests": 25,
+    "reported_status": "PASS",
+    "publication_rerun": false,
+    "native_goal_starts": 0
+  },
+  "scope": "Public artifact hashes only; timing map absent expected; no native replay, Goal preventive contract, quality or timing acceptance."
+}

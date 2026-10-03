@@ -1,0 +1,60 @@
+{
+  "schema": "er8.luna.controller-root-release.v1",
+  "authorization": "HOLD_MISSING_PREVENTIVE_GOAL_CONTRACT",
+  "root_authority": false,
+  "accepted": false,
+  "family": "L",
+  "model": "gpt-6-luna",
+  "effort": "max",
+  "mode": "canary",
+  "native_response_policy": "wall-goal-token-observation-v1",
+  "binding_formula": "er8.luna.exact-original-birth-binding.v1",
+  "owned_cleanup_authorized": false,
+  "run_root": "ROOT_MUST_SELECT_ABSOLUTE_NONEXISTENT_OPERATOR_ROOT",
+  "auth_source_path": "ROOT_MUST_SELECT_UNREAD_PRIVATE_AUTH_SOURCE",
+  "route": "ROOT_MUST_SELECT_REVIEWED_LUNA_ROUTE",
+  "route_snapshot": {
+    "path": "ABS_OWN_ROUTE_SNAPSHOT",
+    "sha256": "EXACT_SHA256"
+  },
+  "controller_snapshot": {
+    "path": "ABS_OWN_CONTROLLER_SNAPSHOT",
+    "sha256": "EXACT_SHA256"
+  },
+  "source_review": {
+    "path": "ABS_INDEPENDENT_SAME_VERSION_PREVENTIVE_SOURCE_REVIEW",
+    "sha256": "EXACT_SHA256"
+  },
+  "execution_acceptance": {
+    "path": "ABS_INDEPENDENT_LIFETIME_MCP_SOURCE_REVIEW",
+    "sha256": "EXACT_SHA256"
+  },
+  "config": {
+    "path": "ABS_PUBLIC_CONFIG_TEMPLATE",
+    "sha256": "EXACT_SHA256"
+  },
+  "ledger_source": {
+    "path": "EXACT_UNCHANGED_LEDGER_RESUME_SOURCE",
+    "sha256": "EXACT_SHA256"
+  },
+  "campaign_authority": {
+    "path": "EXACT_AUTHORITY_AMENDMENT",
+    "sha256": "EXACT_SHA256"
+  },
+  "resume_authority": {
+    "path": "EXACT_USER_RESUME_AUTHORITY",
+    "sha256": "EXACT_SHA256"
+  },
+  "selected_stage_scope": {
+    "canary_id": "v8-l-mechanical-route-canary-v1",
+    "cap_seconds": 480,
+    "cleanup_reserve_seconds": 30,
+    "max_responses_abi_sentinel": 1
+  },
+  "pins": {
+    "runtime": "EXACT_ROUTE_SNAPSHOT_SHA256",
+    "config": "EXACT_CONFIG_TEMPLATE_SHA256",
+    "independent_acceptance": "EXACT_SOURCE_REVIEW_SHA256"
+  },
+  "status": "NONEXECUTABLE_TEMPLATE_NOT_AUTHORIZATION"
+}

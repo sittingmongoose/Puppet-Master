@@ -63,12 +63,33 @@
       }
     ]
   },
-  "checkpoint": "V7_RETRIEVAL_PAIR_ACTIVE_NO_COMPLETE_COMPARISON",
+  "checkpoint": "TWO_OPERATIONAL_PAIRS_RETRIEVAL_FAILED_SCREENS_AMENDMENT_REVIEW_PENDING",
   "prospective_pair_map": "tranche-cohort-v2/cases/tranche-v2/pairs.json",
   "prospective_pair_count": 12,
-  "completed_comparisons": 0,
-  "current_scope_note": "Twelve prospective matched pairs; no full complete matched comparison or quality-qualified efficiency result. Prior outcomes frozen; next twelve assignments bound as whole pairs to same GLM account/native route.",
+  "completed_comparisons": 1,
+  "current_scope_note": "12 target pairs; 2 operational complete; retrieval screened and rejected; amendment quality pending. No full-PASS same-quality efficiency claim.",
   "scope_review": "recovery-results-cohort-v2/evaluation/tranche-scope-review-v1/review.json",
   "scope_review_status": "CLEAR_PROSPECTIVE_NO_LAUNCH_AUTHORITY",
-  "observation_utc": "2026-10-03T01:25:39.382829+00:00"
+  "observation_utc": "2026-10-03T02:24:21.639997+00:00",
+  "completed_comparisons_definition": "One operational pair with both independent dispositions frozen; neither full quality PASS.",
+  "operational_matched_pairs_completed": 2,
+  "quality_qualified_efficiency_comparisons": 0,
+  "integrated_pair_results": [
+    {
+      "pair": "BIO-RETR-C/T",
+      "operational_complete": true,
+      "independent_review": "TWO_FAILED_SCREEN; remainder UNASSESSED",
+      "quality_qualified_efficiency": false,
+      "speedup": "NOT_ESTABLISHED",
+      "evidence": "retrieval-quality-review-v1/ops/recovery-v1/ROOT_RETRIEVAL_COMPARISON_V1.json"
+    },
+    {
+      "pair": "BIO-AMEND-C/T",
+      "operational_complete": true,
+      "independent_review": "PENDING",
+      "quality_qualified_efficiency": false,
+      "speedup": "NOT_ESTABLISHED",
+      "evidence": "integrated-amendment-pair-v1/README.md"
+    }
+  ]
 }

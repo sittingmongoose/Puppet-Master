@@ -1,0 +1,27 @@
+{
+  "schema": "er8.integrated.stage-deferred-close.v1",
+  "case": "V8-BIO-AMEND-T-L",
+  "job": "V8-BIO-AMEND-T-L-research-proposal",
+  "stage_start_monotonic_ns": 213647758106020,
+  "original_case_start_monotonic_ns": 213647758106020,
+  "original_deadline_monotonic_ns": 214847758106020,
+  "lease_release_deferred": true,
+  "lease_released_by_actor": false,
+  "native_wrapper_launch_monotonic_ns": 213649820986293,
+  "native_quiescence_observed_monotonic_ns": 214280901564670,
+  "last_charged_host_monotonic_ns": 214280975857402,
+  "host_groups_absent": true,
+  "required_artifact": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/workspace/out/PROPOSAL.md",
+    "bytes": 25458,
+    "sha256": "0294200a3deac75ee1e18fe7bc23d0ced31581bf2ddbb2eec39dc82f73dfa3f8"
+  },
+  "native_goal_activation_observed": true,
+  "native_goal_target_id": "target_murqc9yi_3d6fb974-2580-4684-b6cf-edc09f1ebc1d",
+  "fresh_session": true,
+  "native_responses": 11,
+  "native_goal_status": "complete",
+  "wrapper_returncode": 0,
+  "source_semantic_acquisition": "UNKNOWN",
+  "usage": "UNKNOWN except reported monotonic output lower bound"
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "pm.er8.public-retrieval-quality-integrity-check.v1",
+  "command": "python3 -I -B verify_public.py COHORT_ROOT",
+  "returncode": 0,
+  "result": {
+    "model_quality_assessed": false,
+    "native_replay_verified": false,
+    "scope": "offline artifact hashes and optional declarations only",
+    "timing_declarations_present_and_valid": false,
+    "verified_artifacts": 36
+  },
+  "verifier_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+  "public_export_sha256": "1006be193f562a195f9baafa4cda09cb70c4ef7d84e56e8bf3d9221490a353e3",
+  "scope": "Offline artifact hashes only; timing map absent expected; no regrade/quality-equivalence/efficiency/winner/holdout/native replay."
+}

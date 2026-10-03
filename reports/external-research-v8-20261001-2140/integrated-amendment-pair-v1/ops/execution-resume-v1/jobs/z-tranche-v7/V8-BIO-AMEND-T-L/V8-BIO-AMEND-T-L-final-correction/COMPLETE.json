@@ -1,0 +1,27 @@
+{
+  "schema": "er8.integrated.stage-deferred-close.v1",
+  "case": "V8-BIO-AMEND-T-L",
+  "job": "V8-BIO-AMEND-T-L-final-correction",
+  "stage_start_monotonic_ns": 215155628727498,
+  "original_case_start_monotonic_ns": 213647758106020,
+  "original_deadline_monotonic_ns": 216055628727498,
+  "lease_release_deferred": true,
+  "lease_released_by_actor": false,
+  "native_wrapper_launch_monotonic_ns": 215156527679368,
+  "native_quiescence_observed_monotonic_ns": 215574808422229,
+  "last_charged_host_monotonic_ns": 215574946951524,
+  "host_groups_absent": true,
+  "required_artifact": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/workspace/out/FINAL_PROPOSAL.md",
+    "bytes": 38964,
+    "sha256": "265934a0f6dbf8d9841853f253a982aaed1562360e95b12f18f49733120ab622"
+  },
+  "native_goal_activation_observed": true,
+  "native_goal_target_id": "target_murr8kq6_ca0a895d-87aa-4071-b9ab-24d2a3b0d299",
+  "fresh_session": true,
+  "native_responses": 9,
+  "native_goal_status": "complete",
+  "wrapper_returncode": 0,
+  "source_semantic_acquisition": "UNKNOWN",
+  "usage": "UNKNOWN except reported monotonic output lower bound"
+}

@@ -1,0 +1,201 @@
+{
+  "schema": "er8.luna.independent-source-review.v2",
+  "reviewer": "er8-luna-v2-review",
+  "verdict": "HOLD",
+  "qualification": "SOURCE_ONLY_HOLD_PREVENTIVE_GOAL_CONTRACT_UNESTABLISHED",
+  "original_helper_birth_epoch": 1790991592.148032,
+  "original_helper_deadline_epoch": 1790992492.148032,
+  "end_epoch": 1790992162.9376564,
+  "before_original_deadline": true,
+  "birth_or_budget_reset": false,
+  "snapshot_sha256": "1e3d4b6c223f7539df0f5560fc6919fc56d76d98f7ccaa59b55ef9c843f67ab5",
+  "snapshot": {
+    "path": "LAB_ROOT/dev/luna-resume-v2/route-successor/SNAPSHOT.json",
+    "sha256": "1e3d4b6c223f7539df0f5560fc6919fc56d76d98f7ccaa59b55ef9c843f67ab5"
+  },
+  "controller_snapshot": {
+    "path": "LAB_ROOT/dev/luna-resume-v2/SNAPSHOT.json",
+    "sha256": "b06f454a4fca15049c73accebaa8d2fba6d11c79fd029690ac1680bddf24b525"
+  },
+  "original_snapshot": {
+    "path": "LAB_ROOT/dev/luna-route-v1/SNAPSHOT.json",
+    "sha256": "d5a052cfac79a7342f4274c61390f852fc5b935e2b2f40faba821a6e55348a4a"
+  },
+  "original_independent_hold": {
+    "path": "LAB_ROOT/evaluation/luna-route-v1/review-freeze1.json",
+    "sha256": "bb6e2e88534b1ba58578fd41124dc33fbcefeb9fc56809bc03e31e311931dad9"
+  },
+  "allowed_modes": [],
+  "create_goal_pre_dispatch_denied_verified": false,
+  "host_one_goal_lifetime_verified": false,
+  "native_canary_qualification": "NOT_RUN",
+  "qualifying_canary_authorized": false,
+  "blockers": [
+    {
+      "id": "LUNA-V2-PREVENT-001",
+      "title": "No established supported same-version preventive candidate create_goal denial",
+      "finding": "Pinned Goal extension returns plain get/create/update executors together and applies the same tools_available flag to all. The create handler dispatches insert_thread_goal and describes only unfinished-Goal rejection. No selected supported candidate-only create filter preserves host Goal creation and candidate get/update. Projector item rejection and replacement observation occur after native dispatch/notification and cannot prove prevention or a one-actual-Goal lifetime.",
+      "selected_public_sources": [
+        {
+          "path": "LAB_ROOT/dev/luna-route-v1/source-controls/ext__goal__src__extension.json",
+          "sha256": "bace50fd2ca45731706ddc2d188774199ff6eb84801b834324ce0c12d5f12b07",
+          "source_lines": [
+            530,
+            584
+          ]
+        },
+        {
+          "path": "LAB_ROOT/dev/luna-route-v1/source-controls/ext__goal__src__tool.json",
+          "sha256": "af0916d9bdec4b97aa6c9e6fb20750223cbb5456d174c4ad95f11fe335cffc20",
+          "source_lines": [
+            143,
+            245
+          ]
+        },
+        {
+          "path": "LAB_ROOT/dev/luna-route-v1/source-controls/core__src__tools__spec_plan.json",
+          "sha256": "cd6c68b61cf7a2aafadcc57aa3c84a09417eaf199bd9d85a18d692ee52100824",
+          "source_lines": [
+            1477,
+            1502
+          ]
+        }
+      ],
+      "route_observation_points": [
+        {
+          "path": "LAB_ROOT/dev/luna-resume-v2/route-successor/projector.py",
+          "line": 116
+        },
+        {
+          "path": "LAB_ROOT/dev/luna-resume-v2/route-successor/native_driver.py",
+          "line": 158
+        }
+      ],
+      "root_guard": {
+        "path": "LAB_ROOT/dev/luna-resume-v2/release_binding.py",
+        "line": 18
+      },
+      "pid1_guard": {
+        "path": "LAB_ROOT/dev/luna-resume-v2/route-successor/formula_check.py",
+        "line": 36
+      },
+      "resolution": "Supply a supported same-version preventive contract and complete one-lifetime source proof, including update complete then queued/parallel create edge; repair in a new additive successor and obtain independent review. Do not relabel this freeze accepted."
+    }
+  ],
+  "source_reviewed": {
+    "controller_complete_selected_dispatch_formula_settlement_chain_read": true,
+    "controller_closure_88_pins_match": true,
+    "successor_route_closure_61_pins_match": true,
+    "original_route_57_pins_match_and_original_hold_unchanged": true,
+    "root_and_pid1_reject_monitor_only_acceptance": true,
+    "finite_item_allowlist_observational_repair": true,
+    "requested_model": "gpt-6-luna",
+    "requested_effort": "max",
+    "subscription_role": "EXISTING_AUTHORIZED_CODEX_SUBSCRIPTION",
+    "fresh_standalone_persistent_thread_source": "ephemeral=false; empty history acknowledgement; one host Goal-set and one host initial turn; no host continuation",
+    "original_canary_birth_arms_before_substantive_imports_and_prep": true,
+    "canary_480_inclusive_native_stop_450_parent_settlement_reserve_15_seconds_source_traced": true,
+    "positive_failure_settlement_without_COMPLETE_metrics_artifacts_rc0_source_and_fixture": true,
+    "unknown_launch_activation_enrollment_or_ownership_retains_HOLD": true,
+    "held_actor_and_settlement_Popen_exit_group_absence_and_current_owned_quiet_source_traced": true,
+    "unique_outside_native_intervals_and_current_release_call_upper_bound_source_and_fixture": true,
+    "failed_productive_case_incomplete_final_correction_reservation_retained_source_traced": true,
+    "max_responses_1_is_ABI_sentinel_not_response_or_HTTP_attempt_cap": true,
+    "prior_generic_source_qualified_facts_reuse_scope": "Only unchanged exact pinned original public-source/control, deadline/PID1/cgroup/broker/MCP/capture primitives as source facts from the pinned original review; no old Z native or entire changed Luna closure acceptance transferred.",
+    "local_public_source_lineage": "Pinned rust-v0.159.2 selected ranges only; original independent HOLD records prior official-tag hash/range verification. No official refetch or extra full upstream source inspection in this review."
+  },
+  "tests": {
+    "author_controller_tests": {
+      "passed": 15,
+      "failed": 0,
+      "fixture_scope": "synthetic records, in-memory LedgerFixture, mocked cgroup/activation, real local non-native held Popen objects"
+    },
+    "author_route_tests": {
+      "passed": 10,
+      "failed": 0,
+      "fixture_scope": "pinned source/catalog, synthetic native events and original clocks, local non-native watchdog child processes"
+    },
+    "independent_preventive_guard_tests": {
+      "passed": 4,
+      "failed": 0,
+      "subcases": 24,
+      "fixture_scope": "Both root and PID1 validators, canary/productive, missing/false/nonboolean preventive and one-lifetime flags rejected; synthetic records only; actual ledger forbidden"
+    },
+    "total_passed": 29,
+    "native_provider_tests": 0,
+    "syntax_ast_parse_passed": 27,
+    "synthetic_fixture_is_acceptance_evidence": false
+  },
+  "unassessed_or_unproven": [
+    "Supported pre-dispatch denial of candidate create_goal and a complete one-actual-Goal lifetime invariant.",
+    "Full insert_thread_goal database implementation, full update handler beyond locally selected excerpt, and queued/parallel complete-to-create race behavior are not established by selected rows.",
+    "Dedicated productive whole-case failed-parent tail fixture is absent. rolling.settle_failed_case was source-read only; complete productive failure-tail cost/settlement behavior remains unqualified.",
+    "Actual native Goal activation, native continuation/completion, model access, admitted MCP operations, source capture/delivered ranges, and on-time owned cgroup quiet.",
+    "Actual inference tool payload UNOBSERVED; HTTP/model attempts UNKNOWN; generated usage and cost UNKNOWN.",
+    "Dynamic actual productive case inputs, artifacts, pair/queue/admission/reservation selection and live account load."
+  ],
+  "activity": {
+    "native_candidate_goal_starts": 0,
+    "provider_calls": 0,
+    "native_launches": 0,
+    "campaign_ledger_state_reads": 0,
+    "campaign_ledger_mutations": 0,
+    "existing_auth_content_reads": 0,
+    "private_profiles_or_raw_journals_reads": 0,
+    "candidate_answer_or_evaluator_key_reads": 0,
+    "source_edits": 0,
+    "git_publication": 0,
+    "owned_review_outputs_only": "LAB_ROOT/evaluation/luna-resume-v2-review-v1"
+  },
+  "campaign_preservation": {
+    "campaign_cutoff_epoch": 1791013030.8303788,
+    "prior_usage_and_explicit_pause": "UNCHANGED; no campaign state accessed",
+    "new_campaign": false
+  },
+  "final_pin_checks": [
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/SNAPSHOT.json",
+      "sha256": "b06f454a4fca15049c73accebaa8d2fba6d11c79fd029690ac1680bddf24b525",
+      "closure_paths": 88,
+      "drift": []
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/route-successor/SNAPSHOT.json",
+      "sha256": "1e3d4b6c223f7539df0f5560fc6919fc56d76d98f7ccaa59b55ef9c843f67ab5",
+      "closure_paths": 61,
+      "drift": []
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-route-v1/SNAPSHOT.json",
+      "sha256": "d5a052cfac79a7342f4274c61390f852fc5b935e2b2f40faba821a6e55348a4a",
+      "closure_paths": 57,
+      "drift": []
+    }
+  ],
+  "evidence": {
+    "pins.json": {
+      "path": "LAB_ROOT/evaluation/luna-resume-v2-review-v1/pins.json",
+      "sha256": "5f42ad4e912d7da14163ae000fe644082e1b703e5f1a7d4d1dbc09ab4fa217fc"
+    },
+    "source-scope.json": {
+      "path": "LAB_ROOT/evaluation/luna-resume-v2-review-v1/source-scope.json",
+      "sha256": "31a9bb3e8812abb4e61f4accdb5f41409704573bf3a3ae10f9fd093021a53668"
+    },
+    "controller-tests.log": {
+      "path": "LAB_ROOT/evaluation/luna-resume-v2-review-v1/controller-tests.log",
+      "sha256": "73b3427b1585d2d833f1cf950949e41dacf4bf3e60d22314edaaa4720d8255d9"
+    },
+    "route-tests.log": {
+      "path": "LAB_ROOT/evaluation/luna-resume-v2-review-v1/route-tests.log",
+      "sha256": "97e6e4665c82919ef0421f4fa4a088eee4a6bdcd141bdde25793cf42a563af7b"
+    },
+    "preventive-guard-tests.log": {
+      "path": "LAB_ROOT/evaluation/luna-resume-v2-review-v1/preventive-guard-tests.log",
+      "sha256": "edc16787142466012d88726760a5e166972ca88f08212645f5029a0f2b805ab1"
+    },
+    "test_preventive_guards.py": {
+      "path": "LAB_ROOT/evaluation/luna-resume-v2-review-v1/test_preventive_guards.py",
+      "sha256": "f620a32e46c69bf7ffbd539217836f1ea62a960012d432687e1f7fe08b8179eb"
+    }
+  }
+}

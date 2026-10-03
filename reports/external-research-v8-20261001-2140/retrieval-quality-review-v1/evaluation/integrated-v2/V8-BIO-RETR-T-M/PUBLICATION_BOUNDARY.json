@@ -1,0 +1,27 @@
+{
+  "case_id": "V8-BIO-RETR-T-M",
+  "publishable_review_metadata_and_brief_excerpts": [
+    "REVIEW.md",
+    "SOURCE_EXCERPTS.md",
+    "quality-disposition.json",
+    "cost-provenance.json",
+    "METHOD_COMPLIANCE.json",
+    "analytic-counterexample.json",
+    "QUALITY_PRE_METHOD.json",
+    "SOURCE_HASH_MANIFEST.json",
+    "OUTPUT_HASH_MANIFEST.json",
+    "FREEZE.json",
+    "FREEZE.sha256",
+    "owner-pointer-assessment.json",
+    "stage-binding-assessment.json",
+    "source-operation-assessment.json",
+    "native-public-summary.json",
+    "input-integrity.json",
+    "released-source-capture.json"
+  ],
+  "private_raw_source_bodies": [
+    "private-source-captures/released-0.4.1-index.bs"
+  ],
+  "do_not_publish": "Raw captured primary bodies or native candidate/runtime data; use SOURCE_EXCERPTS.md plus path/SHA/range only.",
+  "candidate_feedback_authorization": false
+}

@@ -1,0 +1,119 @@
+{
+  "schema": "er8.luna.selected-item-contract.v1",
+  "source": "LAB_ROOT/dev/other-family-recovery-v1/codex-schema/v2/ItemCompletedNotification.json",
+  "source_sha256": "d04b9153de38cd8302a2a418a44a65e8265d4c7586d46ea2cc801b594c6acf5b",
+  "items": {
+    "userMessage": {
+      "required": [
+        "content",
+        "id",
+        "type"
+      ],
+      "allowed": [
+        "clientId",
+        "content",
+        "id",
+        "type"
+      ]
+    },
+    "agentMessage": {
+      "required": [
+        "id",
+        "text",
+        "type"
+      ],
+      "allowed": [
+        "delivery",
+        "id",
+        "memoryCitation",
+        "phase",
+        "questions",
+        "text",
+        "type"
+      ]
+    },
+    "functionCallOutput": {
+      "required": [
+        "id",
+        "name",
+        "output",
+        "type"
+      ],
+      "allowed": [
+        "id",
+        "name",
+        "namespace",
+        "output",
+        "type"
+      ]
+    },
+    "reasoning": {
+      "required": [
+        "id",
+        "type"
+      ],
+      "allowed": [
+        "content",
+        "id",
+        "summary",
+        "type"
+      ]
+    },
+    "mcpToolCall": {
+      "required": [
+        "arguments",
+        "id",
+        "server",
+        "status",
+        "tool",
+        "type"
+      ],
+      "allowed": [
+        "appContext",
+        "arguments",
+        "durationMs",
+        "error",
+        "id",
+        "mcpAppResourceUri",
+        "mcpAppUi",
+        "pluginId",
+        "readOnlyHint",
+        "result",
+        "server",
+        "status",
+        "tool",
+        "type"
+      ]
+    },
+    "dynamicToolCall": {
+      "required": [
+        "arguments",
+        "id",
+        "status",
+        "tool",
+        "type"
+      ],
+      "allowed": [
+        "arguments",
+        "contentItems",
+        "durationMs",
+        "id",
+        "namespace",
+        "status",
+        "success",
+        "tool",
+        "type"
+      ]
+    },
+    "contextCompaction": {
+      "required": [
+        "id",
+        "type"
+      ],
+      "allowed": [
+        "id",
+        "type"
+      ]
+    }
+  }
+}

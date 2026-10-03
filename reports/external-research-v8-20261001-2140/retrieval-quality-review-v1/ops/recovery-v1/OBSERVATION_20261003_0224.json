@@ -1,0 +1,165 @@
+{
+  "schema": "pm.er8.root-observation.v1",
+  "root_authority": true,
+  "created_epoch": 1790994261.6399968,
+  "utc": "2026-10-03T02:24:21.639997+00:00",
+  "accounting": {
+    "elapsed_seconds": 24430.74156475067,
+    "deadline_epoch": 1791013030.8303788,
+    "admissions": 36,
+    "native_goal_starts": 34,
+    "pending_start_permits": 0,
+    "occupied_slot_seconds": 26214.657650232315,
+    "committed_slot_seconds": 1442.530378818512,
+    "reserved_or_committed_slot_seconds": 112846.50549530983,
+    "reserved_or_committed_native_starts": 53,
+    "active_by_family": {
+      "M": 0,
+      "Z": 2,
+      "L": 0
+    },
+    "candidate_output_warning": false,
+    "candidate_output_stop": false,
+    "active_jobs": [
+      "V8-BIO-BREADTH-C-M-research-proposal",
+      "V8-BIO-BREADTH-T-M-research-proposal"
+    ],
+    "overdue_jobs": [],
+    "helper_task_starts": 66,
+    "active_helpers": 4,
+    "evaluator_helper_starts_remaining": 22,
+    "generated_output_tokens_lower_bound": 663088,
+    "generated_usage": "unknown",
+    "outside_native_seconds_by_case": {
+      "v8-z-mechanical-route-canary-v1": 0.435632441,
+      "v8-z-mechanical-route-canary-v2": 87.708301406,
+      "v8-z-mechanical-route-canary-v3": 0.416744337,
+      "V8-BIO-C-Z": 1.881573445,
+      "V8-BIO-WIT-T-Z": 1.93355986,
+      "V8-BIO-P-Z": 218.781088987,
+      "V8-BIO-COND-C-Z": 218.49114402,
+      "V8-NB-COND-C-Z": 2.5303710070000003,
+      "V8-NB-P-Z": 3.2356752049999997,
+      "V8-BIO-BATCH-C-Z": 2.876333539,
+      "V8-BIO-B-Z": 2.8616779529999996,
+      "V8-NB-BATCH-C-Z": 3.1170839940000006,
+      "V8-NB-B-Z": 4.301070160000001,
+      "V8-BIO-RETR-C-M": 6.115310880000001,
+      "V8-BIO-RETR-T-M": 5.4561728469999995,
+      "V8-BIO-AMEND-C-L": 5.3019250079999996,
+      "V8-BIO-AMEND-T-L": 5.596375739000001,
+      "V8-BIO-BREADTH-C-M": 1.743625905,
+      "V8-BIO-BREADTH-T-M": 1.612299807
+    },
+    "category_seconds": {
+      "cancel": 0,
+      "cleanup": 523.3791910900001,
+      "evaluation": 0,
+      "handoff": 2.160077916,
+      "native": 972.478206129,
+      "retry": 0,
+      "setup": 48.856697534,
+      "source_capture": 0,
+      "wait": 0
+    },
+    "occupancy_reconciled": true,
+    "route_reviews": [
+      "v8-z-route-repair1-canary-v1",
+      "v8-z-route-repair1-caller2-canary-v2",
+      "v8-z-route-recovery-v1-canary-v2",
+      "v8-z-route-recovery-v2-canary-v3",
+      "v8-z-route-recovery-v2-native-accepted-v1",
+      "v8-z-route-recovery-v2-native-bound-v2"
+    ],
+    "final_reserved_names": [
+      "V8-BIO-C-Z",
+      "V8-BIO-P-Z",
+      "V8-BIO-B-Z",
+      "V8-NB-C-Z",
+      "V8-NB-P-Z",
+      "V8-NB-B-Z"
+    ],
+    "evaluator_reserved_names": [
+      "V8-EVAL-BIO-C",
+      "V8-EVAL-BIO-P",
+      "V8-EVAL-BIO-B",
+      "V8-EVAL-NB-C",
+      "V8-EVAL-NB-P",
+      "V8-EVAL-NB-B",
+      "V8-EVAL-V8-BIO-WIT-T-Z",
+      "V8-EVAL-V8-BIO-COND-C-Z",
+      "V8-EVAL-V8-BIO-BATCH-C-Z",
+      "V8-EVAL-V8-BIO-RETR-C-M",
+      "V8-EVAL-V8-BIO-RETR-T-M",
+      "V8-EVAL-V8-BIO-AMEND-C-L",
+      "V8-EVAL-V8-BIO-AMEND-T-L",
+      "V8-EVAL-V8-BIO-BREADTH-C-M",
+      "V8-EVAL-V8-BIO-BREADTH-T-M",
+      "V8-EVAL-V8-NB-WIT-T-Z",
+      "V8-EVAL-V8-NB-COND-C-Z",
+      "V8-EVAL-V8-NB-BATCH-C-Z",
+      "V8-EVAL-V8-NB-RETR-C-M",
+      "V8-EVAL-V8-NB-RETR-T-M",
+      "V8-EVAL-V8-NB-AMEND-C-L",
+      "V8-EVAL-V8-NB-AMEND-T-L",
+      "V8-EVAL-V8-NB-BREADTH-C-M",
+      "V8-EVAL-V8-NB-BREADTH-T-M",
+      "V8-EVAL-HOLDOUT-BIO-C",
+      "V8-EVAL-HOLDOUT-BIO-R",
+      "V8-EVAL-HOLDOUT-NB-C",
+      "V8-EVAL-HOLDOUT-NB-R"
+    ],
+    "closed": false,
+    "elapsed_seconds_including_user_pause": 89052.5719435215,
+    "authorized_user_pause_excluded_seconds": 64621.83037877083
+  },
+  "operational_cases_completed": [
+    "V8-BIO-RETR-C-M",
+    "V8-BIO-RETR-T-M",
+    "V8-BIO-AMEND-C-L",
+    "V8-BIO-AMEND-T-L"
+  ],
+  "operational_integrated_pipeline_count": 4,
+  "target_pipeline_count": 24,
+  "operational_matched_pair_count": 2,
+  "target_pair_count": 12,
+  "stage_complete_counts_v3_v6_v7": {
+    "research": 12,
+    "critic": 5,
+    "final": 4
+  },
+  "active_jobs": {
+    "V8-BIO-BREADTH-C-M-research-proposal": {
+      "case": "V8-BIO-BREADTH-C-M",
+      "family": "Z",
+      "status": "native-active",
+      "birth_epoch": 1790993736.0427847,
+      "hard_deadline_epoch": 1790994936.0427847
+    },
+    "V8-BIO-BREADTH-T-M-research-proposal": {
+      "case": "V8-BIO-BREADTH-T-M",
+      "family": "Z",
+      "status": "native-active",
+      "birth_epoch": 1790993829.6314812,
+      "hard_deadline_epoch": 1790995029.6314812
+    }
+  },
+  "independent_quality_screens": 2,
+  "quality_reviewed_matched_pairs": 1,
+  "full_quality_pass_cases": 0,
+  "quality_qualified_efficiency_comparisons": 0,
+  "quality_pending_cases": [
+    "V8-BIO-AMEND-C-L",
+    "V8-BIO-AMEND-T-L"
+  ],
+  "native_muse_helpers": {
+    "invocations": 5,
+    "completed": 3,
+    "timed_out": 2,
+    "inclusive_elapsed_seconds": 874.9526655390172,
+    "candidate_goal_starts": 0,
+    "realized_tokens_reasoning_money": "UNKNOWN"
+  },
+  "current_verified_github_commit": "90c96431f06c082058b168ad63f9cc7ead1d8716",
+  "cost_limits": "Includes all earlier failed starts and occupancy; only explicit user pause excluded; no budget reset. Sol evaluation/management elapsed separate from candidate pair cost; token totals/money UNKNOWN."
+}

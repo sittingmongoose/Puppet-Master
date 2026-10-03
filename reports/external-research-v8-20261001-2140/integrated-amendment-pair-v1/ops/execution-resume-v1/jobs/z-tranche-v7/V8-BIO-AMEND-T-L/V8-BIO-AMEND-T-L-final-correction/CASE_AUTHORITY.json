@@ -1,0 +1,15 @@
+{
+  "case_id": "V8-BIO-AMEND-T-L",
+  "case_start_monotonic_ns": 213647758106020,
+  "case_elapsed_cap_seconds": 3600,
+  "case_occupied_cap_seconds": 5400,
+  "outside_native_cap_seconds": 300,
+  "campaign_native_cutoff_monotonic_ns": 234777000142601,
+  "stages": {
+    "v8-bio-amend-t-l-final-correction": {
+      "stage_start_monotonic_ns": 215155628727498,
+      "cap_seconds": 900,
+      "response_cap": 160
+    }
+  }
+}

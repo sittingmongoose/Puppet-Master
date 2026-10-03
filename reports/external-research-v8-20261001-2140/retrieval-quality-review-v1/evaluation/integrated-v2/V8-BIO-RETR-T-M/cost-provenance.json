@@ -1,0 +1,102 @@
+{
+  "schema": "er8.independent.cost-provenance.v1",
+  "case_id": "V8-BIO-RETR-T-M",
+  "candidate_usage_disposition": "Observed public native receipt totals only; exact generated/billed totals UNKNOWN. Each stage has one more native response than usage_requests_with_delta. No invented zeros or tariff-derived actual spend.",
+  "candidate_reported_usage_totals": {
+    "inputTokens": 2954409,
+    "outputTokens": 96531,
+    "reasoningTokens": 0,
+    "cacheReadTokens": 2574208,
+    "cacheWriteTokens": 0,
+    "totalTokens": 3050940
+  },
+  "candidate_stage_reports": [
+    {
+      "stage": "research-proposal",
+      "metrics_hash": "f79b0a874454ffe11d9bd2f89cd7152515eceefe5f76c1c8f6ffc405dd8ba825",
+      "receipt_sha256": "f79b0a874454ffe11d9bd2f89cd7152515eceefe5f76c1c8f6ffc405dd8ba825",
+      "goal_target_id": "target_murp2gyp_72871f4e-787f-4d51-9d87-a25b59cccbda",
+      "provider_id": "builtin:zai-coding-plan",
+      "model_id": "GLM-5.3-Flash",
+      "effort_effective": "max",
+      "fresh_session": true,
+      "native_responses": 23,
+      "usage_requests_with_delta": 22,
+      "usage_totals": {
+        "inputTokens": 1765662,
+        "outputTokens": 34662,
+        "reasoningTokens": 0,
+        "cacheReadTokens": 1582144,
+        "cacheWriteTokens": 0,
+        "totalTokens": 1800324
+      },
+      "elapsed_milliseconds": 870948,
+      "verified": "passed"
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "metrics_hash": "9c582ef8d1b1e75fe44b945bc2d20f476bf7c108d0729bf22dd7423803f15d25",
+      "receipt_sha256": "9c582ef8d1b1e75fe44b945bc2d20f476bf7c108d0729bf22dd7423803f15d25",
+      "goal_target_id": "target_murpl5sg_659d2b9f-53f9-4d4e-88ad-dc38eab525fc",
+      "provider_id": "builtin:zai-coding-plan",
+      "model_id": "GLM-5.3-Flash",
+      "effort_effective": "max",
+      "fresh_session": true,
+      "native_responses": 15,
+      "usage_requests_with_delta": 14,
+      "usage_totals": {
+        "inputTokens": 897944,
+        "outputTokens": 32753,
+        "reasoningTokens": 0,
+        "cacheReadTokens": 773824,
+        "cacheWriteTokens": 0,
+        "totalTokens": 930697
+      },
+      "elapsed_milliseconds": 755798,
+      "verified": "passed"
+    },
+    {
+      "stage": "final-correction",
+      "metrics_hash": "146fddad5831554abb7d835c0937ab583d7029ba713f7aff6885939f8eb34a77",
+      "receipt_sha256": "146fddad5831554abb7d835c0937ab583d7029ba713f7aff6885939f8eb34a77",
+      "goal_target_id": "target_murq1cmt_924ce039-1188-4f24-95bc-a9d48bb594d6",
+      "provider_id": "builtin:zai-coding-plan",
+      "model_id": "GLM-5.3-Flash",
+      "effort_effective": "max",
+      "fresh_session": true,
+      "native_responses": 8,
+      "usage_requests_with_delta": 7,
+      "usage_totals": {
+        "inputTokens": 290803,
+        "outputTokens": 29116,
+        "reasoningTokens": 0,
+        "cacheReadTokens": 218240,
+        "cacheWriteTokens": 0,
+        "totalTokens": 319919
+      },
+      "elapsed_milliseconds": 507561,
+      "verified": "passed"
+    }
+  ],
+  "candidate_exact_tokens": "UNKNOWN",
+  "candidate_actual_money": "UNKNOWN",
+  "evaluator_exact_tokens": "UNKNOWN",
+  "evaluator_actual_money": "UNKNOWN",
+  "external_unexposed_load": "UNKNOWN",
+  "candidate_case_wall_seconds": 2136.843008518,
+  "candidate_occupied_stage_lease_seconds": 2136.32631111145,
+  "candidate_nonoverlapping_outside_native_seconds": 5.456172847,
+  "candidate_timing_source": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/GLOBAL_PARENT_FINAL_RECEIPT.json",
+    "sha256": "70a9b65ffb38ea1969c3edd77818aeec01c4723ae411418966210a294b464477"
+  },
+  "evaluation_original_birth_epoch": 1790992152.3068507,
+  "evaluation_original_deadline_epoch": 1790994552.3068507,
+  "evaluation_preparation_waits_included": true,
+  "evaluation_clock_reset": false,
+  "evaluation_end_epoch": 1790993138.852565,
+  "subsequent_publication_cost": "SEPARATE_ROOT_MANAGEMENT",
+  "quality_equivalent_speedup_claim": false,
+  "evaluation_inclusive_elapsed_seconds": 986.5457143783569,
+  "finished_before_original_hard_deadline": true
+}

@@ -1,0 +1,79 @@
+{
+  "schema": "pm.er8.root-frozen-comparison.v1",
+  "root_authority": true,
+  "created_epoch": 1790994261.6399968,
+  "pair": "BIO-RETR-C-T",
+  "actual_provider": "GLM-5.3-Flash",
+  "reasoning": "max",
+  "account_binding": "same root-attested opaque Z subscription account; actual account identity UNKNOWN",
+  "operational_matched_pair_complete": true,
+  "independent_quality_reviewed_pair": true,
+  "quality_qualified_efficiency_comparison": false,
+  "full_quality_pass_cases": 0,
+  "arms": [
+    {
+      "case": "V8-BIO-RETR-C-M",
+      "quality_disposition": "FAILED_SCREEN",
+      "whole_case_pass": false,
+      "evaluation_freeze": {
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-RETR-C-M/FREEZE.json",
+        "sha256": "633c698ffbe648b09eb8a811e252ed166f12a0c3506e49a39293b8f8f45ce871"
+      },
+      "evaluation_manifest": {
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-RETR-C-M/MANIFEST.json",
+        "sha256": "6f36d9a5f81fafe60302ad7dc5b0a7b613669db2f566a0ef9bb9c4f8a4171d2f"
+      },
+      "quality_disposition_sha256": "d1deb301a48254a2b5d869acabbb122cd32dc839eb252f34a6b85ab510a07c68",
+      "case_receipt": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/GLOBAL_PARENT_FINAL_RECEIPT.json",
+        "sha256": "8a7be3a9280f6ab4eb6c8b1d68f70305ec8ed6bce73a4052e07f8b705969ad33"
+      },
+      "case_wall_seconds": 1957.311687573,
+      "occupied_stage_lease_seconds": 1956.7773969173431,
+      "outside_native_seconds": 6.11531088
+    },
+    {
+      "case": "V8-BIO-RETR-T-M",
+      "quality_disposition": "FAILED_SCREEN",
+      "whole_case_pass": false,
+      "evaluation_freeze": {
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-RETR-T-M/FREEZE.json",
+        "sha256": "9ddcb1780cd4cfab461bb89bb2657bad0fc165e9b42af4f42eaba7de18abc061"
+      },
+      "evaluation_manifest": {
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-RETR-T-M/OUTPUT_HASH_MANIFEST.json",
+        "sha256": "b63693181c953ccee5c2df4dd437786bb80d2ebab917ae7b04b4924dda2e7ec2"
+      },
+      "quality_disposition_sha256": "a66ca2f440798c78304a673af814262628d467fff9b15b4defd88a83c303edb5",
+      "case_receipt": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/GLOBAL_PARENT_FINAL_RECEIPT.json",
+        "sha256": "70a9b65ffb38ea1969c3edd77818aeec01c4723ae411418966210a294b464477"
+      },
+      "case_wall_seconds": 2136.843008518,
+      "occupied_stage_lease_seconds": 2136.32631111145,
+      "outside_native_seconds": 5.456172847
+    }
+  ],
+  "root_verification": {
+    "frozen_evaluation_pins_match": true,
+    "C_required_dependency_and_unit_refusal_lines_inspected": true,
+    "T_final_formula_and_released_primary_transform_lines_inspected": true,
+    "analytic_counterexamples_recomputed": true,
+    "candidate_implementation_or_fixture_execution": false,
+    "source_body_retained_external": true,
+    "T_primary_url": "https://raw.githubusercontent.com/ome/ngff/0.4.1/0.4/index.bs",
+    "T_released_source_sha256": "592413727ee8d42916bd98007262f48c6139273cb373839c6d285a0ba20b6406"
+  },
+  "findings": {
+    "C": "Consequential selected renderer dependency explicitly unverified; overlay unit compatibility/refusal unspecified. Plan gaps, no observed runtime misrendering.",
+    "T": "Allowed multiscale translation is omitted from final cursor formula: independent analytic expectation [26,69], formula [15,56]. Released primary rule independently checked."
+  },
+  "coverage": "Two decisive independent FAILED_SCREEN dispositions. Full Q1/Q2/Q3+B1-B5 assignment initiated; remaining facets explicitly UNASSESSED. No full-grade completeness claim.",
+  "method_blinding": "Limited blinding; candidate/case context exposed method identity. Quality rulings frozen before METHOD card duties audit; C owner manifest exposed identity before source ruling (disclosed protocol deviation).",
+  "recipe_ruling": "No quality-qualified best recipe or holdout authorization; no speedup/winner claim. Pair-only costs descriptive, failure-inclusive campaign and Sol management/evaluation costs remain separate.",
+  "candidate_feedback": "NONE; no findings or Sol case fixes provided to future candidates.",
+  "observation": {
+    "path": "LAB_ROOT/ops/recovery-v1/OBSERVATION_20261003_0224.json",
+    "sha256": "7f5721b34fbeccbbe59c2192da7c49439af0bf6edfc977198526a0e384cfe38c"
+  }
+}

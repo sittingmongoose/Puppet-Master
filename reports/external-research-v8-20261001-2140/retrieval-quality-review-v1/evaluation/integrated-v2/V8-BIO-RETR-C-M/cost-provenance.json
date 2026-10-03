@@ -1,0 +1,40 @@
+{
+  "schema": "er8.independent.cost-provenance.v1",
+  "case_id": "V8-BIO-RETR-C-M",
+  "evaluation": {
+    "original_birth_epoch": 1790992152.3068507,
+    "birth_source": "Parent task pre-preparation fixed clock; no reset.",
+    "original_hard_deadline_epoch": 1790994552.3068507,
+    "hard_seconds": 2400,
+    "record_written_epoch": 1790993013.2480786,
+    "inclusive_elapsed_seconds_to_cost_record": 860.9412279129028,
+    "actual_compute_start_epoch": "UNKNOWN",
+    "exact_final_end_epoch": "See FREEZE.json; includes preparation and waits from original birth.",
+    "input_tokens": "UNKNOWN",
+    "output_tokens": "UNKNOWN",
+    "reasoning_tokens": "UNKNOWN",
+    "cache_tokens": "UNKNOWN",
+    "money": "UNKNOWN",
+    "no_unknown_assumed_zero": true
+  },
+  "candidate": {
+    "reported_native_usage_sum": {
+      "inputTokens": 3195406,
+      "outputTokens": 81532,
+      "reasoningTokens": 0,
+      "cacheReadTokens": 2765376,
+      "cacheWriteTokens": 0,
+      "totalTokens": 3276938
+    },
+    "status": "Reported per-stage projected native deltas; not independent billing reconciliation. Reported zero reasoning/cache-write does not rule out unexposed components.",
+    "money": "UNKNOWN",
+    "account_price_or_subscription_allocation": "UNKNOWN",
+    "actual_case_wall_seconds": 1957.311687573,
+    "actual_occupied_stage_lease_seconds": 1956.7773969173431,
+    "source": "GLOBAL_PARENT_FINAL_RECEIPT.json and three native-public/receipt.json files, pinned in manifest.",
+    "generated_usage_receipt_qualifier": "Global receipt states UNKNOWN except observed lower bounds; reported route totals retained separately."
+  },
+  "evaluator_provider_actions": 0,
+  "evaluator_web_fetches": 0,
+  "tokens_or_money_estimated_from_file_bytes": false
+}

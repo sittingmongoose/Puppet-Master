@@ -1,0 +1,124 @@
+{
+  "schema": "pm.er8.case-success-settlement-diagnostic.v1",
+  "status": "ALREADY_OPERATIVELY_SETTLED_PENDING_EVALUATION",
+  "case": "V8-BIO-RETR-C-M",
+  "original_birth_epoch": 1790991924.8544538,
+  "original_deadline_epoch": 1790992524.8544538,
+  "observed_epoch": 1790992118.9419186,
+  "completed_before_original_deadline": true,
+  "source_pins": {
+    "dev/prospective-timing-v3/integrated-controller/case_supervisor.py": "b35627e1bdbf914afb939a69959e6b09ac9bcbe5d54cd471d7319cbcf540f096",
+    "dev/prospective-timing-v3/integrated-controller/external_case_close.py": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c",
+    "dev/prospective-timing-v3/integrated-controller/parent_receipt.py": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea",
+    "dev/prospective-timing-v3/integrated-controller/rolling.py": "6f4f59862c963288eb0b514d8d943adfd6c7356681aded5c9b3b9fe45eb6a874",
+    "dev/prospective-timing-v3/integrated-controller/common.py": "e06fe9bcb01fd7eb89999af74422e4e3f504f4601c76fc13df791dac54aedbd7",
+    "dev/prospective-timing-v3/recovery-control.json": "9f42d49be57a74ee744c0be41fa337471a3c441a340cde3e4bfc642926afb938",
+    "ops/execution-resume-v1/quiet_production_monitor.py": "44c3671a2f51d02e412ac5d0df1e719098a80a755ae192a4a07c7fae1d5ae042",
+    "ops/recovery-v1/ledger_resume.py": "a98cf53c1826f1f4c9fa47a9e181eaae8beb971ea41e6564578a253059450b61",
+    "ops/recovery-v1/ledger_overlay.py": "597a3d3349154fbb4614ed7ece864f1cd77ecfea145fbfddaefc79fe0a1cd618",
+    "ops/accounting-v1/slot_ledger.py": "5590fdc09936005e09b2de7aa4ac4113bbe0ddeefa4a8caf3548d78b0e3045af",
+    "dev/prospective-timing-v3/integrated-controller/SOURCE_FREEZE.json": "38f31e444c6dde29f2498a69ba2c1769506b0c4384a048afb25b7882df3f7cb2"
+  },
+  "exact_metadata_pins": {
+    "ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/CASE_DEFERRED_CLOSE.json": "c509e4d868c61ae73926a5f0fc950899d643d921514088c535a5cd3526640961",
+    "ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/CASE_SETTLEMENT_DEFERRED.json": "fcd7d6b3c0cec591d8dca907c9295c3550114f690c7c6c3c8de397e34ab5e11c",
+    "ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/EXTERNAL_CASE_CLOSE.json": "0971d490046722f8a107ac7eee03942d98bba845dba418c45981973253f6aeea",
+    "ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/GLOBAL_PARENT_FINAL_RECEIPT.json": "8a7be3a9280f6ab4eb6c8b1d68f70305ec8ed6bce73a4052e07f8b705969ad33",
+    "ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-research-proposal/COMPLETE.json": "d2e7291b64d7c4c244a6ee46072162e363d00893a673aa79512df2fff32f413c",
+    "ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-research-proposal/QUIESCENCE.json": "0cda7f861a3d5bd4e92cf3f698344c8ba0ee651338867e66befd975775397199",
+    "ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-independent-candidate-critic/COMPLETE.json": "46a50e7810b83cd66a6c7c5f85f9fe8098e8ce468fe98b3ab25ae2724c345eae",
+    "ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-independent-candidate-critic/QUIESCENCE.json": "6210457ca9fa4ceb8b12da74a8dd6942073955f93de4029cbf69cd19f4944578",
+    "ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/COMPLETE.json": "2a36800918b078758f29637d29f296c35a489d5cad40db67eddc13cd7420f3a5",
+    "ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/QUIESCENCE.json": "85685e9457661ae13db921c852a2db50e67d8145a1631abd4c62026d687f5864"
+  },
+  "state_read_snapshot_sha256": "8702d6000b02900d80cc229e548edc5970a475c8615d197f45181c056de88567",
+  "state_is_mutable_historical_snapshot_only": true,
+  "ledger_case_reservation": {
+    "native_starts": 3,
+    "occupied_seconds": 5400,
+    "final_job": "V8-BIO-RETR-C-M-final-correction",
+    "completed": true,
+    "disposition": {
+      "case": "V8-BIO-RETR-C-M",
+      "root_authority": true,
+      "disposition": "OPERATIVE_THREE_GOAL_PIPELINE_PENDING_EVALUATION",
+      "proof_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/GLOBAL_PARENT_FINAL_RECEIPT.json",
+      "original_deadline_monotonic_ns": 215110650609156
+    },
+    "completed_epoch": 1790991721.9425807
+  },
+  "case_jobs_structural": {
+    "V8-BIO-RETR-C-M-research-proposal": {
+      "birth_epoch": 1790989764.4808364,
+      "released_epoch": 1790990380.423352,
+      "launch_pending": null,
+      "family": "Z",
+      "goal_starts_count": 1
+    },
+    "V8-BIO-RETR-C-M-independent-candidate-critic": {
+      "birth_epoch": 1790990380.4607947,
+      "released_epoch": 1790991121.2945309,
+      "launch_pending": null,
+      "family": "Z",
+      "goal_starts_count": 1
+    },
+    "V8-BIO-RETR-C-M-final-correction": {
+      "birth_epoch": 1790991121.3325837,
+      "released_epoch": 1790991721.3337288,
+      "launch_pending": null,
+      "family": "Z",
+      "goal_starts_count": 1
+    }
+  },
+  "current_native_goal_counter": 28,
+  "missing_CASE_COMPLETE_filename": {
+    "exists": false,
+    "source_emits_filename": false,
+    "missing_filename_is_failure": false
+  },
+  "source_success_gates": {
+    "case_supervisor": "Three external stage lease releases; fresh observed Goal activations; integer native response counts 1..160; three distinct actual targets; nonempty actual final artifact => CASE_DEFERRED_CLOSE.",
+    "external_case_close": "Exact original ancestry; supervisor held rc0, exit under original cutoff and group absent; all three ledger jobs released, no pending launch, one activation each => EXTERNAL_CASE_CLOSE and CASE_SETTLEMENT_DEFERRED after host-tail charge.",
+    "parent_receipt": "Finalizer held rc0/group absent; exact original start/deadline; ordered nonoverlapping native intervals; exact outside accounting within 1e-5 and <300; occupied<=5400 => GLOBAL_PARENT_FINAL_RECEIPT, then common.ledger(case-complete).",
+    "ledger_case_complete": "root_authority true and no unreleased/pending same-case jobs => reservation completed=true with disposition/proof/cutoff and current completion epoch.",
+    "quiet_production_monitor": "Reconciles failed/incomplete active stage leases using owned quiet proof; it does not supply a separate successful case-completion step.",
+    "global_root_finalize_action": "No such action in selected frozen controller/ledger source; separate-root-management is post-case metadata/publication cost designation."
+  },
+  "observed_runtime_closure": {
+    "three_stage_COMPLETE_and_QUIESCENCE_present": true,
+    "fresh_distinct_activated_goal_chain": true,
+    "supervisor_held_returncode": 0,
+    "supervisor_group_absent_historical_receipt": true,
+    "finalizer_held_returncode": 0,
+    "actual_case_wall_seconds": 1957.311687573,
+    "actual_occupied_stage_lease_seconds": 1956.7773969173431,
+    "actual_outside_native_seconds": 6.11531088,
+    "all_closed_before_cutoff": true,
+    "final_artifact_locator": {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "bytes": 33890,
+      "sha256": "3ed2f8c5073ef17beaaf9f06dc32506af6841b3d81f3d10fe576f06e3cdfcb9e"
+    },
+    "final_artifact_body_not_read_or_rehashed": true
+  },
+  "recommendation": {
+    "root_metadata_action": "NONE. Reservation already completed at recorded epoch; read/verify proof for reporting only. Do not replay parent_receipt.py or external_case_close.py because they charge tail accounting. Do not invoke case-complete again merely to create absent CASE_COMPLETE filename.",
+    "supported_api": "common.ledger(\"case-complete\", {\"case\": case, \"root_authority\": True, \"disposition\": \"OPERATIVE_THREE_GOAL_PIPELINE_PENDING_EVALUATION\", \"proof_path\": exact_GLOBAL_PARENT_FINAL_RECEIPT_path, \"original_deadline_monotonic_ns\": original_cutoff}) is already invoked by parent_receipt.py. It marks reservation only, writes no CASE_COMPLETE filename.",
+    "cli_recommendation": "No mutation CLI recommended. ledger_resume.py has no standalone main; base slot_ledger.py CLI would bypass selected resume wrapper. Native-launch rolling.py/monitor CLI not a settlement replay API."
+  },
+  "known_unknowns": [
+    "Operational chain completion is separate from semantic quality, correctness, source acquisition and winner; independent evaluation remains pending.",
+    "Final artifact bytes/hash are exact metadata locators only; candidate content was not read or independently rehashed.",
+    "Historical group absence is receipt evidence; no fresh PID/PGID/unit scan or signals were needed for this already closed case.",
+    "Counter was 28 at diagnosis snapshot; concurrent campaign work may advance it.",
+    "Live provider state, exact model HTTP attempts, generated usage/cost and causality remain unestablished."
+  ],
+  "actions": {
+    "native_provider_launches": 0,
+    "signals": 0,
+    "ledger_writes": 0,
+    "source_edits": 0,
+    "git_actions": 0,
+    "candidate_or_evaluator_body_reads": 0
+  }
+}

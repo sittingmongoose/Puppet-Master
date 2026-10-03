@@ -1,5 +1,5 @@
 {
-  "checkpoint": "DURABLE_V7_ACTIVE",
+  "checkpoint": "TWO_OPERATIONAL_PAIRS_RETRIEVAL_FAILED_SCREENS_AMENDMENT_REVIEW_PENDING",
   "accepted_utc": "2026-10-02T01:40:09+00:00",
   "deadline_utc": "2026-10-03T07:37:10.830379Z",
   "cases": [
@@ -100,7 +100,25 @@
   "pause_policy": "Actual explicit pause interval may be excluded prospectively on resume; no fixed assignment deadlines or births/outcomes/consumed usage reset",
   "previous_amended_deadline_utc": "2026-10-02T13:40:09Z",
   "resume_evidence": "resume-cohort-v1/ops/recovery-v1/RESUME_20261002.json",
-  "observation_utc": "2026-10-03T01:25:39.382829+00:00",
+  "observation_utc": "2026-10-03T02:24:21.639997+00:00",
   "native_qualification": "V3_MECHANICAL_PASSED_LIMITED_DELIVERY_INFERENCE",
-  "native_qualification_evidence": "resume-qualified-v3-cohort/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json"
+  "native_qualification_evidence": "resume-qualified-v3-cohort/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json",
+  "current_observation": {
+    "completed_operational_cases": [
+      "V8-BIO-RETR-C-M",
+      "V8-BIO-RETR-T-M",
+      "V8-BIO-AMEND-C-L",
+      "V8-BIO-AMEND-T-L"
+    ],
+    "active_jobs": [
+      "V8-BIO-BREADTH-C-M-research-proposal",
+      "V8-BIO-BREADTH-T-M-research-proposal"
+    ],
+    "quality_reviewed_pairs": 1,
+    "quality_pending_cases": [
+      "V8-BIO-AMEND-C-L",
+      "V8-BIO-AMEND-T-L"
+    ],
+    "evidence": "retrieval-quality-review-v1/ops/recovery-v1/OBSERVATION_20261003_0224.json"
+  }
 }

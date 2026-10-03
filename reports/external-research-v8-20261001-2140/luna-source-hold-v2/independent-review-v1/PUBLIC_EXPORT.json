@@ -1,0 +1,124 @@
+{
+  "schema": "pm.er8.public-luna-independent-review.v1",
+  "positive_selected_count": 9,
+  "status": "HOLD",
+  "projection": "Exact positive hash validation before writes; approved batching host/native whitelist and path/session/internal JSON key sanitizer; embedded original pins preserved; no broad export.",
+  "native_replay_verified": false,
+  "quality_assessed": false,
+  "artifacts": [
+    {
+      "source_projection": "LAB_ROOT/evaluation/luna-resume-v2-review-v1/FREEZE_RECEIPT.json",
+      "public_path": "evaluation/luna-resume-v2-review-v1/FREEZE_RECEIPT.json",
+      "original_sha256": "c2c6ffcf84381eaf2f1e554261c0395abec4bebc9be23010eefa3305e1c8d54c",
+      "original_bytes": 2471,
+      "public_sha256": "077d7af7823c2a0bcfb797691b457d6a0aace348101603283b814677f6ce83af",
+      "public_bytes": 1967,
+      "sanitized": true,
+      "projection_kind": "sanitized"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/luna-resume-v2-review-v1/REVIEW.md",
+      "public_path": "evaluation/luna-resume-v2-review-v1/REVIEW.md",
+      "original_sha256": "abd73191952c1e1a737fc87b1498da90093519728c0c59b7fecfa84b95739bcb",
+      "original_bytes": 3256,
+      "public_sha256": "abd73191952c1e1a737fc87b1498da90093519728c0c59b7fecfa84b95739bcb",
+      "public_bytes": 3256,
+      "sanitized": false,
+      "projection_kind": "sanitized"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/luna-resume-v2-review-v1/controller-tests.log",
+      "public_path": "evaluation/luna-resume-v2-review-v1/controller-tests.log",
+      "original_sha256": "73b3427b1585d2d833f1cf950949e41dacf4bf3e60d22314edaaa4720d8255d9",
+      "original_bytes": 1948,
+      "public_sha256": "73b3427b1585d2d833f1cf950949e41dacf4bf3e60d22314edaaa4720d8255d9",
+      "public_bytes": 1948,
+      "sanitized": false,
+      "projection_kind": "sanitized"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/luna-resume-v2-review-v1/pins.json",
+      "public_path": "evaluation/luna-resume-v2-review-v1/pins.json",
+      "original_sha256": "5f42ad4e912d7da14163ae000fe644082e1b703e5f1a7d4d1dbc09ab4fa217fc",
+      "original_bytes": 1025,
+      "public_sha256": "5f42ad4e912d7da14163ae000fe644082e1b703e5f1a7d4d1dbc09ab4fa217fc",
+      "public_bytes": 1025,
+      "sanitized": false,
+      "projection_kind": "sanitized"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/luna-resume-v2-review-v1/preventive-guard-tests.log",
+      "public_path": "evaluation/luna-resume-v2-review-v1/preventive-guard-tests.log",
+      "original_sha256": "edc16787142466012d88726760a5e166972ca88f08212645f5029a0f2b805ab1",
+      "original_bytes": 662,
+      "public_sha256": "edc16787142466012d88726760a5e166972ca88f08212645f5029a0f2b805ab1",
+      "public_bytes": 662,
+      "sanitized": false,
+      "projection_kind": "sanitized"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/luna-resume-v2-review-v1/review.json",
+      "public_path": "evaluation/luna-resume-v2-review-v1/review.json",
+      "original_sha256": "679b22115e69a9e9694c39723b381d3cf53c242238be3eff21e6829d3e1f576c",
+      "original_bytes": 11373,
+      "public_sha256": "2890599c5502b1c41d606e29d90d0ccded2b4597f2ec6c5261dfb2f48b83ab32",
+      "public_bytes": 10050,
+      "sanitized": true,
+      "projection_kind": "sanitized"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/luna-resume-v2-review-v1/route-tests.log",
+      "public_path": "evaluation/luna-resume-v2-review-v1/route-tests.log",
+      "original_sha256": "97e6e4665c82919ef0421f4fa4a088eee4a6bdcd141bdde25793cf42a563af7b",
+      "original_bytes": 1522,
+      "public_sha256": "97e6e4665c82919ef0421f4fa4a088eee4a6bdcd141bdde25793cf42a563af7b",
+      "public_bytes": 1522,
+      "sanitized": false,
+      "projection_kind": "sanitized"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/luna-resume-v2-review-v1/source-scope.json",
+      "public_path": "evaluation/luna-resume-v2-review-v1/source-scope.json",
+      "original_sha256": "31a9bb3e8812abb4e61f4accdb5f41409704573bf3a3ae10f9fd093021a53668",
+      "original_bytes": 12766,
+      "public_sha256": "19b11714d288fd94ae7f9e30c6f9730118d2d8d7781c62e9fb1a1a266d9335f8",
+      "public_bytes": 10498,
+      "sanitized": true,
+      "projection_kind": "sanitized"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/luna-resume-v2-review-v1/test_preventive_guards.py",
+      "public_path": "evaluation/luna-resume-v2-review-v1/test_preventive_guards.py",
+      "original_sha256": "f620a32e46c69bf7ffbd539217836f1ea62a960012d432687e1f7fe08b8179eb",
+      "original_bytes": 5736,
+      "public_sha256": "8e59f4464b8a206c3cb12755bf693bfb03bd212a84f06f10672ebfd1e948cbc9",
+      "public_bytes": 5673,
+      "sanitized": true,
+      "projection_kind": "sanitized"
+    },
+    {
+      "source_projection": "WORKTREE_ROOT/reports/external-research-v8-20261001-2140/prospective-source-cohort-v3/ops/muse-helper-public-check-v1/root-repair-v1/verify_public.py",
+      "public_path": "verify_public.py",
+      "original_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+      "original_bytes": 6851,
+      "public_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+      "public_bytes": 6851,
+      "sanitized": false,
+      "projection_kind": "standalone-portable-checker"
+    },
+    {
+      "source_projection": "publication-generated",
+      "public_path": "README.md",
+      "original_sha256": null,
+      "public_sha256": "27f14c964c609df05d5ec4737e785dd9a22355ac736bcbe898e9470f9840251b",
+      "public_bytes": 1910
+    },
+    {
+      "source_projection": "publication-generated",
+      "public_path": "ROOT_HANDOFF.json",
+      "original_sha256": null,
+      "public_sha256": "9e92f10aaceee77edecfd0498affa55cc546bcc7c3165b24fad1bb08eb7fb5e9",
+      "public_bytes": 3583
+    }
+  ]
+}

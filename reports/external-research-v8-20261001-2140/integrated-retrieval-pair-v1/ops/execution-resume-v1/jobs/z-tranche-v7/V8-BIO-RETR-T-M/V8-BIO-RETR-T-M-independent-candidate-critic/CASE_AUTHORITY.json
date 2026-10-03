@@ -1,0 +1,15 @@
+{
+  "case_id": "V8-BIO-RETR-T-M",
+  "case_start_monotonic_ns": 211510656659015,
+  "case_elapsed_cap_seconds": 3600,
+  "case_occupied_cap_seconds": 5400,
+  "outside_native_cap_seconds": 300,
+  "campaign_native_cutoff_monotonic_ns": 234777000141986,
+  "stages": {
+    "v8-bio-retr-t-m-independent-candidate-critic": {
+      "stage_start_monotonic_ns": 212382347990452,
+      "cap_seconds": 1200,
+      "response_cap": 160
+    }
+  }
+}

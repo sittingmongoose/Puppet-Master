@@ -1,0 +1,279 @@
+{
+  "schema": "er8.luna.independent-review-source-scope.v1",
+  "epoch": 1790992004.044165,
+  "ast_parse_passed": 27,
+  "own_source_syntax": [
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/canary_actor.py",
+      "sha256": "dbe99186ef49e9dc33cce8d0c283a01d8eb3520d19b2b20ed5b15fce63765774"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/canary_parent.py",
+      "sha256": "d36e5da41969d979a5c0122fd6d7b08dac219bd6b1a63a0ca84870d6aa4ff0dc"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/case_supervisor.py",
+      "sha256": "edaf18f1fefb8641fc4c20bfad288ce28b484c30fa6bbb11087607d891e8cc0f"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/common.py",
+      "sha256": "baf12aeb704ad7a088dee643f95cdb115910bf7bce0ef086dbc5e819fe572322"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/external_case_close.py",
+      "sha256": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/external_stage_close.py",
+      "sha256": "6b4e086cb319a78009c98d21b676fe0c6e281c64e91c1d7461738634c73e3e3f"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/failure_settlement.py",
+      "sha256": "e3eb0f3f5ba7e37f5d62af82db7187125ab2c2990a207696eb47e00cb365c3af"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/freeze_source.py",
+      "sha256": "7e530c6621d7e8788e8fba8791b4c5919d21ffca7e167ea6acf15eb9574ba614"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/parent_receipt.py",
+      "sha256": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/release_binding.py",
+      "sha256": "8e775f401c340f5afd200e696a8aaf6185a5e5f94d04b90f427deac96f9a361e"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/rolling.py",
+      "sha256": "683a5039e762cbc22d35771c0a831f6db399e71735b533367ca2d7cea58d3c9f"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/route-successor/admission.py",
+      "sha256": "5b4076b382f425e29367dcb468cedcc8941da03cc713bc8b0a518d90e0947e57"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/route-successor/bind_plan.py",
+      "sha256": "65beccfdbd6b4675ecdfbd60aad5e8e62b9b5c20b8548489eb975152503e1fd3"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/route-successor/broker_adapter.py",
+      "sha256": "af22a312c973128936e06b3f58a47e92f9ab3f1a4fcdd98bec610738cdf71eb9"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/route-successor/controls.py",
+      "sha256": "d268752c008a09f730d7465214e07c05afb848f02fc1daf3811af1ec85f1db85"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/route-successor/entry.py",
+      "sha256": "0a3c0377d2aaf2b63bc40a4871daa8abfd32dbe44357574117d766709fb4f1be"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/route-successor/formula_check.py",
+      "sha256": "b3ae054cd2cbdeca4f4a5e0db619a5b1a9dbced2bb3a6bf161165916931f7df6"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/route-successor/host_guard.py",
+      "sha256": "3fd35abf436ffb9fd0d09de4f09c7d97a8bdd157c67cf4aa5c5af5acd7aa9a5b"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/route-successor/launch.py",
+      "sha256": "8dec4108eacd3814d5b1fff069daaef87703f8466bc6d15c77607e1bcba1e0d4"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/route-successor/make_plan.py",
+      "sha256": "6f78381300c0c4a467f8cbe98eb001b52c9852c0b4ea788c083201424c70638d"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/route-successor/native_driver.py",
+      "sha256": "5d8e20a1726b48701ca400154b99f825152fa2e9f98b9a8c55031af4cd66f4b9"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/route-successor/native_runner.py",
+      "sha256": "a22998d12bf93b50004e7307ff3c039e52ab35e52045c051ea8ebefdc1190832"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/route-successor/prepare_canary.py",
+      "sha256": "60c0262a48b6712c7a4294dff58635f0e5c08fd802c548c4ff669bda950b492e"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/route-successor/projector.py",
+      "sha256": "dd13d5ebd234bda22c9481b4dcf0180989a647670b04fca626827ddcd9d00404"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/route-successor/test_offline.py",
+      "sha256": "b1fc0c9151a001c037a6ca33a922d7c66f32d500dad33e94b399e9f41f3f9cb6"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/stage_actor.py",
+      "sha256": "af40edd6d0a6deb767b30ea4be3265c0ecddfda916b1892c71c4ae1f91180ef2"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-resume-v2/test_source.py",
+      "sha256": "9b6026863d6f3ce0bbd68f157bb773d46043078dc3bba50f4f678f3b64fc65fe"
+    }
+  ],
+  "locally_pinned_public_selected_sources_read": [
+    {
+      "path": "LAB_ROOT/dev/luna-route-v1/source-controls/ext__goal__src__tool.json",
+      "sha256": "af0916d9bdec4b97aa6c9e6fb20750223cbb5456d174c4ad95f11fe335cffc20",
+      "url": "https://raw.githubusercontent.com/openai/codex/rust-v0.159.2/codex-rs/ext/goal/src/tool.rs",
+      "full_public_source_sha256": "37545f5780a66f79823b68cae86f2b6bc99879cf01725ce07e68f8dd37a4d5e0",
+      "selected_ranges": [
+        {
+          "line_start": 1,
+          "line_end": 260
+        }
+      ]
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-route-v1/source-controls/ext__goal__src__extension.json",
+      "sha256": "bace50fd2ca45731706ddc2d188774199ff6eb84801b834324ce0c12d5f12b07",
+      "url": "https://raw.githubusercontent.com/openai/codex/rust-v0.159.2/codex-rs/ext/goal/src/extension.rs",
+      "full_public_source_sha256": "47fe789555dc082a7b9f1b9d67e2f084bde9fcce34aad1d61257a71c03a67055",
+      "selected_ranges": [
+        {
+          "line_start": 98,
+          "line_end": 120
+        },
+        {
+          "line_start": 250,
+          "line_end": 455
+        },
+        {
+          "line_start": 530,
+          "line_end": 584
+        }
+      ]
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-route-v1/source-controls/core__src__tools__spec_plan.json",
+      "sha256": "cd6c68b61cf7a2aafadcc57aa3c84a09417eaf199bd9d85a18d692ee52100824",
+      "url": "https://raw.githubusercontent.com/openai/codex/rust-v0.159.2/codex-rs/core/src/tools/spec_plan.rs",
+      "full_public_source_sha256": "849ef21d4e5c83febdc31eacd7609911d43e3f69a35168fe02ae899273b5ef3e",
+      "selected_ranges": [
+        {
+          "line_start": 123,
+          "line_end": 187
+        },
+        {
+          "line_start": 653,
+          "line_end": 683
+        },
+        {
+          "line_start": 1078,
+          "line_end": 1088
+        },
+        {
+          "line_start": 1120,
+          "line_end": 1145
+        },
+        {
+          "line_start": 1147,
+          "line_end": 1295
+        },
+        {
+          "line_start": 1298,
+          "line_end": 1305
+        },
+        {
+          "line_start": 1477,
+          "line_end": 1530
+        }
+      ]
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-route-v1/source-controls/core__src__session__session.json",
+      "sha256": "f70b423f6435d93a5fdbd4a8f18d2a2ee422274b441a265d3ba0e0b07ff63dd1",
+      "url": "https://raw.githubusercontent.com/openai/codex/rust-v0.159.2/codex-rs/core/src/session/session.rs",
+      "full_public_source_sha256": "de7eca05b55865c0ef03465a29bfb51e54d1eb78d253533d8b76e88712172f2d",
+      "selected_ranges": [
+        {
+          "line_start": 1003,
+          "line_end": 1020
+        },
+        {
+          "line_start": 1110,
+          "line_end": 1125
+        },
+        {
+          "line_start": 1635,
+          "line_end": 1655
+        }
+      ]
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-route-v1/source-controls/app-server__src__bespoke_event_handling.json",
+      "sha256": "c71ef79c034ebc7f4c79175439992b352790fac1f376575185845998d9def092",
+      "url": "https://raw.githubusercontent.com/openai/codex/rust-v0.159.2/codex-rs/app-server/src/bespoke_event_handling.rs",
+      "full_public_source_sha256": "32dc66a8a6d77412be5d6a9dc7db6d3383b7d0d8d54949de02503cade1774982",
+      "selected_ranges": [
+        {
+          "line_start": 1020,
+          "line_end": 1030
+        },
+        {
+          "line_start": 1575,
+          "line_end": 1606
+        }
+      ]
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-route-v1/source-controls/core__src__config__mod.json",
+      "sha256": "cf38c6b35bb6fde5acbb619cb52a75aaae71f2eb29b7eae754f1fd2c695c9c46",
+      "url": "https://raw.githubusercontent.com/openai/codex/rust-v0.159.2/codex-rs/core/src/config/mod.rs",
+      "full_public_source_sha256": "df6d6871a35a9e365e36beb3d388c2c39cae59d95bd84834321c8501390ec397",
+      "selected_ranges": [
+        {
+          "line_start": 1578,
+          "line_end": 1605
+        },
+        {
+          "line_start": 2680,
+          "line_end": 2716
+        }
+      ]
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-route-v1/source-controls/config__src__config_toml.json",
+      "sha256": "70cd95fcb3bf6facc5936caa283ececbe2c52442d5700e2497b792dcc4702316",
+      "url": "https://raw.githubusercontent.com/openai/codex/rust-v0.159.2/codex-rs/config/src/config_toml.rs",
+      "full_public_source_sha256": "05b6d259c8882322d33a997d69c0898f7ca3693552bf9ec5f4a8f1c60457bb1e",
+      "selected_ranges": [
+        {
+          "line_start": 380,
+          "line_end": 406
+        },
+        {
+          "line_start": 660,
+          "line_end": 687
+        }
+      ]
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-route-v1/source-controls/core__src__tools__mod.json",
+      "sha256": "432044cffc4ab6d544cecd3334d2dacaee5bb31678322ef0e113cb73a09a4fa2",
+      "url": "https://raw.githubusercontent.com/openai/codex/rust-v0.159.2/codex-rs/core/src/tools/mod.rs",
+      "full_public_source_sha256": "510635e3ae67e4c63e1feaf6d645f25dc2590f54391645dddeec0a84c1d17616",
+      "selected_ranges": [
+        {
+          "line_start": 74,
+          "line_end": 97
+        }
+      ]
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-route-v1/source-controls/ext__goal__src__lib.json",
+      "sha256": "493030ab4a0778286a1969b0e37304f1a779b543b901c1c94d610b1200f55426",
+      "url": "https://raw.githubusercontent.com/openai/codex/rust-v0.159.2/codex-rs/ext/goal/src/lib.rs",
+      "full_public_source_sha256": "fa0a7632863b05c565318f88dd2ef985a08518c833c57e51e70bf4e976e6562f",
+      "selected_ranges": [
+        {
+          "line_start": 1,
+          "line_end": 28
+        }
+      ]
+    }
+  ],
+  "official_source_refetch": false,
+  "source_lineage": "Unchanged original freeze1 independent review supplies prior official-tag verification; this review verifies local exact bytes and reads selected ranges only."
+}

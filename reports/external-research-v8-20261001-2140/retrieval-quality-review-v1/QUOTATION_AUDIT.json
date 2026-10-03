@@ -1,0 +1,88 @@
+{
+  "schema": "pm.er8.public-source-quotation-projection-audit.v1",
+  "policy": "<=25 direct third-party words per source across this cohort; conservative omission of every direct SOURCE_EXCERPTS quotation span. Review prose/verdicts otherwise unchanged. No raw source body reads/copies by publisher.",
+  "third_party_direct_verbatim_words_published": 0,
+  "reviews_explicit_quotation_spans": 0,
+  "candidate_own_quotes_permitted": true,
+  "original_source_locators_primary_URLs_ranges_preserved": true,
+  "artifacts": [
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-RETR-C-M/SOURCE_EXCERPTS.md",
+      "original_sha256": "45e6ff3d13468c0b84ac210ace06da5828e440abf60226af8f2d889c6c8f3fe0",
+      "omitted_spans": [
+        {
+          "original_span_sha256": "ec2cdfb2a7c4b0f9a04642d604d7c55cd5a44d622e0e814f3bedc7d2e548f17c",
+          "original_word_count": 13,
+          "public_verbatim_word_count": 0,
+          "original_line": 5
+        },
+        {
+          "original_span_sha256": "e6b4a2d01195c478066de02171373f5e9c86176ba930420162de9c3023b2dfe6",
+          "original_word_count": 1,
+          "public_verbatim_word_count": 0,
+          "original_line": 5
+        },
+        {
+          "original_span_sha256": "fd22112a9a06b5259a1f7e4f1065df194cff58d4e17589e9d3c53c2d2fabb7d6",
+          "original_word_count": 1,
+          "public_verbatim_word_count": 0,
+          "original_line": 5
+        },
+        {
+          "original_span_sha256": "b650ce2c53cb2af2e31e8dbb6c1877afdd7309baf3ab6069cd797e7caf6d9882",
+          "original_word_count": 8,
+          "public_verbatim_word_count": 0,
+          "original_line": 7
+        }
+      ],
+      "public_verbatim_source_quotation_words": 0,
+      "locator_hash_ranges_retained": true,
+      "finding_or_verdict_change": false
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-RETR-T-M/SOURCE_EXCERPTS.md",
+      "original_sha256": "a7b21e1835151d031ac7ee3a67ccac679eb0efafb80f5182b06844a5f0809991",
+      "omitted_spans": [
+        {
+          "original_span_sha256": "1504767400f216ff61dddd7188803e0a96848f05ac3b84bdfc2cd3bc7f007288",
+          "original_word_count": 4,
+          "public_verbatim_word_count": 0,
+          "original_line": 7
+        },
+        {
+          "original_span_sha256": "5a09f5ed75fcdd9a4d960afbec969c2e751360369d0420c353c3f85bda4346d8",
+          "original_word_count": 4,
+          "public_verbatim_word_count": 0,
+          "original_line": 8
+        },
+        {
+          "original_span_sha256": "62a96b898682a405e11c28c1c65e879d8ed7ed166f14eb652348533526e11575",
+          "original_word_count": 2,
+          "public_verbatim_word_count": 0,
+          "original_line": 8
+        },
+        {
+          "original_span_sha256": "a5ccd65c6c8a2153c16325833c3a28527322c6dd9106cfb4e27c3e8c078fce2e",
+          "original_word_count": 2,
+          "public_verbatim_word_count": 0,
+          "original_line": 9
+        },
+        {
+          "original_span_sha256": "73d508c6cb477b1c742f2f8c45a1596ab976bf24cb30f78e147419b95df86620",
+          "original_word_count": 8,
+          "public_verbatim_word_count": 0,
+          "original_line": 9
+        },
+        {
+          "original_span_sha256": "1504767400f216ff61dddd7188803e0a96848f05ac3b84bdfc2cd3bc7f007288",
+          "original_word_count": 4,
+          "public_verbatim_word_count": 0,
+          "original_line": 9
+        }
+      ],
+      "public_verbatim_source_quotation_words": 0,
+      "locator_hash_ranges_retained": true,
+      "finding_or_verdict_change": false
+    }
+  ]
+}

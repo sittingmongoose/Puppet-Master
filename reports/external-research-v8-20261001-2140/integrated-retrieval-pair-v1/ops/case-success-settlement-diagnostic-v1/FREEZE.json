@@ -1,0 +1,13 @@
+{
+  "schema": "pm.er8.case-success-settlement-diagnostic-freeze.v1",
+  "frozen_epoch": 1790992146.813787,
+  "original_birth_epoch": 1790991924.8544538,
+  "original_deadline_epoch": 1790992524.8544538,
+  "completed_before_original_deadline": true,
+  "status": "ALREADY_OPERATIVELY_SETTLED_PENDING_EVALUATION",
+  "files": {
+    "FINDING.json": "af13b717b50a39de4910610594c5a07b97fa4c27696f6ca492ebd43692878c11",
+    "README.md": "bdb9881e10fdf2b2e5f0212fee214cb2d774eecb854c87fd82eb522889550e91"
+  },
+  "root_action": "NONE; already complete; no replay/duplicate launch/quality credit"
+}

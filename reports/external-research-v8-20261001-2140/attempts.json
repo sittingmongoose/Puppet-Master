@@ -1,6 +1,6 @@
 {
   "schema": "pm.external_research.v8.public_attempts.v1",
-  "checkpoint": "V7_RETRIEVAL_CRITICS_ACTIVE_V6_INCOMPLETE",
+  "checkpoint": "TWO_OPERATIONAL_PAIRS_RETRIEVAL_FAILED_SCREENS_AMENDMENT_REVIEW_PENDING",
   "attempts": [
     {
       "id": "v8-z-mechanical-route-canary-v1",
@@ -151,31 +151,52 @@
     {
       "id": "V8-BIO-RETR-C-M",
       "scope": "incomplete integrated pipeline",
-      "status": "RESEARCH_COMPLETE_CRITIC_ACTIVE_AT_OBSERVATION",
-      "native_goal_starts": 2,
-      "research_quality": "UNASSESSED",
-      "evidence": "batching-partial-cohort-v1/ops/recovery-v1/OBSERVATION_20261003_012605.json",
-      "observation_utc": "2026-10-03T01:25:39.382829+00:00"
+      "status": "COMPLETE_THREE_GOAL_OPERATIONAL_PIPELINE",
+      "native_goal_starts": 3,
+      "research_quality": "FAILED_SCREEN; remainder UNASSESSED",
+      "evidence": "integrated-retrieval-pair-v1/README.md",
+      "observation_utc": "2026-10-03T01:25:39.382829+00:00",
+      "independent_quality_evidence": "retrieval-quality-review-v1/README.md"
     },
     {
       "id": "V8-BIO-RETR-T-M",
       "scope": "incomplete integrated pipeline",
-      "status": "RESEARCH_COMPLETE_CRITIC_ACTIVE_AT_OBSERVATION",
-      "native_goal_starts": 2,
-      "research_quality": "UNASSESSED",
-      "evidence": "batching-partial-cohort-v1/ops/recovery-v1/OBSERVATION_20261003_012605.json",
-      "observation_utc": "2026-10-03T01:25:39.382829+00:00"
+      "status": "COMPLETE_THREE_GOAL_OPERATIONAL_PIPELINE",
+      "native_goal_starts": 3,
+      "research_quality": "FAILED_SCREEN; remainder UNASSESSED",
+      "evidence": "integrated-retrieval-pair-v1/README.md",
+      "observation_utc": "2026-10-03T01:25:39.382829+00:00",
+      "independent_quality_evidence": "retrieval-quality-review-v1/README.md"
+    },
+    {
+      "id": "V8-BIO-AMEND-C-L",
+      "scope": "completed operational pipeline",
+      "status": "COMPLETE_THREE_GOAL_OPERATIONAL_PIPELINE",
+      "native_goal_starts": 3,
+      "research_quality": "PENDING independent evaluation",
+      "evidence": "integrated-amendment-pair-v1/README.md"
+    },
+    {
+      "id": "V8-BIO-AMEND-T-L",
+      "scope": "completed operational pipeline",
+      "status": "COMPLETE_THREE_GOAL_OPERATIONAL_PIPELINE",
+      "native_goal_starts": 3,
+      "research_quality": "PENDING independent evaluation",
+      "evidence": "integrated-amendment-pair-v1/README.md"
     }
   ],
   "note": "Current metadata observation; past frozen cohorts/grades retained. Failed native final responses/status/causal reasons UNKNOWN; no completed case or recipe PASS.",
   "native_qualification": "V3_MECHANICAL_PASSED_LIMITED_DELIVERY_INFERENCE",
   "native_qualification_evidence": "resume-qualified-v3-cohort/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json",
-  "observation_utc": "2026-10-03T01:25:39.382829+00:00",
+  "observation_utc": "2026-10-03T02:24:21.639997+00:00",
   "current_stage_counts": {
-    "research": 10,
-    "same_family_critic": 1,
-    "final_correction": 0,
-    "whole_pipelines": 0,
-    "quality_assessed_pipelines": 0
+    "research_complete": 12,
+    "candidate_critic_complete": 5,
+    "final_revision_complete": 4,
+    "operational_integrated_complete": 4,
+    "operational_matched_pairs_complete": 2,
+    "quality_reviewed_pairs": 1,
+    "independent_failed_screens": 2,
+    "full_quality_pass": 0
   }
 }

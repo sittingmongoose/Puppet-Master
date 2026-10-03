@@ -1,0 +1,20 @@
+test_unique_failure_intervals_without_cursor_or_complete (test_source.Accounting.test_unique_failure_intervals_without_cursor_or_complete) ... ok
+test_exact_immutable_pins_and_source_not_json (test_source.Closure.test_exact_immutable_pins_and_source_not_json) ... ok
+test_immutable_deadline_and_arming (test_source.Closure.test_immutable_deadline_and_arming) ... ok
+test_no_release_without_explicit_root (test_source.Closure.test_no_release_without_explicit_root) ... ok
+test_exact_prospective_formula_and_drift_rejection (test_source.FormulaFixture.test_exact_prospective_formula_and_drift_rejection) ... ok
+test_held_returncode_group_and_deadline_enforced (test_source.HeldFailure.test_held_returncode_group_and_deadline_enforced) ... ok
+test_no_launch_needs_positive_marker_not_missing_files (test_source.HeldFailure.test_no_launch_needs_positive_marker_not_missing_files) ... ok
+test_positive_failed_no_complete_current_release_real_held_parents (test_source.HeldFailure.test_positive_failed_no_complete_current_release_real_held_parents) ... ok
+test_unknown_activation_retains_hold (test_source.HeldFailure.test_unknown_activation_retains_hold) ... ok
+test_unknown_or_foreign_enrollment_rejected (test_source.HeldFailure.test_unknown_or_foreign_enrollment_rejected) ... ok
+test_adverse_every_unknown_kind (test_source.PositiveItems.test_adverse_every_unknown_kind) ... ok
+test_exact_native_goal_controls (test_source.PositiveItems.test_exact_native_goal_controls) ... ok
+test_only_four_mcp_names_and_exact_server (test_source.PositiveItems.test_only_four_mcp_names_and_exact_server) ... ok
+test_structural_projection_never_exports_text (test_source.PositiveItems.test_structural_projection_never_exports_text) ... ok
+test_usage_notifications_are_not_response_cap (test_source.PositiveItems.test_usage_notifications_are_not_response_cap) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.279s
+
+OK

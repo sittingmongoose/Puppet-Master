@@ -1,0 +1,22 @@
+{
+  "schema": "er8.independent.integrated-evaluation-freeze.v1",
+  "case_id": "V8-BIO-RETR-C-M",
+  "evaluator": "er8-eval-bio-retr-c",
+  "freeze_epoch": 1790993175.2910974,
+  "original_birth_epoch": 1790992152.3068507,
+  "original_hard_deadline_epoch": 1790994552.3068507,
+  "inclusive_elapsed_seconds_to_freeze": 1022.9842467308044,
+  "before_original_deadline": true,
+  "no_clock_reset": true,
+  "manifest_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-RETR-C-M/MANIFEST.json",
+  "manifest_sha256": "6f36d9a5f81fafe60302ad7dc5b0a7b613669db2f566a0ef9bb9c4f8a4171d2f",
+  "quality_disposition_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-RETR-C-M/quality-disposition.json",
+  "quality_disposition_sha256": "d1deb301a48254a2b5d869acabbb122cd32dc839eb252f34a6b85ab510a07c68",
+  "required_final_proposal_sha256": "3ed2f8c5073ef17beaaf9f06dc32506af6841b3d81f3d10fe576f06e3cdfcb9e",
+  "method_card_after_provisional_quality_ruling": true,
+  "method_identity_was_exposed_earlier_in_owner_manifest": true,
+  "whole_case_pass": false,
+  "full_pass_coverage": false,
+  "evaluation_records_immutable_after_this_receipt": true,
+  "cost_endpoint": "Exact freeze endpoint includes original preparation/waits; post-freeze notification is management work."
+}

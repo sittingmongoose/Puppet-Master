@@ -1,0 +1,27 @@
+{
+  "schema": "pm.er8.public-integrated-publication-freeze.v1",
+  "frozen_epoch": 1790992821.188491,
+  "original_birth_epoch": 1790992408.9549494,
+  "original_deadline_epoch": 1790993608.9549494,
+  "completed_before_original_deadline": true,
+  "positive_selected_count": 9,
+  "manifest_artifact_count": 12,
+  "public_file_count": 15,
+  "files": {
+    "ROOT_HANDOFF.json": "9e92f10aaceee77edecfd0498affa55cc546bcc7c3165b24fad1bb08eb7fb5e9",
+    "README.md": "27f14c964c609df05d5ec4737e785dd9a22355ac736bcbe898e9470f9840251b",
+    "VERIFICATION.json": "4871e36eecde2171831ac07820c6ba99327530e3fb14b532de62d625b7b1c8b8",
+    "PUBLIC_EXPORT.json": "84ff8bd13b88a72430168bec5d43694116bfd06fea1535f8081324b38723013f",
+    "verify_public.py": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+    "evaluation/luna-resume-v2-review-v1/source-scope.json": "19b11714d288fd94ae7f9e30c6f9730118d2d8d7781c62e9fb1a1a266d9335f8",
+    "evaluation/luna-resume-v2-review-v1/pins.json": "5f42ad4e912d7da14163ae000fe644082e1b703e5f1a7d4d1dbc09ab4fa217fc",
+    "evaluation/luna-resume-v2-review-v1/review.json": "2890599c5502b1c41d606e29d90d0ccded2b4597f2ec6c5261dfb2f48b83ab32",
+    "evaluation/luna-resume-v2-review-v1/test_preventive_guards.py": "8e59f4464b8a206c3cb12755bf693bfb03bd212a84f06f10672ebfd1e948cbc9",
+    "evaluation/luna-resume-v2-review-v1/REVIEW.md": "abd73191952c1e1a737fc87b1498da90093519728c0c59b7fecfa84b95739bcb",
+    "evaluation/luna-resume-v2-review-v1/route-tests.log": "97e6e4665c82919ef0421f4fa4a088eee4a6bdcd141bdde25793cf42a563af7b",
+    "evaluation/luna-resume-v2-review-v1/controller-tests.log": "73b3427b1585d2d833f1cf950949e41dacf4bf3e60d22314edaaa4720d8255d9",
+    "evaluation/luna-resume-v2-review-v1/FREEZE_RECEIPT.json": "077d7af7823c2a0bcfb797691b457d6a0aace348101603283b814677f6ce83af",
+    "evaluation/luna-resume-v2-review-v1/preventive-guard-tests.log": "edc16787142466012d88726760a5e166972ca88f08212645f5029a0f2b805ab1"
+  },
+  "verification_returncode": 0
+}

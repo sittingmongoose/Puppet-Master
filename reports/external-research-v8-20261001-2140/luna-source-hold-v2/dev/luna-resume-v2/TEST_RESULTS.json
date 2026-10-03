@@ -1,0 +1,48 @@
+{
+  "schema": "er8.luna.auth-free-source-tests.v1",
+  "status": "PASS",
+  "tests": 25,
+  "runs": [
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "LAB_ROOT/dev/luna-resume-v2",
+        "-p",
+        "test_source.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.4454498291015625,
+      "output": "test_unique_failure_intervals_without_cursor_or_complete (test_source.Accounting.test_unique_failure_intervals_without_cursor_or_complete) ... ok\ntest_exact_immutable_pins_and_source_not_json (test_source.Closure.test_exact_immutable_pins_and_source_not_json) ... ok\ntest_immutable_deadline_and_arming (test_source.Closure.test_immutable_deadline_and_arming) ... ok\ntest_no_release_without_explicit_root (test_source.Closure.test_no_release_without_explicit_root) ... ok\ntest_exact_prospective_formula_and_drift_rejection (test_source.FormulaFixture.test_exact_prospective_formula_and_drift_rejection) ... ok\ntest_held_returncode_group_and_deadline_enforced (test_source.HeldFailure.test_held_returncode_group_and_deadline_enforced) ... ok\ntest_no_launch_needs_positive_marker_not_missing_files (test_source.HeldFailure.test_no_launch_needs_positive_marker_not_missing_files) ... ok\ntest_positive_failed_no_complete_current_release_real_held_parents (test_source.HeldFailure.test_positive_failed_no_complete_current_release_real_held_parents) ... ok\ntest_unknown_activation_retains_hold (test_source.HeldFailure.test_unknown_activation_retains_hold) ... ok\ntest_unknown_or_foreign_enrollment_rejected (test_source.HeldFailure.test_unknown_or_foreign_enrollment_rejected) ... ok\ntest_adverse_every_unknown_kind (test_source.PositiveItems.test_adverse_every_unknown_kind) ... ok\ntest_exact_native_goal_controls (test_source.PositiveItems.test_exact_native_goal_controls) ... ok\ntest_only_four_mcp_names_and_exact_server (test_source.PositiveItems.test_only_four_mcp_names_and_exact_server) ... ok\ntest_structural_projection_never_exports_text (test_source.PositiveItems.test_structural_projection_never_exports_text) ... ok\ntest_usage_notifications_are_not_response_cap (test_source.PositiveItems.test_usage_notifications_are_not_response_cap) ... ok\n\n----------------------------------------------------------------------\nRan 15 tests in 0.241s\n\nOK\n"
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "LAB_ROOT/dev/luna-resume-v2/route-successor",
+        "-p",
+        "test_offline.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 3.6603543758392334,
+      "output": "test_exact_selected_sources_and_only_declared_catalog_delta (test_offline.IdentityPrivacy.test_exact_selected_sources_and_only_declared_catalog_delta) ... ok\ntest_goal_ack_is_not_activation_and_artifact_is_not_completion (test_offline.IdentityPrivacy.test_goal_ack_is_not_activation_and_artifact_is_not_completion) ... ok\ntest_goal_replacement_is_rejected (test_offline.IdentityPrivacy.test_goal_replacement_is_rejected) ... ok\ntest_host_never_starts_automatic_continuations (test_offline.IdentityPrivacy.test_host_never_starts_automatic_continuations) ... ok\ntest_mcp_catalog_rejects_extra_reader_or_resources (test_offline.IdentityPrivacy.test_mcp_catalog_rejects_extra_reader_or_resources) ... ok\ntest_private_text_and_unknown_tool_payload_do_not_cross_projection (test_offline.IdentityPrivacy.test_private_text_and_unknown_tool_payload_do_not_cross_projection) ... ok\ntest_stronger_model_fork_history_and_effort_are_rejected (test_offline.IdentityPrivacy.test_stronger_model_fork_history_and_effort_are_rejected) ... ok\ntest_constructor_cannot_reset_original_stage_birth (test_offline.OriginalLifetime.test_constructor_cannot_reset_original_stage_birth) ... ok\ntest_expired_watchdog_never_spawns_child (test_offline.OriginalLifetime.test_expired_watchdog_never_spawns_child) ... ok\ntest_watchdog_eof_cleans_only_owned_native_group (test_offline.OriginalLifetime.test_watchdog_eof_cleans_only_owned_native_group) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 3.470s\n\nOK\n"
+    }
+  ],
+  "actual_campaign_ledger_access": false,
+  "auth_content_access": false,
+  "native_candidate_goal_starts": 0,
+  "provider_calls": 0,
+  "local_non_native_Popen_fixtures": true,
+  "synthetic_fixture_records_are_authorization": false,
+  "preventive_goal_contract_verified": false
+}

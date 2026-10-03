@@ -1,0 +1,246 @@
+{
+  "schema": "er8.independent.integrated-quality-disposition.v2",
+  "case_id": "V8-BIO-RETR-T-M",
+  "evaluation_reservation": "V8-EVAL-V8-BIO-RETR-T-M",
+  "quality_disposition": "FAILED_SCREEN",
+  "whole_case_pass": false,
+  "evaluation_scope": "decisive verified source-grounded diagnostic rejection; remaining facets expressly unassessed",
+  "source_first_ruling_epoch": 1790992423.6006954,
+  "method_quality_independence": "Case ID necessarily known; final proposal itself names the method, so perfect method blinding is not claimed. METHOD.md and prospective duties were not read before this source ruling.",
+  "method_read_after_source_first_ruling": true,
+  "original_birth_epoch": 1790992152.3068507,
+  "original_hard_deadline_epoch": 1790994552.3068507,
+  "fixed_budget_seconds": 2400,
+  "source_grounded_findings": [
+    {
+      "id": "F1",
+      "severity": "decisive",
+      "kind": "incorrect physical-coordinate composition and preservation regression",
+      "proposal_lines": [
+        90,
+        94,
+        96,
+        100,
+        166,
+        185
+      ],
+      "sources": [
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-final-correction/workspace/public_captures/c01aeed8b58b3bac7b63cee6950b65b352a155748970382e1d6f167624eee75c.body",
+          "sha256": "c01aeed8b58b3bac7b63cee6950b65b352a155748970382e1d6f167624eee75c",
+          "lines": [
+            351,
+            372,
+            380
+          ]
+        },
+        {
+          "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-RETR-T-M/private-source-captures/released-0.4.1-index.bs",
+          "sha256": "592413727ee8d42916bd98007262f48c6139273cb373839c6d285a0ba20b6406",
+          "lines": [
+            348,
+            369,
+            377
+          ]
+        }
+      ],
+      "verification_artifact": "analytic-counterexample.json",
+      "result": "Allowed multiscale translation is dropped; sequential result [26,69], final formula [15,56]."
+    },
+    {
+      "id": "F2",
+      "severity": "supporting",
+      "kind": "contradictory explicit-identity disposition",
+      "proposal_lines": [
+        89,
+        127,
+        159
+      ],
+      "result": "Final accepts explicit identity but also invalidates every type outside translation/scale. General type table cannot waive the narrower dataset restriction."
+    },
+    {
+      "id": "F3",
+      "severity": "supporting",
+      "kind": "source-version and normative-scope overclaim",
+      "proposal_lines": [
+        25,
+        26,
+        42
+      ],
+      "result": "Captured latest/index.bs identifies editor draft; S2 declares NGFFVERSION 0.5-dev. Released 0.4 file differs in status and own version scope; shared transform rule independently confirmed."
+    },
+    {
+      "id": "F4",
+      "severity": "whole-pass barrier",
+      "kind": "acknowledged consequential dependency",
+      "proposal_lines": [
+        162,
+        207
+      ],
+      "leads_lines": [
+        3,
+        5
+      ],
+      "result": "Chosen napari read-only mechanism remains unverified; final blanket claim that no lead blocks the plan does not meet the assigned whole-pass scope."
+    }
+  ],
+  "coverage": [
+    {
+      "facet": "Q1",
+      "status": "UNASSESSED",
+      "assessment": "Two component precedents and a recommendation are present; version-specific component behavior was not independently source-graded after the decisive screen."
+    },
+    {
+      "facet": "Q2",
+      "status": "FAIL",
+      "assessment": "Selected transform composition and normative source scope were source-checked. Final formula omits multiscale translation; remaining format claims are not fully assessed."
+    },
+    {
+      "facet": "Q3",
+      "status": "UNASSESSED",
+      "assessment": "Issue/fix/test narratives and authentic captures are present; exact regression-test lineage was not independently adjudicated."
+    },
+    {
+      "facet": "B1",
+      "status": "PARTIAL_FAIL",
+      "assessment": "Input matrix is textually present, but explicit identity is both accepted and invalidated. L1 leaves the chosen stack read-only mechanism consequentially unverified. Other input checks unassessed."
+    },
+    {
+      "facet": "B2",
+      "status": "FAIL",
+      "assessment": "Physical cursor formula drops a permitted multiscale-level offset; analytic counterexample verifies the consequence."
+    },
+    {
+      "facet": "B3",
+      "status": "UNASSESSED",
+      "assessment": "Association/refusal/sampling choices are present. Faulty composed-coordinate formula can affect mappings, but overlay algebra and all refusal conditions were not fully graded."
+    },
+    {
+      "facet": "B4",
+      "status": "UNASSESSED",
+      "assessment": "Two implementations and bounded tradeoff are present; their behavior and the complete issue/fix/regression-test chain were not independently source-graded."
+    },
+    {
+      "facet": "B5",
+      "status": "PARTIAL_FAIL",
+      "assessment": "Concrete steps inherit the incorrect B2 formula. Proposed fixtures and visible limits are present, but complete discriminating validation coverage was not graded."
+    },
+    {
+      "facet": "all_consequential_claims",
+      "status": "UNASSESSED",
+      "assessment": "Diagnostic screen only; no exhaustive source grading and no whole-case PASS."
+    },
+    {
+      "facet": "two_distinct_implementations",
+      "status": "PRESENT_UNASSESSED",
+      "assessment": "napari/ome-zarr-py and vizarr named, with authentic same-case source captures. Independent discovery operation provenance checked; behavior claims not fully graded."
+    },
+    {
+      "facet": "issue_fix_regression_test_lineage",
+      "status": "UNASSESSED",
+      "assessment": "No credit from the critic assertion or current-main test presence alone."
+    },
+    {
+      "facet": "calibration_composition",
+      "status": "FAIL",
+      "assessment": "Allowed multiscale translation omitted by the final formula."
+    },
+    {
+      "facet": "units_absence_applicability_fallbacks",
+      "status": "PARTIALLY_ASSESSED",
+      "assessment": "Conditional scale-fallback correction checked against source. Full units/fallback behavior unassessed; L8 retained."
+    },
+    {
+      "facet": "resolution_switching",
+      "status": "UNASSESSED",
+      "assessment": "Plan text present; full physical-anchor and level-selection behavior unassessed."
+    },
+    {
+      "facet": "label_association_transform_sampling",
+      "status": "UNASSESSED",
+      "assessment": "Plan text present; full alignment justification unassessed."
+    },
+    {
+      "facet": "versions_dates_context_conditions_exceptions_normative_force",
+      "status": "PARTIAL_FAIL",
+      "assessment": "S2 is a 0.5-dev editor draft under a 0.4.1 repository tag, not the released-version file. Selected transform rule separately confirmed in released 0.4 source; other version/date claims unassessed."
+    },
+    {
+      "facet": "original_current_artifact_preservation",
+      "status": "PARTIAL_FAIL",
+      "assessment": "Correct full T_M composition in initial proposal and critic is narrowed to scale-only in final formula. C1 scale-semantic correction is supported; no penalty for withdrawing an erroneous initial claim."
+    },
+    {
+      "facet": "retained_negative_constraints",
+      "status": "TEXTUALLY_ASSESSED",
+      "assessment": "Local read-only one-image, 2D/two-resolution scope and exclusions remain in the final prose. Runtime enforcement unassessed."
+    },
+    {
+      "facet": "calibration_of_unsupported_claims",
+      "status": "PARTIAL_FAIL",
+      "assessment": "Proposed tests correctly labeled unexecuted and leads carried forward, but final says no lead blocks the plan despite consequential source dependencies. Draft/release identity overclaimed."
+    },
+    {
+      "facet": "proposed_validation_discrimination",
+      "status": "PARTIALLY_ASSESSED",
+      "assessment": "Evaluator-owned multiscale-translation counterexample verified; F1-F11 complete discrimination not assessed. No candidate fixture execution credited."
+    },
+    {
+      "facet": "source_capture_and_delivered_ranges",
+      "status": "ESTABLISHED_HOST_ONLY",
+      "assessment": "Frozen source/receipt hashes and every recorded GET/read delivery byte-range hash verified. Does not establish frontend receipt or model comprehension."
+    },
+    {
+      "facet": "semantic_source_understanding",
+      "status": "NOT_ESTABLISHED",
+      "assessment": "Selected final source interpretation is demonstrably wrong despite delivery of the governing text; understanding of ungraded claims unknown."
+    },
+    {
+      "facet": "native_three_stage_completion",
+      "status": "ESTABLISHED",
+      "assessment": "Three fresh distinct native Goal IDs, same host-bound account, GLM-5.3-Flash max, complete/zero-return/quiescence receipts; separate from quality."
+    },
+    {
+      "facet": "final_artifact_integrity",
+      "status": "ESTABLISHED",
+      "assessment": "Required final proposal and leads match admitted freeze hashes; actual final also matches global receipt."
+    },
+    {
+      "facet": "unresolved_consequential_dependencies",
+      "status": "FAIL_WHOLE_PASS_REQUIREMENT",
+      "assessment": "L1 explicitly leaves the selected component read-only mechanism unverified; L2/L3/L5/L8 and optional fallback leads also disclosed. Not every disclosed lead is independently judged blocking."
+    },
+    {
+      "facet": "declared_method_compliance",
+      "status": "PARTIALLY_ESTABLISHED",
+      "assessment": "Planned three coherent batches and progressive source identity/context operations supported by public receipts. Completing accurate bounded obligations not established; no special witness was assigned."
+    }
+  ],
+  "native_completion_disposition": "COMPLETE_THREE_NATIVE_STAGES",
+  "source_provenance_disposition": "AUTHENTIC_FROZEN_HOST_CAPTURES_AND_MATCHING_DELIVERY_RANGES",
+  "source_semantic_acquisition": "UNKNOWN_AS_A_PROCESS; selected final misunderstanding verified",
+  "preservation_disposition": "PARTIAL_FAIL_ON_CURRENT_FINAL_FULL_TRANSFORM_COMPOSITION",
+  "method_compliance_disposition": "PARTIALLY_ESTABLISHED; source-scope/completion obligation not satisfied",
+  "candidate_fixtures_or_implementation_executed": false,
+  "evaluator_checks_executed": [
+    "Frozen artifact/capture/receipt SHA and byte verification",
+    "Public GET/read delivered-range SHA verification",
+    "Same-case immutable-input transfer hash verification",
+    "Evaluator-owned affine arithmetic counterexample assertions"
+  ],
+  "unassessed_domains": [
+    "Independent full Q1 component behavior audit",
+    "Independent full Q3 issue-fix-regression-test lineage",
+    "All final claims outside selected calibration/normative scope",
+    "Complete alignment/sampling/resolution/fallback validation"
+  ],
+  "raw_native_histories_read": false,
+  "private_runtime_or_profiles_or_auth_read": false,
+  "sibling_case_outputs_read": false,
+  "campaign_or_canon_edits": false,
+  "all_raw_captures_external_private": true,
+  "created_epoch": 1790992814.088977,
+  "evaluation_end_epoch": 1790993138.852565,
+  "evaluation_inclusive_elapsed_seconds": 986.5457143783569,
+  "finished_before_original_hard_deadline": true
+}

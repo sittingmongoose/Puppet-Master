@@ -1,0 +1,200 @@
+{
+  "schema": "er8.independent.scoped-source-checks.v1",
+  "case_id": "V8-BIO-RETR-C-M",
+  "checks": [
+    {
+      "id": "S1",
+      "source_sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+      "url": "https://ngff.openmicroscopy.org/0.4/index.html",
+      "content_read": "Full sections 3.1, 3.3, 3.4, 3.6, 3.7, HTML stripped for reading; exact-byte section locators retained.",
+      "ranges": [
+        [
+          81551,
+          90023
+        ],
+        [
+          97121,
+          98907
+        ],
+        [
+          98907,
+          109179
+        ],
+        [
+          112366,
+          112936
+        ],
+        [
+          112936,
+          116811
+        ]
+      ],
+      "status": "VERIFIED_SCOPED",
+      "supports": "Optional axis units, transform application order/types and per-axis fallback condition, optional group transforms applied after dataset transforms, external path-vector form, association/level-count declarations without alignment guarantee.",
+      "does_not_cover": "All other normative claims, all possible format exceptions, or any actual renderer behavior.",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/public_captures/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body",
+      "body_sha256_verified": true
+    },
+    {
+      "id": "S2",
+      "source_sha256": "f5bae88a5c65a0fe3987f1cf264025e0edbcda8d89cdfd0ceef342c367b4aeb2",
+      "url": "https://api.github.com/repos/napari/napari/releases/tags/v0.9.2",
+      "content_read": "tag, creation/publication dates, html_url, complete release-note body; JSON transport metadata not semantically audited.",
+      "status": "VERIFIED_SCOPED",
+      "supports": "0.9.2 release published 2026-09-29, Qt/vispy characterization, multiscale level extraction action announcement.",
+      "does_not_cover": "Nearest-neighbor labels through their own per-level transforms at every zoom level; release notes are not a renderer source/test proof.",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/public_captures/f5bae88a5c65a0fe3987f1cf264025e0edbcda8d89cdfd0ceef342c367b4aeb2.body",
+      "body_sha256_verified": true
+    },
+    {
+      "id": "S3",
+      "source_sha256": "c46ba936598885a0119bb23452d9ed74f87258a5169daee615d028373c6a88f4",
+      "url": "https://raw.githubusercontent.com/ome/ome-zarr-py/master/ome_zarr/reader.py",
+      "content_read": "Relevant Labels, Label and Multiscales code windows (especially lines 183-322); other class implementations only incidental search context.",
+      "status": "VERIFIED_SCOPED",
+      "supports": "Zarr-group conjunct; first multiscales entry, version fallback 0.1, axes validation call, per-dataset transform metadata, label discovery.",
+      "does_not_cover": "napari plugin mapping, exact released 0.11.1 source identity, dependency compatibility or renderer behavior.",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/public_captures/c46ba936598885a0119bb23452d9ed74f87258a5169daee615d028373c6a88f4.body",
+      "body_sha256_verified": true
+    },
+    {
+      "id": "S4",
+      "source_sha256": "50b0c9834aa58e06195d4e10f236e71adeac89e87aee2f4a38cf83b14ae9cc4f",
+      "url": "https://patch-diff.githubusercontent.com/raw/ome/ome-zarr-py/pull/652.diff",
+      "content_read": "Complete diff.",
+      "status": "VERIFIED_SCOPED",
+      "supports": "Writer normalizes transform input paths with dataset paths; added regression test asserts both; test uses 0.6 metadata and Zarr v3.",
+      "does_not_cover": "A matching defect/regression test in the 0.4 read-only prototype.",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/public_captures/50b0c9834aa58e06195d4e10f236e71adeac89e87aee2f4a38cf83b14ae9cc4f.body",
+      "body_sha256_verified": true
+    },
+    {
+      "id": "S5",
+      "source_sha256": "856e3419341dbbd8c38e10e0382b5a74df2b56d4da572731e04003109b198274",
+      "url": "https://api.github.com/repos/ome/ome-zarr-py/pulls/652",
+      "content_read": "Title/body/state/dates/merge fields.",
+      "status": "VERIFIED_SCOPED",
+      "supports": "Concrete reported failure, merge 2026-09-08, linked fix with test; merge commit 94eaf20aa096b4a034fc0c636e31d5d64953d6ad.",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/public_captures/856e3419341dbbd8c38e10e0382b5a74df2b56d4da572731e04003109b198274.body",
+      "body_sha256_verified": true
+    },
+    {
+      "id": "S6",
+      "source_sha256": "e2b6135a8d325b7db4eb76dd2d3ca4e92d2d25d215045a6351d8264c8110cb03",
+      "url": "https://raw.githubusercontent.com/hms-dbmi/vizarr/master/README.md",
+      "content_read": "Complete README.",
+      "status": "VERIFIED_SCOPED",
+      "supports": "Independent client-side component; browser app and Python anywidget interfaces; explicit generic-array testing limitation.",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/public_captures/e2b6135a8d325b7db4eb76dd2d3ca4e92d2d25d215045a6351d8264c8110cb03.body",
+      "body_sha256_verified": true
+    },
+    {
+      "id": "S7",
+      "source_sha256": "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5",
+      "url": "https://raw.githubusercontent.com/hms-dbmi/vizarr/master/package.json",
+      "content_read": "Complete package.json.",
+      "status": "VERIFIED_SCOPED",
+      "supports": "Snapshot version 0.3.0, Viv ~0.19.0 and zarrita ~0.6.0, vitest runner.",
+      "does_not_cover": "Exact deployment/version attribution of historical diffs.",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/public_captures/bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5.body",
+      "body_sha256_verified": true
+    },
+    {
+      "id": "S8",
+      "source_sha256": "22066be87be786e81fdde59143924d71c5eda932cbd57c3887b2949efc9ab9ee",
+      "url": "https://patch-diff.githubusercontent.com/raw/hms-dbmi/vizarr/pull/261.diff",
+      "content_read": "Relevant model-matrix, fit-to-viewport and coordinateTransformationsToMatrix windows (diff lines 338-354, 522-617).",
+      "status": "VERIFIED_SCOPED",
+      "supports": "First dataset transform access, optional URL matrix precedence, apparent minX denominator text.",
+      "does_not_cover": "Whole diff absence of test additions, runtime correctness or current deployed renderer.",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/public_captures/22066be87be786e81fdde59143924d71c5eda932cbd57c3887b2949efc9ab9ee.body",
+      "body_sha256_verified": true
+    },
+    {
+      "id": "S9",
+      "source_sha256": "f7a8b4620ef658d657af86c398040800660965b98516f5ce3c978182c7090752",
+      "url": "https://patch-diff.githubusercontent.com/raw/hms-dbmi/vizarr/pull/298.diff",
+      "content_read": "Complete diff.",
+      "status": "VERIFIED_SCOPED",
+      "supports": "Detection changes to isMultiscales and defaultMeta fallback; no test file added in this diff.",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/public_captures/f7a8b4620ef658d657af86c398040800660965b98516f5ce3c978182c7090752.body",
+      "body_sha256_verified": true
+    },
+    {
+      "id": "S10",
+      "source_sha256": "3fa66f822c20358c44c1763d4d112d124a6bbfd81b22aeec3f6066b75b056711",
+      "url": "https://api.github.com/repos/hms-dbmi/vizarr/pulls/298",
+      "content_read": "Title/body/state/dates/merge fields.",
+      "status": "VERIFIED_SCOPED",
+      "supports": "Explicit Fixes #297 link; merged 2025-09-03; deploy-preview declaration.",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/public_captures/3fa66f822c20358c44c1763d4d112d124a6bbfd81b22aeec3f6066b75b056711.body",
+      "body_sha256_verified": true
+    },
+    {
+      "id": "S11",
+      "source_sha256": "8ce524d0db134212e69e1f1ead70efbe35751cd1b1bf76a14f8658c30b4e7943",
+      "url": "https://api.github.com/repos/hms-dbmi/vizarr/issues/297",
+      "content_read": "Title/body/state/dates.",
+      "status": "VERIFIED_SCOPED",
+      "supports": "User-reported ignored negative-scale edit and napari comparison; not an independent runtime reproduction.",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/public_captures/8ce524d0db134212e69e1f1ead70efbe35751cd1b1bf76a14f8658c30b4e7943.body",
+      "body_sha256_verified": true
+    },
+    {
+      "id": "S12",
+      "source_sha256": "038a3d5c8a6228bb3380c2de35bd26ca4f6cb4400753d39010752d9cd25fac1c",
+      "url": "https://api.github.com/repos/hms-dbmi/vizarr/issues/271",
+      "content_read": "Title/body/state/dates.",
+      "status": "VERIFIED_SCOPED",
+      "supports": "Reported 3D regression linked to #261 and relevance to label scaling.",
+      "does_not_cover": "Manual checks proved to have missed the regression; chronology alone cannot establish that stronger claim.",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/public_captures/038a3d5c8a6228bb3380c2de35bd26ca4f6cb4400753d39010752d9cd25fac1c.body",
+      "body_sha256_verified": true
+    },
+    {
+      "id": "S13",
+      "source_sha256": "2b72f725dea410179c7ba3b2c70e983b27c58fed9f848ccb483a60d133a9917c",
+      "url": "https://api.github.com/repos/hms-dbmi/vizarr/pulls/261",
+      "content_read": "Title/body/state/dates/merge fields.",
+      "status": "VERIFIED_SCOPED",
+      "supports": "Merge on 2025-03-06; PR body says cherry-picked change; body itself does not establish manual deploy-preview verification of this PR.",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/public_captures/2b72f725dea410179c7ba3b2c70e983b27c58fed9f848ccb483a60d133a9917c.body",
+      "body_sha256_verified": true
+    },
+    {
+      "id": "S14",
+      "source_sha256": "4015dacefbf69c638e425597041804d3bb3b04ea0360d1900731f65db553d34b",
+      "url": "https://raw.githubusercontent.com/ome/ome-zarr-py/master/CHANGELOG.md",
+      "content_read": "Complete changelog.",
+      "status": "VERIFIED_SCOPED",
+      "supports": "Top entry 0.11.1 dated April 2025; 0.10.2 zarr<3 entry; 0.3.0 format support entry.",
+      "does_not_cover": "Current latest published release or exact currently installed dependency constraint.",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/public_captures/4015dacefbf69c638e425597041804d3bb3b04ea0360d1900731f65db553d34b.body",
+      "body_sha256_verified": true
+    },
+    {
+      "id": "S15",
+      "source_sha256": "6a6eb50e974e80f8b93df2de3273547fa8a0553e87cacca46504924abab3485b",
+      "url": "https://api.github.com/repos/hms-dbmi/vizarr/issues/288/comments",
+      "content_read": "All seven comment bodies/dates/URLs.",
+      "status": "VERIFIED_SCOPED",
+      "supports": "Actual quoted final-level ratios y x2, x x1; workaround deleting last level; maintainer diagnosis qualified as belief.",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/public_captures/6a6eb50e974e80f8b93df2de3273547fa8a0553e87cacca46504924abab3485b.body",
+      "body_sha256_verified": true
+    },
+    {
+      "id": "S16",
+      "source_sha256": "122712ce833fb949cb9497684389bdbf923db016bba5aedd69cb4250b441ca27",
+      "url": "https://api.github.com/repos/ome/ome-zarr-py/issues/172",
+      "content_read": "Title/body/state/created date.",
+      "status": "VERIFIED_SCOPED",
+      "supports": "Writer-side group-transform gap reported; not direct evidence of napari plugin behavior.",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/public_captures/122712ce833fb949cb9497684389bdbf923db016bba5aedd69cb4250b441ca27.body",
+      "body_sha256_verified": true
+    }
+  ],
+  "full_claim_audit": false,
+  "remaining_claims": "UNASSESSED beyond specified windows/fields; reading a candidate critique is not independent source verification.",
+  "web_fetches_by_evaluator": 0,
+  "source_capture_copies_written": false
+}

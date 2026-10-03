@@ -1,0 +1,339 @@
+{
+  "schema": "pm.er8.public-luna-source-hold.v2",
+  "status": "EXPLICIT_HOLD",
+  "positive_original_count": 38,
+  "scope": "Own frozen Python source, HOLD template, tests, test receipt, HANDOFF, snapshots and freeze metadata, selected route metadata; standalone public hash checker. No transitive dependency bodies, raw official captures, catalog model instructions, compiled SDK/native bundles, private profile/auth, native streams, raw stdout/stderr/web evidence, candidate/evaluator semantic bodies or keys.",
+  "projection": "Approved publication-source-v3 sanitizer; original/public hashes separate; embedded original pins unchanged; exact positive selection before writing.",
+  "limitations": {
+    "public_verifier_portable": true,
+    "native_replay_portable": false,
+    "source_tests_portable": false,
+    "preventive_goal_contract_verified": false,
+    "independent_source_acceptance": "PENDING",
+    "source_whole_case_failure_fixture_gap": "PENDING_REVIEW",
+    "timing_success_or_cure_established": false,
+    "quality_assessed": false
+  },
+  "artifacts": [
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/FREEZE_RECEIPT.json",
+      "public_path": "dev/luna-resume-v2/FREEZE_RECEIPT.json",
+      "original_sha256": "f7da096045f7980083bfdc812ed20a2721c09e42c2f69c242e571f65c01ef3f4",
+      "public_sha256": "f7da096045f7980083bfdc812ed20a2721c09e42c2f69c242e571f65c01ef3f4",
+      "bytes": 523,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/HANDOFF.md",
+      "public_path": "dev/luna-resume-v2/HANDOFF.md",
+      "original_sha256": "1a75be8775822c65f60f98739a5a49c0a0b9e959465259edc6a5acdb0f23826a",
+      "public_sha256": "c24f6f3801ecea5a4ccbd3aa569569dcf7ab4b0a1dc6f1e39592b38ec4e75ae1",
+      "bytes": 7514,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/HANDOFF_PAUSED.md",
+      "public_path": "dev/luna-resume-v2/HANDOFF_PAUSED.md",
+      "original_sha256": "9ca918ce5d809d613257c113add673799eae60032a561fc189d980993ff4d64b",
+      "public_sha256": "9ca918ce5d809d613257c113add673799eae60032a561fc189d980993ff4d64b",
+      "bytes": 8259,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/ROOT_RELEASE.HOLD.template.json",
+      "public_path": "dev/luna-resume-v2/ROOT_RELEASE.HOLD.template.json",
+      "original_sha256": "1a3fcf5ecb020cfe53c5a10593180b5494a089036f64f1304bdf4ac007e17ff8",
+      "public_sha256": "1a3fcf5ecb020cfe53c5a10593180b5494a089036f64f1304bdf4ac007e17ff8",
+      "bytes": 1841,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/SNAPSHOT.json",
+      "public_path": "dev/luna-resume-v2/SNAPSHOT.json",
+      "original_sha256": "b06f454a4fca15049c73accebaa8d2fba6d11c79fd029690ac1680bddf24b525",
+      "public_sha256": "adabc080626e7b4a27dd02cf0a679372411488e64af4e1d70a2866374f9e9391",
+      "bytes": 17871,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/TEST_RESULTS.json",
+      "public_path": "dev/luna-resume-v2/TEST_RESULTS.json",
+      "original_sha256": "f9e1731925699811d9b9a9f998e07cd940433cd9fcef3de3deebe4f5f1ca04ad",
+      "public_sha256": "a1f3824d1afc45463219c9e01e0a11dd7e02f93050ba2b03437480a9d4629e5b",
+      "bytes": 4563,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/canary_actor.py",
+      "public_path": "dev/luna-resume-v2/canary_actor.py",
+      "original_sha256": "dbe99186ef49e9dc33cce8d0c283a01d8eb3520d19b2b20ed5b15fce63765774",
+      "public_sha256": "dbe99186ef49e9dc33cce8d0c283a01d8eb3520d19b2b20ed5b15fce63765774",
+      "bytes": 7409,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/canary_parent.py",
+      "public_path": "dev/luna-resume-v2/canary_parent.py",
+      "original_sha256": "d36e5da41969d979a5c0122fd6d7b08dac219bd6b1a63a0ca84870d6aa4ff0dc",
+      "public_sha256": "d36e5da41969d979a5c0122fd6d7b08dac219bd6b1a63a0ca84870d6aa4ff0dc",
+      "bytes": 5348,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/case_supervisor.py",
+      "public_path": "dev/luna-resume-v2/case_supervisor.py",
+      "original_sha256": "edaf18f1fefb8641fc4c20bfad288ce28b484c30fa6bbb11087607d891e8cc0f",
+      "public_sha256": "edaf18f1fefb8641fc4c20bfad288ce28b484c30fa6bbb11087607d891e8cc0f",
+      "bytes": 6514,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/common.py",
+      "public_path": "dev/luna-resume-v2/common.py",
+      "original_sha256": "baf12aeb704ad7a088dee643f95cdb115910bf7bce0ef086dbc5e819fe572322",
+      "public_sha256": "baf12aeb704ad7a088dee643f95cdb115910bf7bce0ef086dbc5e819fe572322",
+      "bytes": 10699,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/external_case_close.py",
+      "public_path": "dev/luna-resume-v2/external_case_close.py",
+      "original_sha256": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c",
+      "public_sha256": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c",
+      "bytes": 3590,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/external_stage_close.py",
+      "public_path": "dev/luna-resume-v2/external_stage_close.py",
+      "original_sha256": "6b4e086cb319a78009c98d21b676fe0c6e281c64e91c1d7461738634c73e3e3f",
+      "public_sha256": "6b4e086cb319a78009c98d21b676fe0c6e281c64e91c1d7461738634c73e3e3f",
+      "bytes": 1331,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/failure_settlement.py",
+      "public_path": "dev/luna-resume-v2/failure_settlement.py",
+      "original_sha256": "e3eb0f3f5ba7e37f5d62af82db7187125ab2c2990a207696eb47e00cb365c3af",
+      "public_sha256": "e3eb0f3f5ba7e37f5d62af82db7187125ab2c2990a207696eb47e00cb365c3af",
+      "bytes": 12875,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/freeze_source.py",
+      "public_path": "dev/luna-resume-v2/freeze_source.py",
+      "original_sha256": "7e530c6621d7e8788e8fba8791b4c5919d21ffca7e167ea6acf15eb9574ba614",
+      "public_sha256": "7e530c6621d7e8788e8fba8791b4c5919d21ffca7e167ea6acf15eb9574ba614",
+      "bytes": 5168,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/parent_receipt.py",
+      "public_path": "dev/luna-resume-v2/parent_receipt.py",
+      "original_sha256": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea",
+      "public_sha256": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea",
+      "bytes": 4114,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/recovery-control.json",
+      "public_path": "dev/luna-resume-v2/recovery-control.json",
+      "original_sha256": "4bc02ee57b61dfdcef8a54ee4d1e3d806415542f3a67c0b2587aad011c0919bc",
+      "public_sha256": "f97b1fb852328c7531f01d369cdf1fae5ee3138e510816bddaf84e66c67e36a5",
+      "bytes": 1076,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/release_binding.py",
+      "public_path": "dev/luna-resume-v2/release_binding.py",
+      "original_sha256": "8e775f401c340f5afd200e696a8aaf6185a5e5f94d04b90f427deac96f9a361e",
+      "public_sha256": "8e775f401c340f5afd200e696a8aaf6185a5e5f94d04b90f427deac96f9a361e",
+      "bytes": 6931,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/rolling.py",
+      "public_path": "dev/luna-resume-v2/rolling.py",
+      "original_sha256": "683a5039e762cbc22d35771c0a831f6db399e71735b533367ca2d7cea58d3c9f",
+      "public_sha256": "683a5039e762cbc22d35771c0a831f6db399e71735b533367ca2d7cea58d3c9f",
+      "bytes": 9105,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/route-successor/SNAPSHOT.json",
+      "public_path": "dev/luna-resume-v2/route-successor/SNAPSHOT.json",
+      "original_sha256": "1e3d4b6c223f7539df0f5560fc6919fc56d76d98f7ccaa59b55ef9c843f67ab5",
+      "public_sha256": "9ae5335dee8c5392ba65287803e07805f98947d38bc3cc623f4192a523e014bc",
+      "bytes": 9990,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/route-successor/admission.py",
+      "public_path": "dev/luna-resume-v2/route-successor/admission.py",
+      "original_sha256": "5b4076b382f425e29367dcb468cedcc8941da03cc713bc8b0a518d90e0947e57",
+      "public_sha256": "5b4076b382f425e29367dcb468cedcc8941da03cc713bc8b0a518d90e0947e57",
+      "bytes": 11466,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/route-successor/bind_plan.py",
+      "public_path": "dev/luna-resume-v2/route-successor/bind_plan.py",
+      "original_sha256": "65beccfdbd6b4675ecdfbd60aad5e8e62b9b5c20b8548489eb975152503e1fd3",
+      "public_sha256": "65beccfdbd6b4675ecdfbd60aad5e8e62b9b5c20b8548489eb975152503e1fd3",
+      "bytes": 3239,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/route-successor/broker_adapter.py",
+      "public_path": "dev/luna-resume-v2/route-successor/broker_adapter.py",
+      "original_sha256": "af22a312c973128936e06b3f58a47e92f9ab3f1a4fcdd98bec610738cdf71eb9",
+      "public_sha256": "267760e3b58a8f825422d10ff7b704de62b6391ab5dc6fd2973759c05cb32e2d",
+      "bytes": 3298,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/route-successor/controls.py",
+      "public_path": "dev/luna-resume-v2/route-successor/controls.py",
+      "original_sha256": "d268752c008a09f730d7465214e07c05afb848f02fc1daf3811af1ec85f1db85",
+      "public_sha256": "ec9042bf2fc50c419827c3ee0e668dedb84597becb4b9f4cd12698981ebaf750",
+      "bytes": 5830,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/route-successor/entry.py",
+      "public_path": "dev/luna-resume-v2/route-successor/entry.py",
+      "original_sha256": "0a3c0377d2aaf2b63bc40a4871daa8abfd32dbe44357574117d766709fb4f1be",
+      "public_sha256": "0a3c0377d2aaf2b63bc40a4871daa8abfd32dbe44357574117d766709fb4f1be",
+      "bytes": 9791,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/route-successor/formula_check.py",
+      "public_path": "dev/luna-resume-v2/route-successor/formula_check.py",
+      "original_sha256": "b3ae054cd2cbdeca4f4a5e0db619a5b1a9dbced2bb3a6bf161165916931f7df6",
+      "public_sha256": "b3ae054cd2cbdeca4f4a5e0db619a5b1a9dbced2bb3a6bf161165916931f7df6",
+      "bytes": 4934,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/route-successor/host_guard.py",
+      "public_path": "dev/luna-resume-v2/route-successor/host_guard.py",
+      "original_sha256": "3fd35abf436ffb9fd0d09de4f09c7d97a8bdd157c67cf4aa5c5af5acd7aa9a5b",
+      "public_sha256": "3fd35abf436ffb9fd0d09de4f09c7d97a8bdd157c67cf4aa5c5af5acd7aa9a5b",
+      "bytes": 1380,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/route-successor/item-contract.json",
+      "public_path": "dev/luna-resume-v2/route-successor/item-contract.json",
+      "original_sha256": "e820124c9e5b3596f3d138915c3b557e135917ca47d8c87cfa9552da0ca25f34",
+      "public_sha256": "bf1cb086a744c15e2a6b4e0ec7057ae06bb3c90ade4a8b849732fa4a55a06687",
+      "bytes": 2082,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/route-successor/launch.py",
+      "public_path": "dev/luna-resume-v2/route-successor/launch.py",
+      "original_sha256": "8dec4108eacd3814d5b1fff069daaef87703f8466bc6d15c77607e1bcba1e0d4",
+      "public_sha256": "8dec4108eacd3814d5b1fff069daaef87703f8466bc6d15c77607e1bcba1e0d4",
+      "bytes": 1331,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/route-successor/make_plan.py",
+      "public_path": "dev/luna-resume-v2/route-successor/make_plan.py",
+      "original_sha256": "6f78381300c0c4a467f8cbe98eb001b52c9852c0b4ea788c083201424c70638d",
+      "public_sha256": "1f2d5554f44893ad819e382a633c52d495149be81a4e4426c14f79f8a6837fde",
+      "bytes": 7637,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/route-successor/native_driver.py",
+      "public_path": "dev/luna-resume-v2/route-successor/native_driver.py",
+      "original_sha256": "5d8e20a1726b48701ca400154b99f825152fa2e9f98b9a8c55031af4cd66f4b9",
+      "public_sha256": "5d8e20a1726b48701ca400154b99f825152fa2e9f98b9a8c55031af4cd66f4b9",
+      "bytes": 9143,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/route-successor/native_runner.py",
+      "public_path": "dev/luna-resume-v2/route-successor/native_runner.py",
+      "original_sha256": "a22998d12bf93b50004e7307ff3c039e52ab35e52045c051ea8ebefdc1190832",
+      "public_sha256": "e80afaf9f8d34961e20770f1f8c99839b8d4229d09e1e0ed1e93054e738ab418",
+      "bytes": 4488,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/route-successor/prepare_canary.py",
+      "public_path": "dev/luna-resume-v2/route-successor/prepare_canary.py",
+      "original_sha256": "60c0262a48b6712c7a4294dff58635f0e5c08fd802c548c4ff669bda950b492e",
+      "public_sha256": "7e322c2af7e8c91e9365c2ac8d93c2ddef098ffc2d173edd389d5d81e5447554",
+      "bytes": 7950,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/route-successor/projector.py",
+      "public_path": "dev/luna-resume-v2/route-successor/projector.py",
+      "original_sha256": "dd13d5ebd234bda22c9481b4dcf0180989a647670b04fca626827ddcd9d00404",
+      "public_sha256": "dd13d5ebd234bda22c9481b4dcf0180989a647670b04fca626827ddcd9d00404",
+      "bytes": 12033,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/route-successor/selected-sources.json",
+      "public_path": "dev/luna-resume-v2/route-successor/selected-sources.json",
+      "original_sha256": "81b59cc93da0eac80cec32cd855263b51e81b6a5b7b509dc2ef5307e01c3a212",
+      "public_sha256": "a060f770ea128373b3370c51cc8b6e1ecd3f6df71ba0216db7bc0673defab02f",
+      "bytes": 6293,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/route-successor/test_offline.py",
+      "public_path": "dev/luna-resume-v2/route-successor/test_offline.py",
+      "original_sha256": "b1fc0c9151a001c037a6ca33a922d7c66f32d500dad33e94b399e9f41f3f9cb6",
+      "public_sha256": "b1fc0c9151a001c037a6ca33a922d7c66f32d500dad33e94b399e9f41f3f9cb6",
+      "bytes": 9120,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/stage_actor.py",
+      "public_path": "dev/luna-resume-v2/stage_actor.py",
+      "original_sha256": "af40edd6d0a6deb767b30ea4be3265c0ecddfda916b1892c71c4ae1f91180ef2",
+      "public_sha256": "af40edd6d0a6deb767b30ea4be3265c0ecddfda916b1892c71c4ae1f91180ef2",
+      "bytes": 13996,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/luna-resume-v2/test_source.py",
+      "public_path": "dev/luna-resume-v2/test_source.py",
+      "original_sha256": "9b6026863d6f3ce0bbd68f157bb773d46043078dc3bba50f4f678f3b64fc65fe",
+      "public_sha256": "9b6026863d6f3ce0bbd68f157bb773d46043078dc3bba50f4f678f3b64fc65fe",
+      "bytes": 16405,
+      "sanitized": false
+    },
+    {
+      "source_projection": "WORKTREE_ROOT/reports/external-research-v8-20261001-2140/prospective-source-cohort-v3/ops/muse-helper-public-check-v1/root-repair-v1/verify_public.py",
+      "public_path": "verify_public.py",
+      "original_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+      "public_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+      "bytes": 6851,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/publication-luna-v2/ROOT_HANDOFF.json",
+      "public_path": "ROOT_HANDOFF.json",
+      "original_sha256": "73a7f2d16da976b0c56218b7cb97b8166490b90d1f06975202d2ac6e820216bc",
+      "public_sha256": "9982fc977697cf75d566da5170b7c1b0f2295bce37d1ed42febfe1e32b148ec5",
+      "bytes": 18881,
+      "sanitized": true
+    },
+    {
+      "source_projection": "publication-generated",
+      "public_path": "README.md",
+      "original_sha256": null,
+      "public_sha256": "4f963d0fb48fc14ff4f495ac4733b9b37e6cd3268b41b6e726b91d7bc80f3881",
+      "bytes": 2539,
+      "sanitized": false
+    }
+  ]
+}

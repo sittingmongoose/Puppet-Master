@@ -1,0 +1,71 @@
+{
+  "schema": "er8.independent.current-artifact-preservation.v1",
+  "case_id": "V8-BIO-RETR-C-M",
+  "status": "PARTIALLY_VERIFIED",
+  "input_byte_preservation": [
+    {
+      "stage": "independent-candidate-critic",
+      "input": "PROPOSAL.md",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-independent-candidate-critic/workspace/inputs/PROPOSAL.md",
+      "bytes": 22493,
+      "sha256": "fc94254da3fecfa2126cdd8f65a51caf4c40dc57788ac7867661f629cf5c0732"
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "input": "UNRESOLVED_LEADS.md",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-independent-candidate-critic/workspace/inputs/UNRESOLVED_LEADS.md",
+      "bytes": 3676,
+      "sha256": "3aef766f1c7b70f056b659a524ad55df8e30f00c8a74e509eed821ec38dfd14d"
+    },
+    {
+      "stage": "final-correction",
+      "input": "PROPOSAL.md",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/inputs/PROPOSAL.md",
+      "bytes": 22493,
+      "sha256": "fc94254da3fecfa2126cdd8f65a51caf4c40dc57788ac7867661f629cf5c0732"
+    },
+    {
+      "stage": "final-correction",
+      "input": "CRITIQUE.md",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/inputs/CRITIQUE.md",
+      "bytes": 20306,
+      "sha256": "d08ca7d4544071aa899858a0e489b6f64cfc56a6861ba8a2494b3e882c0fbf3b"
+    },
+    {
+      "stage": "final-correction",
+      "input": "UNRESOLVED_LEADS.md",
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/inputs/UNRESOLVED_LEADS.md",
+      "bytes": 3676,
+      "sha256": "3aef766f1c7b70f056b659a524ad55df8e30f00c8a74e509eed821ec38dfd14d"
+    }
+  ],
+  "negative_constraints_retained": [
+    "local read-only",
+    "2D",
+    "exactly two image resolutions",
+    "one optional categorical label",
+    "no 3D/time/cloud/authoring/segmentation/registration estimation/conversion"
+  ],
+  "observed_retained_choices": [
+    "napari plus ome-zarr-py plus own calibration module",
+    "dataset transforms then group transforms",
+    "per-level anisotropy",
+    "association is not alignment guarantee",
+    "overlay refusal reasons",
+    "proposed tests explicitly unexecuted",
+    "initial seven unresolved leads remain, path-vector support becomes eighth"
+  ],
+  "supported_revisions_checked": [
+    "C3 full per-axis conditional and conditional 1.0 default restored",
+    "C4 source-permitted path vectors explicitly refused and F6b added",
+    "C6 full Zarr-group detection conjunct restored",
+    "C5 #288 ratios relabeled as inspired 2D case",
+    "C8 F9 ambiguity discriminator added",
+    "C9 F7 transfer caveat retained"
+  ],
+  "not_a_failure": [
+    "Replacing or qualifying incorrect initial statements does not itself violate preservation.",
+    "Sources about 3D or writers used as bounded historical analogy do not by themselves expand product scope."
+  ],
+  "unassessed": "Exhaustive atom-by-atom preservation and every initial/final source claim; no old campaign/history regrade."
+}

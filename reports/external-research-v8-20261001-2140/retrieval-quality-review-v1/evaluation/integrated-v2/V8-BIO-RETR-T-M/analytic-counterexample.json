@@ -1,0 +1,63 @@
+{
+  "schema": "er8.evaluator.analytic-counterexample.v1",
+  "case_id": "V8-BIO-RETR-T-M",
+  "run_epoch": 1790992515.75473,
+  "kind": "Evaluator-owned arithmetic analysis; no candidate implementation or fixture execution",
+  "axis_order": [
+    "y",
+    "x"
+  ],
+  "units": [
+    "micrometer",
+    "micrometer"
+  ],
+  "image_shapes": [
+    [
+      4,
+      8
+    ],
+    [
+      2,
+      4
+    ]
+  ],
+  "dataset_level0_scale": [
+    2,
+    3
+  ],
+  "dataset_level1_scale": [
+    4,
+    6
+  ],
+  "dataset_translation": [
+    1,
+    2
+  ],
+  "multiscale_scale": [
+    5,
+    7
+  ],
+  "multiscale_translation": [
+    11,
+    13
+  ],
+  "level0_index": [
+    1,
+    2
+  ],
+  "sequential_mapping_expected": [
+    26,
+    69
+  ],
+  "final_formula_mapping": [
+    15,
+    56
+  ],
+  "difference_expected_minus_formula": [
+    11,
+    13
+  ],
+  "counterexample_discriminates": true,
+  "source_rules": "Captured S2 lines 351,372-380; independently confirmed released 0.4 tag subtree",
+  "candidate_fixtures_executed": false
+}

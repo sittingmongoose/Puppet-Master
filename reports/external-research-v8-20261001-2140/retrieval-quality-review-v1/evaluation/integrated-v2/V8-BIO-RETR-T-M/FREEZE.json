@@ -1,0 +1,20 @@
+{
+  "schema": "er8.evaluation.immutable-freeze.v1",
+  "case_id": "V8-BIO-RETR-T-M",
+  "evaluation_reservation": "V8-EVAL-V8-BIO-RETR-T-M",
+  "quality_disposition": "FAILED_SCREEN",
+  "whole_case_pass": false,
+  "freeze_epoch": 1790993138.852565,
+  "original_birth_epoch": 1790992152.3068507,
+  "original_hard_deadline_epoch": 1790994552.3068507,
+  "inclusive_elapsed_seconds": 986.5457143783569,
+  "closed_before_original_deadline": true,
+  "output_manifest_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-RETR-T-M/OUTPUT_HASH_MANIFEST.json",
+  "output_manifest_sha256": "b63693181c953ccee5c2df4dd437786bb80d2ebab917ae7b04b4924dda2e7ec2",
+  "source_manifest_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-RETR-T-M/SOURCE_HASH_MANIFEST.json",
+  "source_manifest_sha256": "92b5f0ebc8303f2bf98d9e009a15fb615773e52f8f15193b9a963c14a1ed090a",
+  "source_first_ruling_sha256": "8323d363e5a5cd97ba091c950c9f5eeb6cec72d1216881e5919b35f1e9141db4",
+  "no_findings_shared_with_candidate_or_other_evaluator": true,
+  "full_grade_claim": false,
+  "immutability": "Content sealed by hash manifest and read-only files; no later amendment to this packet."
+}

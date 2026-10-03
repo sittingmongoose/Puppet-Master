@@ -1,0 +1,68 @@
+[
+  {
+    "stage": "research-proposal",
+    "metrics_hash": "f79b0a874454ffe11d9bd2f89cd7152515eceefe5f76c1c8f6ffc405dd8ba825",
+    "receipt_sha256": "f79b0a874454ffe11d9bd2f89cd7152515eceefe5f76c1c8f6ffc405dd8ba825",
+    "goal_target_id": "target_murp2gyp_72871f4e-787f-4d51-9d87-a25b59cccbda",
+    "provider_id": "builtin:zai-coding-plan",
+    "model_id": "GLM-5.3-Flash",
+    "effort_effective": "max",
+    "fresh_session": true,
+    "native_responses": 23,
+    "usage_requests_with_delta": 22,
+    "usage_totals": {
+      "inputTokens": 1765662,
+      "outputTokens": 34662,
+      "reasoningTokens": 0,
+      "cacheReadTokens": 1582144,
+      "cacheWriteTokens": 0,
+      "totalTokens": 1800324
+    },
+    "elapsed_milliseconds": 870948,
+    "verified": "passed"
+  },
+  {
+    "stage": "independent-candidate-critic",
+    "metrics_hash": "9c582ef8d1b1e75fe44b945bc2d20f476bf7c108d0729bf22dd7423803f15d25",
+    "receipt_sha256": "9c582ef8d1b1e75fe44b945bc2d20f476bf7c108d0729bf22dd7423803f15d25",
+    "goal_target_id": "target_murpl5sg_659d2b9f-53f9-4d4e-88ad-dc38eab525fc",
+    "provider_id": "builtin:zai-coding-plan",
+    "model_id": "GLM-5.3-Flash",
+    "effort_effective": "max",
+    "fresh_session": true,
+    "native_responses": 15,
+    "usage_requests_with_delta": 14,
+    "usage_totals": {
+      "inputTokens": 897944,
+      "outputTokens": 32753,
+      "reasoningTokens": 0,
+      "cacheReadTokens": 773824,
+      "cacheWriteTokens": 0,
+      "totalTokens": 930697
+    },
+    "elapsed_milliseconds": 755798,
+    "verified": "passed"
+  },
+  {
+    "stage": "final-correction",
+    "metrics_hash": "146fddad5831554abb7d835c0937ab583d7029ba713f7aff6885939f8eb34a77",
+    "receipt_sha256": "146fddad5831554abb7d835c0937ab583d7029ba713f7aff6885939f8eb34a77",
+    "goal_target_id": "target_murq1cmt_924ce039-1188-4f24-95bc-a9d48bb594d6",
+    "provider_id": "builtin:zai-coding-plan",
+    "model_id": "GLM-5.3-Flash",
+    "effort_effective": "max",
+    "fresh_session": true,
+    "native_responses": 8,
+    "usage_requests_with_delta": 7,
+    "usage_totals": {
+      "inputTokens": 290803,
+      "outputTokens": 29116,
+      "reasoningTokens": 0,
+      "cacheReadTokens": 218240,
+      "cacheWriteTokens": 0,
+      "totalTokens": 319919
+    },
+    "elapsed_milliseconds": 507561,
+    "verified": "passed"
+  }
+]

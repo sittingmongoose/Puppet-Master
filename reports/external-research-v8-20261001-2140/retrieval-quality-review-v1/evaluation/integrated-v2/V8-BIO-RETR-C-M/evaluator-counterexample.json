@@ -1,0 +1,35 @@
+{
+  "schema": "er8.independent.design-counterexample.v1",
+  "case_id": "V8-BIO-RETR-C-M",
+  "purpose": "Frozen-plan evaluation only; never supplied to candidate.",
+  "source": "S1: 0.4 axes permit micrometer and nanometer; transforms are in the axes physical coordinates.",
+  "input": "Two 2D levels in both image and categorical label, identical shapes/names/types/numeric scales and nonzero translations; image axes micrometer, label axes nanometer.",
+  "level0_scale_yx": [
+    0.5,
+    0.25
+  ],
+  "level0_translation_yx": [
+    10,
+    20
+  ],
+  "index_yx": [
+    40,
+    20
+  ],
+  "numeric_image_coordinate_micrometer": [
+    30.0,
+    25.0
+  ],
+  "numeric_label_coordinate_nanometer": [
+    30.0,
+    25.0
+  ],
+  "label_coordinate_in_micrometer": [
+    0.03,
+    0.025
+  ],
+  "difference_factor": 1000,
+  "result": "Numeric equality cannot justify physical alignment. Final plan excludes unit conversion and contains no explicit unit mismatch refusal; safe outcome/comparator is unspecified.",
+  "verification": "Independent arithmetic assertion executed in evaluator script. No viewer execution, candidate fixture result, alignment algorithm implementation or upstream reproduction claimed.",
+  "absent_unit_variant": "If label units are absent, source declarations do not establish a shared physical frame; the final explicit refusal list also lacks that state."
+}

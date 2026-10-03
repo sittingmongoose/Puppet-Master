@@ -1,0 +1,255 @@
+{
+  "schema": "pm.er8.root-operational-pair-observation.v1",
+  "root_authority": true,
+  "observed_utc": "2026-10-03T01:55:57.295040+00:00",
+  "completed_native_pipelines": 2,
+  "target_native_pipelines": 24,
+  "completed_operational_matched_pairs": 1,
+  "target_matched_pairs": 12,
+  "completed_quality_reviewed_comparisons": 0,
+  "quality": "PENDING_FULL_INDEPENDENT_EVALUATION; no qualityPASS/winner/speedup",
+  "completed_case_dispositions": {
+    "V8-BIO-RETR-C-M": {
+      "reservation": {
+        "native_starts": 3,
+        "occupied_seconds": 5400,
+        "final_job": "V8-BIO-RETR-C-M-final-correction",
+        "completed": true,
+        "disposition": {
+          "case": "V8-BIO-RETR-C-M",
+          "root_authority": true,
+          "disposition": "OPERATIVE_THREE_GOAL_PIPELINE_PENDING_EVALUATION",
+          "proof_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/GLOBAL_PARENT_FINAL_RECEIPT.json",
+          "original_deadline_monotonic_ns": 215110650609156
+        },
+        "completed_epoch": 1790991721.9425807
+      },
+      "jobs": {
+        "V8-BIO-RETR-C-M-research-proposal": {
+          "status": "released",
+          "birth_epoch": 1790989764.4808364,
+          "hard_deadline_epoch": 1790990964.4808364,
+          "released_epoch": 1790990380.423352,
+          "goal_starts": [
+            {
+              "job": "V8-BIO-RETR-C-M-research-proposal",
+              "receipt_id": "target_murp2gi4_df00f085-0182-4ef8-b43b-017c09712145",
+              "epoch": 1790989772,
+              "recorded_epoch": 1790989773.1735616,
+              "guard_violations": []
+            }
+          ],
+          "quiescence": {
+            "native_quiescent": true,
+            "own_process_group_absent": true,
+            "outer_parent_exited": true,
+            "outer_scope": "THIS_STAGE_ACTOR_ONLY",
+            "outer_returncode": 0,
+            "outer_exit_observed_monotonic_ns": 212126431734595,
+            "original_deadline_monotonic_ns": 212710650609156,
+            "receipt_id": "V8-BIO-RETR-C-M-research-proposal-external-stage-all-owned-quiet",
+            "proof_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-research-proposal/EXTERNAL_STAGE_CLOSE.json"
+          },
+          "launch_pending": null
+        },
+        "V8-BIO-RETR-C-M-independent-candidate-critic": {
+          "status": "released",
+          "birth_epoch": 1790990380.4607947,
+          "hard_deadline_epoch": 1790991580.4607947,
+          "released_epoch": 1790991121.2945309,
+          "goal_starts": [
+            {
+              "job": "V8-BIO-RETR-C-M-independent-candidate-critic",
+              "receipt_id": "target_murpfnxc_cd6e5f1f-0fe9-4268-9606-d2eff84831fe",
+              "epoch": 1790990389,
+              "recorded_epoch": 1790990389.5626152,
+              "guard_violations": []
+            }
+          ],
+          "quiescence": {
+            "native_quiescent": true,
+            "own_process_group_absent": true,
+            "outer_parent_exited": true,
+            "outer_scope": "THIS_STAGE_ACTOR_ONLY",
+            "outer_returncode": 0,
+            "outer_exit_observed_monotonic_ns": 212867273665410,
+            "original_deadline_monotonic_ns": 213326630558478,
+            "receipt_id": "V8-BIO-RETR-C-M-independent-candidate-critic-external-stage-all-owned-quiet",
+            "proof_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-independent-candidate-critic/EXTERNAL_STAGE_CLOSE.json"
+          },
+          "launch_pending": null
+        },
+        "V8-BIO-RETR-C-M-final-correction": {
+          "status": "released",
+          "birth_epoch": 1790991121.3325837,
+          "hard_deadline_epoch": 1790992021.3325837,
+          "released_epoch": 1790991721.3337288,
+          "goal_starts": [
+            {
+              "job": "V8-BIO-RETR-C-M-final-correction",
+              "receipt_id": "target_murpvjgf_fe4be662-8523-41f2-b060-152869fa7251",
+              "epoch": 1790991129,
+              "recorded_epoch": 1790991129.744,
+              "guard_violations": []
+            }
+          ],
+          "quiescence": {
+            "native_quiescent": true,
+            "own_process_group_absent": true,
+            "outer_parent_exited": true,
+            "outer_scope": "THIS_STAGE_ACTOR_ONLY",
+            "outer_returncode": 0,
+            "outer_exit_observed_monotonic_ns": 213467302838377,
+            "original_deadline_monotonic_ns": 213767502348714,
+            "receipt_id": "V8-BIO-RETR-C-M-final-correction-external-stage-all-owned-quiet",
+            "proof_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/EXTERNAL_STAGE_CLOSE.json"
+          },
+          "launch_pending": null
+        }
+      }
+    },
+    "V8-BIO-RETR-T-M": {
+      "reservation": {
+        "native_starts": 3,
+        "occupied_seconds": 5400,
+        "final_job": "V8-BIO-RETR-T-M-final-correction",
+        "completed": true,
+        "disposition": {
+          "case": "V8-BIO-RETR-T-M",
+          "root_authority": true,
+          "disposition": "OPERATIVE_THREE_GOAL_PIPELINE_PENDING_EVALUATION",
+          "proof_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/GLOBAL_PARENT_FINAL_RECEIPT.json",
+          "original_deadline_monotonic_ns": 215110656659015
+        },
+        "completed_epoch": 1790991901.4643612
+      },
+      "jobs": {
+        "V8-BIO-RETR-T-M-research-proposal": {
+          "status": "released",
+          "birth_epoch": 1790989764.4868958,
+          "hard_deadline_epoch": 1790990964.4868958,
+          "released_epoch": 1790990636.14469,
+          "goal_starts": [
+            {
+              "job": "V8-BIO-RETR-T-M-research-proposal",
+              "receipt_id": "target_murp2gyp_72871f4e-787f-4d51-9d87-a25b59cccbda",
+              "epoch": 1790989773,
+              "recorded_epoch": 1790989773.773412,
+              "guard_violations": []
+            }
+          ],
+          "quiescence": {
+            "native_quiescent": true,
+            "own_process_group_absent": true,
+            "outer_parent_exited": true,
+            "outer_scope": "THIS_STAGE_ACTOR_ONLY",
+            "outer_returncode": 0,
+            "outer_exit_observed_monotonic_ns": 212382126330030,
+            "original_deadline_monotonic_ns": 212710656659015,
+            "receipt_id": "V8-BIO-RETR-T-M-research-proposal-external-stage-all-owned-quiet",
+            "proof_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-research-proposal/EXTERNAL_STAGE_CLOSE.json"
+          },
+          "launch_pending": null
+        },
+        "V8-BIO-RETR-T-M-independent-candidate-critic": {
+          "status": "released",
+          "birth_epoch": 1790990636.1782255,
+          "hard_deadline_epoch": 1790991836.1782255,
+          "released_epoch": 1790991392.6120505,
+          "goal_starts": [
+            {
+              "job": "V8-BIO-RETR-T-M-independent-candidate-critic",
+              "receipt_id": "target_murpl5sg_659d2b9f-53f9-4d4e-88ad-dc38eab525fc",
+              "epoch": 1790990645,
+              "recorded_epoch": 1790990646.1433823,
+              "guard_violations": []
+            }
+          ],
+          "quiescence": {
+            "native_quiescent": true,
+            "own_process_group_absent": true,
+            "outer_parent_exited": true,
+            "outer_scope": "THIS_STAGE_ACTOR_ONLY",
+            "outer_returncode": 0,
+            "outer_exit_observed_monotonic_ns": 213138610324164,
+            "original_deadline_monotonic_ns": 213582347990452,
+            "receipt_id": "V8-BIO-RETR-T-M-independent-candidate-critic-external-stage-all-owned-quiet",
+            "proof_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-independent-candidate-critic/EXTERNAL_STAGE_CLOSE.json"
+          },
+          "launch_pending": null
+        },
+        "V8-BIO-RETR-T-M-final-correction": {
+          "status": "released",
+          "birth_epoch": 1790991392.652615,
+          "hard_deadline_epoch": 1790992292.652615,
+          "released_epoch": 1790991900.887307,
+          "goal_starts": [
+            {
+              "job": "V8-BIO-RETR-T-M-final-correction",
+              "receipt_id": "target_murq1cmt_924ce039-1188-4f24-95bc-a9d48bb594d6",
+              "epoch": 1790991401,
+              "recorded_epoch": 1790991401.2462142,
+              "guard_violations": []
+            }
+          ],
+          "quiescence": {
+            "native_quiescent": true,
+            "own_process_group_absent": true,
+            "outer_parent_exited": true,
+            "outer_scope": "THIS_STAGE_ACTOR_ONLY",
+            "outer_returncode": 0,
+            "outer_exit_observed_monotonic_ns": 213646920596104,
+            "original_deadline_monotonic_ns": 214038822379647,
+            "receipt_id": "V8-BIO-RETR-T-M-final-correction-external-stage-all-owned-quiet",
+            "proof_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-final-correction/EXTERNAL_STAGE_CLOSE.json"
+          },
+          "launch_pending": null
+        }
+      }
+    }
+  },
+  "terminal_convention": "Three native COMPLETE/QUIESCENCE + EXTERNAL_CASE_CLOSE + held GLOBAL_PARENT_FINAL_RECEIPT + positive ledger case-complete; CASE_COMPLETE filename never emitted",
+  "independent_evaluations": {
+    "cases": [
+      "V8-BIO-RETR-C-M",
+      "V8-BIO-RETR-T-M"
+    ],
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh",
+    "original_birth_epoch": 1790992152.3068507,
+    "original_deadline_epoch": 1790994552.3068507,
+    "full_scope": true,
+    "in_progress_at_observation": true,
+    "findings": "Not read; unfrozen rulings not published"
+  },
+  "prior_failures_caps_costs_frozen": true,
+  "next_queue": "BIO-AMEND pair actualZ/GLM5.3FlashMax sameaccount/route; M/Lsuffixes arelineage",
+  "tokens_money_account_load": "UNKNOWN except reported output lowerbounds",
+  "accounting": {
+    "elapsed_seconds": 22726.44846224785,
+    "deadline_epoch": 1791013030.8303788,
+    "admissions": 32,
+    "native_goal_starts": 30,
+    "pending_start_permits": 0,
+    "occupied_slot_seconds": 22807.414780139923,
+    "committed_slot_seconds": 2354.796837091446,
+    "reserved_or_committed_slot_seconds": 123113.12828087807,
+    "reserved_or_committed_native_starts": 57,
+    "active_by_family": {
+      "M": 0,
+      "Z": 2,
+      "L": 0
+    },
+    "active_jobs": [
+      "V8-BIO-AMEND-C-L-independent-candidate-critic",
+      "V8-BIO-AMEND-T-L-independent-candidate-critic"
+    ],
+    "overdue_jobs": [],
+    "generated_output_tokens_lower_bound": 546139,
+    "generated_usage": "unknown",
+    "occupancy_reconciled": true,
+    "elapsed_seconds_including_user_pause": 87348.27884101868,
+    "authorized_user_pause_excluded_seconds": 64621.83037877083
+  },
+  "publication_projection_scope": "Immutable root accounting observation; failure-inclusive historical campaign costs and active state at that observation. Distinct from matched-pair operational receipts and pending quality evaluation."
+}

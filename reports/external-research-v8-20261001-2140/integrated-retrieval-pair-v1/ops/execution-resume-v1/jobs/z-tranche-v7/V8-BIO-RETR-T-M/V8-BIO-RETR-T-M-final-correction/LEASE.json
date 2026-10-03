@@ -1,0 +1,27 @@
+{
+  "schema": "er8.route.lease.v1",
+  "owned_unit": "er8-v8-bio-retr-t-m-final-correction.service",
+  "deadline_monotonic_ns": 214038822379647,
+  "native_stop_monotonic_ns": 214008822379647,
+  "case_authority": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-final-correction/CASE_AUTHORITY.json",
+    "sha256": "8f83ab50900412eeb1bb8a07c0a6417fb362b20e39c77e2fb1fb2976fd9c4435",
+    "clock": {
+      "case_id": "V8-BIO-RETR-T-M",
+      "case_start_monotonic_ns": 211510656659015,
+      "case_elapsed_cap_seconds": 3600,
+      "case_occupied_cap_seconds": 5400,
+      "outside_native_cap_seconds": 300,
+      "campaign_native_cutoff_monotonic_ns": 234777000141986,
+      "stages": {
+        "v8-bio-retr-t-m-final-correction": {
+          "stage_start_monotonic_ns": 213138822379647,
+          "cap_seconds": 900,
+          "response_cap": 160
+        }
+      }
+    }
+  },
+  "occupied_seconds_reserved": 900,
+  "outside_seconds_reserved": 300
+}

@@ -1,0 +1,11 @@
+# Brief permitted source excerpts
+
+The original excerpt locators below support the scoped evaluation; verbatim source spans are omitted from this public projection. Raw captures remain external; no complete source body is reproduced here. All hashes refer to exact captured response bytes. The body paths and operation ranges are recorded in `source-checks.json` and `provenance-audit.json`.
+
+1. [OME-NGFF 0.4, axes §3.1](https://ngff.openmicroscopy.org/0.4/index.html#axes-md): [verbatim source excerpt omitted in public projection; original locator/hash/range retained] Also enumerated: [verbatim source excerpt omitted in public projection; original locator/hash/range retained], [verbatim source excerpt omitted in public projection; original locator/hash/range retained]. Exact body SHA-256 `ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269`; section bytes `[81551,90023)`, body lines 2479–2495. This permits absent units and distinct declared physical units; the overlay must establish compatible physical interpretation. Public verbatim source quotation: 0 words (original excerpt omitted). No other spec text is quoted in this bundle.
+
+2. [napari 0.9.2 release](https://github.com/napari/napari/releases/tag/v0.9.2): [verbatim source excerpt omitted in public projection; original locator/hash/range retained]. Exact API body SHA-256 `f5bae88a5c65a0fe3987f1cf264025e0edbcda8d89cdfd0ceef342c367b4aeb2`; field `body`, New Features. This is a level-extraction announcement, not evidence about label sampling through every per-level transform. Public verbatim source quotation: 0 words (original excerpt omitted).
+
+3. [ome-zarr-py #652](https://github.com/ome/ome-zarr-py/pull/652): paraphrase only. The reported writer path-normalization defect has a merged fix and added regression test. Diff SHA-256 `50b0c9834aa58e06195d4e10f236e71adeac89e87aee2f4a38cf83b14ae9cc4f`, full bytes `[0,4613)`; report API SHA-256 `856e3419341dbbd8c38e10e0382b5a74df2b56d4da572731e04003109b198274`, selected title/body/merge/date fields. Its test exercises 0.6/Zarr v3; application to the 0.4 read-only case is an explicitly bounded engineering inference.
+
+No source code excerpt is published. Other independently checked primary locators and precise assessment limits are in `source-checks.json`.

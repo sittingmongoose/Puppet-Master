@@ -1,0 +1,46 @@
+{
+  "schema": "er8.luna.independent-source-review-freeze-receipt.v1",
+  "verdict": "HOLD",
+  "end_epoch": 1790992162.9376564,
+  "original_birth_epoch": 1790991592.148032,
+  "original_deadline_epoch": 1790992492.148032,
+  "before_original_deadline": true,
+  "source_edits": 0,
+  "native_candidate_goal_starts": 0,
+  "provider_calls": 0,
+  "qualifying_canary_authorized": false,
+  "artifacts": {
+    "review.json": {
+      "path": "LAB_ROOT/evaluation/luna-resume-v2-review-v1/review.json",
+      "sha256": "679b22115e69a9e9694c39723b381d3cf53c242238be3eff21e6829d3e1f576c"
+    },
+    "REVIEW.md": {
+      "path": "LAB_ROOT/evaluation/luna-resume-v2-review-v1/REVIEW.md",
+      "sha256": "abd73191952c1e1a737fc87b1498da90093519728c0c59b7fecfa84b95739bcb"
+    },
+    "pins.json": {
+      "path": "LAB_ROOT/evaluation/luna-resume-v2-review-v1/pins.json",
+      "sha256": "5f42ad4e912d7da14163ae000fe644082e1b703e5f1a7d4d1dbc09ab4fa217fc"
+    },
+    "source-scope.json": {
+      "path": "LAB_ROOT/evaluation/luna-resume-v2-review-v1/source-scope.json",
+      "sha256": "31a9bb3e8812abb4e61f4accdb5f41409704573bf3a3ae10f9fd093021a53668"
+    },
+    "controller-tests.log": {
+      "path": "LAB_ROOT/evaluation/luna-resume-v2-review-v1/controller-tests.log",
+      "sha256": "73b3427b1585d2d833f1cf950949e41dacf4bf3e60d22314edaaa4720d8255d9"
+    },
+    "route-tests.log": {
+      "path": "LAB_ROOT/evaluation/luna-resume-v2-review-v1/route-tests.log",
+      "sha256": "97e6e4665c82919ef0421f4fa4a088eee4a6bdcd141bdde25793cf42a563af7b"
+    },
+    "preventive-guard-tests.log": {
+      "path": "LAB_ROOT/evaluation/luna-resume-v2-review-v1/preventive-guard-tests.log",
+      "sha256": "edc16787142466012d88726760a5e166972ca88f08212645f5029a0f2b805ab1"
+    },
+    "test_preventive_guards.py": {
+      "path": "LAB_ROOT/evaluation/luna-resume-v2-review-v1/test_preventive_guards.py",
+      "sha256": "f620a32e46c69bf7ffbd539217836f1ea62a960012d432687e1f7fe08b8179eb"
+    }
+  }
+}

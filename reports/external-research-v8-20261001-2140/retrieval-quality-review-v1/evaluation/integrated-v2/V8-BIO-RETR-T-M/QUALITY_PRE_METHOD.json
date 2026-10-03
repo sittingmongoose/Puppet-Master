@@ -1,0 +1,28 @@
+{
+  "schema": "er8.independent.source-first-quality-screen.v1",
+  "case_id": "V8-BIO-RETR-T-M",
+  "quality_disposition": "FAILED_SCREEN",
+  "ruling_epoch": 1790992423.6006954,
+  "original_evaluation_birth_epoch": 1790992152.3068507,
+  "original_evaluation_hard_deadline_epoch": 1790994552.3068507,
+  "method_file_read_before_ruling": false,
+  "limited_blinding": "Case ID necessarily known; final proposal itself names the method, so perfect method blinding is not claimed. METHOD.md and prospective duties were not read before this source ruling.",
+  "dominant_defect": "Final physical-cursor formula omits optional multiscale-level translation despite accepting that metadata and asserting composition of the full list.",
+  "verified_source": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-final-correction/workspace/public_captures/c01aeed8b58b3bac7b63cee6950b65b352a155748970382e1d6f167624eee75c.body",
+    "sha256": "c01aeed8b58b3bac7b63cee6950b65b352a155748970382e1d6f167624eee75c",
+    "lines": [
+      334,
+      380
+    ],
+    "primary_url": "https://raw.githubusercontent.com/ome/ngff/0.4.1/latest/index.bs"
+  },
+  "proposal_lines": [
+    94,
+    100,
+    166,
+    172,
+    185
+  ],
+  "scope": "Decisive diagnostic screen on Q2/B2 and final preservation. Other whole-case facets not fully source-graded remain UNASSESSED; no whole-case pass is claimed."
+}

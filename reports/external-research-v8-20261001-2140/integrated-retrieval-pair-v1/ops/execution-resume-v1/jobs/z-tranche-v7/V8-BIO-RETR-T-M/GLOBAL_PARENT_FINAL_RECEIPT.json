@@ -1,0 +1,37 @@
+{
+  "schema": "er8.integrated.global-parent-final-receipt.v1",
+  "case": "V8-BIO-RETR-T-M",
+  "held_finalizer_pid": 2326834,
+  "held_finalizer_returncode": 0,
+  "actual_case_end_monotonic_ns": 213647499667533,
+  "original_case_start_monotonic_ns": 211510656659015,
+  "original_case_deadline_monotonic_ns": 215110656659015,
+  "actual_case_wall_seconds": 2136.843008518,
+  "actual_occupied_stage_lease_seconds": 2136.32631111145,
+  "whole_case_occupied_cap_seconds": 5400,
+  "actual_nonoverlapping_outside_native_seconds": 5.456172847,
+  "native_owned_intervals_monotonic_ns": [
+    [
+      211512354977122,
+      212381951914272
+    ],
+    [
+      212383499412634,
+      213138442790020
+    ],
+    [
+      213139858604504,
+      213646705125639
+    ]
+  ],
+  "all_case_execution_closed_before_cutoff": true,
+  "actual_final_proposal": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-final-correction/workspace/out/FINAL_PROPOSAL.md",
+    "bytes": 45341,
+    "sha256": "56e701dc954dfe3d5a07fc9e5fc684e571a62c13423aeb8f012b78e0d4690525"
+  },
+  "subsequent_global_metadata_and_publication_cost": "SEPARATE_ROOT_MANAGEMENT",
+  "semantic_quality": "PENDING_INDEPENDENT_EVALUATION",
+  "source_semantic_acquisition": "UNKNOWN",
+  "generated_usage": "UNKNOWN except observed monotonic lower bounds"
+}

@@ -1,0 +1,211 @@
+{
+  "schema": "er8.independent.immutable-source-output-manifest.v1",
+  "case_id": "V8-BIO-RETR-C-M",
+  "sources": [
+    {
+      "path": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-RETR-C-M/manifest.json",
+      "bytes": 4707,
+      "sha256": "501c315b40001594d2792fba19cf5a3556ddd6d4dd475b41e3caf6a9091c899a"
+    },
+    {
+      "path": "LAB_ROOT/cases/tranche-v2/scoring-only/evaluation-scope.json",
+      "bytes": 3849,
+      "sha256": "6efed6cf4763f91b9674ffaaf35b5c9113decf27663fc38961fcfd140b6883af"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/EXTERNAL_CASE_CLOSE.json",
+      "bytes": 1037,
+      "sha256": "0971d490046722f8a107ac7eee03942d98bba845dba418c45981973253f6aeea"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/GLOBAL_PARENT_FINAL_RECEIPT.json",
+      "bytes": 1405,
+      "sha256": "8a7be3a9280f6ab4eb6c8b1d68f70305ec8ed6bce73a4052e07f8b705969ad33"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/COMPLETE.json",
+      "bytes": 1250,
+      "sha256": "2a36800918b078758f29637d29f296c35a489d5cad40db67eddc13cd7420f3a5"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/PUBLIC_ARTIFACT_FREEZE.json",
+      "bytes": 27888,
+      "sha256": "5ab2b644f6fbd4253cd9318f2c54a68aaf323939a1608b940ee9e44f857926a8"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/QUIESCENCE.json",
+      "bytes": 995,
+      "sha256": "85685e9457661ae13db921c852a2db50e67d8145a1631abd4c62026d687f5864"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/native-public/receipt.json",
+      "bytes": 43526,
+      "sha256": "64490cdd1a6a3e292bef1174c0aed2dead608add9158bb7b1373fdfe14742db3"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/inputs/BRIEF.md",
+      "bytes": 3352,
+      "sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/inputs/CRITIQUE.md",
+      "bytes": 20306,
+      "sha256": "d08ca7d4544071aa899858a0e489b6f64cfc56a6861ba8a2494b3e882c0fbf3b"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/inputs/METHOD.md",
+      "bytes": 982,
+      "sha256": "6b617504d3749407e1a80d876bdce0c1117668326e6131a582e730c50b106d0a"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/inputs/PROPOSAL.md",
+      "bytes": 22493,
+      "sha256": "fc94254da3fecfa2126cdd8f65a51caf4c40dc57788ac7867661f629cf5c0732"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/inputs/THIN_PLAN.md",
+      "bytes": 960,
+      "sha256": "9a4a13328e3f3d4af25d13c371b79b918d898cb20fa2ec99e0901a70fe7be98f"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/workspace/inputs/UNRESOLVED_LEADS.md",
+      "bytes": 3676,
+      "sha256": "3aef766f1c7b70f056b659a524ad55df8e30f00c8a74e509eed821ec38dfd14d"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-independent-candidate-critic/COMPLETE.json",
+      "bytes": 1268,
+      "sha256": "46a50e7810b83cd66a6c7c5f85f9fe8098e8ce468fe98b3ab25ae2724c345eae"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-independent-candidate-critic/PUBLIC_ARTIFACT_FREEZE.json",
+      "bytes": 26883,
+      "sha256": "99620a6b4c5fcf73aca9ecb96a565b088b2b06de3870c42489b60a2a8b9e37ea"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-independent-candidate-critic/QUIESCENCE.json",
+      "bytes": 1043,
+      "sha256": "6210457ca9fa4ceb8b12da74a8dd6942073955f93de4029cbf69cd19f4944578"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-independent-candidate-critic/native-public/receipt.json",
+      "bytes": 85350,
+      "sha256": "14ac3265b03dc88a33a52a2f28f988e42d018114eb1b5df357e562b382808368"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-independent-candidate-critic/workspace/inputs/BRIEF.md",
+      "bytes": 3352,
+      "sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-independent-candidate-critic/workspace/inputs/METHOD.md",
+      "bytes": 982,
+      "sha256": "6b617504d3749407e1a80d876bdce0c1117668326e6131a582e730c50b106d0a"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-independent-candidate-critic/workspace/inputs/PROPOSAL.md",
+      "bytes": 22493,
+      "sha256": "fc94254da3fecfa2126cdd8f65a51caf4c40dc57788ac7867661f629cf5c0732"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-independent-candidate-critic/workspace/inputs/THIN_PLAN.md",
+      "bytes": 960,
+      "sha256": "9a4a13328e3f3d4af25d13c371b79b918d898cb20fa2ec99e0901a70fe7be98f"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-independent-candidate-critic/workspace/inputs/UNRESOLVED_LEADS.md",
+      "bytes": 3676,
+      "sha256": "3aef766f1c7b70f056b659a524ad55df8e30f00c8a74e509eed821ec38dfd14d"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-research-proposal/COMPLETE.json",
+      "bytes": 1246,
+      "sha256": "d2e7291b64d7c4c244a6ee46072162e363d00893a673aa79512df2fff32f413c"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-research-proposal/PUBLIC_ARTIFACT_FREEZE.json",
+      "bytes": 14982,
+      "sha256": "362b700e9e7cab4425d6321cb4a760abcad33ce3542fb3e16fed12c957e0f477"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-research-proposal/QUIESCENCE.json",
+      "bytes": 999,
+      "sha256": "0cda7f861a3d5bd4e92cf3f698344c8ba0ee651338867e66befd975775397199"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-research-proposal/native-public/receipt.json",
+      "bytes": 56228,
+      "sha256": "ed14e481817c6239fbc299c9f0c77742af1a9b1a203c9b5c736f0bf760b23c1c"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-research-proposal/workspace/inputs/BRIEF.md",
+      "bytes": 3352,
+      "sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-research-proposal/workspace/inputs/METHOD.md",
+      "bytes": 982,
+      "sha256": "6b617504d3749407e1a80d876bdce0c1117668326e6131a582e730c50b106d0a"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-research-proposal/workspace/inputs/THIN_PLAN.md",
+      "bytes": 960,
+      "sha256": "9a4a13328e3f3d4af25d13c371b79b918d898cb20fa2ec99e0901a70fe7be98f"
+    }
+  ],
+  "frozen_capture_output_receipt_pins": "pinned-inputs.json lists all frozen stage body/capture metadata/artifact/operation pins; content assessment scope is separate in source-checks.json.",
+  "outputs": [
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-RETR-C-M/REVIEW.md",
+      "bytes": 8376,
+      "sha256": "44e028b2afa3375b815dcd74fd4e02482881c75c94c4ed97a007779b1d56749c"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-RETR-C-M/SOURCE_EXCERPTS.md",
+      "bytes": 1977,
+      "sha256": "45e6ff3d13468c0b84ac210ace06da5828e440abf60226af8f2d889c6c8f3fe0"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-RETR-C-M/cost-provenance.json",
+      "bytes": 1755,
+      "sha256": "0d9ebd041d43966bd5190ab601462eabf2fb697fad363fccf41d68b971d08f42"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-RETR-C-M/evaluator-counterexample.json",
+      "bytes": 1374,
+      "sha256": "f781fecf47e93a5c4a93f2d75076262434975ebb6bd4a531110ab78926d1cba8"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-RETR-C-M/pinned-inputs.json",
+      "bytes": 97911,
+      "sha256": "d5898e315e32e613e44693b5ee95ecf4fcc7c01bf7a12b4302ff3f3ef47e6eac"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-RETR-C-M/preservation-assessment.json",
+      "bytes": 3546,
+      "sha256": "f522c8c847b6c1f5082465a2b2f48794225800dd25e9416085dc30736c1c85f2"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-RETR-C-M/provenance-audit.json",
+      "bytes": 99489,
+      "sha256": "492a27b78471b1b65d419494122db834b41b4e4dbae600dd2cb4fdf7624b49a1"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-RETR-C-M/quality-before-method.json",
+      "bytes": 2196,
+      "sha256": "107251973980960373c07cce6b8439ffcdd8adf25c47c07702ceb246d4629405"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-RETR-C-M/quality-disposition.json",
+      "bytes": 10618,
+      "sha256": "d1deb301a48254a2b5d869acabbb122cd32dc839eb252f34a6b85ab510a07c68"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-RETR-C-M/source-checks.json",
+      "bytes": 13716,
+      "sha256": "635d1010929f1ee8e2dcad5ab41865f237b34eb35542e52e781e6f774d8bd5e8"
+    }
+  ],
+  "raw_sources_copied": false,
+  "append_only_freeze_policy": "No evaluation record mutated after FREEZE.json is emitted. Source captures and candidate artifacts are read-only throughout."
+}

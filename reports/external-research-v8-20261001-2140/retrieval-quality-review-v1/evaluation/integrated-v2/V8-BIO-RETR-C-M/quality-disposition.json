@@ -1,0 +1,184 @@
+{
+  "schema": "er8.independent.integrated-quality-disposition.v1",
+  "case_id": "V8-BIO-RETR-C-M",
+  "evaluator": "er8-eval-bio-retr-c",
+  "quality_disposition": "FAILED_SCREEN",
+  "whole_case_pass": false,
+  "full_pass_coverage": false,
+  "evaluation_mode": "FULL assigned scope initiated, decisive diagnostic rejection; unassessed remainder preserved explicitly.",
+  "native_completion_disposition": "COMPLETE_THREE_FRESH_QUIESCENT_GOALS_PROJECTED",
+  "provenance_disposition": "HOST_CAPTURE_AND_BYTE_RANGES_VERIFIED; FRONTEND_CONSUMPTION_AND_SEMANTIC_ACQUISITION_UNKNOWN",
+  "preservation_disposition": "SCOPED_CURRENT_ARTIFACT_PRESERVATION_PARTIALLY_VERIFIED",
+  "method_disposition": "PARTIALLY_VERIFIED_UPTAKE; quality ruling unchanged",
+  "dominant_defect": {
+    "id": "D1",
+    "status": "VERIFIED_MISSING_REQUIRED_SOURCE_DEPENDENCY",
+    "facets": [
+      "B3",
+      "Q1",
+      "B4"
+    ],
+    "finding": "Final plan requires napari 0.9.2 label rendering through scale/translate at pyramid levels, but final UNRESOLVED_LEADS #5 explicitly says it was not source-verified. The brief bars whole-case pass with unresolved consequential source dependency. F4 is a proposed check, not evidence discharging the dependency.",
+    "final_lines": [
+      142,
+      143,
+      329,
+      337,
+      349,
+      350
+    ],
+    "leads_lines": [
+      39,
+      44
+    ],
+    "brief_lines": [
+      21,
+      21
+    ],
+    "source_check_ids": [
+      "S1",
+      "S2",
+      "S3"
+    ]
+  },
+  "additional_verified_plan_gap": {
+    "id": "D2",
+    "status": "VERIFIED_UNDERSPECIFIED_SAFE_OUTCOME",
+    "facets": [
+      "B2",
+      "B3",
+      "B5"
+    ],
+    "finding": "The overlay gate checks axis names/types and extents but does not define a unit/applicable-calibration compatibility check or refusal. Unit conversion is excluded. Same numeric extents with different units are not shared physical extents; missing units also cannot establish a shared physical frame. The tolerance mixes axis-unit and pixel quantities without a defined normalization. This establishes an incomplete plan, not an observed runtime misrendering.",
+    "final_lines": [
+      303,
+      308,
+      324,
+      341,
+      358,
+      359,
+      384,
+      387
+    ],
+    "leads_lines": [
+      46,
+      49
+    ],
+    "source_check_ids": [
+      "S1"
+    ],
+    "counterexample": "evaluator-counterexample.json"
+  },
+  "coverage_facets": {
+    "actual_frozen_final_proposal": {
+      "status": "VERIFIED",
+      "evidence": "33890 bytes and admitted sha256; all current artifact/capture/receipt freeze pins matched."
+    },
+    "Q1_components_and_bounded_choice": {
+      "status": "PARTIALLY_ASSESSED",
+      "evidence": "Two distinct primary repositories, sampled reader/transform behavior, vizarr interface/package facts and napari release announcement independently checked. Recommendation capability and exact release-to-master source binding remain incomplete."
+    },
+    "Q2_format_calibration_resolution_association": {
+      "status": "PARTIALLY_ASSESSED",
+      "evidence": "Core sections 3.1, 3.3, 3.4, 3.6, 3.7 checked. Transform order/per-axis conditions/path-vector permission and association vs alignment distinction verified. Full normative corpus and complete physical-fallback semantics not audited."
+    },
+    "Q3_issue_fix_regression_test": {
+      "status": "VERIFIED_SCOPED_CHAIN",
+      "evidence": "PR #652 report, merge fields, complete code/test diff inspected. Test is 0.6/Zarr v3; transfer to 0.4 is explicitly inference, not a 0.4 test. Supporting vizarr chain partly checked."
+    },
+    "B1_local_input_support_read_only": {
+      "status": "PARTIALLY_ASSESSED",
+      "evidence": "Contract, absent-label refusal and explicit path-vector refusal are present; Zarr-group reader conjunct verified. Complete support/version/fallback contract and actual read-only store behavior not independently established."
+    },
+    "B2_physical_cursor_calibrated_display": {
+      "status": "PARTIALLY_ASSESSED",
+      "evidence": "Declared scale/translation composition has source basis; optional units/per-axis fallback condition preserved in corrected prose. Renderer mapping, mixed/absent unit applicability and all badge cases remain incomplete."
+    },
+    "B3_resolution_categorical_overlay": {
+      "status": "FAILED_SCREEN",
+      "evidence": "D1: selected napari per-level label transform/sampling dependency remains explicitly unverified. D2: unit/application compatibility has no specified refusal/comparison state."
+    },
+    "B4_two_components_tradeoff_failure_history": {
+      "status": "PARTIALLY_ASSESSED",
+      "evidence": "Two source-backed implementations and a real scoped issue-fix-test chain exist. Full version-specific recommendation and all supporting upstream assertions not established."
+    },
+    "B5_concrete_steps_discriminating_validations_limits": {
+      "status": "PARTIALLY_ASSESSED",
+      "evidence": "Concrete steps and F1-F9 proposed cases inspected; correction adds path-form and badge cases. No test execution claimed or required for this control method. They cannot establish unverified renderer dependencies; unit-compatibility gate lacks a defined discriminator."
+    },
+    "every_consequential_source_claim": {
+      "status": "NOT_FULLY_ASSESSED",
+      "evidence": "Diagnostic rejection stops before an exhaustive claim audit. See source-checks.json for exact checked fields/windows. Remaining claims UNASSESSED, not assigned zero."
+    },
+    "two_distinct_implementations": {
+      "status": "VERIFIED_SCOPED",
+      "evidence": "ome-zarr-py reader and vizarr viewer are separate relevant primary repositories, independently present in same-case captures. No stronger-model/evaluator selections supplied to candidates."
+    },
+    "relevant_issue_fix_test_lineage": {
+      "status": "VERIFIED_SCOPED",
+      "evidence": "#652 failure report -> merged code fix -> added test with both path assertions; source version and read-only prototype transfer limitation retained."
+    },
+    "calibration_matching_alignment_conditions": {
+      "status": "PARTIALLY_ASSESSED_WITH_DEFECT",
+      "evidence": "Core transform ordering/association limits checked; D2 leaves physical-space compatibility outcome unspecified. No runtime overlay correctness established."
+    },
+    "exact_versions_dates_context_conditions_exceptions_normative_force": {
+      "status": "PARTIALLY_ASSESSED",
+      "evidence": "Selected versioned spec sections, dated issue/PR endpoints and napari tag checked. Snapshot master source is not proved identical to recommended ome-zarr-py 0.11.x release; all remaining source conditions UNASSESSED."
+    },
+    "original_current_artifact_preservation": {
+      "status": "PARTIALLY_VERIFIED",
+      "evidence": "Original proposal/leads and critique copied byte-identically into later inputs; inspected corrections and negative constraints survive. This is scoped current-artifact preservation, not full old-history grading."
+    },
+    "calibration_unsupported_claims": {
+      "status": "PARTIALLY_ASSESSED",
+      "evidence": "Tests honestly proposed; negative-scale statement changed to inference; external-path refusal added. D1 explicit uncertainty remains; universal manual-check causal claim and complete source/version assertions not established."
+    },
+    "host_capture_and_delivered_ranges": {
+      "status": "VERIFIED_HOST_WITNESS_SCOPE",
+      "evidence": "Frozen bodies and stdout-flushed operation byte ranges rehashed; positive host transport evidence. HTTP 404 captures are not successful primary-source acquisition. Frontend/model consumption unobserved."
+    },
+    "acquisition_vs_semantic_understanding": {
+      "status": "UNKNOWN_FOR_MODEL_CONSUMPTION",
+      "evidence": "Captures and server stdout flush cannot prove semantic acquisition. Independent scoped source interpretation assessed separately."
+    },
+    "native_critic_and_correction_completion": {
+      "status": "VERIFIED_PROJECTED_RECEIPTS",
+      "evidence": "Three distinct fresh Goal targets complete/quiescent with identical provider GLM-5.3-Flash/max and runtime snapshot. Underlying account identity relies on root attestation, not independent credential inspection."
+    },
+    "self_derived_witness_execution": {
+      "status": "NOT_ASSIGNED",
+      "evidence": "METHOD ordinary control plus batching requires proposed validations; no special witness procedure. Capture receipts do not constitute executed semantic fixture witnesses."
+    },
+    "method_compliance": {
+      "status": "PARTIALLY_VERIFIED",
+      "evidence": "After fixed pre-method ruling, card read: two/three coherent batches and within-case source reuse requested. Three-batch initial note, two-batch correction note and repeated/shared captures support uptake; full native scheduling/history not read."
+    }
+  },
+  "pre_method_quality_ruling": {
+    "path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-RETR-C-M/quality-before-method.json",
+    "sha256": "107251973980960373c07cce6b8439ffcdd8adf25c47c07702ceb246d4629405",
+    "recorded_epoch": 1790992408.5865633,
+    "unchanged": true
+  },
+  "blinding": "Exact case ID necessary; assigned manifest was read for owner brief/thin-plan pointers and exposed method summary. Candidate final artifact also names batching. No perfect blinding claimed; METHOD.md content not yet read. Quality ruling fixed independently of method compliance.",
+  "scope_boundaries": {
+    "raw_native_journals_conversations": "NOT_READ",
+    "private_runtime_profiles_auth": "NOT_READ",
+    "sibling_cases_campaign_outcomes": "NOT_READ",
+    "evaluator_answers_keys": "NOT_READ; only assigned evaluation-scope rubric read",
+    "canon_git_ledger_native_provider_actions": "NONE",
+    "candidate_feedback_repairs": "NONE",
+    "evaluator_public_primary_web_fetches": 0,
+    "quality_from_hash_counts_get_bytes_or_completion": false
+  },
+  "original_birth_epoch": 1790992152.3068507,
+  "original_deadline_epoch": 1790994552.3068507,
+  "no_clock_reset": true,
+  "all_remaining_facets": "UNASSESSED beyond explicitly described evidence; no full case truth/completeness claim.",
+  "evaluation_protocol_limitation": {
+    "status": "LIMITED_BLINDING_ORDER_DEVIATION",
+    "finding": "Assigned manifest was read for brief/thin-plan ownership and exposed prospective method identity before the provisional quality ruling. METHOD.md duties were read only after that ruling. No perfect-blind or fully identity-blind protocol claim is made.",
+    "quality_ruling_not_changed_to_ease_method": true
+  }
+}
