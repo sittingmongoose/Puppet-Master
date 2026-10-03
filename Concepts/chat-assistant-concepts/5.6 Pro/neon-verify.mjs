@@ -37,9 +37,10 @@
  *      live tone on the same row state; raw ratios under 3:1 are information (lead decision, 2026-10-02). A mark
  *      whose svg is hidden (NieR's diamonds part draws working as the wrapper's ::after) is read by its ::after
  *      border ink. 11d measures what is painted: on a real idle row at rest, hovered, selected and selected +
- *      hovered, the idle mark's ink mass and p99 pixel contrast (dpr 2) are no more than the working mark's drawn in
- *      the same host, averaged over twelve phases of its loops (integrate fix cycle 1: NieR's bar inked idle full paper and its
- *      whole ring outweighed the rotateY-narrowed diamond while every colour check passed on equal inks).
+ *      hovered, the idle mark's ink mass (against working's mean over twelve phases of its loops) and p99.5 pixel
+ *      contrast (against working's lowest phase) are no more than the working mark's drawn in the same host
+ *      (integrate fix cycle 1: NieR's bar inked idle full paper and its whole ring outweighed the rotateY-narrowed
+ *      diamond while every colour check passed on equal inks; fix cycle 2: p99.5, no tolerance).
  *   12 a dark theme's backlight paints; NieR has no halo and no backlight.
  *   13 salience: waiting (needs you) has at least working's halo strength and frame-difference motion, on the real
  *      marks of the wide thread list, in every theme. Every animation on the page is paused and the two marks' are
@@ -982,13 +983,16 @@ for (const theme of THEMES) {
    plus 4 px), then the same host is redrawn as working (its data-status and class too, so the list's own rules
    apply) and screenshotted at twelve phases of each of its loops (all paused, stepped together); the host is then
    restored. Ink mass = the summed mean-channel distance from the field (the clip's border median), in CSS px of
-   full ink; peak = the 99th percentile of the pixels' contrast ratio on that field. Idle may exceed working's mean
-   in neither (the peak is what caught NieR's bar: its full-paper idle ring peaked at 8.6:1 over a diamond whose thin
-   turned lines peak lower, while the masses were within 12 %). The peak carries a 3 % tolerance: Friendly Light's
-   idle and working inks are 3.08 and 3.22:1 by design (3E2; idle may not go lighter, its 3:1 floor at rest) and paint
-   p99 ties (3.08 vs 3.05, 2.76 vs 2.75) that flip with antialiasing while working carries twice the mass; NieR's bar
-   failed by 36-44 %. */
-const PEAK_TOL = 1.03;
+   full ink; peak = the 99.5th percentile of the pixels' contrast ratio on that field. Idle's mass may not exceed
+   working's mean, and idle's peak may not exceed working's peak at its lowest phase (the peak is what caught NieR's
+   bar: its full-paper idle ring peaked at 8.6:1 over a diamond whose thin turned lines peak lower, while the masses
+   were within 12 %). Why p99.5 and no tolerance (fix cycle 2): the clip holds about 2,100 device pixels, so p99 is
+   about 21 of them, which sits on the rim of the working bead's full-ink core (working's ring is drawn at .65, only
+   the bead is full ink): it read the bead's antialiasing at its sub-pixel position, not its ink, and swung 3.02-3.07
+   over Friendly Light's phases against idle's 3.08 (a fudge of 3 % passed it, a real row failed it by 5 %).
+   p99.5 (about 10 pixels) sits inside the core: Friendly Light's working reads its full 3.22 ink at every phase
+   (idle 3.08, max 3.08), and the a91721e1d9 build's NieR bar still fails by 21-25 % (8.61 vs 6.48, 11.47 vs
+   9.08). */
 for (const theme of THEMES) {
   await sec(`ink mass ${theme}`, async () => {
     const p = await newWidePage(2);
@@ -1018,7 +1022,7 @@ for (const theme of THEMES) {
           cr.push((Math.max(l, lb) + 0.05) / (Math.min(l, lb) + 0.05));
         }
         cr.sort((u, v) => u - v);
-        return { mass: m / (k * k), peak: cr[Math.floor(cr.length * 0.99)] };
+        return { mass: m / (k * k), peak: cr[Math.floor(cr.length * 0.995)] };
       };
       const measure = async () => {
         const box = await p.evaluate(() => { const h = document.querySelector('.thread-row[data-nx-probe] .ph-status'); if (!h) return null; const r = h.getBoundingClientRect(); return { x: r.x, y: r.y, w: r.width, h: r.height }; });
@@ -1058,7 +1062,7 @@ for (const theme of THEMES) {
         });
         const avg = k => work.reduce((a, b) => a + b[k], 0) / work.length;
         return { idle: +idle.mass.toFixed(1), working: +avg('mass').toFixed(1), workingMin: +Math.min(...work.map(w => w.mass)).toFixed(1),
-          idlePeak: +idle.peak.toFixed(2), workingPeak: +avg('peak').toFixed(2), loops: n };
+          idlePeak: +idle.peak.toFixed(2), workingPeak: +Math.min(...work.map(w => w.peak)).toFixed(2), workingPeakMean: +avg('peak').toFixed(2), loops: n };
       };
       const st = {};
       await p.mouse.move(5, 1075); await p.waitForTimeout(300);
@@ -1072,9 +1076,9 @@ for (const theme of THEMES) {
       st.selected = await measure();
       await p.locator('.thread-row[data-nx-probe]').first().hover(); await p.waitForTimeout(450);
       st.selectedHover = await measure();
-      const bad = Object.entries(st).filter(([, v]) => !v || !(v.idle <= v.working) || !(v.working > 0) || !(v.idlePeak <= v.workingPeak * PEAK_TOL)).map(([k]) => k);
-      const line = Object.entries(st).map(([k, v]) => v ? `${k} ${v.idle} vs ${v.working} (p99 ${v.idlePeak} vs ${v.workingPeak})` : `${k} missing`).join(', ');
-      check(bad.length === 0, `11d idle vs working painted ink [${theme}]: ${line} (idle vs working's mean: ink mass in CSS px of full ink, p99 pixel contrast on the field; want idle <= working in both on each state; peak within ${Math.round((PEAK_TOL - 1) * 100)} %)`, { states: st, failing: bad });
+      const bad = Object.entries(st).filter(([, v]) => !v || !(v.idle <= v.working) || !(v.working > 0) || !(v.idlePeak <= v.workingPeak)).map(([k]) => k);
+      const line = Object.entries(st).map(([k, v]) => v ? `${k} ${v.idle} vs ${v.working} (p99.5 ${v.idlePeak} vs ${v.workingPeak})` : `${k} missing`).join(', ');
+      check(bad.length === 0, `11d idle vs working painted ink [${theme}]: ${line} (ink mass in CSS px of full ink, idle vs working's mean; p99.5 pixel contrast on the field, idle vs working's lowest phase; want idle <= working in both on each state)`, { states: st, failing: bad });
     } finally { await shut(p); }
   });
 }
