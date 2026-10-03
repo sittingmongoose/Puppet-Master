@@ -51,15 +51,19 @@ body {
 /* Light themes: a dark-on-light halo reads as a tinted sticker, so the core stays thin and faint, concept and
    hover icons carry "lit" by ink alone (G1), and the backlight is lower. Final review (2026-10-03): at .12/.095/.10/.05
    the backlights read as soft tinted discs 8.5-15 px out (CIE76 dE 25-40 % above main's filter glow on the bar: pink
-   behind Todo and Subagents on Basic Light, tan behind the collab marks on Retro Light's cream); 30 % lower matches
-   main's tint there. */
+   behind Todo and Subagents on Basic Light, tan behind the collab marks on Retro Light's cream). They are 15 % lower:
+   the review's 30 % matched main's tint in that ring but took the plan's glow metric (tools/glow-metric.mjs, total
+   within 25 % of main's bar glow) to 64-75 % of main on every light theme, because main's light glow is a wide
+   drop-shadow and most of ours, past the thin core, is this backlight; at 15 % the metric holds (32/32 light rows,
+   total 78-97 %, tail 94-115 %) and the ring tint drops by about a quarter of its excess. A smaller disc failed the
+   metric's edge check. The list's needs-you swell, which no metric holds to main, peaks at .08 (from .11). */
 body[data-theme$="-light"] {
   --nx-hi-w: 3.4px;
   --nx-h-blocked-i: .08; --nx-h-attention-i: .08; --nx-h-working-i: .08; --nx-h-changed-i: .07;
   --nx-h-quiet-i: .06;
   --nx-h-concept-i: 0; --nx-h-hover-i: 0; --nx-h-swell-i: 0;
   --nx-h-bolt-i: .2;
-  --nx-bl-blocked: .085; --nx-bl-attention: .065; --nx-bl-working: .07; --nx-bl-changed: .035;
+  --nx-bl-blocked: .102; --nx-bl-attention: .081; --nx-bl-working: .085; --nx-bl-changed: .043;
 }
 /* Idle (Ready) ink on paper (3E2, 2026-10-02): the theme's --subtle read under 3:1 on the thread rows (2.4-2.8), so
    each light theme's idle ink is precomputed (work/3E2/idlecalc.py): --subtle moved toward --muted in sRGB until it
@@ -325,7 +329,7 @@ body[data-theme$="-light"] .nx-st-waiting::before { animation-name: nx-bl-needs-
 .ph-status .nx-st-waiting:not(.nx-still)::before { animation-name: nx-bl-swell; }
 body[data-theme$="-light"] .ph-status .nx-st-waiting:not(.nx-still)::before { animation-name: nx-bl-swell-l; }
 @keyframes nx-bl-needs { 0%, 100% { opacity: .08; } 50% { opacity: .048; } }
-@keyframes nx-bl-needs-l { 0%, 100% { opacity: .065; } 50% { opacity: .039; } }
+@keyframes nx-bl-needs-l { 0%, 100% { opacity: .081; } 50% { opacity: .049; } }
 @keyframes nx-bl-swell { 0%, 100% { opacity: .085; transform: scale(1.12); } 50% { opacity: .025; transform: scale(.88); } }
 /* light themes' list swell peaks at .08 (final review: .11 read as a disc), the light attention backlight's swell */
 @keyframes nx-bl-swell-l { 0%, 100% { opacity: .08; transform: scale(1.12); } 50% { opacity: .025; transform: scale(.88); } }
