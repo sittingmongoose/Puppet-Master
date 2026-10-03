@@ -63,16 +63,16 @@
       }
     ]
   },
-  "checkpoint": "SIX_REVIEWED_PAIRS_ELEVEN_FAILED_SCREENS_ONE_HOLD_TWELVE_PIPELINES_COMPLETE",
+  "checkpoint": "FINAL_RESULTS_READY_FINAL_OWNED_CLOSE_PENDING",
   "prospective_pair_map": "tranche-cohort-v2/cases/tranche-v2/pairs.json",
   "prospective_pair_count": 12,
-  "completed_comparisons": 6,
-  "current_scope_note": "Sixcompleted/reviewedpairs11FAILED_SCREEN1HOLD unchanged. BIOCONDbothresearch COMPLETE/TcriticCOMPLETE; Ccritic/TfinalnativeACTIVE; old06:48 rooterror retained; no newwhole or qualitycredit.",
+  "completed_comparisons": 7,
+  "current_scope_note": "Sevenoperational pairs diagnosticallyreviewed13FAILED_SCREEN1HOLD; no comprehensivePASS/qualityqualifiedefficiency. Targets10pipelines5pairs4holdouts unmet, no safe useful newpair fits originaltime.",
   "scope_review": "recovery-results-cohort-v2/evaluation/tranche-scope-review-v1/review.json",
   "scope_review_status": "CLEAR_PROSPECTIVE_NO_LAUNCH_AUTHORITY",
-  "observation_utc": "2026-10-03T06:50:40.934088+00:00",
-  "completed_comparisons_definition": "Six matched operational pairs with both independent dispositions frozen; no qualified efficiency result.",
-  "operational_matched_pairs_completed": 6,
+  "observation_utc": "2026-10-03T07:25:19Z",
+  "completed_comparisons_definition": "Seven operational pairs with independently sealed diagnostic process; no full3Q5B18certification.",
+  "operational_matched_pairs_completed": 7,
   "quality_qualified_efficiency_comparisons": 0,
   "integrated_pair_results": [
     {
@@ -122,30 +122,51 @@
       "quality_qualified_efficiency": false,
       "speedup": "NOT_ESTABLISHED",
       "evidence": "notebook-breadth-quality-review-v1/ops/recovery-v1/ROOT_NB_BREADTH_COMPARISON_V1.json"
+    },
+    {
+      "pair": "BIOCOND-S8-C/T",
+      "operational_complete": true,
+      "independent_review": "TWO_FAILED_SCREEN; remainingUNASSESSED/null",
+      "quality_qualified_efficiency": false,
+      "speedup": "NOT_ESTABLISHED",
+      "control_evidence": "integrated-biomedical-condition-quality-v1/control/README.md",
+      "treatment_evidence": "integrated-biomedical-condition-quality-v1/treatment/README.md"
     }
   ],
-  "current_metadata_boundary": "Current correction snapshot UTC2026-10-03T06:50:40.934088+00:00 has64 native starts/66 admissions/47851.52034831047 occupied seconds/1622345 output lower bound, with selected2m stopfalse. Both research Goals are COMPLETE/released; treatment critic is positively COMPLETE(native goal complete/wrapper0/released), source receipt SHA-256 `b361cb5422812d93417a5e8c4b4a2fbbc80ece4ca4716f77ac8d6065fccdb76f`; treatment final and control critic are nativeACTIVE at this freeze. Exact stage aggregate23research/15critic/12final adds the literal treatment critic completion. Current correction original locator `LAB/ops/recovery-v1/OBSERVATION_20261003_0650_STAGE_TRANSITION_CORRECTION_V1.json`, SHA-256 `ab76d1b2bcdf0c739992b29eef32b14ad0b8d90aac8de5870b583c7450ccfe63`; public projection pending. The old06:48 immutable root error is preserved separately; no wholepipeline/pair/quality credit, birth/budget reset or present-liveness inference.",
+  "current_metadata_boundary": "Current fixed-results original source `LAB/ops/recovery-v1/FINAL_RESULTS_OBSERVATION_20261003_V1.json`, SHA-256 `fb53ecf8b445c1b65907b8a21ebfbda965daed884861a0930647918fd2ff98c7`; public projection pending. Accounting65starts/67admissions/48812.904603004456occupied/1719680output lower bound is a fixed source snapshot, not final whole-campaign usage. Selected2m output guard remains stopfalse, warningtrue; historical1.5mtrip and exact original global clock remain. LabelsM/L are method cells, not native Muse/Luna starts: actual scored execution used authorized GLM route; Muse scoredHOLD on four managedMCP identities and Luna preventive permissionHOLD/zero scored Goals. Muse mechanical six invocations/four completions/two timeouts/911.7189729450283wall seconds/zero candidate credit is retained.",
   "current_outcomes": {
-    "operational_pipeline_count": 12,
+    "operational_pipeline_count": 14,
     "target_pipelines": 24,
-    "operational_pair_count": 6,
+    "operational_pair_count": 7,
     "target_pairs": 12,
-    "quality_reviewed_pairs": 6,
-    "independent_failed_screens": 11,
+    "quality_reviewed_pairs": 7,
+    "independent_failed_screens": 13,
     "independent_holds": 1,
     "full_quality_pass": 0,
     "quality_qualified_efficiency_comparisons": 0,
     "winner": null,
-    "qualified_holdouts": 0
+    "qualified_holdouts": 0,
+    "unmet_pipeline_executions": 10,
+    "unmet_matched_pairs": 5,
+    "unreleased_holdouts": 4,
+    "reviewed_definition": "Diagnostic process sealed; remaining comprehensive3Q5B18grades UNASSESSED/null, canonical18enumeration/weights unavailable."
   },
-  "source_serialized_utc": "2026-10-03T06:50:40.934088+00:00",
+  "source_serialized_utc": "2026-10-03T07:25:19Z",
   "current_runtime": {
-    "unit": "er8-v8-production-z-tranche-v11.service",
-    "active_jobs": [
-      "V8-BIO-COND-C-Z-S8-independent-candidate-critic",
-      "V8-BIO-P-Z-S8-final-correction"
-    ],
-    "scope": "Frozen correction positivelyconfirms TcriticCOMPLETE; Ccritic/TfinalnativeACTIVE at freeze only, no presentliveness"
+    "active_jobs": [],
+    "active_by_family": {
+      "M": 0,
+      "Z": 0,
+      "L": 0
+    },
+    "pending_start_permits": 0,
+    "passive_standby": "STOPPED",
+    "original_owner_unit": "er8-v8-root-durable-20261002-2348.service",
+    "original_owner_pid": 1969270,
+    "original_owner_final_stop_observed": false,
+    "ledger_closed": false,
+    "campaign_cleanup_complete": false,
+    "scope": "Fixed results snapshot; no future or finalcleanup inference"
   },
   "comparisons_scope": "Original historical reservation labels only; NOT_RUN rows are not a current integrated execution claim. Current actual pair outcomes are in integrated_pair_results and current_outcomes.",
   "previous_observation_creation_epoch": 1791003230.9785047,
@@ -160,8 +181,8 @@
     "historical_trip_preserved": true
   },
   "current_observation_source_pin": {
-    "source_locator": "LAB/ops/recovery-v1/OBSERVATION_20261003_0650_STAGE_TRANSITION_CORRECTION_V1.json",
-    "sha256": "ab76d1b2bcdf0c739992b29eef32b14ad0b8d90aac8de5870b583c7450ccfe63",
+    "source_locator": "LAB/ops/recovery-v1/FINAL_RESULTS_OBSERVATION_20261003_V1.json",
+    "sha256": "fb53ecf8b445c1b65907b8a21ebfbda965daed884861a0930647918fd2ff98c7",
     "public_projection_pending": true
   },
   "output_guard_publication_evidence": "output-guard-recovery-cohort-v1/README.md",
@@ -203,5 +224,18 @@
     "source_locator": "LAB/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-independent-candidate-critic/COMPLETE.json",
     "sha256": "b361cb5422812d93417a5e8c4b4a2fbbc80ece4ca4716f77ac8d6065fccdb76f",
     "source_scope": "Pin only from permittedroot correction; no directcaseoutput read"
-  }
+  },
+  "historical_0650_correction_source": {
+    "source_locator": "LAB/ops/recovery-v1/OBSERVATION_20261003_0650_STAGE_TRANSITION_CORRECTION_V1.json",
+    "sha256": "ab76d1b2bcdf0c739992b29eef32b14ad0b8d90aac8de5870b583c7450ccfe63",
+    "public_projection_pending": true
+  },
+  "results_status": "FINAL_RESULTS_READY",
+  "closure_status": "FINAL_OWNED_CLOSE_PENDING",
+  "unmet_targets": {
+    "pipelines": 10,
+    "pairs": 5,
+    "holdouts": 4
+  },
+  "final_tail_usage": "UNKNOWN"
 }
