@@ -324,11 +324,13 @@
 
       /* ---- the status marks (plan §3); status() wraps them, icon('st-<s>') draws them bare ---- */
       /* working: a bead that orbits ON the ring (Jared, 2026-10-02: "the ball should be orbiting on the circle, not on
-         the outside of it"): its centre travels exactly on the ring's radius (7.5). The ring sits at .65 and opens a
-         small gap either side of the bead (1 unit clear of it, round caps included), and the filled bead (r2.7, a
-         little wider than the tube) carries its own core halo, so it still reads on the accent-tinted selected row.
-         Ring and bead are one moving part: turning a gapped ring IS the gap travelling with the bead. */
-      'st-working': G([M([P('M16.44 5.95A7.5 7.5 0 1 1 7.56 5.95', { c: 'nx-dim' }), C(12, 4.5, 2.7, { f: 1 })], { ar: 360, o: [12, 12] })], 'spin', 'status'),
+         the outside of it"): its centre travels exactly on the ring's radius (7.5). The ring is a still, full circle at
+         .65 with its core halo in the static layer; only the filled bead (r2.7, a little wider than the tube) moves,
+         with its own core halo, so it still reads on the accent-tinted selected row. Final review (2026-10-03): the ring
+         used to be gapped and turned with the bead, and the antialiasing of that turning arc was most of the mark's
+         frame-to-frame change while the bead crept round in 16 s; with the ring still, the bead goes round in 9 s in a
+         list too, the mark changes 22-27 % less from frame to frame, and the bead travels 1.8x as far. */
+      'st-working': G([C(12, 12, 7.5, { c: 'nx-dim' }), M(C(12, 4.5, 2.7, { f: 1 }), { ar: 360, o: [12, 12] })], 'spin', 'status'),
       /* reviewing: the lens sweeps half as far and rests (it must stay below needs-you) */
       'st-reviewing': G([P('M5 3h9l4 4v6'), P('M5 3v17h6'), M([C(16, 16, 3.6), P('m18.6 18.6 2.6 2.6')], { ax: -2.5, ay: -2.5, b: 1 })], 'calm', 'status'),
       'st-waiting': G([P('M5 3h14a2.5 2.5 0 0 1 2.5 2.5v10.5a2.5 2.5 0 0 1-2.5 2.5h-6.5L8 21.8v-3.3H5A2.5 2.5 0 0 1 2.5 16V5.5A2.5 2.5 0 0 1 5 3z'),
@@ -387,7 +389,7 @@
        STATUS (plan §3): canonical status -> mark, tone and list motion, with every alias the surfaces use.
        ====================================================================== */
     var STATUS = {
-      working: { glyph: 'st-working', tone: 'working', motion: 'bead orbits on the ring, 9 s (16 s in the thread list), linear, its core halo only', aliases: ['running', 'in_progress', 'doing', 'live', 'active', 'loading', 'starting'] },
+      working: { glyph: 'st-working', tone: 'working', motion: 'bead orbits on the still ring, 9 s (the thread list too), linear, its core halo only', aliases: ['running', 'in_progress', 'doing', 'live', 'active', 'loading', 'starting'] },
       reviewing: { glyph: 'st-reviewing', tone: 'working', motion: 'lens sweeps 2.5 units and rests; no backlight', aliases: ['verifying', 'review'] },
       waiting: { glyph: 'st-waiting', tone: 'attention', motion: 'full steady halo, backlight breathes .6-1 (in the thread list it swells with the beat, .3-1, x.88-1.12), "?" hops 3.4 units (two beats every 2.4 s)', aliases: ['needs', 'needs_you', 'needs-you', 'yourmove', 'input', 'decide'] },
       'waiting-dep': { glyph: 'st-waiting-dep', tone: 'attention', motion: 'tips once, holds 60 % of 3.6 s', aliases: ['waiting_dep', 'dependency', 'blocked_on', 'held'] },

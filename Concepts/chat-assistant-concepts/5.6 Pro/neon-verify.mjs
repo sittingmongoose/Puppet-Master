@@ -28,7 +28,8 @@
  *      on every thread; recovery-collaboration's blocked runs read attention. 2c the nine
  *      thread statuses in the wide take-6 rows carry .nx-st-<status>. 2d To-Do rows (the bar's To-Do hover card)
  *      carry the set member of their status.
- *   3  the working bead moves >= 3 px in a quarter of its orbit (a lone mark: 9 s; the thread list's is 16 s).
+ *   3  the working bead moves >= 3 px in a quarter of its 9 s orbit (alone and in the thread list), and only the bead
+ *      moves: the ring is a full circle in the mark's static layer (final review, 2026-10-03).
  *   4  a clip reveal ran and left no residual clip-path after finish(); the page/document text lines paint.
  *   5  static scan: no filter, stroke-dashoffset or color-mix() in a .nx / nx- rule or an nx keyframe; no pmx in
  *      an nx keyframe name.
@@ -569,9 +570,12 @@ else await sec('satellite', async () => {
       host.style.cssText = 'position:fixed;left:40px;top:40px;z-index:99999;';
       host.innerHTML = window.PM56_NEON.status('working', 24);
       document.body.appendChild(host);
-      return !!host.querySelector('.nx-st-move .nx-f');
+      /* final review (2026-10-03): the ring is still (a full circle in the static layer); the bead alone moves */
+      const ring = host.querySelector('.nx-st-base circle.nx-c.nx-dim'), moving = host.querySelectorAll('.nx-st-move .nx-c');
+      return { bead: !!host.querySelector('.nx-st-move .nx-f'), stillRing: !!ring && +ring.getAttribute('r') === 7.5, movingTubes: moving.length };
     });
-    if (!has) { check(false, '3 satellite moves: no .nx-f bead in st-working', null); return; }
+    if (!has.bead) { check(false, '3 satellite moves: no .nx-f bead in st-working', has); return; }
+    check(has.stillRing && has.movingTubes === 1, `3 still ring: the full r7.5 ring is in the static layer and the bead is the only moving tube (${has.movingTubes})`, has);
     const centre = sel => p.evaluate(s => {
       const e = document.querySelector(s);
       if (!e) return null;
@@ -1313,7 +1317,7 @@ else await sec('salience', async () => {
       const e = { waiting: 0, working: 0 }, prev = {};
       /* Fix cycle 1: both marks are read at the same animation time. Every animation on the page is paused; the
          two marks' own (pseudo-elements included) are stepped together, DT ms a step, N steps (16.8 s: two turns
-         of NieR's list diamond, seven needs-you cycles, more than one 16 s bead turn), so neither load nor the
+         of NieR's list diamond, seven needs-you cycles, nearly two 9 s bead turns), so neither load nor the
          screenshot order shifts their phases. */
       const stepped = await p.evaluate(() => {
         const hosts = ['waiting', 'working'].map(s => document.querySelector(`.thread-row:not(.active) .ph-status[data-status="${s}"]`));

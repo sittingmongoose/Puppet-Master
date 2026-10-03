@@ -286,15 +286,13 @@ svg.fast-bolt, svg.meta-fast, svg.fast-row-bolt { --nx-ink: var(--warning); --nx
 .nx-tn-changed { --nx-bl-ink: var(--accent-2); --nx-bl-a: var(--nx-bl-changed); }
 /* the quiet tones are unlit: no backlight box at all */
 .nx-tn-done::before, .nx-tn-idle::before, .nx-tn-paused::before { display: none; }
-/* working: the bead orbits slowly on the ring (9 s: the quietest live mark, below reviewing), no breathe, no
-   backlight (the inner halo only). In the thread list (.ph-status) it turns in 16 s, linear. Integrate (2026-10-02):
-   since the bead sits ON the ring (3B) the whole gapped ring turns, and at 9 s its frame-difference energy in a list
-   was about 1.6-2x needs-you's (plan section 3: needs-you outshines working; neon-verify 13). The list rhythm is the
-   list's only (fix cycle 1): a lone mark (the chat header's, a plan step's, a todo's) keeps 9 s, or at 13 px it would
-   barely be seen to move. */
+/* working: the bead orbits slowly on the still ring (9 s: the quietest live mark, below reviewing), no breathe, no
+   backlight (the inner halo only), the same 9 s in the thread list and alone. Final review (2026-10-03): the list used
+   to turn the whole gapped ring in 16 s, which read as a frozen spinner at a glance (the bead crept 1.84 px/s) while
+   the turning arc's antialiasing still out-moved needs-you; now only the bead moves (neon-icons.js st-working), so a
+   9 s list bead is both livelier and quieter, and needs-you's lead (neon-verify 13) is wider. */
 .nx-st-working::before { display: none; }
 .nx-st-working .nx-p { animation: var(--kl) 9000ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 9ms - 9000ms); }
-.ph-status .nx-st-working .nx-p { animation-duration: 16000ms; animation-delay: calc(var(--ad, 0) * 16ms - 16000ms); }
 /* reviewing: the lens sweeps the page; no outer glow, so it stays below needs-you */
 .nx-st-reviewing::before { display: none; }
 .nx-st-reviewing .nx-p { animation: var(--kl) 2800ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 2.8ms - 2800ms); }
@@ -302,8 +300,8 @@ svg.fast-bolt, svg.meta-fast, svg.fast-row-bolt { --nx-ink: var(--warning); --nx
    backlight breathes .6-1 (literal keyframes per theme brightness; opacity only, so it composites). In the thread
    list (.ph-status) the backlight swells with the beat instead: brightest and widest (x1.12) on the hops, ebbing to a
    quarter and x.88 between them (opacity and transform). Integrate (2026-10-02): the deeper, wider swell is what keeps
-   needs-you above the working bead in every theme's list; fix cycle 1 keeps it to the list, with the 16 s bead it
-   answers (:not(.nx-still), so section 14's still rule keeps the last word on a still mark's backlight). */
+   needs-you above the working bead in every theme's list; fix cycle 1 keeps it to the list (:not(.nx-still), so
+   section 14's still rule keeps the last word on a still mark's backlight). */
 .nx-st-waiting .nx-p { animation: var(--kl) 2400ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 2.4ms - 2400ms); }
 .nx-st-waiting::before { animation: nx-bl-needs 2400ms ease-in-out infinite; }
 body[data-theme$="-light"] .nx-st-waiting::before { animation-name: nx-bl-needs-l; }
