@@ -1,0 +1,44 @@
+{
+  "immutable_inputs": {
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-research-proposal/workspace/TASK.md": "5b6c179d5ac4e4606db0c4094667b2366a1743855db61ed8db0163742e530e0e",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-research-proposal/workspace/inputs/METHOD.md": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-research-proposal/workspace/inputs/BRIEF.md": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-research-proposal/workspace/inputs/TASK.md": "5b6c179d5ac4e4606db0c4094667b2366a1743855db61ed8db0163742e530e0e",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-research-proposal/workspace/inputs/THIN_PLAN.md": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999"
+  },
+  "prompt_sha256": "0d933851c41bbbbc300fd92f94baa8482abd1f6e58d7d834cc40352139957302",
+  "normalized_input_receipts": [
+    {
+      "source_path": "LAB_ROOT/cases/planning-v1/briefs/notebook-workspace.md",
+      "source_sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+      "target_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-research-proposal/workspace/inputs/BRIEF.md",
+      "target_sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+      "path_delta": "none"
+    },
+    {
+      "source_path": "LAB_ROOT/cases/planning-v1/sandbox-plans/notebook-workspace.md",
+      "source_sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+      "target_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-research-proposal/workspace/inputs/THIN_PLAN.md",
+      "target_sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+      "path_delta": "none"
+    },
+    {
+      "source_path": "LAB_ROOT/cases/planning-v1/cases/V8-NB-P-Z/METHOD.md",
+      "source_sha256": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a",
+      "target_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-research-proposal/workspace/inputs/METHOD.md",
+      "target_sha256": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a",
+      "path_delta": "none"
+    },
+    {
+      "source_path": "LAB_ROOT/cases/planning-v1/templates/research.TASK.md",
+      "source_sha256": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3",
+      "target_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-research-proposal/workspace/inputs/TASK.md",
+      "target_sha256": "5b6c179d5ac4e4606db0c4094667b2366a1743855db61ed8db0163742e530e0e",
+      "path_delta": "input/ -> inputs/"
+    }
+  ],
+  "normalization_authority": "root prospective input/ to inputs/ path-only authorization",
+  "case_start_monotonic_ns": 206619529144630,
+  "stage_start_monotonic_ns": 206619529144630,
+  "pack_complete_monotonic_ns": 206621261135844
+}

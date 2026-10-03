@@ -1,0 +1,121 @@
+{
+  "schema": "er8.notebook-partial-results.v1",
+  "frozen_utc": "2026-10-03T00:29:19.178530+00:00",
+  "cases": [
+    "V8-NB-COND-C-Z",
+    "V8-NB-P-Z"
+  ],
+  "research_stages": "Nativecomplete; candidateproposals/unresolvedleads hashfrozen; capturedsource metadata+hostdeliveredrangeprojection supplied; semanticsunassessed",
+  "critic_stages": "PositivefreshnativeGoalactivation; nofinalreceipt/metrics/CRITIQUE; originalnative_stop570sec andcleanupbefore600componentcap; initialprogressresponses0 isnotfinalcounter; actual totalresponses/output unknown",
+  "whole_pipeline": "INCOMPLETE/HOLD; 0/24integratedexecutions,0/12comparisons qualified; fullqualityUNASSESSED, no winner",
+  "independent_mechanical_diagnostic": {
+    "path": "LAB_ROOT/ops/critic-diagnostic-v1/RESULT.json",
+    "sha256": "6342fc814be623977d9764666e135794850474a5f416b9d40c8ea3796f802506"
+  },
+  "current_accounting_snapshot": {
+    "elapsed_seconds": 17528.347417116165,
+    "deadline_epoch": 1791013030.8303788,
+    "admissions": 17,
+    "native_goal_starts": 15,
+    "pending_start_permits": 0,
+    "occupied_slot_seconds": 13025.540725946426,
+    "committed_slot_seconds": 868.933892250061,
+    "reserved_or_committed_slot_seconds": 139601.89862704277,
+    "reserved_or_committed_native_starts": 72,
+    "active_by_family": {
+      "M": 0,
+      "Z": 2,
+      "L": 0
+    },
+    "candidate_output_warning": false,
+    "candidate_output_stop": false,
+    "active_jobs": [
+      "V8-BIO-B-Z-independent-candidate-critic",
+      "V8-BIO-BATCH-C-Z-independent-candidate-critic"
+    ],
+    "overdue_jobs": [],
+    "helper_task_starts": 47,
+    "active_helpers": 2,
+    "evaluator_helper_starts_remaining": 26,
+    "generated_output_tokens_lower_bound": 215459,
+    "generated_usage": "unknown",
+    "outside_native_seconds_by_case": {
+      "v8-z-mechanical-route-canary-v1": 0.435632441,
+      "v8-z-mechanical-route-canary-v2": 87.708301406,
+      "v8-z-mechanical-route-canary-v3": 0.416744337,
+      "V8-BIO-C-Z": 1.881573445,
+      "V8-BIO-WIT-T-Z": 1.93355986,
+      "V8-BIO-P-Z": 218.781088987,
+      "V8-BIO-COND-C-Z": 218.49114402,
+      "V8-NB-COND-C-Z": 2.5303710070000003,
+      "V8-NB-P-Z": 3.2356752049999997,
+      "V8-BIO-BATCH-C-Z": 2.876333539,
+      "V8-BIO-B-Z": 2.8616779529999996
+    },
+    "category_seconds": {
+      "cancel": 0,
+      "cleanup": 519.19883245,
+      "evaluation": 0,
+      "handoff": 0.530847602,
+      "native": 972.478206129,
+      "retry": 0,
+      "setup": 21.422422148,
+      "source_capture": 0,
+      "wait": 0
+    },
+    "occupancy_reconciled": true,
+    "route_reviews": [
+      "v8-z-route-repair1-canary-v1",
+      "v8-z-route-repair1-caller2-canary-v2",
+      "v8-z-route-recovery-v1-canary-v2",
+      "v8-z-route-recovery-v2-canary-v3",
+      "v8-z-route-recovery-v2-native-accepted-v1",
+      "v8-z-route-recovery-v2-native-bound-v2"
+    ],
+    "final_reserved_names": [
+      "V8-BIO-C-Z",
+      "V8-BIO-P-Z",
+      "V8-BIO-B-Z",
+      "V8-NB-C-Z",
+      "V8-NB-P-Z",
+      "V8-NB-B-Z"
+    ],
+    "evaluator_reserved_names": [
+      "V8-EVAL-BIO-C",
+      "V8-EVAL-BIO-P",
+      "V8-EVAL-BIO-B",
+      "V8-EVAL-NB-C",
+      "V8-EVAL-NB-P",
+      "V8-EVAL-NB-B",
+      "V8-EVAL-V8-BIO-WIT-T-Z",
+      "V8-EVAL-V8-BIO-COND-C-Z",
+      "V8-EVAL-V8-BIO-BATCH-C-Z",
+      "V8-EVAL-V8-BIO-RETR-C-M",
+      "V8-EVAL-V8-BIO-RETR-T-M",
+      "V8-EVAL-V8-BIO-AMEND-C-L",
+      "V8-EVAL-V8-BIO-AMEND-T-L",
+      "V8-EVAL-V8-BIO-BREADTH-C-M",
+      "V8-EVAL-V8-BIO-BREADTH-T-M",
+      "V8-EVAL-V8-NB-WIT-T-Z",
+      "V8-EVAL-V8-NB-COND-C-Z",
+      "V8-EVAL-V8-NB-BATCH-C-Z",
+      "V8-EVAL-V8-NB-RETR-C-M",
+      "V8-EVAL-V8-NB-RETR-T-M",
+      "V8-EVAL-V8-NB-AMEND-C-L",
+      "V8-EVAL-V8-NB-AMEND-T-L",
+      "V8-EVAL-V8-NB-BREADTH-C-M",
+      "V8-EVAL-V8-NB-BREADTH-T-M",
+      "V8-EVAL-HOLDOUT-BIO-C",
+      "V8-EVAL-HOLDOUT-BIO-R",
+      "V8-EVAL-HOLDOUT-NB-C",
+      "V8-EVAL-HOLDOUT-NB-R"
+    ],
+    "closed": false,
+    "elapsed_seconds_including_user_pause": 82150.177795887,
+    "authorized_user_pause_excluded_seconds": 64621.83037877083
+  },
+  "prior_failureinclusivecosts_retained": true,
+  "original_source_bodies": "ExternalLAB only; metadata/locators/deliveredrangehashes do notprovecomprehension orlegal reproduction ofwholebody.",
+  "helper_usage_money_tokens": "UNKNOWN",
+  "globaldeadline_epoch": 1791013030.8303788
+}

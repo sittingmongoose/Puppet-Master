@@ -1,0 +1,22 @@
+{
+  "schema": "er8.helper.births.prospective-v1",
+  "created_epoch": 1790986940.2917798,
+  "tasks": [
+    {
+      "helper": "er8-prospective-timing-v3",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "birth_epoch": 1790986940.2917798,
+      "deadline_epoch": 1790987840.2917798,
+      "owned_path": "LAB_ROOT/dev/prospective-timing-v3"
+    },
+    {
+      "helper": "er8-critic-public-ops-v1",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "birth_epoch": 1790986940.2917798,
+      "deadline_epoch": 1790987840.2917798,
+      "owned_path": "LAB_ROOT/ops/critic-diagnostic-v1"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+# V8-NB-COND-C-Z — Unresolved leads (research stage)
+
+Only consequential dependencies/uncertainty remaining after `out/PROPOSAL.md`. Anything resolved by captured sources is not repeated here.
+
+- **L1 — Similarity-metric provenance.** The proposal's τ = 0.6 threshold is calibrated against nbdime's captured `threshold=0.7` (jupyter/nbdime @ v4.0.4, `nbdime/diffing/notebooks.py`, `compare_text_approximate`) but the underlying similarity *algorithm* nbdime uses (`compare_strings_approximate` in `nbdime/diffing/generic.py`) was not captured this stage. The proposal's LCS character ratio R = 2L/(|x|+|y|) is an independent derivation, not nbdime's metric; behavior may differ on multi-line cells even at equal τ. Git's `-M` default similarity percentage was also not captured (`Documentation/technical/diffcore.txt` 404'd at tag v2.47.0; `diff-options.txt` not fetched) — only `diff.renames` default-true and `diff.renameLimit` (1000) are cited.
+
+- **L2 — Upstream normalize() churn.** nbformat issues #328 ("Should normalize update minor_version?", open) and #359/#400 plus open PRs #426/#430 (proposing that `normalize()` bump declared versions; unmerged as of capture) show the normalize/upgrade surface is actively contested. The proposal correctly avoids building recovery on `normalize()`, but the critic/correction stages should re-verify nbformat ≤ the pinned v5.11.1 behavior before implementation, since any merged change would affect the §N1 version-echo contract.
+
+- **L3 — Unexecuted arithmetic and fixtures.** Witness W1 and the T1–T8 matrix in `out/PROPOSAL.md` are reasoned derivations only: this stage's admitted `mechanical` tool (operations `line_map`, `render_sections`, `cache_source`) cannot execute arithmetic, so **no execution receipt exists** and no pass/fail may be claimed. Execution requires an admitted deterministic arithmetic tool in a later stage (critic/correction), including the collision-probability restatement borrowed from nbformat PR #217's test comment (1/2^32).
+
+- **L4 — Truncated search capture.** The GitHub issue-search response (S13) was captured with `additional_source_bytes_remain` (32 KiB delivery cap); evidence about open issues (#328, #359, #243, #400) is limited to items visible within the captured bytes. Item-level claims were verified by separate full captures only for #216, #235, PR #217 and its file list.
+
+- **L5 — Transient/ephemeral field policy.** The v4.5 schema capture (S1) and nbdime capture (S6) establish that cell metadata and `execution_count` are excluded from identity comparison, but a fuller policy for execution-transient fields (e.g., output `metadata` blobs growing between runs) was not researched; the prototype's default (report as detail rows, exclude from identity) is a product choice pending the critic pass.
+
+- **L6 — Manifest format is ours.** The capture `manifest.json` schema (path → kind/hash/size) is a prototype-defined contract [CHOICE]; no public standard for "workspace capture manifests" was discovered, so interop claims must stay scoped to this prototype.

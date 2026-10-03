@@ -1,0 +1,170 @@
+{
+  "schema": "er8.execution-stage.v1",
+  "stage_id": "v8-nb-cond-c-z-independent-candidate-critic",
+  "stage_start_monotonic_ns": 207543219792698,
+  "deadline_monotonic_ns": 208143219792698,
+  "native_stop_monotonic_ns": 208113219792698,
+  "cleanup_reserve_seconds": 30,
+  "cap_seconds": 600,
+  "response_cap": 160,
+  "runtime_path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/launch.py",
+  "runtime_argv": [
+    "--workspace",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-independent-candidate-critic/workspace",
+    "--prompt-file",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-independent-candidate-critic/OBJECTIVE.md",
+    "--out",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-independent-candidate-critic/native-public",
+    "--label",
+    "V8-NB-COND-C-Z-independent-candidate-critic",
+    "--max-seconds",
+    "600",
+    "--max-responses",
+    "160",
+    "--admission-file",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-independent-candidate-critic/CASE_BINDING.json",
+    "--public-get",
+    "--mode",
+    "productive"
+  ],
+  "route_snapshot": {
+    "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/SNAPSHOT.json",
+    "sha256": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b"
+  },
+  "route_acceptance": {
+    "path": "LAB_ROOT/evaluation/resume-execution-v1/route-native-acceptance-bound-execution.json",
+    "sha256": "59b08282df39fe1c86e21eea06d1197a17f3ea30ef13b1569d6c34a31347a18c"
+  },
+  "assembly_binding": {
+    "config": {
+      "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/root-config.json",
+      "sha256": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d"
+    },
+    "lease": {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-independent-candidate-critic/LEASE.json",
+      "sha256": "fcb509b04b50e1eb1af0f7d7a07019d451ca048cb346ce7082c5feb6b256a58c"
+    },
+    "case_binding": {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-independent-candidate-critic/CASE_BINDING.json",
+      "sha256": "c27756715a81d23dfe37892c43b5f8660e44a8a817bffdc43570d6afe1264c02"
+    },
+    "acceptance": {
+      "path": "LAB_ROOT/evaluation/resume-execution-v1/route-native-acceptance-bound-execution.json",
+      "sha256": "59b08282df39fe1c86e21eea06d1197a17f3ea30ef13b1569d6c34a31347a18c"
+    }
+  },
+  "case_authority": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-independent-candidate-critic/CASE_AUTHORITY.json",
+    "sha256": "f9bfca529e8c0c77f62a0e3e53aeaa6e2f0c6d84d456b4286e738d105e0d8b00",
+    "clock": {
+      "case_id": "V8-NB-COND-C-Z",
+      "case_start_monotonic_ns": 206619523637934,
+      "case_elapsed_cap_seconds": 3600,
+      "case_occupied_cap_seconds": 5400,
+      "outside_native_cap_seconds": 300,
+      "campaign_native_cutoff_monotonic_ns": 234777000152750,
+      "stages": {
+        "v8-nb-cond-c-z-independent-candidate-critic": {
+          "stage_start_monotonic_ns": 207543219792698,
+          "cap_seconds": 600,
+          "response_cap": 160
+        }
+      }
+    }
+  },
+  "v8_stage_role": "integrated",
+  "v8_canary_review": {
+    "path": "LAB_ROOT/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json",
+    "sha256": "aba3336e6475d1eb50e00b66c3804e2747d7fef38be764ec53379614cfb68fc7"
+  },
+  "enrollment_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-independent-candidate-critic/PLAN.enrollment.json",
+  "occupied_and_outside_cost_enforcement": "mandatory operator case/slot ledger; wrapper proves native lifetime only",
+  "boundary_acceptance": {
+    "path": "LAB_ROOT/evaluation/recovery-route-v1/execution-v2-source-acceptance.json",
+    "sha256": "9702cfd12df7ad290f19dcae6e8134ec77b2fd45f7fff293746a483c1d22c8a7"
+  },
+  "native_qualification": "UNESTABLISHED until actual on-time cgroup quiescence and native receipt review",
+  "recovery_namespace_command": [
+    "/usr/bin/bwrap",
+    "--unshare-user",
+    "--unshare-pid",
+    "--as-pid-1",
+    "--die-with-parent",
+    "--cap-drop",
+    "ALL",
+    "--bind",
+    "/",
+    "/",
+    "--proc",
+    "/proc",
+    "--dev-bind",
+    "/dev",
+    "/dev",
+    "--",
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/deadline_gate",
+    "--absolute-ns",
+    "208113219792698",
+    "--",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/entry.py",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-independent-candidate-critic/PLAN.json"
+  ],
+  "owned_unit": "er8-v8-nb-cond-c-z-independent-candidate-critic.service",
+  "command": [
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/deadline_gate",
+    "--absolute-ns",
+    "208143219792698",
+    "--",
+    "/usr/bin/systemd-run",
+    "--user",
+    "--wait",
+    "--pipe",
+    "--collect",
+    "--unit=er8-v8-nb-cond-c-z-independent-candidate-critic.service",
+    "--property=Type=exec",
+    "--property=KillMode=control-group",
+    "--property=KillSignal=SIGKILL",
+    "--property=SendSIGKILL=yes",
+    "--property=TimeoutStopSec=1s",
+    "--property=RuntimeMaxSec=600s",
+    "--property=Restart=no",
+    "--",
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/deadline_gate",
+    "--absolute-ns",
+    "208113219792698",
+    "--",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "LAB_ROOT/dev/route-recovery-v2/broker_exec.py",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-independent-candidate-critic/PLAN.json",
+    "--",
+    "/usr/bin/bwrap",
+    "--unshare-user",
+    "--unshare-pid",
+    "--as-pid-1",
+    "--die-with-parent",
+    "--cap-drop",
+    "ALL",
+    "--bind",
+    "/",
+    "/",
+    "--proc",
+    "/proc",
+    "--dev-bind",
+    "/dev",
+    "/dev",
+    "--",
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/deadline_gate",
+    "--absolute-ns",
+    "208113219792698",
+    "--",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/entry.py",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-independent-candidate-critic/PLAN.json"
+  ]
+}

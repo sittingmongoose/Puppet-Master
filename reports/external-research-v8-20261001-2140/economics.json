@@ -1,7 +1,7 @@
 {
-  "checkpoint": "DURABLE_NEXT_PAIR_ACTIVE_AFTER_INTERRUPTED_CRITICS",
-  "observed_native_starts": 9,
-  "occupied_candidate_seconds": 9346.818113803864,
+  "checkpoint": "BIO_BATCH_CRITICS_ACTIVE_AFTER_NB_TIMEOUTS",
+  "observed_native_starts": 15,
+  "occupied_candidate_seconds": 13025.540725946426,
   "candidate_generated_tokens": null,
   "management_tokens": null,
   "evaluation_tokens": null,
@@ -62,7 +62,7 @@
       "original_cap_seconds": 480
     }
   ],
-  "current_evidence": "partial-research-cohort-v1/OBSERVATION_AFTER_HELPER.json",
+  "current_evidence": "notebook-partial-cohort-v1/ops/publication-notebook-v1/RESULTS.json",
   "last_independently_reviewed_usage": {
     "native_starts": 2,
     "occupied_candidate_seconds": 1354.3749742507935,
@@ -72,10 +72,10 @@
   "pause_requested_epoch": 1790914502.1696212,
   "resume_epoch": 1790979124.0,
   "pause_duration_seconds": 64621.83037877083,
-  "generated_output_tokens_lower_bound": 1923,
-  "reported_output_lower_bound_scope": "v3 only; prior unexposed usage remains UNKNOWN",
+  "generated_output_tokens_lower_bound": 215459,
+  "reported_output_lower_bound_scope": "Reported public stage/request increments only; critic totals and full campaign usage UNKNOWN",
   "prospective_deadline_epoch": 1791013030.8303788,
-  "observation_utc": "2026-10-02T23:58:39.440382+00:00",
+  "observation_utc": "2026-10-03T00:29:19.178530+00:00",
   "resume_evidence": "resume-cohort-v1/ops/recovery-v1/RESUME_20261002.json",
   "observed_physical_canary_seconds_scope": "Historical first canary only",
   "native_muse_mechanical_helper": {

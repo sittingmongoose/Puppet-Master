@@ -1,0 +1,265 @@
+{
+  "schema": "er8.positive-source-hash-manifest.v1",
+  "excluded": [
+    "private-runtime",
+    "native journals",
+    "raw stdout/stderr",
+    "auth",
+    "candidate/artifact bodies",
+    "public-source capture bodies",
+    "ledger",
+    "Git"
+  ],
+  "sources": {
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-research-proposal/PLAN.json": {
+      "sha256": "32681ceed311b91b250ec1292b92bb438cc24e26a69dbe1927f7b10f5d699920",
+      "bytes": 7612,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-research-proposal/BIRTH.json": {
+      "sha256": "4e0ba082f8c758678cf952d967096e3a597b496499b0895e59770af23383965a",
+      "bytes": 3195,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-research-proposal/LAUNCHED.json": {
+      "sha256": "ea5048f69dfbac7cadd9e090d6152a63cab79d7d9849016d89e253e592eda010",
+      "bytes": 212,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-research-proposal/PLAN.enrollment.json": {
+      "sha256": "9c313a94053e97ffd7a15fcfd7d24436542ead33f589b121d0be3c378bd5c3f9",
+      "bytes": 300,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-research-proposal/QUIESCENCE.json": {
+      "sha256": "6d0822d2c8d88af97a7c989dece85e04e8636301e92d20631923e4ef80639eb5",
+      "bytes": 975,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-research-proposal/native-public/activation.json": {
+      "sha256": "244701b344b2dfb4ba03275a131a9774b6802d24547acbcaa0cec3f12666364f",
+      "bytes": 331,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-research-proposal/native-public/progress.jsonl": {
+      "sha256": "f6d5b2e370f190aae68f2ecaf0b5a184898737555a18c04d1bdd904c6174abcd",
+      "bytes": 362,
+      "scope": "public native progress"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-research-proposal/CASE_BINDING.json": {
+      "sha256": "267ec19bca3a29b8441271bd664a142c84a2e2c3c6bc44c659932051ead5f597",
+      "bytes": 2851,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-research-proposal/native-public/public-metrics.json": {
+      "sha256": "cedffcd70c77f701e11fac79597ea839efdfc78ab4dd0d55790b7aab50a7ac33",
+      "bytes": 61992,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-research-proposal/native-public/receipt.json": {
+      "sha256": "cedffcd70c77f701e11fac79597ea839efdfc78ab4dd0d55790b7aab50a7ac33",
+      "bytes": 61992,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-independent-candidate-critic/PLAN.json": {
+      "sha256": "0baa2c45a8377d2943e1fab4fc1ffb281fa28f9c6abd8013afaab55cff655e98",
+      "bytes": 7784,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-independent-candidate-critic/BIRTH.json": {
+      "sha256": "c12a5c2d7a3400069bba4e9272ccfd8847c590ff488af98bc48643d1342f4d72",
+      "bytes": 3225,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-independent-candidate-critic/LAUNCHED.json": {
+      "sha256": "3897f1a9c65e6a2b42d54c348ad321ced146bdfe309617a38155e41252409c06",
+      "bytes": 234,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-independent-candidate-critic/PLAN.enrollment.json": {
+      "sha256": "7f4e617182a32f819461629edd4a5cc692ce5ddb691fdb9748608d6604b53c09",
+      "bytes": 322,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-independent-candidate-critic/QUIESCENCE.json": {
+      "sha256": "4872d59cc18725c2de895a88154640edd1a45d617206300d7fde8760ad9d58ce",
+      "bytes": 1019,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-independent-candidate-critic/native-public/activation.json": {
+      "sha256": "4947680f58f3d5237d7224cd25c9ab0cb2abfd85960fcdd1d06936dd2c19ee28",
+      "bytes": 331,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-independent-candidate-critic/native-public/progress.jsonl": {
+      "sha256": "191563d3480e0a52caebaef3fa4a4a423c6839fde0001f60d7136610f11db125",
+      "bytes": 162,
+      "scope": "public native progress"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-independent-candidate-critic/CASE_BINDING.json": {
+      "sha256": "c57d65f134bb7fe5b6e93529afad3644725dc5f8affe2c47912443e84266b810",
+      "bytes": 19038,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-P-Z/V8-NB-P-Z-independent-candidate-critic/FAILURE_OR_SUCCESS_QUIET_PROOF.json": {
+      "sha256": "5014c5e935da036c92f65f657aa70bb400ac7343cb72c21cffb69a006abdcfff",
+      "bytes": 3012,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-research-proposal/PLAN.json": {
+      "sha256": "2b660b14a25c928cbd04d77e3bcb18ade30691e1177ad0c310bfaba76c965e1d",
+      "bytes": 7752,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-research-proposal/BIRTH.json": {
+      "sha256": "f64be8c9cc737fa4d1535e3a65865b5a526a06514723736642d440a5eb103cb3",
+      "bytes": 3212,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-research-proposal/LAUNCHED.json": {
+      "sha256": "b792adc085b052cae2ee4f772a551699abbb077c86e62ec3977fda5985490c4c",
+      "bytes": 222,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-research-proposal/PLAN.enrollment.json": {
+      "sha256": "c2a5e883817f3353e7e4c49d14825a4ec485372b506dd83ebd6572420fa17f33",
+      "bytes": 310,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-research-proposal/QUIESCENCE.json": {
+      "sha256": "26f298cea3d011ed4efdaeaeb6e98c95e8e3906a2bdfb5f7e6c80b8adfbec00e",
+      "bytes": 995,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-research-proposal/native-public/activation.json": {
+      "sha256": "8cac11bd7bca9ae76699eef8dbee8a936982e00b00f9532e0625680263d192e3",
+      "bytes": 331,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-research-proposal/native-public/progress.jsonl": {
+      "sha256": "53c741cf1f5f1a8d86a0726291dba8f0b9f23cd58469a5db6da5e81a72d128c0",
+      "bytes": 360,
+      "scope": "public native progress"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-research-proposal/CASE_BINDING.json": {
+      "sha256": "e1f552149528d00584b00c6932128ea603dc536a39c134ece64cf80a4a0a9293",
+      "bytes": 2951,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-research-proposal/native-public/public-metrics.json": {
+      "sha256": "21e309bc4ee5984e267d8bc1d29200721c79b0b14528cc350a54f23c7bcc0e43",
+      "bytes": 55623,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-research-proposal/native-public/receipt.json": {
+      "sha256": "21e309bc4ee5984e267d8bc1d29200721c79b0b14528cc350a54f23c7bcc0e43",
+      "bytes": 55623,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-independent-candidate-critic/PLAN.json": {
+      "sha256": "b740c1f7ceea4ed8a0ae4889bc476f119410e2205c226fe39759f944c4b32d90",
+      "bytes": 7924,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-independent-candidate-critic/BIRTH.json": {
+      "sha256": "423950d2ead41ed433d25bee75ecbfa49a6328e02ab1052cc9ff88558a637ca3",
+      "bytes": 3243,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-independent-candidate-critic/LAUNCHED.json": {
+      "sha256": "f0b587daa220fee9be018991556fdcfc7c70d996d24f80e1384dac734002bea0",
+      "bytes": 244,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-independent-candidate-critic/PLAN.enrollment.json": {
+      "sha256": "f08f8bf940a61a215bf3cbdb4d19bdd5e19101786d1e73a9877eaf172de45956",
+      "bytes": 332,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-independent-candidate-critic/QUIESCENCE.json": {
+      "sha256": "ed46d547066bde7d8b2d51d30f97210eaa31aff3c1b7fd1d0dd290d45411cbe9",
+      "bytes": 1039,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-independent-candidate-critic/native-public/activation.json": {
+      "sha256": "c382cc4417182f27f68e0cab53ef15d790bb8b5179bafa002c3ff8ce56ccb0f9",
+      "bytes": 331,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-independent-candidate-critic/native-public/progress.jsonl": {
+      "sha256": "191563d3480e0a52caebaef3fa4a4a423c6839fde0001f60d7136610f11db125",
+      "bytes": 162,
+      "scope": "public native progress"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-independent-candidate-critic/CASE_BINDING.json": {
+      "sha256": "c27756715a81d23dfe37892c43b5f8660e44a8a817bffdc43570d6afe1264c02",
+      "bytes": 15744,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-COND-C-Z/V8-NB-COND-C-Z-independent-candidate-critic/FAILURE_OR_SUCCESS_QUIET_PROOF.json": {
+      "sha256": "a780a88047cb6df4e5d4bc5909deb1e0b45e978eb0d13c072aad86a1d5aec52b",
+      "bytes": 3070,
+      "scope": "public host/native metadata"
+    },
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/native_runner.py": {
+      "sha256": "9b8bf700a30a9a4be0add4f3161b69bf98c6068acef88d73606085c3b6d6caca",
+      "bytes": 18339,
+      "scope": "accepted host route/controller source; no candidate/private-runtime body"
+    },
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/run_goal.py": {
+      "sha256": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+      "bytes": 21477,
+      "scope": "accepted host route/controller source; no candidate/private-runtime body"
+    },
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/zcode_goal_driver.py": {
+      "sha256": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+      "bytes": 11583,
+      "scope": "accepted host route/controller source; no candidate/private-runtime body"
+    },
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/launch.py": {
+      "sha256": "8dec4108eacd3814d5b1fff069daaef87703f8466bc6d15c77607e1bcba1e0d4",
+      "bytes": 1331,
+      "scope": "accepted host route/controller source; no candidate/private-runtime body"
+    },
+    "LAB_ROOT/dev/route-recovery-v2/broker_exec.py": {
+      "sha256": "3484668112269099bf59fdf1cdad5f0d515b80da9eb6675157cc5fb52795902a",
+      "bytes": 5447,
+      "scope": "accepted host route/controller source; no candidate/private-runtime body"
+    },
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/deadline_gate.c": {
+      "sha256": "abde9b4b9d70bbfd7c97ed397733228707ad2e27ed9214b11185e371631029ee",
+      "bytes": 2384,
+      "scope": "accepted host route/controller source; no candidate/private-runtime body"
+    },
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/entry.py": {
+      "sha256": "3160d2e6624731218ecf0a465c19ff71a6351ecc4a9fb08d7893c86f6f5b99ca",
+      "bytes": 10301,
+      "scope": "accepted host route/controller source; no candidate/private-runtime body"
+    },
+    "LAB_ROOT/dev/route-recovery-v2/source-capture-v1/boundary.py": {
+      "sha256": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+      "bytes": 2648,
+      "scope": "accepted host route/controller source; no candidate/private-runtime body"
+    },
+    "LAB_ROOT/dev/resume-execution-v2/integrated-controller/stage_actor.py": {
+      "sha256": "ba3b13cd1209fd086ecd96e24d776deda92824063fc216cd7796e7b299ffb8cc",
+      "bytes": 12965,
+      "scope": "accepted host route/controller source; no candidate/private-runtime body"
+    },
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/SNAPSHOT.json": {
+      "sha256": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b",
+      "bytes": 8481,
+      "scope": "public accepted route snapshot/config metadata"
+    },
+    "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/root-config.json": {
+      "sha256": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d",
+      "bytes": 3330,
+      "scope": "public accepted route snapshot/config metadata"
+    },
+    "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/SNAPSHOT.json": {
+      "sha256": "667e9b86a7547c8e647142787637c34adfcc63eb52f33826e0f1f5453d379438",
+      "bytes": 8490,
+      "scope": "public accepted route snapshot/config metadata"
+    }
+  }
+}

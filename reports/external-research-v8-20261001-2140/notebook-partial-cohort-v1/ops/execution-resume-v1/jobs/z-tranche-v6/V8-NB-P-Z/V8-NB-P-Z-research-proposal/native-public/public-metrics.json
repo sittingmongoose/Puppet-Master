@@ -1,0 +1,1937 @@
+{
+  "goal_started_turn": true,
+  "native_quiescent": true,
+  "own_process_group_absent": true,
+  "native_responses": 14,
+  "usage_requests_with_delta": 13,
+  "goal_status_final": "complete",
+  "stop_reason": "goal_complete",
+  "usage_totals": {
+    "inputTokens": 1160494,
+    "outputTokens": 36614,
+    "reasoningTokens": 0,
+    "cacheReadTokens": 1010816,
+    "cacheWriteTokens": 0,
+    "totalTokens": 1197108
+  },
+  "request_status_counts": {
+    "model_request_completed": 14
+  },
+  "goal_target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+  "provider_id": "builtin:zai-coding-plan",
+  "model_id": "GLM-5.3-Flash",
+  "effort_effective": "max",
+  "cleanup_projection": {
+    "native_process_returned": true,
+    "native_process_group_remaining_count": 0
+  },
+  "schema": "er8.route.native-positive-receipt.v1",
+  "admission_mode": "productive",
+  "runtime_snapshot_sha256": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b",
+  "accepted_method_sha256": "ac4548c63a16ec83384d3a90667b762fe4d37b208fe487a0aec547d29715d86d",
+  "requested_model": "GLM-5.3-Flash",
+  "requested_effort": "max",
+  "native_goal_engine_sha256": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+  "fresh_session": true,
+  "native_goal_entry": "native-session-goal-set",
+  "shared_native_metadata_changed_paths": "UNOBSERVED-no-host-inventory",
+  "original_case_start_monotonic_ns": 206619529144630,
+  "original_stage_start_monotonic_ns": 206619529144630,
+  "original_native_stop_monotonic_ns": 208389529144630,
+  "original_deadline_monotonic_ns": 208419529144630,
+  "elapsed_milliseconds": 804098,
+  "raw_native_record_emitted": false,
+  "raw_file_hash_or_copy": false,
+  "local_context": {
+    "fresh_home_empty_before_native": true,
+    "fresh_xdg_roots_empty_before_native": true,
+    "fresh_owned_storage_before_native": true,
+    "controlled_workspace_ancestor_instructions_absent": true,
+    "legacy_home_context_inherited": false,
+    "all_memory_off_claim": false
+  },
+  "startup_context": {
+    "verified": true,
+    "allowed_event_rows": [
+      {
+        "event": "bootstrap.app.startup.started",
+        "fields": {
+          "resume": false,
+          "hasInjectedModelAdapter": false
+        }
+      },
+      {
+        "event": "bootstrap.app.startup.plugins.completed",
+        "fields": {
+          "pluginCount": 0,
+          "enabledPluginCount": 0,
+          "hookCount": 0,
+          "commandRootCount": 0,
+          "skillRootCount": 0,
+          "mcpServerCount": 0
+        }
+      },
+      {
+        "event": "bootstrap.app.startup.runtime_config.completed",
+        "fields": {
+          "memoryEnabled": false,
+          "memoryUse": false,
+          "memoryExtractionEnabled": true,
+          "runtimeFeatureBrowserUse": false,
+          "runtimeFeatureNodeRepl": false,
+          "mcpEnabled": true,
+          "mode": "build"
+        }
+      }
+    ],
+    "all_memory_off_claim": false,
+    "global_hooks_disabled_claim": false,
+    "raw_file_hash_or_copy": false
+  },
+  "activation": {
+    "schema": "er8.route.activation-positive.v1",
+    "native_activation_observed": true,
+    "goal_started_turn": true,
+    "native_activation_absent_proof": false,
+    "observed_activation_epoch": 1790984882,
+    "observed_activation_monotonic_ns": 206628318481637,
+    "receipt_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b"
+  },
+  "native_structure": {
+    "goal_continuation_source_count": 576,
+    "goal_continuation_origin_count": 0,
+    "goal_continuation_completed_count": 1,
+    "goal_continuation_failed_count": 0,
+    "hook_lifecycle_count": 0,
+    "tool_lifecycle": [
+      {
+        "tool": "mcp__pm_boundary__read_file",
+        "phase": "scheduled",
+        "call_id": "call_0e67b437f0ce4cd7ad9cf47a"
+      },
+      {
+        "tool": "mcp__pm_boundary__read_file",
+        "phase": "scheduled",
+        "call_id": "call_4f7187a5fa4446d4b8152677"
+      },
+      {
+        "tool": "mcp__pm_boundary__read_file",
+        "phase": "scheduled",
+        "call_id": "call_2532cacec19d444a80aedd70"
+      },
+      {
+        "tool": "mcp__pm_boundary__read_file",
+        "phase": "scheduled",
+        "call_id": "call_4eee08b104614f59a452562e"
+      },
+      {
+        "tool": "mcp__pm_boundary__read_file",
+        "phase": "started",
+        "call_id": "call_0e67b437f0ce4cd7ad9cf47a"
+      },
+      {
+        "tool": "mcp__pm_boundary__read_file",
+        "phase": "completed",
+        "call_id": "call_0e67b437f0ce4cd7ad9cf47a"
+      },
+      {
+        "tool": "mcp__pm_boundary__read_file",
+        "phase": "started",
+        "call_id": "call_4f7187a5fa4446d4b8152677"
+      },
+      {
+        "tool": "mcp__pm_boundary__read_file",
+        "phase": "completed",
+        "call_id": "call_4f7187a5fa4446d4b8152677"
+      },
+      {
+        "tool": "mcp__pm_boundary__read_file",
+        "phase": "started",
+        "call_id": "call_2532cacec19d444a80aedd70"
+      },
+      {
+        "tool": "mcp__pm_boundary__read_file",
+        "phase": "completed",
+        "call_id": "call_2532cacec19d444a80aedd70"
+      },
+      {
+        "tool": "mcp__pm_boundary__read_file",
+        "phase": "started",
+        "call_id": "call_4eee08b104614f59a452562e"
+      },
+      {
+        "tool": "mcp__pm_boundary__read_file",
+        "phase": "completed",
+        "call_id": "call_4eee08b104614f59a452562e"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "scheduled",
+        "call_id": "call_2da0ec8b21094395b1d75ab3"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "scheduled",
+        "call_id": "call_d4ae12ec90db4fa69b53e9f4"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "scheduled",
+        "call_id": "call_3b753b2e36594dc797ecd79b"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "scheduled",
+        "call_id": "call_ea13b27326e04b6180be1a0c"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "started",
+        "call_id": "call_2da0ec8b21094395b1d75ab3"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "completed",
+        "call_id": "call_2da0ec8b21094395b1d75ab3"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "started",
+        "call_id": "call_d4ae12ec90db4fa69b53e9f4"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "completed",
+        "call_id": "call_d4ae12ec90db4fa69b53e9f4"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "started",
+        "call_id": "call_3b753b2e36594dc797ecd79b"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "completed",
+        "call_id": "call_3b753b2e36594dc797ecd79b"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "started",
+        "call_id": "call_ea13b27326e04b6180be1a0c"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "completed",
+        "call_id": "call_ea13b27326e04b6180be1a0c"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "scheduled",
+        "call_id": "call_663c8461aef145e6aa83d4dc"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "scheduled",
+        "call_id": "call_71907cef6a264d69ba7c7c6a"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "scheduled",
+        "call_id": "call_8df424a7f161414685e1073f"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "scheduled",
+        "call_id": "call_de9cc6a7eb594891889f6e29"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "scheduled",
+        "call_id": "call_f216f7a4e3b5416ba6f80dd2"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "started",
+        "call_id": "call_663c8461aef145e6aa83d4dc"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "completed",
+        "call_id": "call_663c8461aef145e6aa83d4dc"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "started",
+        "call_id": "call_71907cef6a264d69ba7c7c6a"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "completed",
+        "call_id": "call_71907cef6a264d69ba7c7c6a"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "started",
+        "call_id": "call_8df424a7f161414685e1073f"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "completed",
+        "call_id": "call_8df424a7f161414685e1073f"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "started",
+        "call_id": "call_de9cc6a7eb594891889f6e29"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "completed",
+        "call_id": "call_de9cc6a7eb594891889f6e29"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "started",
+        "call_id": "call_f216f7a4e3b5416ba6f80dd2"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "completed",
+        "call_id": "call_f216f7a4e3b5416ba6f80dd2"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "scheduled",
+        "call_id": "call_34c395ae651f4085ada01ffa"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "scheduled",
+        "call_id": "call_1ef5aef95a344c508399280d"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "scheduled",
+        "call_id": "call_c2a3001e1dae4390b6822811"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "scheduled",
+        "call_id": "call_a8c8521734ff48a8bbd4c7dc"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "scheduled",
+        "call_id": "call_e98db4e2a08a4d119748bf9b"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "scheduled",
+        "call_id": "call_21399c24a3884d3c86565c3e"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "started",
+        "call_id": "call_34c395ae651f4085ada01ffa"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "completed",
+        "call_id": "call_34c395ae651f4085ada01ffa"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "started",
+        "call_id": "call_1ef5aef95a344c508399280d"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "completed",
+        "call_id": "call_1ef5aef95a344c508399280d"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "started",
+        "call_id": "call_c2a3001e1dae4390b6822811"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "completed",
+        "call_id": "call_c2a3001e1dae4390b6822811"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "started",
+        "call_id": "call_a8c8521734ff48a8bbd4c7dc"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "completed",
+        "call_id": "call_a8c8521734ff48a8bbd4c7dc"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "started",
+        "call_id": "call_e98db4e2a08a4d119748bf9b"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "completed",
+        "call_id": "call_e98db4e2a08a4d119748bf9b"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "started",
+        "call_id": "call_21399c24a3884d3c86565c3e"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "completed",
+        "call_id": "call_21399c24a3884d3c86565c3e"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "scheduled",
+        "call_id": "call_059d4df469e440d5ba757b10"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "scheduled",
+        "call_id": "call_0155080ccc2749d58125e812"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "scheduled",
+        "call_id": "call_7deddf78b8f34f6fb6d15e43"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "scheduled",
+        "call_id": "call_18ad81ed1bae42c18ef7f852"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "started",
+        "call_id": "call_059d4df469e440d5ba757b10"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "completed",
+        "call_id": "call_059d4df469e440d5ba757b10"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "started",
+        "call_id": "call_0155080ccc2749d58125e812"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "completed",
+        "call_id": "call_0155080ccc2749d58125e812"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "started",
+        "call_id": "call_7deddf78b8f34f6fb6d15e43"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "completed",
+        "call_id": "call_7deddf78b8f34f6fb6d15e43"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "started",
+        "call_id": "call_18ad81ed1bae42c18ef7f852"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "completed",
+        "call_id": "call_18ad81ed1bae42c18ef7f852"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "scheduled",
+        "call_id": "call_69cd949a25ba43b78f0ed363"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "scheduled",
+        "call_id": "call_3d398d977d0641e8a03822ec"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "scheduled",
+        "call_id": "call_87fac885668d4c89841f6685"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "started",
+        "call_id": "call_69cd949a25ba43b78f0ed363"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "completed",
+        "call_id": "call_69cd949a25ba43b78f0ed363"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "started",
+        "call_id": "call_3d398d977d0641e8a03822ec"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "completed",
+        "call_id": "call_3d398d977d0641e8a03822ec"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "started",
+        "call_id": "call_87fac885668d4c89841f6685"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "completed",
+        "call_id": "call_87fac885668d4c89841f6685"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "scheduled",
+        "call_id": "call_8d960427e2114d0c80744ee9"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "started",
+        "call_id": "call_8d960427e2114d0c80744ee9"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "completed",
+        "call_id": "call_8d960427e2114d0c80744ee9"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "scheduled",
+        "call_id": "call_f46668e1c7e346deacc12893"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "started",
+        "call_id": "call_f46668e1c7e346deacc12893"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "completed",
+        "call_id": "call_f46668e1c7e346deacc12893"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "scheduled",
+        "call_id": "call_30b9dcd485f24e71bbb80210"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "started",
+        "call_id": "call_30b9dcd485f24e71bbb80210"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "completed",
+        "call_id": "call_30b9dcd485f24e71bbb80210"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "scheduled",
+        "call_id": "call_fda7cddc606b47e58c13e6fa"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "started",
+        "call_id": "call_fda7cddc606b47e58c13e6fa"
+      },
+      {
+        "tool": "mcp__pm_boundary__public_https_get",
+        "phase": "completed",
+        "call_id": "call_fda7cddc606b47e58c13e6fa"
+      },
+      {
+        "tool": "mcp__pm_boundary__write_file",
+        "phase": "scheduled",
+        "call_id": "call_9c9f0245d0394deba650a68e"
+      },
+      {
+        "tool": "mcp__pm_boundary__write_file",
+        "phase": "started",
+        "call_id": "call_9c9f0245d0394deba650a68e"
+      },
+      {
+        "tool": "mcp__pm_boundary__write_file",
+        "phase": "completed",
+        "call_id": "call_9c9f0245d0394deba650a68e"
+      },
+      {
+        "tool": "mcp__pm_boundary__write_file",
+        "phase": "scheduled",
+        "call_id": "call_c0daf565e44a4cb4a78af249"
+      },
+      {
+        "tool": "mcp__pm_boundary__write_file",
+        "phase": "started",
+        "call_id": "call_c0daf565e44a4cb4a78af249"
+      },
+      {
+        "tool": "mcp__pm_boundary__write_file",
+        "phase": "completed",
+        "call_id": "call_c0daf565e44a4cb4a78af249"
+      }
+    ],
+    "fresh_empty_history_samples": [
+      {
+        "empty_messages": true,
+        "target_absent": true,
+        "parent_absent": true,
+        "session_idle": true
+      },
+      {
+        "empty_messages": true,
+        "target_absent": true,
+        "parent_absent": true,
+        "session_idle": true
+      }
+    ],
+    "goal_states": [
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": true
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": false
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": true
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": true
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": true
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": true
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "active",
+        "session_idle": true
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "complete",
+        "session_idle": true
+      },
+      {
+        "target_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b",
+        "status": "paused",
+        "session_idle": true
+      }
+    ]
+  },
+  "inclusive_pre_activation_milliseconds": 8789,
+  "quiescence_group_remaining_counts": [
+    0,
+    0
+  ],
+  "host_groups_absent": true,
+  "inventory_check": {
+    "rows": [
+      {
+        "request_id": "321b4393-ec92-449b-89c5-e5a9f66716c2",
+        "attempt": 1,
+        "same_session": true,
+        "model_matches": true,
+        "provider_matches": true,
+        "max_effort": true,
+        "tool_names": [
+          "mcp__pm_boundary__read_file",
+          "mcp__pm_boundary__write_file",
+          "mcp__pm_boundary__mechanical",
+          "mcp__pm_boundary__public_https_get"
+        ],
+        "unexpected_tool_count": 0,
+        "logical_message_count": 6,
+        "body_message_array_available": false,
+        "sdk_message_array_available": false,
+        "body_system_part_count": 3,
+        "system_text_part_count": 3,
+        "logical_text_part_count": 6,
+        "global_user_instructions_marker_present": false,
+        "agentsMd_marker_present": false,
+        "auto_memory_marker_present": false,
+        "context_verified": true,
+        "source_deliveries": []
+      },
+      {
+        "request_id": "0e489d48-07a5-4299-a187-b5eb0ae36c3c",
+        "attempt": 1,
+        "same_session": true,
+        "model_matches": true,
+        "provider_matches": true,
+        "max_effort": true,
+        "tool_names": [
+          "mcp__pm_boundary__read_file",
+          "mcp__pm_boundary__write_file",
+          "mcp__pm_boundary__mechanical",
+          "mcp__pm_boundary__public_https_get"
+        ],
+        "unexpected_tool_count": 0,
+        "logical_message_count": 11,
+        "body_message_array_available": false,
+        "sdk_message_array_available": false,
+        "body_system_part_count": 3,
+        "system_text_part_count": 3,
+        "logical_text_part_count": 11,
+        "global_user_instructions_marker_present": false,
+        "agentsMd_marker_present": false,
+        "auto_memory_marker_present": false,
+        "context_verified": true,
+        "source_deliveries": []
+      },
+      {
+        "request_id": "be09eb67-14d5-43d7-8bdb-05a169e7d154",
+        "attempt": 1,
+        "same_session": true,
+        "model_matches": true,
+        "provider_matches": true,
+        "max_effort": true,
+        "tool_names": [
+          "mcp__pm_boundary__read_file",
+          "mcp__pm_boundary__write_file",
+          "mcp__pm_boundary__mechanical",
+          "mcp__pm_boundary__public_https_get"
+        ],
+        "unexpected_tool_count": 0,
+        "logical_message_count": 16,
+        "body_message_array_available": false,
+        "sdk_message_array_available": false,
+        "body_system_part_count": 3,
+        "system_text_part_count": 3,
+        "logical_text_part_count": 16,
+        "global_user_instructions_marker_present": false,
+        "agentsMd_marker_present": false,
+        "auto_memory_marker_present": false,
+        "context_verified": true,
+        "source_deliveries": []
+      },
+      {
+        "request_id": "b105543c-d7e4-4e58-aabd-e6db37328056",
+        "attempt": 1,
+        "same_session": true,
+        "model_matches": true,
+        "provider_matches": true,
+        "max_effort": true,
+        "tool_names": [
+          "mcp__pm_boundary__read_file",
+          "mcp__pm_boundary__write_file",
+          "mcp__pm_boundary__mechanical",
+          "mcp__pm_boundary__public_https_get"
+        ],
+        "unexpected_tool_count": 0,
+        "logical_message_count": 22,
+        "body_message_array_available": false,
+        "sdk_message_array_available": false,
+        "body_system_part_count": 3,
+        "system_text_part_count": 3,
+        "logical_text_part_count": 22,
+        "global_user_instructions_marker_present": false,
+        "agentsMd_marker_present": false,
+        "auto_memory_marker_present": false,
+        "context_verified": true,
+        "source_deliveries": []
+      },
+      {
+        "request_id": "dccf08d9-ddbd-4cbf-aef2-3a52a255fcb7",
+        "attempt": 1,
+        "same_session": true,
+        "model_matches": true,
+        "provider_matches": true,
+        "max_effort": true,
+        "tool_names": [
+          "mcp__pm_boundary__read_file",
+          "mcp__pm_boundary__write_file",
+          "mcp__pm_boundary__mechanical",
+          "mcp__pm_boundary__public_https_get"
+        ],
+        "unexpected_tool_count": 0,
+        "logical_message_count": 29,
+        "body_message_array_available": false,
+        "sdk_message_array_available": false,
+        "body_system_part_count": 3,
+        "system_text_part_count": 3,
+        "logical_text_part_count": 29,
+        "global_user_instructions_marker_present": false,
+        "agentsMd_marker_present": false,
+        "auto_memory_marker_present": false,
+        "context_verified": true,
+        "source_deliveries": []
+      },
+      {
+        "request_id": "3bcdbdbc-b9a8-4a75-8c53-d045096f084a",
+        "attempt": 1,
+        "same_session": true,
+        "model_matches": true,
+        "provider_matches": true,
+        "max_effort": true,
+        "tool_names": [
+          "mcp__pm_boundary__read_file",
+          "mcp__pm_boundary__write_file",
+          "mcp__pm_boundary__mechanical",
+          "mcp__pm_boundary__public_https_get"
+        ],
+        "unexpected_tool_count": 0,
+        "logical_message_count": 34,
+        "body_message_array_available": false,
+        "sdk_message_array_available": false,
+        "body_system_part_count": 3,
+        "system_text_part_count": 3,
+        "logical_text_part_count": 34,
+        "global_user_instructions_marker_present": false,
+        "agentsMd_marker_present": false,
+        "auto_memory_marker_present": false,
+        "context_verified": true,
+        "source_deliveries": []
+      },
+      {
+        "request_id": "d13826fd-44f2-4f3b-a1df-47701874615d",
+        "attempt": 1,
+        "same_session": true,
+        "model_matches": true,
+        "provider_matches": true,
+        "max_effort": true,
+        "tool_names": [
+          "mcp__pm_boundary__read_file",
+          "mcp__pm_boundary__write_file",
+          "mcp__pm_boundary__mechanical",
+          "mcp__pm_boundary__public_https_get"
+        ],
+        "unexpected_tool_count": 0,
+        "logical_message_count": 38,
+        "body_message_array_available": false,
+        "sdk_message_array_available": false,
+        "body_system_part_count": 3,
+        "system_text_part_count": 3,
+        "logical_text_part_count": 38,
+        "global_user_instructions_marker_present": false,
+        "agentsMd_marker_present": false,
+        "auto_memory_marker_present": false,
+        "context_verified": true,
+        "source_deliveries": []
+      },
+      {
+        "request_id": "a86d828e-5629-4c8c-8a7a-9be1a088be50",
+        "attempt": 1,
+        "same_session": true,
+        "model_matches": true,
+        "provider_matches": true,
+        "max_effort": true,
+        "tool_names": [
+          "mcp__pm_boundary__read_file",
+          "mcp__pm_boundary__write_file",
+          "mcp__pm_boundary__mechanical",
+          "mcp__pm_boundary__public_https_get"
+        ],
+        "unexpected_tool_count": 0,
+        "logical_message_count": 40,
+        "body_message_array_available": false,
+        "sdk_message_array_available": false,
+        "body_system_part_count": 3,
+        "system_text_part_count": 3,
+        "logical_text_part_count": 40,
+        "global_user_instructions_marker_present": false,
+        "agentsMd_marker_present": false,
+        "auto_memory_marker_present": false,
+        "context_verified": true,
+        "source_deliveries": []
+      },
+      {
+        "request_id": "628a4c61-6eff-480c-a6a5-a46c2e22b4a1",
+        "attempt": 1,
+        "same_session": true,
+        "model_matches": true,
+        "provider_matches": true,
+        "max_effort": true,
+        "tool_names": [
+          "mcp__pm_boundary__read_file",
+          "mcp__pm_boundary__write_file",
+          "mcp__pm_boundary__mechanical",
+          "mcp__pm_boundary__public_https_get"
+        ],
+        "unexpected_tool_count": 0,
+        "logical_message_count": 42,
+        "body_message_array_available": false,
+        "sdk_message_array_available": false,
+        "body_system_part_count": 3,
+        "system_text_part_count": 3,
+        "logical_text_part_count": 42,
+        "global_user_instructions_marker_present": false,
+        "agentsMd_marker_present": false,
+        "auto_memory_marker_present": false,
+        "context_verified": true,
+        "source_deliveries": []
+      },
+      {
+        "request_id": "42a30e9d-3ff7-461e-9f1a-45c9a16f1752",
+        "attempt": 1,
+        "same_session": true,
+        "model_matches": true,
+        "provider_matches": true,
+        "max_effort": true,
+        "tool_names": [
+          "mcp__pm_boundary__read_file",
+          "mcp__pm_boundary__write_file",
+          "mcp__pm_boundary__mechanical",
+          "mcp__pm_boundary__public_https_get"
+        ],
+        "unexpected_tool_count": 0,
+        "logical_message_count": 44,
+        "body_message_array_available": false,
+        "sdk_message_array_available": false,
+        "body_system_part_count": 3,
+        "system_text_part_count": 3,
+        "logical_text_part_count": 44,
+        "global_user_instructions_marker_present": false,
+        "agentsMd_marker_present": false,
+        "auto_memory_marker_present": false,
+        "context_verified": true,
+        "source_deliveries": []
+      },
+      {
+        "request_id": "7ef0bcd6-39a5-4833-b60e-bf3fc0f2d135",
+        "attempt": 1,
+        "same_session": true,
+        "model_matches": true,
+        "provider_matches": true,
+        "max_effort": true,
+        "tool_names": [
+          "mcp__pm_boundary__read_file",
+          "mcp__pm_boundary__write_file",
+          "mcp__pm_boundary__mechanical",
+          "mcp__pm_boundary__public_https_get"
+        ],
+        "unexpected_tool_count": 0,
+        "logical_message_count": 46,
+        "body_message_array_available": false,
+        "sdk_message_array_available": false,
+        "body_system_part_count": 3,
+        "system_text_part_count": 3,
+        "logical_text_part_count": 46,
+        "global_user_instructions_marker_present": false,
+        "agentsMd_marker_present": false,
+        "auto_memory_marker_present": false,
+        "context_verified": true,
+        "source_deliveries": []
+      },
+      {
+        "request_id": "df486c27-e3f4-4d68-853b-678a36292d6e",
+        "attempt": 1,
+        "same_session": true,
+        "model_matches": true,
+        "provider_matches": true,
+        "max_effort": true,
+        "tool_names": [
+          "mcp__pm_boundary__read_file",
+          "mcp__pm_boundary__write_file",
+          "mcp__pm_boundary__mechanical",
+          "mcp__pm_boundary__public_https_get"
+        ],
+        "unexpected_tool_count": 0,
+        "logical_message_count": 48,
+        "body_message_array_available": false,
+        "sdk_message_array_available": false,
+        "body_system_part_count": 3,
+        "system_text_part_count": 3,
+        "logical_text_part_count": 48,
+        "global_user_instructions_marker_present": false,
+        "agentsMd_marker_present": false,
+        "auto_memory_marker_present": false,
+        "context_verified": true,
+        "source_deliveries": []
+      },
+      {
+        "request_id": "28d53af8-a921-4477-9e7b-c49d5ac19e33",
+        "attempt": 1,
+        "same_session": true,
+        "model_matches": true,
+        "provider_matches": true,
+        "max_effort": true,
+        "tool_names": [
+          "mcp__pm_boundary__read_file",
+          "mcp__pm_boundary__write_file",
+          "mcp__pm_boundary__mechanical",
+          "mcp__pm_boundary__public_https_get"
+        ],
+        "unexpected_tool_count": 0,
+        "logical_message_count": 50,
+        "body_message_array_available": false,
+        "sdk_message_array_available": false,
+        "body_system_part_count": 3,
+        "system_text_part_count": 3,
+        "logical_text_part_count": 50,
+        "global_user_instructions_marker_present": false,
+        "agentsMd_marker_present": false,
+        "auto_memory_marker_present": false,
+        "context_verified": true,
+        "source_deliveries": []
+      },
+      {
+        "request_id": "84ff55a6-294a-4031-abbe-ee3bf44aeebf",
+        "attempt": 1,
+        "same_session": true,
+        "model_matches": true,
+        "provider_matches": true,
+        "max_effort": true,
+        "tool_names": [],
+        "unexpected_tool_count": 0,
+        "logical_message_count": 52,
+        "body_message_array_available": false,
+        "sdk_message_array_available": false,
+        "body_system_part_count": 3,
+        "system_text_part_count": 3,
+        "logical_text_part_count": 52,
+        "global_user_instructions_marker_present": false,
+        "agentsMd_marker_present": false,
+        "auto_memory_marker_present": false,
+        "context_verified": true,
+        "source_deliveries": []
+      }
+    ],
+    "expected": [
+      "mcp__pm_boundary__read_file",
+      "mcp__pm_boundary__write_file",
+      "mcp__pm_boundary__mechanical",
+      "mcp__pm_boundary__public_https_get"
+    ],
+    "native_model_status_events": [
+      {
+        "requestId": "321b4393-ec92-449b-89c5-e5a9f66716c2",
+        "attempt": 1,
+        "status": "model_request_started",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "321b4393-ec92-449b-89c5-e5a9f66716c2",
+        "attempt": 1,
+        "status": "model_request_completed",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "0e489d48-07a5-4299-a187-b5eb0ae36c3c",
+        "attempt": 1,
+        "status": "model_request_started",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "0e489d48-07a5-4299-a187-b5eb0ae36c3c",
+        "attempt": 1,
+        "status": "model_request_completed",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "be09eb67-14d5-43d7-8bdb-05a169e7d154",
+        "attempt": 1,
+        "status": "model_request_started",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "be09eb67-14d5-43d7-8bdb-05a169e7d154",
+        "attempt": 1,
+        "status": "model_request_completed",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "b105543c-d7e4-4e58-aabd-e6db37328056",
+        "attempt": 1,
+        "status": "model_request_started",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "b105543c-d7e4-4e58-aabd-e6db37328056",
+        "attempt": 1,
+        "status": "model_request_completed",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "dccf08d9-ddbd-4cbf-aef2-3a52a255fcb7",
+        "attempt": 1,
+        "status": "model_request_started",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "dccf08d9-ddbd-4cbf-aef2-3a52a255fcb7",
+        "attempt": 1,
+        "status": "model_request_completed",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "3bcdbdbc-b9a8-4a75-8c53-d045096f084a",
+        "attempt": 1,
+        "status": "model_request_started",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "3bcdbdbc-b9a8-4a75-8c53-d045096f084a",
+        "attempt": 1,
+        "status": "model_request_completed",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "d13826fd-44f2-4f3b-a1df-47701874615d",
+        "attempt": 1,
+        "status": "model_request_started",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "d13826fd-44f2-4f3b-a1df-47701874615d",
+        "attempt": 1,
+        "status": "model_request_completed",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "a86d828e-5629-4c8c-8a7a-9be1a088be50",
+        "attempt": 1,
+        "status": "model_request_started",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "a86d828e-5629-4c8c-8a7a-9be1a088be50",
+        "attempt": 1,
+        "status": "model_request_completed",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "628a4c61-6eff-480c-a6a5-a46c2e22b4a1",
+        "attempt": 1,
+        "status": "model_request_started",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "628a4c61-6eff-480c-a6a5-a46c2e22b4a1",
+        "attempt": 1,
+        "status": "model_request_completed",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "42a30e9d-3ff7-461e-9f1a-45c9a16f1752",
+        "attempt": 1,
+        "status": "model_request_started",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "42a30e9d-3ff7-461e-9f1a-45c9a16f1752",
+        "attempt": 1,
+        "status": "model_request_completed",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "7ef0bcd6-39a5-4833-b60e-bf3fc0f2d135",
+        "attempt": 1,
+        "status": "model_request_started",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "7ef0bcd6-39a5-4833-b60e-bf3fc0f2d135",
+        "attempt": 1,
+        "status": "model_request_completed",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "df486c27-e3f4-4d68-853b-678a36292d6e",
+        "attempt": 1,
+        "status": "model_request_started",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "df486c27-e3f4-4d68-853b-678a36292d6e",
+        "attempt": 1,
+        "status": "model_request_completed",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "28d53af8-a921-4477-9e7b-c49d5ac19e33",
+        "attempt": 1,
+        "status": "model_request_started",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "28d53af8-a921-4477-9e7b-c49d5ac19e33",
+        "attempt": 1,
+        "status": "model_request_completed",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "84ff55a6-294a-4031-abbe-ee3bf44aeebf",
+        "attempt": 1,
+        "status": "model_request_started",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      },
+      {
+        "requestId": "84ff55a6-294a-4031-abbe-ee3bf44aeebf",
+        "attempt": 1,
+        "status": "model_request_completed",
+        "sessionId": "NATIVE_SESSION_663d12eddd3e84b5",
+        "providerId": "builtin:zai-coding-plan",
+        "modelId": "GLM-5.3-Flash"
+      }
+    ],
+    "verified": true,
+    "missing_request_attempts": [],
+    "unreported_request_attempts": [],
+    "raw_file_hash_or_copy": false
+  },
+  "canary_qualification": "passed",
+  "component_outcome": "passed"
+}

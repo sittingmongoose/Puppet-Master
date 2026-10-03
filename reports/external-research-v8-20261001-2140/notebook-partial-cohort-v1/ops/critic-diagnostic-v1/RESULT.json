@@ -1,0 +1,622 @@
+{
+  "schema": "er8.public-critic-diagnostic.v1",
+  "created_utc": "2026-10-03T00:25:58.275354+00:00",
+  "original_diagnostic_birth_epoch": 1790986940.29178,
+  "original_diagnostic_deadline_epoch": 1790987840.29178,
+  "readonly_existing_runs": true,
+  "no_provider_or_native_calls": true,
+  "no_active_biobatch_access": true,
+  "sources_manifest": "SOURCE_SHA256.json",
+  "rows": [
+    {
+      "case": "V8-NB-P-Z",
+      "role": "research-proposal",
+      "cap_seconds": 1800,
+      "cleanup_reserve_seconds": 30,
+      "response_cap": 160,
+      "activation": {
+        "schema": "er8.route.activation-positive.v1",
+        "native_activation_observed": true,
+        "goal_started_turn": true,
+        "native_activation_absent_proof": false,
+        "observed_activation_epoch": 1790984882,
+        "observed_activation_monotonic_ns": 206628318481637,
+        "receipt_id": "target_murm5msy_eeb84081-a45c-4e16-8ba4-3d98dbd4690b"
+      },
+      "activation_latency_seconds": 8.789337007,
+      "elapsed_to_quiescence_seconds": 804.326404027,
+      "quiescence_after_native_stop_milliseconds": -965673.595973,
+      "positive_enrollment": {
+        "schema": "er8.execution.enrollment.v1",
+        "owned_unit": "er8-v8-nb-p-z-research-proposal.service",
+        "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-nb-p-z-research-proposal.service",
+        "enrolled_monotonic_ns": 206621498934906,
+        "original_deadline_monotonic_ns": 208419529144630
+      },
+      "native_quiet": true,
+      "progress": [
+        {
+          "schema": "er8.route.progress.v1",
+          "goal_status": "active"
+        },
+        {
+          "schema": "er8.route.progress.v1",
+          "goal_status": "active",
+          "run_state": "running",
+          "responses": 0
+        },
+        {
+          "schema": "er8.route.progress.v1",
+          "goal_status": "active",
+          "run_state": "idle",
+          "responses": 13
+        },
+        {
+          "schema": "er8.route.progress.v1",
+          "goal_status": "complete",
+          "run_state": "idle",
+          "responses": 14
+        }
+      ],
+      "route_snapshot": {
+        "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/SNAPSHOT.json",
+        "sha256": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b"
+      },
+      "config": {
+        "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/root-config.json",
+        "sha256": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d"
+      },
+      "runtime_path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/launch.py",
+      "public_get": true,
+      "mode": "productive",
+      "input_count": 5,
+      "capture_input_count": 0,
+      "public_receipt_present": true,
+      "public_metrics_present": true,
+      "artifact_metadata": {
+        "OBJECTIVE.md": {
+          "bytes": 1206,
+          "mode": "0o664",
+          "uid": 1000,
+          "symlink": false,
+          "directory": false,
+          "direct_child_count": null
+        },
+        "workspace/TASK.md": {
+          "bytes": 2684,
+          "mode": "0o664",
+          "uid": 1000,
+          "symlink": false,
+          "directory": false,
+          "direct_child_count": null
+        },
+        "workspace/inputs": {
+          "bytes": 4096,
+          "mode": "0o700",
+          "uid": 1000,
+          "symlink": false,
+          "directory": true,
+          "direct_child_count": 4
+        },
+        "workspace/out": {
+          "bytes": 4096,
+          "mode": "0o700",
+          "uid": 1000,
+          "symlink": false,
+          "directory": true,
+          "direct_child_count": 2
+        },
+        "workspace/public_captures": {
+          "bytes": 4096,
+          "mode": "0o700",
+          "uid": 1000,
+          "symlink": false,
+          "directory": true,
+          "direct_child_count": 49
+        },
+        "workspace/operation_receipts": {
+          "bytes": 4096,
+          "mode": "0o700",
+          "uid": 1000,
+          "symlink": false,
+          "directory": true,
+          "direct_child_count": 1
+        }
+      },
+      "final_metrics": {
+        "native_responses": 14,
+        "usage_requests_with_delta": 13,
+        "goal_status_final": "complete",
+        "stop_reason": "goal_complete",
+        "usage_totals": {
+          "inputTokens": 1160494,
+          "outputTokens": 36614,
+          "reasoningTokens": 0,
+          "cacheReadTokens": 1010816,
+          "cacheWriteTokens": 0,
+          "totalTokens": 1197108
+        },
+        "request_status_counts": {
+          "model_request_completed": 14
+        },
+        "elapsed_milliseconds": 804098
+      }
+    },
+    {
+      "case": "V8-NB-P-Z",
+      "role": "independent-candidate-critic",
+      "cap_seconds": 600,
+      "cleanup_reserve_seconds": 30,
+      "response_cap": 160,
+      "activation": {
+        "schema": "er8.route.activation-positive.v1",
+        "native_activation_observed": true,
+        "goal_started_turn": true,
+        "native_activation_absent_proof": false,
+        "observed_activation_epoch": 1790985687,
+        "observed_activation_monotonic_ns": 207433340958266,
+        "receipt_id": "target_murmmvm7_626d570e-a6a0-4acf-9685-45c96bccee7e"
+      },
+      "activation_latency_seconds": 9.137351441,
+      "elapsed_to_quiescence_seconds": 570.261316848,
+      "quiescence_after_native_stop_milliseconds": 261.316848,
+      "positive_enrollment": {
+        "schema": "er8.execution.enrollment.v1",
+        "owned_unit": "er8-v8-nb-p-z-independent-candidate-critic.service",
+        "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-nb-p-z-independent-candidate-critic.service",
+        "enrolled_monotonic_ns": 207425416729082,
+        "original_deadline_monotonic_ns": 208024203606825
+      },
+      "native_quiet": true,
+      "progress": [
+        {
+          "schema": "er8.route.progress.v1",
+          "goal_status": "active"
+        },
+        {
+          "schema": "er8.route.progress.v1",
+          "goal_status": "active",
+          "run_state": "running",
+          "responses": 0
+        }
+      ],
+      "route_snapshot": {
+        "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/SNAPSHOT.json",
+        "sha256": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b"
+      },
+      "config": {
+        "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/root-config.json",
+        "sha256": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d"
+      },
+      "runtime_path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/launch.py",
+      "public_get": true,
+      "mode": "productive",
+      "input_count": 7,
+      "capture_input_count": 49,
+      "public_receipt_present": false,
+      "public_metrics_present": false,
+      "artifact_metadata": {
+        "OBJECTIVE.md": {
+          "bytes": 1182,
+          "mode": "0o664",
+          "uid": 1000,
+          "symlink": false,
+          "directory": false,
+          "direct_child_count": null
+        },
+        "workspace/TASK.md": {
+          "bytes": 2548,
+          "mode": "0o664",
+          "uid": 1000,
+          "symlink": false,
+          "directory": false,
+          "direct_child_count": null
+        },
+        "workspace/inputs": {
+          "bytes": 4096,
+          "mode": "0o700",
+          "uid": 1000,
+          "symlink": false,
+          "directory": true,
+          "direct_child_count": 6
+        },
+        "workspace/out": {
+          "bytes": 4096,
+          "mode": "0o700",
+          "uid": 1000,
+          "symlink": false,
+          "directory": true,
+          "direct_child_count": 0
+        },
+        "workspace/public_captures": {
+          "bytes": 12288,
+          "mode": "0o700",
+          "uid": 1000,
+          "symlink": false,
+          "directory": true,
+          "direct_child_count": 69
+        },
+        "workspace/operation_receipts": {
+          "bytes": 4096,
+          "mode": "0o700",
+          "uid": 1000,
+          "symlink": false,
+          "directory": true,
+          "direct_child_count": 1
+        }
+      },
+      "held_stage_returncode": 126,
+      "stage_exit_elapsed_seconds": 570.286835853
+    },
+    {
+      "case": "V8-NB-COND-C-Z",
+      "role": "research-proposal",
+      "cap_seconds": 1800,
+      "cleanup_reserve_seconds": 30,
+      "response_cap": 160,
+      "activation": {
+        "schema": "er8.route.activation-positive.v1",
+        "native_activation_observed": true,
+        "goal_started_turn": true,
+        "native_activation_absent_proof": false,
+        "observed_activation_epoch": 1790984882,
+        "observed_activation_monotonic_ns": 206628187715214,
+        "receipt_id": "target_murm5mns_d51d6a34-f98f-4a60-83fb-3445a8d7843b"
+      },
+      "activation_latency_seconds": 8.66407728,
+      "elapsed_to_quiescence_seconds": 923.410073587,
+      "quiescence_after_native_stop_milliseconds": -846589.926413,
+      "positive_enrollment": {
+        "schema": "er8.execution.enrollment.v1",
+        "owned_unit": "er8-v8-nb-cond-c-z-research-proposal.service",
+        "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-nb-cond-c-z-research-proposal.service",
+        "enrolled_monotonic_ns": 206621095587740,
+        "original_deadline_monotonic_ns": 208419523637934
+      },
+      "native_quiet": true,
+      "progress": [
+        {
+          "schema": "er8.route.progress.v1",
+          "goal_status": "active"
+        },
+        {
+          "schema": "er8.route.progress.v1",
+          "goal_status": "active",
+          "run_state": "running",
+          "responses": 0
+        },
+        {
+          "schema": "er8.route.progress.v1",
+          "goal_status": "active",
+          "run_state": "idle",
+          "responses": 8
+        },
+        {
+          "schema": "er8.route.progress.v1",
+          "goal_status": "complete",
+          "run_state": "idle",
+          "responses": 9
+        }
+      ],
+      "route_snapshot": {
+        "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/SNAPSHOT.json",
+        "sha256": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b"
+      },
+      "config": {
+        "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/root-config.json",
+        "sha256": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d"
+      },
+      "runtime_path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/launch.py",
+      "public_get": true,
+      "mode": "productive",
+      "input_count": 5,
+      "capture_input_count": 0,
+      "public_receipt_present": true,
+      "public_metrics_present": true,
+      "artifact_metadata": {
+        "OBJECTIVE.md": {
+          "bytes": 1235,
+          "mode": "0o664",
+          "uid": 1000,
+          "symlink": false,
+          "directory": false,
+          "direct_child_count": null
+        },
+        "workspace/TASK.md": {
+          "bytes": 2573,
+          "mode": "0o664",
+          "uid": 1000,
+          "symlink": false,
+          "directory": false,
+          "direct_child_count": null
+        },
+        "workspace/inputs": {
+          "bytes": 4096,
+          "mode": "0o700",
+          "uid": 1000,
+          "symlink": false,
+          "directory": true,
+          "direct_child_count": 4
+        },
+        "workspace/out": {
+          "bytes": 4096,
+          "mode": "0o700",
+          "uid": 1000,
+          "symlink": false,
+          "directory": true,
+          "direct_child_count": 2
+        },
+        "workspace/public_captures": {
+          "bytes": 4096,
+          "mode": "0o700",
+          "uid": 1000,
+          "symlink": false,
+          "directory": true,
+          "direct_child_count": 37
+        },
+        "workspace/operation_receipts": {
+          "bytes": 4096,
+          "mode": "0o700",
+          "uid": 1000,
+          "symlink": false,
+          "directory": true,
+          "direct_child_count": 1
+        }
+      },
+      "final_metrics": {
+        "native_responses": 9,
+        "usage_requests_with_delta": 8,
+        "goal_status_final": "complete",
+        "stop_reason": "goal_complete",
+        "usage_totals": {
+          "inputTokens": 679540,
+          "outputTokens": 33093,
+          "reasoningTokens": 0,
+          "cacheReadTokens": 542464,
+          "cacheWriteTokens": 0,
+          "totalTokens": 712633
+        },
+        "request_status_counts": {
+          "model_request_completed": 9
+        },
+        "elapsed_milliseconds": 923146
+      }
+    },
+    {
+      "case": "V8-NB-COND-C-Z",
+      "role": "independent-candidate-critic",
+      "cap_seconds": 600,
+      "cleanup_reserve_seconds": 30,
+      "response_cap": 160,
+      "activation": {
+        "schema": "er8.route.activation-positive.v1",
+        "native_activation_observed": true,
+        "goal_started_turn": true,
+        "native_activation_absent_proof": false,
+        "observed_activation_epoch": 1790985804,
+        "observed_activation_monotonic_ns": 207550903744960,
+        "receipt_id": "target_murmpenu_852b60d7-890d-447b-a740-50eb4dce9055"
+      },
+      "activation_latency_seconds": 7.683952262,
+      "elapsed_to_quiescence_seconds": 570.240291928,
+      "quiescence_after_native_stop_milliseconds": 240.291928,
+      "positive_enrollment": {
+        "schema": "er8.execution.enrollment.v1",
+        "owned_unit": "er8-v8-nb-cond-c-z-independent-candidate-critic.service",
+        "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-nb-cond-c-z-independent-candidate-critic.service",
+        "enrolled_monotonic_ns": 207544137732535,
+        "original_deadline_monotonic_ns": 208143219792698
+      },
+      "native_quiet": true,
+      "progress": [
+        {
+          "schema": "er8.route.progress.v1",
+          "goal_status": "active"
+        },
+        {
+          "schema": "er8.route.progress.v1",
+          "goal_status": "active",
+          "run_state": "running",
+          "responses": 0
+        }
+      ],
+      "route_snapshot": {
+        "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/SNAPSHOT.json",
+        "sha256": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b"
+      },
+      "config": {
+        "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/root-config.json",
+        "sha256": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d"
+      },
+      "runtime_path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/launch.py",
+      "public_get": true,
+      "mode": "productive",
+      "input_count": 7,
+      "capture_input_count": 37,
+      "public_receipt_present": false,
+      "public_metrics_present": false,
+      "artifact_metadata": {
+        "OBJECTIVE.md": {
+          "bytes": 1211,
+          "mode": "0o664",
+          "uid": 1000,
+          "symlink": false,
+          "directory": false,
+          "direct_child_count": null
+        },
+        "workspace/TASK.md": {
+          "bytes": 2437,
+          "mode": "0o664",
+          "uid": 1000,
+          "symlink": false,
+          "directory": false,
+          "direct_child_count": null
+        },
+        "workspace/inputs": {
+          "bytes": 4096,
+          "mode": "0o700",
+          "uid": 1000,
+          "symlink": false,
+          "directory": true,
+          "direct_child_count": 6
+        },
+        "workspace/out": {
+          "bytes": 4096,
+          "mode": "0o700",
+          "uid": 1000,
+          "symlink": false,
+          "directory": true,
+          "direct_child_count": 0
+        },
+        "workspace/public_captures": {
+          "bytes": 4096,
+          "mode": "0o700",
+          "uid": 1000,
+          "symlink": false,
+          "directory": true,
+          "direct_child_count": 60
+        },
+        "workspace/operation_receipts": {
+          "bytes": 4096,
+          "mode": "0o700",
+          "uid": 1000,
+          "symlink": false,
+          "directory": true,
+          "direct_child_count": 1
+        }
+      },
+      "held_stage_returncode": 126,
+      "stage_exit_elapsed_seconds": 570.267437071
+    }
+  ],
+  "findings": {
+    "initial_goal_activation": "POSITIVE both critics; native active target and startedTurn true",
+    "deadline_observation": "Both critics quiescent approximately 570.24/570.26 seconds from original stage start, within 0.27 seconds of native_stop = 600 - 30 cleanup reserve. No final receipt/metrics. Held stage returncode 126 is not a unique error classifier.",
+    "whole_run_zero_responses": "UNKNOWN. Last published state transition says responses=0. run_goal.py publishes progress counters only on goal_status/run_state transition, so silent interval cannot establish final count.",
+    "stall_cause": "UNKNOWN: public existing metadata cannot distinguish provider wait, native actor wait, tool gate or late failure. Activation implies initial startup/local-context and model-effort verification gates passed; it does not establish first provider completion or successful first MCP call.",
+    "route_comparison": "Same accepted runtime/config pins, productive/public-get selection, same source-defined namespace/tool mounts and allowlist. Critic 600s vs researcher 1800s caps; differing transferred immutable artifact/capture counts recorded without body reads. No causal mount/config mismatch demonstrated.",
+    "quality": "Critic unfinished native outcomes/costs are separate from model quality. Researchers positive complete receipts report 14/9 responses and public token costs. Critic usage UNKNOWN; positive activation and native occupancy must remain recorded.",
+    "repair": "No demonstrated stall repair. Demonstrated public counter observability gap: prospectively emit bounded progress when completed/failed response count changes (not only state changes), include monotonic observation timestamp, and expose last safe request-status counters before hard stop. This requires root route acceptance/release; helper made no runtime changes. Increasing cap is not a proven cure."
+  },
+  "current_selected_pin_checks": [
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/SNAPSHOT.json",
+      "sha256": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b",
+      "allowlisted_source_checks": [
+        {
+          "path": "LAB_ROOT/dev/route-recovery-v2/broker_exec.py",
+          "current_sha256": "3484668112269099bf59fdf1cdad5f0d515b80da9eb6675157cc5fb52795902a",
+          "pin": "3484668112269099bf59fdf1cdad5f0d515b80da9eb6675157cc5fb52795902a",
+          "matches": true
+        },
+        {
+          "path": "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/deadline_gate.c",
+          "current_sha256": "abde9b4b9d70bbfd7c97ed397733228707ad2e27ed9214b11185e371631029ee",
+          "pin": "abde9b4b9d70bbfd7c97ed397733228707ad2e27ed9214b11185e371631029ee",
+          "matches": true
+        },
+        {
+          "path": "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/entry.py",
+          "current_sha256": "3160d2e6624731218ecf0a465c19ff71a6351ecc4a9fb08d7893c86f6f5b99ca",
+          "pin": "3160d2e6624731218ecf0a465c19ff71a6351ecc4a9fb08d7893c86f6f5b99ca",
+          "matches": true
+        },
+        {
+          "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/launch.py",
+          "current_sha256": "8dec4108eacd3814d5b1fff069daaef87703f8466bc6d15c77607e1bcba1e0d4",
+          "pin": "8dec4108eacd3814d5b1fff069daaef87703f8466bc6d15c77607e1bcba1e0d4",
+          "matches": true
+        },
+        {
+          "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/native_runner.py",
+          "current_sha256": "9b8bf700a30a9a4be0add4f3161b69bf98c6068acef88d73606085c3b6d6caca",
+          "pin": "9b8bf700a30a9a4be0add4f3161b69bf98c6068acef88d73606085c3b6d6caca",
+          "matches": true
+        },
+        {
+          "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/run_goal.py",
+          "current_sha256": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+          "pin": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+          "matches": true
+        },
+        {
+          "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/zcode_goal_driver.py",
+          "current_sha256": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+          "pin": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+          "matches": true
+        },
+        {
+          "path": "LAB_ROOT/dev/route-recovery-v2/source-capture-v1/boundary.py",
+          "current_sha256": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+          "pin": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+          "matches": true
+        }
+      ]
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/root-config.json",
+      "sha256": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d",
+      "matches_all_four_plan_config_pins": true
+    },
+    {
+      "path": "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/SNAPSHOT.json",
+      "sha256": "667e9b86a7547c8e647142787637c34adfcc63eb52f33826e0f1f5453d379438",
+      "allowlisted_source_checks": [
+        {
+          "path": "LAB_ROOT/dev/route-recovery-v2/broker_exec.py",
+          "current_sha256": "3484668112269099bf59fdf1cdad5f0d515b80da9eb6675157cc5fb52795902a",
+          "pin": "3484668112269099bf59fdf1cdad5f0d515b80da9eb6675157cc5fb52795902a",
+          "matches": true
+        },
+        {
+          "path": "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/deadline_gate.c",
+          "current_sha256": "abde9b4b9d70bbfd7c97ed397733228707ad2e27ed9214b11185e371631029ee",
+          "pin": "abde9b4b9d70bbfd7c97ed397733228707ad2e27ed9214b11185e371631029ee",
+          "matches": true
+        },
+        {
+          "path": "LAB_ROOT/dev/route-recovery-v2/execution-path-v1/entry.py",
+          "current_sha256": "3160d2e6624731218ecf0a465c19ff71a6351ecc4a9fb08d7893c86f6f5b99ca",
+          "pin": "3160d2e6624731218ecf0a465c19ff71a6351ecc4a9fb08d7893c86f6f5b99ca",
+          "matches": true
+        },
+        {
+          "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/launch.py",
+          "current_sha256": "8dec4108eacd3814d5b1fff069daaef87703f8466bc6d15c77607e1bcba1e0d4",
+          "pin": "8dec4108eacd3814d5b1fff069daaef87703f8466bc6d15c77607e1bcba1e0d4",
+          "matches": true
+        },
+        {
+          "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/native_runner.py",
+          "current_sha256": "9b8bf700a30a9a4be0add4f3161b69bf98c6068acef88d73606085c3b6d6caca",
+          "pin": "9b8bf700a30a9a4be0add4f3161b69bf98c6068acef88d73606085c3b6d6caca",
+          "matches": true
+        },
+        {
+          "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/root-config.json",
+          "current_sha256": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d",
+          "pin": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d",
+          "matches": true
+        },
+        {
+          "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/run_goal.py",
+          "current_sha256": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+          "pin": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+          "matches": true
+        },
+        {
+          "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/zcode_goal_driver.py",
+          "current_sha256": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+          "pin": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af",
+          "matches": true
+        },
+        {
+          "path": "LAB_ROOT/dev/route-recovery-v2/source-capture-v1/boundary.py",
+          "current_sha256": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+          "pin": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+          "matches": true
+        }
+      ]
+    }
+  ]
+}

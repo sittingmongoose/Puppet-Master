@@ -1,6 +1,6 @@
 {
   "schema": "pm.external_research.v8.public_attempts.v1",
-  "checkpoint": "DURABLE_NEXT_PAIR_ACTIVE_AFTER_INTERRUPTED_CRITICS",
+  "checkpoint": "BIO_BATCH_CRITICS_ACTIVE_AFTER_NB_TIMEOUTS",
   "attempts": [
     {
       "id": "v8-z-mechanical-route-canary-v1",
@@ -98,22 +98,38 @@
     },
     {
       "id": "V8-NB-COND-C-Z",
-      "scope": "integrated research stage",
-      "status": "NATIVE_ACTIVE_AT_SELECTED_OBSERVATION",
-      "native_goal_starts": 1,
-      "research_quality": "UNASSESSED",
-      "evidence": "partial-research-cohort-v1/OBSERVATION_AFTER_HELPER.json"
+      "scope": "incomplete integrated pipeline",
+      "status": "RESEARCH_COMPLETE_CRITIC_TIMED_OUT_NO_FINAL",
+      "native_goal_starts": 2,
+      "research_quality": "UNASSESSED; infrastructure failure with unknown causal stall",
+      "evidence": "notebook-partial-cohort-v1/ops/publication-notebook-v1/RESULTS.json"
     },
     {
       "id": "V8-NB-P-Z",
-      "scope": "integrated research stage",
-      "status": "NATIVE_ACTIVE_AT_SELECTED_OBSERVATION",
-      "native_goal_starts": 1,
+      "scope": "incomplete integrated pipeline",
+      "status": "RESEARCH_COMPLETE_CRITIC_TIMED_OUT_NO_FINAL",
+      "native_goal_starts": 2,
+      "research_quality": "UNASSESSED; infrastructure failure with unknown causal stall",
+      "evidence": "notebook-partial-cohort-v1/ops/publication-notebook-v1/RESULTS.json"
+    },
+    {
+      "id": "V8-BIO-BATCH-C-Z",
+      "scope": "integrated pipeline in progress",
+      "status": "RESEARCH_COMPLETE_FRESH_CRITIC_ACTIVE_AT_SELECTED_OBSERVATION",
+      "native_goal_starts": 2,
       "research_quality": "UNASSESSED",
-      "evidence": "partial-research-cohort-v1/OBSERVATION_AFTER_HELPER.json"
+      "evidence": "notebook-partial-cohort-v1/ops/publication-notebook-v1/RESULTS.json"
+    },
+    {
+      "id": "V8-BIO-B-Z",
+      "scope": "integrated pipeline in progress",
+      "status": "RESEARCH_COMPLETE_FRESH_CRITIC_ACTIVE_AT_SELECTED_OBSERVATION",
+      "native_goal_starts": 2,
+      "research_quality": "UNASSESSED",
+      "evidence": "notebook-partial-cohort-v1/ops/publication-notebook-v1/RESULTS.json"
     }
   ],
-  "note": "All canary and host failures preserved. BIOresearch partial outputs frozen; two critics activated and orphanclosed late, no final or wholequality result. Two fresh notebook researchGoals active; no best-of, originalclocks unchanged.",
+  "note": "Failures and original limits retained. Four published research partials; BIO critics interrupted, NB critics timed out. Both biology batching critics active at selected observation. Initial progress responses0 is not a final critic counter. No whole pipeline, completed comparison, winner or best-of selection.",
   "native_qualification": "V3_MECHANICAL_PASSED_LIMITED_DELIVERY_INFERENCE",
   "native_qualification_evidence": "resume-qualified-v3-cohort/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json"
 }
