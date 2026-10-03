@@ -53,7 +53,7 @@
  * file to ~/pm-motion-lab/neon/<run>/, symlink node_modules to ~/pm-motion-lab/node_modules, then
  *   cd ~/pm-motion-lab/neon/<run> && node neon-verify.mjs --json ../<run>-out/nv.json [--reduced]
  * It launches headless Chromium (Playwright's own; temporary profiles are removed on exit) and takes about
- * 12 minutes for ten themes (13 alone samples 60 frames per theme).
+ * 14 minutes for ten themes (13 alone steps 120 frames per theme; --reduced about 10).
  *
  * WHAT IT WRITES. Nothing but stdout, and the --json file when given. It never writes a tracked file.
  */
