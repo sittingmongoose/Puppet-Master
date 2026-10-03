@@ -1,0 +1,85 @@
+{
+  "no_requalification_or_live_install": true,
+  "schema": "pm.er8.output-guard-control-binding-source-verification.v1",
+  "six_module_copy_proof": {
+    "case_supervisor.py": {
+      "byte_identical": true,
+      "predecessor": {
+        "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/case_supervisor.py",
+        "sha256": "b35627e1bdbf914afb939a69959e6b09ac9bcbe5d54cd471d7319cbcf540f096"
+      },
+      "successor": {
+        "path": "LAB_ROOT/ops/output-guard-binding-v1/integrated-controller/case_supervisor.py",
+        "sha256": "b35627e1bdbf914afb939a69959e6b09ac9bcbe5d54cd471d7319cbcf540f096"
+      }
+    },
+    "external_case_close.py": {
+      "byte_identical": true,
+      "predecessor": {
+        "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/external_case_close.py",
+        "sha256": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c"
+      },
+      "successor": {
+        "path": "LAB_ROOT/ops/output-guard-binding-v1/integrated-controller/external_case_close.py",
+        "sha256": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c"
+      }
+    },
+    "external_stage_close.py": {
+      "byte_identical": true,
+      "predecessor": {
+        "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/external_stage_close.py",
+        "sha256": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4"
+      },
+      "successor": {
+        "path": "LAB_ROOT/ops/output-guard-binding-v1/integrated-controller/external_stage_close.py",
+        "sha256": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4"
+      }
+    },
+    "parent_receipt.py": {
+      "byte_identical": true,
+      "predecessor": {
+        "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/parent_receipt.py",
+        "sha256": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea"
+      },
+      "successor": {
+        "path": "LAB_ROOT/ops/output-guard-binding-v1/integrated-controller/parent_receipt.py",
+        "sha256": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea"
+      }
+    },
+    "rolling.py": {
+      "byte_identical": true,
+      "predecessor": {
+        "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/rolling.py",
+        "sha256": "6f4f59862c963288eb0b514d8d943adfd6c7356681aded5c9b3b9fe45eb6a874"
+      },
+      "successor": {
+        "path": "LAB_ROOT/ops/output-guard-binding-v1/integrated-controller/rolling.py",
+        "sha256": "6f4f59862c963288eb0b514d8d943adfd6c7356681aded5c9b3b9fe45eb6a874"
+      }
+    },
+    "stage_actor.py": {
+      "byte_identical": true,
+      "predecessor": {
+        "path": "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/stage_actor.py",
+        "sha256": "ba3b13cd1209fd086ecd96e24d776deda92824063fc216cd7796e7b299ffb8cc"
+      },
+      "successor": {
+        "path": "LAB_ROOT/ops/output-guard-binding-v1/integrated-controller/stage_actor.py",
+        "sha256": "ba3b13cd1209fd086ecd96e24d776deda92824063fc216cd7796e7b299ffb8cc"
+      }
+    }
+  },
+  "source_only": true,
+  "test_count": 5,
+  "tests": {
+    "auth_free": true,
+    "finished_epoch": 1791006088.8697114,
+    "no_live_ledger_native_sdk_auth_reads": true,
+    "returncode": 0,
+    "started_epoch": 1791006088.250651,
+    "test_results": {
+      "path": "LAB_ROOT/ops/output-guard-binding-v1/TEST_RESULTS.txt",
+      "sha256": "94f040868feae9fae0c8d82b181d74e2de221da584005c2838290a6dfdb59a76"
+    }
+  }
+}

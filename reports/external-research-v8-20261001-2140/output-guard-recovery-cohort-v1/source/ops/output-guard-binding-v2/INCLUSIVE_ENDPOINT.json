@@ -1,0 +1,19 @@
+{
+  "all_prep_tests_freeze_completed_before_capture": true,
+  "captured_epoch": 1791007748.4625602,
+  "elapsed_seconds_at_capture": 260.9950096607208,
+  "final_return_not_yet_observed": true,
+  "freeze": {
+    "path": "LAB_ROOT/ops/output-guard-binding-v2/FREEZE.json",
+    "sha256": "3a45e202be2be41cfaab735ad18ea0c534ca3917759cfc8ff3bb7034f5f2ab82"
+  },
+  "helper_birth_epoch": 1791007487.4675505,
+  "helper_deadline_epoch": 1791007787.4675505,
+  "manifest": {
+    "path": "LAB_ROOT/ops/output-guard-binding-v2/MANIFEST.json",
+    "sha256": "8793c04bd222313691cf41eda060d9f5baa8640806ce38f25e7bba0daf29cb1d"
+  },
+  "qualification": "Source-only endpoint; prior unknown helper tails preserved. No future final-return/full-campaign or live timeliness assertion.",
+  "schema": "pm.er8.source-only-helper-endpoint.v1",
+  "within_original_cutoff_at_capture": true
+}

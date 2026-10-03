@@ -1,0 +1,1309 @@
+{
+  "admission_operator": {
+    "properties": {
+      "ActiveState": "failed",
+      "ControlGroup": "",
+      "LoadState": "loaded",
+      "MainPID": "0"
+    },
+    "unit": "er8-v8-production-z-tranche-v9.service"
+  },
+  "epoch": 1791006671.3366392,
+  "held_process_group_receipts_verified": true,
+  "native_enrollment_receipts_verified": true,
+  "native_unit_queries": [
+    {
+      "epoch": 1791006670.1644037,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-amend-c-l-final-correction.service"
+    },
+    {
+      "epoch": 1791006670.179865,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-amend-c-l-independent-candidate-critic.service"
+    },
+    {
+      "epoch": 1791006670.199361,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-amend-c-l-research-proposal.service"
+    },
+    {
+      "epoch": 1791006670.2184076,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-amend-t-l-final-correction.service"
+    },
+    {
+      "epoch": 1791006670.2370665,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-amend-t-l-independent-candidate-critic.service"
+    },
+    {
+      "epoch": 1791006670.255588,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-amend-t-l-research-proposal.service"
+    },
+    {
+      "epoch": 1791006670.274901,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-b-z-independent-candidate-critic.service"
+    },
+    {
+      "epoch": 1791006670.2944434,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-b-z-research-proposal.service"
+    },
+    {
+      "epoch": 1791006670.3134544,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-batch-c-z-independent-candidate-critic.service"
+    },
+    {
+      "epoch": 1791006670.3324928,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-batch-c-z-research-proposal.service"
+    },
+    {
+      "epoch": 1791006670.3455544,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-breadth-c-m-final-correction.service"
+    },
+    {
+      "epoch": 1791006670.3645587,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-breadth-c-m-independent-candidate-critic.service"
+    },
+    {
+      "epoch": 1791006670.3791513,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-breadth-c-m-research-proposal.service"
+    },
+    {
+      "epoch": 1791006670.398117,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-breadth-t-m-final-correction.service"
+    },
+    {
+      "epoch": 1791006670.4171724,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-breadth-t-m-independent-candidate-critic.service"
+    },
+    {
+      "epoch": 1791006670.4360044,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-breadth-t-m-research-proposal.service"
+    },
+    {
+      "epoch": 1791006670.4572325,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-c-z-research-proposal.service"
+    },
+    {
+      "epoch": 1791006670.476679,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-c-z-s8-independent-candidate-critic.service"
+    },
+    {
+      "epoch": 1791006670.4954348,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-c-z-s8-research-proposal.service"
+    },
+    {
+      "epoch": 1791006670.5136642,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-cond-c-z-independent-candidate-critic.service"
+    },
+    {
+      "epoch": 1791006670.5347066,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-cond-c-z-research-proposal.service"
+    },
+    {
+      "epoch": 1791006670.5533576,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-p-z-independent-candidate-critic.service"
+    },
+    {
+      "epoch": 1791006670.5733707,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-p-z-research-proposal.service"
+    },
+    {
+      "epoch": 1791006670.591983,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-retr-c-m-final-correction.service"
+    },
+    {
+      "epoch": 1791006670.6104145,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-retr-c-m-independent-candidate-critic.service"
+    },
+    {
+      "epoch": 1791006670.628888,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-retr-c-m-research-proposal.service"
+    },
+    {
+      "epoch": 1791006670.6470072,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-retr-t-m-final-correction.service"
+    },
+    {
+      "epoch": 1791006670.6660962,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-retr-t-m-independent-candidate-critic.service"
+    },
+    {
+      "epoch": 1791006670.684413,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-retr-t-m-research-proposal.service"
+    },
+    {
+      "epoch": 1791006670.7028966,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-wit-t-z-research-proposal.service"
+    },
+    {
+      "epoch": 1791006670.7214658,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-bio-wit-t-z-s8-research-proposal.service"
+    },
+    {
+      "epoch": 1791006670.739455,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-amend-c-l-final-correction.service"
+    },
+    {
+      "epoch": 1791006670.75785,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-amend-c-l-independent-candidate-critic.service"
+    },
+    {
+      "epoch": 1791006670.7774112,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-amend-c-l-research-proposal.service"
+    },
+    {
+      "epoch": 1791006670.79616,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-amend-t-l-final-correction.service"
+    },
+    {
+      "epoch": 1791006670.815208,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-amend-t-l-independent-candidate-critic.service"
+    },
+    {
+      "epoch": 1791006670.833007,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-amend-t-l-research-proposal.service"
+    },
+    {
+      "epoch": 1791006670.8518507,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-b-z-final-correction.service"
+    },
+    {
+      "epoch": 1791006670.8706834,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-b-z-independent-candidate-critic.service"
+    },
+    {
+      "epoch": 1791006670.89009,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-b-z-research-proposal.service"
+    },
+    {
+      "epoch": 1791006670.9130151,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-batch-c-z-independent-candidate-critic.service"
+    },
+    {
+      "epoch": 1791006670.935424,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-batch-c-z-research-proposal.service"
+    },
+    {
+      "epoch": 1791006670.9595132,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-breadth-c-m-final-correction.service"
+    },
+    {
+      "epoch": 1791006670.9788606,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-breadth-c-m-independent-candidate-critic.service"
+    },
+    {
+      "epoch": 1791006670.9981642,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-breadth-c-m-research-proposal.service"
+    },
+    {
+      "epoch": 1791006671.0245962,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-breadth-t-m-final-correction.service"
+    },
+    {
+      "epoch": 1791006671.0432258,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-breadth-t-m-independent-candidate-critic.service"
+    },
+    {
+      "epoch": 1791006671.063277,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-breadth-t-m-research-proposal.service"
+    },
+    {
+      "epoch": 1791006671.0827608,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-cond-c-z-independent-candidate-critic.service"
+    },
+    {
+      "epoch": 1791006671.1028843,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-cond-c-z-research-proposal.service"
+    },
+    {
+      "epoch": 1791006671.1284297,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-p-z-independent-candidate-critic.service"
+    },
+    {
+      "epoch": 1791006671.1474273,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-p-z-research-proposal.service"
+    },
+    {
+      "epoch": 1791006671.1666136,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-retr-c-m-final-correction.service"
+    },
+    {
+      "epoch": 1791006671.1816247,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-retr-c-m-independent-candidate-critic.service"
+    },
+    {
+      "epoch": 1791006671.2008543,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-retr-c-m-research-proposal.service"
+    },
+    {
+      "epoch": 1791006671.215475,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-retr-t-m-final-correction.service"
+    },
+    {
+      "epoch": 1791006671.234667,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-retr-t-m-independent-candidate-critic.service"
+    },
+    {
+      "epoch": 1791006671.2515876,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-nb-retr-t-m-research-proposal.service"
+    },
+    {
+      "epoch": 1791006671.2707832,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-z-mechanical-route-canary-v1.service"
+    },
+    {
+      "epoch": 1791006671.2893322,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-z-mechanical-route-canary-v2.service"
+    },
+    {
+      "epoch": 1791006671.3082697,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "LoadState": "not-found",
+        "MainPID": "0"
+      },
+      "unit": "er8-v8-z-mechanical-route-canary-v3.service"
+    }
+  ],
+  "no_signal_or_state_mutation_or_launch": true,
+  "passive_durable_owner_and_standby": "Excluded from candidate/admission execution quiet; remainoriginallybounded ownership holders.",
+  "positive_metadata_sources": [
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/V7_TERMINAL_CURRENT_QUIET_V1.json",
+      "sha256": "2cf6c066ba3c34fd4be6e5625c7b389cb3c64eda64e81a02f85025e1c1b1e0d8"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/ATTEMPT_PREDECESSOR_ROOT_VERIFICATION_V1.json",
+      "sha256": "14f9ce5c843cb5f8d7135b63b0cdfa7e68b75fcddc9d6feda06600856467bb18"
+    },
+    {
+      "path": "LAB_ROOT/ops/s8-terminal-observation-v2/REPORT.json",
+      "sha256": "26c46353a04277b2e4ec2786214ecaa91e689900bf95f9ff61d07f30e6a7d525"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/z-tranche-v9-rolling-parent-positive.launch.json",
+      "sha256": "f2b203a1847bb3af80344129d9f726c9a3a37202b6a4ff1f14382e2bb1164a69"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/z-tranche-v9-rolling-parent-positive.held-exit.json",
+      "sha256": "12989ac39cd39af0c88a6e6913d613dbcb85babefd7b89e4eb46caa66957e6a4"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/z-tranche-v9-rolling-parent-positive.terminal.json",
+      "sha256": "cd1782f708877349f1ac85453bc349febb8822e7bdbad6100802198a33f16119"
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher-v1/jobs/v8-z-mechanical-route-canary-v1/v8-z-mechanical-route-canary-v1/FAILURE_CLEANUP_PROOF.json",
+      "sha256": "f73bb03e8490aacd05458adb4101c8543ba62af2576aee6929f7e8620f56d322"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v2/v8-z-mechanical-route-canary-v2/FAILURE_CLEANUP_PROOF.json",
+      "sha256": "2bae7b91c6b32dca28bffc30b631be142cbd7fc4f26d4eb6d77a6f262babeb10"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-recovery-v1/jobs/v8-z-mechanical-route-canary-v3/v8-z-mechanical-route-canary-v3/EXTERNAL_PARENT_CLOSE.json",
+      "sha256": "b037946f6e87e792b62112ad6595ceac71270e59166c531cdd48056c4aad53f5"
+    }
+  ],
+  "positive_recorded_process_group_queries": [
+    {
+      "epoch": 1791006671.3084707,
+      "group_probe": "ESRCH",
+      "pgid": 1767768,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.308536,
+      "group_probe": "ESRCH",
+      "pgid": 1767800,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3085809,
+      "group_probe": "ESRCH",
+      "pgid": 1767802,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3086197,
+      "group_probe": "ESRCH",
+      "pgid": 1767811,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3086576,
+      "group_probe": "ESRCH",
+      "pgid": 1767815,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3087006,
+      "group_probe": "ESRCH",
+      "pgid": 1804488,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3087375,
+      "group_probe": "ESRCH",
+      "pgid": 1804490,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3087878,
+      "group_probe": "ESRCH",
+      "pgid": 1804492,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.308826,
+      "group_probe": "ESRCH",
+      "pgid": 1804618,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3088615,
+      "group_probe": "ESRCH",
+      "pgid": 1804638,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3088973,
+      "group_probe": "ESRCH",
+      "pgid": 1841513,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3089323,
+      "group_probe": "ESRCH",
+      "pgid": 1847425,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3089676,
+      "group_probe": "ESRCH",
+      "pgid": 1971131,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3090022,
+      "group_probe": "ESRCH",
+      "pgid": 1971167,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.309036,
+      "group_probe": "ESRCH",
+      "pgid": 1971170,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3090706,
+      "group_probe": "ESRCH",
+      "pgid": 1971212,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3091052,
+      "group_probe": "ESRCH",
+      "pgid": 1971214,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.30914,
+      "group_probe": "ESRCH",
+      "pgid": 2038092,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3091736,
+      "group_probe": "ESRCH",
+      "pgid": 2043199,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.309208,
+      "group_probe": "ESRCH",
+      "pgid": 2064582,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.309264,
+      "group_probe": "ESRCH",
+      "pgid": 2064584,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3093042,
+      "group_probe": "ESRCH",
+      "pgid": 2068107,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3093388,
+      "group_probe": "ESRCH",
+      "pgid": 2068110,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3093734,
+      "group_probe": "ESRCH",
+      "pgid": 2087572,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3094084,
+      "group_probe": "ESRCH",
+      "pgid": 2100399,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3094435,
+      "group_probe": "ESRCH",
+      "pgid": 2114061,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3094788,
+      "group_probe": "ESRCH",
+      "pgid": 2114120,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3095138,
+      "group_probe": "ESRCH",
+      "pgid": 2121678,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3095481,
+      "group_probe": "ESRCH",
+      "pgid": 2121720,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3095822,
+      "group_probe": "ESRCH",
+      "pgid": 2148414,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.309617,
+      "group_probe": "ESRCH",
+      "pgid": 2151073,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3096545,
+      "group_probe": "ESRCH",
+      "pgid": 2167554,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3096883,
+      "group_probe": "ESRCH",
+      "pgid": 2191331,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3097234,
+      "group_probe": "ESRCH",
+      "pgid": 2191346,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3097582,
+      "group_probe": "ESRCH",
+      "pgid": 2191348,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.309793,
+      "group_probe": "ESRCH",
+      "pgid": 2191370,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3098266,
+      "group_probe": "ESRCH",
+      "pgid": 2191393,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.309861,
+      "group_probe": "ESRCH",
+      "pgid": 2247834,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3099067,
+      "group_probe": "ESRCH",
+      "pgid": 2272865,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3099422,
+      "group_probe": "ESRCH",
+      "pgid": 2303332,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3099759,
+      "group_probe": "ESRCH",
+      "pgid": 2316179,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.310011,
+      "group_probe": "ESRCH",
+      "pgid": 2323795,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3100452,
+      "group_probe": "ESRCH",
+      "pgid": 2323806,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3100886,
+      "group_probe": "ESRCH",
+      "pgid": 2326865,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3101244,
+      "group_probe": "ESRCH",
+      "pgid": 2326906,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3101583,
+      "group_probe": "ESRCH",
+      "pgid": 2344990,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3101938,
+      "group_probe": "ESRCH",
+      "pgid": 2345020,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3102295,
+      "group_probe": "ESRCH",
+      "pgid": 2372511,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3102915,
+      "group_probe": "ESRCH",
+      "pgid": 2380795,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.310339,
+      "group_probe": "ESRCH",
+      "pgid": 2393232,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3103735,
+      "group_probe": "ESRCH",
+      "pgid": 2393251,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3104086,
+      "group_probe": "ESRCH",
+      "pgid": 2397792,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3104424,
+      "group_probe": "ESRCH",
+      "pgid": 2397821,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3104777,
+      "group_probe": "ESRCH",
+      "pgid": 2423115,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3105114,
+      "group_probe": "ESRCH",
+      "pgid": 2423924,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3105454,
+      "group_probe": "ESRCH",
+      "pgid": 2439646,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3105786,
+      "group_probe": "ESRCH",
+      "pgid": 2443278,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3106117,
+      "group_probe": "ESRCH",
+      "pgid": 2452723,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.310644,
+      "group_probe": "ESRCH",
+      "pgid": 2452799,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.310677,
+      "group_probe": "ESRCH",
+      "pgid": 2483360,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3107102,
+      "group_probe": "ESRCH",
+      "pgid": 2483510,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3107438,
+      "group_probe": "ESRCH",
+      "pgid": 2520786,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3107762,
+      "group_probe": "ESRCH",
+      "pgid": 2521892,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3108094,
+      "group_probe": "ESRCH",
+      "pgid": 2551554,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3108416,
+      "group_probe": "ESRCH",
+      "pgid": 2552579,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3108764,
+      "group_probe": "ESRCH",
+      "pgid": 2581614,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3109095,
+      "group_probe": "ESRCH",
+      "pgid": 2581637,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3109422,
+      "group_probe": "ESRCH",
+      "pgid": 2593017,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.310975,
+      "group_probe": "ESRCH",
+      "pgid": 2593019,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3110085,
+      "group_probe": "ESRCH",
+      "pgid": 2595394,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3110554,
+      "group_probe": "ESRCH",
+      "pgid": 2604249,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3110895,
+      "group_probe": "ESRCH",
+      "pgid": 2610299,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3111222,
+      "group_probe": "ESRCH",
+      "pgid": 2613634,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3111546,
+      "group_probe": "ESRCH",
+      "pgid": 2628428,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3111873,
+      "group_probe": "ESRCH",
+      "pgid": 2685358,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3112195,
+      "group_probe": "ESRCH",
+      "pgid": 2685395,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3112793,
+      "group_probe": "ESRCH",
+      "pgid": 2694183,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3113196,
+      "group_probe": "ESRCH",
+      "pgid": 2694192,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3113525,
+      "group_probe": "ESRCH",
+      "pgid": 2705072,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3113856,
+      "group_probe": "ESRCH",
+      "pgid": 2706281,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3114188,
+      "group_probe": "ESRCH",
+      "pgid": 2728267,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3114514,
+      "group_probe": "ESRCH",
+      "pgid": 2732944,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3114855,
+      "group_probe": "ESRCH",
+      "pgid": 2775530,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.311519,
+      "group_probe": "ESRCH",
+      "pgid": 2775531,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.311552,
+      "group_probe": "ESRCH",
+      "pgid": 2775533,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3115847,
+      "group_probe": "ESRCH",
+      "pgid": 2775571,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3116171,
+      "group_probe": "ESRCH",
+      "pgid": 2775595,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.311651,
+      "group_probe": "ESRCH",
+      "pgid": 2792387,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3116837,
+      "group_probe": "ESRCH",
+      "pgid": 2805421,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3117168,
+      "group_probe": "ESRCH",
+      "pgid": 2867254,
+      "positive_record_bound": true,
+      "proc_absent": true
+    },
+    {
+      "epoch": 1791006671.3117495,
+      "group_probe": "ESRCH",
+      "pgid": 2927982,
+      "positive_record_bound": true,
+      "proc_absent": true
+    }
+  ],
+  "root_authority": true,
+  "schema": "pm.er8.output-guard-execution-current-verification.v1",
+  "scope": "all-candidate-admission-operator-execution-owned-groups",
+  "source_model_helpers": "Currenthelperindependentreview sourceonly/no native/provider launches; notcandidate execution."
+}

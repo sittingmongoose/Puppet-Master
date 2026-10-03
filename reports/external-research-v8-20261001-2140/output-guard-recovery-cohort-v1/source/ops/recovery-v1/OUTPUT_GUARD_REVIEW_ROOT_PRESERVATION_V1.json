@@ -1,0 +1,78 @@
+{
+  "helper": "er8-output-guard-review-v1",
+  "interruption": "Root observed stillrunning afterdeadline atfirst currentexec6671.339773 and interrupted via collaboration; exactactualendUNKNOWN. No restart/renewal/refund.",
+  "no_original_artifact_edits": true,
+  "observed_epoch": 1791006922.7387388,
+  "original_birth": 1791006056.4060485,
+  "original_deadline": 1791006656.4060485,
+  "root_authority": true,
+  "schema": "pm.er8.output-guard-review-root-preservation.v1",
+  "selected_unchanged_artifacts": [
+    {
+      "mtime_epoch": 1791006568.8992162,
+      "path": "LAB_ROOT/ops/output-guard-review-v1/REVIEW.json",
+      "sha256": "9726d756b8fc4e3b4a92b2a9ded46d97ee0a1da7e0e8d87718995aa3cbd1528f"
+    },
+    {
+      "mtime_epoch": 1791006568.8997898,
+      "path": "LAB_ROOT/ops/output-guard-binding-review-v1/REVIEW.json",
+      "sha256": "f91e1a34dfb4b27a14c2da813e95d0a868ecc66172007f22397018a8991b7fe8"
+    },
+    {
+      "mtime_epoch": 1791006568.8981252,
+      "path": "LAB_ROOT/ops/output-guard-review-v1/REPORT.json",
+      "sha256": "ac6a9eac2bd939b660814f23ce1c97b2049ccfabb1a510a1bcd7473223f06987"
+    },
+    {
+      "mtime_epoch": 1791006568.8986657,
+      "path": "LAB_ROOT/ops/output-guard-review-v1/VERIFICATION.json",
+      "sha256": "19f2cf73f561e375ae56e8837f2ed4f177b2b7bf0388d359f7ebf63d2c107e68"
+    },
+    {
+      "mtime_epoch": 1791005909.7688198,
+      "path": "LAB_ROOT/ops/output-guard-api-v1/ledger_output_guard_v1.py",
+      "sha256": "f2f63bbfc7386186e51f79d00449fd0964821b1f0cb48e9d8d70b9ee7fe112b3"
+    },
+    {
+      "mtime_epoch": 1791006088.2402036,
+      "path": "LAB_ROOT/ops/output-guard-api-v1/MANIFEST.json",
+      "sha256": "30ff63d05a355f6e11e28fd155cf0a61c86e78bf70c7ab4ecb20ef485fb8a95d"
+    },
+    {
+      "mtime_epoch": 1791005221.845383,
+      "path": "LAB_ROOT/ops/recovery-v1/OUTPUT_GUARD_ROOT_AUTHORITY_V1.json",
+      "sha256": "2f25c97b0cd79aa3f9b302479fab78f7828d92772271bdf7fe4b3811c7147507"
+    },
+    {
+      "mtime_epoch": 1791006088.2416205,
+      "path": "LAB_ROOT/ops/output-guard-api-v1/FREEZE.json",
+      "sha256": "8621338279360fc29ae529019c9c51c6df4818753e75c586d52f4d8293a941a7"
+    },
+    {
+      "mtime_epoch": 1791006088.2505205,
+      "path": "LAB_ROOT/ops/output-guard-binding-v1/integrated-controller/SOURCE_FREEZE.json",
+      "sha256": "4d7ae7a953551a539496b32b9a25dff4b533e447d8f353a4491643e543fb86d1"
+    },
+    {
+      "mtime_epoch": 1791006088.2480676,
+      "path": "LAB_ROOT/ops/output-guard-binding-v1/recovery-control.json",
+      "sha256": "077a061320498c801a00935ace791804dfde1c18dbfe0b85e3b0ed6cd6399827"
+    },
+    {
+      "mtime_epoch": 1791005766.7823105,
+      "path": "LAB_ROOT/ops/output-guard-binding-v1/control_binding.py",
+      "sha256": "c322c9a80827391d69639ae72c47c1d055bacc0e3655b9d64f8459ec81d39ee3"
+    },
+    {
+      "mtime_epoch": 1791006088.8761902,
+      "path": "LAB_ROOT/ops/output-guard-binding-v1/MANIFEST.json",
+      "sha256": "076c3e418c4146d5485d9a8a097d912ec6542f0a67651c6cdbc3f63fefc8f83e"
+    },
+    {
+      "mtime_epoch": 1791006088.879229,
+      "path": "LAB_ROOT/ops/output-guard-binding-v1/FREEZE.json",
+      "sha256": "3922d898b394843b3eeaf60a1511eb716b84417d8c05176ed1462600ce082547"
+    }
+  ],
+  "timeliness_disposition": "LATE_HOLD_FOR_FULL_HELPER; completed source verdicts and26fixturefindings recordedat6568.8990035beforeoriginal6656.4060485, exactfinaltailUNKNOWN. Source-validity acceptance separate from fullhelper/campaigntimeliness."
+}

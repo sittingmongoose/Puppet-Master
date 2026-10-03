@@ -1,0 +1,632 @@
+{
+  "cohort": "output-guard-recovery-cohort-v1",
+  "later_v2_review_or_launch_not_claimed": true,
+  "no_old_cost_erasure_or_budget_reset": true,
+  "original_source_pins_distinct_from_projection_hashes": true,
+  "positive_original_inputs": [
+    {
+      "bytes": 4767,
+      "original_sha256": "8621338279360fc29ae529019c9c51c6df4818753e75c586d52f4d8293a941a7",
+      "path": "LAB_ROOT/ops/output-guard-api-v1/FREEZE.json"
+    },
+    {
+      "bytes": 6950,
+      "original_sha256": "bb82c5781176b4e1e50120bc9e3b453ecfd14462492d41487a6bd9ff84170942",
+      "path": "LAB_ROOT/ops/output-guard-api-v1/HANDOFF.md"
+    },
+    {
+      "bytes": 937,
+      "original_sha256": "beccab85333e292fd213639b978008c40d7f6946a4cd04264afcd4db6673bd66",
+      "path": "LAB_ROOT/ops/output-guard-api-v1/INCLUSIVE_ENDPOINT.json"
+    },
+    {
+      "bytes": 6578,
+      "original_sha256": "30ff63d05a355f6e11e28fd155cf0a61c86e78bf70c7ab4ecb20ef485fb8a95d",
+      "path": "LAB_ROOT/ops/output-guard-api-v1/MANIFEST.json"
+    },
+    {
+      "bytes": 1451,
+      "original_sha256": "01fd6addafa84805414263f0d19ee63206ed199d0010f8b22b80371158bd6993",
+      "path": "LAB_ROOT/ops/output-guard-api-v1/TEST_RESULTS.txt"
+    },
+    {
+      "bytes": 688,
+      "original_sha256": "2fd6bebe56ee7741b8f8355aaac10516b25a89bddbb978a1677a5e24243d2939",
+      "path": "LAB_ROOT/ops/output-guard-api-v1/VERIFICATION.json"
+    },
+    {
+      "bytes": 17357,
+      "original_sha256": "f2f63bbfc7386186e51f79d00449fd0964821b1f0cb48e9d8d70b9ee7fe112b3",
+      "path": "LAB_ROOT/ops/output-guard-api-v1/ledger_output_guard_v1.py"
+    },
+    {
+      "bytes": 15480,
+      "original_sha256": "32147b0d4d7afd53b77e0286300c75d1affebee9b5a70c8165557310b423226f",
+      "path": "LAB_ROOT/ops/output-guard-api-v1/test_output_guard.py"
+    },
+    {
+      "bytes": 912,
+      "original_sha256": "22ee8062dbbdc6fb4caacb454cd755dfff64786d5242ca1fe96753cbf4794f9c",
+      "path": "LAB_ROOT/ops/output-guard-authority-v1/FREEZE.json"
+    },
+    {
+      "bytes": 10652,
+      "original_sha256": "cd8d23a1b568a3ff29c688e5a0abe7c94586148cc46d1f3f8c0b7ba4729f515d",
+      "path": "LAB_ROOT/ops/output-guard-authority-v1/REPORT.json"
+    },
+    {
+      "bytes": 3532,
+      "original_sha256": "ae934dd6f47bece32ff09a4979db338a39347af9257d68a333ac7452f22c0adb",
+      "path": "LAB_ROOT/ops/output-guard-authority-v1/REPORT.md"
+    },
+    {
+      "bytes": 4832,
+      "original_sha256": "f91e1a34dfb4b27a14c2da813e95d0a868ecc66172007f22397018a8991b7fe8",
+      "path": "LAB_ROOT/ops/output-guard-binding-review-v1/REVIEW.json"
+    },
+    {
+      "bytes": 5848,
+      "original_sha256": "14e6fb767f0281947619b5a160305c9c7e4106c0f7d32fbd3c9a24e2b86581d3",
+      "path": "LAB_ROOT/ops/output-guard-binding-v1/DEPENDENCIES.json"
+    },
+    {
+      "bytes": 9354,
+      "original_sha256": "3922d898b394843b3eeaf60a1511eb716b84417d8c05176ed1462600ce082547",
+      "path": "LAB_ROOT/ops/output-guard-binding-v1/FREEZE.json"
+    },
+    {
+      "bytes": 5696,
+      "original_sha256": "2e3d71e3de1fa8d7a7816ffefb38f6742d4a8cfd06dfce3f262f587abcf7ad8b",
+      "path": "LAB_ROOT/ops/output-guard-binding-v1/HANDOFF.md"
+    },
+    {
+      "bytes": 945,
+      "original_sha256": "c9ffd632c13d5e10905e8632e921b51c43351739739accb157e0471df6731bf2",
+      "path": "LAB_ROOT/ops/output-guard-binding-v1/INCLUSIVE_ENDPOINT.json"
+    },
+    {
+      "bytes": 13579,
+      "original_sha256": "076c3e418c4146d5485d9a8a097d912ec6542f0a67651c6cdbc3f63fefc8f83e",
+      "path": "LAB_ROOT/ops/output-guard-binding-v1/MANIFEST.json"
+    },
+    {
+      "bytes": 9616,
+      "original_sha256": "7ed8a855740337e106595559bf59e7c8919161dba081ef4030e53f169625e15a",
+      "path": "LAB_ROOT/ops/output-guard-binding-v1/PREDECESSOR_HANDOFF.md"
+    },
+    {
+      "bytes": 825,
+      "original_sha256": "94f040868feae9fae0c8d82b181d74e2de221da584005c2838290a6dfdb59a76",
+      "path": "LAB_ROOT/ops/output-guard-binding-v1/TEST_RESULTS.txt"
+    },
+    {
+      "bytes": 4339,
+      "original_sha256": "60d6add431ea278c27f56c58c0f936d54300d80824820feafce569cdaa576a03",
+      "path": "LAB_ROOT/ops/output-guard-binding-v1/VERIFICATION.json"
+    },
+    {
+      "bytes": 17233,
+      "original_sha256": "c322c9a80827391d69639ae72c47c1d055bacc0e3655b9d64f8459ec81d39ee3",
+      "path": "LAB_ROOT/ops/output-guard-binding-v1/control_binding.py"
+    },
+    {
+      "bytes": 27839,
+      "original_sha256": "4d7ae7a953551a539496b32b9a25dff4b533e447d8f353a4491643e543fb86d1",
+      "path": "LAB_ROOT/ops/output-guard-binding-v1/integrated-controller/SOURCE_FREEZE.json"
+    },
+    {
+      "bytes": 6425,
+      "original_sha256": "b35627e1bdbf914afb939a69959e6b09ac9bcbe5d54cd471d7319cbcf540f096",
+      "path": "LAB_ROOT/ops/output-guard-binding-v1/integrated-controller/case_supervisor.py"
+    },
+    {
+      "bytes": 13056,
+      "original_sha256": "a71b60c0cbb76b125863d46bdbeea41a42050a79db172e12324689425b7494d2",
+      "path": "LAB_ROOT/ops/output-guard-binding-v1/integrated-controller/common.py"
+    },
+    {
+      "bytes": 3590,
+      "original_sha256": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c",
+      "path": "LAB_ROOT/ops/output-guard-binding-v1/integrated-controller/external_case_close.py"
+    },
+    {
+      "bytes": 3512,
+      "original_sha256": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4",
+      "path": "LAB_ROOT/ops/output-guard-binding-v1/integrated-controller/external_stage_close.py"
+    },
+    {
+      "bytes": 4114,
+      "original_sha256": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea",
+      "path": "LAB_ROOT/ops/output-guard-binding-v1/integrated-controller/parent_receipt.py"
+    },
+    {
+      "bytes": 6296,
+      "original_sha256": "6f4f59862c963288eb0b514d8d943adfd6c7356681aded5c9b3b9fe45eb6a874",
+      "path": "LAB_ROOT/ops/output-guard-binding-v1/integrated-controller/rolling.py"
+    },
+    {
+      "bytes": 12965,
+      "original_sha256": "ba3b13cd1209fd086ecd96e24d776deda92824063fc216cd7796e7b299ffb8cc",
+      "path": "LAB_ROOT/ops/output-guard-binding-v1/integrated-controller/stage_actor.py"
+    },
+    {
+      "bytes": 7249,
+      "original_sha256": "077a061320498c801a00935ace791804dfde1c18dbfe0b85e3b0ed6cd6399827",
+      "path": "LAB_ROOT/ops/output-guard-binding-v1/recovery-control.json"
+    },
+    {
+      "bytes": 9432,
+      "original_sha256": "c7ddabcede82d9317aba2080807c8b5564b86dd58de220eaea38cac794df573b",
+      "path": "LAB_ROOT/ops/output-guard-binding-v1/test_binding.py"
+    },
+    {
+      "bytes": 6064,
+      "original_sha256": "e2f79dc08e507503613d5a7476e32c84a3c681967aa7b3bbbfe8544fecde6fd8",
+      "path": "LAB_ROOT/ops/output-guard-binding-v2/DEPENDENCIES.json"
+    },
+    {
+      "bytes": 9616,
+      "original_sha256": "3a45e202be2be41cfaab735ad18ea0c534ca3917759cfc8ff3bb7034f5f2ab82",
+      "path": "LAB_ROOT/ops/output-guard-binding-v2/FREEZE.json"
+    },
+    {
+      "bytes": 6440,
+      "original_sha256": "8922b67a4cefc23baea9724da65378fba4ba20e5a59b9a5ab6104a6aea40f437",
+      "path": "LAB_ROOT/ops/output-guard-binding-v2/HANDOFF.md"
+    },
+    {
+      "bytes": 989,
+      "original_sha256": "da82c76f59ab9acada1f9e8886fd703f164280fff08ca1a0e753e6c6b9e72414",
+      "path": "LAB_ROOT/ops/output-guard-binding-v2/INCLUSIVE_ENDPOINT.json"
+    },
+    {
+      "bytes": 13894,
+      "original_sha256": "8793c04bd222313691cf41eda060d9f5baa8640806ce38f25e7bba0daf29cb1d",
+      "path": "LAB_ROOT/ops/output-guard-binding-v2/MANIFEST.json"
+    },
+    {
+      "bytes": 750,
+      "original_sha256": "401abc3170392b4514de7bbd90bb824bfd0bc6896680cb01b7e764c8661b1cc7",
+      "path": "LAB_ROOT/ops/output-guard-binding-v2/TEST_RESULTS.txt"
+    },
+    {
+      "bytes": 747,
+      "original_sha256": "aab4efb7015be2833411f220f42b5e99c53910999f9b3230afa0178c1db8b7bc",
+      "path": "LAB_ROOT/ops/output-guard-binding-v2/VERIFICATION.json"
+    },
+    {
+      "bytes": 17233,
+      "original_sha256": "6e63298aa4611ed660be7d1125a0ba48e818193720fd0eed7dccaee09afe23c3",
+      "path": "LAB_ROOT/ops/output-guard-binding-v2/control_binding.py"
+    },
+    {
+      "bytes": 30351,
+      "original_sha256": "0a8fcb5855a59635570568dbf7be9cf2df29adf232b806851db11656138d6a40",
+      "path": "LAB_ROOT/ops/output-guard-binding-v2/integrated-controller/SOURCE_FREEZE.json"
+    },
+    {
+      "bytes": 6425,
+      "original_sha256": "b35627e1bdbf914afb939a69959e6b09ac9bcbe5d54cd471d7319cbcf540f096",
+      "path": "LAB_ROOT/ops/output-guard-binding-v2/integrated-controller/case_supervisor.py"
+    },
+    {
+      "bytes": 13056,
+      "original_sha256": "a71b60c0cbb76b125863d46bdbeea41a42050a79db172e12324689425b7494d2",
+      "path": "LAB_ROOT/ops/output-guard-binding-v2/integrated-controller/common.py"
+    },
+    {
+      "bytes": 3590,
+      "original_sha256": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c",
+      "path": "LAB_ROOT/ops/output-guard-binding-v2/integrated-controller/external_case_close.py"
+    },
+    {
+      "bytes": 3512,
+      "original_sha256": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4",
+      "path": "LAB_ROOT/ops/output-guard-binding-v2/integrated-controller/external_stage_close.py"
+    },
+    {
+      "bytes": 4114,
+      "original_sha256": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea",
+      "path": "LAB_ROOT/ops/output-guard-binding-v2/integrated-controller/parent_receipt.py"
+    },
+    {
+      "bytes": 6296,
+      "original_sha256": "6f4f59862c963288eb0b514d8d943adfd6c7356681aded5c9b3b9fe45eb6a874",
+      "path": "LAB_ROOT/ops/output-guard-binding-v2/integrated-controller/rolling.py"
+    },
+    {
+      "bytes": 12965,
+      "original_sha256": "ba3b13cd1209fd086ecd96e24d776deda92824063fc216cd7796e7b299ffb8cc",
+      "path": "LAB_ROOT/ops/output-guard-binding-v2/integrated-controller/stage_actor.py"
+    },
+    {
+      "bytes": 8147,
+      "original_sha256": "094d8ddc2aa6393de87041b1f99e492f627a63c93f57d80bf1cdadad206eab0a",
+      "path": "LAB_ROOT/ops/output-guard-binding-v2/recovery-control.json"
+    },
+    {
+      "bytes": 5274,
+      "original_sha256": "d77a37e058f77b64f3bf0de0d08eb739e2f7e5fc6971157fd00d849e884e5d21",
+      "path": "LAB_ROOT/ops/output-guard-binding-v2/test_binding_v2.py"
+    },
+    {
+      "bytes": 16453,
+      "original_sha256": "ac6a9eac2bd939b660814f23ce1c97b2049ccfabb1a510a1bcd7473223f06987",
+      "path": "LAB_ROOT/ops/output-guard-review-v1/REPORT.json"
+    },
+    {
+      "bytes": 3807,
+      "original_sha256": "9726d756b8fc4e3b4a92b2a9ded46d97ee0a1da7e0e8d87718995aa3cbd1528f",
+      "path": "LAB_ROOT/ops/output-guard-review-v1/REVIEW.json"
+    },
+    {
+      "bytes": 3010,
+      "original_sha256": "19f2cf73f561e375ae56e8837f2ed4f177b2b7bf0388d359f7ebf63d2c107e68",
+      "path": "LAB_ROOT/ops/output-guard-review-v1/VERIFICATION.json"
+    },
+    {
+      "bytes": 17594,
+      "original_sha256": "0df9d5c7d4119c85934f40809cee320e2185bfb3bf751c6684e81f7f8cb9ec5a",
+      "path": "LAB_ROOT/ops/recovery-v1/ATTEMPT_BIO_COND_OUTPUT_GUARD_SOURCE_INTERFACE_V1.json"
+    },
+    {
+      "bytes": 6060,
+      "original_sha256": "e69a2b7ceca9e6744d5231b827fa39892db4470880eae27e3fe025776f7c4007",
+      "path": "LAB_ROOT/ops/recovery-v1/ATTEMPT_BIO_COND_REQUEST_V1.json"
+    },
+    {
+      "bytes": 911,
+      "original_sha256": "4ee2ef7840d6bee699a3ba96789f7c4151ba03b8aca6a5ad83f6344f020b8728",
+      "path": "LAB_ROOT/ops/recovery-v1/ATTEMPT_BIO_COND_REQUEST_V1_HOLD.json"
+    },
+    {
+      "bytes": 6076,
+      "original_sha256": "261a5b4f620993109b5eabe7b15b975d2fb1a4d08078beb2d2552be0d686b230",
+      "path": "LAB_ROOT/ops/recovery-v1/ATTEMPT_BIO_COND_REQUEST_V2.json"
+    },
+    {
+      "bytes": 12676,
+      "original_sha256": "beec5de5e28f2241fc7e1b0e3ca637a403da24af4716e2a4dfa65db3b2a1a0b0",
+      "path": "LAB_ROOT/ops/recovery-v1/ATTEMPT_BIO_COND_RESERVATION_ROOT_RECEIPT_V2.json"
+    },
+    {
+      "bytes": 1112,
+      "original_sha256": "0b8a06932f59e0cdc4151eacf0a699ca56e9d2ecb702b1daa70f822dc601fb22",
+      "path": "LAB_ROOT/ops/recovery-v1/OUTPUT_GUARD_CONTROL_BINDING_ACCEPTANCE_V1.json"
+    },
+    {
+      "bytes": 1047,
+      "original_sha256": "5ec1899590c38aa3275946c27e13c75fceae98ebf6fa272d42e5cfa9abd0657e",
+      "path": "LAB_ROOT/ops/recovery-v1/OUTPUT_GUARD_CURRENT_QUIET_V1.json"
+    },
+    {
+      "bytes": 34331,
+      "original_sha256": "babf1709a70870f988a739dc090f9dafa34ced67d4bc51b5e1cf89590f2667af",
+      "path": "LAB_ROOT/ops/recovery-v1/OUTPUT_GUARD_EXECUTION_CURRENT_VERIFICATION_V1.json"
+    },
+    {
+      "bytes": 31849,
+      "original_sha256": "7ad1bc5215b420e440a250241bef573f02a10bbf62b050e4b98a60d7dc93623c",
+      "path": "LAB_ROOT/ops/recovery-v1/OUTPUT_GUARD_EXECUTION_CURRENT_VERIFICATION_V2.json"
+    },
+    {
+      "bytes": 9444,
+      "original_sha256": "40e345c30086d3b881e036e22d2798dc16e347e627a9fc404b8f860204624fa0",
+      "path": "LAB_ROOT/ops/recovery-v1/OUTPUT_GUARD_INSTALL_RECEIPT_V1.json"
+    },
+    {
+      "bytes": 1018,
+      "original_sha256": "ff790cd785ccf178c7ba2f6041088905e39ed8d7a8549055a9cd818b6aeb9799",
+      "path": "LAB_ROOT/ops/recovery-v1/OUTPUT_GUARD_INSTALL_REQUEST_V1.json"
+    },
+    {
+      "bytes": 1457,
+      "original_sha256": "590d860b50b569c665d8f7d1f1eabefbe579bbd49bd1025df36b2e00c519d101",
+      "path": "LAB_ROOT/ops/recovery-v1/OUTPUT_GUARD_RELEASE_V10_PREFLIGHT_HOLD.json"
+    },
+    {
+      "bytes": 4293,
+      "original_sha256": "652ce088322d13d84b60544ce82b86ae993b2e62586d88d599bcbb300a624808",
+      "path": "LAB_ROOT/ops/recovery-v1/OUTPUT_GUARD_REVIEW_ROOT_PRESERVATION_V1.json"
+    },
+    {
+      "bytes": 3076,
+      "original_sha256": "2f25c97b0cd79aa3f9b302479fab78f7828d92772271bdf7fe4b3811c7147507",
+      "path": "LAB_ROOT/ops/recovery-v1/OUTPUT_GUARD_ROOT_AUTHORITY_V1.json"
+    },
+    {
+      "bytes": 1573,
+      "original_sha256": "4a8ca71bd37a97260c1108a6e8d37643a69ae8919a651ec5b1019e244eaa5c36",
+      "path": "LAB_ROOT/ops/recovery-v1/OUTPUT_GUARD_SOURCE_ACCEPTANCE_V1.json"
+    }
+  ],
+  "public_files": [
+    {
+      "path": "CHECKER_RECEIPT.json",
+      "sha256": "799b4cc12cd42a63525138d303e620a7e2d7b2e8cdcb0d2307d3e1aa54422296"
+    },
+    {
+      "path": "PUBLIC_EXPORT.json",
+      "sha256": "b724d2bbc52a0a10a1bbc2321c9aeb921b1dc799578a83b955195e8ed148c819"
+    },
+    {
+      "path": "README.md",
+      "sha256": "b3c33ffc96ac693337c120315d96a43b81ff64bc12f912512a15ea0e05a2497b"
+    },
+    {
+      "path": "source/ops/output-guard-api-v1/FREEZE.json",
+      "sha256": "78cf23f735e7e26480630f7332159e8b76a7f0f3acc8ebb7ce3c912f3aaf5040"
+    },
+    {
+      "path": "source/ops/output-guard-api-v1/HANDOFF.md",
+      "sha256": "d3103df35311c232539e40e1623109d5186ab2280326c3dd8fd38933a1224661"
+    },
+    {
+      "path": "source/ops/output-guard-api-v1/INCLUSIVE_ENDPOINT.json",
+      "sha256": "fc479ca513dfb10c2661ae2e572125ab2320c5aa7ae9d125faafd1017afb555c"
+    },
+    {
+      "path": "source/ops/output-guard-api-v1/MANIFEST.json",
+      "sha256": "135433d22eb2f24d6e1c7c16a4571d36631a7806b9104bea8ca485b08ad9ec76"
+    },
+    {
+      "path": "source/ops/output-guard-api-v1/TEST_RESULTS.txt",
+      "sha256": "01fd6addafa84805414263f0d19ee63206ed199d0010f8b22b80371158bd6993"
+    },
+    {
+      "path": "source/ops/output-guard-api-v1/VERIFICATION.json",
+      "sha256": "276f710c786b70a6334b9411e3db3d2ffb49f0a07f6154e89ac40703f96eafe1"
+    },
+    {
+      "path": "source/ops/output-guard-api-v1/ledger_output_guard_v1.py",
+      "sha256": "2c7b90456a22381e678cc051879b9cbc35c3b6e537065ef97173a5ca2500b4f1"
+    },
+    {
+      "path": "source/ops/output-guard-api-v1/test_output_guard.py",
+      "sha256": "32147b0d4d7afd53b77e0286300c75d1affebee9b5a70c8165557310b423226f"
+    },
+    {
+      "path": "source/ops/output-guard-authority-v1/FREEZE.json",
+      "sha256": "04c1548ac0dd5a6a3fdfc595907584cdac13b4383119869fa781c803fced296d"
+    },
+    {
+      "path": "source/ops/output-guard-authority-v1/REPORT.json",
+      "sha256": "d739a2d78b3a12fbe08c7bab7a20d325d76ad4a4cb3963ac1a46b15cc3ce97d9"
+    },
+    {
+      "path": "source/ops/output-guard-authority-v1/REPORT.md",
+      "sha256": "ae934dd6f47bece32ff09a4979db338a39347af9257d68a333ac7452f22c0adb"
+    },
+    {
+      "path": "source/ops/output-guard-binding-review-v1/REVIEW.json",
+      "sha256": "e666a1b62a21fb0d63dc2e2a9397604de8e13680375011b92773a9b63df3ff09"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v1/DEPENDENCIES.json",
+      "sha256": "2909d8fedbb2bb8bda88236f93743f4fa62e438ea3638060c8e9b86d14aa3356"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v1/FREEZE.json",
+      "sha256": "cd6000ed83c71c13f77cd6bc7dad764a99ff904c76f2459eff27452bc023bc36"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v1/HANDOFF.md",
+      "sha256": "2e3d71e3de1fa8d7a7816ffefb38f6742d4a8cfd06dfce3f262f587abcf7ad8b"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v1/INCLUSIVE_ENDPOINT.json",
+      "sha256": "5262f3dc2f959661f9bba74bdae4dfd9d1e7f684ada13752f6700fbebe2aff96"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v1/MANIFEST.json",
+      "sha256": "1c58f27338dc599dd336be90f7871427a0eec0689dbdebaf0e4de8ea4ef456c1"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v1/PREDECESSOR_HANDOFF.md",
+      "sha256": "b0d11e354e7e8fff9ba4a584d36e9594744ea94951688674246bdc3291960931"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v1/TEST_RESULTS.txt",
+      "sha256": "94f040868feae9fae0c8d82b181d74e2de221da584005c2838290a6dfdb59a76"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v1/VERIFICATION.json",
+      "sha256": "d2dbd4fc9057b7321f70cf68197ec4924b231a559093fdbc5f1fa0bea4ffc4e6"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v1/control_binding.py",
+      "sha256": "c322c9a80827391d69639ae72c47c1d055bacc0e3655b9d64f8459ec81d39ee3"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v1/integrated-controller/SOURCE_FREEZE.json",
+      "sha256": "ce060e56069f59c1a3917040cee16fab8b858fe6918ec952dec00cf05ceed133"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v1/integrated-controller/case_supervisor.py",
+      "sha256": "6408b3b9bd805cdc81e72ce480130d6e368e14c35da1e286fd546f456fd71589"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v1/integrated-controller/common.py",
+      "sha256": "aab93bc965fa757bcd52f70d2a51a0f8cc2b436085f07072b20ada1b987d18a7"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v1/integrated-controller/external_case_close.py",
+      "sha256": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v1/integrated-controller/external_stage_close.py",
+      "sha256": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v1/integrated-controller/parent_receipt.py",
+      "sha256": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v1/integrated-controller/rolling.py",
+      "sha256": "6f4f59862c963288eb0b514d8d943adfd6c7356681aded5c9b3b9fe45eb6a874"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v1/integrated-controller/stage_actor.py",
+      "sha256": "46da1fe78b966e39a059b87940a677b1a68f58f575a6da11a3b698ee694c9814"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v1/recovery-control.json",
+      "sha256": "ed3908ad2c29af186fe7caa803a6beae90f614ad1b3cf564a1c0eccde015cd59"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v1/test_binding.py",
+      "sha256": "c7ddabcede82d9317aba2080807c8b5564b86dd58de220eaea38cac794df573b"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v2/DEPENDENCIES.json",
+      "sha256": "fa1afbfe3af4365885be8931011e701fc8c9e00fc8933c636341c93046d8eb32"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v2/FREEZE.json",
+      "sha256": "89588623439d16ea434878cd3e8b365f5dd916926ee6af3f7039e527f1551218"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v2/HANDOFF.md",
+      "sha256": "894a76bb3f4258616176227a0925c14554318f576cb862258f2258295d56f3b8"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v2/INCLUSIVE_ENDPOINT.json",
+      "sha256": "fb5bc414a5cbb528eeaf42cd3193b2c371522c61c0cfe0d80289cbe2b7fc774b"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v2/MANIFEST.json",
+      "sha256": "aca11aaeb9f5f93a5cc3c01935f4d2f0c12aeebd62a76a1d9fed41cd10d763d3"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v2/TEST_RESULTS.txt",
+      "sha256": "401abc3170392b4514de7bbd90bb824bfd0bc6896680cb01b7e764c8661b1cc7"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v2/VERIFICATION.json",
+      "sha256": "40fcf68cfc35bf62113190faa6e35ef053a6afea33e144b53691101df5488517"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v2/control_binding.py",
+      "sha256": "6e63298aa4611ed660be7d1125a0ba48e818193720fd0eed7dccaee09afe23c3"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v2/integrated-controller/SOURCE_FREEZE.json",
+      "sha256": "4303234423e13d8b6c6f7016f9600dba1167b865764eeb065cf4b081813c182a"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v2/integrated-controller/case_supervisor.py",
+      "sha256": "6408b3b9bd805cdc81e72ce480130d6e368e14c35da1e286fd546f456fd71589"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v2/integrated-controller/common.py",
+      "sha256": "aab93bc965fa757bcd52f70d2a51a0f8cc2b436085f07072b20ada1b987d18a7"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v2/integrated-controller/external_case_close.py",
+      "sha256": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v2/integrated-controller/external_stage_close.py",
+      "sha256": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v2/integrated-controller/parent_receipt.py",
+      "sha256": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v2/integrated-controller/rolling.py",
+      "sha256": "6f4f59862c963288eb0b514d8d943adfd6c7356681aded5c9b3b9fe45eb6a874"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v2/integrated-controller/stage_actor.py",
+      "sha256": "46da1fe78b966e39a059b87940a677b1a68f58f575a6da11a3b698ee694c9814"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v2/recovery-control.json",
+      "sha256": "e6feeb0ae56e2a75fa29b7a7a403178ffe370f73114b73f04cc11484f435aefd"
+    },
+    {
+      "path": "source/ops/output-guard-binding-v2/test_binding_v2.py",
+      "sha256": "d77a37e058f77b64f3bf0de0d08eb739e2f7e5fc6971157fd00d849e884e5d21"
+    },
+    {
+      "path": "source/ops/output-guard-review-v1/REPORT.json",
+      "sha256": "41830180e52ffe2fb0623cdeae1b383972ded838a3ce92147c743446d6826c1f"
+    },
+    {
+      "path": "source/ops/output-guard-review-v1/REVIEW.json",
+      "sha256": "b25451ce6e8c232a0e7748ecf09230513fb7de150bf0d2d3b0ca08ccf8e9cfb5"
+    },
+    {
+      "path": "source/ops/output-guard-review-v1/VERIFICATION.json",
+      "sha256": "b70d8a80fd4babdceac63e98b5f3741f5aad622bd129d13bbe14d027d3e4dcb1"
+    },
+    {
+      "path": "source/ops/recovery-v1/ATTEMPT_BIO_COND_OUTPUT_GUARD_SOURCE_INTERFACE_V1.json",
+      "sha256": "1bd100af10a1805141f6482a6037ee2d47c1c46d0e0296eb552a856cbff4332b"
+    },
+    {
+      "path": "source/ops/recovery-v1/ATTEMPT_BIO_COND_REQUEST_V1.json",
+      "sha256": "99ab383e085c89f81d85822a7f230868104fdb223ae24471c3c5ff74fc280371"
+    },
+    {
+      "path": "source/ops/recovery-v1/ATTEMPT_BIO_COND_REQUEST_V1_HOLD.json",
+      "sha256": "4bf14e4a019def696fe4933fec40d54e5b944a3708f4eda3deb8f0374dc4e5d7"
+    },
+    {
+      "path": "source/ops/recovery-v1/ATTEMPT_BIO_COND_REQUEST_V2.json",
+      "sha256": "27fc63b6a56e7a3920e32a0b14ac1e4dd18b0a09cc7a9af2f966c26b1fde4b40"
+    },
+    {
+      "path": "source/ops/recovery-v1/ATTEMPT_BIO_COND_RESERVATION_ROOT_RECEIPT_V2.json",
+      "sha256": "556d7893b4ac9136ab986b756ff8bceb17de3256d5f2541f8d7e5a374b1475db"
+    },
+    {
+      "path": "source/ops/recovery-v1/OUTPUT_GUARD_CONTROL_BINDING_ACCEPTANCE_V1.json",
+      "sha256": "99e0170a3e0a99bb62cfef6c11f9fc6bf8081d0ff24b891f2c7a5c4269caa06a"
+    },
+    {
+      "path": "source/ops/recovery-v1/OUTPUT_GUARD_CURRENT_QUIET_V1.json",
+      "sha256": "e486f4b74857b7042903c9b01133fd5217249f3542a69f41b8f1ef24dc35c1c7"
+    },
+    {
+      "path": "source/ops/recovery-v1/OUTPUT_GUARD_EXECUTION_CURRENT_VERIFICATION_V1.json",
+      "sha256": "aa60ed0afc7dc0063bbc286820bf49be00073d6ac4b472530958c2d9d2b67dbb"
+    },
+    {
+      "path": "source/ops/recovery-v1/OUTPUT_GUARD_EXECUTION_CURRENT_VERIFICATION_V2.json",
+      "sha256": "25145c4be4a63a5e0f491f1166e91b69b5113f593aa8d9527a00351f8ecfbc5d"
+    },
+    {
+      "path": "source/ops/recovery-v1/OUTPUT_GUARD_INSTALL_RECEIPT_V1.json",
+      "sha256": "7368249e80d6591d7db202d1a5e381705a86e1dced71c36981a11c6f519ad3a6"
+    },
+    {
+      "path": "source/ops/recovery-v1/OUTPUT_GUARD_INSTALL_REQUEST_V1.json",
+      "sha256": "475f73f881de49cf2c8081377f1b4a920c2a5fb9b0c716850482e31c96423886"
+    },
+    {
+      "path": "source/ops/recovery-v1/OUTPUT_GUARD_RELEASE_V10_PREFLIGHT_HOLD.json",
+      "sha256": "da49e06f64aa7fcc902dac774c0bf8cfac8b2b47e5f8620eae3762433e9caee8"
+    },
+    {
+      "path": "source/ops/recovery-v1/OUTPUT_GUARD_REVIEW_ROOT_PRESERVATION_V1.json",
+      "sha256": "05464bf0673a587a375c9bf327b85ceed17bffce7669be7d63bbd5b45c940316"
+    },
+    {
+      "path": "source/ops/recovery-v1/OUTPUT_GUARD_ROOT_AUTHORITY_V1.json",
+      "sha256": "04968cbfdb04207cbec558e6a5c27f0d17e8ad883a3a5bbadc0de87ed2da60be"
+    },
+    {
+      "path": "source/ops/recovery-v1/OUTPUT_GUARD_SOURCE_ACCEPTANCE_V1.json",
+      "sha256": "f2779c7fdcf9c0aa276a66858c43c31871ef3f8ac632dbc9ca87d18f659f6f41"
+    },
+    {
+      "path": "verify_public.py",
+      "sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd"
+    }
+  ],
+  "root_input_inventory_sha256": "682a368bb19b6f2743e74e851639fd94af6a98fee70b70f004fcf32ea8d3226c",
+  "schema": "pm.er8.output-guard-public-hash-manifest.v1",
+  "source_projections": "NONPORTABLE"
+}

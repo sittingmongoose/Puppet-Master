@@ -1,0 +1,49 @@
+{
+  "all_passed": true,
+  "auth_free_AST_and_metadata_only": true,
+  "author_owned_files_checked": {
+    "output-guard-api-v1": 5,
+    "output-guard-binding-v1": 16
+  },
+  "author_tests": 15,
+  "blocked_prohibited_operations": 0,
+  "findings_report": {
+    "path": "LAB_ROOT/ops/output-guard-review-v1/REPORT.json",
+    "sha256": "ac6a9eac2bd939b660814f23ce1c97b2049ccfabb1a510a1bcd7473223f06987"
+  },
+  "fixture_source": {
+    "path": "LAB_ROOT/ops/output-guard-review-v1/review_tests.py",
+    "sha256": "c5c7d391413e613afa71330070c8b32dbbd2a34beac27449444983a4dc3f5643"
+  },
+  "frozen_inputs_sha256": {
+    "LAB_ROOT/ops/output-guard-api-v1/FREEZE.json": "8621338279360fc29ae529019c9c51c6df4818753e75c586d52f4d8293a941a7",
+    "LAB_ROOT/ops/output-guard-api-v1/MANIFEST.json": "30ff63d05a355f6e11e28fd155cf0a61c86e78bf70c7ab4ecb20ef485fb8a95d",
+    "LAB_ROOT/ops/output-guard-api-v1/ledger_output_guard_v1.py": "f2f63bbfc7386186e51f79d00449fd0964821b1f0cb48e9d8d70b9ee7fe112b3",
+    "LAB_ROOT/ops/output-guard-binding-v1/FREEZE.json": "3922d898b394843b3eeaf60a1511eb716b84417d8c05176ed1462600ce082547",
+    "LAB_ROOT/ops/output-guard-binding-v1/MANIFEST.json": "076c3e418c4146d5485d9a8a097d912ec6542f0a67651c6cdbc3f63fefc8f83e",
+    "LAB_ROOT/ops/output-guard-binding-v1/control_binding.py": "c322c9a80827391d69639ae72c47c1d055bacc0e3655b9d64f8459ec81d39ee3",
+    "LAB_ROOT/ops/output-guard-binding-v1/integrated-controller/SOURCE_FREEZE.json": "4d7ae7a953551a539496b32b9a25dff4b533e447d8f353a4491643e543fb86d1",
+    "LAB_ROOT/ops/output-guard-binding-v1/recovery-control.json": "077a061320498c801a00935ace791804dfde1c18dbfe0b85e3b0ed6cd6399827"
+  },
+  "independent_adversarial_tests": 11,
+  "no_author_source_edits": true,
+  "schema": "pm.er8.output-guard-independent-verification.v1",
+  "scoped_dependencies_checked": {
+    "output-guard-api-v1": 17,
+    "output-guard-binding-v1": 28
+  },
+  "six_byte_identical_modules": [
+    "rolling.py",
+    "case_supervisor.py",
+    "stage_actor.py",
+    "external_stage_close.py",
+    "external_case_close.py",
+    "parent_receipt.py"
+  ],
+  "test_results": {
+    "path": "LAB_ROOT/ops/output-guard-review-v1/TEST_RESULTS.txt",
+    "sha256": "c58cf9852302467ee98adf95af6cf4debff164ccc3057c93dd06d72cb7945275"
+  },
+  "tests_run": 26,
+  "verified_epoch": 1791006568.898536
+}

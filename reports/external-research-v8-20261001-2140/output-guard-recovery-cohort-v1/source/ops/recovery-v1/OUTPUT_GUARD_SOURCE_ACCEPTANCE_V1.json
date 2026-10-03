@@ -1,0 +1,28 @@
+{
+  "accepted": true,
+  "accepted_epoch": 1791006922.7987013,
+  "authority": {
+    "path": "LAB_ROOT/ops/recovery-v1/OUTPUT_GUARD_ROOT_AUTHORITY_V1.json",
+    "sha256": "2f25c97b0cd79aa3f9b302479fab78f7828d92772271bdf7fe4b3811c7147507"
+  },
+  "independent_review": {
+    "path": "LAB_ROOT/ops/output-guard-review-v1/REVIEW.json",
+    "sha256": "9726d756b8fc4e3b4a92b2a9ded46d97ee0a1da7e0e8d87718995aa3cbd1528f"
+  },
+  "independent_source_review_accepted": true,
+  "qualification": "SOURCE_VALIDITY_ONLY; 26 auth-freefixtures, no actualnative/liveinstall proof. FullreviewhelperLATE_HOLDandunknownend preserved separately.",
+  "review_timing_preservation": {
+    "path": "LAB_ROOT/ops/recovery-v1/OUTPUT_GUARD_REVIEW_ROOT_PRESERVATION_V1.json",
+    "sha256": "652ce088322d13d84b60544ce82b86ae993b2e62586d88d599bcbb300a624808"
+  },
+  "root_authority": true,
+  "schema": "pm.er8.output-guard-source-acceptance.v1",
+  "source": {
+    "path": "LAB_ROOT/ops/output-guard-api-v1/ledger_output_guard_v1.py",
+    "sha256": "f2f63bbfc7386186e51f79d00449fd0964821b1f0cb48e9d8d70b9ee7fe112b3"
+  },
+  "source_manifest": {
+    "path": "LAB_ROOT/ops/output-guard-api-v1/MANIFEST.json",
+    "sha256": "30ff63d05a355f6e11e28fd155cf0a61c86e78bf70c7ab4ecb20ef485fb8a95d"
+  }
+}

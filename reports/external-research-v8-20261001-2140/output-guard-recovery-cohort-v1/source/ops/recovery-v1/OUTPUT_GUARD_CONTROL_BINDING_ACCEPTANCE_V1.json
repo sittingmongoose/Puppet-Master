@@ -1,0 +1,19 @@
+{
+  "accepted": true,
+  "accepted_epoch": 1791006922.7990208,
+  "control": {
+    "path": "LAB_ROOT/ops/output-guard-binding-v1/recovery-control.json",
+    "sha256": "077a061320498c801a00935ace791804dfde1c18dbfe0b85e3b0ed6cd6399827"
+  },
+  "controller_snapshot": {
+    "path": "LAB_ROOT/ops/output-guard-binding-v1/integrated-controller/SOURCE_FREEZE.json",
+    "sha256": "4d7ae7a953551a539496b32b9a25dff4b533e447d8f353a4491643e543fb86d1"
+  },
+  "independent_review": {
+    "path": "LAB_ROOT/ops/output-guard-binding-review-v1/REVIEW.json",
+    "sha256": "f91e1a34dfb4b27a14c2da813e95d0a868ecc66172007f22397018a8991b7fe8"
+  },
+  "qualification": "SOURCE_BINDING_ONLY; sixunchangedactors,26combinedauthfreefixtures; currentquiet/actualinstall/resourcefit/nativepreflight stillroot prerequisites; helperlatefulltail preserved.",
+  "root_authority": true,
+  "schema": "pm.er8.output-guard-control-binding-root-acceptance.v1"
+}

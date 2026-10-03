@@ -1,0 +1,52 @@
+{
+  "apply_scope": "Future newly born jobs/cases only after explicit reviewed once-only installation; zero active jobs and pending permits required. Old admitted jobs, stopped/denied V9 and prior authority freezes stay unchanged.",
+  "campaign_id": "external-research-v8-20261001-2140",
+  "governing_user_envelope": {
+    "accounts": "existing authorized subscriptions only",
+    "active_helpers": 12,
+    "active_per_family": {
+      "L": 2,
+      "M": 2,
+      "Z": 2
+    },
+    "deadline_epoch": 1791013030.8303788,
+    "explicit_user_pause_seconds": 64621.83037877083,
+    "native_goal_starts": 144,
+    "occupied_candidate_slot_seconds": 172800,
+    "original_start_epoch": 1790905209
+  },
+  "handoff_sha256": "4904d27b98fa94300e30962170abbb80dd0fdd08772c5d5d4cb8758183fffac5",
+  "independent_authority_assessment": {
+    "path": "LAB_ROOT/ops/output-guard-authority-v1/REPORT.json",
+    "qualification": "Permits deliberate finite prospective amendment; does not endorse a specific replacement number or certify live safety.",
+    "sha256": "cd8d23a1b568a3ff29c688e5a0abe7c94586148cc46d1f3f8c0b7ba4729f515d"
+  },
+  "installation": "SOURCE_ONLY_AUTHORITY; no live guard install/reservation/native start in this record",
+  "new_stop": 2000000,
+  "new_warning": 1200000,
+  "preservation": [
+    "No new campaign or budget reset",
+    "Every prior usage, attempt, admission, start, outcome, reservation, birth and cap retained",
+    "Missing tokens, actual consumption and money remainUNKNOWN; monotonic lowerbound may overshoot after active-stage charging",
+    "Other governing limits/routes/config/auth/SDK/candidate models unchanged",
+    "No active-stage limit increase or retry of a denied old identity"
+  ],
+  "prior_authorization_sha256": "25609fc787d622958fd62afa5df218a1e4789f61595a4152865ceb0c143304f2",
+  "prior_stop": 1500000,
+  "prior_stop_and_terminal_evidence": {
+    "active_jobs": [],
+    "native_starts": 59,
+    "occupied_seconds": 44208.342301130295,
+    "output_lower_bound": 1508391,
+    "path": "LAB_ROOT/ops/s8-terminal-observation-v2/REPORT.json",
+    "pending_start_permits": 0,
+    "prior_candidate_output_stop": true,
+    "sha256": "26c46353a04277b2e4ec2786214ecaa91e689900bf95f9ff61d07f30e6a7d525"
+  },
+  "prior_warning": 1200000,
+  "root_authority": true,
+  "schema": "pm.er8.prospective-output-guard-root-authority.v1",
+  "selected_epoch": 1791005221.8461177,
+  "selected_finite_guard_reason": "Permit another substantive previously declared whole pair under remaining original clock and protected pipeline/evaluation reservations. Additional lower-bound headroom is491609 at selection. Not a spending target or full-consumption meter.",
+  "source_user_authority": "Existing /goal execution takeover plus supplied ER8_RESTART_HANDOFF.md sections3,5,8; autonomous engineering choices under original campaign envelope. This is a deliberate prospective operator selection, not a newly attributed user token ceiling."
+}

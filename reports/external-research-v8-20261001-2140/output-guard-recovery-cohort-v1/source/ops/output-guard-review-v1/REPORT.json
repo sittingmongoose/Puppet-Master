@@ -1,0 +1,166 @@
+{
+  "Git_canon_actions": 0,
+  "all63_subsets": true,
+  "api_source_accepted": true,
+  "auth_sdk_native_provider_actions": 0,
+  "author_api_tests": 10,
+  "author_binder_tests": 5,
+  "author_owned_files_checked": {
+    "output-guard-api-v1": 5,
+    "output-guard-binding-v1": 16
+  },
+  "author_source_changes": 0,
+  "authority": {
+    "path": "LAB_ROOT/ops/recovery-v1/OUTPUT_GUARD_ROOT_AUTHORITY_V1.json",
+    "sha256": "2f25c97b0cd79aa3f9b302479fab78f7828d92772271bdf7fe4b3811c7147507"
+  },
+  "authority_assessment": {
+    "path": "LAB_ROOT/ops/output-guard-authority-v1/REPORT.json",
+    "sha256": "cd8d23a1b568a3ff29c688e5a0abe7c94586148cc46d1f3f8c0b7ba4729f515d"
+  },
+  "binder_source_accepted": true,
+  "blocking_findings": [],
+  "control": {
+    "path": "LAB_ROOT/ops/output-guard-binding-v1/recovery-control.json",
+    "sha256": "077a061320498c801a00935ace791804dfde1c18dbfe0b85e3b0ed6cd6399827"
+  },
+  "controller_snapshot": {
+    "path": "LAB_ROOT/ops/output-guard-binding-v1/integrated-controller/SOURCE_FREEZE.json",
+    "sha256": "4d7ae7a953551a539496b32b9a25dff4b533e447d8f353a4491643e543fb86d1"
+  },
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "support",
+      "text": "Explicit once-only install requires exact reviewed source/manifest/root authority pins and helper12 receipt; accepted time, open original finite campaign, positive current execution quiet, original resource headroom and cumulative LB below2000000 are required. Duplicate, closed, expired, active, pending, nonfinite and overbudget requests fail without state mutation."
+    },
+    {
+      "id": "F2",
+      "severity": "support",
+      "text": "Quiet metadata binds canonical full stable preinstall state, exact execution scope and seven literal positive assertions. Observation age60 seconds is inclusive; stale, future, boolean time, wrong scope/digest and nonliteral assertions reject. Passive durable root/standby holders are excluded from that execution scope; actual held enrollment/process receipts remain root evidence."
+    },
+    {
+      "id": "F3",
+      "severity": "support",
+      "text": "Install appends only output_guard_authority_v1. Original cases/jobs, births/caps, usage, starts, occupied costs, reservations, outcomes and closures stay unchanged. Preinstall case/job identity sets and finite births at/after effective time gate future case admission and start; old denied/stopped identities cannot use the enlarged guard."
+    },
+    {
+      "id": "F4",
+      "severity": "support",
+      "text": "Failed/old job usage remains monotonically chargeable. The candidate lower bound remains1508391 in the initial fixture, old1.5m trip remains historical, and current selected warning/stop flags are1.2m/2m.1999999 does not stop;2000000 stops new admission/start. Actual tokens and money remain UNKNOWN; active-stage observations can overshoot."
+    },
+    {
+      "id": "F5",
+      "severity": "support",
+      "text": "Inherited action/resource accounting remains delegated. Original base auth still returns1.5m; selected legacy auth is scoped to a call with valid installed receipt and restores after failure. Source checks show captured original accounting and wrapper delegation remain in place. Isolated fixtures exercise legacy function bodies with mocked authorization/dependency state, not live module imports."
+    },
+    {
+      "id": "F6",
+      "severity": "support",
+      "text": "Binder requires exact API/authority/independent-root acceptance and canonical root install proof, exact equality to the held stored receipt, then common additionally calls wrapper.validate_receipt(required=True). Old selected identities and early/nonfinite births reject; inherited S8 case_sources, wholepair closure, old append receipt/arm lineage/literal promises and original clocks/caps persist."
+    },
+    {
+      "id": "F7",
+      "severity": "support",
+      "text": "All six controller scheduling/stage/case/finalizer modules are byte-identical to prior accepted attempt-control-binding-v1. Only common receipt validation, control ledger/positive-file refs and binder metadata/provenance checks changed. All63 wholepair subsets preserve exact two-arm/six-job structure and existing planning metadata; declarations alone provide no resource promise."
+    }
+  ],
+  "fixture_source": {
+    "path": "LAB_ROOT/ops/output-guard-review-v1/review_tests.py",
+    "sha256": "c5c7d391413e613afa71330070c8b32dbbd2a34beac27449444983a4dc3f5643"
+  },
+  "frozen_inputs_sha256": {
+    "LAB_ROOT/ops/output-guard-api-v1/FREEZE.json": "8621338279360fc29ae529019c9c51c6df4818753e75c586d52f4d8293a941a7",
+    "LAB_ROOT/ops/output-guard-api-v1/MANIFEST.json": "30ff63d05a355f6e11e28fd155cf0a61c86e78bf70c7ab4ecb20ef485fb8a95d",
+    "LAB_ROOT/ops/output-guard-api-v1/ledger_output_guard_v1.py": "f2f63bbfc7386186e51f79d00449fd0964821b1f0cb48e9d8d70b9ee7fe112b3",
+    "LAB_ROOT/ops/output-guard-binding-v1/FREEZE.json": "3922d898b394843b3eeaf60a1511eb716b84417d8c05176ed1462600ce082547",
+    "LAB_ROOT/ops/output-guard-binding-v1/MANIFEST.json": "076c3e418c4146d5485d9a8a097d912ec6542f0a67651c6cdbc3f63fefc8f83e",
+    "LAB_ROOT/ops/output-guard-binding-v1/control_binding.py": "c322c9a80827391d69639ae72c47c1d055bacc0e3655b9d64f8459ec81d39ee3",
+    "LAB_ROOT/ops/output-guard-binding-v1/integrated-controller/SOURCE_FREEZE.json": "4d7ae7a953551a539496b32b9a25dff4b533e447d8f353a4491643e543fb86d1",
+    "LAB_ROOT/ops/output-guard-binding-v1/recovery-control.json": "077a061320498c801a00935ace791804dfde1c18dbfe0b85e3b0ed6cd6399827"
+  },
+  "global_deadline_epoch": 1791013030.8303788,
+  "independent": true,
+  "independent_additional_tests": 11,
+  "live_ledger_reads_transactions": 0,
+  "original_helper_birth_epoch": 1791006056.4060485,
+  "original_helper_deadline_epoch": 1791006656.4060485,
+  "raw_candidate_evaluator_source_answer_reads": 0,
+  "request_schemas": {
+    "path": "LAB_ROOT/ops/output-guard-review-v1/REQUEST_SCHEMAS.json",
+    "sha256": "319e4d4f3ef10cf4e347d974734e65d4e03794d829aa9b32bad01d938227c66f"
+  },
+  "reviewed_epoch": 1791006568.8978984,
+  "schema": "pm.er8.output-guard-independent-findings.v1",
+  "scoped_dependencies_checked": {
+    "output-guard-api-v1": 17,
+    "output-guard-binding-v1": 28
+  },
+  "scoped_dependency_sha256": {
+    "LAB_ROOT/dev/attempt-successor-declarations-v1/DECLARATION_CLOSURE.json": "cb2fb0c8eacf1d3810f204c2f86ed812ee32684cf1924ba3d7c4dfd900778be8",
+    "LAB_ROOT/dev/attempt-successor-declarations-v1/ROOT_RELEASE_PATCH.json": "a3971b757b3c9655474037f6bbf279fb0579e43edb8a1bc6a683ffab1a96fc64",
+    "LAB_ROOT/dev/attempt-successor-declarations-v1/SOURCE_FREEZE.json": "d5427e1f467ab8495c4b35b94ca7528f8b1a9d893de1834bfaf9c662b48eb6a1",
+    "LAB_ROOT/dev/prospective-timing-v3/candidate_inputs.py": "213e1a6aea20e3e0499971b283e900e31956338cbe6c02fad5e16aa701445abf",
+    "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/SOURCE_FREEZE.json": "38f31e444c6dde29f2498a69ba2c1769506b0c4384a048afb25b7882df3f7cb2",
+    "LAB_ROOT/dev/prospective-timing-v3/recovery-control.json": "9f42d49be57a74ee744c0be41fa337471a3c441a340cde3e4bfc642926afb938",
+    "LAB_ROOT/dev/tranche-successor-v8/ADDITIVE_ACTION_SPEC.json": "b3cdb755dfa15e6116a056a3c0090b4edd9dca45971d5550b589d03b03005228",
+    "LAB_ROOT/dev/tranche-successor-v8/REMAINING_CELLS.json": "c4644d8bcacc68a499dc28d790fa584a6892eb508de4d1075656f096ae388585",
+    "LAB_ROOT/dev/tranche-successor-v8/SOURCE_FREEZE.json": "86b997375679047e3c7fede8df94ecfb3ceaa4e0745485159a6d430dbf1cbe1b",
+    "LAB_ROOT/ops/accounting-v1/slot_ledger.py": "5590fdc09936005e09b2de7aa4ac4113bbe0ddeefa4a8caf3548d78b0e3045af",
+    "LAB_ROOT/ops/attempt-control-binding-v1/FREEZE.json": "222a2ff185ca1d33c435ee6f47a4a250d8c6f2098071f1c48d295133b72833e9",
+    "LAB_ROOT/ops/attempt-control-binding-v1/HANDOFF.md": "7ed8a855740337e106595559bf59e7c8919161dba081ef4030e53f169625e15a",
+    "LAB_ROOT/ops/attempt-control-binding-v1/MANIFEST.json": "1a01d91c53aa9e6951d08e9f175316d2928a81346e756af6cd09fcf304f9a94c",
+    "LAB_ROOT/ops/attempt-control-binding-v1/control_binding.py": "619fa432d572d0ae3a662a43325a507814210ea8ea29bedd6d171f0f76a6905d",
+    "LAB_ROOT/ops/attempt-control-binding-v1/integrated-controller/SOURCE_FREEZE.json": "1c93bed6a9fd18a24a67746a0a87ab695b8486ec99936056a614f8ee06bf66c8",
+    "LAB_ROOT/ops/attempt-control-binding-v1/recovery-control.json": "19c7033071c562fd4feecb846d1a921da41f77050fd62585bb923adc162fcd00",
+    "LAB_ROOT/ops/attempt-reservation-api-v1/MANIFEST.json": "2b4b54c140e211c300f1951d43e8f6119f2b86e6461bcd102f407e0d4441a196",
+    "LAB_ROOT/ops/attempt-reservation-api-v1/ledger_attempt_reservations_v1.py": "9bd4b17fe406cd20680c0c8eef16f96a6a45db727d977f1ba2cc42641c82d577",
+    "LAB_ROOT/ops/attempt-reservation-review-v1/REVIEW.json": "d2ac456db3d31e15189f0d47441b2f74fc9b8accda1f62b1886376909a6e49ae",
+    "LAB_ROOT/ops/execution-resume-v1/quiet_production_monitor.py": "44c3671a2f51d02e412ac5d0df1e719098a80a755ae192a4a07c7fae1d5ae042",
+    "LAB_ROOT/ops/execution-resume-v1/root-production-release-v7.json": "4d6593cff543755bd390c9682cbd9f8e76ff8a13f82451ee6821f96aedab4cf2",
+    "LAB_ROOT/ops/helper-concurrency-v2/ledger_helper_concurrency_v2.py": "eafb75b1a157a5b7e77f03f9fc52e298a7ef255e439730e22c4fde6a95dc0405",
+    "LAB_ROOT/ops/output-guard-api-v1/FREEZE.json": "8621338279360fc29ae529019c9c51c6df4818753e75c586d52f4d8293a941a7",
+    "LAB_ROOT/ops/output-guard-api-v1/MANIFEST.json": "30ff63d05a355f6e11e28fd155cf0a61c86e78bf70c7ab4ecb20ef485fb8a95d",
+    "LAB_ROOT/ops/output-guard-api-v1/ledger_output_guard_v1.py": "f2f63bbfc7386186e51f79d00449fd0964821b1f0cb48e9d8d70b9ee7fe112b3",
+    "LAB_ROOT/ops/recovery-v1/ATTEMPT_RESERVATION_SOURCE_ACCEPTANCE_V1.json": "118815780084618de3b62913aebd1141f8415b0eb7c9fd4f3a5bb1661b36f43c",
+    "LAB_ROOT/ops/recovery-v1/ATTEMPT_SUCCESSOR_DEVELOPMENT_AUTHORITY_V1.json": "64b40261010db33ce32871db4cb42900ae130d5dc02272ac92831594bd9e2f7e",
+    "LAB_ROOT/ops/recovery-v1/AUTHORITY_AMENDMENT.json": "1479c0b44869d13878b90ccd2f02d5fb2d755cfa0f0b17315105dc48d57616ec",
+    "LAB_ROOT/ops/recovery-v1/HELPER_CONCURRENCY_AUTHORITY_20261003.json": "f1682a991232997556aed7fb88f167e706317259913d9365c5a1fb72fc572a79",
+    "LAB_ROOT/ops/recovery-v1/OUTPUT_GUARD_ROOT_AUTHORITY_V1.json": "2f25c97b0cd79aa3f9b302479fab78f7828d92772271bdf7fe4b3811c7147507",
+    "LAB_ROOT/ops/recovery-v1/RESUME_20261002.json": "9fc1c92a3b6074610b3b4026bd4d7500e0f0a135b506863965e2919fb640c02f",
+    "LAB_ROOT/ops/recovery-v1/ledger_overlay.py": "597a3d3349154fbb4614ed7ece864f1cd77ecfea145fbfddaefc79fe0a1cd618",
+    "LAB_ROOT/ops/recovery-v1/ledger_resume.py": "a98cf53c1826f1f4c9fa47a9e181eaae8beb971ea41e6564578a253059450b61"
+  },
+  "six_byte_identical_modules": [
+    "rolling.py",
+    "case_supervisor.py",
+    "stage_actor.py",
+    "external_stage_close.py",
+    "external_case_close.py",
+    "parent_receipt.py"
+  ],
+  "source": {
+    "path": "LAB_ROOT/ops/output-guard-api-v1/ledger_output_guard_v1.py",
+    "sha256": "f2f63bbfc7386186e51f79d00449fd0964821b1f0cb48e9d8d70b9ee7fe112b3"
+  },
+  "source_manifest": {
+    "path": "LAB_ROOT/ops/output-guard-api-v1/MANIFEST.json",
+    "sha256": "30ff63d05a355f6e11e28fd155cf0a61c86e78bf70c7ab4ecb20ef485fb8a95d"
+  },
+  "source_only": true,
+  "source_only_limitations": [
+    "Accepted frozen source only; no live install, current ledger safety, actual current quiet, numerical2m cap user endorsement, native/provider qualification or new launch is certified.",
+    "The2m cumulative observed-output stop is deliberately selected finite operator protection under the exact pinned authority assessment; it is not a quoted user token ceiling, generation target, full consumption meter or budget reset.",
+    "AST fixtures exclude module-level dependency/live API loads; authorization, helper receipt state and dependency accounting boundaries are explicitly mocked. Custom dependency/source hashes are verified, while SDK/auth/native/runtime contents and real import/production preflight remain untested.",
+    "Root must freeze fresh genuine execution quiet with full settled state digest after helper/ledger observations, hold installation/append/launch serialization, retain enrollment/process group evidence and actual exact stored install receipt, and independently check current fitting resources.",
+    "Historical root-supplied context remains unchanged: actual1.5m stop,V9 both S8 incomplete,59 native starts,44208.342301130295 occupied seconds,LB1508391 and three quiet-released S8 leases. This review did not read those live records or reconstruct their actual history.",
+    "All births/caps/routes/models/accounts/helpers12/two per family/global144 starts172800 seconds/global deadline1791013030.8303788 remain original. No missing telemetry is reclassified as zero.",
+    "Author completed-source endpoint1791006088.8827295 and last clock1791006113.7941332 before original source cutoff1791006121.846406 are root-supplied; exact author final-return tail is UNKNOWN. This establishes limited source-artifact timeliness, not blanket full-helper/campaign compliance."
+  ],
+  "test_results": {
+    "path": "LAB_ROOT/ops/output-guard-review-v1/TEST_RESULTS.txt",
+    "sha256": "c58cf9852302467ee98adf95af6cf4debff164ccc3057c93dd06d72cb7945275"
+  },
+  "tests_run": 26,
+  "unit_signal_actions": 0
+}

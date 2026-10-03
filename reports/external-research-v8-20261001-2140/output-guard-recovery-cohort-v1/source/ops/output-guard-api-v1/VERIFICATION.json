@@ -1,0 +1,17 @@
+{
+  "qualification": "AST exact-function fixtures with mocked authorization/dependency loads; no live installation or native readiness qualification",
+  "schema": "pm.er8.output-guard-source-verification.v1",
+  "source_only": true,
+  "test_count": 10,
+  "tests": {
+    "auth_free": true,
+    "finished_epoch": 1791006088.2370946,
+    "no_live_ledger_native_sdk_auth_reads": true,
+    "returncode": 0,
+    "started_epoch": 1791006087.803695,
+    "test_results": {
+      "path": "LAB_ROOT/ops/output-guard-api-v1/TEST_RESULTS.txt",
+      "sha256": "01fd6addafa84805414263f0d19ee63206ed199d0010f8b22b80371158bd6993"
+    }
+  }
+}

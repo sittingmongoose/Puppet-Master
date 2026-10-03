@@ -1,0 +1,19 @@
+{
+  "all_prep_tests_freeze_completed_before_capture": true,
+  "captured_epoch": 1791006088.8827295,
+  "elapsed_seconds_at_capture": 867.0363235473633,
+  "final_return_not_yet_observed": true,
+  "freeze": {
+    "path": "LAB_ROOT/ops/output-guard-api-v1/FREEZE.json",
+    "sha256": "8621338279360fc29ae529019c9c51c6df4818753e75c586d52f4d8293a941a7"
+  },
+  "helper_birth_epoch": 1791005221.846406,
+  "helper_deadline_epoch": 1791006121.846406,
+  "manifest": {
+    "path": "LAB_ROOT/ops/output-guard-api-v1/MANIFEST.json",
+    "sha256": "30ff63d05a355f6e11e28fd155cf0a61c86e78bf70c7ab4ecb20ef485fb8a95d"
+  },
+  "qualification": "Source-only endpoint capture; no full-campaign or live-install timeliness assertion.",
+  "schema": "pm.er8.source-only-helper-endpoint.v1",
+  "within_original_cutoff_at_capture": true
+}

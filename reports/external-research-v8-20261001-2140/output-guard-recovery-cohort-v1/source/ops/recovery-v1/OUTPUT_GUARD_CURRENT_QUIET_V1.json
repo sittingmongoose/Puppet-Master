@@ -1,0 +1,20 @@
+{
+  "actors_absent": true,
+  "campaign_id": "external-research-v8-20261001-2140",
+  "held_process_group_receipts_verified": true,
+  "ledger_state_sha256": "8cd8e2f10a9d369bdcc8dcc8515233de0cc2f4f364b7dce58b0bf2a53586a4cb",
+  "native_enrollment_receipts_verified": true,
+  "native_quiescent": true,
+  "observed_epoch": 1791007019.4366581,
+  "parents_absent": true,
+  "permits_settled": true,
+  "positive_current_execution_proof": {
+    "path": "LAB_ROOT/ops/recovery-v1/OUTPUT_GUARD_EXECUTION_CURRENT_VERIFICATION_V2.json",
+    "sha256": "7ad1bc5215b420e440a250241bef573f02a10bbf62b050e4b98a60d7dc93623c"
+  },
+  "qualification": "61 positively enrolled candidateunits and91 positively boundgroups currentabsence. Passiveoriginaldurable owner/standby remainalive andexcluded; no newnativeadmissionoperator.",
+  "root_authority": true,
+  "scheduler_absent": true,
+  "schema": "pm.er8.output-guard-current-quiet.v1",
+  "scope": "all-candidate-admission-operator-execution-owned-groups"
+}

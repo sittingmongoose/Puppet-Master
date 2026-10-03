@@ -1,0 +1,15 @@
+test_active_job_pending_permit_expired_closed_overbudget_reject (__main__.GuardTests.test_active_job_pending_permit_expired_closed_overbudget_reject) ... ok
+test_authority_source_and_quiet_drift_reject (__main__.GuardTests.test_authority_source_and_quiet_drift_reject) ... ok
+test_duplicate_json_and_nonfinite_json_reject (__main__.GuardTests.test_duplicate_json_and_nonfinite_json_reject) ... ok
+test_failed_old_usage_monotonic_and_release_delegation (__main__.GuardTests.test_failed_old_usage_monotonic_and_release_delegation) ... ok
+test_installed_receipt_drift_and_stale_quiet_reject (__main__.GuardTests.test_installed_receipt_drift_and_stale_quiet_reject) ... ok
+test_new_admit_guard_boundary_and_old_identity_reject (__main__.GuardTests.test_new_admit_guard_boundary_and_old_identity_reject) ... ok
+test_nonfinite_original_clock_and_birth_reject (__main__.GuardTests.test_nonfinite_original_clock_and_birth_reject) ... ok
+test_other_actions_delegated_and_selected_flags_returned (__main__.GuardTests.test_other_actions_delegated_and_selected_flags_returned) ... ok
+test_source_acceptance_missing_drift_and_literal_root_reject (__main__.GuardTests.test_source_acceptance_missing_drift_and_literal_root_reject) ... ok
+test_valid_once_install_preserves_every_old_value (__main__.GuardTests.test_valid_once_install_preserves_every_old_value) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.287s
+
+OK

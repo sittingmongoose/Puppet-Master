@@ -1,0 +1,21 @@
+{
+  "authority": {
+    "path": "LAB_ROOT/ops/recovery-v1/OUTPUT_GUARD_ROOT_AUTHORITY_V1.json",
+    "sha256": "2f25c97b0cd79aa3f9b302479fab78f7828d92772271bdf7fe4b3811c7147507"
+  },
+  "campaign_deadline_epoch": 1791013030.8303788,
+  "campaign_id": "external-research-v8-20261001-2140",
+  "current_quiet": {
+    "path": "LAB_ROOT/ops/recovery-v1/OUTPUT_GUARD_CURRENT_QUIET_V1.json",
+    "sha256": "5ec1899590c38aa3275946c27e13c75fceae98ebf6fa272d42e5cfa9abd0657e"
+  },
+  "new_stop": 2000000,
+  "new_warning": 1200000,
+  "original_start_epoch": 1790905209,
+  "receipt_id": "v8-prospective-output-guard-2000000-v1",
+  "root_authority": true,
+  "source_acceptance": {
+    "path": "LAB_ROOT/ops/recovery-v1/OUTPUT_GUARD_SOURCE_ACCEPTANCE_V1.json",
+    "sha256": "4a8ca71bd37a97260c1108a6e8d37643a69ae8919a651ec5b1019e244eaa5c36"
+  }
+}

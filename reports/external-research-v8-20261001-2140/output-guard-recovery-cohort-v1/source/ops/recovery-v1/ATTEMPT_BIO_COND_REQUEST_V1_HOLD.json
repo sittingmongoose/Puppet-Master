@@ -1,0 +1,13 @@
+{
+  "append": "NONE; existing rootguardinstall remainsvalid and alloldstate unchanged.",
+  "cause": "Root selected new currentquiet filenames outside legacy API exact fixedpath schema; reserve-attempt-successors rejected before append. Binder CLI has --pair only, --out rejected before output.",
+  "epoch": 1791007154.823864,
+  "failed_request": {
+    "path": "LAB_ROOT/ops/recovery-v1/ATTEMPT_BIO_COND_REQUEST_V1.json",
+    "sha256": "e69a2b7ceca9e6744d5231b827fa39892db4470880eae27e3fe025776f7c4007"
+  },
+  "native_starts_added": 0,
+  "repair": "Newrequest references existing fixed predecessor quiet files with same unchanged relatedjobdigests; fresh61unit91groupcurrent root proof supportsongoingabsence. PureCLIstdout captured to exclusive sourceinterface file.",
+  "root_authority": true,
+  "schema": "pm.er8.bio-cond-root-request-hold.v1"
+}

@@ -1,0 +1,49 @@
+{
+  "accepted": true,
+  "authority": {
+    "path": "LAB_ROOT/ops/recovery-v1/OUTPUT_GUARD_ROOT_AUTHORITY_V1.json",
+    "sha256": "2f25c97b0cd79aa3f9b302479fab78f7828d92772271bdf7fe4b3811c7147507"
+  },
+  "blocking_findings": [],
+  "findings_report": {
+    "path": "LAB_ROOT/ops/output-guard-review-v1/REPORT.json",
+    "sha256": "ac6a9eac2bd939b660814f23ce1c97b2049ccfabb1a510a1bcd7473223f06987"
+  },
+  "global_deadline_epoch": 1791013030.8303788,
+  "independent": true,
+  "live_install_accepted": false,
+  "native_release_accepted": false,
+  "numerical_2000000_user_endorsement_certified": false,
+  "original_helper_birth_epoch": 1791006056.4060485,
+  "original_helper_deadline_epoch": 1791006656.4060485,
+  "reviewed_epoch": 1791006568.8990035,
+  "reviewer": "codex-er8-output-guard-review",
+  "root_authority": false,
+  "schema": "pm.er8.output-guard-independent-review.v1",
+  "source": {
+    "path": "LAB_ROOT/ops/output-guard-api-v1/ledger_output_guard_v1.py",
+    "sha256": "f2f63bbfc7386186e51f79d00449fd0964821b1f0cb48e9d8d70b9ee7fe112b3"
+  },
+  "source_freeze": {
+    "path": "LAB_ROOT/ops/output-guard-api-v1/FREEZE.json",
+    "sha256": "8621338279360fc29ae529019c9c51c6df4818753e75c586d52f4d8293a941a7"
+  },
+  "source_manifest": {
+    "path": "LAB_ROOT/ops/output-guard-api-v1/MANIFEST.json",
+    "sha256": "30ff63d05a355f6e11e28fd155cf0a61c86e78bf70c7ab4ecb20ef485fb8a95d"
+  },
+  "source_only": true,
+  "source_only_limitations": [
+    "Accepted frozen source only; no live install, current ledger safety, actual current quiet, numerical2m cap user endorsement, native/provider qualification or new launch is certified.",
+    "The2m cumulative observed-output stop is deliberately selected finite operator protection under the exact pinned authority assessment; it is not a quoted user token ceiling, generation target, full consumption meter or budget reset.",
+    "AST fixtures exclude module-level dependency/live API loads; authorization, helper receipt state and dependency accounting boundaries are explicitly mocked. Custom dependency/source hashes are verified, while SDK/auth/native/runtime contents and real import/production preflight remain untested.",
+    "Root must freeze fresh genuine execution quiet with full settled state digest after helper/ledger observations, hold installation/append/launch serialization, retain enrollment/process group evidence and actual exact stored install receipt, and independently check current fitting resources.",
+    "Historical root-supplied context remains unchanged: actual1.5m stop,V9 both S8 incomplete,59 native starts,44208.342301130295 occupied seconds,LB1508391 and three quiet-released S8 leases. This review did not read those live records or reconstruct their actual history.",
+    "All births/caps/routes/models/accounts/helpers12/two per family/global144 starts172800 seconds/global deadline1791013030.8303788 remain original. No missing telemetry is reclassified as zero.",
+    "Author completed-source endpoint1791006088.8827295 and last clock1791006113.7941332 before original source cutoff1791006121.846406 are root-supplied; exact author final-return tail is UNKNOWN. This establishes limited source-artifact timeliness, not blanket full-helper/campaign compliance."
+  ],
+  "verification": {
+    "path": "LAB_ROOT/ops/output-guard-review-v1/VERIFICATION.json",
+    "sha256": "19f2cf73f561e375ae56e8837f2ed4f177b2b7bf0388d359f7ebf63d2c107e68"
+  }
+}

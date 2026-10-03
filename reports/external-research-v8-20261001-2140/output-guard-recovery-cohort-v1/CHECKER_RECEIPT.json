@@ -1,0 +1,12 @@
+{
+  "checker_invocations": 1,
+  "checker_original_and_public_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+  "native_provider_calls": 0,
+  "positive_source_inputs": 67,
+  "references_followed": 0,
+  "returncode": 0,
+  "schema": "pm.er8.output-guard-public-checker-receipt.v1",
+  "scope": "portable offline artifact hashes only",
+  "stderr": "",
+  "stdout": "{\"model_quality_assessed\": false, \"native_replay_verified\": false, \"scope\": \"offline artifact hashes and optional declarations only\", \"timing_declarations_present_and_valid\": false, \"verified_artifacts\": 69}\n"
+}
