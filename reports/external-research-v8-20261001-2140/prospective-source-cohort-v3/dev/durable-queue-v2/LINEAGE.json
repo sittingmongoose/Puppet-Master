@@ -1,0 +1,72 @@
+{
+  "schema": "er8.durable-continuation.constant-binding-successor.v1",
+  "created_utc": "2026-10-03T00:46:33.055469+00:00",
+  "author": "codex-er8-recovery rootmechanical binding",
+  "prior_source": {
+    "path": "LAB_ROOT/dev/durable-queue-v1/continuation.py",
+    "sha256": "dfa376952638e49e00daa4663c21e7d8cb579d5beb0ef4560d0ba6e0b17373e4"
+  },
+  "prior_source_acceptance": {
+    "path": "LAB_ROOT/evaluation/resume-execution-v1/durable-continuation-v1-source-acceptance.json",
+    "sha256": "e2fecb6ceeaf0e5e495e2f0efb67cd65ff00bedde595097152e515fb5fe904ad"
+  },
+  "changes": [
+    [
+      "One exact V6 -> V4 continuation.",
+      "One exact V6 -> V7 allocation-successor continuation."
+    ],
+    [
+      "HERE = LAB / 'dev/durable-queue-v1'",
+      "HERE = LAB / 'dev/durable-queue-v2'"
+    ],
+    [
+      "SOURCE = LAB / 'dev/resume-execution-v2'",
+      "SOURCE = LAB / 'dev/prospective-timing-v3'"
+    ],
+    [
+      "er8-v8-production-z-tranche-v4.service",
+      "er8-v8-production-z-tranche-v7.service"
+    ],
+    [
+      "NEXT_RELEASE = OPS / 'root-production-release-v4.json'",
+      "NEXT_RELEASE = OPS / 'root-production-release-v7.json'"
+    ],
+    [
+      "9d75023760362702fd91a3efa82e9dfbc8e12abe47a2d5ec093c40b76219c7d1",
+      "4d6593cff543755bd390c9682cbd9f8e76ff8a13f82451ee6821f96aedab4cf2"
+    ],
+    [
+      "NEXT_RUN = OPS / 'jobs/z-tranche-v4'",
+      "NEXT_RUN = OPS / 'jobs/z-tranche-v7'"
+    ],
+    [
+      "CONTINUATION_ROOT_AUTHORITY_V1.json",
+      "CONTINUATION_ROOT_AUTHORITY_V2.json"
+    ],
+    [
+      "9b05c02007452c366c950cd190379b76672a4819e22fb83ef86196e9cfa9017c",
+      "5fba8e4858acbdc3b850f1459c751a9a9579bf5c53fea075cf213f7def55c567"
+    ],
+    [
+      "er8-v8-queue-continuation-v1.service",
+      "er8-v8-queue-continuation-v2.service"
+    ],
+    [
+      "RECEIPTS = OPS / 'continuation-v1'",
+      "RECEIPTS = OPS / 'continuation-v2'"
+    ]
+  ],
+  "guard_function_class_import_main_AST_byte_structural_equality": true,
+  "tests_byte_identical": true,
+  "native_privacy_goal_account_and_original_clocks_unchanged": true,
+  "new_release": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/root-production-release-v7.json",
+    "sha256": "4d6593cff543755bd390c9682cbd9f8e76ff8a13f82451ee6821f96aedab4cf2"
+  },
+  "root_request": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/CONTINUATION_ROOT_AUTHORITY_V2.json",
+    "sha256": "5fba8e4858acbdc3b850f1459c751a9a9579bf5c53fea075cf213f7def55c567"
+  },
+  "source_sha256": "0a1a9e423f9df7bb372fdd44c89b3dde610c6d5ad6a233d148074d5563397def",
+  "test_sha256": "48ef84fc90925a8e0b5600864266798a071c3edff56aaf32c56aad15d0d0815e"
+}

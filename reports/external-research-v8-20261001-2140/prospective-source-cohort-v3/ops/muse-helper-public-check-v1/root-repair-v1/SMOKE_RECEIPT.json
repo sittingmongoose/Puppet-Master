@@ -1,0 +1,18 @@
+{
+  "schema": "er8.public-check-existing-cohort-smoke.v1",
+  "observed_utc": "2026-10-03T00:56:05.655816+00:00",
+  "cohort": "WORKTREE_ROOT/reports/external-research-v8-20261001-2140/notebook-partial-cohort-v1",
+  "checker_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+  "public_export_sha256": "9144f2c9cfbe327158bf1e7d879daad31a5b08bc99a1db92fb994b68b4ff50a0",
+  "exit_code": 0,
+  "result": {
+    "verified_artifacts": 116,
+    "timing_declarations_present_and_valid": false,
+    "scope": "offline artifact hashes and optional declarations only",
+    "native_replay_verified": false,
+    "model_quality_assessed": false
+  },
+  "body_output": false,
+  "readonly": true,
+  "limitation": "Optional prospective timing INPUT_MAP absent; actual 12-pair timing declarations are covered by synthetic schema fixture, not this cohort smoke."
+}

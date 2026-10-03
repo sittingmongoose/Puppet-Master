@@ -1,0 +1,51 @@
+{
+  "schema": "er8.muse-public-helper-root-repair-lineage.v1",
+  "native_original": {
+    "path": "LAB_ROOT/ops/muse-helper-public-check-v1/verify_public.py",
+    "expected_sha256": "c7bc301604110e0f583931822ad3a890fde03bb651142e00f7f871271f1096c8",
+    "actual_sha256": "c7bc301604110e0f583931822ad3a890fde03bb651142e00f7f871271f1096c8",
+    "unchanged": true
+  },
+  "repaired_source": {
+    "path": "LAB_ROOT/ops/muse-helper-public-check-v1/root-repair-v1/verify_public.py",
+    "sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd"
+  },
+  "root_requested_repairs": [
+    "strict INPUT_MAP cases dict parser",
+    "PUBLIC_EXPORT/input-map/manifest/cohort symlink and containment checks",
+    "exact case_id/pair_id/pair_arm/reservation_id matching",
+    "duplicate pair arms/manifest refs/JSON keys rejected",
+    "1200/1200/900 stage caps and declaration consistency",
+    "optional map absence is hash-only scope"
+  ],
+  "schema_observation": {
+    "map_top_level_fields": [
+      "schema",
+      "cases"
+    ],
+    "case_assignment_fields_observed": [
+      "manifest",
+      "root",
+      "case_dir",
+      "objectives",
+      "family_provisional",
+      "pair_id",
+      "arm"
+    ],
+    "manifest_identity_fields": [
+      "case_id",
+      "pair_id",
+      "pair_arm"
+    ],
+    "no_case_method_brief_or_answers_output": true
+  },
+  "limitations": [
+    "Offline static artifact bytes and declarations only: no native execution replay, observed timing, source provenance verification or model quality assessment.",
+    "Absolute native map manifest references deliberately rejected; no generic path rebinding. Portable cohort uses LAB_ROOT/relative manifest references.",
+    "Symlink containment assumes a stable offline filesystem; no adversarial concurrent mutation/TOCTOU guarantee.",
+    "Artifact-hash-only pass is allowed when optional INPUT_MAP genuinely absent; symlink/dangling metadata is rejected.",
+    "Existing notebook-partial-cohort smoke verified 116 artifact hashes with timing map absent; only synthetic fixtures exercise twelve paired timing declarations."
+  ],
+  "no_runtime_release_or_configuration_change": true,
+  "existing_cohort_smoke_receipt": "LAB_ROOT/ops/muse-helper-public-check-v1/root-repair-v1/SMOKE_RECEIPT.json"
+}

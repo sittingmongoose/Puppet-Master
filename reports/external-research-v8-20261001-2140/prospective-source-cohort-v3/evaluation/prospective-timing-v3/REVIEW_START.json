@@ -1,0 +1,13 @@
+{
+  "schema": "er8.prospective-timing-independent-review-start.v3",
+  "reviewer": "codex-er8-timing-review-v3",
+  "ownership": "evaluation/prospective-timing-v3 only",
+  "started_epoch": 1790987426.6861153,
+  "hard_deadline_epoch": 1790988326.6861153,
+  "allocation_authority_path": "LAB_ROOT/ops/execution-resume-v1/PROSPECTIVE_ALLOCATION_V3.json",
+  "allocation_authority_sha256": "8ae738d3b3f3ef2355a7b19ebec5404865aa689e53d1a26f618ebe353e9f697c",
+  "source_freeze_required_before_reads": true,
+  "actual_execution_permitted": false,
+  "native_provider_ledger_transactions_permitted": false,
+  "status": "awaiting-exact-source-freeze"
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "er8.prospective-timing.auth-free-test-results.v1",
+  "observed_utc": "2026-10-03T00:32:49.186338+00:00",
+  "command": "python3 -B LAB_ROOT/dev/prospective-timing-v3/test_timing.py",
+  "test_source_sha256": "7a5658795745c0410bf474d00c675cf1cc8b243ffd3af083151b2ab68d846ef8",
+  "exit_code": 0,
+  "tests_run": 8,
+  "all_passed": true,
+  "packed_stage_declarations_checked": 36,
+  "case_assignments_checked": 12,
+  "whole_pairs_checked": 6,
+  "native_launches": 0,
+  "provider_calls": 0,
+  "ledger_transactions": 0,
+  "live_platform_or_auth_probe": false,
+  "checks": [
+    "byte-identical protected predecessors and controller non-role source",
+    "exact numeric-only manifest/task/template/objective changes and pair agreement",
+    "all36 unchanged-adapter temp input/objective packing",
+    "positive bundle/controller/case closure and real planning hash gate",
+    "full component exact-edge fit and case/campaign refusal instead of clipping",
+    "unchanged native plan accepts1200/900 and rejects4500 case",
+    "pure extracted ledger born-case/job immutability and5400 reservation"
+  ],
+  "limitations": [
+    "Mocks and pure plan construction do not establish native completion, live admission, semantic quality, or a cure for zero-response critics.",
+    "Root must accept/bind a new release and recheck entirely unstarted pairs and current owned production quiet before launch."
+  ]
+}

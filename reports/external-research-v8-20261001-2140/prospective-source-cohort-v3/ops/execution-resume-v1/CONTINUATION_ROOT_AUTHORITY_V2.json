@@ -1,0 +1,63 @@
+{
+  "schema": "pm.er8.durable-queue-continuation-root.v1",
+  "root_authority": true,
+  "accepted": true,
+  "mode": "PRODUCTION_CONTINUATION",
+  "created_epoch": 1790988392.9877238,
+  "campaign_id": "external-research-v8-20261001-2140",
+  "campaign_root": "LAB_ROOT",
+  "original_campaign_start_epoch": 1790905209,
+  "campaign_deadline_epoch": 1791013030.8303788,
+  "no_budget_reset": true,
+  "root_holder_claim": {
+    "path": "LAB_ROOT/ops/recovery-v1/SUPERVISOR_DURABLE.json",
+    "sha256": "e0b37dcddefe3d6fcad80a913701cb69729b467bd0ffbf34b535f54dab3211b9"
+  },
+  "root_holder_unit": "er8-v8-root-durable-20261002-2348.service",
+  "current_unit": "er8-v8-production-z-tranche-v6.service",
+  "current_release": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/root-production-release-v6.json",
+    "sha256": "e15d0f1d8d7ce7a74dac72111df2848efe296e5fc605ab2e2f76f35c6f4d8aac"
+  },
+  "current_run_root": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6",
+  "current_held_exit": "LAB_ROOT/ops/execution-resume-v1/z-tranche-v6-rolling-parent-positive.held-exit.json",
+  "current_terminal": "LAB_ROOT/ops/execution-resume-v1/z-tranche-v6-rolling-parent-positive.terminal.json",
+  "next_unit": "er8-v8-production-z-tranche-v7.service",
+  "next_release": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/root-production-release-v7.json",
+    "sha256": "4d6593cff543755bd390c9682cbd9f8e76ff8a13f82451ee6821f96aedab4cf2"
+  },
+  "next_run_root": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7",
+  "source_root": "LAB_ROOT/dev/prospective-timing-v3",
+  "controller_snapshot": {
+    "path": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/SOURCE_FREEZE.json",
+    "sha256": "38f31e444c6dde29f2498a69ba2c1769506b0c4384a048afb25b7882df3f7cb2"
+  },
+  "monitor": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/quiet_production_monitor.py",
+    "sha256": "44c3671a2f51d02e412ac5d0df1e719098a80a755ae192a4a07c7fae1d5ae042"
+  },
+  "ledger": {
+    "path": "LAB_ROOT/ops/recovery-v1/ledger_resume.py",
+    "sha256": "a98cf53c1826f1f4c9fa47a9e181eaae8beb971ea41e6564578a253059450b61"
+  },
+  "authority": {
+    "path": "LAB_ROOT/ops/recovery-v1/RESUME_20261002.json",
+    "sha256": "9fc1c92a3b6074610b3b4026bd4d7500e0f0a135b506863965e2919fb640c02f"
+  },
+  "continuation_unit": "er8-v8-queue-continuation-v2.service",
+  "continuation_owned_root": "LAB_ROOT/ops/execution-resume-v1/continuation-v2",
+  "launch_conditions": "Actual same V6 heldrolling terminal +positiveinactive unit +heldPGIDabsent +allleases/pendingpermits clear/positivequiet; exactnewV7pins andbotharmsentirelyunstarted; no duplicate/currentcap change/costreset.",
+  "prospective_allocation": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/PROSPECTIVE_ALLOCATION_V3.json",
+    "sha256": "8ae738d3b3f3ef2355a7b19ebec5404865aa689e53d1a26f618ebe353e9f697c"
+  },
+  "controller_acceptance": {
+    "path": "LAB_ROOT/evaluation/prospective-timing-v3/ACCEPTANCE.json",
+    "sha256": "d23a69ec6cd32755409c52947a7c73487a7b6bf68c31c159624d861a58803587"
+  },
+  "predecessor_continuation_retained": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/CONTINUATION_ROOT_AUTHORITY_V1.json",
+    "sha256": "9b05c02007452c366c950cd190379b76672a4819e22fb83ef86196e9cfa9017c"
+  }
+}

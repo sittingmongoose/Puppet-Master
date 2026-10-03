@@ -1,0 +1,129 @@
+{
+  "schema": "er8.prospective-timing.independent-source-acceptance.v3",
+  "verdict": "accepted",
+  "status": "ACCEPTED_SOURCE_ONLY",
+  "scope": "Pure prospective host/task cap allocation for12 entirelyunstarted assignments; source-only integration. No native requalification or execution authority.",
+  "reviewer": "codex-er8-timing-review-v3",
+  "review_model": "gpt-6.1-sol",
+  "review_reasoning_effort": "xhigh",
+  "review_started_epoch": 1790987426.6861153,
+  "original_hard_deadline_epoch": 1790988326.6861153,
+  "completed_epoch": 1790988170.7907982,
+  "completed_utc": "2026-10-03T00:42:50.790812+00:00",
+  "snapshot_sha256": "38f31e444c6dde29f2498a69ba2c1769506b0c4384a048afb25b7882df3f7cb2",
+  "controller_snapshot": {
+    "path": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/SOURCE_FREEZE.json",
+    "sha256": "38f31e444c6dde29f2498a69ba2c1769506b0c4384a048afb25b7882df3f7cb2"
+  },
+  "source_bundle": {
+    "path": "LAB_ROOT/dev/prospective-timing-v3/SOURCE_FREEZE.json",
+    "sha256": "bafc1d00f5d6590f6821847517e20c322ac1ea9e10ac4438cd67cca23fc25acf"
+  },
+  "case_source_freeze": {
+    "path": "LAB_ROOT/dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json",
+    "sha256": "b65fcce1cb1398cff2a9e4bdadc2c9d41faa753e8d52a6a92fe31e1097624448"
+  },
+  "allocation_authority": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/PROSPECTIVE_ALLOCATION_V3.json",
+    "sha256": "8ae738d3b3f3ef2355a7b19ebec5404865aa689e53d1a26f618ebe353e9f697c"
+  },
+  "root_release_proposal": {
+    "path": "LAB_ROOT/dev/prospective-timing-v3/ROOT_RELEASE_PATCH.json",
+    "sha256": "170f3e690fb5a3b36335917fceac6b5ed9197af70b6bdc1a2880121faacee4b7"
+  },
+  "reviewed_unreleased_root_draft": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/root-production-release-v7-UNRELEASED.json",
+    "sha256": "7951e92d479a55172b45069b8bf294414ae389fda070c1c81032d53c5e6c3cac"
+  },
+  "governing_caps": {
+    "research_seconds": 1200,
+    "critic_seconds": 1200,
+    "correction_seconds": 900,
+    "declared_sum_seconds": 3300,
+    "host_reserve_seconds": 300,
+    "case_elapsed_seconds": 3600,
+    "case_occupied_seconds": 5400,
+    "outside_native_seconds": 300,
+    "responses_per_stage": 160
+  },
+  "no_new_blocking_findings": true,
+  "findings": [
+    {
+      "id": "N1",
+      "severity": "nonblocking-preexisting",
+      "path": "LAB_ROOT/dev/prospective-timing-v3/candidate_inputs.py",
+      "line": 33,
+      "finding": "The byte-identical required_files helper subscripts a Path when joining template names; calling it raises TypeError. No call exists in the reviewed deployed controller/adapter paths. The active common.check_planning joins template paths correctly. Independent first-run log preserves the observation; frozen source was not changed.",
+      "timing_change_blocker": false
+    },
+    {
+      "id": "N2",
+      "severity": "interpretation-condition",
+      "finding": "README zero-response wording is shorthand for the observed initial progress snapshot. Root clarified final response count and cause are UNKNOWN; prospective acceptance must preserve that distinction and avoid a cure claim.",
+      "timing_change_blocker": false
+    }
+  ],
+  "tests": {
+    "author_frozen_test_rerun": {
+      "tests_run": 8,
+      "passed": 8,
+      "elapsed_seconds": 1.121,
+      "exit_code": 0,
+      "evidence": {
+        "path": "LAB_ROOT/evaluation/prospective-timing-v3/AUTHOR_TEST_RERUN.txt",
+        "sha256": "4f529c59b1d2ebc859ef9adeb5a1189441ade58da2eea6e941f2c1ff3fda2923"
+      }
+    },
+    "independent_tests": {
+      "tests_run": 8,
+      "passed": 8,
+      "elapsed_seconds": 2.886,
+      "exit_code": 0,
+      "test_source": {
+        "path": "LAB_ROOT/evaluation/prospective-timing-v3/test_independent.py",
+        "sha256": "deb3806403a28d9d4092ae52cb5444533cca0e77e99d05576b07c28f89077dd6"
+      },
+      "evidence": {
+        "path": "LAB_ROOT/evaluation/prospective-timing-v3/INDEPENDENT_TEST_RESULTS.txt",
+        "sha256": "fe5354bffa604f1cabe8439a770d1f341478139c863b92328d18ebe05879b26c"
+      },
+      "coverage": [
+        "exact freeze/predecessor closure and all oldV4 planning pins",
+        "AST proves only common.ROLES executable change; control/map minimal path changes",
+        "same12cases/36jobs/sixpairs/native model/account and original limits",
+        "all132 per-case assigned planning pin tamper trials reject",
+        "unaccepted root proposal rejects before any ledger load",
+        "synthetic in-memory release integration reaches preserved checks; missing newcommon closure rejects",
+        "eachrole exact-edge fullcap under case/campaign and +1ns refusal before ledger",
+        "all task/template/objective numeric-only changes and unchanged assignedinput hashes"
+      ]
+    },
+    "draft_binding": {
+      "path": "LAB_ROOT/evaluation/prospective-timing-v3/DRAFT_BINDING_CHECK.json",
+      "sha256": "30f83539dd88b9161c55cdaacee4806300be4a6758d2d9619d03f7b37d0c2d81"
+    },
+    "first_run_nonblocking_observation": {
+      "path": "LAB_ROOT/evaluation/prospective-timing-v3/INDEPENDENT_FIRST_RUN_PREEXISTING_HELPER.txt",
+      "sha256": "d4f377037fed2f30fbf376638381aadd9d88f53c1b99f9612ff7c60b8151fa8c"
+    }
+  },
+  "prospective_integration_conditions": [
+    "Root must issue a new accepted production release bound to this exact source bundle/controller/case freeze and this independent source acceptance; the author proposal and reviewed v7 draft grant no launch authority.",
+    "The new release must preserve the exact12 case IDs,36 reservation IDs,six whole-pair Z/accountA bindings, route/native/privacy/tool-inventory acceptance, original campaign birth/deadline, actual prior costs, and all prior frozen source pins. Select the complete controller closure and exact46 planning pins; never add case declarations to source-only selected_positive_files.",
+    "Immediately before release and activation, root must recheck both arms of every pair entirely unstarted and predecessor owned production lifetimes quiet, positively closed, settled and clean. The author observation and this source review are not live absence or quiet receipts.",
+    "Unchanged live ledger/admission/reservation/slot/usage gates must admit the full prospective caps: research1200,critic1200,correction900; case wall3600,occupied reservation5400,outside-native300,responses160,three literal native starts. Sum3300 leaves300 host reserve. No4500 ceiling exception, clipping,retry,birth reset,or rewrite of prior born/frozen caps.",
+    "Every actual stage must still fit its full cap under both original case and campaign absolute deadlines before ledger/native admission; reject when it cannot fit. Source acceptance does not guarantee actual budget availability or task completion.",
+    "Preserve public full-scoring constraints and evaluator isolation. No candidate artifact,source-acquisition,semantic quality,final response count,cause of prior stalled critics,or benefit/cure from this future allocation is established here. Initial progress responses0 is an early snapshot, not a total-response finding."
+  ],
+  "launch_authority": false,
+  "actual_admissions": 0,
+  "real_ledger_transactions": 0,
+  "native_goal_starts": 0,
+  "provider_calls": 0,
+  "private_auth_or_journals_opened": false,
+  "candidate_generated_artifacts_or_public_source_capture_bodies_opened": false,
+  "private_evaluator_keys_opened": false,
+  "native_requalification_performed": false,
+  "live_admission_or_completion_established": false,
+  "original_birth_or_deadline_reset": false
+}

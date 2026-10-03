@@ -1,0 +1,41 @@
+{
+  "schema": "er8.prospective-timing.independent-draft-binding-check.v3",
+  "draft": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/root-production-release-v7-UNRELEASED.json",
+    "sha256": "7951e92d479a55172b45069b8bf294414ae389fda070c1c81032d53c5e6c3cac"
+  },
+  "all_checks_passed": true,
+  "checks": {
+    "draft_unaccepted": true,
+    "all_six_proposed_fields_exact": true,
+    "all_unchanged_authority_fields_exact": true,
+    "complete_frozen_controller_closure_selected": true,
+    "all_new_selected_positive_fields_exact": true,
+    "all_assigned_case_inputs_pinned": true,
+    "all_prior_positive_source_pins_preserved": true,
+    "case_queue12_same_ids": true,
+    "all36_jobs_same_ids": true,
+    "component_ceiling_preserved": true
+  },
+  "selected_positive_files": 72,
+  "planning_input_pins": 46,
+  "changed_top_level_fields": [
+    "accepted",
+    "allocation_authority",
+    "case_sources",
+    "controller_acceptance",
+    "controller_snapshot",
+    "planning_input_sha256",
+    "predecessor_release_preserved",
+    "production_entry",
+    "purpose",
+    "released_utc",
+    "root_authority",
+    "selected_positive_files",
+    "source_bundle"
+  ],
+  "live_admissions": 0,
+  "ledger_transactions": 0,
+  "native_or_provider_starts": 0,
+  "scope": "Static draft binding only; source acceptance and rechecks still required"
+}

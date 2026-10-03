@@ -1,0 +1,831 @@
+{
+  "schema": "pm.er8.public-prospective-source-cohort.v3",
+  "positive_original_count": 100,
+  "scope": "Source-only positive inventories and immutable/adopted root metadata; offline helper provenance. No native events/stdout/stderr, raw captures, generated candidate bodies, evaluator keys, proprietary SDK, auth or private profiles. No recursive export.",
+  "projection": "Original/public hashes separate; paths tokenized, session handles pseudonymized, internal JSON handles omitted. Embedded original pins intentionally unchanged. No recursive export.",
+  "limitations": {
+    "public_verifier_portable": true,
+    "native_replay_portable": false,
+    "private_original_dependency_source_tests_portable": false,
+    "timing_success_or_cure_established": false,
+    "quality_assessed": false
+  },
+  "artifacts": [
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/briefs/bioimaging.md",
+      "public_path": "cases/prospective-timing-v3/briefs/bioimaging.md",
+      "original_sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+      "public_sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+      "bytes": 3352,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/briefs/notebook-workspace.md",
+      "public_path": "cases/prospective-timing-v3/briefs/notebook-workspace.md",
+      "original_sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+      "public_sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+      "bytes": 3603,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-AMEND-C-L/METHOD.md",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-BIO-AMEND-C-L/METHOD.md",
+      "original_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "public_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "bytes": 473,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-AMEND-C-L/TASK.md",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-BIO-AMEND-C-L/TASK.md",
+      "original_sha256": "ab85a3cceb572759326fbdc24399ec21fdbb0971087a8c2c398f4bfc58027ab4",
+      "public_sha256": "ab85a3cceb572759326fbdc24399ec21fdbb0971087a8c2c398f4bfc58027ab4",
+      "bytes": 985,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-AMEND-C-L/manifest.json",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-BIO-AMEND-C-L/manifest.json",
+      "original_sha256": "90404c986d2c47c7c4f2b4f75861ec73be9e68b8d18a94c2c5831692dce73c16",
+      "public_sha256": "90404c986d2c47c7c4f2b4f75861ec73be9e68b8d18a94c2c5831692dce73c16",
+      "bytes": 4670,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-AMEND-T-L/METHOD.md",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-BIO-AMEND-T-L/METHOD.md",
+      "original_sha256": "cb187544119249fdeef595b43cce64fd0f858e0cf1243264cf4bb7d59fad39b8",
+      "public_sha256": "cb187544119249fdeef595b43cce64fd0f858e0cf1243264cf4bb7d59fad39b8",
+      "bytes": 1482,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-AMEND-T-L/TASK.md",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-BIO-AMEND-T-L/TASK.md",
+      "original_sha256": "78d047ac770c68486f950975b7cf71e763c43e8a61043a304f022982145d5a74",
+      "public_sha256": "78d047ac770c68486f950975b7cf71e763c43e8a61043a304f022982145d5a74",
+      "bytes": 985,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-AMEND-T-L/manifest.json",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-BIO-AMEND-T-L/manifest.json",
+      "original_sha256": "91bd8af40e6a66e3eb591c0966ace99b6a34a5d5403e54d53678e09c6ce92d53",
+      "public_sha256": "91bd8af40e6a66e3eb591c0966ace99b6a34a5d5403e54d53678e09c6ce92d53",
+      "bytes": 4756,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-BREADTH-C-M/METHOD.md",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-BIO-BREADTH-C-M/METHOD.md",
+      "original_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "public_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "bytes": 473,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-BREADTH-C-M/TASK.md",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-BIO-BREADTH-C-M/TASK.md",
+      "original_sha256": "76005819782e19c0f729357c1c319dbfeb5c80f581506f374e5e799b5a591125",
+      "public_sha256": "76005819782e19c0f729357c1c319dbfeb5c80f581506f374e5e799b5a591125",
+      "bytes": 987,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-BREADTH-C-M/manifest.json",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-BIO-BREADTH-C-M/manifest.json",
+      "original_sha256": "da1ec56c4d18dd5cf1976d1e787a88aec0758be7c0a8b5dc4faffb2cc73b5841",
+      "public_sha256": "da1ec56c4d18dd5cf1976d1e787a88aec0758be7c0a8b5dc4faffb2cc73b5841",
+      "bytes": 4682,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-BREADTH-T-M/METHOD.md",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-BIO-BREADTH-T-M/METHOD.md",
+      "original_sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+      "public_sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+      "bytes": 1360,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-BREADTH-T-M/TASK.md",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-BIO-BREADTH-T-M/TASK.md",
+      "original_sha256": "08b68fed3bd3447c35914d82a3921fb8139c725d010fe0fe7756e4f45569b6d1",
+      "public_sha256": "08b68fed3bd3447c35914d82a3921fb8139c725d010fe0fe7756e4f45569b6d1",
+      "bytes": 987,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-BREADTH-T-M/manifest.json",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-BIO-BREADTH-T-M/manifest.json",
+      "original_sha256": "f2b6eba51c306384444e67a94e272617d47dbd220b42493701c5c52b7f718353",
+      "public_sha256": "f2b6eba51c306384444e67a94e272617d47dbd220b42493701c5c52b7f718353",
+      "bytes": 4762,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-RETR-C-M/METHOD.md",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-BIO-RETR-C-M/METHOD.md",
+      "original_sha256": "6b617504d3749407e1a80d876bdce0c1117668326e6131a582e730c50b106d0a",
+      "public_sha256": "6b617504d3749407e1a80d876bdce0c1117668326e6131a582e730c50b106d0a",
+      "bytes": 982,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-RETR-C-M/TASK.md",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-BIO-RETR-C-M/TASK.md",
+      "original_sha256": "1467f97f682cb595a0239cf725ec938409bf44d39356624dcdf3af0394cd2983",
+      "public_sha256": "1467f97f682cb595a0239cf725ec938409bf44d39356624dcdf3af0394cd2983",
+      "bytes": 984,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-RETR-C-M/manifest.json",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-BIO-RETR-C-M/manifest.json",
+      "original_sha256": "b129330848603ab7685a34cc699f8c1363d4d3e9b1304548eedbee9f3128d166",
+      "public_sha256": "b129330848603ab7685a34cc699f8c1363d4d3e9b1304548eedbee9f3128d166",
+      "bytes": 4709,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-RETR-T-M/METHOD.md",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-BIO-RETR-T-M/METHOD.md",
+      "original_sha256": "700f321706f86f2eb5e9debe5cabdef89e2433b24ca272eb0d13faee400221cf",
+      "public_sha256": "700f321706f86f2eb5e9debe5cabdef89e2433b24ca272eb0d13faee400221cf",
+      "bytes": 1440,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-RETR-T-M/TASK.md",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-BIO-RETR-T-M/TASK.md",
+      "original_sha256": "71b1ea9250e7ee73f670ef060dd04c9c2fc350cd085eaa581c9e0668472635b7",
+      "public_sha256": "71b1ea9250e7ee73f670ef060dd04c9c2fc350cd085eaa581c9e0668472635b7",
+      "bytes": 984,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-RETR-T-M/manifest.json",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-BIO-RETR-T-M/manifest.json",
+      "original_sha256": "a9c76e9a305627b02055e1d5bf303d796fb377ded09a46415cda7c0728c2d617",
+      "public_sha256": "a9c76e9a305627b02055e1d5bf303d796fb377ded09a46415cda7c0728c2d617",
+      "bytes": 4772,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-AMEND-C-L/METHOD.md",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-NB-AMEND-C-L/METHOD.md",
+      "original_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "public_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "bytes": 473,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-AMEND-C-L/TASK.md",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-NB-AMEND-C-L/TASK.md",
+      "original_sha256": "22b45e04ca754bf9da692d3958ee6963d3194eec78d3e1092715b9cc5b1b2c4d",
+      "public_sha256": "22b45e04ca754bf9da692d3958ee6963d3194eec78d3e1092715b9cc5b1b2c4d",
+      "bytes": 984,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-AMEND-C-L/manifest.json",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-NB-AMEND-C-L/manifest.json",
+      "original_sha256": "4b5ff563e7e6ae787821da756c0c84da56c07cd6966ad276138846bf709aef89",
+      "public_sha256": "4b5ff563e7e6ae787821da756c0c84da56c07cd6966ad276138846bf709aef89",
+      "bytes": 4688,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-AMEND-T-L/METHOD.md",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-NB-AMEND-T-L/METHOD.md",
+      "original_sha256": "cb187544119249fdeef595b43cce64fd0f858e0cf1243264cf4bb7d59fad39b8",
+      "public_sha256": "cb187544119249fdeef595b43cce64fd0f858e0cf1243264cf4bb7d59fad39b8",
+      "bytes": 1482,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-AMEND-T-L/TASK.md",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-NB-AMEND-T-L/TASK.md",
+      "original_sha256": "0f334dd50a6ecaa66a045d08fc2005706231474086da2528d10c3736e6309d64",
+      "public_sha256": "0f334dd50a6ecaa66a045d08fc2005706231474086da2528d10c3736e6309d64",
+      "bytes": 984,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-AMEND-T-L/manifest.json",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-NB-AMEND-T-L/manifest.json",
+      "original_sha256": "4ae1e22d314bc24f6c525838db4ee4bc2297511acb3487d2adac5ac61af48724",
+      "public_sha256": "4ae1e22d314bc24f6c525838db4ee4bc2297511acb3487d2adac5ac61af48724",
+      "bytes": 4774,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-BREADTH-C-M/METHOD.md",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-NB-BREADTH-C-M/METHOD.md",
+      "original_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "public_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "bytes": 473,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-BREADTH-C-M/TASK.md",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-NB-BREADTH-C-M/TASK.md",
+      "original_sha256": "9d28f2046cd210b619e8d1bcee2dbc0f509e94bd606784a3738af870c4b6941a",
+      "public_sha256": "9d28f2046cd210b619e8d1bcee2dbc0f509e94bd606784a3738af870c4b6941a",
+      "bytes": 986,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-BREADTH-C-M/manifest.json",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-NB-BREADTH-C-M/manifest.json",
+      "original_sha256": "b709b4041eea59d8b34d20efff930f3fd2743016cf51b9dc8315e454e66d7031",
+      "public_sha256": "b709b4041eea59d8b34d20efff930f3fd2743016cf51b9dc8315e454e66d7031",
+      "bytes": 4700,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-BREADTH-T-M/METHOD.md",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-NB-BREADTH-T-M/METHOD.md",
+      "original_sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+      "public_sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+      "bytes": 1360,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-BREADTH-T-M/TASK.md",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-NB-BREADTH-T-M/TASK.md",
+      "original_sha256": "444152ab8048571dd236c47be37306d19d00d531d09da14a03ef759f1452b2cf",
+      "public_sha256": "444152ab8048571dd236c47be37306d19d00d531d09da14a03ef759f1452b2cf",
+      "bytes": 986,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-BREADTH-T-M/manifest.json",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-NB-BREADTH-T-M/manifest.json",
+      "original_sha256": "3bafa60aab573529d4c70f1d2727ac3bf1039da563766a46aa51cf0ac7cf43f3",
+      "public_sha256": "3bafa60aab573529d4c70f1d2727ac3bf1039da563766a46aa51cf0ac7cf43f3",
+      "bytes": 4780,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-RETR-C-M/METHOD.md",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-NB-RETR-C-M/METHOD.md",
+      "original_sha256": "6b617504d3749407e1a80d876bdce0c1117668326e6131a582e730c50b106d0a",
+      "public_sha256": "6b617504d3749407e1a80d876bdce0c1117668326e6131a582e730c50b106d0a",
+      "bytes": 982,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-RETR-C-M/TASK.md",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-NB-RETR-C-M/TASK.md",
+      "original_sha256": "6da30155e3dc85e5f03da8b3ce9570e18ab82ce799f273c416934f84f4c955c8",
+      "public_sha256": "6da30155e3dc85e5f03da8b3ce9570e18ab82ce799f273c416934f84f4c955c8",
+      "bytes": 983,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-RETR-C-M/manifest.json",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-NB-RETR-C-M/manifest.json",
+      "original_sha256": "31f39b272d31b9db89ba63e8e20fbee770e5f43c5c5f51ee0c4ff1ab9be0433a",
+      "public_sha256": "31f39b272d31b9db89ba63e8e20fbee770e5f43c5c5f51ee0c4ff1ab9be0433a",
+      "bytes": 4727,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-RETR-T-M/METHOD.md",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-NB-RETR-T-M/METHOD.md",
+      "original_sha256": "700f321706f86f2eb5e9debe5cabdef89e2433b24ca272eb0d13faee400221cf",
+      "public_sha256": "700f321706f86f2eb5e9debe5cabdef89e2433b24ca272eb0d13faee400221cf",
+      "bytes": 1440,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-RETR-T-M/TASK.md",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-NB-RETR-T-M/TASK.md",
+      "original_sha256": "90771b15356d85cc26069b31ddb05992a235b49939defda9521f8eed1d3eb769",
+      "public_sha256": "90771b15356d85cc26069b31ddb05992a235b49939defda9521f8eed1d3eb769",
+      "bytes": 983,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-RETR-T-M/manifest.json",
+      "public_path": "cases/prospective-timing-v3/candidates/V8-NB-RETR-T-M/manifest.json",
+      "original_sha256": "ec7ad0c991691210a050cf2d6681caf290297b4396ff557bb7d928ad99834ea9",
+      "public_sha256": "ec7ad0c991691210a050cf2d6681caf290297b4396ff557bb7d928ad99834ea9",
+      "bytes": 4790,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/sandbox-plans/bioimaging.md",
+      "public_path": "cases/prospective-timing-v3/sandbox-plans/bioimaging.md",
+      "original_sha256": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30",
+      "public_sha256": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30",
+      "bytes": 959,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/sandbox-plans/notebook-workspace.md",
+      "public_path": "cases/prospective-timing-v3/sandbox-plans/notebook-workspace.md",
+      "original_sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+      "public_sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+      "bytes": 920,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/source-access.json",
+      "public_path": "cases/prospective-timing-v3/source-access.json",
+      "original_sha256": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df",
+      "public_sha256": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df",
+      "bytes": 1728,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/templates/correction.TASK.md",
+      "public_path": "cases/prospective-timing-v3/templates/correction.TASK.md",
+      "original_sha256": "1421e111351ebd35697394e93783cc85587d5ff21c003592982c20a75b9fb39e",
+      "public_sha256": "1421e111351ebd35697394e93783cc85587d5ff21c003592982c20a75b9fb39e",
+      "bytes": 1477,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/templates/critic.TASK.md",
+      "public_path": "cases/prospective-timing-v3/templates/critic.TASK.md",
+      "original_sha256": "7e0d69c1a1c9e92ad37b8b8fa97863fbde211eb06563cb431f330849e48fb0d2",
+      "public_sha256": "7e0d69c1a1c9e92ad37b8b8fa97863fbde211eb06563cb431f330849e48fb0d2",
+      "bytes": 1449,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/cases/prospective-timing-v3/templates/research.TASK.md",
+      "public_path": "cases/prospective-timing-v3/templates/research.TASK.md",
+      "original_sha256": "dcfe7bea57da20811145ea5649464534ae3709b502284bdce754d8e7ae9f9802",
+      "public_sha256": "dcfe7bea57da20811145ea5649464534ae3709b502284bdce754d8e7ae9f9802",
+      "bytes": 1586,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/durable-queue-v2/DEPENDENCIES.json",
+      "public_path": "dev/durable-queue-v2/DEPENDENCIES.json",
+      "original_sha256": "37335ba0f1b6bb1b5b041fa1c51bc6159b0aa345f0dca530070c71a7b5ea62ac",
+      "public_sha256": "829b119f703960a8880f8a1c4a2dbcf8c16d0478f52c9e6e9425cc7851f88c23",
+      "bytes": 17363,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/durable-queue-v2/LINEAGE.json",
+      "public_path": "dev/durable-queue-v2/LINEAGE.json",
+      "original_sha256": "e44168d5b39f384712d58ea1de396a8f5eaf447b1a9434a0ae3ca902b28d1490",
+      "public_sha256": "ac16e62a4b30b0691624a188eb311d57259eb83b7e7951f366a12c2b2fd5b9c3",
+      "bytes": 2620,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/durable-queue-v2/SOURCE_FREEZE.json",
+      "public_path": "dev/durable-queue-v2/SOURCE_FREEZE.json",
+      "original_sha256": "2f6ca5f83f483e0ca38a84872842e2751832fdb4b4737f33e2dd386a14001e8e",
+      "public_sha256": "80ba7dcd0e5e637d5f19dc76abadc9f6ab57c8e6dd394a04fb441a2297012fec",
+      "bytes": 17840,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/durable-queue-v2/TEST_RECEIPT.json",
+      "public_path": "dev/durable-queue-v2/TEST_RECEIPT.json",
+      "original_sha256": "415a1a281c70ea9a29a03ba5622ff1889e18f2a7c59ba0173069552af0577db6",
+      "public_sha256": "ed4c76c1e3adf3d786a3b65858c2e0f9163f9f18af094c36b93a2c0c517560ac",
+      "bytes": 321,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/durable-queue-v2/continuation.py",
+      "public_path": "dev/durable-queue-v2/continuation.py",
+      "original_sha256": "0a1a9e423f9df7bb372fdd44c89b3dde610c6d5ad6a233d148074d5563397def",
+      "public_sha256": "151f2ed0f7b0459073c81f9882d46d9a3f71029588193da334522dab70c4db3f",
+      "bytes": 19978,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/durable-queue-v2/test_continuation.py",
+      "public_path": "dev/durable-queue-v2/test_continuation.py",
+      "original_sha256": "48ef84fc90925a8e0b5600864266798a071c3edff56aaf32c56aad15d0d0815e",
+      "public_sha256": "48ef84fc90925a8e0b5600864266798a071c3edff56aaf32c56aad15d0d0815e",
+      "bytes": 9231,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json",
+      "public_path": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json",
+      "original_sha256": "b65fcce1cb1398cff2a9e4bdadc2c9d41faa753e8d52a6a92fe31e1097624448",
+      "public_sha256": "6cea8ed7af2ad9961b8f8e69d5af41ea7cfbd4cbaa7f1c46950fbde737798867",
+      "bytes": 13956,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/prospective-timing-v3/CONTROLLER_DIFF.patch",
+      "public_path": "dev/prospective-timing-v3/CONTROLLER_DIFF.patch",
+      "original_sha256": "5d0b8890b3bc6b64a8ff60272705688587b2107226d62fc0bf06226862b6a210",
+      "public_sha256": "e6be4aa911b8817d2662502871041b8b07d2b77cf094cfc6ce4c9736ba1653c2",
+      "bytes": 1654,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/prospective-timing-v3/INPUT_MAP.json",
+      "public_path": "dev/prospective-timing-v3/INPUT_MAP.json",
+      "original_sha256": "6dd1abc0b8946f6edde57529628b989af03a8b8b9800e1cd30d02e0583c866bb",
+      "public_sha256": "76ec330efd2db9876c860c8d8e137361db913e13654684696832da9d608b5df0",
+      "bytes": 5297,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/prospective-timing-v3/LINEAGE.json",
+      "public_path": "dev/prospective-timing-v3/LINEAGE.json",
+      "original_sha256": "5254d8e07c2410bb4be6e066193d6400fa017902a510da44de97ea1129b00375",
+      "public_sha256": "c82f5f41fb035085d04114346887b0892b874c923bf58fb03ac17d30700513a6",
+      "bytes": 27656,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/prospective-timing-v3/OBJECTIVES.json",
+      "public_path": "dev/prospective-timing-v3/OBJECTIVES.json",
+      "original_sha256": "967e8b874948bb281a79198b5a8a5ac01eb8f6fa4e209e2d3e7d49b6747bbbf7",
+      "public_sha256": "f6c5ba6765e61f09b9b5c245be1cdaa9496c3cf431c7ef962aea3ae00d1c676b",
+      "bytes": 46940,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/prospective-timing-v3/README.md",
+      "public_path": "dev/prospective-timing-v3/README.md",
+      "original_sha256": "94f389183b92847262b20bb3fe9ef774a9a3720f78a9ae6eb2f4428567c31836",
+      "public_sha256": "94f389183b92847262b20bb3fe9ef774a9a3720f78a9ae6eb2f4428567c31836",
+      "bytes": 4739,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/prospective-timing-v3/ROOT_RELEASE_PATCH.json",
+      "public_path": "dev/prospective-timing-v3/ROOT_RELEASE_PATCH.json",
+      "original_sha256": "170f3e690fb5a3b36335917fceac6b5ed9197af70b6bdc1a2880121faacee4b7",
+      "public_sha256": "f8d1f14a5348db9c2a050eea3dbbd681bbaae4549b05474f5b6094322b91219c",
+      "bytes": 17675,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/prospective-timing-v3/SCOPE_AMENDMENT.json",
+      "public_path": "dev/prospective-timing-v3/SCOPE_AMENDMENT.json",
+      "original_sha256": "46c726e863752aa7129f4add736368b0ed999254fd4cde9cc55fa972a2adece6",
+      "public_sha256": "0a81689d1fb021affcd53cadc7609cff04293d3474a03646922b412bf60855c3",
+      "bytes": 1787,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/prospective-timing-v3/SOURCE_FREEZE.json",
+      "public_path": "dev/prospective-timing-v3/SOURCE_FREEZE.json",
+      "original_sha256": "bafc1d00f5d6590f6821847517e20c322ac1ea9e10ac4438cd67cca23fc25acf",
+      "public_sha256": "79058206564ddda49a6f638a171a73dad717913c4d8b50a0d625636a76480fbb",
+      "bytes": 9732,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/prospective-timing-v3/TEST_RESULTS.json",
+      "public_path": "dev/prospective-timing-v3/TEST_RESULTS.json",
+      "original_sha256": "c173065b1b3632f5b4af821a0162c3b24f38bb2d38cf8aaf5ffb2c6821f1ffb0",
+      "public_sha256": "c5fcdcd31aa29226916d716ca2eb01e828f8de3d14e266bb34c3e4848f105a4f",
+      "bytes": 1408,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/prospective-timing-v3/UNSTARTED_OBSERVATION.json",
+      "public_path": "dev/prospective-timing-v3/UNSTARTED_OBSERVATION.json",
+      "original_sha256": "54718717b3e863aafdc0fc5da2f98736e0ad919453d18cc1e4b643cc0ac53479",
+      "public_sha256": "54718717b3e863aafdc0fc5da2f98736e0ad919453d18cc1e4b643cc0ac53479",
+      "bytes": 685,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/prospective-timing-v3/build_source.py",
+      "public_path": "dev/prospective-timing-v3/build_source.py",
+      "original_sha256": "a733bb3dddd2849ac42ada5101902c04a9317c3dc9d24785b744d359498d4d0d",
+      "public_sha256": "a733bb3dddd2849ac42ada5101902c04a9317c3dc9d24785b744d359498d4d0d",
+      "bytes": 6395,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/prospective-timing-v3/candidate_inputs.py",
+      "public_path": "dev/prospective-timing-v3/candidate_inputs.py",
+      "original_sha256": "213e1a6aea20e3e0499971b283e900e31956338cbe6c02fad5e16aa701445abf",
+      "public_sha256": "213e1a6aea20e3e0499971b283e900e31956338cbe6c02fad5e16aa701445abf",
+      "bytes": 2124,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/prospective-timing-v3/freeze_source.py",
+      "public_path": "dev/prospective-timing-v3/freeze_source.py",
+      "original_sha256": "105e51ac877d8c94c2e2adeb9d2565c375543cdd813f37166419e52246c1ccfa",
+      "public_sha256": "105e51ac877d8c94c2e2adeb9d2565c375543cdd813f37166419e52246c1ccfa",
+      "bytes": 6106,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/SOURCE_FREEZE.json",
+      "public_path": "dev/prospective-timing-v3/integrated-controller/SOURCE_FREEZE.json",
+      "original_sha256": "38f31e444c6dde29f2498a69ba2c1769506b0c4384a048afb25b7882df3f7cb2",
+      "public_sha256": "1e1e8134eaa16023738a51948797a9b8b1c71bcd7f4e959b6a22b19f9184a900",
+      "bytes": 9518,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/case_supervisor.py",
+      "public_path": "dev/prospective-timing-v3/integrated-controller/case_supervisor.py",
+      "original_sha256": "b35627e1bdbf914afb939a69959e6b09ac9bcbe5d54cd471d7319cbcf540f096",
+      "public_sha256": "b35627e1bdbf914afb939a69959e6b09ac9bcbe5d54cd471d7319cbcf540f096",
+      "bytes": 6425,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/common.py",
+      "public_path": "dev/prospective-timing-v3/integrated-controller/common.py",
+      "original_sha256": "e06fe9bcb01fd7eb89999af74422e4e3f504f4601c76fc13df791dac54aedbd7",
+      "public_sha256": "b0beb96100e8c966f2b8f8fabbc01b07a080ba6c1af09f678a6ecf8fa0be4cc4",
+      "bytes": 12757,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/external_case_close.py",
+      "public_path": "dev/prospective-timing-v3/integrated-controller/external_case_close.py",
+      "original_sha256": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c",
+      "public_sha256": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c",
+      "bytes": 3590,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/external_stage_close.py",
+      "public_path": "dev/prospective-timing-v3/integrated-controller/external_stage_close.py",
+      "original_sha256": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4",
+      "public_sha256": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4",
+      "bytes": 3512,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/parent_receipt.py",
+      "public_path": "dev/prospective-timing-v3/integrated-controller/parent_receipt.py",
+      "original_sha256": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea",
+      "public_sha256": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea",
+      "bytes": 4114,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/rolling.py",
+      "public_path": "dev/prospective-timing-v3/integrated-controller/rolling.py",
+      "original_sha256": "6f4f59862c963288eb0b514d8d943adfd6c7356681aded5c9b3b9fe45eb6a874",
+      "public_sha256": "6f4f59862c963288eb0b514d8d943adfd6c7356681aded5c9b3b9fe45eb6a874",
+      "bytes": 6296,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/stage_actor.py",
+      "public_path": "dev/prospective-timing-v3/integrated-controller/stage_actor.py",
+      "original_sha256": "ba3b13cd1209fd086ecd96e24d776deda92824063fc216cd7796e7b299ffb8cc",
+      "public_sha256": "ba3b13cd1209fd086ecd96e24d776deda92824063fc216cd7796e7b299ffb8cc",
+      "bytes": 12965,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/prospective-timing-v3/recovery-control.json",
+      "public_path": "dev/prospective-timing-v3/recovery-control.json",
+      "original_sha256": "9f42d49be57a74ee744c0be41fa337471a3c441a340cde3e4bfc642926afb938",
+      "public_sha256": "02827c50222c4a9ee78962e8e09adb14a092be80ccab242b7e4ea98d436c0243",
+      "bytes": 1224,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/dev/prospective-timing-v3/test_timing.py",
+      "public_path": "dev/prospective-timing-v3/test_timing.py",
+      "original_sha256": "7a5658795745c0410bf474d00c675cf1cc8b243ffd3af083151b2ab68d846ef8",
+      "public_sha256": "7a5658795745c0410bf474d00c675cf1cc8b243ffd3af083151b2ab68d846ef8",
+      "bytes": 10808,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/prospective-timing-v3/ACCEPTANCE.json",
+      "public_path": "evaluation/prospective-timing-v3/ACCEPTANCE.json",
+      "original_sha256": "d23a69ec6cd32755409c52947a7c73487a7b6bf68c31c159624d861a58803587",
+      "public_sha256": "fc53bad3a7109531f988acdae85a096425a63c413c3d5854986e1f4030995355",
+      "bytes": 7504,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/prospective-timing-v3/AUTHOR_TEST_RERUN.txt",
+      "public_path": "evaluation/prospective-timing-v3/AUTHOR_TEST_RERUN.txt",
+      "original_sha256": "4f529c59b1d2ebc859ef9adeb5a1189441ade58da2eea6e941f2c1ff3fda2923",
+      "public_sha256": "4f529c59b1d2ebc859ef9adeb5a1189441ade58da2eea6e941f2c1ff3fda2923",
+      "bytes": 1158,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/prospective-timing-v3/DRAFT_BINDING_CHECK.json",
+      "public_path": "evaluation/prospective-timing-v3/DRAFT_BINDING_CHECK.json",
+      "original_sha256": "30f83539dd88b9161c55cdaacee4806300be4a6758d2d9619d03f7b37d0c2d81",
+      "public_sha256": "21362e5b417e2308288347bd29741c913a4ba19e581195a0725f2236968dcd1e",
+      "bytes": 1343,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/prospective-timing-v3/INDEPENDENT_FIRST_RUN_PREEXISTING_HELPER.txt",
+      "public_path": "evaluation/prospective-timing-v3/INDEPENDENT_FIRST_RUN_PREEXISTING_HELPER.txt",
+      "original_sha256": "d4f377037fed2f30fbf376638381aadd9d88f53c1b99f9612ff7c60b8151fa8c",
+      "public_sha256": "2dcae28b62f343d88f1fcd58592f439dfa9acb72291828ac7b7137950fb03e17",
+      "bytes": 2319,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/prospective-timing-v3/INDEPENDENT_TEST_RESULTS.txt",
+      "public_path": "evaluation/prospective-timing-v3/INDEPENDENT_TEST_RESULTS.txt",
+      "original_sha256": "fe5354bffa604f1cabe8439a770d1f341478139c863b92328d18ebe05879b26c",
+      "public_sha256": "fe5354bffa604f1cabe8439a770d1f341478139c863b92328d18ebe05879b26c",
+      "bytes": 1248,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/prospective-timing-v3/REVIEW.md",
+      "public_path": "evaluation/prospective-timing-v3/REVIEW.md",
+      "original_sha256": "9bdb6fd63b67a887cadf4aeffbb5390a91342cc9b07d0674a28d960c6338158f",
+      "public_sha256": "9bdb6fd63b67a887cadf4aeffbb5390a91342cc9b07d0674a28d960c6338158f",
+      "bytes": 3336,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/prospective-timing-v3/REVIEW_OUTPUT.json",
+      "public_path": "evaluation/prospective-timing-v3/REVIEW_OUTPUT.json",
+      "original_sha256": "19c47aeccbd8bd55a10f039b96b2f80068aa863deaee7619252950a203274590",
+      "public_sha256": "7eea170c971fab8c225286a871a1378c1f853e0019bef50f2d8a739a2aa45aa1",
+      "bytes": 1293,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/prospective-timing-v3/REVIEW_START.json",
+      "public_path": "evaluation/prospective-timing-v3/REVIEW_START.json",
+      "original_sha256": "e8040de7fc9bdd950a456dfb157fd1c9765d0746c14fe3a744804b7c4e3c47af",
+      "public_sha256": "ab106433cc424e5ad8bbe44aedbd4e20a95c7cba31dab4df54443bd0531d7315",
+      "bytes": 640,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/prospective-timing-v3/test_independent.py",
+      "public_path": "evaluation/prospective-timing-v3/test_independent.py",
+      "original_sha256": "deb3806403a28d9d4092ae52cb5444533cca0e77e99d05576b07c28f89077dd6",
+      "public_sha256": "deb3806403a28d9d4092ae52cb5444533cca0e77e99d05576b07c28f89077dd6",
+      "bytes": 16387,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/resume-execution-v1/durable-continuation-v2-source-acceptance.json",
+      "public_path": "evaluation/resume-execution-v1/durable-continuation-v2-source-acceptance.json",
+      "original_sha256": "e340deda1e8ff84b7229d5c71e2dba0d655faaeca2a9aa3afb5fcdb3374da3c4",
+      "public_sha256": "47170e7afb7141c0ae7a882ec214d92ceb0cceb91503c7d694561c7fd08b398b",
+      "bytes": 1084,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-resume-v1/CONTINUATION_ROOT_AUTHORITY_V2.json",
+      "public_path": "ops/execution-resume-v1/CONTINUATION_ROOT_AUTHORITY_V2.json",
+      "original_sha256": "5fba8e4858acbdc3b850f1459c751a9a9579bf5c53fea075cf213f7def55c567",
+      "public_sha256": "a5b6e733578e14c8604c4ff37cf355b2145a44a3754d04cedddbf1b01a22c6a9",
+      "bytes": 3224,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-resume-v1/DURABLE_CONTINUATION_LAUNCH_V2.json",
+      "public_path": "ops/execution-resume-v1/DURABLE_CONTINUATION_LAUNCH_V2.json",
+      "original_sha256": "da569a9527dd54640393a33dba82a0bf661029741d65fca26154cf6906101122",
+      "public_sha256": "61e53e15615332d500d5baa7d5e4d570eb2d97275286e266ff80599a5d7d6d6c",
+      "bytes": 1600,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-resume-v1/PROSPECTIVE_ALLOCATION_V3.json",
+      "public_path": "ops/execution-resume-v1/PROSPECTIVE_ALLOCATION_V3.json",
+      "original_sha256": "8ae738d3b3f3ef2355a7b19ebec5404865aa689e53d1a26f618ebe353e9f697c",
+      "public_sha256": "6ac7a156caad5a9bf9857134a8ec4cda4cfc530cffc12fa721fcd59f66dd7f16",
+      "bytes": 1670,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-resume-v1/continuation-v2/CONTINUATION.json",
+      "public_path": "ops/execution-resume-v1/continuation-v2/CONTINUATION.json",
+      "original_sha256": "ecb8e6bbb604e62b1b1b74db42976ea06c9efd4bd0220c9b36ca8a36fd383ae4",
+      "public_sha256": "fd684964d145a61e0ceecac22a4f4594cb71d53aa41e46fe6f6726eff62c477e",
+      "bytes": 631,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-resume-v1/continuation-v2/LAUNCH_INTENT.json",
+      "public_path": "ops/execution-resume-v1/continuation-v2/LAUNCH_INTENT.json",
+      "original_sha256": "d5eecbe2daf031dc1f1adadca369e0ff17182e74180b90790a3e1c7738efa946",
+      "public_sha256": "c9b42eb72ef28b27117a1f89b497611b7a06c3be02dbcf725e715b166fa73df6",
+      "bytes": 2284,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-resume-v1/root-production-release-v7.json",
+      "public_path": "ops/execution-resume-v1/root-production-release-v7.json",
+      "original_sha256": "4d6593cff543755bd390c9682cbd9f8e76ff8a13f82451ee6821f96aedab4cf2",
+      "public_sha256": "d499bc48f3d67ebb18104562423811d02c81030fd0386fa2784edfddd94c07dd",
+      "bytes": 31339,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/muse-helper-public-check-v1/SOURCE_EXTRACT.json",
+      "public_path": "ops/muse-helper-public-check-v1/SOURCE_EXTRACT.json",
+      "original_sha256": "2ee9e3b9dc01894494051c8615cab58b0e1992c988ae76f102ea4e19a0ad3f22",
+      "public_sha256": "2ee9e3b9dc01894494051c8615cab58b0e1992c988ae76f102ea4e19a0ad3f22",
+      "bytes": 494,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/muse-helper-public-check-v1/root-repair-v1/FREEZE.json",
+      "public_path": "ops/muse-helper-public-check-v1/root-repair-v1/FREEZE.json",
+      "original_sha256": "e3889249bc3374f31e300a05515ec85bb333015f17e634867409c69a64f045a3",
+      "public_sha256": "c9422877edf6bdfcb5731ab0242f5fde9c172c7cd2b64bec6a348346036be179",
+      "bytes": 1305,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/muse-helper-public-check-v1/root-repair-v1/LINEAGE.json",
+      "public_path": "ops/muse-helper-public-check-v1/root-repair-v1/LINEAGE.json",
+      "original_sha256": "41343b1f896babcafbcc22d57bf4bef13c01c16d14d76472ca8cbb5d0fc90eae",
+      "public_sha256": "b0e04d206844d3a68dedd146edbfdb0e13b96f8cf61f856642f6bcb32df9736b",
+      "bytes": 2282,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/muse-helper-public-check-v1/root-repair-v1/SMOKE_RECEIPT.json",
+      "public_path": "ops/muse-helper-public-check-v1/root-repair-v1/SMOKE_RECEIPT.json",
+      "original_sha256": "e695357378c864f11e05c12f0763679c69c02253c65d88fa3c29565de0e6f6dd",
+      "public_sha256": "328991e4f632ceac08a997365287a4544d2d249de3f24d6069a11242a50d1511",
+      "bytes": 867,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/muse-helper-public-check-v1/root-repair-v1/SOURCE_DIFF.patch",
+      "public_path": "ops/muse-helper-public-check-v1/root-repair-v1/SOURCE_DIFF.patch",
+      "original_sha256": "70d55dcd6d7fe34bcb7b2d7cb076d69c80d15a5f6eeaec3b452fdf13ddb19978",
+      "public_sha256": "1f2ed0e8773b2a138078715ba298a3a525f78bf95726485f61e6fed80efa8b3f",
+      "bytes": 11928,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/muse-helper-public-check-v1/root-repair-v1/TESTS.py",
+      "public_path": "ops/muse-helper-public-check-v1/root-repair-v1/TESTS.py",
+      "original_sha256": "2fe840fc77698126bed1970f7238b3121965ff5b805f34ca9c6695b5c9868742",
+      "public_sha256": "2fe840fc77698126bed1970f7238b3121965ff5b805f34ca9c6695b5c9868742",
+      "bytes": 8385,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/muse-helper-public-check-v1/root-repair-v1/TEST_OUTPUT.txt",
+      "public_path": "ops/muse-helper-public-check-v1/root-repair-v1/TEST_OUTPUT.txt",
+      "original_sha256": "79c84753ecb40169165f1dd74fb45eee9078f8ba84467e758f4b25642e447f64",
+      "public_sha256": "79c84753ecb40169165f1dd74fb45eee9078f8ba84467e758f4b25642e447f64",
+      "bytes": 2476,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/muse-helper-public-check-v1/root-repair-v1/TEST_RECEIPT.json",
+      "public_path": "ops/muse-helper-public-check-v1/root-repair-v1/TEST_RECEIPT.json",
+      "original_sha256": "8c2d5732763ec680028ad25dd2908472aed9692feb22e93060deccb4e2e524a0",
+      "public_sha256": "ed712ad1c9a914e1d1a68b08b223ac365369bed9fe38ee82de84da0facf480f9",
+      "bytes": 2455,
+      "sanitized": true
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/muse-helper-public-check-v1/root-repair-v1/verify_public.py",
+      "public_path": "ops/muse-helper-public-check-v1/root-repair-v1/verify_public.py",
+      "original_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+      "public_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+      "bytes": 6851,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/muse-helper-public-check-v1/verify_public.py",
+      "public_path": "ops/muse-helper-public-check-v1/verify_public.py",
+      "original_sha256": "c7bc301604110e0f583931822ad3a890fde03bb651142e00f7f871271f1096c8",
+      "public_sha256": "c7bc301604110e0f583931822ad3a890fde03bb651142e00f7f871271f1096c8",
+      "bytes": 4843,
+      "sanitized": false
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/publication-source-v3/ROOT_HANDOFF.json",
+      "public_path": "ROOT_HANDOFF.json",
+      "original_sha256": "c638aec194cd7e986b94587b163a9c3018472009844efc295301afbe4eaf5da8",
+      "public_sha256": "61b8d13ab27100797150d74f642b44e7d26e50922d1040492667b7cc9c64d727",
+      "bytes": 30026,
+      "sanitized": true
+    },
+    {
+      "source_projection": "publication-generated",
+      "public_path": "PUBLICATION_NOTES.md",
+      "original_sha256": null,
+      "public_sha256": "abbbc128cc2e9e3f5ad2fd645a094038b6788bcb8da81aec466eead8f922ff95",
+      "bytes": 2042,
+      "sanitized": false
+    }
+  ]
+}

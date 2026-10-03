@@ -1,0 +1,15 @@
+{
+  "schema": "pm.er8.public-source-verification.v3",
+  "argv": [
+    "python3",
+    "-I",
+    "-B",
+    "ops/muse-helper-public-check-v1/root-repair-v1/verify_public.py",
+    "COHORT_ROOT"
+  ],
+  "returncode": 0,
+  "stdout": "{\"model_quality_assessed\": false, \"native_replay_verified\": false, \"scope\": \"offline artifact hashes and optional declarations only\", \"timing_declarations_present_and_valid\": true, \"verified_artifacts\": 102}\n",
+  "stderr": "",
+  "public_export_sha256": "660d3609964b49cd45b1a86f00aba54af8eed3e6976d83bfd146ecf630aebe48",
+  "scope": "Offline public hashes and declarations only; no native replay, model quality, timing success or causal cure."
+}

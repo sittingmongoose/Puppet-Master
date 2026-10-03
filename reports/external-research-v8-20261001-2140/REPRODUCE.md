@@ -17,3 +17,6 @@ Planner candidate files and the prospective manifest are preserved from the plan
 [Resume cohort v1](resume-cohort-v1/README.md) now supplies original v3 mechanical RESULT/capture/metrics, selected route source/config closure and runtime source pins. Independent actual native proof remains pending; no research result can be reproduced from the mechanical canary. Host path projections and original pins must be distinguished from public bytes; native subscriptions/application prerequisites remain external.
 
 [Qualified native v3 cohort](resume-qualified-v3-cohort/README.md) supersedes the earlier pending-proof observation: the exact native route passed narrow independent mechanical qualification. Research quality and method effects remain unassessed; no completed integrated result is claimed here.
+
+
+The [prospective source cohort](prospective-source-cohort-v3/README.md) provides a portable executable hash/declaration verifier. From that cohort directory, run `python3 -I -B ops/muse-helper-public-check-v1/root-repair-v1/verify_public.py .`. It checks 102 artifact hashes and twelve paired allocations. Original native execution depends on omitted pinned runtime sources, existing authorized subscriptions and host isolation; this public bundle does not provide portable native replay.

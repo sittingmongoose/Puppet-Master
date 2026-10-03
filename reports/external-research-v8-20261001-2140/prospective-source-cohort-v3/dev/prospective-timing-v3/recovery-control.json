@@ -1,0 +1,36 @@
+{
+  "schema": "er8.recovery-control.v1",
+  "campaign": "LAB_ROOT",
+  "operator_root": "LAB_ROOT/ops/execution-resume-v1",
+  "assembly": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1",
+  "execution": "LAB_ROOT/dev/route-recovery-v2/execution-path-v1",
+  "ledger": {
+    "path": "LAB_ROOT/ops/recovery-v1/ledger_resume.py",
+    "sha256": "a98cf53c1826f1f4c9fa47a9e181eaae8beb971ea41e6564578a253059450b61"
+  },
+  "authority": {
+    "path": "LAB_ROOT/ops/recovery-v1/AUTHORITY_AMENDMENT.json",
+    "sha256": "1479c0b44869d13878b90ccd2f02d5fb2d755cfa0f0b17315105dc48d57616ec"
+  },
+  "deadline_epoch": 1791013030.8303788,
+  "canary_id": "v8-z-mechanical-route-canary-v3",
+  "default_queue": [
+    "V8-BIO-RETR-C-M",
+    "V8-BIO-RETR-T-M",
+    "V8-BIO-AMEND-C-L",
+    "V8-BIO-AMEND-T-L",
+    "V8-BIO-BREADTH-C-M",
+    "V8-BIO-BREADTH-T-M",
+    "V8-NB-RETR-C-M",
+    "V8-NB-RETR-T-M",
+    "V8-NB-AMEND-C-L",
+    "V8-NB-AMEND-T-L",
+    "V8-NB-BREADTH-C-M",
+    "V8-NB-BREADTH-T-M"
+  ],
+  "planning_map": "LAB_ROOT/dev/prospective-timing-v3/INPUT_MAP.json",
+  "resume_authority": {
+    "path": "LAB_ROOT/ops/recovery-v1/RESUME_20261002.json",
+    "sha256": "9fc1c92a3b6074610b3b4026bd4d7500e0f0a135b506863965e2919fb640c02f"
+  }
+}

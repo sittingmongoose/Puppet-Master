@@ -1,0 +1,35 @@
+{
+  "schema": "er8.prospective-timing.source-scope-amendment.v1",
+  "status": "SOURCE_ONLY_ROOT_MESSAGE_RECORD_NOT_LAUNCH_AUTHORITY",
+  "original_helper_started_epoch": 1790986940.29178,
+  "original_helper_deadline_epoch": 1790987840.29178,
+  "original_requested_caps": {
+    "research": 1800,
+    "critic": 1200,
+    "correction": 900,
+    "case_wall": 4500
+  },
+  "original_request_blocked_by_unchanged_3600_ledger_and_native_boundary": true,
+  "root_message_quote": "Good catch; keep unchangedledger/native ceiling3600. Root prospectively narrowsfutureallocation to research1200/critic1200/final900, wholecase3600, occupied5400/outside300/responses160. Sum3300 leaves300hostreserve. Prior4 completedresearch~769–925sec supports1200, noclaimitcures0responsecritic. Do notraiseboundarycaps/requalnative. Expandyourownownership to new LAB/cases/prospective-timing-v3 only, noexistingcasechanges, sooldcandidate_inputs acceptsnewroot. Keep samecaseIDs/pairIDs/source/access/semantic/scores, declarationtimewordingonly1200/1200/900. MinimalnewcontrollerROLES; fullcapfit/3600hardcodelimitsunchanged.",
+  "governing_caps": {
+    "research": 1200,
+    "critic": 1200,
+    "correction": 900,
+    "case_wall": 3600,
+    "case_occupied": 5400,
+    "outside_native": 300,
+    "responses_per_stage": 160
+  },
+  "ownership": [
+    "dev/prospective-timing-v3",
+    "cases/prospective-timing-v3"
+  ],
+  "original_deadline_unchanged": true,
+  "no_new_native_qualification": true,
+  "root_will_review_bind_release_accept_and_launch": true,
+  "no_claim_this_cures_critic_zero_response_failure": true,
+  "root_allocation_authority": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/PROSPECTIVE_ALLOCATION_V3.json",
+    "sha256": "8ae738d3b3f3ef2355a7b19ebec5404865aa689e53d1a26f618ebe353e9f697c"
+  }
+}

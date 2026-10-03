@@ -1,0 +1,18 @@
+{
+  "binding": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/CONTINUATION_ROOT_AUTHORITY_V2.json",
+    "sha256": "5fba8e4858acbdc3b850f1459c751a9a9579bf5c53fea075cf213f7def55c567"
+  },
+  "failures_preserved": true,
+  "global_deadline_epoch": 1791013030.8303788,
+  "metadata": {
+    "ActiveState": "active",
+    "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-production-z-tranche-v7.service",
+    "Id": "er8-v8-production-z-tranche-v7.service",
+    "MainPID": "2191249",
+    "SubState": "running"
+  },
+  "saved_epoch": 1790989762.6892114,
+  "state": "ADOPTED_EXACT_ACTIVE",
+  "usage": "UNKNOWN"
+}

@@ -1,0 +1,41 @@
+--- LAB_ROOT/dev/resume-execution-v2/integrated-controller/common.py
++++ LAB_ROOT/dev/prospective-timing-v3/integrated-controller/common.py
+@@ -19,9 +19,9 @@
+ ACCOUNT = 'existing-authorized-zcode-account-v8-A'
+ ACCOUNTING_SHA = CONTROL['ledger']['sha256']
+ QUEUE = list(CONTROL['default_queue'])
+-ROLES = [('research-proposal', 1800, 'PROPOSAL.md'),
+-         ('independent-candidate-critic', 600, 'CRITIQUE.md'),
+-         ('final-correction', 600, 'FINAL_PROPOSAL.md')]
++ROLES = [('research-proposal', 1200, 'PROPOSAL.md'),
++         ('independent-candidate-critic', 1200, 'CRITIQUE.md'),
++         ('final-correction', 900, 'FINAL_PROPOSAL.md')]
+ PUBLIC_NATIVE = {'activation.json', 'progress.jsonl', 'receipt.json', 'public-metrics.json'}
+ 
+ 
+--- LAB_ROOT/dev/resume-execution-v2/recovery-control.json
++++ LAB_ROOT/dev/prospective-timing-v3/recovery-control.json
+@@ -15,10 +15,20 @@
+   "deadline_epoch": 1791013030.8303788,
+   "canary_id": "v8-z-mechanical-route-canary-v3",
+   "default_queue": [
+-    "V8-BIO-C-Z",
+-    "V8-BIO-WIT-T-Z"
++    "V8-BIO-RETR-C-M",
++    "V8-BIO-RETR-T-M",
++    "V8-BIO-AMEND-C-L",
++    "V8-BIO-AMEND-T-L",
++    "V8-BIO-BREADTH-C-M",
++    "V8-BIO-BREADTH-T-M",
++    "V8-NB-RETR-C-M",
++    "V8-NB-RETR-T-M",
++    "V8-NB-AMEND-C-L",
++    "V8-NB-AMEND-T-L",
++    "V8-NB-BREADTH-C-M",
++    "V8-NB-BREADTH-T-M"
+   ],
+-  "planning_map": "LAB_ROOT/dev/route-recovery-v2/INPUT_MAP.json",
++  "planning_map": "LAB_ROOT/dev/prospective-timing-v3/INPUT_MAP.json",
+   "resume_authority": {
+     "path": "LAB_ROOT/ops/recovery-v1/RESUME_20261002.json",
+     "sha256": "9fc1c92a3b6074610b3b4026bd4d7500e0f0a135b506863965e2919fb640c02f"

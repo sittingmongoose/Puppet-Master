@@ -1,0 +1,44 @@
+{
+  "schema": "er8.durable-continuation.positive-launch.v2",
+  "root_authority": true,
+  "observed_epoch": 1790989041.252853,
+  "unit": "er8-v8-queue-continuation-v2.service",
+  "public_unit_metadata": {
+    "Restart": "no",
+    "RuntimeMaxUSec": "6h 45min",
+    "MainPID": "2143308",
+    "ExecMainStartTimestamp": "Sat 2026-10-03 00:48:10 UTC",
+    "ExecMainStartTimestampMonotonic": "210237060221",
+    "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-queue-continuation-v2.service",
+    "KillMode": "control-group",
+    "Id": "er8-v8-queue-continuation-v2.service",
+    "ActiveState": "active",
+    "SubState": "running"
+  },
+  "actualMainPID_cgroup_positive": true,
+  "actual_cmdline_exact": true,
+  "command": [
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "LAB_ROOT/dev/durable-queue-v2/continuation.py",
+    "--root-request",
+    "LAB_ROOT/ops/execution-resume-v1/CONTINUATION_ROOT_AUTHORITY_V2.json",
+    "--root-request-sha256",
+    "5fba8e4858acbdc3b850f1459c751a9a9579bf5c53fea075cf213f7def55c567"
+  ],
+  "source_freeze": {
+    "path": "LAB_ROOT/dev/durable-queue-v2/SOURCE_FREEZE.json",
+    "sha256": "2f6ca5f83f483e0ca38a84872842e2751832fdb4b4737f33e2dd386a14001e8e"
+  },
+  "runtime_max_seconds": 24300,
+  "globaldeadline_epoch": 1791013030.8303788,
+  "remaining_global_at_observation": 23989.57748055458,
+  "state": "WAITING_FOR_CURRENT_V6_QUIET; no new candidateadmissions yet",
+  "current_jobs": [
+    "V8-NB-BATCH-C-Z-independent-candidate-critic",
+    "V8-NB-B-Z-independent-candidate-critic"
+  ],
+  "usage": "UNKNOWN",
+  "no_budget_reset": true
+}

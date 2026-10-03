@@ -1,0 +1,614 @@
+{
+  "schema": "pm.er8.root-positive-public-source-handoff.v3",
+  "original_birth_epoch": 1790990170.4178967,
+  "original_deadline_epoch": 1790991070.4178967,
+  "created_epoch": 1790990312.2815626,
+  "scope": "Source-only positive inventories and immutable/adopted root metadata; offline helper provenance. No native events/stdout/stderr, raw captures, generated candidate bodies, evaluator keys, proprietary SDK, auth or private profiles. No recursive export.",
+  "native_replay_portable": false,
+  "public_verifier_portable": true,
+  "quality_assessed": false,
+  "timing_success_or_cure_claim": false,
+  "positive_files": [
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/briefs/bioimaging.md",
+      "sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+      "bytes": 3352,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/briefs/notebook-workspace.md",
+      "sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+      "bytes": 3603,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-AMEND-C-L/METHOD.md",
+      "sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "bytes": 473,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-AMEND-C-L/TASK.md",
+      "sha256": "ab85a3cceb572759326fbdc24399ec21fdbb0971087a8c2c398f4bfc58027ab4",
+      "bytes": 985,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-AMEND-C-L/manifest.json",
+      "sha256": "90404c986d2c47c7c4f2b4f75861ec73be9e68b8d18a94c2c5831692dce73c16",
+      "bytes": 4670,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-AMEND-T-L/METHOD.md",
+      "sha256": "cb187544119249fdeef595b43cce64fd0f858e0cf1243264cf4bb7d59fad39b8",
+      "bytes": 1482,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-AMEND-T-L/TASK.md",
+      "sha256": "78d047ac770c68486f950975b7cf71e763c43e8a61043a304f022982145d5a74",
+      "bytes": 985,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-AMEND-T-L/manifest.json",
+      "sha256": "91bd8af40e6a66e3eb591c0966ace99b6a34a5d5403e54d53678e09c6ce92d53",
+      "bytes": 4756,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-BREADTH-C-M/METHOD.md",
+      "sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "bytes": 473,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-BREADTH-C-M/TASK.md",
+      "sha256": "76005819782e19c0f729357c1c319dbfeb5c80f581506f374e5e799b5a591125",
+      "bytes": 987,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-BREADTH-C-M/manifest.json",
+      "sha256": "da1ec56c4d18dd5cf1976d1e787a88aec0758be7c0a8b5dc4faffb2cc73b5841",
+      "bytes": 4682,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-BREADTH-T-M/METHOD.md",
+      "sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+      "bytes": 1360,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-BREADTH-T-M/TASK.md",
+      "sha256": "08b68fed3bd3447c35914d82a3921fb8139c725d010fe0fe7756e4f45569b6d1",
+      "bytes": 987,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-BREADTH-T-M/manifest.json",
+      "sha256": "f2b6eba51c306384444e67a94e272617d47dbd220b42493701c5c52b7f718353",
+      "bytes": 4762,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-RETR-C-M/METHOD.md",
+      "sha256": "6b617504d3749407e1a80d876bdce0c1117668326e6131a582e730c50b106d0a",
+      "bytes": 982,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-RETR-C-M/TASK.md",
+      "sha256": "1467f97f682cb595a0239cf725ec938409bf44d39356624dcdf3af0394cd2983",
+      "bytes": 984,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-RETR-C-M/manifest.json",
+      "sha256": "b129330848603ab7685a34cc699f8c1363d4d3e9b1304548eedbee9f3128d166",
+      "bytes": 4709,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-RETR-T-M/METHOD.md",
+      "sha256": "700f321706f86f2eb5e9debe5cabdef89e2433b24ca272eb0d13faee400221cf",
+      "bytes": 1440,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-RETR-T-M/TASK.md",
+      "sha256": "71b1ea9250e7ee73f670ef060dd04c9c2fc350cd085eaa581c9e0668472635b7",
+      "bytes": 984,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-BIO-RETR-T-M/manifest.json",
+      "sha256": "a9c76e9a305627b02055e1d5bf303d796fb377ded09a46415cda7c0728c2d617",
+      "bytes": 4772,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-AMEND-C-L/METHOD.md",
+      "sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "bytes": 473,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-AMEND-C-L/TASK.md",
+      "sha256": "22b45e04ca754bf9da692d3958ee6963d3194eec78d3e1092715b9cc5b1b2c4d",
+      "bytes": 984,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-AMEND-C-L/manifest.json",
+      "sha256": "4b5ff563e7e6ae787821da756c0c84da56c07cd6966ad276138846bf709aef89",
+      "bytes": 4688,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-AMEND-T-L/METHOD.md",
+      "sha256": "cb187544119249fdeef595b43cce64fd0f858e0cf1243264cf4bb7d59fad39b8",
+      "bytes": 1482,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-AMEND-T-L/TASK.md",
+      "sha256": "0f334dd50a6ecaa66a045d08fc2005706231474086da2528d10c3736e6309d64",
+      "bytes": 984,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-AMEND-T-L/manifest.json",
+      "sha256": "4ae1e22d314bc24f6c525838db4ee4bc2297511acb3487d2adac5ac61af48724",
+      "bytes": 4774,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-BREADTH-C-M/METHOD.md",
+      "sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "bytes": 473,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-BREADTH-C-M/TASK.md",
+      "sha256": "9d28f2046cd210b619e8d1bcee2dbc0f509e94bd606784a3738af870c4b6941a",
+      "bytes": 986,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-BREADTH-C-M/manifest.json",
+      "sha256": "b709b4041eea59d8b34d20efff930f3fd2743016cf51b9dc8315e454e66d7031",
+      "bytes": 4700,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-BREADTH-T-M/METHOD.md",
+      "sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+      "bytes": 1360,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-BREADTH-T-M/TASK.md",
+      "sha256": "444152ab8048571dd236c47be37306d19d00d531d09da14a03ef759f1452b2cf",
+      "bytes": 986,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-BREADTH-T-M/manifest.json",
+      "sha256": "3bafa60aab573529d4c70f1d2727ac3bf1039da563766a46aa51cf0ac7cf43f3",
+      "bytes": 4780,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-RETR-C-M/METHOD.md",
+      "sha256": "6b617504d3749407e1a80d876bdce0c1117668326e6131a582e730c50b106d0a",
+      "bytes": 982,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-RETR-C-M/TASK.md",
+      "sha256": "6da30155e3dc85e5f03da8b3ce9570e18ab82ce799f273c416934f84f4c955c8",
+      "bytes": 983,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-RETR-C-M/manifest.json",
+      "sha256": "31f39b272d31b9db89ba63e8e20fbee770e5f43c5c5f51ee0c4ff1ab9be0433a",
+      "bytes": 4727,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-RETR-T-M/METHOD.md",
+      "sha256": "700f321706f86f2eb5e9debe5cabdef89e2433b24ca272eb0d13faee400221cf",
+      "bytes": 1440,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-RETR-T-M/TASK.md",
+      "sha256": "90771b15356d85cc26069b31ddb05992a235b49939defda9521f8eed1d3eb769",
+      "bytes": 983,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-RETR-T-M/manifest.json",
+      "sha256": "ec7ad0c991691210a050cf2d6681caf290297b4396ff557bb7d928ad99834ea9",
+      "bytes": 4790,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/sandbox-plans/bioimaging.md",
+      "sha256": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30",
+      "bytes": 959,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/sandbox-plans/notebook-workspace.md",
+      "sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+      "bytes": 920,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/source-access.json",
+      "sha256": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df",
+      "bytes": 1728,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/templates/correction.TASK.md",
+      "sha256": "1421e111351ebd35697394e93783cc85587d5ff21c003592982c20a75b9fb39e",
+      "bytes": 1477,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/templates/critic.TASK.md",
+      "sha256": "7e0d69c1a1c9e92ad37b8b8fa97863fbde211eb06563cb431f330849e48fb0d2",
+      "bytes": 1449,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/cases/prospective-timing-v3/templates/research.TASK.md",
+      "sha256": "dcfe7bea57da20811145ea5649464534ae3709b502284bdce754d8e7ae9f9802",
+      "bytes": 1586,
+      "pin_origin": "dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json:case_source_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/durable-queue-v2/DEPENDENCIES.json",
+      "sha256": "37335ba0f1b6bb1b5b041fa1c51bc6159b0aa345f0dca530070c71a7b5ea62ac",
+      "bytes": 24695,
+      "pin_origin": "dev/durable-queue-v2/SOURCE_FREEZE.json:positive_source_bundle_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/durable-queue-v2/LINEAGE.json",
+      "sha256": "e44168d5b39f384712d58ea1de396a8f5eaf447b1a9434a0ae3ca902b28d1490",
+      "bytes": 2872,
+      "pin_origin": "dev/durable-queue-v2/SOURCE_FREEZE.json:positive_source_bundle_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/durable-queue-v2/SOURCE_FREEZE.json",
+      "sha256": "2f6ca5f83f483e0ca38a84872842e2751832fdb4b4737f33e2dd386a14001e8e",
+      "bytes": 25487,
+      "pin_origin": "publication positive selection at original byte snapshot"
+    },
+    {
+      "path": "LAB_ROOT/dev/durable-queue-v2/TEST_RECEIPT.json",
+      "sha256": "415a1a281c70ea9a29a03ba5622ff1889e18f2a7c59ba0173069552af0577db6",
+      "bytes": 384,
+      "pin_origin": "dev/durable-queue-v2/SOURCE_FREEZE.json:positive_source_bundle_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/durable-queue-v2/continuation.py",
+      "sha256": "0a1a9e423f9df7bb372fdd44c89b3dde610c6d5ad6a233d148074d5563397def",
+      "bytes": 20041,
+      "pin_origin": "dev/durable-queue-v2/SOURCE_FREEZE.json:positive_source_bundle_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/durable-queue-v2/test_continuation.py",
+      "sha256": "48ef84fc90925a8e0b5600864266798a071c3edff56aaf32c56aad15d0d0815e",
+      "bytes": 9231,
+      "pin_origin": "dev/durable-queue-v2/SOURCE_FREEZE.json:positive_source_bundle_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/prospective-timing-v3/CASE_SOURCE_FREEZE.json",
+      "sha256": "b65fcce1cb1398cff2a9e4bdadc2c9d41faa753e8d52a6a92fe31e1097624448",
+      "bytes": 19689,
+      "pin_origin": "dev/prospective-timing-v3/SOURCE_FREEZE.json:positive_source_bundle_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/prospective-timing-v3/CONTROLLER_DIFF.patch",
+      "sha256": "5d0b8890b3bc6b64a8ff60272705688587b2107226d62fc0bf06226862b6a210",
+      "bytes": 2095,
+      "pin_origin": "dev/prospective-timing-v3/SOURCE_FREEZE.json:positive_source_bundle_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/prospective-timing-v3/INPUT_MAP.json",
+      "sha256": "6dd1abc0b8946f6edde57529628b989af03a8b8b9800e1cd30d02e0583c866bb",
+      "bytes": 8321,
+      "pin_origin": "dev/prospective-timing-v3/SOURCE_FREEZE.json:positive_source_bundle_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/prospective-timing-v3/LINEAGE.json",
+      "sha256": "5254d8e07c2410bb4be6e066193d6400fa017902a510da44de97ea1129b00375",
+      "bytes": 40193,
+      "pin_origin": "dev/prospective-timing-v3/SOURCE_FREEZE.json:positive_source_bundle_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/prospective-timing-v3/OBJECTIVES.json",
+      "sha256": "967e8b874948bb281a79198b5a8a5ac01eb8f6fa4e209e2d3e7d49b6747bbbf7",
+      "bytes": 47012,
+      "pin_origin": "dev/prospective-timing-v3/SOURCE_FREEZE.json:positive_source_bundle_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/prospective-timing-v3/README.md",
+      "sha256": "94f389183b92847262b20bb3fe9ef774a9a3720f78a9ae6eb2f4428567c31836",
+      "bytes": 4739,
+      "pin_origin": "dev/prospective-timing-v3/SOURCE_FREEZE.json:positive_source_bundle_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/prospective-timing-v3/ROOT_RELEASE_PATCH.json",
+      "sha256": "170f3e690fb5a3b36335917fceac6b5ed9197af70b6bdc1a2880121faacee4b7",
+      "bytes": 24479,
+      "pin_origin": "dev/prospective-timing-v3/SOURCE_FREEZE.json:positive_source_bundle_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/prospective-timing-v3/SCOPE_AMENDMENT.json",
+      "sha256": "46c726e863752aa7129f4add736368b0ed999254fd4cde9cc55fa972a2adece6",
+      "bytes": 1853,
+      "pin_origin": "dev/prospective-timing-v3/SOURCE_FREEZE.json:positive_source_bundle_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/prospective-timing-v3/SOURCE_FREEZE.json",
+      "sha256": "bafc1d00f5d6590f6821847517e20c322ac1ea9e10ac4438cd67cca23fc25acf",
+      "bytes": 13851,
+      "pin_origin": "publication positive selection at original byte snapshot"
+    },
+    {
+      "path": "LAB_ROOT/dev/prospective-timing-v3/TEST_RESULTS.json",
+      "sha256": "c173065b1b3632f5b4af821a0162c3b24f38bb2d38cf8aaf5ffb2c6821f1ffb0",
+      "bytes": 1471,
+      "pin_origin": "dev/prospective-timing-v3/SOURCE_FREEZE.json:positive_source_bundle_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/prospective-timing-v3/UNSTARTED_OBSERVATION.json",
+      "sha256": "54718717b3e863aafdc0fc5da2f98736e0ad919453d18cc1e4b643cc0ac53479",
+      "bytes": 685,
+      "pin_origin": "dev/prospective-timing-v3/SOURCE_FREEZE.json:positive_source_bundle_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/prospective-timing-v3/build_source.py",
+      "sha256": "a733bb3dddd2849ac42ada5101902c04a9317c3dc9d24785b744d359498d4d0d",
+      "bytes": 6395,
+      "pin_origin": "dev/prospective-timing-v3/SOURCE_FREEZE.json:positive_source_bundle_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/prospective-timing-v3/candidate_inputs.py",
+      "sha256": "213e1a6aea20e3e0499971b283e900e31956338cbe6c02fad5e16aa701445abf",
+      "bytes": 2124,
+      "pin_origin": "dev/prospective-timing-v3/SOURCE_FREEZE.json:positive_source_bundle_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/prospective-timing-v3/freeze_source.py",
+      "sha256": "105e51ac877d8c94c2e2adeb9d2565c375543cdd813f37166419e52246c1ccfa",
+      "bytes": 6106,
+      "pin_origin": "dev/prospective-timing-v3/SOURCE_FREEZE.json:positive_source_bundle_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/SOURCE_FREEZE.json",
+      "sha256": "38f31e444c6dde29f2498a69ba2c1769506b0c4384a048afb25b7882df3f7cb2",
+      "bytes": 13385,
+      "pin_origin": "publication positive selection at original byte snapshot"
+    },
+    {
+      "path": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/case_supervisor.py",
+      "sha256": "b35627e1bdbf914afb939a69959e6b09ac9bcbe5d54cd471d7319cbcf540f096",
+      "bytes": 6425,
+      "pin_origin": "dev/prospective-timing-v3/integrated-controller/SOURCE_FREEZE.json:closure_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/common.py",
+      "sha256": "e06fe9bcb01fd7eb89999af74422e4e3f504f4601c76fc13df791dac54aedbd7",
+      "bytes": 12781,
+      "pin_origin": "dev/prospective-timing-v3/integrated-controller/SOURCE_FREEZE.json:closure_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/external_case_close.py",
+      "sha256": "750cc04ecc597aee2b293ed4e4efaf0e077531489432e27fea7a7b88cb7c413c",
+      "bytes": 3590,
+      "pin_origin": "dev/prospective-timing-v3/integrated-controller/SOURCE_FREEZE.json:closure_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/external_stage_close.py",
+      "sha256": "766a80771a83f5005e59267fa2c65cc8dfad8311743d1d0b3bd0b9a7d4fd5da4",
+      "bytes": 3512,
+      "pin_origin": "dev/prospective-timing-v3/integrated-controller/SOURCE_FREEZE.json:closure_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/parent_receipt.py",
+      "sha256": "143c26488ef885632452945477d4a539d8e95c140a16f146868e2d3cf6ccb1ea",
+      "bytes": 4114,
+      "pin_origin": "dev/prospective-timing-v3/integrated-controller/SOURCE_FREEZE.json:closure_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/rolling.py",
+      "sha256": "6f4f59862c963288eb0b514d8d943adfd6c7356681aded5c9b3b9fe45eb6a874",
+      "bytes": 6296,
+      "pin_origin": "dev/prospective-timing-v3/integrated-controller/SOURCE_FREEZE.json:closure_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/stage_actor.py",
+      "sha256": "ba3b13cd1209fd086ecd96e24d776deda92824063fc216cd7796e7b299ffb8cc",
+      "bytes": 12965,
+      "pin_origin": "dev/prospective-timing-v3/integrated-controller/SOURCE_FREEZE.json:closure_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/prospective-timing-v3/recovery-control.json",
+      "sha256": "9f42d49be57a74ee744c0be41fa337471a3c441a340cde3e4bfc642926afb938",
+      "bytes": 1728,
+      "pin_origin": "dev/prospective-timing-v3/SOURCE_FREEZE.json:positive_source_bundle_sha256"
+    },
+    {
+      "path": "LAB_ROOT/dev/prospective-timing-v3/test_timing.py",
+      "sha256": "7a5658795745c0410bf474d00c675cf1cc8b243ffd3af083151b2ab68d846ef8",
+      "bytes": 10808,
+      "pin_origin": "dev/prospective-timing-v3/SOURCE_FREEZE.json:positive_source_bundle_sha256"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/prospective-timing-v3/ACCEPTANCE.json",
+      "sha256": "d23a69ec6cd32755409c52947a7c73487a7b6bf68c31c159624d861a58803587",
+      "bytes": 8260,
+      "pin_origin": "evaluation/prospective-timing-v3/REVIEW_OUTPUT.json:outputs"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/prospective-timing-v3/AUTHOR_TEST_RERUN.txt",
+      "sha256": "4f529c59b1d2ebc859ef9adeb5a1189441ade58da2eea6e941f2c1ff3fda2923",
+      "bytes": 1158,
+      "pin_origin": "evaluation/prospective-timing-v3/REVIEW_OUTPUT.json:outputs"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/prospective-timing-v3/DRAFT_BINDING_CHECK.json",
+      "sha256": "30f83539dd88b9161c55cdaacee4806300be4a6758d2d9619d03f7b37d0c2d81",
+      "bytes": 1406,
+      "pin_origin": "evaluation/prospective-timing-v3/REVIEW_OUTPUT.json:outputs"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/prospective-timing-v3/INDEPENDENT_FIRST_RUN_PREEXISTING_HELPER.txt",
+      "sha256": "d4f377037fed2f30fbf376638381aadd9d88f53c1b99f9612ff7c60b8151fa8c",
+      "bytes": 2508,
+      "pin_origin": "evaluation/prospective-timing-v3/REVIEW_OUTPUT.json:outputs"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/prospective-timing-v3/INDEPENDENT_TEST_RESULTS.txt",
+      "sha256": "fe5354bffa604f1cabe8439a770d1f341478139c863b92328d18ebe05879b26c",
+      "bytes": 1248,
+      "pin_origin": "evaluation/prospective-timing-v3/REVIEW_OUTPUT.json:outputs"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/prospective-timing-v3/REVIEW.md",
+      "sha256": "9bdb6fd63b67a887cadf4aeffbb5390a91342cc9b07d0674a28d960c6338158f",
+      "bytes": 3336,
+      "pin_origin": "evaluation/prospective-timing-v3/REVIEW_OUTPUT.json:outputs"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/prospective-timing-v3/REVIEW_OUTPUT.json",
+      "sha256": "19c47aeccbd8bd55a10f039b96b2f80068aa863deaee7619252950a203274590",
+      "bytes": 1797,
+      "pin_origin": "publication positive selection at original byte snapshot"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/prospective-timing-v3/REVIEW_START.json",
+      "sha256": "e8040de7fc9bdd950a456dfb157fd1c9765d0746c14fe3a744804b7c4e3c47af",
+      "bytes": 703,
+      "pin_origin": "evaluation/prospective-timing-v3/REVIEW_OUTPUT.json:outputs"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/prospective-timing-v3/test_independent.py",
+      "sha256": "deb3806403a28d9d4092ae52cb5444533cca0e77e99d05576b07c28f89077dd6",
+      "bytes": 16387,
+      "pin_origin": "evaluation/prospective-timing-v3/REVIEW_OUTPUT.json:outputs"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/resume-execution-v1/durable-continuation-v2-source-acceptance.json",
+      "sha256": "e340deda1e8ff84b7229d5c71e2dba0d655faaeca2a9aa3afb5fcdb3374da3c4",
+      "bytes": 1210,
+      "pin_origin": "publication positive selection at original byte snapshot"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/CONTINUATION_ROOT_AUTHORITY_V2.json",
+      "sha256": "5fba8e4858acbdc3b850f1459c751a9a9579bf5c53fea075cf213f7def55c567",
+      "bytes": 4295,
+      "pin_origin": "publication positive selection at original byte snapshot"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/DURABLE_CONTINUATION_LAUNCH_V2.json",
+      "sha256": "da569a9527dd54640393a33dba82a0bf661029741d65fca26154cf6906101122",
+      "bytes": 1789,
+      "pin_origin": "publication positive selection at original byte snapshot"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/PROSPECTIVE_ALLOCATION_V3.json",
+      "sha256": "8ae738d3b3f3ef2355a7b19ebec5404865aa689e53d1a26f618ebe353e9f697c",
+      "bytes": 1736,
+      "pin_origin": "publication positive selection at original byte snapshot"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/continuation-v2/CONTINUATION.json",
+      "sha256": "ecb8e6bbb604e62b1b1b74db42976ea06c9efd4bd0220c9b36ca8a36fd383ae4",
+      "bytes": 694,
+      "pin_origin": "publication positive selection at original byte snapshot"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/continuation-v2/LAUNCH_INTENT.json",
+      "sha256": "d5eecbe2daf031dc1f1adadca369e0ff17182e74180b90790a3e1c7738efa946",
+      "bytes": 3040,
+      "pin_origin": "publication positive selection at original byte snapshot"
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/root-production-release-v7.json",
+      "sha256": "4d6593cff543755bd390c9682cbd9f8e76ff8a13f82451ee6821f96aedab4cf2",
+      "bytes": 43459,
+      "pin_origin": "publication positive selection at original byte snapshot"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-helper-public-check-v1/SOURCE_EXTRACT.json",
+      "sha256": "2ee9e3b9dc01894494051c8615cab58b0e1992c988ae76f102ea4e19a0ad3f22",
+      "bytes": 494,
+      "pin_origin": "publication positive selection at original byte snapshot"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-helper-public-check-v1/root-repair-v1/FREEZE.json",
+      "sha256": "e3889249bc3374f31e300a05515ec85bb333015f17e634867409c69a64f045a3",
+      "bytes": 1746,
+      "pin_origin": "publication positive selection at original byte snapshot"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-helper-public-check-v1/root-repair-v1/LINEAGE.json",
+      "sha256": "41343b1f896babcafbcc22d57bf4bef13c01c16d14d76472ca8cbb5d0fc90eae",
+      "bytes": 2471,
+      "pin_origin": "ops/muse-helper-public-check-v1/root-repair-v1/FREEZE.json:files"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-helper-public-check-v1/root-repair-v1/SMOKE_RECEIPT.json",
+      "sha256": "e695357378c864f11e05c12f0763679c69c02253c65d88fa3c29565de0e6f6dd",
+      "bytes": 923,
+      "pin_origin": "ops/muse-helper-public-check-v1/root-repair-v1/FREEZE.json:files"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-helper-public-check-v1/root-repair-v1/SOURCE_DIFF.patch",
+      "sha256": "70d55dcd6d7fe34bcb7b2d7cb076d69c80d15a5f6eeaec3b452fdf13ddb19978",
+      "bytes": 12054,
+      "pin_origin": "ops/muse-helper-public-check-v1/root-repair-v1/FREEZE.json:files"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-helper-public-check-v1/root-repair-v1/TESTS.py",
+      "sha256": "2fe840fc77698126bed1970f7238b3121965ff5b805f34ca9c6695b5c9868742",
+      "bytes": 8385,
+      "pin_origin": "ops/muse-helper-public-check-v1/root-repair-v1/FREEZE.json:files"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-helper-public-check-v1/root-repair-v1/TEST_OUTPUT.txt",
+      "sha256": "79c84753ecb40169165f1dd74fb45eee9078f8ba84467e758f4b25642e447f64",
+      "bytes": 2476,
+      "pin_origin": "ops/muse-helper-public-check-v1/root-repair-v1/FREEZE.json:files"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-helper-public-check-v1/root-repair-v1/TEST_RECEIPT.json",
+      "sha256": "8c2d5732763ec680028ad25dd2908472aed9692feb22e93060deccb4e2e524a0",
+      "bytes": 2518,
+      "pin_origin": "ops/muse-helper-public-check-v1/root-repair-v1/FREEZE.json:files"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-helper-public-check-v1/root-repair-v1/verify_public.py",
+      "sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+      "bytes": 6851,
+      "pin_origin": "ops/muse-helper-public-check-v1/root-repair-v1/FREEZE.json:files"
+    },
+    {
+      "path": "LAB_ROOT/ops/muse-helper-public-check-v1/verify_public.py",
+      "sha256": "c7bc301604110e0f583931822ad3a890fde03bb651142e00f7f871271f1096c8",
+      "bytes": 4843,
+      "pin_origin": "ops/muse-helper-public-check-v1/SOURCE_EXTRACT.json:source_sha256"
+    }
+  ],
+  "excluded_dependencies": "Unchanged/transitive runtime dependencies are locator/hash provenance only and are not exported. Mutable RESTART excluded."
+}

@@ -1,0 +1,26 @@
+{
+  "observed_utc": "2026-10-03T00:26:19.875764+00:00",
+  "scope": "read-only filtered metadata; no activation, no state rewrite",
+  "case_queue": [
+    "V8-BIO-RETR-C-M",
+    "V8-BIO-RETR-T-M",
+    "V8-BIO-AMEND-C-L",
+    "V8-BIO-AMEND-T-L",
+    "V8-BIO-BREADTH-C-M",
+    "V8-BIO-BREADTH-T-M",
+    "V8-NB-RETR-C-M",
+    "V8-NB-RETR-T-M",
+    "V8-NB-AMEND-C-L",
+    "V8-NB-AMEND-T-L",
+    "V8-NB-BREADTH-C-M",
+    "V8-NB-BREADTH-T-M"
+  ],
+  "all_cases_absent": true,
+  "all_case_job_counts_zero": true,
+  "reservation_per_case": {
+    "native_starts": 3,
+    "occupied_seconds": 5400,
+    "final_job": "<case>-final-correction"
+  },
+  "must_recheck_at_root_release_and_launch": true
+}

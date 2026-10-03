@@ -1,0 +1,54 @@
+{
+  "argv": [
+    "systemd-run",
+    "--user",
+    "--quiet",
+    "--unit=er8-v8-production-z-tranche-v7.service",
+    "--working-directory=LAB_ROOT",
+    "--property=Type=exec",
+    "--property=RuntimeMaxSec=23258",
+    "--property=KillMode=control-group",
+    "--property=Restart=no",
+    "--property=StandardOutput=null",
+    "--property=StandardError=null",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "LAB_ROOT/ops/execution-resume-v1/quiet_production_monitor.py",
+    "--root-release",
+    "LAB_ROOT/ops/execution-resume-v1/root-production-release-v7.json",
+    "--release-sha256",
+    "4d6593cff543755bd390c9682cbd9f8e76ff8a13f82451ee6821f96aedab4cf2",
+    "--source-root",
+    "LAB_ROOT/dev/prospective-timing-v3",
+    "--run-root",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7"
+  ],
+  "binding": {
+    "current_release": "LAB_ROOT/ops/execution-resume-v1/root-production-release-v6.json",
+    "current_release_sha256": "e15d0f1d8d7ce7a74dac72111df2848efe296e5fc605ab2e2f76f35c6f4d8aac",
+    "current_unit": "er8-v8-production-z-tranche-v6.service",
+    "global_deadline_epoch": 1791013030.8303788,
+    "monitor": "LAB_ROOT/ops/execution-resume-v1/quiet_production_monitor.py",
+    "monitor_sha256": "44c3671a2f51d02e412ac5d0df1e719098a80a755ae192a4a07c7fae1d5ae042",
+    "next_release": "LAB_ROOT/ops/execution-resume-v1/root-production-release-v7.json",
+    "next_release_sha256": "4d6593cff543755bd390c9682cbd9f8e76ff8a13f82451ee6821f96aedab4cf2",
+    "next_unit": "er8-v8-production-z-tranche-v7.service",
+    "root_claim": "LAB_ROOT/ops/recovery-v1/SUPERVISOR_DURABLE.json",
+    "root_request": {
+      "path": "LAB_ROOT/ops/execution-resume-v1/CONTINUATION_ROOT_AUTHORITY_V2.json",
+      "sha256": "5fba8e4858acbdc3b850f1459c751a9a9579bf5c53fea075cf213f7def55c567"
+    },
+    "root_unit": "er8-v8-root-durable-20261002-2348.service",
+    "run_root": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7",
+    "source_root": "LAB_ROOT/dev/prospective-timing-v3"
+  },
+  "created_epoch": 1790989762.5775838,
+  "launch_outcome": "UNKNOWN",
+  "schema": "pm.er8.one-shot-launch-intent.v1",
+  "terminal": {
+    "failures_preserved": true,
+    "held_returncode": 126,
+    "terminal_sha256": "e63025a0bca84f9c550f26162f1e5da7119dfd52011fcf98dc102655770863dc"
+  }
+}

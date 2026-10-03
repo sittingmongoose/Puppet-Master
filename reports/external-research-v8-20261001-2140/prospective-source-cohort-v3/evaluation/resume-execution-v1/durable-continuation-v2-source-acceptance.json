@@ -1,0 +1,22 @@
+{
+  "schema": "er8.durable-continuation.source-acceptance.v2",
+  "root_authority": true,
+  "verdict": "accepted_constant_binding_successor",
+  "source_freeze": {
+    "path": "LAB_ROOT/dev/durable-queue-v2/SOURCE_FREEZE.json",
+    "sha256": "2f6ca5f83f483e0ca38a84872842e2751832fdb4b4737f33e2dd386a14001e8e"
+  },
+  "source_sha256": "0a1a9e423f9df7bb372fdd44c89b3dde610c6d5ad6a233d148074d5563397def",
+  "guard_class_function_import_main_AST_identical_to_v1": true,
+  "tests": {
+    "count": 13,
+    "PASS": true,
+    "sha256": "48ef84fc90925a8e0b5600864266798a071c3edff56aaf32c56aad15d0d0815e"
+  },
+  "independent_timing_acceptance": {
+    "path": "LAB_ROOT/evaluation/prospective-timing-v3/ACCEPTANCE.json",
+    "sha256": "d23a69ec6cd32755409c52947a7c73487a7b6bf68c31c159624d861a58803587"
+  },
+  "root_readonly_release_planning_validation": "12PASS; actualbinding4d6593c...4cf2; noledgerwrites",
+  "limits": "Originalglobaldeadline/pause/candidatecapfamilylimits; currentV6originalcapsunchanged; onceonlyV7nativeexecutionafterpositivequiet. No modelquality orcausalstall/cureclaim."
+}
