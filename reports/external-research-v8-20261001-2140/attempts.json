@@ -1,6 +1,6 @@
 {
   "schema": "pm.external_research.v8.public_attempts.v1",
-  "checkpoint": "BIO_BATCH_CRITICS_ACTIVE_AFTER_NB_TIMEOUTS",
+  "checkpoint": "V7_RETRIEVAL_CRITICS_ACTIVE_V6_INCOMPLETE",
   "attempts": [
     {
       "id": "v8-z-mechanical-route-canary-v1",
@@ -114,22 +114,68 @@
     },
     {
       "id": "V8-BIO-BATCH-C-Z",
-      "scope": "integrated pipeline in progress",
-      "status": "RESEARCH_COMPLETE_FRESH_CRITIC_ACTIVE_AT_SELECTED_OBSERVATION",
+      "scope": "incomplete integrated pipeline",
+      "status": "RESEARCH_COMPLETE_CRITIC_INCOMPLETE_NO_FINAL",
       "native_goal_starts": 2,
       "research_quality": "UNASSESSED",
-      "evidence": "notebook-partial-cohort-v1/ops/publication-notebook-v1/RESULTS.json"
+      "evidence": "batching-partial-cohort-v1/ops/recovery-v1/OBSERVATION_20261003_012605.json",
+      "observation_utc": "2026-10-03T01:25:39.382829+00:00"
     },
     {
       "id": "V8-BIO-B-Z",
-      "scope": "integrated pipeline in progress",
-      "status": "RESEARCH_COMPLETE_FRESH_CRITIC_ACTIVE_AT_SELECTED_OBSERVATION",
+      "scope": "incomplete integrated pipeline",
+      "status": "RESEARCH_COMPLETE_CRITIC_INCOMPLETE_NO_FINAL",
       "native_goal_starts": 2,
       "research_quality": "UNASSESSED",
-      "evidence": "notebook-partial-cohort-v1/ops/publication-notebook-v1/RESULTS.json"
+      "evidence": "batching-partial-cohort-v1/ops/recovery-v1/OBSERVATION_20261003_012605.json",
+      "observation_utc": "2026-10-03T01:25:39.382829+00:00"
+    },
+    {
+      "id": "V8-NB-BATCH-C-Z",
+      "scope": "incomplete integrated pipeline",
+      "status": "RESEARCH_COMPLETE_CRITIC_INCOMPLETE_NO_FINAL",
+      "native_goal_starts": 2,
+      "research_quality": "UNASSESSED",
+      "evidence": "batching-partial-cohort-v1/ops/recovery-v1/OBSERVATION_20261003_012605.json",
+      "observation_utc": "2026-10-03T01:25:39.382829+00:00"
+    },
+    {
+      "id": "V8-NB-B-Z",
+      "scope": "incomplete integrated pipeline",
+      "status": "RESEARCH_AND_CRITIC_COMPLETE_FINAL_INCOMPLETE",
+      "native_goal_starts": 3,
+      "research_quality": "UNASSESSED",
+      "evidence": "batching-partial-cohort-v1/ops/recovery-v1/OBSERVATION_20261003_012605.json",
+      "observation_utc": "2026-10-03T01:25:39.382829+00:00"
+    },
+    {
+      "id": "V8-BIO-RETR-C-M",
+      "scope": "incomplete integrated pipeline",
+      "status": "RESEARCH_COMPLETE_CRITIC_ACTIVE_AT_OBSERVATION",
+      "native_goal_starts": 2,
+      "research_quality": "UNASSESSED",
+      "evidence": "batching-partial-cohort-v1/ops/recovery-v1/OBSERVATION_20261003_012605.json",
+      "observation_utc": "2026-10-03T01:25:39.382829+00:00"
+    },
+    {
+      "id": "V8-BIO-RETR-T-M",
+      "scope": "incomplete integrated pipeline",
+      "status": "RESEARCH_COMPLETE_CRITIC_ACTIVE_AT_OBSERVATION",
+      "native_goal_starts": 2,
+      "research_quality": "UNASSESSED",
+      "evidence": "batching-partial-cohort-v1/ops/recovery-v1/OBSERVATION_20261003_012605.json",
+      "observation_utc": "2026-10-03T01:25:39.382829+00:00"
     }
   ],
-  "note": "Failures and original limits retained. Four published research partials; BIO critics interrupted, NB critics timed out. Both biology batching critics active at selected observation. Initial progress responses0 is not a final critic counter. No whole pipeline, completed comparison, winner or best-of selection.",
+  "note": "Current metadata observation; past frozen cohorts/grades retained. Failed native final responses/status/causal reasons UNKNOWN; no completed case or recipe PASS.",
   "native_qualification": "V3_MECHANICAL_PASSED_LIMITED_DELIVERY_INFERENCE",
-  "native_qualification_evidence": "resume-qualified-v3-cohort/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json"
+  "native_qualification_evidence": "resume-qualified-v3-cohort/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json",
+  "observation_utc": "2026-10-03T01:25:39.382829+00:00",
+  "current_stage_counts": {
+    "research": 10,
+    "same_family_critic": 1,
+    "final_correction": 0,
+    "whole_pipelines": 0,
+    "quality_assessed_pipelines": 0
+  }
 }

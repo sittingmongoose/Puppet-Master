@@ -1,0 +1,27 @@
+{
+  "schema": "er8.integrated.stage-deferred-close.v1",
+  "case": "V8-NB-B-Z",
+  "job": "V8-NB-B-Z-independent-candidate-critic",
+  "stage_start_monotonic_ns": 210398991718059,
+  "original_case_start_monotonic_ns": 209628462958827,
+  "original_deadline_monotonic_ns": 210998991718059,
+  "lease_release_deferred": true,
+  "lease_released_by_actor": false,
+  "native_wrapper_launch_monotonic_ns": 210399902732013,
+  "native_quiescence_observed_monotonic_ns": 210935537686154,
+  "last_charged_host_monotonic_ns": 210935617737015,
+  "host_groups_absent": true,
+  "required_artifact": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-NB-B-Z/V8-NB-B-Z-independent-candidate-critic/workspace/out/CRITIQUE.md",
+    "bytes": 18792,
+    "sha256": "78afdd5a80050a28e28fc82865789f9fbf42042ea30ef61f37f5e37fe9d83ba2"
+  },
+  "native_goal_activation_observed": true,
+  "native_goal_target_id": "target_muroemue_5de87b43-7d12-445b-952a-bbf716eb42a5",
+  "fresh_session": true,
+  "native_responses": 9,
+  "native_goal_status": "complete",
+  "wrapper_returncode": 0,
+  "source_semantic_acquisition": "UNKNOWN",
+  "usage": "UNKNOWN except reported monotonic output lower bound"
+}

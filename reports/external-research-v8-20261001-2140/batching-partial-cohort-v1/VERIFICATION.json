@@ -1,0 +1,10 @@
+{
+  "schema": "pm.er8.public-batching-verification.v1",
+  "returncode": 0,
+  "stdout": "{\"model_quality_assessed\": false, \"native_replay_verified\": false, \"scope\": \"offline artifact hashes and optional declarations only\", \"timing_declarations_present_and_valid\": false, \"verified_artifacts\": 302}\n",
+  "stderr": "",
+  "command": "python3 -I -B prior-source-cohort/repaired/verify_public.py COHORT_ROOT",
+  "verifier_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+  "public_export_sha256": "8d6f285d4d7ab15638bedebf00b2b0234c0e6130723876499b9ded0c11261f71",
+  "scope": "Public hashes only; no optional INPUT_MAP/timing declarations, native replay, model quality or causal cure."
+}

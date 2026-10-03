@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "execution": {
+    "tool_rules": {
+      "mcp__pm_boundary__write_file": {
+        "decision": "allow"
+      }
+    },
+    "tool_rule_fallback": "deny"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "execution": {
+    "tool_rules": {
+      "read_file": {
+        "decision": "deny"
+      },
+      "subagent_spawn": {
+        "decision": "deny"
+      },
+      "subagent_status": {
+        "decision": "deny"
+      },
+      "subagent_send_message": {
+        "decision": "deny"
+      },
+      "subagent_wait": {
+        "decision": "deny"
+      },
+      "subagent_read_result": {
+        "decision": "deny"
+      },
+      "subagent_cancel": {
+        "decision": "deny"
+      }
+    },
+    "tool_rule_fallback": "deny"
+  }
+}

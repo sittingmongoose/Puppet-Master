@@ -1,0 +1,27 @@
+{
+  "schema": "er8.route.lease.v1",
+  "owned_unit": "er8-v8-bio-batch-c-z-research-proposal.service",
+  "deadline_monotonic_ns": 209795249348935,
+  "native_stop_monotonic_ns": 209765249348935,
+  "case_authority": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v6/V8-BIO-BATCH-C-Z/V8-BIO-BATCH-C-Z-research-proposal/CASE_AUTHORITY.json",
+    "sha256": "5a9117e5683fccdeba495fe74df89863933d8435bac5f2315f056d548d9b8e9a",
+    "clock": {
+      "case_id": "V8-BIO-BATCH-C-Z",
+      "case_start_monotonic_ns": 207995249348935,
+      "case_elapsed_cap_seconds": 3600,
+      "case_occupied_cap_seconds": 5400,
+      "outside_native_cap_seconds": 300,
+      "campaign_native_cutoff_monotonic_ns": 234777000142868,
+      "stages": {
+        "v8-bio-batch-c-z-research-proposal": {
+          "stage_start_monotonic_ns": 207995249348935,
+          "cap_seconds": 1800,
+          "response_cap": 160
+        }
+      }
+    }
+  },
+  "occupied_seconds_reserved": 1800,
+  "outside_seconds_reserved": 300
+}

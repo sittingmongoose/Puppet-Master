@@ -1,0 +1,32 @@
+{
+  "schema": "er8.integrated.external-stage-close.v1",
+  "case": "V8-BIO-B-Z",
+  "job": "V8-BIO-B-Z-research-proposal",
+  "stage_actor_pid": 2068110,
+  "stage_actor_pgid": 2068110,
+  "held_Popen_wait_returncode": 0,
+  "stage_actor_exited": true,
+  "stage_actor_group_absent": true,
+  "stage_actor_exit_observed_monotonic_ns": 208821445620899,
+  "case_supervisor_role": "HOSTMANAGEMENT_STILL_ALIVE_NOT_STAGE_ACTOR",
+  "original_deadline_monotonic_ns": 209913992140388,
+  "inner_quiescence": {
+    "schema": "er8.execution.quiescence.v1",
+    "owned_unit": "er8-v8-bio-b-z-research-proposal.service",
+    "owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-b-z-research-proposal.service",
+    "enrollment": {
+      "schema": "er8.execution.enrollment.v1",
+      "owned_unit": "er8-v8-bio-b-z-research-proposal.service",
+      "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-b-z-research-proposal.service",
+      "enrolled_monotonic_ns": 208115790646970,
+      "original_deadline_monotonic_ns": 209913992140388
+    },
+    "absence_proof": "positively-enrolled-owned-cgroup-removed",
+    "owned_native_quiescent": true,
+    "quiescence_observed_monotonic_ns": 208821512777222,
+    "original_deadline_monotonic_ns": 209913992140388,
+    "inclusive_native_lifetime_established": true,
+    "occupancy_disposition": "releasable-native-only",
+    "native_goal_or_quality_qualification": "UNESTABLISHED; independent native receipt review mandatory"
+  }
+}

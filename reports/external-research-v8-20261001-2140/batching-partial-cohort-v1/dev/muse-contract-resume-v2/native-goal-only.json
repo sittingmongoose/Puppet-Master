@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "execution": {
+    "tool_rules": {
+      "update_goal": {
+        "decision": "allow"
+      }
+    },
+    "tool_rule_fallback": "deny"
+  }
+}

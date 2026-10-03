@@ -1,0 +1,80 @@
+{
+  "schema": "pm.er8.root-current-observation.v1",
+  "observed_utc": "2026-10-03T01:25:39.382829+00:00",
+  "root_authority": true,
+  "completed_stage_counts": {
+    "research": 10,
+    "same_family_critic": 1,
+    "final_correction": 0,
+    "whole_pipelines": 0,
+    "quality_assessed_pipelines": 0
+  },
+  "comparison_counts": {
+    "complete": 0,
+    "target": 12
+  },
+  "V6_frozen_counts": {
+    "research": 6,
+    "critic": 1,
+    "final": 0,
+    "whole_pipelines": 0
+  },
+  "V7_completed_research_receipts": [
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-research-proposal/COMPLETE.json",
+      "sha256": "d2e7291b64d7c4c244a6ee46072162e363d00893a673aa79512df2fff32f413c"
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-research-proposal/COMPLETE.json",
+      "sha256": "55569505aea98aebaa92ba2889f275a4793ca4eaee293924cf8fa452341f3749"
+    }
+  ],
+  "prior_usage_preserved": true,
+  "native_muse_mechanical_helpers": {
+    "invocations": 4,
+    "completed": 3,
+    "timed_out": 1,
+    "elapsed_seconds": 590.083736615018,
+    "candidate_goal_starts": 0,
+    "tokens": null,
+    "money": null,
+    "realized_reasoning": "UNKNOWN"
+  },
+  "quality": "UNASSESSED; no winner or speedup",
+  "unknowns": [
+    "total_candidate_tokens",
+    "Sol/helper/evaluation/management_tokens",
+    "money",
+    "external_account_identity_and_provider_load",
+    "failed_stage_final_response_counts_and_causal_reason",
+    "oldV3heldexit_and_ontimecleanup"
+  ],
+  "scope": "Root current metadata snapshot; active costs continue increasing; completed-stage counts do not qualify complete pipelines or quality; last verified publication4338e1ee099b258671751ef660580879a1dad374",
+  "accounting": {
+    "elapsed_seconds": 20908.540761947632,
+    "deadline_epoch": 1791013030.8303788,
+    "admissions": 26,
+    "native_goal_starts": 24,
+    "pending_start_permits": 0,
+    "occupied_slot_seconds": 19173.16780757904,
+    "committed_slot_seconds": 1937.896738767624,
+    "reserved_or_committed_slot_seconds": 133454.27154541016,
+    "reserved_or_committed_native_starts": 63,
+    "active_by_family": {
+      "M": 0,
+      "Z": 2,
+      "L": 0
+    },
+    "active_jobs": [
+      "V8-BIO-RETR-C-M-independent-candidate-critic",
+      "V8-BIO-RETR-T-M-independent-candidate-critic"
+    ],
+    "overdue_jobs": [],
+    "generated_output_tokens_lower_bound": 365360,
+    "generated_usage": "unknown",
+    "occupancy_reconciled": true,
+    "elapsed_seconds_including_user_pause": 85530.37114071846,
+    "authorized_user_pause_excluded_seconds": 64621.83037877083
+  },
+  "publication_projection_scope": "Historical root01:25:39 accounting observation; active costs/state continue changing. Distinct from historical V6 freeze."
+}

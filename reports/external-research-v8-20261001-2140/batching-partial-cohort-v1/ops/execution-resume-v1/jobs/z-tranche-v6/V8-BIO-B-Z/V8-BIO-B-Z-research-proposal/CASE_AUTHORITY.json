@@ -1,0 +1,15 @@
+{
+  "case_id": "V8-BIO-B-Z",
+  "case_start_monotonic_ns": 208113992140388,
+  "case_elapsed_cap_seconds": 3600,
+  "case_occupied_cap_seconds": 5400,
+  "outside_native_cap_seconds": 300,
+  "campaign_native_cutoff_monotonic_ns": 234777000142430,
+  "stages": {
+    "v8-bio-b-z-research-proposal": {
+      "stage_start_monotonic_ns": 208113992140388,
+      "cap_seconds": 1800,
+      "response_cap": 160
+    }
+  }
+}

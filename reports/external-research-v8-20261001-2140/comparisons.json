@@ -63,11 +63,12 @@
       }
     ]
   },
-  "checkpoint": "ONGOING_TRANCHE_V2",
+  "checkpoint": "V7_RETRIEVAL_PAIR_ACTIVE_NO_COMPLETE_COMPARISON",
   "prospective_pair_map": "tranche-cohort-v2/cases/tranche-v2/pairs.json",
   "prospective_pair_count": 12,
   "completed_comparisons": 0,
-  "current_scope_note": "Initial unexecuted planning comparisons are superseded prospectively by tranche pairs; historical source artifacts unchanged. No output quality/efficiency result.",
+  "current_scope_note": "Twelve prospective matched pairs; no full complete matched comparison or quality-qualified efficiency result. Prior outcomes frozen; next twelve assignments bound as whole pairs to same GLM account/native route.",
   "scope_review": "recovery-results-cohort-v2/evaluation/tranche-scope-review-v1/review.json",
-  "scope_review_status": "CLEAR_PROSPECTIVE_NO_LAUNCH_AUTHORITY"
+  "scope_review_status": "CLEAR_PROSPECTIVE_NO_LAUNCH_AUTHORITY",
+  "observation_utc": "2026-10-03T01:25:39.382829+00:00"
 }

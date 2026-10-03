@@ -1,0 +1,15 @@
+{
+  "case_id": "V8-NB-BATCH-C-Z",
+  "case_start_monotonic_ns": 209392360306965,
+  "case_elapsed_cap_seconds": 3600,
+  "case_occupied_cap_seconds": 5400,
+  "outside_native_cap_seconds": 300,
+  "campaign_native_cutoff_monotonic_ns": 234777000142799,
+  "stages": {
+    "v8-nb-batch-c-z-research-proposal": {
+      "stage_start_monotonic_ns": 209392360306965,
+      "cap_seconds": 1800,
+      "response_cap": 160
+    }
+  }
+}

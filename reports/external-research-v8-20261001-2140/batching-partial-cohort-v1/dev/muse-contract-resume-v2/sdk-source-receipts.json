@@ -1,0 +1,47 @@
+[
+  {
+    "url": "https://api.github.com/repos/meta-models/muse-code-sdk/git/trees/main?recursive=1",
+    "observed_epoch": 1790987348.095132,
+    "status": 200,
+    "sha256": "9a717b8c93e2ff6309593383950da5b12ce4b4f3949da0ab289dd1b7587bea67",
+    "bytes": 114362,
+    "local_path": "LAB_ROOT/dev/muse-contract-resume-v2/sdk-tree.json"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/meta-models/muse-code-sdk/main/publish-anchor.json",
+    "observed_epoch": 1790987348.216379,
+    "status": 200,
+    "sha256": "6dc4fb18aac6fecf0f4ea6ddd64e9cb72da53dd68bbe07fe6891f30208532eb2",
+    "bytes": 4753,
+    "local_path": "LAB_ROOT/dev/muse-contract-resume-v2/sdk-publish-anchor.json"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/meta-models/muse-code-sdk/main/schema/msp/stable/manifest.json",
+    "observed_epoch": 1790987348.3364444,
+    "status": 200,
+    "sha256": "f4d2a29f99a13c2a0e9026677eb7b69e88d5397bdfed5294724d6a0a5a5bc5ad",
+    "bytes": 142,
+    "local_path": "LAB_ROOT/dev/muse-contract-resume-v2/sdk-stable-manifest.json"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/meta-models/muse-code-sdk/bb44be3d36de46d2411bd9eaa4aee99006092546/README.md",
+    "observed_epoch": 1790987494.405158,
+    "sha256": "1f8fda49cc8865f7cadcf4faedfb89e1dc7c0ab1567b525948b1ab34bae091c1",
+    "bytes": 4195,
+    "local_path": "LAB_ROOT/dev/muse-contract-resume-v2/sdk-readme.txt"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/meta-models/muse-code-sdk/bb44be3d36de46d2411bd9eaa4aee99006092546/clients/sdk-ts/src/facade/approval.ts",
+    "observed_epoch": 1790987494.5187216,
+    "sha256": "c2da03869a7e6082154d188a3c34800fefff0fcce5f1f281e8595d27652e41ef",
+    "bytes": 14375,
+    "local_path": "LAB_ROOT/dev/muse-contract-resume-v2/sdk-approval-facade.ts"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/meta-models/muse-code-sdk/bb44be3d36de46d2411bd9eaa4aee99006092546/schema/msp/stable/msp.schema.json",
+    "observed_epoch": 1790987494.6786275,
+    "sha256": "453e6761f8dece17730145cb315d2ffe068afab36bccd3aa2706deb429c00632",
+    "bytes": 270415,
+    "local_path": "LAB_ROOT/dev/muse-contract-resume-v2/sdk-stable-msp.schema.json"
+  }
+]

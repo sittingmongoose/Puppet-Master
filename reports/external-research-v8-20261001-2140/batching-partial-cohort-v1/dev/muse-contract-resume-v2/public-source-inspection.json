@@ -1,0 +1,153 @@
+[
+  {
+    "requested_url": "https://dev.meta.ai/docs/muse-code/changelog",
+    "final_url": "https://dev.meta.ai/docs/muse-code/changelog",
+    "status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "sha256": "e1175a6a618144b84b43eb54d3b2a4c60df05d4f4c77d7e3b453ed56257970eb",
+    "bytes": 1092660,
+    "observed_epoch": 1790987309.7235308,
+    "exact_term_counts": {
+      "tool_rules": 0,
+      "tool_rule_fallback": 0,
+      "enterprise": 1,
+      "managed": 2,
+      "canonical": 2,
+      "enabled_tools": 0,
+      "disabled_tools": 0
+    },
+    "links": [
+      "/docs/muse-code/configuration"
+    ],
+    "permitted_exact_excerpts": [
+      "Added muse config to validate enterprise-managed configuration documents"
+    ],
+    "excerpt_total_words": 8
+  },
+  {
+    "requested_url": "https://dev.meta.ai/docs/muse-code/permissions",
+    "final_url": "https://dev.meta.ai/docs/muse-code/permissions",
+    "status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "sha256": "607f63dab775ab62a4a189c57e36336cf2dbdd255eff787205c025ccd209d20a",
+    "bytes": 215410,
+    "observed_epoch": 1790987309.92365,
+    "exact_term_counts": {
+      "tool_rules": 0,
+      "tool_rule_fallback": 0,
+      "enterprise": 0,
+      "managed": 0,
+      "canonical": 0,
+      "enabled_tools": 0,
+      "disabled_tools": 0
+    },
+    "links": [
+      "/docs/muse-code/configuration",
+      "/docs/muse-code/configuration#settings-file"
+    ],
+    "permitted_exact_excerpts": [
+      "File reads and in-workspace write_file and edit_file writes still pass in any mode."
+    ],
+    "excerpt_total_words": 13
+  },
+  {
+    "requested_url": "https://meta-models.github.io/muse-code-sdk/next/guides/extend/mcp-servers/",
+    "final_url": "https://meta-models.github.io/muse-code-sdk/next/guides/extend/mcp-servers/",
+    "status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "sha256": "ecd53a9aa70c9793073899f7ad17a23f62829365d0c0d4d46241c8a50dcf58b5",
+    "bytes": 231708,
+    "observed_epoch": 1790987310.1014018,
+    "exact_term_counts": {
+      "tool_rules": 0,
+      "tool_rule_fallback": 0,
+      "enterprise": 0,
+      "managed": 2,
+      "canonical": 3,
+      "enabled_tools": 1,
+      "disabled_tools": 1
+    },
+    "links": [
+      "#configure-servers-in-settingsjson",
+      "#project-configuration-with-mcpjson",
+      "#when-configuration-takes-effect",
+      "#settings-servers-versus-plugin-servers",
+      "#configure-servers-in-settingsjson",
+      "#project-configuration-with-mcpjson",
+      "#when-configuration-takes-effect",
+      "#settings-servers-versus-plugin-servers",
+      "#settings-servers-versus-plugin-servers",
+      "#configure-servers-in-settingsjson",
+      "#project-configuration-with-mcpjson",
+      "#when-configuration-takes-effect",
+      "#settings-servers-versus-plugin-servers"
+    ],
+    "permitted_exact_excerpts": [
+      "Each tool is registered as mcp__<server>__<tool>.",
+      "Muse Code 1.3.0 records them but does not act on them."
+    ],
+    "excerpt_total_words": 17
+  },
+  {
+    "requested_url": "https://meta-models.github.io/muse-code-sdk/next/guides/msp-concepts/approvals/",
+    "final_url": "https://meta-models.github.io/muse-code-sdk/next/guides/msp-concepts/approvals/",
+    "status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "sha256": "7a97116aaab2cf5f797ecadd1b482f26cb65d885ecaba1e9c78d796885d9e9e7",
+    "bytes": 160597,
+    "observed_epoch": 1790987310.252231,
+    "exact_term_counts": {
+      "tool_rules": 0,
+      "tool_rule_fallback": 0,
+      "enterprise": 0,
+      "managed": 0,
+      "canonical": 0,
+      "enabled_tools": 0,
+      "disabled_tools": 0
+    },
+    "links": [],
+    "permitted_exact_excerpts": [
+      "a client may pick a mode the user’s configuration already defines but can never author a policy on the wire"
+    ],
+    "excerpt_total_words": 20
+  },
+  {
+    "requested_url": "https://meta-models.github.io/muse-code-sdk/next/",
+    "final_url": "https://meta-models.github.io/muse-code-sdk/next/",
+    "status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "sha256": "6c189efdc80bf5d9e1a79c10fb07ae37d505456aba9295e678f29b085c479645",
+    "bytes": 20085,
+    "observed_epoch": 1790987310.3367884,
+    "exact_term_counts": {
+      "tool_rules": 0,
+      "tool_rule_fallback": 0,
+      "enterprise": 0,
+      "managed": 0,
+      "canonical": 0,
+      "enabled_tools": 0,
+      "disabled_tools": 0
+    },
+    "links": [],
+    "permitted_exact_excerpts": [
+      "generated from commit 683bbecb4f3e38dc5a1584408fe79dca77ba9af6 against schema fingerprint sha256:9f26334d69f06c3ad05d54a44710a41442bf13a336f14b67f9123919ea321e4f"
+    ],
+    "excerpt_total_words": 8
+  },
+  {
+    "requested_url": "https://dev.meta.ai/docs/muse-code/configuration",
+    "status": 200,
+    "sha256": "cc6abf8e09e5d595faba282571ae330d421b6e3872485ec282667ffcb91f9b45",
+    "bytes": 226963,
+    "observed_epoch": 1790987551.1881382,
+    "exact_term_counts": {
+      "tool_rules": 0,
+      "tool_rule_fallback": 0
+    },
+    "permitted_exact_excerpts": [
+      "muse config validate --plane <defaults|policy> --file <path>",
+      "muse config status"
+    ],
+    "excerpt_total_words": 11
+  }
+]

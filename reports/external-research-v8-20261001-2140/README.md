@@ -1,6 +1,6 @@
 # External research v8 — current campaign checkpoint
 
-**Continuing integrated execution. 15 recorded native starts at 2026-10-03T00:29:19.178530+00:00; four published research stages completed, all published pipelines remain incomplete, and the biology batching critics are active. Integrated completions remain 0/24 and completed comparisons 0/12.** See [notebook proposals and actual critic timeout evidence](notebook-partial-cohort-v1/README.md) and [earlier biology partial results](partial-research-cohort-v1/README.md). No research-quality winner is established.
+**Continuing integrated execution. At 2026-10-03T01:25:39.382829+00:00: 24 actual native starts; ten research stages and one same-family critic completed; zero final revisions or whole pipelines completed. The retrieval pair’s critics are active. Integrated completions remain 0/24 and completed comparisons 0/12.** [Actual batching results and failed-stage evidence](batching-partial-cohort-v1/README.md), [new allocation and continuation source](prospective-source-cohort-v3/README.md), [earlier notebook results](notebook-partial-cohort-v1/README.md). Quality remains UNASSESSED; no winner or speedup is established.
 
 - [Current results](RESULTS.md), [methods](methods.json), [attempts](attempts.json), [comparisons](comparisons.json)
 - [Economics](economics.json), [schedule](schedule.json), [failures](FAILURES.md)

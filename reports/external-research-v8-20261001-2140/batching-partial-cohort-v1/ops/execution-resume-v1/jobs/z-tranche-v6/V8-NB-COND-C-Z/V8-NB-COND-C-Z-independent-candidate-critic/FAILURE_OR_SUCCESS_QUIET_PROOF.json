@@ -1,0 +1,73 @@
+{
+  "schema": "pm.er8.failure-cleanup-proof.production.v1",
+  "case": "V8-NB-COND-C-Z",
+  "job": "V8-NB-COND-C-Z-independent-candidate-critic",
+  "root_authority": true,
+  "case_launch": {
+    "case": "V8-NB-COND-C-Z",
+    "case_supervisor_pid": 1971167,
+    "case_supervisor_pgid": 1971167,
+    "original_case_start_monotonic_ns": 206619523637934,
+    "original_case_birth_epoch": 1790984873.353864,
+    "original_case_deadline_monotonic_ns": 210219523637934
+  },
+  "stage_launch": {
+    "case": "V8-NB-COND-C-Z",
+    "job": "V8-NB-COND-C-Z-independent-candidate-critic",
+    "stage_actor_pid": 2043199,
+    "stage_actor_pgid": 2043199,
+    "original_stage_start_monotonic_ns": 207543219792698,
+    "original_stage_birth_epoch": 1790985797.050029,
+    "original_stage_deadline_monotonic_ns": 208143219792698
+  },
+  "case_held_wait": {
+    "case": "V8-NB-COND-C-Z",
+    "case_supervisor_pid": 1971167,
+    "case_supervisor_pgid": 1971167,
+    "original_case_start_monotonic_ns": 206619523637934,
+    "original_case_birth_epoch": 1790984873.353864,
+    "original_case_deadline_monotonic_ns": 210219523637934,
+    "held_Popen_returncode": 126,
+    "actual_exit_observed_monotonic_ns": 208113568496065
+  },
+  "stage_held_wait": {
+    "case": "V8-NB-COND-C-Z",
+    "job": "V8-NB-COND-C-Z-independent-candidate-critic",
+    "stage_actor_pid": 2043199,
+    "stage_actor_pgid": 2043199,
+    "original_stage_start_monotonic_ns": 207543219792698,
+    "original_stage_birth_epoch": 1790985797.050029,
+    "original_stage_deadline_monotonic_ns": 208143219792698,
+    "held_Popen_returncode": 126,
+    "actual_exit_observed_monotonic_ns": 208113487229769
+  },
+  "held_rolling_exit": null,
+  "all_owned_groups_absent": {
+    "case_supervisor": true,
+    "stage_actor": true
+  },
+  "enrolled_native_mcp_quiet": {
+    "schema": "er8.execution.quiescence.v1",
+    "owned_unit": "er8-v8-nb-cond-c-z-independent-candidate-critic.service",
+    "owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-nb-cond-c-z-independent-candidate-critic.service",
+    "enrollment": {
+      "schema": "er8.execution.enrollment.v1",
+      "owned_unit": "er8-v8-nb-cond-c-z-independent-candidate-critic.service",
+      "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-nb-cond-c-z-independent-candidate-critic.service",
+      "enrolled_monotonic_ns": 207544137732535,
+      "original_deadline_monotonic_ns": 208143219792698
+    },
+    "absence_proof": "positively-enrolled-owned-cgroup-removed",
+    "owned_native_quiescent": true,
+    "quiescence_observed_monotonic_ns": 208113646608820,
+    "original_deadline_monotonic_ns": 208143219792698,
+    "inclusive_native_lifetime_established": true,
+    "occupancy_disposition": "releasable-native-only",
+    "native_goal_or_quality_qualification": "UNESTABLISHED; independent native receipt review mandatory"
+  },
+  "actual_observed_monotonic_ns": 208113646622584,
+  "complete_receipt_present": false,
+  "outcome": "FAILURE_OR_INCOMPLETE_PRESERVED",
+  "no_backdating": true,
+  "qualification": "cleanup only"
+}

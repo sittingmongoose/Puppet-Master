@@ -1,0 +1,73 @@
+{
+  "schema": "pm.er8.failure-cleanup-proof.production.v1",
+  "case": "V8-NB-BATCH-C-Z",
+  "job": "V8-NB-BATCH-C-Z-independent-candidate-critic",
+  "root_authority": true,
+  "case_launch": {
+    "case": "V8-NB-BATCH-C-Z",
+    "case_supervisor_pid": 2114061,
+    "case_supervisor_pgid": 2114061,
+    "original_case_start_monotonic_ns": 209392360306965,
+    "original_case_birth_epoch": 1790987646.190543,
+    "original_case_deadline_monotonic_ns": 212992360306965
+  },
+  "stage_launch": {
+    "case": "V8-NB-BATCH-C-Z",
+    "job": "V8-NB-BATCH-C-Z-independent-candidate-critic",
+    "stage_actor_pid": 2148414,
+    "stage_actor_pgid": 2148414,
+    "original_stage_start_monotonic_ns": 210331789432989,
+    "original_stage_birth_epoch": 1790988585.619669,
+    "original_stage_deadline_monotonic_ns": 210931789432989
+  },
+  "case_held_wait": {
+    "case": "V8-NB-BATCH-C-Z",
+    "case_supervisor_pid": 2114061,
+    "case_supervisor_pgid": 2114061,
+    "original_case_start_monotonic_ns": 209392360306965,
+    "original_case_birth_epoch": 1790987646.190543,
+    "original_case_deadline_monotonic_ns": 212992360306965,
+    "held_Popen_returncode": 126,
+    "actual_exit_observed_monotonic_ns": 210902251138443
+  },
+  "stage_held_wait": {
+    "case": "V8-NB-BATCH-C-Z",
+    "job": "V8-NB-BATCH-C-Z-independent-candidate-critic",
+    "stage_actor_pid": 2148414,
+    "stage_actor_pgid": 2148414,
+    "original_stage_start_monotonic_ns": 210331789432989,
+    "original_stage_birth_epoch": 1790988585.619669,
+    "original_stage_deadline_monotonic_ns": 210931789432989,
+    "held_Popen_returncode": 126,
+    "actual_exit_observed_monotonic_ns": 210902163374419
+  },
+  "held_rolling_exit": null,
+  "all_owned_groups_absent": {
+    "case_supervisor": true,
+    "stage_actor": true
+  },
+  "enrolled_native_mcp_quiet": {
+    "schema": "er8.execution.quiescence.v1",
+    "owned_unit": "er8-v8-nb-batch-c-z-independent-candidate-critic.service",
+    "owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-nb-batch-c-z-independent-candidate-critic.service",
+    "enrollment": {
+      "schema": "er8.execution.enrollment.v1",
+      "owned_unit": "er8-v8-nb-batch-c-z-independent-candidate-critic.service",
+      "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-nb-batch-c-z-independent-candidate-critic.service",
+      "enrolled_monotonic_ns": 210332841297454,
+      "original_deadline_monotonic_ns": 210931789432989
+    },
+    "absence_proof": "positively-enrolled-owned-cgroup-removed",
+    "owned_native_quiescent": true,
+    "quiescence_observed_monotonic_ns": 210902397852136,
+    "original_deadline_monotonic_ns": 210931789432989,
+    "inclusive_native_lifetime_established": true,
+    "occupancy_disposition": "releasable-native-only",
+    "native_goal_or_quality_qualification": "UNESTABLISHED; independent native receipt review mandatory"
+  },
+  "actual_observed_monotonic_ns": 210902397863124,
+  "complete_receipt_present": false,
+  "outcome": "FAILURE_OR_INCOMPLETE_PRESERVED",
+  "no_backdating": true,
+  "qualification": "cleanup only"
+}

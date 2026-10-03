@@ -1,0 +1,63 @@
+{
+  "schema": "er8.muse.offline-filetrace-audit.v2",
+  "observed_epoch": 1790987551.2001235,
+  "publication_projection_scope": "Trace path/hash/PID/count/scope metadata only; no syscall lines or raw trace.",
+  "tests": [
+    {
+      "trace_path": "LAB_ROOT/dev/muse-contract-resume-v2/assigned-four-only.filetrace.txt",
+      "sha256": "e39212798d165307bdb380ce484e3cbcd651ba108350260225f63ba9f6492e81",
+      "native_pid": "2104348",
+      "unexpected_path_count": 0,
+      "scope": "post-exec native offline config process; syscall paths only, no file bodies"
+    },
+    {
+      "trace_path": "LAB_ROOT/dev/muse-contract-resume-v2/builtin-read-and-subagent-deny.filetrace.txt",
+      "sha256": "a0278d59325bc5cefa6de6f86a5ed3bba514161f2b096a2b25ab877b5c40c227",
+      "native_pid": "2104360",
+      "unexpected_path_count": 0,
+      "scope": "post-exec native offline config process; syscall paths only, no file bodies"
+    },
+    {
+      "trace_path": "LAB_ROOT/dev/muse-contract-resume-v2/mcp__pm_boundary__mechanical.filetrace.txt",
+      "sha256": "8252985ab4bcca260ab0c84d62f67d43bfce3efdaf5c49fcd891f89f5005b324",
+      "native_pid": "2104338",
+      "unexpected_path_count": 0,
+      "scope": "post-exec native offline config process; syscall paths only, no file bodies"
+    },
+    {
+      "trace_path": "LAB_ROOT/dev/muse-contract-resume-v2/mcp__pm_boundary__public_https_get.filetrace.txt",
+      "sha256": "56d043db4b0c801db4ba3cb42e708e5f94344900872d576d8bd9ff9615a3142c",
+      "native_pid": "2104343",
+      "unexpected_path_count": 0,
+      "scope": "post-exec native offline config process; syscall paths only, no file bodies"
+    },
+    {
+      "trace_path": "LAB_ROOT/dev/muse-contract-resume-v2/mcp__pm_boundary__read_file.filetrace.txt",
+      "sha256": "73190210fac9b6406a8c18ab4018494706810aece68b9b61a6d414ca216aba96",
+      "native_pid": "2104328",
+      "unexpected_path_count": 0,
+      "scope": "post-exec native offline config process; syscall paths only, no file bodies"
+    },
+    {
+      "trace_path": "LAB_ROOT/dev/muse-contract-resume-v2/mcp__pm_boundary__write_file.filetrace.txt",
+      "sha256": "cce74a33daba984feccb29654b75a62410f49a6b620b051e14d00ffc146dfaee",
+      "native_pid": "2104333",
+      "unexpected_path_count": 0,
+      "scope": "post-exec native offline config process; syscall paths only, no file bodies"
+    },
+    {
+      "trace_path": "LAB_ROOT/dev/muse-contract-resume-v2/native-goal-only.filetrace.txt",
+      "sha256": "41993fbb0c1d3946229ca904c942b21a22aa6c078661a910dcc469ef12757113",
+      "native_pid": "2104323",
+      "unexpected_path_count": 0,
+      "scope": "post-exec native offline config process; syscall paths only, no file bodies"
+    },
+    {
+      "trace_path": "LAB_ROOT/dev/muse-contract-resume-v2/private-mount-status.filetrace.txt",
+      "sha256": "05342ecfd324beeedd53bde3a003cd0082a26e12a1ee12b452b8e13f957e2dea",
+      "native_pid": "2104365",
+      "unexpected_path_count": 0,
+      "scope": "post-exec native offline config process; syscall paths only, no file bodies"
+    }
+  ]
+}

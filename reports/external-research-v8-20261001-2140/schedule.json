@@ -1,5 +1,5 @@
 {
-  "checkpoint": "RESUMED_V3_OPERATIONAL_NATIVE_PROOF_PENDING",
+  "checkpoint": "DURABLE_V7_ACTIVE",
   "accepted_utc": "2026-10-02T01:40:09+00:00",
   "deadline_utc": "2026-10-03T07:37:10.830379Z",
   "cases": [
@@ -78,30 +78,29 @@
   ],
   "policy": "Run complete controls early on a qualified route; no sixteen-method prerequisite; original births never reset; ordinary boundary repairs remain bounded. Prospective amendment supersedes cumulative helper/fixed repair limits only; preserve frozen caps and original birth.",
   "prospective_runtime_overlay": {
+    "research_seconds": 1200,
+    "critic_seconds": 1200,
+    "final_seconds": 900,
+    "case_elapsed_seconds": 3600,
+    "case_occupied_seconds": 5400,
     "outside_native_cap_seconds": 300,
-    "applies_to": [
-      "V8-BIO-C-Z",
-      "V8-BIO-P-Z",
-      "V8-BIO-B-Z",
-      "V8-NB-C-Z",
-      "V8-NB-P-Z",
-      "V8-NB-B-Z"
-    ],
-    "scope": "All six cases; narrower than original planner 600 allowance; original birth/caps unchanged",
-    "code_qualification": "CONDITIONAL_CANARY_ONLY",
-    "native_qualification": "V3_OPERATIONAL_COMPLETE_INDEPENDENT_PROOF_PENDING"
+    "response_cap": 160,
+    "applies_to": "Twelve previously unstarted prospective-timing-v3 cases only",
+    "scope": "Prior assignments/outcomes retain original caps",
+    "source_evidence": "prospective-source-cohort-v3/README.md",
+    "native_qualification": "UNCHANGED_V3_MECHANICAL_BOUND_ROUTE"
   },
   "historical_deadline_utc": "2026-10-02T07:40:09Z",
   "historical_protected_final_hour_utc": "2026-10-02T06:40:09Z",
   "authority_amendment": "canary-controller-cohort-v1/recovery-v1/AUTHORITY_AMENDMENT.json",
-  "new_admissions": "PENDING_NEW_EXACT_ROOT_RELEASE_AT_SELECTED_FREEZE",
+  "new_admissions": "V7 actual native activation; root-authorized once-only continuation adopted exact active unit",
   "pause_requested_epoch": 1790914502.1696212,
   "resume_epoch": 1790979124.0,
   "pause_duration_seconds": 64621.83037877083,
   "pause_policy": "Actual explicit pause interval may be excluded prospectively on resume; no fixed assignment deadlines or births/outcomes/consumed usage reset",
   "previous_amended_deadline_utc": "2026-10-02T13:40:09Z",
   "resume_evidence": "resume-cohort-v1/ops/recovery-v1/RESUME_20261002.json",
-  "observation_utc": "2026-10-02T22:17:46.343042+00:00",
+  "observation_utc": "2026-10-03T01:25:39.382829+00:00",
   "native_qualification": "V3_MECHANICAL_PASSED_LIMITED_DELIVERY_INFERENCE",
   "native_qualification_evidence": "resume-qualified-v3-cohort/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json"
 }

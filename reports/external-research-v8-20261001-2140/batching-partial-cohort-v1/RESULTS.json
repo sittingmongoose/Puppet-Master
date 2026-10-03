@@ -1,0 +1,39 @@
+{
+  "schema": "pm.er8.batching-partial-public-results.v1",
+  "historical_V6_freeze_epoch": 1790990688.1945398,
+  "historical_V6_stage_counts": {
+    "research_complete": 6,
+    "critic_complete": 1,
+    "final_complete": 0,
+    "wholecase_complete": 0,
+    "admitted_total": 13,
+    "unsuccessful_critic": 5,
+    "unsuccessful_final": 1
+  },
+  "historical_campaign_context": {
+    "research_complete": 8,
+    "critic_complete": 1,
+    "final_complete": 0,
+    "wholecase_complete": 0,
+    "comparison_pairs_complete": 0
+  },
+  "later_root_observation": "ops/recovery-v1/OBSERVATION_20261003_012605.json",
+  "native_Muse_helpers": {
+    "invocations": 4,
+    "completed": 3,
+    "timed_out": 1,
+    "elapsed_seconds": 590.083736615018,
+    "candidate_goal_starts": 0,
+    "tokens": "UNKNOWN",
+    "money": "UNKNOWN",
+    "realized_reasoning": "UNKNOWN"
+  },
+  "draft_status": "Exactlythree UNQUALIFIED_PARTIAL_CURRENT_QUIET; no nativecomplete/on-timeoutput/quality credit; oldBIO-P INCOMPLETE/HOLD preserved",
+  "quality": "UNASSESSED",
+  "winner": null,
+  "initial_progress_zero_final_counter": false,
+  "failed_native_cause_status_final_responses": "UNKNOWN without finalmetrics",
+  "causal_cure_claim": false,
+  "native_replay_verified": false,
+  "scope": "Positive publication only; no new native/provider/ledger actions"
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "pm.er8.muse-helper-process-quiet.v1",
+  "job": "muse-mechanical-controller-helper-v2",
+  "classification": "helper_not_candidate",
+  "requested_model": "muse-spark-1.3-contributor",
+  "requested_reasoning": "max",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 117.28875179600436,
+  "started_epoch": 1790981114.480773,
+  "ended_epoch": 1790981231.7695303,
+  "parent_reaped": true,
+  "own_process_group_absent": true,
+  "generated_tokens": null,
+  "money": null,
+  "native-events.jsonl": {
+    "bytes": 285254,
+    "sha256": "ae4461e22c4eb536a2ea31afbedfe20728dc2893a2574abf117dde2ada23e97f"
+  },
+  "native-stderr.txt": {
+    "bytes": 279,
+    "sha256": "fb047e3afc44740078eb36dcfdfb63393fbfb1193197e4f7b29f85340695c36d"
+  },
+  "prompt.txt": {
+    "bytes": 13692,
+    "sha256": "db8abd0403b74b739e7ea541c9ca301e25db9e324acdd2cfa04c5242c8a70c55"
+  },
+  "INPUT_MANIFEST.json": {
+    "bytes": 243,
+    "sha256": "cb44462aa121bce438b30ff34b8c942b8cc902feb0708b729520642e16b3655a"
+  }
+}
