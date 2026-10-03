@@ -22,7 +22,8 @@ concept's own body[data-theme] blocks (0,1,1):
   the Chat WOW --tx-* / --fam-* tokens of turn-stage.css;
   the pmx literal tokens of module-shell.css (3.3 and the A1-15 precomputed set, seat fills included);
   the six context source inks of context.css (--ctxseg-*, which the pmx seat hues reuse);
-  the NieR helpers PMConcept7's parts code against (--o55-nier-ink, -ink-rgb, -on-ink, -paper ... -shadow-rgb);
+  the NieR helpers PMConcept7's parts code against (--o55-nier-ink, -ink-rgb, -on-ink, -paper ... -shadow-rgb), plus
+  -on-ink-rgb (the cursor bar's paper as "r,g,b", so a quiet tone on the bar is a tint of it: neon-icons.css);
 and the literal-carrying bits of the parts: the Square pointer part's cursor images (data URIs must carry literal
 colours; the part's other rules are in nier-parts.css), the Reboot moment cover's inks per tone (#o55np-reboot: it is
 drawn before the palette is painted) and the World parts' line art (--o55nw-art-pod / machine / flower / glyphs:
@@ -156,7 +157,7 @@ def roles(mode: str, c: dict, light: dict) -> dict:
     }
     ctx = {f'--ctxseg-{k}': v for k, v in seg.items()}
     helpers = {
-        '--o55-nier-ink': ink, '--o55-nier-ink-rgb': trip(ink), '--o55-nier-on-ink': c['accentForeground'],
+        '--o55-nier-ink': ink, '--o55-nier-ink-rgb': trip(ink), '--o55-nier-on-ink': c['accentForeground'], '--o55-nier-on-ink-rgb': trip(c['accentForeground']),
         '--o55-nier-paper': c['canvas'], '--o55-nier-paper-rgb': trip(c['canvas']),
         '--o55-nier-raised': c['surfaceRaised'], '--o55-nier-overlay': c['surfaceOverlay'], '--o55-nier-secondary': c['secondary'],
         '--o55-nier-hover': c['sidebarRowHover'], '--o55-nier-active': c['sidebarRowActive'], '--o55-nier-selected': c['sidebarRowSelected'],
