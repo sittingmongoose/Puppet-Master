@@ -23,7 +23,7 @@
  *      html[data-ab-<domain>] tone (working/attention ab-breathe, blocked ab-alert, others none). 2c the nine
  *      thread statuses in the wide take-6 rows carry .nx-st-<status>. 2d To-Do rows (the bar's To-Do hover card)
  *      carry the set member of their status.
- *   3  the working bead moves >= 3 px in a quarter of its orbit.
+ *   3  the working bead moves >= 3 px in a quarter of its orbit (a lone mark: 9 s; the thread list's is 16 s).
  *   4  a clip reveal ran and left no residual clip-path after finish(); the page/document text lines paint.
  *   5  static scan: no filter, stroke-dashoffset or color-mix() in a .nx / nx- rule or an nx keyframe; no pmx in
  *      an nx keyframe name.
@@ -34,10 +34,16 @@
  *      still paint, complete's check is drawn (no clip).
  *   11 every theme: the idle ring reads below every live tone on the thread-row field (light themes: and >= 3:1).
  *      11b (hovered row) and 11c (selected, selected + hovered) test the order only: idle never reads above the lowest
- *      live tone on the same row state; raw ratios under 3:1 are information (lead decision, 2026-10-02).
+ *      live tone on the same row state; raw ratios under 3:1 are information (lead decision, 2026-10-02). A mark
+ *      whose svg is hidden (NieR's diamonds part draws working as the wrapper's ::after) is read by its ::after
+ *      border ink. 11d measures what is painted: on a real idle row at rest, hovered, selected and selected +
+ *      hovered, the idle mark's ink mass and p99 pixel contrast (dpr 2) are no more than the working mark's drawn in
+ *      the same host, averaged over twelve phases of its loops (integrate fix cycle 1: NieR's bar inked idle full paper and its
+ *      whole ring outweighed the rotateY-narrowed diamond while every colour check passed on equal inks).
  *   12 a dark theme's backlight paints; NieR has no halo and no backlight.
  *   13 salience: waiting (needs you) has at least working's halo strength and frame-difference motion, on the real
- *      marks of the wide thread list, in every theme.
+ *      marks of the wide thread list, in every theme. Every animation on the page is paused and the two marks' are
+ *      stepped together through 16.8 s (120 steps of 140 ms), so both are read at the same animation time.
  *   14 no status ink (danger, warning, positive, accent, accent-2) on a concept or control glyph at rest outside
  *      the hosts allowed to carry tone (basic-dark, friendly-dark, Query thread, wide list).
  *   15 transcript status glyphs: every halo is inked like its tube.
@@ -144,9 +150,9 @@ async function newPage(opts = {}) {
   return p;
 }
 /* The wide thread list needs a stored width before boot + a tall viewport. */
-async function newWidePage() {
+async function newWidePage(dpr = 1) {
   const ctx = await browser.newContext({
-    viewport: { width: 1440, height: 1080 }, deviceScaleFactor: 1,
+    viewport: { width: 1440, height: 1080 }, deviceScaleFactor: dpr,
     reducedMotion: REDUCED ? 'reduce' : 'no-preference'
   });
   await ctx.addInitScript(() => { try { localStorage.setItem('pm56-history-w', '320'); } catch (e) {} });
@@ -468,7 +474,7 @@ else await sec('satellite', async () => {
     }, sel);
     const a0 = await centre('#nx-test-sat .nx-st-move .nx-f');
     const p0 = await centre('#nx-test-sat .nx-st-move');
-    await p.waitForTimeout(4000); /* a quarter of the 16 s orbit */
+    await p.waitForTimeout(2250); /* a quarter of a lone mark's 9 s orbit (outside the thread list) */
     const a1 = await centre('#nx-test-sat .nx-st-move .nx-f');
     const p1 = await centre('#nx-test-sat .nx-st-move');
     const d = Math.hypot(a1[0] - a0[0], a1[1] - a0[1]);
@@ -828,6 +834,17 @@ for (const theme of THEMES) {
       await p.waitForTimeout(400);
       const rows = await p.evaluate(live => {
         const out = {};
+        /* The painted ink of a mark: NieR's diamonds part hides working's svg and draws the diamond as the
+           wrapper's ::after border (fix cycle 1: the tube's stroke there is an invisible element). */
+        const inkOf = st => {
+          const svg = st && st.querySelector('svg.nx');
+          if (svg && getComputedStyle(svg).visibility === 'hidden') {
+            const a = getComputedStyle(st, '::after');
+            if (a.content && a.content !== 'none') return a.borderTopColor;
+          }
+          const t = st && st.querySelector('.nx-c');
+          return t ? getComputedStyle(t).stroke : null;
+        };
         /* The backdrop as painted: every translucent layer from the tube up, composited down onto the first
            opaque one (a row's hover or selection tint is translucent in several themes). */
         const opaque = el => {
@@ -867,7 +884,7 @@ for (const theme of THEMES) {
           /* Backdrop from the tube up: NieR waiting sits on its own inverted
              ink block (on .nx-st, below .ph-status), everywhere else this
              resolves to the row. */
-          out[s] = { ink: tube ? getComputedStyle(tube).stroke : null, bg: opaque(tube || el) };
+          out[s] = { ink: inkOf(el.classList.contains('nx-st') ? el : el.querySelector('.nx-st')), bg: opaque(tube || el) };
         }
         return out;
       }, LIVE);
@@ -910,11 +927,20 @@ for (const theme of THEMES) {
           for (let i = L.length - 1; i >= 0; i--) { const [r, g, bb, a] = L[i]; b = [r * a + b[0] * (1 - a), g * a + b[1] * (1 - a), bb * a + b[2] * (1 - a)]; }
           return `rgb(${b.map(v => v.toFixed(2)).join(', ')})`; };
         const out = {};
+        const inkOf = st => {
+          const svg = st && st.querySelector('svg.nx');
+          if (svg && getComputedStyle(svg).visibility === 'hidden') {
+            const a = getComputedStyle(st, '::after');
+            if (a.content && a.content !== 'none') return a.borderTopColor;
+          }
+          const t = st && st.querySelector('.nx-c');
+          return t ? getComputedStyle(t).stroke : null;
+        };
         const idle = row.querySelector('.ph-status[data-status="idle"] .nx-c');
         out.idle = idle ? { ink: getComputedStyle(idle).stroke, bg: comp(idle) } : null;
         for (const s of live) {
           const t = row.querySelector(`[data-nx-test-st="${s}"] .nx-c`);
-          out[s] = t ? { ink: getComputedStyle(t).stroke, bg: comp(t) } : null;
+          out[s] = t ? { ink: inkOf(t.closest('.nx-st')), bg: comp(t) } : null;
         }
         return out;
       }, LIVE);
@@ -946,6 +972,109 @@ for (const theme of THEMES) {
       check(oh.ok, `11b idle order, hovered row [${theme}]: ${info(oh)} (want idle <= lowest live)`, states.hover);
       check(!!id && os.ok && osh.ok,
         `11c idle order, selected row [${theme}]: ${info(os)}; selected + hovered ${info(osh)} (want idle <= lowest live on each)`, { selected: states.selected, selectedHover: states.selectedHover });
+    } finally { await shut(p); }
+  });
+}
+
+/* ------------------------------------------------------------- check 11d: idle vs working, painted ink mass */
+/* What the eye weighs is the ink painted, not the computed stroke colour (fix cycle 1). On a real idle row of the
+   wide list, at rest, hovered, selected and selected + hovered, the idle mark is screenshotted (dpr 2, the host
+   plus 4 px), then the same host is redrawn as working (its data-status and class too, so the list's own rules
+   apply) and screenshotted at twelve phases of each of its loops (all paused, stepped together); the host is then
+   restored. Ink mass = the summed mean-channel distance from the field (the clip's border median), in CSS px of
+   full ink; peak = the 99th percentile of the pixels' contrast ratio on that field. Idle may exceed working's mean
+   in neither (the peak is what caught NieR's bar: its full-paper idle ring peaked at 8.6:1 over a diamond whose thin
+   turned lines peak lower, while the masses were within 12 %). The peak carries a 3 % tolerance: Friendly Light's
+   idle and working inks are 3.08 and 3.22:1 by design (3E2; idle may not go lighter, its 3:1 floor at rest) and paint
+   p99 ties (3.08 vs 3.05, 2.76 vs 2.75) that flip with antialiasing while working carries twice the mass; NieR's bar
+   failed by 36-44 %. */
+const PEAK_TOL = 1.03;
+for (const theme of THEMES) {
+  await sec(`ink mass ${theme}`, async () => {
+    const p = await newWidePage(2);
+    try {
+      await setTheme(p, theme, true);
+      await p.evaluate(() => window.PM56_DEMO.setVariant(1, 5));
+      await p.waitForTimeout(400);
+      const id = await p.evaluate(() => {
+        const row = [...document.querySelectorAll('.thread-row')].find(r => r.querySelector('.ph-status[data-status="idle"]') && !r.classList.contains('active'));
+        if (!row) return null;
+        row.setAttribute('data-nx-probe', '1');
+        row.scrollIntoView({ block: 'center' });
+        return row.getAttribute('data-id') || '';
+      });
+      if (!id) { check(false, `11d idle vs working ink mass [${theme}]: no idle row with an id`, null); return; }
+      const reprobe = () => p.evaluate(i => { const r = [...document.querySelectorAll('.thread-row')].find(x => x.getAttribute('data-id') === i); if (r) r.setAttribute('data-nx-probe', '1'); return !!r; }, id);
+      const massOf = (f, cw) => {
+        const k = f.w / cw, W = f.w, H = f.h, px = f.px, edge = [[], [], []];
+        for (let x = 0; x < W; x++) for (const y of [0, H - 1]) { const q = (y * W + x) * 4; for (let c = 0; c < 3; c++) edge[c].push(px[q + c]); }
+        for (let y = 0; y < H; y++) for (const x of [0, W - 1]) { const q = (y * W + x) * 4; for (let c = 0; c < 3; c++) edge[c].push(px[q + c]); }
+        const bg = edge.map(a => { a.sort((u, v) => u - v); return a[a.length >> 1]; });
+        let m = 0;
+        const lb = luminance(bg), cr = [];
+        for (let q = 0; q < px.length; q += 4) {
+          m += (Math.abs(px[q] - bg[0]) + Math.abs(px[q + 1] - bg[1]) + Math.abs(px[q + 2] - bg[2])) / 765;
+          const l = luminance([px[q], px[q + 1], px[q + 2]]);
+          cr.push((Math.max(l, lb) + 0.05) / (Math.min(l, lb) + 0.05));
+        }
+        cr.sort((u, v) => u - v);
+        return { mass: m / (k * k), peak: cr[Math.floor(cr.length * 0.99)] };
+      };
+      const measure = async () => {
+        const box = await p.evaluate(() => { const h = document.querySelector('.thread-row[data-nx-probe] .ph-status'); if (!h) return null; const r = h.getBoundingClientRect(); return { x: r.x, y: r.y, w: r.width, h: r.height }; });
+        if (!box) return null;
+        const clip = { x: Math.floor(box.x - 4), y: Math.floor(box.y - 4), width: Math.ceil(box.w + 8), height: Math.ceil(box.h + 8) };
+        await freezeNx(p);
+        const idle = massOf(await readClip(p, clip), clip.width);
+        await p.evaluate(() => {
+          const h = document.querySelector('.thread-row[data-nx-probe] .ph-status');
+          h.__nxSaved = [h.innerHTML, h.className, h.getAttribute('data-status')];
+          h.className = h.className.replace(/\bph-s-idle\b/, 'ph-s-working');
+          h.setAttribute('data-status', 'working');
+          h.innerHTML = window.PM56_NEON.status('working', 15);
+        });
+        await p.waitForTimeout(120);
+        const n = await p.evaluate(() => {
+          const h = document.querySelector('.thread-row[data-nx-probe] .ph-status');
+          window.__nxMass = [];
+          for (const a of document.getAnimations()) {
+            const t = a.effect && a.effect.target;
+            if (!t || !h.contains(t)) continue;
+            const d = a.effect.getTiming().duration;
+            a.pause();
+            window.__nxMass.push([a, a.currentTime || 0, typeof d === 'number' ? d : 0]);
+          }
+          return window.__nxMass.length;
+        });
+        const work = [];
+        for (let k = 0; k < 12; k++) {
+          await p.evaluate(k => { for (const [a, c0, d] of window.__nxMass) a.currentTime = c0 + k * d / 12; return new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); }, k);
+          work.push(massOf(await readClip(p, clip), clip.width));
+        }
+        await p.evaluate(() => {
+          const h = document.querySelector('.thread-row[data-nx-probe] .ph-status');
+          window.__nxMass = null;
+          if (h && h.__nxSaved) { const [html, cls, st] = h.__nxSaved; h.innerHTML = html; h.className = cls; h.setAttribute('data-status', st); h.__nxSaved = null; }
+        });
+        const avg = k => work.reduce((a, b) => a + b[k], 0) / work.length;
+        return { idle: +idle.mass.toFixed(1), working: +avg('mass').toFixed(1), workingMin: +Math.min(...work.map(w => w.mass)).toFixed(1),
+          idlePeak: +idle.peak.toFixed(2), workingPeak: +avg('peak').toFixed(2), loops: n };
+      };
+      const st = {};
+      await p.mouse.move(5, 1075); await p.waitForTimeout(300);
+      st.rest = await measure();
+      await p.locator('.thread-row[data-nx-probe]').first().hover(); await p.waitForTimeout(450);
+      st.hover = await measure();
+      await p.mouse.move(5, 1075); await p.waitForTimeout(300);
+      await p.evaluate(i => window.PM56_DEMO.selectThread(i), id); await p.waitForTimeout(700);
+      await reprobe();
+      await p.mouse.move(5, 1075); await p.waitForTimeout(300);
+      st.selected = await measure();
+      await p.locator('.thread-row[data-nx-probe]').first().hover(); await p.waitForTimeout(450);
+      st.selectedHover = await measure();
+      const bad = Object.entries(st).filter(([, v]) => !v || !(v.idle <= v.working) || !(v.working > 0) || !(v.idlePeak <= v.workingPeak * PEAK_TOL)).map(([k]) => k);
+      const line = Object.entries(st).map(([k, v]) => v ? `${k} ${v.idle} vs ${v.working} (p99 ${v.idlePeak} vs ${v.workingPeak})` : `${k} missing`).join(', ');
+      check(bad.length === 0, `11d idle vs working painted ink [${theme}]: ${line} (idle vs working's mean: ink mass in CSS px of full ink, p99 pixel contrast on the field; want idle <= working in both on each state; peak within ${Math.round((PEAK_TOL - 1) * 100)} %)`, { states: st, failing: bad });
     } finally { await shut(p); }
   });
 }
@@ -1047,7 +1176,7 @@ else await sec('salience', async () => {
     watch(p);
     await p.goto(pathToFileURL(FILE).href, { waitUntil: 'load' });
     await boot(p);
-    const B = 16, N = 60;
+    const B = 16, N = 120, DT = 140;
     for (const theme of THEMES) {
       await p.evaluate(t => { window.PM56_DEMO.setTheme(t); window.PM56_DEMO.setVariant(1, 5); }, theme);
       await p.waitForTimeout(1200);
@@ -1073,20 +1202,36 @@ else await sec('salience', async () => {
       await p.waitForTimeout(400);
       const clip = k => ({ x: Math.round(pos[k].x - B), y: Math.round(pos[k].y - B), width: 2 * B, height: 2 * B });
       const e = { waiting: 0, working: 0 }, prev = {};
+      /* Fix cycle 1: both marks are read at the same animation time. Every animation on the page is paused; the
+         two marks' own (pseudo-elements included) are stepped together, DT ms a step, N steps (16.8 s: two turns
+         of NieR's list diamond, seven needs-you cycles, more than one 16 s bead turn), so neither load nor the
+         screenshot order shifts their phases. */
+      const stepped = await p.evaluate(() => {
+        const hosts = ['waiting', 'working'].map(s => document.querySelector(`.thread-row:not(.active) .ph-status[data-status="${s}"]`));
+        window.__nxAll = document.getAnimations().filter(a => a.playState === 'running'); /* only these resume */
+        window.__nxStep = [];
+        for (const a of window.__nxAll) {
+          a.pause();
+          const t = a.effect && a.effect.target;
+          if (t && hosts.some(h => h && h.contains(t))) window.__nxStep.push([a, a.currentTime || 0]);
+        }
+        return window.__nxStep.length;
+      });
       for (let i = 0; i < N; i++) {
+        await p.evaluate(t => { for (const [a, c0] of window.__nxStep) a.currentTime = c0 + t; return new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); }, i * DT);
         for (const k of ['waiting', 'working']) {
           const f = await readClip(p, clip(k));
           if (prev[k]) for (let q = 0; q < f.px.length; q += 4)
             e[k] += (Math.abs(f.px[q] - prev[k].px[q]) + Math.abs(f.px[q + 1] - prev[k].px[q + 1]) + Math.abs(f.px[q + 2] - prev[k].px[q + 2])) / 3;
           prev[k] = f;
         }
-        await p.waitForTimeout(150);
       }
+      await p.evaluate(() => { for (const a of window.__nxAll || []) { try { a.play(); } catch (x) {} } window.__nxAll = window.__nxStep = null; });
       const px = prev.waiting.w * prev.waiting.h * (N - 1);
       const ew = +(e.waiting / px).toFixed(3), ek = +(e.working / px).toFixed(3);
       const halo = { waiting: pos.waiting.halo, working: pos.working.halo };
       check(halo.waiting >= halo.working && halo.working >= 0 && ew >= ek && ek > 0,
-        `13 salience [${theme}]: waiting halo ${halo.waiting} >= working ${halo.working}, motion energy ${ew} >= ${ek} (wide list, ${N} frames, both moving)`, { halo, energy: { waiting: ew, working: ek } });
+        `13 salience [${theme}]: waiting halo ${halo.waiting} >= working ${halo.working}, motion energy ${ew} >= ${ek} (wide list, ${N} steps of ${DT} ms at one animation time, ${stepped} loops stepped)`, { halo, energy: { waiting: ew, working: ek }, stepped });
     }
   } finally { await shut(p); }
 });
