@@ -732,7 +732,10 @@
      prefix, every data-action / data-run / data-run-id / data-pm-keep goes,
      buttons become spans, and every non-pmx class (the hook classes a module
      passed through cls/headCls/badgeCls/...) is dropped, so no harness
-     selector and no action can match the preview. */
+     selector and no action can match the preview. The neon family's own
+     classes (nx, nx-*: role, tone, halo, tube, part, still wrapper) are paint,
+     not hooks, and stay, so the preview's kind badge and status mark are lit
+     like the card's (fpfix F-1: the configure sheets' previews drew them bare). */
   var LOOK = { 'primary-button': 1, 'soft-button': 1, 'text-button': 1, 'icon-button': 1 };
   function inert(html) {
     return str(html)
@@ -740,7 +743,7 @@
       .replace(/\s(?:data-action|data-run|data-run-id|data-pm-keep|data-menu-anchor|data-pmx-autofocus|data-hover-key|data-hover-tip|tabindex)(?:="[^"]*")?(?=[\s>\/])/g, '')
       .replace(/\sdata-k="([^"]*)"/g, function (m, v) { return ' data-k="pv:' + v + '"'; })
       .replace(/\sclass="([^"]*)"/g, function (m, v) {
-        var keep = v.split(/\s+/).filter(function (c) { return c && (c.indexOf('pmx-') === 0 || LOOK[c]); });
+        var keep = v.split(/\s+/).filter(function (c) { return c && (c.indexOf('pmx-') === 0 || c === 'nx' || c.indexOf('nx-') === 0 || LOOK[c]); });
         return keep.length ? ' class="' + keep.join(' ') + '"' : '';
       })
       .replace(/\s(?:type="button"|disabled)(?=[\s>\/])/g, '');

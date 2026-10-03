@@ -16207,7 +16207,15 @@ body[data-theme="retro-light"] { --fam-deliverable: #166d83; --fam-people: #9a4b
   width: 17px; height: 17px; border-radius: 50%;
   background: var(--surface); box-shadow: 0 0 0 3px var(--surface);
 }
-.transcript[data-variant="16"] .transcript-inner > [data-family="ledger"] { padding-left: 0; }
+/* the line's text clears the icon by the gap a ledger line keeps everywhere (its 12 px glyph ends 8.5 px before the
+   text): at the 24 px gutter the icon and its 3 px surface ring end 6 px and 3 px short of the text; the narrow pane's
+   18 px gutter ended the icon on the text, so its ring painted over the first letter ("Back" read "3ack"). The line
+   takes back what the gutter gave away (fpfix F-4). Accepted trade-off (fpfix cycle 2): in the narrow pane a ledger
+   line's text therefore starts 6 px right of the prose column. Flush text cannot keep the gap there: the icon is
+   centred on the spine (turn-stage.js draws it at the item's left - gutter + 9.5 px), so its 12 px glyph ends 2.5 px
+   before flush text at the 18 px gutter whatever ring it wears; only moving the icon 6 px off the spine would, and an
+   icon off its hairline reads worse than a receipt line indented one step under the prose. */
+.transcript[data-variant="16"] .transcript-inner > [data-family="ledger"] { padding-left: max(0px, calc(24px - var(--tx-gutter))); }
 
 /* the spine layer (turn-stage.js draws it): marks, hairlines, ticks, end dots,
    and the comet that runs to whatever is live. It sits behind the items. */
@@ -18901,7 +18909,9 @@ html[data-o55-nier-parts~="charts"] .mini-graph > i:last-child { background: var
 
 /* ================================================================================ Map ticks [ticks] */
 /* Transcript cards (system cards, the working card, event cards) get the map's corner ticks and a small grid
-   coordinate at the right end of their header (T-01, T-02 ... down the thread). Counters, no script. */
+   coordinate at the right end of their header (T-01, T-02 ... down the thread). Counters, no script. A ledger line
+   (turn-stage.css LEDGER) is not a card: it has no frame for ticks to mark, and its left edge is its text's (or its
+   icon's), so a tick there stood on the first letter. Ledger lines take none (fpfix F-4, cycle 1). */
 html[data-o55-nier-parts~="ticks"] body {
   --o55nw-ticks: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)), linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)),
     linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)), linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)),
@@ -18912,7 +18922,7 @@ html[data-o55-nier-parts~="ticks"] body {
 }
 html[data-o55-nier-parts~="ticks"] .transcript-inner .system-card,
 html[data-o55-nier-parts~="ticks"] .transcript-inner .working-card,
-html[data-o55-nier-parts~="ticks"] .transcript-inner .event-card {
+html[data-o55-nier-parts~="ticks"] .transcript-inner .event-card:not([data-family="ledger"]) {
   background-image: var(--o55nw-ticks) !important; background-size: var(--o55nw-ticks-size) !important;
   background-position: var(--o55nw-ticks-pos) !important; background-repeat: no-repeat !important;
 }
@@ -27294,8 +27304,16 @@ window.PM56_NIER_FACES = [
       var t2 = worstTone(list(coll(ctx).artifacts));
       return t2 === 'blocked' ? 'attention' : t2;
     }
+    /* Crew, BrainStorm, Review and Chat Room light in the tone of their own runs, as app.js's activityDefs() projects
+       them from each run's presentation state (the card's: blocked, a pending decision, a Chat Room's "your move", an
+       unclean completion, a limit or a failure need you; running and starting work; completed is done). They used to
+       fall through to the subagents list below, so a thread's failed subagent painted its running Review red, and
+       Crew read only the protocol Crews' members, so a seeded Crew blocked mid-run read idle (fpfix F-2, cycle 1). */
+    if (id === 'crew' || id === 'brainstorm' || id === 'review' || id === 'chat_room') {
+      var t3 = defs[id] && defs[id].tone;
+      return TONES.indexOf(t3) >= 0 ? t3 : 'idle';
+    }
     var sc = coll(ctx);
-    if (id === 'crew') return worstTone(list(sc.crew).concat(window.PM56_CREW?.activityMembers(ctx)||[]));
     return worstTone(list(id === 'todo' ? sc.todos : sc.subagents));
   }
 
@@ -35651,7 +35669,10 @@ window.PM56_NIER_FACES = [
      prefix, every data-action / data-run / data-run-id / data-pm-keep goes,
      buttons become spans, and every non-pmx class (the hook classes a module
      passed through cls/headCls/badgeCls/...) is dropped, so no harness
-     selector and no action can match the preview. */
+     selector and no action can match the preview. The neon family's own
+     classes (nx, nx-*: role, tone, halo, tube, part, still wrapper) are paint,
+     not hooks, and stay, so the preview's kind badge and status mark are lit
+     like the card's (fpfix F-1: the configure sheets' previews drew them bare). */
   var LOOK = { 'primary-button': 1, 'soft-button': 1, 'text-button': 1, 'icon-button': 1 };
   function inert(html) {
     return str(html)
@@ -35659,7 +35680,7 @@ window.PM56_NIER_FACES = [
       .replace(/\s(?:data-action|data-run|data-run-id|data-pm-keep|data-menu-anchor|data-pmx-autofocus|data-hover-key|data-hover-tip|tabindex)(?:="[^"]*")?(?=[\s>\/])/g, '')
       .replace(/\sdata-k="([^"]*)"/g, function (m, v) { return ' data-k="pv:' + v + '"'; })
       .replace(/\sclass="([^"]*)"/g, function (m, v) {
-        var keep = v.split(/\s+/).filter(function (c) { return c && (c.indexOf('pmx-') === 0 || LOOK[c]); });
+        var keep = v.split(/\s+/).filter(function (c) { return c && (c.indexOf('pmx-') === 0 || c === 'nx' || c.indexOf('nx-') === 0 || LOOK[c]); });
         return keep.length ? ' class="' + keep.join(' ') + '"' : '';
       })
       .replace(/\s(?:type="button"|disabled)(?=[\s>\/])/g, '');
@@ -60679,8 +60700,10 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     to the legacy "0 members" card in a chat that has Crews (7.13; COLLAB fix-cycle-1 request) */
  function activityRuns(c){return C.runsForThread(c.state.selectedThread).filter(r=>r.kind==='crew');}
  const LEGACY_STATUS={running:'working',working:'working',completed:'done',done:'done',failed:'blocked',blocked:'blocked'};
- /* the Activity chip's tone reads these (activity-bar worstTone): a helper waiting for the Coordinator's plan or
-    for its turn is queued, not "waiting" (which the chip paints as needing attention); only a blocked helper is */
+ /* these feed the Activity panel's Crew member rows only (activity-panel.js crew rows); the chip's tone no longer
+    reads them (fpfix cycle 1): it comes from each run's PM56_COLLAB.presentState through app.js activityDefs(). A
+    helper waiting for the Coordinator's plan or for its turn is queued, not "waiting"; only a blocked helper is
+    blocked */
  /* the members stay the protocol Crews' (the legacy crew list already carries the seeds' members) */
  function activityMembers(c){return activityRuns(c).filter(r=>owns(r.id)).flatMap(r=>{const vm=planVM(r),st=C.presentState?.(r);return r.participants.map(p=>{const x=vm?.parts.find(x=>x.owner.id===p.id);
   const status=st==='completed'||x?.checked?'done':p.status==='blocked'?'blocked':x?.status==='running'&&st==='running'?'working':'queued';
@@ -71332,6 +71355,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      separate domain -- a Crew member is not a subagent. */
   const ACTIVITY_ORDER=['goal','todo','subagents','crew','brainstorm','review','chat_room','changes','artifacts'];
   const COLLAB_DOMAINS={crew:'Crew',brainstorm:'BrainStorm',review:'Review',chat_room:'Chat Room'};
+  const COLLAB_ATTENTION={attention:1,limit:1,failed:1,blocked:1}, COLLAB_TONE_RANK=['attention','working','done','idle'];
   /* collaboration.js owns the runs; app.js only projects whatever is there, so the bar is
      correct with the module absent (no runs -> no domains) and correct with it loaded. */
   function collabRuns(tid){
@@ -71548,16 +71572,25 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       const runs=scope.collab[id]||[];
       const running=runs.filter(r=>r.status==='running');
       const failed=runs.filter(r=>r.status==='failed'||r.degraded);
-      const done=runs.filter(r=>r.status==='completed');
       const latest=runs[runs.length-1]||{};
+      /* fpfix cycle 1: the tone is the worst of each run's own presentation state, the one the cards, dock and receipt
+         read (PM56_COLLAB.presentState, A1-20): blocked, a pending decision, a blocked helper, a Chat Room's "your
+         move", an unclean completion, a limit stop and a failure need you (attention); running and starting work;
+         completed is done; waiting, paused and cancelled stay idle. Raw status is only the fallback without the store. */
+      const C=window.PM56_COLLAB, ps=r=>{try{return C&&C.presentState?C.presentState(r):r.status;}catch(e){return r.status;}};
+      const runTone=r=>{const s=ps(r);return r.degraded||COLLAB_ATTENTION[s]?'attention':s==='running'||s==='starting'?'working':s==='completed'?'done':'idle';};
+      const tones=runs.map(runTone), tone=tones.reduce((w,t)=>COLLAB_TONE_RANK.indexOf(t)<COLLAB_TONE_RANK.indexOf(w)?t:w,'idle');
+      /* fpfix cycle 2: the detail line counts the same per-run tones, so its words match the colour (a Chat Room on
+         "your move" or a blocked run says it needs you instead of "running" or nothing) */
+      const nTone=t=>tones.filter(x=>x===t).length, nYou=nTone('attention'), nRun=nTone('working'), nDone=nTone('done');
       /* neon 3B: each collaborative domain shows its kind mark (one glyph per concept: the bar, the hover card head and
          Activity Detail all read this icon) */
       out[id]={icon:'kind-'+id,label:COLLAB_DOMAINS[id],
         count:String(runs.length),
         state:running.length?'live':failed.length?'changed':'changed',
-        tone:failed.length?'attention':running.length?'working':done.length?'done':'idle',
+        tone,
         summary:latest.title||COLLAB_DOMAINS[id],
-        detail:[running.length?`${running.length} running`:null,done.length?`${done.length} completed`:null,failed.length?`${failed.length} degraded`:null,latest.participants?`${latest.participants.length} participants`:null].filter(Boolean).join(' · ')||'No runs'};
+        detail:[nYou?plural(nYou,'needs you','need you'):null,nRun?`${nRun} running`:null,nDone?`${nDone} completed`:null,latest.participants?plural(latest.participants.length,'participant','participants'):null].filter(Boolean).join(' · ')||'No runs'};
     });
     if(scope.live.artifacts){
       const arts=scope.artifacts;

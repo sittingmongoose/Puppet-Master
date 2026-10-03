@@ -157,7 +157,9 @@ html[data-o55-nier-parts~="charts"] .mini-graph > i:last-child { background: var
 
 /* ================================================================================ Map ticks [ticks] */
 /* Transcript cards (system cards, the working card, event cards) get the map's corner ticks and a small grid
-   coordinate at the right end of their header (T-01, T-02 ... down the thread). Counters, no script. */
+   coordinate at the right end of their header (T-01, T-02 ... down the thread). Counters, no script. A ledger line
+   (turn-stage.css LEDGER) is not a card: it has no frame for ticks to mark, and its left edge is its text's (or its
+   icon's), so a tick there stood on the first letter. Ledger lines take none (fpfix F-4, cycle 1). */
 html[data-o55-nier-parts~="ticks"] body {
   --o55nw-ticks: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)), linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)),
     linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)), linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)),
@@ -168,7 +170,7 @@ html[data-o55-nier-parts~="ticks"] body {
 }
 html[data-o55-nier-parts~="ticks"] .transcript-inner .system-card,
 html[data-o55-nier-parts~="ticks"] .transcript-inner .working-card,
-html[data-o55-nier-parts~="ticks"] .transcript-inner .event-card {
+html[data-o55-nier-parts~="ticks"] .transcript-inner .event-card:not([data-family="ledger"]) {
   background-image: var(--o55nw-ticks) !important; background-size: var(--o55nw-ticks-size) !important;
   background-position: var(--o55nw-ticks-pos) !important; background-repeat: no-repeat !important;
 }

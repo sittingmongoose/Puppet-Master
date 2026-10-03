@@ -1565,6 +1565,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      separate domain -- a Crew member is not a subagent. */
   const ACTIVITY_ORDER=['goal','todo','subagents','crew','brainstorm','review','chat_room','changes','artifacts'];
   const COLLAB_DOMAINS={crew:'Crew',brainstorm:'BrainStorm',review:'Review',chat_room:'Chat Room'};
+  const COLLAB_ATTENTION={attention:1,limit:1,failed:1,blocked:1}, COLLAB_TONE_RANK=['attention','working','done','idle'];
   /* collaboration.js owns the runs; app.js only projects whatever is there, so the bar is
      correct with the module absent (no runs -> no domains) and correct with it loaded. */
   function collabRuns(tid){
@@ -1781,16 +1782,25 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       const runs=scope.collab[id]||[];
       const running=runs.filter(r=>r.status==='running');
       const failed=runs.filter(r=>r.status==='failed'||r.degraded);
-      const done=runs.filter(r=>r.status==='completed');
       const latest=runs[runs.length-1]||{};
+      /* fpfix cycle 1: the tone is the worst of each run's own presentation state, the one the cards, dock and receipt
+         read (PM56_COLLAB.presentState, A1-20): blocked, a pending decision, a blocked helper, a Chat Room's "your
+         move", an unclean completion, a limit stop and a failure need you (attention); running and starting work;
+         completed is done; waiting, paused and cancelled stay idle. Raw status is only the fallback without the store. */
+      const C=window.PM56_COLLAB, ps=r=>{try{return C&&C.presentState?C.presentState(r):r.status;}catch(e){return r.status;}};
+      const runTone=r=>{const s=ps(r);return r.degraded||COLLAB_ATTENTION[s]?'attention':s==='running'||s==='starting'?'working':s==='completed'?'done':'idle';};
+      const tones=runs.map(runTone), tone=tones.reduce((w,t)=>COLLAB_TONE_RANK.indexOf(t)<COLLAB_TONE_RANK.indexOf(w)?t:w,'idle');
+      /* fpfix cycle 2: the detail line counts the same per-run tones, so its words match the colour (a Chat Room on
+         "your move" or a blocked run says it needs you instead of "running" or nothing) */
+      const nTone=t=>tones.filter(x=>x===t).length, nYou=nTone('attention'), nRun=nTone('working'), nDone=nTone('done');
       /* neon 3B: each collaborative domain shows its kind mark (one glyph per concept: the bar, the hover card head and
          Activity Detail all read this icon) */
       out[id]={icon:'kind-'+id,label:COLLAB_DOMAINS[id],
         count:String(runs.length),
         state:running.length?'live':failed.length?'changed':'changed',
-        tone:failed.length?'attention':running.length?'working':done.length?'done':'idle',
+        tone,
         summary:latest.title||COLLAB_DOMAINS[id],
-        detail:[running.length?`${running.length} running`:null,done.length?`${done.length} completed`:null,failed.length?`${failed.length} degraded`:null,latest.participants?`${latest.participants.length} participants`:null].filter(Boolean).join(' · ')||'No runs'};
+        detail:[nYou?plural(nYou,'needs you','need you'):null,nRun?`${nRun} running`:null,nDone?`${nDone} completed`:null,latest.participants?plural(latest.participants.length,'participant','participants'):null].filter(Boolean).join(' · ')||'No runs'};
     });
     if(scope.live.artifacts){
       const arts=scope.artifacts;
