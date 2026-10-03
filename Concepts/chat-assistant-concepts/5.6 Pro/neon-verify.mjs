@@ -1606,6 +1606,14 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
         for (const pos of ['top', 'bottom']) {
           await p.evaluate(pos => { const t = document.querySelector('.transcript'); t.scrollTop = pos === 'top' ? 0 : t.scrollHeight; t.dispatchEvent(new Event('scroll')); }, pos);
           await p.waitForTimeout(1300); /* the transcript scrolls smoothly (about 600 ms) and the dock settles after it */
+          /* the dock can shrink as it settles (recovery-collaboration's composer loses 42 px), which leaves the transcript
+             short of its bottom: scroll it down again until it rests there */
+          for (let k = 0; pos === 'bottom' && k < 3; k++) {
+            const atEnd = await p.evaluate(() => { const t = document.querySelector('.transcript'); return t.scrollTop + t.clientHeight >= t.scrollHeight - 2; });
+            if (atEnd) break;
+            await p.evaluate(() => { const t = document.querySelector('.transcript'); t.scrollTop = t.scrollHeight; t.dispatchEvent(new Event('scroll')); });
+            await p.waitForTimeout(1000);
+          }
           const r = await p.evaluate(pos => {
             const pod = document.getElementById('o55np-pod');
             if (!pod || getComputedStyle(pod).display === 'none') return { nopod: true };
