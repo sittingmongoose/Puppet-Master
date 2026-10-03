@@ -93,14 +93,14 @@
   "historical_deadline_utc": "2026-10-02T07:40:09Z",
   "historical_protected_final_hour_utc": "2026-10-02T06:40:09Z",
   "authority_amendment": "canary-controller-cohort-v1/recovery-v1/AUTHORITY_AMENDMENT.json",
-  "new_admissions": "Frozen V9 S8 BIO CHECK pair has two actual native research starts; V7 completion/positive owned-group quiet retained. No current liveness inference.",
+  "new_admissions": "63admissions/61actualnative starts; S8BIOCHECK incomplete3starts retained; BIOCOND-S8 actual2research activations under soleV11 afteraccepted preflight; V10HOLD0Goals retained.",
   "pause_requested_epoch": 1790914502.1696212,
   "resume_epoch": 1790979124.0,
   "pause_duration_seconds": 64621.83037877083,
   "pause_policy": "Actual explicit pause interval may be excluded prospectively on resume; no fixed assignment deadlines or births/outcomes/consumed usage reset",
   "previous_amended_deadline_utc": "2026-10-02T13:40:09Z",
   "resume_evidence": "resume-cohort-v1/ops/recovery-v1/RESUME_20261002.json",
-  "observation_utc": "2026-10-03T04:53:51.115652+00:00",
+  "observation_utc": "2026-10-03T06:21:33.167905+00:00",
   "native_qualification": "V3_MECHANICAL_PASSED_LIMITED_DELIVERY_INFERENCE",
   "native_qualification_evidence": "resume-qualified-v3-cohort/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json",
   "current_observation": {
@@ -119,41 +119,86 @@
       "V8-NB-BREADTH-T-M"
     ],
     "active_jobs": [
-      "V8-BIO-C-Z-S8-research-proposal",
-      "V8-BIO-WIT-T-Z-S8-research-proposal"
+      "V8-BIO-P-Z-S8-research-proposal",
+      "V8-BIO-COND-C-Z-S8-research-proposal"
     ],
     "quality_reviewed_pairs": 6,
     "independent_failed_screens": 11,
     "independent_holds": 1,
     "quality_pending_cases": [],
     "stage_complete_counts": {
-      "research": 20,
-      "critic": 13,
+      "research": 21,
+      "critic": 14,
       "final": 12
     },
     "operational_pipeline_count": 12,
     "target_pipelines": 24,
     "operational_pair_count": 6,
     "target_pairs": 12,
-    "evidence": "notebook-breadth-quality-review-v1/ops/recovery-v1/OBSERVATION_20261003_0453_SIX_REVIEWED_PAIRS.json",
     "runtime": {
-      "unit": "er8-v8-production-z-tranche-v9.service",
-      "positive_pid": 2775507,
-      "release": "ops/execution-resume-v1/root-production-release-v9.json",
-      "release_sha256": "6264e76ef8cefc71c9c83ddaed37008ffa9bbe707086483ec201a9f7faafb73d",
-      "scope": "Frozen observation only; not present liveness or portable runtime."
+      "unit": "er8-v8-production-z-tranche-v11.service",
+      "positive_pid": 2853927,
+      "active_jobs": [
+        "V8-BIO-P-Z-S8-research-proposal",
+        "V8-BIO-COND-C-Z-S8-research-proposal"
+      ],
+      "release_sha256": "e4e2ff781a113bc6ade2fb722638e0ca35fe1aad805185b8bea2fde34d9ec575",
+      "positive_launch_sha256": "2090903996b5ee3e047eccc860b3edacc0cb62da8ee9c20b5f9a17a7675c7800",
+      "initial_postlaunch_assertion": "Failed after successful systemd launch; causeunobserved; no duplicate retry",
+      "scope": "Exact frozen observation only, no present liveness inference"
     },
-    "S8_actual_native_starts": 2
+    "S8_actual_native_starts": 3,
+    "stage_count_basis": "Prior paired-case and earlier-stage aggregate20/13/12 plus S8 BIO CHECK control research and critic COMPLETE (+1/+1/+0); treatment has no COMPLETE. Derived mechanically from explicit stage facts, not a quality grade.",
+    "S8_BIOCHECK": "Both INCOMPLETE; C research+critic COMPLETE, no final; T held126/no COMPLETE/output UNKNOWN",
+    "BIOCOND_S8": "Sole V11 once-launched; two research Goals active at frozen observation, no whole completion",
+    "previous_public_evidence": "notebook-breadth-quality-review-v1/ops/recovery-v1/OBSERVATION_20261003_0453_SIX_REVIEWED_PAIRS.json"
   },
   "original_case_list_scope": "Historical original reservations, preserved at initial planning freeze; NOT_RUN entries here are not current execution claims. See attempts.json/current_observation for actual outcomes.",
-  "current_metadata_boundary": "Root reservation/creation sample epoch1791003230.9785047; displayed serialized snapshot UTC2026-10-03T04:53:51.115652+00:00 is later capture/write sample ~0.137seconds later. Both retained; no clock correction/reset. Earlier03:30 audit covers historical snapshot only; active jobs at freeze, no present liveness.",
-  "observation_created_epoch": 1791003230.9785047,
-  "source_serialized_utc": "2026-10-03T04:53:51.115652+00:00",
+  "current_metadata_boundary": "Current06:21:33.167905 V11 launch observation, historical06:15 guard-installed observation retained; no clock/budget/outcome reset.",
+  "source_serialized_utc": "2026-10-03T06:21:33.167905+00:00",
   "current_runtime": {
-    "unit": "er8-v8-production-z-tranche-v9.service",
-    "positive_pid": 2775507,
-    "release": "ops/execution-resume-v1/root-production-release-v9.json",
-    "release_sha256": "6264e76ef8cefc71c9c83ddaed37008ffa9bbe707086483ec201a9f7faafb73d",
-    "scope": "Frozen observation only; not present liveness or portable runtime."
+    "unit": "er8-v8-production-z-tranche-v11.service",
+    "positive_pid": 2853927,
+    "active_jobs": [
+      "V8-BIO-P-Z-S8-research-proposal",
+      "V8-BIO-COND-C-Z-S8-research-proposal"
+    ],
+    "release_sha256": "e4e2ff781a113bc6ade2fb722638e0ca35fe1aad805185b8bea2fde34d9ec575",
+    "positive_launch_sha256": "2090903996b5ee3e047eccc860b3edacc0cb62da8ee9c20b5f9a17a7675c7800",
+    "initial_postlaunch_assertion": "Failed after successful systemd launch; causeunobserved; no duplicate retry",
+    "scope": "Exact frozen observation only, no present liveness inference"
+  },
+  "previous_observation_creation_epoch": 1791003230.9785047,
+  "current_output_guard": {
+    "version": "prospective-output-guard-v1",
+    "warning_threshold": 1200000,
+    "stop_threshold": 2000000,
+    "effective_epoch": 1791007019.4522629,
+    "warning_at_observation": true,
+    "stop_at_observation": false,
+    "historical_stop_threshold": 1500000,
+    "historical_trip_preserved": true
+  },
+  "output_guard": {
+    "version": "prospective-output-guard-v1",
+    "warning_threshold": 1200000,
+    "stop_threshold": 2000000,
+    "effective_epoch": 1791007019.4522629,
+    "warning_at_observation": true,
+    "stop_at_observation": false,
+    "historical_stop_threshold": 1500000,
+    "historical_trip_preserved": true
+  },
+  "current_observation_source_pin": {
+    "source_locator": "LAB/ops/recovery-v1/OBSERVATION_20261003_0621_V11_ACTUAL_LAUNCH.json",
+    "sha256": "a646e8367548a3e17bda0b888afe4c94ed3e523f66b9246edfffd3e23987e54e",
+    "public_projection_pending": true
+  },
+  "output_guard_publication_evidence": "output-guard-recovery-cohort-v1/README.md",
+  "output_guard_publication_scope": "README exists; no whole-cohort verification or new source acceptance implied.",
+  "historical_guard_installed_observation": {
+    "source_locator": "LAB/ops/recovery-v1/OBSERVATION_20261003_0615_GUARD_INSTALLED.json",
+    "sha256": "a6b9fb593cc4115b68739f1ca8fb7a82cb8846839365e851cd89e2e086be4ccf",
+    "public_projection_pending": true
   }
 }

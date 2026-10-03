@@ -67,10 +67,10 @@
   "prospective_pair_map": "tranche-cohort-v2/cases/tranche-v2/pairs.json",
   "prospective_pair_count": 12,
   "completed_comparisons": 6,
-  "current_scope_note": "12 target pairs; six operationally complete and independently reviewed, eleven FAILED_SCREEN and one HOLD. S8 BIO CHECK research pair separately active; no full-PASS quality-qualified efficiency result.",
+  "current_scope_note": "12target pairs;6complete/reviewed11FAILED_SCREEN1HOLD. S8BIOCHECK both incomplete3starts; BIOCOND-S8 two actualresearch activations/no wholecredit. No qualityqualifiedefficiency.",
   "scope_review": "recovery-results-cohort-v2/evaluation/tranche-scope-review-v1/review.json",
   "scope_review_status": "CLEAR_PROSPECTIVE_NO_LAUNCH_AUTHORITY",
-  "observation_utc": "2026-10-03T04:53:51.115652+00:00",
+  "observation_utc": "2026-10-03T06:21:33.167905+00:00",
   "completed_comparisons_definition": "Six matched operational pairs with both independent dispositions frozen; no qualified efficiency result.",
   "operational_matched_pairs_completed": 6,
   "quality_qualified_efficiency_comparisons": 0,
@@ -124,7 +124,7 @@
       "evidence": "notebook-breadth-quality-review-v1/ops/recovery-v1/ROOT_NB_BREADTH_COMPARISON_V1.json"
     }
   ],
-  "current_metadata_boundary": "Root reservation/creation sample epoch1791003230.9785047; displayed serialized snapshot UTC2026-10-03T04:53:51.115652+00:00 is later capture/write sample ~0.137seconds later. Both retained; no clock correction/reset. Earlier03:30 audit covers historical snapshot only; active jobs at freeze, no present liveness.",
+  "current_metadata_boundary": "Current06:21:33.167905 V11 launch observation, historical06:15 guard-installed observation retained; no clock/budget/outcome reset.",
   "current_outcomes": {
     "operational_pipeline_count": 12,
     "target_pipelines": 24,
@@ -138,14 +138,41 @@
     "winner": null,
     "qualified_holdouts": 0
   },
-  "observation_created_epoch": 1791003230.9785047,
-  "source_serialized_utc": "2026-10-03T04:53:51.115652+00:00",
+  "source_serialized_utc": "2026-10-03T06:21:33.167905+00:00",
   "current_runtime": {
-    "unit": "er8-v8-production-z-tranche-v9.service",
-    "positive_pid": 2775507,
-    "release": "ops/execution-resume-v1/root-production-release-v9.json",
-    "release_sha256": "6264e76ef8cefc71c9c83ddaed37008ffa9bbe707086483ec201a9f7faafb73d",
-    "scope": "Frozen observation only; not present liveness or portable runtime."
+    "unit": "er8-v8-production-z-tranche-v11.service",
+    "positive_pid": 2853927,
+    "active_jobs": [
+      "V8-BIO-P-Z-S8-research-proposal",
+      "V8-BIO-COND-C-Z-S8-research-proposal"
+    ],
+    "release_sha256": "e4e2ff781a113bc6ade2fb722638e0ca35fe1aad805185b8bea2fde34d9ec575",
+    "positive_launch_sha256": "2090903996b5ee3e047eccc860b3edacc0cb62da8ee9c20b5f9a17a7675c7800",
+    "initial_postlaunch_assertion": "Failed after successful systemd launch; causeunobserved; no duplicate retry",
+    "scope": "Exact frozen observation only, no present liveness inference"
   },
-  "comparisons_scope": "Original historical reservation labels only; NOT_RUN rows are not a current integrated execution claim. Current actual pair outcomes are in integrated_pair_results and current_outcomes."
+  "comparisons_scope": "Original historical reservation labels only; NOT_RUN rows are not a current integrated execution claim. Current actual pair outcomes are in integrated_pair_results and current_outcomes.",
+  "previous_observation_creation_epoch": 1791003230.9785047,
+  "current_output_guard": {
+    "version": "prospective-output-guard-v1",
+    "warning_threshold": 1200000,
+    "stop_threshold": 2000000,
+    "effective_epoch": 1791007019.4522629,
+    "warning_at_observation": true,
+    "stop_at_observation": false,
+    "historical_stop_threshold": 1500000,
+    "historical_trip_preserved": true
+  },
+  "current_observation_source_pin": {
+    "source_locator": "LAB/ops/recovery-v1/OBSERVATION_20261003_0621_V11_ACTUAL_LAUNCH.json",
+    "sha256": "a646e8367548a3e17bda0b888afe4c94ed3e523f66b9246edfffd3e23987e54e",
+    "public_projection_pending": true
+  },
+  "output_guard_publication_evidence": "output-guard-recovery-cohort-v1/README.md",
+  "output_guard_publication_scope": "README exists; no whole-cohort verification or new source acceptance implied.",
+  "historical_guard_installed_observation": {
+    "source_locator": "LAB/ops/recovery-v1/OBSERVATION_20261003_0615_GUARD_INSTALLED.json",
+    "sha256": "a6b9fb593cc4115b68739f1ca8fb7a82cb8846839365e851cd89e2e086be4ccf",
+    "public_projection_pending": true
+  }
 }
