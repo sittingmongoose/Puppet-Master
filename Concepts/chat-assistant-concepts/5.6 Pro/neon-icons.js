@@ -149,6 +149,10 @@
     var BACK_ARC = 'M3 12a9 9 0 1 0 3-6.7L3 8';
     var CREW = ['M3 5c5 0 8 3 12 7', 'M3 12h12', 'M3 19c5 0 8-3 12-7'];
     var X_IN = function (d1, d2, s) { return [M(P(d1), { ax: -3 * s, ao: .3 }), M(P(d2), { ax: 3 * s, ao: .3, ad: 70 })]; };
+    /* the needs-you bubble and its "?": the waiting status mark, and (final review, 2026-10-03) the questionnaire's
+       concept glyph, so a question waiting for you is one drawing wherever it shows */
+    var ASK_BUBBLE = 'M5 3h14a2.5 2.5 0 0 1 2.5 2.5v10.5a2.5 2.5 0 0 1-2.5 2.5h-6.5L8 21.8v-3.3H5A2.5 2.5 0 0 1 2.5 16V5.5A2.5 2.5 0 0 1 5 3z';
+    var ASK_Q = ['M9.4 8.6a2.6 2.6 0 1 1 3.9 2.25c-.85.45-1.3 1.05-1.3 1.9v.1', 'M12 15.6h.01'];
 
     var GLYPHS = {
       /* ---- the activity domains (the bar is the reference surface) ---- */
@@ -274,6 +278,8 @@
       chat: G([P('M10 17h9.5a1.5 1.5 0 0 0 1.5-1.5V7a1.5 1.5 0 0 0-1.5-1.5h-15A1.5 1.5 0 0 0 3 7v8.5A1.5 1.5 0 0 0 4.5 17h1'),
         M(P('M5.5 17v3.5L10 17'), { ar: -18, o: [7.75, 17], b: 1 })], 'wave'),
       info: G([C(12, 12, 9), M(P('M12 11v5M12 8h.01'), { ao: .25, b: 1 })], 'seq'),
+      /* a questionnaire (a question waiting for you): the needs-you bubble as a concept glyph; its "?" hops in */
+      question: G([P(ASK_BUBBLE), M([P(ASK_Q[0]), P(ASK_Q[1])], { ay: -3.4 })], 'hop'),
       check: G([M(P('m5 12 4 4L19 6'), { ao: .6, ac: '0 20 0 4', ae: '0 4 0 4' })], 'seq'),
       branch: G([P('M6 3v12a4 4 0 0 0 4 4h8'), C(6, 3, 2), C(18, 19, 2), P('M6 9h7a4 4 0 0 0 4-4V3'), M(C(17, 3, 2), { ao: .2, b: 1 })], 'seq', 'control'),
       /* lightning: a crack, never a shake (Jared, 2026-10-02: "think of lightning being a crack, like you see lightning
@@ -333,8 +339,7 @@
       'st-working': G([C(12, 12, 7.5, { c: 'nx-dim' }), M(C(12, 4.5, 2.7, { f: 1 }), { ar: 360, o: [12, 12] })], 'spin', 'status'),
       /* reviewing: the lens sweeps half as far and rests (it must stay below needs-you) */
       'st-reviewing': G([P('M5 3h9l4 4v6'), P('M5 3v17h6'), M([C(16, 16, 3.6), P('m18.6 18.6 2.6 2.6')], { ax: -2.5, ay: -2.5, b: 1 })], 'calm', 'status'),
-      'st-waiting': G([P('M5 3h14a2.5 2.5 0 0 1 2.5 2.5v10.5a2.5 2.5 0 0 1-2.5 2.5h-6.5L8 21.8v-3.3H5A2.5 2.5 0 0 1 2.5 16V5.5A2.5 2.5 0 0 1 5 3z'),
-        M([P('M9.4 8.6a2.6 2.6 0 1 1 3.9 2.25c-.85.45-1.3 1.05-1.3 1.9v.1'), P('M12 15.6h.01')], { ay: -3.4 })], 'hop', 'status'),
+      'st-waiting': G([P(ASK_BUBBLE), M([P(ASK_Q[0]), P(ASK_Q[1])], { ay: -3.4 })], 'hop', 'status'),
       'st-waiting-dep': G([M([P('M6.5 3h11M6.5 21h11'), P('M8 3v2.5c0 2.4 4 4 4 6.5s-4 4.1-4 6.5V21M16 3v2.5c0 2.4-4 4-4 6.5s4 4.1 4 6.5V21')], { ar: 16, o: [12, 12], b: 1 })], 'tip', 'status'),
       'st-idle': G([C(12, 12, 4.5)], 'none', 'status'),
       'st-complete': G([M(P('m5 12.5 4.5 4.5L19 7.5'), { ac: '0 20 0 4', ae: '0 4 0 4' })], 'none', 'status'),
@@ -373,7 +378,8 @@
        the back arc (reset/restore/rewind/undo) = the app arc; trash = PMX (threadops' copy retired);
        chevrons = PMX (the app's chevron/down/up/left were the same shapes); clock = PMX clock (app-wide).
        New: plan (a folded map), shield, bug, hourglass, speaker/speaker-off (chat-sound SPK at the
-       family stroke), the 13 status marks. module-shell CHEVRON is chevron-down.
+       family stroke), the 13 status marks, question (the needs-you bubble as the questionnaire's concept glyph).
+       module-shell CHEVRON is chevron-down.
        ====================================================================== */
     var ALIAS = {
       document: 'page', file: 'page', artifact: 'page', passage: 'page',

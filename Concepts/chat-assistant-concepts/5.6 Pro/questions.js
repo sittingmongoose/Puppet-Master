@@ -210,7 +210,7 @@
       type: 'question',
       take: takeOf(ctx),
       key: 'q:' + (flow ? flow.id : 'none') + ':' + (q.id || idx),
-      icon: 'todo',
+      icon: 'question',
       title: (flow && flow.title) || 'Questionnaire',
       subtitle: (flow && flow.note) || '',
       meta: [{ text: ans + '/' + qs.length + ' answered', tone: ans === qs.length ? 'ok' : '' }],

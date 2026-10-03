@@ -295,7 +295,7 @@
     if (origin === 'browser_capture') return 'camera';
     if (origin === 'source_control_object') return 'branch';
     if (origin === 'project_frozen_snapshot') return 'lock';
-    if (origin === 'uploaded_snapshot') return 'upload';
+    if (origin === 'uploaded_snapshot') return 'attach';   /* a file you attached: the transcript's attach glyph (one per concept) */
     return null; /* project_live_reference and anything else: fall back to kind icon */
   }
 

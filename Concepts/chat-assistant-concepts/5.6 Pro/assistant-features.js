@@ -394,7 +394,7 @@
       '<div id="af-teach-conflict-zone">'+renderConflictZone(ctx, conflict)+'</div>'+
       '<div class="plan-actions"><button class="soft-button" data-action="af-teach-cancel">Cancel</button>'+
       '<button class="primary-button" data-action="af-teach-capture">'+icon('check',12)+' Capture memory</button></div>';
-    return dialogShell(ctx, { icon:'sparkles', title:narrowOf?'Narrow taught memory':'Teach Puppet Master', pill:'/teach', body:body, width:520 });
+    return dialogShell(ctx, { icon:'kind-teach', title:narrowOf?'Narrow taught memory':'Teach Puppet Master', pill:'/teach', body:body, width:520 });
   }
 
   /* =====================================================================
@@ -509,7 +509,7 @@
             '<button class="text-button af-danger-text" data-action="af-teach-revoke" data-value="'+e(r.id)+'">'+icon('close',11)+' Revoke</button>'+
           '</div>')+
         '</div>';
-      }).join('') : emptyState(icon('sparkles',20),'Nothing taught yet. Use /teach, natural language such as “remember this…”, or the wand.');
+      }).join('') : emptyState(icon('kind-teach',20),'Nothing taught yet. Use /teach, natural language such as “remember this…”, or the wand.');
     } else {
       body = (auto.length ? auto.map(function(ev){
         return '<div class="af-mem-row'+(ev.blocked?' is-blocked':'')+'">'+
