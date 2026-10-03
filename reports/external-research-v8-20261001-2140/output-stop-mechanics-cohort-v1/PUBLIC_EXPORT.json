@@ -1,0 +1,33 @@
+{
+  "artifacts": [
+    {
+      "original_source_path": "LAB_ROOT/ops/output-stop-mechanics-v1/REPORT.json",
+      "original_source_sha256": "a558bb5d049565727d3ffb6054da2390e39c5ef87ccb64235eed7c05b0bdd608",
+      "portability": "NONPORTABLE_SOURCE_REPORT_ONLY",
+      "public_path": "REPORT.json",
+      "public_sha256": "42b75d58a769b90768dcf2a0543c53f7f5e32846471697fa52df9a820f3fd9d0"
+    },
+    {
+      "original_source_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+      "portability": "PORTABLE_OFFLINE_ARTIFACT_CHECKER",
+      "public_path": "verify_public.py",
+      "public_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd"
+    },
+    {
+      "original_source_sha256": null,
+      "portability": "PORTABLE_DOCUMENTATION",
+      "public_path": "README.md",
+      "public_sha256": "7a33f71a02436a67bbee8423ebf7d8e0327a04360f161699b30849dc44c40d28"
+    }
+  ],
+  "cohort": "output-stop-mechanics-cohort-v1",
+  "no_live_state_or_full_compliance_certificate": true,
+  "references_followed": 0,
+  "root_macros": [
+    "LAB_ROOT",
+    "WORKTREE_ROOT",
+    "USER_HOME"
+  ],
+  "schema": "pm.er8.output-stop-public-export.v1",
+  "source_report_only": true
+}

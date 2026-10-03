@@ -1,0 +1,31 @@
+{
+  "checker_verified_artifacts": 3,
+  "no_full_compliance_certificate": true,
+  "original_external_pins_not_public_hashes": true,
+  "original_report_sha256": "a558bb5d049565727d3ffb6054da2390e39c5ef87ccb64235eed7c05b0bdd608",
+  "projection": "only exact known root replacements",
+  "public_files": [
+    {
+      "path": "REPORT.json",
+      "sha256": "42b75d58a769b90768dcf2a0543c53f7f5e32846471697fa52df9a820f3fd9d0"
+    },
+    {
+      "path": "README.md",
+      "sha256": "7a33f71a02436a67bbee8423ebf7d8e0327a04360f161699b30849dc44c40d28"
+    },
+    {
+      "path": "verify_public.py",
+      "sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd"
+    },
+    {
+      "path": "PUBLIC_EXPORT.json",
+      "sha256": "1c99d4794042e34aed5cbddb166b4757d980bbe46a5f3f47ae15700afa41ec15"
+    },
+    {
+      "path": "CHECKER_RECEIPT.json",
+      "sha256": "55fd7a5ff4426b6f8bcf96610915338f924c59cc0a54bc6789ad71e342330a52"
+    }
+  ],
+  "references_followed": 0,
+  "schema": "pm.er8.output-stop-public-hash-manifest.v1"
+}
