@@ -264,15 +264,16 @@
       var t2 = worstTone(list(coll(ctx).artifacts));
       return t2 === 'blocked' ? 'attention' : t2;
     }
-    /* BrainStorm, Review and Chat Room light in the tone of their own runs, as app.js's activityDefs() projects them
-       (a failed or degraded run attention, a running one working, all finished done). They used to fall through to
-       the subagents list below, so a thread's failed subagent painted its running Review red (fpfix F-2). */
-    if (id === 'brainstorm' || id === 'review' || id === 'chat_room') {
+    /* Crew, BrainStorm, Review and Chat Room light in the tone of their own runs, as app.js's activityDefs() projects
+       them from each run's presentation state (the card's: blocked, a pending decision, a Chat Room's "your move", an
+       unclean completion, a limit or a failure need you; running and starting work; completed is done). They used to
+       fall through to the subagents list below, so a thread's failed subagent painted its running Review red, and
+       Crew read only the protocol Crews' members, so a seeded Crew blocked mid-run read idle (fpfix F-2, cycle 1). */
+    if (id === 'crew' || id === 'brainstorm' || id === 'review' || id === 'chat_room') {
       var t3 = defs[id] && defs[id].tone;
       return TONES.indexOf(t3) >= 0 ? t3 : 'idle';
     }
     var sc = coll(ctx);
-    if (id === 'crew') return worstTone(list(sc.crew).concat(window.PM56_CREW?.activityMembers(ctx)||[]));
     return worstTone(list(id === 'todo' ? sc.todos : sc.subagents));
   }
 
