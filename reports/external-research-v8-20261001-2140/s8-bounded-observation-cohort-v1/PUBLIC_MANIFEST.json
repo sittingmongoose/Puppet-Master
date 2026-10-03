@@ -1,0 +1,52 @@
+{
+  "fixed_observation_not_final_campaign_cleanup": true,
+  "omitted_fields": [
+    "source/REPORT.json/jobs/V8-BIO-C-Z-S8-research-proposal/goal_starts/0/receipt_id",
+    "source/REPORT.json/jobs/V8-BIO-WIT-T-Z-S8-research-proposal/goal_starts/0/receipt_id",
+    "source/REPORT.json/jobs/V8-BIO-C-Z-S8-independent-candidate-critic/goal_starts/0/receipt_id",
+    "source/REPORT.json/compact_receipts/ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-C-Z-S8/V8-BIO-C-Z-S8-research-proposal/COMPLETE.json/native_goal_target_id"
+  ],
+  "original_external_pins_not_public_hashes": true,
+  "public_files": [
+    {
+      "path": "CHECKER_RECEIPT.json",
+      "sha256": "5a719304d5fc824b52f806ce94f712499991867351c9e9cad21f13f96e040850"
+    },
+    {
+      "path": "PUBLIC_EXPORT.json",
+      "sha256": "9102382014b3432a4625c0230407451c90f9bebebf244ab76092893731df8d2a"
+    },
+    {
+      "path": "README.md",
+      "sha256": "8ecb11d5ad562c7f9d2f3de98effd49866542c0c616f7f8d418ef2f85e88344a"
+    },
+    {
+      "path": "source/FREEZE.json",
+      "sha256": "fd25cf51ab57ab6013e154f7df849167e8d7e907f9c9dbee725be0a8299e0814"
+    },
+    {
+      "path": "source/MANIFEST.json",
+      "sha256": "1da577ccc30c8d4b8b7c2fdca46e3733bcaea0d6e9b851756da414634bac61ff"
+    },
+    {
+      "path": "source/REPORT.json",
+      "sha256": "684666de34a07e52bdf7880f4e0d198a956d161bf5c6676eadc38a713addb416"
+    },
+    {
+      "path": "source/REPORT.md",
+      "sha256": "8cfca3b8bbd84f42bb9a8e234bed3dbe84ee8508948668404b70550db1100157"
+    },
+    {
+      "path": "verify_public.py",
+      "sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd"
+    }
+  ],
+  "schema": "pm.er8.s8-observation-public-hash-manifest.v1",
+  "source_original_pins": {
+    "FREEZE.json": "f20a93eead1d4cd8ea54f91249202dd207ddaa3a92bc744fa63b6530c63c8dd6",
+    "MANIFEST.json": "a4eaecb977debb33f9211d4504997d8306911e4039abbc320b19bc29383303f0",
+    "REPORT.json": "acd108dbfa8dc0f71e655f3bc98ce56bd0c66a659dcd5d9573be6115cdec5dc9",
+    "REPORT.md": "8cfca3b8bbd84f42bb9a8e234bed3dbe84ee8508948668404b70550db1100157"
+  },
+  "source_references_followed": 0
+}

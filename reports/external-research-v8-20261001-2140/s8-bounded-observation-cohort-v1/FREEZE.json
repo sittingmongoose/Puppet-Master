@@ -1,0 +1,25 @@
+{
+  "actual_end_epoch": 1791004674.286153,
+  "actual_end_utc": "2026-10-03T05:17:54.286153+00:00",
+  "both_whole_cases_INCOMPLETE": true,
+  "checker_invocations": 1,
+  "checker_receipt_sha256": "5a719304d5fc824b52f806ce94f712499991867351c9e9cad21f13f96e040850",
+  "completed_before_original_deadline": true,
+  "fixed_ACTIVE_not_final_cleanup": true,
+  "new_quality_or_native_wholecase_success_claim": false,
+  "no_live_actions": true,
+  "original_helper_birth_epoch": 1791004517.9205632,
+  "original_helper_deadline_epoch": 1791005417.9205632,
+  "original_pin_post_write_recheck": "PASS4",
+  "original_source_pins": {
+    "FREEZE.json": "f20a93eead1d4cd8ea54f91249202dd207ddaa3a92bc744fa63b6530c63c8dd6",
+    "MANIFEST.json": "a4eaecb977debb33f9211d4504997d8306911e4039abbc320b19bc29383303f0",
+    "REPORT.json": "acd108dbfa8dc0f71e655f3bc98ce56bd0c66a659dcd5d9573be6115cdec5dc9",
+    "REPORT.md": "8cfca3b8bbd84f42bb9a8e234bed3dbe84ee8508948668404b70550db1100157"
+  },
+  "public_export_sha256": "9102382014b3432a4625c0230407451c90f9bebebf244ab76092893731df8d2a",
+  "public_manifest_sha256": "357ab7fe8358982d22fbbe0c97208bb7d4571ff69f6f900c95cd89bc4f008c07",
+  "schema": "pm.er8.s8-observation-public-freeze.v1",
+  "source_references_followed": 0,
+  "status": "FROZEN_BOUNDED_SOURCE_OBSERVATION_ONLY"
+}

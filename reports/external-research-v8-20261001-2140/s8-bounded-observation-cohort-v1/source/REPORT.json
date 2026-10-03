@@ -1,0 +1,568 @@
+{
+  "accounting_observed_epoch": 1791004402.5960834,
+  "accounting_state_sha256": "8d5eee4cb03c471631f5e3f1db1d9240c8affcc2a53bc0d5c088b6cc7b55e8fc",
+  "actual_end_epoch": 1791004402.6994426,
+  "actual_end_utc": "2026-10-03T05:13:22.699443+00:00",
+  "birth_epoch": 1791004155.1342516,
+  "case_status": {
+    "V8-BIO-C-Z-S8": "PARTIAL_ACTIVE: research COMPLETE; critic ACTIVE; correction NOT_STARTED; wholecase incomplete.",
+    "V8-BIO-WIT-T-Z-S8": "FAILURE_OR_INCOMPLETE_PRESERVED: research incomplete rc126 with positive all-owned quiet and releasedlease; critic/correction NOT_STARTED. Cause UNKNOWN, no retry."
+  },
+  "cases": {
+    "V8-BIO-C-Z-S8": {
+      "birth_epoch": 1791002892.9145672,
+      "birth_monotonic": 224639.084341378,
+      "birth_rule": "original outer-gate birth before any preparation",
+      "observed_outside_native_seconds": 3.9798240500000004,
+      "occupied_seconds": 5400,
+      "outside_native_cap_seconds": 300,
+      "wall_seconds": 3600
+    },
+    "V8-BIO-WIT-T-Z-S8": {
+      "birth_epoch": 1791002892.919834,
+      "birth_monotonic": 224639.089597756,
+      "birth_rule": "original outer-gate birth before any preparation",
+      "observed_outside_native_seconds": 2.624376957,
+      "occupied_seconds": 5400,
+      "outside_native_cap_seconds": 300,
+      "wall_seconds": 3600
+    }
+  },
+  "compact_receipts": {
+    "ops/execution-resume-v1/jobs/z-tranche-v9/HOST_LAUNCHES/V8-BIO-C-Z-S8/CASE_LAUNCHED.json": {
+      "case": "V8-BIO-C-Z-S8",
+      "case_supervisor_pgid": 2775531,
+      "case_supervisor_pid": 2775531,
+      "original_case_birth_epoch": 1791002892.9145672,
+      "original_case_deadline_monotonic_ns": 228239084341378,
+      "original_case_start_monotonic_ns": 224639084341378
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v9/HOST_LAUNCHES/V8-BIO-WIT-T-Z-S8/CASE_HELD_WAIT.json": {
+      "actual_exit_observed_monotonic_ns": 225809505327745,
+      "case": "V8-BIO-WIT-T-Z-S8",
+      "case_supervisor_pgid": 2775533,
+      "case_supervisor_pid": 2775533,
+      "held_Popen_returncode": 126,
+      "original_case_birth_epoch": 1791002892.919834,
+      "original_case_deadline_monotonic_ns": 228239089597756,
+      "original_case_start_monotonic_ns": 224639089597756
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v9/HOST_LAUNCHES/V8-BIO-WIT-T-Z-S8/CASE_LAUNCHED.json": {
+      "case": "V8-BIO-WIT-T-Z-S8",
+      "case_supervisor_pgid": 2775533,
+      "case_supervisor_pid": 2775533,
+      "original_case_birth_epoch": 1791002892.919834,
+      "original_case_deadline_monotonic_ns": 228239089597756,
+      "original_case_start_monotonic_ns": 224639089597756
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-C-Z-S8/HOST_LAUNCHES/V8-BIO-C-Z-S8-independent-candidate-critic/STAGE_LAUNCHED.json": {
+      "case": "V8-BIO-C-Z-S8",
+      "job": "V8-BIO-C-Z-S8-independent-candidate-critic",
+      "original_stage_birth_epoch": 1791003920.6661184,
+      "original_stage_deadline_monotonic_ns": 226866835882247,
+      "original_stage_start_monotonic_ns": 225666835882247,
+      "stage_actor_pgid": 2792387,
+      "stage_actor_pid": 2792387
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-C-Z-S8/HOST_LAUNCHES/V8-BIO-C-Z-S8-research-proposal/STAGE_HELD_WAIT.json": {
+      "actual_exit_observed_monotonic_ns": 225666657845744,
+      "case": "V8-BIO-C-Z-S8",
+      "held_Popen_returncode": 0,
+      "job": "V8-BIO-C-Z-S8-research-proposal",
+      "original_stage_birth_epoch": 1791002892.9145672,
+      "original_stage_deadline_monotonic_ns": 225839084341378,
+      "original_stage_start_monotonic_ns": 224639084341378,
+      "stage_actor_pgid": 2775571,
+      "stage_actor_pid": 2775571
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-C-Z-S8/HOST_LAUNCHES/V8-BIO-C-Z-S8-research-proposal/STAGE_LAUNCHED.json": {
+      "case": "V8-BIO-C-Z-S8",
+      "job": "V8-BIO-C-Z-S8-research-proposal",
+      "original_stage_birth_epoch": 1791002892.9145672,
+      "original_stage_deadline_monotonic_ns": 225839084341378,
+      "original_stage_start_monotonic_ns": 224639084341378,
+      "stage_actor_pgid": 2775571,
+      "stage_actor_pid": 2775571
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-C-Z-S8/V8-BIO-C-Z-S8-independent-candidate-critic/PLAN.enrollment.json": {
+      "cgroup": "/user.slice/user-USER_ID.slice/user@USER_ID.service/app.slice/er8-v8-bio-c-z-s8-independent-candidate-critic.service",
+      "enrolled_monotonic_ns": 225668160203306,
+      "original_deadline_monotonic_ns": 226866835882247,
+      "owned_unit": "er8-v8-bio-c-z-s8-independent-candidate-critic.service",
+      "schema": "er8.execution.enrollment.v1"
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-C-Z-S8/V8-BIO-C-Z-S8-independent-candidate-critic/PLAN.json": {
+      "cap_seconds": 1200,
+      "cleanup_reserve_seconds": 30,
+      "deadline_monotonic_ns": 226866835882247,
+      "native_stop_monotonic_ns": 226836835882247,
+      "owned_unit": "er8-v8-bio-c-z-s8-independent-candidate-critic.service",
+      "response_cap": 160,
+      "stage_id": "v8-bio-c-z-s8-independent-candidate-critic",
+      "stage_start_monotonic_ns": 225666835882247
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-C-Z-S8/V8-BIO-C-Z-S8-research-proposal/COMPLETE.json": {
+      "case": "V8-BIO-C-Z-S8",
+      "fresh_session": true,
+      "host_groups_absent": true,
+      "job": "V8-BIO-C-Z-S8-research-proposal",
+      "last_charged_host_monotonic_ns": 225666565965965,
+      "lease_release_deferred": true,
+      "lease_released_by_actor": false,
+      "native_goal_activation_observed": true,
+      "native_goal_status": "complete",
+      "native_quiescence_observed_monotonic_ns": 225666355376278,
+      "native_responses": 15,
+      "native_wrapper_launch_monotonic_ns": 224641412486643,
+      "original_case_start_monotonic_ns": 224639084341378,
+      "original_deadline_monotonic_ns": 225839084341378,
+      "required_artifact": {
+        "bytes": 26209,
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-C-Z-S8/V8-BIO-C-Z-S8-research-proposal/workspace/out/PROPOSAL.md",
+        "sha256": "1145fadb7aef7f722f87771693bcf49bc1d84cbf4a9a934caa1476b51d5e0543"
+      },
+      "schema": "er8.integrated.stage-deferred-close.v1",
+      "source_semantic_acquisition": "UNKNOWN",
+      "stage_start_monotonic_ns": 224639084341378,
+      "usage": "UNKNOWN except reported monotonic output lower bound",
+      "wrapper_returncode": 0
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-C-Z-S8/V8-BIO-C-Z-S8-research-proposal/EXTERNAL_STAGE_CLOSE.json": {
+      "case": "V8-BIO-C-Z-S8",
+      "case_supervisor_role": "HOSTMANAGEMENT_STILL_ALIVE_NOT_STAGE_ACTOR",
+      "held_Popen_wait_returncode": 0,
+      "inner_quiescence": {
+        "absence_proof": "positively-enrolled-owned-cgroup-removed",
+        "enrollment": {
+          "cgroup": "/user.slice/user-USER_ID.slice/user@USER_ID.service/app.slice/er8-v8-bio-c-z-s8-research-proposal.service",
+          "enrolled_monotonic_ns": 224641557680251,
+          "original_deadline_monotonic_ns": 225839084341378,
+          "owned_unit": "er8-v8-bio-c-z-s8-research-proposal.service",
+          "schema": "er8.execution.enrollment.v1"
+        },
+        "inclusive_native_lifetime_established": true,
+        "native_goal_or_quality_qualification": "UNESTABLISHED; independent native receipt review mandatory",
+        "occupancy_disposition": "releasable-native-only",
+        "original_deadline_monotonic_ns": 225839084341378,
+        "owned_cgroup": "/user.slice/user-USER_ID.slice/user@USER_ID.service/app.slice/er8-v8-bio-c-z-s8-research-proposal.service",
+        "owned_native_quiescent": true,
+        "owned_unit": "er8-v8-bio-c-z-s8-research-proposal.service",
+        "quiescence_observed_monotonic_ns": 225666713248889,
+        "schema": "er8.execution.quiescence.v1"
+      },
+      "job": "V8-BIO-C-Z-S8-research-proposal",
+      "original_deadline_monotonic_ns": 225839084341378,
+      "schema": "er8.integrated.external-stage-close.v1",
+      "stage_actor_exit_observed_monotonic_ns": 225666657845744,
+      "stage_actor_exited": true,
+      "stage_actor_group_absent": true,
+      "stage_actor_pgid": 2775571,
+      "stage_actor_pid": 2775571
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-C-Z-S8/V8-BIO-C-Z-S8-research-proposal/PLAN.enrollment.json": {
+      "cgroup": "/user.slice/user-USER_ID.slice/user@USER_ID.service/app.slice/er8-v8-bio-c-z-s8-research-proposal.service",
+      "enrolled_monotonic_ns": 224641557680251,
+      "original_deadline_monotonic_ns": 225839084341378,
+      "owned_unit": "er8-v8-bio-c-z-s8-research-proposal.service",
+      "schema": "er8.execution.enrollment.v1"
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-C-Z-S8/V8-BIO-C-Z-S8-research-proposal/PLAN.json": {
+      "cap_seconds": 1200,
+      "cleanup_reserve_seconds": 30,
+      "deadline_monotonic_ns": 225839084341378,
+      "native_stop_monotonic_ns": 225809084341378,
+      "owned_unit": "er8-v8-bio-c-z-s8-research-proposal.service",
+      "response_cap": 160,
+      "stage_id": "v8-bio-c-z-s8-research-proposal",
+      "stage_start_monotonic_ns": 224639084341378
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-C-Z-S8/V8-BIO-C-Z-S8-research-proposal/QUIESCENCE.json": {
+      "absence_proof": "positively-enrolled-owned-cgroup-removed",
+      "enrollment": {
+        "cgroup": "/user.slice/user-USER_ID.slice/user@USER_ID.service/app.slice/er8-v8-bio-c-z-s8-research-proposal.service",
+        "enrolled_monotonic_ns": 224641557680251,
+        "original_deadline_monotonic_ns": 225839084341378,
+        "owned_unit": "er8-v8-bio-c-z-s8-research-proposal.service",
+        "schema": "er8.execution.enrollment.v1"
+      },
+      "inclusive_native_lifetime_established": true,
+      "native_goal_or_quality_qualification": "UNESTABLISHED; independent native receipt review mandatory",
+      "occupancy_disposition": "releasable-native-only",
+      "original_deadline_monotonic_ns": 225839084341378,
+      "owned_cgroup": "/user.slice/user-USER_ID.slice/user@USER_ID.service/app.slice/er8-v8-bio-c-z-s8-research-proposal.service",
+      "owned_native_quiescent": true,
+      "owned_unit": "er8-v8-bio-c-z-s8-research-proposal.service",
+      "quiescence_observed_monotonic_ns": 225666355376278,
+      "schema": "er8.execution.quiescence.v1"
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-WIT-T-Z-S8/CASE_HOLD.json": {
+      "actor_exit_observed_monotonic_ns": 225809375157346,
+      "case": "V8-BIO-WIT-T-Z-S8",
+      "complete": false,
+      "held_Popen_returncode": 126,
+      "lease_disposition": "HELD",
+      "original_stage_deadline_ns": 225839089597756,
+      "retry": "NONE",
+      "stage": "V8-BIO-WIT-T-Z-S8-research-proposal",
+      "stage_actor_pid": 2775595
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-WIT-T-Z-S8/HOST_LAUNCHES/V8-BIO-WIT-T-Z-S8-research-proposal/STAGE_HELD_WAIT.json": {
+      "actual_exit_observed_monotonic_ns": 225809375157346,
+      "case": "V8-BIO-WIT-T-Z-S8",
+      "held_Popen_returncode": 126,
+      "job": "V8-BIO-WIT-T-Z-S8-research-proposal",
+      "original_stage_birth_epoch": 1791002892.919834,
+      "original_stage_deadline_monotonic_ns": 225839089597756,
+      "original_stage_start_monotonic_ns": 224639089597756,
+      "stage_actor_pgid": 2775595,
+      "stage_actor_pid": 2775595
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-WIT-T-Z-S8/HOST_LAUNCHES/V8-BIO-WIT-T-Z-S8-research-proposal/STAGE_LAUNCHED.json": {
+      "case": "V8-BIO-WIT-T-Z-S8",
+      "job": "V8-BIO-WIT-T-Z-S8-research-proposal",
+      "original_stage_birth_epoch": 1791002892.919834,
+      "original_stage_deadline_monotonic_ns": 225839089597756,
+      "original_stage_start_monotonic_ns": 224639089597756,
+      "stage_actor_pgid": 2775595,
+      "stage_actor_pid": 2775595
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-WIT-T-Z-S8/V8-BIO-WIT-T-Z-S8-research-proposal/FAILURE_LEASE_RELEASE.json": {
+      "full_failed_attempt_cost_retained": true,
+      "job": "V8-BIO-WIT-T-Z-S8-research-proposal",
+      "no_backdating": true,
+      "released_current_epoch_observed": 1791004063.5429683,
+      "semantic_quality": "INCOMPLETE_OR_UNKNOWN"
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-WIT-T-Z-S8/V8-BIO-WIT-T-Z-S8-research-proposal/FAILURE_OR_SUCCESS_QUIET_PROOF.json": {
+      "actual_observed_monotonic_ns": 225809596727039,
+      "all_owned_groups_absent": {
+        "case_supervisor": true,
+        "stage_actor": true
+      },
+      "case": "V8-BIO-WIT-T-Z-S8",
+      "case_held_wait": {
+        "actual_exit_observed_monotonic_ns": 225809505327745,
+        "case": "V8-BIO-WIT-T-Z-S8",
+        "case_supervisor_pgid": 2775533,
+        "case_supervisor_pid": 2775533,
+        "held_Popen_returncode": 126,
+        "original_case_birth_epoch": 1791002892.919834,
+        "original_case_deadline_monotonic_ns": 228239089597756,
+        "original_case_start_monotonic_ns": 224639089597756
+      },
+      "case_launch": {
+        "case": "V8-BIO-WIT-T-Z-S8",
+        "case_supervisor_pgid": 2775533,
+        "case_supervisor_pid": 2775533,
+        "original_case_birth_epoch": 1791002892.919834,
+        "original_case_deadline_monotonic_ns": 228239089597756,
+        "original_case_start_monotonic_ns": 224639089597756
+      },
+      "complete_receipt_present": false,
+      "enrolled_native_mcp_quiet": {
+        "absence_proof": "positively-enrolled-owned-cgroup-removed",
+        "enrollment": {
+          "cgroup": "/user.slice/user-USER_ID.slice/user@USER_ID.service/app.slice/er8-v8-bio-wit-t-z-s8-research-proposal.service",
+          "enrolled_monotonic_ns": 224641850293833,
+          "original_deadline_monotonic_ns": 225839089597756,
+          "owned_unit": "er8-v8-bio-wit-t-z-s8-research-proposal.service",
+          "schema": "er8.execution.enrollment.v1"
+        },
+        "inclusive_native_lifetime_established": true,
+        "native_goal_or_quality_qualification": "UNESTABLISHED; independent native receipt review mandatory",
+        "occupancy_disposition": "releasable-native-only",
+        "original_deadline_monotonic_ns": 225839089597756,
+        "owned_cgroup": "/user.slice/user-USER_ID.slice/user@USER_ID.service/app.slice/er8-v8-bio-wit-t-z-s8-research-proposal.service",
+        "owned_native_quiescent": true,
+        "owned_unit": "er8-v8-bio-wit-t-z-s8-research-proposal.service",
+        "quiescence_observed_monotonic_ns": 225809596718838,
+        "schema": "er8.execution.quiescence.v1"
+      },
+      "held_rolling_exit": null,
+      "job": "V8-BIO-WIT-T-Z-S8-research-proposal",
+      "no_backdating": true,
+      "outcome": "FAILURE_OR_INCOMPLETE_PRESERVED",
+      "qualification": "cleanup only",
+      "root_authority": true,
+      "schema": "pm.er8.failure-cleanup-proof.production.v1",
+      "stage_held_wait": {
+        "actual_exit_observed_monotonic_ns": 225809375157346,
+        "case": "V8-BIO-WIT-T-Z-S8",
+        "held_Popen_returncode": 126,
+        "job": "V8-BIO-WIT-T-Z-S8-research-proposal",
+        "original_stage_birth_epoch": 1791002892.919834,
+        "original_stage_deadline_monotonic_ns": 225839089597756,
+        "original_stage_start_monotonic_ns": 224639089597756,
+        "stage_actor_pgid": 2775595,
+        "stage_actor_pid": 2775595
+      },
+      "stage_launch": {
+        "case": "V8-BIO-WIT-T-Z-S8",
+        "job": "V8-BIO-WIT-T-Z-S8-research-proposal",
+        "original_stage_birth_epoch": 1791002892.919834,
+        "original_stage_deadline_monotonic_ns": 225839089597756,
+        "original_stage_start_monotonic_ns": 224639089597756,
+        "stage_actor_pgid": 2775595,
+        "stage_actor_pid": 2775595
+      }
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-WIT-T-Z-S8/V8-BIO-WIT-T-Z-S8-research-proposal/PLAN.enrollment.json": {
+      "cgroup": "/user.slice/user-USER_ID.slice/user@USER_ID.service/app.slice/er8-v8-bio-wit-t-z-s8-research-proposal.service",
+      "enrolled_monotonic_ns": 224641850293833,
+      "original_deadline_monotonic_ns": 225839089597756,
+      "owned_unit": "er8-v8-bio-wit-t-z-s8-research-proposal.service",
+      "schema": "er8.execution.enrollment.v1"
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-WIT-T-Z-S8/V8-BIO-WIT-T-Z-S8-research-proposal/PLAN.json": {
+      "cap_seconds": 1200,
+      "cleanup_reserve_seconds": 30,
+      "deadline_monotonic_ns": 225839089597756,
+      "native_stop_monotonic_ns": 225809089597756,
+      "owned_unit": "er8-v8-bio-wit-t-z-s8-research-proposal.service",
+      "response_cap": 160,
+      "stage_id": "v8-bio-wit-t-z-s8-research-proposal",
+      "stage_start_monotonic_ns": 224639089597756
+    },
+    "ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-WIT-T-Z-S8/V8-BIO-WIT-T-Z-S8-research-proposal/QUIESCENCE.json": {
+      "absence_proof": "positively-enrolled-owned-cgroup-removed",
+      "enrollment": {
+        "cgroup": "/user.slice/user-USER_ID.slice/user@USER_ID.service/app.slice/er8-v8-bio-wit-t-z-s8-research-proposal.service",
+        "enrolled_monotonic_ns": 224641850293833,
+        "original_deadline_monotonic_ns": 225839089597756,
+        "owned_unit": "er8-v8-bio-wit-t-z-s8-research-proposal.service",
+        "schema": "er8.execution.enrollment.v1"
+      },
+      "inclusive_native_lifetime_established": true,
+      "native_goal_or_quality_qualification": "UNESTABLISHED; independent native receipt review mandatory",
+      "occupancy_disposition": "releasable-native-only",
+      "original_deadline_monotonic_ns": 225839089597756,
+      "owned_cgroup": "/user.slice/user-USER_ID.slice/user@USER_ID.service/app.slice/er8-v8-bio-wit-t-z-s8-research-proposal.service",
+      "owned_native_quiescent": true,
+      "owned_unit": "er8-v8-bio-wit-t-z-s8-research-proposal.service",
+      "quiescence_observed_monotonic_ns": 225809343680379,
+      "schema": "er8.execution.quiescence.v1"
+    }
+  },
+  "cost_and_limits": "Original births/deadlines/caps and failureinclusive occupancy retained; T CASE_HOLD leaseHELD is historical before later positive cleanup/release, not current unreleasedlease. No refunds/reset/backdating.",
+  "ended_before_original_deadline": true,
+  "helper": "er8-s8-terminal-observation-v1",
+  "inclusive_elapsed_seconds": 247.56519103050232,
+  "jobs": {
+    "V8-BIO-C-Z-S8-independent-candidate-critic": {
+      "birth_epoch": 1791003920.6661184,
+      "case": "V8-BIO-C-Z-S8",
+      "case_occupied_seconds": 5400,
+      "case_wall_seconds": 3600,
+      "component_responses": 160,
+      "component_seconds": 1200,
+      "generated_output_tokens": null,
+      "goal_starts": [
+        {
+          "epoch": 1791003927,
+          "guard_violations": [],
+          "job": "V8-BIO-C-Z-S8-independent-candidate-critic",
+          "recorded_epoch": 1791003928.2996798
+        }
+      ],
+      "hard_deadline_epoch": 1791005120.6661184,
+      "job": "V8-BIO-C-Z-S8-independent-candidate-critic",
+      "launch_pending": null,
+      "occupied_birth_through_release_or_observation_seconds": 481.9299650192261,
+      "outside_native_cap_seconds": 300,
+      "quiescence": null,
+      "released_epoch": null,
+      "status": "native-active"
+    },
+    "V8-BIO-C-Z-S8-research-proposal": {
+      "birth_epoch": 1791002892.9145672,
+      "case": "V8-BIO-C-Z-S8",
+      "case_occupied_seconds": 5400,
+      "case_wall_seconds": 3600,
+      "component_responses": 160,
+      "component_seconds": 1200,
+      "generated_output_tokens": 54315,
+      "goal_starts": [
+        {
+          "epoch": 1791002901,
+          "guard_violations": [],
+          "job": "V8-BIO-C-Z-S8-research-proposal",
+          "recorded_epoch": 1791002901.8285093
+        }
+      ],
+      "hard_deadline_epoch": 1791004092.9145672,
+      "job": "V8-BIO-C-Z-S8-research-proposal",
+      "launch_pending": null,
+      "occupied_birth_through_release_or_observation_seconds": 1027.715659379959,
+      "outside_native_cap_seconds": 300,
+      "quiescence": {
+        "native_quiescent": true,
+        "original_deadline_monotonic_ns": 225839084341378,
+        "outer_exit_observed_monotonic_ns": 225666657845744,
+        "outer_parent_exited": true,
+        "outer_returncode": 0,
+        "outer_scope": "THIS_STAGE_ACTOR_ONLY",
+        "own_process_group_absent": true,
+        "proof_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-C-Z-S8/V8-BIO-C-Z-S8-research-proposal/EXTERNAL_STAGE_CLOSE.json",
+        "receipt_id": "V8-BIO-C-Z-S8-research-proposal-external-stage-all-owned-quiet"
+      },
+      "released_epoch": 1791003920.6302266,
+      "status": "released"
+    },
+    "V8-BIO-WIT-T-Z-S8-research-proposal": {
+      "birth_epoch": 1791002892.919834,
+      "case": "V8-BIO-WIT-T-Z-S8",
+      "case_occupied_seconds": 5400,
+      "case_wall_seconds": 3600,
+      "component_responses": 160,
+      "component_seconds": 1200,
+      "generated_output_tokens": null,
+      "goal_starts": [
+        {
+          "epoch": 1791002902,
+          "guard_violations": [],
+          "job": "V8-BIO-WIT-T-Z-S8-research-proposal",
+          "recorded_epoch": 1791002902.2367506
+        }
+      ],
+      "hard_deadline_epoch": 1791004092.919834,
+      "job": "V8-BIO-WIT-T-Z-S8-research-proposal",
+      "launch_pending": null,
+      "occupied_birth_through_release_or_observation_seconds": 1170.5936810970306,
+      "outside_native_cap_seconds": 300,
+      "quiescence": {
+        "native_quiescent": true,
+        "own_process_group_absent": true,
+        "proof_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-WIT-T-Z-S8/V8-BIO-WIT-T-Z-S8-research-proposal/FAILURE_OR_SUCCESS_QUIET_PROOF.json",
+        "qualification": "cleanup only; failure preserved",
+        "receipt_id": "V8-BIO-WIT-T-Z-S8-research-proposal-resume-failed-all-owned-quiet",
+        "root_authority": true
+      },
+      "released_epoch": 1791004063.513515,
+      "status": "released"
+    }
+  },
+  "original_deadline_epoch": 1791004755.1342516,
+  "production_status": "ACTIVE named productionunit; no terminal global-parent receipt found in exact namedrunroot.",
+  "qualification": "Lifecycle/receipt observation only; no content quality review, failurecause attribution, semantic acquisition certification or native replay.",
+  "read_scope": "Only exact2S8 cases, compact receipts, exactrows underlock, enrollednamedunits and emittednativepublic scalars. No candidate output bodies/rawnative logs/hostcapture bodies/SDK/private trees/othercampaign reads; no signals/start/replay/settlement/Git/public edits.",
+  "reservations": {
+    "V8-BIO-C-Z-S8": {
+      "completed": false,
+      "final_job": "V8-BIO-C-Z-S8-final-correction",
+      "native_starts": 3,
+      "occupied_seconds": 5400
+    },
+    "V8-BIO-WIT-T-Z-S8": {
+      "completed": false,
+      "final_job": "V8-BIO-WIT-T-Z-S8-final-correction",
+      "native_starts": 3,
+      "occupied_seconds": 5400
+    }
+  },
+  "schema": "pm.er8.s8-terminal-observation.v1",
+  "state_read_policy": "Shared flock on exact accounting state.lock; no mutation and no export of full state/other job rows.",
+  "unit_observations": {
+    "er8-v8-bio-c-z-s8-independent-candidate-critic.service": {
+      "command_returncode": 0,
+      "enrolled_cgroup_events": "populated 1\nfrozen 0",
+      "enrolled_cgroup_path_exists": true,
+      "observed_epoch": 1791004402.6749716,
+      "properties": {
+        "ActiveState": "active",
+        "ControlGroup": "/user.slice/user-USER_ID.slice/user@USER_ID.service/app.slice/er8-v8-bio-c-z-s8-independent-candidate-critic.service",
+        "ExecMainCode": "0",
+        "ExecMainStatus": "0",
+        "Id": "er8-v8-bio-c-z-s8-independent-candidate-critic.service",
+        "LoadState": "loaded",
+        "MainPID": "2792406",
+        "SubState": "running"
+      }
+    },
+    "er8-v8-bio-c-z-s8-research-proposal.service": {
+      "command_returncode": 0,
+      "enrolled_cgroup_path_exists": false,
+      "observed_epoch": 1791004402.6473706,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "ExecMainCode": "0",
+        "ExecMainStatus": "0",
+        "Id": "er8-v8-bio-c-z-s8-research-proposal.service",
+        "LoadState": "not-found",
+        "MainPID": "0",
+        "SubState": "dead"
+      }
+    },
+    "er8-v8-bio-wit-t-z-s8-research-proposal.service": {
+      "command_returncode": 0,
+      "enrolled_cgroup_path_exists": false,
+      "observed_epoch": 1791004402.6945415,
+      "properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "ExecMainCode": "0",
+        "ExecMainStatus": "0",
+        "Id": "er8-v8-bio-wit-t-z-s8-research-proposal.service",
+        "LoadState": "not-found",
+        "MainPID": "0",
+        "SubState": "dead"
+      }
+    },
+    "er8-v8-production-z-tranche-v9.service": {
+      "command_returncode": 0,
+      "observed_epoch": 1791004402.6263936,
+      "properties": {
+        "ActiveState": "active",
+        "ControlGroup": "/user.slice/user-USER_ID.slice/user@USER_ID.service/app.slice/er8-v8-production-z-tranche-v9.service",
+        "ExecMainCode": "0",
+        "ExecMainStatus": "0",
+        "Id": "er8-v8-production-z-tranche-v9.service",
+        "LoadState": "loaded",
+        "MainPID": "2775507",
+        "SubState": "running"
+      }
+    }
+  },
+  "unresolved": {
+    "S8_actual_native_starts": 3,
+    "active_native_jobs": [
+      "V8-BIO-C-Z-S8-independent-candidate-critic"
+    ],
+    "casecomplete_receipts": "Absent in both exactcase roots; no external caseclose or heldglobalparentfinal receipt.",
+    "held_waits": "C research heldwait rc0; C critic heldwait absent while ACTIVE; C case heldwait absent. T research and T case heldwaits rc126, positive groups-absent cleanup proof.",
+    "output_accounting_gaps": {
+      "C_critic": {
+        "disposition": "ACTIVE finalusage not available",
+        "ledger_output_tokens": null
+      },
+      "C_research": {
+        "ledger_output_tokens": 54315,
+        "scope": "Reported lowerbound; completeusage/moneyUNKNOWN"
+      },
+      "T_research": {
+        "captured_delivery_byte_count": "UNKNOWN; no explicit allowedscalar receipt found",
+        "ledger_output_tokens": null,
+        "native_public_files": [
+          "progress.jsonl",
+          "activation.json"
+        ],
+        "positive_emitted_output_lower_bound": "UNKNOWN",
+        "progress_response_counter": {
+          "JSONL_line": 2,
+          "JSON_pointer": "/responses",
+          "path": "ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-WIT-T-Z-S8/V8-BIO-WIT-T-Z-S8-research-proposal/native-public/progress.jsonl",
+          "scope": "Initial activeprogress only; notfinalcounter, nozero-output inference",
+          "sha256": "191563d3480e0a52caebaef3fa4a4a423c6839fde0001f60d7136610f11db125",
+          "value": 0
+        },
+        "terminal_metrics_or_end_receipt": "Absent from exact PLAN --out native-public directory",
+        "wrapper_returncode": 126
+      }
+    },
+    "pending_launch_permits": [],
+    "unreleased_leases": [
+      "V8-BIO-C-Z-S8-independent-candidate-critic"
+    ],
+    "whole_case_complete": false
+  }
+}
