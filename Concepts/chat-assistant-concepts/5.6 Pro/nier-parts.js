@@ -23,7 +23,8 @@
  *   sounds     PMConcept7's small synth (ticks, select, confirm, cancel, the Pod's chirp, the alert, the reboot sweep),
  *              played through chat-sound.js (PM56_SOUND.synth), so its mute and gesture rules hold
  *   voice      CSS leads (Report / Alert / Proposal) and the POD 042 band; a toast's kind is written at arrival
- *   pod        #o55np-pod bobbing by CSS above the composer's corner; it turns toward each arriving toast
+ *   pod        #o55np-pod bobbing by CSS above the composer's corner; it turns toward each arriving toast, and fades back
+ *              while a control lies under it (data-shy)
  * Alerts are warning and error toasts (by their words; the concept's toasts carry no severity), refusals (.pmx-refusal
  * appearing anywhere) and failed events (an arriving card in a failed, blocked or danger state; an Orbit step failing).
  * Arrivals are read from the concept's own afterRender observer slot (app.js: after every renderApp, renderOverlays and
@@ -404,13 +405,44 @@
         { duration: 520, delay: 200 + i * 90, easing: 'steps(6, end)', fill: 'backwards' });
     });
   }
+  /* The Pod steps back from a control (final review, 2026-10-03). Its resting place is clear of every fixed control (the
+     jump chip, the bar, the queue, the decision panel and the composer yield to it, nier-parts.css), but transcript
+     content scrolls past it, and a card's Resume or Open button could sit under it at some scroll positions. So while a
+     button, link, summary or field lies under its box (nine probe points; the Pod itself is pointer-events none, so
+     elementsFromPoint never returns it) it fades back (data-shy, nier-parts.css) and the control shows through; it comes
+     forward again when the control has passed. Checked on scroll and resize (the shared listener above is the cursor's,
+     so this one is its own) and after every render the concept reports (afterRender, below). */
+  var podShyT = 0;
+  var SHY_HOST = 'button, a[href], summary, [role="button"], input, select, textarea';
+  function podShy() {
+    podShyT = 0;
+    if (!pod || !pod.isConnected) return;
+    var r = pod.getBoundingClientRect(), hit = false;
+    if (r.width > 0 && r.height > 0) {
+      for (var i = 0; i < 9 && !hit; i++) {
+        var x = r.left + r.width * (0.15 + 0.35 * (i % 3)), y = r.top + r.height * (0.15 + 0.35 * Math.floor(i / 3));
+        var els = document.elementsFromPoint(x, y);
+        for (var k = 0; k < els.length && !hit; k++) if (els[k].closest && els[k].closest(SHY_HOST)) hit = true;
+      }
+    }
+    if (pod.hasAttribute('data-shy') !== hit) pod.toggleAttribute('data-shy', hit);
+  }
+  function podShySoon() { if (pod && !podShyT) podShyT = window.setTimeout(podShy, 90); }
   PARTS.pod = {
     on: function () {
       pod = layer(); pod.id = 'o55np-pod';
       pod.innerHTML = '<div class="o55np-pod-shadow">' + POD_SHADOW + '</div><div class="o55np-pod-bob"><div class="o55np-pod-body">' + POD_SVG + '</div></div>' + new Array(4).join('<i class="o55np-pod-signal"></i>');
       idle();
+      window.addEventListener('scroll', podShySoon, { capture: true, passive: true });
+      window.addEventListener('resize', podShySoon, { passive: true });
+      podShySoon();
     },
-    off: function () { if (pod) pod.remove(); pod = null; }
+    off: function () {
+      window.removeEventListener('scroll', podShySoon, { capture: true });
+      window.removeEventListener('resize', podShySoon);
+      if (podShyT) { window.clearTimeout(podShyT); podShyT = 0; }
+      if (pod) pod.remove(); pod = null;
+    }
   };
 
   PARTS.voice = { on: function () {}, off: function () {} };
@@ -550,6 +582,7 @@
   if (EXT && typeof EXT.slot === 'function') {
     EXT.slot('afterRender', function (c, info) {
       if (html.getAttribute('data-o55-nier') !== 'on') { lastTid = null; seenMsg = null; return; }
+      if (pod) podShySoon();
       try {
         var phase = info && info.phase;
         if (phase === 'overlay') onToasts(c);

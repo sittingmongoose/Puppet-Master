@@ -332,7 +332,8 @@ html[data-o55-nier-parts~="voice"] .event-card.warning .event-copy > strong::bef
    brought under it. So while the Pod is on, the bar and the queue keep 40 px clear on each side (the bar stays
    centred; activity-bar.js's tiers measure the narrower row), the jump chip docks left of the Pod, and the transcript
    keeps room under its last line (bottom padding at least 26 px of float plus the 36 it always keeps), so at rest
-   nothing interactive sits under the Pod. Content still scrolls past it, as under PMConcept7's. */
+   nothing interactive sits under the Pod. Content still scrolls past it, as under PMConcept7's, and while a control
+   is under it the Pod fades back (data-shy, below). */
 html[data-o55-nier-parts~="pod"] .chat-stage .chat-float { anchor-name: --o55np-float; }
 html[data-o55-nier-parts~="pod"] .chat-float > .activity-wrap, html[data-o55-nier-parts~="pod"] .chat-float > .send-queue { padding-inline: 40px; }
 html[data-o55-nier-parts~="pod"] .chat-float > .jump-bottom { right: 44px; }
@@ -340,6 +341,10 @@ html[data-o55-nier-parts~="pod"] .chat-stage > .transcript { padding-bottom: cal
 #o55np-pod { position: fixed; position-anchor: --o55np-float; right: calc(anchor(right, 26px) - 4px); bottom: calc(anchor(bottom, 70px) - 6px);
   width: 40px; height: 52px; z-index: 60; pointer-events: none; contain: layout style; color: var(--o55-nier-ink); display: none; }
 html[data-o55-nier-parts~="pod"] #o55np-pod { display: block; }
+/* while a control lies under it the Pod fades back so the control shows through (nier-parts.js podShy), in two held steps */
+#o55np-pod { transition: opacity 180ms steps(2, end); }
+#o55np-pod[data-shy] { opacity: .16; }
+html[data-motion="reduced"] #o55np-pod, body.pm56-reduced #o55np-pod { transition: none; }
 #o55np-pod .o55np-pod-bob, #o55np-pod .o55np-pod-body, #o55np-pod .o55np-pod-shadow { position: absolute; left: 0; top: 0; width: 40px; height: 52px; will-change: transform; }
 #o55np-pod svg { display: block; width: 40px; height: 52px; overflow: visible; }
 #o55np-pod .o55np-pod-fill { fill: var(--o55-nier-paper); }
@@ -368,7 +373,7 @@ html[data-o55-nier-parts~="icons"] svg ellipse { stroke-linecap: square; stroke-
 
 /* ============================================================================================ Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  #o55np-cursor, #o55np-cursor > i, #o55np-reticle, #o55np-reticle > i, #o55np-ground > .o55np-mote, #o55np-pod *, #o55np-wipe > i { animation: none !important; transition: none !important; }
+  #o55np-cursor, #o55np-cursor > i, #o55np-reticle, #o55np-reticle > i, #o55np-ground > .o55np-mote, #o55np-pod, #o55np-pod *, #o55np-wipe > i { animation: none !important; transition: none !important; }
   html[data-o55-nier-parts~="diamonds"] .ctx-spin, html[data-o55-nier-parts~="diamonds"] .qs-orbit { animation: none !important; }
   /* the same selectors as the slice rules above (equal weight, later wins) */
   html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .overlay-menu,
