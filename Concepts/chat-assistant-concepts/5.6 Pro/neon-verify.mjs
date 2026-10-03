@@ -23,12 +23,12 @@
  *      stripped them bare) in every theme.
  *   2  status matrix: the 13 set members render their wrapper and tone; 7 animate, 5 stand still, complete's
  *      one-shot has iteration count 1 (every theme). 2b the bar: each item's root rhythm matches its
- *      html[data-ab-<domain>] tone (working/attention ab-breathe, blocked ab-alert, others none). 2c the nine
+ *      html[data-ab-<domain>] tone (working/attention ab-breathe, blocked ab-alert, others none). 2e the bar's
+ *      Crew, BrainStorm, Review and Chat Room tone is the worst of their runs' card state (PM56_COLLAB.presentState)
+ *      on every thread; recovery-collaboration's blocked runs read attention. 2c the nine
  *      thread statuses in the wide take-6 rows carry .nx-st-<status>. 2d To-Do rows (the bar's To-Do hover card)
  *      carry the set member of their status.
- *   2e the bar's Crew, BrainStorm, Review and Chat Room tone is the worst of their runs' card state
- *      (PM56_COLLAB.presentState) on every thread; recovery-collaboration's blocked runs read attention.
- *   3  the working bead moves >= 3 px in a quarter of its orbit (a lone mark: 9 s; the thread list's is 16 s).
+ *   3  the working bead moves >= 3 px in a quarter of its orbit.
  *   4  a clip reveal ran and left no residual clip-path after finish(); the page/document text lines paint.
  *   5  static scan: no filter, stroke-dashoffset or color-mix() in a .nx / nx- rule or an nx keyframe; no pmx in
  *      an nx keyframe name.
