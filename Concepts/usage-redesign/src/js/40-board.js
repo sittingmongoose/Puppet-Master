@@ -1808,6 +1808,8 @@
     mount: mount, refresh: refresh, flushRefresh: flushRefresh, relevel: relevel, layout: function (room) { return layoutFor(room || current.room || st.room); },
     visible: function (room) { return visibleIds(room || current.room || st.room); },
     rect: function (id) { return layoutFor(current.room || st.room).filter(function (r) { return r.id === id; })[0] || null; },
+    /* a grid rect in board pixels (no layout read): the flight aims at a predicted plate before its body exists */
+    px: function (r) { return r && current.cls ? px(r) : null; },
     resolve: resolve, gravity: gravity, project: project, firstFit: firstFit, tierOf: tierOf, tierPass: tierPass, measure: measure,
     move: move, resize: resize, setVisible: setVisible, reset: reset, tidy: tidy, place: place, persist: persist,
     config: config, setConfig: setConfig, keyboard: keyboard,

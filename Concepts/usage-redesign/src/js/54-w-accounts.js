@@ -114,6 +114,13 @@
     else {
       var r0 = a0.querySelectorAll('.pmu-accrow'), r1 = a1.querySelectorAll('.pmu-accrow');
       if (r0.length !== r1.length) return false;
+      /* a live change of the effective account (the demo hour's auto-switch) is read before anything is written: the light
+         travels from the old active row to the new one after the patch (FINAL-REVIEW-3 must-fix 7) */
+      var eOld = a0.querySelector('.pmu-accrow.is-eff'), eNewDry = a1.querySelector('.pmu-accrow.is-eff'), lightMove = null;
+      if (ctx.reason === 'live' && !ctx.liveFinal && eOld && eNewDry && eOld.getAttribute('data-acct') !== eNewDry.getAttribute('data-acct') && !reducedNow()) {
+        var eNew = a0.querySelector('.pmu-accrow[data-acct="' + eNewDry.getAttribute('data-acct') + '"]'), bd = body.closest('.pmu-board');
+        if (eNew && bd) lightMove = { board: bd, br: bd.getBoundingClientRect(), from: eOld.getBoundingClientRect(), to: eNew.getBoundingClientRect(), row: eNew };
+      }
       for (var i = 0; i < r0.length; i++) {
         if (r0[i].getAttribute('data-acct') !== r1[i].getAttribute('data-acct') || r0[i].querySelectorAll('.pmu-acccell').length !== r1[i].querySelectorAll('.pmu-acccell').length) return false;
         var w0 = Array.prototype.map.call(r0[i].querySelectorAll('.pmu-acccell'), function (c) { return c.getAttribute('data-win') + (c.classList.contains('is-merged') ? 'm' : ''); }).join(',');
@@ -142,12 +149,37 @@
     }
     next.forEach(function (r, i) { var same = false; try { same = JSON.stringify(r.spec) === JSON.stringify(live[i].spec); } catch (error) {} if (!same) C.chartTo(live[i].chart, r.spec, ctx); live[i].spec = r.spec; });
     var f0 = body.querySelector('.pmu-accfoot, .pmu-accsfoot'), f1 = dry.querySelector('.pmu-accfoot, .pmu-accsfoot');
+    var swLine0 = f0 ? (Array.prototype.filter.call(f0.querySelectorAll('.pmu-accfootline'), function (l) { return /Auto-switch/.test(l.textContent); })[0] || null) : null, swText0 = swLine0 ? swLine0.textContent : '';
     if (f0 && f1 && f0.innerHTML !== f1.innerHTML) C.setHtml(f0, f1.innerHTML);
+    if (typeof lightMove !== 'undefined' && lightMove) {
+      travelLight(lightMove.board, lightMove.br, lightMove.from, lightMove.to);
+      var gl = lightMove.row.querySelector('.pmu-accglyph'); if (gl && PMU.film && (PMU.film.halo || PMU.film.ring)) (PMU.film.halo || PMU.film.ring)(gl, { tone: 'good', delay: 300 });
+      /* the switch history's new line in the plate foot flashes once */
+      var swLine = f0 ? Array.prototype.filter.call(f0.querySelectorAll('.pmu-accfootline'), function (l) { return /Auto-switch/.test(l.textContent); })[0] : null;
+      if (swLine && swLine.textContent !== swText0 && PMU.film && PMU.film.flash) PMU.film.flash(swLine, { delay: 380, noSweep: true });
+    }
     body._pmuSig = dry._pmuSig; body._pmuFoot = dry._pmuFoot;
     var pv = PMU.roster.provider(ctx.id.replace(/^acct-/, '')); if (pv) body._pmuPlateShape = plateShape(pv);
     return true;
   }
 
+  /* the active light travels from one row to another (WOW-SPEC 3.9 "Use this account", WOW-SPEC-3 8.6 the demo hour's
+     auto-switch; FINAL-REVIEW-3 must-fix 7: the hour's switch was a cut): one transient light in the board layer, FLIP
+     from the old row's rect to the new row's, 620 (the move 420 on SLIDE, then it fades into the row's own light).
+     from / to are viewport rects read before anything was written, br the board's. */
+  function travelLight(board, br, from, to) {
+    if (!board || !br || !from || !to || reducedNow()) return null;
+    var f = PMU.motion.family ? PMU.motion.family() : 'basic', stp = f === 'retro' || f === 'nier';
+    var light = document.createElement('i'); light.className = 'pmu-actlight'; light.setAttribute('aria-hidden', 'true');
+    light.style.cssText = 'left:' + (to.left - br.left) + 'px;top:' + (to.top - br.top) + 'px;width:' + to.width + 'px;height:' + to.height + 'px';
+    board.appendChild(light);
+    var sx = from.width / Math.max(1, to.width), sy = from.height / Math.max(1, to.height);
+    var an = PMU.motion.animate(light, [{ transform: 'translate(' + (from.left - to.left).toFixed(1) + 'px,' + (from.top - to.top).toFixed(1) + 'px) scale(' + sx.toFixed(3) + ',' + sy.toFixed(3) + ')', opacity: 1 },
+      { transform: 'none', opacity: 1, offset: 0.7 }, { transform: 'none', opacity: 0 }], { dur: 620, easing: stp ? 'steps(5,jump-start)' : 'cubic-bezier(.22,1,.36,1)', fill: 'both' });
+    if (an && an.finished) an.finished.then(function () { light.remove(); }, function () { light.remove(); }); else light.remove();
+    return an;
+  }
+  C.travelLight = travelLight;
   function footLinesOf(p, th) {
     var footLines = [];
     var fb = fallbackSentence(p); if (fb) footLines.push({ glyph: 'alert', tone: 'warn', html: esc(fb) });
@@ -840,15 +872,7 @@
       var row = board ? board.querySelector('.pmu-accrow[data-acct="' + key + '"]') : null;
       if (row && board && !reducedNow()) {
         var br = board.getBoundingClientRect(), to = row.getBoundingClientRect(), f = PMU.motion.family ? PMU.motion.family() : 'basic', stp = f === 'retro' || f === 'nier';
-        if (from && to0) {
-          var light = document.createElement('i'); light.className = 'pmu-actlight'; light.setAttribute('aria-hidden', 'true');
-          light.style.cssText = 'left:' + (to.left - br.left) + 'px;top:' + (to.top - br.top) + 'px;width:' + to.width + 'px;height:' + to.height + 'px';
-          board.appendChild(light);
-          var sx = from.width / Math.max(1, to.width), sy = from.height / Math.max(1, to.height);
-          var an = PMU.motion.animate(light, [{ transform: 'translate(' + (from.left - to.left).toFixed(1) + 'px,' + (from.top - to.top).toFixed(1) + 'px) scale(' + sx.toFixed(3) + ',' + sy.toFixed(3) + ')', opacity: 1 },
-            { transform: 'none', opacity: 1, offset: 0.7 }, { transform: 'none', opacity: 0 }], { dur: 620, easing: stp ? 'steps(5,jump-start)' : 'cubic-bezier(.22,1,.36,1)', fill: 'both' });
-          if (an && an.finished) an.finished.then(function () { light.remove(); }, function () { light.remove(); }); else light.remove();
-        }
+        if (from && to0) travelLight(board, br, from, to);
         [key, oldKey].forEach(function (k) {
           var r = k && board.querySelector('.pmu-accrow[data-acct="' + k + '"] .pmu-accactcell');
           if (r) PMU.motion.animate(r, [{ opacity: 0 }, { opacity: 1 }], { dur: 160, delay: 120, easing: 'cubic-bezier(.22,.8,.28,1)', fill: 'backwards' });
