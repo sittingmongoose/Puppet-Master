@@ -18724,9 +18724,20 @@ html[data-o55-nier-parts~="voice"] .event-card.danger .event-copy > strong::befo
 html[data-o55-nier-parts~="voice"] .event-card.warning .event-copy > strong::before { content: "Alert: "; font-weight: 500; }
 
 /* ---- Pod companion [pod]: a small ink-line Pod hovering above the composer's top-right corner ----
-   Anchored to the chat's composer (the anchor name exists only under this part), so it rides every composer height. */
-html[data-o55-nier-parts~="pod"] .chat-stage > .composer { anchor-name: --o55np-composer; }
-#o55np-pod { position: fixed; position-anchor: --o55np-composer; right: calc(anchor(right, 14px) + 8px); bottom: calc(anchor(top, 58px) + 6px);
+   Anchored to the chat float (the activity bar, the send queue and the jump chip; the anchor name exists only under
+   this part): its right edge 8 px in from the stage's, its foot 6 px under the float's foot, which is just over the
+   composer, or over a decision panel when one is up, so it rides every composer and panel height. Final review
+   (2026-10-03): it sat over the jump-to-latest chip (26x30 px; a thread with no bar drops the chip to the float's
+   foot), over the bar's last item when the bar filled the float, and on a Resume button the transcript's last card
+   brought under it. So while the Pod is on, the bar and the queue keep 40 px clear on each side (the bar stays
+   centred; activity-bar.js's tiers measure the narrower row), the jump chip docks left of the Pod, and the transcript
+   keeps room under its last line (bottom padding at least 26 px of float plus the 36 it always keeps), so at rest
+   nothing interactive sits under the Pod. Content still scrolls past it, as under PMConcept7's. */
+html[data-o55-nier-parts~="pod"] .chat-stage .chat-float { anchor-name: --o55np-float; }
+html[data-o55-nier-parts~="pod"] .chat-float > .activity-wrap, html[data-o55-nier-parts~="pod"] .chat-float > .send-queue { padding-inline: 40px; }
+html[data-o55-nier-parts~="pod"] .chat-float > .jump-bottom { right: 44px; }
+html[data-o55-nier-parts~="pod"] .chat-stage > .transcript { padding-bottom: calc(max(var(--thread-float-h, 44px), 26px) + 36px); }
+#o55np-pod { position: fixed; position-anchor: --o55np-float; right: calc(anchor(right, 26px) - 4px); bottom: calc(anchor(bottom, 70px) - 6px);
   width: 40px; height: 52px; z-index: 60; pointer-events: none; contain: layout style; color: var(--o55-nier-ink); display: none; }
 html[data-o55-nier-parts~="pod"] #o55np-pod { display: block; }
 #o55np-pod .o55np-pod-bob, #o55np-pod .o55np-pod-body, #o55np-pod .o55np-pod-shadow { position: absolute; left: 0; top: 0; width: 40px; height: 52px; will-change: transform; }
