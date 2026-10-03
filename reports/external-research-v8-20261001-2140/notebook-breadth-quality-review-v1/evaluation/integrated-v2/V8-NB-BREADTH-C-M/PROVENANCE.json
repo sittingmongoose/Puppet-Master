@@ -1,0 +1,210 @@
+{
+  "admitted_artifacts": [
+    {
+      "bytes": 25499,
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-C-M/V8-NB-BREADTH-C-M-research-proposal/workspace/out/PROPOSAL.md",
+      "sha256": "5973856d68c91b011b050d22380d41a8f6fe68bb10641c7db9fbf341eea410d5",
+      "stage": "research-proposal"
+    },
+    {
+      "bytes": 1886,
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-C-M/V8-NB-BREADTH-C-M-research-proposal/workspace/out/UNRESOLVED_LEADS.md",
+      "sha256": "3b9a34c528d554a2870ef99a1dfb0ee7eb378c828084eb6711b403af49df722e",
+      "stage": "research-proposal"
+    },
+    {
+      "bytes": 22696,
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-C-M/V8-NB-BREADTH-C-M-independent-candidate-critic/workspace/out/CRITIQUE.md",
+      "sha256": "5a0788d18bd0bd4e5e45e7f3c0c2c65c7c00ecae6e01fe7a0b9748592f876d5b",
+      "stage": "independent-candidate-critic"
+    },
+    {
+      "bytes": 39201,
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-C-M/V8-NB-BREADTH-C-M-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "sha256": "6157387e85135dbdf1e062021528703213abceefabd1d9006202283a13787624",
+      "stage": "final-correction"
+    },
+    {
+      "bytes": 3246,
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-C-M/V8-NB-BREADTH-C-M-final-correction/workspace/out/UNRESOLVED_LEADS.md",
+      "sha256": "17d75c05de1fb48114e99844837bf3dedb81f93a04e612f3dc3e1a690e4461f8",
+      "stage": "final-correction"
+    }
+  ],
+  "case": "V8-NB-BREADTH-C-M",
+  "global_parent_receipt": {
+    "allowed_scalar_projection": {
+      "actual_case_end_monotonic_ns": 223693029190963,
+      "actual_case_wall_seconds": 2271.436343226,
+      "actual_nonoverlapping_outside_native_seconds": 5.179984582,
+      "actual_occupied_stage_lease_seconds": 2270.8215227127075,
+      "all_case_execution_closed_before_cutoff": true,
+      "case": "V8-NB-BREADTH-C-M",
+      "held_finalizer_returncode": 0,
+      "original_case_deadline_monotonic_ns": 225021592847737,
+      "original_case_start_monotonic_ns": 221421592847737,
+      "schema": "er8.integrated.global-parent-final-receipt.v1",
+      "whole_case_occupied_cap_seconds": 5400
+    },
+    "path": "ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-C-M/GLOBAL_PARENT_FINAL_RECEIPT.json",
+    "sha256": "42ef077a82e96475281bb123a028bee0c69ac78984aa5c055664e3705940b843"
+  },
+  "input_pins": [
+    {
+      "path": "ops/execution-resume-v1/root-production-release-v7.json",
+      "role": "release",
+      "sha256": "4d6593cff543755bd390c9682cbd9f8e76ff8a13f82451ee6821f96aedab4cf2"
+    },
+    {
+      "path": "cases/prospective-timing-v3/candidates/V8-NB-BREADTH-C-M/manifest.json",
+      "role": "case_manifest",
+      "sha256": "b709b4041eea59d8b34d20efff930f3fd2743016cf51b9dc8315e454e66d7031"
+    },
+    {
+      "path": "cases/prospective-timing-v3/candidates/V8-NB-BREADTH-C-M/METHOD.md",
+      "role": "method",
+      "sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e"
+    },
+    {
+      "path": "cases/prospective-timing-v3/candidates/V8-NB-BREADTH-C-M/TASK.md",
+      "role": "task",
+      "sha256": "9d28f2046cd210b619e8d1bcee2dbc0f509e94bd606784a3738af870c4b6941a"
+    },
+    {
+      "path": "cases/prospective-timing-v3/briefs/notebook-workspace.md",
+      "role": "brief",
+      "sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3"
+    },
+    {
+      "path": "cases/prospective-timing-v3/sandbox-plans/notebook-workspace.md",
+      "role": "thin_plan",
+      "sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999"
+    },
+    {
+      "path": "cases/tranche-v2/scoring-only/evaluation-scope.json",
+      "role": "evaluation_scope",
+      "sha256": "6efed6cf4763f91b9674ffaaf35b5c9113decf27663fc38961fcfd140b6883af"
+    }
+  ],
+  "operational_claim_scope": "three distinct fresh activated complete native goals, wrapper returns zero, held stage closes with positive quiet fields, parent held return code zero and closed before original cutoff; this establishes no semantic quality",
+  "operational_status": "COMPLETE",
+  "private_native_or_source_body_access": false,
+  "provider_account_model_frontend_semantics": "UNKNOWN",
+  "reveal_order": [
+    "task delegation and operational mailbox/clock",
+    "frozen FINAL_PROPOSAL.md only",
+    "independently obtained pinned/tagged public primary sources",
+    "SOURCE_QUALITY_FREEZE.json plus SOURCE_COVERAGE.json plus SOURCE_DISPOSITION.json written before any own METHOD/TASK/manifest/rubric/case/receipt/cost/provenance read",
+    "pinned V7 release own case_sources projection",
+    "own case manifest/METHOD/TASK",
+    "pinned common evaluation scope and own assigned brief/thin plan",
+    "own stage TASK and permitted scalar receipt projections",
+    "positively frozen own artifact/capture/operation metadata and admitted current artifacts"
+  ],
+  "schema": "er8-permitted-provenance-audit-v1",
+  "source_acquisition": "selected host capture metadata and source operation receipts positively checked; one unique public validator byte range independently hash matched; comprehensive delivered-source coverage and semantic comprehension UNKNOWN",
+  "source_quality_freeze_sha256": "9c264a4239f959e0aa7f8490cb394899848de7e89c82ecba41d228c9095eda2a",
+  "stages": [
+    {
+      "fresh_session": true,
+      "held_Popen_wait_returncode": 0,
+      "inclusive_native_lifetime_established": true,
+      "native_goal_activation_observed": true,
+      "native_goal_status": "complete",
+      "native_goal_target_id": "NATIVE_ID_cf855559c529e6e1",
+      "native_quiescence_observed_monotonic_ns": 222205998192452,
+      "native_responses": 11,
+      "original_deadline_monotonic_ns": 222621592847737,
+      "owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-nb-breadth-c-m-research-proposal.service",
+      "owned_native_quiescent": true,
+      "owned_unit": "er8-v8-nb-breadth-c-m-research-proposal.service",
+      "public_metrics_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-C-M/V8-NB-BREADTH-C-M-research-proposal/native-public/public-metrics.json",
+      "public_metrics_sha256": "ce8facff761f3c6ff3296eee3a7e4443a0a3ce5fe18b04251c20820f98cbdc7b",
+      "quiescence_observed_monotonic_ns": 222205998192452,
+      "receipt_hashes": {
+        "COMPLETE.json": "6c50af2bb2e1ae113d44498f905695be55ca47095d038b7a820fd1fadd56139a",
+        "EXTERNAL_STAGE_CLOSE.json": "1fe72f4bd43aff06ad4c1776b12cd4994efffe968697476c9f51d27b5648998a",
+        "PUBLIC_ARTIFACT_FREEZE.json": "918fcb6b38690241979ba8e9bd566690884c3b8896d5b1b0b1779535ee2e9759",
+        "PUBLIC_METRICS_FREEZE.json": "c43e2066718ba004a85231601ddd3c90f781cde04410bb961a928ee12d8d2bbb",
+        "QUIESCENCE.json": "3243d338f97df60d71504cf3e6161991ae67974673616d5905d10a97c27b0a36"
+      },
+      "required_artifact_sha256": [
+        "5973856d68c91b011b050d22380d41a8f6fe68bb10641c7db9fbf341eea410d5",
+        "3b9a34c528d554a2870ef99a1dfb0ee7eb378c828084eb6711b403af49df722e"
+      ],
+      "stage": "research-proposal",
+      "stage_actor_exit_observed_monotonic_ns": 222206148489240,
+      "stage_actor_exited": true,
+      "stage_actor_group_absent": true,
+      "stage_start_monotonic_ns": 221421592847737,
+      "wrapper_returncode": 0
+    },
+    {
+      "fresh_session": true,
+      "held_Popen_wait_returncode": 0,
+      "inclusive_native_lifetime_established": true,
+      "native_goal_activation_observed": true,
+      "native_goal_status": "complete",
+      "native_goal_target_id": "NATIVE_ID_60dd2b88bcbde60f",
+      "native_quiescence_observed_monotonic_ns": 223181535896520,
+      "native_responses": 19,
+      "original_deadline_monotonic_ns": 223406323495518,
+      "owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-nb-breadth-c-m-independent-candidate-critic.service",
+      "owned_native_quiescent": true,
+      "owned_unit": "er8-v8-nb-breadth-c-m-independent-candidate-critic.service",
+      "public_metrics_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-C-M/V8-NB-BREADTH-C-M-independent-candidate-critic/native-public/public-metrics.json",
+      "public_metrics_sha256": "1b3d76c9e88e3a7e6b60ccedff8274d772d56eb1dc3cbef83373e00b0679ae10",
+      "quiescence_observed_monotonic_ns": 223181535896520,
+      "receipt_hashes": {
+        "COMPLETE.json": "51dd539e328f08c74ad08017efe4649b45eee69e1408a095578d306a443eb868",
+        "EXTERNAL_STAGE_CLOSE.json": "d4a1a22a78305f3f58ff61fa525fa7c2b98ffd63f88363470543190d01fc81dd",
+        "PUBLIC_ARTIFACT_FREEZE.json": "d624b5e5fc517510c5fdaf7e61e54f2e8512e56495e19c4faee5cd088b50a3d8",
+        "PUBLIC_METRICS_FREEZE.json": "5a7d064b4f7764ba79f85811916ce24dea34ac69322d241df10bb68de3152125",
+        "QUIESCENCE.json": "10687d76fa5f8bb4c88e043182e9ff8e51f71c0701c09900aac5add7bf300fe2"
+      },
+      "required_artifact_sha256": [
+        "5a0788d18bd0bd4e5e45e7f3c0c2c65c7c00ecae6e01fe7a0b9748592f876d5b"
+      ],
+      "stage": "independent-candidate-critic",
+      "stage_actor_exit_observed_monotonic_ns": 223181689437640,
+      "stage_actor_exited": true,
+      "stage_actor_group_absent": true,
+      "stage_start_monotonic_ns": 222206323495518,
+      "wrapper_returncode": 0
+    },
+    {
+      "fresh_session": true,
+      "held_Popen_wait_returncode": 0,
+      "inclusive_native_lifetime_established": true,
+      "native_goal_activation_observed": true,
+      "native_goal_status": "complete",
+      "native_goal_target_id": "NATIVE_ID_648fa0712a561d4a",
+      "native_quiescence_observed_monotonic_ns": 223692123157642,
+      "native_responses": 11,
+      "original_deadline_monotonic_ns": 224081875907647,
+      "owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-nb-breadth-c-m-final-correction.service",
+      "owned_native_quiescent": true,
+      "owned_unit": "er8-v8-nb-breadth-c-m-final-correction.service",
+      "public_metrics_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-C-M/V8-NB-BREADTH-C-M-final-correction/native-public/public-metrics.json",
+      "public_metrics_sha256": "16682a6b748a388e8d0dac855a102a4ba89d102b9ae37b46461bf1ac76d21e71",
+      "quiescence_observed_monotonic_ns": 223692123157642,
+      "receipt_hashes": {
+        "COMPLETE.json": "f84e130e93b52cfe8b049cbe66aab216d0700433c86f17087cbe947c52338481",
+        "EXTERNAL_STAGE_CLOSE.json": "1f3c514c850b2b5fbeea86dd5bd9595fbd707b8e3e7ccf7209c502419d5edb8f",
+        "PUBLIC_ARTIFACT_FREEZE.json": "80e1b1e45e8a04a2da190e95c3f016790783a25d70741a4dc9abcb2083216162",
+        "PUBLIC_METRICS_FREEZE.json": "528a267bd96f72a88da16b0ef829a491eff1a920c946681f92239fa39df0516f",
+        "QUIESCENCE.json": "9f2eebd94b6e6aa8d489ee3a03071a9e1cf52dcec3a8e49f3220b50757d61aa1"
+      },
+      "required_artifact_sha256": [
+        "6157387e85135dbdf1e062021528703213abceefabd1d9006202283a13787624",
+        "17d75c05de1fb48114e99844837bf3dedb81f93a04e612f3dc3e1a690e4461f8"
+      ],
+      "stage": "final-correction",
+      "stage_actor_exit_observed_monotonic_ns": 223692315331230,
+      "stage_actor_exited": true,
+      "stage_actor_group_absent": true,
+      "stage_start_monotonic_ns": 223181875907647,
+      "wrapper_returncode": 0
+    }
+  ]
+}

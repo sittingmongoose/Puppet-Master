@@ -1,0 +1,80 @@
+{
+  "canonical_score": null,
+  "case": "V8-NB-BREADTH-T-M",
+  "comprehensive_quality_assessed": false,
+  "decisive_finding": "SQ1",
+  "efficiency_claim": null,
+  "findings": [
+    {
+      "claim_locations": {
+        "lines_1_based": [
+          41,
+          163,
+          170,
+          171,
+          172,
+          486,
+          487,
+          488
+        ],
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/out/FINAL_PROPOSAL.md"
+      },
+      "claim_summary": "The plan inserts newline separators between serialized multiline fragments and declares [a,b] equivalent to a\\nb; T2b expects no output observation.",
+      "consequence": "It suppresses a real ab-to-a\\nb output change, and can fabricate a change for [a\\n,b] versus a\\nb. This affects the central source/output observation contract, the plan steps and the proposed validation.",
+      "finding": "The official tagged format description requires empty-string concatenation; the tagged reader applies it to source, non-JSON mimebundle strings and stream text, and its writer preserves existing line endings. The proposed normalization changes content and its discriminator has the wrong oracle.",
+      "id": "SQ1",
+      "independent_evidence": [
+        "P1:53-59",
+        "P2:15-24,27-52,69-92"
+      ],
+      "severity": "DECISIVE",
+      "status": "VERIFIED",
+      "verification_kind": "INDEPENDENT_PUBLIC_PRIMARY_TAG_AND_IMMUTABLE_COMMIT_SOURCE; exact program semantics traced, no candidate tests executed"
+    },
+    {
+      "claim_locations": {
+        "lines_1_based": [
+          43,
+          191,
+          192,
+          229,
+          230,
+          231,
+          232,
+          516,
+          517,
+          518
+        ],
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/out/FINAL_PROPOSAL.md"
+      },
+      "claim_summary": "Ordinary id-less cells in a declared-4.5 state are only warned about, and the plan expects isvalid True for its T10 state.",
+      "consequence": "T10 has the wrong conformance expectation and the report conflates a future unknown-cell exception with a defective known-cell state.",
+      "finding": "Warning suppression does not disable schema validation. isvalid requests no repair; missing id stays missing; known raw/markdown/code cell schemas require id; schema errors produce ValidationError and isvalid False. The future unrecognized-cell schema is a distinct, conditioned exception, not evidence that ordinary 4.5 cells are valid without id.",
+      "id": "SQ2",
+      "independent_evidence": [
+        "P3:113-132,319-385,437-487,617-649",
+        "P4:115-121,153-159,188-205,369-391"
+      ],
+      "severity": "CONSEQUENTIAL",
+      "status": "VERIFIED_SOURCE_TRACE",
+      "verification_kind": "STATIC_INDEPENDENT_PINNED_SOURCE_TRACE; runtime check not executed"
+    }
+  ],
+  "full_pass": false,
+  "operational_completion_used_for_quality": false,
+  "prohibited_inputs_read": false,
+  "reveal_order": [
+    "Frozen final proposal only",
+    "Independent public primary tagged/immutable sources",
+    "SOURCE_QUALITY, coverage and disposition freeze",
+    "Own method/task/manifest/common rubric/case/receipts/cost/provenance only after this freeze"
+  ],
+  "schema": "source-first-quality-v1",
+  "source_bytes": 49712,
+  "source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/out/FINAL_PROPOSAL.md",
+  "source_quality_freeze_epoch": 1791002211.2473807,
+  "source_sha256": "127c4dc3d97bdcb27d2b11c9336bea8e4fb254537d1c73d18fa08e9108f7a48d",
+  "source_stage_scope": "Decisive source-quality screen; full 3Q/5B/18-facet assessment deliberately stopped. No comprehensive pass or comparable local score.",
+  "status": "FAILED_SCREEN",
+  "winner_claim": null
+}

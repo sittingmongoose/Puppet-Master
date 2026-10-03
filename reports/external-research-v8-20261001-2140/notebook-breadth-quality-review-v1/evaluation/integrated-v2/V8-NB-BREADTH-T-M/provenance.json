@@ -1,0 +1,2822 @@
+{
+  "assigned_inputs": [
+    {
+      "name": "BRIEF.md",
+      "path": "LAB_ROOT/cases/prospective-timing-v3/briefs/notebook-workspace.md",
+      "sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3"
+    },
+    {
+      "name": "THIN_PLAN.md",
+      "path": "LAB_ROOT/cases/prospective-timing-v3/sandbox-plans/notebook-workspace.md",
+      "sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999"
+    },
+    {
+      "name": "METHOD.md",
+      "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-BREADTH-T-M/METHOD.md",
+      "sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24"
+    }
+  ],
+  "capture_identity_summary": {
+    "metadata_record_instances_including_inherited_copies": 95,
+    "not_sum_of_new_fetches": true,
+    "unique_recorded_body_sha256_count": 23,
+    "unique_recorded_url_count": 25
+  },
+  "case": "V8-NB-BREADTH-T-M",
+  "native_private_context_read": false,
+  "other_arm_or_evaluation_read": false,
+  "publication_contains_raw_capture_body": false,
+  "raw_capture_bodies_read": false,
+  "release": {
+    "own_case_sources": {
+      "arm": "treatment",
+      "case_dir": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-BREADTH-T-M",
+      "family_provisional": "M",
+      "manifest": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-BREADTH-T-M/manifest.json",
+      "objectives": "LAB_ROOT/dev/prospective-timing-v3/OBJECTIVES.json",
+      "pair_id": "V8-NB-BREADTH",
+      "root": "LAB_ROOT/cases/prospective-timing-v3"
+    },
+    "path": "LAB_ROOT/ops/execution-resume-v1/root-production-release-v7.json",
+    "sha256": "4d6593cff543755bd390c9682cbd9f8e76ff8a13f82451ee6821f96aedab4cf2"
+  },
+  "schema": "safe-provenance-v1",
+  "scope": {
+    "not_canonical_numeric_weights": true,
+    "path": "LAB_ROOT/cases/tranche-v2/scoring-only/evaluation-scope.json",
+    "sha256": "6efed6cf4763f91b9674ffaaf35b5c9113decf27663fc38961fcfd140b6883af"
+  },
+  "semantic_read_or_understanding": "UNKNOWN",
+  "source_quality_freeze_sha256": "b9c04ad144f93f38172c932f948adf26b2f9be8afbbe38450b60254f6e1b229b",
+  "source_truth": "Independent P1-P4 source rulings are in SOURCE_QUALITY and safe_sources; host capture metadata does not establish interpretation truth.",
+  "stages": [
+    {
+      "PUBLIC_ARTIFACT_FREEZE": {
+        "artifact_hashes_verified": true,
+        "case_id_verified": true,
+        "native_raw_paths_exported": false,
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-research-proposal/PUBLIC_ARTIFACT_FREEZE.json",
+        "sha256": "9f9416f6f2ec668983fbedadc0136c54ab308dddbe2c9c5f8dd136516ffd8ffb"
+      },
+      "PUBLIC_METRICS_FREEZE": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-research-proposal/PUBLIC_METRICS_FREEZE.json",
+        "referenced_public_metrics_sha256_verified": true,
+        "sha256": "a463ccc00ef95a78dfd2f4bdbd324a10f6fa065ac6e2a4385efc04f01356edf5"
+      },
+      "artifacts": [
+        {
+          "bytes": 28508,
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-research-proposal/workspace/out/PROPOSAL.md",
+          "sha256": "43db9e104f794114a31876e13ecbc0bd606b8d5d3b2146f17dee803408124ded"
+        },
+        {
+          "bytes": 2587,
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-research-proposal/workspace/out/UNRESOLVED_LEADS.md",
+          "sha256": "de777c55f445c6558c71634c94509253d4660c8c98059842cfec09dea7dca064"
+        }
+      ],
+      "capture_bodies": "NOT_READ; public freeze metadata hashes only",
+      "capture_completeness_metadata_counts": {
+        "True": 18
+      },
+      "capture_disposition_metadata_counts": {
+        "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN": 18
+      },
+      "capture_metadata": [
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbconvert/v7.16.6/nbconvert/preprocessors/clearoutput.py",
+          "body_complete": true,
+          "captured_bytes": 930,
+          "captured_utc": "2026-10-03T04:02:35.114511+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-research-proposal/workspace/public_captures/351e8f5ade0944fdba110ba014e8a49a.json",
+          "metadata_sha256": "96cd2cb0a1ddcf41c3c86a0bbe33af41298005aa7524a155b2a6ae81c87623de",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbconvert/v7.16.6/nbconvert/preprocessors/clearoutput.py",
+          "sha256": "81657dade38c5f82449157a07e24f43ff9a2518696720647423dbce647df0546",
+          "source_version": "sha256:81657dade38c5f82449157a07e24f43ff9a2518696720647423dbce647df0546",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbconvert/v7.16.6/nbconvert/preprocessors/clearoutput.py"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/nbdime/pulls/639",
+          "body_complete": true,
+          "captured_bytes": 18404,
+          "captured_utc": "2026-10-03T04:01:58.412768+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-research-proposal/workspace/public_captures/3587384b8c4e47bd9e9cebcaabf2dc91.json",
+          "metadata_sha256": "6474b3b664adc01bb9cc33f08d6a0ba0ef2cfdf17a73f739c2a3b258bc8dd1ce",
+          "requested_url": "https://api.github.com/repos/jupyter/nbdime/pulls/639",
+          "sha256": "724573ce004e0d3092b1ffb21f7c07a84a3167f374f8b1564f5cf6cca8901ca7",
+          "source_version": "sha256:724573ce004e0d3092b1ffb21f7c07a84a3167f374f8b1564f5cf6cca8901ca7",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/nbdime/pulls/639"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/validator.py",
+          "body_complete": true,
+          "captured_bytes": 22741,
+          "captured_utc": "2026-10-03T04:02:32.905633+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-research-proposal/workspace/public_captures/44ced1b6769448ae810d61e2b7ec61cb.json",
+          "metadata_sha256": "bc84feefcf6ee36f4dcadc922738920204c121174cbeb5872826aa698fead9c6",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/validator.py",
+          "sha256": "e12625e709dcb0f1ed7cb3d5bcaa29e6d752b9ee62ad11c680925a97e5dc23d3",
+          "source_version": "sha256:e12625e709dcb0f1ed7cb3d5bcaa29e6d752b9ee62ad11c680925a97e5dc23d3",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/validator.py"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md",
+          "body_complete": true,
+          "captured_bytes": 28394,
+          "captured_utc": "2026-10-03T03:59:38.663404+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-research-proposal/workspace/public_captures/4756a194e2ff4f9abc0a33af3a84858c.json",
+          "metadata_sha256": "b2bff13b1e09db868dbb9d628b2f8f2ed7ecd2bf476799473aa59e91a1ab6264",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md",
+          "sha256": "414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab",
+          "source_version": "sha256:414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.9.0.txt",
+          "body_complete": true,
+          "captured_bytes": 14,
+          "captured_utc": "2026-10-03T03:59:40.504707+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-research-proposal/workspace/public_captures/5044ef7e12b5499d95165dae2fc5d82b.json",
+          "metadata_sha256": "6fe39136f4d78903a37aeeedaa879c08b78bd656d4383be93d56cb3fef4af168",
+          "requested_url": "https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.9.0.txt",
+          "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+          "source_version": "sha256:d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+          "status": 404,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.9.0.txt"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/v4/validator.py",
+          "body_complete": true,
+          "captured_bytes": 14,
+          "captured_utc": "2026-10-03T04:00:51.761157+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-research-proposal/workspace/public_captures/505e7befdf654e19953926e737e584d5.json",
+          "metadata_sha256": "755ca210d22869c132e309e285a20b7ce75261b5ddccc2c61a34230f236ae4d5",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/v4/validator.py",
+          "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+          "source_version": "sha256:d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+          "status": 404,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/v4/validator.py"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/nbdime/issues/553",
+          "body_complete": true,
+          "captured_bytes": 4308,
+          "captured_utc": "2026-10-03T04:02:33.545462+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-research-proposal/workspace/public_captures/51f36c88ded345f9894a4d0344088ee7.json",
+          "metadata_sha256": "c4e720cf21cb7c5ec1d7f97fe4b54bb68a6e43b421de68b5ffc550a5e54eba2c",
+          "requested_url": "https://api.github.com/repos/jupyter/nbdime/issues/553",
+          "sha256": "553e301eaf2ad5818b2ca9e309e59f84fd56631d6a145b7645353dc29c14d217",
+          "source_version": "sha256:553e301eaf2ad5818b2ca9e309e59f84fd56631d6a145b7645353dc29c14d217",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/nbdime/issues/553"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/nbformat/contents/nbformat/v4?ref=v5.10.4",
+          "body_complete": true,
+          "captured_bytes": 10506,
+          "captured_utc": "2026-10-03T04:01:57.951256+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-research-proposal/workspace/public_captures/5521211718b747b88ccf5ad3fcfc4b57.json",
+          "metadata_sha256": "6da60095336065b6dd61db996798ad02bd2db128b0161a490452d0b52a4d64af",
+          "requested_url": "https://api.github.com/repos/jupyter/nbformat/contents/nbformat/v4?ref=v5.10.4",
+          "sha256": "73d0de09ff90000c92f0eaa0c00378cd2c66970bb7fb8e5ac19d9c54de347af0",
+          "source_version": "sha256:73d0de09ff90000c92f0eaa0c00378cd2c66970bb7fb8e5ac19d9c54de347af0",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/nbformat/contents/nbformat/v4?ref=v5.10.4"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/enhancement-proposals/contents/",
+          "body_complete": true,
+          "captured_bytes": 31687,
+          "captured_utc": "2026-10-03T04:00:50.602404+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-research-proposal/workspace/public_captures/554dfb10aefa48efa63191ff4e23300f.json",
+          "metadata_sha256": "30472dee5028973f24f7d16fe03422154290ab529009a8227df60782a5b03d60",
+          "requested_url": "https://api.github.com/repos/jupyter/enhancement-proposals/contents/",
+          "sha256": "929771a853949f5ccc4cae905f068575db74d8a3eb23e9379e5124f4cbf704e0",
+          "source_version": "sha256:929771a853949f5ccc4cae905f068575db74d8a3eb23e9379e5124f4cbf704e0",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/enhancement-proposals/contents/"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/enhancement-proposals/contents/62-cell-id",
+          "body_complete": true,
+          "captured_bytes": 898,
+          "captured_utc": "2026-10-03T04:01:57.036586+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-research-proposal/workspace/public_captures/84775e6d305f407d9e8402d7cbaec8a8.json",
+          "metadata_sha256": "fcbf52f4c8e1ddf355c7a6ad9a76aeb1063304563fa87eaf10d6de716c14aae7",
+          "requested_url": "https://api.github.com/repos/jupyter/enhancement-proposals/contents/62-cell-id",
+          "sha256": "c12a634dcad79c7457ac626e08f7d6ca89c6c26254dbdc126e3bb8f4ac121947",
+          "source_version": "sha256:c12a634dcad79c7457ac626e08f7d6ca89c6c26254dbdc126e3bb8f4ac121947",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/enhancement-proposals/contents/62-cell-id"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/v4/nbformat.v4.5.schema.json",
+          "body_complete": true,
+          "captured_bytes": 16104,
+          "captured_utc": "2026-10-03T04:02:34.867499+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-research-proposal/workspace/public_captures/84cfc06cdb424b8f85d85c0e8d3020b9.json",
+          "metadata_sha256": "2602a21597252097065f68fc0297d3a14206558255bf57834d00eb515cbc28c4",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/v4/nbformat.v4.5.schema.json",
+          "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+          "source_version": "sha256:523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/v4/nbformat.v4.5.schema.json"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/search/issues?q=repo%3Ajupyter%2Fnbdime+cell+id&per_page=6",
+          "body_complete": true,
+          "captured_bytes": 61273,
+          "captured_utc": "2026-10-03T04:00:52.170011+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-research-proposal/workspace/public_captures/88d13852ca43441f844697ea0a6cc18c.json",
+          "metadata_sha256": "b038e09a39e7a5e779520ef1f50bd1b1a4fee32cf25e2a38f5fe8860964eac12",
+          "requested_url": "https://api.github.com/search/issues?q=repo%3Ajupyter%2Fnbdime+cell+id&per_page=6",
+          "sha256": "e80870de22ec8ca68f9bb471a8c34cae4e60c0e69f74931536e6b9cceb5a077e",
+          "source_version": "sha256:e80870de22ec8ca68f9bb471a8c34cae4e60c0e69f74931536e6b9cceb5a077e",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/search/issues?q=repo%3Ajupyter%2Fnbdime+cell+id&per_page=6"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbdime/main/CHANGELOG.md",
+          "body_complete": true,
+          "captured_bytes": 18608,
+          "captured_utc": "2026-10-03T03:59:39.970472+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-research-proposal/workspace/public_captures/8c468020189c4705a5512460b2c3f485.json",
+          "metadata_sha256": "aa3877e7da2d32262eff7ea725801e434ee5d4aa7a0310587224ec921c1aa0c1",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbdime/main/CHANGELOG.md",
+          "sha256": "1d3c90cd4292540d702c0917d1243120327bc1146f711958353e76dc0e0e98a3",
+          "source_version": "sha256:1d3c90cd4292540d702c0917d1243120327bc1146f711958353e76dc0e0e98a3",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbdime/main/CHANGELOG.md"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/cell-id.md",
+          "body_complete": true,
+          "captured_bytes": 20578,
+          "captured_utc": "2026-10-03T04:02:32.207849+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-research-proposal/workspace/public_captures/ad7ec8cbeabc42a4bcbf58e7fb4b363a.json",
+          "metadata_sha256": "5f26e9b9da03d2875d99e3ba9e902b3c1d5e2afdab02d82b9d438ed7087a1773",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/cell-id.md",
+          "sha256": "7f52a9c224fd11509db187187f6e1bd760a329ba836a3b40945b47bcde463992",
+          "source_version": "sha256:7f52a9c224fd11509db187187f6e1bd760a329ba836a3b40945b47bcde463992",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/cell-id.md"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/git/git/v2.9.0/Documentation/RelNotes/2.9.0.txt",
+          "body_complete": true,
+          "captured_bytes": 21833,
+          "captured_utc": "2026-10-03T04:00:52.542724+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-research-proposal/workspace/public_captures/bf461c1b25af460eab368895cadcd4e7.json",
+          "metadata_sha256": "197b23ff22308ade2d1802d8f31da8b1eb62192875386e79a73399b54d69464a",
+          "requested_url": "https://raw.githubusercontent.com/git/git/v2.9.0/Documentation/RelNotes/2.9.0.txt",
+          "sha256": "f1332f19e540a2d9583798f6737f5fe913e2cd5599ad859a31e4a0bde2ba6cd6",
+          "source_version": "sha256:f1332f19e540a2d9583798f6737f5fe913e2cd5599ad859a31e4a0bde2ba6cd6",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/git/git/v2.9.0/Documentation/RelNotes/2.9.0.txt"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/git/git/v2.42.0/Documentation/config/diff.txt",
+          "body_complete": true,
+          "captured_bytes": 9243,
+          "captured_utc": "2026-10-03T04:01:58.912698+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-research-proposal/workspace/public_captures/c5fa7d5801594e85b08369dfba57bdbf.json",
+          "metadata_sha256": "36f65bb563a977b43794a6e55a3fb7bc02cbdfbe0bac3c105887acd6671c4c3b",
+          "requested_url": "https://raw.githubusercontent.com/git/git/v2.42.0/Documentation/config/diff.txt",
+          "sha256": "0a0ec973e0aecb852636a2776ddbf51f350686b2afc31b90a0c499d78e21d466",
+          "source_version": "sha256:0a0ec973e0aecb852636a2776ddbf51f350686b2afc31b90a0c499d78e21d466",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/git/git/v2.42.0/Documentation/config/diff.txt"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/62-cell-id.md",
+          "body_complete": true,
+          "captured_bytes": 14,
+          "captured_utc": "2026-10-03T03:59:40.330012+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-research-proposal/workspace/public_captures/e0d0ca1fbc7744bbade6edda6892c42e.json",
+          "metadata_sha256": "fcb9691bb98355fee42d31b9c49e874dcd089f0731aa49a6fa25e80c11082fab",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/62-cell-id.md",
+          "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+          "source_version": "sha256:d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+          "status": 404,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/62-cell-id.md"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/nbdime/issues/566",
+          "body_complete": true,
+          "captured_bytes": 4529,
+          "captured_utc": "2026-10-03T04:02:34.572118+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-research-proposal/workspace/public_captures/ee323c7875774983b165d25cacf8ad87.json",
+          "metadata_sha256": "f36389146fc47d1807fe2ece72cdbfd4b338c1932fb4ab0c5d66bca44982b911",
+          "requested_url": "https://api.github.com/repos/jupyter/nbdime/issues/566",
+          "sha256": "d496eee5e0f2ea42fdfc4248b310b05eeda11ec53a7dced1a4ed62f21a402bbc",
+          "source_version": "sha256:d496eee5e0f2ea42fdfc4248b310b05eeda11ec53a7dced1a4ed62f21a402bbc",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/nbdime/issues/566"
+        }
+      ],
+      "capture_metadata_hash_verified_count": 18,
+      "delivery_caveat": "Ranges/hash/transmission metadata is evidence of transport, not semantic uptake.",
+      "operation_receipts": {
+        "delivery_range_metadata": [
+          {
+            "bytes": 2577,
+            "delivery_truncated": false,
+            "line_end_inclusive": 12,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/TASK.md",
+            "sha256": "cc60d40b7b8f9bc29d2b0d357eb9442bd7db46b48e3d76cb4a59c6a12a89c361",
+            "source_byte_end_exclusive": 2577,
+            "source_byte_start": 0,
+            "source_range_bytes": 2577,
+            "source_range_sha256": "cc60d40b7b8f9bc29d2b0d357eb9442bd7db46b48e3d76cb4a59c6a12a89c361",
+            "transmitted_text_sha256": "fe6e867d3c8923a8abd031c967dcb33e170ed3049f640d4571f74344c242ddff",
+            "transmitted_text_utf8_bytes": 2615
+          },
+          {
+            "bytes": 2577,
+            "delivery_truncated": false,
+            "line_end_inclusive": 12,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/TASK.md",
+            "sha256": "cc60d40b7b8f9bc29d2b0d357eb9442bd7db46b48e3d76cb4a59c6a12a89c361",
+            "source_byte_end_exclusive": 2577,
+            "source_byte_start": 0,
+            "source_range_bytes": 2577,
+            "source_range_sha256": "cc60d40b7b8f9bc29d2b0d357eb9442bd7db46b48e3d76cb4a59c6a12a89c361",
+            "transmitted_text_sha256": "fe6e867d3c8923a8abd031c967dcb33e170ed3049f640d4571f74344c242ddff",
+            "transmitted_text_utf8_bytes": 2615
+          },
+          {
+            "bytes": 3603,
+            "delivery_truncated": false,
+            "line_end_inclusive": 21,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/BRIEF.md",
+            "sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+            "source_byte_end_exclusive": 3603,
+            "source_byte_start": 0,
+            "source_range_bytes": 3603,
+            "source_range_sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+            "transmitted_text_sha256": "89f355d5a01f650142325470d9cf27f3b9451d70ba2db6db4ad59df65aa2bfea",
+            "transmitted_text_utf8_bytes": 3677
+          },
+          {
+            "bytes": 3603,
+            "delivery_truncated": false,
+            "line_end_inclusive": 21,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/BRIEF.md",
+            "sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+            "source_byte_end_exclusive": 3603,
+            "source_byte_start": 0,
+            "source_range_bytes": 3603,
+            "source_range_sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+            "transmitted_text_sha256": "89f355d5a01f650142325470d9cf27f3b9451d70ba2db6db4ad59df65aa2bfea",
+            "transmitted_text_utf8_bytes": 3677
+          },
+          {
+            "bytes": 920,
+            "delivery_truncated": false,
+            "line_end_inclusive": 12,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/THIN_PLAN.md",
+            "sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+            "source_byte_end_exclusive": 920,
+            "source_byte_start": 0,
+            "source_range_bytes": 920,
+            "source_range_sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+            "transmitted_text_sha256": "d2f9df8a25f92c082342a9bfa32be42376fe52833f00bb96e6a9e87970f775b5",
+            "transmitted_text_utf8_bytes": 958
+          },
+          {
+            "bytes": 920,
+            "delivery_truncated": false,
+            "line_end_inclusive": 12,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/THIN_PLAN.md",
+            "sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+            "source_byte_end_exclusive": 920,
+            "source_byte_start": 0,
+            "source_range_bytes": 920,
+            "source_range_sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+            "transmitted_text_sha256": "d2f9df8a25f92c082342a9bfa32be42376fe52833f00bb96e6a9e87970f775b5",
+            "transmitted_text_utf8_bytes": 958
+          },
+          {
+            "bytes": 1360,
+            "delivery_truncated": false,
+            "line_end_inclusive": 5,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/METHOD.md",
+            "sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+            "source_byte_end_exclusive": 1360,
+            "source_byte_start": 0,
+            "source_range_bytes": 1360,
+            "source_range_sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+            "transmitted_text_sha256": "75cce2a37434da8915d1085921c8792c7264cf32dcb9ee947da6c83e409478f6",
+            "transmitted_text_utf8_bytes": 1374
+          },
+          {
+            "bytes": 1360,
+            "delivery_truncated": false,
+            "line_end_inclusive": 5,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/METHOD.md",
+            "sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+            "source_byte_end_exclusive": 1360,
+            "source_byte_start": 0,
+            "source_range_bytes": 1360,
+            "source_range_sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+            "transmitted_text_sha256": "75cce2a37434da8915d1085921c8792c7264cf32dcb9ee947da6c83e409478f6",
+            "transmitted_text_utf8_bytes": 1374
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "1d3c90cd4292540d702c0917d1243120327bc1146f711958353e76dc0e0e98a3"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "1d3c90cd4292540d702c0917d1243120327bc1146f711958353e76dc0e0e98a3"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "929771a853949f5ccc4cae905f068575db74d8a3eb23e9379e5124f4cbf704e0"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "929771a853949f5ccc4cae905f068575db74d8a3eb23e9379e5124f4cbf704e0"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "e80870de22ec8ca68f9bb471a8c34cae4e60c0e69f74931536e6b9cceb5a077e"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "e80870de22ec8ca68f9bb471a8c34cae4e60c0e69f74931536e6b9cceb5a077e"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "f1332f19e540a2d9583798f6737f5fe913e2cd5599ad859a31e4a0bde2ba6cd6"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "f1332f19e540a2d9583798f6737f5fe913e2cd5599ad859a31e4a0bde2ba6cd6"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "c12a634dcad79c7457ac626e08f7d6ca89c6c26254dbdc126e3bb8f4ac121947"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "c12a634dcad79c7457ac626e08f7d6ca89c6c26254dbdc126e3bb8f4ac121947"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "73d0de09ff90000c92f0eaa0c00378cd2c66970bb7fb8e5ac19d9c54de347af0"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "73d0de09ff90000c92f0eaa0c00378cd2c66970bb7fb8e5ac19d9c54de347af0"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "724573ce004e0d3092b1ffb21f7c07a84a3167f374f8b1564f5cf6cca8901ca7"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "724573ce004e0d3092b1ffb21f7c07a84a3167f374f8b1564f5cf6cca8901ca7"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "0a0ec973e0aecb852636a2776ddbf51f350686b2afc31b90a0c499d78e21d466"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "0a0ec973e0aecb852636a2776ddbf51f350686b2afc31b90a0c499d78e21d466"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "7f52a9c224fd11509db187187f6e1bd760a329ba836a3b40945b47bcde463992"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "7f52a9c224fd11509db187187f6e1bd760a329ba836a3b40945b47bcde463992"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "e12625e709dcb0f1ed7cb3d5bcaa29e6d752b9ee62ad11c680925a97e5dc23d3"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "e12625e709dcb0f1ed7cb3d5bcaa29e6d752b9ee62ad11c680925a97e5dc23d3"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "553e301eaf2ad5818b2ca9e309e59f84fd56631d6a145b7645353dc29c14d217"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "553e301eaf2ad5818b2ca9e309e59f84fd56631d6a145b7645353dc29c14d217"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "d496eee5e0f2ea42fdfc4248b310b05eeda11ec53a7dced1a4ed62f21a402bbc"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "d496eee5e0f2ea42fdfc4248b310b05eeda11ec53a7dced1a4ed62f21a402bbc"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "81657dade38c5f82449157a07e24f43ff9a2518696720647423dbce647df0546"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "81657dade38c5f82449157a07e24f43ff9a2518696720647423dbce647df0546"
+          },
+          {
+            "bytes": 28508,
+            "operation": "write_file",
+            "path": "out/PROPOSAL.md",
+            "sha256": "43db9e104f794114a31876e13ecbc0bd606b8d5d3b2146f17dee803408124ded"
+          },
+          {
+            "bytes": 28508,
+            "operation": "write_file",
+            "path": "out/PROPOSAL.md",
+            "sha256": "43db9e104f794114a31876e13ecbc0bd606b8d5d3b2146f17dee803408124ded"
+          },
+          {
+            "bytes": 2587,
+            "operation": "write_file",
+            "path": "out/UNRESOLVED_LEADS.md",
+            "sha256": "de777c55f445c6558c71634c94509253d4660c8c98059842cfec09dea7dca064"
+          },
+          {
+            "bytes": 2587,
+            "operation": "write_file",
+            "path": "out/UNRESOLVED_LEADS.md",
+            "sha256": "de777c55f445c6558c71634c94509253d4660c8c98059842cfec09dea7dca064"
+          }
+        ],
+        "hash_verified": true,
+        "llm_read_counts": {
+          "UNOBSERVED": 48
+        },
+        "operation_counts": {
+          "public_https_get": 54,
+          "read_file": 12,
+          "write_file": 6
+        },
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-research-proposal/workspace/operation_receipts/events.jsonl",
+        "record_count": 72,
+        "semantic_acquisition_counts": {
+          "UNKNOWN": 48
+        },
+        "sha256": "3e5c22b61c2ab18a157982f26f4b1ad9533877d1a6300c60afd53b192d88bd18"
+      },
+      "stage": "research-proposal"
+    },
+    {
+      "PUBLIC_ARTIFACT_FREEZE": {
+        "artifact_hashes_verified": true,
+        "case_id_verified": true,
+        "native_raw_paths_exported": false,
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/PUBLIC_ARTIFACT_FREEZE.json",
+        "sha256": "77e3335d9047ca6bb25432bdc0a300503b6a5b06ab0b6d039365c6042f7b8161"
+      },
+      "PUBLIC_METRICS_FREEZE": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/PUBLIC_METRICS_FREEZE.json",
+        "referenced_public_metrics_sha256_verified": true,
+        "sha256": "76b34611dab2b32a329331b3e9d6e937d915823d13b8d01fadcbccf3d5516c78"
+      },
+      "artifacts": [
+        {
+          "bytes": 24112,
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/out/CRITIQUE.md",
+          "sha256": "0ed52471b46bcaa9e36dd7a53e23a295364603502d476247b800b1b54a2eb8be"
+        }
+      ],
+      "capture_bodies": "NOT_READ; public freeze metadata hashes only",
+      "capture_completeness_metadata_counts": {
+        "True": 34
+      },
+      "capture_disposition_metadata_counts": {
+        "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN": 34
+      },
+      "capture_metadata": [
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/__init__.py",
+          "body_complete": true,
+          "captured_bytes": 6314,
+          "captured_utc": "2026-10-03T04:13:58.431345+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/0cf653556a65434989cc0824dc2f1da2.json",
+          "metadata_sha256": "acac8f921c311bd1fe75f0f3dd174af03e39514ffdef08f038bd444a26f03b20",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/__init__.py",
+          "sha256": "6c9b408a8eec0cdf065c84c022214a693e8b7ab9853f1fab5b0b6a08bc5e29d9",
+          "source_version": "sha256:6c9b408a8eec0cdf065c84c022214a693e8b7ab9853f1fab5b0b6a08bc5e29d9",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/__init__.py"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/nbdime/issues/787",
+          "body_complete": true,
+          "captured_bytes": 3724,
+          "captured_utc": "2026-10-03T04:15:42.816170+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/0d6068e7111d4d58942cdfd102daf286.json",
+          "metadata_sha256": "02fd6578011777ccd0a833d35fef07bab21471b3ebd3ee51a2ddd41c4cfcfda5",
+          "requested_url": "https://api.github.com/repos/jupyter/nbdime/issues/787",
+          "sha256": "b989bf06f9c9900753fdf74022d28e62c92873ce07243e09f36e86aac0234280",
+          "source_version": "sha256:b989bf06f9c9900753fdf74022d28e62c92873ce07243e09f36e86aac0234280",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/nbdime/issues/787"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md",
+          "body_complete": true,
+          "captured_bytes": 28394,
+          "captured_utc": "2026-10-03T04:15:03.383769+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/11c58c973ef243768afab0c87130e70b.json",
+          "metadata_sha256": "4104ba6bec6d6ef1c60e74f6e6ead1af003293ce8edce71067c13290157729f9",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md",
+          "sha256": "414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab",
+          "source_version": "sha256:414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/validator.py",
+          "body_complete": true,
+          "captured_bytes": 22741,
+          "captured_utc": "2026-10-03T04:13:58.222802+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/1fffd8e7e06a4316987f8c3789211e71.json",
+          "metadata_sha256": "c68557c50ef2d07cc39825be26f4ad69c3763f1d336ab76b9f5b49a53e43d593",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/validator.py",
+          "sha256": "e12625e709dcb0f1ed7cb3d5bcaa29e6d752b9ee62ad11c680925a97e5dc23d3",
+          "source_version": "sha256:e12625e709dcb0f1ed7cb3d5bcaa29e6d752b9ee62ad11c680925a97e5dc23d3",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/validator.py"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/nbdime/issues/597",
+          "body_complete": true,
+          "captured_bytes": 8300,
+          "captured_utc": "2026-10-03T04:15:42.520053+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/32c0066e17a1441fac7d12d4ce9d990a.json",
+          "metadata_sha256": "b86c276f03369230b2ee4ce27c3197cdeaca4b2b27f5013199a9a36252a4e38d",
+          "requested_url": "https://api.github.com/repos/jupyter/nbdime/issues/597",
+          "sha256": "d51ef1c9ea00a42ffccb559c70ecc5416cdb2d08241ef1113143c380dda00290",
+          "source_version": "sha256:d51ef1c9ea00a42ffccb559c70ecc5416cdb2d08241ef1113143c380dda00290",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/nbdime/issues/597"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbconvert/v7.16.6/nbconvert/preprocessors/clearoutput.py",
+          "body_complete": true,
+          "captured_bytes": 930,
+          "captured_utc": "2026-10-03T04:02:35.114511+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/351e8f5ade0944fdba110ba014e8a49a.json",
+          "metadata_sha256": "96cd2cb0a1ddcf41c3c86a0bbe33af41298005aa7524a155b2a6ae81c87623de",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbconvert/v7.16.6/nbconvert/preprocessors/clearoutput.py",
+          "sha256": "81657dade38c5f82449157a07e24f43ff9a2518696720647423dbce647df0546",
+          "source_version": "sha256:81657dade38c5f82449157a07e24f43ff9a2518696720647423dbce647df0546",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbconvert/v7.16.6/nbconvert/preprocessors/clearoutput.py"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/nbdime/pulls/639",
+          "body_complete": true,
+          "captured_bytes": 18404,
+          "captured_utc": "2026-10-03T04:01:58.412768+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/3587384b8c4e47bd9e9cebcaabf2dc91.json",
+          "metadata_sha256": "6474b3b664adc01bb9cc33f08d6a0ba0ef2cfdf17a73f739c2a3b258bc8dd1ce",
+          "requested_url": "https://api.github.com/repos/jupyter/nbdime/pulls/639",
+          "sha256": "724573ce004e0d3092b1ffb21f7c07a84a3167f374f8b1564f5cf6cca8901ca7",
+          "source_version": "sha256:724573ce004e0d3092b1ffb21f7c07a84a3167f374f8b1564f5cf6cca8901ca7",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/nbdime/pulls/639"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/nbdime",
+          "body_complete": true,
+          "captured_bytes": 6182,
+          "captured_utc": "2026-10-03T04:15:55.734049+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/3a5a6318dd1c4f08a4e815a70eadf78f.json",
+          "metadata_sha256": "52d5c9a841e55e122f04f64e8565f76e452d347870c813c4ed39ccf3b57d4a5d",
+          "requested_url": "https://api.github.com/repos/jupyter/nbdime",
+          "sha256": "784871fb1e9f0a82af8633d0725aea7c3ecc4e312c01d5b528d68aadf0966f00",
+          "source_version": "sha256:784871fb1e9f0a82af8633d0725aea7c3ecc4e312c01d5b528d68aadf0966f00",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/nbdime"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/nbdime/pulls/566",
+          "body_complete": true,
+          "captured_bytes": 18584,
+          "captured_utc": "2026-10-03T04:15:55.065895+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/3c8fb65af2e94595aa399d1af6ad19ff.json",
+          "metadata_sha256": "b50a2b348962d28815371609320ec22400869648d7691b29169e9f3d73a030f3",
+          "requested_url": "https://api.github.com/repos/jupyter/nbdime/pulls/566",
+          "sha256": "966c1f3f4a53b3b1067f4865b6144a6d16c6be6de44568a493c6b6696fc2781f",
+          "source_version": "sha256:966c1f3f4a53b3b1067f4865b6144a6d16c6be6de44568a493c6b6696fc2781f",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/nbdime/pulls/566"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/validator.py",
+          "body_complete": true,
+          "captured_bytes": 22741,
+          "captured_utc": "2026-10-03T04:02:32.905633+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/44ced1b6769448ae810d61e2b7ec61cb.json",
+          "metadata_sha256": "bc84feefcf6ee36f4dcadc922738920204c121174cbeb5872826aa698fead9c6",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/validator.py",
+          "sha256": "e12625e709dcb0f1ed7cb3d5bcaa29e6d752b9ee62ad11c680925a97e5dc23d3",
+          "source_version": "sha256:e12625e709dcb0f1ed7cb3d5bcaa29e6d752b9ee62ad11c680925a97e5dc23d3",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/validator.py"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md",
+          "body_complete": true,
+          "captured_bytes": 28394,
+          "captured_utc": "2026-10-03T03:59:38.663404+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/4756a194e2ff4f9abc0a33af3a84858c.json",
+          "metadata_sha256": "b2bff13b1e09db868dbb9d628b2f8f2ed7ecd2bf476799473aa59e91a1ab6264",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md",
+          "sha256": "414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab",
+          "source_version": "sha256:414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.9.0.txt",
+          "body_complete": true,
+          "captured_bytes": 14,
+          "captured_utc": "2026-10-03T03:59:40.504707+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/5044ef7e12b5499d95165dae2fc5d82b.json",
+          "metadata_sha256": "6fe39136f4d78903a37aeeedaa879c08b78bd656d4383be93d56cb3fef4af168",
+          "requested_url": "https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.9.0.txt",
+          "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+          "source_version": "sha256:d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+          "status": 404,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.9.0.txt"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/v4/validator.py",
+          "body_complete": true,
+          "captured_bytes": 14,
+          "captured_utc": "2026-10-03T04:00:51.761157+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/505e7befdf654e19953926e737e584d5.json",
+          "metadata_sha256": "755ca210d22869c132e309e285a20b7ce75261b5ddccc2c61a34230f236ae4d5",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/v4/validator.py",
+          "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+          "source_version": "sha256:d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+          "status": 404,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/v4/validator.py"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/nbdime/issues/553",
+          "body_complete": true,
+          "captured_bytes": 4308,
+          "captured_utc": "2026-10-03T04:02:33.545462+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/51f36c88ded345f9894a4d0344088ee7.json",
+          "metadata_sha256": "c4e720cf21cb7c5ec1d7f97fe4b54bb68a6e43b421de68b5ffc550a5e54eba2c",
+          "requested_url": "https://api.github.com/repos/jupyter/nbdime/issues/553",
+          "sha256": "553e301eaf2ad5818b2ca9e309e59f84fd56631d6a145b7645353dc29c14d217",
+          "source_version": "sha256:553e301eaf2ad5818b2ca9e309e59f84fd56631d6a145b7645353dc29c14d217",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/nbdime/issues/553"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/nbformat/contents/nbformat/v4?ref=v5.10.4",
+          "body_complete": true,
+          "captured_bytes": 10506,
+          "captured_utc": "2026-10-03T04:01:57.951256+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/5521211718b747b88ccf5ad3fcfc4b57.json",
+          "metadata_sha256": "6da60095336065b6dd61db996798ad02bd2db128b0161a490452d0b52a4d64af",
+          "requested_url": "https://api.github.com/repos/jupyter/nbformat/contents/nbformat/v4?ref=v5.10.4",
+          "sha256": "73d0de09ff90000c92f0eaa0c00378cd2c66970bb7fb8e5ac19d9c54de347af0",
+          "source_version": "sha256:73d0de09ff90000c92f0eaa0c00378cd2c66970bb7fb8e5ac19d9c54de347af0",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/nbformat/contents/nbformat/v4?ref=v5.10.4"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/enhancement-proposals/contents/",
+          "body_complete": true,
+          "captured_bytes": 31687,
+          "captured_utc": "2026-10-03T04:00:50.602404+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/554dfb10aefa48efa63191ff4e23300f.json",
+          "metadata_sha256": "30472dee5028973f24f7d16fe03422154290ab529009a8227df60782a5b03d60",
+          "requested_url": "https://api.github.com/repos/jupyter/enhancement-proposals/contents/",
+          "sha256": "929771a853949f5ccc4cae905f068575db74d8a3eb23e9379e5124f4cbf704e0",
+          "source_version": "sha256:929771a853949f5ccc4cae905f068575db74d8a3eb23e9379e5124f4cbf704e0",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/enhancement-proposals/contents/"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbdime/main/CHANGELOG.md",
+          "body_complete": true,
+          "captured_bytes": 18608,
+          "captured_utc": "2026-10-03T04:15:04.869142+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/5d8bdadad2d548998789464b7624c2d5.json",
+          "metadata_sha256": "5b76ac0e93da97cfa10371dd3a55471b552db70600e4daf9a8776446ab46d46f",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbdime/main/CHANGELOG.md",
+          "sha256": "1d3c90cd4292540d702c0917d1243120327bc1146f711958353e76dc0e0e98a3",
+          "source_version": "sha256:1d3c90cd4292540d702c0917d1243120327bc1146f711958353e76dc0e0e98a3",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbdime/main/CHANGELOG.md"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/nbdime/pulls/639",
+          "body_complete": true,
+          "captured_bytes": 18404,
+          "captured_utc": "2026-10-03T04:15:55.414208+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/6fa9bf4a73934766acea8c55004616ad.json",
+          "metadata_sha256": "f27e1006bfb07df0c476b6b748aa52f8f75373ba62a44567fa0199d725e30cdb",
+          "requested_url": "https://api.github.com/repos/jupyter/nbdime/pulls/639",
+          "sha256": "724573ce004e0d3092b1ffb21f7c07a84a3167f374f8b1564f5cf6cca8901ca7",
+          "source_version": "sha256:724573ce004e0d3092b1ffb21f7c07a84a3167f374f8b1564f5cf6cca8901ca7",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/nbdime/pulls/639"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/enhancement-proposals/contents/62-cell-id",
+          "body_complete": true,
+          "captured_bytes": 898,
+          "captured_utc": "2026-10-03T04:01:57.036586+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/84775e6d305f407d9e8402d7cbaec8a8.json",
+          "metadata_sha256": "fcbf52f4c8e1ddf355c7a6ad9a76aeb1063304563fa87eaf10d6de716c14aae7",
+          "requested_url": "https://api.github.com/repos/jupyter/enhancement-proposals/contents/62-cell-id",
+          "sha256": "c12a634dcad79c7457ac626e08f7d6ca89c6c26254dbdc126e3bb8f4ac121947",
+          "source_version": "sha256:c12a634dcad79c7457ac626e08f7d6ca89c6c26254dbdc126e3bb8f4ac121947",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/enhancement-proposals/contents/62-cell-id"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/v4/nbformat.v4.5.schema.json",
+          "body_complete": true,
+          "captured_bytes": 16104,
+          "captured_utc": "2026-10-03T04:02:34.867499+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/84cfc06cdb424b8f85d85c0e8d3020b9.json",
+          "metadata_sha256": "2602a21597252097065f68fc0297d3a14206558255bf57834d00eb515cbc28c4",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/v4/nbformat.v4.5.schema.json",
+          "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+          "source_version": "sha256:523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/v4/nbformat.v4.5.schema.json"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/search/issues?q=repo%3Ajupyter%2Fnbdime+cell+id&per_page=6",
+          "body_complete": true,
+          "captured_bytes": 61273,
+          "captured_utc": "2026-10-03T04:00:52.170011+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/88d13852ca43441f844697ea0a6cc18c.json",
+          "metadata_sha256": "b038e09a39e7a5e779520ef1f50bd1b1a4fee32cf25e2a38f5fe8860964eac12",
+          "requested_url": "https://api.github.com/search/issues?q=repo%3Ajupyter%2Fnbdime+cell+id&per_page=6",
+          "sha256": "e80870de22ec8ca68f9bb471a8c34cae4e60c0e69f74931536e6b9cceb5a077e",
+          "source_version": "sha256:e80870de22ec8ca68f9bb471a8c34cae4e60c0e69f74931536e6b9cceb5a077e",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/search/issues?q=repo%3Ajupyter%2Fnbdime+cell+id&per_page=6"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbdime/main/CHANGELOG.md",
+          "body_complete": true,
+          "captured_bytes": 18608,
+          "captured_utc": "2026-10-03T03:59:39.970472+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/8c468020189c4705a5512460b2c3f485.json",
+          "metadata_sha256": "aa3877e7da2d32262eff7ea725801e434ee5d4aa7a0310587224ec921c1aa0c1",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbdime/main/CHANGELOG.md",
+          "sha256": "1d3c90cd4292540d702c0917d1243120327bc1146f711958353e76dc0e0e98a3",
+          "source_version": "sha256:1d3c90cd4292540d702c0917d1243120327bc1146f711958353e76dc0e0e98a3",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbdime/main/CHANGELOG.md"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/git/git/v2.42.0/Documentation/config/diff.txt",
+          "body_complete": true,
+          "captured_bytes": 9243,
+          "captured_utc": "2026-10-03T04:15:05.208134+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/924fb9ee1eda468089829f2a082473fe.json",
+          "metadata_sha256": "90ef7add48b12e41bc98e37089243e0343bcacd8289e6fa82377c46846cdb9e8",
+          "requested_url": "https://raw.githubusercontent.com/git/git/v2.42.0/Documentation/config/diff.txt",
+          "sha256": "0a0ec973e0aecb852636a2776ddbf51f350686b2afc31b90a0c499d78e21d466",
+          "source_version": "sha256:0a0ec973e0aecb852636a2776ddbf51f350686b2afc31b90a0c499d78e21d466",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/git/git/v2.42.0/Documentation/config/diff.txt"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/v4/nbformat.v4.5.schema.json",
+          "body_complete": true,
+          "captured_bytes": 16104,
+          "captured_utc": "2026-10-03T04:13:58.067376+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/a7e533869954441497404c4bfb6785d5.json",
+          "metadata_sha256": "cbc7c47029ba0dfdaf30db2a869d8b9e362d178df7bd6eb11ab5468a2370f265",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/v4/nbformat.v4.5.schema.json",
+          "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+          "source_version": "sha256:523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/v4/nbformat.v4.5.schema.json"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/cell-id.md",
+          "body_complete": true,
+          "captured_bytes": 20578,
+          "captured_utc": "2026-10-03T04:02:32.207849+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/ad7ec8cbeabc42a4bcbf58e7fb4b363a.json",
+          "metadata_sha256": "5f26e9b9da03d2875d99e3ba9e902b3c1d5e2afdab02d82b9d438ed7087a1773",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/cell-id.md",
+          "sha256": "7f52a9c224fd11509db187187f6e1bd760a329ba836a3b40945b47bcde463992",
+          "source_version": "sha256:7f52a9c224fd11509db187187f6e1bd760a329ba836a3b40945b47bcde463992",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/cell-id.md"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/nbdime/issues/553",
+          "body_complete": true,
+          "captured_bytes": 4308,
+          "captured_utc": "2026-10-03T04:15:41.843861+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/b0f29baea1c84fb08f24de8defa0ed7e.json",
+          "metadata_sha256": "9ebf8dd1b50b2b70df97067c448eae37faa0ef6dc4ee0e699fb33c9fcc337611",
+          "requested_url": "https://api.github.com/repos/jupyter/nbdime/issues/553",
+          "sha256": "553e301eaf2ad5818b2ca9e309e59f84fd56631d6a145b7645353dc29c14d217",
+          "source_version": "sha256:553e301eaf2ad5818b2ca9e309e59f84fd56631d6a145b7645353dc29c14d217",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/nbdime/issues/553"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/cell-id.md",
+          "body_complete": true,
+          "captured_bytes": 20578,
+          "captured_utc": "2026-10-03T04:13:57.500474+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/baec98d8a9a64cacbd80fb39f12102e8.json",
+          "metadata_sha256": "4fc7eb92f577a485eb44e3c7f376a3d9336261d900be3bfd7dfec427510b58aa",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/cell-id.md",
+          "sha256": "7f52a9c224fd11509db187187f6e1bd760a329ba836a3b40945b47bcde463992",
+          "source_version": "sha256:7f52a9c224fd11509db187187f6e1bd760a329ba836a3b40945b47bcde463992",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/cell-id.md"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/git/git/v2.9.0/Documentation/RelNotes/2.9.0.txt",
+          "body_complete": true,
+          "captured_bytes": 21833,
+          "captured_utc": "2026-10-03T04:00:52.542724+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/bf461c1b25af460eab368895cadcd4e7.json",
+          "metadata_sha256": "197b23ff22308ade2d1802d8f31da8b1eb62192875386e79a73399b54d69464a",
+          "requested_url": "https://raw.githubusercontent.com/git/git/v2.9.0/Documentation/RelNotes/2.9.0.txt",
+          "sha256": "f1332f19e540a2d9583798f6737f5fe913e2cd5599ad859a31e4a0bde2ba6cd6",
+          "source_version": "sha256:f1332f19e540a2d9583798f6737f5fe913e2cd5599ad859a31e4a0bde2ba6cd6",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/git/git/v2.9.0/Documentation/RelNotes/2.9.0.txt"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/git/git/v2.42.0/Documentation/config/diff.txt",
+          "body_complete": true,
+          "captured_bytes": 9243,
+          "captured_utc": "2026-10-03T04:01:58.912698+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/c5fa7d5801594e85b08369dfba57bdbf.json",
+          "metadata_sha256": "36f65bb563a977b43794a6e55a3fb7bc02cbdfbe0bac3c105887acd6671c4c3b",
+          "requested_url": "https://raw.githubusercontent.com/git/git/v2.42.0/Documentation/config/diff.txt",
+          "sha256": "0a0ec973e0aecb852636a2776ddbf51f350686b2afc31b90a0c499d78e21d466",
+          "source_version": "sha256:0a0ec973e0aecb852636a2776ddbf51f350686b2afc31b90a0c499d78e21d466",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/git/git/v2.42.0/Documentation/config/diff.txt"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/validator.py",
+          "body_complete": true,
+          "captured_bytes": 22349,
+          "captured_utc": "2026-10-03T04:17:04.539406+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/cb1faaca28d54a5b9697ef110387f266.json",
+          "metadata_sha256": "cbfab5e10d1ace1eb5a422e360b05c092e96d46fe072b315c8d84a7d19da9772",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/validator.py",
+          "sha256": "3db1fe48de1060981b13bcf828b8a5779ae30dd082ec06f712f066e90fbbfd46",
+          "source_version": "sha256:3db1fe48de1060981b13bcf828b8a5779ae30dd082ec06f712f066e90fbbfd46",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/validator.py"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/git/git/v2.9.0/Documentation/RelNotes/2.9.0.txt",
+          "body_complete": true,
+          "captured_bytes": 21833,
+          "captured_utc": "2026-10-03T04:15:05.022987+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/d7fc95e64e3e4d72a20222a96bdb4f9e.json",
+          "metadata_sha256": "024d1c69905bdf959cb0bde693ebd73ed4ff769a1f07969c7fadfe023977acec",
+          "requested_url": "https://raw.githubusercontent.com/git/git/v2.9.0/Documentation/RelNotes/2.9.0.txt",
+          "sha256": "f1332f19e540a2d9583798f6737f5fe913e2cd5599ad859a31e4a0bde2ba6cd6",
+          "source_version": "sha256:f1332f19e540a2d9583798f6737f5fe913e2cd5599ad859a31e4a0bde2ba6cd6",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/git/git/v2.9.0/Documentation/RelNotes/2.9.0.txt"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/62-cell-id.md",
+          "body_complete": true,
+          "captured_bytes": 14,
+          "captured_utc": "2026-10-03T03:59:40.330012+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/e0d0ca1fbc7744bbade6edda6892c42e.json",
+          "metadata_sha256": "fcb9691bb98355fee42d31b9c49e874dcd089f0731aa49a6fa25e80c11082fab",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/62-cell-id.md",
+          "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+          "source_version": "sha256:d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+          "status": 404,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/62-cell-id.md"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbconvert/v7.16.6/nbconvert/preprocessors/clearoutput.py",
+          "body_complete": true,
+          "captured_bytes": 930,
+          "captured_utc": "2026-10-03T04:13:31.491013+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/e8af13bc1f4441a2ae1b0c4b39d76bd8.json",
+          "metadata_sha256": "ffd7207339b9d993fd8f12f90e7f467716230b878b82756ae5d05eb169985251",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbconvert/v7.16.6/nbconvert/preprocessors/clearoutput.py",
+          "sha256": "81657dade38c5f82449157a07e24f43ff9a2518696720647423dbce647df0546",
+          "source_version": "sha256:81657dade38c5f82449157a07e24f43ff9a2518696720647423dbce647df0546",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbconvert/v7.16.6/nbconvert/preprocessors/clearoutput.py"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/nbdime/issues/566",
+          "body_complete": true,
+          "captured_bytes": 4529,
+          "captured_utc": "2026-10-03T04:02:34.572118+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/public_captures/ee323c7875774983b165d25cacf8ad87.json",
+          "metadata_sha256": "f36389146fc47d1807fe2ece72cdbfd4b338c1932fb4ab0c5d66bca44982b911",
+          "requested_url": "https://api.github.com/repos/jupyter/nbdime/issues/566",
+          "sha256": "d496eee5e0f2ea42fdfc4248b310b05eeda11ec53a7dced1a4ed62f21a402bbc",
+          "source_version": "sha256:d496eee5e0f2ea42fdfc4248b310b05eeda11ec53a7dced1a4ed62f21a402bbc",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/nbdime/issues/566"
+        }
+      ],
+      "capture_metadata_hash_verified_count": 34,
+      "delivery_caveat": "Ranges/hash/transmission metadata is evidence of transport, not semantic uptake.",
+      "operation_receipts": {
+        "delivery_range_metadata": [
+          {
+            "bytes": 2442,
+            "delivery_truncated": false,
+            "line_end_inclusive": 12,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/TASK.md",
+            "sha256": "d622530bd7bc0fdc36d7d54601b3f72dd2f79031ea573a8fa1701b8424588070",
+            "source_byte_end_exclusive": 2442,
+            "source_byte_start": 0,
+            "source_range_bytes": 2442,
+            "source_range_sha256": "d622530bd7bc0fdc36d7d54601b3f72dd2f79031ea573a8fa1701b8424588070",
+            "transmitted_text_sha256": "20181d846a85f2956a1305354a099cfb117ae250b3572046547663b3fb863075",
+            "transmitted_text_utf8_bytes": 2480
+          },
+          {
+            "bytes": 2442,
+            "delivery_truncated": false,
+            "line_end_inclusive": 12,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/TASK.md",
+            "sha256": "d622530bd7bc0fdc36d7d54601b3f72dd2f79031ea573a8fa1701b8424588070",
+            "source_byte_end_exclusive": 2442,
+            "source_byte_start": 0,
+            "source_range_bytes": 2442,
+            "source_range_sha256": "d622530bd7bc0fdc36d7d54601b3f72dd2f79031ea573a8fa1701b8424588070",
+            "transmitted_text_sha256": "20181d846a85f2956a1305354a099cfb117ae250b3572046547663b3fb863075",
+            "transmitted_text_utf8_bytes": 2480
+          },
+          {
+            "bytes": 3603,
+            "delivery_truncated": false,
+            "line_end_inclusive": 21,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/BRIEF.md",
+            "sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+            "source_byte_end_exclusive": 3603,
+            "source_byte_start": 0,
+            "source_range_bytes": 3603,
+            "source_range_sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+            "transmitted_text_sha256": "89f355d5a01f650142325470d9cf27f3b9451d70ba2db6db4ad59df65aa2bfea",
+            "transmitted_text_utf8_bytes": 3677
+          },
+          {
+            "bytes": 3603,
+            "delivery_truncated": false,
+            "line_end_inclusive": 21,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/BRIEF.md",
+            "sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+            "source_byte_end_exclusive": 3603,
+            "source_byte_start": 0,
+            "source_range_bytes": 3603,
+            "source_range_sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+            "transmitted_text_sha256": "89f355d5a01f650142325470d9cf27f3b9451d70ba2db6db4ad59df65aa2bfea",
+            "transmitted_text_utf8_bytes": 3677
+          },
+          {
+            "bytes": 920,
+            "delivery_truncated": false,
+            "line_end_inclusive": 12,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/THIN_PLAN.md",
+            "sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+            "source_byte_end_exclusive": 920,
+            "source_byte_start": 0,
+            "source_range_bytes": 920,
+            "source_range_sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+            "transmitted_text_sha256": "d2f9df8a25f92c082342a9bfa32be42376fe52833f00bb96e6a9e87970f775b5",
+            "transmitted_text_utf8_bytes": 958
+          },
+          {
+            "bytes": 920,
+            "delivery_truncated": false,
+            "line_end_inclusive": 12,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/THIN_PLAN.md",
+            "sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+            "source_byte_end_exclusive": 920,
+            "source_byte_start": 0,
+            "source_range_bytes": 920,
+            "source_range_sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+            "transmitted_text_sha256": "d2f9df8a25f92c082342a9bfa32be42376fe52833f00bb96e6a9e87970f775b5",
+            "transmitted_text_utf8_bytes": 958
+          },
+          {
+            "bytes": 1360,
+            "delivery_truncated": false,
+            "line_end_inclusive": 5,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/METHOD.md",
+            "sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+            "source_byte_end_exclusive": 1360,
+            "source_byte_start": 0,
+            "source_range_bytes": 1360,
+            "source_range_sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+            "transmitted_text_sha256": "75cce2a37434da8915d1085921c8792c7264cf32dcb9ee947da6c83e409478f6",
+            "transmitted_text_utf8_bytes": 1374
+          },
+          {
+            "bytes": 1360,
+            "delivery_truncated": false,
+            "line_end_inclusive": 5,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/METHOD.md",
+            "sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+            "source_byte_end_exclusive": 1360,
+            "source_byte_start": 0,
+            "source_range_bytes": 1360,
+            "source_range_sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+            "transmitted_text_sha256": "75cce2a37434da8915d1085921c8792c7264cf32dcb9ee947da6c83e409478f6",
+            "transmitted_text_utf8_bytes": 1374
+          },
+          {
+            "bytes": 28508,
+            "delivery_truncated": false,
+            "line_end_inclusive": 363,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/PROPOSAL.md",
+            "sha256": "43db9e104f794114a31876e13ecbc0bd606b8d5d3b2146f17dee803408124ded",
+            "source_byte_end_exclusive": 28508,
+            "source_byte_start": 0,
+            "source_range_bytes": 28508,
+            "source_range_sha256": "43db9e104f794114a31876e13ecbc0bd606b8d5d3b2146f17dee803408124ded",
+            "transmitted_text_sha256": "a33c0e0432b5a7274abf1cdd4c135e824fdadaeccf13ade428e7a2c6fc73433b",
+            "transmitted_text_utf8_bytes": 30214
+          },
+          {
+            "bytes": 28508,
+            "delivery_truncated": false,
+            "line_end_inclusive": 363,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/PROPOSAL.md",
+            "sha256": "43db9e104f794114a31876e13ecbc0bd606b8d5d3b2146f17dee803408124ded",
+            "source_byte_end_exclusive": 28508,
+            "source_byte_start": 0,
+            "source_range_bytes": 28508,
+            "source_range_sha256": "43db9e104f794114a31876e13ecbc0bd606b8d5d3b2146f17dee803408124ded",
+            "transmitted_text_sha256": "a33c0e0432b5a7274abf1cdd4c135e824fdadaeccf13ade428e7a2c6fc73433b",
+            "transmitted_text_utf8_bytes": 30214
+          },
+          {
+            "bytes": 2587,
+            "delivery_truncated": false,
+            "line_end_inclusive": 30,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/UNRESOLVED_LEADS.md",
+            "sha256": "de777c55f445c6558c71634c94509253d4660c8c98059842cfec09dea7dca064",
+            "source_byte_end_exclusive": 2587,
+            "source_byte_start": 0,
+            "source_range_bytes": 2587,
+            "source_range_sha256": "de777c55f445c6558c71634c94509253d4660c8c98059842cfec09dea7dca064",
+            "transmitted_text_sha256": "95f96e7a7554d556cd414bc329f6b21207777be7e850ef546428789b83ea9af2",
+            "transmitted_text_utf8_bytes": 2697
+          },
+          {
+            "bytes": 2587,
+            "delivery_truncated": false,
+            "line_end_inclusive": 30,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/UNRESOLVED_LEADS.md",
+            "sha256": "de777c55f445c6558c71634c94509253d4660c8c98059842cfec09dea7dca064",
+            "source_byte_end_exclusive": 2587,
+            "source_byte_start": 0,
+            "source_range_bytes": 2587,
+            "source_range_sha256": "de777c55f445c6558c71634c94509253d4660c8c98059842cfec09dea7dca064",
+            "transmitted_text_sha256": "95f96e7a7554d556cd414bc329f6b21207777be7e850ef546428789b83ea9af2",
+            "transmitted_text_utf8_bytes": 2697
+          },
+          {
+            "bytes": 28508,
+            "operation": "mechanical",
+            "path": "out/probe_cache.txt",
+            "sha256": "43db9e104f794114a31876e13ecbc0bd606b8d5d3b2146f17dee803408124ded"
+          },
+          {
+            "bytes": 28508,
+            "operation": "mechanical",
+            "path": "out/probe_cache.txt",
+            "sha256": "43db9e104f794114a31876e13ecbc0bd606b8d5d3b2146f17dee803408124ded"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "81657dade38c5f82449157a07e24f43ff9a2518696720647423dbce647df0546"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "81657dade38c5f82449157a07e24f43ff9a2518696720647423dbce647df0546"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "7f52a9c224fd11509db187187f6e1bd760a329ba836a3b40945b47bcde463992"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "7f52a9c224fd11509db187187f6e1bd760a329ba836a3b40945b47bcde463992"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "e12625e709dcb0f1ed7cb3d5bcaa29e6d752b9ee62ad11c680925a97e5dc23d3"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "e12625e709dcb0f1ed7cb3d5bcaa29e6d752b9ee62ad11c680925a97e5dc23d3"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "6c9b408a8eec0cdf065c84c022214a693e8b7ab9853f1fab5b0b6a08bc5e29d9"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "6c9b408a8eec0cdf065c84c022214a693e8b7ab9853f1fab5b0b6a08bc5e29d9"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "1d3c90cd4292540d702c0917d1243120327bc1146f711958353e76dc0e0e98a3"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "1d3c90cd4292540d702c0917d1243120327bc1146f711958353e76dc0e0e98a3"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "f1332f19e540a2d9583798f6737f5fe913e2cd5599ad859a31e4a0bde2ba6cd6"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "f1332f19e540a2d9583798f6737f5fe913e2cd5599ad859a31e4a0bde2ba6cd6"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "0a0ec973e0aecb852636a2776ddbf51f350686b2afc31b90a0c499d78e21d466"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "0a0ec973e0aecb852636a2776ddbf51f350686b2afc31b90a0c499d78e21d466"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "553e301eaf2ad5818b2ca9e309e59f84fd56631d6a145b7645353dc29c14d217"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "553e301eaf2ad5818b2ca9e309e59f84fd56631d6a145b7645353dc29c14d217"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "d51ef1c9ea00a42ffccb559c70ecc5416cdb2d08241ef1113143c380dda00290"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "d51ef1c9ea00a42ffccb559c70ecc5416cdb2d08241ef1113143c380dda00290"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "b989bf06f9c9900753fdf74022d28e62c92873ce07243e09f36e86aac0234280"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "b989bf06f9c9900753fdf74022d28e62c92873ce07243e09f36e86aac0234280"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "966c1f3f4a53b3b1067f4865b6144a6d16c6be6de44568a493c6b6696fc2781f"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "966c1f3f4a53b3b1067f4865b6144a6d16c6be6de44568a493c6b6696fc2781f"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "724573ce004e0d3092b1ffb21f7c07a84a3167f374f8b1564f5cf6cca8901ca7"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "724573ce004e0d3092b1ffb21f7c07a84a3167f374f8b1564f5cf6cca8901ca7"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "784871fb1e9f0a82af8633d0725aea7c3ecc4e312c01d5b528d68aadf0966f00"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "784871fb1e9f0a82af8633d0725aea7c3ecc4e312c01d5b528d68aadf0966f00"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "3db1fe48de1060981b13bcf828b8a5779ae30dd082ec06f712f066e90fbbfd46"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "3db1fe48de1060981b13bcf828b8a5779ae30dd082ec06f712f066e90fbbfd46"
+          },
+          {
+            "bytes": 24112,
+            "operation": "write_file",
+            "path": "out/CRITIQUE.md",
+            "sha256": "0ed52471b46bcaa9e36dd7a53e23a295364603502d476247b800b1b54a2eb8be"
+          },
+          {
+            "bytes": 24112,
+            "operation": "write_file",
+            "path": "out/CRITIQUE.md",
+            "sha256": "0ed52471b46bcaa9e36dd7a53e23a295364603502d476247b800b1b54a2eb8be"
+          }
+        ],
+        "hash_verified": true,
+        "llm_read_counts": {
+          "UNOBSERVED": 84
+        },
+        "operation_counts": {
+          "mechanical": 24,
+          "public_https_get": 48,
+          "read_file": 51,
+          "write_file": 3
+        },
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/operation_receipts/events.jsonl",
+        "record_count": 126,
+        "semantic_acquisition_counts": {
+          "UNKNOWN": 84
+        },
+        "sha256": "d6090cc904db1446424322ac278e768beb9b1225014157ee0ffbecf049ac899a"
+      },
+      "stage": "independent-candidate-critic"
+    },
+    {
+      "PUBLIC_ARTIFACT_FREEZE": {
+        "artifact_hashes_verified": true,
+        "case_id_verified": true,
+        "native_raw_paths_exported": false,
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/PUBLIC_ARTIFACT_FREEZE.json",
+        "sha256": "9b8aa24c3fadb168516b06397df1af07ea2f887c7d706b9f2eb59653d3d4f117"
+      },
+      "PUBLIC_METRICS_FREEZE": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/PUBLIC_METRICS_FREEZE.json",
+        "referenced_public_metrics_sha256_verified": true,
+        "sha256": "0311ba23d32c1cafe6fc713827105a8dadbe4024c3030ede61dbafac63114cc2"
+      },
+      "artifacts": [
+        {
+          "bytes": 49712,
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/out/FINAL_PROPOSAL.md",
+          "sha256": "127c4dc3d97bdcb27d2b11c9336bea8e4fb254537d1c73d18fa08e9108f7a48d"
+        },
+        {
+          "bytes": 4363,
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/out/UNRESOLVED_LEADS.md",
+          "sha256": "ca043350c3e08c1f9cfe5225126434724855110cc4929587dc88ed8f420656ca"
+        }
+      ],
+      "capture_bodies": "NOT_READ; public freeze metadata hashes only",
+      "capture_completeness_metadata_counts": {
+        "True": 43
+      },
+      "capture_disposition_metadata_counts": {
+        "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN": 43
+      },
+      "capture_metadata": [
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/nbdime/pulls/566",
+          "body_complete": true,
+          "captured_bytes": 18584,
+          "captured_utc": "2026-10-03T04:22:31.083411+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/08126be0e6eb4791b7af81e7c4597997.json",
+          "metadata_sha256": "4c266cfcbc6227153f6f9c1865431b2c1b529f29c9cff5761877d71b4bbe9150",
+          "requested_url": "https://api.github.com/repos/jupyter/nbdime/pulls/566",
+          "sha256": "966c1f3f4a53b3b1067f4865b6144a6d16c6be6de44568a493c6b6696fc2781f",
+          "source_version": "sha256:966c1f3f4a53b3b1067f4865b6144a6d16c6be6de44568a493c6b6696fc2781f",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/nbdime/pulls/566"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/__init__.py",
+          "body_complete": true,
+          "captured_bytes": 6314,
+          "captured_utc": "2026-10-03T04:13:58.431345+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/0cf653556a65434989cc0824dc2f1da2.json",
+          "metadata_sha256": "acac8f921c311bd1fe75f0f3dd174af03e39514ffdef08f038bd444a26f03b20",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/__init__.py",
+          "sha256": "6c9b408a8eec0cdf065c84c022214a693e8b7ab9853f1fab5b0b6a08bc5e29d9",
+          "source_version": "sha256:6c9b408a8eec0cdf065c84c022214a693e8b7ab9853f1fab5b0b6a08bc5e29d9",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/__init__.py"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/nbdime/issues/787",
+          "body_complete": true,
+          "captured_bytes": 3724,
+          "captured_utc": "2026-10-03T04:15:42.816170+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/0d6068e7111d4d58942cdfd102daf286.json",
+          "metadata_sha256": "02fd6578011777ccd0a833d35fef07bab21471b3ebd3ee51a2ddd41c4cfcfda5",
+          "requested_url": "https://api.github.com/repos/jupyter/nbdime/issues/787",
+          "sha256": "b989bf06f9c9900753fdf74022d28e62c92873ce07243e09f36e86aac0234280",
+          "source_version": "sha256:b989bf06f9c9900753fdf74022d28e62c92873ce07243e09f36e86aac0234280",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/nbdime/issues/787"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md",
+          "body_complete": true,
+          "captured_bytes": 28394,
+          "captured_utc": "2026-10-03T04:15:03.383769+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/11c58c973ef243768afab0c87130e70b.json",
+          "metadata_sha256": "4104ba6bec6d6ef1c60e74f6e6ead1af003293ce8edce71067c13290157729f9",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md",
+          "sha256": "414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab",
+          "source_version": "sha256:414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/__init__.py",
+          "body_complete": true,
+          "captured_bytes": 6230,
+          "captured_utc": "2026-10-03T04:22:06.957481+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/17ddf1895ea349a58602385784ef7851.json",
+          "metadata_sha256": "fc7891e01c2849e26c28391817727d544ffe26373d7361510c13e1141a9606c1",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/__init__.py",
+          "sha256": "e4afe87976b229354971db0bb3c69b7eb775b2c7f0f13486ed910489f59f1509",
+          "source_version": "sha256:e4afe87976b229354971db0bb3c69b7eb775b2c7f0f13486ed910489f59f1509",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/__init__.py"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/validator.py",
+          "body_complete": true,
+          "captured_bytes": 22741,
+          "captured_utc": "2026-10-03T04:13:58.222802+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/1fffd8e7e06a4316987f8c3789211e71.json",
+          "metadata_sha256": "c68557c50ef2d07cc39825be26f4ad69c3763f1d336ab76b9f5b49a53e43d593",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/validator.py",
+          "sha256": "e12625e709dcb0f1ed7cb3d5bcaa29e6d752b9ee62ad11c680925a97e5dc23d3",
+          "source_version": "sha256:e12625e709dcb0f1ed7cb3d5bcaa29e6d752b9ee62ad11c680925a97e5dc23d3",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/validator.py"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/nbdime/issues/597",
+          "body_complete": true,
+          "captured_bytes": 8300,
+          "captured_utc": "2026-10-03T04:15:42.520053+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/32c0066e17a1441fac7d12d4ce9d990a.json",
+          "metadata_sha256": "b86c276f03369230b2ee4ce27c3197cdeaca4b2b27f5013199a9a36252a4e38d",
+          "requested_url": "https://api.github.com/repos/jupyter/nbdime/issues/597",
+          "sha256": "d51ef1c9ea00a42ffccb559c70ecc5416cdb2d08241ef1113143c380dda00290",
+          "source_version": "sha256:d51ef1c9ea00a42ffccb559c70ecc5416cdb2d08241ef1113143c380dda00290",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/nbdime/issues/597"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbconvert/v7.16.6/nbconvert/preprocessors/clearoutput.py",
+          "body_complete": true,
+          "captured_bytes": 930,
+          "captured_utc": "2026-10-03T04:02:35.114511+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/351e8f5ade0944fdba110ba014e8a49a.json",
+          "metadata_sha256": "96cd2cb0a1ddcf41c3c86a0bbe33af41298005aa7524a155b2a6ae81c87623de",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbconvert/v7.16.6/nbconvert/preprocessors/clearoutput.py",
+          "sha256": "81657dade38c5f82449157a07e24f43ff9a2518696720647423dbce647df0546",
+          "source_version": "sha256:81657dade38c5f82449157a07e24f43ff9a2518696720647423dbce647df0546",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbconvert/v7.16.6/nbconvert/preprocessors/clearoutput.py"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/nbdime/pulls/639",
+          "body_complete": true,
+          "captured_bytes": 18404,
+          "captured_utc": "2026-10-03T04:01:58.412768+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/3587384b8c4e47bd9e9cebcaabf2dc91.json",
+          "metadata_sha256": "6474b3b664adc01bb9cc33f08d6a0ba0ef2cfdf17a73f739c2a3b258bc8dd1ce",
+          "requested_url": "https://api.github.com/repos/jupyter/nbdime/pulls/639",
+          "sha256": "724573ce004e0d3092b1ffb21f7c07a84a3167f374f8b1564f5cf6cca8901ca7",
+          "source_version": "sha256:724573ce004e0d3092b1ffb21f7c07a84a3167f374f8b1564f5cf6cca8901ca7",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/nbdime/pulls/639"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/nbdime",
+          "body_complete": true,
+          "captured_bytes": 6182,
+          "captured_utc": "2026-10-03T04:15:55.734049+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/3a5a6318dd1c4f08a4e815a70eadf78f.json",
+          "metadata_sha256": "52d5c9a841e55e122f04f64e8565f76e452d347870c813c4ed39ccf3b57d4a5d",
+          "requested_url": "https://api.github.com/repos/jupyter/nbdime",
+          "sha256": "784871fb1e9f0a82af8633d0725aea7c3ecc4e312c01d5b528d68aadf0966f00",
+          "source_version": "sha256:784871fb1e9f0a82af8633d0725aea7c3ecc4e312c01d5b528d68aadf0966f00",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/nbdime"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/validator.py",
+          "body_complete": true,
+          "captured_bytes": 22741,
+          "captured_utc": "2026-10-03T04:22:07.116049+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/3c3a2513ffb94ba0adeb76a77b8e72fc.json",
+          "metadata_sha256": "75953d7b7809525c70d80143461e1071393e50436e7d874cd62d25aa014a538d",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/validator.py",
+          "sha256": "e12625e709dcb0f1ed7cb3d5bcaa29e6d752b9ee62ad11c680925a97e5dc23d3",
+          "source_version": "sha256:e12625e709dcb0f1ed7cb3d5bcaa29e6d752b9ee62ad11c680925a97e5dc23d3",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/validator.py"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/nbdime/pulls/566",
+          "body_complete": true,
+          "captured_bytes": 18584,
+          "captured_utc": "2026-10-03T04:15:55.065895+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/3c8fb65af2e94595aa399d1af6ad19ff.json",
+          "metadata_sha256": "b50a2b348962d28815371609320ec22400869648d7691b29169e9f3d73a030f3",
+          "requested_url": "https://api.github.com/repos/jupyter/nbdime/pulls/566",
+          "sha256": "966c1f3f4a53b3b1067f4865b6144a6d16c6be6de44568a493c6b6696fc2781f",
+          "source_version": "sha256:966c1f3f4a53b3b1067f4865b6144a6d16c6be6de44568a493c6b6696fc2781f",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/nbdime/pulls/566"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/validator.py",
+          "body_complete": true,
+          "captured_bytes": 22741,
+          "captured_utc": "2026-10-03T04:02:32.905633+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/44ced1b6769448ae810d61e2b7ec61cb.json",
+          "metadata_sha256": "bc84feefcf6ee36f4dcadc922738920204c121174cbeb5872826aa698fead9c6",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/validator.py",
+          "sha256": "e12625e709dcb0f1ed7cb3d5bcaa29e6d752b9ee62ad11c680925a97e5dc23d3",
+          "source_version": "sha256:e12625e709dcb0f1ed7cb3d5bcaa29e6d752b9ee62ad11c680925a97e5dc23d3",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/validator.py"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md",
+          "body_complete": true,
+          "captured_bytes": 28394,
+          "captured_utc": "2026-10-03T03:59:38.663404+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/4756a194e2ff4f9abc0a33af3a84858c.json",
+          "metadata_sha256": "b2bff13b1e09db868dbb9d628b2f8f2ed7ecd2bf476799473aa59e91a1ab6264",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md",
+          "sha256": "414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab",
+          "source_version": "sha256:414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.9.0.txt",
+          "body_complete": true,
+          "captured_bytes": 14,
+          "captured_utc": "2026-10-03T03:59:40.504707+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/5044ef7e12b5499d95165dae2fc5d82b.json",
+          "metadata_sha256": "6fe39136f4d78903a37aeeedaa879c08b78bd656d4383be93d56cb3fef4af168",
+          "requested_url": "https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.9.0.txt",
+          "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+          "source_version": "sha256:d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+          "status": 404,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.9.0.txt"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/v4/validator.py",
+          "body_complete": true,
+          "captured_bytes": 14,
+          "captured_utc": "2026-10-03T04:00:51.761157+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/505e7befdf654e19953926e737e584d5.json",
+          "metadata_sha256": "755ca210d22869c132e309e285a20b7ce75261b5ddccc2c61a34230f236ae4d5",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/v4/validator.py",
+          "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+          "source_version": "sha256:d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+          "status": 404,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/v4/validator.py"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/nbdime/issues/553",
+          "body_complete": true,
+          "captured_bytes": 4308,
+          "captured_utc": "2026-10-03T04:02:33.545462+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/51f36c88ded345f9894a4d0344088ee7.json",
+          "metadata_sha256": "c4e720cf21cb7c5ec1d7f97fe4b54bb68a6e43b421de68b5ffc550a5e54eba2c",
+          "requested_url": "https://api.github.com/repos/jupyter/nbdime/issues/553",
+          "sha256": "553e301eaf2ad5818b2ca9e309e59f84fd56631d6a145b7645353dc29c14d217",
+          "source_version": "sha256:553e301eaf2ad5818b2ca9e309e59f84fd56631d6a145b7645353dc29c14d217",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/nbdime/issues/553"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/nbformat/contents/nbformat/v4?ref=v5.10.4",
+          "body_complete": true,
+          "captured_bytes": 10506,
+          "captured_utc": "2026-10-03T04:01:57.951256+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/5521211718b747b88ccf5ad3fcfc4b57.json",
+          "metadata_sha256": "6da60095336065b6dd61db996798ad02bd2db128b0161a490452d0b52a4d64af",
+          "requested_url": "https://api.github.com/repos/jupyter/nbformat/contents/nbformat/v4?ref=v5.10.4",
+          "sha256": "73d0de09ff90000c92f0eaa0c00378cd2c66970bb7fb8e5ac19d9c54de347af0",
+          "source_version": "sha256:73d0de09ff90000c92f0eaa0c00378cd2c66970bb7fb8e5ac19d9c54de347af0",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/nbformat/contents/nbformat/v4?ref=v5.10.4"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/enhancement-proposals/contents/",
+          "body_complete": true,
+          "captured_bytes": 31687,
+          "captured_utc": "2026-10-03T04:00:50.602404+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/554dfb10aefa48efa63191ff4e23300f.json",
+          "metadata_sha256": "30472dee5028973f24f7d16fe03422154290ab529009a8227df60782a5b03d60",
+          "requested_url": "https://api.github.com/repos/jupyter/enhancement-proposals/contents/",
+          "sha256": "929771a853949f5ccc4cae905f068575db74d8a3eb23e9379e5124f4cbf704e0",
+          "source_version": "sha256:929771a853949f5ccc4cae905f068575db74d8a3eb23e9379e5124f4cbf704e0",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/enhancement-proposals/contents/"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbdime/main/CHANGELOG.md",
+          "body_complete": true,
+          "captured_bytes": 18608,
+          "captured_utc": "2026-10-03T04:15:04.869142+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/5d8bdadad2d548998789464b7624c2d5.json",
+          "metadata_sha256": "5b76ac0e93da97cfa10371dd3a55471b552db70600e4daf9a8776446ab46d46f",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbdime/main/CHANGELOG.md",
+          "sha256": "1d3c90cd4292540d702c0917d1243120327bc1146f711958353e76dc0e0e98a3",
+          "source_version": "sha256:1d3c90cd4292540d702c0917d1243120327bc1146f711958353e76dc0e0e98a3",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbdime/main/CHANGELOG.md"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/nbdime/pulls/639",
+          "body_complete": true,
+          "captured_bytes": 18404,
+          "captured_utc": "2026-10-03T04:15:55.414208+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/6fa9bf4a73934766acea8c55004616ad.json",
+          "metadata_sha256": "f27e1006bfb07df0c476b6b748aa52f8f75373ba62a44567fa0199d725e30cdb",
+          "requested_url": "https://api.github.com/repos/jupyter/nbdime/pulls/639",
+          "sha256": "724573ce004e0d3092b1ffb21f7c07a84a3167f374f8b1564f5cf6cca8901ca7",
+          "source_version": "sha256:724573ce004e0d3092b1ffb21f7c07a84a3167f374f8b1564f5cf6cca8901ca7",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/nbdime/pulls/639"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/git/git/v2.42.0/Documentation/config/diff.txt",
+          "body_complete": true,
+          "captured_bytes": 9243,
+          "captured_utc": "2026-10-03T04:22:31.277812+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/70e9ec61c1c145a8a2aedc9fa29f33ba.json",
+          "metadata_sha256": "b5e3834cc20d50b0ffee2ed5e7dc61965477be2205c78ba184a5c8c06e8afc6a",
+          "requested_url": "https://raw.githubusercontent.com/git/git/v2.42.0/Documentation/config/diff.txt",
+          "sha256": "0a0ec973e0aecb852636a2776ddbf51f350686b2afc31b90a0c499d78e21d466",
+          "source_version": "sha256:0a0ec973e0aecb852636a2776ddbf51f350686b2afc31b90a0c499d78e21d466",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/git/git/v2.42.0/Documentation/config/diff.txt"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/enhancement-proposals/contents/62-cell-id",
+          "body_complete": true,
+          "captured_bytes": 898,
+          "captured_utc": "2026-10-03T04:01:57.036586+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/84775e6d305f407d9e8402d7cbaec8a8.json",
+          "metadata_sha256": "fcbf52f4c8e1ddf355c7a6ad9a76aeb1063304563fa87eaf10d6de716c14aae7",
+          "requested_url": "https://api.github.com/repos/jupyter/enhancement-proposals/contents/62-cell-id",
+          "sha256": "c12a634dcad79c7457ac626e08f7d6ca89c6c26254dbdc126e3bb8f4ac121947",
+          "source_version": "sha256:c12a634dcad79c7457ac626e08f7d6ca89c6c26254dbdc126e3bb8f4ac121947",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/enhancement-proposals/contents/62-cell-id"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/v4/nbformat.v4.5.schema.json",
+          "body_complete": true,
+          "captured_bytes": 16104,
+          "captured_utc": "2026-10-03T04:02:34.867499+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/84cfc06cdb424b8f85d85c0e8d3020b9.json",
+          "metadata_sha256": "2602a21597252097065f68fc0297d3a14206558255bf57834d00eb515cbc28c4",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/v4/nbformat.v4.5.schema.json",
+          "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+          "source_version": "sha256:523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/v4/nbformat.v4.5.schema.json"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/search/issues?q=repo%3Ajupyter%2Fnbdime+cell+id&per_page=6",
+          "body_complete": true,
+          "captured_bytes": 61273,
+          "captured_utc": "2026-10-03T04:00:52.170011+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/88d13852ca43441f844697ea0a6cc18c.json",
+          "metadata_sha256": "b038e09a39e7a5e779520ef1f50bd1b1a4fee32cf25e2a38f5fe8860964eac12",
+          "requested_url": "https://api.github.com/search/issues?q=repo%3Ajupyter%2Fnbdime+cell+id&per_page=6",
+          "sha256": "e80870de22ec8ca68f9bb471a8c34cae4e60c0e69f74931536e6b9cceb5a077e",
+          "source_version": "sha256:e80870de22ec8ca68f9bb471a8c34cae4e60c0e69f74931536e6b9cceb5a077e",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/search/issues?q=repo%3Ajupyter%2Fnbdime+cell+id&per_page=6"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/__init__.py",
+          "body_complete": true,
+          "captured_bytes": 6314,
+          "captured_utc": "2026-10-03T04:22:07.292802+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/8abb455f8581404bbcdf1c9feaa5ec11.json",
+          "metadata_sha256": "d9530bfb4f4935b325619206c02a83753b25553a2016f95388e3b090c166ea04",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/__init__.py",
+          "sha256": "6c9b408a8eec0cdf065c84c022214a693e8b7ab9853f1fab5b0b6a08bc5e29d9",
+          "source_version": "sha256:6c9b408a8eec0cdf065c84c022214a693e8b7ab9853f1fab5b0b6a08bc5e29d9",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/__init__.py"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbdime/main/CHANGELOG.md",
+          "body_complete": true,
+          "captured_bytes": 18608,
+          "captured_utc": "2026-10-03T03:59:39.970472+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/8c468020189c4705a5512460b2c3f485.json",
+          "metadata_sha256": "aa3877e7da2d32262eff7ea725801e434ee5d4aa7a0310587224ec921c1aa0c1",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbdime/main/CHANGELOG.md",
+          "sha256": "1d3c90cd4292540d702c0917d1243120327bc1146f711958353e76dc0e0e98a3",
+          "source_version": "sha256:1d3c90cd4292540d702c0917d1243120327bc1146f711958353e76dc0e0e98a3",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbdime/main/CHANGELOG.md"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/git/git/v2.42.0/Documentation/config/diff.txt",
+          "body_complete": true,
+          "captured_bytes": 9243,
+          "captured_utc": "2026-10-03T04:15:05.208134+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/924fb9ee1eda468089829f2a082473fe.json",
+          "metadata_sha256": "90ef7add48b12e41bc98e37089243e0343bcacd8289e6fa82377c46846cdb9e8",
+          "requested_url": "https://raw.githubusercontent.com/git/git/v2.42.0/Documentation/config/diff.txt",
+          "sha256": "0a0ec973e0aecb852636a2776ddbf51f350686b2afc31b90a0c499d78e21d466",
+          "source_version": "sha256:0a0ec973e0aecb852636a2776ddbf51f350686b2afc31b90a0c499d78e21d466",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/git/git/v2.42.0/Documentation/config/diff.txt"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/validator.py",
+          "body_complete": true,
+          "captured_bytes": 22349,
+          "captured_utc": "2026-10-03T04:22:06.755852+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/9b44246449284d7dba5892f904b60c8c.json",
+          "metadata_sha256": "c4303b0dcbc1695bfd4d365c366c1795f16a2d8e5e3649a59caa08fd0d62c409",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/validator.py",
+          "sha256": "3db1fe48de1060981b13bcf828b8a5779ae30dd082ec06f712f066e90fbbfd46",
+          "source_version": "sha256:3db1fe48de1060981b13bcf828b8a5779ae30dd082ec06f712f066e90fbbfd46",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/validator.py"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md",
+          "body_complete": true,
+          "captured_bytes": 28394,
+          "captured_utc": "2026-10-03T04:22:06.249663+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/a2c76faaf1f8406c900d27b0e746a47e.json",
+          "metadata_sha256": "e89b830d1c92ff268e374dc9a9584421a345786640f5d285de2d780fa2fa3f15",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md",
+          "sha256": "414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab",
+          "source_version": "sha256:414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/v4/nbformat.v4.5.schema.json",
+          "body_complete": true,
+          "captured_bytes": 16104,
+          "captured_utc": "2026-10-03T04:13:58.067376+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/a7e533869954441497404c4bfb6785d5.json",
+          "metadata_sha256": "cbc7c47029ba0dfdaf30db2a869d8b9e362d178df7bd6eb11ab5468a2370f265",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/v4/nbformat.v4.5.schema.json",
+          "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+          "source_version": "sha256:523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/v4/nbformat.v4.5.schema.json"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/cell-id.md",
+          "body_complete": true,
+          "captured_bytes": 20578,
+          "captured_utc": "2026-10-03T04:02:32.207849+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/ad7ec8cbeabc42a4bcbf58e7fb4b363a.json",
+          "metadata_sha256": "5f26e9b9da03d2875d99e3ba9e902b3c1d5e2afdab02d82b9d438ed7087a1773",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/cell-id.md",
+          "sha256": "7f52a9c224fd11509db187187f6e1bd760a329ba836a3b40945b47bcde463992",
+          "source_version": "sha256:7f52a9c224fd11509db187187f6e1bd760a329ba836a3b40945b47bcde463992",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/cell-id.md"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/nbdime/issues/553",
+          "body_complete": true,
+          "captured_bytes": 4308,
+          "captured_utc": "2026-10-03T04:15:41.843861+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/b0f29baea1c84fb08f24de8defa0ed7e.json",
+          "metadata_sha256": "9ebf8dd1b50b2b70df97067c448eae37faa0ef6dc4ee0e699fb33c9fcc337611",
+          "requested_url": "https://api.github.com/repos/jupyter/nbdime/issues/553",
+          "sha256": "553e301eaf2ad5818b2ca9e309e59f84fd56631d6a145b7645353dc29c14d217",
+          "source_version": "sha256:553e301eaf2ad5818b2ca9e309e59f84fd56631d6a145b7645353dc29c14d217",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/nbdime/issues/553"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/cell-id.md",
+          "body_complete": true,
+          "captured_bytes": 20578,
+          "captured_utc": "2026-10-03T04:13:57.500474+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/baec98d8a9a64cacbd80fb39f12102e8.json",
+          "metadata_sha256": "4fc7eb92f577a485eb44e3c7f376a3d9336261d900be3bfd7dfec427510b58aa",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/cell-id.md",
+          "sha256": "7f52a9c224fd11509db187187f6e1bd760a329ba836a3b40945b47bcde463992",
+          "source_version": "sha256:7f52a9c224fd11509db187187f6e1bd760a329ba836a3b40945b47bcde463992",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/cell-id.md"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/git/git/v2.9.0/Documentation/RelNotes/2.9.0.txt",
+          "body_complete": true,
+          "captured_bytes": 21833,
+          "captured_utc": "2026-10-03T04:00:52.542724+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/bf461c1b25af460eab368895cadcd4e7.json",
+          "metadata_sha256": "197b23ff22308ade2d1802d8f31da8b1eb62192875386e79a73399b54d69464a",
+          "requested_url": "https://raw.githubusercontent.com/git/git/v2.9.0/Documentation/RelNotes/2.9.0.txt",
+          "sha256": "f1332f19e540a2d9583798f6737f5fe913e2cd5599ad859a31e4a0bde2ba6cd6",
+          "source_version": "sha256:f1332f19e540a2d9583798f6737f5fe913e2cd5599ad859a31e4a0bde2ba6cd6",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/git/git/v2.9.0/Documentation/RelNotes/2.9.0.txt"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/v4/nbformat.v4.5.schema.json",
+          "body_complete": true,
+          "captured_bytes": 16104,
+          "captured_utc": "2026-10-03T04:22:30.306824+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/bf699238f4974c89a8af957a12600ef2.json",
+          "metadata_sha256": "f74365ff9372909c62e8ac01378132e7e7914a48382d6a5d09c29cfe81cadbcf",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/v4/nbformat.v4.5.schema.json",
+          "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+          "source_version": "sha256:523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/v4/nbformat.v4.5.schema.json"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/git/git/v2.42.0/Documentation/config/diff.txt",
+          "body_complete": true,
+          "captured_bytes": 9243,
+          "captured_utc": "2026-10-03T04:01:58.912698+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/c5fa7d5801594e85b08369dfba57bdbf.json",
+          "metadata_sha256": "36f65bb563a977b43794a6e55a3fb7bc02cbdfbe0bac3c105887acd6671c4c3b",
+          "requested_url": "https://raw.githubusercontent.com/git/git/v2.42.0/Documentation/config/diff.txt",
+          "sha256": "0a0ec973e0aecb852636a2776ddbf51f350686b2afc31b90a0c499d78e21d466",
+          "source_version": "sha256:0a0ec973e0aecb852636a2776ddbf51f350686b2afc31b90a0c499d78e21d466",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/git/git/v2.42.0/Documentation/config/diff.txt"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/validator.py",
+          "body_complete": true,
+          "captured_bytes": 22349,
+          "captured_utc": "2026-10-03T04:17:04.539406+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/cb1faaca28d54a5b9697ef110387f266.json",
+          "metadata_sha256": "cbfab5e10d1ace1eb5a422e360b05c092e96d46fe072b315c8d84a7d19da9772",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/validator.py",
+          "sha256": "3db1fe48de1060981b13bcf828b8a5779ae30dd082ec06f712f066e90fbbfd46",
+          "source_version": "sha256:3db1fe48de1060981b13bcf828b8a5779ae30dd082ec06f712f066e90fbbfd46",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/validator.py"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/git/git/v2.9.0/Documentation/RelNotes/2.9.0.txt",
+          "body_complete": true,
+          "captured_bytes": 21833,
+          "captured_utc": "2026-10-03T04:15:05.022987+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/d7fc95e64e3e4d72a20222a96bdb4f9e.json",
+          "metadata_sha256": "024d1c69905bdf959cb0bde693ebd73ed4ff769a1f07969c7fadfe023977acec",
+          "requested_url": "https://raw.githubusercontent.com/git/git/v2.9.0/Documentation/RelNotes/2.9.0.txt",
+          "sha256": "f1332f19e540a2d9583798f6737f5fe913e2cd5599ad859a31e4a0bde2ba6cd6",
+          "source_version": "sha256:f1332f19e540a2d9583798f6737f5fe913e2cd5599ad859a31e4a0bde2ba6cd6",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/git/git/v2.9.0/Documentation/RelNotes/2.9.0.txt"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/62-cell-id.md",
+          "body_complete": true,
+          "captured_bytes": 14,
+          "captured_utc": "2026-10-03T03:59:40.330012+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/e0d0ca1fbc7744bbade6edda6892c42e.json",
+          "metadata_sha256": "fcb9691bb98355fee42d31b9c49e874dcd089f0731aa49a6fa25e80c11082fab",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/62-cell-id.md",
+          "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+          "source_version": "sha256:d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+          "status": 404,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/62-cell-id.md"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/nbconvert/v7.16.6/nbconvert/preprocessors/clearoutput.py",
+          "body_complete": true,
+          "captured_bytes": 930,
+          "captured_utc": "2026-10-03T04:13:31.491013+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/e8af13bc1f4441a2ae1b0c4b39d76bd8.json",
+          "metadata_sha256": "ffd7207339b9d993fd8f12f90e7f467716230b878b82756ae5d05eb169985251",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/nbconvert/v7.16.6/nbconvert/preprocessors/clearoutput.py",
+          "sha256": "81657dade38c5f82449157a07e24f43ff9a2518696720647423dbce647df0546",
+          "source_version": "sha256:81657dade38c5f82449157a07e24f43ff9a2518696720647423dbce647df0546",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/nbconvert/v7.16.6/nbconvert/preprocessors/clearoutput.py"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://api.github.com/repos/jupyter/nbdime/issues/566",
+          "body_complete": true,
+          "captured_bytes": 4529,
+          "captured_utc": "2026-10-03T04:02:34.572118+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/ee323c7875774983b165d25cacf8ad87.json",
+          "metadata_sha256": "f36389146fc47d1807fe2ece72cdbfd4b338c1932fb4ab0c5d66bca44982b911",
+          "requested_url": "https://api.github.com/repos/jupyter/nbdime/issues/566",
+          "sha256": "d496eee5e0f2ea42fdfc4248b310b05eeda11ec53a7dced1a4ed62f21a402bbc",
+          "source_version": "sha256:d496eee5e0f2ea42fdfc4248b310b05eeda11ec53a7dced1a4ed62f21a402bbc",
+          "status": 200,
+          "truncated": false,
+          "url": "https://api.github.com/repos/jupyter/nbdime/issues/566"
+        },
+        {
+          "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+          "actual_url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/cell-id.md",
+          "body_complete": true,
+          "captured_bytes": 20578,
+          "captured_utc": "2026-10-03T04:22:30.761976+00:00",
+          "incomplete_http_body": false,
+          "llm_read": "UNOBSERVED",
+          "metadata_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/public_captures/fd14f5f9de2d4138ab8cdb5a80983f22.json",
+          "metadata_sha256": "30b603198f1718a6abe0cbf4c68853c537c9e6e39bb1ed73b71e6152eaebb2f0",
+          "requested_url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/cell-id.md",
+          "sha256": "7f52a9c224fd11509db187187f6e1bd760a329ba836a3b40945b47bcde463992",
+          "source_version": "sha256:7f52a9c224fd11509db187187f6e1bd760a329ba836a3b40945b47bcde463992",
+          "status": 200,
+          "truncated": false,
+          "url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/cell-id.md"
+        }
+      ],
+      "capture_metadata_hash_verified_count": 43,
+      "delivery_caveat": "Ranges/hash/transmission metadata is evidence of transport, not semantic uptake.",
+      "operation_receipts": {
+        "delivery_range_metadata": [
+          {
+            "bytes": 2471,
+            "delivery_truncated": false,
+            "line_end_inclusive": 12,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/TASK.md",
+            "sha256": "fc49db1c18185a22db7e4642c4fa968d7553a0c432b626063177181fa488a4e4",
+            "source_byte_end_exclusive": 2471,
+            "source_byte_start": 0,
+            "source_range_bytes": 2471,
+            "source_range_sha256": "fc49db1c18185a22db7e4642c4fa968d7553a0c432b626063177181fa488a4e4",
+            "transmitted_text_sha256": "263d6700da01e0ed4e2c2405bac35927b2726155bfc2bb15a5a3ef101959898b",
+            "transmitted_text_utf8_bytes": 2509
+          },
+          {
+            "bytes": 2471,
+            "delivery_truncated": false,
+            "line_end_inclusive": 12,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/TASK.md",
+            "sha256": "fc49db1c18185a22db7e4642c4fa968d7553a0c432b626063177181fa488a4e4",
+            "source_byte_end_exclusive": 2471,
+            "source_byte_start": 0,
+            "source_range_bytes": 2471,
+            "source_range_sha256": "fc49db1c18185a22db7e4642c4fa968d7553a0c432b626063177181fa488a4e4",
+            "transmitted_text_sha256": "263d6700da01e0ed4e2c2405bac35927b2726155bfc2bb15a5a3ef101959898b",
+            "transmitted_text_utf8_bytes": 2509
+          },
+          {
+            "bytes": 3603,
+            "delivery_truncated": false,
+            "line_end_inclusive": 21,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/BRIEF.md",
+            "sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+            "source_byte_end_exclusive": 3603,
+            "source_byte_start": 0,
+            "source_range_bytes": 3603,
+            "source_range_sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+            "transmitted_text_sha256": "89f355d5a01f650142325470d9cf27f3b9451d70ba2db6db4ad59df65aa2bfea",
+            "transmitted_text_utf8_bytes": 3677
+          },
+          {
+            "bytes": 3603,
+            "delivery_truncated": false,
+            "line_end_inclusive": 21,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/BRIEF.md",
+            "sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+            "source_byte_end_exclusive": 3603,
+            "source_byte_start": 0,
+            "source_range_bytes": 3603,
+            "source_range_sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+            "transmitted_text_sha256": "89f355d5a01f650142325470d9cf27f3b9451d70ba2db6db4ad59df65aa2bfea",
+            "transmitted_text_utf8_bytes": 3677
+          },
+          {
+            "bytes": 920,
+            "delivery_truncated": false,
+            "line_end_inclusive": 12,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/THIN_PLAN.md",
+            "sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+            "source_byte_end_exclusive": 920,
+            "source_byte_start": 0,
+            "source_range_bytes": 920,
+            "source_range_sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+            "transmitted_text_sha256": "d2f9df8a25f92c082342a9bfa32be42376fe52833f00bb96e6a9e87970f775b5",
+            "transmitted_text_utf8_bytes": 958
+          },
+          {
+            "bytes": 920,
+            "delivery_truncated": false,
+            "line_end_inclusive": 12,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/THIN_PLAN.md",
+            "sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+            "source_byte_end_exclusive": 920,
+            "source_byte_start": 0,
+            "source_range_bytes": 920,
+            "source_range_sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+            "transmitted_text_sha256": "d2f9df8a25f92c082342a9bfa32be42376fe52833f00bb96e6a9e87970f775b5",
+            "transmitted_text_utf8_bytes": 958
+          },
+          {
+            "bytes": 1360,
+            "delivery_truncated": false,
+            "line_end_inclusive": 5,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/METHOD.md",
+            "sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+            "source_byte_end_exclusive": 1360,
+            "source_byte_start": 0,
+            "source_range_bytes": 1360,
+            "source_range_sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+            "transmitted_text_sha256": "75cce2a37434da8915d1085921c8792c7264cf32dcb9ee947da6c83e409478f6",
+            "transmitted_text_utf8_bytes": 1374
+          },
+          {
+            "bytes": 1360,
+            "delivery_truncated": false,
+            "line_end_inclusive": 5,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/METHOD.md",
+            "sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+            "source_byte_end_exclusive": 1360,
+            "source_byte_start": 0,
+            "source_range_bytes": 1360,
+            "source_range_sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+            "transmitted_text_sha256": "75cce2a37434da8915d1085921c8792c7264cf32dcb9ee947da6c83e409478f6",
+            "transmitted_text_utf8_bytes": 1374
+          },
+          {
+            "bytes": 28508,
+            "delivery_truncated": false,
+            "line_end_inclusive": 363,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/PROPOSAL.md",
+            "sha256": "43db9e104f794114a31876e13ecbc0bd606b8d5d3b2146f17dee803408124ded",
+            "source_byte_end_exclusive": 28508,
+            "source_byte_start": 0,
+            "source_range_bytes": 28508,
+            "source_range_sha256": "43db9e104f794114a31876e13ecbc0bd606b8d5d3b2146f17dee803408124ded",
+            "transmitted_text_sha256": "a33c0e0432b5a7274abf1cdd4c135e824fdadaeccf13ade428e7a2c6fc73433b",
+            "transmitted_text_utf8_bytes": 30214
+          },
+          {
+            "bytes": 28508,
+            "delivery_truncated": false,
+            "line_end_inclusive": 363,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/PROPOSAL.md",
+            "sha256": "43db9e104f794114a31876e13ecbc0bd606b8d5d3b2146f17dee803408124ded",
+            "source_byte_end_exclusive": 28508,
+            "source_byte_start": 0,
+            "source_range_bytes": 28508,
+            "source_range_sha256": "43db9e104f794114a31876e13ecbc0bd606b8d5d3b2146f17dee803408124ded",
+            "transmitted_text_sha256": "a33c0e0432b5a7274abf1cdd4c135e824fdadaeccf13ade428e7a2c6fc73433b",
+            "transmitted_text_utf8_bytes": 30214
+          },
+          {
+            "bytes": 24112,
+            "delivery_truncated": false,
+            "line_end_inclusive": 119,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/CRITIQUE.md",
+            "sha256": "0ed52471b46bcaa9e36dd7a53e23a295364603502d476247b800b1b54a2eb8be",
+            "source_byte_end_exclusive": 24112,
+            "source_byte_start": 0,
+            "source_range_bytes": 24112,
+            "source_range_sha256": "0ed52471b46bcaa9e36dd7a53e23a295364603502d476247b800b1b54a2eb8be",
+            "transmitted_text_sha256": "cae57beeec7a43399030f7cc23ded9020459f5d352f923214e90df1e5c67bbef",
+            "transmitted_text_utf8_bytes": 24598
+          },
+          {
+            "bytes": 24112,
+            "delivery_truncated": false,
+            "line_end_inclusive": 119,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/CRITIQUE.md",
+            "sha256": "0ed52471b46bcaa9e36dd7a53e23a295364603502d476247b800b1b54a2eb8be",
+            "source_byte_end_exclusive": 24112,
+            "source_byte_start": 0,
+            "source_range_bytes": 24112,
+            "source_range_sha256": "0ed52471b46bcaa9e36dd7a53e23a295364603502d476247b800b1b54a2eb8be",
+            "transmitted_text_sha256": "cae57beeec7a43399030f7cc23ded9020459f5d352f923214e90df1e5c67bbef",
+            "transmitted_text_utf8_bytes": 24598
+          },
+          {
+            "bytes": 2587,
+            "delivery_truncated": false,
+            "line_end_inclusive": 30,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/UNRESOLVED_LEADS.md",
+            "sha256": "de777c55f445c6558c71634c94509253d4660c8c98059842cfec09dea7dca064",
+            "source_byte_end_exclusive": 2587,
+            "source_byte_start": 0,
+            "source_range_bytes": 2587,
+            "source_range_sha256": "de777c55f445c6558c71634c94509253d4660c8c98059842cfec09dea7dca064",
+            "transmitted_text_sha256": "95f96e7a7554d556cd414bc329f6b21207777be7e850ef546428789b83ea9af2",
+            "transmitted_text_utf8_bytes": 2697
+          },
+          {
+            "bytes": 2587,
+            "delivery_truncated": false,
+            "line_end_inclusive": 30,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "inputs/UNRESOLVED_LEADS.md",
+            "sha256": "de777c55f445c6558c71634c94509253d4660c8c98059842cfec09dea7dca064",
+            "source_byte_end_exclusive": 2587,
+            "source_byte_start": 0,
+            "source_range_bytes": 2587,
+            "source_range_sha256": "de777c55f445c6558c71634c94509253d4660c8c98059842cfec09dea7dca064",
+            "transmitted_text_sha256": "95f96e7a7554d556cd414bc329f6b21207777be7e850ef546428789b83ea9af2",
+            "transmitted_text_utf8_bytes": 2697
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "3db1fe48de1060981b13bcf828b8a5779ae30dd082ec06f712f066e90fbbfd46"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "3db1fe48de1060981b13bcf828b8a5779ae30dd082ec06f712f066e90fbbfd46"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "e4afe87976b229354971db0bb3c69b7eb775b2c7f0f13486ed910489f59f1509"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "e4afe87976b229354971db0bb3c69b7eb775b2c7f0f13486ed910489f59f1509"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "e12625e709dcb0f1ed7cb3d5bcaa29e6d752b9ee62ad11c680925a97e5dc23d3"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "e12625e709dcb0f1ed7cb3d5bcaa29e6d752b9ee62ad11c680925a97e5dc23d3"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "6c9b408a8eec0cdf065c84c022214a693e8b7ab9853f1fab5b0b6a08bc5e29d9"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "6c9b408a8eec0cdf065c84c022214a693e8b7ab9853f1fab5b0b6a08bc5e29d9"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "7f52a9c224fd11509db187187f6e1bd760a329ba836a3b40945b47bcde463992"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "7f52a9c224fd11509db187187f6e1bd760a329ba836a3b40945b47bcde463992"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "966c1f3f4a53b3b1067f4865b6144a6d16c6be6de44568a493c6b6696fc2781f"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "966c1f3f4a53b3b1067f4865b6144a6d16c6be6de44568a493c6b6696fc2781f"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "0a0ec973e0aecb852636a2776ddbf51f350686b2afc31b90a0c499d78e21d466"
+          },
+          {
+            "operation": "public_https_get",
+            "sha256": "0a0ec973e0aecb852636a2776ddbf51f350686b2afc31b90a0c499d78e21d466"
+          },
+          {
+            "bytes": 49712,
+            "operation": "write_file",
+            "path": "out/FINAL_PROPOSAL.md",
+            "sha256": "127c4dc3d97bdcb27d2b11c9336bea8e4fb254537d1c73d18fa08e9108f7a48d"
+          },
+          {
+            "bytes": 49712,
+            "operation": "write_file",
+            "path": "out/FINAL_PROPOSAL.md",
+            "sha256": "127c4dc3d97bdcb27d2b11c9336bea8e4fb254537d1c73d18fa08e9108f7a48d"
+          },
+          {
+            "bytes": 4363,
+            "operation": "write_file",
+            "path": "out/UNRESOLVED_LEADS.md",
+            "sha256": "ca043350c3e08c1f9cfe5225126434724855110cc4929587dc88ed8f420656ca"
+          },
+          {
+            "bytes": 4363,
+            "operation": "write_file",
+            "path": "out/UNRESOLVED_LEADS.md",
+            "sha256": "ca043350c3e08c1f9cfe5225126434724855110cc4929587dc88ed8f420656ca"
+          },
+          {
+            "bytes": 49712,
+            "delivery_truncated": false,
+            "line_end_inclusive": 10,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "out/FINAL_PROPOSAL.md",
+            "sha256": "127c4dc3d97bdcb27d2b11c9336bea8e4fb254537d1c73d18fa08e9108f7a48d",
+            "source_byte_end_exclusive": 704,
+            "source_byte_start": 0,
+            "source_range_bytes": 704,
+            "source_range_sha256": "ce961eb200b715c62715fb7bab8a25f876c6108337fcfb779420165872d21c20",
+            "transmitted_text_sha256": "822f44f48ab1ea4a545edbf9e946746e500f9bac60979747cc01491299732232",
+            "transmitted_text_utf8_bytes": 734
+          },
+          {
+            "bytes": 49712,
+            "delivery_truncated": false,
+            "line_end_inclusive": 10,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "out/FINAL_PROPOSAL.md",
+            "sha256": "127c4dc3d97bdcb27d2b11c9336bea8e4fb254537d1c73d18fa08e9108f7a48d",
+            "source_byte_end_exclusive": 704,
+            "source_byte_start": 0,
+            "source_range_bytes": 704,
+            "source_range_sha256": "ce961eb200b715c62715fb7bab8a25f876c6108337fcfb779420165872d21c20",
+            "transmitted_text_sha256": "822f44f48ab1ea4a545edbf9e946746e500f9bac60979747cc01491299732232",
+            "transmitted_text_utf8_bytes": 734
+          },
+          {
+            "bytes": 4363,
+            "delivery_truncated": false,
+            "line_end_inclusive": 8,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "out/UNRESOLVED_LEADS.md",
+            "sha256": "ca043350c3e08c1f9cfe5225126434724855110cc4929587dc88ed8f420656ca",
+            "source_byte_end_exclusive": 540,
+            "source_byte_start": 0,
+            "source_range_bytes": 540,
+            "source_range_sha256": "a3b870a88f246cfb51b21c4ed785407549300fd4b4a9b7cfa326a802d0e808e5",
+            "transmitted_text_sha256": "fb73c958148792b0dc04b8248c41703e6581fcadf2722316054851577fd0bd0c",
+            "transmitted_text_utf8_bytes": 563
+          },
+          {
+            "bytes": 4363,
+            "delivery_truncated": false,
+            "line_end_inclusive": 8,
+            "line_start": 1,
+            "operation": "read_file",
+            "path": "out/UNRESOLVED_LEADS.md",
+            "sha256": "ca043350c3e08c1f9cfe5225126434724855110cc4929587dc88ed8f420656ca",
+            "source_byte_end_exclusive": 540,
+            "source_byte_start": 0,
+            "source_range_bytes": 540,
+            "source_range_sha256": "a3b870a88f246cfb51b21c4ed785407549300fd4b4a9b7cfa326a802d0e808e5",
+            "transmitted_text_sha256": "fb73c958148792b0dc04b8248c41703e6581fcadf2722316054851577fd0bd0c",
+            "transmitted_text_utf8_bytes": 563
+          }
+        ],
+        "hash_verified": true,
+        "llm_read_counts": {
+          "UNOBSERVED": 40
+        },
+        "operation_counts": {
+          "public_https_get": 27,
+          "read_file": 27,
+          "write_file": 6
+        },
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/operation_receipts/events.jsonl",
+        "record_count": 60,
+        "semantic_acquisition_counts": {
+          "UNKNOWN": 40
+        },
+        "sha256": "cb897f5cff2128c09b98187e79f051295e9464d7676d447af4958072631fd0b2"
+      },
+      "stage": "final-correction"
+    }
+  ]
+}

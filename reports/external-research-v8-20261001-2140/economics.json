@@ -1,7 +1,7 @@
 {
-  "checkpoint": "FIVE_REVIEWED_PAIRS_NINE_FAILED_SCREENS_ONE_HOLD_TEN_PIPELINES_COMPLETE",
-  "observed_native_starts": 56,
-  "occupied_candidate_seconds": 40868.37090468407,
+  "checkpoint": "SIX_REVIEWED_PAIRS_ELEVEN_FAILED_SCREENS_ONE_HOLD_TWELVE_PIPELINES_COMPLETE",
+  "observed_native_starts": 58,
+  "occupied_candidate_seconds": 42029.59377336502,
   "candidate_generated_tokens": null,
   "management_tokens": null,
   "evaluation_tokens": null,
@@ -62,7 +62,7 @@
       "original_cap_seconds": 480
     }
   ],
-  "current_evidence": "notebook-amendment-quality-review-v1/ops/recovery-v1/OBSERVATION_20261003_0425.json",
+  "current_evidence": "notebook-breadth-quality-review-v1/ops/recovery-v1/OBSERVATION_20261003_0453_SIX_REVIEWED_PAIRS.json",
   "last_independently_reviewed_usage": {
     "native_starts": 2,
     "occupied_candidate_seconds": 1354.3749742507935,
@@ -72,10 +72,10 @@
   "pause_requested_epoch": 1790914502.1696212,
   "resume_epoch": 1790979124.0,
   "pause_duration_seconds": 64621.83037877083,
-  "generated_output_tokens_lower_bound": 1374875,
+  "generated_output_tokens_lower_bound": 1423257,
   "reported_output_lower_bound_scope": "Recorded public request/stage increments only; failed-stage counters and full campaign usage UNKNOWN",
   "prospective_deadline_epoch": 1791013030.8303788,
-  "observation_utc": "2026-10-03T04:26:31.254280+00:00",
+  "observation_utc": "2026-10-03T04:53:51.115652+00:00",
   "resume_evidence": "resume-cohort-v1/ops/recovery-v1/RESUME_20261002.json",
   "observed_physical_canary_seconds_scope": "Historical first canary only",
   "native_muse_mechanical_helper": {
@@ -104,8 +104,8 @@
   },
   "native_qualification": "V3_MECHANICAL_PASSED_LIMITED_DELIVERY_INFERENCE",
   "native_qualification_evidence": "resume-qualified-v3-cohort/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json",
-  "reserved_or_committed_native_starts_at_observation": 31,
-  "reserved_or_committed_slot_seconds_at_observation": 77754.97761917114,
+  "reserved_or_committed_native_starts_at_observation": 35,
+  "reserved_or_committed_slot_seconds_at_observation": 80727.62296271324,
   "active_by_family_at_observation": {
     "M": 0,
     "Z": 2,
@@ -181,6 +181,20 @@
       "wall_seconds": 2008.53208353,
       "occupied_stage_lease_seconds": 2007.836809873581,
       "outside_native_seconds": 5.168064165
+    },
+    {
+      "case": "V8-NB-BREADTH-C-M",
+      "quality_disposition": "FAILED_SCREEN",
+      "wall_seconds": 2271.436343226,
+      "occupied_stage_lease_seconds": 2270.8215227127075,
+      "outside_native_seconds": 5.179984582
+    },
+    {
+      "case": "V8-NB-BREADTH-T-M",
+      "quality_disposition": "FAILED_SCREEN",
+      "wall_seconds": 1863.756994083,
+      "occupied_stage_lease_seconds": 1863.0466895103455,
+      "outside_native_seconds": 5.331097033
     }
   ],
   "quality_qualified_efficiency_comparisons": 0,
@@ -204,14 +218,14 @@
   },
   "candidate_output_warning_at_observation": true,
   "candidate_output_stop_at_observation": false,
-  "current_metadata_boundary": "Frozen actual UTC04:26:31.254280 despite observation filename0425; earlier03:30 audit does not cover this update. No present liveness inference.",
+  "current_metadata_boundary": "Root reservation/creation sample epoch1791003230.9785047; displayed serialized snapshot UTC2026-10-03T04:53:51.115652+00:00 is later capture/write sample ~0.137seconds later. Both retained; no clock correction/reset. Earlier03:30 audit covers historical snapshot only; active jobs at freeze, no present liveness.",
   "current_outcomes": {
-    "operational_pipeline_count": 10,
+    "operational_pipeline_count": 12,
     "target_pipelines": 24,
-    "operational_pair_count": 5,
+    "operational_pair_count": 6,
     "target_pairs": 12,
-    "quality_reviewed_pairs": 5,
-    "independent_failed_screens": 9,
+    "quality_reviewed_pairs": 6,
+    "independent_failed_screens": 11,
     "independent_holds": 1,
     "full_quality_pass": 0,
     "quality_qualified_efficiency_comparisons": 0,
@@ -221,6 +235,22 @@
   "current_stage_counts": {
     "research": 20,
     "critic": 13,
-    "final": 10
+    "final": 12
+  },
+  "observation_created_epoch": 1791003230.9785047,
+  "source_serialized_utc": "2026-10-03T04:53:51.115652+00:00",
+  "binder_release_prefit": {
+    "reservation_receipt_id": "v8-s8-bio-check-reservation-v1",
+    "starts_including_all_old_commitments": 93,
+    "occupied_including_all_old_commitments": 122757.21673607826,
+    "holdout_reservations_preserved": true,
+    "scope": "Source declarations and accepted root prefit, not an ongoing resource promise; all old commitments retained."
+  },
+  "current_runtime": {
+    "unit": "er8-v8-production-z-tranche-v9.service",
+    "positive_pid": 2775507,
+    "release": "ops/execution-resume-v1/root-production-release-v9.json",
+    "release_sha256": "6264e76ef8cefc71c9c83ddaed37008ffa9bbe707086483ec201a9f7faafb73d",
+    "scope": "Frozen observation only; not present liveness or portable runtime."
   }
 }

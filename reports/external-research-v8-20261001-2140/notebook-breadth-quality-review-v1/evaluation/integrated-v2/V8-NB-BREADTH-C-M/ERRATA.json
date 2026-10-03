@@ -1,0 +1,13 @@
+{
+  "case": "V8-NB-BREADTH-C-M",
+  "clarifications": [
+    "SQ1 should not be read as a claim that _normalize itself explicitly raises a missing-id ValidationError. The verified raise is later schema validation with repair disabled; section 3 scopes its claim to _normalize, so this is a section-1 wording/integration risk, not the sole dominant screen.",
+    "JEP permits custom id strategies; random generation is not mandatory. SQ2 fails on unspecified uniqueness for identical content and on attributing semantic support from a random generator, not on forbidding all content-derived ids.",
+    "The two hash-matched validator range records are duplicate receipts for one unique operation/range, not two independent ranges.",
+    "Unexecuted proposed validation is appropriate to this plan-only brief and is not treated as an independent required-implementation failure."
+  ],
+  "dominant_screen": "SQ2",
+  "immutable_source_freeze_sha256": "9c264a4239f959e0aa7f8490cb394899848de7e89c82ecba41d228c9095eda2a",
+  "kind": "scope clarification; no source fact or failed-screen outcome changed",
+  "schema": "er8-evaluator-qualification-v1"
+}

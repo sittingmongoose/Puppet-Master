@@ -1,0 +1,20 @@
+{
+  "case": "V8-NB-BREADTH-C-M",
+  "coverage_complete": false,
+  "eighteen_facets": "NOT_YET_REVEALED; each ungraded facet remains UNASSESSED/null; no local aggregate",
+  "freeze_epoch": 1791002309.4231586,
+  "grading_terminated_due_to_verified_failure": true,
+  "obligations": {
+    "N1": "UNASSESSED",
+    "N2": "FAILED_SCREEN on source-condition integration only; remainder UNASSESSED",
+    "N3": "UNASSESSED",
+    "N4": "SOURCE_TO_PLAN_DEFECT in id minting; remainder UNASSESSED",
+    "N5": "PARTIALLY_ASSESSED; no complete recommendation/chain score"
+  },
+  "questions": {
+    "Q1": "PARTIALLY_ASSESSED: nbdime facts verified; Git facts UNASSESSED",
+    "Q2": "FAILED_SCREEN: identity/validation conditional branch and minting transform; remaining axes UNASSESSED",
+    "Q3": "PARTIALLY_ASSESSED: fix/test attribution checked; original issue and full feature/plumbing chain UNASSESSED"
+  },
+  "schema": "er8-source-coverage-v1"
+}

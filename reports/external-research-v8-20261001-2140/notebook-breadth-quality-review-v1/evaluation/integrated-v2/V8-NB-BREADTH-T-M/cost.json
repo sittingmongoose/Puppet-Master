@@ -1,0 +1,139 @@
+{
+  "account_or_external_load": "UNKNOWN",
+  "admitted_markdown_output_byte_lower_bound": 109282,
+  "admitted_markdown_outputs": [
+    {
+      "bytes": 28508,
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-research-proposal/workspace/out/PROPOSAL.md",
+      "sha256": "43db9e104f794114a31876e13ecbc0bd606b8d5d3b2146f17dee803408124ded",
+      "stage": "research-proposal"
+    },
+    {
+      "bytes": 2587,
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-research-proposal/workspace/out/UNRESOLVED_LEADS.md",
+      "sha256": "de777c55f445c6558c71634c94509253d4660c8c98059842cfec09dea7dca064",
+      "stage": "research-proposal"
+    },
+    {
+      "bytes": 24112,
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-independent-candidate-critic/workspace/out/CRITIQUE.md",
+      "sha256": "0ed52471b46bcaa9e36dd7a53e23a295364603502d476247b800b1b54a2eb8be",
+      "stage": "independent-candidate-critic"
+    },
+    {
+      "bytes": 49712,
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "sha256": "127c4dc3d97bdcb27d2b11c9336bea8e4fb254537d1c73d18fa08e9108f7a48d",
+      "stage": "final-correction"
+    },
+    {
+      "bytes": 4363,
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/V8-NB-BREADTH-T-M-final-correction/workspace/out/UNRESOLVED_LEADS.md",
+      "sha256": "ca043350c3e08c1f9cfe5225126434724855110cc4929587dc88ed8f420656ca",
+      "stage": "final-correction"
+    }
+  ],
+  "case": "V8-NB-BREADTH-T-M",
+  "completion_basis": "Root positively verified three fresh complete Goals plus quiet closes and parent zero return code; own positive public-metrics projection agrees.",
+  "efficiency_or_winner_claim": null,
+  "external_close": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/EXTERNAL_CASE_CLOSE.json",
+    "scalar_projection": {
+      "case": "V8-NB-BREADTH-T-M",
+      "case_supervisor_exit_observed_monotonic_ns": 223467612462262,
+      "case_supervisor_exited": true,
+      "case_supervisor_group_absent": true,
+      "external_case_observed_monotonic_ns": 223467783692189,
+      "held_Popen_wait_returncode": 0,
+      "schema": "er8.integrated.external-case-close.v1"
+    },
+    "sha256": "eb0d5f0d5a3cf105bb5050b081ae8d8ff3d40c01847eb95398f24b71033dee90"
+  },
+  "frontend_behavior": "UNKNOWN",
+  "generated_output_tokens": "UNKNOWN",
+  "model_semantics": "UNKNOWN",
+  "money": "UNKNOWN",
+  "native_operational_completion_used_for_quality": false,
+  "native_stage_scalar_projections": [
+    {
+      "elapsed_milliseconds": 681504,
+      "fresh_session": true,
+      "goal_status_final": "complete",
+      "goal_target_id": "NATIVE_ID_a258c3c668d459f3",
+      "host_groups_absent": true,
+      "inclusive_pre_activation_milliseconds": 7849,
+      "native_quiescent": true,
+      "native_responses": 8,
+      "original_case_start_monotonic_ns": 221604097921494,
+      "original_deadline_monotonic_ns": 222804097921494,
+      "original_stage_start_monotonic_ns": 221604097921494,
+      "own_process_group_absent": true,
+      "public_metrics_freeze_sha256": "a463ccc00ef95a78dfd2f4bdbd324a10f6fa065ac6e2a4385efc04f01356edf5",
+      "public_metrics_sha256": "0045fd147b3c7419604a9d40479c3d442168a818cd3a2fd8662b6ceb6088a2d3",
+      "schema": "er8.route.native-positive-receipt.v1",
+      "stage": "research-proposal"
+    },
+    {
+      "elapsed_milliseconds": 731690,
+      "fresh_session": true,
+      "goal_status_final": "complete",
+      "goal_target_id": "NATIVE_ID_b75046a440eaabb1",
+      "host_groups_absent": true,
+      "inclusive_pre_activation_milliseconds": 7431,
+      "native_quiescent": true,
+      "native_responses": 21,
+      "original_case_start_monotonic_ns": 221604097921494,
+      "original_deadline_monotonic_ns": 223486118893030,
+      "original_stage_start_monotonic_ns": 222286118893030,
+      "own_process_group_absent": true,
+      "public_metrics_freeze_sha256": "76b34611dab2b32a329331b3e9d6e937d915823d13b8d01fadcbccf3d5516c78",
+      "public_metrics_sha256": "f0f1550ba837b0a57da305b0e90094bd9d7d54f76f2d6287f4cbe0796dcb6065",
+      "schema": "er8.route.native-positive-receipt.v1",
+      "stage": "independent-candidate-critic"
+    },
+    {
+      "elapsed_milliseconds": 448257,
+      "fresh_session": true,
+      "goal_status_final": "complete",
+      "goal_target_id": "NATIVE_ID_7f8e7aaaa2fd2879",
+      "host_groups_absent": true,
+      "inclusive_pre_activation_milliseconds": 8088,
+      "native_quiescent": true,
+      "native_responses": 8,
+      "original_case_start_monotonic_ns": 221604097921494,
+      "original_deadline_monotonic_ns": 223918489197031,
+      "original_stage_start_monotonic_ns": 223018489197031,
+      "own_process_group_absent": true,
+      "public_metrics_freeze_sha256": "0311ba23d32c1cafe6fc713827105a8dadbe4024c3030ede61dbafac63114cc2",
+      "public_metrics_sha256": "cf5ce419dc3371a5ef664d59810e962e90d80dc7c10b461e59b29069acac6802",
+      "schema": "er8.route.native-positive-receipt.v1",
+      "stage": "final-correction"
+    }
+  ],
+  "observed_total_native_responses": 37,
+  "operational_completion": "COMPLETE_SEPARATE_FROM_SOURCE_QUALITY",
+  "output_lower_bound_note": "Byte-exact required/optional current markdown files only. This is neither generated-token usage nor all response/transport/context output.",
+  "parent_receipt": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/GLOBAL_PARENT_FINAL_RECEIPT.json",
+    "scalar_projection": {
+      "actual_case_end_monotonic_ns": 223467854915577,
+      "actual_case_wall_seconds": 1863.756994083,
+      "actual_nonoverlapping_outside_native_seconds": 5.331097033,
+      "actual_occupied_stage_lease_seconds": 1863.0466895103455,
+      "all_case_execution_closed_before_cutoff": true,
+      "case": "V8-NB-BREADTH-T-M",
+      "held_finalizer_returncode": 0,
+      "original_case_deadline_monotonic_ns": 225204097921494,
+      "original_case_start_monotonic_ns": 221604097921494,
+      "schema": "er8.integrated.global-parent-final-receipt.v1",
+      "whole_case_occupied_cap_seconds": 5400
+    },
+    "sha256": "d9fc19931b558a350c846394fbc4a01e376e381469f78be01e9037b7228387af",
+    "verified": true
+  },
+  "provider": "UNKNOWN",
+  "reported_stage_elapsed_seconds_sum": 1861.451,
+  "restricted_usage_aggregate_not_read_or_projected": true,
+  "schema": "admitted-cost-and-completion-v1",
+  "total_tokens": "UNKNOWN"
+}

@@ -1,0 +1,507 @@
+{
+  "schema": "pm.er8.notebook-breadth-quality-positive-manifest.v1",
+  "positive_original_count": 31,
+  "selected_originals": [
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/REVIEW.md",
+      "sha256": "d2704db00a87073ff851690a3383af344bd05a4efa75a46aa4349a53c0633271",
+      "bytes": 6504,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/DISPOSITION.json",
+      "sha256": "2779be07c16c9dc0a3a6902bdb72f9c4c738438cdc37cd0609ce129afd44ed89",
+      "bytes": 1171,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/COVERAGE.json",
+      "sha256": "a8cc861e4ef98030c527b196cdebeb18b1d9f8d532adaf3f69de53d087061bf7",
+      "bytes": 2367,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/PROVENANCE.json",
+      "sha256": "1aad889e1403ec6a9106960db81d14e80862758385220e67e6ded50a86274aee",
+      "bytes": 11925,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/COST.json",
+      "sha256": "32f4d12e8fe3a6063a291849dde033ea42841cf0794507c538c36ca1c63f32c3",
+      "bytes": 1278,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/METHOD_AUDIT.md",
+      "sha256": "1f1c28aebbf106e9467eb845061dd7df7376e1ed4df7d02977d3df52fb3df86d",
+      "bytes": 2377,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/PRESERVATION_AUDIT.md",
+      "sha256": "b4f383c3921be9b2e98f1b08b66f9d88a8fba7a25cbcdd80ac7c0d288c25a009",
+      "bytes": 2777,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/SAFE_SOURCES.json",
+      "sha256": "233af58ee8389d16d41bee2b610e50b3ce9d5938119e878fcb8ae0baa4adf09f",
+      "bytes": 3842,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/SOURCE_QUALITY_FREEZE.json",
+      "sha256": "9c264a4239f959e0aa7f8490cb394899848de7e89c82ecba41d228c9095eda2a",
+      "bytes": 6054,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/SOURCE_COVERAGE.json",
+      "sha256": "e3ce0f9a908f5d4fd726caf71f41e303aed48f6f610b426083a17e829f060d35",
+      "bytes": 935,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/SOURCE_DISPOSITION.json",
+      "sha256": "705bf2584642b0db1b0e3489c0711e0041f31bdfaf7d6ca4832da409ed185895",
+      "bytes": 487,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/CAPTURE_PROVENANCE.json",
+      "sha256": "d2b021f670961e0382167fc654cb717ffce690ea0ad0d5b8258419186e08c1a4",
+      "bytes": 37404,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/ERRATA.json",
+      "sha256": "9acbcfb455272a1796fa4ca5da47ddd2f6f90c4572768d6d96c1f92cc5ac5ebf",
+      "bytes": 1142,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/MANIFEST.json",
+      "sha256": "1e887d8b31b551b1fc5fbab55631cdd3930f1e2ce7995a4a44e51927a3974e59",
+      "bytes": 3347,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/FREEZE.json",
+      "sha256": "06e736fe50cb55ae9f11371cce8659dbb8b7e113d5f7ce98efdc1f2db14380bf",
+      "bytes": 3656,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/REVIEW.md",
+      "sha256": "c0faefac2bb8242206e3713e2cb8ee7bda912878f0a897b11b10d03246d11760",
+      "bytes": 3644,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/SOURCE_QUALITY.json",
+      "sha256": "9c50c2834719c0dfcfe35f50b4b801c02b3bdf56db9dd2a03c0ba29ba35f88da",
+      "bytes": 4112,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/coverage.json",
+      "sha256": "83fe0ce1919cb5948738b36b5da5272040cf47972ef6a1724ac0f4506bb7b24c",
+      "bytes": 2648,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/disposition.json",
+      "sha256": "60e856179bde27072ae9050f71a3f6bb70ff30145129303a1df5640ebf2ab8b4",
+      "bytes": 650,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/safe_sources.json",
+      "sha256": "69872226ffe94aa3154b2358e8f60ccc3942a8f78a107f53ed0772c16c61f7e2",
+      "bytes": 4181,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/SOURCE_QUALITY_FREEZE.json",
+      "sha256": "b9c04ad144f93f38172c932f948adf26b2f9be8afbbe38450b60254f6e1b229b",
+      "bytes": 794,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/provenance.json",
+      "sha256": "d52716c5d2d863016b40ffb962e3438b7ea1d0b843c6fd14d6855a77f576fa83",
+      "bytes": 171765,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/cost.json",
+      "sha256": "275b231161a9a2cfaf461b5325f706205dafc0e30b07b86d06bb3037e74ae2e5",
+      "bytes": 7147,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/method.json",
+      "sha256": "9fae5cfc7f8c7b2f2a1d041d2e720152345fe8e7e5cbdfd231815c791c0b99af",
+      "bytes": 1776,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/preservation.json",
+      "sha256": "16358abc74b01d2381da9b47d2619ea01bec0f0d7d5c16275edc654674b95de2",
+      "bytes": 8018,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/scope_audit.json",
+      "sha256": "d8049a0eb96dd4b145bfd1695b660d4908615787578672cebb252474a4b26251",
+      "bytes": 2795,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/errata.json",
+      "sha256": "d599aea30cd7e76d76e531798bc6ebd96fc85e852b7483b50d2a190acc934bab",
+      "bytes": 619,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/MANIFEST.json",
+      "sha256": "a383599c5cc1e64cf32f6a9daf1f46575730460f229b4acdb241548f9090828d",
+      "bytes": 2846,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/FREEZE.json",
+      "sha256": "b8c03c96286694f88bc0ad50ec332bc68eb70f0c19265d7a8d844452d47c30a4",
+      "bytes": 1921,
+      "selection": "exact final evaluator freeze/manifest positive topfile"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/ROOT_NB_BREADTH_COMPARISON_V1.json",
+      "sha256": "749b9389496fb7dade23bd6ee55a446f129abff4aaa25c409eda075a9633af1c",
+      "bytes": 3377,
+      "selection": "root separate immutable metadata pin"
+    },
+    {
+      "path": "LAB_ROOT/ops/recovery-v1/OBSERVATION_20261003_0453_SIX_REVIEWED_PAIRS.json",
+      "sha256": "06616edd5331235c8032f901332fbf044eb68bf2449acc61d8cf9b669134340b",
+      "bytes": 6849,
+      "selection": "root separate immutable metadata pin"
+    }
+  ],
+  "exact_top_files_per_arm": {
+    "control": 15,
+    "treatment": 14
+  },
+  "recursive_publication": false,
+  "source_dependencies_portable": false,
+  "original_pins_reference_original_external_dependencies": true,
+  "public_artifacts_before_manifest": [
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-C-M/REVIEW.md",
+      "public_sha256": "4bc6915ac83ed3d1505a8180bfaa61c18580c96a3589004dc5b94456fe024304",
+      "public_bytes": 6502,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/REVIEW.md",
+      "original_sha256": "d2704db00a87073ff851690a3383af344bd05a4efa75a46aa4349a53c0633271",
+      "original_bytes": 6504,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-C-M/DISPOSITION.json",
+      "public_sha256": "2779be07c16c9dc0a3a6902bdb72f9c4c738438cdc37cd0609ce129afd44ed89",
+      "public_bytes": 1171,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/DISPOSITION.json",
+      "original_sha256": "2779be07c16c9dc0a3a6902bdb72f9c4c738438cdc37cd0609ce129afd44ed89",
+      "original_bytes": 1171,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-C-M/COVERAGE.json",
+      "public_sha256": "a8cc861e4ef98030c527b196cdebeb18b1d9f8d532adaf3f69de53d087061bf7",
+      "public_bytes": 2367,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/COVERAGE.json",
+      "original_sha256": "a8cc861e4ef98030c527b196cdebeb18b1d9f8d532adaf3f69de53d087061bf7",
+      "original_bytes": 2367,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-C-M/PROVENANCE.json",
+      "public_sha256": "18bbc2609475355df1972e2691ac75596a90528bc7b8def4469deed699c2ef70",
+      "public_bytes": 11343,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/PROVENANCE.json",
+      "original_sha256": "1aad889e1403ec6a9106960db81d14e80862758385220e67e6ded50a86274aee",
+      "original_bytes": 11925,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-C-M/COST.json",
+      "public_sha256": "32f4d12e8fe3a6063a291849dde033ea42841cf0794507c538c36ca1c63f32c3",
+      "public_bytes": 1278,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/COST.json",
+      "original_sha256": "32f4d12e8fe3a6063a291849dde033ea42841cf0794507c538c36ca1c63f32c3",
+      "original_bytes": 1278,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-C-M/METHOD_AUDIT.md",
+      "public_sha256": "1f1c28aebbf106e9467eb845061dd7df7376e1ed4df7d02977d3df52fb3df86d",
+      "public_bytes": 2377,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/METHOD_AUDIT.md",
+      "original_sha256": "1f1c28aebbf106e9467eb845061dd7df7376e1ed4df7d02977d3df52fb3df86d",
+      "original_bytes": 2377,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-C-M/PRESERVATION_AUDIT.md",
+      "public_sha256": "b4f383c3921be9b2e98f1b08b66f9d88a8fba7a25cbcdd80ac7c0d288c25a009",
+      "public_bytes": 2777,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/PRESERVATION_AUDIT.md",
+      "original_sha256": "b4f383c3921be9b2e98f1b08b66f9d88a8fba7a25cbcdd80ac7c0d288c25a009",
+      "original_bytes": 2777,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-C-M/SAFE_SOURCES.json",
+      "public_sha256": "233af58ee8389d16d41bee2b610e50b3ce9d5938119e878fcb8ae0baa4adf09f",
+      "public_bytes": 3842,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/SAFE_SOURCES.json",
+      "original_sha256": "233af58ee8389d16d41bee2b610e50b3ce9d5938119e878fcb8ae0baa4adf09f",
+      "original_bytes": 3842,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-C-M/SOURCE_QUALITY_FREEZE.json",
+      "public_sha256": "9c264a4239f959e0aa7f8490cb394899848de7e89c82ecba41d228c9095eda2a",
+      "public_bytes": 6054,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/SOURCE_QUALITY_FREEZE.json",
+      "original_sha256": "9c264a4239f959e0aa7f8490cb394899848de7e89c82ecba41d228c9095eda2a",
+      "original_bytes": 6054,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-C-M/SOURCE_COVERAGE.json",
+      "public_sha256": "e3ce0f9a908f5d4fd726caf71f41e303aed48f6f610b426083a17e829f060d35",
+      "public_bytes": 935,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/SOURCE_COVERAGE.json",
+      "original_sha256": "e3ce0f9a908f5d4fd726caf71f41e303aed48f6f610b426083a17e829f060d35",
+      "original_bytes": 935,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-C-M/SOURCE_DISPOSITION.json",
+      "public_sha256": "705bf2584642b0db1b0e3489c0711e0041f31bdfaf7d6ca4832da409ed185895",
+      "public_bytes": 487,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/SOURCE_DISPOSITION.json",
+      "original_sha256": "705bf2584642b0db1b0e3489c0711e0041f31bdfaf7d6ca4832da409ed185895",
+      "original_bytes": 487,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-C-M/CAPTURE_PROVENANCE.json",
+      "public_sha256": "24f6bd855e34cf0b68b8991b5f76f730fdaaba8c24bfbf104dcf85bc152316eb",
+      "public_bytes": 35829,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/CAPTURE_PROVENANCE.json",
+      "original_sha256": "d2b021f670961e0382167fc654cb717ffce690ea0ad0d5b8258419186e08c1a4",
+      "original_bytes": 37404,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-C-M/ERRATA.json",
+      "public_sha256": "9acbcfb455272a1796fa4ca5da47ddd2f6f90c4572768d6d96c1f92cc5ac5ebf",
+      "public_bytes": 1142,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/ERRATA.json",
+      "original_sha256": "9acbcfb455272a1796fa4ca5da47ddd2f6f90c4572768d6d96c1f92cc5ac5ebf",
+      "original_bytes": 1142,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-C-M/MANIFEST.json",
+      "public_sha256": "1e887d8b31b551b1fc5fbab55631cdd3930f1e2ce7995a4a44e51927a3974e59",
+      "public_bytes": 3347,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/MANIFEST.json",
+      "original_sha256": "1e887d8b31b551b1fc5fbab55631cdd3930f1e2ce7995a4a44e51927a3974e59",
+      "original_bytes": 3347,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-C-M/FREEZE.json",
+      "public_sha256": "06e736fe50cb55ae9f11371cce8659dbb8b7e113d5f7ce98efdc1f2db14380bf",
+      "public_bytes": 3656,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/FREEZE.json",
+      "original_sha256": "06e736fe50cb55ae9f11371cce8659dbb8b7e113d5f7ce98efdc1f2db14380bf",
+      "original_bytes": 3656,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-T-M/REVIEW.md",
+      "public_sha256": "b4c277ab345d500c9e033432e7410f12329c1d1b449189f423dcc8637a3fb5c9",
+      "public_bytes": 3930,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/REVIEW.md",
+      "original_sha256": "c0faefac2bb8242206e3713e2cb8ee7bda912878f0a897b11b10d03246d11760",
+      "original_bytes": 3644,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-T-M/SOURCE_QUALITY.json",
+      "public_sha256": "00fe3e328585918c2a22e3bf677aab7edf16b35c6edd0b9dfab87322f4d20528",
+      "public_bytes": 3923,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/SOURCE_QUALITY.json",
+      "original_sha256": "9c50c2834719c0dfcfe35f50b4b801c02b3bdf56db9dd2a03c0ba29ba35f88da",
+      "original_bytes": 4112,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-T-M/coverage.json",
+      "public_sha256": "83fe0ce1919cb5948738b36b5da5272040cf47972ef6a1724ac0f4506bb7b24c",
+      "public_bytes": 2648,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/coverage.json",
+      "original_sha256": "83fe0ce1919cb5948738b36b5da5272040cf47972ef6a1724ac0f4506bb7b24c",
+      "original_bytes": 2648,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-T-M/disposition.json",
+      "public_sha256": "60e856179bde27072ae9050f71a3f6bb70ff30145129303a1df5640ebf2ab8b4",
+      "public_bytes": 650,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/disposition.json",
+      "original_sha256": "60e856179bde27072ae9050f71a3f6bb70ff30145129303a1df5640ebf2ab8b4",
+      "original_bytes": 650,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-T-M/safe_sources.json",
+      "public_sha256": "69872226ffe94aa3154b2358e8f60ccc3942a8f78a107f53ed0772c16c61f7e2",
+      "public_bytes": 4181,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/safe_sources.json",
+      "original_sha256": "69872226ffe94aa3154b2358e8f60ccc3942a8f78a107f53ed0772c16c61f7e2",
+      "original_bytes": 4181,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-T-M/SOURCE_QUALITY_FREEZE.json",
+      "public_sha256": "b9c04ad144f93f38172c932f948adf26b2f9be8afbbe38450b60254f6e1b229b",
+      "public_bytes": 794,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/SOURCE_QUALITY_FREEZE.json",
+      "original_sha256": "b9c04ad144f93f38172c932f948adf26b2f9be8afbbe38450b60254f6e1b229b",
+      "original_bytes": 794,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-T-M/provenance.json",
+      "public_sha256": "acc744fdfa586890c9960e0db4817ce9ae86853ca137ab9f1ba84701bbfdae19",
+      "public_bytes": 164331,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/provenance.json",
+      "original_sha256": "d52716c5d2d863016b40ffb962e3438b7ea1d0b843c6fd14d6855a77f576fa83",
+      "original_bytes": 171765,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-T-M/cost.json",
+      "public_sha256": "a9485975f86431ec8ed433f9d724ae89b21c08e8482494b2c893594779dc9985",
+      "public_bytes": 6628,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/cost.json",
+      "original_sha256": "275b231161a9a2cfaf461b5325f706205dafc0e30b07b86d06bb3037e74ae2e5",
+      "original_bytes": 7147,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-T-M/method.json",
+      "public_sha256": "9fae5cfc7f8c7b2f2a1d041d2e720152345fe8e7e5cbdfd231815c791c0b99af",
+      "public_bytes": 1776,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/method.json",
+      "original_sha256": "9fae5cfc7f8c7b2f2a1d041d2e720152345fe8e7e5cbdfd231815c791c0b99af",
+      "original_bytes": 1776,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-T-M/preservation.json",
+      "public_sha256": "16358abc74b01d2381da9b47d2619ea01bec0f0d7d5c16275edc654674b95de2",
+      "public_bytes": 8018,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/preservation.json",
+      "original_sha256": "16358abc74b01d2381da9b47d2619ea01bec0f0d7d5c16275edc654674b95de2",
+      "original_bytes": 8018,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-T-M/scope_audit.json",
+      "public_sha256": "d8049a0eb96dd4b145bfd1695b660d4908615787578672cebb252474a4b26251",
+      "public_bytes": 2795,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/scope_audit.json",
+      "original_sha256": "d8049a0eb96dd4b145bfd1695b660d4908615787578672cebb252474a4b26251",
+      "original_bytes": 2795,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-T-M/errata.json",
+      "public_sha256": "d599aea30cd7e76d76e531798bc6ebd96fc85e852b7483b50d2a190acc934bab",
+      "public_bytes": 619,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/errata.json",
+      "original_sha256": "d599aea30cd7e76d76e531798bc6ebd96fc85e852b7483b50d2a190acc934bab",
+      "original_bytes": 619,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-T-M/MANIFEST.json",
+      "public_sha256": "a70c0279508f48b407856024f789edb6ed767fdb66efbb1d3dc0e0c28d4e39b1",
+      "public_bytes": 2783,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/MANIFEST.json",
+      "original_sha256": "a383599c5cc1e64cf32f6a9daf1f46575730460f229b4acdb241548f9090828d",
+      "original_bytes": 2846,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "evaluation/integrated-v2/V8-NB-BREADTH-T-M/FREEZE.json",
+      "public_sha256": "b8c03c96286694f88bc0ad50ec332bc68eb70f0c19265d7a8d844452d47c30a4",
+      "public_bytes": 1921,
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/FREEZE.json",
+      "original_sha256": "b8c03c96286694f88bc0ad50ec332bc68eb70f0c19265d7a8d844452d47c30a4",
+      "original_bytes": 1921,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "ops/recovery-v1/ROOT_NB_BREADTH_COMPARISON_V1.json",
+      "public_sha256": "5dcb8abfa90eff778224d31500bed02092550d18fdf7c30a7842890de96f0e01",
+      "public_bytes": 2936,
+      "source_projection": "LAB_ROOT/ops/recovery-v1/ROOT_NB_BREADTH_COMPARISON_V1.json",
+      "original_sha256": "749b9389496fb7dade23bd6ee55a446f129abff4aaa25c409eda075a9633af1c",
+      "original_bytes": 3377,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "ops/recovery-v1/OBSERVATION_20261003_0453_SIX_REVIEWED_PAIRS.json",
+      "public_sha256": "2186b6e02f7b39e7465c835718a610d54aa170e900807deb12119fbc157ebeae",
+      "public_bytes": 1178,
+      "source_projection": "LAB_ROOT/ops/recovery-v1/OBSERVATION_20261003_0453_SIX_REVIEWED_PAIRS.json",
+      "original_sha256": "06616edd5331235c8032f901332fbf044eb68bf2449acc61d8cf9b669134340b",
+      "original_bytes": 6849,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "verify_public.py",
+      "public_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+      "public_bytes": 6851,
+      "source_projection": "approved standalone checker",
+      "original_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+      "original_bytes": 6851,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "QUOTATION_AUDIT.json",
+      "public_sha256": "c65184339146986666fb1afd0cab431578fa4274069eb97592ad905920af5f59",
+      "public_bytes": 2471,
+      "source_projection": "publication-generated",
+      "original_sha256": null,
+      "original_bytes": null,
+      "portable_source_replay": false
+    },
+    {
+      "public_path": "README.md",
+      "public_sha256": "8b2c466ea75e4164c91a7fcd40c1f28ca3c64076658831cb8691110e88701703",
+      "public_bytes": 5372,
+      "source_projection": "publication-generated",
+      "original_sha256": null,
+      "original_bytes": null,
+      "portable_source_replay": false
+    }
+  ]
+}

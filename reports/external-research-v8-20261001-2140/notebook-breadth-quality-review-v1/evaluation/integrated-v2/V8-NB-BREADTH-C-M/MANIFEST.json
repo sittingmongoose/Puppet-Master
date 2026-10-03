@@ -1,0 +1,102 @@
+{
+  "body_files": [
+    {
+      "bytes": 6504,
+      "path": "REVIEW.md",
+      "sha256": "d2704db00a87073ff851690a3383af344bd05a4efa75a46aa4349a53c0633271"
+    },
+    {
+      "bytes": 1171,
+      "path": "DISPOSITION.json",
+      "sha256": "2779be07c16c9dc0a3a6902bdb72f9c4c738438cdc37cd0609ce129afd44ed89"
+    },
+    {
+      "bytes": 2367,
+      "path": "COVERAGE.json",
+      "sha256": "a8cc861e4ef98030c527b196cdebeb18b1d9f8d532adaf3f69de53d087061bf7"
+    },
+    {
+      "bytes": 11925,
+      "path": "PROVENANCE.json",
+      "sha256": "1aad889e1403ec6a9106960db81d14e80862758385220e67e6ded50a86274aee"
+    },
+    {
+      "bytes": 1278,
+      "path": "COST.json",
+      "sha256": "32f4d12e8fe3a6063a291849dde033ea42841cf0794507c538c36ca1c63f32c3"
+    },
+    {
+      "bytes": 2377,
+      "path": "METHOD_AUDIT.md",
+      "sha256": "1f1c28aebbf106e9467eb845061dd7df7376e1ed4df7d02977d3df52fb3df86d"
+    },
+    {
+      "bytes": 2777,
+      "path": "PRESERVATION_AUDIT.md",
+      "sha256": "b4f383c3921be9b2e98f1b08b66f9d88a8fba7a25cbcdd80ac7c0d288c25a009"
+    },
+    {
+      "bytes": 3842,
+      "path": "SAFE_SOURCES.json",
+      "sha256": "233af58ee8389d16d41bee2b610e50b3ce9d5938119e878fcb8ae0baa4adf09f"
+    },
+    {
+      "bytes": 6054,
+      "path": "SOURCE_QUALITY_FREEZE.json",
+      "sha256": "9c264a4239f959e0aa7f8490cb394899848de7e89c82ecba41d228c9095eda2a"
+    },
+    {
+      "bytes": 935,
+      "path": "SOURCE_COVERAGE.json",
+      "sha256": "e3ce0f9a908f5d4fd726caf71f41e303aed48f6f610b426083a17e829f060d35"
+    },
+    {
+      "bytes": 487,
+      "path": "SOURCE_DISPOSITION.json",
+      "sha256": "705bf2584642b0db1b0e3489c0711e0041f31bdfaf7d6ca4832da409ed185895"
+    },
+    {
+      "bytes": 37404,
+      "path": "CAPTURE_PROVENANCE.json",
+      "sha256": "d2b021f670961e0382167fc654cb717ffce690ea0ad0d5b8258419186e08c1a4"
+    },
+    {
+      "bytes": 1142,
+      "path": "ERRATA.json",
+      "sha256": "9acbcfb455272a1796fa4ca5da47ddd2f6f90c4572768d6d96c1f92cc5ac5ebf"
+    }
+  ],
+  "canonical_score": null,
+  "case": "V8-NB-BREADTH-C-M",
+  "comprehensive_quality": "UNASSESSED",
+  "efficiency_claim": null,
+  "evaluator": "er8-quality-nb-breadth-c-v1",
+  "fixed_global_deadline_epoch": 1791013030.8303788,
+  "operational_status": "COMPLETE",
+  "original_component_birth_epoch": 1791002038.7633872,
+  "original_component_deadline_epoch": 1791004438.7633872,
+  "publication_scope": "owned top-level evaluation reports only; original candidate artifacts, host captures, native records and context are referenced by permitted metadata but not exported",
+  "publication_whitelist": [
+    "REVIEW.md",
+    "DISPOSITION.json",
+    "COVERAGE.json",
+    "PROVENANCE.json",
+    "COST.json",
+    "METHOD_AUDIT.md",
+    "PRESERVATION_AUDIT.md",
+    "SAFE_SOURCES.json",
+    "SOURCE_QUALITY_FREEZE.json",
+    "SOURCE_COVERAGE.json",
+    "SOURCE_DISPOSITION.json",
+    "CAPTURE_PROVENANCE.json",
+    "ERRATA.json",
+    "MANIFEST.json",
+    "FREEZE.json"
+  ],
+  "schema": "er8-integrated-evaluation-publication-manifest-v1",
+  "score_weights": null,
+  "self_hash_rule": "MANIFEST hash is pinned in FREEZE; FREEZE hash is returned in terminal handoff. Neither self-hashes.",
+  "source_first_freeze_sha256": "9c264a4239f959e0aa7f8490cb394899848de7e89c82ecba41d228c9095eda2a",
+  "source_quality": "VERIFIED_FAILED_SCREEN",
+  "winner_claim": null
+}

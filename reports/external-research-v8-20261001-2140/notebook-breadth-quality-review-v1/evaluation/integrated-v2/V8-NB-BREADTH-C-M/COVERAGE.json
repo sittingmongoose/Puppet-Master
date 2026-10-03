@@ -1,0 +1,64 @@
+{
+  "aggregate_score": null,
+  "all_asserted_source_claims_checked": false,
+  "case": "V8-NB-BREADTH-C-M",
+  "diagnostic_rejection": "VERIFIED_FAILED_SCREEN",
+  "dominant_defect": "SQ2: content-only deterministic minting does not specify within-notebook uniqueness for identical idless cells and is not semantically established by the cited random UUID subset",
+  "efficiency_claim": null,
+  "full_pass": false,
+  "method_audit": "limited observable control pipeline uptake",
+  "obligations": {
+    "N1": {
+      "score": null,
+      "status": "UNASSESSED"
+    },
+    "N2": {
+      "scope": "Selected schema/conditional identity and ambiguity facts; comprehensive obligation ungraded",
+      "score": null,
+      "status": "PARTIALLY_ASSESSED"
+    },
+    "N3": {
+      "score": null,
+      "status": "UNASSESSED"
+    },
+    "N4": {
+      "scope": "Optional recovery id-minting transform; complete copy/recovery safety ungraded",
+      "score": null,
+      "status": "FAILED_SCREEN"
+    },
+    "N5": {
+      "scope": "Test-chain attribution and method structure only; complete obligation ungraded",
+      "score": null,
+      "status": "PARTIALLY_ASSESSED"
+    }
+  },
+  "operational_completion_audit": "COMPLETE",
+  "preservation_audit": "selected initial/current artifact comparison only",
+  "questions": {
+    "Q1": {
+      "scope": "Selected nbdime/version facts only; Git component and complete recommendation UNASSESSED",
+      "score": null,
+      "status": "PARTIALLY_ASSESSED"
+    },
+    "Q2": {
+      "scope": "Conditional validation behavior and recovery id-minting branch; remaining comparisons and capture limitations UNASSESSED",
+      "score": null,
+      "status": "FAILED_SCREEN"
+    },
+    "Q3": {
+      "scope": "Pinned fix parent/date/stats/generator/test patch checked; complete original issue and feature/plumbing history UNASSESSED",
+      "score": null,
+      "status": "PARTIALLY_ASSESSED"
+    }
+  },
+  "required_eighteen_facet_scope": {
+    "canonical_enumeration_and_numeric_weights": "not supplied by pinned common scope; no invented local aggregate",
+    "comprehensive_assessment_completed": false,
+    "required_count": 18,
+    "score": null,
+    "status": "UNASSESSED"
+  },
+  "schema": "er8-diagnostic-coverage-v1",
+  "source_quality_freeze_sha256": "9c264a4239f959e0aa7f8490cb394899848de7e89c82ecba41d228c9095eda2a",
+  "winner": null
+}

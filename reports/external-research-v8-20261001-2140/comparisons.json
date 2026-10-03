@@ -63,16 +63,16 @@
       }
     ]
   },
-  "checkpoint": "FIVE_REVIEWED_PAIRS_NINE_FAILED_SCREENS_ONE_HOLD_TEN_PIPELINES_COMPLETE",
+  "checkpoint": "SIX_REVIEWED_PAIRS_ELEVEN_FAILED_SCREENS_ONE_HOLD_TWELVE_PIPELINES_COMPLETE",
   "prospective_pair_map": "tranche-cohort-v2/cases/tranche-v2/pairs.json",
   "prospective_pair_count": 12,
-  "completed_comparisons": 5,
-  "current_scope_note": "12 target pairs; five operationally complete and independently reviewed, nine FAILED_SCREEN and one HOLD. No full-PASS quality-qualified efficiency result.",
+  "completed_comparisons": 6,
+  "current_scope_note": "12 target pairs; six operationally complete and independently reviewed, eleven FAILED_SCREEN and one HOLD. S8 BIO CHECK research pair separately active; no full-PASS quality-qualified efficiency result.",
   "scope_review": "recovery-results-cohort-v2/evaluation/tranche-scope-review-v1/review.json",
   "scope_review_status": "CLEAR_PROSPECTIVE_NO_LAUNCH_AUTHORITY",
-  "observation_utc": "2026-10-03T04:26:31.254280+00:00",
-  "completed_comparisons_definition": "Five matched operational pairs with both independent dispositions frozen; no qualified efficiency result.",
-  "operational_matched_pairs_completed": 5,
+  "observation_utc": "2026-10-03T04:53:51.115652+00:00",
+  "completed_comparisons_definition": "Six matched operational pairs with both independent dispositions frozen; no qualified efficiency result.",
+  "operational_matched_pairs_completed": 6,
   "quality_qualified_efficiency_comparisons": 0,
   "integrated_pair_results": [
     {
@@ -114,20 +114,38 @@
       "quality_qualified_efficiency": false,
       "speedup": "NOT_ESTABLISHED",
       "evidence": "notebook-amendment-quality-review-v1/ops/recovery-v1/ROOT_NB_AMENDMENT_COMPARISON_V1.json"
+    },
+    {
+      "pair": "NB-BREADTH-C/T",
+      "operational_complete": true,
+      "independent_review": "TWO_SOURCE_VERIFIED_FAILED_SCREEN; remainder UNASSESSED/null; control ERRATA narrows earlier warning/schema emphasis, freeze unchanged",
+      "quality_qualified_efficiency": false,
+      "speedup": "NOT_ESTABLISHED",
+      "evidence": "notebook-breadth-quality-review-v1/ops/recovery-v1/ROOT_NB_BREADTH_COMPARISON_V1.json"
     }
   ],
-  "current_metadata_boundary": "Frozen actual UTC04:26:31.254280 despite observation filename0425; earlier03:30 audit does not cover this update. No present liveness inference.",
+  "current_metadata_boundary": "Root reservation/creation sample epoch1791003230.9785047; displayed serialized snapshot UTC2026-10-03T04:53:51.115652+00:00 is later capture/write sample ~0.137seconds later. Both retained; no clock correction/reset. Earlier03:30 audit covers historical snapshot only; active jobs at freeze, no present liveness.",
   "current_outcomes": {
-    "operational_pipeline_count": 10,
+    "operational_pipeline_count": 12,
     "target_pipelines": 24,
-    "operational_pair_count": 5,
+    "operational_pair_count": 6,
     "target_pairs": 12,
-    "quality_reviewed_pairs": 5,
-    "independent_failed_screens": 9,
+    "quality_reviewed_pairs": 6,
+    "independent_failed_screens": 11,
     "independent_holds": 1,
     "full_quality_pass": 0,
     "quality_qualified_efficiency_comparisons": 0,
     "winner": null,
     "qualified_holdouts": 0
-  }
+  },
+  "observation_created_epoch": 1791003230.9785047,
+  "source_serialized_utc": "2026-10-03T04:53:51.115652+00:00",
+  "current_runtime": {
+    "unit": "er8-v8-production-z-tranche-v9.service",
+    "positive_pid": 2775507,
+    "release": "ops/execution-resume-v1/root-production-release-v9.json",
+    "release_sha256": "6264e76ef8cefc71c9c83ddaed37008ffa9bbe707086483ec201a9f7faafb73d",
+    "scope": "Frozen observation only; not present liveness or portable runtime."
+  },
+  "comparisons_scope": "Original historical reservation labels only; NOT_RUN rows are not a current integrated execution claim. Current actual pair outcomes are in integrated_pair_results and current_outcomes."
 }

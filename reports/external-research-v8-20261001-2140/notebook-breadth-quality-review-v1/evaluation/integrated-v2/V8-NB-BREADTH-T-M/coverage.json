@@ -1,0 +1,152 @@
+{
+  "assessed_claims": [
+    "SQ1",
+    "SQ2"
+  ],
+  "case": "V8-NB-BREADTH-T-M",
+  "facets": [
+    {
+      "ordinal": 1,
+      "score": null,
+      "status": "UNASSESSED"
+    },
+    {
+      "ordinal": 2,
+      "score": null,
+      "status": "UNASSESSED"
+    },
+    {
+      "ordinal": 3,
+      "score": null,
+      "status": "UNASSESSED"
+    },
+    {
+      "ordinal": 4,
+      "score": null,
+      "status": "UNASSESSED"
+    },
+    {
+      "ordinal": 5,
+      "score": null,
+      "status": "UNASSESSED"
+    },
+    {
+      "ordinal": 6,
+      "score": null,
+      "status": "UNASSESSED"
+    },
+    {
+      "ordinal": 7,
+      "score": null,
+      "status": "UNASSESSED"
+    },
+    {
+      "ordinal": 8,
+      "score": null,
+      "status": "UNASSESSED"
+    },
+    {
+      "ordinal": 9,
+      "score": null,
+      "status": "UNASSESSED"
+    },
+    {
+      "ordinal": 10,
+      "score": null,
+      "status": "UNASSESSED"
+    },
+    {
+      "ordinal": 11,
+      "score": null,
+      "status": "UNASSESSED"
+    },
+    {
+      "ordinal": 12,
+      "score": null,
+      "status": "UNASSESSED"
+    },
+    {
+      "ordinal": 13,
+      "score": null,
+      "status": "UNASSESSED"
+    },
+    {
+      "ordinal": 14,
+      "score": null,
+      "status": "UNASSESSED"
+    },
+    {
+      "ordinal": 15,
+      "score": null,
+      "status": "UNASSESSED"
+    },
+    {
+      "ordinal": 16,
+      "score": null,
+      "status": "UNASSESSED"
+    },
+    {
+      "ordinal": 17,
+      "score": null,
+      "status": "UNASSESSED"
+    },
+    {
+      "ordinal": 18,
+      "score": null,
+      "status": "UNASSESSED"
+    }
+  ],
+  "note": "Claim-level screening is assessed; every full quality scope item remains UNASSESSED. Ordinals are placeholders, not an invented canonical score.",
+  "obligations": [
+    {
+      "id": "B1",
+      "score": null,
+      "status": "UNASSESSED"
+    },
+    {
+      "id": "B2",
+      "score": null,
+      "status": "UNASSESSED"
+    },
+    {
+      "id": "B3",
+      "score": null,
+      "status": "UNASSESSED"
+    },
+    {
+      "id": "B4",
+      "score": null,
+      "status": "UNASSESSED"
+    },
+    {
+      "id": "B5",
+      "score": null,
+      "status": "UNASSESSED"
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q1",
+      "score": null,
+      "status": "UNASSESSED"
+    },
+    {
+      "id": "Q2",
+      "score": null,
+      "status": "UNASSESSED"
+    },
+    {
+      "id": "Q3",
+      "score": null,
+      "status": "UNASSESSED"
+    }
+  ],
+  "schema": "source-screen-coverage-v1",
+  "scope_labels_revealed": false,
+  "scope_required_from_parent": {
+    "B": 5,
+    "Q": 3,
+    "facets": 18
+  },
+  "status": "PARTIAL_DECISIVE_SCREEN"
+}

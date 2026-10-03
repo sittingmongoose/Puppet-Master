@@ -1,0 +1,176 @@
+{
+  "assigned_input_delivery": [
+    {
+      "byte_equal": true,
+      "delivered_sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+      "input": "BRIEF.md",
+      "source_sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+      "stage": "research-proposal"
+    },
+    {
+      "byte_equal": true,
+      "delivered_sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+      "input": "THIN_PLAN.md",
+      "source_sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+      "stage": "research-proposal"
+    },
+    {
+      "byte_equal": true,
+      "delivered_sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+      "input": "METHOD.md",
+      "source_sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+      "stage": "research-proposal"
+    },
+    {
+      "delivered_sha256": "cc60d40b7b8f9bc29d2b0d357eb9442bd7db46b48e3d76cb4a59c6a12a89c361",
+      "exact_source_task_plus_stage_template_with_input_to_inputs_path_adaptation": true,
+      "input": "TASK.md",
+      "source_task_sha256": "444152ab8048571dd236c47be37306d19d00d531d09da14a03ef759f1452b2cf",
+      "source_template_sha256": "dcfe7bea57da20811145ea5649464534ae3709b502284bdce754d8e7ae9f9802",
+      "stage": "research-proposal"
+    },
+    {
+      "byte_equal": true,
+      "delivered_sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+      "input": "BRIEF.md",
+      "source_sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+      "stage": "independent-candidate-critic"
+    },
+    {
+      "byte_equal": true,
+      "delivered_sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+      "input": "THIN_PLAN.md",
+      "source_sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+      "stage": "independent-candidate-critic"
+    },
+    {
+      "byte_equal": true,
+      "delivered_sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+      "input": "METHOD.md",
+      "source_sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+      "stage": "independent-candidate-critic"
+    },
+    {
+      "delivered_sha256": "d622530bd7bc0fdc36d7d54601b3f72dd2f79031ea573a8fa1701b8424588070",
+      "exact_source_task_plus_stage_template_with_input_to_inputs_path_adaptation": true,
+      "input": "TASK.md",
+      "source_task_sha256": "444152ab8048571dd236c47be37306d19d00d531d09da14a03ef759f1452b2cf",
+      "source_template_sha256": "7e0d69c1a1c9e92ad37b8b8fa97863fbde211eb06563cb431f330849e48fb0d2",
+      "stage": "independent-candidate-critic"
+    },
+    {
+      "byte_equal": true,
+      "delivered_sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+      "input": "BRIEF.md",
+      "source_sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+      "stage": "final-correction"
+    },
+    {
+      "byte_equal": true,
+      "delivered_sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+      "input": "THIN_PLAN.md",
+      "source_sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+      "stage": "final-correction"
+    },
+    {
+      "byte_equal": true,
+      "delivered_sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+      "input": "METHOD.md",
+      "source_sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+      "stage": "final-correction"
+    },
+    {
+      "delivered_sha256": "fc49db1c18185a22db7e4642c4fa968d7553a0c432b626063177181fa488a4e4",
+      "exact_source_task_plus_stage_template_with_input_to_inputs_path_adaptation": true,
+      "input": "TASK.md",
+      "source_task_sha256": "444152ab8048571dd236c47be37306d19d00d531d09da14a03ef759f1452b2cf",
+      "source_template_sha256": "1421e111351ebd35697394e93783cc85587d5ff21c003592982c20a75b9fb39e",
+      "stage": "final-correction"
+    }
+  ],
+  "case": "V8-NB-BREADTH-T-M",
+  "consequential_disposition": "FAIL_SOURCE_CONDITION_TRANSFORMATION",
+  "constraint_presence_is_not_whole_quality_pass": true,
+  "current_artifact_findings": [
+    {
+      "critic_location": "CRITIQUE.md lines 72-73",
+      "disposition": "Initial incorrect newline join is retained and broadened by critique; final wrong T2b oracle is materialized, despite primary reader semantics.",
+      "final_location": "FINAL_PROPOSAL.md lines 163-172,486-488",
+      "id": "PRES-SQ1",
+      "initial_location": "PROPOSAL.md lines 98-100",
+      "source_quality_finding": "SQ1"
+    },
+    {
+      "critic_location": "CRITIQUE.md lines 78-79",
+      "disposition": "Critique promotes warning suppression into known-cell validity; final preserves the false generalization and proposes the wrong T10 conformance result.",
+      "final_location": "FINAL_PROPOSAL.md lines 189-193,228-232,507-509",
+      "id": "PRES-SQ2",
+      "source_quality_finding": "SQ2"
+    }
+  ],
+  "legitimate_replacement_observed": "Final moves from deprecated validate repair kwargs to pinned 5.11.1 isvalid-style no-repair parsing discipline; prior false assertions are allowed to be corrected rather than blindly retained. This partial observation is not a complete source approval.",
+  "prior_current_artifact_delivery": [
+    {
+      "artifact": "PROPOSAL.md",
+      "byte_equal": true,
+      "delivered_sha256": "43db9e104f794114a31876e13ecbc0bd606b8d5d3b2146f17dee803408124ded",
+      "predecessor_sha256": "43db9e104f794114a31876e13ecbc0bd606b8d5d3b2146f17dee803408124ded",
+      "stage": "independent-candidate-critic"
+    },
+    {
+      "artifact": "UNRESOLVED_LEADS.md",
+      "byte_equal": true,
+      "delivered_sha256": "de777c55f445c6558c71634c94509253d4660c8c98059842cfec09dea7dca064",
+      "predecessor_sha256": "de777c55f445c6558c71634c94509253d4660c8c98059842cfec09dea7dca064",
+      "stage": "independent-candidate-critic"
+    },
+    {
+      "artifact": "PROPOSAL.md",
+      "byte_equal": true,
+      "delivered_sha256": "43db9e104f794114a31876e13ecbc0bd606b8d5d3b2146f17dee803408124ded",
+      "predecessor_sha256": "43db9e104f794114a31876e13ecbc0bd606b8d5d3b2146f17dee803408124ded",
+      "stage": "final-correction"
+    },
+    {
+      "artifact": "CRITIQUE.md",
+      "byte_equal": true,
+      "delivered_sha256": "0ed52471b46bcaa9e36dd7a53e23a295364603502d476247b800b1b54a2eb8be",
+      "predecessor_sha256": "0ed52471b46bcaa9e36dd7a53e23a295364603502d476247b800b1b54a2eb8be",
+      "stage": "final-correction"
+    },
+    {
+      "artifact": "UNRESOLVED_LEADS.md",
+      "byte_equal": true,
+      "delivered_sha256": "de777c55f445c6558c71634c94509253d4660c8c98059842cfec09dea7dca064",
+      "predecessor_sha256": "de777c55f445c6558c71634c94509253d4660c8c98059842cfec09dea7dca064",
+      "stage": "final-correction"
+    }
+  ],
+  "product_constraints_observed_in_final": [
+    "two captured saved states",
+    "major-v4 notebook and declared minors",
+    "read-only original and snapshots",
+    "new destination and existing-destination refusal",
+    "missing snapshot member and collision refusal",
+    "untracked files surfaced and excluded from recovery",
+    "rename labels distinguish inference from observed changes",
+    "proposed/unexecuted test labels",
+    "source/inference/choice force labels"
+  ],
+  "schema": "current-artifact-preservation-v1",
+  "scope": "Assigned-input delivery and source-conditioned transformations of current proposal through own critique/final only; no whole-history regrade.",
+  "unresolved_leads": {
+    "L5_source_condition_issue": "Its residual-risk claim repeats the missing-id warning generalization; ordinary known-cell schema errors are already returned by no-repair isvalid.",
+    "final_sha256": "ca043350c3e08c1f9cfe5225126434724855110cc4929587dc88ed8f420656ca",
+    "full_leads_source_assessment": "UNASSESSED",
+    "labels": [
+      "L1",
+      "L2",
+      "L3",
+      "L4",
+      "L5",
+      "L6",
+      "L7"
+    ]
+  }
+}

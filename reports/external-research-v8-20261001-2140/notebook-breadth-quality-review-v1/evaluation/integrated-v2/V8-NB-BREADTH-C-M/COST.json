@@ -1,0 +1,29 @@
+{
+  "account_load": "UNKNOWN",
+  "actual_case_wall_seconds": 2271.436343226,
+  "actual_nonoverlapping_outside_native_seconds": 5.179984582,
+  "actual_occupied_stage_lease_seconds": 2270.8215227127075,
+  "admitted_output_artifact_bytes_lower_bound": 92528,
+  "admitted_primary_output_artifact_bytes_lower_bound": 87396,
+  "bounds_qualification": "UTF-8 file bytes are measured admitted output-artifact lower bounds, not token counts, whole-generation totals or all hidden/host effort. Response count is a permitted native scalar, not price. Case clocks are pinned mechanical observations. No cost/quality/efficiency comparison is made.",
+  "case": "V8-NB-BREADTH-C-M",
+  "frontend_semantics": "UNKNOWN",
+  "full_cached_tokens": "UNKNOWN",
+  "full_input_tokens": "UNKNOWN",
+  "full_output_tokens": "UNKNOWN",
+  "full_reasoning_tokens": "UNKNOWN",
+  "full_tokens": "UNKNOWN",
+  "model_semantics": "UNKNOWN",
+  "money": "UNKNOWN",
+  "native_responses": 41,
+  "original_case_wall_cap_seconds": 3600,
+  "provider": "UNKNOWN",
+  "raw_usage_totals_admitted": false,
+  "schema": "er8-safe-cost-lower-bounds-v1",
+  "stage_native_responses": {
+    "final-correction": 11,
+    "independent-candidate-critic": 19,
+    "research-proposal": 11
+  },
+  "whole_case_occupied_cap_seconds": 5400
+}

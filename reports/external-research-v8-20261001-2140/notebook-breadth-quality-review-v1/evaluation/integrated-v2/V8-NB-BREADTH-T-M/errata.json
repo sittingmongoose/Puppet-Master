@@ -1,0 +1,23 @@
+{
+  "case": "V8-NB-BREADTH-T-M",
+  "corrections": [
+    {
+      "correct_T10_lines": [
+        507,
+        508,
+        509
+      ],
+      "field": "claim_locations.lines_1_based",
+      "finding": "SQ2",
+      "old_T10_lines": [
+        516,
+        517,
+        518
+      ],
+      "reason": "The frozen source screen recorded incorrect numerical line locators for T10. The verified finding and status do not change."
+    }
+  ],
+  "frozen_quality_file_sha256": "9c50c2834719c0dfcfe35f50b4b801c02b3bdf56db9dd2a03c0ba29ba35f88da",
+  "original_frozen_files_not_rewritten": true,
+  "schema": "freeze-locator-errata-v1"
+}

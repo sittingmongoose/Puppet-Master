@@ -1,0 +1,20 @@
+{
+  "canonical_score": null,
+  "case": "V8-NB-BREADTH-C-M",
+  "comprehensive_quality": "UNASSESSED",
+  "dominant_failure_id": "SQ2",
+  "efficiency_claim": null,
+  "execution_requirement_qualification": "This brief requests a researched plan, not implementation. Proposed tests are honestly unexecuted; that fact alone is not the failed screen. No outcome depending on those tests is certified.",
+  "local_aggregate_score": null,
+  "operational_status": "COMPLETE",
+  "quality_disposition": "FAILED_SCREEN",
+  "schema": "er8-integrated-diagnostic-disposition-v1",
+  "screen_scope": "concrete duplicate-content counterexample to the recovery minting rule; all remaining ungraded scope is UNASSESSED/null",
+  "secondary_attribution_error": "SQ3",
+  "secondary_source_condition_risk": "SQ1: reading section 1 as a general API claim omits false-repair schema validation; section 3 correctly limits its warning statement to _normalize",
+  "source_quality": "VERIFIED_FAILED_SCREEN",
+  "source_quality_freeze_sha256": "9c264a4239f959e0aa7f8490cb394899848de7e89c82ecba41d228c9095eda2a",
+  "whole_case_failed_aggregate": null,
+  "whole_case_pass": false,
+  "winner_claim": null
+}

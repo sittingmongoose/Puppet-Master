@@ -1,0 +1,99 @@
+{
+  "case": "V8-NB-BREADTH-T-M",
+  "checks": {
+    "all_payload_hashes_positive": true,
+    "core_exact_directory_members": true,
+    "json_parses": true,
+    "restricted_field_values_absent": true,
+    "source_quality_freeze_unchanged": true
+  },
+  "comprehensive_quality": "UNASSESSED",
+  "created_epoch": 1791002917.1473243,
+  "directory": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M",
+  "payload_files": [
+    {
+      "bytes": 3644,
+      "path": "REVIEW.md",
+      "sha256": "c0faefac2bb8242206e3713e2cb8ee7bda912878f0a897b11b10d03246d11760"
+    },
+    {
+      "bytes": 4112,
+      "path": "SOURCE_QUALITY.json",
+      "sha256": "9c50c2834719c0dfcfe35f50b4b801c02b3bdf56db9dd2a03c0ba29ba35f88da"
+    },
+    {
+      "bytes": 2648,
+      "path": "coverage.json",
+      "sha256": "83fe0ce1919cb5948738b36b5da5272040cf47972ef6a1724ac0f4506bb7b24c"
+    },
+    {
+      "bytes": 650,
+      "path": "disposition.json",
+      "sha256": "60e856179bde27072ae9050f71a3f6bb70ff30145129303a1df5640ebf2ab8b4"
+    },
+    {
+      "bytes": 4181,
+      "path": "safe_sources.json",
+      "sha256": "69872226ffe94aa3154b2358e8f60ccc3942a8f78a107f53ed0772c16c61f7e2"
+    },
+    {
+      "bytes": 794,
+      "path": "SOURCE_QUALITY_FREEZE.json",
+      "sha256": "b9c04ad144f93f38172c932f948adf26b2f9be8afbbe38450b60254f6e1b229b"
+    },
+    {
+      "bytes": 171765,
+      "path": "provenance.json",
+      "sha256": "d52716c5d2d863016b40ffb962e3438b7ea1d0b843c6fd14d6855a77f576fa83"
+    },
+    {
+      "bytes": 7147,
+      "path": "cost.json",
+      "sha256": "275b231161a9a2cfaf461b5325f706205dafc0e30b07b86d06bb3037e74ae2e5"
+    },
+    {
+      "bytes": 1776,
+      "path": "method.json",
+      "sha256": "9fae5cfc7f8c7b2f2a1d041d2e720152345fe8e7e5cbdfd231815c791c0b99af"
+    },
+    {
+      "bytes": 8018,
+      "path": "preservation.json",
+      "sha256": "16358abc74b01d2381da9b47d2619ea01bec0f0d7d5c16275edc654674b95de2"
+    },
+    {
+      "bytes": 2795,
+      "path": "scope_audit.json",
+      "sha256": "d8049a0eb96dd4b145bfd1695b660d4908615787578672cebb252474a4b26251"
+    },
+    {
+      "bytes": 619,
+      "path": "errata.json",
+      "sha256": "d599aea30cd7e76d76e531798bc6ebd96fc85e852b7483b50d2a190acc934bab"
+    }
+  ],
+  "publication_whitelist": [
+    "REVIEW.md",
+    "SOURCE_QUALITY.json",
+    "coverage.json",
+    "disposition.json",
+    "safe_sources.json",
+    "SOURCE_QUALITY_FREEZE.json",
+    "provenance.json",
+    "cost.json",
+    "method.json",
+    "preservation.json",
+    "scope_audit.json",
+    "errata.json",
+    "MANIFEST.json",
+    "FREEZE.json"
+  ],
+  "raw_source_or_native_exports": false,
+  "schema": "exact-evaluation-publication-manifest-v1",
+  "score": null,
+  "seal_files": [
+    "MANIFEST.json",
+    "FREEZE.json"
+  ],
+  "source_quality": "FAILED_SCREEN"
+}

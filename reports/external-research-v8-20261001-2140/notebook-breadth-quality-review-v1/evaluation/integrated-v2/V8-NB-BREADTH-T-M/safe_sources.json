@@ -1,0 +1,130 @@
+{
+  "note": "Only acquisition metadata, evidence locators, hashes and ranges are published; no downloaded source body is persisted.",
+  "records": [
+    {
+      "acquired_epoch": 1791002210.9015021,
+      "body_persisted_or_published": false,
+      "bytes": 15492,
+      "commit": "75f819f5b60bc6ffc72145c364132efe5b3c4b35",
+      "complete": true,
+      "id": "P1",
+      "line_ranges_1_based_raw": [
+        [
+          53,
+          59
+        ]
+      ],
+      "public_primary": true,
+      "sha256": "64c851511006d916b8a21c54d58dbc823938eb7724f0bb9145c61a006e14f80d",
+      "status": 200,
+      "tag": "v5.11.1",
+      "tag_and_commit_bytes_equal": true,
+      "tag_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/docs/format_description.rst",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/75f819f5b60bc6ffc72145c364132efe5b3c4b35/docs/format_description.rst"
+    },
+    {
+      "acquired_epoch": 1791002211.0025566,
+      "body_persisted_or_published": false,
+      "bytes": 4289,
+      "commit": "75f819f5b60bc6ffc72145c364132efe5b3c4b35",
+      "complete": true,
+      "id": "P2",
+      "line_ranges_1_based_raw": [
+        [
+          15,
+          24
+        ],
+        [
+          27,
+          52
+        ],
+        [
+          69,
+          92
+        ]
+      ],
+      "public_primary": true,
+      "sha256": "1ea4961fb5986965642d4d122f71c7c0e44b2e7db5eaa9eb872019ae28fe60a4",
+      "status": 200,
+      "tag": "v5.11.1",
+      "tag_and_commit_bytes_equal": true,
+      "tag_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/v4/rwbase.py",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/75f819f5b60bc6ffc72145c364132efe5b3c4b35/nbformat/v4/rwbase.py"
+    },
+    {
+      "acquired_epoch": 1791002211.133876,
+      "body_persisted_or_published": false,
+      "bytes": 22349,
+      "commit": "75f819f5b60bc6ffc72145c364132efe5b3c4b35",
+      "complete": true,
+      "id": "P3",
+      "line_ranges_1_based_raw": [
+        [
+          113,
+          132
+        ],
+        [
+          319,
+          385
+        ],
+        [
+          437,
+          487
+        ],
+        [
+          617,
+          649
+        ]
+      ],
+      "public_primary": true,
+      "sha256": "3db1fe48de1060981b13bcf828b8a5779ae30dd082ec06f712f066e90fbbfd46",
+      "status": 200,
+      "tag": "v5.11.1",
+      "tag_and_commit_bytes_equal": true,
+      "tag_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/validator.py",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/75f819f5b60bc6ffc72145c364132efe5b3c4b35/nbformat/validator.py"
+    },
+    {
+      "acquired_epoch": 1791002211.2473757,
+      "body_persisted_or_published": false,
+      "bytes": 16104,
+      "commit": "75f819f5b60bc6ffc72145c364132efe5b3c4b35",
+      "complete": true,
+      "id": "P4",
+      "line_ranges_1_based_raw": [
+        [
+          115,
+          121
+        ],
+        [
+          153,
+          159
+        ],
+        [
+          188,
+          205
+        ],
+        [
+          369,
+          391
+        ]
+      ],
+      "public_primary": true,
+      "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+      "status": 200,
+      "tag": "v5.11.1",
+      "tag_and_commit_bytes_equal": true,
+      "tag_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/v4/nbformat.v4.5.schema.json",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/75f819f5b60bc6ffc72145c364132efe5b3c4b35/nbformat/v4/nbformat.v4.5.schema.json"
+    }
+  ],
+  "schema": "public-primary-source-metadata-v1",
+  "tag_resolution": {
+    "annotated_tag": "0f8bad6548a32446fad2a5550988b3e0a2bff65f",
+    "commit": "75f819f5b60bc6ffc72145c364132efe5b3c4b35",
+    "public_ref_sha256": "4ffc4d9d74b51c3757cc6501f8834035a06e7a14ba7fdb205f3667a482dfe091",
+    "public_ref_url": "https://api.github.com/repos/jupyter/nbformat/git/ref/tags/v5.11.1",
+    "public_tag_sha256": "7b79498bd186d9f70951a7dddbc50d34a5ab40e9272c2f6af80730b6be6ff127",
+    "public_tag_url": "https://api.github.com/repos/jupyter/nbformat/git/tags/0f8bad6548a32446fad2a5550988b3e0a2bff65f"
+  }
+}

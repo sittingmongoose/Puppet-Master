@@ -1,0 +1,38 @@
+{
+  "schema": "pm.er8.root-sixth-pair-observation.v1",
+  "root_authority": true,
+  "created_epoch": 1791003230.9785047,
+  "utc": "2026-10-03T04:53:51.115652+00:00",
+  "operational_pipeline_count": 12,
+  "operational_pair_count": 6,
+  "NATIVE_ID_7810a8ec704733bf": 24,
+  "NATIVE_ID_e0f6c8cfc05e4e5b": 12,
+  "independent_failed_screens": 11,
+  "quality_pending_cases": [],
+  "stage_complete_counts": {
+    "research": 20,
+    "critic": 13,
+    "final": 12
+  },
+  "accounting": {
+    "elapsed_seconds": 33400.26289868355,
+    "deadline_epoch": 1791013030.8303788,
+    "admissions": 60,
+    "native_goal_starts": 58,
+    "pending_start_permits": 0,
+    "occupied_slot_seconds": 42029.59377336502,
+    "committed_slot_seconds": 1723.6478462219238,
+    "reserved_or_committed_slot_seconds": 80727.62296271324,
+    "reserved_or_committed_native_starts": 35,
+    "active_by_family": {
+      "M": 0,
+      "Z": 2,
+      "L": 0
+    },
+    "generated_output_tokens_lower_bound": 1423257,
+    "generated_usage": "unknown",
+    "occupancy_reconciled": true,
+    "elapsed_seconds_including_user_pause": 98022.09327745438,
+    "authorized_user_pause_excluded_seconds": 64621.83037877083
+  }
+}

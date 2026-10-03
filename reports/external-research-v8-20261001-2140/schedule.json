@@ -1,5 +1,5 @@
 {
-  "checkpoint": "FIVE_REVIEWED_PAIRS_NINE_FAILED_SCREENS_ONE_HOLD_TEN_PIPELINES_COMPLETE",
+  "checkpoint": "SIX_REVIEWED_PAIRS_ELEVEN_FAILED_SCREENS_ONE_HOLD_TWELVE_PIPELINES_COMPLETE",
   "accepted_utc": "2026-10-02T01:40:09+00:00",
   "deadline_utc": "2026-10-03T07:37:10.830379Z",
   "cases": [
@@ -93,14 +93,14 @@
   "historical_deadline_utc": "2026-10-02T07:40:09Z",
   "historical_protected_final_hour_utc": "2026-10-02T06:40:09Z",
   "authority_amendment": "canary-controller-cohort-v1/recovery-v1/AUTHORITY_AMENDMENT.json",
-  "new_admissions": "V7 actual native activation; root-authorized once-only continuation adopted exact active unit",
+  "new_admissions": "Frozen V9 S8 BIO CHECK pair has two actual native research starts; V7 completion/positive owned-group quiet retained. No current liveness inference.",
   "pause_requested_epoch": 1790914502.1696212,
   "resume_epoch": 1790979124.0,
   "pause_duration_seconds": 64621.83037877083,
   "pause_policy": "Actual explicit pause interval may be excluded prospectively on resume; no fixed assignment deadlines or births/outcomes/consumed usage reset",
   "previous_amended_deadline_utc": "2026-10-02T13:40:09Z",
   "resume_evidence": "resume-cohort-v1/ops/recovery-v1/RESUME_20261002.json",
-  "observation_utc": "2026-10-03T04:26:31.254280+00:00",
+  "observation_utc": "2026-10-03T04:53:51.115652+00:00",
   "native_qualification": "V3_MECHANICAL_PASSED_LIMITED_DELIVERY_INFERENCE",
   "native_qualification_evidence": "resume-qualified-v3-cohort/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json",
   "current_observation": {
@@ -114,27 +114,46 @@
       "V8-NB-RETR-C-M",
       "V8-NB-RETR-T-M",
       "V8-NB-AMEND-C-L",
-      "V8-NB-AMEND-T-L"
+      "V8-NB-AMEND-T-L",
+      "V8-NB-BREADTH-C-M",
+      "V8-NB-BREADTH-T-M"
     ],
     "active_jobs": [
-      "V8-NB-BREADTH-T-M-final-correction",
-      "V8-NB-BREADTH-C-M-final-correction"
+      "V8-BIO-C-Z-S8-research-proposal",
+      "V8-BIO-WIT-T-Z-S8-research-proposal"
     ],
-    "quality_reviewed_pairs": 5,
-    "independent_failed_screens": 9,
+    "quality_reviewed_pairs": 6,
+    "independent_failed_screens": 11,
     "independent_holds": 1,
     "quality_pending_cases": [],
     "stage_complete_counts": {
       "research": 20,
       "critic": 13,
-      "final": 10
+      "final": 12
     },
-    "operational_pipeline_count": 10,
+    "operational_pipeline_count": 12,
     "target_pipelines": 24,
-    "operational_pair_count": 5,
+    "operational_pair_count": 6,
     "target_pairs": 12,
-    "evidence": "notebook-amendment-quality-review-v1/ops/recovery-v1/OBSERVATION_20261003_0425.json"
+    "evidence": "notebook-breadth-quality-review-v1/ops/recovery-v1/OBSERVATION_20261003_0453_SIX_REVIEWED_PAIRS.json",
+    "runtime": {
+      "unit": "er8-v8-production-z-tranche-v9.service",
+      "positive_pid": 2775507,
+      "release": "ops/execution-resume-v1/root-production-release-v9.json",
+      "release_sha256": "6264e76ef8cefc71c9c83ddaed37008ffa9bbe707086483ec201a9f7faafb73d",
+      "scope": "Frozen observation only; not present liveness or portable runtime."
+    },
+    "S8_actual_native_starts": 2
   },
   "original_case_list_scope": "Historical original reservations, preserved at initial planning freeze; NOT_RUN entries here are not current execution claims. See attempts.json/current_observation for actual outcomes.",
-  "current_metadata_boundary": "Frozen actual UTC04:26:31.254280 despite observation filename0425; earlier03:30 audit does not cover this update. No present liveness inference."
+  "current_metadata_boundary": "Root reservation/creation sample epoch1791003230.9785047; displayed serialized snapshot UTC2026-10-03T04:53:51.115652+00:00 is later capture/write sample ~0.137seconds later. Both retained; no clock correction/reset. Earlier03:30 audit covers historical snapshot only; active jobs at freeze, no present liveness.",
+  "observation_created_epoch": 1791003230.9785047,
+  "source_serialized_utc": "2026-10-03T04:53:51.115652+00:00",
+  "current_runtime": {
+    "unit": "er8-v8-production-z-tranche-v9.service",
+    "positive_pid": 2775507,
+    "release": "ops/execution-resume-v1/root-production-release-v9.json",
+    "release_sha256": "6264e76ef8cefc71c9c83ddaed37008ffa9bbe707086483ec201a9f7faafb73d",
+    "scope": "Frozen observation only; not present liveness or portable runtime."
+  }
 }

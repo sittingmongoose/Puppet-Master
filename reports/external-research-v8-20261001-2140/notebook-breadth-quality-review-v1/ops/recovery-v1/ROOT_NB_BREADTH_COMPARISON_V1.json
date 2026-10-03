@@ -1,0 +1,55 @@
+{
+  "schema": "pm.er8.root-matched-comparison.v1",
+  "root_authority": true,
+  "created_epoch": 1791003231.1160212,
+  "comparison": "NB breadth/analogy-driven discovery C/T",
+  "case_results": [
+    {
+      "case_id": "V8-NB-BREADTH-C-M",
+      "disposition": "FAILED_SCREEN",
+      "freeze": {
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/FREEZE.json",
+        "sha256": "06e736fe50cb55ae9f11371cce8659dbb8b7e113d5f7ce98efdc1f2db14380bf"
+      },
+      "manifest": {
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-C-M/MANIFEST.json",
+        "sha256": "1e887d8b31b551b1fc5fbab55631cdd3930f1e2ce7995a4a44e51927a3974e59"
+      },
+      "parent_receipt": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-C-M/GLOBAL_PARENT_FINAL_RECEIPT.json",
+        "sha256": "42ef077a82e96475281bb123a028bee0c69ac78984aa5c055664e3705940b843"
+      },
+      "wall_seconds": 2271.436343226,
+      "occupied_stage_lease_seconds": 2270.8215227127075,
+      "outside_native_seconds": 5.179984582
+    },
+    {
+      "case_id": "V8-NB-BREADTH-T-M",
+      "disposition": "FAILED_SCREEN",
+      "freeze": {
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/FREEZE.json",
+        "sha256": "b8c03c96286694f88bc0ad50ec332bc68eb70f0c19265d7a8d844452d47c30a4"
+      },
+      "manifest": {
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-BREADTH-T-M/MANIFEST.json",
+        "sha256": "a383599c5cc1e64cf32f6a9daf1f46575730460f229b4acdb241548f9090828d"
+      },
+      "parent_receipt": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-T-M/GLOBAL_PARENT_FINAL_RECEIPT.json",
+        "sha256": "d9fc19931b558a350c846394fbc4a01e376e381469f78be01e9037b7228387af"
+      },
+      "wall_seconds": 1863.756994083,
+      "occupied_stage_lease_seconds": 1863.0466895103455,
+      "outside_native_seconds": 5.331097033
+    }
+  ],
+  "quality_ruling": "Both independently source-verified FAILED_SCREEN; remaining comprehensive3Q5B18facetsscopeUNASSESSED/null. No wholequalityPASS/canonicalcomparable score/qualifiedefficiency/winner/holdout.",
+  "source_order": "Each immutable output-first source-quality freeze precedes METHOD/TASK/case/rubric/provenance/cost audit; original frozen sources retained.",
+  "control_errata": "Dominant concrete defect is recovery minting uniqueness for identical idless cells; earlier missing-id warning/schema emphasis narrowed, not regraded; source-first freeze unchanged.",
+  "candidate_feedback": "NONE",
+  "cost_scope": "Descriptive case costs separate from Sol/rootmanagement; all prior starts/failure/replacement costs/future commitments retained. Full tokens/money/account/provider/model load UNKNOWN.",
+  "observation": {
+    "path": "LAB_ROOT/ops/recovery-v1/OBSERVATION_20261003_0453_SIX_REVIEWED_PAIRS.json",
+    "sha256": "06616edd5331235c8032f901332fbf044eb68bf2449acc61d8cf9b669134340b"
+  }
+}

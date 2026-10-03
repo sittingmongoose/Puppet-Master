@@ -1,0 +1,34 @@
+{
+  "assigned_extra": "Three or four plausible options, one neighboring analogy, compare at least two, selected concrete tradeoff, retain/reject rationale, before commitment discovery.",
+  "assignment": "ordinary-complete-plus-bounded-breadth-analogy-discovery",
+  "before_commitment_sequencing": "UNVERIFIABLE_FROM_OUTPUT_AND_ALLOWED_METADATA",
+  "case": "V8-NB-BREADTH-T-M",
+  "comparison_scope": "No isolated method effect, numeric score, speedup or winner claim.",
+  "independent_discovery_selection_process": "UNVERIFIABLE_FROM_OUTPUT_AND_ALLOWED_METADATA",
+  "method_revealed_after_source_quality_freeze": true,
+  "method_sha256": "647cc37c306ec1c211d35a43eb34973f5606a4943b207aca93e579dc23111c24",
+  "observable_uptake": "OUTPUT_AND_CAPTURE_SUPPORTED_PARTIAL",
+  "output_evidence": {
+    "analogies": "git for bounded rename-inference rule shape; nbconvert for field classification, rejected as mutating code.",
+    "compared_core_options": [
+      "nbdime library",
+      "nbformat plus in-house comparator"
+    ],
+    "final_locations": [
+      "section 2 bounded shortlist",
+      "section 6 comparison and recommendation",
+      "section 6 analogy retain/reject paragraph"
+    ],
+    "selected_tradeoff": "Narrow offline comparator and explicit ambiguity/refusals in exchange for reimplementing a slice of nbdime and giving up mature rendering/merge edge cases.",
+    "shortlist": [
+      "nbdime",
+      "nbformat",
+      "git",
+      "nbconvert"
+    ]
+  },
+  "public_capture_evidence": "Positive hash-verified capture metadata records public sources in all four component repositories.",
+  "schema": "method-uptake-v1",
+  "source_quality_remains": "FAILED_SCREEN",
+  "source_semantic_uptake": "UNKNOWN; capture/delivery does not prove reading or understanding"
+}

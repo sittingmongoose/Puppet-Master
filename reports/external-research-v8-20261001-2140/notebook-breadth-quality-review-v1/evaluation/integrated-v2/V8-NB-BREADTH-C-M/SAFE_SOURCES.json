@@ -1,0 +1,125 @@
+[
+  {
+    "bytes": 22596,
+    "complete": true,
+    "id": "I1",
+    "operation": "independent public HTTPS GET; body held in memory only",
+    "pin": "v5.9.2",
+    "ranges": [
+      "107-127",
+      "337-381",
+      "455-458",
+      "482-522",
+      "630-659"
+    ],
+    "sha256": "b134b241188d63bcdf1eda912c9c7669bab90dcbda44bae9b25a0372c99d0532",
+    "status": 200,
+    "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.9.2/nbformat/validator.py"
+  },
+  {
+    "bytes": 16104,
+    "complete": true,
+    "id": "I2",
+    "operation": "independent public HTTPS GET; body held in memory only",
+    "pin": "v5.9.2",
+    "ranges": [
+      "98-103",
+      "115-159"
+    ],
+    "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+    "status": 200,
+    "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.9.2/nbformat/v4/nbformat.v4.5.schema.json"
+  },
+  {
+    "bytes": 20578,
+    "complete": true,
+    "id": "I3",
+    "operation": "independent public HTTPS GET; body held in memory only",
+    "pin": "d06b404fe7dd195677f744e6cd3ca91b07e6e6e5",
+    "ranges": [
+      "72-86",
+      "171-180",
+      "234-240",
+      "258-275"
+    ],
+    "sha256": "7f52a9c224fd11509db187187f6e1bd760a329ba836a3b40945b47bcde463992",
+    "status": 200,
+    "url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/d06b404fe7dd195677f744e6cd3ca91b07e6e6e5/62-cell-id/cell-id.md"
+  },
+  {
+    "bytes": 82,
+    "complete": true,
+    "id": "I4",
+    "operation": "independent public HTTPS GET; body held in memory only",
+    "pin": "75f4f442952464c1ab9a6401e526163f2ee9b778",
+    "ranges": [
+      "1-6"
+    ],
+    "sha256": "e512b62ee34535f98bd24f8173bf2d6be6f37601199766549ac808256fa014ce",
+    "status": 200,
+    "url": "https://raw.githubusercontent.com/jupyter/nbformat/75f4f442952464c1ab9a6401e526163f2ee9b778/nbformat/corpus/words.py"
+  },
+  {
+    "bytes": 30398,
+    "complete": true,
+    "id": "I5",
+    "operation": "independent public HTTPS GET; body held in memory only",
+    "pin": "75f4f442952464c1ab9a6401e526163f2ee9b778",
+    "ranges": [
+      "/parents/0/sha",
+      "/commit/author/date",
+      "/commit/committer/date",
+      "/stats",
+      "/files[filename=nbformat/corpus/tests/test_words.py]/patch"
+    ],
+    "sha256": "3a62886d054ae7c2457b98fc1e73c0a44249f34a196153a988d7790cd4d53e1c",
+    "status": 200,
+    "url": "https://api.github.com/repos/jupyter/nbformat/commits/75f4f442952464c1ab9a6401e526163f2ee9b778"
+  },
+  {
+    "bytes": 18745,
+    "complete": true,
+    "id": "I6",
+    "operation": "independent public HTTPS GET; body held in memory only",
+    "pin": "v4.0.2",
+    "ranges": [
+      "63-94",
+      "207-291",
+      "381-415",
+      "524-547",
+      "590-605"
+    ],
+    "sha256": "bc9c5c5ad149661e7d3f6a99e43c657a91cce91ee1411611656df0dc61e837d2",
+    "status": 200,
+    "url": "https://raw.githubusercontent.com/jupyter/nbdime/v4.0.2/nbdime/diffing/notebooks.py"
+  },
+  {
+    "bytes": 15703,
+    "complete": true,
+    "id": "I7",
+    "operation": "independent public HTTPS GET; body held in memory only",
+    "pin": "v5.9.2",
+    "ranges": [
+      "/definitions/raw_cell",
+      "/definitions/markdown_cell",
+      "/definitions/code_cell"
+    ],
+    "sha256": "dddf3bff4c0bd42bd467117321d72bceddb8de7361b0cc9581bd8318e9b4d3c8",
+    "status": 200,
+    "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.9.2/nbformat/v4/nbformat.v4.4.schema.json"
+  },
+  {
+    "bytes": 16063,
+    "complete": true,
+    "id": "I8",
+    "operation": "independent public HTTPS GET; body held in memory only",
+    "pin": "v5.9.2",
+    "ranges": [
+      "166-183",
+      "204-234"
+    ],
+    "sha256": "a7c3aa5c1fd30759ff8ee0fb6db35f4d8f4aabc8ad2977684414a7baf47927e8",
+    "status": 200,
+    "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.9.2/CHANGELOG.md"
+  }
+]

@@ -1,0 +1,105 @@
+{
+  "aggregate_score": null,
+  "canonical_weights": null,
+  "case": "V8-NB-BREADTH-C-M",
+  "efficiency_claim": null,
+  "evaluator": "er8-quality-nb-breadth-c-v1",
+  "execution_status": "Candidate proposed tests not executed; static primary-source inspection only",
+  "findings": [
+    {
+      "artifact_location": "FINAL_PROPOSAL.md section 1 C3; sections 3 and 6 validation recommendation",
+      "claim": "Section 1 generalizes missing-id behavior to warning without any raise for a notebook declaring 4.5 or later.",
+      "consequence": "A read-only validator using the recommended wrapper fails validity or raises rather than merely warning, so the implementation plan must catch/report invalidity before continuing fallback. This is a material source-condition preservation failure.",
+      "evidence": [
+        "I1:337-354",
+        "I1:482-502",
+        "I1:505-522",
+        "I1:630-659",
+        "I1:107-127",
+        "I2:115-159"
+      ],
+      "id": "SQ1",
+      "independent_result": "The warning occurs in _normalize. With repair_duplicate_cell_ids=False, the missing field is left absent; validate then runs iter_validate, whose required-id schema error is raised. isvalid uses that false repair flag and returns False on ValidationError. Default-on repair changes this result by adding the missing id. The statement omits this consequential API/flag condition. Section 3 narrows its statement to _normalize, but does not retract section 1 or specify how the recommended nonmutating validation integrates invalid-id fallback.",
+      "proof_kind": "independent static call-path and required-field trace; candidate fixtures were not executed",
+      "status": "VERIFIED_FAILED_SCREEN"
+    },
+    {
+      "artifact_location": "FINAL_PROPOSAL.md section 7 step 3; section 5 scoped engineering lesson",
+      "claim": "Recovery can mint deterministic content-hash-derived eight-hex ids and describes that as matching the JEP/fix expression family.",
+      "consequence": "The proposed recovery transform is insufficiently specified to guarantee unique valid notebook ids and is not justified by the cited random generator. This supports the failed source-to-plan screen independently of SQ1.",
+      "evidence": [
+        "I3:171-180",
+        "I3:234-240",
+        "I3:258-275",
+        "I4:1-6",
+        "I1:356-375"
+      ],
+      "id": "SQ2",
+      "independent_result": "The cited generator is a random UUID subset; JEP distinguishes random generation and requires per-notebook uniqueness. Eight-hex syntax alone does not establish equivalent semantics. Repeated identical-content idless cells can receive the same deterministic content hash; no collision resolution or cell discriminator is specified for minting. The frozen proposal explicitly admits content duplicates in T9, and its own scoped lesson calls for content-independent fields.",
+      "proof_kind": "source comparison plus deterministic duplicate-content counterexample; no implementation execution",
+      "status": "VERIFIED_SOURCE_TO_PLAN_DEFECT"
+    },
+    {
+      "artifact_location": "FINAL_PROPOSAL.md section 5 step 4",
+      "claim": "The fix commit adds or wraps the no-warnings assertion in test_generate_corpus_id.",
+      "consequence": "A source-traced test-chain description confuses existing context with changed test coverage. This is a secondary attribution defect, not a claim that the fix lacks any test.",
+      "evidence": [
+        "I5:/files[filename=nbformat/corpus/tests/test_words.py]/patch"
+      ],
+      "id": "SQ3",
+      "independent_result": "The fix patch retains the no-warning wrapper and assertion as unchanged context. Its only addition in this test is the replacement probability comment; it also removes corpus tests. The proposal itself earlier attributes the no-warning wrapper to its parent commit. The fix does contain a retained test, but did not add that assertion.",
+      "proof_kind": "independent pinned commit patch inspection",
+      "status": "VERIFIED_CHAIN_ATTRIBUTION_ERROR"
+    }
+  ],
+  "frozen_epoch": 1791002309.4231586,
+  "frozen_utc": "2026-10-03T04:38:29.423159+00:00",
+  "full_quality_assessed": false,
+  "input": {
+    "bytes": 39201,
+    "path": "ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-C-M/V8-NB-BREADTH-C-M-final-correction/workspace/out/FINAL_PROPOSAL.md",
+    "sha256": "6157387e85135dbdf1e062021528703213abceefabd1d9006202283a13787624"
+  },
+  "not_yet_read": [
+    "own METHOD",
+    "own TASK",
+    "own manifest",
+    "common rubric",
+    "case definitions",
+    "stage receipts",
+    "cost records",
+    "provenance records",
+    "other arm or evaluation or prior ruling"
+  ],
+  "operational_complete": "NOT_ASSESSED_IN_SOURCE_PHASE",
+  "reveal_order": [
+    "task delegation and operational mailbox/clock",
+    "frozen FINAL_PROPOSAL.md only",
+    "independently obtained pinned/tagged public primary sources",
+    "SOURCE_QUALITY_FREEZE.json plus SOURCE_COVERAGE.json plus SOURCE_DISPOSITION.json written before any own METHOD/TASK/manifest/rubric/case/receipt/cost/provenance read"
+  ],
+  "safe_source_ids": [
+    "I1",
+    "I2",
+    "I3",
+    "I4",
+    "I5",
+    "I6",
+    "I7",
+    "I8"
+  ],
+  "schema": "er8-source-quality-freeze-v1",
+  "source_quality": "VERIFIED_FAILED_SCREEN",
+  "stop_rule": "Decisive consequential source-condition and source-to-plan defects verified independently. Comprehensive quality grading stops; unscreened scope stays UNASSESSED with null score.",
+  "supported_partial_checks": [
+    "v4.4 cell definitions exclude id and forbid additional fields",
+    "v4.5 cell definitions require id with stated string shape",
+    "default repair remains enabled in validate at v5.9.2",
+    "duplicate-id repair warns and false-repair branch raises",
+    "strict output comparator compares metadata/execution_count while stale comment says otherwise",
+    "nbdime id equality predicate and target axes exist",
+    "fix commit date/parent/stats match and generator is UUID subset",
+    "changelog source and release entries match"
+  ],
+  "winner_claim": null
+}
