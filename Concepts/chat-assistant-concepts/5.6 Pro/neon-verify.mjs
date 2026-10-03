@@ -54,6 +54,12 @@
  *   14 no status ink (danger, warning, positive, accent, accent-2) on a concept or control glyph at rest outside
  *      the hosts allowed to carry tone (basic-dark, friendly-dark, Query thread, wide list).
  *   15 transcript status glyphs: every halo is inked like its tube.
+ *   16 NieR: no status block is blank (its glyph ink never equals the block it paints), every thread and 3 panels.
+ *   17 17a hover lights a control's tube to --text (attach, header search, history close; every theme); 17b the hover
+ *      ink rule never recolours a toned glyph (every thread, the composer menus, six panels; four themes).
+ *   18 NieR's Pod 042 is clear of the jump chip, the bar, the queue, the decision panel and the composer (3 sizes,
+ *      every thread, transcript top and bottom), and of transcript buttons at the bottom.
+ *   19 the chat header's status word wears its mark's tone (nine statuses; three themes).
  *   console: no warnings, errors or page errors.
  *
  * WHERE IT RUNS. Browser checks belong on jared-mac (INVOCATIONS.md recipe): copy the built index.html and this
@@ -1454,6 +1460,212 @@ await sec('transcript halo ink', async () => {
     check(r.n >= 1 && r.bad.length === 0, `15 transcript status glyphs: halo ink equals tube ink (${r.n} glyphs)`, r.bad);
   } finally { await shut(p); }
 });
+
+/* ------------------------------------------------------------- check 16: no blank status block */
+/* NieR inverts needs-you into an ink block with paper strokes; a host rule that inks the glyph in the block's own ink
+   blanks it (final review, 2026-10-03: the pmx decision row's "Your move." mark, module-shell.css's accent at 0,5,1,
+   since NieR's --accent is the ink). Every status wrapper that paints a background, on every thread and in the To-Do,
+   Goal and Subagents panels, has a glyph ink that differs from that background (NieR themes; the default themes paint
+   none, which the count reports). */
+for (const theme of THEMES.filter(t => t.startsWith('nier'))) {
+  await sec(`blank blocks ${theme}`, async () => {
+    const p = await newWidePage();
+    try {
+      await setTheme(p, theme);
+      await p.evaluate(() => window.PM56_DEMO.setVariant(1, 5));
+      const ids = await p.evaluate(() => [...document.querySelectorAll('.thread-row')].map(r => r.dataset.id));
+      const scan = () => p.evaluate(() => {
+        let n = 0; const bad = [];
+        for (const st of document.querySelectorAll('.nx-st')) {
+          const bg = getComputedStyle(st).backgroundColor;
+          if (bg === 'rgba(0, 0, 0, 0)' || st.getBoundingClientRect().width < 1) continue;
+          const c = st.querySelector('svg .nx-c, svg .nx-f');
+          if (!c) continue;
+          n++;
+          const cs = getComputedStyle(c), ink = cs.stroke !== 'none' ? cs.stroke : cs.fill;
+          if (ink === bg) bad.push(st.className + ' @' + String(st.parentElement.className).slice(0, 40) + ' ' + bg);
+        }
+        return { n, bad };
+      });
+      let n = 0; const bad = new Set();
+      for (const id of ids) {
+        await p.evaluate(i => window.PM56_DEMO.selectThread(i), id);
+        await p.waitForTimeout(300);
+        const r = await scan(); n += r.n; r.bad.forEach(b => bad.add(id + ': ' + b));
+      }
+      for (const d of ['todo', 'goal', 'subagents']) {
+        await p.evaluate(x => window.PM56_DEMO.openActivity(x), d);
+        await p.waitForTimeout(400);
+        const r = await scan(); n += r.n; r.bad.forEach(b => bad.add('panel ' + d + ': ' + b));
+      }
+      check(n > 0 && bad.size === 0, `16 no blank status block [${theme}]: ${n} painted blocks on ${ids.length} threads and 3 panels, glyph ink never the block's`, [...bad].slice(0, 10));
+    } finally { await shut(p); }
+  });
+}
+
+/* ------------------------------------------------------------- check 17: hover ignites the tube */
+/* Ruling 1: controls ignite on hover. Final review (2026-10-03): many hosts restate their muted ink after the generic
+   `.icon-button:hover{color:var(--text)}`, so on light themes (no hover halo) a hovered control was pixel-identical to
+   rest once its act ended. 17a: the composer's attach, the header's search and the history close, hovered for 600 ms,
+   draw their tube in the theme's --text ink, and did not at rest (every theme). 17b: the ink rule never recolours a
+   toned glyph: every control or concept glyph its own selector reaches (read from the sheet, the :hover arm dropped)
+   whose ink is not set by a higher rule (its own --nx-ink) rests in a neutral ink (--muted, --subtle, --text, idle) on
+   every thread, in the composer menus and in six Activity panels (basic-dark, basic-light, retro-light, nier-dark). */
+for (const theme of THEMES) {
+  await sec(`hover ink ${theme}`, async () => {
+    const p = await newWidePage();
+    try {
+      await setTheme(p, theme);
+      await p.evaluate(() => { window.PM56_DEMO.setVariant(1, 5); window.PM56_DEMO.selectThread('plain'); });
+      await p.waitForTimeout(700);
+      const text = await p.evaluate(() => { const s = document.createElement('span'); s.style.color = 'var(--text)'; document.body.appendChild(s); const c = getComputedStyle(s).color; s.remove(); return c; });
+      const rows = [];
+      for (const [name, sel] of [['attach', '[data-action="attach"]'], ['search', '.chat-header .icon-button[aria-label*="earch"]'], ['history close', '.history-head .icon-button:last-child']]) {
+        const b = await p.$(sel), bb = b && await b.boundingBox();
+        if (!bb) { rows.push({ name, missing: true }); continue; }
+        const ink = () => p.evaluate(s => getComputedStyle(document.querySelector(s).querySelector('svg.nx .nx-c')).stroke, sel);
+        await p.mouse.move(5, 1075); await p.waitForTimeout(300);
+        const rest = await ink();
+        await p.mouse.move(bb.x + bb.width / 2, bb.y + bb.height / 2); await p.waitForTimeout(600);
+        const hover = await ink();
+        rows.push({ name, rest, hover, ok: hover === text && rest !== text });
+      }
+      await p.mouse.move(5, 1075);
+      check(rows.length === 3 && rows.every(r => r.ok), `17a hover lights the tube to --text [${theme}]: ${rows.map(r => r.name + (r.ok ? '' : ' NO')).join(', ')}`, { text, rows });
+    } finally { await shut(p); }
+  });
+}
+for (const theme of ['basic-dark', 'basic-light', 'retro-light', 'nier-dark'].filter(t => THEMES.includes(t))) {
+  await sec(`hover ink tones ${theme}`, async () => {
+    const p = await newWidePage();
+    try {
+      await setTheme(p, theme);
+      await p.evaluate(() => window.PM56_DEMO.setVariant(1, 5));
+      const bare = await p.evaluate(() => {
+        for (const sh of document.styleSheets) { let rs; try { rs = sh.cssRules; } catch (e) { continue; } for (const r of rs) if (r.selectorText && /--nx-ink:\s*var\(--text\)/.test(r.style.cssText) && /:hover/.test(r.selectorText)) return r.selectorText.replace(/:where\(:hover, :focus-visible\)/g, ''); }
+        return null;
+      });
+      if (!bare) { check(false, `17b hover ink tones [${theme}]: the hover ink rule is missing from the sheets`, null); return; }
+      const scan = where => p.evaluate(([bare, where]) => {
+        const pr = document.createElement('span'); document.body.appendChild(pr); const tok = {};
+        for (const t of ['--muted', '--text', '--subtle', '--nx-idle']) { pr.style.color = 'var(' + t + ', transparent)'; tok[getComputedStyle(pr).color] = 1; }
+        pr.remove();
+        let n = 0; const bad = [];
+        for (const s of document.querySelectorAll('svg.nx')) {
+          if (!s.matches(bare) || s.getBoundingClientRect().width < 2) continue;
+          const c = s.querySelector('.nx-c'); if (!c) continue;
+          n++;
+          if (getComputedStyle(s).getPropertyValue('--nx-ink').trim()) continue;
+          const ink = getComputedStyle(c).stroke;
+          if (!tok[ink]) { const h = s.closest('button, summary, [role="button"], [data-action]'); bad.push(where + ' ' + s.dataset.nx + ' ' + ink + ' @' + h.tagName.toLowerCase() + '.' + String(h.className).trim().replace(/\s+/g, '.').slice(0, 50)); }
+        }
+        return { n, bad };
+      }, [bare, where]);
+      let n = 0; const bad = new Set();
+      const ids = await p.evaluate(() => [...document.querySelectorAll('.thread-row')].map(r => r.dataset.id));
+      for (const id of ids) { await p.evaluate(i => window.PM56_DEMO.selectThread(i), id); await p.waitForTimeout(250); const r = await scan(id); n += r.n; r.bad.forEach(b => bad.add(b)); }
+      await p.evaluate(() => window.PM56_DEMO.selectThread('plain')); await p.waitForTimeout(300);
+      for (const m of ['wand', 'mode', 'model', 'persona', 'permissions']) {
+        const b = await p.$(`[data-menu="${m}"]`); if (!b) continue;
+        try { await b.click(); await p.waitForTimeout(400); const r = await scan('menu ' + m); n += r.n; r.bad.forEach(x => bad.add(x)); } catch (e) {}
+        await closeOverlays(p);
+      }
+      for (const d of ['goal', 'todo', 'subagents', 'changes', 'artifacts', 'crew']) {
+        try { await p.evaluate(x => window.PM56_DEMO.openActivity(x), d); await p.waitForTimeout(350); const r = await scan('panel ' + d); n += r.n; r.bad.forEach(x => bad.add(x)); } catch (e) {}
+      }
+      check(n > 100 && bad.size === 0, `17b hover ink leaves toned glyphs alone [${theme}]: ${n} reachable glyphs, every one without its own --nx-ink rests in a neutral ink`, [...bad].slice(0, 12));
+    } finally { await shut(p); }
+  });
+}
+
+/* ------------------------------------------------------------- check 18: Pod 042 clear of the controls */
+/* NieR's Pod (40x52, pointer-events none) hovers over the composer's top-right corner. Final review (2026-10-03): it
+   hid the jump-to-latest chip, and at some sizes a Resume button and the bar's Artifacts count. At 1440x900,
+   1512x982 and 1920x1100 (history at 320), on every thread, with the transcript at its top and at its bottom, the Pod
+   intersects no jump chip (visible or not: its slot), bar item, send-queue or decision button, or the composer; at the
+   bottom (the resting place) no transcript button or link either, and the bar never overflows its row. (Scrolled up,
+   transcript content passes under the Pod as it does under PMConcept7's.) */
+if (THEMES.includes('nier-dark')) await sec('pod', async () => {
+  const bad = []; let views = 0;
+  for (const [w, h] of [[1440, 900], [1512, 982], [1920, 1100]]) {
+    const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1, reducedMotion: REDUCED ? 'reduce' : 'no-preference' });
+    await ctx.addInitScript(() => { try { localStorage.setItem('pm56-history-w', '320'); } catch (e) {} });
+    const p = await ctx.newPage(); p.__ctx = ctx;
+    try {
+      watch(p);
+      await p.goto(pathToFileURL(FILE).href, { waitUntil: 'load' });
+      await boot(p);
+      await setTheme(p, 'nier-dark');
+      await p.evaluate(() => window.PM56_DEMO.setVariant(1, 5));
+      const ids = await p.evaluate(() => [...document.querySelectorAll('.thread-row')].map(r => r.dataset.id));
+      for (const id of ids) {
+        await p.evaluate(i => window.PM56_DEMO.selectThread(i), id);
+        await p.waitForTimeout(400);
+        await p.mouse.move(5, h - 5);
+        for (const pos of ['top', 'bottom']) {
+          await p.evaluate(pos => { const t = document.querySelector('.transcript'); t.scrollTop = pos === 'top' ? 0 : t.scrollHeight; t.dispatchEvent(new Event('scroll')); }, pos);
+          await p.waitForTimeout(300);
+          const r = await p.evaluate(pos => {
+            const pod = document.getElementById('o55np-pod');
+            if (!pod || getComputedStyle(pod).display === 'none') return { nopod: true };
+            const P = pod.getBoundingClientRect();
+            const hit = e => { const q = e.getBoundingClientRect(); if (q.width < 1 || q.height < 1) return 0; const ix = Math.max(0, Math.min(P.right, q.right) - Math.max(P.left, q.left)), iy = Math.max(0, Math.min(P.bottom, q.bottom) - Math.max(P.top, q.top)); return ix * iy > .5 ? Math.round(ix) + 'x' + Math.round(iy) : 0; };
+            const out = [];
+            for (const e of document.querySelectorAll('.jump-bottom, .activity-item, .send-queue-row button, .decision-host button, .chat-stage > .composer')) { const k = hit(e); if (k) out.push(String(e.className).slice(0, 30) + ' ' + k); }
+            if (pos === 'bottom') {
+              const tr = document.querySelector('.transcript').getBoundingClientRect();
+              for (const e of document.querySelectorAll('.transcript button, .transcript a, .transcript summary')) {
+                const q = e.getBoundingClientRect(); if (q.bottom < tr.top || q.top > tr.bottom) continue;
+                const cs = getComputedStyle(e); if (cs.visibility === 'hidden' || +cs.opacity === 0) continue;
+                const k = hit(e); if (k) out.push('transcript ' + (e.textContent || e.className).trim().slice(0, 24) + ' ' + k);
+              }
+            }
+            const bar = document.querySelector('.chat-float .activity-bar');
+            if (bar && bar.scrollWidth - bar.clientWidth > 1) out.push('bar overflows ' + (bar.scrollWidth - bar.clientWidth) + ' px');
+            return { out };
+          }, pos);
+          views++;
+          if (r.nopod) bad.push(`${w} ${id}: no Pod`);
+          else if (r.out.length) bad.push(`${w} ${id} ${pos}: ${r.out.join(', ')}`);
+        }
+      }
+    } finally { await shut(p); }
+  }
+  check(views > 0 && bad.length === 0, `18 Pod 042 clear of the jump chip, the bar, the queue, the decision panel and the composer (${views} views: 3 sizes x every thread x top and bottom; at the bottom no transcript button either)`, bad.slice(0, 12));
+});
+
+/* ------------------------------------------------------------- check 19: the header word wears its mark's tone */
+/* Final review (2026-10-03): the chat header's status word was the warning amber for every status. On a thread of each
+   of the nine statuses (basic-dark, basic-light, nier-dark) the word's colour is its mark's tone: blocked danger,
+   attention warning, working accent, done positive, idle and paused muted. */
+for (const theme of ['basic-dark', 'basic-light', 'nier-dark'].filter(t => THEMES.includes(t))) {
+  await sec(`header word ${theme}`, async () => {
+    const p = await newWidePage();
+    try {
+      await setTheme(p, theme);
+      await p.evaluate(() => window.PM56_DEMO.setVariant(1, 5));
+      const rows = await p.evaluate(() => [...document.querySelectorAll('.thread-row')].map(r => [r.dataset.id, r.querySelector('.ph-status') && r.querySelector('.ph-status').dataset.status]));
+      const want = { blocked: '--danger', attention: '--warning', working: '--accent', changed: '--accent-2', done: '--positive', idle: '--muted', paused: '--muted' };
+      const seen = {}, bad = [];
+      for (const [id, s] of rows) {
+        if (!s || seen[s]) continue;
+        await p.evaluate(i => window.PM56_DEMO.selectThread(i), id);
+        await p.waitForTimeout(300);
+        const r = await p.evaluate(want => {
+          const c = document.querySelector('.chat-header .chat-state'); if (!c) return null;
+          const tone = (c.querySelector('.nx-st') || {}).className || '';
+          const t = (/nx-tn-(\w+)/.exec(tone) || [])[1];
+          const pr = document.createElement('span'); pr.style.color = 'var(' + want[t] + ')'; document.body.appendChild(pr);
+          const w = getComputedStyle(pr).color; pr.remove();
+          return { tone: t, data: c.dataset.tone || '', color: getComputedStyle(c).color, want: w };
+        }, want);
+        seen[s] = r;
+        if (!r || r.tone !== r.data || r.color !== r.want) bad.push({ status: s, ...r });
+      }
+      check(Object.keys(seen).length >= 9 && bad.length === 0, `19 header status word in its mark's tone [${theme}]: ${Object.keys(seen).length} statuses`, bad);
+    } finally { await shut(p); }
+  });
+}
 
 /* ------------------------------------------------------------- console noise + report */
 check(consoleErrors.length === 0, 'console: zero warnings/errors from the page', consoleErrors.slice(0, 10));
