@@ -673,8 +673,11 @@
     if (!m.released) { if (hero && hold) hold.hero = true; return; }
     var fly = !hero && m.flyCards && m.flyCards.indexOf(card.getAttribute('data-widget')) >= 0;
     /* the plates that hold flight targets show their rows as the flyers set off (FINAL-REVIEW-3 must-fix 4: they stood
-       empty until about 566 ms, white cards in Friendly Light): from 40 before the hero, 20 apart */
-    var slot = hero ? m.heroAt : fly ? m.heroAt - 40 + Math.min(100, 20 * (m.flyRank = (m.flyRank || 0) + 1) - 20)
+       empty until about 566 ms, white cards in Friendly Light): from 40 before the hero, 20 apart. Without a GPU they keep
+       their place after the hero (VM: revealing them with the frames' entrance cost the Accounts change 4-5 frames) */
+    var flyAt = soft() ? m.heroAt + 60 + Math.min(120, 24 * ((m.flyRank || 0) + 1) - 24) : m.heroAt - 40 + Math.min(100, 20 * ((m.flyRank || 0) + 1) - 20);
+    if (fly) m.flyRank = (m.flyRank || 0) + 1;
+    var slot = hero ? m.heroAt : fly ? flyAt
       : !flag('heroRoll') ? m.heroAt + Math.min(T3.quietCap, T3.quietStep * (m.rank++)) : m.quietAt + Math.min(T3.quietCap, T3.quietStep * (m.rank++));
     /* the real reveal time (a body built after its slot reveals at once): flights wait for it to be fully in */
     card._pmuRevealAt = Math.max(slot, since(m));

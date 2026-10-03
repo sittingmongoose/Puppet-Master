@@ -42,7 +42,7 @@
     /* the last card names the alerts pushed past it (reachable, never dropped) */
     if (n === NCARDS - 1) {
       var more = alertSlots().slice(NCARDS);
-      if (more.length) m.more = more.map(function (o) { return slotTitle(o) + ' · ' + slotWhen(o); });
+      if (more.length) m.more = more.map(function (o) { return slotTitle(o) + ' · ' + slotWhen(o) + ' · ' + (o.live ? o.al.detail : C.alertDetail(o.i)); });
     }
     return m;
   }
@@ -62,7 +62,8 @@
         var rows = [['Detail', m.detail], ['Score', m.score + ' of 100 · raises at 70'], ['Owner', m.owner], ['Observed', m.observed], ['Disposition', m.disposition], ['Scope', m.scope], ['Threshold', m.threshold], ['Receipt', m.receipt],
           ['Authority', sl.live ? 'live demo reading (concept fixture) · the demo engine raised it' : 'provider reported · PM pace model for the comparison']];
         if (m.more) rows.push(['More alerts', m.more.join(' · ')]);
-        return C.insp(slotTitle(sl), rows);
+        /* the Details carry the alert's own record title (the fixture's "Qwen weekly runway" lives here: never dropped) */
+        return C.insp(sl.al.title, rows);
       } });
   })(n);
   C.act('alert-route', function (el) {
