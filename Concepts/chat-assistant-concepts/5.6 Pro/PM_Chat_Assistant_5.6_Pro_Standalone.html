@@ -25172,24 +25172,30 @@ window.PM56_NIER_FACES = [
   /* The Pod steps back from a control (final review, 2026-10-03). Its resting place is clear of every fixed control (the
      jump chip, the bar, the queue, the decision panel and the composer yield to it, nier-parts.css), but transcript
      content scrolls past it, and a card's Resume or Open button could sit under it at some scroll positions. So while a
-     button, link, summary or field lies under its box (nine probe points; the Pod itself is pointer-events none, so
-     elementsFromPoint never returns it) it fades back (data-shy, nier-parts.css) and the control shows through; it comes
-     forward again when the control has passed. Checked on scroll and resize (the shared listener above is the cursor's,
+     button, link, summary or field lies under its box (a 5 x 5 grid of probe points; the Pod itself is pointer-events
+     none, so elementsFromPoint never returns it) it fades back (data-shy, nier-parts.css) and the control shows
+     through; it comes forward again once the control has passed. Checked on scroll and resize (the shared listener above is the cursor's,
      so this one is its own) and after every render the concept reports (afterRender, below). */
-  var podShyT = 0;
+  var podShyT = 0, podClearAt = 0;
   var SHY_HOST = 'button, a[href], summary, [role="button"], input, select, textarea';
+  var SHY_AT = [0.06, 0.27, 0.5, 0.73, 0.94];
   function podShy() {
     podShyT = 0;
     if (!pod || !pod.isConnected) return;
     var r = pod.getBoundingClientRect(), hit = false;
     if (r.width > 0 && r.height > 0) {
-      for (var i = 0; i < 9 && !hit; i++) {
-        var x = r.left + r.width * (0.15 + 0.35 * (i % 3)), y = r.top + r.height * (0.15 + 0.35 * Math.floor(i / 3));
-        var els = document.elementsFromPoint(x, y);
+      for (var i = 0; i < 25 && !hit; i++) {
+        var els = document.elementsFromPoint(r.left + r.width * SHY_AT[i % 5], r.top + r.height * SHY_AT[Math.floor(i / 5)]);
         for (var k = 0; k < els.length && !hit; k++) if (els[k].closest && els[k].closest(SHY_HOST)) hit = true;
       }
     }
-    if (pod.hasAttribute('data-shy') !== hit) pod.toggleAttribute('data-shy', hit);
+    /* it fades back at once, and comes forward only after 350 ms with nothing under it, so it does not flicker while a
+       column of buttons scrolls past */
+    var now = Date.now();
+    if (hit) { podClearAt = now + 350; if (!pod.hasAttribute('data-shy')) pod.setAttribute('data-shy', ''); return; }
+    if (!pod.hasAttribute('data-shy')) return;
+    if (now < podClearAt) { podShyT = window.setTimeout(podShy, podClearAt - now + 10); return; }
+    pod.removeAttribute('data-shy');
   }
   function podShySoon() { if (pod && !podShyT) podShyT = window.setTimeout(podShy, 90); }
   PARTS.pod = {
