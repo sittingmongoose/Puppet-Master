@@ -35620,7 +35620,47 @@ var PMU_SERIES = {
     roomKeys[room] = { keys: keys, cards: cards };
   }
   momentListeners.push(function (what, m) { if (what === 'end' || what === 'finish') { try { recordKeys(m.room); } catch (error) {} } });
-  function flightCards(room) { return roomKeys[room] ? roomKeys[room].cards.slice() : []; }
+  function flightCards(room) {
+    if (roomKeys[room]) return roomKeys[room].cards.slice();
+    /* a first visit: the cards predicted to hold the flyers' targets (built right after the hero, revealed with it) */
+    return moment && moment.room === room && moment.predicted ? moment.predicted.slice() : [];
+  }
+  /* where a share lands in a room not visited yet (FINAL-REVIEW-3 must-fix 4: a first visit waited for every first-screen
+     body before any flyer travelled; the towers stood over the hero for 200 ms and the target plates stayed empty): the
+     widget that holds the key in that room, from the widget naming the rooms share (content's widget ids); null when not
+     known (that flyer then waits for its target as before) */
+  function homeOf(room, key, ids) {
+    var kind = shareKind(key), rest = key.slice(kind.length + 1), prov = kind === 'win' || kind === 'acct' ? rest.split('/')[0] : kind === 'prov' ? rest : null;
+    var leg = prov && PMU.roster && PMU.roster.settingsToLegacy ? PMU.roster.settingsToLegacy(prov) : null, cand = [];
+    if (room === 'accounts') {
+      if (kind === 'ctl') cand.push('acct-switch');
+      if (prov) cand.push('acct-' + prov);
+      if (kind === 'reset') cand.push('acct-resets');
+    } else if (room === 'plans') {
+      if (leg && kind !== 'reset') cand.push('plan-' + leg);
+      if (kind === 'win') cand.push('plans-timeline', 'quota-history');
+      if (kind === 'reset') cand.push('reset-map');
+    } else if (room === 'analytics') {
+      if (kind === 'prov' && leg) cand.push('tok-' + leg);
+      if (key === 'num:value.window') cand.push('an-totals');
+      if (key === 'chart:tokens' || key.indexOf('num:tokens') === 0) cand.push('token-trend', 'an-totals');
+      if (kind === 'reset') cand.push('an-resets');
+      if (kind === 'win') cand.push('an-quota-history');
+    } else if (room === 'overview') {
+      if (kind === 'win') cand.push('ov-skyline');
+      if (key === 'num:spend.month' || key === 'chart:budget') cand.push('budget-now');
+      if (key === 'num:value.window') cand.push('month');
+      if (kind === 'ctl') cand.push('ov-headroom');
+      if (kind === 'prov') cand.push('route-pressure');
+      if (kind === 'reset') cand.push('ov-resets');
+    } else if (room === 'costs') {
+      if (key === 'num:spend.month' || key === 'chart:budget') cand.push('budget');
+      if (key === 'num:value.window') cand.push('cost-month');
+    } else if (room === 'context') {
+      if (key === 'num:context.pct' || key === 'chart:context') cand.push('ctx-window');
+    }
+    return cand.filter(function (id) { return ids.indexOf(id) >= 0; })[0] || null;
+  }
   /* one batched read of the old room's shares, before the click task writes anything (46-shell.js setView) */
   function snapShares(toRoom) {
     snapRec = null;
@@ -35679,7 +35719,10 @@ var PMU_SERIES = {
         if (v && valsLeft > 0) { var vr = v.getBoundingClientRect(); if (vr.width > 1) { valsLeft--; it.v = { el: v, kind: 'num', r: { x: vr.left - ar.left, y: vr.top - ar.top, w: vr.width, h: vr.height }, font: faceOf(v) }; } }
       }
     });
-    snapRec = { at: performance.now(), from: st.room, to: toRoom, items: list, app: { x: ar.left, y: ar.top } };
+    /* the board's origin in the app's frame at scroll 0 (the new board takes the old one's place, scrolled to its top): the
+       flight aims at predicted plates from grid geometry (FINAL-REVIEW-3 must-fix 4) */
+    var br = board.getBoundingClientRect();
+    snapRec = { at: performance.now(), from: st.room, to: toRoom, items: list, app: { x: ar.left, y: ar.top }, board: { x: br.left - ar.left, y: br.top - ar.top + scroll.scrollTop } };
   }
   function cssEsc(v) { return window.CSS && CSS.escape ? CSS.escape(v) : String(v).replace(/"/g, '\\"'); }
   function faceOf(el) {
@@ -35744,10 +35787,71 @@ var PMU_SERIES = {
     });
     var F = { flyers: flyers, paired: false, layer: layer, finish: function () { flyers.forEach(function (fl) { land(fl, true); }); } };
     m.flights = F;
+    /* a first visit predicts the cards that hold the targets (built after the hero, revealed with it) and every flyer
+       starts toward its predicted plate when its takeoff ends; it re-aims at its real target when that exists */
+    if (!roomKeys[m.room] && PMU.board && PMU.board.visible) {
+      var ids = PMU.board.visible(m.room) || [], pred = [];
+      flyers.forEach(function (fl) { fl.home = homeOf(m.room, fl.key, ids); if (fl.home && pred.indexOf(fl.home) < 0) pred.push(fl.home); });
+      m.predicted = pred;
+    }
     m.flyCards = flightCards(m.room);
+    if (!sp && f !== 'nier' && f !== 'retro') flyers.forEach(function (fl) { preTravel(fl, rec); });
     /* nothing paired after 700 ms (a target body that never came): the flyers leave */
     mtimer(m, 700, function () { if (!F.paired) pairFlights(true); });
     return F;
+  }
+  /* the early leg (FINAL-REVIEW-3 must-fix 4): from the end of the takeoff the flyer moves toward the point its target is
+     predicted at (the plate's grid rect, no read, and a per-kind anchor inside it), on the same arc as the flight (X on
+     SLIDE, Y on the flight's curve); a tower already starts to tip. pairFlights re-aims it from where it is. */
+  var PRE = { dur: 460 };
+  function homeRect(rec, id) {
+    var g = PMU.board && PMU.board.rect ? PMU.board.rect(id) : null, p = g && PMU.board.px ? PMU.board.px(g) : null;
+    if (!p || !rec.board) return null;
+    return { x: rec.board.x + p.l, y: rec.board.y + p.t, w: p.w, h: p.h };
+  }
+  function preAim(fl, hr) {
+    var it = fl.it || {}, kind = it.kind || 'num', a = fl.r;
+    /* the anchor inside the plate: a window or an account at its row (the account's place in its provider's list), a
+       mark or a reset line near the head, a control or a number in the upper part of the hero */
+    var row = 0;
+    if (kind === 'win' || kind === 'acct') {
+      var parts = String(fl.key).split(':')[1].split('/'), pv = PMU.roster && PMU.roster.provider ? PMU.roster.provider(parts[0]) : null;
+      if (pv) row = Math.max(0, pv.accounts.map(function (x) { return x.id; }).indexOf(parts[1]));
+    }
+    var ax = kind === 'win' ? hr.x + Math.min(hr.w * 0.62, 360) : hr.x + 24 + Math.min(a.w, hr.w * 0.5) / 2;
+    var ay = kind === 'prov' ? hr.y + 24 : kind === 'reset' ? hr.y + 70 : kind === 'ctl' || kind === 'num' || kind === 'chart' ? hr.y + Math.min(hr.h * 0.4, 110) : hr.y + 86 + 36 * row;
+    ay = Math.min(ay, hr.y + hr.h - 12);
+    return { cx: ax, cy: ay };
+  }
+  function preTravel(fl, rec) {
+    if (!fl.home || !rec) return;
+    var hr = homeRect(rec, fl.home); if (!hr) return;
+    var aim = preAim(fl, hr), a = fl.r, it = fl.it || {};
+    var dx = aim.cx - (a.x + a.w / 2), dy = aim.cy - (a.y + a.h / 2);
+    var tip = it.kind === 'win' && a.h > a.w * 1.3, rot = tip ? -90 : 0;
+    fl.outer.style.transformOrigin = '50% 50%'; fl.inner.style.transformOrigin = '50% 50%';
+    var fx = M.curve(E.slide), fy = M.curve('cubic-bezier(.55,.05,.35,1)'), fs = M.curve(E.roll), ko = [], ki = [];
+    for (var i = 0; i <= 12; i++) { var o = i / 12; ko.push({ offset: o, transform: 'translateX(' + (dx * fx(o)).toFixed(2) + 'px)' }); ki.push({ offset: o, transform: 'translateY(' + (dy * fy(o)).toFixed(2) + 'px) rotate(' + (rot * fs(o)).toFixed(2) + 'deg)' }); }
+    fl.pre = { dx: dx, dy: dy, rot: rot, fx: fx, fy: fy, fs: fs,
+      a: anim(fl.outer, ko, { dur: PRE.dur, delay: T3.takeoff, easing: 'linear', fill: 'both' }), b: anim(fl.inner, ki, { dur: PRE.dur, delay: T3.takeoff, easing: 'linear', fill: 'both' }) };
+  }
+  /* where the early leg will have brought the flyer when the real flight starts `after` motion ms from now (from its own
+     timing: no style read). The early leg keeps running until the flight takes over (the flight's animations are newer,
+     so they win from their first frame); it is cancelled at the landing. */
+  function preAt(fl, after) {
+    var P = fl.pre; if (!P) return null;
+    var p = 0, sp0 = M.speed();
+    try {
+      var ct = P.a && P.a.effect && P.a.effect.getComputedTiming();
+      var local = ct && ct.localTime != null ? ct.localTime : 0, dl = T3.takeoff * sp0, du = PRE.dur * sp0;
+      p = Math.max(0, Math.min(1, (local + Math.max(0, after) * sp0 - dl) / du));
+    } catch (error) { p = 0; }
+    return { x: P.dx * P.fx(p), y: P.dy * P.fy(p), r: P.rot * P.fs(p), p: p };
+  }
+  function preCancel(fl) {
+    var P = fl.pre; if (!P) return;
+    fl.pre = null;
+    [P.a, P.b].forEach(function (x) { if (x) try { x.cancel(); } catch (error) {} });
   }
   function makeFlyer(layer, r, clone, it, sp) {
     var outer = H('div', 'pmu-flyer', layer), inner = H('div', 'pmu-fly-in', outer), lift = H('div', 'pmu-fly-lift', inner);
@@ -35803,6 +35907,7 @@ var PMU_SERIES = {
       /* the body that holds the target is fully in before the landing (its reveal ends at its slot + its fade) */
       var bodyIn = Math.max(pick.card._pmuRevealAt != null ? pick.card._pmuRevealAt + T3.quietTravel : 0, pick.card._pmuFrameEnd || 0);
       var t0 = Math.max(start + Math.min(T3.flightCap, T3.flightStep * i), bodyIn - T3.flight);
+      pick.bodyIn = bodyIn - el0;
       i++;
       travel(fl, pick, t0 - el0, f, sp);
       if (fl.val) { if (vt) travel(fl.val, vt, t0 - el0 + 20, f, sp); else leave(fl.val); }
@@ -35836,6 +35941,33 @@ var PMU_SERIES = {
     fl.target = pick.t; fl.card = pick.card;
     var tip = kind === 'win' && a.h > a.w * 1.3 && b.w > b.h * 1.3;
     var dx, dy, tf;
+    /* a flyer already on its early leg re-aims from where that leg will be when this flight starts (centre to centre,
+       about its centre: the leg turned it about its centre), and the rest of its turn and its scale follow (must-fix 4) */
+    var from = fl.pre && !sp && f !== 'retro' && f !== 'nier' ? preAt(fl, delay) : null;
+    if (from) {
+      var R = tip ? -90 : 0, fsx, fsy;
+      if (tip) { fsx = b.h / a.w; fsy = b.w / a.h; }
+      else if (kind === 'reset') { fsx = fsy = 1; }
+      else if (kind === 'chart' || kind === 'win') { fsx = b.w / a.w; fsy = b.h / a.h; }
+      else if (kind === 'num') { fsx = fsy = b.h / a.h; }
+      else { fsx = fsy = Math.min(b.w / a.w, b.h / a.h); }
+      dx = (b.x + b.w / 2) - (a.x + a.w / 2); dy = (b.y + b.h / 2) - (a.y + a.h / 2);
+      var fdur = Math.max(300, Math.round(T3.flight * (1 - 0.35 * from.p)));
+      /* the body that holds the target is fully in before the landing (the shorter leg starts later if it must) */
+      if (pick.bodyIn != null && delay + fdur < pick.bodyIn) { delay = pick.bodyIn - fdur; from = preAt(fl, delay); }
+      var cfy = M.curve('cubic-bezier(.55,.05,.35,1)'), cfs = M.curve(E.roll), kin = [];
+      for (var j = 0; j <= 12; j++) { var oo = j / 12, ey = cfy(oo), es = cfs(oo); kin.push({ offset: oo, transform: 'translateY(' + (from.y + (dy - from.y) * ey).toFixed(2) + 'px) rotate(' + (from.r + (R - from.r) * es).toFixed(2) + 'deg) scale(' + (1 + (fsx - 1) * es).toFixed(4) + ',' + (1 + (fsy - 1) * es).toFixed(4) + ')' }); }
+      anim(fl.outer, [{ transform: 'translateX(' + from.x.toFixed(2) + 'px)' }, { transform: 'translateX(' + dx.toFixed(2) + 'px)' }], { dur: fdur, delay: delay, easing: E.slide, fill: 'forwards' });
+      var lastF = anim(fl.inner, kin, { dur: fdur, delay: delay, easing: 'linear', fill: 'forwards' });
+      if (fl.takeoff) anim(fl.lift, [{ transform: 'translateY(-3px) scale(1.04)' }, { transform: 'none' }], { dur: fdur, delay: delay, easing: E.out, fill: 'forwards' });
+      if (fl.shadow) anim(fl.shadow, [{ opacity: 1 }, { opacity: 0 }], { dur: fdur, delay: delay, easing: E.out, fill: 'forwards' });
+      if (f === 'glass') glintFlyer(fl, delay + 40);
+      fl.anim = lastF;
+      if (!lastF) { preCancel(fl); land(fl); return; }
+      lastF.finished.then(function () { preCancel(fl); land(fl); }, function () {});
+      return;
+    }
+    preCancel(fl);
     if (tip) {
       /* a vertical tower landing in a horizontal meter tips over (6.3): rotate -90 about its centre while its length scales to
          the target's length and its thickness to the target's */
@@ -35907,6 +36039,7 @@ var PMU_SERIES = {
   function land(fl, now) {
     if (fl.done) { if (now && fl.outer.isConnected) fl.outer.remove(); return; }
     fl.done = true;
+    if (now) preCancel(fl);
     if (fl.anim && now) { try { fl.anim.finish(); } catch (error) {} }
     var t = fl.target;
     if (fl.val) land(fl.val, now);
@@ -43166,6 +43299,8 @@ var PMU_SERIES = {
     mount: mount, refresh: refresh, flushRefresh: flushRefresh, relevel: relevel, layout: function (room) { return layoutFor(room || current.room || st.room); },
     visible: function (room) { return visibleIds(room || current.room || st.room); },
     rect: function (id) { return layoutFor(current.room || st.room).filter(function (r) { return r.id === id; })[0] || null; },
+    /* a grid rect in board pixels (no layout read): the flight aims at a predicted plate before its body exists */
+    px: function (r) { return r && current.cls ? px(r) : null; },
     resolve: resolve, gravity: gravity, project: project, firstFit: firstFit, tierOf: tierOf, tierPass: tierPass, measure: measure,
     move: move, resize: resize, setVisible: setVisible, reset: reset, tidy: tidy, place: place, persist: persist,
     config: config, setConfig: setConfig, keyboard: keyboard,
@@ -43307,6 +43442,10 @@ var PMU_SERIES = {
   function syncHead(card, ctx) {
     var def = ctx.def, form = card.getAttribute('data-head') || 'line', tier = ctx.tier || {};
     var titleEl = card.querySelector('.pmu-cardtitle'), subEl = card.querySelector('.pmu-cardsub'), asideEl = card.querySelector('.pmu-cardmeta'), keyEl = card.querySelector('.pmu-cardkey');
+    /* the key (mark or swatch) first: titleFits and fitSub measure the room beside it, and a hidden key read on the first
+       sync made the subtitle 34 px too generous (FINAL-REVIEW-3 must-fix 8: Muse Code "Standby · alex@orbit.example" cut
+       at 140 / 185 px in Glass Dark 1440) */
+    if (keyEl) { var k = keyHtml(def, ctx, form); if (keyEl._pmu !== k) { keyEl.innerHTML = k; keyEl._pmu = k; keyEl.hidden = !k; } }
     var full = text(def.title, ctx), sub = text(def.meta, ctx);
     /* the short title only where the whole title does not fit its line (final fix M8: provider tiles keep their Settings
        names wherever they fit) */
@@ -43322,7 +43461,6 @@ var PMU_SERIES = {
     var wrap = form === 'plate' && !titleFits(card, want, form);
     if (card.hasAttribute('data-title-wrap') !== wrap) card.toggleAttribute('data-title-wrap', wrap);
     if (asideEl) { var a = asideHtml(asideV); if (asideEl._pmu !== a) { asideEl.innerHTML = a; asideEl._pmu = a; } }
-    if (keyEl) { var k = keyHtml(def, ctx, form); if (keyEl._pmu !== k) { keyEl.innerHTML = k; keyEl._pmu = k; keyEl.hidden = !k; } }
     var tone = def.tone ? text(def.tone, ctx) : '';
     if ((card.getAttribute('data-tone') || '') !== tone) { if (tone) card.setAttribute('data-tone', tone); else card.removeAttribute('data-tone'); }
   }
@@ -47261,6 +47399,13 @@ var PMU_SERIES = {
     else {
       var r0 = a0.querySelectorAll('.pmu-accrow'), r1 = a1.querySelectorAll('.pmu-accrow');
       if (r0.length !== r1.length) return false;
+      /* a live change of the effective account (the demo hour's auto-switch) is read before anything is written: the light
+         travels from the old active row to the new one after the patch (FINAL-REVIEW-3 must-fix 7) */
+      var eOld = a0.querySelector('.pmu-accrow.is-eff'), eNewDry = a1.querySelector('.pmu-accrow.is-eff'), lightMove = null;
+      if (ctx.reason === 'live' && !ctx.liveFinal && eOld && eNewDry && eOld.getAttribute('data-acct') !== eNewDry.getAttribute('data-acct') && !reducedNow()) {
+        var eNew = a0.querySelector('.pmu-accrow[data-acct="' + eNewDry.getAttribute('data-acct') + '"]'), bd = body.closest('.pmu-board');
+        if (eNew && bd) lightMove = { board: bd, br: bd.getBoundingClientRect(), from: eOld.getBoundingClientRect(), to: eNew.getBoundingClientRect(), row: eNew };
+      }
       for (var i = 0; i < r0.length; i++) {
         if (r0[i].getAttribute('data-acct') !== r1[i].getAttribute('data-acct') || r0[i].querySelectorAll('.pmu-acccell').length !== r1[i].querySelectorAll('.pmu-acccell').length) return false;
         var w0 = Array.prototype.map.call(r0[i].querySelectorAll('.pmu-acccell'), function (c) { return c.getAttribute('data-win') + (c.classList.contains('is-merged') ? 'm' : ''); }).join(',');
@@ -47289,12 +47434,37 @@ var PMU_SERIES = {
     }
     next.forEach(function (r, i) { var same = false; try { same = JSON.stringify(r.spec) === JSON.stringify(live[i].spec); } catch (error) {} if (!same) C.chartTo(live[i].chart, r.spec, ctx); live[i].spec = r.spec; });
     var f0 = body.querySelector('.pmu-accfoot, .pmu-accsfoot'), f1 = dry.querySelector('.pmu-accfoot, .pmu-accsfoot');
+    var swLine0 = f0 ? (Array.prototype.filter.call(f0.querySelectorAll('.pmu-accfootline'), function (l) { return /Auto-switch/.test(l.textContent); })[0] || null) : null, swText0 = swLine0 ? swLine0.textContent : '';
     if (f0 && f1 && f0.innerHTML !== f1.innerHTML) C.setHtml(f0, f1.innerHTML);
+    if (typeof lightMove !== 'undefined' && lightMove) {
+      travelLight(lightMove.board, lightMove.br, lightMove.from, lightMove.to);
+      var gl = lightMove.row.querySelector('.pmu-accglyph'); if (gl && PMU.film && (PMU.film.halo || PMU.film.ring)) (PMU.film.halo || PMU.film.ring)(gl, { tone: 'good', delay: 300 });
+      /* the switch history's new line in the plate foot flashes once */
+      var swLine = f0 ? Array.prototype.filter.call(f0.querySelectorAll('.pmu-accfootline'), function (l) { return /Auto-switch/.test(l.textContent); })[0] : null;
+      if (swLine && swLine.textContent !== swText0 && PMU.film && PMU.film.flash) PMU.film.flash(swLine, { delay: 380, noSweep: true });
+    }
     body._pmuSig = dry._pmuSig; body._pmuFoot = dry._pmuFoot;
     var pv = PMU.roster.provider(ctx.id.replace(/^acct-/, '')); if (pv) body._pmuPlateShape = plateShape(pv);
     return true;
   }
 
+  /* the active light travels from one row to another (WOW-SPEC 3.9 "Use this account", WOW-SPEC-3 8.6 the demo hour's
+     auto-switch; FINAL-REVIEW-3 must-fix 7: the hour's switch was a cut): one transient light in the board layer, FLIP
+     from the old row's rect to the new row's, 620 (the move 420 on SLIDE, then it fades into the row's own light).
+     from / to are viewport rects read before anything was written, br the board's. */
+  function travelLight(board, br, from, to) {
+    if (!board || !br || !from || !to || reducedNow()) return null;
+    var f = PMU.motion.family ? PMU.motion.family() : 'basic', stp = f === 'retro' || f === 'nier';
+    var light = document.createElement('i'); light.className = 'pmu-actlight'; light.setAttribute('aria-hidden', 'true');
+    light.style.cssText = 'left:' + (to.left - br.left) + 'px;top:' + (to.top - br.top) + 'px;width:' + to.width + 'px;height:' + to.height + 'px';
+    board.appendChild(light);
+    var sx = from.width / Math.max(1, to.width), sy = from.height / Math.max(1, to.height);
+    var an = PMU.motion.animate(light, [{ transform: 'translate(' + (from.left - to.left).toFixed(1) + 'px,' + (from.top - to.top).toFixed(1) + 'px) scale(' + sx.toFixed(3) + ',' + sy.toFixed(3) + ')', opacity: 1 },
+      { transform: 'none', opacity: 1, offset: 0.7 }, { transform: 'none', opacity: 0 }], { dur: 620, easing: stp ? 'steps(5,jump-start)' : 'cubic-bezier(.22,1,.36,1)', fill: 'both' });
+    if (an && an.finished) an.finished.then(function () { light.remove(); }, function () { light.remove(); }); else light.remove();
+    return an;
+  }
+  C.travelLight = travelLight;
   function footLinesOf(p, th) {
     var footLines = [];
     var fb = fallbackSentence(p); if (fb) footLines.push({ glyph: 'alert', tone: 'warn', html: esc(fb) });
@@ -47987,15 +48157,7 @@ var PMU_SERIES = {
       var row = board ? board.querySelector('.pmu-accrow[data-acct="' + key + '"]') : null;
       if (row && board && !reducedNow()) {
         var br = board.getBoundingClientRect(), to = row.getBoundingClientRect(), f = PMU.motion.family ? PMU.motion.family() : 'basic', stp = f === 'retro' || f === 'nier';
-        if (from && to0) {
-          var light = document.createElement('i'); light.className = 'pmu-actlight'; light.setAttribute('aria-hidden', 'true');
-          light.style.cssText = 'left:' + (to.left - br.left) + 'px;top:' + (to.top - br.top) + 'px;width:' + to.width + 'px;height:' + to.height + 'px';
-          board.appendChild(light);
-          var sx = from.width / Math.max(1, to.width), sy = from.height / Math.max(1, to.height);
-          var an = PMU.motion.animate(light, [{ transform: 'translate(' + (from.left - to.left).toFixed(1) + 'px,' + (from.top - to.top).toFixed(1) + 'px) scale(' + sx.toFixed(3) + ',' + sy.toFixed(3) + ')', opacity: 1 },
-            { transform: 'none', opacity: 1, offset: 0.7 }, { transform: 'none', opacity: 0 }], { dur: 620, easing: stp ? 'steps(5,jump-start)' : 'cubic-bezier(.22,1,.36,1)', fill: 'both' });
-          if (an && an.finished) an.finished.then(function () { light.remove(); }, function () { light.remove(); }); else light.remove();
-        }
+        if (from && to0) travelLight(board, br, from, to);
         [key, oldKey].forEach(function (k) {
           var r = k && board.querySelector('.pmu-accrow[data-acct="' + k + '"] .pmu-accactcell');
           if (r) PMU.motion.animate(r, [{ opacity: 0 }, { opacity: 1 }], { dur: 160, delay: 120, easing: 'cubic-bezier(.22,.8,.28,1)', fill: 'backwards' });
@@ -48191,15 +48353,20 @@ var PMU_SERIES = {
         Array.prototype.forEach.call(c.querySelectorAll('.pmu-skyval b, .pmu-skyswitch span, .pmu-herohead'), function (el) { el.textContent = ''; });
         return c.innerHTML.replace(/ (?:style|data-ramp|data-off|data-at|data-v|data-pm-hover-[a-z-]+|aria-describedby|aria-label|data-tone)(?:="[^"]*")?/g, '');
       };
-      var next = dry.querySelector('.pmu-skyplot'); if (!next || norm(next) !== norm(plot)) return false;
-      var f = fam(), st = stepped();
-      Array.prototype.forEach.call(next.querySelectorAll('.pmu-skycol'), function (c1, i) {
-        var c0 = plot.querySelectorAll('.pmu-skycol')[i]; if (!c0) return;
-        ['data-pm-hover-label', 'data-pm-hover-detail'].forEach(function (a) { c0.setAttribute(a, c1.getAttribute(a) || ''); });
-        moveTower(c0, c1, ctx, { flash: ctx.reason !== 'live', final: !!ctx.liveFinal });
-      });
-      var s1 = next.querySelector('.pmu-skyswitch');
-      if (s1) patchSwitch(body, plot, +s1.getAttribute('data-at'), s1.hasAttribute('data-off'), (s1.querySelector('span') || {}).textContent || '', ctx);
+      var next = dry.querySelector('.pmu-skyplot'); if (!next) return false;
+      if (norm(next) !== norm(plot)) {
+        /* the same towers in a new order (an auto-switch: the switched provider's tower takes the new account's reading and
+           the skyline re-ranks): FLIP, FINAL-REVIEW-3 must-fix 7 */
+        if (!rerank(plot, next, ctx)) return false;
+      } else {
+        Array.prototype.forEach.call(next.querySelectorAll('.pmu-skycol'), function (c1, i) {
+          var c0 = plot.querySelectorAll('.pmu-skycol')[i]; if (!c0) return;
+          ['data-pm-hover-label', 'data-pm-hover-detail'].forEach(function (a) { c0.setAttribute(a, c1.getAttribute(a) || ''); });
+          moveTower(c0, c1, ctx, { flash: ctx.reason !== 'live', final: !!ctx.liveFinal });
+        });
+        var s1 = next.querySelector('.pmu-skyswitch');
+        if (s1) patchSwitch(body, plot, +s1.getAttribute('data-at'), s1.hasAttribute('data-off'), (s1.querySelector('span') || {}).textContent || '', ctx);
+      }
       var h0 = body.querySelector('.pmu-herohead'), hh = dry.querySelector('.pmu-herohead');
       if (h0 && hh) {
         var sb0 = h0.querySelector('.pmu-herosub'), sb1 = hh.querySelector('.pmu-herosub'); if (sb0 && sb1 && sb0.innerHTML !== sb1.innerHTML) { C.setHtml(sb0, sb1.innerHTML); if (!ctx.liveFinal) M.animate(sb0, [{ opacity: 0.25 }, { opacity: 1 }], { dur: 160 }); }
@@ -48231,6 +48398,40 @@ var PMU_SERIES = {
       });
     }
   });
+  /* the skyline re-ranks (WOW-SPEC-3 8.4 "a tower whose order changes slides sideways with the skyline's FLIP (420 SLIDE,
+     20 apart)", 8.6 the demo hour's auto-switch: "the skyline's Claude tower re-labels its account and drops to Lab's
+     reading"; FINAL-REVIEW-3 must-fix 7: it was a cut). The towers are the same windows (provider and window) in a new
+     order: the old columns' places are read once before anything is written, the plot takes the new columns, and each
+     tower slides from its old place to its new one while its fill and value move from the old reading to the new one. */
+  function rerank(plot, next, ctx) {
+    var cols0 = Array.prototype.slice.call(plot.querySelectorAll('.pmu-skycol')), cols1 = Array.prototype.slice.call(next.querySelectorAll('.pmu-skycol'));
+    if (!cols0.length || cols0.length !== cols1.length) return false;
+    var idOf = function (c) { return c.getAttribute('data-prov') + '|' + c.getAttribute('data-win'); };
+    var ids0 = cols0.map(idOf), ids1 = cols1.map(idOf);
+    if (ids0.slice().sort().join(',') !== ids1.slice().sort().join(',')) return false;
+    var quiet = M.reduced() || !!ctx.liveFinal, st = stepped();
+    var xs = quiet ? null : cols0.map(function (c) { return c.offsetLeft; });
+    var olds = {};
+    cols0.forEach(function (c, i) { var n = c.querySelector('.pmu-num'); olds[ids0[i]] = { i: i, v: parseFloat(n && n.getAttribute('data-v')), ramp: c.getAttribute('data-ramp'), acct: c.getAttribute('data-acct') }; });
+    if (PMU.charts && PMU.charts.patchHtml) PMU.charts.patchHtml(plot, next.innerHTML); else plot.innerHTML = next.innerHTML;
+    plot.setAttribute('style', next.getAttribute('style') || '');
+    if (quiet) return true;
+    var ease = st ? 'steps(5,jump-start)' : E('roll', 'cubic-bezier(.16,1,.3,1)');
+    Array.prototype.slice.call(plot.querySelectorAll('.pmu-skycol')).forEach(function (col, j) {
+      var o = olds[idOf(col)]; if (!o) return;
+      var n = col.querySelector('.pmu-num'), v1 = parseFloat(n && n.getAttribute('data-v'));
+      if (o.i !== j && xs) M.animate(col, [{ transform: 'translateX(' + (xs[o.i] - xs[j]).toFixed(1) + 'px)' }, { transform: 'none' }], { dur: st ? 200 : 420, delay: 20 * j, easing: st ? 'steps(4,jump-start)' : 'cubic-bezier(.22,1,.36,1)', fill: 'backwards' });
+      if (isFinite(o.v) && isFinite(v1) && o.v !== v1) {
+        var fillEl = col.querySelector('.pmu-skyfill');
+        if (fillEl) M.animate(fillEl, [{ transform: 'translateY(' + C.skyOff(o.v) + '%)' }, { transform: 'translateY(' + C.skyOff(v1) + '%)' }], { dur: 520, delay: 20 * j, easing: ease, fill: 'backwards' });
+        var fmt = v1 < 10 && v1 % 1 ? 'pct1' : 'pct';
+        M.countUp(n, o.v, v1, function (v) { return C.numOnly(v, fmt); }, { dur: 'value' });
+      }
+      /* the switched provider's tower re-labels its account: its foot mark rings once */
+      if (o.acct !== col.getAttribute('data-acct')) { var mk = col.querySelector('.pmu-skyfoot'); if (mk && film() && film().flash) film().flash(mk, { delay: 200, noSweep: true }); }
+    });
+    return true;
+  }
   /* one tower takes a new reading in place (a live beat, a Settings change, a refresh): the fill and its rider move from
      the old offset to the new one (520 ROLL, compositor transforms); the colour follows the ramp by a cross-fade of the
      pre-painted heat layer (it holds the old colour and fades out over 300 OUT at the end of the move, NOTES3-perf Q7);

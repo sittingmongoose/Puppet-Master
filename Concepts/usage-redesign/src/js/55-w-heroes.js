@@ -107,15 +107,20 @@
         Array.prototype.forEach.call(c.querySelectorAll('.pmu-skyval b, .pmu-skyswitch span, .pmu-herohead'), function (el) { el.textContent = ''; });
         return c.innerHTML.replace(/ (?:style|data-ramp|data-off|data-at|data-v|data-pm-hover-[a-z-]+|aria-describedby|aria-label|data-tone)(?:="[^"]*")?/g, '');
       };
-      var next = dry.querySelector('.pmu-skyplot'); if (!next || norm(next) !== norm(plot)) return false;
-      var f = fam(), st = stepped();
-      Array.prototype.forEach.call(next.querySelectorAll('.pmu-skycol'), function (c1, i) {
-        var c0 = plot.querySelectorAll('.pmu-skycol')[i]; if (!c0) return;
-        ['data-pm-hover-label', 'data-pm-hover-detail'].forEach(function (a) { c0.setAttribute(a, c1.getAttribute(a) || ''); });
-        moveTower(c0, c1, ctx, { flash: ctx.reason !== 'live', final: !!ctx.liveFinal });
-      });
-      var s1 = next.querySelector('.pmu-skyswitch');
-      if (s1) patchSwitch(body, plot, +s1.getAttribute('data-at'), s1.hasAttribute('data-off'), (s1.querySelector('span') || {}).textContent || '', ctx);
+      var next = dry.querySelector('.pmu-skyplot'); if (!next) return false;
+      if (norm(next) !== norm(plot)) {
+        /* the same towers in a new order (an auto-switch: the switched provider's tower takes the new account's reading and
+           the skyline re-ranks): FLIP, FINAL-REVIEW-3 must-fix 7 */
+        if (!rerank(plot, next, ctx)) return false;
+      } else {
+        Array.prototype.forEach.call(next.querySelectorAll('.pmu-skycol'), function (c1, i) {
+          var c0 = plot.querySelectorAll('.pmu-skycol')[i]; if (!c0) return;
+          ['data-pm-hover-label', 'data-pm-hover-detail'].forEach(function (a) { c0.setAttribute(a, c1.getAttribute(a) || ''); });
+          moveTower(c0, c1, ctx, { flash: ctx.reason !== 'live', final: !!ctx.liveFinal });
+        });
+        var s1 = next.querySelector('.pmu-skyswitch');
+        if (s1) patchSwitch(body, plot, +s1.getAttribute('data-at'), s1.hasAttribute('data-off'), (s1.querySelector('span') || {}).textContent || '', ctx);
+      }
       var h0 = body.querySelector('.pmu-herohead'), hh = dry.querySelector('.pmu-herohead');
       if (h0 && hh) {
         var sb0 = h0.querySelector('.pmu-herosub'), sb1 = hh.querySelector('.pmu-herosub'); if (sb0 && sb1 && sb0.innerHTML !== sb1.innerHTML) { C.setHtml(sb0, sb1.innerHTML); if (!ctx.liveFinal) M.animate(sb0, [{ opacity: 0.25 }, { opacity: 1 }], { dur: 160 }); }
@@ -147,6 +152,40 @@
       });
     }
   });
+  /* the skyline re-ranks (WOW-SPEC-3 8.4 "a tower whose order changes slides sideways with the skyline's FLIP (420 SLIDE,
+     20 apart)", 8.6 the demo hour's auto-switch: "the skyline's Claude tower re-labels its account and drops to Lab's
+     reading"; FINAL-REVIEW-3 must-fix 7: it was a cut). The towers are the same windows (provider and window) in a new
+     order: the old columns' places are read once before anything is written, the plot takes the new columns, and each
+     tower slides from its old place to its new one while its fill and value move from the old reading to the new one. */
+  function rerank(plot, next, ctx) {
+    var cols0 = Array.prototype.slice.call(plot.querySelectorAll('.pmu-skycol')), cols1 = Array.prototype.slice.call(next.querySelectorAll('.pmu-skycol'));
+    if (!cols0.length || cols0.length !== cols1.length) return false;
+    var idOf = function (c) { return c.getAttribute('data-prov') + '|' + c.getAttribute('data-win'); };
+    var ids0 = cols0.map(idOf), ids1 = cols1.map(idOf);
+    if (ids0.slice().sort().join(',') !== ids1.slice().sort().join(',')) return false;
+    var quiet = M.reduced() || !!ctx.liveFinal, st = stepped();
+    var xs = quiet ? null : cols0.map(function (c) { return c.offsetLeft; });
+    var olds = {};
+    cols0.forEach(function (c, i) { var n = c.querySelector('.pmu-num'); olds[ids0[i]] = { i: i, v: parseFloat(n && n.getAttribute('data-v')), ramp: c.getAttribute('data-ramp'), acct: c.getAttribute('data-acct') }; });
+    if (PMU.charts && PMU.charts.patchHtml) PMU.charts.patchHtml(plot, next.innerHTML); else plot.innerHTML = next.innerHTML;
+    plot.setAttribute('style', next.getAttribute('style') || '');
+    if (quiet) return true;
+    var ease = st ? 'steps(5,jump-start)' : E('roll', 'cubic-bezier(.16,1,.3,1)');
+    Array.prototype.slice.call(plot.querySelectorAll('.pmu-skycol')).forEach(function (col, j) {
+      var o = olds[idOf(col)]; if (!o) return;
+      var n = col.querySelector('.pmu-num'), v1 = parseFloat(n && n.getAttribute('data-v'));
+      if (o.i !== j && xs) M.animate(col, [{ transform: 'translateX(' + (xs[o.i] - xs[j]).toFixed(1) + 'px)' }, { transform: 'none' }], { dur: st ? 200 : 420, delay: 20 * j, easing: st ? 'steps(4,jump-start)' : 'cubic-bezier(.22,1,.36,1)', fill: 'backwards' });
+      if (isFinite(o.v) && isFinite(v1) && o.v !== v1) {
+        var fillEl = col.querySelector('.pmu-skyfill');
+        if (fillEl) M.animate(fillEl, [{ transform: 'translateY(' + C.skyOff(o.v) + '%)' }, { transform: 'translateY(' + C.skyOff(v1) + '%)' }], { dur: 520, delay: 20 * j, easing: ease, fill: 'backwards' });
+        var fmt = v1 < 10 && v1 % 1 ? 'pct1' : 'pct';
+        M.countUp(n, o.v, v1, function (v) { return C.numOnly(v, fmt); }, { dur: 'value' });
+      }
+      /* the switched provider's tower re-labels its account: its foot mark rings once */
+      if (o.acct !== col.getAttribute('data-acct')) { var mk = col.querySelector('.pmu-skyfoot'); if (mk && film() && film().flash) film().flash(mk, { delay: 200, noSweep: true }); }
+    });
+    return true;
+  }
   /* one tower takes a new reading in place (a live beat, a Settings change, a refresh): the fill and its rider move from
      the old offset to the new one (520 ROLL, compositor transforms); the colour follows the ramp by a cross-fade of the
      pre-painted heat layer (it holds the old colour and fades out over 300 OUT at the end of the move, NOTES3-perf Q7);

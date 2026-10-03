@@ -790,7 +790,47 @@
     roomKeys[room] = { keys: keys, cards: cards };
   }
   momentListeners.push(function (what, m) { if (what === 'end' || what === 'finish') { try { recordKeys(m.room); } catch (error) {} } });
-  function flightCards(room) { return roomKeys[room] ? roomKeys[room].cards.slice() : []; }
+  function flightCards(room) {
+    if (roomKeys[room]) return roomKeys[room].cards.slice();
+    /* a first visit: the cards predicted to hold the flyers' targets (built right after the hero, revealed with it) */
+    return moment && moment.room === room && moment.predicted ? moment.predicted.slice() : [];
+  }
+  /* where a share lands in a room not visited yet (FINAL-REVIEW-3 must-fix 4: a first visit waited for every first-screen
+     body before any flyer travelled; the towers stood over the hero for 200 ms and the target plates stayed empty): the
+     widget that holds the key in that room, from the widget naming the rooms share (content's widget ids); null when not
+     known (that flyer then waits for its target as before) */
+  function homeOf(room, key, ids) {
+    var kind = shareKind(key), rest = key.slice(kind.length + 1), prov = kind === 'win' || kind === 'acct' ? rest.split('/')[0] : kind === 'prov' ? rest : null;
+    var leg = prov && PMU.roster && PMU.roster.settingsToLegacy ? PMU.roster.settingsToLegacy(prov) : null, cand = [];
+    if (room === 'accounts') {
+      if (kind === 'ctl') cand.push('acct-switch');
+      if (prov) cand.push('acct-' + prov);
+      if (kind === 'reset') cand.push('acct-resets');
+    } else if (room === 'plans') {
+      if (leg && kind !== 'reset') cand.push('plan-' + leg);
+      if (kind === 'win') cand.push('plans-timeline', 'quota-history');
+      if (kind === 'reset') cand.push('reset-map');
+    } else if (room === 'analytics') {
+      if (kind === 'prov' && leg) cand.push('tok-' + leg);
+      if (key === 'num:value.window') cand.push('an-totals');
+      if (key === 'chart:tokens' || key.indexOf('num:tokens') === 0) cand.push('token-trend', 'an-totals');
+      if (kind === 'reset') cand.push('an-resets');
+      if (kind === 'win') cand.push('an-quota-history');
+    } else if (room === 'overview') {
+      if (kind === 'win') cand.push('ov-skyline');
+      if (key === 'num:spend.month' || key === 'chart:budget') cand.push('budget-now');
+      if (key === 'num:value.window') cand.push('month');
+      if (kind === 'ctl') cand.push('ov-headroom');
+      if (kind === 'prov') cand.push('route-pressure');
+      if (kind === 'reset') cand.push('ov-resets');
+    } else if (room === 'costs') {
+      if (key === 'num:spend.month' || key === 'chart:budget') cand.push('budget');
+      if (key === 'num:value.window') cand.push('cost-month');
+    } else if (room === 'context') {
+      if (key === 'num:context.pct' || key === 'chart:context') cand.push('ctx-window');
+    }
+    return cand.filter(function (id) { return ids.indexOf(id) >= 0; })[0] || null;
+  }
   /* one batched read of the old room's shares, before the click task writes anything (46-shell.js setView) */
   function snapShares(toRoom) {
     snapRec = null;
@@ -849,7 +889,10 @@
         if (v && valsLeft > 0) { var vr = v.getBoundingClientRect(); if (vr.width > 1) { valsLeft--; it.v = { el: v, kind: 'num', r: { x: vr.left - ar.left, y: vr.top - ar.top, w: vr.width, h: vr.height }, font: faceOf(v) }; } }
       }
     });
-    snapRec = { at: performance.now(), from: st.room, to: toRoom, items: list, app: { x: ar.left, y: ar.top } };
+    /* the board's origin in the app's frame at scroll 0 (the new board takes the old one's place, scrolled to its top): the
+       flight aims at predicted plates from grid geometry (FINAL-REVIEW-3 must-fix 4) */
+    var br = board.getBoundingClientRect();
+    snapRec = { at: performance.now(), from: st.room, to: toRoom, items: list, app: { x: ar.left, y: ar.top }, board: { x: br.left - ar.left, y: br.top - ar.top + scroll.scrollTop } };
   }
   function cssEsc(v) { return window.CSS && CSS.escape ? CSS.escape(v) : String(v).replace(/"/g, '\\"'); }
   function faceOf(el) {
@@ -914,10 +957,71 @@
     });
     var F = { flyers: flyers, paired: false, layer: layer, finish: function () { flyers.forEach(function (fl) { land(fl, true); }); } };
     m.flights = F;
+    /* a first visit predicts the cards that hold the targets (built after the hero, revealed with it) and every flyer
+       starts toward its predicted plate when its takeoff ends; it re-aims at its real target when that exists */
+    if (!roomKeys[m.room] && PMU.board && PMU.board.visible) {
+      var ids = PMU.board.visible(m.room) || [], pred = [];
+      flyers.forEach(function (fl) { fl.home = homeOf(m.room, fl.key, ids); if (fl.home && pred.indexOf(fl.home) < 0) pred.push(fl.home); });
+      m.predicted = pred;
+    }
     m.flyCards = flightCards(m.room);
+    if (!sp && f !== 'nier' && f !== 'retro') flyers.forEach(function (fl) { preTravel(fl, rec); });
     /* nothing paired after 700 ms (a target body that never came): the flyers leave */
     mtimer(m, 700, function () { if (!F.paired) pairFlights(true); });
     return F;
+  }
+  /* the early leg (FINAL-REVIEW-3 must-fix 4): from the end of the takeoff the flyer moves toward the point its target is
+     predicted at (the plate's grid rect, no read, and a per-kind anchor inside it), on the same arc as the flight (X on
+     SLIDE, Y on the flight's curve); a tower already starts to tip. pairFlights re-aims it from where it is. */
+  var PRE = { dur: 460 };
+  function homeRect(rec, id) {
+    var g = PMU.board && PMU.board.rect ? PMU.board.rect(id) : null, p = g && PMU.board.px ? PMU.board.px(g) : null;
+    if (!p || !rec.board) return null;
+    return { x: rec.board.x + p.l, y: rec.board.y + p.t, w: p.w, h: p.h };
+  }
+  function preAim(fl, hr) {
+    var it = fl.it || {}, kind = it.kind || 'num', a = fl.r;
+    /* the anchor inside the plate: a window or an account at its row (the account's place in its provider's list), a
+       mark or a reset line near the head, a control or a number in the upper part of the hero */
+    var row = 0;
+    if (kind === 'win' || kind === 'acct') {
+      var parts = String(fl.key).split(':')[1].split('/'), pv = PMU.roster && PMU.roster.provider ? PMU.roster.provider(parts[0]) : null;
+      if (pv) row = Math.max(0, pv.accounts.map(function (x) { return x.id; }).indexOf(parts[1]));
+    }
+    var ax = kind === 'win' ? hr.x + Math.min(hr.w * 0.62, 360) : hr.x + 24 + Math.min(a.w, hr.w * 0.5) / 2;
+    var ay = kind === 'prov' ? hr.y + 24 : kind === 'reset' ? hr.y + 70 : kind === 'ctl' || kind === 'num' || kind === 'chart' ? hr.y + Math.min(hr.h * 0.4, 110) : hr.y + 86 + 36 * row;
+    ay = Math.min(ay, hr.y + hr.h - 12);
+    return { cx: ax, cy: ay };
+  }
+  function preTravel(fl, rec) {
+    if (!fl.home || !rec) return;
+    var hr = homeRect(rec, fl.home); if (!hr) return;
+    var aim = preAim(fl, hr), a = fl.r, it = fl.it || {};
+    var dx = aim.cx - (a.x + a.w / 2), dy = aim.cy - (a.y + a.h / 2);
+    var tip = it.kind === 'win' && a.h > a.w * 1.3, rot = tip ? -90 : 0;
+    fl.outer.style.transformOrigin = '50% 50%'; fl.inner.style.transformOrigin = '50% 50%';
+    var fx = M.curve(E.slide), fy = M.curve('cubic-bezier(.55,.05,.35,1)'), fs = M.curve(E.roll), ko = [], ki = [];
+    for (var i = 0; i <= 12; i++) { var o = i / 12; ko.push({ offset: o, transform: 'translateX(' + (dx * fx(o)).toFixed(2) + 'px)' }); ki.push({ offset: o, transform: 'translateY(' + (dy * fy(o)).toFixed(2) + 'px) rotate(' + (rot * fs(o)).toFixed(2) + 'deg)' }); }
+    fl.pre = { dx: dx, dy: dy, rot: rot, fx: fx, fy: fy, fs: fs,
+      a: anim(fl.outer, ko, { dur: PRE.dur, delay: T3.takeoff, easing: 'linear', fill: 'both' }), b: anim(fl.inner, ki, { dur: PRE.dur, delay: T3.takeoff, easing: 'linear', fill: 'both' }) };
+  }
+  /* where the early leg will have brought the flyer when the real flight starts `after` motion ms from now (from its own
+     timing: no style read). The early leg keeps running until the flight takes over (the flight's animations are newer,
+     so they win from their first frame); it is cancelled at the landing. */
+  function preAt(fl, after) {
+    var P = fl.pre; if (!P) return null;
+    var p = 0, sp0 = M.speed();
+    try {
+      var ct = P.a && P.a.effect && P.a.effect.getComputedTiming();
+      var local = ct && ct.localTime != null ? ct.localTime : 0, dl = T3.takeoff * sp0, du = PRE.dur * sp0;
+      p = Math.max(0, Math.min(1, (local + Math.max(0, after) * sp0 - dl) / du));
+    } catch (error) { p = 0; }
+    return { x: P.dx * P.fx(p), y: P.dy * P.fy(p), r: P.rot * P.fs(p), p: p };
+  }
+  function preCancel(fl) {
+    var P = fl.pre; if (!P) return;
+    fl.pre = null;
+    [P.a, P.b].forEach(function (x) { if (x) try { x.cancel(); } catch (error) {} });
   }
   function makeFlyer(layer, r, clone, it, sp) {
     var outer = H('div', 'pmu-flyer', layer), inner = H('div', 'pmu-fly-in', outer), lift = H('div', 'pmu-fly-lift', inner);
@@ -973,6 +1077,7 @@
       /* the body that holds the target is fully in before the landing (its reveal ends at its slot + its fade) */
       var bodyIn = Math.max(pick.card._pmuRevealAt != null ? pick.card._pmuRevealAt + T3.quietTravel : 0, pick.card._pmuFrameEnd || 0);
       var t0 = Math.max(start + Math.min(T3.flightCap, T3.flightStep * i), bodyIn - T3.flight);
+      pick.bodyIn = bodyIn - el0;
       i++;
       travel(fl, pick, t0 - el0, f, sp);
       if (fl.val) { if (vt) travel(fl.val, vt, t0 - el0 + 20, f, sp); else leave(fl.val); }
@@ -1006,6 +1111,33 @@
     fl.target = pick.t; fl.card = pick.card;
     var tip = kind === 'win' && a.h > a.w * 1.3 && b.w > b.h * 1.3;
     var dx, dy, tf;
+    /* a flyer already on its early leg re-aims from where that leg will be when this flight starts (centre to centre,
+       about its centre: the leg turned it about its centre), and the rest of its turn and its scale follow (must-fix 4) */
+    var from = fl.pre && !sp && f !== 'retro' && f !== 'nier' ? preAt(fl, delay) : null;
+    if (from) {
+      var R = tip ? -90 : 0, fsx, fsy;
+      if (tip) { fsx = b.h / a.w; fsy = b.w / a.h; }
+      else if (kind === 'reset') { fsx = fsy = 1; }
+      else if (kind === 'chart' || kind === 'win') { fsx = b.w / a.w; fsy = b.h / a.h; }
+      else if (kind === 'num') { fsx = fsy = b.h / a.h; }
+      else { fsx = fsy = Math.min(b.w / a.w, b.h / a.h); }
+      dx = (b.x + b.w / 2) - (a.x + a.w / 2); dy = (b.y + b.h / 2) - (a.y + a.h / 2);
+      var fdur = Math.max(300, Math.round(T3.flight * (1 - 0.35 * from.p)));
+      /* the body that holds the target is fully in before the landing (the shorter leg starts later if it must) */
+      if (pick.bodyIn != null && delay + fdur < pick.bodyIn) { delay = pick.bodyIn - fdur; from = preAt(fl, delay); }
+      var cfy = M.curve('cubic-bezier(.55,.05,.35,1)'), cfs = M.curve(E.roll), kin = [];
+      for (var j = 0; j <= 12; j++) { var oo = j / 12, ey = cfy(oo), es = cfs(oo); kin.push({ offset: oo, transform: 'translateY(' + (from.y + (dy - from.y) * ey).toFixed(2) + 'px) rotate(' + (from.r + (R - from.r) * es).toFixed(2) + 'deg) scale(' + (1 + (fsx - 1) * es).toFixed(4) + ',' + (1 + (fsy - 1) * es).toFixed(4) + ')' }); }
+      anim(fl.outer, [{ transform: 'translateX(' + from.x.toFixed(2) + 'px)' }, { transform: 'translateX(' + dx.toFixed(2) + 'px)' }], { dur: fdur, delay: delay, easing: E.slide, fill: 'forwards' });
+      var lastF = anim(fl.inner, kin, { dur: fdur, delay: delay, easing: 'linear', fill: 'forwards' });
+      if (fl.takeoff) anim(fl.lift, [{ transform: 'translateY(-3px) scale(1.04)' }, { transform: 'none' }], { dur: fdur, delay: delay, easing: E.out, fill: 'forwards' });
+      if (fl.shadow) anim(fl.shadow, [{ opacity: 1 }, { opacity: 0 }], { dur: fdur, delay: delay, easing: E.out, fill: 'forwards' });
+      if (f === 'glass') glintFlyer(fl, delay + 40);
+      fl.anim = lastF;
+      if (!lastF) { preCancel(fl); land(fl); return; }
+      lastF.finished.then(function () { preCancel(fl); land(fl); }, function () {});
+      return;
+    }
+    preCancel(fl);
     if (tip) {
       /* a vertical tower landing in a horizontal meter tips over (6.3): rotate -90 about its centre while its length scales to
          the target's length and its thickness to the target's */
@@ -1077,6 +1209,7 @@
   function land(fl, now) {
     if (fl.done) { if (now && fl.outer.isConnected) fl.outer.remove(); return; }
     fl.done = true;
+    if (now) preCancel(fl);
     if (fl.anim && now) { try { fl.anim.finish(); } catch (error) {} }
     var t = fl.target;
     if (fl.val) land(fl.val, now);
