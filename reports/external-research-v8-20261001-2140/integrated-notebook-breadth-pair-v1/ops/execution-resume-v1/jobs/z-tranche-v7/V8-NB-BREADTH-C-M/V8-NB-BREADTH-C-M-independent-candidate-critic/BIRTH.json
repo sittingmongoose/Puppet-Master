@@ -1,0 +1,75 @@
+{
+  "case": "V8-NB-BREADTH-C-M",
+  "job": "V8-NB-BREADTH-C-M-independent-candidate-critic",
+  "original_case_epoch": 1790999675.4230838,
+  "original_case_monotonic_ns": 221421592847737,
+  "stage_epoch": 1791000460.1537316,
+  "stage_monotonic_ns": 222206323495518,
+  "original_deadline_monotonic_ns": 223406323495518,
+  "admission": {
+    "job": "V8-NB-BREADTH-C-M-independent-candidate-critic",
+    "case": "V8-NB-BREADTH-C-M",
+    "family": "Z",
+    "route": "v8-z-route-recovery-v2-native-bound-v2",
+    "pins": {
+      "runtime": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b",
+      "config": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d",
+      "independent_acceptance": "59b08282df39fe1c86e21eea06d1197a17f3ea30ef13b1569d6c34a31347a18c"
+    },
+    "component_seconds": 1200,
+    "component_responses": 160,
+    "case_wall_seconds": 3600,
+    "case_occupied_seconds": 5400,
+    "outside_native_cap_seconds": 300,
+    "source_access": {
+      "mode": "brief-only-independent-public-primary-source-discovery",
+      "supplied_research_sources": [],
+      "supplied_research_facts": [],
+      "allowed_subjects": [
+        "public primary documentation",
+        "public implementation repository source",
+        "public issue/fix/regression-test history"
+      ],
+      "route": "public_https_get",
+      "route_constraints": {
+        "maximum_response_bytes": 524288,
+        "text_encoding": "UTF-8",
+        "public_ip_only": true,
+        "dns_ip_pinned": true,
+        "tls": true,
+        "port": 443,
+        "authentication": false,
+        "proxy": false,
+        "alternate_ports": false
+      },
+      "route_version_binding": "host must bind the new-v8 accepted tool/code/config hash before case preparation; no silent route change",
+      "capture": "host records request/response provenance, capture bytes/hash and model-delivered ranges mechanically; positive source acquisition requires actual capture plus delivered-range evidence",
+      "availability": "uncaptured or unavailable sources remain unresolved; candidate-authored access assertions are not host acquisition proof",
+      "within_case_reuse": "research, fresh critic and fresh correction may read this case's raw admitted public-source captures; each may independently fetch further allowed public sources",
+      "cross_case_reuse": "prohibited: no captures, discoveries, proposals, critiques, source selections, evaluator lists, rulings or feedback from another case/arm",
+      "prohibited": [
+        "private host files",
+        "credential contents",
+        "evaluator keys/rulings",
+        "prior campaign candidate/evaluator output",
+        "sibling case content",
+        "premium-model research answers",
+        "unapproved source tools",
+        "candidate helper/child/native/provider launches"
+      ]
+    },
+    "current_stages": [
+      "independent-candidate-critic"
+    ],
+    "birth_epoch": 1791000460.1537316,
+    "birth_monotonic": 222206.323495518,
+    "admitted_epoch": 1791000460.9146805,
+    "hard_deadline_epoch": 1791001660.1537316,
+    "released_epoch": null,
+    "status": "admitted",
+    "goal_starts": [],
+    "generated_output_tokens": null,
+    "quiescence": null,
+    "launch_pending": null
+  }
+}

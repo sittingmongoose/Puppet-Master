@@ -1,0 +1,27 @@
+{
+  "schema": "er8.integrated.stage-deferred-close.v1",
+  "case": "V8-NB-BREADTH-C-M",
+  "job": "V8-NB-BREADTH-C-M-research-proposal",
+  "stage_start_monotonic_ns": 221421592847737,
+  "original_case_start_monotonic_ns": 221421592847737,
+  "original_deadline_monotonic_ns": 222621592847737,
+  "lease_release_deferred": true,
+  "lease_released_by_actor": false,
+  "native_wrapper_launch_monotonic_ns": 221423065888718,
+  "native_quiescence_observed_monotonic_ns": 222205998192452,
+  "last_charged_host_monotonic_ns": 222206081054532,
+  "host_groups_absent": true,
+  "required_artifact": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-C-M/V8-NB-BREADTH-C-M-research-proposal/workspace/out/PROPOSAL.md",
+    "bytes": 25499,
+    "sha256": "5973856d68c91b011b050d22380d41a8f6fe68bb10641c7db9fbf341eea410d5"
+  },
+  "native_goal_activation_observed": true,
+  "native_goal_target_id": "target_muruyvl5_323f1ce9-06a5-401e-8867-257cad73f160",
+  "fresh_session": true,
+  "native_responses": 11,
+  "native_goal_status": "complete",
+  "wrapper_returncode": 0,
+  "source_semantic_acquisition": "UNKNOWN",
+  "usage": "UNKNOWN except reported monotonic output lower bound"
+}

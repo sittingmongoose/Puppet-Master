@@ -1,0 +1,27 @@
+{
+  "schema": "er8.integrated.stage-deferred-close.v1",
+  "case": "V8-NB-BREADTH-C-M",
+  "job": "V8-NB-BREADTH-C-M-final-correction",
+  "stage_start_monotonic_ns": 223181875907647,
+  "original_case_start_monotonic_ns": 221421592847737,
+  "original_deadline_monotonic_ns": 224081875907647,
+  "lease_release_deferred": true,
+  "lease_released_by_actor": false,
+  "native_wrapper_launch_monotonic_ns": 223182983412538,
+  "native_quiescence_observed_monotonic_ns": 223692123157642,
+  "last_charged_host_monotonic_ns": 223692247033722,
+  "host_groups_absent": true,
+  "required_artifact": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-BREADTH-C-M/V8-NB-BREADTH-C-M-final-correction/workspace/out/FINAL_PROPOSAL.md",
+    "bytes": 39201,
+    "sha256": "6157387e85135dbdf1e062021528703213abceefabd1d9006202283a13787624"
+  },
+  "native_goal_activation_observed": true,
+  "native_goal_target_id": "target_murw0lsu_a2728ddf-d86a-446a-b412-8e6c6ccf096f",
+  "fresh_session": true,
+  "native_responses": 11,
+  "native_goal_status": "complete",
+  "wrapper_returncode": 0,
+  "source_semantic_acquisition": "UNKNOWN",
+  "usage": "UNKNOWN except reported monotonic output lower bound"
+}
