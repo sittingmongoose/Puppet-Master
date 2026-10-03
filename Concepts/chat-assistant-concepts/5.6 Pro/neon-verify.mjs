@@ -28,7 +28,7 @@
  *      carry the set member of their status.
  *   2e the bar's Crew, BrainStorm, Review and Chat Room tone is the worst of their runs' card state
  *      (PM56_COLLAB.presentState) on every thread; recovery-collaboration's blocked runs read attention.
- *   3  the working bead moves >= 3 px in a quarter of its orbit.
+ *   3  the working bead moves >= 3 px in a quarter of its orbit (a lone mark: 9 s; the thread list's is 16 s).
  *   4  a clip reveal ran and left no residual clip-path after finish(); the page/document text lines paint.
  *   5  static scan: no filter, stroke-dashoffset or color-mix() in a .nx / nx- rule or an nx keyframe; no pmx in
  *      an nx keyframe name.
