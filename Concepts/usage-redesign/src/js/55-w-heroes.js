@@ -318,7 +318,30 @@
   C.kindReadings.flow = function () {
     return (DATA.authority || []).map(function (r) { return [C.oldName(r[0]), r[1] + ' · ' + r[2] + ' · ' + r[3]]; });
   };
-  C.kind('attempts', {
+  var attemptsImpl;
+  C.kind('attempts', attemptsImpl = {
+    /* live (WOW-SPEC-3 8.4 "an attempt arrives", FINAL-REVIEW-3 must-fix 2): the lanes re-render in the beat; a new attempt
+       pops onto its lane at NOW with one halo, a receipt that settles fills its hollow dot; the hero count rolls */
+    live: function (body, ctx) {
+      if (ctx.liveFinal || !body.querySelector('.pmu-atarea')) return false;
+      var was = {};
+      Array.prototype.forEach.call(body.querySelectorAll('.pmu-atdot[data-aid]'), function (d) { was[d.getAttribute('data-aid')] = d.classList.contains('is-pending'); });
+      C.liveRender(body, ctx, attemptsImpl);
+      if (M.reduced()) return true;
+      var st = stepped();
+      Array.prototype.forEach.call(body.querySelectorAll('.pmu-atdot[data-aid]'), function (d) {
+        var id = d.getAttribute('data-aid'), pend = d.classList.contains('is-pending');
+        if (!(id in was)) {
+          M.animate(d, [{ transform: 'translate(-50%,-50%) scale(0)', opacity: 0 }, { opacity: 1, offset: 0.3 }, { transform: 'translate(-50%,-50%) scale(1)', opacity: 1 }],
+            { dur: 420, delay: 120, easing: st ? 'steps(3,jump-start)' : E('pop', 'cubic-bezier(.34,1.45,.64,1)'), fill: 'backwards' });
+          if (film() && film().halo) film().halo(d, { delay: 300 });
+        } else if (was[id] && !pend) {
+          M.animate(d, [{ transform: 'translate(-50%,-50%) scale(.4)' }, { transform: 'translate(-50%,-50%) scale(1.2)', offset: 0.6 }, { transform: 'translate(-50%,-50%) scale(1)' }],
+            { dur: 360, easing: st ? 'steps(3,jump-start)' : E('pop', 'cubic-bezier(.34,1.45,.64,1)') });
+        }
+      });
+      return true;
+    },
     render: function (body, ctx) {
       var list = D.attempts().slice().sort(function (a, z) { return new Date(a.occurred_at) - new Date(z.occurred_at); });
       if (!list.length) { body.innerHTML = C.empty('No attempts for the selected scope and range', 'Unknown is never shown as zero'); return; }
@@ -350,7 +373,7 @@
         var sid = PMU.roster.legacyProvider(a.provider_id), mk = PMU.markOf(sid), lane = lanes.indexOf(a.provider_id);
         var r = pend ? Math.min(7, rMax) : Math.round(Math.min(rMax, 4 + (rMax - 4) * Math.sqrt(v / maxV)));
         var hv = C.hover(a.attempt_id + ' · ' + C.legName(a.provider_id), F.clock(t) + ' · ' + (pend ? 'value not known yet · pending receipt' : C.money(v) + (a.charge ? ' settled' : ' plan estimate')) + ' · ' + a.model_id.replace(/^model:/, '') + ' · ' + a.settlement_status);
-        return '<span class="pmu-atdot' + (pend ? ' is-pending' : '') + (a.charge ? '' : ' is-est') + '" data-i="' + i + '" data-vendor="' + mk.vendor + '" role="button" tabindex="0" style="left:' + x(t).toFixed(2) + '%;top:' + (lane * laneH + laneH / 2) + 'px;--r:' + r + 'px"' + hv + '></span>';
+        return '<span class="pmu-atdot' + (pend ? ' is-pending' : '') + (a.charge ? '' : ' is-est') + '" data-i="' + i + '" data-aid="' + esc(a.attempt_id) + '" data-vendor="' + mk.vendor + '" role="button" tabindex="0" style="left:' + x(t).toFixed(2) + '%;top:' + (lane * laneH + laneH / 2) + 'px;--r:' + r + 'px"' + hv + '></span>';
       }).join('');
       body.innerHTML = '<div class="pmu-attl">' + head + '<div class="pmu-atplot" style="--lab:' + labW + 'px;height:' + (lanes.length * laneH + axisH) + 'px">' +
         '<div class="pmu-atlanes">' + lanes.map(function (pid, k) {

@@ -204,6 +204,15 @@
       try { same = JSON.stringify(spec) === JSON.stringify(o.spec); } catch (error) {}
       if (!same && o.chart) C.chartTo(o.chart, spec, ctx);
       o.spec = spec;
+      /* the legend's plan allocation part takes the live spend too (FINAL-REVIEW-3 must-fix 3: "$145.88 + $38.74" stayed
+         beside a rising headline) */
+      b.objs.forEach(function (x) {
+        if (x.name !== 'mix' || !m.mix) return;
+        var ms = { segments: m.mix, legend: true }, eq = false;
+        try { eq = JSON.stringify(ms) === JSON.stringify(x.spec); } catch (error) {}
+        if (!eq && x.chart) C.chartTo(x.chart, ms, ctx);
+        x.spec = ms;
+      });
       return true;
     }
   });

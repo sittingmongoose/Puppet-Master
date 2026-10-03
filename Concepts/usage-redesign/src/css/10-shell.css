@@ -28,6 +28,9 @@ html[data-o55-nier="on"] #panel-usage .pmu-shell { --pmu-font: "PM NieR Sans", v
 #panel-usage .pmu-navbtn.active .pmu-navicon { color: var(--pmu-accent); }
 #panel-usage .pmu-navicon svg { display: block; width: 100%; height: 100%; }
 #panel-usage .pmu-navtext { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* the Attention row's count (WOW-SPEC-3 8.3): warn-ink numerals at the row's end, no badge */
+#panel-usage .pmu-navcount { margin-left: auto; flex: none; padding-left: 6px; font-size: 11.5px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--pmu-ink-warn); }
+#panel-usage .pmu-navcount[hidden] { display: none; }
 html[data-theme^="retro"] #panel-usage :is(.pmu-navink, .pmu-navbtn) { border-radius: 0; }
 /* the mono face is wider: the Retro rail keeps every room name whole ("Source authority", "Plans & limits") */
 html[data-theme^="retro"] #panel-usage .pmu-rail { width: 196px; }

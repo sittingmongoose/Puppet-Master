@@ -1386,6 +1386,8 @@
       leadRect = lead(board, p.lead);
     }
     pulse();
+    /* an alert arriving rolls the rail's Attention count (WOW-SPEC-3 8.3) */
+    if (keys.some(function (k) { return k.indexOf('alert:') === 0; }) && PMU.shell && PMU.shell.navCount) { try { PMU.shell.navCount(true); } catch (error) {} }
     var rec = { beats: p.beats, at: Math.round(performance.now()), held: p.held || null, cards: cards.map(function (c) { return c.getAttribute('data-widget'); }),
       shares: keys, ms: 0, slices: 0, anims: 0 };
     log.push(rec); if (log.length > 200) log.shift();
