@@ -17579,7 +17579,9 @@ html[data-o55-nier="on"] .nx-st-waiting.nx-still::after { animation: none; }
  * that sends itself flip the chip Stop -> Send -> Stop inside one task (turn-stream.js renders, then flushes the
  * queue), and a step at the start would leave the chip on the accent until the flood's way back has run.
  * The run: the square breathes ~1 px (scale .88) at the activity bar's 2.2 s working cadence while words arrive, and
- * .95 at 3.2 s while the model thinks or a tool runs; the danger backlight breathes .30/.18 (.10/.06 on light themes).
+ * .92 at 3.2 s while the model thinks or a tool runs; the danger backlight breathes .30/.18 (.10/.06 on light themes),
+ * .30/.20 (.10/.067) in the waiting cadence. Final review (2026-10-03): at .95 and .30/.24 the 69 s of waiting in a long
+ * agent turn read as a still red button, not as running; the deeper slow pulse stays well under the flowing cadence.
  * Both loops animate transform or opacity on a box (the svg root, the backlight's gradient), so they run on the
  * compositor.
  *
@@ -17819,12 +17821,12 @@ body[data-theme^="retro"] .sendstop[data-ss="stop"] .ss-flood { transition: scal
 .sendstop[data-ss="stop"][data-flow="waiting"] .ss-bl::before { animation-name: ss-glow-w; animation-duration: 3200ms; }
 .sendstop[data-ss="stop"][data-flowed] .ss-g, .sendstop[data-ss="stop"][data-flowed] .ss-bl::before { animation-delay: 0ms; }
 @keyframes ss-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(.88); } }
-@keyframes ss-breathe-w { 0%, 100% { transform: scale(1); } 50% { transform: scale(.95); } }
+@keyframes ss-breathe-w { 0%, 100% { transform: scale(1); } 50% { transform: scale(.92); } }
 /* literal values per theme brightness (no var() inside a loop's keyframes, so the compositor runs it) */
 @keyframes ss-glow { 0%, 100% { opacity: .3; } 50% { opacity: .18; } }
-@keyframes ss-glow-w { 0%, 100% { opacity: .3; } 50% { opacity: .24; } }
+@keyframes ss-glow-w { 0%, 100% { opacity: .3; } 50% { opacity: .2; } }
 @keyframes ss-glow-l { 0%, 100% { opacity: .1; } 50% { opacity: .06; } }
-@keyframes ss-glow-wl { 0%, 100% { opacity: .1; } 50% { opacity: .08; } }
+@keyframes ss-glow-wl { 0%, 100% { opacity: .1; } 50% { opacity: .067; } }
 body[data-theme$="-light"] .sendstop[data-ss="stop"] .ss-bl::before { animation-name: ss-glow-l; }
 body[data-theme$="-light"] .sendstop[data-ss="stop"][data-flow="waiting"] .ss-bl::before { animation-name: ss-glow-wl; }
 
