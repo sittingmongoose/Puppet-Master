@@ -384,7 +384,7 @@
             tierPass([c2], false);
             c2.removeAttribute('data-body-wait');
           }
-          if (later.length) requestAnimationFrame(function () { lateHeld && lateHeld(false); }); else lateHeld = null;
+          if (later.length) lateNext(function () { lateHeld && lateHeld(false); }); else lateHeld = null;
         };
       }
     }
@@ -400,6 +400,10 @@
   var leaving = [], leaveFlushQueued = false, pendingOld = null;
   /* a build or refresh slice runs with the content fit pass deferred to the slice's end (one batched read for the cards of
      the slice, inside the slice; NOTES3-content E1, NOTES3-perf C1/Q6), never as a microtask after it */
+  /* integ3: the off-screen bodies built after a moment (no-GPU profile) go one batch per IDLE period, not per frame: they
+     are not motion and nothing waits for them (a scroll or a gesture builds them at once); a frame callback per card made
+     the census read Usage frame work in the settled board (HARD USAGE-RAF on Cache at 1440) */
+  function lateNext(fn) { if (window.requestIdleCallback) requestIdleCallback(function () { fn(); }, { timeout: 400 }); else setTimeout(fn, 16); }
   function fitSliced(fn) {
     var C = PMU.content;
     if (!C || typeof C.fitSlice !== 'function') return fn();
@@ -635,7 +639,7 @@
         tierPass([c], false);
         built.push(c);
       }
-      if (later.length) { requestAnimationFrame(function () { buildLater(false); }); return; }
+      if (later.length) { lateNext(function () { buildLater(false); }); return; }
       if (streaming && streaming.token === token) streaming = null;
       emit('built', { room: o.room, cards: built.filter(function (c) { return c.isConnected; }).length, ms: Math.round(performance.now() - t0) });
     }

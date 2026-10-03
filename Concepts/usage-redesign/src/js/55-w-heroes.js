@@ -528,7 +528,9 @@
         }).sort(function (a, z) { return a.x - z.x; });
         items.forEach(function (it, i) {
           var next = items[i + 1], prev = items[i - 1];
-          if (it.beyond) { it.side = (prev && prev.side === 'r' && prev.x + prev.w > it.x - it.w) ? 'none' : 'l'; it.m.side = it.side; return; }
+          /* integ3: a label beyond the week also gives way to the previous MARKER itself, not only to its right-hand words
+             (Friendly Light 1440: Kimi's "MO 36% · Nov 1" was printed over the WK 52% diamond) */
+          if (it.beyond) { var pEnd = prev ? (prev.side === 'r' ? prev.x + prev.w : prev.x + 16) : -labW; it.side = pEnd > it.x - it.w ? 'none' : 'l'; it.m.side = it.side; return; }
           var rightEnd = it.x + it.w, nextStart = next ? (next.beyond ? next.x - next.w : next.x - 8) : trackW + edge;
           var leftStart = it.x - it.w, prevEnd = prev ? (prev.side === 'r' ? prev.x + prev.w : prev.x + 8) : -labW;
           it.side = rightEnd <= nextStart ? 'r' : leftStart >= prevEnd ? 'l' : 'none';
