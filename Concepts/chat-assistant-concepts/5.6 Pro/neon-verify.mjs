@@ -58,7 +58,7 @@
  *   17 17a hover lights a control's tube to --text (attach, header search, history close; every theme); 17b the hover
  *      ink rule never recolours a toned glyph (every thread, the composer menus, six panels; four themes).
  *   18 NieR's Pod 042 is clear of the jump chip, the bar, the queue, the decision panel and the composer (3 sizes,
- *      every thread, transcript top and bottom), and of transcript buttons at the bottom.
+ *      every thread, transcript top and bottom), of transcript buttons at the bottom, and faded back over any it passes.
  *   19 the chat header's status word wears its mark's tone (nine statuses; three themes).
  *   console: no warnings, errors or page errors.
  *
@@ -1583,8 +1583,9 @@ for (const theme of ['basic-dark', 'basic-light', 'retro-light', 'nier-dark'].fi
    hid the jump-to-latest chip, and at some sizes a Resume button and the bar's Artifacts count. At 1440x900,
    1512x982 and 1920x1100 (history at 320), on every thread, with the transcript at its top and at its bottom, the Pod
    intersects no jump chip (visible or not: its slot), bar item, send-queue or decision button, or the composer; at the
-   bottom (the resting place) no transcript button or link either, and the bar never overflows its row. (Scrolled up,
-   transcript content passes under the Pod as it does under PMConcept7's.) */
+   bottom (the resting place) no transcript button or link either (and it has not faded back), and the bar never
+   overflows its row. Scrolled up, transcript content passes under the Pod as under PMConcept7's; whenever a transcript
+   control is under it, it has faded back (data-shy, opacity <= .2) so the control shows through. */
 if (THEMES.includes('nier-dark')) await sec('pod', async () => {
   const bad = []; let views = 0;
   for (const [w, h] of [[1440, 900], [1512, 982], [1920, 1100]]) {
@@ -1604,7 +1605,7 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
         await p.mouse.move(5, h - 5);
         for (const pos of ['top', 'bottom']) {
           await p.evaluate(pos => { const t = document.querySelector('.transcript'); t.scrollTop = pos === 'top' ? 0 : t.scrollHeight; t.dispatchEvent(new Event('scroll')); }, pos);
-          await p.waitForTimeout(300);
+          await p.waitForTimeout(450);
           const r = await p.evaluate(pos => {
             const pod = document.getElementById('o55np-pod');
             if (!pod || getComputedStyle(pod).display === 'none') return { nopod: true };
@@ -1612,14 +1613,18 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
             const hit = e => { const q = e.getBoundingClientRect(); if (q.width < 1 || q.height < 1) return 0; const ix = Math.max(0, Math.min(P.right, q.right) - Math.max(P.left, q.left)), iy = Math.max(0, Math.min(P.bottom, q.bottom) - Math.max(P.top, q.top)); return ix * iy > .5 ? Math.round(ix) + 'x' + Math.round(iy) : 0; };
             const out = [];
             for (const e of document.querySelectorAll('.jump-bottom, .activity-item, .send-queue-row button, .decision-host button, .chat-stage > .composer')) { const k = hit(e); if (k) out.push(String(e.className).slice(0, 30) + ' ' + k); }
-            if (pos === 'bottom') {
-              const tr = document.querySelector('.transcript').getBoundingClientRect();
-              for (const e of document.querySelectorAll('.transcript button, .transcript a, .transcript summary')) {
-                const q = e.getBoundingClientRect(); if (q.bottom < tr.top || q.top > tr.bottom) continue;
-                const cs = getComputedStyle(e); if (cs.visibility === 'hidden' || +cs.opacity === 0) continue;
-                const k = hit(e); if (k) out.push('transcript ' + (e.textContent || e.className).trim().slice(0, 24) + ' ' + k);
-              }
+            /* transcript controls: none under the Pod at the bottom (its resting place); scrolled up, content passes
+               under it, and then the Pod must have faded back (data-shy, opacity <= .2) */
+            const tr = document.querySelector('.transcript').getBoundingClientRect(), under = [];
+            for (const e of document.querySelectorAll('.transcript button, .transcript a[href], .transcript summary')) {
+              const q = e.getBoundingClientRect(); if (q.bottom < tr.top || q.top > tr.bottom) continue;
+              const cs = getComputedStyle(e); if (cs.visibility === 'hidden' || +cs.opacity === 0) continue;
+              const k = hit(e); if (k) under.push('transcript ' + (e.textContent || e.className).trim().slice(0, 24) + ' ' + k);
             }
+            const shy = pod.hasAttribute('data-shy'), op = +getComputedStyle(pod).opacity;
+            if (pos === 'bottom') out.push(...under);
+            else if (under.length && !(shy && op <= .2)) out.push('not faded back over ' + under.join(', ') + ' (shy ' + shy + ', opacity ' + op + ')');
+            if (!under.length && pos === 'bottom' && shy) out.push('faded back with no control under it');
             const bar = document.querySelector('.chat-float .activity-bar');
             if (bar && bar.scrollWidth - bar.clientWidth > 1) out.push('bar overflows ' + (bar.scrollWidth - bar.clientWidth) + ' px');
             return { out };
@@ -1631,7 +1636,7 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
       }
     } finally { await shut(p); }
   }
-  check(views > 0 && bad.length === 0, `18 Pod 042 clear of the jump chip, the bar, the queue, the decision panel and the composer (${views} views: 3 sizes x every thread x top and bottom; at the bottom no transcript button either)`, bad.slice(0, 12));
+  check(views > 0 && bad.length === 0, `18 Pod 042 clear of the jump chip, the bar, the queue, the decision panel and the composer (${views} views: 3 sizes x every thread x top and bottom; at the bottom no transcript button either; faded back over any it passes)`, bad.slice(0, 12));
 });
 
 /* ------------------------------------------------------------- check 19: the header word wears its mark's tone */
