@@ -209,6 +209,9 @@
     if (input && h.spec.search && h.spec.focusSearch !== false) { input.focus({ preventScroll: true }); return; }
     var rows = enabledRows(h);
     var on = rows.filter(function (b) { return b.classList.contains('active'); })[0];
+    /* a menu whose every row is disabled (a size picker with no other size that fits) takes focus itself, so the keys
+       still reach it (FINAL-REVIEW-3 must-fix 6, INT-2: focus stayed on the trigger) */
+    if (!on && !rows[0]) { if (!h.el.hasAttribute('tabindex')) h.el.setAttribute('tabindex', '-1'); try { h.el.focus({ preventScroll: true }); } catch (e) {} return; }
     focusRow(h, on || rows[0]);
   }
   var typeBuf = '', typeT = 0;
@@ -315,7 +318,10 @@
     el.addEventListener('keydown', function (event) { onKey(h, event); });
     el.addEventListener('pointerdown', function (event) { event.stopPropagation(); });
     current = h;
-    requestAnimationFrame(function () { if (h.open) focusFirst(h); });
+    /* Reduce Motion: the menu is final now, so its first row takes focus now (FINAL-REVIEW-3 must-fix 6); otherwise in the
+       next frame, after the sprout's first style */
+    if (reduced()) focusFirst(h);
+    requestAnimationFrame(function () { if (h.open && !h.el.contains(document.activeElement)) focusFirst(h); });
     return h;
   }
   /* the rows materialize (WOW-SPEC 3.14, E-6): opacity 0 -> 1 with a 3 px rise, 110 OUT, 18 ms apart from 60 (at most ten
@@ -378,6 +384,17 @@
     if (current.el.contains(t)) return;
     if (current.anchor && current.anchor.contains && current.anchor.contains(t)) return;
     close(current, { focus: false });
+  }, true);
+  /* Escape closes the open menu wherever focus is (FINAL-REVIEW-3 must-fix 6: with focus left on the trigger, the menu's own
+     handler never heard it): a capture-phase listener on the document, for keys from inside the Usage page or from no
+     particular element; a drilled-in menu steps back first, as the menu's own handler does */
+  document.addEventListener('keydown', function (event) {
+    if (event.key !== 'Escape' || !current || !current.open) return;
+    var tg = event.target, panel = document.getElementById('panel-usage');
+    if (!(tg === document.body || tg === document.documentElement || (panel && panel.contains(tg)) || current.el.contains(tg))) return;
+    event.preventDefault(); event.stopPropagation();
+    if (current.stack.length) { back(current); return; }
+    close(current, { focus: true });
   }, true);
   window.addEventListener('resize', function () { if (current) close(current, { instant: true }); });
   var scroller = document.getElementById('pmuScroll');

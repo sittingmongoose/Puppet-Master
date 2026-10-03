@@ -95,10 +95,30 @@
       if (part && !part.hidden) PMU.motion.animate(part, [{ opacity: 0, transform: 'translateX(6px)' }, { opacity: 1, transform: 'none' }], { dur: 160, easing: 'cubic-bezier(.22,.8,.28,1)' });
     });
     var closeBtn = document.getElementById('pmuInspClose');
-    setTimeout(function () { if (closeBtn && el.classList.contains('open')) closeBtn.focus({ preventScroll: true }); }, 30);
+    /* the close button takes focus once the drawer is shown; under Reduce Motion the app's 0.01 ms transitions can leave the
+       head hidden for a frame or more, so a refused focus is tried again a few times (FINAL-REVIEW-3 must-fix 6) */
+    var tries = 0;
+    (function focusClose() {
+      setTimeout(function () {
+        if (!closeBtn || !el.classList.contains('open') || document.activeElement === closeBtn || el.contains(document.activeElement)) return;
+        closeBtn.focus({ preventScroll: true });
+        if (document.activeElement !== closeBtn && ++tries < 6) focusClose();
+      }, tries ? 50 : 30);
+    })();
   }
   var closeBtn = document.getElementById('pmuInspClose');
   if (closeBtn) closeBtn.addEventListener('click', function () { close(); });
+  /* Escape closes the drawer wherever focus is (FINAL-REVIEW-3 must-fix 6): a capture-phase listener on the document, for
+     keys from inside the Usage page or from no particular element; an open menu takes Escape first (45-menu.js), and a
+     board gesture keeps its own Escape (cancel with a glide back) */
+  document.addEventListener('keydown', function (event) {
+    if (event.key !== 'Escape' || !el || !el.classList.contains('open')) return;
+    if (PMU.menu && PMU.menu.isOpen && PMU.menu.isOpen()) return;
+    if (PMU.board && PMU.board.gesture && PMU.board.gesture()) return;
+    var tg = event.target, panel = document.getElementById('panel-usage');
+    if (!(tg === document.body || tg === document.documentElement || (panel && panel.contains(tg)))) return;
+    event.preventDefault(); event.stopPropagation(); close();
+  }, true);
   if (el) {
     el.addEventListener('keydown', function (event) { if (event.key === 'Escape') { event.stopPropagation(); close(); } });
     el.addEventListener('click', function (event) {

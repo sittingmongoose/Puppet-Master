@@ -34,7 +34,10 @@ html[data-theme^="retro"] #panel-usage .pmu-shell { --pmu-r-menu: 0px; --pmu-r-m
 html[data-pmu-soft] #panel-usage .pmu-menu { background: var(--pmu-menu-bg) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
 /* closed nudge: toward the trigger (a menu below its trigger starts 10 px up, one above starts 10 px down) */
 #panel-usage .pmu-menu[data-side="below"] { --pmu-m-ty: -10px; }
-#panel-usage .pmu-menu[data-mstate="measure"] { visibility: hidden; opacity: 0; transform: none; transition: none; }
+/* measured invisible by opacity, never by visibility: the app's reduced-motion rule gives every element a 0.01 ms
+   transition, so a list that inherited "hidden" here was still hidden in the frame the first row took focus, focus stayed
+   on the trigger and Escape closed nothing (FINAL-REVIEW-3 must-fix 6) */
+#panel-usage .pmu-menu[data-mstate="measure"] { opacity: 0; pointer-events: none; transform: none; transition: none; }
 #panel-usage .pmu-menu[data-mnomo] { transition: none !important; animation: none !important; }
 #panel-usage .pmu-menu[data-mstate="closed"] { opacity: 0; transform: translate3d(0, var(--pmu-m-ty), 0) scale3d(var(--pmu-m-sx), var(--pmu-m-sy), 1); }
 #panel-usage .pmu-menu[data-mstate="open"] { opacity: 1; transform: none; }
