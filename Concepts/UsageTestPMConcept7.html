@@ -30865,7 +30865,10 @@ html[data-theme^="retro"] #panel-usage .pmu-shell { --pmu-r-menu: 0px; --pmu-r-m
 html[data-pmu-soft] #panel-usage .pmu-menu { background: var(--pmu-menu-bg) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
 /* closed nudge: toward the trigger (a menu below its trigger starts 10 px up, one above starts 10 px down) */
 #panel-usage .pmu-menu[data-side="below"] { --pmu-m-ty: -10px; }
-#panel-usage .pmu-menu[data-mstate="measure"] { visibility: hidden; opacity: 0; transform: none; transition: none; }
+/* measured invisible by opacity, never by visibility: the app's reduced-motion rule gives every element a 0.01 ms
+   transition, so a list that inherited "hidden" here was still hidden in the frame the first row took focus, focus stayed
+   on the trigger and Escape closed nothing (FINAL-REVIEW-3 must-fix 6) */
+#panel-usage .pmu-menu[data-mstate="measure"] { opacity: 0; pointer-events: none; transform: none; transition: none; }
 #panel-usage .pmu-menu[data-mnomo] { transition: none !important; animation: none !important; }
 #panel-usage .pmu-menu[data-mstate="closed"] { opacity: 0; transform: translate3d(0, var(--pmu-m-ty), 0) scale3d(var(--pmu-m-sx), var(--pmu-m-sy), 1); }
 #panel-usage .pmu-menu[data-mstate="open"] { opacity: 1; transform: none; }
@@ -43673,10 +43676,30 @@ var PMU_SERIES = {
       if (part && !part.hidden) PMU.motion.animate(part, [{ opacity: 0, transform: 'translateX(6px)' }, { opacity: 1, transform: 'none' }], { dur: 160, easing: 'cubic-bezier(.22,.8,.28,1)' });
     });
     var closeBtn = document.getElementById('pmuInspClose');
-    setTimeout(function () { if (closeBtn && el.classList.contains('open')) closeBtn.focus({ preventScroll: true }); }, 30);
+    /* the close button takes focus once the drawer is shown; under Reduce Motion the app's 0.01 ms transitions can leave the
+       head hidden for a frame or more, so a refused focus is tried again a few times (FINAL-REVIEW-3 must-fix 6) */
+    var tries = 0;
+    (function focusClose() {
+      setTimeout(function () {
+        if (!closeBtn || !el.classList.contains('open') || document.activeElement === closeBtn || el.contains(document.activeElement)) return;
+        closeBtn.focus({ preventScroll: true });
+        if (document.activeElement !== closeBtn && ++tries < 6) focusClose();
+      }, tries ? 50 : 30);
+    })();
   }
   var closeBtn = document.getElementById('pmuInspClose');
   if (closeBtn) closeBtn.addEventListener('click', function () { close(); });
+  /* Escape closes the drawer wherever focus is (FINAL-REVIEW-3 must-fix 6): a capture-phase listener on the document, for
+     keys from inside the Usage page or from no particular element; an open menu takes Escape first (45-menu.js), and a
+     board gesture keeps its own Escape (cancel with a glide back) */
+  document.addEventListener('keydown', function (event) {
+    if (event.key !== 'Escape' || !el || !el.classList.contains('open')) return;
+    if (PMU.menu && PMU.menu.isOpen && PMU.menu.isOpen()) return;
+    if (PMU.board && PMU.board.gesture && PMU.board.gesture()) return;
+    var tg = event.target, panel = document.getElementById('panel-usage');
+    if (!(tg === document.body || tg === document.documentElement || (panel && panel.contains(tg)))) return;
+    event.preventDefault(); event.stopPropagation(); close();
+  }, true);
   if (el) {
     el.addEventListener('keydown', function (event) { if (event.key === 'Escape') { event.stopPropagation(); close(); } });
     el.addEventListener('click', function (event) {
@@ -43901,6 +43924,9 @@ var PMU_SERIES = {
     if (input && h.spec.search && h.spec.focusSearch !== false) { input.focus({ preventScroll: true }); return; }
     var rows = enabledRows(h);
     var on = rows.filter(function (b) { return b.classList.contains('active'); })[0];
+    /* a menu whose every row is disabled (a size picker with no other size that fits) takes focus itself, so the keys
+       still reach it (FINAL-REVIEW-3 must-fix 6, INT-2: focus stayed on the trigger) */
+    if (!on && !rows[0]) { if (!h.el.hasAttribute('tabindex')) h.el.setAttribute('tabindex', '-1'); try { h.el.focus({ preventScroll: true }); } catch (e) {} return; }
     focusRow(h, on || rows[0]);
   }
   var typeBuf = '', typeT = 0;
@@ -44007,7 +44033,10 @@ var PMU_SERIES = {
     el.addEventListener('keydown', function (event) { onKey(h, event); });
     el.addEventListener('pointerdown', function (event) { event.stopPropagation(); });
     current = h;
-    requestAnimationFrame(function () { if (h.open) focusFirst(h); });
+    /* Reduce Motion: the menu is final now, so its first row takes focus now (FINAL-REVIEW-3 must-fix 6); otherwise in the
+       next frame, after the sprout's first style */
+    if (reduced()) focusFirst(h);
+    requestAnimationFrame(function () { if (h.open && !h.el.contains(document.activeElement)) focusFirst(h); });
     return h;
   }
   /* the rows materialize (WOW-SPEC 3.14, E-6): opacity 0 -> 1 with a 3 px rise, 110 OUT, 18 ms apart from 60 (at most ten
@@ -44070,6 +44099,17 @@ var PMU_SERIES = {
     if (current.el.contains(t)) return;
     if (current.anchor && current.anchor.contains && current.anchor.contains(t)) return;
     close(current, { focus: false });
+  }, true);
+  /* Escape closes the open menu wherever focus is (FINAL-REVIEW-3 must-fix 6: with focus left on the trigger, the menu's own
+     handler never heard it): a capture-phase listener on the document, for keys from inside the Usage page or from no
+     particular element; a drilled-in menu steps back first, as the menu's own handler does */
+  document.addEventListener('keydown', function (event) {
+    if (event.key !== 'Escape' || !current || !current.open) return;
+    var tg = event.target, panel = document.getElementById('panel-usage');
+    if (!(tg === document.body || tg === document.documentElement || (panel && panel.contains(tg)) || current.el.contains(tg))) return;
+    event.preventDefault(); event.stopPropagation();
+    if (current.stack.length) { back(current); return; }
+    close(current, { focus: true });
   }, true);
   window.addEventListener('resize', function () { if (current) close(current, { instant: true }); });
   var scroller = document.getElementById('pmuScroll');
