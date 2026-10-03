@@ -876,10 +876,12 @@
      answers stay. item.extra overrides. */
   /* neon step 3E: a decision row leads with the status set's needs-you mark, still (pmxStatus): warm is needs
      (attention), accent is your move (the canon accent); a caller's 'warn' is the attention triangle; any other glyph
-     (memory's hand) is drawn as given. */
+     (memory's hand) is drawn as given. The mark sits in its own slot (an <i>, never a span): the status wrapper is a
+     span, and as a direct span child of the say line it took the reason's clamp (display:-webkit-box, overflow hidden,
+     which cut its backlight) and was the line's first `> span`, the one every caller reads as the reason. */
   function decisionMark(glyph, tone) {
-    if (!glyph || glyph === 'ring-dot') return pmxStatus(tone === 'accent' ? 'yourmove' : 'needs', 14);
-    return glyph === 'warn' ? pmxStatus('attention', 14) : g(glyph, 14);
+    var m = !glyph || glyph === 'ring-dot' ? pmxStatus(tone === 'accent' ? 'yourmove' : 'needs', 14) : glyph === 'warn' ? pmxStatus('attention', 14) : g(glyph, 14);
+    return m ? '<i class="pmx-decision-mark">' + m + '</i>' : '';
   }
   function pmxDecision(o) {
     o = o || {};

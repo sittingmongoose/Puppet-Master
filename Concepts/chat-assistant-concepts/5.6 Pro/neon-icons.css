@@ -413,8 +413,9 @@ html[data-o55-nier-parts~="cursor"] .thread-row.active .nx-st-waiting > svg.nx {
 /* and, NieR's form of the list swell (it has no backlight): in the thread list four ink corner brackets lock on
    around the block for the two "?" beats of each 2.4 s cycle, then let go (held frames, opacity only). Integrate
    (2026-10-02): without them the slowed working diamond still out-moved needs-you in a NieR list (neon-verify 13).
-   List only, like the swell (fix cycle 1): the chat header's mark clips its own box, so the brackets never showed there. */
-html[data-o55-nier="on"] .ph-status .nx-st-waiting::after {
+   List only, like the swell (fix cycle 1): the chat header's mark clips its own box, so the brackets never showed there.
+   They are the Target brackets part's (final fix 2026-10-03): with that part off the block stays, the brackets go. */
+html[data-o55-nier-parts~="brackets"] .ph-status .nx-st-waiting::after {
   content: ""; position: absolute; inset: -5px; pointer-events: none; opacity: 0; --nx-bk-c: var(--nx-bk, var(--o55-nier-ink));
   background:
     linear-gradient(var(--nx-bk-c), var(--nx-bk-c)) left top / 4px 1px no-repeat, linear-gradient(var(--nx-bk-c), var(--nx-bk-c)) left top / 1px 4px no-repeat,

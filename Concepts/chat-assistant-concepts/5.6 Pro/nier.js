@@ -190,7 +190,7 @@
   var HELP = {
     square: ['Square corners and fine ink lines everywhere.', 4], cursor: ['The row under the pointer becomes an ink bar with a small cursor.', 5],
     headers: ['Section titles in wide capitals over a ruled line.', 4], ground: ['A faint grid behind the whole concept.', 3],
-    brackets: ['Four corner brackets mark keyboard focus and the chosen thread.', 5], diamonds: ['Spinners and the working mark become a turning diamond.', 3],
+    brackets: ['Four corner brackets mark keyboard focus, the chosen thread and a thread that needs you.', 5], diamonds: ['Spinners and the working mark become a turning diamond.', 3],
     reboot: ['An ink band sweeps over the window when NieR Mode turns on or off.', 8], slice: ['Menus, pickers, dialogs and sheets open from a thin line.', 4],
     decode: ['Thread titles and new replies resolve from scrambled letters.', 5], wipe: ['A quick band crosses the chat when you switch threads.', 4],
     particles: ['Small ink squares drift over the chat; alerts throw a few off.', 3], sweep: ['A faint scan line crosses the screen, and every alert.', 2],

@@ -9423,12 +9423,13 @@ body[data-theme^="retro"] .pmx-p-line{stroke-linecap:square;}
 /* C7 decision row (the one loud moment) */
 .pmx-decision{display:flex;flex-direction:column;gap:10px;min-width:0;}
 .pmx-decision-say{margin:0;display:flex;gap:8px;align-items:flex-start;height:37px;font:var(--pmx-fs-sentence);color:var(--muted);overflow:hidden;}
-.pmx-decision-say > svg{flex:none;margin-top:2.25px;color:var(--warning);}
-.pmx-decision[data-tone="accent"] .pmx-decision-say > svg{color:var(--muted);stroke:var(--accent);}
+/* the mark's own slot (pmxDecision): an <i>, so the reason's `> span` clamp below never reaches the status wrapper */
+.pmx-decision-mark{flex:none;display:flex;margin-top:2.25px;}
+.pmx-decision-mark > svg{flex:none;color:var(--warning);}
+.pmx-decision[data-tone="accent"] .pmx-decision-mark > svg{color:var(--muted);stroke:var(--accent);}
 .pmx-decision[data-tone="accent"] .pmx-decision-say .pmx-g-dot{fill:var(--accent);}
-.pmx-decision-say > .nx-st{flex:none;margin-top:2.25px;}
-.pmx-decision[data-tone="accent"] .pmx-decision-say > .nx-st{--nx-bl-ink:var(--accent);}
-.pmx-decision[data-tone="accent"] .pmx-decision-say > .nx-st > svg.nx{--nx-ink:var(--accent);}
+.pmx-decision[data-tone="accent"] .pmx-decision-mark > .nx-st{--nx-bl-ink:var(--accent);}
+.pmx-decision[data-tone="accent"] .pmx-decision-mark > .nx-st > svg.nx{--nx-ink:var(--accent);}
 .pmx-decision-say > span{min-width:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 .pmx-decision-say b{color:var(--text);font-weight:var(--pmx-w-650);}
 .pmx-decision-acts{display:flex;flex-wrap:wrap;gap:12px 10px;padding-left:22px;min-width:0;}
@@ -17391,8 +17392,9 @@ html[data-o55-nier-parts~="cursor"] .thread-row.active .nx-st-waiting > svg.nx {
 /* and, NieR's form of the list swell (it has no backlight): in the thread list four ink corner brackets lock on
    around the block for the two "?" beats of each 2.4 s cycle, then let go (held frames, opacity only). Integrate
    (2026-10-02): without them the slowed working diamond still out-moved needs-you in a NieR list (neon-verify 13).
-   List only, like the swell (fix cycle 1): the chat header's mark clips its own box, so the brackets never showed there. */
-html[data-o55-nier="on"] .ph-status .nx-st-waiting::after {
+   List only, like the swell (fix cycle 1): the chat header's mark clips its own box, so the brackets never showed there.
+   They are the Target brackets part's (final fix 2026-10-03): with that part off the block stays, the brackets go. */
+html[data-o55-nier-parts~="brackets"] .ph-status .nx-st-waiting::after {
   content: ""; position: absolute; inset: -5px; pointer-events: none; opacity: 0; --nx-bk-c: var(--nx-bk, var(--o55-nier-ink));
   background:
     linear-gradient(var(--nx-bk-c), var(--nx-bk-c)) left top / 4px 1px no-repeat, linear-gradient(var(--nx-bk-c), var(--nx-bk-c)) left top / 1px 4px no-repeat,
@@ -24558,7 +24560,7 @@ window.PM56_NIER_FACES = [
   var HELP = {
     square: ['Square corners and fine ink lines everywhere.', 4], cursor: ['The row under the pointer becomes an ink bar with a small cursor.', 5],
     headers: ['Section titles in wide capitals over a ruled line.', 4], ground: ['A faint grid behind the whole concept.', 3],
-    brackets: ['Four corner brackets mark keyboard focus and the chosen thread.', 5], diamonds: ['Spinners and the working mark become a turning diamond.', 3],
+    brackets: ['Four corner brackets mark keyboard focus, the chosen thread and a thread that needs you.', 5], diamonds: ['Spinners and the working mark become a turning diamond.', 3],
     reboot: ['An ink band sweeps over the window when NieR Mode turns on or off.', 8], slice: ['Menus, pickers, dialogs and sheets open from a thin line.', 4],
     decode: ['Thread titles and new replies resolve from scrambled letters.', 5], wipe: ['A quick band crosses the chat when you switch threads.', 4],
     particles: ['Small ink squares drift over the chat; alerts throw a few off.', 3], sweep: ['A faint scan line crosses the screen, and every alert.', 2],
@@ -35813,10 +35815,12 @@ window.PM56_NIER_FACES = [
      answers stay. item.extra overrides. */
   /* neon step 3E: a decision row leads with the status set's needs-you mark, still (pmxStatus): warm is needs
      (attention), accent is your move (the canon accent); a caller's 'warn' is the attention triangle; any other glyph
-     (memory's hand) is drawn as given. */
+     (memory's hand) is drawn as given. The mark sits in its own slot (an <i>, never a span): the status wrapper is a
+     span, and as a direct span child of the say line it took the reason's clamp (display:-webkit-box, overflow hidden,
+     which cut its backlight) and was the line's first `> span`, the one every caller reads as the reason. */
   function decisionMark(glyph, tone) {
-    if (!glyph || glyph === 'ring-dot') return pmxStatus(tone === 'accent' ? 'yourmove' : 'needs', 14);
-    return glyph === 'warn' ? pmxStatus('attention', 14) : g(glyph, 14);
+    var m = !glyph || glyph === 'ring-dot' ? pmxStatus(tone === 'accent' ? 'yourmove' : 'needs', 14) : glyph === 'warn' ? pmxStatus('attention', 14) : g(glyph, 14);
+    return m ? '<i class="pmx-decision-mark">' + m + '</i>' : '';
   }
   function pmxDecision(o) {
     o = o || {};
