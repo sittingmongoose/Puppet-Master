@@ -1,0 +1,14 @@
+{
+  "schema": "pm.er8.s8-observation-freeze.v2",
+  "helper": "er8-s8-terminal-observation-v2",
+  "birth_epoch": 1791004862.689853,
+  "original_deadline_epoch": 1791005462.689853,
+  "actual_end_epoch": 1791005136.467866,
+  "inclusive_elapsed_seconds": 273.77801299095154,
+  "ended_before_original_deadline": true,
+  "outputs": {
+    "REPORT.json": "26c46353a04277b2e4ec2786214ecaa91e689900bf95f9ff61d07f30e6a7d525",
+    "REPORT.md": "d8582e4e8c35f58d4114e9bfa7b0cf97b52ed57e7f465553599d52a7c4b31277",
+    "MANIFEST.json": "5e72b110fa6b4c3667bb9c37df5f698add02b392b27b95a85dc624d67a8e623d"
+  }
+}

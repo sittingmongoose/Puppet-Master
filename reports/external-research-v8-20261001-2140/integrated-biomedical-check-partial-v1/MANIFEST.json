@@ -1,0 +1,32 @@
+{
+  "schema": "er8.s8.public.manifest.v1",
+  "selected_input_count": 129,
+  "projected_input_count": 129,
+  "candidate_output_count": 2,
+  "scope": {
+    "schema": "er8.s8.partial-results.v1",
+    "status": "BOTH_PIPELINES_INCOMPLETE",
+    "native_starts": 3,
+    "control_completed_stages": [
+      "research-proposal",
+      "independent-candidate-critic"
+    ],
+    "control_final": "HOST_ATTEMPT_HELD_126; NO_NATIVE_ADMISSION_OR_GOAL",
+    "treatment_research": "HELD_FAILURE_126; NO_COMPLETE_OR_FINAL_METRICS",
+    "treatment_critic_final_retry": "NOT_ADMITTED",
+    "all_three_leases_released": true,
+    "pending_start_permits": 0,
+    "rolling_held_exit_code": 126,
+    "rolling_group_absent": true,
+    "outer_monitor_held_exit": "UNKNOWN",
+    "failure_cause": "UNKNOWN",
+    "treatment_output_tokens": "UNKNOWN",
+    "historical_output_stop_lower_bound": 1508391,
+    "complete_whole_pipeline_count_for_this_cohort": 0,
+    "semantic_quality": "UNASSESSED",
+    "full_quality_failure_claim": false,
+    "speedup_winner_holdout": "NOT_CLAIMED",
+    "cost_scope": "All actual occupied and historical failure costs retained in original observation; T final usage, tokens/money/account/provider load unknown; no refund/reset."
+  },
+  "positive_input_manifest_sha256": "e0cf800b990e9a426a2a0a114f26048475b114a3befec2cfdcf0b0bf353a2ab9"
+}

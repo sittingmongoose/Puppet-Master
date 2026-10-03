@@ -1,0 +1,32 @@
+{
+  "schema": "er8.route.case-binding.v1",
+  "case_id": "V8-BIO-WIT-T-Z-S8",
+  "case_start_monotonic_ns": 224639089597756,
+  "stage_id": "v8-bio-wit-t-z-s8-research-proposal",
+  "stage_start_monotonic_ns": 224639089597756,
+  "max_seconds": 1200,
+  "max_responses": 160,
+  "workspace": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-WIT-T-Z-S8/V8-BIO-WIT-T-Z-S8-research-proposal/workspace",
+  "prompt_file": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-WIT-T-Z-S8/V8-BIO-WIT-T-Z-S8-research-proposal/OBJECTIVE.md",
+  "prompt_sha256": "323aa81190fa3ce5afbed905c1e19a983e6f4a55790e170a4585bd94bd8ad70d",
+  "native_out": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-WIT-T-Z-S8/V8-BIO-WIT-T-Z-S8-research-proposal/native-public",
+  "label": "V8-BIO-WIT-T-Z-S8-research-proposal",
+  "mode": "productive",
+  "public_get": true,
+  "immutable_inputs": {
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-WIT-T-Z-S8/V8-BIO-WIT-T-Z-S8-research-proposal/workspace/TASK.md": "5b3292485b7224e871aea7f532f2fe6b7703adb426103ac9b97c1ac37678406c",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-WIT-T-Z-S8/V8-BIO-WIT-T-Z-S8-research-proposal/workspace/inputs/METHOD.md": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-WIT-T-Z-S8/V8-BIO-WIT-T-Z-S8-research-proposal/workspace/inputs/BRIEF.md": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-WIT-T-Z-S8/V8-BIO-WIT-T-Z-S8-research-proposal/workspace/inputs/TASK.md": "5b3292485b7224e871aea7f532f2fe6b7703adb426103ac9b97c1ac37678406c",
+    "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-WIT-T-Z-S8/V8-BIO-WIT-T-Z-S8-research-proposal/workspace/inputs/THIN_PLAN.md": "9a4a13328e3f3d4af25d13c371b79b918d898cb20fa2ec99e0901a70fe7be98f"
+  },
+  "immutable_capture_inputs": {},
+  "capture_origin_case_id": "V8-BIO-WIT-T-Z-S8",
+  "config_sha256": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d",
+  "lease_sha256": "834e43c855980c2a540c33fd0a365c9df83832c8cd78fc97cc2c84834b06c63f",
+  "account_identity": "existing-authorized-zcode-account-v8-A",
+  "canary_review": {
+    "path": "LAB_ROOT/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json",
+    "sha256": "aba3336e6475d1eb50e00b66c3804e2747d7fef38be764ec53379614cfb68fc7"
+  }
+}

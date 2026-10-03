@@ -1,0 +1,73 @@
+{
+  "schema": "pm.er8.failure-cleanup-proof.production.v1",
+  "case": "V8-BIO-WIT-T-Z-S8",
+  "job": "V8-BIO-WIT-T-Z-S8-research-proposal",
+  "root_authority": true,
+  "case_launch": {
+    "case": "V8-BIO-WIT-T-Z-S8",
+    "case_supervisor_pid": 2775533,
+    "case_supervisor_pgid": 2775533,
+    "original_case_start_monotonic_ns": 224639089597756,
+    "original_case_birth_epoch": 1791002892.919834,
+    "original_case_deadline_monotonic_ns": 228239089597756
+  },
+  "stage_launch": {
+    "case": "V8-BIO-WIT-T-Z-S8",
+    "job": "V8-BIO-WIT-T-Z-S8-research-proposal",
+    "stage_actor_pid": 2775595,
+    "stage_actor_pgid": 2775595,
+    "original_stage_start_monotonic_ns": 224639089597756,
+    "original_stage_birth_epoch": 1791002892.919834,
+    "original_stage_deadline_monotonic_ns": 225839089597756
+  },
+  "case_held_wait": {
+    "case": "V8-BIO-WIT-T-Z-S8",
+    "case_supervisor_pid": 2775533,
+    "case_supervisor_pgid": 2775533,
+    "original_case_start_monotonic_ns": 224639089597756,
+    "original_case_birth_epoch": 1791002892.919834,
+    "original_case_deadline_monotonic_ns": 228239089597756,
+    "held_Popen_returncode": 126,
+    "actual_exit_observed_monotonic_ns": 225809505327745
+  },
+  "stage_held_wait": {
+    "case": "V8-BIO-WIT-T-Z-S8",
+    "job": "V8-BIO-WIT-T-Z-S8-research-proposal",
+    "stage_actor_pid": 2775595,
+    "stage_actor_pgid": 2775595,
+    "original_stage_start_monotonic_ns": 224639089597756,
+    "original_stage_birth_epoch": 1791002892.919834,
+    "original_stage_deadline_monotonic_ns": 225839089597756,
+    "held_Popen_returncode": 126,
+    "actual_exit_observed_monotonic_ns": 225809375157346
+  },
+  "held_rolling_exit": null,
+  "all_owned_groups_absent": {
+    "case_supervisor": true,
+    "stage_actor": true
+  },
+  "enrolled_native_mcp_quiet": {
+    "schema": "er8.execution.quiescence.v1",
+    "owned_unit": "er8-v8-bio-wit-t-z-s8-research-proposal.service",
+    "owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-wit-t-z-s8-research-proposal.service",
+    "enrollment": {
+      "schema": "er8.execution.enrollment.v1",
+      "owned_unit": "er8-v8-bio-wit-t-z-s8-research-proposal.service",
+      "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-wit-t-z-s8-research-proposal.service",
+      "enrolled_monotonic_ns": 224641850293833,
+      "original_deadline_monotonic_ns": 225839089597756
+    },
+    "absence_proof": "positively-enrolled-owned-cgroup-removed",
+    "owned_native_quiescent": true,
+    "quiescence_observed_monotonic_ns": 225809596718838,
+    "original_deadline_monotonic_ns": 225839089597756,
+    "inclusive_native_lifetime_established": true,
+    "occupancy_disposition": "releasable-native-only",
+    "native_goal_or_quality_qualification": "UNESTABLISHED; independent native receipt review mandatory"
+  },
+  "actual_observed_monotonic_ns": 225809596727039,
+  "complete_receipt_present": false,
+  "outcome": "FAILURE_OR_INCOMPLETE_PRESERVED",
+  "no_backdating": true,
+  "qualification": "cleanup only"
+}

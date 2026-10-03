@@ -1,0 +1,26 @@
+{
+  "schema": "er8.integrated.stage-deferred-close.v1",
+  "case": "V8-BIO-C-Z-S8",
+  "job": "V8-BIO-C-Z-S8-independent-candidate-critic",
+  "stage_start_monotonic_ns": 225666835882247,
+  "original_case_start_monotonic_ns": 224639084341378,
+  "original_deadline_monotonic_ns": 226866835882247,
+  "lease_release_deferred": true,
+  "lease_released_by_actor": false,
+  "native_wrapper_launch_monotonic_ns": 225668007055063,
+  "native_quiescence_observed_monotonic_ns": 226323214405742,
+  "last_charged_host_monotonic_ns": 226323325971822,
+  "host_groups_absent": true,
+  "required_artifact": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-C-Z-S8/V8-BIO-C-Z-S8-independent-candidate-critic/workspace/out/CRITIQUE.md",
+    "bytes": 13095,
+    "sha256": "97a2c125e4c6b7dcfc320f1b3fdd335fab52cb896b935f278911e49d742d0d7f"
+  },
+  "native_goal_activation_observed": true,
+  "fresh_session": true,
+  "native_responses": 18,
+  "native_goal_status": "complete",
+  "wrapper_returncode": 0,
+  "source_semantic_acquisition": "UNKNOWN",
+  "usage": "UNKNOWN except reported monotonic output lower bound"
+}

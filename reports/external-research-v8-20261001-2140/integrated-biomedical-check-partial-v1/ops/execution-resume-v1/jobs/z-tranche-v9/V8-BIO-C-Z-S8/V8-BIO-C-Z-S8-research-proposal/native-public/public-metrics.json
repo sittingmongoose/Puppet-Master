@@ -1,0 +1,53 @@
+{
+  "goal_started_turn": true,
+  "native_quiescent": true,
+  "own_process_group_absent": true,
+  "native_responses": 15,
+  "usage_requests_with_delta": 14,
+  "goal_status_final": "complete",
+  "stop_reason": "goal_complete",
+  "provider_id": "builtin:zai-coding-plan",
+  "model_id": "GLM-5.3-Flash",
+  "effort_effective": "max",
+  "schema": "er8.route.native-positive-receipt.v1",
+  "admission_mode": "productive",
+  "runtime_snapshot_sha256": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b",
+  "accepted_method_sha256": "904b5ad53f5f6a5af23087634f36506474e214e6e433a780ba85b563b50f6278",
+  "requested_model": "GLM-5.3-Flash",
+  "requested_effort": "max",
+  "native_goal_engine_sha256": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+  "fresh_session": true,
+  "original_case_start_monotonic_ns": 224639084341378,
+  "original_stage_start_monotonic_ns": 224639084341378,
+  "original_native_stop_monotonic_ns": 225809084341378,
+  "original_deadline_monotonic_ns": 225839084341378,
+  "elapsed_milliseconds": 1026906,
+  "inclusive_pre_activation_milliseconds": 8791,
+  "host_groups_absent": true,
+  "canary_qualification": "passed",
+  "component_outcome": "passed",
+  "usage_totals": {
+    "inputTokens": 1673818,
+    "outputTokens": 54315,
+    "reasoningTokens": 0,
+    "cacheReadTokens": 1471360,
+    "cacheWriteTokens": 0,
+    "totalTokens": 1728133
+  },
+  "request_status_counts": {
+    "model_request_completed": 15
+  },
+  "activation": {
+    "schema": "er8.route.activation-positive.v1",
+    "native_activation_observed": true,
+    "goal_started_turn": true,
+    "native_activation_absent_proof": false,
+    "observed_activation_epoch": 1791002901,
+    "observed_activation_monotonic_ns": 224647876132838
+  },
+  "cleanup_projection": {
+    "native_process_returned": true,
+    "native_process_group_remaining_count": 0
+  },
+  "publication_projection_scope": "Positive public scalar/quantified receipt metadata only; not complete original proof. No local/startup context, raw native structure, conversation, tool arguments or source delivery body."
+}

@@ -1,0 +1,14 @@
+{
+  "schema": "pm.er8.root-one-shot-native-positive-launch.v1",
+  "root_authority": true,
+  "observed_epoch": 1791002890.7719164,
+  "intent": {
+    "path": "LAB_ROOT/ops/recovery-v1/ATTEMPT_BIO_CHECK_ONCE_LAUNCH_INTENT_V1.json",
+    "sha256": "566393a92a3269b82bbefcf594f87b2e02af9bcdc1375a2bec655c2ae3775761"
+  },
+  "systemd_run_returncode": 0,
+  "candidate_goal_starts": "Determine from exact current ledger; unit start alone does not prove native Goal start.",
+  "global_deadline_unchanged": true,
+  "publication_scope": "Metadata only; source/dependency closures not followed. Six-pair declarations convey no native starts except the actual biomedical check pair reported separately.",
+  "source_dependency_locators_not_followed": {}
+}

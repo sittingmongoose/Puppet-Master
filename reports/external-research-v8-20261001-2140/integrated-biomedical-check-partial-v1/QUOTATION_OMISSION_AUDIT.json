@@ -1,0 +1,585 @@
+{
+  "schema": "er8.quote-omission.v1",
+  "audit": [
+    {
+      "source_projection": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-C-Z-S8/V8-BIO-C-Z-S8-research-proposal/workspace/out/PROPOSAL.md",
+      "original_sha256": "1145fadb7aef7f722f87771693bcf49bc1d84cbf4a9a934caa1476b51d5e0543",
+      "omitted_spans": [
+        {
+          "original_span_sha256": "51d938242becbb5de3a18960901007a0c44f2ba15952c5622b040cc571c57d4a",
+          "original_word_count": 3,
+          "original_utf8_bytes": 20,
+          "original_line": 9,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "340a0a4e7703227b33f4846900f78cfd83493275159e8611bb3cb4e34252e5bf",
+          "original_word_count": 2,
+          "original_utf8_bytes": 9,
+          "original_line": 9,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "1dcd5ae5104e283e33321008368ad3078e28c64fd23f54ddb529768b33facf3e",
+          "original_word_count": 4,
+          "original_utf8_bytes": 39,
+          "original_line": 9,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "4fd0d7ea2bb221aa113127c6a88f8880f34ed61abc9a8e3c7ce1d8c9474ffe06",
+          "original_word_count": 7,
+          "original_utf8_bytes": 46,
+          "original_line": 13,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "22f0efb784fd81dfbfca817108666bf428ab765d90a0cef743bec65cfd460767",
+          "original_word_count": 7,
+          "original_utf8_bytes": 65,
+          "original_line": 13,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "730eed1008303bbdb62e724957d7c80abb2c38c76953368a2d481da3c9e2a5cf",
+          "original_word_count": 1,
+          "original_utf8_bytes": 14,
+          "original_line": 17,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "98c1f9963be4e46d96e725ae202c4c3c49d856692e7a744ebe44950f978757b5",
+          "original_word_count": 7,
+          "original_utf8_bytes": 44,
+          "original_line": 29,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "8a840f4cb017f3974815bc799a8a8258ddafc99fb49ad85f2e2750256c2cec67",
+          "original_word_count": 8,
+          "original_utf8_bytes": 54,
+          "original_line": 31,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "02a99053c24ab6f909eb1aed0abef08390b4cb23cc679e655bf38d571c03a882",
+          "original_word_count": 7,
+          "original_utf8_bytes": 36,
+          "original_line": 32,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "ef862b2358d825c19999382516e30491d1c2397c1d217e26e0d4e65a5ff4cfb6",
+          "original_word_count": 9,
+          "original_utf8_bytes": 77,
+          "original_line": 34,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "3b01b5b0fd8b6dc35a08da13bc4931821fb722874e22539cba75f9fc8de1232b",
+          "original_word_count": 13,
+          "original_utf8_bytes": 86,
+          "original_line": 41,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "8d7ad40cb55f896710e9a5f59cbf416ce09f4c4582c98de6fb6f459c10f5dacf",
+          "original_word_count": 4,
+          "original_utf8_bytes": 38,
+          "original_line": 43,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "816c1202643f30c5edba1bebef9fd6bb32194db1c3fa235e7c0f58c256450358",
+          "original_word_count": 9,
+          "original_utf8_bytes": 41,
+          "original_line": 43,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "1aff60c6085b334446a8230f3ab32439c48bb57b6e9b2aa8dad704864f03ec6b",
+          "original_word_count": 7,
+          "original_utf8_bytes": 51,
+          "original_line": 44,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "6d39e1ca69884357539a95d2d6da5289c53f6aeb08b8e804ac6c3bc86b84b1ac",
+          "original_word_count": 9,
+          "original_utf8_bytes": 54,
+          "original_line": 45,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "9189c14dc66435dd658fda7e6279a787c2a4e1646a74f5cbcaa3bee48712f4a7",
+          "original_word_count": 7,
+          "original_utf8_bytes": 42,
+          "original_line": 75,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "4471717ff38285baf606baaabf51924b9aa6ccd11c8444c0436bd428107b39a9",
+          "original_word_count": 5,
+          "original_utf8_bytes": 35,
+          "original_line": 75,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "e0e462a6e7f59011cc6ab272b8ca6ca60f50c03383450ebc19dd3a3aa1936da7",
+          "original_word_count": 3,
+          "original_utf8_bytes": 19,
+          "original_line": 79,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "401f1785c6edfe4e83fcde99c750fa54658467ce33f25521fa045335de78e3ce",
+          "original_word_count": 2,
+          "original_utf8_bytes": 19,
+          "original_line": 79,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "b1341d34871079dcb54fe4231bdcf5556ec9a6a586f433f7db1ca88514e899d1",
+          "original_word_count": 5,
+          "original_utf8_bytes": 31,
+          "original_line": 93,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "58e340962fa63999258409a03f9233047ca107ffd9cacdab87232394866a7d16",
+          "original_word_count": 14,
+          "original_utf8_bytes": 81,
+          "original_line": 94,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "a414fd18355515c4560c8ef177653c8617f1d502dc1cc46a74d9c18dc0250011",
+          "original_word_count": 10,
+          "original_utf8_bytes": 53,
+          "original_line": 95,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "e04ab56707a583177b0c680fa421dfbed3ba4ab26628a95a89af0623007f2538",
+          "original_word_count": 3,
+          "original_utf8_bytes": 7,
+          "original_line": 102,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "a70986e34767bf976c2d503cc460a6e7e4c6a3adf2594d0027fb484ddbab4996",
+          "original_word_count": 4,
+          "original_utf8_bytes": 37,
+          "original_line": 103,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "38343ee6f8e6ef68c87d4a047f296d3da22414be46cd6df91a258c4737867ce4",
+          "original_word_count": 8,
+          "original_utf8_bytes": 60,
+          "original_line": 105,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "1dc1d3db838b70f96f383eebcbbaa7de73263c7d3299ea967c49f3f59242519e",
+          "original_word_count": 2,
+          "original_utf8_bytes": 12,
+          "original_line": 109,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "09d1163465804e3e1f79d2f8ffce8fcd4e918e84bb7b9304b9bdc95b66dfc1f5",
+          "original_word_count": 2,
+          "original_utf8_bytes": 21,
+          "original_line": 110,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "11fcd34f5bbd0c19060887bee9619b5383b898cde15860c180b45a4c8123f36b",
+          "original_word_count": 7,
+          "original_utf8_bytes": 41,
+          "original_line": 124,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "5c8a62d0f83eb6c31c14303bca89ad37c70cbd97abecb5aebc11c5dfc6a9148b",
+          "original_word_count": 2,
+          "original_utf8_bytes": 20,
+          "original_line": 126,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "f7d3c821d33d09d989ac4e726a681f032c64f3a5fade65126b4286f9324293a3",
+          "original_word_count": 4,
+          "original_utf8_bytes": 24,
+          "original_line": 129,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "a8e375537b99a3c820352a1a6a31d36f2b3223192513775882513971dfc065b7",
+          "original_word_count": 3,
+          "original_utf8_bytes": 18,
+          "original_line": 139,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "213078ac2eae34959f06a769db49e4da2bc6daf70f3e030e7bd19d9d26525f50",
+          "original_word_count": 2,
+          "original_utf8_bytes": 9,
+          "original_line": 139,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "f64931ce758d5bd850e64f1c0cb49f0ea77848a08d778b991ede7be55c70fd24",
+          "original_word_count": 3,
+          "original_utf8_bytes": 26,
+          "original_line": 141,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "e0e462a6e7f59011cc6ab272b8ca6ca60f50c03383450ebc19dd3a3aa1936da7",
+          "original_word_count": 3,
+          "original_utf8_bytes": 19,
+          "original_line": 159,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "0c060ce4b9c8d5162e0c0bbf9c8906c0bacaf6b59dc3925640324660976a849c",
+          "original_word_count": 4,
+          "original_utf8_bytes": 29,
+          "original_line": 164,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "01f6d6cb646cb346950612dbfb79c3d0d0e38e9d4af6d6e9a19dfa10957773b8",
+          "original_word_count": 3,
+          "original_utf8_bytes": 16,
+          "original_line": 175,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        }
+      ],
+      "fenced_candidate_code_examples_preserved": true,
+      "source_URL_hash_ranges_retained": true,
+      "uncertain_prose_quotes_also_omitted": true,
+      "locator_tokens_retained": [
+        "1–4",
+        "2022-02",
+        "2024-02",
+        "2024-11",
+        "2025-03",
+        "2025-04",
+        "2025-09",
+        "2026-03",
+        "2026-06",
+        "2026-09",
+        "260–271",
+        "2–3",
+        "2–5",
+        "https://github.com/hms-dbmi/vizarr.",
+        "https://github.com/napari/napari.",
+        "https://github.com/ome/ome-zarr-py.",
+        "https://ngff.openmicroscopy.org/0.4/"
+      ]
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v9/V8-BIO-C-Z-S8/V8-BIO-C-Z-S8-independent-candidate-critic/workspace/out/CRITIQUE.md",
+      "original_sha256": "97a2c125e4c6b7dcfc320f1b3fdd335fab52cb896b935f278911e49d742d0d7f",
+      "omitted_spans": [
+        {
+          "original_span_sha256": "dc5a1bda1745690ef63452446d61a70c1e1dc88147b4157c27af7a307ac6a1e7",
+          "original_word_count": 3,
+          "original_utf8_bytes": 7,
+          "original_line": 24,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "38343ee6f8e6ef68c87d4a047f296d3da22414be46cd6df91a258c4737867ce4",
+          "original_word_count": 8,
+          "original_utf8_bytes": 60,
+          "original_line": 32,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "05a1bcec26e52d5c5413eed063994db2af7b1b3be714d8b7be68f22dc28b11c1",
+          "original_word_count": 3,
+          "original_utf8_bytes": 19,
+          "original_line": 39,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "a3ad00a894ce07ff7e6f0e81d05a495d712d0cc9dbf4a28450bb423d71df86dd",
+          "original_word_count": 6,
+          "original_utf8_bytes": 43,
+          "original_line": 42,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "f07354daf0f057201efeb4bd2df0e235080c9145f45ee357fcfd4451a9d11472",
+          "original_word_count": 4,
+          "original_utf8_bytes": 34,
+          "original_line": 49,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "c757ff30ba1402685d058ee0a3ae7f88bc82ace55d5dbac4aeae766db7549505",
+          "original_word_count": 6,
+          "original_utf8_bytes": 32,
+          "original_line": 55,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "4cff3f4915231faed1431948324df45f932f4e49941a59b3e37585368a1841fd",
+          "original_word_count": 6,
+          "original_utf8_bytes": 26,
+          "original_line": 55,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "4471717ff38285baf606baaabf51924b9aa6ccd11c8444c0436bd428107b39a9",
+          "original_word_count": 5,
+          "original_utf8_bytes": 35,
+          "original_line": 57,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "3261b94b9a6f75c0084ad65ac7d0c07867dad11d7eb684f56f8288be8a33e955",
+          "original_word_count": 3,
+          "original_utf8_bytes": 9,
+          "original_line": 60,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "e0acef3dfa3519c014ddd384ebe4810617cd220b772d9eab67cd642c56ee994b",
+          "original_word_count": 2,
+          "original_utf8_bytes": 15,
+          "original_line": 62,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "4878b8c0e3901a9c1a05ab01d2d6815c7f864e8f68b104c7f470ea007c1fee1c",
+          "original_word_count": 5,
+          "original_utf8_bytes": 32,
+          "original_line": 64,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "22f0efb784fd81dfbfca817108666bf428ab765d90a0cef743bec65cfd460767",
+          "original_word_count": 7,
+          "original_utf8_bytes": 65,
+          "original_line": 66,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "7814b763f7c2cd10f483296a27bb671f793cafa70930adb56521a9f1ba1ed93b",
+          "original_word_count": 12,
+          "original_utf8_bytes": 72,
+          "original_line": 72,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "c2649ac28aafe5172bc09850b68cbd425d8b1103a2ecc09ab8f548e4ae9896e0",
+          "original_word_count": 4,
+          "original_utf8_bytes": 43,
+          "original_line": 81,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "efa849edb2d4f97e023953b62b5f221605bd8f9e02559682f1fef831337b28af",
+          "original_word_count": 3,
+          "original_utf8_bytes": 17,
+          "original_line": 91,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "7c6230912d507dc904a65bd61e4daa5e76af6292728fcd7eec86a85d401fdd71",
+          "original_word_count": 5,
+          "original_utf8_bytes": 22,
+          "original_line": 92,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "9c7a14fe54d5be88066dd7ca1dccb00f406bf158163c519d4606dedbff0caa9d",
+          "original_word_count": 7,
+          "original_utf8_bytes": 51,
+          "original_line": 93,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "147584eb4af3fc5d5fe6a3bd4b18e51677ee1b18bae26e983b34f9ad819366e3",
+          "original_word_count": 2,
+          "original_utf8_bytes": 19,
+          "original_line": 96,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "64c8add66ecef0456416f98112dbf0c7ef094fe44e7e454965621082e1d0b7a5",
+          "original_word_count": 4,
+          "original_utf8_bytes": 24,
+          "original_line": 112,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "dc1f619b4c18c3ce32c670fe774b32bb2b6281661d71546687ff8189a4adb323",
+          "original_word_count": 2,
+          "original_utf8_bytes": 13,
+          "original_line": 116,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "399e01b4e07b3cf3278f6b8d7a98df64c9ac4ee869d015f79ba795b7d10a3c97",
+          "original_word_count": 1,
+          "original_utf8_bytes": 12,
+          "original_line": 117,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "0f2dc8250c4a46c4898265481c37554341ec81f1a1e44cd55d391cda0d7305b7",
+          "original_word_count": 5,
+          "original_utf8_bytes": 24,
+          "original_line": 122,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "5852908cd8e36438e5f89d2ff404408f304227d5bf252a2c5eba3a8bdb18350d",
+          "original_word_count": 3,
+          "original_utf8_bytes": 24,
+          "original_line": 123,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "27d4f143895a2051a299e46ff72efb29c404de6230ff9a7e78c7c863acbe3e30",
+          "original_word_count": 1,
+          "original_utf8_bytes": 12,
+          "original_line": 125,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "3d0403d8da21a4dcd9ed05808dc4dc35bba0828e083734a0545074b7ce127dc9",
+          "original_word_count": 6,
+          "original_utf8_bytes": 35,
+          "original_line": 139,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "f166d308b0140bfcbdf40dbcd665fa32550a67b21bc003e1e31dae7ae9e9e0ba",
+          "original_word_count": 13,
+          "original_utf8_bytes": 75,
+          "original_line": 140,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "69333d283103dd7c98aebc7829fa1cb23089ccfa0c6bc3902d17af885b24fed8",
+          "original_word_count": 2,
+          "original_utf8_bytes": 13,
+          "original_line": 142,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "1f6b77b3a7458a192d77c2248936ed9b718921713aa7d12ac73c72f7feaca426",
+          "original_word_count": 10,
+          "original_utf8_bytes": 65,
+          "original_line": 143,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "2ab517381becc0a24335036ccdbe23b6785d57ebaf8ceece495374a85a94fa78",
+          "original_word_count": 3,
+          "original_utf8_bytes": 23,
+          "original_line": 145,
+          "scope": "source-attributed multiword inline source/code excerpt",
+          "public_verbatim_words": 0
+        },
+        {
+          "original_span_sha256": "0abd67e5f8c31e5ff0a17b8ca9591ac90ecb61da33de04089fd7d5396a31e8f5",
+          "original_word_count": 1,
+          "original_utf8_bytes": 8,
+          "original_line": 165,
+          "scope": "explicit or uncertain prose quotation outside own code example",
+          "public_verbatim_words": 0
+        }
+      ],
+      "fenced_candidate_code_examples_preserved": true,
+      "source_URL_hash_ranges_retained": true,
+      "uncertain_prose_quotes_also_omitted": true,
+      "locator_tokens_retained": [
+        "2022-02",
+        "2024-02",
+        "2024-11",
+        "2025-03",
+        "2025-04",
+        "2025-09",
+        "2026-03",
+        "2026-06",
+        "2026-09",
+        "2026-10",
+        "2–5",
+        "https://ngff.openmicroscopy.org/0.4/"
+      ]
+    }
+  ],
+  "thirdparty_verbatim_projection_policy": "Conservatively omit explicit/uncertain prose excerpts and block quotations; candidate own code examples preserved; no source body copies."
+}
