@@ -41633,7 +41633,7 @@ var PMU_SERIES = {
             tierPass([c2], false);
             c2.removeAttribute('data-body-wait');
           }
-          if (later.length) requestAnimationFrame(function () { lateHeld && lateHeld(false); }); else lateHeld = null;
+          if (later.length) lateNext(function () { lateHeld && lateHeld(false); }); else lateHeld = null;
         };
       }
     }
@@ -41649,6 +41649,10 @@ var PMU_SERIES = {
   var leaving = [], leaveFlushQueued = false, pendingOld = null;
   /* a build or refresh slice runs with the content fit pass deferred to the slice's end (one batched read for the cards of
      the slice, inside the slice; NOTES3-content E1, NOTES3-perf C1/Q6), never as a microtask after it */
+  /* integ3: the off-screen bodies built after a moment (no-GPU profile) go one batch per IDLE period, not per frame: they
+     are not motion and nothing waits for them (a scroll or a gesture builds them at once); a frame callback per card made
+     the census read Usage frame work in the settled board (HARD USAGE-RAF on Cache at 1440) */
+  function lateNext(fn) { if (window.requestIdleCallback) requestIdleCallback(function () { fn(); }, { timeout: 400 }); else setTimeout(fn, 16); }
   function fitSliced(fn) {
     var C = PMU.content;
     if (!C || typeof C.fitSlice !== 'function') return fn();
@@ -41884,7 +41888,7 @@ var PMU_SERIES = {
         tierPass([c], false);
         built.push(c);
       }
-      if (later.length) { requestAnimationFrame(function () { buildLater(false); }); return; }
+      if (later.length) { lateNext(function () { buildLater(false); }); return; }
       if (streaming && streaming.token === token) streaming = null;
       emit('built', { room: o.room, cards: built.filter(function (c) { return c.isConnected; }).length, ms: Math.round(performance.now() - t0) });
     }
@@ -48360,7 +48364,9 @@ var PMU_SERIES = {
         }).sort(function (a, z) { return a.x - z.x; });
         items.forEach(function (it, i) {
           var next = items[i + 1], prev = items[i - 1];
-          if (it.beyond) { it.side = (prev && prev.side === 'r' && prev.x + prev.w > it.x - it.w) ? 'none' : 'l'; it.m.side = it.side; return; }
+          /* integ3: a label beyond the week also gives way to the previous MARKER itself, not only to its right-hand words
+             (Friendly Light 1440: Kimi's "MO 36% · Nov 1" was printed over the WK 52% diamond) */
+          if (it.beyond) { var pEnd = prev ? (prev.side === 'r' ? prev.x + prev.w : prev.x + 16) : -labW; it.side = pEnd > it.x - it.w ? 'none' : 'l'; it.m.side = it.side; return; }
           var rightEnd = it.x + it.w, nextStart = next ? (next.beyond ? next.x - next.w : next.x - 8) : trackW + edge;
           var leftStart = it.x - it.w, prevEnd = prev ? (prev.side === 'r' ? prev.x + prev.w : prev.x + 8) : -labW;
           it.side = rightEnd <= nextStart ? 'r' : leftStart >= prevEnd ? 'l' : 'none';
