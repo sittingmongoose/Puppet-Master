@@ -1,0 +1,409 @@
+{
+  "case": "V8-BIO-P-Z-S8",
+  "scope": "Independent diagnostic source screen of identified claim groups; not exhaustive atomic enumeration",
+  "final_sha256": "d6f0f5c6d8c15e83af0788c3432ff3119a72a6c294bb5c4e5a402734d12b6661",
+  "claims": [
+    {
+      "claim_id": "C01",
+      "final_locator": "S1 / section2.1",
+      "own_paraphrase": "0.4 release status and editor draft support warning",
+      "status": "SUPPORTED",
+      "primary_source_ids": [
+        "ngff-index"
+      ],
+      "evaluator_reason": "Release header supports version scope; source line locator should include 20-22.",
+      "product_consequence": null
+    },
+    {
+      "claim_id": "C02",
+      "final_locator": "section2.1",
+      "own_paraphrase": "Zarr v2 arrays and group attributes",
+      "status": "SUPPORTED_WITH_LOCATOR_ERRATUM",
+      "primary_source_ids": [
+        "ngff-index"
+      ],
+      "evaluator_reason": "Substance is in pinned source but final L64-65 points into introductory prose, not the storage rule. Array/group rule occurs in layout section; published section2 supports it.",
+      "product_consequence": null
+    },
+    {
+      "claim_id": "C03",
+      "final_locator": "section2.1",
+      "own_paraphrase": "Names unique; unit and generic axis type SHOULD fields",
+      "status": "SUPPORTED_CONDITIONALLY",
+      "primary_source_ids": [
+        "ngff-index"
+      ],
+      "evaluator_reason": "Generic axes section has SHOULD type and unit, but multiscales has additional MUST space-type requirements.",
+      "product_consequence": null
+    },
+    {
+      "claim_id": "C04",
+      "final_locator": "section2.1 sentence after axis metadata",
+      "own_paraphrase": "Axis types may be absent for this multiscale input",
+      "status": "FALSE_MISSING_CONDITION",
+      "primary_source_ids": [
+        "ngff-index"
+      ],
+      "evaluator_reason": "Pinned 352-359 requires 2 or 3 axes explicitly of type space in a multiscale image. Generic axis SHOULD is not the whole input contract.",
+      "product_consequence": "RQ2 misstates normative force even though section6.1 itself demands both spatial types."
+    },
+    {
+      "claim_id": "C05",
+      "final_locator": "section2.2 / P2",
+      "own_paraphrase": "Per-level scale then optional translation; dimension lengths; top transforms last",
+      "status": "SUPPORTED",
+      "primary_source_ids": [
+        "ngff-index"
+      ],
+      "evaluator_reason": "Pinned 346 and 367-376 supports ordering, exact count, per-axis relative fallback, and multiscale composition.",
+      "product_consequence": null
+    },
+    {
+      "claim_id": "C06",
+      "final_locator": "section2.2 / T8",
+      "own_paraphrase": "Arbitrary same-axis absolute-to-relative interpretation across levels is established by L369",
+      "status": "NOT_ESTABLISHED",
+      "primary_source_ids": [
+        "ngff-index"
+      ],
+      "evaluator_reason": "Axes and units define one shared coordinate space. The relative fallback is conditional on unavailable/inapplicable scaling. F2 does not supply serializable metadata distinguishing its level1 y factor from a physical value, yet level0 declares y micrometers. It cannot be automatically interpreted as proposed from the stated 0.4 vectors alone.",
+      "product_consequence": "B2/T8 need an explicit admissibility/calibration condition or withheld value; no source guarantee of the proposed semantic switch."
+    },
+    {
+      "claim_id": "C07",
+      "final_locator": "section2.2 / section2.4",
+      "own_paraphrase": "Declared coordinate mapping does not certify pixels or labels are co-sampled",
+      "status": "SUPPORTED_AS_INFERENCE",
+      "primary_source_ids": [
+        "ngff-index"
+      ],
+      "evaluator_reason": "Transformation definitions and label structural clauses do not guarantee content registration; label-size layout comment is descriptive. Correctly separated from guarantee.",
+      "product_consequence": null
+    },
+    {
+      "claim_id": "C08",
+      "final_locator": "section2.3",
+      "own_paraphrase": "Largest-to-smallest paths; optional version; name selection fallback",
+      "status": "SUPPORTED",
+      "primary_source_ids": [
+        "ngff-index"
+      ],
+      "evaluator_reason": "Pinned 362-364 and 378-400 support these. Selection snippet is explanatory guidance, not an additional MUST.",
+      "product_consequence": null
+    },
+    {
+      "claim_id": "C09",
+      "final_locator": "section2.3",
+      "own_paraphrase": "ome-zarr reader missing version defaults to0.1 and validates axes",
+      "status": "SUPPORTED",
+      "primary_source_ids": [
+        "ome-reader",
+        "ome-format"
+      ],
+      "evaluator_reason": "Reader279-287 uses default0.1, format selection, and Axes; format13-21 rejects unrecognized versions.",
+      "product_consequence": null
+    },
+    {
+      "claim_id": "C10",
+      "final_locator": "section2.4 / P3",
+      "own_paraphrase": "Labels listed in child labels group; unlisted permitted; image-label plus multiscales; level-count parity",
+      "status": "SUPPORTED",
+      "primary_source_ids": [
+        "ngff-index"
+      ],
+      "evaluator_reason": "Pinned448-467 and487-491 supports structure, optional source, relative default. The final occasionally calls labels a sibling group; it is a child of the image group and siblings are label objects under it.",
+      "product_consequence": null
+    },
+    {
+      "claim_id": "C11",
+      "final_locator": "section2.5",
+      "own_paraphrase": "omero optional display metadata",
+      "status": "SUPPORTED",
+      "primary_source_ids": [
+        "ngff-index"
+      ],
+      "evaluator_reason": "439-443 explicitly makes optional metadata conditional requirements; display interpretation comes from section3.5.",
+      "product_consequence": null
+    },
+    {
+      "claim_id": "C12",
+      "final_locator": "S3 / section1.1",
+      "own_paraphrase": "Plugin dependency minimums and no ome-zarr-py dependency",
+      "status": "SUPPORTED",
+      "primary_source_ids": [
+        "plugin-pyproject"
+      ],
+      "evaluator_reason": "v0.10.0 pyproject1-27 matches license, Python, napari, zarr minima and dependency absence. Dependency list alone is not a test of every v2 layout.",
+      "product_consequence": null
+    },
+    {
+      "claim_id": "C13",
+      "final_locator": "section1.1",
+      "own_paraphrase": "Plugin axes version branches and unit forwarding",
+      "status": "SUPPORTED",
+      "primary_source_ids": [
+        "plugin-reader"
+      ],
+      "evaluator_reason": "218-236 and249-258 support branches, default types, labels and units forwarding. Unit-hiding statement is a code comment independently corroborated descriptively by units guide.",
+      "product_consequence": null
+    },
+    {
+      "claim_id": "C14",
+      "final_locator": "section1.1 / P1",
+      "own_paraphrase": "Plugin drops dataset-level translation and reads only first transform at dataset0",
+      "status": "SUPPORTED",
+      "primary_source_ids": [
+        "plugin-reader"
+      ],
+      "evaluator_reason": "266-274 append only first dataset0 transform; sequential scale/translation means later translation is omitted. Does not prove all napari lower-level array geometry from plugin code alone.",
+      "product_consequence": null
+    },
+    {
+      "claim_id": "C15",
+      "final_locator": "section1.1 C5",
+      "own_paraphrase": "0.4 top-level None-name comparison passes first transform",
+      "status": "SUPPORTED",
+      "primary_source_ids": [
+        "plugin-reader"
+      ],
+      "evaluator_reason": "269-283 supports the absent-input/output comparison and first-only behavior.",
+      "product_consequence": null
+    },
+    {
+      "claim_id": "C16",
+      "final_locator": "section1.1 / section2.4 / lesson",
+      "own_paraphrase": "Ordinary0.4 label layers inherit parent image transform chain by assumption",
+      "status": "FALSE_CONDITION_ERASURE",
+      "primary_source_ids": [
+        "plugin-reader"
+      ],
+      "evaluator_reason": "Spec139 initializes parent_transforms empty; Multiscales.children189-193 forwards only existing parent_transforms; ordinary0.4 metadata computes local transforms without filling that member; Label.metadata603 calls its own Multiscales.metadata. Isolated evaluator AST witness returns image scale0.5 and label scale0.75, both parent chains empty.",
+      "product_consequence": "The compared component claim, overlay failure explanation, and engineering lesson conflate external/scene parent transforms with plain0.4 input. Avoiding plugin translation loss remains independently justified."
+    },
+    {
+      "claim_id": "C17",
+      "final_locator": "section1.1",
+      "own_paraphrase": "Plugin when opened at label walks two parents; labels need multiscales; hidden by default",
+      "status": "SUPPORTED",
+      "primary_source_ids": [
+        "plugin-reader"
+      ],
+      "evaluator_reason": "572-578,654 and681-689 support these scoped observations.",
+      "product_consequence": null
+    },
+    {
+      "claim_id": "C18",
+      "final_locator": "S2i/S2p / section3.1 chain1",
+      "own_paraphrase": "Issue403 links missing translations to downsampling; PR590 fixes and adds writer tests",
+      "status": "SUPPORTED",
+      "primary_source_ids": [
+        "ome-issue403",
+        "ome-pr590",
+        "ome-pr590-files"
+      ],
+      "evaluator_reason": "Issue title/body and PR body+merge timestamp match. Diff changes both writer paths and test assertions for image/label metadata. This proves test provenance, not tests executed here.",
+      "product_consequence": null
+    },
+    {
+      "claim_id": "C19",
+      "final_locator": "section3.1 C2",
+      "own_paraphrase": "Image writer uses physical scale; format writer uses dimension ratios and reference1",
+      "status": "SUPPORTED",
+      "primary_source_ids": [
+        "ome-image",
+        "ome-format",
+        "ome-pr590-files"
+      ],
+      "evaluator_reason": "Image187-207 includes base image.scale; format279-286 uses ratios. Formula split itself is correct; comparing numbers requires a common coordinate convention.",
+      "product_consequence": null
+    },
+    {
+      "claim_id": "C20",
+      "final_locator": "section5 variantC / section7T6",
+      "own_paraphrase": "For F1 the format path produces translation0 while image path produces0.25, proving disagreement",
+      "status": "FALSE_COORDINATE_CONVENTION",
+      "primary_source_ids": [
+        "ome-format",
+        "ome-image"
+      ],
+      "evaluator_reason": "F1 shapes64->32 make format scale2 and translation0.5 in level0 pixel units, not scale1/translation0. Multiplying by level0 calibration0.5 gives0.25 micrometers, matching image physical formula1/2-0.5/2. Evaluator witness executes captured function with these shapes.",
+      "product_consequence": "T6 and C variant are not a valid two-writer disagreement for this fixture. The final substitutes a physical scale into the dimension-ratio path."
+    },
+    {
+      "claim_id": "C21",
+      "final_locator": "section3.1 / C3",
+      "own_paraphrase": "PR590 first release not established; in v0.19 line",
+      "status": "PARTIALLY_SUPPORTED",
+      "primary_source_ids": [
+        "ome-image",
+        "ome-format",
+        "ome-release"
+      ],
+      "evaluator_reason": "Pinnedv0.19.2 source contains both translation paths. v0.19.2 release lists652; first carrying590 is unassessed. Dropping a claim of first release is reasonable; absence of590 from patch notes would not itself disprove inclusion in0.19.2.",
+      "product_consequence": null
+    },
+    {
+      "claim_id": "C22",
+      "final_locator": "section3.1 chain2",
+      "own_paraphrase": "PR652 normalizes level and transform input paths with a regression test",
+      "status": "SUPPORTED_WITH_VERSION_SCOPE",
+      "primary_source_ids": [
+        "ome-pr652",
+        "ome-pr652-files",
+        "ome-release",
+        "ome-writer-tests"
+      ],
+      "evaluator_reason": "Diff and tests match, release includes652. The test is a v0.6 Zarrv3 graph-transform case, not0.4; use as analogous consistency lesson, not direct0.4 normative proof.",
+      "product_consequence": null
+    },
+    {
+      "claim_id": "C23",
+      "final_locator": "S4 / section1.2",
+      "own_paraphrase": "napari tag commit, release date, monthly cadence, embedding9533/extraction9495",
+      "status": "SUPPORTED",
+      "primary_source_ids": [
+        "napari-tag",
+        "napari-release",
+        "napari-pr9533",
+        "napari-pr9495"
+      ],
+      "evaluator_reason": "Exact tag commit and release metadata match; PR bodies support corrected prepopulated viewer and extraction semantics.",
+      "product_consequence": null
+    },
+    {
+      "claim_id": "C24",
+      "final_locator": "S5 / section1.1",
+      "own_paraphrase": "vizarr version dependencies; open265/271/292 and merged273/334",
+      "status": "SUPPORTED_WITH_MINOR_ERRATUM",
+      "primary_source_ids": [
+        "vizarr-package",
+        "vizarr-repo",
+        "vizarr-265",
+        "vizarr-271",
+        "vizarr-273",
+        "vizarr-292",
+        "vizarr-334",
+        "vizarr-334-files"
+      ],
+      "evaluator_reason": "Native package says deck.gl~9.1.0, not~0.9.x; table also supplies correct value. Issue reports support scoped behaviors, not executed behavior on current package. PR334 test snapshots corroborate273; no whole browser runtime tested.",
+      "product_consequence": null
+    },
+    {
+      "claim_id": "C25",
+      "final_locator": "S5 / section1.1",
+      "own_paraphrase": "vizarr ignored transforms until261",
+      "status": "SUPPORTED_AS_ISSUE_REPORTED_HISTORY",
+      "primary_source_ids": [
+        "vizarr-261",
+        "vizarr-271"
+      ],
+      "evaluator_reason": "271 body describes prior ignored transforms and3D implementation after261. No independent runtime or entire historical git inspection.",
+      "product_consequence": null
+    },
+    {
+      "claim_id": "C26",
+      "final_locator": "S5 / section0",
+      "own_paraphrase": "No GitHub releases based on latest endpoint404",
+      "status": "NOT_FULLY_ESTABLISHED",
+      "primary_source_ids": [
+        "vizarr-release"
+      ],
+      "evaluator_reason": "Latest endpoint404 supports no available latest published release, not logically every release/draft absence. Full release-list query unperformed.",
+      "product_consequence": null
+    },
+    {
+      "claim_id": "C27",
+      "final_locator": "S6 / section1.2 / P2",
+      "own_paraphrase": "Units guide describes scale/data->world, pixel fallback, Pint synonyms and world alignment",
+      "status": "SUPPORTED_DESCRIPTIVELY",
+      "primary_source_ids": [
+        "napari-units"
+      ],
+      "evaluator_reason": "Captured4294bytes exact hash matches claimed abbreviated hash;35-47,60-81 support descriptive model. Source is docs/main, not pinned0.9.2 implementation.",
+      "product_consequence": null
+    },
+    {
+      "claim_id": "C28",
+      "final_locator": "S6 version caveat / lead1",
+      "own_paraphrase": "Current guide fully validates napari0.9.2 mouse coordinate and multiscale behavior",
+      "status": "UNVERIFIABLE_NOT_CLAIMED_RESOLVED",
+      "primary_source_ids": [
+        "napari-units",
+        "napari-tag"
+      ],
+      "evaluator_reason": "Final explicitly leaves MouseEvent payload open. Independent pinned image/base/slice code attempts404. The chosen renderer per-level application and payload space remain unchecked dependencies.",
+      "product_consequence": null
+    },
+    {
+      "claim_id": "C29",
+      "final_locator": "section5 A/B",
+      "own_paraphrase": "F1 inverse transforms A=(40,48),(20,14); constructedB=(20,24)",
+      "status": "SUPPORTED_BY_EVALUATOR_ARITHMETIC",
+      "primary_source_ids": [
+        "ngff-index"
+      ],
+      "evaluator_reason": "Applying stored chains as stated produces these numbers. Values are a designed input, not upstream measured outcomes.",
+      "product_consequence": null
+    },
+    {
+      "claim_id": "C30",
+      "final_locator": "section5 Bprime / discrimination / T4",
+      "own_paraphrase": "Plugin-exact level1 sample=(40,28) and all consumer interpretations same atlevel0",
+      "status": "UNVERIFIABLE_AND_INTERNAL_CONTRADICTION",
+      "primary_source_ids": [
+        "plugin-reader",
+        "napari-pr9495"
+      ],
+      "evaluator_reason": "Plugin metadata alone does not establish napari level1 sample geometry; pinned rendering code unavailable. Dropped dataset0 translation already changes level0 from correct(40,48) to unshifted world/layer readout(40,28), contradicting all-identical-level0 statement. Do not call constructed value plugin-exact without napari multiscale evidence.",
+      "product_consequence": "Witness negativecontrol attribution is not fully sourced. F1 A remains valid."
+    },
+    {
+      "claim_id": "C31",
+      "final_locator": "section5 C and T2",
+      "own_paraphrase": "Index13.75 nearest14 gives0.75 center offset; format14 distinguishable fromA14",
+      "status": "FALSE_ARITHMETIC_INTERNAL",
+      "primary_source_ids": [
+        "ome-format"
+      ],
+      "evaluator_reason": "Distance14-13.75=0.25. Numeric14.0 cannot discriminate from numericA14.0; semantic writers may differ elsewhere but this claimed discrimination is not established.",
+      "product_consequence": "B5/T2 fixture claims require correction; candidate explicitly unexecuted."
+    },
+    {
+      "claim_id": "C32",
+      "final_locator": "P3 / section6.2-6.3",
+      "own_paraphrase": "Complete chains justify overlay after assigning identical units",
+      "status": "NOT_FULLY_JUSTIFIED",
+      "primary_source_ids": [
+        "ngff-index",
+        "napari-units"
+      ],
+      "evaluator_reason": "Own counterexample: image scale0.5micrometers and label scale500nanometers describe equal physical size. Guide60-68 supports preserving units. Assigning same units without converting values, as section6.2 proposes while excluding conversion, can create1000x misplacement. No explicit label-unit incompatibility refusal is given.",
+      "product_consequence": "B2/B3 alignment proof incomplete across permitted native-unit differences. Product choice is not a source guarantee."
+    },
+    {
+      "claim_id": "C33",
+      "final_locator": "section6 / sections7-10",
+      "own_paraphrase": "Read-only, support/refusal, tests and visible limits provided",
+      "status": "PRESENT_CONTENT_UNEXECUTED",
+      "primary_source_ids": [],
+      "evaluator_reason": "B1-B5 all have named sections; no proposed test execution claimed. Support0.3 needs axis normalization to reconcile string axes with strict type check; not executed. Source assessment is diagnostic, not complete certification.",
+      "product_consequence": null
+    },
+    {
+      "claim_id": "C34",
+      "final_locator": "section7T8 / unresolved lead8",
+      "own_paraphrase": "F2/T8 closes mixed calibration research dependency",
+      "status": "NOT_CLOSED",
+      "primary_source_ids": [],
+      "evaluator_reason": "Proposal leaves execution open and does not serialize semantic-mode metadata; merely adding fixture prose does not establish distinguishability or implementation behavior.",
+      "product_consequence": null
+    }
+  ],
+  "unassessed": [
+    "Every unlisted atomic claim and all complete runtime semantics",
+    "Full pinnednapari0.9.2 multiscale/event execution",
+    "All canonical18facets: canonical enumeration unavailable during blind phase",
+    "Comprehensive allclaim coverage",
+    "All proposed candidate tests remain unexecuted"
+  ]
+}

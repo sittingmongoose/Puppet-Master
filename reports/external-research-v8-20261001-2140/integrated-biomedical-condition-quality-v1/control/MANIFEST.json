@@ -1,0 +1,163 @@
+{
+  "canonical_comparable_score": null,
+  "full_usage": "UNKNOWN",
+  "original_FREEZE_sha256": "2ce20769c1404a9748a3d3ced8c70e3e592bcc5c4ec8aac2f2475366991744b2",
+  "original_source_hashes_distinct_from_public_hashes": true,
+  "positive_original_source_inventory": [
+    {
+      "bytes": 4248,
+      "original_sha256": "9d8bc9a65750c05d6e8e728401123548676e2b2ea3980192aca4c34b80d59ca2",
+      "source_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-COND-C-Z-S8/REVIEW.md"
+    },
+    {
+      "bytes": 1712,
+      "original_sha256": "502887c8184160f99f69072783d9254a7d4ffcaff09237c9720bf615a35f51b9",
+      "source_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-COND-C-Z-S8/SOURCE_QUALITY.json"
+    },
+    {
+      "bytes": 7979,
+      "original_sha256": "5df298b07ec121ea717094deb73b5fa4127464d67553c8476f20b970b4166dfa",
+      "source_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-COND-C-Z-S8/CLAIM_DISPOSITIONS.json"
+    },
+    {
+      "bytes": 2288,
+      "original_sha256": "6b5c8b2420fc36bd376762ab49678a27e3f53c667e2fd75a22994cca26b5718a",
+      "source_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-COND-C-Z-S8/COVERAGE.json"
+    },
+    {
+      "bytes": 8355,
+      "original_sha256": "c2d22d7cd115c25e21f2915eacbcd1e4167023988f702843e8226fac08aa4894",
+      "source_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-COND-C-Z-S8/PROVENANCE.json"
+    },
+    {
+      "bytes": 1611,
+      "original_sha256": "c6b58982eeddf792d3ce5eb00cf61244edb47f34639d328490d775b679474202",
+      "source_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-COND-C-Z-S8/WITNESS.py"
+    },
+    {
+      "bytes": 966,
+      "original_sha256": "afe00a5438268d6b956748041d5b40aa3695cc16628ff26c6a0c1594528c117a",
+      "source_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-COND-C-Z-S8/WITNESS_RESULTS.json"
+    },
+    {
+      "bytes": 1133,
+      "original_sha256": "d4bc6c69e20c079e09c88d6082c869661cfce1290c19be133be3eb8d4a13eb52",
+      "source_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-COND-C-Z-S8/SOURCE_QUALITY_FREEZE.json"
+    },
+    {
+      "bytes": 8423,
+      "original_sha256": "9e22e8ddda8f7a4e6324fea4335edf097394530d5fb0589068d7709435159af1",
+      "source_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-COND-C-Z-S8/OPERATIONAL_COST.json"
+    },
+    {
+      "bytes": 7163,
+      "original_sha256": "354d250c2699633e6a6257775090d6ac4076d2859a4c3a5baaeb3ea5d3664e86",
+      "source_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-COND-C-Z-S8/METHOD_AND_PRESERVATION.json"
+    },
+    {
+      "bytes": 1590,
+      "original_sha256": "f1ed3e357fbf5a907c8321565ed93ab25256446d26782b61561edc6160684446",
+      "source_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-COND-C-Z-S8/SCOPE_NOTES.json"
+    },
+    {
+      "bytes": 1017,
+      "original_sha256": "6a08209743d87915cd45fd176855a7fb67ae6fa8d281f660ec60a64fab3e6f9c",
+      "source_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-COND-C-Z-S8/EVALUATOR_ENDPOINT.json"
+    },
+    {
+      "bytes": 661,
+      "original_sha256": "1f8e9506d1e129373326650c7da42f1b8b6b40828987a3613b44168d2a39487a",
+      "source_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-COND-C-Z-S8/VERIFICATION.json"
+    },
+    {
+      "bytes": 1036,
+      "original_sha256": "d079454f9a756261f9063b9c1c013ef902de0f3b74084b4ae69b6faf0a55abe2",
+      "source_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-COND-C-Z-S8/MANIFEST.json"
+    },
+    {
+      "bytes": 3211,
+      "original_sha256": "2ce20769c1404a9748a3d3ced8c70e3e592bcc5c4ec8aac2f2475366991744b2",
+      "source_path": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-COND-C-Z-S8/FREEZE.json"
+    }
+  ],
+  "public_files": [
+    {
+      "path": "CHECKER_RECEIPT.json",
+      "sha256": "7ee13bfe713d0e4a48270476c77c755d8446c1409fe55ad1fde00449d6774190"
+    },
+    {
+      "path": "PUBLIC_EXPORT.json",
+      "sha256": "5050f7b665951ab483933772fc5693cd251e405b9d6852a26ec15e19243ae063"
+    },
+    {
+      "path": "README.md",
+      "sha256": "589bbae81c215b4c498ce8d2c80e73d164867f3f7f711ef741cf320e249bc25c"
+    },
+    {
+      "path": "source/CLAIM_DISPOSITIONS.json",
+      "sha256": "3214c60b84d1fbd5eb14f9a1bd6546b84fe7741ce8d5b2a27d4437b9ed5b3d7c"
+    },
+    {
+      "path": "source/COVERAGE.json",
+      "sha256": "cc1fdb62336205a265f1add1f2372c61ce230be3f4af3e040f6ed959ccc40506"
+    },
+    {
+      "path": "source/EVALUATOR_ENDPOINT.json",
+      "sha256": "1754f88c9c745baafa79b0eedb8f68215ba9dc06c983fcf304903fa6f4d1741a"
+    },
+    {
+      "path": "source/FREEZE.json",
+      "sha256": "f7c2f95d3d8b99c0f9e54e30a8d5ba19770b482f8d309859ffb8ed7830c3194c"
+    },
+    {
+      "path": "source/MANIFEST.json",
+      "sha256": "df7468774f5b9d47bfac70f34fab6d7cf8ae40ebadb92c91a82c8012bc41ab3d"
+    },
+    {
+      "path": "source/METHOD_AND_PRESERVATION.json",
+      "sha256": "d80521183258f2a2384291f8500005862e2af6624ee2f89b840a24b67bdbd22a"
+    },
+    {
+      "path": "source/OPERATIONAL_COST.json",
+      "sha256": "5fa3422d1907688b6adff5f688cbae744f094507269514aafb8e66335d794c95"
+    },
+    {
+      "path": "source/PROVENANCE.json",
+      "sha256": "217f8d68d66cf96c1033d652e09ef73306d42398065efcd6de53db623a94090f"
+    },
+    {
+      "path": "source/REVIEW.md",
+      "sha256": "9d8bc9a65750c05d6e8e728401123548676e2b2ea3980192aca4c34b80d59ca2"
+    },
+    {
+      "path": "source/SCOPE_NOTES.json",
+      "sha256": "fe6e507fe20271940d2fadcdf2825d84dad190e67b3808c630f0d67a854a054c"
+    },
+    {
+      "path": "source/SOURCE_QUALITY.json",
+      "sha256": "dabbb15addbb5011782db9778b87fedccd2356a3c72b0e02d8aba31e4e3321b7"
+    },
+    {
+      "path": "source/SOURCE_QUALITY_FREEZE.json",
+      "sha256": "b54e42b6e08fbee2d23b6d4317601fb091b5db27cdf5f4698847c0244b51d265"
+    },
+    {
+      "path": "source/VERIFICATION.json",
+      "sha256": "a4dfa39d58df804106436b2a20ccfeecf36656290b03fc2b0ad02d3cf71430d3"
+    },
+    {
+      "path": "source/WITNESS.py",
+      "sha256": "c6b58982eeddf792d3ce5eb00cf61244edb47f34639d328490d775b679474202"
+    },
+    {
+      "path": "source/WITNESS_RESULTS.json",
+      "sha256": "05092f66c144fde764aef6563024ca4c5f840e03843e2dd7e55e09eb1f800d3c"
+    },
+    {
+      "path": "verify_public.py",
+      "sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd"
+    }
+  ],
+  "quality_disposition": "FAILED_SCREEN",
+  "schema": "pm.er8.control-quality-public-manifest.v1"
+}

@@ -1,0 +1,109 @@
+{
+  "schema": "er8.independent.final-evaluation.manifest.v1",
+  "case": "V8-BIO-P-Z-S8",
+  "evaluator": "er8-quality-biocond-t-v1",
+  "verdict": "FAILED_SCREEN",
+  "diagnostic_only": true,
+  "canonical_comparable_score": null,
+  "PUBLICATION_WHITELIST": [
+    "REVIEW.md",
+    "SOURCE_QUALITY.json",
+    "CLAIM_COVERAGE.json",
+    "DISPOSITION.json",
+    "SOURCE_PROVENANCE.json",
+    "SOURCE_QUALITY_FREEZE.json",
+    "EVALUATOR_WITNESS.py",
+    "EVALUATOR_WITNESS_RESULT.json",
+    "METHOD_REVIEW.json",
+    "PRESERVATION.json",
+    "COST_METADATA.json",
+    "SOURCE_ADMISSION.json",
+    "SCOPE.json",
+    "ERRATA.json",
+    "EVALUATOR_ENDPOINT.json",
+    "MANIFEST.json",
+    "FREEZE.json"
+  ],
+  "publication_boundary": "Exactlisted topfilesonly; _raw, nativepayloads, sourcebodies, candidateartifactbodies, privateidentifiers and externalfiles are excluded. Rootpublication must use positive whitelist and independentlysanitize.",
+  "selected_files": [
+    {
+      "path": "REVIEW.md",
+      "bytes": 8799,
+      "sha256": "54d90112a3bfac8eb29940656a24697e8018ac8fbbece1abe6099ff2834bad05"
+    },
+    {
+      "path": "SOURCE_QUALITY.json",
+      "bytes": 2480,
+      "sha256": "3b8ddc240e8c31f69cb702b9a416ba541621d88f37ae3b39c5c34040d1884973"
+    },
+    {
+      "path": "CLAIM_COVERAGE.json",
+      "bytes": 19526,
+      "sha256": "737340c9ccaf182df67a0c9434415807d5df19f49ffdb015c3e38673575999b9"
+    },
+    {
+      "path": "DISPOSITION.json",
+      "bytes": 539,
+      "sha256": "ee703a37707f595dd01c19de9a84aa3cfc0adf3f1b3f9e6db46da6af621e1a5e"
+    },
+    {
+      "path": "SOURCE_PROVENANCE.json",
+      "bytes": 17119,
+      "sha256": "58613634177974ebee2876e64c4d14113cf3abd4b5a4671a64d021dc6f7a2633"
+    },
+    {
+      "path": "SOURCE_QUALITY_FREEZE.json",
+      "bytes": 1476,
+      "sha256": "fe250ab363f54e86d9d0c6bebfbb92bc48f23dda55f595c5853f05bad3e1781e"
+    },
+    {
+      "path": "EVALUATOR_WITNESS.py",
+      "bytes": 4412,
+      "sha256": "be8700dc08298d6a2169e86f031d886af2a817ed834901859327fabc128ff26d"
+    },
+    {
+      "path": "EVALUATOR_WITNESS_RESULT.json",
+      "bytes": 1187,
+      "sha256": "d73ce994be1d48d55be088fc97265c25d2582714efd21eb6137a09fa65830f14"
+    },
+    {
+      "path": "METHOD_REVIEW.json",
+      "bytes": 2717,
+      "sha256": "b7683d196652cdafa6f407e0115c4dc4e76aa05425debfb6bc21d052e8b8c21a"
+    },
+    {
+      "path": "PRESERVATION.json",
+      "bytes": 4997,
+      "sha256": "414abf11187cffccca032e3f790864f2ecdb824f67ed24d9469b3a5d61093837"
+    },
+    {
+      "path": "COST_METADATA.json",
+      "bytes": 7591,
+      "sha256": "847062743414902a2a5586671e1bde0c4126e1bd020aa8e07de48fd92398311d"
+    },
+    {
+      "path": "SOURCE_ADMISSION.json",
+      "bytes": 73252,
+      "sha256": "1637f3dcf4d2d3d8666b3e272b7d75caac3b0709656b39ce3effc31d8b51a08a"
+    },
+    {
+      "path": "SCOPE.json",
+      "bytes": 1445,
+      "sha256": "b3fe5d717b842f85c9551bc930720629cda1b6fa0b8d7d330623d792a488f666"
+    },
+    {
+      "path": "ERRATA.json",
+      "bytes": 764,
+      "sha256": "02a37f2c9e044f985b0b555b7e3d10c484e2ff1c4d1ba88499bcf194adee7e4c"
+    },
+    {
+      "path": "EVALUATOR_ENDPOINT.json",
+      "bytes": 888,
+      "sha256": "7538b4adca8263ef4a94a556367e4e43bb09692196c4ddfc9d07dedb40ea2684"
+    }
+  ],
+  "source_quality_freeze_sha256": "fe250ab363f54e86d9d0c6bebfbb92bc48f23dda55f595c5853f05bad3e1781e",
+  "final_proposal_sha256": "d6f0f5c6d8c15e83af0788c3432ff3119a72a6c294bb5c4e5a402734d12b6661",
+  "observed_pre_handoff_endpoint_epoch": 1791012198.1258998,
+  "full_return_tail": "UNKNOWN"
+}

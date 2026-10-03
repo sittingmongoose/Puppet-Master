@@ -1,0 +1,38 @@
+{
+  "case": "V8-BIO-COND-C-Z-S8",
+  "files": [
+    {
+      "bytes": 1712,
+      "path": "SOURCE_QUALITY.json",
+      "sha256": "502887c8184160f99f69072783d9254a7d4ffcaff09237c9720bf615a35f51b9"
+    },
+    {
+      "bytes": 7979,
+      "path": "CLAIM_DISPOSITIONS.json",
+      "sha256": "5df298b07ec121ea717094deb73b5fa4127464d67553c8476f20b970b4166dfa"
+    },
+    {
+      "bytes": 2288,
+      "path": "COVERAGE.json",
+      "sha256": "6b5c8b2420fc36bd376762ab49678a27e3f53c667e2fd75a22994cca26b5718a"
+    },
+    {
+      "bytes": 8355,
+      "path": "PROVENANCE.json",
+      "sha256": "c2d22d7cd115c25e21f2915eacbcd1e4167023988f702843e8226fac08aa4894"
+    },
+    {
+      "bytes": 1611,
+      "path": "WITNESS.py",
+      "sha256": "c6b58982eeddf792d3ce5eb00cf61244edb47f34639d328490d775b679474202"
+    },
+    {
+      "bytes": 966,
+      "path": "WITNESS_RESULTS.json",
+      "sha256": "afe00a5438268d6b956748041d5b40aa3695cc16628ff26c6a0c1594528c117a"
+    }
+  ],
+  "immutable": true,
+  "source_quality_frozen_at_utc": "2026-10-03T07:09:11.308106+00:00",
+  "stage": "before method/task/cost/initial proposal/critique/scope disclosure"
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "pm.er8.matched-diagnostic-comparison.v1",
+  "pair": "V8-BIO-COND-S8",
+  "native_candidate_model": "GLM5.3FlashMax existing authorized zcode account",
+  "operational_completed_pipeline_count": 2,
+  "independent_evaluations_source_first_before_method_disclosure": true,
+  "arms": [
+    {
+      "case": "V8-BIO-COND-C-Z-S8",
+      "quality": "FAILED_SCREEN",
+      "scope": "bounded diagnostic; unchecked claims/facets UNASSESSED; canonical score null",
+      "canonical_score": null,
+      "wall_seconds": 2376.500532555,
+      "occupied_seconds": 2375.9142928123474,
+      "outside_native_seconds": 9.702711419,
+      "observed_output_lower_bound": 112041,
+      "full_usage": "UNKNOWN",
+      "evaluation": "control/source/REVIEW.md",
+      "evaluator_source_freeze_original_sha256": "d4bc6c69e20c079e09c88d6082c869661cfce1290c19be133be3eb8d4a13eb52",
+      "diagnostic": "Dataset identity-transform validity, inverse composition and nondiscriminatory geometry counterexample."
+    },
+    {
+      "case": "V8-BIO-P-Z-S8",
+      "quality": "FAILED_SCREEN",
+      "scope": "bounded diagnostic over34identifiedclaim groups; remaining/canonical18UNASSESSED/null",
+      "canonical_score": null,
+      "wall_seconds": 2229.493781491,
+      "occupied_seconds": 2228.6480090618134,
+      "outside_native_seconds": 8.871340225,
+      "observed_output_lower_bound": 99248,
+      "reported_input_aggregate": 3422705,
+      "reported_total_aggregate": 3521953,
+      "reported_cache_read_aggregate": 3013184,
+      "full_billed_usage": "UNKNOWN",
+      "evaluation": "treatment/source/REVIEW.md",
+      "evaluator_source_freeze_original_sha256": "fe250ab363f54e86d9d0c6bebfbb92bc48f23dda55f595c5853f05bad3e1781e",
+      "diagnostic": "Conditional label inheritance and writer-coordinate counterexamples; partial method uptake and supported-meaning preservation only."
+    }
+  ],
+  "decision": {
+    "winner": null,
+    "quality_qualified_efficiency": null,
+    "holdout_release": false,
+    "unverified_comprehensive_scope": "3questions/5obligations/18facets remain UNASSESSED/null where screened out; canonical18 enumeration/weights unavailable"
+  },
+  "campaign_retained_totals": {
+    "operational_pipelines": 14,
+    "matched_pairs": 7,
+    "diagnostic_evaluation_pairs_sealed": 7,
+    "FAILED_SCREEN": 13,
+    "HOLD": 1,
+    "comprehensive_PASS": 0
+  },
+  "prior_frozen_outcomes_costs_unchanged": true,
+  "semantic_acquisition": "UNKNOWN; captures/prepared/flushed bytes do not prove model comprehension",
+  "source_vs_projection_hashes": "Original evaluator pins and sanitized projection pins are distinct. Public witnesses/primary source locators explain the diagnostic; portable hash checks do not certify source semantics."
+}

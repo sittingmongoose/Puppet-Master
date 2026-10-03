@@ -1,0 +1,36 @@
+{
+  "schema": "er8.evaluator.public-quote-omission.v1",
+  "json_omissions": [],
+  "markdown_omissions": [
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-BIO-P-Z-S8/REVIEW.md",
+      "original_sha256": "54d90112a3bfac8eb29940656a24697e8018ac8fbbece1abe6099ff2834bad05",
+      "omitted_spans": [],
+      "fenced_candidate_code_examples_preserved": true,
+      "source_URL_hash_ranges_retained": true,
+      "uncertain_prose_quotes_also_omitted": true,
+      "locator_tokens_retained": [
+        "178-194",
+        "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e",
+        "260-291",
+        "600-603",
+        "82b61d30f62d6eddd81ff63b43146fd4f7be93be767ae5561b74a99951c24eca",
+        "a5681c677c189db942c112a77c24b5b6e3a850892575b0459fe4b5a25b42f2d7",
+        "c71a6caae9d76955dc35b9993cd69a6a958579f98c5e536a6a16582c16f04841",
+        "d6f0f5c6d8c15e83af0788c3432ff3119a72a6c294bb5c4e5a402734d12b6661",
+        "da1c0606697e8b09a2e2d26184da3014044b0fd88e4abf01d2c85412563922bb",
+        "https://github.com/napari/docs/blob/main/docs/guides/units.md#L60",
+        "https://github.com/ome/napari-ome-zarr/blob/v0.10.0/napari_ome_zarr/ome_zarr_reader.py#L178",
+        "https://github.com/ome/ngff-spec/blob/a4c68004fdb8a8d822367205dc12f9574a32ddf8/index.bs#L352",
+        "https://github.com/ome/ngff-spec/blob/a4c68004fdb8a8d822367205dc12f9574a32ddf8/index.bs#L367",
+        "https://github.com/ome/ome-zarr-py/blob/v0.19.2/ome_zarr/classes/image.py#L187",
+        "https://github.com/ome/ome-zarr-py/blob/v0.19.2/ome_zarr/format.py#L276",
+        "https://github.com/ome/ome-zarr-py/issues/403",
+        "https://github.com/ome/ome-zarr-py/pull/590/files",
+        "https://github.com/ome/ome-zarr-py/pull/652/files",
+        "https://ngff.openmicroscopy.org/0.4/"
+      ]
+    }
+  ],
+  "scope": "Conservative explicit/uncertain quotations omitted. Primary URL/hash/version/line and original evaluator pins retained. Evaluator own witness code preserved, never executed by publisher."
+}

@@ -1,0 +1,1547 @@
+{
+  "case": "V8-BIO-P-Z-S8",
+  "read_after_source_freeze": true,
+  "meaning": "Verified same-case hostmanifest and packet/range evidence; captured/prepared/flushed does not establish model comprehension",
+  "stages": [
+    {
+      "stage": "research-proposal",
+      "host_manifest_path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-research-proposal/PUBLIC_ARTIFACT_FREEZE.json",
+      "host_manifest_sha256": "ef1fdd40f905053214c94e1d83ff4d1ce4d52a2cf97f987a9d8908baf135c6ea",
+      "same_case_manifest_capture_files_verified": 52,
+      "events_sha256": "457235b8c1d2201464d593070ff6d809b57fc96cf9e51e7cad6819ea63a8be00",
+      "prepared_operation_counts": {
+        "read_file": 8,
+        "public_https_get": 26,
+        "mechanical": 2,
+        "write_file": 2
+      },
+      "private_native_payload_exported": false,
+      "input_artifact_read_records_omitted_count": 3,
+      "unsuccessful_http_records": [
+        {
+          "actual_url": "https://raw.githubusercontent.com/ome/ngff/main/0.4/index.bs",
+          "status": 404,
+          "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed"
+        },
+        {
+          "actual_url": "https://api.github.com/repos/hms-dbmi/vizarr/releases/latest",
+          "status": 404,
+          "sha256": "d9e37600354c1839f6b22cebde497e9d14750d2401a06c9a51b1619baf991613"
+        },
+        {
+          "actual_url": "https://api.github.com/repos/ome/napari-ome-zarr/contents/src/napari_ome_zarr?ref=main",
+          "status": 404,
+          "sha256": "e45906ce02e79f16fb87a838d86bb4e497e37a9591f97608fa013bbcd8b9cbc2"
+        }
+      ],
+      "positive_public_source_capture_and_range_records": [
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/ome/ome-zarr-py",
+            "body_complete": true,
+            "capture_path": "public_captures/b301149c86811b42142d0923d28ebc8553e6d04a9af07e4048870f604b30fe19.body",
+            "captured_bytes": 6078,
+            "sha256": "b301149c86811b42142d0923d28ebc8553e6d04a9af07e4048870f604b30fe19",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 6078,
+            "byte_start": 0,
+            "range_bytes": 6078,
+            "range_sha256": "b301149c86811b42142d0923d28ebc8553e6d04a9af07e4048870f604b30fe19",
+            "sha256": "b301149c86811b42142d0923d28ebc8553e6d04a9af07e4048870f604b30fe19",
+            "transmitted_text_sha256": "b301149c86811b42142d0923d28ebc8553e6d04a9af07e4048870f604b30fe19",
+            "transmitted_text_utf8_bytes": 6078
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/hms-dbmi/vizarr",
+            "body_complete": true,
+            "capture_path": "public_captures/e2a29c19571284bd92f5fa8f25621a4916cf7f5abac45d2fe9c22a82fa7cf701.body",
+            "captured_bytes": 6260,
+            "sha256": "e2a29c19571284bd92f5fa8f25621a4916cf7f5abac45d2fe9c22a82fa7cf701",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 6260,
+            "byte_start": 0,
+            "range_bytes": 6260,
+            "range_sha256": "e2a29c19571284bd92f5fa8f25621a4916cf7f5abac45d2fe9c22a82fa7cf701",
+            "sha256": "e2a29c19571284bd92f5fa8f25621a4916cf7f5abac45d2fe9c22a82fa7cf701",
+            "transmitted_text_sha256": "e2a29c19571284bd92f5fa8f25621a4916cf7f5abac45d2fe9c22a82fa7cf701",
+            "transmitted_text_utf8_bytes": 6260
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/ome/ome-zarr-py/releases/latest",
+            "body_complete": true,
+            "capture_path": "public_captures/1085265c47e71e3e0cb90cfda90877fbdfdf516774a7060eac5fbee2efe6549e.body",
+            "captured_bytes": 1991,
+            "sha256": "1085265c47e71e3e0cb90cfda90877fbdfdf516774a7060eac5fbee2efe6549e",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 1991,
+            "byte_start": 0,
+            "range_bytes": 1991,
+            "range_sha256": "1085265c47e71e3e0cb90cfda90877fbdfdf516774a7060eac5fbee2efe6549e",
+            "sha256": "1085265c47e71e3e0cb90cfda90877fbdfdf516774a7060eac5fbee2efe6549e",
+            "transmitted_text_sha256": "1085265c47e71e3e0cb90cfda90877fbdfdf516774a7060eac5fbee2efe6549e",
+            "transmitted_text_utf8_bytes": 1991
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/ome/ngff/contents/",
+            "body_complete": true,
+            "capture_path": "public_captures/aa81ca44f0705970dc519ba6a2555c8f6c82ba7a09555537bb577b2b57f12a24.body",
+            "captured_bytes": 16284,
+            "sha256": "aa81ca44f0705970dc519ba6a2555c8f6c82ba7a09555537bb577b2b57f12a24",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 16284,
+            "byte_start": 0,
+            "range_bytes": 16284,
+            "range_sha256": "aa81ca44f0705970dc519ba6a2555c8f6c82ba7a09555537bb577b2b57f12a24",
+            "sha256": "aa81ca44f0705970dc519ba6a2555c8f6c82ba7a09555537bb577b2b57f12a24",
+            "transmitted_text_sha256": "aa81ca44f0705970dc519ba6a2555c8f6c82ba7a09555537bb577b2b57f12a24",
+            "transmitted_text_utf8_bytes": 16284
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/ome/ome-zarr-py/pulls/652",
+            "body_complete": true,
+            "capture_path": "public_captures/856e3419341dbbd8c38e10e0382b5a74df2b56d4da572731e04003109b198274.body",
+            "captured_bytes": 17832,
+            "sha256": "856e3419341dbbd8c38e10e0382b5a74df2b56d4da572731e04003109b198274",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 17832,
+            "byte_start": 0,
+            "range_bytes": 17832,
+            "range_sha256": "856e3419341dbbd8c38e10e0382b5a74df2b56d4da572731e04003109b198274",
+            "sha256": "856e3419341dbbd8c38e10e0382b5a74df2b56d4da572731e04003109b198274",
+            "transmitted_text_sha256": "856e3419341dbbd8c38e10e0382b5a74df2b56d4da572731e04003109b198274",
+            "transmitted_text_utf8_bytes": 17832
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/ome/ngff/contents/specifications",
+            "body_complete": true,
+            "capture_path": "public_captures/dcd3b3138f02558ea740a4c7f057fbae74209744861a6bdf99795c6f1b4f6baa.body",
+            "captured_bytes": 5656,
+            "sha256": "dcd3b3138f02558ea740a4c7f057fbae74209744861a6bdf99795c6f1b4f6baa",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 5656,
+            "byte_start": 0,
+            "range_bytes": 5656,
+            "range_sha256": "dcd3b3138f02558ea740a4c7f057fbae74209744861a6bdf99795c6f1b4f6baa",
+            "sha256": "dcd3b3138f02558ea740a4c7f057fbae74209744861a6bdf99795c6f1b4f6baa",
+            "transmitted_text_sha256": "dcd3b3138f02558ea740a4c7f057fbae74209744861a6bdf99795c6f1b4f6baa",
+            "transmitted_text_utf8_bytes": 5656
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/search/issues?q=repo%3Aome%2Fome-zarr-py+translation&per_page=30",
+            "body_complete": true,
+            "capture_path": "public_captures/58c1c4297762b9eadfbe9a55f0881f45ae6b39c6675fb17567f6ff882190c053.body",
+            "captured_bytes": 61444,
+            "sha256": "58c1c4297762b9eadfbe9a55f0881f45ae6b39c6675fb17567f6ff882190c053",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 32768,
+            "byte_start": 0,
+            "range_bytes": 32768,
+            "range_sha256": "625e8ce9c3499077cfa4bf333b30ad1b9de4b57d31bdbd8dbd346dd59c03b487",
+            "sha256": "58c1c4297762b9eadfbe9a55f0881f45ae6b39c6675fb17567f6ff882190c053",
+            "transmitted_text_sha256": "625e8ce9c3499077cfa4bf333b30ad1b9de4b57d31bdbd8dbd346dd59c03b487",
+            "transmitted_text_utf8_bytes": 32768
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/ome/ome-zarr-py/pulls/652/files",
+            "body_complete": true,
+            "capture_path": "public_captures/66900c97b442e2f804930a499c941c9fc2d56cafa52705a05d2b284e7e4c2f88.body",
+            "captured_bytes": 5613,
+            "sha256": "66900c97b442e2f804930a499c941c9fc2d56cafa52705a05d2b284e7e4c2f88",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 5613,
+            "byte_start": 0,
+            "range_bytes": 5613,
+            "range_sha256": "66900c97b442e2f804930a499c941c9fc2d56cafa52705a05d2b284e7e4c2f88",
+            "sha256": "66900c97b442e2f804930a499c941c9fc2d56cafa52705a05d2b284e7e4c2f88",
+            "transmitted_text_sha256": "66900c97b442e2f804930a499c941c9fc2d56cafa52705a05d2b284e7e4c2f88",
+            "transmitted_text_utf8_bytes": 5613
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/ome/ome-zarr-py/issues/403",
+            "body_complete": true,
+            "capture_path": "public_captures/2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99.body",
+            "captured_bytes": 3698,
+            "sha256": "2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 3698,
+            "byte_start": 0,
+            "range_bytes": 3698,
+            "range_sha256": "2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99",
+            "sha256": "2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99",
+            "transmitted_text_sha256": "2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99",
+            "transmitted_text_utf8_bytes": 3698
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/ome/ome-zarr-py/pulls/590/files",
+            "body_complete": true,
+            "capture_path": "public_captures/7598661acaad16b624a71e81c0f81b28cdd8c7ed658373a22c7edc36748307f7.body",
+            "captured_bytes": 8283,
+            "sha256": "7598661acaad16b624a71e81c0f81b28cdd8c7ed658373a22c7edc36748307f7",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 8283,
+            "byte_start": 0,
+            "range_bytes": 8283,
+            "range_sha256": "7598661acaad16b624a71e81c0f81b28cdd8c7ed658373a22c7edc36748307f7",
+            "sha256": "7598661acaad16b624a71e81c0f81b28cdd8c7ed658373a22c7edc36748307f7",
+            "transmitted_text_sha256": "7598661acaad16b624a71e81c0f81b28cdd8c7ed658373a22c7edc36748307f7",
+            "transmitted_text_utf8_bytes": 8283
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/ome/ngff-spec/contents/?ref=a4c68004fdb8a8d822367205dc12f9574a32ddf8",
+            "body_complete": true,
+            "capture_path": "public_captures/fd883248275dd571055bf0faa3ad67901d44f60f6e3124da37c49c364e97fc7b.body",
+            "captured_bytes": 17320,
+            "sha256": "fd883248275dd571055bf0faa3ad67901d44f60f6e3124da37c49c364e97fc7b",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 17320,
+            "byte_start": 0,
+            "range_bytes": 17320,
+            "range_sha256": "fd883248275dd571055bf0faa3ad67901d44f60f6e3124da37c49c364e97fc7b",
+            "sha256": "fd883248275dd571055bf0faa3ad67901d44f60f6e3124da37c49c364e97fc7b",
+            "transmitted_text_sha256": "fd883248275dd571055bf0faa3ad67901d44f60f6e3124da37c49c364e97fc7b",
+            "transmitted_text_utf8_bytes": 17320
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://raw.githubusercontent.com/ome/ngff-spec/a4c68004fdb8a8d822367205dc12f9574a32ddf8/index.bs",
+            "body_complete": true,
+            "capture_path": "public_captures/a5681c677c189db942c112a77c24b5b6e3a850892575b0459fe4b5a25b42f2d7.body",
+            "captured_bytes": 41115,
+            "sha256": "a5681c677c189db942c112a77c24b5b6e3a850892575b0459fe4b5a25b42f2d7",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 32768,
+            "byte_start": 0,
+            "range_bytes": 32768,
+            "range_sha256": "1d7fbcc54b8f65aff1d01bda7d2e3da01f1cdbef3b8a3638e06dc216d66f6f73",
+            "sha256": "a5681c677c189db942c112a77c24b5b6e3a850892575b0459fe4b5a25b42f2d7",
+            "transmitted_text_sha256": "1d7fbcc54b8f65aff1d01bda7d2e3da01f1cdbef3b8a3638e06dc216d66f6f73",
+            "transmitted_text_utf8_bytes": 32768
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://raw.githubusercontent.com/hms-dbmi/vizarr/main/package.json",
+            "body_complete": true,
+            "capture_path": "public_captures/bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5.body",
+            "captured_bytes": 1265,
+            "sha256": "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 1265,
+            "byte_start": 0,
+            "range_bytes": 1265,
+            "range_sha256": "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5",
+            "sha256": "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5",
+            "transmitted_text_sha256": "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5",
+            "transmitted_text_utf8_bytes": 1265
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/search/issues?q=repo%3Ahms-dbmi%2Fvizarr+label&per_page=20",
+            "body_complete": true,
+            "capture_path": "public_captures/9e917c1ed4063a0a75453b7c3f87fb854484edb94cf01ce131b79a18aa152cee.body",
+            "captured_bytes": 129286,
+            "sha256": "9e917c1ed4063a0a75453b7c3f87fb854484edb94cf01ce131b79a18aa152cee",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 32768,
+            "byte_start": 0,
+            "range_bytes": 32768,
+            "range_sha256": "a19fbf811cdeb9f02c933e67ef438b1015971652093a5241f6230dec90f8814d",
+            "sha256": "9e917c1ed4063a0a75453b7c3f87fb854484edb94cf01ce131b79a18aa152cee",
+            "transmitted_text_sha256": "a19fbf811cdeb9f02c933e67ef438b1015971652093a5241f6230dec90f8814d",
+            "transmitted_text_utf8_bytes": 32768
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://raw.githubusercontent.com/ome/ome-zarr-py/v0.19.2/ome_zarr/reader.py",
+            "body_complete": true,
+            "capture_path": "public_captures/c46ba936598885a0119bb23452d9ed74f87258a5169daee615d028373c6a88f4.body",
+            "captured_bytes": 22327,
+            "sha256": "c46ba936598885a0119bb23452d9ed74f87258a5169daee615d028373c6a88f4",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 22327,
+            "byte_start": 0,
+            "range_bytes": 22327,
+            "range_sha256": "c46ba936598885a0119bb23452d9ed74f87258a5169daee615d028373c6a88f4",
+            "sha256": "c46ba936598885a0119bb23452d9ed74f87258a5169daee615d028373c6a88f4",
+            "transmitted_text_sha256": "c46ba936598885a0119bb23452d9ed74f87258a5169daee615d028373c6a88f4",
+            "transmitted_text_utf8_bytes": 22327
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/napari/napari/releases/latest",
+            "body_complete": true,
+            "capture_path": "public_captures/ac2bef88f3237418e5e4c91fee622ca52724c235224b394d4e8514cb565d7d42.body",
+            "captured_bytes": 29784,
+            "sha256": "ac2bef88f3237418e5e4c91fee622ca52724c235224b394d4e8514cb565d7d42",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 29784,
+            "byte_start": 0,
+            "range_bytes": 29784,
+            "range_sha256": "ac2bef88f3237418e5e4c91fee622ca52724c235224b394d4e8514cb565d7d42",
+            "sha256": "ac2bef88f3237418e5e4c91fee622ca52724c235224b394d4e8514cb565d7d42",
+            "transmitted_text_sha256": "ac2bef88f3237418e5e4c91fee622ca52724c235224b394d4e8514cb565d7d42",
+            "transmitted_text_utf8_bytes": 29784
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/ome/ome-zarr-py/contents/ome_zarr?ref=v0.19.2",
+            "body_complete": true,
+            "capture_path": "public_captures/4822365cac27d4bf25068d107f989f61ed89e0bc19d43fcc1ed858d3d25008e4.body",
+            "captured_bytes": 11631,
+            "sha256": "4822365cac27d4bf25068d107f989f61ed89e0bc19d43fcc1ed858d3d25008e4",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 11631,
+            "byte_start": 0,
+            "range_bytes": 11631,
+            "range_sha256": "4822365cac27d4bf25068d107f989f61ed89e0bc19d43fcc1ed858d3d25008e4",
+            "sha256": "4822365cac27d4bf25068d107f989f61ed89e0bc19d43fcc1ed858d3d25008e4",
+            "transmitted_text_sha256": "4822365cac27d4bf25068d107f989f61ed89e0bc19d43fcc1ed858d3d25008e4",
+            "transmitted_text_utf8_bytes": 11631
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/ome/napari-ome-zarr",
+            "body_complete": true,
+            "capture_path": "public_captures/6c7999e5af0da3a9cfea2e657ad52963f4b5c01522bc3203ef810c6b547d2b78.body",
+            "captured_bytes": 6289,
+            "sha256": "6c7999e5af0da3a9cfea2e657ad52963f4b5c01522bc3203ef810c6b547d2b78",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 6289,
+            "byte_start": 0,
+            "range_bytes": 6289,
+            "range_sha256": "6c7999e5af0da3a9cfea2e657ad52963f4b5c01522bc3203ef810c6b547d2b78",
+            "sha256": "6c7999e5af0da3a9cfea2e657ad52963f4b5c01522bc3203ef810c6b547d2b78",
+            "transmitted_text_sha256": "6c7999e5af0da3a9cfea2e657ad52963f4b5c01522bc3203ef810c6b547d2b78",
+            "transmitted_text_utf8_bytes": 6289
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/ome/napari-ome-zarr/contents/?ref=main",
+            "body_complete": true,
+            "capture_path": "public_captures/43b35f006f9fcf4a1686bffa530ad9738e17e28da45f0f45301a6be0005a8412.body",
+            "captured_bytes": 9512,
+            "sha256": "43b35f006f9fcf4a1686bffa530ad9738e17e28da45f0f45301a6be0005a8412",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 9512,
+            "byte_start": 0,
+            "range_bytes": 9512,
+            "range_sha256": "43b35f006f9fcf4a1686bffa530ad9738e17e28da45f0f45301a6be0005a8412",
+            "sha256": "43b35f006f9fcf4a1686bffa530ad9738e17e28da45f0f45301a6be0005a8412",
+            "transmitted_text_sha256": "43b35f006f9fcf4a1686bffa530ad9738e17e28da45f0f45301a6be0005a8412",
+            "transmitted_text_utf8_bytes": 9512
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/ome/napari-ome-zarr/releases/latest",
+            "body_complete": true,
+            "capture_path": "public_captures/4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d.body",
+            "captured_bytes": 2148,
+            "sha256": "4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 2148,
+            "byte_start": 0,
+            "range_bytes": 2148,
+            "range_sha256": "4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d",
+            "sha256": "4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d",
+            "transmitted_text_sha256": "4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d",
+            "transmitted_text_utf8_bytes": 2148
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/ome/napari-ome-zarr/contents/napari_ome_zarr?ref=main",
+            "body_complete": true,
+            "capture_path": "public_captures/27921ed3a06ba4a4b42570c8f674a0139115f53add69805d04caa6e1d32a6b6a.body",
+            "captured_bytes": 5852,
+            "sha256": "27921ed3a06ba4a4b42570c8f674a0139115f53add69805d04caa6e1d32a6b6a",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 5852,
+            "byte_start": 0,
+            "range_bytes": 5852,
+            "range_sha256": "27921ed3a06ba4a4b42570c8f674a0139115f53add69805d04caa6e1d32a6b6a",
+            "sha256": "27921ed3a06ba4a4b42570c8f674a0139115f53add69805d04caa6e1d32a6b6a",
+            "transmitted_text_sha256": "27921ed3a06ba4a4b42570c8f674a0139115f53add69805d04caa6e1d32a6b6a",
+            "transmitted_text_utf8_bytes": 5852
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://raw.githubusercontent.com/ome/napari-ome-zarr/v0.10.0/pyproject.toml",
+            "body_complete": true,
+            "capture_path": "public_captures/770dbc8ca578ce81f87c9d4399d9c3cfcc1d4e7fecb74e0da5e76f0a5a258d94.body",
+            "captured_bytes": 1322,
+            "sha256": "770dbc8ca578ce81f87c9d4399d9c3cfcc1d4e7fecb74e0da5e76f0a5a258d94",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 1322,
+            "byte_start": 0,
+            "range_bytes": 1322,
+            "range_sha256": "770dbc8ca578ce81f87c9d4399d9c3cfcc1d4e7fecb74e0da5e76f0a5a258d94",
+            "sha256": "770dbc8ca578ce81f87c9d4399d9c3cfcc1d4e7fecb74e0da5e76f0a5a258d94",
+            "transmitted_text_sha256": "770dbc8ca578ce81f87c9d4399d9c3cfcc1d4e7fecb74e0da5e76f0a5a258d94",
+            "transmitted_text_utf8_bytes": 1322
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://raw.githubusercontent.com/ome/napari-ome-zarr/v0.10.0/napari_ome_zarr/ome_zarr_reader.py",
+            "body_complete": true,
+            "capture_path": "public_captures/255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e.body",
+            "captured_bytes": 29333,
+            "sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 29333,
+            "byte_start": 0,
+            "range_bytes": 29333,
+            "range_sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e",
+            "sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e",
+            "transmitted_text_sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e",
+            "transmitted_text_utf8_bytes": 29333
+          }
+        },
+        {
+          "tool": "read_file",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "bytes": 41115,
+            "delivery_truncated": false,
+            "line_end_inclusive": 299,
+            "line_start": 180,
+            "path": "public_captures/a5681c677c189db942c112a77c24b5b6e3a850892575b0459fe4b5a25b42f2d7.body",
+            "sha256": "a5681c677c189db942c112a77c24b5b6e3a850892575b0459fe4b5a25b42f2d7",
+            "source_byte_end_exclusive": 16690,
+            "source_byte_start": 10702,
+            "source_range_bytes": 5988,
+            "source_range_sha256": "bf0c8d885817525f33b7fb1d44d6ed43ff9b80d1478f7cbbedec0c1e0107d0b7",
+            "transmitted_text_sha256": "43c79a837d839bac0ba3f00f71f24778eae5653a5a8f38a13cefde3da69fc42b",
+            "transmitted_text_utf8_bytes": 6587
+          },
+          "read_body_hash_matches": true,
+          "read_body_in_verified_capture_manifest": true,
+          "delivered_range_metadata": {}
+        },
+        {
+          "tool": "read_file",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "bytes": 22327,
+            "delivery_truncated": false,
+            "line_end_inclusive": 239,
+            "line_start": 180,
+            "path": "public_captures/c46ba936598885a0119bb23452d9ed74f87258a5169daee615d028373c6a88f4.body",
+            "sha256": "c46ba936598885a0119bb23452d9ed74f87258a5169daee615d028373c6a88f4",
+            "source_byte_end_exclusive": 7924,
+            "source_byte_start": 5691,
+            "source_range_bytes": 2233,
+            "source_range_sha256": "b493355bc2bfba9ea1cac3a164e0b14583410b683cbefc4ff85c167648823dde",
+            "transmitted_text_sha256": "2cc113f971dfdfdde43ebe7b6fb43e70a3cd8bcfeebc6e9d913cfa2063c77614",
+            "transmitted_text_utf8_bytes": 2532
+          },
+          "read_body_hash_matches": true,
+          "read_body_in_verified_capture_manifest": true,
+          "delivered_range_metadata": {}
+        },
+        {
+          "tool": "read_file",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "bytes": 29333,
+            "delivery_truncated": false,
+            "line_end_inclusive": 289,
+            "line_start": 215,
+            "path": "public_captures/255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e.body",
+            "sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e",
+            "source_byte_end_exclusive": 11637,
+            "source_byte_start": 7888,
+            "source_range_bytes": 3749,
+            "source_range_sha256": "323fd8e0c2bb04dad51409ac9b39b3b66638369c8cb986d0876b32933c3fca92",
+            "transmitted_text_sha256": "243ae196c68b849ff256018191abb824741b60c64240dfbd3e1471ea94f9a6af",
+            "transmitted_text_utf8_bytes": 4123
+          },
+          "read_body_hash_matches": true,
+          "read_body_in_verified_capture_manifest": true,
+          "delivered_range_metadata": {}
+        },
+        {
+          "tool": "read_file",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "bytes": 41115,
+            "delivery_truncated": false,
+            "line_end_inclusive": 414,
+            "line_start": 300,
+            "path": "public_captures/a5681c677c189db942c112a77c24b5b6e3a850892575b0459fe4b5a25b42f2d7.body",
+            "sha256": "a5681c677c189db942c112a77c24b5b6e3a850892575b0459fe4b5a25b42f2d7",
+            "source_byte_end_exclusive": 25295,
+            "source_byte_start": 16690,
+            "source_range_bytes": 8605,
+            "source_range_sha256": "811bc8b69ed0f7471ebd3487efec7254383c46f5baf2d99f2b5c24201ca29baa",
+            "transmitted_text_sha256": "e1bd7034802d55b0962639e67979f06457e7f3eea498906fd638a49c4ecd00fe",
+            "transmitted_text_utf8_bytes": 9179
+          },
+          "read_body_hash_matches": true,
+          "read_body_in_verified_capture_manifest": true,
+          "delivered_range_metadata": {}
+        },
+        {
+          "tool": "read_file",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "bytes": 41115,
+            "delivery_truncated": false,
+            "line_end_inclusive": 529,
+            "line_start": 415,
+            "path": "public_captures/a5681c677c189db942c112a77c24b5b6e3a850892575b0459fe4b5a25b42f2d7.body",
+            "sha256": "a5681c677c189db942c112a77c24b5b6e3a850892575b0459fe4b5a25b42f2d7",
+            "source_byte_end_exclusive": 31104,
+            "source_byte_start": 25295,
+            "source_range_bytes": 5809,
+            "source_range_sha256": "fc7026e5b42678d25199f3a6dca25773728c5de100f558c607c27b48ab0d1a57",
+            "transmitted_text_sha256": "97a409d6b046935127fccba8c84c65e16f2419c5a29bd64248f8c491210bbf98",
+            "transmitted_text_utf8_bytes": 6383
+          },
+          "read_body_hash_matches": true,
+          "read_body_in_verified_capture_manifest": true,
+          "delivered_range_metadata": {}
+        }
+      ],
+      "original_positive_capture_and_range_record_count": 34
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "host_manifest_path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-independent-candidate-critic/PUBLIC_ARTIFACT_FREEZE.json",
+      "host_manifest_sha256": "6ae8b29cdc311419fdc2a858e29ad42be5bfcd1da3d0ac161d43af2fa9f91e0c",
+      "same_case_manifest_capture_files_verified": 80,
+      "events_sha256": "91f731c9996dad3626af8428f653dee7a7a4295d5b8c23c4c95e5b86236c410c",
+      "prepared_operation_counts": {
+        "read_file": 24,
+        "mechanical": 5,
+        "public_https_get": 20,
+        "write_file": 1
+      },
+      "private_native_payload_exported": false,
+      "input_artifact_read_records_omitted_count": 5,
+      "unsuccessful_http_records": [
+        {
+          "actual_url": "https://raw.githubusercontent.com/ome/napari-ome-zarr/v0.10.0/napari_ome_zarr/reader.py",
+          "status": 404,
+          "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed"
+        },
+        {
+          "actual_url": "https://api.github.com/repos/hms-dbmi/vizarr/releases/latest",
+          "status": 404,
+          "sha256": "d9e37600354c1839f6b22cebde497e9d14750d2401a06c9a51b1619baf991613"
+        }
+      ],
+      "positive_public_source_capture_and_range_records": [
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://ngff.openmicroscopy.org/0.4/index.html",
+            "body_complete": true,
+            "capture_path": "public_captures/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body",
+            "captured_bytes": 163120,
+            "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 32768,
+            "byte_start": 0,
+            "range_bytes": 32768,
+            "range_sha256": "78eaa2fa1fa6b9a9cbc8fa2484fae2b114e8a48c75b61618bd53f74f54e7becd",
+            "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+            "transmitted_text_sha256": "78eaa2fa1fa6b9a9cbc8fa2484fae2b114e8a48c75b61618bd53f74f54e7becd",
+            "transmitted_text_utf8_bytes": 32768
+          }
+        },
+        {
+          "tool": "read_file",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "bytes": 163120,
+            "path": "public_captures/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body",
+            "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+            "transmitted_text_sha256": "7d7ea1eb46d823d80fe47f6b9d6518aaf54b223861932cfcbe46a08a042ecfa7",
+            "transmitted_text_utf8_bytes": 32768
+          },
+          "read_body_hash_matches": true,
+          "read_body_in_verified_capture_manifest": true,
+          "delivered_range_metadata": {}
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://github.com/ome/ome-zarr-py/issues/403",
+            "body_complete": true,
+            "capture_path": "public_captures/c2d88edcabcc73286bf901e9cb8cafd70b1cbfe3ed63bfc083a98d7ac1137df1.body",
+            "captured_bytes": 258213,
+            "sha256": "c2d88edcabcc73286bf901e9cb8cafd70b1cbfe3ed63bfc083a98d7ac1137df1",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 32768,
+            "byte_start": 0,
+            "range_bytes": 32768,
+            "range_sha256": "785e7d27c55cf394ae86d3599a48770b62b997b90618ee426a77662d35b1339c",
+            "sha256": "c2d88edcabcc73286bf901e9cb8cafd70b1cbfe3ed63bfc083a98d7ac1137df1",
+            "transmitted_text_sha256": "785e7d27c55cf394ae86d3599a48770b62b997b90618ee426a77662d35b1339c",
+            "transmitted_text_utf8_bytes": 32768
+          }
+        },
+        {
+          "tool": "read_file",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "bytes": 163120,
+            "path": "public_captures/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body",
+            "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+            "transmitted_text_sha256": "c4be1c6456730bcd2d25d81558f44486e94a60789a7883790e8a377b5407228a",
+            "transmitted_text_utf8_bytes": 32768
+          },
+          "read_body_hash_matches": true,
+          "read_body_in_verified_capture_manifest": true,
+          "delivered_range_metadata": {}
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/ome/ome-zarr-py/issues/403",
+            "body_complete": true,
+            "capture_path": "public_captures/2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99.body",
+            "captured_bytes": 3698,
+            "sha256": "2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 3698,
+            "byte_start": 0,
+            "range_bytes": 3698,
+            "range_sha256": "2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99",
+            "sha256": "2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99",
+            "transmitted_text_sha256": "2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99",
+            "transmitted_text_utf8_bytes": 3698
+          }
+        },
+        {
+          "tool": "read_file",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "bytes": 163120,
+            "path": "public_captures/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body",
+            "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+            "transmitted_text_sha256": "329e9a56881e1a23e084a4f4ca66707e72a83861af6beca3098a18c02d7cb2fd",
+            "transmitted_text_utf8_bytes": 32768
+          },
+          "read_body_hash_matches": true,
+          "read_body_in_verified_capture_manifest": true,
+          "delivered_range_metadata": {}
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://patch-diff.githubusercontent.com/raw/ome/ome-zarr-py/pull/590.diff",
+            "body_complete": true,
+            "capture_path": "public_captures/f0aa7ce9ce88fbfdb83214141942a8ae4d0c3aa206773ea523b9f38cc09ce565.body",
+            "captured_bytes": 6811,
+            "sha256": "f0aa7ce9ce88fbfdb83214141942a8ae4d0c3aa206773ea523b9f38cc09ce565",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 6811,
+            "byte_start": 0,
+            "range_bytes": 6811,
+            "range_sha256": "f0aa7ce9ce88fbfdb83214141942a8ae4d0c3aa206773ea523b9f38cc09ce565",
+            "sha256": "f0aa7ce9ce88fbfdb83214141942a8ae4d0c3aa206773ea523b9f38cc09ce565",
+            "transmitted_text_sha256": "f0aa7ce9ce88fbfdb83214141942a8ae4d0c3aa206773ea523b9f38cc09ce565",
+            "transmitted_text_utf8_bytes": 6811
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/ome/ome-zarr-py/pulls/652",
+            "body_complete": true,
+            "capture_path": "public_captures/856e3419341dbbd8c38e10e0382b5a74df2b56d4da572731e04003109b198274.body",
+            "captured_bytes": 17832,
+            "sha256": "856e3419341dbbd8c38e10e0382b5a74df2b56d4da572731e04003109b198274",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 17832,
+            "byte_start": 0,
+            "range_bytes": 17832,
+            "range_sha256": "856e3419341dbbd8c38e10e0382b5a74df2b56d4da572731e04003109b198274",
+            "sha256": "856e3419341dbbd8c38e10e0382b5a74df2b56d4da572731e04003109b198274",
+            "transmitted_text_sha256": "856e3419341dbbd8c38e10e0382b5a74df2b56d4da572731e04003109b198274",
+            "transmitted_text_utf8_bytes": 17832
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://raw.githubusercontent.com/ome/napari-ome-zarr/v0.10.0/napari_ome_zarr/ome_zarr_reader.py",
+            "body_complete": true,
+            "capture_path": "public_captures/255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e.body",
+            "captured_bytes": 29333,
+            "sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 29333,
+            "byte_start": 0,
+            "range_bytes": 29333,
+            "range_sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e",
+            "sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e",
+            "transmitted_text_sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e",
+            "transmitted_text_utf8_bytes": 29333
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/ome/ome-zarr-py/releases/latest",
+            "body_complete": true,
+            "capture_path": "public_captures/1085265c47e71e3e0cb90cfda90877fbdfdf516774a7060eac5fbee2efe6549e.body",
+            "captured_bytes": 1991,
+            "sha256": "1085265c47e71e3e0cb90cfda90877fbdfdf516774a7060eac5fbee2efe6549e",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 1991,
+            "byte_start": 0,
+            "range_bytes": 1991,
+            "range_sha256": "1085265c47e71e3e0cb90cfda90877fbdfdf516774a7060eac5fbee2efe6549e",
+            "sha256": "1085265c47e71e3e0cb90cfda90877fbdfdf516774a7060eac5fbee2efe6549e",
+            "transmitted_text_sha256": "1085265c47e71e3e0cb90cfda90877fbdfdf516774a7060eac5fbee2efe6549e",
+            "transmitted_text_utf8_bytes": 1991
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/ome/napari-ome-zarr/releases/latest",
+            "body_complete": true,
+            "capture_path": "public_captures/4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d.body",
+            "captured_bytes": 2148,
+            "sha256": "4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 2148,
+            "byte_start": 0,
+            "range_bytes": 2148,
+            "range_sha256": "4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d",
+            "sha256": "4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d",
+            "transmitted_text_sha256": "4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d",
+            "transmitted_text_utf8_bytes": 2148
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://raw.githubusercontent.com/ome/napari-ome-zarr/v0.10.0/pyproject.toml",
+            "body_complete": true,
+            "capture_path": "public_captures/770dbc8ca578ce81f87c9d4399d9c3cfcc1d4e7fecb74e0da5e76f0a5a258d94.body",
+            "captured_bytes": 1322,
+            "sha256": "770dbc8ca578ce81f87c9d4399d9c3cfcc1d4e7fecb74e0da5e76f0a5a258d94",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 1322,
+            "byte_start": 0,
+            "range_bytes": 1322,
+            "range_sha256": "770dbc8ca578ce81f87c9d4399d9c3cfcc1d4e7fecb74e0da5e76f0a5a258d94",
+            "sha256": "770dbc8ca578ce81f87c9d4399d9c3cfcc1d4e7fecb74e0da5e76f0a5a258d94",
+            "transmitted_text_sha256": "770dbc8ca578ce81f87c9d4399d9c3cfcc1d4e7fecb74e0da5e76f0a5a258d94",
+            "transmitted_text_utf8_bytes": 1322
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://raw.githubusercontent.com/hms-dbmi/vizarr/main/package.json",
+            "body_complete": true,
+            "capture_path": "public_captures/bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5.body",
+            "captured_bytes": 1265,
+            "sha256": "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 1265,
+            "byte_start": 0,
+            "range_bytes": 1265,
+            "range_sha256": "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5",
+            "sha256": "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5",
+            "transmitted_text_sha256": "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5",
+            "transmitted_text_utf8_bytes": 1265
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/hms-dbmi/vizarr",
+            "body_complete": true,
+            "capture_path": "public_captures/e2a29c19571284bd92f5fa8f25621a4916cf7f5abac45d2fe9c22a82fa7cf701.body",
+            "captured_bytes": 6260,
+            "sha256": "e2a29c19571284bd92f5fa8f25621a4916cf7f5abac45d2fe9c22a82fa7cf701",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 6260,
+            "byte_start": 0,
+            "range_bytes": 6260,
+            "range_sha256": "e2a29c19571284bd92f5fa8f25621a4916cf7f5abac45d2fe9c22a82fa7cf701",
+            "sha256": "e2a29c19571284bd92f5fa8f25621a4916cf7f5abac45d2fe9c22a82fa7cf701",
+            "transmitted_text_sha256": "e2a29c19571284bd92f5fa8f25621a4916cf7f5abac45d2fe9c22a82fa7cf701",
+            "transmitted_text_utf8_bytes": 6260
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/napari/napari/releases/tags/v0.9.2",
+            "body_complete": true,
+            "capture_path": "public_captures/ac2bef88f3237418e5e4c91fee622ca52724c235224b394d4e8514cb565d7d42.body",
+            "captured_bytes": 29784,
+            "sha256": "ac2bef88f3237418e5e4c91fee622ca52724c235224b394d4e8514cb565d7d42",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 29784,
+            "byte_start": 0,
+            "range_bytes": 29784,
+            "range_sha256": "ac2bef88f3237418e5e4c91fee622ca52724c235224b394d4e8514cb565d7d42",
+            "sha256": "ac2bef88f3237418e5e4c91fee622ca52724c235224b394d4e8514cb565d7d42",
+            "transmitted_text_sha256": "ac2bef88f3237418e5e4c91fee622ca52724c235224b394d4e8514cb565d7d42",
+            "transmitted_text_utf8_bytes": 29784
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/hms-dbmi/vizarr/issues/265",
+            "body_complete": true,
+            "capture_path": "public_captures/6213d6bd700ec654d1a8efabc68e5662833ee05dfb7ee5333dced0ac2e825a4b.body",
+            "captured_bytes": 2936,
+            "sha256": "6213d6bd700ec654d1a8efabc68e5662833ee05dfb7ee5333dced0ac2e825a4b",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 2936,
+            "byte_start": 0,
+            "range_bytes": 2936,
+            "range_sha256": "6213d6bd700ec654d1a8efabc68e5662833ee05dfb7ee5333dced0ac2e825a4b",
+            "sha256": "6213d6bd700ec654d1a8efabc68e5662833ee05dfb7ee5333dced0ac2e825a4b",
+            "transmitted_text_sha256": "6213d6bd700ec654d1a8efabc68e5662833ee05dfb7ee5333dced0ac2e825a4b",
+            "transmitted_text_utf8_bytes": 2936
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/hms-dbmi/vizarr/issues/271",
+            "body_complete": true,
+            "capture_path": "public_captures/038a3d5c8a6228bb3380c2de35bd26ca4f6cb4400753d39010752d9cd25fac1c.body",
+            "captured_bytes": 3402,
+            "sha256": "038a3d5c8a6228bb3380c2de35bd26ca4f6cb4400753d39010752d9cd25fac1c",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 3402,
+            "byte_start": 0,
+            "range_bytes": 3402,
+            "range_sha256": "038a3d5c8a6228bb3380c2de35bd26ca4f6cb4400753d39010752d9cd25fac1c",
+            "sha256": "038a3d5c8a6228bb3380c2de35bd26ca4f6cb4400753d39010752d9cd25fac1c",
+            "transmitted_text_sha256": "038a3d5c8a6228bb3380c2de35bd26ca4f6cb4400753d39010752d9cd25fac1c",
+            "transmitted_text_utf8_bytes": 3402
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/hms-dbmi/vizarr/issues/292",
+            "body_complete": true,
+            "capture_path": "public_captures/1ccaedfa3883540761dfb60266898bd8e7fd7ab4b33d3fc38f4f919ea51b1427.body",
+            "captured_bytes": 3471,
+            "sha256": "1ccaedfa3883540761dfb60266898bd8e7fd7ab4b33d3fc38f4f919ea51b1427",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 3471,
+            "byte_start": 0,
+            "range_bytes": 3471,
+            "range_sha256": "1ccaedfa3883540761dfb60266898bd8e7fd7ab4b33d3fc38f4f919ea51b1427",
+            "sha256": "1ccaedfa3883540761dfb60266898bd8e7fd7ab4b33d3fc38f4f919ea51b1427",
+            "transmitted_text_sha256": "1ccaedfa3883540761dfb60266898bd8e7fd7ab4b33d3fc38f4f919ea51b1427",
+            "transmitted_text_utf8_bytes": 3471
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/hms-dbmi/vizarr/pulls/273",
+            "body_complete": true,
+            "capture_path": "public_captures/e7d17c3185b1f3cf5156b76304416121dfb17adda13c81b51f93b27de2fcf458.body",
+            "captured_bytes": 17273,
+            "sha256": "e7d17c3185b1f3cf5156b76304416121dfb17adda13c81b51f93b27de2fcf458",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 17273,
+            "byte_start": 0,
+            "range_bytes": 17273,
+            "range_sha256": "e7d17c3185b1f3cf5156b76304416121dfb17adda13c81b51f93b27de2fcf458",
+            "sha256": "e7d17c3185b1f3cf5156b76304416121dfb17adda13c81b51f93b27de2fcf458",
+            "transmitted_text_sha256": "e7d17c3185b1f3cf5156b76304416121dfb17adda13c81b51f93b27de2fcf458",
+            "transmitted_text_utf8_bytes": 17273
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/ome/ome-zarr-py/pulls/590",
+            "body_complete": true,
+            "capture_path": "public_captures/2b797ae575b5aee3fd0087280eab97abb10177cff0078024b8c37354b7b17603.body",
+            "captured_bytes": 16985,
+            "sha256": "2b797ae575b5aee3fd0087280eab97abb10177cff0078024b8c37354b7b17603",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 16985,
+            "byte_start": 0,
+            "range_bytes": 16985,
+            "range_sha256": "2b797ae575b5aee3fd0087280eab97abb10177cff0078024b8c37354b7b17603",
+            "sha256": "2b797ae575b5aee3fd0087280eab97abb10177cff0078024b8c37354b7b17603",
+            "transmitted_text_sha256": "2b797ae575b5aee3fd0087280eab97abb10177cff0078024b8c37354b7b17603",
+            "transmitted_text_utf8_bytes": 16985
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://raw.githubusercontent.com/ome/ome-zarr-py/v0.19.2/ome_zarr/reader.py",
+            "body_complete": true,
+            "capture_path": "public_captures/c46ba936598885a0119bb23452d9ed74f87258a5169daee615d028373c6a88f4.body",
+            "captured_bytes": 22327,
+            "sha256": "c46ba936598885a0119bb23452d9ed74f87258a5169daee615d028373c6a88f4",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 22327,
+            "byte_start": 0,
+            "range_bytes": 22327,
+            "range_sha256": "c46ba936598885a0119bb23452d9ed74f87258a5169daee615d028373c6a88f4",
+            "sha256": "c46ba936598885a0119bb23452d9ed74f87258a5169daee615d028373c6a88f4",
+            "transmitted_text_sha256": "c46ba936598885a0119bb23452d9ed74f87258a5169daee615d028373c6a88f4",
+            "transmitted_text_utf8_bytes": 22327
+          }
+        }
+      ],
+      "original_positive_capture_and_range_record_count": 28
+    },
+    {
+      "stage": "final-correction",
+      "host_manifest_path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-final-correction/PUBLIC_ARTIFACT_FREEZE.json",
+      "host_manifest_sha256": "20532c55417d302357433777b9efdba8678d599f9b94ecdd902e0ea7fefc3cd0",
+      "same_case_manifest_capture_files_verified": 98,
+      "events_sha256": "af13dfbfb07d0366de57adc54343abe7cf3fcec91257b67296ef5a71beb987ab",
+      "prepared_operation_counts": {
+        "read_file": 7,
+        "public_https_get": 12,
+        "write_file": 3
+      },
+      "private_native_payload_exported": false,
+      "input_artifact_read_records_omitted_count": 6,
+      "unsuccessful_http_records": [
+        {
+          "actual_url": "https://napari.org/stable/deep-dives/coordinates.html",
+          "status": 404,
+          "sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368"
+        },
+        {
+          "actual_url": "https://api.github.com/repos/napari/docs/contents/docs/deep-dives",
+          "status": 404,
+          "sha256": "e45906ce02e79f16fb87a838d86bb4e497e37a9591f97608fa013bbcd8b9cbc2"
+        },
+        {
+          "actual_url": "https://raw.githubusercontent.com/napari/napari/v0.9.2/napari/events.py",
+          "status": 404,
+          "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed"
+        },
+        {
+          "actual_url": "https://api.github.com/repos/napari/napari/contents/napari?ref=v0.9.2",
+          "status": 404,
+          "sha256": "e45906ce02e79f16fb87a838d86bb4e497e37a9591f97608fa013bbcd8b9cbc2"
+        },
+        {
+          "actual_url": "https://raw.githubusercontent.com/napari/napari/main/napari/utils/interactions.py",
+          "status": 404,
+          "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed"
+        },
+        {
+          "actual_url": "https://api.github.com/repos/napari/napari/contents/napari?ref=595639295a153c84bcb127a9e07d801355440a35",
+          "status": 404,
+          "sha256": "e45906ce02e79f16fb87a838d86bb4e497e37a9591f97608fa013bbcd8b9cbc2"
+        },
+        {
+          "actual_url": "https://raw.githubusercontent.com/napari/napari/v0.9.2/napari/utils/interactions.py",
+          "status": 404,
+          "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed"
+        }
+      ],
+      "positive_public_source_capture_and_range_records": [
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/napari/docs/contents/docs/howtos",
+            "body_complete": true,
+            "capture_path": "public_captures/2847bcc5f6cabebb5a9a628dcb2f0c30750ce8be5bfe5ddd05e4668dff957a27.body",
+            "captured_bytes": 5970,
+            "sha256": "2847bcc5f6cabebb5a9a628dcb2f0c30750ce8be5bfe5ddd05e4668dff957a27",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 5970,
+            "byte_start": 0,
+            "range_bytes": 5970,
+            "range_sha256": "2847bcc5f6cabebb5a9a628dcb2f0c30750ce8be5bfe5ddd05e4668dff957a27",
+            "sha256": "2847bcc5f6cabebb5a9a628dcb2f0c30750ce8be5bfe5ddd05e4668dff957a27",
+            "transmitted_text_sha256": "2847bcc5f6cabebb5a9a628dcb2f0c30750ce8be5bfe5ddd05e4668dff957a27",
+            "transmitted_text_utf8_bytes": 5970
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/napari/docs/contents/docs",
+            "body_complete": true,
+            "capture_path": "public_captures/687768ba7e39a1c687878a0c6dfafc1402bced5124569a4ff7f38653f03dc368.body",
+            "captured_bytes": 15287,
+            "sha256": "687768ba7e39a1c687878a0c6dfafc1402bced5124569a4ff7f38653f03dc368",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 15287,
+            "byte_start": 0,
+            "range_bytes": 15287,
+            "range_sha256": "687768ba7e39a1c687878a0c6dfafc1402bced5124569a4ff7f38653f03dc368",
+            "sha256": "687768ba7e39a1c687878a0c6dfafc1402bced5124569a4ff7f38653f03dc368",
+            "transmitted_text_sha256": "687768ba7e39a1c687878a0c6dfafc1402bced5124569a4ff7f38653f03dc368",
+            "transmitted_text_utf8_bytes": 15287
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/napari/docs/contents/docs/guides",
+            "body_complete": true,
+            "capture_path": "public_captures/1e2603941182e28b09712de6084734a95172405b9e1bfae4df8f8c84de7ec6dc.body",
+            "captured_bytes": 11084,
+            "sha256": "1e2603941182e28b09712de6084734a95172405b9e1bfae4df8f8c84de7ec6dc",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 11084,
+            "byte_start": 0,
+            "range_bytes": 11084,
+            "range_sha256": "1e2603941182e28b09712de6084734a95172405b9e1bfae4df8f8c84de7ec6dc",
+            "sha256": "1e2603941182e28b09712de6084734a95172405b9e1bfae4df8f8c84de7ec6dc",
+            "transmitted_text_sha256": "1e2603941182e28b09712de6084734a95172405b9e1bfae4df8f8c84de7ec6dc",
+            "transmitted_text_utf8_bytes": 11084
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://raw.githubusercontent.com/napari/docs/main/docs/guides/units.md",
+            "body_complete": true,
+            "capture_path": "public_captures/ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11.body",
+            "captured_bytes": 4294,
+            "sha256": "ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 4294,
+            "byte_start": 0,
+            "range_bytes": 4294,
+            "range_sha256": "ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11",
+            "sha256": "ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11",
+            "transmitted_text_sha256": "ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11",
+            "transmitted_text_utf8_bytes": 4294
+          }
+        },
+        {
+          "tool": "public_https_get",
+          "operation_prepared": true,
+          "stdout_flushed": true,
+          "operation_error": false,
+          "model_read": "UNOBSERVED",
+          "model_semantic_acquisition": "UNKNOWN",
+          "source_evidence": {
+            "actual_url": "https://api.github.com/repos/napari/napari/git/refs/tags/v0.9.2",
+            "body_complete": true,
+            "capture_path": "public_captures/257308eadcf06687dee4021149635f92b52bd98188d938064a6b81794364a4d5.body",
+            "captured_bytes": 335,
+            "sha256": "257308eadcf06687dee4021149635f92b52bd98188d938064a6b81794364a4d5",
+            "status": 200,
+            "truncated": false
+          },
+          "capture_body_admitted_by_verified_same_case_manifest": true,
+          "delivered_range_metadata": {
+            "byte_end_exclusive": 335,
+            "byte_start": 0,
+            "range_bytes": 335,
+            "range_sha256": "257308eadcf06687dee4021149635f92b52bd98188d938064a6b81794364a4d5",
+            "sha256": "257308eadcf06687dee4021149635f92b52bd98188d938064a6b81794364a4d5",
+            "transmitted_text_sha256": "257308eadcf06687dee4021149635f92b52bd98188d938064a6b81794364a4d5",
+            "transmitted_text_utf8_bytes": 335
+          }
+        }
+      ],
+      "original_positive_capture_and_range_record_count": 18
+    }
+  ]
+}

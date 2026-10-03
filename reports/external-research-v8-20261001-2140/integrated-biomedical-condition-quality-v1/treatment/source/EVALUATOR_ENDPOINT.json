@@ -1,0 +1,15 @@
+{
+  "case": "V8-BIO-P-Z-S8",
+  "evaluator": "er8-quality-biocond-t-v1",
+  "fixed_birth_epoch": 1791010944.9860394,
+  "fixed_cutoff_epoch": 1791012444.9860394,
+  "observed_pre_handoff_verification_endpoint_epoch": 1791012198.1258998,
+  "observed_elapsed_seconds": 1253.1398603916168,
+  "seconds_until_original_cutoff": 246.86013960838318,
+  "all_work_inclusive_deadline_not_renewed": true,
+  "actual_inclusive_full_return_endpoint": "UNKNOWN to evaluator; root should observe finalreturn",
+  "full_return_tail_seconds": "UNKNOWN",
+  "sourcequality_frozen_before_laterreviews": true,
+  "verification": "Frozenquality hashes, exactfinal hash/bytes, JSONparse and deterministicisolatedwitness rerun verified. No actualrenderer/candidatefixtures executed.",
+  "other_case_or_nativeprivate_access": "Not used for evaluation; no nativeconversation/raw CLI/auth/profile/localcontext exported."
+}

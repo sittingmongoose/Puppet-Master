@@ -1,0 +1,18 @@
+{
+  "assignment_birth_epoch": 1791010944.9198422,
+  "candidate_billed_dollars": null,
+  "candidate_token_usage": null,
+  "case": "V8-BIO-COND-C-Z-S8",
+  "clock_renewed": false,
+  "complete_response_return_tail": "UNKNOWN; evaluator cannot observe its own full return after final handoff",
+  "evaluator_billed_dollars": null,
+  "evaluator_request_token_usage": null,
+  "inclusive_hard_budget_seconds": 1500,
+  "observed_inclusive_seconds_through_checkpoint": 920.9841372966766,
+  "observed_report_verification_checkpoint_epoch": 1791011865.9039795,
+  "observed_report_verification_checkpoint_utc": "2026-10-03T07:17:45.903980+00:00",
+  "original_hard_deadline_epoch": 1791012444.9198422,
+  "post_checkpoint_public_freeze_and_handoff": "performed immediately under the same original deadline; final freeze checkpoint is independently pinned",
+  "preparation_source_checks_method_cost_preservation_report_and_verification_included": true,
+  "quality_disposition": "FAILED_SCREEN; no whole-case score or certification"
+}

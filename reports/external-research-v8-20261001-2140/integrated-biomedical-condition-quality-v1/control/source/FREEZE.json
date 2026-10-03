@@ -1,0 +1,102 @@
+{
+  "PUBLICATION_WHITELIST": [
+    "REVIEW.md",
+    "SOURCE_QUALITY.json",
+    "CLAIM_DISPOSITIONS.json",
+    "COVERAGE.json",
+    "PROVENANCE.json",
+    "WITNESS.py",
+    "WITNESS_RESULTS.json",
+    "SOURCE_QUALITY_FREEZE.json",
+    "OPERATIONAL_COST.json",
+    "METHOD_AND_PRESERVATION.json",
+    "SCOPE_NOTES.json",
+    "EVALUATOR_ENDPOINT.json",
+    "VERIFICATION.json",
+    "MANIFEST.json",
+    "FREEZE.json"
+  ],
+  "case": "V8-BIO-COND-C-Z-S8",
+  "deadline_not_renewed": true,
+  "full_response_return_tail": "UNKNOWN",
+  "immutable": true,
+  "inclusive_evaluator_seconds_through_public_freeze": 920.9916515350342,
+  "original_deadline_epoch": 1791012444.9198422,
+  "public_freeze_epoch": 1791011865.9114938,
+  "public_freeze_utc": "2026-10-03T07:17:45.911494+00:00",
+  "selected_public_files": [
+    {
+      "bytes": 4248,
+      "path": "REVIEW.md",
+      "sha256": "9d8bc9a65750c05d6e8e728401123548676e2b2ea3980192aca4c34b80d59ca2"
+    },
+    {
+      "bytes": 1712,
+      "path": "SOURCE_QUALITY.json",
+      "sha256": "502887c8184160f99f69072783d9254a7d4ffcaff09237c9720bf615a35f51b9"
+    },
+    {
+      "bytes": 7979,
+      "path": "CLAIM_DISPOSITIONS.json",
+      "sha256": "5df298b07ec121ea717094deb73b5fa4127464d67553c8476f20b970b4166dfa"
+    },
+    {
+      "bytes": 2288,
+      "path": "COVERAGE.json",
+      "sha256": "6b5c8b2420fc36bd376762ab49678a27e3f53c667e2fd75a22994cca26b5718a"
+    },
+    {
+      "bytes": 8355,
+      "path": "PROVENANCE.json",
+      "sha256": "c2d22d7cd115c25e21f2915eacbcd1e4167023988f702843e8226fac08aa4894"
+    },
+    {
+      "bytes": 1611,
+      "path": "WITNESS.py",
+      "sha256": "c6b58982eeddf792d3ce5eb00cf61244edb47f34639d328490d775b679474202"
+    },
+    {
+      "bytes": 966,
+      "path": "WITNESS_RESULTS.json",
+      "sha256": "afe00a5438268d6b956748041d5b40aa3695cc16628ff26c6a0c1594528c117a"
+    },
+    {
+      "bytes": 1133,
+      "path": "SOURCE_QUALITY_FREEZE.json",
+      "sha256": "d4bc6c69e20c079e09c88d6082c869661cfce1290c19be133be3eb8d4a13eb52"
+    },
+    {
+      "bytes": 8423,
+      "path": "OPERATIONAL_COST.json",
+      "sha256": "9e22e8ddda8f7a4e6324fea4335edf097394530d5fb0589068d7709435159af1"
+    },
+    {
+      "bytes": 7163,
+      "path": "METHOD_AND_PRESERVATION.json",
+      "sha256": "354d250c2699633e6a6257775090d6ac4076d2859a4c3a5baaeb3ea5d3664e86"
+    },
+    {
+      "bytes": 1590,
+      "path": "SCOPE_NOTES.json",
+      "sha256": "f1ed3e357fbf5a907c8321565ed93ab25256446d26782b61561edc6160684446"
+    },
+    {
+      "bytes": 1017,
+      "path": "EVALUATOR_ENDPOINT.json",
+      "sha256": "6a08209743d87915cd45fd176855a7fb67ae6fa8d281f660ec60a64fab3e6f9c"
+    },
+    {
+      "bytes": 661,
+      "path": "VERIFICATION.json",
+      "sha256": "1f8e9506d1e129373326650c7da42f1b8b6b40828987a3613b44168d2a39487a"
+    },
+    {
+      "bytes": 1036,
+      "path": "MANIFEST.json",
+      "sha256": "d079454f9a756261f9063b9c1c013ef902de0f3b74084b4ae69b6faf0a55abe2"
+    }
+  ],
+  "self_hash_policy": "FREEZE.json is pinned externally at handoff; self-referential hash omitted.",
+  "source_quality_freeze_sha256": "d4bc6c69e20c079e09c88d6082c869661cfce1290c19be133be3eb8d4a13eb52",
+  "source_quality_unchanged_after_method_disclosure": true
+}

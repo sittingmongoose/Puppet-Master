@@ -1,0 +1,17 @@
+{
+  "case": "V8-BIO-P-Z-S8",
+  "post_freeze_locator_errata_only": true,
+  "source_quality_freeze_immutable": true,
+  "items": [
+    {
+      "affected": "SOURCE_PROVENANCE ngff-index locator94-106",
+      "correction": "Zarrv2/groupattributes storage requirements are pinnedindex.bs lines120-125; final source L64-65 is wrong. C02 substance/dispositionunchanged.",
+      "source_sha256": "a5681c677c189db942c112a77c24b5b6e3a850892575b0459fe4b5a25b42f2d7"
+    },
+    {
+      "affected": "All publiccounterexamples",
+      "clarification": "No actual napariGUI, proposedcandidatefixture, or candidateT1-T8 executed. IsolatedASTwitness usesdependency stubs and proves theplain0.4 sourcebranch andformatshape arithmeticonly.",
+      "verdict_change": false
+    }
+  ]
+}

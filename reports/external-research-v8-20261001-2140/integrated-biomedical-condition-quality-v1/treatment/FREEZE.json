@@ -1,0 +1,114 @@
+{
+  "schema": "er8.biocond.treatment-quality.public-freeze.v1",
+  "original_birth_epoch": 1791012228.2777927,
+  "original_cutoff_epoch": 1791012678.2777927,
+  "actual_endpoint_epoch": 1791012426.9360924,
+  "inclusive_elapsed_seconds": 198.65829968452454,
+  "files": {
+    "CHECK_RECEIPT.json": {
+      "sha256": "467ef820c847015a2ab1c08b74ff4aecbd95ee704bd305771a8cf58334cc6518",
+      "bytes": 220
+    },
+    "README.md": {
+      "sha256": "b91bbdba3912b9f80c462e845361018796a9138e6af3464130f1784624735446",
+      "bytes": 2930
+    },
+    "POSITIVE_INPUT_MANIFEST.json": {
+      "sha256": "d6baf14b0da2d31421605a3d35872920146db61a25f40dbee08074ddf327b2bc",
+      "bytes": 3561
+    },
+    "MANIFEST.json": {
+      "sha256": "448f599af3a8c17ee1adeee82ddbb945a7f05a119da3b91b44bd85ffecb07174",
+      "bytes": 1535
+    },
+    "PUBLIC_EXPORT.json": {
+      "sha256": "0fd63e800a6f70bd7c190fbdf994b306e5cbac26ac602ceea978d9395d03e6c5",
+      "bytes": 10260
+    },
+    "QUOTATION_OMISSION_AUDIT.json": {
+      "sha256": "17e184e205e4d6e74fffd3600235da1bdfb974861e7107c7fe044ac1d88a2776",
+      "bytes": 2030
+    },
+    "verify_public.py": {
+      "sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+      "bytes": 6851
+    },
+    "source/DISPOSITION.json": {
+      "sha256": "ee703a37707f595dd01c19de9a84aa3cfc0adf3f1b3f9e6db46da6af621e1a5e",
+      "bytes": 539
+    },
+    "source/SOURCE_QUALITY_FREEZE.json": {
+      "sha256": "fe250ab363f54e86d9d0c6bebfbb92bc48f23dda55f595c5853f05bad3e1781e",
+      "bytes": 1476
+    },
+    "source/ERRATA.json": {
+      "sha256": "02a37f2c9e044f985b0b555b7e3d10c484e2ff1c4d1ba88499bcf194adee7e4c",
+      "bytes": 764
+    },
+    "source/METHOD_REVIEW.json": {
+      "sha256": "b7683d196652cdafa6f407e0115c4dc4e76aa05425debfb6bc21d052e8b8c21a",
+      "bytes": 2717
+    },
+    "source/SOURCE_QUALITY.json": {
+      "sha256": "3b8ddc240e8c31f69cb702b9a416ba541621d88f37ae3b39c5c34040d1884973",
+      "bytes": 2480
+    },
+    "source/SOURCE_ADMISSION.json": {
+      "sha256": "ef0d9b9053b593058bd98dcf83e97c466eb7524593b550431eba3e65906ce9e7",
+      "bytes": 73630
+    },
+    "source/EVALUATOR_WITNESS.py": {
+      "sha256": "be8700dc08298d6a2169e86f031d886af2a817ed834901859327fabc128ff26d",
+      "bytes": 4412
+    },
+    "source/SCOPE.json": {
+      "sha256": "b3fe5d717b842f85c9551bc930720629cda1b6fa0b8d7d330623d792a488f666",
+      "bytes": 1445
+    },
+    "source/MANIFEST.json": {
+      "sha256": "0b27c662e0babfcdee7a628169289faee6aaeb068c935d8a98b5f694e9c2dee4",
+      "bytes": 3557
+    },
+    "source/REVIEW.md": {
+      "sha256": "54d90112a3bfac8eb29940656a24697e8018ac8fbbece1abe6099ff2834bad05",
+      "bytes": 8799
+    },
+    "source/CLAIM_COVERAGE.json": {
+      "sha256": "737340c9ccaf182df67a0c9434415807d5df19f49ffdb015c3e38673575999b9",
+      "bytes": 19526
+    },
+    "source/EVALUATOR_WITNESS_RESULT.json": {
+      "sha256": "d73ce994be1d48d55be088fc97265c25d2582714efd21eb6137a09fa65830f14",
+      "bytes": 1187
+    },
+    "source/FREEZE.json": {
+      "sha256": "7e75066407a6f2214a9691724dcd75f330eed16d8e627edb5c4d1fff73e61a6f",
+      "bytes": 3408
+    },
+    "source/COST_METADATA.json": {
+      "sha256": "847062743414902a2a5586671e1bde0c4126e1bd020aa8e07de48fd92398311d",
+      "bytes": 7591
+    },
+    "source/PRESERVATION.json": {
+      "sha256": "414abf11187cffccca032e3f790864f2ecdb824f67ed24d9469b3a5d61093837",
+      "bytes": 4997
+    },
+    "source/SOURCE_PROVENANCE.json": {
+      "sha256": "58613634177974ebee2876e64c4d14113cf3abd4b5a4671a64d021dc6f7a2633",
+      "bytes": 17119
+    },
+    "source/EVALUATOR_ENDPOINT.json": {
+      "sha256": "7538b4adca8263ef4a94a556367e4e43bb09692196c4ddfc9d07dedb40ea2684",
+      "bytes": 888
+    }
+  },
+  "selected_originals": 17,
+  "offline_checker": {
+    "model_quality_assessed": false,
+    "native_replay_verified": false,
+    "scope": "offline artifact hashes and optional declarations only",
+    "timing_declarations_present_and_valid": false,
+    "verified_artifacts": 22
+  },
+  "status": "FROZEN_DIAGNOSTIC_FAILED_SCREEN_UNASSESSED_REMAINDER"
+}

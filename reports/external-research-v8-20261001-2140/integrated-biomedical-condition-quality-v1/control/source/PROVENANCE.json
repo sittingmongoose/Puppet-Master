@@ -1,0 +1,226 @@
+{
+  "primary_sources": [
+    {
+      "bytes": 38987,
+      "lines": 934,
+      "paraphrase": "The generic transformation vocabulary includes identity, but dataset transformations in multiscales are restricted to scale and translation, and the shared transformation layer inherits those restrictions. Axis order follows array dimension order. Shared transforms follow dataset transforms. The label-series count rule is mandatory; the dimension advice appears in a layout comment.",
+      "ranges": [
+        [
+          222,
+          232
+        ],
+        [
+          235,
+          252
+        ],
+        [
+          262,
+          284
+        ],
+        [
+          329,
+          341
+        ],
+        [
+          395,
+          423
+        ],
+        [
+          151,
+          154
+        ]
+      ],
+      "retrieved_at_utc": "2026-10-03T07:04:50.019911+00:00",
+      "sha256": "55976a60452f42b5194d21502443ffb3a334aec5764f8385fcb937db0aea5bf6",
+      "source_id": "ngff_pinned_latest",
+      "url": "https://raw.githubusercontent.com/ome/ngff/0f03373888f3103978843d5d0a896521807f2637/latest/index.bs",
+      "version": "ome/ngff 0.4.0, commit 0f03373888f3103978843d5d0a896521807f2637"
+    },
+    {
+      "bytes": 5474,
+      "lines": 233,
+      "paraphrase": "The transformation entries admit scale and translation objects with inline arrays; a scale array has a minimum length but no coupling to the number of axes.",
+      "ranges": [
+        [
+          167,
+          230
+        ]
+      ],
+      "retrieved_at_utc": "2026-10-03T07:04:50.374708+00:00",
+      "sha256": "57b355b91e3ea30608268e58359d74c4842f9bb890b7b872de1dcab713ae37a7",
+      "source_id": "ngff_schema",
+      "url": "https://raw.githubusercontent.com/ome/ngff/0.4.0/0.4/schemas/image.schema",
+      "version": "ome/ngff 0.4.0"
+    },
+    {
+      "bytes": 22327,
+      "lines": 610,
+      "paraphrase": "The reader defaults missing multiscales version metadata, constructs the axes object without a separate unit dictionary, exports dataset transformations, and loads labels through a hidden labels-container child.",
+      "ranges": [
+        [
+          111,
+          147
+        ],
+        [
+          183,
+          227
+        ],
+        [
+          270,
+          318
+        ]
+      ],
+      "retrieved_at_utc": "2026-10-03T07:04:50.440044+00:00",
+      "sha256": "c46ba936598885a0119bb23452d9ed74f87258a5169daee615d028373c6a88f4",
+      "source_id": "reader",
+      "url": "https://raw.githubusercontent.com/ome/ome-zarr-py/94eaf20aa096b4a034fc0c636e31d5d64953d6ad/ome_zarr/reader.py",
+      "version": "ome-zarr-py v0.19.2, commit 94eaf20aa096b4a034fc0c636e31d5d64953d6ad"
+    },
+    {
+      "bytes": 5702,
+      "lines": 184,
+      "paraphrase": "The warning branches for unknown units depend on the separately supplied unit dictionary. The normal 0.4 axis validation checks axis types rather than these inline unit strings.",
+      "ranges": [
+        [
+          65,
+          107
+        ],
+        [
+          116,
+          154
+        ]
+      ],
+      "retrieved_at_utc": "2026-10-03T07:04:50.515304+00:00",
+      "sha256": "50583547eaf8826c62e740bead55649441f3e4c8e3903acd2d84b90529465b71",
+      "source_id": "axes",
+      "url": "https://raw.githubusercontent.com/ome/ome-zarr-py/94eaf20aa096b4a034fc0c636e31d5d64953d6ad/ome_zarr/axes.py",
+      "version": "ome-zarr-py v0.19.2, same commit"
+    },
+    {
+      "bytes": 17832,
+      "json_fields": [
+        "merged_at",
+        "merge_commit_sha",
+        "state"
+      ],
+      "lines": 1,
+      "paraphrase": "The pull request is merged at the cited time and merge commit.",
+      "retrieved_at_utc": "2026-10-03T07:04:50.752371+00:00",
+      "sha256": "856e3419341dbbd8c38e10e0382b5a74df2b56d4da572731e04003109b198274",
+      "source_id": "pr652",
+      "url": "https://api.github.com/repos/ome/ome-zarr-py/pulls/652",
+      "version": "GitHub PR 652 metadata retrieved 2026-10-03"
+    },
+    {
+      "bytes": 4613,
+      "lines": 117,
+      "paraphrase": "The patch updates both the dataset location and the transform input location. Its new writer regression test builds 0.6 metadata and checks both normalized locations and preservation of the output-space name.",
+      "ranges": [
+        [
+          5,
+          32
+        ],
+        [
+          41,
+          107
+        ]
+      ],
+      "retrieved_at_utc": "2026-10-03T07:04:51.009525+00:00",
+      "sha256": "50b0c9834aa58e06195d4e10f236e71adeac89e87aee2f4a38cf83b14ae9cc4f",
+      "source_id": "pr652_diff",
+      "url": "https://github.com/ome/ome-zarr-py/pull/652.diff",
+      "version": "PR 652 merged change"
+    },
+    {
+      "bytes": 1991,
+      "json_fields": [
+        "tag_name",
+        "published_at",
+        "body"
+      ],
+      "lines": 1,
+      "paraphrase": "Release notes list the path-normalization pull request as the sole listed change; this confirms release-note content, not a separately executed regression test.",
+      "retrieved_at_utc": "2026-10-03T07:04:51.347367+00:00",
+      "sha256": "1085265c47e71e3e0cb90cfda90877fbdfdf516774a7060eac5fbee2efe6549e",
+      "source_id": "release0192",
+      "url": "https://api.github.com/repos/ome/ome-zarr-py/releases/tags/v0.19.2",
+      "version": "v0.19.2 release metadata"
+    },
+    {
+      "bytes": 341,
+      "json_fields": [
+        "object.sha",
+        "object.type"
+      ],
+      "lines": 1,
+      "paraphrase": "The release tag points directly to the PR merge commit.",
+      "retrieved_at_utc": "2026-10-03T07:06:03.224685+00:00",
+      "sha256": "d767c518351d88f0c39a2c4b56021b7c83bad774d505a4156125a1670c5e5ea7",
+      "source_id": "release0192_tag",
+      "url": "https://api.github.com/repos/ome/ome-zarr-py/git/ref/tags/v0.19.2",
+      "version": "v0.19.2 tag mapping"
+    },
+    {
+      "bytes": 317,
+      "json_fields": [
+        "object.sha",
+        "object.type"
+      ],
+      "lines": 1,
+      "paraphrase": "The tag reference points to an annotated tag object.",
+      "retrieved_at_utc": "2026-10-03T07:04:50.599553+00:00",
+      "sha256": "fac630e5fa5ccc3bd5836cb11ebed3c54519bd30a529702ace87f6e9292d8bbd",
+      "source_id": "ngff_tag_ref",
+      "url": "https://api.github.com/repos/ome/ngff/git/ref/tags/0.4.0",
+      "version": "0.4.0 tag reference"
+    },
+    {
+      "bytes": 1252,
+      "json_fields": [
+        "object.sha",
+        "object.type"
+      ],
+      "lines": 1,
+      "paraphrase": "The annotated tag resolves to the proposal's claimed commit.",
+      "retrieved_at_utc": "2026-10-03T07:06:03.087651+00:00",
+      "sha256": "74daf988da42de795d603f1dcda4448d7e85638860962659491424755c6964ba",
+      "source_id": "ngff_annotated_tag",
+      "url": "https://api.github.com/repos/ome/ngff/git/tags/71ae909048563f5cc80670b307e686c9c445e5a7",
+      "version": "0.4.0 annotated tag"
+    },
+    {
+      "bytes": 986,
+      "lines": 38,
+      "paraphrase": "This example has three axes and a two-element scale; the time axis has a length unit. Directory placement is upstream evidence of intended schema validity, rather than evaluator execution of a validator.",
+      "ranges": [
+        [
+          4,
+          30
+        ]
+      ],
+      "retrieved_at_utc": "2026-10-03T07:06:41.900344+00:00",
+      "sha256": "fe1cec03c924c65943398e2a220544bdf4073d6b2d6526e7c6bec69378a3d60a",
+      "source_id": "mismatch_axes_units",
+      "url": "https://raw.githubusercontent.com/ome/ngff/0.4.0/0.4/examples/valid/mismatch_axes_units.json",
+      "version": "ome/ngff 0.4.0 shipped valid-example directory"
+    },
+    {
+      "bytes": 834,
+      "lines": 33,
+      "paraphrase": "The example carries a non-listed spelling on a spatial axis and an inline two-element scale.",
+      "ranges": [
+        [
+          4,
+          25
+        ]
+      ],
+      "retrieved_at_utc": "2026-10-03T07:06:41.974785+00:00",
+      "sha256": "fab72ea35efa2773daafac8bc56a12241b9abd4cfcb04533d781bfd67434c7f4",
+      "source_id": "invalid_axis_units",
+      "url": "https://raw.githubusercontent.com/ome/ngff/0.4.0/0.4/examples/valid/invalid_axis_units.json",
+      "version": "ome/ngff 0.4.0 shipped valid-example directory"
+    }
+  ],
+  "raw_capture_policy": "Raw captures are evaluator-private and excluded from publication. Public primary locators and safe evaluator paraphrases permit independent review.",
+  "third_party_verbatim_prose_words": 0
+}

@@ -1,0 +1,51 @@
+{
+  "additional_diagnostics": [
+    "F2: literal switching inverse omits supported global composition",
+    "F3: swapped y,x witness dimensions defeat the claimed predicate discriminator",
+    "F4: illustrative lowercase advice mislabeled RFC SHOULD"
+  ],
+  "blind_inputs_read": [
+    "own assignment",
+    "frozen FINAL_PROPOSAL.md",
+    "own UNRESOLVED_LEADS.md",
+    "own BRIEF.md",
+    "own THIN_PLAN.md",
+    "independently retrieved public primary sources"
+  ],
+  "canonical_comparable_score": null,
+  "case": "V8-BIO-COND-C-Z-S8",
+  "claim_dispositions_file": "CLAIM_DISPOSITIONS.json",
+  "comprehensive_certification": false,
+  "coverage_file": "COVERAGE.json",
+  "decisive_failure": "F1: dataset-level identity is prohibited by the multiscales prose, contrary to the final claim of prose legality.",
+  "final_artifact": {
+    "bytes": 36899,
+    "sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26"
+  },
+  "frozen_at_utc": "2026-10-03T07:09:11.307824+00:00",
+  "limitations": "Diagnostic source screen only. Unchecked claims/facets remain UNASSESSED/null. Candidate source acquisition success and operational closure do not establish model comprehension.",
+  "not_read_before_freeze": [
+    "METHOD",
+    "TASK",
+    "initial PROPOSAL",
+    "CRITIQUE",
+    "canonical evaluation-scope",
+    "scoring feedback",
+    "operational root proof",
+    "native receipts",
+    "cost evidence",
+    "any other case"
+  ],
+  "reasoning_effort": "xhigh",
+  "review_model": "gpt-6.1-sol",
+  "reviewer": "er8-quality-biocond-c-v1",
+  "source_first": true,
+  "source_provenance_file": "PROVENANCE.json",
+  "supports": [
+    "S1",
+    "S2",
+    "S3",
+    "S4"
+  ],
+  "verdict": "FAILED_SCREEN"
+}

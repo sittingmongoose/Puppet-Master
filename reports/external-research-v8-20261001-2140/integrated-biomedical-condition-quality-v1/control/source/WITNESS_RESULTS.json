@@ -1,0 +1,51 @@
+{
+  "V13_axes_y_x": {
+    "epsilon": [
+      "0.5",
+      "0.40"
+    ],
+    "gaps_start_end": [
+      [
+        "0",
+        "125.0"
+      ],
+      [
+        "100.0",
+        "100.0"
+      ]
+    ],
+    "image": [
+      [
+        "10",
+        "266.0"
+      ],
+      [
+        "2.5",
+        "207.3"
+      ]
+    ],
+    "label": [
+      [
+        "10",
+        "141"
+      ],
+      [
+        "102.5",
+        "307.3"
+      ]
+    ],
+    "new_two_endpoint_rule_admits": false,
+    "old_far_endpoint_rule_admits": false
+  },
+  "execution_kind": "Evaluator-owned decimal arithmetic only; no candidate implementation or upstream runtime test",
+  "global_composition_switch": {
+    "correct_level0_index": "100",
+    "final_line109_literal_level0_index": "330",
+    "global_scale_x": "3",
+    "global_translation_x": "7",
+    "level1_index_x": "50",
+    "physical_after_correct_switch": "134.5",
+    "physical_after_literal_switch": "410.5",
+    "physical_x": "134.5"
+  }
+}

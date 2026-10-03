@@ -1,0 +1,43 @@
+{
+  "case": "V8-BIO-P-Z-S8",
+  "frozen_epoch": 1791011541.4776185,
+  "evaluator": "er8-quality-biocond-t-v1",
+  "birth_epoch": 1791010944.9860394,
+  "hard_deadline_epoch": 1791012444.9860394,
+  "phase_order": "FINAL+ownBRIEF/THIN_PLAN -> independentprimarysources+isolatedwitness -> immutableSOURCEQUALITYFREEZE -> METHOD/TASK/scope/operations/cost/preservation",
+  "method_task_scope_initialproposal_critic_receipts_cost_read_before_freeze": false,
+  "frozen_files": [
+    {
+      "path": "SOURCE_QUALITY.json",
+      "bytes": 2480,
+      "sha256": "3b8ddc240e8c31f69cb702b9a416ba541621d88f37ae3b39c5c34040d1884973"
+    },
+    {
+      "path": "CLAIM_COVERAGE.json",
+      "bytes": 19526,
+      "sha256": "737340c9ccaf182df67a0c9434415807d5df19f49ffdb015c3e38673575999b9"
+    },
+    {
+      "path": "DISPOSITION.json",
+      "bytes": 539,
+      "sha256": "ee703a37707f595dd01c19de9a84aa3cfc0adf3f1b3f9e6db46da6af621e1a5e"
+    },
+    {
+      "path": "SOURCE_PROVENANCE.json",
+      "bytes": 17119,
+      "sha256": "58613634177974ebee2876e64c4d14113cf3abd4b5a4671a64d021dc6f7a2633"
+    },
+    {
+      "path": "EVALUATOR_WITNESS.py",
+      "bytes": 4412,
+      "sha256": "be8700dc08298d6a2169e86f031d886af2a817ed834901859327fabc128ff26d"
+    },
+    {
+      "path": "EVALUATOR_WITNESS_RESULT.json",
+      "bytes": 1187,
+      "sha256": "d73ce994be1d48d55be088fc97265c25d2582714efd21eb6137a09fa65830f14"
+    }
+  ],
+  "quality_verdict": "FAILED_SCREEN",
+  "diagnostic_only": true
+}

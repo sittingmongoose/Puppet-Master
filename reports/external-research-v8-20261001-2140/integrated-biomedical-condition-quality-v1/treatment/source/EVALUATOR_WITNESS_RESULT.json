@@ -1,0 +1,52 @@
+{
+  "kind": "evaluator isolated AST witness; upstream classes extracted from independently captured pinned source; dependencies stubbed; no napari GUI/runtime execution",
+  "plugin_plain_0_4_image_scale": [
+    0.5,
+    0.5
+  ],
+  "plugin_plain_0_4_label_scale": [
+    0.75,
+    0.75
+  ],
+  "parent_transforms_image": [],
+  "parent_transforms_label": [],
+  "plugin_image_translation": [
+    0.0,
+    0.0
+  ],
+  "format_shape_inputs": [
+    [
+      64,
+      64
+    ],
+    [
+      32,
+      32
+    ]
+  ],
+  "format_level1_cts": [
+    {
+      "type": "scale",
+      "scale": [
+        2.0,
+        2.0
+      ]
+    },
+    {
+      "type": "translation",
+      "translation": [
+        0.5,
+        0.5
+      ]
+    }
+  ],
+  "format_level1_translation_native_unit": "level-0 pixels",
+  "format_level1_translation_if_level0_pixel_is_0_5_um": [
+    0.25,
+    0.25
+  ],
+  "image_formula_1_over_2_minus_0_5_over_2_um": 0.25,
+  "nearest_sample_14_minus_float_index_13_75": 0.25,
+  "assertions": "PASS",
+  "limitations": "Affine stub checks scale/translation only. This does not execute napari multiscale internals, viewer behavior, actual arrays, original candidate fixtures, or proposed tests."
+}

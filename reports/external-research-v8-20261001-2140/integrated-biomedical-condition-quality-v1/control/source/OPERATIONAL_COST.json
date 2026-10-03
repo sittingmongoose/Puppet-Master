@@ -1,0 +1,232 @@
+{
+  "actual_case_wall_seconds": 2376.500532555,
+  "actual_nonoverlapping_outside_native_seconds": 9.702711419,
+  "actual_occupied_stage_lease_seconds": 2375.9142928123474,
+  "all_execution_closed_before_cutoff": true,
+  "billed_dollars": null,
+  "candidate_model_source_comprehension": "UNKNOWN; evaluator source findings assessed separately",
+  "candidate_source_semantic_acquisition": "UNKNOWN",
+  "case": "V8-BIO-COND-C-Z-S8",
+  "full_billed_consumption": null,
+  "literal_reservation_completed": true,
+  "operational_disposition": "COMPLETE_CLOSED",
+  "post_case_root_management_cost": "SEPARATE; not measured here",
+  "publication_policy": "Only sanitized mechanical fields and hashes; no native identifiers, payloads, conversation bodies or local host details.",
+  "request_token_aggregate": null,
+  "request_token_aggregate_disposition": "UNKNOWN: pinned COMPLETE usage fields and parent generated_usage provide no token aggregate",
+  "root_proof": {
+    "receipt": "BIOCOND_S8_WHOLE_PAIR_OPERATIONAL_ROOT_V1.json",
+    "sha256": "da1c0606697e8b09a2e2d26184da3014044b0fd88e4abf01d2c85412563922bb"
+  },
+  "semantic_quality_separate": "FAILED_SCREEN; this operational disposition certifies no source understanding",
+  "stages": {
+    "final-correction": {
+      "fresh_session": true,
+      "inclusive_stage_wall_through_held_exit_seconds": 483.410421751,
+      "native_goal_status": "complete",
+      "native_owned_seconds": 481.512991244,
+      "native_responses": 14,
+      "usage": "UNKNOWN except reported monotonic output lower bound",
+      "wrapper_returncode": 0
+    },
+    "independent-candidate-critic": {
+      "fresh_session": true,
+      "inclusive_stage_wall_through_held_exit_seconds": 749.504477361,
+      "native_goal_status": "complete",
+      "native_owned_seconds": 747.142444615,
+      "native_responses": 13,
+      "usage": "UNKNOWN except reported monotonic output lower bound",
+      "wrapper_returncode": 0
+    },
+    "research-proposal": {
+      "fresh_session": true,
+      "inclusive_stage_wall_through_held_exit_seconds": 1142.12085288,
+      "native_goal_status": "complete",
+      "native_owned_seconds": 1138.142385277,
+      "native_responses": 24,
+      "usage": "UNKNOWN except reported monotonic output lower bound",
+      "wrapper_returncode": 0
+    }
+  },
+  "verified_positive_receipts": [
+    {
+      "bytes": 1416,
+      "observed": {
+        "actual_case_wall_seconds": 2376.500532555,
+        "actual_nonoverlapping_outside_native_seconds": 9.702711419,
+        "actual_occupied_stage_lease_seconds": 2375.9142928123474,
+        "all_case_execution_closed_before_cutoff": true,
+        "generated_usage": "UNKNOWN except observed monotonic lower bounds",
+        "held_finalizer_returncode": 0,
+        "source_semantic_acquisition": "UNKNOWN"
+      },
+      "receipt": "GLOBAL_PARENT_FINAL_RECEIPT.json",
+      "sha256": "5475ccb75517760527ad5b2ebfe79e2de1df6f43c81355e4cdc017edb4e668da",
+      "stage": null
+    },
+    {
+      "bytes": 1047,
+      "observed": {
+        "case_supervisor_exited": true,
+        "case_supervisor_group_absent": true,
+        "held_Popen_wait_returncode": 0
+      },
+      "receipt": "EXTERNAL_CASE_CLOSE.json",
+      "sha256": "ab5a22db063859d631ceae86f41a18d31d49fd4251ceb6df97e1290aa34a5b6e",
+      "stage": null
+    },
+    {
+      "bytes": 354,
+      "observed": {
+        "held_returncode": 0
+      },
+      "receipt": "CASE_HELD_WAIT.json",
+      "sha256": "ffcf586d8f22a4bfc22afe5dc9ff895d588a2ec97bf01b37bbee4187dc2efb24",
+      "stage": null
+    },
+    {
+      "bytes": 1259,
+      "observed": {
+        "fresh_session": true,
+        "native_goal_activation_observed": true,
+        "native_goal_status": "complete",
+        "native_owned_seconds": 1138.142385277,
+        "native_responses": 24,
+        "source_semantic_acquisition": "UNKNOWN",
+        "usage": "UNKNOWN except reported monotonic output lower bound",
+        "wrapper_returncode": 0
+      },
+      "receipt": "COMPLETE.json",
+      "sha256": "299507a8ca64926202bef37c4accb63abf02538ef20af3c14d526b8c702962e3",
+      "stage": "research-proposal"
+    },
+    {
+      "bytes": 1011,
+      "observed": {
+        "inclusive_native_lifetime_established": true,
+        "occupancy_disposition": "releasable-native-only",
+        "owned_native_quiescent": true
+      },
+      "receipt": "QUIESCENCE.json",
+      "sha256": "b3bdbfe7a61399d1d28a1610e4778ed5f7f98ffd7d70bfeeca51d4a4825875cb",
+      "stage": "research-proposal"
+    },
+    {
+      "bytes": 1556,
+      "observed": {
+        "held_Popen_wait_returncode": 0,
+        "stage_actor_exited": true,
+        "stage_actor_group_absent": true
+      },
+      "receipt": "EXTERNAL_STAGE_CLOSE.json",
+      "sha256": "73aad38af2b56aaaeda62d70efeae4deb7f492c5e655a6bb0e9f4d948fdc1787",
+      "stage": "research-proposal"
+    },
+    {
+      "bytes": 398,
+      "observed": {
+        "held_returncode": 0,
+        "inclusive_stage_wall_through_held_exit_seconds": 1142.12085288
+      },
+      "receipt": "STAGE_HELD_WAIT.json",
+      "sha256": "f74a28d5283d3334d8891b04a4d32fb08e32b1917202ef851b94113fee68147b",
+      "stage": "research-proposal"
+    },
+    {
+      "bytes": 1281,
+      "observed": {
+        "fresh_session": true,
+        "native_goal_activation_observed": true,
+        "native_goal_status": "complete",
+        "native_owned_seconds": 747.142444615,
+        "native_responses": 13,
+        "source_semantic_acquisition": "UNKNOWN",
+        "usage": "UNKNOWN except reported monotonic output lower bound",
+        "wrapper_returncode": 0
+      },
+      "receipt": "COMPLETE.json",
+      "sha256": "cfd67c6e18fcd6d84de05864d840904760ba53330b4be3fee2eabe32078a1b51",
+      "stage": "independent-candidate-critic"
+    },
+    {
+      "bytes": 1055,
+      "observed": {
+        "inclusive_native_lifetime_established": true,
+        "occupancy_disposition": "releasable-native-only",
+        "owned_native_quiescent": true
+      },
+      "receipt": "QUIESCENCE.json",
+      "sha256": "77ad878243ca4b0e7f83035994c8fe53bf09a5da29658f744d3508d831d40da9",
+      "stage": "independent-candidate-critic"
+    },
+    {
+      "bytes": 1611,
+      "observed": {
+        "held_Popen_wait_returncode": 0,
+        "stage_actor_exited": true,
+        "stage_actor_group_absent": true
+      },
+      "receipt": "EXTERNAL_STAGE_CLOSE.json",
+      "sha256": "bc04101b5534dbd846e79b99096a32d15cb01a26c41fc7b9480a1855bb8dadd7",
+      "stage": "independent-candidate-critic"
+    },
+    {
+      "bytes": 409,
+      "observed": {
+        "held_returncode": 0,
+        "inclusive_stage_wall_through_held_exit_seconds": 749.504477361
+      },
+      "receipt": "STAGE_HELD_WAIT.json",
+      "sha256": "abfe81a689e84b33dee6050639c5bf1fd5681382582c7c8e0d03da336facd458",
+      "stage": "independent-candidate-critic"
+    },
+    {
+      "bytes": 1263,
+      "observed": {
+        "fresh_session": true,
+        "native_goal_activation_observed": true,
+        "native_goal_status": "complete",
+        "native_owned_seconds": 481.512991244,
+        "native_responses": 14,
+        "source_semantic_acquisition": "UNKNOWN",
+        "usage": "UNKNOWN except reported monotonic output lower bound",
+        "wrapper_returncode": 0
+      },
+      "receipt": "COMPLETE.json",
+      "sha256": "679bed5dfa86c24184018d4d1c243339662aa2d57a36fd7f73a7b7b12d721690",
+      "stage": "final-correction"
+    },
+    {
+      "bytes": 1007,
+      "observed": {
+        "inclusive_native_lifetime_established": true,
+        "occupancy_disposition": "releasable-native-only",
+        "owned_native_quiescent": true
+      },
+      "receipt": "QUIESCENCE.json",
+      "sha256": "d2599cd0f92dde40b2980ab94b6acd5c37cac9f8003b5c092fe285d5480405c4",
+      "stage": "final-correction"
+    },
+    {
+      "bytes": 1551,
+      "observed": {
+        "held_Popen_wait_returncode": 0,
+        "stage_actor_exited": true,
+        "stage_actor_group_absent": true
+      },
+      "receipt": "EXTERNAL_STAGE_CLOSE.json",
+      "sha256": "9461fdf4472133aecefb2d6bed3ba1f35824ad6ac25c043740592f05237d23d0",
+      "stage": "final-correction"
+    },
+    {
+      "bytes": 397,
+      "observed": {
+        "held_returncode": 0,
+        "inclusive_stage_wall_through_held_exit_seconds": 483.410421751
+      },
+      "receipt": "STAGE_HELD_WAIT.json",
+      "sha256": "344cdc1cf1b78ade78eb13ef1839ffc92e6f95aa1431a2efe38bd5c617f13c4c",
+      "stage": "final-correction"
+    }
+  ]
+}

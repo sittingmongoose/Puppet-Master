@@ -1,0 +1,30 @@
+{
+  "PUBLICATION_WHITELIST": [
+    "REVIEW.md",
+    "SOURCE_QUALITY.json",
+    "CLAIM_DISPOSITIONS.json",
+    "COVERAGE.json",
+    "PROVENANCE.json",
+    "WITNESS.py",
+    "WITNESS_RESULTS.json",
+    "SOURCE_QUALITY_FREEZE.json",
+    "OPERATIONAL_COST.json",
+    "METHOD_AND_PRESERVATION.json",
+    "SCOPE_NOTES.json",
+    "EVALUATOR_ENDPOINT.json",
+    "VERIFICATION.json",
+    "MANIFEST.json",
+    "FREEZE.json"
+  ],
+  "artifact_candidate_copy_policy": "This bundle references the separately frozen candidate final by exact hash and line locators; it does not republish candidate or third-party raw bodies.",
+  "case": "V8-BIO-COND-C-Z-S8",
+  "excluded": [
+    "all _raw files and source bodies",
+    "all candidate native payloads and identifiers",
+    "all private assignment and operational source receipts",
+    "all sibling cases and evaluator keys"
+  ],
+  "publication_mode": "root mechanical publication of whitelist top files only",
+  "source_quality_frozen_before_disclosure": true,
+  "third_party_verbatim_prose_words": 0
+}

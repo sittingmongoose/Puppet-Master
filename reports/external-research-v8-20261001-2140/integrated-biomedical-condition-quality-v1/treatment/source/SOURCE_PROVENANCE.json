@@ -1,0 +1,509 @@
+{
+  "case": "V8-BIO-P-Z-S8",
+  "kind": "independent primary retrieval; raw bodies excluded from publication",
+  "sources": [
+    {
+      "id": "ngff-index",
+      "url": "https://raw.githubusercontent.com/ome/ngff-spec/a4c68004fdb8a8d822367205dc12f9574a32ddf8/index.bs",
+      "status": 200,
+      "bytes": 41115,
+      "sha256": "a5681c677c189db942c112a77c24b5b6e3a850892575b0459fe4b5a25b42f2d7",
+      "capture_epoch": 1791011122.120423,
+      "locator": [
+        "20-22",
+        "94-106",
+        "240-247",
+        "333-346",
+        "352-381",
+        "448-494"
+      ],
+      "evidence_path": "_raw/ngff-index.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "ngff-published",
+      "url": "https://ngff.openmicroscopy.org/0.4/",
+      "status": 200,
+      "bytes": 163120,
+      "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+      "capture_epoch": 1791011122.167441,
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "evidence_path": "_raw/ngff-published.txt",
+      "public_body": false,
+      "read_semantically": false
+    },
+    {
+      "id": "plugin-reader",
+      "url": "https://raw.githubusercontent.com/ome/napari-ome-zarr/v0.10.0/napari_ome_zarr/ome_zarr_reader.py",
+      "status": 200,
+      "bytes": 29333,
+      "sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e",
+      "capture_epoch": 1791011122.1062062,
+      "locator": [
+        "136-139",
+        "178-194",
+        "199-202",
+        "218-236",
+        "249-291",
+        "572-603",
+        "652-655",
+        "672-689",
+        "702-718"
+      ],
+      "evidence_path": "_raw/plugin-reader.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "plugin-pyproject",
+      "url": "https://raw.githubusercontent.com/ome/napari-ome-zarr/v0.10.0/pyproject.toml",
+      "status": 200,
+      "bytes": 1322,
+      "sha256": "770dbc8ca578ce81f87c9d4399d9c3cfcc1d4e7fecb74e0da5e76f0a5a258d94",
+      "capture_epoch": 1791011122.123107,
+      "locator": [
+        "1-27"
+      ],
+      "evidence_path": "_raw/plugin-pyproject.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "ome-reader",
+      "url": "https://raw.githubusercontent.com/ome/ome-zarr-py/v0.19.2/ome_zarr/reader.py",
+      "status": 200,
+      "bytes": 22327,
+      "sha256": "c46ba936598885a0119bb23452d9ed74f87258a5169daee615d028373c6a88f4",
+      "capture_epoch": 1791011122.1045637,
+      "locator": [
+        "279-295"
+      ],
+      "evidence_path": "_raw/ome-reader.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "ome-format",
+      "url": "https://raw.githubusercontent.com/ome/ome-zarr-py/v0.19.2/ome_zarr/format.py",
+      "status": 200,
+      "bytes": 12703,
+      "sha256": "82b61d30f62d6eddd81ff63b43146fd4f7be93be767ae5561b74a99951c24eca",
+      "capture_epoch": 1791011122.1328125,
+      "locator": [
+        "13-21",
+        "276-294"
+      ],
+      "evidence_path": "_raw/ome-format.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "ome-image",
+      "url": "https://raw.githubusercontent.com/ome/ome-zarr-py/v0.19.2/ome_zarr/classes/image.py",
+      "status": 200,
+      "bytes": 45577,
+      "sha256": "c71a6caae9d76955dc35b9993cd69a6a958579f98c5e536a6a16582c16f04841",
+      "capture_epoch": 1791011122.1598284,
+      "locator": [
+        "187-238",
+        "395-410"
+      ],
+      "evidence_path": "_raw/ome-image.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "ome-writer-tests",
+      "url": "https://raw.githubusercontent.com/ome/ome-zarr-py/v0.19.2/tests/test_writer.py",
+      "status": 200,
+      "bytes": 95394,
+      "sha256": "2ded9ffcd5f2deac26ac42da7a9c5aa9fdd0c1ff158a964412d43619709ef259",
+      "capture_epoch": 1791011122.1526837,
+      "locator": [
+        "307-378",
+        "1123-1189"
+      ],
+      "evidence_path": "_raw/ome-writer-tests.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "ome-issue403",
+      "url": "https://api.github.com/repos/ome/ome-zarr-py/issues/403",
+      "status": 200,
+      "bytes": 3698,
+      "sha256": "2a813b45c4038f1a31ea1687bcfca92631a23f9630b9e6c9a036d7212f624c99",
+      "capture_epoch": 1791011122.2056284,
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "evidence_path": "_raw/ome-issue403.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "ome-pr590",
+      "url": "https://api.github.com/repos/ome/ome-zarr-py/pulls/590",
+      "status": 200,
+      "bytes": 16985,
+      "sha256": "2b797ae575b5aee3fd0087280eab97abb10177cff0078024b8c37354b7b17603",
+      "capture_epoch": 1791011122.2543824,
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "evidence_path": "_raw/ome-pr590.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "ome-pr590-files",
+      "url": "https://api.github.com/repos/ome/ome-zarr-py/pulls/590/files?per_page=100",
+      "status": 200,
+      "bytes": 8283,
+      "sha256": "7598661acaad16b624a71e81c0f81b28cdd8c7ed658373a22c7edc36748307f7",
+      "capture_epoch": 1791011122.3417368,
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "evidence_path": "_raw/ome-pr590-files.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "ome-pr652",
+      "url": "https://api.github.com/repos/ome/ome-zarr-py/pulls/652",
+      "status": 200,
+      "bytes": 17832,
+      "sha256": "856e3419341dbbd8c38e10e0382b5a74df2b56d4da572731e04003109b198274",
+      "capture_epoch": 1791011122.3194866,
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "evidence_path": "_raw/ome-pr652.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "ome-pr652-files",
+      "url": "https://api.github.com/repos/ome/ome-zarr-py/pulls/652/files?per_page=100",
+      "status": 200,
+      "bytes": 5613,
+      "sha256": "66900c97b442e2f804930a499c941c9fc2d56cafa52705a05d2b284e7e4c2f88",
+      "capture_epoch": 1791011122.3800058,
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "evidence_path": "_raw/ome-pr652-files.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "ome-release",
+      "url": "https://api.github.com/repos/ome/ome-zarr-py/releases/tags/v0.19.2",
+      "status": 200,
+      "bytes": 1991,
+      "sha256": "1085265c47e71e3e0cb90cfda90877fbdfdf516774a7060eac5fbee2efe6549e",
+      "capture_epoch": 1791011122.2506614,
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "evidence_path": "_raw/ome-release.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "napari-tag",
+      "url": "https://api.github.com/repos/napari/napari/git/ref/tags/v0.9.2",
+      "status": 200,
+      "bytes": 335,
+      "sha256": "257308eadcf06687dee4021149635f92b52bd98188d938064a6b81794364a4d5",
+      "capture_epoch": 1791011122.285688,
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "evidence_path": "_raw/napari-tag.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "napari-release",
+      "url": "https://api.github.com/repos/napari/napari/releases/tags/v0.9.2",
+      "status": 200,
+      "bytes": 29784,
+      "sha256": "ac2bef88f3237418e5e4c91fee622ca52724c235224b394d4e8514cb565d7d42",
+      "capture_epoch": 1791011122.3105981,
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "evidence_path": "_raw/napari-release.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "napari-units",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/guides/units.md",
+      "status": 200,
+      "bytes": 4294,
+      "sha256": "ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11",
+      "capture_epoch": 1791011122.2553742,
+      "locator": [
+        "5-10",
+        "35-47",
+        "60-81"
+      ],
+      "evidence_path": "_raw/napari-units.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "vizarr-package",
+      "url": "https://raw.githubusercontent.com/hms-dbmi/vizarr/main/package.json",
+      "status": 200,
+      "bytes": 1265,
+      "sha256": "bddde203696567259721c7f04f6ca8ff0bed44d30203106346efc42fdd7d2cb5",
+      "capture_epoch": 1791011122.2636962,
+      "locator": [
+        "1-5",
+        "16-38"
+      ],
+      "evidence_path": "_raw/vizarr-package.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "vizarr-repo",
+      "url": "https://api.github.com/repos/hms-dbmi/vizarr",
+      "status": 200,
+      "bytes": 6260,
+      "sha256": "e2a29c19571284bd92f5fa8f25621a4916cf7f5abac45d2fe9c22a82fa7cf701",
+      "capture_epoch": 1791011122.3867927,
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "evidence_path": "_raw/vizarr-repo.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "vizarr-release",
+      "url": "https://api.github.com/repos/hms-dbmi/vizarr/releases/latest",
+      "capture_epoch": 1791011122.4114022,
+      "error": "HTTP Error 404: Not Found",
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "read_semantically": false
+    },
+    {
+      "id": "vizarr-261",
+      "url": "https://api.github.com/repos/hms-dbmi/vizarr/issues/261",
+      "status": 200,
+      "bytes": 3421,
+      "sha256": "2038a8b9cc45c6ae547649690f44bf4ce39f216acb55be487258072241741665",
+      "capture_epoch": 1791011122.4854093,
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "evidence_path": "_raw/vizarr-261.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "vizarr-265",
+      "url": "https://api.github.com/repos/hms-dbmi/vizarr/issues/265",
+      "status": 200,
+      "bytes": 2936,
+      "sha256": "6213d6bd700ec654d1a8efabc68e5662833ee05dfb7ee5333dced0ac2e825a4b",
+      "capture_epoch": 1791011122.422155,
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "evidence_path": "_raw/vizarr-265.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "vizarr-271",
+      "url": "https://api.github.com/repos/hms-dbmi/vizarr/issues/271",
+      "status": 200,
+      "bytes": 3402,
+      "sha256": "038a3d5c8a6228bb3380c2de35bd26ca4f6cb4400753d39010752d9cd25fac1c",
+      "capture_epoch": 1791011122.425424,
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "evidence_path": "_raw/vizarr-271.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "vizarr-273",
+      "url": "https://api.github.com/repos/hms-dbmi/vizarr/pulls/273",
+      "status": 200,
+      "bytes": 17273,
+      "sha256": "e7d17c3185b1f3cf5156b76304416121dfb17adda13c81b51f93b27de2fcf458",
+      "capture_epoch": 1791011122.5503101,
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "evidence_path": "_raw/vizarr-273.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "vizarr-292",
+      "url": "https://api.github.com/repos/hms-dbmi/vizarr/issues/292",
+      "status": 200,
+      "bytes": 3471,
+      "sha256": "1ccaedfa3883540761dfb60266898bd8e7fd7ab4b33d3fc38f4f919ea51b1427",
+      "capture_epoch": 1791011122.46841,
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "evidence_path": "_raw/vizarr-292.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "vizarr-334",
+      "url": "https://api.github.com/repos/hms-dbmi/vizarr/pulls/334",
+      "status": 200,
+      "bytes": 16916,
+      "sha256": "1c87fb2562b9b662c28a09e0e77eb5b1dc28a4f1588eb453be0c7a5da5dd685a",
+      "capture_epoch": 1791011122.5385556,
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "evidence_path": "_raw/vizarr-334.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "vizarr-334-files",
+      "url": "https://api.github.com/repos/hms-dbmi/vizarr/pulls/334/files?per_page=100",
+      "status": 200,
+      "bytes": 2786,
+      "sha256": "7f9764b4e485190c73f8225cbe7e9faa49aa9db0eae98a68ae3b48c04f8406dc",
+      "capture_epoch": 1791011122.6298325,
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "evidence_path": "_raw/vizarr-334-files.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "napari-image",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.9.2/napari/layers/image/image.py",
+      "capture_epoch": 1791011183.0266666,
+      "error": "HTTP Error 404: Not Found",
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "read_semantically": false
+    },
+    {
+      "id": "napari-base",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.9.2/napari/layers/base/base.py",
+      "capture_epoch": 1791011183.0569386,
+      "error": "HTTP Error 404: Not Found",
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "read_semantically": false
+    },
+    {
+      "id": "napari-image-slice",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.9.2/napari/layers/image/_slice.py",
+      "capture_epoch": 1791011183.054398,
+      "error": "HTTP Error 404: Not Found",
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "read_semantically": false
+    },
+    {
+      "id": "napari-vispy-image",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.9.2/napari/_vispy/layers/image.py",
+      "capture_epoch": 1791011183.0431836,
+      "error": "HTTP Error 404: Not Found",
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "read_semantically": false
+    },
+    {
+      "id": "napari-pr9495",
+      "url": "https://api.github.com/repos/napari/napari/pulls/9495",
+      "status": 200,
+      "bytes": 21128,
+      "sha256": "0956318ec1061557563f03f16c3bc762eaf9ef235f1ed2464a7adeeaf43b2388",
+      "capture_epoch": 1791011183.3270135,
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "evidence_path": "_raw/napari-pr9495.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "napari-pr9533",
+      "url": "https://api.github.com/repos/napari/napari/pulls/9533",
+      "status": 200,
+      "bytes": 19623,
+      "sha256": "6b1a027501e0e38e3494d04bcd918168240759f632764fb9fb5af1c0764be491",
+      "capture_epoch": 1791011183.3797455,
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "evidence_path": "_raw/napari-pr9533.txt",
+      "public_body": false,
+      "read_semantically": true
+    },
+    {
+      "id": "zarr-python-pyproject",
+      "url": "https://raw.githubusercontent.com/zarr-developers/zarr-python/v3.1.5/pyproject.toml",
+      "status": 200,
+      "bytes": 12196,
+      "sha256": "79b6c4b445786cd9663312917f6bec85c374e13628d5236b890b464c2fc6feeb",
+      "capture_epoch": 1791011183.0496433,
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "evidence_path": "_raw/zarr-python-pyproject.txt",
+      "public_body": false,
+      "read_semantically": false
+    },
+    {
+      "id": "plugin-release",
+      "url": "https://api.github.com/repos/ome/napari-ome-zarr/releases/tags/v0.10.0",
+      "status": 200,
+      "bytes": 2148,
+      "sha256": "4ba4287cfc69f7c92cd439331b1bc4b2ac9e969e8c8afb4b9bea94e632bced8d",
+      "capture_epoch": 1791011183.0738523,
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "evidence_path": "_raw/plugin-release.txt",
+      "public_body": false,
+      "read_semantically": false
+    },
+    {
+      "id": "napari-doc-main",
+      "url": "https://api.github.com/repos/napari/docs/commits/main",
+      "status": 200,
+      "bytes": 6301,
+      "sha256": "282af11d81d00de7262aad3eaddb172525974f008922b08187ae91434d9ce80a",
+      "capture_epoch": 1791011183.170212,
+      "locator": [
+        "JSON fields/body/patch as identified in claim coverage"
+      ],
+      "evidence_path": "_raw/napari-doc-main.txt",
+      "public_body": false,
+      "read_semantically": false
+    }
+  ]
+}

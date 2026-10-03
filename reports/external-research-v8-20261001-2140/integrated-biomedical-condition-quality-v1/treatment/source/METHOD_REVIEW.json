@@ -1,0 +1,44 @@
+{
+  "case": "V8-BIO-P-Z-S8",
+  "read_after_source_quality_freeze": true,
+  "method_path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-final-correction/workspace/inputs/METHOD.md",
+  "method_sha256": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a",
+  "task_sha256": "fca20cc8591350908f7a07e98af56580199925d4945315e41008674540da8adc",
+  "method_name": "proposition-condition-witness-lean",
+  "uptake_structural": "PRESENT",
+  "quality_of_uptake": "PARTIAL_DEFICIENT",
+  "checks": [
+    {
+      "requirement": "Exactly3 consequential propositions with source/version/condition/exception/normativeforce/classes",
+      "disposition": "PRESENT",
+      "evidence": "Final section4 P1/P2/P3 columns present. P3 is chiefly an overlay policy fromRQ2/B3 with failure-history tie toRQ3; a directRQ3 lesson proposition is less clear."
+    },
+    {
+      "requirement": "Preserve applicability conditions and normativeforce",
+      "disposition": "DEFICIENT",
+      "evidence": "FrozenC04 andC16 miss scope/conditional requirements; C06 promotes relative-fallback prose into an unencoded per-level semantic switch."
+    },
+    {
+      "requirement": "Supported correction when rejecting earlier proposition",
+      "disposition": "PARTIAL",
+      "evidence": "Rejecting translation handling as-is is supported by pinnedreader. RelabelingB constructed removes incorrect provenance. Writer formula split is supported but itsF1 numerical comparison is false."
+    },
+    {
+      "requirement": "Self-derived witness with intermediate reasoning and discrimination",
+      "disposition": "PARTIAL",
+      "evidence": "F1 A/B derivation uses candidatechosen values absent from brief/thinplan and is valid. C20/C30/C31 undermine additional claimed alternatives, nearestoffset and plugin-exact attribution."
+    },
+    {
+      "requirement": "Execute only admitted deterministic arithmetic; otherwisereasonedUNEXECUTED",
+      "disposition": "STRUCTURALLY_SATISFIED",
+      "evidence": "Candidate explicitly marks arithmetic and tests unexecuted. Own receipts show mechanical line_map operations, no arithmeticexecution evidenced. Evaluator witness execution is separate and not credited as candidateexecution."
+    },
+    {
+      "requirement": "Threeproposition check supplements wholecase",
+      "disposition": "PRESENT_IN_INTENT_NOT_FULLY_DISCHARGED",
+      "evidence": "Final has all3question/5obligation maps and steps; unresolvedconsequentialB2 and sourceerrors prevent qualitypass."
+    }
+  ],
+  "operational_method_three_stages": "Verified COMPLETE via rootpositive receipts and hashed metrics; operational completion is separate from semantic uptake",
+  "canonical_score": null
+}

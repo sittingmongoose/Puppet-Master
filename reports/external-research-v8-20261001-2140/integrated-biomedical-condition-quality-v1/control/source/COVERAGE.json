@@ -1,0 +1,78 @@
+{
+  "canonical_18_facets": {
+    "enumeration": null,
+    "note": "Canonical scope not opened before source freeze; no invented enumeration or weights.",
+    "status": "UNASSESSED"
+  },
+  "canonical_comparable_score": null,
+  "product_obligations": {
+    "B1": {
+      "findings": [
+        "F1",
+        "S3"
+      ],
+      "status": "FAILED_SCREEN_PARTIAL"
+    },
+    "B2": {
+      "findings": [
+        "F1",
+        "F2",
+        "S1"
+      ],
+      "status": "FAILED_SCREEN_PARTIAL"
+    },
+    "B3": {
+      "findings": [
+        "F2",
+        "F3"
+      ],
+      "status": "FAILED_SCREEN_PARTIAL"
+    },
+    "B4": {
+      "findings": [
+        "S4"
+      ],
+      "note": "The real fix chain is supported; two-component discovery/comparison remains unassessed.",
+      "status": "PARTIALLY_ASSESSED"
+    },
+    "B5": {
+      "findings": [
+        "F3"
+      ],
+      "note": "Validation V13 is defective. Other validations, recovery and full end-to-end obligations remain unassessed.",
+      "status": "FAILED_SCREEN_PARTIAL"
+    }
+  },
+  "research_questions": {
+    "Q1": {
+      "note": "Component comparison present in final but napari/Vitessce claims not independently certified.",
+      "status": "UNASSESSED"
+    },
+    "Q2": {
+      "findings": [
+        "F1",
+        "F2",
+        "F4"
+      ],
+      "note": "Selected normative, axis-order and composition claims checked; remainder unassessed.",
+      "status": "FAILED_SCREEN_PARTIAL"
+    },
+    "Q3": {
+      "findings": [
+        "S4"
+      ],
+      "note": "Primary PR/release/tag/test-history checked; not full validation of all engineering inferences.",
+      "status": "PARTIALLY_SUPPORTED"
+    }
+  },
+  "scope_basis": "Own final, BRIEF and THIN_PLAN inspected before method/task/scoring disclosure.",
+  "screen_termination_reason": "A concrete pinned-primary contradiction of a consequential normative claim is sufficient for bounded FAILED_SCREEN; other partial findings are additional diagnostics.",
+  "unchecked_scope": [
+    "Remaining final source claims",
+    "Full component version/capability comparison",
+    "Complete calibration, matching, recovery and refusal-path coverage",
+    "All 18 canonical facets",
+    "All proposed validations and runtime behavior"
+  ],
+  "whole_case_pass_eligible": false
+}

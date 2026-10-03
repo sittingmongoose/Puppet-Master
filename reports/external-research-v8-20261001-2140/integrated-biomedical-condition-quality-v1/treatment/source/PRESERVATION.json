@@ -1,0 +1,98 @@
+{
+  "case": "V8-BIO-P-Z-S8",
+  "read_after_source_quality_freeze": true,
+  "initial_proposal_sha256": "b9340c9085f7a199e6059da518de7986b10d64b89ae165931e3be460add96b32",
+  "critic_sha256": "3cf81b0800dfa734cfbb1547c52423c421e5c5b41f84c8386dfedd1c38094cf9",
+  "final_proposal_sha256": "d6f0f5c6d8c15e83af0788c3432ff3119a72a6c294bb5c4e5a402734d12b6661",
+  "assessment_kind": "Selected supportedmeaning dispositions; not exhaustive atomic preservation score",
+  "dispositions": [
+    {
+      "meaning": "Own metadata gate and boundednapari choice",
+      "initial": "sections1.2/4P1/6",
+      "final": "same sections",
+      "disposition": "SUPPORTED_MEANING_PRESERVED",
+      "reason": "Plugin drops perdatasettranslation in both artifacts; gate need independently survives erroneous parentinheritance attribution."
+    },
+    {
+      "meaning": "Perlevel scale->translation->toptransform mapping",
+      "initial": "section2/P2/6.2",
+      "final": "same plusDOC",
+      "disposition": "SUPPORTED_MEANING_PRESERVED",
+      "reason": "Pinned0.4 mapping retained and current docmodel added with version caveat."
+    },
+    {
+      "meaning": "Metadata declaration distinct from content alignment guarantee",
+      "initial": "section2/4P3",
+      "final": "same",
+      "disposition": "SUPPORTED_MEANING_PRESERVED_BUT_PRODUCT_APPLICATION_INCOMPLETE",
+      "reason": "Correct distinction survives; final completechain tier2 and identicalunits do not fully establish crossunit/content alignment."
+    },
+    {
+      "meaning": "Issue403->590->writer tests",
+      "initial": "section3",
+      "final": "section3",
+      "disposition": "SUPPORTED_CHAIN_PRESERVED",
+      "reason": "Real chain retained, perfile formula attribution improved. Later Cwriter disagreement is false and gets no preservation credit."
+    },
+    {
+      "meaning": "Pathref consistency652",
+      "initial": "section3",
+      "final": "section3",
+      "disposition": "SUPPORTED_ANALOGOUS_MEANING_PRESERVED",
+      "reason": "Exact fix and test survive; pinnedtest is0.6/Zarrv3, useful analogy notdirect0.4 proof."
+    },
+    {
+      "meaning": "ConstructedB should not be attributed to plugin",
+      "initial": "section5 claims upstream assumptionclass",
+      "final": "section5B relabeledconstructed",
+      "disposition": "SUPPORTED_FALSE_ATTRIBUTION_REPLACEMENT",
+      "reason": "No penalty for correcting false attribution. AddedBprime remains unverified napariarray behavior."
+    },
+    {
+      "meaning": "Writer conventions",
+      "initial": "section3/5C attributes one formula broadly",
+      "final": "perfile split plusCformat/T6",
+      "disposition": "MIXED_CORRECTION_WITH_NEW_ERROR",
+      "reason": "Perfile formulas corrected, but physical1.0 was substituted for ratio2.0 in F1formatpath. Raw number differences are not equal-unit disagreement."
+    },
+    {
+      "meaning": "Explicit scene pixelcontent fixture semantics",
+      "initial": "F1 metadataonly",
+      "final": "F1 scenecontent declared",
+      "disposition": "SUPPORTED_NARROW_ADDITION",
+      "reason": "Makes featuremarker criterion meaningful in plan; nofixture executed."
+    },
+    {
+      "meaning": "Hard1e-6 overlay refusal",
+      "initial": "P3/6.3 hardtolerance",
+      "final": "two-tier warn/refuse policy",
+      "disposition": "PRODUCT_CHOICE_CHANGED_NO_AUTOMATIC_PRESERVATION_PENALTY",
+      "reason": "Normative spec does not demand scale equality. Broader policy needs ownunit/association/sampling justification; its deficiency evaluated on final merits."
+    },
+    {
+      "meaning": "Claim590 present in0.19.2",
+      "initial": "section3 says present, notfirstrelease",
+      "final": "v0.19line/firstreleaseunevidenced",
+      "disposition": "WEAKENED_WITHOUT_MATERIAL_SUPPORTED_MEANING_LOSS",
+      "reason": "Independent pinned0.19.2 code includes translation fix. Critic conflates present-in with firstcarrying; final weaker phrasing does not require harmfulcopying penalty."
+    },
+    {
+      "meaning": "Unresolvedcursor event and execution gaps",
+      "initial": "leads/validation unexecuted",
+      "final": "leads stillopen; docs narrows transformmodel",
+      "disposition": "PRESERVED_AS_UNRESOLVED",
+      "reason": "Correct acknowledgement remains; additional citations do not discharge openevent/pinnedrendererdependency."
+    },
+    {
+      "meaning": "Unconditionalplain0.4 parentinheritance and0.75 nearestoffset",
+      "initial": "sections1/3/5C",
+      "final": "sameclaims retained",
+      "disposition": "FALSE_RETENTION_NO_SUPPORTED_PRESERVATION_CREDIT",
+      "reason": "Frozenprimary condition/writer/arithmetic counterexamples. Criticaffirmation does not certifytruth."
+    }
+  ],
+  "whole_artifact_preservation_certification": null,
+  "unassessed": "Every other atom; no aggregatepreservation score and no wholecasePASS",
+  "no_false_retention_or_harmful_copying_penalty": true,
+  "candidate_critic_verdict": "Survives claim read only after quality freeze; not adopted as groundtruth"
+}

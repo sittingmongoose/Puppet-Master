@@ -1,0 +1,23 @@
+{
+  "verdict": "FAILED_SCREEN",
+  "supported_core": [
+    "NGFF per-level ordered transform and label structure",
+    "Plugin dataset0 scale-only reader limitation",
+    "Issue403->PR590->writer tests",
+    "PR652 as0.6 consistency precedent",
+    "Documented native-unit world model with version caveat"
+  ],
+  "consequential_false_claims": [
+    "C16",
+    "C20",
+    "C04"
+  ],
+  "unresolved_dependencies": [
+    "C06",
+    "C28",
+    "C30",
+    "C32"
+  ],
+  "all_unchecked_facets": "UNASSESSED",
+  "no_posthoc_scope_narrowing": true
+}

@@ -1,0 +1,160 @@
+{
+  "case": "V8-BIO-P-Z-S8",
+  "root_operational_proof_path": "ops/recovery-v1/BIOCOND_S8_WHOLE_PAIR_OPERATIONAL_ROOT_V1.json",
+  "root_operational_proof_sha256": "da1c0606697e8b09a2e2d26184da3014044b0fd88e4abf01d2c85412563922bb",
+  "operational_pipeline": "COMPLETE",
+  "quality_verdict_separate": "FAILED_SCREEN diagnostic only",
+  "actual_case_wall_seconds": 2229.493781491,
+  "actual_occupied_stage_lease_seconds": 2228.6480090618134,
+  "actual_nonoverlapping_outside_native_seconds": 8.871340225,
+  "stages": [
+    {
+      "stage": "research-proposal",
+      "metrics_path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-research-proposal/native-public/public-metrics.json",
+      "metrics_sha256": "c8054dbb42e491d5b7e2e0e9c53c934f805752b4d6d05c50bc9142337dab02a0",
+      "metrics_freeze_sha256": "35beec133dada59c266244ffcd5a5366fadd7f5cec7d3a795e120daac11e06be",
+      "native_responses": 18,
+      "usage_requests_with_delta": 17,
+      "reported_monotonic_usage_totals": {
+        "inputTokens": 1671450,
+        "outputTokens": 36084,
+        "reasoningTokens": 0,
+        "cacheReadTokens": 1502976,
+        "cacheWriteTokens": 0,
+        "totalTokens": 1707534
+      },
+      "native_elapsed_milliseconds": 891264,
+      "fresh_session": true,
+      "goal_status_final": "complete",
+      "provider_id": "builtin:zai-coding-plan",
+      "model_id": "GLM-5.3-Flash",
+      "effort_effective": "max"
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "metrics_path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-independent-candidate-critic/native-public/public-metrics.json",
+      "metrics_sha256": "bd9caa5446b5be35922197b7ecd362943813287071e9c22ea83991f6ea45ae55",
+      "metrics_freeze_sha256": "d74b7a083e3cc094dfcf6487a1f51dac7dfddff4a5d0587f1e1333d9499b2304",
+      "native_responses": 24,
+      "usage_requests_with_delta": 23,
+      "reported_monotonic_usage_totals": {
+        "inputTokens": 1160255,
+        "outputTokens": 28268,
+        "reasoningTokens": 0,
+        "cacheReadTokens": 998144,
+        "cacheWriteTokens": 0,
+        "totalTokens": 1188523
+      },
+      "native_elapsed_milliseconds": 624365,
+      "fresh_session": true,
+      "goal_status_final": "complete",
+      "provider_id": "builtin:zai-coding-plan",
+      "model_id": "GLM-5.3-Flash",
+      "effort_effective": "max"
+    },
+    {
+      "stage": "final-correction",
+      "metrics_path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-final-correction/native-public/public-metrics.json",
+      "metrics_sha256": "a02e6c7b9dcab7ac4b164a0838f8578dff56e62aa42c9214ab9c7d196b2252aa",
+      "metrics_freeze_sha256": "7c67ec767e5fb11f7ea921860b5201d445147a5b73b42847abad362d805e90b3",
+      "native_responses": 15,
+      "usage_requests_with_delta": 14,
+      "reported_monotonic_usage_totals": {
+        "inputTokens": 591000,
+        "outputTokens": 34896,
+        "reasoningTokens": 0,
+        "cacheReadTokens": 512064,
+        "cacheWriteTokens": 0,
+        "totalTokens": 625896
+      },
+      "native_elapsed_milliseconds": 709663,
+      "fresh_session": true,
+      "goal_status_final": "complete",
+      "provider_id": "builtin:zai-coding-plan",
+      "model_id": "GLM-5.3-Flash",
+      "effort_effective": "max"
+    }
+  ],
+  "total_native_responses": 57,
+  "total_usage_requests_with_delta": 54,
+  "reported_monotonic_aggregate_usage": {
+    "inputTokens": 3422705,
+    "outputTokens": 99248,
+    "reasoningTokens": 0,
+    "cacheReadTokens": 3013184,
+    "cacheWriteTokens": 0,
+    "totalTokens": 3521953
+  },
+  "full_billed_usage": null,
+  "full_billed_usage_disposition": "UNKNOWN; request-level monotonic reported aggregates are not independently reconciled invoice/billing totals; zero reasoning/cache-write fields are reported values, not proved actualzero",
+  "currency_cost": null,
+  "currency_cost_disposition": "UNKNOWN",
+  "candidate_semantic_acquisition": "UNKNOWN",
+  "positive_closure_pins": [
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/GLOBAL_PARENT_FINAL_RECEIPT.json",
+      "sha256": "b1b51da9d146b3531b98f134f87d2dd0b5bc5013927590beb11150153f840565"
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/EXTERNAL_CASE_CLOSE.json",
+      "sha256": "0c8d188ea85b50c4458cf64eb96374bf6a194bdc67f6a0f16321988c5eafe4dd"
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/HOST_LAUNCHES/V8-BIO-P-Z-S8/CASE_HELD_WAIT.json",
+      "sha256": "5d1e5b6a12bbc56b32132effc8bbe12cdeac455d94232250f84a1bfda6bb63a4"
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-research-proposal/COMPLETE.json",
+      "sha256": "2a18b473485acfff748d3dd750eefaf8010b3dcee2b35ba506c063dfa9d63a19"
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-research-proposal/QUIESCENCE.json",
+      "sha256": "7d0c71b98d68491cf0d332e4c5a9e2d1450b4985b11a210af9566ea48bbb8b8c"
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-research-proposal/EXTERNAL_STAGE_CLOSE.json",
+      "sha256": "9f4998dc2d05de42cbad5c8719fd7584b0f8f8383cf173b82c36869d8d159015"
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/HOST_LAUNCHES/V8-BIO-P-Z-S8-research-proposal/STAGE_HELD_WAIT.json",
+      "sha256": "6d6fea8db7493913e8f1623aaeff272b65fa10a6c28868e16aa999da932579c4"
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-independent-candidate-critic/COMPLETE.json",
+      "sha256": "b361cb5422812d93417a5e8c4b4a2fbbc80ece4ca4716f77ac8d6065fccdb76f"
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-independent-candidate-critic/QUIESCENCE.json",
+      "sha256": "34ed3dde750cdfe9de2a79684b60d1da02d6740a14df8c805478e21f1a88862c"
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-independent-candidate-critic/EXTERNAL_STAGE_CLOSE.json",
+      "sha256": "b816b249565ac0d9c9cd301be2f5c9fe895fab9c254e59cfb1b00c9a50b9a85c"
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/HOST_LAUNCHES/V8-BIO-P-Z-S8-independent-candidate-critic/STAGE_HELD_WAIT.json",
+      "sha256": "9316d15d6e2a17692ec0933630f8b014ce44014a492eb40840aab55e0dfe6701"
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-final-correction/COMPLETE.json",
+      "sha256": "4825fecb9fd125757e1a526e26477cc25adf1f3a0bda93bb035481759563bf9c"
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-final-correction/QUIESCENCE.json",
+      "sha256": "e0c15d736024395c7556026817d60642486c36ca4c4d65d3a56462b36d05a267"
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-final-correction/EXTERNAL_STAGE_CLOSE.json",
+      "sha256": "1cd16b8727642359f7578de1997f5bfc217675abb625f203785515d33c569dbf"
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/HOST_LAUNCHES/V8-BIO-P-Z-S8-final-correction/STAGE_HELD_WAIT.json",
+      "sha256": "a04f7512bf76e8c9c930b62f2e75a2c0613068b4f9166f967f6c04fc039fea02"
+    }
+  ],
+  "all_literal_stage_case_held_wait_returncodes_verified_zero": true,
+  "all_three_fresh_sessions_complete": true,
+  "literal_reservation_completed_root_attested": true,
+  "no_case_complete_shortcut": true,
+  "read_after_source_freeze": true
+}

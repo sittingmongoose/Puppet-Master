@@ -1,0 +1,241 @@
+{
+  "aggregate_score": null,
+  "checked_claims": [
+    {
+      "argument": "The multiscales subsection restricts dataset transformations to scale and translation. The generic identity vocabulary does not override this narrower mandatory rule. Identity is prohibited by both prose and schema at this location.",
+      "candidate_lines": [
+        67,
+        102,
+        168
+      ],
+      "claim_paraphrase": "An explicit identity entry at dataset level is legal under the prose but invalid under the image schema.",
+      "consequence": "The proposed refusal remains conservative, but Q2/B1/B2 classify its normative basis incorrectly; the schema-versus-prose distinction is a consequential research claim.",
+      "disposition": "CONTRADICTED",
+      "evidence": [
+        {
+          "lines": [
+            273,
+            278
+          ],
+          "source_id": "ngff_pinned_latest"
+        },
+        {
+          "lines": [
+            189,
+            229
+          ],
+          "source_id": "ngff_schema"
+        }
+      ],
+      "id": "F1",
+      "severity": "DECISIVE_SCREEN_FAILURE"
+    },
+    {
+      "argument": "The formula uses dataset scale/offset symbols defined at line 101 but omits undoing the shared transform. With a permitted shared x scale of 3 and offset 7, the physical point 134.5 maps to level-0 index 330 rather than 100 and returns to 410.5. The formula works only if those symbols are explicitly redefined as composed coefficients, which the final text does not do.",
+      "candidate_lines": [
+        101,
+        109,
+        146,
+        148,
+        158
+      ],
+      "claim_paraphrase": "Switching levels preserves the physical cursor point using the displayed inverse formula while supporting a shared multiscales transform.",
+      "consequence": "B2/B3 and proposed V6 lack an explicit correct inverse for a declared supported condition.",
+      "disposition": "CONTRADICTED_LITERAL_ALGORITHM",
+      "evidence": [
+        {
+          "lines": [
+            273,
+            282
+          ],
+          "source_id": "ngff_pinned_latest"
+        },
+        {
+          "evaluator_artifact": "WITNESS.py"
+        },
+        {
+          "evaluator_artifact": "WITNESS_RESULTS.json",
+          "key": "global_composition_switch"
+        }
+      ],
+      "id": "F2",
+      "qualification": "A charitable interpretation of composed coefficients could repair the formula; that interpretation is not specified.",
+      "severity": "CONSEQUENTIAL_PRODUCT_DEFECT"
+    },
+    {
+      "argument": "The x dimension is 256. The stated label ends at x=307.3 and y=141; the image ends at x=207.3 and y=266. Both the old and new rules reject it. Swapping the shape to 256 by 131 would create the intended counterexample, but the frozen proposal does not use that shape. The y tolerance is also 0.5 under the stated formula, rather than the 0.25 printed at line 134.",
+      "candidate_lines": [
+        23,
+        125,
+        134,
+        136,
+        165
+      ],
+      "claim_paraphrase": "A label shaped 131 by 256 in y,x order has an x far endpoint equal to the image and is admitted by the former far-endpoint-only gate.",
+      "consequence": "V13 does not discriminate the corrected predicate from the previous one; B5's regression evidence is defective.",
+      "disposition": "CONTRADICTED_NUMERICAL_WITNESS",
+      "evidence": [
+        {
+          "lines": [
+            263,
+            277
+          ],
+          "source_id": "ngff_pinned_latest"
+        },
+        {
+          "evaluator_artifact": "WITNESS.py"
+        },
+        {
+          "evaluator_artifact": "WITNESS_RESULTS.json",
+          "key": "V13_axes_y_x"
+        }
+      ],
+      "id": "F3",
+      "severity": "CONSEQUENTIAL_VALIDATION_DEFECT"
+    },
+    {
+      "argument": "The cited source is lowercase advice inside the illustrative directory-layout comment. It does not contain the uppercase RFC keyword required by the final proposal's own label definition. The substance can remain advisory, with an informative label.",
+      "candidate_lines": [
+        38,
+        71
+      ],
+      "claim_paraphrase": "The image-label dimension advice is classified as an RFC keyword-level SHOULD.",
+      "consequence": "Q2 source-force labeling is inconsistent.",
+      "disposition": "NORMATIVE_LABEL_OVERSTATEMENT",
+      "evidence": [
+        {
+          "lines": [
+            151,
+            154
+          ],
+          "source_id": "ngff_pinned_latest"
+        }
+      ],
+      "id": "F4",
+      "severity": "SECONDARY_LABELING_DEFECT"
+    },
+    {
+      "argument": "The reader does not pass the separate unit dictionary required to enter those warning branches. This validates the narrow correction, not a universal claim that no unit-related error can ever occur upstream.",
+      "candidate_lines": [
+        24,
+        48,
+        103
+      ],
+      "claim_paraphrase": "Inline unit strings are not sent through the separate unknown-unit warning path during ordinary v0.19.2 reading.",
+      "disposition": "SUPPORTED_LIMITED",
+      "evidence": [
+        {
+          "lines": [
+            279,
+            288
+          ],
+          "source_id": "reader"
+        },
+        {
+          "lines": [
+            83,
+            107
+          ],
+          "source_id": "axes"
+        }
+      ],
+      "id": "S1"
+    },
+    {
+      "argument": "The selection example lacks an uppercase normative keyword and offers an alternative in its comment.",
+      "candidate_lines": [
+        25,
+        70
+      ],
+      "claim_paraphrase": "The first-multiscale fallback passage is informative rather than an RFC requirement.",
+      "disposition": "SUPPORTED",
+      "evidence": [
+        {
+          "lines": [
+            329,
+            341
+          ],
+          "source_id": "ngff_pinned_latest"
+        }
+      ],
+      "id": "S2"
+    },
+    {
+      "argument": "The schema has a minimum vector length without an axes-length rule; the example contains three axes and two scale entries. No standalone schema validation was run by the evaluator.",
+      "candidate_lines": [
+        26,
+        46,
+        47,
+        94
+      ],
+      "claim_paraphrase": "The scale schema does not couple vector length to axes count, and the shipped example exposes that gap.",
+      "disposition": "SUPPORTED_LIMITED",
+      "evidence": [
+        {
+          "lines": [
+            167,
+            230
+          ],
+          "source_id": "ngff_schema"
+        },
+        {
+          "lines": [
+            4,
+            30
+          ],
+          "source_id": "mismatch_axes_units"
+        },
+        {
+          "lines": [
+            277,
+            277
+          ],
+          "source_id": "ngff_pinned_latest"
+        }
+      ],
+      "id": "S3"
+    },
+    {
+      "argument": "Independent raw retrieval matches the claimed spec, schema, reader, axes and diff hashes. The PR merge, release note and tag support the history; the regression is specifically a 0.6 writer test, which the final correctly discloses. This is repository evidence, not proof tests passed in this evaluation.",
+      "candidate_lines": [
+        45,
+        48,
+        49,
+        78,
+        79,
+        80,
+        81,
+        82
+      ],
+      "claim_paraphrase": "The source pins and released path-normalization fix/test history used for Q3 are real.",
+      "disposition": "SUPPORTED",
+      "evidence": [
+        {
+          "source_id": "ngff_tag_ref"
+        },
+        {
+          "source_id": "ngff_annotated_tag"
+        },
+        {
+          "source_id": "release0192_tag"
+        },
+        {
+          "source_id": "pr652"
+        },
+        {
+          "lines": [
+            5,
+            107
+          ],
+          "source_id": "pr652_diff"
+        },
+        {
+          "source_id": "release0192"
+        }
+      ],
+      "id": "S4"
+    }
+  ],
+  "remaining_final_source_claims": "UNASSESSED; no exhaustive source-claim inventory completed",
+  "review_kind": "diagnostic screen"
+}

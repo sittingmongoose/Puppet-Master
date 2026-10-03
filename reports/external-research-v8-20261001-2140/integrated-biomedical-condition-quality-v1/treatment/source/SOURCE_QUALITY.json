@@ -1,0 +1,46 @@
+{
+  "case": "V8-BIO-P-Z-S8",
+  "artifact": "FINAL_PROPOSAL.md",
+  "artifact_sha256": "d6f0f5c6d8c15e83af0788c3432ff3119a72a6c294bb5c4e5a402734d12b6661",
+  "artifact_bytes": 35724,
+  "verdict": "FAILED_SCREEN",
+  "whole_case_pass": false,
+  "diagnostic_only": true,
+  "comprehensive_certification": false,
+  "canonical_comparable_score": null,
+  "local_aggregate_score": null,
+  "canonical_18_facet_score": null,
+  "canonical_18_enumeration_available_at_freeze": false,
+  "independent_source_first": true,
+  "freeze_before_method_task_receipts_cost_initialproposal_critic": true,
+  "blocking_findings": [
+    "C16: plain0.4 label inheritance erases the parent-chain condition",
+    "C20: dimension-ratio writer is evaluated with physical scale, invalidating writer-disagreement witness",
+    "C04: generic axis optionaltype claim omits multiscale space-type MUST condition"
+  ],
+  "additional_material_findings": [
+    "C06",
+    "C28",
+    "C30",
+    "C31",
+    "C32"
+  ],
+  "all_three_questions_present": true,
+  "all_five_obligations_present": true,
+  "questions_assessment": {
+    "RQ1": "PARTIAL; component contrast has conditional error",
+    "RQ2": "PARTIAL; several normative rules verified, axis condition and mixed semantic reading deficient",
+    "RQ3": "PARTIAL;403->590->tests verified, writer witness applied incorrectly"
+  },
+  "obligations_assessment": {
+    "B1": "PARTIAL; read-only and refusal present; no executed contract tests",
+    "B2": "DEFICIENT; event and per-level renderer dependencies open, mixedunit semantic reading unsupported",
+    "B3": "DEFICIENT; no complete unit/axis/content alignment justification across stated input variants",
+    "B4": "DEFICIENT; two components and primaryfix chain present, but inheritance condition and writer application wrong",
+    "B5": "DEFICIENT; concrete steps/tests/limits present, discrimination witness partly invalid"
+  },
+  "score_incomparability": "No canonical comparable rubric or canonical18 enumeration read before quality freeze. No invented weights, aggregate, or facet enumeration.",
+  "unknown_coverage_disposition": "UNASSESSED/null; a diagnostic failure is not an exhaustive review.",
+  "candidate_source_admission": "Independent retrieval used. Capture/read success does not establish model comprehension. No source-admission receipts were inspected before freeze.",
+  "test_execution": "Candidate tests explicitly unexecuted. Evaluator isolatedAST witness executed with stubs, not renderer."
+}

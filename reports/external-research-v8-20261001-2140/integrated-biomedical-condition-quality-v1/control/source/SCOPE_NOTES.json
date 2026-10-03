@@ -1,0 +1,26 @@
+{
+  "active_assignment_inclusive_seconds": 1500,
+  "assignment_birth_epoch": 1791010944.9198422,
+  "assignment_deadline_epoch": 1791012444.9198422,
+  "candidate_source_delivery_receipts_audited": false,
+  "candidate_source_delivery_status": "UNKNOWN; own independent primary retrievals establish evaluator source truth only.",
+  "canonical_18_facet_enumeration": null,
+  "canonical_common_rubric": "NOT AVAILABLE: no authoritative 18-facet enumeration/weights supplied or found in the named scope. Root confirmed this gap; no broader campaign audit performed.",
+  "canonical_comparable_score": null,
+  "canonical_scope_path_label": "cases/planning-v1/evaluation-scope.json",
+  "canonical_scope_pin": {
+    "bytes": 3217,
+    "sha256": "3e213c62509fa9e9d5050085157e5c2d8e67a59f7a61513c788961ac5633e292"
+  },
+  "canonical_weights": null,
+  "case": "V8-BIO-COND-C-Z-S8",
+  "clock_precedence": "The fresh root assignment governs. Source checks, method, cost, report, verification, public freeze and handoff all remain inside the original 1500-second clock.",
+  "diagnostic_policy": "Concrete source counterexample permits FAILED_SCREEN; remaining unassessed coverage stays unassessed.",
+  "inherited_scope_seconds": 2400,
+  "local_aggregate_score": null,
+  "method_and_preservation_do_not_revise_source_freeze": true,
+  "read_after_source_freeze": true,
+  "same_quality_or_speedup_claim": null,
+  "scope_applies": "Entire final and unresolved leads, every source claim, all three questions, all five obligations, and method additions; no retrospective narrowing.",
+  "whole_case_pass": false
+}

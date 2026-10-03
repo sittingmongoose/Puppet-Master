@@ -1,0 +1,15 @@
+{
+  "case": "V8-BIO-COND-C-Z-S8",
+  "checks": {
+    "canonical_score_is_null": true,
+    "json_parse": true,
+    "no_aggregate_weights_invented": true,
+    "own_positive_receipts_sha256": true,
+    "publication_sanitization_scan": true,
+    "source_freeze_selected_hashes_unchanged": true,
+    "witness_reexecution_matches_frozen_results": true
+  },
+  "limitations": "Selected static and arithmetic checks only; no candidate runtime implementation test or complete-source/facet certification. Final whitelist/freeze hash verification is performed at endpoint.",
+  "verified_at_utc": "2026-10-03T07:17:45.902707+00:00",
+  "verified_positive_receipt_count": 15
+}
