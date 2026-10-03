@@ -1,3 +1,5 @@
+Final owned closure verified: [closure evidence](final-closure-cohort-v1/README.md). Ledger closed; all enrolledexecution quiet; standby stopped and originalpassiveowner naturally timedout; originallock free. Finalreview result14pipelines/7pairs/13failedscreens/1HOLD/0winner; targets10pipelines/5pairs/4holdouts unmet. Prior current-result snapshot and pendingclosure fields below are retained history.
+
 # Best recipe disposition
 
 **FINAL_RESULTS_READY; FINAL_OWNED_CLOSE_PENDING.** Fixed candidate results are ready; root-owned final closure is still pending.

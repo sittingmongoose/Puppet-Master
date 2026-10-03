@@ -1,0 +1,45 @@
+{
+  "helper": "er8-top-reports-update-v5",
+  "status": "COMPLETE_MECHANICAL_UPDATE",
+  "results_status": "FINAL_RESULTS_READY",
+  "closure_status": "FINAL_OWNED_CLOSE_PENDING",
+  "birth_epoch": 1791012228.3153675,
+  "original_cutoff_epoch": 1791012708.3153675,
+  "original_inclusive_cap_seconds": 480,
+  "actual_inclusive_endpoint_epoch": 1791012626.319524,
+  "actual_inclusive_elapsed_seconds": 398.00415658950806,
+  "actual_endpoint_utc": "2026-10-03T07:30:26.319524+00:00",
+  "before_original_cutoff": true,
+  "global_cutoff_unchanged": 1791013030.8303788,
+  "edited_files": [
+    "README.md",
+    "RESULTS.md",
+    "CHECKPOINT.md",
+    "REPRODUCE.md",
+    "BEST_RECIPE.md",
+    "FAILURES.md",
+    "attempts.json",
+    "comparisons.json",
+    "economics.json",
+    "schedule.json"
+  ],
+  "report_sha256": {
+    "README.md": "c4f2459a278a9c0f61738c223a3efd1535e0f1ebc396be6d93a8134bebd51794",
+    "RESULTS.md": "2ac629462038d1d0b5236a9b1a5b16b1e609c1c5f3cf35962d1b465119ada60f",
+    "CHECKPOINT.md": "b0c72631ebade5b2ef34a226e2fb752740462e50b9dbd74069be4b1bef145dfc",
+    "REPRODUCE.md": "6b4732aa0de9aadf29e9a2a5c95eddd4a3be22d5871b6e4df425c0fbcc611ab6",
+    "BEST_RECIPE.md": "4cde9829fdb71c80fea264a2063bbae7db2a2a4e01f4a0bf4ff41d93cab076be",
+    "FAILURES.md": "2281fe1b6182369fc195a3d7621384dbcb30031fddd1fa0b4508d6cb4be896e8",
+    "attempts.json": "3cdb84c56f294aaf7441ef020f2d4e1269fa8ed4ca7a94f2c6a111cc9c660409",
+    "comparisons.json": "7922da80d7d10260d1fc9d38bdf4bfcc59b4e90a3554e209026e7bd23a059027",
+    "economics.json": "58ebb24c4df8a08e6e863a5d42af2eb76b64e2a1d759c7af7b45511c01af6ed1",
+    "schedule.json": "bab6d41312705544b2f3f13cfb9b50f3970344e73212cceb62796b462515de74"
+  },
+  "proof_sha256": {
+    "EDIT_INVENTORY.json": "f98388bc3f7e7f67b6c317fc9277aed0b5bb293b52b92a0ae8ae69b5d76ff3b2",
+    "VALIDATION.json": "3018876b828cad0c8bc506b2406a21f05a17083b29923f8d4170b322595335e2",
+    "MANIFEST.json": "e084a25b3f245e887498454b939f6c03c23b775b0a7abd84703cc1a4c261201f",
+    "EDIT_DIFF.patch": "55350b50d86a95de4c671828b05d05173082239808f4f97f2be633b86f10bea5",
+    "README.md": "cd77388a0ba15220d4eebf35981d917af8a7736eecc967131da33c6174492d1c"
+  }
+}

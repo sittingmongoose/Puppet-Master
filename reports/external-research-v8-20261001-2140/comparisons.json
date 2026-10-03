@@ -237,5 +237,23 @@
     "pairs": 5,
     "holdouts": 4
   },
-  "final_tail_usage": "UNKNOWN"
+  "final_tail_usage": "UNKNOWN",
+  "final_owned_closure": {
+    "status": "CLOSED_NO_SAFE_USEFUL_NEW_PAIR_FITS_ORIGINAL_CLOCK",
+    "evidence": "final-closure-cohort-v1/FINAL_CLOSE.json",
+    "original_private_sha256": "196811d94fe7f5682b8952c67bb17022e02ad59343de32c0512fb8058ee8ebd9",
+    "all_candidate_leases_released": true,
+    "active_candidate_jobs": 0,
+    "pending_permits": 0,
+    "active_helpers": 0,
+    "supervisor_lock_free": true,
+    "original_owner": "natural RuntimeMax timeout positively quiet",
+    "prior_current_snapshot_pending_fields": "historical fixed preclose observation retained",
+    "targets_unmet": {
+      "pipelines": 10,
+      "pairs": 5,
+      "holdouts": 4
+    },
+    "full_usage": "UNKNOWN"
+  }
 }

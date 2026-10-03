@@ -1,0 +1,2771 @@
+{
+  "schema": "pm.er8.current-candidate-quiet.v1",
+  "root_authority": false,
+  "helper": "er8-current-candidate-quiet-v1",
+  "birth_epoch": 1791011854.2837043,
+  "original_cutoff_epoch": 1791012154.2837043,
+  "scope": "Current candidate execution/admission operators only; passiveowners separatelyobserved and excluded. No campaignclosure/safety/modelquality certification.",
+  "baseline_units": 61,
+  "baseline_groups": 91,
+  "current_unique_candidate_units": 67,
+  "current_positive_groups": 100,
+  "native_unit_queries": [
+    {
+      "unit": "er8-v8-bio-amend-c-l-final-correction.service",
+      "observed_epoch": 1791012019.8931623,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-amend-c-l-final-correction.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-amend-c-l-independent-candidate-critic.service",
+      "observed_epoch": 1791012019.8931704,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-amend-c-l-independent-candidate-critic.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-amend-c-l-research-proposal.service",
+      "observed_epoch": 1791012019.8931744,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-amend-c-l-research-proposal.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-amend-t-l-final-correction.service",
+      "observed_epoch": 1791012019.8931773,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-amend-t-l-final-correction.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-amend-t-l-independent-candidate-critic.service",
+      "observed_epoch": 1791012019.8931797,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-amend-t-l-independent-candidate-critic.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-amend-t-l-research-proposal.service",
+      "observed_epoch": 1791012019.8931828,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-amend-t-l-research-proposal.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-b-z-independent-candidate-critic.service",
+      "observed_epoch": 1791012019.8931854,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-b-z-independent-candidate-critic.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-b-z-research-proposal.service",
+      "observed_epoch": 1791012019.893188,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-b-z-research-proposal.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-batch-c-z-independent-candidate-critic.service",
+      "observed_epoch": 1791012019.8931906,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-batch-c-z-independent-candidate-critic.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-batch-c-z-research-proposal.service",
+      "observed_epoch": 1791012019.8931937,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-batch-c-z-research-proposal.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-breadth-c-m-final-correction.service",
+      "observed_epoch": 1791012019.8931963,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-breadth-c-m-final-correction.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-breadth-c-m-independent-candidate-critic.service",
+      "observed_epoch": 1791012019.893199,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-breadth-c-m-independent-candidate-critic.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-breadth-c-m-research-proposal.service",
+      "observed_epoch": 1791012019.8932014,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-breadth-c-m-research-proposal.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-breadth-t-m-final-correction.service",
+      "observed_epoch": 1791012019.8932037,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-breadth-t-m-final-correction.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-breadth-t-m-independent-candidate-critic.service",
+      "observed_epoch": 1791012019.8932056,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-breadth-t-m-independent-candidate-critic.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-breadth-t-m-research-proposal.service",
+      "observed_epoch": 1791012019.893208,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-breadth-t-m-research-proposal.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-c-z-research-proposal.service",
+      "observed_epoch": 1791012019.8932102,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-c-z-research-proposal.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-c-z-s8-independent-candidate-critic.service",
+      "observed_epoch": 1791012019.8934977,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-c-z-s8-independent-candidate-critic.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [
+        {
+          "positive_enrolled_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-c-z-s8-independent-candidate-critic.service",
+          "exists": false,
+          "events": null
+        }
+      ],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-c-z-s8-research-proposal.service",
+      "observed_epoch": 1791012019.893629,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-c-z-s8-research-proposal.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [
+        {
+          "positive_enrolled_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-c-z-s8-research-proposal.service",
+          "exists": false,
+          "events": null
+        }
+      ],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-cond-c-z-independent-candidate-critic.service",
+      "observed_epoch": 1791012019.8936336,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-cond-c-z-independent-candidate-critic.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-cond-c-z-research-proposal.service",
+      "observed_epoch": 1791012019.8936365,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-cond-c-z-research-proposal.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-cond-c-z-s8-final-correction.service",
+      "observed_epoch": 1791012019.8937466,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-cond-c-z-s8-final-correction.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [
+        {
+          "positive_enrolled_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-cond-c-z-s8-final-correction.service",
+          "exists": false,
+          "events": null
+        }
+      ],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-cond-c-z-s8-independent-candidate-critic.service",
+      "observed_epoch": 1791012019.8938487,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-cond-c-z-s8-independent-candidate-critic.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [
+        {
+          "positive_enrolled_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-cond-c-z-s8-independent-candidate-critic.service",
+          "exists": false,
+          "events": null
+        }
+      ],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-cond-c-z-s8-research-proposal.service",
+      "observed_epoch": 1791012019.893934,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-cond-c-z-s8-research-proposal.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [
+        {
+          "positive_enrolled_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-cond-c-z-s8-research-proposal.service",
+          "exists": false,
+          "events": null
+        }
+      ],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-p-z-independent-candidate-critic.service",
+      "observed_epoch": 1791012019.8939388,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-p-z-independent-candidate-critic.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-p-z-research-proposal.service",
+      "observed_epoch": 1791012019.8939426,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-p-z-research-proposal.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-p-z-s8-final-correction.service",
+      "observed_epoch": 1791012019.8940265,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-p-z-s8-final-correction.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [
+        {
+          "positive_enrolled_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-p-z-s8-final-correction.service",
+          "exists": false,
+          "events": null
+        }
+      ],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-p-z-s8-independent-candidate-critic.service",
+      "observed_epoch": 1791012019.8941302,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-p-z-s8-independent-candidate-critic.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [
+        {
+          "positive_enrolled_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-p-z-s8-independent-candidate-critic.service",
+          "exists": false,
+          "events": null
+        }
+      ],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-p-z-s8-research-proposal.service",
+      "observed_epoch": 1791012019.8942761,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-p-z-s8-research-proposal.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [
+        {
+          "positive_enrolled_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-p-z-s8-research-proposal.service",
+          "exists": false,
+          "events": null
+        }
+      ],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-retr-c-m-final-correction.service",
+      "observed_epoch": 1791012019.894281,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-retr-c-m-final-correction.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-retr-c-m-independent-candidate-critic.service",
+      "observed_epoch": 1791012019.8942835,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-retr-c-m-independent-candidate-critic.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-retr-c-m-research-proposal.service",
+      "observed_epoch": 1791012019.8942864,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-retr-c-m-research-proposal.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-retr-t-m-final-correction.service",
+      "observed_epoch": 1791012019.8942888,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-retr-t-m-final-correction.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-retr-t-m-independent-candidate-critic.service",
+      "observed_epoch": 1791012019.894292,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-retr-t-m-independent-candidate-critic.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-retr-t-m-research-proposal.service",
+      "observed_epoch": 1791012019.894295,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-retr-t-m-research-proposal.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-wit-t-z-research-proposal.service",
+      "observed_epoch": 1791012019.8942976,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-wit-t-z-research-proposal.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-bio-wit-t-z-s8-research-proposal.service",
+      "observed_epoch": 1791012019.8944225,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-bio-wit-t-z-s8-research-proposal.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [
+        {
+          "positive_enrolled_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-bio-wit-t-z-s8-research-proposal.service",
+          "exists": false,
+          "events": null
+        }
+      ],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-amend-c-l-final-correction.service",
+      "observed_epoch": 1791012019.8944263,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-amend-c-l-final-correction.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-amend-c-l-independent-candidate-critic.service",
+      "observed_epoch": 1791012019.894429,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-amend-c-l-independent-candidate-critic.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-amend-c-l-research-proposal.service",
+      "observed_epoch": 1791012019.8944316,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-amend-c-l-research-proposal.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-amend-t-l-final-correction.service",
+      "observed_epoch": 1791012019.894434,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-amend-t-l-final-correction.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-amend-t-l-independent-candidate-critic.service",
+      "observed_epoch": 1791012019.8944373,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-amend-t-l-independent-candidate-critic.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-amend-t-l-research-proposal.service",
+      "observed_epoch": 1791012019.8944397,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-amend-t-l-research-proposal.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-b-z-final-correction.service",
+      "observed_epoch": 1791012019.8944423,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-b-z-final-correction.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-b-z-independent-candidate-critic.service",
+      "observed_epoch": 1791012019.894445,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-b-z-independent-candidate-critic.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-b-z-research-proposal.service",
+      "observed_epoch": 1791012019.8944478,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-b-z-research-proposal.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-batch-c-z-independent-candidate-critic.service",
+      "observed_epoch": 1791012019.8944504,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-batch-c-z-independent-candidate-critic.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-batch-c-z-research-proposal.service",
+      "observed_epoch": 1791012019.894453,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-batch-c-z-research-proposal.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-breadth-c-m-final-correction.service",
+      "observed_epoch": 1791012019.8944554,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-breadth-c-m-final-correction.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-breadth-c-m-independent-candidate-critic.service",
+      "observed_epoch": 1791012019.894458,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-breadth-c-m-independent-candidate-critic.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-breadth-c-m-research-proposal.service",
+      "observed_epoch": 1791012019.8944604,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-breadth-c-m-research-proposal.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-breadth-t-m-final-correction.service",
+      "observed_epoch": 1791012019.894463,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-breadth-t-m-final-correction.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-breadth-t-m-independent-candidate-critic.service",
+      "observed_epoch": 1791012019.8944652,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-breadth-t-m-independent-candidate-critic.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-breadth-t-m-research-proposal.service",
+      "observed_epoch": 1791012019.8944678,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-breadth-t-m-research-proposal.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-cond-c-z-independent-candidate-critic.service",
+      "observed_epoch": 1791012019.8944702,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-cond-c-z-independent-candidate-critic.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-cond-c-z-research-proposal.service",
+      "observed_epoch": 1791012019.8944726,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-cond-c-z-research-proposal.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-p-z-independent-candidate-critic.service",
+      "observed_epoch": 1791012019.8944747,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-p-z-independent-candidate-critic.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-p-z-research-proposal.service",
+      "observed_epoch": 1791012019.8944771,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-p-z-research-proposal.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-retr-c-m-final-correction.service",
+      "observed_epoch": 1791012019.8944795,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-retr-c-m-final-correction.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-retr-c-m-independent-candidate-critic.service",
+      "observed_epoch": 1791012019.8944821,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-retr-c-m-independent-candidate-critic.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-retr-c-m-research-proposal.service",
+      "observed_epoch": 1791012019.8944845,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-retr-c-m-research-proposal.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-retr-t-m-final-correction.service",
+      "observed_epoch": 1791012019.8944864,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-retr-t-m-final-correction.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-retr-t-m-independent-candidate-critic.service",
+      "observed_epoch": 1791012019.8944888,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-retr-t-m-independent-candidate-critic.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-nb-retr-t-m-research-proposal.service",
+      "observed_epoch": 1791012019.8944917,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-nb-retr-t-m-research-proposal.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-z-mechanical-route-canary-v1.service",
+      "observed_epoch": 1791012019.8945796,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-z-mechanical-route-canary-v1.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [
+        {
+          "positive_enrolled_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-z-mechanical-route-canary-v1.service",
+          "exists": false,
+          "events": null
+        }
+      ],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-z-mechanical-route-canary-v2.service",
+      "observed_epoch": 1791012019.89466,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-z-mechanical-route-canary-v2.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [
+        {
+          "positive_enrolled_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-z-mechanical-route-canary-v2.service",
+          "exists": false,
+          "events": null
+        }
+      ],
+      "prior_positive_identity_bound": true
+    },
+    {
+      "unit": "er8-v8-z-mechanical-route-canary-v3.service",
+      "observed_epoch": 1791012019.8947446,
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-z-mechanical-route-canary-v3.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "positive_cgroup_queries": [
+        {
+          "positive_enrolled_cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/er8-v8-z-mechanical-route-canary-v3.service",
+          "exists": false,
+          "events": null
+        }
+      ],
+      "prior_positive_identity_bound": true
+    }
+  ],
+  "positive_recorded_group_queries": [
+    {
+      "pgid": 1767768,
+      "observed_epoch": 1791012019.8947952,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 1767800,
+      "observed_epoch": 1791012019.8948567,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 1767802,
+      "observed_epoch": 1791012019.8948958,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 1767811,
+      "observed_epoch": 1791012019.8949292,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 1767815,
+      "observed_epoch": 1791012019.8949606,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 1804488,
+      "observed_epoch": 1791012019.8950005,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 1804490,
+      "observed_epoch": 1791012019.89504,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 1804492,
+      "observed_epoch": 1791012019.8950822,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 1804618,
+      "observed_epoch": 1791012019.8951218,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 1804638,
+      "observed_epoch": 1791012019.8951547,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 1841513,
+      "observed_epoch": 1791012019.8951871,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 1847425,
+      "observed_epoch": 1791012019.8952184,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 1971131,
+      "observed_epoch": 1791012019.8952878,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 1971167,
+      "observed_epoch": 1791012019.895323,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 1971170,
+      "observed_epoch": 1791012019.8953614,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 1971212,
+      "observed_epoch": 1791012019.8954036,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 1971214,
+      "observed_epoch": 1791012019.895434,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2038092,
+      "observed_epoch": 1791012019.8954644,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2043199,
+      "observed_epoch": 1791012019.8955014,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2064582,
+      "observed_epoch": 1791012019.8955326,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2064584,
+      "observed_epoch": 1791012019.8955624,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2068107,
+      "observed_epoch": 1791012019.8955934,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2068110,
+      "observed_epoch": 1791012019.895627,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2087572,
+      "observed_epoch": 1791012019.8956585,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2100399,
+      "observed_epoch": 1791012019.8956912,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2114061,
+      "observed_epoch": 1791012019.8957233,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2114120,
+      "observed_epoch": 1791012019.8957536,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2121678,
+      "observed_epoch": 1791012019.8957858,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2121720,
+      "observed_epoch": 1791012019.8958187,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2148414,
+      "observed_epoch": 1791012019.8958497,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2151073,
+      "observed_epoch": 1791012019.8958797,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2167554,
+      "observed_epoch": 1791012019.895913,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2191331,
+      "observed_epoch": 1791012019.895945,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2191346,
+      "observed_epoch": 1791012019.8959763,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2191348,
+      "observed_epoch": 1791012019.896006,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2191370,
+      "observed_epoch": 1791012019.8960366,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2191393,
+      "observed_epoch": 1791012019.8960671,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2247834,
+      "observed_epoch": 1791012019.8960974,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2272865,
+      "observed_epoch": 1791012019.8961275,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2303332,
+      "observed_epoch": 1791012019.89617,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2316179,
+      "observed_epoch": 1791012019.8961997,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2323795,
+      "observed_epoch": 1791012019.896231,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2323806,
+      "observed_epoch": 1791012019.8962967,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2326865,
+      "observed_epoch": 1791012019.8963287,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2326906,
+      "observed_epoch": 1791012019.89636,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2344990,
+      "observed_epoch": 1791012019.8964047,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2345020,
+      "observed_epoch": 1791012019.8964365,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2372511,
+      "observed_epoch": 1791012019.8964677,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2380795,
+      "observed_epoch": 1791012019.8964996,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2393232,
+      "observed_epoch": 1791012019.896537,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2393251,
+      "observed_epoch": 1791012019.896568,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2397792,
+      "observed_epoch": 1791012019.8966103,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2397821,
+      "observed_epoch": 1791012019.896663,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2423115,
+      "observed_epoch": 1791012019.8966954,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2423924,
+      "observed_epoch": 1791012019.896736,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2439646,
+      "observed_epoch": 1791012019.8967667,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2443278,
+      "observed_epoch": 1791012019.8967974,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2452723,
+      "observed_epoch": 1791012019.8968282,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2452799,
+      "observed_epoch": 1791012019.8968585,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2483360,
+      "observed_epoch": 1791012019.89689,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2483510,
+      "observed_epoch": 1791012019.8969321,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2520786,
+      "observed_epoch": 1791012019.896964,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2521892,
+      "observed_epoch": 1791012019.8969972,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2551554,
+      "observed_epoch": 1791012019.8970404,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2552579,
+      "observed_epoch": 1791012019.8970714,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2581614,
+      "observed_epoch": 1791012019.8971136,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2581637,
+      "observed_epoch": 1791012019.897145,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2593017,
+      "observed_epoch": 1791012019.897176,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2593019,
+      "observed_epoch": 1791012019.8972077,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2595394,
+      "observed_epoch": 1791012019.8972654,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2604249,
+      "observed_epoch": 1791012019.897301,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2610299,
+      "observed_epoch": 1791012019.897333,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2613634,
+      "observed_epoch": 1791012019.8973649,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2628428,
+      "observed_epoch": 1791012019.8973958,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2685358,
+      "observed_epoch": 1791012019.8974338,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2685395,
+      "observed_epoch": 1791012019.8974729,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2694183,
+      "observed_epoch": 1791012019.897503,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2694192,
+      "observed_epoch": 1791012019.897535,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2705072,
+      "observed_epoch": 1791012019.8975654,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2706281,
+      "observed_epoch": 1791012019.8975956,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2728267,
+      "observed_epoch": 1791012019.8976345,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2732944,
+      "observed_epoch": 1791012019.8976927,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2775530,
+      "observed_epoch": 1791012019.8977265,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2775531,
+      "observed_epoch": 1791012019.8977563,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2775533,
+      "observed_epoch": 1791012019.897787,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2775571,
+      "observed_epoch": 1791012019.8978171,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2775595,
+      "observed_epoch": 1791012019.8978481,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2792387,
+      "observed_epoch": 1791012019.8978786,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2805421,
+      "observed_epoch": 1791012019.8979087,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2853938,
+      "observed_epoch": 1791012019.8979409,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2853940,
+      "observed_epoch": 1791012019.8979714,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2853942,
+      "observed_epoch": 1791012019.8980014,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2853944,
+      "observed_epoch": 1791012019.898031,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2853946,
+      "observed_epoch": 1791012019.8980618,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2862877,
+      "observed_epoch": 1791012019.8980925,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2865658,
+      "observed_epoch": 1791012019.8981235,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2867254,
+      "observed_epoch": 1791012019.8981543,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2870498,
+      "observed_epoch": 1791012019.898185,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2874301,
+      "observed_epoch": 1791012019.8982162,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    },
+    {
+      "pgid": 2927982,
+      "observed_epoch": 1791012019.898267,
+      "kill_zero_group_probe": "ESRCH",
+      "leader_proc_absent": true,
+      "positive_record_bound": true
+    }
+  ],
+  "exact_recorded_pid_queries": [
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.898352
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8983808
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8984501
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8984852
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8985124
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8985386
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8985708
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8985956
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.898622
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8986478
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8986747
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8986995
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8987248
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8987496
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8987744
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8987994
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8988347
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.898859
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8988836
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8989077
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8989327
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8989568
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8989813
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8990054
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.89903
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8990545
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.89908
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8991058
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8991303
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8991659
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8991933
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8992174
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8992696
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.899298
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8993235
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.899358
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8993866
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8994186
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8994431
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.899468
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.899493
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8995175
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8995419
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8995674
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8995922
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8996172
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8996425
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.899667
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8996925
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8997176
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8997517
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8997765
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8998013
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8998263
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8998508
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8998752
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8998995
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8999243
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8999488
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8999734
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.8999977
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.900022
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9000463
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.900071
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9000957
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9001238
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.900157
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.900184
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9002087
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9002335
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9002953
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9003325
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9003594
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9003844
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.900409
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9004352
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.900461
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9004874
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9005132
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.900547
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9005733
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9005978
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9006233
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9006553
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9006796
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9007037
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9007285
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9007525
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.900777
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9008014
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9008267
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.900851
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9008758
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9009008
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9009254
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.90095
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9009748
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9009998
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9010313
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9010575
+    },
+    {
+      "pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+      "proc_absent": true,
+      "observed_epoch": 1791012019.9010823
+    }
+  ],
+  "positive_selected_metadata": [
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-research-proposal/PLAN.enrollment.json",
+      "root_authority": null,
+      "held_returncode": null,
+      "native_owned_unit": "er8-v8-bio-cond-c-z-s8-research-proposal.service",
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-research-proposal/QUIESCENCE.json",
+      "root_authority": null,
+      "held_returncode": null,
+      "native_owned_unit": "er8-v8-bio-cond-c-z-s8-research-proposal.service",
+      "native_quiet": true,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-research-proposal/EXTERNAL_STAGE_CLOSE.json",
+      "root_authority": null,
+      "held_returncode": 0,
+      "native_owned_unit": null,
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": true
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/HOST_LAUNCHES/V8-BIO-COND-C-Z-S8-research-proposal/STAGE_LAUNCHED.json",
+      "root_authority": null,
+      "held_returncode": null,
+      "native_owned_unit": null,
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/HOST_LAUNCHES/V8-BIO-COND-C-Z-S8-research-proposal/STAGE_HELD_WAIT.json",
+      "root_authority": null,
+      "held_returncode": 0,
+      "native_owned_unit": null,
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-independent-candidate-critic/PLAN.enrollment.json",
+      "root_authority": null,
+      "held_returncode": null,
+      "native_owned_unit": "er8-v8-bio-cond-c-z-s8-independent-candidate-critic.service",
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-independent-candidate-critic/QUIESCENCE.json",
+      "root_authority": null,
+      "held_returncode": null,
+      "native_owned_unit": "er8-v8-bio-cond-c-z-s8-independent-candidate-critic.service",
+      "native_quiet": true,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-independent-candidate-critic/EXTERNAL_STAGE_CLOSE.json",
+      "root_authority": null,
+      "held_returncode": 0,
+      "native_owned_unit": null,
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": true
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/HOST_LAUNCHES/V8-BIO-COND-C-Z-S8-independent-candidate-critic/STAGE_LAUNCHED.json",
+      "root_authority": null,
+      "held_returncode": null,
+      "native_owned_unit": null,
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/HOST_LAUNCHES/V8-BIO-COND-C-Z-S8-independent-candidate-critic/STAGE_HELD_WAIT.json",
+      "root_authority": null,
+      "held_returncode": 0,
+      "native_owned_unit": null,
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/PLAN.enrollment.json",
+      "root_authority": null,
+      "held_returncode": null,
+      "native_owned_unit": "er8-v8-bio-cond-c-z-s8-final-correction.service",
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/QUIESCENCE.json",
+      "root_authority": null,
+      "held_returncode": null,
+      "native_owned_unit": "er8-v8-bio-cond-c-z-s8-final-correction.service",
+      "native_quiet": true,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/EXTERNAL_STAGE_CLOSE.json",
+      "root_authority": null,
+      "held_returncode": 0,
+      "native_owned_unit": null,
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": true
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/HOST_LAUNCHES/V8-BIO-COND-C-Z-S8-final-correction/STAGE_LAUNCHED.json",
+      "root_authority": null,
+      "held_returncode": null,
+      "native_owned_unit": null,
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/HOST_LAUNCHES/V8-BIO-COND-C-Z-S8-final-correction/STAGE_HELD_WAIT.json",
+      "root_authority": null,
+      "held_returncode": 0,
+      "native_owned_unit": null,
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/EXTERNAL_CASE_CLOSE.json",
+      "root_authority": null,
+      "held_returncode": 0,
+      "native_owned_unit": null,
+      "native_quiet": null,
+      "case_group_absent": true,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/GLOBAL_PARENT_FINAL_RECEIPT.json",
+      "root_authority": null,
+      "held_returncode": null,
+      "native_owned_unit": null,
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/HOST_LAUNCHES/V8-BIO-COND-C-Z-S8/CASE_LAUNCHED.json",
+      "root_authority": null,
+      "held_returncode": null,
+      "native_owned_unit": null,
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/HOST_LAUNCHES/V8-BIO-COND-C-Z-S8/CASE_HELD_WAIT.json",
+      "root_authority": null,
+      "held_returncode": 0,
+      "native_owned_unit": null,
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-research-proposal/PLAN.enrollment.json",
+      "root_authority": null,
+      "held_returncode": null,
+      "native_owned_unit": "er8-v8-bio-p-z-s8-research-proposal.service",
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-research-proposal/QUIESCENCE.json",
+      "root_authority": null,
+      "held_returncode": null,
+      "native_owned_unit": "er8-v8-bio-p-z-s8-research-proposal.service",
+      "native_quiet": true,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-research-proposal/EXTERNAL_STAGE_CLOSE.json",
+      "root_authority": null,
+      "held_returncode": 0,
+      "native_owned_unit": null,
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": true
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/HOST_LAUNCHES/V8-BIO-P-Z-S8-research-proposal/STAGE_LAUNCHED.json",
+      "root_authority": null,
+      "held_returncode": null,
+      "native_owned_unit": null,
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/HOST_LAUNCHES/V8-BIO-P-Z-S8-research-proposal/STAGE_HELD_WAIT.json",
+      "root_authority": null,
+      "held_returncode": 0,
+      "native_owned_unit": null,
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-independent-candidate-critic/PLAN.enrollment.json",
+      "root_authority": null,
+      "held_returncode": null,
+      "native_owned_unit": "er8-v8-bio-p-z-s8-independent-candidate-critic.service",
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-independent-candidate-critic/QUIESCENCE.json",
+      "root_authority": null,
+      "held_returncode": null,
+      "native_owned_unit": "er8-v8-bio-p-z-s8-independent-candidate-critic.service",
+      "native_quiet": true,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-independent-candidate-critic/EXTERNAL_STAGE_CLOSE.json",
+      "root_authority": null,
+      "held_returncode": 0,
+      "native_owned_unit": null,
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": true
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/HOST_LAUNCHES/V8-BIO-P-Z-S8-independent-candidate-critic/STAGE_LAUNCHED.json",
+      "root_authority": null,
+      "held_returncode": null,
+      "native_owned_unit": null,
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/HOST_LAUNCHES/V8-BIO-P-Z-S8-independent-candidate-critic/STAGE_HELD_WAIT.json",
+      "root_authority": null,
+      "held_returncode": 0,
+      "native_owned_unit": null,
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-final-correction/PLAN.enrollment.json",
+      "root_authority": null,
+      "held_returncode": null,
+      "native_owned_unit": "er8-v8-bio-p-z-s8-final-correction.service",
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-final-correction/QUIESCENCE.json",
+      "root_authority": null,
+      "held_returncode": null,
+      "native_owned_unit": "er8-v8-bio-p-z-s8-final-correction.service",
+      "native_quiet": true,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/V8-BIO-P-Z-S8-final-correction/EXTERNAL_STAGE_CLOSE.json",
+      "root_authority": null,
+      "held_returncode": 0,
+      "native_owned_unit": null,
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": true
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/HOST_LAUNCHES/V8-BIO-P-Z-S8-final-correction/STAGE_LAUNCHED.json",
+      "root_authority": null,
+      "held_returncode": null,
+      "native_owned_unit": null,
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/HOST_LAUNCHES/V8-BIO-P-Z-S8-final-correction/STAGE_HELD_WAIT.json",
+      "root_authority": null,
+      "held_returncode": 0,
+      "native_owned_unit": null,
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/EXTERNAL_CASE_CLOSE.json",
+      "root_authority": null,
+      "held_returncode": 0,
+      "native_owned_unit": null,
+      "native_quiet": null,
+      "case_group_absent": true,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-P-Z-S8/GLOBAL_PARENT_FINAL_RECEIPT.json",
+      "root_authority": null,
+      "held_returncode": null,
+      "native_owned_unit": null,
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/HOST_LAUNCHES/V8-BIO-P-Z-S8/CASE_LAUNCHED.json",
+      "root_authority": null,
+      "held_returncode": null,
+      "native_owned_unit": null,
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/jobs/z-tranche-v11/HOST_LAUNCHES/V8-BIO-P-Z-S8/CASE_HELD_WAIT.json",
+      "root_authority": null,
+      "held_returncode": 0,
+      "native_owned_unit": null,
+      "native_quiet": null,
+      "case_group_absent": null,
+      "stage_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/z-tranche-v11-rolling-parent-positive.launch.json",
+      "held_returncode": null,
+      "rolling_group_absent": null
+    },
+    {
+      "path": "ops/execution-resume-v1/z-tranche-v11-rolling-parent-positive.held-exit.json",
+      "held_returncode": 0,
+      "rolling_group_absent": true
+    },
+    {
+      "path": "ops/execution-resume-v1/z-tranche-v11-rolling-parent-positive.terminal.json",
+      "held_returncode": 0,
+      "rolling_group_absent": true
+    }
+  ],
+  "candidate_nonquiet_units": [],
+  "candidate_nonquiet_groups": [],
+  "candidate_native_quiet_at_snapshot": true,
+  "admission_operators": [
+    {
+      "unit": "er8-v8-production-z-tranche-v9.service",
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "126",
+        "ControlGroup": "",
+        "Id": "er8-v8-production-z-tranche-v9.service",
+        "LoadState": "loaded",
+        "ActiveState": "failed",
+        "SubState": "failed"
+      },
+      "observed_epoch": 1791012019.9135246,
+      "scope": "Namedoperatorstate only, notheldwaitproof"
+    },
+    {
+      "unit": "er8-v8-production-z-tranche-v11.service",
+      "properties": {
+        "MainPID": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Id": "er8-v8-production-z-tranche-v11.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "observed_epoch": 1791012019.913528,
+      "scope": "Namedoperatorstate only, notheldwaitproof"
+    }
+  ],
+  "passive_owners_excluded": [
+    {
+      "unit": "er8-v8-root-durable-20261002-2348.service",
+      "properties": {
+        "MainPID": "1969270",
+        "ExecMainStatus": "0",
+        "ControlGroup": "OMITTED_LOCAL_CGROUP_PATH",
+        "Id": "er8-v8-root-durable-20261002-2348.service",
+        "LoadState": "loaded",
+        "ActiveState": "active",
+        "SubState": "running"
+      },
+      "observed_epoch": 1791012019.9135303
+    },
+    {
+      "unit": "er8-v8-root-durable-successor-v2.service",
+      "properties": {
+        "MainPID": "2422357",
+        "ExecMainStatus": "0",
+        "ControlGroup": "OMITTED_LOCAL_CGROUP_PATH",
+        "Id": "er8-v8-root-durable-successor-v2.service",
+        "LoadState": "loaded",
+        "ActiveState": "active",
+        "SubState": "running"
+      },
+      "observed_epoch": 1791012019.9135323
+    }
+  ],
+  "accounting_projection": {
+    "observed_epoch": 1791012019.9132867,
+    "state_sha256": "fea237a17430c80f8b6a37884ec6de206c8ec9b59b6efd09183065b311a48bd6",
+    "V11_exact_six_job_rows": {
+      "V8-BIO-P-Z-S8-research-proposal": {
+        "released_epoch": 1791009311.6482613,
+        "status": "released",
+        "generated_output_tokens": 36084,
+        "launch_pending": null
+      },
+      "V8-BIO-COND-C-Z-S8-research-proposal": {
+        "released_epoch": 1791009561.6686215,
+        "status": "released",
+        "generated_output_tokens": 49602,
+        "launch_pending": null
+      },
+      "V8-BIO-P-Z-S8-independent-candidate-critic": {
+        "released_epoch": 1791009937.1420171,
+        "status": "released",
+        "generated_output_tokens": 28268,
+        "launch_pending": null
+      },
+      "V8-BIO-COND-C-Z-S8-independent-candidate-critic": {
+        "released_epoch": 1791010311.4587753,
+        "status": "released",
+        "generated_output_tokens": 39036,
+        "launch_pending": null
+      },
+      "V8-BIO-P-Z-S8-final-correction": {
+        "released_epoch": 1791010648.0182235,
+        "status": "released",
+        "generated_output_tokens": 34896,
+        "launch_pending": null
+      },
+      "V8-BIO-COND-C-Z-S8-final-correction": {
+        "released_epoch": 1791010795.2815626,
+        "status": "released",
+        "generated_output_tokens": 23403,
+        "launch_pending": null
+      }
+    },
+    "unreleased_V11_leases": [],
+    "pending_V11_permits": [],
+    "global_counts": "Root07:17context67admissions65starts0active/pending; observerdoesnotrecomputeotherjobs."
+  },
+  "proof_limits": "Currentabsence is bound to priorpositiveidentity/selectedpositiveV11metadata; sourceacceptance not proof. Held waits stay separate fromsystemd/defaultExecStatus. No unselected COMPLETE/rawnative/privatecontext/argv/body/candidate/eval reads. FullhandofftailUNKNOWN unless separatelyobserved.",
+  "actions": "Read-only systemctl,exactpositivecgroup scalar reads,kill0group existence probes andexactPIDprocabsence. No launches/renewals/settlement/Git/ledgertransaction/mutations/nonzero signals.",
+  "actual_end_epoch": 1791012019.917881,
+  "actual_end_utc": "2026-10-03T07:20:19.917881+00:00",
+  "inclusive_elapsed_seconds": 165.63417673110962,
+  "ended_before_original_cutoff": true
+}

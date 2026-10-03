@@ -1,0 +1,74 @@
+{
+  "schema": "pm.er8.final-close-public-export.v1",
+  "artifacts": [
+    {
+      "public_path": "FINAL_CLOSE.json",
+      "public_sha256": "78c666d7a18be82a700c504c5d4cee96bfcc2dc5ee577a85ef535e59769175b2",
+      "original_source_path": "LAB_ROOT/ops/recovery-v1/ROOT_CAMPAIGN_FINAL_CLOSE_V1.json",
+      "original_source_sha256": "196811d94fe7f5682b8952c67bb17022e02ad59343de32c0512fb8058ee8ebd9",
+      "projection": "LAB/WT locators mapped; local process/cgroup identifiers omitted; original predicates and unknowns preserved"
+    },
+    {
+      "public_path": "FINAL_RESULTS.json",
+      "public_sha256": "9f6c4a3ef21c7c2c0b9696813bbe430f4718c9b420305a43c94743ff34177aa1",
+      "original_source_path": "LAB_ROOT/ops/recovery-v1/FINAL_RESULTS_OBSERVATION_20261003_V1.json",
+      "original_source_sha256": "fb53ecf8b445c1b65907b8a21ebfbda965daed884861a0930647918fd2ff98c7",
+      "projection": "LAB/WT locators mapped; local process/cgroup identifiers omitted; original predicates and unknowns preserved"
+    },
+    {
+      "public_path": "NO_NEW_PAIR_BOUNDARY.json",
+      "public_sha256": "8cb4e0ce85fbd92ddf6eeb437f7eff72bfe7e6b6454953bd87e09ff73e29149e",
+      "original_source_path": "LAB_ROOT/ops/recovery-v1/NO_SAFE_USEFUL_NEW_PAIR_BOUNDARY_V1.json",
+      "original_source_sha256": "8cb4e0ce85fbd92ddf6eeb437f7eff72bfe7e6b6454953bd87e09ff73e29149e",
+      "projection": "LAB/WT locators mapped; local process/cgroup identifiers omitted; original predicates and unknowns preserved"
+    },
+    {
+      "public_path": "CURRENT_ACCOUNTING.json",
+      "public_sha256": "7a014359600c88a6d5ad76c5ffafb2e669dfb63c195d9d223df0311b19842f15",
+      "original_source_path": "LAB_ROOT/ops/current-accounting-final-v1/REPORT.json",
+      "original_source_sha256": "494b5bcbcd50c18e426adbcdf433333084f2f26508511b1b317982fc2fc143f6",
+      "projection": "LAB/WT locators mapped; local process/cgroup identifiers omitted; original predicates and unknowns preserved"
+    },
+    {
+      "public_path": "CURRENT_CANDIDATE_QUIET.json",
+      "public_sha256": "db053e94c23ade8ae8f386733f6641d0850084cd65fd0bd16a6cef691f649f51",
+      "original_source_path": "LAB_ROOT/ops/current-candidate-quiet-v1/REPORT.json",
+      "original_source_sha256": "449a99fdd45f7976cc5bc18f48d8aead1a76cdd62c419a962aa1a37590e85a1f",
+      "projection": "LAB/WT locators mapped; local process/cgroup identifiers omitted; original predicates and unknowns preserved"
+    },
+    {
+      "public_path": "STANDBY_STOP.json",
+      "public_sha256": "49009cdee3eb5b2ea7c4cf806d66a31e1bc0460767f430d078da895fe7e8df25",
+      "original_source_path": "LAB_ROOT/ops/recovery-v1/ROOT_OWNED_STANDBY_STOP_V1.json",
+      "original_source_sha256": "e32ad0750335610ff9b0a4b4a1213b5f50f2ace46eba7bb273ac293747e9b5c8",
+      "projection": "LAB/WT locators mapped; local process/cgroup identifiers omitted; original predicates and unknowns preserved"
+    },
+    {
+      "public_path": "TOP_RESULTS_UPDATE_FREEZE.json",
+      "public_sha256": "01b5d6f5c808b1c8e62f80f35aa25058076c0fdf3038df3a307fe4fb8bb97063",
+      "original_source_path": "LAB_ROOT/ops/top-reports-update-v5/FREEZE.json",
+      "original_source_sha256": "01b5d6f5c808b1c8e62f80f35aa25058076c0fdf3038df3a307fe4fb8bb97063",
+      "projection": "LAB/WT locators mapped; local process/cgroup identifiers omitted; original predicates and unknowns preserved"
+    },
+    {
+      "public_path": "RESTART_AT_CLOSURE.json",
+      "public_sha256": "7f70a6a0ba22c2b277b25906fa5d5322e5e96e7b58b45e540cc80b5fb891c7a3",
+      "original_source_path": "LAB_ROOT/ops/recovery-v1/RESTART.json",
+      "original_source_sha256": "8a96ea83cb697291d50299efca8b82212592aa2c504a4d438421f1c555d8c531",
+      "projection": "LAB/WT locators mapped; local process/cgroup identifiers omitted; original predicates and unknowns preserved"
+    },
+    {
+      "public_path": "README.md",
+      "public_sha256": "5c74e55d7e9bd26274b4bd8b47cb4679a51ac1d6b3eaf03c176104d07b8b8d9e",
+      "projection": "root-authored public evidence/byte checker; no thirdparty quotes"
+    },
+    {
+      "public_path": "verify_public.py",
+      "public_sha256": "4d0facac46d383fe5a287d0fcd29ae3866884a58a2320cf32d4c6813b412b53f",
+      "projection": "root-authored public evidence/byte checker; no thirdparty quotes"
+    }
+  ],
+  "original_and_projection_hashes_distinct": true,
+  "raw_native_private_payloads_followed_or_published": false,
+  "full_usage": "UNKNOWN"
+}

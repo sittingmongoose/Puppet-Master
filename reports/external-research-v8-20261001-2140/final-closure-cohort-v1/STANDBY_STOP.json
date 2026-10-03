@@ -1,0 +1,55 @@
+{
+  "schema": "pm.er8.root-owned-standby-stop.v1",
+  "root_authority": true,
+  "observed_epoch": 1791012183.9680288,
+  "exact_positive_source": {
+    "path": "LAB_ROOT/ops/recovery-v1/ROOT_HOLDER_SUCCESSOR_POSITIVE_V2.json",
+    "sha256": "e74ddeb77c90aea493ce1f343afa46422ccb3478dd72bda730a51d836dfc18cc"
+  },
+  "request_sha256": "3e251412e16c8fb9757261b50f1e3d7dba6e5090ff1b93654e4f4724ca88e01f",
+  "source_sha256": "77f869fe33387d426fc0fe66e146e0fad3ebbca08b386650773587b6748d1e35",
+  "exact_argv_positive_match": true,
+  "unit": "er8-v8-root-durable-successor-v2.service",
+  "positive_pid": "OMITTED_POSITIVE_OWNED_PROCESS_ID",
+  "before": {
+    "RuntimeMaxUSec": "5h 9min 25s",
+    "MainPID": "2422357",
+    "ControlGroup": "OMITTED_LOCAL_CGROUP_PATH",
+    "LoadState": "loaded",
+    "ActiveState": "active",
+    "SubState": "running"
+  },
+  "after": {
+    "RuntimeMaxUSec": "infinity",
+    "MainPID": "0",
+    "ControlGroup": "",
+    "LoadState": "not-found",
+    "ActiveState": "inactive",
+    "SubState": "dead"
+  },
+  "positive_cgroup_after_absent_or_empty": true,
+  "original_owner_before": {
+    "RuntimeMaxUSec": "7h 46min 40s",
+    "MainPID": "1969270",
+    "ControlGroup": "OMITTED_LOCAL_CGROUP_PATH",
+    "LoadState": "loaded",
+    "ActiveState": "active",
+    "SubState": "running"
+  },
+  "original_owner_after": {
+    "RuntimeMaxUSec": "7h 46min 40s",
+    "MainPID": "1969270",
+    "ControlGroup": "OMITTED_LOCAL_CGROUP_PATH",
+    "LoadState": "loaded",
+    "ActiveState": "active",
+    "SubState": "running"
+  },
+  "standby_stopped_first": true,
+  "successor_claim_absent_before_after": true,
+  "lock_identity_unchanged": true,
+  "command": "systemctl --user stop exact positively enrolled standby unit",
+  "no_runtime_renewal_broad_signal_or_sibling_touch": true,
+  "original_owner_retained_for_remaining_publication": true,
+  "elapsed_cleanup_seconds": 0.06842160224914551,
+  "campaign_closed": false
+}
