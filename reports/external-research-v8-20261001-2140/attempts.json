@@ -1,6 +1,6 @@
 {
   "schema": "pm.external_research.v8.public_attempts.v1",
-  "checkpoint": "FOUR_OPERATIONAL_PAIRS_THREE_REVIEWED_FAILED_SCREENS_NB_AMEND_ACTIVE",
+  "checkpoint": "FOUR_REVIEWED_PAIRS_SEVEN_FAILED_SCREENS_ONE_HOLD_NINTH_PIPELINE_COMPLETE",
   "attempts": [
     {
       "id": "v8-z-mechanical-route-canary-v1",
@@ -203,9 +203,10 @@
       "scope": "completed operational integrated pipeline",
       "status": "COMPLETE_THREE_GOAL_OPERATIONAL_PIPELINE",
       "native_goal_starts": 3,
-      "research_quality": "PENDING independent final freeze",
-      "evidence": "current-state-cohort-v1/latest-root-metadata-v1/ops/recovery-v1/OBSERVATION_20261003_033042.json",
-      "observation_utc": "2026-10-03T03:30:42.162151+00:00"
+      "research_quality": "HOLD; canonical score null, local87.5 not comparable",
+      "evidence": "integrated-notebook-retrieval-pair-v1/README.md",
+      "observation_utc": "2026-10-03T03:54:53.321786+00:00",
+      "independent_quality_evidence": "notebook-retrieval-quality-review-v1/README.md"
     },
     {
       "id": "V8-BIO-BREADTH-T-M",
@@ -222,36 +223,46 @@
       "scope": "completed operational integrated pipeline",
       "status": "COMPLETE_THREE_GOAL_OPERATIONAL_PIPELINE",
       "native_goal_starts": 3,
-      "research_quality": "PENDING independent final freeze",
-      "evidence": "current-state-cohort-v1/latest-root-metadata-v1/ops/recovery-v1/OBSERVATION_20261003_033042.json",
-      "observation_utc": "2026-10-03T03:30:42.162151+00:00"
+      "research_quality": "VERIFIED_FAILED_SCREEN; remainder UNASSESSED",
+      "evidence": "integrated-notebook-retrieval-pair-v1/README.md",
+      "observation_utc": "2026-10-03T03:54:53.321786+00:00",
+      "independent_quality_evidence": "notebook-retrieval-quality-review-v1/README.md"
     },
     {
       "id": "V8-NB-AMEND-C-L",
-      "scope": "active integrated pipeline",
-      "status": "RESEARCH_COMPLETE_CRITIC_ACTIVE_AT_OBSERVATION",
-      "native_goal_starts": 2,
-      "research_quality": "UNASSESSED",
-      "evidence": "current-state-cohort-v1/latest-root-metadata-v1/ops/recovery-v1/OBSERVATION_20261003_033042.json",
-      "observation_utc": "2026-10-03T03:30:42.162151+00:00"
+      "scope": "completed operational pipeline",
+      "status": "COMPLETE_THREE_GOAL_OPERATIONAL_PIPELINE",
+      "native_goal_starts": 3,
+      "research_quality": "PENDING independent review",
+      "evidence": "notebook-retrieval-quality-review-v1/ops/recovery-v1/OBSERVATION_20261003_035453.json",
+      "observation_utc": "2026-10-03T03:54:53.321786+00:00"
     },
     {
       "id": "V8-NB-AMEND-T-L",
       "scope": "active integrated pipeline",
+      "status": "FINAL_REVISION_ACTIVE_AT_OBSERVATION",
+      "native_goal_starts": 3,
+      "research_quality": "UNASSESSED",
+      "evidence": "notebook-retrieval-quality-review-v1/ops/recovery-v1/OBSERVATION_20261003_035453.json",
+      "observation_utc": "2026-10-03T03:54:53.321786+00:00"
+    },
+    {
+      "id": "V8-NB-BREADTH-C-M",
+      "scope": "active integrated pipeline",
       "status": "RESEARCH_ACTIVE_AT_OBSERVATION",
       "native_goal_starts": 1,
       "research_quality": "UNASSESSED",
-      "evidence": "current-state-cohort-v1/latest-root-metadata-v1/ops/recovery-v1/OBSERVATION_20261003_033042.json",
-      "observation_utc": "2026-10-03T03:30:42.162151+00:00"
+      "evidence": "notebook-retrieval-quality-review-v1/ops/recovery-v1/OBSERVATION_20261003_035453.json",
+      "observation_utc": "2026-10-03T03:54:53.321786+00:00"
     }
   ],
   "note": "Current metadata observation; past frozen cohorts/grades retained. Failed native final responses/status/causal reasons UNKNOWN; no completed case or recipe PASS.",
   "native_qualification": "V3_MECHANICAL_PASSED_LIMITED_DELIVERY_INFERENCE",
   "native_qualification_evidence": "resume-qualified-v3-cohort/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json",
-  "observation_utc": "2026-10-03T03:30:42.162151+00:00",
+  "observation_utc": "2026-10-03T03:54:53.321786+00:00",
   "current_stage_counts": {
-    "research": 17,
-    "critic": 9,
-    "final": 8
+    "research": 18,
+    "critic": 11,
+    "final": 9
   }
 }

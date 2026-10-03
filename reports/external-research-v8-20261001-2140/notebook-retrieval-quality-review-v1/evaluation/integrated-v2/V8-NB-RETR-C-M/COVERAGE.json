@@ -1,0 +1,222 @@
+{
+  "schema_version": 1,
+  "case_id": "V8-NB-RETR-C-M",
+  "quality_freeze_sha256": "32f7fc9761ba109cc98a8481aeefe4ea9b5dd85d7a7a89a63b186fe018c77f2a",
+  "frozen_local_score_percent": 87.5,
+  "canonical_comparable_numerical_score": null,
+  "score_note": "The source-first 18-facet local rubric was independently declared before hidden scope was read. Common evaluation-scope.json has pass criteria but no canonical numerical weights or 18 labels; 87.5 is not a canonical comparable score.",
+  "all_three_questions_assessed": true,
+  "all_five_product_obligations_assessed": true,
+  "frozen_question_statuses": {
+    "Q1": "PARTIAL",
+    "Q2": "PARTIAL",
+    "Q3": "PARTIAL"
+  },
+  "frozen_obligation_statuses": {
+    "N1": "PARTIAL",
+    "N2": "PARTIAL",
+    "N3": "PASS",
+    "N4": "PARTIAL",
+    "N5": "PARTIAL"
+  },
+  "frozen_semantic_facets": [
+    {
+      "id": "F01",
+      "name": "Primary source authority and independent verification",
+      "score_0_to_1": 1,
+      "status": "PASS",
+      "evidence": "All 13 candidate source artifacts independently fetched over public HTTPS; full body hashes match the final-reported values or prefixes. No private capture or runtime used."
+    },
+    {
+      "id": "F02",
+      "name": "Source locators and version qualification",
+      "score_0_to_1": 0.75,
+      "status": "PARTIAL",
+      "evidence": "Public URLs and branch/tag distinctions are exposed. Release pin remains open; nbdime v4.0.4 lacks the main-only similarity configuration API."
+    },
+    {
+      "id": "F03",
+      "name": "Normative force vs examples/recommendations",
+      "score_0_to_1": 1,
+      "status": "PASS",
+      "evidence": "4.5+ id requiredness, schema bounds and notebook-local uniqueness are separated from JEP generation/split suggestions and configurable defaults."
+    },
+    {
+      "id": "F04",
+      "name": "Conditions, exceptions and alternatives",
+      "score_0_to_1": 0.75,
+      "status": "PARTIAL",
+      "evidence": "Git preliminary-pass conditions and JEP split/paste exceptions are preserved. Unknown future cell/output types lack a complete comparison policy; representation alternatives are not explicitly addressed."
+    },
+    {
+      "id": "F05",
+      "name": "Source fact vs engineering inference vs product choice",
+      "score_0_to_1": 1,
+      "status": "PASS",
+      "evidence": "SRC/INF/CHOICE/FIX/PROPOSED TEST labels distinguish metrics, borrowed policy and unexecuted validation."
+    },
+    {
+      "id": "F06",
+      "name": "Q1 two useful precedents and comparison criteria",
+      "score_0_to_1": 1,
+      "status": "PASS",
+      "evidence": "nbdime library reuse and git policy precedent are compared across notebook awareness, identity, rename handling, safety and reuse cost."
+    },
+    {
+      "id": "F07",
+      "name": "Q1 minimal recommendation and concrete tradeoff",
+      "score_0_to_1": 0.75,
+      "status": "PARTIAL",
+      "evidence": "A bounded recommendation and reuse/control tradeoff exist. Pin and main-only API dependencies remain consequential."
+    },
+    {
+      "id": "F08",
+      "name": "Q2 source/output/metadata lanes and attachments",
+      "score_0_to_1": 1,
+      "status": "PASS",
+      "evidence": "All-True targets and output-metadata path are correct. Attachments presence-only limitation is explicit; identifier/execution_count lane remains a choice."
+    },
+    {
+      "id": "F09",
+      "name": "Q2 cell identity, missing/duplicate IDs and reorder",
+      "score_0_to_1": 0.75,
+      "status": "PARTIAL",
+      "evidence": "Version-conditioned id vs inferred matching and duplicate ambiguity are coherent. Missing/invalid IDs beyond duplicate cases and future-type fallback are not fully specified."
+    },
+    {
+      "id": "F10",
+      "name": "Q2 observed differences vs rename inference",
+      "score_0_to_1": 1,
+      "status": "PASS",
+      "evidence": "Same-path hashes are observations; exact-content and similarity renames are labeled inference. Multiple candidates remain unresolved."
+    },
+    {
+      "id": "F11",
+      "name": "Q2 untracked definition and capture epistemic limits",
+      "score_0_to_1": 1,
+      "status": "PASS",
+      "evidence": "Snapshot-directory absent-manifest definition is labeled a choice; cannot infer historic trackedness, unsaved buffers or live kernel state."
+    },
+    {
+      "id": "F12",
+      "name": "Q3 real issue/fix/test chain and scoped lesson",
+      "score_0_to_1": 0.75,
+      "status": "PARTIAL",
+      "evidence": "Public #235, #243, 5.5.0 changelog, PR #447 diff and double-validation tests corroborate a thematic chain; the final correctly avoids claiming public validate is now non-mutating. No proven direct issue-closing link."
+    },
+    {
+      "id": "F13",
+      "name": "N1 bounded input and immutable capture contract",
+      "score_0_to_1": 0.75,
+      "status": "PARTIAL",
+      "evidence": "One v4 notebook, ordinary text files, manifest hashes, read-only snapshots and version reporting are specified. Future-minor proceed policy lacks unknown-cell handling."
+    },
+    {
+      "id": "F14",
+      "name": "N2 notebook observation and identity plan",
+      "score_0_to_1": 0.75,
+      "status": "PARTIAL",
+      "evidence": "Lane separation and authoritative identity layer exist; pairing-to-diff_notebooks wrapper and future-type/error paths need precision."
+    },
+    {
+      "id": "F15",
+      "name": "N3 ordinary file observations and ambiguity",
+      "score_0_to_1": 1,
+      "status": "PASS",
+      "evidence": "Hash-first path changes, explicit metric choice, corrected two-to-one exact-candidate fixture and limits are usable."
+    },
+    {
+      "id": "F16",
+      "name": "N4 recovery safety and refusals",
+      "score_0_to_1": 0.75,
+      "status": "PARTIAL",
+      "evidence": "New/empty destination, verified bytes, default all-or-nothing and explicit refusals are sound. Collision fixture is not reachable under the declared disjoint manifest/untracked path definitions without an additional name-mapping condition."
+    },
+    {
+      "id": "F17",
+      "name": "N5 concrete revision and discriminating validation",
+      "score_0_to_1": 0.75,
+      "status": "PARTIAL",
+      "evidence": "R1-R6 and T1-T10 distinguish several contrary designs; T6 is now reachable. Pinning and calibration remain unexecuted dependencies; T10 needs a realizable collision mechanism."
+    },
+    {
+      "id": "F18",
+      "name": "Uncertainty preservation and execution-status honesty",
+      "score_0_to_1": 1,
+      "status": "PASS",
+      "evidence": "Five unresolved leads retained with consequences and next actions; no claim of implemented code or executed test results. Guarded dependencies prevent whole-artifact PASS."
+    }
+  ],
+  "formal_scope_read_after_freeze": {
+    "path": "LAB_ROOT/cases/tranche-v2/scoring-only/evaluation-scope.json",
+    "sha256": "6efed6cf4763f91b9674ffaaf35b5c9113decf27663fc38961fcfd140b6883af"
+  },
+  "common_pass_criteria": [
+    {
+      "criterion": 1,
+      "status": "PASS",
+      "evidence": "Actual frozen final hash matches independently read final and parent final receipt."
+    },
+    {
+      "criterion": 2,
+      "status": "PARTIAL",
+      "evidence": "Core public source claims independently checked. QF2/QF3/QF5 and post-freeze brief conflict prevent complete interpretation compliance."
+    },
+    {
+      "criterion": 3,
+      "status": "PARTIAL",
+      "evidence": "Three questions/five obligations assessed and two components plus thematic issue/fix/test chain present. Source discovery is candidate declared; no operation trace/semantic delivery inspected."
+    },
+    {
+      "criterion": 4,
+      "status": "PARTIAL",
+      "evidence": "Most source conditions and normative force preserved. Rename calibration open, T10 reachability incomplete and future type handling unspecified."
+    },
+    {
+      "criterion": 5,
+      "status": "PARTIAL",
+      "evidence": "Three distinct fresh native activations, artifacts, complete status, and close receipts inspected. Same family/account is root-attested; credential identity independently UNKNOWN."
+    },
+    {
+      "criterion": 6,
+      "status": "PARTIAL",
+      "evidence": "Current-artifact corrections and necessary choices preserved; four consequential implementation dependencies remain open."
+    },
+    {
+      "criterion": 7,
+      "status": "UNASSESSED",
+      "score": null,
+      "evidence": "Positive captured/delivered-range operation receipts were not admitted/read in this evaluator turn. Public source hash verification supports artifact accuracy, not transport consumption."
+    }
+  ],
+  "post_freeze_brief_scope_findings": [
+    {
+      "id": "SC1",
+      "obligation": "N4",
+      "status": "CONFLICT",
+      "final_locator": "§6 destination rule; §9 T8",
+      "brief_locator": "BRIEF paragraph 2 and N4",
+      "finding": "The brief requests creation of a new destination directory and existing-destination refusal. The final allows an existing empty directory, borrowing git clone behavior. A public precedent does not override this brief constraint. T8 covers only non-empty existing directories.",
+      "judgment_basis": "Post-freeze exact assigned brief comparison; source-first quality score was not revised."
+    },
+    {
+      "id": "SC2",
+      "obligation": "N1",
+      "status": "UNDER_SPECIFIED",
+      "final_locator": "§5 inputs",
+      "brief_locator": "BRIEF paragraph 1",
+      "finding": "The assigned saved state contains one notebook and two ordinary text files; final says exactly one notebook plus ordinary text files without preserving the count of two. Contract is weaker than the assigned bounded prototype.",
+      "judgment_basis": "Post-freeze exact assigned brief comparison; source-first quality score was not revised."
+    }
+  ],
+  "unassessed_transport_or_history_facets": [
+    "Canonical numerical rubric",
+    "Actual research batching operation trace",
+    "Semantic source acquisition",
+    "Frontend source consumption",
+    "Positive source delivery-range receipt validation",
+    "Provider usage/cost",
+    "Credential/account identity independently verified"
+  ],
+  "unchecked_facet_policy": "Each unassessed item is UNKNOWN or null; no numeric 0 and no full PASS inferred."
+}

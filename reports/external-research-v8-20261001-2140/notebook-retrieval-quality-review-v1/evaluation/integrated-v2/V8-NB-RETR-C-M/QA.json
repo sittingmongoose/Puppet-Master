@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "verification_kind": "Evaluator bundle consistency and pin checks, not candidate execution",
+  "checks": {
+    "immutable_quality_freeze_sha256": true,
+    "frozen_source_metadata_sha256": true,
+    "source_bodies_hash_match": true,
+    "exact_source_ranges_valid": true,
+    "all_published_json_parse": true,
+    "question_count_three": true,
+    "obligation_count_five": true,
+    "local_facets_eighteen": true,
+    "local_score_consistent": true,
+    "canonical_unassessed_numeric_null": true,
+    "distinct_native_target_ids": true,
+    "all_stage_hashes_current": true,
+    "all_receipt_pins_current": true,
+    "global_parent_receipt_expected_hash": true,
+    "wall_components_arithmetic": true,
+    "stage_and_case_closure_within_original_caps": true,
+    "helper_still_before_original_inclusive_deadline": true,
+    "no_full_case_pass": true
+  },
+  "all_checks_pass": true,
+  "performed_epoch": 1790999088.5669665,
+  "candidate_tests_executed": false,
+  "analytical_diagnostics_only": true
+}

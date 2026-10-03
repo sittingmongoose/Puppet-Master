@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "case_id": "V8-NB-RETR-C-M",
+  "provenance_sha256": "fd352c57aef8d0553388dab5de92ffe02a4a3770a2121b538a31a1fbacb7cc15",
+  "candidate_case": {
+    "original_start_monotonic_ns": 217259649557177,
+    "original_deadline_monotonic_ns": 220859649557177,
+    "actual_end_monotonic_ns": 219168052962487,
+    "wall_seconds": 1908.40340531,
+    "occupied_stage_lease_seconds": 1907.84130525589,
+    "occupied_cap_seconds": 5400,
+    "nonoverlapping_outside_native_seconds": 5.634330074,
+    "native_owned_seconds_derived": 1902.769075236,
+    "native_response_count": 28,
+    "stage_seconds": [
+      {
+        "stage": "research-proposal",
+        "native_interval_seconds": 757.994833983,
+        "stage_inclusive_to_external_exit_seconds": 759.82401324,
+        "stage_cap_seconds": 1200.0,
+        "stage_closed_before_original_deadline": true,
+        "enrolled_before_native_launch": false
+      },
+      {
+        "stage": "independent-candidate-critic",
+        "native_interval_seconds": 829.900106405,
+        "stage_inclusive_to_external_exit_seconds": 830.935792807,
+        "stage_cap_seconds": 1200.0,
+        "stage_closed_before_original_deadline": true,
+        "enrolled_before_native_launch": false
+      },
+      {
+        "stage": "final-correction",
+        "native_interval_seconds": 314.874134848,
+        "stage_inclusive_to_external_exit_seconds": 316.574919137,
+        "stage_cap_seconds": 900.0,
+        "stage_closed_before_original_deadline": true,
+        "enrolled_before_native_launch": false
+      }
+    ],
+    "within_recorded_case_and_stage_caps": true,
+    "host_overhead_300s_proxy": "5.634330074s outside-native interval recorded; not independently equated with all unexposed host/provider work",
+    "input_cap_pack": "Native stage deadlines mechanically equal updated prospective-timing-v3 1200/1200/900s; original manifest alone is reservation lineage.",
+    "generated_usage": "UNKNOWN",
+    "input_tokens": null,
+    "output_tokens": null,
+    "cached_tokens": null,
+    "dollars": null,
+    "monotonic_output_lower_bound": "Reported as available in usage strings, no numerical usage lower bound supplied by admitted receipts. Not invented.",
+    "unexposed_provider_load": "UNKNOWN",
+    "root_metadata_publication_cost": "SEPARATE_ROOT_MANAGEMENT"
+  },
+  "evaluator": {
+    "helper_birth_epoch": 1790997968.6905622,
+    "original_inclusive_deadline_epoch": 1791000368.6905622,
+    "hard_seconds": 2400,
+    "global_deadline_epoch": 1791013030.8303788,
+    "quality_freeze_epoch": 1790998431.2400153,
+    "end_record": "See FREEZE.json actual_end_epoch; all preparation, waits, reads and writes count from original helper birth."
+  },
+  "inference_limit": "Operational completion and these intervals do not establish answer quality, recipe effectiveness, relative speed or a winner."
+}

@@ -1,0 +1,382 @@
+{
+  "schema": "pm.er8.public-retrieval-quality-review.v1",
+  "positive_original_count": 30,
+  "status": "INDEPENDENT_C_HOLD_T_VERIFIED_FAILED_SCREEN",
+  "remaining_facets": "UNASSESSED",
+  "full_PASS": false,
+  "quality_qualified_pair": false,
+  "efficiency_winner_holdout_claim": false,
+  "projection": "Exact positive freeze/manifest/filename selection before writes; approved path/session/internal-key sanitizer; zero direct third-party source-excerpt quotes; original/public hashes separate and original pins preserved.",
+  "artifacts": [
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-C-M/COST.json",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-C-M/COST.json",
+      "original_sha256": "51c1943ce79b5d591c8197c826ac9e719c4f9a156f5ead2f71a9fb8b9bedccd7",
+      "original_bytes": 2850,
+      "public_sha256": "51c1943ce79b5d591c8197c826ac9e719c4f9a156f5ead2f71a9fb8b9bedccd7",
+      "public_bytes": 2850,
+      "sanitized": false,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-C-M/COVERAGE.json",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-C-M/COVERAGE.json",
+      "original_sha256": "b24cf586833b82d8f86c61e9640a6f2ded3e2577e0884d6defeae161d8610f34",
+      "original_bytes": 10315,
+      "public_sha256": "648a119d02fefa7d4bc83dd709dd2c7d3da362760bc848dcbdfad41dca527da0",
+      "public_bytes": 10240,
+      "sanitized": true,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-C-M/DISPOSITION.json",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-C-M/DISPOSITION.json",
+      "original_sha256": "425fa6d4f5ba70bbb6011fcd787a897576865392b55825e072b4403f20bdbf73",
+      "original_bytes": 1483,
+      "public_sha256": "425fa6d4f5ba70bbb6011fcd787a897576865392b55825e072b4403f20bdbf73",
+      "public_bytes": 1483,
+      "sanitized": false,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-C-M/FREEZE.json",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-C-M/FREEZE.json",
+      "original_sha256": "8a4013e41ca5eb81965c48e692f2b48fb0f188807f0fd8b071caff431d36e8a2",
+      "original_bytes": 5176,
+      "public_sha256": "4051a57bc6731a6aad8fd44ff9fa331437edc50f03db7a1d05a1064cc6d10d2e",
+      "public_bytes": 4483,
+      "sanitized": true,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-C-M/MANIFEST.json",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-C-M/MANIFEST.json",
+      "original_sha256": "17e557a9d409632f98aeedcc210fe030586977e074e3c5492415880796bc971a",
+      "original_bytes": 4531,
+      "public_sha256": "450fd2de997415ef60a788874eecda3b229c753cf5dda9fc0845f7137c1b9094",
+      "public_bytes": 3838,
+      "sanitized": true,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-C-M/METHOD.json",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-C-M/METHOD.json",
+      "original_sha256": "3dfe39db284205d066f9f5fd4f4cf438b018da6c273b7400c95f7563572492c1",
+      "original_bytes": 2479,
+      "public_sha256": "02322ce379ab946c3562146178fcfd8e8fb1e300cf936e233cec7585a9983eec",
+      "public_bytes": 2471,
+      "sanitized": true,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-C-M/PRESERVATION.json",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-C-M/PRESERVATION.json",
+      "original_sha256": "c48f46e95e21bc779965dbd4a4bc5b900b6c9b997b0323a77693f3245feaa4fc",
+      "original_bytes": 5030,
+      "public_sha256": "8a9473c98613bcbd0099963bf5babcb59dc5146c2d3433ce47f721fba069498b",
+      "public_bytes": 5026,
+      "sanitized": true,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-C-M/PROVENANCE.json",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-C-M/PROVENANCE.json",
+      "original_sha256": "fd352c57aef8d0553388dab5de92ffe02a4a3770a2121b538a31a1fbacb7cc15",
+      "original_bytes": 23601,
+      "public_sha256": "0692077967f3f3a9dedae093a0e9ad9075bfb32195968fb26e2c916b2133f8c0",
+      "public_bytes": 21900,
+      "sanitized": true,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-C-M/QA.json",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-C-M/QA.json",
+      "original_sha256": "5f080dfc2631279157f27a6891d6a80e90166dd4476ff02229874f9bd6d669be",
+      "original_bytes": 1027,
+      "public_sha256": "5f080dfc2631279157f27a6891d6a80e90166dd4476ff02229874f9bd6d669be",
+      "public_bytes": 1027,
+      "sanitized": false,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-C-M/QUALITY_FREEZE.json",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-C-M/QUALITY_FREEZE.json",
+      "original_sha256": "32f7fc9761ba109cc98a8481aeefe4ea9b5dd85d7a7a89a63b186fe018c77f2a",
+      "original_bytes": 13122,
+      "public_sha256": "035aeb266991ea78b43b9c1a7f40551621d4d4030c778985b85237b245bd44a4",
+      "public_bytes": 12825,
+      "sanitized": true,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-C-M/REVIEW.md",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-C-M/REVIEW.md",
+      "original_sha256": "69549e22295ae165ccdae9c99b58a484d51fbd8d0f6a72c1de780b33e210f459",
+      "original_bytes": 17809,
+      "public_sha256": "69549e22295ae165ccdae9c99b58a484d51fbd8d0f6a72c1de780b33e210f459",
+      "public_bytes": 17809,
+      "sanitized": false,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-C-M/SOURCES.json",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-C-M/SOURCES.json",
+      "original_sha256": "53ed1e8b15587bc8b0eea51d14ca3ffd47a5f631ab590d8160da12f0f98ceee9",
+      "original_bytes": 15067,
+      "public_sha256": "53ed1e8b15587bc8b0eea51d14ca3ffd47a5f631ab590d8160da12f0f98ceee9",
+      "public_bytes": 15067,
+      "sanitized": false,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-C-M/SOURCE_RANGES.json",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-C-M/SOURCE_RANGES.json",
+      "original_sha256": "82eaac28de4c89b83c4e03162952e40abea17fc1cf3638a961ded774c8f2f586",
+      "original_bytes": 13693,
+      "public_sha256": "82eaac28de4c89b83c4e03162952e40abea17fc1cf3638a961ded774c8f2f586",
+      "public_bytes": 13693,
+      "sanitized": false,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/COST.json",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-T-M/COST.json",
+      "original_sha256": "d8516c642b1f07c9cd5908ce95b67da7e7d116878bc8330f0cd208849dcc24c3",
+      "original_bytes": 1796,
+      "public_sha256": "d8516c642b1f07c9cd5908ce95b67da7e7d116878bc8330f0cd208849dcc24c3",
+      "public_bytes": 1796,
+      "sanitized": false,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/COVERAGE.json",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-T-M/COVERAGE.json",
+      "original_sha256": "ec5efdd1fdec8250466dcdcaaad3f3da8799fb5f7befbdf7ab2e39b1cf281e68",
+      "original_bytes": 5469,
+      "public_sha256": "30ff91207bb3c6682afae8d071162743ad1c239e0010d57cbb177491c096e047",
+      "public_bytes": 5343,
+      "sanitized": true,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/DISPOSITION.json",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-T-M/DISPOSITION.json",
+      "original_sha256": "5fa47f2df7cb6ac128ee7f5ac4b54b44cc55a4e94b4bd4ced3ab1951ad5eda87",
+      "original_bytes": 961,
+      "public_sha256": "21e3f491f40933c4bb79ff892547a4b7363fe031061449ea92b09ba5eb97cb72",
+      "public_bytes": 898,
+      "sanitized": true,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/FREEZE.json",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-T-M/FREEZE.json",
+      "original_sha256": "272227f0edbd38a9eb5338df886dae241e014180c1c516bc0d95a2ec3f6d86e3",
+      "original_bytes": 5748,
+      "public_sha256": "d235b270b0c9a01ff0e74a8f0165454eddba76010df604d8f4b0fe4529e295db",
+      "public_bytes": 4803,
+      "sanitized": true,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/HASH_MATCH_ERRATUM.json",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-T-M/HASH_MATCH_ERRATUM.json",
+      "original_sha256": "3c0547224a353d5e36c141684fbda5ba1013a8643057f975d9a195a624356849",
+      "original_bytes": 5424,
+      "public_sha256": "3c0547224a353d5e36c141684fbda5ba1013a8643057f975d9a195a624356849",
+      "public_bytes": 5424,
+      "sanitized": false,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/MANIFEST.json",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-T-M/MANIFEST.json",
+      "original_sha256": "282c3ec771b2f6ff7f284106e8d90fe4ef2bfc958740e6c613fb64d41075a364",
+      "original_bytes": 5112,
+      "public_sha256": "2b6e73799d0034001a071b1101da49cd4ab1aa9c48ef4fd0589863b8f681ad1d",
+      "public_bytes": 4167,
+      "sanitized": true,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/METHOD_AUDIT.json",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-T-M/METHOD_AUDIT.json",
+      "original_sha256": "196fadd8755c525d5d39caca9e9384517065277b592bfa36354196a07b382b94",
+      "original_bytes": 2455,
+      "public_sha256": "95c30503845f82418e41acf239888958c8693b4ea4b7f18968139151bce40730",
+      "public_bytes": 2266,
+      "sanitized": true,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/PRESERVATION.json",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-T-M/PRESERVATION.json",
+      "original_sha256": "67e604eab43c75741ef0bf2e2851903aa2ba53ab4a76cb4465bb532f50247075",
+      "original_bytes": 4289,
+      "public_sha256": "2875551634b6cbab7377b0e2d05792dd92f747c648665d673815cfeeb20c2a63",
+      "public_bytes": 3839,
+      "sanitized": true,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/PROVENANCE.json",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-T-M/PROVENANCE.json",
+      "original_sha256": "80315ba813af0c90c5346125032234974b8eb17635befc24131b6c49cccd616a",
+      "original_bytes": 18832,
+      "public_sha256": "3ee60bc04954f0f679537aedf3e6d9e22237e1bdb0af60e71fd35fc282764794",
+      "public_bytes": 17194,
+      "sanitized": true,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/QUALITY_COVERAGE.json",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-T-M/QUALITY_COVERAGE.json",
+      "original_sha256": "fccdd2dc4953c5cefedc13e891078b049b36f6add0b915ad8dd4c020d760c5d2",
+      "original_bytes": 4513,
+      "public_sha256": "fccdd2dc4953c5cefedc13e891078b049b36f6add0b915ad8dd4c020d760c5d2",
+      "public_bytes": 4513,
+      "sanitized": false,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/QUALITY_DISPOSITION.json",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-T-M/QUALITY_DISPOSITION.json",
+      "original_sha256": "abe7d0f153f164da78099fede947c3c4acbf02b48baef3571ab77d93556022e4",
+      "original_bytes": 442,
+      "public_sha256": "abe7d0f153f164da78099fede947c3c4acbf02b48baef3571ab77d93556022e4",
+      "public_bytes": 442,
+      "sanitized": false,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/QUALITY_FREEZE.json",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-T-M/QUALITY_FREEZE.json",
+      "original_sha256": "7b8dfbf143ad282040fd8d0dd7ca18b56b523c37c237f46cb2709005c923ffdd",
+      "original_bytes": 7722,
+      "public_sha256": "72acdc69836247237ffd5e669f6f296271c4149d3e94e4f7f4af5aa0f1faa65f",
+      "public_bytes": 6147,
+      "sanitized": true,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/QUALITY_REVIEW.md",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-T-M/QUALITY_REVIEW.md",
+      "original_sha256": "5926d2aa652ea01510fb68cc738e936c99aff26ade30c2dcc829218371c56b83",
+      "original_bytes": 3546,
+      "public_sha256": "0572b01591d15efdd05500466e60ad973fefc0e7aeb076864a44277560754ffe",
+      "public_bytes": 3603,
+      "sanitized": true,
+      "projection_kind": "quotation-minimized-excerpts",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/REVIEW.md",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-T-M/REVIEW.md",
+      "original_sha256": "037d5b31c760237e24f94feca6fbac53eab4a427e6ddf2cbb68dfb7b8821cdaa",
+      "original_bytes": 4621,
+      "public_sha256": "037d5b31c760237e24f94feca6fbac53eab4a427e6ddf2cbb68dfb7b8821cdaa",
+      "public_bytes": 4621,
+      "sanitized": false,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/SOURCE_METADATA.json",
+      "public_path": "evaluation/integrated-v2/V8-NB-RETR-T-M/SOURCE_METADATA.json",
+      "original_sha256": "f7367fa20b3c400022537fbbdd463fb7c560890c01fff8f2915e11c9d38201a0",
+      "original_bytes": 8330,
+      "public_sha256": "f7367fa20b3c400022537fbbdd463fb7c560890c01fff8f2915e11c9d38201a0",
+      "public_bytes": 8330,
+      "sanitized": false,
+      "projection_kind": "sanitized",
+      "pin_origin": "root exact final freeze/manifest/quality freeze pins and explicit OWN topfile whitelist"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/OBSERVATION_20261003_035453.json",
+      "public_path": "ops/recovery-v1/OBSERVATION_20261003_035453.json",
+      "original_sha256": "30dbbbaf9f47ee1c2c677c68b0868d6d43ea1823f9ed0d4340efd7714d7f0920",
+      "original_bytes": 17594,
+      "public_sha256": "a4d65d2f17f5dbd380a75ecdbf44d59bf3025f8a3b0ac35640b8c193169ee147",
+      "public_bytes": 15323,
+      "sanitized": true,
+      "projection_kind": "sanitized",
+      "pin_origin": "root separate exact immutable comparison/current observation pin"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/recovery-v1/ROOT_NB_RETRIEVAL_COMPARISON_V1.json",
+      "public_path": "ops/recovery-v1/ROOT_NB_RETRIEVAL_COMPARISON_V1.json",
+      "original_sha256": "e57f52d324975a055c4c4e241ba2c8b54586e2fe8fe1acf63d468c901c89bdc1",
+      "original_bytes": 3973,
+      "public_sha256": "3f9c6389b56a94a880317eb0c12f38acfc8700887f7e125da1594892480deb78",
+      "public_bytes": 3532,
+      "sanitized": true,
+      "projection_kind": "sanitized",
+      "pin_origin": "root separate exact immutable comparison/current observation pin"
+    },
+    {
+      "source_projection": "WORKTREE_ROOT/reports/external-research-v8-20261001-2140/prospective-source-cohort-v3/ops/muse-helper-public-check-v1/root-repair-v1/verify_public.py",
+      "public_path": "verify_public.py",
+      "original_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+      "original_bytes": 6851,
+      "public_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+      "public_bytes": 6851,
+      "sanitized": false,
+      "projection_kind": "standalone-portable-checker"
+    },
+    {
+      "source_projection": "LAB_ROOT/ops/publication-notebook-retrieval-quality-v1/ROOT_HANDOFF.json",
+      "public_path": "ROOT_HANDOFF.json",
+      "original_sha256": "5f406102843144cea32da15d7813348cba4094f9b4c24b081b2f89c4a3f61845",
+      "original_bytes": 14145,
+      "public_sha256": "5bdc80ffee171833e0d1d57d51e472be9150036f9bfe084f34d73b102391a420",
+      "public_bytes": 12199,
+      "sanitized": true
+    },
+    {
+      "source_projection": "publication-generated",
+      "public_path": "QUOTATION_AUDIT.json",
+      "original_sha256": null,
+      "public_sha256": "7bc43d40e88d98b57dd1aab615ff9e350764fe8e689ee166886b1321d83b46fe",
+      "public_bytes": 1129
+    },
+    {
+      "source_projection": "publication-generated",
+      "public_path": "README.md",
+      "original_sha256": null,
+      "public_sha256": "66671559955ee7e7f77d77c5056539fa3786e5338f58dfd5ffab040168a02b8e",
+      "public_bytes": 4812
+    },
+    {
+      "source_projection": "publication-generated",
+      "public_path": "MANIFEST.json",
+      "original_sha256": null,
+      "public_sha256": "f3338ea95b9ad5fb9d07d0fd535cade549c9796f6125f4b522b5c44838ff80c4",
+      "public_bytes": 30172
+    }
+  ]
+}

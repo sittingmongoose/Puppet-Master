@@ -1,0 +1,511 @@
+{
+  "policy": "Exact public HTTP response bodies retained only in evaluator-owned external _raw; publication whitelist excludes _raw. No private/native logs. Line numbers refer to independently captured bodies. No verbatim source quotations published.",
+  "sources": [
+    {
+      "id": "CONFIG",
+      "requested_url": "https://raw.githubusercontent.com/jupyter/nbdime/main/nbdime/diffing/config.py",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbdime/main/nbdime/diffing/config.py",
+      "status": 200,
+      "retrieved_epoch": 1790998180.123844,
+      "sha256": "9bf4a80db9bf0daf64d376f6797e9ee165f587135dc2e6ab48087e59e6157d82",
+      "bytes": 1134,
+      "line_ranges_1_based": [
+        [
+          1,
+          34
+        ]
+      ],
+      "body_publication_allowed": false,
+      "source_kind": "public primary",
+      "quotations_published_words": 0
+    },
+    {
+      "id": "FORMAT",
+      "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/docs/format_description.rst",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/docs/format_description.rst",
+      "status": 200,
+      "retrieved_epoch": 1790998273.6748934,
+      "sha256": "64c851511006d916b8a21c54d58dbc823938eb7724f0bb9145c61a006e14f80d",
+      "bytes": 15492,
+      "line_ranges_1_based": [
+        [
+          13,
+          18
+        ],
+        [
+          53,
+          60
+        ],
+        [
+          346,
+          366
+        ]
+      ],
+      "body_publication_allowed": false,
+      "source_kind": "public primary",
+      "quotations_published_words": 0
+    },
+    {
+      "id": "INIT",
+      "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/__init__.py",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/__init__.py",
+      "status": 200,
+      "retrieved_epoch": 1790998180.2464674,
+      "sha256": "e4afe87976b229354971db0bb3c69b7eb775b2c7f0f13486ed910489f59f1509",
+      "bytes": 6230,
+      "line_ranges_1_based": [
+        [
+          66,
+          101
+        ]
+      ],
+      "body_publication_allowed": false,
+      "source_kind": "public primary",
+      "quotations_published_words": 0
+    },
+    {
+      "id": "PR447",
+      "requested_url": "https://api.github.com/repos/jupyter/nbformat/pulls/447",
+      "resolved_url": "https://api.github.com/repos/jupyter/nbformat/pulls/447",
+      "status": 200,
+      "retrieved_epoch": 1790998180.434885,
+      "sha256": "4eb2e9e5d4751de8780b8543b584ec02f0380189c55038874d17aa031cf24a3f",
+      "bytes": 19827,
+      "line_ranges_1_based": [
+        [
+          1,
+          300
+        ]
+      ],
+      "body_publication_allowed": false,
+      "source_kind": "public primary",
+      "quotations_published_words": 0
+    },
+    {
+      "id": "S1",
+      "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md",
+      "status": 200,
+      "retrieved_epoch": 1790998085.1283548,
+      "sha256": "414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab",
+      "bytes": 28394,
+      "line_ranges_1_based": [
+        [
+          30,
+          70
+        ],
+        [
+          248,
+          257
+        ],
+        [
+          313,
+          340
+        ],
+        [
+          459,
+          468
+        ],
+        [
+          517,
+          524
+        ]
+      ],
+      "body_publication_allowed": false,
+      "source_kind": "public primary",
+      "quotations_published_words": 0
+    },
+    {
+      "id": "S10",
+      "requested_url": "https://api.github.com/search/issues?q=repo%3Ajupyter%2Fnbformat%20%22duplicate%20cell%20id%22",
+      "resolved_url": "https://api.github.com/search/issues?q=repo%3Ajupyter%2Fnbformat%20%22duplicate%20cell%20id%22",
+      "status": 200,
+      "retrieved_epoch": 1790998085.3296926,
+      "sha256": "f234572e4467b21dc6b289d2b011bf604a218ebb33ffdd1fd6a4aacd37c1c4ab",
+      "bytes": 10563,
+      "line_ranges_1_based": [
+        [
+          1,
+          300
+        ]
+      ],
+      "body_publication_allowed": false,
+      "source_kind": "public primary",
+      "quotations_published_words": 0
+    },
+    {
+      "id": "S11",
+      "requested_url": "https://raw.githubusercontent.com/git/git/master/Documentation/gitdiffcore.adoc",
+      "resolved_url": "https://raw.githubusercontent.com/git/git/master/Documentation/gitdiffcore.adoc",
+      "status": 200,
+      "retrieved_epoch": 1790998085.2123146,
+      "sha256": "28cf7eb14e75fe46417d87acf0f81b989419c62b72b5926910e7f256003f185f",
+      "bytes": 14082,
+      "line_ranges_1_based": [
+        [
+          123,
+          196
+        ]
+      ],
+      "body_publication_allowed": false,
+      "source_kind": "public primary",
+      "quotations_published_words": 0
+    },
+    {
+      "id": "S12",
+      "requested_url": "https://raw.githubusercontent.com/git/git/master/Documentation/git-clone.adoc",
+      "resolved_url": "https://raw.githubusercontent.com/git/git/master/Documentation/git-clone.adoc",
+      "status": 200,
+      "retrieved_epoch": 1790998085.2101378,
+      "sha256": "32ab4dc61fe9527326d5dd77c200f4bd8c3e4ca91606e7d6fadab172e3e2c59a",
+      "bytes": 17146,
+      "line_ranges_1_based": [
+        [
+          373,
+          378
+        ]
+      ],
+      "body_publication_allowed": false,
+      "source_kind": "public primary",
+      "quotations_published_words": 0
+    },
+    {
+      "id": "S2a",
+      "requested_url": "https://raw.githubusercontent.com/jupyter/nbdime/main/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbdime/main/README.md",
+      "status": 200,
+      "retrieved_epoch": 1790998085.1078048,
+      "sha256": "24cc7e5ead43c72bce18c574b1441cdd47ed58b4421ec5a52a214af946607649",
+      "bytes": 3944,
+      "line_ranges_1_based": [
+        [
+          1,
+          85
+        ]
+      ],
+      "body_publication_allowed": false,
+      "source_kind": "public primary",
+      "quotations_published_words": 0
+    },
+    {
+      "id": "S2b",
+      "requested_url": "https://api.github.com/repos/jupyter/nbdime/releases/latest",
+      "resolved_url": "https://api.github.com/repos/jupyter/nbdime/releases/latest",
+      "status": 200,
+      "retrieved_epoch": 1790998085.1806927,
+      "sha256": "8bc19b5003338b7c8a6997191f98be5ec24422cfeec9e5e925426d292128276c",
+      "bytes": 14523,
+      "line_ranges_1_based": [
+        [
+          1,
+          120
+        ]
+      ],
+      "body_publication_allowed": false,
+      "source_kind": "public primary",
+      "quotations_published_words": 0
+    },
+    {
+      "id": "S3",
+      "requested_url": "https://raw.githubusercontent.com/jupyter/nbdime/main/nbdime/diffing/notebooks.py",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbdime/main/nbdime/diffing/notebooks.py",
+      "status": 200,
+      "retrieved_epoch": 1790998085.1303074,
+      "sha256": "9f9739feb52db1673832af609c257dda1f3ac6b258ec4d81f64db8d93657fe37",
+      "bytes": 18981,
+      "line_ranges_1_based": [
+        [
+          4,
+          11
+        ],
+        [
+          34,
+          40
+        ],
+        [
+          56,
+          80
+        ],
+        [
+          207,
+          291
+        ],
+        [
+          294,
+          384
+        ],
+        [
+          387,
+          415
+        ],
+        [
+          433,
+          466
+        ],
+        [
+          520,
+          556
+        ],
+        [
+          590,
+          626
+        ]
+      ],
+      "body_publication_allowed": false,
+      "source_kind": "public primary",
+      "quotations_published_words": 0
+    },
+    {
+      "id": "S4",
+      "requested_url": "https://raw.githubusercontent.com/jupyter/nbdime/main/nbdime/diffing/generic.py",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbdime/main/nbdime/diffing/generic.py",
+      "status": 200,
+      "retrieved_epoch": 1790998085.1150582,
+      "sha256": "8a4493e7e622e49ae859102a8f00341251a174257d746609947846c290bace6a",
+      "bytes": 10287,
+      "line_ranges_1_based": [
+        [
+          20,
+          52
+        ],
+        [
+          63,
+          119
+        ],
+        [
+          157,
+          170
+        ]
+      ],
+      "body_publication_allowed": false,
+      "source_kind": "public primary",
+      "quotations_published_words": 0
+    },
+    {
+      "id": "S5",
+      "requested_url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/cell-id.md",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/cell-id.md",
+      "status": 200,
+      "retrieved_epoch": 1790998085.0752218,
+      "sha256": "7f52a9c224fd11509db187187f6e1bd760a329ba836a3b40945b47bcde463992",
+      "bytes": 20578,
+      "line_ranges_1_based": [
+        [
+          1,
+          16
+        ],
+        [
+          56,
+          86
+        ],
+        [
+          88,
+          102
+        ],
+        [
+          171,
+          183
+        ],
+        [
+          258,
+          275
+        ],
+        [
+          326,
+          334
+        ]
+      ],
+      "body_publication_allowed": false,
+      "source_kind": "public primary",
+      "quotations_published_words": 0
+    },
+    {
+      "id": "S6",
+      "requested_url": "https://api.github.com/repos/jupyter/nbformat/contents/nbformat/v4?ref=main",
+      "resolved_url": "https://api.github.com/repos/jupyter/nbformat/contents/nbformat/v4?ref=main",
+      "status": 200,
+      "retrieved_epoch": 1790998085.1530502,
+      "sha256": "b3385c61115d20914310949041828928f92593cfeaaa74dc6805695818e22012",
+      "bytes": 10326,
+      "line_ranges_1_based": [
+        [
+          1,
+          250
+        ]
+      ],
+      "body_publication_allowed": false,
+      "source_kind": "public primary",
+      "quotations_published_words": 0
+    },
+    {
+      "id": "S7",
+      "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/validator.py",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/validator.py",
+      "status": 200,
+      "retrieved_epoch": 1790998085.1198823,
+      "sha256": "3db1fe48de1060981b13bcf828b8a5779ae30dd082ec06f712f066e90fbbfd46",
+      "bytes": 22349,
+      "line_ranges_1_based": [
+        [
+          31,
+          99
+        ],
+        [
+          101,
+          120
+        ],
+        [
+          291,
+          354
+        ],
+        [
+          356,
+          447
+        ]
+      ],
+      "body_publication_allowed": false,
+      "source_kind": "public primary",
+      "quotations_published_words": 0
+    },
+    {
+      "id": "S8",
+      "requested_url": "https://api.github.com/repos/jupyter/nbformat/issues/235",
+      "resolved_url": "https://api.github.com/repos/jupyter/nbformat/issues/235",
+      "status": 200,
+      "retrieved_epoch": 1790998085.2441578,
+      "sha256": "40420f0c01c3ebcc658bbce6a1178292440e58bbaf1395501b66829683cf5fe7",
+      "bytes": 3393,
+      "line_ranges_1_based": [
+        [
+          1,
+          160
+        ]
+      ],
+      "body_publication_allowed": false,
+      "source_kind": "public primary",
+      "quotations_published_words": 0
+    },
+    {
+      "id": "S9",
+      "requested_url": "https://github.com/jupyter/nbformat/pull/447.diff",
+      "resolved_url": "https://patch-diff.githubusercontent.com/raw/jupyter/nbformat/pull/447.diff",
+      "status": 200,
+      "retrieved_epoch": 1790998085.513573,
+      "sha256": "b2ed75abcea6eb0130887e147f4a462446d3815286f82e131bb9349bc76ebd35",
+      "bytes": 8583,
+      "line_ranges_1_based": [
+        [
+          26,
+          125
+        ],
+        [
+          147,
+          235
+        ]
+      ],
+      "body_publication_allowed": false,
+      "source_kind": "public primary",
+      "quotations_published_words": 0
+    },
+    {
+      "id": "SCHEMA44",
+      "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.4.schema.json",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.4.schema.json",
+      "status": 200,
+      "retrieved_epoch": 1790998273.7119658,
+      "sha256": "dddf3bff4c0bd42bd467117321d72bceddb8de7361b0cc9581bd8318e9b4d3c8",
+      "bytes": 15703,
+      "line_ranges_1_based": [
+        [
+          140,
+          240
+        ]
+      ],
+      "body_publication_allowed": false,
+      "source_kind": "public primary",
+      "quotations_published_words": 0
+    },
+    {
+      "id": "SCHEMA45",
+      "requested_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.5.schema.json",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.5.schema.json",
+      "status": 200,
+      "retrieved_epoch": 1790998273.7486625,
+      "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+      "bytes": 16104,
+      "line_ranges_1_based": [
+        [
+          98,
+          107
+        ],
+        [
+          277,
+          306
+        ],
+        [
+          393,
+          413
+        ]
+      ],
+      "body_publication_allowed": false,
+      "source_kind": "public primary",
+      "quotations_published_words": 0
+    },
+    {
+      "id": "TAG3",
+      "requested_url": "https://raw.githubusercontent.com/jupyter/nbdime/v4.0.4/nbdime/diffing/notebooks.py",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbdime/v4.0.4/nbdime/diffing/notebooks.py",
+      "status": 200,
+      "retrieved_epoch": 1790998180.1633036,
+      "sha256": "bc9c5c5ad149661e7d3f6a99e43c657a91cce91ee1411611656df0dc61e837d2",
+      "bytes": 18745,
+      "line_ranges_1_based": [
+        [
+          63,
+          83
+        ],
+        [
+          381,
+          384
+        ],
+        [
+          590,
+          605
+        ]
+      ],
+      "body_publication_allowed": false,
+      "source_kind": "public primary",
+      "quotations_published_words": 0
+    },
+    {
+      "id": "TAG4",
+      "requested_url": "https://raw.githubusercontent.com/jupyter/nbdime/v4.0.4/nbdime/diffing/generic.py",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbdime/v4.0.4/nbdime/diffing/generic.py",
+      "status": 200,
+      "retrieved_epoch": 1790998180.2001688,
+      "sha256": "7ed11454e7e944942e628c1b602cc1e24db026426e4f66adc3b1024f069cfa0a",
+      "bytes": 8311,
+      "line_ranges_1_based": [
+        [
+          20,
+          94
+        ]
+      ],
+      "body_publication_allowed": false,
+      "source_kind": "public primary",
+      "quotations_published_words": 0
+    }
+  ],
+  "failed_fetches": [
+    {
+      "requested_url": "https://nbformat.readthedocs.io/en/latest/format_description.html",
+      "status": 403,
+      "fallback": "Public web browser content and raw upstream docs/format_description.rst"
+    },
+    {
+      "requested_url": "https://raw.githubusercontent.com/jupyter/nbdime/4.0.4/nbdime/diffing/notebooks.py",
+      "status": 404,
+      "fallback": "Correct v4.0.4 tag fetched"
+    }
+  ]
+}

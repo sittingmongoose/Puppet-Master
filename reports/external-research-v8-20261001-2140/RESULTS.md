@@ -1,6 +1,6 @@
 # Current results
 
-At 2026-10-03T03:30:42.162151+00:00: 47 actual native starts; seventeen research stages, nine same-family critics and eight final revisions completed. Operational completion is 8/24 pipelines and 4/12 matched pairs. Three biomedical pairs have six independent FAILED_SCREEN verdicts; the notebook retrieval pair is under review. Remaining unchecked facets are UNASSESSED. No full quality PASS or quality-qualified speedup is established. [Frozen observation](current-state-cohort-v1/latest-root-metadata-v1/ops/recovery-v1/OBSERVATION_20261003_033042.json); active costs continue increasing.
+At 2026-10-03T03:54:53.321786+00:00: 51 actual native starts; eighteen research stages, eleven same-family critics and nine final revisions completed. Operational completion is 9/24 pipelines and 4/12 matched pairs. All four completed pairs have independent reviews: seven FAILED_SCREEN verdicts and one HOLD. No full quality PASS, quality-qualified speedup or winner is established. Unchecked facets remain UNASSESSED. [Frozen observation](notebook-retrieval-quality-review-v1/ops/recovery-v1/OBSERVATION_20261003_035453.json); active costs continue increasing.
 
 | Cases | Research | Candidate critic | Revision / whole pipeline | Independent quality |
 |---|---|---|---|---|
@@ -11,9 +11,9 @@ At 2026-10-03T03:30:42.162151+00:00: 47 actual native starts; seventeen research
 | BIO-RETR-C / BIO-RETR-T | Both complete | Both complete | Both complete / 2 pipelines | Both FAILED_SCREEN; remainder UNASSESSED |
 | BIO-AMEND-C / BIO-AMEND-T | Both complete | Both complete | Both complete / 2 pipelines | Both FAILED_SCREEN; remainder UNASSESSED |
 | BIO-BREADTH-C / BIO-BREADTH-T | Both complete | Both complete | Both complete / 2 pipelines | Both FAILED_SCREEN; remainder UNASSESSED |
-| NB-RETR-C / NB-RETR-T | Both complete | Both complete | Both complete / 2 pipelines | Independent review pending final freeze |
-| NB-AMEND-C / NB-AMEND-T | Control complete; treatment active at observation | Control active; treatment pending | Pending | UNASSESSED |
-| NB-BREADTH-C / NB-BREADTH-T | Queued | Pending | Pending | UNASSESSED |
+| NB-RETR-C / NB-RETR-T | Both complete | Both complete | Both complete / 2 pipelines | Control HOLD; treatment VERIFIED_FAILED_SCREEN |
+| NB-AMEND-C / NB-AMEND-T | Both complete | Both complete | Control complete; treatment final active at observation | Control review pending; treatment UNASSESSED |
+| NB-BREADTH-C / NB-BREADTH-T | Control active at observation; treatment queued | Pending | Pending | UNASSESSED |
 
 The [retrieval reviews](retrieval-quality-review-v1/README.md) identify concrete defects. Control leaves a selected renderer dependency explicitly unverified and lacks a defined unit-compatibility refusal for the overlay. Treatment drops a permitted multiscale translation from its final coordinate formula: evaluator-owned analysis gives expected [26,69] versus [15,56]. These diagnostic rejections leave every unreviewed facet UNASSESSED. No candidate fixture execution or observed viewer misrendering is claimed. Limited blinding is disclosed; source-quality rulings preceded METHOD duties audit, and control disclosed earlier owner-manifest identity exposure. [Root comparison](retrieval-quality-review-v1/ops/recovery-v1/ROOT_RETRIEVAL_COMPARISON_V1.json). Findings were not sent to future candidates.
 
@@ -30,3 +30,5 @@ Full quality PASS requires all three questions, five obligations, both implement
 [Independent breadth findings](breadth-quality-review-v1/README.md) preserve both failed screens: unresolved categorical rendering/calibration conditions in control and omitted group transforms in the treatment overlay gate. The latter analytic counterexample displaces labels by 10 micrometers; no renderer or candidate fixture execution is claimed. [Current-state evidence](current-state-cohort-v1/README.md) and [later corrected metadata](current-state-cohort-v1/latest-root-metadata-v1/README.md) distinguish historical freezes, the late accounting-audit HOLD, sixth Muse mechanical source and installed twelve-helper limit. The earlier root research-stage double count is explicitly corrected from 19 to 17; native starts, costs and case outcomes are unchanged.
 
 [Completed notebook retrieval pair](integrated-notebook-retrieval-pair-v1/README.md) supplies all six actual native stages and positive closure evidence; its operational bundle retains quality PENDING at its freeze. [Twelve-helper amendment](helper-concurrency-v2-cohort/README.md) publishes the unchanged budgets, preserved v1 HOLD, exact v2 acceptance and once-only root installation.
+
+[Independent notebook retrieval reviews](notebook-retrieval-quality-review-v1/README.md) preserve control HOLD and treatment VERIFIED_FAILED_SCREEN. Control’s local 87.5 is explicitly not a canonical comparable score; canonical score is null. The treatment’s source-hash erratum and unchanged source-quality freeze remain visible. Method trace uptake is indeterminate. The new observation records one additional completed amendment control; its output/closure publication and independent review are pending. The output lower bound of 1,211,449 crosses the 1,200,000 warning, below the unchanged 1,500,000 stop.

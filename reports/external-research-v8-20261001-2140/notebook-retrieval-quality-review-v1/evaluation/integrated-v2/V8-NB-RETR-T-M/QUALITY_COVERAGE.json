@@ -1,0 +1,201 @@
+{
+  "schema": "independent-source-screen-coverage-v1",
+  "case_id": "V8-NB-RETR-T-M",
+  "comprehensive": false,
+  "score": null,
+  "facet_count": 18,
+  "facets": [
+    {
+      "id": "S01",
+      "semantic_facet": "Component identities and versions",
+      "status": "UNASSESSED",
+      "score": null,
+      "findings": []
+    },
+    {
+      "id": "S02",
+      "semantic_facet": "Documented major/minor compatibility conditions",
+      "status": "VERIFIED_FAILED",
+      "score": null,
+      "findings": [
+        "F1"
+      ]
+    },
+    {
+      "id": "S03",
+      "semantic_facet": "Component comparison and minimal approach",
+      "status": "VERIFIED_FAILED",
+      "score": null,
+      "findings": [
+        "F1"
+      ]
+    },
+    {
+      "id": "S04",
+      "semantic_facet": "Schema field inventory and separation",
+      "status": "UNASSESSED",
+      "score": null,
+      "findings": []
+    },
+    {
+      "id": "S05",
+      "semantic_facet": "Output metadata/execution-count effects on identity",
+      "status": "VERIFIED_FAILED",
+      "score": null,
+      "findings": [
+        "F2"
+      ]
+    },
+    {
+      "id": "S06",
+      "semantic_facet": "ID syntax and version-gated requiredness",
+      "status": "UNASSESSED",
+      "score": null,
+      "findings": []
+    },
+    {
+      "id": "S07",
+      "semantic_facet": "Missing/duplicate-ID exceptions and handling",
+      "status": "UNASSESSED",
+      "score": null,
+      "findings": []
+    },
+    {
+      "id": "S08",
+      "semantic_facet": "Heuristic matching and ambiguity",
+      "status": "UNASSESSED",
+      "score": null,
+      "findings": []
+    },
+    {
+      "id": "S09",
+      "semantic_facet": "Reorder versus edit classification",
+      "status": "UNASSESSED",
+      "score": null,
+      "findings": []
+    },
+    {
+      "id": "S10",
+      "semantic_facet": "Declared-version and cross-minor preservation",
+      "status": "UNASSESSED",
+      "score": null,
+      "findings": []
+    },
+    {
+      "id": "S11",
+      "semantic_facet": "Observed file changes versus rename inference",
+      "status": "UNASSESSED",
+      "score": null,
+      "findings": []
+    },
+    {
+      "id": "S12",
+      "semantic_facet": "Untracked status and transitions",
+      "status": "UNASSESSED",
+      "score": null,
+      "findings": []
+    },
+    {
+      "id": "S13",
+      "semantic_facet": "Unknown capture data and unsaved limits",
+      "status": "UNASSESSED",
+      "score": null,
+      "findings": []
+    },
+    {
+      "id": "S14",
+      "semantic_facet": "Saved snapshot and read-only contract",
+      "status": "UNASSESSED",
+      "score": null,
+      "findings": []
+    },
+    {
+      "id": "S15",
+      "semantic_facet": "Selected copy recovery and destination conditions",
+      "status": "UNASSESSED",
+      "score": null,
+      "findings": []
+    },
+    {
+      "id": "S16",
+      "semantic_facet": "Public issue and concrete failure harm",
+      "status": "UNASSESSED",
+      "score": null,
+      "findings": []
+    },
+    {
+      "id": "S17",
+      "semantic_facet": "Fix/version/validation/normalization conditions",
+      "status": "UNASSESSED",
+      "score": null,
+      "findings": []
+    },
+    {
+      "id": "S18",
+      "semantic_facet": "Test chain and discriminating proposed validation",
+      "status": "UNASSESSED",
+      "score": null,
+      "findings": []
+    }
+  ],
+  "brief_questions": [
+    {
+      "id": "Q1",
+      "status": "VERIFIED_FAILED_SCREEN",
+      "score": null,
+      "findings": [
+        "F1"
+      ]
+    },
+    {
+      "id": "Q2",
+      "status": "VERIFIED_FAILED_SCREEN",
+      "score": null,
+      "findings": [
+        "F2"
+      ]
+    },
+    {
+      "id": "Q3",
+      "status": "UNASSESSED",
+      "score": null
+    }
+  ],
+  "plan_obligations": [
+    {
+      "id": "N1",
+      "status": "UNASSESSED",
+      "score": null,
+      "findings": []
+    },
+    {
+      "id": "N2",
+      "status": "VERIFIED_FAILED_SCREEN",
+      "score": null,
+      "findings": [
+        "F2"
+      ]
+    },
+    {
+      "id": "N3",
+      "status": "UNASSESSED",
+      "score": null,
+      "findings": []
+    },
+    {
+      "id": "N4",
+      "status": "UNASSESSED",
+      "score": null,
+      "findings": []
+    },
+    {
+      "id": "N5",
+      "status": "VERIFIED_FAILED_SCREEN",
+      "score": null,
+      "findings": [
+        "F1"
+      ]
+    }
+  ],
+  "note": "Facets independently derived from the incoming final before TASK disclosure; official mapping may be appended after freeze without changing this judgment."
+}

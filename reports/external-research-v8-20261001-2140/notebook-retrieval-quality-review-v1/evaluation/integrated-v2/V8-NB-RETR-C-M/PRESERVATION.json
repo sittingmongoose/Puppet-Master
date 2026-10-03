@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "case_id": "V8-NB-RETR-C-M",
+  "reviewed_only_after_quality_freeze": true,
+  "current_proposal_sha256": "412f2784834afb8f0ca6165f9ee6de6204c12fe917ebfcaefaabfd7ecf123b5c",
+  "critic_sha256": "abb2820d2f108f291011d269eca27f7ba9c39d2776594110e284bf9beeac2424",
+  "earlier_unresolved_leads_sha256": "8a21e3663eb4ab7a0f90f3a8cb351a2024f5a04a44b09266e845dc4f9d2cd42e",
+  "final_sha256": "60fccc881e9c24c7f4550a0f1fa733fb5685d11c2157eed27c1795fb04fb9cab",
+  "corrections": [
+    {
+      "id": "C1",
+      "status": "CORRECTLY_REPLACED",
+      "evidence": "Unreachable deletion-only rename fixture replaced by two disappeared files and one new name; two exact candidates now exist. Analytic, unexecuted."
+    },
+    {
+      "id": "C2",
+      "status": "CORRECTLY_REPLACED",
+      "evidence": "Removed deprecation string distinguished from changelog and current 5.1.4 warning; inconsistency added to lead5."
+    },
+    {
+      "id": "C3",
+      "status": "PRESERVED_WITH_RESTORED_CONDITIONS",
+      "evidence": "Copy/break detection off condition, at-most-one comparison and skippable duplicate-name condition restored."
+    },
+    {
+      "id": "C4",
+      "status": "CORRECTLY_EXTENDED",
+      "evidence": "Attachments and output metadata paths added; presence-only attachment scope and all-True defaults explicit."
+    }
+  ],
+  "micro_nuances": [
+    {
+      "topic": "JEP split rule",
+      "status": "PRESERVED_AS_RECOMMENDATION"
+    },
+    {
+      "topic": "#235 tracking characterization",
+      "status": "PRESERVED_WITH_API_STATE_LIMIT"
+    },
+    {
+      "topic": "normalise spelling",
+      "status": "PRESERVED_AS_ISSUE_WORDING"
+    },
+    {
+      "topic": "alignment authority",
+      "status": "ADDED_AS_ENGINEERING_RULE"
+    },
+    {
+      "topic": "pin-and-reverify",
+      "status": "MADE_EXPLICIT_PRECONDITION"
+    }
+  ],
+  "necessary_choices_preserved": [
+    {
+      "token": "nbdime.diffing.notebooks.diff_notebooks",
+      "in_current_proposal": true,
+      "in_final": true
+    },
+    {
+      "token": "threshold 0.5",
+      "in_current_proposal": true,
+      "in_final": true
+    },
+    {
+      "token": "50%",
+      "in_current_proposal": true,
+      "in_final": true
+    },
+    {
+      "token": "--include-untracked",
+      "in_current_proposal": true,
+      "in_final": true
+    },
+    {
+      "token": "--on-collision fail|skip|rename",
+      "in_current_proposal": true,
+      "in_final": true
+    },
+    {
+      "token": "--allow-partial",
+      "in_current_proposal": true,
+      "in_final": true
+    },
+    {
+      "token": "byte-identical",
+      "in_current_proposal": true,
+      "in_final": true
+    },
+    {
+      "token": "MissingIDFieldWarning",
+      "in_current_proposal": true,
+      "in_final": true
+    },
+    {
+      "token": "DuplicateCellId",
+      "in_current_proposal": true,
+      "in_final": true
+    },
+    {
+      "token": "Non-unique cell id",
+      "in_current_proposal": true,
+      "in_final": true
+    },
+    {
+      "token": "TEXT_MIMEDATA_MAX_COMPARE_LENGTH",
+      "in_current_proposal": true,
+      "in_final": true
+    },
+    {
+      "token": "STREAM_MAX_COMPARE_LENGTH",
+      "in_current_proposal": true,
+      "in_final": true
+    },
+    {
+      "token": "MIN_MATCH_LENGTH",
+      "in_current_proposal": true,
+      "in_final": true
+    },
+    {
+      "token": "0.3",
+      "in_current_proposal": true,
+      "in_final": true
+    },
+    {
+      "token": "4.5+",
+      "in_current_proposal": true,
+      "in_final": true
+    },
+    {
+      "token": "unrecognized_cell",
+      "in_current_proposal": true,
+      "in_final": true
+    },
+    {
+      "token": "unrecognized_output",
+      "in_current_proposal": true,
+      "in_final": true
+    },
+    {
+      "token": "repair_duplicate_cell_ids=False",
+      "in_current_proposal": true,
+      "in_final": true
+    }
+  ],
+  "uncertainty_preservation": {
+    "earlier_leads_1_through_4": "Retained with same consequential or low-risk status and implementation/release-verification next actions. Lead3 renamed calibration rather than equivalence, preserving metric non-equivalence.",
+    "new_lead_5": "Warning-text introduction-version inconsistency retained.",
+    "negative_constraints": "Read-only original/snapshots, offline compare/recover, no watching/sync/collaboration/unsaved buffers/history repair/notebook execution retained.",
+    "execution_status": "All T1-T10 and any self-derived witness analytic/unexecuted; no execution receipt claimed."
+  },
+  "preservation_disposition": "SUPPORTED_FOR_CURRENT_ARTIFACT; CONSEQUENTIALLY_OPEN",
+  "preservation_is_not_source_acquisition": "Final retention is inspectable separately from whether an unobserved native frontend semantically acquired source ranges.",
+  "limitations": [
+    "No full reasoning-history regrade",
+    "Source table moved into §0.2/references to earlier artifact, with several stale section references",
+    "Preserved source/choice content still has frozen QF1-QF6 gaps and post-freeze SC1-SC2 scope findings"
+  ]
+}

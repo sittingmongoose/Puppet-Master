@@ -1,0 +1,354 @@
+{
+  "schema": "pm.er8.root-observation.v1",
+  "root_authority": true,
+  "created_epoch": 1790999693.3217864,
+  "utc": "2026-10-03T03:54:53.321786+00:00",
+  "accounting": {
+    "elapsed_seconds": 29862.46429491043,
+    "deadline_epoch": 1791013030.8303788,
+    "admissions": 53,
+    "native_goal_starts": 51,
+    "pending_start_permits": 0,
+    "occupied_slot_seconds": 37073.588742256165,
+    "committed_slot_seconds": 1742.1515233516693,
+    "reserved_or_committed_slot_seconds": 84941.92297172546,
+    "reserved_or_committed_native_starts": 36,
+    "active_by_family": {
+      "M": 0,
+      "Z": 2,
+      "L": 0
+    },
+    "candidate_output_warning": true,
+    "candidate_output_stop": false,
+    "active_jobs": [
+      "V8-NB-AMEND-T-L-final-correction",
+      "V8-NB-BREADTH-C-M-research-proposal"
+    ],
+    "overdue_jobs": [],
+    "helper_task_starts": 92,
+    "active_helpers": 3,
+    "evaluator_helper_starts_remaining": 18,
+    "generated_output_tokens_lower_bound": 1211449,
+    "generated_usage": "unknown",
+    "outside_native_seconds_by_case": {
+      "v8-z-mechanical-route-canary-v1": 0.435632441,
+      "v8-z-mechanical-route-canary-v2": 87.708301406,
+      "v8-z-mechanical-route-canary-v3": 0.416744337,
+      "V8-BIO-C-Z": 1.881573445,
+      "V8-BIO-WIT-T-Z": 1.93355986,
+      "V8-BIO-P-Z": 218.781088987,
+      "V8-BIO-COND-C-Z": 218.49114402,
+      "V8-NB-COND-C-Z": 2.5303710070000003,
+      "V8-NB-P-Z": 3.2356752049999997,
+      "V8-BIO-BATCH-C-Z": 2.876333539,
+      "V8-BIO-B-Z": 2.8616779529999996,
+      "V8-NB-BATCH-C-Z": 3.1170839940000006,
+      "V8-NB-B-Z": 4.301070160000001,
+      "V8-BIO-RETR-C-M": 6.115310880000001,
+      "V8-BIO-RETR-T-M": 5.4561728469999995,
+      "V8-BIO-AMEND-C-L": 5.3019250079999996,
+      "V8-BIO-AMEND-T-L": 5.596375739000001,
+      "V8-BIO-BREADTH-C-M": 5.069627012000001,
+      "V8-BIO-BREADTH-T-M": 5.222031248999999,
+      "V8-NB-RETR-C-M": 5.634330073999999,
+      "V8-NB-RETR-T-M": 4.902850151,
+      "V8-NB-AMEND-C-L": 5.3927405660000005,
+      "V8-NB-AMEND-T-L": 4.204479176999999,
+      "V8-NB-BREADTH-C-M": 1.473040981
+    },
+    "category_seconds": {
+      "cancel": 0,
+      "cleanup": 529.0185243330001,
+      "evaluation": 0,
+      "handoff": 3.812875982,
+      "native": 972.478206129,
+      "retry": 0,
+      "setup": 70.107739723,
+      "source_capture": 0,
+      "wait": 0
+    },
+    "occupancy_reconciled": true,
+    "route_reviews": [
+      "v8-z-route-repair1-canary-v1",
+      "v8-z-route-repair1-caller2-canary-v2",
+      "v8-z-route-recovery-v1-canary-v2",
+      "v8-z-route-recovery-v2-canary-v3",
+      "v8-z-route-recovery-v2-native-accepted-v1",
+      "v8-z-route-recovery-v2-native-bound-v2"
+    ],
+    "final_reserved_names": [
+      "V8-BIO-C-Z",
+      "V8-BIO-P-Z",
+      "V8-BIO-B-Z",
+      "V8-NB-C-Z",
+      "V8-NB-P-Z",
+      "V8-NB-B-Z"
+    ],
+    "evaluator_reserved_names": [
+      "V8-EVAL-BIO-C",
+      "V8-EVAL-BIO-P",
+      "V8-EVAL-BIO-B",
+      "V8-EVAL-NB-C",
+      "V8-EVAL-NB-P",
+      "V8-EVAL-NB-B",
+      "V8-EVAL-V8-BIO-WIT-T-Z",
+      "V8-EVAL-V8-BIO-COND-C-Z",
+      "V8-EVAL-V8-BIO-BATCH-C-Z",
+      "V8-EVAL-V8-BIO-RETR-C-M",
+      "V8-EVAL-V8-BIO-RETR-T-M",
+      "V8-EVAL-V8-BIO-AMEND-C-L",
+      "V8-EVAL-V8-BIO-AMEND-T-L",
+      "V8-EVAL-V8-BIO-BREADTH-C-M",
+      "V8-EVAL-V8-BIO-BREADTH-T-M",
+      "V8-EVAL-V8-NB-WIT-T-Z",
+      "V8-EVAL-V8-NB-COND-C-Z",
+      "V8-EVAL-V8-NB-BATCH-C-Z",
+      "V8-EVAL-V8-NB-RETR-C-M",
+      "V8-EVAL-V8-NB-RETR-T-M",
+      "V8-EVAL-V8-NB-AMEND-C-L",
+      "V8-EVAL-V8-NB-AMEND-T-L",
+      "V8-EVAL-V8-NB-BREADTH-C-M",
+      "V8-EVAL-V8-NB-BREADTH-T-M",
+      "V8-EVAL-HOLDOUT-BIO-C",
+      "V8-EVAL-HOLDOUT-BIO-R",
+      "V8-EVAL-HOLDOUT-NB-C",
+      "V8-EVAL-HOLDOUT-NB-R"
+    ],
+    "closed": false,
+    "elapsed_seconds_including_user_pause": 94484.29467368126,
+    "authorized_user_pause_excluded_seconds": 64621.83037877083
+  },
+  "completed_operational_cases": [
+    "V8-BIO-RETR-C-M",
+    "V8-BIO-RETR-T-M",
+    "V8-BIO-AMEND-C-L",
+    "V8-BIO-AMEND-T-L",
+    "V8-BIO-BREADTH-C-M",
+    "V8-BIO-BREADTH-T-M",
+    "V8-NB-RETR-C-M",
+    "V8-NB-RETR-T-M",
+    "V8-NB-AMEND-C-L"
+  ],
+  "operational_pipeline_count": 9,
+  "target_pipelines": 24,
+  "operational_pair_count": 4,
+  "target_pairs": 12,
+  "quality_reviewed_pairs": 4,
+  "independent_failed_screens": 7,
+  "full_quality_pass": 0,
+  "quality_qualified_efficiency_comparisons": 0,
+  "quality_pending_cases": [
+    "V8-NB-AMEND-C-L"
+  ],
+  "stage_complete_counts": {
+    "research": 18,
+    "critic": 11,
+    "final": 9
+  },
+  "active_jobs": {
+    "V8-NB-AMEND-T-L-final-correction": {
+      "case": "V8-NB-AMEND-T-L",
+      "status": "native-active",
+      "native_goal_starts": 1
+    },
+    "V8-NB-BREADTH-C-M-research-proposal": {
+      "case": "V8-NB-BREADTH-C-M",
+      "status": "native-active",
+      "native_goal_starts": 1
+    }
+  },
+  "active_helpers": [
+    "er8-nb-retr-quality-public-v1",
+    "er8-attempt-reservation-api-v1",
+    "er8-successor-case-materializer-v1"
+  ],
+  "helper_concurrency": {
+    "previous": 6,
+    "selected_prospective": 12,
+    "explicit_user_authority": {
+      "path": "LAB_ROOT/ops/recovery-v1/HELPER_CONCURRENCY_AUTHORITY_20261003.json",
+      "sha256": "f1682a991232997556aed7fb88f167e706317259913d9365c5a1fb72fc572a79"
+    },
+    "installation": "INSTALLED_EXACT_ACCEPTED_V2",
+    "candidate_slots_unchanged": {
+      "M": 2,
+      "Z": 2,
+      "L": 2
+    },
+    "root_install": {
+      "path": "LAB_ROOT/ops/recovery-v1/HELPER_CONCURRENCY_ROOT_INSTALL_V2.json",
+      "sha256": "e9e743d89c34adb8c2d229cf985a57d663c0b027b7569ffbbb78bd8246ab87d0"
+    }
+  },
+  "native_muse_helpers": {
+    "invocations": 6,
+    "completed": 4,
+    "timed_out": 2,
+    "known_native_cli_elapsed_seconds": 911.7189729450283,
+    "candidate_goal_starts": 0,
+    "latest_source_result": {
+      "path": "LAB_ROOT/ops/muse-count-checker-source-v1/RESULT.py",
+      "sha256": "76ec7af07d0c3704e6fa9ec0e33097a63d5b42d071d555d2bc818caa1fefdf21"
+    },
+    "latest_source_acceptance": {
+      "path": "LAB_ROOT/ops/muse-count-checker-source-v1/ROOT_SOURCE_ACCEPTANCE.json",
+      "sha256": "a6eab7e6fe3eba121e0527cd8136d33781f704a68dc249801c45c84e61e08302"
+    },
+    "latest_native_elapsed_seconds": 36.76630740601104,
+    "latest_helper_birth_to_native_quiet_seconds": 202.74116897583008,
+    "root_late_extraction_tests": "Separate root management; source captured and nativequiet beforeoriginal300deadline, no renew/retry",
+    "tokens_money_realized_reasoning": "UNKNOWN"
+  },
+  "accounting_audit": {
+    "path": "LAB_ROOT/ops/current-accounting-audit-v1/REPORT.json",
+    "sha256": "2f7c5b7e06cdeb18a0fda309ac98358506bc9d332e871c6dbc691c0833a261a7",
+    "status": "LATE_HOLD_ADVISORY",
+    "lateness_seconds": 56.580358028411865,
+    "pinned_snapshot_reconstructed_exactly": true,
+    "fully_bounded_acceptance": false
+  },
+  "verified_github_commit": "04006eefef146cc14518258938b446d0452911a2",
+  "cost_scope": "Allpriorstarts/failures/orphanbirth→latepositivecost retained; explicit64621.83037877083pauseonlyexcluded; totalgeneratedtokens/moneyUNKNOWN.",
+  "stage_count_basis": {
+    "prior_non_v7_counts": {
+      "research": 8,
+      "critic": 1,
+      "final": 0
+    },
+    "previous_observation": {
+      "path": "LAB_ROOT/ops/recovery-v1/OBSERVATION_20261003_033042.json",
+      "sha256": "dae9e439aa894a15f039b11f8ca8508bad165662c3d335ef558bffafffc17fd4"
+    },
+    "current_v7_complete_metadata": [
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-research-proposal/COMPLETE.json",
+        "sha256": "d2e7291b64d7c4c244a6ee46072162e363d00893a673aa79512df2fff32f413c"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-independent-candidate-critic/COMPLETE.json",
+        "sha256": "46a50e7810b83cd66a6c7c5f85f9fe8098e8ce468fe98b3ab25ae2724c345eae"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-C-M/V8-BIO-RETR-C-M-final-correction/COMPLETE.json",
+        "sha256": "2a36800918b078758f29637d29f296c35a489d5cad40db67eddc13cd7420f3a5"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-research-proposal/COMPLETE.json",
+        "sha256": "55569505aea98aebaa92ba2889f275a4793ca4eaee293924cf8fa452341f3749"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-independent-candidate-critic/COMPLETE.json",
+        "sha256": "eda93793b41f2585153f63754b8d0a4978611adcf0a32b945c750548987655e6"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-RETR-T-M/V8-BIO-RETR-T-M-final-correction/COMPLETE.json",
+        "sha256": "c2869aee6640499449cfc49a48759f1a4f9e1dabdc84ff65bfdd1c286b4ce75c"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-C-L/V8-BIO-AMEND-C-L-research-proposal/COMPLETE.json",
+        "sha256": "6ef3359c709a1c748bca235222929d5aea9a24b683cc91599df8aa0fd4398343"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-C-L/V8-BIO-AMEND-C-L-independent-candidate-critic/COMPLETE.json",
+        "sha256": "e87971e6c98890effaef8e3bef4417d5b2659e20360166297944c2117059d863"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-C-L/V8-BIO-AMEND-C-L-final-correction/COMPLETE.json",
+        "sha256": "468c19f8a511d232883ccae1d8109ec6b38cf23144c2a1005e3b10c09f2736c3"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-research-proposal/COMPLETE.json",
+        "sha256": "94b09a87fb5a656131c21d5724c1716a1d67a3a231d82249a5e076ce38a65498"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-independent-candidate-critic/COMPLETE.json",
+        "sha256": "b40b2332153bdedcc86f17682718a7513826834cdff60b4bea0fd772c0a1a244"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-AMEND-T-L/V8-BIO-AMEND-T-L-final-correction/COMPLETE.json",
+        "sha256": "be828fefd7f74b8122d6bcee5cc5db95309534a42730b543786cd4eeea69fa65"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-research-proposal/COMPLETE.json",
+        "sha256": "2ffc2a4067483d54c63402d56eec45fe7297e3120f42fb1144479f2338f296bf"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-independent-candidate-critic/COMPLETE.json",
+        "sha256": "d24db57223b4c4200e5fb5beaddb1161219b1ccd7362ad346a53d7bb7e7bbba5"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-C-M/V8-BIO-BREADTH-C-M-final-correction/COMPLETE.json",
+        "sha256": "b45b7094a06c3a831acb0c70d910770b21776ac6b3f5785e8dc73c0558798cd0"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-research-proposal/COMPLETE.json",
+        "sha256": "2831b8c120b1d68b142e6116daaa6819692b4b7b0c3b49c0a9cf4be5f90a0064"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-independent-candidate-critic/COMPLETE.json",
+        "sha256": "05fa6d118d0b2d1c12172310ec8051947f92c94310b59def13a208dbe58a6940"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-BIO-BREADTH-T-M/V8-BIO-BREADTH-T-M-final-correction/COMPLETE.json",
+        "sha256": "9c6e6f246e27762035b1beb3b1073ae6241461af9b2e10fea16ffa4c7a3c38a9"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-C-M/V8-NB-RETR-C-M-research-proposal/COMPLETE.json",
+        "sha256": "ad4acf21f9b9abcbd67fc0ccc6051d56c80054f9c4747cbbfc1f1747b374fca2"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-C-M/V8-NB-RETR-C-M-independent-candidate-critic/COMPLETE.json",
+        "sha256": "9af88c8c12defbf6f93f26f2f12e99e1c66a590b6c181288778ec763a459f822"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-C-M/V8-NB-RETR-C-M-final-correction/COMPLETE.json",
+        "sha256": "70b8cde36a64e132e74fda05f5c5a2c7aab25cae5699bfd7509e3f57ac9df138"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-research-proposal/COMPLETE.json",
+        "sha256": "f029376eda7ad93f2bf48813762d1151c7d9f5d7c9d96961dd6647d21894a3e9"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-independent-candidate-critic/COMPLETE.json",
+        "sha256": "fd0a3e51447cd38d49f8d01b383f95653351563bb6057aa2b3d7a000a5165178"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-final-correction/COMPLETE.json",
+        "sha256": "aaf6bb8e3197613c8cae075d94ec300f82a8f03049c98eb47360c4b685ff2783"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-research-proposal/COMPLETE.json",
+        "sha256": "a40c1fe1dd4e7db978f67c617f6ed3ae937f63f6ca56a8bb0b1504038d39b24b"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-independent-candidate-critic/COMPLETE.json",
+        "sha256": "9c3fc0e2172031ad5cd4d41a15f424403fb7f8dfd7bbc40f11e657d3315e198b"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-final-correction/COMPLETE.json",
+        "sha256": "b3bba0f3beb04f93fd82de82f85bfc1e660cfb80e0250cb7d91d5945cda075b9"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-T-L/V8-NB-AMEND-T-L-research-proposal/COMPLETE.json",
+        "sha256": "43d6b7e64b34982b16e1b395049bcef9ee156ba25e1b3cb7cdd73b3e6bc7cee5"
+      },
+      {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-T-L/V8-NB-AMEND-T-L-independent-candidate-critic/COMPLETE.json",
+        "sha256": "acacec8cbe032659d79ef36816bb9bc3b667744cf14f5593fbbcfb499336aec0"
+      }
+    ]
+  },
+  "root_metadata_correction": {
+    "supersedes": {
+      "path": "LAB_ROOT/ops/recovery-v1/OBSERVATION_20261003_032937.json",
+      "sha256": "007f29037e495309a708594b3479964413f37c43de43808c4ffadecd709dd555"
+    },
+    "field": "stage_complete_counts.research",
+    "previous": 19,
+    "corrected": 17,
+    "reason": "Previous root aggregation included two NB-RETR research completions both in prior baseline and current V7 count; baseline non-V7 is8, not10. Native starts/costs/case outcomes unchanged.",
+    "old_bytes_preserved": true
+  },
+  "independent_holds": 1,
+  "latest_review_limits": "NB-RETR C local18-facet87.5 is NOT a canonical comparable score; canonical numericnull/HOLD. T decisive VERIFIED_FAILED_SCREEN, comprehensivefalse and unassessednull. Sourcehash all13 statementerratum preserved12/13, decisive sourcesmatch. No qualified efficiency or holdout."
+}

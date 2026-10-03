@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "case_id": "V8-NB-RETR-C-M",
+  "disposition": "HOLD",
+  "source_first_quality_disposition": "HOLD",
+  "source_first_local_score_percent": 87.5,
+  "canonical_comparable_numerical_score": null,
+  "quality_freeze_sha256": "32f7fc9761ba109cc98a8481aeefe4ea9b5dd85d7a7a89a63b186fe018c77f2a",
+  "full_case_pass": false,
+  "failed_screen": false,
+  "operational_pipeline": "THREE_FRESH_GOALS_AND_ACTUAL_FINAL_PROPOSAL; QUIET AND CLOSED RECEIPTS INSPECTED",
+  "native_family": "GLM5.3FlashMax via accepted Z subscription (root-attested); C-M planning suffix only",
+  "reason": [
+    "Consequential nbformat/nbdime release pin and safe parse behavior dependencies remain unresolved",
+    "Future-minor unknown-cell comparison policy incomplete",
+    "Rename calibration and collision fixture reachability unresolved",
+    "Exact brief requires new destination; final permits existing empty directory",
+    "Positive source delivery-range operation validation and semantic acquisition are UNKNOWN"
+  ],
+  "coverage_path": "COVERAGE.json",
+  "source_path": "SOURCES.json",
+  "preservation_path": "PRESERVATION.json",
+  "method_path": "METHOD.json",
+  "cost_path": "COST.json",
+  "provenance_path": "PROVENANCE.json",
+  "score_warning": "87.5 is the declared independent local semantic rubric, not canonical comparable score; source-first score/disposition were not tuned after hidden scope or method reveal.",
+  "source_range_correction_path": "SOURCE_RANGES.json"
+}

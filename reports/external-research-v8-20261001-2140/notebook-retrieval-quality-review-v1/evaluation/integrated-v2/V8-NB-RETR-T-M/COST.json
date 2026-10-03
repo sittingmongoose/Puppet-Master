@@ -1,0 +1,48 @@
+{
+  "schema": "whitelist-cost-summary-v1",
+  "case_id": "V8-NB-RETR-T-M",
+  "basis": "Recorded own receipts; all arithmetic below is evaluator-derived analytic arithmetic, not an executed candidate test",
+  "native_response_count": 35,
+  "fresh_goal_target_count": 3,
+  "stage_costs": [
+    {
+      "stage": "research-proposal",
+      "cap_seconds": 1200.0,
+      "inclusive_to_recorded_inner_quiescence_seconds": 575.609469327,
+      "within_stage_deadline": true,
+      "native_responses": 9
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "cap_seconds": 1200.0,
+      "inclusive_to_recorded_inner_quiescence_seconds": 690.86427274,
+      "within_stage_deadline": true,
+      "native_responses": 14
+    },
+    {
+      "stage": "final-correction",
+      "cap_seconds": 900.0,
+      "inclusive_to_recorded_inner_quiescence_seconds": 792.179611527,
+      "within_stage_deadline": true,
+      "native_responses": 12
+    }
+  ],
+  "reported_case_wall_seconds": 2059.356413208,
+  "reported_occupied_stage_lease_seconds": 2058.8847460746765,
+  "reported_nonoverlapping_outside_native_seconds": 4.902850151,
+  "derived_native_owned_interval_seconds": 2054.453563057,
+  "derived_wall_minus_native_interval_seconds": 4.902850151000166,
+  "case_wall_cap_seconds": 3600,
+  "occupied_cap_seconds": 5400,
+  "outside_native_cap_seconds": 300,
+  "within_recorded_caps": true,
+  "input_tokens": null,
+  "reasoning_tokens": null,
+  "output_tokens": null,
+  "generated_usage_status": "UNKNOWN except reported monotonic output lower bound; lower-bound values not admitted/read",
+  "monetary_cost": null,
+  "token_status": "UNKNOWN, never treated as zero",
+  "external_unexposed_provider_load": "UNKNOWN",
+  "efficiency": "UNASSESSED; no other-arm access or comparison",
+  "winner": "UNASSESSED"
+}

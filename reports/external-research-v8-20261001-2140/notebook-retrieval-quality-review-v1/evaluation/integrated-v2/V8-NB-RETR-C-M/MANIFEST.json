@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "case_id": "V8-NB-RETR-C-M",
+  "evaluator": "er8-quality-nb-retr-c-v1",
+  "scope": "Independent frozen-output evaluation only",
+  "disposition": "HOLD",
+  "whole_case_pass": false,
+  "local_score_percent": 87.5,
+  "canonical_comparable_numerical_score": null,
+  "payload_pins": [
+    {
+      "name": "REVIEW.md",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-C-M/REVIEW.md",
+      "bytes": 17809,
+      "sha256": "69549e22295ae165ccdae9c99b58a484d51fbd8d0f6a72c1de780b33e210f459"
+    },
+    {
+      "name": "DISPOSITION.json",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-C-M/DISPOSITION.json",
+      "bytes": 1483,
+      "sha256": "425fa6d4f5ba70bbb6011fcd787a897576865392b55825e072b4403f20bdbf73"
+    },
+    {
+      "name": "COVERAGE.json",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-C-M/COVERAGE.json",
+      "bytes": 10315,
+      "sha256": "b24cf586833b82d8f86c61e9640a6f2ded3e2577e0884d6defeae161d8610f34"
+    },
+    {
+      "name": "PROVENANCE.json",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-C-M/PROVENANCE.json",
+      "bytes": 23601,
+      "sha256": "fd352c57aef8d0553388dab5de92ffe02a4a3770a2121b538a31a1fbacb7cc15"
+    },
+    {
+      "name": "COST.json",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-C-M/COST.json",
+      "bytes": 2850,
+      "sha256": "51c1943ce79b5d591c8197c826ac9e719c4f9a156f5ead2f71a9fb8b9bedccd7"
+    },
+    {
+      "name": "METHOD.json",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-C-M/METHOD.json",
+      "bytes": 2479,
+      "sha256": "3dfe39db284205d066f9f5fd4f4cf438b018da6c273b7400c95f7563572492c1"
+    },
+    {
+      "name": "PRESERVATION.json",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-C-M/PRESERVATION.json",
+      "bytes": 5030,
+      "sha256": "c48f46e95e21bc779965dbd4a4bc5b900b6c9b997b0323a77693f3245feaa4fc"
+    },
+    {
+      "name": "SOURCES.json",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-C-M/SOURCES.json",
+      "bytes": 15067,
+      "sha256": "53ed1e8b15587bc8b0eea51d14ca3ffd47a5f631ab590d8160da12f0f98ceee9"
+    },
+    {
+      "name": "SOURCE_RANGES.json",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-C-M/SOURCE_RANGES.json",
+      "bytes": 13693,
+      "sha256": "82eaac28de4c89b83c4e03162952e40abea17fc1cf3638a961ded774c8f2f586"
+    },
+    {
+      "name": "QUALITY_FREEZE.json",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-C-M/QUALITY_FREEZE.json",
+      "bytes": 13122,
+      "sha256": "32f7fc9761ba109cc98a8481aeefe4ea9b5dd85d7a7a89a63b186fe018c77f2a"
+    },
+    {
+      "name": "QA.json",
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-C-M/QA.json",
+      "bytes": 1027,
+      "sha256": "5f080dfc2631279157f27a6891d6a80e90166dd4476ff02229874f9bd6d669be"
+    }
+  ],
+  "positive_topfile_publication_whitelist": [
+    "REVIEW.md",
+    "DISPOSITION.json",
+    "COVERAGE.json",
+    "PROVENANCE.json",
+    "COST.json",
+    "METHOD.json",
+    "PRESERVATION.json",
+    "SOURCES.json",
+    "SOURCE_RANGES.json",
+    "QUALITY_FREEZE.json",
+    "QA.json",
+    "MANIFEST.json",
+    "FREEZE.json"
+  ],
+  "publication_policy": "Copy only these exact top-level files. No recursive copy. Exclude _raw/**, capture bodies and any unlisted file. Public-source locators/hashes/ranges and whitelisted native scalar receipts only.",
+  "original_helper_birth_epoch": 1790997968.6905622,
+  "original_inclusive_deadline_epoch": 1791000368.6905622,
+  "global_deadline_epoch": 1791013030.8303788,
+  "actual_end_record": "FREEZE.json",
+  "source_first_quality_freeze_sha256": "32f7fc9761ba109cc98a8481aeefe4ea9b5dd85d7a7a89a63b186fe018c77f2a",
+  "source_metadata_correction": "SOURCE_RANGES.json corrects only compact-API reading-window metadata; immutable source-first quality remains unchanged."
+}

@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "case_id": "V8-NB-RETR-C-M",
+  "revealed_after_quality_freeze": true,
+  "quality_freeze_sha256": "32f7fc9761ba109cc98a8481aeefe4ea9b5dd85d7a7a89a63b186fe018c77f2a",
+  "method_id": "C-B",
+  "assigned_method": "ordinary-complete-plus-coherent-batching",
+  "planning_suffix": "C-M",
+  "actual_native_family": "root-attested GLM5.3FlashMax via accepted Z subscription",
+  "method_card_sha256": "6b617504d3749407e1a80d876bdce0c1117668326e6131a582e730c50b106d0a",
+  "requirements": [
+    {
+      "requirement": "Plan two or three coherent research batches across three questions",
+      "artifact_status": "PRESENT",
+      "evidence": "Final §1 names three batches: format/diff, cell-id/git/failure chain, and re-verification reads.",
+      "actual_operation_uptake": "UNKNOWN"
+    },
+    {
+      "requirement": "Reuse an acquired source within this case where related obligations apply",
+      "artifact_status": "PRESENT",
+      "evidence": "S3/S7/S11 cited across component analysis, identity, safe validation and plan obligations.",
+      "actual_operation_uptake": "UNKNOWN"
+    },
+    {
+      "requirement": "Only a short research-order note",
+      "artifact_status": "PRESENT",
+      "evidence": "Final §1 is a single short paragraph.",
+      "actual_operation_uptake": "UNKNOWN"
+    },
+    {
+      "requirement": "Fresh independent candidate critique and bounded correction",
+      "artifact_status": "PRESENT",
+      "mechanical_status": "SUPPORTED_BY_ADMITTED_RECEIPTS",
+      "evidence": "Distinct target IDs, fresh-session flags, complete statuses, artifact hashes and positive quiet/close receipts.",
+      "same_account": "ROOT_ATTESTED; independent credential identity UNKNOWN"
+    },
+    {
+      "requirement": "No cross-case cache/discoveries or private/evaluator content",
+      "artifact_status": "CANDIDATE_DECLARED",
+      "actual_operation_uptake": "UNKNOWN"
+    }
+  ],
+  "optional_observed_artifact_behavior": [
+    "SRC/INF/CHOICE/PROPOSED TEST labels",
+    "Self-derived analytic witness section"
+  ],
+  "requirement_inference_limit": "Optional control behavior is not treatment contamination and is not a quality penalty. No operation trace or raw history read. Instruction uptake is not recipe-effectiveness evidence.",
+  "method_disposition": "ARTIFACT_NOTE_CONFORMS; ACTUAL_BATCHING_UNKNOWN",
+  "source_semantic_acquisition": "UNKNOWN",
+  "frontend_consumption": "UNKNOWN",
+  "winner_or_efficiency_inference": false
+}

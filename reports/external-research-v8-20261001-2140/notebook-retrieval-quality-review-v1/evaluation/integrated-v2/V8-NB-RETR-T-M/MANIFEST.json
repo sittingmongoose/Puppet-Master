@@ -1,0 +1,107 @@
+{
+  "schema": "positive-publication-manifest-v1",
+  "case_id": "V8-NB-RETR-T-M",
+  "grade": "FAIL",
+  "quality_disposition": "VERIFIED_FAILED_SCREEN",
+  "publication_policy": "Only named top-level files below; no recursive directory publication",
+  "allowed_public_top_level_files": [
+    "REVIEW.md",
+    "DISPOSITION.json",
+    "COVERAGE.json",
+    "PROVENANCE.json",
+    "COST.json",
+    "METHOD_AUDIT.json",
+    "PRESERVATION.json",
+    "HASH_MATCH_ERRATUM.json",
+    "SOURCE_METADATA.json",
+    "QUALITY_REVIEW.md",
+    "QUALITY_DISPOSITION.json",
+    "QUALITY_COVERAGE.json",
+    "QUALITY_FREEZE.json",
+    "MANIFEST.json",
+    "FREEZE.json"
+  ],
+  "positive_pins": [
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/REVIEW.md",
+      "sha256": "037d5b31c760237e24f94feca6fbac53eab4a427e6ddf2cbb68dfb7b8821cdaa",
+      "bytes": 4621
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/DISPOSITION.json",
+      "sha256": "5fa47f2df7cb6ac128ee7f5ac4b54b44cc55a4e94b4bd4ced3ab1951ad5eda87",
+      "bytes": 961
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/COVERAGE.json",
+      "sha256": "ec5efdd1fdec8250466dcdcaaad3f3da8799fb5f7befbdf7ab2e39b1cf281e68",
+      "bytes": 5469
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/PROVENANCE.json",
+      "sha256": "80315ba813af0c90c5346125032234974b8eb17635befc24131b6c49cccd616a",
+      "bytes": 18832
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/COST.json",
+      "sha256": "d8516c642b1f07c9cd5908ce95b67da7e7d116878bc8330f0cd208849dcc24c3",
+      "bytes": 1796
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/METHOD_AUDIT.json",
+      "sha256": "196fadd8755c525d5d39caca9e9384517065277b592bfa36354196a07b382b94",
+      "bytes": 2455
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/PRESERVATION.json",
+      "sha256": "67e604eab43c75741ef0bf2e2851903aa2ba53ab4a76cb4465bb532f50247075",
+      "bytes": 4289
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/HASH_MATCH_ERRATUM.json",
+      "sha256": "3c0547224a353d5e36c141684fbda5ba1013a8643057f975d9a195a624356849",
+      "bytes": 5424
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/SOURCE_METADATA.json",
+      "sha256": "f7367fa20b3c400022537fbbdd463fb7c560890c01fff8f2915e11c9d38201a0",
+      "bytes": 8330
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/QUALITY_REVIEW.md",
+      "sha256": "5926d2aa652ea01510fb68cc738e936c99aff26ade30c2dcc829218371c56b83",
+      "bytes": 3546
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/QUALITY_DISPOSITION.json",
+      "sha256": "abe7d0f153f164da78099fede947c3c4acbf02b48baef3571ab77d93556022e4",
+      "bytes": 442
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/QUALITY_COVERAGE.json",
+      "sha256": "fccdd2dc4953c5cefedc13e891078b049b36f6add0b915ad8dd4c020d760c5d2",
+      "bytes": 4513
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/QUALITY_FREEZE.json",
+      "sha256": "7b8dfbf143ad282040fd8d0dd7ca18b56b523c37c237f46cb2709005c923ffdd",
+      "bytes": 7722
+    }
+  ],
+  "manifest_and_freeze_pins": "Reported out of band in terminal evaluator receipt to avoid self-reference",
+  "raw_public_source_bodies": "Stay external in owned source-captures; excluded",
+  "excluded": "All unlisted files, source-captures raw bodies, native context/runtime/SDK/tool arguments/live account or ledger artifacts",
+  "quality_immutable_pin": {
+    "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/QUALITY_FREEZE.json",
+    "sha256": "7b8dfbf143ad282040fd8d0dd7ca18b56b523c37c237f46cb2709005c923ffdd",
+    "bytes": 7722
+  },
+  "source_quality_hash_erratum_pin": {
+    "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/HASH_MATCH_ERRATUM.json",
+    "sha256": "3c0547224a353d5e36c141684fbda5ba1013a8643057f975d9a195a624356849",
+    "bytes": 5424
+  },
+  "quality_comprehensive": false,
+  "unchecked_status": "UNASSESSED",
+  "unchecked_score": null
+}

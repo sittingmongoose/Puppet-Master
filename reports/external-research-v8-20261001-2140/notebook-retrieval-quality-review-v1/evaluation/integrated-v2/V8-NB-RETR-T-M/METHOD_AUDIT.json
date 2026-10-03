@@ -1,0 +1,40 @@
+{
+  "schema": "independent-method-audit-v1",
+  "case_id": "V8-NB-RETR-T-M",
+  "read_after_quality_freeze": true,
+  "method_pin": {
+    "path": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-RETR-T-M/METHOD.md",
+    "sha256": "700f321706f86f2eb5e9debe5cabdef89e2433b24ca272eb0d13faee400221cf",
+    "bytes": 1440
+  },
+  "task_pin": {
+    "path": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-RETR-T-M/TASK.md",
+    "sha256": "3e8880be6ef929c150e0465a9e0c3c23a4c4397ba2b8de3b59744b95a8371164",
+    "bytes": 982
+  },
+  "prospective_manifest_pin": {
+    "path": "LAB_ROOT/cases/prospective-timing-v3/candidates/V8-NB-RETR-T-M/manifest.json",
+    "sha256": "ec7ad0c991691210a050cf2d6681caf290297b4396ff557bb7d928ad99834ea9",
+    "bytes": 4790
+  },
+  "method_id": "C-B-R",
+  "assigned_requirements": [
+    "two or three coherent research batches across three questions",
+    "source reuse within case",
+    "progressive identity/version/section discovery followed by surrounding-context expansion",
+    "short research-order note",
+    "complete all bounded obligations"
+  ],
+  "proposal_self_report": "Three batches: component identities/releases; targeted matching/schema sections; issue-fix-test drill-down. Final describes targeted critique-source recapture and source reuse.",
+  "short_research_order_note": "PRESENT",
+  "method_cards_identical_across_stage_inputs": true,
+  "actual_coherent_batching": "UNKNOWN from narratives alone",
+  "actual_progressive_acquisition": "UNKNOWN; no admitted operation metadata yet",
+  "method_compliance": "INDETERMINATE",
+  "research_critic_correction_stage_sequence": "SUPPORTED by recorded own complete/close timestamps and preserved output/input bytes",
+  "three_fresh_distinct_targets": "RECORDED; actual fresh-session flag and root attestation, no reasoning history inspected",
+  "no_cross_case_reuse": "UNKNOWN from permitted evidence",
+  "no_candidate_test_execution_claim": "SUPPORTED by explicit proposed/unexecuted labels; not proof of absence of any undisclosed execution",
+  "quality_effect": "NONE: frozen VERIFIED_FAILED_SCREEN remains independent of this audit",
+  "excluded_evidence": "Other cases, prior evaluators, private inventories, live ledger/accounts/profiles, runtime streams/tool arguments/context payloads"
+}

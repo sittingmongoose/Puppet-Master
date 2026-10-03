@@ -30,4 +30,6 @@ The completed-pair and independent-quality bundles provide actual artifacts and 
 
 [Completed notebook retrieval pair](integrated-notebook-retrieval-pair-v1/README.md) supplies all six actual native stages and positive closure evidence; its operational bundle retains quality PENDING at its freeze. [Twelve-helper amendment](helper-concurrency-v2-cohort/README.md) publishes the unchanged budgets, preserved v1 HOLD, exact v2 acceptance and once-only root installation.
 
-[Independent public-checkpoint audit](current-state-cohort-v1/public-checkpoint-audit-v2/README.md) verifies the selected totals, links and new manifest hashes within its stated mechanical scope.
+[Independent public-checkpoint audit](current-state-cohort-v1/public-checkpoint-audit-v2/README.md) verifies the earlier 03:30 snapshot, links and new manifest hashes within its stated mechanical scope; later observations remain separate.
+
+[Notebook retrieval independent reviews](notebook-retrieval-quality-review-v1/README.md) add separately frozen source-first dispositions, limited coverage, exact original/public provenance and hash errata. The local control score is not a canonical comparable grade. Its standalone public verifier checks 35 artifact hashes only.

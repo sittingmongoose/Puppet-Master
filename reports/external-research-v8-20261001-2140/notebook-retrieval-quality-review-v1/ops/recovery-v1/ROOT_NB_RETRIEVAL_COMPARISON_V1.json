@@ -1,0 +1,58 @@
+{
+  "schema": "pm.er8.root-matched-comparison.v1",
+  "root_authority": true,
+  "created_epoch": 1790999693.3227634,
+  "comparison": "NB progressive-retrieval C/T",
+  "case_results": [
+    {
+      "case_id": "V8-NB-RETR-C-M",
+      "disposition": "HOLD",
+      "freeze": {
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-C-M/FREEZE.json",
+        "sha256": "8a4013e41ca5eb81965c48e692f2b48fb0f188807f0fd8b071caff431d36e8a2"
+      },
+      "manifest": {
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-C-M/MANIFEST.json",
+        "sha256": "17e557a9d409632f98aeedcc210fe030586977e074e3c5492415880796bc971a"
+      },
+      "case_receipt": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-C-M/GLOBAL_PARENT_FINAL_RECEIPT.json",
+        "sha256": "5c2ebf747294c58c423ec527b31bd556240c386f067b4bb670a370091ac2b316"
+      },
+      "wall_seconds": 1908.40340531,
+      "occupied_stage_lease_seconds": 1907.84130525589,
+      "outside_native_seconds": 5.634330074
+    },
+    {
+      "case_id": "V8-NB-RETR-T-M",
+      "disposition": "VERIFIED_FAILED_SCREEN",
+      "freeze": {
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/FREEZE.json",
+        "sha256": "272227f0edbd38a9eb5338df886dae241e014180c1c516bc0d95a2ec3f6d86e3"
+      },
+      "manifest": {
+        "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/MANIFEST.json",
+        "sha256": "282c3ec771b2f6ff7f284106e8d90fe4ef2bfc958740e6c613fb64d41075a364"
+      },
+      "case_receipt": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/GLOBAL_PARENT_FINAL_RECEIPT.json",
+        "sha256": "49e90c9b54ddcc468f97ea4f1882d837201d36e51604343cfde9bf43bd723cb5"
+      },
+      "wall_seconds": 2059.356413208,
+      "occupied_stage_lease_seconds": 2058.8847460746765,
+      "outside_native_seconds": 4.902850151
+    }
+  ],
+  "root_checks": "Exact admitted final/parent and independent evaluator freeze/manifest pins matched; wholecase ledger completed before evaluation. Root preserves independent source rulings without new source grade or candidate fixture execution.",
+  "quality_ruling": "Control HOLD; treatment VERIFIED_FAILED_SCREEN. No full quality PASS, winner, qualified same-quality efficiency or holdout release.",
+  "control_numeric_score_scope": "Local declared18-facet87.5/100 is not canonical comparable numerical grade; canonical score null. No best-of selection or qualified comparison based on local score.",
+  "remaining_scope": "UNASSESSED/null or explicit local rubric coverage as original reports; not zero/full truth certification.",
+  "method_quality_order": "Source-first immutable quality freezes precede METHOD/TASK/manifest/native/provenance audit; exposed case/artifact identity limits blinding. Actual trace-level method uptake INDETERMINATE, candidate self-reports insufficient.",
+  "preservation": "C confirmed source-range bookkeeping correction added separately, original source/quality pins retained. T initial all13hash-match statement corrected by erratum12/13, decisive source hashes match; original quality freeze unchanged.",
+  "candidate_feedback": "NONE",
+  "cost_scope": "Descriptive candidate costs separate from Sol evaluator/preparation/root management; all earlier failure/replacement costs retained, full tokens/money/account/load UNKNOWN.",
+  "observation": {
+    "path": "LAB_ROOT/ops/recovery-v1/OBSERVATION_20261003_035453.json",
+    "sha256": "30dbbbaf9f47ee1c2c677c68b0868d6d43ea1823f9ed0d4340efd7714d7f0920"
+  }
+}

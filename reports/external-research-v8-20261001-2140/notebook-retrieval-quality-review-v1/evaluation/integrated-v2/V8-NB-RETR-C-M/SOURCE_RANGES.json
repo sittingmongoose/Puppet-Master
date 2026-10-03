@@ -1,0 +1,491 @@
+{
+  "schema_version": 1,
+  "scope": "Source locator metadata correction only, after immutable quality freeze. Compact GitHub API bodies are one line; original SOURCES.json stored overlarge intended reading windows. Exact ranges below supersede those windows. Bodies, hashes, claims and frozen quality judgments are unchanged.",
+  "frozen_sources_sha256": "53ed1e8b15587bc8b0eea51d14ca3ffd47a5f631ab590d8160da12f0f98ceee9",
+  "sources": [
+    {
+      "id": "CONFIG",
+      "url": "https://raw.githubusercontent.com/jupyter/nbdime/main/nbdime/diffing/config.py",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbdime/main/nbdime/diffing/config.py",
+      "sha256": "9bf4a80db9bf0daf64d376f6797e9ee165f587135dc2e6ab48087e59e6157d82",
+      "body_line_count": 34,
+      "exact_body_line_ranges_1_based": [
+        [
+          1,
+          34
+        ]
+      ],
+      "source_body_published": false,
+      "verbatim_excerpt_words": 0
+    },
+    {
+      "id": "FORMAT",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/docs/format_description.rst",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/docs/format_description.rst",
+      "sha256": "64c851511006d916b8a21c54d58dbc823938eb7724f0bb9145c61a006e14f80d",
+      "body_line_count": 465,
+      "exact_body_line_ranges_1_based": [
+        [
+          13,
+          18
+        ],
+        [
+          53,
+          60
+        ],
+        [
+          346,
+          366
+        ]
+      ],
+      "source_body_published": false,
+      "verbatim_excerpt_words": 0
+    },
+    {
+      "id": "INIT",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/__init__.py",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/__init__.py",
+      "sha256": "e4afe87976b229354971db0bb3c69b7eb775b2c7f0f13486ed910489f59f1509",
+      "body_line_count": 211,
+      "exact_body_line_ranges_1_based": [
+        [
+          66,
+          101
+        ]
+      ],
+      "source_body_published": false,
+      "verbatim_excerpt_words": 0
+    },
+    {
+      "id": "PR447",
+      "url": "https://api.github.com/repos/jupyter/nbformat/pulls/447",
+      "resolved_url": "https://api.github.com/repos/jupyter/nbformat/pulls/447",
+      "sha256": "4eb2e9e5d4751de8780b8543b584ec02f0380189c55038874d17aa031cf24a3f",
+      "body_line_count": 1,
+      "exact_body_line_ranges_1_based": [
+        [
+          1,
+          1
+        ]
+      ],
+      "source_body_published": false,
+      "verbatim_excerpt_words": 0,
+      "json_pointers": [
+        "/state",
+        "/merged",
+        "/merged_at",
+        "/merge_commit_sha"
+      ]
+    },
+    {
+      "id": "S1",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md",
+      "sha256": "414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab",
+      "body_line_count": 532,
+      "exact_body_line_ranges_1_based": [
+        [
+          30,
+          70
+        ],
+        [
+          248,
+          257
+        ],
+        [
+          313,
+          340
+        ],
+        [
+          459,
+          468
+        ],
+        [
+          517,
+          524
+        ]
+      ],
+      "source_body_published": false,
+      "verbatim_excerpt_words": 0
+    },
+    {
+      "id": "S10",
+      "url": "https://api.github.com/search/issues?q=repo%3Ajupyter%2Fnbformat%20%22duplicate%20cell%20id%22",
+      "resolved_url": "https://api.github.com/search/issues?q=repo%3Ajupyter%2Fnbformat%20%22duplicate%20cell%20id%22",
+      "sha256": "f234572e4467b21dc6b289d2b011bf604a218ebb33ffdd1fd6a4aacd37c1c4ab",
+      "body_line_count": 1,
+      "exact_body_line_ranges_1_based": [
+        [
+          1,
+          1
+        ]
+      ],
+      "source_body_published": false,
+      "verbatim_excerpt_words": 0,
+      "json_pointers": [
+        "/total_count",
+        "/items/0/number",
+        "/items/1/number",
+        "/items/2/number",
+        "/items/1/body",
+        "/items/2/body"
+      ]
+    },
+    {
+      "id": "S11",
+      "url": "https://raw.githubusercontent.com/git/git/master/Documentation/gitdiffcore.adoc",
+      "resolved_url": "https://raw.githubusercontent.com/git/git/master/Documentation/gitdiffcore.adoc",
+      "sha256": "28cf7eb14e75fe46417d87acf0f81b989419c62b72b5926910e7f256003f185f",
+      "body_line_count": 333,
+      "exact_body_line_ranges_1_based": [
+        [
+          123,
+          196
+        ]
+      ],
+      "source_body_published": false,
+      "verbatim_excerpt_words": 0
+    },
+    {
+      "id": "S12",
+      "url": "https://raw.githubusercontent.com/git/git/master/Documentation/git-clone.adoc",
+      "resolved_url": "https://raw.githubusercontent.com/git/git/master/Documentation/git-clone.adoc",
+      "sha256": "32ab4dc61fe9527326d5dd77c200f4bd8c3e4ca91606e7d6fadab172e3e2c59a",
+      "body_line_count": 445,
+      "exact_body_line_ranges_1_based": [
+        [
+          373,
+          378
+        ]
+      ],
+      "source_body_published": false,
+      "verbatim_excerpt_words": 0
+    },
+    {
+      "id": "S2a",
+      "url": "https://raw.githubusercontent.com/jupyter/nbdime/main/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbdime/main/README.md",
+      "sha256": "24cc7e5ead43c72bce18c574b1441cdd47ed58b4421ec5a52a214af946607649",
+      "body_line_count": 94,
+      "exact_body_line_ranges_1_based": [
+        [
+          1,
+          85
+        ]
+      ],
+      "source_body_published": false,
+      "verbatim_excerpt_words": 0
+    },
+    {
+      "id": "S2b",
+      "url": "https://api.github.com/repos/jupyter/nbdime/releases/latest",
+      "resolved_url": "https://api.github.com/repos/jupyter/nbdime/releases/latest",
+      "sha256": "8bc19b5003338b7c8a6997191f98be5ec24422cfeec9e5e925426d292128276c",
+      "body_line_count": 1,
+      "exact_body_line_ranges_1_based": [
+        [
+          1,
+          1
+        ]
+      ],
+      "source_body_published": false,
+      "verbatim_excerpt_words": 0,
+      "json_pointers": [
+        "/tag_name",
+        "/published_at",
+        "/target_commitish",
+        "/draft",
+        "/prerelease"
+      ]
+    },
+    {
+      "id": "S3",
+      "url": "https://raw.githubusercontent.com/jupyter/nbdime/main/nbdime/diffing/notebooks.py",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbdime/main/nbdime/diffing/notebooks.py",
+      "sha256": "9f9739feb52db1673832af609c257dda1f3ac6b258ec4d81f64db8d93657fe37",
+      "body_line_count": 626,
+      "exact_body_line_ranges_1_based": [
+        [
+          4,
+          11
+        ],
+        [
+          34,
+          40
+        ],
+        [
+          56,
+          80
+        ],
+        [
+          207,
+          291
+        ],
+        [
+          294,
+          384
+        ],
+        [
+          387,
+          415
+        ],
+        [
+          433,
+          466
+        ],
+        [
+          520,
+          556
+        ],
+        [
+          590,
+          626
+        ]
+      ],
+      "source_body_published": false,
+      "verbatim_excerpt_words": 0
+    },
+    {
+      "id": "S4",
+      "url": "https://raw.githubusercontent.com/jupyter/nbdime/main/nbdime/diffing/generic.py",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbdime/main/nbdime/diffing/generic.py",
+      "sha256": "8a4493e7e622e49ae859102a8f00341251a174257d746609947846c290bace6a",
+      "body_line_count": 287,
+      "exact_body_line_ranges_1_based": [
+        [
+          20,
+          52
+        ],
+        [
+          63,
+          119
+        ],
+        [
+          157,
+          170
+        ]
+      ],
+      "source_body_published": false,
+      "verbatim_excerpt_words": 0
+    },
+    {
+      "id": "S5",
+      "url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/cell-id.md",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/cell-id.md",
+      "sha256": "7f52a9c224fd11509db187187f6e1bd760a329ba836a3b40945b47bcde463992",
+      "body_line_count": 334,
+      "exact_body_line_ranges_1_based": [
+        [
+          1,
+          16
+        ],
+        [
+          56,
+          86
+        ],
+        [
+          88,
+          102
+        ],
+        [
+          171,
+          183
+        ],
+        [
+          258,
+          275
+        ],
+        [
+          326,
+          334
+        ]
+      ],
+      "source_body_published": false,
+      "verbatim_excerpt_words": 0
+    },
+    {
+      "id": "S6",
+      "url": "https://api.github.com/repos/jupyter/nbformat/contents/nbformat/v4?ref=main",
+      "resolved_url": "https://api.github.com/repos/jupyter/nbformat/contents/nbformat/v4?ref=main",
+      "sha256": "b3385c61115d20914310949041828928f92593cfeaaa74dc6805695818e22012",
+      "body_line_count": 1,
+      "exact_body_line_ranges_1_based": [
+        [
+          1,
+          1
+        ]
+      ],
+      "source_body_published": false,
+      "verbatim_excerpt_words": 0,
+      "json_pointers": [
+        "/3/name",
+        "/3/sha",
+        "/3/size",
+        "/4/name",
+        "/4/sha",
+        "/4/size",
+        "/5/name",
+        "/5/sha",
+        "/5/size",
+        "/6/name",
+        "/6/sha",
+        "/6/size",
+        "/7/name",
+        "/7/sha",
+        "/7/size",
+        "/8/name",
+        "/8/sha",
+        "/8/size",
+        "/9/name",
+        "/9/sha",
+        "/9/size"
+      ]
+    },
+    {
+      "id": "S7",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/validator.py",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/validator.py",
+      "sha256": "3db1fe48de1060981b13bcf828b8a5779ae30dd082ec06f712f066e90fbbfd46",
+      "body_line_count": 649,
+      "exact_body_line_ranges_1_based": [
+        [
+          31,
+          99
+        ],
+        [
+          101,
+          120
+        ],
+        [
+          291,
+          354
+        ],
+        [
+          356,
+          447
+        ]
+      ],
+      "source_body_published": false,
+      "verbatim_excerpt_words": 0
+    },
+    {
+      "id": "S8",
+      "url": "https://api.github.com/repos/jupyter/nbformat/issues/235",
+      "resolved_url": "https://api.github.com/repos/jupyter/nbformat/issues/235",
+      "sha256": "40420f0c01c3ebcc658bbce6a1178292440e58bbaf1395501b66829683cf5fe7",
+      "body_line_count": 1,
+      "exact_body_line_ranges_1_based": [
+        [
+          1,
+          1
+        ]
+      ],
+      "source_body_published": false,
+      "verbatim_excerpt_words": 0,
+      "json_pointers": [
+        "/title",
+        "/state",
+        "/comments",
+        "/created_at",
+        "/body",
+        "/user/login",
+        "/author_association"
+      ]
+    },
+    {
+      "id": "S9",
+      "url": "https://github.com/jupyter/nbformat/pull/447.diff",
+      "resolved_url": "https://patch-diff.githubusercontent.com/raw/jupyter/nbformat/pull/447.diff",
+      "sha256": "b2ed75abcea6eb0130887e147f4a462446d3815286f82e131bb9349bc76ebd35",
+      "body_line_count": 237,
+      "exact_body_line_ranges_1_based": [
+        [
+          26,
+          125
+        ],
+        [
+          147,
+          235
+        ]
+      ],
+      "source_body_published": false,
+      "verbatim_excerpt_words": 0
+    },
+    {
+      "id": "SCHEMA44",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.4.schema.json",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.4.schema.json",
+      "sha256": "dddf3bff4c0bd42bd467117321d72bceddb8de7361b0cc9581bd8318e9b4d3c8",
+      "body_line_count": 459,
+      "exact_body_line_ranges_1_based": [
+        [
+          140,
+          240
+        ]
+      ],
+      "source_body_published": false,
+      "verbatim_excerpt_words": 0
+    },
+    {
+      "id": "SCHEMA45",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.5.schema.json",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.5.schema.json",
+      "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+      "body_line_count": 471,
+      "exact_body_line_ranges_1_based": [
+        [
+          98,
+          107
+        ],
+        [
+          277,
+          306
+        ],
+        [
+          393,
+          413
+        ]
+      ],
+      "source_body_published": false,
+      "verbatim_excerpt_words": 0
+    },
+    {
+      "id": "TAG3",
+      "url": "https://raw.githubusercontent.com/jupyter/nbdime/v4.0.4/nbdime/diffing/notebooks.py",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbdime/v4.0.4/nbdime/diffing/notebooks.py",
+      "sha256": "bc9c5c5ad149661e7d3f6a99e43c657a91cce91ee1411611656df0dc61e837d2",
+      "body_line_count": 626,
+      "exact_body_line_ranges_1_based": [
+        [
+          63,
+          83
+        ],
+        [
+          381,
+          384
+        ],
+        [
+          590,
+          605
+        ]
+      ],
+      "source_body_published": false,
+      "verbatim_excerpt_words": 0
+    },
+    {
+      "id": "TAG4",
+      "url": "https://raw.githubusercontent.com/jupyter/nbdime/v4.0.4/nbdime/diffing/generic.py",
+      "resolved_url": "https://raw.githubusercontent.com/jupyter/nbdime/v4.0.4/nbdime/diffing/generic.py",
+      "sha256": "7ed11454e7e944942e628c1b602cc1e24db026426e4f66adc3b1024f069cfa0a",
+      "body_line_count": 238,
+      "exact_body_line_ranges_1_based": [
+        [
+          20,
+          94
+        ]
+      ],
+      "source_body_published": false,
+      "verbatim_excerpt_words": 0
+    }
+  ]
+}

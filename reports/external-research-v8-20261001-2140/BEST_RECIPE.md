@@ -1,3 +1,3 @@
 # Best recipe disposition
 
-**NOT ESTABLISHED.** Three operational biomedical pairs have six independent FAILED_SCREEN verdicts. The completed notebook retrieval pair is under independent review. Unchecked facets remain UNASSESSED. No full quality PASS, quality-qualified speedup, winner or unseen-holdout qualification. [Retrieval findings](retrieval-quality-review-v1/README.md), [amendment findings](amendment-quality-review-v1/README.md), [breadth findings](breadth-quality-review-v1/README.md).
+**NOT ESTABLISHED.** Four completed operational pairs have seven independent FAILED_SCREEN verdicts and one HOLD. Unchecked facets remain UNASSESSED. Notebook control’s local 87.5 is not a comparable canonical score and does not qualify a recipe. No full quality PASS, qualified speedup, winner or unseen-holdout qualification. [Biomedical findings](breadth-quality-review-v1/README.md), [notebook retrieval findings](notebook-retrieval-quality-review-v1/README.md).

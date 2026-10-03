@@ -1,5 +1,5 @@
 {
-  "checkpoint": "FOUR_OPERATIONAL_PAIRS_THREE_REVIEWED_FAILED_SCREENS_NB_AMEND_ACTIVE",
+  "checkpoint": "FOUR_REVIEWED_PAIRS_SEVEN_FAILED_SCREENS_ONE_HOLD_NINTH_PIPELINE_COMPLETE",
   "accepted_utc": "2026-10-02T01:40:09+00:00",
   "deadline_utc": "2026-10-03T07:37:10.830379Z",
   "cases": [
@@ -100,7 +100,7 @@
   "pause_policy": "Actual explicit pause interval may be excluded prospectively on resume; no fixed assignment deadlines or births/outcomes/consumed usage reset",
   "previous_amended_deadline_utc": "2026-10-02T13:40:09Z",
   "resume_evidence": "resume-cohort-v1/ops/recovery-v1/RESUME_20261002.json",
-  "observation_utc": "2026-10-03T03:30:42.162151+00:00",
+  "observation_utc": "2026-10-03T03:54:53.321786+00:00",
   "native_qualification": "V3_MECHANICAL_PASSED_LIMITED_DELIVERY_INFERENCE",
   "native_qualification_evidence": "resume-qualified-v3-cohort/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json",
   "current_observation": {
@@ -112,18 +112,20 @@
       "V8-BIO-BREADTH-C-M",
       "V8-BIO-BREADTH-T-M",
       "V8-NB-RETR-C-M",
-      "V8-NB-RETR-T-M"
+      "V8-NB-RETR-T-M",
+      "V8-NB-AMEND-C-L"
     ],
     "active_jobs": [
-      "V8-NB-AMEND-T-L-research-proposal",
-      "V8-NB-AMEND-C-L-independent-candidate-critic"
+      "V8-NB-AMEND-T-L-final-correction",
+      "V8-NB-BREADTH-C-M-research-proposal"
     ],
-    "quality_reviewed_pairs": 3,
+    "quality_reviewed_pairs": 4,
+    "independent_failed_screens": 7,
+    "independent_holds": 1,
     "quality_pending_cases": [
-      "V8-NB-RETR-C-M",
-      "V8-NB-RETR-T-M"
+      "V8-NB-AMEND-C-L"
     ],
-    "evidence": "current-state-cohort-v1/latest-root-metadata-v1/ops/recovery-v1/OBSERVATION_20261003_033042.json"
+    "evidence": "notebook-retrieval-quality-review-v1/ops/recovery-v1/OBSERVATION_20261003_035453.json"
   },
   "original_case_list_scope": "Historical original reservations, preserved at initial planning freeze; NOT_RUN entries here are not current execution claims. See attempts.json/current_observation for actual outcomes."
 }

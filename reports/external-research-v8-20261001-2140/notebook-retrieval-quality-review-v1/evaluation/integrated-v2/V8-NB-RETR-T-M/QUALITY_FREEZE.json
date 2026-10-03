@@ -1,0 +1,144 @@
+{
+  "schema": "source-first-quality-freeze-v1",
+  "case_id": "V8-NB-RETR-T-M",
+  "quality_disposition": "VERIFIED_FAILED_SCREEN",
+  "quality_freeze_epoch": 1790998314.3806639,
+  "quality_freeze_utc": "2026-10-03T03:31:54.380664+00:00",
+  "helper_original_birth_epoch": 1790997968.6905622,
+  "helper_original_deadline_epoch": 1791000368.6905622,
+  "helper_budget_seconds": 2400,
+  "before_deadline": true,
+  "first_method_or_manifest_access": "not yet occurred",
+  "incoming_pins": [
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "sha256": "26e08d71be2a7f0562d76fb863dba9c9786ea66b63e66382ed253e962fe7707f",
+      "bytes": 43525
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-final-correction/workspace/out/UNRESOLVED_LEADS.md",
+      "sha256": "d25db16b16d08646c8c7c0e2a05ce57c32510f1c95e5842874991c1c97e72101",
+      "bytes": 4890
+    }
+  ],
+  "quality_pins": [
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/QUALITY_REVIEW.md",
+      "sha256": "5926d2aa652ea01510fb68cc738e936c99aff26ade30c2dcc829218371c56b83",
+      "bytes": 3546
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/QUALITY_COVERAGE.json",
+      "sha256": "fccdd2dc4953c5cefedc13e891078b049b36f6add0b915ad8dd4c020d760c5d2",
+      "bytes": 4513
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/QUALITY_DISPOSITION.json",
+      "sha256": "abe7d0f153f164da78099fede947c3c4acbf02b48baef3571ab77d93556022e4",
+      "bytes": 442
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/SOURCE_METADATA.json",
+      "sha256": "f7367fa20b3c400022537fbbdd463fb7c560890c01fff8f2915e11c9d38201a0",
+      "bytes": 8330
+    }
+  ],
+  "raw_source_index_pin": {
+    "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/source-captures/index.json",
+    "sha256": "d9763ea3f932bff11888bc7c670b9ab469098799641fea680f5a83d819c3a506",
+    "bytes": 5564
+  },
+  "public_body_pins": [
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/source-captures/nbdime-notebooks-main.py",
+      "sha256": "9f9739feb52db1673832af609c257dda1f3ac6b258ec4d81f64db8d93657fe37",
+      "bytes": 18981
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/source-captures/nbformat-validator-main.py",
+      "sha256": "3db1fe48de1060981b13bcf828b8a5779ae30dd082ec06f712f066e90fbbfd46",
+      "bytes": 22349
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/source-captures/nbformat-validator-v5.11.1.py",
+      "sha256": "3db1fe48de1060981b13bcf828b8a5779ae30dd082ec06f712f066e90fbbfd46",
+      "bytes": 22349
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/source-captures/nbformat-tests-main.py",
+      "sha256": "1d5990ad23fba5ad6b048e6cddde5ed6d4ac8c1d4239e34650067d666173e6cc",
+      "bytes": 13945
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/source-captures/nbformat-init-main.py",
+      "sha256": "e4afe87976b229354971db0bb3c69b7eb775b2c7f0f13486ed910489f59f1509",
+      "bytes": 6230
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/source-captures/nbformat-schema45.json",
+      "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+      "bytes": 16104
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/source-captures/nbformat-schema44.json",
+      "sha256": "dddf3bff4c0bd42bd467117321d72bceddb8de7361b0cc9581bd8318e9b4d3c8",
+      "bytes": 15703
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/source-captures/nbdime-changelog.md",
+      "sha256": "1d3c90cd4292540d702c0917d1243120327bc1146f711958353e76dc0e0e98a3",
+      "bytes": 18608
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/source-captures/nbformat-changelog.md",
+      "sha256": "414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab",
+      "bytes": 28394
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/source-captures/nbformat-warnings.py",
+      "sha256": "bcd6aa3e8cc7f6ae733c7f4cbf7ca2a206cb91b190b225897d4c3442fb017c82",
+      "bytes": 741
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/source-captures/nbformat-issue243.json",
+      "sha256": "882be9f73e27dfe956f70b0d6df50c0c6e871eff83a42078d868bdf229832cfa",
+      "bytes": 3232
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/source-captures/nbformat-pr282.json",
+      "sha256": "e32bac08f2f38eabf23580e0e35459c725b22ef832f8f9f18444c7161da19f5f",
+      "bytes": 18631
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/source-captures/nbformat-release.json",
+      "sha256": "4e7c7592aeae719f17b4a30fe6e7ec45ba0d3606445f586e121581d7d48d1452",
+      "bytes": 10314
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/source-captures/nbdime-release.json",
+      "sha256": "8bc19b5003338b7c8a6997191f98be5ec24422cfeec9e5e925426d292128276c",
+      "bytes": 14523
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/source-captures/nbdime-notebooks-v4.0.4.py",
+      "sha256": "bc9c5c5ad149661e7d3f6a99e43c657a91cce91ee1411611656df0dc61e837d2",
+      "bytes": 18745
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/source-captures/nbdime-generic.py",
+      "sha256": "8a4493e7e622e49ae859102a8f00341251a174257d746609947846c290bace6a",
+      "bytes": 10287
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/source-captures/nbdime-utils-v4.0.4.py",
+      "sha256": "f5a53b69a5832024dddabd0c2e593e9419d4c8c4ad8e292f620a1a5cddd94a15",
+      "bytes": 10559
+    },
+    {
+      "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/source-captures/nbformat-converter-v5.11.1.py",
+      "sha256": "4de95eec690de98ef22280e85c26e1a97f74cff7866e6fa247dc514f8886e28f",
+      "bytes": 2620
+    }
+  ],
+  "immutable": true
+}

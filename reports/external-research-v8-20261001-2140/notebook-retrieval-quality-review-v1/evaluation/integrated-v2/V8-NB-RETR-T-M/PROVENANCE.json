@@ -1,0 +1,364 @@
+{
+  "schema": "frozen-output-evaluator-provenance-v1",
+  "case_id": "V8-NB-RETR-T-M",
+  "inspection_after_quality_freeze": true,
+  "quality_freeze_pin": {
+    "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/QUALITY_FREEZE.json",
+    "sha256": "7b8dfbf143ad282040fd8d0dd7ca18b56b523c37c237f46cb2709005c923ffdd",
+    "bytes": 7722
+  },
+  "stages": [
+    {
+      "stage": "research-proposal",
+      "complete": {
+        "schema": "er8.integrated.stage-deferred-close.v1",
+        "case": "V8-NB-RETR-T-M",
+        "job": "V8-NB-RETR-T-M-research-proposal",
+        "stage_start_monotonic_ns": 217535465191293,
+        "original_case_start_monotonic_ns": 217535465191293,
+        "original_deadline_monotonic_ns": 218735465191293,
+        "native_wrapper_launch_monotonic_ns": 217537059485884,
+        "native_quiescence_observed_monotonic_ns": 218110801730840,
+        "last_charged_host_monotonic_ns": 218110922051421,
+        "host_groups_absent": true,
+        "required_artifact": {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-research-proposal/workspace/out/PROPOSAL.md",
+          "bytes": 26153,
+          "sha256": "3f9c8b11c71ce00b8adab41fbd1ee231282695bdcc44be536d035059ebc54285"
+        },
+        "native_goal_activation_observed": true,
+        "native_goal_target_id": "target_mursnlq2_4a70e275-7bae-4eab-ab30-80701510d22a",
+        "fresh_session": true,
+        "native_responses": 9,
+        "native_goal_status": "complete",
+        "wrapper_returncode": 0,
+        "source_semantic_acquisition": "UNKNOWN",
+        "usage": "UNKNOWN except reported monotonic output lower bound"
+      },
+      "quiescence": {
+        "schema": "er8.execution.quiescence.v1",
+        "owned_unit": "er8-v8-nb-retr-t-m-research-proposal.service",
+        "absence_proof": "positively-enrolled-owned-cgroup-removed",
+        "owned_native_quiescent": true,
+        "quiescence_observed_monotonic_ns": 218110801730840,
+        "original_deadline_monotonic_ns": 218735465191293,
+        "inclusive_native_lifetime_established": true,
+        "occupancy_disposition": "releasable-native-only"
+      },
+      "external_stage_close": {
+        "schema": "er8.integrated.external-stage-close.v1",
+        "case": "V8-NB-RETR-T-M",
+        "job": "V8-NB-RETR-T-M-research-proposal",
+        "stage_actor_pid": 2483510,
+        "stage_actor_pgid": 2483510,
+        "held_Popen_wait_returncode": 0,
+        "stage_actor_exited": true,
+        "stage_actor_group_absent": true,
+        "stage_actor_exit_observed_monotonic_ns": 218110989452088,
+        "original_deadline_monotonic_ns": 218735465191293,
+        "inner_quiescence": {
+          "schema": "er8.execution.quiescence.v1",
+          "owned_unit": "er8-v8-nb-retr-t-m-research-proposal.service",
+          "absence_proof": "positively-enrolled-owned-cgroup-removed",
+          "owned_native_quiescent": true,
+          "quiescence_observed_monotonic_ns": 218111074660620,
+          "original_deadline_monotonic_ns": 218735465191293,
+          "inclusive_native_lifetime_established": true,
+          "occupancy_disposition": "releasable-native-only"
+        }
+      },
+      "receipt_pins": [
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-research-proposal/COMPLETE.json",
+          "sha256": "f029376eda7ad93f2bf48813762d1151c7d9f5d7c9d96961dd6647d21894a3e9",
+          "bytes": 1241
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-research-proposal/QUIESCENCE.json",
+          "sha256": "57f5949d70e2bcf67e768e51c9d3d19606ee0f13162d7bc984762f02c872c31a",
+          "bytes": 995
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-research-proposal/EXTERNAL_STAGE_CLOSE.json",
+          "sha256": "c88b9829c4571c34f0436f2331a1732f211aca0fbc61d7a1b71cbf278ee5ed66",
+          "bytes": 1532
+        }
+      ]
+    },
+    {
+      "stage": "independent-candidate-critic",
+      "complete": {
+        "schema": "er8.integrated.stage-deferred-close.v1",
+        "case": "V8-NB-RETR-T-M",
+        "job": "V8-NB-RETR-T-M-independent-candidate-critic",
+        "stage_start_monotonic_ns": 218111202123615,
+        "original_case_start_monotonic_ns": 217535465191293,
+        "original_deadline_monotonic_ns": 219311202123615,
+        "native_wrapper_launch_monotonic_ns": 218112136999136,
+        "native_quiescence_observed_monotonic_ns": 218801817795105,
+        "last_charged_host_monotonic_ns": 218801910195104,
+        "host_groups_absent": true,
+        "required_artifact": {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-independent-candidate-critic/workspace/out/CRITIQUE.md",
+          "bytes": 25616,
+          "sha256": "e73063dcfa0127d1d40c70bd9af52ef18ee45812d85f3cb338524c259d6c58b0"
+        },
+        "native_goal_activation_observed": true,
+        "native_goal_target_id": "target_murszwok_a9a0939b-6ca0-47bb-80ca-2c702f1e1163",
+        "fresh_session": true,
+        "native_responses": 14,
+        "native_goal_status": "complete",
+        "wrapper_returncode": 0,
+        "source_semantic_acquisition": "UNKNOWN",
+        "usage": "UNKNOWN except reported monotonic output lower bound"
+      },
+      "quiescence": {
+        "schema": "er8.execution.quiescence.v1",
+        "owned_unit": "er8-v8-nb-retr-t-m-independent-candidate-critic.service",
+        "absence_proof": "positively-enrolled-owned-cgroup-removed",
+        "owned_native_quiescent": true,
+        "quiescence_observed_monotonic_ns": 218801817795105,
+        "original_deadline_monotonic_ns": 219311202123615,
+        "inclusive_native_lifetime_established": true,
+        "occupancy_disposition": "releasable-native-only"
+      },
+      "external_stage_close": {
+        "schema": "er8.integrated.external-stage-close.v1",
+        "case": "V8-NB-RETR-T-M",
+        "job": "V8-NB-RETR-T-M-independent-candidate-critic",
+        "stage_actor_pid": 2521892,
+        "stage_actor_pgid": 2521892,
+        "held_Popen_wait_returncode": 0,
+        "stage_actor_exited": true,
+        "stage_actor_group_absent": true,
+        "stage_actor_exit_observed_monotonic_ns": 218801987418897,
+        "original_deadline_monotonic_ns": 219311202123615,
+        "inner_quiescence": {
+          "schema": "er8.execution.quiescence.v1",
+          "owned_unit": "er8-v8-nb-retr-t-m-independent-candidate-critic.service",
+          "absence_proof": "positively-enrolled-owned-cgroup-removed",
+          "owned_native_quiescent": true,
+          "quiescence_observed_monotonic_ns": 218802066396355,
+          "original_deadline_monotonic_ns": 219311202123615,
+          "inclusive_native_lifetime_established": true,
+          "occupancy_disposition": "releasable-native-only"
+        }
+      },
+      "receipt_pins": [
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-independent-candidate-critic/COMPLETE.json",
+          "sha256": "fd0a3e51447cd38d49f8d01b383f95653351563bb6057aa2b3d7a000a5165178",
+          "bytes": 1264
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-independent-candidate-critic/QUIESCENCE.json",
+          "sha256": "7249f1b6c8dc519580b2350e6d1a00ad2e19af6c2acac7a6721302522bb4e981",
+          "bytes": 1039
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-independent-candidate-critic/EXTERNAL_STAGE_CLOSE.json",
+          "sha256": "8508713580894273b17fe37ea54dadebfbc424660c45c7e338af126587bbcb62",
+          "bytes": 1587
+        }
+      ]
+    },
+    {
+      "stage": "final-correction",
+      "complete": {
+        "schema": "er8.integrated.stage-deferred-close.v1",
+        "case": "V8-NB-RETR-T-M",
+        "job": "V8-NB-RETR-T-M-final-correction",
+        "stage_start_monotonic_ns": 218802188867702,
+        "original_case_start_monotonic_ns": 217535465191293,
+        "original_deadline_monotonic_ns": 219702188867702,
+        "native_wrapper_launch_monotonic_ns": 218803093906456,
+        "native_quiescence_observed_monotonic_ns": 219594124428588,
+        "last_charged_host_monotonic_ns": 219594197207012,
+        "host_groups_absent": true,
+        "required_artifact": {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-final-correction/workspace/out/FINAL_PROPOSAL.md",
+          "bytes": 43525,
+          "sha256": "26e08d71be2a7f0562d76fb863dba9c9786ea66b63e66382ed253e962fe7707f"
+        },
+        "native_goal_activation_observed": true,
+        "native_goal_target_id": "target_murteprz_f03e5298-0dbe-4b58-aaf9-46170cced118",
+        "fresh_session": true,
+        "native_responses": 12,
+        "native_goal_status": "complete",
+        "wrapper_returncode": 0,
+        "source_semantic_acquisition": "UNKNOWN",
+        "usage": "UNKNOWN except reported monotonic output lower bound"
+      },
+      "quiescence": {
+        "schema": "er8.execution.quiescence.v1",
+        "owned_unit": "er8-v8-nb-retr-t-m-final-correction.service",
+        "absence_proof": "positively-enrolled-owned-cgroup-removed",
+        "owned_native_quiescent": true,
+        "quiescence_observed_monotonic_ns": 219594124428588,
+        "original_deadline_monotonic_ns": 219702188867702,
+        "inclusive_native_lifetime_established": true,
+        "occupancy_disposition": "releasable-native-only"
+      },
+      "external_stage_close": {
+        "schema": "er8.integrated.external-stage-close.v1",
+        "case": "V8-NB-RETR-T-M",
+        "job": "V8-NB-RETR-T-M-final-correction",
+        "stage_actor_pid": 2551554,
+        "stage_actor_pgid": 2551554,
+        "held_Popen_wait_returncode": 0,
+        "stage_actor_exited": true,
+        "stage_actor_group_absent": true,
+        "stage_actor_exit_observed_monotonic_ns": 219594282269743,
+        "original_deadline_monotonic_ns": 219702188867702,
+        "inner_quiescence": {
+          "schema": "er8.execution.quiescence.v1",
+          "owned_unit": "er8-v8-nb-retr-t-m-final-correction.service",
+          "absence_proof": "positively-enrolled-owned-cgroup-removed",
+          "owned_native_quiescent": true,
+          "quiescence_observed_monotonic_ns": 219594368479229,
+          "original_deadline_monotonic_ns": 219702188867702,
+          "inclusive_native_lifetime_established": true,
+          "occupancy_disposition": "releasable-native-only"
+        }
+      },
+      "receipt_pins": [
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-final-correction/COMPLETE.json",
+          "sha256": "aaf6bb8e3197613c8cae075d94ec300f82a8f03049c98eb47360c4b685ff2783",
+          "bytes": 1246
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-final-correction/QUIESCENCE.json",
+          "sha256": "7122d8bad015d7a995d1ca13d8c948de651a60e78d9625837f701ded2ca8838f",
+          "bytes": 991
+        },
+        {
+          "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-final-correction/EXTERNAL_STAGE_CLOSE.json",
+          "sha256": "f79ee915b7ed9637002bd1ff425bb9bbbe1f9dfba08c6d3f7a17499ae57881de",
+          "bytes": 1527
+        }
+      ]
+    }
+  ],
+  "external_case_close": {
+    "schema": "er8.integrated.external-case-close.v1",
+    "case": "V8-NB-RETR-T-M",
+    "hostmanagement_supervisor_pid": 2483360,
+    "hostmanagement_supervisor_pgid": 2483360,
+    "held_Popen_wait_returncode": 0,
+    "case_supervisor_exited": true,
+    "case_supervisor_group_absent": true,
+    "case_supervisor_exit_observed_monotonic_ns": 219594604738595,
+    "original_case_start_monotonic_ns": 217535465191293,
+    "original_case_deadline_monotonic_ns": 221135465191293,
+    "external_case_observed_monotonic_ns": 219594729107838,
+    "actual_final_proposal": {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "bytes": 43525,
+      "sha256": "26e08d71be2a7f0562d76fb863dba9c9786ea66b63e66382ed253e962fe7707f"
+    },
+    "source_semantic_acquisition": "UNKNOWN"
+  },
+  "global_parent_final_receipt": {
+    "schema": "er8.integrated.global-parent-final-receipt.v1",
+    "case": "V8-NB-RETR-T-M",
+    "held_finalizer_pid": 2593006,
+    "held_finalizer_returncode": 0,
+    "actual_case_end_monotonic_ns": 219594821604501,
+    "original_case_start_monotonic_ns": 217535465191293,
+    "original_case_deadline_monotonic_ns": 221135465191293,
+    "actual_case_wall_seconds": 2059.356413208,
+    "actual_occupied_stage_lease_seconds": 2058.8847460746765,
+    "whole_case_occupied_cap_seconds": 5400,
+    "actual_nonoverlapping_outside_native_seconds": 4.902850151,
+    "native_owned_intervals_monotonic_ns": [
+      [
+        217537059485884,
+        218110801730840
+      ],
+      [
+        218112136999136,
+        218801817795105
+      ],
+      [
+        218803093906456,
+        219594124428588
+      ]
+    ],
+    "all_case_execution_closed_before_cutoff": true,
+    "actual_final_proposal": {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "bytes": 43525,
+      "sha256": "26e08d71be2a7f0562d76fb863dba9c9786ea66b63e66382ed253e962fe7707f"
+    },
+    "source_semantic_acquisition": "UNKNOWN"
+  },
+  "receipt_pins": [
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-research-proposal/COMPLETE.json",
+      "sha256": "f029376eda7ad93f2bf48813762d1151c7d9f5d7c9d96961dd6647d21894a3e9",
+      "bytes": 1241
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-research-proposal/QUIESCENCE.json",
+      "sha256": "57f5949d70e2bcf67e768e51c9d3d19606ee0f13162d7bc984762f02c872c31a",
+      "bytes": 995
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-research-proposal/EXTERNAL_STAGE_CLOSE.json",
+      "sha256": "c88b9829c4571c34f0436f2331a1732f211aca0fbc61d7a1b71cbf278ee5ed66",
+      "bytes": 1532
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-independent-candidate-critic/COMPLETE.json",
+      "sha256": "fd0a3e51447cd38d49f8d01b383f95653351563bb6057aa2b3d7a000a5165178",
+      "bytes": 1264
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-independent-candidate-critic/QUIESCENCE.json",
+      "sha256": "7249f1b6c8dc519580b2350e6d1a00ad2e19af6c2acac7a6721302522bb4e981",
+      "bytes": 1039
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-independent-candidate-critic/EXTERNAL_STAGE_CLOSE.json",
+      "sha256": "8508713580894273b17fe37ea54dadebfbc424660c45c7e338af126587bbcb62",
+      "bytes": 1587
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-final-correction/COMPLETE.json",
+      "sha256": "aaf6bb8e3197613c8cae075d94ec300f82a8f03049c98eb47360c4b685ff2783",
+      "bytes": 1246
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-final-correction/QUIESCENCE.json",
+      "sha256": "7122d8bad015d7a995d1ca13d8c948de651a60e78d9625837f701ded2ca8838f",
+      "bytes": 991
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-final-correction/EXTERNAL_STAGE_CLOSE.json",
+      "sha256": "f79ee915b7ed9637002bd1ff425bb9bbbe1f9dfba08c6d3f7a17499ae57881de",
+      "bytes": 1527
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/EXTERNAL_CASE_CLOSE.json",
+      "sha256": "68a2cdbd5650144c68afee905f3f9c9866d4c0520769cf5283c11e672ea5ba91",
+      "bytes": 1034
+    },
+    {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/GLOBAL_PARENT_FINAL_RECEIPT.json",
+      "sha256": "49e90c9b54ddcc468f97ea4f1882d837201d36e51604343cfde9bf43bd723cb5",
+      "bytes": 1403
+    }
+  ],
+  "global_parent_expected_pin_match": true,
+  "native_targets_distinct": true,
+  "all_three_complete": true,
+  "all_three_quiescent_receipts": true,
+  "all_stage_outer_closes_zero_and_absent": true,
+  "same_native_family_account_mode_route": "root attestation only: accepted Z subscription, native GLM5.3FlashMax; filename T-M is lineage",
+  "underlying_account_identity": "UNKNOWN; no credentials/provider profiles/live ledger inspected",
+  "ledger_reservation_completion": "root attestation only",
+  "native_frontend_consumption": "UNKNOWN",
+  "source_semantic_acquisition": "UNKNOWN",
+  "scope": "Whitelist-only recorded provenance; no live native process or SDK/runtime/context streams inspected. Receipt completion does not prove source semantics, quality, efficiency, or winner."
+}

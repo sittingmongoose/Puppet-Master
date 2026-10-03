@@ -1,0 +1,28 @@
+{
+  "case_id": "V8-NB-RETR-T-M",
+  "quality_disposition": "VERIFIED_FAILED_SCREEN",
+  "grade": "FAIL",
+  "score": null,
+  "comprehensive": false,
+  "pass_eligible": false,
+  "decisive_findings": [
+    "F1",
+    "F2"
+  ],
+  "unchecked_status": "UNASSESSED",
+  "unchecked_scores": null,
+  "quality_independent_of_method": true,
+  "tests_executed": false,
+  "native_frontend_consumption": "UNKNOWN",
+  "source_semantic_acquisition": "UNKNOWN",
+  "operational_pipeline": "RECORDED_COMPLETE_AND_QUIESCENT",
+  "method_compliance": "INDETERMINATE",
+  "preservation": "VERIFIED_BYTE_LINEAGE_AND_TEXTUAL_ADOPTION",
+  "receipt_pin_match": true,
+  "recorded_caps": "WITHIN",
+  "quality_hash_bookkeeping_erratum": {
+    "path": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/HASH_MATCH_ERRATUM.json",
+    "sha256": "3c0547224a353d5e36c141684fbda5ba1013a8643057f975d9a195a624356849",
+    "bytes": 5424
+  }
+}

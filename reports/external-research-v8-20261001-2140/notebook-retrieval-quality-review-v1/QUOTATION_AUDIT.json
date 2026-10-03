@@ -1,0 +1,25 @@
+{
+  "schema": "pm.er8.public-source-quotation-projection-audit.v1",
+  "policy": "<=25 direct third-party words per source across this cohort; conservative omission of every direct SOURCE_EXCERPTS quotation span. Review prose/verdicts otherwise unchanged. No raw source body reads/copies by publisher.",
+  "third_party_direct_verbatim_words_published": 0,
+  "reviews_explicit_quotation_spans": 0,
+  "candidate_own_quotes_permitted": true,
+  "original_source_locators_primary_URLs_ranges_preserved": true,
+  "artifacts": [
+    {
+      "source_projection": "LAB_ROOT/evaluation/integrated-v2/V8-NB-RETR-T-M/QUALITY_REVIEW.md",
+      "original_sha256": "5926d2aa652ea01510fb68cc738e936c99aff26ade30c2dcc829218371c56b83",
+      "omitted_spans": [
+        {
+          "original_span_sha256": "cb6729fa30880067fdaa267b68feb0bd3d908775ae8a7ed3699ddddb78f733c3",
+          "original_word_count": 3,
+          "public_verbatim_word_count": 0,
+          "original_line": 7
+        }
+      ],
+      "public_verbatim_source_quotation_words": 0,
+      "locator_hash_ranges_retained": true,
+      "finding_or_verdict_change": false
+    }
+  ]
+}

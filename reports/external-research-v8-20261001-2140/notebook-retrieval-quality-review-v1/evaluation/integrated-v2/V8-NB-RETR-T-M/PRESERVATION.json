@@ -1,0 +1,96 @@
+{
+  "schema": "artifact-preservation-audit-v1",
+  "case_id": "V8-NB-RETR-T-M",
+  "quality_freeze_unchanged": true,
+  "artifact_lineage": [
+    {
+      "check": "research proposal → critic input",
+      "source": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-research-proposal/workspace/out/PROPOSAL.md",
+        "sha256": "3f9c8b11c71ce00b8adab41fbd1ee231282695bdcc44be536d035059ebc54285",
+        "bytes": 26153
+      },
+      "destination": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-independent-candidate-critic/workspace/inputs/PROPOSAL.md",
+        "sha256": "3f9c8b11c71ce00b8adab41fbd1ee231282695bdcc44be536d035059ebc54285",
+        "bytes": 26153
+      },
+      "byte_identical": true
+    },
+    {
+      "check": "research proposal → correction input",
+      "source": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-research-proposal/workspace/out/PROPOSAL.md",
+        "sha256": "3f9c8b11c71ce00b8adab41fbd1ee231282695bdcc44be536d035059ebc54285",
+        "bytes": 26153
+      },
+      "destination": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-final-correction/workspace/inputs/PROPOSAL.md",
+        "sha256": "3f9c8b11c71ce00b8adab41fbd1ee231282695bdcc44be536d035059ebc54285",
+        "bytes": 26153
+      },
+      "byte_identical": true
+    },
+    {
+      "check": "critic output → correction input",
+      "source": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-independent-candidate-critic/workspace/out/CRITIQUE.md",
+        "sha256": "e73063dcfa0127d1d40c70bd9af52ef18ee45812d85f3cb338524c259d6c58b0",
+        "bytes": 25616
+      },
+      "destination": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-final-correction/workspace/inputs/CRITIQUE.md",
+        "sha256": "e73063dcfa0127d1d40c70bd9af52ef18ee45812d85f3cb338524c259d6c58b0",
+        "bytes": 25616
+      },
+      "byte_identical": true
+    }
+  ],
+  "required_outputs_match_receipts": true,
+  "final_pinned_output": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-RETR-T-M/V8-NB-RETR-T-M-final-correction/workspace/out/FINAL_PROPOSAL.md",
+    "sha256": "26e08d71be2a7f0562d76fb863dba9c9786ea66b63e66382ed253e962fe7707f",
+    "bytes": 43525
+  },
+  "critique_disposition_text_audit": [
+    {
+      "id": "C1",
+      "status": "TEXTUALLY_ADOPTED",
+      "effect": "Raw/markdown attachments only; code-cell schema anomaly"
+    },
+    {
+      "id": "C2",
+      "status": "TEXTUALLY_ADOPTED",
+      "effect": "Self-parsed JSON, isvalid on copies, validate/reads repair path differentiated"
+    },
+    {
+      "id": "C3",
+      "status": "TEXTUALLY_ADOPTED",
+      "effect": "Old docstring relocated to PR-era source"
+    },
+    {
+      "id": "C4",
+      "status": "TEXTUALLY_ADOPTED",
+      "effect": "Function-specific quote wording"
+    },
+    {
+      "id": "C5",
+      "status": "TEXTUALLY_ADOPTED",
+      "effect": "Pre-4.0 claim relabeled inference"
+    },
+    {
+      "id": "C6",
+      "status": "TEXTUALLY_ADOPTED",
+      "effect": "Blob locator retained as unresolved"
+    },
+    {
+      "id": "T1",
+      "status": "TEXTUALLY_ADOPTED",
+      "effect": "Pairwise-distinct content fixture and dedicated ambiguity variant"
+    }
+  ],
+  "unexecuted_validation_labels_preserved": true,
+  "normative_intent_and_current_mechanism_distinguished_in_final": true,
+  "seven_unresolved_leads_visible": true,
+  "note": "Editorial and byte preservation audit after quality freeze; not primary-source endorsement of unchecked critique/correction claims. No evaluator feedback entered the frozen candidate artifacts."
+}

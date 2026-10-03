@@ -1,0 +1,233 @@
+{
+  "case_id": "V8-NB-RETR-T-M",
+  "source_type": "independently captured public primary sources",
+  "range_unit": "UTF-8 text lines, 1-based, inclusive",
+  "sources": [
+    {
+      "file": "nbdime-notebooks-main.py",
+      "url": "https://raw.githubusercontent.com/jupyter/nbdime/main/nbdime/diffing/notebooks.py",
+      "sha256": "9f9739feb52db1673832af609c257dda1f3ac6b258ec4d81f64db8d93657fe37",
+      "bytes": 18981,
+      "status": 200,
+      "captured_at": "2026-10-03T03:28:48.138059+00:00",
+      "assessed_ranges": [
+        {
+          "start": 7,
+          "end": 10
+        },
+        {
+          "start": 266,
+          "end": 292
+        },
+        {
+          "start": 350,
+          "end": 379
+        },
+        {
+          "start": 619,
+          "end": 626
+        }
+      ],
+      "role": "decisive evidence"
+    },
+    {
+      "file": "nbformat-validator-main.py",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/validator.py",
+      "sha256": "3db1fe48de1060981b13bcf828b8a5779ae30dd082ec06f712f066e90fbbfd46",
+      "bytes": 22349,
+      "status": 200,
+      "captured_at": "2026-10-03T03:28:48.134462+00:00",
+      "assessed_ranges": [],
+      "role": "capture/hash comparison only; claims UNASSESSED"
+    },
+    {
+      "file": "nbformat-validator-v5.11.1.py",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/validator.py",
+      "sha256": "3db1fe48de1060981b13bcf828b8a5779ae30dd082ec06f712f066e90fbbfd46",
+      "bytes": 22349,
+      "status": 200,
+      "captured_at": "2026-10-03T03:28:48.142663+00:00",
+      "assessed_ranges": [],
+      "role": "capture/hash comparison only; claims UNASSESSED"
+    },
+    {
+      "file": "nbformat-tests-main.py",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/tests/test_validator.py",
+      "sha256": "1d5990ad23fba5ad6b048e6cddde5ed6d4ac8c1d4239e34650067d666173e6cc",
+      "bytes": 13945,
+      "status": 200,
+      "captured_at": "2026-10-03T03:28:48.179571+00:00",
+      "assessed_ranges": [],
+      "role": "capture/hash comparison only; claims UNASSESSED"
+    },
+    {
+      "file": "nbformat-init-main.py",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/__init__.py",
+      "sha256": "e4afe87976b229354971db0bb3c69b7eb775b2c7f0f13486ed910489f59f1509",
+      "bytes": 6230,
+      "status": 200,
+      "captured_at": "2026-10-03T03:28:48.176689+00:00",
+      "assessed_ranges": [],
+      "role": "capture/hash comparison only; claims UNASSESSED"
+    },
+    {
+      "file": "nbformat-schema45.json",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.5.schema.json",
+      "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+      "bytes": 16104,
+      "status": 200,
+      "captured_at": "2026-10-03T03:28:48.176329+00:00",
+      "assessed_ranges": [],
+      "role": "capture/hash comparison only; claims UNASSESSED"
+    },
+    {
+      "file": "nbformat-schema44.json",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.4.schema.json",
+      "sha256": "dddf3bff4c0bd42bd467117321d72bceddb8de7361b0cc9581bd8318e9b4d3c8",
+      "bytes": 15703,
+      "status": 200,
+      "captured_at": "2026-10-03T03:28:48.175720+00:00",
+      "assessed_ranges": [],
+      "role": "capture/hash comparison only; claims UNASSESSED"
+    },
+    {
+      "file": "nbdime-changelog.md",
+      "url": "https://raw.githubusercontent.com/jupyter/nbdime/main/CHANGELOG.md",
+      "sha256": "1d3c90cd4292540d702c0917d1243120327bc1146f711958353e76dc0e0e98a3",
+      "bytes": 18608,
+      "status": 200,
+      "captured_at": "2026-10-03T03:28:48.188004+00:00",
+      "assessed_ranges": [],
+      "role": "capture/hash comparison only; claims UNASSESSED"
+    },
+    {
+      "file": "nbformat-changelog.md",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md",
+      "sha256": "414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab",
+      "bytes": 28394,
+      "status": 200,
+      "captured_at": "2026-10-03T03:28:48.179208+00:00",
+      "assessed_ranges": [],
+      "role": "capture/hash comparison only; claims UNASSESSED"
+    },
+    {
+      "file": "nbformat-warnings.py",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/warnings.py",
+      "sha256": "bcd6aa3e8cc7f6ae733c7f4cbf7ca2a206cb91b190b225897d4c3442fb017c82",
+      "bytes": 741,
+      "status": 200,
+      "captured_at": "2026-10-03T03:28:48.218814+00:00",
+      "assessed_ranges": [],
+      "role": "capture/hash comparison only; claims UNASSESSED"
+    },
+    {
+      "file": "nbformat-issue243.json",
+      "url": "https://api.github.com/repos/jupyter/nbformat/issues/243",
+      "sha256": "882be9f73e27dfe956f70b0d6df50c0c6e871eff83a42078d868bdf229832cfa",
+      "bytes": 3232,
+      "status": 200,
+      "captured_at": "2026-10-03T03:28:48.336906+00:00",
+      "assessed_ranges": [],
+      "role": "capture/hash comparison only; claims UNASSESSED"
+    },
+    {
+      "file": "nbformat-pr282.json",
+      "url": "https://api.github.com/repos/jupyter/nbformat/pulls/282",
+      "sha256": "e32bac08f2f38eabf23580e0e35459c725b22ef832f8f9f18444c7161da19f5f",
+      "bytes": 18631,
+      "status": 200,
+      "captured_at": "2026-10-03T03:28:48.394202+00:00",
+      "assessed_ranges": [],
+      "role": "capture/hash comparison only; claims UNASSESSED"
+    },
+    {
+      "file": "nbformat-release.json",
+      "url": "https://api.github.com/repos/jupyter/nbformat/releases/latest",
+      "sha256": "4e7c7592aeae719f17b4a30fe6e7ec45ba0d3606445f586e121581d7d48d1452",
+      "bytes": 10314,
+      "status": 200,
+      "captured_at": "2026-10-03T03:28:48.324190+00:00",
+      "assessed_ranges": [],
+      "role": "capture/hash comparison only; claims UNASSESSED"
+    },
+    {
+      "file": "nbdime-release.json",
+      "url": "https://api.github.com/repos/jupyter/nbdime/releases/latest",
+      "sha256": "8bc19b5003338b7c8a6997191f98be5ec24422cfeec9e5e925426d292128276c",
+      "bytes": 14523,
+      "status": 200,
+      "captured_at": "2026-10-03T03:28:48.355288+00:00",
+      "assessed_ranges": [],
+      "role": "capture/hash comparison only; claims UNASSESSED"
+    },
+    {
+      "file": "nbdime-notebooks-v4.0.4.py",
+      "url": "https://raw.githubusercontent.com/jupyter/nbdime/v4.0.4/nbdime/diffing/notebooks.py",
+      "sha256": "bc9c5c5ad149661e7d3f6a99e43c657a91cce91ee1411611656df0dc61e837d2",
+      "bytes": 18745,
+      "status": 200,
+      "captured_at": "2026-10-03T03:28:48.247318+00:00",
+      "assessed_ranges": [
+        {
+          "start": 7,
+          "end": 10
+        },
+        {
+          "start": 266,
+          "end": 292
+        },
+        {
+          "start": 350,
+          "end": 379
+        },
+        {
+          "start": 619,
+          "end": 626
+        }
+      ],
+      "role": "decisive evidence"
+    },
+    {
+      "file": "nbdime-generic.py",
+      "url": "https://raw.githubusercontent.com/jupyter/nbdime/main/nbdime/diffing/generic.py",
+      "sha256": "8a4493e7e622e49ae859102a8f00341251a174257d746609947846c290bace6a",
+      "bytes": 10287,
+      "status": 200,
+      "captured_at": "2026-10-03T03:28:48.214852+00:00",
+      "assessed_ranges": [],
+      "role": "capture/hash comparison only; claims UNASSESSED"
+    },
+    {
+      "file": "nbdime-utils-v4.0.4.py",
+      "url": "https://raw.githubusercontent.com/jupyter/nbdime/v4.0.4/nbdime/utils.py",
+      "sha256": "f5a53b69a5832024dddabd0c2e593e9419d4c8c4ad8e292f620a1a5cddd94a15",
+      "bytes": 10559,
+      "captured_at": "2026-10-03T03:29:48.016891+00:00",
+      "assessed_ranges": [
+        {
+          "start": 25,
+          "end": 51
+        }
+      ],
+      "role": "decisive evidence"
+    },
+    {
+      "file": "nbformat-converter-v5.11.1.py",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/converter.py",
+      "sha256": "4de95eec690de98ef22280e85c26e1a97f74cff7866e6fa247dc514f8886e28f",
+      "bytes": 2620,
+      "captured_at": "2026-10-03T03:29:48.117817+00:00",
+      "assessed_ranges": [
+        {
+          "start": 12,
+          "end": 26
+        },
+        {
+          "start": 36,
+          "end": 41
+        }
+      ],
+      "role": "decisive evidence"
+    }
+  ]
+}
