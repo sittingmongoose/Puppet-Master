@@ -13,22 +13,61 @@
     { disposition: 'route watch', threshold: 'crossed above 60', scope: 'Gemini API · vision helper', receipt: 'receipt ue-616 linked', foot: 'Review route · Gemini API', anomaly: true },
     { disposition: 'no action', threshold: 'clear', scope: 'Qwen Coding Plan', receipt: 'receipt ue-617 linked', foot: 'Within policy · Qwen' }
   ];
-  DATA.alerts.forEach(function (al, i) {
-    var x = ALERT_X[i];
-    def('alert-' + i, 'attention', { title: (PMU_BOARDS.widgets['alert-' + i] || {}).title || al.title, mark: al.provider_id ? PMU.roster.legacyProvider(al.provider_id) : null, prov: al.provider_id ? PMU.roster.legacyProvider(al.provider_id) : null,
-      meta: function () { return (al.time === 'now' ? 'now' : al.time + ' ago') + ' · ' + C.oldName(al.owner); }, model: function () {
-        if (al.provider_id && !D.inScope(al.provider_id)) return null;
-        var warn = al.state === 'warn', acts = [];
-        if (warn) acts.push({ label: 'Switch route', primary: true, act: 'alert-route', value: String(i), hover: 'cmd.provider.switch_route · moves new work to the next eligible route' });
-        acts.push({ label: 'Acknowledge', demo: 'usage.alert_ack', arg: 'alert-' + i, hover: 'Keeps the warning here; stops raising it on the Dashboard' });
-        acts.push({ label: 'Snooze 1h', demo: 'usage.alert_snooze', arg: 'alert-' + i, hover: 'Snoozes the alert for one hour' });
-        if (x.anomaly) { acts.push({ label: 'Keep guard', demo: 'usage.anomaly_keep', arg: 'alert-' + i }); acts.push({ label: 'Allow once', demo: 'usage.anomaly_allow', arg: 'alert-' + i }); }
-        return { sev: warn ? 'warn' : 'ok', sevWord: warn ? 'Attention' : 'Healthy', when: al.time === 'now' ? 'now' : al.time + ' ago', detail: C.alertCopy[i], score: al.score, raise: 70, baseline: '24-hour norm',
-          owner: C.oldName(al.owner), observed: al.time === 'now' ? 'now' : al.time + ' ago', disposition: x.disposition, scope: x.scope, threshold: x.threshold, receipt: x.receipt, actions: acts, foot: x.foot };
-      }, inspect: function () { return C.insp(al.title, [['Detail', C.alertCopy[i]], ['Score', al.score + ' of 100 · raises at 70'], ['Owner', C.oldName(al.owner)], ['Observed', al.time], ['Disposition', x.disposition], ['Scope', x.scope], ['Threshold', x.threshold], ['Receipt', x.receipt], ['Authority', 'provider reported · PM pace model for the comparison']]); } });
-  });
+  /* the alert cards are slots (FINAL-REVIEW-3 must-fix 5): a live alert (PMU.data.liveAlerts(), WOW-SPEC-3 8.3 beat 7)
+     becomes the first alert card and the fixture alerts shift down one card; an alert pushed past the last card stays
+     reachable as that card's "More alerts" fact and in its Details. With no live alert every card is exactly its fixture
+     alert, as before. */
+  var NCARDS = DATA.alerts.length;
+  function alertSlots() {
+    var live = (D.liveAlerts ? D.liveAlerts() : []).map(function (al) { return { live: true, al: al, key: 'live:' + al.id }; });
+    return live.concat(DATA.alerts.map(function (al, i) { return { live: false, al: al, i: i, key: 'alert-' + i }; }));
+  }
+  function slotOf(n) { return alertSlots()[n] || null; }
+  function slotTitle(sl) { return sl.live ? sl.al.title : (PMU_BOARDS.widgets['alert-' + sl.i] || {}).title || sl.al.title; }
+  function slotWhen(sl) { return sl.live || sl.al.time === 'now' ? 'now' : sl.al.time + ' ago'; }
+  function liveX(al) {
+    var a = al.account ? PMU.roster.account(al.account) : null, th = PMU.roster.thresholds();
+    return { disposition: 'route watch', threshold: 'crossed the ' + (100 - th.warnLeft) + '% warn line', scope: C.legName(al.provider_id) + (a ? ' · ' + a.nickname : ''),
+      receipt: 'live demo reading · no receipt yet', foot: 'Review route · ' + C.legName(al.provider_id) };
+  }
+  function slotModel(sl, n) {
+    var al = sl.al, x = sl.live ? liveX(al) : ALERT_X[sl.i], warn = al.state === 'warn', acts = [], arg = sl.live ? 'live:' + al.id : 'alert-' + sl.i;
+    if (warn) acts.push({ label: 'Switch route', primary: true, act: 'alert-route', value: sl.live ? 'live:' + al.id : String(sl.i), hover: 'cmd.provider.switch_route · moves new work to the next eligible route' });
+    acts.push({ label: 'Acknowledge', demo: 'usage.alert_ack', arg: arg, hover: 'Keeps the warning here; stops raising it on the Dashboard' });
+    acts.push({ label: 'Snooze 1h', demo: 'usage.alert_snooze', arg: arg, hover: 'Snoozes the alert for one hour' });
+    if (x.anomaly) { acts.push({ label: 'Keep guard', demo: 'usage.anomaly_keep', arg: arg }); acts.push({ label: 'Allow once', demo: 'usage.anomaly_allow', arg: arg }); }
+    var m = { key: sl.key, live: !!sl.live, prov: al.provider_id ? PMU.roster.legacyProvider(al.provider_id) : null, sev: warn ? 'warn' : 'ok', sevWord: warn ? 'Attention' : 'Healthy', when: slotWhen(sl), detail: sl.live ? al.detail : C.alertDetail(sl.i),
+      score: sl.live ? al.score : C.alertScore(sl.i, al), raise: 70, baseline: '24-hour norm', owner: C.oldName(al.owner), observed: slotWhen(sl), disposition: x.disposition, scope: x.scope,
+      threshold: x.threshold, receipt: x.receipt, actions: acts, foot: x.foot };
+    /* the last card names the alerts pushed past it (reachable, never dropped) */
+    if (n === NCARDS - 1) {
+      var more = alertSlots().slice(NCARDS);
+      if (more.length) m.more = more.map(function (o) { return slotTitle(o) + ' · ' + slotWhen(o); });
+    }
+    return m;
+  }
+  for (var n = 0; n < NCARDS; n++) (function (n) {
+    def('alert-' + n, 'attention', {
+      title: function () { var sl = slotOf(n); return sl ? slotTitle(sl) : DATA.alerts[n].title; },
+      mark: function () { var sl = slotOf(n); return sl && sl.al.provider_id ? PMU.roster.legacyProvider(sl.al.provider_id) : ''; },
+      meta: function () { var sl = slotOf(n); return sl ? slotWhen(sl) + ' · ' + C.oldName(sl.al.owner) : ''; },
+      model: function () {
+        var sl = slotOf(n); if (!sl) return null;
+        if (sl.al.provider_id && !D.inScope(sl.al.provider_id)) return null;
+        return slotModel(sl, n);
+      },
+      inspect: function () {
+        var sl = slotOf(n); if (!sl) return C.insp('Alert', [['Detail', 'No alert in this slot']]);
+        var m = slotModel(sl, n);
+        var rows = [['Detail', m.detail], ['Score', m.score + ' of 100 · raises at 70'], ['Owner', m.owner], ['Observed', m.observed], ['Disposition', m.disposition], ['Scope', m.scope], ['Threshold', m.threshold], ['Receipt', m.receipt],
+          ['Authority', sl.live ? 'live demo reading (concept fixture) · the demo engine raised it' : 'provider reported · PM pace model for the comparison']];
+        if (m.more) rows.push(['More alerts', m.more.join(' · ')]);
+        return C.insp(slotTitle(sl), rows);
+      } });
+  })(n);
   C.act('alert-route', function (el) {
-    var al = DATA.alerts[+el.getAttribute('data-value')]; if (!al) return;
+    var v = el.getAttribute('data-value') || '', al = v.indexOf('live:') === 0 ? (D.liveAlerts ? D.liveAlerts() : []).filter(function (x) { return 'live:' + x.id === v; })[0] : DATA.alerts[+v];
+    if (!al) return;
     var r = command('cmd.provider.switch_route', { provider_id: al.provider_id, reason: 'attention_' + (al.provider_id || 'route'), source: 'usage.attention', alert_title: al.title }, { requested: true });
     if (r.dispatch_accepted !== false) PMU.shell.toast('Route change requested for ' + legName(al.provider_id) + '. New work moves to the next eligible route.');
   });
@@ -58,10 +97,13 @@
   def('attention-history', 'attention', { meta: function () { return 'Daily · 7 days · actionable provider and pricing signals'; }, model: function () {
     var H = D.series('attentionHistory7d'), today = new Date(PMU.clock.now()); today.setHours(0, 0, 0, 0);
     var labels = H.raised.map(function (v, i) { return F.day(today.getTime() - (H.raised.length - 1 - i) * 86400000); });
-    return { labels: labels, unit: 'count', stacks: [{ providerId: 'raised', name: 'Raised', idx: 2, settled: H.raised, estimate: H.raised.map(function () { return 0; }) },
+    /* a live alert (beat 7) is raised today and open (FINAL-REVIEW-3 must-fix 5); the fixture's 11 / 9 / 2 are the base */
+    var nLive = D.liveAlerts ? D.liveAlerts().length : 0, raised = H.raised.slice();
+    if (nLive && raised.length) raised[raised.length - 1] += nLive;
+    return { labels: labels, unit: 'count', stacks: [{ providerId: 'raised', name: 'Raised', idx: 2, settled: raised, estimate: raised.map(function () { return 0; }) },
       { providerId: 'resolved', name: 'Resolved', idx: 1, settled: H.resolved, estimate: H.resolved.map(function () { return 0; }) }],
-      totals: H.raised.map(function (v, i) { return v + H.resolved[i]; }),
-      caption: '<span class="pmu-cap">RAISED</span> <b>11</b> · <span class="pmu-cap">RESOLVED</span> <b>9</b> · <span class="pmu-cap">OPEN</span> <b>2</b> · <span class="pmu-cap">MEDIAN</span> <b>18m</b>',
+      totals: raised.map(function (v, i) { return v + H.resolved[i]; }),
+      caption: '<span class="pmu-cap">RAISED</span> <b>' + (11 + nLive) + '</b> · <span class="pmu-cap">RESOLVED</span> <b>9</b> · <span class="pmu-cap">OPEN</span> <b>' + (2 + nLive) + '</b> · <span class="pmu-cap">MEDIAN</span> <b>18m</b>',
       note: 'Only actionable provider and pricing signals are counted.' };
   } });
 
@@ -263,11 +305,28 @@
     'cache-trend': ['num:cache', 'num:attempts'], 'signal-history': ['num:attempts'], /* integ3: every card that prints the selected attempts count follows it */ 'plan-value-now': ['num:value'],
     'an-totals': ['num:tokens', 'num:value', 'num:cache'], 'token-trend': ['num:tokens', 'chart:tokens'], 'next-reset': ['win:'], 'route-pressure': ['win:'],
     'ov-headroom': ['win:'], 'acct-switch': ['win:'], 'ov-resets': ['win:'], 'reset-map': ['win:'], 'acct-resets': ['win:'], 'an-resets': ['win:'],
-    'attention-now': ['alert:'], 'ledger-count': ['num:attempts'], 'ledger-routes': ['num:attempts'], 'budget-now': ['num:spend', 'chart:budget'], 'budget': ['num:spend', 'chart:budget'],
+    'attention-now': ['alert:', 'win:claude-code/work-claude/fiveHour'], 'alert-0': ['alert:', 'win:claude-code/work-claude/fiveHour'], 'alert-1': ['alert:', 'win:claude-code/work-claude/fiveHour'],
+    'alert-2': ['alert:', 'win:claude-code/work-claude/fiveHour'], 'attention-history': ['alert:'], 'ledger-count': ['num:attempts'], 'ledger-routes': ['num:attempts'], 'budget-now': ['num:spend', 'chart:budget'], 'budget': ['num:spend', 'chart:budget'],
     'quota-history': ['win:'], 'acct-history': ['acct:'], 'an-quota-history': ['win:'], 'plans-timeline': ['win:'], 'ov-skyline': ['win:']
   };
+  /* FINAL-REVIEW-3 must-fix 2 and 3: every card whose reading derives from the selected attempts (live attempts arrive
+     and settle: num:attempts.count, num:attempts.settle), from the window value (num:value.window) or from the month's
+     spend (num:spend.month) follows those keys, so no split, count or caption on screen is left stale beside its headline */
+  var V = 'num:value', A = 'num:attempts', SP = 'num:spend', CA = 'num:cache', TK = 'num:tokens';
+  var DERIVED = {
+    'budget-now': [V], 'budget': [V], 'plan-value-now': [A], 'forecast': [V, A], 'plan-settlement': [V, A], 'allowance-attribution': [V, A],
+    'cost-api': [A], 'cost-plan': [V, A], 'provider-cost': [V, A], 'cost-authority': [V, A, SP], 'cost-trend': [V, A], 'cost-spend': [SP],
+    'pricing-confidence': [V, A], 'burn-basis': [V, SP], 'account-fallbacks': [A], 'route-mismatches': [A],
+    'an-totals': [A], 'token-trend': [V, A], 'model-mix': [A], 'an-model-donut': [A], 'an-token-breakdown': [TK, A], 'cache-read-share': [TK, A, CA], 'reasoning-mix': [TK, A],
+    'ledger-timeline': [A], 'ledger-errors': [A], 'settlement-states': [A], 'ledger-main': [A], 'attempt-lineage': [A], 'ledger-coverage': [A], 'ledger-export': [A], 'usage-record-state': [A],
+    'anom': [A], 'cache-economics': [CA, A], 'cache-break-even': [CA, A], 'tool-list': [A], 'tool-allowance': [A], 'pricing-provenance': [V, A]
+  };
+  Object.keys(DERIVED).forEach(function (id) {
+    var have = LIVE[id] || [];
+    LIVE[id] = have.concat(DERIVED[id].filter(function (k) { return have.indexOf(k) < 0; }));
+  });
   Object.keys(LIVE).forEach(function (id) { if (PMU.widgets.get(id)) PMU.widgets.define(id, { live: LIVE[id] }); });
-  ['claude', 'codex', 'qwen', 'gemini', 'kimi', 'copilot'].forEach(function (id) { if (PMU.widgets.get('tok-' + id)) PMU.widgets.define('tok-' + id, { live: ['num:tokens.' + id] }); });
+  ['claude', 'codex', 'qwen', 'gemini', 'kimi', 'copilot'].forEach(function (id) { if (PMU.widgets.get('tok-' + id)) PMU.widgets.define('tok-' + id, { live: ['num:tokens.' + id, A] }); });
   C.inspectAll(Object.keys(PMU_BOARDS.widgets).concat.apply(Object.keys(PMU_BOARDS.widgets), Object.keys(PMU_BOARDS.rooms).map(function (room) { return PMU.widgets.list(room); })));
 
   /* ================================================================== room beats (WOW-SPEC-3 7, WOW-TASKS-3 N3-5; see 70-rooms-a.js) */

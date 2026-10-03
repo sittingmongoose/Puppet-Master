@@ -131,23 +131,23 @@
 
   def('budget-now', 'overview', { short: 'Budget', meta: function () { return C.budgetModel().periodText + ' · period to date · range does not apply'; }, model: function () { return C.budgetModel(); } });
   C.budgetModel = function () {
-    var S = D.series('spendDaily30'), P = D.series('budgetProjection'), cum = [], s = 0, live = D.ov ? D.ov('spend.month') : 0;
-    S.values.forEach(function (v) { s += v; cum.push(Math.round(s * 100) / 100); });
-    /* live: today's spend of the running work (WOW-SPEC-3 8.3) lands on the period-to-date total and today's point */
-    if (live && cum.length) cum[cum.length - 1] = Math.round((cum[cum.length - 1] + live) * 100) / 100;
+    /* live: today's spend of the running work (WOW-SPEC-3 8.3) lands on today's point, the period-to-date total and the plan
+       allocation part of the legend (D.monthSpend, FINAL-REVIEW-3 must-fix 3) */
+    var S = D.spendDaily(), P = D.series('budgetProjection'), cum = [], s = 0, MS = D.monthSpend();
+    S.values.forEach(function (v) { s += v || 0; cum.push(Math.round(s * 100) / 100); });
     var budget = DATA.costs.budget, c = D.costs();
     /* one clock (REVIEW-jared must-fix 8): the fixture is day S.today of a S.days-day budget period that ends with today's
        spend, so the period runs from today - (S.today - 1) days; the axis dates and the period end come from the real
        date, and the Spend chart's 28 days are the same days */
     var start = new Date(PMU.clock.now()); start.setHours(0, 0, 0, 0); start.setDate(start.getDate() - (S.today - 1));
     var end = new Date(start.getTime()); end.setDate(end.getDate() + S.days - 1);
-    return { spent: Math.round((DATA.costs.month + live) * 100) / 100, budget: budget, share: 'num:spend.month', days: S.days, today: S.today, cumulative: cum, periodStart: start.getTime(), periodEnd: end.getTime(),
+    return { spent: MS.month, budget: budget, share: 'num:spend.month', days: S.days, today: S.today, cumulative: cum, periodStart: start.getTime(), periodEnd: end.getTime(),
       periodText: F.date(start.getTime()) + ' to ' + F.date(end.getTime()),
       projection: { to: P.to, lo: P.lo, hi: P.hi, label: 'est. ' + C.money(P.to) + ' · PM estimate', confidence: P.confidence },
       /* "Forecast used": the projection as a share of the Settings budget (the old meter; its 30x extrapolation is gone,
          the PM projection is the forecast) */
       facts: [['Burn', C.money(DATA.costs.burn) + '/day'], ['Projection', C.money(P.to) + ' est.'], ['Forecast used', (budget ? Math.round(100 * P.to / budget) + '% of budget' : 'no budget set') + ' est.'], ['Confidence', P.confidence + '%'], ['Projected remaining', C.money(budget - P.to) + ' est.'], ['Metered overage', C.money(DATA.costs.overage)]],
-      mix: [{ name: 'Plan allocation est.', value: DATA.costs.plans, idx: 0, est: true, valueText: C.money(DATA.costs.plans) }, { name: 'Settled API', value: DATA.costs.api, idx: 1, valueText: C.money(DATA.costs.api) }],
+      mix: [{ name: 'Plan allocation est.', value: MS.plans, idx: 0, est: true, valueText: C.money(MS.plans) }, { name: 'Settled API', value: MS.api, idx: 1, valueText: C.money(MS.api) }],
       selected: c.selected };
   };
 
@@ -167,6 +167,23 @@
     'Vision helper calls raised daily API spend by 18%.',
     'Current pace leaves an estimated 31% left at reset (estimate).'
   ];
+  /* the allowance-pressure sentence and score read the window they are about (Work Claude's 5-hour window, the alert's
+     scope), so a Live beat that moves that window moves them too: "crossed 80%" never sits above "78% used"
+     (FINAL-REVIEW-3 must-fix 5). The fixture text is the shape; only the percentage and the score follow the reading. */
+  var PRESSURE_KEY = 'claude-code/work-claude', PRESSURE_WIN = 'fiveHour', PRESSURE_FIX = 78;
+  function pressureWin() {
+    var a = PMU.roster.account(PRESSURE_KEY), w = a && a.windows.filter(function (x) { return x.key === PRESSURE_WIN; })[0];
+    return w && w.pct !== null ? w : null;
+  }
+  C.alertDetail = function (i) {
+    var w = i === 0 ? pressureWin() : null;
+    if (!w) return C.alertCopy[i];
+    return C.alertCopy[i].replace(/\b78%/, C.fmt(w.pct, 'pct'));
+  };
+  C.alertScore = function (i, al) {
+    var w = i === 0 ? pressureWin() : null;
+    return w ? Math.round(al.score + (w.pct - PRESSURE_FIX)) : al.score;
+  };
   def('attention-now', 'overview', { meta: function () { return (DATA.alerts.filter(function (a) { return a.state === 'warn'; }).length + (D.liveAlerts ? D.liveAlerts().length : 0)) + ' current · scope filters by provider'; }, model: function () {
     /* live: an alert the demo engine raised while Usage is open arrives at the top (WOW-SPEC-3 8.3 beat 7) */
     var liveRows = (D.liveAlerts ? D.liveAlerts() : []).filter(function (al) { return !al.provider_id || D.inScope(al.provider_id); }).map(function (al) {
@@ -177,7 +194,7 @@
       if (al.provider_id && !D.inScope(al.provider_id)) return null;
       /* the alert's board title (no "runway": headroom, not a run-out countdown) and its Settings owner name */
       var bt = (PMU_BOARDS.widgets['alert-' + i] || {}).title || al.title;
-      return { name: bt, sub: C.alertCopy[i], glyph: al.state === 'warn' ? 'alert' : 'checkCircle', tone: al.state === 'warn' ? 'warn' : 'good', value: al.time === 'now' ? 'now' : al.time + ' ago', note: C.oldName(al.owner),
+      return { name: bt, sub: C.alertDetail(i), glyph: al.state === 'warn' ? 'alert' : 'checkCircle', tone: al.state === 'warn' ? 'warn' : 'good', value: al.time === 'now' ? 'now' : al.time + ' ago', note: C.oldName(al.owner),
         prov: al.provider_id ? PMU.roster.legacyProvider(al.provider_id) : null, onClick: function () { PMU.shell.setView({ room: 'attention' }, 'attention-now'); } };
     }).filter(Boolean);
     return { rows: liveRows.concat(rows), empty: 'No alerts for the selected scope' };
@@ -319,7 +336,7 @@
     while (parts.length > 1 && C.wrapLines(parts.join(' · '), bw - 4, 12.5) > 1) parts.pop();
     return parts.join(' · ');
   }, model: function () {
-    var S = D.series('spendDaily30'), v = S.values, n = v.length, today = new Date(PMU.clock.now()); today.setHours(0, 0, 0, 0);
+    var S = D.spendDaily(), v = S.values, n = v.length, today = new Date(PMU.clock.now()); today.setHours(0, 0, 0, 0);
     var sum = function (k) { return D.sum(v.slice(n - k)); };
     var labels = v.map(function (x, i) { return F.date(today.getTime() - (n - 1 - i) * 86400000); });
     return { labels: labels, values: v, idx: 0, unit: 'usd', highlightLast: true, states: v.map(function (x) { return x === 0 ? 'zero' : 'ok'; }),
@@ -344,7 +361,7 @@
     var c = D.costs();
     return { rows: [
       { name: 'API billed', sub: 'counts against the spending limit', value: money(DATA.costs.api), note: 'selected range ' + money(c.settled) + ' settled', glyph: 'check' },
-      { name: 'Plan included', sub: 'does not count against the limit', value: money(DATA.costs.plans) + ' est.', note: 'selected range ' + money(c.plan) + ' est.', glyph: 'pencil', noteTone: 'warn' },
+      { name: 'Plan included', sub: 'does not count against the limit', value: money(D.monthSpend().plans) + ' est.', note: 'selected range ' + money(c.plan) + ' est.', glyph: 'pencil', noteTone: 'warn' },
       { name: 'Cache avoided', sub: 'explicit estimate', value: money(DATA.costs.saved) + ' est.', note: 'selected range ' + money(c.cache) + ' est.', glyph: 'pencil', noteTone: 'warn' },
       { name: 'Pending', sub: 'not promoted to settled charge', value: String(c.pending), note: c.pending ? 'awaiting provider receipt' : 'none', glyph: 'clockCircle', tone: c.pending ? 'warn' : null },
       { name: 'Unpriced', sub: 'excluded from billed total', value: '3 events', note: 'never converted to zero', glyph: 'slashCircle', tone: 'warn' },
@@ -377,7 +394,7 @@
     var c = D.costs();
     return { value: c.dayEquivalent, fmt: 'perday', sub: '24h equivalent from selected records · ' + b(c.attempts) + (c.attempts === 1 ? ' attempt' : ' attempts') + '',
       facts: [['Settled charge', money(c.settled)], ['Plan estimate', money(c.plan) + ' est.'], ['Pending', String(c.pending)], ['Window hours', String(c.hours)], ['Confidence', '87%'], ['Provider charges', money(DATA.costs.api)],
-        ['Plan allocation', money(DATA.costs.plans) + ' est.'], ['Unpriced', '3 events'], ['Time zone', 'local 24h'], ['Period end', money(D.series('budgetProjection').to) + ' est.'], ['Overage buffer', money(DATA.costs.budget - D.series('budgetProjection').to)], ['Next refresh', '40s']],
+        ['Plan allocation', money(D.monthSpend().plans) + ' est.'], ['Unpriced', '3 events'], ['Time zone', 'local 24h'], ['Period end', money(D.series('budgetProjection').to) + ' est.'], ['Overage buffer', money(DATA.costs.budget - D.series('budgetProjection').to)], ['Next refresh', '40s']],
       spark: { values: D.series('spendDaily30').settled, idx: 1 }, foot: esc(D.scopeText()) + ' · projection only' };
   } });
 

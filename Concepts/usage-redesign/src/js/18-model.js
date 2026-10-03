@@ -322,22 +322,77 @@
     memo['tok' + key] = out;
     return out;
   }
+  /* ---------------------------------------------------------------- live attempts (FINAL-REVIEW-3 must-fix 2)
+     An attempt the live script plays (roster.json live: "attempt") is a real attempt row of the overlay (overlay._attempts,
+     WOW-SPEC-3 8.4 "an attempt arrives"): it arrives with its receipt pending (no value yet: never $0), and the next live
+     value beat settles it with that beat's value (the value moves from the running work onto the receipt, so every total
+     stays continuous). It carries the identity axes of its provider's newest fixture attempt and is labelled a live demo
+     reading. DATA and PM7_USAGE.projectedAttempts never change: these rows exist only in the overlay. Newest first. */
+  var LIVE_TPL = {};
+  function liveTemplate(legacy) {
+    if (LIVE_TPL[legacy] !== undefined) return LIVE_TPL[legacy];
+    var best = null;
+    DATA.attempts.forEach(function (a) { if (a.provider_id === legacy && (!best || new Date(a.occurred_at) > new Date(best.occurred_at))) best = a; });
+    LIVE_TPL[legacy] = best;
+    return best;
+  }
+  function liveAttempts() {
+    var o = OV(), list = o && o._attempts;
+    if (!list || !list.length) return [];
+    var s = st.scope || 'all', out = [];
+    list.forEach(function (x) {
+      var tpl = liveTemplate(x.provider); if (!tpl) return;
+      if ((s === 'work' || s === 'personal') && tpl.scope !== s) return;
+      if (s.indexOf('provider:') === 0 && tpl.provider_id !== s.slice(9)) return;
+      var tin = Math.round((x.tokens || 0) * 0.75), n = String(x.n), settled = !!x.settled;
+      out.push(Object.assign({}, tpl, {
+        attempt_id: 'live-' + (n.length < 2 ? '0' : '') + n, usage_event_ref: 'ue-live-' + n, usage_record_id: 'ur-live-' + n, provider_attempt_ref: settled ? 'pa-live-' + n : 'pending',
+        occurred_at: new Date(x.at).toISOString(), input_tokens: tin, output_tokens: (x.tokens || 0) - tin, charge: 0,
+        plan_allocation_estimate: settled ? x.value : 0, cache_avoided_estimate: 0, request_count: 1,
+        settlement_status: settled ? 'settled' : 'pending provider receipt', settlement_authority: 'live demo reading (concept fixture)',
+        source_authority: 'live demo reading (concept fixture)', projection_freshness: 'current', projection_health: 'healthy',
+        plan_allocation_authority: settled ? 'live demo estimate (concept fixture)' : 'receipt pending', cache_avoided_authority: 'not exposed',
+        cache_read_tokens: 0, cache_write_tokens: 0, tool_error_count: 0, reasoning_tokens: 0, anomaly_score: 12, live: true
+      }));
+    });
+    return out.reverse();
+  }
+  /* every attempt the page shows: the live rows (newest first) and the projected fixture attempts */
+  function attemptsNow() { var live = liveAttempts(); return live.length ? live.concat(projectedAttempts()) : projectedAttempts(); }
+
   /* the cost line: settled charge + plan allocation estimate of the recorded attempts, summed per bucket (exact) */
   /* buckets no recorded attempt covers stay null (missing is never zero): the line breaks there */
   function costLine(range) {
     var b = buckets(range), list = projectedAttempts(), vals = b.x.map(function () { return null; }), split = b.x.map(function () { return {}; });
     var first = b.x[0];
+    function place(a) {
+      var t = new Date(a.occurred_at).getTime(); if (t < first) return -1;
+      return Math.min(b.n - 1, Math.floor((t - first) / b.bucketMs));
+    }
     list.forEach(function (a) {
-      var t = new Date(a.occurred_at).getTime(); if (t < first) return;
-      var i = Math.min(b.n - 1, Math.floor((t - first) / b.bucketMs)), v = (a.charge || 0) + (a.plan_allocation_estimate || 0);
+      var i = place(a); if (i < 0) return;
+      var v = (a.charge || 0) + (a.plan_allocation_estimate || 0);
       /* a receipt still pending with no value yet is unknown, not $0 (missing is never zero): the bucket keeps its gap */
       if (!(v > 0) && /pending/i.test(a.settlement_status || '')) { split[i]._pending = (split[i]._pending || 0) + 1; return; }
       vals[i] = (vals[i] || 0) + v;
       split[i][a.provider_id] = (split[i][a.provider_id] || 0) + v;
     });
-    var dv = (st.scope || 'all') === 'all' ? ov('value.window') : 0;
-    if (dv && vals.length) { var li = vals.length - 1; vals[li] = (vals[li] || 0) + dv; split[li].live = (split[li].live || 0) + dv; }
-    return { values: vals.map(function (v) { return v === null ? null : Math.round(v * 100) / 100; }), split: split, total: sum(vals), attempts: list.length + ((st.scope || 'all') === 'all' ? ov('attempts') : 0) };
+    /* Live (FINAL-REVIEW-3 must-fix 1 and 2): the live demo readings move points that exist and never draw a point into a
+       gap. A live attempt still waiting for its receipt is a pending marker; a live receipt and the running work's value
+       join their bucket only where it already holds a recorded attempt (null + $0.04 drew a fake ~$0 point at NOW for the
+       first half of every hour). What is not drawn stays in the total and is said in the readout (running). */
+    var running = 0, live = liveAttempts();
+    live.forEach(function (a) {
+      var i = place(a); if (i < 0) return;
+      var v = (a.charge || 0) + (a.plan_allocation_estimate || 0);
+      if (!(v > 0)) { split[i]._pending = (split[i]._pending || 0) + 1; return; }
+      if (vals[i] === null) { running += v; return; }
+      vals[i] += v; split[i][a.provider_id] = (split[i][a.provider_id] || 0) + v;
+    });
+    var dv = (st.scope || 'all') === 'all' ? ov('value.window') : 0, li = vals.length - 1;
+    if (dv && li >= 0 && vals[li] !== null) { vals[li] += dv; split[li].live = (split[li].live || 0) + dv; } else running += dv;
+    return { values: vals.map(function (v) { return v === null ? null : Math.round(v * 100) / 100; }), split: split, total: sum(vals) + running, running: Math.round(running * 100) / 100,
+      attempts: list.length + live.length };
   }
   /* split one attempt into the five disjoint buckets (R-DATA-03) with the provider's counting basis */
   function attemptBuckets(a) {
@@ -352,7 +407,7 @@
     if (memo['models' + key]) return memo['models' + key];
     var names = series().models || {}, rates = series().catalogRates || {};
     var by = {};
-    projectedAttempts().forEach(function (a) {
+    attemptsNow().forEach(function (a) {
       var m = by[a.model_id] || (by[a.model_id] = { id: a.model_id, legacy: a.provider_id, tokens: { in: 0, out: 0, rsn: 0, cw: 0, cr: 0, total: 0 }, attempts: 0, requests: 0, settled: 0, planEstimate: 0, cacheAvoided: 0, partial: false, ids: [] });
       var bk = attemptBuckets(a);
       ['in', 'out', 'rsn', 'cw', 'cr', 'total'].forEach(function (k) { m.tokens[k] += bk[k]; });
@@ -387,7 +442,7 @@
     return out;
   }
   function costs() {
-    var list = projectedAttempts(), out = { selected: 0, settled: 0, plan: 0, cache: 0, pending: 0, attempts: list.length, providers: 0, requests: 0, input: 0, output: 0,
+    var list = attemptsNow(), out = { selected: 0, settled: 0, plan: 0, cache: 0, pending: 0, attempts: list.length, providers: 0, requests: 0, input: 0, output: 0,
       cacheRead: 0, cacheWrite: 0, planAttempts: 0, meteredAttempts: 0, settledAttempts: 0, byProvider: {}, hours: rangeHours(), statuses: {} };
     var seen = {};
     list.forEach(function (a) {
@@ -402,11 +457,13 @@
       p.attempts += 1; p.requests += a.request_count || 0; p.settled += a.charge || 0; p.plan += a.plan_allocation_estimate || 0; p.cache += a.cache_avoided_estimate || 0;
       p.input += a.input_tokens || 0; p.output += a.output_tokens || 0; p.cacheRead += a.cache_read_tokens || 0; if (/pending/.test(a.settlement_status)) p.pending += 1;
     });
-    /* live: the running work's value (plan estimate), attempts and cache facts (WOW-SPEC-3 8.3) */
+    /* live: the running work's value (plan estimate) and cache facts (WOW-SPEC-3 8.3); live attempts are rows of the list
+       above (pending until their receipt settles: FINAL-REVIEW-3 must-fix 2) */
     if (OV() && (st.scope || 'all') === 'all') {
-      out.plan = round2(out.plan + ov('value.window')); out.attempts += ov('attempts'); out.settledAttempts += ov('attempts'); out.planAttempts += ov('attempts');
+      out.plan = round2(out.plan + ov('value.window'));
       out.cacheRead += Math.round(ov('cache.read')); out.cache = round2(out.cache + ov('cache.saved'));
     }
+    out.plan = round2(out.plan); out.settled = round2(out.settled);
     out.selected = out.settled + out.plan; out.providers = Object.keys(seen).length;
     out.dayEquivalent = out.hours ? out.selected * 24 / out.hours : 0;
     return out;
@@ -534,13 +591,14 @@
     var p = DATA.providers.filter(function (x) { return x.id === legacyId; })[0]; if (!p) return null;
     var sid = LEGACY_PROVIDER[legacyId] || legacyId, rp = PMU.roster.provider(sid), eff = rp ? rp.effective : null;
     var c = costs().byProvider[legacyId] || { attempts: 0, requests: 0, settled: 0, plan: 0, input: 0, output: 0, pending: 0 };
-    var list = projectedAttempts().filter(function (a) { return a.provider_id === legacyId; });
+    var list = attemptsNow().filter(function (a) { return a.provider_id === legacyId; });
     return { legacy: p, settingsId: sid, provider: rp, account: eff, windows: eff ? eff.windows : [], binding: eff ? eff.binding : null, costs: c, attempts: list,
       name: rp ? rp.name : p.name, plan: p.plan };
   }
 
   PMU.data = {
-    attempts: function () { return projectedAttempts(); },
+    attempts: function () { return attemptsNow(); },
+    liveAttempts: liveAttempts,
     providers: function () { return DATA.providers.filter(function (p) { return inScope(p.id); }); },
     inScope: inScope,
     settingsInScope: settingsInScope,
@@ -576,6 +634,20 @@
       arr = arr.slice(); arr[arr.length - 1] = (arr[arr.length - 1] || 0) + d; return arr;
     },
     /* the live alerts (beat 7), newest first: {id, title, detail, state, provider_id, owner, account, at} */
+    /* the month's spend with the Live running work (FINAL-REVIEW-3 must-fix 3): the running work is plan-covered, so the
+       live spend.month delta lands on the plan allocation estimate part and on today's spend; the API part is receipts
+       only. Every split of the month (budget legend, Spend period, cost authority, burn basis) reads this, so each sums
+       to its headline after any number of beats. */
+    monthSpend: function () {
+      var live = ov('spend.month'), c = DATA.costs;
+      return { month: round2(c.month + live), plans: round2(c.plans + live), api: c.api, live: round2(live) };
+    },
+    /* today's spend with the live delta (the last day of spendDaily30) */
+    spendDaily: function () {
+      var S = series().spendDaily30 || { values: [] }, v = (S.values || []).slice(), live = ov('spend.month');
+      if (live && v.length && v[v.length - 1] !== null) v[v.length - 1] = round2(v[v.length - 1] + live);
+      return Object.assign({}, S, { values: v });
+    },
     liveAlerts: function () {
       var o = OV(); if (!o) return [];
       return Object.keys(o).filter(function (k) { return k.indexOf('alert:') === 0 && o[k] && typeof o[k] === 'object'; }).map(function (k) { return o[k]; })
@@ -599,7 +671,23 @@
         else (SHARE_OF[k] || ['num:' + k]).forEach(function (x) { out.push(x); });
       });
       if (beat.alert) out.push('alert:' + beat.alert.id);
+      if (beat.attempt) out.push('num:attempts.count');
       return out.filter(function (x, i) { return out.indexOf(x) === i; });
+    }
+    /* a live attempt arrives with its receipt pending (FINAL-REVIEW-3 must-fix 2) */
+    function addAttempt(o, spec, at) {
+      if (!spec || !spec.provider) return false;
+      o._attemptSeq = (o._attemptSeq || 0) + 1;
+      o._attempts = (o._attempts || []).concat([{ n: o._attemptSeq, provider: spec.provider, tokens: spec.tokens || 0, at: at, settled: false, value: 0 }]);
+      return true;
+    }
+    /* a live value beat settles the oldest live attempt still pending: the beat's value moves onto its receipt (instead of
+       the running work), so the window value and every total move by the same amount either way */
+    function settleWith(o, d, at) {
+      var p = (o._attempts || []).filter(function (x) { return !x.settled; })[0];
+      if (!p || !(d > 0)) return false;
+      p.settled = true; p.value = Math.round(d * 1e6) / 1e6; p.settledAt = at;
+      return true;
     }
     function playable(o, i) {
       var b = script()[i]; if (!b) return false;
@@ -624,16 +712,22 @@
       },
       apply: function (o, i) {
         var b = script()[i]; if (!b || !o) return null;
+        var extra = [], now = clockNow();
+        /* the value of this beat settles a pending live attempt first (it then is that receipt's value, not running work) */
+        var settled = b.deltas && settleWith(o, b.deltas['value.window'], now);
+        if (settled) extra.push('num:attempts.settle');
         Object.keys(b.deltas || {}).forEach(function (k) {
           var d = b.deltas[k]; if (typeof d !== 'number' || !isFinite(d)) return;
+          if (settled && k === 'value.window') return;
           /* a window that has no reading never moves (missing never becomes a number) */
           if (k.indexOf('win:') === 0) { var parts = k.slice(4).split('/'), acc = PMU.roster.account(parts[0] + '/' + parts[1]); var w = acc && acc.windows.filter(function (x) { return x.key === parts[2]; })[0]; if (!w || w.pct === null) return; }
           o[k] = Math.round(((o[k] || 0) + d) * 1e6) / 1e6;
         });
-        if (b.alert) o['alert:' + b.alert.id] = Object.assign({}, b.alert, { at: clockNow(), time: 'now', live: true });
+        if (b.alert) o['alert:' + b.alert.id] = Object.assign({}, b.alert, { at: now, time: 'now', live: true });
+        if (b.attempt) addAttempt(o, b.attempt, now);
         o._played = o._played || {}; o._played[b.beat] = (o._played[b.beat] || 0) + 1;
         memo = {}; cache = null;
-        return { beat: i, n: b.beat, shares: sharesOf(b), lead: (b.lead || []).slice() };
+        return { beat: i, n: b.beat, shares: sharesOf(b).concat(extra), lead: (b.lead || []).slice() };
       },
       reset: function (o) { if (!o) return; Object.keys(o).forEach(function (k) { delete o[k]; }); memo = {}; cache = null; },
       /* WOW-SPEC-3 8.6 / WOW-TASKS-3 P3-2 (flag playHour): one step of "Play the next hour" (the engine advanced the demo
@@ -649,7 +743,12 @@
         if (!o) return null;
         var L = (window.PM_USAGE_ROSTER && window.PM_USAGE_ROSTER.live) || ROSTER.live || {}, H = L.hour || {};
         var changed = {}, lead = [];
-        var add = function (k, d) { if (typeof d !== 'number' || !isFinite(d) || !d) return; o[k] = Math.round(((o[k] || 0) + d) * 1e6) / 1e6; changed[k] = true; };
+        var add = function (k, d) {
+          if (typeof d !== 'number' || !isFinite(d) || !d) return;
+          /* the step's value settles a pending live attempt first (must-fix 2) */
+          if (k === 'value.window' && settleWith(o, d, now)) { changed['attempts.settle'] = true; return; }
+          o[k] = Math.round(((o[k] || 0) + d) * 1e6) / 1e6; changed[k] = true;
+        };
         var inval = function () { memo = {}; cache = null; };
         var snap = function () {
           var out = {};
@@ -662,6 +761,8 @@
         /* 1 the steady readings (tokens, spend, value, cache, attempts) */
         var every = function (map, n) { if (map && (!n || step % n === 0)) Object.keys(map).forEach(function (k) { add(k, map[k]); }); };
         every(H.every); every(H.every3, 3); every(H.every4, 4);
+        /* a live attempt arrives every attempt_every steps, its receipt pending until the next step's value */
+        if (H.attempt && H.attempt_every && step % H.attempt_every === 0 && addAttempt(o, H.attempt, now)) changed.attempts = true;
         /* 2 the climbing windows: the effective account of each provider in the script */
         inval();
         var crossedWarn = [];

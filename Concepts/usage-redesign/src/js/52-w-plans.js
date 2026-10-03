@@ -112,9 +112,35 @@
 
   /* ================================================================== alert: attention cards */
   /* model: {sev: 'warn'|'ok', sevWord, detail, score, threshold, owner, observed, disposition, scope, receipt, prov, actions: [...]} */
-  C.kind('alert', {
+  var alertImpl;
+  C.kind('alert', alertImpl = {
+    /* live (FINAL-REVIEW-3 must-fix 5): when a live alert arrives the cards are slots and each takes the alert of the card
+       before it: the card's content slides in from the left (one animation per card, 40 apart along the row); the new
+       alert's severity glyph pops and its card flashes once in the warn tone. The same alert: the generic in-place patch. */
+    live: function (body, ctx) {
+      var m = ctx.model, k0 = body._pmuAlertKey;
+      if (!m || !k0 || k0 === m.key) return false;
+      C.liveRender(body, ctx, alertImpl);
+      if (ctx.liveFinal || (PMU.motion.reduced && PMU.motion.reduced())) return true;
+      var slot = +(/(\d+)$/.exec(String(ctx.id)) || [0, 0])[1], st = PMU.motion.family && /retro|nier/.test(PMU.motion.family());
+      var inner = body.querySelector('.pmu-alert');
+      if (inner) PMU.motion.animate(inner, [{ opacity: 0, transform: 'translateX(-14px)' }, { opacity: 1, transform: 'none' }], { dur: st ? 200 : 300, delay: 40 * slot, easing: st ? 'steps(4,jump-start)' : 'cubic-bezier(.22,.8,.28,1)', fill: 'backwards' });
+      if (m.live) {
+        var g = body.querySelector('.pmu-alerttop .pmu-ico, .pmu-alerttop svg');
+        if (g) PMU.motion.animate(g, [{ transform: 'scale(.2)' }, { transform: 'scale(1.25)', offset: 0.6 }, { transform: 'none' }], { dur: 260, delay: 260, easing: st ? 'steps(3,jump-start)' : 'cubic-bezier(.34,1.45,.64,1)', fill: 'backwards' });
+        var top = body.querySelector('.pmu-alerttop');
+        if (top && PMU.film && PMU.film.flash) PMU.film.flash(top, { delay: 300, tone: 'warn', noSweep: true });
+      }
+      return true;
+    },
     render: function (body, ctx) {
-      var m = ctx.model; if (!m) { body.innerHTML = C.empty('This alert is not in the selected scope.', 'Scope filters alerts by provider'); return; }
+      var m = ctx.model;
+      if (!body._pmuDry) {
+        body._pmuAlertKey = m ? m.key || null : null;
+        /* the card's provider follows its slot (the cross-highlight hover reads data-prov) */
+        if (ctx.card) { if (m && m.prov) ctx.card.setAttribute('data-prov', m.prov); else if (ctx.card.hasAttribute('data-prov')) ctx.card.removeAttribute('data-prov'); }
+      }
+      if (!m) { body.innerHTML = C.empty('This alert is not in the selected scope.', 'Scope filters alerts by provider'); return; }
       var bh = ctx.tier.bh, narrow = ctx.tier.bw < 300;
       var top = '<div class="pmu-alerttop" data-tone="' + (m.sev === 'ok' ? 'good' : 'warn') + '">' + C.glyph(m.sev === 'ok' ? 'checkCircle' : 'alert') + '<b>' + esc(m.sevWord) + '</b></div>' +
         '<p class="pmu-alertdetail">' + esc(m.detail) + '</p>';
@@ -126,7 +152,7 @@
       /* measured (VM 1920 / 1440): the pressure meter is 52 px with a one-line reset line, 15 px more a wrapped line */
       var meter = { t: 'Current pressure ' + m.score + ' · baseline ' + m.baseline + ' · raise at ' + m.raise, h: 37 + 15 * Math.min(3, C.wrapLines('baseline ' + m.baseline + ' · raise at ' + m.raise, ctx.tier.bw, 12)), html: '<div class="pmu-alertmeter"></div>' };
       /* the time and the owner are the subtitle's (each said once, LOOK-REVIEW-2 16) */
-      var facts = [['Disposition', m.disposition], ['Scope', m.scope], ['Threshold', m.threshold], ['Receipt', m.receipt]];
+      var facts = [['Disposition', m.disposition], ['Scope', m.scope], ['Threshold', m.threshold], ['Receipt', m.receipt]].concat(m.more && m.more.length ? [['More alerts', m.more.join(' · ')]] : []);
       var actions = !(m.actions || []).length ? null : { h: narrow ? 68 : 38, html: '<div class="pmu-alertacts">' + m.actions.map(function (a) {
         return '<button type="button" class="pmu-textbtn' + (a.primary ? ' is-primary' : '') + '"' + (a.act ? ' data-pmu-act="' + esc(a.act) + '" data-value="' + esc(a.value || '') + '"' : '') +
           (a.demo ? ' data-demo-action="' + esc(a.demo) + '" data-demo-arg="' + esc(a.arg || '') + '"' : '') + (a.disabled ? ' disabled' : '') + C.hover(a.label, a.hover || '') + '>' + esc(a.label) + '</button>';

@@ -177,8 +177,10 @@
         cost: { values: cost.values, unit: 'usd', pending: cost.split.map(function (sp) { return (sp && sp._pending) || 0; }) }, source: 'token series · estimated cost from recorded attempts', notes: 'Input and output are summed only from selected identity-bound attempts.',
         readoutFoot: function (i) {
           var sp = cost.split[i] || {}, ks = Object.keys(sp).filter(function (k) { return k !== '_pending'; });
-          var out = ks.map(function (k) { return legName(k).replace('ChatGPT / ', '') + ' ' + money(sp[k]); });
+          var out = ks.map(function (k) { return (k === 'live' ? 'Running work' : legName(k).replace('ChatGPT / ', '')) + ' ' + money(sp[k]); });
           if (sp._pending) out.push(sp._pending + (sp._pending === 1 ? ' receipt' : ' receipts') + ' pending, value not known yet');
+          /* Live: the running work's value in a bucket with no recorded attempt is said, never drawn as a point */
+          if (cost.running && i === cost.values.length - 1) out.push('Running work ' + money(cost.running) + ' · not on a receipt yet, not drawn');
           return out.length ? out.join(' · ') : 'no attempts recorded in this bucket';
         } },
       headline: { value: cr ? tk.totals.all : tk.totals.noCache, fmt: 'tok', label: cr ? 'tokens' : 'tokens without cache reads' }, spark: { values: tk.noCache, tk: 'all' },

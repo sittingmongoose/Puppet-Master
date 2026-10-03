@@ -1248,6 +1248,44 @@
     }
   });
 
+  /* a live re-render now (in view, the beat's own slice): the same steps as a data update, the changed numbers roll from
+     what was shown (FINAL-REVIEW-3 must-fix 2: a live attempt arriving on the Ledger hero) */
+  C.liveRender = function (body, ctx, impl) {
+    var old = snapshot(body); C.destroy(body); fitReset(body); body.removeAttribute('data-pm-hover-label'); body.removeAttribute('data-pm-hover-detail');
+    body._pmuImpl = impl; body._pmuCtxK = ctx; impl.render(body, ctx); moreAtMax(body); fitLater(body);
+    if (!ctx.liveFinal) C.countFrom(body, old);
+  };
+  /* the table's live hook (WOW-SPEC-3 8.4 "an attempt arrives", FINAL-REVIEW-3 must-fix 2): the same rows -> in-place
+     words; one new row at the top of the first page -> it is inserted (one child-list change), the row pushed past the
+     page leaves, the count and the pager take their new words, the rows below slide down one row (one animation on the
+     row group, 250 SLIDE), the new row rises with its opacity (260 OUT) and flashes once. Anything else: the idle re-render. */
+  C.tableLive = function (impl) {
+    return function (body, ctx) {
+      var tb = body.querySelector('.pmu-tbody'); if (!tb) return false;
+      var dry = document.createElement('div'); dry._pmuDry = true;
+      try { impl.render(dry, Object.assign({}, ctx, { _dry: true })); } catch (error) { return false; }
+      var dt = dry.querySelector('.pmu-tbody'); if (!dt) return false;
+      var keysOf = function (root) { return Array.prototype.map.call(root.querySelectorAll(':scope > .pmu-trow'), function (r) { return r.getAttribute('data-tkey') || ''; }); };
+      var k0 = keysOf(tb), k1 = keysOf(dt);
+      if (k0.join('\n') === k1.join('\n')) return C.livePatch(body, dry, ctx) ? true : false;
+      if (!k1.length || !k1[0] || k0.indexOf(k1[0]) >= 0 || k1.slice(1).join('\n') !== k0.slice(0, k1.length - 1).join('\n')) return false;
+      var p0 = body.querySelector('.pmu-tpager'), p1 = dry.querySelector('.pmu-tpager');
+      if (!!p0 !== !!p1) return false;   /* a pager that comes or goes changes the card's layout: the idle re-render */
+      var rows0 = Array.prototype.slice.call(tb.querySelectorAll(':scope > .pmu-trow')), nr = dt.querySelector(':scope > .pmu-trow');
+      tb.insertBefore(nr, rows0[0] || tb.firstChild);
+      for (var i = k1.length - 1; i < rows0.length; i++) rows0[i].remove();
+      Array.prototype.forEach.call(tb.querySelectorAll(':scope > .pmu-trow[data-pmu-row]'), function (r, j) { r.setAttribute('data-pmu-row', String(j)); });
+      if (body._pmuTable && dry._pmuTable) body._pmuTable.shown = dry._pmuTable.shown;
+      var c0 = body.querySelector('.pmu-tcount'), c1 = dry.querySelector('.pmu-tcount'); if (c0 && c1 && c0.textContent !== c1.textContent) c0.textContent = c1.textContent;
+      if (p0 && p1 && p0.innerHTML !== p1.innerHTML) p0.innerHTML = p1.innerHTML;
+      if (ctx.liveFinal || (PMU.motion.reduced && PMU.motion.reduced())) return true;
+      var st = PMU.motion.family && /retro|nier/.test(PMU.motion.family()), dy = +nr.getAttribute('data-th') || 33;
+      PMU.motion.animate(tb, [{ transform: 'translateY(' + (-dy) + 'px)' }, { transform: 'none' }], { dur: st ? 160 : 250, easing: st ? 'steps(4,jump-start)' : 'cubic-bezier(.22,1,.36,1)' });
+      PMU.motion.animate(nr, [{ opacity: 0, transform: 'translateY(-6px)' }, { opacity: 1, transform: 'none' }], { dur: 260, delay: 120, easing: st ? 'steps(3,jump-start)' : 'cubic-bezier(.22,.8,.28,1)', fill: 'backwards' });
+      if (PMU.film && PMU.film.flash) PMU.film.flash(nr, { delay: 320, noSweep: true, tone: nr.getAttribute('data-tone') === 'warn' ? 'warn' : null });
+      return true;
+    };
+  };
   /* the list's live hook (WOW-SPEC-3 8.4, an alert arriving): the same rows -> in-place words; one new row at the top ->
      it is inserted (one child-list change, the only one of the beat), the rows below FLIP down (250 SLIDE), the new row
      rises 8 px with its opacity (260 OUT) and its severity glyph pops (POP 260); a row pushed past the card leaves and
@@ -1262,10 +1300,17 @@
       var k0 = keysOf(list), k1 = keysOf(dl);
       if (k0.join('\n') === k1.join('\n')) return C.livePatch(body, dry, ctx) ? true : false;
       if (k1.length < 1 || k0.indexOf(k1[0]) >= 0 || k1.slice(1).join('\n') !== k0.slice(0, k1.length - 1).join('\n')) return false;
-      var rows0 = Array.prototype.slice.call(list.querySelectorAll(':scope > .pmu-lrow')), nr = dl.querySelector(':scope > .pmu-lrow');
+      var rows0 = Array.prototype.slice.call(list.querySelectorAll(':scope > .pmu-lrow')), drows = Array.prototype.slice.call(dl.querySelectorAll(':scope > .pmu-lrow')), nr = drows[0];
       var fin = ctx.liveFinal, st = PMU.motion.family && /retro|nier/.test(PMU.motion.family());
       list.insertBefore(nr, rows0[0] || list.firstChild);
       for (var i = k1.length - 1; i < rows0.length; i++) rows0[i].remove();
+      /* the rows that stay take their new words too (FINAL-REVIEW-3 must-fix 5: "crossed 80%" arrived above a row that still
+         read "78% used"): a kept row whose markup changed is written from the dry render, without motion */
+      rows0.slice(0, k1.length - 1).forEach(function (r, j) {
+        var d = drows[j + 1]; if (!d || r.innerHTML === d.innerHTML) return;
+        r.innerHTML = d.innerHTML;
+        ['data-pm-hover-label', 'data-pm-hover-detail', 'data-tone'].forEach(function (a) { if (d.hasAttribute(a)) r.setAttribute(a, d.getAttribute(a)); else r.removeAttribute(a); });
+      });
       var m0 = list.querySelector(':scope > .pmu-more'), m1 = dl.querySelector(':scope > .pmu-more');
       if (m0 && m1) { m0.textContent = m1.textContent; ['data-pm-hover-label', 'data-pm-hover-detail'].forEach(function (a) { if (m1.hasAttribute(a)) m0.setAttribute(a, m1.getAttribute(a)); }); }
       else if (m1 && !m0) list.appendChild(m1);
@@ -1282,7 +1327,9 @@
   /* ================================================================== table: data tables (ledger and others) */
   /* model: {cols: [{key, label, align?, min?: tier, w?: css, fmt?}], rows: [{cells: {key: text|{html}}, tone?, onClick?, id?}],
              toolbar?: {search?: placeholder, filters?: [{key, label, options: [{value, label}], value}], export?: fn}, empty?, foot?} */
-  C.kind('table', {
+  var tableImpl;
+  C.kind('table', tableImpl = {
+    live: function (body, ctx) { return C.tableLive(tableImpl)(body, ctx); },
     /* "Fit" in the card menu (NOTES2-engine, paging at S): the height in rows that shows every record without a pager,
        at most the kind's tallest size; null when the card already shows them all */
     autoH: function (ctx) {
@@ -1362,7 +1409,8 @@
       }
       var head = '<div class="pmu-trow pmu-thead" style="grid-template-columns:' + tmpl + '">' + cols.map(function (c) { return '<span class="pmu-cap"' + (c.align === 'right' ? ' data-align="r"' : '') + '>' + esc(c.label) + '</span>'; }).join('') + '</div>';
       var bodyRows = shown.length ? shown.map(function (r, i) {
-        return '<div class="pmu-trow' + (r.onClick ? ' is-click' : '') + '" data-reveal style="grid-template-columns:' + tmpl + '"' + (r.tone ? ' data-tone="' + r.tone + '"' : '') +
+        var tkey = r.key != null ? r.key : r.cells && (typeof r.cells.id === 'string' || typeof r.cells.id === 'number') ? r.cells.id : '';
+        return '<div class="pmu-trow' + (r.onClick ? ' is-click' : '') + '" data-reveal data-tkey="' + esc(String(tkey)) + '" data-th="' + rowHOf(r) + '" style="grid-template-columns:' + tmpl + '"' + (r.tone ? ' data-tone="' + r.tone + '"' : '') +
           (r.onClick ? ' data-pmu-row="' + i + '" role="button" tabindex="0"' : '') + (r.hover ? C.hover(r.hover[0], r.hover[1]) : '') + '>' + cols.map(function (c) {
             var v = r.cells[c.key], html = v && typeof v === 'object' ? v.html : esc(v == null ? '' : v);
             return '<span class="pmu-tcell"' + (c.align === 'right' ? ' data-align="r"' : '') + (c.mono ? ' data-mono' : '') + '>' + html + '</span>';
@@ -1374,7 +1422,7 @@
       body.innerHTML = '<div class="pmu-table">' + toolbar + head + '<div class="pmu-tbody">' + bodyRows + '</div>' + pg + '</div>' + (m.foot ? C.foot(m.foot) : '');
       body._pmuTable = { model: m, shown: shown };
       var tbody = body.querySelector('.pmu-tbody');
-      if (tbody) tbody.addEventListener('click', function (event) { var row = event.target.closest('[data-pmu-row]'); if (!row) return; var r = shown[+row.getAttribute('data-pmu-row')]; if (r && r.onClick) r.onClick(row); });
+      if (tbody) tbody.addEventListener('click', function (event) { var row = event.target.closest('[data-pmu-row]'); if (!row) return; var r = ((body._pmuTable && body._pmuTable.shown) || shown)[+row.getAttribute('data-pmu-row')]; if (r && r.onClick) r.onClick(row); });
       var input = body.querySelector('[data-pmu-tsearch]');
       if (input) {
         var timer = 0;

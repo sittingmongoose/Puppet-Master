@@ -167,6 +167,22 @@
     }
     fitDesc();
     syncInk(true);
+    navCount(false);
+  }
+  /* the rail's Attention row carries the count of alerts that need attention now (WOW-SPEC-3 8.3: a live alert arriving
+     rolls it; FINAL-REVIEW-3 must-fix 5): plain warn-ink numerals, no badge */
+  function navCount(anim) {
+    var btn = app && app.querySelector('.pmu-navbtn[data-room="attention"]'); if (!btn) return;
+    var n = DATA.alerts.filter(function (a) { return a.state === 'warn'; }).length + (PMU.data && PMU.data.liveAlerts ? PMU.data.liveAlerts().length : 0);
+    var el = btn.querySelector('.pmu-navcount'), txt = n ? String(n) : '';
+    if (!el) { el = document.createElement('span'); el.className = 'pmu-navcount'; el.setAttribute('aria-hidden', 'true'); btn.appendChild(el); }
+    if (el.textContent === txt) return;
+    el.textContent = txt; el.hidden = !n;
+    btn.setAttribute('data-pm-hover-detail', ROOM.attention.desc + (n ? ' ' + n + (n === 1 ? ' alert needs' : ' alerts need') + ' attention now.' : ''));
+    if (anim && n && PMU.motion && !PMU.motion.reduced()) {
+      var ff = PMU.motion.family();
+      PMU.motion.animate(el, [{ transform: 'translateY(8px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { dur: 420, easing: ff === 'retro' || ff === 'nier' ? 'steps(3,jump-start)' : 'cubic-bezier(.16,1,.3,1)' });
+    }
   }
   /* the head subtitle (E3-11, NOTES3-content E3): shown whole when it fits beside the title, otherwise hidden (the title's
      hover tag carries it); never an ellipsis. Measured with canvas text metrics against the title block's width from a
@@ -405,6 +421,6 @@
   if (window.ResizeObserver) { var stageEl = document.getElementById('pmuStage'); if (stageEl) new ResizeObserver(queueNotices).observe(stageEl); }
   window.addEventListener('resize', queueNotices);
 
-  PMU.shell = { render: render, setView: setView, fitDesc: fitDesc, pop: pop, closePop: closePop, toast: toastText, syncInk: syncInk, syncSegInk: syncSegInk, placeNotices: queueNotices,
+  PMU.shell = { navCount: navCount, render: render, setView: setView, fitDesc: fitDesc, pop: pop, closePop: closePop, toast: toastText, syncInk: syncInk, syncSegInk: syncSegInk, placeNotices: queueNotices,
     scopeLabel: scopeLabel, providerName: providerName, counts: counts, menus: { scope: scopeMenu, range: rangeMenu, detail: detailMenu, panels: panelsSpec, export: exportMenu } };
 })();
