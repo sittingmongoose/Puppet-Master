@@ -1077,16 +1077,19 @@
       var footText = m.foot ? String(m.foot).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() : '';
       var footRoom = m.foot && C.h(ctx, 'h2') ? 4 + (hasBtn ? 26 : 17 * Math.min(2, C.wrapLines(footText, bw, 12, 400))) : 0;
       var trend = sparkOk && C.h(ctx, 'h3') ? 48 : 0;
-      var subLines = subText ? Math.min(4, C.wrapLines(subText, bw, 12.5)) : 0;
+      /* a sub with bold parts is measured at 600: laid-out bold runs ~11% wider than the same string at 400
+         (tool-3: estimate 2 lines, laid out 3, the third cut by the clamp) */
+      var subWt = /<b[ >]/.test(m.sub || '') ? 600 : 400;
+      var subLines = subText ? Math.min(4, C.wrapLines(subText, bw, 12.5, subWt)) : 0;
       /* the sub line at most n lines: whole trailing " · " parts give way; only a first part that cannot fit is clamped */
       var subAt = function (n) {
         if (!n || !subLines) return { html: '', lines: 0 };
         if (subLines <= n) return { html: m.sub, lines: subLines };
         var segs = String(m.sub).split(' · ');
-        while (segs.length > 1 && C.wrapLines(segs.join(' · ').replace(/<[^>]+>/g, ''), bw, 12.5) > n) segs.pop();
+        while (segs.length > 1 && C.wrapLines(segs.join(' · ').replace(/<[^>]+>/g, ''), bw, 12.5, subWt) > n) segs.pop();
         var hh = segs.join(' · ');
         for (var openB = (hh.match(/<b>/g) || []).length - (hh.match(/<\/b>/g) || []).length; openB > 0; openB--) hh += '</b>';
-        return { html: hh, lines: Math.max(1, Math.min(n, C.wrapLines(hh.replace(/<[^>]+>/g, ''), bw, 12.5))) };
+        return { html: hh, lines: Math.max(1, Math.min(n, C.wrapLines(hh.replace(/<[^>]+>/g, ''), bw, 12.5, subWt))) };
       };
       var lay = C.factLayout(facts, wide ? Math.max(120, bw * 0.42) : bw, wide ? 1 : 0);
       /* the folded facts' quiet count: in the head where it fits, else at the right end of the value line (a narrow tile
