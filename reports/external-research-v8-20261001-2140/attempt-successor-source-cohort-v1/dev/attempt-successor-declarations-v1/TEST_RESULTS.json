@@ -1,0 +1,19 @@
+{
+  "schema": "pm.er8.attempt-successor-author-tests.v1",
+  "observed_utc": "2026-10-03T04:03:38.912650+00:00",
+  "exit_code": 0,
+  "tests_run": 6,
+  "all_passed": true,
+  "case_declarations_checked": 12,
+  "pairs_checked": 6,
+  "stages_objectives_and_temp_packing_checked": 36,
+  "test_source_sha256": "a0fddaded89df868f482fba0ae636226166ec79c807063ae8d71a6da65055b32",
+  "test_output_sha256": "3c3e139d5e59fa78fa057587e2ee58141a510f22eea69b7b84275611d63a5bfd",
+  "native_provider_process_launches": 0,
+  "ledger_imports_or_transactions": 0,
+  "reservations_admissions_case_births": 0,
+  "prior_candidate_or_evaluator_content_reads": 0,
+  "all_original_source_pins_checked": true,
+  "frozen_feasibility_HOLD_and_original8tests_unchanged": true,
+  "known_limit": "Static/temp pack verification is not native completion, current resource preflight, or root acceptance."
+}

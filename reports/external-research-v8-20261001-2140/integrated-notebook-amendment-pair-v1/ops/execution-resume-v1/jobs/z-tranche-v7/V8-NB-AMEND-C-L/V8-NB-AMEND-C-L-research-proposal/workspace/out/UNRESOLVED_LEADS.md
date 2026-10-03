@@ -1,0 +1,13 @@
+# UNRESOLVED_LEADS — V8-NB-AMEND-C-L
+
+Only consequential dependencies/uncertainty that the proposal could not close, each with its consequence and a lead.
+
+1. **nbformat `validate()` repair-default boundary is not pinned to a tagged release.** Captured `main` tests (S3) show `validate()` still repairs missing/duplicate ids with warnings by default, while the 5.5.0 changelog text (S2) says validation will stop silently modifying notebooks and 5.11.0 removed the deprecated kwargs (PR #447). Which tagged release first makes missing/duplicate ids a hard error through the public `validate()` is unresolved from these captures. *Consequence:* the prototype must not claim "nbformat errors on these inputs" without pinning the version it will vendor; we therefore treat nbformat's verdict as advisory and keep our own checks normative for the prototype. *Lead:* read `nbformat/validator.py` at tagged releases 5.5.x–5.11.x and diff the repair default.
+
+2. **nbdime PR #639's exact fallback when ids are absent/duplicate is unverified.** The changelog (S8) proves id-aware diffing exists since 4.0.0, but the fallback alignment policy for pre-4.5 or duplicate-id notebooks was not read from source. *Consequence:* our §3.3 heuristic-fallback design cannot cite nbdime's exact algorithm, only its existence and history. *Lead:* read `nbdime/diffing/notebooks.py` at v4.0.4.
+
+3. **Heuristic-alignment and rename-similarity thresholds are untuned product constants.** Git's default 50% similarity (S9) is a precedent from an unrelated corpus; our fixture set is too small to justify any threshold > 0, which is why the proposal defaults renames to exact-hash only. `difflib.SequenceMatcher`'s ratio behavior for cell alignment was not captured/verified in this stage. *Consequence:* near-rename and cell-fuzzy-match behavior stays behind an explicit flag until F1–F12 run. *Lead:* implement F2/F5/F9 first, then measure candidate thresholds on those fixtures only.
+
+4. **The snapshot/manifest format is synthetic with no public normative source.** The brief's snapshots (declared minor version + manifest) correspond to no captured public standard; the §3.1 contract is a product choice. *Consequence:* if the real capture format differs (e.g., stores hashes vs full contents), §3.1 and N4 refusal rules need re-derivation. *Lead:* confirm the packaging format against the actual fixture snapshots before implementation.
+
+5. **Proposed validation is unexecuted.** All F1–F12 checks, the end-to-end dirty-pair check, and the no-mutation invariant are designed, not run; no execution receipt exists. *Consequence:* the plan's correctness claims are limited to source-traced design rationale. *Lead:* execute §6 in the implementation stage and attach receipts there.

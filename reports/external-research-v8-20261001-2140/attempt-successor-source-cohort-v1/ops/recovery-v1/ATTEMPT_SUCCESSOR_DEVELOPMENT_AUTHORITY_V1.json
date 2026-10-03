@@ -1,0 +1,66 @@
+{
+  "schema": "pm.er8.attempt-successor-root-development-authority.v1",
+  "root_authority": true,
+  "campaign_id": "external-research-v8-20261001-2140",
+  "recorded_epoch": 1790999538.5274992,
+  "authorization_basis": "Existing user /goal takeover authorizes ordinary repairs and candidate execution within preserved v8 envelope; no new campaign or approval phase.",
+  "allowed_append_action": "reserve-attempt-successors",
+  "allowed_logical_pair_ids": [
+    "V8-BIO-CHECK",
+    "V8-BIO-COND",
+    "V8-BIO-BATCH",
+    "V8-NB-CHECK",
+    "V8-NB-COND",
+    "V8-NB-BATCH"
+  ],
+  "allowed_attempt_case_ids": [
+    "V8-BIO-C-Z-S8",
+    "V8-BIO-WIT-T-Z-S8",
+    "V8-BIO-COND-C-Z-S8",
+    "V8-BIO-P-Z-S8",
+    "V8-BIO-BATCH-C-Z-S8",
+    "V8-BIO-B-Z-S8",
+    "V8-NB-C-Z-S8",
+    "V8-NB-WIT-T-Z-S8",
+    "V8-NB-COND-C-Z-S8",
+    "V8-NB-P-Z-S8",
+    "V8-NB-BATCH-C-Z-S8",
+    "V8-NB-B-Z-S8"
+  ],
+  "proposal_file": {
+    "path": "LAB_ROOT/dev/tranche-successor-v8/REMAINING_CELLS.json",
+    "sha256": "c4644d8bcacc68a499dc28d790fa584a6892eb508de4d1075656f096ae388585"
+  },
+  "original_start_epoch": 1790905209,
+  "campaign_deadline_epoch": 1791013030.8303788,
+  "native_goal_starts_ceiling": 144,
+  "occupied_candidate_seconds_ceiling": 172800,
+  "candidate_output_warning": 1200000,
+  "candidate_output_stop": 1500000,
+  "stage_caps": [
+    1200,
+    1200,
+    900
+  ],
+  "case_wall": 3600,
+  "case_occupied": 5400,
+  "outside_native": 300,
+  "responses": 160,
+  "candidate_slots_by_family": {
+    "M": 2,
+    "Z": 2,
+    "L": 2
+  },
+  "helper_limit": 12,
+  "source_api_base": {
+    "path": "LAB_ROOT/ops/helper-concurrency-v2/ledger_helper_concurrency_v2.py",
+    "sha256": "eafb75b1a157a5b7e77f03f9fc52e298a7ef255e439730e22c4fde6a95dc0405"
+  },
+  "development_and_frozen_case_materialization_authorized": true,
+  "live_install_or_native_release_requires_exact_independent_source_acceptance_and_root_positive_preflight": true,
+  "root_may_select_fitting_whole_pair_subset": true,
+  "all_old_reservations_jobs_births_caps_costs_events_unknown_usage_outcomes_and_protected_reserves_unchanged": true,
+  "no_old_commitment_retirement_or_budget_reset": true,
+  "no_evaluator_or_prior_candidate_content_in_new_candidates": true,
+  "no_new_scheduler_alongside_live_V7": true
+}

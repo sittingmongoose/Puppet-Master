@@ -1,0 +1,37 @@
+{
+  "schema": "er8.integrated.global-parent-final-receipt.v1",
+  "case": "V8-NB-AMEND-C-L",
+  "held_finalizer_pid": 2685347,
+  "held_finalizer_returncode": 0,
+  "actual_case_end_monotonic_ns": 221421232180859,
+  "original_case_start_monotonic_ns": 219168386653503,
+  "original_case_deadline_monotonic_ns": 222768386653503,
+  "actual_case_wall_seconds": 2252.845527356,
+  "actual_occupied_stage_lease_seconds": 2252.287031173706,
+  "whole_case_occupied_cap_seconds": 5400,
+  "actual_nonoverlapping_outside_native_seconds": 5.392740566,
+  "native_owned_intervals_monotonic_ns": [
+    [
+      219170027499713,
+      219760821415572
+    ],
+    [
+      219762143731541,
+      220637568749919
+    ],
+    [
+      220639209115093,
+      221420442967646
+    ]
+  ],
+  "all_case_execution_closed_before_cutoff": true,
+  "actual_final_proposal": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-final-correction/workspace/out/FINAL_PROPOSAL.md",
+    "bytes": 45736,
+    "sha256": "3bbc99d85c5e5631ebe17be9a8e39827850e8aa536e2108ffc477262de55e424"
+  },
+  "subsequent_global_metadata_and_publication_cost": "SEPARATE_ROOT_MANAGEMENT",
+  "semantic_quality": "PENDING_INDEPENDENT_EVALUATION",
+  "source_semantic_acquisition": "UNKNOWN",
+  "generated_usage": "UNKNOWN except observed monotonic lower bounds"
+}

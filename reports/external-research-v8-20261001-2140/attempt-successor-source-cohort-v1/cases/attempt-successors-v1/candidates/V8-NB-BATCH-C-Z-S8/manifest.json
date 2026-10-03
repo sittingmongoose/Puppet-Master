@@ -1,0 +1,138 @@
+{
+  "schema": "pm.external_research.v8.integrated_case.v2",
+  "campaign_id": "external-research-v8-20261001-2140",
+  "case_id": "V8-NB-BATCH-C-Z-S8",
+  "status": "SOURCE_FROZEN_DEVELOPMENT_REPEAT_NOT_ADMITTED",
+  "reserved_at": null,
+  "domain": "notebook-workspace",
+  "method_id": "P-R",
+  "method": "condition-witness-plus-progressive-retrieval",
+  "brief": "briefs/notebook-workspace.md",
+  "thin_plan": "sandbox-plans/notebook-workspace.md",
+  "research_question_count": 3,
+  "required_product_obligations": [
+    "N1",
+    "N2",
+    "N3",
+    "N4",
+    "N5"
+  ],
+  "stages": [
+    {
+      "reservation_id": "V8-NB-BATCH-C-Z-S8-research-proposal",
+      "native_goal_required": true,
+      "fresh_context": true,
+      "seconds": 1200,
+      "task_template": "templates/research.TASK.md",
+      "required_artifact": "PROPOSAL.md"
+    },
+    {
+      "reservation_id": "V8-NB-BATCH-C-Z-S8-independent-candidate-critic",
+      "native_goal_required": true,
+      "fresh_context": true,
+      "seconds": 1200,
+      "task_template": "templates/critic.TASK.md",
+      "required_artifact": "CRITIQUE.md"
+    },
+    {
+      "reservation_id": "V8-NB-BATCH-C-Z-S8-final-correction",
+      "native_goal_required": true,
+      "fresh_context": true,
+      "seconds": 900,
+      "task_template": "templates/correction.TASK.md",
+      "required_artifact": "FINAL_PROPOSAL.md"
+    }
+  ],
+  "candidate_account": {
+    "family": "Z",
+    "model": "GLM5.3Flash",
+    "native_application": "zcode",
+    "mode": "Max",
+    "account_policy": "Both arms and all three stages share a mechanically bound existing authorized account, exact model/mode and route; no automatic fallback. Provisional family may be rebound for the entire unstarted pair prospectively before either case birth; record the exact common binding and immutable method/input hashes.",
+    "opaque_identity_binding": null,
+    "binding_required": "host records an opaque nonsecret identity reference before actual case preparation; this declaration reserves the existing-account role and does not invent an account identifier",
+    "fresh_contexts": "three fresh native Goal contexts per case; no copied reasoning histories; critic sees only current proposal, unresolved leads, brief/method/plan and same-case raw source captures; correction also sees candidate critique",
+    "load_policy": "host freezes admission's own active-case/Goal occupancy and exposed account/provider load snapshot; external/unexposed load is UNKNOWN, never assumed zero",
+    "no_automatic_fallback": true
+  },
+  "caps": {
+    "research_proposal_seconds": 1200,
+    "candidate_critic_seconds": 1200,
+    "final_correction_seconds": 900,
+    "summed_stage_hard_seconds": 3300,
+    "host_overhead_hard_seconds": 300,
+    "case_wall_hard_seconds": 3600,
+    "case_occupied_hard_seconds": 5400,
+    "research_response_cap": 160,
+    "critic_response_cap": 160,
+    "correction_response_cap": 160,
+    "native_goal_starts_for_complete_case": 3,
+    "active_ours_family_caps": {
+      "M": 2,
+      "Z": 2,
+      "L": 2
+    },
+    "stages": "sequential; critic and correction consume the same family slots as research",
+    "clock_birth": "case birth is recorded before the first actual case-specific preparation/account execution binding/sandbox setup/source preparation/launch, whichever is earliest; each stage birth precedes its own preparation",
+    "no_reset": true,
+    "inclusive_timing": "all preparation, waits, launch/activation delay, critique, corrections, cancel/termination and host work count; original case clock persists across stages and failures",
+    "overrun": "stop under host caps; unused stages remain unexecuted and incomplete cases cannot pass"
+  },
+  "source_access": "source-access.json",
+  "case_birth_utc": null,
+  "case_birth_epoch": null,
+  "birth_required": "host records BEFORE actual case-specific preparation; reservation/template preparation time is not an activation receipt",
+  "evaluator_reservation": "V8-EVAL-V8-NB-BATCH-C-Z-S8",
+  "input_packaging": "copy only the assigned brief, thin plan, method card and stage TASK; later stages get only permitted same-case frozen current artifacts/raw source captures; no full planning directory mount",
+  "candidate_writes": [
+    "actual stage proposal/critique/final proposal",
+    "unresolved consequential leads",
+    "optional within-case witness artifact with honest execution status"
+  ],
+  "host_writes": [
+    "capture/provenance/delivered ranges",
+    "native histories and stage artifact hashes",
+    "births/termination/waits/occupancy",
+    "account/load binding",
+    "cost and known/unknown token components"
+  ],
+  "method_extra_requirements": [
+    "three-proposition-condition-check",
+    "self-derived-discriminating-numerical-witness",
+    "progressive-context-retrieval"
+  ],
+  "pair_id": "V8-NB-BATCH",
+  "pair_arm": "control",
+  "logical_case_id": "V8-NB-BATCH-C-Z",
+  "logical_pair_id": "V8-NB-BATCH",
+  "attempt_pair_id": "V8-NB-BATCH-S8",
+  "successor_of": "V8-NB-BATCH-C-Z",
+  "original_evaluator_reservation": "V8-EVAL-V8-NB-BATCH-C-Z",
+  "classification": "DEVELOPMENT_REPEAT_NOT_FRESH_HOLDOUT",
+  "lineage": {
+    "original_manifest": {
+      "path": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-BATCH-C-Z/manifest.json",
+      "sha256": "1289009d5f8b46e99c6a1e0a52fa575d7e5077a7cf5e9d3a219f0da62c7b2e11"
+    },
+    "original_method": {
+      "path": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-BATCH-C-Z/METHOD.md",
+      "sha256": "222ad8739878a9dfc93d6e3ee533596ea2cd2f4cac673870c6c285c18dd2570c"
+    },
+    "development_authority": {
+      "path": "LAB_ROOT/ops/recovery-v1/ATTEMPT_SUCCESSOR_DEVELOPMENT_AUTHORITY_V1.json",
+      "sha256": "64b40261010db33ce32871db4cb42900ae130d5dc02272ac92831594bd9e2f7e"
+    }
+  },
+  "prospective_host_binding": {
+    "route": "v8-z-route-recovery-v2-native-bound-v2",
+    "account": "existing-authorized-zcode-account-v8-A",
+    "actual_account_id": "UNKNOWN",
+    "model": "GLM5.3FlashMax",
+    "pins": {
+      "runtime": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b",
+      "config": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d",
+      "independent_acceptance": "59b08282df39fe1c86e21eea06d1197a17f3ea30ef13b1569d6c34a31347a18c"
+    },
+    "binding_status": "REQUESTED_EXISTING_ACCEPTED_ROUTE_NOT_NEW_PROVIDER_VERIFICATION"
+  }
+}

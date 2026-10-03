@@ -1,0 +1,12 @@
+# V8-NB-AMEND-T-L
+
+Complete the assigned brief and thin plan through source capture/discovery → repository investigation → sandbox-plan comparison → fresh same-family independent candidate critic → bounded final correction → complete actual proposal. All three questions and five obligations are required. Use only explicitly packaged assigned inputs, same-case admitted raw source captures and frozen current artifacts; no sibling, evaluator, campaign answer or private host content. Method: `METHOD.md`. The host packages `templates/research.TASK.md`, then fresh `templates/critic.TASK.md`, then fresh `templates/correction.TASK.md`. Research ≤1200s; critic ≤1200s; correction ≤900s; fixed inclusive case wall ≤3600s, occupied ≤5400s, host overhead ≤300s. Case/stage births precede actual preparation; no reset. Host account/model/mode/route binding must be common to both arms before either case birth. This reservation is not an execution/admission receipt.
+
+
+# Independent candidate flash critique
+
+This is a fresh context in the original case's candidate family/account, not independent evaluator feedback. Read `inputs/BRIEF.md`, `inputs/THIN_PLAN.md`, `inputs/METHOD.md`, the frozen `inputs/PROPOSAL.md`, optional `inputs/UNRESOLVED_LEADS.md` and this case's raw public-source captures. You may independently retrieve allowed public sources; never use evaluator keys/rulings, sibling cases, previous candidate reasoning or campaign grades.
+
+Write `out/CRITIQUE.md`. Assess all three questions and five obligations against the actual proposal. Check consequential claims at their cited version and surrounding source context; preserve conditions, exceptions and normative force. Separate unsupported source claims, legitimate inference, product choices and supported corrections. Inspect the recommendation, real issue → fix → test evidence and proposed validations. For the witness recipes, check the candidate's own values/calculation and whether the example discriminates its stated assumption. Give concise cited corrections and concrete counterexamples where warranted. Mark unresolved obligations explicitly; a mere checklist does not establish truth.
+
+At most 1200 seconds from this stage's fixed birth, still inside the original 3600-second case clock. Write the critique, not a host ledger or a replacement proposal. No helper/child/native Goal/provider launch or private/sibling/evaluator access.

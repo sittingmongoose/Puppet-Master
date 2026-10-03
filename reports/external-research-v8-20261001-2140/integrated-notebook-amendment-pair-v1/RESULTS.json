@@ -1,0 +1,52 @@
+{
+  "schema": "pm.er8.public-integrated-notebook-amendment-results.v1",
+  "operational_counts": {
+    "bundle_case_pipelines": 2,
+    "bundle_matched_pairs": 1,
+    "campaign_operational_cases_root_attested_at_0407": 10,
+    "campaign_operational_pairs_root_attested_at_0407": 5,
+    "case_target": 24,
+    "pair_target": 12,
+    "assigned_quality_reviewed_comparisons": 0
+  },
+  "quality": "PENDING_INDEPENDENT_EVALUATION",
+  "winner": null,
+  "case_summaries": {
+    "V8-NB-AMEND-C-L": {
+      "actual_case_wall_seconds": 2252.845527356,
+      "actual_occupied_stage_lease_seconds": 2252.287031173706,
+      "actual_nonoverlapping_outside_native_seconds": 5.392740566,
+      "all_case_execution_closed_before_cutoff": true,
+      "actual_final_proposal": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-final-correction/workspace/out/FINAL_PROPOSAL.md",
+        "bytes": 45736,
+        "sha256": "3bbc99d85c5e5631ebe17be9a8e39827850e8aa536e2108ffc477262de55e424"
+      }
+    },
+    "V8-NB-AMEND-T-L": {
+      "actual_case_wall_seconds": 2008.53208353,
+      "actual_occupied_stage_lease_seconds": 2007.836809873581,
+      "actual_nonoverlapping_outside_native_seconds": 5.168064165,
+      "all_case_execution_closed_before_cutoff": true,
+      "actual_final_proposal": {
+        "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-T-L/V8-NB-AMEND-T-L-final-correction/workspace/out/FINAL_PROPOSAL.md",
+        "bytes": 50479,
+        "sha256": "b5598d87e0786b3ac69243af1f93c6bb1538d24c65f026db54c27849bc20427a"
+      }
+    }
+  },
+  "immutable_root_observation": null,
+  "cost_scope": "Actual pair six stage intervals; historical failure-inclusive campaign costs separately observed; root management/publication/evaluation costs separate.",
+  "source_semantic_acquisition": "UNKNOWN",
+  "native_replay_portable": false,
+  "grader_findings_read": false,
+  "T_critic_packaging_conflict": {
+    "literal_METHOD_cap_seconds": 600,
+    "admitted_TASK_runtime_cap_seconds": 1200,
+    "observed_native_owned_seconds": 804.874124699,
+    "admitted_lease_late": false,
+    "stage_host_charge_and_external_actor_close_before_deadline": true,
+    "packet_edited": false,
+    "semantic_method_effect_claim": false
+  }
+}

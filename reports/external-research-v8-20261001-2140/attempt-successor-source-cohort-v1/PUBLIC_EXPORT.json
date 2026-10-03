@@ -1,0 +1,893 @@
+{
+  "artifacts": [
+    {
+      "bytes": 3352,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/briefs/bioimaging.md",
+      "original_source_sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/briefs/bioimaging.md",
+      "public_sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 3603,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/briefs/notebook-workspace.md",
+      "original_source_sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/briefs/notebook-workspace.md",
+      "public_sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 2024,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-B-Z-S8/METHOD.md",
+      "original_source_sha256": "f6df08a280a4db79323bd96c9d816c34aee66a02e3f155602407f1290c599f5c",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-BIO-B-Z-S8/METHOD.md",
+      "public_sha256": "f6df08a280a4db79323bd96c9d816c34aee66a02e3f155602407f1290c599f5c",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 1082,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-B-Z-S8/TASK.md",
+      "original_source_sha256": "3f9a20a4785a4cb4e5ca27015db857b569fe2c93915236590bf30c7e3fc17706",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-BIO-B-Z-S8/TASK.md",
+      "public_sha256": "3f9a20a4785a4cb4e5ca27015db857b569fe2c93915236590bf30c7e3fc17706",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 6146,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-B-Z-S8/manifest.json",
+      "original_source_sha256": "21ffb4e9fdf511c5d52fb2f10ed4d681a704fe7c7271406b356e58009a0ef04d",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-BIO-B-Z-S8/manifest.json",
+      "public_sha256": "29889dde1a1bdad88af1a75e8eea9ba5d12c054aa15259c01f4636c9ad48e4e4",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 2032,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-BATCH-C-Z-S8/METHOD.md",
+      "original_source_sha256": "222ad8739878a9dfc93d6e3ee533596ea2cd2f4cac673870c6c285c18dd2570c",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-BIO-BATCH-C-Z-S8/METHOD.md",
+      "public_sha256": "222ad8739878a9dfc93d6e3ee533596ea2cd2f4cac673870c6c285c18dd2570c",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 988,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-BATCH-C-Z-S8/TASK.md",
+      "original_source_sha256": "3d589b5dbfc6bb5f31846ed63fc1d7a203ca04d1c391c5543b775b9dec3a801e",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-BIO-BATCH-C-Z-S8/TASK.md",
+      "public_sha256": "3d589b5dbfc6bb5f31846ed63fc1d7a203ca04d1c391c5543b775b9dec3a801e",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 6343,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-BATCH-C-Z-S8/manifest.json",
+      "original_source_sha256": "285beb8535e2d39759a1daafa37451f775afdd3d91862491da6363f7a1169336",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-BIO-BATCH-C-Z-S8/manifest.json",
+      "public_sha256": "79f5c4323d57842bcd34f70e99fc71b989e6fcccc83ccdf418f672b764581e48",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 473,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-C-Z-S8/METHOD.md",
+      "original_source_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-BIO-C-Z-S8/METHOD.md",
+      "public_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 1082,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-C-Z-S8/TASK.md",
+      "original_source_sha256": "01033eabf39521eebbf5c4d073785a50f51d670a24363d7c85d45ea2cfb74fe1",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-BIO-C-Z-S8/TASK.md",
+      "public_sha256": "01033eabf39521eebbf5c4d073785a50f51d670a24363d7c85d45ea2cfb74fe1",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 5957,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-C-Z-S8/manifest.json",
+      "original_source_sha256": "1e3e164f807b404d5aa194f82ac085b342e22a1fab266eb64e5f4a3ba6e86e8f",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-BIO-C-Z-S8/manifest.json",
+      "public_sha256": "9b51e680371774ab647e2d1eb842c1e99ecfb56b652eddbfeec5615b796c6106",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 1307,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-COND-C-Z-S8/METHOD.md",
+      "original_source_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-BIO-COND-C-Z-S8/METHOD.md",
+      "public_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 987,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-COND-C-Z-S8/TASK.md",
+      "original_source_sha256": "800d1b54049534e3f5a3d34e81d6840e064bb8f9f9649dc6b1ecbe6d69504c81",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-BIO-COND-C-Z-S8/TASK.md",
+      "public_sha256": "800d1b54049534e3f5a3d34e81d6840e064bb8f9f9649dc6b1ecbe6d69504c81",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 6266,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-COND-C-Z-S8/manifest.json",
+      "original_source_sha256": "d8cadb6c0e6ef1c2b676708a47a6ba8c8fb91f3895f628aefb55ecb8d4ccec4b",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-BIO-COND-C-Z-S8/manifest.json",
+      "public_sha256": "2a7b523bfaa5c9490ddc890a5cc480862ed31668797d98b99f9e12ef1a18b1fa",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 1172,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-P-Z-S8/METHOD.md",
+      "original_source_sha256": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-BIO-P-Z-S8/METHOD.md",
+      "public_sha256": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 1082,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-P-Z-S8/TASK.md",
+      "original_source_sha256": "629dcd8e1d945b7bd5427f759da9227de7d0b27ccbee291fa7e00924506b678d",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-BIO-P-Z-S8/TASK.md",
+      "public_sha256": "629dcd8e1d945b7bd5427f759da9227de7d0b27ccbee291fa7e00924506b678d",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 6063,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-P-Z-S8/manifest.json",
+      "original_source_sha256": "e31f89240c3631b40ab0b5e87f590adaefeb7a66b7d2783f9db6babf7070df12",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-BIO-P-Z-S8/manifest.json",
+      "public_sha256": "4959cc7a620f16b187b50a46eb1de6ae4974f32fe5c531aaa0858997e0554f0a",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 1307,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-WIT-T-Z-S8/METHOD.md",
+      "original_source_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-BIO-WIT-T-Z-S8/METHOD.md",
+      "public_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 986,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-WIT-T-Z-S8/TASK.md",
+      "original_source_sha256": "2f1a0bc8c359f8f21599cfcea988531b95e8368a9a72cfcf42288caa9e5daf97",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-BIO-WIT-T-Z-S8/TASK.md",
+      "public_sha256": "2f1a0bc8c359f8f21599cfcea988531b95e8368a9a72cfcf42288caa9e5daf97",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 6261,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-WIT-T-Z-S8/manifest.json",
+      "original_source_sha256": "5b4027fada09e13d7ee5c701be2f4e51520b939ce3da3e6e929e2bb1404643a8",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-BIO-WIT-T-Z-S8/manifest.json",
+      "public_sha256": "143bb6acee42df5f40032a29c8a0ab8411bc6d37ba9c3acbe84842c4f26567ce",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 2024,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-B-Z-S8/METHOD.md",
+      "original_source_sha256": "f6df08a280a4db79323bd96c9d816c34aee66a02e3f155602407f1290c599f5c",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-NB-B-Z-S8/METHOD.md",
+      "public_sha256": "f6df08a280a4db79323bd96c9d816c34aee66a02e3f155602407f1290c599f5c",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 1097,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-B-Z-S8/TASK.md",
+      "original_source_sha256": "56b1410213e221f090e1fafa9dc4a76870e575513702950a1cdc64aaf23b40f9",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-NB-B-Z-S8/TASK.md",
+      "public_sha256": "56b1410213e221f090e1fafa9dc4a76870e575513702950a1cdc64aaf23b40f9",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 6157,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-B-Z-S8/manifest.json",
+      "original_source_sha256": "d4b5688448b80a96d4b64c3a7ec9827bba8eba3d2737c6e140b3c2d824c86e7b",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-NB-B-Z-S8/manifest.json",
+      "public_sha256": "c73ac96cf9ff461b73e489f932a01f1ca05b117a530fb7115bee51ac5213a677",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 2032,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-BATCH-C-Z-S8/METHOD.md",
+      "original_source_sha256": "222ad8739878a9dfc93d6e3ee533596ea2cd2f4cac673870c6c285c18dd2570c",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-NB-BATCH-C-Z-S8/METHOD.md",
+      "public_sha256": "222ad8739878a9dfc93d6e3ee533596ea2cd2f4cac673870c6c285c18dd2570c",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 987,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-BATCH-C-Z-S8/TASK.md",
+      "original_source_sha256": "c571c11db31a0cc6579755a07251747525edd9b5c71d2e9546773600b514c7f0",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-NB-BATCH-C-Z-S8/TASK.md",
+      "public_sha256": "c571c11db31a0cc6579755a07251747525edd9b5c71d2e9546773600b514c7f0",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 6354,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-BATCH-C-Z-S8/manifest.json",
+      "original_source_sha256": "755c5fc4d7c06cdbc64f78d803c3797e3573547ac91c8526d003a33d3d293506",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-NB-BATCH-C-Z-S8/manifest.json",
+      "public_sha256": "00a7a6b953157a520c69bece323048e76d5f603d4db659897b9ff28dcbdbbe94",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 473,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-C-Z-S8/METHOD.md",
+      "original_source_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-NB-C-Z-S8/METHOD.md",
+      "public_sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 1097,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-C-Z-S8/TASK.md",
+      "original_source_sha256": "06d46af81346597e9a0d7d5f6a082e98f1e0507a538c2927e85e758e899181cc",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-NB-C-Z-S8/TASK.md",
+      "public_sha256": "06d46af81346597e9a0d7d5f6a082e98f1e0507a538c2927e85e758e899181cc",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 5968,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-C-Z-S8/manifest.json",
+      "original_source_sha256": "fe58210488e2b24b2c013b340a36d70ffe0b2e9a5dc8b101780e176ad1a8b103",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-NB-C-Z-S8/manifest.json",
+      "public_sha256": "f011d6ced07b66878b91af556489d4c1b75f3bd25d5a36d4ea78ea8c45ba2fb1",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 1307,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-COND-C-Z-S8/METHOD.md",
+      "original_source_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-NB-COND-C-Z-S8/METHOD.md",
+      "public_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 986,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-COND-C-Z-S8/TASK.md",
+      "original_source_sha256": "cc03327404a96ce75ea56dd36e1aaec9487a4c45e8d201398274ec0ee0a190cd",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-NB-COND-C-Z-S8/TASK.md",
+      "public_sha256": "cc03327404a96ce75ea56dd36e1aaec9487a4c45e8d201398274ec0ee0a190cd",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 6277,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-COND-C-Z-S8/manifest.json",
+      "original_source_sha256": "dd4b671a58ab95a660acad063e006be59e3e847e36a6e9b94dc434498417224f",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-NB-COND-C-Z-S8/manifest.json",
+      "public_sha256": "5a69cfd0453b0e7a95a71609eed13a6322f16d1c1b53eb1e655e97df647ca934",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 1172,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-P-Z-S8/METHOD.md",
+      "original_source_sha256": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-NB-P-Z-S8/METHOD.md",
+      "public_sha256": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 1097,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-P-Z-S8/TASK.md",
+      "original_source_sha256": "fce771420bbab946b482f63c09d78f8f0d6edaa211cf96305754b6cf02f72628",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-NB-P-Z-S8/TASK.md",
+      "public_sha256": "fce771420bbab946b482f63c09d78f8f0d6edaa211cf96305754b6cf02f72628",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 6074,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-P-Z-S8/manifest.json",
+      "original_source_sha256": "57bb104767173cff9285582f6d0b4f457495aa9ec2d0df67f1bd80b5e56b1fe1",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-NB-P-Z-S8/manifest.json",
+      "public_sha256": "7285b874a1eb467c3d9375ce59921762e1635f3af92c81e0260cdc51300d156d",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 1307,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-WIT-T-Z-S8/METHOD.md",
+      "original_source_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-NB-WIT-T-Z-S8/METHOD.md",
+      "public_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 985,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-WIT-T-Z-S8/TASK.md",
+      "original_source_sha256": "23d24487e083b9139867e9b6fb6aae0d2c95b3a5e84371c4bc993576811887a9",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-NB-WIT-T-Z-S8/TASK.md",
+      "public_sha256": "23d24487e083b9139867e9b6fb6aae0d2c95b3a5e84371c4bc993576811887a9",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 6272,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-WIT-T-Z-S8/manifest.json",
+      "original_source_sha256": "88c57485c2a99533633619fd49fa2def9a57d3e9b8c7a386f58cbfc44c0e8969",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/candidates/V8-NB-WIT-T-Z-S8/manifest.json",
+      "public_sha256": "3cf097b5dee25396dbae607ec98e14e571f5585c20923d2c5f11ab62a61a2cd6",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 29033,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/pairs.json",
+      "original_source_sha256": "66c12e9d30af3c600089f507883f9f9a63c441355f1f20c8f5b604a60070a815",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/pairs.json",
+      "public_sha256": "b943f6f950bd19dda07ed3016da37230b2a37b7a11bfbcb802a70bf6329849ba",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 4477,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/pairs/V8-BIO-BATCH.json",
+      "original_source_sha256": "939861bc3a16900e266e2cc59ebbd16786262ec3924475157804c90414fb56a8",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/pairs/V8-BIO-BATCH.json",
+      "public_sha256": "75e8d8c6ba67db19f4088d3cab570d6f793fba4e7d803a4513837f0d2610151d",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 4399,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/pairs/V8-BIO-CHECK.json",
+      "original_source_sha256": "611ce24e2f86bb3523064039b39bedb4c6dca31381817536a7a181253cc7c7b5",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/pairs/V8-BIO-CHECK.json",
+      "public_sha256": "68fbd2431f536f38cc85badf9b24e152b79b49a880260ec183f8f09aa5b1a97b",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 4440,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/pairs/V8-BIO-COND.json",
+      "original_source_sha256": "4d070a4604b0192b2c495c8638dbe9b0b0cff7cd91b1c251ddb93dd6209b312f",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/pairs/V8-BIO-COND.json",
+      "public_sha256": "7049dfee962f48e6c7a64b0d8031d58279bd607cd1f3cbeaae69a4e83c284d79",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 4459,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/pairs/V8-NB-BATCH.json",
+      "original_source_sha256": "ac3de4f878a98c57730aa8dfffa18a3d77d0f04a95200d36a4b4e6fb628655a2",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/pairs/V8-NB-BATCH.json",
+      "public_sha256": "0cece7874505bfefd4f1b2ecf77bac50de4e576718f2d0dc62ecbaad3e9dc40e",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 4381,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/pairs/V8-NB-CHECK.json",
+      "original_source_sha256": "f7d0ac70fd2055e81496fc55f357edf53077b1ce3e435fdcb76edaff3281ef3d",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/pairs/V8-NB-CHECK.json",
+      "public_sha256": "03c042a4a7f652c5e8d1f6401015300228133446ed63c70dc3c16ead3f0c834b",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 4422,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/pairs/V8-NB-COND.json",
+      "original_source_sha256": "32766cf825a0705f144ef99fd11976d6f5d0025c0faf65b4ccec0bb02bdeab9c",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/pairs/V8-NB-COND.json",
+      "public_sha256": "40c5e47681e579a37fcbeab24acba620d059c9b0a9cd4908564d74b26d26b581",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 959,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/sandbox-plans/bioimaging.md",
+      "original_source_sha256": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/sandbox-plans/bioimaging.md",
+      "public_sha256": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 920,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/sandbox-plans/notebook-workspace.md",
+      "original_source_sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/sandbox-plans/notebook-workspace.md",
+      "public_sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 1728,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/source-access.json",
+      "original_source_sha256": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/source-access.json",
+      "public_sha256": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 1477,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/templates/correction.TASK.md",
+      "original_source_sha256": "1421e111351ebd35697394e93783cc85587d5ff21c003592982c20a75b9fb39e",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/templates/correction.TASK.md",
+      "public_sha256": "1421e111351ebd35697394e93783cc85587d5ff21c003592982c20a75b9fb39e",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 1449,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/templates/critic.TASK.md",
+      "original_source_sha256": "7e0d69c1a1c9e92ad37b8b8fa97863fbde211eb06563cb431f330849e48fb0d2",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/templates/critic.TASK.md",
+      "public_sha256": "7e0d69c1a1c9e92ad37b8b8fa97863fbde211eb06563cb431f330849e48fb0d2",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 1586,
+      "original_source_path": "LAB_ROOT/cases/attempt-successors-v1/templates/research.TASK.md",
+      "original_source_sha256": "dcfe7bea57da20811145ea5649464534ae3709b502284bdce754d8e7ae9f9802",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "cases/attempt-successors-v1/templates/research.TASK.md",
+      "public_sha256": "dcfe7bea57da20811145ea5649464534ae3709b502284bdce754d8e7ae9f9802",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 31230,
+      "original_source_path": "LAB_ROOT/dev/attempt-successor-declarations-v1/DECLARATION_CLOSURE.json",
+      "original_source_sha256": "cb2fb0c8eacf1d3810f204c2f86ed812ee32684cf1924ba3d7c4dfd900778be8",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "dev/attempt-successor-declarations-v1/DECLARATION_CLOSURE.json",
+      "public_sha256": "d59bd17d84c4149ed44bf9f57cb77eec22008e66f86c9e79318109ee8640e4cd",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 4926,
+      "original_source_path": "LAB_ROOT/dev/attempt-successor-declarations-v1/HANDOFF.md",
+      "original_source_sha256": "ce079a57df5fac780d34da33a50f05b7d70e771b792b3e7f64b1b654628c03fd",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "dev/attempt-successor-declarations-v1/HANDOFF.md",
+      "public_sha256": "ce079a57df5fac780d34da33a50f05b7d70e771b792b3e7f64b1b654628c03fd",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 5403,
+      "original_source_path": "LAB_ROOT/dev/attempt-successor-declarations-v1/INPUT_MAP.json",
+      "original_source_sha256": "da97cadb4436c5432f9dc071db840e0ac094e61a317072e5bbd6d31b59c2de3e",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "dev/attempt-successor-declarations-v1/INPUT_MAP.json",
+      "public_sha256": "cbe9e288b5ea242c36dfe0e284ff9acf4e9e8cd86032e56b08ce56ccfd8f28c7",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 39267,
+      "original_source_path": "LAB_ROOT/dev/attempt-successor-declarations-v1/LINEAGE.json",
+      "original_source_sha256": "40c1fe1a18412d396f721c2f2b69ce9abae34f35df691abe289bf60a9115fb56",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "dev/attempt-successor-declarations-v1/LINEAGE.json",
+      "public_sha256": "f2d6ad6cd68e082fdd48ffb367100d40eebe8e4455b3db246cfac747c25a5fe7",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 104258,
+      "original_source_path": "LAB_ROOT/dev/attempt-successor-declarations-v1/OBJECTIVES.json",
+      "original_source_sha256": "490eb017d32c4217933d74f2bd29f6fe0f14a7b7b131678b856470cfe857de71",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "dev/attempt-successor-declarations-v1/OBJECTIVES.json",
+      "public_sha256": "490eb017d32c4217933d74f2bd29f6fe0f14a7b7b131678b856470cfe857de71",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 28784,
+      "original_source_path": "LAB_ROOT/dev/attempt-successor-declarations-v1/PAIR_CLOSURE_DRAFT.json",
+      "original_source_sha256": "535500ebd86ac4d1cafdfddfde2434f257686add010b1a76fa5bc153996e1998",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "dev/attempt-successor-declarations-v1/PAIR_CLOSURE_DRAFT.json",
+      "public_sha256": "43cbfa294c97370e81efff2058a48f0e9ea97215ef3c33626f95b3dc1c07435c",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 19151,
+      "original_source_path": "LAB_ROOT/dev/attempt-successor-declarations-v1/ROOT_RELEASE_PATCH.json",
+      "original_source_sha256": "a3971b757b3c9655474037f6bbf279fb0579e43edb8a1bc6a683ffab1a96fc64",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "dev/attempt-successor-declarations-v1/ROOT_RELEASE_PATCH.json",
+      "public_sha256": "430963c79b37842de6b86b68f198972eb9e7cd603fa1fc3df16a7af1fd856eec",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 498,
+      "original_source_path": "LAB_ROOT/dev/attempt-successor-declarations-v1/SCORING_SCOPE_BINDING.json",
+      "original_source_sha256": "c98d8ab9d2076c603227bd78b1896f1d28f97f360655c03d78f5ac72523cf780",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "dev/attempt-successor-declarations-v1/SCORING_SCOPE_BINDING.json",
+      "public_sha256": "e8a91650451f0b239d94cfa2cea6009dc14a54fb0d10114d4ff58f574e2bc094",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 10680,
+      "original_source_path": "LAB_ROOT/dev/attempt-successor-declarations-v1/SOURCE_FREEZE.json",
+      "original_source_sha256": "d5427e1f467ab8495c4b35b94ca7528f8b1a9d893de1834bfaf9c662b48eb6a1",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "dev/attempt-successor-declarations-v1/SOURCE_FREEZE.json",
+      "public_sha256": "500d39d363da1e83a7635a970c23b269625c2289a3101715ade0e6b899ac70ae",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 1090,
+      "original_source_path": "LAB_ROOT/dev/attempt-successor-declarations-v1/TEST_OUTPUT.txt",
+      "original_source_sha256": "3c3e139d5e59fa78fa057587e2ee58141a510f22eea69b7b84275611d63a5bfd",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "dev/attempt-successor-declarations-v1/TEST_OUTPUT.txt",
+      "public_sha256": "3c3e139d5e59fa78fa057587e2ee58141a510f22eea69b7b84275611d63a5bfd",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 871,
+      "original_source_path": "LAB_ROOT/dev/attempt-successor-declarations-v1/TEST_RESULTS.json",
+      "original_source_sha256": "96242501e845078914340d53fc4b4a31ec041a2b8bdd03a69cd6388fa098982a",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "dev/attempt-successor-declarations-v1/TEST_RESULTS.json",
+      "public_sha256": "96242501e845078914340d53fc4b4a31ec041a2b8bdd03a69cd6388fa098982a",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 6862,
+      "original_source_path": "LAB_ROOT/dev/attempt-successor-declarations-v1/finish_declarations.py",
+      "original_source_sha256": "e8205db3e4d4ec7c6edee9859c12b81cb535915b83dbb6bd042694104930efd3",
+      "portability": "NONPORTABLE_NATIVE_DEPENDENCIES_SOURCE_ONLY",
+      "public_path": "dev/attempt-successor-declarations-v1/finish_declarations.py",
+      "public_sha256": "e8205db3e4d4ec7c6edee9859c12b81cb535915b83dbb6bd042694104930efd3",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 9586,
+      "original_source_path": "LAB_ROOT/dev/attempt-successor-declarations-v1/materialize.py",
+      "original_source_sha256": "e5ef5451a18b5f73ce4f0eaf3fbb6966caa49257a604db427ee9dafd0f0ab515",
+      "portability": "NONPORTABLE_NATIVE_DEPENDENCIES_SOURCE_ONLY",
+      "public_path": "dev/attempt-successor-declarations-v1/materialize.py",
+      "public_sha256": "e5ef5451a18b5f73ce4f0eaf3fbb6966caa49257a604db427ee9dafd0f0ab515",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 9836,
+      "original_source_path": "LAB_ROOT/dev/attempt-successor-declarations-v1/test_declarations.py",
+      "original_source_sha256": "a0fddaded89df868f482fba0ae636226166ec79c807063ae8d71a6da65055b32",
+      "portability": "NONPORTABLE_NATIVE_DEPENDENCIES_SOURCE_ONLY",
+      "public_path": "dev/attempt-successor-declarations-v1/test_declarations.py",
+      "public_sha256": "a0fddaded89df868f482fba0ae636226166ec79c807063ae8d71a6da65055b32",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 4379,
+      "original_source_path": "LAB_ROOT/dev/tranche-successor-v8/ADDITIVE_ACTION_SPEC.json",
+      "original_source_sha256": "b3cdb755dfa15e6116a056a3c0090b4edd9dca45971d5550b589d03b03005228",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "dev/tranche-successor-v8/ADDITIVE_ACTION_SPEC.json",
+      "public_sha256": "b3cdb755dfa15e6116a056a3c0090b4edd9dca45971d5550b589d03b03005228",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 6125,
+      "original_source_path": "LAB_ROOT/dev/tranche-successor-v8/HANDOFF.json",
+      "original_source_sha256": "56f31cce8c2f5cb0e5fdbfa064b713a6edf955ccb48e026113145e4c66320e6c",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "dev/tranche-successor-v8/HANDOFF.json",
+      "public_sha256": "27a670146a32689985bfea03c033797ece17abd0b08df57adb735465e26ff320",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 6908,
+      "original_source_path": "LAB_ROOT/dev/tranche-successor-v8/HANDOFF.md",
+      "original_source_sha256": "d2171e1435fd9277e59182ec4ea1e74f09aea18c0c572b36ebaaebc7e5de7466",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "dev/tranche-successor-v8/HANDOFF.md",
+      "public_sha256": "d2171e1435fd9277e59182ec4ea1e74f09aea18c0c572b36ebaaebc7e5de7466",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 44964,
+      "original_source_path": "LAB_ROOT/dev/tranche-successor-v8/REMAINING_CELLS.json",
+      "original_source_sha256": "c4644d8bcacc68a499dc28d790fa584a6892eb508de4d1075656f096ae388585",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "dev/tranche-successor-v8/REMAINING_CELLS.json",
+      "public_sha256": "79dc6fc9f16ff982d48c89b6d758d45014f7509cb08d8607334ce79cdd97e8fb",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 2299,
+      "original_source_path": "LAB_ROOT/dev/tranche-successor-v8/SOURCE_FREEZE.json",
+      "original_source_sha256": "86b997375679047e3c7fede8df94ecfb3ceaa4e0745485159a6d430dbf1cbe1b",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "dev/tranche-successor-v8/SOURCE_FREEZE.json",
+      "public_sha256": "ff2ea2e9fb123c421b59e45f2797daba18435305225fed9539588e66654ba07b",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 641,
+      "original_source_path": "LAB_ROOT/dev/tranche-successor-v8/TEST_RESULTS.json",
+      "original_source_sha256": "9c537b904ffaea4425316e20241f55bb9488883ca80073318c185aee3559da97",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "dev/tranche-successor-v8/TEST_RESULTS.json",
+      "public_sha256": "9c537b904ffaea4425316e20241f55bb9488883ca80073318c185aee3559da97",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 7316,
+      "original_source_path": "LAB_ROOT/ops/attempt-reservation-api-v1/HANDOFF.md",
+      "original_source_sha256": "260b395b5fb7a1f30324a6192a5792596601b66dea246fcec354bc654fe52333",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "ops/attempt-reservation-api-v1/HANDOFF.md",
+      "public_sha256": "d42e9ff4f6d8d1660bbc7cfe5df095347eebb73ca91786a88b7f041993eed47b",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 3376,
+      "original_source_path": "LAB_ROOT/ops/attempt-reservation-api-v1/MANIFEST.json",
+      "original_source_sha256": "2b4b54c140e211c300f1951d43e8f6119f2b86e6461bcd102f407e0d4441a196",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "ops/attempt-reservation-api-v1/MANIFEST.json",
+      "public_sha256": "6b39ce80970ace4c724b32d059c31dee01f1de8127db41821f3409fb9f73aa26",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 602,
+      "original_source_path": "LAB_ROOT/ops/attempt-reservation-api-v1/QUIET_RECORD_TEMPLATE.json",
+      "original_source_sha256": "c8637ff9b1e8add849b20a13bf30d6983b45d80adef156ecd105ed9f2df5733f",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "ops/attempt-reservation-api-v1/QUIET_RECORD_TEMPLATE.json",
+      "public_sha256": "c8637ff9b1e8add849b20a13bf30d6983b45d80adef156ecd105ed9f2df5733f",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 3843,
+      "original_source_path": "LAB_ROOT/ops/attempt-reservation-api-v1/REQUEST_SCHEMA.json",
+      "original_source_sha256": "3f6281de816127dba1ce9d51ed49cd958e24b17c363400a3ca76fc6555a56f9c",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "ops/attempt-reservation-api-v1/REQUEST_SCHEMA.json",
+      "public_sha256": "3f6281de816127dba1ce9d51ed49cd958e24b17c363400a3ca76fc6555a56f9c",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 474,
+      "original_source_path": "LAB_ROOT/ops/attempt-reservation-api-v1/REVIEW_RECORD_TEMPLATE.json",
+      "original_source_sha256": "920ada20d1be72417c31c6892ec1dc6dd930d477fc5e308987b0a63b07c11b01",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "ops/attempt-reservation-api-v1/REVIEW_RECORD_TEMPLATE.json",
+      "public_sha256": "cfce9b6feb66a6bd1fea7a78ccb81d2326115c6c6395772e8a9fcb0cbe02eecd",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 1243,
+      "original_source_path": "LAB_ROOT/ops/attempt-reservation-api-v1/ROOT_ACCEPTANCE_TEMPLATE.json",
+      "original_source_sha256": "3e2bf19c4c6ee9913e99cd384023cc2ffda08a7fd15e3657fac377b6759cda21",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "ops/attempt-reservation-api-v1/ROOT_ACCEPTANCE_TEMPLATE.json",
+      "public_sha256": "77e0ca17af480e65278dfd4bbd87f7411d93a0f3cc68bf6be3922a10b1761a07",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 2922,
+      "original_source_path": "LAB_ROOT/ops/attempt-reservation-api-v1/TEST_RESULTS.txt",
+      "original_source_sha256": "c8b39a98ea6898029f25773015cd76c012cea1ea9b6e19adde815e5c7327ae21",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "ops/attempt-reservation-api-v1/TEST_RESULTS.txt",
+      "public_sha256": "c8b39a98ea6898029f25773015cd76c012cea1ea9b6e19adde815e5c7327ae21",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 16092,
+      "original_source_path": "LAB_ROOT/ops/attempt-reservation-api-v1/fixture_harness.py",
+      "original_source_sha256": "86b0fc8337d48fe01ddd7cef44d60bc36c9948a83a31890fddb743ca1ae08d5e",
+      "portability": "NONPORTABLE_NATIVE_DEPENDENCIES_SOURCE_ONLY",
+      "public_path": "ops/attempt-reservation-api-v1/fixture_harness.py",
+      "public_sha256": "86b0fc8337d48fe01ddd7cef44d60bc36c9948a83a31890fddb743ca1ae08d5e",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 20868,
+      "original_source_path": "LAB_ROOT/ops/attempt-reservation-api-v1/ledger_attempt_reservations_v1.py",
+      "original_source_sha256": "9bd4b17fe406cd20680c0c8eef16f96a6a45db727d977f1ba2cc42641c82d577",
+      "portability": "NONPORTABLE_NATIVE_DEPENDENCIES_SOURCE_ONLY",
+      "public_path": "ops/attempt-reservation-api-v1/ledger_attempt_reservations_v1.py",
+      "public_sha256": "bb0d3708ca92396bcb456d37ce3f8608b6fc736e213649e657a92a177ef14d1a",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 21067,
+      "original_source_path": "LAB_ROOT/ops/attempt-reservation-api-v1/test_attempt_reservations_v1.py",
+      "original_source_sha256": "ea75eb737548ef4582fa18a8546a2bc10eec4ff35c2d5000ea69ae83a7ae37c7",
+      "portability": "NONPORTABLE_NATIVE_DEPENDENCIES_SOURCE_ONLY",
+      "public_path": "ops/attempt-reservation-api-v1/test_attempt_reservations_v1.py",
+      "public_sha256": "ea75eb737548ef4582fa18a8546a2bc10eec4ff35c2d5000ea69ae83a7ae37c7",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 2922,
+      "original_source_path": "LAB_ROOT/ops/attempt-reservation-review-v1/AUTHOR_TEST_RECEIPT.txt",
+      "original_source_sha256": "0873bf3f48356c550093167c83f610ecb373538f6de8316ae7920b6d986636c3",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "ops/attempt-reservation-review-v1/AUTHOR_TEST_RECEIPT.txt",
+      "public_sha256": "0873bf3f48356c550093167c83f610ecb373538f6de8316ae7920b6d986636c3",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 1258,
+      "original_source_path": "LAB_ROOT/ops/attempt-reservation-review-v1/DECLARATION_TEST_RECEIPT.txt",
+      "original_source_sha256": "cefcd5155014add2d8f06ede1c1b6883ae9280fa68baee6f307f8cee103832e9",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "ops/attempt-reservation-review-v1/DECLARATION_TEST_RECEIPT.txt",
+      "public_sha256": "cefcd5155014add2d8f06ede1c1b6883ae9280fa68baee6f307f8cee103832e9",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 5408,
+      "original_source_path": "LAB_ROOT/ops/attempt-reservation-review-v1/FREEZE.json",
+      "original_source_sha256": "df4b219a5a684a28a8444f4be364899698e64e1da3833115aa2bb5e1967cb695",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "ops/attempt-reservation-review-v1/FREEZE.json",
+      "public_sha256": "d260b726bffe01f8a0c1d2cd661569e31fe85652fe5136fbbddb695295e3e2d3",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 1040,
+      "original_source_path": "LAB_ROOT/ops/attempt-reservation-review-v1/FREEZE_VERIFICATION.json",
+      "original_source_sha256": "75022997158bec2aff70634612a47ba4c53e8d1de8d58bc7b5951a2b0520ad33",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "ops/attempt-reservation-review-v1/FREEZE_VERIFICATION.json",
+      "public_sha256": "ed6e255c3f5a89d37260ec6f35c12e76e81b55747f280cb9d9013fcaee375a2c",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 1743,
+      "original_source_path": "LAB_ROOT/ops/attempt-reservation-review-v1/INDEPENDENT_TEST_RECEIPT.txt",
+      "original_source_sha256": "418657375a29cbc5412a12fc48b5c5aac808cf02d474929a550981e1103a9bdf",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "ops/attempt-reservation-review-v1/INDEPENDENT_TEST_RECEIPT.txt",
+      "public_sha256": "418657375a29cbc5412a12fc48b5c5aac808cf02d474929a550981e1103a9bdf",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 4934,
+      "original_source_path": "LAB_ROOT/ops/attempt-reservation-review-v1/REVIEW.json",
+      "original_source_sha256": "d2ac456db3d31e15189f0d47441b2f74fc9b8accda1f62b1886376909a6e49ae",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "ops/attempt-reservation-review-v1/REVIEW.json",
+      "public_sha256": "f7bfa4573591c85e080b302f67e31fef8359e6e15c341043ecb75ca8392e12c6",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 3634,
+      "original_source_path": "LAB_ROOT/ops/attempt-reservation-review-v1/REVIEW.md",
+      "original_source_sha256": "dc75723b653f74240318528e3345bc9daf46d39f866fb09f50a41823ed5ceb80",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "ops/attempt-reservation-review-v1/REVIEW.md",
+      "public_sha256": "dc75723b653f74240318528e3345bc9daf46d39f866fb09f50a41823ed5ceb80",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 16092,
+      "original_source_path": "LAB_ROOT/ops/attempt-reservation-review-v1/fixture_harness.py",
+      "original_source_sha256": "86b0fc8337d48fe01ddd7cef44d60bc36c9948a83a31890fddb743ca1ae08d5e",
+      "portability": "NONPORTABLE_NATIVE_DEPENDENCIES_SOURCE_ONLY",
+      "public_path": "ops/attempt-reservation-review-v1/fixture_harness.py",
+      "public_sha256": "86b0fc8337d48fe01ddd7cef44d60bc36c9948a83a31890fddb743ca1ae08d5e",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 3720,
+      "original_source_path": "LAB_ROOT/ops/attempt-reservation-review-v1/run_declaration_fixture.py",
+      "original_source_sha256": "1467514c88e7407741902f066c624d4b42bfa9494516c5120f35bae5dcb6b7fa",
+      "portability": "NONPORTABLE_NATIVE_DEPENDENCIES_SOURCE_ONLY",
+      "public_path": "ops/attempt-reservation-review-v1/run_declaration_fixture.py",
+      "public_sha256": "1467514c88e7407741902f066c624d4b42bfa9494516c5120f35bae5dcb6b7fa",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 21067,
+      "original_source_path": "LAB_ROOT/ops/attempt-reservation-review-v1/test_attempt_reservations_v1.py",
+      "original_source_sha256": "ea75eb737548ef4582fa18a8546a2bc10eec4ff35c2d5000ea69ae83a7ae37c7",
+      "portability": "NONPORTABLE_NATIVE_DEPENDENCIES_SOURCE_ONLY",
+      "public_path": "ops/attempt-reservation-review-v1/test_attempt_reservations_v1.py",
+      "public_sha256": "ea75eb737548ef4582fa18a8546a2bc10eec4ff35c2d5000ea69ae83a7ae37c7",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 7862,
+      "original_source_path": "LAB_ROOT/ops/attempt-reservation-review-v1/test_independent_review.py",
+      "original_source_sha256": "c3b3774178582361731041d242261fb0ab0c9a2296f519d48274c29d7ccb0311",
+      "portability": "NONPORTABLE_NATIVE_DEPENDENCIES_SOURCE_ONLY",
+      "public_path": "ops/attempt-reservation-review-v1/test_independent_review.py",
+      "public_sha256": "c3b3774178582361731041d242261fb0ab0c9a2296f519d48274c29d7ccb0311",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 6851,
+      "original_source_path": "LAB_ROOT/ops/muse-helper-public-check-v1/root-repair-v1/verify_public.py",
+      "original_source_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+      "portability": "PORTABLE_OFFLINE_ARTIFACT_CHECKER",
+      "public_path": "verify_public.py",
+      "public_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 1470,
+      "original_source_path": "LAB_ROOT/ops/recovery-v1/ATTEMPT_RESERVATION_SOURCE_ACCEPTANCE_V1.json",
+      "original_source_sha256": "118815780084618de3b62913aebd1141f8415b0eb7c9fd4f3a5bb1661b36f43c",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "ops/recovery-v1/ATTEMPT_RESERVATION_SOURCE_ACCEPTANCE_V1.json",
+      "public_sha256": "ff1ba1c63d3267108840a6a2ef7916ed8671f466c332e45d806037dcf6dac207",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 2263,
+      "original_source_path": "LAB_ROOT/ops/recovery-v1/ATTEMPT_SUCCESSOR_DEVELOPMENT_AUTHORITY_V1.json",
+      "original_source_sha256": "64b40261010db33ce32871db4cb42900ae130d5dc02272ac92831594bd9e2f7e",
+      "portability": "SANITIZED_SOURCE_OR_METADATA",
+      "public_path": "ops/recovery-v1/ATTEMPT_SUCCESSOR_DEVELOPMENT_AUTHORITY_V1.json",
+      "public_sha256": "a379438fc0437765bc5eb8a71f79d840f39db0efaf7f8a5e0ccaf270e35002d5",
+      "sanitization": "exact known roots only; embedded original external pins remain original hashes"
+    },
+    {
+      "bytes": 2392,
+      "original_source_path": null,
+      "original_source_sha256": null,
+      "portability": "PORTABLE_DOCUMENTATION",
+      "public_path": "README.md",
+      "public_sha256": "c1a525ada833846c7940cb6b3a49398ea31376d63ca008677011698a7f0ed3c6"
+    }
+  ],
+  "cohort": "attempt-successor-source-cohort-v1",
+  "declared_cases": 12,
+  "exclusions": [
+    "private context",
+    "raw streams",
+    "SDK/auth",
+    "nested native workspaces",
+    "delivery records",
+    ".body",
+    "source corpus quotes/captures",
+    "evaluator keys/answers",
+    "prior candidate outputs"
+  ],
+  "materializer_full_end_timeliness": "UNKNOWN",
+  "native_launch_authority": false,
+  "native_source_portability": "NONPORTABLE",
+  "original_pin_semantics": "original external bytes; never public-file hashes",
+  "resource_promise": false,
+  "root_macros": [
+    "USER_HOME",
+    "LAB_ROOT",
+    "WORKTREE_ROOT"
+  ],
+  "schema": "pm.er8.sanitized-positive-source-export.v1",
+  "status": "SOURCE_VALIDITY_ACCEPTED_FEASIBILITY_HOLD",
+  "whole_pairs": 6
+}

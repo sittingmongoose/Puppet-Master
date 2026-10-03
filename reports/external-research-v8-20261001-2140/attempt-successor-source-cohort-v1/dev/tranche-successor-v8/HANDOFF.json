@@ -1,0 +1,87 @@
+{
+  "schema": "er8.tranche-successor.handoff.v8",
+  "status": "HOLD_SUPPORTED_RESERVATION_API_MISSING",
+  "root_authority": false,
+  "accepted": false,
+  "launch_authority": "NONE",
+  "helper_birth_epoch": 1790998406.3611405,
+  "original_helper_deadline_epoch": 1790999306.3611405,
+  "campaign_deadline_epoch": 1791013030.8303788,
+  "campaign_start_epoch": 1790905209,
+  "candidate_family": "Z",
+  "model_mode": "GLM5.3Flash/Max",
+  "account_identity": "existing-authorized-zcode-account-v8-A",
+  "stage_caps_seconds": [
+    1200,
+    1200,
+    900
+  ],
+  "case_wall_seconds": 3600,
+  "case_occupied_seconds": 5400,
+  "outside_native_seconds": 300,
+  "stage_response_caps": [
+    160,
+    160,
+    160
+  ],
+  "ours_active_Z": 2,
+  "controller_reuse": {
+    "path": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/SOURCE_FREEZE.json",
+    "sha256": "38f31e444c6dde29f2498a69ba2c1769506b0c4384a048afb25b7882df3f7cb2"
+  },
+  "production_entry_if_future_admissible": "LAB_ROOT/dev/prospective-timing-v3/integrated-controller/rolling.py",
+  "remaining_cells_file": "LAB_ROOT/dev/tranche-successor-v8/REMAINING_CELLS.json",
+  "supported_api_blockers": [
+    {
+      "source": "ops/accounting-v1/slot_ledger.py:reserve",
+      "reason": "Initial six names only; requires empty jobs and empty final_reserved_names; cannot append fresh attempts now."
+    },
+    {
+      "source": "ops/recovery-v1/ledger_overlay.py:extend-reservations",
+      "reason": "First tranche only, exact28 distinct names, immutable original reservations; rejects existing tranche_reservation_receipt. No second append action."
+    },
+    {
+      "source": "dev/prospective-timing-v3/integrated-controller/common.py:check_release",
+      "reason": "Every queued case needs reservation_by_case[new_id] native_starts3 and literal new_id-final-correction. Alias-only map or unreserved direct admission cannot satisfy accepted controller."
+    },
+    {
+      "source": "ops/accounting-v1/slot_ledger.py:prepare-admission/case-birth/admit",
+      "reason": "An interrupted old case birth cannot be reset; job names are unique. Changing old caps/time declarations does not make it a fresh assignment."
+    }
+  ],
+  "supported_actions_that_do_not_solve_it": [
+    "case-complete permits explicit root quiet disposition and retirement of unused future commitment; cannot create successor reservation and does not establish operational/semantic completion.",
+    "Fresh root release/case_sources alone changes no reservation or old birth; fixed controller still refuses unreserved new IDs."
+  ],
+  "required_mechanism_before_launch": {
+    "name": "New additive root-authorized attempt-reservation API, independently reviewed before installation",
+    "not_implemented_by_this_helper": true,
+    "requirements": [
+      "Append fresh case/job/final/evaluation attempt identities with explicit immutable logical-cell and predecessor lineage; reject all duplicate/reused identity, split pair, V7 scheduled cell or operationally completed cell.",
+      "Require positive predecessor native/parent/actor/cgroup quiet and no launch_pending permits; do not renew or reset old births, caps, deadlines, jobs, routes, actual starts, occupied costs, unknown tokens or disposition history.",
+      "Append-only reservations: every old reservation value and completed/disposition field remains unchanged; do not use case-complete to claim failed attempts whole-complete or retire their commitments for this continuation. Charge all old spent and future commitments; reject if extra promises cannot fit.",
+      "Preserve original candidate_output_warning1200000 and candidate_output_stop1500000. Unknown generated usage remains unknown and known lower bounds remain monotonic. New assignment is not a campaign/resource budget renewal.",
+      "Recompute occupied + outstanding starts/slot commitments under unchanged144/172800/globaldeadline/2Z/outputstop/holdout/evaluator protection; reject overbudget, not overwrite/remove reservations.",
+      "Every fresh attempt must promise3 starts,5400 occupied and literal <newcase>-final-correction; common caps1200/1200/900,3600wall,300host,160responses; no child/provider fallback.",
+      "Materialize additive case declarations under approved LAB/cases source root after ownership is authorized; exact lineage and numeric/identity-only changes, methods/brief/scoring unchanged. This helper owns only dev/tranche-successor-v8 and created no executable case declarations.",
+      "After V7 scheduler positively quiet, root may release one fresh scheduler using exact accepted controller and new frozen data; never launch alongside V7 or inject another scheduler when an individual slot becomes ready."
+    ],
+    "proposed_action": "reserve-attempt-successors",
+    "proposed_append_only_state_keys": [
+      "attempt_reservation_receipts[receipt_id]",
+      "attempt_lineage_by_case[new_case_id]",
+      "reservation_by_case[new_case_id]",
+      "evaluator_reserved_names += exact unique new evaluation attempt names"
+    ]
+  },
+  "root_next_action": "Keep V7 running. Do not release/launch this HOLD. If completing the remaining contrasts is still intended, authorize a narrow additive successor-reservation mechanism plus new case-source ownership, develop/review its append-only action/state-key contract without changing ceilings or history or using case-complete to claim failed attempts whole-complete, then independently accept exact source and release only after V7 positive quiet. Recheck current metadata, source pins and full case/component/global admission at that time.",
+  "known_limitations": [
+    "Pinned public observation is historical, not live proof of quiet/unstarted state; no current-state check or source acquisition was performed.",
+    "No guaranteed24-case/12-pair completion within remaining fixed time; operational completion alone is not quality-qualified comparison.",
+    "No native/provider/unit/ledger/Git action or executable reservation successor was performed."
+  ],
+  "original_output_thresholds": {
+    "candidate_output_warning": 1200000,
+    "candidate_output_stop": 1500000
+  }
+}

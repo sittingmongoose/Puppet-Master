@@ -1,0 +1,28 @@
+{
+  "schema": "pm.er8.attempt-reservation-source-acceptance.v1",
+  "root_authority": "ROOT_REQUIRED_TRUE",
+  "accepted": "ROOT_REQUIRED_TRUE_AFTER_INDEPENDENT_ACCEPTANCE",
+  "independent_source_review_accepted": "ROOT_REQUIRED_TRUE",
+  "declarations_accepted": "ROOT_REQUIRED_TRUE_AFTER_DECLARATION_REVIEW",
+  "accepted_epoch": "ROOT_FINITE_ACTUAL_EPOCH",
+  "source": {
+    "path": "LAB_ROOT/ops/attempt-reservation-api-v1/ledger_attempt_reservations_v1.py",
+    "sha256": "9bd4b17fe406cd20680c0c8eef16f96a6a45db727d977f1ba2cc42641c82d577"
+  },
+  "source_manifest": {
+    "path": "LAB_ROOT/ops/attempt-reservation-api-v1/MANIFEST.json",
+    "sha256": "ROOT_OR_REVIEWER_HASHES_FROZEN_MANIFEST"
+  },
+  "independent_review": {
+    "path": "LAB_ROOT/ops/attempt-reservation-review-v1/REVIEW.json",
+    "sha256": "ROOT_HASHES_REAL_REVIEW"
+  },
+  "declaration_closure": {
+    "path": "LAB_ROOT/dev/attempt-successor-declarations-v1/DECLARATION_CLOSURE.json",
+    "sha256": "cb2fb0c8eacf1d3810f204c2f86ed812ee32684cf1924ba3d7c4dfd900778be8"
+  },
+  "development_authority": {
+    "path": "LAB_ROOT/ops/recovery-v1/ATTEMPT_SUCCESSOR_DEVELOPMENT_AUTHORITY_V1.json",
+    "sha256": "64b40261010db33ce32871db4cb42900ae130d5dc02272ac92831594bd9e2f7e"
+  }
+}

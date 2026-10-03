@@ -1,0 +1,11 @@
+{
+  "author_test_reruns": 0,
+  "checker_original_and_public_sha256": "3f9c492bed5b8fac52b5d10d11de4b4d3e6cb8caa9c767e85d1ab7f4a983fafd",
+  "command": "python3 verify_public.py COHORT",
+  "native_or_provider_calls": 0,
+  "returncode": 0,
+  "scope": "standalone offline public artifact hashes only",
+  "scoped_sanitation_audit_passed": true,
+  "stderr": "",
+  "stdout": "{\"model_quality_assessed\": false, \"native_replay_verified\": false, \"scope\": \"offline artifact hashes and optional declarations only\", \"timing_declarations_present_and_valid\": false, \"verified_artifacts\": 96}\n"
+}

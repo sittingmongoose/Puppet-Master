@@ -1,0 +1,110 @@
+{
+  "schema": "pm.er8.attempt-reservation-independent-review-freeze.v1",
+  "status": "FROZEN_SOURCE_ONLY_ACCEPTED",
+  "accepted": true,
+  "independent": true,
+  "actual_end_epoch": 1791001162.8860426,
+  "actual_end_utc": "2026-10-03T04:19:22.886043+00:00",
+  "endpoint_scope": "Inclusive substantive source review, fixture preparation/import/reads/tests, report writes, exact-pin/receipt verification and mailbox send/check; sampled during terminal freeze recording. No work continues after this close.",
+  "original_helper_birth_epoch": 1791000599.0972836,
+  "original_helper_deadline_epoch": 1791001199.0972836,
+  "completed_before_original_helper_deadline": true,
+  "global_deadline_epoch": 1791013030.8303788,
+  "review": {
+    "path": "LAB_ROOT/ops/attempt-reservation-review-v1/REVIEW.json",
+    "sha256": "d2ac456db3d31e15189f0d47441b2f74fc9b8accda1f62b1886376909a6e49ae"
+  },
+  "source": {
+    "path": "LAB_ROOT/ops/attempt-reservation-api-v1/ledger_attempt_reservations_v1.py",
+    "sha256": "9bd4b17fe406cd20680c0c8eef16f96a6a45db727d977f1ba2cc42641c82d577"
+  },
+  "source_manifest": {
+    "path": "LAB_ROOT/ops/attempt-reservation-api-v1/MANIFEST.json",
+    "sha256": "2b4b54c140e211c300f1951d43e8f6119f2b86e6461bcd102f407e0d4441a196"
+  },
+  "declaration_closure": {
+    "path": "LAB_ROOT/dev/attempt-successor-declarations-v1/DECLARATION_CLOSURE.json",
+    "sha256": "cb2fb0c8eacf1d3810f204c2f86ed812ee32684cf1924ba3d7c4dfd900778be8"
+  },
+  "declaration_source_freeze": {
+    "path": "LAB_ROOT/dev/attempt-successor-declarations-v1/SOURCE_FREEZE.json",
+    "sha256": "d5427e1f467ab8495c4b35b94ca7528f8b1a9d893de1834bfaf9c662b48eb6a1"
+  },
+  "development_authority": {
+    "path": "LAB_ROOT/ops/recovery-v1/ATTEMPT_SUCCESSOR_DEVELOPMENT_AUTHORITY_V1.json",
+    "sha256": "64b40261010db33ce32871db4cb42900ae130d5dc02272ac92831594bd9e2f7e"
+  },
+  "tests_passed": 41,
+  "source_validity_only": true,
+  "materializer_full_end_timeliness": "UNKNOWN",
+  "owned_files": {
+    "write_review.py": {
+      "path": "LAB_ROOT/ops/attempt-reservation-review-v1/write_review.py",
+      "sha256": "e9be8ac227b004a41f52e64df61c08399f3859d4f4144f5088a43e1871df9dc2"
+    },
+    "INDEPENDENT_TEST_RECEIPT.txt": {
+      "path": "LAB_ROOT/ops/attempt-reservation-review-v1/INDEPENDENT_TEST_RECEIPT.txt",
+      "sha256": "418657375a29cbc5412a12fc48b5c5aac808cf02d474929a550981e1103a9bdf"
+    },
+    "FINAL_INBOX_RECEIPT.txt": {
+      "path": "LAB_ROOT/ops/attempt-reservation-review-v1/FINAL_INBOX_RECEIPT.txt",
+      "sha256": "1718f95d8ec287ff67a1e841a822f0ccb5e9e766ede85f857d8bfb2515f2d346"
+    },
+    "DECLARATION_FIXTURE_INVENTORY.json": {
+      "path": "LAB_ROOT/ops/attempt-reservation-review-v1/DECLARATION_FIXTURE_INVENTORY.json",
+      "sha256": "f49e8b7dc1f8983e5a35f5f07b541e903cc3b0e7330071d1b701fb03e9118639"
+    },
+    "verify_freezes.py": {
+      "path": "LAB_ROOT/ops/attempt-reservation-review-v1/verify_freezes.py",
+      "sha256": "670eaeabcf4e70a5acdd637bfd0327c04c856b680fdc86505135088e74dd0a40"
+    },
+    "INDEPENDENT_TEST_INITIAL_RECEIPT.txt": {
+      "path": "LAB_ROOT/ops/attempt-reservation-review-v1/INDEPENDENT_TEST_INITIAL_RECEIPT.txt",
+      "sha256": "88f6125126134b6884c3f97e2b50d5bb4b6168c76c1aaafbad2012993ede25d0"
+    },
+    "test_attempt_reservations_v1.py": {
+      "path": "LAB_ROOT/ops/attempt-reservation-review-v1/test_attempt_reservations_v1.py",
+      "sha256": "ea75eb737548ef4582fa18a8546a2bc10eec4ff35c2d5000ea69ae83a7ae37c7"
+    },
+    "DECLARATION_TEST_RECEIPT.txt": {
+      "path": "LAB_ROOT/ops/attempt-reservation-review-v1/DECLARATION_TEST_RECEIPT.txt",
+      "sha256": "cefcd5155014add2d8f06ede1c1b6883ae9280fa68baee6f307f8cee103832e9"
+    },
+    "REVIEW.md": {
+      "path": "LAB_ROOT/ops/attempt-reservation-review-v1/REVIEW.md",
+      "sha256": "dc75723b653f74240318528e3345bc9daf46d39f866fb09f50a41823ed5ceb80"
+    },
+    "FREEZE_VERIFICATION.json": {
+      "path": "LAB_ROOT/ops/attempt-reservation-review-v1/FREEZE_VERIFICATION.json",
+      "sha256": "75022997158bec2aff70634612a47ba4c53e8d1de8d58bc7b5951a2b0520ad33"
+    },
+    "MAIL_RECEIPT.txt": {
+      "path": "LAB_ROOT/ops/attempt-reservation-review-v1/MAIL_RECEIPT.txt",
+      "sha256": "5c1a3597b9936c5c39f78da0a7e3fb4398b58003d558243c5fbe79466556ab71"
+    },
+    "fixture_harness.py": {
+      "path": "LAB_ROOT/ops/attempt-reservation-review-v1/fixture_harness.py",
+      "sha256": "86b0fc8337d48fe01ddd7cef44d60bc36c9948a83a31890fddb743ca1ae08d5e"
+    },
+    "test_independent_review.py": {
+      "path": "LAB_ROOT/ops/attempt-reservation-review-v1/test_independent_review.py",
+      "sha256": "c3b3774178582361731041d242261fb0ab0c9a2296f519d48274c29d7ccb0311"
+    },
+    "run_declaration_fixture.py": {
+      "path": "LAB_ROOT/ops/attempt-reservation-review-v1/run_declaration_fixture.py",
+      "sha256": "1467514c88e7407741902f066c624d4b42bfa9494516c5120f35bae5dcb6b7fa"
+    },
+    "AUTHOR_TEST_RECEIPT.txt": {
+      "path": "LAB_ROOT/ops/attempt-reservation-review-v1/AUTHOR_TEST_RECEIPT.txt",
+      "sha256": "0873bf3f48356c550093167c83f610ecb373538f6de8316ae7920b6d986636c3"
+    },
+    "REVIEW.json": {
+      "path": "LAB_ROOT/ops/attempt-reservation-review-v1/REVIEW.json",
+      "sha256": "d2ac456db3d31e15189f0d47441b2f74fc9b8accda1f62b1886376909a6e49ae"
+    }
+  },
+  "live_ledger_reads": 0,
+  "live_ledger_transactions": 0,
+  "native_provider_calls": 0,
+  "original_source_changes": 0
+}

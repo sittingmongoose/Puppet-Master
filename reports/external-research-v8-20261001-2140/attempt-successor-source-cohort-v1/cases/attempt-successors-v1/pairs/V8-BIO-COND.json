@@ -1,0 +1,95 @@
+{
+  "schema": "pm.er8.attempt-successor-pair-declaration.v1",
+  "root_authority": false,
+  "accepted": false,
+  "logical_pair_id": "V8-BIO-COND",
+  "attempt_pair_id": "V8-BIO-COND-S8",
+  "domain": "bioimaging",
+  "contrast": "conditions-propositions",
+  "prospective_estimand": "Three proposition/condition checks added on a shared discriminating-witness background; old P keeps its complete frozen recipe.",
+  "claim_limit": "Instruction-level incremental comparison on the declared shared recipe background; not a universal independent main effect. One matched pair per domain/contrast, no statistical generalization. No candidate outputs or source discoveries may cross cases. Control may spontaneously use a technique; report observed separation.",
+  "classification": "DEVELOPMENT_REPEAT_NOT_FRESH_HOLDOUT",
+  "cases": [
+    "V8-BIO-COND-C-Z-S8",
+    "V8-BIO-P-Z-S8"
+  ],
+  "arms": [
+    {
+      "logical_case_id": "V8-BIO-COND-C-Z",
+      "logical_pair_id": "V8-BIO-COND",
+      "arm": "control",
+      "predecessor_attempt_case_id": "V8-BIO-COND-C-Z",
+      "new_attempt_case_id": "V8-BIO-COND-C-Z-S8",
+      "new_jobs": [
+        "V8-BIO-COND-C-Z-S8-research-proposal",
+        "V8-BIO-COND-C-Z-S8-independent-candidate-critic",
+        "V8-BIO-COND-C-Z-S8-final-correction"
+      ],
+      "new_final_job": "V8-BIO-COND-C-Z-S8-final-correction",
+      "evaluator_attempt_id": "V8-EVAL-V8-BIO-COND-C-Z-S8",
+      "source_manifest": {
+        "path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-COND-C-Z-S8/manifest.json",
+        "sha256": "d8cadb6c0e6ef1c2b676708a47a6ba8c8fb91f3895f628aefb55ecb8d4ccec4b"
+      },
+      "method": {
+        "path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-COND-C-Z-S8/METHOD.md",
+        "sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af"
+      },
+      "original_manifest_sha256": "ea0b885d4bbcef2bda6d16ab10008aea78303e4e8ca796b60f57800a484be478",
+      "original_method_sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af"
+    },
+    {
+      "logical_case_id": "V8-BIO-P-Z",
+      "logical_pair_id": "V8-BIO-COND",
+      "arm": "treatment",
+      "predecessor_attempt_case_id": "V8-BIO-P-Z",
+      "new_attempt_case_id": "V8-BIO-P-Z-S8",
+      "new_jobs": [
+        "V8-BIO-P-Z-S8-research-proposal",
+        "V8-BIO-P-Z-S8-independent-candidate-critic",
+        "V8-BIO-P-Z-S8-final-correction"
+      ],
+      "new_final_job": "V8-BIO-P-Z-S8-final-correction",
+      "evaluator_attempt_id": "V8-EVAL-V8-BIO-P-Z-S8",
+      "source_manifest": {
+        "path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-P-Z-S8/manifest.json",
+        "sha256": "e31f89240c3631b40ab0b5e87f590adaefeb7a66b7d2783f9db6babf7070df12"
+      },
+      "method": {
+        "path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-P-Z-S8/METHOD.md",
+        "sha256": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a"
+      },
+      "original_manifest_sha256": "4642c8d7ebb2b925f3a2256db79c73070549a451ad2bc4235df1862a0c6cba0b",
+      "original_method_sha256": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a"
+    }
+  ],
+  "common_binding": {
+    "route": "v8-z-route-recovery-v2-native-bound-v2",
+    "account": "existing-authorized-zcode-account-v8-A",
+    "actual_account_id": "UNKNOWN",
+    "model": "GLM5.3FlashMax",
+    "pins": {
+      "runtime": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b",
+      "config": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d",
+      "independent_acceptance": "59b08282df39fe1c86e21eea06d1197a17f3ea30ef13b1569d6c34a31347a18c"
+    },
+    "binding_status": "REQUESTED_EXISTING_ACCEPTED_ROUTE_NOT_NEW_PROVIDER_VERIFICATION",
+    "task_sha256": "18afa7322322621495c8c87ff1f1ee85f1bf895e04a7732f0ef6758b7db054e0",
+    "brief_sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+    "thin_plan_sha256": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30",
+    "source_access_sha256": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df",
+    "scoring_contract_sha256": "6efed6cf4763f91b9674ffaaf35b5c9113decf27663fc38961fcfd140b6883af"
+  },
+  "caps": {
+    "stage_caps": [
+      1200,
+      1200,
+      900
+    ],
+    "case_wall": 3600,
+    "case_occupied": 5400,
+    "outside_native": 300,
+    "responses": 160
+  },
+  "campaign_deadline_epoch": 1791013030.8303788
+}

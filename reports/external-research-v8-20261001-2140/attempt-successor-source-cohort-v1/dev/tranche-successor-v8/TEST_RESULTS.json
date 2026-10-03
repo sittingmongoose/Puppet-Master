@@ -1,0 +1,14 @@
+{
+  "schema": "er8.tranche-successor.source-tests.v8",
+  "observed_utc": "2026-10-03T03:44:06.046088+00:00",
+  "exit_code": 0,
+  "tests_run": 8,
+  "all_passed": true,
+  "test_source_sha256": "da001477767f421423c6c33d0a3e20c48fdd90e3a0778ae953a2aa388fe8d611",
+  "test_output_sha256": "200bf25527e49cd2ba1b959ac99e6a15c03377b92407f891b7740f4ec0e3b9c7",
+  "native_provider_process_starts": 0,
+  "ledger_imports_or_transactions": 0,
+  "candidate_or_evaluator_body_reads": 0,
+  "current_ledger_state_reads": 0,
+  "interpretation": "Source-only HOLD mechanism and invariants verified; no executable successor reservation exists or is admitted."
+}

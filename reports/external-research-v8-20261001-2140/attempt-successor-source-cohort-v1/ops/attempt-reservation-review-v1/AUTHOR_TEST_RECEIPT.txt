@@ -1,0 +1,28 @@
+test_all_other_actions_accounting_and_native_admit_parity (__main__.AttemptTests.test_all_other_actions_accounting_and_native_admit_parity) ... ok
+test_cli_status_never_transaction_or_write (__main__.AttemptTests.test_cli_status_never_transaction_or_write) ... ok
+test_completed_logical_case_rejected (__main__.AttemptTests.test_completed_logical_case_rejected) ... ok
+test_current_case_end_boundary_not_renewed (__main__.AttemptTests.test_current_case_end_boundary_not_renewed) ... ok
+test_duplicate_receipt_and_same_logical_pair_rejected (__main__.AttemptTests.test_duplicate_receipt_and_same_logical_pair_rejected) ... ok
+test_identity_collisions_anywhere_in_old_state (__main__.AttemptTests.test_identity_collisions_anywhere_in_old_state) ... ok
+test_import_read_only_and_no_shared_module_registration (__main__.AttemptTests.test_import_read_only_and_no_shared_module_registration) ... ok
+test_missing_quiet_and_pending_or_active_predecessor (__main__.AttemptTests.test_missing_quiet_and_pending_or_active_predecessor) ... ok
+test_nonfinite_deadline_clocks (__main__.AttemptTests.test_nonfinite_deadline_clocks) ... ok
+test_output_stop_and_unknown_usage_preserved (__main__.AttemptTests.test_output_stop_and_unknown_usage_preserved) ... ok
+test_preflight_late_clock_failure_is_atomic (__main__.AttemptTests.test_preflight_late_clock_failure_is_atomic) ... ok
+test_real_accounting_delta_counts_all_old_commitments (__main__.AttemptTests.test_real_accounting_delta_counts_all_old_commitments) ... ok
+test_resource_ceiling_boundaries (__main__.AttemptTests.test_resource_ceiling_boundaries) ... ok
+test_root_path_hash_unknown_fields_and_caps (__main__.AttemptTests.test_root_path_hash_unknown_fields_and_caps) ... ok
+test_second_disjoint_pair_preserves_first_receipt_lineage (__main__.AttemptTests.test_second_disjoint_pair_preserves_first_receipt_lineage) ... ok
+test_source_acceptance_and_independent_review_required (__main__.AttemptTests.test_source_acceptance_and_independent_review_required) ... ok
+test_source_and_declaration_hash_corruption (__main__.AttemptTests.test_source_and_declaration_hash_corruption) ... ok
+test_split_pair_alias_duplicate_names_rejected (__main__.AttemptTests.test_split_pair_alias_duplicate_names_rejected) ... ok
+test_stale_quiet_pin_and_negative_native_proof (__main__.AttemptTests.test_stale_quiet_pin_and_negative_native_proof) ... ok
+test_success_only_append_and_old_values_preserved (__main__.AttemptTests.test_success_only_append_and_old_values_preserved) ... ok
+test_symlink_dependency_and_no_live_files (__main__.AttemptTests.test_symlink_dependency_and_no_live_files) ... ok
+test_v7_scheduled_case_blocked (__main__.AttemptTests.test_v7_scheduled_case_blocked) ... ok
+test_whole_subset_not_all_twelve_blind (__main__.AttemptTests.test_whole_subset_not_all_twelve_blind) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 1.142s
+
+OK

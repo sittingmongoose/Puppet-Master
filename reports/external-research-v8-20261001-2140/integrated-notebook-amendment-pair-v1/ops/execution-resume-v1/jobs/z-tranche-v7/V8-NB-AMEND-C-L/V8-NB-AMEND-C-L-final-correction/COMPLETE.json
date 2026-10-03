@@ -1,0 +1,27 @@
+{
+  "schema": "er8.integrated.stage-deferred-close.v1",
+  "case": "V8-NB-AMEND-C-L",
+  "job": "V8-NB-AMEND-C-L-final-correction",
+  "stage_start_monotonic_ns": 220638050567565,
+  "original_case_start_monotonic_ns": 219168386653503,
+  "original_deadline_monotonic_ns": 221538050567565,
+  "lease_release_deferred": true,
+  "lease_released_by_actor": false,
+  "native_wrapper_launch_monotonic_ns": 220639209115093,
+  "native_quiescence_observed_monotonic_ns": 221420442967646,
+  "last_charged_host_monotonic_ns": 221420508846316,
+  "host_groups_absent": true,
+  "required_artifact": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-C-L/V8-NB-AMEND-C-L-final-correction/workspace/out/FINAL_PROPOSAL.md",
+    "bytes": 45736,
+    "sha256": "3bbc99d85c5e5631ebe17be9a8e39827850e8aa536e2108ffc477262de55e424"
+  },
+  "native_goal_activation_observed": true,
+  "native_goal_target_id": "target_murui2sq_3aaafddb-0f28-4277-bc3e-499ea825e8bf",
+  "fresh_session": true,
+  "native_responses": 9,
+  "native_goal_status": "complete",
+  "wrapper_returncode": 0,
+  "source_semantic_acquisition": "UNKNOWN",
+  "usage": "UNKNOWN except reported monotonic output lower bound"
+}

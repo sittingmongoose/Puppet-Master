@@ -1,0 +1,15 @@
+{
+  "case_id": "V8-NB-AMEND-C-L",
+  "case_start_monotonic_ns": 219168386653503,
+  "case_elapsed_cap_seconds": 3600,
+  "case_occupied_cap_seconds": 5400,
+  "outside_native_cap_seconds": 300,
+  "campaign_native_cutoff_monotonic_ns": 234777000142892,
+  "stages": {
+    "v8-nb-amend-c-l-independent-candidate-critic": {
+      "stage_start_monotonic_ns": 219761236880288,
+      "cap_seconds": 1200,
+      "response_cap": 160
+    }
+  }
+}

@@ -1,0 +1,911 @@
+{
+  "schema": "er8.tranche-successor.remaining-logical-cells.v8",
+  "status": "HOLD_IDENTITY_PROPOSALS_NOT_ADMITTED",
+  "source_observation": {
+    "path": "LAB_ROOT/ops/recovery-v1/OBSERVATION_20261003_033042.json",
+    "sha256": "dae9e439aa894a15f039b11f8ca8508bad165662c3d335ef558bffafffc17fd4"
+  },
+  "source_v7_release": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/root-production-release-v7.json",
+    "sha256": "4d6593cff543755bd390c9682cbd9f8e76ff8a13f82451ee6821f96aedab4cf2"
+  },
+  "excluded_v7_queue": [
+    "V8-BIO-RETR-C-M",
+    "V8-BIO-RETR-T-M",
+    "V8-BIO-AMEND-C-L",
+    "V8-BIO-AMEND-T-L",
+    "V8-BIO-BREADTH-C-M",
+    "V8-BIO-BREADTH-T-M",
+    "V8-NB-RETR-C-M",
+    "V8-NB-RETR-T-M",
+    "V8-NB-AMEND-C-L",
+    "V8-NB-AMEND-T-L",
+    "V8-NB-BREADTH-C-M",
+    "V8-NB-BREADTH-T-M"
+  ],
+  "excluded_operationally_complete_cases": [
+    "V8-BIO-RETR-C-M",
+    "V8-BIO-RETR-T-M",
+    "V8-BIO-AMEND-C-L",
+    "V8-BIO-AMEND-T-L",
+    "V8-BIO-BREADTH-C-M",
+    "V8-BIO-BREADTH-T-M",
+    "V8-NB-RETR-C-M",
+    "V8-NB-RETR-T-M"
+  ],
+  "logical_target_pairs": 12,
+  "logical_target_whole_cases": 24,
+  "remaining_logical_pairs": [
+    {
+      "logical_pair_id": "V8-BIO-CHECK",
+      "proposed_pair_attempt_id": "V8-BIO-CHECK-S8",
+      "domain": "bioimaging",
+      "contrast": "concrete-discriminatory-checks",
+      "prospective_estimand": "One self-derived discriminating numerical witness added to ordinary complete pipeline.",
+      "claim_limit": "Instruction-level incremental comparison on the declared shared recipe background; not a universal independent main effect. One matched pair per domain/contrast, no statistical generalization. No candidate outputs or source discoveries may cross cases. Control may spontaneously use a technique; report observed separation.",
+      "arms": [
+        {
+          "logical_case_id": "V8-BIO-C-Z",
+          "logical_pair_id": "V8-BIO-CHECK",
+          "arm": "control",
+          "proposed_attempt_case_id": "V8-BIO-C-Z-S8",
+          "proposed_jobs": [
+            "V8-BIO-C-Z-S8-research-proposal",
+            "V8-BIO-C-Z-S8-independent-candidate-critic",
+            "V8-BIO-C-Z-S8-final-correction"
+          ],
+          "proposed_final_job": "V8-BIO-C-Z-S8-final-correction",
+          "proposed_evaluation_attempt_id": "V8-EVAL-V8-BIO-C-Z-S8",
+          "original_evaluator_reservation": "V8-EVAL-BIO-C",
+          "method_id": "C",
+          "method_name": "simple-complete-control",
+          "original_assigned_sources": {
+            "manifest": {
+              "path": "LAB_ROOT/cases/planning-v1/cases/V8-BIO-C-Z/manifest.json",
+              "sha256": "8e7640a9e34d166a97e4c22f732cb56e5ee516bec47327da605324e5608a5447"
+            },
+            "method_card": {
+              "path": "LAB_ROOT/cases/planning-v1/cases/V8-BIO-C-Z/METHOD.md",
+              "sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e"
+            },
+            "case_task": {
+              "path": "LAB_ROOT/cases/planning-v1/cases/V8-BIO-C-Z/TASK.md",
+              "sha256": "af4401598f65effb4271b0cc1fb24c757d2b331d71b7bb35f73ed5df03d17ff9"
+            },
+            "brief": {
+              "path": "LAB_ROOT/cases/planning-v1/briefs/bioimaging.md",
+              "sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789"
+            },
+            "thin_plan": {
+              "path": "LAB_ROOT/cases/planning-v1/sandbox-plans/bioimaging.md",
+              "sha256": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30"
+            },
+            "source_access": {
+              "path": "LAB_ROOT/cases/planning-v1/source-access.json",
+              "sha256": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df"
+            },
+            "stage_templates": [
+              {
+                "path": "LAB_ROOT/cases/planning-v1/templates/research.TASK.md",
+                "sha256": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3"
+              },
+              {
+                "path": "LAB_ROOT/cases/planning-v1/templates/critic.TASK.md",
+                "sha256": "fa635038ca75a96599f09d43eb289b89c25320eda9325fd836c6fef2878504b2"
+              },
+              {
+                "path": "LAB_ROOT/cases/planning-v1/templates/correction.TASK.md",
+                "sha256": "9ef5b51a9b2e9db734e492f6be2978f277ec8ee7f456b310c1f793375f1997d5"
+              }
+            ]
+          },
+          "actual_original_birth_state": "UNKNOWN_NOT_ESTABLISHED_BY_ABSENT_OBSERVATION_ROW",
+          "declaration_status": "PROPOSAL_ONLY_NO_MANIFEST_NO_RESERVATION_NO_BIRTH",
+          "prior_artifact_transfer": "NONE; new attempt starts from original brief/method/plan only; no prior candidate proposal, critique, captures or reasoning",
+          "preserve_original_question_count": 3,
+          "preserve_original_product_obligations": [
+            "B1",
+            "B2",
+            "B3",
+            "B4",
+            "B5"
+          ]
+        },
+        {
+          "logical_case_id": "V8-BIO-WIT-T-Z",
+          "logical_pair_id": "V8-BIO-CHECK",
+          "arm": "treatment",
+          "proposed_attempt_case_id": "V8-BIO-WIT-T-Z-S8",
+          "proposed_jobs": [
+            "V8-BIO-WIT-T-Z-S8-research-proposal",
+            "V8-BIO-WIT-T-Z-S8-independent-candidate-critic",
+            "V8-BIO-WIT-T-Z-S8-final-correction"
+          ],
+          "proposed_final_job": "V8-BIO-WIT-T-Z-S8-final-correction",
+          "proposed_evaluation_attempt_id": "V8-EVAL-V8-BIO-WIT-T-Z-S8",
+          "original_evaluator_reservation": "V8-EVAL-V8-BIO-WIT-T-Z",
+          "method_id": "WIT",
+          "method_name": "ordinary-complete-plus-self-derived-discriminating-witness",
+          "original_assigned_sources": {
+            "manifest": {
+              "path": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-WIT-T-Z/manifest.json",
+              "sha256": "05a9e5c6ce15c19fd9e5e726a8d12e1850551ba63989c9166b797e8096ea0ad7"
+            },
+            "method_card": {
+              "path": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-WIT-T-Z/METHOD.md",
+              "sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af"
+            },
+            "case_task": {
+              "path": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-WIT-T-Z/TASK.md",
+              "sha256": "02d16a86976a312e377cb4dd709e07673abf9cbcbed6e85f80cb5841d54021c5"
+            },
+            "brief": {
+              "path": "LAB_ROOT/cases/tranche-v2/briefs/bioimaging.md",
+              "sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789"
+            },
+            "thin_plan": {
+              "path": "LAB_ROOT/cases/tranche-v2/sandbox-plans/bioimaging.md",
+              "sha256": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30"
+            },
+            "source_access": {
+              "path": "LAB_ROOT/cases/tranche-v2/source-access.json",
+              "sha256": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df"
+            },
+            "stage_templates": [
+              {
+                "path": "LAB_ROOT/cases/tranche-v2/templates/research.TASK.md",
+                "sha256": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3"
+              },
+              {
+                "path": "LAB_ROOT/cases/tranche-v2/templates/critic.TASK.md",
+                "sha256": "fa635038ca75a96599f09d43eb289b89c25320eda9325fd836c6fef2878504b2"
+              },
+              {
+                "path": "LAB_ROOT/cases/tranche-v2/templates/correction.TASK.md",
+                "sha256": "9ef5b51a9b2e9db734e492f6be2978f277ec8ee7f456b310c1f793375f1997d5"
+              }
+            ]
+          },
+          "actual_original_birth_state": "UNKNOWN_NOT_ESTABLISHED_BY_ABSENT_OBSERVATION_ROW",
+          "declaration_status": "PROPOSAL_ONLY_NO_MANIFEST_NO_RESERVATION_NO_BIRTH",
+          "prior_artifact_transfer": "NONE; new attempt starts from original brief/method/plan only; no prior candidate proposal, critique, captures or reasoning",
+          "preserve_original_question_count": 3,
+          "preserve_original_product_obligations": [
+            "B1",
+            "B2",
+            "B3",
+            "B4",
+            "B5"
+          ]
+        }
+      ],
+      "both_arms_common_binding_required": true
+    },
+    {
+      "logical_pair_id": "V8-BIO-COND",
+      "proposed_pair_attempt_id": "V8-BIO-COND-S8",
+      "domain": "bioimaging",
+      "contrast": "conditions-propositions",
+      "prospective_estimand": "Three proposition/condition checks added on a shared discriminating-witness background; old P keeps its complete frozen recipe.",
+      "claim_limit": "Instruction-level incremental comparison on the declared shared recipe background; not a universal independent main effect. One matched pair per domain/contrast, no statistical generalization. No candidate outputs or source discoveries may cross cases. Control may spontaneously use a technique; report observed separation.",
+      "arms": [
+        {
+          "logical_case_id": "V8-BIO-COND-C-Z",
+          "logical_pair_id": "V8-BIO-COND",
+          "arm": "control",
+          "proposed_attempt_case_id": "V8-BIO-COND-C-Z-S8",
+          "proposed_jobs": [
+            "V8-BIO-COND-C-Z-S8-research-proposal",
+            "V8-BIO-COND-C-Z-S8-independent-candidate-critic",
+            "V8-BIO-COND-C-Z-S8-final-correction"
+          ],
+          "proposed_final_job": "V8-BIO-COND-C-Z-S8-final-correction",
+          "proposed_evaluation_attempt_id": "V8-EVAL-V8-BIO-COND-C-Z-S8",
+          "original_evaluator_reservation": "V8-EVAL-V8-BIO-COND-C-Z",
+          "method_id": "WIT",
+          "method_name": "ordinary-complete-plus-self-derived-discriminating-witness",
+          "original_assigned_sources": {
+            "manifest": {
+              "path": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-COND-C-Z/manifest.json",
+              "sha256": "ea0b885d4bbcef2bda6d16ab10008aea78303e4e8ca796b60f57800a484be478"
+            },
+            "method_card": {
+              "path": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-COND-C-Z/METHOD.md",
+              "sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af"
+            },
+            "case_task": {
+              "path": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-COND-C-Z/TASK.md",
+              "sha256": "40190071b49087a9de939f72803e016ca2768a999d4d6987136ae669e4e0c9df"
+            },
+            "brief": {
+              "path": "LAB_ROOT/cases/tranche-v2/briefs/bioimaging.md",
+              "sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789"
+            },
+            "thin_plan": {
+              "path": "LAB_ROOT/cases/tranche-v2/sandbox-plans/bioimaging.md",
+              "sha256": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30"
+            },
+            "source_access": {
+              "path": "LAB_ROOT/cases/tranche-v2/source-access.json",
+              "sha256": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df"
+            },
+            "stage_templates": [
+              {
+                "path": "LAB_ROOT/cases/tranche-v2/templates/research.TASK.md",
+                "sha256": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3"
+              },
+              {
+                "path": "LAB_ROOT/cases/tranche-v2/templates/critic.TASK.md",
+                "sha256": "fa635038ca75a96599f09d43eb289b89c25320eda9325fd836c6fef2878504b2"
+              },
+              {
+                "path": "LAB_ROOT/cases/tranche-v2/templates/correction.TASK.md",
+                "sha256": "9ef5b51a9b2e9db734e492f6be2978f277ec8ee7f456b310c1f793375f1997d5"
+              }
+            ]
+          },
+          "actual_original_birth_state": "UNKNOWN_NOT_ESTABLISHED_BY_ABSENT_OBSERVATION_ROW",
+          "declaration_status": "PROPOSAL_ONLY_NO_MANIFEST_NO_RESERVATION_NO_BIRTH",
+          "prior_artifact_transfer": "NONE; new attempt starts from original brief/method/plan only; no prior candidate proposal, critique, captures or reasoning",
+          "preserve_original_question_count": 3,
+          "preserve_original_product_obligations": [
+            "B1",
+            "B2",
+            "B3",
+            "B4",
+            "B5"
+          ]
+        },
+        {
+          "logical_case_id": "V8-BIO-P-Z",
+          "logical_pair_id": "V8-BIO-COND",
+          "arm": "treatment",
+          "proposed_attempt_case_id": "V8-BIO-P-Z-S8",
+          "proposed_jobs": [
+            "V8-BIO-P-Z-S8-research-proposal",
+            "V8-BIO-P-Z-S8-independent-candidate-critic",
+            "V8-BIO-P-Z-S8-final-correction"
+          ],
+          "proposed_final_job": "V8-BIO-P-Z-S8-final-correction",
+          "proposed_evaluation_attempt_id": "V8-EVAL-V8-BIO-P-Z-S8",
+          "original_evaluator_reservation": "V8-EVAL-BIO-P",
+          "method_id": "P",
+          "method_name": "proposition-condition-witness-lean",
+          "original_assigned_sources": {
+            "manifest": {
+              "path": "LAB_ROOT/cases/planning-v1/cases/V8-BIO-P-Z/manifest.json",
+              "sha256": "4642c8d7ebb2b925f3a2256db79c73070549a451ad2bc4235df1862a0c6cba0b"
+            },
+            "method_card": {
+              "path": "LAB_ROOT/cases/planning-v1/cases/V8-BIO-P-Z/METHOD.md",
+              "sha256": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a"
+            },
+            "case_task": {
+              "path": "LAB_ROOT/cases/planning-v1/cases/V8-BIO-P-Z/TASK.md",
+              "sha256": "4c8c7e7e083d4788e4d5e7db27e3e8841c5073d51e46ae3b937a88dab4a6636f"
+            },
+            "brief": {
+              "path": "LAB_ROOT/cases/planning-v1/briefs/bioimaging.md",
+              "sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789"
+            },
+            "thin_plan": {
+              "path": "LAB_ROOT/cases/planning-v1/sandbox-plans/bioimaging.md",
+              "sha256": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30"
+            },
+            "source_access": {
+              "path": "LAB_ROOT/cases/planning-v1/source-access.json",
+              "sha256": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df"
+            },
+            "stage_templates": [
+              {
+                "path": "LAB_ROOT/cases/planning-v1/templates/research.TASK.md",
+                "sha256": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3"
+              },
+              {
+                "path": "LAB_ROOT/cases/planning-v1/templates/critic.TASK.md",
+                "sha256": "fa635038ca75a96599f09d43eb289b89c25320eda9325fd836c6fef2878504b2"
+              },
+              {
+                "path": "LAB_ROOT/cases/planning-v1/templates/correction.TASK.md",
+                "sha256": "9ef5b51a9b2e9db734e492f6be2978f277ec8ee7f456b310c1f793375f1997d5"
+              }
+            ]
+          },
+          "actual_original_birth_state": "UNKNOWN_NOT_ESTABLISHED_BY_ABSENT_OBSERVATION_ROW",
+          "declaration_status": "PROPOSAL_ONLY_NO_MANIFEST_NO_RESERVATION_NO_BIRTH",
+          "prior_artifact_transfer": "NONE; new attempt starts from original brief/method/plan only; no prior candidate proposal, critique, captures or reasoning",
+          "preserve_original_question_count": 3,
+          "preserve_original_product_obligations": [
+            "B1",
+            "B2",
+            "B3",
+            "B4",
+            "B5"
+          ]
+        }
+      ],
+      "both_arms_common_binding_required": true
+    },
+    {
+      "logical_pair_id": "V8-BIO-BATCH",
+      "proposed_pair_attempt_id": "V8-BIO-BATCH-S8",
+      "domain": "bioimaging",
+      "contrast": "coherent-batching",
+      "prospective_estimand": "Coherent two/three research batches added on shared proposition/condition/witness/progressive-retrieval background; within-case source reuse access common.",
+      "claim_limit": "Instruction-level incremental comparison on the declared shared recipe background; not a universal independent main effect. One matched pair per domain/contrast, no statistical generalization. No candidate outputs or source discoveries may cross cases. Control may spontaneously use a technique; report observed separation.",
+      "arms": [
+        {
+          "logical_case_id": "V8-BIO-BATCH-C-Z",
+          "logical_pair_id": "V8-BIO-BATCH",
+          "arm": "control",
+          "proposed_attempt_case_id": "V8-BIO-BATCH-C-Z-S8",
+          "proposed_jobs": [
+            "V8-BIO-BATCH-C-Z-S8-research-proposal",
+            "V8-BIO-BATCH-C-Z-S8-independent-candidate-critic",
+            "V8-BIO-BATCH-C-Z-S8-final-correction"
+          ],
+          "proposed_final_job": "V8-BIO-BATCH-C-Z-S8-final-correction",
+          "proposed_evaluation_attempt_id": "V8-EVAL-V8-BIO-BATCH-C-Z-S8",
+          "original_evaluator_reservation": "V8-EVAL-V8-BIO-BATCH-C-Z",
+          "method_id": "P-R",
+          "method_name": "condition-witness-plus-progressive-retrieval",
+          "original_assigned_sources": {
+            "manifest": {
+              "path": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-BATCH-C-Z/manifest.json",
+              "sha256": "96640dea4593af1319bdda14a47cde5c0f1973780e26703e86983d03171bb17b"
+            },
+            "method_card": {
+              "path": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-BATCH-C-Z/METHOD.md",
+              "sha256": "222ad8739878a9dfc93d6e3ee533596ea2cd2f4cac673870c6c285c18dd2570c"
+            },
+            "case_task": {
+              "path": "LAB_ROOT/cases/tranche-v2/candidates/V8-BIO-BATCH-C-Z/TASK.md",
+              "sha256": "b3109ea8dc06c27c99b3e1a4f1d3f2ff8c909aad7080ac7c900196556e9b5d18"
+            },
+            "brief": {
+              "path": "LAB_ROOT/cases/tranche-v2/briefs/bioimaging.md",
+              "sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789"
+            },
+            "thin_plan": {
+              "path": "LAB_ROOT/cases/tranche-v2/sandbox-plans/bioimaging.md",
+              "sha256": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30"
+            },
+            "source_access": {
+              "path": "LAB_ROOT/cases/tranche-v2/source-access.json",
+              "sha256": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df"
+            },
+            "stage_templates": [
+              {
+                "path": "LAB_ROOT/cases/tranche-v2/templates/research.TASK.md",
+                "sha256": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3"
+              },
+              {
+                "path": "LAB_ROOT/cases/tranche-v2/templates/critic.TASK.md",
+                "sha256": "fa635038ca75a96599f09d43eb289b89c25320eda9325fd836c6fef2878504b2"
+              },
+              {
+                "path": "LAB_ROOT/cases/tranche-v2/templates/correction.TASK.md",
+                "sha256": "9ef5b51a9b2e9db734e492f6be2978f277ec8ee7f456b310c1f793375f1997d5"
+              }
+            ]
+          },
+          "actual_original_birth_state": "UNKNOWN_NOT_ESTABLISHED_BY_ABSENT_OBSERVATION_ROW",
+          "declaration_status": "PROPOSAL_ONLY_NO_MANIFEST_NO_RESERVATION_NO_BIRTH",
+          "prior_artifact_transfer": "NONE; new attempt starts from original brief/method/plan only; no prior candidate proposal, critique, captures or reasoning",
+          "preserve_original_question_count": 3,
+          "preserve_original_product_obligations": [
+            "B1",
+            "B2",
+            "B3",
+            "B4",
+            "B5"
+          ]
+        },
+        {
+          "logical_case_id": "V8-BIO-B-Z",
+          "logical_pair_id": "V8-BIO-BATCH",
+          "arm": "treatment",
+          "proposed_attempt_case_id": "V8-BIO-B-Z-S8",
+          "proposed_jobs": [
+            "V8-BIO-B-Z-S8-research-proposal",
+            "V8-BIO-B-Z-S8-independent-candidate-critic",
+            "V8-BIO-B-Z-S8-final-correction"
+          ],
+          "proposed_final_job": "V8-BIO-B-Z-S8-final-correction",
+          "proposed_evaluation_attempt_id": "V8-EVAL-V8-BIO-B-Z-S8",
+          "original_evaluator_reservation": "V8-EVAL-BIO-B",
+          "method_id": "B",
+          "method_name": "condition-witness-with-batching-progressive-retrieval",
+          "original_assigned_sources": {
+            "manifest": {
+              "path": "LAB_ROOT/cases/planning-v1/cases/V8-BIO-B-Z/manifest.json",
+              "sha256": "bacf9033fa8af87aef92fb6c6ff4128135fab2159632a395c286b2a9425c74b7"
+            },
+            "method_card": {
+              "path": "LAB_ROOT/cases/planning-v1/cases/V8-BIO-B-Z/METHOD.md",
+              "sha256": "f6df08a280a4db79323bd96c9d816c34aee66a02e3f155602407f1290c599f5c"
+            },
+            "case_task": {
+              "path": "LAB_ROOT/cases/planning-v1/cases/V8-BIO-B-Z/TASK.md",
+              "sha256": "cb0f443bfa9daee35e3d30f6e7dfa27be5a1933a8097ef5b77175bffc2dcd551"
+            },
+            "brief": {
+              "path": "LAB_ROOT/cases/planning-v1/briefs/bioimaging.md",
+              "sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789"
+            },
+            "thin_plan": {
+              "path": "LAB_ROOT/cases/planning-v1/sandbox-plans/bioimaging.md",
+              "sha256": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30"
+            },
+            "source_access": {
+              "path": "LAB_ROOT/cases/planning-v1/source-access.json",
+              "sha256": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df"
+            },
+            "stage_templates": [
+              {
+                "path": "LAB_ROOT/cases/planning-v1/templates/research.TASK.md",
+                "sha256": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3"
+              },
+              {
+                "path": "LAB_ROOT/cases/planning-v1/templates/critic.TASK.md",
+                "sha256": "fa635038ca75a96599f09d43eb289b89c25320eda9325fd836c6fef2878504b2"
+              },
+              {
+                "path": "LAB_ROOT/cases/planning-v1/templates/correction.TASK.md",
+                "sha256": "9ef5b51a9b2e9db734e492f6be2978f277ec8ee7f456b310c1f793375f1997d5"
+              }
+            ]
+          },
+          "actual_original_birth_state": "UNKNOWN_NOT_ESTABLISHED_BY_ABSENT_OBSERVATION_ROW",
+          "declaration_status": "PROPOSAL_ONLY_NO_MANIFEST_NO_RESERVATION_NO_BIRTH",
+          "prior_artifact_transfer": "NONE; new attempt starts from original brief/method/plan only; no prior candidate proposal, critique, captures or reasoning",
+          "preserve_original_question_count": 3,
+          "preserve_original_product_obligations": [
+            "B1",
+            "B2",
+            "B3",
+            "B4",
+            "B5"
+          ]
+        }
+      ],
+      "both_arms_common_binding_required": true
+    },
+    {
+      "logical_pair_id": "V8-NB-CHECK",
+      "proposed_pair_attempt_id": "V8-NB-CHECK-S8",
+      "domain": "notebook-workspace",
+      "contrast": "concrete-discriminatory-checks",
+      "prospective_estimand": "One self-derived discriminating numerical witness added to ordinary complete pipeline.",
+      "claim_limit": "Instruction-level incremental comparison on the declared shared recipe background; not a universal independent main effect. One matched pair per domain/contrast, no statistical generalization. No candidate outputs or source discoveries may cross cases. Control may spontaneously use a technique; report observed separation.",
+      "arms": [
+        {
+          "logical_case_id": "V8-NB-C-Z",
+          "logical_pair_id": "V8-NB-CHECK",
+          "arm": "control",
+          "proposed_attempt_case_id": "V8-NB-C-Z-S8",
+          "proposed_jobs": [
+            "V8-NB-C-Z-S8-research-proposal",
+            "V8-NB-C-Z-S8-independent-candidate-critic",
+            "V8-NB-C-Z-S8-final-correction"
+          ],
+          "proposed_final_job": "V8-NB-C-Z-S8-final-correction",
+          "proposed_evaluation_attempt_id": "V8-EVAL-V8-NB-C-Z-S8",
+          "original_evaluator_reservation": "V8-EVAL-NB-C",
+          "method_id": "C",
+          "method_name": "simple-complete-control",
+          "original_assigned_sources": {
+            "manifest": {
+              "path": "LAB_ROOT/cases/planning-v1/cases/V8-NB-C-Z/manifest.json",
+              "sha256": "feabe7e17c01d50d74c5431ace0dcb41de0e409ac1ab7ede6489c4f0c0a37a81"
+            },
+            "method_card": {
+              "path": "LAB_ROOT/cases/planning-v1/cases/V8-NB-C-Z/METHOD.md",
+              "sha256": "fbd9aa39f44f37d1e81b64f145c1ebe3434f8a1acdefd4e26612b6c2d5a91f2e"
+            },
+            "case_task": {
+              "path": "LAB_ROOT/cases/planning-v1/cases/V8-NB-C-Z/TASK.md",
+              "sha256": "d9816fe920d7e06953d52572466f681d8d74d9fb494d03a6d62219269de36428"
+            },
+            "brief": {
+              "path": "LAB_ROOT/cases/planning-v1/briefs/notebook-workspace.md",
+              "sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3"
+            },
+            "thin_plan": {
+              "path": "LAB_ROOT/cases/planning-v1/sandbox-plans/notebook-workspace.md",
+              "sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999"
+            },
+            "source_access": {
+              "path": "LAB_ROOT/cases/planning-v1/source-access.json",
+              "sha256": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df"
+            },
+            "stage_templates": [
+              {
+                "path": "LAB_ROOT/cases/planning-v1/templates/research.TASK.md",
+                "sha256": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3"
+              },
+              {
+                "path": "LAB_ROOT/cases/planning-v1/templates/critic.TASK.md",
+                "sha256": "fa635038ca75a96599f09d43eb289b89c25320eda9325fd836c6fef2878504b2"
+              },
+              {
+                "path": "LAB_ROOT/cases/planning-v1/templates/correction.TASK.md",
+                "sha256": "9ef5b51a9b2e9db734e492f6be2978f277ec8ee7f456b310c1f793375f1997d5"
+              }
+            ]
+          },
+          "actual_original_birth_state": "UNKNOWN_NOT_ESTABLISHED_BY_ABSENT_OBSERVATION_ROW",
+          "declaration_status": "PROPOSAL_ONLY_NO_MANIFEST_NO_RESERVATION_NO_BIRTH",
+          "prior_artifact_transfer": "NONE; new attempt starts from original brief/method/plan only; no prior candidate proposal, critique, captures or reasoning",
+          "preserve_original_question_count": 3,
+          "preserve_original_product_obligations": [
+            "N1",
+            "N2",
+            "N3",
+            "N4",
+            "N5"
+          ]
+        },
+        {
+          "logical_case_id": "V8-NB-WIT-T-Z",
+          "logical_pair_id": "V8-NB-CHECK",
+          "arm": "treatment",
+          "proposed_attempt_case_id": "V8-NB-WIT-T-Z-S8",
+          "proposed_jobs": [
+            "V8-NB-WIT-T-Z-S8-research-proposal",
+            "V8-NB-WIT-T-Z-S8-independent-candidate-critic",
+            "V8-NB-WIT-T-Z-S8-final-correction"
+          ],
+          "proposed_final_job": "V8-NB-WIT-T-Z-S8-final-correction",
+          "proposed_evaluation_attempt_id": "V8-EVAL-V8-NB-WIT-T-Z-S8",
+          "original_evaluator_reservation": "V8-EVAL-V8-NB-WIT-T-Z",
+          "method_id": "WIT",
+          "method_name": "ordinary-complete-plus-self-derived-discriminating-witness",
+          "original_assigned_sources": {
+            "manifest": {
+              "path": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-WIT-T-Z/manifest.json",
+              "sha256": "fd9d96ce1d9be01f3a88791a62e9d16fd504aa1090d625bf3af8b0361d13b064"
+            },
+            "method_card": {
+              "path": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-WIT-T-Z/METHOD.md",
+              "sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af"
+            },
+            "case_task": {
+              "path": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-WIT-T-Z/TASK.md",
+              "sha256": "36c6433c67d8762783a58d06806b85d815fe529172ae6c922877feac94b00943"
+            },
+            "brief": {
+              "path": "LAB_ROOT/cases/tranche-v2/briefs/notebook-workspace.md",
+              "sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3"
+            },
+            "thin_plan": {
+              "path": "LAB_ROOT/cases/tranche-v2/sandbox-plans/notebook-workspace.md",
+              "sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999"
+            },
+            "source_access": {
+              "path": "LAB_ROOT/cases/tranche-v2/source-access.json",
+              "sha256": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df"
+            },
+            "stage_templates": [
+              {
+                "path": "LAB_ROOT/cases/tranche-v2/templates/research.TASK.md",
+                "sha256": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3"
+              },
+              {
+                "path": "LAB_ROOT/cases/tranche-v2/templates/critic.TASK.md",
+                "sha256": "fa635038ca75a96599f09d43eb289b89c25320eda9325fd836c6fef2878504b2"
+              },
+              {
+                "path": "LAB_ROOT/cases/tranche-v2/templates/correction.TASK.md",
+                "sha256": "9ef5b51a9b2e9db734e492f6be2978f277ec8ee7f456b310c1f793375f1997d5"
+              }
+            ]
+          },
+          "actual_original_birth_state": "UNKNOWN_NOT_ESTABLISHED_BY_ABSENT_OBSERVATION_ROW",
+          "declaration_status": "PROPOSAL_ONLY_NO_MANIFEST_NO_RESERVATION_NO_BIRTH",
+          "prior_artifact_transfer": "NONE; new attempt starts from original brief/method/plan only; no prior candidate proposal, critique, captures or reasoning",
+          "preserve_original_question_count": 3,
+          "preserve_original_product_obligations": [
+            "N1",
+            "N2",
+            "N3",
+            "N4",
+            "N5"
+          ]
+        }
+      ],
+      "both_arms_common_binding_required": true
+    },
+    {
+      "logical_pair_id": "V8-NB-COND",
+      "proposed_pair_attempt_id": "V8-NB-COND-S8",
+      "domain": "notebook-workspace",
+      "contrast": "conditions-propositions",
+      "prospective_estimand": "Three proposition/condition checks added on a shared discriminating-witness background; old P keeps its complete frozen recipe.",
+      "claim_limit": "Instruction-level incremental comparison on the declared shared recipe background; not a universal independent main effect. One matched pair per domain/contrast, no statistical generalization. No candidate outputs or source discoveries may cross cases. Control may spontaneously use a technique; report observed separation.",
+      "arms": [
+        {
+          "logical_case_id": "V8-NB-COND-C-Z",
+          "logical_pair_id": "V8-NB-COND",
+          "arm": "control",
+          "proposed_attempt_case_id": "V8-NB-COND-C-Z-S8",
+          "proposed_jobs": [
+            "V8-NB-COND-C-Z-S8-research-proposal",
+            "V8-NB-COND-C-Z-S8-independent-candidate-critic",
+            "V8-NB-COND-C-Z-S8-final-correction"
+          ],
+          "proposed_final_job": "V8-NB-COND-C-Z-S8-final-correction",
+          "proposed_evaluation_attempt_id": "V8-EVAL-V8-NB-COND-C-Z-S8",
+          "original_evaluator_reservation": "V8-EVAL-V8-NB-COND-C-Z",
+          "method_id": "WIT",
+          "method_name": "ordinary-complete-plus-self-derived-discriminating-witness",
+          "original_assigned_sources": {
+            "manifest": {
+              "path": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-COND-C-Z/manifest.json",
+              "sha256": "c77ec419aa9c2879fcb5610b68c7d6a49d9fe4de8e9fa32038400f9422f68407"
+            },
+            "method_card": {
+              "path": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-COND-C-Z/METHOD.md",
+              "sha256": "86ccd5331ac4d87522878e9b49f031c62235bdea5b4a5f6fb1eb7e9c9e51f3af"
+            },
+            "case_task": {
+              "path": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-COND-C-Z/TASK.md",
+              "sha256": "b391ac44c5edf3462ea380144de3ecf8ce0e475dc1c99cd8dfe04eac8d1fe5a0"
+            },
+            "brief": {
+              "path": "LAB_ROOT/cases/tranche-v2/briefs/notebook-workspace.md",
+              "sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3"
+            },
+            "thin_plan": {
+              "path": "LAB_ROOT/cases/tranche-v2/sandbox-plans/notebook-workspace.md",
+              "sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999"
+            },
+            "source_access": {
+              "path": "LAB_ROOT/cases/tranche-v2/source-access.json",
+              "sha256": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df"
+            },
+            "stage_templates": [
+              {
+                "path": "LAB_ROOT/cases/tranche-v2/templates/research.TASK.md",
+                "sha256": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3"
+              },
+              {
+                "path": "LAB_ROOT/cases/tranche-v2/templates/critic.TASK.md",
+                "sha256": "fa635038ca75a96599f09d43eb289b89c25320eda9325fd836c6fef2878504b2"
+              },
+              {
+                "path": "LAB_ROOT/cases/tranche-v2/templates/correction.TASK.md",
+                "sha256": "9ef5b51a9b2e9db734e492f6be2978f277ec8ee7f456b310c1f793375f1997d5"
+              }
+            ]
+          },
+          "actual_original_birth_state": "UNKNOWN_NOT_ESTABLISHED_BY_ABSENT_OBSERVATION_ROW",
+          "declaration_status": "PROPOSAL_ONLY_NO_MANIFEST_NO_RESERVATION_NO_BIRTH",
+          "prior_artifact_transfer": "NONE; new attempt starts from original brief/method/plan only; no prior candidate proposal, critique, captures or reasoning",
+          "preserve_original_question_count": 3,
+          "preserve_original_product_obligations": [
+            "N1",
+            "N2",
+            "N3",
+            "N4",
+            "N5"
+          ]
+        },
+        {
+          "logical_case_id": "V8-NB-P-Z",
+          "logical_pair_id": "V8-NB-COND",
+          "arm": "treatment",
+          "proposed_attempt_case_id": "V8-NB-P-Z-S8",
+          "proposed_jobs": [
+            "V8-NB-P-Z-S8-research-proposal",
+            "V8-NB-P-Z-S8-independent-candidate-critic",
+            "V8-NB-P-Z-S8-final-correction"
+          ],
+          "proposed_final_job": "V8-NB-P-Z-S8-final-correction",
+          "proposed_evaluation_attempt_id": "V8-EVAL-V8-NB-P-Z-S8",
+          "original_evaluator_reservation": "V8-EVAL-NB-P",
+          "method_id": "P",
+          "method_name": "proposition-condition-witness-lean",
+          "original_assigned_sources": {
+            "manifest": {
+              "path": "LAB_ROOT/cases/planning-v1/cases/V8-NB-P-Z/manifest.json",
+              "sha256": "081d67be0ab11b321add5f13ff70418833937c897873b2f7c2560131f362ba7c"
+            },
+            "method_card": {
+              "path": "LAB_ROOT/cases/planning-v1/cases/V8-NB-P-Z/METHOD.md",
+              "sha256": "8636dbec461253eaab5fdac22f48af57a12ef8e42fab28b94994cd9ec283915a"
+            },
+            "case_task": {
+              "path": "LAB_ROOT/cases/planning-v1/cases/V8-NB-P-Z/TASK.md",
+              "sha256": "af2b57df7cbf964103c9c91b2396f34c1d924179de064c8ea9c2ff023e4a473e"
+            },
+            "brief": {
+              "path": "LAB_ROOT/cases/planning-v1/briefs/notebook-workspace.md",
+              "sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3"
+            },
+            "thin_plan": {
+              "path": "LAB_ROOT/cases/planning-v1/sandbox-plans/notebook-workspace.md",
+              "sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999"
+            },
+            "source_access": {
+              "path": "LAB_ROOT/cases/planning-v1/source-access.json",
+              "sha256": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df"
+            },
+            "stage_templates": [
+              {
+                "path": "LAB_ROOT/cases/planning-v1/templates/research.TASK.md",
+                "sha256": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3"
+              },
+              {
+                "path": "LAB_ROOT/cases/planning-v1/templates/critic.TASK.md",
+                "sha256": "fa635038ca75a96599f09d43eb289b89c25320eda9325fd836c6fef2878504b2"
+              },
+              {
+                "path": "LAB_ROOT/cases/planning-v1/templates/correction.TASK.md",
+                "sha256": "9ef5b51a9b2e9db734e492f6be2978f277ec8ee7f456b310c1f793375f1997d5"
+              }
+            ]
+          },
+          "actual_original_birth_state": "UNKNOWN_NOT_ESTABLISHED_BY_ABSENT_OBSERVATION_ROW",
+          "declaration_status": "PROPOSAL_ONLY_NO_MANIFEST_NO_RESERVATION_NO_BIRTH",
+          "prior_artifact_transfer": "NONE; new attempt starts from original brief/method/plan only; no prior candidate proposal, critique, captures or reasoning",
+          "preserve_original_question_count": 3,
+          "preserve_original_product_obligations": [
+            "N1",
+            "N2",
+            "N3",
+            "N4",
+            "N5"
+          ]
+        }
+      ],
+      "both_arms_common_binding_required": true
+    },
+    {
+      "logical_pair_id": "V8-NB-BATCH",
+      "proposed_pair_attempt_id": "V8-NB-BATCH-S8",
+      "domain": "notebook-workspace",
+      "contrast": "coherent-batching",
+      "prospective_estimand": "Coherent two/three research batches added on shared proposition/condition/witness/progressive-retrieval background; within-case source reuse access common.",
+      "claim_limit": "Instruction-level incremental comparison on the declared shared recipe background; not a universal independent main effect. One matched pair per domain/contrast, no statistical generalization. No candidate outputs or source discoveries may cross cases. Control may spontaneously use a technique; report observed separation.",
+      "arms": [
+        {
+          "logical_case_id": "V8-NB-BATCH-C-Z",
+          "logical_pair_id": "V8-NB-BATCH",
+          "arm": "control",
+          "proposed_attempt_case_id": "V8-NB-BATCH-C-Z-S8",
+          "proposed_jobs": [
+            "V8-NB-BATCH-C-Z-S8-research-proposal",
+            "V8-NB-BATCH-C-Z-S8-independent-candidate-critic",
+            "V8-NB-BATCH-C-Z-S8-final-correction"
+          ],
+          "proposed_final_job": "V8-NB-BATCH-C-Z-S8-final-correction",
+          "proposed_evaluation_attempt_id": "V8-EVAL-V8-NB-BATCH-C-Z-S8",
+          "original_evaluator_reservation": "V8-EVAL-V8-NB-BATCH-C-Z",
+          "method_id": "P-R",
+          "method_name": "condition-witness-plus-progressive-retrieval",
+          "original_assigned_sources": {
+            "manifest": {
+              "path": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-BATCH-C-Z/manifest.json",
+              "sha256": "1289009d5f8b46e99c6a1e0a52fa575d7e5077a7cf5e9d3a219f0da62c7b2e11"
+            },
+            "method_card": {
+              "path": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-BATCH-C-Z/METHOD.md",
+              "sha256": "222ad8739878a9dfc93d6e3ee533596ea2cd2f4cac673870c6c285c18dd2570c"
+            },
+            "case_task": {
+              "path": "LAB_ROOT/cases/tranche-v2/candidates/V8-NB-BATCH-C-Z/TASK.md",
+              "sha256": "95f2e189af32dbd55661c4b2ec907aa1bddfc280a4d699e19da4571d0b3a6361"
+            },
+            "brief": {
+              "path": "LAB_ROOT/cases/tranche-v2/briefs/notebook-workspace.md",
+              "sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3"
+            },
+            "thin_plan": {
+              "path": "LAB_ROOT/cases/tranche-v2/sandbox-plans/notebook-workspace.md",
+              "sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999"
+            },
+            "source_access": {
+              "path": "LAB_ROOT/cases/tranche-v2/source-access.json",
+              "sha256": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df"
+            },
+            "stage_templates": [
+              {
+                "path": "LAB_ROOT/cases/tranche-v2/templates/research.TASK.md",
+                "sha256": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3"
+              },
+              {
+                "path": "LAB_ROOT/cases/tranche-v2/templates/critic.TASK.md",
+                "sha256": "fa635038ca75a96599f09d43eb289b89c25320eda9325fd836c6fef2878504b2"
+              },
+              {
+                "path": "LAB_ROOT/cases/tranche-v2/templates/correction.TASK.md",
+                "sha256": "9ef5b51a9b2e9db734e492f6be2978f277ec8ee7f456b310c1f793375f1997d5"
+              }
+            ]
+          },
+          "actual_original_birth_state": "UNKNOWN_NOT_ESTABLISHED_BY_ABSENT_OBSERVATION_ROW",
+          "declaration_status": "PROPOSAL_ONLY_NO_MANIFEST_NO_RESERVATION_NO_BIRTH",
+          "prior_artifact_transfer": "NONE; new attempt starts from original brief/method/plan only; no prior candidate proposal, critique, captures or reasoning",
+          "preserve_original_question_count": 3,
+          "preserve_original_product_obligations": [
+            "N1",
+            "N2",
+            "N3",
+            "N4",
+            "N5"
+          ]
+        },
+        {
+          "logical_case_id": "V8-NB-B-Z",
+          "logical_pair_id": "V8-NB-BATCH",
+          "arm": "treatment",
+          "proposed_attempt_case_id": "V8-NB-B-Z-S8",
+          "proposed_jobs": [
+            "V8-NB-B-Z-S8-research-proposal",
+            "V8-NB-B-Z-S8-independent-candidate-critic",
+            "V8-NB-B-Z-S8-final-correction"
+          ],
+          "proposed_final_job": "V8-NB-B-Z-S8-final-correction",
+          "proposed_evaluation_attempt_id": "V8-EVAL-V8-NB-B-Z-S8",
+          "original_evaluator_reservation": "V8-EVAL-NB-B",
+          "method_id": "B",
+          "method_name": "condition-witness-with-batching-progressive-retrieval",
+          "original_assigned_sources": {
+            "manifest": {
+              "path": "LAB_ROOT/cases/planning-v1/cases/V8-NB-B-Z/manifest.json",
+              "sha256": "8b4268c2b11ccccae378713bfa8c87ddea7bc03ee1e50c236ccd269b7bc50485"
+            },
+            "method_card": {
+              "path": "LAB_ROOT/cases/planning-v1/cases/V8-NB-B-Z/METHOD.md",
+              "sha256": "f6df08a280a4db79323bd96c9d816c34aee66a02e3f155602407f1290c599f5c"
+            },
+            "case_task": {
+              "path": "LAB_ROOT/cases/planning-v1/cases/V8-NB-B-Z/TASK.md",
+              "sha256": "3637535202f4e89c20924ce2938ca17d5761c5ebec07bf6c4c23fe23fb6ab822"
+            },
+            "brief": {
+              "path": "LAB_ROOT/cases/planning-v1/briefs/notebook-workspace.md",
+              "sha256": "a96c3ed6d7aaed3b76e45df954375b40b765a21bdcc91ca9c4a8254c069afbc3"
+            },
+            "thin_plan": {
+              "path": "LAB_ROOT/cases/planning-v1/sandbox-plans/notebook-workspace.md",
+              "sha256": "2bdc3a2e64b23b1ec7d35bd0945a9cfb9dc7c490dcfaa1453450c0d575fa6999"
+            },
+            "source_access": {
+              "path": "LAB_ROOT/cases/planning-v1/source-access.json",
+              "sha256": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df"
+            },
+            "stage_templates": [
+              {
+                "path": "LAB_ROOT/cases/planning-v1/templates/research.TASK.md",
+                "sha256": "cfc995154387d81e16f1063f108443dc87a29d4cd28b57fd512281e4367b1eb3"
+              },
+              {
+                "path": "LAB_ROOT/cases/planning-v1/templates/critic.TASK.md",
+                "sha256": "fa635038ca75a96599f09d43eb289b89c25320eda9325fd836c6fef2878504b2"
+              },
+              {
+                "path": "LAB_ROOT/cases/planning-v1/templates/correction.TASK.md",
+                "sha256": "9ef5b51a9b2e9db734e492f6be2978f277ec8ee7f456b310c1f793375f1997d5"
+              }
+            ]
+          },
+          "actual_original_birth_state": "UNKNOWN_NOT_ESTABLISHED_BY_ABSENT_OBSERVATION_ROW",
+          "declaration_status": "PROPOSAL_ONLY_NO_MANIFEST_NO_RESERVATION_NO_BIRTH",
+          "prior_artifact_transfer": "NONE; new attempt starts from original brief/method/plan only; no prior candidate proposal, critique, captures or reasoning",
+          "preserve_original_question_count": 3,
+          "preserve_original_product_obligations": [
+            "N1",
+            "N2",
+            "N3",
+            "N4",
+            "N5"
+          ]
+        }
+      ],
+      "both_arms_common_binding_required": true
+    }
+  ],
+  "scope_preservation": "No completed or V7 scheduled pair repeated; prior failed/partial attempts remain additional history/cost, not whole-complete successes. Original scoring contract is unchanged; logical/evaluation IDs are lineage only, not source answers or grades."
+}

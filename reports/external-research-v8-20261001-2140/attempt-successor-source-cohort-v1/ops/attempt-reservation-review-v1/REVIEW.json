@@ -1,0 +1,90 @@
+{
+  "schema": "pm.er8.attempt-reservation-independent-review.v1",
+  "accepted": true,
+  "independent": true,
+  "reviewer": "codex-er8-reservation-review",
+  "source": {
+    "path": "LAB_ROOT/ops/attempt-reservation-api-v1/ledger_attempt_reservations_v1.py",
+    "sha256": "9bd4b17fe406cd20680c0c8eef16f96a6a45db727d977f1ba2cc42641c82d577"
+  },
+  "source_manifest": {
+    "path": "LAB_ROOT/ops/attempt-reservation-api-v1/MANIFEST.json",
+    "sha256": "2b4b54c140e211c300f1951d43e8f6119f2b86e6461bcd102f407e0d4441a196"
+  },
+  "declarations_accepted": true,
+  "declaration_closure": {
+    "path": "LAB_ROOT/dev/attempt-successor-declarations-v1/DECLARATION_CLOSURE.json",
+    "sha256": "cb2fb0c8eacf1d3810f204c2f86ed812ee32684cf1924ba3d7c4dfd900778be8"
+  },
+  "declaration_source_freeze": {
+    "path": "LAB_ROOT/dev/attempt-successor-declarations-v1/SOURCE_FREEZE.json",
+    "sha256": "d5427e1f467ab8495c4b35b94ca7528f8b1a9d893de1834bfaf9c662b48eb6a1"
+  },
+  "development_authority": {
+    "path": "LAB_ROOT/ops/recovery-v1/ATTEMPT_SUCCESSOR_DEVELOPMENT_AUTHORITY_V1.json",
+    "sha256": "64b40261010db33ce32871db4cb42900ae130d5dc02272ac92831594bd9e2f7e"
+  },
+  "source_only": true,
+  "live_install_accepted": false,
+  "native_release_accepted": false,
+  "reviewed_epoch": 1791001110.9355097,
+  "tests": {
+    "author_api_cases_rerun": 23,
+    "independent_adversarial_cases": 12,
+    "declaration_cases_rerun": 6,
+    "all_passed": true,
+    "stage_packings": 36,
+    "source_files_hash_verified": 138
+  },
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "support",
+      "text": "The new action accepts nonempty exact whole-pair subsets of the pinned six-pair/twelve-S8 declaration map; old V7 scheduled/completed cases, split/duplicate/aliased identities and collisions anywhere in old state reject before mutation."
+    },
+    {
+      "id": "F2",
+      "severity": "support",
+      "text": "All new reservations are charged through the unchanged accounting implementation over every old spent and outstanding promise. Exact144 starts/172800 occupied fits; one real start or occupied second over rejects atomically. No old promise retirement, completion, birth, holdout, cost, output or clock edit occurs."
+    },
+    {
+      "id": "F3",
+      "severity": "support",
+      "text": "Root/independent source acceptance, exact closure/authority/source pins, fixed-path positive predecessor quiet records, current related-job hashes and finite settled job releases are required. Genuine external quiet/permit/native observations remain root evidence, never inferred from absent rows."
+    },
+    {
+      "id": "F4",
+      "severity": "support",
+      "text": "Malformed/nonfinite/duplicate JSON, bool-typed authorization and times, wrong pins/paths/symlinks, stale/negative quiet, pending related attempts, completed related attempts, output stop and invalid end clocks reject with state unchanged. Import/status are read-only and old API actions/accounting/admission remain delegated."
+    },
+    {
+      "id": "F5",
+      "severity": "support",
+      "text": "Declarations preserve all original positive source pins, original brief/thin-plan/access bytes,12 byte-identical METHOD cards, three questions/five obligations, pair arms and development lineage. TASK/template changes are fresh headings and explicit numeric timing edits only; all36 actual unchanged-adapter fixture packs and unchanged-controller planning checks pass."
+    },
+    {
+      "id": "F6",
+      "severity": "support",
+      "text": "Scoring scope is only the root-supplied opaque digest6efed6cf4763f91b9674ffaaf35b5c9113decf27663fc38961fcfd140b6883af; scoring/evaluator contents, prior outputs/captures/private contexts and native provider/SDK/auth files were not read or transferred."
+    },
+    {
+      "id": "F7",
+      "severity": "limitation",
+      "text": "Declaration source freeze04:03:38 predates original materializer cutoff04:06:24, but the exact post-verification inclusive materializer endpoint is not recorded and root helper bookkeeping actual end is None. Full-end timeliness remains UNKNOWN; source validity acceptance does not establish timely helper completion or renew its deadline."
+    },
+    {
+      "id": "F8",
+      "severity": "limitation",
+      "text": "Only source validity is accepted. Actual root receipts, current external quiet, current resource-fitting subset, control binding/native route preflight and final original/global deadline checks remain root conditions. All12 declarations create no resource promise or new budget."
+    }
+  ],
+  "live_ledger_reads": 0,
+  "live_ledger_transactions": 0,
+  "native_provider_calls": 0,
+  "candidate_or_evaluator_output_reads": 0,
+  "original_source_changes": 0,
+  "original_helper_birth_epoch": 1791000599.0972836,
+  "original_helper_deadline_epoch": 1791001199.0972836,
+  "global_deadline_epoch": 1791013030.8303788,
+  "declaration_materializer_full_end_status": "UNKNOWN"
+}

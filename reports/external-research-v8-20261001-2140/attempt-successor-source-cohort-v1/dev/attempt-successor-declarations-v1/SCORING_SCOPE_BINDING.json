@@ -1,0 +1,8 @@
+{
+  "schema": "pm.er8.opaque-scoring-scope-binding.v1",
+  "source": "Root message in current authorized task; existing shared scope digest only",
+  "existing_scope_path": "LAB_ROOT/cases/tranche-v2/scoring-only/evaluation-scope.json",
+  "scoring_contract_sha256": "6efed6cf4763f91b9674ffaaf35b5c9113decf27663fc38961fcfd140b6883af",
+  "contents_read_by_materializer": false,
+  "meaning": "Existing shared criteria scope, unchanged; not a new numeric-weight scoring contract or evaluator answers."
+}

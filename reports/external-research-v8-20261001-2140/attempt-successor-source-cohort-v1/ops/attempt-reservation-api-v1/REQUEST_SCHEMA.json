@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Root reserve-attempt-successors request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "receipt_id",
+    "root_authority",
+    "development_authority",
+    "source_acceptance",
+    "source_freeze",
+    "declaration_closure",
+    "predecessor_release",
+    "campaign_id",
+    "original_start_epoch",
+    "campaign_deadline_epoch",
+    "caps",
+    "pairs",
+    "predecessor_quiet_records"
+  ],
+  "properties": {
+    "development_authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "source_acceptance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "source_freeze": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "declaration_closure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "predecessor_release": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "receipt_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+    },
+    "root_authority": {
+      "const": true
+    },
+    "campaign_id": {
+      "const": "external-research-v8-20261001-2140"
+    },
+    "original_start_epoch": {
+      "const": 1790905209
+    },
+    "campaign_deadline_epoch": {
+      "const": 1791013030.8303788
+    },
+    "caps": {
+      "const": {
+        "stage_caps": [
+          1200,
+          1200,
+          900
+        ],
+        "case_wall": 3600,
+        "case_occupied": 5400,
+        "outside_native": 300,
+        "responses": 160
+      }
+    },
+    "pairs": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 6,
+      "description": "Exact complete pair objects copied unchanged from pinned DECLARATION_CLOSURE.json; runtime rejects duplicates, aliases, split arms, or any unequal value."
+    },
+    "predecessor_quiet_records": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      },
+      "description": "Exactly one fixed-path quiet reference per selected predecessor case, no extra cases."
+    }
+  },
+  "description": "Schema documents shape only; runtime requires exact dependency pins, independent/root acceptance, whole-pair declarations/current quiet proofs and unchanged envelope preflight."
+}

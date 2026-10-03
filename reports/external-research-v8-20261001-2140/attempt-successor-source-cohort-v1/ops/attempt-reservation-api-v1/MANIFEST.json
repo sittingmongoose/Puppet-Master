@@ -1,0 +1,80 @@
+{
+  "schema": "pm.er8.attempt-reservation-source-freeze.v1",
+  "status": "SOURCE_READY_REQUIRES_INDEPENDENT_REVIEW",
+  "source": {
+    "path": "LAB_ROOT/ops/attempt-reservation-api-v1/ledger_attempt_reservations_v1.py",
+    "sha256": "9bd4b17fe406cd20680c0c8eef16f96a6a45db727d977f1ba2cc42641c82d577"
+  },
+  "actual_end_epoch": 1791000397.9246154,
+  "original_helper_birth_epoch": 1790999484.786973,
+  "original_helper_deadline_epoch": 1791000684.786973,
+  "completed_before_original_helper_deadline": true,
+  "caps": {
+    "stage_caps": [
+      1200,
+      1200,
+      900
+    ],
+    "case_wall": 3600,
+    "case_occupied": 5400,
+    "outside_native": 300,
+    "responses": 160
+  },
+  "global_deadline_epoch": 1791013030.8303788,
+  "tests_passed": 23,
+  "owned_files": {
+    "HANDOFF.md": {
+      "path": "LAB_ROOT/ops/attempt-reservation-api-v1/HANDOFF.md",
+      "sha256": "260b395b5fb7a1f30324a6192a5792596601b66dea246fcec354bc654fe52333"
+    },
+    "QUIET_RECORD_TEMPLATE.json": {
+      "path": "LAB_ROOT/ops/attempt-reservation-api-v1/QUIET_RECORD_TEMPLATE.json",
+      "sha256": "c8637ff9b1e8add849b20a13bf30d6983b45d80adef156ecd105ed9f2df5733f"
+    },
+    "REQUEST_SCHEMA.json": {
+      "path": "LAB_ROOT/ops/attempt-reservation-api-v1/REQUEST_SCHEMA.json",
+      "sha256": "3f6281de816127dba1ce9d51ed49cd958e24b17c363400a3ca76fc6555a56f9c"
+    },
+    "REVIEW_RECORD_TEMPLATE.json": {
+      "path": "LAB_ROOT/ops/attempt-reservation-api-v1/REVIEW_RECORD_TEMPLATE.json",
+      "sha256": "920ada20d1be72417c31c6892ec1dc6dd930d477fc5e308987b0a63b07c11b01"
+    },
+    "ROOT_ACCEPTANCE_TEMPLATE.json": {
+      "path": "LAB_ROOT/ops/attempt-reservation-api-v1/ROOT_ACCEPTANCE_TEMPLATE.json",
+      "sha256": "3e2bf19c4c6ee9913e99cd384023cc2ffda08a7fd15e3657fac377b6759cda21"
+    },
+    "TEST_RESULTS.txt": {
+      "path": "LAB_ROOT/ops/attempt-reservation-api-v1/TEST_RESULTS.txt",
+      "sha256": "c8b39a98ea6898029f25773015cd76c012cea1ea9b6e19adde815e5c7327ae21"
+    },
+    "fixture_harness.py": {
+      "path": "LAB_ROOT/ops/attempt-reservation-api-v1/fixture_harness.py",
+      "sha256": "86b0fc8337d48fe01ddd7cef44d60bc36c9948a83a31890fddb743ca1ae08d5e"
+    },
+    "ledger_attempt_reservations_v1.py": {
+      "path": "LAB_ROOT/ops/attempt-reservation-api-v1/ledger_attempt_reservations_v1.py",
+      "sha256": "9bd4b17fe406cd20680c0c8eef16f96a6a45db727d977f1ba2cc42641c82d577"
+    },
+    "test_attempt_reservations_v1.py": {
+      "path": "LAB_ROOT/ops/attempt-reservation-api-v1/test_attempt_reservations_v1.py",
+      "sha256": "ea75eb737548ef4582fa18a8546a2bc10eec4ff35c2d5000ea69ae83a7ae37c7"
+    }
+  },
+  "declaration_closure": {
+    "path": "LAB_ROOT/dev/attempt-successor-declarations-v1/DECLARATION_CLOSURE.json",
+    "sha256": "cb2fb0c8eacf1d3810f204c2f86ed812ee32684cf1924ba3d7c4dfd900778be8"
+  },
+  "development_authority": {
+    "path": "LAB_ROOT/ops/recovery-v1/ATTEMPT_SUCCESSOR_DEVELOPMENT_AUTHORITY_V1.json",
+    "sha256": "64b40261010db33ce32871db4cb42900ae130d5dc02272ac92831594bd9e2f7e"
+  },
+  "accepted_base_api": {
+    "path": "LAB_ROOT/ops/helper-concurrency-v2/ledger_helper_concurrency_v2.py",
+    "sha256": "eafb75b1a157a5b7e77f03f9fc52e298a7ef255e439730e22c4fde6a95dc0405"
+  },
+  "live_install": false,
+  "live_state_read": false,
+  "native_provider_calls": 0,
+  "source_acceptance_authored": false,
+  "old_source_or_live_state_changes": 0
+}

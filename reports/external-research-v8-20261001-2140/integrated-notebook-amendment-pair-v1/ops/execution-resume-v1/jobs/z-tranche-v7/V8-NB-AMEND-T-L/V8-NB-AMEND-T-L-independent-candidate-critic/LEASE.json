@@ -1,0 +1,27 @@
+{
+  "schema": "er8.route.lease.v1",
+  "owned_unit": "er8-v8-nb-amend-t-l-independent-candidate-critic.service",
+  "deadline_monotonic_ns": 221493261946037,
+  "native_stop_monotonic_ns": 221463261946037,
+  "case_authority": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-T-L/V8-NB-AMEND-T-L-independent-candidate-critic/CASE_AUTHORITY.json",
+    "sha256": "6948b0c2b6faa6f4ced9208dd3fef0ce7a8451b136719cc804f915b00102f307",
+    "clock": {
+      "case_id": "V8-NB-AMEND-T-L",
+      "case_start_monotonic_ns": 219595188887962,
+      "case_elapsed_cap_seconds": 3600,
+      "case_occupied_cap_seconds": 5400,
+      "outside_native_cap_seconds": 300,
+      "campaign_native_cutoff_monotonic_ns": 234777000142701,
+      "stages": {
+        "v8-nb-amend-t-l-independent-candidate-critic": {
+          "stage_start_monotonic_ns": 220293261946037,
+          "cap_seconds": 1200,
+          "response_cap": 160
+        }
+      }
+    }
+  },
+  "occupied_seconds_reserved": 1200,
+  "outside_seconds_reserved": 300
+}

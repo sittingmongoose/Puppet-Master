@@ -1,0 +1,13 @@
+{
+  "schema": "pm.er8.attempt-reservation-independent-review.v1",
+  "accepted": "REVIEWER_BOOLEAN_OUTCOME",
+  "independent": true,
+  "source": {
+    "path": "LAB_ROOT/ops/attempt-reservation-api-v1/ledger_attempt_reservations_v1.py",
+    "sha256": "9bd4b17fe406cd20680c0c8eef16f96a6a45db727d977f1ba2cc42641c82d577"
+  },
+  "source_manifest": {
+    "path": "LAB_ROOT/ops/attempt-reservation-api-v1/MANIFEST.json",
+    "sha256": "ROOT_OR_REVIEWER_HASHES_FROZEN_MANIFEST"
+  }
+}

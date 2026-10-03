@@ -1,0 +1,38 @@
+{
+  "schema": "er8.tranche-successor.source-freeze.v8",
+  "status": "FROZEN_HOLD_SUPPORTED_RESERVATION_API_MISSING",
+  "frozen_utc": "2026-10-03T03:44:50.844560+00:00",
+  "helper_birth_epoch": 1790998406.3611405,
+  "original_helper_deadline_epoch": 1790999306.3611405,
+  "accepted": false,
+  "root_authority": false,
+  "launch_authority": "NONE",
+  "closure_sha256": {
+    "LAB_ROOT/dev/tranche-successor-v8/ADDITIVE_ACTION_SPEC.json": "b3cdb755dfa15e6116a056a3c0090b4edd9dca45971d5550b589d03b03005228",
+    "LAB_ROOT/dev/tranche-successor-v8/HANDOFF.json": "56f31cce8c2f5cb0e5fdbfa064b713a6edf955ccb48e026113145e4c66320e6c",
+    "LAB_ROOT/dev/tranche-successor-v8/HANDOFF.md": "d2171e1435fd9277e59182ec4ea1e74f09aea18c0c572b36ebaaebc7e5de7466",
+    "LAB_ROOT/dev/tranche-successor-v8/REMAINING_CELLS.json": "c4644d8bcacc68a499dc28d790fa584a6892eb508de4d1075656f096ae388585",
+    "LAB_ROOT/dev/tranche-successor-v8/SOURCE_DIFF.json": "066281e3f269d69bcb4f262560411482a6bbf201fd5bddde251fe01e794c52d8",
+    "LAB_ROOT/dev/tranche-successor-v8/SOURCE_PINS.json": "48f72379a4b281c6a271c5959e4917759a871a1697e098982af5c211a552baaf",
+    "LAB_ROOT/dev/tranche-successor-v8/TEST_OUTPUT.txt": "200bf25527e49cd2ba1b959ac99e6a15c03377b92407f891b7740f4ec0e3b9c7",
+    "LAB_ROOT/dev/tranche-successor-v8/TEST_RESULTS.json": "9c537b904ffaea4425316e20241f55bb9488883ca80073318c185aee3559da97",
+    "LAB_ROOT/dev/tranche-successor-v8/prepare_handoff.py": "d26332fd0c1e246314e20a7d9ec08fbf726bb7a6d46797484eb9adcce99f1021",
+    "LAB_ROOT/dev/tranche-successor-v8/test_source.py": "da001477767f421423c6c33d0a3e20c48fdd90e3a0778ae953a2aa388fe8d611"
+  },
+  "unchanged_source_pins": {
+    "path": "LAB_ROOT/dev/tranche-successor-v8/SOURCE_PINS.json",
+    "sha256": "48f72379a4b281c6a271c5959e4917759a871a1697e098982af5c211a552baaf"
+  },
+  "handoff": {
+    "path": "LAB_ROOT/dev/tranche-successor-v8/HANDOFF.json",
+    "sha256": "56f31cce8c2f5cb0e5fdbfa064b713a6edf955ccb48e026113145e4c66320e6c"
+  },
+  "tests": {
+    "path": "LAB_ROOT/dev/tranche-successor-v8/TEST_RESULTS.json",
+    "sha256": "9c537b904ffaea4425316e20241f55bb9488883ca80073318c185aee3559da97"
+  },
+  "native_or_provider_calls": 0,
+  "ledger_transactions": 0,
+  "old_case_birth_job_or_reservation_changes": 0,
+  "future_mechanism_implemented": false
+}

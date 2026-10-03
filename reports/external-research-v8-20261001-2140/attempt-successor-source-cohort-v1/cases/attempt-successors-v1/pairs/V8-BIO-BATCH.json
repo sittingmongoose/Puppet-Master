@@ -1,0 +1,95 @@
+{
+  "schema": "pm.er8.attempt-successor-pair-declaration.v1",
+  "root_authority": false,
+  "accepted": false,
+  "logical_pair_id": "V8-BIO-BATCH",
+  "attempt_pair_id": "V8-BIO-BATCH-S8",
+  "domain": "bioimaging",
+  "contrast": "coherent-batching",
+  "prospective_estimand": "Coherent two/three research batches added on shared proposition/condition/witness/progressive-retrieval background; within-case source reuse access common.",
+  "claim_limit": "Instruction-level incremental comparison on the declared shared recipe background; not a universal independent main effect. One matched pair per domain/contrast, no statistical generalization. No candidate outputs or source discoveries may cross cases. Control may spontaneously use a technique; report observed separation.",
+  "classification": "DEVELOPMENT_REPEAT_NOT_FRESH_HOLDOUT",
+  "cases": [
+    "V8-BIO-BATCH-C-Z-S8",
+    "V8-BIO-B-Z-S8"
+  ],
+  "arms": [
+    {
+      "logical_case_id": "V8-BIO-BATCH-C-Z",
+      "logical_pair_id": "V8-BIO-BATCH",
+      "arm": "control",
+      "predecessor_attempt_case_id": "V8-BIO-BATCH-C-Z",
+      "new_attempt_case_id": "V8-BIO-BATCH-C-Z-S8",
+      "new_jobs": [
+        "V8-BIO-BATCH-C-Z-S8-research-proposal",
+        "V8-BIO-BATCH-C-Z-S8-independent-candidate-critic",
+        "V8-BIO-BATCH-C-Z-S8-final-correction"
+      ],
+      "new_final_job": "V8-BIO-BATCH-C-Z-S8-final-correction",
+      "evaluator_attempt_id": "V8-EVAL-V8-BIO-BATCH-C-Z-S8",
+      "source_manifest": {
+        "path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-BATCH-C-Z-S8/manifest.json",
+        "sha256": "285beb8535e2d39759a1daafa37451f775afdd3d91862491da6363f7a1169336"
+      },
+      "method": {
+        "path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-BATCH-C-Z-S8/METHOD.md",
+        "sha256": "222ad8739878a9dfc93d6e3ee533596ea2cd2f4cac673870c6c285c18dd2570c"
+      },
+      "original_manifest_sha256": "96640dea4593af1319bdda14a47cde5c0f1973780e26703e86983d03171bb17b",
+      "original_method_sha256": "222ad8739878a9dfc93d6e3ee533596ea2cd2f4cac673870c6c285c18dd2570c"
+    },
+    {
+      "logical_case_id": "V8-BIO-B-Z",
+      "logical_pair_id": "V8-BIO-BATCH",
+      "arm": "treatment",
+      "predecessor_attempt_case_id": "V8-BIO-B-Z",
+      "new_attempt_case_id": "V8-BIO-B-Z-S8",
+      "new_jobs": [
+        "V8-BIO-B-Z-S8-research-proposal",
+        "V8-BIO-B-Z-S8-independent-candidate-critic",
+        "V8-BIO-B-Z-S8-final-correction"
+      ],
+      "new_final_job": "V8-BIO-B-Z-S8-final-correction",
+      "evaluator_attempt_id": "V8-EVAL-V8-BIO-B-Z-S8",
+      "source_manifest": {
+        "path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-B-Z-S8/manifest.json",
+        "sha256": "21ffb4e9fdf511c5d52fb2f10ed4d681a704fe7c7271406b356e58009a0ef04d"
+      },
+      "method": {
+        "path": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-B-Z-S8/METHOD.md",
+        "sha256": "f6df08a280a4db79323bd96c9d816c34aee66a02e3f155602407f1290c599f5c"
+      },
+      "original_manifest_sha256": "bacf9033fa8af87aef92fb6c6ff4128135fab2159632a395c286b2a9425c74b7",
+      "original_method_sha256": "f6df08a280a4db79323bd96c9d816c34aee66a02e3f155602407f1290c599f5c"
+    }
+  ],
+  "common_binding": {
+    "route": "v8-z-route-recovery-v2-native-bound-v2",
+    "account": "existing-authorized-zcode-account-v8-A",
+    "actual_account_id": "UNKNOWN",
+    "model": "GLM5.3FlashMax",
+    "pins": {
+      "runtime": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b",
+      "config": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d",
+      "independent_acceptance": "59b08282df39fe1c86e21eea06d1197a17f3ea30ef13b1569d6c34a31347a18c"
+    },
+    "binding_status": "REQUESTED_EXISTING_ACCEPTED_ROUTE_NOT_NEW_PROVIDER_VERIFICATION",
+    "task_sha256": "18afa7322322621495c8c87ff1f1ee85f1bf895e04a7732f0ef6758b7db054e0",
+    "brief_sha256": "6a41f1bc045d39f53d4a825c82298bb38fac2d0c4e9de460fa1e2a02188dd789",
+    "thin_plan_sha256": "83607635ae7c953c39b5275cc7807c1213fe98c50103fd7d9fa529a72c710f30",
+    "source_access_sha256": "f82bdc9ffcc8c501717c104707773137cf8aef6efe78158dde764529094130df",
+    "scoring_contract_sha256": "6efed6cf4763f91b9674ffaaf35b5c9113decf27663fc38961fcfd140b6883af"
+  },
+  "caps": {
+    "stage_caps": [
+      1200,
+      1200,
+      900
+    ],
+    "case_wall": 3600,
+    "case_occupied": 5400,
+    "outside_native": 300,
+    "responses": 160
+  },
+  "campaign_deadline_epoch": 1791013030.8303788
+}

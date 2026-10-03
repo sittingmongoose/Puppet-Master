@@ -1,0 +1,113 @@
+{
+  "schema": "er8.assigned-input-map.v1",
+  "cases": {
+    "V8-BIO-C-Z-S8": {
+      "manifest": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-C-Z-S8/manifest.json",
+      "root": "LAB_ROOT/cases/attempt-successors-v1",
+      "case_dir": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-C-Z-S8",
+      "objectives": "LAB_ROOT/dev/attempt-successor-declarations-v1/OBJECTIVES.json",
+      "family_provisional": "Z",
+      "pair_id": "V8-BIO-CHECK",
+      "arm": "control"
+    },
+    "V8-BIO-WIT-T-Z-S8": {
+      "manifest": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-WIT-T-Z-S8/manifest.json",
+      "root": "LAB_ROOT/cases/attempt-successors-v1",
+      "case_dir": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-WIT-T-Z-S8",
+      "objectives": "LAB_ROOT/dev/attempt-successor-declarations-v1/OBJECTIVES.json",
+      "family_provisional": "Z",
+      "pair_id": "V8-BIO-CHECK",
+      "arm": "treatment"
+    },
+    "V8-BIO-COND-C-Z-S8": {
+      "manifest": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-COND-C-Z-S8/manifest.json",
+      "root": "LAB_ROOT/cases/attempt-successors-v1",
+      "case_dir": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-COND-C-Z-S8",
+      "objectives": "LAB_ROOT/dev/attempt-successor-declarations-v1/OBJECTIVES.json",
+      "family_provisional": "Z",
+      "pair_id": "V8-BIO-COND",
+      "arm": "control"
+    },
+    "V8-BIO-P-Z-S8": {
+      "manifest": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-P-Z-S8/manifest.json",
+      "root": "LAB_ROOT/cases/attempt-successors-v1",
+      "case_dir": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-P-Z-S8",
+      "objectives": "LAB_ROOT/dev/attempt-successor-declarations-v1/OBJECTIVES.json",
+      "family_provisional": "Z",
+      "pair_id": "V8-BIO-COND",
+      "arm": "treatment"
+    },
+    "V8-BIO-BATCH-C-Z-S8": {
+      "manifest": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-BATCH-C-Z-S8/manifest.json",
+      "root": "LAB_ROOT/cases/attempt-successors-v1",
+      "case_dir": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-BATCH-C-Z-S8",
+      "objectives": "LAB_ROOT/dev/attempt-successor-declarations-v1/OBJECTIVES.json",
+      "family_provisional": "Z",
+      "pair_id": "V8-BIO-BATCH",
+      "arm": "control"
+    },
+    "V8-BIO-B-Z-S8": {
+      "manifest": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-B-Z-S8/manifest.json",
+      "root": "LAB_ROOT/cases/attempt-successors-v1",
+      "case_dir": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-BIO-B-Z-S8",
+      "objectives": "LAB_ROOT/dev/attempt-successor-declarations-v1/OBJECTIVES.json",
+      "family_provisional": "Z",
+      "pair_id": "V8-BIO-BATCH",
+      "arm": "treatment"
+    },
+    "V8-NB-C-Z-S8": {
+      "manifest": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-C-Z-S8/manifest.json",
+      "root": "LAB_ROOT/cases/attempt-successors-v1",
+      "case_dir": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-C-Z-S8",
+      "objectives": "LAB_ROOT/dev/attempt-successor-declarations-v1/OBJECTIVES.json",
+      "family_provisional": "Z",
+      "pair_id": "V8-NB-CHECK",
+      "arm": "control"
+    },
+    "V8-NB-WIT-T-Z-S8": {
+      "manifest": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-WIT-T-Z-S8/manifest.json",
+      "root": "LAB_ROOT/cases/attempt-successors-v1",
+      "case_dir": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-WIT-T-Z-S8",
+      "objectives": "LAB_ROOT/dev/attempt-successor-declarations-v1/OBJECTIVES.json",
+      "family_provisional": "Z",
+      "pair_id": "V8-NB-CHECK",
+      "arm": "treatment"
+    },
+    "V8-NB-COND-C-Z-S8": {
+      "manifest": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-COND-C-Z-S8/manifest.json",
+      "root": "LAB_ROOT/cases/attempt-successors-v1",
+      "case_dir": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-COND-C-Z-S8",
+      "objectives": "LAB_ROOT/dev/attempt-successor-declarations-v1/OBJECTIVES.json",
+      "family_provisional": "Z",
+      "pair_id": "V8-NB-COND",
+      "arm": "control"
+    },
+    "V8-NB-P-Z-S8": {
+      "manifest": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-P-Z-S8/manifest.json",
+      "root": "LAB_ROOT/cases/attempt-successors-v1",
+      "case_dir": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-P-Z-S8",
+      "objectives": "LAB_ROOT/dev/attempt-successor-declarations-v1/OBJECTIVES.json",
+      "family_provisional": "Z",
+      "pair_id": "V8-NB-COND",
+      "arm": "treatment"
+    },
+    "V8-NB-BATCH-C-Z-S8": {
+      "manifest": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-BATCH-C-Z-S8/manifest.json",
+      "root": "LAB_ROOT/cases/attempt-successors-v1",
+      "case_dir": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-BATCH-C-Z-S8",
+      "objectives": "LAB_ROOT/dev/attempt-successor-declarations-v1/OBJECTIVES.json",
+      "family_provisional": "Z",
+      "pair_id": "V8-NB-BATCH",
+      "arm": "control"
+    },
+    "V8-NB-B-Z-S8": {
+      "manifest": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-B-Z-S8/manifest.json",
+      "root": "LAB_ROOT/cases/attempt-successors-v1",
+      "case_dir": "LAB_ROOT/cases/attempt-successors-v1/candidates/V8-NB-B-Z-S8",
+      "objectives": "LAB_ROOT/dev/attempt-successor-declarations-v1/OBJECTIVES.json",
+      "family_provisional": "Z",
+      "pair_id": "V8-NB-BATCH",
+      "arm": "treatment"
+    }
+  }
+}

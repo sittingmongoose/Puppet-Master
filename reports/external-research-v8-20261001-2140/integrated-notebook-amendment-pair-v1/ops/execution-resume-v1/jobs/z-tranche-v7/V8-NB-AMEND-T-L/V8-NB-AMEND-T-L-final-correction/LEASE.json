@@ -1,0 +1,27 @@
+{
+  "schema": "er8.route.lease.v1",
+  "owned_unit": "er8-v8-nb-amend-t-l-final-correction.service",
+  "deadline_monotonic_ns": 221999487550837,
+  "native_stop_monotonic_ns": 221969487550837,
+  "case_authority": {
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v7/V8-NB-AMEND-T-L/V8-NB-AMEND-T-L-final-correction/CASE_AUTHORITY.json",
+    "sha256": "c6ee2836f72c20dcda1b2b940d0b40c6d93d7ac467f9a6865ee39d67df802ad2",
+    "clock": {
+      "case_id": "V8-NB-AMEND-T-L",
+      "case_start_monotonic_ns": 219595188887962,
+      "case_elapsed_cap_seconds": 3600,
+      "case_occupied_cap_seconds": 5400,
+      "outside_native_cap_seconds": 300,
+      "campaign_native_cutoff_monotonic_ns": 234777000142701,
+      "stages": {
+        "v8-nb-amend-t-l-final-correction": {
+          "stage_start_monotonic_ns": 221099487550837,
+          "cap_seconds": 900,
+          "response_cap": 160
+        }
+      }
+    }
+  },
+  "occupied_seconds_reserved": 900,
+  "outside_seconds_reserved": 300
+}

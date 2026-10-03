@@ -1,0 +1,54 @@
+{
+  "schema": "er8.attempt-successor-reservation.proposed-contract.v8",
+  "status": "HOLD_CONTRACT_ONLY_NOT_IMPLEMENTED",
+  "accepted": false,
+  "root_authority": false,
+  "proposed_action": "reserve-attempt-successors",
+  "request_fields": {
+    "receipt_id": "unique immutable root receipt identity",
+    "root_authority": true,
+    "source_acceptance": "exact independently accepted mechanism/source record",
+    "source_freeze": "exact predecessor and successor declaration closure record",
+    "predecessor_release": "exact V7 release record",
+    "campaign_id": "existing campaign only",
+    "original_start_epoch": "same existing start, never reset",
+    "campaign_deadline_epoch": 1791013030.8303788,
+    "pairs": "whole logical pairs, each two arm rows with logical_case_id/logical_pair_id/arm/predecessor_attempt_case_id/new_attempt_case_id/new_final_job/evaluator_attempt_id/source_manifest_sha256/method_sha256/common route+account+model pins",
+    "predecessor_quiet_records": "exact positive native/parent/actor/permit settlement records; no scope from candidate content"
+  },
+  "state_append_only": {
+    "attempt_reservation_receipts[receipt_id]": "immutable accepted request, recorded epoch, preflight totals and source lineage; duplicate receipt/name is rejected, no replacement",
+    "attempt_lineage_by_case[new_id]": "immutable logical cell/pair/arm/predecessor IDs and old source pins; no past outcome rewritten",
+    "reservation_by_case[new_id]": {
+      "native_starts": 3,
+      "occupied_seconds": 5400,
+      "completed": false,
+      "final_job": "<new_id>-final-correction"
+    },
+    "evaluator_reserved_names": "append exact unique evaluator attempt names; preserve old names and protected holdouts"
+  },
+  "immutable_old_state": [
+    "campaign identity/start/deadline/authority",
+    "all old reservation rows including completed/disposition/final promises",
+    "all old cases/births/caps",
+    "all old jobs/births/hard deadlines/goal starts/permits/releases/quiescence",
+    "old event/cost/output lower-bound and unknown usage history",
+    "route/account/model pins and old pair identities",
+    "existing tranche reservation receipt and final_reserved_names",
+    "existing holdout/evaluator protections"
+  ],
+  "preflight_requirements": [
+    "Exact root+independent source authority, same campaign and fixed original deadline; current output stop not reached; no active duplicate logical attempt or V7 scheduler.",
+    "Reject any new case/job/final/evaluation identity already present, orphan aliases, split pair, completed comparison, still-V7-scheduled cell or missing predecessor quiet evidence.",
+    "Copy state for validation; add only proposed new records; charge every old actual start/occupied interval/unknown usage plus all old outstanding native starts and occupied commitments. No retirement/reset/supersession subtraction in this first append-only mechanism.",
+    "Under proposed state, actual native starts + reserved_or_committed_native_starts <=144 and occupied_slot_seconds + reserved_or_committed_slot_seconds <=172800; preserve unchanged output warning1200000/stop1500000, full case/stage/global deadline, twoZ slots, case3600/occupied5400/outside300/responses160.",
+    "Validate requested caps1200/1200/900 and declared common task/source/scoring semantics; fresh actual stage births occur only later before preparation.",
+    "Install all new request/state records atomically only after every preflight passes. On failure leave all state unchanged and report HOLD; no transaction/direct JSON write workaround."
+  ],
+  "deferred_not_authorized": [
+    "Any new future-commitment supersession/transfer mechanism that discounts an old unused promise would require a separate explicit accounting contract and independent review. It is not part of this proposed append-only action.",
+    "Materializing inputs outside this helper ownership, installing API, modifying controller ledger binding, independently accepting source, root release and native launch."
+  ],
+  "controller_integration": "Reuse accepted controller source if exact successor promises/source map are admitted. Its pinned ledger loader would require a separately frozen/accepted additive ledger successor and new controller control binding to that accepted source; do not edit frozen ledger_resume or current V7 control.",
+  "no_new_budget": true
+}
