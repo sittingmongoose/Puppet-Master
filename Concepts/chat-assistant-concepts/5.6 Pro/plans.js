@@ -807,7 +807,9 @@
   /* A Building… plan's support line marks a WAITING state: its wait copy (r.wait), Waiting for Usage, Outside execution
      window. It carries the shared status set's waiting-dep mark (the hourglass, attention tone) and a paused run the
      paused mark, through the registry, instead of the info glyph in the accent (integrate, 2026-10-02: colour is
-     reserved for status). An unknown info condition keeps the concept-lit info glyph. */
+     reserved for status). A line that says Paused (the window's wind-down, "Paused at window wind-down") takes the
+     paused mark too, so the copy and the mark agree (integrate fix cycle 2). An unknown info condition keeps the
+     concept-lit info glyph. */
   var WAIT_STATUS = { wait:'waiting-dep', quota:'waiting-dep', quota_wait:'waiting-dep', window:'waiting-dep', paused:'paused' };
   function waitMark(kind){
     var N=window.PM56_NEON, s=WAIT_STATUS[kind];
@@ -1120,7 +1122,7 @@
     }).join('');
     var att=a.attempt ? '<span class="pd-attn-attempt">attempt '+esc(a.attempt)+'</span>' : '';
     return '<span class="pd-wait pd-attn pd-attn-'+esc(a.tone)+'" data-condition="'+esc(a.condition_kind)+'">'+
-      (a.tone==='warning'?ICON.warning:waitMark(a.condition_kind))+
+      (a.tone==='warning'?ICON.warning:waitMark(/^Paused\b/.test(a.line)?'paused':a.condition_kind))+
       '<span class="pd-attn-copy"><strong>'+esc(a.line)+'</strong><span>'+esc(a.reason)+'</span>'+att+'</span>'+
       acts+'</span>';
   }

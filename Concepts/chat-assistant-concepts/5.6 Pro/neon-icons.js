@@ -387,9 +387,9 @@
        STATUS (plan §3): canonical status -> mark, tone and list motion, with every alias the surfaces use.
        ====================================================================== */
     var STATUS = {
-      working: { glyph: 'st-working', tone: 'working', motion: 'bead orbits on the ring, 16 s linear, its core halo only', aliases: ['running', 'in_progress', 'doing', 'live', 'active', 'loading', 'starting'] },
+      working: { glyph: 'st-working', tone: 'working', motion: 'bead orbits on the ring, 9 s (16 s in the thread list), linear, its core halo only', aliases: ['running', 'in_progress', 'doing', 'live', 'active', 'loading', 'starting'] },
       reviewing: { glyph: 'st-reviewing', tone: 'working', motion: 'lens sweeps 2.5 units and rests; no backlight', aliases: ['verifying', 'review'] },
-      waiting: { glyph: 'st-waiting', tone: 'attention', motion: 'full steady halo, backlight swells with the beat (.3-1, x.88-1.12), "?" hops 3.4 units (two beats every 2.4 s)', aliases: ['needs', 'needs_you', 'needs-you', 'yourmove', 'input', 'decide'] },
+      waiting: { glyph: 'st-waiting', tone: 'attention', motion: 'full steady halo, backlight breathes .6-1 (in the thread list it swells with the beat, .3-1, x.88-1.12), "?" hops 3.4 units (two beats every 2.4 s)', aliases: ['needs', 'needs_you', 'needs-you', 'yourmove', 'input', 'decide'] },
       'waiting-dep': { glyph: 'st-waiting-dep', tone: 'attention', motion: 'tips once, holds 60 % of 3.6 s', aliases: ['waiting_dep', 'dependency', 'blocked_on', 'held'] },
       idle: { glyph: 'st-idle', tone: 'idle', motion: 'none', aliases: ['ready'] },
       complete: { glyph: 'st-complete', tone: 'done', motion: 'clip-draws once', aliases: ['done', 'completed', 'sent', 'verified', 'restored'] },

@@ -11499,9 +11499,9 @@ html[data-o55-nier="on"] .plan-doc .pd-build-building::after{ width:5px; height:
   display:inline-flex; align-items:center; gap:6px; margin-left:2px;
   font:400 11px/1.4 var(--font-ui); color:var(--muted);
 }
+/* the wait line's mark is a status mark (waiting-dep, paused; plans.js waitMark), inked by its tone, never the
+   accent; its .nx-st wrapper is already flex:none (neon-icons.css) */
 .plan-doc .pd-wait svg{ flex:0 0 auto; }
-/* the wait line's mark is a status mark (waiting-dep, paused; plans.js waitMark), inked by its tone, never the accent */
-.plan-doc .pd-wait > .nx-st{ flex:0 0 auto; }
 .plan-doc .pd-act{ white-space:nowrap; }
 
 /* --------------------------------------------------- historical compact */
@@ -24072,9 +24072,9 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
        STATUS (plan §3): canonical status -> mark, tone and list motion, with every alias the surfaces use.
        ====================================================================== */
     var STATUS = {
-      working: { glyph: 'st-working', tone: 'working', motion: 'bead orbits on the ring, 16 s linear, its core halo only', aliases: ['running', 'in_progress', 'doing', 'live', 'active', 'loading', 'starting'] },
+      working: { glyph: 'st-working', tone: 'working', motion: 'bead orbits on the ring, 9 s (16 s in the thread list), linear, its core halo only', aliases: ['running', 'in_progress', 'doing', 'live', 'active', 'loading', 'starting'] },
       reviewing: { glyph: 'st-reviewing', tone: 'working', motion: 'lens sweeps 2.5 units and rests; no backlight', aliases: ['verifying', 'review'] },
-      waiting: { glyph: 'st-waiting', tone: 'attention', motion: 'full steady halo, backlight swells with the beat (.3-1, x.88-1.12), "?" hops 3.4 units (two beats every 2.4 s)', aliases: ['needs', 'needs_you', 'needs-you', 'yourmove', 'input', 'decide'] },
+      waiting: { glyph: 'st-waiting', tone: 'attention', motion: 'full steady halo, backlight breathes .6-1 (in the thread list it swells with the beat, .3-1, x.88-1.12), "?" hops 3.4 units (two beats every 2.4 s)', aliases: ['needs', 'needs_you', 'needs-you', 'yourmove', 'input', 'decide'] },
       'waiting-dep': { glyph: 'st-waiting-dep', tone: 'attention', motion: 'tips once, holds 60 % of 3.6 s', aliases: ['waiting_dep', 'dependency', 'blocked_on', 'held'] },
       idle: { glyph: 'st-idle', tone: 'idle', motion: 'none', aliases: ['ready'] },
       complete: { glyph: 'st-complete', tone: 'done', motion: 'clip-draws once', aliases: ['done', 'completed', 'sent', 'verified', 'restored'] },
@@ -42195,7 +42195,9 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
   /* A Building… plan's support line marks a WAITING state: its wait copy (r.wait), Waiting for Usage, Outside execution
      window. It carries the shared status set's waiting-dep mark (the hourglass, attention tone) and a paused run the
      paused mark, through the registry, instead of the info glyph in the accent (integrate, 2026-10-02: colour is
-     reserved for status). An unknown info condition keeps the concept-lit info glyph. */
+     reserved for status). A line that says Paused (the window's wind-down, "Paused at window wind-down") takes the
+     paused mark too, so the copy and the mark agree (integrate fix cycle 2). An unknown info condition keeps the
+     concept-lit info glyph. */
   var WAIT_STATUS = { wait:'waiting-dep', quota:'waiting-dep', quota_wait:'waiting-dep', window:'waiting-dep', paused:'paused' };
   function waitMark(kind){
     var N=window.PM56_NEON, s=WAIT_STATUS[kind];
@@ -42508,7 +42510,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     }).join('');
     var att=a.attempt ? '<span class="pd-attn-attempt">attempt '+esc(a.attempt)+'</span>' : '';
     return '<span class="pd-wait pd-attn pd-attn-'+esc(a.tone)+'" data-condition="'+esc(a.condition_kind)+'">'+
-      (a.tone==='warning'?ICON.warning:waitMark(a.condition_kind))+
+      (a.tone==='warning'?ICON.warning:waitMark(/^Paused\b/.test(a.line)?'paused':a.condition_kind))+
       '<span class="pd-attn-copy"><strong>'+esc(a.line)+'</strong><span>'+esc(a.reason)+'</span>'+att+'</span>'+
       acts+'</span>';
   }
