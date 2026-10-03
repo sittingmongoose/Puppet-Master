@@ -1605,7 +1605,7 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
         await p.mouse.move(5, h - 5);
         for (const pos of ['top', 'bottom']) {
           await p.evaluate(pos => { const t = document.querySelector('.transcript'); t.scrollTop = pos === 'top' ? 0 : t.scrollHeight; t.dispatchEvent(new Event('scroll')); }, pos);
-          await p.waitForTimeout(650);
+          await p.waitForTimeout(1300); /* the transcript scrolls smoothly (about 600 ms) and the dock settles after it */
           const r = await p.evaluate(pos => {
             const pod = document.getElementById('o55np-pod');
             if (!pod || getComputedStyle(pod).display === 'none') return { nopod: true };
@@ -1619,7 +1619,8 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
             for (const e of document.querySelectorAll('.transcript button, .transcript a[href], .transcript summary')) {
               const q = e.getBoundingClientRect(); if (q.bottom < tr.top || q.top > tr.bottom) continue;
               const cs = getComputedStyle(e); if (cs.visibility === 'hidden' || +cs.opacity === 0) continue;
-              const k = hit(e); if (k) under.push('transcript ' + (e.textContent || e.className).trim().slice(0, 24) + ' ' + k);
+              const q2 = e.getBoundingClientRect(), ix = Math.min(P.right, q2.right) - Math.max(P.left, q2.left), iy = Math.min(P.bottom, q2.bottom) - Math.max(P.top, q2.top);
+              if (ix >= 4 && iy >= 4) under.push('transcript ' + (e.textContent || e.className).trim().slice(0, 24) + ' ' + Math.round(ix) + 'x' + Math.round(iy)); /* a sliver under 4 px hides nothing */
             }
             const shy = pod.hasAttribute('data-shy'), op = +getComputedStyle(pod).opacity;
             if (pos === 'bottom') out.push(...under);
