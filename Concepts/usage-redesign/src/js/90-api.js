@@ -55,7 +55,10 @@ function selectRoom(room, source) {
 }
 
 function usageExportJson(kind) {
-  var payload = kind === 'ledger' ? projectedAttempts() : { schema_id: 'pm7.usage.prototype.snapshot.v1', state: state, attempts: projectedAttempts() };
+  /* the records the page shows: the projected fixture attempts and the live demo attempts (labelled as such), so the
+     export holds what "Export selected records" counts (FINAL-REVIEW-3 must-fix 2) */
+  var shown = PMU.data && PMU.data.attempts ? PMU.data.attempts() : projectedAttempts();
+  var payload = kind === 'ledger' ? shown : { schema_id: 'pm7.usage.prototype.snapshot.v1', state: state, attempts: shown };
   try {
     var blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
     var link = document.createElement('a'); link.href = URL.createObjectURL(blob);

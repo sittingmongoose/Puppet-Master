@@ -672,7 +672,9 @@
     var hero = card.hasAttribute('data-hero');
     if (!m.released) { if (hero && hold) hold.hero = true; return; }
     var fly = !hero && m.flyCards && m.flyCards.indexOf(card.getAttribute('data-widget')) >= 0;
-    var slot = hero ? m.heroAt : fly ? m.heroAt + 60 + Math.min(120, 24 * (m.flyRank = (m.flyRank || 0) + 1) - 24)
+    /* the plates that hold flight targets show their rows as the flyers set off (FINAL-REVIEW-3 must-fix 4: they stood
+       empty until about 566 ms, white cards in Friendly Light): from 40 before the hero, 20 apart */
+    var slot = hero ? m.heroAt : fly ? m.heroAt - 40 + Math.min(100, 20 * (m.flyRank = (m.flyRank || 0) + 1) - 20)
       : !flag('heroRoll') ? m.heroAt + Math.min(T3.quietCap, T3.quietStep * (m.rank++)) : m.quietAt + Math.min(T3.quietCap, T3.quietStep * (m.rank++));
     /* the real reveal time (a body built after its slot reveals at once): flights wait for it to be fully in */
     card._pmuRevealAt = Math.max(slot, since(m));
@@ -965,7 +967,7 @@
       m.predicted = pred;
     }
     m.flyCards = flightCards(m.room);
-    if (!sp && f !== 'nier' && f !== 'retro') flyers.forEach(function (fl) { preTravel(fl, rec); });
+    if (!sp && f !== 'nier' && f !== 'retro') flyers.forEach(function (fl) { preTravel(fl, rec); if (fl.val && fl.pre) preFollow(fl.val, fl.pre); });
     /* nothing paired after 700 ms (a target body that never came): the flyers leave */
     mtimer(m, 700, function () { if (!F.paired) pairFlights(true); });
     return F;
@@ -1004,6 +1006,14 @@
     for (var i = 0; i <= 12; i++) { var o = i / 12; ko.push({ offset: o, transform: 'translateX(' + (dx * fx(o)).toFixed(2) + 'px)' }); ki.push({ offset: o, transform: 'translateY(' + (dy * fy(o)).toFixed(2) + 'px) rotate(' + (rot * fs(o)).toFixed(2) + 'deg)' }); }
     fl.pre = { dx: dx, dy: dy, rot: rot, fx: fx, fy: fy, fs: fs,
       a: anim(fl.outer, ko, { dur: PRE.dur, delay: T3.takeoff, easing: 'linear', fill: 'both' }), b: anim(fl.inner, ki, { dur: PRE.dur, delay: T3.takeoff, easing: 'linear', fill: 'both' }) };
+  }
+  /* a window's value text keeps beside its meter on the early leg: the same move, no turn */
+  function preFollow(v, P) {
+    v.outer.style.transformOrigin = '50% 50%'; v.inner.style.transformOrigin = '50% 50%';
+    var ko = [], ki = [];
+    for (var i = 0; i <= 12; i++) { var o = i / 12; ko.push({ offset: o, transform: 'translateX(' + (P.dx * P.fx(o)).toFixed(2) + 'px)' }); ki.push({ offset: o, transform: 'translateY(' + (P.dy * P.fy(o)).toFixed(2) + 'px)' }); }
+    v.pre = { dx: P.dx, dy: P.dy, rot: 0, fx: P.fx, fy: P.fy, fs: P.fs,
+      a: anim(v.outer, ko, { dur: PRE.dur, delay: T3.takeoff, easing: 'linear', fill: 'both' }), b: anim(v.inner, ki, { dur: PRE.dur, delay: T3.takeoff, easing: 'linear', fill: 'both' }) };
   }
   /* where the early leg will have brought the flyer when the real flight starts `after` motion ms from now (from its own
      timing: no style read). The early leg keeps running until the flight takes over (the flight's animations are newer,
