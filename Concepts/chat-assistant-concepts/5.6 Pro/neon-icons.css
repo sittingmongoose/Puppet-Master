@@ -403,6 +403,9 @@ html[data-o55-nier="on"] .nx-bolt::before { display: none; }
    needs-you is an inverted ink block with paper strokes and a paper "?" (it outshines everything); */
 html[data-o55-nier="on"] .nx-st-waiting { background: var(--nx-bk, var(--o55-nier-ink)); box-shadow: 0 0 0 2px var(--nx-bk, var(--o55-nier-ink)); }
 html[data-o55-nier="on"] .nx-st-waiting > svg.nx { --nx-ink: var(--o55-nier-on-ink); }
+/* a pmx decision row ("Your move.") inks its mark in --accent (module-shell.css, 0,5,1), and NieR's --accent is the
+   block's own ink, so the "?" vanished into the block (final review, 2026-10-03): the block's strokes stay paper there */
+html[data-o55-nier="on"] .pmx-decision[data-tone] .pmx-decision-mark > .nx-st-waiting > svg.nx { --nx-ink: var(--o55-nier-on-ink); }
 /* on an ink cursor bar the block turns over: paper with ink strokes */
 html[data-o55-nier-parts~="cursor"] .thread-row:hover .nx-st-waiting,
 html[data-o55-nier-parts~="cursor"] .thread-row.active .nx-st-waiting { --nx-bk: var(--o55-nier-on-ink); }
