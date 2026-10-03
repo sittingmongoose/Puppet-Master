@@ -1,0 +1,547 @@
+{
+  "candidate_claims_not_evaluated": true,
+  "omissions": [
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "a91d520145955c724d773590fd47533d061b79e95c4441c668d76401ffc8053f",
+      "omitted_utf8_bytes": 23,
+      "original_line": 99,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-research-proposal/workspace/out/PROPOSAL.md",
+      "original_source_sha256": "9c435336ba1039e82745620a56ee8761af7665646da52666460568c7f6cb7bad",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "66b5dec092b032025840cca63557218278167b3438f201e808020a3d68cd134c",
+      "omitted_utf8_bytes": 51,
+      "original_line": 57,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-research-proposal/workspace/out/PROPOSAL.md",
+      "original_source_sha256": "9c435336ba1039e82745620a56ee8761af7665646da52666460568c7f6cb7bad",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "be869338adf4a03ad56842dbeee1166d80b758b9aaf3068d69f2802f1c97e767",
+      "omitted_utf8_bytes": 28,
+      "original_line": 57,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-research-proposal/workspace/out/PROPOSAL.md",
+      "original_source_sha256": "9c435336ba1039e82745620a56ee8761af7665646da52666460568c7f6cb7bad",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "ba8d6d462463d0ee8df2982db1ba2093e12eb3a33d929d6d6491f027b86fa0c4",
+      "omitted_utf8_bytes": 37,
+      "original_line": 47,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-research-proposal/workspace/out/PROPOSAL.md",
+      "original_source_sha256": "9c435336ba1039e82745620a56ee8761af7665646da52666460568c7f6cb7bad",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "4a710963c5583696bdc09bcd196e82c9f9a112ee72e1e2676319503fb1659f3c",
+      "omitted_utf8_bytes": 26,
+      "original_line": 42,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-research-proposal/workspace/out/PROPOSAL.md",
+      "original_source_sha256": "9c435336ba1039e82745620a56ee8761af7665646da52666460568c7f6cb7bad",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "02a99053c24ab6f909eb1aed0abef08390b4cb23cc679e655bf38d571c03a882",
+      "omitted_utf8_bytes": 36,
+      "original_line": 42,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-research-proposal/workspace/out/PROPOSAL.md",
+      "original_source_sha256": "9c435336ba1039e82745620a56ee8761af7665646da52666460568c7f6cb7bad",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "e1d6eb0af124e08c717f301e87c9a6de10b96ad71765a4dd9b051310160c7339",
+      "omitted_utf8_bytes": 29,
+      "original_line": 32,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-research-proposal/workspace/out/PROPOSAL.md",
+      "original_source_sha256": "9c435336ba1039e82745620a56ee8761af7665646da52666460568c7f6cb7bad",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "54e7e4ca13144c15fdfc0895ed8e978aaf017809be177a6c37020145b2923082",
+      "omitted_utf8_bytes": 53,
+      "original_line": 27,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-research-proposal/workspace/out/PROPOSAL.md",
+      "original_source_sha256": "9c435336ba1039e82745620a56ee8761af7665646da52666460568c7f6cb7bad",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "7845c8ca382c70e05c1433bdc6b2529d75b5aec8897d655cad8a08ddb531d5c2",
+      "omitted_utf8_bytes": 92,
+      "original_line": 27,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-research-proposal/workspace/out/PROPOSAL.md",
+      "original_source_sha256": "9c435336ba1039e82745620a56ee8761af7665646da52666460568c7f6cb7bad",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "0dc77a322e329fc024dc27ac7ab59a37ac7d00f6ced33b027abaf665e051efbb",
+      "omitted_utf8_bytes": 56,
+      "original_line": 24,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-research-proposal/workspace/out/PROPOSAL.md",
+      "original_source_sha256": "9c435336ba1039e82745620a56ee8761af7665646da52666460568c7f6cb7bad",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "47eb6f553544d92204b586a7bf0299f8f575ea715b801cb3937da8667aa4083b",
+      "omitted_utf8_bytes": 48,
+      "original_line": 24,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-research-proposal/workspace/out/PROPOSAL.md",
+      "original_source_sha256": "9c435336ba1039e82745620a56ee8761af7665646da52666460568c7f6cb7bad",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "571af8aec9e66fdc6b77feeb0a290772f5d365c0724821e4f22588f53a585f05",
+      "omitted_utf8_bytes": 19,
+      "original_line": 23,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-research-proposal/workspace/out/PROPOSAL.md",
+      "original_source_sha256": "9c435336ba1039e82745620a56ee8761af7665646da52666460568c7f6cb7bad",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "a91d520145955c724d773590fd47533d061b79e95c4441c668d76401ffc8053f",
+      "omitted_utf8_bytes": 23,
+      "original_line": 23,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-research-proposal/workspace/out/PROPOSAL.md",
+      "original_source_sha256": "9c435336ba1039e82745620a56ee8761af7665646da52666460568c7f6cb7bad",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "4a710963c5583696bdc09bcd196e82c9f9a112ee72e1e2676319503fb1659f3c",
+      "omitted_utf8_bytes": 26,
+      "original_line": 21,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-research-proposal/workspace/out/PROPOSAL.md",
+      "original_source_sha256": "9c435336ba1039e82745620a56ee8761af7665646da52666460568c7f6cb7bad",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "91ec996449d77dd52d2d5458d4fca028b383a5160cb07881143286682a6aa69d",
+      "omitted_utf8_bytes": 32,
+      "original_line": 14,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-research-proposal/workspace/out/UNRESOLVED_LEADS.md",
+      "original_source_sha256": "dab83437e46b4944d7149754e4825f1b89a2dc15180ac7a04dc355707b9fd070",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "c1ac10f51ce291098e3de1d7eb729c5cb24f1c8d4ad2f0b2d4270722e1410507",
+      "omitted_utf8_bytes": 16,
+      "original_line": 201,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-independent-candidate-critic/workspace/out/CRITIQUE.md",
+      "original_source_sha256": "a5af758fa100a8304b078246c33fb2f8bd96732a73ea1febbe76f72f5cf1e6f0",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "e6c87997eb1fb70f1ef986883a8fcc2051ceb9d2d09e19be2ff7c50f1bb43537",
+      "omitted_utf8_bytes": 39,
+      "original_line": 162,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-independent-candidate-critic/workspace/out/CRITIQUE.md",
+      "original_source_sha256": "a5af758fa100a8304b078246c33fb2f8bd96732a73ea1febbe76f72f5cf1e6f0",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "13f9abb46c91d95e84cc8ce1beae5665979ba3ce1b74e046cbb19308d0608b52",
+      "omitted_utf8_bytes": 40,
+      "original_line": 162,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-independent-candidate-critic/workspace/out/CRITIQUE.md",
+      "original_source_sha256": "a5af758fa100a8304b078246c33fb2f8bd96732a73ea1febbe76f72f5cf1e6f0",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "8e5933ac8873e16611af3f02ad6d34fb59d388f887fe17000fe797cebaacabf0",
+      "omitted_utf8_bytes": 21,
+      "original_line": 151,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-independent-candidate-critic/workspace/out/CRITIQUE.md",
+      "original_source_sha256": "a5af758fa100a8304b078246c33fb2f8bd96732a73ea1febbe76f72f5cf1e6f0",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "7177ed896566f9e3154c194909d69777c98881cec12dd0615185ef194699c651",
+      "omitted_utf8_bytes": 60,
+      "original_line": 73,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-independent-candidate-critic/workspace/out/CRITIQUE.md",
+      "original_source_sha256": "a5af758fa100a8304b078246c33fb2f8bd96732a73ea1febbe76f72f5cf1e6f0",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "4a33d2d9000ea0c8804f37da2d50439da69fb64be444dec288bebdefa8b1d625",
+      "omitted_utf8_bytes": 67,
+      "original_line": 69,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-independent-candidate-critic/workspace/out/CRITIQUE.md",
+      "original_source_sha256": "a5af758fa100a8304b078246c33fb2f8bd96732a73ea1febbe76f72f5cf1e6f0",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "b57570234cffdf137131b8fab27fcafccdf9d8202a8364e1c220ca9c7a72b836",
+      "omitted_utf8_bytes": 46,
+      "original_line": 67,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-independent-candidate-critic/workspace/out/CRITIQUE.md",
+      "original_source_sha256": "a5af758fa100a8304b078246c33fb2f8bd96732a73ea1febbe76f72f5cf1e6f0",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "ccd0285ccc91ee059c4022daa97851769749b7e2b46387ffa2304298a6bc2a0d",
+      "omitted_utf8_bytes": 76,
+      "original_line": 65,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-independent-candidate-critic/workspace/out/CRITIQUE.md",
+      "original_source_sha256": "a5af758fa100a8304b078246c33fb2f8bd96732a73ea1febbe76f72f5cf1e6f0",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "be869338adf4a03ad56842dbeee1166d80b758b9aaf3068d69f2802f1c97e767",
+      "omitted_utf8_bytes": 28,
+      "original_line": 54,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-independent-candidate-critic/workspace/out/CRITIQUE.md",
+      "original_source_sha256": "a5af758fa100a8304b078246c33fb2f8bd96732a73ea1febbe76f72f5cf1e6f0",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "986a05ed6a8e1ede294161ce1a95da5c8ef6454746560584937950221f67dbfa",
+      "omitted_utf8_bytes": 74,
+      "original_line": 46,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-independent-candidate-critic/workspace/out/CRITIQUE.md",
+      "original_source_sha256": "a5af758fa100a8304b078246c33fb2f8bd96732a73ea1febbe76f72f5cf1e6f0",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "47eb6f553544d92204b586a7bf0299f8f575ea715b801cb3937da8667aa4083b",
+      "omitted_utf8_bytes": 48,
+      "original_line": 45,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-independent-candidate-critic/workspace/out/CRITIQUE.md",
+      "original_source_sha256": "a5af758fa100a8304b078246c33fb2f8bd96732a73ea1febbe76f72f5cf1e6f0",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "571af8aec9e66fdc6b77feeb0a290772f5d365c0724821e4f22588f53a585f05",
+      "omitted_utf8_bytes": 19,
+      "original_line": 40,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-independent-candidate-critic/workspace/out/CRITIQUE.md",
+      "original_source_sha256": "a5af758fa100a8304b078246c33fb2f8bd96732a73ea1febbe76f72f5cf1e6f0",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "a91d520145955c724d773590fd47533d061b79e95c4441c668d76401ffc8053f",
+      "omitted_utf8_bytes": 23,
+      "original_line": 39,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-independent-candidate-critic/workspace/out/CRITIQUE.md",
+      "original_source_sha256": "a5af758fa100a8304b078246c33fb2f8bd96732a73ea1febbe76f72f5cf1e6f0",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "b1341d34871079dcb54fe4231bdcf5556ec9a6a586f433f7db1ca88514e899d1",
+      "omitted_utf8_bytes": 31,
+      "original_line": 31,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-independent-candidate-critic/workspace/out/CRITIQUE.md",
+      "original_source_sha256": "a5af758fa100a8304b078246c33fb2f8bd96732a73ea1febbe76f72f5cf1e6f0",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "234756e1bc2cadfbe1030375b461e6d730dbeb99f57d97fad8d6a0e60e29017e",
+      "omitted_utf8_bytes": 23,
+      "original_line": 26,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-independent-candidate-critic/workspace/out/CRITIQUE.md",
+      "original_source_sha256": "a5af758fa100a8304b078246c33fb2f8bd96732a73ea1febbe76f72f5cf1e6f0",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "4a710963c5583696bdc09bcd196e82c9f9a112ee72e1e2676319503fb1659f3c",
+      "omitted_utf8_bytes": 26,
+      "original_line": 24,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-independent-candidate-critic/workspace/out/CRITIQUE.md",
+      "original_source_sha256": "a5af758fa100a8304b078246c33fb2f8bd96732a73ea1febbe76f72f5cf1e6f0",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "a91d520145955c724d773590fd47533d061b79e95c4441c668d76401ffc8053f",
+      "omitted_utf8_bytes": 23,
+      "original_line": 125,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "8e5933ac8873e16611af3f02ad6d34fb59d388f887fe17000fe797cebaacabf0",
+      "omitted_utf8_bytes": 21,
+      "original_line": 103,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "66b5dec092b032025840cca63557218278167b3438f201e808020a3d68cd134c",
+      "omitted_utf8_bytes": 51,
+      "original_line": 81,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "be869338adf4a03ad56842dbeee1166d80b758b9aaf3068d69f2802f1c97e767",
+      "omitted_utf8_bytes": 28,
+      "original_line": 81,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "ba8d6d462463d0ee8df2982db1ba2093e12eb3a33d929d6d6491f027b86fa0c4",
+      "omitted_utf8_bytes": 37,
+      "original_line": 71,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "3a82b924f32dd5d84df3b01a4cc9ef7756c9d7940001eaca380fcdaae181b217",
+      "omitted_utf8_bytes": 39,
+      "original_line": 70,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "4a710963c5583696bdc09bcd196e82c9f9a112ee72e1e2676319503fb1659f3c",
+      "omitted_utf8_bytes": 26,
+      "original_line": 66,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "02a99053c24ab6f909eb1aed0abef08390b4cb23cc679e655bf38d571c03a882",
+      "omitted_utf8_bytes": 36,
+      "original_line": 66,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "e1d6eb0af124e08c717f301e87c9a6de10b96ad71765a4dd9b051310160c7339",
+      "omitted_utf8_bytes": 29,
+      "original_line": 56,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "b57570234cffdf137131b8fab27fcafccdf9d8202a8364e1c220ca9c7a72b836",
+      "omitted_utf8_bytes": 46,
+      "original_line": 52,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "54e7e4ca13144c15fdfc0895ed8e978aaf017809be177a6c37020145b2923082",
+      "omitted_utf8_bytes": 53,
+      "original_line": 51,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "7845c8ca382c70e05c1433bdc6b2529d75b5aec8897d655cad8a08ddb531d5c2",
+      "omitted_utf8_bytes": 92,
+      "original_line": 51,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "06e0c3824d25159f99daa76b6cd45b4ff933af9713dfd900b08f411da0aaed26",
+      "omitted_utf8_bytes": 47,
+      "original_line": 48,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "5ae5b313255b0a9ddd45ed7feb26d95dd54499a81fb55377714016ca0dcf3083",
+      "omitted_utf8_bytes": 47,
+      "original_line": 48,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "0bdbbf836f0f1c061a5a7a1be9805d93f88c06713ea8009ed07ccead64381b21",
+      "omitted_utf8_bytes": 39,
+      "original_line": 48,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "8e5933ac8873e16611af3f02ad6d34fb59d388f887fe17000fe797cebaacabf0",
+      "omitted_utf8_bytes": 21,
+      "original_line": 48,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "986a05ed6a8e1ede294161ce1a95da5c8ef6454746560584937950221f67dbfa",
+      "omitted_utf8_bytes": 74,
+      "original_line": 48,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "f63221c8bf0257a6cbb36a9c2ac2c53866c679fe4d246ab541d580f47b56b14e",
+      "omitted_utf8_bytes": 45,
+      "original_line": 48,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "47eb6f553544d92204b586a7bf0299f8f575ea715b801cb3937da8667aa4083b",
+      "omitted_utf8_bytes": 48,
+      "original_line": 48,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "571af8aec9e66fdc6b77feeb0a290772f5d365c0724821e4f22588f53a585f05",
+      "omitted_utf8_bytes": 19,
+      "original_line": 47,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "a91d520145955c724d773590fd47533d061b79e95c4441c668d76401ffc8053f",
+      "omitted_utf8_bytes": 23,
+      "original_line": 47,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "4a710963c5583696bdc09bcd196e82c9f9a112ee72e1e2676319503fb1659f3c",
+      "omitted_utf8_bytes": 26,
+      "original_line": 45,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "c1ac10f51ce291098e3de1d7eb729c5cb24f1c8d4ad2f0b2d4270722e1410507",
+      "omitted_utf8_bytes": 16,
+      "original_line": 29,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "3a82b924f32dd5d84df3b01a4cc9ef7756c9d7940001eaca380fcdaae181b217",
+      "omitted_utf8_bytes": 39,
+      "original_line": 25,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "d743880deba7e8aaf44b90d811c6cad9ba2329eefb31b05d320fe9c29e6e3f35",
+      "omitted_utf8_bytes": 42,
+      "original_line": 25,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "5ceaffdec49cbdf385f7205293f203fe1129eb36e6ce7a4cf665f955e5ebd0e6",
+      "omitted_utf8_bytes": 68,
+      "original_line": 24,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "08658f69df56d0e48b34767e369b30b6452f5d593d8934a9e9959da13b8d2b6e",
+      "omitted_utf8_bytes": 32,
+      "original_line": 24,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "upstream source/code locator near original line",
+      "omitted_span_sha256": "8e5933ac8873e16611af3f02ad6d34fb59d388f887fe17000fe797cebaacabf0",
+      "omitted_utf8_bytes": 21,
+      "original_line": 24,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+      "original_source_sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    },
+    {
+      "citation_locator": "source/register citation near original line",
+      "omitted_span_sha256": "91ec996449d77dd52d2d5458d4fca028b383a5160cb07881143286682a6aa69d",
+      "omitted_utf8_bytes": 32,
+      "original_line": 18,
+      "original_source_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/UNRESOLVED_LEADS.md",
+      "original_source_sha256": "326e7769ed649a7951317d542dbb884385aa71118c727bb90f778f64b8cebf92",
+      "reason": "third-party verbatim prose/code omitted; own candidate paraphrase/claims retained"
+    }
+  ],
+  "original_span_provenance_only_no_quoted_text": true,
+  "schema": "pm.er8.control-complete-quote-omissions.v1"
+}

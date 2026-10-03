@@ -1,0 +1,38 @@
+{
+  "accepted_method_sha256": "f47542565dadd76aac9406fb49f17fac2831051c45e231bf6b1c783c7526fbec",
+  "admission_mode": "productive",
+  "canary_qualification": "passed",
+  "cleanup_projection": {
+    "native_process_group_remaining_count": 0,
+    "native_process_returned": true
+  },
+  "component_outcome": "passed",
+  "effort_effective": "max",
+  "elapsed_milliseconds": 748823,
+  "fresh_session": true,
+  "goal_started_turn": true,
+  "goal_status_final": "complete",
+  "host_groups_absent": true,
+  "inclusive_pre_activation_milliseconds": 8228,
+  "model_id": "GLM-5.3-Flash",
+  "native_goal_engine_sha256": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+  "native_quiescent": true,
+  "native_responses": 13,
+  "original_case_start_monotonic_ns": 230165429321985,
+  "original_deadline_monotonic_ns": 232507892218914,
+  "original_native_stop_monotonic_ns": 232477892218914,
+  "original_stage_start_monotonic_ns": 231307892218914,
+  "own_process_group_absent": true,
+  "provider_id": "builtin:zai-coding-plan",
+  "raw_file_hash_or_copy": false,
+  "raw_native_record_emitted": false,
+  "request_status_counts": {
+    "model_request_completed": 13
+  },
+  "requested_effort": "max",
+  "requested_model": "GLM-5.3-Flash",
+  "runtime_snapshot_sha256": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b",
+  "schema": "er8.route.native-positive-receipt.v1",
+  "stop_reason": "goal_complete",
+  "usage_requests_with_delta": 12
+}

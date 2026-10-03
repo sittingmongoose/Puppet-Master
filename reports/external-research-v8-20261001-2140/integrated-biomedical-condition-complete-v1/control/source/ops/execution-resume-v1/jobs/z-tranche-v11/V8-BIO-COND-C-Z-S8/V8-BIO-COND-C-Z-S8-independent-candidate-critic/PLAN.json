@@ -1,0 +1,69 @@
+{
+  "assembly_binding": {
+    "acceptance": {
+      "path": "LAB_ROOT/evaluation/resume-execution-v1/route-native-acceptance-bound-execution.json",
+      "sha256": "59b08282df39fe1c86e21eea06d1197a17f3ea30ef13b1569d6c34a31347a18c"
+    },
+    "case_binding": {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-independent-candidate-critic/CASE_BINDING.json",
+      "sha256": "c3975af53032ecd49a2c1f97b26985442eca8b774590b9090cc0b2ea98c37347"
+    },
+    "config": {
+      "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/root-config.json",
+      "sha256": "b649896430df176d903efadf657993a605eccc3f41a4b7f4999fbf25e713605d"
+    },
+    "lease": {
+      "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-independent-candidate-critic/LEASE.json",
+      "sha256": "f47542565dadd76aac9406fb49f17fac2831051c45e231bf6b1c783c7526fbec"
+    }
+  },
+  "boundary_acceptance": {
+    "path": "LAB_ROOT/evaluation/recovery-route-v1/execution-v2-source-acceptance.json",
+    "sha256": "9702cfd12df7ad290f19dcae6e8134ec77b2fd45f7fff293746a483c1d22c8a7"
+  },
+  "cap_seconds": 1200,
+  "case_authority": {
+    "clock": {
+      "campaign_native_cutoff_monotonic_ns": 234777000150184,
+      "case_elapsed_cap_seconds": 3600,
+      "case_id": "V8-BIO-COND-C-Z-S8",
+      "case_occupied_cap_seconds": 5400,
+      "case_start_monotonic_ns": 230165429321985,
+      "outside_native_cap_seconds": 300,
+      "stages": {
+        "v8-bio-cond-c-z-s8-independent-candidate-critic": {
+          "cap_seconds": 1200,
+          "response_cap": 160,
+          "stage_start_monotonic_ns": 231307892218914
+        }
+      }
+    },
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-independent-candidate-critic/CASE_AUTHORITY.json",
+    "sha256": "2e305fa323f7f01f54bcbe92093ea51accc0192fa09a83a2cd05d4902b7e1441"
+  },
+  "cleanup_reserve_seconds": 30,
+  "deadline_monotonic_ns": 232507892218914,
+  "enrollment_path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-independent-candidate-critic/PLAN.enrollment.json",
+  "native_qualification": "UNESTABLISHED until actual on-time cgroup quiescence and native receipt review",
+  "native_stop_monotonic_ns": 232477892218914,
+  "occupied_and_outside_cost_enforcement": "mandatory operator case/slot ledger; wrapper proves native lifetime only",
+  "owned_unit": "er8-v8-bio-cond-c-z-s8-independent-candidate-critic.service",
+  "response_cap": 160,
+  "route_acceptance": {
+    "path": "LAB_ROOT/evaluation/resume-execution-v1/route-native-acceptance-bound-execution.json",
+    "sha256": "59b08282df39fe1c86e21eea06d1197a17f3ea30ef13b1569d6c34a31347a18c"
+  },
+  "route_snapshot": {
+    "path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/SNAPSHOT.json",
+    "sha256": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b"
+  },
+  "runtime_path": "LAB_ROOT/dev/route-recovery-v2/route-assembly-v1/launch.py",
+  "schema": "er8.execution-stage.v1",
+  "stage_id": "v8-bio-cond-c-z-s8-independent-candidate-critic",
+  "stage_start_monotonic_ns": 231307892218914,
+  "v8_canary_review": {
+    "path": "LAB_ROOT/evaluation/resume-execution-v1/native-canary-v3-review-bound-execution.json",
+    "sha256": "aba3336e6475d1eb50e00b66c3804e2747d7fef38be764ec53379614cfb68fc7"
+  },
+  "v8_stage_role": "integrated"
+}

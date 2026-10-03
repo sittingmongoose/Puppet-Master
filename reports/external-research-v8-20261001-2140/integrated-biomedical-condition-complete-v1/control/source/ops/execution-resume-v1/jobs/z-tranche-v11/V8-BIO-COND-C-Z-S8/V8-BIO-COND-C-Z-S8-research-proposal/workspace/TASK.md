@@ -1,0 +1,12 @@
+# V8-BIO-COND-C-Z-S8
+
+Complete the assigned brief and thin plan through source capture/discovery → repository investigation → sandbox-plan comparison → fresh same-family independent candidate critic → bounded final correction → complete actual proposal. All three questions and five obligations are required. Use only explicitly packaged assigned inputs, same-case admitted raw source captures and frozen current artifacts; no sibling, evaluator, campaign answer or private host content. Method: `METHOD.md`. The host packages `templates/research.TASK.md`, then fresh `templates/critic.TASK.md`, then fresh `templates/correction.TASK.md`. Research ≤1200s; critic ≤1200s; correction ≤900s; fixed inclusive case wall ≤3600s, occupied ≤5400s, host overhead ≤300s. Case/stage births precede actual preparation; no reset. Host account/model/mode/route binding must be common to both arms before either case birth. This reservation is not an execution/admission receipt.
+
+
+# Research and proposal
+
+Read `inputs/BRIEF.md`, `inputs/THIN_PLAN.md` and `inputs/METHOD.md`. Complete this one declared case, using only your allowed public-source discovery/capture tools and this case's writable output directory. Select your own primary sources; no evaluator list is supplied. Compare at least two relevant existing implementations/components and investigate a real relevant issue → fix → test chain. A supplied standard alone is insufficient.
+
+Write `out/PROPOSAL.md`: a concise but complete actual research-backed plan covering all three questions and all five obligations, with exact source/version locators, scope/conditions/exceptions, concrete component choices/tradeoffs, revised implementation steps and discriminating tests. Distinguish source requirements, examples/optional behavior, engineering inference, product choices and supported corrections. Write `out/UNRESOLVED_LEADS.md` only for remaining consequential dependencies/uncertainty. Do not write host compliance, hash, cost or acquisition ledgers; the host captures those mechanically. Do not claim unexecuted validation passed.
+
+Apply the prospective method instruction in `METHOD.md`. Keep superseded propositions out of the current asserted findings. This stage has at most 1200 seconds from its fixed birth; it does not stop or reset the whole-case 3600-second clock. Candidate/critic/repair share the same assigned family/account and campaign slot caps. No helper/child/native Goal/provider launch, evaluator directory, sibling case, prior campaign output or private host access is allowed.

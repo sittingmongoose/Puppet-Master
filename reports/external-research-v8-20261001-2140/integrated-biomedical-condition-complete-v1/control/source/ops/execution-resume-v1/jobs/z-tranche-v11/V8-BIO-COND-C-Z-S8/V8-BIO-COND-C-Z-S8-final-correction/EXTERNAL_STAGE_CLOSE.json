@@ -1,0 +1,32 @@
+{
+  "case": "V8-BIO-COND-C-Z-S8",
+  "case_supervisor_role": "HOSTMANAGEMENT_STILL_ALIVE_NOT_STAGE_ACTOR",
+  "held_Popen_wait_returncode": 0,
+  "inner_quiescence": {
+    "absence_proof": "positively-enrolled-owned-cgroup-removed",
+    "enrollment": {
+      "cgroup": "/user.slice/user-USER_ID.slice/user@USER_ID.service/app.slice/er8-v8-bio-cond-c-z-s8-final-correction.service",
+      "enrolled_monotonic_ns": 232059368127582,
+      "original_deadline_monotonic_ns": 232957682424154,
+      "owned_unit": "er8-v8-bio-cond-c-z-s8-final-correction.service",
+      "schema": "er8.execution.enrollment.v1"
+    },
+    "inclusive_native_lifetime_established": true,
+    "native_goal_or_quality_qualification": "UNESTABLISHED; independent native receipt review mandatory",
+    "occupancy_disposition": "releasable-native-only",
+    "original_deadline_monotonic_ns": 232957682424154,
+    "owned_cgroup": "/user.slice/user-USER_ID.slice/user@USER_ID.service/app.slice/er8-v8-bio-cond-c-z-s8-final-correction.service",
+    "owned_native_quiescent": true,
+    "owned_unit": "er8-v8-bio-cond-c-z-s8-final-correction.service",
+    "quiescence_observed_monotonic_ns": 232541184490093,
+    "schema": "er8.execution.quiescence.v1"
+  },
+  "job": "V8-BIO-COND-C-Z-S8-final-correction",
+  "original_deadline_monotonic_ns": 232957682424154,
+  "schema": "er8.integrated.external-stage-close.v1",
+  "stage_actor_exit_observed_monotonic_ns": 232541092845905,
+  "stage_actor_exited": true,
+  "stage_actor_group_absent": true,
+  "stage_actor_pgid": 2874301,
+  "stage_actor_pid": 2874301
+}

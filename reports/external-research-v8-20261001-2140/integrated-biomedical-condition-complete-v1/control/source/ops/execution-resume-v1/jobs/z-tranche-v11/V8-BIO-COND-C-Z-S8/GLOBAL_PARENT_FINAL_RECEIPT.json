@@ -1,0 +1,37 @@
+{
+  "actual_case_end_monotonic_ns": 232541929854540,
+  "actual_case_wall_seconds": 2376.500532555,
+  "actual_final_proposal": {
+    "bytes": 36899,
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-final-correction/workspace/out/FINAL_PROPOSAL.md",
+    "sha256": "1adfc22625ada079d117d918797c4ef06842fc4009d6b8ea33663d9b7f8e0e26"
+  },
+  "actual_nonoverlapping_outside_native_seconds": 9.702711419,
+  "actual_occupied_stage_lease_seconds": 2375.9142928123474,
+  "all_case_execution_closed_before_cutoff": true,
+  "case": "V8-BIO-COND-C-Z-S8",
+  "generated_usage": "UNKNOWN except observed monotonic lower bounds",
+  "held_finalizer_pid": 2878958,
+  "held_finalizer_returncode": 0,
+  "native_owned_intervals_monotonic_ns": [
+    [
+      230168956912250,
+      231307099297527
+    ],
+    [
+      231309873777060,
+      232057016221675
+    ],
+    [
+      232059222154748,
+      232540735145992
+    ]
+  ],
+  "original_case_deadline_monotonic_ns": 233765429321985,
+  "original_case_start_monotonic_ns": 230165429321985,
+  "schema": "er8.integrated.global-parent-final-receipt.v1",
+  "semantic_quality": "PENDING_INDEPENDENT_EVALUATION",
+  "source_semantic_acquisition": "UNKNOWN",
+  "subsequent_global_metadata_and_publication_cost": "SEPARATE_ROOT_MANAGEMENT",
+  "whole_case_occupied_cap_seconds": 5400
+}

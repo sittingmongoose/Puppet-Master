@@ -1,0 +1,46 @@
+{
+  "goal_started_turn": true,
+  "native_quiescent": true,
+  "own_process_group_absent": true,
+  "native_responses": 18,
+  "usage_requests_with_delta": 17,
+  "goal_status_final": "complete",
+  "stop_reason": "goal_complete",
+  "provider_id": "builtin:zai-coding-plan",
+  "model_id": "GLM-5.3-Flash",
+  "effort_effective": "max",
+  "schema": "er8.route.native-positive-receipt.v1",
+  "admission_mode": "productive",
+  "runtime_snapshot_sha256": "42198fc715f0eb78eff99d0bb9369a898bdd4a68fc7e587027310fe927299d2b",
+  "accepted_method_sha256": "da0ad2da45b14d85740b4ee030eebe1cbf3aff7e7d19b07c4d07d1358cd9deef",
+  "requested_model": "GLM-5.3-Flash",
+  "requested_effort": "max",
+  "native_goal_engine_sha256": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31",
+  "fresh_session": true,
+  "original_case_start_monotonic_ns": 230165434533059,
+  "original_stage_start_monotonic_ns": 230165434533059,
+  "original_native_stop_monotonic_ns": 231335434533059,
+  "original_deadline_monotonic_ns": 231365434533059,
+  "elapsed_milliseconds": 891264,
+  "inclusive_pre_activation_milliseconds": 9047,
+  "host_groups_absent": true,
+  "canary_qualification": "passed",
+  "component_outcome": "passed",
+  "request_status_counts": {
+    "model_request_completed": 18
+  },
+  "activation": {
+    "schema": "er8.route.activation-positive.v1",
+    "native_activation_observed": true,
+    "goal_started_turn": true,
+    "native_activation_absent_proof": false,
+    "observed_activation_epoch": 1791008428,
+    "observed_activation_monotonic_ns": 230174482083751
+  },
+  "cleanup_projection": {
+    "native_process_returned": true,
+    "native_process_group_remaining_count": 0
+  },
+  "publication_projection_scope": "Positive public scalar/quantified receipt metadata only; not complete original proof. No local/startup context, raw native structure, conversation, tool arguments or source delivery body.",
+  "full_usage": "UNKNOWN; original usage totals excluded from this publication"
+}

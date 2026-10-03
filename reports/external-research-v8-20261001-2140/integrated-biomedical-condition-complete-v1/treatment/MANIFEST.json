@@ -1,0 +1,32 @@
+{
+  "schema": "er8.biocond.treatment-complete.public-manifest.v1",
+  "case": "V8-BIO-P-Z-S8",
+  "stages": [
+    "research-proposal",
+    "independent-candidate-critic",
+    "final-correction"
+  ],
+  "operational_pipeline": "COMPLETE",
+  "semantic_quality": "PENDING_INDEPENDENT_EVALUATION",
+  "source_semantic_acquisition": "UNKNOWN",
+  "full_usage": "UNKNOWN",
+  "selected_input_count": 75,
+  "candidate_output_count": 5,
+  "capture_JSON_files_exported": 0,
+  "unavailable_unselected_template_names": 59,
+  "source_evidence_scope": "INCOMPLETE",
+  "root_native_starts_at_selection": 65,
+  "root_operational_whole_pipelines": 14,
+  "root_operational_pairs": 7,
+  "reviewed_pairs": 6,
+  "failed_screens": 11,
+  "holds": 1,
+  "full_PASS": 0,
+  "winner": "NONE",
+  "holdouts_released": 0,
+  "output_lower_bound": 1719680,
+  "occupied_seconds": 48812.904603004456,
+  "inventory_original_sha256": "b549f9b55a93d01cb8139474f164af5e9170b1e0843b4b7129ba269fcb111fd9",
+  "immutable_positive_selection_sha256": "f66be5f978f037a94f6f9e7b1644f46fdbe0f87aa70522485711d40fbb62ab92",
+  "historical_correction": "06:48 inconsistent prose preserved; separate06:50 correction retained."
+}

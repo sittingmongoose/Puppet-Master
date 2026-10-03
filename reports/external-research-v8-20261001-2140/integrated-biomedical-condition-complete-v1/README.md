@@ -1,0 +1,7 @@
+# Completed condition-aware biomedical pair
+
+Both three-stage pipelines completed with three fresh native Goals, wrapper exit 0, positive stage and case closure, held waits 0, and verified final artifacts. [Control](control/README.md) and [treatment](treatment/README.md) contain projected proposals, critiques, inputs, exact original pins, positive operational receipts and offline checks. These frozen children record independent quality as PENDING at selection; later quality findings are published separately.
+
+The root fixed observation records 65 native starts across 67 admissions, 48,812.904603 occupied seconds and a generated-output lower bound of 1,719,680. This brings operational completion to 14 pipelines / 7 matched pairs; six pairs had completed independent review at selection. Full usage, billed cost and external load remain UNKNOWN. Operational completion does not establish source accuracy, a winner or quality-qualified efficiency.
+
+Original private source hashes and public projection hashes are separate. Third-party quotations are omitted with provenance; unavailable template names are unselected and do not prove captures absent. Existing failed outcomes, costs, the inconsistent 06:48 root prose and its literal 06:50 correction remain preserved. Each child checker verifies public bytes only. Native execution requires the original host prerequisites; the exports do not certify semantic acquisition or comprehensive compliance.

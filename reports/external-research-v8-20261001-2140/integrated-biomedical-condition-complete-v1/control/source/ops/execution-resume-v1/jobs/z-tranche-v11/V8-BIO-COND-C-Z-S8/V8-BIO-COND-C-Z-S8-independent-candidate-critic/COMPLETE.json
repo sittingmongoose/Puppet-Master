@@ -1,0 +1,25 @@
+{
+  "case": "V8-BIO-COND-C-Z-S8",
+  "fresh_session": true,
+  "host_groups_absent": true,
+  "job": "V8-BIO-COND-C-Z-S8-independent-candidate-critic",
+  "last_charged_host_monotonic_ns": 232057175973960,
+  "lease_release_deferred": true,
+  "lease_released_by_actor": false,
+  "native_goal_activation_observed": true,
+  "native_goal_status": "complete",
+  "native_quiescence_observed_monotonic_ns": 232057016221675,
+  "native_responses": 13,
+  "native_wrapper_launch_monotonic_ns": 231309873777060,
+  "original_case_start_monotonic_ns": 230165429321985,
+  "original_deadline_monotonic_ns": 232507892218914,
+  "required_artifact": {
+    "bytes": 15275,
+    "path": "LAB_ROOT/ops/execution-resume-v1/jobs/z-tranche-v11/V8-BIO-COND-C-Z-S8/V8-BIO-COND-C-Z-S8-independent-candidate-critic/workspace/out/CRITIQUE.md",
+    "sha256": "a5af758fa100a8304b078246c33fb2f8bd96732a73ea1febbe76f72f5cf1e6f0"
+  },
+  "schema": "er8.integrated.stage-deferred-close.v1",
+  "source_semantic_acquisition": "UNKNOWN",
+  "stage_start_monotonic_ns": 231307892218914,
+  "wrapper_returncode": 0
+}
