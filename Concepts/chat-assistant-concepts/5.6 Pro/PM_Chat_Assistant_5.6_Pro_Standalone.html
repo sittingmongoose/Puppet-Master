@@ -17181,12 +17181,13 @@ svg:where(.nx-z0) .nx-p { animation: none; }
    reached the glyph: on light themes (no hover halo) a hovered control was pixel-identical to rest once its act ended,
    and on dark ones the .30 halo was a grey blur round a dim tube. Now light themes light by ink alone (G1: about 2.5:1
    rising to about 15:1) and the dark halo follows the brighter ink. Hosts that carry a tone or a selection keep their
-   ink (an active or pinned toggle, a danger or warning row or button, a primary chip, Orbit's core, a [data-tone] host), and so
+   ink (an active, pressed, checked or pinned toggle, a danger or warning row or button, a primary chip, Orbit's core, a
+   [data-tone] host; NieR inverts a pressed filter to paper on ink, which the text ink would blank), and so
    does a glyph on a tinted tile (.work-output-icon, .event-icon) or one wearing a tone class (nx-t-*, also zero
    specificity, so it is excluded rather than outranked); any rule that inks a glyph through --nx-ink at a specificity
    above zero (the Fast bolt, a NieR cursor bar) still wins. neon-verify 17 holds both. */
-:where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .af-chip-pending, .orbit-node, .wa-disc, .rail8-item, .active, .is-on, .is-pinned, [class*="danger"], [class*="warn"], .primary-button, .primary, .orbit-core, [data-tone])) > svg:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [class*="nx-t-"])),
-:where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .af-chip-pending, .orbit-node, .wa-disc, .rail8-item, .active, .is-on, .is-pinned, [class*="danger"], [class*="warn"], .primary-button, .primary, .orbit-core, [data-tone])) > :where(:not(button, summary, [role="button"], [data-action], .work-output-icon, .event-icon)) > svg:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [class*="nx-t-"])) {
+:where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .af-chip-pending, .orbit-node, .wa-disc, .rail8-item, .active, .is-on, .is-pinned, [aria-pressed="true"], [aria-checked="true"], [aria-selected="true"], [class*="danger"], [class*="warn"], .primary-button, .primary, .orbit-core, [data-tone])) > svg:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [class*="nx-t-"])),
+:where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .af-chip-pending, .orbit-node, .wa-disc, .rail8-item, .active, .is-on, .is-pinned, [aria-pressed="true"], [aria-checked="true"], [aria-selected="true"], [class*="danger"], [class*="warn"], .primary-button, .primary, .orbit-core, [data-tone])) > :where(:not(button, summary, [role="button"], [data-action], .work-output-icon, .event-icon)) > svg:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [class*="nx-t-"])) {
   --nx-ink: var(--text);
 }
 /* Filled chips (primary buttons) already carry their own fill: the act plays, the halo stays off. (Send/Stop is
