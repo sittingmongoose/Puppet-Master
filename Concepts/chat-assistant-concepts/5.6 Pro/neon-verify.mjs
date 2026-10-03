@@ -1605,7 +1605,7 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
         await p.mouse.move(5, h - 5);
         for (const pos of ['top', 'bottom']) {
           await p.evaluate(pos => { const t = document.querySelector('.transcript'); t.scrollTop = pos === 'top' ? 0 : t.scrollHeight; t.dispatchEvent(new Event('scroll')); }, pos);
-          await p.waitForTimeout(450);
+          await p.waitForTimeout(650);
           const r = await p.evaluate(pos => {
             const pod = document.getElementById('o55np-pod');
             if (!pod || getComputedStyle(pod).display === 'none') return { nopod: true };
