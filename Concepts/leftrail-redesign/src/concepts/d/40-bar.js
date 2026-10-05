@@ -31,12 +31,16 @@ function mountBar(barEl) {
     tile.classList.add('is-on');
     if (!animate || !wasOn || !from || from === to || PMR.motion.reduced()) { last = icon; return; }
     const f = fam();
+    if (f === 'nier') {
+      /* NieR cuts: the ink tile is simply on the new icon, with one hard blink */
+      tile.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 140, easing: 'steps(2, end)' });
+      last = icon; return;
+    }
     const opts = {
       basic: { duration: 260, easing: 'cubic-bezier(.2, .8, .2, 1)' },
       friendly: { duration: 460, easing: 'cubic-bezier(.34, 1.5, .5, 1)' },
       glass: { duration: 520, easing: 'cubic-bezier(.2, 1.1, .3, 1)' },
       retro: { duration: 220, easing: 'steps(4, end)' },
-      nier: { duration: 160, easing: 'steps(2, end)' },
     }[f] || { duration: 260, easing: 'ease-out' };
     const frames = f === 'glass'
       ? [{ transform: from }, { transform: from.replace(/\)$/, ') scaleY(1.22)'), offset: .35 }, { transform: to }]

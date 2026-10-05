@@ -11,7 +11,7 @@ const FAM_MOTION = {
   friendly: { dy: 10, dx: 18, dur: 420, step: 30, ease: 'cubic-bezier(.34, 1.45, .5, 1)', scale: .985 },
   glass:    { dy: 9,  dx: 16, dur: 480, step: 30, ease: 'cubic-bezier(.16, 1, .3, 1)', blur: 5 },
   retro:    { dy: 4,  dx: 8,  dur: 200, step: 36, ease: 'steps(3, end)' },
-  nier:     { dy: 0,  dx: 0,  dur: 300, step: 34, ease: 'cubic-bezier(.7, 0, .2, 1)', wipe: true },
+  nier:     { dy: 0,  dx: 0,  dur: 210, step: 24, ease: 'cubic-bezier(.45, 0, .15, 1)', wipe: true },
 };
 const reduced = () => PMR.motion.reduced();
 const fam = () => (PMR.motion.nier() ? 'nier' : PMR.motion.family());

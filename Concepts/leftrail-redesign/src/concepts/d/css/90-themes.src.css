@@ -1,0 +1,55 @@
+/* ---- 11. Family accents ----------------------------------------------------------------------------------------------
+   The geometry and the type are shared; each family keeps one signature. Basic is flat and crisp. Friendly lifts its
+   shelves a touch. Glass keeps its violet liquid tab ink and frosted plates. Retro casts hard offset shadows. NieR is
+   ink on paper with hairlines and YoRHa capitals. */
+§{friendly} .sh-shelf { box-shadow: 0 1px 2px rgba(0, 0, 0, .10), 0 4px 14px -8px color-mix(in srgb, var(--cat, var(--accent-blue)) 40%, transparent) !important; }
+§{friendly,light} .sh-shelf { box-shadow: 0 1px 2px rgba(80, 60, 110, .06), 0 6px 16px -10px color-mix(in srgb, var(--cat, var(--accent-blue)) 45%, transparent) !important; }
+§{glass,dark} .pm-segtab-ink {
+  background:
+    linear-gradient(#B5A4FF, #B5A4FF) 0 0 / 100% 1.5px no-repeat,
+    linear-gradient(180deg, color-mix(in srgb, #6A4BE5 72%, #3A2470) 0%, color-mix(in srgb, #6A4BE5 48%, #241450) 100%) !important;
+  box-shadow: inset 0 0 0 1px rgba(181, 164, 255, .35), 0 4px 14px -4px rgba(106, 75, 229, .55) !important;
+}
+§{glass,light} .pm-segtab-ink {
+  background:
+    linear-gradient(#C9BCFF, #C9BCFF) 0 0 / 100% 1.5px no-repeat,
+    linear-gradient(180deg, color-mix(in srgb, #6A4BE5 42%, #F2EEFF) 0%, color-mix(in srgb, #6A4BE5 28%, #E4DCF8) 100%) !important;
+  box-shadow: inset 0 0 0 1px rgba(106, 75, 229, .25), 0 3px 10px -4px rgba(106, 75, 229, .35) !important;
+}
+§{glass} .pm-segtab-item.active svg { color: currentColor; }
+§{glass,dark} .pm-segtab-item.active { color: #fff !important; }
+§{glass,light} .pm-segtab-item.active { color: #2A1848 !important; }
+§{glass} .sh-shelf { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08) !important; }
+§{retro} .sh-shelf { box-shadow: 2px 2px 0 color-mix(in srgb, var(--cat, var(--accent-blue)) 38%, transparent) !important; }
+§{retro} .pm-btn { box-shadow: 1px 1px 0 var(--d-ctl-line) !important; }
+§{retro} .pm-btn:active { box-shadow: none !important; transform: translate(1px, 1px) !important; }
+§{retro} .pm-segtab::before { box-shadow: inset 0 0 0 1px var(--d-ctl-line), 2px 2px 0 var(--d-ctl-line); }
+§{retro} .pm-segtab-ink { background: color-mix(in srgb, var(--accent-primary) 22%, var(--surface)) !important; box-shadow: inset 0 0 0 1px var(--accent-primary) !important; }
+§{retro} .sh-banner > .sh-bico { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 50%, transparent); }
+/* NieR: hairline boxes, the ink band as the active tab, capitals on headers when that part is on */
+§{nier} .sh-shelf { border-color: var(--d-line-2) !important; }
+§{nier} .pm-segtab-ink { background: var(--o55-nier-ink) !important; box-shadow: none !important; }
+§{nier} .pm-segtab-item.active, §{nier} .pm-segtab-item.active svg { color: var(--o55-nier-on-ink) !important; }
+§{nier} .pm-segtab::before { box-shadow: inset 0 0 0 1px var(--d-line-2); background: transparent; }
+§{nier} .sh-banner > .sh-bico { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+§{nier} .pm-btn { border-color: var(--d-line-2) !important; background: transparent !important; }
+§{nier} .pm-btn:hover { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; }
+§{nier} .pm-btn:hover svg { color: inherit !important; }
+§{nier} .pm-btn-primary { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; }
+§R[data-o55-nier="on"][data-o55-nier-parts~="headers"] :is(#panel-files,#panel-source,#panel-docker) :is(.sh-hlabel, .sh-title, .pm-sumcard-h, .pm7-post-card-title) {
+  text-transform: uppercase !important; letter-spacing: .14em !important;
+}
+
+/* ---- 12. Reduced motion: nothing in the skin moves --------------------------------------------------------------- */
+§R[data-motion="reduced"] :is(#panel-files,#panel-source,#panel-docker) *, §R[data-reduced-motion="1"] :is(#panel-files,#panel-source,#panel-docker) *,
+§R[data-motion="reduced"] #activityBar *, §R[data-reduced-motion="1"] #activityBar * {
+  transition: none !important; animation: none !important;
+}
+§R[data-motion="reduced"] .d-gl::after, §R[data-reduced-motion="1"] .d-gl::after { display: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  §R :is(#panel-files,#panel-source,#panel-docker) *, §R #activityBar *, §R #activityBar .icon, §R #activityBar .icon .symbol { transition: none !important; animation: none !important; }
+  §R .d-gl::after { display: none !important; }
+  §R .d-gl .d-spin { animation: none !important; }
+}
+§R[data-motion="reduced"] .d-gl .d-spin, §R[data-reduced-motion="1"] .d-gl .d-spin { animation: none !important; }
+§R[data-motion="reduced"] #activityBar .icon, §R[data-reduced-motion="1"] #activityBar .icon { transition: none !important; }

@@ -1,0 +1,72 @@
+/* ---- 3. Shelves: the coloured boxes that group the rail -------------------------------------------------------------
+   The shelf is the only box. Its head is a band flush with the shelf's top (the shelf clips, so the band always has
+   exactly the shelf's corners); a collapsed shelf is just its head, with no dead strip under it. Rows inside sit one
+   inset from the edge and carry the inner radius, so every hover and open fill is concentric with the shelf. */
+§ .sh-shelf {
+  position: relative; margin: 0 0 var(--d-g) !important; padding: 0 !important;
+  border-radius: var(--d-R) !important; overflow: clip !important; box-shadow: none !important;
+  background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-fill), var(--surface)) !important;
+  border: 1px solid color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-line), transparent) !important;
+}
+§{glass} .sh-shelf { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-fill), transparent) !important; }
+§ .sh-shelf:last-child { margin-bottom: 0 !important; }
+§ .sh-shelf > .sh-head {
+  position: relative; display: flex !important; align-items: center; gap: var(--d-gap); flex-wrap: nowrap;
+  min-height: var(--d-head-h); margin: 0 !important; padding: 0 calc(var(--d-in) + var(--d-pad)) !important;
+  border-radius: 0 !important; box-shadow: none !important;
+  background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-head), transparent) !important;
+  transition: background-color var(--d-t1) var(--d-ease);
+}
+§ .sh-shelf > .sh-head[data-collapse] { cursor: pointer; }
+§ .sh-shelf > .sh-head[data-collapse]:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) calc(var(--d-shelf-head) + 6%), transparent) !important; }
+§ .sh-shelf > .sh-head:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -3px; }
+§ .sh-head > .sh-accchev { width: 10px; height: 10px; margin: 0 -1px 0 -1px; color: var(--d-text-2); }
+§ .sh-head > .sh-hico {
+  width: 14px !important; height: 14px !important; flex: none; border-radius: 0 !important; background: none !important;
+  color: var(--cat, var(--accent-blue)) !important; box-shadow: none !important;
+}
+§ .sh-head > .sh-hico svg, § .sh-head > .sh-hico .pm-ico { width: 13px !important; height: 13px !important; }
+§ .sh-head > .sh-hlabel {
+  flex: 0 1 auto; min-width: 0; font: var(--d-w-label) var(--d-fs-label)/1.3 var(--display-font, var(--body-font)) !important;
+  letter-spacing: 0 !important; text-transform: none !important; color: var(--d-text) !important;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+/* counts: plain numbers, right-aligned in one column across shelves; phrases are words, never a capsule */
+§ .sh-head > .sh-hcount, § .sh-head > .sh-hstatus {
+  flex: 0 0 auto; margin-left: auto !important; max-width: none !important; min-width: 0; padding: 0 !important;
+  border: 0 !important; border-radius: 0 !important; background: none !important; box-shadow: none !important;
+  font: 500 var(--d-fs-meta)/1.3 var(--body-font) !important; letter-spacing: 0 !important; font-variant-numeric: tabular-nums;
+  color: var(--d-text-2) !important; white-space: nowrap; overflow: visible !important; text-overflow: clip !important;
+}
+§ .sh-hcount .hc-abbr { display: none !important; }
+§ .sh-hcount .hc-full { display: inline !important; }
+§ .sh-head > .pm-minibtn { margin-right: -4px; }
+§ .sh-head > .sh-hcount + .pm-minibtn { margin-left: 2px; }
+/* a head whose summary does not fit beside its label stacks it under the label instead of shortening it */
+§ .sh-shelf > .sh-head[data-d-stack] { flex-wrap: wrap; row-gap: 1px; padding-top: 7px !important; padding-bottom: 8px !important; }
+§ .sh-head[data-d-stack] > .sh-hcount {
+  order: 9; flex: 1 1 100%; margin-left: var(--d-stack-x, 24px) !important; white-space: normal; overflow-wrap: anywhere;
+  color: var(--d-text-2) !important; text-align: left;
+}
+
+/* bodies: the inset is the only padding; a collapsed body is zero high */
+§ .sh-shelf > .sh-body { padding: var(--d-in) !important; }
+§ .sh-shelf > .sh-accb, § .sh-shelf > .sh-body.sh-accb { padding: 0 var(--d-in) !important; }
+§ .sh-shelf > .sh-accb > .pm-acc-inner > .sh-body { padding: 0 !important; }
+§ .sh-shelf > .sh-accb > .pm-acc-inner > :first-child { margin-top: var(--d-in); }
+§ .sh-shelf > .sh-accb > .pm-acc-inner > :last-child { margin-bottom: var(--d-in); }
+§ [data-acc] > :is(.sh-accb, .sh-wt-b) {
+  transition: grid-template-rows var(--d-t3) var(--d-spring), opacity var(--d-t2) var(--d-ease) !important;
+}
+§ [data-acc]:not(.open) > :is(.sh-accb, .sh-wt-b) { transition: grid-template-rows var(--d-t2) var(--d-ease), opacity var(--d-t1) var(--d-ease) !important; }
+§ .sh-accchev, § .sh-wt-h > .chev, § .fm-cchev, § .fm-chevron {
+  transition: transform var(--d-t2) var(--d-spring) !important;
+}
+/* notes and footnotes read as quiet text, not boxes */
+§ .pm-footnote { padding: 2px 2px 8px !important; font: 400 var(--d-fs-small)/1.45 var(--body-font) !important; color: var(--d-text-3) !important; letter-spacing: 0; }
+§ .sh-shelf .pm-footnote { padding: 2px var(--d-pad) 6px !important; }
+§ .pm-note {
+  margin: 4px 0 6px !important; padding: 8px var(--d-pad) !important; gap: 8px; border-radius: var(--d-r) !important;
+  border: 0 !important; background: color-mix(in srgb, var(--d-warn) 10%, transparent) !important;
+  font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; color: var(--d-text) !important;
+}

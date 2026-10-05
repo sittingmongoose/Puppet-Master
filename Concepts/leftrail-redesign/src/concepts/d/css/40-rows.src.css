@@ -1,0 +1,83 @@
+/* ---- 4. Rows -----------------------------------------------------------------------------------------------------------
+   Rows are flat inside their shelf (no card inside a card). A row's hover fill and an open item's fill are drawn on the
+   row's own box: inset by --d-in from the shelf edge, corners --d-r. Names 12.5, facts 11.5, numbers tabular. */
+§ :is(.sh-chg, .sh-ctr, .sh-wt, .sh-commit, .fm-changeitem, .fm-openitem) {
+  position: relative; margin: 0 0 2px !important; padding: 0 !important; overflow: clip;
+  border: 0 !important; border-radius: var(--d-r) !important; background: transparent !important; box-shadow: none !important;
+  transition: background-color var(--d-t2) var(--d-ease);
+}
+§ :is(.sh-chg, .sh-ctr, .sh-wt, .sh-commit, .fm-changeitem, .fm-openitem):last-child { margin-bottom: 0 !important; }
+§ :is(.sh-chg, .sh-ctr, .sh-wt, .sh-commit, .fm-changeitem, .fm-openitem).open {
+  background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-open), transparent) !important;
+}
+§ :is(.sh-chg-h, .sh-ctr-h, .sh-wt-h, .sh-commit-h, .fm-changerow, .fm-openrow, .sh-row) {
+  min-height: var(--d-row-h); margin: 0 !important; padding: 4px var(--d-pad) !important; gap: var(--d-gap);
+  border-radius: var(--d-r) !important; background: transparent; box-shadow: none !important; transform: none !important;
+  transition: background-color var(--d-t1) var(--d-ease);
+}
+§ :is(.sh-chg-h, .sh-ctr-h, .sh-wt-h, .sh-commit-h, .fm-changerow, .fm-openrow, .sh-row:not(.flat)):hover {
+  background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important;
+}
+§ .open > :is(.sh-chg-h, .sh-ctr-h, .sh-wt-h, .sh-commit-h, .fm-changerow, .fm-openrow) { border-radius: var(--d-r) var(--d-r) 0 0 !important; }
+§ :is(.sh-chg-h, .sh-ctr-h, .sh-wt-h, .sh-commit-h, .fm-changerow, .fm-openrow, .sh-stage-h):focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+§ :is(.sh-chg-h, .sh-ctr-h, .fm-changerow, .fm-openrow, .sh-row) { display: flex !important; align-items: center; }
+§ :is(.sh-chg, .sh-ctr, .sh-wt, .sh-commit, .fm-changeitem, .fm-openitem) > :is(.sh-accb, .sh-wt-b) {
+  padding: 0 var(--d-pad) 0 calc(var(--d-pad) + 13px) !important;
+}
+§ :is(.sh-chg, .sh-ctr, .sh-wt, .sh-commit, .fm-changeitem, .fm-openitem) > :is(.sh-accb, .sh-wt-b) > .pm-acc-inner > :last-child { margin-bottom: 9px !important; }
+§ :is(.sh-chg, .sh-ctr, .sh-wt, .sh-commit, .fm-changeitem, .fm-openitem) > :is(.sh-accb, .sh-wt-b) > .pm-acc-inner > :first-child { margin-top: 1px !important; }
+§ .sh-chg-h > .sh-accchev, § .sh-ctr-h > .sh-accchev, § .sh-wt-h > .chev { width: 9px !important; height: 9px !important; color: var(--d-text-3) !important; flex: none; }
+
+/* text */
+§ .sh-main { display: flex !important; flex-direction: column; gap: 1px; min-width: 0; flex: 1 1 auto; }
+§ .sh-name {
+  display: flex !important; align-items: center; gap: var(--d-gap); min-width: 0;
+  font: var(--d-w-name) var(--d-fs-name)/var(--d-lh) var(--body-font) !important; letter-spacing: 0 !important; color: var(--d-text) !important;
+}
+§ :is(.sh-name.sh-mono, .sh-nm-txt.sh-mono, .sh-branch) { font-family: var(--mono-font) !important; font-size: var(--d-fs-mono) !important; font-weight: 500 !important; }
+§ .sh-name > .sh-nm-txt { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+§ .sh-name > :is(.pm-gs, .pm-chip, .sh-imgtag) { flex: none; }
+§ .sh-name > .pm-gs { order: -1; min-width: 12px !important; justify-content: flex-start !important; }
+§ .sh-meta > .d-dir { font-family: var(--mono-font); font-size: var(--d-fs-small); color: var(--d-text-2); }
+§ .sh-meta > .d-dir::after { content: ' \00B7  '; font-family: var(--body-font); color: var(--d-text-3); }
+§ .sh-meta, § :is(.sh-run-h, .sh-ctr-h) .sh-meta {
+  display: block !important; flex: none !important; max-width: none !important;
+  font: 400 var(--d-fs-meta)/1.35 var(--body-font) !important; letter-spacing: 0 !important; color: var(--d-text-3) !important;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+§ .sh-ds { flex: none; display: inline-flex; gap: 4px; font: 500 var(--d-fs-small)/1.3 var(--mono-font) !important; font-variant-numeric: tabular-nums; white-space: nowrap; }
+§ .sh-ds .add { color: var(--d-ok) !important; font-weight: 600 !important; }
+§ .sh-ds .del { color: var(--d-fail) !important; font-weight: 600 !important; }
+§ .pm-rmetric { font: 500 var(--d-fs-small)/1.3 var(--mono-font) !important; color: var(--d-text-2) !important; font-variant-numeric: tabular-nums; }
+§R .side-panel-slot[data-wtier="mid"] :is(#panel-docker) .pm-rmetric { display: inline-flex; }
+
+/* key / value facts: label column, value column, values wrap instead of clipping */
+§ .sh-kv {
+  display: grid !important; grid-template-columns: minmax(48px, max-content) minmax(0, 1fr); column-gap: 6px; align-items: baseline;
+  width: 100%; padding: 3px 0 !important; overflow: visible !important;
+}
+§ .sh-kv > .sh-k { font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; color: var(--d-text-3) !important; white-space: nowrap; }
+§ .sh-kv > .sh-v {
+  font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; color: var(--d-text-2) !important; text-align: left !important;
+  white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere;
+}
+§ .sh-kv > .sh-v.sh-mono { font-family: var(--mono-font) !important; font-size: var(--d-fs-mono) !important; }
+§ .sh-shelf > .sh-body > .sh-kv, § .sh-shelf > .sh-accb > .pm-acc-inner > .sh-kv { padding: 3px var(--d-pad) !important; }
+§ .sh-kvwrap { padding: 3px 0 !important; gap: 4px 8px !important; }
+§ .sh-kvwrap > .sh-k { font: 400 var(--d-fs-small)/1.45 var(--mono-font) !important; color: var(--d-text-2) !important; }
+§ .sh-kvwrap > .sh-k:not(.sh-mono) { font-family: var(--body-font) !important; font-size: var(--d-fs-meta) !important; color: var(--d-text-3) !important; }
+§ .sh-acts { display: flex !important; flex-wrap: wrap; gap: 6px !important; margin-top: 8px !important; }
+§ .sh-hunkprev { padding: 2px 0 0 !important; font: 400 var(--d-fs-small)/1.45 var(--mono-font) !important; color: var(--d-text-3) !important; }
+§ .sh-cfl { gap: 10px !important; padding: 2px 0 !important; font: 400 var(--d-fs-small)/1.45 var(--mono-font) !important; }
+§ .sh-cfl .f { color: var(--d-text-2) !important; }
+
+/* meters: a hairline track, a rounded fill, tabular values */
+§ .pm-occ { display: grid !important; grid-template-columns: 4.6em minmax(40px, 1fr) 3em; align-items: center; gap: 7px !important; padding: 3px 0 !important; font: 400 var(--d-fs-meta)/1.3 var(--body-font) !important; }
+§ .pm-occ .nm { max-width: none !important; min-width: 0; color: var(--d-text-3) !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+§ .pm-occ .bar { height: 4px !important; border-radius: 2px !important; background: var(--d-line) !important; min-width: 40px; }
+§ .pm-occ .bar i { border-radius: 2px !important; background: var(--d-ok) !important; }
+§ .pm-occ .bar.warn i { background: var(--d-warn) !important; }
+§ .pm-occ .bar.err i { background: var(--d-fail) !important; }
+§ .pm-occ .v { min-width: 3.2em; text-align: right; font: 500 var(--d-fs-small)/1.3 var(--mono-font) !important; color: var(--d-text-2) !important; font-variant-numeric: tabular-nums; }
+§{retro} .pm-occ .bar, §{retro} .pm-occ .bar i, §{nier} .pm-occ .bar, §{nier} .pm-occ .bar i { border-radius: 0 !important; }
+§ .d-wrap { white-space: normal !important; overflow-wrap: anywhere; text-overflow: clip !important; }

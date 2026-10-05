@@ -232,6 +232,12 @@ def lint() -> list[str]:
     for d in concept_dirs():
         if not any(d.glob('*.js')):
             problems.append(f'concept {d.name} has no script')
+    # concept D's stylesheet is generated from src/concepts/d/css/*.src.css (selector macros, see build_d_css.py)
+    if (CONCEPTS_SRC / 'd' / 'css').is_dir() and (ONLY is None or 'd' in ONLY):
+        sys.path.insert(0, str(TOOLS))
+        import build_d_css  # noqa: E402
+        if build_d_css.stale():
+            problems.append('src/concepts/d/d.css is stale: run tools/build_d_css.py')
     return problems
 
 

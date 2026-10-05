@@ -1,0 +1,57 @@
+/* ---- 5. Status: shape + colour + word, never a capsule ------------------------------------------------------------------
+   Every chip, pill and state badge of the shell keeps its element (other code reads them) and loses its capsule. The
+   skin's JS tags it data-d-st="<state>" and puts a 12 px glyph (.d-gl) in front of the word. Dots become glyphs too:
+   a filled dot is live, a ring is stopped, a dashed ring is pending, a triangle is a warning, a cross is a failure. */
+§ :is(.pm-chip, .sh-pill, .pm7-post-state, .pm-chipbtn.d-tag) {
+  display: inline-flex !important; align-items: center; gap: 4px; flex: none; max-width: 100% !important; min-width: 0;
+  padding: 0 !important; margin: 0; border: 0 !important; border-radius: 0 !important; background: none !important; box-shadow: none !important;
+  font: 600 var(--d-fs-meta)/1.3 var(--body-font) !important; letter-spacing: 0 !important; text-transform: none !important;
+  color: var(--d-text-2) !important; white-space: nowrap; overflow: visible !important; text-overflow: clip !important; min-height: 0 !important;
+}
+§ :is(.pm-chip, .sh-pill, .pm7-post-state) .chip-abbr { display: none !important; }
+§ :is(.pm-chip, .sh-pill, .pm7-post-state) .chip-full { display: inline !important; overflow: visible !important; }
+§ [data-d-st="ok"], § [data-d-st="live"] { color: var(--d-ok) !important; }
+§ [data-d-st="run"] { color: var(--d-run) !important; }
+§ [data-d-st="warn"], § [data-d-st="stale"], § [data-d-st="dirty"] { color: var(--d-warn) !important; }
+§ [data-d-st="fail"], § [data-d-st="blocked"] { color: var(--d-fail) !important; }
+§ [data-d-st="pending"], § [data-d-st="info"] { color: var(--d-pend) !important; }
+§ [data-d-st="idle"], § [data-d-st="unknown"] { color: var(--d-idle) !important; }
+§ [data-d-st="conflict"] { color: var(--d-conflict) !important; }
+§ [data-d-st="orphan"] { color: var(--accent-orange, var(--d-warn)) !important; }
+§ [data-d-st="current"] { color: var(--accent-primary) !important; }
+/* the glyph: its shape is the state, its colour follows the word */
+§R .d-gl { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 12px; height: 12px; position: relative; color: inherit; }
+§R .d-gl svg { width: 12px; height: 12px; display: block; overflow: visible; }
+§R .d-gl[data-pulse]::after {
+  content: ''; position: absolute; inset: 1px; border-radius: 50%; border: 1.5px solid currentColor; opacity: 0; pointer-events: none;
+  animation: d-pulse 2.2s cubic-bezier(.2, .7, .3, 1) infinite;
+}
+§R[data-o55-nier="on"] .d-gl[data-pulse]::after, §R[data-theme^="retro"] .d-gl[data-pulse]::after { border-radius: 0; }
+@keyframes d-pulse { 0% { opacity: .55; transform: scale(.7); } 70%, 100% { opacity: 0; transform: scale(1.65); } }
+/* dots that became glyphs: the element stays (contracts, colours from markup) but draws the glyph */
+§ :is(.sh-dot, .dot).d-dot {
+  width: 12px !important; height: 12px !important; border-radius: 0 !important; background: none !important; box-shadow: none !important;
+  animation: none !important; display: inline-flex !important; align-items: center; justify-content: center; flex: none; transform: none !important;
+}
+§ :is(.sh-dot, .dot).d-dot > svg { width: 12px; height: 12px; overflow: visible; }
+/* git letters: the letter is the status (F-074); no capsule, one fixed column so rows align */
+§ :is(.pm-gs, .fm-gitbadge) {
+  display: inline-flex !important; align-items: center; justify-content: center; flex: none; width: auto !important; min-width: 14px; height: auto !important;
+  margin: 0 !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: none !important;
+  font: 700 var(--d-fs-small)/1 var(--mono-font) !important; letter-spacing: 0 !important;
+}
+§ .fm-gitbadge > :is(svg, .pm-ico) { display: none !important; }
+§ .pm-gs-mod, § .fm-gitbadge.M { color: var(--d-warn) !important; }
+§ .pm-gs-staged, § .fm-gitbadge.A { color: var(--d-ok) !important; }
+§ .fm-gitbadge.D { color: var(--d-fail) !important; }
+§ .fm-gitbadge.C { color: var(--d-conflict) !important; }
+§ .fm-gitbadge.Q { color: var(--d-text-3) !important; }
+/* the words "read-only" and "ignored" in the tree are quiet tags, not letters */
+§ .fm-gitbadge.d-word { min-width: 0; font: 500 var(--d-fs-small)/1 var(--body-font) !important; color: var(--d-text-3) !important; }
+/* counts that change roll; numbers never jump */
+§R .d-roll { display: inline-block; font-variant-numeric: tabular-nums; }
+/* pending turns slowly (it is waiting on something); a live dot breathes only when it is restarting or watching */
+§R .d-gl .d-spin { transform-origin: 8px 8px; animation: d-spin 7s linear infinite; }
+@keyframes d-spin { to { transform: rotate(360deg); } }
+§R[data-theme^="retro"] .d-gl .d-spin { animation-timing-function: steps(8, end); animation-duration: 4s; }
+§R .d-gl[data-pulse]::after { inset: 0; }

@@ -1,0 +1,95 @@
+/* ---- 9. Docker ------------------------------------------------------------------------------------------------------- */
+§K .sh-ctr.is-running { border: 0 !important; }
+§K .sh-ctr-h { gap: var(--d-gap); }
+/* the fleet summary is a section of its shelf, not a card inside it */
+§K .pm-sumcard {
+  margin: 6px 0 0 !important; padding: 8px var(--d-pad) 4px !important; border: 0 !important; border-radius: 0 !important; background: none !important;
+  border-top: 1px solid color-mix(in srgb, var(--cat, var(--accent-blue)) 22%, transparent) !important; box-shadow: none !important;
+}
+§K .pm-sumcard-h {
+  display: flex; align-items: baseline; gap: 8px; margin: 0 0 4px !important; padding: 0 !important; border: 0 !important;
+  font: var(--d-w-label) var(--d-fs-label)/1.3 var(--display-font, var(--body-font)) !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--d-text) !important;
+}
+§K .pm-sumcard-h:not(:first-child) { margin-top: 10px !important; padding-top: 0 !important; border-top: 0 !important; }
+§K .pm-sumcard-h .c { margin-left: auto; font: 500 var(--d-fs-meta)/1.3 var(--body-font) !important; color: var(--d-text-2) !important; font-variant-numeric: tabular-nums; }
+§K .pm-2col { display: grid !important; grid-template-columns: minmax(0, 1fr) !important; row-gap: 2px; }
+§K .pm-sumcard .pm-occ { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "nm v" "bar bar"; row-gap: 4px; padding: 4px 0 !important; }
+§K .pm-sumcard .pm-occ .nm { grid-area: nm; }
+§K .pm-sumcard .pm-occ .bar { grid-area: bar; }
+§K .pm-sumcard .pm-occ .v { grid-area: v; }
+§K .pm-li {
+  display: grid !important; grid-template-columns: 12px minmax(0, 1fr); grid-template-areas: "dot name" "dot meta";
+  column-gap: 5px; row-gap: 0; align-items: center; padding: 5px 0 !important; border-top: 0 !important;
+}
+§K .pm-li > .dot { grid-area: dot; align-self: start; margin-top: 2px; }
+§K .pm-li-n { grid-area: name; max-width: none !important; white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere; font: var(--d-w-name) var(--d-fs-name)/1.3 var(--body-font) !important; color: var(--d-text) !important; }
+§K .pm-li-m {
+  grid-area: meta; max-width: none !important; text-align: left !important;
+  font: 400 var(--d-fs-meta)/1.35 var(--body-font) !important; color: var(--d-text-3) !important;
+}
+/* images: repository on the first line, tag and size on the second */
+§K [data-pane="images"] .sh-ctr-h {
+  display: grid !important; grid-template-columns: 10px minmax(0, 1fr) auto; grid-template-areas: "chev name name" "chev tag size";
+  column-gap: var(--d-gap); row-gap: 1px; align-items: center;
+}
+§K [data-pane="images"] .sh-ctr-h > .sh-accchev { grid-area: chev; }
+§K [data-pane="images"] .sh-ctr-h > .sh-main, §K [data-pane="images"] .sh-ctr-h > .sh-main > .sh-name { display: contents !important; }
+§K [data-pane="images"] .sh-ctr-h .sh-nm-txt { grid-area: name; min-width: 0; font: 500 var(--d-fs-mono)/1.3 var(--mono-font) !important; color: var(--d-text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+§K [data-pane="images"] .sh-ctr-h .sh-imgtag { grid-area: tag; min-width: 0; font: 400 var(--d-fs-small)/1.3 var(--mono-font) !important; color: var(--d-text-2) !important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+§K [data-pane="images"] .sh-ctr-h > .sh-imgsz { grid-area: size; margin: 0 !important; font: 400 var(--d-fs-small)/1.3 var(--body-font) !important; color: var(--d-text-3) !important; font-variant-numeric: tabular-nums; }
+§K .sh-imgsum { gap: 8px !important; padding: 2px var(--d-pad) 6px !important; font: 400 var(--d-fs-meta)/1.35 var(--body-font) !important; color: var(--d-text-2) !important; }
+§K .sh-imgsum .sh-imgsum-t { white-space: normal !important; overflow: visible !important; }
+/* registries: name on the first line, state and account on the second */
+§K [data-pane="registries"] .sh-ctr-h {
+  display: grid !important; grid-template-columns: 10px auto minmax(0, 1fr); grid-template-areas: "chev name name" "chev state meta";
+  column-gap: var(--d-gap); row-gap: 1px; align-items: center;
+}
+§K [data-pane="registries"] .sh-ctr-h > .sh-accchev { grid-area: chev; }
+§K [data-pane="registries"] .sh-ctr-h > .sh-main, §K [data-pane="registries"] .sh-ctr-h > .sh-main > .sh-name { display: contents !important; }
+§K [data-pane="registries"] .sh-ctr-h .sh-nm-txt { grid-area: name; min-width: 0; font: 500 var(--d-fs-mono)/1.3 var(--mono-font) !important; color: var(--d-text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+§K [data-pane="registries"] .sh-ctr-h .pm-chip { grid-area: state; }
+§K [data-pane="registries"] .sh-ctr-h .sh-meta { grid-area: meta; min-width: 0; }
+§K [data-pane="registries"] .sh-ctr-h .sh-meta::before { content: '\00B7'; margin: 0 6px 0 0; }
+/* compose: identity as text, then the aggregate state */
+§K .sh-cmpid { display: grid; gap: 2px; padding: 2px var(--d-pad) 6px !important; margin: 0 !important; }
+§K .sh-cmpid-row { display: flex !important; align-items: center; gap: 0 !important; min-width: 0; flex-wrap: wrap; }
+§K .sh-cmpid .pm-chip { font: 400 var(--d-fs-small)/1.4 var(--mono-font) !important; color: var(--d-text-2) !important; }
+§K .sh-cmpid-row:first-child .pm-chip { font: 600 var(--d-fs-name)/1.35 var(--body-font) !important; color: var(--d-text) !important; margin-right: 8px; }
+§K .sh-cmpid-row:not(:first-child) .pm-chip + .pm-chip::before { content: '\00B7'; margin: 0 6px; color: var(--d-text-3); }
+§K .sh-cmpf { min-width: 0; flex: 1 1 auto; font: 400 var(--d-fs-small)/1.4 var(--mono-font) !important; color: var(--d-text-3) !important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+§K .sh-cmpid-row .pm-minibtn { margin-left: auto; }
+§K .sh-cmpstate { gap: 6px !important; padding: 0 var(--d-pad) 6px !important; font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; color: var(--d-text-2) !important; align-items: flex-start !important; }
+§K .sh-cmpstate .sh-cmps-txt { white-space: normal !important; overflow: visible !important; }
+§K .sh-cmpstate b { color: var(--d-text) !important; font-weight: 600; }
+§K .sh-cmpstate > .dot.d-dot { margin-top: 1px; }
+§K .sh-runfail { padding: 0 var(--d-pad) 6px calc(var(--d-pad) + 16px) !important; white-space: normal !important; overflow-wrap: anywhere; font: 400 var(--d-fs-small)/1.4 var(--mono-font) !important; color: var(--d-fail) !important; }
+/* the publish chain: numbered steps on a hairline, the step's state under its name */
+§K .sh-chain { padding-left: 27px !important; margin: 2px 0 4px !important; }
+§K .sh-chain::before { left: 12px !important; width: 1px !important; top: 14px !important; bottom: 14px !important; border-radius: 0 !important; background: color-mix(in srgb, var(--cat, var(--accent-blue)) 40%, transparent) !important; }
+§K .sh-stage { margin: 0 0 2px; }
+§K .sh-stage-h {
+  display: grid !important; grid-template-columns: 10px minmax(0, 1fr); grid-template-areas: "chev label" "chev state";
+  column-gap: var(--d-gap); row-gap: 1px; align-items: center; min-height: 0; padding: 5px var(--d-pad) 5px 6px !important;
+  border-radius: var(--d-r) !important; transition: background-color var(--d-t1) var(--d-ease);
+}
+§K .sh-stage-h:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important; }
+§K .sh-stage.open > .sh-stage-h { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-open), transparent); }
+§K .sh-stage-h > .sh-accchev { grid-area: chev; width: 10px; height: 10px; color: var(--d-text-3); }
+§K .sh-stage-l { grid-area: label; white-space: normal !important; overflow: visible !important; font: var(--d-w-name) var(--d-fs-name)/1.35 var(--body-font) !important; color: var(--d-text-2) !important; }
+§K .sh-stage.done .sh-stage-l, §K .sh-stage.now .sh-stage-l { color: var(--d-text) !important; }
+§K .sh-stage-h > .pm-chip { grid-area: state; }
+§K .sh-stage .sh-stgnum {
+  left: -27px !important; top: 5px; width: 20px !important; height: 20px !important; border-width: 1.5px !important;
+  font: 600 var(--d-fs-small)/1 var(--mono-font) !important; background: var(--surface) !important;
+}
+§{retro}K .sh-stage .sh-stgnum, §{nier}K .sh-stage .sh-stgnum { border-radius: 0 !important; }
+§K .sh-stage > .sh-accb { padding: 0 var(--d-pad) 0 24px !important; }
+§K .sh-stage > .sh-accb > .pm-acc-inner > :last-child { margin-bottom: 6px; }
+
+§K [data-pane="registries"] .sh-ctr-h[data-d-stack] { grid-template-areas: "chev name name" "chev state state" "chev meta meta"; }
+§K [data-pane="registries"] .sh-ctr-h[data-d-stack] .sh-meta::before { content: none; }
+/* a container or service line that runs long takes a second line rather than losing its end */
+§K .sh-ctr-h .sh-meta { white-space: normal !important; display: -webkit-box !important; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+§K [data-pane="registries"] .sh-ctr-h .sh-meta { display: block !important; white-space: nowrap !important; text-overflow: ellipsis; }
+§K .sh-imgsum { align-items: flex-start !important; }
+§K .sh-imgsum .pm-chipbtn { margin-top: 1px; }

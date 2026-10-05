@@ -1,0 +1,104 @@
+/* ---- 1. Tokens ------------------------------------------------------------------------------------------------------
+   One geometry for the whole rail: an outer radius R for every box that groups (shelves, the tab strip, cards) and an
+   inner radius r = R - inset for everything that sits inside one (rows, tab ink, buttons, inputs). Highlights are drawn
+   on the element they highlight, so a hover or selection fill is always exactly its row's box. Type: one ladder,
+   sentence case, nothing under 11 px. */
+§R {
+  --d-g: 6px;                 /* vertical gutter: box to box */
+  --d-gx: 3px;                /* horizontal gutter: panel edge to box (width is at a premium) */
+  --d-in: 2px;                /* inset: box edge to the rows inside it */
+  --d-R: 8px;                 /* outer radius */
+  --d-r: 4px;                 /* inner radius (R - inset) */
+  --d-rs: min(var(--d-r), 6px); /* small controls (under 26 px high) never round into a capsule */
+  --d-pad: 5px;               /* text inset inside a row or a head */
+  --d-gap: 4px;               /* between a chevron, a status glyph and the text */
+  --d-head-h: 34px;
+  --d-row-h: 28px;
+  --d-fs-title: 13px;
+  --d-fs-label: 12px;
+  --d-fs-name: 12.5px;
+  --d-fs-meta: 11.5px;
+  --d-fs-mono: 11.5px;
+  --d-fs-small: 11px;
+  --d-lh: 1.38;
+  --d-w-name: 500;
+  --d-w-label: 600;
+  --d-text: var(--text-primary);
+  --d-text-2: var(--text-secondary);
+  --d-text-3: var(--text-muted);
+  --d-line: color-mix(in srgb, var(--text-primary) 10%, transparent);
+  --d-line-2: color-mix(in srgb, var(--text-primary) 16%, transparent);
+  --d-hover: color-mix(in srgb, var(--text-primary) 6%, transparent);
+  --d-press: color-mix(in srgb, var(--text-primary) 10%, transparent);
+  --d-sel: color-mix(in srgb, var(--accent-primary) 16%, transparent);
+  --d-chrome: color-mix(in srgb, var(--surface) 84%, transparent);
+  --d-ctl-bg: color-mix(in srgb, var(--text-primary) 5%, transparent);
+  --d-ctl-line: color-mix(in srgb, var(--text-primary) 11%, transparent);
+  --d-on-accent: var(--surface);
+  /* shelf tints: the category colour Jared likes, measured so every family reads the same */
+  --d-shelf-fill: 7%;
+  --d-shelf-head: 13%;
+  --d-shelf-line: 22%;
+  --d-shelf-hover: 11%;
+  --d-shelf-open: 8%;
+  /* status colours (shape + colour + word) */
+  --d-ok: var(--graph-passed);
+  --d-live: var(--graph-passed);
+  --d-run: var(--graph-running);
+  --d-warn: var(--accent-warning);
+  --d-fail: var(--graph-failed);
+  --d-pend: var(--accent-blue);
+  --d-idle: var(--text-muted);
+  --d-conflict: var(--accent-magenta, var(--graph-failed));
+  /* motion: Basic is crisp */
+  --d-t1: 120ms;
+  --d-t2: 200ms;
+  --d-t3: 300ms;
+  --d-ease: cubic-bezier(.2, .8, .2, 1);
+  --d-spring: cubic-bezier(.25, 1.2, .45, 1);
+  --d-out: cubic-bezier(.4, 0, 1, 1);
+}
+/* Friendly: rounder, springier, Poppins runs a little wide */
+§R[data-theme^="friendly"] {
+  --d-R: 12px; --d-r: 10px; --d-pad: 6px;
+  --d-t1: 150ms; --d-t2: 260ms; --d-t3: 380ms;
+  --d-spring: cubic-bezier(.34, 1.5, .5, 1);
+  --d-fs-name: 12.5px; --d-fs-meta: 11.5px;
+}
+/* Glass: soft radii, long glides, and translucent chrome */
+§R[data-theme^="glass"] {
+  --d-R: 13px; --d-r: 10px;
+  --d-t1: 160ms; --d-t2: 300ms; --d-t3: 440ms;
+  --d-ease: cubic-bezier(.16, 1, .3, 1);
+  --d-spring: cubic-bezier(.2, 1.15, .35, 1);
+  --d-hover: color-mix(in srgb, var(--text-primary) 8%, transparent);
+  --d-chrome: color-mix(in srgb, var(--surface-elevated) 70%, transparent);
+  --d-ctl-bg: color-mix(in srgb, var(--text-primary) 7%, transparent);
+  --d-on-accent: var(--bg, #241B36);
+  --d-shelf-fill: 9%; --d-shelf-head: 15%; --d-shelf-line: 26%;
+}
+/* Retro: square, stepped, and IBM Plex Mono throughout is wide, so its type ladder is half a pixel smaller */
+§R[data-theme^="retro"] {
+  --d-R: 0px; --d-r: 0px;
+  --d-fs-title: 12.5px; --d-fs-label: 11.5px; --d-fs-name: 12px; --d-fs-meta: 11px; --d-fs-mono: 11px; --d-fs-small: 11px;
+  --d-t1: 90ms; --d-t2: 150ms; --d-t3: 220ms;
+  --d-ease: steps(3, end); --d-spring: steps(4, end); --d-out: steps(2, end);
+  --d-shelf-fill: 6%; --d-shelf-head: 12%; --d-shelf-line: 34%;
+}
+§R[data-theme="basic-light"], §R[data-theme="friendly-light"] { --d-shelf-fill: 6%; --d-shelf-head: 11%; --d-shelf-line: 26%; --d-on-accent: #fff; }
+§R[data-theme="retro-light"] { --d-on-accent: #fff; }
+§R[data-theme="glass-light"] { --d-on-accent: #fff; }
+/* NieR Mode paints over Basic: square, ink and paper, hairlines; motion is a hard ink wipe */
+§R[data-o55-nier="on"] {
+  --d-R: 0px; --d-r: 0px;
+  --d-line: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .26);
+  --d-line-2: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .44);
+  --d-hover: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .10);
+  --d-sel: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .16);
+  --d-ctl-bg: transparent;
+  --d-ctl-line: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .42);
+  --d-on-accent: var(--o55-nier-on-ink, var(--surface));
+  --d-ok: var(--o55-nier-ink); --d-live: var(--o55-nier-ink); --d-idle: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .55);
+  --d-ease: cubic-bezier(.7, 0, .2, 1);
+  --d-spring: cubic-bezier(.7, 0, .2, 1);
+}

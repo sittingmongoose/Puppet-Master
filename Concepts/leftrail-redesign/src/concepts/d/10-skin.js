@@ -204,14 +204,14 @@ function applyScrollEdge(panel) {
 function applyPaths(panel) {
   panel.querySelectorAll('[data-pane="changes"] .sh-chg-h .sh-nm-txt').forEach(el => {
     if (el._dPath || el.children.length) return;
-    const full = el.textContent.trim(), i = full.lastIndexOf('/');
+    const orig = el.textContent, full = orig.trim(), i = full.lastIndexOf('/');
     if (i <= 0) return;
     const meta = el.closest('.sh-main') && el.closest('.sh-main').querySelector(':scope > .sh-meta');
     el._dPath = full;
     el.textContent = full.slice(i + 1);
     const dir = meta ? PMR.h('span.d-dir', { text: full.slice(0, i) }) : null;
     if (dir) meta.insertBefore(dir, meta.firstChild);
-    remember(() => { el.textContent = full; delete el._dPath; if (dir) dir.remove(); });
+    remember(() => { el.textContent = orig; delete el._dPath; if (dir) dir.remove(); });
   });
 }
 /* the repository location breaks between its parts, never inside one */

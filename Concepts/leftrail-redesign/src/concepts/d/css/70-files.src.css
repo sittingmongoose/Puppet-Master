@@ -1,0 +1,67 @@
+/* ---- 7. Files ------------------------------------------------------------------------------------------------------------
+   The tree keeps its git colours (a folder or file reads in its state's colour, as in every editor) but loses the
+   capsules and the sideways nudge on hover; the guide line under each folder is a hairline. */
+§F .fm-tree { padding: 0; }
+§F .fm-row {
+  min-height: 25px; padding: 0 3px !important; column-gap: 0; border-radius: var(--d-r) !important;
+  transform: none !important; background: transparent; transition: background-color var(--d-t1) var(--d-ease) !important;
+}
+§F .fm-row:hover { background: var(--d-hover) !important; }
+§F .fm-row:active { transform: none !important; background: var(--d-press) !important; }
+§F .fm-row.active-file { background: var(--d-sel) !important; }
+§F .fm-row.selected { background: color-mix(in srgb, var(--accent-primary) 24%, transparent) !important; }
+§F .fm-row:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+§F .fm-row > :is(.fm-chevron, .fm-ficon) { margin-right: 4px; }
+§F .fm-chevron { width: 11px !important; height: 11px !important; color: var(--d-text-3) !important; }
+§F .fm-ficon { width: 15px !important; height: 15px !important; }
+§F .fm-name { font: 400 var(--d-fs-name)/1.3 var(--body-font) !important; letter-spacing: 0; }
+§F .fm-name.mono { font-family: var(--mono-font) !important; font-size: var(--d-fs-mono) !important; }
+§F .fm-folder > .fm-row > .fm-name { font-weight: 500 !important; }
+§F .fm-children { margin-left: 8px !important; padding-left: 2px !important; border-left: 1px solid var(--d-line) !important; }
+§F .fm-trail { min-width: 40px; gap: 6px; }
+§F .fm-count { font: 400 var(--d-fs-small)/1 var(--body-font) !important; color: var(--d-text-3) !important; font-variant-numeric: tabular-nums; }
+§F .fm-quick { gap: 1px !important; }
+§F .fm-quick .pm-minibtn { width: 22px !important; height: 22px !important; border-radius: var(--d-r) !important; }
+§F .fm-quick .pm-minibtn:hover { transform: none !important; }
+§F .fm-showmore { padding: 4px 6px 4px 30px !important; font: 400 var(--d-fs-small)/1.4 var(--body-font) !important; color: var(--d-text-3) !important; }
+§F .fm-reveal-note { border-radius: var(--d-r) !important; font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; }
+/* Changed and Open: letter, file, folder, chevron */
+§F .fm-changerow::before { content: none !important; }
+§F :is(.fm-changerow, .fm-openrow) { gap: 0 4px !important; }
+§F :is(.fm-cfile, .fm-path) { font: 400 var(--d-fs-mono)/1.3 var(--mono-font) !important; color: var(--d-text) !important; flex: 0 1 auto !important; }
+§F .fm-cdir {
+  flex: 1 1 0 !important; max-width: none !important; min-width: 0;
+  font: 400 var(--d-fs-small)/1.3 var(--mono-font) !important; color: var(--d-text-3) !important;
+}
+§F .fm-cchev { width: 10px !important; height: 10px !important; color: var(--d-text-3) !important; flex: none; }
+§F .fm-openrow > .fm-path { flex: 1 1 auto !important; }
+§F .fm-openrow > .sh-k { font: 400 var(--d-fs-small)/1 var(--body-font) !important; color: var(--d-text-3) !important; font-variant-numeric: tabular-nums; }
+§F .fm-dirty { width: 7px !important; height: 7px !important; border-radius: 50% !important; background: var(--d-warn) !important; }
+§{retro}F .fm-dirty, §{nier}F .fm-dirty { border-radius: 0 !important; }
+§F .fm-cbody { display: grid; gap: 4px; padding: 0 !important; }
+§F .fm-cpath { font: 400 var(--d-fs-small)/1.45 var(--mono-font) !important; color: var(--d-text-3) !important; overflow-wrap: anywhere; white-space: normal !important; }
+§F .fm-chunks { display: flex; gap: 10px; font: 500 var(--d-fs-small)/1.3 var(--mono-font) !important; }
+§F .fm-chunks .add { color: var(--d-ok) !important; } §F .fm-chunks .del { color: var(--d-fail) !important; }
+§F .fm-chunks .meta { color: var(--d-text-3) !important; font-family: var(--body-font); }
+§F .fm-cacts { display: flex !important; flex-wrap: wrap; gap: 6px !important; margin-top: 4px; }
+§F .fm-changeitem > .sh-accb, §F .fm-openitem > .sh-accb { padding-left: calc(var(--d-pad) + 18px) !important; }
+
+/* Changed and Open rows read on two lines: the file, then its folder; nothing is cut to a single letter */
+§F .fm-changerow {
+  display: grid !important; grid-template-columns: 14px minmax(0, 1fr) 10px; grid-template-areas: "badge file chev" "badge dir chev";
+  column-gap: 4px !important; row-gap: 0; align-items: center;
+}
+§F .fm-changerow > .fm-gitbadge { grid-area: badge; align-self: start; margin-top: 3px !important; }
+§F .fm-changerow > .fm-cfile { grid-area: file; }
+§F .fm-changerow > .fm-cdir { grid-area: dir; }
+§F .fm-changerow > .fm-cchev { grid-area: chev; }
+§F .fm-openitem > .fm-openrow {
+  display: grid !important; grid-template-columns: 8px 15px minmax(0, 1fr) 10px; grid-template-areas: "dot ico file chev" ". . dir chev";
+  column-gap: 4px !important; row-gap: 0; align-items: center;
+}
+§F .fm-openitem > .fm-openrow > .fm-dirty { grid-area: dot; }
+§F .fm-openitem > .fm-openrow > .fm-ficon { grid-area: ico; }
+§F .fm-openitem > .fm-openrow > .fm-cfile { grid-area: file; }
+§F .fm-openitem > .fm-openrow > .fm-cdir { grid-area: dir; }
+§F .fm-openitem > .fm-openrow > .fm-cchev { grid-area: chev; }
+§F :is(.fm-changerow, .fm-openrow) > .fm-cdir { text-align: left !important; direction: ltr !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

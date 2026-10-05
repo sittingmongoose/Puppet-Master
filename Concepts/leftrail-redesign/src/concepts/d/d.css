@@ -1,6 +1,7 @@
-/* Concept D (Polish): today's rail, polished. Every rule is scoped to html[data-rail-skin="d"] and to the three
-   panels it restyles (#panel-files, #panel-source, #panel-docker) plus the activity bar. Written flat on purpose: the
-   Look settings scaler (text size, animation speed) only rescales top-level rules, so no CSS nesting here. */
+/* Concept D (Polish): today's rail, polished. GENERATED from src/concepts/d/css/*.src.css by
+   tools/build_d_css.py: edit the sources, never this file. Every rule is scoped to html[data-rail-skin="d"] and
+   to the three panels it restyles (#panel-files, #panel-source, #panel-docker) plus the activity bar. Written flat
+   on purpose: the Look settings scaler (text size, animation speed) only rescales top-level rules. */
 /* ---- 1. Tokens ------------------------------------------------------------------------------------------------------
    One geometry for the whole rail: an outer radius R for every box that groups (shelves, the tab strip, cards) and an
    inner radius r = R - inset for everything that sits inside one (rows, tab ink, buttons, inputs). Highlights are drawn
@@ -916,6 +917,12 @@
 [data-rail-skin="d"][data-o55-nier="on"] #activityBar .icon[data-target].active { color: var(--o55-nier-on-ink) !important; }
 [data-rail-skin="d"] #activityBar .icon[data-target].d-bump .symbol svg { animation: d-bump var(--d-t3) var(--d-spring); }
 @keyframes d-bump { 0% { transform: scale(.82); } 60% { transform: scale(1.08); } 100% { transform: none; } }
+/* expanded bar labels: readable sentence case (the DOM keeps the shell's capitals, other tooling reads them) */
+[data-rail-skin="d"]:not([data-o55-nier="on"]) #activityBar:not(.collapsed) .icon .icon-label {
+  display: block; font: 500 11px/1.2 var(--body-font) !important; letter-spacing: 0 !important; text-transform: lowercase;
+}
+[data-rail-skin="d"]:not([data-o55-nier="on"]) #activityBar:not(.collapsed) .icon .icon-label::first-letter { text-transform: uppercase; }
+[data-rail-skin="d"] #activityBar .icon[data-target].active .icon-label { color: var(--d-text) !important; }
 
 /* ---- 11. Family accents ----------------------------------------------------------------------------------------------
    The geometry and the type are shared; each family keeps one signature. Basic is flat and crisp. Friendly lifts its
@@ -966,5 +973,9 @@
 }
 [data-rail-skin="d"][data-motion="reduced"] .d-gl::after, [data-rail-skin="d"][data-reduced-motion="1"] .d-gl::after { display: none !important; }
 @media (prefers-reduced-motion: reduce) {
-  [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) *, [data-rail-skin="d"] #activityBar * { transition: none !important; animation: none !important; }
+  [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) *, [data-rail-skin="d"] #activityBar *, [data-rail-skin="d"] #activityBar .icon, [data-rail-skin="d"] #activityBar .icon .symbol { transition: none !important; animation: none !important; }
+  [data-rail-skin="d"] .d-gl::after { display: none !important; }
+  [data-rail-skin="d"] .d-gl .d-spin { animation: none !important; }
 }
+[data-rail-skin="d"][data-motion="reduced"] .d-gl .d-spin, [data-rail-skin="d"][data-reduced-motion="1"] .d-gl .d-spin { animation: none !important; }
+[data-rail-skin="d"][data-motion="reduced"] #activityBar .icon, [data-rail-skin="d"][data-reduced-motion="1"] #activityBar .icon { transition: none !important; }

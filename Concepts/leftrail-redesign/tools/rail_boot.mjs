@@ -1,22 +1,33 @@
-/* Rail acceptance check: boots LeftRailPMConcept7.html headless over file:// (?o55=off), and for each concept checks
- * the redesigned panels by real clicks against the reference page (PMConcept7.html):
- *   - no new console errors; the concept view replaces the original panel when its icon is clicked;
+/* Rail acceptance check: boots LeftRailPMConcept7.html over file:// (?o55=off) in GPU Chrome on the VM (one
+ * agent-browser headless session per boot, driven through playwright-core connectOverCDP), and for each concept
+ * checks the redesigned panels by real clicks against the reference page (PMConcept7.html):
+ *   - no new console errors; the concept view replaces the original panel when its icon is clicked. A skin concept
+ *     (registered with skin: true, today d "Polish"; 'current' is checked the same way) keeps the shell's own panels
+ *     instead: the original panel must stay visible and its reach is read straight off it, not crawled;
  *   - reach: a crawler opens every element the concept marks [data-pmr-nav] (tabs, expanders, drill rows, row
  *     selection, menu triggers, submenus) and collects every data-demo-action/-arg pair it can see; every pair of the
  *     original panel must be reachable;
  *   - no horizontal overflow at 240 / 280 / 320 / 480 px; computed text >= 11 px (menus excepted: the chat picker's
  *     group label is 10 px by design); no pills (filled or bordered, radius >= half height); no coloured side bars;
- *     every open popup inside a concept is a PMR menu; reduced motion leaves nothing animating;
+ *     every open popup inside a concept is a PMR menu — for a skin concept instead: every visible
+ *     .pm6-tb-menu-trigger of the panel must sprout a chat-style .pmr-menu, never the shell's .pm6-tb-menu, and no
+ *     <select> may be visible inside the panel ('current' reports only); reduced motion leaves nothing animating;
  *   - every theme family x light/dark, and NieR Mode light/dark: view visible, no overflow at 280, type floor, pills.
  *
- *   node Concepts/leftrail-redesign/tools/rail_boot.mjs <out-dir> [--page P] [--ref R] [--concepts a,b,c]
+ *   node Concepts/leftrail-redesign/tools/rail_boot.mjs <out-dir> [--page P] [--ref R] [--concepts a,b,c,d]
  *        [--panels files,source,docker] [--themes all|basic-dark,...] [--quick] [--shots]
- * Writes <out-dir>/rail-boot.json, prints a summary, exits 1 when a check fails. --shots writes rail screenshots per
- * concept x theme x panel into <out-dir>/shots (review media: delete after review). Profiles are deleted on close. */
-import { launch, sleep } from '../../onboarding/opus-5.5/tools/chrome.mjs';
-import { mkdirSync, writeFileSync } from 'node:fs';
+ * Writes <out-dir>/rail-boot.json (summary.gpu names the WebGL renderer), prints a summary, exits 1 when a check
+ * fails. --shots writes rail screenshots per concept x theme x panel into <out-dir>/shots (review media: delete
+ * after review). Every agent-browser session is stopped when its page is done (finally, SIGINT, SIGTERM); profiles
+ * are deleted by agent-browser at stop. Running on the GPU is mandatory: --disable-gpu and swiftshader flags are
+ * forbidden, and a browser whose WebGL UNMASKED_RENDERER_WEBGL names SwiftShader or llvmpipe aborts the run with
+ * the failing check `not on the GPU: <renderer>`. */
+import { execFileSync } from 'node:child_process';
+import { createRequire } from 'node:module';
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, join, dirname } from 'node:path';
+import { homedir } from 'node:os';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const concepts = resolve(here, '../..');
@@ -29,19 +40,59 @@ const REF = resolve(opt('ref', join(concepts, 'PMConcept7.html')));
 const ALL_THEMES = ['basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'glass-dark', 'glass-light', 'retro-dark', 'retro-light'];
 const themesOpt = opt('themes', 'all');
 const THEMES = themesOpt === 'all' ? ALL_THEMES : String(themesOpt).split(',');
-const CONCEPTS = String(opt('concepts', 'a,b,c')).split(',');
+const CONCEPTS = String(opt('concepts', 'a,b,c,d')).split(',');
 const PANELS = String(opt('panels', 'files,source,docker')).split(',');
 const QUICK = !!opt('quick', false);
 const SHOTS = !!opt('shots', false);
 const TARGET = { files: 'panel-files', source: 'panel-source', docker: 'panel-docker' };
 const norm = (e) => e.replace(/file:\/\/\S+?\.html(:\d+)*(:\d+)?/g, '<page>').replace(/\s+/g, ' ').trim();
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+/* playwright-core is resolved by absolute path (createRequire) so this script also runs from the repository
+   (Concepts/leftrail-redesign/tools/, which has no node_modules): env PM_PLAYWRIGHT (a directory containing
+   playwright-core), then the lane's node_modules, then ~/pm-motion-lab. */
+function loadChromium() {
+  const req = createRequire(import.meta.url);
+  const roots = [];
+  if (process.env.PM_PLAYWRIGHT) roots.push(process.env.PM_PLAYWRIGHT);
+  roots.push('/home/sittingmongoose/PM-Experiments/leftrail-redesign-20261002/node_modules');
+  roots.push(join(homedir(), 'pm-motion-lab', 'node_modules'));
+  for (const root of roots) {
+    const dir = join(root, 'playwright-core');
+    if (!existsSync(join(dir, 'package.json'))) continue;
+    try {
+      const pw = req(dir);
+      if (pw && pw.chromium && typeof pw.chromium.connectOverCDP === 'function') return pw.chromium;
+    } catch (_) { /* try the next root */ }
+  }
+  throw new Error(`playwright-core not found (set PM_PLAYWRIGHT to a directory containing playwright-core); tried: ${roots.map((r) => join(r, 'playwright-core')).join(', ')}`);
+}
+let chromium;
+try { chromium = loadChromium(); } catch (e) { console.error(`rail boot: ${e.message}`); process.exit(1); }
+
+/* agent-browser sessions: every started id is tracked and stopped on every exit path (close() in finally, plus
+   SIGINT/SIGTERM), so no headless Chrome of this harness survives a run or an interrupt. */
+const openSessions = new Set();
+function stopSession(id) {
+  openSessions.delete(id);
+  try { execFileSync('agent-browser', ['stop', id], { stdio: 'ignore', timeout: 90000 }); } catch (_) { /* already gone */ }
+}
+for (const sig of ['SIGINT', 'SIGTERM']) process.once(sig, () => { for (const id of [...openSessions]) stopSession(id); process.exit(sig === 'SIGINT' ? 130 : 143); });
+
+/* the run must be on the VM GPU: once per browser, read the WebGL renderer and abort on a software one */
+const GPU_PROBE = () => { const g = document.createElement('canvas').getContext('webgl'); if (!g) return 'no webgl'; const x = g.getExtension('WEBGL_debug_renderer_info'); return g.getParameter(x ? x.UNMASKED_RENDERER_WEBGL : g.RENDERER); };
+const SOFT_GPU = /SwiftShader|llvmpipe/i;
+let GPU = null;
+class NoGpu extends Error { constructor(renderer) { super(`not on the GPU: ${renderer}`); this.renderer = renderer; } }
 
 /* ---- in-page helpers (stringified into the page once) ---- */
 const PAGE_LIB = () => {
   const L = window.__railCheck = {};
+  L.skin = false; /* the harness sets this after the concept switch: skin concepts keep the shell's own panels */
   L.sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   L.visible = (el) => { if (!el || !el.isConnected) return false; const r = el.getBoundingClientRect(); if (r.width < 1 || r.height < 1) return false; const cs = getComputedStyle(el); return cs.visibility !== 'hidden' && cs.display !== 'none' && +cs.opacity > 0.02; };
-  L.view = (panel) => document.querySelector(`.pmr-view[data-pmr-for="panel-${panel}"]`);
+  /* a skin concept renders no .pmr-view: its "view" is the shell's own panel under html[data-rail-skin] */
+  L.view = (panel) => L.skin ? document.getElementById('panel-' + panel) : document.querySelector(`.pmr-view[data-pmr-for="panel-${panel}"]`);
   L.roots = (panel) => [L.view(panel), document.getElementById('pmr-overlay'), ...document.querySelectorAll('.pmr-menu')].filter(Boolean);
   /* a pair counts when an element carries it, or carries it as data-legacy-cmd/-arg (the fixture's canon replacement of
      an original action keeps the original pair there on purpose) */
@@ -52,7 +103,18 @@ const PAGE_LIB = () => {
     const orig = document.getElementById('panel-' + panel);
     if (!(orig && orig.classList.contains('active') && !slot.classList.contains('hidden'))) icon.click();
     await L.sleep(450);
-    return { viewShown: L.visible(L.view(panel)), originalHidden: !L.visible(orig) };
+    /* a skin concept never hides the original panel (it is the view), so originalHidden is not a requirement */
+    return L.skin ? { viewShown: L.visible(orig), originalHidden: null } : { viewShown: L.visible(L.view(panel)), originalHidden: !L.visible(orig) };
+  };
+  /* skin reach: no crawler — collect the pairs straight off the original panel plus #fileContextMenu (Files) and any
+     open .pmr-menu, exactly like refPairs() collects them off the reference page */
+  L.directPairs = (panel) => {
+    const s = new Set();
+    const roots = [document.getElementById('panel-' + panel)];
+    if (panel === 'files') roots.push(document.getElementById('fileContextMenu'));
+    roots.push(...[...document.querySelectorAll('.pmr-menu')].filter(L.visible));
+    for (const r of roots) { if (r) r.querySelectorAll('[data-demo-action]').forEach((e) => s.add(e.getAttribute('data-demo-action') + ' | ' + (e.getAttribute('data-demo-arg') || ''))); }
+    return [...s];
   };
   /* crawl (depth-first): click every visible [data-pmr-nav] once; after a click that shows something new (a tab, a
      drill, a selection, a navigating menu item) crawl the new state to completion before moving on; after a drill,
@@ -173,6 +235,23 @@ const PAGE_LIB = () => {
     return bad.slice(0, 10);
   };
   L.foreignMenus = (panel) => { const v = L.view(panel); return v ? v.querySelectorAll('.pm6-tb-menu, select').length : -1; };
+  /* skin menu probe: one visible .pm6-tb-menu-trigger at a time — click it, wait 400 ms and report what opened
+     ('pmr' = a chat-style menu, 'shell' = the shell's own sprout menu, 'none'); PMR.menu.closeAll() runs in-page,
+     the harness presses Escape after each probe */
+  L.menuTriggerCount = (panel) => { const p = document.getElementById('panel-' + panel); return p ? [...p.querySelectorAll('.pm6-tb-menu-trigger')].filter(L.visible).length : 0; };
+  L.menuTriggerProbe = async (panel, idx) => {
+    const p = document.getElementById('panel-' + panel);
+    const t = p && [...p.querySelectorAll('.pm6-tb-menu-trigger')].filter(L.visible)[idx];
+    if (!t) return { state: 'gone' };
+    const label = ((t.getAttribute('aria-label') || t.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 40)) || 'trigger ' + idx;
+    t.click();
+    await L.sleep(400);
+    const pmrOpen = [...document.querySelectorAll('.pmr-menu')].some(L.visible);
+    const shellOpen = [...document.querySelectorAll('.pm6-tb-menu.is-open')].some(L.visible);
+    try { window.PMR.menu.closeAll(); } catch (e) { /* PMR not up */ }
+    return { state: pmrOpen ? 'pmr' : (shellOpen ? 'shell' : 'none'), label };
+  };
+  L.visibleSelects = (panel) => { const p = document.getElementById('panel-' + panel); return p ? [...p.querySelectorAll('select')].filter(L.visible).length : 0; };
   L.setWidth = async (w) => { const s = document.getElementById('sidePanelSlot'); s.style.setProperty('width', w + 'px', 'important'); s.style.setProperty('flex', 'none', 'important'); await L.sleep(350); return Math.round(s.getBoundingClientRect().width); };
   L.clearWidth = async () => { const s = document.getElementById('sidePanelSlot'); s.style.removeProperty('width'); s.style.removeProperty('flex'); await L.sleep(250); };
   L.theme = async (slug, nier) => {
@@ -187,16 +266,41 @@ const PAGE_LIB = () => {
 };
 
 async function bootPage(file, { width = 1600, height = 1000 } = {}) {
-  const b = await launch({ width, height });
-  await b.page.goto(pathToFileURL(file).href + '?o55=off');
-  await sleep(2500);
-  await b.page.evaluate(`(${PAGE_LIB.toString()})()`);
-  return b;
+  const started = JSON.parse(execFileSync('agent-browser', ['start', '--url', 'about:blank'], { encoding: 'utf8', timeout: 120000 }));
+  openSessions.add(started.id);
+  let browser = null;
+  const b = {
+    id: started.id, errors: [], gpu: null, page: null, cdp: null,
+    async close() {
+      if (browser) { const x = browser; browser = null; try { await x.close(); } catch (_) { /* disconnect is best-effort */ } }
+      stopSession(started.id);
+    },
+  };
+  try {
+    browser = await chromium.connectOverCDP(started.cdp_endpoint);
+    const ctx = browser.contexts()[0];
+    const page = ctx.pages()[0] || await ctx.newPage();
+    page.on('pageerror', (e) => b.errors.push('PAGEERROR ' + String((e && e.message) || e).slice(0, 300)));
+    page.on('console', (m) => { if (m.type() === 'error') b.errors.push('CONSOLE ' + m.text().slice(0, 300)); });
+    const cdp = await ctx.newCDPSession(page);
+    await cdp.send('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: false });
+    await page.goto(pathToFileURL(file).href + '?o55=off', { waitUntil: 'load', timeout: 60000 });
+    b.gpu = await page.evaluate(GPU_PROBE);
+    if (GPU === null) GPU = b.gpu;
+    if (SOFT_GPU.test(String(b.gpu))) throw new NoGpu(b.gpu);
+    await sleep(2500);
+    await page.evaluate(`(${PAGE_LIB.toString()})()`);
+    b.page = page; b.cdp = cdp;
+    return b;
+  } catch (e) {
+    await b.close();
+    throw e;
+  }
 }
 
 async function refErrors() {
   const b = await bootPage(REF);
-  try { await sleep(1500); return [...new Set(b.page.errors.map(norm))]; } finally { await b.close(); }
+  try { await sleep(1500); return [...new Set(b.errors.map(norm))]; } finally { await b.close(); }
 }
 async function refPairs() {
   const b = await bootPage(REF);
@@ -209,18 +313,55 @@ async function refPairs() {
   } finally { await b.close(); }
 }
 
+/* skin-concept menu check: every visible .pm6-tb-menu-trigger of the panel is clicked; a visible .pmr-menu is a
+   pass, a visible .pm6-tb-menu.is-open a fail (shell sprout menu instead of the chat-style menu). closeAll() runs
+   in-page, Escape is a real key press between triggers. Visible <select>s are counted too. */
+async function skinMenus(page, p) {
+  const res = { triggers: 0, pmr: 0, sprouted: [], none: [], selects: 0 };
+  res.triggers = await page.evaluate((x) => window.__railCheck.menuTriggerCount(x), p);
+  for (let i = 0; i < res.triggers; i++) {
+    const probe = await page.evaluate(async ([x, idx]) => window.__railCheck.menuTriggerProbe(x, idx), [p, i]);
+    if (!probe || probe.state === 'gone') break;
+    await page.keyboard.press('Escape');
+    await sleep(250);
+    if (probe.state === 'pmr') res.pmr++;
+    else if (probe.state === 'shell') res.sprouted.push(probe.label);
+    else res.none.push(probe.label);
+  }
+  res.selects = await page.evaluate((x) => window.__railCheck.visibleSelects(x), p);
+  return res;
+}
+
 async function runConcept(c, ref) {
-  const r = { concept: c, panels: {}, themes: {}, errors: [] };
+  const r = { concept: c, skin: false, gpu: null, panels: {}, themes: {}, errors: [] };
   const b = await bootPage(PAGE);
-  const { page } = b;
+  const page = b.page;
+  r.gpu = b.gpu;
   try {
-    const ready = await page.evaluate(async (cid) => { const L = window.__railCheck; for (let i = 0; i < 60 && !document.documentElement.hasAttribute('data-pmr-ready'); i++) await L.sleep(100); if (!window.PMR) return { ok: false, why: 'no PMR' }; window.PMR.concepts.set(cid); await L.sleep(800); return { ok: true, concept: document.documentElement.getAttribute('data-rail-concept'), switcher: !!document.querySelector('.pmr-switch') }; }, c);
+    const ready = await page.evaluate(async (cid) => {
+      const L = window.__railCheck;
+      for (let i = 0; i < 60 && !document.documentElement.hasAttribute('data-pmr-ready'); i++) await L.sleep(100);
+      if (!window.PMR) return { ok: false, why: 'no PMR' };
+      window.PMR.concepts.set(cid); await L.sleep(800);
+      const def = window.PMR.concepts.get(cid);
+      /* a skin concept keeps the shell's own panels; 'current' (today's rail) is checked the same way, report-only
+         on menus, so the lead can compare a skin against it */
+      L.skin = cid === 'current' || !!(def && def.skin);
+      return { ok: true, concept: document.documentElement.getAttribute('data-rail-concept'), skinAttr: document.documentElement.getAttribute('data-rail-skin'), skinMode: L.skin, switcher: !!document.querySelector('.pmr-switch') };
+    }, c);
     r.boot = ready;
+    r.skin = !!(ready && ready.skinMode);
     for (const p of PANELS) {
       const pr = {};
       pr.open = await page.evaluate((x) => window.__railCheck.open(x), p);
-      if (!QUICK) {
-        const cr = await page.evaluate((x, n) => window.__railCheck.crawl(x, n), p, 900);
+      if (r.skin) {
+        const pairs = await page.evaluate((x) => window.__railCheck.directPairs(x), p);
+        const reached = new Set(pairs);
+        pr.reach = { mode: 'direct', steps: null, reached: pairs.length, missing: (ref[p] || []).filter((x) => !reached.has(x)) };
+        pr.reach.missingCount = pr.reach.missing.length;
+        pr.reach.missing = pr.reach.missing.slice(0, 12);
+      } else if (!QUICK) {
+        const cr = await page.evaluate(([x, n]) => window.__railCheck.crawl(x, n), [p, 900]);
         const reached = new Set(cr.pairs);
         pr.reach = { steps: cr.steps, reached: cr.pairs.length, missing: (ref[p] || []).filter((x) => !reached.has(x)) };
         pr.reach.missingCount = pr.reach.missing.length;
@@ -237,21 +378,33 @@ async function runConcept(c, ref) {
       pr.type = await page.evaluate((x) => window.__railCheck.typeFloor(x), p);
       pr.pills = await page.evaluate((x) => window.__railCheck.pills(x), p);
       pr.sidebars = await page.evaluate((x) => window.__railCheck.sidebars(x), p);
-      pr.foreignMenus = await page.evaluate((x) => window.__railCheck.foreignMenus(x), p);
+      if (r.skin) pr.menus = await skinMenus(page, p);
+      else pr.foreignMenus = await page.evaluate((x) => window.__railCheck.foreignMenus(x), p);
       r.panels[p] = pr;
     }
-    /* reduced motion: after switching a panel and clicking its first nav element nothing inside the rail animates */
+    /* reduced motion: after switching a panel and clicking its first nav element nothing inside the rail animates.
+       For a skin concept the click target is the panel's first visible [data-tab] and the animation targets are
+       inside the original panel. */
     r.reduced = await page.evaluate(async (first) => {
       const L = window.__railCheck; const de = document.documentElement; de.setAttribute('data-motion', 'reduced');
-      await L.open(first); const nav = L.view(first) && L.view(first).querySelector('[data-pmr-nav]'); if (nav) nav.click(); await L.sleep(60);
-      const anims = document.getAnimations().filter((a) => { const t = a.effect && a.effect.target; return t && t.closest && (t.closest('.pmr-view') || t.closest('#pmr-overlay')) && a.playState === 'running'; }).length;
+      await L.open(first);
+      let anims;
+      if (L.skin) {
+        const p = document.getElementById('panel-' + first);
+        const tab = p && [...p.querySelectorAll('[data-tab]')].find(L.visible);
+        if (tab) tab.click(); await L.sleep(60);
+        anims = document.getAnimations().filter((a) => { const t = a.effect && a.effect.target; return t && t.closest && t.closest('#panel-' + first) && a.playState === 'running'; }).length;
+      } else {
+        const nav = L.view(first) && L.view(first).querySelector('[data-pmr-nav]'); if (nav) nav.click(); await L.sleep(60);
+        anims = document.getAnimations().filter((a) => { const t = a.effect && a.effect.target; return t && t.closest && (t.closest('.pmr-view') || t.closest('#pmr-overlay')) && a.playState === 'running'; }).length;
+      }
       de.removeAttribute('data-motion'); window.PMR.menu.closeAll(); return { running: anims };
     }, PANELS[0]);
     const themeList = QUICK ? ['basic-dark', 'retro-light'] : THEMES;
     const runs = themeList.map((t) => ({ slug: t, nier: false })).concat(QUICK ? [] : [{ slug: 'basic-dark', nier: true }, { slug: 'basic-light', nier: true }]);
     for (const t of runs) {
       const key = t.slug + (t.nier ? '+nier' : '');
-      const tr = { set: await page.evaluate((s, n) => window.__railCheck.theme(s, n), t.slug, t.nier), panels: {} };
+      const tr = { set: await page.evaluate(([s, n]) => window.__railCheck.theme(s, n), [t.slug, t.nier]), panels: {} };
       for (const p of PANELS) {
         await page.evaluate((x) => window.__railCheck.open(x), p);
         await page.evaluate((x) => window.__railCheck.setWidth(x), 280);
@@ -264,7 +417,8 @@ async function runConcept(c, ref) {
         if (SHOTS) {
           mkdirSync(join(out, 'shots'), { recursive: true });
           const clip = await page.evaluate(() => { const a = document.getElementById('activityBar').getBoundingClientRect(), s = document.getElementById('sidePanelSlot').getBoundingClientRect(); return { x: Math.floor(a.left), y: Math.floor(Math.min(a.top, s.top)), width: Math.ceil(s.right - a.left + 2), height: Math.ceil(Math.max(a.bottom, s.bottom) - Math.min(a.top, s.top)), scale: 1 }; });
-          await page.screenshot(join(out, 'shots', `${c}-${key}-${p}.png`), { clip });
+          const shot = await b.cdp.send('Page.captureScreenshot', { format: 'png', clip, captureBeyondViewport: false });
+          writeFileSync(join(out, 'shots', `${c}-${key}-${p}.png`), Buffer.from(shot.data, 'base64'));
         }
       }
       await page.evaluate(() => window.__railCheck.clearWidth());
@@ -274,42 +428,52 @@ async function runConcept(c, ref) {
   } catch (e) {
     r.fatal = String(e && e.stack || e).slice(0, 600);
   } finally {
-    r.errors = [...new Set(page.errors.map(norm))];
+    r.errors = [...new Set(b.errors.map(norm))];
     await b.close();
   }
   return r;
 }
 
-const ref = { errors: await refErrors(), pairs: await refPairs() };
 const results = [];
-for (const c of CONCEPTS) results.push(await runConcept(c, ref.pairs));
-
-/* verdicts */
 const fails = [];
-for (const r of results) {
-  const c = r.concept;
-  if (r.fatal) fails.push(`${c}: fatal ${r.fatal.split('\n')[0]}`);
-  if (!r.boot || !r.boot.ok || r.boot.concept !== c) fails.push(`${c}: did not boot into the concept (${JSON.stringify(r.boot)})`);
-  const newErr = r.errors.filter((e) => !ref.errors.includes(e));
-  if (newErr.length) fails.push(`${c}: ${newErr.length} new console errors: ${newErr.slice(0, 3).join(' || ')}`);
-  for (const [p, pr] of Object.entries(r.panels)) {
-    if (!pr.open || !pr.open.viewShown || !pr.open.originalHidden) fails.push(`${c}/${p}: view not shown or original not hidden (${JSON.stringify(pr.open)})`);
-    if (pr.reach && pr.reach.missingCount) fails.push(`${c}/${p}: ${pr.reach.missingCount} original actions not reachable, e.g. ${pr.reach.missing.slice(0, 3).join(' ;; ')}`);
-    for (const [w, o] of Object.entries(pr.widths || {})) if (o.count || o.scroll > 1) fails.push(`${c}/${p}: overflow at ${w}px (${o.count} elements, scroll ${o.scroll}) ${o.offenders.slice(0, 3).join(', ')}`);
-    if (pr.type && pr.type.min < 11) fails.push(`${c}/${p}: text below 11px (${pr.type.min}px at ${pr.type.where})`);
-    if (pr.pills && pr.pills.length) fails.push(`${c}/${p}: pill-shaped elements: ${pr.pills.slice(0, 3).join(', ')}`);
-    if (pr.sidebars && pr.sidebars.length) fails.push(`${c}/${p}: coloured side bars: ${pr.sidebars.slice(0, 3).join(', ')}`);
-    if (pr.foreignMenus) fails.push(`${c}/${p}: ${pr.foreignMenus} non-PMR menus/selects inside the concept view`);
+let ref = { errors: [], pairs: {} };
+try {
+  ref = { errors: await refErrors(), pairs: await refPairs() };
+  for (const c of CONCEPTS) results.push(await runConcept(c, ref.pairs));
+
+  /* verdicts */
+  for (const r of results) {
+    const c = r.concept;
+    if (r.fatal) fails.push(`${c}: fatal ${r.fatal.split('\n')[0]}`);
+    if (!r.boot || !r.boot.ok || r.boot.concept !== c) fails.push(`${c}: did not boot into the concept (${JSON.stringify(r.boot)})`);
+    const newErr = r.errors.filter((e) => !ref.errors.includes(e));
+    if (newErr.length) fails.push(`${c}: ${newErr.length} new console errors: ${newErr.slice(0, 3).join(' || ')}`);
+    for (const [p, pr] of Object.entries(r.panels)) {
+      if (!pr.open || !pr.open.viewShown || (!r.skin && !pr.open.originalHidden)) fails.push(`${c}/${p}: view not shown or original not hidden (${JSON.stringify(pr.open)})`);
+      if (pr.reach && pr.reach.missingCount) fails.push(`${c}/${p}: ${pr.reach.missingCount} original actions not reachable, e.g. ${pr.reach.missing.slice(0, 3).join(' ;; ')}`);
+      for (const [w, o] of Object.entries(pr.widths || {})) if (o.count || o.scroll > 1) fails.push(`${c}/${p}: overflow at ${w}px (${o.count} elements, scroll ${o.scroll}) ${o.offenders.slice(0, 3).join(', ')}`);
+      if (pr.type && pr.type.min < 11) fails.push(`${c}/${p}: text below 11px (${pr.type.min}px at ${pr.type.where})`);
+      if (pr.pills && pr.pills.length) fails.push(`${c}/${p}: pill-shaped elements: ${pr.pills.slice(0, 3).join(', ')}`);
+      if (pr.sidebars && pr.sidebars.length) fails.push(`${c}/${p}: coloured side bars: ${pr.sidebars.slice(0, 3).join(', ')}`);
+      if (pr.foreignMenus) fails.push(`${c}/${p}: ${pr.foreignMenus} non-PMR menus/selects inside the concept view`);
+      if (r.skin && c !== 'current' && pr.menus) {
+        if (pr.menus.sprouted.length) fails.push(`${c}/${p}: shell sprout menu instead of the chat-style menu (${pr.menus.sprouted.length}/${pr.menus.triggers} triggers: ${pr.menus.sprouted.slice(0, 3).join(', ')})`);
+        if (pr.menus.selects) fails.push(`${c}/${p}: ${pr.menus.selects} visible <select> inside the panel`);
+      }
+    }
+    if (r.reduced && r.reduced.running) fails.push(`${c}: ${r.reduced.running} animations running under reduced motion`);
+    for (const [t, tr] of Object.entries(r.themes)) for (const [p, x] of Object.entries(tr.panels)) {
+      if (!x.shown) fails.push(`${c}/${t}/${p}: view not visible`);
+      if (x.overflow) fails.push(`${c}/${t}/${p}: overflow at 280px (${x.overflow})`);
+      if (x.type < 11) fails.push(`${c}/${t}/${p}: text below 11px (${x.type})`);
+      if (x.pills) fails.push(`${c}/${t}/${p}: ${x.pills} pill-shaped elements`);
+    }
   }
-  if (r.reduced && r.reduced.running) fails.push(`${c}: ${r.reduced.running} animations running under reduced motion`);
-  for (const [t, tr] of Object.entries(r.themes)) for (const [p, x] of Object.entries(tr.panels)) {
-    if (!x.shown) fails.push(`${c}/${t}/${p}: view not visible`);
-    if (x.overflow) fails.push(`${c}/${t}/${p}: overflow at 280px (${x.overflow})`);
-    if (x.type < 11) fails.push(`${c}/${t}/${p}: text below 11px (${x.type})`);
-    if (x.pills) fails.push(`${c}/${t}/${p}: ${x.pills} pill-shaped elements`);
-  }
+} catch (e) {
+  if (e instanceof NoGpu) fails.push(e.message);
+  else throw e;
 }
-const summary = { page: PAGE, ref: REF, refErrors: ref.errors.length, refPairs: Object.fromEntries(Object.entries(ref.pairs).map(([k, v]) => [k, v.length])), concepts: results.map((r) => ({ concept: r.concept, errors: r.errors.length, reach: Object.fromEntries(Object.entries(r.panels).map(([p, x]) => [p, x.reach ? `${x.reach.reached} seen, ${x.reach.missingCount} missing` : 'skipped'])), type: Object.fromEntries(Object.entries(r.panels).map(([p, x]) => [p, x.type && x.type.min])) })), fails };
+const summary = { page: PAGE, ref: REF, gpu: GPU, refErrors: ref.errors.length, refPairs: Object.fromEntries(Object.entries(ref.pairs).map(([k, v]) => [k, v.length])), concepts: results.map((r) => ({ concept: r.concept, skin: r.skin, gpu: r.gpu, errors: r.errors.length, reach: Object.fromEntries(Object.entries(r.panels).map(([p, x]) => [p, x.reach ? `${x.reach.reached} seen, ${x.reach.missingCount} missing` : 'skipped'])), type: Object.fromEntries(Object.entries(r.panels).map(([p, x]) => [p, x.type && x.type.min])) })), fails };
 writeFileSync(join(out, 'rail-boot.json'), JSON.stringify({ summary, results }, null, 2));
 console.log(JSON.stringify(summary, null, 1));
 console.log(fails.length ? `rail boot: ${fails.length} failing checks` : 'rail boot: ok');
