@@ -56,7 +56,12 @@ NIER_SELECTOR_PATCHES = [
      'nier strip list (rail)'),
 ]
 
-CONCEPT_IDS = ('a', 'b', 'c')
+CONCEPT_IDS = ('a', 'b', 'c', 'd')
+# Shell classes whose names contain "pill" and that a skin concept (D) must select to take the capsule away. The pill
+# lint stops concepts from creating pill classes; naming these shell classes in order to restyle them is allowed, and
+# only inside skin concept folders.
+SHELL_PILL_CLASSES = {'sh-pill'}
+SKIN_CONCEPTS = {'d'}
 # build_rail.py --only x sets this so a builder's private build includes (and lints) only the core and concept x
 ONLY: list[str] | None = None
 
@@ -184,6 +189,8 @@ def lint() -> list[str]:
             continue
         rel = p.relative_to(PKG).as_posix()
         text = p.read_text(encoding='utf-8')
+        skin = CONCEPTS_SRC in p.parents and p.relative_to(CONCEPTS_SRC).parts[0] in SKIN_CONCEPTS
+        allowed = SHELL_PILL_CLASSES if skin else set()
         if build.EMOJI.search(text):
             problems.append(f'emoji glyph in {rel}')
         if p.suffix == '.css':
@@ -199,13 +206,14 @@ def lint() -> list[str]:
                     problems.append(f'inset side bar in {rel}: {m.group(0).strip()}')
             for sel in re.findall(r'([^{}]+)\{', code):
                 for cls in CSS_CLASS.findall(sel):
-                    if 'pill' in cls.lower() and not cls.startswith('pm6-'):
+                    if 'pill' in cls.lower() and not cls.startswith('pm6-') and cls not in allowed:
                         problems.append(f'pill class name in {rel}: .{cls}')
         if p.suffix == '.js':
             code = re.sub(r'/\*[\s\S]*?\*/', lambda m: re.sub(r'[^\n]', ' ', m.group()), text)
             for rx in PILL_MARKUP:
                 for m in rx.finditer(code):
-                    if re.search(r'(?<![\w-])(?!pm6-)[\w-]*pill[\w-]*', m.group(1), re.I):
+                    names = re.findall(r'(?<![\w-])(?!pm6-)[\w-]*pill[\w-]*', m.group(1), re.I)
+                    if [x for x in names if x not in allowed]:
                         problems.append(f'pill class name in {rel}: {m.group(0)[:80]}')
             if p.parent == SRC / 'js':
                 for n, line in enumerate(code.split('\n'), 1):
