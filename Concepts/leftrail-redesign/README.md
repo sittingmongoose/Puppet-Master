@@ -1,9 +1,10 @@
 # Left rail redesign
 
-Three redesign concepts for the left rail of the Puppet Master concept (the activity bar and its side panels), built
-as a layer over the published concept. The review copy is `Concepts/LeftRailPMConcept7.html`: `PMConcept7.html` with
-the concepts added and a switcher in the status bar ("Rail", Alt+Shift+1..4, or `?rail=a|b|c|current`). It is
-generated: never hand-edit it, and never edit `PMConcept7.html` for this work.
+Four concepts for the left rail of the Puppet Master concept (the activity bar and its side panels), built as a layer
+over the published concept. The review copy is `Concepts/LeftRailPMConcept7.html`: `PMConcept7.html` with the concepts
+added and a switcher in the status bar ("Rail", Alt+Shift+1..5 for A, B, C, D and Current, or
+`?rail=a|b|c|d|current`; D is the default). It is generated: never hand-edit it, and never edit `PMConcept7.html` for
+this work.
 
 Concept round (Jared, 2026-10-02): each concept redesigns the activity bar and three panels — Files, Source Control and
 Docker. The other six panels stay as they are, and "Current" shows today's rail untouched, so the concepts can be
@@ -14,10 +15,18 @@ compared in place. Jared judges the concepts; nothing here ranks them.
 | A | Ledger | Read it in place: typographic two-line rows, text tabs with a gliding ink and an overflow menu, inline detail |
 | B | Stack | Drill in: a summary page per panel instead of tabs, full-width pages per area and per item, depth told by motion |
 | C | Lens | Detail beside the rail: compact one-line index rows, a transient sheet beside the rail for the selected item, morphing icon tabs |
+| D | Polish | Today's rail, polished (Jared, 2026-10-05, after A-C): same structure and coloured shelves, no pills, status glyph + word, highlights concentric with their boxes, text that fits by layout (stacking, middle truncation) instead of abbreviation, tight horizontal spacing, per-family motion |
+
+Concept D is a skin: it renders no views of its own. It keeps the shell's `#panel-files`, `#panel-source` and
+`#panel-docker` (every behaviour and `data-demo-action` stays), restyles them under `html[data-rail-skin="d"]`, and its
+script records every DOM change it makes and undoes it on a concept switch, so "Current" is byte-identical afterwards.
+Its stylesheet is generated: edit `src/concepts/d/css/*.src.css` and run `tools/build_d_css.py` (the Look settings
+scaler only rescales flat rules, so the sources use selector macros instead of CSS nesting).
 
 Hard rules for every concept: no pills, no boxes with coloured side bars, no emoji, every dropdown in the chat
 assistant's picker style (`PMR.menu`), readable type (13 px names, 12 px facts, nothing under 11 px), the rail stays
-narrow (280 px default), all eight theme variants plus NieR Mode, motion that holds 60 fps without a GPU.
+narrow (280 px default), all eight theme variants plus NieR Mode, smooth motion. Browser checks run on the VM GPU
+(`agent-browser`, never `--disable-gpu`; `/mnt/Cursor/Agent-Guides/gpu-recording.md`).
 
 ## Layout
 
@@ -26,7 +35,10 @@ Concepts/leftrail-redesign/
   README.md, DATA.md            this file; the fixture schema every concept renders from
   tools/build_rail.py           build / --check Concepts/LeftRailPMConcept7.html (--out PATH [--only x] for private builds)
   tools/rail_layer.py           apply(text, need) -> (text, notes), lint(), syntax_check(text)
-  tools/rail_boot.mjs           acceptance check by real clicks (reach, overflow, type floor, pills, side bars, themes, NieR)
+  tools/rail_boot.mjs           acceptance check on GPU Chrome (reach, overflow, type floor, pills, side bars, themes, NieR;
+                                skin concepts checked on the shell's own panels, their dropdowns must open PMR.menu)
+  tools/rail_perf.py            frames drawn per rail motion on the VM GPU (headful, renderer asserted)
+  tools/build_d_css.py          concept D's d.css from src/concepts/d/css/*.src.css (--check for staleness)
   tools/parity.py               every original data-demo-action/-arg pair of the three panels is in the fixture
   src/css/*.css                 shared tokens, the menu, the host, the kit, the NieR hooks
   src/js/*.js                   window.PMR: core helpers, the fixture (05-07 data only, 08 assembly), glyphs, rules,
@@ -40,7 +52,9 @@ Concepts/leftrail-redesign/
 python3 Concepts/leftrail-redesign/tools/build_rail.py          # build Concepts/LeftRailPMConcept7.html
 python3 Concepts/leftrail-redesign/tools/build_rail.py --check  # rebuild in memory, lint, syntax, byte parity
 python3 Concepts/leftrail-redesign/tools/parity.py --list       # fixture completeness against PMConcept7.html
-node Concepts/leftrail-redesign/tools/rail_boot.mjs <out-dir> [--concepts a,b,c] [--quick] [--shots]
+node Concepts/leftrail-redesign/tools/rail_boot.mjs <out-dir> [--concepts a,b,c,d,current] [--quick] [--shots]
+python3 Concepts/leftrail-redesign/tools/rail_perf.py Concepts/LeftRailPMConcept7.html <out.json> --concepts d
+python3 Concepts/leftrail-redesign/tools/build_d_css.py [--check]
 python3 Concepts/onboarding/opus-5.5/tools/build.py --check     # the published concept stays untouched: "check ok"
 ```
 
