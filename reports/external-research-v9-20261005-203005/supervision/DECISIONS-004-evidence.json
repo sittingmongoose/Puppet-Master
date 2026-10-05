@@ -1,0 +1,70 @@
+{
+  "schema": "er9.supervision.evidence.v1",
+  "recorded_utc": "2026-10-05T22:28:03.828372+00:00",
+  "scope": "neutral prospective contracts and exact identity hash of private assessment; no source-specific findings or holdout/candidate contents copied",
+  "earlier_decision_evidence_unchanged": true,
+  "evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/input/ER9/ER9_EXECUTE_HANDOFF.md",
+      "sha256": "46529ea93a95d92196f947daf3da54ac60768408aed9f5eaaa8d64c4167d210a",
+      "bytes": 58697,
+      "publication_class": "neutral_contract"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "bytes": 2521,
+      "publication_class": "neutral_contract"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "bytes": 1751,
+      "publication_class": "neutral_contract"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/integrated/I-09-reservation.json",
+      "sha256": "3d0be73498a37ac966961e3463688c760c12e19f4643b4715cd2aaf3d2a13336",
+      "bytes": 1036,
+      "publication_class": "neutral_contract"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/integrated/I-11-reservation.json",
+      "sha256": "29f6eb56185ca18deaca681c99c534d12f67b95c072dd9c2b0a40bc968b7c499",
+      "bytes": 1036,
+      "publication_class": "neutral_contract"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/confirmation/LOCK_PROTOCOL.md",
+      "sha256": "db399aca970c8f05e4d83626c24b931008d458ea915edb2b2646bb991acedb64",
+      "bytes": 2667,
+      "publication_class": "neutral_contract"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/confirmation/QUEUE.json",
+      "sha256": "9e24f0ef43123fff26af6d96baada437b2682bb3a76a270df19114bcc75e6068",
+      "bytes": 880,
+      "publication_class": "neutral_contract"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-review0001/REVIEW.md",
+      "sha256": "4f0c9c4cf58f0544a63c302facc89283618f5ad7c99509c81f7a31e5fe850d35",
+      "bytes": 8675,
+      "publication_class": "evaluator_only_source_findings",
+      "contents_read_by_supervisor": false,
+      "handling": "identity hash only; no contents copied or candidate prompt use"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-004.md",
+      "sha256": "1f6f1f562851c6ca9319560d695e0edb69b35ec4705f7a3300baa06e29d4b09a",
+      "bytes": 8092,
+      "publication_class": "prospective_selection_freeze"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-004.json",
+      "sha256": "15e38a031919d07e63c942022d6e006f9db3b5e812e2df2a94bb3b97767d3072",
+      "bytes": 3448,
+      "publication_class": "prospective_selection_freeze"
+    }
+  ]
+}

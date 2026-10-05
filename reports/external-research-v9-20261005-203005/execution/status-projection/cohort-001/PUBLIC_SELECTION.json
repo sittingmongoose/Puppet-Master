@@ -1,0 +1,33 @@
+{
+  "schema": "er9.native-goal-status-public-selection.v1",
+  "frozen_owner": "codex-er9-execution",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/status-projection/export.py",
+      "sha256": "921ef67204e4d4116b7e63a9c755fd20599379e819bdda1d659f6d67fbee5e82"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/status-projection/test_export.py",
+      "sha256": "db5f64a233e3a630d707035ccadd5639019c3832e9712442c6c1eca0245c7bcb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/status-projection/README.md",
+      "sha256": "d238ba15c2b0f866de6eae6c5d79123000cb62783d56947be6992e8254e4c6b9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/status-projection/cohort-001/NATIVE_GOAL_STATUS.json",
+      "sha256": "b290343719c1e0feea8a54d9627dd8c34175e2db8d0d0426efbffea484dc1f7d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/status-projection/cohort-001/MANIFEST.json",
+      "sha256": "39e24cee207252642889158742f86df189a240ef22d13c709ba8c912f0a0f584"
+    }
+  ],
+  "selector_regressions": {
+    "count": 3,
+    "passed": true,
+    "model_calls": 0
+  },
+  "old_accounting_exports_preserved": true,
+  "no_raw_native_or_candidate_text": true
+}

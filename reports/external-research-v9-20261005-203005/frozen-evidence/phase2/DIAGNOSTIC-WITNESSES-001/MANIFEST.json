@@ -1,0 +1,150 @@
+{
+  "schema": "er9.positive-phase2-diagnostic-execution-export.v1",
+  "bindings": [
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "B",
+      "execution_id": "exec-r01veuh3",
+      "phase1_partial_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "output_freeze_sha256": "9f8284c59c61faa8001174794d1541b468950df1b1a8d06582ad6cc9f2600f48",
+      "native_receipt_sha256": "202da0486fa6024b2b54014bfb606d08c15fac643bf1b4358d9a41b7094c3657",
+      "all_five_quiet_flags": true
+    },
+    {
+      "pair_id": "D-V14-B",
+      "alias": "A",
+      "execution_id": "exec-wa1jtbo0",
+      "phase1_partial_judgment_sha256": "2b3c2e69bec308a3766822613d19ad28b245fc2ad99998ad2eb267a24417f71d",
+      "output_freeze_sha256": "c948a167dabc97c9a85bf757543b2789a0c5515874cc77469008c0eba7c33bdd",
+      "native_receipt_sha256": "1a91e3d95c12a58baa784d71ae5e5472a29c83b7a3873b99c0180637a5898e13",
+      "all_five_quiet_flags": true
+    }
+  ],
+  "files": [
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "B",
+      "execution_id": "exec-r01veuh3",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-WITNESSES-001/D-V14-A-LUNA-R1/B/exec-r01veuh3/code.py",
+      "sha256": "abe2559d0f367a076c4b528236c397c9892cfd75576c03e3068f7cc060d7c0c2",
+      "original_sha256": "abe2559d0f367a076c4b528236c397c9892cfd75576c03e3068f7cc060d7c0c2",
+      "evidence_kind": "candidate_code",
+      "redaction_policy": "exact bytes"
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "B",
+      "execution_id": "exec-r01veuh3",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-WITNESSES-001/D-V14-A-LUNA-R1/B/exec-r01veuh3/data.json",
+      "sha256": "21f60a858681d34dab0e199f4503beeb0791fed2b75fc3faa8df2bd77dad5d84",
+      "original_sha256": "21f60a858681d34dab0e199f4503beeb0791fed2b75fc3faa8df2bd77dad5d84",
+      "evidence_kind": "candidate_input",
+      "redaction_policy": "exact bytes"
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "B",
+      "execution_id": "exec-r01veuh3",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-WITNESSES-001/D-V14-A-LUNA-R1/B/exec-r01veuh3/stdout.bin",
+      "sha256": "fd3b08068314591d9e371303876644ec2d92d4a4e6c1a7c5984b81d2dceeecdf",
+      "original_sha256": "fd3b08068314591d9e371303876644ec2d92d4a4e6c1a7c5984b81d2dceeecdf",
+      "evidence_kind": "candidate_stdout",
+      "redaction_policy": "exact bytes"
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "B",
+      "execution_id": "exec-r01veuh3",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-WITNESSES-001/D-V14-A-LUNA-R1/B/exec-r01veuh3/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_kind": "candidate_stderr",
+      "redaction_policy": "exact bytes"
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "B",
+      "execution_id": "exec-r01veuh3",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-WITNESSES-001/D-V14-A-LUNA-R1/B/exec-r01veuh3/execution-facts.json",
+      "sha256": "a67746aa10573639030f86f4c101877c43935166fea552462cb3b8b1ca066f7a",
+      "original_sha256": "d5e9195cac164e39226848a0d8d6cadf099dce5f4083e567638981cc3dcfac28",
+      "evidence_kind": "candidate_execution_receipt",
+      "redaction_policy": "positive metadata projection; omit unit/privatepath/timing/history/economics, streams separately exact",
+      "omitted_original_fields": [
+        "cleanup_query_stderr",
+        "cleanup_query_stdout",
+        "cleanup_stop_stderr",
+        "cleanup_stop_stdout",
+        "completed_utc",
+        "control_group_after_stop",
+        "elapsed_seconds",
+        "limitations",
+        "stderr",
+        "stdout"
+      ]
+    },
+    {
+      "pair_id": "D-V14-B",
+      "alias": "A",
+      "execution_id": "exec-wa1jtbo0",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-WITNESSES-001/D-V14-B/A/exec-wa1jtbo0/code.py",
+      "sha256": "4d0c3a0914a99045d4321d3a5257b866b6193e40d31d071735e5f1b183b0ba78",
+      "original_sha256": "4d0c3a0914a99045d4321d3a5257b866b6193e40d31d071735e5f1b183b0ba78",
+      "evidence_kind": "candidate_code",
+      "redaction_policy": "exact bytes"
+    },
+    {
+      "pair_id": "D-V14-B",
+      "alias": "A",
+      "execution_id": "exec-wa1jtbo0",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-WITNESSES-001/D-V14-B/A/exec-wa1jtbo0/data.json",
+      "sha256": "4e84bd3d2a7508c625288ba7d512c93ed4d701fb131951126a9cdb945155bee6",
+      "original_sha256": "4e84bd3d2a7508c625288ba7d512c93ed4d701fb131951126a9cdb945155bee6",
+      "evidence_kind": "candidate_input",
+      "redaction_policy": "exact bytes"
+    },
+    {
+      "pair_id": "D-V14-B",
+      "alias": "A",
+      "execution_id": "exec-wa1jtbo0",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-WITNESSES-001/D-V14-B/A/exec-wa1jtbo0/stdout.bin",
+      "sha256": "1e0293ceca4571cf3665ab8b3361bad349694f19db5201b59e8952d474982e39",
+      "original_sha256": "1e0293ceca4571cf3665ab8b3361bad349694f19db5201b59e8952d474982e39",
+      "evidence_kind": "candidate_stdout",
+      "redaction_policy": "exact bytes"
+    },
+    {
+      "pair_id": "D-V14-B",
+      "alias": "A",
+      "execution_id": "exec-wa1jtbo0",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-WITNESSES-001/D-V14-B/A/exec-wa1jtbo0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_kind": "candidate_stderr",
+      "redaction_policy": "exact bytes"
+    },
+    {
+      "pair_id": "D-V14-B",
+      "alias": "A",
+      "execution_id": "exec-wa1jtbo0",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-WITNESSES-001/D-V14-B/A/exec-wa1jtbo0/execution-facts.json",
+      "sha256": "9132af8564108b673d278b0e83f48bf5eb4d84aa8ef9aac639cbe7676951cc81",
+      "original_sha256": "ea9c60048eef5854761e1e1fbb52e9ded7473cb453b72f98b05143346bac5d39",
+      "evidence_kind": "candidate_execution_receipt",
+      "redaction_policy": "positive metadata projection; omit unit/privatepath/timing/history/economics, streams separately exact",
+      "omitted_original_fields": [
+        "cleanup_query_stderr",
+        "cleanup_query_stdout",
+        "cleanup_stop_stderr",
+        "cleanup_stop_stdout",
+        "completed_utc",
+        "control_group_after_stop",
+        "elapsed_seconds",
+        "limitations",
+        "stderr",
+        "stdout"
+      ]
+    }
+  ],
+  "semantic_assessment": "NOT_PERFORMED_BY_COURIER; no expected-answer substitution"
+}

@@ -1,0 +1,661 @@
+{
+  "schema": "er9.positive-anonymous-source-capture-metadata.v1",
+  "parent_dispatch_sha256": "e3be7ac228eef9f72f91f0a844ecc18770dae5bc4f67a1f5e9da9315018b89cf",
+  "files": [
+    {
+      "alias": "A",
+      "relative_path": "A/00fac44f69fa4da68621633d3cab87ec.json",
+      "sha256": "00eb4f45f876a62fb60a7f775b1edb43337043991c0ea44ad0af230ea87e0996",
+      "original_sha256": "7ebf8c5d9b092ba673b4d1aef03e8c7472c00ffdd8ddd33a5ff38f53799d07cc",
+      "source_ids": [
+        "S4"
+      ],
+      "capture_id": "00fac44f69fa4da68621633d3cab87ec",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "relative_path": "A/0a0dcc8289a046ab92f2ad65146e2a74.json",
+      "sha256": "9fd1cefe00e66e2ec53209f76cbaf109d05483d6efb336d0dac643d7cebfc9e2",
+      "original_sha256": "a7e51c75ca19b7dcbe8783308fd6256b4a6de4c81aabbc78d605acc470522b74",
+      "source_ids": [
+        "S11"
+      ],
+      "capture_id": "0a0dcc8289a046ab92f2ad65146e2a74",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "relative_path": "A/30a71717ae544c7cbc59c759916acd49.json",
+      "sha256": "bc269faeab6c43034ad66944c79caf0de4bfd11ec0cb8a1c2d24209375daf79f",
+      "original_sha256": "0b974e880c2c1b43a8a89180df820d989ce5de77490aca2045081579534394a7",
+      "source_ids": [
+        "S13"
+      ],
+      "capture_id": "30a71717ae544c7cbc59c759916acd49",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "relative_path": "A/3bc3d21d9ad24ba1819a80a3d7393290.json",
+      "sha256": "54618d63257aa6039753d97bed659ef2c6d429cc51d3f5d1c0a6770dcfb44425",
+      "original_sha256": "a45ab5a8c127ce3c4c2bd89dadfc23c4185b713bbfc82b7baaa60625b469dae9",
+      "source_ids": [
+        "S17"
+      ],
+      "capture_id": "3bc3d21d9ad24ba1819a80a3d7393290",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "relative_path": "A/4b8b8f7ee312463784f240d9e902ed09.json",
+      "sha256": "6ae3d8ada5d202e98429a70525d08d427349caf86cf6a544dad5bdc6fbaddca5",
+      "original_sha256": "cc65911b36bec291e747983969bf5fa920b13bf17f32849fc51bc33ae21ee42e",
+      "source_ids": [
+        "S12"
+      ],
+      "capture_id": "4b8b8f7ee312463784f240d9e902ed09",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "relative_path": "A/4df07dc4957f4947b80c1df855504094.json",
+      "sha256": "40cc7cab14908c1824d96f1acfb907c3b59add482f8dd0503a5f22c160f4c390",
+      "original_sha256": "a86c64c49fa90e0b463037b4ca09d8466d94402b1e2cfa65eabef1f3c7082afa",
+      "source_ids": [
+        "S16"
+      ],
+      "capture_id": "4df07dc4957f4947b80c1df855504094",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "relative_path": "A/6b004847f427487abc3abc582ea04bda.json",
+      "sha256": "36c0993542bad54b1542833cb8ec7248bce2478b6c97ad0c9871edde276e5a9d",
+      "original_sha256": "4436c77575923976be29f9fb5e23116e536b518efd6c7b892c96d079dabc73f1",
+      "source_ids": [
+        "S22"
+      ],
+      "capture_id": "6b004847f427487abc3abc582ea04bda",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "relative_path": "A/73d90e7b613347ceb1bba9d4cbae636d.json",
+      "sha256": "307c2ac0bddf1713f2116bfa53e397bbadd6bb4537ba01df608dce6cbc0078f2",
+      "original_sha256": "9c0c47206f9235b7edaa96bb6badd3c3e0d81b903f5fc61670922d017c646ba6",
+      "source_ids": [
+        "S22"
+      ],
+      "capture_id": "73d90e7b613347ceb1bba9d4cbae636d",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "relative_path": "A/9530c002c2c948dfab7923546b927128.json",
+      "sha256": "5a48d9686e6328cb28115e6f9de1a4811a6ced203371ef503417f9bdc512182d",
+      "original_sha256": "7a1e174b0392bfe08994e521f31fd3935d5a15ea11a2d43deb07d85a180c9f08",
+      "source_ids": [
+        "S15"
+      ],
+      "capture_id": "9530c002c2c948dfab7923546b927128",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "relative_path": "A/9a0f223d1aa94658a5c8ca9617d9e979.json",
+      "sha256": "7e5ae14f5af18ac28d44fab70b076da76e799c798bd61b0a6495486683ffd6eb",
+      "original_sha256": "57cc9e7f97001df546a0167a134e0d08e6d45a0da3cc83072b3c0f6066d87079",
+      "source_ids": [
+        "S20"
+      ],
+      "capture_id": "9a0f223d1aa94658a5c8ca9617d9e979",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "relative_path": "A/9d16285005d740ba9a34b29ef579d94c.json",
+      "sha256": "674f410ea711c0afe927dfb92bf1e346b008df4a5598656694385977889317f0",
+      "original_sha256": "3e312cb369259aaded0d3fe3d66a031134b1a25a0f3f2269026f0bbc92103d1d",
+      "source_ids": [
+        "S2"
+      ],
+      "capture_id": "9d16285005d740ba9a34b29ef579d94c",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "relative_path": "A/9db338a5fa0044eda2d02add3c06d0d0.json",
+      "sha256": "338c560691441f41f0a9904fee8cca13a084129b9c72e0cacc08a25d0a809a14",
+      "original_sha256": "c4a1f90961b7b49b862e724fa8f0d9f12f74c45f367ab0cbae64146d7db57510",
+      "source_ids": [
+        "S14"
+      ],
+      "capture_id": "9db338a5fa0044eda2d02add3c06d0d0",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "relative_path": "A/ac8fe25b4f6f4285ae74d0d2653804f2.json",
+      "sha256": "da1e5e2f4d0093dd50642fd57b5579120e0220f9c2490f7de7c3b3e82bc39d24",
+      "original_sha256": "fff0fd4335cc4ad289eb06d6ee8fc2b3992f6fb70f112342523353aac13db641",
+      "source_ids": [
+        "S21"
+      ],
+      "capture_id": "ac8fe25b4f6f4285ae74d0d2653804f2",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "relative_path": "A/b5fc08bfd24f4ac4b5a01b788534e258.json",
+      "sha256": "3b716e3d512229b40ac02c3bf61dd8bce267df4efe262df6d8b8c9cb8503ce5c",
+      "original_sha256": "4b92fcf71309113df1b6e25d3b41f9a7eab8fded9cd7bea6e86a7a1433ca3e98",
+      "source_ids": [
+        "S1"
+      ],
+      "capture_id": "b5fc08bfd24f4ac4b5a01b788534e258",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "relative_path": "A/b93bf458d9dc41328c75cc3e7262e02b.json",
+      "sha256": "d33440eff80c42e5ece28c7aeef69292a12c532807782556c4117035edc2b673",
+      "original_sha256": "09af89e805cfd68570d8b6d593b7b21d7072f1a3801b74caa2a3115a53cfba98",
+      "source_ids": [
+        "S6"
+      ],
+      "capture_id": "b93bf458d9dc41328c75cc3e7262e02b",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "relative_path": "A/b96ca39e9df943c490bd24df071266fa.json",
+      "sha256": "3a379c7ab08ee642f9d37d2222d9676a89a84adf001886b7d7247982c90768cb",
+      "original_sha256": "affbbd33eafebb3bdc116123f42e1a2509d7338f17324ac5785a1455730954af",
+      "source_ids": [
+        "S5"
+      ],
+      "capture_id": "b96ca39e9df943c490bd24df071266fa",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "relative_path": "A/c52027e1151d4c268223130560cfabae.json",
+      "sha256": "bc2c12bc8f9742a2584aaeca5c37e0db51571dfb8084c5a3ca8003e28a1d3414",
+      "original_sha256": "55d7d88bdc7c9b703b5a450d016755e571c0ad012920d6b5ae9dfb640d9f17f1",
+      "source_ids": [
+        "S15"
+      ],
+      "capture_id": "c52027e1151d4c268223130560cfabae",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "relative_path": "A/c5c3a688a12d4e379d46547e8344112e.json",
+      "sha256": "014bdc18b7fd3705a42fd9610a7a9ce5bf2f4b119cece45b7ab14b9de8699800",
+      "original_sha256": "1fc469f454e93118b9d22df844245485ffc27c463aed3c0e1e266dee9edc2926",
+      "source_ids": [
+        "S3"
+      ],
+      "capture_id": "c5c3a688a12d4e379d46547e8344112e",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "relative_path": "A/ce4cfbafcf9f412791d0fb2b9a770dbd.json",
+      "sha256": "2dcf6fd2d985e324dd0fde625ae4645860925c62c99a908e98fe8b91cedb4d44",
+      "original_sha256": "c68fac565e8ee924118700251412f1b31da907dcbe0337744e3808dec2575b2f",
+      "source_ids": [
+        "S9"
+      ],
+      "capture_id": "ce4cfbafcf9f412791d0fb2b9a770dbd",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "relative_path": "A/d257f27e8d0a4910ada81712fce86c89.json",
+      "sha256": "f6652597c8d7aac6519f7fbfe07803e032a171ccea005c54093c7bcbaf458073",
+      "original_sha256": "23301c2839e1bd33b6d8f3e896c322e94b1cb3b1f655f48062adc50afb63877e",
+      "source_ids": [
+        "S10"
+      ],
+      "capture_id": "d257f27e8d0a4910ada81712fce86c89",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "B",
+      "relative_path": "B/0557df6baa094be99f1de9fb076cfa49.json",
+      "sha256": "31165e6841482e416561e9822fd102453a9d32bce01a0133b2df496e3eb3b8f5",
+      "original_sha256": "eff344b5840695bf8dff19b9749160c643f71764fc8198a62be7c99279dad432",
+      "source_ids": [
+        "S04"
+      ],
+      "capture_id": "0557df6baa094be99f1de9fb076cfa49",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "B",
+      "relative_path": "B/07ec3fb4c23a4acba7d0f9718015611b.json",
+      "sha256": "8a2fda51ab627a96dff8144c960ab0a66921945eaa5119a8b28c082994700366",
+      "original_sha256": "a1a855d1e03d11b5e10c831fe331e580d04a4803f01cf1b3290bdf2799ad1064",
+      "source_ids": [
+        "S13"
+      ],
+      "capture_id": "07ec3fb4c23a4acba7d0f9718015611b",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "B",
+      "relative_path": "B/12d8828109f341b49d3637348d461903.json",
+      "sha256": "e9dba967e4d77641d4d00e37ab560d5c6869ffd78abc92589a09b97c44bced57",
+      "original_sha256": "68fd0f5ecadf31a4fc66142ca4499dd0319495edf4e737b338352e829098aa84",
+      "source_ids": [
+        "S17"
+      ],
+      "capture_id": "12d8828109f341b49d3637348d461903",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "B",
+      "relative_path": "B/30499752f7eb405b8f94739f63499332.json",
+      "sha256": "0d42990f722c35e6f986a51972a3af198d252c757199ec8c001153668c364940",
+      "original_sha256": "d0c7e749240a58aa49f4c88fc9b115d805f5d9f8958c50f00fab562867683a96",
+      "source_ids": [
+        "S01"
+      ],
+      "capture_id": "30499752f7eb405b8f94739f63499332",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "B",
+      "relative_path": "B/337fedb95c2543a0bce41abf551e92a7.json",
+      "sha256": "25367c38d0bf2d64b786b6e9bd1dbd8e17643d1f096b7a0809389f24be38094b",
+      "original_sha256": "717d604ba3a4de837103adbd3bd6bca72c1b8dd58a89a593e1a55e8c36440474",
+      "source_ids": [
+        "S12"
+      ],
+      "capture_id": "337fedb95c2543a0bce41abf551e92a7",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "B",
+      "relative_path": "B/33cd7c69ace549e793f9bc4b4787ba31.json",
+      "sha256": "ee598a49b122d620595a94fa8d61597ed9e0028c023b91f0640bf126a137140a",
+      "original_sha256": "3161d0f9d0e79047975e577a6a6e406086b5e1bca1e953e26bbb21a735c8b6d2",
+      "source_ids": [
+        "S05"
+      ],
+      "capture_id": "33cd7c69ace549e793f9bc4b4787ba31",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "B",
+      "relative_path": "B/3bfee7c3747346afb3a5b157f8254c9a.json",
+      "sha256": "ac6b343bac05dc7386d591f7b08c74a351433b5d77a20904eb84da5680237eb0",
+      "original_sha256": "b0b816894a3a58ce9a2a56493d5064cf5c2591ac01fae87a1d5522256e2429de",
+      "source_ids": [
+        "S06"
+      ],
+      "capture_id": "3bfee7c3747346afb3a5b157f8254c9a",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "B",
+      "relative_path": "B/3eb52c2d04f348fba9a0429344b42971.json",
+      "sha256": "e584f237bd6c54942b9b245e8deb5780a0df20e239142a2b6b7d0529f804e815",
+      "original_sha256": "eeadd3e469ef1f7bd2dc0431a17f22afe49bbdba768ea1c3bffed1c57b57ec5e",
+      "source_ids": [
+        "S10"
+      ],
+      "capture_id": "3eb52c2d04f348fba9a0429344b42971",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "B",
+      "relative_path": "B/491cd67cf3ba4d67a3fc93008bea8f5b.json",
+      "sha256": "690ad47ecd7ee47e308e8b16c79d4a35028c42619213ed44b4f419152b927592",
+      "original_sha256": "68ad9624d6d6b841ad8123284d7f733d98eda73de495b6e7f27539d86d11fdae",
+      "source_ids": [
+        "S03"
+      ],
+      "capture_id": "491cd67cf3ba4d67a3fc93008bea8f5b",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "B",
+      "relative_path": "B/5da14e1b1e154f14af1faa4b06f28d7f.json",
+      "sha256": "1701405849661fdf81c2a29d6be80b1fa2306c4875df7eb86b1fd6f9c5ead20a",
+      "original_sha256": "e6827d11db89088fa819755603d40f6e196c5a96b9e1e02e87a2192360873f5c",
+      "source_ids": [
+        "S08"
+      ],
+      "capture_id": "5da14e1b1e154f14af1faa4b06f28d7f",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "B",
+      "relative_path": "B/6a812b7dae114807b956b9e03d629396.json",
+      "sha256": "1870d2572041e21f1ec097011b6529ce054985a6dbd47d274c919bb3ab4d5dc3",
+      "original_sha256": "821e21366945be87e2ff41b790bb4f635e9787fc669622690ef752004e5ced69",
+      "source_ids": [
+        "S07"
+      ],
+      "capture_id": "6a812b7dae114807b956b9e03d629396",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "B",
+      "relative_path": "B/7ae13d4d3cc348cb85dc665d41276bf9.json",
+      "sha256": "38b253ab84b32950f739e383800623d5ba26edfce22e7e5fc261f582d6a81042",
+      "original_sha256": "d85bab75774a9ec9e5bde38d8c2e1a62aa31947c73669967442047766e1b910a",
+      "source_ids": [
+        "S15"
+      ],
+      "capture_id": "7ae13d4d3cc348cb85dc665d41276bf9",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "B",
+      "relative_path": "B/9596c7db83ea4120a28fc2c0382bca8d.json",
+      "sha256": "18068425eedcea504a7bcf5801a91d1d42d9a321018c5ef407fea97cac2f6ceb",
+      "original_sha256": "1145e5213467b2bb7e9bb0c22dbe20c7557a808f077e38372ef44a9ae700675d",
+      "source_ids": [
+        "S02"
+      ],
+      "capture_id": "9596c7db83ea4120a28fc2c0382bca8d",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "B",
+      "relative_path": "B/ab76de31db9043c787eb763690b15283.json",
+      "sha256": "00a9768f4a78fcf663e1ac7128170127a20dd68db1df9b3d0275c0d5b597a207",
+      "original_sha256": "397dfcd35c286673b64a3b74dec6d37578428ad2a843b5cb14fb50938c7cb2bd",
+      "source_ids": [
+        "S14"
+      ],
+      "capture_id": "ab76de31db9043c787eb763690b15283",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "B",
+      "relative_path": "B/b140ebd4b78c476c8db68ed881a29d05.json",
+      "sha256": "0957ca15e6af2d49584b7e1250d05643aa4e61e4220a47f04a16a89340796ecd",
+      "original_sha256": "a12f03786f6039e3cd86aeeb05b3e064029129f5a23343e065727b2ef3149fe3",
+      "source_ids": [
+        "S16"
+      ],
+      "capture_id": "b140ebd4b78c476c8db68ed881a29d05",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "B",
+      "relative_path": "B/d22e06c52f8f41ff8101feb4bda7d8b2.json",
+      "sha256": "d2fd69a4513618110e40e1acca78cfc2252e03fe32112c72ff2bf4e8f7b17759",
+      "original_sha256": "1d9c122c681c22577de59581035ce98be3162384e3118c33707cbbb6c6a9b535",
+      "source_ids": [
+        "S18"
+      ],
+      "capture_id": "d22e06c52f8f41ff8101feb4bda7d8b2",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "B",
+      "relative_path": "B/f3793ca9a9ea4f34808dda9fe0d2da4e.json",
+      "sha256": "c180ba024a4caaeb80265a3fe9bd84e4b18928b785c927d135d43d5fbd7f6dde",
+      "original_sha256": "86fca5fbed54d739d5ee14b23b77933bf0daac7498698c53d307b897f3e26419",
+      "source_ids": [
+        "S09"
+      ],
+      "capture_id": "f3793ca9a9ea4f34808dda9fe0d2da4e",
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; exclude machine capture_path/public_pinned_ip/llm_read; raw bodies remain LAB only",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    }
+  ],
+  "unresolved_references": [
+    {
+      "alias": "A",
+      "source_id": "S4",
+      "candidate_catalog_hash_reference": "b3385c61115d20914310949041828928f92593cfeaaa74dc6805695818e22012",
+      "disposition": "hash-only reference; no capture ID guessed"
+    },
+    {
+      "alias": "A",
+      "capture_id": "28795e18a5fb43b7a04435321db4bae2",
+      "source_ids": [
+        "S22"
+      ],
+      "disposition": "referenced metadata absent"
+    },
+    {
+      "alias": "B",
+      "capture_id": "4985ee0331754bc29480fa92f00773cc",
+      "source_ids": [
+        "S11"
+      ],
+      "disposition": "referenced metadata absent"
+    }
+  ],
+  "raw_bodies": "not copied",
+  "semantic_assessment": "NOT_PERFORMED_BY_COURIER"
+}

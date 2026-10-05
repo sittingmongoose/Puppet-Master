@@ -1,0 +1,20 @@
+{
+  "schema": "er9.diagnostic-facet-scope-clarification.v1",
+  "pair_id": "D-V15-B",
+  "saved_utc": "2026-10-05T23:05:34.463645Z",
+  "original_judgment": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/partial_source_judgment.json",
+    "sha256": "964afda2bac53991deed012343017a0edc8240d4b29712d88291b27fa39b7520"
+  },
+  "original_judgment_unchanged": true,
+  "assessed_facet": "Real source-level version and component boundaries in selected historical issue/fix/test chains.",
+  "narrower_misleading_or_version_mismatched_apparent_chain_facet": "UNASSESSED",
+  "reason": "Both outputs demonstrate true earlier-versus-later source differences, but the misleading interpretations they reject are explicitly hypothetical older-version/component assumptions. Neither assessment establishes an actual misleading upstream chain or a mismatch in the chosen modern release. Do not credit those true tag comparisons as a completed false-chain detection diagnostic.",
+  "supported_discoveries_preserved": [
+    "Kernel-death polling and exact historical task/test boundary",
+    "Direct IPython%run exception-propagation boundary and larger nested-path uncertainty"
+  ],
+  "quality_effect": "No grade rewrite: partial HOLD and unassessed actual-scope remainder were already explicit. No whole-case PASS or method effect.",
+  "new_source_searches": false,
+  "candidate_feedback_or_repair": false
+}

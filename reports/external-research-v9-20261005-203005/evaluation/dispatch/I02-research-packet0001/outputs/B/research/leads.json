@@ -1,0 +1,59 @@
+{
+  "stage": "research",
+  "leads": [
+    {
+      "id": "L1",
+      "topic": "nbformat release that started emitting cell ids by default",
+      "detail": "JEP 62 (Implemented, 2020-09-25) and the v4.5 schema establish that ids are required at nbformat_minor>=5 [S03, S04], but this research did not pin the specific nbformat package release (5.1.0 per community memory, unverified) whose writers emit ids by default. If the implementation depends on writer behavior (not just reader tolerance), verify against the nbformat CHANGELOG.",
+      "resolution_hint": "Fetch https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md and locate the 5.1.0 entry."
+    },
+    {
+      "id": "L2",
+      "topic": "Canonical statement of 'kernel restart does not clear outputs' in Jupyter",
+      "detail": "The brief requires that a restart must not silently label old outputs current. This design treats the saved document as kernel-state-agnostic because the nbformat v4.5 schema records no kernel-session or kernel-liveness field [S03] (absence-of-field inference). The classic Jupyter documentation page ('Interrupting Kernels', which stated restart does not clear output) now returns 404 at its readthedocs URL; the canonical replacement page was not located this session.",
+      "resolution_hint": "Search docs.jupyter.org / jupyterlab docs for 'Restart Kernel and Clear All Outputs' menu distinction, or the long-standing jupyterlab issue on clearing outputs at restart."
+    },
+    {
+      "id": "L3",
+      "topic": "PEP 751 (pylock.toml) installer adoption status",
+      "detail": "PEP 751 is Final (resolution 31-Mar-2025) [S13], but which installers consume pylock.toml today (uv, pip, PDM, Poetry) was not verified. The proposal therefore stores the lock file plus a generated requirements.lock fallback.",
+      "resolution_hint": "Check installer release notes for pylock.toml support; verify with a lock/install round trip."
+    },
+    {
+      "id": "L4",
+      "topic": "DuckDB 'Quack' remote protocol and DuckLake for multi-process write",
+      "detail": "DuckDB docs (current, v1.5-era) state multi-process write access arrives via the Quack remote protocol, beta as of v1.5.2, expected mature by v2.0 (fall 2026), and point to DuckLake for stable multi-writer setups [S08]. Not evaluated; do not design against beta features.",
+      "resolution_hint": "Re-evaluate after DuckDB 2.0 release if concurrent writers become a team requirement."
+    },
+    {
+      "id": "L5",
+      "topic": "DuckDB store_rejects table lifetime",
+      "detail": "Docs describe reject_scans/reject_errors as temporary tables populated when store_rejects=true [S06]. Their session scope means a durable quarantine view must copy them into project-owned storage at import time; exact lifetime semantics were not tested.",
+      "resolution_hint": "Run a two-connection test; copy rejects into a project table keyed by (dataset_hash, line, line_byte_position)."
+    },
+    {
+      "id": "L6",
+      "topic": "Cell-level data lineage inside notebooks (Verdant-style)",
+      "detail": "Academic systems (e.g., Verdant, CHI 2023) capture per-cell dataflow by instrumenting kernel execution. Potentially upgrade path from hash-based cell dependencies to value-level lineage. Not investigated this session; opportunity only.",
+      "resolution_hint": "Prototype an ipython input transformation that records variable-level reads/writes per cell."
+    },
+    {
+      "id": "L7",
+      "topic": "Polars streaming engine as an alternative transform engine",
+      "detail": "Lazy/streaming DataFrame execution could replace DuckDB for transform-heavy pipelines. Bounded out of this research; DuckDB covers CSV/NDJSON/Parquet plus the SQL-colleague requirement with one component.",
+      "resolution_hint": "Benchmark Polars streaming on the U1 workload if DuckDB memory behavior proves problematic."
+    },
+    {
+      "id": "L8",
+      "topic": "pandas display truncation precedent",
+      "detail": "The proposal sets its own truncation policy (row/byte caps with explicit markers). pandas' display.max_rows default was not fetched as a source; the product choice stands on the brief's requirement plus W1's truncation marker, not on a pandas citation.",
+      "resolution_hint": "Cite pandas options page if a precedent is wanted."
+    },
+    {
+      "id": "L9",
+      "topic": "Import-stage freshness checks ala 'dvc update'",
+      "detail": "DVC reports 'update available' for imported external data by checking the upstream source [S05]. Our registry currently hashes at import and on explicit refresh only; automatic remote re-hashing (URL-backed datasets) is deferred since credentials are out of scope.",
+      "resolution_hint": "Add opt-in re-hash scheduler for file-backed datasets; never auto-follow URLs with credentials."
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "execution_label": "evaluator_executed",
+  "case": "nbclient skip branch",
+  "input_cell": {
+    "cell_type": "code",
+    "source": "print(new_value)",
+    "metadata": {
+      "tags": [
+        "skip-execution"
+      ]
+    },
+    "execution_count": 7,
+    "outputs": [
+      {
+        "output_type": "stream",
+        "name": "stdout",
+        "text": "OLD SAVED OUTPUT"
+      }
+    ]
+  },
+  "source_sha256": "5a61fded74a94fd0851c8a85d55d12a9e9fb44be34324a44583efe48e874da8a",
+  "source_locator": "client.py lines968-970 returns cell before outputs cleared at992",
+  "finding": "Skipped cell is unchanged; its saved output is not newly produced in the fresh kernel",
+  "scope": "Direct primary-source control-flow witness, not a full nbclient runtime execution"
+}

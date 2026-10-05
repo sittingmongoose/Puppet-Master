@@ -1,0 +1,828 @@
+{
+  "schema": "er9.current-output-judgment.v1",
+  "protocol_version": "ER9-independent-output-v1",
+  "evaluation_id": "ER9-EVAL-D-V15-A-001",
+  "saved_utc": "2026-10-05T22:27:56.925817Z",
+  "dispatch": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/packet0001/dispatch.json",
+    "sha256": "2a7a58c4139a783b3a5aa3a8b9fd65d08fb6bdb9f09089eb8f063aac282f008f"
+  },
+  "received_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/packet0001/task/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/packet0001/task/neutral_task.md",
+      "sha256": "7687562ba698734d1af43b9d0f4487674ed4203726d93c4316a8e26d07145a88"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/packet0001/task/coverage_map.json",
+      "sha256": "d6dd5b10a8c153dfdcff4a2efc573583188e285327b63958b801077a430f0992"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/packet0001/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/packet0001/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/packet0001/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/packet0001/outputs/B/final/proposal.md",
+      "sha256": "48e02c80a23848ee0290121ef5449077bcd7d8f80916c763eabcc539a675bf98"
+    }
+  ],
+  "configured_evaluator": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh",
+    "basis": "Root confirmed actual spawn controls; fork_turns none"
+  },
+  "observed_physical_evaluator_identity": "UNKNOWN",
+  "scope": "Actual V15-A targeted diagnostic only; full development proposal completeness UNASSESSED outside scope",
+  "comparison_status": "INCOMPLETE_PAIR",
+  "assessment_mode": "partial_source_assessment",
+  "anonymous_output_results": [
+    {
+      "alias": "A",
+      "artifact_status": "TERMINAL_MISSING_DESIGNATED_FINAL",
+      "operational_status": "FAIL",
+      "decision": "NOT_EVALUATED",
+      "quality_status": "UNASSESSED",
+      "assessment_state": "unassessed",
+      "phase1_decision": "NOT_EVALUATED",
+      "full_pass_eligible": false,
+      "obligations": [
+        {
+          "obligation_id": "D-V15-A-01",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "output_locators": [],
+          "source_ids": [],
+          "reason": "No actual designated artifact; no semantic claim can be assessed."
+        },
+        {
+          "obligation_id": "D-V15-A-02",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "output_locators": [],
+          "source_ids": [],
+          "reason": "No actual designated artifact; no semantic claim can be assessed."
+        },
+        {
+          "obligation_id": "D-V15-A-03",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "output_locators": [],
+          "source_ids": [],
+          "reason": "No actual designated artifact; no semantic claim can be assessed."
+        },
+        {
+          "obligation_id": "D-V15-A-04",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "output_locators": [],
+          "source_ids": [],
+          "reason": "No actual designated artifact; no semantic claim can be assessed."
+        }
+      ],
+      "consequential_claims": [],
+      "dimensions": [
+        {
+          "id": 1,
+          "assessment_state": "unassessed",
+          "obligation_ids": [],
+          "finding": "No artifact."
+        },
+        {
+          "id": 2,
+          "assessment_state": "unassessed",
+          "obligation_ids": [],
+          "finding": "No artifact."
+        },
+        {
+          "id": 3,
+          "assessment_state": "unassessed",
+          "obligation_ids": [],
+          "finding": "No artifact."
+        },
+        {
+          "id": 4,
+          "assessment_state": "unassessed",
+          "obligation_ids": [],
+          "finding": "No artifact."
+        },
+        {
+          "id": 5,
+          "assessment_state": "unassessed",
+          "obligation_ids": [],
+          "finding": "No artifact."
+        },
+        {
+          "id": 6,
+          "assessment_state": "unassessed",
+          "obligation_ids": [],
+          "finding": "No artifact."
+        },
+        {
+          "id": 7,
+          "assessment_state": "unassessed",
+          "obligation_ids": [],
+          "finding": "No artifact."
+        },
+        {
+          "id": 8,
+          "assessment_state": "unassessed",
+          "obligation_ids": [],
+          "finding": "No artifact."
+        }
+      ],
+      "supported_findings_delivered": [],
+      "defects": [],
+      "witnesses": [],
+      "remaining_unassessed": [
+        "All actual diagnostic obligations and consequential claims."
+      ],
+      "critical_dependencies": [],
+      "whole_case_pass_basis": null
+    },
+    {
+      "alias": "B",
+      "artifact_status": "FROZEN_DESIGNATED_FINAL_PRESENT",
+      "decision": "HOLD",
+      "quality_status": "PARTIAL_UNASSESSED_REMAINDER",
+      "assessment_state": "partial",
+      "phase1_decision": "HOLD",
+      "full_pass_eligible": false,
+      "obligations": [
+        {
+          "obligation_id": "D-V15-A-01",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "output_locators": [
+            "proposal.md:7-33"
+          ],
+          "source_ids": [
+            "napari-issue8901",
+            "napari-pr9394",
+            "napari-fixed-shapelist",
+            "tifffile-pinned-readme",
+            "zarr340-arrays",
+            "ngff-pinned-source"
+          ],
+          "reason": "Actual issue/fix/tests and independently useful components verified; source selection/history and witness/capture completeness remain unresolved. No full domain-proposal certification."
+        },
+        {
+          "obligation_id": "D-V15-A-02",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "output_locators": [
+            "proposal.md:7-91"
+          ],
+          "source_ids": [
+            "napari-issue8901",
+            "napari-pr9394",
+            "napari-fixed-shapelist",
+            "tifffile-pinned-readme",
+            "zarr340-arrays",
+            "ngff-pinned-source"
+          ],
+          "reason": "Actual issue/fix/tests and independently useful components verified; source selection/history and witness/capture completeness remain unresolved. No full domain-proposal certification."
+        },
+        {
+          "obligation_id": "D-V15-A-03",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "output_locators": [
+            "proposal.md:7-91"
+          ],
+          "source_ids": [
+            "napari-issue8901",
+            "napari-pr9394",
+            "napari-fixed-shapelist",
+            "tifffile-pinned-readme",
+            "zarr340-arrays",
+            "ngff-pinned-source"
+          ],
+          "reason": "Actual issue/fix/tests and independently useful components verified; source selection/history and witness/capture completeness remain unresolved. No full domain-proposal certification."
+        },
+        {
+          "obligation_id": "D-V15-A-04",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "output_locators": [
+            "proposal.md:7-91"
+          ],
+          "source_ids": [
+            "napari-issue8901",
+            "napari-pr9394",
+            "napari-fixed-shapelist",
+            "tifffile-pinned-readme",
+            "zarr340-arrays",
+            "ngff-pinned-source"
+          ],
+          "reason": "Actual issue/fix/tests and independently useful components verified; source selection/history and witness/capture completeness remain unresolved. No full domain-proposal certification."
+        }
+      ],
+      "consequential_claims": [
+        {
+          "claim_id": "C01",
+          "claim": "Issue #8901 reports rendered but unselectable rectangle with reordered axes, scale 0.01, translation 5.1, napari 0.7.0.",
+          "output_locator": "proposal.md:15",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "napari-issue8901"
+          ],
+          "reason": "Original report matches the proposed conditions. A report is correctly separated from independent reproduction."
+        },
+        {
+          "claim_id": "C02",
+          "claim": "PR #9394 links that issue and explains drawing/picking disagreement for fractional real-valued slice keys.",
+          "output_locator": "proposal.md:17",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "napari-pr9394",
+            "napari-fixed-shapelist"
+          ],
+          "reason": "Code and PR agree: planar dimensions use strict half-slice tolerance; spanning dimensions retain interval containment. This is not a general affine-transform proof."
+        },
+        {
+          "claim_id": "C03",
+          "claim": "Three named regression tests exist and cover fractional picking/render agreement and unwidened spanning boundaries.",
+          "output_locator": "proposal.md:19",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "napari-fixed-shapelist-tests",
+            "napari-fixed-shapes-tests"
+          ],
+          "reason": "Inspected tests at exact merge commit. Upstream test execution statement is attributed to PR author, not claimed as candidate execution."
+        },
+        {
+          "claim_id": "C04",
+          "claim": "Fix merged 2 October after v0.9.2 published 29 September; released source lacks this fix; 0.10.0 milestone is open.",
+          "output_locator": "proposal.md:9,19",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "napari-pr9394",
+            "napari-v092-release",
+            "napari-released-shapelist",
+            "napari-fixed-shapelist"
+          ],
+          "reason": "Actual merge SHA/date and release date corroborated. Released predicate is the old exact-containment form. Open milestone supports caution; no whole-application guarantee inferred."
+        },
+        {
+          "claim_id": "C05",
+          "claim": "The trace supports a common mapping and common boundary tests for rendering/picking/persistence/export, while proving only specific Shapes behavior.",
+          "output_locator": "proposal.md:21-23,29",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "napari-fixed-shapelist",
+            "napari-fixed-shapelist-tests",
+            "napari-fixed-shapes-tests"
+          ],
+          "reason": "Useful engineering inference against the brief, with explicit extrapolation limit. Persistence/export validation remains proposed."
+        },
+        {
+          "claim_id": "C06",
+          "claim": "Tifffile 2026.9.20 documents TIFF-backed Zarr region selection and compressed-codec dependency.",
+          "output_locator": "proposal.md:13,30,45",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "tifffile-pinned-readme",
+            "py-tifffile2026920",
+            "py-imagecodecs2026816"
+          ],
+          "reason": "Exact tagged README gives return_as=zarr, read-only zarr.open and region example; codec dependency exists. Candidate explicitly withholds universal bounded-memory performance claim."
+        },
+        {
+          "claim_id": "C07",
+          "claim": "Zarr 3.4.0 documents loading requested slice regions into NumPy rather than claiming full-application memory guarantees.",
+          "output_locator": "proposal.md:13,31,45",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "zarr340-arrays",
+            "py-zarr340"
+          ],
+          "reason": "Versioned guide supports component-level region access. Runtime laziness, cache/cancellation and 3 GB peak memory remain explicit adoption tests."
+        },
+        {
+          "claim_id": "C08",
+          "claim": "NGFF 0.5.2/0.5 defines axis metadata, scale/translation, multiscales, integer labels and Zarr v3.",
+          "output_locator": "proposal.md:31,55,61,71",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "ngff-pinned-source",
+            "ome-ngff-tags"
+          ],
+          "reason": "Pinned specification supports these selected facts. Dataset transforms allow scale plus optional subsequent translation, not arbitrary orientation. Label samples are integers. This is not proof of interoperability of unbuilt app exports."
+        },
+        {
+          "claim_id": "C09",
+          "claim": "NGFF omero display metadata is transitional and should not control app provenance.",
+          "output_locator": "proposal.md:73",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "ngff-pinned-source"
+          ],
+          "reason": "Transitional status is explicit in spec; non-authoritative app manifest is a product choice, not a claim imposed by NGFF."
+        },
+        {
+          "claim_id": "C10",
+          "claim": "Napari, tifffile and Zarr are independently useful implementation precedents at viewer/parser/array layers.",
+          "output_locator": "proposal.md:25-33",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "napari-fixed-shapelist",
+            "tifffile-pinned-readme",
+            "zarr340-arrays"
+          ],
+          "reason": "Separate repositories/code responsibilities contribute different useful mechanisms. This establishes useful layer independence, not source-isolation history or integrated compatibility."
+        },
+        {
+          "claim_id": "C11",
+          "claim": "First-stack package versions and merge commit exist; they are prototype pins, not a tested combined lockfile.",
+          "output_locator": "proposal.md:7-9",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "napari-pr9394",
+            "py-tifffile2026920",
+            "py-zarr340",
+            "py-imagecodecs2026816",
+            "ome-ngff-tags"
+          ],
+          "reason": "Selected identities verified. Candidate correctly makes shipping conditional on tagged fix plus own coordinate checks. Joint integration/install feasibility is UNASSESSED."
+        },
+        {
+          "claim_id": "C12",
+          "claim": "A 256x256 uint16 plane is 128 KiB; 512 MiB holds 4096 such tiles before overhead.",
+          "output_locator": "proposal.md:47",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [],
+          "reason": "Independent arithmetic: 256*256*2=131072 bytes; 512*1024*1024/131072=4096. Numerical illustration only, not measured cache capacity."
+        },
+        {
+          "claim_id": "C13",
+          "claim": "Source identity, named axes, index-to-physical mapping, read-only originals, derived-asset provenance and explicit relocation are proposed contracts.",
+          "output_locator": "proposal.md:35-75",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [],
+          "reason": "Clearly marked engineering inference/product choices fit the actual brief and avoid unsupported performance promises. Full project architecture, concurrency/fsync/recovery/export correctness are outside this targeted diagnostic assessment."
+        },
+        {
+          "claim_id": "C14",
+          "claim": "Candidate executed W01 arithmetic and an earlier failed scratch attempt; details are in witnesses.json.",
+          "output_locator": "proposal.md:79",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "source_ids": [],
+          "reason": "No witness catalog, code/input, receipt, stdout/stderr/exit or expectation evidence was supplied in Phase 1. This neither proves execution nor establishes a false execution claim."
+        },
+        {
+          "claim_id": "C15",
+          "claim": "Source catalog pins each source capture and applicability.",
+          "output_locator": "proposal.md:91",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "source_ids": [],
+          "reason": "sources.json is absent from the frozen designated-artifact packet. Evaluator independently reconstructed primary URLs; that does not reconstruct candidate capture lineage."
+        },
+        {
+          "claim_id": "C16",
+          "claim": "Large-image, interaction, display-vs-data, recovery and ambiguous-metadata checks remain unexecuted and gating adoption.",
+          "output_locator": "proposal.md:81-87",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [],
+          "reason": "Proposal expressly labels these UNEXECUTED. They discriminate relevant conditions and are not falsely claimed as empirical application evidence."
+        },
+        {
+          "claim_id": "C17",
+          "claim": "Actual brief-only discovery and deliberate issue/code/test method uptake occurred.",
+          "output_locator": "proposal.md:3,11-33",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "source_ids": [],
+          "reason": "Output contains a useful candidate-selected chain and independent components, consistent with discovery; exact frozen candidate inputs/public tool requests and stage history have not been opened."
+        }
+      ],
+      "dimensions": [
+        {
+          "id": 1,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V15-A-01",
+            "D-V15-A-03"
+          ],
+          "finding": "Real chain and useful independent precedents delivered; standalone catalog completeness unresolved."
+        },
+        {
+          "id": 2,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V15-A-01",
+            "D-V15-A-02",
+            "D-V15-A-04"
+          ],
+          "finding": "Selected primary sources, exact pins, issue conditions and fix applicability verified."
+        },
+        {
+          "id": 3,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V15-A-01",
+            "D-V15-A-02",
+            "D-V15-A-04"
+          ],
+          "finding": "Useful source-grounded inference; proposed architecture has explicit adoption conditions."
+        },
+        {
+          "id": 4,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V15-A-01",
+            "D-V15-A-04"
+          ],
+          "finding": "Verified useful coordinate failure mechanism and TIFF/chunked component opportunities; discovery history unopened."
+        },
+        {
+          "id": 5,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V15-A-03"
+          ],
+          "finding": "Proposed validation scoped correctly; claimed candidate W01 execution UNASSESSED."
+        },
+        {
+          "id": 6,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V15-A-02",
+            "D-V15-A-03"
+          ],
+          "finding": "No consequential semantic error or false rejection established in assessed claims; history-dependent preservation UNASSESSED."
+        },
+        {
+          "id": 7,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V15-A-02",
+            "D-V15-A-03",
+            "D-V15-A-04"
+          ],
+          "finding": "Source limits, performance target and joint-stack uncertainty correctly retained in assessed sections."
+        },
+        {
+          "id": 8,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V15-A-03",
+            "D-V15-A-04"
+          ],
+          "finding": "Actual proposal bytes frozen; missing catalogs and candidate capture/execution lineage remain UNASSESSED."
+        }
+      ],
+      "supported_findings_delivered": [
+        "Real napari fractional-slice hit-testing chain and three applicable regression tests.",
+        "Correct release-versus-merge distinction; prototype-only dependency with gating adoption checks.",
+        "Independent TIFF region-read and chunked-array mechanisms, with honest whole-app memory limits.",
+        "NGFF restricted transform/labels contract plus optional chunked handoff and reference-versus-conversion alternative."
+      ],
+      "defects": [],
+      "witnesses": [
+        {
+          "witness_id": "W01-claimed",
+          "execution_label": "candidate_executed",
+          "claim_ids": [
+            "C14"
+          ],
+          "receipt_refs": [],
+          "expected_value_basis": "Not supplied; unassessed. Candidate execution is only a claim at this phase.",
+          "scope": "Claimed isolated arithmetic, not upstream/app execution",
+          "finding": "UNASSESSED; missing witness catalog/evidence; not credited as executed"
+        }
+      ],
+      "remaining_unassessed": [
+        "Actual candidate execution, discarded scratch failure and its costs.",
+        "Candidate source capture identity/time/locators in missing sources.json and catalog-delivery completeness.",
+        "Actual brief-only source-isolated discovery/method uptake before unblinding.",
+        "Full integrated development proposal/workflow correctness, stack installation, performance, recovery, broad coordinate/export correctness."
+      ],
+      "critical_dependencies": [
+        {
+          "dependency": "Unbuilt canvas/reader/project integration and bounded-memory behavior",
+          "status": "explicitly proposed/gated, not established",
+          "output_locator": "proposal.md:9,23,45,81-87"
+        }
+      ],
+      "whole_case_pass_basis": null
+    }
+  ],
+  "shared_check_comparison": [
+    {
+      "check_id": "D-V15-A-P1",
+      "arm_results": [
+        {
+          "alias": "A",
+          "assessment_state": "unassessed",
+          "finding": "No artifact; check impossible."
+        },
+        {
+          "alias": "B",
+          "assessment_state": "partial",
+          "finding": "Assessed chain/version claims supported; no new source error established in that scope. Other claims remain explicitly partial/unassessed."
+        }
+      ],
+      "repair_detection_false_rejection_difference": "No complete matched comparison; missing partner is not semantic FAIL and no quality equivalence/winner follows.",
+      "assessment_asymmetry": "Only B has current artifact."
+    },
+    {
+      "check_id": "D-V15-A-P2",
+      "arm_results": [
+        {
+          "alias": "A",
+          "assessment_state": "unassessed",
+          "finding": "No artifact; check impossible."
+        },
+        {
+          "alias": "B",
+          "assessment_state": "partial",
+          "finding": "Supported conditions, real issue/test details and useful alternatives preserved. Missing catalogs and witness evidence prevent complete delivery/coverage judgment."
+        }
+      ],
+      "repair_detection_false_rejection_difference": "No complete matched comparison; missing partner is not semantic FAIL and no quality equivalence/winner follows.",
+      "assessment_asymmetry": "Only B has current artifact."
+    },
+    {
+      "check_id": "D-V15-A-P3",
+      "arm_results": [
+        {
+          "alias": "A",
+          "assessment_state": "unassessed",
+          "finding": "No artifact; check impossible."
+        },
+        {
+          "alias": "B",
+          "assessment_state": "partial",
+          "finding": "Current output is consistent with code/issue/test tracing; actual mechanism uptake and candidate execution remain unassessed until Phase 2."
+        }
+      ],
+      "repair_detection_false_rejection_difference": "No complete matched comparison; missing partner is not semantic FAIL and no quality equivalence/winner follows.",
+      "assessment_asymmetry": "Only B has current artifact."
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "napari-issue8901",
+      "url": "https://api.github.com/repos/napari/napari/issues/8901",
+      "final_url": "https://api.github.com/repos/napari/napari/issues/8901",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:22:43.763255Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/review0001/source-captures/napari-issue8901.json",
+      "sha256": "2c28146e8ca1ecc0f1a3ab9ca7358005f6e03bd459ff3d217de3401624d0b5bb",
+      "bytes": 6188,
+      "execution_label": "evaluator_retrieved",
+      "version_or_commit": "0.7.0 reported environment",
+      "locator": "issue body / steps to reproduce / environment",
+      "supports": "Specific source facts inventoried below; evaluator retrieval is not candidate execution or capture proof."
+    },
+    {
+      "source_id": "napari-pr9394",
+      "url": "https://api.github.com/repos/napari/napari/pulls/9394",
+      "final_url": "https://api.github.com/repos/napari/napari/pulls/9394",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:22:43.776943Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/review0001/source-captures/napari-pr9394.json",
+      "sha256": "0b723c197169c0f433bf5d6e746ee425af29c2a3a2c5a9dadfdc5b970eb93e46",
+      "bytes": 20996,
+      "execution_label": "evaluator_retrieved",
+      "version_or_commit": "merged 2026-10-02; 6d386b1c2ed1c185483e06dc19ebb961679d1a7b",
+      "locator": "body, merged, merged_at, merge_commit_sha, milestone",
+      "supports": "Specific source facts inventoried below; evaluator retrieval is not candidate execution or capture proof."
+    },
+    {
+      "source_id": "napari-mergecommit",
+      "url": "https://api.github.com/repos/napari/napari/commits/6d386b1c2ed1c185483e06dc19ebb961679d1a7b",
+      "final_url": "https://api.github.com/repos/napari/napari/commits/6d386b1c2ed1c185483e06dc19ebb961679d1a7b",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:22:43.793492Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/review0001/source-captures/napari-mergecommit.json",
+      "sha256": "00e7053f11d5f04f1c518bd90c384d2e4c3ca1b8117b2980111bc48ea5aedbd3",
+      "bytes": 14612,
+      "execution_label": "evaluator_retrieved",
+      "version_or_commit": "6d386b1c2ed1c185483e06dc19ebb961679d1a7b",
+      "locator": "files patches and parent 6e6b13003fec4e8fd7129f80c476ebb564d9de67",
+      "supports": "Specific source facts inventoried below; evaluator retrieval is not candidate execution or capture proof."
+    },
+    {
+      "source_id": "napari-v092-release",
+      "url": "https://api.github.com/repos/napari/napari/releases/tags/v0.9.2",
+      "final_url": "https://api.github.com/repos/napari/napari/releases/tags/v0.9.2",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:22:43.717763Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/review0001/source-captures/napari-v092-release.json",
+      "sha256": "6cbcca9319b7fc59da9b2e6f3e4bc2c97a4ed640aeb2b773ed251266cf0d8391",
+      "bytes": 29784,
+      "execution_label": "evaluator_retrieved",
+      "version_or_commit": "v0.9.2 / 595639295a153c84bcb127a9e07d801355440a35",
+      "locator": "tag_name / published_at / target_commitish",
+      "supports": "Specific source facts inventoried below; evaluator retrieval is not candidate execution or capture proof."
+    },
+    {
+      "source_id": "zarr340-arrays",
+      "url": "https://zarr.readthedocs.io/en/v3.4.0/user-guide/arrays/",
+      "final_url": "https://zarr.readthedocs.io/en/v3.4.0/user-guide/arrays/",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:22:43.812297Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/review0001/source-captures/zarr340-arrays.html",
+      "sha256": "9dd614d41f086f795047344af03bb7cde3bead96e82638c5392ed7f9469a1e89",
+      "bytes": 221945,
+      "execution_label": "evaluator_retrieved",
+      "version_or_commit": "versioned documentation v3.4.0",
+      "locator": "Reading and writing data; indexing requested region as NumPy array; Advanced indexing",
+      "supports": "Specific source facts inventoried below; evaluator retrieval is not candidate execution or capture proof."
+    },
+    {
+      "source_id": "ome-ngff-tags",
+      "url": "https://api.github.com/repos/ome/ngff/tags",
+      "final_url": "https://api.github.com/repos/ome/ngff/tags",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:22:43.925308Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/review0001/source-captures/ome-ngff-tags.json",
+      "sha256": "6fa7034e809e59c3c23a34f72c3ffc2a4c2e7bede08ebab1fa50beb4f9bfc48d",
+      "bytes": 3851,
+      "execution_label": "evaluator_retrieved",
+      "version_or_commit": "0.5.2 tag",
+      "locator": "tag name and commit identity",
+      "supports": "Specific source facts inventoried below; evaluator retrieval is not candidate execution or capture proof."
+    },
+    {
+      "source_id": "py-tifffile2026920",
+      "url": "https://pypi.org/pypi/tifffile/2026.9.20/json",
+      "final_url": "https://pypi.org/pypi/tifffile/2026.9.20/json",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:22:43.840782Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/review0001/source-captures/py-tifffile2026920.json",
+      "sha256": "91dcd45827308d59e6074acb4dcb9041e51543933c2b09f970415079ac4462fa",
+      "bytes": 37285,
+      "execution_label": "evaluator_retrieved",
+      "version_or_commit": "2026.9.20",
+      "locator": "info.version / package release",
+      "supports": "Specific source facts inventoried below; evaluator retrieval is not candidate execution or capture proof."
+    },
+    {
+      "source_id": "py-imagecodecs2026816",
+      "url": "https://pypi.org/pypi/imagecodecs/2026.8.16/json",
+      "final_url": "https://pypi.org/pypi/imagecodecs/2026.8.16/json",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:22:43.873162Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/review0001/source-captures/py-imagecodecs2026816.json",
+      "sha256": "94de75a86cc455dc59029e02f5af07c35a8685d54134a5cc74a3da7c7fc1c996",
+      "bytes": 45586,
+      "execution_label": "evaluator_retrieved",
+      "version_or_commit": "2026.8.16",
+      "locator": "info.version / package release",
+      "supports": "Specific source facts inventoried below; evaluator retrieval is not candidate execution or capture proof."
+    },
+    {
+      "source_id": "py-zarr340",
+      "url": "https://pypi.org/pypi/zarr/3.4.0/json",
+      "final_url": "https://pypi.org/pypi/zarr/3.4.0/json",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:22:43.947359Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/review0001/source-captures/py-zarr340.json",
+      "sha256": "2d711bee9e0e7757c6fc659d23bff9ec4f9c21f88480d73648a496b5f8edb6dc",
+      "bytes": 7783,
+      "execution_label": "evaluator_retrieved",
+      "version_or_commit": "3.4.0",
+      "locator": "info.version / package release",
+      "supports": "Specific source facts inventoried below; evaluator retrieval is not candidate execution or capture proof."
+    },
+    {
+      "source_id": "napari-fixed-shapelist",
+      "url": "https://raw.githubusercontent.com/napari/napari/6d386b1c2ed1c185483e06dc19ebb961679d1a7b/src/napari/layers/shapes/_shape_list.py",
+      "final_url": "https://raw.githubusercontent.com/napari/napari/6d386b1c2ed1c185483e06dc19ebb961679d1a7b/src/napari/layers/shapes/_shape_list.py",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:24:13.298326Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/review0001/source-captures/napari-fixed-shapelist.txt",
+      "sha256": "d7a54b8ff342245fc800876238bc6769666284e64ff82a50bbe8f054ca47702d",
+      "bytes": 80861,
+      "execution_label": "evaluator_retrieved",
+      "version_or_commit": "6d386b1c2ed1c185483e06dc19ebb961679d1a7b",
+      "locator": "_shape_list.py lines 1859-1876",
+      "supports": "Specific source facts inventoried below; evaluator retrieval is not candidate execution or capture proof."
+    },
+    {
+      "source_id": "napari-released-shapelist",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.9.2/src/napari/layers/shapes/_shape_list.py",
+      "final_url": "https://raw.githubusercontent.com/napari/napari/v0.9.2/src/napari/layers/shapes/_shape_list.py",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:24:13.305828Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/review0001/source-captures/napari-released-shapelist.txt",
+      "sha256": "95eec5bb51bae344af6839d0351f7e3864d2d98f776f5d24ecfd847702f7b8a3",
+      "bytes": 80843,
+      "execution_label": "evaluator_retrieved",
+      "version_or_commit": "v0.9.2",
+      "locator": "_shape_list.py lines 1859-1871",
+      "supports": "Specific source facts inventoried below; evaluator retrieval is not candidate execution or capture proof."
+    },
+    {
+      "source_id": "napari-fixed-shapelist-tests",
+      "url": "https://raw.githubusercontent.com/napari/napari/6d386b1c2ed1c185483e06dc19ebb961679d1a7b/src/napari/layers/shapes/_tests/test_shape_list.py",
+      "final_url": "https://raw.githubusercontent.com/napari/napari/6d386b1c2ed1c185483e06dc19ebb961679d1a7b/src/napari/layers/shapes/_tests/test_shape_list.py",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:24:13.337459Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/review0001/source-captures/napari-fixed-shapelist-tests.txt",
+      "sha256": "f6f57ea9c0b5f2c61b77a3fc6fb9c507941520a352b98e65f087a765c45051f7",
+      "bytes": 14849,
+      "execution_label": "evaluator_retrieved",
+      "version_or_commit": "6d386b1c2ed1c185483e06dc19ebb961679d1a7b",
+      "locator": "test_inside_with_fractional_slice_key; test_visible_shapes_spanning_slices_are_not_widened",
+      "supports": "Specific source facts inventoried below; evaluator retrieval is not candidate execution or capture proof."
+    },
+    {
+      "source_id": "napari-fixed-shapes-tests",
+      "url": "https://raw.githubusercontent.com/napari/napari/6d386b1c2ed1c185483e06dc19ebb961679d1a7b/src/napari/layers/shapes/_tests/test_shapes.py",
+      "final_url": "https://raw.githubusercontent.com/napari/napari/6d386b1c2ed1c185483e06dc19ebb961679d1a7b/src/napari/layers/shapes/_tests/test_shapes.py",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:24:13.348443Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/review0001/source-captures/napari-fixed-shapes-tests.txt",
+      "sha256": "be7b28544bb2ee5df99e4d3f53e54c90e1155c5c8dc3409cd1c5584f9837960f",
+      "bytes": 93069,
+      "execution_label": "evaluator_retrieved",
+      "version_or_commit": "6d386b1c2ed1c185483e06dc19ebb961679d1a7b",
+      "locator": "test_value_with_fractional_slice_key",
+      "supports": "Specific source facts inventoried below; evaluator retrieval is not candidate execution or capture proof."
+    },
+    {
+      "source_id": "tifffile-pinned-readme",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/v2026.9.20/README.rst",
+      "final_url": "https://raw.githubusercontent.com/cgohlke/tifffile/v2026.9.20/README.rst",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:24:13.278311Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/review0001/source-captures/tifffile-pinned-readme.txt",
+      "sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48",
+      "bytes": 32898,
+      "execution_label": "evaluator_retrieved",
+      "version_or_commit": "v2026.9.20",
+      "locator": "README.rst dependency lines 71-76; TIFF notes; bounded region example lines 759-772",
+      "supports": "Specific source facts inventoried below; evaluator retrieval is not candidate execution or capture proof."
+    },
+    {
+      "source_id": "ngff-pinned-source",
+      "url": "https://raw.githubusercontent.com/ome/ngff/5cdf83b6806b5e500477c7af69dae9ed2adcf77d/0.5/index.bs",
+      "final_url": "https://raw.githubusercontent.com/ome/ngff/5cdf83b6806b5e500477c7af69dae9ed2adcf77d/0.5/index.bs",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:24:54.005935Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/review0001/source-captures/ngff-pinned-source.bs",
+      "sha256": "eb007bba48e6b359906a1b5f289a4d6f5965a7fc0e8f50fd3bcfaeb765fef685",
+      "bytes": 37464,
+      "execution_label": "evaluator_retrieved",
+      "version_or_commit": "0.5.2 tag / 5cdf83b6806b5e500477c7af69dae9ed2adcf77d",
+      "locator": "0.5/index.bs lines 53-57; axes 179-191; transformations 273-321; transitional omero 349; labels 393-422",
+      "supports": "Specific source facts inventoried below; evaluator retrieval is not candidate execution or capture proof."
+    }
+  ],
+  "source_index": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/review0001/source-captures/INDEX.json",
+    "sha256": "f5ae841e5c6d1e542b90cf2e8af0a8818ae4c6e4d7ef8eeecde5f626f15d4eef"
+  },
+  "blinding": {
+    "hints": [
+      "Assignment disclosed V14/V15 targeted mechanism names and requested Luna family; actual arm allocation, observed candidate identity, history, costs and prior grades remain unopened. Exact neutral task/coverage cards also describe the treatment mechanism.",
+      "Ops disclosed a partial present artifact and missing catalogs; exact arm allocation, failure cause, native history and costs remain unopened.",
+      "Proposal headings and deliberate issue/code/test narrative suggest method uptake but do not reveal verified arm assignment."
+    ],
+    "method_history_alias_sidecar_economics_opened": false
+  },
+  "budget": {
+    "screen_max_seconds": 1200,
+    "hard_max_seconds": 1800,
+    "semantic_clock_started_utc": "2026-10-05T22:21:11.537980Z",
+    "elapsed_to_phase1_freeze_seconds": 405.3880519,
+    "budget_expired": false,
+    "setup_cost_separate": true
+  },
+  "limitations": [
+    "No decisive semantic FAIL established in assessed current claims. HOLD preserves unassessed missing execution/capture evidence rather than inferring a false claim from native interruption.",
+    "Independent evaluator retrieval validates source meaning only; it is not candidate source-capture or execution evidence.",
+    "No complete matched discovery outcome, quality equivalence, full pipeline credit or whole-case PASS.",
+    "Exact candidate source URLs/capture records absent; evaluator URLs were reconstructed from source/project identifiers and exact pins."
+  ]
+}

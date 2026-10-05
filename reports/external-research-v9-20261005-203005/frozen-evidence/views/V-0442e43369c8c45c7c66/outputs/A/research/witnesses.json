@@ -1,0 +1,38 @@
+{
+  "catalog_version": 1,
+  "stage": "D-V14-B-treatment-diagnostic-a002",
+  "witnesses": [
+    {
+      "id": "W1",
+      "label": "executed by candidate",
+      "purpose": "Tiny synthetic NDJSON contract component check; no product code or external package was used.",
+      "justified_expected_behavior": "The brief requires Unicode/null/missing-value handling, explicit conversion/error semantics, stable row/order identity, and no mutation of source data. For identical bytes, this candidate-authored example should preserve Unicode, distinguish an absent key from explicit JSON null, produce the same digest-plus-record-ordinal row IDs on repeated transformation, reject a malformed timestamp with its record and field, and leave source bytes unchanged.",
+      "code": "import hashlib, json\nfrom datetime import datetime\n\ndef transform(raw):\n    digest = hashlib.sha256(raw).hexdigest()\n    out = []\n    for line_no, line in enumerate(raw.splitlines(), 1):\n        try:\n            row = json.loads(line.decode('utf-8'))\n        except Exception as exc:\n            raise ValueError(f'line {line_no}: invalid NDJSON: {exc}') from None\n        if not isinstance(row, dict):\n            raise ValueError(f'line {line_no}: expected an object')\n        if 'when' in row and row['when'] is not None:\n            try:\n                parsed = datetime.fromisoformat(row['when'].replace('Z', '+00:00'))\n                if parsed.tzinfo is None:\n                    raise ValueError('timestamp has no timezone')\n            except Exception as exc:\n                raise ValueError(f'line {line_no}, field when: {exc}') from None\n        out.append({'row_id': f'{digest}:{line_no}', 'present': sorted(row), 'row': row})\n    return out\n\ngood = data['valid'].encode('utf-8')\nfirst = transform(good)\nsecond = transform(good)\nassert first == second\nassert first[0]['row']['label'] == '雪'\nassert 'label' not in first[1]['row']\nassert 'label' in first[2]['row'] and first[2]['row']['label'] is None\nbad = data['malformed'].encode('utf-8')\nbefore = hashlib.sha256(bad).hexdigest()\ntry:\n    transform(bad)\nexcept ValueError as exc:\n    error = str(exc)\nelse:\n    raise AssertionError('malformed timestamp unexpectedly accepted')\nassert error.startswith('line 2, field when:')\nassert hashlib.sha256(bad).hexdigest() == before\nprint(json.dumps({'valid_rows': len(first), 'unicode_preserved': first[0]['row']['label'], 'missing_label_is_absent': 'label' not in first[1]['row'], 'explicit_null_is_present': 'label' in first[2]['row'] and first[2]['row']['label'] is None, 'repeat_stable': first == second, 'malformed_error': error, 'source_bytes_unchanged': hashlib.sha256(bad).hexdigest() == before}, ensure_ascii=False, sort_keys=True))",
+      "input": {
+        "valid": "{\"id\":\"a\",\"label\":\"雪\",\"value\":3,\"when\":\"2025-01-01T12:00:00Z\"}\n{\"id\":\"b\",\"value\":4,\"when\":\"2025-01-02T12:00:00Z\"}\n{\"id\":\"c\",\"label\":null,\"value\":null,\"when\":\"2025-01-03T12:00:00Z\"}\n",
+        "malformed": "{\"id\":\"a\",\"label\":\"雪\",\"value\":3,\"when\":\"2025-01-01T12:00:00Z\"}\n{\"id\":\"bad\",\"value\":4,\"when\":\"not-a-date\"}\n"
+      },
+      "actual_receipt": {
+        "execution_id": "exec-wa1jtbo0",
+        "completed_utc": "2026-10-05T22:02:41.428895+00:00",
+        "code_sha256": "4d0c3a0914a99045d4321d3a5257b866b6193e40d31d071735e5f1b183b0ba78",
+        "data_sha256": "4e84bd3d2a7508c625288ba7d512c93ed4d701fb131951126a9cdb945155bee6",
+        "stdout": "{\"explicit_null_is_present\": true, \"malformed_error\": \"line 2, field when: Invalid isoformat string: 'not-a-date'\", \"missing_label_is_absent\": true, \"repeat_stable\": true, \"source_bytes_unchanged\": true, \"unicode_preserved\": \"雪\", \"valid_rows\": 3}\n",
+        "stdout_sha256": "1e0293ceca4571cf3665ab8b3361bad349694f19db5201b59e8952d474982e39",
+        "stderr": "",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "execution_label": "executed by candidate",
+        "isolation": "Fresh empty filesystem, standard library only, no network or credentials; pm_execution Python capability receipt.",
+        "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "tasks": 16},
+        "cleanup_confirmed": true
+      },
+      "scope_limits": [
+        "This checks only the displayed candidate-authored Python function against two tiny in-memory synthetic inputs.",
+        "It does not test DuckDB, actual NDJSON/CSV/Parquet readers, notebook document parsing, Jupyter kernel replay, user interface, filesystem atomicity, the proposed OS sandbox, large files, or 5 GB resource targets.",
+        "The row identity is stable only for identical full source bytes and record ordinal; this does not validate semantic identity across reordered or edited datasets.",
+        "A successful component receipt is not proof the complete proposed workspace behaves correctly."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "er9.evaluation-start-receipt.v1",
+  "evaluation_id": "ER9-EVAL-D-V14-A-LUNA-R1-001",
+  "dispatch": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-A-LUNA-R1/packet0001/dispatch.json",
+    "sha256": "812500e3aa6b9db44e5a2f523115d99407861e154c17ad5348d274c793541bd8"
+  },
+  "packet_verified_utc": "2026-10-05T22:20:53.504995Z",
+  "actual_current_output_read": false,
+  "semantic_budget_clock_started_utc": null,
+  "configured_evaluator": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh",
+    "basis": "Root confirmed actual spawn controls; fork_turns none"
+  },
+  "observed_physical_identity": "UNKNOWN; tool returned task name only",
+  "method_history_alias_sidecar_economics_opened": false
+}

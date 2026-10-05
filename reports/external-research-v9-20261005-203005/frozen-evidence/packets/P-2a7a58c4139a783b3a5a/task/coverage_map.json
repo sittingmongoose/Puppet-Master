@@ -1,0 +1,74 @@
+{
+  "schema": "er9.diagnostic_coverage.v1",
+  "pair_id": "D-V15-A",
+  "status": "PROSPECTIVE_NOT_RUN",
+  "common_criteria_path": "common_criteria.json",
+  "obligations": [
+    {
+      "id": "D-V15-A-01",
+      "text": "From the biomedical brief, locate a consequential mechanism and a real public issue/fix/regression-test chain. Compare ordinary docs-first research with deliberate code/issue/test tracing and two independent useful implementation precedents.",
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "D-V15-A-02",
+      "text": "Assess consequential source/version/condition and behavior claims under the actual supplied/discovered full source context; preserve supported content and identify unsupported critical dependencies.",
+      "dimensions": [
+        "Q2",
+        "Q3",
+        "Q6",
+        "Q7"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "D-V15-A-03",
+      "text": "Deliver a complete current task-scoped result with source locators and honest executed/proposed validation; no new consequential error or false rejection.",
+      "dimensions": [
+        "Q1",
+        "Q5",
+        "Q6",
+        "Q7",
+        "Q8"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "D-V15-A-04",
+      "text": "Perform actual brief-only primary-source discovery and candidate-selected useful implementation/issue leads; do not treat a supplied corpus as autonomous discovery.",
+      "dimensions": [
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q7",
+        "Q8"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    }
+  ],
+  "important_checks": [
+    {
+      "id": "D-V15-A-P1",
+      "question": "Do the same predeclared consequential source/behavior claims receive correct supported correction or preservation under this method, without a new consequential error?"
+    },
+    {
+      "id": "D-V15-A-P2",
+      "question": "Does the final retain supported conditions, legitimate uncertainty and required useful content rather than blanket rejection or incomplete delivery?"
+    },
+    {
+      "id": "D-V15-A-P3",
+      "question": "Was the declared mechanism actually taken up with honest source/execution scope, and what critical/false-rejection/repair differences appear under matched budgets?"
+    }
+  ],
+  "scope": "Targeted diagnostic task only; do not imply full development-domain PASS or autonomous discovery when inputs supplied.",
+  "truth_key": null
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "er9.native-goal-status-manifest.v1",
+  "projection": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/status-projection/cohort-001/NATIVE_GOAL_STATUS.json",
+    "sha256": "b290343719c1e0feea8a54d9627dd8c34175e2db8d0d0426efbffea484dc1f7d"
+  },
+  "exporter": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/status-projection/export.py",
+    "sha256": "921ef67204e4d4116b7e63a9c755fd20599379e819bdda1d659f6d67fbee5e82"
+  },
+  "source_registry_snapshot": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+    "sha256": "48a15b2f745b15c5eb786d63e670fc21391c3865920dff25dda9a1ca9ddf8ec4"
+  },
+  "safe_fields_only": true,
+  "raw_sources_excluded": "Native/private runtime, protocol bodies and candidate strings are not copied. Source hashes/selectors remain as evidence pointers."
+}

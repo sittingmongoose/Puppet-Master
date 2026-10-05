@@ -1,0 +1,988 @@
+{
+  "schema": "er9.positive-phase2-diagnostic-source-metadata.v1",
+  "files": [
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/A/0f2c3534897c45cc80060034b04c7b10.json",
+      "sha256": "683ff74c545efc8ac7c45a797d40972607bd7ba06db0e873fdd9813aaebbe99e",
+      "original_sha256": "9613371848173b467ce2eb2af737e07bf05b8bc10d376e55e2fe159c9b034aea",
+      "capture_id": "0f2c3534897c45cc80060034b04c7b10",
+      "source_ids": [
+        "S05"
+      ],
+      "source_catalog_sha256": "b230417b7238d1f2eb2df17fa0d06ad826af218612a902eaf8fcd549ac7feae4",
+      "output_freeze_sha256": "4ef2bfd0c42149b4e90b94eb05fe5c7a4aea5cab6025ac699436af97c38ebc63",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/A/190655b1ec04406e81f2a7f197b4875f.json",
+      "sha256": "8e3242af5cb3c47477a8737a2c09fa575084553aede9818aeb8e0d36941157d8",
+      "original_sha256": "3cdc609fec0b3e4d331d0dfb0fe46641c65074308918cc5c226379cc157ff38b",
+      "capture_id": "190655b1ec04406e81f2a7f197b4875f",
+      "source_ids": [
+        "S04"
+      ],
+      "source_catalog_sha256": "b230417b7238d1f2eb2df17fa0d06ad826af218612a902eaf8fcd549ac7feae4",
+      "output_freeze_sha256": "4ef2bfd0c42149b4e90b94eb05fe5c7a4aea5cab6025ac699436af97c38ebc63",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/A/25ff2c9b6bd3443a8e470b3ffc9ffda7.json",
+      "sha256": "ee317ef934a92f2ce34a7a00d2d8ab4e47a7d2c92bad3f5c51aaab4883d2d91b",
+      "original_sha256": "b0efdde4f234b4c72967f52f2585aeeee3a60488664f0e30de335ab0ddc00674",
+      "capture_id": "25ff2c9b6bd3443a8e470b3ffc9ffda7",
+      "source_ids": [
+        "S14"
+      ],
+      "source_catalog_sha256": "b230417b7238d1f2eb2df17fa0d06ad826af218612a902eaf8fcd549ac7feae4",
+      "output_freeze_sha256": "4ef2bfd0c42149b4e90b94eb05fe5c7a4aea5cab6025ac699436af97c38ebc63",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/A/310088e0c6fa4de494761b3e5b3da051.json",
+      "sha256": "576b1578c02dc046c00d2eb0a1186842ea799d2db8cbb8d2712e4122c253fac2",
+      "original_sha256": "66ba186ce72bef7e8345ad6149a58bb61ca8a8a39ca8dc024a718c8534bca301",
+      "capture_id": "310088e0c6fa4de494761b3e5b3da051",
+      "source_ids": [
+        "S09"
+      ],
+      "source_catalog_sha256": "b230417b7238d1f2eb2df17fa0d06ad826af218612a902eaf8fcd549ac7feae4",
+      "output_freeze_sha256": "4ef2bfd0c42149b4e90b94eb05fe5c7a4aea5cab6025ac699436af97c38ebc63",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/A/3716ef9f3f4944709a7ab1aefc819c90.json",
+      "sha256": "38069a0756c624f2065642c5339331d92a89168613da4616a6dd9fed5601465b",
+      "original_sha256": "b28b25ba4c22b94fc26b7e0d6208f0e8553ee10fb1cedb54ea91b6d7fc63759e",
+      "capture_id": "3716ef9f3f4944709a7ab1aefc819c90",
+      "source_ids": [
+        "S06"
+      ],
+      "source_catalog_sha256": "b230417b7238d1f2eb2df17fa0d06ad826af218612a902eaf8fcd549ac7feae4",
+      "output_freeze_sha256": "4ef2bfd0c42149b4e90b94eb05fe5c7a4aea5cab6025ac699436af97c38ebc63",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/A/45e041ea97894dd08376c545c1e7e544.json",
+      "sha256": "881fecd2beaeb2d4f6a18a0828dce0b93b76cfc31d1353ebe848bf16805b8ad4",
+      "original_sha256": "d22142dea956c65e3143b4dbe5ba45dcb22864dddcce87e414f427f26c3b4a5a",
+      "capture_id": "45e041ea97894dd08376c545c1e7e544",
+      "source_ids": [
+        "S07"
+      ],
+      "source_catalog_sha256": "b230417b7238d1f2eb2df17fa0d06ad826af218612a902eaf8fcd549ac7feae4",
+      "output_freeze_sha256": "4ef2bfd0c42149b4e90b94eb05fe5c7a4aea5cab6025ac699436af97c38ebc63",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/A/462ea7eb8c10474e8982efed454bc184.json",
+      "sha256": "a9831fded72ee749ad071f8f4d9431f6811a7c48e420d93e87adce3251ca248a",
+      "original_sha256": "9cec1352a70ce0797d8af4b7de4a8b57e5d9cef21f52ba3d22d0a412ecd46564",
+      "capture_id": "462ea7eb8c10474e8982efed454bc184",
+      "source_ids": [
+        "S02"
+      ],
+      "source_catalog_sha256": "b230417b7238d1f2eb2df17fa0d06ad826af218612a902eaf8fcd549ac7feae4",
+      "output_freeze_sha256": "4ef2bfd0c42149b4e90b94eb05fe5c7a4aea5cab6025ac699436af97c38ebc63",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/A/84167d5b792043a394d5612197884019.json",
+      "sha256": "1d4d5ef97b3aee4c7ea6e7eef07ce18f06e63acb08acca8864b5a6de68c04d3f",
+      "original_sha256": "ad81e002b16dfe33e26ad7be3d97aeeac1c8fc7489a80eb6c4f151ddca8a690f",
+      "capture_id": "84167d5b792043a394d5612197884019",
+      "source_ids": [
+        "S03"
+      ],
+      "source_catalog_sha256": "b230417b7238d1f2eb2df17fa0d06ad826af218612a902eaf8fcd549ac7feae4",
+      "output_freeze_sha256": "4ef2bfd0c42149b4e90b94eb05fe5c7a4aea5cab6025ac699436af97c38ebc63",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/A/8e7b1307878d416e8726d65ca103d772.json",
+      "sha256": "e60a9b425505960147c0e03f421df4cd67568823fa6640966f1ac41d919fc8a0",
+      "original_sha256": "3063d2fb7cef0193deb808b34bc982fb87040430374a6867bbf6de26be691c94",
+      "capture_id": "8e7b1307878d416e8726d65ca103d772",
+      "source_ids": [
+        "S08"
+      ],
+      "source_catalog_sha256": "b230417b7238d1f2eb2df17fa0d06ad826af218612a902eaf8fcd549ac7feae4",
+      "output_freeze_sha256": "4ef2bfd0c42149b4e90b94eb05fe5c7a4aea5cab6025ac699436af97c38ebc63",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/A/979eec015814467ab30aacf282a2af2e.json",
+      "sha256": "0b27b849d9ecb9f85207d5612c1eb991e123edcc9f0cd739db301c2b4cfc4ee7",
+      "original_sha256": "95b33f38a57d87b333253e255a469270d69eee98d03bd0caff72a2cbe6ae9be2",
+      "capture_id": "979eec015814467ab30aacf282a2af2e",
+      "source_ids": [
+        "S15"
+      ],
+      "source_catalog_sha256": "b230417b7238d1f2eb2df17fa0d06ad826af218612a902eaf8fcd549ac7feae4",
+      "output_freeze_sha256": "4ef2bfd0c42149b4e90b94eb05fe5c7a4aea5cab6025ac699436af97c38ebc63",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/A/9d246f2cfc674237ae887ab73751ec1b.json",
+      "sha256": "f05329075c389fdbe27e7d3cb198473389582b9a6a1538429371b78e2377abac",
+      "original_sha256": "229a0b5fe494cfdf6b34e02c38b5656eb42830abf57894df5f2377982bb5918c",
+      "capture_id": "9d246f2cfc674237ae887ab73751ec1b",
+      "source_ids": [
+        "S10"
+      ],
+      "source_catalog_sha256": "b230417b7238d1f2eb2df17fa0d06ad826af218612a902eaf8fcd549ac7feae4",
+      "output_freeze_sha256": "4ef2bfd0c42149b4e90b94eb05fe5c7a4aea5cab6025ac699436af97c38ebc63",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/A/c50d0889a4ec42f295f1e1798e8940fe.json",
+      "sha256": "a44de0ca92d2987b33bd67cbc5c9a92dd12dc9d8fe15c70f1f7a29902974e0d0",
+      "original_sha256": "8b0dfe7b9dc79112cd9adab214545dac32f9e482fa76d9531fa3e3d340c5262f",
+      "capture_id": "c50d0889a4ec42f295f1e1798e8940fe",
+      "source_ids": [
+        "S16"
+      ],
+      "source_catalog_sha256": "b230417b7238d1f2eb2df17fa0d06ad826af218612a902eaf8fcd549ac7feae4",
+      "output_freeze_sha256": "4ef2bfd0c42149b4e90b94eb05fe5c7a4aea5cab6025ac699436af97c38ebc63",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/A/e29fbde8df534271a9cc920968fe2d2d.json",
+      "sha256": "a21688d8a53194fdc48eac8f281ea4b85268cd641467a1458f029e07d8bf3c28",
+      "original_sha256": "3d49387f5a7add95e50e95dc3ac025bb851837f2540387d6454364374e9f1580",
+      "capture_id": "e29fbde8df534271a9cc920968fe2d2d",
+      "source_ids": [
+        "S11"
+      ],
+      "source_catalog_sha256": "b230417b7238d1f2eb2df17fa0d06ad826af218612a902eaf8fcd549ac7feae4",
+      "output_freeze_sha256": "4ef2bfd0c42149b4e90b94eb05fe5c7a4aea5cab6025ac699436af97c38ebc63",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/A/e5c90ee0e219451b87244415679b5bb6.json",
+      "sha256": "df38106eca045442cbf2e2febc3e35d83a6c9630e85ff1cae43d8c80ad243d6b",
+      "original_sha256": "52ba3d58963211984dac732dc3c91eca4c4267291c1facb9d0af80f275b8ee68",
+      "capture_id": "e5c90ee0e219451b87244415679b5bb6",
+      "source_ids": [
+        "S12"
+      ],
+      "source_catalog_sha256": "b230417b7238d1f2eb2df17fa0d06ad826af218612a902eaf8fcd549ac7feae4",
+      "output_freeze_sha256": "4ef2bfd0c42149b4e90b94eb05fe5c7a4aea5cab6025ac699436af97c38ebc63",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/A/ff794be725b44303a4542d70c9ba58aa.json",
+      "sha256": "5fc65fbf269f1697a071de9b40b4ed728df7c65c6a3513a505515486ec9f8482",
+      "original_sha256": "480247da923c2a8e538683ed0784106fccf715f6e9b6d86a852fdbe221fb2db0",
+      "capture_id": "ff794be725b44303a4542d70c9ba58aa",
+      "source_ids": [
+        "S13"
+      ],
+      "source_catalog_sha256": "b230417b7238d1f2eb2df17fa0d06ad826af218612a902eaf8fcd549ac7feae4",
+      "output_freeze_sha256": "4ef2bfd0c42149b4e90b94eb05fe5c7a4aea5cab6025ac699436af97c38ebc63",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/A/ff88b30574164d71975fff62b98fd581.json",
+      "sha256": "7b57ca6c27d95aa4f8be2f7db8505fb169969aebe17b04d811c78dc00211b0d1",
+      "original_sha256": "43a25bb33ac28e0820689caca6efdd0c20c77c6d242912ae02497f14ec54e6eb",
+      "capture_id": "ff88b30574164d71975fff62b98fd581",
+      "source_ids": [
+        "S01"
+      ],
+      "source_catalog_sha256": "b230417b7238d1f2eb2df17fa0d06ad826af218612a902eaf8fcd549ac7feae4",
+      "output_freeze_sha256": "4ef2bfd0c42149b4e90b94eb05fe5c7a4aea5cab6025ac699436af97c38ebc63",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "B",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/B/1a24705c9c7046d79910d90ac717ce39.json",
+      "sha256": "c51c47586e1e200908513c6c2f01309e5a85e31ce5ab0b03f8f9524071f989e6",
+      "original_sha256": "92c8c5188ed82fe63109fd246a1f2270cd2c031d264650cd8593e7c0879741f6",
+      "capture_id": "1a24705c9c7046d79910d90ac717ce39",
+      "source_ids": [
+        "S16"
+      ],
+      "source_catalog_sha256": "830bef9b0d586e35679efb7bdbfccd67cc7fa1ca080cd8265b9a2a577ad87dd9",
+      "output_freeze_sha256": "9f8284c59c61faa8001174794d1541b468950df1b1a8d06582ad6cc9f2600f48",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "B",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/B/249c5169e01345c7bd60be95391a36f4.json",
+      "sha256": "36420c0e3129bbce7b8a526244893fc95d3e7e04c29068f234207162eed0eddb",
+      "original_sha256": "4421dbede2e246cf42bafb34a89510cda99ddf25ecfe1f23de3677679be09f0a",
+      "capture_id": "249c5169e01345c7bd60be95391a36f4",
+      "source_ids": [
+        "S5"
+      ],
+      "source_catalog_sha256": "830bef9b0d586e35679efb7bdbfccd67cc7fa1ca080cd8265b9a2a577ad87dd9",
+      "output_freeze_sha256": "9f8284c59c61faa8001174794d1541b468950df1b1a8d06582ad6cc9f2600f48",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "B",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/B/4393f15c77264a649e8deb16d1767b86.json",
+      "sha256": "bae8092854c0ec0e0c0f098f981c8d0079b1ae7b02e59c6874fb27d879cff1f2",
+      "original_sha256": "c000087e4993ab30e347a376b723d0777edda4cc6b5f9d6e2a5ca92c6f4b01aa",
+      "capture_id": "4393f15c77264a649e8deb16d1767b86",
+      "source_ids": [
+        "S11"
+      ],
+      "source_catalog_sha256": "830bef9b0d586e35679efb7bdbfccd67cc7fa1ca080cd8265b9a2a577ad87dd9",
+      "output_freeze_sha256": "9f8284c59c61faa8001174794d1541b468950df1b1a8d06582ad6cc9f2600f48",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "B",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/B/63f633557475401981b857f3fe7e2348.json",
+      "sha256": "6cc64dc06ad024d939249a310e0314a23338a276a1cf721903200cfabc90380a",
+      "original_sha256": "a791f302c30c6374e18a8f00d23fedd4f75cb65f24e43f4ac0ed114defaeea4f",
+      "capture_id": "63f633557475401981b857f3fe7e2348",
+      "source_ids": [
+        "S18"
+      ],
+      "source_catalog_sha256": "830bef9b0d586e35679efb7bdbfccd67cc7fa1ca080cd8265b9a2a577ad87dd9",
+      "output_freeze_sha256": "9f8284c59c61faa8001174794d1541b468950df1b1a8d06582ad6cc9f2600f48",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "B",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/B/6d2b347fd3c8476496e1563bd424bc80.json",
+      "sha256": "ff4664642f4094eee94ac3cf5b5c082fed898c9fb2852e40a4a2458cab391e42",
+      "original_sha256": "1f59380fcda0e5b4add4cacd43384c2c96aaefaa7f968c2733c61914f7842f8f",
+      "capture_id": "6d2b347fd3c8476496e1563bd424bc80",
+      "source_ids": [
+        "S6"
+      ],
+      "source_catalog_sha256": "830bef9b0d586e35679efb7bdbfccd67cc7fa1ca080cd8265b9a2a577ad87dd9",
+      "output_freeze_sha256": "9f8284c59c61faa8001174794d1541b468950df1b1a8d06582ad6cc9f2600f48",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "B",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/B/87efd05da78e4dd283381f1bd4269f86.json",
+      "sha256": "d09b427f5620fcd38409f0321b310daa97e91646ebe3196cfbfd18e89850c442",
+      "original_sha256": "2345056fbd311a9ab0b3d1219a041b2d3738fe42d0520f53f96304a47510cef9",
+      "capture_id": "87efd05da78e4dd283381f1bd4269f86",
+      "source_ids": [
+        "S12"
+      ],
+      "source_catalog_sha256": "830bef9b0d586e35679efb7bdbfccd67cc7fa1ca080cd8265b9a2a577ad87dd9",
+      "output_freeze_sha256": "9f8284c59c61faa8001174794d1541b468950df1b1a8d06582ad6cc9f2600f48",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "B",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/B/8d676aaac1334407a9632b60a52a98ef.json",
+      "sha256": "a9113ca6857eac60c2fa4a0b367af86e056f5b906f3ac329e6322a1819be6a8b",
+      "original_sha256": "b0b5436e4c8e7b5d0ecdf7935f7b86cc0a65e9dfc1b8f3cc97a51061673aed88",
+      "capture_id": "8d676aaac1334407a9632b60a52a98ef",
+      "source_ids": [
+        "S17"
+      ],
+      "source_catalog_sha256": "830bef9b0d586e35679efb7bdbfccd67cc7fa1ca080cd8265b9a2a577ad87dd9",
+      "output_freeze_sha256": "9f8284c59c61faa8001174794d1541b468950df1b1a8d06582ad6cc9f2600f48",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "B",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/B/8f19c988b2fb481cba32ccc617ec1c57.json",
+      "sha256": "01a9365774d74a6ebc1f3579af6e6efa0ac1fd4957a4118e0131c374317aeafb",
+      "original_sha256": "8f24faec3334e27b684d32f9efcc01e04ac675f8f991674d9cc8feff0b12a1de",
+      "capture_id": "8f19c988b2fb481cba32ccc617ec1c57",
+      "source_ids": [
+        "S14"
+      ],
+      "source_catalog_sha256": "830bef9b0d586e35679efb7bdbfccd67cc7fa1ca080cd8265b9a2a577ad87dd9",
+      "output_freeze_sha256": "9f8284c59c61faa8001174794d1541b468950df1b1a8d06582ad6cc9f2600f48",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "B",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/B/90df6e2a3ca741cbbeb291444c8023da.json",
+      "sha256": "fbe06e99c0c218df26039ab54aa0f2663c046470a525c28ebafde5aa7eebab2f",
+      "original_sha256": "1c36b4a852919f20eb61d8cbfd06062f0e73d3d2932f62e0a96e380879986582",
+      "capture_id": "90df6e2a3ca741cbbeb291444c8023da",
+      "source_ids": [
+        "S4"
+      ],
+      "source_catalog_sha256": "830bef9b0d586e35679efb7bdbfccd67cc7fa1ca080cd8265b9a2a577ad87dd9",
+      "output_freeze_sha256": "9f8284c59c61faa8001174794d1541b468950df1b1a8d06582ad6cc9f2600f48",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "B",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/B/afb1af66f172429cadd5f01fc292ea18.json",
+      "sha256": "9a4e2dceb828dee64c71a1f5b7829dd12a33adbe9332f2d67130492f8aec133a",
+      "original_sha256": "62d1c22f092f85ee0254caea3a404261a1656e32e3a67bb7c2b5b81d901122e7",
+      "capture_id": "afb1af66f172429cadd5f01fc292ea18",
+      "source_ids": [
+        "S15"
+      ],
+      "source_catalog_sha256": "830bef9b0d586e35679efb7bdbfccd67cc7fa1ca080cd8265b9a2a577ad87dd9",
+      "output_freeze_sha256": "9f8284c59c61faa8001174794d1541b468950df1b1a8d06582ad6cc9f2600f48",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "B",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/B/b4ea6bea151840c9a2c5deadf1ac3c05.json",
+      "sha256": "10e997cf7e50e43acc35c98feb2986a9264fc829e6e6e4a0fa39d14a1095727c",
+      "original_sha256": "19852b5249909fb10418b58e7041c75c528c4b408f5b5f74430ae405377a7090",
+      "capture_id": "b4ea6bea151840c9a2c5deadf1ac3c05",
+      "source_ids": [
+        "S8"
+      ],
+      "source_catalog_sha256": "830bef9b0d586e35679efb7bdbfccd67cc7fa1ca080cd8265b9a2a577ad87dd9",
+      "output_freeze_sha256": "9f8284c59c61faa8001174794d1541b468950df1b1a8d06582ad6cc9f2600f48",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "B",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/B/c00797ccd8e24679a3387953100d66aa.json",
+      "sha256": "0dbef2a5694e6d00604032233696850ac63601180281105a46399a733e82a733",
+      "original_sha256": "2adfd63e5938f31da5d25c694df2ec676446857cf39ed25058689c1080053fec",
+      "capture_id": "c00797ccd8e24679a3387953100d66aa",
+      "source_ids": [
+        "S1"
+      ],
+      "source_catalog_sha256": "830bef9b0d586e35679efb7bdbfccd67cc7fa1ca080cd8265b9a2a577ad87dd9",
+      "output_freeze_sha256": "9f8284c59c61faa8001174794d1541b468950df1b1a8d06582ad6cc9f2600f48",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "B",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/B/c0c639b9ea0c4a5e939b874fe5c004bd.json",
+      "sha256": "ad6ae3ec447cf73aa0676a827adf1afe739adcedcc0db5fbcf732691d91ff56c",
+      "original_sha256": "89f7a8f3fc5b6fb46db2f9394b1c4cb23e4213b1c77fec4ef6bdd07f206f45ac",
+      "capture_id": "c0c639b9ea0c4a5e939b874fe5c004bd",
+      "source_ids": [
+        "S9"
+      ],
+      "source_catalog_sha256": "830bef9b0d586e35679efb7bdbfccd67cc7fa1ca080cd8265b9a2a577ad87dd9",
+      "output_freeze_sha256": "9f8284c59c61faa8001174794d1541b468950df1b1a8d06582ad6cc9f2600f48",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "B",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/B/c18432f0891445738f37bfac842542a7.json",
+      "sha256": "d29cb704d078a14848f1869ad252fd92c3669cc1b525443cbbac2d894e3f56e1",
+      "original_sha256": "1822df25ecf0e3ff55a5ee7bd549f2ac83f59f8da7aa9310234423166d942748",
+      "capture_id": "c18432f0891445738f37bfac842542a7",
+      "source_ids": [
+        "S2"
+      ],
+      "source_catalog_sha256": "830bef9b0d586e35679efb7bdbfccd67cc7fa1ca080cd8265b9a2a577ad87dd9",
+      "output_freeze_sha256": "9f8284c59c61faa8001174794d1541b468950df1b1a8d06582ad6cc9f2600f48",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "B",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/B/c7cf9a403d8b44f4831ef3db70678d94.json",
+      "sha256": "6d052a5fbdfa14a76d00f7de920bb7ae58641ee53c8f029713574e81f38e96d1",
+      "original_sha256": "463e5c5353002c207a632bc1acc7f07a15edb89441bece33df1352227332dcff",
+      "capture_id": "c7cf9a403d8b44f4831ef3db70678d94",
+      "source_ids": [
+        "S3"
+      ],
+      "source_catalog_sha256": "830bef9b0d586e35679efb7bdbfccd67cc7fa1ca080cd8265b9a2a577ad87dd9",
+      "output_freeze_sha256": "9f8284c59c61faa8001174794d1541b468950df1b1a8d06582ad6cc9f2600f48",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "B",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/B/d560c41bac4f43619bf1485c36e98f37.json",
+      "sha256": "9175a53b691d779c030b6cf86644bb4c70d04ad5098503136e752ddce35d0fc3",
+      "original_sha256": "f0a0abb1cf26eabbffec742f81fde4c7e14d66fb8877de548b59599fc065ea3e",
+      "capture_id": "d560c41bac4f43619bf1485c36e98f37",
+      "source_ids": [
+        "S7"
+      ],
+      "source_catalog_sha256": "830bef9b0d586e35679efb7bdbfccd67cc7fa1ca080cd8265b9a2a577ad87dd9",
+      "output_freeze_sha256": "9f8284c59c61faa8001174794d1541b468950df1b1a8d06582ad6cc9f2600f48",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "B",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/B/da2464328e0c453bbd7719151f1976b0.json",
+      "sha256": "37f66152cf6d2cf44e1e120159d1949a55d0e8ee63bcd6fd3ef69db729872ee9",
+      "original_sha256": "037e7b870c1691d4b99fd90c5c2cb027be68d17e93bad8605d233bcaec9fedf6",
+      "capture_id": "da2464328e0c453bbd7719151f1976b0",
+      "source_ids": [
+        "S10"
+      ],
+      "source_catalog_sha256": "830bef9b0d586e35679efb7bdbfccd67cc7fa1ca080cd8265b9a2a577ad87dd9",
+      "output_freeze_sha256": "9f8284c59c61faa8001174794d1541b468950df1b1a8d06582ad6cc9f2600f48",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "B",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-A-LUNA-R1/B/e1e5205aa44e4581b12e045769443a29.json",
+      "sha256": "d81ebf8dba9370c6bcda96365f9cd4cfd23c3d8b257653c11c084b8f321f2840",
+      "original_sha256": "582353b316318b8c21b9224b6448adf63b2c919e12e0c30e4b1014f6947ee036",
+      "capture_id": "e1e5205aa44e4581b12e045769443a29",
+      "source_ids": [
+        "S13"
+      ],
+      "source_catalog_sha256": "830bef9b0d586e35679efb7bdbfccd67cc7fa1ca080cd8265b9a2a577ad87dd9",
+      "output_freeze_sha256": "9f8284c59c61faa8001174794d1541b468950df1b1a8d06582ad6cc9f2600f48",
+      "saved_phase1_judgment_sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-B",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-B/A/130b61c63c5c42a9a50f6e021fbda56c.json",
+      "sha256": "fa17b402fecc72e593c7fb876c8ecfe13239e4bab7e34b0eecd29dbb5dafd748",
+      "original_sha256": "a23d2ca0df0c41ac2600a86d3546c6a884288c2de3f709c519d5b9c8ccd55c6d",
+      "capture_id": "130b61c63c5c42a9a50f6e021fbda56c",
+      "source_ids": [
+        "S1"
+      ],
+      "source_catalog_sha256": "40f52b106415f448d0743edd31caf247959bc003af6b2cb583fd08d13ed5f101",
+      "output_freeze_sha256": "c948a167dabc97c9a85bf757543b2789a0c5515874cc77469008c0eba7c33bdd",
+      "saved_phase1_judgment_sha256": "2b3c2e69bec308a3766822613d19ad28b245fc2ad99998ad2eb267a24417f71d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-B",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-B/A/14fea7cb3ce4434aa5454a9c88c99f7b.json",
+      "sha256": "d083a9b6de42d6b4ccafc5848968095e64f8ee8917cfdbf1f5491f8d3ee7fc8b",
+      "original_sha256": "cd5681a7565fea0385c487e87f3176041ed66c6d25a3dedbb18521838a73cbeb",
+      "capture_id": "14fea7cb3ce4434aa5454a9c88c99f7b",
+      "source_ids": [
+        "S10"
+      ],
+      "source_catalog_sha256": "40f52b106415f448d0743edd31caf247959bc003af6b2cb583fd08d13ed5f101",
+      "output_freeze_sha256": "c948a167dabc97c9a85bf757543b2789a0c5515874cc77469008c0eba7c33bdd",
+      "saved_phase1_judgment_sha256": "2b3c2e69bec308a3766822613d19ad28b245fc2ad99998ad2eb267a24417f71d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-B",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-B/A/1d8c675438994efca5563da537741da1.json",
+      "sha256": "bf441dd0d6d2fd85068731cfb23be1268c2f7c69defbc0ac530d14e07070904d",
+      "original_sha256": "3975ead3db769770d3cc994e1f1d04aa779113ff8edc06ee9354059b43a24cd0",
+      "capture_id": "1d8c675438994efca5563da537741da1",
+      "source_ids": [
+        "S4"
+      ],
+      "source_catalog_sha256": "40f52b106415f448d0743edd31caf247959bc003af6b2cb583fd08d13ed5f101",
+      "output_freeze_sha256": "c948a167dabc97c9a85bf757543b2789a0c5515874cc77469008c0eba7c33bdd",
+      "saved_phase1_judgment_sha256": "2b3c2e69bec308a3766822613d19ad28b245fc2ad99998ad2eb267a24417f71d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-B",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-B/A/2f44a38bf66a46d8ab1ed5f5567b3470.json",
+      "sha256": "ad6386c2fb8b806014c8b5d237c9993ab63815bc1cc97c340382c4e65eea549f",
+      "original_sha256": "8046985dc848276a073bc04627d71ab9248769112888f45d8163ce40c23f7a23",
+      "capture_id": "2f44a38bf66a46d8ab1ed5f5567b3470",
+      "source_ids": [
+        "S15"
+      ],
+      "source_catalog_sha256": "40f52b106415f448d0743edd31caf247959bc003af6b2cb583fd08d13ed5f101",
+      "output_freeze_sha256": "c948a167dabc97c9a85bf757543b2789a0c5515874cc77469008c0eba7c33bdd",
+      "saved_phase1_judgment_sha256": "2b3c2e69bec308a3766822613d19ad28b245fc2ad99998ad2eb267a24417f71d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-B",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-B/A/53c5edc0b5364662b0d4128d3e911672.json",
+      "sha256": "3d840539db19bfd4f0290671d466fdee01b018bb4c7fb48d20df64de35668f58",
+      "original_sha256": "262a26d52dddf0db460c1a23a0bee6957d695a1cc48152fb87ba358050795d35",
+      "capture_id": "53c5edc0b5364662b0d4128d3e911672",
+      "source_ids": [
+        "S7"
+      ],
+      "source_catalog_sha256": "40f52b106415f448d0743edd31caf247959bc003af6b2cb583fd08d13ed5f101",
+      "output_freeze_sha256": "c948a167dabc97c9a85bf757543b2789a0c5515874cc77469008c0eba7c33bdd",
+      "saved_phase1_judgment_sha256": "2b3c2e69bec308a3766822613d19ad28b245fc2ad99998ad2eb267a24417f71d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-B",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-B/A/55ba4be59507453cad8c32c89a38bb64.json",
+      "sha256": "feb7ec81a2529687d554e6ed481429d3c37fa447d17779dcbab798c1d22a0f3e",
+      "original_sha256": "0bc9a990275c2840ee34c8e892c97d2c1a3fd67d5cc7d0eff810dcaaa9df1490",
+      "capture_id": "55ba4be59507453cad8c32c89a38bb64",
+      "source_ids": [
+        "S14"
+      ],
+      "source_catalog_sha256": "40f52b106415f448d0743edd31caf247959bc003af6b2cb583fd08d13ed5f101",
+      "output_freeze_sha256": "c948a167dabc97c9a85bf757543b2789a0c5515874cc77469008c0eba7c33bdd",
+      "saved_phase1_judgment_sha256": "2b3c2e69bec308a3766822613d19ad28b245fc2ad99998ad2eb267a24417f71d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-B",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-B/A/55c7a296639947cda18d0703dbae422e.json",
+      "sha256": "b36bdb49efb567c276c44ef9ad8ba52b57ed35088e0c9c50c3fe45bce7f55489",
+      "original_sha256": "8cd1a0474b8997a7f636bd3843c9cd7c06f8991a1f1751cd411ab7ca90e12680",
+      "capture_id": "55c7a296639947cda18d0703dbae422e",
+      "source_ids": [
+        "S9"
+      ],
+      "source_catalog_sha256": "40f52b106415f448d0743edd31caf247959bc003af6b2cb583fd08d13ed5f101",
+      "output_freeze_sha256": "c948a167dabc97c9a85bf757543b2789a0c5515874cc77469008c0eba7c33bdd",
+      "saved_phase1_judgment_sha256": "2b3c2e69bec308a3766822613d19ad28b245fc2ad99998ad2eb267a24417f71d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-B",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-B/A/62921743d3f64a18909b24c2ffc7c339.json",
+      "sha256": "eb2e377c13961e3931302097af83d859fe070254f0f86ec88dffd8a534217b03",
+      "original_sha256": "381b5e121ae8fa0a019cfb8305118285c70e2b8a573126c935b16f753aab720a",
+      "capture_id": "62921743d3f64a18909b24c2ffc7c339",
+      "source_ids": [
+        "S2"
+      ],
+      "source_catalog_sha256": "40f52b106415f448d0743edd31caf247959bc003af6b2cb583fd08d13ed5f101",
+      "output_freeze_sha256": "c948a167dabc97c9a85bf757543b2789a0c5515874cc77469008c0eba7c33bdd",
+      "saved_phase1_judgment_sha256": "2b3c2e69bec308a3766822613d19ad28b245fc2ad99998ad2eb267a24417f71d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-B",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-B/A/6a846d032e744e3fb4696eb8dcdee498.json",
+      "sha256": "7c7b0c538f4cac822274f546b28d8a895ab4cf08c7335934f021ee2936b0eeb8",
+      "original_sha256": "6f70a7d10722e0acaff34adae2ef61566362d3be72d39014c0457257fb4cc543",
+      "capture_id": "6a846d032e744e3fb4696eb8dcdee498",
+      "source_ids": [
+        "S11"
+      ],
+      "source_catalog_sha256": "40f52b106415f448d0743edd31caf247959bc003af6b2cb583fd08d13ed5f101",
+      "output_freeze_sha256": "c948a167dabc97c9a85bf757543b2789a0c5515874cc77469008c0eba7c33bdd",
+      "saved_phase1_judgment_sha256": "2b3c2e69bec308a3766822613d19ad28b245fc2ad99998ad2eb267a24417f71d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-B",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-B/A/8abb1f3cb73f453a8090e3e7cb285d9f.json",
+      "sha256": "6848e35a17f6b25232075dbd8391cd2c8226f014007ee3ab2bb77aca1d8edb7e",
+      "original_sha256": "be1fda41b82a342bde21d2306ab4e8cf40bde01a73925a59840d906eec2236a3",
+      "capture_id": "8abb1f3cb73f453a8090e3e7cb285d9f",
+      "source_ids": [
+        "S3"
+      ],
+      "source_catalog_sha256": "40f52b106415f448d0743edd31caf247959bc003af6b2cb583fd08d13ed5f101",
+      "output_freeze_sha256": "c948a167dabc97c9a85bf757543b2789a0c5515874cc77469008c0eba7c33bdd",
+      "saved_phase1_judgment_sha256": "2b3c2e69bec308a3766822613d19ad28b245fc2ad99998ad2eb267a24417f71d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-B",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-B/A/94d6382e1d6b422aa82b4262a0e2f18f.json",
+      "sha256": "4de5fe6f1ea5d4ef04a442129240079c41705f98224cf45b1d25fada6d5ef0e0",
+      "original_sha256": "80feefb687bf6fcbcccf0eed7c40f439327d87b223893cb7e8b9b8cd1137bda6",
+      "capture_id": "94d6382e1d6b422aa82b4262a0e2f18f",
+      "source_ids": [
+        "S5"
+      ],
+      "source_catalog_sha256": "40f52b106415f448d0743edd31caf247959bc003af6b2cb583fd08d13ed5f101",
+      "output_freeze_sha256": "c948a167dabc97c9a85bf757543b2789a0c5515874cc77469008c0eba7c33bdd",
+      "saved_phase1_judgment_sha256": "2b3c2e69bec308a3766822613d19ad28b245fc2ad99998ad2eb267a24417f71d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-B",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-B/A/aa2be87a4f8e4aabbeb195343c178838.json",
+      "sha256": "729e620e5e4514f8902a6f30eeacaac65829a9ed30fe145588cf51ec8f465381",
+      "original_sha256": "7bbf2039c5610fab685249d4a34b9601a67aba342d216dedbc90a6b8dbc01c77",
+      "capture_id": "aa2be87a4f8e4aabbeb195343c178838",
+      "source_ids": [
+        "S8"
+      ],
+      "source_catalog_sha256": "40f52b106415f448d0743edd31caf247959bc003af6b2cb583fd08d13ed5f101",
+      "output_freeze_sha256": "c948a167dabc97c9a85bf757543b2789a0c5515874cc77469008c0eba7c33bdd",
+      "saved_phase1_judgment_sha256": "2b3c2e69bec308a3766822613d19ad28b245fc2ad99998ad2eb267a24417f71d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-B",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-B/A/d7056346fcde4a3b8b31bbfd152e7b3d.json",
+      "sha256": "c9e4784aab43e38d5ba60e00cb27553b3ab3dd4d0dd266f3d8096a8f7d92f5be",
+      "original_sha256": "b3210d058280cf76369e45f6dc5aedd6db13e6b2e3ba6f07b8720894530edc39",
+      "capture_id": "d7056346fcde4a3b8b31bbfd152e7b3d",
+      "source_ids": [
+        "S12"
+      ],
+      "source_catalog_sha256": "40f52b106415f448d0743edd31caf247959bc003af6b2cb583fd08d13ed5f101",
+      "output_freeze_sha256": "c948a167dabc97c9a85bf757543b2789a0c5515874cc77469008c0eba7c33bdd",
+      "saved_phase1_judgment_sha256": "2b3c2e69bec308a3766822613d19ad28b245fc2ad99998ad2eb267a24417f71d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-B",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-B/A/de4ff0375b5a4420925c6d02fd5849b7.json",
+      "sha256": "99b12dcad177b79b995d56a43fd402fc81dcf6fcb8d48b2dcb01c7c0fc0fe6d1",
+      "original_sha256": "2bde916bea913865c865f2450130cd89bd90f51e311f76e76e108ccbf4560568",
+      "capture_id": "de4ff0375b5a4420925c6d02fd5849b7",
+      "source_ids": [
+        "S13"
+      ],
+      "source_catalog_sha256": "40f52b106415f448d0743edd31caf247959bc003af6b2cb583fd08d13ed5f101",
+      "output_freeze_sha256": "c948a167dabc97c9a85bf757543b2789a0c5515874cc77469008c0eba7c33bdd",
+      "saved_phase1_judgment_sha256": "2b3c2e69bec308a3766822613d19ad28b245fc2ad99998ad2eb267a24417f71d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "pair_id": "D-V14-B",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/D-V14-B/A/fb5a68b380dc4d589b4f33e9f703ec68.json",
+      "sha256": "301c60fb4cb1ca330a7e1ae3ebe89b6c13aba0c5e6896f19a076066b0e30f8bd",
+      "original_sha256": "1e1a30996831357547f4a3a24dae93de7608a37362e9678176ac918cea5b9b96",
+      "capture_id": "fb5a68b380dc4d589b4f33e9f703ec68",
+      "source_ids": [
+        "S6"
+      ],
+      "source_catalog_sha256": "40f52b106415f448d0743edd31caf247959bc003af6b2cb583fd08d13ed5f101",
+      "output_freeze_sha256": "c948a167dabc97c9a85bf757543b2789a0c5515874cc77469008c0eba7c33bdd",
+      "saved_phase1_judgment_sha256": "2b3c2e69bec308a3766822613d19ad28b245fc2ad99998ad2eb267a24417f71d",
+      "redaction_policy": "positive metadata projection; omit private machine path/IP/llm_read; no body copied",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    }
+  ],
+  "unresolved_references": [],
+  "raw_bodies": "not copied",
+  "semantic_assessment": "NOT_PERFORMED_BY_COURIER"
+}

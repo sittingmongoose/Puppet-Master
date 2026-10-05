@@ -1,0 +1,60 @@
+{
+ "check": "W4 clean replay + manifest + nondeterminism exposure",
+ "replay_identical_output_bytes": true,
+ "unseeded_rng_differs_between_runs": true,
+ "rng_run1_sample": [
+  0.3037518948940596,
+  0.6282514319724355
+ ],
+ "rng_run2_sample": [
+  0.3065022134837697,
+  0.5239581378323613
+ ],
+ "manifest": {
+  "manifest_schema": "repro-manifest/0.1",
+  "notebook_sha256": "d830f0e42bb9836edc9600dde349ef7820b92687fb9b924e5c99f3bdc64d6ccf",
+  "cells": [
+   {
+    "id": "cell-load",
+    "code_sha256": "ebfcdb614986c86689bddceb9dccf05c0242427a2f1b3b943c46037586632d98",
+    "exec_order": 1,
+    "status": "current"
+   },
+   {
+    "id": "cell-agg",
+    "code_sha256": "db4e382a497c8bbaff536e96895242fec2496f36111e56918667336b17348ef6",
+    "exec_order": 2,
+    "status": "current"
+   }
+  ],
+  "datasets": [
+   {
+    "name": "d1",
+    "sha256": "d7464e876d6dfba7ea1d361e48c5c60f278a2c1ae1d8bd75045c958f1e9ea2e2",
+    "bytes": 2920,
+    "declared_schema": {
+     "id": "int64",
+     "name": "utf8",
+     "amount": "float64"
+    }
+   }
+  ],
+  "environment": {
+   "python": "3.14.4",
+   "platform": "Linux",
+   "packages_declared": [
+    "pandas==2.2.3",
+    "duckdb==1.4.1"
+   ],
+   "packages_locked": true
+  },
+  "replay": {
+   "identical_output_bytes": true,
+   "declared_nondeterminism": [
+    "unseeded RNG cell excluded from replay contract"
+   ]
+  }
+ },
+ "ok": true
+}
+W4 PASS

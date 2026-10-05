@@ -1,0 +1,566 @@
+{
+  "schema": "er9.partial-source-judgment.v1",
+  "evaluation_id": "ER9-EVAL-D-V14-B-001-PARTIAL-SOURCE-001",
+  "parent_evaluation_id": "ER9-EVAL-D-V14-B-001",
+  "saved_utc": "2026-10-05T22:45:31.131707Z",
+  "scope": "PARTIAL_SOURCE_ONLY",
+  "dispatch": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/views/V-0442e43369c8c45c7c66/dispatch.json",
+    "sha256": "8bd82d6efe3e96ae6453c08fb35c41dec54117ce6b0e0eaacbf6a27c744dbd18"
+  },
+  "original_judgments": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-B/review0001/current_output_judgment.json",
+      "sha256": "2124b9fd74c738e6adb2c980901bb1ca9e57f4f611f007440bf0336e91238687"
+    }
+  ],
+  "original_judgments_unchanged": true,
+  "final_quality": "UNASSESSED",
+  "whole_case_PASS": false,
+  "full_pipeline_credit": false,
+  "comparison_status": "INCOMPLETE_PARTIAL_PAIR; no matched effect or winner",
+  "anonymous_output_results": [
+    {
+      "alias": "A",
+      "partial_source_decision": "HOLD",
+      "assessment_state": "partial",
+      "final_quality": "UNASSESSED",
+      "obligations": [
+        {
+          "obligation_id": "D-V14-B-01",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "output_locators": [
+            "A proposal.md:5-65"
+          ],
+          "source_ids": [],
+          "reason": "Selected useful breadth, chain and source-condition claims verified; remaining integration/delivery/history/execution unassessed."
+        },
+        {
+          "obligation_id": "D-V14-B-02",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "output_locators": [
+            "A proposal.md:5-65"
+          ],
+          "source_ids": [],
+          "reason": "Selected useful breadth, chain and source-condition claims verified; remaining integration/delivery/history/execution unassessed."
+        },
+        {
+          "obligation_id": "D-V14-B-03",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "output_locators": [
+            "A proposal.md:5-65"
+          ],
+          "source_ids": [],
+          "reason": "Selected useful breadth, chain and source-condition claims verified; remaining integration/delivery/history/execution unassessed."
+        },
+        {
+          "obligation_id": "D-V14-B-04",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "output_locators": [
+            "A proposal.md:5-65"
+          ],
+          "source_ids": [],
+          "reason": "Selected useful breadth, chain and source-condition claims verified; remaining integration/delivery/history/execution unassessed."
+        }
+      ],
+      "consequential_claims": [
+        {
+          "claim_id": "A01",
+          "claim": "Historical jupyter_client8 execution hang links to PR925/merge666eab0, reply-return contract tests, downstream Papermill check and8.0.2 release entry.",
+          "output_locator": "A proposal.md:11,63; sources.json:S3-S7",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "jc-issue922",
+            "jc-pr925",
+            "jc-commit925",
+            "jc-changelog"
+          ],
+          "reason": "Original issue, fix body, no-reply msg_id string change and tests/workflow corroborate. Candidate claims code/test addition, not successful upstream execution; provisional floor explicitly requires current locked-matrix validation."
+        },
+        {
+          "claim_id": "A02",
+          "claim": "Notebook format stores cells/counts/outputs, not complete execution history or proof of reproducibility.",
+          "output_locator": "A proposal.md:9,34,36",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "nbformat-document"
+          ],
+          "reason": "Document fields supported; provenance limits are justified engineering inference, without overclaiming interchange as runtime semantics."
+        },
+        {
+          "claim_id": "A03",
+          "claim": "nbclient exposes cell timeouts/hooks and default stop-on-error/allow_errors mechanisms.",
+          "output_locator": "A proposal.md:19",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "nbclient-api"
+          ],
+          "reason": "API guide explicitly supports cited features; workflow commit and UI semantics remain app proposals."
+        },
+        {
+          "claim_id": "A04",
+          "claim": "DuckDB CSV type/dialect inference and explicit overrides plus faulty-row policies require reviewed schema/error semantics.",
+          "output_locator": "A proposal.md:17,24-26",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "duckdb-csv",
+            "duckdb-faulty-csv",
+            "duckdb-conversion"
+          ],
+          "reason": "Selected engine mechanisms exist. Fail-fast/quarantine/no-silent-cast choices are proposed product policy, not all guaranteed defaults."
+        },
+        {
+          "claim_id": "A05",
+          "claim": "Large DuckDB import/export may need memory/order trade-offs; not every operation streams within5GB target.",
+          "output_locator": "A proposal.md:24,28-30",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "duckdb-tuning"
+          ],
+          "reason": "Primary guide supports insertion-order/memory caution; candidate withholds target benchmark and sets proposed bounded paths/global-operation limits."
+        },
+        {
+          "claim_id": "A06",
+          "claim": "uv lock/sync checks and --locked stale-lock error support environment workflow but not OS/native/undeclared-data hermeticity.",
+          "output_locator": "A proposal.md:11",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "uv-lock"
+          ],
+          "reason": "Exact documented lock freshness semantics supported; environmental caveats retained."
+        },
+        {
+          "claim_id": "A07",
+          "claim": "Notebook-aware nbdime diffs/elision/generated metadata handling give an optional mechanism for explaining changed results.",
+          "output_locator": "A proposal.md:55",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "nbdime"
+          ],
+          "reason": "Independent useful component opportunity from official documentation. Product visual quality and exact adoption remain proposed."
+        },
+        {
+          "claim_id": "A08",
+          "claim": "Polars is an alternative investigation lead, with no pinned operator/performance promise.",
+          "output_locator": "A proposal.md:57; sources.json:S14",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [
+            "polars-streaming"
+          ],
+          "reason": "Streaming concept exists; current retrieved hash differs from candidate catalog, so candidate snapshot identity remains unverified. Output honestly marks version/operator behavior as unassessed."
+        },
+        {
+          "claim_id": "A09",
+          "claim": "Tiny NDJSON witness checks Unicode, missing versus null, stable same-byte row IDs, timestamp error location and in-memory source-byte immutability.",
+          "output_locator": "A proposal.md:61; witnesses.json:W1",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [],
+          "reason": "Displayed code, inputs and receipt fields are internally consistent; code/stdout/stderr self-hashes match. Claimed actual execution/containment/cleanup require positive tool receipt. Scope correctly excludes DuckDB, files, notebooks, OS sandbox and large datasets."
+        },
+        {
+          "claim_id": "A10",
+          "claim": "Chosen Jupyter/DuckDB/nbdime mechanisms are independently useful; source-isolated brief-only discovery and complete delivery occurred.",
+          "output_locator": "A proposal.md:5-11,55; source catalog stage",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "source_ids": [],
+          "reason": "Distinct public projects and useful mechanisms evident in output. Actual source selection/input/receipt history unopened; no designated final/catalog-delivery completion."
+        },
+        {
+          "claim_id": "A11",
+          "claim": "Full invalidation/provenance/recovery/large-data/untrusted-runtime contract and component integration.",
+          "output_locator": "A proposal.md:13-65",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "source_ids": [],
+          "reason": "These implementation/product consequences remain outside this partial source screen. Candidate marks sandbox unimplemented/security-untested, disables untrusted replay on failed preflight, and labels adoption tests UNEXECUTED. No full proposal or safety certification."
+        }
+      ],
+      "dimensions": [
+        {
+          "id": 1,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V14-B-01",
+            "D-V14-B-03"
+          ],
+          "finding": "Selected source-backed Jupyter/data/diff mechanisms assessed; full current scope, actual execution/history and final delivery unassessed."
+        },
+        {
+          "id": 2,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V14-B-01",
+            "D-V14-B-02",
+            "D-V14-B-04"
+          ],
+          "finding": "Selected source-backed Jupyter/data/diff mechanisms assessed; full current scope, actual execution/history and final delivery unassessed."
+        },
+        {
+          "id": 3,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V14-B-01",
+            "D-V14-B-02",
+            "D-V14-B-04"
+          ],
+          "finding": "Selected source-backed Jupyter/data/diff mechanisms assessed; full current scope, actual execution/history and final delivery unassessed."
+        },
+        {
+          "id": 4,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V14-B-01",
+            "D-V14-B-04"
+          ],
+          "finding": "Selected source-backed Jupyter/data/diff mechanisms assessed; full current scope, actual execution/history and final delivery unassessed."
+        },
+        {
+          "id": 5,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V14-B-03"
+          ],
+          "finding": "Selected source-backed Jupyter/data/diff mechanisms assessed; full current scope, actual execution/history and final delivery unassessed."
+        },
+        {
+          "id": 6,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V14-B-02",
+            "D-V14-B-03"
+          ],
+          "finding": "Selected source-backed Jupyter/data/diff mechanisms assessed; full current scope, actual execution/history and final delivery unassessed."
+        },
+        {
+          "id": 7,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V14-B-02",
+            "D-V14-B-03",
+            "D-V14-B-04"
+          ],
+          "finding": "Selected source-backed Jupyter/data/diff mechanisms assessed; full current scope, actual execution/history and final delivery unassessed."
+        },
+        {
+          "id": 8,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V14-B-03",
+            "D-V14-B-04"
+          ],
+          "finding": "Selected source-backed Jupyter/data/diff mechanisms assessed; full current scope, actual execution/history and final delivery unassessed."
+        }
+      ],
+      "supported_findings_delivered": [
+        "Historical asynchronous client reply-return compatibility defect with fix/tests/downstream/release trace.",
+        "Notebook document-versus-runtime provenance distinction, API hooks/timeouts and conservative proposed replay policy.",
+        "DuckDB inference/error/order/memory cautions; no5GB guarantee.",
+        "Optional notebook-aware diffs and bounded Python streaming alternative with lock/hermeticity limitations."
+      ],
+      "defects": [],
+      "witnesses": [
+        {
+          "witness_id": "W1-claimed",
+          "execution_label": "candidate_executed",
+          "verified": false,
+          "finding": "Internally consistent catalog snapshot; actual receipt/isolation not yet independently bound."
+        }
+      ],
+      "remaining_unassessed": [
+        "Actual candidate witness execution/input/source-GET/method uptake/history/costs.",
+        "Polars candidate capture snapshot identity; no full operator performance assertion.",
+        "Missing final/lead delivery and full integrated development proposal correctness."
+      ]
+    },
+    {
+      "alias": "B",
+      "partial_source_decision": "NOT_EVALUATED",
+      "assessment_state": "unassessed",
+      "final_quality": "UNASSESSED",
+      "obligations": [
+        {
+          "obligation_id": "D-V14-B-01",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "reason": "No eligible partial research artifact."
+        },
+        {
+          "obligation_id": "D-V14-B-02",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "reason": "No eligible partial research artifact."
+        },
+        {
+          "obligation_id": "D-V14-B-03",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "reason": "No eligible partial research artifact."
+        },
+        {
+          "obligation_id": "D-V14-B-04",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "reason": "No eligible partial research artifact."
+        }
+      ],
+      "consequential_claims": [],
+      "supported_findings_delivered": [],
+      "defects": [],
+      "remaining_unassessed": [
+        "All source/diagnostic/claim scope; no artifact."
+      ]
+    }
+  ],
+  "shared_check_comparison": [
+    {
+      "check_id": "D-V14-B-P1",
+      "arm_results": [
+        {
+          "alias": "A",
+          "assessment_state": "partial",
+          "finding": "Selected source/version mechanism claims and honest limits supported; actual method/execution plus remaining scope unassessed."
+        },
+        {
+          "alias": "B",
+          "assessment_state": "unassessed",
+          "finding": "No partial artifact; impossible."
+        }
+      ],
+      "repair_detection_false_rejection_difference": "No complete matched difference, equivalence or method superiority; supported single-arm discoveries only.",
+      "assessment_asymmetry": "Only A supplies partial source artifacts."
+    },
+    {
+      "check_id": "D-V14-B-P2",
+      "arm_results": [
+        {
+          "alias": "A",
+          "assessment_state": "partial",
+          "finding": "Selected source/version mechanism claims and honest limits supported; actual method/execution plus remaining scope unassessed."
+        },
+        {
+          "alias": "B",
+          "assessment_state": "unassessed",
+          "finding": "No partial artifact; impossible."
+        }
+      ],
+      "repair_detection_false_rejection_difference": "No complete matched difference, equivalence or method superiority; supported single-arm discoveries only.",
+      "assessment_asymmetry": "Only A supplies partial source artifacts."
+    },
+    {
+      "check_id": "D-V14-B-P3",
+      "arm_results": [
+        {
+          "alias": "A",
+          "assessment_state": "partial",
+          "finding": "Selected source/version mechanism claims and honest limits supported; actual method/execution plus remaining scope unassessed."
+        },
+        {
+          "alias": "B",
+          "assessment_state": "unassessed",
+          "finding": "No partial artifact; impossible."
+        }
+      ],
+      "repair_detection_false_rejection_difference": "No complete matched difference, equivalence or method superiority; supported single-arm discoveries only.",
+      "assessment_asymmetry": "Only A supplies partial source artifacts."
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "jc-issue922",
+      "url": "https://api.github.com/repos/jupyter/jupyter_client/issues/922",
+      "final_url": "https://api.github.com/repos/jupyter/jupyter_client/issues/922",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:43:13.343911Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-B/partial-review0001/source-captures/jc-issue922.txt",
+      "sha256": "849dc4e4a930c664b201e167c484ae0d2a48b39d2b19d4a2a8949ee7e8b4e139",
+      "bytes": 6362,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "jc-pr925",
+      "url": "https://api.github.com/repos/jupyter/jupyter_client/pulls/925",
+      "final_url": "https://api.github.com/repos/jupyter/jupyter_client/pulls/925",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:43:13.391994Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-B/partial-review0001/source-captures/jc-pr925.txt",
+      "sha256": "5105ffcc030b50444ea24054d433a8120ba825376781d41f7dcad65e2a75f17b",
+      "bytes": 17550,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "jc-commit925",
+      "url": "https://api.github.com/repos/jupyter/jupyter_client/commits/666eab0b8cd7991697a9957001cf78401a76c52d",
+      "final_url": "https://api.github.com/repos/jupyter/jupyter_client/commits/666eab0b8cd7991697a9957001cf78401a76c52d",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:43:13.409394Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-B/partial-review0001/source-captures/jc-commit925.txt",
+      "sha256": "be08caed12a78b60594a52a23f302f3c70163831b3f5c0a3266fdf07169a1e82",
+      "bytes": 12367,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "jc-changelog",
+      "url": "https://raw.githubusercontent.com/jupyter/jupyter_client/v8.1.0/CHANGELOG.md",
+      "final_url": "https://raw.githubusercontent.com/jupyter/jupyter_client/v8.1.0/CHANGELOG.md",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:43:13.249741Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-B/partial-review0001/source-captures/jc-changelog.txt",
+      "sha256": "20c05b83853eadce85156257be3e9ba9db946bc2ba320062ea9d7a4c20fd6ada",
+      "bytes": 75321,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "nbformat-document",
+      "url": "https://nbformat.readthedocs.io/en/latest/format_description.html",
+      "final_url": "https://nbformat.readthedocs.io/en/latest/format_description.html",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:43:13.242806Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-B/partial-review0001/source-captures/nbformat-document.txt",
+      "sha256": "f534c9b16fe3f228576ce9c85ddb7e0602427626e1ab3c7dbf3e2de404e7f503",
+      "bytes": 51110,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "nbclient-api",
+      "url": "https://nbclient.readthedocs.io/en/latest/client.html",
+      "final_url": "https://nbclient.readthedocs.io/en/latest/client.html",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:43:13.418227Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-B/partial-review0001/source-captures/nbclient-api.txt",
+      "sha256": "b3cb019dd5c55e581a62379ed9545ffa8082022192acb6f14a3934fef442466a",
+      "bytes": 36686,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "duckdb-csv",
+      "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+      "final_url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:43:13.396085Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-B/partial-review0001/source-captures/duckdb-csv.txt",
+      "sha256": "ae0787d424805aa282c03ce8963f2abf8c97d79c95e27c2aca9c0d877e379a13",
+      "bytes": 372286,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "duckdb-faulty-csv",
+      "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+      "final_url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:43:13.465680Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-B/partial-review0001/source-captures/duckdb-faulty-csv.txt",
+      "sha256": "58b86efc8cca4d5d40af215944a38c97f5f19be548875bc4407c43edb6677a6c",
+      "bytes": 376006,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "duckdb-tuning",
+      "url": "https://duckdb.org/docs/current/guides/performance/how_to_tune_workloads",
+      "final_url": "https://duckdb.org/docs/current/guides/performance/how_to_tune_workloads",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:43:13.524737Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-B/partial-review0001/source-captures/duckdb-tuning.txt",
+      "sha256": "8dd960ee1d68981d6ee483bb2f6bccb2b610c3d6f211e16b2d581630b7c5df8b",
+      "bytes": 368625,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "duckdb-conversion",
+      "url": "https://duckdb.org/docs/current/clients/python/conversion",
+      "final_url": "https://duckdb.org/docs/current/clients/python/conversion",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:43:13.511876Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-B/partial-review0001/source-captures/duckdb-conversion.txt",
+      "sha256": "84afa18e15f6f43a26f59ff1b8869c0018ff6ea32119b174cbb921a31fc8d2a8",
+      "bytes": 381366,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "uv-lock",
+      "url": "https://docs.astral.sh/uv/concepts/projects/sync/",
+      "final_url": "https://docs.astral.sh/uv/concepts/projects/sync/",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:43:13.564595Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-B/partial-review0001/source-captures/uv-lock.txt",
+      "sha256": "4bd4a89338543bf671bd036a52bc666a295986c7c72ea175d95d1c2ac228e0cf",
+      "bytes": 81839,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "nbdime",
+      "url": "https://nbdime.readthedocs.io/en/latest/",
+      "final_url": "https://nbdime.readthedocs.io/en/latest/",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:43:13.517667Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-B/partial-review0001/source-captures/nbdime.txt",
+      "sha256": "1d7168f5cb22a28d77195fdc7c346cc94bb0f791e47b50fc0fec179e3a38beae",
+      "bytes": 17986,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "polars-streaming",
+      "url": "https://docs.pola.rs/user-guide/concepts/streaming/",
+      "final_url": "https://docs.pola.rs/user-guide/concepts/streaming/",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:43:13.664552Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-B/partial-review0001/source-captures/polars-streaming.txt",
+      "sha256": "5ebd60e9f9295ebae011804e5437d45a804faf71e7358d6c782905d6b53d8999",
+      "bytes": 234294,
+      "execution_label": "evaluator_retrieved"
+    }
+  ],
+  "blinding": {
+    "hints": [
+      "Assignment disclosed V14/V15 targeted mechanism names and requested Luna family; actual arm allocation, observed candidate identity, history, costs and prior grades remain unopened. Exact neutral task/coverage cards also describe the treatment mechanism.",
+      "sources.json and witnesses.json name D-V14-B-treatment-diagnostic-a002, revealing A as treatment before this partial judgment."
+    ],
+    "arm_identity_known_before_partial_judgment": true,
+    "private_alias_history_economics_opened": false
+  },
+  "budget": {
+    "screen_max_seconds": 1200,
+    "hard_max_seconds": 1800,
+    "first_actual_output_read_utc": "2026-10-05T22:42:20.210382Z",
+    "elapsed_seconds": 190.921449978,
+    "clock_reset": false,
+    "budget_expired": false
+  },
+  "limitations": [
+    "No decisive semantic error established in selected assessed source claims; HOLD with unassessed remainder, not PASS.",
+    "Catalog execution fields remain candidate-authored assertions until positive receipt binding.",
+    "One empty partner precludes method comparison or quality equivalence.",
+    "No final promotion, historical grade rewrite or broad safety/product plan certification."
+  ],
+  "status": "PARTIAL_SOURCE_PHASE1_FROZEN",
+  "partial_source_judgment": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-B/partial-review0001/partial_source_judgment.json",
+    "sha256": "2b3c2e69bec308a3766822613d19ad28b245fc2ad99998ad2eb267a24417f71d"
+  },
+  "configured_evaluator": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh",
+    "basis": "Root actual spawn controls"
+  },
+  "observed_physical_evaluator_identity": "UNKNOWN",
+  "phase2": {
+    "completed": false
+  },
+  "economics": {
+    "candidate_costs": "UNOPENED",
+    "tokens_and_money": "UNKNOWN"
+  }
+}

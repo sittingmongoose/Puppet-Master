@@ -1,0 +1,116 @@
+{
+  "schema": "er9.diagnostic_method_card.v1",
+  "pair_id": "D-V14-B",
+  "card_version": "v1",
+  "track": "A",
+  "status": "NOT_RUN",
+  "freeze_state": "PROSPECTIVE_UNLAUNCHED",
+  "method_id": "V14",
+  "method_name": "Protected breadth and cross-component analogies",
+  "case_id": "D-V14-B-v1",
+  "domain": "B",
+  "task_name": "Brief-only notebook/data breadth beyond whole-product competitors",
+  "task": "Research the full notebook brief from scratch, including implementation opportunities outside whole-product competitors. Treatment protects breadth and optional leads while maintaining required-plan coverage.",
+  "question": "Use brief-only cases in two domains where relevant components exist outside obvious whole-product competitors. Do not supply the target repositories or a list of answers.",
+  "source_scope": "BRIEF_ONLY public live primary-source discovery; candidate selects components, no named target repository or semantic fixture.",
+  "initial_input_class": "BRIEF_ONLY_LIVE_DISCOVERY",
+  "discovery_conclusion_allowed": true,
+  "control": "Ordinary whole-product competitor and relevant-project research at the same source/time allowance.",
+  "treatment": "Protect a share of discovery effort for different mechanism families, user promises and non-competitor components before deepening the best leads. Keep an explicit opportunity/alternative lane as well as defect hunting.",
+  "measure": "Verified useful novelty, distinct mechanism coverage, applicability, false opportunities, required-plan coverage and cost; raw link counts are not quality.",
+  "integration_limit": "This must run actual external discovery, not only a fixed normative corpus. Keep broad leads even if optional adoption is deferred.",
+  "requested_family": "Luna",
+  "requested_model": "GPT-6 Luna",
+  "requested_effort": "Max",
+  "requested_route": "fresh standalone native Codex /goal",
+  "observed_model": null,
+  "observed_effort": null,
+  "family_binding_rule": "Within pair identical actual supported family/model/effort. Root may version an unstarted card prospectively if route unavailable; preserve original planned family and reason. No substitution attributed as same-model replication.",
+  "brief_path": "briefs/development-B-notebook.md",
+  "common_criteria_path": "common_criteria.json",
+  "source_access_path": "source_access.json",
+  "stages": {
+    "control": [
+      {
+        "stage": "diagnostic",
+        "max_native_seconds": 900,
+        "native_goal": true,
+        "fresh_same_family": true,
+        "max_parent_responses": 100
+      }
+    ],
+    "treatment": [
+      {
+        "stage": "diagnostic",
+        "max_native_seconds": 900,
+        "native_goal": true,
+        "fresh_same_family": true,
+        "max_parent_responses": 100
+      }
+    ]
+  },
+  "allocation": {
+    "critical_path_candidate_seconds_per_arm": 900,
+    "occupied_candidate_seconds_per_arm": 900,
+    "parent_responses_per_arm": 100,
+    "per_stage_parent_response_cap": 100,
+    "startup_and_service_waits": "measured/charged within original allowance",
+    "V09_note": null
+  },
+  "execution_policy": {
+    "public_get": true,
+    "control_execution_enabled": true,
+    "treatment_execution_enabled": true,
+    "isolation_config_pin": null,
+    "retrieval_config_pin": null,
+    "factor_enforcement": "V01 control critic physically lacks execution, not only text prohibition; otherwise tools equal unless documented factor is retrieval ordering/representation."
+  },
+  "fixture_prerequisites": [],
+  "frozen_seed_manifest_path": null,
+  "neutral_task_prompt_path": "diagnostics/D-V14-B-TASK.md",
+  "candidate_artifacts": {
+    "designated_final": "out/final/proposal.md",
+    "source_catalog": "out/final/sources.json",
+    "witness_catalog": "out/final/witnesses.json",
+    "lead_inventory": "out/final/leads.json"
+  },
+  "important_checks": [
+    {
+      "id": "D-V14-B-P1",
+      "question": "Do the same predeclared consequential source/behavior claims receive correct supported correction or preservation under this method, without a new consequential error?"
+    },
+    {
+      "id": "D-V14-B-P2",
+      "question": "Does the final retain supported conditions, legitimate uncertainty and required useful content rather than blanket rejection or incomplete delivery?"
+    },
+    {
+      "id": "D-V14-B-P3",
+      "question": "Was the declared mechanism actually taken up with honest source/execution scope, and what critical/false-rejection/repair differences appear under matched budgets?"
+    }
+  ],
+  "no_truth_key_in_candidate": true,
+  "candidate_authorship": "All substantive scored candidate checking, integration and code remain affordable candidate-native Goal work; Sol only scenario/protocol/evaluator infrastructure.",
+  "evaluate_before_history": true,
+  "economics_fields": [
+    "actual_starts_and_stage_models",
+    "wall_and_critical_path_seconds",
+    "occupied_candidate_seconds",
+    "parent_responses",
+    "native_retries_and_waits",
+    "known_input_cache_output_counters_and_definitions",
+    "unknown_child/cancelled_usage",
+    "tool/source_traffic",
+    "cold_seed_development_cost_separate"
+  ],
+  "outcome": {
+    "attempted": 0,
+    "completed": 0,
+    "assessed": 0,
+    "quality": "NOT_RUN"
+  },
+  "arm_modifier_paths": {
+    "control": "diagnostics/D-V14-B-CONTROL.md",
+    "treatment": "diagnostics/D-V14-B-TREATMENT.md"
+  },
+  "coverage_path": "diagnostics/D-V14-B-coverage.json"
+}

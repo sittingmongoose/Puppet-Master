@@ -1,0 +1,24 @@
+{
+  "schema": "er9.additive-receipt-assessment-reservation.v1",
+  "evaluation_id": "ER9-EVAL-D-V15-A-RECEIPT-001",
+  "pair_id": "D-V15-A",
+  "authorized_by": "Root explicit coordination message; separately declared600s receipt-only extension",
+  "reserved_utc": "2026-10-05T22:52:44.381529Z",
+  "status": "RESERVED_WAITING_EXACT_FROZEN_EXECUTION_PACKET",
+  "hard_max_seconds": 600,
+  "clock_start": "Exact frozen execution/lineage packet delivery; freeze start/deadline before receipt bodies read",
+  "original_allowance_closed": true,
+  "original_judgments_preserved": true,
+  "scope": [
+    "Actual execution IDs and exact code/input/stdout/stderr/exit hashes",
+    "W01 correspondence, UNKNOWN if not provable",
+    "Method uptake and observed cost/provenance",
+    "Failure and successful execution attempts preserved separately"
+  ],
+  "excluded": [
+    "New semantic source searches",
+    "Candidate work/research/critique/repair",
+    "Rewritten original grades or expanded original1800s clock"
+  ],
+  "evaluator_cost": "Separately reported additive600s assessment cost/coverage"
+}

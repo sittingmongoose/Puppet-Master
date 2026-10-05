@@ -1,0 +1,425 @@
+{
+  "protocol_version": "ER9-independent-output-v1",
+  "evaluation_id": "ER9-EVAL-D-V14-A-LUNA-R1-001",
+  "status": "PHASE1_FROZEN_PARTIAL_OR_UNASSESSED",
+  "requested_evaluator": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_evaluator": {
+    "physical_identity": "UNKNOWN",
+    "basis": "No independently observed physical provider/model/effort metadata returned; actual spawn controls confirmed by root."
+  },
+  "started_utc": "2026-10-05T22:20:53.504995Z",
+  "finished_utc": "2026-10-05T22:25:39.906084Z",
+  "current_output_judgment": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-A-LUNA-R1/review0001/current_output_judgment.json",
+    "sha256": "56c1c84412743568672087f4ef0ae202b161d57ef93010cdf8b160a09b2209c8",
+    "saved_utc": "2026-10-05T22:25:39.906084Z"
+  },
+  "received_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-A-LUNA-R1/packet0001/task/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-A-LUNA-R1/packet0001/task/neutral_task.md",
+      "sha256": "6f60c2a231666d0e3bf29462b6338f71e6af268f334d4f6c4897cbe6b2a40f83"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-A-LUNA-R1/packet0001/task/coverage_map.json",
+      "sha256": "80496b3b7c247ac69d8c021a0ea4949b2d08fe35fd078baebe639cd223d49a08"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-A-LUNA-R1/packet0001/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-A-LUNA-R1/packet0001/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-A-LUNA-R1/packet0001/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    }
+  ],
+  "blinding": {
+    "hints": [
+      "Assignment disclosed V14/V15 targeted mechanism names and requested Luna family; actual arm allocation, observed candidate identity, history, costs and prior grades remain unopened. Exact neutral task/coverage cards also describe the treatment mechanism."
+    ],
+    "identity_known_before_judgment": "Requested family known; observed actual identity and arm allocation unknown",
+    "method_history_alias_sidecar_economics_opened": false
+  },
+  "assessment_mode": "no_current_output",
+  "anonymous_output_results": [
+    {
+      "alias": "A",
+      "artifact_status": "TERMINAL_MISSING_DESIGNATED_FINAL",
+      "operational_status": "FAIL",
+      "decision": "NOT_EVALUATED",
+      "quality_status": "UNASSESSED",
+      "assessment_state": "unassessed",
+      "phase1_decision": "NOT_EVALUATED",
+      "full_pass_eligible": false,
+      "obligations": [
+        {
+          "obligation_id": "D-V14-A-LUNA-R1-01",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "output_locators": [],
+          "source_ids": [],
+          "reason": "No designated current artifact exists; no source-grounded semantic judgment possible."
+        },
+        {
+          "obligation_id": "D-V14-A-LUNA-R1-02",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "output_locators": [],
+          "source_ids": [],
+          "reason": "No designated current artifact exists; no source-grounded semantic judgment possible."
+        },
+        {
+          "obligation_id": "D-V14-A-LUNA-R1-03",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "output_locators": [],
+          "source_ids": [],
+          "reason": "No designated current artifact exists; no source-grounded semantic judgment possible."
+        },
+        {
+          "obligation_id": "D-V14-A-LUNA-R1-04",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "output_locators": [],
+          "source_ids": [],
+          "reason": "No designated current artifact exists; no source-grounded semantic judgment possible."
+        }
+      ],
+      "consequential_claims": [],
+      "dimensions": [
+        {
+          "id": 1,
+          "assessment_state": "unassessed",
+          "obligation_ids": [],
+          "finding": "No designated artifact exists."
+        },
+        {
+          "id": 2,
+          "assessment_state": "unassessed",
+          "obligation_ids": [],
+          "finding": "No designated artifact exists."
+        },
+        {
+          "id": 3,
+          "assessment_state": "unassessed",
+          "obligation_ids": [],
+          "finding": "No designated artifact exists."
+        },
+        {
+          "id": 4,
+          "assessment_state": "unassessed",
+          "obligation_ids": [],
+          "finding": "No designated artifact exists."
+        },
+        {
+          "id": 5,
+          "assessment_state": "unassessed",
+          "obligation_ids": [],
+          "finding": "No designated artifact exists."
+        },
+        {
+          "id": 6,
+          "assessment_state": "unassessed",
+          "obligation_ids": [],
+          "finding": "No designated artifact exists."
+        },
+        {
+          "id": 7,
+          "assessment_state": "unassessed",
+          "obligation_ids": [],
+          "finding": "No designated artifact exists."
+        },
+        {
+          "id": 8,
+          "assessment_state": "unassessed",
+          "obligation_ids": [],
+          "finding": "No designated artifact exists."
+        }
+      ],
+      "supported_findings_delivered": [],
+      "defects": [],
+      "witnesses": [],
+      "remaining_unassessed": [
+        "All actual diagnostic obligations and consequential current-output claims; no artifact.",
+        "Method uptake, history, execution and economics unopened."
+      ],
+      "critical_dependencies": [],
+      "whole_case_pass_basis": null
+    },
+    {
+      "alias": "B",
+      "artifact_status": "TERMINAL_MISSING_DESIGNATED_FINAL",
+      "operational_status": "FAIL",
+      "decision": "NOT_EVALUATED",
+      "quality_status": "UNASSESSED",
+      "assessment_state": "unassessed",
+      "phase1_decision": "NOT_EVALUATED",
+      "full_pass_eligible": false,
+      "obligations": [
+        {
+          "obligation_id": "D-V14-A-LUNA-R1-01",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "output_locators": [],
+          "source_ids": [],
+          "reason": "No designated current artifact exists; no source-grounded semantic judgment possible."
+        },
+        {
+          "obligation_id": "D-V14-A-LUNA-R1-02",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "output_locators": [],
+          "source_ids": [],
+          "reason": "No designated current artifact exists; no source-grounded semantic judgment possible."
+        },
+        {
+          "obligation_id": "D-V14-A-LUNA-R1-03",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "output_locators": [],
+          "source_ids": [],
+          "reason": "No designated current artifact exists; no source-grounded semantic judgment possible."
+        },
+        {
+          "obligation_id": "D-V14-A-LUNA-R1-04",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "output_locators": [],
+          "source_ids": [],
+          "reason": "No designated current artifact exists; no source-grounded semantic judgment possible."
+        }
+      ],
+      "consequential_claims": [],
+      "dimensions": [
+        {
+          "id": 1,
+          "assessment_state": "unassessed",
+          "obligation_ids": [],
+          "finding": "No designated artifact exists."
+        },
+        {
+          "id": 2,
+          "assessment_state": "unassessed",
+          "obligation_ids": [],
+          "finding": "No designated artifact exists."
+        },
+        {
+          "id": 3,
+          "assessment_state": "unassessed",
+          "obligation_ids": [],
+          "finding": "No designated artifact exists."
+        },
+        {
+          "id": 4,
+          "assessment_state": "unassessed",
+          "obligation_ids": [],
+          "finding": "No designated artifact exists."
+        },
+        {
+          "id": 5,
+          "assessment_state": "unassessed",
+          "obligation_ids": [],
+          "finding": "No designated artifact exists."
+        },
+        {
+          "id": 6,
+          "assessment_state": "unassessed",
+          "obligation_ids": [],
+          "finding": "No designated artifact exists."
+        },
+        {
+          "id": 7,
+          "assessment_state": "unassessed",
+          "obligation_ids": [],
+          "finding": "No designated artifact exists."
+        },
+        {
+          "id": 8,
+          "assessment_state": "unassessed",
+          "obligation_ids": [],
+          "finding": "No designated artifact exists."
+        }
+      ],
+      "supported_findings_delivered": [],
+      "defects": [],
+      "witnesses": [],
+      "remaining_unassessed": [
+        "All actual diagnostic obligations and consequential current-output claims; no artifact.",
+        "Method uptake, history, execution and economics unopened."
+      ],
+      "critical_dependencies": [],
+      "whole_case_pass_basis": null
+    }
+  ],
+  "shared_check_comparison": [
+    {
+      "check_id": "D-V14-A-LUNA-R1-P1",
+      "arm_results": [
+        {
+          "alias": "A",
+          "assessment_state": "unassessed",
+          "finding": "No designated artifact; impossible"
+        },
+        {
+          "alias": "B",
+          "assessment_state": "unassessed",
+          "finding": "No designated artifact; impossible"
+        }
+      ],
+      "repair_detection_false_rejection_difference": "UNASSESSED; no semantic equivalence or paired winner",
+      "assessment_asymmetry": null
+    },
+    {
+      "check_id": "D-V14-A-LUNA-R1-P2",
+      "arm_results": [
+        {
+          "alias": "A",
+          "assessment_state": "unassessed",
+          "finding": "No designated artifact; impossible"
+        },
+        {
+          "alias": "B",
+          "assessment_state": "unassessed",
+          "finding": "No designated artifact; impossible"
+        }
+      ],
+      "repair_detection_false_rejection_difference": "UNASSESSED; no semantic equivalence or paired winner",
+      "assessment_asymmetry": null
+    },
+    {
+      "check_id": "D-V14-A-LUNA-R1-P3",
+      "arm_results": [
+        {
+          "alias": "A",
+          "assessment_state": "unassessed",
+          "finding": "No designated artifact; impossible"
+        },
+        {
+          "alias": "B",
+          "assessment_state": "unassessed",
+          "finding": "No designated artifact; impossible"
+        }
+      ],
+      "repair_detection_false_rejection_difference": "UNASSESSED; no semantic equivalence or paired winner",
+      "assessment_asymmetry": null
+    }
+  ],
+  "sources": [],
+  "phase2": {
+    "method_uptake": [],
+    "history_dependent_preservation": [],
+    "candidate_execution_evidence": [],
+    "completed": false,
+    "boundary": "History/execution/cost receipt release requested after frozen Phase1; no absence treated as falsehood."
+  },
+  "economics": {
+    "reported_separately_after_blind_judgment": false,
+    "candidate_cost_receipt_refs": [],
+    "evaluator_wall_seconds": 0,
+    "evaluator_usage": null,
+    "unknown_counters": [
+      "Evaluator input/cache/output tokens and money UNKNOWN.",
+      "Candidate starts, occupied/wall time, retries/waits and witness cost not opened at Phase1."
+    ],
+    "setup_cost_separate": true
+  },
+  "limitations": [
+    "Both absent artifacts remain quality UNASSESSED, not semantic FAIL.",
+    "Operational status is the anonymous packet notice, not inference from source semantics.",
+    "No complete pipeline or matched discovery comparison credit."
+  ],
+  "errata": [],
+  "field_contract": {
+    "assessment_state": [
+      "complete",
+      "partial",
+      "unassessed"
+    ],
+    "decision": [
+      "PASS",
+      "FAIL",
+      "HOLD",
+      "NOT_EVALUATED"
+    ],
+    "obligation_row": {
+      "obligation_id": "case ID",
+      "assessment_state": "enum",
+      "finding": "supported|contradicted|unresolved|not_applicable",
+      "output_locators": [],
+      "source_ids": [],
+      "reason": "source-backed explanation"
+    },
+    "claim_row": {
+      "claim_id": "local ID",
+      "claim": "consequential current claim",
+      "output_locator": "exact locator",
+      "assessment_state": "enum",
+      "finding": "supported|contradicted|unresolved",
+      "source_ids": [],
+      "reason": "version/conditions and inference boundary"
+    },
+    "defect_row": {
+      "defect_id": "stable ID",
+      "severity": "critical|major|minor with concrete rationale",
+      "kind": "error|omission|false_rejection|unsupported_dependency|execution_misclaim",
+      "obligation_ids": [],
+      "claim_ids": [],
+      "output_locators": [],
+      "source_ids": [],
+      "reason": "decisive consequence",
+      "screen_decisive": false
+    },
+    "witness_row": {
+      "witness_id": "ID",
+      "execution_label": "candidate_executed|evaluator_executed|proposed_unexecuted",
+      "claim_ids": [],
+      "receipt_refs": [],
+      "expected_value_basis": "independent basis",
+      "scope": "what was actually exercised",
+      "finding": "result and limits"
+    },
+    "source_row": {
+      "source_id": "ID",
+      "url": "primary URL",
+      "version_or_commit": "applicable identity",
+      "locator": "exact section/lines/test",
+      "retrieved_utc": "UTC",
+      "capture_path": null,
+      "sha256": null,
+      "supports": "claim and actual normative force"
+    },
+    "check_comparison_row": {
+      "check_id": "dispatch ID",
+      "arm_results": [],
+      "repair_detection_false_rejection_difference": "no equivalence from FAIL/FAIL",
+      "assessment_asymmetry": null
+    }
+  },
+  "configured_evaluator": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh",
+    "source": "Actual spawn controls confirmed by root; fork_turns none"
+  },
+  "scope": "actual targeted diagnostic only; full development proposal completeness UNASSESSED",
+  "comparison_status": "INCOMPLETE_PAIR",
+  "full_pipeline_credit": false,
+  "whole_case_PASS": false,
+  "additive_partial_source_view_expected": true,
+  "budget": {
+    "screen_max_seconds": 1200,
+    "hard_max_seconds": 1800,
+    "semantic_clock_started": false,
+    "semantic_assessment_seconds": 0,
+    "reason": "No actual output to start substantive source assessment; missing-artifact classification is setup/operational boundary."
+  }
+}

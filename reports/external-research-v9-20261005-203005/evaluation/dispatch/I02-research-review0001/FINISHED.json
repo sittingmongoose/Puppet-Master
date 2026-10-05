@@ -1,0 +1,36 @@
+{
+  "evaluation_id": "ER9-EVAL-I02-RESEARCH-001",
+  "finished_utc": "2026-10-05T22:57:45.373356Z",
+  "wall_seconds_through_verification": 1651.8818321228027,
+  "source_screen_seconds": 1023.2739706039429,
+  "screen_target_seconds": 1200,
+  "hard_max_seconds": 1800,
+  "scope": "two research-stage source screens only",
+  "stage_outcomes": {
+    "A": "FAIL_SCREEN",
+    "B": "FAIL_SCREEN"
+  },
+  "whole_pipeline_quality": "UNASSESSED",
+  "designated_finals_present": 0,
+  "original_phase1_pin_unchanged": true,
+  "checks_passed": [
+    "two actual research scopes",
+    "12 obligations and8 dimensions peralias",
+    "same5 importantchecks",
+    "all sourceID references",
+    "10 actualexecution proofs /2failed retained",
+    "separate operational andsemanticstates",
+    "nativeUNKNOWN preserved",
+    "cache/UI totals never doubled",
+    "screen verdict within1200/wholeevaluationwithin1800",
+    "timing clarification additive"
+  ],
+  "source_pins": {
+    "REVIEW.md": "348e8467413dd2babc3237cf2394d01a011a2fcfdbf67c1f56c2a6868766948f",
+    "report.json": "e40f376ccd380054f460c797c6ff31784247c664cd2b518a94a31516556915c6",
+    "current_output_judgment.json": "ffb8df5fb93d0dfa751e5d6029f5b6f21921f17f64f112405a6b367395940a54",
+    "SOURCE_INDEX.json": "39676aa3ef71881ce19cbf2ac9e5233e34dc71bec8b54b380121db0c3be69e27",
+    "PHASE2_METADATA.json": "132a60102cc328592fc4deb680d864cf9b0d53c94979757e2dbe562ffcec2d9c",
+    "ERRATUM_01.json": "b38b418fa67a39e79c65570574a0d7f17ba26cf9fbe5eabd3339d122b8c58cb9"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "schema": "er9.mechanical-anonymous-export.v1",
+  "label": "P-812500e3aa6b9db44e5a",
+  "dispatch_sha256": "812500e3aa6b9db44e5a2f523115d99407861e154c17ad5348d274c793541bd8",
+  "evaluation_id": "ER9-EVAL-D-V14-A-LUNA-R1-001",
+  "byte_policy": "exact original typed packet bytes; descriptors retain original frozen packet paths",
+  "scope": "targeted_diagnostic_pair",
+  "semantic_assessment": "NOT_PERFORMED_BY_COURIER",
+  "files": [
+    {
+      "relative_path": "dispatch.json",
+      "sha256": "812500e3aa6b9db44e5a2f523115d99407861e154c17ad5348d274c793541bd8",
+      "size_bytes": 5456
+    },
+    {
+      "relative_path": "task/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "size_bytes": 5324
+    },
+    {
+      "relative_path": "task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "size_bytes": 2521
+    },
+    {
+      "relative_path": "task/coverage_map.json",
+      "sha256": "80496b3b7c247ac69d8c021a0ea4949b2d08fe35fd078baebe639cd223d49a08",
+      "size_bytes": 2723
+    },
+    {
+      "relative_path": "task/neutral_task.md",
+      "sha256": "6f60c2a231666d0e3bf29462b6338f71e6af268f334d4f6c4897cbe6b2a40f83",
+      "size_bytes": 1460
+    },
+    {
+      "relative_path": "task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "size_bytes": 2062
+    },
+    {
+      "relative_path": "task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "size_bytes": 1751
+    }
+  ],
+  "private_alias_map": "EXCLUDED",
+  "public_source_raw_bodies": "LAB_ONLY_NOT_PUBLICATION_AUTHORITY"
+}

@@ -1,0 +1,21 @@
+{
+  "sort_by_key_only_orders": {
+    "input_a": [
+      1,
+      3,
+      2
+    ],
+    "input_b": [
+      3,
+      1,
+      2
+    ]
+  },
+  "key_only_order_depends_on_physical_order": true,
+  "key_plus_rid_tiebreak_order": [
+    1,
+    3,
+    2
+  ],
+  "key_plus_rid_identical_across_inputs": true
+}

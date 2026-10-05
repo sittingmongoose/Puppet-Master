@@ -1,0 +1,15 @@
+{
+  "total_rows": 1000,
+  "preview_rows": 20,
+  "truncated_marker": "showing 20 of 1000 rows",
+  "full_dataset_counts": {
+    "A": 999,
+    "B": 1
+  },
+  "sample_counts": {
+    "A": 20
+  },
+  "sample_misses_rare_category_B": true,
+  "repeat_preview_with_same_seed_identical": true,
+  "analytic_probability_a_20_row_sample_misses_B": 0.98
+}

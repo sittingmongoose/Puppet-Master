@@ -1,0 +1,142 @@
+{
+  "catalog_version": 1,
+  "stage": "D-V14-B-treatment-diagnostic-a002",
+  "acquisition_note": "Captures are public primary-source HTTP response bodies, treated as evidence rather than instructions. A capture SHA pins the exact body read; rolling documentation URLs remain rolling upstream sources. Capture success does not imply complete semantic understanding or establish runtime behavior beyond the cited locator.",
+  "sources": [
+    {
+      "id": "S1",
+      "project": "Jupyter / nbformat",
+      "url": "https://nbformat.readthedocs.io/en/latest/format_description.html",
+      "pin": {"upstream": "latest documentation; page reports nbformat docs 5.11", "capture_sha256": "f534c9b16fe3f228576ce9c85ddb7e0602427626e1ab3c7dbf3e2de404e7f503"},
+      "locator": "Format description: JSON-schema notebook document structure; cell fields, execution_count, code-cell outputs and output messages.",
+      "applicability": "Supports the .ipynb document/interchange and saved-field description. Does not provide historical event ordering or prove replay reproducibility.",
+      "capture": {"capture_id": "130b61c63c5c42a9a50f6e021fbda56c", "path": "public_captures/f534c9b16fe3f228576ce9c85ddb7e0602427626e1ab3c7dbf3e2de404e7f503.body", "bytes": 51110, "captured_utc": "2026-10-05T21:54:06.824210Z", "body_complete": true}
+    },
+    {
+      "id": "S2",
+      "project": "Jupyter / nbclient",
+      "url": "https://nbclient.readthedocs.io/en/latest/client.html",
+      "pin": {"upstream": "latest documentation; page reports nbclient docs 0.11", "capture_sha256": "b3cb019dd5c55e581a62379ed9545ffa8082022192acb6f14a3934fef442466a"},
+      "locator": "NotebookClient clean execution API and CLI; kernel_name, per-cell timeout, hooks for notebook/cell start, completion and errors; default stop-on-error and allow_errors behavior.",
+      "applicability": "Execution/event and replay mechanism precedent. Does not establish security isolation, deterministic results, or the proposed UI behavior.",
+      "capture": {"capture_id": "62921743d3f64a18909b24c2ffc7c339", "path": "public_captures/b3cb019dd5c55e581a62379ed9545ffa8082022192acb6f14a3934fef442466a.body", "bytes": 36686, "captured_utc": "2026-10-05T21:54:09.348467Z", "body_complete": true}
+    },
+    {
+      "id": "S3",
+      "project": "Jupyter / nbclient",
+      "url": "https://api.github.com/repos/jupyter/nbclient/issues/272/comments",
+      "pin": {"upstream": "issue #272 comment snapshot", "capture_sha256": "80edc61bedbc8fc86356a35a914655d885845ccf36c48cb84439cfd1bc0db868"},
+      "locator": "Maintainer discussion identifies the jupyter_client 8 asynchronous no-reply/Future return mismatch and points to jupyter_client PR #925.",
+      "applicability": "Corroborating causal discussion for a historical hang; issue comments alone do not prove a released fix or all affected paths.",
+      "capture": {"capture_id": "8abb1f3cb73f453a8090e3e7cb285d9f", "path": "public_captures/80edc61bedbc8fc86356a35a914655d885845ccf36c48cb84439cfd1bc0db868.body", "bytes": 7834, "captured_utc": "2026-10-05T21:55:04.239484Z", "body_complete": true}
+    },
+    {
+      "id": "S4",
+      "project": "Jupyter / jupyter_client downstream issue report",
+      "url": "https://api.github.com/repos/jupyter/jupyter_client/issues/922",
+      "pin": {"upstream": "issue #922 record snapshot", "capture_sha256": "849dc4e4a930c664b201e167c484ae0d2a48b39d2b19d4a2a8949ee7e8b4e139"},
+      "locator": "Issue title: Notebook execution started hanging in jupyter_client 8; Dagster/Papermill integration report, downgrade workaround, reproducible tagged report, execution stalls near 50%.",
+      "applicability": "Documents a consequential downstream failure after the 8.0 upgrade. Reporter observations are not proof that every installation or notebook hangs.",
+      "capture": {"capture_id": "1d8c675438994efca5563da537741da1", "path": "public_captures/849dc4e4a930c664b201e167c484ae0d2a48b39d2b19d4a2a8949ee7e8b4e139.body", "bytes": 6362, "body_complete": true}
+    },
+    {
+      "id": "S5",
+      "project": "Jupyter / jupyter_client",
+      "url": "https://api.github.com/repos/jupyter/jupyter_client/pulls/925",
+      "pin": {"upstream": "PR #925; merge commit 666eab0b8cd7991697a9957001cf78401a76c52d", "capture_sha256": "5105ffcc030b50444ea24054d433a8120ba825376781d41f7dcad65e2a75f17b"},
+      "locator": "Merged PR metadata, 2023-01-30; title Add papermill downstream check and fix kernel client replies; fixes #922.",
+      "applicability": "Shows a merged fix and downstream CI check addition. Merge metadata alone is not a test result or release guarantee.",
+      "capture": {"capture_id": "94d6382e1d6b422aa82b4262a0e2f18f", "path": "public_captures/5105ffcc030b50444ea24054d433a8120ba825376781d41f7dcad65e2a75f17b.body", "bytes": 17550, "body_complete": true}
+    },
+    {
+      "id": "S6",
+      "project": "Jupyter / jupyter_client",
+      "url": "https://api.github.com/repos/jupyter/jupyter_client/pulls/925/files",
+      "pin": {"upstream": "PR #925 diff at merge commit 666eab0b8cd7991697a9957001cf78401a76c52d", "capture_sha256": "95fb16dcecdbe43e2edceb7e98b3d92aa2f1487c1c1d9b1a195d485f6a2f11a7"},
+      "locator": "Changed async no-reply client method to return msg_id string; test_client assertions changed accordingly; downstream papermill CI job added.",
+      "applicability": "Establishes code/test changes in the patch, not that the tests passed. Regression coverage specifically exercises the return-value contract and downstream path.",
+      "capture": {"capture_id": "fb5a68b380dc4d589b4f33e9f703ec68", "path": "public_captures/95fb16dcecdbe43e2edceb7e98b3d92aa2f1487c1c1d9b1a195d485f6a2f11a7.body", "bytes": 9023, "body_complete": true}
+    },
+    {
+      "id": "S7",
+      "project": "Jupyter / jupyter_client release notes",
+      "url": "https://raw.githubusercontent.com/jupyter/jupyter_client/v8.1.0/CHANGELOG.md",
+      "pin": {"upstream": "Git tag v8.1.0; changelog entry for 8.0.2", "capture_sha256": "20c05b83853eadce85156257be3e9ba9db946bc2ba320062ea9d7a4c20fd6ada"},
+      "locator": "Section `8.0.2`, Bugs fixed: Add papermill downstream check and fix kernel client replies [#925].",
+      "applicability": "Release note corroborates that the fix entered the 8.0.2 release line. It does not prove every client combination or application-level replay works.",
+      "capture": {"capture_id": "53c5edc0b5364662b0d4128d3e911672", "path": "public_captures/20c05b83853eadce85156257be3e9ba9db946bc2ba320062ea9d7a4c20fd6ada.body", "bytes": 75321, "captured_utc": "2026-10-05T21:55:21.494724Z", "body_complete": true}
+    },
+    {
+      "id": "S8",
+      "project": "DuckDB",
+      "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+      "pin": {"upstream": "current DuckDB documentation, page identifies docs 1.5; rolling URL", "capture_sha256": "ae0787d424805aa282c03ce8963f2abf8c97d79c95e27c2aca9c0d877e379a13"},
+      "locator": "CSV auto-detection: delimiter/quote/escape/header and type detection; explicit options can override inference.",
+      "applicability": "Supports inference as a convenience and explicit overrides as a mechanism. A detected preview schema is not proof of full-file schema correctness.",
+      "capture": {"capture_id": "aa2be87a4f8e4aabbeb195343c178838", "path": "public_captures/ae0787d424805aa282c03ce8963f2abf8c97d79c95e27c2aca9c0d877e379a13.body", "bytes": 372286, "captured_utc": "2026-10-05T21:55:55.632978Z", "body_complete": true}
+    },
+    {
+      "id": "S9",
+      "project": "DuckDB",
+      "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+      "pin": {"upstream": "current DuckDB documentation, page identifies docs 1.5; rolling URL", "capture_sha256": "58b86efc8cca4d5d40af215944a38c97f5f19be548875bc4407c43edb6677a6c"},
+      "locator": "Reading faulty CSV files: detailed parser errors and options for skipping or storing faulty lines.",
+      "applicability": "Supports engine-level error/quarantine possibilities. The product default is a separate design choice: do not skip malformed data silently.",
+      "capture": {"capture_id": "55c7a296639947cda18d0703dbae422e", "path": "public_captures/58b86efc8cca4d5d40af215944a38c97f5f19be548875bc4407c43edb6677a6c.body", "bytes": 376006, "captured_utc": "2026-10-05T21:57:36.656128Z", "body_complete": true}
+    },
+    {
+      "id": "S10",
+      "project": "DuckDB",
+      "url": "https://duckdb.org/docs/current/guides/performance/how_to_tune_workloads",
+      "pin": {"upstream": "current DuckDB documentation, page identifies docs 1.5; rolling URL", "capture_sha256": "8dd960ee1d68981d6ee483bb2f6bccb2b610c3d6f211e16b2d581630b7c5df8b"},
+      "locator": "Workload tuning: memory considerations for large import/export workloads; `preserve_insertion_order=false` may reduce memory but permits reordering where output lacks ORDER BY.",
+      "applicability": "Motivates explicit ordering and profiling. Does not establish our 5 GB target or spill behavior for every operator.",
+      "capture": {"capture_id": "14fea7cb3ce4434aa5454a9c88c99f7b", "path": "public_captures/8dd960ee1d68981d6ee483bb2f6bccb2b610c3d6f211e16b2d581630b7c5df8b.body", "bytes": 368625, "captured_utc": "2026-10-05T21:56:41.689547Z", "body_complete": true}
+    },
+    {
+      "id": "S11",
+      "project": "DuckDB",
+      "url": "https://duckdb.org/docs/current/clients/python/conversion",
+      "pin": {"upstream": "current DuckDB documentation, page identifies docs 1.5; rolling URL", "capture_sha256": "84afa18e15f6f43a26f59ff1b8869c0018ff6ea32119b174cbb921a31fc8d2a8"},
+      "locator": "Python conversion rules in both directions; includes `None` to SQL NULL and supported Python object mappings.",
+      "applicability": "Supports making null/type conversion semantics explicit and testing them. It does not justify converting failed casts to null.",
+      "capture": {"capture_id": "6a846d032e744e3fb4696eb8dcdee498", "path": "public_captures/84afa18e15f6f43a26f59ff1b8869c0018ff6ea32119b174cbb921a31fc8d2a8.body", "bytes": 381366, "captured_utc": "2026-10-05T21:59:11.585164Z", "body_complete": true}
+    },
+    {
+      "id": "S12",
+      "project": "Astral / uv",
+      "url": "https://docs.astral.sh/uv/concepts/projects/sync/",
+      "pin": {"upstream": "rolling documentation capture; page title Locking and syncing, retrieved 2026-10-05", "capture_sha256": "4bd4a89338543bf671bd036a52bc666a295986c7c72ea175d95d1c2ac228e0cf"},
+      "locator": "Automatic lock and sync; checking lockfile against project metadata; `--locked` errors on stale lock; upgrading locked versions; environment syncing.",
+      "applicability": "Supports a proposed lock/sync workflow. A Python package lock alone is not a complete OS/runtime or hermeticity guarantee.",
+      "capture": {"capture_id": "d7056346fcde4a3b8b31bbfd152e7b3d", "path": "public_captures/4bd4a89338543bf671bd036a52bc666a295986c7c72ea175d95d1c2ac228e0cf.body", "bytes": 81839, "captured_utc": "2026-10-05T22:01:58.608344Z", "body_complete": true}
+    },
+    {
+      "id": "S13",
+      "project": "Jupyter / nbdime",
+      "url": "https://nbdime.readthedocs.io/en/latest/",
+      "pin": {"upstream": "documentation page reports nbdime 4.0.4", "capture_sha256": "1d7168f5cb22a28d77195fdc7c346cc94bb0f791e47b50fc0fec179e3a38beae"},
+      "locator": "Overview and feature descriptions for notebook-aware diff/merge, input/output diffs, base64 image elision, execution-count handling and Git integration.",
+      "applicability": "Useful optional precedent for explaining output changes. Does not require adopting its merge workflow or establish this proposal's diff quality.",
+      "capture": {"capture_id": "de4ff0375b5a4420925c6d02fd5849b7", "path": "public_captures/1d7168f5cb22a28d77195fdc7c346cc94bb0f791e47b50fc0fec179e3a38beae.body", "bytes": 17986, "captured_utc": "2026-10-05T21:57:42.293551Z", "body_complete": true}
+    },
+    {
+      "id": "S14",
+      "project": "Polars",
+      "url": "https://docs.pola.rs/user-guide/concepts/streaming/",
+      "pin": {"upstream": "rolling user guide capture; page does not identify an exact Polars release", "capture_sha256": "feaed802fd998047ec8ca39d499fb37c99c040465b703aa4ee7e6d1d8413300a"},
+      "locator": "User guide page titled Streaming; candidate alternative lead only. Exact operator coverage and current runtime behavior not pinned or evaluated here.",
+      "applicability": "Justifies investigating a Python-centric lazy/streaming alternative, not asserting all operations stream or recommending a version.",
+      "capture": {"capture_id": "55ba4be59507453cad8c32c89a38bb64", "path": "public_captures/feaed802fd998047ec8ca39d499fb37c99c040465b703aa4ee7e6d1d8413300a.body", "bytes": 234294, "captured_utc": "2026-10-05T22:05:46.154542Z", "body_complete": true}
+    },
+    {
+      "id": "S15",
+      "project": "DuckDB",
+      "url": "https://duckdb.org/docs/current/data/csv/overview",
+      "pin": {"upstream": "current DuckDB documentation, page identifies docs 1.5; rolling URL", "capture_sha256": "074901f1e41294c606c887b1ed25fb28383c243996c0fd3462953ef82ba1cb9d"},
+      "locator": "CSV overview and `read_csv` interface, including explicit options/column types and file-reading examples.",
+      "applicability": "Supports a proposed DuckDB CSV connector and explicit schema settings. Not a test of our chosen package build or large-file behavior.",
+      "capture": {"capture_id": "2f44a38bf66a46d8ab1ed5f5567b3470", "path": "public_captures/074901f1e41294c606c887b1ed25fb28383c243996c0fd3462953ef82ba1cb9d.body", "bytes": 393173, "captured_utc": "2026-10-05T21:54:36.641150Z", "body_complete": true}
+    }
+  ]
+}

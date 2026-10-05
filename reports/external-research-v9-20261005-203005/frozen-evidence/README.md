@@ -1,0 +1,5 @@
+# Exact frozen courier evidence
+
+Positive selectors 001/002/003/004 preserve exact typed dispatch/task/output bytes, actual candidate witnesses and sanitized capture/economics metadata. Anonymous original missing-final views and additive partial-artifact views remain distinct; `designated_final=null` does not become a final because a partial proposal exists. No courier grade is invented. Original alias maps, live dispatch state, private runtime/raw ModelIO and raw public capture bodies are excluded.
+
+Paths within typed dispatch copies refer to original lab custody. `history/cohort006.json` maps originals to this public tree with exact hashes. The separately published I02 review binds the proposals and checks it actually assessed. Acquisition hashes and captured bytes do not demonstrate comprehension. Courier003 receipt-only extension is now released with the separately frozen 600 s D15A RECEIPT-001 assessment. Original judgments/allowances remain unchanged; formal missing witness-ID mapping is not reconstructed as delivery.

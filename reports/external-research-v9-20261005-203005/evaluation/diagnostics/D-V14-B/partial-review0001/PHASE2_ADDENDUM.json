@@ -1,0 +1,367 @@
+{
+  "schema": "er9.diagnostic-phase2-addendum.v1",
+  "pair_id": "D-V14-B",
+  "saved_utc": "2026-10-05T23:01:00.049460Z",
+  "current_source_judgment": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-B/partial-review0001/partial_source_judgment.json",
+    "sha256": "2b3c2e69bec308a3766822613d19ad28b245fc2ad99998ad2eb267a24417f71d"
+  },
+  "original_judgment_unchanged": true,
+  "phase2_packets": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-OPERATIONAL-001/MANIFEST.json",
+      "sha256": "34c88ad39cc031012be700b4a2127b6dded42480ac36beeadc7dc5cd5e3bc68a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-WITNESSES-001/MANIFEST.json",
+      "sha256": "27624ed38a04f8c2127da3ff4d2087788aa564b40ffe2c37e229a0c0dd931446"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/MANIFEST.json",
+      "sha256": "764d71019c8087f5d01d805b23ce21f2babbfd61f984a412a7c8aae47370120b"
+    }
+  ],
+  "phase2_arms": [
+    {
+      "alias": "A",
+      "arm_phase2": "treatment",
+      "candidate_identity": {
+        "actual_family": "Luna",
+        "observed_model": "gpt-6-luna",
+        "observed_effort": "max",
+        "basis": "NATIVE_THREAD_IDENTITY_AND_USAGE_RECEIPT"
+      },
+      "input_pin_checks": {
+        "diagnostic_task.md": true,
+        "brief.md": true,
+        "arm_instruction.md": true,
+        "output_contract.md": true
+      },
+      "native_quiescent": true,
+      "operational_complete": false,
+      "native_goal_starts": 1,
+      "method_uptake": "Task/method instruction input pins verified; independent public capture metadata shows brief-only eligible acquisition across mechanism families. Protected-share time allocation/complete uptake is UNASSESSED; current source claims assessed separately.",
+      "captures": {
+        "selected_catalog_capture_count": 15,
+        "all_pins_match": true,
+        "http_status_counts": {
+          "200": 15
+        },
+        "captured_response_bytes_sum": 2429461,
+        "complete_body_count": 15,
+        "raw_model_comprehension": "UNKNOWN; acquisition not comprehension",
+        "full_source_tool_traffic": "UNKNOWN; only catalog-positive selectors exported",
+        "metadata_manifest": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/MANIFEST.json",
+          "sha256": "764d71019c8087f5d01d805b23ce21f2babbfd61f984a412a7c8aae47370120b"
+        },
+        "capture_times_utc": {
+          "first": "2026-10-05T21:54:06.824210+00:00",
+          "last": "2026-10-05T22:05:46.154542+00:00"
+        }
+      },
+      "candidate_execution_receipts": [
+        {
+          "actor": "candidate",
+          "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+          "bootstrap_started": true,
+          "cleanup_classification": "collected_unit_absent",
+          "cleanup_confirmed": true,
+          "cleanup_state_returncode": 0,
+          "cleanup_stop_returncode": 5,
+          "code_sha256": "4d0c3a0914a99045d4321d3a5257b866b6193e40d31d071735e5f1b183b0ba78",
+          "control_group_absent_after_stop": null,
+          "control_group_populated_after_stop": null,
+          "data_sha256": "4e84bd3d2a7508c625288ba7d512c93ed4d701fb131951126a9cdb945155bee6",
+          "execution_id": "exec-wa1jtbo0",
+          "execution_label": "executed by candidate",
+          "exit_code": 0,
+          "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+          "limits": {
+            "cpu_seconds": 3,
+            "memory_bytes": 268435456,
+            "network": "new empty namespace",
+            "stream_bytes_each": 32768,
+            "tasks": 16,
+            "wall_seconds": 5
+          },
+          "schema": "er9.execution.result.v1",
+          "stderr_bytes": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_bytes": 249,
+          "stdout_sha256": "1e0293ceca4571cf3665ab8b3361bad349694f19db5201b59e8952d474982e39",
+          "stopped_by_adapter": null,
+          "unit_active_state_after_stop": "inactive",
+          "unit_load_state_after_stop": "not-found"
+        }
+      ],
+      "execution_evidence_files": [
+        {
+          "pair_id": "D-V14-B",
+          "alias": "A",
+          "execution_id": "exec-wa1jtbo0",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-WITNESSES-001/D-V14-B/A/exec-wa1jtbo0/code.py",
+          "sha256": "4d0c3a0914a99045d4321d3a5257b866b6193e40d31d071735e5f1b183b0ba78",
+          "original_sha256": "4d0c3a0914a99045d4321d3a5257b866b6193e40d31d071735e5f1b183b0ba78",
+          "evidence_kind": "candidate_code",
+          "redaction_policy": "exact bytes"
+        },
+        {
+          "pair_id": "D-V14-B",
+          "alias": "A",
+          "execution_id": "exec-wa1jtbo0",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-WITNESSES-001/D-V14-B/A/exec-wa1jtbo0/data.json",
+          "sha256": "4e84bd3d2a7508c625288ba7d512c93ed4d701fb131951126a9cdb945155bee6",
+          "original_sha256": "4e84bd3d2a7508c625288ba7d512c93ed4d701fb131951126a9cdb945155bee6",
+          "evidence_kind": "candidate_input",
+          "redaction_policy": "exact bytes"
+        },
+        {
+          "pair_id": "D-V14-B",
+          "alias": "A",
+          "execution_id": "exec-wa1jtbo0",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-WITNESSES-001/D-V14-B/A/exec-wa1jtbo0/stdout.bin",
+          "sha256": "1e0293ceca4571cf3665ab8b3361bad349694f19db5201b59e8952d474982e39",
+          "original_sha256": "1e0293ceca4571cf3665ab8b3361bad349694f19db5201b59e8952d474982e39",
+          "evidence_kind": "candidate_stdout",
+          "redaction_policy": "exact bytes"
+        },
+        {
+          "pair_id": "D-V14-B",
+          "alias": "A",
+          "execution_id": "exec-wa1jtbo0",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-WITNESSES-001/D-V14-B/A/exec-wa1jtbo0/stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "evidence_kind": "candidate_stderr",
+          "redaction_policy": "exact bytes"
+        },
+        {
+          "pair_id": "D-V14-B",
+          "alias": "A",
+          "execution_id": "exec-wa1jtbo0",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-WITNESSES-001/D-V14-B/A/exec-wa1jtbo0/execution-facts.json",
+          "sha256": "9132af8564108b673d278b0e83f48bf5eb4d84aa8ef9aac639cbe7676951cc81",
+          "original_sha256": "ea9c60048eef5854761e1e1fbb52e9ded7473cb453b72f98b05143346bac5d39",
+          "evidence_kind": "candidate_execution_receipt",
+          "redaction_policy": "positive metadata projection; omit unit/privatepath/timing/history/economics, streams separately exact",
+          "omitted_original_fields": [
+            "cleanup_query_stderr",
+            "cleanup_query_stdout",
+            "cleanup_stop_stderr",
+            "cleanup_stop_stdout",
+            "completed_utc",
+            "control_group_after_stop",
+            "elapsed_seconds",
+            "limitations",
+            "stderr",
+            "stdout"
+          ]
+        }
+      ],
+      "accounting_typed_row": {
+        "actual_family": "Luna",
+        "arm": "treatment",
+        "attempt_id": "D-V14-B-treatment-diagnostic-a002",
+        "billing_dollars": "UNKNOWN",
+        "cancelled_or_unexposed_tail": "UNKNOWN",
+        "category": "candidate_attempt",
+        "cleanup_reserve_seconds": 15.0,
+        "cleanup_seconds": "UNKNOWN",
+        "end_utc": null,
+        "goal_identity": "01a10e0e-ed8a-72b0-a2fb-a761051d820b",
+        "http_attempts": "UNKNOWN",
+        "inference_model_provenance": "NATIVE_THREAD_IDENTITY_AND_USAGE_RECEIPT",
+        "job_status": "FAILED",
+        "known_usage": {
+          "cached_input_included": 3175936,
+          "input": 3520119,
+          "output": 33676,
+          "reasoning_output_subset": 20984,
+          "total": 3553795
+        },
+        "native_execution_seconds": null,
+        "native_goal_starts": 1,
+        "native_goal_status": "paused",
+        "native_goal_status_before_cleanup": "active",
+        "observed_effort": "max",
+        "observed_model": "gpt-6-luna",
+        "occupied_seconds": 885.492878623,
+        "pair_id": "D-V14-B",
+        "provider_request_count": null,
+        "provider_status_counts": {},
+        "quiescent": true,
+        "quota_exhaustion": "UNKNOWN",
+        "requested_effort": "max",
+        "requested_model": "gpt-6-luna",
+        "router_terminal_status": "HOLD",
+        "source_pins": [
+          {
+            "path": "ops/dispatcher/runs/D-V14-B-treatment-diagnostic-a002/native/result.json",
+            "sha256": "1a91e3d95c12a58baa784d71ae5e5472a29c83b7a3873b99c0180637a5898e13"
+          }
+        ],
+        "stage": "diagnostic",
+        "start_utc": null,
+        "terminal_error_class": "TimeoutError",
+        "turn_completion_notifications": 1,
+        "turn_status_counts": {
+          "interrupted": 1
+        },
+        "ui_usage_separate": null,
+        "usage_basis": "native_thread_cumulative",
+        "usage_notifications": 46
+      }
+    },
+    {
+      "alias": "B",
+      "arm_phase2": "control",
+      "candidate_identity": {
+        "actual_family": "Luna",
+        "observed_model": "gpt-6-luna",
+        "observed_effort": "max",
+        "basis": "NATIVE_THREAD_IDENTITY_AND_USAGE_RECEIPT"
+      },
+      "input_pin_checks": {
+        "diagnostic_task.md": true,
+        "brief.md": true,
+        "arm_instruction.md": true,
+        "output_contract.md": true
+      },
+      "native_quiescent": true,
+      "operational_complete": false,
+      "native_goal_starts": 1,
+      "method_uptake": "Task/method instruction input pins verified; independent public capture metadata shows brief-only eligible acquisition across mechanism families. Protected-share time allocation/complete uptake is UNASSESSED; current source claims assessed separately.",
+      "captures": {
+        "selected_catalog_capture_count": 0,
+        "all_pins_match": true,
+        "http_status_counts": {},
+        "captured_response_bytes_sum": 0,
+        "complete_body_count": 0,
+        "raw_model_comprehension": "UNKNOWN; acquisition not comprehension",
+        "full_source_tool_traffic": "UNKNOWN; only catalog-positive selectors exported",
+        "metadata_manifest": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/MANIFEST.json",
+          "sha256": "764d71019c8087f5d01d805b23ce21f2babbfd61f984a412a7c8aae47370120b"
+        },
+        "capture_times_utc": {
+          "first": null,
+          "last": null
+        }
+      },
+      "candidate_execution_receipts": [],
+      "execution_evidence_files": [],
+      "accounting_typed_row": {
+        "actual_family": "Luna",
+        "arm": "control",
+        "attempt_id": "D-V14-B-control-diagnostic-a002",
+        "billing_dollars": "UNKNOWN",
+        "cancelled_or_unexposed_tail": "UNKNOWN",
+        "category": "candidate_attempt",
+        "cleanup_reserve_seconds": 15.0,
+        "cleanup_seconds": "UNKNOWN",
+        "end_utc": null,
+        "goal_identity": "01a10e0e-e878-7fc0-b003-758692e41da3",
+        "http_attempts": "UNKNOWN",
+        "inference_model_provenance": "NATIVE_THREAD_IDENTITY_AND_USAGE_RECEIPT",
+        "job_status": "FAILED",
+        "known_usage": {
+          "cached_input_included": 6377216,
+          "input": 6891056,
+          "output": 26804,
+          "reasoning_output_subset": 22065,
+          "total": 6917860
+        },
+        "native_execution_seconds": null,
+        "native_goal_starts": 1,
+        "native_goal_status": "paused",
+        "native_goal_status_before_cleanup": "active",
+        "observed_effort": "max",
+        "observed_model": "gpt-6-luna",
+        "occupied_seconds": 885.575054691,
+        "pair_id": "D-V14-B",
+        "provider_request_count": null,
+        "provider_status_counts": {},
+        "quiescent": true,
+        "quota_exhaustion": "UNKNOWN",
+        "requested_effort": "max",
+        "requested_model": "gpt-6-luna",
+        "router_terminal_status": "HOLD",
+        "source_pins": [
+          {
+            "path": "ops/dispatcher/runs/D-V14-B-control-diagnostic-a002/native/result.json",
+            "sha256": "93dbb51ddd92202eda6cea0c4f4d077ad9b1b813c2cd1fcf602058085bc9f16b"
+          }
+        ],
+        "stage": "diagnostic",
+        "start_utc": null,
+        "terminal_error_class": "TimeoutError",
+        "turn_completion_notifications": 1,
+        "turn_status_counts": {
+          "interrupted": 1
+        },
+        "ui_usage_separate": null,
+        "usage_basis": "native_thread_cumulative",
+        "usage_notifications": 69
+      }
+    }
+  ],
+  "receipt_finding": {
+    "witness_id": "W1",
+    "new_evidence_finding": "Actual treatment exec-wa1jtbo0 code/input/stdout/stderr hashes match catalog exactly; actorcandidate, bootstrapstarted, exit0, cleanupconfirmed. Tiny NDJSON function scope verified; not DuckDB/notebook/OS boundary/app/5GB validation.",
+    "candidate_executed_scoped_check_verified": true,
+    "original_final_quality": "UNASSESSED",
+    "original_partial_HOLD_preserved": true
+  },
+  "source_quality_or_grade_rewritten": false,
+  "final_quality": "UNASSESSED",
+  "whole_case_PASS": false,
+  "full_pipeline_credit": false,
+  "economics": {
+    "candidate_occupied_seconds_sum": 1771.0679333140001,
+    "largest_arm_occupied_seconds": 885.575054691,
+    "pair_wall_or_critical_path": "UNKNOWN; start/end UTC missing, overlapping time not summed as wall",
+    "raw_usage_per_arm": [
+      {
+        "alias": "A",
+        "arm": "treatment",
+        "known_usage": {
+          "cached_input_included": 3175936,
+          "input": 3520119,
+          "output": 33676,
+          "reasoning_output_subset": 20984,
+          "total": 3553795
+        },
+        "definition": "native_thread_cumulative; cached_input_included is subset of input; reasoning_output_subset is subset of output; total=input+output, not generated output or billed dollars"
+      },
+      {
+        "alias": "B",
+        "arm": "control",
+        "known_usage": {
+          "cached_input_included": 6377216,
+          "input": 6891056,
+          "output": 26804,
+          "reasoning_output_subset": 22065,
+          "total": 6917860
+        },
+        "definition": "native_thread_cumulative; cached_input_included is subset of input; reasoning_output_subset is subset of output; total=input+output, not generated output or billed dollars"
+      }
+    ],
+    "billing_dollars": "UNKNOWN",
+    "service_http_retries_waits_child_cancelled_tail": "UNKNOWN",
+    "evaluator_total_wall_since_first_partial_read_seconds": 1119.839054457,
+    "evaluator_tokens_money": "UNKNOWN",
+    "source_capture_traffic": "Only positive catalog-selected response counts/bytes; full tool traffic UNKNOWN"
+  },
+  "budget": {
+    "hard_max_seconds": 1800,
+    "original_clock_reset": false,
+    "elapsed_seconds": 1119.839054457,
+    "within_original_bound": true
+  },
+  "limits": [
+    "Protected breadth effort share not independently timed; no actual method-superiority conclusion.",
+    "Both required finals absent; operational incomplete costs remain charged; no accepted-output economics or qualification.",
+    "No raw private model I/O, alias sidecar or native result body opened."
+  ]
+}

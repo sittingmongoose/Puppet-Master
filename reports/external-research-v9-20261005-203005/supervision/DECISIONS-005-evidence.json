@@ -1,0 +1,50 @@
+{
+  "schema": "er9.supervision.evidence.v1",
+  "recorded_utc": "2026-10-05T22:57:03.049243+00:00",
+  "scope": "structural adjudication only; no candidate/source bodies, holdout details, model calls or historical outcome edits",
+  "prior_decision_evidence_unchanged": true,
+  "evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/input/ER9/ER9_EXECUTE_HANDOFF.md",
+      "sha256": "46529ea93a95d92196f947daf3da54ac60768408aed9f5eaaa8d64c4167d210a",
+      "bytes": 58697,
+      "scope": "structural metadata / runner source / neutral contract only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/dynamic_stage_runner.py",
+      "sha256": "7991ce8c1a68a09a167a054a93cda14f6b9a2ade387ba0bf6e70cc4a5d460911",
+      "bytes": 12444,
+      "scope": "structural metadata / runner source / neutral contract only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/diagnosis-I05/STRUCTURAL_TIMING.json",
+      "sha256": "6c9e34438ae93b4507fcb4970dbf6d0859b7b5f615be0feaa5fd139af57f84c8",
+      "bytes": 38865,
+      "scope": "structural metadata / runner source / neutral contract only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/diagnosis-I05/COMPLETE_PREDICATE_TIMING.json",
+      "sha256": "bc5282eb32405fe8b3288becd6d509bee0d19ade374cdf3abac2f9137b908077",
+      "bytes": 1604,
+      "scope": "structural metadata / runner source / neutral contract only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/diagnosis-I05/COMPLETE_WRITE_TIMING.json",
+      "sha256": "6718b612425d81829963ee20999bc0ad014fce1a38dff5e10629228865d4ab84",
+      "bytes": 6791,
+      "scope": "structural metadata / runner source / neutral contract only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-005.md",
+      "sha256": "391232eb55e6ff1c5b16b433ee3705335e840eeeffae454c5bcfdc6b68a2ca7c",
+      "bytes": 6821,
+      "scope": "structural metadata / runner source / neutral contract only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-005.json",
+      "sha256": "69f07ca0aac6b85cf43b67283cc3de683b68e53a2209c31df833907d03c6b4d6",
+      "bytes": 2725,
+      "scope": "structural metadata / runner source / neutral contract only"
+    }
+  ]
+}

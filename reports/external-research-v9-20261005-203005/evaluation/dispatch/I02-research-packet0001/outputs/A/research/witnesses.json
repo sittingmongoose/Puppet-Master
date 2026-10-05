@@ -1,0 +1,72 @@
+{
+  "inventory_version": "research-stage/1.0",
+  "executor": "experiment-admitted isolated Python executor (bubblewrap/systemd namespace; 256 MiB mem, 5s wall, 3s CPU, network-isolated namespace per receipt limits)",
+  "labels": {
+    "executed_by_candidate": "all entries below; receipts produced by the executor, not hand-written",
+    "scope_warning": "isolated component checks on tiny synthetic data; none establish full application behavior, large-dataset behavior, or a real notebook runtime"
+  },
+  "witnesses": [
+    {
+      "id": "W1-rev1",
+      "title": "nbformat-4.5-informed document fidelity check (FAILED attempt, superseded by W1-rev2)",
+      "status": "executed_by_candidate",
+      "outcome": "fail (exit 1)",
+      "execution_id": "exec-83jjs6ws",
+      "code_sha256": "c05485aae07c5f60cbd7a3ec02bb845b180f4fe3a0c910ec9ade7d243ac5d54d",
+      "stdout": "(empty)",
+      "stderr_summary": "TypeError: '<' not supported between instances of 'NoneType' and 'int' - replay ordering sorted execution_count without handling the schema-defined null ('not been run') case",
+      "exit_code": 1,
+      "expected_behavior_justification": "schema [S4] defines execution_count as integer>=0 or null; the check itself was wrong to sort mixed values - the crash is evidence the replay-order rule must partition never-run cells",
+      "scope_limits": "schema-level rules only; does not run the real nbformat library"
+    },
+    {
+      "id": "W1",
+      "title": "nbformat-4.5-informed document fidelity (rev2)",
+      "status": "executed_by_candidate",
+      "outcome": "pass (exit 0)",
+      "execution_id": "exec-6tyxg1kl",
+      "code_sha256": "122fde487b19ae201ebe104742f055783d77a0eb6360c905afc8a5bf141dda64",
+      "stdout_summary": "5 cells validated, 0 schema problems; display_order [cell-load, cell-plot, cell-stat, cell-fresh] vs replay_order [cell-load, cell-stat, cell-plot] differ as constructed; never_run_cells [cell-fresh] excluded and flagged unverified; doc hash 454465c4057c132a",
+      "exit_code": 0,
+      "expected_behavior_justification": "rules derived from pinned schema S4: required cell keys, id regex/length, execution_count int-or-null, four output types, kernelspec keys",
+      "scope_limits": "schema-derived rules only; no Jupyter/nbformat library involved; a conforming synthetic document"
+    },
+    {
+      "id": "W2",
+      "title": "bounded-memory streaming NDJSON transform with reject ledger",
+      "status": "executed_by_candidate",
+      "outcome": "pass (exit 0)",
+      "execution_id": "exec-eo7n39wa",
+      "code_sha256": "0cdd861a1625b50aaa50bade9a560fef0203c6626c00c390320bc44c673245f1",
+      "stdout_summary": "50000 lines: 49997 ok + 3 rejected (ledger with line/byte_offset/reason/raw); sum preserved; max rows materialized 512 <= budget 1024; preview bounded to 5 and flagged sample-not-proof; unicode/null/missing/timestamp values exercised; source sha256 unchanged (read-only)",
+      "exit_code": 0,
+      "expected_behavior_justification": "brief requires bounded/streaming processing, no silent deletion of malformed records, no mutation of originals, preview not represented as full-dataset proof; each assertion maps to a contract rule (proposal 5 D1-D7)",
+      "scope_limits": "50k-row in-memory synthetic corpus, not a 5 GB file; json.loads-per-line is not the production engine; memory bound is app-tracked, not OS-measured"
+    },
+    {
+      "id": "W3",
+      "title": "output-status invalidation state machine",
+      "status": "executed_by_candidate",
+      "outcome": "pass (exit 0)",
+      "execution_id": "exec-vephzgkd",
+      "code_sha256": "9d1dd4802343a3ccc76600b679d7be8ffe425f51f22754d663fb3f2f4360c5f8",
+      "stdout_summary": "13-event scenario asserted: run/edit/dataset-change/error/re-run/kernel-restart; final statuses all unverified after restart; error marks cell failed + descendants unverified; dataset identity change stales readers transitively",
+      "exit_code": 0,
+      "expected_behavior_justification": "the brief's required invalidation semantics (upstream edit, source change, env change, restart, interrupt must never leave stale outputs labeled current); rules are the product choice formalized in proposal 6",
+      "scope_limits": "model-level simulation of a 3-cell DAG; no real kernel, no real editor; transitive-ancestor lookup recomputed per event"
+    },
+    {
+      "id": "W4",
+      "title": "clean-replay determinism + reproducibility manifest + nondeterminism exposure",
+      "status": "executed_by_candidate",
+      "outcome": "pass (exit 0)",
+      "execution_id": "exec-0mgh0exa",
+      "code_sha256": "fccc8ce64279b36c2d53c6f9d35cdd6207775440e4af31d91bf09c3497ace2f0",
+      "stdout_summary": "pure transform replayed twice -> identical output bytes; unseeded random -> different values across runs (must be declared); manifest emitted with notebook hash, per-cell code hashes + exec order + status, dataset sha256/bytes/declared schema, python 3.14.4/Linux env binding, replay verdict",
+      "exit_code": 0,
+      "expected_behavior_justification": "brief requires a reproducibility manifest and an honest clean-replay boundary; identical bytes for pure code and differing bytes for unseeded RNG demonstrate both the guarantee and its stated limit",
+      "scope_limits": "no subprocess isolation (fresh state emulated); sandbox interpreter was 3.14.4 - not one of the proposed supported versions; manifest shape is illustrative, not a frozen schema"
+    }
+  ],
+  "not_executed_note": "No evaluator-provided execution exists for these checks; nothing in this file was executed outside the admitted sandbox. Proposed/UNEXECUTED validation lives in proposal.md section 13 (V1-V7) and is deliberately not listed here to avoid blurring the label."
+}

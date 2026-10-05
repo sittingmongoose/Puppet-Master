@@ -1,0 +1,133 @@
+{
+  "schema_version": "er9.sources.v1",
+  "stage": "D-V15-A-treatment-diagnostic-a002",
+  "capture_policy": "Public primary-source captures only. Each sha256 identifies the complete captured HTTP response body; delivered_bytes records what the tool displayed in this thread. Partial delivery is explicit.",
+  "sources": [
+    {
+      "id": "S00",
+      "title": "GitHub issue search used for candidate discovery",
+      "url": "https://api.github.com/search/issues?q=repo%3Anapari%2Fnapari%20coordinate%20scale%20issue%20is%3Aclosed",
+      "pin": "Live GitHub Search API response captured 2026-10-05; query as URL",
+      "locator": "First result PR #9394; discovery lead only, not evidence for claims",
+      "capture": {"capture_id": "f03fa2e8b59f41c6a38ebca83ba0a2fb", "sha256": "9bd6b6c1875a3c33f38f7142c8bdc2cb9d31de26824ca160c4f5e13df4618c8e", "path": "public_captures/9bd6b6c1875a3c33f38f7142c8bdc2cb9d31de26824ca160c4f5e13df4618c8e.body", "response_bytes": 185686, "delivered_bytes": 32768, "delivery_complete": false, "captured_utc": "2026-10-05T21:57:44.439054+00:00"},
+      "applicability": "Records the search route from the supplied brief. Direct issue, PR and test-diff captures below carry the substantive evidence."
+    },
+    {
+      "id": "S01",
+      "title": "napari issue #8901, Unselectable shape",
+      "url": "https://api.github.com/repos/napari/napari/issues/8901",
+      "pin": "Issue #8901; report environment identifies napari 0.7.0; updated/closed 2026-10-02",
+      "locator": "body: reproduction with scale=(0.01,0.01,0.01), translate=(0,0,5.1), dims.order=(2,0,1); issue title and environment",
+      "capture": {"capture_id": "e6227b5c56344beb97753a1a4984dedb", "sha256": "2c28146e8ca1ecc0f1a3ab9ca7358005f6e03bd459ff3d217de3401624d0b5bb", "path": "public_captures/2c28146e8ca1ecc0f1a3ab9ca7358005f6e03bd459ff3d217de3401624d0b5bb.body", "response_bytes": 6188, "delivered_bytes": 6188, "delivery_complete": true, "captured_utc": "2026-10-05T21:57:50.016092+00:00"},
+      "applicability": "Primary user report and reproduction context; does not independently prove the failure or establish a broader napari defect."
+    },
+    {
+      "id": "S02",
+      "title": "napari PR #9394, fix(shapes): pick shapes on a fractional slice key",
+      "url": "https://api.github.com/repos/napari/napari/pulls/9394",
+      "pin": "Merged 2026-10-02; merge commit 6d386b1c2ed1c185483e06dc19ebb961679d1a7b; milestone 0.10.0",
+      "locator": "PR body: mismatch between real-valued displayed slice and whole-slice shape keys; fix explanation; links issue #8901; merged_at and merge_commit_sha fields",
+      "capture": {"capture_id": "40f30657e26346dcb3343547dcc45097", "sha256": "0b723c197169c0f433bf5d6e746ee425af29c2a3a2c5a9dadfdc5b970eb93e46", "path": "public_captures/0b723c197169c0f433bf5d6e746ee425af29c2a3a2c5a9dadfdc5b970eb93e46.body", "response_bytes": 20996, "delivered_bytes": 20996, "delivery_complete": true, "captured_utc": "2026-10-05T21:57:52.134214+00:00"},
+      "applicability": "Establishes the PR's stated mechanism, merge state, exact merge SHA and milestone; not a released binary or an application-level guarantee."
+    },
+    {
+      "id": "S03",
+      "title": "napari PR #9394 changed files and regression-test patch",
+      "url": "https://api.github.com/repos/napari/napari/pulls/9394/files",
+      "pin": "PR #9394 patch as captured after merge; tested source commit f0e10214a6688c8712f5cf22f8d3fff4306044ea, merged by S02 at 6d386b1c2ed1c185483e06dc19ebb961679d1a7b",
+      "locator": "src/napari/layers/shapes/_shape_list.py hunk `_visible_shapes`; src/napari/layers/shapes/_tests/test_shape_list.py: test_inside_with_fractional_slice_key and test_visible_shapes_spanning_slices_are_not_widened; src/napari/layers/shapes/_tests/test_shapes.py: test_value_with_fractional_slice_key",
+      "capture": {"capture_id": "e6746a4c9ba746159253d3d6eea84722", "sha256": "8b311af8513e2ca59999713f111425754cb3e867ff34004cc82cfbf920999337", "path": "public_captures/8b311af8513e2ca59999713f111425754cb3e867ff34004cc82cfbf920999337.body", "response_bytes": 5780, "delivered_bytes": 5780, "delivery_complete": true, "captured_utc": "2026-10-05T21:57:54.126232+00:00"},
+      "applicability": "Exact changed-code and test diff. PR text states which tests fail without the fix and reports upstream test-suite results; this candidate did not run those tests."
+    },
+    {
+      "id": "S04",
+      "title": "napari PR #9394 commit list",
+      "url": "https://api.github.com/repos/napari/napari/pulls/9394/commits",
+      "pin": "PR branch commits through f0e10214a6688c8712f5cf22f8d3fff4306044ea; main merge commit independently recorded in S02",
+      "locator": "first commit 0e4e302ed09bd46fd9078441723f9471fcd9e895; message states mismatch and half-slice rule; PR branch merge history",
+      "capture": {"capture_id": "1436ec2d3e62463e9137bbf5eaa11d41", "sha256": "91b758c202a48341e86eb8e1573e34076011fdbf74b6efc560a914c4ff129ef3", "path": "public_captures/91b758c202a48341e86eb8e1573e34076011fdbf74b6efc560a914c4ff129ef3.body", "response_bytes": 11936, "delivered_bytes": 11936, "delivery_complete": true, "captured_utc": "2026-10-05T21:58:27.595569+00:00"},
+      "applicability": "Commit messages and parent history help follow the repair; commit-list response is branch history, not itself proof of release publication."
+    },
+    {
+      "id": "S05",
+      "title": "napari releases, latest stable release v0.9.2",
+      "url": "https://api.github.com/repos/napari/napari/releases?per_page=10",
+      "pin": "First response entry: v0.9.2, published 2026-09-29, target commit 595639295a153c84bcb127a9e07d801355440a35; observed on 2026-10-05",
+      "locator": "first release object's tag_name, target_commitish, published_at and release notes; latest captured entry is v0.9.2",
+      "capture": {"capture_id": "beb158a0f1ae471bb40eda6c659cd0c0", "sha256": "23ed09e911055c7c69f61c39c01cf096983cbe33f6107f89018484daa4ada793", "path": "public_captures/23ed09e911055c7c69f61c39c01cf096983cbe33f6107f89018484daa4ada793.body", "response_bytes": 354148, "delivered_bytes": 32768, "delivery_complete": false, "captured_utc": "2026-10-05T21:58:31.610271+00:00"},
+      "applicability": "The first release object and its release notes were delivered; its publication predates PR #9394 merge. The response was not fully displayed, so the claim is limited to that first object and the captured state."
+    },
+    {
+      "id": "S06",
+      "title": "napari Shapes source at merge commit",
+      "url": "https://raw.githubusercontent.com/napari/napari/6d386b1c2ed1c185483e06dc19ebb961679d1a7b/src/napari/layers/shapes/_shape_list.py",
+      "pin": "Git commit 6d386b1c2ed1c185483e06dc19ebb961679d1a7b",
+      "locator": "src/napari/layers/shapes/_shape_list.py; ShapeList display and slice-key implementation. Use S03 for the exact changed hunk and tests.",
+      "capture": {"capture_id": "efa4118786e4420a8d9b775087709b55", "sha256": "d7a54b8ff342245fc800876238bc6769666284e64ff82a50bbe8f054ca47702d", "path": "public_captures/d7a54b8ff342245fc800876238bc6769666284e64ff82a50bbe8f054ca47702d.body", "response_bytes": 80861, "delivered_bytes": 32768, "delivery_complete": false, "captured_utc": "2026-10-05T21:58:19.401170+00:00"},
+      "applicability": "Exact commit-addressed source capture. Display implementation is visible in the delivered portion; the changed picking logic is grounded in the complete PR diff S03."
+    },
+    {
+      "id": "S07",
+      "title": "OME-NGFF releases, latest 0.5.2",
+      "url": "https://api.github.com/repos/ome/ngff/releases/latest",
+      "pin": "OME-NGFF tag 0.5.2, published 2025-01-28",
+      "locator": "tag_name, published_at, body linking the 0.5 specification",
+      "capture": {"capture_id": "c37da2218ba6420fbbc1b32f3b6d4cf9", "sha256": "4e95d4ae356bc4542d935496d3ea20708f20c240af54d54e3f4252eb37283d46", "path": "public_captures/4e95d4ae356bc4542d935496d3ea20708f20c240af54d54e3f4252eb37283d46.body", "response_bytes": 1733, "delivered_bytes": 1733, "delivery_complete": true, "captured_utc": "2026-10-05T21:58:39.247873+00:00"},
+      "applicability": "Pins the released specification version, not an implementation's conformance."
+    },
+    {
+      "id": "S08",
+      "title": "OME-NGFF specification 0.5.2 source",
+      "url": "https://raw.githubusercontent.com/ome/ngff/0.5.2/0.5/index.bs",
+      "pin": "Git tag 0.5.2; source path 0.5/index.bs",
+      "locator": "Storage format and image layout; axes metadata #axes-md; transformations #trafo-md; multiscales #multiscale-md; label images #labels-md; OME channel display metadata #omero-md",
+      "capture": {"capture_id": "a983d54db9e249f1bc6877f093f6a7a4", "sha256": "eb007bba48e6b359906a1b5f289a4d6f5965a7fc0e8f50fd3bcfaeb765fef685", "path": "public_captures/eb007bba48e6b359906a1b5f289a4d6f5965a7fc0e8f50fd3bcfaeb765fef685.body", "response_bytes": 37464, "delivered_bytes": 32768, "delivery_complete": false, "captured_utc": "2026-10-05T21:59:30.130684+00:00"},
+      "applicability": "The delivered source includes the cited axes, transform, multiscale and label sections. It specifies NGFF metadata and label arrays, not the app's own full provenance or arbitrary affine requirements."
+    },
+    {
+      "id": "S09",
+      "title": "tifffile release v2026.9.20",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/releases/latest",
+      "pin": "Tag v2026.9.20, published 2026-09-21",
+      "locator": "release description: TIFF/BigTIFF/OME-TIFF reading and available array/Zarr forms; release changes",
+      "capture": {"capture_id": "908b6adc6486462db8dccf240f9f50a0", "sha256": "387aa3381eb5ba1685ae8886d31d5c4491c34f81676d490208444f760fe0e1e3", "path": "public_captures/387aa3381eb5ba1685ae8886d31d5c4491c34f81676d490208444f760fe0e1e3.body", "response_bytes": 6722, "delivered_bytes": 6722, "delivery_complete": true, "captured_utc": "2026-10-05T21:59:51.183752+00:00"},
+      "applicability": "Pins the proposed TIFF component and its release claim; does not certify the proposed support subset."
+    },
+    {
+      "id": "S10",
+      "title": "tifffile README at v2026.9.20",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/v2026.9.20/README.rst",
+      "pin": "Git tag v2026.9.20; README version field 2026.9.20",
+      "locator": "Quickstart requirements; Notes on TIFF subset and unsupported features; Examples: inspect series metadata; 'Use Zarr to read parts of the tiled, pyramidal images in the TIFF file'; codec requirements",
+      "capture": {"capture_id": "a7c190aef6474c73b835f5b3d53a15d9", "sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48", "path": "public_captures/cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48.body", "response_bytes": 32898, "delivered_bytes": 32768, "delivery_complete": false, "captured_utc": "2026-10-05T21:59:57.586594+00:00"},
+      "applicability": "The delivered README includes the targeted read-only regional Zarr example, tested dependency versions, and notes; it does not demonstrate memory or latency for this project."
+    },
+    {
+      "id": "S11",
+      "title": "Zarr-Python latest release v3.4.0",
+      "url": "https://api.github.com/repos/zarr-developers/zarr-python/releases/latest",
+      "pin": "Tag v3.4.0, published 2026-09-15",
+      "locator": "tag_name, published_at and release description/change list",
+      "capture": {"capture_id": "ece1eed9f6134fa9aff886752cc784bb", "sha256": "abc8a6a14660744b3fbd5c66b52e297c2a6c9e1eec94865e9748939803cce08b", "path": "public_captures/abc8a6a14660744b3fbd5c66b52e297c2a6c9e1eec94865e9748939803cce08b.body", "response_bytes": 12763, "delivered_bytes": 12763, "delivery_complete": true, "captured_utc": "2026-10-05T21:58:35.796404+00:00"},
+      "applicability": "Pins the proposed array library version. A latest-release record is not evidence that every codec/store combination has been validated here."
+    },
+    {
+      "id": "S12",
+      "title": "Zarr-Python v3.4.0 working-with-arrays guide",
+      "url": "https://zarr.readthedocs.io/en/v3.4.0/user-guide/arrays/",
+      "pin": "Documentation version v3.4.0; page Working with arrays",
+      "locator": "Creating an array; Reading and writing data; Persistent arrays. The guide states a slice loads the requested region into a NumPy array and shows chunked persistent local stores.",
+      "capture": {"capture_id": "54f5303152ef4da09b8360f8bf9c537c", "sha256": "9dd614d41f086f795047344af03bb7cde3bead96e82638c5392ed7f9469a1e89", "path": "public_captures/9dd614d41f086f795047344af03bb7cde3bead96e82638c5392ed7f9469a1e89.body", "response_bytes": 221945, "delivered_bytes": 32768, "delivery_complete": false, "captured_utc": "2026-10-05T22:00:35.036197+00:00", "additional_read_ranges": [{"byte_start": 57000, "byte_end_exclusive": 66000, "range_sha256": "16fd8779f768070e3f9685fdf4d7d7aef6c385362a745446b9fe6428086180d4"}, {"byte_start": 66000, "byte_end_exclusive": 73000, "range_sha256": "6b800f8654eac8b5b393c68be7b89caf379d2afbe018a6cb13ca1280cd623897"}]},
+      "applicability": "Versioned docs provide the bounded slice/chunk mechanism, not an application RSS, responsiveness, transaction or cancellation guarantee."
+    },
+    {
+      "id": "S13",
+      "title": "napari Shapes source at released tag v0.9.2",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.9.2/src/napari/layers/shapes/_shape_list.py",
+      "pin": "Git tag v0.9.2; release commit as recorded in S05",
+      "locator": "ShapeList._update_displayed, the display-side half-slice comparison; compare the changed picking hunk in S03",
+      "capture": {"capture_id": "c797d73be486491bb7a9e548013fad00", "sha256": "95eec5bb51bae344af6839d0351f7e3864d2d98f776f5d24ecfd847702f7b8a3", "path": "public_captures/95eec5bb51bae344af6839d0351f7e3864d2d98f776f5d24ecfd847702f7b8a3.body", "response_bytes": 80843, "delivered_bytes": 32768, "delivery_complete": false, "captured_utc": "2026-10-05T22:00:20.778204+00:00"},
+      "applicability": "The delivered portion shows the display-side tolerance in this tag. Release chronology and PR merge status are separately captured in S02 and S05."
+    }
+  ]
+}

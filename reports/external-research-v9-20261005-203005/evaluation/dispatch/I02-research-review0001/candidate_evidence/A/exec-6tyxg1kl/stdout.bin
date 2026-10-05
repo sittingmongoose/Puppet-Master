@@ -1,0 +1,21 @@
+{
+ "check": "W1 nbformat-4.5-informed document fidelity (rev2)",
+ "cells_validated": 5,
+ "schema_problems": [],
+ "display_order": [
+  "cell-load",
+  "cell-plot",
+  "cell-stat",
+  "cell-fresh"
+ ],
+ "replay_order_by_execution_count": [
+  "cell-load",
+  "cell-stat",
+  "cell-plot"
+ ],
+ "never_run_cells_excluded_and_flagged_unverified": [
+  "cell-fresh"
+ ],
+ "doc_sha256": "454465c4057c132a"
+}
+W1 PASS

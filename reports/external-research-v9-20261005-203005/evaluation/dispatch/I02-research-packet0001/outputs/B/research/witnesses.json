@@ -1,0 +1,128 @@
+{
+  "stage": "research",
+  "labeling": {
+    "executed_by_candidate": "Run in the experiment's admitted isolated python_execute sandbox (fresh empty filesystem, no network, systemd/bubblewrap isolation). Each entry records execution_id, code_sha256, expected behavior with justification, observed stdout/exit, and scope limits.",
+    "executed_only_by_evaluator": "none provided in this stage",
+    "proposed_unexecuted": "Planned validations for the real implementation; never run in this experiment."
+  },
+  "witnesses": [
+    {
+      "id": "W1",
+      "name": "preview-sampling-is-not-proof",
+      "kind": "executed by candidate",
+      "execution_id": "exec-ibi5bnok",
+      "completed_utc": "2026-10-05T21:40:49Z",
+      "code_sha256": "1beb9f57cefa18cbdaec58b29cef47cdbdfb7a214d1cd4070f4217323911b240",
+      "input": "Tiny synthetic dataset: 1000 rows, category 'A' x999 plus exactly one 'B' row; seeded (411) 20-row sample drawn twice.",
+      "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "expected": "A 20-row random sample misses the lone 'B' row with probability C(999,20)/C(1000,20) = 980/1000 = 0.98, while a full scan always finds it; identical seed reproduces the identical sample. Justification: combinatorial probability of excluding one specific row from a fixed-size sample without replacement.",
+      "observed": {
+        "exit_code": 0,
+        "stdout_sha256": "59ca5383be033513928eba8381f0ad6c402c6e551519f6e8b80590a3c6f72319",
+        "stdout_summary": "sample_counts={A:20}; sample_misses_rare_category_B=true; repeat_preview_with_same_seed_identical=true; truncated marker 'showing 20 of 1000 rows'; full counts {A:999, B:1}."
+      },
+      "scope_limits": "Pure-stdlib component check on 1000 synthetic rows; does not measure DuckDB USING SAMPLE behavior or any real reader; establishes only the epistemic point and a repeatable-seed pattern."
+    },
+    {
+      "id": "W2",
+      "name": "data-contract-quarantine",
+      "kind": "executed by candidate",
+      "execution_id": "exec-g1i97bf6",
+      "completed_utc": "2026-10-05T21:40:49Z",
+      "code_sha256": "ed001e4866b35f79d3a6dd69340db2a4787b9d7bd91c0bb1e57157bd615024f4",
+      "input": "7 synthetic NDJSON lines covering: valid row with Z-suffixed timestamp, null optional field, Unicode string ('naïve ✓'), wrong type in required field, missing required field, non-JSON line, impossible calendar date (month 13). Declared schema {id:int64 required, v:utf8 optional, ts:timestamp optional}, coercion policy 'quarantine'.",
+      "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "expected": "Rows that fail parse/type/required checks are quarantined with (offset, reason, preserved raw line); valid rows including Unicode and nulls are accepted with the timestamp normalized to ISO-8601; the original line array is never mutated.",
+      "observed": {
+        "exit_code": 0,
+        "stdout_sha256": "ac7dd8a7b2a98823abc18d03771cbf22cd8814ba0020509213ea65d9316a3bb9",
+        "stdout_summary": "accepted_count=3 (unicode_preserved=true, nulls allowed); quarantined_count=4 with per-row reasons (coercion failure, missing required field, JSONDecodeError, month must be in 1..12) and preserved raw lines; original_source_untouched=true."
+      },
+      "scope_limits": "Component check of the contract algorithm only; does not exercise DuckDB store_rejects, Parquet, or file IO."
+    },
+    {
+      "id": "W3-attempt-1",
+      "name": "output-status-machine (failed first attempt, recorded honestly)",
+      "kind": "executed by candidate",
+      "execution_id": "exec-g8sj7v5r",
+      "completed_utc": "2026-10-05T21:41:23Z",
+      "code_sha256": "0be044d5533589481691229e6eb0f6dfd90bbb9872145ad1a355274b020ae98b",
+      "input": "Scenario script (bugged: baseline run never invoked).",
+      "expected": "Status timeline printout.",
+      "observed": {
+        "exit_code": 1,
+        "stderr_summary": "KeyError: 'a' at the restart step because state was empty — the scenario lambdas were appended but never called.",
+        "note": "Kept as an honest record; superseded by W3."
+      },
+      "scope_limits": "None to infer; failure was in candidate-authored scenario code, not in the status model."
+    },
+    {
+      "id": "W3",
+      "name": "output-status-machine + manifest round-trip",
+      "kind": "executed by candidate",
+      "execution_id": "exec-scuesopl",
+      "completed_utc": "2026-10-05T21:41:42Z",
+      "code_sha256": "fdf4e7313f93491d78b0f9d31a4bc5ef93037a76f3b9efeeec24ae8bc56e28c6",
+      "input": "Two-cell dependency chain (a -> b); deps = {dataset hash, env fingerprint, upstream cell text hash}; scenario: baseline run, edit upstream cell, mutate source dataset hash, kernel restart, re-run with failure; plus sha256 manifest serialize/reload check.",
+      "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "expected": "current -> downstream-only stale after upstream edit; all stale after dataset mutation; both unverified after kernel restart (session identity lost, outputs kept); failed with captured error text after a failing re-run; manifest hashes survive a JSON round-trip.",
+      "observed": {
+        "exit_code": 0,
+        "stdout_sha256": "2d6511e61f1424da0ae92f7b58933edbe195622f8506e10d212bf4ad98e49737",
+        "stdout_summary": "timeline: {a:current,b:current} -> {a:current,b:stale(cell:a)} -> {a:stale,b:stale} -> {a:unverified,b:unverified} -> {a:failed,b:unverified}; failed_error_captured='ValueError: column 'day' not found'; manifest_hash_roundtrip_ok=true."
+      },
+      "scope_limits": "Component check of the status computation on synthetic hashes; does not prove a live kernel, real file watching, or DuckDB behavior."
+    },
+    {
+      "id": "W4",
+      "name": "stable-vs-deterministic-ordering",
+      "kind": "executed by candidate",
+      "execution_id": "exec-wabe9p2h",
+      "completed_utc": "2026-10-05T21:41:24Z",
+      "code_sha256": "0a2cf6dd6595fbb055ae8602e104e1ca5a0fb20727628350c8966a0764f3687d",
+      "input": "Three synthetic rows with tied sort keys, presented in two different physical orders.",
+      "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "expected": "Sorting by key only yields order that depends on physical input order (Python sorted is stable, so ties keep input order); adding an explicit rid tie-break yields identical order across both inputs.",
+      "observed": {
+        "exit_code": 0,
+        "stdout_sha256": "a5882add1894c791782d2268223203188400e54c44118c16107d69ca8ed6dc03",
+        "stdout_summary": "key_only order [1,3,2] vs [3,1,2] across inputs (differs=true); (key, rid) order [1,3,2] identical across inputs."
+      },
+      "scope_limits": "Component check in stdlib Python; database GROUP BY ordering behavior is covered by DuckDB docs facts, not by this check."
+    }
+  ],
+  "proposed_unexecuted": [
+    {
+      "id": "U1",
+      "name": "5 GB CSV through bounded path on 16 GB machine",
+      "plan": "Generate ~5 GB CSV; run DuckDB 1.x aggregation with SET memory_limit='9GB', SET threads=4, SET preserve_insertion_order=false, temp_directory on local SSD; record peak RSS and wall time; acceptance: completes without OOM and writes row count correct to within quarantine accounting.",
+      "status": "proposed/UNEXECUTED",
+      "risk_notes": "DuckDB docs state some operations circumvent the buffer manager's memory limit [S10], so peak RSS may exceed memory_limit; the test must measure actual RSS, and the target is investigation, not a verified result."
+    },
+    {
+      "id": "U2",
+      "name": "crash-recovery of project saves",
+      "plan": "Kill -9 the app during (a) event-log commit and (b) notebook JSON save; reopen; assert WAL replay restores last committed event and notebook file is either the old or new complete copy (temp+rename), never truncated; assert outputs are marked unverified if a run was in flight.",
+      "status": "proposed/UNEXECUTED"
+    },
+    {
+      "id": "U3",
+      "name": "two-machine bundle open",
+      "plan": "Zip project excluding external datasets; copy to second directory standing in for another machine; open; assert manifest hashes verify, all outputs load as unverified, and data absence is reported as unresolved source rather than silent failure.",
+      "status": "proposed/UNEXECUTED"
+    },
+    {
+      "id": "U4",
+      "name": "single-writer project locking",
+      "plan": "Open the same project from two app processes; assert the second gets an explicit advisory-lock (flock) refusal message and can open read-only; verify DuckDB file-lock error surfaces as actionable feedback consistent with DuckDB's documented concurrency model [S08].",
+      "status": "proposed/UNEXECUTED"
+    },
+    {
+      "id": "U5",
+      "name": "sandbox policy conformance",
+      "plan": "In the OS sandbox: cell attempting socket connect is blocked and the denial recorded as a run event; cell writing outside the allowlist fails with EPERM; pip install fails; resource limit (RLIMIT_AS / cpu) triggers on an infinite allocator. Acceptance: denials are visible in the UI feed, not silent.",
+      "status": "proposed/UNEXECUTED",
+      "risk_notes": "Sandbox behavioral differences across Linux/macOS (bubblewrap vs seatbelt) may change denial modes; portability is part of the test."
+    }
+  ]
+}

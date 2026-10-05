@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/runtime/bootstrap.py", line 9, in <module>
+    exec(compile(open('/work/code.py').read(), '/work/code.py', 'exec'), {'__name__':'__main__', 'data':data})
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/code.py", line 34, in <module>
+    assert chunk_bytes == 128 * 1024
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

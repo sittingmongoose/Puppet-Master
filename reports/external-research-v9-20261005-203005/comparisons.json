@@ -1,5 +1,5 @@
 {
-  "scope": "Original I01 stages plus independent partial-final screen",
+  "scope": "Frozen I01/I02 and original/partial D14/D15 views; no full pair effect claims",
   "completed_matched_comparisons": 0,
   "comparisons": [
     {
@@ -14,6 +14,15 @@
       "available_partial_final": "FAIL_SCREEN",
       "missing_partner_quality": "UNASSESSED",
       "independent_assessment": "evaluation/dispatch/I01-review0001/report.json"
+    },
+    {
+      "pair_id": "I-02",
+      "scope": "research-stage screen",
+      "status": "BOTH_STAGE_FAIL_SCREEN",
+      "full_final_pipeline": "UNASSESSED",
+      "method_outcome": null,
+      "independent_assessment": "evaluation/dispatch/I02-research-review0001/report.json"
     }
-  ]
+  ],
+  "diagnostic_reports": "evaluation/diagnostics/INDEX.md"
 }

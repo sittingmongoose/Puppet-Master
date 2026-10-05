@@ -1,0 +1,18 @@
+{
+  "schema": "er9.evaluation-start-receipt.v1",
+  "evaluation_id": "ER9-EVAL-D-V14-B-001",
+  "dispatch": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-B/packet0001/dispatch.json",
+    "sha256": "0442e43369c8c45c7c6697a62e4bcd5b81a291346501628cea68a66297da5373"
+  },
+  "packet_verified_utc": "2026-10-05T22:20:53.506701Z",
+  "actual_current_output_read": false,
+  "semantic_budget_clock_started_utc": null,
+  "configured_evaluator": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh",
+    "basis": "Root confirmed actual spawn controls; fork_turns none"
+  },
+  "observed_physical_identity": "UNKNOWN; tool returned task name only",
+  "method_history_alias_sidecar_economics_opened": false
+}

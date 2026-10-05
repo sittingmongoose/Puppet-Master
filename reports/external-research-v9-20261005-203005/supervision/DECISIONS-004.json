@@ -1,0 +1,59 @@
+{
+  "schema": "er9.remaining_contrasts_confirmation_defaults.v1",
+  "policy_version": "DECISIONS-004",
+  "root_accepted_before_later_pair_outputs": true,
+  "source_quality_findings_remain_evaluator_only": true,
+  "candidate_output_or_holdout_details_read": false,
+  "candidate_Goals_launched": 0,
+  "selected_contrasts": [
+    {"pairs": ["I-09", "I-10"], "method": "V10", "factor": "early coherent component release/artifact/API binding; ordinary correct version citation remains required in control"},
+    {"pairs": ["I-11", "I-12"], "method": "V16", "factor": "decision-focused current-result organization with complete required meaning and existing catalogs; no padding or scope reduction in control"}
+  ],
+  "matched_configuration": {
+    "actual_family": "GLM",
+    "model": "GLM 5.3 Flash",
+    "effort": "max",
+    "native_goal_each_stage": true,
+    "stages_seconds": {"research": 1200, "critique": 900, "final_author": 600},
+    "critical_path_seconds_per_arm": 2700,
+    "occupied_seconds_per_arm": 5400,
+    "same_source_access_and_admitted_tools": true,
+    "full_brief_scope_unchanged": true,
+    "brief_only_candidate_discovery": true,
+    "independent_precedents_required": 2,
+    "real_issue_fix_test_chain_required": true,
+    "four_final_artifacts_required_in_both_arms": true
+  },
+  "semantic_basis": {
+    "status": "PARTIAL_ASSESSMENT_WITH_UNASSESSED_SCOPE",
+    "basis": ["coherent source/version applicability uncertainty", "scope of execution evidence", "complete current artifact delivery"],
+    "matched_V01_effect_established": false,
+    "treatment_final_quality": "UNASSESSED",
+    "new_methods_efficacy_established": false,
+    "winner": null,
+    "exact_source_answers_allowed_in_candidate_prompts": false
+  },
+  "confirmation_defaults": {
+    "status": "PREPARED_NOT_LOCKED",
+    "fallback_condition": "no complete development final qualifies at actual selection point",
+    "classification": "prospective diagnostic recipes, not presumed qualification",
+    "actual_family_model_effort": "GLM 5.3 Flash/max on one account",
+    "common_neutral_bundle": ["V14 protected discovery effort commitment", "V10 early coherent binding", "candidate-authored discriminating execution where useful", "V16 complete decision-focused delivery"],
+    "discovery_effort_commitment": "30% inside research; observed uptake required, not claimed measured from prompt",
+    "A": {"topology": ["research", "fresh_critic", "fresh_final_author"], "stage_seconds": [1200, 900, 600]},
+    "B": {"topology": ["research", "fresh_critic_and_complete_final"], "stage_seconds": [1200, 1500]},
+    "control_each_pair": {"topology": ["research", "fresh_critic", "fresh_final_author"], "stage_seconds": [1200, 900, 600], "competent_same_full_scope_tools_and_allowance": true},
+    "critical_path_seconds_per_arm": 2700,
+    "occupied_seconds_per_arm": 5400,
+    "candidate_concurrency_needed_per_pipeline": 1,
+    "combination_interactions_established": false,
+    "prior_PASS_required": false,
+    "latest_lock_trigger_unchanged": "initial versions of all12 integrated pairs terminal",
+    "holdout_release_before_actual_lock": false,
+    "pairs": ["C-01", "C-02", "C-03", "C-04"],
+    "retune_or_cancel_after_earlier_confirmation_FAIL": false
+  },
+  "all_32_diagnostics_or_new_root_Go_required_before_later_integration": false,
+  "ordinary_safe_route_admission_and_GLM_capacity_required": true,
+  "no_new_engineering_or_review_hierarchy": true
+}

@@ -1,0 +1,75 @@
+{
+  "schema": "witness-inventory-v1",
+  "witnesses": [
+    {
+      "id": "W1",
+      "status": "executed by candidate",
+      "execution_id": "exec-r01veuh3",
+      "tool": "pm_execution.python_execute",
+      "code": "axes = data[\"axes\"]\nindex = data[\"index\"]\nscale = data[\"scale\"]\ntranslation = data[\"translation\"]\nphysical = {axis: index[axis] * scale[axis] + translation[axis] for axis in axes}\nexpected = data[\"expected_physical\"]\nassert all(abs(physical[a] - expected[a]) < 1e-12 for a in axes)\nrecovered = {axis: (physical[axis] - translation[axis]) / scale[axis] for axis in axes}\nassert all(abs(recovered[a] - index[a]) < 1e-12 for a in axes)\nprint({\"physical\": physical, \"recovered_index\": recovered, \"round_trip\": True})",
+      "code_sha256": "abe2559d0f367a076c4b528236c397c9892cfd75576c03e3068f7cc060d7c0c2",
+      "input": {
+        "axes": ["t", "c", "z", "y", "x"],
+        "index": {"t": 2, "c": 0, "z": 3, "y": 7, "x": 11},
+        "scale": {"t": 0.1, "c": 1, "z": 0.5, "y": 0.25, "x": 0.25},
+        "translation": {"t": 0, "c": 0, "z": 10, "y": -2, "x": 100},
+        "expected_physical": {"t": 0.2, "c": 0, "z": 11.5, "y": -0.25, "x": 102.75}
+      },
+      "input_sha256": "21f60a858681d34dab0e199f4503beeb0791fed2b75fc3faa8df2bd77dad5d84",
+      "expected_behavior": "Apply one scale then translation per named axis; inverse should recover the input index for nonzero scales. The expected values are directly calculated for this explicitly declared test vector, consistent with the OME-NGFF 0.4 scale/translation ordering described in S1 §3.3.",
+      "stdout": "{'physical': {'t': 0.2, 'c': 0.0, 'z': 11.5, 'y': 11.5, 'x': 102.75}, 'recovered_index': {'t': 2.0, 'c': 0.0, 'z': 3.0, 'y': 7.0, 'x': 11.0}, 'round_trip': True}\n",
+      "stderr": "",
+      "exit_code": 0,
+      "scope_limits": "Isolated arithmetic only. Does not establish OME-NGFF parsing, reader metadata interpretation, napari rendering, app persistence, arbitrary affine behavior, or full application correctness."
+    },
+    {
+      "id": "W2",
+      "status": "proposed/UNEXECUTED",
+      "check": "Use a synthetic asymmetric multiaxis image with non-square scale, nonzero origin, axis permutation and flip; save/reopen points, polygon and mask and compare stored, displayed and physical coordinates.",
+      "expected_behavior": "Each annotation returns to the declared source index and physical coordinate, including after view change; raw metadata is preserved.",
+      "limits": "Requires prototype reader, renderer and project serialization; W1 is not a substitute."
+    },
+    {
+      "id": "W3",
+      "status": "proposed/UNEXECUTED",
+      "check": "Run representative 3 GB source on 16 GB workstation; trace block requests, aggregate app/reader RSS, cache occupancy, progress, source hash, and cancellation at a delayed read.",
+      "expected_behavior": "No source-sized allocation, cache <=512 MiB, proposed aggregate RSS <=6 GiB, no source hash change, visible progress, cancellation once current decode call returns.",
+      "limits": "Must be repeated per reader/format variant; API region calls do not prove bounded codec allocations."
+    },
+    {
+      "id": "W4",
+      "status": "proposed/UNEXECUTED",
+      "check": "Compare display-only changes and one recorded geometric resampling against source and derived hashes; inspect operation and affine metadata.",
+      "expected_behavior": "Display edits leave original bytes unchanged; resampling creates a derived resource and auditable operation; annotation migration is explicit.",
+      "limits": "Application-level persistence and image-processing check."
+    },
+    {
+      "id": "W5",
+      "status": "proposed/UNEXECUTED",
+      "check": "Inject termination during import, DB transaction, asset staging, export and snapshot publication; reopen local and shared-storage snapshots.",
+      "expected_behavior": "Last verified project remains usable; incomplete outputs never appear complete; actual shared storage meets tested publish/reopen semantics.",
+      "limits": "SQLite docs do not guarantee the group's filesystem behavior."
+    },
+    {
+      "id": "W6",
+      "status": "proposed/UNEXECUTED",
+      "check": "Relocate a reference-backed project to another workstation; verify full SHA-256/series before and after relocation; test mismatch and multi-file input.",
+      "expected_behavior": "Verified source rebind is recorded; mismatch preserves project and blocks source-dependent export pending explicit confirmation.",
+      "limits": "Hash duration and real instrument multi-file behavior require measurement."
+    },
+    {
+      "id": "W7",
+      "status": "proposed/UNEXECUTED",
+      "check": "Export point/polygon/mask table, overlay and small derived crop; compare output to project and re-import in a clean project.",
+      "expected_behavior": "Coordinate order/origin/scope, channel/time/slice, transform, sample conversion and overlap losses are reported; source unchanged.",
+      "limits": "Format interoperability varies; no external app round-trip is claimed until tested."
+    },
+    {
+      "id": "W8",
+      "status": "proposed/UNEXECUTED",
+      "check": "Keyboard-only task completion, focus/labels, contrast and non-color status for import failure, unresolved metadata, annotation, undo/redo and export.",
+      "expected_behavior": "Core workflow is operable without a pointer, and errors/metadata remain legible and explicitly labeled.",
+      "limits": "Requires accessibility review with target researchers; not tested in this stage."
+    }
+  ]
+}

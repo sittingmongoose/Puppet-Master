@@ -1,0 +1,116 @@
+{
+  "schema": "er9.diagnostic_method_card.v1",
+  "pair_id": "D-V15-A",
+  "card_version": "v1",
+  "track": "A",
+  "status": "NOT_RUN",
+  "freeze_state": "PROSPECTIVE_UNLAUNCHED",
+  "method_id": "V15",
+  "method_name": "Implementation and issue-to-test investigation",
+  "case_id": "D-V15-A-v1",
+  "domain": "A",
+  "task_name": "Candidate-discovered image failure/fix/test chain",
+  "task": "From the biomedical brief, locate a consequential mechanism and a real public issue/fix/regression-test chain. Compare ordinary docs-first research with deliberate code/issue/test tracing and two independent useful implementation precedents.",
+  "question": "Use one real fix chain and one misleading or version-mismatched apparent chain. For discovery cells the candidate must locate the chain itself.",
+  "source_scope": "BRIEF_ONLY live primary-source discovery, exact public code/issues/fix/tests/release context; no repository hints or preselected chain.",
+  "initial_input_class": "BRIEF_ONLY_LIVE_DISCOVERY",
+  "discovery_conclusion_allowed": true,
+  "control": "Documentation-first investigation with normal access to repositories, issues and tests.",
+  "treatment": "Follow selected consequential mechanisms through entry points, real issue history, fixes and regression tests; compare at least two independent implementations where the case requires it.",
+  "measure": "Verified lessons, version/branch applicability, unsupported causal links, executable behavior, novelty, code-reading cost and recommendation impact.",
+  "integration_limit": "An issue title is a lead, not consensus; a merged patch is not automatically evidence of the affected release or a reproduced defect.",
+  "requested_family": "Luna",
+  "requested_model": "GPT-6 Luna",
+  "requested_effort": "Max",
+  "requested_route": "fresh standalone native Codex /goal",
+  "observed_model": null,
+  "observed_effort": null,
+  "family_binding_rule": "Within pair identical actual supported family/model/effort. Root may version an unstarted card prospectively if route unavailable; preserve original planned family and reason. No substitution attributed as same-model replication.",
+  "brief_path": "briefs/development-A-biomedical.md",
+  "common_criteria_path": "common_criteria.json",
+  "source_access_path": "source_access.json",
+  "stages": {
+    "control": [
+      {
+        "stage": "diagnostic",
+        "max_native_seconds": 900,
+        "native_goal": true,
+        "fresh_same_family": true,
+        "max_parent_responses": 100
+      }
+    ],
+    "treatment": [
+      {
+        "stage": "diagnostic",
+        "max_native_seconds": 900,
+        "native_goal": true,
+        "fresh_same_family": true,
+        "max_parent_responses": 100
+      }
+    ]
+  },
+  "allocation": {
+    "critical_path_candidate_seconds_per_arm": 900,
+    "occupied_candidate_seconds_per_arm": 900,
+    "parent_responses_per_arm": 100,
+    "per_stage_parent_response_cap": 100,
+    "startup_and_service_waits": "measured/charged within original allowance",
+    "V09_note": null
+  },
+  "execution_policy": {
+    "public_get": true,
+    "control_execution_enabled": true,
+    "treatment_execution_enabled": true,
+    "isolation_config_pin": null,
+    "retrieval_config_pin": null,
+    "factor_enforcement": "V01 control critic physically lacks execution, not only text prohibition; otherwise tools equal unless documented factor is retrieval ordering/representation."
+  },
+  "fixture_prerequisites": [],
+  "frozen_seed_manifest_path": null,
+  "neutral_task_prompt_path": "diagnostics/D-V15-A-TASK.md",
+  "candidate_artifacts": {
+    "designated_final": "out/final/proposal.md",
+    "source_catalog": "out/final/sources.json",
+    "witness_catalog": "out/final/witnesses.json",
+    "lead_inventory": "out/final/leads.json"
+  },
+  "important_checks": [
+    {
+      "id": "D-V15-A-P1",
+      "question": "Do the same predeclared consequential source/behavior claims receive correct supported correction or preservation under this method, without a new consequential error?"
+    },
+    {
+      "id": "D-V15-A-P2",
+      "question": "Does the final retain supported conditions, legitimate uncertainty and required useful content rather than blanket rejection or incomplete delivery?"
+    },
+    {
+      "id": "D-V15-A-P3",
+      "question": "Was the declared mechanism actually taken up with honest source/execution scope, and what critical/false-rejection/repair differences appear under matched budgets?"
+    }
+  ],
+  "no_truth_key_in_candidate": true,
+  "candidate_authorship": "All substantive scored candidate checking, integration and code remain affordable candidate-native Goal work; Sol only scenario/protocol/evaluator infrastructure.",
+  "evaluate_before_history": true,
+  "economics_fields": [
+    "actual_starts_and_stage_models",
+    "wall_and_critical_path_seconds",
+    "occupied_candidate_seconds",
+    "parent_responses",
+    "native_retries_and_waits",
+    "known_input_cache_output_counters_and_definitions",
+    "unknown_child/cancelled_usage",
+    "tool/source_traffic",
+    "cold_seed_development_cost_separate"
+  ],
+  "outcome": {
+    "attempted": 0,
+    "completed": 0,
+    "assessed": 0,
+    "quality": "NOT_RUN"
+  },
+  "arm_modifier_paths": {
+    "control": "diagnostics/D-V15-A-CONTROL.md",
+    "treatment": "diagnostics/D-V15-A-TREATMENT.md"
+  },
+  "coverage_path": "diagnostics/D-V15-A-coverage.json"
+}

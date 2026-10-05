@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "scope": "BRIEF_ONLY live public primary sources discovered for this arm; no other arm, evaluator, repository list, prior findings, or private material was inspected.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "OME-Zarr specification 0.5",
+      "url": "https://raw.githubusercontent.com/ome/ngff/5cdf83b6806b5e500477c7af69dae9ed2adcf77d/0.5/index.bs",
+      "pin": {"tag": "0.5.2", "commit": "5cdf83b6806b5e500477c7af69dae9ed2adcf77d", "metadata_version": "0.5"},
+      "locator": ["Storage format #storage-format", "Images #image-layout", "axes metadata #axes-md", "coordinateTransformations #trafo-md", "multiscales #multiscale-md", "omero metadata #omero-md", "labels metadata #labels-md"],
+      "capture": {"capture_id": "ff88b30574164d71975fff62b98fd581", "body_sha256": "eb007bba48e6b359906a1b5f289a4d6f5965a7fc0e8f50fd3bcfaeb765fef685", "captured_utc": "2026-10-05T22:02:23.961838+00:00", "body_bytes": 37464, "body_complete": true, "delivered_range": [0, 32768]},
+      "applicability": "Normative 0.5 spec for axes, order, scale/translation coordinate mapping, transitional channel display metadata, and integer label images. Does not establish reader support or application behavior. The multiscale image transform rules constrain transforms to scale/translation."
+    },
+    {
+      "id": "S02",
+      "title": "OME-NGFF release tags used to pin 0.5.2",
+      "url": "https://api.github.com/repos/ome/ngff/tags?per_page=30",
+      "pin": {"tag": "0.5.2", "commit": "5cdf83b6806b5e500477c7af69dae9ed2adcf77d"},
+      "locator": ["JSON entry name 0.5.2 and commit.sha"],
+      "capture": {"capture_id": "462ea7eb8c10474e8982efed454bc184", "body_sha256": "6fa7034e809e59c3c23a34f72c3ffc2a4c2e7bede08ebab1fa50beb4f9bfc48d", "captured_utc": "2026-10-05T21:54:38.498992+00:00", "body_bytes": 3851, "body_complete": true},
+      "applicability": "Pin-resolution evidence only; the spec claims rely on S01."
+    },
+    {
+      "id": "S03",
+      "title": "tifffile README and examples",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/a14e516c4fa3c0c9ede980ebb3111260347dd213/README.rst",
+      "pin": {"release": "2026.9.20", "commit": "a14e516c4fa3c0c9ede980ebb3111260347dd213"},
+      "locator": ["Quickstart", "Requirements", "Notes: TIFF, BigTIFF, OME-TIFF and unsupported TIFF features", "Examples: Get information without reading pixel data", "Examples: Use Zarr to read parts of tiled pyramidal images", "Examples: Load base layer as Dask array"],
+      "capture": {"capture_id": "84167d5b792043a394d5612197884019", "body_sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48", "captured_utc": "2026-10-05T21:56:34.914730+00:00", "body_bytes": 32898, "body_complete": true, "delivered_range": [0, 32768]},
+      "applicability": "Implementation documentation for a TIFF reader and its Zarr-backed access examples and limits. The examples do not prove bounded RSS or compatibility with every file."
+    },
+    {
+      "id": "S04",
+      "title": "tifffile release tags used to pin 2026.9.20",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/tags?per_page=10",
+      "pin": {"release": "v2026.9.20", "commit": "a14e516c4fa3c0c9ede980ebb3111260347dd213"},
+      "locator": ["JSON entry name v2026.9.20 and commit.sha"],
+      "capture": {"capture_id": "190655b1ec04406e81f2a7f197b4875f", "body_sha256": "df846d8788843271ba737dfc77a7a3c06a4349a93b92251ece2428313aaa9b3b", "captured_utc": "2026-10-05T21:56:26.084738+00:00", "body_bytes": 4272, "body_complete": true},
+      "applicability": "Pin-resolution evidence only; implementation claims rely on S03."
+    },
+    {
+      "id": "S05",
+      "title": "napari Layer implementation at v0.8.0",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.8.0/src/napari/layers/base/base.py",
+      "pin": {"release_tag": "v0.8.0", "related_fix_merge_commit": "63b1239ab53dedc4e40b934ee79fd18e4147dd83"},
+      "locator": ["Layer class parameter documentation: affine, axis_labels, cache, scale, translate, units", "TransformChain setup: tile2data, data2physical, physical2world"],
+      "capture": {"capture_id": "0f2c3534897c45cc80060034b04c7b10", "body_sha256": "20fd08b92ca1ec797cb3bf6e6ae558371d203e424a5a54c850b87ca769384379", "captured_utc": "2026-10-05T21:56:50.546820+00:00", "body_bytes": 87832, "body_complete": true, "delivered_range": [0, 32768]},
+      "applicability": "Pinned viewer-layer model supports the proposed coordinate/view integration. It is not evidence of project serialization, source-reader compatibility, or persistence."
+    },
+    {
+      "id": "S06",
+      "title": "napari issue 8939: Dask-backed Zarr label painting failure",
+      "url": "https://api.github.com/repos/napari/napari/issues/8939",
+      "pin": {"issue": 8939, "observed_state": "closed", "reported_napari": "0.7.1.dev86+gc528997a8"},
+      "locator": ["Issue body: environment, traceback ending `Don't yet support nd fancy indexing`, reproduction through Labels.paint_polygon"],
+      "capture": {"capture_id": "3716ef9f3f4944709a7ab1aefc819c90", "body_sha256": "6ec695aa67f93aa5fb7570734465f5500fb9652a7e9e683d1eb51573aa4d245f", "captured_utc": "2026-10-05T21:54:52.616514+00:00", "body_bytes": 24771, "body_complete": true},
+      "applicability": "Primary public failure report and concrete reproduction. It is not, alone, evidence of a fix."
+    },
+    {
+      "id": "S07",
+      "title": "napari issue 8939 comments linking the fix",
+      "url": "https://api.github.com/repos/napari/napari/issues/8939/comments",
+      "pin": {"issue": 8939, "comment_ids": [4357625357, 4374071054, 4374076782, 4374088460]},
+      "locator": ["Comment 4357625357 links PR #8636 as the suspected fix; later comments discuss Zarr/TensorStore and Dask tradeoffs"],
+      "capture": {"capture_id": "45e041ea97894dd08376c545c1e7e544", "body_sha256": "16a68e33319ccddfa15b6f3261c1b768ec4df8de5ab7e4fb6dad9c7a9bc28827", "captured_utc": "2026-10-05T21:54:54.574892+00:00", "body_bytes": 7646, "body_complete": true},
+      "applicability": "Link in the failure discussion; requires the PR implementation/tests/release corroboration in S08-S10."
+    },
+    {
+      "id": "S08",
+      "title": "napari PR 8636: labels painting refactor",
+      "url": "https://api.github.com/repos/napari/napari/pulls/8636",
+      "pin": {"pull_request": 8636, "merge_commit": "63b1239ab53dedc4e40b934ee79fd18e4147dd83", "merged_at": "2026-07-08T20:23:22Z", "release": "v0.8.0"},
+      "locator": ["PR body: closes #8939; mask and bounding-box approach; backend-agnostic basic slicing; merge metadata"],
+      "capture": {"capture_id": "8e7b1307878d416e8726d65ca103d772", "body_sha256": "541fda332e969bb8702029f14700df2db689d29a212c0e7286a173bf937fb3ca", "captured_utc": "2026-10-05T21:54:56.707514+00:00", "body_bytes": 26359, "body_complete": true},
+      "applicability": "Merged code-level fix explanation and issue closure record. PR author-reported benchmarks are not independent performance evidence."
+    },
+    {
+      "id": "S09",
+      "title": "napari PR 8636 changed-file diff and added regression tests",
+      "url": "https://api.github.com/repos/napari/napari/pulls/8636/files",
+      "pin": {"pull_request": 8636, "merge_commit": "63b1239ab53dedc4e40b934ee79fd18e4147dd83"},
+      "locator": ["src/napari/layers/labels/labels.py: _MaskedPaintAtom docs specify basic slicing and backend coverage", "src/napari/layers/labels/_tests/test_labels.py: test_paint_history_undo_redo_with_dask, test_paint_polygon_zarr, test_paint_polygon_tensorstore"],
+      "capture": {"capture_id": "310088e0c6fa4de494761b3e5b3da051", "body_sha256": "5d2d8b82acbf8a5e5680ae13d39a5bfeab9885bdf5cf3617c30a65ffaf38a193", "captured_utc": "2026-10-05T21:54:59.486153+00:00", "body_bytes": 84043, "body_complete": true, "delivered_ranges": [[0, 32768], [32768, 36768], [64000, 68000]]},
+      "applicability": "Diff includes regression-style test code for backend editing/history. It does not provide candidate-executed test receipts or an exact Dask-backed polygon gesture test."
+    },
+    {
+      "id": "S10",
+      "title": "napari v0.8.0 release notes",
+      "url": "https://api.github.com/repos/napari/napari/releases/tags/v0.8.0",
+      "pin": {"release_tag": "v0.8.0", "published_at": "2026-07-14T16:15:31Z", "included_pr": 8636},
+      "locator": ["Release highlights: Paint into more arrays faster", "Performance: Labels painting refactor to use masks and bounding boxes (#8636)"],
+      "capture": {"capture_id": "9d246f2cfc674237ae887ab73751ec1b", "body_sha256": "328d393a31d70ac392772ac63e2c18cd72d0501510cb1861b65ef6a7a0df1860", "captured_utc": "2026-10-05T21:55:06.035908+00:00", "body_bytes": 41516, "body_complete": true, "delivered_range": [0, 32768]},
+      "applicability": "Release-note corroboration that the merged PR is included in v0.8.0; does not establish behavior on the proposed full app."
+    },
+    {
+      "id": "S11",
+      "title": "Bio-Formats 8.5.0 format overview",
+      "url": "https://bio-formats.readthedocs.io/en/v8.5.0/formats/index.html",
+      "pin": {"documentation_version": "8.5.0", "last_updated": "2026-03-18"},
+      "locator": ["Formats page introduction: over 140 formats and links to individual support ratings"],
+      "capture": {"capture_id": "e29fbde8df534271a9cc920968fe2d2d", "body_sha256": "5dc209b517b8c63ca87002b5b488ba211b19e7a151b27869d479998cda445f0a", "captured_utc": "2026-10-05T21:58:37.004842+00:00", "body_bytes": 9038, "body_complete": true},
+      "applicability": "Official docs establish advertised breadth, not equal quality, complete metadata, app integration, or performance."
+    },
+    {
+      "id": "S12",
+      "title": "Bio-Formats 8.5.0 supported formats and separate rating dimensions",
+      "url": "https://bio-formats.readthedocs.io/en/v8.5.0/supported-formats.html",
+      "pin": {"documentation_version": "8.5.0", "last_updated": "2026-03-18"},
+      "locator": ["Supported Formats table columns: pixels, metadata, openness, presence, utility, export, BSD, multiple images, pyramid"],
+      "capture": {"capture_id": "e5c90ee0e219451b87244415679b5bb6", "body_sha256": "bf30281cb39de320d8178a6dd403d7e7cc3bc770ef317c666bf7dc26a83c19fa", "captured_utc": "2026-10-05T21:58:40.045618+00:00", "body_bytes": 157789, "body_complete": true, "delivered_range": [0, 32768]},
+      "applicability": "Shows that a broad format list has varying per-format ratings. Image formats need fixture-specific acceptance."
+    },
+    {
+      "id": "S13",
+      "title": "Bio-Formats v8.5.0 release assets",
+      "url": "https://api.github.com/repos/ome/bioformats/releases/latest",
+      "pin": {"release_tag": "v8.5.0", "published_at": "2026-03-18T13:48:00Z", "bioformats_package_jar_bytes": 53843906},
+      "locator": ["Release asset bioformats_package.jar size and v8.5.0 release metadata"],
+      "capture": {"capture_id": "ff794be725b44303a4542d70c9ba58aa", "body_sha256": "ea3e4b4b10e87eef4e28f73314e5abf4224894b62877aa9af8a5fba625c8a76b", "captured_utc": "2026-10-05T21:58:32.515570+00:00", "body_bytes": 31721, "body_complete": true},
+      "applicability": "Release package size is one deployment-cost signal only; it excludes a complete evaluation of Java integration or runtime memory."
+    },
+    {
+      "id": "S14",
+      "title": "SQLite atomic commit documentation",
+      "url": "https://sqlite.org/atomiccommit.html",
+      "pin": {"captured_document_last_modified": "2026-09-11", "capture_sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1"},
+      "locator": ["Introduction: all-or-none transaction", "Single File Commit", "Rollback", "Hardware Assumptions and filesystem flush behavior"],
+      "capture": {"capture_id": "25ff2c9b6bd3443a8e470b3ffc9ffda7", "body_sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1", "captured_utc": "2026-10-05T21:58:43.320782+00:00", "body_bytes": 77968, "body_complete": true, "delivered_range": [0, 32768]},
+      "applicability": "Explains local SQLite transaction atomicity and its VFS/OS durability assumptions. Not an app crash test or network filesystem guarantee."
+    },
+    {
+      "id": "S15",
+      "title": "SQLite Write-Ahead Logging documentation",
+      "url": "https://sqlite.org/wal.html",
+      "pin": {"captured_document_last_modified": "2026-09-11", "capture_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e"},
+      "locator": ["Overview: WAL advantages/disadvantages", "Concurrency: one writer and same-host shared memory", "WAL file must be retained with database", "Checkpointing and durability"],
+      "capture": {"capture_id": "979eec015814467ab30aacf282a2af2e", "body_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e", "captured_utc": "2026-10-05T22:01:53.455246+00:00", "body_bytes": 42143, "body_complete": true, "delivered_range": [0, 32768]},
+      "applicability": "Supports use of WAL for a local single-host working database and the warning to exchange closed snapshots rather than editing on network storage."
+    },
+    {
+      "id": "S16",
+      "title": "SQLite online backup API documentation",
+      "url": "https://sqlite.org/backup.html",
+      "pin": {"captured_document_last_modified": "2026-09-11", "capture_sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04"},
+      "locator": ["Using the SQLite online backup API", "Example 2: online backup of a running database", "Progress pagecount/remaining and failure behavior"],
+      "capture": {"capture_id": "c50d0889a4ec42f295f1e1798e8940fe", "body_sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04", "captured_utc": "2026-10-05T21:59:09.990740+00:00", "body_bytes": 28195, "body_complete": true},
+      "applicability": "Supports a consistent snapshot of SQLite state and a progress callback. Bundle assembly and atomic publication remain app-level work."
+    }
+  ]
+}

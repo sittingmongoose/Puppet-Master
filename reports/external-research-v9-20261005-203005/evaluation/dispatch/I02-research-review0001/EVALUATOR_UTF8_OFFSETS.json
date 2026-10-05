@@ -1,0 +1,17 @@
+{
+  "execution_label": "evaluator_executed",
+  "case": "Actual candidate W2 ledger Unicode offsets",
+  "candidate_reported_offsets": {
+    "line101": 6158,
+    "line2001": 126362
+  },
+  "independent_utf8_offsets": {
+    "line101": 6292,
+    "line2001": 129029
+  },
+  "candidate_algorithm_character_offsets": {
+    "line101": 6158,
+    "line2001": 126362
+  },
+  "scope": "Encoding arithmetic using the declared fixture and observed ledger; no candidate code or DuckDB execution"
+}

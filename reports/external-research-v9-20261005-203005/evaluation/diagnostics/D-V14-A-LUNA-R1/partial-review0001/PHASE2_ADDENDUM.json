@@ -1,0 +1,380 @@
+{
+  "schema": "er9.diagnostic-phase2-addendum.v1",
+  "pair_id": "D-V14-A-LUNA-R1",
+  "saved_utc": "2026-10-05T23:01:00.026441Z",
+  "current_source_judgment": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-A-LUNA-R1/partial-review0001/partial_source_judgment.json",
+    "sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d"
+  },
+  "original_judgment_unchanged": true,
+  "phase2_packets": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-OPERATIONAL-001/MANIFEST.json",
+      "sha256": "34c88ad39cc031012be700b4a2127b6dded42480ac36beeadc7dc5cd5e3bc68a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-WITNESSES-001/MANIFEST.json",
+      "sha256": "27624ed38a04f8c2127da3ff4d2087788aa564b40ffe2c37e229a0c0dd931446"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/MANIFEST.json",
+      "sha256": "764d71019c8087f5d01d805b23ce21f2babbfd61f984a412a7c8aae47370120b"
+    }
+  ],
+  "phase2_arms": [
+    {
+      "alias": "A",
+      "arm_phase2": "treatment",
+      "candidate_identity": {
+        "actual_family": "Luna",
+        "observed_model": "gpt-6-luna",
+        "observed_effort": "max",
+        "basis": "NATIVE_THREAD_IDENTITY_AND_USAGE_RECEIPT"
+      },
+      "input_pin_checks": {
+        "diagnostic_task.md": true,
+        "brief.md": true,
+        "arm_instruction.md": true,
+        "output_contract.md": true
+      },
+      "native_quiescent": true,
+      "operational_complete": false,
+      "native_goal_starts": 1,
+      "method_uptake": "Task/method instruction input pins verified; independent public capture metadata shows brief-only eligible acquisition across mechanism families. Protected-share time allocation/complete uptake is UNASSESSED; current source claims assessed separately.",
+      "captures": {
+        "selected_catalog_capture_count": 16,
+        "all_pins_match": true,
+        "http_status_counts": {
+          "200": 16
+        },
+        "captured_response_bytes_sum": 697506,
+        "complete_body_count": 16,
+        "raw_model_comprehension": "UNKNOWN; acquisition not comprehension",
+        "full_source_tool_traffic": "UNKNOWN; only catalog-positive selectors exported",
+        "metadata_manifest": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/MANIFEST.json",
+          "sha256": "764d71019c8087f5d01d805b23ce21f2babbfd61f984a412a7c8aae47370120b"
+        },
+        "capture_times_utc": {
+          "first": "2026-10-05T21:54:38.498992+00:00",
+          "last": "2026-10-05T22:02:23.961838+00:00"
+        }
+      },
+      "candidate_execution_receipts": [],
+      "execution_evidence_files": [],
+      "accounting_typed_row": {
+        "actual_family": "Luna",
+        "arm": "treatment",
+        "attempt_id": "D-V14-A-LUNA-R1-treatment-diagnostic-a002",
+        "billing_dollars": "UNKNOWN",
+        "cancelled_or_unexposed_tail": "UNKNOWN",
+        "category": "candidate_attempt",
+        "cleanup_reserve_seconds": 15.0,
+        "cleanup_seconds": "UNKNOWN",
+        "end_utc": null,
+        "goal_identity": "01a10e0e-a372-7ec2-bf07-7919221e5a76",
+        "http_attempts": "UNKNOWN",
+        "inference_model_provenance": "NATIVE_THREAD_IDENTITY_AND_USAGE_RECEIPT",
+        "job_status": "FAILED",
+        "known_usage": {
+          "cached_input_included": 3777024,
+          "input": 4057437,
+          "output": 40219,
+          "reasoning_output_subset": 29115,
+          "total": 4097656
+        },
+        "native_execution_seconds": null,
+        "native_goal_starts": 1,
+        "native_goal_status": "paused",
+        "native_goal_status_before_cleanup": "active",
+        "observed_effort": "max",
+        "observed_model": "gpt-6-luna",
+        "occupied_seconds": 885.419129252,
+        "pair_id": "D-V14-A-LUNA-R1",
+        "provider_request_count": null,
+        "provider_status_counts": {},
+        "quiescent": true,
+        "quota_exhaustion": "UNKNOWN",
+        "requested_effort": "max",
+        "requested_model": "gpt-6-luna",
+        "router_terminal_status": "HOLD",
+        "source_pins": [
+          {
+            "path": "ops/dispatcher/runs/D-V14-A-LUNA-R1-treatment-diagnostic-a002/native/result.json",
+            "sha256": "f20ae3d3091601a86e30cf99cba78cf02f227f5ddf72e8e6d9a538e5a0f53609"
+          }
+        ],
+        "stage": "diagnostic",
+        "start_utc": null,
+        "terminal_error_class": "TimeoutError",
+        "turn_completion_notifications": 1,
+        "turn_status_counts": {
+          "interrupted": 1
+        },
+        "ui_usage_separate": null,
+        "usage_basis": "native_thread_cumulative",
+        "usage_notifications": 41
+      }
+    },
+    {
+      "alias": "B",
+      "arm_phase2": "control",
+      "candidate_identity": {
+        "actual_family": "Luna",
+        "observed_model": "gpt-6-luna",
+        "observed_effort": "max",
+        "basis": "NATIVE_THREAD_IDENTITY_AND_USAGE_RECEIPT"
+      },
+      "input_pin_checks": {
+        "diagnostic_task.md": true,
+        "brief.md": true,
+        "arm_instruction.md": true,
+        "output_contract.md": true
+      },
+      "native_quiescent": true,
+      "operational_complete": false,
+      "native_goal_starts": 1,
+      "method_uptake": "Task/method instruction input pins verified; independent public capture metadata shows brief-only eligible acquisition across mechanism families. Protected-share time allocation/complete uptake is UNASSESSED; current source claims assessed separately.",
+      "captures": {
+        "selected_catalog_capture_count": 18,
+        "all_pins_match": true,
+        "http_status_counts": {
+          "200": 18
+        },
+        "captured_response_bytes_sum": 1470663,
+        "complete_body_count": 17,
+        "raw_model_comprehension": "UNKNOWN; acquisition not comprehension",
+        "full_source_tool_traffic": "UNKNOWN; only catalog-positive selectors exported",
+        "metadata_manifest": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D14-CAPTURE-METADATA-001/MANIFEST.json",
+          "sha256": "764d71019c8087f5d01d805b23ce21f2babbfd61f984a412a7c8aae47370120b"
+        },
+        "capture_times_utc": {
+          "first": "2026-10-05T21:53:40.430204+00:00",
+          "last": "2026-10-05T21:58:20.925429+00:00"
+        }
+      },
+      "candidate_execution_receipts": [
+        {
+          "actor": "candidate",
+          "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+          "bootstrap_started": true,
+          "cleanup_classification": "collected_unit_absent",
+          "cleanup_confirmed": true,
+          "cleanup_state_returncode": 0,
+          "cleanup_stop_returncode": 5,
+          "code_sha256": "abe2559d0f367a076c4b528236c397c9892cfd75576c03e3068f7cc060d7c0c2",
+          "control_group_absent_after_stop": null,
+          "control_group_populated_after_stop": null,
+          "data_sha256": "21f60a858681d34dab0e199f4503beeb0791fed2b75fc3faa8df2bd77dad5d84",
+          "execution_id": "exec-r01veuh3",
+          "execution_label": "executed by candidate",
+          "exit_code": 0,
+          "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+          "limits": {
+            "cpu_seconds": 3,
+            "memory_bytes": 268435456,
+            "network": "new empty namespace",
+            "stream_bytes_each": 32768,
+            "tasks": 16,
+            "wall_seconds": 5
+          },
+          "schema": "er9.execution.result.v1",
+          "stderr_bytes": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_bytes": 163,
+          "stdout_sha256": "fd3b08068314591d9e371303876644ec2d92d4a4e6c1a7c5984b81d2dceeecdf",
+          "stopped_by_adapter": null,
+          "unit_active_state_after_stop": "inactive",
+          "unit_load_state_after_stop": "not-found"
+        }
+      ],
+      "execution_evidence_files": [
+        {
+          "pair_id": "D-V14-A-LUNA-R1",
+          "alias": "B",
+          "execution_id": "exec-r01veuh3",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-WITNESSES-001/D-V14-A-LUNA-R1/B/exec-r01veuh3/code.py",
+          "sha256": "abe2559d0f367a076c4b528236c397c9892cfd75576c03e3068f7cc060d7c0c2",
+          "original_sha256": "abe2559d0f367a076c4b528236c397c9892cfd75576c03e3068f7cc060d7c0c2",
+          "evidence_kind": "candidate_code",
+          "redaction_policy": "exact bytes"
+        },
+        {
+          "pair_id": "D-V14-A-LUNA-R1",
+          "alias": "B",
+          "execution_id": "exec-r01veuh3",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-WITNESSES-001/D-V14-A-LUNA-R1/B/exec-r01veuh3/data.json",
+          "sha256": "21f60a858681d34dab0e199f4503beeb0791fed2b75fc3faa8df2bd77dad5d84",
+          "original_sha256": "21f60a858681d34dab0e199f4503beeb0791fed2b75fc3faa8df2bd77dad5d84",
+          "evidence_kind": "candidate_input",
+          "redaction_policy": "exact bytes"
+        },
+        {
+          "pair_id": "D-V14-A-LUNA-R1",
+          "alias": "B",
+          "execution_id": "exec-r01veuh3",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-WITNESSES-001/D-V14-A-LUNA-R1/B/exec-r01veuh3/stdout.bin",
+          "sha256": "fd3b08068314591d9e371303876644ec2d92d4a4e6c1a7c5984b81d2dceeecdf",
+          "original_sha256": "fd3b08068314591d9e371303876644ec2d92d4a4e6c1a7c5984b81d2dceeecdf",
+          "evidence_kind": "candidate_stdout",
+          "redaction_policy": "exact bytes"
+        },
+        {
+          "pair_id": "D-V14-A-LUNA-R1",
+          "alias": "B",
+          "execution_id": "exec-r01veuh3",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-WITNESSES-001/D-V14-A-LUNA-R1/B/exec-r01veuh3/stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "evidence_kind": "candidate_stderr",
+          "redaction_policy": "exact bytes"
+        },
+        {
+          "pair_id": "D-V14-A-LUNA-R1",
+          "alias": "B",
+          "execution_id": "exec-r01veuh3",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-WITNESSES-001/D-V14-A-LUNA-R1/B/exec-r01veuh3/execution-facts.json",
+          "sha256": "a67746aa10573639030f86f4c101877c43935166fea552462cb3b8b1ca066f7a",
+          "original_sha256": "d5e9195cac164e39226848a0d8d6cadf099dce5f4083e567638981cc3dcfac28",
+          "evidence_kind": "candidate_execution_receipt",
+          "redaction_policy": "positive metadata projection; omit unit/privatepath/timing/history/economics, streams separately exact",
+          "omitted_original_fields": [
+            "cleanup_query_stderr",
+            "cleanup_query_stdout",
+            "cleanup_stop_stderr",
+            "cleanup_stop_stdout",
+            "completed_utc",
+            "control_group_after_stop",
+            "elapsed_seconds",
+            "limitations",
+            "stderr",
+            "stdout"
+          ]
+        }
+      ],
+      "accounting_typed_row": {
+        "actual_family": "Luna",
+        "arm": "control",
+        "attempt_id": "D-V14-A-LUNA-R1-control-diagnostic-a002",
+        "billing_dollars": "UNKNOWN",
+        "cancelled_or_unexposed_tail": "UNKNOWN",
+        "category": "candidate_attempt",
+        "cleanup_reserve_seconds": 15.0,
+        "cleanup_seconds": "UNKNOWN",
+        "end_utc": null,
+        "goal_identity": "01a10e0e-9c33-79d2-8c8d-a3536e4f04fc",
+        "http_attempts": "UNKNOWN",
+        "inference_model_provenance": "NATIVE_THREAD_IDENTITY_AND_USAGE_RECEIPT",
+        "job_status": "FAILED",
+        "known_usage": {
+          "cached_input_included": 4225536,
+          "input": 4547557,
+          "output": 35374,
+          "reasoning_output_subset": 20818,
+          "total": 4582931
+        },
+        "native_execution_seconds": null,
+        "native_goal_starts": 1,
+        "native_goal_status": "paused",
+        "native_goal_status_before_cleanup": "active",
+        "observed_effort": "max",
+        "observed_model": "gpt-6-luna",
+        "occupied_seconds": 885.431355342,
+        "pair_id": "D-V14-A-LUNA-R1",
+        "provider_request_count": null,
+        "provider_status_counts": {},
+        "quiescent": true,
+        "quota_exhaustion": "UNKNOWN",
+        "requested_effort": "max",
+        "requested_model": "gpt-6-luna",
+        "router_terminal_status": "HOLD",
+        "source_pins": [
+          {
+            "path": "ops/dispatcher/runs/D-V14-A-LUNA-R1-control-diagnostic-a002/native/result.json",
+            "sha256": "202da0486fa6024b2b54014bfb606d08c15fac643bf1b4358d9a41b7094c3657"
+          }
+        ],
+        "stage": "diagnostic",
+        "start_utc": null,
+        "terminal_error_class": "TimeoutError",
+        "turn_completion_notifications": 1,
+        "turn_status_counts": {
+          "interrupted": 1
+        },
+        "ui_usage_separate": null,
+        "usage_basis": "native_thread_cumulative",
+        "usage_notifications": 44
+      }
+    }
+  ],
+  "receipt_finding": {
+    "defect_id": "B-WITNESS-RECORD-01",
+    "phase1_defect_preserved": true,
+    "new_evidence_finding": "Actual control W1 exec-r01veuh3 ran exact declared code/input, exit0, correct stdout y=-0.25. Catalog reported y11.5. Defect is delivery/transcription of execution evidence, not erroneous actual arithmetic or fabricated execution.",
+    "actual_stdout_pin": {
+      "pair_id": "D-V14-A-LUNA-R1",
+      "alias": "B",
+      "execution_id": "exec-r01veuh3",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-WITNESSES-001/D-V14-A-LUNA-R1/B/exec-r01veuh3/stdout.bin",
+      "sha256": "fd3b08068314591d9e371303876644ec2d92d4a4e6c1a7c5984b81d2dceeecdf",
+      "original_sha256": "fd3b08068314591d9e371303876644ec2d92d4a4e6c1a7c5984b81d2dceeecdf",
+      "evidence_kind": "candidate_stdout",
+      "redaction_policy": "exact bytes"
+    },
+    "candidate_executed_scoped_check_verified": true,
+    "original_final_quality": "UNASSESSED",
+    "original_partial_decision_preserved": "FAIL_SCREEN of delivered witness record; no whole final/diagnostic grade."
+  },
+  "source_quality_or_grade_rewritten": false,
+  "final_quality": "UNASSESSED",
+  "whole_case_PASS": false,
+  "full_pipeline_credit": false,
+  "economics": {
+    "candidate_occupied_seconds_sum": 1770.850484594,
+    "largest_arm_occupied_seconds": 885.431355342,
+    "pair_wall_or_critical_path": "UNKNOWN; start/end UTC missing, overlapping time not summed as wall",
+    "raw_usage_per_arm": [
+      {
+        "alias": "A",
+        "arm": "treatment",
+        "known_usage": {
+          "cached_input_included": 3777024,
+          "input": 4057437,
+          "output": 40219,
+          "reasoning_output_subset": 29115,
+          "total": 4097656
+        },
+        "definition": "native_thread_cumulative; cached_input_included is subset of input; reasoning_output_subset is subset of output; total=input+output, not generated output or billed dollars"
+      },
+      {
+        "alias": "B",
+        "arm": "control",
+        "known_usage": {
+          "cached_input_included": 4225536,
+          "input": 4547557,
+          "output": 35374,
+          "reasoning_output_subset": 20818,
+          "total": 4582931
+        },
+        "definition": "native_thread_cumulative; cached_input_included is subset of input; reasoning_output_subset is subset of output; total=input+output, not generated output or billed dollars"
+      }
+    ],
+    "billing_dollars": "UNKNOWN",
+    "service_http_retries_waits_child_cancelled_tail": "UNKNOWN",
+    "evaluator_total_wall_since_first_partial_read_seconds": 1490.801607373,
+    "evaluator_tokens_money": "UNKNOWN",
+    "source_capture_traffic": "Only positive catalog-selected response counts/bytes; full tool traffic UNKNOWN"
+  },
+  "budget": {
+    "hard_max_seconds": 1800,
+    "original_clock_reset": false,
+    "elapsed_seconds": 1490.801607373,
+    "within_original_bound": true
+  },
+  "limits": [
+    "Protected breadth effort share not independently timed; no actual method-superiority conclusion.",
+    "Both required finals absent; operational incomplete costs remain charged; no accepted-output economics or qualification.",
+    "No raw private model I/O, alias sidecar or native result body opened."
+  ]
+}

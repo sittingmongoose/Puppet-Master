@@ -1,0 +1,150 @@
+{
+  "schema": "er9.current-output-judgment.v1",
+  "evaluation_id": "ER9-EVAL-D-V15-B-001",
+  "saved_utc": "2026-10-05T22:55:36.659087Z",
+  "dispatch": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/packet0001/dispatch.json",
+    "sha256": "d969be23243353adc83ca6692906d40873d149a3a5069a694f8539bc33d57c32"
+  },
+  "scope": "Actual targeted diagnostic final-artifact boundary only",
+  "comparison_status": "INCOMPLETE_PAIR",
+  "assessment_mode": "no_current_final",
+  "anonymous_output_results": [
+    {
+      "alias": "A",
+      "artifact_status": "TERMINAL_MISSING_DESIGNATED_FINAL",
+      "decision": "NOT_EVALUATED",
+      "quality_status": "UNASSESSED",
+      "assessment_state": "unassessed",
+      "full_pass_eligible": false,
+      "obligations": [
+        {
+          "obligation_id": "D-V15-B-01",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "reason": "No designated final; partial research evaluated only in separate source view."
+        },
+        {
+          "obligation_id": "D-V15-B-02",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "reason": "No designated final; partial research evaluated only in separate source view."
+        },
+        {
+          "obligation_id": "D-V15-B-03",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "reason": "No designated final; partial research evaluated only in separate source view."
+        },
+        {
+          "obligation_id": "D-V15-B-04",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "reason": "No designated final; partial research evaluated only in separate source view."
+        }
+      ]
+    },
+    {
+      "alias": "B",
+      "artifact_status": "TERMINAL_MISSING_DESIGNATED_FINAL",
+      "decision": "NOT_EVALUATED",
+      "quality_status": "UNASSESSED",
+      "assessment_state": "unassessed",
+      "full_pass_eligible": false,
+      "obligations": [
+        {
+          "obligation_id": "D-V15-B-01",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "reason": "No designated final; partial research evaluated only in separate source view."
+        },
+        {
+          "obligation_id": "D-V15-B-02",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "reason": "No designated final; partial research evaluated only in separate source view."
+        },
+        {
+          "obligation_id": "D-V15-B-03",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "reason": "No designated final; partial research evaluated only in separate source view."
+        },
+        {
+          "obligation_id": "D-V15-B-04",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "reason": "No designated final; partial research evaluated only in separate source view."
+        }
+      ]
+    }
+  ],
+  "shared_check_comparison": [
+    {
+      "check_id": "D-V15-B-P1",
+      "arm_results": [
+        {
+          "alias": "A",
+          "assessment_state": "unassessed",
+          "finding": "No designated final"
+        },
+        {
+          "alias": "B",
+          "assessment_state": "unassessed",
+          "finding": "No designated final"
+        }
+      ]
+    },
+    {
+      "check_id": "D-V15-B-P2",
+      "arm_results": [
+        {
+          "alias": "A",
+          "assessment_state": "unassessed",
+          "finding": "No designated final"
+        },
+        {
+          "alias": "B",
+          "assessment_state": "unassessed",
+          "finding": "No designated final"
+        }
+      ]
+    },
+    {
+      "check_id": "D-V15-B-P3",
+      "arm_results": [
+        {
+          "alias": "A",
+          "assessment_state": "unassessed",
+          "finding": "No designated final"
+        },
+        {
+          "alias": "B",
+          "assessment_state": "unassessed",
+          "finding": "No designated final"
+        }
+      ]
+    }
+  ],
+  "blinding": {
+    "private_alias_history_economics_opened": false,
+    "hints": [
+      "Assignment disclosed V14/V15 targeted mechanism names and requested Luna family; actual arm allocation, observed candidate identity, history, costs and prior grades remain unopened. Exact neutral task/coverage cards also describe the treatment mechanism."
+    ]
+  },
+  "sources": [],
+  "full_pipeline_credit": false,
+  "whole_case_PASS": false,
+  "limits": "Finalabsence not semanticFAIL. Separate partial-source judgment supplies selected source findings only; no grade replacement.",
+  "current_output_judgment": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/review0001/current_output_judgment.json",
+    "sha256": "cf71e581176be116cfd913f708eaf083ecbc5ad7d261bf9388f44788e8301080"
+  },
+  "status": "FINAL_QUALITY_UNASSESSED",
+  "phase2": {
+    "completed": false
+  },
+  "economics": {
+    "usage_and_money": "UNKNOWN"
+  }
+}

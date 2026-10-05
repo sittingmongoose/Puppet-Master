@@ -1,0 +1,46 @@
+{
+  "schema": "er9.public-admission-metadata.v1",
+  "pair_id": "I-01-R001",
+  "actual_family": "GLM-5.3-Flash",
+  "effort": "max",
+  "budgets": {
+    "research_seconds": 1200,
+    "cleanup_reserve_inside_total": 30,
+    "research_response_cap": 120
+  },
+  "actual_tools_version": "v1.2",
+  "held_originals_preserved": true,
+  "research_order": "treatment22:42:16.312 thencontrol22:46:20.582; actual ER9two-slot capacity",
+  "admission_cap_scope": "ER9-owned2, siblingoccupancy separate/realceilingUNKNOWN",
+  "stage_pins": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/publication/I01_R001_ADMISSION_V1/control-TASK.md",
+      "sha256": "957038feb2d36cfd304e9465ca5419f376ee9c01ca0d921031295a24075ae64f",
+      "original_source": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-R001-control-research-a001/workspace/TASK.md",
+      "kind": "immutable_neutral_prompt",
+      "candidate_output_included": false
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/publication/I01_R001_ADMISSION_V1/control-TOOLS.json",
+      "sha256": "332c2f33b51d491e17ff7762117bf690108dda34fa493530d90c4886f626f6f8",
+      "original_source": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-R001-control-research-a001/tools.json",
+      "kind": "actual_confined_mcp_config",
+      "candidate_output_included": false
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/publication/I01_R001_ADMISSION_V1/treatment-TASK.md",
+      "sha256": "957038feb2d36cfd304e9465ca5419f376ee9c01ca0d921031295a24075ae64f",
+      "original_source": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-R001-treatment-research-a001/workspace/TASK.md",
+      "kind": "immutable_neutral_prompt",
+      "candidate_output_included": false
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/publication/I01_R001_ADMISSION_V1/treatment-TOOLS.json",
+      "sha256": "f683839310cdedba4d74605beb5616c534a6b54c640cbb76532adb1e43a485ed",
+      "original_source": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-R001-treatment-research-a001/tools.json",
+      "kind": "actual_confined_mcp_config",
+      "candidate_output_included": false
+    }
+  ],
+  "semantic_candidate_outputs_included": false
+}

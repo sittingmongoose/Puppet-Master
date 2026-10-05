@@ -1,0 +1,20 @@
+{
+  "schema": "er9.additive-receipt-assessment-start.v1",
+  "evaluation_id": "ER9-EVAL-D-V15-A-RECEIPT-001",
+  "delivery_received_utc": "2026-10-05T22:53:17.625832Z",
+  "started_monotonic_ns": 71216482874798,
+  "deadline_utc": "2026-10-05T23:03:17.625832Z",
+  "hard_max_seconds": 600,
+  "packet": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D15A-WITNESSES-HELD-001/MANIFEST.json",
+    "sha256": "625f6466bc93f6e842f7466121aedb4d52be3b07053a7d9ca3d4f4a189ae47dd"
+  },
+  "operational_packet": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-OPERATIONAL-001/MANIFEST.json",
+    "sha256": "34c88ad39cc031012be700b4a2127b6dded42480ac36beeadc7dc5cd5e3bc68a"
+  },
+  "receipt_bodies_read": false,
+  "original_allowance_not_reset": true,
+  "original_judgments_not_modified": true,
+  "next_action": "Freeze D15B source judgment, then positive receipt assessment only"
+}

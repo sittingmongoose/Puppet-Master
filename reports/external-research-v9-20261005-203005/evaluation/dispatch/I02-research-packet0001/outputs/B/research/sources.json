@@ -1,0 +1,187 @@
+{
+  "stage": "research",
+  "captured_utc": "2026-10-05",
+  "note": "All captures are public HTTP responses obtained via the experiment's admitted public_https_get tool during this session. capture_sha256 is the exact-response-body hash reported by the tool; window_sha256 is the hash of the delivered 32768-byte window when the body exceeded it. Pins marked 'branch @ capture date' were not frozen to a commit; the capture sha256 is the identity of record.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "OSV record for CVE-2023-47248 (PyArrow IPC/Parquet deserialization arbitrary code execution)",
+      "type": "advisory-aggregate",
+      "url": "https://api.osv.dev/v1/vulns/CVE-2023-47248",
+      "pin": "OSV schema 1.9.0 record; CVE published 2023-11-09; record modified 2026-08-27; aliases GHSA-5wvp-7f3h-6wmm, PYSEC-2023-238",
+      "locator": ".details (affected 0.14.0 to 14.0.0, fixed by upgrade to 14.0.1, pyarrow-hotfix for older); .affected[0].ranges[0].events (introduced a591d76..., fixed f14170976372436ec1d03a724d8d3f3925484ecf)",
+      "capture": {"capture_id": "30499752f7eb405b8f94739f63499332", "capture_sha256": "3ff000fc2fa8eda419efbe1eed248777b21fc8d4dbe4070086264709c9d58abb", "captured_utc": "2026-10-05T21:36:52Z", "complete_body": true},
+      "applicability": "Primary evidence for the PyArrow issue/fix chain; sets the pyarrow>=14.0.1 dependency floor for any project path that reads untrusted Parquet/IPC/Feather."
+    },
+    {
+      "id": "S02",
+      "title": "apache/arrow fix commit f141709 (GH-38607: [Python] Disable PyExtensionType autoload, PR #38608)",
+      "type": "commit",
+      "url": "https://api.github.com/repos/apache/arrow/commits/f14170976372436ec1d03a724d8d3f3925484ecf",
+      "pin": "commit f14170976372436ec1d03a724d8d3f3925484ecf, authored 2023-11-06 (Antoine Pitrou), signed off by Raúl Cumplido; parent 5a37e741",
+      "locator": ".commit.message; .stats (622 changes: 377 additions / 245 deletions); .files[] includes python/pyarrow/tests/test_extension_type.py (+220/-93, new tests test_ipc_unregistered / test_ipc_registered, validate(full=True) added to parquet reads) and python/pyarrow/tests/test_cffi.py",
+      "capture": {"capture_id": "9596c7db83ea4120a28fc2c0382bca8d", "capture_sha256": "9fac1c63ba297e6e83e62b1053275329a9e154f52cf6b1d9b4039743a6113708", "captured_utc": "2026-10-05T21:37:55Z", "complete_body": false, "note": "32768-byte window of a 44002-byte JSON response; file list partially observed (docs, test_cffi.py, test_extension_type.py seen)."},
+      "applicability": "Regression-test evidence: the fix commit itself adds/updates tests that assert unregistered extension types deserialize to storage types and that full validation is run after Parquet reads."
+    },
+    {
+      "id": "S03",
+      "title": "nbformat v4 JSON schema (nbformat repo, branch main at capture)",
+      "type": "spec-source",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.schema.json",
+      "pin": "branch main @ 2026-10-05 (unpinned commit; identity = capture sha256). Schema self-describes as 'Jupyter Notebook v4.5 JSON schema'; nbformat_minor minimum 5",
+      "locator": "definitions.code_cell.required = [id, cell_type, metadata, source, outputs, execution_count]; execution_count description: 'The code cell's prompt number. Will be null if the cell has not been run.'; output oneOf execute_result|display_data|stream|error; metadata.kernelspec required keys name/display_name. No field records kernel session identity or kernel liveness.",
+      "capture": {"capture_id": "491cd67cf3ba4d67a3fc93008bea8f5b", "capture_sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a", "captured_utc": "2026-10-05T21:37:19Z", "complete_body": true},
+      "applicability": "Mechanism source for distinguishing displayed cell order, execution bookkeeping, and output association; the schema's absence of kernel-state fields is the documented gap our output-status model fills."
+    },
+    {
+      "id": "S04",
+      "title": "JEP 62 — Cell ID Addition to Notebook Format (status: Implemented, 2020-09-25)",
+      "type": "spec-source",
+      "url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/cell-id.md",
+      "pin": "branch master @ 2026-10-05; JEP 62, dated 2020-09-25",
+      "locator": "'The id field in cells would always be required for any future nbformat versions (4.5+)'; motivation includes 'comparing a cell's output across multiple runs'; paste/copy collision rules; older formats auto-updated to 4.5.",
+      "capture": {"capture_id": "0557df6baa094be99f1de9fb076cfa49", "capture_sha256": "7f52a9c224fd11509db187187f6e1bd760a329ba836a3b40945b47bcde463992", "captured_utc": "2026-10-05T21:37:21Z", "complete_body": true},
+      "applicability": "Cell identity is the join key between saved outputs, execution events, and provenance records; paste collision rules inform our invalidation semantics."
+    },
+    {
+      "id": "S05",
+      "title": "DVC command reference: dvc status (docs source markdown)",
+      "type": "docs-source",
+      "url": "https://raw.githubusercontent.com/iterative/dvc.org/main/content/docs/command-reference/status.md",
+      "pin": "branch main @ 2026-10-05 (unpinned commit; identity = capture sha256)",
+      "locator": "Local workspace states 'changed checksum' / 'always changed' / 'changed deps' / 'changed outs' with sub-states new|modified|deleted|not in cache; '--with-deps' example: editing code/featurization.py marks downstream stage matrix-train.p 'changed deps: modified: code/featurization.py'; import stages report 'update available' when the source changed; hashes recorded in dvc.lock or .dvc files.",
+      "capture": {"capture_id": "33cd7c69ace549e793f9bc4b4787ba31", "capture_sha256": "b735e7bb52c22af269f05c2ab727df64a63d83173b46dea28a63174e22bf902a", "captured_utc": "2026-10-05T21:37:20Z", "complete_body": true},
+      "applicability": "Independent precedent for content-hash dependency DAGs with explicit staleness reporting; the mechanism our output-status computation borrows (hash deps, diff, report reasons)."
+    },
+    {
+      "id": "S06",
+      "title": "DuckDB docs: Reading Faulty CSV Files (docs source markdown)",
+      "type": "docs-source",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/data/csv/reading_faulty_csv_files.md",
+      "pin": "branch main @ 2026-10-05; rendered page canonical https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files (site 'current' version observed as 1.5 on the rendered overview page)",
+      "locator": "Structural error types: CAST, MISSING COLUMNS, TOO MANY COLUMNS, UNQUOTED VALUE, LINE SIZE OVER MAXIMUM (default 2,097,152 bytes), INVALID ENCODING; ignore_errors option; store_rejects with reject_scans/reject_errors tables (columns include line, line_byte_position, column_name, error_type, csv_line, error_message); documented pitfall: 'the CSV Parser is affected by the projection pushdown optimization' so selecting only the valid column makes a CAST error disappear.",
+      "capture": {"capture_id": "3bfee7c3747346afb3a5b157f8254c9a", "capture_sha256": "12897abe4612269153224a487dd74a46c1143b3be1824132a7ee00e1838778ad", "captured_utc": "2026-10-05T21:38:20Z", "complete_body": true},
+      "applicability": "Mechanism for quarantine-not-delete error handling, and a documented pitfall (projection-dependent error visibility) that motivates running contract validation over all declared columns."
+    },
+    {
+      "id": "S07",
+      "title": "DuckDB docs: Samples (docs source markdown)",
+      "type": "docs-source",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/sql/samples.md",
+      "pin": "branch main @ 2026-10-05",
+      "locator": "'Samples are probabilistic, that is to say, samples can be different between runs unless the seed is specifically specified. Specifying the seed only guarantees that the sample is the same if multi-threading is not enabled (i.e., SET threads = 1).'; reservoir sampling gives exact row counts and is 'only recommended for small sample sizes'.",
+      "capture": {"capture_id": "6a812b7dae114807b956b9e03d629396", "capture_sha256": "387a24f9948338ba8287bcaeb8bfe23750326af3febc83c9dfbfacbd2cf2c5e5", "captured_utc": "2026-10-05T21:38:21Z", "complete_body": true},
+      "applicability": "Preview sampling design: seeded reservoir samples are repeatable under stated conditions but never constitute full-dataset properties."
+    },
+    {
+      "id": "S08",
+      "title": "DuckDB docs: Concurrency (docs source markdown)",
+      "type": "docs-source",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/connect/concurrency.md",
+      "pin": "branch main @ 2026-10-05; page references DuckDB v1.5.2 (Quack remote protocol 'in beta stage as of DuckDB v1.5.2')",
+      "locator": "'Read-write mode: one process can both read and write'; 'Read-only mode: multiple processes can read from the database, but no processes can write'; 'DuckDB handles concurrent database access requests using file locks. Exercise extra caution when accessing a DuckDB database file in a shared directory'.",
+      "capture": {"capture_id": "5da14e1b1e154f14af1faa4b06f28d7f", "capture_sha256": "f76d0f41136ee004fd818888ae226a09300753330a9d67b7752db3cde0338e0f", "captured_utc": "2026-10-05T21:38:21Z", "complete_body": true},
+      "applicability": "Concurrency/locking model: project-level single-writer policy; the SQL colleague opens project data read-only or on a copy."
+    },
+    {
+      "id": "S09",
+      "title": "DuckDB docs: Combining Schemas (docs source markdown)",
+      "type": "docs-source",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/data/multiple_files/combining_schemas.md",
+      "pin": "branch main @ 2026-10-05",
+      "locator": "Default unifies by column position from the first file; union_by_name=true unifies by name and fills missing columns with NULL; note: 'Using the union_by_name option increases memory consumption.'",
+      "capture": {"capture_id": "f3793ca9a9ea4f34808dda9fe0d2da4e", "capture_sha256": "943f82b197a2562dd20071ba669d8c8ca3e0550ca63b2033f5f7087dc8227457", "captured_utc": "2026-10-05T21:38:21Z", "complete_body": true},
+      "applicability": "Schema-evolution mechanism for datasets stored as multiple files whose schema drifts over time."
+    },
+    {
+      "id": "S10",
+      "title": "DuckDB docs: Out-of-Memory Issues (docs source markdown)",
+      "type": "docs-source",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/guides/performance/oom.md",
+      "pin": "branch main @ 2026-10-05",
+      "locator": "'Setting the memory limit lower than the default 80% can help prevent out of memory errors... because some of DuckDB's operations circumvent the database's buffer manager and thus they can reserve more memory than allowed by the memory limit'; guidance: SET threads lower, SET memory_limit to 50-60% of system memory, SET preserve_insertion_order = false for large reads/writes.",
+      "capture": {"capture_id": "3eb52c2d04f348fba9a0429344b42971", "capture_sha256": "ca39ab3ff1221b096e8022ed7bc8baedf3d3f33759e81515b6d03e731ae9dd48", "captured_utc": "2026-10-05T21:39:54Z", "complete_body": true},
+      "applicability": "16 GB workstation envelope configuration and an explicit documented caveat that the memory limit is not a hard guarantee."
+    },
+    {
+      "id": "S11",
+      "title": "DuckDB docs: Limits (docs source markdown)",
+      "type": "docs-source",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/operations_manual/limits.md",
+      "pin": "branch main @ 2026-10-05",
+      "locator": "'Memory use | 80% of RAM | memory_limit | Note: This limit only applies to the buffer manager.'; 'Temporary directory size | unlimited | max_temp_directory_size'; 'DuckDB doesn't have a practical limit for the size of a single DuckDB database file... 15 TB+... checkpointing can be slower.'",
+      "capture": {"capture_id": "4985ee0331754bc29480fa92f00773cc", "capture_sha256": "9b61d5d096c5859a83aae751ebb796ab63611e52fa52deb388e04392c87b4d92", "captured_utc": "2026-10-05T21:40:48Z", "complete_body": true},
+      "applicability": "Bound declarations for large inputs: out-of-core temp space is available and unbounded by default; the memory cap is explicitly not a total-process guarantee."
+    },
+    {
+      "id": "S12",
+      "title": "PEP 723 — Inline script metadata (Status: Final)",
+      "type": "spec",
+      "url": "https://peps.python.org/pep-0723/",
+      "pin": "Status Final (resolution 08-Jan-2024); created 04-Aug-2023; page notes canonical spec now maintained on the PyPA specs page",
+      "locator": "Header field-list (Status: Final); '# /// script' block with dependencies (PEP 508) and requires-python (PEP 440); 'Script runners MUST error if the specified dependencies cannot be provided.'",
+      "capture": {"capture_id": "337fedb95c2543a0bce41abf551e92a7", "capture_sha256": "1bb79e5880add2424221e259128a0a8ceeb8f047a159d8a03d8a26b823f22c78", "captured_utc": "2026-10-05T21:37:00Z", "complete_body": false, "note": "32768-byte window of 73655-byte page; header and specification sections observed."},
+      "applicability": "Standard for declaring per-transform dependencies inline in transforms/*.py."
+    },
+    {
+      "id": "S13",
+      "title": "PEP 751 — A file format to record Python dependencies for installation reproducibility (Status: Final)",
+      "type": "spec",
+      "url": "https://peps.python.org/pep-0751/",
+      "pin": "Status Final (resolution 31-Mar-2025); created 24-Jul-2024; replaces PEP 665; canonical spec on PyPA specs page (pylock.toml)",
+      "locator": "Header field-list (Status: Final); file name 'pylock.toml' or ^pylock\\.[^.]+\\.toml$; 'Currently, no standard exists to create an immutable record, such as a lock file, which specifies what direct and indirect dependencies should be installed into a virtual environment.'; installers consume without resolution.",
+      "capture": {"capture_id": "07ec3fb4c23a4acba7d0f9718015611b", "capture_sha256": "a73937a1e942c22f3a4c623dd59d3a7008b7f85f1bbf293c50a966e7a1257ce0", "captured_utc": "2026-10-05T21:37:56Z", "complete_body": false, "note": "32768-byte window of 162130-byte page; header, motivation, and file-name specification observed."},
+      "applicability": "Candidate environment-lock format for env/pylock.toml; adoption by specific installers is not verified here (see leads L3)."
+    },
+    {
+      "id": "S14",
+      "title": "Frictionless Table Schema v1 (spec page)",
+      "type": "spec",
+      "url": "https://specs.frictionlessdata.io/table-schema/",
+      "pin": "Version 1; created 12 November 2012, updated 5 October 2021 (per page metadata); JSON Schema linked at /schemas/table-schema.json",
+      "locator": "'physical and logical representation' concepts ('constraints should be tested on the logical representation... whereas a property like missingValues applies to the physical representation'); descriptor MUST contain ordered fields array; missingValues, primaryKey, foreignKeys; field types string|number|integer|... with formats.",
+      "capture": {"capture_id": "ab76de31db9043c787eb763690b15283", "capture_sha256": "1e8e3ce45ed677ff7a50674f0ea3bc8f7c3ea962a3f44d8b04490e60684f40e4", "captured_utc": "2026-10-05T21:39:54Z", "complete_body": false, "note": "32768-byte window of 70938-byte page; front matter, concepts, descriptor, and field descriptor sections observed."},
+      "applicability": "Existing interchange vocabulary for the dataset data contract (declared types, missing-value tokens, constraints); adopted selectively, not wholesale."
+    },
+    {
+      "id": "S15",
+      "title": "Jupyter Server documentation: Security in the Jupyter Server",
+      "type": "docs",
+      "url": "https://jupyter-server.readthedocs.io/en/latest/operators/security.html",
+      "pin": "readthedocs 'latest' at capture; page metadata docsearch:version 2.22; last-modified 2026-09-15",
+      "locator": "'Since access to the Jupyter Server means access to running arbitrary code, it is important to restrict access to the server.'",
+      "capture": {"capture_id": "7ae13d4d3cc348cb85dc665d41276bf9", "capture_sha256": "b6f2c13e1d7c752450c2027092fa0f8e70e4dcc0115d836686b9035475f516e0", "captured_utc": "2026-10-05T21:39:34Z", "complete_body": false, "note": "32768-byte window of 79569-byte page; the quoted security statement is in the observed window."},
+      "applicability": "Grounds the execution-boundary stance: the notebook server itself is an arbitrary-code executor, so isolation must come from the OS layer, not from the notebook tooling."
+    },
+    {
+      "id": "S16",
+      "title": "JupyterLab user documentation: Notebooks (docs source markdown)",
+      "type": "docs-source",
+      "url": "https://raw.githubusercontent.com/jupyterlab/jupyterlab/main/docs/source/user/notebook.md",
+      "pin": "branch main @ 2026-10-05",
+      "locator": "Trust section: 'JavaScript and HTML in notebooks created on other machines are not trusted, which results in sanitization of HTML and interactive outputs not being displayed until the notebook is explicitly trusted.'; 'Paste code cells without output' setting (pasting carries outputs by default otherwise); Cell ID exposed in Property Inspector.",
+      "capture": {"capture_id": "b140ebd4b78c476c8db68ed881a29d05", "capture_sha256": "3ff927267c8df0686912235e4eb3f4871dcad7cde482d9ce222117b9e277dccf", "captured_utc": "2026-10-05T21:39:54Z", "complete_body": true},
+      "applicability": "Evidence that outputs travel with documents independently of execution truth (paste behavior, trust gating), reinforcing that a saved output is not automatically reproducible."
+    },
+    {
+      "id": "S17",
+      "title": "SQLite documentation: Write-Ahead Logging",
+      "type": "docs",
+      "url": "https://www.sqlite.org/wal.html",
+      "pin": "Page last-modified 2026-09-11 (HTTP header); WAL available since SQLite 3.7.0 (2010-07-21) per page",
+      "locator": "Section 2 'How WAL Works': 'The original content is preserved in the database file and the changes are appended into a separate WAL file. A COMMIT occurs when a special record indicating a commit is appended to the WAL.'; Section 4: WAL file 'might be retained on disk after all connections to the database have been closed' if the last process exits uncleanly, and 'should be kept with the database if the database is copied or moved'; Section 2.3: synchronous=NORMAL omits per-commit sync (durability tradeoff).",
+      "capture": {"capture_id": "12d8828109f341b49d3637348d461903", "capture_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e", "captured_utc": "2026-10-05T21:39:02Z", "complete_body": false, "note": "32768-byte window of 42143-byte page; sections 1-8 observed."},
+      "applicability": "Precedent and mechanism for the project event store: crash-safe append-only log, readers-don't-block-writers, and copy-the-WAL-too rule for bundles."
+    },
+    {
+      "id": "S18",
+      "title": "nbclient source: nbclient/client.py (branch main at capture)",
+      "type": "source",
+      "url": "https://raw.githubusercontent.com/jupyter/nbclient/main/nbclient/client.py",
+      "pin": "branch main @ 2026-10-05 (unpinned commit; identity = capture sha256)",
+      "locator": "allow_errors trait docstring: 'If False (default), when a cell raises an error the execution is stopped and a CellExecutionError is raised... Output from exceptions is included in the cell output in both cases.'; force_raise_errors overrides 'raises-exception' cell tags; skip_cells_with_tag default 'skip-execution'; record_timing stores per-cell execution timestamps in cell metadata.",
+      "capture": {"capture_id": "d22e06c52f8f41ff8101feb4bda7d8b2", "capture_sha256": "5a61fded74a94fd0851c8a85d55d12a9e9fb44be34324a44583efe48e874da8a", "captured_utc": "2026-10-05T21:39:55Z", "complete_body": false, "note": "32768-byte window of 49883-byte file; trait definitions and async_execute observed."},
+      "applicability": "Clean-replay executor semantics: default stop-on-first-error with error outputs recorded; skip-execution tags; timing metadata for provenance."
+    }
+  ]
+}

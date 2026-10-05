@@ -1,0 +1,22 @@
+{
+  "schema": "er9.evaluation-budget-closure.v1",
+  "pair_id": "D-V15-A",
+  "closed_utc": "2026-10-05T22:50:40.573654Z",
+  "original_first_output_read_utc": "2026-10-05T22:21:11.537980Z",
+  "hard_max_seconds": 1800,
+  "elapsed_original_clock_seconds": 1769.035593866,
+  "clock_reset": false,
+  "closure_reason": "Substantive selected source assessment and additive source catalog check completed; no positive candidate witness/history/economic receipts delivered within remaining reserve. Close as partial HOLD with explicit unassessed remainder; do not certify or invent evidence.",
+  "original_judgments_unchanged": true,
+  "semantic_decision_current_final": "HOLD",
+  "partial_source_status": "SUPPORTED_USEFUL_DISCOVERY_WITH_UNASSESSED_REMAINDER",
+  "phase2_completed": false,
+  "unassessed": [
+    "Actual W01 execution and failed scratch attempt",
+    "Actual discovery/method uptake receipt history",
+    "Candidate costs/usage receipts and finalcatalog delivery",
+    "Complete actual scope and broader integration/performance/recovery"
+  ],
+  "candidate_failure_inferred_from_budget": false,
+  "followup_rule": "Any later semantic/history reassessment needs an explicitly separate bounded additive continuation; original snapshots and consumed clocks stay preserved."
+}

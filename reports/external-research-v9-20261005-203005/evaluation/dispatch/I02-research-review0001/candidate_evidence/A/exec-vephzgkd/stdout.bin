@@ -1,0 +1,122 @@
+{
+ "check": "W3 invalidation state machine",
+ "rules": {
+  "cell_edit": "cell+descendants stale",
+  "dataset_identity_change": "cells reading it (transitively) stale",
+  "cell_error": "cell failed, descendants unverified",
+  "kernel_restart": "all outputs unverified (never silently current)",
+  "env_binding_change": "all outputs unverified"
+ },
+ "event_log": [
+  {
+   "event": "run A (ok)",
+   "statuses": {
+    "A": "current",
+    "B": "stale",
+    "C": "stale"
+   }
+  },
+  {
+   "event": "run B (ok)",
+   "statuses": {
+    "A": "current",
+    "B": "current",
+    "C": "stale"
+   }
+  },
+  {
+   "event": "run C (ok)",
+   "statuses": {
+    "A": "current",
+    "B": "current",
+    "C": "current"
+   }
+  },
+  {
+   "event": "edit A",
+   "statuses": {
+    "A": "stale",
+    "B": "stale",
+    "C": "stale"
+   }
+  },
+  {
+   "event": "run A (ok)",
+   "statuses": {
+    "A": "current",
+    "B": "stale",
+    "C": "stale"
+   }
+  },
+  {
+   "event": "run B (ok)",
+   "statuses": {
+    "A": "current",
+    "B": "current",
+    "C": "stale"
+   }
+  },
+  {
+   "event": "run C (ok)",
+   "statuses": {
+    "A": "current",
+    "B": "current",
+    "C": "current"
+   }
+  },
+  {
+   "event": "dataset d1 changed",
+   "statuses": {
+    "A": "stale",
+    "B": "stale",
+    "C": "stale"
+   }
+  },
+  {
+   "event": "run A (ok)",
+   "statuses": {
+    "A": "current",
+    "B": "stale",
+    "C": "stale"
+   }
+  },
+  {
+   "event": "run B (error)",
+   "statuses": {
+    "A": "current",
+    "B": "failed",
+    "C": "unverified"
+   }
+  },
+  {
+   "event": "run B (ok)",
+   "statuses": {
+    "A": "current",
+    "B": "current",
+    "C": "stale"
+   }
+  },
+  {
+   "event": "run C (ok)",
+   "statuses": {
+    "A": "current",
+    "B": "current",
+    "C": "current"
+   }
+  },
+  {
+   "event": "kernel restart",
+   "statuses": {
+    "A": "unverified",
+    "B": "unverified",
+    "C": "unverified"
+   }
+  }
+ ],
+ "final": {
+  "A": "unverified",
+  "B": "unverified",
+  "C": "unverified"
+ }
+}
+W3 PASS

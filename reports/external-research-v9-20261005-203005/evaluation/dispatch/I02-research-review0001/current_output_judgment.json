@@ -1,0 +1,777 @@
+{
+  "protocol_version": "ER9-independent-output-v1",
+  "evaluation_id": "ER9-EVAL-I02-RESEARCH-001",
+  "phase": "1_RESEARCH_CURRENT_OUTPUT_SAVED_BEFORE_HISTORY_ECONOMICS",
+  "saved_utc": "2026-10-05T22:47:16.765454Z",
+  "started_utc": "2026-10-05T22:30:13.491488Z",
+  "dispatch_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I02-research-packet0001/dispatch.json",
+    "sha256": "e3be7ac228eef9f72f91f0a844ecc18770dae5bc4f67a1f5e9da9315018b89cf"
+  },
+  "assessment_mode": "matched_stage_screen_fail",
+  "scope": "two_terminal_research_stage_outputs",
+  "whole_pipeline_quality": "UNASSESSED",
+  "designated_final_present": false,
+  "requested_evaluator": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_evaluator": null,
+  "blinding": {
+    "method_family_context_known_before_assessment": true,
+    "alias_map_not_opened": true,
+    "arm_mapping_unknown": true,
+    "economics_and_later_history_not_opened": true,
+    "hints": [
+      "Research-stage headers/source selections differ; exact bytes preserved.",
+      "Witness catalogs include source/execution times as evidence; no economic totals opened."
+    ]
+  },
+  "anonymous_output_results": [
+    {
+      "alias": "A",
+      "assessed_stage": "research",
+      "decision": "FAIL",
+      "stage_quality_status": "FAIL_SCREEN",
+      "assessment_state": "partial",
+      "designated_final": null,
+      "full_pipeline_quality": "UNASSESSED",
+      "full_case_PASS_eligible": false,
+      "obligations": [
+        {
+          "obligation_id": "B01",
+          "text": "Minimum create/import/preview/author/interactive-run/clean-replay/save/reopen/export workflow and bounded language support",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "reason": "Topic inspected in research proposal; selected sources/checks supported, full obligation not certified."
+        },
+        {
+          "obligation_id": "B02",
+          "text": "Schema/type/null/Unicode/timestamp/row-order contract, conversion and malformed-input behavior; originals retained",
+          "assessment_state": "partial",
+          "finding": "contradicted",
+          "reason": "Current stage has decisive defect(s); remaining consequential scope unassessed."
+        },
+        {
+          "obligation_id": "B03",
+          "text": "Separate cell order, execution order, kernel state and saved output provenance; guarantees and limits of clean replay",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "reason": "Topic inspected in research proposal; selected sources/checks supported, full obligation not certified."
+        },
+        {
+          "obligation_id": "B04",
+          "text": "Defined invalidation/current/stale/failed/unverified states after code, dataset or environment changes, restart and interrupted execution",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "reason": "Topic inspected in research proposal; selected sources/checks supported, full obligation not certified."
+        },
+        {
+          "obligation_id": "B05",
+          "text": "Project/source/environment/execution/output identity and portable exchange/reproducibility manifest",
+          "assessment_state": "partial",
+          "finding": "contradicted",
+          "reason": "Current stage has decisive defect(s); remaining consequential scope unassessed."
+        },
+        {
+          "obligation_id": "B06",
+          "text": "Bounded/streaming large-data path, preview limits, caching/ordering/concurrency/cancel, and interrupted-save recovery without unsupported performance claims",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "reason": "Topic inspected in research proposal; selected sources/checks supported, full obligation not certified."
+        },
+        {
+          "obligation_id": "B07",
+          "text": "Untrusted code execution permissions/isolation/resource boundary and usable error/status/dependency/provenance presentation",
+          "assessment_state": "partial",
+          "finding": "contradicted",
+          "reason": "Current stage has decisive defect(s); remaining consequential scope unassessed."
+        },
+        {
+          "obligation_id": "B08",
+          "text": "Candidate-discovered >=2 independently useful implementation precedents with source/pins and concrete plan implications",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "reason": "Topic inspected in research proposal; selected sources/checks supported, full obligation not certified."
+        },
+        {
+          "obligation_id": "B09",
+          "text": "Candidate-discovered real issue/failure -> associated fix -> regression test chain with applicability and causal limits",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "reason": "Topic inspected in research proposal; selected sources/checks supported, full obligation not certified."
+        },
+        {
+          "obligation_id": "B10",
+          "text": "At least one useful opportunity and one plausible alternative, with coherent design/critical dependencies and optional adoption distinguished from requirements",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "reason": "Topic inspected in research proposal; selected sources/checks supported, full obligation not certified."
+        },
+        {
+          "obligation_id": "B11",
+          "text": "Consequential replay/data/invalidation witnesses discriminate behavior; executed/proposed labels and synthetic/full-runtime scope honest",
+          "assessment_state": "partial",
+          "finding": "contradicted",
+          "reason": "Current stage has decisive defect(s); remaining consequential scope unassessed."
+        },
+        {
+          "obligation_id": "B12",
+          "text": "Standalone current final preserves supported findings/conditions, fixes actual errors, cites exact evidence and exposes unresolved leads",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "reason": "Final-form delivery/preservation/repair is missing and not judged from research."
+        }
+      ],
+      "consequential_claims": [
+        {
+          "claim_id": "A-C01",
+          "claim": "Distinct notebook-schema/reactivity/tabular implementation precedents contribute useful mechanisms",
+          "output_locator": "proposal.md:30-63",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [
+            "P-NBFORMAT",
+            "P-MARIMO",
+            "P-DUCKDB-CSV"
+          ],
+          "reason": "Schema, reactive-DAG and CSV mechanisms checked; full papermill/dependency independence not exhaustively assessed."
+        },
+        {
+          "claim_id": "A-C02",
+          "claim": "DuckDB12596 is a real null-padding/parallel-path failure with associated fix and regression test",
+          "output_locator": "proposal.md:65-75",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "P-DUCKDB-ISSUE",
+            "P-DUCKDB-PATCH",
+            "P-DUCKDB-TAG-TEST"
+          ],
+          "reason": "Primary issue, patch and v1.1.0 test/code establish the chain; no evaluator/candidate execution of DuckDB claimed."
+        },
+        {
+          "claim_id": "A-C03",
+          "claim": "Fix is present in v1.1.0;1.0.x backports unresolved",
+          "output_locator": "proposal.md:72",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "P-DUCKDB-TAG-TEST",
+            "P-DUCKDB-TAG-CODE"
+          ],
+          "reason": "Tag code and regression test checked directly; release dates alone would be insufficient. Earlier backports remain appropriately unresolved."
+        },
+        {
+          "claim_id": "A-C04",
+          "claim": "nbformat4.5 carries IDs/counts/output types without standardized freshness state",
+          "output_locator": "proposal.md:34",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "P-NBFORMAT"
+          ],
+          "reason": "Standard schema fields checked. Arbitrary metadata extensions do not create universal runtime-liveness semantics."
+        },
+        {
+          "claim_id": "A-C05",
+          "claim": "marimo uses static reactivity and does not track mutations; interrupts cancel queued dependents",
+          "output_locator": "proposal.md:41",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "P-MARIMO"
+          ],
+          "reason": "Selected claims match the independently captured primary document."
+        },
+        {
+          "claim_id": "A-C06",
+          "claim": "Clean replay/input provenance and all invalidation transitions are established by witnesses",
+          "output_locator": "proposal.md:115-141,195",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "source_ids": [
+            "E-A-W3",
+            "E-A-W4"
+          ],
+          "reason": "Synthetic edit/dataset/error/restart examples executed; environment-status transition and interrupt are not actually exercised. No full runtime qualification."
+        },
+        {
+          "claim_id": "A-C07",
+          "claim": "W2 reject ledger records UTF8 byte offsets",
+          "output_locator": "proposal.md:107,194",
+          "assessment_state": "complete",
+          "finding": "contradicted",
+          "source_ids": [
+            "E-A-W2",
+            "E-UTF8"
+          ],
+          "reason": "It increments offsets using len(str); actual rejected line101 reports6158 instead of6292 UTF8 bytes, and line2001 reports126362 instead of129029."
+        },
+        {
+          "claim_id": "A-C08",
+          "claim": "W2 demonstrates bounded chunk processing, retained source and labeled preview",
+          "output_locator": "proposal.md:194",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [
+            "E-A-W2"
+          ],
+          "reason": "Counts/source hash/512-entry working buffer verified; full fixture is in memory and no OS peak/5GB result is established, as catalog admits."
+        },
+        {
+          "claim_id": "A-C09",
+          "claim": "Authoritative provenance remains trustworthy with untrusted kernels allowed to write .labbook",
+          "output_locator": "proposal.md:23-25,88-95,154",
+          "assessment_state": "complete",
+          "finding": "contradicted",
+          "source_ids": [
+            "TASK-PROPOSAL-A"
+          ],
+          "reason": "The writable grant includes events.jsonl/index/outputs. No finer trusted-writer boundary is specified, so the selected authority is forgeable under the stated policy; no running product compromise claimed."
+        },
+        {
+          "claim_id": "A-C10",
+          "claim": "W1 distinguishes display and recorded execution order and handles null counts",
+          "output_locator": "proposal.md:118,193",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "E-A-W1",
+            "P-NBFORMAT"
+          ],
+          "reason": "Successful correction and original failed attempt are receipted. A partial schema-derived example, not a full nbformat validator or clean-runtime replay."
+        },
+        {
+          "claim_id": "A-C11",
+          "claim": "W4 pure transform repeats bytes and sampled RNG calls differ",
+          "output_locator": "proposal.md:139,196",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "E-A-W4"
+          ],
+          "reason": "Observed local results supported; fresh process/kernel determinism remains outside this same-process illustrative example."
+        },
+        {
+          "claim_id": "A-C12",
+          "claim": "Streaming resource target and operator limits are qualified",
+          "output_locator": "proposal.md:161,208",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [
+            "P-DUCKDB-CSV"
+          ],
+          "reason": "5GB target explicitly unverified; precise memory/spill behavior for chosen engine/version remains unassessed."
+        },
+        {
+          "claim_id": "A-C13",
+          "claim": "Python support/EOL and PEP723 details justify environment boundary",
+          "output_locator": "proposal.md:97,170-172",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "source_ids": [],
+          "reason": "No complete independent release-support/PEP review in this failed screen; secondary EOL source not used as ground truth."
+        },
+        {
+          "claim_id": "A-C14",
+          "claim": "marimo issue/PR states and generation-counter applicability are correct",
+          "output_locator": "proposal.md:45,131,214",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "source_ids": [],
+          "reason": "Search capture is a lead; full current issue/implementation/test applicability left unassessed."
+        },
+        {
+          "claim_id": "A-C15",
+          "claim": "Workflow, opportunities and alternatives cover actual brief topics",
+          "output_locator": "proposal.md:174-216",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [],
+          "reason": "All12topics inspected for proposed coverage; no absent final substituted and no full implementation/schema/interoperability certification."
+        },
+        {
+          "claim_id": "A-C16",
+          "claim": "Hash/caching/locking/multi-file recovery makes portable bundles reliable",
+          "output_locator": "proposal.md:95,101,163-166",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "source_ids": [],
+          "reason": "Mechanisms proposed; crash consistency, lock recovery and complete environment identity not fully assessed."
+        },
+        {
+          "claim_id": "A-C17",
+          "claim": "Five candidate executions, including first failure, and proposed validations are labeled honestly",
+          "output_locator": "proposal.md:189-208",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "E-A-ALL"
+          ],
+          "reason": "Exactly5 receipts:4exit0 and1exit1. These are isolated synthetic checks;V1–V7 remain proposed."
+        },
+        {
+          "claim_id": "A-C18",
+          "claim": "Full final delivery and later preservation/repair are complete",
+          "output_locator": "proposal.md:3",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "source_ids": [],
+          "reason": "Assessed artifact is research only; designated final and all later pipeline duties remain UNASSESSED."
+        }
+      ],
+      "defects": [
+        {
+          "defect_id": "I02-A-D01",
+          "alias": "A",
+          "severity": "major",
+          "kind": "error",
+          "obligation_ids": [
+            "B02",
+            "B11"
+          ],
+          "claim_ids": [
+            "A-C07"
+          ],
+          "output_locators": [
+            "proposal.md:107,194",
+            "W2/code.py:byte_off += len(raw)+1"
+          ],
+          "source_ids": [
+            "E-A-W2",
+            "E-UTF8"
+          ],
+          "reason": "Character count is labeled as UTF8 byte position, mislocating actual rejected records in the supplied multilingual fixture.",
+          "screen_decisive": true
+        },
+        {
+          "defect_id": "I02-A-D02",
+          "alias": "A",
+          "severity": "major",
+          "kind": "unsupported_dependency",
+          "obligation_ids": [
+            "B05",
+            "B07"
+          ],
+          "claim_ids": [
+            "A-C09"
+          ],
+          "output_locators": [
+            "proposal.md:88-95,154"
+          ],
+          "source_ids": [
+            "TASK-PROPOSAL-A"
+          ],
+          "reason": "Untrusted code receives write access to authoritative event/index/output paths without a stated trusted-writer separation. The provenance guarantee is unsupported under that permission policy; this is a design inference, not a penetration test.",
+          "screen_decisive": true
+        }
+      ],
+      "candidate_executions": {
+        "confirmed": 5,
+        "exit0": 4,
+        "exit1": 1
+      },
+      "remaining_partial_or_unassessed": [
+        "A-C01",
+        "A-C06",
+        "A-C08",
+        "A-C12",
+        "A-C13",
+        "A-C14",
+        "A-C15",
+        "A-C16",
+        "A-C18"
+      ]
+    },
+    {
+      "alias": "B",
+      "assessed_stage": "research",
+      "decision": "FAIL",
+      "stage_quality_status": "FAIL_SCREEN",
+      "assessment_state": "partial",
+      "designated_final": null,
+      "full_pipeline_quality": "UNASSESSED",
+      "full_case_PASS_eligible": false,
+      "obligations": [
+        {
+          "obligation_id": "B01",
+          "text": "Minimum create/import/preview/author/interactive-run/clean-replay/save/reopen/export workflow and bounded language support",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "reason": "Topic inspected in research proposal; selected sources/checks supported, full obligation not certified."
+        },
+        {
+          "obligation_id": "B02",
+          "text": "Schema/type/null/Unicode/timestamp/row-order contract, conversion and malformed-input behavior; originals retained",
+          "assessment_state": "partial",
+          "finding": "contradicted",
+          "reason": "Current stage has decisive defect(s); remaining consequential scope unassessed."
+        },
+        {
+          "obligation_id": "B03",
+          "text": "Separate cell order, execution order, kernel state and saved output provenance; guarantees and limits of clean replay",
+          "assessment_state": "partial",
+          "finding": "contradicted",
+          "reason": "Current stage has decisive defect(s); remaining consequential scope unassessed."
+        },
+        {
+          "obligation_id": "B04",
+          "text": "Defined invalidation/current/stale/failed/unverified states after code, dataset or environment changes, restart and interrupted execution",
+          "assessment_state": "partial",
+          "finding": "contradicted",
+          "reason": "Current stage has decisive defect(s); remaining consequential scope unassessed."
+        },
+        {
+          "obligation_id": "B05",
+          "text": "Project/source/environment/execution/output identity and portable exchange/reproducibility manifest",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "reason": "Topic inspected in research proposal; selected sources/checks supported, full obligation not certified."
+        },
+        {
+          "obligation_id": "B06",
+          "text": "Bounded/streaming large-data path, preview limits, caching/ordering/concurrency/cancel, and interrupted-save recovery without unsupported performance claims",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "reason": "Topic inspected in research proposal; selected sources/checks supported, full obligation not certified."
+        },
+        {
+          "obligation_id": "B07",
+          "text": "Untrusted code execution permissions/isolation/resource boundary and usable error/status/dependency/provenance presentation",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "reason": "Topic inspected in research proposal; selected sources/checks supported, full obligation not certified."
+        },
+        {
+          "obligation_id": "B08",
+          "text": "Candidate-discovered >=2 independently useful implementation precedents with source/pins and concrete plan implications",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "reason": "Topic inspected in research proposal; selected sources/checks supported, full obligation not certified."
+        },
+        {
+          "obligation_id": "B09",
+          "text": "Candidate-discovered real issue/failure -> associated fix -> regression test chain with applicability and causal limits",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "reason": "Topic inspected in research proposal; selected sources/checks supported, full obligation not certified."
+        },
+        {
+          "obligation_id": "B10",
+          "text": "At least one useful opportunity and one plausible alternative, with coherent design/critical dependencies and optional adoption distinguished from requirements",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "reason": "Topic inspected in research proposal; selected sources/checks supported, full obligation not certified."
+        },
+        {
+          "obligation_id": "B11",
+          "text": "Consequential replay/data/invalidation witnesses discriminate behavior; executed/proposed labels and synthetic/full-runtime scope honest",
+          "assessment_state": "partial",
+          "finding": "contradicted",
+          "reason": "Current stage has decisive defect(s); remaining consequential scope unassessed."
+        },
+        {
+          "obligation_id": "B12",
+          "text": "Standalone current final preserves supported findings/conditions, fixes actual errors, cites exact evidence and exposes unresolved leads",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "reason": "Final-form delivery/preservation/repair is missing and not judged from research."
+        }
+      ],
+      "consequential_claims": [
+        {
+          "claim_id": "B-C01",
+          "claim": "Jupyter/DVC/DuckDB supply independently useful mechanisms",
+          "output_locator": "proposal.md:62-70",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [
+            "P-NBFORMAT",
+            "P-DVC",
+            "P-DUCKDB-CSV"
+          ],
+          "reason": "Selected schema, hash-status and CSV/quarantine mechanisms verified; all integration claims not certified."
+        },
+        {
+          "claim_id": "B-C02",
+          "claim": "PyArrow CVE failure, fix, tests and14.0.1 applicability are real",
+          "output_locator": "proposal.md:74-81",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "P-ARROW-RELEASE",
+            "P-ARROW-PATCH"
+          ],
+          "reason": "Apache primary release notice and pinned fix/test diff support the chain and PyArrow-specific scope; vulnerability not reproduced."
+        },
+        {
+          "claim_id": "B-C03",
+          "claim": "The selected nbformat/nbclient document and default error semantics are as described",
+          "output_locator": "proposal.md:39-43",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "P-NBFORMAT",
+            "P-NBCLIENT"
+          ],
+          "reason": "Selected standard fields and default stop/error-output behavior checked, including option/tag caveats."
+        },
+        {
+          "claim_id": "B-C04",
+          "claim": "Every visible output in clean replay is newly produced in a fresh kernel while skip tags are honored",
+          "output_locator": "proposal.md:149-151",
+          "assessment_state": "complete",
+          "finding": "contradicted",
+          "source_ids": [
+            "P-NBCLIENT",
+            "E-SKIP"
+          ],
+          "reason": "The pinned skip-tag branch returns the cell before clearing outputs; preexisting outputs survive without fresh execution. Guarantee needs explicit clearing/relabeling/exclusion."
+        },
+        {
+          "claim_id": "B-C05",
+          "claim": "DVC changed-dependency traversal is a useful staleness precedent",
+          "output_locator": "proposal.md:45",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "P-DVC"
+          ],
+          "reason": "Primary example supports dependency-change reporting; not proof of automatic Python-cell dependency discovery."
+        },
+        {
+          "claim_id": "B-C06",
+          "claim": "DuckDB memory_limit is only a buffer-manager limit and target must be measured",
+          "output_locator": "proposal.md:52,184,237",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "P-DUCKDB-MEMORY"
+          ],
+          "reason": "Primary current document matches capture hash and explicit caveat; no5GB/RSS performance proof assigned."
+        },
+        {
+          "claim_id": "B-C07",
+          "claim": "W2 keeps nulls distinct from missing optional fields in normalized data",
+          "output_locator": "proposal.md:119,211",
+          "assessment_state": "complete",
+          "finding": "contradicted",
+          "source_ids": [
+            "E-B-W2",
+            "E-NULL-PRESENCE"
+          ],
+          "reason": "Both missing optional field and explicit null are materialized as None, with no presence state in the normalized row. Original-source preservation is retained but does not demonstrate the claimed normalized distinction."
+        },
+        {
+          "claim_id": "B-C08",
+          "claim": "W2 parses/quarantines the actual malformed fixture and preserves Unicode/source strings",
+          "output_locator": "proposal.md:211",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "E-B-W2"
+          ],
+          "reason": "3accepted/4quarantined actual results supported; boundaries for64-bit range and naive timestamp offsets not tested/certified."
+        },
+        {
+          "claim_id": "B-C09",
+          "claim": "W3 covers all proposed invalidation effects and current semantics",
+          "output_locator": "proposal.md:131-145,213",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "source_ids": [
+            "E-B-W3"
+          ],
+          "reason": "Actual edit/dataset/restart/failure scenario observed; environment-change and interrupted-run transitions not exercised. Own edited-cell output deliberately stays current, which is a disclosed choice, not an evaluator-imposed alternate rule."
+        },
+        {
+          "claim_id": "B-C10",
+          "claim": "W1 correctly illustrates sampling limits and a0.98 miss probability",
+          "output_locator": "proposal.md:121,210",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "E-B-W1"
+          ],
+          "reason": "Observed rare-category miss and repeat-seed match are valid; analytic probability independently justified. No DuckDB sampling/runtime guarantee inferred."
+        },
+        {
+          "claim_id": "B-C11",
+          "claim": "W4 demonstrates stable versus explicit tie-break ordering",
+          "output_locator": "proposal.md:117,214",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "E-B-W4"
+          ],
+          "reason": "Source-preserving permutation with tied keys produces different key-only order and equal key+RID order; no engine ordering proof inferred."
+        },
+        {
+          "claim_id": "B-C12",
+          "claim": "Trusted app-only event writer keeps kernel from editing its own log",
+          "output_locator": "proposal.md:109,168",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [
+            "TASK-PROPOSAL-B"
+          ],
+          "reason": "Boundary is explicitly stronger than a shared writable authority directory. Actual OS enforcement and completeness of input observation remain unassessed."
+        },
+        {
+          "claim_id": "B-C13",
+          "claim": "Locking/WAL/copy/recovery and hash-keyed caching are sufficient",
+          "output_locator": "proposal.md:179-188",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "source_ids": [],
+          "reason": "Proposed mechanisms present; live-copy consistency, crash behavior, cache completeness and multi-process details not exhaustively assessed."
+        },
+        {
+          "claim_id": "B-C14",
+          "claim": "PEP723751/Frictionless/source versions support all chosen dependencies",
+          "output_locator": "proposal.md:54,163,237",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "source_ids": [],
+          "reason": "Stage preserves installer-adoption uncertainty; full format/installer/engine-version applicability audit not performed."
+        },
+        {
+          "claim_id": "B-C15",
+          "claim": "Workflow, useful opportunities and bounded alternatives cover brief topics",
+          "output_locator": "proposal.md:192-239",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [],
+          "reason": "All12topics inspected for proposal presence; Polars feasibility/integration and complete support scope unassessed."
+        },
+        {
+          "claim_id": "B-C16",
+          "claim": "Five candidate executions including first failed script and proposed U1–U5 labels are honest",
+          "output_locator": "proposal.md:208-220",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "E-B-ALL"
+          ],
+          "reason": "5actual receipts:4exit0 and1exit1. Failed attempt not hidden; synthetic/full-runtime boundaries explicit."
+        },
+        {
+          "claim_id": "B-C17",
+          "claim": "Full final and later pipeline duties are complete",
+          "output_locator": "proposal.md:3",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "source_ids": [],
+          "reason": "Research-stage artifact only; final delivery, critic/revision uptake and whole-pipeline quality remain UNASSESSED."
+        }
+      ],
+      "defects": [
+        {
+          "defect_id": "I02-B-D01",
+          "alias": "B",
+          "severity": "major",
+          "kind": "error",
+          "obligation_ids": [
+            "B03",
+            "B04"
+          ],
+          "claim_ids": [
+            "B-C04"
+          ],
+          "output_locators": [
+            "proposal.md:149-151",
+            "nbclient/client.py:968-992"
+          ],
+          "source_ids": [
+            "P-NBCLIENT",
+            "E-SKIP"
+          ],
+          "reason": "Honoring skip tags retains saved output in the selected executor, contradicting the blanket fresh-output guarantee unless the product separately clears or labels those outputs.",
+          "screen_decisive": true
+        },
+        {
+          "defect_id": "I02-B-D02",
+          "alias": "B",
+          "severity": "major",
+          "kind": "error",
+          "obligation_ids": [
+            "B02",
+            "B11"
+          ],
+          "claim_ids": [
+            "B-C07"
+          ],
+          "output_locators": [
+            "proposal.md:119,211",
+            "W2/code.py:missing optional field / explicit null branches"
+          ],
+          "source_ids": [
+            "E-B-W2",
+            "E-NULL-PRESENCE"
+          ],
+          "reason": "The executed normalized-row model collapses missing and explicit null; it cannot substantiate their asserted preservation without additional presence/provenance semantics.",
+          "screen_decisive": true
+        }
+      ],
+      "candidate_executions": {
+        "confirmed": 5,
+        "exit0": 4,
+        "exit1": 1
+      },
+      "remaining_partial_or_unassessed": [
+        "B-C01",
+        "B-C09",
+        "B-C12",
+        "B-C13",
+        "B-C14",
+        "B-C15",
+        "B-C17"
+      ]
+    }
+  ],
+  "shared_checks": [
+    {
+      "check_id": "B-P1",
+      "A": "Useful schema/reactivity/engine precedents; realDuckDB issue/fix/test and pinnedtag source verified",
+      "B": "Useful schema/DVC/engine precedents; realPyArrow primary advisory/fix/test verified",
+      "assessment_state": "partial"
+    },
+    {
+      "check_id": "B-P2",
+      "A": "Data/source semantics checked; UTF8 defect and authority-boundary gap; other claims unresolved",
+      "B": "Replay/source semantics checked; skip guarantee and null-presence defect; other claims unresolved",
+      "assessment_state": "partial"
+    },
+    {
+      "check_id": "B-P3",
+      "A": "All5actual executions confirmed, firstfail preserved;4successes source/scopes examined, UTF8 error; env/interrupt coverage incomplete",
+      "B": "All5actual executions confirmed, firstfail preserved;4successes examined, normalizedpresence error; env/interrupt coverage incomplete",
+      "assessment_state": "partial"
+    },
+    {
+      "check_id": "B-P4",
+      "A": "Current researchsource fidelity/errors checked; laterfinal preservation/repairUNASSESSED",
+      "B": "Current researchsource fidelity/errors checked; laterfinal preservation/repairUNASSESSED",
+      "assessment_state": "partial"
+    },
+    {
+      "check_id": "B-P5",
+      "A": "All12originaltopics inspected for researchproposal coverage; final contract not substituted",
+      "B": "All12originaltopics inspected for researchproposal coverage; final contract not substituted",
+      "assessment_state": "partial"
+    }
+  ],
+  "paired_inference": "Different concrete defects and supported findings; twoFAIL_SCREEN labels do not establish equivalent quality. Later-stage method effect and validpipeline comparison are not assessed.",
+  "candidate_vs_evaluator": "10actual candidate executions established by exact code/input/streams/facts;2failedattempts preserved. UTF8 arithmetic and source-derived dictionary/skip-path counterexamples are evaluator-only, not candidate execution. Proposed validations remain UNEXECUTED.",
+  "source_retrieval_limits": [
+    "Several directGitHub API attempts received403rate limit; no repeated API retries or credentials used. Public primary pages/raw pins and preserved metadata used instead.",
+    "37candidate capturemetadata records preserved;3unresolved references explicitly retained.",
+    "Metadata/hash receipts establish capture identity, not comprehension."
+  ],
+  "limitations": [
+    "Decisive partial-stage screens, not all-claims certification.",
+    "Full final, later criticism/repair/preservation and wholepipeline duties remainUNASSESSED.",
+    "No candidatefeedback, retest, nativecandidate/modelGoal or curatedanswers supplied to case owner."
+  ]
+}

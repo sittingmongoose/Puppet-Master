@@ -1,0 +1,14 @@
+{
+  "scope": "independent evaluator source requests",
+  "attempts_per_endpoint": 1,
+  "status": 403,
+  "kind": "rate_limit",
+  "endpoints": [
+    "https://api.github.com/repos/duckdb/duckdb/issues/12596",
+    "https://api.github.com/repos/duckdb/duckdb/pulls/12679",
+    "https://api.github.com/repos/duckdb/duckdb/pulls/12679/files?per_page=100",
+    "https://api.github.com/repos/apache/arrow/commits/f14170976372436ec1d03a724d8d3f3925484ecf"
+  ],
+  "continued_with": "public primary HTML/raw pinned source and preserved capture metadata",
+  "no_credentials_or_repeated_API_retries": true
+}

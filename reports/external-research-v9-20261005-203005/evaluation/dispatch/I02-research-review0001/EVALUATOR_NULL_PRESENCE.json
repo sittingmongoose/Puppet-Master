@@ -1,0 +1,17 @@
+{
+  "execution_label": "evaluator_executed",
+  "case": "Published W2 optional-field branch",
+  "missing_input": {
+    "id": 8
+  },
+  "null_input": {
+    "id": 8,
+    "v": null
+  },
+  "normalized_v_for_missing": null,
+  "normalized_v_for_null": null,
+  "same_normalized_field": true,
+  "input_presence_distinct": true,
+  "code_basis": "if name not in obj: rec[name]=None; explicit null: rec[name]=None",
+  "scope": "Source-derived dictionary model only; original source rows can remain recoverable by separate provenance, but normalized row does not carry presence state"
+}

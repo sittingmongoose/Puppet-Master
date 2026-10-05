@@ -1,0 +1,108 @@
+{
+  "protocol_version": "ER9-independent-output-v1",
+  "dispatch_interface_version": "diagnostic-1",
+  "evaluation_id": "ER9-EVAL-D-V15-B-001",
+  "scope": "targeted_diagnostic_pair",
+  "track": "A",
+  "prepared_utc": "2026-10-05T22:33:49.223566Z",
+  "candidate_outputs_frozen_utc": "2026-10-05T22:33:49.125423+00:00",
+  "requested_evaluator": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_evaluator": null,
+  "result_directory": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/review0001",
+  "task": {
+    "brief": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/packet0001/task/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    "neutral_task": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/packet0001/task/neutral_task.md",
+      "sha256": "51ce8a6df781f7094ac70bcd42cf96ad036dc3c3d790dfd8e6ada8f4f3378e03"
+    },
+    "coverage_map": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/packet0001/task/coverage_map.json",
+      "sha256": "e3d69049883c946bf578ea04b0b93047c54ec50a6b13852b97cdb3addef158ea"
+    },
+    "common_criteria": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/packet0001/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+    },
+    "source_access": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/packet0001/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    "output_contract": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/packet0001/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    }
+  },
+  "anonymous_outputs": [
+    {
+      "alias": "A",
+      "artifact_status": "TERMINAL_MISSING_DESIGNATED_FINAL",
+      "designated_final": null,
+      "operational_status": "FAIL",
+      "quality_status": "UNASSESSED",
+      "phase1_notice": "Terminal missing designated artifact; no semantic assessment possible."
+    },
+    {
+      "alias": "B",
+      "artifact_status": "TERMINAL_MISSING_DESIGNATED_FINAL",
+      "designated_final": null,
+      "operational_status": "FAIL",
+      "quality_status": "UNASSESSED",
+      "phase1_notice": "Terminal missing designated artifact; no semantic assessment possible."
+    }
+  ],
+  "common_predeclared_checks": [
+    {
+      "check_id": "D-V15-B-P1",
+      "obligation_ids": [],
+      "neutral_question": "Do the same predeclared consequential source/behavior claims receive correct supported correction or preservation under this method, without a new consequential error?"
+    },
+    {
+      "check_id": "D-V15-B-P2",
+      "obligation_ids": [],
+      "neutral_question": "Does the final retain supported conditions, legitimate uncertainty and required useful content rather than blanket rejection or incomplete delivery?"
+    },
+    {
+      "check_id": "D-V15-B-P3",
+      "obligation_ids": [],
+      "neutral_question": "Was the declared mechanism actually taken up with honest source/execution scope, and what critical/false-rejection/repair differences appear under matched budgets?"
+    }
+  ],
+  "assessment_plan": {
+    "mode": "screen_then_complete_if_promising",
+    "screen_max_seconds": 1200,
+    "hard_max_seconds": 1800,
+    "budget_frozen_utc": "2026-10-05T21:52:46.368710Z",
+    "clock_start": "first substantive read of frozen actual current output; setup separate",
+    "limits_note": "Targeted diagnostic only. Same important checks in both aliases. No screen-only PASS or expansion after start. Full development proposal completeness remains UNASSESSED outside actual card scope."
+  },
+  "scope_boundary": "Targeted diagnostic task only; do not imply full development-domain PASS or autonomous discovery when inputs supplied.",
+  "comparison_boundary": "INCOMPLETE_PAIR; missing artifacts quality UNASSESSED; no paired winner",
+  "full_development_proposal_completeness": "UNASSESSED_OUTSIDE_TARGETED_DIAGNOSTIC_SCOPE",
+  "blinding": {
+    "hidden_fields": [
+      "arm_assignment",
+      "economics",
+      "prior_grades",
+      "method_history",
+      "failure_cause"
+    ],
+    "known_hints_at_dispatch": [
+      "Assignment disclosed V14/V15 targeted mechanism names and requested Luna family; actual arm allocation, observed candidate identity, history, costs and prior grades remain unopened. Exact neutral task/coverage cards also describe the treatment mechanism."
+    ],
+    "byte_policy": "Exact substantive frozen bytes; disclose incidental identity hints.",
+    "allocation_record": "coordinator-only excluded sidecar",
+    "phase2_material_release": "only after immutable current_output_judgment.json saved"
+  },
+  "outputs": [
+    "current_output_judgment.json",
+    "report.json",
+    "REVIEW.md"
+  ],
+  "private_expected_truth_policy": "post-freeze evaluator-only; never candidate input"
+}

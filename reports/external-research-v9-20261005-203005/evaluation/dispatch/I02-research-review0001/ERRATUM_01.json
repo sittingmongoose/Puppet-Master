@@ -1,0 +1,11 @@
+{
+  "id": "I02-EVAL-ERRATUM-01",
+  "recorded_utc": "2026-10-05T22:57:45.370355Z",
+  "kind": "verification_timing_clarification",
+  "affected_claim": "A-C03",
+  "original_snapshot_unchanged": true,
+  "clarification": "Tagged regression test was inspected before Phase1. The tagged scanner file was captured before Phase1, but its exact guard was specifically located during post-snapshot verification. Phase1 wording that both were directly checked overstates pre-snapshot code inspection. The later source check supports the same version claim.",
+  "later_evidence": "v1.1.0 string_value_scanner.cpp line1564 contains corrected guard; SOURCE_INDEX P-DUCKDB-TAG-CODE",
+  "quality_decisions_changed": false,
+  "scope_or_coverage_expanded": false
+}

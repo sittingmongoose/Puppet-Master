@@ -1,12 +1,11 @@
 {
   "campaign_id": "external-research-v9-20261005-203005",
-  "cohort": "independent-I01-failed-screen-005",
-  "publication_snapshot_at": "2026-10-05T22:23:19.145775+00:00",
-  "selection_scope": "Original I01 quiescent research stages; no later live outputs. Counts cover published frozen cohort, not present scheduler state.",
-  "research_stages_published": 2,
-  "operationally_complete_research_stages": 1,
-  "failed_research_stages": 1,
-  "independent_semantic_assessments": 1,
+  "cohort": "I02-research-screen-and-goal-status-006",
+  "publication_snapshot_at": "2026-10-05T23:07:44.888216+00:00",
+  "selection_scope": "Frozen I01/I02/D14/D15 current-phase evidence plus separately labelled receipt extension. Counts describe published scope, not present scheduler.",
+  "research_stages_published": 4,
+  "operationally_complete_research_stages": 2,
+  "failed_research_stages": 2,
   "whole_pipelines_completed": 0,
   "matched_comparisons_completed": 0,
   "actual_research_families": [
@@ -27,12 +26,10 @@
     "integrated_pairs": 12,
     "confirmation_pairs": 4
   },
-  "independent_assessment_scope": "Bounded failed screen of one available partial final;14complete/10partial-or-unassessed claim groups; missing partner UNASSESSED",
   "i01_pair_status": "INCOMPLETE_PAIR",
   "i01_final_stage_status": "Control final capped; available proposal screened, catalogs absent",
   "known_provider_tokens_i01_four_stages": 7992185,
   "occupied_stage_seconds_i01_four_stages": 3608.2,
-  "scored_stages_observed_in_phase2": 4,
   "evaluator_findings_candidate_input": false,
   "luna_source_boundary": "routes/luna/dynamic-ready-v1/PUBLIC_REPRODUCTION_BOUNDARY.md",
   "diagnostic_native_goal_starts_observed": 4,
@@ -40,6 +37,31 @@
   "first_d14_native_metered_tokens": 19152242,
   "first_d14_cancelled_tail_usage": "UNKNOWN",
   "first_d14_semantic_assessment": "NOT_PUBLISHED_IN_THIS_COHORT",
-  "campaign_accounting_snapshot": "accounting/cohort-001/snapshot.safe.json",
-  "accounting_snapshot_is_live_or_final": false
+  "campaign_accounting_snapshot": "accounting/cohort-004/snapshot.safe.json",
+  "accounting_snapshot_is_live_or_final": false,
+  "independent_I02_research_verdicts": [
+    "FAIL_SCREEN",
+    "FAIL_SCREEN"
+  ],
+  "I02_final_pipeline_quality": "UNASSESSED",
+  "independent_I02_execution_checks": {
+    "exit0": 8,
+    "exit1": 2
+  },
+  "diagnostic_reviews_public": "evaluation/diagnostics/INDEX.md",
+  "whole_pipeline_completion_claim": false,
+  "method_winner": null,
+  "native_goal_status_source": "execution/status-projection/cohort-001/NATIVE_GOAL_STATUS.json",
+  "earlier_accounting_native_goal_status_erratum": "GLM001..003 fields held router statuses; do not infer native Goal from those. Direct saved status evidence separate.",
+  "I01_R001_publication_scope": "Frozen neutral prompts/configs/admission only; no live outputs",
+  "completed_matched_comparison_claim": false,
+  "independent_screen_bundles_published": 2,
+  "diagnostic_original_boundary_reports_published": 4,
+  "diagnostic_partial_source_reviews_published": 4,
+  "separately_frozen_receipt_extensions_published": 1,
+  "I01_independent_assessment_scope": "Bounded failed screen of one available partial final;14complete/10partial-or-unassessed claim groups; missing partner UNASSESSED",
+  "research_stage_count_scope": "Four published/source-reviewed research-stage artifacts only: original I01 two +I02 two. Not all campaign research attempts, terminal/retest/recovery jobs or current occupancy.",
+  "research_stage_operational_count_source": "Per-stage frozen evidence; I01 earlier native-status interpretation is corrected by separate direct status source.",
+  "I01_scored_stages_observed_in_phase2": 4,
+  "accounting_snapshot_scope": "37 candidate deployments/29known starts at accounting004 own capture timestamp; later live/retest/recovery outcomes may differ."
 }

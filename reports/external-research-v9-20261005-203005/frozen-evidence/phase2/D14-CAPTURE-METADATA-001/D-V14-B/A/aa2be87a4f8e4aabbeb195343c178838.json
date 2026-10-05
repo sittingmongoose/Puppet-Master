@@ -1,0 +1,31 @@
+{
+  "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+  "actual_url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+  "body_complete": true,
+  "capture_format": "exact-http-response-body-bytes",
+  "capture_id": "aa2be87a4f8e4aabbeb195343c178838",
+  "captured_bytes": 372286,
+  "captured_utc": "2026-10-05T21:55:55.632978+00:00",
+  "content_encoding": null,
+  "content_length_header": null,
+  "content_type": "text/html; charset=utf-8",
+  "etag": null,
+  "incomplete_http_body": false,
+  "last_modified": null,
+  "redirects": [
+    {
+      "status": 308,
+      "url": "https://duckdb.org/docs/current/data/csv/auto_detection.html"
+    }
+  ],
+  "requested_url": "https://duckdb.org/docs/current/data/csv/auto_detection.html",
+  "response_bytes_observed": 372286,
+  "sha256": "ae0787d424805aa282c03ce8963f2abf8c97d79c95e27c2aca9c0d877e379a13",
+  "source_version": "sha256:ae0787d424805aa282c03ce8963f2abf8c97d79c95e27c2aca9c0d877e379a13",
+  "status": 200,
+  "truncated": false,
+  "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+  "utf8_bytes": 372286,
+  "utf8_valid": true,
+  "model_comprehension": "UNKNOWN; acquisition does not establish comprehension"
+}

@@ -1,0 +1,149 @@
+{
+  "schema": "er9.courier-phase2-accounting-subset.v1",
+  "phase1_judgment_sha256": "ffb8df5fb93d0dfa751e5d6029f5b6f21921f17f64f112405a6b367395940a54",
+  "parent_dispatch_sha256": "e3be7ac228eef9f72f91f0a844ecc18770dae5bc4f67a1f5e9da9315018b89cf",
+  "source_accounting_sha256": "2af4b3df6d76447c30117e4a4b6e05428fded0996287da12c25875525bd978cb",
+  "selection_rule": "exact typed cohort004 rows for two assessed I02 research stages; verified matching actual stagefreeze native receipt pins; later semantic bodies excluded",
+  "freeze_binding": [
+    {
+      "attempt_id": "I-02-control-research-a001",
+      "output_freeze_sha256": "bddbdfc24437aab9ab72ec3c7b64922cbb56631a00013c70ba2222879613cd36",
+      "native_receipt_sha256": "be01c7b65f2fed0c9db16e291c971dbd95ed64d8573a8e5532f3868486535614"
+    },
+    {
+      "attempt_id": "I-02-treatment-research-a001",
+      "output_freeze_sha256": "589b950c8f2a763bd04d6e555def07bc002b676297353784b371a53f0f51b3dc",
+      "native_receipt_sha256": "9ef7870e0f98db079ad14bfe62351534bb001cdcec963a7abc5caae679031df3"
+    }
+  ],
+  "attempts": [
+    {
+      "actual_family": "GLM",
+      "arm": "control",
+      "attempt_id": "I-02-control-research-a001",
+      "billing_dollars": "UNKNOWN",
+      "cancelled_or_unexposed_tail": "UNKNOWN",
+      "category": "candidate_attempt",
+      "cleanup_reserve_seconds": null,
+      "cleanup_seconds": "UNKNOWN",
+      "end_utc": "2026-10-05T21:49:51.056488+00:00",
+      "goal_identity": "target_muvrk4m1_e6f1310f-5086-4904-9ab1-59e4f919f441",
+      "http_attempts": "UNKNOWN",
+      "inference_model_provenance": "NATIVE_PROVIDER_REQUEST_EXPORT",
+      "job_status": "FAILED",
+      "known_usage": {
+        "cached_input_included": 1622976,
+        "input": 1835989,
+        "output": 51821,
+        "reasoning_output_subset": 0,
+        "total": 1887810
+      },
+      "native_execution_seconds": null,
+      "native_goal_starts": 1,
+      "native_goal_status": "UNKNOWN",
+      "native_goal_status_before_cleanup": null,
+      "observed_effort": "max",
+      "observed_model": "GLM-5.3-Flash",
+      "occupied_seconds": 1174.778103698991,
+      "pair_id": "I-02",
+      "provider_request_count": 14,
+      "provider_status_counts": {
+        "cancelled": 1,
+        "completed": 13
+      },
+      "quiescent": true,
+      "quota_exhaustion": "UNKNOWN",
+      "requested_effort": "max",
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "router_terminal_status": "execution_error",
+      "source_pins": [
+        {
+          "path": "ops/dispatcher/runs/I-02-control-research-a001/native/receipt.json",
+          "sha256": "be01c7b65f2fed0c9db16e291c971dbd95ed64d8573a8e5532f3868486535614"
+        },
+        {
+          "path": "ops/dispatcher/runs/I-02-control-research-a001/native/provider-usage.redacted.jsonl",
+          "sha256": "5caf11dda18e2be56e02893741ab3430843ea005349934cb43d9f436544f3967"
+        }
+      ],
+      "stage": "research",
+      "start_utc": "2026-10-05T21:30:16.328479+00:00",
+      "terminal_error_class": "ProtocolError",
+      "turn_completion_notifications": null,
+      "turn_status_counts": {},
+      "ui_usage_separate": {
+        "cached_input_included": 0,
+        "input": 212527,
+        "output": 51821,
+        "reasoning_output_subset": 0,
+        "total": 264348
+      },
+      "usage_basis": "native_provider_request_sum_known_values",
+      "usage_notifications": null
+    },
+    {
+      "actual_family": "GLM",
+      "arm": "treatment",
+      "attempt_id": "I-02-treatment-research-a001",
+      "billing_dollars": "UNKNOWN",
+      "cancelled_or_unexposed_tail": "UNEXPOSED_CHILD_USAGE_UNKNOWN",
+      "category": "candidate_attempt",
+      "cleanup_reserve_seconds": null,
+      "cleanup_seconds": "UNKNOWN",
+      "end_utc": "2026-10-05T22:05:06.982243+00:00",
+      "goal_identity": "target_muvs9jq8_5a95fba8-3af1-4f7e-b0bd-5fccefbb515a",
+      "http_attempts": "UNKNOWN",
+      "inference_model_provenance": "NATIVE_PROVIDER_REQUEST_EXPORT",
+      "job_status": "COMPLETED",
+      "known_usage": {
+        "cached_input_included": 1101504,
+        "input": 1448170,
+        "output": 41597,
+        "reasoning_output_subset": 0,
+        "total": 1489767
+      },
+      "native_execution_seconds": null,
+      "native_goal_starts": 1,
+      "native_goal_status": "UNKNOWN",
+      "native_goal_status_before_cleanup": null,
+      "observed_effort": "max",
+      "observed_model": "GLM-5.3-Flash",
+      "occupied_seconds": 904.7974388389994,
+      "pair_id": "I-02",
+      "provider_request_count": 12,
+      "provider_status_counts": {
+        "completed": 12
+      },
+      "quiescent": true,
+      "quota_exhaustion": "UNKNOWN",
+      "requested_effort": "max",
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "router_terminal_status": "completed",
+      "source_pins": [
+        {
+          "path": "ops/dispatcher/runs/I-02-treatment-research-a001/native/receipt.json",
+          "sha256": "9ef7870e0f98db079ad14bfe62351534bb001cdcec963a7abc5caae679031df3"
+        },
+        {
+          "path": "ops/dispatcher/runs/I-02-treatment-research-a001/native/provider-usage.redacted.jsonl",
+          "sha256": "170615453fbc3a3e0c4a3be507b15c674ce071caa9668b155d9fa4b5a3aaafa5"
+        }
+      ],
+      "stage": "research",
+      "start_utc": "2026-10-05T21:50:02.231452+00:00",
+      "terminal_error_class": null,
+      "turn_completion_notifications": null,
+      "turn_status_counts": {},
+      "ui_usage_separate": {
+        "cached_input_included": 0,
+        "input": 346284,
+        "output": 41597,
+        "reasoning_output_subset": 0,
+        "total": 387881
+      },
+      "usage_basis": "native_provider_request_sum_known_values",
+      "usage_notifications": null
+    }
+  ],
+  "semantic_interpretation": "none; definitions/unknowns retained from accounting owner"
+}

@@ -1,0 +1,843 @@
+{
+  "protocol_version": "ER9-independent-output-v1",
+  "evaluation_id": "ER9-EVAL-I02-RESEARCH-001",
+  "status": "PARTIAL_RESEARCH_STAGE_SOURCE_SCREENS_ASSESSED",
+  "scope": "two_terminal_research_stage_outputs",
+  "whole_pipeline_quality": "UNASSESSED",
+  "full_case_PASS": false,
+  "matched_method_effect": "NOT_ASSESSED; declared factor acts in later stages",
+  "started_utc": "2026-10-05T22:30:13.491488Z",
+  "finished_utc": "2026-10-05T22:56:10.846702Z",
+  "requested_evaluator": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_evaluator": null,
+  "observed_evaluator_limit": "No platform-observed evaluator configuration receipt supplied; requested xhigh is not silently treated as observed.",
+  "current_output_judgment": {
+    "path": "current_output_judgment.json",
+    "sha256": "ffb8df5fb93d0dfa751e5d6029f5b6f21921f17f64f112405a6b367395940a54",
+    "saved_utc": "2026-10-05T22:47:16.765454Z",
+    "immutable": true
+  },
+  "received_inputs": [
+    {
+      "kind": "brief",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I02-research-packet0001/task/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "kind": "coverage_map",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I02-research-packet0001/task/coverage_map.json",
+      "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f"
+    },
+    {
+      "kind": "common_criteria",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I02-research-packet0001/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+    },
+    {
+      "kind": "source_access",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I02-research-packet0001/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "kind": "important_checks",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I02-research-packet0001/task/important_checks.json",
+      "sha256": "543a07fd1de56392b89858999cd6dce73757bdf40de62dd7d16106b0adf4ca60"
+    },
+    {
+      "kind": "output_contract",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I02-research-packet0001/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "kind": "research_task",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I02-research-packet0001/task/research_task.md",
+      "sha256": "dd186ebbc7c24727fa3543cf14ce87613fb9b8f097510cb65367ff368459ce50"
+    },
+    {
+      "kind": "stage_proposal",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I02-research-packet0001/outputs/A/research/proposal.md",
+      "sha256": "63a0055fcb753a1f231ce0f202f693d961e5fd486c79175170a6fe57a5fae8df"
+    },
+    {
+      "kind": "source_catalog",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I02-research-packet0001/outputs/A/research/sources.json",
+      "sha256": "99e732e12036f339697bc7a4cf59d439ad142413b3d452f2186957005b9caf7a"
+    },
+    {
+      "kind": "witness_catalog",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I02-research-packet0001/outputs/A/research/witnesses.json",
+      "sha256": "9f6f4a5e5be704e1d034ad49929c88e934a8452c71675d654ff4233f24b3578d"
+    },
+    {
+      "kind": "leads",
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I02-research-packet0001/outputs/A/research/leads.json",
+      "sha256": "193efdef4b6adff977b69af28c090c9d579a6e824c23f1f1a95d306d083a4c5a"
+    },
+    {
+      "kind": "stage_proposal",
+      "alias": "B",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I02-research-packet0001/outputs/B/research/proposal.md",
+      "sha256": "e738b2479ebcb1a751b59ef6bec46d7e23c3cc1b304b49898779b4b81c7ab281"
+    },
+    {
+      "kind": "source_catalog",
+      "alias": "B",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I02-research-packet0001/outputs/B/research/sources.json",
+      "sha256": "0a7e44128cad96b4538ac4dc86b4fceba2e99e9e458be13f62b8849305c31760"
+    },
+    {
+      "kind": "witness_catalog",
+      "alias": "B",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I02-research-packet0001/outputs/B/research/witnesses.json",
+      "sha256": "c0b6b503ddee589ec462366dadf23027f1e595381e70904f6d3ecbdceeddb71a"
+    },
+    {
+      "kind": "leads",
+      "alias": "B",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I02-research-packet0001/outputs/B/research/leads.json",
+      "sha256": "f65071356f6e4adfbf0f5f9d9cd543751cca8d1c8b4ad619621732111f3a4a21"
+    }
+  ],
+  "blinding": {
+    "method_family_context_known": true,
+    "aliases_blind_until_saved_snapshot": true,
+    "private_sidecar_not_opened": true,
+    "later_semantic_history_not_opened": true,
+    "economics_and_allocation_released_only_after_snapshot": true,
+    "post_phase1_allocation": {
+      "phase1_sha256": "ffb8df5fb93d0dfa751e5d6029f5b6f21921f17f64f112405a6b367395940a54",
+      "released_after_phase1": true,
+      "source": "/root/frozen_exports compact message from exact existing private allocation",
+      "alias_map": {
+        "A": "I-02-treatment-research-a001",
+        "B": "I-02-control-research-a001"
+      },
+      "private_sidecar_not_opened_by_evaluator": true
+    },
+    "hints": [
+      "Research-stage headers/source selections differ; exact bytes preserved.",
+      "Witness catalogs include source/execution times as evidence; no economic totals opened."
+    ]
+  },
+  "anonymous_output_results": [
+    {
+      "alias": "A",
+      "assessed_stage": "research",
+      "stage_quality_status": "FAIL_SCREEN",
+      "decision": "FAIL",
+      "assessment_state": "partial",
+      "designated_final": null,
+      "full_case_PASS_eligible": false,
+      "full_pipeline_quality": "UNASSESSED",
+      "defect_ids": [
+        "I02-A-D01",
+        "I02-A-D02"
+      ],
+      "details_ref": "current_output_judgment.json",
+      "obligation_map": [
+        {
+          "obligation_id": "B01",
+          "assessment_state": "partial",
+          "finding": "supported"
+        },
+        {
+          "obligation_id": "B02",
+          "assessment_state": "partial",
+          "finding": "contradicted"
+        },
+        {
+          "obligation_id": "B03",
+          "assessment_state": "partial",
+          "finding": "supported"
+        },
+        {
+          "obligation_id": "B04",
+          "assessment_state": "partial",
+          "finding": "supported"
+        },
+        {
+          "obligation_id": "B05",
+          "assessment_state": "partial",
+          "finding": "contradicted"
+        },
+        {
+          "obligation_id": "B06",
+          "assessment_state": "partial",
+          "finding": "supported"
+        },
+        {
+          "obligation_id": "B07",
+          "assessment_state": "partial",
+          "finding": "contradicted"
+        },
+        {
+          "obligation_id": "B08",
+          "assessment_state": "partial",
+          "finding": "supported"
+        },
+        {
+          "obligation_id": "B09",
+          "assessment_state": "partial",
+          "finding": "supported"
+        },
+        {
+          "obligation_id": "B10",
+          "assessment_state": "partial",
+          "finding": "supported"
+        },
+        {
+          "obligation_id": "B11",
+          "assessment_state": "partial",
+          "finding": "contradicted"
+        },
+        {
+          "obligation_id": "B12",
+          "assessment_state": "unassessed",
+          "finding": "unresolved"
+        }
+      ],
+      "claim_map": [
+        {
+          "claim_id": "A-C01",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [
+            "P-NBFORMAT",
+            "P-MARIMO",
+            "P-DUCKDB-CSV"
+          ],
+          "output_locator": "proposal.md:30-63"
+        },
+        {
+          "claim_id": "A-C02",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "P-DUCKDB-ISSUE",
+            "P-DUCKDB-PATCH",
+            "P-DUCKDB-TAG-TEST"
+          ],
+          "output_locator": "proposal.md:65-75"
+        },
+        {
+          "claim_id": "A-C03",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "P-DUCKDB-TAG-TEST",
+            "P-DUCKDB-TAG-CODE"
+          ],
+          "output_locator": "proposal.md:72"
+        },
+        {
+          "claim_id": "A-C04",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "P-NBFORMAT"
+          ],
+          "output_locator": "proposal.md:34"
+        },
+        {
+          "claim_id": "A-C05",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "P-MARIMO"
+          ],
+          "output_locator": "proposal.md:41"
+        },
+        {
+          "claim_id": "A-C06",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "source_ids": [
+            "E-A-W3",
+            "E-A-W4"
+          ],
+          "output_locator": "proposal.md:115-141,195"
+        },
+        {
+          "claim_id": "A-C07",
+          "assessment_state": "complete",
+          "finding": "contradicted",
+          "source_ids": [
+            "E-A-W2",
+            "E-UTF8"
+          ],
+          "output_locator": "proposal.md:107,194"
+        },
+        {
+          "claim_id": "A-C08",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [
+            "E-A-W2"
+          ],
+          "output_locator": "proposal.md:194"
+        },
+        {
+          "claim_id": "A-C09",
+          "assessment_state": "complete",
+          "finding": "contradicted",
+          "source_ids": [
+            "TASK-PROPOSAL-A"
+          ],
+          "output_locator": "proposal.md:23-25,88-95,154"
+        },
+        {
+          "claim_id": "A-C10",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "E-A-W1",
+            "P-NBFORMAT"
+          ],
+          "output_locator": "proposal.md:118,193"
+        },
+        {
+          "claim_id": "A-C11",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "E-A-W4"
+          ],
+          "output_locator": "proposal.md:139,196"
+        },
+        {
+          "claim_id": "A-C12",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [
+            "P-DUCKDB-CSV"
+          ],
+          "output_locator": "proposal.md:161,208"
+        },
+        {
+          "claim_id": "A-C13",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "source_ids": [],
+          "output_locator": "proposal.md:97,170-172"
+        },
+        {
+          "claim_id": "A-C14",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "source_ids": [],
+          "output_locator": "proposal.md:45,131,214"
+        },
+        {
+          "claim_id": "A-C15",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [],
+          "output_locator": "proposal.md:174-216"
+        },
+        {
+          "claim_id": "A-C16",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "source_ids": [],
+          "output_locator": "proposal.md:95,101,163-166"
+        },
+        {
+          "claim_id": "A-C17",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "E-A-ALL"
+          ],
+          "output_locator": "proposal.md:189-208"
+        },
+        {
+          "claim_id": "A-C18",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "source_ids": [],
+          "output_locator": "proposal.md:3"
+        }
+      ],
+      "claim_state_counts": {
+        "complete": 9,
+        "partial": 6,
+        "unassessed": 3
+      },
+      "partial_or_unassessed_groups": [
+        "A-C01",
+        "A-C06",
+        "A-C08",
+        "A-C12",
+        "A-C13",
+        "A-C14",
+        "A-C15",
+        "A-C16",
+        "A-C18"
+      ],
+      "candidate_execution_count": 5,
+      "candidate_execution_exit0": 4,
+      "candidate_execution_exit1": 1,
+      "dimensions": [
+        {
+          "id": 1,
+          "assessment_state": "partial",
+          "full_pipeline_duties": "UNASSESSED",
+          "finding_ref": "current_output_judgment.json and REVIEW.md"
+        },
+        {
+          "id": 2,
+          "assessment_state": "partial",
+          "full_pipeline_duties": "UNASSESSED",
+          "finding_ref": "current_output_judgment.json and REVIEW.md"
+        },
+        {
+          "id": 3,
+          "assessment_state": "partial",
+          "full_pipeline_duties": "UNASSESSED",
+          "finding_ref": "current_output_judgment.json and REVIEW.md"
+        },
+        {
+          "id": 4,
+          "assessment_state": "partial",
+          "full_pipeline_duties": "UNASSESSED",
+          "finding_ref": "current_output_judgment.json and REVIEW.md"
+        },
+        {
+          "id": 5,
+          "assessment_state": "partial",
+          "full_pipeline_duties": "UNASSESSED",
+          "finding_ref": "current_output_judgment.json and REVIEW.md"
+        },
+        {
+          "id": 6,
+          "assessment_state": "unassessed",
+          "full_pipeline_duties": "UNASSESSED",
+          "finding_ref": "current_output_judgment.json and REVIEW.md"
+        },
+        {
+          "id": 7,
+          "assessment_state": "partial",
+          "full_pipeline_duties": "UNASSESSED",
+          "finding_ref": "current_output_judgment.json and REVIEW.md"
+        },
+        {
+          "id": 8,
+          "assessment_state": "partial",
+          "full_pipeline_duties": "UNASSESSED",
+          "finding_ref": "current_output_judgment.json and REVIEW.md"
+        }
+      ]
+    },
+    {
+      "alias": "B",
+      "assessed_stage": "research",
+      "stage_quality_status": "FAIL_SCREEN",
+      "decision": "FAIL",
+      "assessment_state": "partial",
+      "designated_final": null,
+      "full_case_PASS_eligible": false,
+      "full_pipeline_quality": "UNASSESSED",
+      "defect_ids": [
+        "I02-B-D01",
+        "I02-B-D02"
+      ],
+      "details_ref": "current_output_judgment.json",
+      "obligation_map": [
+        {
+          "obligation_id": "B01",
+          "assessment_state": "partial",
+          "finding": "supported"
+        },
+        {
+          "obligation_id": "B02",
+          "assessment_state": "partial",
+          "finding": "contradicted"
+        },
+        {
+          "obligation_id": "B03",
+          "assessment_state": "partial",
+          "finding": "contradicted"
+        },
+        {
+          "obligation_id": "B04",
+          "assessment_state": "partial",
+          "finding": "contradicted"
+        },
+        {
+          "obligation_id": "B05",
+          "assessment_state": "partial",
+          "finding": "supported"
+        },
+        {
+          "obligation_id": "B06",
+          "assessment_state": "partial",
+          "finding": "supported"
+        },
+        {
+          "obligation_id": "B07",
+          "assessment_state": "partial",
+          "finding": "supported"
+        },
+        {
+          "obligation_id": "B08",
+          "assessment_state": "partial",
+          "finding": "supported"
+        },
+        {
+          "obligation_id": "B09",
+          "assessment_state": "partial",
+          "finding": "supported"
+        },
+        {
+          "obligation_id": "B10",
+          "assessment_state": "partial",
+          "finding": "supported"
+        },
+        {
+          "obligation_id": "B11",
+          "assessment_state": "partial",
+          "finding": "contradicted"
+        },
+        {
+          "obligation_id": "B12",
+          "assessment_state": "unassessed",
+          "finding": "unresolved"
+        }
+      ],
+      "claim_map": [
+        {
+          "claim_id": "B-C01",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [
+            "P-NBFORMAT",
+            "P-DVC",
+            "P-DUCKDB-CSV"
+          ],
+          "output_locator": "proposal.md:62-70"
+        },
+        {
+          "claim_id": "B-C02",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "P-ARROW-RELEASE",
+            "P-ARROW-PATCH"
+          ],
+          "output_locator": "proposal.md:74-81"
+        },
+        {
+          "claim_id": "B-C03",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "P-NBFORMAT",
+            "P-NBCLIENT"
+          ],
+          "output_locator": "proposal.md:39-43"
+        },
+        {
+          "claim_id": "B-C04",
+          "assessment_state": "complete",
+          "finding": "contradicted",
+          "source_ids": [
+            "P-NBCLIENT",
+            "E-SKIP"
+          ],
+          "output_locator": "proposal.md:149-151"
+        },
+        {
+          "claim_id": "B-C05",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "P-DVC"
+          ],
+          "output_locator": "proposal.md:45"
+        },
+        {
+          "claim_id": "B-C06",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "P-DUCKDB-MEMORY"
+          ],
+          "output_locator": "proposal.md:52,184,237"
+        },
+        {
+          "claim_id": "B-C07",
+          "assessment_state": "complete",
+          "finding": "contradicted",
+          "source_ids": [
+            "E-B-W2",
+            "E-NULL-PRESENCE"
+          ],
+          "output_locator": "proposal.md:119,211"
+        },
+        {
+          "claim_id": "B-C08",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "E-B-W2"
+          ],
+          "output_locator": "proposal.md:211"
+        },
+        {
+          "claim_id": "B-C09",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "source_ids": [
+            "E-B-W3"
+          ],
+          "output_locator": "proposal.md:131-145,213"
+        },
+        {
+          "claim_id": "B-C10",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "E-B-W1"
+          ],
+          "output_locator": "proposal.md:121,210"
+        },
+        {
+          "claim_id": "B-C11",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "E-B-W4"
+          ],
+          "output_locator": "proposal.md:117,214"
+        },
+        {
+          "claim_id": "B-C12",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [
+            "TASK-PROPOSAL-B"
+          ],
+          "output_locator": "proposal.md:109,168"
+        },
+        {
+          "claim_id": "B-C13",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "source_ids": [],
+          "output_locator": "proposal.md:179-188"
+        },
+        {
+          "claim_id": "B-C14",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "source_ids": [],
+          "output_locator": "proposal.md:54,163,237"
+        },
+        {
+          "claim_id": "B-C15",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [],
+          "output_locator": "proposal.md:192-239"
+        },
+        {
+          "claim_id": "B-C16",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "E-B-ALL"
+          ],
+          "output_locator": "proposal.md:208-220"
+        },
+        {
+          "claim_id": "B-C17",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "source_ids": [],
+          "output_locator": "proposal.md:3"
+        }
+      ],
+      "claim_state_counts": {
+        "complete": 10,
+        "partial": 5,
+        "unassessed": 2
+      },
+      "partial_or_unassessed_groups": [
+        "B-C01",
+        "B-C09",
+        "B-C12",
+        "B-C13",
+        "B-C14",
+        "B-C15",
+        "B-C17"
+      ],
+      "candidate_execution_count": 5,
+      "candidate_execution_exit0": 4,
+      "candidate_execution_exit1": 1,
+      "dimensions": [
+        {
+          "id": 1,
+          "assessment_state": "partial",
+          "full_pipeline_duties": "UNASSESSED",
+          "finding_ref": "current_output_judgment.json and REVIEW.md"
+        },
+        {
+          "id": 2,
+          "assessment_state": "partial",
+          "full_pipeline_duties": "UNASSESSED",
+          "finding_ref": "current_output_judgment.json and REVIEW.md"
+        },
+        {
+          "id": 3,
+          "assessment_state": "partial",
+          "full_pipeline_duties": "UNASSESSED",
+          "finding_ref": "current_output_judgment.json and REVIEW.md"
+        },
+        {
+          "id": 4,
+          "assessment_state": "partial",
+          "full_pipeline_duties": "UNASSESSED",
+          "finding_ref": "current_output_judgment.json and REVIEW.md"
+        },
+        {
+          "id": 5,
+          "assessment_state": "partial",
+          "full_pipeline_duties": "UNASSESSED",
+          "finding_ref": "current_output_judgment.json and REVIEW.md"
+        },
+        {
+          "id": 6,
+          "assessment_state": "unassessed",
+          "full_pipeline_duties": "UNASSESSED",
+          "finding_ref": "current_output_judgment.json and REVIEW.md"
+        },
+        {
+          "id": 7,
+          "assessment_state": "partial",
+          "full_pipeline_duties": "UNASSESSED",
+          "finding_ref": "current_output_judgment.json and REVIEW.md"
+        },
+        {
+          "id": 8,
+          "assessment_state": "partial",
+          "full_pipeline_duties": "UNASSESSED",
+          "finding_ref": "current_output_judgment.json and REVIEW.md"
+        }
+      ]
+    }
+  ],
+  "shared_check_comparison": [
+    {
+      "check_id": "B-P1",
+      "A_assessment_state": "partial",
+      "B_assessment_state": "partial",
+      "detail_ref": "current_output_judgment.json/shared_checks",
+      "inference": "Different supported findings/defects; no quality equivalence from shared FAIL_SCREEN labels"
+    },
+    {
+      "check_id": "B-P2",
+      "A_assessment_state": "partial",
+      "B_assessment_state": "partial",
+      "detail_ref": "current_output_judgment.json/shared_checks",
+      "inference": "Different supported findings/defects; no quality equivalence from shared FAIL_SCREEN labels"
+    },
+    {
+      "check_id": "B-P3",
+      "A_assessment_state": "partial",
+      "B_assessment_state": "partial",
+      "detail_ref": "current_output_judgment.json/shared_checks",
+      "inference": "Different supported findings/defects; no quality equivalence from shared FAIL_SCREEN labels"
+    },
+    {
+      "check_id": "B-P4",
+      "A_assessment_state": "partial",
+      "B_assessment_state": "partial",
+      "detail_ref": "current_output_judgment.json/shared_checks",
+      "inference": "Different supported findings/defects; no quality equivalence from shared FAIL_SCREEN labels"
+    },
+    {
+      "check_id": "B-P5",
+      "A_assessment_state": "partial",
+      "B_assessment_state": "partial",
+      "detail_ref": "current_output_judgment.json/shared_checks",
+      "inference": "Different supported findings/defects; no quality equivalence from shared FAIL_SCREEN labels"
+    }
+  ],
+  "sources": {
+    "path": "SOURCE_INDEX.json",
+    "sha256": "39676aa3ef71881ce19cbf2ac9e5233e34dc71bec8b54b380121db0c3be69e27"
+  },
+  "execution_labels": {
+    "candidate_executed": 10,
+    "candidate_exit0": 8,
+    "candidate_exit1": 2,
+    "evaluator_only": "UTF8 encoding arithmetic and source-derived presence/skip-path checks; no full upstream runtime",
+    "proposed_unexecuted": "A V1\u2013V7 and B U1\u2013U5 remain proposed"
+  },
+  "phase2": {
+    "scope": "exact two research-row accountant subset and compact alias release only",
+    "metadata_pin": {
+      "path": "PHASE2_METADATA.json",
+      "sha256": "132a60102cc328592fc4deb680d864cf9b0d53c94979757e2dbe562ffcec2d9c"
+    },
+    "observed_candidate_model": "GLM-5.3-Flash",
+    "observed_candidate_effort": "max",
+    "control_research_job_status": "FAILED",
+    "treatment_research_job_status": "COMPLETED",
+    "native_goal_status_in_projection": "UNKNOWN for both; not inferred from row labels",
+    "quiescent": true,
+    "later_stage_semantics": "UNASSESSED",
+    "later_stage_native_starts_and_cost": "OUTSIDE_THIS_SUBSET",
+    "valid_full_pipeline_credit": false
+  },
+  "economics": {
+    "reported_after_blind_judgment": true,
+    "assessed_research_native_starts": 2,
+    "occupied_research_seconds": 2079.5755425379903,
+    "known_provider_usage": {
+      "input": 3284159,
+      "output": 93418,
+      "cached_input_included": 2724480,
+      "total": 3377577
+    },
+    "known_provider_definition": "Sum exported known attempt fields; cached input already included in input/total. Never add UI usage or cache again.",
+    "cancelled_or_unexposed_usage": "UNKNOWN; control cancelled tail, treatment child usage unexposed",
+    "billing_dollars": "UNKNOWN",
+    "HTTP_cost": "UNKNOWN",
+    "full_pipeline_efficiency": "UNASSESSED",
+    "evaluator_wall_seconds": 1557.355267047882,
+    "evaluator_source_screen_seconds": 1023.2739706039429,
+    "evaluator_token_usage": null
+  },
+  "denominators": {
+    "research_stage_outputs_present": 2,
+    "research_stage_source_screens_assessed": 2,
+    "research_stage_FAIL_SCREEN": 2,
+    "designated_finals_present": 0,
+    "full_pipeline_source_assessments": 0,
+    "full_semantic_passes": 0,
+    "completed_method_comparisons": 0
+  },
+  "limitations": [
+    "Decisive partial-stage screens, not all-claims certification.",
+    "Full final, later criticism/repair/preservation and wholepipeline duties remainUNASSESSED.",
+    "No candidatefeedback, retest, nativecandidate/modelGoal or curatedanswers supplied to case owner.",
+    "Several directGitHub API attempts received403rate limit; no repeated API retries or credentials used. Public primary pages/raw pins and preserved metadata used instead.",
+    "37candidate capturemetadata records preserved;3unresolved references explicitly retained.",
+    "Metadata/hash receipts establish capture identity, not comprehension."
+  ],
+  "errata": [
+    {
+      "path": "ERRATUM_01.json",
+      "sha256": "b38b418fa67a39e79c65570574a0d7f17ba26cf9fbe5eabd3339d122b8c58cb9",
+      "changes_quality_decision": false
+    }
+  ]
+}

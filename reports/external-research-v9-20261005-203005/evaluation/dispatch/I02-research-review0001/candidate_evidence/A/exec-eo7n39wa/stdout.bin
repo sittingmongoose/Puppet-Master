@@ -1,0 +1,66 @@
+{
+ "check": "W2 bounded streaming NDJSON transform",
+ "rows_ok": 49997,
+ "rows_rejected": 3,
+ "total_lines": 50000,
+ "reject_ledger_sample": [
+  {
+   "line": 101,
+   "byte_offset": 6158,
+   "reason": "Expecting property name enclosed in double quotes: line 1 column 2 (char 1)",
+   "raw": "{not json"
+  },
+  {
+   "line": 2001,
+   "byte_offset": 126362,
+   "reason": "schema violation: unknown or missing 'cat'",
+   "raw": "{\"id\":2000,\"name\":\"x\",\"cat\":\"d\",\"amount\":\"lots\"}"
+  }
+ ],
+ "sum_amount": 19480482.0,
+ "max_rows_materialized": 512,
+ "row_budget": 1024,
+ "preview_bounded_to": 5,
+ "preview_is_sample_not_full_property": true,
+ "preview": [
+  {
+   "id": 0,
+   "name": "Zoë",
+   "amount": null
+  },
+  {
+   "id": 1,
+   "name": "李明",
+   "amount": 37.5
+  },
+  {
+   "id": 2,
+   "name": "Ana",
+   "amount": 74.5
+  },
+  {
+   "id": 3,
+   "name": "José",
+   "amount": 111.5
+  },
+  {
+   "id": 4,
+   "name": "Anna-Marie ✳",
+   "amount": 148.5
+  }
+ ],
+ "category_order_stable_first_seen": [
+  "a",
+  "b",
+  "c"
+ ],
+ "category_order_deterministic_sorted": [
+  "a",
+  "b",
+  "c"
+ ],
+ "category_sums_equal_both_orders": true,
+ "source_sha256": "e73534f794a7f8fb",
+ "source_unchanged": true
+}
+W2 PASS

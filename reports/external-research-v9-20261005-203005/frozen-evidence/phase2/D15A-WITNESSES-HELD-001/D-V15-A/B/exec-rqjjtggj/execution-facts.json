@@ -1,0 +1,33 @@
+{
+  "actor": "candidate",
+  "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+  "bootstrap_started": true,
+  "cleanup_classification": "collected_unit_absent",
+  "cleanup_confirmed": true,
+  "cleanup_state_returncode": 0,
+  "cleanup_stop_returncode": 5,
+  "code_sha256": "58db797c4204f0acc5db0379fd18d0edd34dd3de26b55ffe04b0b12326ac5da3",
+  "control_group_absent_after_stop": null,
+  "control_group_populated_after_stop": null,
+  "data_sha256": "f335796a6c455bd55d55e0aadd978b51356af9a76372e6388015a6c6454ddf8c",
+  "execution_id": "exec-rqjjtggj",
+  "execution_label": "executed by candidate",
+  "exit_code": 0,
+  "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+  "limits": {
+    "cpu_seconds": 3,
+    "memory_bytes": 268435456,
+    "network": "new empty namespace",
+    "stream_bytes_each": 32768,
+    "tasks": 16,
+    "wall_seconds": 5
+  },
+  "schema": "er9.execution.result.v1",
+  "stderr_bytes": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_bytes": 33,
+  "stdout_sha256": "fa6ea847f11d77bbfbc91c530cc51cc6af938484d70c5264b7c4106dc2e81576",
+  "stopped_by_adapter": null,
+  "unit_active_state_after_stop": "inactive",
+  "unit_load_state_after_stop": "not-found"
+}

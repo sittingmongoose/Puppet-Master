@@ -1,0 +1,44 @@
+{
+  "status_timeline": [
+    {
+      "event": "baseline clean run of a,b",
+      "statuses": {
+        "a": "current",
+        "b": "current"
+      }
+    },
+    {
+      "event": "after editing cell a",
+      "statuses": {
+        "a": "current",
+        "b": "stale"
+      }
+    },
+    {
+      "event": "after source dataset mutated on disk",
+      "statuses": {
+        "a": "stale",
+        "b": "stale"
+      }
+    },
+    {
+      "event": "after kernel restart (session id lost; outputs kept)",
+      "statuses": {
+        "a": "unverified",
+        "b": "unverified"
+      }
+    },
+    {
+      "event": "after re-run of a fails",
+      "statuses": {
+        "a": "failed",
+        "b": "unverified"
+      }
+    }
+  ],
+  "failed_error_captured": "ValueError: column 'day' not found",
+  "stale_reasons_recorded": {
+    "b": "cell:a"
+  },
+  "manifest_hash_roundtrip_ok": true
+}

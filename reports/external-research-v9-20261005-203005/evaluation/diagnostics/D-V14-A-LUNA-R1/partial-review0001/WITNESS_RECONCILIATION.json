@@ -1,0 +1,32 @@
+{
+  "schema": "er9.evaluator-witness-reconciliation.v1",
+  "saved_utc": "2026-10-05T22:38:55.368875Z",
+  "execution_label": "evaluator_executed",
+  "candidate_witness_catalog": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/views/V-812500e3aa6b9db44e5a/outputs/B/research/witnesses.json",
+    "sha256": "e6dc0b8373b8f31b9462de6eb11dedb9bd4e6e8b4cf54aaf2f3ec13dde6c0341",
+    "artifact_kind": "partial_discovery"
+  },
+  "candidate_claimed_execution_id": "exec-r01veuh3",
+  "candidate_code_sha256_declared": "abe2559d0f367a076c4b528236c397c9892cfd75576c03e3068f7cc060d7c0c2",
+  "candidate_code_sha256_actual": "abe2559d0f367a076c4b528236c397c9892cfd75576c03e3068f7cc060d7c0c2",
+  "independent_expected_value_basis": "Named scale then translation source convention (NGFF 0.4) plus independent arithmetic. y=7*0.25-2=-0.25; z=3*0.5+10=11.5. No upstream or candidate code executed.",
+  "evaluator_computed_physical": {
+    "t": 0.2,
+    "c": 0,
+    "z": 11.5,
+    "y": -0.25,
+    "x": 102.75
+  },
+  "candidate_expected_physical": {
+    "t": 0.2,
+    "c": 0,
+    "z": 11.5,
+    "y": -0.25,
+    "x": 102.75
+  },
+  "candidate_reported_stdout": "{'physical': {'t': 0.2, 'c': 0.0, 'z': 11.5, 'y': 11.5, 'x': 102.75}, 'recovered_index': {'t': 2.0, 'c': 0.0, 'z': 3.0, 'y': 7.0, 'x': 11.0}, 'round_trip': True}\n",
+  "candidate_reported_exit_code": 0,
+  "finding": "W1 reported stdout y=11.5 disagrees with declared input/code and expected y=-0.25. This delivered witness record is self-inconsistent; actual candidate tool execution remains unverified, not assumed fabricated.",
+  "scope": "Evidence-record consistency only, not application/reader/NGFF conformance."
+}

@@ -1,0 +1,463 @@
+{
+  "schema": "er9.direct-native-goal-status.v1",
+  "created_utc": "2026-10-05T22:50:25.233758+00:00",
+  "status_source_policy": "Only exact native target.status objects from saved final UI or saved structural RPC reply. No inference from registry/driver status, filename, artifact presence, response count or Goal activation alone.",
+  "event_time_policy": "Native target.updatedAt is exported as the target-record update time; RPC host observation time separately identifies when a reply was saved. Neither is invented from router completion.",
+  "scope": "Terminal family-Z locators in pinned registry snapshot plus explicitly selected saved route exercises. Active rows are excluded.",
+  "registry_snapshot": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+    "sha256": "48a15b2f745b15c5eb786d63e670fc21391c3865920dff25dda9a1ca9ddf8ec4"
+  },
+  "jobs": [
+    {
+      "job_id": "I-01-control-research-a001",
+      "pair_id": "I-01",
+      "arm": "control",
+      "stage": "research",
+      "deployment_kind": "candidate_stage",
+      "registry_operational_status": "COMPLETED",
+      "native_goal_status": "complete",
+      "goal_id": "target_muvqumhe_ae3a193e-ede2-4c16-8bc1-467c1f7f179a",
+      "native_goal_record_update_utc": "2026-10-05T21:28:19.403000+00:00",
+      "source_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-research-a001/native/final-session.redacted.json",
+        "sha256": "c5c57b512758ae3712a1656b9486ce161664adee526c91a41b25856316fb7a3c",
+        "source_kind": "saved_final_native_UI_object",
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt",
+        "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+      },
+      "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+      "router_terminal_status": "completed",
+      "router_status_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-research-a001/native/receipt.json",
+        "sha256": "a4d4cc02668166da5a58ea684c937e83da7fcd83b285bdc37576ea16881860f1",
+        "selector": "/status",
+        "definition": "Driver/router result only; not used to populate native_goal_status"
+      },
+      "native_goal_updated_at_epoch_ms": 1791235699403,
+      "status_selector": "/projection/target/status",
+      "goal_id_selector": "/projection/target/targetId",
+      "event_time_selector": "/projection/target/updatedAt"
+    },
+    {
+      "job_id": "I-01-control-critique-a001",
+      "pair_id": "I-01",
+      "arm": "control",
+      "stage": "critique",
+      "deployment_kind": "candidate_stage",
+      "registry_operational_status": "COMPLETED",
+      "native_goal_status": "complete",
+      "goal_id": "target_muvri8d9_77d8f43e-d9c3-41dc-927d-19ed7509fe32",
+      "native_goal_record_update_utc": "2026-10-05T21:41:40.846000+00:00",
+      "source_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-critique-a001/native/final-session.redacted.json",
+        "sha256": "99a82c3d89b53f39a2aed7ceadf06c66cd56b70672ffb4863cd1871cdc6b533c",
+        "source_kind": "saved_final_native_UI_object",
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt",
+        "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+      },
+      "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+      "router_terminal_status": "completed",
+      "router_status_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-critique-a001/native/receipt.json",
+        "sha256": "2ac85128d0d01b6a7081aa944c8fe5b30d511fe7fcc95c167b0b605b18c955e3",
+        "selector": "/status",
+        "definition": "Driver/router result only; not used to populate native_goal_status"
+      },
+      "native_goal_updated_at_epoch_ms": 1791236500846,
+      "status_selector": "/projection/target/status",
+      "goal_id_selector": "/projection/target/targetId",
+      "event_time_selector": "/projection/target/updatedAt"
+    },
+    {
+      "job_id": "I-01-control-revision-a001",
+      "pair_id": "I-01",
+      "arm": "control",
+      "stage": "revision",
+      "deployment_kind": "candidate_stage",
+      "registry_operational_status": "FAILED",
+      "native_goal_status": "paused",
+      "goal_id": "target_muvrz8sf_0335bf05-64b1-42ab-bee8-eef300f232f7",
+      "native_goal_record_update_utc": "2026-10-05T21:51:31.841000+00:00",
+      "source_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-revision-a001/native/final-session.redacted.json",
+        "sha256": "e7b05ae22812f61b89a0e7479b9512fcbec52c0eb477044c84190b9a09148438",
+        "source_kind": "saved_final_native_UI_object",
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt",
+        "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+      },
+      "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+      "router_terminal_status": "cap_seconds",
+      "router_status_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-revision-a001/native/receipt.json",
+        "sha256": "71a877cd78da86c8c63eb56faf2f87272288db76a44fb2e21d05f919203136d2",
+        "selector": "/status",
+        "definition": "Driver/router result only; not used to populate native_goal_status"
+      },
+      "native_goal_updated_at_epoch_ms": 1791237091841,
+      "status_selector": "/projection/target/status",
+      "goal_id_selector": "/projection/target/targetId",
+      "event_time_selector": "/projection/target/updatedAt"
+    },
+    {
+      "job_id": "I-01-treatment-research-a001",
+      "pair_id": "I-01",
+      "arm": "treatment",
+      "stage": "research",
+      "deployment_kind": "candidate_stage",
+      "registry_operational_status": "FAILED",
+      "native_goal_status": "paused",
+      "goal_id": "target_muvqup8r_62a60155-de5f-4718-aaf9-8fd0a0e3bba1",
+      "native_goal_record_update_utc": "2026-10-05T21:30:00.069000+00:00",
+      "source_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-treatment-research-a001/native/final-session.redacted.json",
+        "sha256": "6fc7349ff151b1c957137d79054303e99280ff5455076903d63f50386426b3c0",
+        "source_kind": "saved_final_native_UI_object",
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt",
+        "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+      },
+      "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+      "router_terminal_status": "cap_seconds",
+      "router_status_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-treatment-research-a001/native/receipt.json",
+        "sha256": "eeffaeebf3d0725d20b8fcb902066f5dde0b4faea564b9269df38d27577421e7",
+        "selector": "/status",
+        "definition": "Driver/router result only; not used to populate native_goal_status"
+      },
+      "native_goal_updated_at_epoch_ms": 1791235800069,
+      "status_selector": "/projection/target/status",
+      "goal_id_selector": "/projection/target/targetId",
+      "event_time_selector": "/projection/target/updatedAt"
+    },
+    {
+      "job_id": "I-02-control-research-a001",
+      "pair_id": "I-02",
+      "arm": "control",
+      "stage": "research",
+      "deployment_kind": "candidate_stage",
+      "registry_operational_status": "FAILED",
+      "native_goal_status": "paused",
+      "goal_id": "target_muvrk4m1_e6f1310f-5086-4904-9ab1-59e4f919f441",
+      "native_goal_record_update_utc": "2026-10-05T21:49:46.764000+00:00",
+      "source_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-control-research-a001/native/final-session.redacted.json",
+        "sha256": "159c07afa785b1787c23e8d2a5522dc2a0afee44a12e0801a1dd0f3e2709f9d0",
+        "source_kind": "saved_final_native_UI_object",
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt",
+        "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+      },
+      "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+      "router_terminal_status": "execution_error",
+      "router_status_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-control-research-a001/native/receipt.json",
+        "sha256": "be01c7b65f2fed0c9db16e291c971dbd95ed64d8573a8e5532f3868486535614",
+        "selector": "/status",
+        "definition": "Driver/router result only; not used to populate native_goal_status"
+      },
+      "native_goal_updated_at_epoch_ms": 1791236986764,
+      "status_selector": "/projection/target/status",
+      "goal_id_selector": "/projection/target/targetId",
+      "event_time_selector": "/projection/target/updatedAt"
+    },
+    {
+      "job_id": "I-02-treatment-research-a001",
+      "pair_id": "I-02",
+      "arm": "treatment",
+      "stage": "research",
+      "deployment_kind": "candidate_stage",
+      "registry_operational_status": "COMPLETED",
+      "native_goal_status": "complete",
+      "goal_id": "target_muvs9jq8_5a95fba8-3af1-4f7e-b0bd-5fccefbb515a",
+      "native_goal_record_update_utc": "2026-10-05T22:05:02.969000+00:00",
+      "source_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-treatment-research-a001/native/final-session.redacted.json",
+        "sha256": "cc2ae3a44e993a724069b6233c6ec98f9884ea1e61415211c318cf91534e1f3a",
+        "source_kind": "saved_final_native_UI_object",
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt",
+        "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+      },
+      "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+      "router_terminal_status": "completed",
+      "router_status_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-treatment-research-a001/native/receipt.json",
+        "sha256": "9ef7870e0f98db079ad14bfe62351534bb001cdcec963a7abc5caae679031df3",
+        "selector": "/status",
+        "definition": "Driver/router result only; not used to populate native_goal_status"
+      },
+      "native_goal_updated_at_epoch_ms": 1791237902969,
+      "status_selector": "/projection/target/status",
+      "goal_id_selector": "/projection/target/targetId",
+      "event_time_selector": "/projection/target/updatedAt"
+    },
+    {
+      "job_id": "I-02-treatment-critique-a001",
+      "pair_id": "I-02",
+      "arm": "treatment",
+      "stage": "critique",
+      "deployment_kind": "candidate_stage",
+      "registry_operational_status": "FAILED",
+      "native_goal_status": "paused",
+      "goal_id": "target_muvst7vd_50e195fa-a56b-4064-a519-39db5388201d",
+      "native_goal_record_update_utc": "2026-10-05T22:19:50.384000+00:00",
+      "source_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-treatment-critique-a001/native/final-session.redacted.json",
+        "sha256": "9d93493797c559f9a0a2e12804458912b9dcf5398d66b40ede8be48ec64c7bd1",
+        "source_kind": "saved_final_native_UI_object",
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt",
+        "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+      },
+      "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+      "router_terminal_status": "cap_seconds",
+      "router_status_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-treatment-critique-a001/native/receipt.json",
+        "sha256": "3b7918e862170e0cf528679bf7d6a6d0055f233ebf48a2e6e377d21a5a8e838f",
+        "selector": "/status",
+        "definition": "Driver/router result only; not used to populate native_goal_status"
+      },
+      "native_goal_updated_at_epoch_ms": 1791238790384,
+      "status_selector": "/projection/target/status",
+      "goal_id_selector": "/projection/target/targetId",
+      "event_time_selector": "/projection/target/updatedAt"
+    },
+    {
+      "job_id": "I-03-control-research-a001",
+      "pair_id": "I-03",
+      "arm": "control",
+      "stage": "research",
+      "deployment_kind": "candidate_stage",
+      "registry_operational_status": "FAILED",
+      "native_goal_status": "paused",
+      "goal_id": "target_muvsbthc_3ded7f6d-963f-4cd7-9005-10ff43903089",
+      "native_goal_record_update_utc": "2026-10-05T22:11:18.755000+00:00",
+      "source_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-03-control-research-a001/native/final-session.redacted.json",
+        "sha256": "82c2107b2327a005121cc5993f9012bf1a7ff67ba6bf861e2a18732457dab757",
+        "source_kind": "saved_final_native_UI_object",
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt",
+        "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+      },
+      "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+      "router_terminal_status": "cap_seconds",
+      "router_status_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-03-control-research-a001/native/receipt.json",
+        "sha256": "d0a02f152ae031b8fe432d38a86a5704b3d6b66498e59080fe05ee1060d92dd7",
+        "selector": "/status",
+        "definition": "Driver/router result only; not used to populate native_goal_status"
+      },
+      "native_goal_updated_at_epoch_ms": 1791238278755,
+      "status_selector": "/projection/target/status",
+      "goal_id_selector": "/projection/target/targetId",
+      "event_time_selector": "/projection/target/updatedAt"
+    },
+    {
+      "job_id": "I-03-treatment-research-a001",
+      "pair_id": "I-03",
+      "arm": "treatment",
+      "stage": "research",
+      "deployment_kind": "candidate_stage",
+      "registry_operational_status": "FAILED",
+      "native_goal_status": "paused",
+      "goal_id": "target_muvt1a6t_7693847e-9ce4-4446-ad9f-184a84712c6a",
+      "native_goal_record_update_utc": "2026-10-05T22:28:36.192000+00:00",
+      "source_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-03-treatment-research-a001/native/final-session.redacted.json",
+        "sha256": "749abda5ebad2747560a2ac0546e36a2b9f0713f6135859df071af94b6b85518",
+        "source_kind": "saved_final_native_UI_object",
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt",
+        "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+      },
+      "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+      "router_terminal_status": "cap_seconds",
+      "router_status_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-03-treatment-research-a001/native/receipt.json",
+        "sha256": "3460a004e724e604f8e3157b7ac27cf3ac0bbd5802b355475adda4a0bb40f748",
+        "selector": "/status",
+        "definition": "Driver/router result only; not used to populate native_goal_status"
+      },
+      "native_goal_updated_at_epoch_ms": 1791239316192,
+      "status_selector": "/projection/target/status",
+      "goal_id_selector": "/projection/target/targetId",
+      "event_time_selector": "/projection/target/updatedAt"
+    },
+    {
+      "job_id": "I-04-control-research-a001",
+      "pair_id": "I-04",
+      "arm": "control",
+      "stage": "research",
+      "deployment_kind": "candidate_stage",
+      "registry_operational_status": "FAILED",
+      "native_goal_status": "paused",
+      "goal_id": "target_muvtch0y_b9aea62b-f124-49ce-9789-0f90f55a1edd",
+      "native_goal_record_update_utc": "2026-10-05T22:39:49.157000+00:00",
+      "source_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-04-control-research-a001/native/final-session.redacted.json",
+        "sha256": "9655a5928eaab0f29478ea5f39373a174752feca66ea24adde53abf1a6184318",
+        "source_kind": "saved_final_native_UI_object",
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt",
+        "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+      },
+      "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+      "router_terminal_status": "cap_seconds",
+      "router_status_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-04-control-research-a001/native/receipt.json",
+        "sha256": "6177120829ca07256c60fcf8f250650337b75f95230b96ad26d99ab1858ed580",
+        "selector": "/status",
+        "definition": "Driver/router result only; not used to populate native_goal_status"
+      },
+      "native_goal_updated_at_epoch_ms": 1791239989157,
+      "status_selector": "/projection/target/status",
+      "goal_id_selector": "/projection/target/targetId",
+      "event_time_selector": "/projection/target/updatedAt"
+    },
+    {
+      "job_id": "I-04-treatment-research-a001",
+      "pair_id": "I-04",
+      "arm": "treatment",
+      "stage": "research",
+      "deployment_kind": "candidate_stage",
+      "registry_operational_status": "FAILED",
+      "native_goal_status": "paused",
+      "goal_id": "target_muvtno4g_95a4e5e8-1463-4890-a1a1-ad7a7dea3ee7",
+      "native_goal_record_update_utc": "2026-10-05T22:46:01.115000+00:00",
+      "source_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-04-treatment-research-a001/native/final-session.redacted.json",
+        "sha256": "43eda498d01ccbb219d45e5b2eafd5d4485a6083e406cea985f54572ccf92028",
+        "source_kind": "saved_final_native_UI_object",
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt",
+        "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+      },
+      "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+      "router_terminal_status": "cap_seconds",
+      "router_status_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-04-treatment-research-a001/native/receipt.json",
+        "sha256": "94b2172548a18009079ceb100c7d8d0307db5cd74ad22c4ed07ab4b30ebfa67b",
+        "selector": "/status",
+        "definition": "Driver/router result only; not used to populate native_goal_status"
+      },
+      "native_goal_updated_at_epoch_ms": 1791240361115,
+      "status_selector": "/projection/target/status",
+      "goal_id_selector": "/projection/target/targetId",
+      "event_time_selector": "/projection/target/updatedAt"
+    },
+    {
+      "job_id": "er9-glm-probe-001",
+      "pair_id": null,
+      "arm": null,
+      "stage": "route_configuration",
+      "deployment_kind": "configuration_probe",
+      "registry_operational_status": "SAVED_ROUTE_TERMINAL",
+      "native_goal_status": "UNKNOWN",
+      "goal_id": null,
+      "native_goal_record_update_utc": null,
+      "source_evidence": null,
+      "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+      "router_terminal_status": "probe_ready",
+      "router_status_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/probe-001/native/receipt.json",
+        "sha256": "bb1f11839001f23b266ad3e18dce0428b2785e779a4753b585aa43cbbb05f4ae",
+        "selector": "/status",
+        "definition": "Driver/router result only; not used to populate native_goal_status"
+      },
+      "unknown_reason": "NO_DIRECT_NATIVE_GOAL_STATUS_RECEIPT"
+    },
+    {
+      "job_id": "er9-glm-route-canary-001",
+      "pair_id": null,
+      "arm": null,
+      "stage": "route_canary",
+      "deployment_kind": "route_canary",
+      "registry_operational_status": "SAVED_ROUTE_TERMINAL",
+      "native_goal_status": "paused",
+      "goal_id": "target_muvqh3sa_ea236b3b-59ea-4ff7-a881-7a8848925eab",
+      "native_goal_record_update_utc": "2026-10-05T21:00:00.672000+00:00",
+      "source_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/canary-001/native/final-session.redacted.json",
+        "sha256": "e5b766cc4a5d32ee94867048f2fa2d331ec21ede8d0e8f2cd06522fa3f1baecf",
+        "source_kind": "saved_final_native_UI_object",
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt",
+        "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+      },
+      "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+      "router_terminal_status": "execution_error",
+      "router_status_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/canary-001/native/receipt.json",
+        "sha256": "f72d00fb53f8d183da1558100fc48e7f712b81794c1f5e45d3b6f5948338aa2f",
+        "selector": "/status",
+        "definition": "Driver/router result only; not used to populate native_goal_status"
+      },
+      "native_goal_updated_at_epoch_ms": 1791234000672,
+      "status_selector": "/projection/target/status",
+      "goal_id_selector": "/projection/target/targetId",
+      "event_time_selector": "/projection/target/updatedAt"
+    },
+    {
+      "job_id": "er9-glm-route-canary-002",
+      "pair_id": null,
+      "arm": null,
+      "stage": "route_canary",
+      "deployment_kind": "route_canary",
+      "registry_operational_status": "SAVED_ROUTE_TERMINAL",
+      "native_goal_status": "complete",
+      "goal_id": "target_muvqkkrq_2b40558d-311c-4881-9268-b0a640b23c6f",
+      "native_goal_record_update_utc": "2026-10-05T21:03:51.118000+00:00",
+      "source_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/canary-002/native/final-session.redacted.json",
+        "sha256": "75211e077e541d9edc81c6608d38269ad35966cfe9528597c1136782f6cb252b",
+        "source_kind": "saved_final_native_UI_object",
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt",
+        "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+      },
+      "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+      "router_terminal_status": "completed",
+      "router_status_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/canary-002/native/receipt.json",
+        "sha256": "b33715595ee1e222b8f0a3087b22114fdb81ebd98e90fc64d20d255cc214fe75",
+        "selector": "/status",
+        "definition": "Driver/router result only; not used to populate native_goal_status"
+      },
+      "native_goal_updated_at_epoch_ms": 1791234231118,
+      "status_selector": "/projection/target/status",
+      "goal_id_selector": "/projection/target/targetId",
+      "event_time_selector": "/projection/target/updatedAt"
+    }
+  ],
+  "counts_by_last_direct_native_goal_status": {
+    "complete": 4,
+    "paused": 9,
+    "UNKNOWN": 1
+  },
+  "candidate_stage_counts_by_last_direct_native_goal_status": {
+    "complete": 3,
+    "paused": 8
+  },
+  "erratum": {
+    "old_exports_preserved": true,
+    "correction": "Accounting cohorts001..003 used router terminal outcome as native_goal_status. Cohort004 removed that inference. This new separately pinned native-evidence export supplies actual observed status where available; it does not alter router outcome, costs, source grading or old cohorts."
+  }
+}

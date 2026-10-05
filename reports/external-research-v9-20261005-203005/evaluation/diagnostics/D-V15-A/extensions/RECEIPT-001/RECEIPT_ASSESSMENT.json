@@ -1,0 +1,526 @@
+{
+  "schema": "er9.additive-receipt-assessment.v1",
+  "evaluation_id": "ER9-EVAL-D-V15-A-RECEIPT-001",
+  "saved_utc": "2026-10-05T23:01:00.056572Z",
+  "reservation": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/extensions/RECEIPT-001/RESERVATION.json",
+    "sha256": "4742d127efb244e70ff6a1592807fe9fceaa341d1c2ee20b3e0d75bec94460d0"
+  },
+  "started": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/extensions/RECEIPT-001/STARTED.json",
+    "sha256": "13629f8713032a29d949a88ad9d2905da339a8d946e0364d45e52679a6786297"
+  },
+  "packets": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D15A-WITNESSES-HELD-001/MANIFEST.json",
+      "sha256": "625f6466bc93f6e842f7466121aedb4d52be3b07053a7d9ca3d4f4a189ae47dd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/DIAGNOSTIC-OPERATIONAL-001/MANIFEST.json",
+      "sha256": "34c88ad39cc031012be700b4a2127b6dded42480ac36beeadc7dc5cd5e3bc68a"
+    }
+  ],
+  "original_allowance_closed_and_not_reset": true,
+  "original_current_source_judgments_unchanged": true,
+  "semantic_source_searches_performed": false,
+  "executions": [
+    {
+      "execution_id": "exec-jsy4p0dv",
+      "actor": "candidate",
+      "execution_label": "candidate_executed",
+      "receipt_facts": {
+        "actor": "candidate",
+        "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+        "bootstrap_started": true,
+        "cleanup_classification": "collected_unit_absent",
+        "cleanup_confirmed": true,
+        "cleanup_state_returncode": 0,
+        "cleanup_stop_returncode": 5,
+        "code_sha256": "89488a57cd09012b0f04e277e3ae0261ed5aa5fd97e28c5d659875e6562861b2",
+        "control_group_absent_after_stop": null,
+        "control_group_populated_after_stop": null,
+        "data_sha256": "9a510f2a7c610d09f74d86e2f266ce4f0def2cdeb9484016f57bcf9e5a6475a9",
+        "execution_id": "exec-jsy4p0dv",
+        "execution_label": "executed by candidate",
+        "exit_code": 1,
+        "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+        "limits": {
+          "cpu_seconds": 3,
+          "memory_bytes": 268435456,
+          "network": "new empty namespace",
+          "stream_bytes_each": 32768,
+          "tasks": 16,
+          "wall_seconds": 5
+        },
+        "schema": "er9.execution.result.v1",
+        "stderr_bytes": 443,
+        "stderr_sha256": "ba95c4ebfcab1d2b9ad1cb93dc0199779c29508812a51690ae53a4c550153fd4",
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stopped_by_adapter": null,
+        "unit_active_state_after_stop": "inactive",
+        "unit_load_state_after_stop": "not-found"
+      },
+      "evidence_files": [
+        {
+          "pair_id": "D-V15-A",
+          "alias": "B",
+          "execution_id": "exec-jsy4p0dv",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D15A-WITNESSES-HELD-001/D-V15-A/B/exec-jsy4p0dv/code.py",
+          "sha256": "89488a57cd09012b0f04e277e3ae0261ed5aa5fd97e28c5d659875e6562861b2",
+          "original_sha256": "89488a57cd09012b0f04e277e3ae0261ed5aa5fd97e28c5d659875e6562861b2",
+          "evidence_kind": "candidate_code",
+          "redaction_policy": "exact bytes"
+        },
+        {
+          "pair_id": "D-V15-A",
+          "alias": "B",
+          "execution_id": "exec-jsy4p0dv",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D15A-WITNESSES-HELD-001/D-V15-A/B/exec-jsy4p0dv/data.json",
+          "sha256": "9a510f2a7c610d09f74d86e2f266ce4f0def2cdeb9484016f57bcf9e5a6475a9",
+          "original_sha256": "9a510f2a7c610d09f74d86e2f266ce4f0def2cdeb9484016f57bcf9e5a6475a9",
+          "evidence_kind": "candidate_input",
+          "redaction_policy": "exact bytes"
+        },
+        {
+          "pair_id": "D-V15-A",
+          "alias": "B",
+          "execution_id": "exec-jsy4p0dv",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D15A-WITNESSES-HELD-001/D-V15-A/B/exec-jsy4p0dv/stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "evidence_kind": "candidate_stdout",
+          "redaction_policy": "exact bytes"
+        },
+        {
+          "pair_id": "D-V15-A",
+          "alias": "B",
+          "execution_id": "exec-jsy4p0dv",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D15A-WITNESSES-HELD-001/D-V15-A/B/exec-jsy4p0dv/stderr.bin",
+          "sha256": "ba95c4ebfcab1d2b9ad1cb93dc0199779c29508812a51690ae53a4c550153fd4",
+          "original_sha256": "ba95c4ebfcab1d2b9ad1cb93dc0199779c29508812a51690ae53a4c550153fd4",
+          "evidence_kind": "candidate_stderr",
+          "redaction_policy": "exact bytes"
+        },
+        {
+          "pair_id": "D-V15-A",
+          "alias": "B",
+          "execution_id": "exec-jsy4p0dv",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D15A-WITNESSES-HELD-001/D-V15-A/B/exec-jsy4p0dv/execution-facts.json",
+          "sha256": "4e434f552e9b73fc96d5875ce21f3ed85fe9615b39abf1bbcad1d1afd3213ed5",
+          "original_sha256": "e7a5da1e4b7c39d8655c809af80aa2e3a35bc2e11daadb7cf72e3600d09e6f3d",
+          "evidence_kind": "candidate_execution_receipt",
+          "redaction_policy": "positive metadata projection; omit unit/privatepath/timing/history/economics, streams separately exact",
+          "omitted_original_fields": [
+            "cleanup_query_stderr",
+            "cleanup_query_stdout",
+            "cleanup_stop_stderr",
+            "cleanup_stop_stdout",
+            "completed_utc",
+            "control_group_after_stop",
+            "elapsed_seconds",
+            "limitations",
+            "stderr",
+            "stdout"
+          ]
+        }
+      ],
+      "content_correspondence": "Failed scratch: omitted X dimension in chunk-size multiplication; input/code/AssertionError match narrative failed attempt."
+    },
+    {
+      "execution_id": "exec-puumq921",
+      "actor": "candidate",
+      "execution_label": "candidate_executed",
+      "receipt_facts": {
+        "actor": "candidate",
+        "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+        "bootstrap_started": true,
+        "cleanup_classification": "collected_unit_absent",
+        "cleanup_confirmed": true,
+        "cleanup_state_returncode": 0,
+        "cleanup_stop_returncode": 5,
+        "code_sha256": "caa85062195ad4c4f3a247550b539a1928077be5076bfcc8f069dcdd9b87bc3e",
+        "control_group_absent_after_stop": null,
+        "control_group_populated_after_stop": null,
+        "data_sha256": "9a510f2a7c610d09f74d86e2f266ce4f0def2cdeb9484016f57bcf9e5a6475a9",
+        "execution_id": "exec-puumq921",
+        "execution_label": "executed by candidate",
+        "exit_code": 0,
+        "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+        "limits": {
+          "cpu_seconds": 3,
+          "memory_bytes": 268435456,
+          "network": "new empty namespace",
+          "stream_bytes_each": 32768,
+          "tasks": 16,
+          "wall_seconds": 5
+        },
+        "schema": "er9.execution.result.v1",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 273,
+        "stdout_sha256": "18ad6f620ec02c1ab000ff248c65537e3fcb5ae4fe4d5b959d01a5cc6e2139c4",
+        "stopped_by_adapter": null,
+        "unit_active_state_after_stop": "inactive",
+        "unit_load_state_after_stop": "not-found"
+      },
+      "evidence_files": [
+        {
+          "pair_id": "D-V15-A",
+          "alias": "B",
+          "execution_id": "exec-puumq921",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D15A-WITNESSES-HELD-001/D-V15-A/B/exec-puumq921/code.py",
+          "sha256": "caa85062195ad4c4f3a247550b539a1928077be5076bfcc8f069dcdd9b87bc3e",
+          "original_sha256": "caa85062195ad4c4f3a247550b539a1928077be5076bfcc8f069dcdd9b87bc3e",
+          "evidence_kind": "candidate_code",
+          "redaction_policy": "exact bytes"
+        },
+        {
+          "pair_id": "D-V15-A",
+          "alias": "B",
+          "execution_id": "exec-puumq921",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D15A-WITNESSES-HELD-001/D-V15-A/B/exec-puumq921/data.json",
+          "sha256": "9a510f2a7c610d09f74d86e2f266ce4f0def2cdeb9484016f57bcf9e5a6475a9",
+          "original_sha256": "9a510f2a7c610d09f74d86e2f266ce4f0def2cdeb9484016f57bcf9e5a6475a9",
+          "evidence_kind": "candidate_input",
+          "redaction_policy": "exact bytes"
+        },
+        {
+          "pair_id": "D-V15-A",
+          "alias": "B",
+          "execution_id": "exec-puumq921",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D15A-WITNESSES-HELD-001/D-V15-A/B/exec-puumq921/stdout.bin",
+          "sha256": "18ad6f620ec02c1ab000ff248c65537e3fcb5ae4fe4d5b959d01a5cc6e2139c4",
+          "original_sha256": "18ad6f620ec02c1ab000ff248c65537e3fcb5ae4fe4d5b959d01a5cc6e2139c4",
+          "evidence_kind": "candidate_stdout",
+          "redaction_policy": "exact bytes"
+        },
+        {
+          "pair_id": "D-V15-A",
+          "alias": "B",
+          "execution_id": "exec-puumq921",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D15A-WITNESSES-HELD-001/D-V15-A/B/exec-puumq921/stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "evidence_kind": "candidate_stderr",
+          "redaction_policy": "exact bytes"
+        },
+        {
+          "pair_id": "D-V15-A",
+          "alias": "B",
+          "execution_id": "exec-puumq921",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D15A-WITNESSES-HELD-001/D-V15-A/B/exec-puumq921/execution-facts.json",
+          "sha256": "2755851ba46285b64f18765081c46fc44341f339b5b69d39e09e00cc91d1c4c5",
+          "original_sha256": "f046cc1031440ed1283f0dfd3652bd1dc4f61ecba2c151ebfa08a5512b927820",
+          "evidence_kind": "candidate_execution_receipt",
+          "redaction_policy": "positive metadata projection; omit unit/privatepath/timing/history/economics, streams separately exact",
+          "omitted_original_fields": [
+            "cleanup_query_stderr",
+            "cleanup_query_stdout",
+            "cleanup_stop_stderr",
+            "cleanup_stop_stdout",
+            "completed_utc",
+            "control_group_after_stop",
+            "elapsed_seconds",
+            "limitations",
+            "stderr",
+            "stdout"
+          ]
+        }
+      ],
+      "content_correspondence": "Unique full successful predicate/coordinate/chunk check matches all narrated W01 features."
+    },
+    {
+      "execution_id": "exec-rqjjtggj",
+      "actor": "candidate",
+      "execution_label": "candidate_executed",
+      "receipt_facts": {
+        "actor": "candidate",
+        "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+        "bootstrap_started": true,
+        "cleanup_classification": "collected_unit_absent",
+        "cleanup_confirmed": true,
+        "cleanup_state_returncode": 0,
+        "cleanup_stop_returncode": 5,
+        "code_sha256": "58db797c4204f0acc5db0379fd18d0edd34dd3de26b55ffe04b0b12326ac5da3",
+        "control_group_absent_after_stop": null,
+        "control_group_populated_after_stop": null,
+        "data_sha256": "f335796a6c455bd55d55e0aadd978b51356af9a76372e6388015a6c6454ddf8c",
+        "execution_id": "exec-rqjjtggj",
+        "execution_label": "executed by candidate",
+        "exit_code": 0,
+        "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+        "limits": {
+          "cpu_seconds": 3,
+          "memory_bytes": 268435456,
+          "network": "new empty namespace",
+          "stream_bytes_each": 32768,
+          "tasks": 16,
+          "wall_seconds": 5
+        },
+        "schema": "er9.execution.result.v1",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 33,
+        "stdout_sha256": "fa6ea847f11d77bbfbc91c530cc51cc6af938484d70c5264b7c4106dc2e81576",
+        "stopped_by_adapter": null,
+        "unit_active_state_after_stop": "inactive",
+        "unit_load_state_after_stop": "not-found"
+      },
+      "evidence_files": [
+        {
+          "pair_id": "D-V15-A",
+          "alias": "B",
+          "execution_id": "exec-rqjjtggj",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D15A-WITNESSES-HELD-001/D-V15-A/B/exec-rqjjtggj/code.py",
+          "sha256": "58db797c4204f0acc5db0379fd18d0edd34dd3de26b55ffe04b0b12326ac5da3",
+          "original_sha256": "58db797c4204f0acc5db0379fd18d0edd34dd3de26b55ffe04b0b12326ac5da3",
+          "evidence_kind": "candidate_code",
+          "redaction_policy": "exact bytes"
+        },
+        {
+          "pair_id": "D-V15-A",
+          "alias": "B",
+          "execution_id": "exec-rqjjtggj",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D15A-WITNESSES-HELD-001/D-V15-A/B/exec-rqjjtggj/data.json",
+          "sha256": "f335796a6c455bd55d55e0aadd978b51356af9a76372e6388015a6c6454ddf8c",
+          "original_sha256": "f335796a6c455bd55d55e0aadd978b51356af9a76372e6388015a6c6454ddf8c",
+          "evidence_kind": "candidate_input",
+          "redaction_policy": "exact bytes"
+        },
+        {
+          "pair_id": "D-V15-A",
+          "alias": "B",
+          "execution_id": "exec-rqjjtggj",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D15A-WITNESSES-HELD-001/D-V15-A/B/exec-rqjjtggj/stdout.bin",
+          "sha256": "fa6ea847f11d77bbfbc91c530cc51cc6af938484d70c5264b7c4106dc2e81576",
+          "original_sha256": "fa6ea847f11d77bbfbc91c530cc51cc6af938484d70c5264b7c4106dc2e81576",
+          "evidence_kind": "candidate_stdout",
+          "redaction_policy": "exact bytes"
+        },
+        {
+          "pair_id": "D-V15-A",
+          "alias": "B",
+          "execution_id": "exec-rqjjtggj",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D15A-WITNESSES-HELD-001/D-V15-A/B/exec-rqjjtggj/stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "evidence_kind": "candidate_stderr",
+          "redaction_policy": "exact bytes"
+        },
+        {
+          "pair_id": "D-V15-A",
+          "alias": "B",
+          "execution_id": "exec-rqjjtggj",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D15A-WITNESSES-HELD-001/D-V15-A/B/exec-rqjjtggj/execution-facts.json",
+          "sha256": "c8e7977b91e8d698009af6fd8ef74b27764dc9928270d24cc3fda58e3e9ddee7",
+          "original_sha256": "6dade05b6151c20d69ee3e48d8709fe379d2b016f4175c8e230e52c1c202841f",
+          "evidence_kind": "candidate_execution_receipt",
+          "redaction_policy": "positive metadata projection; omit unit/privatepath/timing/history/economics, streams separately exact",
+          "omitted_original_fields": [
+            "cleanup_query_stderr",
+            "cleanup_query_stdout",
+            "cleanup_stop_stderr",
+            "cleanup_stop_stdout",
+            "completed_utc",
+            "control_group_after_stop",
+            "elapsed_seconds",
+            "limitations",
+            "stderr",
+            "stdout"
+          ]
+        }
+      ],
+      "content_correspondence": "Separate successful chunk-size sanity print, narrower scope."
+    }
+  ],
+  "W01_correspondence": {
+    "formal_identifier_mapping": "UNKNOWN; witnesses.json absent, no canonical W01-to-execution-ID record",
+    "content_correspondence": "SUPPORTED inference: exec-puumq921 uniquely matches the final narrative full arithmetic check; failed exec-jsy4p0dv and extra exec-rqjjtggj preserved",
+    "candidate_execution_claim": "Three actual candidate executions proved by bounded positive receipts; do not credit evaluator work or upstream/app execution"
+  },
+  "phase2_allocation": [
+    {
+      "alias": "A",
+      "arm": "control",
+      "accounting_typed_row": {
+        "actual_family": "Luna",
+        "arm": "control",
+        "attempt_id": "D-V15-A-control-diagnostic-a002",
+        "billing_dollars": "UNKNOWN",
+        "cancelled_or_unexposed_tail": "UNKNOWN",
+        "category": "candidate_attempt",
+        "cleanup_reserve_seconds": 15.0,
+        "cleanup_seconds": "UNKNOWN",
+        "end_utc": null,
+        "goal_identity": "01a10e0f-6382-7701-ac04-d2c73d7dbf74",
+        "http_attempts": "UNKNOWN",
+        "inference_model_provenance": "NATIVE_THREAD_IDENTITY_AND_USAGE_RECEIPT",
+        "job_status": "FAILED",
+        "known_usage": {
+          "cached_input_included": 5393920,
+          "input": 5707541,
+          "output": 27987,
+          "reasoning_output_subset": 23877,
+          "total": 5735528
+        },
+        "native_execution_seconds": null,
+        "native_goal_starts": 1,
+        "native_goal_status": "paused",
+        "native_goal_status_before_cleanup": "active",
+        "observed_effort": "max",
+        "observed_model": "gpt-6-luna",
+        "occupied_seconds": 885.499773399,
+        "pair_id": "D-V15-A",
+        "provider_request_count": null,
+        "provider_status_counts": {},
+        "quiescent": true,
+        "quota_exhaustion": "UNKNOWN",
+        "requested_effort": "max",
+        "requested_model": "gpt-6-luna",
+        "router_terminal_status": "HOLD",
+        "source_pins": [
+          {
+            "path": "ops/dispatcher/runs/D-V15-A-control-diagnostic-a002/native/result.json",
+            "sha256": "529dd260b032e4bc5e925bf2ec55dea815bba529458e36d391c8ff4bbfab78ca"
+          }
+        ],
+        "stage": "diagnostic",
+        "start_utc": null,
+        "terminal_error_class": "TimeoutError",
+        "turn_completion_notifications": 1,
+        "turn_status_counts": {
+          "interrupted": 1
+        },
+        "ui_usage_separate": null,
+        "usage_basis": "native_thread_cumulative",
+        "usage_notifications": 52
+      },
+      "native_quiescent": true,
+      "actual_input_pins": {
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-A-control-diagnostic-a002/workspace/inputs/diagnostic_task.md": "7687562ba698734d1af43b9d0f4487674ed4203726d93c4316a8e26d07145a88",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-A-control-diagnostic-a002/workspace/inputs/brief.md": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-A-control-diagnostic-a002/workspace/inputs/arm_instruction.md": "c679bd6ba40025982ec325e99be60e7e192007e066873f61cad2a4b27eceb0d4",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-A-control-diagnostic-a002/workspace/inputs/output_contract.md": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+      }
+    },
+    {
+      "alias": "B",
+      "arm": "treatment",
+      "accounting_typed_row": {
+        "actual_family": "Luna",
+        "arm": "treatment",
+        "attempt_id": "D-V15-A-treatment-diagnostic-a002",
+        "billing_dollars": "UNKNOWN",
+        "cancelled_or_unexposed_tail": "UNKNOWN",
+        "category": "candidate_attempt",
+        "cleanup_reserve_seconds": 15.0,
+        "cleanup_seconds": "UNKNOWN",
+        "end_utc": null,
+        "goal_identity": "01a10e12-58f3-7750-86dd-8d7ce4327ce2",
+        "http_attempts": "UNKNOWN",
+        "inference_model_provenance": "NATIVE_THREAD_IDENTITY_AND_USAGE_RECEIPT",
+        "job_status": "FAILED",
+        "known_usage": {
+          "cached_input_included": 2767104,
+          "input": 3313114,
+          "output": 40560,
+          "reasoning_output_subset": 28337,
+          "total": 3353674
+        },
+        "native_execution_seconds": null,
+        "native_goal_starts": 1,
+        "native_goal_status": "paused",
+        "native_goal_status_before_cleanup": "active",
+        "observed_effort": "max",
+        "observed_model": "gpt-6-luna",
+        "occupied_seconds": 885.55507176,
+        "pair_id": "D-V15-A",
+        "provider_request_count": null,
+        "provider_status_counts": {},
+        "quiescent": true,
+        "quota_exhaustion": "UNKNOWN",
+        "requested_effort": "max",
+        "requested_model": "gpt-6-luna",
+        "router_terminal_status": "HOLD",
+        "source_pins": [
+          {
+            "path": "ops/dispatcher/runs/D-V15-A-treatment-diagnostic-a002/native/result.json",
+            "sha256": "01f55b1420c5208c345ab3698a8e12ee46b12696be55e5c8adbc170602dac474"
+          }
+        ],
+        "stage": "diagnostic",
+        "start_utc": null,
+        "terminal_error_class": "TimeoutError",
+        "turn_completion_notifications": 1,
+        "turn_status_counts": {
+          "interrupted": 1
+        },
+        "ui_usage_separate": null,
+        "usage_basis": "native_thread_cumulative",
+        "usage_notifications": 34
+      },
+      "native_quiescent": true,
+      "actual_input_pins": {
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-A-treatment-diagnostic-a002/workspace/inputs/diagnostic_task.md": "7687562ba698734d1af43b9d0f4487674ed4203726d93c4316a8e26d07145a88",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-A-treatment-diagnostic-a002/workspace/inputs/brief.md": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-A-treatment-diagnostic-a002/workspace/inputs/arm_instruction.md": "054f9494e9c099e0cc48099439849003ceb2a11216658d831020b343e8e1d167",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-A-treatment-diagnostic-a002/workspace/inputs/output_contract.md": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+      }
+    }
+  ],
+  "method_uptake": "Treatment issued candidate-authored source-derived predicate/coordinate checks and corrected a failed dimensional arithmetic attempt. Actual direct input pins show brief-only method contract; no premium repair or case answer was supplied. Complete chain/app qualification remains original unassessed remainder.",
+  "economics": {
+    "occupied_seconds_sum": 1771.054845159,
+    "usage_per_arm": [
+      {
+        "alias": "A",
+        "arm": "control",
+        "usage": {
+          "cached_input_included": 5393920,
+          "input": 5707541,
+          "output": 27987,
+          "reasoning_output_subset": 23877,
+          "total": 5735528
+        },
+        "basis": "native_thread_cumulative"
+      },
+      {
+        "alias": "B",
+        "arm": "treatment",
+        "usage": {
+          "cached_input_included": 2767104,
+          "input": 3313114,
+          "output": 40560,
+          "reasoning_output_subset": 28337,
+          "total": 3353674
+        },
+        "basis": "native_thread_cumulative"
+      }
+    ],
+    "definitions": "Cached input subset included in input; reasoning subset included in output; total=input+output; not generated-output dollars.",
+    "billing_dollars": "UNKNOWN",
+    "service_waits_retries_child_tail": "UNKNOWN",
+    "extra_evaluator_elapsed_seconds": 462.430683741,
+    "extra_evaluator_tokens_money": "UNKNOWN",
+    "extra_evaluator_coverage": "Only receipt/provenance correspondence, method/cost metadata; no new semantic source findings"
+  },
+  "decision_boundary": {
+    "original_HOLD_unchanged": true,
+    "final_catalog_delivery_still_missing": true,
+    "whole_case_PASS": false,
+    "complete_pair_or_pipeline_credit": false
+  },
+  "budget": {
+    "separate_max_seconds": 600,
+    "delivery_received_utc": "2026-10-05T22:53:17.625832Z",
+    "deadline_utc": "2026-10-05T23:03:17.625832Z",
+    "elapsed_seconds": 462.430683741,
+    "within_declared_extension": true
+  },
+  "limits": [
+    "Missing W01 formal mapping/catalog is not repaired by evaluator matching.",
+    "Three charged candidate executions are not one selected best-of result; failed attempt remains.",
+    "No new semantic source search, candidate work, grade rewrite or original budget reset."
+  ]
+}

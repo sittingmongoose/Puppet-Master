@@ -1,0 +1,18 @@
+{
+  "evaluation_id": "ER9-EVAL-I02-RESEARCH-001",
+  "started_utc": "2026-10-05T22:30:13.491488Z",
+  "started_epoch": 1791239413.4914834,
+  "screen_target_epoch": 1791240613.4914834,
+  "deadline_epoch": 1791241213.4914834,
+  "requested_evaluator": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_evaluator": null,
+  "dispatch_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I02-research-packet0001/dispatch.json",
+    "sha256": "e3be7ac228eef9f72f91f0a844ecc18770dae5bc4f67a1f5e9da9315018b89cf"
+  },
+  "scope": "two_terminal_research_stage_outputs",
+  "designated_final_present": false
+}

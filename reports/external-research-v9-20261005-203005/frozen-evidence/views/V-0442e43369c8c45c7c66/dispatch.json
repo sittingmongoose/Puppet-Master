@@ -1,0 +1,135 @@
+{
+  "schema": "er9.partial-diagnostic-dispatch.v1",
+  "protocol_version": "ER9-independent-output-v1",
+  "evaluation_id": "ER9-EVAL-D-V14-B-001-PARTIAL-SOURCE-001",
+  "parent_evaluation_id": "ER9-EVAL-D-V14-B-001",
+  "track": "A",
+  "scope": "PARTIAL_SOURCE_ONLY",
+  "prepared_utc": "2026-10-05T22:32:29.335088Z",
+  "parent_dispatch_sha256": "0442e43369c8c45c7c6697a62e4bcd5b81a291346501628cea68a66297da5373",
+  "result_directory": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-B/partial-review0001",
+  "task": {
+    "brief": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/views/V-0442e43369c8c45c7c66/task/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    "neutral_task": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/views/V-0442e43369c8c45c7c66/task/neutral_task.md",
+      "sha256": "0cb72a9fdae767d211ada4dfb1862708f7ebb057b678dba1676b6c1b4b8dc6a9"
+    },
+    "coverage_map": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/views/V-0442e43369c8c45c7c66/task/coverage_map.json",
+      "sha256": "9fa7e45130357db9164e8a539f3a75916bde66b60b76faa2897ab19aced4818c"
+    },
+    "common_criteria": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/views/V-0442e43369c8c45c7c66/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+    },
+    "source_access": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/views/V-0442e43369c8c45c7c66/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    "output_contract": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/views/V-0442e43369c8c45c7c66/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    }
+  },
+  "anonymous_partial_outputs": [
+    {
+      "alias": "A",
+      "view_status": "PARTIAL_SOURCE_ONLY",
+      "designated_final": null,
+      "final_quality_in_this_view": "UNASSESSED",
+      "parent_designated_final_artifact_status": "TERMINAL_MISSING_DESIGNATED_FINAL",
+      "partial_artifacts": {
+        "partial_discovery_report": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/views/V-0442e43369c8c45c7c66/outputs/A/research/proposal.md",
+          "sha256": "0f82d566ddc5fad55df7679234c7790bc0f9da0b9efa9e669261b18f331c8a57",
+          "artifact_kind": "partial_discovery"
+        },
+        "source_catalog": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/views/V-0442e43369c8c45c7c66/outputs/A/research/sources.json",
+          "sha256": "40f52b106415f448d0743edd31caf247959bc003af6b2cb583fd08d13ed5f101",
+          "artifact_kind": "partial_discovery"
+        },
+        "witness_catalog": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/views/V-0442e43369c8c45c7c66/outputs/A/research/witnesses.json",
+          "sha256": "69f8940eed7dc3790496cc11f0576a0847b95a5ce577cce4e6bce422a06a2f29",
+          "artifact_kind": "partial_discovery"
+        }
+      },
+      "additional_anonymous_evidence": [],
+      "boundary": "Frozen research artifacts are assessed only as partial discoveries; never a final, complete pipeline or replacement grade."
+    },
+    {
+      "alias": "B",
+      "view_status": "NO_PARTIAL_ARTIFACT",
+      "designated_final": null,
+      "final_quality_in_this_view": "UNASSESSED",
+      "parent_designated_final_artifact_status": "TERMINAL_MISSING_DESIGNATED_FINAL",
+      "partial_artifacts": {},
+      "additional_anonymous_evidence": [],
+      "boundary": "Frozen research artifacts are assessed only as partial discoveries; never a final, complete pipeline or replacement grade."
+    }
+  ],
+  "common_predeclared_checks": [
+    {
+      "check_id": "D-V14-B-P1",
+      "obligation_ids": [],
+      "neutral_question": "Do the same predeclared consequential source/behavior claims receive correct supported correction or preservation under this method, without a new consequential error?"
+    },
+    {
+      "check_id": "D-V14-B-P2",
+      "obligation_ids": [],
+      "neutral_question": "Does the final retain supported conditions, legitimate uncertainty and required useful content rather than blanket rejection or incomplete delivery?"
+    },
+    {
+      "check_id": "D-V14-B-P3",
+      "obligation_ids": [],
+      "neutral_question": "Was the declared mechanism actually taken up with honest source/execution scope, and what critical/false-rejection/repair differences appear under matched budgets?"
+    }
+  ],
+  "assessment_plan": {
+    "mode": "screen_then_complete_if_promising",
+    "screen_max_seconds": 1200,
+    "hard_max_seconds": 1800,
+    "budget_frozen_utc": "2026-10-05T21:52:46.368710Z",
+    "clock_start": "first substantive read of frozen actual current output; setup separate",
+    "limits_note": "Targeted diagnostic only. Same important checks in both aliases. No screen-only PASS or expansion after start. Full development proposal completeness remains UNASSESSED outside actual card scope."
+  },
+  "blinding": {
+    "hidden_fields": [
+      "arm_assignment",
+      "economics",
+      "prior_grades",
+      "method_history",
+      "failure_cause"
+    ],
+    "known_hints_at_dispatch": [
+      "Assignment disclosed V14/V15 targeted mechanism names and requested Luna family; actual arm allocation, observed candidate identity, history, costs and prior grades remain unopened. Exact neutral task/coverage cards also describe the treatment mechanism."
+    ],
+    "byte_policy": "Exact substantive frozen bytes; disclose incidental identity hints.",
+    "allocation_record": "coordinator-only excluded sidecar",
+    "phase2_material_release": "only after immutable current_output_judgment.json saved"
+  },
+  "scope_boundary": "Targeted diagnostic task only; do not imply full development-domain PASS or autonomous discovery when inputs supplied.",
+  "budget_rule": "Same original per-pair allowance; no reset for additive view. Record prior consumption and first actual output read. Setup separate.",
+  "original_judgments": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-B/review0001/current_output_judgment.json",
+      "sha256": "2124b9fd74c738e6adb2c980901bb1ca9e57f4f611f007440bf0336e91238687"
+    }
+  ],
+  "outputs": [
+    "partial_source_judgment.json",
+    "report.json",
+    "REVIEW.md"
+  ],
+  "prohibited_credit": [
+    "designated final",
+    "complete pipeline",
+    "full development proposal PASS",
+    "quality equivalence from absence"
+  ],
+  "phase2_rule": "Save immutable partial_source_judgment.json before opening necessary history/economics."
+}

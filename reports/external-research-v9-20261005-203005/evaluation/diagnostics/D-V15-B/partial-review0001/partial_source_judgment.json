@@ -1,0 +1,755 @@
+{
+  "schema": "er9.partial-source-judgment.v1",
+  "evaluation_id": "ER9-EVAL-D-V15-B-001-PARTIAL-SOURCE-001",
+  "parent_evaluation_id": "ER9-EVAL-D-V15-B-001",
+  "saved_utc": "2026-10-05T22:55:36.650831Z",
+  "scope": "PARTIAL_SOURCE_ONLY",
+  "dispatch": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/views/V-d969be23243353adc83c/dispatch.json",
+    "sha256": "59a78cd88e90f9253a5f54153a930bc8abea0879e97e2c119e1a2abfeb1e7e5a"
+  },
+  "original_judgments": [],
+  "original_judgments_unchanged": true,
+  "final_quality": "UNASSESSED",
+  "whole_case_PASS": false,
+  "full_pipeline_credit": false,
+  "comparison_status": "PARTIAL_CLAIM_COMPARISON_ONLY; both designated finals absent",
+  "anonymous_output_results": [
+    {
+      "alias": "A",
+      "partial_source_decision": "HOLD",
+      "final_quality": "UNASSESSED",
+      "assessment_state": "partial",
+      "obligations": [
+        {
+          "obligation_id": "D-V15-B-01",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "output_locators": [
+            "A research/proposal.md issue/fix/applicability section"
+          ],
+          "source_ids": [],
+          "reason": "Selected historical issue/fix/test/version boundary verified; entire actual source/claim/delivery/history scope unassessed."
+        },
+        {
+          "obligation_id": "D-V15-B-02",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "output_locators": [
+            "A research/proposal.md issue/fix/applicability section"
+          ],
+          "source_ids": [],
+          "reason": "Selected historical issue/fix/test/version boundary verified; entire actual source/claim/delivery/history scope unassessed."
+        },
+        {
+          "obligation_id": "D-V15-B-03",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "output_locators": [
+            "A research/proposal.md issue/fix/applicability section"
+          ],
+          "source_ids": [],
+          "reason": "Selected historical issue/fix/test/version boundary verified; entire actual source/claim/delivery/history scope unassessed."
+        },
+        {
+          "obligation_id": "D-V15-B-04",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "output_locators": [
+            "A research/proposal.md issue/fix/applicability section"
+          ],
+          "source_ids": [],
+          "reason": "Selected historical issue/fix/test/version boundary verified; entire actual source/claim/delivery/history scope unassessed."
+        }
+      ],
+      "consequential_claims": [
+        {
+          "claim_id": "A01",
+          "claim": "nbclient issue88 links to PR90/merge9750d919, periodic kernel-liveness task and Autokill regression asserting runtime error.",
+          "output_locator": "A research/proposal.md:81",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "A-issue88-html",
+            "A-pr90-html",
+            "A-pr90-diff"
+          ],
+          "reason": "Primary issue and merged PR/diff support the selected mechanism. Test is deliberate local kernel self-termination; candidate correctly does not claim containerOOM/remoteGateway/full runtime reproduction."
+        },
+        {
+          "claim_id": "A02",
+          "claim": "0.4.0 lacks the specific liveness polling task/new test;0.5.0 has task; selected0.11.0 retains task and test.",
+          "output_locator": "A research/proposal.md:83; nbclient-v040-line-map.json",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [
+            "A040-client",
+            "A050-client",
+            "A-v011-client",
+            "A040-tests",
+            "A011-tests"
+          ],
+          "reason": "Exact old/new source comparison corroborates task absence/presence and test presence in corresponding client test file. A040 independently retrieved body matches source-map hash69d849... . Entire old test-tree absence was not independently enumerated. Other old death checks exist, so this supports the specific task/path boundary, not total absence of death handling."
+        },
+        {
+          "claim_id": "A03",
+          "claim": "Version boundary is a real source applicability diagnostic; current local subprocess polling does not certify OOM/recovery/remote kernels.",
+          "output_locator": "A research/proposal.md:83",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "A040-client",
+            "A050-client",
+            "A-v011-client",
+            "A011-tests"
+          ],
+          "reason": "Actual differing tagged code demonstrates a genuine release-source boundary. It is a deliberately contrasted historical version assumption, not evidence selected current0.11.0 is unfixed or that an upstream source falsely advertised0.4.0."
+        },
+        {
+          "claim_id": "A04",
+          "claim": "DuckDB sampled JSON inference collapses missing key to NULL; explicit presence/raw-record sidecar is needed to retain absence.",
+          "output_locator": "A research/proposal.md:31-37",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "A-jsonoverview",
+            "A-jsonloading"
+          ],
+          "reason": "Official JSON docs support sample size20480 and missing-to-null behavior. Proposed sidecar responds to a real selected-engine limitation; its implementation remains unexecuted."
+        },
+        {
+          "claim_id": "A05",
+          "claim": "SQL order is not automatically stable; unique deterministic tie-breaker needed;5GB performance is unverified.",
+          "output_locator": "A research/proposal.md:39,45-49",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [
+            "A-order",
+            "A-duckdb156-pypi"
+          ],
+          "reason": "Official order-preservation conditions support limited consequence; package identity1.5.6 exists. Query/operator memory behavior and complete selected-stack compatibility remain unassessed."
+        },
+        {
+          "claim_id": "A06",
+          "claim": "Selected nbclient0.11.0/DuckDB1.5.6 package identities exist with stated lower-bound Python/dependency metadata.",
+          "output_locator": "A research/proposal.md:9",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "A-nbclient011-pypi",
+            "A-duckdb156-pypi"
+          ],
+          "reason": "Package metadata supports direct identities/lower bounds. Candidate explicitly does not claim compatible installed lock."
+        },
+        {
+          "claim_id": "A07",
+          "claim": "Open Gateway follow-upPR is an unreleased/testless lead; candidate executed one successful and one failed synthetic check; full project/security/format facts and choices.",
+          "output_locator": "A research/proposal.md:17,85,98-110",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "source_ids": [],
+          "reason": "No source/witness/lead catalog or positive execution packet for this view. Gateway PR identifier/URL absent, so not independently traced. Executions and packaging/integration/whole proposal consequences remain unassessed, not assumed false."
+        }
+      ],
+      "dimensions": [
+        {
+          "id": 1,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V15-B-01",
+            "D-V15-B-03"
+          ],
+          "finding": "Source chain/conditions and qualified useful implications assessed; missing witness/catalog/final/history and remaining choices unassessed."
+        },
+        {
+          "id": 2,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V15-B-01",
+            "D-V15-B-02",
+            "D-V15-B-04"
+          ],
+          "finding": "Source chain/conditions and qualified useful implications assessed; missing witness/catalog/final/history and remaining choices unassessed."
+        },
+        {
+          "id": 3,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V15-B-01",
+            "D-V15-B-02",
+            "D-V15-B-04"
+          ],
+          "finding": "Source chain/conditions and qualified useful implications assessed; missing witness/catalog/final/history and remaining choices unassessed."
+        },
+        {
+          "id": 4,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V15-B-01",
+            "D-V15-B-04"
+          ],
+          "finding": "Source chain/conditions and qualified useful implications assessed; missing witness/catalog/final/history and remaining choices unassessed."
+        },
+        {
+          "id": 5,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V15-B-03"
+          ],
+          "finding": "Source chain/conditions and qualified useful implications assessed; missing witness/catalog/final/history and remaining choices unassessed."
+        },
+        {
+          "id": 6,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V15-B-02",
+            "D-V15-B-03"
+          ],
+          "finding": "Source chain/conditions and qualified useful implications assessed; missing witness/catalog/final/history and remaining choices unassessed."
+        },
+        {
+          "id": 7,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V15-B-02",
+            "D-V15-B-03",
+            "D-V15-B-04"
+          ],
+          "finding": "Source chain/conditions and qualified useful implications assessed; missing witness/catalog/final/history and remaining choices unassessed."
+        },
+        {
+          "id": 8,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V15-B-03",
+            "D-V15-B-04"
+          ],
+          "finding": "Source chain/conditions and qualified useful implications assessed; missing witness/catalog/final/history and remaining choices unassessed."
+        }
+      ],
+      "supported_findings_delivered": [
+        "Real kernel-death hang\u2192periodic polling\u2192self-terminating regression chain.",
+        "Correct specific0.4/0.5/current0.11 source applicability boundary and local-versus-remote/OOM limits.",
+        "Selected data-engine missing-key-to-NULL pitfall with explicit proposed presence/raw-source preservation."
+      ],
+      "defects": [],
+      "witnesses": [
+        {
+          "witness_id": "A-claimed-synthetic",
+          "execution_label": "candidate_executed",
+          "verified": false,
+          "finding": "No positive execution/code/input receipt in source view; unassessed."
+        }
+      ],
+      "remaining_unassessed": [
+        "Actual candidate execution and failures; source capture/tool request and method uptake history.",
+        "Absent source/witness/lead/final catalogs and complete delivery.",
+        "All claims explicitly unassessed/partial above; whole integrated plan/runtime/security/performance not certified."
+      ]
+    },
+    {
+      "alias": "B",
+      "partial_source_decision": "HOLD",
+      "final_quality": "UNASSESSED",
+      "assessment_state": "partial",
+      "obligations": [
+        {
+          "obligation_id": "D-V15-B-01",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "output_locators": [
+            "B research/proposal.md issue/fix/applicability section"
+          ],
+          "source_ids": [],
+          "reason": "Selected historical issue/fix/test/version boundary verified; entire actual source/claim/delivery/history scope unassessed."
+        },
+        {
+          "obligation_id": "D-V15-B-02",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "output_locators": [
+            "B research/proposal.md issue/fix/applicability section"
+          ],
+          "source_ids": [],
+          "reason": "Selected historical issue/fix/test/version boundary verified; entire actual source/claim/delivery/history scope unassessed."
+        },
+        {
+          "obligation_id": "D-V15-B-03",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "output_locators": [
+            "B research/proposal.md issue/fix/applicability section"
+          ],
+          "source_ids": [],
+          "reason": "Selected historical issue/fix/test/version boundary verified; entire actual source/claim/delivery/history scope unassessed."
+        },
+        {
+          "obligation_id": "D-V15-B-04",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "output_locators": [
+            "B research/proposal.md issue/fix/applicability section"
+          ],
+          "source_ids": [],
+          "reason": "Selected historical issue/fix/test/version boundary verified; entire actual source/claim/delivery/history scope unassessed."
+        }
+      ],
+      "consequential_claims": [
+        {
+          "claim_id": "B01",
+          "claim": "nbclient issue48 concerns notebook errors through IPython%run; fix is IPythonPR12301 merged as c24e8af4 to7.16 line.",
+          "output_locator": "B research/proposal.md:73",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [
+            "B-issue48-html",
+            "B-ipython-pr12301-html",
+            "B-ipython-pr12301-diff"
+          ],
+          "reason": "Primary issue and PR/diff corroborate direct mechanism/link. Exact larger nested nbclient pipeline is not independently reproduced, as candidate explicitly admits."
+        },
+        {
+          "claim_id": "B02",
+          "claim": "7.15.0 calls safe_execfile_ipy without raising flag;7.16.0 adds raise_exceptions=True and test_run_nb_error.",
+          "output_locator": "B research/proposal.md:73-75",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "B-ipy715-execution",
+            "B-ipy716-execution",
+            "B-ipy716-testrun",
+            "B-ipython-pr12301-diff"
+          ],
+          "reason": "Pinned source line715 versus718 and tagged test405 onward corroborate genuine source-level version difference. Source/test presence is not wheel/runtime execution."
+        },
+        {
+          "claim_id": "B03",
+          "claim": "Attributing this fix to nbclient or IPython7.15.0 is incorrect; it covers direct%run error propagation, not all nested notebook cases.",
+          "output_locator": "B research/proposal.md:75-77",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "B-ipy715-execution",
+            "B-ipy716-execution",
+            "B-ipy716-testrun"
+          ],
+          "reason": "Exact component/version boundary is justified and useful to failure-status/replay requirements. This is a contrasted historical assumption, not demonstrated defect in current chosen stack or authenticated misleading upstream recommendation."
+        },
+        {
+          "claim_id": "B04",
+          "claim": "Two independent implementation precedents Jupyter execution and DuckDB analytic engine contribute distinct mechanisms; selected data/execution/source limits.",
+          "output_locator": "B research/proposal.md:7-22,38-69",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [],
+          "reason": "Different mechanism responsibilities are evident and partly supported by shared primary docs. Exact chosen nbclient0.10.2, all current package pins/security claims, CSV/spill path facts and complete product/invalidation/sandbox/recovery consequences were not independently assessed in this bounded chain screen."
+        },
+        {
+          "claim_id": "B05",
+          "claim": "Candidate executed an isolated synthetic normalization/hash component check; sources catalog supplies exact pins.",
+          "output_locator": "B research/proposal.md:88,93",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "source_ids": [],
+          "reason": "Neither witness catalog nor source catalog was frozen in this source view. Actual execution and claimed catalog lineage/delivery remain unassessed; no fabrication inferred."
+        }
+      ],
+      "dimensions": [
+        {
+          "id": 1,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V15-B-01",
+            "D-V15-B-03"
+          ],
+          "finding": "Source chain/conditions and qualified useful implications assessed; missing witness/catalog/final/history and remaining choices unassessed."
+        },
+        {
+          "id": 2,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V15-B-01",
+            "D-V15-B-02",
+            "D-V15-B-04"
+          ],
+          "finding": "Source chain/conditions and qualified useful implications assessed; missing witness/catalog/final/history and remaining choices unassessed."
+        },
+        {
+          "id": 3,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V15-B-01",
+            "D-V15-B-02",
+            "D-V15-B-04"
+          ],
+          "finding": "Source chain/conditions and qualified useful implications assessed; missing witness/catalog/final/history and remaining choices unassessed."
+        },
+        {
+          "id": 4,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V15-B-01",
+            "D-V15-B-04"
+          ],
+          "finding": "Source chain/conditions and qualified useful implications assessed; missing witness/catalog/final/history and remaining choices unassessed."
+        },
+        {
+          "id": 5,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V15-B-03"
+          ],
+          "finding": "Source chain/conditions and qualified useful implications assessed; missing witness/catalog/final/history and remaining choices unassessed."
+        },
+        {
+          "id": 6,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V15-B-02",
+            "D-V15-B-03"
+          ],
+          "finding": "Source chain/conditions and qualified useful implications assessed; missing witness/catalog/final/history and remaining choices unassessed."
+        },
+        {
+          "id": 7,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V15-B-02",
+            "D-V15-B-03",
+            "D-V15-B-04"
+          ],
+          "finding": "Source chain/conditions and qualified useful implications assessed; missing witness/catalog/final/history and remaining choices unassessed."
+        },
+        {
+          "id": 8,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "D-V15-B-03",
+            "D-V15-B-04"
+          ],
+          "finding": "Source chain/conditions and qualified useful implications assessed; missing witness/catalog/final/history and remaining choices unassessed."
+        }
+      ],
+      "supported_findings_delivered": [
+        "Real nested notebook error report\u2192IPython%run raising fix\u2192direct regression test.",
+        "Correct7.15/7.16 component/version boundary; historical fix not a current dependency recommendation.",
+        "Useful failure-status/replay lesson, preserving uncertainty of larger nested application path."
+      ],
+      "defects": [],
+      "witnesses": [
+        {
+          "witness_id": "B-claimed-synthetic",
+          "execution_label": "candidate_executed",
+          "verified": false,
+          "finding": "No positive execution/code/input receipt in source view; unassessed."
+        }
+      ],
+      "remaining_unassessed": [
+        "Actual candidate execution and failures; source capture/tool request and method uptake history.",
+        "Absent source/witness/lead/final catalogs and complete delivery.",
+        "All claims explicitly unassessed/partial above; whole integrated plan/runtime/security/performance not certified."
+      ]
+    }
+  ],
+  "shared_check_comparison": [
+    {
+      "check_id": "D-V15-B-P1",
+      "arm_results": [
+        {
+          "alias": "A",
+          "assessment_state": "partial",
+          "finding": "Selected real chain/tag boundary and limits supported; witness/history/remaining source claims unassessed."
+        },
+        {
+          "alias": "B",
+          "assessment_state": "partial",
+          "finding": "Selected direct%run chain/tag boundary and limits supported; witness/history/remaining source claims unassessed."
+        }
+      ],
+      "repair_detection_false_rejection_difference": "Different useful failure mechanisms and source-level version boundaries delivered. No decisive semantic error found in selected assessed claims; HOLD/HOLD does not establish equal quality or method effect.",
+      "assessment_asymmetry": "A has old-client source locator map and more data-engine specificity; neither has source/witness catalogs."
+    },
+    {
+      "check_id": "D-V15-B-P2",
+      "arm_results": [
+        {
+          "alias": "A",
+          "assessment_state": "partial",
+          "finding": "Selected real chain/tag boundary and limits supported; witness/history/remaining source claims unassessed."
+        },
+        {
+          "alias": "B",
+          "assessment_state": "partial",
+          "finding": "Selected direct%run chain/tag boundary and limits supported; witness/history/remaining source claims unassessed."
+        }
+      ],
+      "repair_detection_false_rejection_difference": "Different useful failure mechanisms and source-level version boundaries delivered. No decisive semantic error found in selected assessed claims; HOLD/HOLD does not establish equal quality or method effect.",
+      "assessment_asymmetry": "A has old-client source locator map and more data-engine specificity; neither has source/witness catalogs."
+    },
+    {
+      "check_id": "D-V15-B-P3",
+      "arm_results": [
+        {
+          "alias": "A",
+          "assessment_state": "partial",
+          "finding": "Selected real chain/tag boundary and limits supported; witness/history/remaining source claims unassessed."
+        },
+        {
+          "alias": "B",
+          "assessment_state": "partial",
+          "finding": "Selected direct%run chain/tag boundary and limits supported; witness/history/remaining source claims unassessed."
+        }
+      ],
+      "repair_detection_false_rejection_difference": "Different useful failure mechanisms and source-level version boundaries delivered. No decisive semantic error found in selected assessed claims; HOLD/HOLD does not establish equal quality or method effect.",
+      "assessment_asymmetry": "A has old-client source locator map and more data-engine specificity; neither has source/witness catalogs."
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "A-v011-client",
+      "url": "https://raw.githubusercontent.com/jupyter/nbclient/v0.11.0/nbclient/client.py",
+      "final_url": "https://raw.githubusercontent.com/jupyter/nbclient/v0.11.0/nbclient/client.py",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:47:52.021718Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/source-captures/A-v011-client.txt",
+      "sha256": "5a61fded74a94fd0851c8a85d55d12a9e9fb44be34324a44583efe48e874da8a",
+      "bytes": 49883,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "B-ipy715-execution",
+      "url": "https://raw.githubusercontent.com/ipython/ipython/7.15.0/IPython/core/magics/execution.py",
+      "final_url": "https://raw.githubusercontent.com/ipython/ipython/7.15.0/IPython/core/magics/execution.py",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:47:52.124279Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/source-captures/B-ipy715-execution.txt",
+      "sha256": "158dd6ab7940335af546e937232ec77c899fda963340f4361c1c7ac3a391f715",
+      "bytes": 57476,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "B-ipy716-execution",
+      "url": "https://raw.githubusercontent.com/ipython/ipython/7.16.0/IPython/core/magics/execution.py",
+      "final_url": "https://raw.githubusercontent.com/ipython/ipython/7.16.0/IPython/core/magics/execution.py",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:47:52.131517Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/source-captures/B-ipy716-execution.txt",
+      "sha256": "2c3dd4aed38845cf31edc1631c5a40a8a8319f2e1ed4a323320eda46d7e3d0f8",
+      "bytes": 57595,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "B-ipy716-tests",
+      "url": "https://raw.githubusercontent.com/ipython/ipython/7.16.0/IPython/core/tests/test_magic.py",
+      "final_url": "https://raw.githubusercontent.com/ipython/ipython/7.16.0/IPython/core/tests/test_magic.py",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:47:52.166957Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/source-captures/B-ipy716-tests.txt",
+      "sha256": "c35eadf94021b16cada56b36f7e6f0c2306b59694c144a1b840d47da4746ae70",
+      "bytes": 36400,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "A-nbclient011-pypi",
+      "url": "https://pypi.org/pypi/nbclient/0.11.0/json",
+      "final_url": "https://pypi.org/pypi/nbclient/0.11.0/json",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:47:52.056446Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/source-captures/A-nbclient011-pypi.txt",
+      "sha256": "04ff5a4e5bb9dbf00f8fc0d4f5bea38ed492639855d60420c855503b7b7da474",
+      "bytes": 9215,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "A-duckdb156-pypi",
+      "url": "https://pypi.org/pypi/duckdb/1.5.6/json",
+      "final_url": "https://pypi.org/pypi/duckdb/1.5.6/json",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:47:52.069608Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/source-captures/A-duckdb156-pypi.txt",
+      "sha256": "487a71012b05219ab35731b64ac5a19487e7dac1a64b8fa98c2f39b294857936",
+      "bytes": 34887,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "A-jsonoverview",
+      "url": "https://duckdb.org/docs/current/data/json/overview",
+      "final_url": "https://duckdb.org/docs/current/data/json/overview",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:47:52.176145Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/source-captures/A-jsonoverview.txt",
+      "sha256": "817e764cb9776e9cedb9d0c904fe4dda2a666f79072a3a91c6f62a99a85c98c5",
+      "bytes": 362469,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "A-jsonloading",
+      "url": "https://duckdb.org/docs/current/data/json/loading_json",
+      "final_url": "https://duckdb.org/docs/current/data/json/loading_json",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:47:52.209385Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/source-captures/A-jsonloading.txt",
+      "sha256": "4f963de5ffe98e122232cd250b27a308f7e510ebd8f7e028227d6a39b8a1c8f1",
+      "bytes": 399880,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "A-order",
+      "url": "https://duckdb.org/docs/current/sql/dialect/order_preservation",
+      "final_url": "https://duckdb.org/docs/current/sql/dialect/order_preservation",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:47:52.294961Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/source-captures/A-order.txt",
+      "sha256": "ec8165fb4d5ab782be7d7686a80ef8db8e6a9c823e529a86c6b968840be95a81",
+      "bytes": 356158,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "A040-client",
+      "url": "https://raw.githubusercontent.com/jupyter/nbclient/0.4.0/nbclient/client.py",
+      "final_url": "https://raw.githubusercontent.com/jupyter/nbclient/0.4.0/nbclient/client.py",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:48:47.746475Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/source-captures/A040-client.txt",
+      "sha256": "69d849ea030e86ab711a1ea18196cef3d3ab12c03b28f1090251a57ed5e24ae5",
+      "bytes": 35856,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "A050-client",
+      "url": "https://raw.githubusercontent.com/jupyter/nbclient/0.5.0/nbclient/client.py",
+      "final_url": "https://raw.githubusercontent.com/jupyter/nbclient/0.5.0/nbclient/client.py",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:48:47.763437Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/source-captures/A050-client.txt",
+      "sha256": "e506eb12a555c45ed5432807704a33966d77d94d59d33d4161ca2f8942dd3662",
+      "bytes": 39834,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "A040-tests",
+      "url": "https://raw.githubusercontent.com/jupyter/nbclient/0.4.0/nbclient/tests/test_client.py",
+      "final_url": "https://raw.githubusercontent.com/jupyter/nbclient/0.4.0/nbclient/tests/test_client.py",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:48:47.743069Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/source-captures/A040-tests.txt",
+      "sha256": "10cbf4397c346958c7f4f2db1cbb7bc38be72b8cfc801b07d694e7f3c947579f",
+      "bytes": 53611,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "A011-tests",
+      "url": "https://raw.githubusercontent.com/jupyter/nbclient/v0.11.0/tests/test_client.py",
+      "final_url": "https://raw.githubusercontent.com/jupyter/nbclient/v0.11.0/tests/test_client.py",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:48:47.746091Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/source-captures/A011-tests.txt",
+      "sha256": "df61ce78ea0ae2a97c0a1be53ad63388867e2cf87cb69501ce7d5e80a2d0905d",
+      "bytes": 72363,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "A-pr90-diff",
+      "url": "https://github.com/jupyter/nbclient/pull/90.diff",
+      "final_url": "https://patch-diff.githubusercontent.com/raw/jupyter/nbclient/pull/90.diff",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:48:47.984746Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/source-captures/A-pr90-diff.txt",
+      "sha256": "72923cfa20d2e93c05b6c90a8879002d8e6f010e5b2bff1725b504436f0cd5a9",
+      "bytes": 9183,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "A-issue88-html",
+      "url": "https://github.com/jupyter/nbclient/issues/88",
+      "final_url": "https://github.com/jupyter/nbclient/issues/88",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:48:48.366437Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/source-captures/A-issue88-html.txt",
+      "sha256": "b904371aa2399ca518c0c56714ee2cb35dfcf383f372c01b84a49a1362b8c906",
+      "bytes": 278159,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "A-pr90-html",
+      "url": "https://github.com/jupyter/nbclient/pull/90",
+      "final_url": "https://github.com/jupyter/nbclient/pull/90",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:48:48.553210Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/source-captures/A-pr90-html.txt",
+      "sha256": "81451a09ee1a101c98ced7b622540fd49c6ddd3e01abe89b4a08d8c1217de627",
+      "bytes": 416560,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "B-issue48-html",
+      "url": "https://github.com/jupyter/nbclient/issues/48",
+      "final_url": "https://github.com/jupyter/nbclient/issues/48",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:48:48.397345Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/source-captures/B-issue48-html.txt",
+      "sha256": "aea25d1ae6352096641a91eefacff24f6d560e62285b1f91a81b4d895a07c9af",
+      "bytes": 283559,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "B-ipython-pr12301-html",
+      "url": "https://github.com/ipython/ipython/pull/12301",
+      "final_url": "https://github.com/ipython/ipython/pull/12301",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:48:48.766766Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/source-captures/B-ipython-pr12301-html.txt",
+      "sha256": "6ac972b9ab85d08d9abded7662db52a2c84ef6dc76e2fdc83805ea8218eb33ae",
+      "bytes": 504419,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "B-ipython-pr12301-diff",
+      "url": "https://github.com/ipython/ipython/pull/12301.diff",
+      "final_url": "https://patch-diff.githubusercontent.com/raw/ipython/ipython/pull/12301.diff",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:48:48.394556Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/source-captures/B-ipython-pr12301-diff.txt",
+      "sha256": "78628c75a7df10d0ba844453450f867a85d76b32678db318dc580a4d17ff2e7e",
+      "bytes": 3114,
+      "execution_label": "evaluator_retrieved"
+    },
+    {
+      "source_id": "B-ipy716-testrun",
+      "url": "https://raw.githubusercontent.com/ipython/ipython/7.16.0/IPython/core/tests/test_run.py",
+      "final_url": "https://raw.githubusercontent.com/ipython/ipython/7.16.0/IPython/core/tests/test_run.py",
+      "http_status": 200,
+      "retrieved_utc": "2026-10-05T22:52:44.380164Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/source-captures/B-ipy716-testrun.txt",
+      "sha256": "6c75110b9510c6eb304e1e76420aa486380696dc5293da243e8ba03cb46072d0",
+      "bytes": 19315,
+      "execution_label": "evaluator_retrieved"
+    }
+  ],
+  "source_index": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/source-captures/INDEX.json",
+    "sha256": "6ccb7fd07b78a47a189823aae2a5130e1157a020adb8e947bf8052ef78061173"
+  },
+  "blinding": {
+    "hints": [
+      "Assignment disclosed V14/V15 targeted mechanism names and requested Luna family; actual arm allocation, observed candidate identity, history, costs and prior grades remain unopened. Exact neutral task/coverage cards also describe the treatment mechanism."
+    ],
+    "private_alias_history_economics_opened": false,
+    "arm_assignment_known": false
+  },
+  "budget": {
+    "screen_max_seconds": 1200,
+    "hard_max_seconds": 1800,
+    "first_actual_read_utc": "2026-10-05T22:46:20.550141Z",
+    "elapsed_seconds": 556.101057146,
+    "clock_reset": false,
+    "budget_expired": false
+  },
+  "limitations": [
+    "No decisive semantic failure established in selected assessed chains; actual full scope remains partially unassessed.",
+    "Version difference exists in independently retrieved source; no current selected-stack defect or misleading upstream claim is invented.",
+    "Source catalog absent; source URLs reconstructed from named identifiers/pins.",
+    "Initial GitHub REST source requests hit rate limits; supported public HTML/diff/raw-source retrieval used, with all failed requests retained in source index.",
+    "No selected release wheel/upstream/application tests executed; source-level evidence only."
+  ]
+}

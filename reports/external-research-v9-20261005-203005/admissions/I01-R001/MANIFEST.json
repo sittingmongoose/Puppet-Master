@@ -1,0 +1,40 @@
+{
+  "schema": "er9.public-positive-selection.v1",
+  "files": [
+    {
+      "path": "LAB_ROOT/ops/dispatcher/publication/I01_R001_ADMISSION_V1/control-TASK.md",
+      "sha256": "957038feb2d36cfd304e9465ca5419f376ee9c01ca0d921031295a24075ae64f",
+      "original_source": "LAB_ROOT/ops/dispatcher/runs/I-01-R001-control-research-a001/workspace/TASK.md",
+      "kind": "immutable_neutral_prompt",
+      "candidate_output_included": false
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/publication/I01_R001_ADMISSION_V1/control-TOOLS.json",
+      "sha256": "332c2f33b51d491e17ff7762117bf690108dda34fa493530d90c4886f626f6f8",
+      "original_source": "LAB_ROOT/ops/dispatcher/runs/I-01-R001-control-research-a001/tools.json",
+      "kind": "actual_confined_mcp_config",
+      "candidate_output_included": false
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/publication/I01_R001_ADMISSION_V1/treatment-TASK.md",
+      "sha256": "957038feb2d36cfd304e9465ca5419f376ee9c01ca0d921031295a24075ae64f",
+      "original_source": "LAB_ROOT/ops/dispatcher/runs/I-01-R001-treatment-research-a001/workspace/TASK.md",
+      "kind": "immutable_neutral_prompt",
+      "candidate_output_included": false
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/publication/I01_R001_ADMISSION_V1/treatment-TOOLS.json",
+      "sha256": "f683839310cdedba4d74605beb5616c534a6b54c640cbb76532adb1e43a485ed",
+      "original_source": "LAB_ROOT/ops/dispatcher/runs/I-01-R001-treatment-research-a001/tools.json",
+      "kind": "actual_confined_mcp_config",
+      "candidate_output_included": false
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/publication/I01_R001_ADMISSION_V1/ADMISSION.json",
+      "sha256": "1096b68eef60070844ddb26c9488e73559c5b0077f04b5c8ea7ee7154f1898d3",
+      "kind": "admission_metadata"
+    }
+  ],
+  "private_auth_native_logs_excluded": true,
+  "host_path_projection_required_for_public_configs": true
+}

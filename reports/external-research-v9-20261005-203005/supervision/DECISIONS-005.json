@@ -1,0 +1,59 @@
+{
+  "schema": "er9.native_goal_tail_adjudication.v1",
+  "policy_version": "DECISIONS-005",
+  "scope": "structural lifecycle and prospective runner predicate only",
+  "original_control": {
+    "job_id": "I-05-LUNA-S1-control-research-a001",
+    "genuine_native_Goal_complete_observed": true,
+    "native_complete_receipts": 12,
+    "native_complete_epoch_interval": [1791239616, 1791239617],
+    "native_stop_epoch": 1791239627.977159,
+    "required_artifacts_last_flush_utc": "2026-10-05T22:32:36.067790+00:00",
+    "tool_flushes_after_complete_second": 0,
+    "turn_terminal_status": "interrupted",
+    "turn_terminal_seconds_after_native_stop": 0.060239136,
+    "original_job_outcome": "HOLD",
+    "original_operational_complete": false,
+    "original_total_deadline_met_and_owned_activity_quiet": true,
+    "semantic_quality_inferred_from_lifecycle": false,
+    "retrospective_PASS_or_cost_rewrite": false
+  },
+  "prospective_v1_1": {
+    "supported_in_principle": true,
+    "implementation_already_admitted_by_this_record": false,
+    "native_Goal_complete_RPC_and_identity_verification_required": true,
+    "host_receipt_monotonic_before_original_native_stop_required": true,
+    "coarse_native_timestamp_alone_admits_late_receipt": false,
+    "naturally_completed_turn_tail_required": false,
+    "exact_owned_tail_tag_and_supported_interrupt_required": true,
+    "interrupted_turn_fact_preserved": true,
+    "other_adverse_event_checks_retained": true,
+    "same_original_native_and_total_deadlines": true,
+    "required_artifacts_immutable_freeze_and_quiet_proofs_retained": true,
+    "native_completion_implies_operational_quiet_or_semantic_PASS": false,
+    "targeted_zero_inference_regressions_required": true,
+    "new_model_canary_or_broad_reaudit_required": false,
+    "new_Max_or_user_stage_gate": false
+  },
+  "same_arm_recovery": {
+    "allowed": true,
+    "classification": "separate charged recovery lineage over frozen completed-Goal research",
+    "fresh_same_family_native_critic_and_final_author": true,
+    "original_artifacts_brief_and_legitimate_context_only": true,
+    "original_HOLD_or_grade_rewritten": false,
+    "fresh_integrated_comparison_credit": false,
+    "original_and_new_costs_preserved": true,
+    "Sol_semantic_completion_or_evaluator_answers": false
+  },
+  "fresh_symmetric_successor": {
+    "allowed_when_useful": true,
+    "both_arms_share_frozen_lifecycle_budgets_tools": true,
+    "brief_only_no_inherited_discoveries": true,
+    "preserve_original_failures_and_all_costs": true,
+    "automatic_bestof_retries": false
+  },
+  "candidate_or_source_bodies_read": false,
+  "sealed_holdout_details_read": false,
+  "native_Goals_launched": 0,
+  "automatic_canonical_adoption": false
+}

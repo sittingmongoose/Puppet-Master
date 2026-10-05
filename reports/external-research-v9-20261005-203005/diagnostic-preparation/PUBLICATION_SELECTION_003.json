@@ -1,0 +1,1242 @@
+{
+  "schema": "er9.positive-publication-addendum.v1",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/FIRST_SIX_STRUCTURAL.json",
+      "relative_path": "diagnosis-live/FIRST_SIX_STRUCTURAL.json",
+      "sha256": "a3f50bc8866c9f612cb395b2a6e8303ce8e9ccbd9cd1b0fde432a5f8ae05906b",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/FIRST_SIX_STRUCTURAL_INITIAL.json",
+      "relative_path": "diagnosis-live/FIRST_SIX_STRUCTURAL_INITIAL.json",
+      "sha256": "28ceb5513519883c466f94d4836c4a028232a6d64c2112fed2d45269af243d0a",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/INPUT_MANIFEST.json",
+      "relative_path": "diagnosis-live/INPUT_MANIFEST.json",
+      "sha256": "26637164a200072cbf5f043b647fd0dfc1e9dc4c79092e7d4a43fa5bb685a8a7",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/INPUT_MANIFEST_ADDENDUM_001.json",
+      "relative_path": "diagnosis-live/INPUT_MANIFEST_ADDENDUM_001.json",
+      "sha256": "dbe0c7766bae34fe00b07329b7410ccdb586bcf81784c06484ef1142eafb2aa3",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/INPUT_MANIFEST_ADDENDUM_002.json",
+      "relative_path": "diagnosis-live/INPUT_MANIFEST_ADDENDUM_002.json",
+      "sha256": "97baa96570f2aec31daa57ca58307122145a6f66e4cf75f51f3f7c318298513b",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/LIVE_DISCOVERY_SCOPE_R002.md",
+      "relative_path": "diagnosis-live/LIVE_DISCOVERY_SCOPE_R002.md",
+      "sha256": "f91419685de893d624069ca85f9cf4f88322cfa6b87ed63e2d177d60297ef395",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/LIVE_SCOPE_R002_ADMISSION_ADDENDUM_001.json",
+      "relative_path": "diagnosis-live/LIVE_SCOPE_R002_ADMISSION_ADDENDUM_001.json",
+      "sha256": "d8cb6aeb7110b8189ca29cb8e9f305117694764e221b850fa1187f6f1cc0b83b",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/LIVE_SCOPE_R002_OUTBOX.json",
+      "relative_path": "diagnosis-live/LIVE_SCOPE_R002_OUTBOX.json",
+      "sha256": "c2de5cf2a549689bf297a52c70bc7437cb5a9a4eebffd1c127175af9e60fc69e",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/LUNA_RESPONSE_CAP_ERRATUM_001.json",
+      "relative_path": "diagnosis-live/LUNA_RESPONSE_CAP_ERRATUM_001.json",
+      "sha256": "f9d2dfd519df6ca33e91db25515217481852b2a118038aad4525371c6eefd482",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/README.md",
+      "relative_path": "diagnosis-live/README.md",
+      "sha256": "ee051281f2be8d9670f6e43d1d001cd5d3288bfb4bec72bb8b3a7afc7980d080",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/prepare_successors.py",
+      "relative_path": "diagnosis-live/prepare_successors.py",
+      "sha256": "1b8035cd757ac5806eee7045e232c1de148ab0763e7c2103e3ecd7a768f1c1c2",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/cards/D-V14-A-LUNA-R1-SCOPE-R002.json",
+      "relative_path": "diagnosis-live/successors/cards/D-V14-A-LUNA-R1-SCOPE-R002.json",
+      "sha256": "a45867e7d111acb88c6d1abe8f19965f61d837e82d078c5e439236e0799fd35b",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/cards/D-V14-B-SCOPE-R002.json",
+      "relative_path": "diagnosis-live/successors/cards/D-V14-B-SCOPE-R002.json",
+      "sha256": "1f502dd5ff4beb129231aa61350342899e11990ad63b78905b467a03b1ca1cd7",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/cards/D-V15-A-SCOPE-R002.json",
+      "relative_path": "diagnosis-live/successors/cards/D-V15-A-SCOPE-R002.json",
+      "sha256": "3538c3a53d8ec5928a06038833d769d4ed813d62b3541f76c57836b2724c65b4",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/cards/D-V15-B-SCOPE-R002.json",
+      "relative_path": "diagnosis-live/successors/cards/D-V15-B-SCOPE-R002.json",
+      "sha256": "40967f1103de7ae182a6281381e03832f4882a0d1de5b8fcacd7ca2a66a235a4",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-control-diagnostic-a001/packet.json",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-control-diagnostic-a001/packet.json",
+      "sha256": "28f922fc6470b4d264094c2ff5339dd9312df0d7d06af6ca097e60e6ecaa41b0",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-control-diagnostic-a001/prepared-stage.json",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-control-diagnostic-a001/prepared-stage.json",
+      "sha256": "fe9dc70974c535461da59356867606c74378ab70d85e9e39cb6c6b9f00f2db09",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-control-diagnostic-a001/workspace/TASK.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-control-diagnostic-a001/workspace/TASK.md",
+      "sha256": "22430503264158593df0a9333e9afc524a4a159c1feb1440ab1389710f4678f0",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-control-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-control-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "sha256": "dce8a3f434cae7ac0f82173f684785dc232abd25bbb26bac722944f9a3af643d",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-control-diagnostic-a001/workspace/inputs/brief.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-control-diagnostic-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-control-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-control-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "sha256": "6f60c2a231666d0e3bf29462b6338f71e6af268f334d4f6c4897cbe6b2a40f83",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-control-diagnostic-a001/workspace/inputs/output_contract.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-control-diagnostic-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-treatment-diagnostic-a001/packet.json",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-treatment-diagnostic-a001/packet.json",
+      "sha256": "10a833804dfadffcbabef55b80b307ee9eff1f2f810b9771aefc7a0a19d8f461",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-treatment-diagnostic-a001/prepared-stage.json",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-treatment-diagnostic-a001/prepared-stage.json",
+      "sha256": "9dd603db6c4c7976ef88c102c82fcba2830abad3bc9bd6df947a1e1c48881dc9",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-treatment-diagnostic-a001/workspace/TASK.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-treatment-diagnostic-a001/workspace/TASK.md",
+      "sha256": "50a06c8167b0b7dbfbff7db8b61386fc197fbc35c7ff5dd2be45dbfbb31476f4",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "sha256": "17b0f281cbabcada5737364d27db929f35a98ad2cd625a3a7d56ce8719a8e618",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/brief.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "sha256": "6f60c2a231666d0e3bf29462b6338f71e6af268f334d4f6c4897cbe6b2a40f83",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/output_contract.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/D-V14-A-LUNA-R1-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/PAIR_INPUT_FREEZE.json",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/PAIR_INPUT_FREEZE.json",
+      "sha256": "d6566b13c1b5d92b01191a178abb493ecf0bbe27f88eb31028863c298ca74abd",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/PAIR_INPUT_SCOPE_FREEZE_R002.json",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-A-LUNA-R1-SCOPE-R002/PAIR_INPUT_SCOPE_FREEZE_R002.json",
+      "sha256": "c6456902ddb590a29e140e3b75bd018e1b791064084a38ca10c28e55136e7b48",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-control-diagnostic-a001/packet.json",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-control-diagnostic-a001/packet.json",
+      "sha256": "b4dfea844b0568e79def9f2d0400f91e926e7fcaa06788d76cbbe1f0ce5d22e4",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-control-diagnostic-a001/prepared-stage.json",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-control-diagnostic-a001/prepared-stage.json",
+      "sha256": "27f544c36dae538963eadcf02013466ee4740020ece353528827433c41710371",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-control-diagnostic-a001/workspace/TASK.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-control-diagnostic-a001/workspace/TASK.md",
+      "sha256": "e2da49d8a41db02912930e0998a4a449376c2dccdc740b6d78e2413cc1c9d7b8",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-control-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-control-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "sha256": "dce8a3f434cae7ac0f82173f684785dc232abd25bbb26bac722944f9a3af643d",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-control-diagnostic-a001/workspace/inputs/brief.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-control-diagnostic-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-control-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-control-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "sha256": "0cb72a9fdae767d211ada4dfb1862708f7ebb057b678dba1676b6c1b4b8dc6a9",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-control-diagnostic-a001/workspace/inputs/output_contract.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-control-diagnostic-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-treatment-diagnostic-a001/packet.json",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-treatment-diagnostic-a001/packet.json",
+      "sha256": "c6384e2754a16a9f32385fb8745096a5f81e4a2c8ae31178e2c16371d2519488",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-treatment-diagnostic-a001/prepared-stage.json",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-treatment-diagnostic-a001/prepared-stage.json",
+      "sha256": "b8619d2edb222f53363eaad0a5b47776b08fed227917fa5f5153d4c7ce6652d6",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-treatment-diagnostic-a001/workspace/TASK.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-treatment-diagnostic-a001/workspace/TASK.md",
+      "sha256": "fbce3dde011b7408e5c0a19dc691b82dae67b11b9a29b14a494404198d386bef",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "sha256": "17b0f281cbabcada5737364d27db929f35a98ad2cd625a3a7d56ce8719a8e618",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/brief.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "sha256": "0cb72a9fdae767d211ada4dfb1862708f7ebb057b678dba1676b6c1b4b8dc6a9",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/output_contract.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/PAIR_INPUT_FREEZE.json",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/PAIR_INPUT_FREEZE.json",
+      "sha256": "094006ab7b3d7318264ff62239280f188f390a26b3badeae04fb0d1cab084dfb",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/PAIR_INPUT_SCOPE_FREEZE_R002.json",
+      "relative_path": "diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/PAIR_INPUT_SCOPE_FREEZE_R002.json",
+      "sha256": "2efb2ee4e6aaba8715a93f1d0f3ebaa5fa8007c81c678b9ab51444b7fee5a4e8",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-control-diagnostic-a001/packet.json",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-control-diagnostic-a001/packet.json",
+      "sha256": "2c61ac476ded971357e8bcb674a5abf002e0bedbe08b942abc1306d19d2f7415",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-control-diagnostic-a001/prepared-stage.json",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-control-diagnostic-a001/prepared-stage.json",
+      "sha256": "745c8c7219bd874b18436c8af6637108ae0f09762b83c8ba1844c7e4d5372a34",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-control-diagnostic-a001/workspace/TASK.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-control-diagnostic-a001/workspace/TASK.md",
+      "sha256": "fff18555006c364ee10af10da8949eaedb337d104e859efe052183e3a12cc98b",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-control-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-control-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "sha256": "c679bd6ba40025982ec325e99be60e7e192007e066873f61cad2a4b27eceb0d4",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-control-diagnostic-a001/workspace/inputs/brief.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-control-diagnostic-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-control-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-control-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "sha256": "7687562ba698734d1af43b9d0f4487674ed4203726d93c4316a8e26d07145a88",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-control-diagnostic-a001/workspace/inputs/output_contract.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-control-diagnostic-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-treatment-diagnostic-a001/packet.json",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-treatment-diagnostic-a001/packet.json",
+      "sha256": "542f72daf1c7bb7307e68e7d557f4c5c8b05f5eac0e86852ff98f7fa61548791",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-treatment-diagnostic-a001/prepared-stage.json",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-treatment-diagnostic-a001/prepared-stage.json",
+      "sha256": "30c062ffcc037ae3b1417a21ed59866fb10327fb8cc175d94c170af0c1dd69c4",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-treatment-diagnostic-a001/workspace/TASK.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-treatment-diagnostic-a001/workspace/TASK.md",
+      "sha256": "cc5f957af1b0dceb4de37afcce52ea4f36c6212bde56b8c234422742b8c11a22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "sha256": "054f9494e9c099e0cc48099439849003ceb2a11216658d831020b343e8e1d167",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/brief.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "sha256": "7687562ba698734d1af43b9d0f4487674ed4203726d93c4316a8e26d07145a88",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/output_contract.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/D-V15-A-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/PAIR_INPUT_FREEZE.json",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/PAIR_INPUT_FREEZE.json",
+      "sha256": "073aa5ff0da0702211f603a72395014626811ea8a27accd82fda8d4e744c01ee",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/PAIR_INPUT_SCOPE_FREEZE_R002.json",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-A-SCOPE-R002/PAIR_INPUT_SCOPE_FREEZE_R002.json",
+      "sha256": "0e048747e33b22a81500f077ed01dad00103ab068a659630f99060e72015a53f",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-control-diagnostic-a001/packet.json",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-control-diagnostic-a001/packet.json",
+      "sha256": "599ceea7805f0f9de4aa93e839790ed8a0a8d4e2f7752d5f2627ea1995eca259",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-control-diagnostic-a001/prepared-stage.json",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-control-diagnostic-a001/prepared-stage.json",
+      "sha256": "dfbeed207483194a56f079c26199fbfd07e1b639c4f3d3a4160abf6e1ba5af88",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-control-diagnostic-a001/workspace/TASK.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-control-diagnostic-a001/workspace/TASK.md",
+      "sha256": "ef85a59580d5b5e7c46f535167c30f429776309e9b7e3ebd8845dc2c18553ac5",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-control-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-control-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "sha256": "c679bd6ba40025982ec325e99be60e7e192007e066873f61cad2a4b27eceb0d4",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-control-diagnostic-a001/workspace/inputs/brief.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-control-diagnostic-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-control-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-control-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "sha256": "51ce8a6df781f7094ac70bcd42cf96ad036dc3c3d790dfd8e6ada8f4f3378e03",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-control-diagnostic-a001/workspace/inputs/output_contract.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-control-diagnostic-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-treatment-diagnostic-a001/packet.json",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-treatment-diagnostic-a001/packet.json",
+      "sha256": "c24503c230bf7ae70832a99b62dad36396c448606e5405903a78fd83b7be00fe",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-treatment-diagnostic-a001/prepared-stage.json",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-treatment-diagnostic-a001/prepared-stage.json",
+      "sha256": "a8f6649715f20eed899a7e8972febdf656b392a7c43ea93e64a66edb114e127b",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-treatment-diagnostic-a001/workspace/TASK.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-treatment-diagnostic-a001/workspace/TASK.md",
+      "sha256": "5922bb9b8655e5154e500576357e2740d2dd399831010468a550af37117b0e93",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "sha256": "054f9494e9c099e0cc48099439849003ceb2a11216658d831020b343e8e1d167",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/brief.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "sha256": "51ce8a6df781f7094ac70bcd42cf96ad036dc3c3d790dfd8e6ada8f4f3378e03",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/output_contract.md",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/D-V15-B-SCOPE-R002-treatment-diagnostic-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/PAIR_INPUT_FREEZE.json",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/PAIR_INPUT_FREEZE.json",
+      "sha256": "dbbaf4724b6e855eb3bbe2e0067a07bcee6edc398d6af98d1d59c1e29fcf371c",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/PAIR_INPUT_SCOPE_FREEZE_R002.json",
+      "relative_path": "diagnosis-live/successors/prepared/D-V15-B-SCOPE-R002/PAIR_INPUT_SCOPE_FREEZE_R002.json",
+      "sha256": "dcf5b4b5086b6c15bda527d9cd38080003d4508202aba438937e2d14d7fdcd8f",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/registration/D-V14-A-LUNA-R1-SCOPE-R002-diagnostic-preparation-scope-R002-bound-unfixed-history.json",
+      "relative_path": "diagnosis-live/successors/prepared/registration/D-V14-A-LUNA-R1-SCOPE-R002-diagnostic-preparation-scope-R002-bound-unfixed-history.json",
+      "sha256": "7e1ef668bf951df13b5031fb3a4791fa37731df71b213b29637d974cd9e07c16",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/registration/D-V14-A-LUNA-R1-SCOPE-R002-diagnostic-preparation-scope-R002-bound.json",
+      "relative_path": "diagnosis-live/successors/prepared/registration/D-V14-A-LUNA-R1-SCOPE-R002-diagnostic-preparation-scope-R002-bound.json",
+      "sha256": "40b90f6b76771e8948e231423c13571d80490a7c340638bb03dfde52fdae78ab",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/registration/D-V14-A-LUNA-R1-SCOPE-R002-diagnostic-preparation-scope-R002.json",
+      "relative_path": "diagnosis-live/successors/prepared/registration/D-V14-A-LUNA-R1-SCOPE-R002-diagnostic-preparation-scope-R002.json",
+      "sha256": "99b6f3e278967c16bf781064808d8ea2a79eb3b2ceb7e112c031ce2080c0fedf",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/registration/D-V14-B-SCOPE-R002-diagnostic-preparation-scope-R002-bound-unfixed-history.json",
+      "relative_path": "diagnosis-live/successors/prepared/registration/D-V14-B-SCOPE-R002-diagnostic-preparation-scope-R002-bound-unfixed-history.json",
+      "sha256": "45abf5a017be89b2714ed8991e9f0862e9b430b3eae8d8f450ab19e569e685a7",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/registration/D-V14-B-SCOPE-R002-diagnostic-preparation-scope-R002-bound.json",
+      "relative_path": "diagnosis-live/successors/prepared/registration/D-V14-B-SCOPE-R002-diagnostic-preparation-scope-R002-bound.json",
+      "sha256": "8ab053bea44543094adcfe95947eb85483f7060aa978af6743ec8cede5a24027",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/registration/D-V14-B-SCOPE-R002-diagnostic-preparation-scope-R002.json",
+      "relative_path": "diagnosis-live/successors/prepared/registration/D-V14-B-SCOPE-R002-diagnostic-preparation-scope-R002.json",
+      "sha256": "6117492c52064565ab15b24f286312e1183b489d6d2c944ee2c8a66d79f70780",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/registration/D-V15-A-SCOPE-R002-diagnostic-preparation-scope-R002-bound-unfixed-history.json",
+      "relative_path": "diagnosis-live/successors/prepared/registration/D-V15-A-SCOPE-R002-diagnostic-preparation-scope-R002-bound-unfixed-history.json",
+      "sha256": "0a3944ce66091eb00972cb03f378296237ce989a7ae15b822083e4e7c07fc171",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/registration/D-V15-A-SCOPE-R002-diagnostic-preparation-scope-R002-bound.json",
+      "relative_path": "diagnosis-live/successors/prepared/registration/D-V15-A-SCOPE-R002-diagnostic-preparation-scope-R002-bound.json",
+      "sha256": "6d1fa9e8f1b49db137842e814283bf0150db5050d4f1d738cbe8c81569d87327",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/registration/D-V15-A-SCOPE-R002-diagnostic-preparation-scope-R002.json",
+      "relative_path": "diagnosis-live/successors/prepared/registration/D-V15-A-SCOPE-R002-diagnostic-preparation-scope-R002.json",
+      "sha256": "781416c068dfaec70928b77b0292728cc1731ee3c0baf79d786d50440a119649",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/registration/D-V15-B-SCOPE-R002-diagnostic-preparation-scope-R002-bound-unfixed-history.json",
+      "relative_path": "diagnosis-live/successors/prepared/registration/D-V15-B-SCOPE-R002-diagnostic-preparation-scope-R002-bound-unfixed-history.json",
+      "sha256": "c479919d6271085f73497b2521b85e05f2c2e3594ea38ddd6497384dbd43e18f",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/registration/D-V15-B-SCOPE-R002-diagnostic-preparation-scope-R002-bound.json",
+      "relative_path": "diagnosis-live/successors/prepared/registration/D-V15-B-SCOPE-R002-diagnostic-preparation-scope-R002-bound.json",
+      "sha256": "17f8c7526e0224b03fc65e19c857ca86df182db873a7f2b562e8fc0d1de9b555",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/registration/D-V15-B-SCOPE-R002-diagnostic-preparation-scope-R002.json",
+      "relative_path": "diagnosis-live/successors/prepared/registration/D-V15-B-SCOPE-R002-diagnostic-preparation-scope-R002.json",
+      "sha256": "d9b98ce0131b98de38ec37c4db21e3d559cdd32d4e1032519538125bf8984771",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-09/I-09-control-critique-a001/prepared-stage.json",
+      "relative_path": "integrated-final-selections/I-09/I-09-control-critique-a001/prepared-stage.json",
+      "sha256": "8a7c170126b09771195f2e44467596962ae3e808edf40b9d568f83bed78d0cbc",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-09/I-09-control-critique-a001/workspace/TASK.md",
+      "relative_path": "integrated-final-selections/I-09/I-09-control-critique-a001/workspace/TASK.md",
+      "sha256": "190efad722b01fcfb64666d45bda18e258c839743d86c0e97d5e4f3006933f11",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-09/I-09-control-critique-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-final-selections/I-09/I-09-control-critique-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-09/I-09-control-critique-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-final-selections/I-09/I-09-control-critique-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-09/I-09-control-research-a001/prepared-stage.json",
+      "relative_path": "integrated-final-selections/I-09/I-09-control-research-a001/prepared-stage.json",
+      "sha256": "689371cd6d82ab1b5add04a4fe7411a62078533ba7efd0e243f968c757a5085d",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-09/I-09-control-research-a001/workspace/TASK.md",
+      "relative_path": "integrated-final-selections/I-09/I-09-control-research-a001/workspace/TASK.md",
+      "sha256": "216a3265158f9cd8057db2645b11a01be65ef6817baccd835733e56388f79d86",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-09/I-09-control-research-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-final-selections/I-09/I-09-control-research-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-09/I-09-control-research-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-final-selections/I-09/I-09-control-research-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-09/I-09-control-revision-a001/prepared-stage.json",
+      "relative_path": "integrated-final-selections/I-09/I-09-control-revision-a001/prepared-stage.json",
+      "sha256": "bf629b80a02d4b42d000818482c558b466723842514ef6cfd69629be22256a1f",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-09/I-09-control-revision-a001/workspace/TASK.md",
+      "relative_path": "integrated-final-selections/I-09/I-09-control-revision-a001/workspace/TASK.md",
+      "sha256": "1420b978fc336d4bb06abd8c7df2b8a425bf408a39174608138bf6eaf3202c46",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-09/I-09-control-revision-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-final-selections/I-09/I-09-control-revision-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-09/I-09-control-revision-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-final-selections/I-09/I-09-control-revision-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-09/I-09-treatment-critique-a001/prepared-stage.json",
+      "relative_path": "integrated-final-selections/I-09/I-09-treatment-critique-a001/prepared-stage.json",
+      "sha256": "cb5ada5f06338f8ad3b81731967cc9ce909f3652402a6a9bd7d4c4e8078d5410",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-09/I-09-treatment-critique-a001/workspace/TASK.md",
+      "relative_path": "integrated-final-selections/I-09/I-09-treatment-critique-a001/workspace/TASK.md",
+      "sha256": "190efad722b01fcfb64666d45bda18e258c839743d86c0e97d5e4f3006933f11",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-09/I-09-treatment-critique-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-final-selections/I-09/I-09-treatment-critique-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-09/I-09-treatment-critique-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-final-selections/I-09/I-09-treatment-critique-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-09/I-09-treatment-research-a001/prepared-stage.json",
+      "relative_path": "integrated-final-selections/I-09/I-09-treatment-research-a001/prepared-stage.json",
+      "sha256": "89f91749c9d6a1fbbc7a8e48588d3884f1fb7e4056d61014abe9519fe402ba38",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-09/I-09-treatment-research-a001/workspace/TASK.md",
+      "relative_path": "integrated-final-selections/I-09/I-09-treatment-research-a001/workspace/TASK.md",
+      "sha256": "1c6bd9551ae3595581ac10fbcd1c9f946835d94442419c5fc39da56fde3aba22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-09/I-09-treatment-research-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-final-selections/I-09/I-09-treatment-research-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-09/I-09-treatment-research-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-final-selections/I-09/I-09-treatment-research-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-09/I-09-treatment-revision-a001/prepared-stage.json",
+      "relative_path": "integrated-final-selections/I-09/I-09-treatment-revision-a001/prepared-stage.json",
+      "sha256": "438e8c479902e29f6c32bf517401b4b142bcd4320db206a33edd43e8c2c72370",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-09/I-09-treatment-revision-a001/workspace/TASK.md",
+      "relative_path": "integrated-final-selections/I-09/I-09-treatment-revision-a001/workspace/TASK.md",
+      "sha256": "1420b978fc336d4bb06abd8c7df2b8a425bf408a39174608138bf6eaf3202c46",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-09/I-09-treatment-revision-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-final-selections/I-09/I-09-treatment-revision-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-09/I-09-treatment-revision-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-final-selections/I-09/I-09-treatment-revision-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-09/PAIR_INPUT_FREEZE.json",
+      "relative_path": "integrated-final-selections/I-09/PAIR_INPUT_FREEZE.json",
+      "sha256": "464d0bff2639ca705b5db3d484659474b0efebb458d1df4bb341893130a58427",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-10/I-10-control-critique-a001/prepared-stage.json",
+      "relative_path": "integrated-final-selections/I-10/I-10-control-critique-a001/prepared-stage.json",
+      "sha256": "c3745a42086a65374ca8fe7d68f38547b8de9c4c2e6ba39e2b9f28f6d2590e96",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-10/I-10-control-critique-a001/workspace/TASK.md",
+      "relative_path": "integrated-final-selections/I-10/I-10-control-critique-a001/workspace/TASK.md",
+      "sha256": "e71eb44646c542d0825abfcb5b45b9cc100b9ff2a3f4977ea0ffa07b14cac616",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-10/I-10-control-critique-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-final-selections/I-10/I-10-control-critique-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-10/I-10-control-critique-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-final-selections/I-10/I-10-control-critique-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-10/I-10-control-research-a001/prepared-stage.json",
+      "relative_path": "integrated-final-selections/I-10/I-10-control-research-a001/prepared-stage.json",
+      "sha256": "cc87a8e6ca589ceb5f2459282dddeb259e04096b9b0871f432f3b700ade39e7c",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-10/I-10-control-research-a001/workspace/TASK.md",
+      "relative_path": "integrated-final-selections/I-10/I-10-control-research-a001/workspace/TASK.md",
+      "sha256": "94aea6006cc4b30f9e12fb5bbe06e9933b3545005209734701e076530981064f",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-10/I-10-control-research-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-final-selections/I-10/I-10-control-research-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-10/I-10-control-research-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-final-selections/I-10/I-10-control-research-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-10/I-10-control-revision-a001/prepared-stage.json",
+      "relative_path": "integrated-final-selections/I-10/I-10-control-revision-a001/prepared-stage.json",
+      "sha256": "5c9e926aa1ec3d136baef169ff4ce2b27d5732639812f00ac1c7323ee89127a7",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-10/I-10-control-revision-a001/workspace/TASK.md",
+      "relative_path": "integrated-final-selections/I-10/I-10-control-revision-a001/workspace/TASK.md",
+      "sha256": "cf31e1374203c8427c9b60dbfc28e8337106fa405822af4f9b695d789553fd53",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-10/I-10-control-revision-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-final-selections/I-10/I-10-control-revision-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-10/I-10-control-revision-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-final-selections/I-10/I-10-control-revision-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-10/I-10-treatment-critique-a001/prepared-stage.json",
+      "relative_path": "integrated-final-selections/I-10/I-10-treatment-critique-a001/prepared-stage.json",
+      "sha256": "4a056bdac3993d1371fddbdd11f16402d39b591bbcefb6dd56aec96ccbf83c98",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-10/I-10-treatment-critique-a001/workspace/TASK.md",
+      "relative_path": "integrated-final-selections/I-10/I-10-treatment-critique-a001/workspace/TASK.md",
+      "sha256": "e71eb44646c542d0825abfcb5b45b9cc100b9ff2a3f4977ea0ffa07b14cac616",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-10/I-10-treatment-critique-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-final-selections/I-10/I-10-treatment-critique-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-10/I-10-treatment-critique-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-final-selections/I-10/I-10-treatment-critique-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-10/I-10-treatment-research-a001/prepared-stage.json",
+      "relative_path": "integrated-final-selections/I-10/I-10-treatment-research-a001/prepared-stage.json",
+      "sha256": "b749e380b3daa143171e292121830d81a92f6993f8f3749a029f31d513087c9d",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-10/I-10-treatment-research-a001/workspace/TASK.md",
+      "relative_path": "integrated-final-selections/I-10/I-10-treatment-research-a001/workspace/TASK.md",
+      "sha256": "1c29936bea0a4a68f080fa33174e9e28c03e1c22db54b3f9f68aedd70b89842d",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-10/I-10-treatment-research-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-final-selections/I-10/I-10-treatment-research-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-10/I-10-treatment-research-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-final-selections/I-10/I-10-treatment-research-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-10/I-10-treatment-revision-a001/prepared-stage.json",
+      "relative_path": "integrated-final-selections/I-10/I-10-treatment-revision-a001/prepared-stage.json",
+      "sha256": "cc63088fbd9b3b8e6966882782922173970c8ba209c103a27a7e7233c9f700e1",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-10/I-10-treatment-revision-a001/workspace/TASK.md",
+      "relative_path": "integrated-final-selections/I-10/I-10-treatment-revision-a001/workspace/TASK.md",
+      "sha256": "cf31e1374203c8427c9b60dbfc28e8337106fa405822af4f9b695d789553fd53",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-10/I-10-treatment-revision-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-final-selections/I-10/I-10-treatment-revision-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-10/I-10-treatment-revision-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-final-selections/I-10/I-10-treatment-revision-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-10/PAIR_INPUT_FREEZE.json",
+      "relative_path": "integrated-final-selections/I-10/PAIR_INPUT_FREEZE.json",
+      "sha256": "66c72a490bf73e8550fc4c6103530baa9582fc844d52097cc945df353ccb605d",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-11/I-11-control-critique-a001/prepared-stage.json",
+      "relative_path": "integrated-final-selections/I-11/I-11-control-critique-a001/prepared-stage.json",
+      "sha256": "eb6369d05ec88168ab1e2b0b2cadb33f6774bd15ce20ee93d101c7beead3f400",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-11/I-11-control-critique-a001/workspace/TASK.md",
+      "relative_path": "integrated-final-selections/I-11/I-11-control-critique-a001/workspace/TASK.md",
+      "sha256": "190efad722b01fcfb64666d45bda18e258c839743d86c0e97d5e4f3006933f11",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-11/I-11-control-critique-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-final-selections/I-11/I-11-control-critique-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-11/I-11-control-critique-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-final-selections/I-11/I-11-control-critique-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-11/I-11-control-research-a001/prepared-stage.json",
+      "relative_path": "integrated-final-selections/I-11/I-11-control-research-a001/prepared-stage.json",
+      "sha256": "cb8f49f5f8bcdd4b10dc3c1036e8049cd2fdd265b5cba9e68985109a15d1509f",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-11/I-11-control-research-a001/workspace/TASK.md",
+      "relative_path": "integrated-final-selections/I-11/I-11-control-research-a001/workspace/TASK.md",
+      "sha256": "216a3265158f9cd8057db2645b11a01be65ef6817baccd835733e56388f79d86",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-11/I-11-control-research-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-final-selections/I-11/I-11-control-research-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-11/I-11-control-research-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-final-selections/I-11/I-11-control-research-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-11/I-11-control-revision-a001/prepared-stage.json",
+      "relative_path": "integrated-final-selections/I-11/I-11-control-revision-a001/prepared-stage.json",
+      "sha256": "d9912bb887d6cc58306087efbe64d0b92f19952c4bbe03456525be18c02135fd",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-11/I-11-control-revision-a001/workspace/TASK.md",
+      "relative_path": "integrated-final-selections/I-11/I-11-control-revision-a001/workspace/TASK.md",
+      "sha256": "1420b978fc336d4bb06abd8c7df2b8a425bf408a39174608138bf6eaf3202c46",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-11/I-11-control-revision-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-final-selections/I-11/I-11-control-revision-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-11/I-11-control-revision-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-final-selections/I-11/I-11-control-revision-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-11/I-11-treatment-critique-a001/prepared-stage.json",
+      "relative_path": "integrated-final-selections/I-11/I-11-treatment-critique-a001/prepared-stage.json",
+      "sha256": "36ed3ed667c61a8885d600cd31ba892adee4e5b439ee35caf39c418529a6fe7e",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-11/I-11-treatment-critique-a001/workspace/TASK.md",
+      "relative_path": "integrated-final-selections/I-11/I-11-treatment-critique-a001/workspace/TASK.md",
+      "sha256": "190efad722b01fcfb64666d45bda18e258c839743d86c0e97d5e4f3006933f11",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-11/I-11-treatment-critique-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-final-selections/I-11/I-11-treatment-critique-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-11/I-11-treatment-critique-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-final-selections/I-11/I-11-treatment-critique-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-11/I-11-treatment-research-a001/prepared-stage.json",
+      "relative_path": "integrated-final-selections/I-11/I-11-treatment-research-a001/prepared-stage.json",
+      "sha256": "f666a28a2ecff189319709da875ca332e66f06b2aa580ccf95279a0e7fe95a26",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-11/I-11-treatment-research-a001/workspace/TASK.md",
+      "relative_path": "integrated-final-selections/I-11/I-11-treatment-research-a001/workspace/TASK.md",
+      "sha256": "216a3265158f9cd8057db2645b11a01be65ef6817baccd835733e56388f79d86",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-11/I-11-treatment-research-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-final-selections/I-11/I-11-treatment-research-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-11/I-11-treatment-research-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-final-selections/I-11/I-11-treatment-research-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-11/I-11-treatment-revision-a001/prepared-stage.json",
+      "relative_path": "integrated-final-selections/I-11/I-11-treatment-revision-a001/prepared-stage.json",
+      "sha256": "9d28e8310242605095b238e0694fa7de49d3b8470e41746a3d19bb6f10f661de",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-11/I-11-treatment-revision-a001/workspace/TASK.md",
+      "relative_path": "integrated-final-selections/I-11/I-11-treatment-revision-a001/workspace/TASK.md",
+      "sha256": "b4889cc906ed051f5c1c72c90aedb926d22e12fe82c29eb054a9bca781afc79b",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-11/I-11-treatment-revision-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-final-selections/I-11/I-11-treatment-revision-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-11/I-11-treatment-revision-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-final-selections/I-11/I-11-treatment-revision-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-11/PAIR_INPUT_FREEZE.json",
+      "relative_path": "integrated-final-selections/I-11/PAIR_INPUT_FREEZE.json",
+      "sha256": "be6cc0fdbca0868e389c6fc2b1ea40cb85e33748ea2d5535da75722ab2d1c908",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-12/I-12-control-critique-a001/prepared-stage.json",
+      "relative_path": "integrated-final-selections/I-12/I-12-control-critique-a001/prepared-stage.json",
+      "sha256": "508ad2aacaceaa072cd00528d0575ed39bbc31b4c6e4f7a9043a765a6cfe19c8",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-12/I-12-control-critique-a001/workspace/TASK.md",
+      "relative_path": "integrated-final-selections/I-12/I-12-control-critique-a001/workspace/TASK.md",
+      "sha256": "e71eb44646c542d0825abfcb5b45b9cc100b9ff2a3f4977ea0ffa07b14cac616",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-12/I-12-control-critique-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-final-selections/I-12/I-12-control-critique-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-12/I-12-control-critique-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-final-selections/I-12/I-12-control-critique-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-12/I-12-control-research-a001/prepared-stage.json",
+      "relative_path": "integrated-final-selections/I-12/I-12-control-research-a001/prepared-stage.json",
+      "sha256": "7319ed71afab79d3c8fb4fe3231f36542004cdbfa5fa68ae217f8c2bb6afb498",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-12/I-12-control-research-a001/workspace/TASK.md",
+      "relative_path": "integrated-final-selections/I-12/I-12-control-research-a001/workspace/TASK.md",
+      "sha256": "94aea6006cc4b30f9e12fb5bbe06e9933b3545005209734701e076530981064f",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-12/I-12-control-research-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-final-selections/I-12/I-12-control-research-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-12/I-12-control-research-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-final-selections/I-12/I-12-control-research-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-12/I-12-control-revision-a001/prepared-stage.json",
+      "relative_path": "integrated-final-selections/I-12/I-12-control-revision-a001/prepared-stage.json",
+      "sha256": "587f205f68b83a53bf9095f0a9d364bf3833d79952cc31c26b0cab6196673066",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-12/I-12-control-revision-a001/workspace/TASK.md",
+      "relative_path": "integrated-final-selections/I-12/I-12-control-revision-a001/workspace/TASK.md",
+      "sha256": "cf31e1374203c8427c9b60dbfc28e8337106fa405822af4f9b695d789553fd53",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-12/I-12-control-revision-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-final-selections/I-12/I-12-control-revision-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-12/I-12-control-revision-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-final-selections/I-12/I-12-control-revision-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-12/I-12-treatment-critique-a001/prepared-stage.json",
+      "relative_path": "integrated-final-selections/I-12/I-12-treatment-critique-a001/prepared-stage.json",
+      "sha256": "d877715288c9e1ff78337acd740c845ef862d3a894102d61411e77c7dca81ce4",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-12/I-12-treatment-critique-a001/workspace/TASK.md",
+      "relative_path": "integrated-final-selections/I-12/I-12-treatment-critique-a001/workspace/TASK.md",
+      "sha256": "e71eb44646c542d0825abfcb5b45b9cc100b9ff2a3f4977ea0ffa07b14cac616",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-12/I-12-treatment-critique-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-final-selections/I-12/I-12-treatment-critique-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-12/I-12-treatment-critique-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-final-selections/I-12/I-12-treatment-critique-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-12/I-12-treatment-research-a001/prepared-stage.json",
+      "relative_path": "integrated-final-selections/I-12/I-12-treatment-research-a001/prepared-stage.json",
+      "sha256": "d7c2bc79577974378d27a6a5eb8a80390f2613ce13992c509c86fcad956759c1",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-12/I-12-treatment-research-a001/workspace/TASK.md",
+      "relative_path": "integrated-final-selections/I-12/I-12-treatment-research-a001/workspace/TASK.md",
+      "sha256": "94aea6006cc4b30f9e12fb5bbe06e9933b3545005209734701e076530981064f",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-12/I-12-treatment-research-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-final-selections/I-12/I-12-treatment-research-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-12/I-12-treatment-research-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-final-selections/I-12/I-12-treatment-research-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-12/I-12-treatment-revision-a001/prepared-stage.json",
+      "relative_path": "integrated-final-selections/I-12/I-12-treatment-revision-a001/prepared-stage.json",
+      "sha256": "2f1404d1c0f0d308ded6f9413115fa0789642cb59cdcb28e18971bb31ddec696",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-12/I-12-treatment-revision-a001/workspace/TASK.md",
+      "relative_path": "integrated-final-selections/I-12/I-12-treatment-revision-a001/workspace/TASK.md",
+      "sha256": "efb6a45fcbeb77a46a1dbdc560f4a4653a734211c1f79c6e5ead18fd0921f36a",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-12/I-12-treatment-revision-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-final-selections/I-12/I-12-treatment-revision-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-12/I-12-treatment-revision-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-final-selections/I-12/I-12-treatment-revision-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/I-12/PAIR_INPUT_FREEZE.json",
+      "relative_path": "integrated-final-selections/I-12/PAIR_INPUT_FREEZE.json",
+      "sha256": "d5b1349449cb30ec9128d3f5e727ca420682a9c3733155a22b8804618351638f",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/INPUT_MANIFEST.json",
+      "relative_path": "integrated-final-selections/INPUT_MANIFEST.json",
+      "sha256": "99143f282070d59dc712a48a1e3f081cade619fb459a0ec723f49509b070d582",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/OUTBOX.json",
+      "relative_path": "integrated-final-selections/OUTBOX.json",
+      "sha256": "e7727ad44a5d640c495fb4c91271ffd3aeb79f71ab1d260bb5c95f6da7267162",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/cards/I-09.json",
+      "relative_path": "integrated-final-selections/cards/I-09.json",
+      "sha256": "7400fb8e4d8a34c6210b37e9cba74f3f0478a8e430337cd513912b185a061921",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/cards/I-10.json",
+      "relative_path": "integrated-final-selections/cards/I-10.json",
+      "sha256": "59024ee762877e2ab440e0fb2ef03eacd23acd3eb16a16b5a33b7bf63dae528a",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/cards/I-11.json",
+      "relative_path": "integrated-final-selections/cards/I-11.json",
+      "sha256": "93d69c906061aa8eab00b2b42fccedf6ac60728cc4212c0f0c6c990d94519dba",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/cards/I-12.json",
+      "relative_path": "integrated-final-selections/cards/I-12.json",
+      "sha256": "0e48d93b24013f8dc5a6794d33e5214b47e325dabd42bd77298d61f33da4f002",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/prompts/V10-release-binding.md",
+      "relative_path": "integrated-final-selections/prompts/V10-release-binding.md",
+      "sha256": "fe2d93a5921075e44ee26cdf72b59e95d615ae910eb554d970741f426e758a55",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/prompts/V16-complete-decision-delivery.md",
+      "relative_path": "integrated-final-selections/prompts/V16-complete-decision-delivery.md",
+      "sha256": "a78917022bdee0019914ae70f8b5eb78b1aa95a5d4d864c39a4871de0d42913b",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/registration/I-09-DEC004-selection-r001.json",
+      "relative_path": "integrated-final-selections/registration/I-09-DEC004-selection-r001.json",
+      "sha256": "aaee53510c554f21402905c528c2e5a5bc6134123f934814a557a0b9807c7c55",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/registration/I-10-DEC004-selection-r001.json",
+      "relative_path": "integrated-final-selections/registration/I-10-DEC004-selection-r001.json",
+      "sha256": "35d760db3fa824e620a64c0eff484b51b074379fded6d21606f36d91f969559d",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/registration/I-11-DEC004-selection-r001.json",
+      "relative_path": "integrated-final-selections/registration/I-11-DEC004-selection-r001.json",
+      "sha256": "240369a4b13b820d9bfe03866eed9798234e750f775888faaa73fa2b7802e4bd",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/registration/I-12-DEC004-selection-r001.json",
+      "relative_path": "integrated-final-selections/registration/I-12-DEC004-selection-r001.json",
+      "sha256": "ac06d27135620fb0bbff88aab12dc8d2f78b2365921629eb8011b20e1767ffc7",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/prepare_integrated_final.py",
+      "relative_path": "prepare_integrated_final.py",
+      "sha256": "36510fe61ea42c0e7320e2bab8dd1a3047d7bd6eee5c3f13674ae6a83dc42d96",
+      "classification": "NEUTRAL_SCOPE_DIAGNOSIS_OR_PROSPECTIVE_INPUT"
+    }
+  ],
+  "candidate_content_included": false,
+  "native_result_source_payloads_included": false,
+  "sealed_holdout_details_included": false,
+  "native_starts_by_preparer": 0,
+  "originals_and_costs_preserved": true,
+  "R002_scope_target": [
+    "V14",
+    "V15"
+  ],
+  "DEC004_methods": [
+    "V10",
+    "V16"
+  ]
+}

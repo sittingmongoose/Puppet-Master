@@ -1,0 +1,55 @@
+{
+  "accepted_count": 3,
+  "accepted": [
+    {
+      "offset": 0,
+      "row": {
+        "id": 1,
+        "v": "ok",
+        "ts": "2026-01-02T03:04:05+00:00"
+      }
+    },
+    {
+      "offset": 1,
+      "row": {
+        "id": 2,
+        "v": null,
+        "ts": null
+      }
+    },
+    {
+      "offset": 2,
+      "row": {
+        "id": 3,
+        "v": "naïve ✓",
+        "ts": null
+      }
+    }
+  ],
+  "quarantined_count": 4,
+  "quarantined": [
+    {
+      "offset": 3,
+      "reason": "ValueError: cannot coerce 'x' to int64",
+      "raw_line_preserved": "{\"id\": \"x\", \"v\": 7}"
+    },
+    {
+      "offset": 4,
+      "reason": "ValueError: missing required field 'id'",
+      "raw_line_preserved": "{\"v\": \"missing id\"}"
+    },
+    {
+      "offset": 5,
+      "reason": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
+      "raw_line_preserved": "not json at all"
+    },
+    {
+      "offset": 6,
+      "reason": "ValueError: month must be in 1..12, not 13",
+      "raw_line_preserved": "{\"id\": 4, \"ts\": \"2026-13-99T00:00:00Z\"}"
+    }
+  ],
+  "unicode_preserved": true,
+  "nulls_allowed_for_optional_field": true,
+  "original_source_untouched": true
+}

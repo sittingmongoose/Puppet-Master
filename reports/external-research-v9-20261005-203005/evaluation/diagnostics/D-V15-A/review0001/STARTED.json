@@ -1,0 +1,25 @@
+{
+  "schema": "er9.evaluation-start-receipt.v1",
+  "evaluation_id": "ER9-EVAL-D-V15-A-001",
+  "dispatch": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/packet0001/dispatch.json",
+    "sha256": "2a7a58c4139a783b3a5aa3a8b9fd65d08fb6bdb9f09089eb8f063aac282f008f"
+  },
+  "packet_verified_utc": "2026-10-05T22:20:53.508143Z",
+  "actual_current_output_read": true,
+  "semantic_budget_clock_started_utc": "2026-10-05T22:21:11.537980Z",
+  "configured_evaluator": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh",
+    "basis": "Root confirmed actual spawn controls; fork_turns none"
+  },
+  "observed_physical_identity": "UNKNOWN; tool returned task name only",
+  "method_history_alias_sidecar_economics_opened": false,
+  "semantic_budget_clock_started_monotonic_ns": 69290395039195,
+  "output_pins": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/packet0001/outputs/B/final/proposal.md",
+      "sha256": "48e02c80a23848ee0290121ef5449077bcd7d8f80916c763eabcc539a675bf98"
+    }
+  ]
+}
