@@ -81,11 +81,10 @@ End with exactly one:
 <!-- agent-rules: start (managed by `agent-rules install` in the Cursor share Inbox folder; edits inside are overwritten) -->
 ## GPU browser testing and recording
 
-Browser tests and test videos run on the Ubuntu VM's NVIDIA GPU. Read `/mnt/Cursor/Agent-Guides/gpu-recording.md` before your first one.
+Use `agent-browser` for browser tests and test videos: each agent gets its own Chrome on the GPU. The Ubuntu VM, the Mac and the Windows PC all have it, with the same commands and their own limits; read `/mnt/Cursor/Agent-Guides/gpu-recording.md` before your first one.
 
-- Record: `agent-browser start --record /abs/path.mp4 --url <url>`, drive it with Playwright `connectOverCDP(cdp_endpoint)`, finish with `agent-browser stop <id>`.
-- Headless: `agent-browser start --url <url>`, or launch Chrome yourself with `--enable-gpu` and `DISPLAY=:0 XAUTHORITY=/home/sittingmongoose/.Xauthority`: without both it silently renders on the CPU. Never use Playwright `recordVideo` or CPU screen recorders.
-- Limits for the whole VM: 5 recordings (3 while Jared streams with Moonlight), 8 browsers in all while anything records, 12 headless otherwise. Delete videos when done.
+- Record: `agent-browser start --record /abs/path.mp4 --url <url>`, drive it with Playwright `connectOverCDP(cdp_endpoint)` on the page whose URL does not start with `recorder_url`, finish with `agent-browser stop <id>`.
+- Headless: `agent-browser start --url <url>`. Never use Playwright `recordVideo`, CPU screen recorders, `--disable-gpu` or SwiftShader.
 
 ## Extra worker agents
 
