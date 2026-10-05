@@ -1,10 +1,10 @@
 /* Host: the concept views replace the three redesigned panels while their original is .active; the six other panels
    and "Current" stay exactly as the shell draws them. */
 .pmr-view { display: none; }
-html[data-rail-concept]:not([data-rail-concept="current"]) #sidePanelSlot > :is(#panel-files, #panel-source, #panel-docker) { display: none !important; }
-html[data-rail-concept]:not([data-rail-concept="current"]) #sidePanelSlot > #panel-files.active ~ .pmr-view[data-pmr-for="panel-files"],
-html[data-rail-concept]:not([data-rail-concept="current"]) #sidePanelSlot > #panel-source.active ~ .pmr-view[data-pmr-for="panel-source"],
-html[data-rail-concept]:not([data-rail-concept="current"]) #sidePanelSlot > #panel-docker.active ~ .pmr-view[data-pmr-for="panel-docker"] {
+html[data-rail-concept]:not([data-rail-concept="current"]):not([data-rail-skin]) #sidePanelSlot > :is(#panel-files, #panel-source, #panel-docker) { display: none !important; }
+html[data-rail-concept]:not([data-rail-concept="current"]):not([data-rail-skin]) #sidePanelSlot > #panel-files.active ~ .pmr-view[data-pmr-for="panel-files"],
+html[data-rail-concept]:not([data-rail-concept="current"]):not([data-rail-skin]) #sidePanelSlot > #panel-source.active ~ .pmr-view[data-pmr-for="panel-source"],
+html[data-rail-concept]:not([data-rail-concept="current"]):not([data-rail-skin]) #sidePanelSlot > #panel-docker.active ~ .pmr-view[data-pmr-for="panel-docker"] {
   display: flex;
 }
 .pmr-view {
