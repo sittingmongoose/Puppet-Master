@@ -1,0 +1,75 @@
+{
+  "schema": "er9.luna.mcp-metadata.v1",
+  "inference_started": false,
+  "native_turns_started": 0,
+  "native_goals_set": 0,
+  "config": {
+    "projected_selected_controls_match": true,
+    "unprojected_supported_controls": [
+      "tools.update_plan.enabled",
+      "tools.experimental_request_user_input.enabled"
+    ]
+  },
+  "catalog": {
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "catalog_control_acknowledged": true,
+    "existing_account_access": "UNKNOWN until successful native inference"
+  },
+  "identity": {
+    "fresh_empty_history": true,
+    "instruction_sources_empty": true,
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "ephemeral": false
+  },
+  "thread_id": "01a10de7-4a54-7250-b815-ed9fd5f0529c",
+  "mcp_catalog": {
+    "servers": {
+      "pm_boundary": [
+        "mechanical",
+        "public_https_get",
+        "read_file",
+        "write_file"
+      ],
+      "pm_execution": [
+        "python_execute"
+      ]
+    },
+    "resources": 0,
+    "resource_templates": 0
+  },
+  "outcome": "metadata_pass",
+  "mcp_startup_receipts": [
+    {
+      "threadId": "01a10de7-4a54-7250-b815-ed9fd5f0529c",
+      "status": "starting"
+    },
+    {
+      "threadId": "01a10de7-4a54-7250-b815-ed9fd5f0529c",
+      "status": "starting"
+    },
+    {
+      "threadId": "01a10de7-4a54-7250-b815-ed9fd5f0529c",
+      "status": "ready"
+    },
+    {
+      "threadId": "01a10de7-4a54-7250-b815-ed9fd5f0529c",
+      "status": "ready"
+    }
+  ],
+  "rpc_counts": {
+    "initialize": 1,
+    "config/read": 1,
+    "model/list": 1,
+    "thread/start": 1,
+    "mcpServerStatus/list": 1
+  },
+  "native_event_counts": {
+    "remoteControl/status/changed": 1,
+    "thread/started": 1,
+    "warning": 1,
+    "mcpServer/startupStatus/updated": 4
+  },
+  "elapsed_seconds": 2.007652235
+}

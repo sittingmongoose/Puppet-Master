@@ -1,0 +1,130 @@
+{
+  "schema": "er9.luna.native-stage.v1",
+  "label": "er9-luna-tools-canary-003",
+  "requested_model": "gpt-6-luna",
+  "requested_effort": "max",
+  "scored_research": false,
+  "model_fallback_allowed": false,
+  "preventive_candidate_create_goal_denial": "UNESTABLISHED",
+  "goal_policy": "fresh_native_goal_original_clock_monitor_v1",
+  "mcp_admission_policy": "private exact user-preauthorized tools approve; general auto and global never retained",
+  "binary_sha256": "12eb3e81114588aca3b7998f4f19e8997b056aca08e57a7ca7c8a3ec8c652aad",
+  "prompt_sha256": "65104923c0d0f565f13af150197243e6b16d85293c147cdeb8ef4358b9a8df54",
+  "allowed_mcp": {
+    "pm_boundary": [
+      "mechanical",
+      "public_https_get",
+      "read_file",
+      "write_file"
+    ],
+    "pm_execution": [
+      "python_execute"
+    ]
+  },
+  "tools_config_sha256": "2fe65bf146fcb8ea2a03b375ceac6d19113150dc88bcbe5ee9c653e1c68cbc3f",
+  "execution_server_sha256": "002328c3e3e30a3ad8e60553de496215f6fb17c8f4e789a42238fe3253553b51",
+  "tools_source_pins_sha256": "04d18860f56cdd93427fdfe1336f7418d8d248e6a70e5b9463f602aeb8ff5aa2",
+  "actual_inference_tool_payload": "UNOBSERVED",
+  "http_attempts": "UNKNOWN",
+  "cost": "UNKNOWN",
+  "runtime_source_sha256": {
+    "controls.py": "31cf8b193b2431d3117758e233fba8c51930cbfb4096c1b956a42ce0a7ffdd34",
+    "native_driver.py": "9fcbd7ab8895dafa2b4d5406a473280a2f30b1a949d333df37f587b3199e22e7",
+    "projector.py": "74c1084659a919097864f1a31afa2c9ed3744c1f99511a86d00bdb591903b35f",
+    "host_guard.py": "9428f2a107819128394a4edb3f07c4ce957ad0dbcfe93d967c3c2191a917bf04",
+    "stage_runner.py": "00574db3d616b7cf793415901c49c1de686168010dc9607ae8fbae0f11b930e7",
+    "restricted-luna-catalog.json": "8a4b241efd51025bdf39ba0b7e6ca39ad94b5a25efff5f98b8a330ab08c992f3",
+    "item-contract.json": "c14555752205eae3994f831016f269f7e6c066ea6ddf8c11774dced4acb45da4"
+  },
+  "config": {
+    "projected_selected_controls_match": true,
+    "unprojected_supported_controls": [
+      "tools.update_plan.enabled",
+      "tools.experimental_request_user_input.enabled"
+    ]
+  },
+  "catalog": {
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "catalog_control_acknowledged": true,
+    "existing_account_access": "UNKNOWN until successful native inference"
+  },
+  "identity": {
+    "fresh_empty_history": true,
+    "instruction_sources_empty": true,
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "ephemeral": false
+  },
+  "thread_id": "01a10de3-bb78-7e40-8f85-90c42d1ab917",
+  "metrics": {
+    "schema": "er9.luna.public-metrics.v1",
+    "fresh_session": true,
+    "requested_model": "gpt-6-luna",
+    "requested_effort": "max",
+    "goal_target_id": "01a10de3-bb78-7e40-8f85-90c42d1ab917",
+    "goal_started_turn": false,
+    "activation": {
+      "schema": "er9.route.activation-positive.v1",
+      "native_activation_observed": false,
+      "native_activation_absent_proof": false
+    },
+    "goal_status_final": null,
+    "native_responses": "UNKNOWN",
+    "usage_notification_count": 0,
+    "native_response_policy": "wall-goal-token-observation-v1",
+    "native_model_response_cap_enforced": false,
+    "candidate_goals_set_by_host": 0,
+    "goal_replacements_observed": 0,
+    "native_response_measure": "HTTP attempts UNKNOWN; native wall bounded; Goal identity monitored; tokens observed",
+    "native_turns_started": 0,
+    "native_turns_completed": 0,
+    "native_owned_continuation_observed": false,
+    "host_initial_turns_started": 0,
+    "host_followup_turns_started": 0,
+    "usage_totals": {},
+    "tool_completed_counts": {},
+    "goal_tool_completed_counts": {},
+    "tool_attempt_counts": {},
+    "tool_failed_counts": {},
+    "goal_tool_call_count_scope": "visible item telemetry only; zero is not proof of no native Goal calls",
+    "inventory_check": {
+      "verified": false,
+      "native_mcp_catalog_verified": false,
+      "actual_inference_tool_payload_observed": false,
+      "scope": "source-controlled restriction plus MCP catalog; request payload UNKNOWN"
+    },
+    "native_http_attempts": "UNKNOWN",
+    "cost": "UNKNOWN",
+    "component_outcome": "HOLD"
+  },
+  "outcome": "HOLD",
+  "error_class": "Empty",
+  "error": "",
+  "native_goal_status_before_cleanup": null,
+  "turn_receipts": [],
+  "host_rpc_counts": {
+    "initialize": 1,
+    "config/read": 1,
+    "model/list": 1,
+    "thread/start": 1,
+    "mcpServerStatus/list": 1,
+    "thread/goal/set": 1
+  },
+  "native_event_counts": {
+    "remoteControl/status/changed": 1,
+    "thread/started": 1,
+    "warning": 1,
+    "mcpServer/startupStatus/updated": 4,
+    "account/updated": 1
+  },
+  "held_process_exit_code": 0,
+  "native_cgroup_quiet": true,
+  "held_process_groups_absent": true,
+  "execution_units_quiet": true,
+  "elapsed_seconds": 23.452970708,
+  "closed_before_original_total_stop": true,
+  "raw_native_output_persisted_by_driver": false,
+  "mechanical_route_pass": false,
+  "publication_scope": "Terminal mechanical route attempt; no substantive research or blanket route admission. Actual HTTP requests/billing remain unknown. Goal-tool zero counts represent visible telemetry only."
+}

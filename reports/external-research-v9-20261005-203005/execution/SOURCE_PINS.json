@@ -1,0 +1,50 @@
+{
+  "schema": "er9.execution-source-pins.v1",
+  "created_utc": "2026-10-05T21:04:17.557538+00:00",
+  "engine_version": "v2-native-objective-normalization",
+  "files": [
+    {
+      "path": "LAB_ROOT/dev/execution/glm_stage.py",
+      "sha256": "8bc5b63d9235cee7ad038d43102e49182bbba1b4b6f78620b7694afdecc92b6d"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/stage_worker.py",
+      "sha256": "cb299253506f701d71902a0e7a58aa6ce7105ea731d6c847633f2bfb12d98c44"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/native_guard.py",
+      "sha256": "fbca6499ffe4d6727e21a5768b993eddf0d25295baa0d276524fabe29452b3ca"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/native_support.py",
+      "sha256": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/test_execution.py",
+      "sha256": "8083f49ff132d5d9e1af58c4fff8ace8f12b2c9366a9d79722329b4a682f7d3c"
+    }
+  ],
+  "reused_sources": [
+    {
+      "path": "EXPERIMENTS_ROOT/external-research-v8-20261001-2140/dev/route-recovery-v2/route-assembly-v1/run_goal.py",
+      "sha256": "cf8302f30404128eee32aff128b1f03a5ea26fcfebedeb54ca662a98b2e2ef31"
+    },
+    {
+      "path": "EXPERIMENTS_ROOT/external-research-v8-20261001-2140/dev/route-recovery-v2/route-assembly-v1/zcode_goal_driver.py",
+      "sha256": "5ffcd0c14f1c56cd404dc93c19fda2774b0c5d4b4ce4dc8b5f110b36095c35af"
+    },
+    {
+      "path": "EXPERIMENTS_ROOT/external-research-v8-20261001-2140/dev/route-recovery-v2/route-assembly-v1/zcode_native.py",
+      "sha256": "4212dc1017bea268ba25789d3ebf6dc647d88a9571f9c22fff1f3ccf9cf00633"
+    },
+    {
+      "path": "EXPERIMENTS_ROOT/external-research-v8-20261001-2140/dev/route-recovery-v2/route-assembly-v1/host_guard.py",
+      "sha256": "3aa60ec7c7a3886619835c2e5238579e415223041828775f9e226331c3faa438"
+    }
+  ],
+  "reuse_scope": "Native Goal RPC/model binding/registry projection/sanitizer/stdio helpers and guarded process pattern only. No ER8 releases, campaign clocks, global caps, authority or executable old run entrypoint reused. native_support retains helper functions only and omits credential-bearing wire digests.",
+  "installed_cli": {
+    "path": "installed-zcode-3.11.2.6792",
+    "sha256": "e9f1868c0fdb863537ed910ee3828b9be96b8c2fd805473f63b439e1113266b8"
+  }
+}

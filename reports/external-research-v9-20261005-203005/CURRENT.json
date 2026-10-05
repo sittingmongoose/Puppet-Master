@@ -2,48 +2,36 @@
   "campaign_id": "external-research-v9-20261005-203005",
   "snapshot_at": "2026-10-05T21:00:37.856646+00:00",
   "source_updated_at": "2026-10-05T20:37:01.713104+00:00",
-  "cohort": "route-method-002",
+  "cohort": "failure-inclusive-infrastructure-003",
   "completed_pairs": {
     "diagnostic_pairs_completed": 0,
     "integrated_pairs_completed": 0,
     "confirmation_pairs_completed": 0
   },
-  "candidate_attempts_published": 0,
+  "candidate_attempts_published": 2,
   "scored_outputs_published": 0,
-  "route_canaries_published": {
-    "Luna": 1,
-    "GLM": 0,
-    "Muse": 0
-  },
-  "actual_scored_families": [],
+  "actual_scored_families": [
+    "GLM"
+  ],
   "best_supported_recipe": null,
   "candidate_research_cost": null,
   "route_status": {
-    "GLM": "accepted historical route copied; new zero-inference probe/tests in progress",
-    "Luna": "fresh native /goal and app-native automatic continuation canary PASS; tools binding/guardian regressions pending",
-    "Muse": "UNAVAILABLE_NATIVE_TOOL_AUTH_BOUNDARY; exact catalog metadata only; no candidate inference"
+    "GLM": "Operational acceptance v2 for pinned tool composition; no research quality claim",
+    "Luna": "Terminal tools002/005 HOLD; preactivation003 and metadata004 included; successors outside snapshot",
+    "Muse": "UNAVAILABLE_NATIVE_TOOL_AUTH_BOUNDARY; unchanged"
   },
-  "route_canary_counters": {
-    "Luna": {
-      "native_goal_starts": 1,
-      "seconds": 11.61,
-      "terminal": "complete",
-      "observed_model": "gpt-6-luna",
-      "effort": "max",
-      "native_metered_total": 39704,
-      "native_input": 39642,
-      "native_cached_input": 28672,
-      "native_output": 62,
-      "goal_tokens_used": 9443,
-      "model_billing": "UNKNOWN",
-      "quiescent": true
-    },
-    "GLM": {
-      "native_goal_starts": 0
-    },
-    "Muse": {
-      "native_goal_starts": 0
-    }
+  "reproduction_boundary": "Frozen prospective inputs + projected native receipts + generic boundary verification; native account replay not portable.",
+  "publication_snapshot_at": "2026-10-05T21:27:05.751203+00:00",
+  "completed_scored_pipelines_published": 0,
+  "completed_pairs_published": 0,
+  "route_goal_starts_published": {
+    "GLM": 2,
+    "Luna": 3,
+    "Muse": 0
   },
-  "reproduction_boundary": "Frozen prospective inputs + projected native receipts + generic boundary verification; native account replay not portable."
+  "substantive_live_note": "Root reported two I01 GLM research Goal activations at 2026-10-05T21:10:25/29Z; no live outputs selected and no finished scored pipeline established by this cohort.",
+  "billed_dollars": "UNKNOWN",
+  "scored_stage_goal_starts_published": 2,
+  "scored_activation_snapshot": "activations/I01_ACTIVATION_ONLY_V1.json",
+  "present_liveness_claim": false
 }

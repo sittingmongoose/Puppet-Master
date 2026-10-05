@@ -1,0 +1,58 @@
+{
+  "schema": "er9.tools.cleanup-erratum.v1",
+  "observed_utc": "2026-10-05T21:08:43.489850+00:00",
+  "original_canary": "canary-002",
+  "original_run": "dev/execution/canary-002/tool-evidence/executions/exec-f8u2wu_g",
+  "original_request_sha256": "263062a06308b2edb3028a96bb29a5985557a148dae57739fab5ce0df08cff25",
+  "original_result_sha256": "dec148a68b6c2fd38e970fc884427d6c95162467fd5fc9b4237fd4d91b5714f4",
+  "original_source_pins_sha256": "04d18860f56cdd93427fdfe1336f7418d8d248e6a70e5b9463f602aeb8ff5aa2",
+  "owned_unit": "er9-exec-9d8e5975b63a41b4a6783dab2543996e.service",
+  "original_result_unchanged": true,
+  "finding": "Original cleanup_confirmed=false was conservative; original unit_absent sentinel conflated an unavailable user-bus query with absence.",
+  "causal_reproduction": {
+    "command": [
+      "/usr/bin/systemctl",
+      "--user",
+      "show",
+      "er9-exec-9d8e5975b63a41b4a6783dab2543996e.service",
+      "--property=ActiveState",
+      "--value"
+    ],
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Failed to connect to user scope bus via local transport: $DBUS_SESSION_BUS_ADDRESS and $XDG_RUNTIME_DIR not defined (consider using --machine=<user>@.host --user to connect to bus of other user)\n"
+  },
+  "supported_exact_unit_query": {
+    "command": [
+      "/usr/bin/systemctl",
+      "--user",
+      "show",
+      "er9-exec-9d8e5975b63a41b4a6783dab2543996e.service",
+      "--property=LoadState",
+      "--property=ActiveState",
+      "--property=ControlGroup"
+    ],
+    "returncode": 0,
+    "stdout": "LoadState=not-found\nActiveState=inactive\nControlGroup=\n",
+    "stderr": ""
+  },
+  "supported_slice_query": {
+    "command": [
+      "/usr/bin/systemctl",
+      "--user",
+      "show",
+      "app.slice",
+      "--property=ControlGroup",
+      "--value"
+    ],
+    "returncode": 0,
+    "stdout": "/user.slice/user-1000.slice/user@1000.service/app.slice\n",
+    "stderr": ""
+  },
+  "expected_default_owned_cgroup_path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/er9-exec-9d8e5975b63a41b4a6783dab2543996e.service",
+  "expected_default_owned_cgroup_absent": true,
+  "supplementary_cleanup_observation": "Exact owned transient unit currently not-found/inactive with empty ControlGroup; default app.slice owned cgroup absent.",
+  "temporal_limit": "This later observation does not rewrite or retroactively prove the immediate original post-run query; original receipt remains false/unconfirmed.",
+  "prospective_successor": "versions/v1.1",
+  "boundary_change": "No kernel isolation, runtime/resource or candidate code behavior change; explicit user-manager env and cleanup status receipt classification only."
+}

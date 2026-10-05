@@ -7,3 +7,5 @@ Next work: freeze cases/common criteria and budgeted contrasts, qualify usable n
 At campaign closure record campaign-owned job cleanup and reconcile all queue denominators. This initial cohort supplies no cleanup claim and no completed candidate stages.
 
 Cohort 002 adds frozen early inputs, evaluation protocol, projected route receipts and owner-pinned generic tool code. Read `CURRENT.json` source timestamp and `history/cohort002.json` selections; live native runs may advance after that snapshot. `tools/README.md` states the systemd/Bubblewrap/OS prerequisites. The tool source is reproducible within that boundary, while native account/session replay is not portable. Consult current private campaign state before dispatch; this published snapshot authorizes no duplicate starts.
+
+Cohort 003 retains failed routes and publishes a separate prospective tools v1.1 plus the pinned GLM engine. Use current private dispatcher state rather than route attempt snapshots before any admission. Later Luna successors are excluded. Original source and receipt hashes are listed in `history/cohort003.json`.

@@ -1,0 +1,237 @@
+{
+  "schema": "er9.luna.native-stage.v1",
+  "label": "er9-luna-tools-canary-005",
+  "requested_model": "gpt-6-luna",
+  "requested_effort": "max",
+  "scored_research": false,
+  "model_fallback_allowed": false,
+  "preventive_candidate_create_goal_denial": "UNESTABLISHED",
+  "goal_policy": "fresh_native_goal_original_clock_monitor_v1",
+  "mcp_admission_policy": "private exact user-preauthorized tools approve; general auto and global never retained",
+  "binary_sha256": "12eb3e81114588aca3b7998f4f19e8997b056aca08e57a7ca7c8a3ec8c652aad",
+  "prompt_sha256": "65104923c0d0f565f13af150197243e6b16d85293c147cdeb8ef4358b9a8df54",
+  "allowed_mcp": {
+    "pm_boundary": [
+      "mechanical",
+      "public_https_get",
+      "read_file",
+      "write_file"
+    ],
+    "pm_execution": [
+      "python_execute"
+    ]
+  },
+  "tools_config_sha256": "2fe65bf146fcb8ea2a03b375ceac6d19113150dc88bcbe5ee9c653e1c68cbc3f",
+  "execution_server_sha256": "0a20191b4b32b925456142c280965f4faf7cbdefc458ba93fc6087eaa0968007",
+  "tools_source_pins_sha256": "18112b71153533b27d1613c3fc67e9efd63b2a5ebb6adf08c8914750f2f276f3",
+  "actual_inference_tool_payload": "UNOBSERVED",
+  "http_attempts": "UNKNOWN",
+  "cost": "UNKNOWN",
+  "runtime_source_sha256": {
+    "controls.py": "31cf8b193b2431d3117758e233fba8c51930cbfb4096c1b956a42ce0a7ffdd34",
+    "native_driver.py": "8fe6619897dfed5e0e861a5f4e7808ffe400b5a6c06482986c559a7748079301",
+    "projector.py": "74c1084659a919097864f1a31afa2c9ed3744c1f99511a86d00bdb591903b35f",
+    "host_guard.py": "9428f2a107819128394a4edb3f07c4ce957ad0dbcfe93d967c3c2191a917bf04",
+    "stage_runner.py": "eaa3570d4116e553246ad37245b3acce28e60e033394f0dfbdafacc9555067c5",
+    "restricted-luna-catalog.json": "8a4b241efd51025bdf39ba0b7e6ca39ad94b5a25efff5f98b8a330ab08c992f3",
+    "item-contract.json": "c14555752205eae3994f831016f269f7e6c066ea6ddf8c11774dced4acb45da4"
+  },
+  "config": {
+    "projected_selected_controls_match": true,
+    "unprojected_supported_controls": [
+      "tools.update_plan.enabled",
+      "tools.experimental_request_user_input.enabled"
+    ]
+  },
+  "catalog": {
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "catalog_control_acknowledged": true,
+    "existing_account_access": "UNKNOWN until successful native inference"
+  },
+  "identity": {
+    "fresh_empty_history": true,
+    "instruction_sources_empty": true,
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "ephemeral": false
+  },
+  "thread_id": "01a10de9-641f-7661-b180-b54a74f9d777",
+  "native_mcp_catalog": {
+    "servers": {
+      "pm_boundary": [
+        "mechanical",
+        "public_https_get",
+        "read_file",
+        "write_file"
+      ],
+      "pm_execution": [
+        "python_execute"
+      ]
+    },
+    "resources": 0,
+    "resource_templates": 0
+  },
+  "native_goal_set_receipt": {
+    "goal": {
+      "threadId": "01a10de9-641f-7661-b180-b54a74f9d777",
+      "objective": "Perform this mechanical ER9 route canary only. Do no case research and create no new Goal. Use only the admitted pm_boundary tools, pm_execution.python_execute, get_goal and update_goal. File tool paths must be relative, e.g. inputs/fixture.json and out/canary.md.\n\nOn the first native turn: get_goal; read inputs/fixture.json; use mechanical with operation line_map to produce out/fixture-map.json. Fetch the neutral public primary URL https://www.python.org/robots.txt with public_https_get, then read a bounded range from the returned capture path. Record the actual capture identity, source hash, delivered range and limitations without claiming understanding from a hash.\n\nAuthor and run a tiny Python calculation over the supplied numbers with python_execute. Independently derive the expected sum, check your calculation, and exercise one deliberately incorrect expectation so the witness distinguishes failure; catch that expected assertion failure and report it. Do not request files, environment or network from Python. Write a short standalone out/canary.md with operations/results/remaining limitations using write_file. Leave this Goal active and emit final text CANARY_PHASE_ONE.\n\nThe host sends exactly one user turn. On genuine native automatic continuation, get_goal, read out/canary.md to check delivery, update_goal status complete and emit final text CANARY_PHASE_TWO. Do not use any unlisted capabilities. The canary is finite under a trusted original-birth 180-second host deadline; complete promptly.",
+      "status": "active",
+      "tokenBudget": null,
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791234782,
+      "updatedAt": 1791234782
+    }
+  },
+  "metrics": {
+    "schema": "er9.luna.public-metrics.v1",
+    "fresh_session": true,
+    "requested_model": "gpt-6-luna",
+    "requested_effort": "max",
+    "goal_target_id": "01a10de9-641f-7661-b180-b54a74f9d777",
+    "goal_started_turn": true,
+    "activation": {
+      "schema": "er9.route.activation-positive.v1",
+      "native_activation_observed": true,
+      "native_activation_absent_proof": false,
+      "goal_started_turn": true,
+      "receipt_id": "01a10de9-641f-7661-b180-b54a74f9d777",
+      "observed_activation_epoch": 1791234782
+    },
+    "goal_status_final": "paused",
+    "native_responses": "UNKNOWN",
+    "usage_notification_count": 18,
+    "native_response_policy": "wall-goal-token-observation-v1",
+    "native_model_response_cap_enforced": false,
+    "candidate_goals_set_by_host": 1,
+    "goal_replacements_observed": 0,
+    "native_response_measure": "HTTP attempts UNKNOWN; native wall bounded; Goal identity monitored; tokens observed",
+    "native_turns_started": 3,
+    "native_turns_completed": 3,
+    "native_owned_continuation_observed": true,
+    "host_initial_turns_started": 1,
+    "host_followup_turns_started": 0,
+    "usage_totals": {
+      "inputTokens": 188268,
+      "cachedInputTokens": 145664,
+      "outputTokens": 4677,
+      "reasoningOutputTokens": 3654,
+      "totalTokens": 192945
+    },
+    "tool_completed_counts": {},
+    "goal_tool_completed_counts": {},
+    "tool_attempt_counts": {
+      "pm_boundary.read_file": 6,
+      "pm_boundary.public_https_get": 2,
+      "pm_boundary.mechanical": 2,
+      "pm_boundary.write_file": 2
+    },
+    "tool_failed_counts": {
+      "pm_boundary.read_file": 6,
+      "pm_boundary.public_https_get": 2,
+      "pm_boundary.mechanical": 2,
+      "pm_boundary.write_file": 2
+    },
+    "goal_tool_call_count_scope": "visible item telemetry only; zero is not proof of no native Goal calls",
+    "inventory_check": {
+      "verified": false,
+      "native_mcp_catalog_verified": true,
+      "actual_inference_tool_payload_observed": false,
+      "scope": "source-controlled restriction plus MCP catalog; request payload UNKNOWN"
+    },
+    "native_http_attempts": "UNKNOWN",
+    "cost": "UNKNOWN",
+    "component_outcome": "HOLD"
+  },
+  "outcome": "HOLD",
+  "error_class": "RuntimeError",
+  "error": "native Goal stopped before completion",
+  "native_goal_status_before_cleanup": "blocked",
+  "turn_receipts": [
+    {
+      "method": "turn/started",
+      "turnId": "01a10de9-b437-7ad2-908a-5f310f0f60bb",
+      "status": "inProgress"
+    },
+    {
+      "method": "turn/completed",
+      "turnId": "01a10de9-b437-7ad2-908a-5f310f0f60bb",
+      "status": "completed"
+    },
+    {
+      "method": "turn/started",
+      "turnId": "01a10dea-4c5c-7651-bac2-5c33348d5b94",
+      "status": "inProgress"
+    },
+    {
+      "method": "turn/completed",
+      "turnId": "01a10dea-4c5c-7651-bac2-5c33348d5b94",
+      "status": "completed"
+    },
+    {
+      "method": "turn/started",
+      "turnId": "01a10deb-407e-70a0-9b35-d4f4d42067f1",
+      "status": "inProgress"
+    },
+    {
+      "method": "turn/completed",
+      "turnId": "01a10deb-407e-70a0-9b35-d4f4d42067f1",
+      "status": "interrupted"
+    }
+  ],
+  "host_rpc_counts": {
+    "initialize": 1,
+    "config/read": 1,
+    "model/list": 1,
+    "thread/start": 1,
+    "mcpServerStatus/list": 1,
+    "thread/goal/set": 2,
+    "turn/start": 1,
+    "thread/goal/get": 114,
+    "turn/interrupt": 1
+  },
+  "native_event_counts": {
+    "remoteControl/status/changed": 1,
+    "thread/started": 1,
+    "warning": 1,
+    "mcpServer/startupStatus/updated": 4,
+    "account/updated": 1,
+    "thread/goal/updated": 21,
+    "thread/status/changed": 6,
+    "turn/started": 3,
+    "item/started": 36,
+    "item/completed": 36,
+    "item/agentMessage/delta": 179,
+    "thread/tokenUsage/updated": 18,
+    "account/rateLimits/updated": 18,
+    "turn/completed": 3
+  },
+  "mcp_startup_receipts": [
+    {
+      "threadId": "01a10de9-641f-7661-b180-b54a74f9d777",
+      "status": "starting"
+    },
+    {
+      "threadId": "01a10de9-641f-7661-b180-b54a74f9d777",
+      "status": "starting"
+    },
+    {
+      "threadId": "01a10de9-641f-7661-b180-b54a74f9d777",
+      "status": "ready"
+    },
+    {
+      "threadId": "01a10de9-641f-7661-b180-b54a74f9d777",
+      "status": "ready"
+    }
+  ],
+  "held_process_exit_code": 0,
+  "native_cgroup_quiet": true,
+  "held_process_groups_absent": true,
+  "execution_units_quiet": true,
+  "elapsed_seconds": 139.845834143,
+  "closed_before_original_total_stop": true,
+  "raw_native_output_persisted_by_driver": false,
+  "mechanical_route_pass": false,
+  "publication_scope": "Terminal mechanical route attempt; no substantive research or blanket route admission. Actual HTTP requests/billing remain unknown. Goal-tool zero counts represent visible telemetry only."
+}

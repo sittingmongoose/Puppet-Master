@@ -1,0 +1,45 @@
+{
+  "schema": "er9.activation-only-publication.v1",
+  "frozen_utc": "2026-10-05T21:26:16.540163+00:00",
+  "campaign_id": "external-research-v9-20261005-203005",
+  "scored_stage_goal_starts": 2,
+  "whole_pipelines_completed_at_activation": 0,
+  "comparisons_completed_at_activation": 0,
+  "semantic_quality": "UNASSESSED",
+  "present_liveness_claim": false,
+  "records": [
+    {
+      "job_id": "I-01-control-research-a001",
+      "family": "GLM",
+      "requested_model": "GLM 5.3 Flash",
+      "observed_model": "GLM-5.3-Flash",
+      "requested_effort": "max",
+      "observed_effort": "max",
+      "original_worker_launch_utc": "2026-10-05T21:10:25.669529+00:00",
+      "native_started_turn": true,
+      "native_goal_target_id": "target_muvqumhe_ae3a193e-ede2-4c16-8bc1-467c1f7f179a",
+      "native_session_id": "sess_228fa8a0-a744-454c-8b9a-9e377f3b3a21",
+      "native_goal_starts": 1,
+      "activation_source_locator": "LAB_ROOT/ops/dispatcher/runs/I-01-control-research-a001/native/activation.json",
+      "activation_original_sha256": "2f94a9169a453cc2dfa60bc3027f4fb4dd23dd14d817ffe2126c1fe18ae06414",
+      "publication_scope": "activation metadata only; no candidate responses/history/outputs or process IDs"
+    },
+    {
+      "job_id": "I-01-treatment-research-a001",
+      "family": "GLM",
+      "requested_model": "GLM 5.3 Flash",
+      "observed_model": "GLM-5.3-Flash",
+      "requested_effort": "max",
+      "observed_effort": "max",
+      "original_worker_launch_utc": "2026-10-05T21:10:29.266440+00:00",
+      "native_started_turn": true,
+      "native_goal_target_id": "target_muvqup8r_62a60155-de5f-4718-aaf9-8fd0a0e3bba1",
+      "native_session_id": "sess_f110e688-2e6b-4145-a8cb-04cd5f16dae9",
+      "native_goal_starts": 1,
+      "activation_source_locator": "LAB_ROOT/ops/dispatcher/runs/I-01-treatment-research-a001/native/activation.json",
+      "activation_original_sha256": "76664483374f4e4b02584f7b14c98edc048fa9fe029ed014413b5dcdb06bb08b",
+      "publication_scope": "activation metadata only; no candidate responses/history/outputs or process IDs"
+    }
+  ],
+  "limitations": "Immutable metadata projection; does not establish source understanding, completed candidate work, or independent quality. Actual original runtime body remains separately pinned by original SHA."
+}

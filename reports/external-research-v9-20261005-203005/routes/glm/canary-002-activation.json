@@ -1,0 +1,203 @@
+{
+  "response": "Goal active\nObjective: This is a generic tool-route canary, not a scored research case. Use the genuine native Goal until complete. Using only admitted tools: (1) read TASK.md; (2) execute your own tiny Python calculation with python_execute, print a small integer result, and record the actual returned receipt/exit; (3) fetch https://www.python.org/ via public_https_get and record actual URL/status/capture hash returned, without interpreting product research; (4) write out/canary.txt stating which actions actually succeeded or failed. Never claim a tool executed if it returned an error. Do not inspect host/private files. Complete this native Goal after the artifact is written.\nUsage: 0 tokens / none\nTime: 0 seconds",
+  "snapshot": {
+    "messages": [
+      {
+        "info": {
+          "agent": "zcode-agent",
+          "messageId": "msg_muvqkkt8_582fc2a4-6ca8-4a7b-a90a-00f19d63f299",
+          "model": {
+            "modelId": "GLM-5.3-Flash",
+            "providerId": "builtin:zai-coding-plan",
+            "variant": "max"
+          },
+          "metadata": {
+            "executionKind": "controlOnly"
+          },
+          "role": "user",
+          "semantics": {
+            "origin": "real_user",
+            "kind": "user_prompt",
+            "uiVisibility": "visible",
+            "providerVisibility": "visible",
+            "transcriptVisibility": "visible"
+          },
+          "sessionId": "sess_655ac328-5f0a-44f0-8353-12bc53a91ede",
+          "time": {
+            "created": 1791234161757
+          },
+          "tools": {}
+        },
+        "parts": [
+          {
+            "messageId": "msg_muvqkkt8_582fc2a4-6ca8-4a7b-a90a-00f19d63f299",
+            "partId": "part_muvqkkt9_43490738-4ac1-4671-9814-34e895071eba",
+            "sessionId": "sess_655ac328-5f0a-44f0-8353-12bc53a91ede",
+            "text": "This is a generic tool-route canary, not a scored research case. Use the genuine native Goal until complete. Using only admitted tools: (1) read TASK.md; (2) execute your own tiny Python calculation with python_execute, print a small integer result, and record the actual returned receipt/exit; (3) fetch https://www.python.org/ via public_https_get and record actual URL/status/capture hash returned, without interpreting product research; (4) write out/canary.txt stating which actions actually succeeded or failed. Never claim a tool executed if it returned an error. Do not inspect host/private files. Complete this native Goal after the artifact is written.",
+            "type": "text"
+          }
+        ]
+      }
+    ],
+    "projection": {
+      "activeToolCalls": [],
+      "backgroundJobs": [],
+      "contextUsed": 0,
+      "contextWindow": 1000000,
+      "currentTurnId": "turn_04ecf584-db41-47f4-8c2c-eec4bb04bb1f",
+      "mode": "build",
+      "pendingPermissions": [],
+      "sessionId": "sess_655ac328-5f0a-44f0-8353-12bc53a91ede",
+      "status": "idle",
+      "target": {
+        "createdAt": 1791234161702,
+        "objective": "This is a generic tool-route canary, not a scored research case. Use the genuine native Goal until complete. Using only admitted tools: (1) read TASK.md; (2) execute your own tiny Python calculation with python_execute, print a small integer result, and record the actual returned receipt/exit; (3) fetch https://www.python.org/ via public_https_get and record actual URL/status/capture hash returned, without interpreting product research; (4) write out/canary.txt stating which actions actually succeeded or failed. Never claim a tool executed if it returned an error. Do not inspect host/private files. Complete this native Goal after the artifact is written.",
+        "sessionId": "sess_655ac328-5f0a-44f0-8353-12bc53a91ede",
+        "status": "active",
+        "summaryTitle": "This is a generic tool-route canary, not a scored research case. Use the genuine native Goal unti...",
+        "targetId": "target_muvqkkrq_2b40558d-311c-4881-9268-b0a640b23c6f",
+        "timeUsedSeconds": 0,
+        "tokenBudget": null,
+        "tokensUsed": 0,
+        "activeInputId": null,
+        "activeRunStartedAtMs": null,
+        "activeRunLastSeenAtMs": null,
+        "updatedAt": 1791234161788
+      },
+      "totalTokenCount": 0,
+      "turnCount": 1
+    },
+    "protocol": {
+      "name": "ZCode Protocol",
+      "version": 1
+    },
+    "runtime": {
+      "eventSeq": 5,
+      "pendingRequestIds": [],
+      "goalVerifications": [],
+      "goalVerificationTimeline": [],
+      "stateRevision": 3
+    },
+    "session": {
+      "createdAt": 1791234161408,
+      "mode": "build",
+      "model": {
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan"
+      },
+      "traceId": "a832ef06-35b2-4be9-ab4a-751029eaa94c",
+      "sessionId": "sess_655ac328-5f0a-44f0-8353-12bc53a91ede",
+      "sessionKind": "interactive",
+      "status": "idle",
+      "target": {
+        "createdAt": 1791234161702,
+        "objective": "This is a generic tool-route canary, not a scored research case. Use the genuine native Goal until complete. Using only admitted tools: (1) read TASK.md; (2) execute your own tiny Python calculation with python_execute, print a small integer result, and record the actual returned receipt/exit; (3) fetch https://www.python.org/ via public_https_get and record actual URL/status/capture hash returned, without interpreting product research; (4) write out/canary.txt stating which actions actually succeeded or failed. Never claim a tool executed if it returned an error. Do not inspect host/private files. Complete this native Goal after the artifact is written.",
+        "sessionId": "sess_655ac328-5f0a-44f0-8353-12bc53a91ede",
+        "status": "active",
+        "summaryTitle": "This is a generic tool-route canary, not a scored research case. Use the genuine native Goal unti...",
+        "targetId": "target_muvqkkrq_2b40558d-311c-4881-9268-b0a640b23c6f",
+        "timeUsedSeconds": 0,
+        "tokenBudget": null,
+        "tokensUsed": 0,
+        "activeInputId": null,
+        "activeRunStartedAtMs": null,
+        "activeRunLastSeenAtMs": null,
+        "updatedAt": 1791234161788
+      },
+      "title": "This is a generic tool-route canary, not a scored researc...",
+      "titleSource": "first_input",
+      "updatedAt": 1791234161788,
+      "workspace": {
+        "workspacePath": "LAB_ROOT/dev/execution/canary-002/workspace",
+        "workspaceKey": "LAB_ROOT/dev/execution/canary-002/workspace"
+      }
+    },
+    "settings": {
+      "appliedProviderRevision": "er9-native-glm-flash-max",
+      "mode": {
+        "current": "build"
+      },
+      "model": {
+        "available": [
+          {
+            "contextWindow": 1000000,
+            "label": "GLM-5.3-Flash",
+            "providerLabel": "Z.AI",
+            "ref": {
+              "modelId": "GLM-5.3-Flash",
+              "providerId": "builtin:zai-coding-plan"
+            }
+          }
+        ],
+        "current": {
+          "modelId": "GLM-5.3-Flash",
+          "providerId": "builtin:zai-coding-plan"
+        },
+        "lastUsed": {
+          "modelId": "GLM-5.3-Flash",
+          "providerId": "builtin:zai-coding-plan"
+        }
+      },
+      "permission": {
+        "mode": "build"
+      },
+      "thoughtLevel": {
+        "available": [
+          {
+            "label": "low",
+            "value": "low"
+          },
+          {
+            "label": "high",
+            "value": "high"
+          },
+          {
+            "label": "max",
+            "value": "max"
+          }
+        ],
+        "current": "max",
+        "defaultLevel": "max",
+        "enabled": true
+      }
+    },
+    "slashCommands": [
+      {
+        "description": "Show or set the current session goal.",
+        "inputHint": "/goal [pause|resume|clear|replace <objective>|<objective>]",
+        "name": "goal",
+        "source": "builtin"
+      },
+      {
+        "description": "Compact the current conversation with optional instructions.",
+        "inputHint": "/compact [instructions]",
+        "name": "compact",
+        "source": "builtin"
+      },
+      {
+        "description": "Create or update workspace AGENTS.md instructions.",
+        "inputHint": "/init [notes]",
+        "name": "init",
+        "source": "builtin"
+      },
+      {
+        "description": "Switch to Plan mode and optionally send a task.",
+        "inputHint": "/plan [task]",
+        "name": "plan",
+        "source": "builtin"
+      }
+    ],
+    "goalStats": {
+      "contextUsed": 0,
+      "contextWindow": 1000000,
+      "iterationCount": 1,
+      "timeUsedSeconds": 0,
+      "tokenBudget": null,
+      "tokensUsed": 0,
+      "toolCallCount": 0
+    },
+    "todos": [],
+    "todoGroups": []
+  },
+  "startedTurn": true
+}

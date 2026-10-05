@@ -1,0 +1,77 @@
+{
+  "schema": "er9.native-stage.v1",
+  "job_id": "er9-glm-route-canary-001",
+  "start_utc": "2026-10-05T20:59:55.180364+00:00",
+  "birth_epoch": 1791233995.07658,
+  "max_seconds": 120.0,
+  "max_responses": 12,
+  "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+  "requested_effort": "max",
+  "fresh_session": true,
+  "native_goal_entry": "official app-server session/goal set",
+  "status": "execution_error",
+  "prompt_sha256": "5da8d69debd59c4fb0b9c022b88491a306db202b8e710495333595cd80b1e63b",
+  "tool_allowlist": [
+    "mcp__pm_boundary__read_file",
+    "mcp__pm_boundary__write_file",
+    "mcp__pm_boundary__mechanical",
+    "mcp__pm_boundary__public_https_get",
+    "mcp__pm_execution__python_execute"
+  ],
+  "cli_sha256": "e9f1868c0fdb863537ed910ee3828b9be96b8c2fd805473f63b439e1113266b8",
+  "goal_activated": false,
+  "unknown_costs": [
+    "dollar billing",
+    "unexposed provider child usage"
+  ],
+  "session_id": "sess_03aa8b28-f7eb-42f2-8a11-26e5a6cc4aa0",
+  "observed_model": {
+    "modelId": "GLM-5.3-Flash",
+    "providerId": "builtin:zai-coding-plan"
+  },
+  "observed_effort": "max",
+  "error_class": "RuntimeError",
+  "error": "Genuine native Goal activation receipt mismatch",
+  "native_usage": {
+    "sessionId": "sess_03aa8b28-f7eb-42f2-8a11-26e5a6cc4aa0",
+    "totalTokens": 0,
+    "inputTokens": 0,
+    "outputTokens": 0,
+    "reasoningTokens": 0,
+    "cacheCreationTokens": 0,
+    "cacheReadTokens": 0,
+    "modelRequestCount": 0,
+    "modelErrorCount": 0,
+    "inputBaselineBySource": {}
+  },
+  "cleanup": {
+    "process_exited": true,
+    "exit_code": 0,
+    "remaining_group_members": [],
+    "native_quiescent": true
+  },
+  "actual_models": [],
+  "effort_request_verification": "unknown",
+  "provider_usage": {
+    "available": true,
+    "session_id": "sess_03aa8b28-f7eb-42f2-8a11-26e5a6cc4aa0",
+    "row_count": 0,
+    "export_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "query_scope": "exact session_id only; read-only SQLite connection",
+    "semantics": "individual native request attempts, including Goal verification; no conversation UI input-baseline subtraction"
+  },
+  "request_status_counts": {},
+  "native_responses": 0,
+  "last_usage_delta_by_request_totals": {
+    "inputTokens": 0,
+    "outputTokens": 0,
+    "reasoningTokens": 0,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "totalTokens": 0
+  },
+  "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars",
+  "ended_utc": "2026-10-05T21:00:02.842617+00:00",
+  "elapsed_seconds": 7.766054387997428,
+  "caps_include_setup_and_cleanup": true
+}

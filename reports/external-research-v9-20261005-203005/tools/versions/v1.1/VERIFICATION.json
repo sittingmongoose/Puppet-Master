@@ -1,0 +1,29 @@
+{
+  "schema": "er9.tools.verification.v1",
+  "version": "v1.1",
+  "status": "READY",
+  "verified_utc": "2026-10-05T21:09:11.782874+00:00",
+  "snapshot_sha256": "18112b71153533b27d1613c3fc67e9efd63b2a5ebb6adf08c8914750f2f276f3",
+  "checks": [
+    {
+      "command": "python3 -B dev/tools/versions/v1.1/test_tools.py",
+      "exit_code": 0,
+      "tests": 9,
+      "elapsed_seconds": 11.556,
+      "type": "real generic execution boundary plus sanitized-MCP-env collection/query-failure regression"
+    },
+    {
+      "command": "source_capture/test_source_capture.py",
+      "exit_code": 0,
+      "tests": 14,
+      "reuse": "Source adapter/server/test files byte-identical to previously tested v1; no source boundary change or new source-test run required"
+    }
+  ],
+  "original_cleanup_erratum": {
+    "path": "dev/tools/errata/canary-002-cleanup-erratum.json",
+    "sha256": "fe39f9537c47089c85297bf83e0b6c7953f321f11d4ddd3851a54c7e79ef369e"
+  },
+  "original_canary_request_result_and_v1_pins_preserved": true,
+  "candidate_model_calls_for_fix": 0,
+  "admission": "Root authorized prospective scored use once this local regression passes; route selects distinct config path/pins. No candidate sandbox behavior change or inference rerun."
+}

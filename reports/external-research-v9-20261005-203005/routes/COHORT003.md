@@ -1,0 +1,9 @@
+# Failure-inclusive infrastructure cohort 003
+
+GLM canary 001 failed activation validation after native whitespace trimming. Its original receipt still says no activation; the separate accounting correction charges **one actual native Goal start** without changing the failure. Canary 002 completed the synthetic confined read/calculation/public-capture/write checks in 75.976 s with five observed native requests at actual GLM-5.3-Flash/max. These are route canaries, not matched research arms. Published [route acceptance v2](../execution/ROUTE_ACCEPTANCE_V2.json) defines its exact scope.
+
+The canary 002 witness's original cleanup flag was false/unconfirmed because the query lacked DBus/XDG context. The additive [erratum](../tools/errata/canary-002-cleanup-erratum.json) records a later exact-unit absence observation and its temporal limit. [Tools v1.1](../tools/versions/v1.1/README.md) adds trusted query environment and explicit query error classification; nine local tests passed, with zero model reruns. Original published tool v1 and receipts are preserved.
+
+Luna's tools canaries 002 and 005 remain HOLD, including metered usage and all visible failures. Attempt 003 stopped before activation; metadata 004 performed zero inference. Attempt 005 had one Goal activation, three native turns, 139.846 s wall time and 192,945 native metered tokens, but its tools failed and the Goal did not complete. Its quiet cleanup is a lifecycle result, not semantic success or tool admission. Later successors are outside this snapshot.
+
+Request-delta totals, session/native meters, cache counters and native Goal tokens have distinct definitions; do not sum them or interpret them as billed dollars. Native HTTP counts remain unknown where not observed. Development/host tests are separate from candidate inference and independent evaluation. No scored pipeline has completed in this publication cohort.

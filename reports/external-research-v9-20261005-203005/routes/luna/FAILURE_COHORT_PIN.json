@@ -1,0 +1,86 @@
+{
+  "schema": "er9.luna.failure-cohort-positive-projection.v1",
+  "projection": "essential metadata only; no raw native journal/auth/home/config contents",
+  "rows": [
+    {
+      "attempt": "tools-canary-002",
+      "receipt": "LAB_ROOT/dev/luna-route/tools-canary-002/result.json",
+      "sha256": "7869b31af18eaddc7904df4f64a79067518b1f16567a6f8006b455d21860ed8e",
+      "outcome": "HOLD",
+      "elapsed_seconds": 78.498865694,
+      "native_goal_activation": true,
+      "native_turns_started": 3,
+      "native_turns_completed": 3,
+      "host_initial_turns": 1,
+      "usage_totals": {
+        "inputTokens": 109902,
+        "cachedInputTokens": 76800,
+        "outputTokens": 2815,
+        "reasoningOutputTokens": 2343,
+        "totalTokens": 112717
+      },
+      "native_cgroup_quiet": true,
+      "held_process_groups_absent": true,
+      "execution_units_quiet": true,
+      "native_goal_status_before_cleanup": null,
+      "source_snapshot": "LAB_ROOT/dev/luna-route/tools-canary-002/source-snapshot/SNAPSHOT.json"
+    },
+    {
+      "attempt": "tools-canary-003",
+      "receipt": "LAB_ROOT/dev/luna-route/tools-canary-003/result.json",
+      "sha256": "a9dd9478bafdefaa85b2f42746472fc0a8a3529ef0970e84672b31d6ac544bb5",
+      "outcome": "HOLD",
+      "elapsed_seconds": 23.452970708,
+      "native_goal_activation": false,
+      "native_turns_started": 0,
+      "native_turns_completed": 0,
+      "host_initial_turns": 0,
+      "usage_totals": {},
+      "native_cgroup_quiet": true,
+      "held_process_groups_absent": true,
+      "execution_units_quiet": true,
+      "native_goal_status_before_cleanup": null,
+      "source_snapshot": "LAB_ROOT/dev/luna-route/tools-canary-003/source-snapshot/SNAPSHOT.json"
+    },
+    {
+      "attempt": "mcp-metadata-004",
+      "receipt": "LAB_ROOT/dev/luna-route/mcp-metadata-004/result.json",
+      "sha256": "5f7c2f935bb30643a62eb7f8287a0d1c08613245373d6462bf5b6ad684f52443",
+      "outcome": "metadata_pass",
+      "elapsed_seconds": 2.007652235,
+      "native_goal_activation": false,
+      "native_turns_started": 0,
+      "native_turns_completed": 0,
+      "host_initial_turns": 0,
+      "usage_totals": {},
+      "native_cgroup_quiet": true,
+      "held_process_groups_absent": null,
+      "execution_units_quiet": null,
+      "native_goal_status_before_cleanup": null,
+      "source_snapshot": null
+    },
+    {
+      "attempt": "tools-canary-005",
+      "receipt": "LAB_ROOT/dev/luna-route/tools-canary-005/result.json",
+      "sha256": "89705acfd702d055da18474f998dccada0e2163f1a49e13e773b560499602ccd",
+      "outcome": "HOLD",
+      "elapsed_seconds": 139.845834143,
+      "native_goal_activation": true,
+      "native_turns_started": 3,
+      "native_turns_completed": 3,
+      "host_initial_turns": 1,
+      "usage_totals": {
+        "inputTokens": 188268,
+        "cachedInputTokens": 145664,
+        "outputTokens": 4677,
+        "reasoningOutputTokens": 3654,
+        "totalTokens": 192945
+      },
+      "native_cgroup_quiet": true,
+      "held_process_groups_absent": true,
+      "execution_units_quiet": true,
+      "native_goal_status_before_cleanup": "blocked",
+      "source_snapshot": "LAB_ROOT/dev/luna-route/tools-canary-005-source/SNAPSHOT.json"
+    }
+  ]
+}

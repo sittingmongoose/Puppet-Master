@@ -1,0 +1,90 @@
+{
+  "schema": "er9.native-stage.v1",
+  "job_id": "er9-glm-route-canary-002",
+  "start_utc": "2026-10-05T21:02:37.559166+00:00",
+  "birth_epoch": 1791234157.5131047,
+  "max_seconds": 120.0,
+  "max_responses": 12,
+  "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+  "requested_effort": "max",
+  "fresh_session": true,
+  "native_goal_entry": "official app-server session/goal set",
+  "status": "completed",
+  "raw_prompt_sha256": "5da8d69debd59c4fb0b9c022b88491a306db202b8e710495333595cd80b1e63b",
+  "prompt_sha256": "6f970bb2a8f81bc75c3810765b15b4296e90b99f13330505e1792c37f96d065a",
+  "tool_allowlist": [
+    "mcp__pm_boundary__read_file",
+    "mcp__pm_boundary__write_file",
+    "mcp__pm_boundary__mechanical",
+    "mcp__pm_boundary__public_https_get",
+    "mcp__pm_execution__python_execute"
+  ],
+  "cli_sha256": "e9f1868c0fdb863537ed910ee3828b9be96b8c2fd805473f63b439e1113266b8",
+  "goal_activated": true,
+  "unknown_costs": [
+    "dollar billing",
+    "unexposed provider child usage"
+  ],
+  "session_id": "sess_655ac328-5f0a-44f0-8353-12bc53a91ede",
+  "observed_model": {
+    "modelId": "GLM-5.3-Flash",
+    "providerId": "builtin:zai-coding-plan"
+  },
+  "observed_effort": "max",
+  "goal_submitted": true,
+  "goal_target_id": "target_muvqkkrq_2b40558d-311c-4881-9268-b0a640b23c6f",
+  "activation_utc": "2026-10-05T21:02:42.509301+00:00",
+  "pre_activation_seconds": 4.9962088510001195,
+  "native_usage": {
+    "sessionId": "sess_655ac328-5f0a-44f0-8353-12bc53a91ede",
+    "totalTokens": 35526,
+    "inputTokens": 32735,
+    "outputTokens": 2791,
+    "reasoningTokens": 0,
+    "cacheCreationTokens": 0,
+    "cacheReadTokens": 0,
+    "modelRequestCount": 5,
+    "modelErrorCount": 0,
+    "inputBaselineBySource": {
+      "main_turn": 15903
+    }
+  },
+  "cleanup": {
+    "process_exited": true,
+    "exit_code": 0,
+    "remaining_group_members": [],
+    "native_quiescent": true
+  },
+  "actual_models": [
+    {
+      "providerId": "builtin:zai-coding-plan",
+      "modelId": "GLM-5.3-Flash",
+      "variant": "max"
+    }
+  ],
+  "effort_request_verification": "verified",
+  "provider_usage": {
+    "available": true,
+    "session_id": "sess_655ac328-5f0a-44f0-8353-12bc53a91ede",
+    "row_count": 5,
+    "export_sha256": "17b5e08949129495d53a71b168aeda50032ab4ab32fecedb8ce5cb4518d33de7",
+    "query_scope": "exact session_id only; read-only SQLite connection",
+    "semantics": "individual native request attempts, including Goal verification; no conversation UI input-baseline subtraction"
+  },
+  "request_status_counts": {
+    "model_request_completed": 5
+  },
+  "native_responses": 5,
+  "last_usage_delta_by_request_totals": {
+    "inputTokens": 37617,
+    "outputTokens": 2112,
+    "reasoningTokens": 0,
+    "cacheReadTokens": 21568,
+    "cacheWriteTokens": 0,
+    "totalTokens": 39729
+  },
+  "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars",
+  "ended_utc": "2026-10-05T21:03:53.489212+00:00",
+  "elapsed_seconds": 75.9761276920035,
+  "caps_include_setup_and_cleanup": true
+}

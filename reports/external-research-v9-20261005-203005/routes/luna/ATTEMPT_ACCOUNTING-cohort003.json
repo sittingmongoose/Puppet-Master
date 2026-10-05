@@ -1,0 +1,65 @@
+{
+  "schema": "er9.luna.accounting.v1",
+  "attempts": [
+    {
+      "attempt": "tools-canary-003",
+      "result_path": "LAB_ROOT/dev/luna-route/tools-canary-003/result.json",
+      "outcome": "HOLD",
+      "elapsed_seconds": 23.452970708,
+      "actual_goal_activations": 0,
+      "native_turns_started": 0,
+      "native_turns_completed": 0,
+      "host_initial_turns_started": 0,
+      "usage_totals": {},
+      "native_cgroup_quiet": true,
+      "owned_groups_absent": null,
+      "execution_units_quiet": true,
+      "inference_started": null,
+      "rpc_counts": null
+    },
+    {
+      "attempt": "mcp-metadata-004",
+      "result_path": "LAB_ROOT/dev/luna-route/mcp-metadata-004/result.json",
+      "outcome": "metadata_pass",
+      "elapsed_seconds": 2.007652235,
+      "actual_goal_activations": 0,
+      "native_turns_started": 0,
+      "native_turns_completed": 0,
+      "host_initial_turns_started": 0,
+      "usage_totals": null,
+      "native_cgroup_quiet": null,
+      "owned_groups_absent": null,
+      "execution_units_quiet": null,
+      "inference_started": false,
+      "rpc_counts": {
+        "initialize": 1,
+        "config/read": 1,
+        "model/list": 1,
+        "thread/start": 1,
+        "mcpServerStatus/list": 1
+      }
+    },
+    {
+      "attempt": "tools-canary-005",
+      "result_path": "LAB_ROOT/dev/luna-route/tools-canary-005/result.json",
+      "outcome": "HOLD",
+      "elapsed_seconds": 139.845834143,
+      "actual_goal_activations": 1,
+      "native_turns_started": 3,
+      "native_turns_completed": 3,
+      "host_initial_turns_started": 1,
+      "usage_totals": {
+        "inputTokens": 188268,
+        "cachedInputTokens": 145664,
+        "outputTokens": 4677,
+        "reasoningOutputTokens": 3654,
+        "totalTokens": 192945
+      },
+      "native_cgroup_quiet": true,
+      "owned_groups_absent": null,
+      "execution_units_quiet": true,
+      "inference_started": null,
+      "rpc_counts": null
+    }
+  ]
+}

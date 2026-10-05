@@ -1,0 +1,150 @@
+{
+  "schema": "er9.glm-route-acceptance.v2",
+  "created_utc": "2026-10-05T21:10:07.426859+00:00",
+  "ready": true,
+  "candidate_family": "GLM",
+  "actual_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+  "actual_effort": "max",
+  "genuine_native_goal": true,
+  "native_goal_status": "completed",
+  "native_quiescent": true,
+  "boundary_test_count": 14,
+  "boundary_tests_exit_code": 0,
+  "tool_boundary_tests": {
+    "execution_config": 7,
+    "source_capture": 14,
+    "actual_stdio_probe": "PASS"
+  },
+  "canary_elapsed_seconds": 75.9761276920035,
+  "canary_native_responses": 5,
+  "actual_request_variants": [
+    {
+      "providerId": "builtin:zai-coding-plan",
+      "modelId": "GLM-5.3-Flash",
+      "variant": "max"
+    }
+  ],
+  "checks": {
+    "confined_read": true,
+    "candidate_authored_python_execution": true,
+    "public_https_capture": true,
+    "artifact_write": true
+  },
+  "scored_comparisons": 0,
+  "failed_predecessor": {
+    "path": "LAB_ROOT/dev/execution/canary-001",
+    "actual_native_goal_starts": 1,
+    "status": "failed_activation_validation",
+    "accounting_correction": {
+      "path": "LAB_ROOT/dev/execution/canary-001/ACCOUNTING_CORRECTION.json",
+      "sha256": "b7cbab0a00cca58dc28590a02da33ca6b9d1c5389b788e19135051f7212b0c5f"
+    }
+  },
+  "evidence": [
+    {
+      "path": "LAB_ROOT/dev/execution/canary-002/native/receipt.json",
+      "sha256": "b33715595ee1e222b8f0a3087b22114fdb81ebd98e90fc64d20d255cc214fe75"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/canary-002/native/activation.json",
+      "sha256": "e445b25b07b9fc98e8b0336eb1035942e9ae2dae02467aaaec4b519521a79a78"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/canary-002/native/provider-usage.redacted.jsonl",
+      "sha256": "17b5e08949129495d53a71b168aeda50032ab4ab32fecedb8ce5cb4518d33de7"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/canary-002/native/model-io.redacted.jsonl",
+      "sha256": "e6e9418d5c1e071915c89c3cccb8b356f4d412d564a969aca7535b7cd09e68ab"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/canary-002/workspace/out/canary.txt",
+      "sha256": "0b63033823945cd78f2e0590308939a8f966a66d4c74537304cf531ff2c11ea0"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/canary-002/tool-evidence/executions/exec-f8u2wu_g/result.json",
+      "sha256": "dec148a68b6c2fd38e970fc884427d6c95162467fd5fc9b4237fd4d91b5714f4"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/SOURCE_PINS.json",
+      "sha256": "90e1b8f8453152122ce18f5755cd8c93843ea86e1da4e43ef3b97f43d14a77be"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/VERIFICATION.json",
+      "sha256": "944e0d54b103752ef50bd7f52a8582e30d26b9d9a8596bbc2e92384f026d787c"
+    },
+    {
+      "path": "LAB_ROOT/dev/tools/SOURCE_PINS.json",
+      "sha256": "04d18860f56cdd93427fdfe1336f7418d8d248e6a70e5b9463f602aeb8ff5aa2"
+    },
+    {
+      "path": "LAB_ROOT/dev/tools/VERIFICATION.json",
+      "sha256": "7c10ed56e606717aaddd65a7603bb14d7486d979e1cbd92a7659434bb3eb69e7"
+    }
+  ],
+  "scope": "Exact pinned engine and tools, fresh native Goal, fixed isolated packet. Admission remains sole ops dispatcher; family capacity2 including every stage and successor. Operational acceptance does not certify source interpretation or study quality.",
+  "actual_request_tool_names": [
+    [
+      "mcp__pm_boundary__mechanical",
+      "mcp__pm_boundary__public_https_get",
+      "mcp__pm_boundary__read_file",
+      "mcp__pm_boundary__write_file",
+      "mcp__pm_execution__python_execute"
+    ],
+    [
+      "mcp__pm_boundary__mechanical",
+      "mcp__pm_boundary__public_https_get",
+      "mcp__pm_boundary__read_file",
+      "mcp__pm_boundary__write_file",
+      "mcp__pm_execution__python_execute"
+    ],
+    [
+      "mcp__pm_boundary__mechanical",
+      "mcp__pm_boundary__public_https_get",
+      "mcp__pm_boundary__read_file",
+      "mcp__pm_boundary__write_file",
+      "mcp__pm_execution__python_execute"
+    ],
+    [
+      "mcp__pm_boundary__mechanical",
+      "mcp__pm_boundary__public_https_get",
+      "mcp__pm_boundary__read_file",
+      "mcp__pm_boundary__write_file",
+      "mcp__pm_execution__python_execute"
+    ],
+    []
+  ],
+  "configured_tool_allowlist": [
+    "mcp__pm_boundary__mechanical",
+    "mcp__pm_boundary__public_https_get",
+    "mcp__pm_boundary__read_file",
+    "mcp__pm_boundary__write_file",
+    "mcp__pm_execution__python_execute"
+  ],
+  "candidate_tool_inventory_verified": true,
+  "supersedes": {
+    "path": "LAB_ROOT/dev/execution/ROUTE_ACCEPTANCE.json",
+    "sha256": "441abe377cbc1221414278f8a66f40f5490af0d5219f9e0bd56eae3da5100fcc"
+  },
+  "selected_tools_config_builder": {
+    "path": "LAB_ROOT/dev/tools/versions/v1.1/config.py",
+    "sha256": "2fe65bf146fcb8ea2a03b375ceac6d19113150dc88bcbe5ee9c653e1c68cbc3f"
+  },
+  "selected_tool_source_pins": {
+    "path": "LAB_ROOT/dev/tools/versions/v1.1/SOURCE_PINS.json",
+    "sha256": "18112b71153533b27d1613c3fc67e9efd63b2a5ebb6adf08c8914750f2f276f3"
+  },
+  "selected_tool_verification": {
+    "path": "LAB_ROOT/dev/tools/versions/v1.1/VERIFICATION.json",
+    "sha256": "fe3ab2c87a3997345fc62dd4693217422fb5bfbdbdf67870c4aa01a160fc3340"
+  },
+  "cleanup_observer_erratum": {
+    "path": "LAB_ROOT/dev/tools/errata/canary-002-cleanup-erratum.json",
+    "sha256": "fe39f9537c47089c85297bf83e0b6c7953f321f11d4ddd3851a54c7e79ef369e"
+  },
+  "tool_boundary_version": "v1.1",
+  "tool_v11_targeted_test_count": 9,
+  "tool_v11_targeted_tests_exit_code": 0,
+  "tool_change_scope": "Trusted cleanup observer uses explicit DBus/XDG environment and records LoadState/ActiveState/ControlGroup plus query errors. Execution containment and native model invocation unchanged. Failed query is unknown, never proof of absence. Original canary result and pinned v1 tool code preserved. Exact canary execution unit independently confirmed absent after original model-run freeze.",
+  "candidate_inference_rerun_for_observer_change": false
+}

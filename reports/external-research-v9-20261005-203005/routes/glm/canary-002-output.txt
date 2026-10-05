@@ -1,0 +1,36 @@
+Tool-route canary results — 2026-10-05
+========================================
+
+Action 1: read TASK.md — SUCCEEDED
+  tool: read_file (pm_boundary)
+  path: TASK.md
+  sha256: 5da8d69debd59c4fb0b9c022b88491a306db202b8e710495333595cd80b1e63b
+  bytes: 663
+  operation_id: 8c398b76fa2744c0918bc10771390d7f
+
+Action 2: python_execute tiny calculation — SUCCEEDED
+  tool: python_execute (pm_execution)
+  code: result = 6 * 7; print(result)
+  printed result: 42
+  exit_code: 0
+  execution_id: exec-f8u2wu_g
+  code_sha256: 546e6b0ebba4c1c948cb490ca11b7eb94adc08b0f9582da768333c41fa8a9eba
+  stdout: "42\n"
+  stdout_sha256: 084c799cd551dd1d8d5c5f9a5d593b2e931f5e36122ee5c793c1d08a19839cc0
+  completed_utc: 2026-10-05T21:02:58.058479+00:00
+
+Action 3: public_https_get https://www.python.org/ — SUCCEEDED
+  tool: public_https_get (pm_boundary)
+  requested_url: https://www.python.org/
+  actual_url: https://www.python.org/
+  status: 200
+  capture_id: 6870f7ea91d04ac2b76bbb92f8545fff
+  capture sha256: 9e293afcffdade52000e5ffabd0dcb96777d755337072286fef0352e22b9a4d9
+  captured_bytes: 52759
+  body_complete: true
+  captured_utc: 2026-10-05T21:03:05.340781+00:00
+
+Action 4: write out/canary.txt (this file) — recorded upon successful write.
+
+Summary: Actions 1, 2, and 3 all succeeded; no action failed. Page content
+from python.org was captured but not interpreted, per instructions.

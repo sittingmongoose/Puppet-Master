@@ -1,0 +1,218 @@
+{
+  "cohort": "failure-inclusive-infrastructure-003",
+  "published_at": "2026-10-05T21:27:05.749595+00:00",
+  "sources": [
+    {
+      "source": "dev/tools/versions/v1.1/config.py",
+      "published": "tools/versions/v1.1/config.py",
+      "source_sha256": "2fe65bf146fcb8ea2a03b375ceac6d19113150dc88bcbe5ee9c653e1c68cbc3f",
+      "transform": "byte-identical owner-pinned"
+    },
+    {
+      "source": "dev/tools/versions/v1.1/execution_server.py",
+      "published": "tools/versions/v1.1/execution_server.py",
+      "source_sha256": "0a20191b4b32b925456142c280965f4faf7cbdefc458ba93fc6087eaa0968007",
+      "transform": "byte-identical owner-pinned"
+    },
+    {
+      "source": "dev/tools/versions/v1.1/test_tools.py",
+      "published": "tools/versions/v1.1/test_tools.py",
+      "source_sha256": "840a680de57fba4019ba8a671513085bbdae181c1f1952b00bad0f43e3f7fe0a",
+      "transform": "byte-identical owner-pinned"
+    },
+    {
+      "source": "dev/tools/versions/v1.1/source_capture/boundary.py",
+      "published": "tools/versions/v1.1/source_capture/boundary.py",
+      "source_sha256": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+      "transform": "byte-identical owner-pinned"
+    },
+    {
+      "source": "dev/tools/versions/v1.1/source_capture/tool_server.py",
+      "published": "tools/versions/v1.1/source_capture/tool_server.py",
+      "source_sha256": "9c25c1faaf7c4557aaeb22b0977061914a9fbba1a04d87d2a3a29851daa29846",
+      "transform": "byte-identical owner-pinned"
+    },
+    {
+      "source": "dev/tools/versions/v1.1/source_capture/test_source_capture.py",
+      "published": "tools/versions/v1.1/source_capture/test_source_capture.py",
+      "source_sha256": "a2e661f064dff5efb21c61461106d9473995e76c14133a8ff4abdec5a5aaf808",
+      "transform": "byte-identical owner-pinned"
+    },
+    {
+      "source": "dev/tools/versions/v1.1/README.md",
+      "published": "tools/versions/v1.1/README.md",
+      "source_sha256": "9b62d619611a1f9f7bdc932b1996e24d7dc0bb775f98206aa4217726974565cc",
+      "transform": "byte-identical owner-pinned"
+    },
+    {
+      "source": "dev/tools/versions/v1.1/SOURCE_PINS.json",
+      "published": "tools/versions/v1.1/SOURCE_PINS.json",
+      "source_sha256": "18112b71153533b27d1613c3fc67e9efd63b2a5ebb6adf08c8914750f2f276f3",
+      "transform": "selected fields; local host paths/clocks/process identifiers omitted or normalized"
+    },
+    {
+      "source": "dev/tools/versions/v1.1/VERIFICATION.json",
+      "published": "tools/versions/v1.1/VERIFICATION.json",
+      "source_sha256": "fe3ab2c87a3997345fc62dd4693217422fb5bfbdbdf67870c4aa01a160fc3340",
+      "transform": "byte-identical owner-pinned"
+    },
+    {
+      "source": "dev/tools/errata/canary-002-cleanup-erratum.json",
+      "published": "tools/errata/canary-002-cleanup-erratum.json",
+      "source_sha256": "fe39f9537c47089c85297bf83e0b6c7953f321f11d4ddd3851a54c7e79ef369e",
+      "transform": "selected fields; local host paths/clocks/process identifiers omitted or normalized"
+    },
+    {
+      "source": "dev/execution/glm_stage.py",
+      "published": "execution/glm_stage.py",
+      "source_sha256": "8bc5b63d9235cee7ad038d43102e49182bbba1b4b6f78620b7694afdecc92b6d",
+      "transform": "byte-identical owner-pinned"
+    },
+    {
+      "source": "dev/execution/stage_worker.py",
+      "published": "execution/stage_worker.py",
+      "source_sha256": "cb299253506f701d71902a0e7a58aa6ce7105ea731d6c847633f2bfb12d98c44",
+      "transform": "byte-identical owner-pinned"
+    },
+    {
+      "source": "dev/execution/native_guard.py",
+      "published": "execution/native_guard.py",
+      "source_sha256": "fbca6499ffe4d6727e21a5768b993eddf0d25295baa0d276524fabe29452b3ca",
+      "transform": "byte-identical owner-pinned"
+    },
+    {
+      "source": "dev/execution/native_support.py",
+      "published": "execution/native_support.py",
+      "source_sha256": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a",
+      "transform": "byte-identical owner-pinned"
+    },
+    {
+      "source": "dev/execution/test_execution.py",
+      "published": "execution/test_execution.py",
+      "source_sha256": "8083f49ff132d5d9e1af58c4fff8ace8f12b2c9366a9d79722329b4a682f7d3c",
+      "transform": "byte-identical owner-pinned"
+    },
+    {
+      "source": "dev/execution/README.md",
+      "published": "execution/README.md",
+      "source_sha256": "fcc547012b6954ad97069a08200818c7ebe9937ce43999687e7d74aa5320b882",
+      "transform": "byte-identical owner-pinned"
+    },
+    {
+      "source": "dev/execution/SOURCE_PINS.json",
+      "published": "execution/SOURCE_PINS.json",
+      "source_sha256": "90e1b8f8453152122ce18f5755cd8c93843ea86e1da4e43ef3b97f43d14a77be",
+      "transform": "selected fields; local host paths/clocks/process identifiers omitted or normalized"
+    },
+    {
+      "source": "dev/execution/VERIFICATION.json",
+      "published": "execution/VERIFICATION.json",
+      "source_sha256": "944e0d54b103752ef50bd7f52a8582e30d26b9d9a8596bbc2e92384f026d787c",
+      "transform": "selected fields; local host paths/clocks/process identifiers omitted or normalized"
+    },
+    {
+      "source": "dev/execution/ROUTE_ACCEPTANCE.json",
+      "published": "execution/ROUTE_ACCEPTANCE.json",
+      "source_sha256": "441abe377cbc1221414278f8a66f40f5490af0d5219f9e0bd56eae3da5100fcc",
+      "transform": "selected fields; local host paths/clocks/process identifiers omitted or normalized"
+    },
+    {
+      "source": "dev/execution/ROUTE_ACCEPTANCE_V2.json",
+      "published": "execution/ROUTE_ACCEPTANCE_V2.json",
+      "source_sha256": "db4f0e1108f42a8690d391fd50fe18d13c7c27fde8e6d181dcc0fee54865e50c",
+      "transform": "selected fields; local host paths/clocks/process identifiers omitted or normalized"
+    },
+    {
+      "source": "dev/execution/canary-001/native/receipt.json",
+      "published": "routes/glm/canary-001-receipt.json",
+      "source_sha256": "f72d00fb53f8d183da1558100fc48e7f712b81794c1f5e45d3b6f5948338aa2f",
+      "transform": "selected fields; local host paths/clocks/process identifiers omitted or normalized"
+    },
+    {
+      "source": "dev/execution/canary-002/native/receipt.json",
+      "published": "routes/glm/canary-002-receipt.json",
+      "source_sha256": "b33715595ee1e222b8f0a3087b22114fdb81ebd98e90fc64d20d255cc214fe75",
+      "transform": "selected fields; local host paths/clocks/process identifiers omitted or normalized"
+    },
+    {
+      "source": "dev/execution/canary-001/ACCOUNTING_CORRECTION.json",
+      "published": "routes/glm/canary-001-ACCOUNTING_CORRECTION.json",
+      "source_sha256": "b7cbab0a00cca58dc28590a02da33ca6b9d1c5389b788e19135051f7212b0c5f",
+      "transform": "selected fields; local host paths/clocks/process identifiers omitted or normalized"
+    },
+    {
+      "source": "dev/execution/canary-002/native/activation.json",
+      "published": "routes/glm/canary-002-activation.json",
+      "source_sha256": "e445b25b07b9fc98e8b0336eb1035942e9ae2dae02467aaaec4b519521a79a78",
+      "transform": "selected fields; local host paths/clocks/process identifiers omitted or normalized"
+    },
+    {
+      "source": "dev/luna-route/tools-canary-002/result.json",
+      "published": "routes/luna/tools-canary-002.json",
+      "source_sha256": "7869b31af18eaddc7904df4f64a79067518b1f16567a6f8006b455d21860ed8e",
+      "transform": "selected fields; local host paths/clocks/process identifiers omitted or normalized"
+    },
+    {
+      "source": "dev/luna-route/tools-canary-003/result.json",
+      "published": "routes/luna/tools-canary-003.json",
+      "source_sha256": "a9dd9478bafdefaa85b2f42746472fc0a8a3529ef0970e84672b31d6ac544bb5",
+      "transform": "selected fields; local host paths/clocks/process identifiers omitted or normalized"
+    },
+    {
+      "source": "dev/luna-route/tools-canary-005/result.json",
+      "published": "routes/luna/tools-canary-005.json",
+      "source_sha256": "89705acfd702d055da18474f998dccada0e2163f1a49e13e773b560499602ccd",
+      "transform": "selected fields; local host paths/clocks/process identifiers omitted or normalized"
+    },
+    {
+      "source": "dev/luna-route/mcp-metadata-004/result.json",
+      "published": "routes/luna/mcp-metadata-004.json",
+      "source_sha256": "5f7c2f935bb30643a62eb7f8287a0d1c08613245373d6462bf5b6ad684f52443",
+      "transform": "selected fields; local host paths/clocks/process identifiers omitted or normalized"
+    },
+    {
+      "source": "dev/luna-route/ATTEMPT_ACCOUNTING.json",
+      "published": "routes/luna/ATTEMPT_ACCOUNTING-cohort003.json",
+      "source_sha256": "e2e729487a9155575257e36ecfea5e9a01c892d1bc81a84687d1ff5e06ab3bfa",
+      "transform": "selected fields; local host paths/clocks/process identifiers omitted or normalized"
+    },
+    {
+      "source": "dev/luna-route/FAILURE_COHORT_PIN.json",
+      "published": "routes/luna/FAILURE_COHORT_PIN.json",
+      "source_sha256": "01ef07e9a1500d432b56f618f836bd7407450209c2c512aaeb4ada843c1c442c",
+      "transform": "path labels normalized; source pins checked"
+    },
+    {
+      "source": "ops/dispatcher/publication/I01_ACTIVATION_ONLY_V1.json",
+      "published": "activations/I01_ACTIVATION_ONLY_V1.json",
+      "source_sha256": "0fa492da525c4c714dea1d8621219a0dfc66e2d668ff40b0d418f156c23956d4",
+      "transform": "byte-identical owner-frozen safe metadata"
+    },
+    {
+      "source": "dev/execution/canary-002/workspace/out/canary.txt",
+      "published": "routes/glm/canary-002-output.txt",
+      "source_sha256": "0b63033823945cd78f2e0590308939a8f966a66d4c74537304cf531ff2c11ea0",
+      "transform": "byte-identical frozen synthetic output/witness"
+    },
+    {
+      "source": "dev/execution/canary-002/tool-evidence/executions/exec-f8u2wu_g/code.py",
+      "published": "routes/glm/canary-002-witness-code.py",
+      "source_sha256": "546e6b0ebba4c1c948cb490ca11b7eb94adc08b0f9582da768333c41fa8a9eba",
+      "transform": "byte-identical frozen synthetic output/witness"
+    },
+    {
+      "source": "dev/execution/canary-002/tool-evidence/executions/exec-f8u2wu_g/result.json",
+      "published": "routes/glm/canary-002-witness-result.json",
+      "source_sha256": "dec148a68b6c2fd38e970fc884427d6c95162467fd5fc9b4237fd4d91b5714f4",
+      "transform": "byte-identical frozen synthetic output/witness"
+    },
+    {
+      "source": "dev/execution/canary-002/tool-evidence/executions/exec-f8u2wu_g/request.json",
+      "published": "routes/glm/canary-002-witness-request.json",
+      "source_sha256": "263062a06308b2edb3028a96bb29a5985557a148dae57739fab5ce0df08cff25",
+      "transform": "exact execution command host source paths normalized, monotonic deadline omitted"
+    }
+  ],
+  "boundary": "Terminal frozen mechanical routes and pinned code only. No live candidate outputs, raw native messages, private HOME/database/credential files or binary packages. Native replay requires existing authorized official account/native installation; generic tool replay requires declared systemd/Bubblewrap host runtime.",
+  "research_completion_claim": false
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "er9.execution-verification.v1",
+  "created_utc": "2026-10-05T21:04:18.990041+00:00",
+  "source_pins_sha256": "90e1b8f8453152122ce18f5755cd8c93843ea86e1da4e43ef3b97f43d14a77be",
+  "test_count": 14,
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "test_absolute_deadline_kills_native_descendant (test_execution.GuardTests.test_absolute_deadline_kills_native_descendant) ... ok\ntest_controller_death_eof_kills_native_descendant (test_execution.GuardTests.test_controller_death_eof_kills_native_descendant) ... ok\ntest_fresh_goal_receipt_and_complete (test_execution.RouteBoundaryTests.test_fresh_goal_receipt_and_complete) ... ok\ntest_mismatched_model_never_activates_goal (test_execution.RouteBoundaryTests.test_mismatched_model_never_activates_goal) ... ok\ntest_missing_native_started_turn_is_failure (test_execution.RouteBoundaryTests.test_missing_native_started_turn_is_failure) ... ok\ntest_no_native_bash_or_host_read_admission (test_execution.RouteBoundaryTests.test_no_native_bash_or_host_read_admission) ... ok\ntest_probe_performs_no_goal (test_execution.RouteBoundaryTests.test_probe_performs_no_goal) ... ok\ntest_tool_names_need_server (test_execution.RouteBoundaryTests.test_tool_names_need_server) ... ok\ntest_unusable_budget_rejected_before_native (test_execution.RouteBoundaryTests.test_unusable_budget_rejected_before_native) ... ok\ntest_actual_outputs_frozen_and_hashed (test_execution.WorkerBoundaryTests.test_actual_outputs_frozen_and_hashed) ... ok\ntest_complete_requires_actual_artifacts (test_execution.WorkerBoundaryTests.test_complete_requires_actual_artifacts) ... ok\ntest_complete_requires_native_quiescence (test_execution.WorkerBoundaryTests.test_complete_requires_native_quiescence) ... ok\ntest_corrupted_input_never_launches (test_execution.WorkerBoundaryTests.test_corrupted_input_never_launches) ... ok\ntest_malformed_catalog_does_not_complete (test_execution.WorkerBoundaryTests.test_malformed_catalog_does_not_complete) ... ok\n\n----------------------------------------------------------------------\nRan 14 tests in 1.185s\n\nOK\n",
+  "real_boundary_tests": [
+    "Original absolute deadline terminates native and child process",
+    "Controller EOF terminates native and child process"
+  ],
+  "no_model_calls_in_tests": true,
+  "zero_inference_probe_receipt": "LAB_ROOT/dev/execution/probe-001/native/receipt.json",
+  "probe_status": "probe_ready",
+  "probe_model_request_count": 0,
+  "probe_quiescent": true
+}

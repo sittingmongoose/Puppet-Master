@@ -1,0 +1,23 @@
+{
+  "schema": "er9.failure-accounting-correction.v1",
+  "original_preserved": true,
+  "actual_native_goal_starts": 1,
+  "actual_target_id": "target_muvqh3sa_ea236b3b-59ea-4ff7-a881-7a8848925eab",
+  "native_started_turn": true,
+  "reason": "Native trims surrounding whitespace. Driver v1 validated raw trailing newline before recording activation, so receipt goal_activated=false is invalid for starts accounting. Original failure unchanged.",
+  "wire_sha256": "835b2f972ed5c5e10197a4cde88b16ee942313e405dcf868bd9dd86eeaebb4ec",
+  "native_usage": {
+    "sessionId": "sess_03aa8b28-f7eb-42f2-8a11-26e5a6cc4aa0",
+    "totalTokens": 0,
+    "inputTokens": 0,
+    "outputTokens": 0,
+    "reasoningTokens": 0,
+    "cacheCreationTokens": 0,
+    "cacheReadTokens": 0,
+    "modelRequestCount": 0,
+    "modelErrorCount": 0,
+    "inputBaselineBySource": {}
+  },
+  "native_quiescent": true,
+  "successor": "canary-002 with native-compatible strip normalization"
+}

@@ -1,0 +1,48 @@
+{
+  "schema": "er9.tools.source-pins.v1",
+  "version": "v1.1",
+  "created_utc": "2026-10-05T21:09:11.744585+00:00",
+  "predecessor_source_pins_sha256": "04d18860f56cdd93427fdfe1336f7418d8d248e6a70e5b9463f602aeb8ff5aa2",
+  "files": {
+    "config.py": "2fe65bf146fcb8ea2a03b375ceac6d19113150dc88bcbe5ee9c653e1c68cbc3f",
+    "execution_server.py": "0a20191b4b32b925456142c280965f4faf7cbdefc458ba93fc6087eaa0968007",
+    "test_tools.py": "840a680de57fba4019ba8a671513085bbdae181c1f1952b00bad0f43e3f7fe0a",
+    "source_capture/boundary.py": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+    "source_capture/tool_server.py": "9c25c1faaf7c4557aaeb22b0977061914a9fbba1a04d87d2a3a29851daa29846",
+    "source_capture/test_source_capture.py": "a2e661f064dff5efb21c61461106d9473995e76c14133a8ff4abdec5a5aaf808",
+    "README.md": "9b62d619611a1f9f7bdc932b1996e24d7dc0bb775f98206aa4217726974565cc"
+  },
+  "copied_upstream": {
+    "boundary.py": {
+      "path": "EXPERIMENTS_ROOT/external-research-v8-20261001-2140/dev/source-capture-v1/boundary.py",
+      "sha256": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+      "destination": "source_capture/boundary.py",
+      "byte_identical": true
+    },
+    "tool_server.py": {
+      "path": "EXPERIMENTS_ROOT/external-research-v8-20261001-2140/dev/source-capture-v1/tool_server.py",
+      "sha256": "9c25c1faaf7c4557aaeb22b0977061914a9fbba1a04d87d2a3a29851daa29846",
+      "destination": "source_capture/tool_server.py",
+      "byte_identical": true
+    },
+    "test_source_capture.py": {
+      "path": "EXPERIMENTS_ROOT/external-research-v8-20261001-2140/dev/source-capture-v1/test_source_capture.py",
+      "sha256": "a2e661f064dff5efb21c61461106d9473995e76c14133a8ff4abdec5a5aaf808",
+      "destination": "source_capture/test_source_capture.py",
+      "byte_identical": true
+    }
+  },
+  "runtime_binaries": {
+    "/usr/bin/python3": "be9a2a5eada8c89c1c399fdfb8397179e877c20d8db0739c802f726d4d0e69fd",
+    "/usr/bin/bwrap": "a85b0ff8664c52ab923e0daf7e20cbc394272cd3831cc492ab144105d8091361",
+    "/usr/bin/systemd-run": "55ba6ffaebbe831ee903e238c42aa27120543f7e1316c5d2084f7e1461526f42",
+    "/usr/bin/systemctl": "044cb69b902982835d7916423a7efcc4ba3181addc887f0c23941c7c09eacbab"
+  },
+  "pin_scope": "tool code/config/copied implementation/runtime executables; existing OS standard library is runtime, not newly installed",
+  "changed_files": [
+    "execution_server.py",
+    "test_tools.py",
+    "README.md"
+  ],
+  "change_scope": "Explicit supported local userbus environment for cleanup systemctl calls; detailed successful absence versus failed-query receipts and regression only. Candidate runtime sandbox/mounts/resource limits unchanged."
+}
