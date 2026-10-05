@@ -73,9 +73,11 @@ function deal(list, o) {
     const el = it.el;
     if (!el || !el.animate) continue;
     stopEnter(el);
+    /* Glass blurs only the boxes: a blur on every row costs a raster per row per frame */
+    const rowSpec = f.blur ? Object.assign({}, f, { blur: 0 }) : f;
     const frames = it.box
-      ? (f.wipe ? enterFrames(f, o.dx || 1, 0) : [{ opacity: 0, transform: 'translate(' + Math.round((o.dx || 0) * .5) + 'px, ' + Math.round((o.dy != null ? o.dy : f.dy) * .6) + 'px)' }, { opacity: 1, transform: 'none' }])
-      : enterFrames(f, o.dx || 0, o.dy != null ? o.dy : f.dy);
+      ? (f.wipe ? enterFrames(f, o.dx || 1, 0) : enterFrames(Object.assign({}, f, { scale: 0 }), Math.round((o.dx || 0) * .5), Math.round((o.dy != null ? o.dy : f.dy) * .6)))
+      : enterFrames(rowSpec, o.dx || 0, o.dy != null ? o.dy : f.dy);
     const a = el.animate(frames, { duration: Math.round(f.dur * (it.box ? .75 : 1)), easing: f.ease, delay: t, fill: 'backwards' });
     a.id = 'd-enter';
     if (!it.box) { t += o.step != null ? o.step : f.step; n += 1; }

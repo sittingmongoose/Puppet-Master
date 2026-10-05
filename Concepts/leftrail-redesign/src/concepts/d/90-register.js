@@ -49,7 +49,7 @@ PMR.concepts.register('d', {
       show(info) {
         const p = document.getElementById(info && info.target);
         if (!p) return;
-        requestAnimationFrame(() => { fitAll(); if (info.reason === 'switch' || info.reason === 'concept') enterPanel(p); });
+        requestAnimationFrame(() => { fitAll(p); if (info.reason === 'switch' || info.reason === 'concept') enterPanel(p); });
       },
       destroy() { unmountSkin(); },
     };

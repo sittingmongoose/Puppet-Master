@@ -25,10 +25,15 @@ function fitTabs(st) {
   });
 }
 
-function stackHeads(root) {
-  root.querySelectorAll('.sh-shelf > .sh-head').forEach(h => {
+function stackHeads(root, force) {
+  const heads = Array.from(root.querySelectorAll('.sh-shelf > .sh-head'));
+  const widths = heads.map(h => h.offsetWidth);
+  heads.forEach((h, i) => {
     const c = h.querySelector(':scope > .sh-hcount'), l = h.querySelector(':scope > .sh-hlabel');
-    if (!c || !l || !h.offsetWidth) return;
+    if (!c || !l || !widths[i]) return;
+    const key = widths[i] + '|' + c.textContent;
+    if (!force && h._dStackKey === key) return;
+    h._dStackKey = key;
     h.removeAttribute('data-d-stack');
     const over = l.scrollWidth > l.clientWidth + 1 || h.scrollWidth > h.clientWidth + 1;
     if (over) {
@@ -60,8 +65,12 @@ function wireThumb(panel) {
   remember(() => { delete sw._dThumb; });
 }
 
+function clearFitCache() {
+  panelEls().forEach(p => p.querySelectorAll('*').forEach(el => { delete el._dFitKey; delete el._dStackKey; delete el._dStackW; }));
+}
 /* the fitting state is recomputed, not remembered: clearing it is the undo */
 function clearFit() {
+  clearFitCache();
   document.querySelectorAll('[data-d-tabs]').forEach(el => el.removeAttribute('data-d-tabs'));
   document.querySelectorAll('[data-d-stack]').forEach(el => el.removeAttribute('data-d-stack'));
   document.querySelectorAll('.sh-head[style*="--d-stack-x"]').forEach(el => el.style.removeProperty('--d-stack-x'));
@@ -72,20 +81,26 @@ function stackRows(root) {
   /* worktrees: the diff sits beside the branch when the whole branch name fits there, else under it */
   root.querySelectorAll('.sh-wt-h').forEach(h => {
     const b = h.querySelector(':scope > .sh-branch');
-    if (!b || !h.offsetWidth) return;
+    const w = h.offsetWidth;
+    if (!b || !w || h._dStackW === w) return;
+    h._dStackW = w;
     if (b._dFull != null && b.textContent !== b._dFull) b.textContent = b._dFull;
     h.removeAttribute('data-d-stack');
     if (b.scrollWidth > b.clientWidth) h.setAttribute('data-d-stack', '');
   });
   root.querySelectorAll('[data-pane="registries"] .sh-ctr-h').forEach(h => {
     const m = h.querySelector('.sh-meta');
-    if (!m || !h.offsetWidth) return;
+    const w = h.offsetWidth;
+    if (!m || !w || h._dStackW === w) return;
+    h._dStackW = w;
     h.removeAttribute('data-d-stack');
     if (m.scrollWidth > m.clientWidth) h.setAttribute('data-d-stack', '');
   });
 }
-function fitAll() {
+function fitAll(only) {
   panelEls().forEach(p => {
+    if (only && p !== only) return;
+    if (!p.offsetWidth) return;
     p.querySelectorAll(':scope > .pm-segtab').forEach(fitTabs);
     stackHeads(p);
     stackRows(p);
@@ -104,7 +119,7 @@ function watchFit() {
     D.observers.push(ro);
   }
   /* theme, NieR and text size change fonts and widths */
-  const mo = new MutationObserver(fitSoon);
+  const mo = new MutationObserver(() => { clearFitCache(); fitSoon(); });
   mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'data-o55-nier-parts', 'style'] });
   D.observers.push(mo);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (D.on) fitAll(); });
@@ -173,7 +188,18 @@ function midFit(el) {
   let n = Math.max(4, bestN);
   while (el.scrollWidth > el.clientWidth && n > 4) { n -= 1; el.textContent = midText(full, n); }
 }
-function midFitAll(root) { root.querySelectorAll(MID_SEL).forEach(el => { if (el.offsetParent) midFit(el); }); }
+/* read every width first (one layout), then fit only the names whose room changed since their last fit */
+function midFitAll(root) {
+  const els = Array.from(root.querySelectorAll(MID_SEL));
+  const rooms = els.map(el => (el.offsetParent ? el.clientWidth : 0));
+  els.forEach((el, i) => {
+    if (!rooms[i]) return;
+    const key = rooms[i] + '|' + (el._dFull != null ? el._dFull : el.textContent);
+    if (el._dFitKey === key) return;
+    midFit(el);
+    el._dFitKey = el.clientWidth + '|' + (el._dFull != null ? el._dFull : el.textContent);
+  });
+}
 
 /* Publish and review: always there, its facts fold away on request (remembered per viewer) */
 function wirePublish(panel) {
