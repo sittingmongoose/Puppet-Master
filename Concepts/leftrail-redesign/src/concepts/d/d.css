@@ -7,11 +7,13 @@
    on the element they highlight, so a hover or selection fill is always exactly its row's box. Type: one ladder,
    sentence case, nothing under 11 px. */
 [data-rail-skin="d"] {
-  --d-g: 8px;                 /* gutter: panel edge to box, box to box */
-  --d-in: 4px;                /* inset: box edge to the rows inside it */
+  --d-g: 6px;                 /* vertical gutter: box to box */
+  --d-gx: 4px;                /* horizontal gutter: panel edge to box (width is at a premium) */
+  --d-in: 3px;                /* inset: box edge to the rows inside it */
   --d-R: 8px;                 /* outer radius */
   --d-r: 4px;                 /* inner radius (R - inset) */
-  --d-pad: 10px;              /* text inset inside a row or a head */
+  --d-rs: min(var(--d-r), 6px); /* small controls (under 26 px high) never round into a capsule */
+  --d-pad: 7px;               /* text inset inside a row or a head */
   --d-head-h: 34px;
   --d-row-h: 28px;
   --d-fs-title: 13px;
@@ -60,14 +62,14 @@
 }
 /* Friendly: rounder, springier, Poppins runs a little wide */
 [data-rail-skin="d"][data-theme^="friendly"] {
-  --d-R: 14px; --d-r: 10px; --d-pad: 11px;
+  --d-R: 13px; --d-r: 10px; --d-pad: 8px;
   --d-t1: 150ms; --d-t2: 260ms; --d-t3: 380ms;
   --d-spring: cubic-bezier(.34, 1.5, .5, 1);
   --d-fs-name: 12.5px; --d-fs-meta: 11.5px;
 }
 /* Glass: soft radii, long glides, and translucent chrome */
 [data-rail-skin="d"][data-theme^="glass"] {
-  --d-R: 14px; --d-r: 10px;
+  --d-R: 13px; --d-r: 10px;
   --d-t1: 160ms; --d-t2: 300ms; --d-t3: 440ms;
   --d-ease: cubic-bezier(.16, 1, .3, 1);
   --d-spring: cubic-bezier(.2, 1.15, .35, 1);
@@ -123,16 +125,16 @@
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .sh-banner {
   display: grid !important; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-rows: auto auto;
   grid-template-areas: "ico title acts" "ico sub acts";
-  align-items: center; column-gap: 10px; row-gap: 0;
-  margin: 0 !important; padding: 10px 12px 9px !important; min-height: 0;
+  align-items: center; column-gap: 8px; row-gap: 0;
+  margin: 0 !important; padding: 8px 8px 7px !important; min-height: 0;
   border-radius: 0 !important; box-shadow: none !important; border: 0 !important;
 }
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .sh-banner > .sh-bico {
-  grid-area: ico; width: 32px; height: 32px; border-radius: var(--d-R);
+  grid-area: ico; width: 28px; height: 28px; border-radius: min(var(--d-R), 8px);
   background: color-mix(in srgb, var(--accent-primary) 14%, transparent); color: var(--accent-primary);
   transition: transform var(--d-t2) var(--d-spring), background-color var(--d-t2) var(--d-ease);
 }
-[data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .sh-banner > .sh-bico svg { width: 17px; height: 17px; }
+[data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .sh-banner > .sh-bico svg { width: 15px; height: 15px; }
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .sh-banner > .sh-title {
   grid-area: title; align-self: end; min-width: 0; max-width: 100%;
   font: var(--d-w-label) var(--d-fs-title)/1.25 var(--display-font, var(--body-font)); letter-spacing: 0; text-transform: none;
@@ -161,7 +163,7 @@
 [data-rail-skin="d"] #panel-files .sh-banner .pm6-tb-menu-trigger .pm-ico { width: 12px; height: 12px; }
 
 /* Source context: the repository identity under the header, then the engine switch */
-[data-rail-skin="d"] #panel-source .pm7-scm-context { display: grid; gap: 8px; padding: 0 12px 10px !important; border-bottom: 0 !important; z-index: 5; }
+[data-rail-skin="d"] #panel-source .pm7-scm-context { display: grid; gap: 7px; padding: 0 8px 8px !important; border-bottom: 0 !important; z-index: 5; }
 [data-rail-skin="d"] #panel-source .pm7-scm-context-row { align-items: flex-start; gap: 10px; }
 [data-rail-skin="d"] #panel-source .pm7-scm-context-main { gap: 1px; }
 [data-rail-skin="d"] #panel-source .pm7-context-title { font: var(--d-w-label) var(--d-fs-name)/1.3 var(--body-font); color: var(--d-text); }
@@ -196,11 +198,11 @@
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .pm-segtab {
   position: relative !important; display: flex !important; gap: 0; box-sizing: border-box !important;
   width: auto !important; max-width: none !important; min-width: 0 !important;
-  margin: 0 !important; padding: calc(var(--d-in) + 1px) calc(var(--d-g) + var(--d-in) + 1px) calc(var(--d-g) + var(--d-in) + 1px) !important;
+  margin: 0 !important; padding: calc(var(--d-in) + 1px) calc(var(--d-gx) + var(--d-in) + 1px) calc(var(--d-g) + var(--d-in) + 1px) !important;
   border: 0 !important; border-radius: 0 !important; overflow: visible !important; box-shadow: none !important;
 }
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .pm-segtab::before {
-  content: ''; position: absolute; z-index: 0; inset: 0 var(--d-g) var(--d-g); pointer-events: none;
+  content: ''; position: absolute; z-index: 0; inset: 0 var(--d-gx) var(--d-g); pointer-events: none;
   border-radius: var(--d-R); background: var(--d-ctl-bg); box-shadow: inset 0 0 0 1px var(--d-ctl-line);
 }
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .pm-segtab-ink {
@@ -231,12 +233,12 @@
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .pm-segtab-item > .eq-abbr { display: none !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .pm-segtab[data-d-tabs="active"] .pm-segtab-item:not(.active) > :is(span, .eq-full),
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .pm-segtab[data-d-tabs="icons"] .pm-segtab-item > :is(span, .eq-full) { max-width: 0; margin-left: 0; opacity: 0; }
-[data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .pm-segtab[data-d-tabs="active"] .pm-segtab-item.active { flex: 0 0 auto !important; padding: 0 12px !important; }
+[data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .pm-segtab[data-d-tabs="active"] .pm-segtab-item.active { flex: 0 0 auto !important; padding: 0 10px !important; }
 
 /* Files toolbar: icon buttons on the chrome plate, no box around them */
-[data-rail-skin="d"] #panel-files .fm-toolbar-wrap { margin: 0 !important; padding: 0 var(--d-g) var(--d-g) !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
+[data-rail-skin="d"] #panel-files .fm-toolbar-wrap { margin: 0 !important; padding: 0 var(--d-gx) var(--d-g) !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
 [data-rail-skin="d"] #panel-files .fm-toolbar-wrap::before { content: none !important; }
-[data-rail-skin="d"] #panel-files .fm-toolbar { gap: 2px; padding: 0 calc(var(--d-in) - 2px); }
+[data-rail-skin="d"] #panel-files .fm-toolbar { gap: 1px; padding: 0; }
 [data-rail-skin="d"] #panel-files .fm-tbtn {
   width: 28px; height: 28px; padding: 0 !important; justify-content: center; gap: 0;
   border: 0 !important; border-radius: var(--d-r) !important; background: none !important; box-shadow: none !important;
@@ -252,14 +254,14 @@
 [data-rail-skin="d"] #panel-files .fm-toolbar-hint { padding: 0 6px 0 8px; gap: 5px; font: 500 var(--d-fs-meta)/1 var(--body-font) !important; color: var(--d-text-3) !important; }
 [data-rail-skin="d"] #panel-files .fm-toolbar-hint b { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--d-text-2) !important; }
 [data-rail-skin="d"] #panel-files .fm-toolbar-hint svg, [data-rail-skin="d"] #panel-files .fm-toolbar-hint .pm-ico { width: 13px; height: 13px; color: var(--d-text-3) !important; }
-[data-rail-skin="d"] #panel-files .fm-selbar { margin: 0 !important; padding: 0 var(--d-g) var(--d-g) !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
+[data-rail-skin="d"] #panel-files .fm-selbar { margin: 0 !important; padding: 0 var(--d-gx) var(--d-g) !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
 [data-rail-skin="d"] #panel-files .fm-selbar .fm-selcount { font: 500 var(--d-fs-meta)/1.3 var(--body-font); color: var(--d-text-2); }
-[data-rail-skin="d"] #panel-files .fm-filter { margin: 0 !important; padding: 0 var(--d-g) var(--d-g) !important; border-radius: 0 !important; }
+[data-rail-skin="d"] #panel-files .fm-filter { margin: 0 !important; padding: 0 var(--d-gx) var(--d-g) !important; border-radius: 0 !important; }
 [data-rail-skin="d"] #panel-files .fm-filter .pm-input { border-radius: var(--d-r) !important; }
 [data-rail-skin="d"] #panel-files .fm-filtercount { font: 500 var(--d-fs-meta)/1 var(--mono-font); color: var(--d-text-3); }
 
 /* the scroller: content starts one gutter below the chrome and ends with room to breathe */
-[data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .sh-scroll { padding-left: var(--d-g) !important; padding-right: var(--d-g) !important; padding-bottom: 14px !important; scrollbar-gutter: auto; }
+[data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .sh-scroll { padding-left: var(--d-gx) !important; padding-right: var(--d-gx) !important; padding-bottom: 12px !important; scrollbar-gutter: auto; }
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .sh-scroll { padding-top: calc(var(--pm6-shrun-banner-h, 42px) + 2px) !important; }
 /* a hairline under the chrome only while something has scrolled under it */
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker).d-scrolled .pm-segtab::after, [data-rail-skin="d"] #panel-files.d-scrolled .fm-toolbar-wrap::after {
@@ -269,7 +271,7 @@
 
 /* footer (Files): status line on the panel surface */
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .sh-foot {
-  gap: 8px; padding: 7px 12px !important; min-height: 32px; background: var(--d-chrome) !important;
+  gap: 6px; padding: 6px 8px !important; min-height: 30px; background: var(--d-chrome) !important;
   border-top: 1px solid var(--d-line) !important; box-shadow: none !important;
 }
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .sh-foot .fm-footstat { gap: 6px; align-items: flex-start !important; font: 500 var(--d-fs-meta)/1.35 var(--body-font) !important; color: var(--d-text-2) !important; white-space: normal !important; overflow: visible; min-width: 0; }
@@ -288,7 +290,7 @@
 [data-rail-skin="d"][data-theme^="glass"] :is(#panel-files,#panel-source,#panel-docker) .sh-shelf { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-fill), transparent) !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .sh-shelf:last-child { margin-bottom: 0 !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .sh-shelf > .sh-head {
-  position: relative; display: flex !important; align-items: center; gap: 8px; flex-wrap: nowrap;
+  position: relative; display: flex !important; align-items: center; gap: 7px; flex-wrap: nowrap;
   min-height: var(--d-head-h); margin: 0 !important; padding: 0 calc(var(--d-in) + var(--d-pad)) !important;
   border-radius: 0 !important; box-shadow: none !important;
   background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-head), transparent) !important;
@@ -340,7 +342,7 @@
   transition: transform var(--d-t2) var(--d-spring) !important;
 }
 /* notes and footnotes read as quiet text, not boxes */
-[data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .pm-footnote { padding: 2px 4px 10px !important; font: 400 var(--d-fs-small)/1.45 var(--body-font) !important; color: var(--d-text-3) !important; letter-spacing: 0; }
+[data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .pm-footnote { padding: 2px 2px 8px !important; font: 400 var(--d-fs-small)/1.45 var(--body-font) !important; color: var(--d-text-3) !important; letter-spacing: 0; }
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .sh-shelf .pm-footnote { padding: 2px var(--d-pad) 6px !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .pm-note {
   margin: 4px 0 6px !important; padding: 8px var(--d-pad) !important; gap: 8px; border-radius: var(--d-r) !important;
@@ -361,7 +363,7 @@
   background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-open), transparent) !important;
 }
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) :is(.sh-chg-h, .sh-ctr-h, .sh-wt-h, .sh-commit-h, .fm-changerow, .fm-openrow, .sh-row) {
-  min-height: var(--d-row-h); margin: 0 !important; padding: 5px var(--d-pad) !important; gap: 8px;
+  min-height: var(--d-row-h); margin: 0 !important; padding: 5px var(--d-pad) !important; gap: 6px;
   border-radius: var(--d-r) !important; background: transparent; box-shadow: none !important; transform: none !important;
   transition: background-color var(--d-t1) var(--d-ease);
 }
@@ -372,7 +374,7 @@
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) :is(.sh-chg-h, .sh-ctr-h, .sh-wt-h, .sh-commit-h, .fm-changerow, .fm-openrow, .sh-stage-h):focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) :is(.sh-chg-h, .sh-ctr-h, .fm-changerow, .fm-openrow, .sh-row) { display: flex !important; align-items: center; }
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) :is(.sh-chg, .sh-ctr, .sh-wt, .sh-commit, .fm-changeitem, .fm-openitem) > :is(.sh-accb, .sh-wt-b) {
-  padding: 0 var(--d-pad) 0 calc(var(--d-pad) + 18px) !important;
+  padding: 0 var(--d-pad) 0 calc(var(--d-pad) + 16px) !important;
 }
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) :is(.sh-chg, .sh-ctr, .sh-wt, .sh-commit, .fm-changeitem, .fm-openitem) > :is(.sh-accb, .sh-wt-b) > .pm-acc-inner > :last-child { margin-bottom: 9px !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) :is(.sh-chg, .sh-ctr, .sh-wt, .sh-commit, .fm-changeitem, .fm-openitem) > :is(.sh-accb, .sh-wt-b) > .pm-acc-inner > :first-child { margin-top: 1px !important; }
@@ -403,7 +405,7 @@
 
 /* key / value facts: label column, value column, values wrap instead of clipping */
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .sh-kv {
-  display: grid !important; grid-template-columns: minmax(56px, max-content) minmax(0, 1fr); column-gap: 10px; align-items: baseline;
+  display: grid !important; grid-template-columns: minmax(52px, max-content) minmax(0, 1fr); column-gap: 8px; align-items: baseline;
   width: 100%; padding: 3px 0 !important; overflow: visible !important;
 }
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .sh-kv > .sh-k { font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; color: var(--d-text-3) !important; white-space: nowrap; }
@@ -522,7 +524,7 @@
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .pm-minibtn.danger:hover { color: var(--d-fail) !important; background: color-mix(in srgb, var(--d-fail) 12%, transparent) !important; }
 /* mini buttons that carry a word (Copy id, Copy ref) are small text buttons */
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .sh-idrow .pm-minibtn, [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .sh-liveline .pm-minibtn, [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .sh-retn .pm-minibtn {
-  width: auto !important; padding: 0 7px !important; gap: 4px; font: 600 var(--d-fs-small)/1 var(--body-font) !important; color: var(--d-text-2) !important;
+  width: auto !important; padding: 0 7px !important; gap: 4px; border-radius: var(--d-rs) !important; font: 600 var(--d-fs-small)/1 var(--body-font) !important; color: var(--d-text-2) !important;
 }
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .sh-idrow .pm-minibtn svg, [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .sh-idrow .pm-minibtn .pm-ico { width: 12px !important; height: 12px !important; }
 
@@ -577,7 +579,7 @@
 
 /* tokens that are links (ports) and ids: quiet bordered text, small radius, never a capsule */
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .sh-portchip {
-  display: inline-flex; align-items: center; height: 22px; padding: 0 7px !important; border-radius: var(--d-r) !important;
+  display: inline-flex; align-items: center; height: 22px; padding: 0 7px !important; border-radius: var(--d-rs) !important;
   border: 1px solid color-mix(in srgb, var(--cat, var(--accent-blue)) 34%, transparent) !important;
   background: none !important; color: var(--d-text) !important; font: 500 var(--d-fs-small)/1 var(--mono-font) !important;
   transition: background-color var(--d-t1) var(--d-ease);
@@ -592,7 +594,7 @@
 }
 /* filter buttons that toggle (images: dangling) look like the other buttons, pressed when on */
 [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) .pm-chipbtn:not(.d-tag) {
-  display: inline-flex; align-items: center; min-height: 24px; padding: 0 8px !important; border-radius: var(--d-r) !important;
+  display: inline-flex; align-items: center; min-height: 24px; padding: 0 8px !important; border-radius: var(--d-rs) !important;
   border: 1px solid var(--d-ctl-line) !important; background: var(--d-ctl-bg) !important; color: var(--d-text-2) !important;
   font: 600 var(--d-fs-small)/1 var(--body-font) !important; letter-spacing: 0 !important; text-transform: none;
 }
@@ -604,7 +606,7 @@
    capsules and the sideways nudge on hover; the guide line under each folder is a hairline. */
 [data-rail-skin="d"] #panel-files .fm-tree { padding: 0; }
 [data-rail-skin="d"] #panel-files .fm-row {
-  min-height: 26px; padding: 0 6px !important; column-gap: 0; border-radius: var(--d-r) !important;
+  min-height: 26px; padding: 0 4px !important; column-gap: 0; border-radius: var(--d-r) !important;
   transform: none !important; background: transparent; transition: background-color var(--d-t1) var(--d-ease) !important;
 }
 [data-rail-skin="d"] #panel-files .fm-row:hover { background: var(--d-hover) !important; }
@@ -612,13 +614,13 @@
 [data-rail-skin="d"] #panel-files .fm-row.active-file { background: var(--d-sel) !important; }
 [data-rail-skin="d"] #panel-files .fm-row.selected { background: color-mix(in srgb, var(--accent-primary) 24%, transparent) !important; }
 [data-rail-skin="d"] #panel-files .fm-row:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
-[data-rail-skin="d"] #panel-files .fm-row > :is(.fm-chevron, .fm-ficon) { margin-right: 6px; }
+[data-rail-skin="d"] #panel-files .fm-row > :is(.fm-chevron, .fm-ficon) { margin-right: 5px; }
 [data-rail-skin="d"] #panel-files .fm-chevron { width: 12px !important; height: 12px !important; color: var(--d-text-3) !important; }
 [data-rail-skin="d"] #panel-files .fm-ficon { width: 15px !important; height: 15px !important; }
 [data-rail-skin="d"] #panel-files .fm-name { font: 400 var(--d-fs-name)/1.3 var(--body-font) !important; letter-spacing: 0; }
 [data-rail-skin="d"] #panel-files .fm-name.mono { font-family: var(--mono-font) !important; font-size: var(--d-fs-mono) !important; }
 [data-rail-skin="d"] #panel-files .fm-folder > .fm-row > .fm-name { font-weight: 500 !important; }
-[data-rail-skin="d"] #panel-files .fm-children { margin-left: 12px !important; padding-left: 4px !important; border-left: 1px solid var(--d-line) !important; }
+[data-rail-skin="d"] #panel-files .fm-children { margin-left: 10px !important; padding-left: 3px !important; border-left: 1px solid var(--d-line) !important; }
 [data-rail-skin="d"] #panel-files .fm-trail { min-width: 40px; gap: 6px; }
 [data-rail-skin="d"] #panel-files .fm-count { font: 400 var(--d-fs-small)/1 var(--body-font) !important; color: var(--d-text-3) !important; font-variant-numeric: tabular-nums; }
 [data-rail-skin="d"] #panel-files .fm-quick { gap: 1px !important; }
@@ -628,7 +630,7 @@
 [data-rail-skin="d"] #panel-files .fm-reveal-note { border-radius: var(--d-r) !important; font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; }
 /* Changed and Open: letter, file, folder, chevron */
 [data-rail-skin="d"] #panel-files .fm-changerow::before { content: none !important; }
-[data-rail-skin="d"] #panel-files :is(.fm-changerow, .fm-openrow) { gap: 0 8px !important; }
+[data-rail-skin="d"] #panel-files :is(.fm-changerow, .fm-openrow) { gap: 0 6px !important; }
 [data-rail-skin="d"] #panel-files :is(.fm-cfile, .fm-path) { font: 400 var(--d-fs-mono)/1.3 var(--mono-font) !important; color: var(--d-text) !important; flex: 0 1 auto !important; }
 [data-rail-skin="d"] #panel-files .fm-cdir {
   flex: 1 1 0 !important; max-width: none !important; min-width: 0;
@@ -645,12 +647,12 @@
 [data-rail-skin="d"] #panel-files .fm-chunks .add { color: var(--d-ok) !important; } [data-rail-skin="d"] #panel-files .fm-chunks .del { color: var(--d-fail) !important; }
 [data-rail-skin="d"] #panel-files .fm-chunks .meta { color: var(--d-text-3) !important; font-family: var(--body-font); }
 [data-rail-skin="d"] #panel-files .fm-cacts { display: flex !important; flex-wrap: wrap; gap: 6px !important; margin-top: 4px; }
-[data-rail-skin="d"] #panel-files .fm-changeitem > .sh-accb, [data-rail-skin="d"] #panel-files .fm-openitem > .sh-accb { padding-left: calc(var(--d-pad) + 22px) !important; }
+[data-rail-skin="d"] #panel-files .fm-changeitem > .sh-accb, [data-rail-skin="d"] #panel-files .fm-openitem > .sh-accb { padding-left: calc(var(--d-pad) + 20px) !important; }
 
 /* Changed and Open rows read on two lines: the file, then its folder; nothing is cut to a single letter */
 [data-rail-skin="d"] #panel-files .fm-changerow {
   display: grid !important; grid-template-columns: 14px minmax(0, 1fr) 10px; grid-template-areas: "badge file chev" "badge dir chev";
-  column-gap: 8px !important; row-gap: 0; align-items: center;
+  column-gap: 6px !important; row-gap: 0; align-items: center;
 }
 [data-rail-skin="d"] #panel-files .fm-changerow > .fm-gitbadge { grid-area: badge; align-self: start; margin-top: 3px !important; }
 [data-rail-skin="d"] #panel-files .fm-changerow > .fm-cfile { grid-area: file; }
@@ -658,7 +660,7 @@
 [data-rail-skin="d"] #panel-files .fm-changerow > .fm-cchev { grid-area: chev; }
 [data-rail-skin="d"] #panel-files .fm-openitem > .fm-openrow {
   display: grid !important; grid-template-columns: 8px 15px minmax(0, 1fr) 10px; grid-template-areas: "dot ico file chev" ". . dir chev";
-  column-gap: 7px !important; row-gap: 0; align-items: center;
+  column-gap: 5px !important; row-gap: 0; align-items: center;
 }
 [data-rail-skin="d"] #panel-files .fm-openitem > .fm-openrow > .fm-dirty { grid-area: dot; }
 [data-rail-skin="d"] #panel-files .fm-openitem > .fm-openrow > .fm-ficon { grid-area: ico; }
@@ -672,8 +674,8 @@
 [data-rail-skin="d"] #panel-source .sh-chg-h > .sh-ds { align-self: center; }
 /* worktrees: branch and diff on the first line, the state word and the owner on the second; no capsule crushes the name */
 [data-rail-skin="d"] #panel-source .sh-wt-h {
-  display: grid !important; grid-template-columns: 10px auto minmax(0, 1fr) auto; column-gap: 8px; row-gap: 1px;
-  grid-template-areas: "chev branch branch ds" "chev pill owner owner"; align-items: center;
+  display: grid !important; grid-template-columns: 10px auto minmax(0, 1fr) auto; column-gap: 6px; row-gap: 1px;
+  grid-template-areas: "chev branch branch branch" "chev pill owner ds"; align-items: center;
 }
 [data-rail-skin="d"] #panel-source .sh-wt-h > .chev { grid-area: chev; }
 [data-rail-skin="d"] #panel-source .sh-wt-h > .sh-branch { grid-area: branch; min-width: 0; color: var(--d-text) !important; }
@@ -685,7 +687,7 @@
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 [data-rail-skin="d"] #panel-source .sh-wt-h > .sh-owner::before { content: '\00B7'; margin: 0 6px 0 0; color: var(--d-text-3); }
-[data-rail-skin="d"] #panel-source .sh-wtnote { padding: 0 var(--d-pad) 6px calc(var(--d-pad) + 18px) !important; font: 400 var(--d-fs-small)/1.4 var(--mono-font) !important; white-space: normal !important; color: var(--accent-orange, var(--d-warn)) !important; }
+[data-rail-skin="d"] #panel-source .sh-wtnote { padding: 0 var(--d-pad) 6px calc(var(--d-pad) + 16px) !important; font: 400 var(--d-fs-small)/1.4 var(--mono-font) !important; white-space: normal !important; color: var(--accent-orange, var(--d-warn)) !important; }
 [data-rail-skin="d"] #panel-source .sh-wtchips.d-hidden { display: none !important; }
 [data-rail-skin="d"] #panel-source .d-wtfilter { display: flex; align-items: center; gap: 6px; margin: 0 0 6px; }
 /* history: sha and age on top, the message under it */
@@ -694,7 +696,7 @@
 [data-rail-skin="d"] #panel-source .sh-commit-t .sh-accchev { width: 10px; height: 10px; color: var(--d-text-3); }
 [data-rail-skin="d"] #panel-source .sh-sha { font: 500 var(--d-fs-small)/1.3 var(--mono-font) !important; color: var(--cat, var(--accent-blue)) !important; }
 [data-rail-skin="d"] #panel-source .sh-age { margin-left: auto; font: 400 var(--d-fs-small)/1.3 var(--body-font) !important; color: var(--d-text-3) !important; font-variant-numeric: tabular-nums; }
-[data-rail-skin="d"] #panel-source .sh-msg { padding-left: 18px; font: 400 var(--d-fs-name)/1.35 var(--body-font) !important; color: var(--d-text) !important; white-space: normal !important; display: -webkit-box !important; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+[data-rail-skin="d"] #panel-source .sh-msg { padding-left: 16px; font: 400 var(--d-fs-name)/1.35 var(--body-font) !important; color: var(--d-text) !important; white-space: normal !important; display: -webkit-box !important; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 /* branches: current branch is a filled dot, others a ring, stashes the paused mark */
 [data-rail-skin="d"] #panel-source .sh-row.flat { cursor: default; }
 [data-rail-skin="d"] #panel-source .sh-row.flat > .pm-chip { margin-left: auto; }
@@ -704,12 +706,12 @@
 [data-rail-skin="d"] #panel-source .pm-commitrow .pm-input { flex: 1 1 auto; }
 /* publish and review: one card, title then state then the promise, facts in two columns */
 [data-rail-skin="d"] #panel-source .pm7-scm-git-footer {
-  padding: var(--d-g) !important; background: var(--d-chrome); border-top: 1px solid var(--d-line);
+  padding: var(--d-g) var(--d-gx) !important; background: var(--d-chrome); border-top: 1px solid var(--d-line);
   -webkit-backdrop-filter: blur(14px) saturate(140%); backdrop-filter: blur(14px) saturate(140%);
 }
 [data-rail-skin="d"][data-theme^="glass"] #panel-source .pm7-scm-git-footer { -webkit-backdrop-filter: none; backdrop-filter: none; }
 [data-rail-skin="d"] #panel-source :is(.pm7-scm-git-footer, .pm7-scm-jj-view) .pm7-post-card {
-  padding: 10px 12px 12px !important; border-radius: var(--d-R) !important; box-shadow: none !important;
+  padding: 8px 9px 9px !important; border-radius: var(--d-R) !important; box-shadow: none !important;
   border: 1px solid var(--d-line) !important; background: color-mix(in srgb, var(--surface-elevated) 70%, transparent) !important;
   container-type: inline-size;
 }
@@ -725,7 +727,7 @@
   [data-rail-skin="d"] #panel-source .pm7-post-card-head { grid-template-columns: minmax(0, 1fr); grid-template-areas: "title" "state" "sub"; }
   [data-rail-skin="d"] #panel-source .pm7-post-card-head > .pm7-post-state { justify-self: start; }
 }
-[data-rail-skin="d"] #panel-source .pm7-post-kv { display: grid !important; grid-template-columns: minmax(84px, max-content) minmax(0, 1fr) !important; gap: 3px 12px !important; margin: 0; font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; }
+[data-rail-skin="d"] #panel-source .pm7-post-kv { display: grid !important; grid-template-columns: minmax(76px, max-content) minmax(0, 1fr) !important; gap: 3px 10px !important; margin: 0; font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; }
 [data-rail-skin="d"] #panel-source .pm7-post-kv dt { color: var(--d-text-3) !important; }
 [data-rail-skin="d"] #panel-source .pm7-post-kv dd { color: var(--d-text-2) !important; margin: 0; overflow-wrap: anywhere; }
 [data-rail-skin="d"] #panel-source .pm7-post-kv dd.sh-mono { font-family: var(--mono-font) !important; font-size: var(--d-fs-small) !important; }
@@ -735,7 +737,7 @@
 }
 [data-rail-skin="d"] #panel-source .pm7-post-actions { display: flex !important; flex-wrap: wrap; gap: 6px !important; margin-top: 10px !important; }
 [data-rail-skin="d"] #panel-source .pm7-post-actions .pm-btn { flex: 1 1 auto; }
-[data-rail-skin="d"] #panel-source .pm7-scm-jj-view { padding: 0 var(--d-g) var(--d-g) !important; gap: var(--d-g) !important; }
+[data-rail-skin="d"] #panel-source .pm7-scm-jj-view { padding: 0 var(--d-gx) var(--d-g) !important; gap: var(--d-g) !important; }
 [data-rail-skin="d"] #panel-source .pm7-scm-jj-view .sh-chg { margin: 0 -4px 2px !important; }
 
 [data-rail-skin="d"] #panel-source .pm7-post-card-head { grid-template-columns: minmax(0, 1fr) auto 24px; grid-template-areas: "title state fold" "sub sub sub"; cursor: pointer; }
@@ -757,10 +759,15 @@
 /* change, branch and stash rows: the name gets the whole first line; folder or facts and the diff share the second */
 [data-rail-skin="d"] #panel-source .sh-chg-h {
   display: grid !important; grid-template-columns: auto auto minmax(0, 1fr) auto; column-gap: 0; row-gap: 1px;
-  grid-template-areas: "chev glyph name name" "chev glyph meta ds"; align-items: center;
+  grid-template-areas: "chev glyph name name" "chev glyph meta ds"; align-items: center; position: relative;
 }
-[data-rail-skin="d"] #panel-source .sh-chg-h > .sh-accchev { grid-area: chev; margin-right: 8px; }
-[data-rail-skin="d"] #panel-source .sh-chg-h > .sh-dot { grid-area: glyph; margin-right: 8px; }
+/* the git letter sits at the top right, above the diff, in one column for every row */
+[data-rail-skin="d"] #panel-source .sh-chg-h .sh-name { display: contents !important; }
+[data-rail-skin="d"] #panel-source .sh-chg-h .sh-name > .sh-nm-txt { grid-area: name; min-width: 0; }
+[data-rail-skin="d"] #panel-source [data-pane="changes"] .sh-chg-h .sh-name > .sh-nm-txt { padding-right: 18px; }
+[data-rail-skin="d"] #panel-source .sh-chg-h .sh-name > .pm-gs { position: absolute; top: 7px; right: var(--d-pad); order: 0; justify-content: flex-end !important; }
+[data-rail-skin="d"] #panel-source .sh-chg-h > .sh-accchev { grid-area: chev; margin-right: 6px; }
+[data-rail-skin="d"] #panel-source .sh-chg-h > .sh-dot { grid-area: glyph; margin-right: 6px; }
 [data-rail-skin="d"] #panel-source .sh-chg-h > .sh-main { display: contents !important; }
 [data-rail-skin="d"] #panel-source .sh-chg-h .sh-name { grid-area: name; min-width: 0; }
 [data-rail-skin="d"] #panel-source .sh-chg-h .sh-meta { grid-area: meta; min-width: 0; }
@@ -794,7 +801,7 @@
 [data-rail-skin="d"] #panel-docker .pm-sumcard .pm-occ .v { grid-area: v; }
 [data-rail-skin="d"] #panel-docker .pm-li {
   display: grid !important; grid-template-columns: 14px minmax(0, 1fr); grid-template-areas: "dot name" "dot meta";
-  column-gap: 8px; row-gap: 0; align-items: center; padding: 5px 0 !important; border-top: 0 !important;
+  column-gap: 6px; row-gap: 0; align-items: center; padding: 5px 0 !important; border-top: 0 !important;
 }
 [data-rail-skin="d"] #panel-docker .pm-li > .dot { grid-area: dot; align-self: start; margin-top: 2px; }
 [data-rail-skin="d"] #panel-docker .pm-li-n { grid-area: name; max-width: none !important; white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere; font: var(--d-w-name) var(--d-fs-name)/1.3 var(--body-font) !important; color: var(--d-text) !important; }
@@ -805,7 +812,7 @@
 /* images: repository on the first line, tag and size on the second */
 [data-rail-skin="d"] #panel-docker [data-pane="images"] .sh-ctr-h {
   display: grid !important; grid-template-columns: 10px minmax(0, 1fr) auto; grid-template-areas: "chev name name" "chev tag size";
-  column-gap: 8px; row-gap: 1px; align-items: center;
+  column-gap: 6px; row-gap: 1px; align-items: center;
 }
 [data-rail-skin="d"] #panel-docker [data-pane="images"] .sh-ctr-h > .sh-accchev { grid-area: chev; }
 [data-rail-skin="d"] #panel-docker [data-pane="images"] .sh-ctr-h > .sh-main, [data-rail-skin="d"] #panel-docker [data-pane="images"] .sh-ctr-h > .sh-main > .sh-name { display: contents !important; }
@@ -817,7 +824,7 @@
 /* registries: name on the first line, state and account on the second */
 [data-rail-skin="d"] #panel-docker [data-pane="registries"] .sh-ctr-h {
   display: grid !important; grid-template-columns: 10px auto minmax(0, 1fr); grid-template-areas: "chev name name" "chev state meta";
-  column-gap: 8px; row-gap: 1px; align-items: center;
+  column-gap: 6px; row-gap: 1px; align-items: center;
 }
 [data-rail-skin="d"] #panel-docker [data-pane="registries"] .sh-ctr-h > .sh-accchev { grid-area: chev; }
 [data-rail-skin="d"] #panel-docker [data-pane="registries"] .sh-ctr-h > .sh-main, [data-rail-skin="d"] #panel-docker [data-pane="registries"] .sh-ctr-h > .sh-main > .sh-name { display: contents !important; }
@@ -837,14 +844,14 @@
 [data-rail-skin="d"] #panel-docker .sh-cmpstate .sh-cmps-txt { white-space: normal !important; overflow: visible !important; }
 [data-rail-skin="d"] #panel-docker .sh-cmpstate b { color: var(--d-text) !important; font-weight: 600; }
 [data-rail-skin="d"] #panel-docker .sh-cmpstate > .dot.d-dot { margin-top: 1px; }
-[data-rail-skin="d"] #panel-docker .sh-runfail { padding: 0 var(--d-pad) 6px calc(var(--d-pad) + 18px) !important; white-space: normal !important; overflow-wrap: anywhere; font: 400 var(--d-fs-small)/1.4 var(--mono-font) !important; color: var(--d-fail) !important; }
+[data-rail-skin="d"] #panel-docker .sh-runfail { padding: 0 var(--d-pad) 6px calc(var(--d-pad) + 16px) !important; white-space: normal !important; overflow-wrap: anywhere; font: 400 var(--d-fs-small)/1.4 var(--mono-font) !important; color: var(--d-fail) !important; }
 /* the publish chain: numbered steps on a hairline, the step's state under its name */
 [data-rail-skin="d"] #panel-docker .sh-chain { padding-left: 30px !important; margin: 2px 0 4px !important; }
 [data-rail-skin="d"] #panel-docker .sh-chain::before { left: 13px !important; width: 1px !important; top: 14px !important; bottom: 14px !important; border-radius: 0 !important; background: color-mix(in srgb, var(--cat, var(--accent-blue)) 40%, transparent) !important; }
 [data-rail-skin="d"] #panel-docker .sh-stage { margin: 0 0 2px; }
 [data-rail-skin="d"] #panel-docker .sh-stage-h {
   display: grid !important; grid-template-columns: 10px minmax(0, 1fr); grid-template-areas: "chev label" "chev state";
-  column-gap: 8px; row-gap: 1px; align-items: center; min-height: 0; padding: 5px var(--d-pad) 5px 6px !important;
+  column-gap: 6px; row-gap: 1px; align-items: center; min-height: 0; padding: 5px var(--d-pad) 5px 6px !important;
   border-radius: var(--d-r) !important; transition: background-color var(--d-t1) var(--d-ease);
 }
 [data-rail-skin="d"] #panel-docker .sh-stage-h:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important; }

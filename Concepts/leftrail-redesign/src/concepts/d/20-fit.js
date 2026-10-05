@@ -137,17 +137,33 @@ function midFit(el) {
   }
   const full = el._dFull;
   if (el.textContent !== full) el.textContent = full;
-  const room = el.clientWidth;
-  if (!room || el.scrollWidth <= room + 1) return;
-  let lo = 4, hi = full.length - 1, best = null;
+  const ecs = getComputedStyle(el);
+  const pad = (parseFloat(ecs.paddingLeft) || 0) + (parseFloat(ecs.paddingRight) || 0);
+  const room = el.clientWidth - pad;
+  if (room <= 0 || el.scrollWidth <= el.clientWidth) return;
+  const fits = t => textWidth(el, t) <= room - 1;
+  /* the plain best cut */
+  let lo = 4, hi = full.length - 1, best = null, bestN = 0;
   while (lo <= hi) {
     const mid = (lo + hi) >> 1, t = midText(full, mid);
-    if (textWidth(el, t) <= room - 1) { best = t; lo = mid + 1; } else hi = mid - 1;
+    if (fits(t)) { best = t; bestN = mid; lo = mid + 1; } else hi = mid - 1;
   }
+  /* cuts on whole parts ("tastebook-…-worker-batch", "web/…/QuantityStepper.svelte") win when they keep nearly as much */
+  const seps = [];
+  for (let i = 1; i < full.length - 1; i++) if ('/-_.'.indexOf(full[i]) >= 0) seps.push(i);
+  const slash = full.lastIndexOf('/');
+  let score = bestN;
+  seps.forEach(h => seps.forEach(t => {
+    if (t <= h) return;
+    const cand = full.slice(0, h + 1) + '…' + full.slice(t);
+    const kept = h + 1 + full.length - t;
+    const s = kept + 3 + (slash > 0 && t === slash ? 4 : 0);
+    if (s > score && fits(cand)) { best = cand; score = s; }
+  }));
   if (best && best !== el.textContent) el.textContent = best;
   /* the canvas can differ from layout by a pixel or two: confirm in the DOM and step down if the browser disagrees */
-  let n = lo - 1;
-  while (el.scrollWidth > el.clientWidth + 1 && n > 4) { n -= 1; el.textContent = midText(full, n); }
+  let n = Math.max(4, bestN);
+  while (el.scrollWidth > el.clientWidth && n > 4) { n -= 1; el.textContent = midText(full, n); }
 }
 function midFitAll(root) { root.querySelectorAll(MID_SEL).forEach(el => { if (el.offsetParent) midFit(el); }); }
 
