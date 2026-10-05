@@ -43,24 +43,57 @@ function cascade(list, opts) {
 }
 const visible = el => !!(el && el.offsetParent !== null && el.getClientRects().length);
 function activePane(panel) { return panel.querySelector(':scope > .sh-scroll > [data-pane]:not(.pm-hidden)'); }
-function paneItems(pane) {
+const onScreen = el => { const r = el.getBoundingClientRect(); return r.height > 0 && r.top < window.innerHeight && r.bottom > 0; };
+/* what deals in: each shelf box, then its head and rows one by one; loose items (buttons, notes) in order */
+function dealList(pane) {
   if (!pane) return [];
+  const out = [];
   const tree = pane.querySelector(':scope > .fm-tree');
-  if (tree) return Array.from(tree.querySelectorAll(':scope > .fm-node')).filter(visible);
-  return Array.from(pane.children).filter(visible);
+  const tops = tree ? Array.from(tree.querySelectorAll(':scope > .fm-node')) : Array.from(pane.children);
+  tops.filter(visible).filter(onScreen).forEach(el => {
+    if (el.classList.contains('sh-shelf')) {
+      out.push({ el, box: true });
+      const head = el.querySelector(':scope > .sh-head');
+      if (head) out.push({ el: head });
+      const body = el.querySelector(':scope > .sh-body, :scope > .sh-accb > .pm-acc-inner > .sh-body, :scope > .sh-accb > .pm-acc-inner');
+      if (body && el.querySelector(':scope > .sh-head') && (!el.hasAttribute('data-acc') || el.classList.contains('open'))) {
+        Array.from(body.children).filter(visible).filter(onScreen).forEach(r => out.push({ el: r }));
+      }
+    } else out.push({ el });
+  });
+  return out;
+}
+/* play a deal: boxes settle with the next row, rows follow one step apart; capped so a long list never drags */
+function deal(list, o) {
+  if (reduced() || !list.length) return;
+  const f = spec();
+  let t = o.delay || 0, n = 0;
+  for (const it of list) {
+    if (n >= (o.max || 16)) break;
+    const el = it.el;
+    if (!el || !el.animate) continue;
+    stopEnter(el);
+    const frames = it.box
+      ? (f.wipe ? enterFrames(f, o.dx || 1, 0) : [{ opacity: 0, transform: 'translate(' + Math.round((o.dx || 0) * .5) + 'px, ' + Math.round((o.dy != null ? o.dy : f.dy) * .6) + 'px)' }, { opacity: 1, transform: 'none' }])
+      : enterFrames(f, o.dx || 0, o.dy != null ? o.dy : f.dy);
+    const a = el.animate(frames, { duration: Math.round(f.dur * (it.box ? .75 : 1)), easing: f.ease, delay: t, fill: 'backwards' });
+    a.id = 'd-enter';
+    if (!it.box) { t += o.step != null ? o.step : f.step; n += 1; }
+  }
 }
 
-/* the panel comes in: its chrome settles first, then the content rises shelf by shelf */
+/* the panel comes in: its chrome settles first, the content deals in right behind it */
 function enterPanel(panel) {
   if (reduced() || !panel) return;
   const chrome = [':scope > .sh-banner', ':scope > .pm7-scm-context', ':scope > .pm-segtab', ':scope > .fm-toolbar-wrap']
     .map(s => panel.querySelector(s)).filter(visible);
   const f = spec();
-  cascade(chrome, { dy: f.wipe ? 0 : Math.max(2, Math.round(f.dy / 2)), step: Math.round(f.step * .7), durK: .8 });
+  cascade(chrome, { dy: f.wipe ? 0 : Math.max(2, Math.round(f.dy / 2)), step: Math.round(f.step * .6), durK: .8 });
   const jj = panel.querySelector(':scope > .pm7-scm-jj-view');
-  const content = (jj && visible(jj)) ? Array.from(jj.children) : paneItems(activePane(panel));
+  const list = (jj && visible(jj)) ? Array.from(jj.children).map(el => ({ el })) : dealList(activePane(panel));
   const foot = panel.querySelector(':scope > .pm7-scm-git-footer');
-  cascade(content.concat(visible(foot) ? [foot] : []), { delay: chrome.length * Math.round(f.step * .7) + 30, max: 12 });
+  if (visible(foot)) list.push({ el: foot });
+  deal(list, { delay: Math.round(f.step * 1.5) });
   const ico = panel.querySelector(':scope > .sh-banner > .sh-bico');
   if (ico && !f.wipe) {
     const k = fam() === 'retro' ? 'steps(4, end)' : 'cubic-bezier(.3, 1.6, .5, 1)';
@@ -68,11 +101,11 @@ function enterPanel(panel) {
   }
 }
 
-/* a tab change: the new pane slides in from the side of the tab you came from */
+/* a tab change: the new pane deals in from the side of the tab you came from */
 function enterPane(pane, dir) {
   if (reduced() || !pane) return;
   const f = spec();
-  cascade(paneItems(pane), { dx: f.wipe ? (dir < 0 ? -1 : 1) : dir * f.dx, dy: 0, max: 10, step: Math.round(f.step * .8) });
+  deal(dealList(pane), { dx: f.wipe ? (dir < 0 ? -1 : 1) : dir * f.dx, dy: 0, max: 12, step: Math.round(f.step * .8) });
 }
 
 /* an expander opens: its body's rows fade down into place, a beat after the height starts */
@@ -117,6 +150,17 @@ function applyCounts(root, animate) {
   });
 }
 
+/* an expander opened near the bottom of the list scrolls itself into view while it grows */
+function revealInView(item) {
+  const sc = item.closest('.sh-scroll');
+  if (!sc) return;
+  setTimeout(() => {
+    const ir = item.getBoundingClientRect(), sr = sc.getBoundingClientRect();
+    const over = ir.bottom - sr.bottom + 8;
+    if (over > 0) sc.scrollBy({ top: Math.min(over, Math.max(0, ir.top - sr.top - 40)), behavior: reduced() ? 'auto' : 'smooth' });
+  }, reduced() ? 0 : 120);
+}
+
 /* clicks: tabs and expanders get their motion after the shell has switched them */
 function onClickMotion(ev) {
   if (!D.on) return;
@@ -142,7 +186,7 @@ function onClickMotion(ev) {
     const item = head.closest('[data-acc]');
     requestAnimationFrame(() => {
       if (!item) return;
-      if (item.classList.contains('open')) { revealBody(item); stackHeads(item); midFitAll(item); }
+      if (item.classList.contains('open')) { revealBody(item); stackHeads(item); midFitAll(item); revealInView(item); }
     });
   }
 }

@@ -77,26 +77,41 @@ const PHRASES = [
 const metaWords = s => String(s || '').replace(/\b(\d+) ctr\b/g, (m, n) => n + (n === '1' ? ' container' : ' containers')).replace(/\bctr\b/g, 'containers');
 const OWNER = { All: 'All', Threads: 'Threads', Th: 'Threads', Orch: 'Orchestrator', Agents: 'Agents', Ag: 'Agents', Manual: 'Manual', Man: 'Manual' };
 
-/* ---- status: a glyph whose shape is the state; colour comes from data-d-st on the element ---- */
-const G = {
-  ok: '<path d="M3.6 8.4l2.8 2.8 6-6.4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>',
-  live: '<circle cx="8" cy="8" r="4" fill="currentColor"/>',
-  run: '<circle cx="8" cy="8" r="4" fill="currentColor"/>',
-  current: '<circle cx="8" cy="8" r="3.6" fill="currentColor"/><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".5"/>',
-  idle: '<circle cx="8" cy="8" r="4.2" fill="none" stroke="currentColor" stroke-width="1.6"/>',
-  pending: '<circle cx="8" cy="8" r="4.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="2.4 2"/>',
-  warn: '<path d="M8 2.7l5.5 9.7H2.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 6.6v2.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="10.9" r=".85" fill="currentColor"/>',
-  fail: '<circle cx="8" cy="8" r="5.4" fill="currentColor"/><path d="M6 6l4 4M10 6l-4 4" stroke="var(--surface, #fff)" stroke-width="1.6" stroke-linecap="round"/>',
-  blocked: '<circle cx="8" cy="8" r="5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4.6 11.4l6.8-6.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>',
-  stale: '<circle cx="8" cy="8" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 5.3V8l1.9 1.3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>',
-  unknown: '<circle cx="8" cy="8" r="5.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="1.6 1.8"/><path d="M6.6 6.7a1.5 1.5 0 1 1 2.1 1.4c-.5.2-.7.6-.7 1v.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="11" r=".8" fill="currentColor"/>',
-  info: '<circle cx="8" cy="8" r="5.2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 7.4v3.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="5.3" r=".85" fill="currentColor"/>',
-  conflict: '<path d="M4.2 3.8l7.6 8.4M11.8 3.8l-7.6 8.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
-  dirty: '<circle cx="8" cy="8" r="4.6" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="1.9" fill="currentColor"/>',
-  orphan: '<path d="M10.9 4.1A4.8 4.8 0 1 0 12.8 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12.6" cy="4.4" r="1.1" fill="currentColor"/>',
-  stash: '<rect x="4.6" y="4" width="2.2" height="8" rx=".5" fill="currentColor"/><rect x="9.2" y="4" width="2.2" height="8" rx=".5" fill="currentColor"/>',
+/* ---- status: a glyph whose shape is the state; colour comes from data-d-st on the element ----
+   One family on a 16-unit grid. Definite states are solid badges with the mark knocked out (done, failed, warning,
+   blocked, info, conflict); live things are a dot with a halo; stopped is a ring; pending is a dashed ring that
+   turns slowly; changed is a half-filled circle; a stash is a tray. Knock-outs are masks, so they show whatever
+   is behind the glyph (a shelf tint, a selected row) instead of a guessed surface colour. */
+let maskSeq = 0;
+const SOLID = {
+  ok:       { shape: '<circle cx="8" cy="8" r="6.5"/>', cut: '<path d="M5 8.3l2 2 4-4.4" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>' },
+  fail:     { shape: '<circle cx="8" cy="8" r="6.5"/>', cut: '<path d="M5.7 5.7l4.6 4.6M10.3 5.7l-4.6 4.6" stroke-width="1.7" stroke-linecap="round"/>' },
+  warn:     { shape: '<path d="M8 1.6c.5 0 .9.3 1.2.7l5.4 9.6c.6 1-.1 2.3-1.3 2.3H2.7c-1.2 0-1.9-1.3-1.3-2.3L6.8 2.3c.3-.4.7-.7 1.2-.7z"/>', cut: '<path d="M8 5.6v3.6" stroke-width="1.7" stroke-linecap="round"/><circle cx="8" cy="11.6" r="1" stroke="none" fill="#000"/>' },
+  blocked:  { shape: '<circle cx="8" cy="8" r="6.5"/>', cut: '<path d="M4.9 8h6.2" stroke-width="1.8" stroke-linecap="round"/>' },
+  info:     { shape: '<circle cx="8" cy="8" r="6.5"/>', cut: '<path d="M8 7.3v3.7" stroke-width="1.7" stroke-linecap="round"/><circle cx="8" cy="5" r="1" stroke="none" fill="#000"/>' },
+  conflict: { shape: '<path d="M8 1.2l6.8 6.8L8 14.8 1.2 8z" stroke-linejoin="round"/>', cut: '<path d="M6.1 6.1l3.8 3.8M9.9 6.1l-3.8 3.8" stroke-width="1.6" stroke-linecap="round"/>' },
 };
-const svgFor = st => '<svg viewBox="0 0 16 16" width="12" height="12" focusable="false" aria-hidden="true">' + (G[st] || G.info) + '</svg>';
+const G = {
+  live: '<circle cx="8" cy="8" r="6.4" fill="currentColor" opacity=".2"/><circle cx="8" cy="8" r="3.6" fill="currentColor"/>',
+  run: '<circle cx="8" cy="8" r="6.4" fill="currentColor" opacity=".2"/><circle cx="8" cy="8" r="3.6" fill="currentColor"/>',
+  current: '<circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="3" fill="currentColor"/>',
+  idle: '<circle cx="8" cy="8" r="5.2" fill="none" stroke="currentColor" stroke-width="1.7"/>',
+  pending: '<g class="d-spin"><circle cx="8" cy="8" r="5.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-dasharray="3.1 2.76" stroke-linecap="round"/></g>',
+  stale: '<circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 4.8V8l2.2 1.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>',
+  unknown: '<circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 1.8"/><path d="M6.5 6.5a1.6 1.6 0 1 1 2.2 1.5c-.5.2-.7.6-.7 1.1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="11.3" r=".9" fill="currentColor"/>',
+  dirty: '<circle cx="8" cy="8" r="5.6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 2.4a5.6 5.6 0 0 0 0 11.2z" fill="currentColor"/>',
+  orphan: '<path d="M11.4 3.6A5.6 5.6 0 1 0 13.6 8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="13.2" cy="4.1" r="1.3" fill="currentColor"/>',
+  stash: '<path d="M2.5 9.2l1.6-5.1c.2-.6.7-1 1.3-1h5.2c.6 0 1.1.4 1.3 1l1.6 5.1v2.6c0 .8-.6 1.4-1.4 1.4H3.9c-.8 0-1.4-.6-1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M2.6 9.2h3.1l.9 1.4h2.8l.9-1.4h3.1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>',
+};
+function svgFor(st) {
+  let body = G[st];
+  if (!body) {
+    const s = SOLID[st] || SOLID.info, id = 'dgm' + (++maskSeq);
+    body = '<defs><mask id="' + id + '" maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="16"><rect width="16" height="16" fill="#fff"/>'
+      + '<g stroke="#000">' + s.cut + '</g></mask></defs><g mask="url(#' + id + ')" fill="currentColor">' + s.shape + '</g>';
+  }
+  return '<svg viewBox="0 0 16 16" width="12" height="12" focusable="false" aria-hidden="true">' + body + '</svg>';
+}
 function glyph(st, pulse) {
   const s = PMR.h('span', { class: 'd-gl', 'aria-hidden': 'true', 'data-gl': st });
   s.innerHTML = svgFor(st);

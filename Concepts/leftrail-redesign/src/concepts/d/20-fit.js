@@ -69,6 +69,14 @@ function clearFit() {
 }
 /* a registry row whose state and account do not fit on one line puts the account on a third line */
 function stackRows(root) {
+  /* worktrees: the diff sits beside the branch when the whole branch name fits there, else under it */
+  root.querySelectorAll('.sh-wt-h').forEach(h => {
+    const b = h.querySelector(':scope > .sh-branch');
+    if (!b || !h.offsetWidth) return;
+    if (b._dFull != null && b.textContent !== b._dFull) b.textContent = b._dFull;
+    h.removeAttribute('data-d-stack');
+    if (b.scrollWidth > b.clientWidth) h.setAttribute('data-d-stack', '');
+  });
   root.querySelectorAll('[data-pane="registries"] .sh-ctr-h').forEach(h => {
     const m = h.querySelector('.sh-meta');
     if (!m || !h.offsetWidth) return;
