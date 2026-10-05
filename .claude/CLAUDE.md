@@ -77,3 +77,21 @@
 End with exactly one:
 - `<status>COMPLETE</status>`
 - `<status>BLOCKED</status>`
+
+<!-- agent-rules: start (managed by `agent-rules install` in the Cursor share Inbox folder; edits inside are overwritten) -->
+## GPU browser testing and recording
+
+Browser tests and test videos run on the Ubuntu VM's NVIDIA GPU. Read `/mnt/Cursor/Agent-Guides/gpu-recording.md` before your first one.
+
+- Record: `agent-browser start --record /abs/path.mp4 --url <url>`, drive it with Playwright `connectOverCDP(cdp_endpoint)`, finish with `agent-browser stop <id>`.
+- Headless: `agent-browser start --url <url>`, or launch Chrome yourself with `--enable-gpu` and `DISPLAY=:0 XAUTHORITY=/home/sittingmongoose/.Xauthority`: without both it silently renders on the CPU. Never use Playwright `recordVideo` or CPU screen recorders.
+- Limits for the whole VM: 5 recordings (3 while Jared streams with Moonlight), 8 browsers in all while anything records, 12 headless otherwise. Delete videos when done.
+
+## Extra worker agents
+
+For easy, spec-driven work you may start OMP or Muse workers on the VM: recipe in `/mnt/Cursor/Agent-Guides/extra-workers.md`.
+
+## Thread mailbox
+
+Coordinate with other agents through `pm-mail`, as your global CLAUDE.md or AGENTS.md describes (`pm-mail guide` prints the recipe).
+<!-- agent-rules: end -->

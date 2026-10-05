@@ -114,3 +114,21 @@ Use the repo skill `$pm-bootstrap-planning-ledger` when available. If skills are
 
 ### After the 2026-09-10 history rewrite
 - Every clone and worktree created before 2026-09-10 is stale and must not push. Recreate it from a fresh clone, or run `git fetch origin && git reset --hard origin/main` in the shared checkout and make a new worktree.
+
+<!-- agent-rules: start (managed by `agent-rules install` in the Cursor share Inbox folder; edits inside are overwritten) -->
+## GPU browser testing and recording
+
+Browser tests and test videos run on the Ubuntu VM's NVIDIA GPU. Read `/mnt/Cursor/Agent-Guides/gpu-recording.md` before your first one.
+
+- Record: `agent-browser start --record /abs/path.mp4 --url <url>`, drive it with Playwright `connectOverCDP(cdp_endpoint)`, finish with `agent-browser stop <id>`.
+- Headless: `agent-browser start --url <url>`, or launch Chrome yourself with `--enable-gpu` and `DISPLAY=:0 XAUTHORITY=/home/sittingmongoose/.Xauthority`: without both it silently renders on the CPU. Never use Playwright `recordVideo` or CPU screen recorders.
+- Limits for the whole VM: 5 recordings (3 while Jared streams with Moonlight), 8 browsers in all while anything records, 12 headless otherwise. Delete videos when done.
+
+## Extra worker agents
+
+For easy, spec-driven work you may start OMP or Muse workers on the VM: recipe in `/mnt/Cursor/Agent-Guides/extra-workers.md`.
+
+## Thread mailbox
+
+Coordinate with other agents through `pm-mail`, as your global CLAUDE.md or AGENTS.md describes (`pm-mail guide` prints the recipe).
+<!-- agent-rules: end -->
