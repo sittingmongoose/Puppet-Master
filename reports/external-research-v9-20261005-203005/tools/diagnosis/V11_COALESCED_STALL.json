@@ -1,0 +1,15 @@
+{
+  "schema": "er9.execution.framing-reproduction.v1",
+  "native_model_calls": 0,
+  "source_pins_sha256": "18112b71153533b27d1613c3fc67e9efd63b2a5ebb6adf08c8914750f2f276f3",
+  "initialize_replied": true,
+  "initialized_plus_tools_list_sent_in_one_flush": true,
+  "tools_list_replied_within_1_second": false,
+  "child_alive_during_stall": true,
+  "child_exit_after_original_deadline": 0,
+  "trailing_stdout_bytes": 0,
+  "stderr_bytes": 0,
+  "input_frame_sha256": "86f7774d08b3d7d2003604dcfd7173aca4265c48ebcbd778adb7d8e7618ba0a2",
+  "cause": "Buffered readline read-ahead consumes tools/list behind id-less notification; selector sees no more kernel input while buffered complete line remains.",
+  "original_code_unchanged": true
+}

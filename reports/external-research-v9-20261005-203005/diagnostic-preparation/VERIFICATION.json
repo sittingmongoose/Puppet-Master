@@ -1,0 +1,19 @@
+{
+  "schema": "er9.diagnostic-preparer-verification.v1",
+  "verified_utc": "2026-10-05T21:33:07.914083+00:00",
+  "mechanical_unit_tests": 13,
+  "test_exit_code": 0,
+  "live_original_pairs_prepared": 4,
+  "live_original_arm_packets": 8,
+  "seeded_diagnostic_DAGs": 28,
+  "candidate_seed_jobs_planned": 8,
+  "seed_max_occupied_seconds": 6300,
+  "GLM_standby_alternative_slots": 30,
+  "GLM_live_standby_pairs": 4,
+  "candidate_native_starts_by_preparer": 0,
+  "scored_comparisons_by_preparer": 0,
+  "semantic_research_PASS_claimed": false,
+  "actual_native_route_qualification_claimed": false,
+  "source_interpretation_by_Sol_supplied": false,
+  "cases_originals_changed": false
+}

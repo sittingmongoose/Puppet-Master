@@ -1,0 +1,111 @@
+{
+  "schema": "er9.mechanical-stage-diagnosis.v1",
+  "created_utc": "2026-10-05T21:40:39.409566+00:00",
+  "scope": "Budget/model-Goal completion/tool counter mechanics only. No candidate research text or source interpretation used. No old outcomes changed and no retry or new model run performed.",
+  "original_job": "I-01-treatment-research-a001",
+  "original_operational_outcome": "INCOMPLETE: cap_seconds with observed quiet",
+  "original_deadline_proof": {
+    "worker_birth_monotonic": 65048.383842862,
+    "absolute_deadline_monotonic": 66248.38384286201,
+    "allocation_seconds": 1200.0000000000073,
+    "native_work_cutoff_monotonic": 66218.38384286201,
+    "cleanup_reserve_seconds": 30,
+    "pause_request_elapsed_seconds": 1170.0,
+    "freeze_elapsed_seconds": 1175.7679753310003,
+    "unused_allocation_seconds": 24.23195334400225
+  },
+  "observed_close_sequence": {
+    "last_prepause_snapshot_elapsed_seconds": 1168.328,
+    "last_prepause_goal_status": "active",
+    "last_prepause_projection_status": "running",
+    "last_request_started_elapsed_seconds": 1092.581,
+    "pause_request_elapsed_seconds": 1170.0,
+    "last_request_failed_elapsed_seconds": 1170.156,
+    "main_turn_interrupted_elapsed_seconds": 1170.567,
+    "target_completion_verification_requests": 0,
+    "native_group_quiescent": true
+  },
+  "conclusion": "The predeclared native-work window was exhausted while a main request remained active. The host intentionally paused at original deadline minus the original cleanup reserve. The approximately 1175.77-second total is work cutoff plus actual teardown/capture/freeze, not a silently shortened 1200-second total envelope or an expanded cap. No observed natural completion/verifier race preceded the pause. Required saved artifacts alone do not establish native Goal completion.",
+  "control_comparator_sequence": {
+    "main_turn_success_elapsed_seconds": 1035.185,
+    "native_verifier_request_started_elapsed_seconds": 1035.429,
+    "native_verifier_request_completed_elapsed_seconds": 1073.341,
+    "goal_complete_observed_elapsed_seconds": 1075.588
+  },
+  "artifact_pathnames_only": {
+    "control": [
+      "final/leads.json",
+      "final/proposal.md",
+      "final/sources.json",
+      "final/witnesses.json",
+      "research/leads.json",
+      "research/proposal.md",
+      "research/sources.json",
+      "research/witnesses.json"
+    ],
+    "treatment": [
+      "critique/review.md",
+      "research/leads.json",
+      "research/proposal.md",
+      "research/sources.json",
+      "research/witnesses.json"
+    ]
+  },
+  "stage_scope_hypothesis": {
+    "status": "PLAUSIBLE_NOT_PROVEN_CAUSE",
+    "basis": "The frozen host-authored research task includes the common final paths and critique path as well as research paths. Filename-only inventory shows work saved under other stage directories. This does not prove why the candidate kept running or assess that content.",
+    "proposal": "Append a neutral current-role-only overlay prospectively and equally across matched successor arms. Preserve full brief/criteria/source access and declared bounds. Leave originals untouched.",
+    "proposal_pin": {
+      "path": "LAB_ROOT/dev/execution/STAGE_SCOPE_V2/PROPOSAL.json",
+      "sha256": "067f930de33b05cb3af0513ba27799487bfa3086160aa51f1f1732cc7b3c1aa6"
+    },
+    "neutral_fragment_pin": {
+      "path": "LAB_ROOT/dev/execution/diagnosis-I01-v1/NEUTRAL_TASK_SCOPE_FRAGMENTS.json",
+      "sha256": "c063c9a204fd3b325f2495fac45983d286698faafc3ffdd4891c7488f9202dc1"
+    }
+  },
+  "cost_observation": "Prefer exact native provider attempt field sums to conversation UI input baseline counters. Cache-read is already part of reported input; do not add it again. A cancelled row with null provider_total and zero placeholders does not attest zero accrued partial usage. Dollar billing remains unknown.",
+  "counter_exports": [
+    {
+      "path": "LAB_ROOT/dev/execution/diagnosis-I01-v1/C_STRUCTURAL_METRICS.json",
+      "sha256": "2525bf640765f8554c85e3a2c7c366b2d4ef684a96284354b0e2afb4312e83d7"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/diagnosis-I01-v1/T_STRUCTURAL_METRICS.json",
+      "sha256": "97fe3f9a53759b23fc2cce65b8e056746924cd9a6c334f26ee61e41c772aaee6"
+    }
+  ],
+  "counter_api": {
+    "path": "LAB_ROOT/dev/execution/structural_metrics.py",
+    "sha256": "0c6da113e5f98cc61d14f0c1ac8a83f6bd54dc2c588e96b06c85d9d20622704c"
+  },
+  "counter_regression": {
+    "path": "LAB_ROOT/dev/execution/test_structural_metrics.py",
+    "sha256": "54955f720109e52b0f33d7904a3f522c40b5243fc44a4cfa7efde6f1b1274f66",
+    "passed": true,
+    "count": 1
+  },
+  "receipt_refs": [
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-treatment-research-a001/native/receipt.json",
+      "sha256": "eeffaeebf3d0725d20b8fcb902066f5dde0b4faea564b9269df38d27577421e7"
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-treatment-research-a001/OUTPUT_FREEZE.json",
+      "sha256": "e84d6ebe150eb9c61797b22182d47d6e9f00f27f3c5e54639afed879ef98e5b5"
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-control-research-a001/native/receipt.json",
+      "sha256": "a4d4cc02668166da5a58ea684c937e83da7fcd83b285bdc37576ea16881860f1"
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-control-research-a001/OUTPUT_FREEZE.json",
+      "sha256": "3dfadfdbcc76c641b7bcd9ee8b8bdfd706a3235f6c15f3f1567a313246a9268e"
+    }
+  ],
+  "actions_taken": [
+    "Additive mechanical report and generic metrics only",
+    "Neutral prospective scope proposal",
+    "No canonical edits, existing candidate edits, grade changes, budget extension, native rerun or automatic retry"
+  ]
+}

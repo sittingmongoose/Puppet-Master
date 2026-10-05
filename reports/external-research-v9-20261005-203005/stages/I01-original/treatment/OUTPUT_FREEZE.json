@@ -1,0 +1,62 @@
+{
+  "schema": "er9.stage-output-freeze.v1",
+  "job_id": "I-01-treatment-research-a001",
+  "pair_id": "I-01",
+  "arm": "treatment",
+  "stage": "research",
+  "operational_complete": false,
+  "semantic_quality": "PENDING_INDEPENDENT_EVALUATION",
+  "native_status": "cap_seconds",
+  "native_quiescent": true,
+  "native_receipt": {
+    "path": "LAB_ROOT/ops/dispatcher/runs/I-01-treatment-research-a001/native/receipt.json",
+    "sha256": "eeffaeebf3d0725d20b8fcb902066f5dde0b4faea564b9269df38d27577421e7"
+  },
+  "pair_freeze": {
+    "path": "LAB_ROOT/ops/dispatcher/seals/I-01.json",
+    "sha256": "d524b61f1a49e745b6dc0534b742c7211dbd744bd75a1e867b2dc710bbd976b3"
+  },
+  "artifacts": [
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-treatment-research-a001/frozen-output/critique/review.md",
+      "relative_path": "critique/review.md",
+      "sha256": "c65ff790bb41251e45dd134e148d1d5551e2017a25011dc3d725caecc6a91df5",
+      "bytes": 7262
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-treatment-research-a001/frozen-output/research/leads.json",
+      "relative_path": "research/leads.json",
+      "sha256": "10ea0e9fed2139468a30cf8c3fd277d45cc8c7a4f4e27301ec204d2d3d8466f3",
+      "bytes": 3847
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-treatment-research-a001/frozen-output/research/proposal.md",
+      "relative_path": "research/proposal.md",
+      "sha256": "6fbd62a1545e2877acd298a9a5da247f115ac3427487e97bab0303f95aa83c92",
+      "bytes": 32936
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-treatment-research-a001/frozen-output/research/sources.json",
+      "relative_path": "research/sources.json",
+      "sha256": "32917cb0f969e448680747c59e0246e4e97530df3a3b1107020ff894f39455f4",
+      "bytes": 18824
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-treatment-research-a001/frozen-output/research/witnesses.json",
+      "relative_path": "research/witnesses.json",
+      "sha256": "a6f5c86f938c00223a8737176b09b395e74751398069eff992237b87a05bbc76",
+      "bytes": 7589
+    }
+  ],
+  "missing_required_artifacts": [],
+  "invalid_json_artifacts": [],
+  "elapsed_seconds": 1175.7679753310003,
+  "birth_epoch": 1791234629.5268512,
+  "birth_monotonic": 65048.383842862,
+  "end_monotonic": 66224.151889518,
+  "goal_session_id": "sess_f110e688-2e6b-4145-a8cb-04cd5f16dae9",
+  "goal_target_id": "target_muvqup8r_62a60155-de5f-4718-aaf9-8fd0a0e3bba1",
+  "native_goal_starts": 1,
+  "native_responses": 12,
+  "usage": "Exact native session receipt and redacted request attempts; no inferred dollars"
+}

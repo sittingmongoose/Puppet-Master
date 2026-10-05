@@ -1,0 +1,42 @@
+# ER9 prospective selection and capacity protocol 002
+
+Owner: `codex-er9-max`. This is a prospective operating rule accepted by root, not a candidate result, weighted rubric or extra approval gate. DECISIONS-001 remains immutable. No sealed confirmation brief, holdout coverage detail or live candidate output was read for this decision. Queue design status is not a claim about current running jobs.
+
+## Remaining Track B selections
+
+| Pair reservations | Contrast | Selection rule |
+|---|---|---|
+| I-05 / I-06 | V14 protected breadth and analogies | Root accepts V14 now as the discovery default. V15 is the eligible alternative if assessed development evidence distinguishes it before launch. Once a pair is frozen/launched its selection is unchanged. |
+| I-07 / I-08 | V08 two-stage completion | Root accepts V08 now as the lower-overhead default. V06/V16 remain eligible alternatives before launch if evidence supports them. Complete research/checking/repair/final duties remain required. |
+| I-09 / I-10 | Evidence-selected distinct contrast | Root selects one remaining method addressing a consequential uncertainty demonstrated by actual development comparisons. |
+| I-11 / I-12 | A second evidence-selected distinct contrast | Root selects a different remaining mechanism addressing another consequence or a meaningful quality/work trade-off. No factorial grid. |
+
+Case/ops owners may prepare the V14/V08 eight arms now; preparation is not a scored execution or route admission. Use the existing two development briefs, matched source access and the common criteria. All later integrated arms still start from the brief alone, independently select sources, investigate two useful independent precedents and a real issue/fix/test chain, compare the plan and deliver a complete current final. Do not supply findings/repositories from earlier arms as fresh-discovery answers.
+
+For the last two contrasts, use saved independent current-output assessments of completed matched comparisons: the same important checks in both arms, verified useful findings/novelty, corrections, new consequential errors, false dismissals, critical unresolved dependencies and required meaning delivered. Use scope-specific cost/latency as supporting evidence, including failures and unknowns. A completed failed screen is informative; two FAIL labels, raw links, tokens, tool counts or host unit tests are not a method comparison. Unequal/unassessed coverage limits the claimed advantage and is recorded.
+
+Select mechanisms with a concrete relationship to those observations and different factors from V01/V05/V14/V08. The remaining choices may concern units/domains, implementation paths, evidence order, critical dependency order, version binding, contradiction searches, retrieval, reuse, parallel seams or delivery. Prefer an actually informative tested contrast, but do not require both domains, every diagnostic, a whole-case PASS or a complete component certification before integrated execution. If all contrasts fail, choose the most defensible implementable next comparison with the observed failure and uncertainty stated. If only route failures/incomplete outputs exist, choose a technically implementable declared workflow at the same frozen budget and label its semantic basis unassessed; never pretend missing outputs are favorable evidence or idle confirmation awaiting qualification.
+
+Preserve method-specific interpretation: V09 charges both concurrent critics and requires two actual family slots; V13 includes legitimate cold seed and change costs and cannot be sold as cold-discovery savings; V06 requires actual strict generic assembly without Sol repair; V16 cannot shrink the required final. Every selection gets one compact rationale naming evidence, remaining uncertainty, exact factor, route/model/tools and allocations. Root/medium implement it under standing authority; no new Max stage review.
+
+## Confirmation lock and execution
+
+Lock two plausible one-family/one-account recipes from actual development evidence as soon as useful recipe evidence exists, and no later than the initial versions of all twelve integrated pairs reaching terminal states. Do not wait for all diagnostics, successor repairs, full coverage or a PASS. Terminal failed/incomplete/unavailable states supply honest limits rather than a reason to leave the locked block unused. Prefer actually exercised complete workflows; if none delivered a complete final, lock implementable prospective workflows and explicitly call the confirmations diagnostic, not presumed qualification.
+
+Choose one recipe for its best-supported substantive outcome and another for a meaningful lower-work/topology alternative or distinct supported mechanism. Do not infer interactions from component results: a new combination is an explicitly untested recipe. If choices are effectively identical, lock independent repeats or a meaningful ablation and disclose that scope.
+
+Freeze both recipes, competent matched controls, actual family/model/effort, full duties/stages, finite allocations, tools/config, common criteria, sealed brief identities/hashes and evaluator obligations before releasing any holdout detail. Use a currently safe route, including GLM when Luna/Muse remain unavailable. Each pair remains same-family; a family difference is not a within-model replication.
+
+Run C-01/C-02 (recipe 1 across H1/H2) and C-03/C-04 (recipe 2 across H1/H2): four genuine control/recipe pairs, eight full prospective pipelines. A failed first confirmation does not cancel or retune the others. Do not feed any confirmation output, evaluator correction, source conclusion, grade or developer adaptation into another locked candidate. Route/host failures and their costs remain recorded; any necessary successor has a new identity and cannot overwrite the locked attempt. Whole-case qualification still requires the actual independent assessment; selection is not qualification.
+
+## Rolling capacity and explicit replacements
+
+Continue ready dependent stages of admitted work so complete finals reach the reserved evaluator. Selection-relevant discovery and lower-overhead diagnostics can use the next useful free windows; the entire 32-diagnostic wave is not a prerequisite. After confirmation lock, give its four reserved pair windows priority over optional extras, speculative repairs and unselected research backlog. Do not interrupt owned live jobs merely to reorder the queue. Dispatch only as evaluator throughput and real service capacity support; UNKNOWN billing is not a stop rule.
+
+Honor at most two campaign GLM Goals and four Muse Goals, including stages/critics/retries and exposed child occupancy. Luna/Sol retain no campaign numerical ceiling. No account rotation, quota bypass or silent clock pause. Concurrent paired starts are preferred when capacity permits; otherwise counterbalance and record service/load differences. V09 may require serial arms on GLM because its treatment uses both slots.
+
+If Luna is not scored-safe when a needed diagnostic reaches admission, do not wait for that route to complete the campaign. Root may create an explicit GLM successor with a new pair ID such as `D-V14-A-GLM-R1`, linked to the exact original/current predecessor and common `source_slot`. Freeze both arms with the same actual GLM model/effort, legitimate fixed inputs, declared factor and matched finite budget. Preserve any Muse-to-Luna-to-GLM lineage. Record seed family/provenance; only equally supplied frozen diagnostic material may be reused, not another arm's discoveries or evaluator answers.
+
+An original unstarted allocation stays NOT_RUN/route-unavailable; an actual failed attempt stays failed and charged. Route canaries stay separate from substantive comparisons. Report 32 planned diagnostic slots separately from every original/successor attempt and family-specific assessed result. The GLM successor is GLM evidence, never a Luna observation. Before a replacement, observe/adopt or stop precisely owned earlier activity; never duplicate a job after a lost receipt. A later repaired route may join a genuinely useful declared comparison without silently changing a frozen running pair or imposing another campaign.
+
+Exact contract/queue pointers and hashes appear in `DECISIONS-002-evidence.json`; machine-readable defaults appear in `DECISIONS-002.json`. This protocol adds no candidate answers, scores, external writes or canonical changes.

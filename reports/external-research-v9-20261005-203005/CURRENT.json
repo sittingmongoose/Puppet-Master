@@ -1,37 +1,30 @@
 {
   "campaign_id": "external-research-v9-20261005-203005",
-  "snapshot_at": "2026-10-05T21:00:37.856646+00:00",
-  "source_updated_at": "2026-10-05T20:37:01.713104+00:00",
-  "cohort": "failure-inclusive-infrastructure-003",
-  "completed_pairs": {
-    "diagnostic_pairs_completed": 0,
-    "integrated_pairs_completed": 0,
-    "confirmation_pairs_completed": 0
-  },
-  "candidate_attempts_published": 2,
-  "scored_outputs_published": 0,
-  "actual_scored_families": [
+  "cohort": "research-stages-and-successors-004",
+  "publication_snapshot_at": "2026-10-05T21:47:35.178317+00:00",
+  "selection_scope": "Original I01 quiescent research stages; no later live outputs. Counts cover published frozen cohort, not present scheduler state.",
+  "research_stages_published": 2,
+  "operationally_complete_research_stages": 1,
+  "failed_research_stages": 1,
+  "independent_semantic_assessments": 0,
+  "whole_pipelines_completed": 0,
+  "matched_comparisons_completed": 0,
+  "actual_research_families": [
     "GLM"
   ],
   "best_supported_recipe": null,
-  "candidate_research_cost": null,
   "route_status": {
-    "GLM": "Operational acceptance v2 for pinned tool composition; no research quality claim",
-    "Luna": "Terminal tools002/005 HOLD; preactivation003 and metadata004 included; successors outside snapshot",
-    "Muse": "UNAVAILABLE_NATIVE_TOOL_AUTH_BOUNDARY; unchanged"
+    "GLM": "Operational route v2; source quality unassessed",
+    "Luna": "Synthetic client-dynamic010 READY; native-MCP002/005/008 HOLD unchanged; no scored result selected",
+    "Muse": "UNAVAILABLE_NATIVE_TOOL_AUTH_BOUNDARY"
   },
-  "reproduction_boundary": "Frozen prospective inputs + projected native receipts + generic boundary verification; native account replay not portable.",
-  "publication_snapshot_at": "2026-10-05T21:27:05.751203+00:00",
-  "completed_scored_pipelines_published": 0,
-  "completed_pairs_published": 0,
-  "route_goal_starts_published": {
-    "GLM": 2,
-    "Luna": 3,
-    "Muse": 0
-  },
-  "substantive_live_note": "Root reported two I01 GLM research Goal activations at 2026-10-05T21:10:25/29Z; no live outputs selected and no finished scored pipeline established by this cohort.",
-  "billed_dollars": "UNKNOWN",
-  "scored_stage_goal_starts_published": 2,
-  "scored_activation_snapshot": "activations/I01_ACTIVATION_ONLY_V1.json",
-  "present_liveness_claim": false
+  "luna010_dynamic_code_included": false,
+  "billing": "UNKNOWN",
+  "treatment_cancelled_partial_usage": "UNKNOWN",
+  "present_liveness_claim": false,
+  "targets": {
+    "diagnostic_pairs": 32,
+    "integrated_pairs": 12,
+    "confirmation_pairs": 4
+  }
 }

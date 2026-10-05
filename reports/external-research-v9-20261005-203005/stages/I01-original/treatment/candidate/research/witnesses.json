@@ -1,0 +1,128 @@
+{
+  "witness_version": "research-2026-10-05",
+  "labels": {
+    "executed_by_candidate": "code authored by this candidate and run in the isolated python_execute sandbox; receipts below are copied verbatim from the tool responses",
+    "unexecuted": "proposed check; labeled UNEXECUTED; no receipt exists"
+  },
+  "witnesses": [
+    {
+      "id": "W-1",
+      "name": "Coordinate precision, axis-order and unit normalization",
+      "status": "executed_by_candidate",
+      "execution_id": "exec-s4l1km59",
+      "completed_utc": "2026-10-05T21:20:30Z",
+      "code_sha256": "69da607bcac15d1dcfcf95731a713cfed04f8dbb8c6e1762e88d6e349eaf0da3",
+      "data_sha256": "c89a148be40e6752261e3038609a4b68de22fa3bfdaf32f884edffb8480b9bbe",
+      "exit_code": 0,
+      "stdout_sha256": "061c5f5a3c442c9d557e77cbfadca4ba52928ec788d69767596d927aa8983893",
+      "expected_justification": "Python float64 repr-based JSON round-trips exactly for values of this magnitude; IEEE-754 binary32 cannot represent 2**24+1; swapping y/x scales under anisotropic pixels must produce a large, detectable position error; 'px' is absent from the unit table so must be flagged.",
+      "key_results": {
+        "phys_um": [912.5, -11679.975, 74660.335],
+        "float64_json_roundtrip_exact": true,
+        "big_index_as_float32": 16777216.0,
+        "float32_lossy_for_big_index": true,
+        "correct_world_um": [3.5, 166.4, 580.5],
+        "swapped_yx_world_um": [3.5, 330.24, 292.5],
+        "swap_error_um": 331.3420371760879,
+        "unit_normalization": {"µm": "micrometer", "um": "micrometer", "micrometer": "micrometer", "micron": "micrometer", "nm": "nanometer", "mm": "millimeter", "px": null},
+        "unitless_flagged": true
+      },
+      "scope_limits": "Pure stdlib arithmetic/serialization in an isolated sandbox. Validates the storage choice (float64, unit table, axis-order test), NOT any shipped reader, viewer, or full application. A first attempt with the same logic (data passed via the harness 'data' parameter) errored with exit 1 (execution receipt in session log) because the parameter arrived as a string; the check was re-run self-contained and is what is receipted here.",
+      "supports_claims": ["4.2 precision rules", "4.2 unit handling", "13 sources S11 axes/units"]
+    },
+    {
+      "id": "W-2",
+      "name": "Bounded tile-cache arithmetic for the 3 GB envelope; zarr chunk-key forms",
+      "status": "executed_by_candidate",
+      "execution_id": "exec-fq_n957l",
+      "completed_utc": "2026-10-05T21:20:14Z",
+      "code_sha256": "c1534286c0191e3d544b54f740dc2ecf0c22affec77c584702d07210f79d81dc",
+      "exit_code": 0,
+      "stdout_sha256": "2e1e4b429165b03e5f6427f0f81c92ce6ff5b4c2e74a438ec988b283ce04f403",
+      "expected_justification": "For 2048x2048x366 uint16 (~2.86 GiB), 256x256 uint16 tiles give 128 KiB tiles, 64 per plane; 128-tile LRU (16 MiB) plus one displayed plane (8 MiB) is ~24 MiB, far below 16 GiB and ~0.8% of a second full copy.",
+      "key_results": {
+        "source_bytes": 3070230528,
+        "source_GiB": 2.859,
+        "tile_bytes": 131072,
+        "tiles_per_z_plane": 64,
+        "tiles_in_volume": 23424,
+        "lru_cache_bytes": 16777216,
+        "displayed_plane_bytes": 8388608,
+        "working_set_MiB": 24.0,
+        "budget_fraction_of_16GiB": 0.001465,
+        "working_set_vs_second_copy_ratio": 0.008197,
+        "zarr_v2_chunk_key_dotted": "0/2.1.7.13.29",
+        "zarr_nested_path_style": "0/2/1/7/13/29",
+        "chunk_reads_per_plane_pan": 64,
+        "bytes_read_per_plane_pan_MiB": 8.0
+      },
+      "scope_limits": "Arithmetic only; ignores decode buffers, GPU textures, interpreter overhead, and 3-D chunk shapes. Which chunk-path form applies (dotted vs nested) is adapter-config dependent and must be verified against real .zarray files (U-3). Does not demonstrate any real reader meeting the envelope.",
+      "supports_claims": ["5.4 envelope analysis", "6.4 no-second-copy claim"]
+    },
+    {
+      "id": "W-3",
+      "name": "Atomic save / interrupted save / failed export recovery (temp + fsync + os.replace)",
+      "status": "executed_by_candidate",
+      "execution_id": "exec-9p6o53cz",
+      "completed_utc": "2026-10-05T21:20:14Z",
+      "code_sha256": "bc2ecee1e35925d29f43ee748f0fae403e2cc9b8d965b0e66aa60f7dccfba9de",
+      "exit_code": 0,
+      "stdout_sha256": "77257e8e46ee4bffb0412dcf72fdb1f69339386a994c976bb9eab9552ed020a5",
+      "expected_justification": "POSIX rename(2) atomically replaces an existing target (man7 S15); writing to a same-directory temp then replacing therefore leaves the prior file intact if the replace never happens, and the temp is recoverable.",
+      "key_results": {
+        "after_clean_save": true,
+        "no_tmp_left_after_clean_save": true,
+        "interrupted_save_original_intact": true,
+        "interrupted_save_tmp_present": true,
+        "tmp_recoverable_content": true,
+        "recovered_content": true,
+        "failed_export_target_untouched": true,
+        "failed_export_cleaned_tmp": true
+      },
+      "scope_limits": "Single file, local tmpfs/ext-class filesystem, POSIX; does NOT prove crash during rename, multi-file atomicity, or NFS behavior (man7 rename BUGS explicitly cautions on NFS). Component check, not application behavior.",
+      "supports_claims": ["6.1 atomic save protocol"]
+    },
+    {
+      "id": "U-1",
+      "name": "Embedded-napari 3 GB bounded-access RSS measurement",
+      "status": "unexecuted",
+      "why": "requires a desktop/Qt/GPU environment and a real zarr-backed 3 GB volume; sandbox has neither",
+      "method_if_run": "embed napari QtViewer, back a synthetic 2048x2048x366 uint16 volume with zarr, pan through all z while sampling process RSS and GPU-mem if available; assert working set << 1 GiB and no full-array materialization (guard by wrapping the store to fail on full reads)"
+    },
+    {
+      "id": "U-2",
+      "name": "Interrupted OME-Zarr write -> recovery scan",
+      "status": "unexecuted",
+      "why": "requires zarr library in the execution sandbox",
+      "method_if_run": "kill a chunked write midway; reopen; verify all-or-nothing per chunk, detectable torn group, and recovery to last consistent manifest"
+    },
+    {
+      "id": "U-3",
+      "name": "dimension_separator / chunk-path inventory on the lab's real NGFF files",
+      "status": "unexecuted",
+      "why": "requires the team's real instrument exports",
+      "method_if_run": "for each real .zarr, read .zarray (and .zmetadata), record dimension_separator, verify the adapter's key builder matches disk layout"
+    },
+    {
+      "id": "U-4",
+      "name": "Journal corruption recovery test (truncate-to-last-good-record)",
+      "status": "unexecuted",
+      "why": "belongs to M1 implementation with the journal code",
+      "method_if_run": "append garbage/partial records to a valid journal; open; assert truncation to last checksummed record and zero silent loss"
+    },
+    {
+      "id": "U-5",
+      "name": "Pinned tifffile golden-metadata corpus",
+      "status": "unexecuted",
+      "why": "requires package install (outside sandbox isolation)",
+      "method_if_run": "fix tifffile==2026.9.20; run per-instrument corpus; compare axes/units/shapes/dtypes to goldens on every bump"
+    },
+    {
+      "id": "U-6",
+      "name": "Export round-trip coordinate equality",
+      "status": "unexecuted",
+      "why": "requires the M3 export code",
+      "method_if_run": "export table, re-import, compare sample coords within 1e-9 and physical coords within 1e-6 um against journal originals"
+    }
+  ]
+}

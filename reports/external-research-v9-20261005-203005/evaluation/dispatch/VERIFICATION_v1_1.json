@@ -1,0 +1,19 @@
+{
+  "schema": "er9.dispatch-v1.1-verification.v1",
+  "tested_utc": "2026-10-05T21:36:25.049417Z",
+  "scope": "synthetic mechanics only, no actual candidate output read",
+  "passed_checks": [
+    "one real final exact bytes plus terminal missing partner",
+    "missing partner operational FAIL with quality UNASSESSED",
+    "failure cause/arm history excluded",
+    "pending partner rejected before packet write",
+    "original v1 builder hash unchanged"
+  ],
+  "source_pins": {
+    "build_blind_packet_v1_1.py": "36685482e7c8e1c7846a7378d318c20b5c0fdb61bd285f202252ff5c46bea6d1",
+    "INTERFACE_ADDENDUM_v1_1.md": "9311857634271f3ab54718f0113621a65b03d33fdeb336bd1879f52942afb026",
+    "I01_TASK_BINDING_v1_1.json": "fc0c9d1801ddcd86efadaa30b3923a44b14ea02f4b5094c65b4dbe343ddce838"
+  },
+  "semantic_assessment": "NOT_STARTED",
+  "original_I01_budget_unchanged": true
+}

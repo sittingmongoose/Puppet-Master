@@ -1,0 +1,66 @@
+{
+  "schema": "er9.luna.ready-public-selection.v1",
+  "owner_frozen": true,
+  "readiness": {
+    "schema": "er9.luna.route-status.v1",
+    "status": "READY",
+    "scope": "safe route availability for prospectively frozen finite native Luna assignments; no case quality claim",
+    "family": "GPT-6 Luna",
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "model_fallback": false,
+    "native_goal": "thread/goal/set|get (persisted app-native /goal); genuine automatic continuation",
+    "binding": "app-server dynamicTools namespace + item/tool/call; confined generic MCP APIs behind trusted client relay",
+    "entrypoint": "dynamic_stage_runner.py",
+    "pin_file": "PIN.json",
+    "pin_sha256": "91b8c0246b724d48ee0b4e8c483c9f0c3fd5879b640b3b8ffaf51b4d93155b69",
+    "safe_client_tools": {
+      "pm_boundary": [
+        "mechanical",
+        "public_https_get",
+        "read_file",
+        "write_file"
+      ],
+      "pm_execution": [
+        "python_execute"
+      ]
+    },
+    "native_mcp_servers": [],
+    "parent_response_cap": null,
+    "parent_response_count": "UNKNOWN",
+    "http_attempt_count": "UNKNOWN",
+    "candidate_create_goal_preventive_denial": "UNESTABLISHED",
+    "goal_identity_replacement": "observed replacement invalidates run and stops under original deadline",
+    "historical_native_mcp_lane": "HOLD002/005/008 unchanged; catalogue/startup success did not imply tool dispatch success",
+    "canary": {
+      "label": "er9-luna-client-canary-010",
+      "thread_id": "01a10e01-529e-7f02-bfce-eeed325a246e",
+      "actual_goal_activations": 1,
+      "native_turns_started": 2,
+      "native_turns_completed": 2,
+      "host_initial_turns": 1,
+      "host_followups": 0,
+      "elapsed_seconds": 53.230523804,
+      "usage_totals": {
+        "inputTokens": 133365,
+        "cachedInputTokens": 98816,
+        "outputTokens": 2024,
+        "reasoningOutputTokens": 871,
+        "totalTokens": 135389
+      },
+      "all_five_tool_types_executed": true,
+      "semantic_witness": "CANARY_010_WITNESS.json",
+      "native_cgroup_quiet": true,
+      "client_tool_cgroups_quiet": true,
+      "execution_units_quiet": true
+    }
+  },
+  "source_refs": {
+    "pin_sha256": "91b8c0246b724d48ee0b4e8c483c9f0c3fd5879b640b3b8ffaf51b4d93155b69",
+    "metadata009_sha256": "088f910c1e07db1df9a060e4bf57ab4a0a72d1af828307f30ecfd141a5c6bf9a",
+    "canary010_sha256": "8df4b22f8f8f453eef98a96ee6a5cec479625efd997c1f96215d64a1a5b559a8",
+    "witness_sha256": "42cdb7bcbb1304361e36f06f799228b3c012f0e4fd587d326f5a01491fa53164",
+    "prospective_runtime_snapshot_sha256": "3debd2953a3b0a545131196ac631b918ce332c9fb9aa1b49ae74499de7398f96",
+    "readme_sha256": "f20cd53e823ceacc1b5e56c8b48edec8f0c6720be0f01453d0b8c7c87f44f40f"
+  }
+}

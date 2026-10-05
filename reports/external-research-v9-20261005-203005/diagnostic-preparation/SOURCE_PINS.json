@@ -1,0 +1,25 @@
+{
+  "schema": "er9.diagnostic-preparer-pins.v1",
+  "created_utc": "2026-10-05T21:33:07.914321+00:00",
+  "files": {
+    "LAB_ROOT/dev/diagnostic-runner/ADMISSION_OVERLAY_01.json": "ef3d0811d12bd0c7cc1e6ae8dd3d80ffdf4045a6e8219505ebb0097530ddd803",
+    "LAB_ROOT/dev/diagnostic-runner/README.md": "0522c98cadc4e9abc2e8a8cae3b6761a552c848f536eaeb762020a17c7469c08",
+    "LAB_ROOT/dev/diagnostic-runner/SEED_MANIFEST_CONTRACT.md": "b60c1d31a0b6ad57672d33ea00af4eb3cd5087f3fabdf3325cf6efc43672ef4a",
+    "LAB_ROOT/dev/diagnostic-runner/VERIFICATION.json": "e36f01a042bd844b89c9200e325bb98b5c13c4af267999a64c79e48a01dd23d8",
+    "LAB_ROOT/dev/diagnostic-runner/alternatives/STANDBY_SELECTION.json": "1e3e542ab021ed9b86ec8da1e65481e9318491f262bca1229e8e7e6194f14863",
+    "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/LIVE_STANDBY_OUTBOX.json": "84ac76cb0a06e8d034a2cb99c84b5c5e2003eb6588c1d9cb34852c7d5720a4d4",
+    "LAB_ROOT/dev/diagnostic-runner/bind_seeded.py": "3d320a18db3ad01338c069e25dc4bb059be35255d8ba6be702be59c00f4a2c36",
+    "LAB_ROOT/dev/diagnostic-runner/exact_assembly.py": "3af2177da77b483fccb43ec355501a1319e95c238cf29431e2c51592dd476721",
+    "LAB_ROOT/dev/diagnostic-runner/plan_seeded.py": "ec57249658f67d59bce2338c775280485e315c71ce8d508a7ca7c31896e54b50",
+    "LAB_ROOT/dev/diagnostic-runner/prepare.py": "48ff881c11fd89c12d9ce6c6f24790bb34956f970aa55575644ae2cbdf03d6cb",
+    "LAB_ROOT/dev/diagnostic-runner/prepare_glm_standby.py": "26065f74c5b0df493902770f2982892f21bb4a0743453376979192d7219acd9c",
+    "LAB_ROOT/dev/diagnostic-runner/prepared/LIVE_OUTBOX_R002.json": "75ad700223679c79ab79d2ccd3e0b574dede59cbeb87b07ef6ce71c5f489bc27",
+    "LAB_ROOT/dev/diagnostic-runner/seeded/DAG_OUTBOX.json": "273c2aea30ba9b6068a61a6bc7ab860cc35bfe027939875e2a9bb51202e4f853",
+    "LAB_ROOT/dev/diagnostic-runner/seeded/SEED_JOBS.json": "a9598c20ce6258c4cf025149bc29e5131dd5d4ef26975b409b9543ec2ea6a27e",
+    "LAB_ROOT/dev/diagnostic-runner/seeded/SEED_REGISTRATION_OUTBOX.json": "9f20e569ebfde14650a4f6fd829331cf802df63932cc39fe2399e456d2a57b98",
+    "LAB_ROOT/dev/diagnostic-runner/test_preparation.py": "1ccb1de4d9bd7f25dd07b22c4c9f50a9cb50be64890fce785525bfa198c3f437"
+  },
+  "candidate_semantic_output_included": false,
+  "sealed_holdout_details_included": false,
+  "publication_selection": "Code/contracts/neutral prepared input/request paths only; exclude any later authentic candidate source captures/output and evaluator evidence unless separately selected after output freeze."
+}

@@ -1,0 +1,5 @@
+# Neutral prospective diagnostic preparation
+
+The pinned code and 13 mechanical tests perform packet preparation only, with zero native candidate starts or semantic PASS. The compact `NEUTRAL_INPUT_BUNDLE.json` maps 389 exact owner-selected source locators to 272 unique text contents, preserving original r001/r002 and Luna-to-GLM standby lineage, authentic seed-job DAG prompts and I05–I08 prospective default inputs. All remain NOT_RUN/PREPARED_NOT_ADMITTED in this preparation snapshot.
+
+Look up an original locator in `locators`, then use its `content_key` in `contents`. Text contains normalized `LAB_ROOT/` labels; original SHA-256 values identify external original bytes, not the normalized text. No runtime workspaces, authentic candidate seed findings, sealed holdout details or evaluator answers are included. `PUBLICATION_SELECTION_001.json` supplies the exact positive owner selection. Reconstruction requires the declared lab paths and actual native route setup; this bundle does not claim portable native replay.

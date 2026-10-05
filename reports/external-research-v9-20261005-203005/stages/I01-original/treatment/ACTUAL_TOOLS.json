@@ -1,0 +1,24 @@
+{
+  "tool_allowlist": [
+    "mcp__pm_boundary__read_file",
+    "mcp__pm_boundary__write_file",
+    "mcp__pm_boundary__mechanical",
+    "mcp__pm_boundary__public_https_get",
+    "mcp__pm_execution__python_execute"
+  ],
+  "source_identity": "ER8 exact copied HTTPS capture; see SOURCE_PINS.json",
+  "execution_enabled": true,
+  "external_stage_supervisor_required": true,
+  "original_config_sha256": "74745987a2d97d7809d5c19e6433aa0a34024540bf3c11c6c9812dcd80076c92",
+  "tool_boundary_source": "tools/versions/v1.1/SOURCE_PINS.json",
+  "original_bounds": {
+    "max_seconds": 1200,
+    "max_responses": 120,
+    "required_artifacts": [
+      "out/research/proposal.md",
+      "out/research/sources.json",
+      "out/research/witnesses.json",
+      "out/research/leads.json"
+    ]
+  }
+}

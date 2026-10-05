@@ -1,0 +1,42 @@
+{
+  "schema": "er9.prospective-stage-scope-overlay.v2",
+  "status": "PROPOSED_FOR_ROOT_SUCCESSOR_DECISION_NOT_APPLIED",
+  "hypothesis": "Common whole-pipeline final/critique artifact instructions within a research Goal may cause work outside its assigned stage. This is not proven to be the cause of the I01 timeout.",
+  "observed_primary_failure": "The original 1170-second native-work window ended with a main request still running; no natural completion or verifier race was observed.",
+  "unchanged": [
+    "brief",
+    "coverage dimensions",
+    "source eligibility",
+    "required quality",
+    "1200/900/600 original stage allocations",
+    "original outcomes and grades",
+    "original current active jobs"
+  ],
+  "application": "Append exactly one relevant role overlay at the end of a prospectively frozen successor task, equally across matched arms. Host keeps later stages as fresh native Goals. Root chooses successor identity; no launch by this proposal.",
+  "files": [
+    {
+      "path": "LAB_ROOT/dev/execution/STAGE_SCOPE_V2/RESEARCH_SCOPE.md",
+      "sha256": "13271842d880307220b676e8ab81a8de91af89beb32fd00996eeb61f8f10c6e5"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/STAGE_SCOPE_V2/CRITIC_SCOPE.md",
+      "sha256": "67946510ffcb14d0399ad8006a0eb46dd9e55bdc4d499096ce052246edc40b16"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/STAGE_SCOPE_V2/FINAL_AUTHOR_SCOPE.md",
+      "sha256": "fcc664dd8d22e55fb1cd8082cf898b001c274a7ce1da260dd710a60f3b713feb"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/STAGE_SCOPE_V2/V05_REVISION_SCOPE.md",
+      "sha256": "eb0d09776c5e9f0cbb94aa4988cd3164b4ed51214dabcfa90aff55ffc2236456"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/STAGE_SCOPE_V2/V05_FLASH_SCOPE.md",
+      "sha256": "c4bbf0fa5aeafbca8adae5558957ff958a76453fecd1b288a74647789e6c91eb"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/STAGE_SCOPE_V2/V05_FINAL_RESOLUTION_SCOPE.md",
+      "sha256": "e8c4c6236f34490d22cf47918e5ede001f74f738613c3daf2e3c3ba6b6a0d173"
+    }
+  ]
+}

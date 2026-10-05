@@ -1,0 +1,20 @@
+{
+  "schema": "er9.tools.framing-erratum.v1",
+  "created_utc": "2026-10-05T21:36:24.355575+00:00",
+  "affected_implementation": "execution MCP buffered readline plus kernel selector in immutable v1/v1.1",
+  "direct_causal_reproduction": {
+    "path": "dev/tools/diagnosis/V11_COALESCED_STALL.json",
+    "sha256": "ec519486b4bfaf79597d50ea4342c0ce4c4a0c4b2c029b43121ac5ddcf255fb1",
+    "initialize_replied": true,
+    "following_coalesced_initialized_notification_and_tools_list_stalled": true,
+    "child_alive": true,
+    "original_deadline_still_enforced": true
+  },
+  "fix": "v1.2 nonblocking os.read into bounded explicit newline frame buffer; drain complete frames before polling kernel readiness.",
+  "original_source_mcp_changed": false,
+  "native_transport_closed_failures_regraded": false,
+  "causal_scope": "Proves execution MCP coalesced-frame stall in direct persistent stdio and client relay smoke. Does not establish the cause of all prior Luna native pm_boundary Transport closed failures.",
+  "candidate_model_calls": 0,
+  "tools_or_privileges_added": false,
+  "older_versions_and_failures_preserved": true
+}

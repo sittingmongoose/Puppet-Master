@@ -1,0 +1,316 @@
+{
+  "schema": "er9.structural-stage-metrics.v1",
+  "job_id": "I-01-treatment-research-a001",
+  "source_scope": "Exact supplied stage files only; no recursive runtime scan, candidate text, tool arguments or source interpretation emitted",
+  "native_terminal": "cap_seconds",
+  "native_quiescent": true,
+  "native_ui_usage": {
+    "sessionId": "sess_f110e688-2e6b-4145-a8cb-04cd5f16dae9",
+    "totalTokens": 296163,
+    "inputTokens": 243026,
+    "outputTokens": 53137,
+    "reasoningTokens": 0,
+    "cacheCreationTokens": 0,
+    "cacheReadTokens": 0,
+    "modelRequestCount": 13,
+    "modelErrorCount": 0,
+    "inputBaselineBySource": {
+      "main_turn": 0
+    }
+  },
+  "native_ui_usage_definition": "Conversation UI usage includes input-baseline behavior. Do not treat as repeated-request inclusive input total.",
+  "request_status_counts_post_cleanup": {
+    "model_request_completed": 12,
+    "model_request_failed": 1
+  },
+  "request_statuses_post_cleanup": {
+    "21601952-d420-4468-abbb-88987c2004b9": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 198.011158
+    },
+    "d907c5bd-54fd-4141-8c9e-cc2a5bdbdd00": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 241.482465
+    },
+    "c5f5088a-c1fb-41db-ab73-acb1af42b704": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 276.034955
+    },
+    "7c8a14f9-2281-4dd8-8f35-477ffb825931": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 339.576605
+    },
+    "1ec119e2-cc1b-49b8-9dc5-12cac31234a5": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 365.384094
+    },
+    "efe559aa-714e-4e7a-9c25-ab6b69db6af6": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 400.367468
+    },
+    "b740a28c-78d0-42ea-a5ad-5739328a3ec0": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 451.712223
+    },
+    "c0d75ccb-e88e-4c5e-bf61-6c71e9a2d05c": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 581.992728
+    },
+    "0ce94470-c8b0-491d-b01d-253ffd710270": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 600.671826
+    },
+    "9f68cbdc-681d-4602-acde-a2d31a117a51": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 866.895918
+    },
+    "137ed832-fd57-4962-9e07-4badac0de185": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 1007.524465
+    },
+    "18816e58-acd5-4938-8597-eda3f27a2899": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 1091.074335
+    },
+    "d3e6650c-9671-4f8d-97e2-454f60d9bfe4": {
+      "status": "model_request_failed",
+      "last_observed_elapsed_seconds": 1170.155555
+    }
+  },
+  "native_goal_calls": [
+    {
+      "elapsed_seconds": 4.247138,
+      "action": "set"
+    },
+    {
+      "elapsed_seconds": 1170.000134,
+      "action": "pause"
+    }
+  ],
+  "last_structural_snapshots": [
+    {
+      "elapsed_seconds": 1152.827171,
+      "goal_status": "active",
+      "projection_status": "running",
+      "active_tool_count": 0,
+      "pending_native_requests": 0
+    },
+    {
+      "elapsed_seconds": 1155.487333,
+      "goal_status": "active",
+      "projection_status": "running",
+      "active_tool_count": 0,
+      "pending_native_requests": 0
+    },
+    {
+      "elapsed_seconds": 1158.023534,
+      "goal_status": "active",
+      "projection_status": "running",
+      "active_tool_count": 0,
+      "pending_native_requests": 0
+    },
+    {
+      "elapsed_seconds": 1160.598792,
+      "goal_status": "active",
+      "projection_status": "running",
+      "active_tool_count": 0,
+      "pending_native_requests": 0
+    },
+    {
+      "elapsed_seconds": 1163.248164,
+      "goal_status": "active",
+      "projection_status": "running",
+      "active_tool_count": 0,
+      "pending_native_requests": 0
+    },
+    {
+      "elapsed_seconds": 1165.778677,
+      "goal_status": "active",
+      "projection_status": "running",
+      "active_tool_count": 0,
+      "pending_native_requests": 0
+    },
+    {
+      "elapsed_seconds": 1168.327931,
+      "goal_status": "active",
+      "projection_status": "running",
+      "active_tool_count": 0,
+      "pending_native_requests": 0
+    },
+    {
+      "elapsed_seconds": 1171.775663,
+      "goal_status": "paused",
+      "projection_status": "idle",
+      "active_tool_count": 0,
+      "pending_native_requests": 0
+    }
+  ],
+  "turn_terminal_events": [
+    {
+      "elapsed_seconds": 4.603523,
+      "status": "success",
+      "duration_ms": 0
+    },
+    {
+      "elapsed_seconds": 1170.56704,
+      "status": "interrupted",
+      "duration_ms": 1165777
+    }
+  ],
+  "telemetry_event_counts": {
+    "turn.started": 2,
+    "turn.terminal": 2,
+    "model.request.status": 26,
+    "stream.chunk": 29726,
+    "usage.delta": 12,
+    "tool.lifecycle": 117
+  },
+  "tool_lifecycle_counts": {
+    "mcp__pm_boundary__public_https_get": {
+      "scheduled": 26,
+      "started": 26,
+      "completed": 26
+    },
+    "mcp__pm_boundary__read_file": {
+      "scheduled": 4,
+      "started": 4,
+      "completed": 4
+    },
+    "mcp__pm_execution__python_execute": {
+      "scheduled": 4,
+      "started": 4,
+      "completed": 4
+    },
+    "mcp__pm_boundary__write_file": {
+      "scheduled": 5,
+      "started": 5,
+      "completed": 5
+    }
+  },
+  "tool_lifecycle_semantics": "Completed means invocation terminal; not necessarily success. Use explicit prepared-result is_error separately.",
+  "source_tool_operations": 35,
+  "source_tool_error_operations": 1,
+  "source_tool_error_counts": {
+    "public_https_get": 1
+  },
+  "repeated_error_fingerprints": [],
+  "invalid_argument_error_count": null,
+  "invalid_argument_error_definition": "Unknown: captured structural is_error does not expose an error class; HTTP/source failure and invalid argument are not silently conflated.",
+  "execution_operations": [
+    {
+      "execution_id": "exec-9p6o53cz",
+      "execution_label": "executed by candidate",
+      "actor": "candidate",
+      "exit_code": 0,
+      "elapsed_seconds": 0.24304991798999254,
+      "cleanup_confirmed": true,
+      "unit_active_state_after_stop": "inactive"
+    },
+    {
+      "execution_id": "exec-fq_n957l",
+      "execution_label": "executed by candidate",
+      "actor": "candidate",
+      "exit_code": 0,
+      "elapsed_seconds": 0.2185797100100899,
+      "cleanup_confirmed": true,
+      "unit_active_state_after_stop": "inactive"
+    },
+    {
+      "execution_id": "exec-ru78218x",
+      "execution_label": "executed by candidate",
+      "actor": "candidate",
+      "exit_code": 1,
+      "elapsed_seconds": 0.24659522699948866,
+      "cleanup_confirmed": true,
+      "unit_active_state_after_stop": "inactive"
+    },
+    {
+      "execution_id": "exec-s4l1km59",
+      "execution_label": "executed by candidate",
+      "actor": "candidate",
+      "exit_code": 0,
+      "elapsed_seconds": 0.17941291000170168,
+      "cleanup_confirmed": true,
+      "unit_active_state_after_stop": "inactive"
+    }
+  ],
+  "execution_nonzero_exits": 1,
+  "provider_attempt_rows": 13,
+  "provider_attempt_status_counts": {
+    "completed": 12,
+    "cancelled": 1
+  },
+  "provider_query_source_counts": {
+    "main_turn": 13
+  },
+  "provider_attempt_field_sums": {
+    "input_tokens": 1737174,
+    "output_tokens": 53137,
+    "reasoning_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 1493824,
+    "provider_total_tokens": 1790311,
+    "computed_total_tokens": 1790311
+  },
+  "provider_attempt_null_counts": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "reasoning_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "provider_total_tokens": 1,
+    "computed_total_tokens": 0
+  },
+  "provider_counter_definitions": "Sum each exported field across individual native attempts, including native verifier. Input includes provider-reported cached input; do not add cache-read again. provider_total and computed_total are alternatives, not summands. Tokens are not dollars.",
+  "cancelled_usage_unknown": true,
+  "cancelled_usage_definition": "Zero-filled cancelled row is not proof of no consumed usage. Provider total null and unexposed partial streaming usage remain unknown.",
+  "usage_delta_event_counts_by_request": {
+    "21601952-d420-4468-abbb-88987c2004b9": 1,
+    "d907c5bd-54fd-4141-8c9e-cc2a5bdbdd00": 1,
+    "c5f5088a-c1fb-41db-ab73-acb1af42b704": 1,
+    "7c8a14f9-2281-4dd8-8f35-477ffb825931": 1,
+    "1ec119e2-cc1b-49b8-9dc5-12cac31234a5": 1,
+    "efe559aa-714e-4e7a-9c25-ab6b69db6af6": 1,
+    "b740a28c-78d0-42ea-a5ad-5739328a3ec0": 1,
+    "c0d75ccb-e88e-4c5e-bf61-6c71e9a2d05c": 1,
+    "0ce94470-c8b0-491d-b01d-253ffd710270": 1,
+    "9f68cbdc-681d-4602-acde-a2d31a117a51": 1,
+    "137ed832-fd57-4962-9e07-4badac0de185": 1,
+    "18816e58-acd5-4938-8597-eda3f27a2899": 1
+  },
+  "usage_delta_semantics": "Raw observed events only. Do not assume repeated events are independent incremental amounts without their native definition.",
+  "input_receipts": [
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-treatment-research-a001/native/receipt.json",
+      "sha256": "eeffaeebf3d0725d20b8fcb902066f5dde0b4faea564b9269df38d27577421e7"
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-treatment-research-a001/native/protocol.redacted.jsonl",
+      "sha256": "69224866073e2b2ad780be106a31e4dfeaed8150225c88d78a97900f9f0703c0"
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-treatment-research-a001/native/provider-usage.redacted.jsonl",
+      "sha256": "4c7109f26c308f114143ce9f2dda572d8194690a6cb65215d00fa5920fff27a6"
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-treatment-research-a001/operation_receipts/events.jsonl",
+      "sha256": "99050b7e39d45f66dfdf6d3705f987af544be83a71f7d61019aef8c7963f0f47"
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-treatment-research-a001/operation_receipts/executions/exec-9p6o53cz/result.json",
+      "sha256": "4a43d6d4a708acc7937ad0e876c96889dcbe9c132f6a7ce144bcdd48abb70202"
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-treatment-research-a001/operation_receipts/executions/exec-fq_n957l/result.json",
+      "sha256": "3a87b64201f3c134e4dff33640ce92c16c914a05ca3f83973f82f0dae6ac8d29"
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-treatment-research-a001/operation_receipts/executions/exec-ru78218x/result.json",
+      "sha256": "0e48baca251f2accef0da30c42f9a91c64a3eda1a0eedf95432e2afe6a5f77e5"
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-treatment-research-a001/operation_receipts/executions/exec-s4l1km59/result.json",
+      "sha256": "4180207fd4651895cf48be03f1c408d3b4ff0f4ccd07a4c959cea762fd0d2524"
+    }
+  ]
+}

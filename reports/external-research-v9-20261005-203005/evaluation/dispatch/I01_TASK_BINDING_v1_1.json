@@ -1,0 +1,47 @@
+{
+  "schema": "er9.evaluation-coordinator-binding.v1",
+  "evaluation_id": "ER9-EVAL-I01-001",
+  "pair_id": "I-01",
+  "candidate_outputs_frozen_utc": null,
+  "result_directory": "LAB_ROOT/evaluation/dispatch/I01-review0001",
+  "task": {
+    "brief": {
+      "path": "LAB_ROOT/cases/briefs/development-A-biomedical.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    "coverage_map": {
+      "path": "LAB_ROOT/cases/coverage/development-A.json",
+      "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92"
+    },
+    "common_criteria": {
+      "path": "LAB_ROOT/cases/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+    },
+    "source_access": {
+      "path": "LAB_ROOT/cases/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    "important_checks": {
+      "path": "LAB_ROOT/cases/coverage/important-checks-A.json",
+      "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75"
+    },
+    "output_contract": {
+      "path": "LAB_ROOT/cases/prompts/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    }
+  },
+  "final_freezes": [],
+  "assessment_plan": {
+    "mode": "screen_then_complete_if_promising",
+    "screen_max_seconds": 1200,
+    "hard_max_seconds": 1800,
+    "budget_frozen_utc": "2026-10-05T21:16:04.045809Z",
+    "limits_note": "One coherent pair; full-case PASS only after all obligations/current consequential claims assessed. This is evaluator time, not candidate budget."
+  },
+  "known_hints_at_dispatch": [
+    "The parent assignment disclosed GLM 5.3 Flash/max candidate family/model and V01 mechanism before evaluation. Anonymous arm assignment, economics, prior current grades and actual stage history remain hidden.",
+    "Coordination context disclosed which arm was expected to produce the available final before assessment; this limits arm-assignment blinding despite anonymous packet locations."
+  ],
+  "dispatch_interface_version": "1.1",
+  "terminal_missing_outputs": []
+}

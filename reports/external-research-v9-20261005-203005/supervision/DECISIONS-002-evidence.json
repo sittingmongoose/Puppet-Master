@@ -1,0 +1,73 @@
+{
+  "schema": "er9.supervision.evidence.v1",
+  "recorded_utc": "2026-10-05T21:30:33.597764+00:00",
+  "scope": "prospective contracts/queues only; no sealed briefs, live candidate outputs, or private/auth contents",
+  "decision_001_evidence_unchanged": true,
+  "evidence": [
+    {
+      "path": "LAB_ROOT/input/ER9/ER9_EXECUTE_HANDOFF.md",
+      "sha256": "46529ea93a95d92196f947daf3da54ac60768408aed9f5eaaa8d64c4167d210a",
+      "bytes": 58697
+    },
+    {
+      "path": "LAB_ROOT/cases/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "bytes": 2521
+    },
+    {
+      "path": "LAB_ROOT/cases/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "bytes": 1751
+    },
+    {
+      "path": "LAB_ROOT/cases/QUEUE_DESIGN_MANIFEST.json",
+      "sha256": "35ef111ac7bc5fda939246309071ab422cb3680522863e8d444011b243f479de",
+      "bytes": 26613
+    },
+    {
+      "path": "LAB_ROOT/cases/diagnostics/QUEUE.json",
+      "sha256": "7fe3a19d92a9ebf231069006cd03e4e0bbeb1dc7ea126b09207b2408bb72e9cf",
+      "bytes": 9937
+    },
+    {
+      "path": "LAB_ROOT/cases/diagnostics/TOPOLOGY.json",
+      "sha256": "427d1a03aabdcb002ba5b69c8116bfeec622a446b2ca0de39c0af578b67fd4d1",
+      "bytes": 3671
+    },
+    {
+      "path": "LAB_ROOT/cases/integrated/QUEUE.json",
+      "sha256": "9bc6593f795d3cf33d2db07371c3eb8ad580c89a78d2291bda1f7fc53d0d1299",
+      "bytes": 1883
+    },
+    {
+      "path": "LAB_ROOT/cases/integrated/I-05-reservation.json",
+      "sha256": "3cc95adb9d5ebdadefe1320b7d3c580f381532c040b19b336003b6b387c0ed76",
+      "bytes": 1020
+    },
+    {
+      "path": "LAB_ROOT/cases/integrated/I-07-reservation.json",
+      "sha256": "fe176eb89d74d4fa84392b9f179d855007c17b00c786925623c6774f12fdcad1",
+      "bytes": 1029
+    },
+    {
+      "path": "LAB_ROOT/cases/integrated/I-09-reservation.json",
+      "sha256": "3d0be73498a37ac966961e3463688c760c12e19f4643b4715cd2aaf3d2a13336",
+      "bytes": 1036
+    },
+    {
+      "path": "LAB_ROOT/cases/integrated/I-11-reservation.json",
+      "sha256": "29f6eb56185ca18deaca681c99c534d12f67b95c072dd9c2b0a40bc968b7c499",
+      "bytes": 1036
+    },
+    {
+      "path": "LAB_ROOT/cases/confirmation/LOCK_PROTOCOL.md",
+      "sha256": "db399aca970c8f05e4d83626c24b931008d458ea915edb2b2646bb991acedb64",
+      "bytes": 2667
+    },
+    {
+      "path": "LAB_ROOT/cases/confirmation/QUEUE.json",
+      "sha256": "9e24f0ef43123fff26af6d96baada437b2682bb3a76a270df19114bcc75e6068",
+      "bytes": 880
+    }
+  ]
+}

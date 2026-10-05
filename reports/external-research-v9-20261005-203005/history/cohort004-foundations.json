@@ -1,0 +1,384 @@
+{
+  "cohort": "research-stages-and-successors-004",
+  "frozen_at": "2026-10-05T21:40:58.088828+00:00",
+  "sources": [
+    {
+      "source": "supervision/DECISIONS-002.md",
+      "published": "supervision/DECISIONS-002.md",
+      "source_sha256": "121b65e98c978b771697fce9d8a2a993bc802c4d69b5549c3d28dde1cc83afe7",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "supervision/DECISIONS-002.json",
+      "published": "supervision/DECISIONS-002.json",
+      "source_sha256": "ee961dc6a74fccda9e7909b4bbad6bb646d56dae73e3c196130623fbe0c83c16",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "supervision/DECISIONS-002-evidence.json",
+      "published": "supervision/DECISIONS-002-evidence.json",
+      "source_sha256": "6e2dd316d2281bf76a2dd5f3e2271fcaf075104a54dbd057efe0dbc230290e1a",
+      "transform": "host path labels normalized; original hash retained"
+    },
+    {
+      "source": "supervision/DECISIONS-003.md",
+      "published": "supervision/DECISIONS-003.md",
+      "source_sha256": "49e0850c07297500920e349e95052c3b012b94a4b218e4f906f881371ac1200f",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "supervision/DECISIONS-003.json",
+      "published": "supervision/DECISIONS-003.json",
+      "source_sha256": "87f29cfb32763c08b9aab73827e339de55a9eaed7eb1cca0fa5695fef4a42a44",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "supervision/DECISIONS-003-evidence.json",
+      "published": "supervision/DECISIONS-003-evidence.json",
+      "source_sha256": "af61fc55a23d3e43cc8af36197ed84d0ba033472ad2630640c0b1322ab544903",
+      "transform": "host path labels normalized; original hash retained"
+    },
+    {
+      "source": "dev/tools/versions/v1.2/config.py",
+      "published": "tools/versions/v1.2/config.py",
+      "source_sha256": "2fe65bf146fcb8ea2a03b375ceac6d19113150dc88bcbe5ee9c653e1c68cbc3f",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "dev/tools/versions/v1.2/execution_server.py",
+      "published": "tools/versions/v1.2/execution_server.py",
+      "source_sha256": "01ba5ab8ab9d8f1ff495f7a768c211ee1c8dd1cbc2b834868b93785a984c72ef",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "dev/tools/versions/v1.2/test_tools.py",
+      "published": "tools/versions/v1.2/test_tools.py",
+      "source_sha256": "840a680de57fba4019ba8a671513085bbdae181c1f1952b00bad0f43e3f7fe0a",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "dev/tools/versions/v1.2/source_capture/boundary.py",
+      "published": "tools/versions/v1.2/source_capture/boundary.py",
+      "source_sha256": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "dev/tools/versions/v1.2/source_capture/tool_server.py",
+      "published": "tools/versions/v1.2/source_capture/tool_server.py",
+      "source_sha256": "9c25c1faaf7c4557aaeb22b0977061914a9fbba1a04d87d2a3a29851daa29846",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "dev/tools/versions/v1.2/source_capture/test_source_capture.py",
+      "published": "tools/versions/v1.2/source_capture/test_source_capture.py",
+      "source_sha256": "a2e661f064dff5efb21c61461106d9473995e76c14133a8ff4abdec5a5aaf808",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "dev/tools/versions/v1.2/README.md",
+      "published": "tools/versions/v1.2/README.md",
+      "source_sha256": "51056a1bdcaa8fc576d8c941b4bc23cb8b0bcd459f73b043438fab72f011f5f1",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "dev/tools/versions/v1.2/test_framing.py",
+      "published": "tools/versions/v1.2/test_framing.py",
+      "source_sha256": "e4122b4c52298aaea4e7a70a6f36a5bcba8fdc9444db4e79760cd40393a03093",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "dev/tools/versions/v1.2/SOURCE_PINS.json",
+      "published": "tools/versions/v1.2/SOURCE_PINS.json",
+      "source_sha256": "9b6d877f5caa79bacf3846e7ca3fec6ddbb66de919b416a1a1e38dd28b214b34",
+      "transform": "host path labels normalized; original hash retained"
+    },
+    {
+      "source": "dev/tools/versions/v1.2/VERIFICATION.json",
+      "published": "tools/versions/v1.2/VERIFICATION.json",
+      "source_sha256": "781e939ab7f66e82c360a312c16826c4db62ec9596892f6591f407b8fe4f498b",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "dev/tools/errata/execution-v11-framing-erratum.json",
+      "published": "tools/errata/execution-v11-framing-erratum.json",
+      "source_sha256": "f50b1092db344f4dc64685e35898b549d35c2bcc170814c920f2ee6dfa83a923",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "dev/tools/diagnosis/V11_COALESCED_STALL.json",
+      "published": "tools/diagnosis/V11_COALESCED_STALL.json",
+      "source_sha256": "ec519486b4bfaf79597d50ea4342c0ce4c4a0c4b2c029b43121ac5ddcf255fb1",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "dev/diagnostic-runner/ADMISSION_OVERLAY_01.json",
+      "published": "diagnostic-preparation/ADMISSION_OVERLAY_01.json",
+      "source_sha256": "ef3d0811d12bd0c7cc1e6ae8dd3d80ffdf4045a6e8219505ebb0097530ddd803",
+      "transform": "host path labels normalized; original hash retained"
+    },
+    {
+      "source": "dev/diagnostic-runner/README.md",
+      "published": "diagnostic-preparation/README.md",
+      "source_sha256": "0522c98cadc4e9abc2e8a8cae3b6761a552c848f536eaeb762020a17c7469c08",
+      "transform": "host path labels normalized; original hash retained"
+    },
+    {
+      "source": "dev/diagnostic-runner/SEED_MANIFEST_CONTRACT.md",
+      "published": "diagnostic-preparation/SEED_MANIFEST_CONTRACT.md",
+      "source_sha256": "b60c1d31a0b6ad57672d33ea00af4eb3cd5087f3fabdf3325cf6efc43672ef4a",
+      "transform": "host path labels normalized; original hash retained"
+    },
+    {
+      "source": "dev/diagnostic-runner/VERIFICATION.json",
+      "published": "diagnostic-preparation/VERIFICATION.json",
+      "source_sha256": "e36f01a042bd844b89c9200e325bb98b5c13c4af267999a64c79e48a01dd23d8",
+      "transform": "host path labels normalized; original hash retained"
+    },
+    {
+      "source": "dev/diagnostic-runner/bind_seeded.py",
+      "published": "diagnostic-preparation/bind_seeded.py",
+      "source_sha256": "3d320a18db3ad01338c069e25dc4bb059be35255d8ba6be702be59c00f4a2c36",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "dev/diagnostic-runner/exact_assembly.py",
+      "published": "diagnostic-preparation/exact_assembly.py",
+      "source_sha256": "3af2177da77b483fccb43ec355501a1319e95c238cf29431e2c51592dd476721",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "dev/diagnostic-runner/plan_seeded.py",
+      "published": "diagnostic-preparation/plan_seeded.py",
+      "source_sha256": "ec57249658f67d59bce2338c775280485e315c71ce8d508a7ca7c31896e54b50",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "dev/diagnostic-runner/prepare.py",
+      "published": "diagnostic-preparation/prepare.py",
+      "source_sha256": "48ff881c11fd89c12d9ce6c6f24790bb34956f970aa55575644ae2cbdf03d6cb",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "dev/diagnostic-runner/prepare_glm_standby.py",
+      "published": "diagnostic-preparation/prepare_glm_standby.py",
+      "source_sha256": "26065f74c5b0df493902770f2982892f21bb4a0743453376979192d7219acd9c",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "dev/diagnostic-runner/test_preparation.py",
+      "published": "diagnostic-preparation/test_preparation.py",
+      "source_sha256": "1ccb1de4d9bd7f25dd07b22c4c9f50a9cb50be64890fce785525bfa198c3f437",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "dev/diagnostic-runner/prepare_integrated_defaults.py",
+      "published": "diagnostic-preparation/prepare_integrated_defaults.py",
+      "source_sha256": "48c76f5def2e72e2dc9326eeba86f465faf27a1a05fd9aef256a0314533d7a14",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "dev/diagnostic-runner/SOURCE_PINS.json",
+      "published": "diagnostic-preparation/SOURCE_PINS.json",
+      "source_sha256": "224ed377500c72444462e35d239b2e2bd767b47a673e439d1fba84323207fd36",
+      "transform": "host path labels normalized; original hash retained"
+    },
+    {
+      "source": "owner-pinned neutral diagnostic references",
+      "published": "diagnostic-preparation/NEUTRAL_INPUT_BUNDLE.json",
+      "source_locators": 231,
+      "unique_contents": 146,
+      "transform": "positive reference traversal with pin validation; text normalized; private/output/sealed references excluded"
+    },
+    {
+      "source": "evaluation/dispatch/build_blind_packet_v1_1.py",
+      "published": "evaluation/dispatch/build_blind_packet_v1_1.py",
+      "source_sha256": "36685482e7c8e1c7846a7378d318c20b5c0fdb61bd285f202252ff5c46bea6d1",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "evaluation/dispatch/INTERFACE_ADDENDUM_v1_1.md",
+      "published": "evaluation/dispatch/INTERFACE_ADDENDUM_v1_1.md",
+      "source_sha256": "9311857634271f3ab54718f0113621a65b03d33fdeb336bd1879f52942afb026",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "evaluation/dispatch/I01_TASK_BINDING_v1_1.json",
+      "published": "evaluation/dispatch/I01_TASK_BINDING_v1_1.json",
+      "source_sha256": "fc0c9d1801ddcd86efadaa30b3923a44b14ea02f4b5094c65b4dbe343ddce838",
+      "transform": "host path labels normalized; original hash retained"
+    },
+    {
+      "source": "evaluation/dispatch/README.md",
+      "published": "evaluation/dispatch/README.md",
+      "source_sha256": "381b037e7984d9175933cf68ef054ba70db7578c923e81f0327cb548c6d71234",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "evaluation/dispatch/I01_REQUIREMENTS_INVENTORY.md",
+      "published": "evaluation/dispatch/I01_REQUIREMENTS_INVENTORY.md",
+      "source_sha256": "772ca755ea0b71dd6ba56ea02b0369cb509a46704416606b57b71fee68ac99c3",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "evaluation/dispatch/RESERVATION_I01_v1_1.json",
+      "published": "evaluation/dispatch/RESERVATION_I01_v1_1.json",
+      "source_sha256": "c036a060fc3d8393810e9c180c2d29ea0d5571cb0980da7fba9873fa43a7d416",
+      "transform": "host path labels normalized; original hash retained"
+    },
+    {
+      "source": "evaluation/dispatch/VERIFICATION_v1_1.json",
+      "published": "evaluation/dispatch/VERIFICATION_v1_1.json",
+      "source_sha256": "257443ea296fa0716ec7e86741a318779c965eed2ebd8d23b88e132992f8e21e",
+      "transform": "host path labels normalized; original hash retained"
+    },
+    {
+      "source": "dev/diagnostic-runner/PUBLICATION_SELECTION_001.json",
+      "published": "diagnostic-preparation/PUBLICATION_SELECTION_001.json",
+      "source_sha256": "b725b11ac1e325e17cf3f3de6f57293269c199296c03d5516ac38ab4f1140d92",
+      "transform": "source paths normalized;389 exact owner-selected neutral locators pinned and represented in deduplicated bundle"
+    },
+    {
+      "source": "dev/execution/structural_metrics.py",
+      "published": "execution/structural_metrics.py",
+      "source_sha256": "0c6da113e5f98cc61d14f0c1ac8a83f6bd54dc2c588e96b06c85d9d20622704c",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "dev/execution/test_structural_metrics.py",
+      "published": "execution/test_structural_metrics.py",
+      "source_sha256": "54955f720109e52b0f33d7904a3f522c40b5243fc44a4cfa7efde6f1b1274f66",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "dev/execution/diagnosis-I01-v1/PROVIDER_ATTEMPTS_FULL_V1.json",
+      "published": "execution/diagnosis-I01-v1/PROVIDER_ATTEMPTS_FULL_V1.json",
+      "source_sha256": "13adb9df34a63f8ee1c5091811aacd28c3bf611d9dae1dd08d565b5973326df7",
+      "transform": "host path labels normalized; original pin retained"
+    },
+    {
+      "source": "dev/execution/diagnosis-I01-v1/T_STRUCTURAL_METRICS.json",
+      "published": "execution/diagnosis-I01-v1/T_STRUCTURAL_METRICS.json",
+      "source_sha256": "97fe3f9a53759b23fc2cce65b8e056746924cd9a6c334f26ee61e41c772aaee6",
+      "transform": "host path labels normalized; original pin retained"
+    },
+    {
+      "source": "dev/execution/diagnosis-I01-v1/C_STRUCTURAL_METRICS.json",
+      "published": "execution/diagnosis-I01-v1/C_STRUCTURAL_METRICS.json",
+      "source_sha256": "2525bf640765f8554c85e3a2c7c366b2d4ef684a96284354b0e2afb4312e83d7",
+      "transform": "host path labels normalized; original pin retained"
+    },
+    {
+      "source": "dev/execution/diagnosis-I01-v1/DIAGNOSIS.json",
+      "published": "execution/diagnosis-I01-v1/DIAGNOSIS.json",
+      "source_sha256": "528b5484f5a581eb47fabf13f7c4d91921554477266e9a14d48df9911789157d",
+      "transform": "host path labels normalized; original pin retained"
+    },
+    {
+      "source": "dev/execution/diagnosis-I01-v1/NEUTRAL_TASK_SCOPE_FRAGMENTS.json",
+      "published": "execution/diagnosis-I01-v1/NEUTRAL_TASK_SCOPE_FRAGMENTS.json",
+      "source_sha256": "c063c9a204fd3b325f2495fac45983d286698faafc3ffdd4891c7488f9202dc1",
+      "transform": "host path labels normalized; original pin retained"
+    },
+    {
+      "source": "dev/execution/STAGE_SCOPE_V2/V05_FLASH_SCOPE.md",
+      "published": "execution/STAGE_SCOPE_V2/V05_FLASH_SCOPE.md",
+      "source_sha256": "c4bbf0fa5aeafbca8adae5558957ff958a76453fecd1b288a74647789e6c91eb",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "dev/execution/STAGE_SCOPE_V2/FINAL_AUTHOR_SCOPE.md",
+      "published": "execution/STAGE_SCOPE_V2/FINAL_AUTHOR_SCOPE.md",
+      "source_sha256": "fcc664dd8d22e55fb1cd8082cf898b001c274a7ce1da260dd710a60f3b713feb",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "dev/execution/STAGE_SCOPE_V2/PROPOSAL.json",
+      "published": "execution/STAGE_SCOPE_V2/PROPOSAL.json",
+      "source_sha256": "067f930de33b05cb3af0513ba27799487bfa3086160aa51f1f1732cc7b3c1aa6",
+      "transform": "host path labels normalized; original pin retained"
+    },
+    {
+      "source": "dev/execution/STAGE_SCOPE_V2/V05_FINAL_RESOLUTION_SCOPE.md",
+      "published": "execution/STAGE_SCOPE_V2/V05_FINAL_RESOLUTION_SCOPE.md",
+      "source_sha256": "e8c4c6236f34490d22cf47918e5ede001f74f738613c3daf2e3c3ba6b6a0d173",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "dev/execution/STAGE_SCOPE_V2/RESEARCH_SCOPE.md",
+      "published": "execution/STAGE_SCOPE_V2/RESEARCH_SCOPE.md",
+      "source_sha256": "13271842d880307220b676e8ab81a8de91af89beb32fd00996eeb61f8f10c6e5",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "dev/execution/STAGE_SCOPE_V2/V05_REVISION_SCOPE.md",
+      "published": "execution/STAGE_SCOPE_V2/V05_REVISION_SCOPE.md",
+      "source_sha256": "eb0d09776c5e9f0cbb94aa4988cd3164b4ed51214dabcfa90aff55ffc2236456",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "dev/execution/STAGE_SCOPE_V2/CRITIC_SCOPE.md",
+      "published": "execution/STAGE_SCOPE_V2/CRITIC_SCOPE.md",
+      "source_sha256": "67946510ffcb14d0399ad8006a0eb46dd9e55bdc4d499096ce052246edc40b16",
+      "transform": "byte-identical owner-frozen"
+    },
+    {
+      "source": "dev/execution/diagnosis-I01-v1/MANIFEST.json",
+      "published": "execution/diagnosis-I01-v1/MANIFEST.json",
+      "source_sha256": "c47643c4361fbf27b24e3099d9954c91bcc2e6cbd99143d67ec20929c9bf522e",
+      "transform": "host path labels normalized; original pin retained"
+    },
+    {
+      "source": "dev/execution/diagnosis-I01-v1/MANIFEST_V2.json",
+      "published": "execution/diagnosis-I01-v1/MANIFEST_V2.json",
+      "source_sha256": "f9d132454e0fd61139f6fb6d824edceb0752cc4398ef2f8d8efa30aaf8e76412",
+      "transform": "host path labels normalized; original pin retained"
+    },
+    {
+      "source": "dev/luna-route/COHORT_008_PIN.json",
+      "published": "routes/luna/COHORT_008_PIN.json",
+      "source_sha256": "bc69fcdfc889d2c9a163a6f7d5b8af37b0e91ad2951442e5e3f74679777874bc",
+      "transform": "byte-identical owner-frozen safe semantic projection"
+    },
+    {
+      "source": "dev/luna-route/ROUTE_PUBLIC_SELECTION.json",
+      "published": "routes/luna/ROUTE_PUBLIC_SELECTION.json",
+      "source_sha256": "271fbf912ed9e6a1b1f388e6402c51f01d2522a6b4d4380a1f217e36c2a4746e",
+      "transform": "byte-identical owner-frozen safe semantic projection"
+    },
+    {
+      "source": "dev/luna-route/CANARY_010_WITNESS.json",
+      "published": "routes/luna/CANARY_010_WITNESS.json",
+      "source_sha256": "42cdb7bcbb1304361e36f06f799228b3c012f0e4fd587d326f5a01491fa53164",
+      "transform": "byte-identical owner-frozen safe semantic projection"
+    },
+    {
+      "source": "evaluation/dispatch/build_blind_packet.py",
+      "published": "evaluation/dispatch/build_blind_packet.py",
+      "source_sha256": "5c399c3dbfd8b08a41bdeef2f74c1db64f2addfb2b653ee76a6081aeb960ce12",
+      "transform": "byte-identical owner-frozen no-answer interface"
+    },
+    {
+      "source": "evaluation/dispatch/I01_TASK_BINDING.json",
+      "published": "evaluation/dispatch/I01_TASK_BINDING.json",
+      "source_sha256": "dae56674938819c8e2aa040b33e52cb29c78406335cd7a056bea43d06b91dcab",
+      "transform": "byte-identical owner-frozen no-answer interface"
+    },
+    {
+      "source": "evaluation/dispatch/RESERVATION_I01.json",
+      "published": "evaluation/dispatch/RESERVATION_I01.json",
+      "source_sha256": "0bc160d4385f9c73ddf36251cc47cdc144096b4d7b43539855c800967346a4fb",
+      "transform": "byte-identical owner-frozen no-answer interface"
+    },
+    {
+      "source": "evaluation/dispatch/VERIFICATION.json",
+      "published": "evaluation/dispatch/VERIFICATION.json",
+      "source_sha256": "f183be10e94fcf5a6efac69fe58c2b8fad34c7c45988f6d02b29e9d0f4819a02",
+      "transform": "byte-identical owner-frozen no-answer interface"
+    }
+  ],
+  "omissions": [
+    "No raw capture bodies, native logs, private HOME/db/auth or proprietary SDK/binary.",
+    "No live outputs or sealed holdout details.",
+    "Prepared diagnostic source/card bundles have zero native starts and no research PASS."
+  ]
+}

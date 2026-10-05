@@ -1,11 +1,19 @@
 # Current results
 
-Route/method cohort 002 contains two published research activation records with zero completed outputs, zero assessed research outputs and zero completed matched comparisons. The finite target remains 32 diagnostic, 12 integrated and 4 confirmation pairs. No winning recipe or product adoption is supported.
+| Published research-stage outcome | Count |
+| --- | ---: |
+| Native Goal complete with frozen research outputs | 1 |
+| Native-work cutoff reached; failed completion with partial research outputs | 1 |
+| Independent semantic assessments | 0 |
+| Whole pipelines completed | 0 |
+| Matched comparisons completed | 0 |
 
-[Early prospective inputs](cases/README.md) bind four V01/V05 integrated contrasts, briefs, common criteria, coverage obligations and stage prompts. Freeze addendum 02 prospectively corrects artifact paths to `out/`; earlier freeze records are historical, superseded per path. [Independent evaluation protocol](evaluation/protocol/README.md) is ready, with no evaluated output yet.
+[Original I01 artifacts](stages/I01-original/README.md) are inspectable candidate outputs, with source catalogs, witnesses, leads and stage-bound capture metadata. The treatment failure remains a failure. Research-created `final/` and `critique/` files are historical artifacts rather than designated later-stage results. No source-correctness or whole-product quality PASS is claimed.
 
-[Route evidence](routes/README.md) separates Luna's one mechanical lifecycle canary from GLM/Muse zero-inference metadata probes. Muse remains HOLD. The Luna no-MCP result does not admit scored tool use. Generic boundary tests are recorded in [verification](tools/VERIFICATION.json); they are host checks and add no candidate research runs. [Supervision decisions](supervision/DECISIONS-001.md) preserve the historical HOLD while declaring a prospective successor policy.
+Control provider attempt totals: **2,515,693** tokens (2,468,253 input; 47,440 output; 1,997,504 cached input already included). Treatment: **1,790,311 known** tokens (1,737,174 input; 53,137 output; 1,493,824 cached input included), plus **unknown cancelled partial usage**. UI totals 517,700/296,163 are preserved separate baseline-filtered metrics. Token counters do not establish billed dollars. All observed failure/verification requests are retained in the [31-row provider export](execution/diagnosis-I01-v1/PROVIDER_ATTEMPTS_FULL_V1.json).
 
-Cost counters for substantive research remain unknown. Route-only Luna metering and Goal accounting have distinct definitions and are listed separately. No source-backed research finding or actual paired outcome is claimed.
+Luna native-MCP attempt 008 remains HOLD: 138.037 s, 209,371 metered tokens, zero successful tool operations and 12 failed operations, with owned cleanup quiet. Its distinct client-dynamic successor 010 completed a synthetic canary in 53.231 s with 135,389 metered tokens, all five tool types exercised and owned cleanup quiet. [Public selection](routes/luna/ROUTE_PUBLIC_SELECTION.json) and [synthetic witness](routes/luna/CANARY_010_WITNESS.json) limit that result to route availability. It is no research-method win.
 
-[Infrastructure cohort 003](routes/COHORT003.md) adds GLM route failure/success and accounting correction, preserved cleanup uncertainty plus additive erratum, separate tool v1.1, and terminal Luna tool-route failures. These add no scored completions. [Frozen I01 research activation metadata](activations/I01_ACTIVATION_ONLY_V1.json) records two actual GLM/max starts; their results await proper output freeze and independent evaluation.
+Tools v1.2 fixes a locally reproduced execution-MCP coalesced-frame stall; six framing and nine boundary tests passed with zero candidate model calls. Original v1/v1.1 and native failures remain unchanged. This local proof does not establish the cause of all prior native Transport closed failures. Diagnostic preparation records 13 mechanical tests and zero native starts; missing-partner evaluation is a prospective interface, with no completed evaluation.
+
+DEC003 permits a fresh paired stage-scope successor with unchanged budgets. The scope hypothesis is not causal proof of the original timeout; no retest outcome is included. Product adoption remains premature.

@@ -1,0 +1,62 @@
+{
+  "schema": "er9.mechanical-diagnosis-manifest.v1",
+  "created_utc": "2026-10-05T21:40:39.411256+00:00",
+  "files": [
+    {
+      "path": "LAB_ROOT/dev/execution/structural_metrics.py",
+      "sha256": "0c6da113e5f98cc61d14f0c1ac8a83f6bd54dc2c588e96b06c85d9d20622704c"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/test_structural_metrics.py",
+      "sha256": "54955f720109e52b0f33d7904a3f522c40b5243fc44a4cfa7efde6f1b1274f66"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/diagnosis-I01-v1/T_STRUCTURAL_METRICS.json",
+      "sha256": "97fe3f9a53759b23fc2cce65b8e056746924cd9a6c334f26ee61e41c772aaee6"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/diagnosis-I01-v1/C_STRUCTURAL_METRICS.json",
+      "sha256": "2525bf640765f8554c85e3a2c7c366b2d4ef684a96284354b0e2afb4312e83d7"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/diagnosis-I01-v1/DIAGNOSIS.json",
+      "sha256": "528b5484f5a581eb47fabf13f7c4d91921554477266e9a14d48df9911789157d"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/diagnosis-I01-v1/NEUTRAL_TASK_SCOPE_FRAGMENTS.json",
+      "sha256": "c063c9a204fd3b325f2495fac45983d286698faafc3ffdd4891c7488f9202dc1"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/STAGE_SCOPE_V2/V05_FLASH_SCOPE.md",
+      "sha256": "c4bbf0fa5aeafbca8adae5558957ff958a76453fecd1b288a74647789e6c91eb"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/STAGE_SCOPE_V2/FINAL_AUTHOR_SCOPE.md",
+      "sha256": "fcc664dd8d22e55fb1cd8082cf898b001c274a7ce1da260dd710a60f3b713feb"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/STAGE_SCOPE_V2/PROPOSAL.json",
+      "sha256": "067f930de33b05cb3af0513ba27799487bfa3086160aa51f1f1732cc7b3c1aa6"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/STAGE_SCOPE_V2/V05_FINAL_RESOLUTION_SCOPE.md",
+      "sha256": "e8c4c6236f34490d22cf47918e5ede001f74f738613c3daf2e3c3ba6b6a0d173"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/STAGE_SCOPE_V2/RESEARCH_SCOPE.md",
+      "sha256": "13271842d880307220b676e8ab81a8de91af89beb32fd00996eeb61f8f10c6e5"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/STAGE_SCOPE_V2/V05_REVISION_SCOPE.md",
+      "sha256": "eb0d09776c5e9f0cbb94aa4988cd3164b4ed51214dabcfa90aff55ffc2236456"
+    },
+    {
+      "path": "LAB_ROOT/dev/execution/STAGE_SCOPE_V2/CRITIC_SCOPE.md",
+      "sha256": "67946510ffcb14d0399ad8006a0eb46dd9e55bdc4d499096ce052246edc40b16"
+    }
+  ],
+  "original_engine_source_pins_unchanged": {
+    "path": "LAB_ROOT/dev/execution/SOURCE_PINS.json",
+    "sha256": "90e1b8f8453152122ce18f5755cd8c93843ea86e1da4e43ef3b97f43d14a77be"
+  }
+}

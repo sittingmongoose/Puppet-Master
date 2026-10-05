@@ -1,0 +1,28 @@
+{
+  "schema": "er9.luna.terminal-positive-projection.v1",
+  "attempt": "tools-canary-008",
+  "receipt_sha256": "1b5b2b8f2c895e3534706ff9e6a7b0f3466ef7dea89a08d2cc9d26d868a649a4",
+  "source_snapshot_sha256": "3a88e009803069352e670d19f96ca60f39d10e8fde2d89de455e8a7530979ead",
+  "outcome": "HOLD",
+  "binding": "native MCP",
+  "elapsed_seconds": 138.036692618,
+  "actual_native_goal_activations": 1,
+  "native_turns_started": 3,
+  "native_turns_completed": 3,
+  "host_initial_turns": 1,
+  "host_followups": 0,
+  "usage_totals": {
+    "inputTokens": 204710,
+    "cachedInputTokens": 161024,
+    "outputTokens": 4661,
+    "reasoningOutputTokens": 3671,
+    "totalTokens": 209371
+  },
+  "tool_successes": 0,
+  "tool_failures": 12,
+  "native_goal_status_before_cleanup": "blocked",
+  "native_cgroup_quiet": true,
+  "held_process_groups_absent": true,
+  "execution_units_quiet": true,
+  "limitation": "persisted runtime catalogue verified but native tool dispatch failed; no scored finding"
+}

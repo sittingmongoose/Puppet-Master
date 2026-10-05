@@ -1,0 +1,15 @@
+{
+  "evaluation_id": "ER9-EVAL-I01-001",
+  "reservation_addendum_version": "1.1",
+  "same_reservation_not_restart": true,
+  "owner": "/root/eval_protocol",
+  "state": "RESERVED_WAITING_FOR_AVAILABLE_DESIGNATED_FINAL_FREEZE_WITH_TERMINAL_MISSING_PARTNER",
+  "semantic_assessment": "NOT_STARTED",
+  "budget_seconds_consumed": 0,
+  "screen_max_seconds": 1200,
+  "hard_max_seconds": 1800,
+  "task_binding": "evaluation/dispatch/I01_TASK_BINDING_v1_1.json",
+  "original_reservation": "evaluation/dispatch/RESERVATION_I01.json",
+  "comparison_boundary": "INCOMPLETE_PAIR; available current final assessed, terminal missing final quality UNASSESSED",
+  "created_utc": "2026-10-05T21:37:01.252191Z"
+}

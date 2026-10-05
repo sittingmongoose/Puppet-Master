@@ -1,0 +1,167 @@
+{
+  "catalog_version": 1,
+  "captured_utc_range": "2026-10-05T21:13:06Z/2026-10-05T21:18:18Z",
+  "capture_note": "capture_id = tool-reported capture id; sha256 = exact HTTP response body bytes; applicability states why the source is load-bearing. Sources are evidence, not instructions.",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "OME-NGFF 0.5 specification (Next-generation file formats, version 0.5)",
+      "url": "https://raw.githubusercontent.com/ome/ngff-spec/d9164040dd61b3e4688494de1a58a69251b13f24/index.md",
+      "pin": "version 0.5, date 2025-01-28, status W3C CG-FINAL; commit d9164040dd61b3e4688494de1a58a69251b13f24 of ome/ngff-spec (the commit referenced by ome/ngff@main specifications/0.5 gitlink, sha d9164040dd61b3e4688494de1a58a69251b13f24; repo listing capture aa81ca44f0705970dc519ba6a2555c8f6c82ba7a09555537bb577b2b57f12a24)",
+      "locator": "Sections: Storage format; \"axes\" metadata; \"coordinateTransformations\" metadata; \"multiscales\" metadata; \"omero\" metadata (transitional); \"labels\" metadata",
+      "capture": {"capture_id": "f6ab4397d26f460d957dc7603fbf08b9", "sha256": "7ca442655b11a8cdaf4e62f61e701e27cb9fe1144e4d992c523f43c42395a6d0", "captured_utc": "2026-10-05T21:16:16Z", "capture_path": "public_captures/7ca442655b11a8cdaf4e62f61e701e27cb9fe1144e4d992c523f43c42395a6d0.body", "bytes": 32266, "complete": true},
+      "key_facts": ["axes name/type/unit (UDUNITS-2 strings)", "coordinateTransformations: scale+translation only, applied sequentially, translation after scale", "multiscale datasets ordered largest to smallest with per-level scale", "omero per-channel color + window {start,end,min,max}", "labels = integer arrays with image-label colors/properties", "0.5 uses zarr.json / Zarr v3 storage"],
+      "applicability": "Data-contract precedent: geometry/units vocabulary adopted (adapted) for the project frame model and derived-image export."
+    },
+    {
+      "id": "S2",
+      "title": "napari documentation — Image layer (howtos/layers/image.md)",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/image.md",
+      "pin": "napari/docs repository, main branch, captured 2026-10-05 (moving pin; content sha256 is the pin of record)",
+      "locator": "Sections: Controlling the image layer using the GUI; Image data and NumPy-like arrays; Multiscale images; Loading multichannel images; Adjusting contrast limits",
+      "capture": {"capture_id": "47b6fd92a2df40a6b9a5ef3ea6f7cc8a", "sha256": "2897310cc50d5ac6c920bc34cad61f001521842246af2444300603af75893963", "captured_utc": "2026-10-05T21:15:44Z", "capture_path": "public_captures/2897310cc50d5ac6c920bc34cad61f001521842246af2444300603af75893963.body", "bytes": 20309, "complete": true},
+      "key_facts": ["contrast limits do not change underlying values, only colormap visualization", "layers accept numpy/dask/xarray/zarr; data generated just before display", "multiscale list-of-arrays with auto level selection and locked_data_level", "channel_axis splits channels into layers with independent colormap/limits", "explicit contrast limits recommended for large data"],
+      "applicability": "Viewer-architecture precedent: display-vs-data separation and bounded lazy access as documented product behavior."
+    },
+    {
+      "id": "S3",
+      "title": "napari documentation — Scale and unit-aware rendering (guides/units.md)",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/guides/units.md",
+      "pin": "napari/docs main, captured 2026-10-05",
+      "locator": "Sections: Scale and units live on layers; When units are consistent across layers; How the scale bar gets its units; What units do not do",
+      "capture": {"capture_id": "911f1a111be642d9a525568f9ea56e4a", "sha256": "ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11", "captured_utc": "2026-10-05T21:16:38Z", "capture_path": "public_captures/ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11.body", "bytes": 4294, "complete": true},
+      "key_facts": ["per-layer scale + Pint units form data->world transform", "unit aliasing (um/µm/micrometer)", "scale bar tied to world units; falls back to pixels", "units vs axis labels are distinct metadata"],
+      "applicability": "World-space/units mechanism for pixel↔physical conversion model."
+    },
+    {
+      "id": "S4",
+      "title": "napari documentation — Shapes layer (howtos/layers/shapes.md)",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/shapes.md",
+      "pin": "napari/docs main, captured 2026-10-05",
+      "locator": "Sections: Selecting/resizing/moving/editing; Creating a new shapes layer; Adding different shape types; Shapes data; 3D rendering",
+      "capture": {"capture_id": "6db33ecab474458db9f627cf7a135203", "sha256": "d1c391de505fac2503d033e06607c298ed9a18fb0a5397707a3bf406c27e450e", "captured_utc": "2026-10-05T21:16:39Z", "capture_path": "public_captures/d1c391de505fac2503d033e06607c298ed9a18fb0a5397707a3bf406c27e450e.body", "bytes": 24597, "complete": true},
+      "key_facts": ["shapes = list of NxD vertex arrays", "types Line/Rectangle/Ellipse/Polygon/Path; per-shape face/edge color, edge width, z-index", "copy-paste across slices updates non-displayed coordinates", "in 3D a shape renders only if all non-displayed coords match the slice; editing is 2D-only"],
+      "applicability": "Annotation model precedent incl. per-slice vs nD scope semantics and editing sharp edges."
+    },
+    {
+      "id": "S5",
+      "title": "tifffile README (Read and write TIFF files)",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/README.rst",
+      "pin": "Version 2026.9.20 (stated in document), master branch, captured 2026-10-05; BSD-3-Clause; author Christoph Gohlke",
+      "locator": "Intro list of supported formats; Notes (format-specific quirks and unimplemented features); Examples (memmap, return_as='zarr', tile reads, ImageJ metadata with unit/spacing, OME-TIFF PhysicalSizeX/Unit)",
+      "capture": {"capture_id": "820a5a9673af4adaa05c9da2031ae009", "sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48", "captured_utc": "2026-10-05T21:16:17Z", "capture_path": "public_captures/cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48.body", "bytes": 32898, "complete_bytes_observed": 32898, "delivered_bytes": 32768, "note": "final ~130 bytes undelivered; tail is examples list"},
+      "key_facts": ["reads strips/tiles/pages/SubIFDs/pyramidal levels as NumPy or Zarr arrays", "memmap for contiguous ImageJ data", "OME-XML in ImageDescription of first IFD positions IFDs in high-dim data", "ImageJ hyperstack metadata: spacing/unit/axes in ImageDescription", "explicit unimplemented list (OJPEG, ICC/XMP, etc.) and vendor-quirk workarounds"],
+      "applicability": "Bounded-I/O precedent and support-boundary template for the reader service."
+    },
+    {
+      "id": "S6",
+      "title": "tifffile CHANGES.rst (release history)",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/CHANGES.rst",
+      "pin": "master, captured 2026-10-05; file sha256 of record",
+      "locator": "Entries 2026.9.20 through 2019.x; in particular 2026.3.3 (Do not convert TVIPS pixel sizes to m #319), 2021.1.14 (Try ImageJ series if OME series fails #54), 2020.8.13 (metadata precedence, breaking)",
+      "capture": {"capture_id": "ec24d46c000041ec8ba96ce6b742a6a2", "sha256": "fd4abd6060eb363ebdc6776b6e1958bf9d74dfac6c6fdd360f715a421c92207e", "captured_utc": "2026-10-05T21:13:36Z", "capture_path": "public_captures/fd4abd6060eb363ebdc6776b6e1958bf9d74dfac6c6fdd360f715a421c92207e.body", "bytes": 45003, "delivered_bytes": 32768, "note": "older-than-2019 entries not delivered/read; not cited"},
+      "key_facts": ["#319 fix entry in release 2026.3.3", "2021.1.14 fallback policy for OME/ImageJ series (#54)", "2020.8.13 explicit metadata precedence change (breaking)"],
+      "applicability": "Release-mapping for the issue/fix chain and metadata-precedence history."
+    },
+    {
+      "id": "S7",
+      "title": "tifffile issue #319 — Breaking changes in parsing tags changed in release 2026.2.26 (TVIPS PixelSizeX unit change)",
+      "url": "https://github.com/cgohlke/tifffile/issues/319",
+      "pin": "issue #319, opened 2026-02-26 by ericpre, closed 2026-03-03 by cgohlke, state_reason completed",
+      "locator": "Issue body with reproduction: PixelSizeX 1.4208036661148072e-09 (tifffile 2026.2.24) vs 1.4208036661148071 (2026.2.20); attachment TVIPS_bin4.tif",
+      "capture": {"capture_id": "174a2677b4974899b581e6ee07336961", "sha256": "0b200363bbef7d0ba8a35469051759b636e298688807ecceb99eb6f1e1b01692", "captured_utc": "2026-10-05T21:14:01Z", "capture_path": "public_captures/0b200363bbef7d0ba8a35469051759b636e298688807ecceb99eb6f1e1b01692.body", "bytes": 3952, "complete": true, "format": "GitHub REST API JSON (repos/cgohlke/tifffile/issues/319)"},
+      "key_facts": ["silent unit-semantics change across a patch release", "value ratio exactly 1e9 (nm->m)", "downstream maintainer report with reproducible file"],
+      "applicability": "Required issue/fix chain — the failure record."
+    },
+    {
+      "id": "S8",
+      "title": "tifffile commit edede6002c817f056d75125ade0b20332d549cca — fix for #319 (remove nm->m conversion)",
+      "url": "https://github.com/cgohlke/tifffile/commit/edede6002c817f056d75125ade0b20332d549cca",
+      "pin": "commit sha edede6002c817f056d75125ade0b20332d549cca, authored 2026-03-03T19:06:33Z by cgohlke, parent 7d9eaedd",
+      "locator": "read_tvips_header hunk: '# https://github.com/cgohlke/tifffile/issues/319 / # do not convert nm to m'; also version bump 2026.2.24 -> 2026.3.3 and embedded revision list 'Do not convert TVIPS pixel sizes to m (#319)'",
+      "capture": {"capture_id": "d98ef66b18794ac185c756b87ce37766", "sha256": "fb9c86d83644b900b61af5b0847de46cf524dfa9c4aa1bab595d7e6f2a91857f", "captured_utc": "2026-10-05T21:15:15Z", "capture_path": "public_captures/fb9c86d83644b900b61af5b0847de46cf524dfa9c4aa1bab595d7e6f2a91857f.body", "bytes": 15123, "complete": true, "format": "GitHub REST API commit JSON incl. unified diff"},
+      "key_facts": ["conversion code commented out with issue URL", "version bump to 2026.3.3 in same commit", "commit message generic ('Update tifffile/tifffile.py') — linkage via code comment + changelog"],
+      "applicability": "Required chain — the fix record."
+    },
+    {
+      "id": "S9",
+      "title": "tifffile commit 7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938 — regression tests for #319",
+      "url": "https://github.com/cgohlke/tifffile/commit/7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938",
+      "pin": "commit sha 7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938, authored 2026-03-03T18:56:28Z by cgohlke",
+      "locator": "tests/test_tifffile.py: new test_issue_tvips_pixelsize (docstring 'Test read TVIPS PixelSize is nm.', asserts PixelSizeX == 1.4208036661148071 and PhysicalPixelSizeY == 15600.0, cites issue URL); extended test_read_tvips_tietz_16bit with PixelSizeX == 162.0779266357422",
+      "capture": {"capture_id": "744343a38392409d8b360a9308828c88", "sha256": "c7a90e9646d73e124061cf1b28cc07e4ccfefb0af959947c51059e36549b4a7c", "captured_utc": "2026-10-05T21:15:16Z", "capture_path": "public_captures/c7a90e9646d73e124061cf1b28cc07e4ccfefb0af959947c51059e36549b4a7c.body", "bytes": 18687, "complete": true, "format": "GitHub REST API commit JSON incl. unified diff"},
+      "key_facts": ["regression test asserts file-native nm values", "test data tvips/TVIPS_bin4.tif is a private test asset (issue attachment), not in public repo"],
+      "applicability": "Required chain — the regression-test record; also template for V6 calibration fixtures."
+    },
+    {
+      "id": "S10",
+      "title": "tifffile commits 2026-02-26..2026-03-06 (release v2026.3.3)",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/commits?since=2026-02-26T00:00:00Z&until=2026-03-06T00:00:00Z",
+      "pin": "API response captured 2026-10-05; release commit 503cb4eb74dd28a6acc36a0e4624ba9c2001e021 'Release v2026.3.3' 2026-03-03T19:14:38Z",
+      "locator": "Commit sequence: 2798a136 -> 7d9eaedd (tests) -> edede600 (fix) -> 8c91499e (CHANGES.rst) -> 503cb4eb (Release v2026.3.3)",
+      "capture": {"capture_id": "2d0da64bb8a749f28bf0fae816d19089", "sha256": "a5e2ca8bea612640b94ca334fd06d07d3ce70bd0b458845eaab14d57b613daa", "captured_utc": "2026-10-05T21:14:54Z", "capture_path": "public_captures/a5e2ca8bea612640b94ca334fd06d07d3ce70bd0b458845eaab14d57b613daa.body", "bytes": 12844, "complete": true},
+      "key_facts": ["exact commit ordering for issue->fix->test->release", "release commit sha pins version applicability (v2026.3.3 onward)"],
+      "applicability": "Required chain — commit/release applicability."
+    },
+    {
+      "id": "S11",
+      "title": "tifffile issue #54 — can not parse positions from ome-tiff generated by micro-manager",
+      "url": "https://github.com/cgohlke/tifffile/issues/54",
+      "pin": "issue #54, opened 2021-01-14 by bryantChhun, closed 2021-01-15 by cgohlke; links image.sc forum thread",
+      "locator": "Issue body: inconsistent series shapes from Micro-Manager OME-TIFF ((50,5,3,2048,2048) vs partial (510,2048,2048))",
+      "capture": {"capture_id": "24a1d6df50b94411ab360bc54118498a", "sha256": "654ab708851a88b2c2b4a10129f46a58f1eeefff4374eb0640d80dca5365d4c6", "captured_utc": "2026-10-05T21:14:01Z", "capture_path": "public_captures/654ab708851a88b2c2b4a10129f46a58f1eeefff4374eb0640d80dca5365d4c6.body", "bytes": 4817, "complete": true},
+      "key_facts": ["real OME metadata that failed to parse", "changelog 2021.1.14 responds with 'Try ImageJ series if OME series fails (#54)'"],
+      "applicability": "Metadata-ambiguity precedent (secondary; commit-level chain not established — stated in proposal §3.6 limits)."
+    },
+    {
+      "id": "S12",
+      "title": "QuPath CHANGELOG.md (release notes 0.0.1-beta..0.8.0-in-progress)",
+      "url": "https://raw.githubusercontent.com/qupath/qupath/main/CHANGELOG.md",
+      "pin": "main branch, captured 2026-10-05; latest stable release per docs is 0.7.0",
+      "locator": "v0.2.1 #512 (abnormal close breaks data files), v0.2.1 #528 (AffineTransformImageServer pixel calibration), v0.2.2 #543/#568 (URI relocation), v0.3.x #648 (TileExporter downsample), v0.5.0 #1252 (backup restore on write failure), v0.6.0 #1494/#1516/#1668 (export losses; self-contained project relocation), v0.7.0 #1958 (B/C from lowest resolution)",
+      "capture": {"capture_id": "5e247c657f3e40e696e1308cc6d8f6e3", "sha256": "c2ce5425f9d0704c036b7efa3ac73afa1090ec70bbf0664de47c6e1bf2720f55", "captured_utc": "2026-10-05T21:17:01Z", "capture_path": "public_captures/c2ce5425f9d0704c036b7efa3ac73afa1090ec70bbf0664de47c6e1bf2720f55.body", "bytes": 114084, "read_ranges": ["0-32768 delivered", "65536-114084 read via read_file (range sha256 4375cbc6f90e95fbf459b66ed5ec165bab5ad99fec8ad3db94f3b362dc303015)"], "note": "bytes 32768-65536 (part of v0.3.x/v0.4.x notes) not read; items cited all fall in read ranges"},
+      "key_facts": ["documented durability/relocation/export-calibration failures and their fixes across a mature tool"],
+      "applicability": "Secondary failure evidence for atomic save, relocation, and export honesty; alternative-platform evidence."
+    },
+    {
+      "id": "S13",
+      "title": "QuPath 0.7.0 docs — Exporting annotations",
+      "url": "https://qupath.readthedocs.io/en/stable/docs/advanced/exporting_annotations.html",
+      "pin": "QuPath 0.7.0 documentation (stable), page last-modified header 2026-08-18, captured 2026-10-05",
+      "locator": "Admonition 'Units and origin'; GeoJSON section incl. 'GeoJSON limitations'; labeled image draw-order tip",
+      "capture": {"capture_id": "1183d0f02ff24075a8c3ddc7b550071a", "sha256": "df12ec58ce64a72dea1596677e444ade4684b12328555ed36fda1175c341f420", "captured_utc": "2026-10-05T21:17:26Z", "capture_path": "public_captures/df12ec58ce64a72dea1596677e444ade4684b12328555ed36fda1175c341f420.body", "bytes": 40941, "delivered_bytes": 32768, "note": "tail (labeled tiles section) undelivered; not cited"},
+      "key_facts": ["all shape exports: pixel units, origin top-left of full-resolution image; may differ from other software expectations", "GeoJSON turns ellipses into polygons", "labeled-image export: later-provided labels overwrite earlier per pixel"],
+      "applicability": "Export-contract precedent for the export-manifest design."
+    },
+    {
+      "id": "S14",
+      "title": "QuPath 0.7.0 docs — Project structure",
+      "url": "https://qupath.readthedocs.io/en/stable/docs/reference/projects_structure.html",
+      "pin": "QuPath 0.7.0 documentation (stable), captured 2026-10-05",
+      "locator": "Sections: The project.qpproj file; The data directory; The scripts directory; The classifiers directory",
+      "capture": {"capture_id": "e324d5433ba94511a95e9741015b953a", "sha256": "d43691575723d67efacba4cd10583feec21ab24a3b27ef690502be9998fe106f", "captured_utc": "2026-10-05T21:17:27Z", "capture_path": "public_captures/d43691575723d67efacba4cd10583feec21ab24a3b27ef690502be9998fe106f.body", "bytes": 12770, "complete": true},
+      "key_facts": ["project.qpproj = JSON entries with serverBuilder (reader + URI), entryID, names", "data/<entryID>/ holds data.qpdata + thumbnail + summary.json written together", "documented pattern of per-machine .qpproj copies on shared drives"],
+      "applicability": "Project-layout and relocation precedent."
+    },
+    {
+      "id": "S15",
+      "title": "rename(2) — Linux manual page (man-pages 6.19)",
+      "url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+      "pin": "man-pages 6.19, page dated 2026-02-08, captured 2026-10-05",
+      "locator": "DESCRIPTION (atomic replacement; failure leaves newpath in place), ERRORS (EXDEV), BUGS (NFS caveat)",
+      "capture": {"capture_id": "bb417749f1884a8c9f7f30cc5ebc2cdb", "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57", "captured_utc": "2026-10-05T21:18:18Z", "capture_path": "public_captures/8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57.body", "bytes": 23571, "complete": true},
+      "key_facts": ["atomic replacement semantics", "failure preserves existing file", "EXDEV across mount points", "NFS: failure does not imply not-renamed"],
+      "applicability": "Standards-level basis for atomic save and its shared-storage limits."
+    },
+    {
+      "id": "S16",
+      "title": "QuPath 0.7.0 documentation index (supports S13/S14 version pin)",
+      "url": "https://qupath.readthedocs.io/en/stable/",
+      "pin": "QuPath 0.7.0 documentation (stable), captured 2026-10-05",
+      "locator": "Page title 'Welcome to QuPath!'; 'The latest release is QuPath 0.7.0'",
+      "capture": {"capture_id": "91dcb9c1ef8344bc9548c185747d1059", "sha256": "2e5b0725fb785ded16ccd7532399f16af7259e354e2f7f97492b85969415b2a8", "captured_utc": "2026-10-05T21:17:01Z", "capture_path": "public_captures/2e5b0725fb785ded16ccd7532399f16af7259e354e2f7f97492b85969415b2a8.body", "bytes": 14855, "complete": true},
+      "key_facts": ["pins QuPath stable docs to version 0.7.0"],
+      "applicability": "Version pin corroboration for S13/S14."
+    }
+  ]
+}

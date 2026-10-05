@@ -1,18 +1,17 @@
 # External research v9
 
-Research-only campaign started 2026-10-05. Current cohort 003 records **two published GLM research activation records and zero completed research outputs and zero completed comparisons**, with separately reported failure-inclusive GLM and Luna mechanical route attempts. Frozen prospective inputs, independent evaluation protocol and route metadata/lifecycle evidence are now published. No supported winning recipe exists yet.
+Cohort 004 publishes the first **two frozen GLM research stages**: control completed its native Goal; treatment timed out with partial artifacts. Both are **semantically UNASSESSED**. This snapshot contains **zero completed whole pipelines and zero completed matched comparisons**. No supported winning recipe exists.
 
-- [Current results](RESULTS.md) and [machine-readable snapshot](CURRENT.json)
-- [Declared methods](methods.json), [finite queue](queue.json), [executed comparisons](comparisons.json), [attempt ledger](attempts.jsonl)
-- [Campaign input](input/CAMPAIGN_PLAN.json) and [restart boundary](RESTART.md)
-- [Publication selections and omissions](PUBLICATION.json)
+- [Current results](RESULTS.md), [snapshot](CURRENT.json), [attempts](attempts.jsonl), [comparisons](comparisons.json)
+- [Actual original I01 research artifacts and stage evidence](stages/I01-original/README.md)
+- [Failure-inclusive provider costs and mechanical diagnosis](execution/diagnosis-I01-v1/DIAGNOSIS.json)
+- [Declared methods](methods.json), [finite queue](queue.json), [early inputs](cases/README.md), [independent evaluation](evaluation/protocol/README.md)
+- [Neutral prospective diagnostic preparation](diagnostic-preparation/BUNDLE_README.md), [missing-partner evaluation interface](evaluation/dispatch/INTERFACE_ADDENDUM_v1_1.md)
+- [Route history](routes/README.md), [failure-inclusive routes](routes/COHORT003.md), [Luna dynamic-tool route selection](routes/luna/ROUTE_PUBLIC_SELECTION.json)
+- [Tools v1.2 framing successor](tools/versions/v1.2/README.md), [framing erratum](tools/errata/execution-v11-framing-erratum.json)
+- [Prospective selection policy](supervision/DECISIONS-002.md), [timeout successor policy](supervision/DECISIONS-003.md)
+- [Restart boundary](RESTART.md), [exact publication scope/omissions](PUBLICATION.json), [cohort provenance](history/cohort004.json)
 
-The target is 32 diagnostic pairs, 12 integrated pairs and 4 locked confirmation pairs (48 pairs, including 32 complete pipelines). Targets do not establish completion. Declared candidate families are Muse 1.3 Contributor Max, GLM 5.3 Flash Max and GPT-6 Luna Max; Luna lifecycle execution is reported separately from scored research. Every candidate stage must use its genuine native Goal. Independent source evaluation is outside candidate recipes.
+The target remains 32 diagnostic pairs, 12 integrated pairs and 4 locked confirmation pairs (48 pairs; 32 whole pipelines). Preparation, adapter checks and route canaries do not count toward those targets. GLM actual research execution is published; Luna's dynamic-tool synthetic route completion is separate, with earlier native-MCP failures preserved. Muse remains unavailable at its private-read/auth boundary. No scored Luna result is included here.
 
-Historical v8 remains closed at `873dc5996a78ffbb7017e4d5a862fc56921f668c`. This branch contains reports only; canonical Plans, main, WorkNodes and the sibling campaign remain outside its scope. Later cohorts must expose actual prompts, tool/configuration snapshots, semantic outputs, executed checks, independent reviews, comparison outcomes, failures and inclusive costs. No automatic product adoption follows.
-
-- [Prospective early inputs](cases/README.md), [evaluation protocol](evaluation/protocol/README.md), [route evidence](routes/README.md), [cohort history](history/cohort002.json)
-
-- [Failure-inclusive infrastructure cohort 003](routes/COHORT003.md), [pinned GLM engine](execution/README.md), [tools successor v1.1](tools/versions/v1.1/README.md)
-
-- [Frozen I01 activation metadata](activations/I01_ACTIVATION_ONLY_V1.json): two real GLM/max research Goal starts, UNASSESSED; no present liveness claim.
+Historical v8 remains closed at `873dc5996a78ffbb7017e4d5a862fc56921f668c`. This research branch does not adopt findings into Plans, main or WorkNodes. No present liveness claim is made for jobs outside these frozen selections.

@@ -1,0 +1,48 @@
+{
+  "schema": "er9.tools.verification.v1",
+  "version": "v1.2",
+  "status": "READY",
+  "verified_utc": "2026-10-05T21:36:24.387830+00:00",
+  "snapshot_sha256": "9b6d877f5caa79bacf3846e7ca3fec6ddbb66de919b416a1a1e38dd28b214b34",
+  "checks": [
+    {
+      "command": "python3 -B dev/tools/versions/v1.2/test_framing.py",
+      "exit_code": 0,
+      "tests": 6,
+      "elapsed_seconds": 3.94,
+      "scope": [
+        "persistent coalesced initialize/notification/tools-list",
+        "notification plus adjacent requests",
+        "fragmented frames",
+        "real execution and positive cgroup quiet",
+        "original absolute deadline with idle/partial request",
+        "original deadline/controller EOF during real sleeping code",
+        "unchanged source coalesced catalog/read"
+      ]
+    },
+    {
+      "command": "python3 -B dev/tools/versions/v1.2/test_tools.py",
+      "exit_code": 0,
+      "tests": 9,
+      "elapsed_seconds": 11.366,
+      "scope": "Full previous generic resource/network/private-files/JSON/actor/cleanup probes"
+    },
+    {
+      "command": "source_capture/test_source_capture.py",
+      "exit_code": 0,
+      "tests": 14,
+      "reuse": "Source adapter/server/test exact copied bytes from previously tested immutable versions; framing suite additionally exercises source real pipes."
+    }
+  ],
+  "framing_erratum": {
+    "path": "dev/tools/errata/execution-v11-framing-erratum.json",
+    "sha256": "f50b1092db344f4dc64685e35898b549d35c2bcc170814c920f2ee6dfa83a923"
+  },
+  "direct_v11_failed_reproduction": {
+    "path": "dev/tools/diagnosis/V11_COALESCED_STALL.json",
+    "sha256": "ec519486b4bfaf79597d50ea4342c0ce4c4a0c4b2c029b43121ac5ddcf255fb1"
+  },
+  "candidate_model_calls_for_fix": 0,
+  "tool_schemas_and_names_unchanged": true,
+  "admission": "Root authorized narrow framing successor after causal local reproduction; route owners select new config/pins prospectively. Existing active jobs keep selected old pins."
+}

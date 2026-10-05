@@ -1,0 +1,326 @@
+{
+  "schema": "er9.structural-stage-metrics.v1",
+  "job_id": "I-01-control-research-a001",
+  "source_scope": "Exact supplied stage files only; no recursive runtime scan, candidate text, tool arguments or source interpretation emitted",
+  "native_terminal": "completed",
+  "native_quiescent": true,
+  "native_ui_usage": {
+    "sessionId": "sess_228fa8a0-a744-454c-8b9a-9e377f3b3a21",
+    "totalTokens": 517700,
+    "inputTokens": 470260,
+    "outputTokens": 47440,
+    "reasoningTokens": 0,
+    "cacheCreationTokens": 0,
+    "cacheReadTokens": 0,
+    "modelRequestCount": 18,
+    "modelErrorCount": 0,
+    "inputBaselineBySource": {
+      "main_turn": 233349
+    }
+  },
+  "native_ui_usage_definition": "Conversation UI usage includes input-baseline behavior. Do not treat as repeated-request inclusive input total.",
+  "request_status_counts_post_cleanup": {
+    "model_request_completed": 18
+  },
+  "request_statuses_post_cleanup": {
+    "3b20acaf-6879-4359-95dd-2342860ecea4": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 160.422308
+    },
+    "7a9bedcf-4152-430d-a507-c2405d60c518": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 179.034114
+    },
+    "34b3f478-2613-40fe-994f-4738730e2ffb": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 190.613976
+    },
+    "7b938e83-8cb3-4c8b-b9de-0df4c707bc1e": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 214.886584
+    },
+    "10cfa329-90a0-4f83-8014-add73e0e8077": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 268.197576
+    },
+    "013b81e3-1326-4557-9e60-84236f518c68": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 289.523568
+    },
+    "98c04296-9058-4528-9e72-2d99a1903f91": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 318.113795
+    },
+    "023e5b70-123f-45da-b902-14509f80ff53": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 350.57695
+    },
+    "adeceee6-6f91-4559-bee8-43b202101cb6": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 371.479439
+    },
+    "b1a65045-8bd2-4576-9ab8-6c0360ddc856": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 395.212747
+    },
+    "2237d7c3-66e9-47fd-ae36-28c6e7ea2232": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 419.850859
+    },
+    "846b5a87-4c16-419b-a2da-99cd19c4b559": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 471.354328
+    },
+    "628d9542-0b5a-4795-b9b7-23ee74d3fea5": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 496.641993
+    },
+    "83e8bc78-dc5f-416d-bec2-66eaf2f78a76": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 805.949808
+    },
+    "468f006a-1772-4587-9e1b-b8331bcf4db9": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 967.857869
+    },
+    "141eea28-017d-45f6-ad7d-5642d6fa7db2": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 989.668619
+    },
+    "e4cc4925-f6eb-43d2-8791-97ff7f825400": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 1035.04421
+    },
+    "72857866-9135-4568-9ca8-32eb6e49e791": {
+      "status": "model_request_completed",
+      "last_observed_elapsed_seconds": 1073.341428
+    }
+  },
+  "native_goal_calls": [
+    {
+      "elapsed_seconds": 4.135993,
+      "action": "set"
+    }
+  ],
+  "last_structural_snapshots": [
+    {
+      "elapsed_seconds": 1060.33721,
+      "goal_status": "active",
+      "projection_status": "idle",
+      "active_tool_count": 0,
+      "pending_native_requests": 0
+    },
+    {
+      "elapsed_seconds": 1062.852714,
+      "goal_status": "active",
+      "projection_status": "idle",
+      "active_tool_count": 0,
+      "pending_native_requests": 0
+    },
+    {
+      "elapsed_seconds": 1065.372909,
+      "goal_status": "active",
+      "projection_status": "idle",
+      "active_tool_count": 0,
+      "pending_native_requests": 0
+    },
+    {
+      "elapsed_seconds": 1067.887433,
+      "goal_status": "active",
+      "projection_status": "idle",
+      "active_tool_count": 0,
+      "pending_native_requests": 0
+    },
+    {
+      "elapsed_seconds": 1070.531384,
+      "goal_status": "active",
+      "projection_status": "idle",
+      "active_tool_count": 0,
+      "pending_native_requests": 0
+    },
+    {
+      "elapsed_seconds": 1073.061208,
+      "goal_status": "active",
+      "projection_status": "idle",
+      "active_tool_count": 0,
+      "pending_native_requests": 0
+    },
+    {
+      "elapsed_seconds": 1075.588198,
+      "goal_status": "complete",
+      "projection_status": "idle",
+      "active_tool_count": 0,
+      "pending_native_requests": 0
+    },
+    {
+      "elapsed_seconds": 1076.16108,
+      "goal_status": "complete",
+      "projection_status": "idle",
+      "active_tool_count": 0,
+      "pending_native_requests": 0
+    }
+  ],
+  "turn_terminal_events": [
+    {
+      "elapsed_seconds": 4.553136,
+      "status": "success",
+      "duration_ms": 0
+    },
+    {
+      "elapsed_seconds": 1035.185127,
+      "status": "success",
+      "duration_ms": 1030415
+    }
+  ],
+  "telemetry_event_counts": {
+    "turn.started": 2,
+    "turn.terminal": 2,
+    "model.request.status": 36,
+    "stream.chunk": 23103,
+    "usage.delta": 17,
+    "tool.lifecycle": 135
+  },
+  "tool_lifecycle_counts": {
+    "mcp__pm_boundary__public_https_get": {
+      "scheduled": 33,
+      "started": 33,
+      "completed": 33
+    },
+    "mcp__pm_boundary__read_file": {
+      "scheduled": 1,
+      "started": 1,
+      "completed": 1
+    },
+    "mcp__pm_execution__python_execute": {
+      "scheduled": 3,
+      "started": 3,
+      "completed": 3
+    },
+    "mcp__pm_boundary__write_file": {
+      "scheduled": 4,
+      "started": 4,
+      "completed": 4
+    },
+    "mcp__pm_boundary__mechanical": {
+      "scheduled": 4,
+      "started": 4,
+      "completed": 4
+    }
+  },
+  "tool_lifecycle_semantics": "Completed means invocation terminal; not necessarily success. Use explicit prepared-result is_error separately.",
+  "source_tool_operations": 42,
+  "source_tool_error_operations": 0,
+  "source_tool_error_counts": {},
+  "repeated_error_fingerprints": [],
+  "invalid_argument_error_count": null,
+  "invalid_argument_error_definition": "Unknown: captured structural is_error does not expose an error class; HTTP/source failure and invalid argument are not silently conflated.",
+  "execution_operations": [
+    {
+      "execution_id": "exec-2ambjtod",
+      "execution_label": "executed by candidate",
+      "actor": "candidate",
+      "exit_code": 0,
+      "elapsed_seconds": 0.21742131900100503,
+      "cleanup_confirmed": true,
+      "unit_active_state_after_stop": "inactive"
+    },
+    {
+      "execution_id": "exec-gw87zrsh",
+      "execution_label": "executed by candidate",
+      "actor": "candidate",
+      "exit_code": 0,
+      "elapsed_seconds": 0.21652058098698035,
+      "cleanup_confirmed": true,
+      "unit_active_state_after_stop": "inactive"
+    },
+    {
+      "execution_id": "exec-zw6uyd4k",
+      "execution_label": "executed by candidate",
+      "actor": "candidate",
+      "exit_code": 0,
+      "elapsed_seconds": 0.21662289800588042,
+      "cleanup_confirmed": true,
+      "unit_active_state_after_stop": "inactive"
+    }
+  ],
+  "execution_nonzero_exits": 0,
+  "provider_attempt_rows": 18,
+  "provider_attempt_status_counts": {
+    "completed": 18
+  },
+  "provider_query_source_counts": {
+    "main_turn": 17,
+    "target_completion_verification": 1
+  },
+  "provider_attempt_field_sums": {
+    "input_tokens": 2468253,
+    "output_tokens": 47440,
+    "reasoning_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 1997504,
+    "provider_total_tokens": 2515693,
+    "computed_total_tokens": 2515693
+  },
+  "provider_attempt_null_counts": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "reasoning_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "provider_total_tokens": 0,
+    "computed_total_tokens": 0
+  },
+  "provider_counter_definitions": "Sum each exported field across individual native attempts, including native verifier. Input includes provider-reported cached input; do not add cache-read again. provider_total and computed_total are alternatives, not summands. Tokens are not dollars.",
+  "cancelled_usage_unknown": false,
+  "cancelled_usage_definition": "Zero-filled cancelled row is not proof of no consumed usage. Provider total null and unexposed partial streaming usage remain unknown.",
+  "usage_delta_event_counts_by_request": {
+    "3b20acaf-6879-4359-95dd-2342860ecea4": 1,
+    "7a9bedcf-4152-430d-a507-c2405d60c518": 1,
+    "34b3f478-2613-40fe-994f-4738730e2ffb": 1,
+    "7b938e83-8cb3-4c8b-b9de-0df4c707bc1e": 1,
+    "10cfa329-90a0-4f83-8014-add73e0e8077": 1,
+    "013b81e3-1326-4557-9e60-84236f518c68": 1,
+    "98c04296-9058-4528-9e72-2d99a1903f91": 1,
+    "023e5b70-123f-45da-b902-14509f80ff53": 1,
+    "adeceee6-6f91-4559-bee8-43b202101cb6": 1,
+    "b1a65045-8bd2-4576-9ab8-6c0360ddc856": 1,
+    "2237d7c3-66e9-47fd-ae36-28c6e7ea2232": 1,
+    "846b5a87-4c16-419b-a2da-99cd19c4b559": 1,
+    "628d9542-0b5a-4795-b9b7-23ee74d3fea5": 1,
+    "83e8bc78-dc5f-416d-bec2-66eaf2f78a76": 1,
+    "468f006a-1772-4587-9e1b-b8331bcf4db9": 1,
+    "141eea28-017d-45f6-ad7d-5642d6fa7db2": 1,
+    "e4cc4925-f6eb-43d2-8791-97ff7f825400": 1
+  },
+  "usage_delta_semantics": "Raw observed events only. Do not assume repeated events are independent incremental amounts without their native definition.",
+  "input_receipts": [
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-control-research-a001/native/receipt.json",
+      "sha256": "a4d4cc02668166da5a58ea684c937e83da7fcd83b285bdc37576ea16881860f1"
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-control-research-a001/native/protocol.redacted.jsonl",
+      "sha256": "ddd56b216095e0a2c84ba3a9776a97da2e0c9e6983112feb7c8428beee853cda"
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-control-research-a001/native/provider-usage.redacted.jsonl",
+      "sha256": "57821d4e1dbfe9e99271a9819e7c9b33bf179013a23116b53e65fbd3fec2a030"
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-control-research-a001/operation_receipts/events.jsonl",
+      "sha256": "5081b9e57c42fae713b18bfea33e88276f758187ba28e41cccc36616581f42b6"
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-control-research-a001/operation_receipts/executions/exec-2ambjtod/result.json",
+      "sha256": "32e0ad9155a563a2c95d7efb358665b54aa05b6452576607d763be7102c562eb"
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-control-research-a001/operation_receipts/executions/exec-gw87zrsh/result.json",
+      "sha256": "cc1d9c4ad882ef7652cb1757996145cbdcf7204b9920e36f88542326ee184e12"
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-control-research-a001/operation_receipts/executions/exec-zw6uyd4k/result.json",
+      "sha256": "2ecca4c921b2fb88e178d32ee45cea5e3039c4779adcad90197de1519c1067e1"
+    }
+  ]
+}

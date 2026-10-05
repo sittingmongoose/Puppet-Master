@@ -1,0 +1,157 @@
+{
+  "catalog_version": "research-2026-10-05",
+  "note": "Every entry records URL, pin, exact locator, capture identity (from the public_https_get receipts of this session), and applicability. 'delivered' notes byte ranges actually reviewed where the tool capped transmission. Captures are exact HTTP response bodies; semantic acquisition is NOT asserted by the capture itself.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "napari issue #7962: [Shapes] Consider that layer list contextual menu Shapes to Labels use LayerList.extent",
+      "url": "https://github.com/napari/napari/issues/7962",
+      "pin": "napari/napari issue 7962; created 2025-05-23; closed 2025-09-24 (state_reason completed)",
+      "exact_locator": "Issue body: 'the Shapes.extent will be used, so you will get a Labels layer that does not match the size of the image layer ... when you save the layer for using later it doesn't match what you expect'",
+      "capture_identity": {"capture_id": "1356704c488347afa036f8076755717c", "sha256": "eb82e8d95342e89e638a324ac4db8d428a16bb1737f274a26a358d50da028d2e", "captured_utc": "2026-10-05T21:15:05Z", "delivery": "complete (5156 bytes)"},
+      "applicability": "Chain-1 anchor: annotation-derived rasters must be sized by the image extent, not the annotation extent; directly motivates scope/extent binding in the data contract."
+    },
+    {
+      "id": "S02",
+      "title": "napari PR #8098 'Fix effect of scaling when converting shapes to labels' (merged 2025-09-24) - file list with patches",
+      "url": "https://github.com/napari/napari/pull/8098",
+      "pin": "merged_at 2025-09-24T09:07:55Z; head blobs at commit 9592252d83b45150c04e8f27b0e1eacf1202a360; milestone 0.6.5",
+      "exact_locator": "src/napari/layers/_layer_actions.py patch: data = lay.to_labels(labels_shape=lay.world_to_data(ll_shape)); src/napari/layers/_tests/test_layer_actions.py patch: adds parametrized test_make_label_from_shape_param with xfail case 'Converting layers with translations does not work'",
+      "capture_identity": {"capture_id": "573a4981cfaf46c48fe9488d7e852abb", "sha256": "7dabd78b0c839d1298c73fb4fa73f3fbfd7dc63c23d79bbda2d8bd8088067b48", "captured_utc": "2026-10-05T21:15:07Z", "delivery": "complete (3273 bytes)"},
+      "applicability": "Chain-1 fix + regression test; shows world->data conversion as the fault point; fix limits (translation xfail, static extent) are stated in the same patch."
+    },
+    {
+      "id": "S03",
+      "title": "napari release 0.6.5 notes (GitHub release JSON)",
+      "url": "https://github.com/napari/napari/releases/tag/v0.6.5",
+      "pin": "tag v0.6.5, published 2025-10-02T02:18:34Z, target d2ec944fee10b7fe0fe5f2dc14493b2601b9df81",
+      "exact_locator": "body '## Bug Fixes' -> '- Fix effect of scaling when converting shapes to labels ([#8098])'; also 'New task manager ([#8211]) ... showing a confirmation dialog if you attempt to close napari while a task is running'; also zarr-handling fixes #8260/#8267/#8268",
+      "capture_identity": {"capture_id": "6b8b9caf34c443a6aadd69c31f7c3a9c", "sha256": "5265faad007283ead9a033b7b24c7c70e38f00592ea6d4f9ac04e51eff2eb875", "captured_utc": "2026-10-05T21:15:07Z", "delivery": "first 32768 of 37044 bytes reviewed; the cited Bug Fixes and task-manager lines are inside the delivered window"},
+      "applicability": "Chain-1 release applicability; cancel/close guard precedent; napari self-description (Qt + vispy + numpy/scipy)."
+    },
+    {
+      "id": "S04",
+      "title": "GitHub search capture containing napari PR #9337 'Support for non-orthogonal 2D slicing of nD images and labels' (open PR, full description)",
+      "url": "https://github.com/napari/napari/pull/9337",
+      "pin": "PR_kwDOCJ0aI875Gp1t; created 2026-07-31; state open at capture; labels: feature, bugfix, highlight",
+      "exact_locator": "body sections 'Transform semantics and notation' (chain tile2data -> data2physical -> physical2world; A_vispy = A_pw ∘ A_dp ∘ A_td) and 'Things that are not (yet?) covered' ('Correct consideration of units. This PR applies apply_units_to_transform ... I have not ... fully validate this')",
+      "capture_identity": {"capture_id": "903a4d539ee548b1a9433e8ee941bd5e", "sha256": "3ebaae7c667678ed296b6f023f4810a1e58700835c34d392d861a4816694756d", "captured_utc": "2026-10-05T21:13:48Z", "delivery": "first 32768 of 88467 bytes reviewed; PR #9337 item and body are within the delivered window"},
+      "applicability": "Precedent P1 mechanism: explicit per-layer affine transform chain separating data/physical/world frames; caveat that unit handling upstream is not fully validated."
+    },
+    {
+      "id": "S05",
+      "title": "QuPath issue #1252: PathIO doesn't restore backup if writing ImageData fails",
+      "url": "https://github.com/qupath/qupath/issues/1252",
+      "pin": "created 2023-03-14; closed 2023-08-24; milestone v0.5.0-rc1 (issue JSON shows milestone object titled 'v0.5.0-rc1')",
+      "exact_locator": "body: 'if it is not successful then the backup is not automatically restored ... One approach would be to write a new temporary file, and then only rename if the writing has succeeded'; links image.sc forum thread on a corrupted file",
+      "capture_identity": {"capture_id": "b41cc96ffc2447c3af0e1c9f547e2095", "sha256": "b730b1d2de1c3585826abb06f6ce521b35c37459ebc08ebe414531576097ca8c", "captured_utc": "2026-10-05T21:16:11Z", "delivery": "complete (5967 bytes)"},
+      "applicability": "Chain-2 anchor: interrupted/failed save must restore prior state; proposal's atomic-save + recovery-scan protocol."
+    },
+    {
+      "id": "S06",
+      "title": "QuPath issue #1252 timeline (API) - referencing commits and cross-referenced PRs",
+      "url": "https://api.github.com/repos/qupath/qupath/issues/1252/timeline",
+      "pin": "events captured 2026-10-05; contains repo metadata snapshot (license GPL-3.0)",
+      "exact_locator": "referenced event commit 15e715de813cf97a26ebec36600d2f76379f75fc; cross-referenced PR #1255 'JavaFX update and fixes' (body: 'Fix for https://github.com/qupath/qupath/issues/1252') merged_at 2023-03-23T17:35:06Z; cross-referenced PR #1300 'More bug fixes' merged_at 2023-08-24T16:27:11Z; maintainer comment 2023-03-14 explaining NPE-vs-IOException root cause",
+      "capture_identity": {"capture_id": "9e9e12fba2ed45b795f62f257e954b08", "sha256": "26b3e0af648e7321ac8eb7eecb9440f9a36716bec425cbf8dad02b11b68e4e26", "captured_utc": "2026-10-05T21:16:35Z", "delivery": "complete (30467 bytes)"},
+      "applicability": "Chain-2 linkage: identifies the fix PR and merge dates; repo license fact (GPL-3.0) used in the alternatives section."
+    },
+    {
+      "id": "S07",
+      "title": "QuPath PR #1255 files - PathIO.java exception-wrapping patch",
+      "url": "https://github.com/qupath/qupath/pull/1255",
+      "pin": "merged 2023-03-23T17:35:06Z; file blobs at commit 74542ddb25ba0f463d4a9f3e9614b2c4f9f73ba6",
+      "exact_locator": "qupath-core/src/main/java/qupath/lib/io/PathIO.java patch: 'catch (Exception e) { if (e instanceof IOException ioe) throw ioe; else throw new IOException(e); }' plus EOFException re-throw",
+      "capture_identity": {"capture_id": "07ada6f3253a483aa2df9c94283abcfe", "sha256": "be666280c9c9c80b2464fd88f64cdda7f0f1b523370c93ea3b5268598d54c035", "captured_utc": "2026-10-05T21:18:01Z", "delivery": "first 32768 of 42959 bytes reviewed; the PathIO.java patch and filenames are within the delivered window; a residual tail of the file list (~10 KB) was NOT reviewed - absence of tests is claimed only for the reviewed portion"},
+      "applicability": "Chain-2 fix mechanism: make every read/save failure surface as IOException so the backup-restore path runs. Limits: no regression test file in the reviewed portion."
+    },
+    {
+      "id": "S08",
+      "title": "QuPath PR #1300 'More bug fixes' files",
+      "url": "https://github.com/qupath/qupath/pull/1300",
+      "pin": "merged 2023-08-24T16:27:11Z; head commit 15e715de813cf97a26ebec36600d2f76379f75fc",
+      "exact_locator": "CHANGELOG.md patch adds '* PathIO doesn't restore backup if writing ImageData fails (https://github.com/qupath/qupath/issues/1252)'; file list = CHANGELOG.md, Dialogs.java, ProjectImportImagesCommand.java, DefaultScriptEditor.java (no PathIO.java)",
+      "capture_identity": {"capture_id": "5178f084343e450fa0a59c16dd301d69", "sha256": "a22918d464d89b30d242a021fbed950ce69e2ebb38cba747a65d2725bd20e673", "captured_utc": "2026-10-05T21:17:11Z", "delivery": "complete (11317 bytes)"},
+      "applicability": "Chain-2 bookkeeping: confirms #1300 only documents #1252; the code change is #1255's."
+    },
+    {
+      "id": "S09",
+      "title": "QuPath CHANGELOG.md (raw, main branch)",
+      "url": "https://raw.githubusercontent.com/qupath/qupath/main/CHANGELOG.md",
+      "pin": "etag \"595b725bfbccb4a36a85fe410ba9cabde54e8027c421f82fe1f6bc31402decc1\"; sections v0.8.0 (in progress) down to v0.2.x reviewed",
+      "exact_locator": "v0.5.0: display-settings save/restore in projects; bugs: PathIO backup #1252, TileExporter loses pixel size/channel colors #1516; v0.6.0: OME-Zarr read/write #1474, self-contained projects don't prompt URI update #1668, missing-image warning indicator + 'Skip file checks in projects' pref, UriResource/UriUpdater (code changes), InstanSeg support; v0.7.0: tile cache keyed by path insufficient #2012, arrow-key nav speed #2038, multi OME-Zarr import #1989; v0.3.x window: arrow-key z/t navigation bug #748; v0.2.1 window: 'Closing QuPath abnormally can result in broken data files (#512)', AffineTransformImageServer did not update pixel calibration #528; v0.2.2 window: URI resolve across filesystems #543; v0.8.0 window: 'Length µm in pixels' #2158",
+      "capture_identity": {"capture_id": "f77fd433f32f4912b59c37320f2defdd", "sha256": "c2ce5425f9d0704c036b7efa3ac73afa1090ec70bbf0664de47c6e1bf2720f55", "captured_utc": "2026-10-05T21:15:08Z", "delivery": "first 32768 bytes plus window [65536,85536) (range sha256 97662d241788430a266e4829b2a360cc703849312dfe6c5e823daadee158780f); bytes [32768,65536) and [85536,114084) NOT reviewed"},
+      "applicability": "Precedent P2 mechanisms (relocation, warnings, tile cache, display persistence) and risk evidence for export/unit honesty and recovery."
+    },
+    {
+      "id": "S10",
+      "title": "QuPath release v0.4.0 (GitHub release JSON)",
+      "url": "https://github.com/qupath/qupath/releases/tag/v0.4.0",
+      "pin": "tag v0.4.0 published 2022-12-02T18:48:09Z",
+      "exact_locator": "body: short announcement pointing to CHANGELOG.md for details",
+      "capture_identity": {"capture_id": "9a19ff2a86b247f197f42217bf975cfc", "sha256": "9b1e7c2a3748f291a30ebfd86c9109c073d575ab7d72260b406da4a7cd56b276", "captured_utc": "2026-10-05T21:14:32Z", "delivery": "complete (11853 bytes)"},
+      "applicability": "Establishes that release-tag notes alone are thin; changelog (S09) is the locator of record for QuPath claims."
+    },
+    {
+      "id": "S11",
+      "title": "OME-NGFF 0.4 specification (Next-generation file formats, Final Community Group Report)",
+      "url": "https://ngff.openmicroscopy.org/0.4/",
+      "pin": "spec revision meta a4c68004fdb8a8d822367205dc12f9574a32ddf8, updated 2026-10-01; ETag W/\"a34b4d538e29489772eebf7fe832f7c7\"",
+      "exact_locator": "sec 2.1 image layout (.zgroup/.zattrs, per-level arrays, chunk files); sec 3.1 axes (name/type/unit, UDUNITS-2 unit names); sec 3.3 coordinateTransformations (identity/translation/scale; List[float] or path); sec 3.4 multiscales (axes 2-5, ordering time->channel->space, zyx SHOULD, exactly one scale per dataset, translation only after scale, group-level transforms applied after); sec 3.5 omero channel window (color, window min/max/start/end); sec 3.6 labels; sec 3.7 image-label (label-value, rgba, properties, source.image)",
+      "capture_identity": {"capture_id": "c9c59652ad5d4e4c834aba0c75835539", "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269", "captured_utc": "2026-10-05T21:13:50Z", "delivery": "windows [32768,65536) sha 7d7ea1eb..., [65536,98304) sha c4be1c64..., [98304,131072) sha 329e9a56... reviewed; bytes [131072,163120) NOT reviewed (implementations/history sections expected there)"},
+      "applicability": "Data-contract backbone: explicit axes/units, scale/translation transforms, display windows, labels exchange, chunk-addressable layout for bounded access."
+    },
+    {
+      "id": "S12",
+      "title": "zarr-python README (raw)",
+      "url": "https://raw.githubusercontent.com/zarr-developers/zarr-python/main/README.md",
+      "pin": "main branch at capture; describes the Zarr storage format",
+      "exact_locator": "'The zarr library is a Python implementation of the Zarr storage format. zarr delivers compressed, chunked, N-dimensional arrays ...' ; features: chunk along any dimension, concurrent read/write, groups/hierarchies",
+      "capture_identity": {"capture_id": "10bdfc3bc0ee4042bb0cb6571f702e4e", "sha256": "2cf2e111cb92b2b6d6236bca9629e32d901e88234a2bb05b225aede20f817b28", "captured_utc": "2026-10-05T21:16:36Z", "delivery": "complete (3533 bytes)"},
+      "applicability": "Precedent P3 mechanism: chunked N-D arrays enabling bounded access without full decode."
+    },
+    {
+      "id": "S13",
+      "title": "tifffile CHANGES.rst (raw)",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/CHANGES.rst",
+      "pin": "latest section '2026.9.20' at capture",
+      "exact_locator": "2026.9.20 head; 2026.5.2 'Update ZarrTiffStore to zarr format 3 and multiscales to NGFF 0.5 (breaking)' and 'Update multiscales zarr format 2 fsspec files to NGFF 0.4'; 2026.2.15/16 multi-file pyramidal OME TIFF support; 2025.6.11 'Fix reading images with dimension length 1 through Zarr (#303)'; 2024.12.12 'Zarr 3 is not supported (#272)'; 2025.5.21 'Require Zarr 3 ... remove support for Zarr 2'; 2021.7.4 'Read NDPI files > 4 GB (#15)'; 2024.5.3 'Fix reading incompletely written LSM'",
+      "capture_identity": {"capture_id": "355ecb2feda8402bb91063b4c37e6e8d", "sha256": "fd4abd6060eb363ebdc6776b6e1958bf9d74dfac6c6fdd360f715a421c92207e", "captured_utc": "2026-10-05T21:18:02Z", "delivery": "first 32768 of 45003 bytes reviewed (versions 2026.9.20 back to ~2019.1.30); remainder NOT reviewed"},
+      "applicability": "Precedent P4: support boundary is a moving target; version pinning + integration corpus justified; current pin candidate 2026.9.20."
+    },
+    {
+      "id": "S14",
+      "title": "napari API documentation - napari.layers.Image page",
+      "url": "https://napari.org/stable/api/napari.layers.Image.html",
+      "pin": "stable docs at capture; theme_switcher_version_match 0.9.2 in page metadata; Last-Modified 2026-10-05",
+      "exact_locator": "class signature parameters include data, affine, ...; sidebar/API surface lists napari.layers.{Image,Labels,Points,Shapes,Layer}, napari.utils.transforms.{Affine,CompositeAffine,ScaleTranslate,Transform,TransformChain}, napari.utils.{progress,cancelable_progress}, napari.qt.threading.{GeneratorWorker,WorkerBase}, napari.qt.QtViewer, napari.utils.notifications",
+      "capture_identity": {"capture_id": "852bd6c8a7194445ba66f42b08d8cbcf", "sha256": "2f33a8571acbe2044422eca1a2e7fa390092405b014cbb59939a20cb268df3fd", "captured_utc": "2026-10-05T21:18:02Z", "delivery": "first 32768 of 253595 bytes reviewed (head + full navigation tree + start of class signature); the parameter reference bodies (e.g. contrast_limits text) are deeper in the page and were NOT reviewed"},
+      "applicability": "Embedding-surface evidence: layers, transform utilities, cancellable workers, progress, QtViewer exist as public API components."
+    },
+    {
+      "id": "S15",
+      "title": "rename(2) - Linux manual page (man7.org)",
+      "url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+      "pin": "man-pages 6.19, page dated 2026-02-08, HTML rendering 2026-09-09",
+      "exact_locator": "DESCRIPTION: 'If newpath already exists, it will be atomically replaced, so that there is no point at which another process attempting to access newpath will find it missing'; BUGS: 'On NFS filesystems, you can not assume that if the operation failed, the file was not renamed'",
+      "capture_identity": {"capture_id": "246e1fd86f9b4df5b318cc8fe6ccccbd", "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57", "captured_utc": "2026-10-05T21:16:11Z", "delivery": "complete (23571 bytes)"},
+      "applicability": "Atomic-save semantics and its shared-storage (NFS) limits; motivates checksummed manifest + recovery scan in addition to rename."
+    },
+    {
+      "id": "S16",
+      "title": "napari/docs repository contents (root and docs/ listings)",
+      "url": "https://api.github.com/repos/napari/docs/contents/",
+      "pin": "main at capture; docs/ tree contains guides/, howtos/, tutorials/, api/, developers/, release/, naps/",
+      "exact_locator": "JSON listings of repo root and docs/",
+      "capture_identity": {"capture_id_root": "904fa0a17e2843ccb78e68f90e153df8 sha256 89f1b827153b919a4896f15fa22c5d6c3e7ce5b0be326a04b9c24e690cf168a9 (2026-10-05T21:16:10Z, complete)", "capture_id_docs": "fe252a2d8c2e404abdd1e5ba40665738 sha256 687768ba7e39a1c687878a0c6dfafc1402bced5124569a4ff7f38653f03dc368 (2026-10-05T21:16:36Z, complete)"},
+      "applicability": "Confirms napari documentation tree exists for future deep-dives; negative results below prevent stale-path citations."
+    }
+  ],
+  "negative_results": [
+    {"url": "https://raw.githubusercontent.com/napari/docs/main/docs/deep_dives/coordinate_systems.md", "status": 404, "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed", "note": "guessed path does not exist; do not cite napari coordinate-systems deep dive without re-locating it"},
+    {"url": "https://simpleitk.readthedocs.io/en/v2.2.0/fundamental_concepts.html", "status": 404, "sha256": "193732e823fb0c1e151461add491746693fff4d3ba28156e5388f9d25a4438fb", "note": "SimpleITK geometry page not at guessed location; ITK physical-geometry claims therefore rest on NGFF axes/units + direction-matrix convention instead"},
+    {"url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/CHANGES", "status": 404, "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed", "note": "file renamed; correct file is CHANGES.rst (S13)"},
+    {"url": "https://raw.githubusercontent.com/napari/docs/main/docs/guides/layers.md", "status": 404, "sha256": "34e365f2bb5f44b3ab567373fbb96354", "note": "napari guides page lives elsewhere; layer semantics cited via S04/S14 instead"},
+    {"url": "https://itk.org/Doxygen/html/classitk_1_1Image.html", "status": "tool error (boundary failure: ValueError)", "note": "fetch failed; no ITK doxygen citation used"}
+  ]
+}

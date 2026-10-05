@@ -1,0 +1,2353 @@
+{
+  "schema": "er9.diagnostic-positive-publication-selection.v1",
+  "native_starts": 0,
+  "files": [
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/ADMISSION_OVERLAY_01.json",
+      "relative_path": "ADMISSION_OVERLAY_01.json",
+      "sha256": "ef3d0811d12bd0c7cc1e6ae8dd3d80ffdf4045a6e8219505ebb0097530ddd803",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/README.md",
+      "relative_path": "README.md",
+      "sha256": "0522c98cadc4e9abc2e8a8cae3b6761a552c848f536eaeb762020a17c7469c08",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/SEED_MANIFEST_CONTRACT.md",
+      "relative_path": "SEED_MANIFEST_CONTRACT.md",
+      "sha256": "b60c1d31a0b6ad57672d33ea00af4eb3cd5087f3fabdf3325cf6efc43672ef4a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/SOURCE_PINS.json",
+      "relative_path": "SOURCE_PINS.json",
+      "sha256": "224ed377500c72444462e35d239b2e2bd767b47a673e439d1fba84323207fd36",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/VERIFICATION.json",
+      "relative_path": "VERIFICATION.json",
+      "sha256": "e36f01a042bd844b89c9200e325bb98b5c13c4af267999a64c79e48a01dd23d8",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/STANDBY_SELECTION.json",
+      "relative_path": "alternatives/STANDBY_SELECTION.json",
+      "sha256": "1e3e542ab021ed9b86ec8da1e65481e9318491f262bca1229e8e7e6194f14863",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V01-B-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V01-B-GLM-S1.json",
+      "sha256": "4ddecd867df55b9a1d19f784a6cf2b897b455daad5ab47d89e9ed7bf9261af9d",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V02-A-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V02-A-GLM-S1.json",
+      "sha256": "f7af3611eb39a6d7b0db640595430442cff91caba198eb367a8c90c383adaace",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V02-B-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V02-B-GLM-S1.json",
+      "sha256": "c86077bb221260ac325928137d2bfc8691caa7db0cbf505c346d01395a7f5d8c",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V03-A-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V03-A-GLM-S1.json",
+      "sha256": "c84ca4b4cd349b8584d3b5cd52e58b2eeee20b1be050f0e56754779dcefc2bcc",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V03-B-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V03-B-GLM-S1.json",
+      "sha256": "d20b89fd2d34a69ff298122b9e32a2a8fd7c2fe6608863fa0d806088bff344b3",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V04-A-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V04-A-GLM-S1.json",
+      "sha256": "325fe96ec92e44d2b4f4e128571b073b1cf8ebca23bc775aa36bfd24db3cc320",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V04-B-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V04-B-GLM-S1.json",
+      "sha256": "12c5f637a606eca5f1f8bb3fa1308967be18e159cee0d1fd9b065519d1ca5c75",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V05-A-LUNA-R1-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V05-A-LUNA-R1-GLM-S1.json",
+      "sha256": "01edc957bae369b8ab1aa9ddba22d8481b3f726986db6cb6f42ddb0f94b8f874",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V05-B-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V05-B-GLM-S1.json",
+      "sha256": "c9ca9c38669634ce9eb92723e59530de5aa03dcea64a552a501b4ca63f79ec49",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V06-A-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V06-A-GLM-S1.json",
+      "sha256": "e9c7d96ea9a91a3a0a2b5d6ba55a014604ab8bf5763ba81610d97277b4ede1fc",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V06-B-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V06-B-GLM-S1.json",
+      "sha256": "24d4aaee3b032fe423425ef4c0604b47156f93b2881c9cfdeb21e7a448d582cd",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V07-A-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V07-A-GLM-S1.json",
+      "sha256": "07fdcb8217e613e99e38406ae2c917e12f063a6dc5acbbdcd26cbe2cd757c0cd",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V07-B-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V07-B-GLM-S1.json",
+      "sha256": "cea95a9b167ce1b5983cb3d00da5e4bf7f71d276b9b6f05c159765b80adb5ae7",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V08-A-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V08-A-GLM-S1.json",
+      "sha256": "54bdc3c837a8f5e55ac715c91b6564253029ada0c00d877f7ad2a5dda9169b06",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V09-A-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V09-A-GLM-S1.json",
+      "sha256": "3d2d9fbbd4a981125978e43484623162dd6bf9bf05bcd9e71c4f3106df6612af",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V09-B-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V09-B-GLM-S1.json",
+      "sha256": "90c3a8f10831f019524adecdd508a77cc9679679e324344cadff81ee741d7d51",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V10-A-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V10-A-GLM-S1.json",
+      "sha256": "7290a14b10732ee691b7b005a8665ab7970d32ae2e0c00a2587a1a96cf4c5ec2",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V10-B-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V10-B-GLM-S1.json",
+      "sha256": "0543cc5605d7fe53f35441d3dc2ccd299029f3ce6805956d7b814c1164b0ec43",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V11-A-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V11-A-GLM-S1.json",
+      "sha256": "fcf15a7deecdd52f9d619c6ebd1f170fcf19d112373e8c9c653aa395b5446066",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V11-B-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V11-B-GLM-S1.json",
+      "sha256": "f752eaaa8a05613b7516c895ffc9a365edbc493989a5765c5c6d110e0945f464",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V12-A-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V12-A-GLM-S1.json",
+      "sha256": "15c695a7d079585dedf9076a3485f505dce9a4b9573f32237036fb2e180750e8",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V12-B-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V12-B-GLM-S1.json",
+      "sha256": "b8e5818cdaa9150b2ec1379cc57e13c5a845be387fe0e97cb81a74e98f39589a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V13-A-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V13-A-GLM-S1.json",
+      "sha256": "ea6a066f29e61b869690afe862606dd5b6cef7484fbaf9fcf7ec1ecc4d396c6c",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V13-B-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V13-B-GLM-S1.json",
+      "sha256": "bfea6f4c4c658c899cf31dd945a2038af25355c622ba72243c07d06b8561c95a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V14-A-LUNA-R1-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V14-A-LUNA-R1-GLM-S1.json",
+      "sha256": "a788732b9d8ce101f7ace54920495ef6feb40979c4a8d984a03f62f15c6d3ef5",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V14-B-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V14-B-GLM-S1.json",
+      "sha256": "e58893c2b8fdea5dada46f979ff0975b076628a3de053c2b66569d4438a6cf62",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V15-A-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V15-A-GLM-S1.json",
+      "sha256": "165fed47eb5aaa07fe2fe44f4e18a09486cd73867583df42af46a4ffa73c8a51",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V15-B-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V15-B-GLM-S1.json",
+      "sha256": "657ccfce4ff09616d30bc9b83152787219e31c05d54d82c1aa04a6ad1ddc9152",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V16-A-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V16-A-GLM-S1.json",
+      "sha256": "69242d268a5bfd358c07a5f030efc10c9fc2ed937b6b9c5b5a86a16fdb863c5e",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/cards/D-V16-B-GLM-S1.json",
+      "relative_path": "alternatives/cards/D-V16-B-GLM-S1.json",
+      "sha256": "2855f1866cb8747ba6ee5ccbb86e725449e010711abb38da07f034337ff97914",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/plans/D-V01-B-GLM-S1.json",
+      "relative_path": "alternatives/plans/D-V01-B-GLM-S1.json",
+      "sha256": "c71a0f0b3d6af4a68fbfd2c0e11ee3cae0c4e1dc41b51c665f61ec4baf1c822a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/plans/D-V02-A-GLM-S1.json",
+      "relative_path": "alternatives/plans/D-V02-A-GLM-S1.json",
+      "sha256": "4a1641a99896f65d53242d4eb12050218d5d96a1b55857734df8ec6e8c834515",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/plans/D-V02-B-GLM-S1.json",
+      "relative_path": "alternatives/plans/D-V02-B-GLM-S1.json",
+      "sha256": "24533ede16f4dc83741f2170cff41468e448d1cd84e275d98f94555bae71722c",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/plans/D-V03-A-GLM-S1.json",
+      "relative_path": "alternatives/plans/D-V03-A-GLM-S1.json",
+      "sha256": "5f3b828487aa098eb9f3ea39f77a887c5fb042c95f1d77137a5bdd7c49d94cbb",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/plans/D-V03-B-GLM-S1.json",
+      "relative_path": "alternatives/plans/D-V03-B-GLM-S1.json",
+      "sha256": "ebc8dca7ef81351cef0496c277cc811a220e32fc4e3f1fd607e62310661df233",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/plans/D-V04-A-GLM-S1.json",
+      "relative_path": "alternatives/plans/D-V04-A-GLM-S1.json",
+      "sha256": "39fbf089313c616813c74ba2858d8e92e03a4657eb5d181f143cb723bf40f4dc",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/plans/D-V04-B-GLM-S1.json",
+      "relative_path": "alternatives/plans/D-V04-B-GLM-S1.json",
+      "sha256": "f6dc12a4ff33c0ea335a6369f551602bd667314954cb03d98b21797f75d503d8",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/plans/D-V05-A-LUNA-R1-GLM-S1.json",
+      "relative_path": "alternatives/plans/D-V05-A-LUNA-R1-GLM-S1.json",
+      "sha256": "562bc6c912abecb96a32f867a252e6354ba1940c0ae2753d6a51ec4fe66cfd8b",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/plans/D-V05-B-GLM-S1.json",
+      "relative_path": "alternatives/plans/D-V05-B-GLM-S1.json",
+      "sha256": "9b7a5858be7d2ea0c24846b87996c8a30fc6e7701bf7f9b55601c719a59846fe",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/plans/D-V06-A-GLM-S1.json",
+      "relative_path": "alternatives/plans/D-V06-A-GLM-S1.json",
+      "sha256": "8584a9bc286f1d933c1ed5cc4e2cfad115aeec59a41113cb3db81edc79444446",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/plans/D-V06-B-GLM-S1.json",
+      "relative_path": "alternatives/plans/D-V06-B-GLM-S1.json",
+      "sha256": "b6677c9212ff54f294a909544cac7c8b3f4f7ea00ac7b95b3ca0c7b0d8870188",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/plans/D-V07-A-GLM-S1.json",
+      "relative_path": "alternatives/plans/D-V07-A-GLM-S1.json",
+      "sha256": "588302aba51b1cd7ac14199a4050afcbf211ce14a37b95bbe48d53f9f3d6ba3f",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/plans/D-V07-B-GLM-S1.json",
+      "relative_path": "alternatives/plans/D-V07-B-GLM-S1.json",
+      "sha256": "a1ebed846be3999621417f5e3ca931357f8d5211cd857b9791c320cb434c4d26",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/plans/D-V08-A-GLM-S1.json",
+      "relative_path": "alternatives/plans/D-V08-A-GLM-S1.json",
+      "sha256": "20ec50297790c71b440c5e55732448352f0fc315416740d144be2ff3144dc37d",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/plans/D-V09-A-GLM-S1.json",
+      "relative_path": "alternatives/plans/D-V09-A-GLM-S1.json",
+      "sha256": "e53c940d64369f8907e1c4346d8d24bfe1c57b704b97a2b65f584bec454545f2",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/plans/D-V09-B-GLM-S1.json",
+      "relative_path": "alternatives/plans/D-V09-B-GLM-S1.json",
+      "sha256": "34e50f1d8a3748fa1768441314e533e8331c5633110cfcaab1e190cbe28adef5",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/plans/D-V10-A-GLM-S1.json",
+      "relative_path": "alternatives/plans/D-V10-A-GLM-S1.json",
+      "sha256": "4a15296fa04afd485402c7a72b9054dc818f44d5e4610a5367d6732e7303fe9a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/plans/D-V10-B-GLM-S1.json",
+      "relative_path": "alternatives/plans/D-V10-B-GLM-S1.json",
+      "sha256": "1da9b0aa5feeed3e1a9798b9f6f7646d406d53fbfb18277f7ed3986c835abfc9",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/plans/D-V11-A-GLM-S1.json",
+      "relative_path": "alternatives/plans/D-V11-A-GLM-S1.json",
+      "sha256": "3a98fbad9859587ba3e7bada2c91d1e72121ce1b3b698137b2fab72abd4646c7",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/plans/D-V11-B-GLM-S1.json",
+      "relative_path": "alternatives/plans/D-V11-B-GLM-S1.json",
+      "sha256": "550c5ea89b1b7fe63d27b87127b0727b24abb4b7678f7119ecb51e25c658f904",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/plans/D-V12-A-GLM-S1.json",
+      "relative_path": "alternatives/plans/D-V12-A-GLM-S1.json",
+      "sha256": "ca5d8df33e17217b345e4386abea20b247ba5d180c9113d71700d6d9d0ba24ef",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/plans/D-V12-B-GLM-S1.json",
+      "relative_path": "alternatives/plans/D-V12-B-GLM-S1.json",
+      "sha256": "05652547a9cf80c5c5ee54d4bac346c7e00cb8466b6e5403814243a033e835ec",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/plans/D-V13-A-GLM-S1.json",
+      "relative_path": "alternatives/plans/D-V13-A-GLM-S1.json",
+      "sha256": "a8cec5b454fc3e636b26f49a858d12bf84a908cb4f7f0878952bbfdbeeba6738",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/plans/D-V13-B-GLM-S1.json",
+      "relative_path": "alternatives/plans/D-V13-B-GLM-S1.json",
+      "sha256": "ff15985fd9f88066c4ccdb9f8e48e27d2cb748ca0c9debc2bacfe05054cf86c9",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/plans/D-V16-A-GLM-S1.json",
+      "relative_path": "alternatives/plans/D-V16-A-GLM-S1.json",
+      "sha256": "24689ce337daea1fd86717c418ca60ba275c0cc2a83ce1c14787892bb3e57807",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/plans/D-V16-B-GLM-S1.json",
+      "relative_path": "alternatives/plans/D-V16-B-GLM-S1.json",
+      "sha256": "313bd18eff9bcc7bd0a9f2f5db4601583d3959457c3f62e5beab78ebc5fb7855",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-control-diagnostic-a001/packet.json",
+      "relative_path": "alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-control-diagnostic-a001/packet.json",
+      "sha256": "b2d68eaf94ea8d79f5c577d91bb58fe0c7f5cc10a3ee8c89df6565cd31f9c283",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-control-diagnostic-a001/prepared-stage.json",
+      "relative_path": "alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-control-diagnostic-a001/prepared-stage.json",
+      "sha256": "9962f73bb9d8099845e613a4e3052977f393d8f840eb737eeaf6367ddb68f351",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-control-diagnostic-a001/workspace/TASK.md",
+      "relative_path": "alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-control-diagnostic-a001/workspace/TASK.md",
+      "sha256": "ecf442cfcdc22b536f5c4b80c62de37e803cc444a4537296c78b013a12a5e229",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-control-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "relative_path": "alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-control-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "sha256": "dce8a3f434cae7ac0f82173f684785dc232abd25bbb26bac722944f9a3af643d",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-control-diagnostic-a001/workspace/inputs/brief.md",
+      "relative_path": "alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-control-diagnostic-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-control-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "relative_path": "alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-control-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "sha256": "6f60c2a231666d0e3bf29462b6338f71e6af268f334d4f6c4897cbe6b2a40f83",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-control-diagnostic-a001/workspace/inputs/output_contract.md",
+      "relative_path": "alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-control-diagnostic-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-treatment-diagnostic-a001/packet.json",
+      "relative_path": "alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-treatment-diagnostic-a001/packet.json",
+      "sha256": "2bfa4472d20ea8fd42330246fdbf2ff937097c434be0140b5bab921ffd977684",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-treatment-diagnostic-a001/prepared-stage.json",
+      "relative_path": "alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-treatment-diagnostic-a001/prepared-stage.json",
+      "sha256": "7ae355b8cd131ae714e755c9a0f16a5b1ef67d87b62e4728d72f5753d6102de7",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-treatment-diagnostic-a001/workspace/TASK.md",
+      "relative_path": "alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-treatment-diagnostic-a001/workspace/TASK.md",
+      "sha256": "9a4128fde476d29edb7eff94965ee7ee50b7dced09b9f30ef39b2f6630b708aa",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-treatment-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "relative_path": "alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-treatment-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "sha256": "17b0f281cbabcada5737364d27db929f35a98ad2cd625a3a7d56ce8719a8e618",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-treatment-diagnostic-a001/workspace/inputs/brief.md",
+      "relative_path": "alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-treatment-diagnostic-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-treatment-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "relative_path": "alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-treatment-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "sha256": "6f60c2a231666d0e3bf29462b6338f71e6af268f334d4f6c4897cbe6b2a40f83",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-treatment-diagnostic-a001/workspace/inputs/output_contract.md",
+      "relative_path": "alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/D-V14-A-LUNA-R1-GLM-S1-treatment-diagnostic-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/PAIR_INPUT_FREEZE.json",
+      "relative_path": "alternatives/prepared/D-V14-A-LUNA-R1-GLM-S1/PAIR_INPUT_FREEZE.json",
+      "sha256": "6345344091c880bb4411a2e37c6989be3f7ca0a3da772be5ca4f5725a6c0afb6",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-control-diagnostic-a001/packet.json",
+      "relative_path": "alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-control-diagnostic-a001/packet.json",
+      "sha256": "f4eb4cb2663a51a5232530ffd72adca32cd4912debeb64d2f3254b70117f9e29",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-control-diagnostic-a001/prepared-stage.json",
+      "relative_path": "alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-control-diagnostic-a001/prepared-stage.json",
+      "sha256": "e948287b8f4d2d0d346b162a47ae85d37cc64678f906480d6330779a41acbc0c",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-control-diagnostic-a001/workspace/TASK.md",
+      "relative_path": "alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-control-diagnostic-a001/workspace/TASK.md",
+      "sha256": "e9420c2ff3c49f37ca5911f5b77966611eb575497ebd6e04ebffcf675f659db1",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-control-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "relative_path": "alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-control-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "sha256": "dce8a3f434cae7ac0f82173f684785dc232abd25bbb26bac722944f9a3af643d",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-control-diagnostic-a001/workspace/inputs/brief.md",
+      "relative_path": "alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-control-diagnostic-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-control-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "relative_path": "alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-control-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "sha256": "0cb72a9fdae767d211ada4dfb1862708f7ebb057b678dba1676b6c1b4b8dc6a9",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-control-diagnostic-a001/workspace/inputs/output_contract.md",
+      "relative_path": "alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-control-diagnostic-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-treatment-diagnostic-a001/packet.json",
+      "relative_path": "alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-treatment-diagnostic-a001/packet.json",
+      "sha256": "76b3611650266f22450e26f4552f09077cb355d32582cc33210f8e0700295e15",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-treatment-diagnostic-a001/prepared-stage.json",
+      "relative_path": "alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-treatment-diagnostic-a001/prepared-stage.json",
+      "sha256": "9a3c942ed960336d80716a7bb9e89933ef8e9ec3f14da7bde8c6143acb5e4719",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-treatment-diagnostic-a001/workspace/TASK.md",
+      "relative_path": "alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-treatment-diagnostic-a001/workspace/TASK.md",
+      "sha256": "c7cda3837ed6408747a7d0e4513c9eb5b7312d863b1f10468503dc2232400e0c",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-treatment-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "relative_path": "alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-treatment-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "sha256": "17b0f281cbabcada5737364d27db929f35a98ad2cd625a3a7d56ce8719a8e618",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-treatment-diagnostic-a001/workspace/inputs/brief.md",
+      "relative_path": "alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-treatment-diagnostic-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-treatment-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "relative_path": "alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-treatment-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "sha256": "0cb72a9fdae767d211ada4dfb1862708f7ebb057b678dba1676b6c1b4b8dc6a9",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-treatment-diagnostic-a001/workspace/inputs/output_contract.md",
+      "relative_path": "alternatives/prepared/D-V14-B-GLM-S1/D-V14-B-GLM-S1-treatment-diagnostic-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V14-B-GLM-S1/PAIR_INPUT_FREEZE.json",
+      "relative_path": "alternatives/prepared/D-V14-B-GLM-S1/PAIR_INPUT_FREEZE.json",
+      "sha256": "daf3e22f5cab7bef9af1add82535146e90fd30dcfbc06638872018034f3f8bcc",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-control-diagnostic-a001/packet.json",
+      "relative_path": "alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-control-diagnostic-a001/packet.json",
+      "sha256": "9756b2778c0e400c5cdb3b403dff4fcd0eb62fab23d16d061e46f50d28c6f664",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-control-diagnostic-a001/prepared-stage.json",
+      "relative_path": "alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-control-diagnostic-a001/prepared-stage.json",
+      "sha256": "0479c674cc31a4925bdf3e838f85599526ab45641492ebd7b4ff8c3ee5a40c9f",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-control-diagnostic-a001/workspace/TASK.md",
+      "relative_path": "alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-control-diagnostic-a001/workspace/TASK.md",
+      "sha256": "f65946465484b36a5ff8e7027fbbb6c23b09c65c400f7c591e2888502b798064",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-control-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "relative_path": "alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-control-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "sha256": "c679bd6ba40025982ec325e99be60e7e192007e066873f61cad2a4b27eceb0d4",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-control-diagnostic-a001/workspace/inputs/brief.md",
+      "relative_path": "alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-control-diagnostic-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-control-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "relative_path": "alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-control-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "sha256": "7687562ba698734d1af43b9d0f4487674ed4203726d93c4316a8e26d07145a88",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-control-diagnostic-a001/workspace/inputs/output_contract.md",
+      "relative_path": "alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-control-diagnostic-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-treatment-diagnostic-a001/packet.json",
+      "relative_path": "alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-treatment-diagnostic-a001/packet.json",
+      "sha256": "88ec062f3e1bb56151a87f3de1f289865216e7d44627240a35f690ea874a104c",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-treatment-diagnostic-a001/prepared-stage.json",
+      "relative_path": "alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-treatment-diagnostic-a001/prepared-stage.json",
+      "sha256": "7b16ebd0df280e91c18089010658ce3b28d3614154f5e774de79da2711c4bb38",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-treatment-diagnostic-a001/workspace/TASK.md",
+      "relative_path": "alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-treatment-diagnostic-a001/workspace/TASK.md",
+      "sha256": "55691fc359d1da0bdd02760cedb900db2894646a09bf1cbd39ed8bfbb9dc8be8",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-treatment-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "relative_path": "alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-treatment-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "sha256": "054f9494e9c099e0cc48099439849003ceb2a11216658d831020b343e8e1d167",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-treatment-diagnostic-a001/workspace/inputs/brief.md",
+      "relative_path": "alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-treatment-diagnostic-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-treatment-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "relative_path": "alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-treatment-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "sha256": "7687562ba698734d1af43b9d0f4487674ed4203726d93c4316a8e26d07145a88",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-treatment-diagnostic-a001/workspace/inputs/output_contract.md",
+      "relative_path": "alternatives/prepared/D-V15-A-GLM-S1/D-V15-A-GLM-S1-treatment-diagnostic-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-A-GLM-S1/PAIR_INPUT_FREEZE.json",
+      "relative_path": "alternatives/prepared/D-V15-A-GLM-S1/PAIR_INPUT_FREEZE.json",
+      "sha256": "bcceec43d383d0c8250038abc2f1cd174ad5c262363c0c72f63db4d9d73b5349",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-control-diagnostic-a001/packet.json",
+      "relative_path": "alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-control-diagnostic-a001/packet.json",
+      "sha256": "695c8abde9ccf0f0083ecd926ed4fe8f583e7ead358773cd35d1e023889870e7",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-control-diagnostic-a001/prepared-stage.json",
+      "relative_path": "alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-control-diagnostic-a001/prepared-stage.json",
+      "sha256": "7fe7629b8de0362c19eb4f20ae68a292b0fee66f5bbda917b7d8f07dba4075bf",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-control-diagnostic-a001/workspace/TASK.md",
+      "relative_path": "alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-control-diagnostic-a001/workspace/TASK.md",
+      "sha256": "0cfb07626f0c40ac5be951b7f9968c071642eb257baac0d9b21704f389f9cb26",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-control-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "relative_path": "alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-control-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "sha256": "c679bd6ba40025982ec325e99be60e7e192007e066873f61cad2a4b27eceb0d4",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-control-diagnostic-a001/workspace/inputs/brief.md",
+      "relative_path": "alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-control-diagnostic-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-control-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "relative_path": "alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-control-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "sha256": "51ce8a6df781f7094ac70bcd42cf96ad036dc3c3d790dfd8e6ada8f4f3378e03",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-control-diagnostic-a001/workspace/inputs/output_contract.md",
+      "relative_path": "alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-control-diagnostic-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-treatment-diagnostic-a001/packet.json",
+      "relative_path": "alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-treatment-diagnostic-a001/packet.json",
+      "sha256": "8ad94954ea8ef7c11b93902c31343cc06f90f297930ef564e5cc7fb87b5af598",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-treatment-diagnostic-a001/prepared-stage.json",
+      "relative_path": "alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-treatment-diagnostic-a001/prepared-stage.json",
+      "sha256": "999356e5cb28c20bb55b4ccb933bbef7cb74225f51e418b962fe404d93200fce",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-treatment-diagnostic-a001/workspace/TASK.md",
+      "relative_path": "alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-treatment-diagnostic-a001/workspace/TASK.md",
+      "sha256": "cb9263f12d193954426b6e24bdba7f0dfa73922b3278dbac4e288d6b7a6f7728",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-treatment-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "relative_path": "alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-treatment-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "sha256": "054f9494e9c099e0cc48099439849003ceb2a11216658d831020b343e8e1d167",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-treatment-diagnostic-a001/workspace/inputs/brief.md",
+      "relative_path": "alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-treatment-diagnostic-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-treatment-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "relative_path": "alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-treatment-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "sha256": "51ce8a6df781f7094ac70bcd42cf96ad036dc3c3d790dfd8e6ada8f4f3378e03",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-treatment-diagnostic-a001/workspace/inputs/output_contract.md",
+      "relative_path": "alternatives/prepared/D-V15-B-GLM-S1/D-V15-B-GLM-S1-treatment-diagnostic-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/D-V15-B-GLM-S1/PAIR_INPUT_FREEZE.json",
+      "relative_path": "alternatives/prepared/D-V15-B-GLM-S1/PAIR_INPUT_FREEZE.json",
+      "sha256": "9f13a12539c6a28bb1584d6f2c37088700fa56fab4eb7ee644c669ee14bdf2ff",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/LIVE_STANDBY_OUTBOX.json",
+      "relative_path": "alternatives/prepared/LIVE_STANDBY_OUTBOX.json",
+      "sha256": "84ac76cb0a06e8d034a2cb99c84b5c5e2003eb6588c1d9cb34852c7d5720a4d4",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/registration/D-V14-A-LUNA-R1-GLM-S1-diagnostic-preparation-r001.json",
+      "relative_path": "alternatives/prepared/registration/D-V14-A-LUNA-R1-GLM-S1-diagnostic-preparation-r001.json",
+      "sha256": "ceb8240fe9062e903113a989a29663437ba96648b43a50e4fc8aed47d410bc54",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/registration/D-V14-B-GLM-S1-diagnostic-preparation-r001.json",
+      "relative_path": "alternatives/prepared/registration/D-V14-B-GLM-S1-diagnostic-preparation-r001.json",
+      "sha256": "511ec9db7c8f1aca994925fec529cb4fe431b0d371dd6d3a713dcdf8c2ea12b5",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/registration/D-V15-A-GLM-S1-diagnostic-preparation-r001.json",
+      "relative_path": "alternatives/prepared/registration/D-V15-A-GLM-S1-diagnostic-preparation-r001.json",
+      "sha256": "ce33e1161c1707f8db16c745fea5221d9c393163ae275f30fbf8b098cb7af3bd",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/alternatives/prepared/registration/D-V15-B-GLM-S1-diagnostic-preparation-r001.json",
+      "relative_path": "alternatives/prepared/registration/D-V15-B-GLM-S1-diagnostic-preparation-r001.json",
+      "sha256": "2f3f9c63af76dfb3cc642d280a41fe6749ed6223f3601ea7587af6fdf6f70386",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/bind_seeded.py",
+      "relative_path": "bind_seeded.py",
+      "sha256": "3d320a18db3ad01338c069e25dc4bb059be35255d8ba6be702be59c00f4a2c36",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/exact_assembly.py",
+      "relative_path": "exact_assembly.py",
+      "sha256": "3af2177da77b483fccb43ec355501a1319e95c238cf29431e2c51592dd476721",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-05/I-05-control-critique-a001/prepared-stage.json",
+      "relative_path": "integrated-defaults/I-05/I-05-control-critique-a001/prepared-stage.json",
+      "sha256": "8a2376774baeb4e9fd28651728431ee56656346b15ea6f304d2a58f83bf84ca4",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-05/I-05-control-critique-a001/workspace/TASK.md",
+      "relative_path": "integrated-defaults/I-05/I-05-control-critique-a001/workspace/TASK.md",
+      "sha256": "fe138550bcc3fe3f7cdf73c4fc423c2387dbc336ec82ca7434c63d2f3bf3165e",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-05/I-05-control-critique-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-defaults/I-05/I-05-control-critique-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-05/I-05-control-critique-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-defaults/I-05/I-05-control-critique-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-05/I-05-control-research-a001/prepared-stage.json",
+      "relative_path": "integrated-defaults/I-05/I-05-control-research-a001/prepared-stage.json",
+      "sha256": "a62f2d344adc8771145a88a67e9209ec9580982bcca3f4e5bab46d077731e51c",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-05/I-05-control-research-a001/workspace/TASK.md",
+      "relative_path": "integrated-defaults/I-05/I-05-control-research-a001/workspace/TASK.md",
+      "sha256": "c92169b3bec4f452c8ba88a29300884437b4f61d232db64586ae91c87b3fe21d",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-05/I-05-control-research-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-defaults/I-05/I-05-control-research-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-05/I-05-control-research-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-defaults/I-05/I-05-control-research-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-05/I-05-control-revision-a001/prepared-stage.json",
+      "relative_path": "integrated-defaults/I-05/I-05-control-revision-a001/prepared-stage.json",
+      "sha256": "29c8632b9766855d89a2fd3988bc9c63bdcef5f134963005095994ef7643ba03",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-05/I-05-control-revision-a001/workspace/TASK.md",
+      "relative_path": "integrated-defaults/I-05/I-05-control-revision-a001/workspace/TASK.md",
+      "sha256": "91f57122e04694dd21aa706c2d26db0e6bfbb47ec4379a89dda24fc5178f8d1b",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-05/I-05-control-revision-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-defaults/I-05/I-05-control-revision-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-05/I-05-control-revision-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-defaults/I-05/I-05-control-revision-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-05/I-05-treatment-critique-a001/prepared-stage.json",
+      "relative_path": "integrated-defaults/I-05/I-05-treatment-critique-a001/prepared-stage.json",
+      "sha256": "ad2e83116cfaa802f6fd4c3df56198c861106deb53321c279074da9fcced6476",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-05/I-05-treatment-critique-a001/workspace/TASK.md",
+      "relative_path": "integrated-defaults/I-05/I-05-treatment-critique-a001/workspace/TASK.md",
+      "sha256": "fe138550bcc3fe3f7cdf73c4fc423c2387dbc336ec82ca7434c63d2f3bf3165e",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-05/I-05-treatment-critique-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-defaults/I-05/I-05-treatment-critique-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-05/I-05-treatment-critique-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-defaults/I-05/I-05-treatment-critique-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-05/I-05-treatment-research-a001/prepared-stage.json",
+      "relative_path": "integrated-defaults/I-05/I-05-treatment-research-a001/prepared-stage.json",
+      "sha256": "8b23ec884c71f71f2aedc474999a3eb62f7e084959508964b8d8d67981695ffe",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-05/I-05-treatment-research-a001/workspace/TASK.md",
+      "relative_path": "integrated-defaults/I-05/I-05-treatment-research-a001/workspace/TASK.md",
+      "sha256": "8e38740b5b5227f22319af13c98b38fc7fedd7a54c73b1a4d4fcb4ae1ba010f6",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-05/I-05-treatment-research-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-defaults/I-05/I-05-treatment-research-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-05/I-05-treatment-research-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-defaults/I-05/I-05-treatment-research-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-05/I-05-treatment-revision-a001/prepared-stage.json",
+      "relative_path": "integrated-defaults/I-05/I-05-treatment-revision-a001/prepared-stage.json",
+      "sha256": "c047e4e7e294ed2f7c2cb9636156a196626d180ad3fec2ea268d9dcc51755df1",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-05/I-05-treatment-revision-a001/workspace/TASK.md",
+      "relative_path": "integrated-defaults/I-05/I-05-treatment-revision-a001/workspace/TASK.md",
+      "sha256": "91f57122e04694dd21aa706c2d26db0e6bfbb47ec4379a89dda24fc5178f8d1b",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-05/I-05-treatment-revision-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-defaults/I-05/I-05-treatment-revision-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-05/I-05-treatment-revision-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-defaults/I-05/I-05-treatment-revision-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-05/PAIR_INPUT_FREEZE.json",
+      "relative_path": "integrated-defaults/I-05/PAIR_INPUT_FREEZE.json",
+      "sha256": "7f9514755c2d81b51921c2fe86aec17dc843da305e9b9b156d94369803568496",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-06/I-06-control-critique-a001/prepared-stage.json",
+      "relative_path": "integrated-defaults/I-06/I-06-control-critique-a001/prepared-stage.json",
+      "sha256": "fb8f874f91d9a9098ea6ef2c012377e8c6cab4bd79ce4d5dc1763b4807d14c7a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-06/I-06-control-critique-a001/workspace/TASK.md",
+      "relative_path": "integrated-defaults/I-06/I-06-control-critique-a001/workspace/TASK.md",
+      "sha256": "ec68a7a380829693d4f4857b0cf8a2661a80ff2fc543e922d36cb2ff5f1f3b80",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-06/I-06-control-critique-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-defaults/I-06/I-06-control-critique-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-06/I-06-control-critique-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-defaults/I-06/I-06-control-critique-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-06/I-06-control-research-a001/prepared-stage.json",
+      "relative_path": "integrated-defaults/I-06/I-06-control-research-a001/prepared-stage.json",
+      "sha256": "45d43788deecd022161a207cab108d132b38556c57a384f76b8fcd53e05b1e76",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-06/I-06-control-research-a001/workspace/TASK.md",
+      "relative_path": "integrated-defaults/I-06/I-06-control-research-a001/workspace/TASK.md",
+      "sha256": "a262b3864b9473f2404701b855871480468fe7fbe4d3de4af8903f528e74fa4f",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-06/I-06-control-research-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-defaults/I-06/I-06-control-research-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-06/I-06-control-research-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-defaults/I-06/I-06-control-research-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-06/I-06-control-revision-a001/prepared-stage.json",
+      "relative_path": "integrated-defaults/I-06/I-06-control-revision-a001/prepared-stage.json",
+      "sha256": "2e9bb0b033423086cfe54469efa111a75d7f82210c82d9fed071b58fce730377",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-06/I-06-control-revision-a001/workspace/TASK.md",
+      "relative_path": "integrated-defaults/I-06/I-06-control-revision-a001/workspace/TASK.md",
+      "sha256": "864d4385421192c8738663d6c9153ea0e416cc249725a0aca00ed8afb8a3bfc3",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-06/I-06-control-revision-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-defaults/I-06/I-06-control-revision-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-06/I-06-control-revision-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-defaults/I-06/I-06-control-revision-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-06/I-06-treatment-critique-a001/prepared-stage.json",
+      "relative_path": "integrated-defaults/I-06/I-06-treatment-critique-a001/prepared-stage.json",
+      "sha256": "fc3b6fafc3a9a84f96c1bb6a2af16dc7f43dd7dcaeb1ad7618c7911b788065e2",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-06/I-06-treatment-critique-a001/workspace/TASK.md",
+      "relative_path": "integrated-defaults/I-06/I-06-treatment-critique-a001/workspace/TASK.md",
+      "sha256": "ec68a7a380829693d4f4857b0cf8a2661a80ff2fc543e922d36cb2ff5f1f3b80",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-06/I-06-treatment-critique-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-defaults/I-06/I-06-treatment-critique-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-06/I-06-treatment-critique-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-defaults/I-06/I-06-treatment-critique-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-06/I-06-treatment-research-a001/prepared-stage.json",
+      "relative_path": "integrated-defaults/I-06/I-06-treatment-research-a001/prepared-stage.json",
+      "sha256": "c99c33280c8e79fd0e4e96ad9ec288406ad31523b2cec69e37b6e3432f23d05d",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-06/I-06-treatment-research-a001/workspace/TASK.md",
+      "relative_path": "integrated-defaults/I-06/I-06-treatment-research-a001/workspace/TASK.md",
+      "sha256": "5d4e0d90ddb813e095fff6c489cffe0b2df90e76dde2a6c6d7551c50d6f14dcf",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-06/I-06-treatment-research-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-defaults/I-06/I-06-treatment-research-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-06/I-06-treatment-research-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-defaults/I-06/I-06-treatment-research-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-06/I-06-treatment-revision-a001/prepared-stage.json",
+      "relative_path": "integrated-defaults/I-06/I-06-treatment-revision-a001/prepared-stage.json",
+      "sha256": "7c39931bfeec4df7904e99edbdd8623bb145ccd36f4fbaa7839fb35a6f8379c5",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-06/I-06-treatment-revision-a001/workspace/TASK.md",
+      "relative_path": "integrated-defaults/I-06/I-06-treatment-revision-a001/workspace/TASK.md",
+      "sha256": "864d4385421192c8738663d6c9153ea0e416cc249725a0aca00ed8afb8a3bfc3",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-06/I-06-treatment-revision-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-defaults/I-06/I-06-treatment-revision-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-06/I-06-treatment-revision-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-defaults/I-06/I-06-treatment-revision-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-06/PAIR_INPUT_FREEZE.json",
+      "relative_path": "integrated-defaults/I-06/PAIR_INPUT_FREEZE.json",
+      "sha256": "c9f39350f12d7299b106d4918c3d75bd798a6dc2a5d219c103db4a8c77c9a7b9",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-07/I-07-control-critique-a001/prepared-stage.json",
+      "relative_path": "integrated-defaults/I-07/I-07-control-critique-a001/prepared-stage.json",
+      "sha256": "7d4668089c159962c82afeed5a9cb9fa5816ffa35400877bca5625fd67496abd",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-07/I-07-control-critique-a001/workspace/TASK.md",
+      "relative_path": "integrated-defaults/I-07/I-07-control-critique-a001/workspace/TASK.md",
+      "sha256": "fe138550bcc3fe3f7cdf73c4fc423c2387dbc336ec82ca7434c63d2f3bf3165e",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-07/I-07-control-critique-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-defaults/I-07/I-07-control-critique-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-07/I-07-control-critique-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-defaults/I-07/I-07-control-critique-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-07/I-07-control-research-a001/prepared-stage.json",
+      "relative_path": "integrated-defaults/I-07/I-07-control-research-a001/prepared-stage.json",
+      "sha256": "4f6c9f56f1dde0b2d577bb5b9006ae76258960a7123c824b7c367fb702fefa7c",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-07/I-07-control-research-a001/workspace/TASK.md",
+      "relative_path": "integrated-defaults/I-07/I-07-control-research-a001/workspace/TASK.md",
+      "sha256": "c92169b3bec4f452c8ba88a29300884437b4f61d232db64586ae91c87b3fe21d",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-07/I-07-control-research-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-defaults/I-07/I-07-control-research-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-07/I-07-control-research-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-defaults/I-07/I-07-control-research-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-07/I-07-control-revision-a001/prepared-stage.json",
+      "relative_path": "integrated-defaults/I-07/I-07-control-revision-a001/prepared-stage.json",
+      "sha256": "0f33da2b0874f9392073c76cfae0794af5605f3f35f250486442d5cb8e3d12eb",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-07/I-07-control-revision-a001/workspace/TASK.md",
+      "relative_path": "integrated-defaults/I-07/I-07-control-revision-a001/workspace/TASK.md",
+      "sha256": "91f57122e04694dd21aa706c2d26db0e6bfbb47ec4379a89dda24fc5178f8d1b",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-07/I-07-control-revision-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-defaults/I-07/I-07-control-revision-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-07/I-07-control-revision-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-defaults/I-07/I-07-control-revision-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-07/I-07-treatment-critic_final-a001/prepared-stage.json",
+      "relative_path": "integrated-defaults/I-07/I-07-treatment-critic_final-a001/prepared-stage.json",
+      "sha256": "31803847ae95b15138c35eccc06824bc1dec6d3d92f2ca2b15ece6f81a07078c",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-07/I-07-treatment-critic_final-a001/workspace/TASK.md",
+      "relative_path": "integrated-defaults/I-07/I-07-treatment-critic_final-a001/workspace/TASK.md",
+      "sha256": "5e2d336192761666ff83ae5da0543c88389d15214aa92e2e140a2ed8867c9546",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-07/I-07-treatment-critic_final-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-defaults/I-07/I-07-treatment-critic_final-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-07/I-07-treatment-critic_final-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-defaults/I-07/I-07-treatment-critic_final-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-07/I-07-treatment-research-a001/prepared-stage.json",
+      "relative_path": "integrated-defaults/I-07/I-07-treatment-research-a001/prepared-stage.json",
+      "sha256": "1ed1f93fefb99ace5cfb4c129c7fd981ce3d9a54114980a81b97b2f59c2cf78d",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-07/I-07-treatment-research-a001/workspace/TASK.md",
+      "relative_path": "integrated-defaults/I-07/I-07-treatment-research-a001/workspace/TASK.md",
+      "sha256": "c92169b3bec4f452c8ba88a29300884437b4f61d232db64586ae91c87b3fe21d",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-07/I-07-treatment-research-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-defaults/I-07/I-07-treatment-research-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-07/I-07-treatment-research-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-defaults/I-07/I-07-treatment-research-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-07/PAIR_INPUT_FREEZE.json",
+      "relative_path": "integrated-defaults/I-07/PAIR_INPUT_FREEZE.json",
+      "sha256": "6226b51a96e78246b82a1e3457a1d18c9818d653ea69e28c14d2b63208d498f9",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-08/I-08-control-critique-a001/prepared-stage.json",
+      "relative_path": "integrated-defaults/I-08/I-08-control-critique-a001/prepared-stage.json",
+      "sha256": "c3f51d838d746060a774761064c22b45dcafc6a3abdca9e8defa772976def1dc",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-08/I-08-control-critique-a001/workspace/TASK.md",
+      "relative_path": "integrated-defaults/I-08/I-08-control-critique-a001/workspace/TASK.md",
+      "sha256": "ec68a7a380829693d4f4857b0cf8a2661a80ff2fc543e922d36cb2ff5f1f3b80",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-08/I-08-control-critique-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-defaults/I-08/I-08-control-critique-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-08/I-08-control-critique-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-defaults/I-08/I-08-control-critique-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-08/I-08-control-research-a001/prepared-stage.json",
+      "relative_path": "integrated-defaults/I-08/I-08-control-research-a001/prepared-stage.json",
+      "sha256": "b77375360be4cff12650dcee2b18b016c6177903c0e0197e4565497ed9355747",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-08/I-08-control-research-a001/workspace/TASK.md",
+      "relative_path": "integrated-defaults/I-08/I-08-control-research-a001/workspace/TASK.md",
+      "sha256": "a262b3864b9473f2404701b855871480468fe7fbe4d3de4af8903f528e74fa4f",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-08/I-08-control-research-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-defaults/I-08/I-08-control-research-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-08/I-08-control-research-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-defaults/I-08/I-08-control-research-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-08/I-08-control-revision-a001/prepared-stage.json",
+      "relative_path": "integrated-defaults/I-08/I-08-control-revision-a001/prepared-stage.json",
+      "sha256": "f724de8dfaec32b15f70f222d9534e05d377afbdf2a452db14c44413462db1a2",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-08/I-08-control-revision-a001/workspace/TASK.md",
+      "relative_path": "integrated-defaults/I-08/I-08-control-revision-a001/workspace/TASK.md",
+      "sha256": "864d4385421192c8738663d6c9153ea0e416cc249725a0aca00ed8afb8a3bfc3",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-08/I-08-control-revision-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-defaults/I-08/I-08-control-revision-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-08/I-08-control-revision-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-defaults/I-08/I-08-control-revision-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-08/I-08-treatment-critic_final-a001/prepared-stage.json",
+      "relative_path": "integrated-defaults/I-08/I-08-treatment-critic_final-a001/prepared-stage.json",
+      "sha256": "557b16aeb799ad63355a97cb585c93842d9c06bcff8d27a5d579e874ce14c68b",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-08/I-08-treatment-critic_final-a001/workspace/TASK.md",
+      "relative_path": "integrated-defaults/I-08/I-08-treatment-critic_final-a001/workspace/TASK.md",
+      "sha256": "8ab41768d4919662019ada0264392594585ef44662ee42e91476c3c1ba2c2e15",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-08/I-08-treatment-critic_final-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-defaults/I-08/I-08-treatment-critic_final-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-08/I-08-treatment-critic_final-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-defaults/I-08/I-08-treatment-critic_final-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-08/I-08-treatment-research-a001/prepared-stage.json",
+      "relative_path": "integrated-defaults/I-08/I-08-treatment-research-a001/prepared-stage.json",
+      "sha256": "5cf0b9aac3d1d28ef15f45f50c0e6c9e13d9b1ff42cd863a15a5a4861563ed10",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-08/I-08-treatment-research-a001/workspace/TASK.md",
+      "relative_path": "integrated-defaults/I-08/I-08-treatment-research-a001/workspace/TASK.md",
+      "sha256": "a262b3864b9473f2404701b855871480468fe7fbe4d3de4af8903f528e74fa4f",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-08/I-08-treatment-research-a001/workspace/inputs/brief.md",
+      "relative_path": "integrated-defaults/I-08/I-08-treatment-research-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-08/I-08-treatment-research-a001/workspace/inputs/output_contract.md",
+      "relative_path": "integrated-defaults/I-08/I-08-treatment-research-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/I-08/PAIR_INPUT_FREEZE.json",
+      "relative_path": "integrated-defaults/I-08/PAIR_INPUT_FREEZE.json",
+      "sha256": "5d91f7074a6f026e8fab1ef4a42c09fb509d3e6a3a906e354d7499c64dc9cfb6",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/INPUT_MANIFEST.json",
+      "relative_path": "integrated-defaults/INPUT_MANIFEST.json",
+      "sha256": "4a2b8875ff20b3b9e112b1072bf058041a2cafa6efda211801c885422262edf6",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/OUTBOX.json",
+      "relative_path": "integrated-defaults/OUTBOX.json",
+      "sha256": "6822b47316599dd5f356f6b5c29e5ac203dbe448cf07d875026a30aecd047852",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/cards/I-05.json",
+      "relative_path": "integrated-defaults/cards/I-05.json",
+      "sha256": "cf58d8c386dd017548334f449dad940b6ea5a0643728031a1abeb56f58dfbd09",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/cards/I-06.json",
+      "relative_path": "integrated-defaults/cards/I-06.json",
+      "sha256": "2da7194d1a4501cf393d20d44c78683946f8f1b6bf5b3415332f8a203b156c35",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/cards/I-07.json",
+      "relative_path": "integrated-defaults/cards/I-07.json",
+      "sha256": "0ccfe26b3d206246c2d64047ac4c96b13f84e7656044b9b1929eb7aead3880f6",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/cards/I-08.json",
+      "relative_path": "integrated-defaults/cards/I-08.json",
+      "sha256": "fc0b6b0038013196d6afd343b576ce3634720712560f733cb145fdfe1f83fce0",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/prompts/V08-critic-final.md",
+      "relative_path": "integrated-defaults/prompts/V08-critic-final.md",
+      "sha256": "00901de3e8927b7ffd5158c6d8820d3dea96759d90cb67af74477e35febe7e9a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/prompts/V14-protected-discovery.md",
+      "relative_path": "integrated-defaults/prompts/V14-protected-discovery.md",
+      "sha256": "e82dfecd4f679298d29fe9fad2dc69094ed04f1a784ede8dc37d46dcf9e68913",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/registration/I-05-DEC002-default-r001.json",
+      "relative_path": "integrated-defaults/registration/I-05-DEC002-default-r001.json",
+      "sha256": "750410e79ec6d4b5bf8fd5439c852b770d88b3980efcc90da6123ec577af9afe",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/registration/I-06-DEC002-default-r001.json",
+      "relative_path": "integrated-defaults/registration/I-06-DEC002-default-r001.json",
+      "sha256": "bfcea52616c64416d54c0ae915214ce906caed775a256116e4b9594e3053d9ea",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/registration/I-07-DEC002-default-r001.json",
+      "relative_path": "integrated-defaults/registration/I-07-DEC002-default-r001.json",
+      "sha256": "ec981430971293620f0e008bd15df41cd309adfb3f622da31daab825d867cf25",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/integrated-defaults/registration/I-08-DEC002-default-r001.json",
+      "relative_path": "integrated-defaults/registration/I-08-DEC002-default-r001.json",
+      "sha256": "d139ce307d93ac44b2b94b5b27a84714df7199a7772dd7f58b34354eefa9d12b",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/plan_seeded.py",
+      "relative_path": "plan_seeded.py",
+      "sha256": "ec57249658f67d59bce2338c775280485e315c71ce8d508a7ca7c31896e54b50",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepare.py",
+      "relative_path": "prepare.py",
+      "sha256": "48ff881c11fd89c12d9ce6c6f24790bb34956f970aa55575644ae2cbdf03d6cb",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepare_glm_standby.py",
+      "relative_path": "prepare_glm_standby.py",
+      "sha256": "26065f74c5b0df493902770f2982892f21bb4a0743453376979192d7219acd9c",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepare_integrated_defaults.py",
+      "relative_path": "prepare_integrated_defaults.py",
+      "sha256": "48c76f5def2e72e2dc9326eeba86f465faf27a1a05fd9aef256a0314533d7a14",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-control-diagnostic-a001/packet.json",
+      "relative_path": "prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-control-diagnostic-a001/packet.json",
+      "sha256": "96b6d56fdcf2353b729b4e39e613d33ac0d89339d6fa2c7ef66ba42113876e09",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-control-diagnostic-a001/prepared-stage.json",
+      "relative_path": "prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-control-diagnostic-a001/prepared-stage.json",
+      "sha256": "d7f9b6d86d3b64bee07b75c62982a6c6dbe06b6e19ee3c1ab7e8844ffea7c606",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-control-diagnostic-a001/runtime-stage-template-r002.json",
+      "relative_path": "prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-control-diagnostic-a001/runtime-stage-template-r002.json",
+      "sha256": "4aced37c73f16411a440117f081b9f7ca99887d752835153db9112a28fbf6db8",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-control-diagnostic-a001/workspace/TASK.md",
+      "relative_path": "prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-control-diagnostic-a001/workspace/TASK.md",
+      "sha256": "0bcfecddd81fd72929a70bbcf621229cd0d1c7664b16b9dca92c26f4255675ca",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-control-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "relative_path": "prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-control-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "sha256": "dce8a3f434cae7ac0f82173f684785dc232abd25bbb26bac722944f9a3af643d",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-control-diagnostic-a001/workspace/inputs/brief.md",
+      "relative_path": "prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-control-diagnostic-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-control-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "relative_path": "prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-control-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "sha256": "6f60c2a231666d0e3bf29462b6338f71e6af268f334d4f6c4897cbe6b2a40f83",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-control-diagnostic-a001/workspace/inputs/output_contract.md",
+      "relative_path": "prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-control-diagnostic-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-treatment-diagnostic-a001/packet.json",
+      "relative_path": "prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-treatment-diagnostic-a001/packet.json",
+      "sha256": "30914a18ef6c7280d0afc29ec477b7c8875afedf74b48e48cc3908476356665d",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-treatment-diagnostic-a001/prepared-stage.json",
+      "relative_path": "prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-treatment-diagnostic-a001/prepared-stage.json",
+      "sha256": "03acf4038cda4f1216b45101c027f44fa15defa97da05f40bff28a6a9a0c9a79",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-treatment-diagnostic-a001/runtime-stage-template-r002.json",
+      "relative_path": "prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-treatment-diagnostic-a001/runtime-stage-template-r002.json",
+      "sha256": "7faa69aa9936f172970568efc4e06f03b6cf020e0a8a8d4a139dc1fd016bc50f",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-treatment-diagnostic-a001/workspace/TASK.md",
+      "relative_path": "prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-treatment-diagnostic-a001/workspace/TASK.md",
+      "sha256": "d9b4fbcc05dd249aa47f9276406fdf6763bfab8f180ffbf8107995312abbba22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-treatment-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "relative_path": "prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-treatment-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "sha256": "17b0f281cbabcada5737364d27db929f35a98ad2cd625a3a7d56ce8719a8e618",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-treatment-diagnostic-a001/workspace/inputs/brief.md",
+      "relative_path": "prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-treatment-diagnostic-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-treatment-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "relative_path": "prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-treatment-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "sha256": "6f60c2a231666d0e3bf29462b6338f71e6af268f334d4f6c4897cbe6b2a40f83",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-treatment-diagnostic-a001/workspace/inputs/output_contract.md",
+      "relative_path": "prepared/D-V14-A-LUNA-R1/D-V14-A-LUNA-R1-treatment-diagnostic-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-A-LUNA-R1/PAIR_INPUT_FREEZE.json",
+      "relative_path": "prepared/D-V14-A-LUNA-R1/PAIR_INPUT_FREEZE.json",
+      "sha256": "4913873bd162ef7b6f45dbbb9252cd3a6d8486e17d94d260bc6a24899e34410a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-B/D-V14-B-control-diagnostic-a001/packet.json",
+      "relative_path": "prepared/D-V14-B/D-V14-B-control-diagnostic-a001/packet.json",
+      "sha256": "9bf0f7cd72f9d48910b489065e0f227537a541d4bdb31899297ec166f897c66c",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-B/D-V14-B-control-diagnostic-a001/prepared-stage.json",
+      "relative_path": "prepared/D-V14-B/D-V14-B-control-diagnostic-a001/prepared-stage.json",
+      "sha256": "aa2664ce3986063fb0bf983e64041df52b22ae4df6dcb904aedf8e66cab4bcfd",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-B/D-V14-B-control-diagnostic-a001/runtime-stage-template-r002.json",
+      "relative_path": "prepared/D-V14-B/D-V14-B-control-diagnostic-a001/runtime-stage-template-r002.json",
+      "sha256": "d0fe38cdee261ab0a95d81a75625147fc310961e7145f8457db3c0bfec5924db",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-B/D-V14-B-control-diagnostic-a001/workspace/TASK.md",
+      "relative_path": "prepared/D-V14-B/D-V14-B-control-diagnostic-a001/workspace/TASK.md",
+      "sha256": "496b66fabf15c28c530876075a7431f1f9b62497e2999c455b9a48065c9f97fa",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-B/D-V14-B-control-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "relative_path": "prepared/D-V14-B/D-V14-B-control-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "sha256": "dce8a3f434cae7ac0f82173f684785dc232abd25bbb26bac722944f9a3af643d",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-B/D-V14-B-control-diagnostic-a001/workspace/inputs/brief.md",
+      "relative_path": "prepared/D-V14-B/D-V14-B-control-diagnostic-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-B/D-V14-B-control-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "relative_path": "prepared/D-V14-B/D-V14-B-control-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "sha256": "0cb72a9fdae767d211ada4dfb1862708f7ebb057b678dba1676b6c1b4b8dc6a9",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-B/D-V14-B-control-diagnostic-a001/workspace/inputs/output_contract.md",
+      "relative_path": "prepared/D-V14-B/D-V14-B-control-diagnostic-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-B/D-V14-B-treatment-diagnostic-a001/packet.json",
+      "relative_path": "prepared/D-V14-B/D-V14-B-treatment-diagnostic-a001/packet.json",
+      "sha256": "54dc3380fc3a665b7c15bb355f1de3567dd2e46efea9c0571dedd1f3f618f513",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-B/D-V14-B-treatment-diagnostic-a001/prepared-stage.json",
+      "relative_path": "prepared/D-V14-B/D-V14-B-treatment-diagnostic-a001/prepared-stage.json",
+      "sha256": "ca224963b17f29cd3174ab98bb644ff2f2598dc2e90369b9e9e3f4693fa541c9",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-B/D-V14-B-treatment-diagnostic-a001/runtime-stage-template-r002.json",
+      "relative_path": "prepared/D-V14-B/D-V14-B-treatment-diagnostic-a001/runtime-stage-template-r002.json",
+      "sha256": "d9bb5bd0540c182268f8fd8f629c37e5f99bc2cdd8ff3e9172933ac277820d87",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-B/D-V14-B-treatment-diagnostic-a001/workspace/TASK.md",
+      "relative_path": "prepared/D-V14-B/D-V14-B-treatment-diagnostic-a001/workspace/TASK.md",
+      "sha256": "6c57c85fa506cb1ca15373be0b17db722aeb965e2d90ecedf431d898d2a14a55",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-B/D-V14-B-treatment-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "relative_path": "prepared/D-V14-B/D-V14-B-treatment-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "sha256": "17b0f281cbabcada5737364d27db929f35a98ad2cd625a3a7d56ce8719a8e618",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-B/D-V14-B-treatment-diagnostic-a001/workspace/inputs/brief.md",
+      "relative_path": "prepared/D-V14-B/D-V14-B-treatment-diagnostic-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-B/D-V14-B-treatment-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "relative_path": "prepared/D-V14-B/D-V14-B-treatment-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "sha256": "0cb72a9fdae767d211ada4dfb1862708f7ebb057b678dba1676b6c1b4b8dc6a9",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-B/D-V14-B-treatment-diagnostic-a001/workspace/inputs/output_contract.md",
+      "relative_path": "prepared/D-V14-B/D-V14-B-treatment-diagnostic-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V14-B/PAIR_INPUT_FREEZE.json",
+      "relative_path": "prepared/D-V14-B/PAIR_INPUT_FREEZE.json",
+      "sha256": "2b04f851405a356bd075c86fc2adc7f6afbd9fe9e04f8ce1c6001a52ffaadae8",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-A/D-V15-A-control-diagnostic-a001/packet.json",
+      "relative_path": "prepared/D-V15-A/D-V15-A-control-diagnostic-a001/packet.json",
+      "sha256": "08f7f010eb95321c3080244a2f530687062a90bc2baddfc968e4ae1c88407ab0",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-A/D-V15-A-control-diagnostic-a001/prepared-stage.json",
+      "relative_path": "prepared/D-V15-A/D-V15-A-control-diagnostic-a001/prepared-stage.json",
+      "sha256": "bc725c21159519e56f21f38c814ed4b8c1715147dbb2bc8113cbcffb70fc6290",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-A/D-V15-A-control-diagnostic-a001/runtime-stage-template-r002.json",
+      "relative_path": "prepared/D-V15-A/D-V15-A-control-diagnostic-a001/runtime-stage-template-r002.json",
+      "sha256": "0ca3c1d8d78d51d83492875dcdc23fce01b8d83314cccda5c8daaf12f926946f",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-A/D-V15-A-control-diagnostic-a001/workspace/TASK.md",
+      "relative_path": "prepared/D-V15-A/D-V15-A-control-diagnostic-a001/workspace/TASK.md",
+      "sha256": "7d4c4b1747aea12ee378d31b7135f4dd41ac618a49d727ae10f06d735278ffed",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-A/D-V15-A-control-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "relative_path": "prepared/D-V15-A/D-V15-A-control-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "sha256": "c679bd6ba40025982ec325e99be60e7e192007e066873f61cad2a4b27eceb0d4",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-A/D-V15-A-control-diagnostic-a001/workspace/inputs/brief.md",
+      "relative_path": "prepared/D-V15-A/D-V15-A-control-diagnostic-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-A/D-V15-A-control-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "relative_path": "prepared/D-V15-A/D-V15-A-control-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "sha256": "7687562ba698734d1af43b9d0f4487674ed4203726d93c4316a8e26d07145a88",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-A/D-V15-A-control-diagnostic-a001/workspace/inputs/output_contract.md",
+      "relative_path": "prepared/D-V15-A/D-V15-A-control-diagnostic-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-A/D-V15-A-treatment-diagnostic-a001/packet.json",
+      "relative_path": "prepared/D-V15-A/D-V15-A-treatment-diagnostic-a001/packet.json",
+      "sha256": "4bd00d8323212ec675d14eb8b27839485b45e6bb25e665548e03ad44a55e7313",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-A/D-V15-A-treatment-diagnostic-a001/prepared-stage.json",
+      "relative_path": "prepared/D-V15-A/D-V15-A-treatment-diagnostic-a001/prepared-stage.json",
+      "sha256": "f99306c3f41cfbee7798df036ae91965ff39265a4ad5b74112d84d228f89537e",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-A/D-V15-A-treatment-diagnostic-a001/runtime-stage-template-r002.json",
+      "relative_path": "prepared/D-V15-A/D-V15-A-treatment-diagnostic-a001/runtime-stage-template-r002.json",
+      "sha256": "3526c374f9fc0ca762213412c32e1e37224ef32fee5433d3c24a097ff98b5a12",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-A/D-V15-A-treatment-diagnostic-a001/workspace/TASK.md",
+      "relative_path": "prepared/D-V15-A/D-V15-A-treatment-diagnostic-a001/workspace/TASK.md",
+      "sha256": "54230f026940a21468be4393faacdb0927f1c0baf3af7e11a68eb2232027d0ba",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-A/D-V15-A-treatment-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "relative_path": "prepared/D-V15-A/D-V15-A-treatment-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "sha256": "054f9494e9c099e0cc48099439849003ceb2a11216658d831020b343e8e1d167",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-A/D-V15-A-treatment-diagnostic-a001/workspace/inputs/brief.md",
+      "relative_path": "prepared/D-V15-A/D-V15-A-treatment-diagnostic-a001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-A/D-V15-A-treatment-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "relative_path": "prepared/D-V15-A/D-V15-A-treatment-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "sha256": "7687562ba698734d1af43b9d0f4487674ed4203726d93c4316a8e26d07145a88",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-A/D-V15-A-treatment-diagnostic-a001/workspace/inputs/output_contract.md",
+      "relative_path": "prepared/D-V15-A/D-V15-A-treatment-diagnostic-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-A/PAIR_INPUT_FREEZE.json",
+      "relative_path": "prepared/D-V15-A/PAIR_INPUT_FREEZE.json",
+      "sha256": "8cf5ec793649c1adbee9bb45e60d90e1aca9b265ba05087d6d0e1ec670b9f921",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-B/D-V15-B-control-diagnostic-a001/packet.json",
+      "relative_path": "prepared/D-V15-B/D-V15-B-control-diagnostic-a001/packet.json",
+      "sha256": "04848fa271f1c5bb4711304caf1a565875813cbabb2fbe44ca322817b8e46e30",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-B/D-V15-B-control-diagnostic-a001/prepared-stage.json",
+      "relative_path": "prepared/D-V15-B/D-V15-B-control-diagnostic-a001/prepared-stage.json",
+      "sha256": "7e811c544b9f8ac15d5682601aab5d974f33dfe3a6c328ae31800ff760ab2217",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-B/D-V15-B-control-diagnostic-a001/runtime-stage-template-r002.json",
+      "relative_path": "prepared/D-V15-B/D-V15-B-control-diagnostic-a001/runtime-stage-template-r002.json",
+      "sha256": "910c9bdff15622bda123ee5a281f7bfa4c92fff9db1967efd3586e1ca2a3abf6",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-B/D-V15-B-control-diagnostic-a001/workspace/TASK.md",
+      "relative_path": "prepared/D-V15-B/D-V15-B-control-diagnostic-a001/workspace/TASK.md",
+      "sha256": "2d6099ed4208a1a51e4cc6fe8b1fbd840933016441d5698d4081a2d83807902f",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-B/D-V15-B-control-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "relative_path": "prepared/D-V15-B/D-V15-B-control-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "sha256": "c679bd6ba40025982ec325e99be60e7e192007e066873f61cad2a4b27eceb0d4",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-B/D-V15-B-control-diagnostic-a001/workspace/inputs/brief.md",
+      "relative_path": "prepared/D-V15-B/D-V15-B-control-diagnostic-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-B/D-V15-B-control-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "relative_path": "prepared/D-V15-B/D-V15-B-control-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "sha256": "51ce8a6df781f7094ac70bcd42cf96ad036dc3c3d790dfd8e6ada8f4f3378e03",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-B/D-V15-B-control-diagnostic-a001/workspace/inputs/output_contract.md",
+      "relative_path": "prepared/D-V15-B/D-V15-B-control-diagnostic-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-B/D-V15-B-treatment-diagnostic-a001/packet.json",
+      "relative_path": "prepared/D-V15-B/D-V15-B-treatment-diagnostic-a001/packet.json",
+      "sha256": "d2125660f787a0b8f9544e9d2021fa61ee3e01fbeec5752cf9ade7785df95658",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-B/D-V15-B-treatment-diagnostic-a001/prepared-stage.json",
+      "relative_path": "prepared/D-V15-B/D-V15-B-treatment-diagnostic-a001/prepared-stage.json",
+      "sha256": "9da8eafb26475a6d55281401769a52cf21daed350c674762bd60cd40da04da1f",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-B/D-V15-B-treatment-diagnostic-a001/runtime-stage-template-r002.json",
+      "relative_path": "prepared/D-V15-B/D-V15-B-treatment-diagnostic-a001/runtime-stage-template-r002.json",
+      "sha256": "e435e295ce175b892fc56626666c6bc16ad99d7babad7cc78e8272c4d47810b6",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-B/D-V15-B-treatment-diagnostic-a001/workspace/TASK.md",
+      "relative_path": "prepared/D-V15-B/D-V15-B-treatment-diagnostic-a001/workspace/TASK.md",
+      "sha256": "ccca613d0f007664c013d15b173cb3590a607900106adb00cd4b1cf23e362ec8",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-B/D-V15-B-treatment-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "relative_path": "prepared/D-V15-B/D-V15-B-treatment-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "sha256": "054f9494e9c099e0cc48099439849003ceb2a11216658d831020b343e8e1d167",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-B/D-V15-B-treatment-diagnostic-a001/workspace/inputs/brief.md",
+      "relative_path": "prepared/D-V15-B/D-V15-B-treatment-diagnostic-a001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-B/D-V15-B-treatment-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "relative_path": "prepared/D-V15-B/D-V15-B-treatment-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "sha256": "51ce8a6df781f7094ac70bcd42cf96ad036dc3c3d790dfd8e6ada8f4f3378e03",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-B/D-V15-B-treatment-diagnostic-a001/workspace/inputs/output_contract.md",
+      "relative_path": "prepared/D-V15-B/D-V15-B-treatment-diagnostic-a001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/D-V15-B/PAIR_INPUT_FREEZE.json",
+      "relative_path": "prepared/D-V15-B/PAIR_INPUT_FREEZE.json",
+      "sha256": "001385d735d76204c05975df711a5cce62600723d0b94e8b988f4f10a81dad06",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/LIVE_OUTBOX.json",
+      "relative_path": "prepared/LIVE_OUTBOX.json",
+      "sha256": "d0f0bff50876ba9bdd39d7322c65359ae832fd2de8f1d3967a307434f1cfcb0f",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/LIVE_OUTBOX_R002.json",
+      "relative_path": "prepared/LIVE_OUTBOX_R002.json",
+      "sha256": "75ad700223679c79ab79d2ccd3e0b574dede59cbeb87b07ef6ce71c5f489bc27",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/registration/D-V14-A-LUNA-R1-diagnostic-preparation-r001.json",
+      "relative_path": "prepared/registration/D-V14-A-LUNA-R1-diagnostic-preparation-r001.json",
+      "sha256": "13eda1422322ec64389f6c6abdce52939612ef767ed2e4a32c20ea7ba8f669e2",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/registration/D-V14-A-LUNA-R1-diagnostic-preparation-r002.json",
+      "relative_path": "prepared/registration/D-V14-A-LUNA-R1-diagnostic-preparation-r002.json",
+      "sha256": "b813bec6e5b8a7b6aaccd1e9498c9733ce0ad4dfedfb025c524c0e8973f409ec",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/registration/D-V14-B-diagnostic-preparation-r001.json",
+      "relative_path": "prepared/registration/D-V14-B-diagnostic-preparation-r001.json",
+      "sha256": "b402acef0690119f7e2e736da090aad9b93df4b16cd43dbc0efaacfa4b6f88d6",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/registration/D-V14-B-diagnostic-preparation-r002.json",
+      "relative_path": "prepared/registration/D-V14-B-diagnostic-preparation-r002.json",
+      "sha256": "18111bc0e814f233ef28162f16bf13ec94eec6246a2ef382c2763e5fc7adcc66",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/registration/D-V15-A-diagnostic-preparation-r001.json",
+      "relative_path": "prepared/registration/D-V15-A-diagnostic-preparation-r001.json",
+      "sha256": "9d2d50e3bd1868da6e5bd7c13524c0ed880f478b7d18ebc6a1c813929c9bdbc6",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/registration/D-V15-A-diagnostic-preparation-r002.json",
+      "relative_path": "prepared/registration/D-V15-A-diagnostic-preparation-r002.json",
+      "sha256": "7f40341513ab6f5e4f99390ddb8add5da314f0cc6d9af81f91ac1c7387a3413c",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/registration/D-V15-B-diagnostic-preparation-r001.json",
+      "relative_path": "prepared/registration/D-V15-B-diagnostic-preparation-r001.json",
+      "sha256": "9ce463f4083994d8e6ebb940a98e0632ee417424e2d50d9546bc19935ff9257d",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/prepared/registration/D-V15-B-diagnostic-preparation-r002.json",
+      "relative_path": "prepared/registration/D-V15-B-diagnostic-preparation-r002.json",
+      "sha256": "601ca16e55d6e822e857a47fdd1b2565028b502f7f01e5fcdb0ed7af6195549a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/DAG_OUTBOX.json",
+      "relative_path": "seeded/DAG_OUTBOX.json",
+      "sha256": "273c2aea30ba9b6068a61a6bc7ab860cc35bfe027939875e2a9bb51202e4f853",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/SEED-DEV-A-registration.json",
+      "relative_path": "seeded/SEED-DEV-A-registration.json",
+      "sha256": "4df62383de4ba2172d429a58fc9c50a3f7fa6657e73cc73039c4010c69ad05dd",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/SEED-DEV-B-registration.json",
+      "relative_path": "seeded/SEED-DEV-B-registration.json",
+      "sha256": "0ca97f00080130477cad2add7ca6823271bd637472ae1231a086eef66c44d7f5",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/SEED_JOBS.json",
+      "relative_path": "seeded/SEED_JOBS.json",
+      "sha256": "a9598c20ce6258c4cf025149bc29e5131dd5d4ef26975b409b9543ec2ea6a27e",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/SEED_REGISTRATION_OUTBOX.json",
+      "relative_path": "seeded/SEED_REGISTRATION_OUTBOX.json",
+      "sha256": "9f20e569ebfde14650a4f6fd829331cf802df63932cc39fe2399e456d2a57b98",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V01-A.json",
+      "relative_path": "seeded/plans/D-V01-A.json",
+      "sha256": "ba298c6430463f96e2f32bac310d7a84432b8456ad84589ab9c563761ab04501",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V01-B.json",
+      "relative_path": "seeded/plans/D-V01-B.json",
+      "sha256": "797567303821f29ba7b02c1a02fa71b440c8648f6c4aa0a4e3db84859186e13a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V02-A.json",
+      "relative_path": "seeded/plans/D-V02-A.json",
+      "sha256": "6d47f57fc8a194da877222ad2c512e3df6c51f621833f1e4e3afdb471aeceacb",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V02-B.json",
+      "relative_path": "seeded/plans/D-V02-B.json",
+      "sha256": "2e6511432ecb2f5eb22710b55de28898b42e0c3cd06e9dc1c907a24336b4d329",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V03-A.json",
+      "relative_path": "seeded/plans/D-V03-A.json",
+      "sha256": "c69b6d57bcf69dd8c5f96dbd848813ae995f270f3bb5cbe2ee689ee20e361292",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V03-B.json",
+      "relative_path": "seeded/plans/D-V03-B.json",
+      "sha256": "f5486c3bbdb9652a21544590d778e0f0c03b7bf6252a493dd1c81f3d38ef20db",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V04-A.json",
+      "relative_path": "seeded/plans/D-V04-A.json",
+      "sha256": "f5e940530b08eca425812e0c277173c89b083e91938959f197eb609f06b9d957",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V04-B.json",
+      "relative_path": "seeded/plans/D-V04-B.json",
+      "sha256": "267cde01e17f8504e8ae2eb10f96221c521d29f073ecca557070291f27fbb8bc",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V05-A-LUNA-R1.json",
+      "relative_path": "seeded/plans/D-V05-A-LUNA-R1.json",
+      "sha256": "642bb8ce791b842d2d057b7b9d81c1076ee6bb7a356f6bef8cc8746fcde7ef58",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V05-B.json",
+      "relative_path": "seeded/plans/D-V05-B.json",
+      "sha256": "7a6f69f26dc3ee0a964f553b7e341908d3cc2ca35e8382de3a7aa4e2b5fa4719",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V06-A.json",
+      "relative_path": "seeded/plans/D-V06-A.json",
+      "sha256": "a7e527b80e34dff221555b73fe56b0e432b28cd6481817ce71a1ddd488f7406b",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V06-B.json",
+      "relative_path": "seeded/plans/D-V06-B.json",
+      "sha256": "51d5d3531cf47edf7018d84b32788c5dc76eb15a8f93250d5ec6e4aecdc2acb3",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V07-A.json",
+      "relative_path": "seeded/plans/D-V07-A.json",
+      "sha256": "746836b4d4b710ceb36649373ea1c2a6f66e777cd46bf697af248768a85112ff",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V07-B.json",
+      "relative_path": "seeded/plans/D-V07-B.json",
+      "sha256": "fbc91726c314d473fcd2e3d4f74014e2642f5693504010a5a26c03831dd510ab",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V08-A.json",
+      "relative_path": "seeded/plans/D-V08-A.json",
+      "sha256": "6af162e0ba79f5416f12d57f02f027d725291eb3d22b21d161a6b94d15beb6b6",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V08-B.json",
+      "relative_path": "seeded/plans/D-V08-B.json",
+      "sha256": "c417c2c55899ff09ca10150d23330d8cf406edd6e43b632ac2cf8fb165f819c0",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V09-A.json",
+      "relative_path": "seeded/plans/D-V09-A.json",
+      "sha256": "229dfa558b31e6b8bcbc26527cf33d8e2737904a092d95740df9b643cac558b3",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V09-B.json",
+      "relative_path": "seeded/plans/D-V09-B.json",
+      "sha256": "5bf4995936e9ac16da09e6a352e23bf29c8f2dab917a0ca09ac8c6ff17f6b0c6",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V10-A.json",
+      "relative_path": "seeded/plans/D-V10-A.json",
+      "sha256": "c3663236360cbdf7c3bfae82b17c9ce426bd2f55c345b894426c2aac2e50d7eb",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V10-B.json",
+      "relative_path": "seeded/plans/D-V10-B.json",
+      "sha256": "5dc0d727ae06c9b45df3808f36feac5d7b46fcceb57d851193352ba9f7fa3121",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V11-A.json",
+      "relative_path": "seeded/plans/D-V11-A.json",
+      "sha256": "b8c82a66eb29df6eef78e6427533440587aaa7c4847aa8027893fe875e83baf9",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V11-B.json",
+      "relative_path": "seeded/plans/D-V11-B.json",
+      "sha256": "57b1d23daef1fbb682a72ee59bb27655c2e5ca8808cc137509ef4ca984c768d8",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V12-A.json",
+      "relative_path": "seeded/plans/D-V12-A.json",
+      "sha256": "d89c7e842311be1a80408328d212fb41c69db62d15bb754174998a7e1d2f87cc",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V12-B.json",
+      "relative_path": "seeded/plans/D-V12-B.json",
+      "sha256": "8ac527d81985cbcd2cc1b1914c162978d91b84c26067bcf561d9c30b8d0041de",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V13-A.json",
+      "relative_path": "seeded/plans/D-V13-A.json",
+      "sha256": "61b500920ad36ebfe219518245362b28131b75597f5414db08375d90e0d0d7bd",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V13-B.json",
+      "relative_path": "seeded/plans/D-V13-B.json",
+      "sha256": "158f0ff2c2320271deab4ca5454871a813289bad26b1572e7a8450d872307289",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V16-A.json",
+      "relative_path": "seeded/plans/D-V16-A.json",
+      "sha256": "9e2566af9245ae71bc0f6d1761a7a9c2d979cd82f99ec8376b718422a6792ea5",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/plans/D-V16-B.json",
+      "relative_path": "seeded/plans/D-V16-B.json",
+      "sha256": "464935a992f033b476ff03c2f5712a66aa1db8f02bfc5f71ef670710f60e93be",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-A-base-s001/SEED_INPUT_FREEZE.json",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-A-base-s001/SEED_INPUT_FREEZE.json",
+      "sha256": "78620d2bc8e75fbbfafc5c0606c6becd4d7fa74004eccdc589872a5972a7228c",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-A-base-s001/job.json",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-A-base-s001/job.json",
+      "sha256": "43e553a348e7d5eee83ca0ffc220899ae6f579c8bcd1ab19fa82990077f79d91",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-A-base-s001/prepared-stage.json",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-A-base-s001/prepared-stage.json",
+      "sha256": "30f3797ca5effa99632a570a29234da1c81d8a89727f4ddb6a56cb5a474ce88b",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-A-base-s001/workspace/TASK.md",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-A-base-s001/workspace/TASK.md",
+      "sha256": "0381fd64998e819b79553c19d761347076b60902108739eb07ededbc4b8bea01",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-A-base-s001/workspace/inputs/brief.md",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-A-base-s001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-A-critique-s001/SEED_INPUT_FREEZE.json",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-A-critique-s001/SEED_INPUT_FREEZE.json",
+      "sha256": "4f4eec41265ffce09dd2ea3557485e917caf49f2518cc9122876de2a0fec78c8",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-A-critique-s001/job.json",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-A-critique-s001/job.json",
+      "sha256": "a833a7d3db34bee0abbf9aaddb89f7cb176de05abe5dec1dc1614e0cc4f42b9f",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-A-critique-s001/prepared-stage.json",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-A-critique-s001/prepared-stage.json",
+      "sha256": "d6d83620adfd779454f802e2718e1566e0beccf8ffb1e6f3984dff9eab44bd8d",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-A-critique-s001/workspace/TASK.md",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-A-critique-s001/workspace/TASK.md",
+      "sha256": "0c49626b4e0abad6c8e1ad018e81cb40a4dcf5cb324c79ade4e73e96a6ec3a48",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-A-critique-s001/workspace/inputs/brief.md",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-A-critique-s001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-A-enrichment-s001/SEED_INPUT_FREEZE.json",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-A-enrichment-s001/SEED_INPUT_FREEZE.json",
+      "sha256": "7efb67b0013d44dcf5390c6db4c7979dc46d129d4af885821bfac4b21b158bb8",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-A-enrichment-s001/job.json",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-A-enrichment-s001/job.json",
+      "sha256": "8b3c387584911379b7a79e6240cde171885a031a7458fdbb043db3eeeb3ef914",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-A-enrichment-s001/prepared-stage.json",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-A-enrichment-s001/prepared-stage.json",
+      "sha256": "547f04546e7415435b7a021ba06acdfbdd79581aa5b675774fcf3e4de02119ac",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-A-enrichment-s001/workspace/TASK.md",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-A-enrichment-s001/workspace/TASK.md",
+      "sha256": "551febc40cbb5b60b31a4dc72d183a0e2684847a861c708eb4bac8c59c1a2f06",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-A-enrichment-s001/workspace/inputs/brief.md",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-A-enrichment-s001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-A-revision-s001/SEED_INPUT_FREEZE.json",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-A-revision-s001/SEED_INPUT_FREEZE.json",
+      "sha256": "9367d879a7052532daaac1dd2364849282eeea31256c3f8a9626c488a43cf10d",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-A-revision-s001/job.json",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-A-revision-s001/job.json",
+      "sha256": "488f814ea35c338503eb50cb5a54067cb0cb3d00e7f0c671d330a8cd91800df2",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-A-revision-s001/prepared-stage.json",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-A-revision-s001/prepared-stage.json",
+      "sha256": "1aa3667852c5c849ef265abfd1d7db4c3bdbc0faba6dbb9e88c0b0b772ab3429",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-A-revision-s001/workspace/TASK.md",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-A-revision-s001/workspace/TASK.md",
+      "sha256": "4737918db62a6c47228d91cb03a97b2e8a9a6097c06651229d59769f16dc4cff",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-A-revision-s001/workspace/inputs/brief.md",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-A-revision-s001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-B-base-s001/SEED_INPUT_FREEZE.json",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-B-base-s001/SEED_INPUT_FREEZE.json",
+      "sha256": "cc0730f0b06ff78cd513a379b279f3c6b842fd53a003421ec350ef4ac306cc26",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-B-base-s001/job.json",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-B-base-s001/job.json",
+      "sha256": "e7cc2c587fad4c8b344861ad2f2fef2179d461925892d202dcc9be14e4edefc8",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-B-base-s001/prepared-stage.json",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-B-base-s001/prepared-stage.json",
+      "sha256": "6b64f7582152412f6154c334197bb30f0f366c6ce920726203864bb867084127",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-B-base-s001/workspace/TASK.md",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-B-base-s001/workspace/TASK.md",
+      "sha256": "d3069da43d077f845b3a0299322c567df3b1a74ceb186ace7a19ce537352a8f7",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-B-base-s001/workspace/inputs/brief.md",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-B-base-s001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-B-critique-s001/SEED_INPUT_FREEZE.json",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-B-critique-s001/SEED_INPUT_FREEZE.json",
+      "sha256": "8a72fcff7c9db2188031779aba3d20f2504e032a3b2c09e396d1d63fd6e0ef4d",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-B-critique-s001/job.json",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-B-critique-s001/job.json",
+      "sha256": "863912ed25a45fe4d2eaf9f337e50e7bb801a22c7309d3301e590a5dce49030a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-B-critique-s001/prepared-stage.json",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-B-critique-s001/prepared-stage.json",
+      "sha256": "ace34bb64a5c97b9ba1d65521fbae231f0fd5176cd2105eb31a85ec4212b9ef3",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-B-critique-s001/workspace/TASK.md",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-B-critique-s001/workspace/TASK.md",
+      "sha256": "cf38da0793ebd09981e248692349d4d7a3b282e7250c56a5f94a22e357ac657e",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-B-critique-s001/workspace/inputs/brief.md",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-B-critique-s001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-B-enrichment-s001/SEED_INPUT_FREEZE.json",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-B-enrichment-s001/SEED_INPUT_FREEZE.json",
+      "sha256": "c20f1bbfccb514777b38b0790636a3d4fdbe2955ee609cb4ad3e1898adff7e6c",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-B-enrichment-s001/job.json",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-B-enrichment-s001/job.json",
+      "sha256": "7bb92017093079a6839f19cc918e93cb8d975fed2e088deac96c513c09c6d58b",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-B-enrichment-s001/prepared-stage.json",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-B-enrichment-s001/prepared-stage.json",
+      "sha256": "6b264e072a5aae60f53323ff8f96a9c2cd98522b895001724212e0abed6b75a0",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-B-enrichment-s001/workspace/TASK.md",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-B-enrichment-s001/workspace/TASK.md",
+      "sha256": "360af1f3618d43f18813193aab2303175b4c70f16bd2482984a92b05701602da",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-B-enrichment-s001/workspace/inputs/brief.md",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-B-enrichment-s001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-B-revision-s001/SEED_INPUT_FREEZE.json",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-B-revision-s001/SEED_INPUT_FREEZE.json",
+      "sha256": "0d00f4f9f86268789ba61893b398799faad288d6c7907f3a8a8c0c855b806305",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-B-revision-s001/job.json",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-B-revision-s001/job.json",
+      "sha256": "c4162e4e15820d289d27435347c27d815f23fb770e07759260b90fcf2b920570",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-B-revision-s001/prepared-stage.json",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-B-revision-s001/prepared-stage.json",
+      "sha256": "33f0809b92a523490509decd997157867a3ec1554fe2d66c13d23ece02f8448d",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-B-revision-s001/workspace/TASK.md",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-B-revision-s001/workspace/TASK.md",
+      "sha256": "ac35642328596daf31cb0c85a3c5b2847da93f170dbcd8112f4ec754411783e1",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-B-revision-s001/workspace/inputs/brief.md",
+      "relative_path": "seeded/seed-jobs/SEED-DEV-B-revision-s001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    },
+    {
+      "path": "LAB_ROOT/dev/diagnostic-runner/test_preparation.py",
+      "relative_path": "test_preparation.py",
+      "sha256": "1ccb1de4d9bd7f25dd07b22c4c9f50a9cb50be64890fce785525bfa198c3f437",
+      "classification": "NEUTRAL_PROSPECTIVE_INPUT_OR_MECHANICAL_CODE"
+    }
+  ],
+  "preserve_lineage": [
+    "Original r001 and r002 preparation metadata",
+    "Original Luna and explicit GLM standby cards/source-slot mapping",
+    "Original integrated reservations referenced by exact hash"
+  ],
+  "exclude": [
+    "Later authentic candidate discoveries/seed outputs/captures",
+    "All evaluator-only evidence",
+    "All holdout/sealed details",
+    "Provider private runtime/account files"
+  ],
+  "deduplicated_projection_allowed": true,
+  "projection_rule": "Retain original absolute/relative locator and SHA for each exact byte item; do not claim nested runtime workspaces were committed."
+}

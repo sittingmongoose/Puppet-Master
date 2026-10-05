@@ -1,0 +1,43 @@
+{
+  "schema": "er9.supervision.evidence.v1",
+  "recorded_utc": "2026-10-05T21:39:03.776035+00:00",
+  "scope": "frozen input contracts only; operational failure metadata supplied by root/engine, no candidate output inspected",
+  "decisions_001_002_evidence_unchanged": true,
+  "evidence": [
+    {
+      "path": "LAB_ROOT/input/ER9/ER9_EXECUTE_HANDOFF.md",
+      "sha256": "46529ea93a95d92196f947daf3da54ac60768408aed9f5eaaa8d64c4167d210a",
+      "bytes": 58697
+    },
+    {
+      "path": "LAB_ROOT/cases/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "bytes": 2521
+    },
+    {
+      "path": "LAB_ROOT/cases/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "bytes": 1751
+    },
+    {
+      "path": "LAB_ROOT/cases/integrated/I-01.json",
+      "sha256": "e71dc26f223802b2ca318941274b3fde67dd86797d234317aa24ccbfb402094b",
+      "bytes": 6751
+    },
+    {
+      "path": "LAB_ROOT/cases/EARLY_FREEZE_ADDENDUM_02.json",
+      "sha256": "611a673188a3502611cb40333e628e6719a66b02b7ed0190c3ee67079f2a4888",
+      "bytes": 2799
+    },
+    {
+      "path": "LAB_ROOT/cases/prompts/research.md",
+      "sha256": "7e00cde942ab09c11daec15450edbe7206204e88ee68ff2b3976b415d5710742",
+      "bytes": 845
+    },
+    {
+      "path": "LAB_ROOT/cases/prompts/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "bytes": 2062
+    }
+  ]
+}

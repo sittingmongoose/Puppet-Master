@@ -1,0 +1,82 @@
+{
+  "schema": "er9.native-stage.v1",
+  "job_id": "I-01-control-research-a001",
+  "start_utc": "2026-10-05T21:10:26.057141+00:00",
+  "max_seconds": 1200,
+  "max_responses": 120,
+  "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+  "requested_effort": "max",
+  "fresh_session": true,
+  "native_goal_entry": "official app-server session/goal set",
+  "status": "completed",
+  "raw_prompt_sha256": "7dd04089a69ce8dd5318927537bbf8b8ce2e795db87572afa6954ff4c741e78b",
+  "prompt_sha256": "6c5595dee019d50931e91da62de4048d956fa286cee48a7293ba838e85fbdb85",
+  "tool_allowlist": [
+    "mcp__pm_boundary__read_file",
+    "mcp__pm_boundary__write_file",
+    "mcp__pm_boundary__mechanical",
+    "mcp__pm_boundary__public_https_get",
+    "mcp__pm_execution__python_execute"
+  ],
+  "cli_sha256": "e9f1868c0fdb863537ed910ee3828b9be96b8c2fd805473f63b439e1113266b8",
+  "goal_activated": true,
+  "unknown_costs": [
+    "dollar billing",
+    "unexposed provider child usage"
+  ],
+  "session_id": "sess_228fa8a0-a744-454c-8b9a-9e377f3b3a21",
+  "observed_model": {
+    "modelId": "GLM-5.3-Flash",
+    "providerId": "builtin:zai-coding-plan"
+  },
+  "observed_effort": "max",
+  "goal_submitted": true,
+  "goal_target_id": "target_muvqumhe_ae3a193e-ede2-4c16-8bc1-467c1f7f179a",
+  "activation_utc": "2026-10-05T21:10:31.350672+00:00",
+  "pre_activation_seconds": 5.340310864005005,
+  "native_usage": {
+    "sessionId": "sess_228fa8a0-a744-454c-8b9a-9e377f3b3a21",
+    "totalTokens": 517700,
+    "inputTokens": 470260,
+    "outputTokens": 47440,
+    "reasoningTokens": 0,
+    "cacheCreationTokens": 0,
+    "cacheReadTokens": 0,
+    "modelRequestCount": 18,
+    "modelErrorCount": 0,
+    "inputBaselineBySource": {
+      "main_turn": 233349
+    }
+  },
+  "actual_models": [
+    {
+      "providerId": "builtin:zai-coding-plan",
+      "modelId": "GLM-5.3-Flash",
+      "variant": "max"
+    }
+  ],
+  "effort_request_verification": "verified",
+  "request_status_counts": {
+    "model_request_completed": 18
+  },
+  "native_responses": 18,
+  "last_usage_delta_by_request_totals": {
+    "inputTokens": 2231342,
+    "outputTokens": 46049,
+    "reasoningTokens": 0,
+    "cacheReadTokens": 1997504,
+    "cacheWriteTokens": 0,
+    "totalTokens": 2277391
+  },
+  "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars",
+  "ended_utc": "2026-10-05T21:28:25.612754+00:00",
+  "elapsed_seconds": 1079.6023966010034,
+  "caps_include_setup_and_cleanup": true,
+  "cleanup": {
+    "process_exited": true,
+    "exit_code": 0,
+    "remaining_group_members": [],
+    "native_quiescent": true
+  },
+  "cost_definition_addendum": "native_usage is UI/session baseline-filtered metric. Failure-inclusive provider row totals are separately published in execution/diagnosis-I01-v1/PROVIDER_ATTEMPTS_FULL_V1.json; do not add the measures or cached input again. Cancelled partial usage and billed dollars remain unknown."
+}

@@ -1,0 +1,124 @@
+{
+  "schema": "er9.positive-publication-selection.v1",
+  "frozen_utc": "2026-10-05T21:44:54.105475+00:00",
+  "scope": "Two frozen I01 research stages only; no live critic/I02 history/output; no raw captures/auth/native logs",
+  "whole_pipelines_completed": 0,
+  "matched_comparisons_completed": 0,
+  "stages": [
+    {
+      "job_id": "I-01-control-research-a001",
+      "operational_complete": true,
+      "capture_metadata_rows": 33
+    },
+    {
+      "job_id": "I-01-treatment-research-a001",
+      "operational_complete": false,
+      "capture_metadata_rows": 25
+    }
+  ],
+  "files": [
+    {
+      "source_path": "LAB_ROOT/ops/dispatcher/runs/I-01-control-research-a001/frozen-output/final/leads.json",
+      "sha256": "e2aa174222501198afb33a30f71d2a0139c63f10e911047379c6e6c700fe7751",
+      "public_relative_path": "control/candidate/final/leads.json",
+      "kind": "actual_candidate_authored_frozen_output"
+    },
+    {
+      "source_path": "LAB_ROOT/ops/dispatcher/runs/I-01-control-research-a001/frozen-output/final/proposal.md",
+      "sha256": "b50faea240a31cc53b4ec0a291defe944e88b08d57fe72766b341825e5bb0dc7",
+      "public_relative_path": "control/candidate/final/proposal.md",
+      "kind": "actual_candidate_authored_frozen_output"
+    },
+    {
+      "source_path": "LAB_ROOT/ops/dispatcher/runs/I-01-control-research-a001/frozen-output/final/sources.json",
+      "sha256": "b293a7aa16554a5817e15f07aded8e02de150438570f1b3e24658d10dde33f1b",
+      "public_relative_path": "control/candidate/final/sources.json",
+      "kind": "actual_candidate_authored_frozen_output"
+    },
+    {
+      "source_path": "LAB_ROOT/ops/dispatcher/runs/I-01-control-research-a001/frozen-output/final/witnesses.json",
+      "sha256": "5b5e0c0d9d8c52c3d8259fcb11bd51a29f1d6d468f953f721f03e38a2e37ca4a",
+      "public_relative_path": "control/candidate/final/witnesses.json",
+      "kind": "actual_candidate_authored_frozen_output"
+    },
+    {
+      "source_path": "LAB_ROOT/ops/dispatcher/runs/I-01-control-research-a001/frozen-output/research/leads.json",
+      "sha256": "e2aa174222501198afb33a30f71d2a0139c63f10e911047379c6e6c700fe7751",
+      "public_relative_path": "control/candidate/research/leads.json",
+      "kind": "actual_candidate_authored_frozen_output"
+    },
+    {
+      "source_path": "LAB_ROOT/ops/dispatcher/runs/I-01-control-research-a001/frozen-output/research/proposal.md",
+      "sha256": "b50faea240a31cc53b4ec0a291defe944e88b08d57fe72766b341825e5bb0dc7",
+      "public_relative_path": "control/candidate/research/proposal.md",
+      "kind": "actual_candidate_authored_frozen_output"
+    },
+    {
+      "source_path": "LAB_ROOT/ops/dispatcher/runs/I-01-control-research-a001/frozen-output/research/sources.json",
+      "sha256": "b293a7aa16554a5817e15f07aded8e02de150438570f1b3e24658d10dde33f1b",
+      "public_relative_path": "control/candidate/research/sources.json",
+      "kind": "actual_candidate_authored_frozen_output"
+    },
+    {
+      "source_path": "LAB_ROOT/ops/dispatcher/runs/I-01-control-research-a001/frozen-output/research/witnesses.json",
+      "sha256": "5b5e0c0d9d8c52c3d8259fcb11bd51a29f1d6d468f953f721f03e38a2e37ca4a",
+      "public_relative_path": "control/candidate/research/witnesses.json",
+      "kind": "actual_candidate_authored_frozen_output"
+    },
+    {
+      "source_path": "LAB_ROOT/dev/execution/diagnosis-I01-v1/C_STRUCTURAL_METRICS.json",
+      "sha256": "2525bf640765f8554c85e3a2c7c366b2d4ef684a96284354b0e2afb4312e83d7",
+      "public_relative_path": "control/structural_metrics_original.json",
+      "kind": "engine_frozen_mechanical_metrics; publisher path projection allowed original/public digests separately"
+    },
+    {
+      "source_path": "LAB_ROOT/ops/dispatcher/publication/I01_RESEARCH_OUTCOMES_V1/control-stage-metadata.json",
+      "sha256": "79620db00f28ab5644cf5cc614cb2c08d53eb45dc6dc8b62c3008b726e7c3592",
+      "public_relative_path": "control/stage-metadata.json",
+      "kind": "sanitized immutable outcome/cost/source capture metadata"
+    },
+    {
+      "source_path": "LAB_ROOT/ops/dispatcher/runs/I-01-treatment-research-a001/frozen-output/critique/review.md",
+      "sha256": "c65ff790bb41251e45dd134e148d1d5551e2017a25011dc3d725caecc6a91df5",
+      "public_relative_path": "treatment/candidate/critique/review.md",
+      "kind": "actual_candidate_authored_frozen_output"
+    },
+    {
+      "source_path": "LAB_ROOT/ops/dispatcher/runs/I-01-treatment-research-a001/frozen-output/research/leads.json",
+      "sha256": "10ea0e9fed2139468a30cf8c3fd277d45cc8c7a4f4e27301ec204d2d3d8466f3",
+      "public_relative_path": "treatment/candidate/research/leads.json",
+      "kind": "actual_candidate_authored_frozen_output"
+    },
+    {
+      "source_path": "LAB_ROOT/ops/dispatcher/runs/I-01-treatment-research-a001/frozen-output/research/proposal.md",
+      "sha256": "6fbd62a1545e2877acd298a9a5da247f115ac3427487e97bab0303f95aa83c92",
+      "public_relative_path": "treatment/candidate/research/proposal.md",
+      "kind": "actual_candidate_authored_frozen_output"
+    },
+    {
+      "source_path": "LAB_ROOT/ops/dispatcher/runs/I-01-treatment-research-a001/frozen-output/research/sources.json",
+      "sha256": "32917cb0f969e448680747c59e0246e4e97530df3a3b1107020ff894f39455f4",
+      "public_relative_path": "treatment/candidate/research/sources.json",
+      "kind": "actual_candidate_authored_frozen_output"
+    },
+    {
+      "source_path": "LAB_ROOT/ops/dispatcher/runs/I-01-treatment-research-a001/frozen-output/research/witnesses.json",
+      "sha256": "a6f5c86f938c00223a8737176b09b395e74751398069eff992237b87a05bbc76",
+      "public_relative_path": "treatment/candidate/research/witnesses.json",
+      "kind": "actual_candidate_authored_frozen_output"
+    },
+    {
+      "source_path": "LAB_ROOT/dev/execution/diagnosis-I01-v1/T_STRUCTURAL_METRICS.json",
+      "sha256": "97fe3f9a53759b23fc2cce65b8e056746924cd9a6c334f26ee61e41c772aaee6",
+      "public_relative_path": "treatment/structural_metrics_original.json",
+      "kind": "engine_frozen_mechanical_metrics; publisher path projection allowed original/public digests separately"
+    },
+    {
+      "source_path": "LAB_ROOT/ops/dispatcher/publication/I01_RESEARCH_OUTCOMES_V1/treatment-stage-metadata.json",
+      "sha256": "767aa60b39619f7a2ab711a9a48b13b3c471392e026af908facc238f362afd9c",
+      "public_relative_path": "treatment/stage-metadata.json",
+      "kind": "sanitized immutable outcome/cost/source capture metadata"
+    }
+  ],
+  "limitations": "Capture/hash/artifact receipts establish acquisition/execution mechanics, not semantic quality; original T native Goal FAILED cap and partial outputs remain failed."
+}

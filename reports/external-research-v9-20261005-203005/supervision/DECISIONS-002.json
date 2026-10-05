@@ -1,0 +1,37 @@
+{
+  "schema": "er9.prospective_selection_capacity.v1",
+  "authority": "root accepted DEC002 defaults and conditions before later-pair outputs",
+  "policy_version": "DECISIONS-002",
+  "historical_decision_001_immutable": true,
+  "sealed_brief_details_read": false,
+  "live_candidate_outputs_read": false,
+  "early_integrated_pairs": ["I-01", "I-02", "I-03", "I-04"],
+  "next_defaults": [
+    {"pairs": ["I-05", "I-06"], "method": "V14", "eligible_prelaunch_alternative": "V15", "arms_to_prepare": 4},
+    {"pairs": ["I-07", "I-08"], "method": "V08", "eligible_prelaunch_alternatives": ["V06", "V16"], "arms_to_prepare": 4}
+  ],
+  "evidence_selected_slots": [
+    {"pairs": ["I-09", "I-10"], "selected_method": null},
+    {"pairs": ["I-11", "I-12"], "selected_method": null}
+  ],
+  "selection_basis": "actual matched independent assessment scopes, useful delivered findings, consequential defects/corrections, false rejection, critical uncertainty and inclusive costs; no aggregate score",
+  "prior_PASS_required": false,
+  "all_32_diagnostics_required_before_integration_or_confirmation": false,
+  "confirmation_latest_lock_trigger": "initial versions of all12 integrated pairs terminal; earlier useful recipe evidence permitted",
+  "all_failed_or_incomplete_fallback": "lock technically implementable prospective recipes at frozen matched budgets and disclose semantic evidence limits; confirmation remains diagnostic and must run",
+  "confirmation_pairs": ["C-01", "C-02", "C-03", "C-04"],
+  "confirmation_full_pipelines": 8,
+  "confirmation_feedback_between_pairs": false,
+  "confirmation_queue_priority_after_lock": "next reserved windows before optional extras/repairs; never interrupt live jobs solely to reorder",
+  "candidate_caps": {"GLM": 2, "Muse": 4, "Luna": "actual capacity, no campaign numerical ceiling", "Sol": "actual capacity, no campaign numerical ceiling"},
+  "route_replacement": {
+    "trigger": "needed diagnostic ready for admission and Luna not scored-safe",
+    "fallback": "prospectively frozen GLM successor botharms",
+    "example_id": "D-V14-A-GLM-R1",
+    "preserve": ["original/current predecessor", "source_slot", "original NOT_RUN/failed outcome", "all failures/costs", "requested and actual families", "seed provenance", "every native attempt"],
+    "original_family_credit_from_successor": false,
+    "duplicate_dispatch_after_lost_receipt": false
+  },
+  "new_Max_or_user_stage_approval_required": false,
+  "root_admission_and_real_safety_boundary_still_required": true
+}

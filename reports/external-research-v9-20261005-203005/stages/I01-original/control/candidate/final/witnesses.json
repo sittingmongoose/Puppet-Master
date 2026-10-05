@@ -1,0 +1,45 @@
+{
+  "witness_catalog_version": 1,
+  "labels": {
+    "executed_by_candidate": "Isolated stdlib-only Python sandbox (mcp python_execute). Receipts include code/data sha256, stdout sha256, exit code, and sandbox limits. These are isolated component checks; they do not establish full-application behavior.",
+    "executed_only_by_evaluator": "none provided at this stage",
+    "proposed": "UNEXECUTED checks planned for implementation/validation; no receipts exist and none are invented."
+  },
+  "executed": [
+    {
+      "id": "W1",
+      "title": "Coordinate storage precision: float32 vs float64 vs JSON round-trip",
+      "rationale": "Brief requires enough precision to reopen and export reliably; need a discriminating check that float32 is insufficient at realistic pixel coordinates and that JSON binary64 round-trips exactly.",
+      "expected": "float32 introduces measurable index error at ~1e5 px; float64 JSON round-trip is exact; float32 value itself round-trips through JSON (because it is representable in binary64) — showing the loss happens at storage width, not serialization.",
+      "execution": {"execution_id": "exec-zw6uyd4k", "executed_utc": "2026-10-05T21:18:19Z", "code_sha256": "07bacf9e492b7f0b4d9c7f2bb730df7016dec1d1b04d101e187a5fd292d2ad5c", "data_sha256": "6e855369b7af1a6d3c45415195c43ae650c19fb9636471ef2bd6b3e781625d42", "stdout_sha256": "b46266f9c5192b234b28e81b0af1733876af1a21aeccc2b3ecaaeb111765d206", "stderr_bytes": 0, "exit_code": 0, "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "network": "none"}},
+      "stdout": "float64 stored px : 104857.6\nfloat32 stored px : 104857.6015625 err_px = 0.001562499994179234\nphysical um f64   : 6815.744000000001\nphysical um f32   : 6815.74365234375 err_um = 0.0003476562505966285\nroundtrip f32 px  : 104857.6015625 err_px = 0.001562499994179234\njson roundtrip exact: True\njson text: {\"x_um\": 6815.744000000001, \"y_px\": 104857.6}\nfloat32 value in json: {\"x_um\": 6815.74365234375} -> reloaded equal: True\n",
+      "scope_limits": ["stdlib-only sandbox; no numpy/Qt/zarr involved", "single-point demonstration at one scale/coordinate; error scales with coordinate magnitude", "does not test any real viewer or file format"]
+    },
+    {
+      "id": "W2",
+      "title": "Affine composition order discriminates transform conventions",
+      "rationale": "Brief requires explicit representation of origin/axis order/scale/display transforms; need a check that composition order is observable and therefore must be a pinned schema constant.",
+      "expected": "translate∘scale ≠ scale∘translate for the same point and matrices; concrete differing outputs demonstrate the ambiguity the schema must remove.",
+      "execution": {"execution_id": "exec-2ambjtod", "executed_utc": "2026-10-05T21:18:43Z", "code_sha256": "f793df71a823758a791decc451071b8607683911cfdbfcb27faccb583b4ffb9b", "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b", "stdout_sha256": "efc58e7d4a914db358a6246d052aa5a12f08b7450072a191c8f6c4f894e90671", "stderr_bytes": 0, "exit_code": 0, "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "network": "none"}},
+      "stdout": "p                : (1.0, 1.0)\ntranslate->scale : (22.0, 84.0)\nscale->translate : (12.0, 24.0)\norders equal     : False\nS then T matrix  : [[2.0, 0.0, 10.0], [0.0, 4.0, 20.0], [0.0, 0.0, 1]]\n",
+      "scope_limits": ["pure arithmetic on 3x3 matrices, column-vector convention", "does not test any real transform pipeline"]
+    },
+    {
+      "id": "W3",
+      "title": "Atomic project save (temp in same dir + os.replace) and content-hash identity",
+      "rationale": "Brief requires recoverable state after interrupted save and explicit source identity; check the safe-save pattern preserves the old file on failure and that sha256 is a byte-sensitive identity.",
+      "expected": "failed save leaves target byte-identical; successful save replaces atomically; hash stable for identical bytes and different for any change; NOTE a crash between temp-write and replace leaves an orphan temp file (observed) motivating the recovery sweep.",
+      "execution": {"execution_id": "exec-gw87zrsh", "executed_utc": "2026-10-05T21:18:43Z", "code_sha256": "b732ae4c1b561fdac4b145029af46bc838c08a8fd6e886907d12b588cada485a", "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b", "stdout_sha256": "dbc93ac5c8cd384f080572e747b141590a887827d7d024748c7cc6c237fa375c", "stderr_bytes": 0, "exit_code": 0, "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "network": "none"}},
+      "stdout": "target intact after failed save : True True\nno leftover temp visible?  files: ['.project-z57qhje0.tmp', 'project.json']\nafter successful save           : {\"v\": 2, \"ann\": [\"ok\"]}\nidentity hash stable            : True\nany byte change alters identity : True\nsame-dir rename supported       : True\n",
+      "scope_limits": ["single process, local tmpfs/ext filesystem; no power-loss/crash injection beyond an exception before replace", "cross-filesystem EXDEV and NFS semantics NOT exercised (see V3/V5)", "does not establish behavior of any real application"]
+    }
+  ],
+  "proposed_unexecuted": [
+    {"id": "V1", "title": "Reopen round-trip on a second machine", "plan": "Copy project directory + referenced sources to a second path/user; open; assert annotations bit-identical and relocation dialog appears only for reference-policy sources whose paths moved.", "acceptance": "annotation rows hash-equal pre/post move; no silent relinking when sha256 mismatches.", "status": "UNEXECUTED"},
+    {"id": "V2", "title": "3 GB bounded-read benchmark on the 8-core/16 GB envelope", "plan": "Synthetic 3 GB tiled OME-TIFF + real instrument file; measure p95 tile latency at review zoom, peak RSS, prefetch behavior, cancel latency.", "acceptance": "p95 < 100 ms at review zoom; RSS < 4 GB; cancel < 250 ms. Tests assumption A1.", "status": "UNEXECUTED"},
+    {"id": "V3", "title": "Kill during save/export on the shared filesystem", "plan": "kill -9 mid-save and mid-export on the team's NFS/SMB share; verify old state opens, .partial cleanup, and probe NFS rename caveats (rename(2) BUGS).", "acceptance": "project opens with last good state; no partially-written authoritative files.", "status": "UNEXECUTED"},
+    {"id": "V4", "title": "Export->reimport coordinate equality", "plan": "Export CSV/GeoJSON; reparse; compare to stored float64 bit-exactly; validate export-manifest transform chain against oplog.", "acceptance": "exact float64 equality; manifest chain matches recorded ops.", "status": "UNEXECUTED"},
+    {"id": "V5", "title": "Cross-filesystem relocation (EXDEV path)", "plan": "Move project dir across mounts; verify temp-in-same-dir save avoids EXDEV or falls back to copy+replace safely.", "acceptance": "no save failures; no orphaned authoritative files.", "status": "UNEXECUTED"},
+    {"id": "V6", "title": "Per-instrument calibration fixture (mirrors tifffile test_issue_tvips_pixelsize)", "plan": "For each instrument's files, fixture asserts imported (value, unit) equals file-native values through the workspace import path, so a reader upgrade that changes semantics (as in tifffile 2026.2.24) is caught before annotations are made.", "acceptance": "fixtures fail loudly on any (value, unit) semantic drift.", "status": "UNEXECUTED"}
+  ]
+}

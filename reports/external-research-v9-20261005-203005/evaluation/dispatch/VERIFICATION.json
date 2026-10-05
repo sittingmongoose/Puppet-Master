@@ -1,0 +1,23 @@
+{
+  "schema": "er9.evaluation-dispatch-mechanics-verification.v1",
+  "tested_utc": "2026-10-05T21:19:08.464674Z",
+  "scope": "generic synthetic mechanics only; no candidate artifact read or graded",
+  "passed_checks": [
+    "anonymous output copy with exact bytes",
+    "positive evidence selection and explicit missing catalogs",
+    "private alias sidecar exclusion",
+    "existing packet overwrite refusal",
+    "freeze/artifact pin drift refusal before output construction",
+    "final_resolution designated-stage admission",
+    "external evidence copy with redaction metadata",
+    "external evidence wrong-final binding rejection"
+  ],
+  "source_pins": {
+    "build_blind_packet.py": "5c399c3dbfd8b08a41bdeef2f74c1db64f2addfb2b653ee76a6081aeb960ce12",
+    "README.md": "381b037e7984d9175933cf68ef054ba70db7578c923e81f0327cb548c6d71234",
+    "I01_TASK_BINDING.json": "dae56674938819c8e2aa040b33e52cb29c78406335cd7a056bea43d06b91dcab",
+    "I01_REQUIREMENTS_INVENTORY.md": "772ca755ea0b71dd6ba56ea02b0369cb509a46704416606b57b71fee68ac99c3",
+    "RESERVATION_I01.json": "0bc160d4385f9c73ddf36251cc47cdc144096b4d7b43539855c800967346a4fb"
+  },
+  "semantic_evaluation": "NOT_STARTED"
+}

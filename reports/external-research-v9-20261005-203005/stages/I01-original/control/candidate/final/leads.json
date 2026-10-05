@@ -1,0 +1,23 @@
+{
+  "leads_catalog_version": 1,
+  "note": "Useful leads and optional ideas preserved with status. Nothing here is a minimum obligation; adoption must be justified later. Leads are not requirements and none were executed.",
+  "leads": [
+    {"id": "L1", "title": "OME-Zarr 0.5 write/export for derived images", "detail": "NGFF 0.5 axes/units/coordinateTransformations + omero channel windows give a standard home for derived rasters and calibration (S1). tifffile can write NGFF 0.5 multiscales (S5/S6 2026.5.2 entry); QuPath 0.6+ reads/writes OME-Zarr (S12).", "status": "recommended opportunity (proposal §9); not built"},
+    {"id": "L2", "title": "Build on napari (embed or plugin) as fallback", "detail": "napari already implements display/data separation, lazy arrays, multiscale, shapes, units (S2-S4). Fallback if custom canvas work overruns; cost is dependency and version churn.", "status": "bounded alternative (proposal §8.2)"},
+    {"id": "L3", "title": "QuPath as platform alternative", "detail": "Field-tested project/backup/relocation/export machinery (S12-S14); strongest if whole-slide breadth becomes a requirement; JVM stack mismatched to this team.", "status": "plausible alternative, rejected for v1 (proposal §9)"},
+    {"id": "L4", "title": "image.sc forum threads as community evidence channel", "detail": "tifffile issue #54 originated from an image.sc discussion (S11); forum threads often precede GitHub issues for calibration/axes questions — monitor for the team's instruments.", "status": "process lead"},
+    {"id": "L5", "title": "CZI and other vendor formats", "detail": "Deferred per support boundary (tifffile does not read CZI; S5). Options if needed later: aicspylibczi/bioio readers behind the Reader service interface; each addition needs its own calibration fixtures (V6 pattern).", "status": "deferred"},
+    {"id": "L6", "title": "GPU-assisted rendering/decoding", "detail": "Envelope marks GPU optional. Keep renderer path abstract (VisPy-like) so GPU LUT/windowing can be added; do not gate v1 on it.", "status": "deferred"},
+    {"id": "L7", "title": "GeoJSON external interop caveat", "detail": "RFC 7946 defines GeoJSON positions as WGS84 lon/lat; microscopy tools (incl. QuPath) use plain pixel x/y (S13). Our GeoJSON export should carry an explicit non-geographic CRS note in the manifest; a compliant-lonlat mode is a later, tested addition. RFC text itself not fetched this stage.", "status": "design note, UNVERIFIED against RFC text"},
+    {"id": "L8", "title": "ITK/SimpleITK physical-coordinate model for future registration", "detail": "Origin/spacing/direction-cosine model would be the precedent if registration becomes in-scope; not investigated this stage.", "status": "deferred, unexamined"},
+    {"id": "L9", "title": "Assisted segmentation (Cellpose/StarDist/InstanSeg)", "detail": "QuPath ecosystem evidence of demand and integration patterns (S12 v0.6.0 InstanSeg). Later alternative if annotation throughput becomes the bottleneck; must remain assist-only with provenance labels.", "status": "later alternative"},
+    {"id": "L10", "title": "OMERO/cloud exchange", "detail": "Out of scope for v1 (bundle exchange via shared storage). NGFF's HTTP-object-store orientation (S1) keeps a later cloud path open without schema change.", "status": "out of scope, path preserved"},
+    {"id": "L11", "title": "tifffile asxarray/coords for axis metadata probing", "detail": "tifffile 2026.5.2 added asxarray and TiffPageSeries mpp/coords/units properties (S5/S6) — candidate implementation detail for the import inspector; verify behavior on the team's files.", "status": "implementation lead, unverified"},
+    {"id": "L12", "title": "napari-layer undo/redo behavior", "detail": "Brief requires undo/redo; napari layers provide some undo behavior but this was not verified this stage (S4 does not document it). Design keeps undo in our own op stack (C6) regardless; do not rely on unverified library behavior.", "status": "explicitly unverified; not relied upon"}
+  ],
+  "unresolved_critical_dependencies": [
+    {"dependency": "A1 tile-latency adequacy of tifffile/zarr on the team's real 3 GB files", "evidence_state": "consistent with design (S5 tile/page/zarr reads) but no benchmark executed", "next_check": "V2"},
+    {"dependency": "A2 shared-storage (NFS/SMB) save-atomicity acceptable with temp-in-dir + backups", "evidence_state": "rename(2) documents atomicity and NFS caveat (S15); W3 is local-only", "next_check": "V3"},
+    {"dependency": "A3 instrument calibration trustworthy after one recorded import confirmation", "evidence_state": "tifffile #319 shows readers can change unit semantics (S7-S9)", "next_check": "V6 fixtures per instrument"}
+  ]
+}

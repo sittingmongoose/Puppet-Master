@@ -1,0 +1,69 @@
+{
+  "leads_version": "research-2026-10-05",
+  "note": "Optional ideas, deferred adoption, and watch-items. Nothing here is a minimum obligation. Preserved per contract even where adoption is unlikely.",
+  "leads": [
+    {
+      "id": "L1",
+      "title": "OME-Zarr labels as mask/derivative exchange",
+      "evidence": "NGFF 0.4 sections 3.6/3.7 define labels and image-label metadata incl. source image link (S11); QuPath reads and writes OME-Zarr since v0.6.0 (S09)",
+      "why_deferred": "one writer path beyond M3 table/overlay exports; needs U-2/U-3 groundwork",
+      "impact_if_adopted": "masks reopen in napari/QuPath/Fiji-family tools with coordinates intact"
+    },
+    {
+      "id": "L2",
+      "title": "Watch napari PR #9337 (non-orthogonal 2D slicing of transformed n-D images)",
+      "evidence": "open PR with detailed transform-chain description; author lists uncovered gaps incl. units (S04)",
+      "why_deferred": "oblique slicing is out of minimum scope; upstream still maturing",
+      "impact_if_adopted": "free oblique-plane review once merged and validated; our transform contract is compatible (4x4 affines)"
+    },
+    {
+      "id": "L3",
+      "title": "Automatic segmentation (InstanSeg-style) as later plugin",
+      "evidence": "QuPath 0.6.0 ships InstanSeg support (S09) showing integration pattern",
+      "why_deferred": "brief excludes from minimum scope; research tool must keep original-vs-derived distinction sharp",
+      "impact_if_adopted": "segmentation results enter as derived assets with op records only"
+    },
+    {
+      "id": "L4",
+      "title": "QuPath extension path as fallback architecture",
+      "evidence": "QuPath project/URI/tile-cache/OME-Zarr surface (S09); GPL-3.0 license (S06)",
+      "why_deferred": "Java toolchain + license + foreign release cadence vs MVP needs",
+      "impact_if_adopted": "drop napari embedding; keep the same data contract on QuPath project files"
+    },
+    {
+      "id": "L5",
+      "title": "NGFF 0.5 tracking",
+      "evidence": "tifffile added NGFF 0.5 multiscale support for zarr v3 in 2026.5.2 (S13)",
+      "why_deferred": "0.4 is the widely interoperable version today; support boundary stays testable",
+      "impact_if_adopted": "upgrade adapters behind the corpus gate once the ecosystem settles"
+    },
+    {
+      "id": "L6",
+      "title": "NIfTI-1 / DICOM-series read adapters",
+      "evidence": "none captured this pass (SimpleITK page 404; see negative results in sources.json)",
+      "why_deferred": "no verified source pin yet; boundary stays at TIFF/OME-TIFF/OME-Zarr/PNG",
+      "impact_if_adopted": "wider instrument coverage; requires its own corpus entries"
+    },
+    {
+      "id": "L7",
+      "title": "Collaboration beyond bundle exchange (simultaneous editing, cloud sync)",
+      "evidence": "none; explicitly out of scope by brief",
+      "why_deferred": "conflict handling would dwarf the annotation journal's simplicity",
+      "impact_if_adopted": "journal records are already append-only; a CRDT/sync layer could replay them"
+    },
+    {
+      "id": "L8",
+      "title": "GPU volume rendering / BigDataViewer-style oblique interaction",
+      "evidence": "napari PR #9337 discusses BDV-style rendering paths (S04)",
+      "why_deferred": "performance nicety; no minimum obligation",
+      "impact_if_adopted": "smoother volumetric review on the optional GPU"
+    },
+    {
+      "id": "L9",
+      "title": "Locate authoritative napari coordinate-systems documentation",
+      "evidence": "guessed raw path 404'd (sources.json negative results); napari/docs tree confirmed at docs/{guides,howtos,tutorials} (S16)",
+      "why_deferred": "S04's PR description already documents the chain semantics precisely",
+      "impact_if_adopted": "stronger citation for the napari transform chain than a PR description"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "schema": "er9.neutral-task-scope-fragments.v1",
+  "scope": "Frozen host-authored packet excerpts only; no candidate output or source interpretation",
+  "sources": [
+    {
+      "arm": "control",
+      "task_path": "LAB_ROOT/ops/dispatcher/runs/I-01-control-research-a001/workspace/TASK.md",
+      "task_sha256": "7dd04089a69ce8dd5318927537bbf8b8ce2e795db87572afa6954ff4c741e78b",
+      "exact_neutral_scope_fragments": [
+        {
+          "line": 25,
+          "exact_text": "Produce a standalone current proposal at out/final/proposal.md. Supporting source catalog is out/final/sources.json; executed/proposed witness inventory is out/final/witnesses.json; unresolved/optional leads are out/final/leads.json. During research write out/research/proposal.md and the same catalogs under out/research/. During critique write out/critique/review.md with supported corrections, source/version evidence, preserved valid claims, uncertainty and affected dependencies. A source catalog records URL, pin, exact locator, capture identity and applicability; it does not replace meaningful citations in the proposal.",
+          "sha256": "01c4bb2702bb986f8341f34e17a2a9132b7c81ce2b5bd32da3f4814c550ac09b"
+        },
+        {
+          "line": 36,
+          "exact_text": "Freeze your complete proposal and catalogs under out/research/ before the next fresh candidate receives them. Keep the same brief obligations throughout. You may use only the stage's admitted tools, and must accurately label any proposed versus executed check.",
+          "sha256": "34c20f37b4b5d0212c03bbb566e727f5f7590e2b7ffa1062b9ef2be027297d51"
+        }
+      ]
+    },
+    {
+      "arm": "treatment",
+      "task_path": "LAB_ROOT/ops/dispatcher/runs/I-01-treatment-research-a001/workspace/TASK.md",
+      "task_sha256": "7dd04089a69ce8dd5318927537bbf8b8ce2e795db87572afa6954ff4c741e78b",
+      "exact_neutral_scope_fragments": [
+        {
+          "line": 25,
+          "exact_text": "Produce a standalone current proposal at out/final/proposal.md. Supporting source catalog is out/final/sources.json; executed/proposed witness inventory is out/final/witnesses.json; unresolved/optional leads are out/final/leads.json. During research write out/research/proposal.md and the same catalogs under out/research/. During critique write out/critique/review.md with supported corrections, source/version evidence, preserved valid claims, uncertainty and affected dependencies. A source catalog records URL, pin, exact locator, capture identity and applicability; it does not replace meaningful citations in the proposal.",
+          "sha256": "01c4bb2702bb986f8341f34e17a2a9132b7c81ce2b5bd32da3f4814c550ac09b"
+        },
+        {
+          "line": 36,
+          "exact_text": "Freeze your complete proposal and catalogs under out/research/ before the next fresh candidate receives them. Keep the same brief obligations throughout. You may use only the stage's admitted tools, and must accurately label any proposed versus executed check.",
+          "sha256": "34c20f37b4b5d0212c03bbb566e727f5f7590e2b7ffa1062b9ef2be027297d51"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "evaluation_id": "ER9-EVAL-I01-001",
+  "pair_id": "I-01",
+  "owner": "/root/eval_protocol",
+  "state": "RESERVED_WAITING_FOR_BOTH_DESIGNATED_FINAL_FREEZES",
+  "semantic_assessment": "NOT_STARTED",
+  "requested_model": "gpt-6.1-sol",
+  "requested_reasoning_effort": "xhigh",
+  "observed_model_effort": "coordinator must bind actual supported identity; not inferred",
+  "scope": "one coherent pair",
+  "screen_max_seconds": 1200,
+  "hard_max_seconds": 1800,
+  "task_binding": "evaluation/dispatch/I01_TASK_BINDING.json",
+  "trigger_outbox": "ops/dispatcher/evaluation_notifications.jsonl",
+  "next_action": "ops prepares anonymous packet only from two terminal final freezes, then followup_task evaluator",
+  "created_utc": "2026-10-05T21:17:10.240671Z"
+}
