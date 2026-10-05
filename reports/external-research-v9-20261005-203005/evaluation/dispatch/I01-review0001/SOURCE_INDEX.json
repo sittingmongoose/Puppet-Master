@@ -1,0 +1,200 @@
+{
+  "sources": [
+    {
+      "source_id": "P-TIFF-ISSUE319",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/issues/319",
+      "version_or_commit": "see pinned URL or capture identity",
+      "locator": "issue319 body version output",
+      "retrieved_utc": "2026-10-05T22:01:20.499836Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-review0001/sources/tifffile_issue319.capture",
+      "sha256": "0b200363bbef7d0ba8a35469051759b636e298688807ecceb99eb6f1e1b01692",
+      "capture_bytes": 3952,
+      "public_delivery": "primary URL + exact locator/pin; raw capture excluded from compact publication"
+    },
+    {
+      "source_id": "P-TIFF-FIX",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/commits/edede6002c817f056d75125ade0b20332d549cca",
+      "version_or_commit": "see pinned URL or capture identity",
+      "locator": "files[0].patch read_tvips_header; parents[0]",
+      "retrieved_utc": "2026-10-05T22:01:20.475674Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-review0001/sources/tifffile_fix_commit.capture",
+      "sha256": "fb9c86d83644b900b61af5b0847de46cf524dfa9c4aa1bab595d7e6f2a91857f",
+      "capture_bytes": 15123,
+      "public_delivery": "primary URL + exact locator/pin; raw capture excluded from compact publication"
+    },
+    {
+      "source_id": "P-TIFF-TEST",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/commits/7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938",
+      "version_or_commit": "see pinned URL or capture identity",
+      "locator": "files[0].patch test_issue_tvips_pixelsize",
+      "retrieved_utc": "2026-10-05T22:01:20.490273Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-review0001/sources/tifffile_test_commit.capture",
+      "sha256": "c7a90e9646d73e124061cf1b28cc07e4ccfefb0af959947c51059e36549b4a7c",
+      "capture_bytes": 18687,
+      "public_delivery": "primary URL + exact locator/pin; raw capture excluded from compact publication"
+    },
+    {
+      "source_id": "P-NGFF-PIN",
+      "url": "https://raw.githubusercontent.com/ome/ngff-spec/d9164040/index.bs",
+      "version_or_commit": "d9164040dd61b3e4688494de1a58a69251b13f24",
+      "locator": "index.bs lines272-320, especially314-319",
+      "retrieved_utc": "2026-10-05T22:02:05.586589Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-review0001/sources/ngff_pinned_d9164040.capture",
+      "sha256": "eb007bba48e6b359906a1b5f289a4d6f5965a7fc0e8f50fd3bcfaeb765fef685",
+      "capture_bytes": 37464,
+      "public_delivery": "primary URL + exact locator/pin; raw capture excluded from compact publication"
+    },
+    {
+      "source_id": "P-NAPARI-IMAGE",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/image.md",
+      "version_or_commit": "7f5eaee3ffb8d7b674aed6f4c26a95b90831736d at evaluator capture",
+      "locator": "image.md lazy arrays lines163-193; contrast lines410-418",
+      "retrieved_utc": "2026-10-05T22:02:05.456258Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-review0001/sources/napari_image_main.capture",
+      "sha256": "2897310cc50d5ac6c920bc34cad61f001521842246af2444300603af75893963",
+      "capture_bytes": 20309,
+      "public_delivery": "primary URL + exact locator/pin; raw capture excluded from compact publication"
+    },
+    {
+      "source_id": "P-NAPARI-UNITS",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/guides/units.md",
+      "version_or_commit": "7f5eaee3ffb8d7b674aed6f4c26a95b90831736d at evaluator capture",
+      "locator": "units.md units/scale/world-coordinate sections",
+      "retrieved_utc": "2026-10-05T22:02:05.469861Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-review0001/sources/napari_units_main.capture",
+      "sha256": "ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11",
+      "capture_bytes": 4294,
+      "public_delivery": "primary URL + exact locator/pin; raw capture excluded from compact publication"
+    },
+    {
+      "source_id": "P-TIFF-README",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/v2026.9.20/README.rst",
+      "version_or_commit": "see pinned URL or capture identity",
+      "locator": "README.rst format/read examples and ZarrTiffStore revisions",
+      "retrieved_utc": "2026-10-05T22:01:20.350848Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-review0001/sources/tifffile_readme_2026_9_20.capture",
+      "sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48",
+      "capture_bytes": 32898,
+      "public_delivery": "primary URL + exact locator/pin; raw capture excluded from compact publication"
+    },
+    {
+      "source_id": "P-TIFF-ZARR",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/v2026.9.20/tifffile/zarr.py",
+      "version_or_commit": "v2026.9.20",
+      "locator": "zarr.py _init_zarray lines779-808; get lines1198-1232",
+      "retrieved_utc": "2026-10-05T22:02:47.107809Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-review0001/sources/tifffile_zarr_pinned.capture",
+      "sha256": "adfed9be489acd318f354cfc98e05386fb6e3971905b60f5eeeca41143f41ed6",
+      "capture_bytes": 91288,
+      "public_delivery": "primary URL + exact locator/pin; raw capture excluded from compact publication"
+    },
+    {
+      "source_id": "P-TIFF-CORE",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/v2026.9.20/tifffile/tifffile.py",
+      "version_or_commit": "v2026.9.20",
+      "locator": "tifffile.py TiffPage.chunks lines8251-8264",
+      "retrieved_utc": "2026-10-05T22:03:45.151928Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-review0001/sources/tifffile_core_pinned.capture",
+      "sha256": "a58e2d16ceefce0455e780fdc7955e15d76030ff66f68f7a68a4a0108d0c77f8",
+      "capture_bytes": 988932,
+      "public_delivery": "primary URL + exact locator/pin; raw capture excluded from compact publication"
+    },
+    {
+      "source_id": "P-QUPATH-EXPORT",
+      "url": "https://qupath.readthedocs.io/en/0.7/docs/advanced/exporting_annotations.html",
+      "version_or_commit": "see pinned URL or capture identity",
+      "locator": "Units and origin admonition",
+      "retrieved_utc": "2026-10-05T22:02:05.581516Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-review0001/sources/qupath_export_v0_7.capture",
+      "sha256": "9de635b324f7c4394a02b7af0ea551f33485f7bd73d2b3ef444b49aad6dc54e1",
+      "capture_bytes": 40938,
+      "public_delivery": "primary URL + exact locator/pin; raw capture excluded from compact publication"
+    },
+    {
+      "source_id": "P-RENAME2",
+      "url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+      "version_or_commit": "see pinned URL or capture identity",
+      "locator": "DESCRIPTION pathname replacement, EXDEV and NFS caveat",
+      "retrieved_utc": "2026-10-05T22:02:05.847954Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-review0001/sources/rename2.capture",
+      "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "capture_bytes": 23571,
+      "public_delivery": "primary URL + exact locator/pin; raw capture excluded from compact publication"
+    },
+    {
+      "source_id": "P-RFC7946",
+      "url": "https://www.rfc-editor.org/rfc/rfc7946.txt",
+      "version_or_commit": "RFC7946 August2016",
+      "locator": "Sections4,7.1,8",
+      "retrieved_utc": "2026-10-05T22:12:45.825323Z",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-review0001/sources/rfc7946.capture",
+      "sha256": "cb52f07b9cc6c841750d75850988fe8f32c7b7f0e1f7420f2069d5b5ded124f8",
+      "capture_bytes": 49143,
+      "public_delivery": "primary URL + exact locator/pin; raw capture excluded from compact publication"
+    },
+    {
+      "source_id": "E-W1",
+      "execution_label": "candidate_executed",
+      "execution_id": "exec-k5j_1d86",
+      "actor": "candidate",
+      "exit_code": 0,
+      "code_sha256": "adbe6124982c519b9f8f7b5f975fc863f2e22be04d34f8141a7f50379fe5e83e",
+      "stdout_sha256": "5c55ef1764c36cd818082e846e20c9af6de13fe652dfc79a6e090f67a0fb069c",
+      "facts_path": "candidate_evidence/W1/execution-facts.json",
+      "facts_sha256": "5f45a2a4f341940f8bbe60b4277626bb476a6ea0b8ef3185bc710cf6492cbde0",
+      "scope": "exact anonymous component execution facts/code/input/stdout/stderr"
+    },
+    {
+      "source_id": "E-W2",
+      "execution_label": "candidate_executed",
+      "execution_id": "exec-ygfz3rwq",
+      "actor": "candidate",
+      "exit_code": 0,
+      "code_sha256": "62d83243a8c950c0fddff57b0b378ab71cb7ce9aa61f7655b7cf1a16f2c1b323",
+      "stdout_sha256": "f8ea9bf5773284eb7acf69de759aa45f1328311a5add45edcdb095ea4085d245",
+      "facts_path": "candidate_evidence/W2/execution-facts.json",
+      "facts_sha256": "846ef2b39a72117042b0e35d99c863cb42f6d5404a28ea3792776e7490a1a691",
+      "scope": "exact anonymous component execution facts/code/input/stdout/stderr"
+    },
+    {
+      "source_id": "E-W3",
+      "execution_label": "candidate_executed",
+      "execution_id": "exec-54y7y15g",
+      "actor": "candidate",
+      "exit_code": 0,
+      "code_sha256": "996361810111f2f67e0a0893c4f566b6decf5a74ea8203f5a6083ae8a84b6768",
+      "stdout_sha256": "8bc8ed719c4cf45a23ba5a9d616e8a67e078c624d0c29e632efe88feb241112f",
+      "facts_path": "candidate_evidence/W3/execution-facts.json",
+      "facts_sha256": "ec0fa892b58469f80d8bc13016d40e8f74acf0a13a7d73cf96a94b47883051d1",
+      "scope": "exact anonymous component execution facts/code/input/stdout/stderr"
+    },
+    {
+      "source_id": "E-W3-CONTROL",
+      "execution_label": "evaluator_executed",
+      "path": "EVALUATOR_W3_DISCRIMINATION.json",
+      "sha256": "8c8f51e56d2febc3aade3f5a6fe056820d1ff45b0266708aeb7c62a4cc150f6c",
+      "scope": "private post-freeze evaluator check; not candidate execution"
+    },
+    {
+      "source_id": "E-IDENTITY",
+      "execution_label": "evaluator_executed",
+      "path": "EVALUATOR_IDENTITY_COUNTEREXAMPLE.json",
+      "sha256": "0b18a5eab93d4d911592de094aec91b74569ab507a5a1cb6ae6c3f1e009d0471",
+      "scope": "private post-freeze evaluator check; not candidate execution"
+    },
+    {
+      "source_id": "E-STRIP",
+      "execution_label": "evaluator_executed",
+      "path": "EVALUATOR_STRIP_BOUND.json",
+      "sha256": "cfb683ef4c762be02e858f2820dc8fa8c5dc9c22509a0bb6394c8cceaf880123",
+      "scope": "private post-freeze evaluator check; not candidate execution"
+    },
+    {
+      "source_id": "TASK-OUTPUT-CONTRACT",
+      "path": "../I01-packet0001/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "scope": "actual frozen task contract"
+    }
+  ],
+  "capture_policy": "Raw upstream captures stay in lab; publish source URLs/full pins/locators and only compact source-backed report. No auth/modelIO/private stage history included."
+}

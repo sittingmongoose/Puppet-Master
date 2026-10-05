@@ -1,0 +1,14 @@
+{
+  "schema": "er9.luna.client-relay-tests.v1",
+  "real_confined_read_map_write_python": true,
+  "unregistered_tool_denied": true,
+  "smoke_all_owned_units_quiet": true,
+  "deadline": {
+    "all_owned_cgroups_and_process_groups_quiet": true,
+    "elapsed_seconds": 4.031776802003151
+  },
+  "controller-loss": {
+    "all_owned_cgroups_and_process_groups_quiet": true,
+    "elapsed_seconds": 0.8345230639970396
+  }
+}

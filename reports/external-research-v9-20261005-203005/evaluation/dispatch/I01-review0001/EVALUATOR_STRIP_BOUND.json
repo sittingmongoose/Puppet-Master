@@ -1,0 +1,19 @@
+{
+  "execution_label": "evaluator_executed",
+  "source_pin": "cgohlke/tifffile v2026.9.20",
+  "source_paths": [
+    "tifffile.py:TiffPage.chunks",
+    "zarr.py:ZarrTiffStore._init_zarray/get"
+  ],
+  "case": {
+    "height": 32768,
+    "width": 49152,
+    "rowsperstrip": 32768,
+    "sample_bytes": 2,
+    "compression": "Deflate",
+    "layout": "one full-height strip"
+  },
+  "decode_chunk_bytes": 3221225472,
+  "proposed_cache_bytes": 536870912,
+  "finding": "One accepted compressed strip can be a whole plane, exceeding the nominal cache before eviction. Source traversal establishes this geometry; no full library execution or performance benchmark claimed."
+}

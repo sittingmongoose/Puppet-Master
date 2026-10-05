@@ -1,0 +1,31 @@
+{
+  "evaluation_id": "ER9-EVAL-I01-001",
+  "finished_utc": "2026-10-05T22:16:59.672536Z",
+  "wall_seconds_through_verification": 1046.9969849586487,
+  "screen_target_seconds": 1200,
+  "hard_max_seconds": 1800,
+  "quality_status": "FAIL_SCREEN_FOR_AVAILABLE_OUTPUT",
+  "missing_partner_quality": "UNASSESSED",
+  "comparison_status": "INCOMPLETE_PAIR",
+  "original_snapshot_unchanged": true,
+  "checks_passed": [
+    "all12obligationIDs",
+    "all8dimensions",
+    "same5importantchecks",
+    "sourceIDcrossrefs",
+    "originalPhase1pin",
+    "missingqualityUNASSESSED",
+    "separateoperationfail",
+    "candidateexecutionlabels",
+    "no cache/UI doublecount",
+    "napariresolvedcommitbytesmatch",
+    "withinoriginalscreenbudget"
+  ],
+  "source_pins": {
+    "current_output_judgment.json": "9a3d2bcbabfca57057131b83a8545e06d933202f79fc950e2e1575881f5c3ff9",
+    "report.json": "b8ef1d561c9a0208ba2c81cb45b5d4314c52f74285663f73d936b845b7896a97",
+    "REVIEW.md": "4f0c9c4cf58f0544a63c302facc89283618f5ad7c99509c81f7a31e5fe850d35",
+    "SOURCE_INDEX.json": "332c1e8447f772bad588310dbdd587e847bce6247eadd94af7bb87ca122a81c0",
+    "PHASE2_METADATA.json": "25d772afd6c782b86b7988c728303c0c85f1f8b81310dbd8e6b784e08e38f8ef"
+  }
+}

@@ -1,0 +1,7 @@
+simulated failure                : simulated crash before os.replace
+target intact after failed save  : True True
+directory listing (orphan temp?) : ['annotations.json', 'annotations.json.tmp']
+after successful save            : {"v": 2, "ann": ["ok"]}
+identity hash stable             : True
+any byte change alters identity  : True
+temp was created in target dir   : True (by construction, avoids EXDEV)

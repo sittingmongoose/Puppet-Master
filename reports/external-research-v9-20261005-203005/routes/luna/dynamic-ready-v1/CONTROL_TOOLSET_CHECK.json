@@ -1,0 +1,21 @@
+{
+  "schema": "er9.luna.control-toolset-check.v1",
+  "status": "PASS",
+  "inference_started": false,
+  "actual_goal_starts": 0,
+  "execution_enabled": false,
+  "public_get": true,
+  "configured_client_namespaces": {
+    "pm_boundary": [
+      "mechanical",
+      "public_https_get",
+      "read_file",
+      "write_file"
+    ]
+  },
+  "registered_tool_count": 4,
+  "execution_namespace_absent": true,
+  "owned_source_cgroup_quiet": true,
+  "runner_handles_actual_configured_namespace_set": true,
+  "runtime_pin_unchanged": true
+}

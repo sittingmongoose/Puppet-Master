@@ -1,0 +1,44 @@
+{
+  "schema": "er9.luna.scored-completion-diagnosis.v1",
+  "scope": "first two D14 pairs / four a002 jobs; structural metadata only",
+  "classification": "genuine declared wall-cap exhaustion with incomplete native Goals",
+  "dispatcher_false_failure_established": false,
+  "canary_artifact_name_coupling": false,
+  "model": "gpt-6-luna",
+  "effort": "max",
+  "actual_native_goal_activations": 4,
+  "successful_native_turn_completions": 0,
+  "interrupted_native_turns": 4,
+  "native_goal_status_before_cleanup": "active",
+  "native_goal_terminal_complete_receipts": 0,
+  "all_owned_units_quiet": true,
+  "required_artifact_namespace": "out/final/",
+  "observed_partial_artifact_namespace": "out/research/ for three jobs; no output files for one",
+  "output_contract_scope_issue": "generic contract contains both interim research and final artifacts; ambiguity is prospective task-owner issue, not proof native completion",
+  "response_counter": "UNKNOWN; usage notifications not responses",
+  "observed_usage_totals": {
+    "inputTokens": 19016169,
+    "cachedInputTokens": 17555712,
+    "outputTokens": 136073,
+    "reasoningOutputTokens": 92982,
+    "totalTokens": 19152242
+  },
+  "occupied_wall_seconds_sum": 3541.918417908,
+  "occupied_sum_is_not_critical_path": true,
+  "canceled_request_tail_usage": "UNKNOWN",
+  "telemetry_alias": "metrics.native_turns_completed counts terminal notifications including interrupted; use turn_receipts status to identify successful completion",
+  "recommended_narrow_action": "preserve original HOLD/costs; independent evaluation may assess authorized frozen partials; task owner prospectively clarifies current-stage final artifact scope and native Goal terminal instruction; future telemetry version separates terminal/completed/interrupted counts",
+  "changes_applied": "notes only; no ops/runtime/live job/grade/candidate artifact mutation",
+  "evidence": {
+    "FIRST_TWO_PAIRS_STRUCTURAL.json": "a9481963b69b24e42b2f2b6036a0b25678b48ef78498b0ef98953191151bc5ab",
+    "OUTPUT_CONTRACT_METADATA.json": "7f1c886a714aa404b6e824b52749d4ba9323c703af2c03dc0befbec03198cda9"
+  },
+  "source_refs": {
+    "worker": "ops/dispatcher/luna_worker.py:57,85-114",
+    "generic_preparer": "dev/diagnostic-runner/prepare.py:101-118",
+    "generic_contract": "cases/prompts/output_contract.md:5",
+    "binding": "ops/dispatcher/luna_bind_next.py:49-50",
+    "runner_stop": "dev/luna-route/dynamic_stage_runner.py:121-138",
+    "terminal_counter": "dev/luna-route/dynamic_projector.py:132-140,203"
+  }
+}

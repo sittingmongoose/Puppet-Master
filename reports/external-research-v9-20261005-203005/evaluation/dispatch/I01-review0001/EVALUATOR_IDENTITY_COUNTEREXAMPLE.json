@@ -1,0 +1,8 @@
+{
+  "execution_label": "evaluator_executed",
+  "input_rule": "Same-size files, same sampled prefix; changed bytes beyond prefix",
+  "sampled_prefix_hash_equal": true,
+  "whole_file_hash_equal": false,
+  "finding": "Partial rehash cannot establish whole-file source identity; size/mtime can also remain unchanged",
+  "scope": "In-memory deterministic identity counterexample, not a candidate execution or filesystem benchmark"
+}

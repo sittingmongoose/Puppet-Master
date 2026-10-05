@@ -1,0 +1,125 @@
+{
+  "actual_family_totals": {
+    "GLM": {
+      "attempts": 12,
+      "known_tokens": 13480305,
+      "native_goal_starts_known": 12
+    },
+    "Luna": {
+      "attempts": 24,
+      "known_tokens": 59510605,
+      "native_goal_starts_known": 21
+    },
+    "UNKNOWN_PRE_NATIVE": {
+      "attempts": 12,
+      "known_tokens": 0,
+      "native_goal_starts_known": 0
+    }
+  },
+  "as_of_utc": "2026-10-05T22:27:12.201260+00:00",
+  "billing_dollars": "UNKNOWN",
+  "cleanup_rule": "Occupied seconds include setup/cleanup where receipt says so. Cleanup reserve is a bound, not measured cleanup. Parallel occupied seconds must not be called critical-path time.",
+  "counter_rule": "Cache included in input once; reasoning subset of output; provider request sums separate from baseline-filtered native UI counters, native Goal and supervisor cumulative counters. Unobserved/cancelled tails remain UNKNOWN.",
+  "helper_provider_usage": "UNKNOWN",
+  "model_provenance": {
+    "candidate_identity_rule": "Observed model receipt only; requested names and label suffixes do not establish actual family.",
+    "configured_accountant": "GPT6.1SolMedium",
+    "physical_provider_telemetry": "UNKNOWN"
+  },
+  "reconciliations": {
+    "I01_full4": {
+      "attempt_ids": [
+        "I-01-control-research-a001",
+        "I-01-control-critique-a001",
+        "I-01-control-revision-a001",
+        "I-01-treatment-research-a001"
+      ],
+      "known_tokens": 7992185
+    },
+    "Luna_D14_first4": {
+      "attempt_ids": [
+        "D-V14-A-LUNA-R1-control-diagnostic-a002",
+        "D-V14-A-LUNA-R1-treatment-diagnostic-a002",
+        "D-V14-B-control-diagnostic-a002",
+        "D-V14-B-treatment-diagnostic-a002"
+      ],
+      "known_tokens": 19152242
+    }
+  },
+  "schema": "er9.accounting.snapshot.v1",
+  "seed_apportionment_rule": "Count unique actual actor attempt once in global totals; shared per-comparison allocation must state reference count and fraction, never erase failed originals.",
+  "seed_unique_actor_artifact_cost": "NO_OBSERVED_SEED_ATTEMPTS_IN_THIS_SNAPSHOT",
+  "sources": [
+    {
+      "path": "state/jobs.json",
+      "sha256": "51f34149f672c5de34775a2ce3b1adb5173a14c26062a44b3686a7cb0d453981"
+    },
+    {
+      "path": "state/attempts.jsonl",
+      "sha256": "fe4f15639993c3f62da96342146602d1a18feeea667134fda4458a170613185f"
+    },
+    {
+      "path": "state/queue_cursor.json",
+      "sha256": "343aabd1d58e3373df90c5ff497fdca2fedde183e51384b71f6ff7e94ff32fcb"
+    },
+    {
+      "path": "state/supervisor_goal_counters.jsonl",
+      "sha256": "05d4e2e0e39b0b315a7aa39394c19bf23715c2d26ed47b3d56278bfa5c1dd56c"
+    }
+  ],
+  "supervisor_cumulative_snapshots_separate_never_sum": [
+    {
+      "at": "2026-10-05T21:22:00Z",
+      "status": "UNKNOWN",
+      "time_used_seconds": 3177,
+      "tokens_used": 2062875
+    },
+    {
+      "at": "2026-10-05T22:06:02.000Z",
+      "status": "active",
+      "time_used_seconds": 5812,
+      "tokens_used": 3177771
+    }
+  ],
+  "totals": {
+    "candidate_attempt": {
+      "attempts": 34,
+      "known_tokens": 72243544,
+      "native_goal_starts_known": 26,
+      "occupied_seconds_known": 15544.264750283983,
+      "occupied_seconds_unknown_rows": 6,
+      "starts_unknown_rows": 0,
+      "usage_unknown_rows": 3
+    },
+    "route_canary": {
+      "attempts": 2,
+      "known_tokens": 57240,
+      "native_goal_starts_known": 2,
+      "occupied_seconds_known": 83.74218208000093,
+      "occupied_seconds_unknown_rows": 0,
+      "starts_unknown_rows": 0,
+      "usage_unknown_rows": 0
+    },
+    "route_canary_or_metadata": {
+      "attempts": 11,
+      "known_tokens": 690126,
+      "native_goal_starts_known": 5,
+      "occupied_seconds_known": 473.934378578,
+      "occupied_seconds_unknown_rows": 0,
+      "starts_unknown_rows": 3,
+      "usage_unknown_rows": 3
+    },
+    "route_probe": {
+      "attempts": 1,
+      "known_tokens": 0,
+      "native_goal_starts_known": 0,
+      "occupied_seconds_known": 8.237438862001,
+      "occupied_seconds_unknown_rows": 0,
+      "starts_unknown_rows": 0,
+      "usage_unknown_rows": 0
+    }
+  },
+  "validation_errors": [],
+  "wall_critical_path_seconds": "UNKNOWN",
+  "wasted_seconds": "UNKNOWN_FAILURE_IS_NOT_PROOF_ALL_TIME_WASTED"
+}

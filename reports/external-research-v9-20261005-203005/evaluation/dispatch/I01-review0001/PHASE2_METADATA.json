@@ -1,0 +1,355 @@
+{
+  "schema": "er9.post-phase1-operational-economic.v1",
+  "pair_id": "I-01",
+  "phase1_judgment_sha256": "9a3d2bcbabfca57057131b83a8545e06d933202f79fc950e2e1575881f5c3ff9",
+  "frozen_utc": "2026-10-05T22:12:00.243100+00:00",
+  "stages": [
+    {
+      "job_id": "I-01-control-research-a001",
+      "arm": "control",
+      "stage": "research",
+      "operational_complete": true,
+      "native_goal_status": "completed",
+      "native_quiescent": true,
+      "native_goal_starts": 1,
+      "elapsed_seconds": 1079.6402334250015,
+      "missing_required_artifacts": [],
+      "native_responses": 18,
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "observed_model": {
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan"
+      },
+      "observed_effort": "max",
+      "native_ui_usage": {
+        "sessionId": "sess_228fa8a0-a744-454c-8b9a-9e377f3b3a21",
+        "totalTokens": 517700,
+        "inputTokens": 470260,
+        "outputTokens": 47440,
+        "reasoningTokens": 0,
+        "cacheCreationTokens": 0,
+        "cacheReadTokens": 0,
+        "modelRequestCount": 18,
+        "modelErrorCount": 0,
+        "inputBaselineBySource": {
+          "main_turn": 233349
+        }
+      },
+      "native_ui_usage_definition": "Conversation UI usage includes input-baseline behavior. Do not treat as repeated-request inclusive input total.",
+      "provider_attempt_field_sums": {
+        "input_tokens": 2468253,
+        "output_tokens": 47440,
+        "reasoning_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 1997504,
+        "provider_total_tokens": 2515693,
+        "computed_total_tokens": 2515693
+      },
+      "provider_attempt_status_counts": {
+        "completed": 18
+      },
+      "provider_counter_definitions": "Sum each exported field across individual native attempts, including native verifier. Input includes provider-reported cached input; do not add cache-read again. provider_total and computed_total are alternatives, not summands. Tokens are not dollars.",
+      "cancelled_usage_unknown": false,
+      "cancelled_usage_definition": "Zero-filled cancelled row is not proof of no consumed usage. Provider total null and unexposed partial streaming usage remain unknown.",
+      "source_tool_error_counts": {},
+      "invalid_argument_error_count": null,
+      "invalid_argument_error_definition": "Unknown: captured structural is_error does not expose an error class; HTTP/source failure and invalid argument are not silently conflated.",
+      "repeated_error_fingerprints": [],
+      "execution_operations": [
+        {
+          "execution_id": "exec-2ambjtod",
+          "execution_label": "executed by candidate",
+          "actor": "candidate",
+          "exit_code": 0,
+          "elapsed_seconds": 0.21742131900100503,
+          "cleanup_confirmed": true,
+          "unit_active_state_after_stop": "inactive"
+        },
+        {
+          "execution_id": "exec-gw87zrsh",
+          "execution_label": "executed by candidate",
+          "actor": "candidate",
+          "exit_code": 0,
+          "elapsed_seconds": 0.21652058098698035,
+          "cleanup_confirmed": true,
+          "unit_active_state_after_stop": "inactive"
+        },
+        {
+          "execution_id": "exec-zw6uyd4k",
+          "execution_label": "executed by candidate",
+          "actor": "candidate",
+          "exit_code": 0,
+          "elapsed_seconds": 0.21662289800588042,
+          "cleanup_confirmed": true,
+          "unit_active_state_after_stop": "inactive"
+        }
+      ],
+      "execution_nonzero_exits": 0,
+      "source_positive_pins": {
+        "output_freeze_sha256": "3dfadfdbcc76c641b7bcd9ee8b8bdfd706a3235f6c15f3f1567a313246a9268e",
+        "native_receipt_sha256": "a4d4cc02668166da5a58ea684c937e83da7fcd83b285bdc37576ea16881860f1",
+        "mechanical_metrics_sha256": "2525bf640765f8554c85e3a2c7c366b2d4ef684a96284354b0e2afb4312e83d7"
+      }
+    },
+    {
+      "job_id": "I-01-control-critique-a001",
+      "arm": "control",
+      "stage": "critique",
+      "operational_complete": true,
+      "native_goal_status": "completed",
+      "native_quiescent": true,
+      "native_goal_starts": 1,
+      "elapsed_seconds": 778.3514304279961,
+      "missing_required_artifacts": [],
+      "native_responses": 19,
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "observed_model": {
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan"
+      },
+      "observed_effort": "max",
+      "native_ui_usage": {
+        "sessionId": "sess_71a38006-aa3c-446d-a2d6-aef776d950ec",
+        "totalTokens": 447632,
+        "inputTokens": 412034,
+        "outputTokens": 35598,
+        "reasoningTokens": 0,
+        "cacheCreationTokens": 0,
+        "cacheReadTokens": 0,
+        "modelRequestCount": 19,
+        "modelErrorCount": 0,
+        "inputBaselineBySource": {
+          "main_turn": 204526
+        }
+      },
+      "native_ui_usage_definition": "Conversation UI usage includes input-baseline behavior. Do not treat as repeated-request inclusive input total.",
+      "provider_attempt_field_sums": {
+        "input_tokens": 2144451,
+        "output_tokens": 35598,
+        "reasoning_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 1731904,
+        "provider_total_tokens": 2180049,
+        "computed_total_tokens": 2180049
+      },
+      "provider_attempt_status_counts": {
+        "completed": 19
+      },
+      "provider_counter_definitions": "Sum each exported field across individual native attempts, including native verifier. Input includes provider-reported cached input; do not add cache-read again. provider_total and computed_total are alternatives, not summands. Tokens are not dollars.",
+      "cancelled_usage_unknown": false,
+      "cancelled_usage_definition": "Zero-filled cancelled row is not proof of no consumed usage. Provider total null and unexposed partial streaming usage remain unknown.",
+      "source_tool_error_counts": {},
+      "invalid_argument_error_count": null,
+      "invalid_argument_error_definition": "Unknown: captured structural is_error does not expose an error class; HTTP/source failure and invalid argument are not silently conflated.",
+      "repeated_error_fingerprints": [],
+      "execution_operations": [],
+      "execution_nonzero_exits": 0,
+      "source_positive_pins": {
+        "output_freeze_sha256": "b030f3b808ff73f623c2f475cce100982a22ffff86426e8090b9de3157146130",
+        "native_receipt_sha256": "2ac85128d0d01b6a7081aa944c8fe5b30d511fe7fcc95c167b0b605b18c955e3",
+        "mechanical_metrics_sha256": "b5a3b9a8b2d2dcd481891a4592e9a5ae5656c71709e950bc81420ddcaad1cbce"
+      }
+    },
+    {
+      "job_id": "I-01-control-revision-a001",
+      "arm": "control",
+      "stage": "revision",
+      "operational_complete": false,
+      "native_goal_status": "cap_seconds",
+      "native_quiescent": true,
+      "native_goal_starts": 1,
+      "elapsed_seconds": 574.4431769759976,
+      "missing_required_artifacts": [
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "native_responses": 14,
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "observed_model": {
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan"
+      },
+      "observed_effort": "max",
+      "native_ui_usage": {
+        "sessionId": "sess_68336b7a-da22-478b-905c-98423754910f",
+        "totalTokens": 234540,
+        "inputTokens": 204994,
+        "outputTokens": 29546,
+        "reasoningTokens": 0,
+        "cacheCreationTokens": 0,
+        "cacheReadTokens": 0,
+        "modelRequestCount": 15,
+        "modelErrorCount": 0,
+        "inputBaselineBySource": {
+          "main_turn": 0
+        }
+      },
+      "native_ui_usage_definition": "Conversation UI usage includes input-baseline behavior. Do not treat as repeated-request inclusive input total.",
+      "provider_attempt_field_sums": {
+        "input_tokens": 1476586,
+        "output_tokens": 29546,
+        "reasoning_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 1271168,
+        "provider_total_tokens": 1506132,
+        "computed_total_tokens": 1506132
+      },
+      "provider_attempt_status_counts": {
+        "completed": 14,
+        "cancelled": 1
+      },
+      "provider_counter_definitions": "Sum each exported field across individual native attempts, including native verifier. Input includes provider-reported cached input; do not add cache-read again. provider_total and computed_total are alternatives, not summands. Tokens are not dollars.",
+      "cancelled_usage_unknown": true,
+      "cancelled_usage_definition": "Zero-filled cancelled row is not proof of no consumed usage. Provider total null and unexposed partial streaming usage remain unknown.",
+      "source_tool_error_counts": {},
+      "invalid_argument_error_count": null,
+      "invalid_argument_error_definition": "Unknown: captured structural is_error does not expose an error class; HTTP/source failure and invalid argument are not silently conflated.",
+      "repeated_error_fingerprints": [],
+      "execution_operations": [
+        {
+          "execution_id": "exec-54y7y15g",
+          "execution_label": "executed by candidate",
+          "actor": "candidate",
+          "exit_code": 0,
+          "elapsed_seconds": 0.20821233799506444,
+          "cleanup_confirmed": true,
+          "unit_active_state_after_stop": "inactive"
+        },
+        {
+          "execution_id": "exec-k5j_1d86",
+          "execution_label": "executed by candidate",
+          "actor": "candidate",
+          "exit_code": 0,
+          "elapsed_seconds": 0.19549967000784818,
+          "cleanup_confirmed": true,
+          "unit_active_state_after_stop": "inactive"
+        },
+        {
+          "execution_id": "exec-ygfz3rwq",
+          "execution_label": "executed by candidate",
+          "actor": "candidate",
+          "exit_code": 0,
+          "elapsed_seconds": 0.21758594899438322,
+          "cleanup_confirmed": true,
+          "unit_active_state_after_stop": "inactive"
+        }
+      ],
+      "execution_nonzero_exits": 0,
+      "source_positive_pins": {
+        "output_freeze_sha256": "7531a48d8b1ba57960337b72a7ad6c554cb0f518f1252c53b1a2920ec7d20f26",
+        "native_receipt_sha256": "71a877cd78da86c8c63eb56faf2f87272288db76a44fb2e21d05f919203136d2",
+        "mechanical_metrics_sha256": "5bcae85a174ddb49350937e555818366a4a704820b0a6dd12a506b905b1dc048"
+      }
+    },
+    {
+      "job_id": "I-01-treatment-research-a001",
+      "arm": "treatment",
+      "stage": "research",
+      "operational_complete": false,
+      "native_goal_status": "cap_seconds",
+      "native_quiescent": true,
+      "native_goal_starts": 1,
+      "elapsed_seconds": 1175.7679753310003,
+      "missing_required_artifacts": [],
+      "native_responses": 12,
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "observed_model": {
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan"
+      },
+      "observed_effort": "max",
+      "native_ui_usage": {
+        "sessionId": "sess_f110e688-2e6b-4145-a8cb-04cd5f16dae9",
+        "totalTokens": 296163,
+        "inputTokens": 243026,
+        "outputTokens": 53137,
+        "reasoningTokens": 0,
+        "cacheCreationTokens": 0,
+        "cacheReadTokens": 0,
+        "modelRequestCount": 13,
+        "modelErrorCount": 0,
+        "inputBaselineBySource": {
+          "main_turn": 0
+        }
+      },
+      "native_ui_usage_definition": "Conversation UI usage includes input-baseline behavior. Do not treat as repeated-request inclusive input total.",
+      "provider_attempt_field_sums": {
+        "input_tokens": 1737174,
+        "output_tokens": 53137,
+        "reasoning_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 1493824,
+        "provider_total_tokens": 1790311,
+        "computed_total_tokens": 1790311
+      },
+      "provider_attempt_status_counts": {
+        "completed": 12,
+        "cancelled": 1
+      },
+      "provider_counter_definitions": "Sum each exported field across individual native attempts, including native verifier. Input includes provider-reported cached input; do not add cache-read again. provider_total and computed_total are alternatives, not summands. Tokens are not dollars.",
+      "cancelled_usage_unknown": true,
+      "cancelled_usage_definition": "Zero-filled cancelled row is not proof of no consumed usage. Provider total null and unexposed partial streaming usage remain unknown.",
+      "source_tool_error_counts": {
+        "public_https_get": 1
+      },
+      "invalid_argument_error_count": null,
+      "invalid_argument_error_definition": "Unknown: captured structural is_error does not expose an error class; HTTP/source failure and invalid argument are not silently conflated.",
+      "repeated_error_fingerprints": [],
+      "execution_operations": [
+        {
+          "execution_id": "exec-9p6o53cz",
+          "execution_label": "executed by candidate",
+          "actor": "candidate",
+          "exit_code": 0,
+          "elapsed_seconds": 0.24304991798999254,
+          "cleanup_confirmed": true,
+          "unit_active_state_after_stop": "inactive"
+        },
+        {
+          "execution_id": "exec-fq_n957l",
+          "execution_label": "executed by candidate",
+          "actor": "candidate",
+          "exit_code": 0,
+          "elapsed_seconds": 0.2185797100100899,
+          "cleanup_confirmed": true,
+          "unit_active_state_after_stop": "inactive"
+        },
+        {
+          "execution_id": "exec-ru78218x",
+          "execution_label": "executed by candidate",
+          "actor": "candidate",
+          "exit_code": 1,
+          "elapsed_seconds": 0.24659522699948866,
+          "cleanup_confirmed": true,
+          "unit_active_state_after_stop": "inactive"
+        },
+        {
+          "execution_id": "exec-s4l1km59",
+          "execution_label": "executed by candidate",
+          "actor": "candidate",
+          "exit_code": 0,
+          "elapsed_seconds": 0.17941291000170168,
+          "cleanup_confirmed": true,
+          "unit_active_state_after_stop": "inactive"
+        }
+      ],
+      "execution_nonzero_exits": 1,
+      "source_positive_pins": {
+        "output_freeze_sha256": "e84d6ebe150eb9c61797b22182d47d6e9f00f27f3c5e54639afed879ef98e5b5",
+        "native_receipt_sha256": "eeffaeebf3d0725d20b8fcb902066f5dde0b4faea564b9269df38d27577421e7",
+        "mechanical_metrics_sha256": "97fe3f9a53759b23fc2cce65b8e056746924cd9a6c334f26ee61e41c772aaee6"
+      }
+    }
+  ],
+  "control_whole_pipeline_operational": "FAIL",
+  "treatment_whole_pipeline_operational": "FAIL_R_DEPENDENTS_NOT_ADMITTED",
+  "treatment_remaining_native_goal_starts": 0,
+  "source_interpretation_or_semantic_history": "NOT_INCLUDED",
+  "money": "UNKNOWN",
+  "provider_sum_cache_included_in_input_and_total": true,
+  "never_sum_ui_and_provider_counters": true,
+  "preservation_rate": "UNASSESSED",
+  "completepair_efficiency": "NOT_QUALIFIED",
+  "scope": "Exact terminal mechanical facts and known cost/lowerbounds only; incomplete cancelled and unexposed HTTP/native child costs remain UNKNOWN"
+}

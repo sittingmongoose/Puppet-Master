@@ -1,0 +1,54 @@
+{
+  "actor": "candidate",
+  "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+  "bootstrap_started": true,
+  "cleanup_classification": "collected_unit_absent",
+  "cleanup_confirmed": true,
+  "code_sha256": "996361810111f2f67e0a0893c4f566b6decf5a74ea8203f5a6083ae8a84b6768",
+  "control_group_absent_after_stop": null,
+  "control_group_populated_after_stop": null,
+  "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+  "execution_id": "exec-54y7y15g",
+  "execution_label": "executed by candidate",
+  "exit_code": 0,
+  "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+  "limitations": [
+    "isolated component check only",
+    "stderr excludes trusted bootstrap prefix; stderr-observed.bin retains wire bytes",
+    "arbitrary stdlib code; kernel isolation supplied by Bubblewrap/systemd, not AST filters",
+    "clock/randomness remain available; deterministic behavior must be candidate-authored",
+    "execution receipts do not prove semantic correctness or candidate consumption"
+  ],
+  "limits": {
+    "cpu_seconds": 3,
+    "memory_bytes": 268435456,
+    "network": "new empty namespace",
+    "stream_bytes_each": 32768,
+    "tasks": 16,
+    "wall_seconds": 5
+  },
+  "schema": "er9.execution.result.v1",
+  "stderr": "",
+  "stderr_bytes": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout": "simulated failure                : simulated crash before os.replace\ntarget intact after failed save  : True True\ndirectory listing (orphan temp?) : ['annotations.json', 'annotations.json.tmp']\nafter successful save            : {\"v\": 2, \"ann\": [\"ok\"]}\nidentity hash stable             : True\nany byte change alters identity  : True\ntemp was created in target dir   : True (by construction, avoids EXDEV)\n",
+  "stdout_bytes": 405,
+  "stdout_sha256": "8bc8ed719c4cf45a23ba5a9d616e8a67e078c624d0c29e632efe88feb241112f",
+  "stopped_by_adapter": null,
+  "unit_active_state_after_stop": "inactive",
+  "unit_load_state_after_stop": "not-found",
+  "projection_redaction": {
+    "removed_keys": [
+      "cleanup_query_stderr",
+      "cleanup_query_stdout",
+      "cleanup_state_returncode",
+      "cleanup_stop_returncode",
+      "cleanup_stop_stderr",
+      "cleanup_stop_stdout",
+      "completed_utc",
+      "control_group_after_stop",
+      "elapsed_seconds"
+    ],
+    "reason": "Private host identity/absolute machine paths, precise timing/economics/history and bus-query text withheld from Phase1; code/input/output/exit/sandbox caps and actual cleanup facts retained"
+  }
+}

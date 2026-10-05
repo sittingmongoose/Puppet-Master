@@ -1,16 +1,19 @@
 {
-  "scope": "I01 original frozen research stages only",
+  "scope": "Original I01 stages plus independent partial-final screen",
   "completed_matched_comparisons": 0,
   "comparisons": [
     {
       "pair_id": "I-01",
-      "status": "INCOMPLETE_PIPELINES",
+      "status": "INCOMPLETE_PAIR",
       "control_research_stage": "OPERATIONAL_COMPLETE",
       "treatment_research_stage": "FAILED_NATIVE_COMPLETION_CAP_SECONDS",
       "independent_semantic_assessment": "UNASSESSED",
       "method_outcome": null,
       "files_present_imply_goal_completion": false,
-      "prospective_successor_policy": "supervision/DECISIONS-003.json"
+      "prospective_successor_policy": "supervision/DECISIONS-003.json",
+      "available_partial_final": "FAIL_SCREEN",
+      "missing_partner_quality": "UNASSESSED",
+      "independent_assessment": "evaluation/dispatch/I01-review0001/report.json"
     }
   ]
 }

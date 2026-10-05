@@ -1,0 +1,34 @@
+{
+  "execution_label": "evaluator_executed",
+  "candidate_execution_not_established": true,
+  "input_coordinate": "104857.6",
+  "float32_storage_value": "104857.6015625",
+  "absolute_pixel_error": "0.0015625",
+  "scale_um_per_px": "0.065",
+  "physical_error_um": "0.0001015625",
+  "candidate_physical_error_approx_um": "0.00015",
+  "candidate_discrepancy_ratio": "1.476923076923076923076923077",
+  "transforms": {
+    "point": [
+      1,
+      1
+    ],
+    "scale": [
+      2,
+      4
+    ],
+    "translation": [
+      10,
+      20
+    ],
+    "translate_then_scale": [
+      22,
+      84
+    ],
+    "scale_then_translate": [
+      12,
+      24
+    ]
+  },
+  "scope": "Independent scalar/transform arithmetic only; does not reproduce candidate code or application behavior"
+}

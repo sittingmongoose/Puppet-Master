@@ -1,0 +1,28 @@
+[
+  {
+    "mode": "deadline",
+    "original_deadline_monotonic_ns": 63131985357791,
+    "guardian_exit": 0,
+    "pids": [
+      1800990,
+      1800991
+    ],
+    "all_owned_pids_absent": true,
+    "cgroup_absent_or_empty": true,
+    "elapsed_seconds": 3.075926958,
+    "record": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/guard-tests/guard-deadline-8pxa6ofe/record.json"
+  },
+  {
+    "mode": "controller-loss",
+    "original_deadline_monotonic_ns": 63135063465676,
+    "guardian_exit": 0,
+    "pids": [
+      1801019,
+      1801024
+    ],
+    "all_owned_pids_absent": true,
+    "cgroup_absent_or_empty": true,
+    "elapsed_seconds": 0.248211351,
+    "record": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/guard-tests/guard-controller-loss-gqmu55dj/record.json"
+  }
+]

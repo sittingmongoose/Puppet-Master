@@ -1,0 +1,23 @@
+{
+  "schema": "er9.luna.canary-semantic-witness.v1",
+  "status": "PASS",
+  "candidate_authored_check": true,
+  "sum": 12,
+  "independent_expected_sum": 12,
+  "wrong_expectation": 13,
+  "wrong_expectation_caught": true,
+  "execution_exit_code": 0,
+  "execution_bootstrap_started": true,
+  "execution_cleanup_confirmed": true,
+  "public_capture_http_status": 200,
+  "public_capture_bytes": 537,
+  "public_capture_sha256": "18cb4cd525df8528491845e76f3af26c29c6795d02ea8133974d3b341a2ddd9f",
+  "delivered_range": [
+    0,
+    180
+  ],
+  "range_sha256": "ddb1a44ba43da28e8db88e297222c24933f479b40b7b36ec34b55bb8a5255306",
+  "required_artifact": "out/canary.md",
+  "artifact_sha256": "636e5631189eb6f6393f19072ca0c0d9c47d849ae611d0e12a392f153103436d",
+  "scope": "synthetic route availability only; no scored research quality claim"
+}

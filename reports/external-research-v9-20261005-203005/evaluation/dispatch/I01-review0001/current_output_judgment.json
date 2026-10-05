@@ -1,0 +1,624 @@
+{
+  "protocol_version": "ER9-independent-output-v1",
+  "evaluation_id": "ER9-EVAL-I01-001",
+  "phase": "1_CURRENT_OUTPUT_SAVED_BEFORE_HISTORY_ECONOMICS",
+  "saved_utc": "2026-10-05T22:09:00.772221Z",
+  "started_utc": "2026-10-05T21:59:32.675505Z",
+  "assessment_mode": "screen_fail",
+  "comparison_status": "INCOMPLETE_PAIR",
+  "requested_evaluator": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_evaluator": null,
+  "dispatch_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-packet0001/dispatch.json",
+    "sha256": "0f97b87af9bf8b8c37cb6c1cb9d9f22ddcff62f9f82adbb55589920db7b90c04"
+  },
+  "blinding": {
+    "candidate_family_model_and_available_arm_identity_known_from_coordination": true,
+    "economics_prior_current_grades_and_actual_stage_semantics_not_opened": true,
+    "private_alias_sidecar_not_opened": true,
+    "embedded_stage_resolution_summary_in_final_read_as_current_claim_only": true,
+    "limits": "Anonymous filenames do not erase assignment disclosures."
+  },
+  "anonymous_output_results": [
+    {
+      "alias": "A",
+      "artifact_status": "TERMINAL_MISSING_DESIGNATED_FINAL",
+      "operational_status": "FAIL",
+      "decision": "NOT_EVALUATED",
+      "quality_status": "UNASSESSED",
+      "assessment_state": "unassessed",
+      "obligations": [
+        {
+          "obligation_id": "A01",
+          "assessment_state": "unassessed",
+          "reason": "No designated current artifact"
+        },
+        {
+          "obligation_id": "A02",
+          "assessment_state": "unassessed",
+          "reason": "No designated current artifact"
+        },
+        {
+          "obligation_id": "A03",
+          "assessment_state": "unassessed",
+          "reason": "No designated current artifact"
+        },
+        {
+          "obligation_id": "A04",
+          "assessment_state": "unassessed",
+          "reason": "No designated current artifact"
+        },
+        {
+          "obligation_id": "A05",
+          "assessment_state": "unassessed",
+          "reason": "No designated current artifact"
+        },
+        {
+          "obligation_id": "A06",
+          "assessment_state": "unassessed",
+          "reason": "No designated current artifact"
+        },
+        {
+          "obligation_id": "A07",
+          "assessment_state": "unassessed",
+          "reason": "No designated current artifact"
+        },
+        {
+          "obligation_id": "A08",
+          "assessment_state": "unassessed",
+          "reason": "No designated current artifact"
+        },
+        {
+          "obligation_id": "A09",
+          "assessment_state": "unassessed",
+          "reason": "No designated current artifact"
+        },
+        {
+          "obligation_id": "A10",
+          "assessment_state": "unassessed",
+          "reason": "No designated current artifact"
+        },
+        {
+          "obligation_id": "A11",
+          "assessment_state": "unassessed",
+          "reason": "No designated current artifact"
+        },
+        {
+          "obligation_id": "A12",
+          "assessment_state": "unassessed",
+          "reason": "No designated current artifact"
+        }
+      ]
+    },
+    {
+      "alias": "B",
+      "artifact_status": "FROZEN_DESIGNATED_FINAL_PRESENT_WITH_3_REQUIRED_CATALOGS_MISSING",
+      "decision": "FAIL",
+      "quality_status": "FAIL_SCREEN",
+      "assessment_state": "partial",
+      "full_pass_eligible": false,
+      "obligations": [
+        {
+          "obligation_id": "A01",
+          "text": "Minimum import/inspect/navigation/annotation/save/reopen/export workflow, with preservation of originals and bounded support scope",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "reason": "Minimum workflow and original preservation explicitly planned; complete behavior audit not performed."
+        },
+        {
+          "obligation_id": "A02",
+          "text": "Explicit axis, coordinate, orientation, physical calibration and annotation scope contract; transformations and units qualified",
+          "assessment_state": "partial",
+          "finding": "contradicted",
+          "reason": "Axis/frame contract present; NGFFmultiscales type rules misstatedD03."
+        },
+        {
+          "obligation_id": "A03",
+          "text": "Distinguish intensity display from sample mutation and recorded resampling; exported annotation/derived-image meaning",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "reason": "Display/sample/resampling distinction present and napari display fact checked; full exported-transform correctness unassessed."
+        },
+        {
+          "obligation_id": "A04",
+          "text": "Large-data access/cache responsiveness, progress/cancel and investigated resource target without unsupported performance promises",
+          "assessment_state": "partial",
+          "finding": "contradicted",
+          "reason": "Resource target andcancel/progress present; strip decode defeats blanket allocation promiseD04."
+        },
+        {
+          "obligation_id": "A05",
+          "text": "Project identity, portability/external-path relocation, metadata provenance and save/recovery behavior",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "reason": "Whole-file identity/relocation/recoveryplanned; partial-hash wording and multi-file/backup crash consistency remain unresolved."
+        },
+        {
+          "obligation_id": "A06",
+          "text": "Usable annotation styles, undo/redo, keyboard/accessibility and legible status/unsupported-input feedback",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "reason": "Styles,annotationundo/redo,keyboardoperability and textstatus/error/accessibilityfloor are explicitly planned; no claimimplementation exists."
+        },
+        {
+          "obligation_id": "A07",
+          "text": "Candidate-discovered >=2 independently useful implementation precedents with source/pins and concrete plan implications",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "reason": "At leastnapari/tifffile provide distinct useful documented mechanisms; exact fullsourcecatalog and allfour independence assertions not fully verified."
+        },
+        {
+          "obligation_id": "A08",
+          "text": "Candidate-discovered real issue/failure -> associated fix -> regression test chain with applicability and causal limits",
+          "assessment_state": "partial",
+          "finding": "contradicted",
+          "reason": "Real issue/fix/test chain verified; applicability interval wrongD02."
+        },
+        {
+          "obligation_id": "A09",
+          "text": "At least one useful opportunity and one plausible alternative; optional adoption distinguished from requirements",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "reason": "UsefulNGFFexportopportunity and plausible napariplugin/QuPath alternatives present, adoptionoptional; all dependency claims unassessed."
+        },
+        {
+          "obligation_id": "A10",
+          "text": "Coherent component/architecture choice or bounded alternatives with critical dependencies and support/validation limits",
+          "assessment_state": "partial",
+          "finding": "contradicted",
+          "reason": "Coherent architecture/alternatives present, latency/NFS assumptions qualified; bounded-memory dependency overclaimedD04."
+        },
+        {
+          "obligation_id": "A11",
+          "text": "Consequential numerical/coordinate/storage/export checks discriminate claimed behavior; executed/proposed labels and component/full-app scope are honest",
+          "assessment_state": "partial",
+          "finding": "contradicted",
+          "reason": "Three actualcandidateexecutions confirmed;W1/W2 correct, W3saveobservationvalid, hashdiscrimination failsD05; proposedV1\u2013V8 honest."
+        },
+        {
+          "obligation_id": "A12",
+          "text": "Standalone current final preserves supported findings/conditions, fixes actual errors, cites exact evidence and keeps unresolved leads separately accessible",
+          "assessment_state": "partial",
+          "finding": "contradicted",
+          "reason": "Currentproposal substantivelystandalone prose but threecatalogs absentD01; history-dependentpreservation stillunassessed."
+        }
+      ],
+      "consequential_claims": [
+        {
+          "claim_id": "B-C01",
+          "claim": "Required catalogs and full source/witness/lead information delivered",
+          "output_locator": "proposal.md:6,277-288",
+          "assessment_state": "complete",
+          "finding": "contradicted",
+          "source_ids": [
+            "TASK-OUTPUT-CONTRACT"
+          ],
+          "reason": "All three catalogs are absent. Headline short hashes and S IDs do not supply their contents."
+        },
+        {
+          "claim_id": "B-C02",
+          "claim": "Identity and path are allowed transformations in NGFF multiscales",
+          "output_locator": "proposal.md:52",
+          "assessment_state": "complete",
+          "finding": "contradicted",
+          "source_ids": [
+            "P-NGFF-PIN"
+          ],
+          "reason": "The pinned multiscales clauses restrict transform types to scale/translation; path is a field in the general transform table, not a transform type."
+        },
+        {
+          "claim_id": "B-C03",
+          "claim": "NGFF scale precedes optional translation and maps data to physical coordinates",
+          "output_locator": "proposal.md:21,51-56,184",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "P-NGFF-PIN"
+          ],
+          "reason": "Selected order, optionality, array dimension/order and Zarr-v3 claims are supported. No complete NGFF conformance audit performed."
+        },
+        {
+          "claim_id": "B-C04",
+          "claim": "napari separates contrast display from samples and accepts lazy NumPy-like images",
+          "output_locator": "proposal.md:22,64-67",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "P-NAPARI-IMAGE"
+          ],
+          "reason": "The independently captured document has the headline hash prefix supplied by the proposal and supports these mechanisms."
+        },
+        {
+          "claim_id": "B-C05",
+          "claim": "napari unit/shape behavior including 3D editing constraints",
+          "output_locator": "proposal.md:68-69",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "source_ids": [
+            "P-NAPARI-UNITS"
+          ],
+          "reason": "Units source checked; shape source and release-specific implementation behavior not fully assessed."
+        },
+        {
+          "claim_id": "B-C06",
+          "claim": "tifffile tile/strip/Zarr access guarantees only bounded viewport tiles under accepted formats",
+          "output_locator": "proposal.md:77-78,135,172,201",
+          "assessment_state": "complete",
+          "finding": "contradicted",
+          "source_ids": [
+            "P-TIFF-README",
+            "P-TIFF-ZARR",
+            "P-TIFF-CORE"
+          ],
+          "reason": "The nominated implementation chunks by actual tile or strip; a supported compressed full-height strip can decode a whole plane. A cache bound does not cap allocation before decode."
+        },
+        {
+          "claim_id": "B-C07",
+          "claim": "tifffile format breadth and metadata-precedence history",
+          "output_locator": "proposal.md:75-84",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "source_ids": [
+            "P-TIFF-README"
+          ],
+          "reason": "Current read formats and examples supported; full historical precedence/issue54 chain not independently audited."
+        },
+        {
+          "claim_id": "B-C08",
+          "claim": "TVIPS issue319 changed unit semantics, associated fix and regression test are real",
+          "output_locator": "proposal.md:28,114-124",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "P-TIFF-ISSUE319",
+            "P-TIFF-FIX",
+            "P-TIFF-TEST"
+          ],
+          "reason": "Issue reports baseline2026.2.20 versus changed2026.2.24. Fix references319; test asserts file-native nm, and fix parent is the test commit."
+        },
+        {
+          "claim_id": "B-C09",
+          "claim": "Versions2026.2.20\u20132026.3.2 received meters instead of nanometers",
+          "output_locator": "proposal.md:124",
+          "assessment_state": "complete",
+          "finding": "contradicted",
+          "source_ids": [
+            "P-TIFF-ISSUE319"
+          ],
+          "reason": "The issue explicitly reports2026.2.20 returning the original nanometer value. It does not justify the entire claimed interval."
+        },
+        {
+          "claim_id": "B-C10",
+          "claim": "Exact release ordering, all later releases corrected, and public fixture absence",
+          "output_locator": "proposal.md:120-130",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "source_ids": [
+            "P-TIFF-FIX",
+            "P-TIFF-TEST"
+          ],
+          "reason": "Direct test/fix parent linkage and fix version3.3 checked. Every release and all fixture availability paths not checked."
+        },
+        {
+          "claim_id": "B-C11",
+          "claim": "QuPath project layout, relocation, changelog and durability version attributions",
+          "output_locator": "proposal.md:88-96",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "source_ids": [],
+          "reason": "Official export page checked separately; layout and all changelog/version assertions remain unassessed."
+        },
+        {
+          "claim_id": "B-C12",
+          "claim": "QuPath exports image-space pixels with top-left full-resolution origin",
+          "output_locator": "proposal.md:24,93,183",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "P-QUPATH-EXPORT"
+          ],
+          "reason": "Supported by official0.7 export docs; complete source catalog pin missing."
+        },
+        {
+          "claim_id": "B-C13",
+          "claim": "rename atomically replaces one existing pathname and has EXDEV/NFS limitations",
+          "output_locator": "proposal.md:100-104,136",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "P-RENAME2"
+          ],
+          "reason": "The proposal acknowledges NFS uncertainty and uses target-directory temp files. This establishes neither multi-file transactions nor power-loss durability."
+        },
+        {
+          "claim_id": "B-C14",
+          "claim": "Microscopy pixel-profile export is explicitly non-WGS84 with interoperability caveat",
+          "output_locator": "proposal.md:106-111",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [
+            "P-RFC7946"
+          ],
+          "reason": "RFC geographic convention and prior-arrangement note verified. Full consumer interoperability of this proposed profile unassessed."
+        },
+        {
+          "claim_id": "B-C15",
+          "claim": "Partial rehash or size/mtime establishes source identity on reopen",
+          "output_locator": "proposal.md:137,195",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "source_ids": [
+            "E-IDENTITY"
+          ],
+          "reason": "The partial-hash wording does not establish whole-file identity;7.4 explicitly demands a matching hash. Which rule controls ordinary reopen remains unclear."
+        },
+        {
+          "claim_id": "B-C16",
+          "claim": "Per-file backup rotation/save/recovery is sufficient for coherent interrupted project recovery",
+          "output_locator": "proposal.md:30,178,198-200",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "source_ids": [
+            "P-RENAME2"
+          ],
+          "reason": "One-file pre-replace behavior is exercised; multi-file snapshot/backup ordering, directory fsync and share crash tests remain unassessed."
+        },
+        {
+          "claim_id": "B-C17",
+          "claim": "float32/JSON precision checkW1 ran and produced reported approximate error",
+          "output_locator": "proposal.md:240",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "E-W1"
+          ],
+          "reason": "Receipt/code/stdout agree. Both coordinate and calibration are quantized tofloat32, giving0.00014843750432191882um; no arithmetic-error defect assigned."
+        },
+        {
+          "claim_id": "B-C18",
+          "claim": "Transform-order checkW2 ran with22,84 versus12,24",
+          "output_locator": "proposal.md:241",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "E-W2"
+          ],
+          "reason": "Exact code, stdout and exit0 support a discriminating isolated composition example."
+        },
+        {
+          "claim_id": "B-C19",
+          "claim": "W3 ran, preserving old bytes before replace and leaving an orphan temp",
+          "output_locator": "proposal.md:242",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "E-W3"
+          ],
+          "reason": "Exact code/receipt/stdout support this simulated pre-replace exception and orphan observation; not an NFS/crash-durability proof."
+        },
+        {
+          "claim_id": "B-C20",
+          "claim": "W3 hash assertion discriminates a changed byte from an unchanged file",
+          "output_locator": "proposal.md:242,137",
+          "assessment_state": "complete",
+          "finding": "contradicted",
+          "source_ids": [
+            "E-W3",
+            "E-W3-CONTROL"
+          ],
+          "reason": "It compares against h1 from version1 after a successful version2 save. The Boolean is alreadytrue before the appended whitespace."
+        },
+        {
+          "claim_id": "B-C21",
+          "claim": "All16sources were byte-identically re-fetched and full critique corrections preserved",
+          "output_locator": "proposal.md:5,12,256-273",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "source_ids": [],
+          "reason": "Source capture history and prior candidate artifacts intentionally withheld until saved Phase1. Several independent captures match advertised short prefixes; that does not prove the entire assertion."
+        },
+        {
+          "claim_id": "B-C22",
+          "claim": "The proposed architecture fully covers minimum workflow/usability/scopes and optional lanes",
+          "output_locator": "proposal.md:32-43,145-153,170-205,209-233",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [],
+          "reason": "All12obligation topics were inspected for actual coverage. Proposed scope/keyboard/styles/opportunity/alternatives are present; complete source/implementation correctness is not certified."
+        },
+        {
+          "claim_id": "B-C23",
+          "claim": "Qt/VisPy/tifffile/zarr interoperability, teamPython knowledge and all format/version support",
+          "output_locator": "proposal.md:147-150,210-221",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "source_ids": [],
+          "reason": "No supplied brief establishes teamPython skill; dependency/version integration and broad interoperability claims not fully assessed."
+        },
+        {
+          "claim_id": "B-C24",
+          "claim": "V1\u2013V8 are proposals, not completed application validation",
+          "output_locator": "proposal.md:244-252",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [],
+          "reason": "UNEXECUTED label and isolated-vs-application boundary are explicit. These remain proposed checks, not candidate execution credit."
+        }
+      ],
+      "defects": [
+        {
+          "defect_id": "I01-B-D01",
+          "severity": "major",
+          "kind": "omission",
+          "obligation_ids": [
+            "A12"
+          ],
+          "claim_ids": [
+            "B-C01"
+          ],
+          "output_locators": [
+            "proposal.md:6,277-288"
+          ],
+          "source_ids": [
+            "TASK-OUTPUT-CONTRACT"
+          ],
+          "reason": "Three required catalogs absent; references to unavailable full pins, witness inventory andL1\u2013L12 prevent standalone reproducible delivery. This is an artifact/contract failure, not proof that candidate research or executions never occurred.",
+          "screen_decisive": true
+        },
+        {
+          "defect_id": "I01-B-D02",
+          "severity": "major",
+          "kind": "error",
+          "obligation_ids": [
+            "A08",
+            "A10"
+          ],
+          "claim_ids": [
+            "B-C09"
+          ],
+          "output_locators": [
+            "proposal.md:124"
+          ],
+          "source_ids": [
+            "P-TIFF-ISSUE319"
+          ],
+          "reason": "Affected-version interval includes the documented unaffected baseline2026.2.20. This changes applicability and upgrade/pinning advice; preserve the real chain but do not extend its demonstrated version scope.",
+          "screen_decisive": true
+        },
+        {
+          "defect_id": "I01-B-D03",
+          "severity": "major",
+          "kind": "error",
+          "obligation_ids": [
+            "A02",
+            "A03"
+          ],
+          "claim_ids": [
+            "B-C02"
+          ],
+          "output_locators": [
+            "proposal.md:52"
+          ],
+          "source_ids": [
+            "P-NGFF-PIN"
+          ],
+          "reason": "General transform vocabulary is applied to restricted multiscales. Allowing identity/path as transform types can produce invalid interchange metadata; path is a field, and multiscales permits scale/translation only.",
+          "screen_decisive": true
+        },
+        {
+          "defect_id": "I01-B-D04",
+          "severity": "major",
+          "kind": "unsupported_dependency",
+          "obligation_ids": [
+            "A04",
+            "A10"
+          ],
+          "claim_ids": [
+            "B-C06"
+          ],
+          "output_locators": [
+            "proposal.md:135,150,201"
+          ],
+          "source_ids": [
+            "P-TIFF-ZARR",
+            "P-TIFF-CORE"
+          ],
+          "reason": "The by-construction bounded-memory assertion exceeds the pinned reader behavior for accepted strips. Actualchunk size may be an entire compressed plane; need a decode-size admission rule or a qualified fallback. The stated unverified latency assumption does not qualify this stronger allocation promise.",
+          "screen_decisive": true
+        },
+        {
+          "defect_id": "I01-B-D05",
+          "severity": "major",
+          "kind": "error",
+          "obligation_ids": [
+            "A11"
+          ],
+          "claim_ids": [
+            "B-C20"
+          ],
+          "output_locators": [
+            "proposal.md:242"
+          ],
+          "source_ids": [
+            "E-W3",
+            "E-W3-CONTROL"
+          ],
+          "reason": "The executed identity subcheck is confounded by the successful project mutation before the whitespace change. Removing the claimed change produces the sameTrue result, so this witness does not discriminate that proposition. SHA256 itself is not alleged broken.",
+          "screen_decisive": true
+        }
+      ],
+      "candidate_witnesses_confirmed": 3,
+      "candidate_witnesses_fully_supported_for_declared_local_result": [
+        "W1",
+        "W2"
+      ],
+      "candidate_witness_partial_result": "W3 oldfile/orphan supported; hashassertion confounded",
+      "remaining_unassessed": [
+        "B-C05",
+        "B-C07",
+        "B-C10",
+        "B-C11",
+        "B-C14",
+        "B-C15",
+        "B-C16",
+        "B-C21",
+        "B-C22",
+        "B-C23"
+      ],
+      "whole_case_pass_basis": null
+    }
+  ],
+  "shared_checks": [
+    {
+      "check_id": "A-P1",
+      "present_alias": "B",
+      "assessment_state": "partial",
+      "finding": "Two useful implementation mechanisms and realissue/fix/testchain verified; applicabilitydefectD02",
+      "missing_alias": "A",
+      "missing_assessment_state": "unassessed"
+    },
+    {
+      "check_id": "A-P2",
+      "present_alias": "B",
+      "assessment_state": "partial",
+      "finding": "Source/data contract checked; normativeD03 andallocationD04 defects; other claims unassessed",
+      "missing_alias": "A",
+      "missing_assessment_state": "unassessed"
+    },
+    {
+      "check_id": "A-P3",
+      "present_alias": "B",
+      "assessment_state": "complete",
+      "finding": "All3claimedfinalexecutions receipted;W1/W2 validisolatedexamples;W3 hashsubcheck nondiscriminatingD05; proposedchecks notempirical",
+      "missing_alias": "A",
+      "missing_assessment_state": "unassessed"
+    },
+    {
+      "check_id": "A-P4",
+      "present_alias": "B",
+      "assessment_state": "partial",
+      "finding": "Current finalnewerrors/falsecatalogcompleteness assessed; actualcrossstagepreservation withheld/unassessed",
+      "missing_alias": "A",
+      "missing_assessment_state": "unassessed"
+    },
+    {
+      "check_id": "A-P5",
+      "present_alias": "B",
+      "assessment_state": "partial",
+      "finding": "All12actualobligationtopics inspected; minimumworkflow/usability/opportunity/alternativespresent; technicalquality notfullycertified",
+      "missing_alias": "A",
+      "missing_assessment_state": "unassessed"
+    }
+  ],
+  "whole_pair_semantic_comparison": "No pairedqualityequivalence,winnerorcompletemechanismeffect established; missingaliaschecks areUNASSESSED.",
+  "candidate_vs_evaluator": "W1\u2013W3 actualcandidateexecutions confirmedbyexactreceipts. Arithmetic/stripgeometry/identitycounterexamples are evaluator-only. V1\u2013V8proposedunexecuted.",
+  "economics": "Withheld before this snapshot; operationalcompletion and candidatecost are separate from semanticfindings.",
+  "limitations": [
+    "Decisivefailedscreen, not completeaudit of allconsequentialsource/implementationclaims.",
+    "No research/critique semantic history yet; no preservation/correctionrate orfalse-rejection mechanism effect assessed.",
+    "No candidatefeedback or expectedtruths sent to development/confirmationinputs."
+  ]
+}

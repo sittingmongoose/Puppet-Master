@@ -1,0 +1,10 @@
+{
+  "execution_label": "evaluator_executed",
+  "witness": "W3 discrimination check",
+  "old_state_sha256": "ab07aee553170faa6eb63ad2f4cd123f3cd708d3807ff9396f873da6c7015d8c",
+  "post_successful_save_before_append_sha256": "9030d034ea3e2d94641d96cb0d20d01447d83f24d8d829f5fd8375f2b80d3a0b",
+  "candidate_boolean_without_append": true,
+  "candidate_boolean_with_append": true,
+  "finding": "same True both with and without claimed whitespace change; prior successful state mutation is an uncontrolled difference",
+  "scope": "Counterfactual of candidate hash assertion only; does not claim SHA256 fails to detect changed bytes"
+}

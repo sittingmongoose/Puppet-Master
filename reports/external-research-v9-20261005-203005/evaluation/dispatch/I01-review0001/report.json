@@ -1,0 +1,686 @@
+{
+  "protocol_version": "ER9-independent-output-v1",
+  "evaluation_id": "ER9-EVAL-I01-001",
+  "status": "DECLARED_FAILED_SCREEN_ASSESSED",
+  "whole_case_PASS": false,
+  "comparison_status": "INCOMPLETE_PAIR",
+  "assessment_mode": "screen_fail",
+  "started_utc": "2026-10-05T21:59:32.675505Z",
+  "finished_utc": "2026-10-05T22:15:18.007179Z",
+  "requested_evaluator": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_evaluator": null,
+  "observed_evaluator_limit": "Requested configuration documented; no platform-observed evaluator identity/effort receipt supplied. Do not infer from filename or task role.",
+  "current_output_judgment": {
+    "path": "current_output_judgment.json",
+    "sha256": "9a3d2bcbabfca57057131b83a8545e06d933202f79fc950e2e1575881f5c3ff9",
+    "saved_utc": "2026-10-05T22:09:00.772221Z",
+    "immutable": true
+  },
+  "received_inputs": [
+    {
+      "kind": "brief",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-packet0001/task/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "kind": "coverage_map",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-packet0001/task/coverage_map.json",
+      "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92"
+    },
+    {
+      "kind": "common_criteria",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-packet0001/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+    },
+    {
+      "kind": "source_access",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-packet0001/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "kind": "important_checks",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-packet0001/task/important_checks.json",
+      "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75"
+    },
+    {
+      "kind": "output_contract",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-packet0001/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "kind": "designated_final",
+      "alias": "B",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-packet0001/outputs/B/final/proposal.md",
+      "sha256": "f0022e3e23d4156b7816b24dd7a57e2676e9b00d73511a3c00d817a13571ed65"
+    }
+  ],
+  "blinding": {
+    "family_model_and_available_arm_disclosed_before_assessment": true,
+    "anonymous_alias_sidecar_not_opened": true,
+    "actual_prior_stage_semantics_not_opened": true,
+    "current_final_contains_resolution_summary": true,
+    "economics_opened_only_after_snapshot": true,
+    "phase2_metadata_pin": {
+      "path": "PHASE2_METADATA.json",
+      "sha256": "25d772afd6c782b86b7988c728303c0c85f1f8b81310dbd8e6b784e08e38f8ef"
+    },
+    "unblinded_utc": "2026-10-05T22:12:45Z"
+  },
+  "anonymous_output_results": [
+    {
+      "alias": "A",
+      "decision": "NOT_EVALUATED",
+      "quality_status": "UNASSESSED",
+      "operational_status": "FAIL",
+      "assessment_state": "unassessed",
+      "reason": "Terminal missing designated final. No unfinished research artifact promoted.",
+      "obligation_map": [
+        {
+          "obligation_id": "A01",
+          "assessment_state": "unassessed"
+        },
+        {
+          "obligation_id": "A02",
+          "assessment_state": "unassessed"
+        },
+        {
+          "obligation_id": "A03",
+          "assessment_state": "unassessed"
+        },
+        {
+          "obligation_id": "A04",
+          "assessment_state": "unassessed"
+        },
+        {
+          "obligation_id": "A05",
+          "assessment_state": "unassessed"
+        },
+        {
+          "obligation_id": "A06",
+          "assessment_state": "unassessed"
+        },
+        {
+          "obligation_id": "A07",
+          "assessment_state": "unassessed"
+        },
+        {
+          "obligation_id": "A08",
+          "assessment_state": "unassessed"
+        },
+        {
+          "obligation_id": "A09",
+          "assessment_state": "unassessed"
+        },
+        {
+          "obligation_id": "A10",
+          "assessment_state": "unassessed"
+        },
+        {
+          "obligation_id": "A11",
+          "assessment_state": "unassessed"
+        },
+        {
+          "obligation_id": "A12",
+          "assessment_state": "unassessed"
+        }
+      ]
+    },
+    {
+      "alias": "B",
+      "decision": "FAIL",
+      "quality_status": "FAIL_SCREEN",
+      "operational_status": "FAIL",
+      "assessment_state": "partial",
+      "full_pass_eligible": false,
+      "defect_ids": [
+        "I01-B-D01",
+        "I01-B-D02",
+        "I01-B-D03",
+        "I01-B-D04",
+        "I01-B-D05"
+      ],
+      "details": "Immutable current_output_judgment.json has exact defect explanations/output locators and all consequential claim groups.",
+      "obligation_map": [
+        {
+          "obligation_id": "A01",
+          "assessment_state": "partial",
+          "finding": "supported"
+        },
+        {
+          "obligation_id": "A02",
+          "assessment_state": "partial",
+          "finding": "contradicted"
+        },
+        {
+          "obligation_id": "A03",
+          "assessment_state": "partial",
+          "finding": "supported"
+        },
+        {
+          "obligation_id": "A04",
+          "assessment_state": "partial",
+          "finding": "contradicted"
+        },
+        {
+          "obligation_id": "A05",
+          "assessment_state": "partial",
+          "finding": "unresolved"
+        },
+        {
+          "obligation_id": "A06",
+          "assessment_state": "complete",
+          "finding": "supported"
+        },
+        {
+          "obligation_id": "A07",
+          "assessment_state": "partial",
+          "finding": "supported"
+        },
+        {
+          "obligation_id": "A08",
+          "assessment_state": "partial",
+          "finding": "contradicted"
+        },
+        {
+          "obligation_id": "A09",
+          "assessment_state": "partial",
+          "finding": "supported"
+        },
+        {
+          "obligation_id": "A10",
+          "assessment_state": "partial",
+          "finding": "contradicted"
+        },
+        {
+          "obligation_id": "A11",
+          "assessment_state": "partial",
+          "finding": "contradicted"
+        },
+        {
+          "obligation_id": "A12",
+          "assessment_state": "partial",
+          "finding": "contradicted"
+        }
+      ],
+      "claim_map": [
+        {
+          "claim_id": "B-C01",
+          "assessment_state": "complete",
+          "finding": "contradicted",
+          "source_ids": [
+            "TASK-OUTPUT-CONTRACT"
+          ],
+          "output_locator": "proposal.md:6,277-288"
+        },
+        {
+          "claim_id": "B-C02",
+          "assessment_state": "complete",
+          "finding": "contradicted",
+          "source_ids": [
+            "P-NGFF-PIN"
+          ],
+          "output_locator": "proposal.md:52"
+        },
+        {
+          "claim_id": "B-C03",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "P-NGFF-PIN"
+          ],
+          "output_locator": "proposal.md:21,51-56,184"
+        },
+        {
+          "claim_id": "B-C04",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "P-NAPARI-IMAGE"
+          ],
+          "output_locator": "proposal.md:22,64-67"
+        },
+        {
+          "claim_id": "B-C05",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "source_ids": [
+            "P-NAPARI-UNITS"
+          ],
+          "output_locator": "proposal.md:68-69"
+        },
+        {
+          "claim_id": "B-C06",
+          "assessment_state": "complete",
+          "finding": "contradicted",
+          "source_ids": [
+            "P-TIFF-README",
+            "P-TIFF-ZARR",
+            "P-TIFF-CORE"
+          ],
+          "output_locator": "proposal.md:77-78,135,172,201"
+        },
+        {
+          "claim_id": "B-C07",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "source_ids": [
+            "P-TIFF-README"
+          ],
+          "output_locator": "proposal.md:75-84"
+        },
+        {
+          "claim_id": "B-C08",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "P-TIFF-ISSUE319",
+            "P-TIFF-FIX",
+            "P-TIFF-TEST"
+          ],
+          "output_locator": "proposal.md:28,114-124"
+        },
+        {
+          "claim_id": "B-C09",
+          "assessment_state": "complete",
+          "finding": "contradicted",
+          "source_ids": [
+            "P-TIFF-ISSUE319"
+          ],
+          "output_locator": "proposal.md:124"
+        },
+        {
+          "claim_id": "B-C10",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "source_ids": [
+            "P-TIFF-FIX",
+            "P-TIFF-TEST"
+          ],
+          "output_locator": "proposal.md:120-130"
+        },
+        {
+          "claim_id": "B-C11",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "source_ids": [],
+          "output_locator": "proposal.md:88-96"
+        },
+        {
+          "claim_id": "B-C12",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "P-QUPATH-EXPORT"
+          ],
+          "output_locator": "proposal.md:24,93,183"
+        },
+        {
+          "claim_id": "B-C13",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "P-RENAME2"
+          ],
+          "output_locator": "proposal.md:100-104,136"
+        },
+        {
+          "claim_id": "B-C14",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [
+            "P-RFC7946"
+          ],
+          "output_locator": "proposal.md:106-111"
+        },
+        {
+          "claim_id": "B-C15",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "source_ids": [
+            "E-IDENTITY"
+          ],
+          "output_locator": "proposal.md:137,195"
+        },
+        {
+          "claim_id": "B-C16",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "source_ids": [
+            "P-RENAME2"
+          ],
+          "output_locator": "proposal.md:30,178,198-200"
+        },
+        {
+          "claim_id": "B-C17",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "E-W1"
+          ],
+          "output_locator": "proposal.md:240"
+        },
+        {
+          "claim_id": "B-C18",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "E-W2"
+          ],
+          "output_locator": "proposal.md:241"
+        },
+        {
+          "claim_id": "B-C19",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "E-W3"
+          ],
+          "output_locator": "proposal.md:242"
+        },
+        {
+          "claim_id": "B-C20",
+          "assessment_state": "complete",
+          "finding": "contradicted",
+          "source_ids": [
+            "E-W3",
+            "E-W3-CONTROL"
+          ],
+          "output_locator": "proposal.md:242,137"
+        },
+        {
+          "claim_id": "B-C21",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "source_ids": [],
+          "output_locator": "proposal.md:5,12,256-273"
+        },
+        {
+          "claim_id": "B-C22",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [],
+          "output_locator": "proposal.md:32-43,145-153,170-205,209-233"
+        },
+        {
+          "claim_id": "B-C23",
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "source_ids": [],
+          "output_locator": "proposal.md:147-150,210-221"
+        },
+        {
+          "claim_id": "B-C24",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [],
+          "output_locator": "proposal.md:244-252"
+        }
+      ],
+      "claim_group_state_counts": {
+        "complete": 14,
+        "partial": 7,
+        "unassessed": 3
+      },
+      "remaining_unassessed_claim_groups": [
+        "B-C05",
+        "B-C07",
+        "B-C10",
+        "B-C11",
+        "B-C14",
+        "B-C15",
+        "B-C16",
+        "B-C21",
+        "B-C22",
+        "B-C23"
+      ],
+      "dimensions": [
+        {
+          "id": 1,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "A01",
+            "A02",
+            "A03",
+            "A04",
+            "A05",
+            "A06",
+            "A09",
+            "A10",
+            "A12"
+          ],
+          "finding_ref": "current_output_judgment.json; REVIEW.md"
+        },
+        {
+          "id": 2,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "A02",
+            "A03",
+            "A04",
+            "A05",
+            "A07",
+            "A08",
+            "A10",
+            "A11",
+            "A12"
+          ],
+          "finding_ref": "current_output_judgment.json; REVIEW.md"
+        },
+        {
+          "id": 3,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "A01",
+            "A02",
+            "A03",
+            "A04",
+            "A05",
+            "A06",
+            "A07",
+            "A08",
+            "A09",
+            "A10"
+          ],
+          "finding_ref": "current_output_judgment.json; REVIEW.md"
+        },
+        {
+          "id": 4,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "A07",
+            "A08",
+            "A09"
+          ],
+          "finding_ref": "current_output_judgment.json; REVIEW.md"
+        },
+        {
+          "id": 5,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "A02",
+            "A03",
+            "A08",
+            "A11"
+          ],
+          "finding_ref": "current_output_judgment.json; REVIEW.md"
+        },
+        {
+          "id": 6,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "A12"
+          ],
+          "finding_ref": "current_output_judgment.json; REVIEW.md"
+        },
+        {
+          "id": 7,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "A01",
+            "A04",
+            "A05",
+            "A09",
+            "A10",
+            "A11",
+            "A12"
+          ],
+          "finding_ref": "current_output_judgment.json; REVIEW.md"
+        },
+        {
+          "id": 8,
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "A11",
+            "A12"
+          ],
+          "finding_ref": "current_output_judgment.json; REVIEW.md"
+        }
+      ],
+      "witnesses": [
+        {
+          "witness_id": "W1",
+          "execution_label": "candidate_executed",
+          "finding": "Supported scalar precision example under actual coordinate+calibration quantization",
+          "scope": "isolated stdlib component"
+        },
+        {
+          "witness_id": "W2",
+          "execution_label": "candidate_executed",
+          "finding": "Supported discriminating transform-order example",
+          "scope": "isolated stdlib component"
+        },
+        {
+          "witness_id": "W3",
+          "execution_label": "candidate_executed",
+          "finding": "Pre-replace exception/orphan supported; hash sensitivity comparison confounded",
+          "scope": "isolated stdlib component"
+        },
+        {
+          "witness_id": "V1-V8",
+          "execution_label": "proposed_unexecuted",
+          "finding": "Honest proposed validation; no empirical credit"
+        }
+      ],
+      "whole_case_pass_basis": null
+    }
+  ],
+  "shared_check_comparison": [
+    {
+      "check_id": "A-P1",
+      "B_assessment_state": "partial",
+      "A_assessment_state": "unassessed",
+      "detail_ref": "current_output_judgment.json/shared_checks",
+      "comparison_boundary": "No paired semantic comparison because A has no designated artifact"
+    },
+    {
+      "check_id": "A-P2",
+      "B_assessment_state": "partial",
+      "A_assessment_state": "unassessed",
+      "detail_ref": "current_output_judgment.json/shared_checks",
+      "comparison_boundary": "No paired semantic comparison because A has no designated artifact"
+    },
+    {
+      "check_id": "A-P3",
+      "B_assessment_state": "complete",
+      "A_assessment_state": "unassessed",
+      "detail_ref": "current_output_judgment.json/shared_checks",
+      "comparison_boundary": "No paired semantic comparison because A has no designated artifact"
+    },
+    {
+      "check_id": "A-P4",
+      "B_assessment_state": "partial",
+      "A_assessment_state": "unassessed",
+      "detail_ref": "current_output_judgment.json/shared_checks",
+      "comparison_boundary": "No paired semantic comparison because A has no designated artifact"
+    },
+    {
+      "check_id": "A-P5",
+      "B_assessment_state": "partial",
+      "A_assessment_state": "unassessed",
+      "detail_ref": "current_output_judgment.json/shared_checks",
+      "comparison_boundary": "No paired semantic comparison because A has no designated artifact"
+    }
+  ],
+  "source_index": {
+    "path": "SOURCE_INDEX.json",
+    "sha256": "332c1e8447f772bad588310dbdd587e847bce6247eadd94af7bb87ca122a81c0"
+  },
+  "phase2": {
+    "scope": "Post-judgment operational/economic projection only",
+    "completed_for_declared_scope": true,
+    "semantic_preservation_rate": "UNASSESSED",
+    "repair_detection_false_rejection_rates": "UNASSESSED",
+    "complete_pair_efficiency": "NOT_QUALIFIED",
+    "candidate_observed_model": "GLM-5.3-Flash",
+    "candidate_observed_effort": "max",
+    "native_goal_starts": 4,
+    "valid_whole_pipelines": 0,
+    "treatment_dependent_starts": 0,
+    "control_final_native_goal_status": "cap_seconds",
+    "treatment_research_native_goal_status": "cap_seconds",
+    "all_four_stage_jobs_native_quiescent": true
+  },
+  "economics": {
+    "reported_separately_after_blind_judgment": true,
+    "by_arm": {
+      "control": {
+        "stage_elapsed_seconds_sum": 2432.434840828995,
+        "native_goal_starts": 3,
+        "known_provider_attempt_field_sums": {
+          "input_tokens": 6089290,
+          "output_tokens": 112584,
+          "cache_read_input_tokens": 5000576,
+          "provider_total_tokens": 6201874
+        },
+        "cancelled_usage_unknown": true,
+        "native_ui_counters_not_added": true
+      },
+      "treatment": {
+        "stage_elapsed_seconds_sum": 1175.7679753310003,
+        "native_goal_starts": 1,
+        "known_provider_attempt_field_sums": {
+          "input_tokens": 1737174,
+          "output_tokens": 53137,
+          "cache_read_input_tokens": 1493824,
+          "provider_total_tokens": 1790311
+        },
+        "cancelled_usage_unknown": true,
+        "native_ui_counters_not_added": true
+      }
+    },
+    "failure_inclusive_occupied_stage_elapsed_seconds_sum": 3608.2028161599956,
+    "known_provider_total_field_sum": 7992185,
+    "candidate_money": "UNKNOWN",
+    "pair_critical_path_seconds": "UNKNOWN from this compact projection; do not sum concurrent arms",
+    "counter_rules": "Input and total include reported cached input; cache-read is a subset, not an extra summand. Provider totals and UI totals are not additive. Cancelled partials remain unknown; these are known exported counters, not billed dollars.",
+    "unknown_counters": [
+      "cancelled partial streaming usage on control final and treatment research",
+      "unexposed HTTP/native child costs",
+      "invalid-argument error class",
+      "billed dollars",
+      "evaluator token/usage counters"
+    ],
+    "evaluator_wall_seconds": 945.3316640853882,
+    "evaluator_usage": null
+  },
+  "denominators": {
+    "pair_attempted": 1,
+    "valid_full_pipelines_completed": 0,
+    "designated_proposal_artifacts_present": 1,
+    "available_current_outputs_screen_assessed": 1,
+    "terminal_missing_current_outputs_quality_unassessed": 1,
+    "full_semantic_passes": 0,
+    "complete_matched_current_output_comparisons": 0
+  },
+  "limitations": [
+    "Decisivefailedscreen, not completeaudit of allconsequentialsource/implementationclaims.",
+    "No research/critique semantic history yet; no preservation/correctionrate orfalse-rejection mechanism effect assessed.",
+    "No candidatefeedback or expectedtruths sent to development/confirmationinputs.",
+    "Broad source completeness and history-dependent preservation remain unassessed after decisive failure.",
+    "No candidate findings or expected answers supplied to prospective successors or confirmation inputs."
+  ],
+  "errata": []
+}

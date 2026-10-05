@@ -1,5 +1,5 @@
 {
-  "status": "DECLARED_NOT_EXECUTED",
+  "status": "DECLARED_CATALOG_WITH_PUBLISHED_EXECUTION_BINDINGS",
   "methods": [
     {
       "id": "V01",
@@ -146,5 +146,58 @@
       "integration": "Both arms must satisfy the same research goal. This tests organization and duplication, not reducing requirements or defining a smaller answer after seeing failures."
     }
   ],
-  "executed_configurations": []
+  "executed_configurations": [
+    {
+      "pair_id": "I-01",
+      "job_id": "I-01-control-research-a001",
+      "stage": "research",
+      "actual_family": "GLM",
+      "observed_model": {
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan"
+      },
+      "observed_effort": "max",
+      "operation_and_cost_source": "evaluation/dispatch/I01-review0001/PHASE2_METADATA.json",
+      "semantic_success_claim": false
+    },
+    {
+      "pair_id": "I-01",
+      "job_id": "I-01-control-critique-a001",
+      "stage": "critique",
+      "actual_family": "GLM",
+      "observed_model": {
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan"
+      },
+      "observed_effort": "max",
+      "operation_and_cost_source": "evaluation/dispatch/I01-review0001/PHASE2_METADATA.json",
+      "semantic_success_claim": false
+    },
+    {
+      "pair_id": "I-01",
+      "job_id": "I-01-control-revision-a001",
+      "stage": "revision",
+      "actual_family": "GLM",
+      "observed_model": {
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan"
+      },
+      "observed_effort": "max",
+      "operation_and_cost_source": "evaluation/dispatch/I01-review0001/PHASE2_METADATA.json",
+      "semantic_success_claim": false
+    },
+    {
+      "pair_id": "I-01",
+      "job_id": "I-01-treatment-research-a001",
+      "stage": "research",
+      "actual_family": "GLM",
+      "observed_model": {
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan"
+      },
+      "observed_effort": "max",
+      "operation_and_cost_source": "evaluation/dispatch/I01-review0001/PHASE2_METADATA.json",
+      "semantic_success_claim": false
+    }
+  ]
 }
