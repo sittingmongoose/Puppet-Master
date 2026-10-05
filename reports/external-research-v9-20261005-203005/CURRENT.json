@@ -1,0 +1,29 @@
+{
+  "campaign_id": "external-research-v9-20261005-203005",
+  "snapshot_at": "2026-10-05T20:33:26.903198+00:00",
+  "cohort": "initial-campaign-contract",
+  "candidate_attempts_published": 0,
+  "completed_pairs": {
+    "diagnostic": 0,
+    "integrated": 0,
+    "confirmation": 0
+  },
+  "unexecuted_pair_slots": 48,
+  "blocked_pairs_classified": 0,
+  "actual_families": [],
+  "best_supported_recipe": null,
+  "candidate_cost": null,
+  "candidate_latency": null,
+  "target_workload": {
+    "method_count": 16,
+    "diagnostic_pairs": 32,
+    "diagnostic_arm_executions": 64,
+    "integrated_pairs": 12,
+    "integrated_pipelines": 24,
+    "confirmation_pairs": 4,
+    "confirmation_pipelines": 8,
+    "total_pairs": 48,
+    "total_whole_pipelines": 32
+  },
+  "reproduction_boundary": "Contract only; genuine native/account runtime not portable."
+}

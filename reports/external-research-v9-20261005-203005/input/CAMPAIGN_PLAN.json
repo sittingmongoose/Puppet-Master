@@ -1,0 +1,747 @@
+{
+  "schema": "pm.external_research.execution_queue_design.v9",
+  "status": "USER_HANDOFF_PROPOSAL_EXECUTE_WHEN_ASSIGNED",
+  "historical_freeze": {
+    "repository": "sittingmongoose/Puppet-Master",
+    "commit": "873dc5996a78ffbb7017e4d5a862fc56921f668c",
+    "report_root": "reports/external-research-v8-20261001-2140",
+    "closed": true
+  },
+  "roles": {
+    "root": "GPT 6.1 Sol Max",
+    "easy_deployment_monitoring": "GPT 6.1 Sol Medium",
+    "engineering": "GPT 6.1 Sol High/xhigh",
+    "hardest": "GPT 6.1 Sol Max",
+    "independent_evaluation": "GPT 6.1 Sol High/xhigh; Max for hardest disputes"
+  },
+  "candidates": {
+    "Muse": "Muse Code / Muse 1.3 Contributor Max",
+    "GLM": "zcode / GLM 5.3 Flash Max",
+    "Luna": "GPT-6 Luna Max; fresh standalone native Codex Goal thread"
+  },
+  "concurrency": {
+    "campaign_muse_max": 4,
+    "campaign_glm_max": 2,
+    "luna_policy_max": null,
+    "sol_codex_policy_max": null,
+    "unbounded_policy_means": "No user numerical thread cap; actual capacity, provider limits and finite useful work still bind"
+  },
+  "workload": {
+    "method_count": 16,
+    "diagnostic_pairs": 32,
+    "diagnostic_arm_executions": 64,
+    "integrated_pairs": 12,
+    "integrated_pipelines": 24,
+    "confirmation_pairs": 4,
+    "confirmation_pipelines": 8,
+    "total_pairs": 48,
+    "total_whole_pipelines": 32
+  },
+  "global_controls": {
+    "campaign_deadline_imposed_by_packet": false,
+    "lifetime_helper_start_cap": null,
+    "inherited_candidate_start_cap": null,
+    "inherited_aggregate_token_stop": null,
+    "per_adapter_repair_count_cap": null,
+    "scope_boundary": "Finite declared workload; no automatic next campaign; existing subscriptions only; bounded jobs and real service/safety limits"
+  },
+  "targets_are_not_completion_evidence": true,
+  "method_catalog": [
+    {
+      "id": "V01",
+      "name": "Executable checks instead of prose-only verification",
+      "control": "The frozen v8-style critic checks the assigned propositions and witnesses by reading and reasoning, without a newly added calculation/execution capability. Label this explicitly as the legacy-workflow comparator, not a claim about every ordinary agent.",
+      "treatment": "Give that critic a bounded deterministic execution tool. It authors and runs calculations or small data examples, checks an independently justified expectation, and revises the recommendation from the observed result.",
+      "diagnostic": "Use one numerical/transform or dimensional case and one notebook/data-structure case. Mix incorrect claims with correct claims and legitimately unresolved ones; do not reveal which are defective.",
+      "measure": "Source-correct corrections, new errors, false rejection, witness discrimination, actual executions, tool overhead and total critic cost. Executing a self-confirming assertion is not success.",
+      "integration": "Run early, before the complete diagnostic queue finishes. This is a priority integrated contrast."
+    },
+    {
+      "id": "V02",
+      "name": "Unit-, type- and domain-aware checking",
+      "control": "The V01 tool-enabled critic uses ordinary calculations with the same executable access and total allowance.",
+      "treatment": "Before computing, the critic binds each consequential variable to units, coordinate system/type, source version and allowed domain; it then checks conversions, boundary values, and forward/inverse or other applicable invariants.",
+      "diagnostic": "Use unlike coordinate conventions and a non-geometric analogue such as byte/character offsets, index/count distinctions, or major/minor version predicates. The critic derives its own examples.",
+      "measure": "Whether errors in applying otherwise-correct formulas are found; whether irrelevant unit rules or unsupported invariants are invented; cost beyond plain calculation.",
+      "integration": "Compare to V01, not to a tool-denied control, so this tests interpretation discipline separately from tool availability."
+    },
+    {
+      "id": "V03",
+      "name": "Pinned implementation-path witnesses",
+      "control": "Read the same public documentation and implementation source with the common safe tools; produce an ordinary evidence-backed code interpretation.",
+      "treatment": "Trace the relevant entry point, branch predicates, defaults, mutations and version. Where practical, execute a minimal pinned upstream function/test in isolation and state precisely which behavior was exercised.",
+      "diagnostic": "Select a default/threshold/identity example and an implementation conditional or mutation example. Include misleading comments or examples as leads, not authoritative answers.",
+      "measure": "Comment-to-code disagreements detected, version correctness, contextual applicability, isolated-test limitations, installation/extraction overhead and source-backed verdicts.",
+      "integration": "An extracted function is a component witness, not proof of the full library or GUI. No large application build is required."
+    },
+    {
+      "id": "V04",
+      "name": "Evidence-first checking to reduce agreement bias",
+      "control": "The fresh same-family critic sees the proposal first, then checks its sources and implications.",
+      "treatment": "For consequential decision questions, the fresh critic first records what the admissible source supports using the neutral question and relevant context, without seeing the candidate answer. Then it sees and compares the proposal.",
+      "diagnostic": "Use plausible but false claims, correctly qualified claims, and reasonable product choices. Keep task, source access, total budget and final output contract matched.",
+      "measure": "Detection and false-rejection rates, supported corrections, added reading/writing, and whether evidence-first answers merely create another unchecked narrative.",
+      "integration": "Stage ordering can use existing artifact controls. Do not build a new isolation service just for this contrast; record observable ordering and its limits."
+    },
+    {
+      "id": "V05",
+      "name": "Verification of consequential final changes",
+      "control": "The normal three-stage pipeline ends after the final author responds to the critic; its evaluator sees the frozen result.",
+      "treatment": "Reallocate part of the same total allowance to a fresh flash check of added or changed consequential claims and their affected dependencies after revision. Resolve its findings within the allocated pipeline budget.",
+      "diagnostic": "Use draft/critique/revision bundles containing both good corrections and errors newly introduced by correction. Show the checker all context needed to understand a changed assertion.",
+      "measure": "New-error detection, collateral regressions, remaining critical changes, total latency and usage. Closing a critic ID is not proof that the new text is correct.",
+      "integration": "Do not silently add a free fourth complete review. The extra stage and any corrective work count within the recipe. This is a priority integrated contrast."
+    },
+    {
+      "id": "V06",
+      "name": "Amendment-first repair with complete final assembly",
+      "control": "The final author rewrites a complete proposal from the draft and critique using the practical current workflow.",
+      "treatment": "The author changes only supported disputed content and its affected dependencies. The host preserves the remaining current content and renders one standalone proposal, keeping superseded text only in history.",
+      "diagnostic": "Use related findings with conditions, cross-references, a corrected assertion, an unexecuted validation idea and an independent unaffected finding.",
+      "measure": "Supported semantic retention, corrected errors, new errors, incomplete patches, writing volume and final usability. Exact retention of a false assertion receives no quality credit.",
+      "integration": "Reuse the working artifact format; do not restart the old per-block parser project. The whole final remains the scored output."
+    },
+    {
+      "id": "V07",
+      "name": "Critical-dependency-first verification",
+      "control": "An ordinary critic distributes its effort across the complete report without a separate consequence ordering.",
+      "treatment": "The candidate identifies the assumptions required by the selected design and verifies those first, then checks remaining obligations and a predeclared sample of apparently low-risk assertions. Optional leads stay visible.",
+      "diagnostic": "Mix decisive dependencies, innocuous claims, surprising low-ranked defects, and interesting optional discoveries. Risk classification is candidate work, not an evaluator answer list.",
+      "measure": "Critical errors caught per unit time, missed supposedly low-risk defects, unnecessary refusal, breadth preserved, and final unresolved dependencies.",
+      "integration": "Do not obtain a pass by deleting obligations or treating every open lead as fatal. A chosen design cannot rely silently on an unverified critical dependency."
+    },
+    {
+      "id": "V08",
+      "name": "Two-stage versus three-stage completion",
+      "control": "Research/proposal -> fresh same-family critic -> fresh final author, with a declared shared allowance.",
+      "treatment": "Research/proposal -> fresh same-family critic that makes evidence-backed local corrections and delivers the complete final. Keep required checking and the same total allowance.",
+      "diagnostic": "Use cases requiring actual correction, including one in which correcting a claim can affect another section. This is not a formatting-only exercise.",
+      "measure": "Startup/context duplication saved, final defects introduced or missed, preservation, corrections, and full case cost. Independent premium evaluation remains outside both candidate recipes.",
+      "integration": "This tests a simpler production topology, not permission for Sol to finish the research. Do not require three Goals merely to call a two-stage pipeline integrated."
+    },
+    {
+      "id": "V09",
+      "name": "Parallel complementary flash critics",
+      "control": "One fresh critic handles the whole evidence/coverage/derivation review.",
+      "treatment": "Split a fixed critic budget between two fresh same-family critics with complementary, overlapping responsibilities, such as source applicability and implementation/derivation behavior. The candidate resolves both into one result.",
+      "diagnostic": "Include cross-boundary errors so splitting cannot earn credit just by ignoring interactions. Both critics have the brief and sufficient common context.",
+      "measure": "Critical-path latency, aggregate occupied time, duplicate work, disagreement quality, coverage seams and final corrections. No majority-vote truth rule.",
+      "integration": "Both critics consume this campaign's family slots and the pipeline's total budget. A recipe requiring two concurrent Goals on one account must disclose that requirement."
+    },
+    {
+      "id": "V10",
+      "name": "Early dependency-release and API-contract binding",
+      "control": "A competent ordinary research process cites versions as discovered and follows relevant current documentation. Do not force it to choose mismatched sources.",
+      "treatment": "Once a component is selected, bind a coherent release/artifact set and verify consequential defaults, API paths and compatibility at those pins before writing the recommendation.",
+      "diagnostic": "Use genuine development-branch/release differences and a case with internally consistent sources. Correct uncertainty and choosing a development build explicitly are legitimate outcomes.",
+      "measure": "Version-mixing defects, needless pin churn, newly blocked good proposals, capture reuse and repeated research cost.",
+      "integration": "The treatment is earlier coherent binding, not a ban on new information. A version change invalidates affected assumptions, not necessarily the whole report."
+    },
+    {
+      "id": "V11",
+      "name": "Contradiction-seeking and scoped absence checks",
+      "control": "An ordinary source-checking critic verifies the claims under the common output contract.",
+      "treatment": "For consequential negative/universal claims, search for counterexamples and inspect governing context and reasonable variants. State searched scope. Preserve unsupported disputes as unresolved rather than inventing absence.",
+      "diagnostic": "Include source-absence assertions, ordinary missing-input conditions, unsupported-input test proposals, true negatives and supported positive claims.",
+      "measure": "False dismissals corrected, true errors found, false-positive absence alarms, gratuitous uncertainty, breadth and search costs.",
+      "integration": "Do not reuse the known overbroad missing/unsupported keyword gate as a truth checker. A searched field is evidence of a search, not proof of absence."
+    },
+    {
+      "id": "V12",
+      "name": "Progressive retrieval with reusable exact evidence",
+      "control": "Competent native source navigation with normal rereads and no deliberately forced full-source repetition.",
+      "treatment": "Use compact navigational maps, question-directed ranges and exact same-case captures, expanding for conditions and counterevidence. The model retains full permitted source access.",
+      "diagnostic": "Use sources whose crucial qualifications lie outside the first likely excerpt; record returned ranges and truncation when exposed.",
+      "measure": "Source-correct yield, missed context, delivered bytes/tokens, fetch/read duplication, cold and warm costs, and end-to-end outcome.",
+      "integration": "A map is navigation, not a premium-written semantic summary. Do not claim cache hits or model understanding from a file hash."
+    },
+    {
+      "id": "V13",
+      "name": "Dependency-aware incremental research reuse",
+      "control": "Re-research the current task from its legitimate inputs after a bounded plan/source change.",
+      "treatment": "Reuse unchanged supported findings with explicit source/plan/version dependencies; re-check affected decisions and render a complete current result.",
+      "diagnostic": "Use one unchanged dependency case and one meaningful dependency change, plus a tempting stale answer. Reused records must be candidate-produced and equally available where the contrast requires them.",
+      "measure": "Invalidation recall, unsupported reuse, preserved good findings, cold seed cost, warm marginal cost and total multi-run cost.",
+      "integration": "Never present a warm result as a cold full-discovery win. This is an incremental-workflow experiment, not source discovery from a blank brief."
+    },
+    {
+      "id": "V14",
+      "name": "Protected breadth and cross-component analogies",
+      "control": "Ordinary whole-product competitor and relevant-project research at the same source/time allowance.",
+      "treatment": "Protect a share of discovery effort for different mechanism families, user promises and non-competitor components before deepening the best leads. Keep an explicit opportunity/alternative lane as well as defect hunting.",
+      "diagnostic": "Use brief-only cases in two domains where relevant components exist outside obvious whole-product competitors. Do not supply the target repositories or a list of answers.",
+      "measure": "Verified useful novelty, distinct mechanism coverage, applicability, false opportunities, required-plan coverage and cost; raw link counts are not quality.",
+      "integration": "This must run actual external discovery, not only a fixed normative corpus. Keep broad leads even if optional adoption is deferred."
+    },
+    {
+      "id": "V15",
+      "name": "Implementation and issue-to-test investigation",
+      "control": "Documentation-first investigation with normal access to repositories, issues and tests.",
+      "treatment": "Follow selected consequential mechanisms through entry points, real issue history, fixes and regression tests; compare at least two independent implementations where the case requires it.",
+      "diagnostic": "Use one real fix chain and one misleading or version-mismatched apparent chain. For discovery cells the candidate must locate the chain itself.",
+      "measure": "Verified lessons, version/branch applicability, unsupported causal links, executable behavior, novelty, code-reading cost and recommendation impact.",
+      "integration": "An issue title is a lead, not consensus; a merged patch is not automatically evidence of the affected release or a reproduced defect."
+    },
+    {
+      "id": "V16",
+      "name": "Decision-focused delivery without losing breadth",
+      "control": "The normal standalone research report with its findings, implications, limitations and validation proposals; do not force padding.",
+      "treatment": "Deliver a concise current decision/proposal with evidence-backed complete findings and a separate structured lead/history inventory. The host captures administrative history; the model does not repeat it.",
+      "diagnostic": "Use reports containing required conditions, optional ideas, rejected alternatives and real open dependencies. Check that concise delivery does not hide critical information in the appendix.",
+      "measure": "Required meaning in the designated final, false completeness, useful ideas retained, critic reading/writing cost and usability.",
+      "integration": "Both arms must satisfy the same research goal. This tests organization and duplication, not reducing requirements or defining a smaller answer after seeing failures."
+    }
+  ],
+  "diagnostic_queue": [
+    {
+      "pair_id": "D-V01-A",
+      "method_id": "V01",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V01-B",
+      "method_id": "V01",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V02-A",
+      "method_id": "V02",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V02-B",
+      "method_id": "V02",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V03-A",
+      "method_id": "V03",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V03-B",
+      "method_id": "V03",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V04-A",
+      "method_id": "V04",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V04-B",
+      "method_id": "V04",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V05-A",
+      "method_id": "V05",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V05-B",
+      "method_id": "V05",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V06-A",
+      "method_id": "V06",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V06-B",
+      "method_id": "V06",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V07-A",
+      "method_id": "V07",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V07-B",
+      "method_id": "V07",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V08-A",
+      "method_id": "V08",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V08-B",
+      "method_id": "V08",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V09-A",
+      "method_id": "V09",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V09-B",
+      "method_id": "V09",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V10-A",
+      "method_id": "V10",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V10-B",
+      "method_id": "V10",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V11-A",
+      "method_id": "V11",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V11-B",
+      "method_id": "V11",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V12-A",
+      "method_id": "V12",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V12-B",
+      "method_id": "V12",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V13-A",
+      "method_id": "V13",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V13-B",
+      "method_id": "V13",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V14-A",
+      "method_id": "V14",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V14-B",
+      "method_id": "V14",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V15-A",
+      "method_id": "V15",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V15-B",
+      "method_id": "V15",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V16-A",
+      "method_id": "V16",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V16-B",
+      "method_id": "V16",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    }
+  ],
+  "integration_slots": [
+    {
+      "pair_id": "I-01",
+      "contrast_slot": 1,
+      "domain_slot": "A",
+      "status": "PLANNED",
+      "selected_method": null,
+      "actual_family": null
+    },
+    {
+      "pair_id": "I-02",
+      "contrast_slot": 1,
+      "domain_slot": "B",
+      "status": "PLANNED",
+      "selected_method": null,
+      "actual_family": null
+    },
+    {
+      "pair_id": "I-03",
+      "contrast_slot": 2,
+      "domain_slot": "A",
+      "status": "PLANNED",
+      "selected_method": null,
+      "actual_family": null
+    },
+    {
+      "pair_id": "I-04",
+      "contrast_slot": 2,
+      "domain_slot": "B",
+      "status": "PLANNED",
+      "selected_method": null,
+      "actual_family": null
+    },
+    {
+      "pair_id": "I-05",
+      "contrast_slot": 3,
+      "domain_slot": "A",
+      "status": "PLANNED",
+      "selected_method": null,
+      "actual_family": null
+    },
+    {
+      "pair_id": "I-06",
+      "contrast_slot": 3,
+      "domain_slot": "B",
+      "status": "PLANNED",
+      "selected_method": null,
+      "actual_family": null
+    },
+    {
+      "pair_id": "I-07",
+      "contrast_slot": 4,
+      "domain_slot": "A",
+      "status": "PLANNED",
+      "selected_method": null,
+      "actual_family": null
+    },
+    {
+      "pair_id": "I-08",
+      "contrast_slot": 4,
+      "domain_slot": "B",
+      "status": "PLANNED",
+      "selected_method": null,
+      "actual_family": null
+    },
+    {
+      "pair_id": "I-09",
+      "contrast_slot": 5,
+      "domain_slot": "A",
+      "status": "PLANNED",
+      "selected_method": null,
+      "actual_family": null
+    },
+    {
+      "pair_id": "I-10",
+      "contrast_slot": 5,
+      "domain_slot": "B",
+      "status": "PLANNED",
+      "selected_method": null,
+      "actual_family": null
+    },
+    {
+      "pair_id": "I-11",
+      "contrast_slot": 6,
+      "domain_slot": "A",
+      "status": "PLANNED",
+      "selected_method": null,
+      "actual_family": null
+    },
+    {
+      "pair_id": "I-12",
+      "contrast_slot": 6,
+      "domain_slot": "B",
+      "status": "PLANNED",
+      "selected_method": null,
+      "actual_family": null
+    }
+  ],
+  "confirmation_slots": [
+    {
+      "pair_id": "C-01",
+      "recipe_slot": 1,
+      "fresh_brief_slot": "A",
+      "status": "PLANNED",
+      "whole_case_prior_pass_required_to_execute": false,
+      "candidate_feedback_before_block_end": false
+    },
+    {
+      "pair_id": "C-02",
+      "recipe_slot": 1,
+      "fresh_brief_slot": "B",
+      "status": "PLANNED",
+      "whole_case_prior_pass_required_to_execute": false,
+      "candidate_feedback_before_block_end": false
+    },
+    {
+      "pair_id": "C-03",
+      "recipe_slot": 2,
+      "fresh_brief_slot": "A",
+      "status": "PLANNED",
+      "whole_case_prior_pass_required_to_execute": false,
+      "candidate_feedback_before_block_end": false
+    },
+    {
+      "pair_id": "C-04",
+      "recipe_slot": 2,
+      "fresh_brief_slot": "B",
+      "status": "PLANNED",
+      "whole_case_prior_pass_required_to_execute": false,
+      "candidate_feedback_before_block_end": false
+    }
+  ],
+  "qualification": "Actual complete scope and evidence required; diagnostic confirmation without prior pass is allowed but not presumed qualification.",
+  "authority_note": "This is an execution planning aid, not an installed scheduler or proof of any native run. ER9_EXECUTE_HANDOFF.md governs; current explicit user instructions and real platform controls take precedence."
+}

@@ -1,0 +1,553 @@
+{
+  "snapshot_kind": "INITIAL_DECLARED_QUEUE",
+  "diagnostics": [
+    {
+      "pair_id": "D-V01-A",
+      "method_id": "V01",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V01-B",
+      "method_id": "V01",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V02-A",
+      "method_id": "V02",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V02-B",
+      "method_id": "V02",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V03-A",
+      "method_id": "V03",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V03-B",
+      "method_id": "V03",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V04-A",
+      "method_id": "V04",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V04-B",
+      "method_id": "V04",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V05-A",
+      "method_id": "V05",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V05-B",
+      "method_id": "V05",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V06-A",
+      "method_id": "V06",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V06-B",
+      "method_id": "V06",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V07-A",
+      "method_id": "V07",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V07-B",
+      "method_id": "V07",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V08-A",
+      "method_id": "V08",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V08-B",
+      "method_id": "V08",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V09-A",
+      "method_id": "V09",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V09-B",
+      "method_id": "V09",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V10-A",
+      "method_id": "V10",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V10-B",
+      "method_id": "V10",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V11-A",
+      "method_id": "V11",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V11-B",
+      "method_id": "V11",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V12-A",
+      "method_id": "V12",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V12-B",
+      "method_id": "V12",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V13-A",
+      "method_id": "V13",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V13-B",
+      "method_id": "V13",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V14-A",
+      "method_id": "V14",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V14-B",
+      "method_id": "V14",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V15-A",
+      "method_id": "V15",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V15-B",
+      "method_id": "V15",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V16-A",
+      "method_id": "V16",
+      "case_role": "A",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    },
+    {
+      "pair_id": "D-V16-B",
+      "method_id": "V16",
+      "case_role": "B",
+      "status": "PLANNED",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "actual_model": null,
+      "actual_case_id": null,
+      "note": "Executing root binds inputs, safe route, budget and evaluation before dispatch."
+    }
+  ],
+  "integrated": [
+    {
+      "pair_id": "I-01",
+      "contrast_slot": 1,
+      "domain_slot": "A",
+      "status": "PLANNED",
+      "selected_method": null,
+      "actual_family": null
+    },
+    {
+      "pair_id": "I-02",
+      "contrast_slot": 1,
+      "domain_slot": "B",
+      "status": "PLANNED",
+      "selected_method": null,
+      "actual_family": null
+    },
+    {
+      "pair_id": "I-03",
+      "contrast_slot": 2,
+      "domain_slot": "A",
+      "status": "PLANNED",
+      "selected_method": null,
+      "actual_family": null
+    },
+    {
+      "pair_id": "I-04",
+      "contrast_slot": 2,
+      "domain_slot": "B",
+      "status": "PLANNED",
+      "selected_method": null,
+      "actual_family": null
+    },
+    {
+      "pair_id": "I-05",
+      "contrast_slot": 3,
+      "domain_slot": "A",
+      "status": "PLANNED",
+      "selected_method": null,
+      "actual_family": null
+    },
+    {
+      "pair_id": "I-06",
+      "contrast_slot": 3,
+      "domain_slot": "B",
+      "status": "PLANNED",
+      "selected_method": null,
+      "actual_family": null
+    },
+    {
+      "pair_id": "I-07",
+      "contrast_slot": 4,
+      "domain_slot": "A",
+      "status": "PLANNED",
+      "selected_method": null,
+      "actual_family": null
+    },
+    {
+      "pair_id": "I-08",
+      "contrast_slot": 4,
+      "domain_slot": "B",
+      "status": "PLANNED",
+      "selected_method": null,
+      "actual_family": null
+    },
+    {
+      "pair_id": "I-09",
+      "contrast_slot": 5,
+      "domain_slot": "A",
+      "status": "PLANNED",
+      "selected_method": null,
+      "actual_family": null
+    },
+    {
+      "pair_id": "I-10",
+      "contrast_slot": 5,
+      "domain_slot": "B",
+      "status": "PLANNED",
+      "selected_method": null,
+      "actual_family": null
+    },
+    {
+      "pair_id": "I-11",
+      "contrast_slot": 6,
+      "domain_slot": "A",
+      "status": "PLANNED",
+      "selected_method": null,
+      "actual_family": null
+    },
+    {
+      "pair_id": "I-12",
+      "contrast_slot": 6,
+      "domain_slot": "B",
+      "status": "PLANNED",
+      "selected_method": null,
+      "actual_family": null
+    }
+  ],
+  "confirmation": [
+    {
+      "pair_id": "C-01",
+      "recipe_slot": 1,
+      "fresh_brief_slot": "A",
+      "status": "PLANNED",
+      "whole_case_prior_pass_required_to_execute": false,
+      "candidate_feedback_before_block_end": false
+    },
+    {
+      "pair_id": "C-02",
+      "recipe_slot": 1,
+      "fresh_brief_slot": "B",
+      "status": "PLANNED",
+      "whole_case_prior_pass_required_to_execute": false,
+      "candidate_feedback_before_block_end": false
+    },
+    {
+      "pair_id": "C-03",
+      "recipe_slot": 2,
+      "fresh_brief_slot": "A",
+      "status": "PLANNED",
+      "whole_case_prior_pass_required_to_execute": false,
+      "candidate_feedback_before_block_end": false
+    },
+    {
+      "pair_id": "C-04",
+      "recipe_slot": 2,
+      "fresh_brief_slot": "B",
+      "status": "PLANNED",
+      "whole_case_prior_pass_required_to_execute": false,
+      "candidate_feedback_before_block_end": false
+    }
+  ]
+}

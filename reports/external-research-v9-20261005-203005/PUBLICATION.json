@@ -1,0 +1,37 @@
+{
+  "cohort": "initial-campaign-contract",
+  "positive_selection": [
+    "README.md",
+    "RESULTS.md",
+    "RESTART.md",
+    "CURRENT.json",
+    "input/CAMPAIGN_PLAN.json",
+    "methods.json",
+    "queue.json",
+    "comparisons.json",
+    "attempts.jsonl",
+    "PUBLICATION.json"
+  ],
+  "source": {
+    "file": "input/ER9/CAMPAIGN_PLAN.json",
+    "sha256": "7baf6fd1d688a85021bb042f0eb6bf18aa3a9301cde39a13e9495205db0639a3"
+  },
+  "projections": {
+    "methods.json": "method_catalog unchanged plus empty executed configurations",
+    "queue.json": "diagnostic_queue, integration_slots, confirmation_slots unchanged",
+    "CURRENT.json": "publisher initial zero-run snapshot; not a live scheduler",
+    "comparisons.json": "empty executed comparison projection",
+    "attempts.jsonl": "empty initial published attempt ledger"
+  },
+  "omissions": [
+    "Private native sessions, account credentials, raw host logs and proprietary provider bundles.",
+    "User start prompt and internal handoff are not copied; campaign plan preserves declared methods/finite slots.",
+    "Fresh evaluator-only answers and hidden criteria remain excluded until locked blocks finish.",
+    "Mutable runtime, case drafts and route/development files await an owner-declared frozen cohort."
+  ],
+  "checks": {
+    "selection": "positive exact filename whitelist",
+    "secrets": "pattern scan plus normal Git hooks; not a guarantee against all secret formats"
+  },
+  "semantic_evidence": "No candidate evidence exists in this initial cohort; later publication must include accessible semantic evidence, not hashes alone."
+}
