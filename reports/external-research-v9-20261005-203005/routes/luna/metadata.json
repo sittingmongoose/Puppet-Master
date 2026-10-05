@@ -1,0 +1,34 @@
+{
+  "schema": "er9.luna.native-metadata-probe.v1",
+  "requested_model": "gpt-6-luna",
+  "requested_effort": "max",
+  "native_turns_started": 0,
+  "native_goals_set": 0,
+  "inference_started": false,
+  "account_inference_access": "UNKNOWN",
+  "binary_sha256": "12eb3e81114588aca3b7998f4f19e8997b056aca08e57a7ca7c8a3ec8c652aad",
+  "config": {
+    "projected_selected_controls_match": true,
+    "unprojected_supported_controls": [
+      "tools.update_plan.enabled",
+      "tools.experimental_request_user_input.enabled"
+    ]
+  },
+  "catalog": {
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "catalog_control_acknowledged": true,
+    "existing_account_access": "UNKNOWN until successful native inference"
+  },
+  "identity": {
+    "fresh_empty_history": true,
+    "instruction_sources_empty": true,
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "ephemeral": false
+  },
+  "thread_id": "01a10dc5-080c-7e90-891e-55ecf89e14d3",
+  "outcome": "native_metadata_pass",
+  "host_exit_code": 0,
+  "elapsed_seconds": 3.324945934
+}

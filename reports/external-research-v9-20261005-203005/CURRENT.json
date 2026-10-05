@@ -1,29 +1,49 @@
 {
   "campaign_id": "external-research-v9-20261005-203005",
-  "snapshot_at": "2026-10-05T20:33:26.903198+00:00",
-  "cohort": "initial-campaign-contract",
-  "candidate_attempts_published": 0,
+  "snapshot_at": "2026-10-05T21:00:37.856646+00:00",
+  "source_updated_at": "2026-10-05T20:37:01.713104+00:00",
+  "cohort": "route-method-002",
   "completed_pairs": {
-    "diagnostic": 0,
-    "integrated": 0,
-    "confirmation": 0
+    "diagnostic_pairs_completed": 0,
+    "integrated_pairs_completed": 0,
+    "confirmation_pairs_completed": 0
   },
-  "unexecuted_pair_slots": 48,
-  "blocked_pairs_classified": 0,
-  "actual_families": [],
+  "candidate_attempts_published": 0,
+  "scored_outputs_published": 0,
+  "route_canaries_published": {
+    "Luna": 1,
+    "GLM": 0,
+    "Muse": 0
+  },
+  "actual_scored_families": [],
   "best_supported_recipe": null,
-  "candidate_cost": null,
-  "candidate_latency": null,
-  "target_workload": {
-    "method_count": 16,
-    "diagnostic_pairs": 32,
-    "diagnostic_arm_executions": 64,
-    "integrated_pairs": 12,
-    "integrated_pipelines": 24,
-    "confirmation_pairs": 4,
-    "confirmation_pipelines": 8,
-    "total_pairs": 48,
-    "total_whole_pipelines": 32
+  "candidate_research_cost": null,
+  "route_status": {
+    "GLM": "accepted historical route copied; new zero-inference probe/tests in progress",
+    "Luna": "fresh native /goal and app-native automatic continuation canary PASS; tools binding/guardian regressions pending",
+    "Muse": "UNAVAILABLE_NATIVE_TOOL_AUTH_BOUNDARY; exact catalog metadata only; no candidate inference"
   },
-  "reproduction_boundary": "Contract only; genuine native/account runtime not portable."
+  "route_canary_counters": {
+    "Luna": {
+      "native_goal_starts": 1,
+      "seconds": 11.61,
+      "terminal": "complete",
+      "observed_model": "gpt-6-luna",
+      "effort": "max",
+      "native_metered_total": 39704,
+      "native_input": 39642,
+      "native_cached_input": 28672,
+      "native_output": 62,
+      "goal_tokens_used": 9443,
+      "model_billing": "UNKNOWN",
+      "quiescent": true
+    },
+    "GLM": {
+      "native_goal_starts": 0
+    },
+    "Muse": {
+      "native_goal_starts": 0
+    }
+  },
+  "reproduction_boundary": "Frozen prospective inputs + projected native receipts + generic boundary verification; native account replay not portable."
 }

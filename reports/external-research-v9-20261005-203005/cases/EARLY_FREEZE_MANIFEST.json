@@ -1,0 +1,100 @@
+{
+  "schema": "er9.prospective_input_manifest.v1",
+  "created_utc": "2026-10-05T20:33:30.362798+00:00",
+  "status": "PROSPECTIVE_NOT_LAUNCHED",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "fb90672cce32d598481136e6d7f3dbf25c3d3fb6a7bf45414a23b6b0b82fa524"
+    },
+    {
+      "path": "briefs/development-A-biomedical.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "briefs/development-B-notebook.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+    },
+    {
+      "path": "coverage/development-A.json",
+      "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92"
+    },
+    {
+      "path": "coverage/development-B.json",
+      "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f"
+    },
+    {
+      "path": "integrated/I-01-research-task.md",
+      "sha256": "efc4f59f7bc41116227a0d09e57347da994cf9c912e6f0e325938d61ab1eb014"
+    },
+    {
+      "path": "integrated/I-01.json",
+      "sha256": "81a6e2c7b5899adc64880c2349e6eea5a4fb7c40de5933b822ba6a7c188e5c79"
+    },
+    {
+      "path": "integrated/I-02-research-task.md",
+      "sha256": "2d08c77f30418a5eb6a2bfcc80563dc1f770d77d79ff71bfd8317c6e2d8764ac"
+    },
+    {
+      "path": "integrated/I-02.json",
+      "sha256": "7f7b7d1ba721417a3dfb30df5b3fdf1362186384f9e502111c48b3587a9e0a28"
+    },
+    {
+      "path": "integrated/I-03-research-task.md",
+      "sha256": "fc324860e51050b1f3669f31bb062fac3ff4126cc8f601cbdd33004898567ba2"
+    },
+    {
+      "path": "integrated/I-03.json",
+      "sha256": "1e67cec63200c2a5a22a82218bc772b255c31afeaac09b73526f2ca6d7b0b085"
+    },
+    {
+      "path": "integrated/I-04-research-task.md",
+      "sha256": "af7d7d5857b53c8ebb646470c47f7ee23585d90a4b994b13540553122d1c4335"
+    },
+    {
+      "path": "integrated/I-04.json",
+      "sha256": "81cdc63e765468d24c57a89e86052ac189bee7f6573dee52515423ff9186c58f"
+    },
+    {
+      "path": "prompts/critique-V01-control.md",
+      "sha256": "f119da121bf667f80fd5aa80f17572f907ed5608c41a8e994cbc6655977bf1b2"
+    },
+    {
+      "path": "prompts/critique-V01-treatment.md",
+      "sha256": "5fba9aff86466313c09405979e1e8560d6d1243adc34078cbdda9a978b662d55"
+    },
+    {
+      "path": "prompts/critique-common.md",
+      "sha256": "6bbfe3dbea816af801ee9a91380b2d6438e5ebe354488bcd49e61416522612aa"
+    },
+    {
+      "path": "prompts/flash-V05.md",
+      "sha256": "aad8ff301d8038b93c6124101a1f60db395dcee865e31dbdc344f8802f8edc0b"
+    },
+    {
+      "path": "prompts/output_contract.md",
+      "sha256": "446b4bd07ab555e2157c54331ef03436b76656d2a4da0093b4178b6dd1d1c551"
+    },
+    {
+      "path": "prompts/repair-V05.md",
+      "sha256": "31cff660457d38bec6825f3b98b0ad39cba6b2a227e006c0ed5fc52dd7a19443"
+    },
+    {
+      "path": "prompts/research.md",
+      "sha256": "07b973a6b092f50ac715efc47f40a9dd659df16ea046c17d8f884c5a54c4c2f5"
+    },
+    {
+      "path": "prompts/revision.md",
+      "sha256": "eefa6cc7cf7af885fac7287b965d82f3eceaa5840d9037d836c95aa92cb75c6e"
+    },
+    {
+      "path": "source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    }
+  ],
+  "seal_rule": "Root launch freeze copies/records these exact bytes plus resolved observed native identity and tool config. This prospective manifest does not itself admit a route or prove a launch."
+}

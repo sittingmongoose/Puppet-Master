@@ -1,0 +1,3 @@
+# V05 revision output modifier — applied after common instructions
+
+For this treatment revision stage only, write your complete current proposal to out/revision/proposal.md and supporting sources.json, witnesses.json and leads.json under out/revision/. Do not write out/final/ at this stage. These complete immutable revision artifacts are the flash checker’s inputs. The subsequent fresh final_resolution stage alone writes the designated scored out/final/proposal.md and catalogs. Preserve the common brief, research duties, source access and semantic requirements. This output-path modifier overrides the common final-path instruction for this stage.

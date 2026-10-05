@@ -1,0 +1,56 @@
+{
+  "protocol_version": "ER9-independent-output-v1",
+  "evaluation_id": "REPLACE",
+  "status": "NOT_EVALUATED",
+  "requested_evaluator": {"model": "gpt-6.1-sol", "reasoning_effort": "xhigh"},
+  "observed_evaluator": null,
+  "started_utc": null,
+  "finished_utc": null,
+  "current_output_judgment": {"path": null, "sha256": null, "saved_utc": null},
+  "received_inputs": [],
+  "blinding": {"hints": [], "identity_known_before_judgment": false, "unblinded_utc": null},
+  "assessment_mode": "full_case",
+  "anonymous_output_results": [
+    {
+      "alias": "A",
+      "decision": "NOT_EVALUATED",
+      "assessment_state": "unassessed",
+      "phase1_decision": "NOT_EVALUATED",
+      "full_pass_eligible": false,
+      "obligations": [],
+      "consequential_claims": [],
+      "dimensions": [
+        {"id": 1, "assessment_state": "unassessed", "obligation_ids": [], "finding": null},
+        {"id": 2, "assessment_state": "unassessed", "obligation_ids": [], "finding": null},
+        {"id": 3, "assessment_state": "unassessed", "obligation_ids": [], "finding": null},
+        {"id": 4, "assessment_state": "unassessed", "obligation_ids": [], "finding": null},
+        {"id": 5, "assessment_state": "unassessed", "obligation_ids": [], "finding": null},
+        {"id": 6, "assessment_state": "unassessed", "obligation_ids": [], "finding": null},
+        {"id": 7, "assessment_state": "unassessed", "obligation_ids": [], "finding": null},
+        {"id": 8, "assessment_state": "unassessed", "obligation_ids": [], "finding": null}
+      ],
+      "supported_findings_delivered": [],
+      "defects": [],
+      "witnesses": [],
+      "remaining_unassessed": [],
+      "critical_dependencies": [],
+      "whole_case_pass_basis": null
+    }
+  ],
+  "shared_check_comparison": [],
+  "sources": [],
+  "phase2": {"method_uptake": [], "history_dependent_preservation": [], "candidate_execution_evidence": [], "completed": false},
+  "economics": {"reported_separately_after_blind_judgment": false, "candidate_cost_receipt_refs": [], "evaluator_wall_seconds": null, "evaluator_usage": null, "unknown_counters": []},
+  "limitations": [],
+  "errata": [],
+  "field_contract": {
+    "assessment_state": ["complete", "partial", "unassessed"],
+    "decision": ["PASS", "FAIL", "HOLD", "NOT_EVALUATED"],
+    "obligation_row": {"obligation_id": "case ID", "assessment_state": "enum", "finding": "supported|contradicted|unresolved|not_applicable", "output_locators": [], "source_ids": [], "reason": "source-backed explanation"},
+    "claim_row": {"claim_id": "local ID", "claim": "consequential current claim", "output_locator": "exact locator", "assessment_state": "enum", "finding": "supported|contradicted|unresolved", "source_ids": [], "reason": "version/conditions and inference boundary"},
+    "defect_row": {"defect_id": "stable ID", "severity": "critical|major|minor with concrete rationale", "kind": "error|omission|false_rejection|unsupported_dependency|execution_misclaim", "obligation_ids": [], "claim_ids": [], "output_locators": [], "source_ids": [], "reason": "decisive consequence", "screen_decisive": false},
+    "witness_row": {"witness_id": "ID", "execution_label": "candidate_executed|evaluator_executed|proposed_unexecuted", "claim_ids": [], "receipt_refs": [], "expected_value_basis": "independent basis", "scope": "what was actually exercised", "finding": "result and limits"},
+    "source_row": {"source_id": "ID", "url": "primary URL", "version_or_commit": "applicable identity", "locator": "exact section/lines/test", "retrieved_utc": "UTC", "capture_path": null, "sha256": null, "supports": "claim and actual normative force"},
+    "check_comparison_row": {"check_id": "dispatch ID", "arm_results": [], "repair_detection_false_rejection_difference": "no equivalence from FAIL/FAIL", "assessment_asymmetry": null}
+  }
+}

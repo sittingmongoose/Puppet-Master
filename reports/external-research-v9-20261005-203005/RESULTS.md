@@ -1,5 +1,9 @@
 # Current results
 
-Initial publication snapshot: zero candidate attempts published; zero assessed or completed diagnostic, integrated or confirmation comparisons. All 48 declared pair slots are unexecuted in this snapshot, with no blocked-pair classification yet. No actual candidate families, cost measurements, latency measurements, source-backed findings or winner are reported.
+Route/method cohort 002 contains zero published substantive candidate attempts, zero assessed research outputs and zero completed matched comparisons. The finite target remains 32 diagnostic, 12 integrated and 4 confirmation pairs. No winning recipe or product adoption is supported.
 
-Budgets, inputs, common criteria and routes must be bound prospectively before each comparison. Route preparation and adapter checks do not count toward the research queue. Missing cost counters must remain unknown rather than zero. Product adoption is premature until independent reviews and failure-inclusive comparisons support it.
+[Early prospective inputs](cases/README.md) bind four V01/V05 integrated contrasts, briefs, common criteria, coverage obligations and stage prompts. Freeze addendum 02 prospectively corrects artifact paths to `out/`; earlier freeze records are historical, superseded per path. [Independent evaluation protocol](evaluation/protocol/README.md) is ready, with no evaluated output yet.
+
+[Route evidence](routes/README.md) separates Luna's one mechanical lifecycle canary from GLM/Muse zero-inference metadata probes. Muse remains HOLD. The Luna no-MCP result does not admit scored tool use. Generic boundary tests are recorded in [verification](tools/VERIFICATION.json); they are host checks and add no candidate research runs. [Supervision decisions](supervision/DECISIONS-001.md) preserve the historical HOLD while declaring a prospective successor policy.
+
+Cost counters for substantive research remain unknown. Route-only Luna metering and Goal accounting have distinct definitions and are listed separately. No source-backed research finding or actual paired outcome is claimed.

@@ -1,0 +1,32 @@
+{
+  "schema": "er9.prospective_input_addendum.v1",
+  "created_utc": "2026-10-05T20:35:24.797259+00:00",
+  "status": "PRELAUNCH_V05_PATH_CLARIFICATION",
+  "files": [
+    {
+      "path": "prompts/revision-V05.md",
+      "sha256": "5d2451ae0f5c4ee32a2770b205fa9e8dbd6fabd6a190e377f8e82b49a6f2eba5"
+    },
+    {
+      "path": "integrated/I-03.json",
+      "sha256": "c10997b9a93d4b19fb25090b63a0cad9913671f0c5b15834a0e11d0788862651"
+    },
+    {
+      "path": "integrated/I-04.json",
+      "sha256": "7c30157aa09687878ce898b4de62b5caacc1aa6d403160626f96292668120c15"
+    },
+    {
+      "path": "coverage/important-checks-A.json",
+      "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75"
+    },
+    {
+      "path": "coverage/important-checks-B.json",
+      "sha256": "543a07fd1de56392b89858999cd6dce73757bdf40de62dd7d16106b0adf4ca60"
+    }
+  ],
+  "supersedes_only_paths": [
+    "integrated/I-03.json",
+    "integrated/I-04.json"
+  ],
+  "reason": "Make V05 revision output override explicit in candidate packet; add neutral matched evaluator questions. I01/02 card bytes unchanged."
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "er9.tools.verification.v1",
+  "status": "READY_FOR_ROUTE_CANARY",
+  "verified_utc": "2026-10-05T20:58:59.733649+00:00",
+  "snapshot_sha256": "04d18860f56cdd93427fdfe1336f7418d8d248e6a70e5b9463f602aeb8ff5aa2",
+  "checks": [
+    {
+      "command": "python3 -B test_tools.py",
+      "exit_code": 0,
+      "tests": 7,
+      "elapsed_seconds": 18.646,
+      "type": "real systemd/Bubblewrap generic boundary probes",
+      "scope": [
+        "arithmetic/arrays/strings/JSON/functions",
+        "private host paths/env/process/network absent",
+        "read-only mounts/ephemeral writes",
+        "exceptions/exit37/actor labels",
+        "Memory/CPU/tasks/output/wall/deadline",
+        "inactive owned sleeping/fork units",
+        "stores disjoint from output"
+      ]
+    },
+    {
+      "command": "python3 -B source_capture/test_source_capture.py",
+      "exit_code": 0,
+      "tests": 14,
+      "elapsed_seconds": 0.182,
+      "type": "synthetic public-network policy and actual local source MCP namespace"
+    },
+    {
+      "command": "execution MCP initialize/list/call synthetic stdio probe",
+      "exit_code": 0,
+      "execution_exit_code": 0,
+      "bootstrap_started": true,
+      "cleanup_confirmed": true
+    }
+  ],
+  "prior_test_correction": {
+    "failure": "Initial fork-cap test wrongly expected nonzero exit although Bubblewrap PID1 kills sleeping children on clean parent exit.",
+    "resolution": "Assert task-cap message, parent exit0, elapsed bound and inactive assigned unit.",
+    "semantic_case_answers_changed": false
+  },
+  "native_candidate_calls": 0,
+  "qualification": "host boundary tests only; route-native catalog/confinement/receipt admission remains route-owned",
+  "limitations": [
+    "no host archive extraction",
+    "no third-party installer",
+    "external stage supervisor for source MCP",
+    "receipt does not prove semantic correctness"
+  ]
+}

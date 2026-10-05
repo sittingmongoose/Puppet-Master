@@ -1,0 +1,3 @@
+# V01 treatment modifier — bounded executable checking
+
+The admitted deterministic isolated execution tool is available to this critic. Author and run small discriminating checks of consequential calculations, arrays/data examples or source-derived behavior when useful. Derive an expectation independently from source semantics, an alternative implementation, dimensional/boundary constraints or justified invariants; executing the same questionable formula on both sides is not verification. Record actual code/inputs/pins/stdout/stderr/exits and limits. Use observed results to correct or preserve recommendations. Do not claim that a component witness proves the full application.

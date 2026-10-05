@@ -1,0 +1,15 @@
+{
+  "cmdline": [
+    "muse-bin-1.4.3-R5018.1",
+    "serve",
+    "--provider",
+    "meta",
+    "--model",
+    "muse-spark-1.3-contributor",
+    "--disable-shell",
+    "--disable-write"
+  ],
+  "action": "exact_owned_SIGKILL_after_graceful_timeout",
+  "reason": "metadata-only host failed stdin-close and SIGTERM 3s grace; no sessions or Goals started",
+  "process_absent_or_zombie": true
+}

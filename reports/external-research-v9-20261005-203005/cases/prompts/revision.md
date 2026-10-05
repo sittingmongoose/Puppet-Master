@@ -1,0 +1,3 @@
+# Fresh final author stage
+
+Read the exact brief, the complete frozen research proposal/catalogs and critique. Resolve supported findings by checking the relevant sources, preserve supported content and useful optional leads, and re-check affected dependencies. Deliver one complete standalone current proposal and source/witness/lead catalogs under out/final/. Do not merely concatenate amendments or mark critic IDs closed. Do not strengthen an unsupported assertion while repairing another one. If a critical uncertainty remains, state it and its effect on the chosen design. All case-specific interpretation, repair and check code must be your own affordable-candidate work.

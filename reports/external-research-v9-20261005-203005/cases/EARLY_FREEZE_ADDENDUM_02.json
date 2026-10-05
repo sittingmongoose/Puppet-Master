@@ -1,0 +1,76 @@
+{
+  "schema": "er9.prospective_input_addendum.v1",
+  "created_utc": "2026-10-05T20:36:25.163747+00:00",
+  "status": "PRELAUNCH_NAMESPACE_CORRECTION",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "132c46b761fe12bea0ff16d8a612f198d37a290c4bd92bcc64bfa61e8616bc26"
+    },
+    {
+      "path": "build_early_cards.py",
+      "sha256": "2f2fc18ced6829b5f637bd91d969af015d39a0f0895a8175579eb930830bca66"
+    },
+    {
+      "path": "integrated/I-01-research-task.md",
+      "sha256": "dac9562abb37847b3cacc9a8101fb7d708c1ced3887f97126a86033fb7ecabdd"
+    },
+    {
+      "path": "integrated/I-01.json",
+      "sha256": "e71dc26f223802b2ca318941274b3fde67dd86797d234317aa24ccbfb402094b"
+    },
+    {
+      "path": "integrated/I-02-research-task.md",
+      "sha256": "dd186ebbc7c24727fa3543cf14ce87613fb9b8f097510cb65367ff368459ce50"
+    },
+    {
+      "path": "integrated/I-02.json",
+      "sha256": "9ec73ea921de70d8b9798e028cdee87bc835d076397d00db8a208f942e33742b"
+    },
+    {
+      "path": "integrated/I-03-research-task.md",
+      "sha256": "e57ca145ad417dbf7494323bbf89ffdd8ca165f54804aca37a7d6da4e5f8d280"
+    },
+    {
+      "path": "integrated/I-03.json",
+      "sha256": "4ce65caf2c3b5aadf7fc31f683ac40beb82e0f1ddae42372f9602f67f7393371"
+    },
+    {
+      "path": "integrated/I-04-research-task.md",
+      "sha256": "b5ebbbacb0303aa5bd4d25c69a706eb782063f7a3381e58b80ebf9588408616c"
+    },
+    {
+      "path": "integrated/I-04.json",
+      "sha256": "f460f9076fbe146140df5862bb2a254dd48b83952f086cd9895bee55301d5a0b"
+    },
+    {
+      "path": "prompts/critique-common.md",
+      "sha256": "d0f855633df3051425dde60427378738faf8b006d814cca8f811dc488164b840"
+    },
+    {
+      "path": "prompts/flash-V05.md",
+      "sha256": "765c26b5888fdb243bc3858c4037478adaa22c50f3b4e658ba46a8ccc9092135"
+    },
+    {
+      "path": "prompts/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "prompts/repair-V05.md",
+      "sha256": "0e30788311a1ea27f981b39a10885f458a06a9e97508d68281077bda765caebc"
+    },
+    {
+      "path": "prompts/research.md",
+      "sha256": "7e00cde942ab09c11daec15450edbe7206204e88ee68ff2b3976b415d5710742"
+    },
+    {
+      "path": "prompts/revision-V05.md",
+      "sha256": "e0d5a933b974b2727eef99b02a440f96d5b8d6888c7d9be2045580d7c407c667"
+    },
+    {
+      "path": "prompts/revision.md",
+      "sha256": "4c14b6955ca8888ead023f665c23f3c0ab7462e9e5ed8a7f6fb5782454c78768"
+    }
+  ],
+  "reason": "Admitted confined tools expose out/, not output/. All candidate artifact paths and cards now use exact out/research, out/critique, out/revision, out/flash, out/final. No alias or nonexistent path. Prior prospective hashes preserved in earlier manifests. No launched outputs overwritten."
+}

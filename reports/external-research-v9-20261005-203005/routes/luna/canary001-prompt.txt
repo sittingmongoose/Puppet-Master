@@ -1,0 +1,4 @@
+/goal
+Perform this mechanical ER9 native Goal route canary. Do no research and create no new Goal. Use only get_goal and update_goal.
+In your first turn, call get_goal to observe this active Goal, then emit the final text CANARY_PHASE_ONE and leave this Goal active. Do not mark complete in the first turn.
+Wait for genuine native Goal automatic continuation. On the next native turn, call get_goal, confirm the same objective is active, then call update_goal with status complete and emit the final text CANARY_PHASE_TWO. This checks native automatic continuation; the host will not send another user turn.

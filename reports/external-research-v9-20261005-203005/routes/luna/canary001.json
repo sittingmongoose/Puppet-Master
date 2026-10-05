@@ -1,0 +1,146 @@
+{
+  "schema": "er9.luna.native-canary.v1",
+  "root_admitted": true,
+  "scored_research": false,
+  "requested_model": "gpt-6-luna",
+  "requested_effort": "max",
+  "host_followup_turns_started": 0,
+  "binary_sha256": "12eb3e81114588aca3b7998f4f19e8997b056aca08e57a7ca7c8a3ec8c652aad",
+  "preventive_candidate_create_goal_denial": "UNESTABLISHED",
+  "policy": "fresh_native_goal_original_clock_monitor_v1",
+  "config": {
+    "projected_selected_controls_match": true,
+    "unprojected_supported_controls": [
+      "tools.update_plan.enabled",
+      "tools.experimental_request_user_input.enabled"
+    ]
+  },
+  "catalog": {
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "catalog_control_acknowledged": true,
+    "existing_account_access": "UNKNOWN until successful native inference"
+  },
+  "identity": {
+    "fresh_empty_history": true,
+    "instruction_sources_empty": true,
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "ephemeral": false
+  },
+  "thread_id": "01a10dc6-8d8f-7252-a851-f0039cf021c1",
+  "native_goal_set_receipt": {
+    "goal": {
+      "threadId": "01a10dc6-8d8f-7252-a851-f0039cf021c1",
+      "objective": "Perform this mechanical ER9 native Goal route canary. Do no research and create no new Goal. Use only get_goal and update_goal.\nIn your first turn, call get_goal to observe this active Goal, then emit the final text CANARY_PHASE_ONE and leave this Goal active. Do not mark complete in the first turn.\nWait for genuine native Goal automatic continuation. On the next native turn, call get_goal, confirm the same objective is active, then call update_goal with status complete and emit the final text CANARY_PHASE_TWO. This checks native automatic continuation; the host will not send another user turn.",
+      "status": "active",
+      "tokenBudget": null,
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791232478,
+      "updatedAt": 1791232478
+    }
+  },
+  "native_goal_terminal_receipt": {
+    "goal": {
+      "threadId": "01a10dc6-8d8f-7252-a851-f0039cf021c1",
+      "objective": "Perform this mechanical ER9 native Goal route canary. Do no research and create no new Goal. Use only get_goal and update_goal.\nIn your first turn, call get_goal to observe this active Goal, then emit the final text CANARY_PHASE_ONE and leave this Goal active. Do not mark complete in the first turn.\nWait for genuine native Goal automatic continuation. On the next native turn, call get_goal, confirm the same objective is active, then call update_goal with status complete and emit the final text CANARY_PHASE_TWO. This checks native automatic continuation; the host will not send another user turn.",
+      "status": "complete",
+      "tokenBudget": null,
+      "tokensUsed": 9443,
+      "timeUsedSeconds": 7,
+      "createdAt": 1791232478,
+      "updatedAt": 1791232485
+    }
+  },
+  "outcome": "native_goal_complete",
+  "metrics": {
+    "schema": "er8.luna.public-metrics.v1",
+    "fresh_session": true,
+    "requested_model": "gpt-6-luna",
+    "requested_effort": "max",
+    "goal_target_id": "01a10dc6-8d8f-7252-a851-f0039cf021c1",
+    "goal_started_turn": true,
+    "activation": {
+      "schema": "er8.route.activation-positive.v1",
+      "native_activation_observed": true,
+      "native_activation_absent_proof": false,
+      "goal_started_turn": true,
+      "receipt_id": "01a10dc6-8d8f-7252-a851-f0039cf021c1",
+      "observed_activation_epoch": 1791232478,
+      "observed_activation_monotonic_ns": 62897719328713
+    },
+    "goal_status_final": "complete",
+    "native_responses": "UNKNOWN",
+    "usage_notification_count": 5,
+    "native_response_policy": "wall-goal-token-observation-v1",
+    "native_model_response_cap_enforced": false,
+    "candidate_goals_set_by_host": 1,
+    "goal_replacements_observed": 0,
+    "native_response_measure": "HTTP attempts UNKNOWN; native wall bounded; Goal identity monitored; tokens observed",
+    "native_turns_started": 2,
+    "native_turns_completed": 2,
+    "native_owned_continuation_observed": true,
+    "host_initial_turns_started": 1,
+    "host_followup_turns_started": 0,
+    "usage_totals": {
+      "inputTokens": 39642,
+      "cachedInputTokens": 28672,
+      "outputTokens": 62,
+      "reasoningOutputTokens": 0,
+      "totalTokens": 39704
+    },
+    "tool_completed_counts": {},
+    "goal_tool_completed_counts": {},
+    "inventory_check": {
+      "verified": false,
+      "native_mcp_catalog_verified": false,
+      "actual_inference_tool_payload_observed": false,
+      "scope": "source-controlled restriction plus MCP catalog; request payload UNKNOWN"
+    },
+    "native_http_attempts": "UNKNOWN",
+    "cost": "UNKNOWN",
+    "component_outcome": "HOLD"
+  },
+  "turn_receipts": [
+    {
+      "method": "turn/started",
+      "turnId": "01a10dc6-8e7a-7e11-aad9-68d5fed4c289",
+      "status": "inProgress",
+      "observed_monotonic_ns": 62897712284277
+    },
+    {
+      "method": "turn/completed",
+      "turnId": "01a10dc6-8e7a-7e11-aad9-68d5fed4c289",
+      "status": "completed",
+      "observed_monotonic_ns": 62902441033758
+    },
+    {
+      "method": "turn/started",
+      "turnId": "01a10dc6-a101-78d0-aba8-ff53e446a737",
+      "status": "inProgress",
+      "observed_monotonic_ns": 62902453720851
+    },
+    {
+      "method": "turn/completed",
+      "turnId": "01a10dc6-a101-78d0-aba8-ff53e446a737",
+      "status": "completed",
+      "observed_monotonic_ns": 62905874086590
+    }
+  ],
+  "host_rpc_counts": {
+    "initialize": 1,
+    "config/read": 1,
+    "model/list": 1,
+    "thread/start": 1,
+    "thread/goal/set": 1,
+    "turn/start": 1,
+    "thread/goal/get": 9
+  },
+  "held_process_exit_code": 0,
+  "held_process_groups_absent": true,
+  "elapsed_seconds": 11.610296296,
+  "closed_before_original_total_stop": true,
+  "raw_native_output_persisted_by_driver": false,
+  "publication_scope": "No-MCP mechanical lifecycle canary only. Old component HOLD, false inventory flags and zero tool-item counts are retained; they do not establish absence of native Goal tool calls or failed lifecycle. Tool-enabled route admission remains pending."
+}

@@ -5,3 +5,5 @@ This GitHub cohort is an inspectable campaign contract, not a portable native re
 Next work: freeze cases/common criteria and budgeted contrasts, qualify usable native routes, execute integrated contrasts early alongside diagnostics, evaluate frozen finished outputs, and publish result cohorts without blocking other jobs. Preserve attempt failures and prospectively version repairs/retests. Confirmation answers remain evaluator-only until their locked block ends.
 
 At campaign closure record campaign-owned job cleanup and reconcile all queue denominators. This initial cohort supplies no cleanup claim and no completed candidate stages.
+
+Cohort 002 adds frozen early inputs, evaluation protocol, projected route receipts and owner-pinned generic tool code. Read `CURRENT.json` source timestamp and `history/cohort002.json` selections; live native runs may advance after that snapshot. `tools/README.md` states the systemd/Bubblewrap/OS prerequisites. The tool source is reproducible within that boundary, while native account/session replay is not portable. Consult current private campaign state before dispatch; this published snapshot authorizes no duplicate starts.

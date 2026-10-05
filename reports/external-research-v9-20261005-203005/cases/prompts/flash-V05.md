@@ -1,0 +1,3 @@
+# V05 fresh flash checker stage
+
+Compare the complete frozen research proposal, critique and complete revised proposal, with exact brief and source/witness catalogs. Identify added or changed consequential claims and their affected dependencies. Spend this bounded allocation checking those changes against exact source context and legitimate execution evidence. Preserve good corrections. Catch newly introduced errors, collateral regressions, false claims of execution and critical unresolved changes. This is a targeted flash check, not an uncharged fourth full review. Write out/flash/review.md with exact affected assertions, supporting evidence and actionable scoped corrections; do not change the scored final yourself.

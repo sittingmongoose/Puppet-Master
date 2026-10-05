@@ -1,0 +1,58 @@
+{
+  "schema": "er9.muse.catalog_probe.v1",
+  "status": "CATALOG_VERIFIED_ONLY",
+  "reconstruction": "First native metadata probe returned initialize+catalog then graceful close timed out; recovered exact received frames, preserved targeted kill receipt. No rerun or semantic inference.",
+  "initialize": {
+    "experimentalApi": false,
+    "grantedCapabilities": [],
+    "platformFamily": "unix",
+    "platformOs": "linux",
+    "schema": {
+      "fingerprint": "sha256:4cb671082574037fc1070a136db7c0c8dc24e65e78cf3d209a10944ff9f9845f",
+      "version": 1
+    },
+    "serverInfo": {
+      "name": "muse",
+      "version": "1.4.3"
+    },
+    "sessionDurability": "durable",
+    "userAgent": "muse-build/1.4.3 (non-interactive; linux-x86_64; build 5c1bccecf3f125ff8fdc53f63558f6527ee70e56)"
+  },
+  "model_list_source": "providerCatalog",
+  "actual_model_row": {
+    "contextLimit": 1007997,
+    "cost": null,
+    "defaultReasoningEffort": "max",
+    "description": "Your content, including inter-session messages, may be used for product improvement.",
+    "displayLabel": "muse-spark-1.3-contributor",
+    "isActive": false,
+    "isDefault": true,
+    "modelId": "muse-spark-1.3-contributor",
+    "outputLimit": 128000,
+    "profileId": "tbh",
+    "providerId": "meta",
+    "reasoningEffortVariants": [
+      {
+        "description": "Use this for deepest analysis and complex fixes.",
+        "tier": "xhigh"
+      }
+    ],
+    "releaseDate": "2026-09-02",
+    "variants": [
+      "minimal",
+      "low",
+      "medium",
+      "high",
+      "xhigh",
+      "max"
+    ]
+  },
+  "requested_effort": "max",
+  "effort_observed": "catalog offered + offline profile resolver only; no fresh session effort acknowledgement",
+  "candidate_goals_started": 0,
+  "provider_turns_started": 0,
+  "fresh_sessions_started": 0,
+  "stop_receipt": "STOP_RECEIPT.json",
+  "owned_process_quiet": true,
+  "inference_admission": "UNAVAILABLE_NATIVE_TOOL_AUTH_BOUNDARY"
+}

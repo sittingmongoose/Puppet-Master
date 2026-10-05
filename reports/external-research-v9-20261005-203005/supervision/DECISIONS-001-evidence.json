@@ -1,0 +1,92 @@
+{
+  "schema": "er9.supervision.evidence.v1",
+  "recorded_utc": "2026-10-05T20:37:35.414644+00:00",
+  "scope": "decision evidence; no private/auth/raw native material selected",
+  "historical_ER8_untouched": true,
+  "evidence": [
+    {
+      "path": "LAB_ROOT/input/ER9/ER9_EXECUTE_HANDOFF.md",
+      "sha256": "46529ea93a95d92196f947daf3da54ac60768408aed9f5eaaa8d64c4167d210a",
+      "bytes": 58697,
+      "access": "external original; selected projections may differ"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-route/metadata-probe-001/result.json",
+      "sha256": "63138e552e26006a58cdf88ed432c7d02d4cda55cdf83c572d424a46c110bfba",
+      "bytes": 1144,
+      "access": "external original; selected projections may differ"
+    },
+    {
+      "path": "LAB_ROOT/dev/luna-route/canary-001/result.json",
+      "sha256": "5d405e38778e2210102c51118cb369103d5b5299698771098df800b4524f81d8",
+      "bytes": 9975,
+      "access": "external original; selected projections may differ"
+    },
+    {
+      "path": "LAB_ROOT/dev/muse-route/STATUS.json",
+      "sha256": "54d938e36ab50c3fe1655ab9a2d9cd08adb560b4a2a912e1dde20d201b99dc03",
+      "bytes": 1896,
+      "access": "external original; selected projections may differ"
+    },
+    {
+      "path": "LAB_ROOT/dev/muse-route/schema/msp.schema.json",
+      "sha256": "7f2fd878d86bb6102fce8a29ca5e126ea3d1b5593456baf9b8a94cfa7b3dfe72",
+      "bytes": 289615,
+      "access": "external original; selected projections may differ"
+    },
+    {
+      "path": "LAB_ROOT/dev/muse-route/catalog-probe/STOP_RECEIPT.json",
+      "sha256": "393053783bbee7efb4811bbe69f2cf58da987115b271448ab9e47f4a2ae3b5db",
+      "bytes": 467,
+      "access": "external original; selected projections may differ"
+    },
+    {
+      "path": "LAB_ROOT/cases/integrated/I-01.json",
+      "sha256": "e71dc26f223802b2ca318941274b3fde67dd86797d234317aa24ccbfb402094b",
+      "bytes": 6751,
+      "access": "external original; selected projections may differ"
+    },
+    {
+      "path": "LAB_ROOT/cases/integrated/I-02.json",
+      "sha256": "9ec73ea921de70d8b9798e028cdee87bc835d076397d00db8a208f942e33742b",
+      "bytes": 6749,
+      "access": "external original; selected projections may differ"
+    },
+    {
+      "path": "LAB_ROOT/cases/integrated/I-03.json",
+      "sha256": "4ce65caf2c3b5aadf7fc31f683ac40beb82e0f1ddae42372f9602f67f7393371",
+      "bytes": 7751,
+      "access": "external original; selected projections may differ"
+    },
+    {
+      "path": "LAB_ROOT/cases/integrated/I-04.json",
+      "sha256": "f460f9076fbe146140df5862bb2a254dd48b83952f086cd9895bee55301d5a0b",
+      "bytes": 7749,
+      "access": "external original; selected projections may differ"
+    },
+    {
+      "path": "LAB_ROOT/cases/prompts/revision-V05.md",
+      "sha256": "e0d5a933b974b2727eef99b02a440f96d5b8d6888c7d9be2045580d7c407c667",
+      "bytes": 658,
+      "access": "external original; selected projections may differ"
+    },
+    {
+      "path": "LAB_ROOT/cases/EARLY_FREEZE_ADDENDUM_01.json",
+      "sha256": "e95d9a2e990df92c9331cb0335ead3002aa47583eef64e05c982ad3f92e80cf0",
+      "bytes": 1105,
+      "access": "external original; selected projections may differ"
+    },
+    {
+      "path": "LAB_ROOT/dev/tools/execution_server.py",
+      "sha256": "002328c3e3e30a3ad8e60553de496215f6fb17c8f4e789a42238fe3253553b51",
+      "bytes": 12138,
+      "access": "external original; selected projections may differ"
+    },
+    {
+      "path": "LAB_ROOT/dev/tools/test_tools.py",
+      "sha256": "4bc4093cb6beded6b257257f61c7f0aa879cff55666f09d4aaa0586000b63e44",
+      "bytes": 7653,
+      "access": "external original; selected projections may differ"
+    }
+  ]
+}

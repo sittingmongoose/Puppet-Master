@@ -1,0 +1,55 @@
+{
+  "protocol_version": "ER9-independent-output-v1",
+  "evaluation_id": "REPLACE",
+  "scope": "one_coherent_pair",
+  "track": "B",
+  "candidate_outputs_frozen_utc": "REPLACE",
+  "requested_evaluator": {"model": "gpt-6.1-sol", "reasoning_effort": "xhigh"},
+  "observed_evaluator": null,
+  "result_directory": "REPLACE_WITH_OWNED_EVALUATION_DIRECTORY",
+  "task": {
+    "brief": {"path": "REPLACE", "sha256": "REPLACE"},
+    "coverage_map": {"path": "REPLACE", "sha256": "REPLACE"},
+    "common_criteria": {"path": "REPLACE", "sha256": "REPLACE"},
+    "source_access": {"path": "REPLACE", "sha256": "REPLACE"},
+    "other_actual_task_inputs": []
+  },
+  "anonymous_outputs": [
+    {
+      "alias": "A",
+      "designated_final": {"path": "REPLACE", "sha256": "REPLACE"},
+      "source_catalog": {"path": "REPLACE_OR_NULL", "sha256": "REPLACE_OR_NULL"},
+      "witness_catalog": {"path": "REPLACE_OR_NULL", "sha256": "REPLACE_OR_NULL"},
+      "leads": null,
+      "additional_anonymous_evidence": []
+    },
+    {
+      "alias": "B",
+      "designated_final": {"path": "REPLACE", "sha256": "REPLACE"},
+      "source_catalog": {"path": "REPLACE_OR_NULL", "sha256": "REPLACE_OR_NULL"},
+      "witness_catalog": {"path": "REPLACE_OR_NULL", "sha256": "REPLACE_OR_NULL"},
+      "leads": null,
+      "additional_anonymous_evidence": []
+    }
+  ],
+  "common_predeclared_checks": [
+    {"check_id": "REPLACE", "obligation_ids": ["REPLACE"], "neutral_question": "REPLACE_WITH_IMPORTANT_TASK_CHECK_NOT_EXPECTED_ANSWER"}
+  ],
+  "assessment_plan": {
+    "mode": "screen_then_complete_if_promising",
+    "screen_max_seconds": 1200,
+    "full_coverage_reserve_seconds": 2400,
+    "history_execution_reserve_seconds": 600,
+    "hard_max_seconds": 4200,
+    "budget_frozen_utc": "REPLACE",
+    "limits_note": "Illustrative finite budget. Coordinator fits actual scope before dispatch; no running expansion or screen-only PASS."
+  },
+  "blinding": {
+    "hidden_fields": ["treatment_label", "candidate_model", "candidate_family", "economics", "prior_grades", "method_history"],
+    "known_hints_at_dispatch": [],
+    "allocation_record": "COORDINATOR_ONLY_NOT_A_PATH_IN_EVALUATOR_PACKET",
+    "phase2_material_release": "coordinator releases only after current_output_judgment.json is saved"
+  },
+  "outputs": ["current_output_judgment.json", "report.json", "REVIEW.md"],
+  "private_expected_truth_policy": "post-freeze evaluator-only; no candidate access; locked holdout notes withheld until block is over"
+}

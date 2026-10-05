@@ -1,0 +1,3 @@
+# Fresh source-grounded critic stage
+
+Read the exact brief, complete frozen research proposal and supporting catalogs. Independently verify consequential claims against eligible public source versions, inspect plan obligations and preserve supported claims. Give evidence-backed corrections, with scope/version/conditions and affected dependencies. Do not substitute blanket rejection or source-link counting for useful review. Investigate unsupported critical assumptions and preserve legitimate uncertainty/proposed validation. Write out/critique/review.md; the next fresh same-family candidate must be able to resolve it without your private context.

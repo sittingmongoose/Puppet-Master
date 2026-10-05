@@ -1,0 +1,337 @@
+{
+  "cohort": "route-method-002",
+  "published_at": "2026-10-05T21:00:37.859126+00:00",
+  "sources": [
+    {
+      "source": "cases/README.md",
+      "published": "cases/README.md",
+      "source_sha256": "132c46b761fe12bea0ff16d8a612f198d37a290c4bd92bcc64bfa61e8616bc26",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "cases/common_criteria.json",
+      "published": "cases/common_criteria.json",
+      "source_sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "cases/source_access.json",
+      "published": "cases/source_access.json",
+      "source_sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "cases/briefs/development-A-biomedical.md",
+      "published": "cases/briefs/development-A-biomedical.md",
+      "source_sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "cases/briefs/development-B-notebook.md",
+      "published": "cases/briefs/development-B-notebook.md",
+      "source_sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "cases/coverage/development-A.json",
+      "published": "cases/coverage/development-A.json",
+      "source_sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "cases/coverage/development-B.json",
+      "published": "cases/coverage/development-B.json",
+      "source_sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "cases/integrated/I-01.json",
+      "published": "cases/integrated/I-01.json",
+      "source_sha256": "e71dc26f223802b2ca318941274b3fde67dd86797d234317aa24ccbfb402094b",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "cases/integrated/I-01-research-task.md",
+      "published": "cases/integrated/I-01-research-task.md",
+      "source_sha256": "dac9562abb37847b3cacc9a8101fb7d708c1ced3887f97126a86033fb7ecabdd",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "cases/integrated/I-02.json",
+      "published": "cases/integrated/I-02.json",
+      "source_sha256": "9ec73ea921de70d8b9798e028cdee87bc835d076397d00db8a208f942e33742b",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "cases/integrated/I-02-research-task.md",
+      "published": "cases/integrated/I-02-research-task.md",
+      "source_sha256": "dd186ebbc7c24727fa3543cf14ce87613fb9b8f097510cb65367ff368459ce50",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "cases/integrated/I-03.json",
+      "published": "cases/integrated/I-03.json",
+      "source_sha256": "4ce65caf2c3b5aadf7fc31f683ac40beb82e0f1ddae42372f9602f67f7393371",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "cases/integrated/I-03-research-task.md",
+      "published": "cases/integrated/I-03-research-task.md",
+      "source_sha256": "e57ca145ad417dbf7494323bbf89ffdd8ca165f54804aca37a7d6da4e5f8d280",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "cases/integrated/I-04.json",
+      "published": "cases/integrated/I-04.json",
+      "source_sha256": "f460f9076fbe146140df5862bb2a254dd48b83952f086cd9895bee55301d5a0b",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "cases/integrated/I-04-research-task.md",
+      "published": "cases/integrated/I-04-research-task.md",
+      "source_sha256": "b5ebbbacb0303aa5bd4d25c69a706eb782063f7a3381e58b80ebf9588408616c",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "cases/prompts/research.md",
+      "published": "cases/prompts/research.md",
+      "source_sha256": "7e00cde942ab09c11daec15450edbe7206204e88ee68ff2b3976b415d5710742",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "cases/prompts/critique-common.md",
+      "published": "cases/prompts/critique-common.md",
+      "source_sha256": "d0f855633df3051425dde60427378738faf8b006d814cca8f811dc488164b840",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "cases/prompts/critique-V01-control.md",
+      "published": "cases/prompts/critique-V01-control.md",
+      "source_sha256": "f119da121bf667f80fd5aa80f17572f907ed5608c41a8e994cbc6655977bf1b2",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "cases/prompts/critique-V01-treatment.md",
+      "published": "cases/prompts/critique-V01-treatment.md",
+      "source_sha256": "5fba9aff86466313c09405979e1e8560d6d1243adc34078cbdda9a978b662d55",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "cases/prompts/revision.md",
+      "published": "cases/prompts/revision.md",
+      "source_sha256": "4c14b6955ca8888ead023f665c23f3c0ab7462e9e5ed8a7f6fb5782454c78768",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "cases/prompts/revision-V05.md",
+      "published": "cases/prompts/revision-V05.md",
+      "source_sha256": "e0d5a933b974b2727eef99b02a440f96d5b8d6888c7d9be2045580d7c407c667",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "cases/prompts/flash-V05.md",
+      "published": "cases/prompts/flash-V05.md",
+      "source_sha256": "765c26b5888fdb243bc3858c4037478adaa22c50f3b4e658ba46a8ccc9092135",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "cases/prompts/repair-V05.md",
+      "published": "cases/prompts/repair-V05.md",
+      "source_sha256": "0e30788311a1ea27f981b39a10885f458a06a9e97508d68281077bda765caebc",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "cases/prompts/output_contract.md",
+      "published": "cases/prompts/output_contract.md",
+      "source_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "cases/EARLY_FREEZE_MANIFEST.json",
+      "published": "cases/EARLY_FREEZE_MANIFEST.json",
+      "source_sha256": "0ea1018abedf73040c371cef1052a76ae29eedc4086501ca237d756f3b992ac6",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "cases/EARLY_FREEZE_ADDENDUM_01.json",
+      "published": "cases/EARLY_FREEZE_ADDENDUM_01.json",
+      "source_sha256": "e95d9a2e990df92c9331cb0335ead3002aa47583eef64e05c982ad3f92e80cf0",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "cases/EARLY_FREEZE_ADDENDUM_02.json",
+      "published": "cases/EARLY_FREEZE_ADDENDUM_02.json",
+      "source_sha256": "611a673188a3502611cb40333e628e6719a66b02b7ed0190c3ee67079f2a4888",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/protocol/README.md",
+      "published": "evaluation/protocol/README.md",
+      "source_sha256": "e07dac8a9dc3bca255836f779256768abc8cd70cdf45eee00c77304d95f8b917",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/protocol/PROTOCOL.md",
+      "published": "evaluation/protocol/PROTOCOL.md",
+      "source_sha256": "7d5994d09557e8f94ec554f548b379fb5bda98b1a4c374bbaf0ba18fd4bc569c",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/protocol/EVALUATOR_PROMPT.md",
+      "published": "evaluation/protocol/EVALUATOR_PROMPT.md",
+      "source_sha256": "2a8f7f6bd74097358133ebfd0052f86680b1ada0cfa5bf34a3b0cb9fceb3e7ff",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/protocol/REPORT_TEMPLATE.json",
+      "published": "evaluation/protocol/REPORT_TEMPLATE.json",
+      "source_sha256": "760ac0f4b39b52587a11bd06d4873ef3fb7a0d78226d003ab76d63ee6610d16c",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/protocol/DISPATCH_TEMPLATE.json",
+      "published": "evaluation/protocol/DISPATCH_TEMPLATE.json",
+      "source_sha256": "2eaf8877de301df5c1140ff15e1b0fc75a5bf1706f4e2162ee14da1844723687",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-001.md",
+      "published": "supervision/DECISIONS-001.md",
+      "source_sha256": "541c2de9d218b5e3221254a8defb8107707671fe0178842a32094157d5ee6328",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-001-evidence.json",
+      "published": "supervision/DECISIONS-001-evidence.json",
+      "source_sha256": "26ace0fe96dede58835728e2788f33f55c758c0717d1b6f13ec046c9753b151a",
+      "transform": "path labels normalized to LAB_ROOT; original hashes retained"
+    },
+    {
+      "source": "dev/luna-route/metadata-probe-001/result.json",
+      "published": "routes/luna/metadata.json",
+      "source_sha256": "63138e552e26006a58cdf88ed432c7d02d4cda55cdf83c572d424a46c110bfba",
+      "transform": "local binary path omitted; binary digest and selected controls retained"
+    },
+    {
+      "source": "dev/luna-route/canary-001/result.json",
+      "published": "routes/luna/canary001.json",
+      "source_sha256": "5d405e38778e2210102c51118cb369103d5b5299698771098df800b4524f81d8",
+      "transform": "selected lifecycle/identity/usage/cleanup fields; local binary/process ids and repetitive polling omitted"
+    },
+    {
+      "source": "dev/luna-route/canary-001/prompt.txt",
+      "published": "routes/luna/canary001-prompt.txt",
+      "source_sha256": "8641cbaba6cc4cb437a993a4e91e94c8a3b5ace5e66639b21dca2b3559061d63",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/GUARD_TEST_RESULTS.json",
+      "published": "routes/luna/guard-tests.json",
+      "source_sha256": "c5838a8641e2dfafcd8840cae8622c9065b4a41ae3a29444cbc3d5472fef4249",
+      "transform": "essential local regression results; process IDs/private scratch paths omitted"
+    },
+    {
+      "source": "dev/muse-route/STATUS.json",
+      "published": "routes/muse/STATUS.json",
+      "source_sha256": "54d938e36ab50c3fe1655ab9a2d9cd08adb560b4a2a912e1dde20d201b99dc03",
+      "transform": "host home/binary paths and private occupancy/process identifiers omitted; metadata/HOLD/cleanup meaning retained"
+    },
+    {
+      "source": "dev/muse-route/catalog-probe/RECEIPT.json",
+      "published": "routes/muse/catalog-probe/RECEIPT.json",
+      "source_sha256": "d9f40e420ba3405a6126513c366a5e90f15680043cf8a8184702c16cdf41bd1e",
+      "transform": "host home/binary paths and private occupancy/process identifiers omitted; metadata/HOLD/cleanup meaning retained"
+    },
+    {
+      "source": "dev/muse-route/catalog-probe/STOP_RECEIPT.json",
+      "published": "routes/muse/catalog-probe/STOP_RECEIPT.json",
+      "source_sha256": "393053783bbee7efb4811bbe69f2cf58da987115b271448ab9e47f4a2ae3b5db",
+      "transform": "host home/binary paths and private occupancy/process identifiers omitted; metadata/HOLD/cleanup meaning retained"
+    },
+    {
+      "source": "dev/muse-route/MANIFEST.json",
+      "published": "routes/muse/SOURCE_MANIFEST.json",
+      "source_sha256": "729afa56eb1107243bb50914b9be5b1baed3c0a3703ababc03f29fec8dc41361",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/probe-001/native/receipt.json",
+      "published": "routes/glm/metadata-probe001.json",
+      "source_sha256": "bb1f11839001f23b266ad3e18dce0428b2785e779a4753b585aa43cbbb05f4ae",
+      "transform": "essential config/model/effort/zero-request/cleanup receipt; private path and host clocks omitted"
+    },
+    {
+      "source": "dev/tools/VERIFICATION.json",
+      "published": "tools/VERIFICATION.json",
+      "source_sha256": "7c10ed56e606717aaddd65a7603bb14d7486d979e1cbd92a7659434bb3eb69e7",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/SOURCE_PINS.json",
+      "published": "tools/SOURCE_PINS.json",
+      "source_sha256": "04d18860f56cdd93427fdfe1336f7418d8d248e6a70e5b9463f602aeb8ff5aa2",
+      "transform": "upstream original paths normalized to EXPERIMENTS_ROOT; original hashes retained"
+    },
+    {
+      "source": "dev/tools/config.py",
+      "published": "tools/config.py",
+      "source_sha256": "2fe65bf146fcb8ea2a03b375ceac6d19113150dc88bcbe5ee9c653e1c68cbc3f",
+      "transform": "byte-identical owner-pinned"
+    },
+    {
+      "source": "dev/tools/execution_server.py",
+      "published": "tools/execution_server.py",
+      "source_sha256": "002328c3e3e30a3ad8e60553de496215f6fb17c8f4e789a42238fe3253553b51",
+      "transform": "byte-identical owner-pinned"
+    },
+    {
+      "source": "dev/tools/test_tools.py",
+      "published": "tools/test_tools.py",
+      "source_sha256": "4bc4093cb6beded6b257257f61c7f0aa879cff55666f09d4aaa0586000b63e44",
+      "transform": "byte-identical owner-pinned"
+    },
+    {
+      "source": "dev/tools/source_capture/boundary.py",
+      "published": "tools/source_capture/boundary.py",
+      "source_sha256": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+      "transform": "byte-identical owner-pinned"
+    },
+    {
+      "source": "dev/tools/source_capture/tool_server.py",
+      "published": "tools/source_capture/tool_server.py",
+      "source_sha256": "9c25c1faaf7c4557aaeb22b0977061914a9fbba1a04d87d2a3a29851daa29846",
+      "transform": "byte-identical owner-pinned"
+    },
+    {
+      "source": "dev/tools/source_capture/test_source_capture.py",
+      "published": "tools/source_capture/test_source_capture.py",
+      "source_sha256": "a2e661f064dff5efb21c61461106d9473995e76c14133a8ff4abdec5a5aaf808",
+      "transform": "byte-identical owner-pinned"
+    },
+    {
+      "source": "dev/tools/README.md",
+      "published": "tools/README.md",
+      "source_sha256": "80a59fe1a128240b0ec41db1dc6c4fd4eadfe1e796d095cbb4e3181ec42cc4d7",
+      "transform": "byte-identical owner-pinned"
+    },
+    {
+      "source": "cases/coverage/important-checks-A.json",
+      "published": "cases/coverage/important-checks-A.json",
+      "source_sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "transform": "byte-identical owner-pinned"
+    },
+    {
+      "source": "cases/coverage/important-checks-B.json",
+      "published": "cases/coverage/important-checks-B.json",
+      "source_sha256": "543a07fd1de56392b89858999cd6dce73757bdf40de62dd7d16106b0adf4ca60",
+      "transform": "byte-identical owner-pinned"
+    }
+  ],
+  "omissions": [
+    "Raw native captures, private runtime/auth/home databases and host environment dumps.",
+    "Fresh confirmation answers and evaluator hidden keys.",
+    "Native no-MCP route code/catalogs are not in this cohort.",
+    "Mutable dispatcher/job state and native runner source are excluded; pinned generic boundary tool code is included."
+  ],
+  "research_completion_claim": false
+}

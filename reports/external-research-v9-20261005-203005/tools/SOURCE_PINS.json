@@ -1,0 +1,40 @@
+{
+  "schema": "er9.tools.source-pins.v1",
+  "created_utc": "2026-10-05T20:58:59.669109+00:00",
+  "files": {
+    "config.py": "2fe65bf146fcb8ea2a03b375ceac6d19113150dc88bcbe5ee9c653e1c68cbc3f",
+    "execution_server.py": "002328c3e3e30a3ad8e60553de496215f6fb17c8f4e789a42238fe3253553b51",
+    "test_tools.py": "4bc4093cb6beded6b257257f61c7f0aa879cff55666f09d4aaa0586000b63e44",
+    "source_capture/boundary.py": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+    "source_capture/tool_server.py": "9c25c1faaf7c4557aaeb22b0977061914a9fbba1a04d87d2a3a29851daa29846",
+    "source_capture/test_source_capture.py": "a2e661f064dff5efb21c61461106d9473995e76c14133a8ff4abdec5a5aaf808",
+    "README.md": "80a59fe1a128240b0ec41db1dc6c4fd4eadfe1e796d095cbb4e3181ec42cc4d7"
+  },
+  "copied_upstream": {
+    "boundary.py": {
+      "path": "EXPERIMENTS_ROOT/external-research-v8-20261001-2140/dev/source-capture-v1/boundary.py",
+      "sha256": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+      "destination": "source_capture/boundary.py",
+      "byte_identical": true
+    },
+    "tool_server.py": {
+      "path": "EXPERIMENTS_ROOT/external-research-v8-20261001-2140/dev/source-capture-v1/tool_server.py",
+      "sha256": "9c25c1faaf7c4557aaeb22b0977061914a9fbba1a04d87d2a3a29851daa29846",
+      "destination": "source_capture/tool_server.py",
+      "byte_identical": true
+    },
+    "test_source_capture.py": {
+      "path": "EXPERIMENTS_ROOT/external-research-v8-20261001-2140/dev/source-capture-v1/test_source_capture.py",
+      "sha256": "a2e661f064dff5efb21c61461106d9473995e76c14133a8ff4abdec5a5aaf808",
+      "destination": "source_capture/test_source_capture.py",
+      "byte_identical": true
+    }
+  },
+  "runtime_binaries": {
+    "/usr/bin/python3": "be9a2a5eada8c89c1c399fdfb8397179e877c20d8db0739c802f726d4d0e69fd",
+    "/usr/bin/bwrap": "a85b0ff8664c52ab923e0daf7e20cbc394272cd3831cc492ab144105d8091361",
+    "/usr/bin/systemd-run": "55ba6ffaebbe831ee903e238c42aa27120543f7e1316c5d2084f7e1461526f42",
+    "/usr/bin/systemctl": "044cb69b902982835d7916423a7efcc4ba3181addc887f0c23941c7c09eacbab"
+  },
+  "pin_scope": "tool code/config/copied implementation/runtime executables; existing OS standard library is runtime, not newly installed"
+}

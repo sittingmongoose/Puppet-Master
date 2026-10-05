@@ -1,0 +1,195 @@
+{
+  "schema": "er9.integrated_method_card.v1",
+  "pair_id": "I-03",
+  "card_version": "v1",
+  "track": "B",
+  "status": "NOT_RUN",
+  "freeze_state": "PROSPECTIVE_READY_FOR_ROOT_ADMISSION",
+  "method_id": "V05",
+  "case_id": "DEV-A-v1",
+  "domain": "A",
+  "question": "Does allocating part of the same pipeline allowance to fresh verification and resolution of consequential final changes reduce new errors without losing required meaning?",
+  "candidate_family": "GLM",
+  "requested_model": "GLM 5.3 Flash",
+  "requested_effort": "Max",
+  "requested_native_route": "zcode genuine app-native /goal",
+  "observed_model": null,
+  "observed_effort": null,
+  "brief_path": "briefs/development-A-biomedical.md",
+  "coverage_path": "coverage/development-A.json",
+  "source_access_path": "source_access.json",
+  "common_criteria_path": "common_criteria.json",
+  "common_output_contract": "prompts/output_contract.md",
+  "initial_input_class": "BRIEF_ONLY_LIVE_DISCOVERY",
+  "evaluator_selected_repositories": false,
+  "prior_candidate_findings_supplied": false,
+  "discovery_obligation": {
+    "independent_implementation_precedents_min": 2,
+    "real_issue_fix_regression_chain_min": 1,
+    "candidate_selects_sources": true
+  },
+  "control_label": "Competent practical three-stage baseline",
+  "control_stages": [
+    {
+      "stage": "research",
+      "native_goal": true,
+      "fresh_same_family": true,
+      "max_native_seconds": 1200,
+      "max_parent_responses": 120,
+      "prompt_paths": [
+        "prompts/research.md"
+      ],
+      "case_specific_authorship": "candidate only",
+      "tool_policy": "same admitted public-source retrieval and isolated execution across arms unless V01 critic modifier explicitly removes execution"
+    },
+    {
+      "stage": "critique",
+      "native_goal": true,
+      "fresh_same_family": true,
+      "max_native_seconds": 900,
+      "max_parent_responses": 90,
+      "prompt_paths": [
+        "prompts/critique-common.md"
+      ],
+      "case_specific_authorship": "candidate only",
+      "tool_policy": "same admitted public-source retrieval and isolated execution across arms unless V01 critic modifier explicitly removes execution"
+    },
+    {
+      "stage": "revision",
+      "native_goal": true,
+      "fresh_same_family": true,
+      "max_native_seconds": 600,
+      "max_parent_responses": 60,
+      "prompt_paths": [
+        "prompts/revision.md"
+      ],
+      "case_specific_authorship": "candidate only",
+      "tool_policy": "same admitted public-source retrieval and isolated execution across arms unless V01 critic modifier explicitly removes execution"
+    }
+  ],
+  "treatment_stages": [
+    {
+      "stage": "research",
+      "native_goal": true,
+      "fresh_same_family": true,
+      "max_native_seconds": 1050,
+      "max_parent_responses": 105,
+      "prompt_paths": [
+        "prompts/research.md"
+      ],
+      "case_specific_authorship": "candidate only",
+      "tool_policy": "same admitted public-source retrieval and isolated execution across arms unless V01 critic modifier explicitly removes execution"
+    },
+    {
+      "stage": "critique",
+      "native_goal": true,
+      "fresh_same_family": true,
+      "max_native_seconds": 750,
+      "max_parent_responses": 75,
+      "prompt_paths": [
+        "prompts/critique-common.md"
+      ],
+      "case_specific_authorship": "candidate only",
+      "tool_policy": "same admitted public-source retrieval and isolated execution across arms unless V01 critic modifier explicitly removes execution"
+    },
+    {
+      "stage": "revision",
+      "native_goal": true,
+      "fresh_same_family": true,
+      "max_native_seconds": 450,
+      "max_parent_responses": 45,
+      "prompt_paths": [
+        "prompts/revision.md",
+        "prompts/revision-V05.md"
+      ],
+      "case_specific_authorship": "candidate only",
+      "tool_policy": "same admitted public-source retrieval and isolated execution across arms unless V01 critic modifier explicitly removes execution",
+      "output_override": "out/revision/proposal.md and catalogs; not the designated final"
+    },
+    {
+      "stage": "flash_check",
+      "native_goal": true,
+      "fresh_same_family": true,
+      "max_native_seconds": 300,
+      "max_parent_responses": 30,
+      "prompt_paths": [
+        "prompts/flash-V05.md"
+      ],
+      "case_specific_authorship": "candidate only",
+      "tool_policy": "same admitted public-source retrieval and isolated execution across arms unless V01 critic modifier explicitly removes execution"
+    },
+    {
+      "stage": "final_resolution",
+      "native_goal": true,
+      "fresh_same_family": true,
+      "max_native_seconds": 150,
+      "max_parent_responses": 30,
+      "prompt_paths": [
+        "prompts/repair-V05.md"
+      ],
+      "case_specific_authorship": "candidate only",
+      "tool_policy": "same admitted public-source retrieval and isolated execution across arms unless V01 critic modifier explicitly removes execution",
+      "input_complete_context": true
+    }
+  ],
+  "exact_factor": "Same finite total allowance reallocated across research/critique/revision plus fresh flash check and final resolution",
+  "allocation": {
+    "critical_path_candidate_seconds_per_arm": 2700,
+    "occupied_candidate_seconds_per_arm": 5400,
+    "default_stage_maximum": 1800,
+    "startup_and_service_waits": "included in measured total and charged; no clock pauses or backdated expansion",
+    "candidate_children": "accounted against occupied budget and actual family occupancy when exposed",
+    "per_stage_allocations_sum": 2700
+  },
+  "paired_start_policy": {
+    "preferred": "concurrent if real service/account capacity permits",
+    "otherwise": "counterbalanced order: odd pair control-first, even pair treatment-first",
+    "record": [
+      "actual UTC starts",
+      "load/occupancy",
+      "service waits",
+      "native retries",
+      "deviation reason"
+    ]
+  },
+  "tool_binding_before_launch": {
+    "retrieval_config_pin": null,
+    "execution_boundary_pin": null,
+    "control_execution_factor_verified": false,
+    "real_capacity_required": "at most two campaign GLM parent Goals; treatment V05 sequential stages needs one arm slot"
+  },
+  "artifacts": {
+    "designated_final": "out/final/proposal.md",
+    "source_catalog": "out/final/sources.json",
+    "witness_catalog": "out/final/witnesses.json",
+    "lead_inventory": "out/final/leads.json"
+  },
+  "stage_artifact_freeze": "Immutable outputs/catalogs between stages, with byte hashes. Fresh next-stage context has exact brief and all needed prior artifacts. No sibling arm or evaluator answer.",
+  "evaluation": "Blind designated current final with exact brief, obligations and source access; judge same predeclared important checks in both arms. Method uptake/history reviewed after saved output judgment.",
+  "economics_fields": [
+    "wall_seconds",
+    "critical_path_candidate_seconds",
+    "occupied_candidate_seconds",
+    "native_goal_starts",
+    "parent_responses",
+    "service_wait_seconds",
+    "native_retries",
+    "known_input_cache_output_counters_with_definition",
+    "unknown_child_or_cancelled_usage",
+    "source_bytes_and_tool_traffic_when_exposed",
+    "Sol_development_evaluation_publication_cost_separate"
+  ],
+  "root_admission_required": [
+    "record supported observed model/effort and genuine Goal route",
+    "pin admitted tool configuration and bounds",
+    "materialize per-arm isolated candidate packet without evaluator or sibling paths",
+    "hash this card, brief, prompts, coverage and source-access into immutable launch freeze before outputs",
+    "record evaluator allocation and case identity"
+  ],
+  "outcome": {
+    "attempted": 0,
+    "completed": 0,
+    "assessed": 0,
+    "quality": "NOT_RUN"
+  }
+}
