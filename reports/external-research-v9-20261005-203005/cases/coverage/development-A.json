@@ -1,0 +1,153 @@
+{
+  "schema": "er9.case_coverage.v1",
+  "case_id": "DEV-A-v1",
+  "status": "PROSPECTIVE_NOT_RUN",
+  "brief_path": "briefs/development-A-biomedical.md",
+  "criteria_path": "common_criteria.json",
+  "obligations": [
+    {
+      "id": "A01",
+      "text": "Minimum import/inspect/navigation/annotation/save/reopen/export workflow, with preservation of originals and bounded support scope",
+      "dimensions": [
+        "Q1",
+        "Q3",
+        "Q7"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "A02",
+      "text": "Explicit axis, coordinate, orientation, physical calibration and annotation scope contract; transformations and units qualified",
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q5"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "A03",
+      "text": "Distinguish intensity display from sample mutation and recorded resampling; exported annotation/derived-image meaning",
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q5"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "A04",
+      "text": "Large-data access/cache responsiveness, progress/cancel and investigated resource target without unsupported performance promises",
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q7"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "A05",
+      "text": "Project identity, portability/external-path relocation, metadata provenance and save/recovery behavior",
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q7"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "A06",
+      "text": "Usable annotation styles, undo/redo, keyboard/accessibility and legible status/unsupported-input feedback",
+      "dimensions": [
+        "Q1",
+        "Q3"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "A07",
+      "text": "Candidate-discovered >=2 independently useful implementation precedents with source/pins and concrete plan implications",
+      "dimensions": [
+        "Q2",
+        "Q3",
+        "Q4"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "A08",
+      "text": "Candidate-discovered real issue/failure -> associated fix -> regression test chain with applicability and causal limits",
+      "dimensions": [
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "A09",
+      "text": "At least one useful opportunity and one plausible alternative; optional adoption distinguished from requirements",
+      "dimensions": [
+        "Q1",
+        "Q3",
+        "Q4",
+        "Q7"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "A10",
+      "text": "Coherent component/architecture choice or bounded alternatives with critical dependencies and support/validation limits",
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q7"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "A11",
+      "text": "Consequential numerical/coordinate/storage/export checks discriminate claimed behavior; executed/proposed labels and component/full-app scope are honest",
+      "dimensions": [
+        "Q2",
+        "Q5",
+        "Q7",
+        "Q8"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "A12",
+      "text": "Standalone current final preserves supported findings/conditions, fixes actual errors, cites exact evidence and keeps unresolved leads separately accessible",
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q6",
+        "Q7",
+        "Q8"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    }
+  ],
+  "consequential_current_claims": "Evaluator additionally assesses all consequential claims introduced in the designated final, not only these headings.",
+  "optional_choice_rule": "A useful opportunity/alternative is required research coverage; adopting it is optional.",
+  "predeclared_matched_screen": "Inspect source/applicability correctness of design-critical claims, actual independent precedents/issue chain, and support for each claimed executed witness in both arms; preserve remainder UNASSESSED on decisive screen."
+}
