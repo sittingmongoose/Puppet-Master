@@ -1,0 +1,93 @@
+{
+  "catalog_schema": "er9.research.witnesses.v1",
+  "labeling_rule": "status 'executed-by-candidate' = run by this candidate via the admitted isolated python_execute sandbox; receipts (execution_id, code/data sha256, stdout sha256, exit code) are recorded by the sandbox, not self-authored. status 'proposed-UNEXECUTED' = designed but not run; no receipt exists.",
+  "scope_warning": "All executed checks are isolated component checks on synthetic arithmetic or JSON. None establishes full application behavior, real I/O performance, or filesystem crash semantics.",
+  "witnesses": [
+    {
+      "id": "W1",
+      "label": "Transform round-trip precision: float64 vs float32 storage of coordinates/sampling/origin",
+      "status": "executed-by-candidate",
+      "executed": {
+        "execution_id": "exec-3rb9e_me",
+        "completed_utc": "2026-10-06T04:16:03.709525+00:00",
+        "code_sha256": "e5f8da0990a0b4f34ec0efbca4bccd732c898150ad5bf2cd37b7ff0e5269ce7d",
+        "exit_code": 0,
+        "stdout": "float64: phys=[249787.112, -179893.608, 12024.4]\nfloat64: max voxel error after round-trip = 7.16227e-11 voxels (rel 3.5e-14)\nfloat32: phys=[249787.109375, -179893.609375, 12024.400390625]\nfloat32: max voxel error after round-trip = 0.0252686 voxels (rel 1.23e-05)\nthreshold: float64 must stay < 1e-9 voxels; float32 shown for contrast",
+        "stdout_sha256": "460b6de81d0ae21f14192375e3dac144de10726c700baf158028232507bfe5d4",
+        "stderr_bytes": 0
+      },
+      "input": "90-degree rotation about z; sampling (0.104, 0.104, 0.400) um/voxel; stage translation (250000, -180000, 12000) um; probe voxel (1023, 2047, 61); float32 emulated via struct.pack('f').",
+      "justified_expected": "A 3x3 rotation with unit determinant is exactly invertible in exact arithmetic; float64 should keep round-trip error near machine epsilon scaled by matrix condition (< 1e-9 voxels); float32's ~1e-7 relative epsilon on ~2.5e5 um magnitudes should leave visible sub-pixel error.",
+      "observed": "float64 max error 7.16e-11 voxels (rel 3.5e-14) - PASS; float32 max error 0.0253 voxels (rel 1.23e-5) - two orders above the float64 threshold.",
+      "scope_limits": "Pure arithmetic model of a 3-axis affine; no rendering, no real instrument data, no GPU path. Supports the storage rule (float64), not a measurement of any shipped viewer."
+    },
+    {
+      "id": "W2",
+      "label": "Memory-budget arithmetic for a ~3 GB uint16 volume on a 16 GB workstation",
+      "status": "executed-by-candidate",
+      "executed": {
+        "execution_id": "exec-3hzrg7ey",
+        "completed_utc": "2026-10-06T04:16:07.127358+00:00",
+        "code_sha256": "717aa71efd5b84bdc67b1183afc276fa1dc828b9cf39afd6dcaf1d9b02c8e2be",
+        "exit_code": 0,
+        "stdout": "{\n \"volume_GB\": 2.828,\n \"chunk_bytes\": 8388608,\n \"chunk_grid\": [32, 8, 2],\n \"chunks_total\": 512,\n \"ram_total_GB\": 16, \"os_app_reserve_GB\": 4,\n \"cache_budget_MB\": 512, \"annotation_budget_MB\": 64,\n \"free_headroom_GB\": 11.438,\n \"cache_holds_chunks\": 64,\n \"cache_coverage_pct\": 12.5,\n \"full_plane_bytes\": 1482752,\n \"chunks_touched_per_512x512_zstep\": 4,\n \"in_flight_working_set_MB\": 33.41\n}\nPASS criterion: free_headroom_GB > 0 and in_flight working set << free headroom",
+        "stdout_sha256": "90337e9815d69b933d6b65054f9a7d441d8d588037b032ce195da7ab473fe80f",
+        "stderr_bytes": 0
+      },
+      "input": "Volume 2048x2048x362 uint16 (= 2.83 GB); chunk 64x256x256 (= 8 MiB); reserves: 4 GB OS+app (estimate), 512 MiB LRU chunk cache (product choice), 64 MiB annotations.",
+      "justified_expected": "If chunked access is used, resident memory is governed by cache budget + in-flight chunks, not by file size; the budget arithmetic should show large positive headroom for this plan.",
+      "observed": "11.44 GB free headroom; cache covers 12.5% of chunks; a 512x512 navigation step touches 4 chunks (~33 MiB working set).",
+      "scope_limits": "Arithmetic only - no decoder, disk, compression or allocator behavior. The 4 GB reserve is an engineering estimate. Must be re-run per real acquisition shape and validated by W5 on real files."
+    },
+    {
+      "id": "W3",
+      "label": "Rank-map after dimension reduction (napari #5004 mechanism) + annotation JSON round-trip stability",
+      "status": "executed-by-candidate",
+      "executed": {
+        "execution_id": "exec-qgnrb6fs",
+        "completed_utc": "2026-10-06T04:16:07.876904+00:00",
+        "code_sha256": "eee97e140c2f478f1a69444fb40d8a48a4761457f0d17b6b8341bca601ef7ed2",
+        "exit_code": 0,
+        "stdout": "order        single-argsort   double-argsort (identity-preserving)\n(0, 1)       (0, 1)           (0, 1)\n(1, 0)       (1, 0)           (1, 0)\n(2, 1, 0)    (2, 1, 0)        (2, 1, 0)\n(2, 0, 1)    (1, 2, 0)        (2, 0, 1)\n(4, 0, 2)    (1, 2, 0)        (2, 0, 1)\njson round-trip exact float coordinates: True\ncanonical sha256 stable: True 33f43898f2dc2862",
+        "stdout_sha256": "f2cd3606c32370f96e6a2c9240fded49516344c3a32891b4d5241df029ef4649",
+        "stderr_bytes": 0
+      },
+      "input": "Orders (0,1), (1,0), (2,1,0), (2,0,1), (4,0,2) through both the pre-fix single-argsort and post-fix double-argsort rank maps (algorithms transcribed from captured napari diff S5); a sample annotation document with float64 physical coordinates serialized with sort_keys and re-parsed.",
+      "justified_expected": "Single argsort is a different (wrong) permutation for non-monotonic orders; double argsort equals argsort(argsort(x)) which is the identity-preserving rank map. JSON round-trip of float64 via json.dumps/loads is exact (IEEE754 shortest-repr), so canonical hashing must be stable.",
+      "observed": "Single-argsort diverges exactly on non-monotonic orders ((2,0,1)->(1,2,0), (4,0,2)->(1,2,0)); double-argsort matches the S5 docstring examples ((2,0,1)->(2,0,1), (4,0,2)->(2,0,1)); JSON coordinates exact; canonical sha256 stable.",
+      "scope_limits": "Verifies the arithmetic pattern published in napari's public diff (S5) and JSON/stdlib behavior; it does not import napari and does not test our application. Supports adopting permutation-parametrized coordinate tests, not any claim about napari releases beyond S2/S5."
+    },
+    {
+      "id": "W4",
+      "label": "Crash-safety of atomic save protocol (temp + fsync + os.replace; recovery scan)",
+      "status": "proposed-UNEXECUTED",
+      "plan": "Run the save path in a harness; SIGKILL the process at randomized offsets during project.json and annotations writes on ext4 and on an SMB-mounted NTFS volume; reopen: previous generation must load; stale .tmp files must be cleaned; uncommitted provenance op must be discarded; repeat 100 times per filesystem.",
+      "justified_expected": "Per POSIX rename semantics on the same filesystem, readers see either old or new file content; directory fsync makes the rename durable. SMB servers may weaken ordering, hence the explicit test.",
+      "scope_limits": "UNEXECUTED. Requires real filesystems and process-kill harness; not runnable in the admitted sandbox."
+    },
+    {
+      "id": "W5",
+      "label": "3 GB real-file bounded-memory run (OME-TIFF and OME-Zarr)",
+      "status": "proposed-UNEXECUTED",
+      "plan": "On the target 8-core/16 GB workstation class, page slices of a real >=3 GB OME-TIFF and OME-Zarr through the bounded accessor; sample peak RSS every 200 ms; assert peak < 4 GB; measure cancel latency (must be <= one chunk decode); measure p95 slice latency while randomly seeking.",
+      "justified_expected": "Chunk/tile-addressable access (S1 section 2.1; S12 tile/zarr examples) should keep RSS governed by cache budget (512 MiB) + working set, independent of file size.",
+      "scope_limits": "UNEXECUTED. Needs real multi-GB files and a desktop OS environment; W2's arithmetic is the current (weaker) evidence."
+    },
+    {
+      "id": "W6",
+      "label": "Cross-machine reopen with path relocation",
+      "status": "proposed-UNEXECUTED",
+      "plan": "Create project + annotations on machine A (Linux/ext4), copy project (without images) to machine B (Windows/NTFS) where images live at different paths; run relink via size+sha256 matching; assert annotation physical coordinates bit-identical and axis tables unchanged.",
+      "justified_expected": "Coordinates are stored as float64 physical values independent of paths; identity verification uses content hashes, so relocation must not alter any stored coordinate.",
+      "scope_limits": "UNEXECUTED. Needs two machines/OSes and the implemented import/export stack."
+    },
+    {
+      "id": "W7",
+      "label": "Export fidelity round-trip (table + GeoJSON + overlay + derived image)",
+      "status": "proposed-UNEXECUTED",
+      "plan": "Export annotations of a known synthetic image; reimport the annotation table into a fresh project; assert physical coordinates identical to 1e-9 relative; verify GeoJSON foreign-member metadata parses and polygon winding is RFC 7946-conformant; verify overlay sidecar maps pixel (0,0) to the documented physical origin; verify derived-image sha256 differs from source and its op record names input id+hash.",
+      "justified_expected": "Exports carry full coordinate-space metadata in-band (Sections 10, S6, S9), so a faithful reimplementation must reproduce coordinates within float64 tolerance.",
+      "scope_limits": "UNEXECUTED. Requires the implemented export service."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "candidate_retest_native_model_browser_worker_goal_created": false,
+  "closure_monotonic_ns": 103919647157556,
+  "closure_status": "PHASE2_INCLUSIVE_CAP_BREACHED",
+  "closure_utc": "2026-10-06T07:58:20.790169+00:00",
+  "courier_and_final_content_neutral": true,
+  "designated_final": null,
+  "evaluation_id": "independent-warm-recovery-4",
+  "files": [
+    {
+      "bytes": 622,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-4/reservation.json",
+      "sha256": "a7060e65ad626f7a99f1e159a863fb26c85b35c2d219248052cac499d505a998"
+    },
+    {
+      "bytes": 480,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-4/source-start.json",
+      "sha256": "e02f35ba006ad4fd7a8c2ce1fde3e4ec1e2a4fb675400701ef6e82a4c7629892"
+    },
+    {
+      "bytes": 7131,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-4/source-pins.json",
+      "sha256": "c55ecc1a858be502a3a498d627e867fcbfb09a37096ec4f5956155f34b53de5e"
+    },
+    {
+      "bytes": 13905,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-4/phase1-report.md",
+      "sha256": "921e7f32ebace35ed8a58797261fcf64c887132a3d393306a03042a4a0c7b1fe"
+    },
+    {
+      "bytes": 10165,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-4/phase1-judgment.json",
+      "sha256": "e8dce0290fe3209a301e8b443ca7b79ff9a208ce9f8aa43f2bdd2ff9dbf973f3"
+    },
+    {
+      "bytes": 2238,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-4/phase1-pinlock.json",
+      "sha256": "a64af3b260cc55ab4bbf29656b9089a81aced61e1fd745e175439de5a0102c94"
+    },
+    {
+      "bytes": 4672,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-4/phase2-report.md",
+      "sha256": "213a65c34375c1932d0048c9965ffd88230e4435cdebed906198fae96642f385"
+    },
+    {
+      "bytes": 7800,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-4/phase2-verification.json",
+      "sha256": "4db90dd9a8a7e55b4e4488a3935f81831e87522c60a64fabf9b359c5310479d6"
+    }
+  ],
+  "final_scientific_quality": "UNASSESSED",
+  "findings_sent_only_to_root": true,
+  "further_source_or_phase2_review_stopped": true,
+  "handoff_ack_waited": false,
+  "literal_inclusive_phase2_elapsed_seconds": 796.266980257,
+  "original_whole_deadline_monotonic_ns": 104512240741448,
+  "original_whole_elapsed_seconds": 1207.406416108,
+  "ownership_scope": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-4",
+  "pair_id": "I-05-treatment-BLIND-SOURCE-FIDELITY-R001",
+  "phase1_bytes_unchanged": true,
+  "phase2_deadline_monotonic_ns": 103723380177299,
+  "phase2_overrun_seconds": 196.266980257,
+  "phase2_report_created_before_cap": true,
+  "phase2_required_handoff_completion_within_cap": "UNKNOWN_NOT_TIMESTAMPED",
+  "postdeadline_operations": "terminal timing/closure receipt and neutral required handoffs only",
+  "raw_native_ModelIO_auth_private_history_old_grades_read": false,
+  "required_report_handoffs_queued": [
+    "/root",
+    "/root/frozen_exports",
+    "/root/cost_accounting"
+  ],
+  "reset": false,
+  "schema": "er9.independent-evaluator-closure.v1",
+  "source_phase_elapsed_seconds": 411.139435851,
+  "whole_pipeline_quality": "UNASSESSED",
+  "within_original_phase2": false,
+  "within_original_whole": true
+}

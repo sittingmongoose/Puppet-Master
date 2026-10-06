@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "clocks": {
+      "additionalProperties": false,
+      "properties": {
+        "all_required_handoffs_within_phase2_cap": {
+          "type": "string"
+        },
+        "clock_reset": {
+          "type": "boolean"
+        },
+        "phase2_inclusive_elapsed_seconds": {
+          "type": "number"
+        },
+        "phase2_original_cap_seconds": {
+          "type": "number"
+        },
+        "phase2_overrun_seconds": {
+          "type": "number"
+        },
+        "phase2_report_elapsed_subset_seconds": {
+          "type": "number"
+        },
+        "whole_elapsed_seconds": {
+          "type": "number"
+        },
+        "whole_original_cap_seconds": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "phase2_inclusive_elapsed_seconds",
+        "phase2_original_cap_seconds",
+        "phase2_overrun_seconds",
+        "phase2_report_elapsed_subset_seconds",
+        "whole_elapsed_seconds",
+        "whole_original_cap_seconds",
+        "all_required_handoffs_within_phase2_cap",
+        "clock_reset"
+      ],
+      "type": "object"
+    },
+    "owner_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema",
+    "owner_pin",
+    "clocks",
+    "scope"
+  ],
+  "type": "object"
+}

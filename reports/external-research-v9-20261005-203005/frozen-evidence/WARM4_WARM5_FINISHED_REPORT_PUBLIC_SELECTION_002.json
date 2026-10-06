@@ -1,0 +1,80 @@
+{
+  "schema": "er9.positive-publication-file-selector.v1",
+  "selection_id": "ER9-WARM4-WARM5-FINISHED-REPORTS-002",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-4/phase1-report.md",
+      "relative_path": "evaluation/independent-warm-recovery-4/phase1-report.md",
+      "sha256": "921e7f32ebace35ed8a58797261fcf64c887132a3d393306a03042a4a0c7b1fe",
+      "bytes": 13905
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-4/phase1-judgment.json",
+      "relative_path": "evaluation/independent-warm-recovery-4/phase1-judgment.json",
+      "sha256": "e8dce0290fe3209a301e8b443ca7b79ff9a208ce9f8aa43f2bdd2ff9dbf973f3",
+      "bytes": 10165
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-4/phase2-report.md",
+      "relative_path": "evaluation/independent-warm-recovery-4/phase2-report.md",
+      "sha256": "213a65c34375c1932d0048c9965ffd88230e4435cdebed906198fae96642f385",
+      "bytes": 4672
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-4/phase2-verification.json",
+      "relative_path": "evaluation/independent-warm-recovery-4/phase2-verification.json",
+      "sha256": "4db90dd9a8a7e55b4e4488a3935f81831e87522c60a64fabf9b359c5310479d6",
+      "bytes": 7800
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-4/closure.json",
+      "relative_path": "evaluation/independent-warm-recovery-4/closure.json",
+      "sha256": "f6ac09edd139c423b28260bfd76555b665a954e9810f1dd60f5e48c82604e27f",
+      "bytes": 3780
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-5/phase1/report.md",
+      "relative_path": "evaluation/independent-warm-recovery-5/phase1/report.md",
+      "sha256": "4c1a794aab931ad9e94fd560734215737e69a2a9a721f4e408755f628b0a0bc5",
+      "bytes": 10711
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-5/phase1/judgment.json",
+      "relative_path": "evaluation/independent-warm-recovery-5/phase1/judgment.json",
+      "sha256": "4394f5245852a25fc3a4575980f875b2d38a1f7795703244af88825dddb800da",
+      "bytes": 16463
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-5/phase1/freeze.json",
+      "relative_path": "evaluation/independent-warm-recovery-5/phase1/freeze.json",
+      "sha256": "5d8c63004548e094d5a875b17647d8a9ebff431be25053092c9e95ab222001fd",
+      "bytes": 1147
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-5/closure.json",
+      "relative_path": "evaluation/independent-warm-recovery-5/closure.json",
+      "sha256": "830180b2e9bac54c94b1d22cf91c5cbf2b06e0e74d12c6ad57fb96e12c419b0f",
+      "bytes": 829
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-5/phase2/report.md",
+      "relative_path": "evaluation/independent-warm-recovery-5/phase2/report.md",
+      "sha256": "8ee25fd0ebe316a3f8e5aeb25cc285eb59c55d61bd9112dfc5236ee618ea3628",
+      "bytes": 2805
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-5/phase2/assessment.json",
+      "relative_path": "evaluation/independent-warm-recovery-5/phase2/assessment.json",
+      "sha256": "9aa85bbbe286a8d49d76250cf41a665bc7e6124141e4a38f42479f090c369931",
+      "bytes": 5725
+    }
+  ],
+  "scope": "Rootauthorized exact independentfinished reports/phase1judgments/freezeandterminalclockqualifiers; Warm4inclusivecapbreached196.266980257s MUST accompany unchangedreport; Warm5withinliteral592.202309152. MissingfinalsourcequalityUNASSESSED, no extra logical/fresh/matchedcredit or gradeoverwrite.",
+  "exclusions": [
+    "rawnative/ModelIO/auth/privateGoalcontext",
+    "private keys/aliases/directsourcebyteinventory",
+    "rawpublicbodies/unselectedbaselines",
+    "recursive referencedfiles"
+  ],
+  "previous_selector_sha256": "35099a63fb490e3861b677ebb4fd2fc335eff5cdcf87a65a5e8a11cf481c66d6"
+}

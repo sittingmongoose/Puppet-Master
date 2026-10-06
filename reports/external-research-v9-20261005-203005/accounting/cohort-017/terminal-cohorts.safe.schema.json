@@ -1,0 +1,2627 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "candidate_ledger_rule": {
+      "type": "string"
+    },
+    "cohorts": {
+      "items": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accounting_source_window": {
+                "additionalProperties": false,
+                "properties": {
+                  "end": {
+                    "type": "string"
+                  },
+                  "start": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "end",
+                  "start"
+                ],
+                "type": "object"
+              },
+              "cohort": {
+                "type": "string"
+              },
+              "owner_checkpoint_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "owner_observed_utc": {
+                "type": "string"
+              },
+              "rows": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "accounting_actual_attempt_present": {
+                          "type": "boolean"
+                        },
+                        "accounting_native_starts_reference": {
+                          "type": "number"
+                        },
+                        "arm": {
+                          "type": "string"
+                        },
+                        "billing_dollars": {
+                          "type": "string"
+                        },
+                        "direct_freeze_quiet_metadata": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "all_owned_scopes_quiet": {
+                              "type": "null"
+                            },
+                            "client_tool_cgroups_quiet": {
+                              "type": "null"
+                            },
+                            "client_tool_process_groups_absent": {
+                              "type": "null"
+                            },
+                            "elapsed_seconds": {
+                              "type": "number"
+                            },
+                            "execution_units_quiet": {
+                              "type": "null"
+                            },
+                            "held_process_groups_absent": {
+                              "type": "null"
+                            },
+                            "native_cgroup_quiet": {
+                              "type": "null"
+                            },
+                            "native_quiescent": {
+                              "type": "boolean"
+                            },
+                            "operational_complete": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "all_owned_scopes_quiet",
+                            "client_tool_cgroups_quiet",
+                            "client_tool_process_groups_absent",
+                            "elapsed_seconds",
+                            "execution_units_quiet",
+                            "held_process_groups_absent",
+                            "native_cgroup_quiet",
+                            "native_quiescent",
+                            "operational_complete"
+                          ],
+                          "type": "object"
+                        },
+                        "elapsed_seconds": {
+                          "type": "number"
+                        },
+                        "ended_utc": {
+                          "type": "string"
+                        },
+                        "freeze_ref": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "path": {
+                              "type": "string"
+                            },
+                            "sha256": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "path",
+                            "sha256"
+                          ],
+                          "type": "object"
+                        },
+                        "job_id": {
+                          "type": "string"
+                        },
+                        "known_usage_reference_only": {
+                          "type": "null"
+                        },
+                        "missing_required_artifacts": {
+                          "items": {},
+                          "type": "array"
+                        },
+                        "native_Goal_status_saved_reference": {
+                          "type": "null"
+                        },
+                        "native_goal_starts": {
+                          "type": "number"
+                        },
+                        "native_quiescent": {
+                          "type": "boolean"
+                        },
+                        "native_receipt_pins_reference_only": {
+                          "items": {},
+                          "type": "array"
+                        },
+                        "native_status": {
+                          "type": "string"
+                        },
+                        "new_charge_from_checkpoint_reference": {
+                          "type": "boolean"
+                        },
+                        "no_target_or_pass_credit": {
+                          "type": "boolean"
+                        },
+                        "operational_complete": {
+                          "type": "boolean"
+                        },
+                        "operator_permit_release_metadata": {
+                          "type": "string"
+                        },
+                        "private_slice_release": {
+                          "type": "null"
+                        },
+                        "release_receipt_verified_projections": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "exact_sha_verified": {
+                                    "type": "boolean"
+                                  },
+                                  "metadata": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "all_owned_scopes_quiet": {
+                                        "type": "string"
+                                      },
+                                      "all_private_units_quiet": {
+                                        "type": "string"
+                                      },
+                                      "client_tool_cgroups_quiet": {
+                                        "type": "string"
+                                      },
+                                      "client_tool_process_groups_absent": {
+                                        "type": "string"
+                                      },
+                                      "execution_units_quiet": {
+                                        "type": "string"
+                                      },
+                                      "held_process_groups_absent": {
+                                        "type": "string"
+                                      },
+                                      "native_cgroup_quiet": {
+                                        "type": "string"
+                                      },
+                                      "native_quiescent": {
+                                        "type": "string"
+                                      },
+                                      "owned_quiet": {
+                                        "type": "string"
+                                      },
+                                      "permit_release_confirmed": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "native_quiescent",
+                                      "owned_quiet",
+                                      "all_owned_scopes_quiet",
+                                      "native_cgroup_quiet",
+                                      "held_process_groups_absent",
+                                      "client_tool_cgroups_quiet",
+                                      "client_tool_process_groups_absent",
+                                      "execution_units_quiet",
+                                      "permit_release_confirmed",
+                                      "all_private_units_quiet"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "scope": {
+                                    "type": "string"
+                                  },
+                                  "source_pin": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "path": {
+                                        "type": "string"
+                                      },
+                                      "sha256": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "path",
+                                      "sha256"
+                                    ],
+                                    "type": "object"
+                                  }
+                                },
+                                "required": [
+                                  "source_pin",
+                                  "exact_sha_verified",
+                                  "metadata",
+                                  "scope"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "release_ref": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "path": {
+                              "type": "string"
+                            },
+                            "sha256": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "path",
+                            "sha256"
+                          ],
+                          "type": "object"
+                        },
+                        "runtime_ref": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "path": {
+                              "type": "string"
+                            },
+                            "sha256": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "path",
+                            "sha256"
+                          ],
+                          "type": "object"
+                        },
+                        "stage": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string"
+                        },
+                        "usage_basis": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "accounting_actual_attempt_present",
+                        "accounting_native_starts_reference",
+                        "arm",
+                        "billing_dollars",
+                        "direct_freeze_quiet_metadata",
+                        "elapsed_seconds",
+                        "ended_utc",
+                        "freeze_ref",
+                        "job_id",
+                        "known_usage_reference_only",
+                        "missing_required_artifacts",
+                        "native_Goal_status_saved_reference",
+                        "native_goal_starts",
+                        "native_quiescent",
+                        "native_receipt_pins_reference_only",
+                        "native_status",
+                        "new_charge_from_checkpoint_reference",
+                        "no_target_or_pass_credit",
+                        "operational_complete",
+                        "operator_permit_release_metadata",
+                        "private_slice_release",
+                        "release_ref",
+                        "runtime_ref",
+                        "stage",
+                        "status",
+                        "usage_basis",
+                        "release_receipt_verified_projections"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "accounting_actual_attempt_present": {
+                          "type": "boolean"
+                        },
+                        "accounting_native_starts_reference": {
+                          "type": "number"
+                        },
+                        "arm": {
+                          "type": "string"
+                        },
+                        "billing_dollars": {
+                          "type": "string"
+                        },
+                        "direct_freeze_quiet_metadata": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "all_owned_scopes_quiet": {
+                              "type": "null"
+                            },
+                            "client_tool_cgroups_quiet": {
+                              "type": "null"
+                            },
+                            "client_tool_process_groups_absent": {
+                              "type": "null"
+                            },
+                            "elapsed_seconds": {
+                              "type": "number"
+                            },
+                            "execution_units_quiet": {
+                              "type": "null"
+                            },
+                            "held_process_groups_absent": {
+                              "type": "null"
+                            },
+                            "native_cgroup_quiet": {
+                              "type": "null"
+                            },
+                            "native_quiescent": {
+                              "type": "boolean"
+                            },
+                            "operational_complete": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "all_owned_scopes_quiet",
+                            "client_tool_cgroups_quiet",
+                            "client_tool_process_groups_absent",
+                            "elapsed_seconds",
+                            "execution_units_quiet",
+                            "held_process_groups_absent",
+                            "native_cgroup_quiet",
+                            "native_quiescent",
+                            "operational_complete"
+                          ],
+                          "type": "object"
+                        },
+                        "elapsed_seconds": {
+                          "type": "number"
+                        },
+                        "ended_utc": {
+                          "type": "string"
+                        },
+                        "freeze_ref": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "path": {
+                              "type": "string"
+                            },
+                            "sha256": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "path",
+                            "sha256"
+                          ],
+                          "type": "object"
+                        },
+                        "job_id": {
+                          "type": "string"
+                        },
+                        "known_usage_reference_only": {
+                          "type": "null"
+                        },
+                        "missing_required_artifacts": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "native_Goal_status_saved_reference": {
+                          "type": "null"
+                        },
+                        "native_goal_starts": {
+                          "type": "number"
+                        },
+                        "native_quiescent": {
+                          "type": "boolean"
+                        },
+                        "native_receipt_pins_reference_only": {
+                          "items": {},
+                          "type": "array"
+                        },
+                        "native_status": {
+                          "type": "string"
+                        },
+                        "new_charge_from_checkpoint_reference": {
+                          "type": "boolean"
+                        },
+                        "no_target_or_pass_credit": {
+                          "type": "boolean"
+                        },
+                        "operational_complete": {
+                          "type": "boolean"
+                        },
+                        "operator_permit_release_metadata": {
+                          "type": "string"
+                        },
+                        "private_slice_release": {
+                          "type": "null"
+                        },
+                        "release_receipt_verified_projections": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "exact_sha_verified": {
+                                    "type": "boolean"
+                                  },
+                                  "metadata": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "all_owned_scopes_quiet": {
+                                        "type": "string"
+                                      },
+                                      "all_private_units_quiet": {
+                                        "type": "string"
+                                      },
+                                      "client_tool_cgroups_quiet": {
+                                        "type": "string"
+                                      },
+                                      "client_tool_process_groups_absent": {
+                                        "type": "string"
+                                      },
+                                      "execution_units_quiet": {
+                                        "type": "string"
+                                      },
+                                      "held_process_groups_absent": {
+                                        "type": "string"
+                                      },
+                                      "native_cgroup_quiet": {
+                                        "type": "string"
+                                      },
+                                      "native_quiescent": {
+                                        "type": "string"
+                                      },
+                                      "owned_quiet": {
+                                        "type": "string"
+                                      },
+                                      "permit_release_confirmed": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "native_quiescent",
+                                      "owned_quiet",
+                                      "all_owned_scopes_quiet",
+                                      "native_cgroup_quiet",
+                                      "held_process_groups_absent",
+                                      "client_tool_cgroups_quiet",
+                                      "client_tool_process_groups_absent",
+                                      "execution_units_quiet",
+                                      "permit_release_confirmed",
+                                      "all_private_units_quiet"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "scope": {
+                                    "type": "string"
+                                  },
+                                  "source_pin": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "path": {
+                                        "type": "string"
+                                      },
+                                      "sha256": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "path",
+                                      "sha256"
+                                    ],
+                                    "type": "object"
+                                  }
+                                },
+                                "required": [
+                                  "source_pin",
+                                  "exact_sha_verified",
+                                  "metadata",
+                                  "scope"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "release_ref": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "path": {
+                              "type": "string"
+                            },
+                            "sha256": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "path",
+                            "sha256"
+                          ],
+                          "type": "object"
+                        },
+                        "runtime_ref": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "path": {
+                              "type": "string"
+                            },
+                            "sha256": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "path",
+                            "sha256"
+                          ],
+                          "type": "object"
+                        },
+                        "stage": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string"
+                        },
+                        "usage_basis": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "accounting_actual_attempt_present",
+                        "accounting_native_starts_reference",
+                        "arm",
+                        "billing_dollars",
+                        "direct_freeze_quiet_metadata",
+                        "elapsed_seconds",
+                        "ended_utc",
+                        "freeze_ref",
+                        "job_id",
+                        "known_usage_reference_only",
+                        "missing_required_artifacts",
+                        "native_Goal_status_saved_reference",
+                        "native_goal_starts",
+                        "native_quiescent",
+                        "native_receipt_pins_reference_only",
+                        "native_status",
+                        "new_charge_from_checkpoint_reference",
+                        "no_target_or_pass_credit",
+                        "operational_complete",
+                        "operator_permit_release_metadata",
+                        "private_slice_release",
+                        "release_ref",
+                        "runtime_ref",
+                        "stage",
+                        "status",
+                        "usage_basis",
+                        "release_receipt_verified_projections"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "accounting_actual_attempt_present": {
+                          "type": "boolean"
+                        },
+                        "accounting_native_starts_reference": {
+                          "type": "number"
+                        },
+                        "arm": {
+                          "type": "string"
+                        },
+                        "billing_dollars": {
+                          "type": "string"
+                        },
+                        "direct_freeze_quiet_metadata": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "all_owned_scopes_quiet": {
+                              "type": "null"
+                            },
+                            "client_tool_cgroups_quiet": {
+                              "type": "null"
+                            },
+                            "client_tool_process_groups_absent": {
+                              "type": "null"
+                            },
+                            "elapsed_seconds": {
+                              "type": "number"
+                            },
+                            "execution_units_quiet": {
+                              "type": "null"
+                            },
+                            "held_process_groups_absent": {
+                              "type": "null"
+                            },
+                            "native_cgroup_quiet": {
+                              "type": "null"
+                            },
+                            "native_quiescent": {
+                              "type": "boolean"
+                            },
+                            "operational_complete": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "all_owned_scopes_quiet",
+                            "client_tool_cgroups_quiet",
+                            "client_tool_process_groups_absent",
+                            "elapsed_seconds",
+                            "execution_units_quiet",
+                            "held_process_groups_absent",
+                            "native_cgroup_quiet",
+                            "native_quiescent",
+                            "operational_complete"
+                          ],
+                          "type": "object"
+                        },
+                        "elapsed_seconds": {
+                          "type": "number"
+                        },
+                        "ended_utc": {
+                          "type": "string"
+                        },
+                        "freeze_ref": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "path": {
+                              "type": "string"
+                            },
+                            "sha256": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "path",
+                            "sha256"
+                          ],
+                          "type": "object"
+                        },
+                        "job_id": {
+                          "type": "string"
+                        },
+                        "known_usage_reference_only": {
+                          "type": "null"
+                        },
+                        "missing_required_artifacts": {
+                          "items": {},
+                          "type": "array"
+                        },
+                        "native_Goal_status_saved_reference": {
+                          "type": "null"
+                        },
+                        "native_goal_starts": {
+                          "type": "number"
+                        },
+                        "native_quiescent": {
+                          "type": "boolean"
+                        },
+                        "native_receipt_pins_reference_only": {
+                          "items": {},
+                          "type": "array"
+                        },
+                        "native_status": {
+                          "type": "string"
+                        },
+                        "new_charge_from_checkpoint_reference": {
+                          "type": "boolean"
+                        },
+                        "no_target_or_pass_credit": {
+                          "type": "boolean"
+                        },
+                        "operational_complete": {
+                          "type": "boolean"
+                        },
+                        "operator_permit_release_metadata": {
+                          "type": "string"
+                        },
+                        "private_slice_release": {
+                          "type": "null"
+                        },
+                        "release_receipt_verified_projections": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "exact_sha_verified": {
+                                    "type": "boolean"
+                                  },
+                                  "metadata": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "all_owned_scopes_quiet": {
+                                        "type": "string"
+                                      },
+                                      "all_private_units_quiet": {
+                                        "type": "string"
+                                      },
+                                      "client_tool_cgroups_quiet": {
+                                        "type": "string"
+                                      },
+                                      "client_tool_process_groups_absent": {
+                                        "type": "string"
+                                      },
+                                      "execution_units_quiet": {
+                                        "type": "string"
+                                      },
+                                      "held_process_groups_absent": {
+                                        "type": "string"
+                                      },
+                                      "native_cgroup_quiet": {
+                                        "type": "string"
+                                      },
+                                      "native_quiescent": {
+                                        "type": "string"
+                                      },
+                                      "owned_quiet": {
+                                        "type": "string"
+                                      },
+                                      "permit_release_confirmed": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "native_quiescent",
+                                      "owned_quiet",
+                                      "all_owned_scopes_quiet",
+                                      "native_cgroup_quiet",
+                                      "held_process_groups_absent",
+                                      "client_tool_cgroups_quiet",
+                                      "client_tool_process_groups_absent",
+                                      "execution_units_quiet",
+                                      "permit_release_confirmed",
+                                      "all_private_units_quiet"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "scope": {
+                                    "type": "string"
+                                  },
+                                  "source_pin": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "path": {
+                                        "type": "string"
+                                      },
+                                      "sha256": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "path",
+                                      "sha256"
+                                    ],
+                                    "type": "object"
+                                  }
+                                },
+                                "required": [
+                                  "source_pin",
+                                  "exact_sha_verified",
+                                  "metadata",
+                                  "scope"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "release_ref": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "path": {
+                              "type": "string"
+                            },
+                            "sha256": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "path",
+                            "sha256"
+                          ],
+                          "type": "object"
+                        },
+                        "runtime_ref": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "path": {
+                              "type": "string"
+                            },
+                            "sha256": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "path",
+                            "sha256"
+                          ],
+                          "type": "object"
+                        },
+                        "stage": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string"
+                        },
+                        "usage_basis": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "accounting_actual_attempt_present",
+                        "accounting_native_starts_reference",
+                        "arm",
+                        "billing_dollars",
+                        "direct_freeze_quiet_metadata",
+                        "elapsed_seconds",
+                        "ended_utc",
+                        "freeze_ref",
+                        "job_id",
+                        "known_usage_reference_only",
+                        "missing_required_artifacts",
+                        "native_Goal_status_saved_reference",
+                        "native_goal_starts",
+                        "native_quiescent",
+                        "native_receipt_pins_reference_only",
+                        "native_status",
+                        "new_charge_from_checkpoint_reference",
+                        "no_target_or_pass_credit",
+                        "operational_complete",
+                        "operator_permit_release_metadata",
+                        "private_slice_release",
+                        "release_ref",
+                        "runtime_ref",
+                        "stage",
+                        "status",
+                        "usage_basis",
+                        "release_receipt_verified_projections"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "accounting_actual_attempt_present": {
+                          "type": "boolean"
+                        },
+                        "accounting_native_starts_reference": {
+                          "type": "number"
+                        },
+                        "arm": {
+                          "type": "string"
+                        },
+                        "billing_dollars": {
+                          "type": "string"
+                        },
+                        "direct_freeze_quiet_metadata": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "all_owned_scopes_quiet": {
+                              "type": "null"
+                            },
+                            "client_tool_cgroups_quiet": {
+                              "type": "null"
+                            },
+                            "client_tool_process_groups_absent": {
+                              "type": "null"
+                            },
+                            "elapsed_seconds": {
+                              "type": "number"
+                            },
+                            "execution_units_quiet": {
+                              "type": "null"
+                            },
+                            "held_process_groups_absent": {
+                              "type": "null"
+                            },
+                            "native_cgroup_quiet": {
+                              "type": "null"
+                            },
+                            "native_quiescent": {
+                              "type": "boolean"
+                            },
+                            "operational_complete": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "all_owned_scopes_quiet",
+                            "client_tool_cgroups_quiet",
+                            "client_tool_process_groups_absent",
+                            "elapsed_seconds",
+                            "execution_units_quiet",
+                            "held_process_groups_absent",
+                            "native_cgroup_quiet",
+                            "native_quiescent",
+                            "operational_complete"
+                          ],
+                          "type": "object"
+                        },
+                        "elapsed_seconds": {
+                          "type": "number"
+                        },
+                        "ended_utc": {
+                          "type": "string"
+                        },
+                        "freeze_ref": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "path": {
+                              "type": "string"
+                            },
+                            "sha256": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "path",
+                            "sha256"
+                          ],
+                          "type": "object"
+                        },
+                        "job_id": {
+                          "type": "string"
+                        },
+                        "known_usage_reference_only": {
+                          "type": "null"
+                        },
+                        "missing_required_artifacts": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "native_Goal_status_saved_reference": {
+                          "type": "null"
+                        },
+                        "native_goal_starts": {
+                          "type": "number"
+                        },
+                        "native_quiescent": {
+                          "type": "boolean"
+                        },
+                        "native_receipt_pins_reference_only": {
+                          "items": {},
+                          "type": "array"
+                        },
+                        "native_status": {
+                          "type": "string"
+                        },
+                        "new_charge_from_checkpoint_reference": {
+                          "type": "boolean"
+                        },
+                        "no_target_or_pass_credit": {
+                          "type": "boolean"
+                        },
+                        "operational_complete": {
+                          "type": "boolean"
+                        },
+                        "operator_permit_release_metadata": {
+                          "type": "string"
+                        },
+                        "private_slice_release": {
+                          "type": "null"
+                        },
+                        "release_receipt_verified_projections": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "exact_sha_verified": {
+                                    "type": "boolean"
+                                  },
+                                  "metadata": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "all_owned_scopes_quiet": {
+                                        "type": "string"
+                                      },
+                                      "all_private_units_quiet": {
+                                        "type": "string"
+                                      },
+                                      "client_tool_cgroups_quiet": {
+                                        "type": "string"
+                                      },
+                                      "client_tool_process_groups_absent": {
+                                        "type": "string"
+                                      },
+                                      "execution_units_quiet": {
+                                        "type": "string"
+                                      },
+                                      "held_process_groups_absent": {
+                                        "type": "string"
+                                      },
+                                      "native_cgroup_quiet": {
+                                        "type": "string"
+                                      },
+                                      "native_quiescent": {
+                                        "type": "string"
+                                      },
+                                      "owned_quiet": {
+                                        "type": "string"
+                                      },
+                                      "permit_release_confirmed": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "native_quiescent",
+                                      "owned_quiet",
+                                      "all_owned_scopes_quiet",
+                                      "native_cgroup_quiet",
+                                      "held_process_groups_absent",
+                                      "client_tool_cgroups_quiet",
+                                      "client_tool_process_groups_absent",
+                                      "execution_units_quiet",
+                                      "permit_release_confirmed",
+                                      "all_private_units_quiet"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "scope": {
+                                    "type": "string"
+                                  },
+                                  "source_pin": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "path": {
+                                        "type": "string"
+                                      },
+                                      "sha256": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "path",
+                                      "sha256"
+                                    ],
+                                    "type": "object"
+                                  }
+                                },
+                                "required": [
+                                  "source_pin",
+                                  "exact_sha_verified",
+                                  "metadata",
+                                  "scope"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "release_ref": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "path": {
+                              "type": "string"
+                            },
+                            "sha256": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "path",
+                            "sha256"
+                          ],
+                          "type": "object"
+                        },
+                        "runtime_ref": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "path": {
+                              "type": "string"
+                            },
+                            "sha256": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "path",
+                            "sha256"
+                          ],
+                          "type": "object"
+                        },
+                        "stage": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string"
+                        },
+                        "usage_basis": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "accounting_actual_attempt_present",
+                        "accounting_native_starts_reference",
+                        "arm",
+                        "billing_dollars",
+                        "direct_freeze_quiet_metadata",
+                        "elapsed_seconds",
+                        "ended_utc",
+                        "freeze_ref",
+                        "job_id",
+                        "known_usage_reference_only",
+                        "missing_required_artifacts",
+                        "native_Goal_status_saved_reference",
+                        "native_goal_starts",
+                        "native_quiescent",
+                        "native_receipt_pins_reference_only",
+                        "native_status",
+                        "new_charge_from_checkpoint_reference",
+                        "no_target_or_pass_credit",
+                        "operational_complete",
+                        "operator_permit_release_metadata",
+                        "private_slice_release",
+                        "release_ref",
+                        "runtime_ref",
+                        "stage",
+                        "status",
+                        "usage_basis",
+                        "release_receipt_verified_projections"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "scope": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "accounting_source_window",
+              "cohort",
+              "owner_checkpoint_pin",
+              "owner_observed_utc",
+              "rows",
+              "scope"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accounting_source_window": {
+                "additionalProperties": false,
+                "properties": {
+                  "end": {
+                    "type": "string"
+                  },
+                  "start": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "end",
+                  "start"
+                ],
+                "type": "object"
+              },
+              "cohort": {
+                "type": "string"
+              },
+              "owner_checkpoint_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "owner_observed_utc": {
+                "type": "string"
+              },
+              "rows": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "accounting_actual_attempt_present": {
+                          "type": "boolean"
+                        },
+                        "accounting_native_starts_reference": {
+                          "type": "number"
+                        },
+                        "arm": {
+                          "type": "string"
+                        },
+                        "billing_dollars": {
+                          "type": "string"
+                        },
+                        "direct_freeze_quiet_metadata": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "all_owned_scopes_quiet": {
+                              "type": "null"
+                            },
+                            "client_tool_cgroups_quiet": {
+                              "type": "null"
+                            },
+                            "client_tool_process_groups_absent": {
+                              "type": "null"
+                            },
+                            "elapsed_seconds": {
+                              "type": "number"
+                            },
+                            "execution_units_quiet": {
+                              "type": "null"
+                            },
+                            "held_process_groups_absent": {
+                              "type": "null"
+                            },
+                            "native_cgroup_quiet": {
+                              "type": "null"
+                            },
+                            "native_quiescent": {
+                              "type": "boolean"
+                            },
+                            "operational_complete": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "all_owned_scopes_quiet",
+                            "client_tool_cgroups_quiet",
+                            "client_tool_process_groups_absent",
+                            "elapsed_seconds",
+                            "execution_units_quiet",
+                            "held_process_groups_absent",
+                            "native_cgroup_quiet",
+                            "native_quiescent",
+                            "operational_complete"
+                          ],
+                          "type": "object"
+                        },
+                        "elapsed_seconds": {
+                          "type": "number"
+                        },
+                        "ended_utc": {
+                          "type": "string"
+                        },
+                        "freeze_ref": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "path": {
+                              "type": "string"
+                            },
+                            "sha256": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "path",
+                            "sha256"
+                          ],
+                          "type": "object"
+                        },
+                        "job_id": {
+                          "type": "string"
+                        },
+                        "known_usage_reference_only": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "cached_input_included": {
+                              "type": "number"
+                            },
+                            "input": {
+                              "type": "number"
+                            },
+                            "output": {
+                              "type": "number"
+                            },
+                            "reasoning_output_subset": {
+                              "type": "number"
+                            },
+                            "total": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "cached_input_included",
+                            "input",
+                            "output",
+                            "reasoning_output_subset",
+                            "total"
+                          ],
+                          "type": "object"
+                        },
+                        "missing_required_artifacts": {
+                          "items": {},
+                          "type": "array"
+                        },
+                        "native_Goal_status_saved_reference": {
+                          "type": "string"
+                        },
+                        "native_goal_starts": {
+                          "type": "number"
+                        },
+                        "native_quiescent": {
+                          "type": "boolean"
+                        },
+                        "native_receipt_pins_reference_only": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "sha256": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "sha256"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "native_status": {
+                          "type": "string"
+                        },
+                        "new_charge_from_checkpoint_reference": {
+                          "type": "boolean"
+                        },
+                        "no_target_or_pass_credit": {
+                          "type": "boolean"
+                        },
+                        "operational_complete": {
+                          "type": "boolean"
+                        },
+                        "operator_permit_release_metadata": {
+                          "type": "string"
+                        },
+                        "private_slice_release": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "path": {
+                              "type": "string"
+                            },
+                            "sha256": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "path",
+                            "sha256"
+                          ],
+                          "type": "object"
+                        },
+                        "release_receipt_verified_projections": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "exact_sha_verified": {
+                                    "type": "boolean"
+                                  },
+                                  "metadata": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "all_owned_scopes_quiet": {
+                                        "type": "string"
+                                      },
+                                      "all_private_units_quiet": {
+                                        "type": "string"
+                                      },
+                                      "client_tool_cgroups_quiet": {
+                                        "type": "string"
+                                      },
+                                      "client_tool_process_groups_absent": {
+                                        "type": "string"
+                                      },
+                                      "execution_units_quiet": {
+                                        "type": "string"
+                                      },
+                                      "held_process_groups_absent": {
+                                        "type": "string"
+                                      },
+                                      "native_cgroup_quiet": {
+                                        "type": "string"
+                                      },
+                                      "native_quiescent": {
+                                        "type": "string"
+                                      },
+                                      "owned_quiet": {
+                                        "type": "string"
+                                      },
+                                      "permit_release_confirmed": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "native_quiescent",
+                                      "owned_quiet",
+                                      "all_owned_scopes_quiet",
+                                      "native_cgroup_quiet",
+                                      "held_process_groups_absent",
+                                      "client_tool_cgroups_quiet",
+                                      "client_tool_process_groups_absent",
+                                      "execution_units_quiet",
+                                      "permit_release_confirmed",
+                                      "all_private_units_quiet"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "scope": {
+                                    "type": "string"
+                                  },
+                                  "source_pin": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "path": {
+                                        "type": "string"
+                                      },
+                                      "sha256": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "path",
+                                      "sha256"
+                                    ],
+                                    "type": "object"
+                                  }
+                                },
+                                "required": [
+                                  "source_pin",
+                                  "exact_sha_verified",
+                                  "metadata",
+                                  "scope"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "release_ref": {
+                          "type": "null"
+                        },
+                        "runtime_ref": {
+                          "type": "null"
+                        },
+                        "stage": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string"
+                        },
+                        "usage_basis": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "accounting_actual_attempt_present",
+                        "accounting_native_starts_reference",
+                        "arm",
+                        "billing_dollars",
+                        "direct_freeze_quiet_metadata",
+                        "elapsed_seconds",
+                        "ended_utc",
+                        "freeze_ref",
+                        "job_id",
+                        "known_usage_reference_only",
+                        "missing_required_artifacts",
+                        "native_Goal_status_saved_reference",
+                        "native_goal_starts",
+                        "native_quiescent",
+                        "native_receipt_pins_reference_only",
+                        "native_status",
+                        "new_charge_from_checkpoint_reference",
+                        "no_target_or_pass_credit",
+                        "operational_complete",
+                        "operator_permit_release_metadata",
+                        "private_slice_release",
+                        "release_ref",
+                        "runtime_ref",
+                        "stage",
+                        "status",
+                        "usage_basis",
+                        "release_receipt_verified_projections"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "accounting_actual_attempt_present": {
+                          "type": "boolean"
+                        },
+                        "accounting_native_starts_reference": {
+                          "type": "number"
+                        },
+                        "arm": {
+                          "type": "string"
+                        },
+                        "billing_dollars": {
+                          "type": "string"
+                        },
+                        "direct_freeze_quiet_metadata": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "all_owned_scopes_quiet": {
+                              "type": "null"
+                            },
+                            "client_tool_cgroups_quiet": {
+                              "type": "null"
+                            },
+                            "client_tool_process_groups_absent": {
+                              "type": "null"
+                            },
+                            "elapsed_seconds": {
+                              "type": "number"
+                            },
+                            "execution_units_quiet": {
+                              "type": "null"
+                            },
+                            "held_process_groups_absent": {
+                              "type": "null"
+                            },
+                            "native_cgroup_quiet": {
+                              "type": "null"
+                            },
+                            "native_quiescent": {
+                              "type": "boolean"
+                            },
+                            "operational_complete": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "all_owned_scopes_quiet",
+                            "client_tool_cgroups_quiet",
+                            "client_tool_process_groups_absent",
+                            "elapsed_seconds",
+                            "execution_units_quiet",
+                            "held_process_groups_absent",
+                            "native_cgroup_quiet",
+                            "native_quiescent",
+                            "operational_complete"
+                          ],
+                          "type": "object"
+                        },
+                        "elapsed_seconds": {
+                          "type": "number"
+                        },
+                        "ended_utc": {
+                          "type": "string"
+                        },
+                        "freeze_ref": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "path": {
+                              "type": "string"
+                            },
+                            "sha256": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "path",
+                            "sha256"
+                          ],
+                          "type": "object"
+                        },
+                        "job_id": {
+                          "type": "string"
+                        },
+                        "known_usage_reference_only": {
+                          "type": "null"
+                        },
+                        "missing_required_artifacts": {
+                          "items": {},
+                          "type": "array"
+                        },
+                        "native_Goal_status_saved_reference": {
+                          "type": "null"
+                        },
+                        "native_goal_starts": {
+                          "type": "number"
+                        },
+                        "native_quiescent": {
+                          "type": "boolean"
+                        },
+                        "native_receipt_pins_reference_only": {
+                          "items": {},
+                          "type": "array"
+                        },
+                        "native_status": {
+                          "type": "string"
+                        },
+                        "new_charge_from_checkpoint_reference": {
+                          "type": "boolean"
+                        },
+                        "no_target_or_pass_credit": {
+                          "type": "boolean"
+                        },
+                        "operational_complete": {
+                          "type": "boolean"
+                        },
+                        "operator_permit_release_metadata": {
+                          "type": "string"
+                        },
+                        "private_slice_release": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "path": {
+                              "type": "string"
+                            },
+                            "sha256": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "path",
+                            "sha256"
+                          ],
+                          "type": "object"
+                        },
+                        "release_receipt_verified_projections": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "exact_sha_verified": {
+                                    "type": "boolean"
+                                  },
+                                  "metadata": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "all_owned_scopes_quiet": {
+                                        "type": "string"
+                                      },
+                                      "all_private_units_quiet": {
+                                        "type": "string"
+                                      },
+                                      "client_tool_cgroups_quiet": {
+                                        "type": "string"
+                                      },
+                                      "client_tool_process_groups_absent": {
+                                        "type": "string"
+                                      },
+                                      "execution_units_quiet": {
+                                        "type": "string"
+                                      },
+                                      "held_process_groups_absent": {
+                                        "type": "string"
+                                      },
+                                      "native_cgroup_quiet": {
+                                        "type": "string"
+                                      },
+                                      "native_quiescent": {
+                                        "type": "string"
+                                      },
+                                      "owned_quiet": {
+                                        "type": "string"
+                                      },
+                                      "permit_release_confirmed": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "native_quiescent",
+                                      "owned_quiet",
+                                      "all_owned_scopes_quiet",
+                                      "native_cgroup_quiet",
+                                      "held_process_groups_absent",
+                                      "client_tool_cgroups_quiet",
+                                      "client_tool_process_groups_absent",
+                                      "execution_units_quiet",
+                                      "permit_release_confirmed",
+                                      "all_private_units_quiet"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "scope": {
+                                    "type": "string"
+                                  },
+                                  "source_pin": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "path": {
+                                        "type": "string"
+                                      },
+                                      "sha256": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "path",
+                                      "sha256"
+                                    ],
+                                    "type": "object"
+                                  }
+                                },
+                                "required": [
+                                  "source_pin",
+                                  "exact_sha_verified",
+                                  "metadata",
+                                  "scope"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "release_ref": {
+                          "type": "null"
+                        },
+                        "runtime_ref": {
+                          "type": "null"
+                        },
+                        "stage": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string"
+                        },
+                        "usage_basis": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "accounting_actual_attempt_present",
+                        "accounting_native_starts_reference",
+                        "arm",
+                        "billing_dollars",
+                        "direct_freeze_quiet_metadata",
+                        "elapsed_seconds",
+                        "ended_utc",
+                        "freeze_ref",
+                        "job_id",
+                        "known_usage_reference_only",
+                        "missing_required_artifacts",
+                        "native_Goal_status_saved_reference",
+                        "native_goal_starts",
+                        "native_quiescent",
+                        "native_receipt_pins_reference_only",
+                        "native_status",
+                        "new_charge_from_checkpoint_reference",
+                        "no_target_or_pass_credit",
+                        "operational_complete",
+                        "operator_permit_release_metadata",
+                        "private_slice_release",
+                        "release_ref",
+                        "runtime_ref",
+                        "stage",
+                        "status",
+                        "usage_basis",
+                        "release_receipt_verified_projections"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "accounting_actual_attempt_present": {
+                          "type": "boolean"
+                        },
+                        "accounting_native_starts_reference": {
+                          "type": "number"
+                        },
+                        "arm": {
+                          "type": "string"
+                        },
+                        "billing_dollars": {
+                          "type": "string"
+                        },
+                        "direct_freeze_quiet_metadata": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "all_owned_scopes_quiet": {
+                              "type": "null"
+                            },
+                            "client_tool_cgroups_quiet": {
+                              "type": "null"
+                            },
+                            "client_tool_process_groups_absent": {
+                              "type": "null"
+                            },
+                            "elapsed_seconds": {
+                              "type": "number"
+                            },
+                            "execution_units_quiet": {
+                              "type": "null"
+                            },
+                            "held_process_groups_absent": {
+                              "type": "null"
+                            },
+                            "native_cgroup_quiet": {
+                              "type": "null"
+                            },
+                            "native_quiescent": {
+                              "type": "boolean"
+                            },
+                            "operational_complete": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "all_owned_scopes_quiet",
+                            "client_tool_cgroups_quiet",
+                            "client_tool_process_groups_absent",
+                            "elapsed_seconds",
+                            "execution_units_quiet",
+                            "held_process_groups_absent",
+                            "native_cgroup_quiet",
+                            "native_quiescent",
+                            "operational_complete"
+                          ],
+                          "type": "object"
+                        },
+                        "elapsed_seconds": {
+                          "type": "number"
+                        },
+                        "ended_utc": {
+                          "type": "string"
+                        },
+                        "freeze_ref": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "path": {
+                              "type": "string"
+                            },
+                            "sha256": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "path",
+                            "sha256"
+                          ],
+                          "type": "object"
+                        },
+                        "job_id": {
+                          "type": "string"
+                        },
+                        "known_usage_reference_only": {
+                          "type": "null"
+                        },
+                        "missing_required_artifacts": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "native_Goal_status_saved_reference": {
+                          "type": "null"
+                        },
+                        "native_goal_starts": {
+                          "type": "number"
+                        },
+                        "native_quiescent": {
+                          "type": "boolean"
+                        },
+                        "native_receipt_pins_reference_only": {
+                          "items": {},
+                          "type": "array"
+                        },
+                        "native_status": {
+                          "type": "string"
+                        },
+                        "new_charge_from_checkpoint_reference": {
+                          "type": "boolean"
+                        },
+                        "no_target_or_pass_credit": {
+                          "type": "boolean"
+                        },
+                        "operational_complete": {
+                          "type": "boolean"
+                        },
+                        "operator_permit_release_metadata": {
+                          "type": "string"
+                        },
+                        "private_slice_release": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "path": {
+                              "type": "string"
+                            },
+                            "sha256": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "path",
+                            "sha256"
+                          ],
+                          "type": "object"
+                        },
+                        "release_receipt_verified_projections": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "exact_sha_verified": {
+                                    "type": "boolean"
+                                  },
+                                  "metadata": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "all_owned_scopes_quiet": {
+                                        "type": "string"
+                                      },
+                                      "all_private_units_quiet": {
+                                        "type": "string"
+                                      },
+                                      "client_tool_cgroups_quiet": {
+                                        "type": "string"
+                                      },
+                                      "client_tool_process_groups_absent": {
+                                        "type": "string"
+                                      },
+                                      "execution_units_quiet": {
+                                        "type": "string"
+                                      },
+                                      "held_process_groups_absent": {
+                                        "type": "string"
+                                      },
+                                      "native_cgroup_quiet": {
+                                        "type": "string"
+                                      },
+                                      "native_quiescent": {
+                                        "type": "string"
+                                      },
+                                      "owned_quiet": {
+                                        "type": "string"
+                                      },
+                                      "permit_release_confirmed": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "native_quiescent",
+                                      "owned_quiet",
+                                      "all_owned_scopes_quiet",
+                                      "native_cgroup_quiet",
+                                      "held_process_groups_absent",
+                                      "client_tool_cgroups_quiet",
+                                      "client_tool_process_groups_absent",
+                                      "execution_units_quiet",
+                                      "permit_release_confirmed",
+                                      "all_private_units_quiet"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "scope": {
+                                    "type": "string"
+                                  },
+                                  "source_pin": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "path": {
+                                        "type": "string"
+                                      },
+                                      "sha256": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "path",
+                                      "sha256"
+                                    ],
+                                    "type": "object"
+                                  }
+                                },
+                                "required": [
+                                  "source_pin",
+                                  "exact_sha_verified",
+                                  "metadata",
+                                  "scope"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "release_ref": {
+                          "type": "null"
+                        },
+                        "runtime_ref": {
+                          "type": "null"
+                        },
+                        "stage": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string"
+                        },
+                        "usage_basis": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "accounting_actual_attempt_present",
+                        "accounting_native_starts_reference",
+                        "arm",
+                        "billing_dollars",
+                        "direct_freeze_quiet_metadata",
+                        "elapsed_seconds",
+                        "ended_utc",
+                        "freeze_ref",
+                        "job_id",
+                        "known_usage_reference_only",
+                        "missing_required_artifacts",
+                        "native_Goal_status_saved_reference",
+                        "native_goal_starts",
+                        "native_quiescent",
+                        "native_receipt_pins_reference_only",
+                        "native_status",
+                        "new_charge_from_checkpoint_reference",
+                        "no_target_or_pass_credit",
+                        "operational_complete",
+                        "operator_permit_release_metadata",
+                        "private_slice_release",
+                        "release_ref",
+                        "runtime_ref",
+                        "stage",
+                        "status",
+                        "usage_basis",
+                        "release_receipt_verified_projections"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "accounting_actual_attempt_present": {
+                          "type": "boolean"
+                        },
+                        "accounting_native_starts_reference": {
+                          "type": "number"
+                        },
+                        "arm": {
+                          "type": "string"
+                        },
+                        "billing_dollars": {
+                          "type": "string"
+                        },
+                        "direct_freeze_quiet_metadata": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "all_owned_scopes_quiet": {
+                              "type": "null"
+                            },
+                            "client_tool_cgroups_quiet": {
+                              "type": "null"
+                            },
+                            "client_tool_process_groups_absent": {
+                              "type": "null"
+                            },
+                            "elapsed_seconds": {
+                              "type": "number"
+                            },
+                            "execution_units_quiet": {
+                              "type": "null"
+                            },
+                            "held_process_groups_absent": {
+                              "type": "null"
+                            },
+                            "native_cgroup_quiet": {
+                              "type": "null"
+                            },
+                            "native_quiescent": {
+                              "type": "boolean"
+                            },
+                            "operational_complete": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "all_owned_scopes_quiet",
+                            "client_tool_cgroups_quiet",
+                            "client_tool_process_groups_absent",
+                            "elapsed_seconds",
+                            "execution_units_quiet",
+                            "held_process_groups_absent",
+                            "native_cgroup_quiet",
+                            "native_quiescent",
+                            "operational_complete"
+                          ],
+                          "type": "object"
+                        },
+                        "elapsed_seconds": {
+                          "type": "number"
+                        },
+                        "ended_utc": {
+                          "type": "string"
+                        },
+                        "freeze_ref": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "path": {
+                              "type": "string"
+                            },
+                            "sha256": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "path",
+                            "sha256"
+                          ],
+                          "type": "object"
+                        },
+                        "job_id": {
+                          "type": "string"
+                        },
+                        "known_usage_reference_only": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "cached_input_included": {
+                              "type": "number"
+                            },
+                            "input": {
+                              "type": "number"
+                            },
+                            "output": {
+                              "type": "number"
+                            },
+                            "reasoning_output_subset": {
+                              "type": "number"
+                            },
+                            "total": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "cached_input_included",
+                            "input",
+                            "output",
+                            "reasoning_output_subset",
+                            "total"
+                          ],
+                          "type": "object"
+                        },
+                        "missing_required_artifacts": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "native_Goal_status_saved_reference": {
+                          "type": "string"
+                        },
+                        "native_goal_starts": {
+                          "type": "number"
+                        },
+                        "native_quiescent": {
+                          "type": "boolean"
+                        },
+                        "native_receipt_pins_reference_only": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "sha256": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "sha256"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "native_status": {
+                          "type": "string"
+                        },
+                        "new_charge_from_checkpoint_reference": {
+                          "type": "boolean"
+                        },
+                        "no_target_or_pass_credit": {
+                          "type": "boolean"
+                        },
+                        "operational_complete": {
+                          "type": "boolean"
+                        },
+                        "operator_permit_release_metadata": {
+                          "type": "string"
+                        },
+                        "private_slice_release": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "path": {
+                              "type": "string"
+                            },
+                            "sha256": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "path",
+                            "sha256"
+                          ],
+                          "type": "object"
+                        },
+                        "release_receipt_verified_projections": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "exact_sha_verified": {
+                                    "type": "boolean"
+                                  },
+                                  "metadata": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "all_owned_scopes_quiet": {
+                                        "type": "string"
+                                      },
+                                      "all_private_units_quiet": {
+                                        "type": "string"
+                                      },
+                                      "client_tool_cgroups_quiet": {
+                                        "type": "string"
+                                      },
+                                      "client_tool_process_groups_absent": {
+                                        "type": "string"
+                                      },
+                                      "execution_units_quiet": {
+                                        "type": "string"
+                                      },
+                                      "held_process_groups_absent": {
+                                        "type": "string"
+                                      },
+                                      "native_cgroup_quiet": {
+                                        "type": "string"
+                                      },
+                                      "native_quiescent": {
+                                        "type": "string"
+                                      },
+                                      "owned_quiet": {
+                                        "type": "string"
+                                      },
+                                      "permit_release_confirmed": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "native_quiescent",
+                                      "owned_quiet",
+                                      "all_owned_scopes_quiet",
+                                      "native_cgroup_quiet",
+                                      "held_process_groups_absent",
+                                      "client_tool_cgroups_quiet",
+                                      "client_tool_process_groups_absent",
+                                      "execution_units_quiet",
+                                      "permit_release_confirmed",
+                                      "all_private_units_quiet"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "scope": {
+                                    "type": "string"
+                                  },
+                                  "source_pin": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "path": {
+                                        "type": "string"
+                                      },
+                                      "sha256": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "path",
+                                      "sha256"
+                                    ],
+                                    "type": "object"
+                                  }
+                                },
+                                "required": [
+                                  "source_pin",
+                                  "exact_sha_verified",
+                                  "metadata",
+                                  "scope"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "release_ref": {
+                          "type": "null"
+                        },
+                        "runtime_ref": {
+                          "type": "null"
+                        },
+                        "stage": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string"
+                        },
+                        "usage_basis": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "accounting_actual_attempt_present",
+                        "accounting_native_starts_reference",
+                        "arm",
+                        "billing_dollars",
+                        "direct_freeze_quiet_metadata",
+                        "elapsed_seconds",
+                        "ended_utc",
+                        "freeze_ref",
+                        "job_id",
+                        "known_usage_reference_only",
+                        "missing_required_artifacts",
+                        "native_Goal_status_saved_reference",
+                        "native_goal_starts",
+                        "native_quiescent",
+                        "native_receipt_pins_reference_only",
+                        "native_status",
+                        "new_charge_from_checkpoint_reference",
+                        "no_target_or_pass_credit",
+                        "operational_complete",
+                        "operator_permit_release_metadata",
+                        "private_slice_release",
+                        "release_ref",
+                        "runtime_ref",
+                        "stage",
+                        "status",
+                        "usage_basis",
+                        "release_receipt_verified_projections"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "accounting_actual_attempt_present": {
+                          "type": "boolean"
+                        },
+                        "accounting_native_starts_reference": {
+                          "type": "null"
+                        },
+                        "arm": {
+                          "type": "string"
+                        },
+                        "billing_dollars": {
+                          "type": "string"
+                        },
+                        "elapsed_seconds": {
+                          "type": "null"
+                        },
+                        "ended_utc": {
+                          "type": "null"
+                        },
+                        "freeze_ref": {
+                          "type": "null"
+                        },
+                        "job_id": {
+                          "type": "string"
+                        },
+                        "known_usage_reference_only": {
+                          "type": "null"
+                        },
+                        "missing_required_artifacts": {
+                          "type": "null"
+                        },
+                        "native_Goal_status_saved_reference": {
+                          "type": "string"
+                        },
+                        "native_goal_starts": {
+                          "type": "number"
+                        },
+                        "native_quiescent": {
+                          "type": "null"
+                        },
+                        "native_receipt_pins_reference_only": {
+                          "items": {},
+                          "type": "array"
+                        },
+                        "native_status": {
+                          "type": "null"
+                        },
+                        "new_charge_from_checkpoint_reference": {
+                          "type": "boolean"
+                        },
+                        "no_target_or_pass_credit": {
+                          "type": "boolean"
+                        },
+                        "operational_complete": {
+                          "type": "null"
+                        },
+                        "private_slice_release": {
+                          "type": "null"
+                        },
+                        "release_receipt_verified_projections": {
+                          "items": {},
+                          "type": "array"
+                        },
+                        "release_ref": {
+                          "type": "null"
+                        },
+                        "runtime_ref": {
+                          "type": "null"
+                        },
+                        "stage": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string"
+                        },
+                        "usage_basis": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "accounting_actual_attempt_present",
+                        "accounting_native_starts_reference",
+                        "arm",
+                        "billing_dollars",
+                        "elapsed_seconds",
+                        "ended_utc",
+                        "freeze_ref",
+                        "job_id",
+                        "known_usage_reference_only",
+                        "missing_required_artifacts",
+                        "native_Goal_status_saved_reference",
+                        "native_goal_starts",
+                        "native_quiescent",
+                        "native_receipt_pins_reference_only",
+                        "native_status",
+                        "new_charge_from_checkpoint_reference",
+                        "no_target_or_pass_credit",
+                        "operational_complete",
+                        "private_slice_release",
+                        "release_ref",
+                        "runtime_ref",
+                        "stage",
+                        "status",
+                        "usage_basis",
+                        "release_receipt_verified_projections"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "scope": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "accounting_source_window",
+              "cohort",
+              "owner_checkpoint_pin",
+              "owner_observed_utc",
+              "rows",
+              "scope"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "type": "array"
+    },
+    "schema": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "candidate_ledger_rule",
+    "cohorts",
+    "schema"
+  ],
+  "type": "object"
+}

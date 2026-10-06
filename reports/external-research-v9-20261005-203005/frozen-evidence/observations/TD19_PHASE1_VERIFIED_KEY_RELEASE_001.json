@@ -1,0 +1,15 @@
+{
+  "schema": "er9.verified-phase1-key-release.v1",
+  "evaluation_id": "independent-targeted-19",
+  "observed_utc": "2026-10-06T08:36:56.708593+00:00",
+  "pinlock_sha256": "50f33cf65161ede649262a14e0abe15f2a681d5d81935f537155405093298054",
+  "all_six_locklisted_primary_sha_lengths_readonly_verified": true,
+  "all_dispatch_positive_source_pin_hashes_declared_lengths_verified": true,
+  "dispatch_source_pin_count": 15,
+  "key_sha256": "8c86eac39ef53e08181a32db79638d9aa0bba721683bd50dd7cd1810e1353162",
+  "phase1_frozen_utc": "2026-10-06T08:34:14.997199+00:00",
+  "phase2_deadline_monotonic_ns": 106673854188189,
+  "original_whole_deadline_monotonic_ns": 107581729706517,
+  "mode_qualification": "Four owned metadata files initially0600 at P1freeze; owner changed modes only0444, all lockedbytes/START/freezedeadline unchanged.",
+  "no_reset_or_source_grade_read": true
+}

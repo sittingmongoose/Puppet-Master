@@ -1,0 +1,912 @@
+{
+  "cohort": "warm-reviews-infrastructure-and-accounting-032",
+  "snapshot_at": "2026-10-06T08:51:07.445501+00:00",
+  "sources": [
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/PUBLICATION_SELECTOR.json",
+      "published": "DEC016-source-032/PUBLICATION_SELECTOR.json",
+      "source_sha256": "e64cece06522b2fa86f1d9b11f6561ae3abc200a7bf6e1375bea66f3627d078b",
+      "public_sha256": "e64cece06522b2fa86f1d9b11f6561ae3abc200a7bf6e1375bea66f3627d078b",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/clock_fragment.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/clock_fragment.md",
+      "source_sha256": "0533d4afedeb0c630f087e57a904c143d0bb913639802257bbd86037ba4b06ad",
+      "public_sha256": "0533d4afedeb0c630f087e57a904c143d0bb913639802257bbd86037ba4b06ad",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/prepared-stage.json",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/prepared-stage.json",
+      "source_sha256": "fa8821e9253d808b8b4cffefbc8999b125ab7854a1ce64630115298e4b8fe76a",
+      "public_sha256": "fa8821e9253d808b8b4cffefbc8999b125ab7854a1ce64630115298e4b8fe76a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/workspace/TASK.inherited.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/workspace/TASK.inherited.md",
+      "source_sha256": "69041ca3788f17be74448bd6b00f67100293cfd9c003ff10ede779deb75045c1",
+      "public_sha256": "69041ca3788f17be74448bd6b00f67100293cfd9c003ff10ede779deb75045c1",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/workspace/TASK.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/workspace/TASK.md",
+      "source_sha256": "69041ca3788f17be74448bd6b00f67100293cfd9c003ff10ede779deb75045c1",
+      "public_sha256": "69041ca3788f17be74448bd6b00f67100293cfd9c003ff10ede779deb75045c1",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/workspace/inputs/brief.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/workspace/inputs/brief.md",
+      "source_sha256": "a0bd5d028acfedcd443b7860e43fb6240627873b354fe2a282ad9884990cbe50",
+      "public_sha256": "a0bd5d028acfedcd443b7860e43fb6240627873b354fe2a282ad9884990cbe50",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/workspace/inputs/delivery_objective.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/workspace/inputs/delivery_objective.md",
+      "source_sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+      "public_sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/workspace/inputs/output_contract.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/workspace/inputs/output_contract.md",
+      "source_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "public_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/workspace/inputs/source_access.json",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/workspace/inputs/source_access.json",
+      "source_sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "public_sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/workspace/inputs/source_separation.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/workspace/inputs/source_separation.md",
+      "source_sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d",
+      "public_sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/clock_fragment.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/clock_fragment.md",
+      "source_sha256": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86",
+      "public_sha256": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/prepared-stage.json",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/prepared-stage.json",
+      "source_sha256": "c6ebb70a3bc8bca0d0abe9b116b20e98aa579e99ac412f402d9d3a8ea1f77087",
+      "public_sha256": "c6ebb70a3bc8bca0d0abe9b116b20e98aa579e99ac412f402d9d3a8ea1f77087",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/workspace/TASK.inherited.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/workspace/TASK.inherited.md",
+      "source_sha256": "78e57f18a376d991c9c7d32856c16aa2b417cd256c0dfca781e1a1e03840be11",
+      "public_sha256": "78e57f18a376d991c9c7d32856c16aa2b417cd256c0dfca781e1a1e03840be11",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/workspace/TASK.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/workspace/TASK.md",
+      "source_sha256": "0ed06e65171c2c2a71cc5d2c013fd3839d434e935bf0061b7ba461fc6a8eb65a",
+      "public_sha256": "0ed06e65171c2c2a71cc5d2c013fd3839d434e935bf0061b7ba461fc6a8eb65a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/workspace/inputs/brief.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/workspace/inputs/brief.md",
+      "source_sha256": "a0bd5d028acfedcd443b7860e43fb6240627873b354fe2a282ad9884990cbe50",
+      "public_sha256": "a0bd5d028acfedcd443b7860e43fb6240627873b354fe2a282ad9884990cbe50",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/workspace/inputs/delivery_objective.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/workspace/inputs/delivery_objective.md",
+      "source_sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+      "public_sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/workspace/inputs/delivery_role_manifest.json",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/workspace/inputs/delivery_role_manifest.json",
+      "source_sha256": "f4ea17f39b181b76776debca506fe71a45caa441c579b36e0c517d2496d88ac8",
+      "public_sha256": "f4ea17f39b181b76776debca506fe71a45caa441c579b36e0c517d2496d88ac8",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/workspace/inputs/output_contract.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/workspace/inputs/output_contract.md",
+      "source_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "public_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/workspace/inputs/source_access.json",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/workspace/inputs/source_access.json",
+      "source_sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "public_sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/workspace/inputs/source_separation.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/workspace/inputs/source_separation.md",
+      "source_sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d",
+      "public_sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/clock_fragment.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/clock_fragment.md",
+      "source_sha256": "0533d4afedeb0c630f087e57a904c143d0bb913639802257bbd86037ba4b06ad",
+      "public_sha256": "0533d4afedeb0c630f087e57a904c143d0bb913639802257bbd86037ba4b06ad",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/prepared-stage.json",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/prepared-stage.json",
+      "source_sha256": "523c851fb5fe1ff6b11a146db871357aa8ddc2d3666f03574f76c7845ce89327",
+      "public_sha256": "523c851fb5fe1ff6b11a146db871357aa8ddc2d3666f03574f76c7845ce89327",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/workspace/TASK.inherited.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/workspace/TASK.inherited.md",
+      "source_sha256": "69041ca3788f17be74448bd6b00f67100293cfd9c003ff10ede779deb75045c1",
+      "public_sha256": "69041ca3788f17be74448bd6b00f67100293cfd9c003ff10ede779deb75045c1",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/workspace/TASK.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/workspace/TASK.md",
+      "source_sha256": "69041ca3788f17be74448bd6b00f67100293cfd9c003ff10ede779deb75045c1",
+      "public_sha256": "69041ca3788f17be74448bd6b00f67100293cfd9c003ff10ede779deb75045c1",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/workspace/inputs/brief.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/workspace/inputs/brief.md",
+      "source_sha256": "a0bd5d028acfedcd443b7860e43fb6240627873b354fe2a282ad9884990cbe50",
+      "public_sha256": "a0bd5d028acfedcd443b7860e43fb6240627873b354fe2a282ad9884990cbe50",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/workspace/inputs/delivery_objective.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/workspace/inputs/delivery_objective.md",
+      "source_sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+      "public_sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/workspace/inputs/output_contract.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/workspace/inputs/output_contract.md",
+      "source_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "public_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/workspace/inputs/source_access.json",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/workspace/inputs/source_access.json",
+      "source_sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "public_sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/workspace/inputs/source_separation.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/workspace/inputs/source_separation.md",
+      "source_sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d",
+      "public_sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/clock_fragment.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/clock_fragment.md",
+      "source_sha256": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86",
+      "public_sha256": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/prepared-stage.json",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/prepared-stage.json",
+      "source_sha256": "6067d4d89effceddcbbb9890ee8637bf6251be70700fffc9945d3e08ca7c8007",
+      "public_sha256": "6067d4d89effceddcbbb9890ee8637bf6251be70700fffc9945d3e08ca7c8007",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/workspace/TASK.inherited.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/workspace/TASK.inherited.md",
+      "source_sha256": "8478a95a7082a0c941910838a9ae99073a6250e7d29b5dd307deaa294b63f5d9",
+      "public_sha256": "8478a95a7082a0c941910838a9ae99073a6250e7d29b5dd307deaa294b63f5d9",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/workspace/TASK.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/workspace/TASK.md",
+      "source_sha256": "96a233fd836693c55145eb2da1dbdbfcf43edbe2ed8b6f28761037621e39cc83",
+      "public_sha256": "96a233fd836693c55145eb2da1dbdbfcf43edbe2ed8b6f28761037621e39cc83",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/workspace/inputs/brief.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/workspace/inputs/brief.md",
+      "source_sha256": "a0bd5d028acfedcd443b7860e43fb6240627873b354fe2a282ad9884990cbe50",
+      "public_sha256": "a0bd5d028acfedcd443b7860e43fb6240627873b354fe2a282ad9884990cbe50",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/workspace/inputs/delivery_objective.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/workspace/inputs/delivery_objective.md",
+      "source_sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+      "public_sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/workspace/inputs/delivery_role_manifest.json",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/workspace/inputs/delivery_role_manifest.json",
+      "source_sha256": "14bfc8abe03c71a8a1e3f5c6689223f206c8259d6dd7134dfd331cad5ea74fcf",
+      "public_sha256": "14bfc8abe03c71a8a1e3f5c6689223f206c8259d6dd7134dfd331cad5ea74fcf",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/workspace/inputs/output_contract.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/workspace/inputs/output_contract.md",
+      "source_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "public_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/workspace/inputs/source_access.json",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/workspace/inputs/source_access.json",
+      "source_sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "public_sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/workspace/inputs/source_separation.md",
+      "published": "DEC016-source-032/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/workspace/inputs/source_separation.md",
+      "source_sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d",
+      "public_sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/COMMON_RUNTIME_CLOSURE.json",
+      "published": "DEC016-source-032/COMMON_RUNTIME_CLOSURE.json",
+      "source_sha256": "84c7fae9f420ee5ba939a0473e21e43fff9eb9f4824f20fc474e817438d62ae5",
+      "public_sha256": "84c7fae9f420ee5ba939a0473e21e43fff9eb9f4824f20fc474e817438d62ae5",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/OLD_SOURCE_BYTE_SNAPSHOT.json",
+      "published": "DEC016-source-032/OLD_SOURCE_BYTE_SNAPSHOT.json",
+      "source_sha256": "e686fba19ccab21beda2d2eb8f7fbee84b5afdae137315a8ee5c30c69d233eaa",
+      "public_sha256": "e686fba19ccab21beda2d2eb8f7fbee84b5afdae137315a8ee5c30c69d233eaa",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/OUTBOX.json",
+      "published": "DEC016-source-032/OUTBOX.json",
+      "source_sha256": "4b1c4c46144122e66ff06a78d16d6a37c2a8136329efa68d2783c870ad9bf421",
+      "public_sha256": "4b1c4c46144122e66ff06a78d16d6a37c2a8136329efa68d2783c870ad9bf421",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/OUTBOX_FINAL.json",
+      "published": "DEC016-source-032/OUTBOX_FINAL.json",
+      "source_sha256": "8c6642e94398211a7462294fecfb4e985aec3c21d9fd73b1d8259425ec35a640",
+      "public_sha256": "8c6642e94398211a7462294fecfb4e985aec3c21d9fd73b1d8259425ec35a640",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/PIPELINE_CLOSURE.json",
+      "published": "DEC016-source-032/PIPELINE_CLOSURE.json",
+      "source_sha256": "2b6b5d36298624437b93dc45234c8c56cf2c69d71f5f744fe322fa2fc194e8e5",
+      "public_sha256": "2b6b5d36298624437b93dc45234c8c56cf2c69d71f5f744fe322fa2fc194e8e5",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/README.md",
+      "published": "DEC016-source-032/README.md",
+      "source_sha256": "845c635b4cec987834356980318bfc51a4df37cc083c155e0aad95aa35962bc4",
+      "public_sha256": "845c635b4cec987834356980318bfc51a4df37cc083c155e0aad95aa35962bc4",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/READY.json",
+      "published": "DEC016-source-032/READY.json",
+      "source_sha256": "b49a85cbd26fc55abba651d38b54b1a1b926fabd283673ab3ee6a8705909d284",
+      "public_sha256": "b49a85cbd26fc55abba651d38b54b1a1b926fabd283673ab3ee6a8705909d284",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/ROLE_BINDING_CONTRACT.json",
+      "published": "DEC016-source-032/ROLE_BINDING_CONTRACT.json",
+      "source_sha256": "2c2533b6124c82064869588f97fa6720efdcbae67f70a6c7578677e3e5c67d3c",
+      "public_sha256": "2c2533b6124c82064869588f97fa6720efdcbae67f70a6c7578677e3e5c67d3c",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/SOURCE_PIN.json",
+      "published": "DEC016-source-032/SOURCE_PIN.json",
+      "source_sha256": "8e86a3f475329add0e538cad2ddc35dd865d39f07b881f1ad0c339f9ca524d2d",
+      "public_sha256": "8e86a3f475329add0e538cad2ddc35dd865d39f07b881f1ad0c339f9ca524d2d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/VERIFICATION.json",
+      "published": "DEC016-source-032/VERIFICATION.json",
+      "source_sha256": "8f8ebff7ed2e59d2676f325f271acaefa34814b13408d782cadb2ca662fefb27",
+      "public_sha256": "8f8ebff7ed2e59d2676f325f271acaefa34814b13408d782cadb2ca662fefb27",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/card.json",
+      "published": "DEC016-source-032/card.json",
+      "source_sha256": "22b0f3c3750616cb885de65302ddd2419cf8bda88a81b8df45a6f1a2a6a18890",
+      "public_sha256": "22b0f3c3750616cb885de65302ddd2419cf8bda88a81b8df45a6f1a2a6a18890",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/prepare.py",
+      "published": "DEC016-source-032/prepare.py",
+      "source_sha256": "b08ab32b9e3470dbc7880d7850a6857089a1ccd6338b97723b9bed9775c704b2",
+      "public_sha256": "b08ab32b9e3470dbc7880d7850a6857089a1ccd6338b97723b9bed9775c704b2",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/registration.json",
+      "published": "DEC016-source-032/registration.json",
+      "source_sha256": "869a49c6c14de0eaaa31562eea9169ed8c1a60cf3b723f51cabe9da508d42bfa",
+      "public_sha256": "869a49c6c14de0eaaa31562eea9169ed8c1a60cf3b723f51cabe9da508d42bfa",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/role_birth.py",
+      "published": "DEC016-source-032/role_birth.py",
+      "source_sha256": "f9827af0cc344f06d1bd9a3f9ceeeed9a1e2f8ea588380600ee54db823df4fc4",
+      "public_sha256": "f9827af0cc344f06d1bd9a3f9ceeeed9a1e2f8ea588380600ee54db823df4fc4",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/seal.py",
+      "published": "DEC016-source-032/seal.py",
+      "source_sha256": "8ab8587ece1b77e44e3644dead6acd1f966f93afc6e6fd9bfb12a46d9b99b420",
+      "public_sha256": "8ab8587ece1b77e44e3644dead6acd1f966f93afc6e6fd9bfb12a46d9b99b420",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/test_repair.py",
+      "published": "DEC016-source-032/test_repair.py",
+      "source_sha256": "4bd6a6ef4e23c8370df00818e4488733e2b6e182e11a53df983f8d0577ec307c",
+      "public_sha256": "4bd6a6ef4e23c8370df00818e4488733e2b6e182e11a53df983f8d0577ec307c",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/WARM4_WARM5_FINISHED_REPORT_PUBLIC_SELECTION_002.json",
+      "published": "frozen-evidence/WARM4_WARM5_FINISHED_REPORT_PUBLIC_SELECTION_002.json",
+      "source_sha256": "f6386535954d4c3966a3fc88159000bb9495f56730246a949e46eaec4234431e",
+      "public_sha256": "f6386535954d4c3966a3fc88159000bb9495f56730246a949e46eaec4234431e",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-warm-recovery-4/phase1-report.md",
+      "published": "evaluation/independent-warm-recovery-4/phase1-report.md",
+      "source_sha256": "921e7f32ebace35ed8a58797261fcf64c887132a3d393306a03042a4a0c7b1fe",
+      "public_sha256": "921e7f32ebace35ed8a58797261fcf64c887132a3d393306a03042a4a0c7b1fe",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-warm-recovery-4/phase1-judgment.json",
+      "published": "evaluation/independent-warm-recovery-4/phase1-judgment.json",
+      "source_sha256": "e8dce0290fe3209a301e8b443ca7b79ff9a208ce9f8aa43f2bdd2ff9dbf973f3",
+      "public_sha256": "e8dce0290fe3209a301e8b443ca7b79ff9a208ce9f8aa43f2bdd2ff9dbf973f3",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-warm-recovery-4/phase2-report.md",
+      "published": "evaluation/independent-warm-recovery-4/phase2-report.md",
+      "source_sha256": "213a65c34375c1932d0048c9965ffd88230e4435cdebed906198fae96642f385",
+      "public_sha256": "213a65c34375c1932d0048c9965ffd88230e4435cdebed906198fae96642f385",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-warm-recovery-4/phase2-verification.json",
+      "published": "evaluation/independent-warm-recovery-4/phase2-verification.json",
+      "source_sha256": "4db90dd9a8a7e55b4e4488a3935f81831e87522c60a64fabf9b359c5310479d6",
+      "public_sha256": "4db90dd9a8a7e55b4e4488a3935f81831e87522c60a64fabf9b359c5310479d6",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-warm-recovery-4/closure.json",
+      "published": "evaluation/independent-warm-recovery-4/closure.json",
+      "source_sha256": "f6ac09edd139c423b28260bfd76555b665a954e9810f1dd60f5e48c82604e27f",
+      "public_sha256": "f6ac09edd139c423b28260bfd76555b665a954e9810f1dd60f5e48c82604e27f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-warm-recovery-5/phase1/report.md",
+      "published": "evaluation/independent-warm-recovery-5/phase1/report.md",
+      "source_sha256": "4c1a794aab931ad9e94fd560734215737e69a2a9a721f4e408755f628b0a0bc5",
+      "public_sha256": "4c1a794aab931ad9e94fd560734215737e69a2a9a721f4e408755f628b0a0bc5",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-warm-recovery-5/phase1/judgment.json",
+      "published": "evaluation/independent-warm-recovery-5/phase1/judgment.json",
+      "source_sha256": "4394f5245852a25fc3a4575980f875b2d38a1f7795703244af88825dddb800da",
+      "public_sha256": "4394f5245852a25fc3a4575980f875b2d38a1f7795703244af88825dddb800da",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-warm-recovery-5/phase1/freeze.json",
+      "published": "evaluation/independent-warm-recovery-5/phase1/freeze.json",
+      "source_sha256": "5d8c63004548e094d5a875b17647d8a9ebff431be25053092c9e95ab222001fd",
+      "public_sha256": "5d8c63004548e094d5a875b17647d8a9ebff431be25053092c9e95ab222001fd",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-warm-recovery-5/closure.json",
+      "published": "evaluation/independent-warm-recovery-5/closure.json",
+      "source_sha256": "830180b2e9bac54c94b1d22cf91c5cbf2b06e0e74d12c6ad57fb96e12c419b0f",
+      "public_sha256": "830180b2e9bac54c94b1d22cf91c5cbf2b06e0e74d12c6ad57fb96e12c419b0f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-warm-recovery-5/phase2/report.md",
+      "published": "evaluation/independent-warm-recovery-5/phase2/report.md",
+      "source_sha256": "8ee25fd0ebe316a3f8e5aeb25cc285eb59c55d61bd9112dfc5236ee618ea3628",
+      "public_sha256": "8ee25fd0ebe316a3f8e5aeb25cc285eb59c55d61bd9112dfc5236ee618ea3628",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-warm-recovery-5/phase2/assessment.json",
+      "published": "evaluation/independent-warm-recovery-5/phase2/assessment.json",
+      "source_sha256": "9aa85bbbe286a8d49d76250cf41a665bc7e6124141e4a38f42479f090c369931",
+      "public_sha256": "9aa85bbbe286a8d49d76250cf41a665bc7e6124141e4a38f42479f090c369931",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/PUBLIC_SELECTION_053.json",
+      "published": "frozen-evidence/PUBLIC_SELECTION_053.json",
+      "source_sha256": "0846d6706431e711a38f6309fb70870e5f64bb4174ea5cc117223b45b744b526",
+      "public_sha256": "0846d6706431e711a38f6309fb70870e5f64bb4174ea5cc117223b45b744b526",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/phase2/INDEPENDENT-TARGETED-18_CURRENT_RUNTIME_001.json",
+      "published": "frozen-evidence/phase2/INDEPENDENT-TARGETED-18_CURRENT_RUNTIME_001.json",
+      "source_sha256": "b291c1a41966e556905a1b5813d31cd7f54657e403735bb0b7ac7c1c44818050",
+      "public_sha256": "b291c1a41966e556905a1b5813d31cd7f54657e403735bb0b7ac7c1c44818050",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/phase2/TD18_CURRENT_RESOURCE_EXECUTION_001.json",
+      "published": "frozen-evidence/phase2/TD18_CURRENT_RESOURCE_EXECUTION_001.json",
+      "source_sha256": "582d8e04f31b6e15bc150915bb2d780315209b4418d477b3c45b587f76fcf2ca",
+      "public_sha256": "582d8e04f31b6e15bc150915bb2d780315209b4418d477b3c45b587f76fcf2ca",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/observations/TD18_PHASE1_VERIFIED_KEY_RELEASE_001.json",
+      "published": "frozen-evidence/observations/TD18_PHASE1_VERIFIED_KEY_RELEASE_001.json",
+      "source_sha256": "ee3a54a71fc2f7aa0bf8fc6fb6e4c3acadc09e28db58221e930e034fec0f1c3c",
+      "public_sha256": "ee3a54a71fc2f7aa0bf8fc6fb6e4c3acadc09e28db58221e930e034fec0f1c3c",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/phase2/INDEPENDENT-TARGETED-19_CURRENT_RUNTIME_001.json",
+      "published": "frozen-evidence/phase2/INDEPENDENT-TARGETED-19_CURRENT_RUNTIME_001.json",
+      "source_sha256": "285eb025494554938c5828a5f4784254c2ae440fee978bf444b5b49ce7d1079c",
+      "public_sha256": "285eb025494554938c5828a5f4784254c2ae440fee978bf444b5b49ce7d1079c",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/phase2/TD19_CURRENT_RESOURCE_EXECUTION_001.json",
+      "published": "frozen-evidence/phase2/TD19_CURRENT_RESOURCE_EXECUTION_001.json",
+      "source_sha256": "0b1c7d4712ba5eef20dffcaef843710b9c387d4e4d21c1564e869d34b699b4e5",
+      "public_sha256": "0b1c7d4712ba5eef20dffcaef843710b9c387d4e4d21c1564e869d34b699b4e5",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/observations/TD19_PHASE1_VERIFIED_KEY_RELEASE_001.json",
+      "published": "frozen-evidence/observations/TD19_PHASE1_VERIFIED_KEY_RELEASE_001.json",
+      "source_sha256": "f2fc1b153798d8c40cd1b54f05e7a33233601fc4803a86629552898b9746526a",
+      "public_sha256": "f2fc1b153798d8c40cd1b54f05e7a33233601fc4803a86629552898b9746526a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/TD18-REQUESTED-ADMITTED-SOURCE-WITNESS-001/A/source-role-pin-projection.json",
+      "published": "frozen-evidence/selected-evidence/TD18-REQUESTED-ADMITTED-SOURCE-WITNESS-001/A/source-role-pin-projection.json",
+      "source_sha256": "ce3fdec69306cba74606b55498568e3088a24233b7833d1c8b7aa72fa4d72cff",
+      "public_sha256": "ce3fdec69306cba74606b55498568e3088a24233b7833d1c8b7aa72fa4d72cff",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/TD18-REQUESTED-ADMITTED-SOURCE-WITNESS-001/B/source-role-pin-projection.json",
+      "published": "frozen-evidence/selected-evidence/TD18-REQUESTED-ADMITTED-SOURCE-WITNESS-001/B/source-role-pin-projection.json",
+      "source_sha256": "39d92c4020af6ac72b74226163a633c223c80200144d5b68cb4e51c1d33c8e2b",
+      "public_sha256": "39d92c4020af6ac72b74226163a633c223c80200144d5b68cb4e51c1d33c8e2b",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/TD18-REQUESTED-ADMITTED-SOURCE-WITNESS-001/B/exec-8tot6bkb/code.py",
+      "published": "frozen-evidence/selected-evidence/TD18-REQUESTED-ADMITTED-SOURCE-WITNESS-001/B/exec-8tot6bkb/code.py",
+      "source_sha256": "9f037d0a5d02666faf8024afde09c6a9187c6970ed48e94e22cc38f265aad9ed",
+      "public_sha256": "9f037d0a5d02666faf8024afde09c6a9187c6970ed48e94e22cc38f265aad9ed",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/TD18-REQUESTED-ADMITTED-SOURCE-WITNESS-001/B/exec-8tot6bkb/data.json",
+      "published": "frozen-evidence/selected-evidence/TD18-REQUESTED-ADMITTED-SOURCE-WITNESS-001/B/exec-8tot6bkb/data.json",
+      "source_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "public_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/TD18-REQUESTED-ADMITTED-SOURCE-WITNESS-001/B/exec-8tot6bkb/stdout.bin",
+      "published": "frozen-evidence/selected-evidence/TD18-REQUESTED-ADMITTED-SOURCE-WITNESS-001/B/exec-8tot6bkb/stdout.bin",
+      "source_sha256": "aa322af6479a2bc114a2ce382d39ba25490a213034f4db1fa2bdf6b7aac9f81a",
+      "public_sha256": "aa322af6479a2bc114a2ce382d39ba25490a213034f4db1fa2bdf6b7aac9f81a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/TD18-REQUESTED-ADMITTED-SOURCE-WITNESS-001/B/exec-8tot6bkb/stderr.bin",
+      "published": "frozen-evidence/selected-evidence/TD18-REQUESTED-ADMITTED-SOURCE-WITNESS-001/B/exec-8tot6bkb/stderr.bin",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/TD18-REQUESTED-ADMITTED-SOURCE-WITNESS-001/B/exec-8tot6bkb/execution-facts.json",
+      "published": "frozen-evidence/selected-evidence/TD18-REQUESTED-ADMITTED-SOURCE-WITNESS-001/B/exec-8tot6bkb/execution-facts.json",
+      "source_sha256": "1c51f08472193845188574e64045a479c1bc27aa818880e5ba19c7b8ecd70372",
+      "public_sha256": "1c51f08472193845188574e64045a479c1bc27aa818880e5ba19c7b8ecd70372",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/TD18-REQUESTED-ADMITTED-SOURCE-WITNESS-001/B/exec-deuq9qzg/code.py",
+      "published": "frozen-evidence/selected-evidence/TD18-REQUESTED-ADMITTED-SOURCE-WITNESS-001/B/exec-deuq9qzg/code.py",
+      "source_sha256": "3cb6ea584e2b02ba034e45ed023376ecb800af26bba151e8a9921607e2029b49",
+      "public_sha256": "3cb6ea584e2b02ba034e45ed023376ecb800af26bba151e8a9921607e2029b49",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/TD18-REQUESTED-ADMITTED-SOURCE-WITNESS-001/B/exec-deuq9qzg/data.json",
+      "published": "frozen-evidence/selected-evidence/TD18-REQUESTED-ADMITTED-SOURCE-WITNESS-001/B/exec-deuq9qzg/data.json",
+      "source_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "public_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/TD18-REQUESTED-ADMITTED-SOURCE-WITNESS-001/B/exec-deuq9qzg/stdout.bin",
+      "published": "frozen-evidence/selected-evidence/TD18-REQUESTED-ADMITTED-SOURCE-WITNESS-001/B/exec-deuq9qzg/stdout.bin",
+      "source_sha256": "f51d7dbadd190cfe8c6d3270a130ffba7ae3a169741d21f9c0b0ae691cd1a2eb",
+      "public_sha256": "f51d7dbadd190cfe8c6d3270a130ffba7ae3a169741d21f9c0b0ae691cd1a2eb",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/TD18-REQUESTED-ADMITTED-SOURCE-WITNESS-001/B/exec-deuq9qzg/stderr.bin",
+      "published": "frozen-evidence/selected-evidence/TD18-REQUESTED-ADMITTED-SOURCE-WITNESS-001/B/exec-deuq9qzg/stderr.bin",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/TD18-REQUESTED-ADMITTED-SOURCE-WITNESS-001/B/exec-deuq9qzg/execution-facts.json",
+      "published": "frozen-evidence/selected-evidence/TD18-REQUESTED-ADMITTED-SOURCE-WITNESS-001/B/exec-deuq9qzg/execution-facts.json",
+      "source_sha256": "0bf441cba28575e8f2bcf3217f0388e63887dabee3dade68bf251799f69756a9",
+      "public_sha256": "0bf441cba28575e8f2bcf3217f0388e63887dabee3dade68bf251799f69756a9",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/PUBLIC_SELECTION_054.json",
+      "published": "frozen-evidence/PUBLIC_SELECTION_054.json",
+      "source_sha256": "b83a80edffc492326a09e1f4cebe9ad2e40a1a20bf4861de6441ddb04852cf66",
+      "public_sha256": "b83a80edffc492326a09e1f4cebe9ad2e40a1a20bf4861de6441ddb04852cf66",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P8-I01-FRESH-RESEARCH-001/dispatch.json",
+      "published": "frozen-evidence/packets/P8-I01-FRESH-RESEARCH-001/dispatch.json",
+      "source_sha256": "4b837ebb8c1fe96b795fc8bc83e4559041b5f11b0318281a66c33f068a08bcbf",
+      "public_sha256": "b374dc80acb1bcbe3e4627bdb5d8e242495bd5cd76e2b3ac8484b7a2011ff6f7",
+      "transform": "LAB_ROOT metadata labels"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P8-I01-FRESH-RESEARCH-001/outputs/B/research/leads.json",
+      "published": "frozen-evidence/packets/P8-I01-FRESH-RESEARCH-001/outputs/B/research/leads.json",
+      "source_sha256": "7459f0b786971af2eb12e7c01d46f7764e3f9a0e7eaea519278444592f50260f",
+      "public_sha256": "7459f0b786971af2eb12e7c01d46f7764e3f9a0e7eaea519278444592f50260f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P8-I01-FRESH-RESEARCH-001/outputs/B/research/proposal.md",
+      "published": "frozen-evidence/packets/P8-I01-FRESH-RESEARCH-001/outputs/B/research/proposal.md",
+      "source_sha256": "50902ea7bbe01b80bc93b164f2b317626f12d92944379a8f7b2bed6911202fc3",
+      "public_sha256": "50902ea7bbe01b80bc93b164f2b317626f12d92944379a8f7b2bed6911202fc3",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P8-I01-FRESH-RESEARCH-001/outputs/B/research/sources.json",
+      "published": "frozen-evidence/packets/P8-I01-FRESH-RESEARCH-001/outputs/B/research/sources.json",
+      "source_sha256": "b241c8da94c070534530b9b1aaab700992b642438090543ab5c3a186ae51adcf",
+      "public_sha256": "b241c8da94c070534530b9b1aaab700992b642438090543ab5c3a186ae51adcf",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P8-I01-FRESH-RESEARCH-001/outputs/B/research/witnesses.json",
+      "published": "frozen-evidence/packets/P8-I01-FRESH-RESEARCH-001/outputs/B/research/witnesses.json",
+      "source_sha256": "34cc0f5f20e6e4360ad8eb2190b7dcbf71d44ee3e1b2d1dfb124621eed837af6",
+      "public_sha256": "34cc0f5f20e6e4360ad8eb2190b7dcbf71d44ee3e1b2d1dfb124621eed837af6",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P8-I01-FRESH-RESEARCH-001/task/actual_launched_research_task.md",
+      "published": "frozen-evidence/packets/P8-I01-FRESH-RESEARCH-001/task/actual_launched_research_task.md",
+      "source_sha256": "d73838573b11f13ec3035b4fc7041b570e46faea48f0cfa2021dfea045680f44",
+      "public_sha256": "d73838573b11f13ec3035b4fc7041b570e46faea48f0cfa2021dfea045680f44",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P8-I01-FRESH-RESEARCH-001/task/brief.md",
+      "published": "frozen-evidence/packets/P8-I01-FRESH-RESEARCH-001/task/brief.md",
+      "source_sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "public_sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P8-I01-FRESH-RESEARCH-001/task/common_criteria.json",
+      "published": "frozen-evidence/packets/P8-I01-FRESH-RESEARCH-001/task/common_criteria.json",
+      "source_sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "public_sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P8-I01-FRESH-RESEARCH-001/task/coverage_map.json",
+      "published": "frozen-evidence/packets/P8-I01-FRESH-RESEARCH-001/task/coverage_map.json",
+      "source_sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "public_sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P8-I01-FRESH-RESEARCH-001/task/important_checks.json",
+      "published": "frozen-evidence/packets/P8-I01-FRESH-RESEARCH-001/task/important_checks.json",
+      "source_sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "public_sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P8-I01-FRESH-RESEARCH-001/task/output_contract.md",
+      "published": "frozen-evidence/packets/P8-I01-FRESH-RESEARCH-001/task/output_contract.md",
+      "source_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "public_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P8-I01-FRESH-RESEARCH-001/task/source_access.json",
+      "published": "frozen-evidence/packets/P8-I01-FRESH-RESEARCH-001/task/source_access.json",
+      "source_sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "public_sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/observations/P8_RESEARCH_SOURCE_SCOPE_INTERFACE_CLARIFIER_001.json",
+      "published": "frozen-evidence/observations/P8_RESEARCH_SOURCE_SCOPE_INTERFACE_CLARIFIER_001.json",
+      "source_sha256": "0b8350ac9aeea3722fa5fe606bc23545951dcd659e155f52674b72bdceb4bd53",
+      "public_sha256": "0b8350ac9aeea3722fa5fe606bc23545951dcd659e155f52674b72bdceb4bd53",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "consolidation/workload-005/PUBLICATION_SELECTOR.json",
+      "published": "consolidation/workload-005/PUBLICATION_SELECTOR.json",
+      "source_sha256": "360bb2255001a936c28d2891e65fc0e8b21375b7ff437ad17d072c093995da5d",
+      "public_sha256": "360bb2255001a936c28d2891e65fc0e8b21375b7ff437ad17d072c093995da5d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "consolidation/workload-005/WORKLOAD_SCOREBOARD.json",
+      "published": "consolidation/workload-005/WORKLOAD_SCOREBOARD.json",
+      "source_sha256": "4a221612c13858b2cc508dec9507f1d6b10bcdd442ec132fc7f16fb979640462",
+      "public_sha256": "4a221612c13858b2cc508dec9507f1d6b10bcdd442ec132fc7f16fb979640462",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "consolidation/workload-005/README.md",
+      "published": "consolidation/workload-005/README.md",
+      "source_sha256": "f472344eba959ffb99a904987601b15e6700e721e44d7fbe3a9ba02e747fd7fb",
+      "public_sha256": "f472344eba959ffb99a904987601b15e6700e721e44d7fbe3a9ba02e747fd7fb",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "consolidation/workload-005/NEUTRAL_CAPTURE_RECEIPT.json",
+      "published": "consolidation/workload-005/NEUTRAL_CAPTURE_RECEIPT.json",
+      "source_sha256": "90e25d376439738a9e46bcd1e3d669717381aeb70e0dece6732ddee545dc0413",
+      "public_sha256": "90e25d376439738a9e46bcd1e3d669717381aeb70e0dece6732ddee545dc0413",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-017/PUBLIC_SELECTION.json",
+      "published": "accounting/cohort-017/PUBLIC_SELECTION.json",
+      "source_sha256": "31bc0a9d48f2085b03bfc6ade59fc7c2e3b074515f7e142484679d46ddd80ab0",
+      "public_sha256": "31bc0a9d48f2085b03bfc6ade59fc7c2e3b074515f7e142484679d46ddd80ab0",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-017/ACCOUNTING_REPORT_READY_CLOCK.json",
+      "published": "accounting/cohort-017/ACCOUNTING_REPORT_READY_CLOCK.json",
+      "source_sha256": "e9779d7a0d90260b57fdd5e556754807c2317a8221709bd450a268952731e432",
+      "public_sha256": "e9779d7a0d90260b57fdd5e556754807c2317a8221709bd450a268952731e432",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-017/ACCOUNTING_REPORT_READY_CLOCK.schema.json",
+      "published": "accounting/cohort-017/ACCOUNTING_REPORT_READY_CLOCK.schema.json",
+      "source_sha256": "73cfdffd9ccd66e50a2e9a7117540ffa1a9a3f30aca865374f6eef5d1749db79",
+      "public_sha256": "73cfdffd9ccd66e50a2e9a7117540ffa1a9a3f30aca865374f6eef5d1749db79",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-017/COST_SNAPSHOT.md",
+      "published": "accounting/cohort-017/COST_SNAPSHOT.md",
+      "source_sha256": "7d2bf3364e95b831fbe540cd1763c54ea2279876f2e7984d8c681d27dfa5028f",
+      "public_sha256": "7d2bf3364e95b831fbe540cd1763c54ea2279876f2e7984d8c681d27dfa5028f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-017/KEEPER_RECEIPT.json",
+      "published": "accounting/cohort-017/KEEPER_RECEIPT.json",
+      "source_sha256": "e6883227613068b45f8e6e78b2dd4551ea86edac0653412523d50bc10ff60420",
+      "public_sha256": "e6883227613068b45f8e6e78b2dd4551ea86edac0653412523d50bc10ff60420",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-017/KEEPER_RECEIPT.schema.json",
+      "published": "accounting/cohort-017/KEEPER_RECEIPT.schema.json",
+      "source_sha256": "4ed35467aa205e4424b529ac684d7dcfe09d9e5e112ae587ff7d36afe80a2356",
+      "public_sha256": "4ed35467aa205e4424b529ac684d7dcfe09d9e5e112ae587ff7d36afe80a2356",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-017/VERIFICATION.json",
+      "published": "accounting/cohort-017/VERIFICATION.json",
+      "source_sha256": "e44ec3edd6192e987fc3dca2ef560b90bbeb6ebdb93a90caf34646b1d7e4c11e",
+      "public_sha256": "e44ec3edd6192e987fc3dca2ef560b90bbeb6ebdb93a90caf34646b1d7e4c11e",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-017/Warm4-clock-qualifier.safe.json",
+      "published": "accounting/cohort-017/Warm4-clock-qualifier.safe.json",
+      "source_sha256": "d608c066ae49dc686413a54cdc2c026e53eb8982a2fb254777183ccd1d6d6489",
+      "public_sha256": "d608c066ae49dc686413a54cdc2c026e53eb8982a2fb254777183ccd1d6d6489",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-017/Warm4-clock-qualifier.safe.schema.json",
+      "published": "accounting/cohort-017/Warm4-clock-qualifier.safe.schema.json",
+      "source_sha256": "da04f332f45d1ed4b77806826aed6389e94cb8030df6e02c491be14a04bbba40",
+      "public_sha256": "da04f332f45d1ed4b77806826aed6389e94cb8030df6e02c491be14a04bbba40",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-017/attempts.safe.json",
+      "published": "accounting/cohort-017/attempts.safe.json",
+      "source_sha256": "387b045d6da27e84d95be538486b23a35cea0329645e6c87f327cc6687cff375",
+      "public_sha256": "387b045d6da27e84d95be538486b23a35cea0329645e6c87f327cc6687cff375",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-017/attempts.safe.schema.json",
+      "published": "accounting/cohort-017/attempts.safe.schema.json",
+      "source_sha256": "9ae617f920a5baab2c4683eacab135d784f21b6b274e6e9cc522ddc2d4ad180c",
+      "public_sha256": "9ae617f920a5baab2c4683eacab135d784f21b6b274e6e9cc522ddc2d4ad180c",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-017/evaluator-clocks.safe.json",
+      "published": "accounting/cohort-017/evaluator-clocks.safe.json",
+      "source_sha256": "f3e872a5ce0cef50f390e6000fe8e94f359f44287922f3834159c23e7bd9ea6f",
+      "public_sha256": "f3e872a5ce0cef50f390e6000fe8e94f359f44287922f3834159c23e7bd9ea6f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-017/evaluator-clocks.safe.schema.json",
+      "published": "accounting/cohort-017/evaluator-clocks.safe.schema.json",
+      "source_sha256": "6bbdb27c0520737bb687aeacbe42a9421401d4140c25ea3e84a6169a6e88cba6",
+      "public_sha256": "6bbdb27c0520737bb687aeacbe42a9421401d4140c25ea3e84a6169a6e88cba6",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-017/snapshot.safe.json",
+      "published": "accounting/cohort-017/snapshot.safe.json",
+      "source_sha256": "b5cb63bc643b956c3a2d050cc2b14c2735e34b278dfa034b5d5f015d19554d4c",
+      "public_sha256": "b5cb63bc643b956c3a2d050cc2b14c2735e34b278dfa034b5d5f015d19554d4c",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-017/snapshot.safe.schema.json",
+      "published": "accounting/cohort-017/snapshot.safe.schema.json",
+      "source_sha256": "8293646edef909790752b07aade27d7b4571aeedfcc82794379a788bddbffae9",
+      "public_sha256": "8293646edef909790752b07aade27d7b4571aeedfcc82794379a788bddbffae9",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-017/terminal-cohorts.safe.json",
+      "published": "accounting/cohort-017/terminal-cohorts.safe.json",
+      "source_sha256": "85ac90eb05eece623d21deedc9629289b6e27648bb0baa9c3d1a978841cdbd40",
+      "public_sha256": "85ac90eb05eece623d21deedc9629289b6e27648bb0baa9c3d1a978841cdbd40",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-017/terminal-cohorts.safe.schema.json",
+      "published": "accounting/cohort-017/terminal-cohorts.safe.schema.json",
+      "source_sha256": "2d25e2a17b5f64871164e15c2a0ff95bab3d5f6b52e9c3fc72a13948d0bab4b6",
+      "public_sha256": "2d25e2a17b5f64871164e15c2a0ff95bab3d5f6b52e9c3fc72a13948d0bab4b6",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "state/history/projection-20261006T080706.819555Z/PUBLIC_SELECTION.json",
+      "published": "restart/cohort032/PUBLIC_SELECTION.json",
+      "source_sha256": "975b577fcb6eefc5650d9c7f0b4bd270bdc33b8453a12985b3f88f7be4bef443",
+      "public_sha256": "975b577fcb6eefc5650d9c7f0b4bd270bdc33b8453a12985b3f88f7be4bef443",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "state/history/projection-20261006T080706.819555Z/frozen-state--current.json",
+      "published": "restart/cohort032/frozen-state--current.json",
+      "source_sha256": "fb4f94f0ea5ee7ac70c214aa42ec99ca5b7200e3b7705e35561e1f8577d98c43",
+      "public_sha256": "fc66942098d81fc12fb9b8a12ee8f30fbb86b4b5226f3572ad460700135a61c3",
+      "transform": "LAB_ROOT metadata labels"
+    },
+    {
+      "source": "state/history/projection-20261006T080706.819555Z/frozen-state--campaign.json",
+      "published": "restart/cohort032/frozen-state--campaign.json",
+      "source_sha256": "fb4f94f0ea5ee7ac70c214aa42ec99ca5b7200e3b7705e35561e1f8577d98c43",
+      "public_sha256": "fc66942098d81fc12fb9b8a12ee8f30fbb86b4b5226f3572ad460700135a61c3",
+      "transform": "LAB_ROOT metadata labels"
+    },
+    {
+      "source": "state/history/projection-20261006T080706.819555Z/frozen-CURRENT.md",
+      "published": "restart/cohort032/frozen-CURRENT.md",
+      "source_sha256": "049d26e572514b5b820d06c862356203f5a27766343c9fb5515f7cb6e54f44eb",
+      "public_sha256": "049d26e572514b5b820d06c862356203f5a27766343c9fb5515f7cb6e54f44eb",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "state/history/projection-20261006T080706.819555Z/PROJECTION_RECEIPT.json",
+      "published": "restart/cohort032/PROJECTION_RECEIPT.json",
+      "source_sha256": "daaf8c2c881585eedcbabe8aee60c5df88439f6c4bc3d2d38fb71491029195b1",
+      "public_sha256": "daaf8c2c881585eedcbabe8aee60c5df88439f6c4bc3d2d38fb71491029195b1",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "state/history/projection-20261006T080706.819555Z/BACKUP_RECEIPT.json",
+      "published": "restart/cohort032/BACKUP_RECEIPT.json",
+      "source_sha256": "9a96da0bc4a25c888d6fd8b3665df9510da49fdbe5fee10afe61506318aed4f0",
+      "public_sha256": "9a96da0bc4a25c888d6fd8b3665df9510da49fdbe5fee10afe61506318aed4f0",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/dispatcher/DEC016_IMPORT_001/PRELAUNCH.json",
+      "published": "admissions/cohort032/DEC016_PRELAUNCH.json",
+      "source_sha256": "1218c3a4a3fdb76859148476a35391c9a7148ab0b4bf0de41f987bf37346de7a",
+      "public_sha256": "a0571edc78f8e2f5150c3aad77b4a8eeabab3832908ae2cacf4c3d1d98219f8d",
+      "transform": "LAB_ROOT metadata labels"
+    }
+  ],
+  "Warm_review_scope": "Warm4/Warm5 current derivative independent reports preserve originalgrades/no freshmatchedtargetcredit; only exact selectedreports and clocks",
+  "Warm4_required_clock_qualification": "LiteralinclusiveP2796.266980257 over196.266980257/reportready382.475863119 subset/requiredhandoffwithincapUNKNOWN; qualifieralready031 immutable",
+  "Warm5_clock": "Inclusive592.202309152/whole1039.814658971 originalcaps/noreset",
+  "DEC016": "54frozenneutralsource/task/configs plus actual atomicprelaunch proof; bothcriticactivations already031; cumulativeinfrastructure continuations no researchrerun or newlogicalcredit",
+  "accounting017": "08:44:53.739814\u201354.385525Z253attempts235confirmedstarts640014652known+31usageUNKNOWN/0unknownstarts; historicalcosts retained/roothelpercounterseparate",
+  "workload005": "Distinctdated08:46:23.661912\u2013747831 UTC metadata capture with stablewindowhashes; no wholecampaign atomicclaim",
+  "restart": "Frozenkeeper54at08:07:06.819555UTC earlier distinctcutoff",
+  "operational_pipelines_prior_verified": 6,
+  "operational_matched_pairs_prior_verified": 2,
+  "causal_winner": null
+}

@@ -1,0 +1,230 @@
+{
+  "catalog_schema": "er9.research.sources.v1",
+  "captured_utc": "2026-10-06T04:08:00Z/2026-10-06T04:14:20Z",
+  "note": "Capture identity = exact HTTP response body bytes as delivered by the admitted public_https_get tool (sha256 of full captured body). Pins are exact locators inside the captured bytes or the named file at a pinned tag/version.",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Next-generation file formats (NGFF), version 0.4 (Final Community Group Report, 1 October 2026)",
+      "publisher": "OME / Open Microscopy Environment",
+      "url": "https://ngff.openmicroscopy.org/0.4/",
+      "pin": {
+        "locator": "Sections 2.1 (Zarr v2 hierarchy, nested chunk layout), 3.1 (\"axes\" metadata: name MUST; type/unit SHOULD, UDUNITS-2), 3.3 (\"coordinateTransformations\": identity/translation/scale, applied sequentially in order), 3.4 (\"multiscales\": 2-5 dims; axes ordered time, channel/custom, space; datasets ordered largest->smallest; exactly one scale per dataset; translation after scale; version history table), 3.5 (\"omero\": channel window min/max/start/end; rdefs defaultZ/defaultT), 3.6-3.7 (labels/image-label), 5 (implementations list incl. bioformats2raw, ome-zarr-py, vizarr, bigdataviewer-ome-zarr), 7 (version history: 0.3.0 added axes field; 0.4.0 2022-02-08 'multiscales: add axes type, units and coordinateTransformations'; 0.4.1 bioformats2raw.layout)"
+      },
+      "capture": {
+        "captured_via": "public_https_get of https://ngff.openmicroscopy.org/0.4/index.html",
+        "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+        "bytes": 163120,
+        "captured_utc": "2026-10-06T04:08:06.667639+00:00",
+        "etag": "W/\"a34b4d538e29489772eebf7fe832f7c7\"",
+        "last_modified": "Thu, 01 Oct 2026 09:42:12 GMT"
+      },
+      "applicability": "Primary normative contract for the project's image metadata model (axes/units/scale/translation/channel windows) and for OME-Zarr as derived-data/exchange format. Community-group report, not a formal standard; MUST/SHOULD language per RFC 2119."
+    },
+    {
+      "id": "S2",
+      "title": "napari 0.4.18 release notes (captured at git tag v0.4.18)",
+      "publisher": "napari/napari",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.4.18/docs/release/release_0_4_18.md",
+      "pin": {
+        "locator": "Bug Fixes list entries: 'Fix display of order and scale combinations (#5004)'; 'Enforce that contrast limits must be increasing (#5036)'; 'Fix editing shape data above 2 dimensions (#5383)'; 'Add cancellation functionality to progress (#5728)' (New Features); 'Fix copy/paste of points (#5795)'; 'Refactor Main Window status bar to improve information presentation (#5451)'"
+      },
+      "capture": {
+        "sha256": "c5d11849316f6d4427366965ba8f330f1274f551e5f05bc9cfdc34de582d9cbc",
+        "bytes": 54908,
+        "captured_utc": "2026-10-06T04:11:01.754424+00:00",
+        "content_type": "text/plain; charset=utf-8"
+      },
+      "applicability": "Release-applicability anchor for the #4926->#5004 issue/fix/regression chain (Section 3.1 of the proposal); secondary evidence for contrast-limit and nD-annotation edit fixes and for cancellable progress precedent."
+    },
+    {
+      "id": "S3",
+      "title": "napari 0.5.0 release notes (napari/docs repository, main branch)",
+      "publisher": "napari/docs",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/release/release_0_5_0.md",
+      "pin": {
+        "locator": "Highlights: 'we have added fields for axis names and physical units in layers (#6979). ... Currently, napari is *not* using this information, but we will in upcoming versions'; Bug Fixes: 'Fix decomposition function to properly work with more than 2x2 matrices (#6636)', 'Warn if float image data being saved to non-tiff (#6884)', 'flip the default for the reader plugin dialog to *not* have the Remember box checked (#7016)'; New Features/Improvements: 'Replace old async loading with new approach (#5816)', 'Add layer slicer base class for async slicing (#5170)', 'Expose theme font_size as an Appearance setting (#6113)'"
+      },
+      "capture": {
+        "sha256": "9559024ff0a62b9d7d728e660b230093c2e6454ff861be30218c323230acdf9d",
+        "bytes": 94337,
+        "captured_utc": "2026-10-06T04:11:01.479557+00:00"
+      },
+      "applicability": "Evidence that napari's axis/units support is recent and unused by napari itself (limits of napari as a calibration authority); release anchor for the #6636 decomposition chain; async-slicing and cancellation precedent."
+    },
+    {
+      "id": "S4",
+      "title": "napari issue #4926: '3D scaling does not match axis order'",
+      "publisher": "napari/napari issue tracker",
+      "url": "https://github.com/napari/napari/issues/4926",
+      "pin": {
+        "locator": "Issue body (rendered HTML near end of capture): heading '3D scaling does not match axis order'; 'Images with non-trivial scale factors are not correctly visualized if (visible) axis order is changed'; reproduction with data=np.zeros([100,100,50]), scale=(1,1,2), toggle 3D, press change-visible-axis-order button; 'Expected behavior: Images should be scaled correctly independently of the axis order'; opened by Steffen-Wolf on Aug 12, 2022; labels bug, priority:high; assignee andy-sweet; environment napari 0.1.dev2406+g9ea0159, VisPy 0.11.0"
+      },
+      "capture": {
+        "sha256": "5017f5dfc0f1dc34f995461c234130624ad48dda5e2108bd4ceffb2c4e624dad",
+        "bytes": 265622,
+        "captured_utc": "2026-10-06T04:12:08.249560+00:00",
+        "capture_note": "GitHub HTML page; issue title/body located in captured byte range 232854-265622; earlier bytes are GitHub site chrome (marketing nav/scripts) and were not used as evidence."
+      },
+      "applicability": "Starting link of the required issue->fix->regression-test chain; documents the failure symptom (silent wrong geometry under axis permutation with anisotropic scale)."
+    },
+    {
+      "id": "S5",
+      "title": "napari PR #5004 'Fix display of order and scale combinations' (unified diff)",
+      "publisher": "napari/napari",
+      "url": "https://github.com/napari/napari/pull/5004.diff",
+      "pin": {
+        "locator": "New file napari/_vispy/_tests/test_vispy_image_layer.py: four tests parametrized over permutations((0,1,2)) and permutations((0,1,2,3)) with docstrings 'See https://github.com/napari/napari/issues/4926'; napari/utils/misc.py: reorder_after_dim_reduction reimplemented as tuple(_argsort(_argsort(order))) with comment 'A single argsort works for strictly increasing/decreasing orders, but not for arbitrary orders'; napari/layers/image/image.py _get_order uses reorder_after_dim_reduction(self._dims_displayed); new test_reorder_after_dim_reduction in napari/components/_tests/test_dims.py"
+      },
+      "capture": {
+        "sha256": "60a7d6a4336d7e06c135ccb427ae05404554fa2fce10b271f8b1f4dd4c253fc8",
+        "bytes": 10433,
+        "captured_utc": "2026-10-06T04:11:43.142340+00:00",
+        "served_via_redirect": "https://patch-diff.githubusercontent.com/raw/napari/napari/pull/5004.diff"
+      },
+      "applicability": "Fix + regression tests link of the chain. Also the adopted test pattern (permutation-parametrized coordinate checks) replicated in executed witness W3."
+    },
+    {
+      "id": "S5b",
+      "title": "napari PR #6636 'Fix decomposition function to properly work with more than 2x2 matrices' (unified diff)",
+      "publisher": "napari/napari",
+      "url": "https://github.com/napari/napari/pull/6636.diff",
+      "pin": {
+        "locator": "napari/utils/transforms/transform_utils.py: decompose_linear_matrix rewritten (scale_with_sign/normalize per-axis sign handling replacing det<0 branch); new tests test_decompose_linear_matrix_3d (rotation matrix *5 decomposes to rotate=original, scale=[5,5,5], upper_triangular=False) and test_affine_rotate_3d (Affine(rotate=90, ndim=3)); napari/components/_tests/test_layers_list.py: existing test_world_extent_mixed_flipped expectation changed from (1,-1) to (1,1); napari/_vispy/layers/base.py _on_matrix_change simplified and np.dot replaced by @ operator"
+      },
+      "capture": {
+        "sha256": "2251e11772e0d9c95347139c7f54ef46a79a24e34a128af34688fc384aba33cd",
+        "bytes": 4685,
+        "captured_utc": "2026-10-06T04:11:42.387122+00:00",
+        "served_via_redirect": "https://patch-diff.githubusercontent.com/raw/napari/napari/pull/6636.diff"
+      },
+      "applicability": "Second (partial) chain: fix + regression tests + behavior-changing test expectation; release note anchor S3. Standalone upstream issue NOT traced within this stage - asserted only as PR+tests+release, per the no-invented-history rule."
+    },
+    {
+      "id": "S6",
+      "title": "RFC 7946: The GeoJSON Format",
+      "publisher": "IETF",
+      "url": "https://www.rfc-editor.org/rfc/rfc7946.txt",
+      "pin": {
+        "locator": "Abstract (WGS84, decimal degrees); Section 3.1.1 Position ('first two elements are longitude and latitude, or easting and northing, precisely in that order'); 3.1.6 Polygon winding (right-hand rule, exterior counterclockwise); 3.1.10 Uncertainty and Precision; Section 4 Coordinate Reference System (alternative CRS 'removed from this version ... proven to have interoperability issues'; allowed 'where all involved parties have a prior arrangement'); Section 6.1 Foreign Members (allowed, no normative processing model, reduced interoperability risk)"
+      },
+      "capture": {
+        "sha256": "cb52f07b9cc6c841750d75850988fe8f32c7b7f0e1f7420f2069d5b5ded124f8",
+        "bytes": 49143,
+        "captured_utc": "2026-10-06T04:13:42.375196+00:00"
+      },
+      "applicability": "Basis for the GeoJSON export honesty contract: micrometer coordinates are non-conformant absent an explicit prior arrangement, carried as foreign members; winding normalization; precision statement."
+    },
+    {
+      "id": "S7",
+      "title": "napari transform_utils.py at tag v0.5.0 (post-#6636 source)",
+      "publisher": "napari/napari",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.5.0/napari/utils/transforms/transform_utils.py",
+      "pin": {
+        "locator": "compose_linear_matrix docstring and body ('Order is rotate, shear, scale'; returns full_rotate @ full_shear @ full_scale); decompose_linear_matrix (QR/RQ based, 'Decomposition is based on code from https://github.com/matthew-brett/transforms3d'); scale_to_vector / translate_to_vector ('Scale is broadcast to 1 in leading dimensions ... a scale of [4, 18, 34] in 3D can be used as a scale of [1, 4, 18, 34] in 4D without modification')"
+      },
+      "capture": {
+        "sha256": "3497bca29498cf03bfe4a5329fdf2abfc6eca87dc8273043c5d66b07ae04577f",
+        "bytes": 15711,
+        "captured_utc": "2026-10-06T04:14:19.984973+00:00"
+      },
+      "applicability": "Mechanism pin for the affine component model (compose order, broadcast semantics, decomposition provenance); supports the decision to store full matrices as authority."
+    },
+    {
+      "id": "S8",
+      "title": "QuPath 0.7.0 documentation - Project structure (page source markdown)",
+      "publisher": "QuPath (qupath.readthedocs.io)",
+      "url": "https://qupath.readthedocs.io/en/stable/_sources/docs/reference/projects_structure.md.txt",
+      "pin": {
+        "locator": "Sections: 'The *project.qpproj* file' (JSON representation; each entry: serverBuilder to create the ImageServer, unique entryID, imageName, randomizedName UUID); tip on duplicate .qpproj files: 'You are working on a shared drive ... The paths to the images might differ for each computer ...' and warning 'be cautious if you wish to add new images later - since this may inadvertently result in adding different images with the same IDs'; 'The *data* directory' (data/<entryID>/data.qpdata, thumbnail.jpg, summary.json written at the same time as data.qpdata)"
+      },
+      "capture": {
+        "sha256": "b21a8766e7dac3af11a4200a96f71fdec7d3debaaa73fb634e554507e5511855",
+        "bytes": 3952,
+        "captured_utc": "2026-10-06T04:10:31.120584+00:00",
+        "last_modified": "Thu, 26 Jun 2025 08:15:02 GMT"
+      },
+      "applicability": "Precedent mechanism A: project-directory layout with external image references, per-machine path variants, and the documented identity hazard that motivates content hashes."
+    },
+    {
+      "id": "S9",
+      "title": "QuPath 0.7.0 documentation - Exporting annotations (page source markdown)",
+      "publisher": "QuPath (qupath.readthedocs.io)",
+      "url": "https://qupath.readthedocs.io/en/stable/_sources/docs/advanced/exporting_annotations.md.txt",
+      "pin": {
+        "locator": "Opening ('In which format exactly?'); admonition 'Units and origin': 'All of the shape export methods below define coordinates in pixel units, taking the origin (0, 0) as the top left corner of the full-resolution image ... may be different from how other software expects'; GeoJSON sidebar 'ellipses become polygons'; 'GeoJSON ... is the preferred method of annotation export in QuPath'; Labeled vs binary labeled-image export; 'It is usually neither necessary nor desirable to export labels for an entire whole slide image at full resolution'"
+      },
+      "capture": {
+        "sha256": "08a3dcd72724cdb010b1f6e6fc0a058a47334ee7aaaf28e665ffe21c4d08f735",
+        "bytes": 13996,
+        "captured_utc": "2026-10-06T04:10:31.335353+00:00",
+        "last_modified": "Thu, 26 Jun 2025 16:27:33 GMT"
+      },
+      "applicability": "Precedent mechanism B2: export honesty (in-band coordinate-space statement, enumerated lossy conversions) used as the template for the export contract."
+    },
+    {
+      "id": "S10",
+      "title": "QuPath 0.7.0 documentation - Concepts: Images (page source markdown)",
+      "publisher": "QuPath (qupath.readthedocs.io)",
+      "url": "https://qupath.readthedocs.io/en/stable/_sources/docs/concepts/images.md.txt",
+      "pin": {
+        "locator": "'By separating the display color from the pixel value using LUTs, it becomes possible to change the brightness/contrast of an image *without* changing the underlying pixel values'; 'the pixel values are the raw data in scientific imaging. These need to be preserved unchanged'; warning 'Pixel size information is *not* guaranteed to be a) present, or b) correct within a file!' with TIFF 'dots per inch' trap and 'always sanity-check pixel sizes'; 'z-stacks & time series' (limited support; 'Objects (e.g. annotations, cells) also should remember which plane they belong to')"
+      },
+      "capture": {
+        "sha256": "8d6f90a3a610f4c33447ec603af7bce596725f4b5c4e9653570c887fbff2aaae",
+        "bytes": 16385,
+        "captured_utc": "2026-10-06T04:11:02.081148+00:00",
+        "last_modified": "Fri, 21 Aug 2026 19:51:57 GMT"
+      },
+      "applicability": "Doctrinal support for display/data separation, mandatory calibration inspection with explicit correction, and per-plane annotation binding."
+    },
+    {
+      "id": "S11",
+      "title": "QuPath 0.7.0 documentation - Shortcuts (page source markdown)",
+      "publisher": "QuPath (qupath.readthedocs.io)",
+      "url": "https://qupath.readthedocs.io/en/stable/_sources/docs/reference/shortcuts.md.txt",
+      "pin": {
+        "locator": "Drawing & navigation table (Move M, Spacebar temporary move, Rectangle R, Ellipse O, Line L, Polygon P, Polyline V, Brush B, Wand W, Points '.'); Alt key eraser/selection notes; Display shortcuts (Show/hide annotations A, detections H, numeric keys show/hide color channel); Command shortcuts (Ctrl+S Save, Ctrl+R Reload data, Shift+C Brightness/Contrast, Shift+E Restore last annotation)"
+      },
+      "capture": {
+        "sha256": "a300d9e645b7c737d8d1c8a3aafa39be61526dc4c2946dcadde9a64dedd2877b",
+        "bytes": 4445,
+        "captured_utc": "2026-10-06T04:13:42.906257+00:00",
+        "last_modified": "Tue, 12 Sep 2023 14:14:14 GMT"
+      },
+      "applicability": "Keyboard-first interaction model precedent (tools, toggles, save/reload, display) adopted in Section 11."
+    },
+    {
+      "id": "S12",
+      "title": "tifffile package metadata, version 2026.9.20 (PyPI JSON API; description = project README)",
+      "publisher": "Christoph Gohlke (PyPI)",
+      "url": "https://pypi.org/pypi/tifffile/json",
+      "pin": {
+        "locator": "Description: 'Image data can be read as NumPy arrays or Zarr arrays/groups from strips, tiles, pages (IFDs), SubIFDs, higher-order series, and pyramidal levels'; OME-TIFF note ('The UTF-8 encoded OME-XML metadata found in the ImageDescription tag of the first IFD defines the position of TIFF IFDs in the high-dimensional image data'); Notes ('Tifffile supports a large subset of the TIFF6 specification ... Specifically, OJPEG compression, chroma subsampling without JPEG compression, color space transformations, samples with differing types, or IPTC, ICC, and XMP metadata are not implemented'; MMStack 'The TIFF structures and metadata are often corrupted or wrong'); Examples (memmap of contiguous ImageJ hyperstack; imread(..., return_as='zarr') tile read z['0'][2,0,128:384,256:]); Revisions 2026.5.2 ('breaking' API changes: TiffFile.series callable; 'Update ZarrTiffStore to zarr format 3 and multiscales to NGFF 0.5'); Version 2026.9.20, License BSD-3-Clause"
+      },
+      "capture": {
+        "sha256": "775c238a4576ce121f541539e68d3882591e9fa5aae0dda7028f219a3e85fdaf",
+        "bytes": 313690,
+        "captured_utc": "2026-10-06T04:14:20.174339+00:00",
+        "capture_note": "Full body captured; pins are within first 32768 bytes."
+      },
+      "applicability": "Component precedent for bounded access (tiles/IFDs/zarr/memmap), OME-TIFF metadata location, and evidence for the narrow support boundary and version pinning. Package documentation, not a specification."
+    },
+    {
+      "id": "S13",
+      "title": "napari homepage (stable docs landing page)",
+      "publisher": "napari",
+      "url": "https://napari.org/stable/",
+      "pin": {
+        "locator": "Page description/og:description and feature list: 'view and explore 2D, 3D, and higher-dimensional arrays on a canvas; overlay derived data such as points, polygons, segmentations, and more; annotate and edit derived datasets, using standard data structures such as NumPy or Zarr arrays'"
+      },
+      "capture": {
+        "sha256": "bea3ca2f2c5d75dc6198c95d208f0ac95dfd1a7cc48d3483d2fb61a1a8616d55",
+        "bytes": 61364,
+        "captured_utc": "2026-10-06T04:10:31.515641+00:00",
+        "last_modified": "Mon, 05 Oct 2026 10:30:52 GMT"
+      },
+      "applicability": "Scope-of-napari statement used in precedent A framing (2D-5D viewer with annotation overlays on standard arrays)."
+    }
+  ]
+}

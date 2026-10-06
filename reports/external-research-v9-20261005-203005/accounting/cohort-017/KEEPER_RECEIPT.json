@@ -1,0 +1,110 @@
+{
+  "attempts_pin": {
+    "path": "accounting/cohort-017/attempts.safe.json",
+    "sha256": "387b045d6da27e84d95be538486b23a35cea0329645e6c87f327cc6687cff375"
+  },
+  "candidate_family_counts": {
+    "GLM": {
+      "attempts": 84,
+      "confirmed_native_starts": 84,
+      "known_tokens": 91008936
+    },
+    "Luna": {
+      "attempts": 151,
+      "confirmed_native_starts": 151,
+      "known_tokens": 549005716
+    },
+    "UNKNOWN_PRE_NATIVE": {
+      "attempts": 18,
+      "confirmed_native_starts": 0,
+      "known_tokens": 0
+    }
+  },
+  "candidate_totals": {
+    "attempts": 253,
+    "known_tokens": 640014652,
+    "native_goal_starts_known": 235,
+    "occupied_seconds_known": 155578.08584544904,
+    "occupied_seconds_unknown_rows": 30,
+    "starts_unknown_rows": 0,
+    "usage_unknown_rows": 31
+  },
+  "capture_interval_utc": {
+    "end": "2026-10-06T08:44:54.385525+00:00",
+    "start": "2026-10-06T08:44:53.739814+00:00"
+  },
+  "clock_companion_pin": {
+    "path": "accounting/cohort-017/evaluator-clocks.safe.json",
+    "sha256": "f3e872a5ce0cef50f390e6000fe8e94f359f44287922f3834159c23e7bd9ea6f"
+  },
+  "current_changed_sources": [],
+  "last_captured_root_counter_separate": {
+    "helper_inclusion": "UNKNOWN",
+    "native_updated_at": 1791275576,
+    "observed_utc": "2026-10-06 08:32:56 UTC",
+    "provider_counts_combined": false,
+    "remainingTokens": null,
+    "status": "active",
+    "stop_trigger": false,
+    "timeUsedSeconds": 43226,
+    "tokensUsed": 31081640
+  },
+  "later_unjournaled_counter_reference": {
+    "add_to_provider_or_journal": false,
+    "billing_dollars": "UNKNOWN",
+    "helper_inclusion": "UNKNOWN",
+    "journaled": false,
+    "observed_time_supplied_minute": "2026-10-06 08:43 UTC",
+    "provenance": "Root-supplied message; no retained journal row or directcounter receipt here",
+    "time_used_seconds": 43863,
+    "tokens_used": 31944862
+  },
+  "new_actual_attempt_ids": [
+    "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+    "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+    "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-critique-a001",
+    "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001",
+    "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+    "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+    "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+    "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001",
+    "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+    "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001"
+  ],
+  "prior012_race_flag_preserved": {
+    "capture_interval_utc": {
+      "end": "2026-10-06T03:39:52.102244+00:00",
+      "start": "2026-10-06T03:39:51.273554+00:00"
+    },
+    "changed_sources": [
+      {
+        "captured_sha256": "d5996c535285f74b41fb40ad9a742f54e13cd3350494a935d358664f206a8403",
+        "path": "ops/dispatcher/runs/D-V13-B-DEFERRED-R001-control-diagnostic-a001/native/result.json",
+        "unchanged_at_capture_end": false
+      }
+    ],
+    "rule": "Historical012 exact bytes/flag unchanged; new013 capture is distinct."
+  },
+  "prior016_selection_pin": {
+    "path": "accounting/cohort-016/PUBLIC_SELECTION.json",
+    "sha256": "4d7aa49c0b62e8acf1a0bbb6bdfd8a26fd33ef74fc33a3a03ab81d49cd5f3140"
+  },
+  "schema": "er9.accounting.restart-receipt.v1",
+  "scope": "Retained neutral metadata only; no raw native modelIO/protocol/private bulk or scientific reports accessed. Actualfamilies distinctlogicaltargets; failed/blocked/unknown costs retained; no passcredit/stop.",
+  "snapshot_pin": {
+    "path": "accounting/cohort-017/snapshot.safe.json",
+    "sha256": "b5cb63bc643b956c3a2d050cc2b14c2735e34b278dfa034b5d5f015d19554d4c"
+  },
+  "terminal_cohorts_pin": {
+    "path": "accounting/cohort-017/terminal-cohorts.safe.json",
+    "sha256": "85ac90eb05eece623d21deedc9629289b6e27648bb0baa9c3d1a978841cdbd40"
+  },
+  "warm4_inclusive_qualifier_pin": {
+    "path": "accounting/cohort-017/Warm4-clock-qualifier.safe.json",
+    "sha256": "d608c066ae49dc686413a54cdc2c026e53eb8982a2fb254777183ccd1d6d6489"
+  }
+}

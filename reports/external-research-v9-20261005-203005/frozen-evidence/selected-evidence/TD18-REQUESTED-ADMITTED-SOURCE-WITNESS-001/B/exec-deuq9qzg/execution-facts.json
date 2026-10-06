@@ -1,0 +1,32 @@
+{
+  "schema": "er9.execution.result.v1",
+  "actor": "candidate",
+  "execution_id": "exec-deuq9qzg",
+  "exit_code": 0,
+  "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+  "limits": {
+    "cpu_seconds": 3,
+    "memory_bytes": 268435456,
+    "network": "new empty namespace",
+    "stream_bytes_each": 32768,
+    "tasks": 16,
+    "wall_seconds": 5
+  },
+  "bootstrap_started": true,
+  "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+  "code_sha256": "3cb6ea584e2b02ba034e45ed023376ecb800af26bba151e8a9921607e2029b49",
+  "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+  "stdout_bytes": 190,
+  "stdout_sha256": "f51d7dbadd190cfe8c6d3270a130ffba7ae3a169741d21f9c0b0ae691cd1a2eb",
+  "stderr_bytes": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "cleanup_confirmed": true,
+  "cleanup_classification": "collected_unit_absent",
+  "control_group_absent_after_stop": null,
+  "control_group_populated_after_stop": null,
+  "unit_active_state_after_stop": "inactive",
+  "unit_load_state_after_stop": "not-found",
+  "cleanup_state_returncode": 0,
+  "cleanup_stop_returncode": 5,
+  "stopped_by_adapter": null
+}

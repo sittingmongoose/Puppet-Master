@@ -1,0 +1,197 @@
+{
+  "additional_current_execution_receipts": {
+    "count": 4,
+    "not_assumed_never_executed": true,
+    "scientific_code_input_result_body": "UNASSESSED_NOT_ADMITTED",
+    "unknown_behavior_not_inferred_from_hashes_or_counts": true
+  },
+  "candidate_report_provenance": "SAME_CANDIDATE_NATIVE_GOAL_SELF_CRITIQUE_NOT_INDEPENDENT_SOL_ASSESSMENT",
+  "candidate_retest_or_model_goal_started": false,
+  "current_candidate_usage_separate": {
+    "accounting_definitions": "native usage notifications are observed cumulative accounting; cached/reasoning scopes are nested only where selected runtime defines them; unknown inclusion semantics retained otherwise; not additive to parent/UI/provider rows; provider requests/cache money/cancelled-unexposed tail UNKNOWN where unexposed",
+    "billing_dollars": "UNKNOWN",
+    "imported_baseline_starts_recounted": false,
+    "native_http_attempts": "UNKNOWN",
+    "parent_or_ui_usage_added": false,
+    "usage_notification_count": 84,
+    "usage_totals": {
+      "cachedInputTokens": 5548544,
+      "inputTokens": 5882445,
+      "outputTokens": 68295,
+      "reasoningOutputTokens": 40526,
+      "totalTokens": 5950740
+    }
+  },
+  "designated_final": null,
+  "direct_saved_goal_scalars": {
+    "first": {
+      "createdAt": 1791267605,
+      "status": "active",
+      "timeUsedSeconds": 0,
+      "tokenBudget": null,
+      "tokensUsed": 0,
+      "updatedAt": 1791267605
+    },
+    "goal_completion_observed": false,
+    "last": {
+      "createdAt": 1791267605,
+      "status": "paused",
+      "timeUsedSeconds": 1479,
+      "tokenBudget": null,
+      "tokensUsed": 402196,
+      "updatedAt": 1791269084
+    },
+    "thread_session_not_opaque_goal_id": true
+  },
+  "driver_metadata_separate": {
+    "candidate_goals_set_by_host": 1,
+    "closed_before_original_total_stop": true,
+    "elapsed_seconds": 1485.788483628,
+    "error": "original native stop reached",
+    "error_class": "TimeoutError",
+    "goal_replacements_observed": 0,
+    "host_goal_set_rpc_count": 2,
+    "host_goal_set_rpcs_not_candidate_start_count": true,
+    "native_outcome": "HOLD",
+    "turn_statuses": [
+      {
+        "method": "turn/started",
+        "observed_monotonic_ns": 98024086220227,
+        "status": "inProgress"
+      },
+      {
+        "method": "turn/completed",
+        "observed_monotonic_ns": 99503559934399,
+        "status": "interrupted"
+      }
+    ]
+  },
+  "evaluation_id": "independent-warm-recovery-4",
+  "execution_positive_projection_checks": [
+    {
+      "actor": "candidate",
+      "bootstrap_started": true,
+      "claim_scope": "setup failure only",
+      "cleanup_confirmed": true,
+      "execution_id": "exec-1zm8pdgo",
+      "exit_code": 1,
+      "original_result_bytes_read": false,
+      "original_result_sha256": "65bc466f837ee5f71a6e841029ab4787fddb561ffd0b5e38275d80924b355079",
+      "positive_projection_match_fields": [
+        "code_sha256",
+        "exit_code",
+        "data_sha256"
+      ],
+      "retested": false,
+      "witness_id": "W0"
+    },
+    {
+      "actor": "candidate",
+      "bootstrap_started": true,
+      "claim_scope": "stated standard-library scalar arithmetic only",
+      "cleanup_confirmed": true,
+      "execution_id": "exec-e9ctzb3e",
+      "exit_code": 0,
+      "original_result_bytes_read": false,
+      "original_result_sha256": "cc0cff71c5a0ac31fb234a75a35b95e7f54cab67592e4f6f3d7c6bc1c246075b",
+      "positive_projection_match_fields": [
+        "code_sha256",
+        "exit_code",
+        "data_sha256",
+        "stdout_sha256"
+      ],
+      "retested": false,
+      "witness_id": "W1"
+    }
+  ],
+  "final_scientific_quality": "UNASSESSED",
+  "no_reset": true,
+  "original_whole_deadline_monotonic_ns": 104512240741448,
+  "pair_id": "I-05-treatment-BLIND-SOURCE-FIDELITY-R001",
+  "phase1_bytes_unchanged": true,
+  "phase1_pinlock_sha256": "a64af3b260cc55ab4bbf29656b9089a81aced61e1fd745e175439de5a0102c94",
+  "phase1_scientific_judgment_rewritten": false,
+  "phase2_deadline_monotonic_ns": 103723380177299,
+  "phase2_elapsed_seconds": 382.475863119,
+  "phase2_inputs": [
+    {
+      "bytes": 38918,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-4/phase2-input/INDEPENDENT-WARM-RECOVERY-4_PHASE2_KEY_001.json",
+      "sha256": "9171ad7718b022545129580e958922c5f7180c5634855bec1d3419decde776d7"
+    },
+    {
+      "bytes": 15566,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-4/phase2-input/WARM4_CURRENT_SINGLE_RESOURCE_EXECUTION_001.json",
+      "sha256": "450c045c578edcf6c599b05e5e235c50fb33f5238b083a775bdc63a9be88ec8e"
+    },
+    {
+      "bytes": 58174,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-4/phase2-input/WARM4_CURRENT_SINGLE_RUNTIME_001.json",
+      "sha256": "332a9efada89e0f288400f4548a2a01b01641f80da7114b1a8f3c515dad1e024"
+    },
+    {
+      "bytes": 938,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-4/phase2-input/WARM4_PHASE1_VERIFIED_KEY_RELEASE_001.json",
+      "sha256": "25fe62dfb8bec5ab6b261d09bdd1ebf7a355763f26dc9a5ae99abcb80dd15a9c"
+    }
+  ],
+  "proof_chain": {
+    "chain_scope": "Exactselected current proof-reader hash matches actualproof+launchseal; embedded referenced receipt hash and enriched final native hash distinct. Source-order enrichment sequence and separately retained preembeddingbytes UNKNOWN unless exact additional current source-order proof supplied; never reconstructed.",
+    "embedded_pre_enrichment_native_receipt_sha256": "c0bb1bbd14fdb374d80a3bbd3e704b65c8c18180a4e9349b3e1d405a5a8cd42e",
+    "native_final_result_sha256": "f706f61a4fa9faeaaaf98580d7657c45f675e71c9d6634dfd681da53c02ae5de",
+    "owned_proof_hash_chain": "embedded native_receipt_sha256 and final result hash are distinct; enrichment sequence provenance UNKNOWN pending exact owner source proof",
+    "reconstruction_performed": false
+  },
+  "raw_native_ModelIO_private_auth_history_read": false,
+  "released_identity": {
+    "alias": "A",
+    "arm": "treatment",
+    "job_id": "I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+    "observed_identity_labels": {
+      "effort": "max",
+      "model": "gpt-6-luna"
+    },
+    "opaque_nativeGoalID": "UNKNOWN_NOT_EXPOSED; API thread/session is separate",
+    "physical_provider_runtime_attestation": "UNKNOWN",
+    "requested_effort": "max",
+    "requested_model": "gpt-6-luna"
+  },
+  "report_monotonic_ns": 103505856040418,
+  "report_utc": "2026-10-06T07:51:26.999052+00:00",
+  "resource_observations": {
+    "aggregate_before_worker_exit": {
+      "cgroup.events": {
+        "frozen": "0",
+        "populated": "1"
+      },
+      "memory.current": "162590720",
+      "memory.events": {
+        "high": "0",
+        "low": "0",
+        "max": "0",
+        "oom": "0",
+        "oom_group_kill": "0",
+        "oom_kill": "0",
+        "sock_throttled": "0"
+      },
+      "memory.max": "2415919104",
+      "memory.peak": "462643200",
+      "memory.swap.max": "0"
+    },
+    "all_owned_scopes_quiet": true,
+    "application_3GB_target_verified": false,
+    "cpu_tasks_scratch_aggregate_caps": "UNKNOWN_NOT_EXPOSED_BY_PROFILE",
+    "cross_workload_fit_claimed": false,
+    "memory_swap_max_bytes": 0,
+    "observed_complete_job_memory_max_bytes": 2415919104,
+    "private_slice_all_descendants_quiet": true,
+    "profile_fit": "UNKNOWN"
+  },
+  "schema": "er9.independent-evaluator-phase2-verification.v1",
+  "scientific_findings_recipients": [
+    "root"
+  ],
+  "wait_and_mode_qualification_included_in_phase2": true,
+  "whole_elapsed_seconds": 793.61529897,
+  "whole_pipeline_quality": "UNASSESSED"
+}

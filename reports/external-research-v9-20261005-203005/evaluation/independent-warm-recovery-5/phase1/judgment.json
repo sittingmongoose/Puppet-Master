@@ -1,0 +1,342 @@
+{
+  "schema": "er9.independent-partial-source-judgment.v1",
+  "evaluation_id": "independent-warm-recovery-5",
+  "pair_id": "I-06-control-BLIND-SOURCE-FIDELITY-R001",
+  "phase": "P1_IMMUTABLE_SOURCE_ONLY",
+  "scope": "All eight listed current scratch partial artifacts plus the 19-byte canonical sameGoal candidate report; no scratch promotion or best-of selection.",
+  "requested_evaluator": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh",
+    "fork_turns": "none"
+  },
+  "physical_model": "UNKNOWN",
+  "provider": "UNKNOWN",
+  "actual_criteria_counts": {
+    "full_B_brief_obligations": 12,
+    "common_dimensions": 8,
+    "common_important_checks": 5,
+    "target_scope_checks": "NOT_APPLICABLE_INTEGRATED_FULL_BRIEF"
+  },
+  "canonical_designated_final": null,
+  "canonical_final_four_delivery": "INCOMPLETE",
+  "canonical_critic_report": "19 bytes: Draft in progress.",
+  "case_outcome": "UNASSESSED",
+  "final_scientific_quality": "UNASSESSED",
+  "whole_pipeline_quality": "UNASSESSED",
+  "partial_source_assessment": "PARTIAL_WITH_VERIFIED_USEFUL_SOURCE_CONTENT_AND_TRACEABILITY_COVERAGE_LIMITS",
+  "no_blank_PASS": true,
+  "original_grade_replacement": false,
+  "fresh_matched_causal_credit": false,
+  "candidate_self_report_is_independent_evaluator": false,
+  "candidate_report_provenance": "Same current candidate native Goal, per source packet; scratch report correctly labels self-critique and disclaims independent Sol assessment.",
+  "consequential_verified_public_source_errors": [],
+  "findings": [
+    {
+      "id": "W5-F01",
+      "class": "traceability",
+      "severity": "material",
+      "subject": "scratch-witnesses.json",
+      "finding": "Not valid JSON: invalid escape at line 9 column 329 (character 3746), in observed_stdout. All other four JSON partials parsed. Do not silently repair the source or infer a canonical inventory.",
+      "effect": "Supporting inventory cannot be consumed as supplied; actual stdout authenticity and execution remain UNKNOWN until a permitted receipt, not never-executed."
+    },
+    {
+      "id": "W5-F02",
+      "class": "mandatory_delivery",
+      "severity": "major_delivery",
+      "finding": "Packet designates no final; proposal/sources/witnesses/leads canonical final entries are null. The required canonical critique report is only Draft in progress. Scratch proposal, two source-register versions, witness inventory, leads and longer scratch review remain partials.",
+      "effect": "Delivery INCOMPLETE; final scientific quality UNASSESSED, without treating absence as a scientific FAIL or PASS."
+    },
+    {
+      "id": "W5-F03",
+      "class": "preservation_limit",
+      "severity": "unassessed",
+      "finding": "Scratch review/proposal/leads explicitly say admitted prior files were not found/read. This packet supplies no authenticated prior bodies.",
+      "effect": "No line-by-line fidelity, correction or preservation assessment; their reported access limitation and allocation were not independently confirmed from native history."
+    },
+    {
+      "id": "W5-F04",
+      "class": "coverage",
+      "severity": "partial",
+      "finding": "The draft sketches Python-only/SQL-only alternatives and optional SQL but does not develop a distinct useful opportunity with evidence/trade-offs; accessible status/provenance views are also thin.",
+      "effect": "B07/B10 and B-P5 remain PARTIAL. This is a coverage judgment, not a verified false external-source assertion."
+    },
+    {
+      "id": "W5-F05",
+      "class": "engineering_dependency",
+      "severity": "partial",
+      "finding": "The draft leaves later/subsequent-cell invalidation and dependency determination underdefined for out-of-order interactive execution. Missing events are admitted, but a conservative fallback for all affected earlier-displayed outputs is not explicit.",
+      "effect": "B04 remains PARTIAL. No analytical example was executed and no actual runtime defect is claimed."
+    },
+    {
+      "id": "W5-F06",
+      "class": "pin_and_version_limit",
+      "severity": "qualification",
+      "finding": "S1 has no complete retained digest and its reported prefix does not match the independently re-fetched body. Its latest URL is mutable, so historical capture identity remains UNKNOWN. Early/final source-register IDs are reassigned; assess each frozen version explicitly and never mix them into an endorsed bundle.",
+      "effect": "New retrieval authenticates current public bytes, not an absent historical receipt or a canonical final association."
+    }
+  ],
+  "partial_obligation_coverage": [
+    {
+      "id": "B01",
+      "state": "PARTIAL",
+      "basis": "The draft describes import/preview/author/interactive/replay/save/reopen/export and Python plus optional SQL. Project creation, interaction details and a practical implementation sequence are thin. Final delivery is absent.",
+      "designated_final_assessment": "UNASSESSED"
+    },
+    {
+      "id": "B02",
+      "state": "PARTIAL",
+      "basis": "Explicit parser/schema/cast/null/Unicode/timestamp/row-ordinal and reject policies are proposed; originals remain read-only. Concrete timezone, heterogeneous/missing-field and multi-file conversion policies remain open, as the draft acknowledges.",
+      "designated_final_assessment": "UNASSESSED"
+    },
+    {
+      "id": "B03",
+      "state": "COMPLETE",
+      "basis": "Within the partial draft, document order, observed execution order, kernel epochs and saved provenance are separated; clean replay and nondeterminism/undeclared-I/O limits are explicit. This assesses the written design, not an implementation or final.",
+      "designated_final_assessment": "UNASSESSED"
+    },
+    {
+      "id": "B04",
+      "state": "PARTIAL",
+      "basis": "Freshness states, restarts, source/environment changes and conservative later-cell invalidation are described. The dependency model and the meaning of later/subsequent under out-of-order interactive execution are not settled.",
+      "designated_final_assessment": "UNASSESSED"
+    },
+    {
+      "id": "B05",
+      "state": "PARTIAL",
+      "basis": "The draft supplies project/input/environment/run/output identities, portable folders, omitted external-input disclosure and export links. It has no concrete manifest schema or verified cross-machine reopen contract.",
+      "designated_final_assessment": "UNASSESSED"
+    },
+    {
+      "id": "B06",
+      "state": "PARTIAL",
+      "basis": "Streaming/spill limits, bounded preview, truncation, keys, ordering, cancellation, single-writer conflicts and save recovery are proposed and appropriately unverified. Operation-specific 5GB support limits and filesystem guarantees are still gates.",
+      "designated_final_assessment": "UNASSESSED"
+    },
+    {
+      "id": "B07",
+      "state": "PARTIAL",
+      "basis": "Filesystem/network/resource restrictions and process-tree cleanup are proposed and explicitly require validation. Progress/error/status is mentioned; accessible feedback, provenance/dependency views and sandbox usability are not developed.",
+      "designated_final_assessment": "UNASSESSED"
+    },
+    {
+      "id": "B08",
+      "state": "COMPLETE",
+      "basis": "Applicable partial research contains independently useful nbclient lifecycle and DuckDB bounded/out-of-core mechanisms, with independent projects and concrete planner consequences. Public evidence supports them; original discovery-process provenance is not inferred.",
+      "designated_final_assessment": "UNASSESSED"
+    },
+    {
+      "id": "B09",
+      "state": "COMPLETE",
+      "basis": "Applicable partial research establishes nbclient PR234 reported startup leak -> cleanup/re-raise patch -> injected-startup-failure test -> implementation/test present at v0.7.0. It does not claim suite execution or full-supervisor behavior.",
+      "designated_final_assessment": "UNASSESSED"
+    },
+    {
+      "id": "B10",
+      "state": "PARTIAL",
+      "basis": "Python-only and SQL-only are plausible brief alternatives; optional embedded SQL is a bounded choice. No distinct useful opportunity is developed with evidence/trade-offs beyond those component choices; critical gates are explicit.",
+      "designated_final_assessment": "UNASSESSED"
+    },
+    {
+      "id": "B11",
+      "state": "PARTIAL",
+      "basis": "W1 code/inputs/expectation and narrow limits can be statically assessed. The witness inventory is invalid JSON and the authentic execution receipt is withheld, so candidate execution remains UNKNOWN. Integrated/recovery/security/performance tests are explicitly UNEXECUTED.",
+      "designated_final_assessment": "UNASSESSED"
+    },
+    {
+      "id": "B12",
+      "state": "UNASSESSED",
+      "basis": "No designated current final exists and authenticated prior proposal/catalogs are absent from this packet. No preservation/correction credit relative to predecessors is possible. The scratch draft/report explicitly disclose that limit.",
+      "designated_final_assessment": "UNASSESSED"
+    }
+  ],
+  "common_dimensions": [
+    {
+      "id": "Q1",
+      "state": "PARTIAL",
+      "basis": "Broad minimum-workflow coverage is useful, with B02/B04/B07/B10 details incomplete and no final."
+    },
+    {
+      "id": "Q2",
+      "state": "PARTIAL",
+      "basis": "Independently checked consequential public-source facts are supported with the stated conditions; full final and authenticated witness execution are not assessed."
+    },
+    {
+      "id": "Q3",
+      "state": "PARTIAL",
+      "basis": "Component choices and conservative provenance/security design are coherent proposals, but implementation contracts and critical gates remain unresolved."
+    },
+    {
+      "id": "Q4",
+      "state": "PARTIAL",
+      "basis": "Two independent useful mechanisms and a real fix/test chain are verified in the partials; opportunity breadth remains limited."
+    },
+    {
+      "id": "Q5",
+      "state": "PARTIAL",
+      "basis": "W1 static expectations are justified for the tiny stdlib example; actual execution is UNKNOWN and broader checks remain proposed."
+    },
+    {
+      "id": "Q6",
+      "state": "UNASSESSED",
+      "basis": "Predecessor preservation cannot be reviewed without authenticated prior artifacts; neither scratch version is promoted or selected as final."
+    },
+    {
+      "id": "Q7",
+      "state": "PARTIAL",
+      "basis": "The partials honestly disclose key unknowns, source-delivery limits and candidate-report provenance. Some design details remain underdefined."
+    },
+    {
+      "id": "Q8",
+      "state": "PARTIAL",
+      "basis": "Pins and current partial bodies are inspectable. Mandatory four-final delivery and a substantive canonical critic report are missing; economics/lifecycle are withheld and separate."
+    }
+  ],
+  "common_important_checks": [
+    {
+      "id": "B-P1",
+      "state": "PARTIAL",
+      "basis": "B08/B09 mechanisms and issue/fix/test chain independently supported in partials; designated-final question UNASSESSED.",
+      "designated_final_assessment": "UNASSESSED"
+    },
+    {
+      "id": "B-P2",
+      "state": "PARTIAL",
+      "basis": "Current documented defaults, replay/error behavior, package constraints and resource limits checked; design dependency/invalidation contracts remain incomplete.",
+      "designated_final_assessment": "UNASSESSED"
+    },
+    {
+      "id": "B-P3",
+      "state": "PARTIAL",
+      "basis": "Static W1 expectations checked; authentic receipt unavailable and JSON inventory malformed; execution UNKNOWN, broader tests explicitly UNEXECUTED.",
+      "designated_final_assessment": "UNASSESSED"
+    },
+    {
+      "id": "B-P4",
+      "state": "UNASSESSED",
+      "basis": "No current final or authenticated predecessor bodies; preservation unknown, not inferred from candidate self-report.",
+      "designated_final_assessment": "UNASSESSED"
+    },
+    {
+      "id": "B-P5",
+      "state": "PARTIAL",
+      "basis": "Broad workflow/resource/security/recovery language survives; accessible presentation and opportunity/alternative development remain partial.",
+      "designated_final_assessment": "UNASSESSED"
+    }
+  ],
+  "targeted_scope": "NOT_APPLICABLE_INTEGRATED_FULL_BRIEF",
+  "targeted_predeclared_checks": [],
+  "witness": {
+    "id": "W1",
+    "review": "STATIC_ONLY_NO_REEXECUTION",
+    "code_sha256": "ebd4e2a1055ee1d2522a49afb3ba3f013585fec231118a29684f61482f341a2a",
+    "code_hash_matches_embedded_receipt": true,
+    "actual_execution": "UNKNOWN",
+    "authentic_receipt_seen": false,
+    "independent_expectation": "Python csv defaults retain field strings; candidate explicitly maps NULL and float amounts, rejects its two constructed malformed examples, slices a one-row preview and hashes changes to three selected key dimensions. These checks do not prove streaming bounds, file immutability, application invalidation or integration.",
+    "scope_qualifiers_preserved": true
+  },
+  "source_support": [
+    {
+      "claim": "nbformat document/cell/output representation does not supply full provenance/freshness",
+      "evidence": [
+        "S1"
+      ],
+      "assessment": "SUPPORTED_WITH_INFERENCE_EXPLICIT"
+    },
+    {
+      "claim": "nbclient document-order execution, default stop-on-error and configurable continuation",
+      "evidence": [
+        "S2",
+        "E2-nbclient011-client"
+      ],
+      "assessment": "SUPPORTED; fresh worker is a proposed product precondition, not an unconditional nbclient default"
+    },
+    {
+      "claim": "Jupyter Server access permits code execution; authentication is no notebook sandbox",
+      "evidence": [
+        "S3"
+      ],
+      "assessment": "SUPPORTED; docs/package mismatch retained"
+    },
+    {
+      "claim": "CSV inference, strict_mode true/ignore_errors false, explicit schemas and error options",
+      "evidence": [
+        "S4"
+      ],
+      "assessment": "SUPPORTED_AS_DOCUMENTED; no universal reader correctness claim"
+    },
+    {
+      "claim": "DuckDB spill/out-of-core and blocking/list/string aggregation limitations; ordering/memory tradeoff",
+      "evidence": [
+        "S5"
+      ],
+      "assessment": "SUPPORTED_AS_DOCUMENTED; 5GB remains unverified target"
+    },
+    {
+      "claim": "JSON inference/declared columns; Parquet projection/filter pushdown and union_by_name false default",
+      "evidence": [
+        "S7",
+        "S8"
+      ],
+      "assessment": "SUPPORTED_WITH_SCHEMA_LIMITS"
+    },
+    {
+      "claim": "PR234 startup cleanup failure, fix, regression test and v0.7.0 source applicability",
+      "evidence": [
+        "S9",
+        "S10",
+        "S11-0",
+        "S11-1"
+      ],
+      "assessment": "SUPPORTED; no candidate execution/CI pass/full product guarantee"
+    },
+    {
+      "claim": "Selected PyPI versions/Python bounds and Lab-Server/nbclient-nbformat metadata intersections",
+      "evidence": [
+        "S12",
+        "S13",
+        "S14",
+        "S15",
+        "S16",
+        "ERR-server222"
+      ],
+      "assessment": "SUPPORTED_METADATA_ONLY; no resolved lock/install/runtime integration"
+    },
+    {
+      "claim": "Project ledger, input identities, freshness policy, network/resource restrictions and save recovery",
+      "evidence": [
+        "scratch-proposal.md"
+      ],
+      "assessment": "PROPOSED_ENGINEERING_CHOICES; critical validation gates preserved, not established component properties"
+    }
+  ],
+  "mechanical_checks": {
+    "packet_and_selected_artifact_hashes": "MATCH",
+    "briefmap_reconstructs_exact_brief": true,
+    "json_valid": [
+      "scratch-brief-map.json",
+      "scratch-leads.json",
+      "scratch-sources.json",
+      "scratch-sources-final.json"
+    ],
+    "json_invalid": [
+      "scratch-witnesses.json"
+    ],
+    "public_capture_count": 20,
+    "integrity_proof": "HASH_VERIFIED_BODY_UNREAD"
+  },
+  "blinding": {
+    "unavoidable_hints": "Root assignment, case/stage path and actual task labels; requested evaluator model metadata. No perfect blinding claim.",
+    "withheld_not_read": [
+      "key",
+      "native Goal conversation",
+      "native status/history",
+      "identity telemetry",
+      "cost",
+      "prior grades",
+      "sibling summaries"
+    ],
+    "body_scope": "Only exact packet task/partial bodies and independently retrieved public primary sources."
+  },
+  "storage": "Small source-only copies and bounded public byte captures inside owned directory; no repository/canon/Git/job/candidate writes, retests, native execution or foreign cleanup."
+}

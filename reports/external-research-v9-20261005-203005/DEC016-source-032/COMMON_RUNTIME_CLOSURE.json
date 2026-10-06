@@ -1,0 +1,40 @@
+{
+  "all_active_retained_growth_gate_retained": true,
+  "bundle_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/PIN.json",
+    "sha256": "57a8470b12a85f9d252f6670fc2a06395c5637d5e968dce8d2acee2f5eea324b"
+  },
+  "core_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+    "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+  },
+  "fit": "UNKNOWN",
+  "host_reserve_bytes": 3221225472,
+  "maximum_G_owned_all_stages": 2,
+  "ops_markers": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+      "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/GLM_BUNDLE_CLOCK_V3_READY.json",
+      "sha256": "bb4c9a62092efaee7576cf778cf97edb3dd7f5912046e4080a10df1d878fbd99"
+    }
+  ],
+  "outer_memory_max_bytes": 805306368,
+  "policy_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-016-C01-PAIRED-INFRASTRUCTURE-STAGE-REPAIR.json",
+    "sha256": "8958cfdad704dec538226f1b2dc035f282159ad41a751aa4fe080c6937cd03c8"
+  },
+  "private_memory_max_bytes": 2415919104,
+  "schema": "er9.dec016-c01-common-runtime-source-closure.v1",
+  "source_card_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-clock-fresh-retest-001/pairs/C-01-CONFIRMATION-CLOCK-FRESH-R001/card.json",
+    "sha256": "d72692518f45aac9749699bd1323b630803632b1ebb50563eceac8de60c8f193"
+  },
+  "swap_max_bytes": 0,
+  "tools_source_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/SOURCE_PINS.json",
+    "sha256": "abe26402b0156639e4c0a207e5a030db012c5f2d4b5af5d507a95f00eadeb748"
+  }
+}

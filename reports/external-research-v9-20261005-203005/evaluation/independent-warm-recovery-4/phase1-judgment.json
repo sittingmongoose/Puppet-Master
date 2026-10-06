@@ -1,0 +1,316 @@
+{
+  "blinding": {
+    "economics_read_pre_freeze": false,
+    "identity_key_read_pre_freeze": false,
+    "native_status_history_read_pre_freeze": false,
+    "old_grades_read": false,
+    "perfect_blinding_claimed": false,
+    "unavoidable_hints": [
+      "actual task labels",
+      "arm role",
+      "requested model in assignment"
+    ]
+  },
+  "candidate_report_provenance": "SAME_CANDIDATE_NATIVE_COMBINED_GOAL_SELF_CRITIQUE_NOT_INDEPENDENT_SOL_ASSESSMENT",
+  "common_dimensions": [
+    {
+      "designated_final_assessment": "UNASSESSED",
+      "id": "Q1",
+      "partial_assessment": "PARTIAL"
+    },
+    {
+      "designated_final_assessment": "UNASSESSED",
+      "id": "Q2",
+      "partial_assessment": "PARTIAL"
+    },
+    {
+      "designated_final_assessment": "UNASSESSED",
+      "id": "Q3",
+      "partial_assessment": "PARTIAL"
+    },
+    {
+      "designated_final_assessment": "UNASSESSED",
+      "id": "Q4",
+      "partial_assessment": "PARTIAL"
+    },
+    {
+      "designated_final_assessment": "UNASSESSED",
+      "id": "Q5",
+      "partial_assessment": "PARTIAL"
+    },
+    {
+      "designated_final_assessment": "UNASSESSED",
+      "id": "Q6",
+      "partial_assessment": "UNASSESSED"
+    },
+    {
+      "designated_final_assessment": "UNASSESSED",
+      "id": "Q7",
+      "partial_assessment": "COMPLETE"
+    },
+    {
+      "designated_final_assessment": "UNASSESSED",
+      "id": "Q8",
+      "partial_assessment": "PARTIAL"
+    }
+  ],
+  "comparative_credit": {
+    "best_of_selection": false,
+    "causal": false,
+    "fresh": false,
+    "matched": false,
+    "original_grade_replaced": false,
+    "working_output_promoted": false
+  },
+  "critical_unknowns": [
+    "No designated final",
+    "No predecessor preservation comparison",
+    "Independent W0/W1 execution receipts absent",
+    "Full dataset and group transform mapping/reference resolution",
+    "Reader/viewer/dependency/hardware interoperability",
+    "Representative 3 GB/resource/cancel behavior",
+    "Actual filesystem recovery",
+    "Store content identity and annotation/export round trip"
+  ],
+  "designated_final": null,
+  "evaluation_id": "independent-warm-recovery-4",
+  "execution_evidence": {
+    "W0": "UNKNOWN_INDEPENDENT_RECEIPT_ABSENT; declared setup failure retained",
+    "W1": "UNKNOWN_INDEPENDENT_RECEIPT_ABSENT; arithmetic expectation and code/stdout text hashes checked",
+    "application_behavior_verified": false,
+    "candidate_code_retested": false,
+    "upstream_tests_executed": false
+  },
+  "final_scientific_quality": "UNASSESSED",
+  "findings": [
+    {
+      "claim_locations": [
+        "working/proposal.md:9",
+        "working/proposal.md:37",
+        "critique/review.md:14",
+        "critique/review.md:27"
+      ],
+      "dimensions": [
+        "Q2",
+        "Q3",
+        "Q4"
+      ],
+      "evidence": [
+        "omezarr-format.body:368",
+        "omezarr-writer.body:675",
+        "omezarr-writer.body:744",
+        "omezarr-writer-tests.body:57",
+        "omezarr-writer-tests.body:303",
+        "omezarr-writer-tests.body:324"
+      ],
+      "id": "F1",
+      "kind": "SOURCE_INTERPRETATION_FALSE_NEGATIVE",
+      "obligations": [
+        "A07",
+        "A10"
+      ],
+      "severity": "MEDIUM",
+      "summary": "Historical FormatV05 no-writing docstring generalized despite same-pin 0.5 writer code and tests. Read-only product choice remains legitimate."
+    },
+    {
+      "claim_locations": [
+        "working/proposal.md:37",
+        "working/proposal.md:46",
+        "working/proposal.md:50"
+      ],
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q5",
+        "Q7"
+      ],
+      "evidence": [
+        "ngff-index.body:277",
+        "ngff-index.body:282",
+        "omezarr-reader.body:279",
+        "omezarr-reader.body:293"
+      ],
+      "id": "F2",
+      "kind": "UNRESOLVED_DESIGN_CRITICAL_COORDINATE_DEPENDENCY",
+      "obligations": [
+        "A02",
+        "A03",
+        "A10"
+      ],
+      "severity": "HIGH",
+      "summary": "Define dataset plus multiscales transform composition and annotation reference resolution, or explicitly refuse the unsupported valid input. Static source-derived counterexample is unexecuted; no full-app failure claimed."
+    },
+    {
+      "claim_locations": [
+        "critique/review.md:14",
+        "critique/review.md:15",
+        "critique/review.md:16",
+        "critique/review.md:17"
+      ],
+      "dimensions": [
+        "Q2",
+        "Q8"
+      ],
+      "evidence": [
+        "working/sources.json:21",
+        "working/sources.json:37",
+        "working/sources.json:52",
+        "working/sources.json:85"
+      ],
+      "id": "F3",
+      "kind": "CRITIQUE_CITATION_CATALOG_INCONSISTENCY",
+      "obligations": [
+        "A07",
+        "A08",
+        "A12"
+      ],
+      "severity": "MEDIUM",
+      "summary": "Critique references S11-S17 which do not exist and misassigns existing S3-S10; correct proposal source mapping preserved."
+    }
+  ],
+  "important_checks": [
+    {
+      "designated_final_assessment": "UNASSESSED",
+      "id": "A-P1",
+      "partial_assessment": "PARTIAL"
+    },
+    {
+      "designated_final_assessment": "UNASSESSED",
+      "id": "A-P2",
+      "partial_assessment": "PARTIAL"
+    },
+    {
+      "designated_final_assessment": "UNASSESSED",
+      "id": "A-P3",
+      "partial_assessment": "PARTIAL"
+    },
+    {
+      "designated_final_assessment": "UNASSESSED",
+      "id": "A-P4",
+      "partial_assessment": "UNASSESSED"
+    },
+    {
+      "designated_final_assessment": "UNASSESSED",
+      "id": "A-P5",
+      "partial_assessment": "COMPLETE"
+    }
+  ],
+  "mandatory_delivery_status": "INCOMPLETE_CANONICAL_FINAL_ABSENT",
+  "methods": {
+    "browser": false,
+    "candidate_reexecution": false,
+    "native_goal_or_model_test": false,
+    "public_retrieval": true,
+    "static_source_inspection": true
+  },
+  "obligations": [
+    {
+      "designated_final_assessment": "UNASSESSED",
+      "id": "A01",
+      "partial_comment": "Workflow and restricted imports explicitly planned.",
+      "partial_coverage": "COMPLETE"
+    },
+    {
+      "designated_final_assessment": "UNASSESSED",
+      "id": "A02",
+      "partial_comment": "F2: transform composition/reference resolution unresolved.",
+      "partial_coverage": "PARTIAL"
+    },
+    {
+      "designated_final_assessment": "UNASSESSED",
+      "id": "A03",
+      "partial_comment": "Display/resampling separation supported; physical exports depend on F2.",
+      "partial_coverage": "PARTIAL"
+    },
+    {
+      "designated_final_assessment": "UNASSESSED",
+      "id": "A04",
+      "partial_comment": "Bounded mechanisms/proposed 3 GB gate; memory/cache/responsiveness unproved.",
+      "partial_coverage": "PARTIAL"
+    },
+    {
+      "designated_final_assessment": "UNASSESSED",
+      "id": "A05",
+      "partial_comment": "Relinking/digest/generations/bundle tradeoff planned; store identity/filesystem details open.",
+      "partial_coverage": "PARTIAL"
+    },
+    {
+      "designated_final_assessment": "UNASSESSED",
+      "id": "A06",
+      "partial_comment": "Styles, keyboard, undo/redo and legible/accessibility feedback planned.",
+      "partial_coverage": "COMPLETE"
+    },
+    {
+      "designated_final_assessment": "UNASSESSED",
+      "id": "A07",
+      "partial_comment": "Useful separate reader/viewer mechanisms verified; F1; discovery process not audited.",
+      "partial_coverage": "PARTIAL"
+    },
+    {
+      "designated_final_assessment": "UNASSESSED",
+      "id": "A08",
+      "partial_comment": "Real source-history issue/fix/test/release chain verified; no upstream execution credit.",
+      "partial_coverage": "COMPLETE"
+    },
+    {
+      "designated_final_assessment": "UNASSESSED",
+      "id": "A09",
+      "partial_comment": "Optional exchange opportunity and Qt alternative retained.",
+      "partial_coverage": "COMPLETE"
+    },
+    {
+      "designated_final_assessment": "UNASSESSED",
+      "id": "A10",
+      "partial_comment": "Bounded coherent architecture with F1/F2 and explicit integration dependencies.",
+      "partial_coverage": "PARTIAL"
+    },
+    {
+      "designated_final_assessment": "UNASSESSED",
+      "id": "A11",
+      "partial_comment": "Narrow expectation/text hashes correct; independent execution receipt UNKNOWN.",
+      "partial_coverage": "PARTIAL"
+    },
+    {
+      "designated_final_assessment": "UNASSESSED",
+      "id": "A12",
+      "partial_comment": "No final or predecessor bodies; preservation delta unassessed; F3 report references.",
+      "partial_coverage": "UNASSESSED"
+    }
+  ],
+  "pair_id": "I-05-treatment-BLIND-SOURCE-FIDELITY-R001",
+  "partial_source_outcome": "ASSESSED_WITH_IDENTIFIED_DEFECTS_AND_UNKNOWNS",
+  "phase": "P1",
+  "physical_model": "UNKNOWN",
+  "preservation_delta": "UNASSESSED_PREDECESSOR_AND_CURRENT_FINAL_ABSENT",
+  "provider": "UNKNOWN",
+  "schema": "er9.independent-partial-source-assessment.v1",
+  "scope": "ACTUAL_AUTHORED_PARTIAL_ARTIFACTS_ONLY",
+  "source_start": {
+    "evaluation_id": "independent-warm-recovery-4",
+    "phase2_inclusive_seconds": 600,
+    "schema": "er9.evaluation-source-start.v1",
+    "source_budget_seconds": 1200,
+    "source_start_monotonic_ns": 102712240741448,
+    "source_start_utc": "2026-10-06T07:38:13.383693+00:00",
+    "start_precedes_first_semantic_dispatch_task_brief_body_read": true,
+    "whole_budget_seconds": 1800,
+    "whole_start_monotonic_ns": 102712240741448,
+    "whole_start_utc": "2026-10-06T07:38:13.383693+00:00"
+  },
+  "supported_partial_content": [
+    "Pinned NGFF/Dask read-path facts",
+    "Restricted TIFF reader mechanism and codec qualifications",
+    "Independent napari viewer and annotation mechanism",
+    "Actual napari issue9072/PR9389/test/release chain with narrow causal scope",
+    "Substantial minimum-workflow and display/resampling plan",
+    "Correct scoped arithmetic expectation and matching code/stdout text hashes",
+    "Useful required/optional/alternative leads L1-L8"
+  ],
+  "targeted_checks": {
+    "assignment_three_slots": "NOT_APPLICABLE_INTEGRATED_FULL_BRIEF",
+    "dispatch_predeclared_checks": [],
+    "new_rubric_created": false
+  },
+  "whole_pipeline_quality": "UNASSESSED"
+}

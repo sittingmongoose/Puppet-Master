@@ -1,0 +1,77 @@
+{
+  "backup_receipt": {
+    "bytes": 769,
+    "path": "state/history/projection-20261006T080706.819555Z/BACKUP_RECEIPT.json",
+    "sha256": "9a96da0bc4a25c888d6fd8b3665df9510da49fdbe5fee10afe61506318aed4f0"
+  },
+  "kind": "MECHANICAL_RESTART_PROJECTION",
+  "meaningful_update_count": 54,
+  "owner": "/root/projection_keeper",
+  "recorded_utc": "2026-10-06T08:07:06.819555+00:00",
+  "scope": "030/rootcounter21/Warm4-5clocks/TD17START/DEC016source+registration only/no scientificbody/grade inference or campaignfinish.",
+  "source_observed_utc": "2026-10-06T08:05:25.311628+00:00",
+  "sources": [
+    {
+      "bytes": 2803,
+      "path": "ops/publication/cohort030-verification.json",
+      "sha256": "8686ceb014686cf11c6d22b78cd869aa9829306c15005f4b19feda9c02833a3d"
+    },
+    {
+      "bytes": 7179,
+      "path": "state/supervisor_goal_counters.jsonl",
+      "sha256": "c5e6096dfb42ed844216439c034fd2ed62058727488c901778107b926d2d8e41"
+    },
+    {
+      "bytes": 3780,
+      "path": "evaluation/independent-warm-recovery-4/closure.json",
+      "sha256": "f6ac09edd139c423b28260bfd76555b665a954e9810f1dd60f5e48c82604e27f"
+    },
+    {
+      "bytes": 1171,
+      "path": "supervision/WARM4-EVALUATOR-P2-OVERRUN-001.json",
+      "sha256": "0a58f710df1a74b823decddf94dd9f5e5bb982cd51be4806ee78163799d04179"
+    },
+    {
+      "bytes": 829,
+      "path": "evaluation/independent-warm-recovery-5/closure.json",
+      "sha256": "830180b2e9bac54c94b1d22cf91c5cbf2b06e0e74d12c6ad57fb96e12c419b0f"
+    },
+    {
+      "bytes": 709,
+      "path": "evaluation/independent-targeted-17/source_start.json",
+      "sha256": "4e0a5b4ceeb6ac65896855cc3c3ce3325f3cf2874d3b582c84440bdbd810c14d"
+    },
+    {
+      "bytes": 26591,
+      "path": "dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/PUBLICATION_SELECTOR.json",
+      "sha256": "e64cece06522b2fa86f1d9b11f6561ae3abc200a7bf6e1375bea66f3627d078b"
+    },
+    {
+      "bytes": 31627,
+      "path": "ops/dispatcher/DEC014_C02_TERMINAL_C03_ACTIVATION_CHECKPOINT_001.json",
+      "sha256": "66a54e3e12265ebc8f8f59f34945dcadb30a4bb78c16d3c4e80142d70aa62e7f"
+    },
+    {
+      "bytes": 8363,
+      "path": "ops/dispatcher/DEC016_IMPORT_001/PRELAUNCH.json",
+      "sha256": "1218c3a4a3fdb76859148476a35391c9a7148ab0b4bf0de41f987bf37346de7a"
+    }
+  ],
+  "updated_files": [
+    {
+      "bytes": 207394,
+      "path": "state/current.json",
+      "sha256": "fb4f94f0ea5ee7ac70c214aa42ec99ca5b7200e3b7705e35561e1f8577d98c43"
+    },
+    {
+      "bytes": 207394,
+      "path": "state/campaign.json",
+      "sha256": "fb4f94f0ea5ee7ac70c214aa42ec99ca5b7200e3b7705e35561e1f8577d98c43"
+    },
+    {
+      "bytes": 33477,
+      "path": "CURRENT.md",
+      "sha256": "049d26e572514b5b820d06c862356203f5a27766343c9fb5515f7cb6e54f44eb"
+    }
+  ]
+}

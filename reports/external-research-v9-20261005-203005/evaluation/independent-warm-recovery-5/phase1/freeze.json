@@ -1,0 +1,24 @@
+{
+  "schema": "er9.independent-phase1-freeze.v1",
+  "evaluation_id": "independent-warm-recovery-5",
+  "phase1_freeze_utc": "2026-10-06T07:50:58.707044+00:00",
+  "phase1_freeze_monotonic_ns": 103477564031821,
+  "source_elapsed_seconds": 447.612349819,
+  "p2_deadline_monotonic_ns": 104077564031821,
+  "p2_max_inclusive_seconds": 600,
+  "whole_deadline_monotonic_ns": 104829951682002,
+  "immutable_files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-5/phase1/report.md",
+      "sha256": "4c1a794aab931ad9e94fd560734215737e69a2a9a721f4e408755f628b0a0bc5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-5/phase1/judgment.json",
+      "sha256": "4394f5245852a25fc3a4575980f875b2d38a1f7795703244af88825dddb800da"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-5/phase1/pinlock.json",
+      "sha256": "b044eb5cce206acd384b5d2b544b697bc76856b596ea1f464f4c84b5ebd99782"
+    }
+  ]
+}

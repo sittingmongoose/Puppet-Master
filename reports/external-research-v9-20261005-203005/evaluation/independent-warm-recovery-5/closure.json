@@ -1,0 +1,20 @@
+{
+  "schema": "er9.independent-evaluator-terminal-closure.v1",
+  "evaluation_id": "independent-warm-recovery-5",
+  "terminal_handoff_closure_utc": "2026-10-06T08:00:50.909355+00:00",
+  "terminal_handoff_closure_monotonic_ns": 104069766340973,
+  "source_start_monotonic_ns": 103029951682002,
+  "phase1_freeze_monotonic_ns": 103477564031821,
+  "source_elapsed_seconds": 447.612349819,
+  "inclusive_p2_elapsed_seconds": 592.202309152,
+  "actual_whole_elapsed_seconds": 1039.814658971,
+  "inclusive_p2_deadline_monotonic_ns": 104077564031821,
+  "original_whole_deadline_monotonic_ns": 104829951682002,
+  "p2_deadline_met": true,
+  "whole_deadline_met": true,
+  "required_report_and_usage_handoffs_sent_before_this_clock": true,
+  "immutable_phase1_hashes": "MATCH",
+  "no_ack_wait": true,
+  "no_reset": true,
+  "closure": "CLOSED"
+}

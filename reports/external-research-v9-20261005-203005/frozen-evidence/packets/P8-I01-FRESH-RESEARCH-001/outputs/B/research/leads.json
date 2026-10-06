@@ -1,0 +1,90 @@
+{
+  "catalog_schema": "er9.research.leads.v1",
+  "rule": "Optional/deferred ideas and unresolved questions. Nothing here is a minimum obligation. Each lead preserves the evidence trail that made it interesting.",
+  "leads": [
+    {
+      "id": "L1",
+      "title": "napari interop (reader plugin / embedded renderer)",
+      "detail": "Once the project format is stable, an npe2 reader plugin ('open this project in napari') reuses napari's rendering without making napari the coordinate authority. Watch napari's axis_labels/units adoption: 0.5.0 added the fields but 'napari is not using this information' yet (S3).",
+      "evidence": ["S3"],
+      "deferred_because": "Embedding napari couples us to its plugin/Qt machinery and its evolving transform internals (S5b showed a decomposition fix as late as 0.5.0)."
+    },
+    {
+      "id": "L2",
+      "title": "Vendor-proprietary formats via Bio-Formats / bioformats2raw",
+      "detail": "CZI/ND2/LIF support via the bioformats2raw conversion path into OME-Zarr keeps the in-app reader boundary narrow (S1 lists bioformats2raw as an NGFF implementation).",
+      "evidence": ["S1"],
+      "deferred_because": "Java dependency and large conversion surface; out of the team's testable boundary. Revisit if the group's instruments demand it."
+    },
+    {
+      "id": "L3",
+      "title": "NGFF 0.5 / 0.6 evolution tracking",
+      "detail": "tifffile 2026.5.2 already moved ZarrTiffStore multiscales output to NGFF 0.5 / zarr format 3 (S12 Revisions); the ome/ngff repo continues 0.5 development. Our writer targets 0.4 until 0.5 reader support is cheap; re-check spec diffs before pinning a writer version.",
+      "evidence": ["S12"],
+      "unresolved": "Exact 0.5 deltas relevant to us (ome/ label metadata) were not diffed in this stage."
+    },
+    {
+      "id": "L4",
+      "title": "SQLite single-file project store",
+      "detail": "Bounded alternative to the JSON directory: transactional atomicity across documents, worse human diffability. Trigger: field evidence of torn saves from W4-style testing on the lab NAS.",
+      "evidence": ["proposal section 7.1-B"],
+      "deferred_because": "Directory+rename meets the requirement if filesystem semantics cooperate; SQLite complicates bundle diffing for a six-person team."
+    },
+    {
+      "id": "L5",
+      "title": "Automatic segmentation assist (StarDist/CellPose-style) and registration",
+      "detail": "Brief lists these as opportunities. QuPath's docs show a mature integration pattern (deep-learning pages, LabeledImageServer for ground-truth export) that we could copy later; masks we produce would be derived images with op records.",
+      "evidence": ["S9", "QuPath docs nav captured 2026-10-06 (deep-learning section listing)"],
+      "deferred_because": "Not minimum scope; heavy model dependencies."
+    },
+    {
+      "id": "L6",
+      "title": "Web sharing of bundles (vizarr-style client rendering)",
+      "detail": "OME-Zarr output makes a later read-only web view nearly free (S1 lists vizarr as purely client-side).",
+      "evidence": ["S1"],
+      "deferred_because": "Desktop-first brief; collaboration beyond bundle exchange excluded from minimum scope."
+    },
+    {
+      "id": "L7",
+      "title": "OMERO / cloud storage backends",
+      "detail": "NGFF's ecosystem includes OMERO-to-Zarr services (S1 implementations list). A locator abstraction ('file://' vs 'omero://' URIs, QuPath-style serverBuilder idea from S8) would make this a drop-in later.",
+      "evidence": ["S1", "S8"],
+      "deferred_because": "Cloud services explicitly out of minimum scope."
+    },
+    {
+      "id": "L8",
+      "title": "ImageJ/Fiji + BigDataViewer as partial reuse",
+      "detail": "Mature nD navigation and HDF5 chunk caching; the bigdataviewer-ome-zarr Fiji plugin reads OME-Zarr (S1).",
+      "evidence": ["S1"],
+      "deferred_because": "Java split for a small Python-capable team; project/annotation layer still ours."
+    },
+    {
+      "id": "L9",
+      "title": "GPU-accelerated channel compositing",
+      "detail": "Optional once CPU compositing profiles slow on large multi-channel 3D views; napari's VisPy stack is the reference point.",
+      "evidence": ["S3 (architecture overview: VisPy GPU rendering)"],
+      "deferred_because": "Envelope target is bounded access, not frame rate; optional GPU."
+    },
+    {
+      "id": "L10",
+      "title": "Whole-slide pyramidal formats (SVS/NDPI/ZIF) via tifffile",
+      "detail": "tifffile reads Aperio SVS, Hamamatsu NDPI, ZIF etc. with documented caveats (NDPI 'works around this limitation ... performs poorly'; ZIF constraints) (S12 Notes). Only worth adding if the group receives slide scans.",
+      "evidence": ["S12"],
+      "deferred_because": "Outside the tested support boundary; per-format verification cost is real."
+    },
+    {
+      "id": "L11",
+      "title": "Canonical annotation diff format for shared-storage review",
+      "detail": "Since bundles are exchanged via ordinary storage, a small JSON-Patch-style diff of annotation documents would let teammates review each other's edits. Depends on the canonical-JSON hashing proven in W3.",
+      "evidence": ["W3"],
+      "deferred_because": "Review workflow beyond minimum; keep canonical serialization stable from v1 to enable it."
+    },
+    {
+      "id": "L12",
+      "title": "Orientation matrices beyond axis flips",
+      "detail": "v1 records only axis order + per-axis flips + sampling/origin; full affine orientation (e.g., stage-scan stitched tiles needing per-tile translation) needs the napari-style full affine and is recorded as a data op, never as silent import interpretation.",
+      "evidence": ["S7", "S5b"],
+      "unresolved": "No source-backed design chosen yet for per-tile translations; would start from NGFF coordinateTransformations lists (S1 3.3)."
+    }
+  ]
+}

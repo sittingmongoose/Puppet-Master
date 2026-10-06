@@ -1,0 +1,137 @@
+{
+  "schema": "er9.independent-phase2-operational-closure.v1",
+  "evaluation_id": "independent-warm-recovery-5",
+  "scope": "Exact authorized current key/runtime/resource-execution projections only; no raw referenced stores followed.",
+  "immutable_phase1_unchanged": true,
+  "phase1_final_science": "UNASSESSED",
+  "no_source_grade_rewrite": true,
+  "no_clock_reset": true,
+  "delivery": "INCOMPLETE",
+  "missing_final_four": [
+    "out/final/proposal.md",
+    "out/final/sources.json",
+    "out/final/witnesses.json",
+    "out/final/leads.json"
+  ],
+  "canonical_report_bytes": 19,
+  "native": {
+    "requested_model": "gpt-6-luna",
+    "requested_effort": "max",
+    "observed_configuration": {
+      "effort": "max",
+      "model": "gpt-6-luna"
+    },
+    "physical_provider_attestation": "UNKNOWN",
+    "opaque_nativeGoalID": "UNKNOWN",
+    "saved_first_goal": {
+      "createdAt": 1791267606,
+      "status": "active",
+      "timeUsedSeconds": 0,
+      "tokenBudget": null,
+      "tokensUsed": 0,
+      "updatedAt": 1791267606
+    },
+    "saved_last_goal": {
+      "createdAt": 1791267606,
+      "status": "paused",
+      "timeUsedSeconds": 1479,
+      "tokenBudget": null,
+      "tokensUsed": 442377,
+      "updatedAt": 1791269086
+    },
+    "driver_outcome": "HOLD",
+    "driver_error_class": "TimeoutError",
+    "driver_error": "original native stop reached",
+    "elapsed_seconds": 1485.606847704,
+    "completed_goal_claim": false,
+    "candidate_goals_set_by_host": 1,
+    "goal_replacements_observed": 0,
+    "native_response_count": "UNKNOWN",
+    "http_attempts": "UNKNOWN",
+    "response_cap_enforced": false,
+    "native_conversation_read": false
+  },
+  "usage_separate": {
+    "usage_notification_count": 86,
+    "usage_totals": {
+      "cachedInputTokens": 5292032,
+      "inputTokens": 5668990,
+      "outputTokens": 65419,
+      "reasoningOutputTokens": 34837,
+      "totalTokens": 5734409
+    },
+    "billing_dollars": "UNKNOWN",
+    "goal_scalar_tokens_used": 442377,
+    "scope": "usage notification aggregates and saved Goal scalar are distinct measures; no subtraction or price inference"
+  },
+  "execution_corroboration": {
+    "W1_execution_id": "exec-rt050r2k",
+    "execution_receipt_sha256": "9360e11ac83e079d0f4030804c9add3d35ac064b821b6896aa2ad5e0eb53b203",
+    "positive_receipt_fields": {
+      "schema": "er9.execution.result.v1",
+      "actor": "candidate",
+      "execution_id": "exec-rt050r2k",
+      "execution_label": "executed by candidate",
+      "exit_code": 0,
+      "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+      "limits": {
+        "cpu_seconds": 3,
+        "memory_bytes": 268435456,
+        "network": "new empty namespace",
+        "stream_bytes_each": 32768,
+        "tasks": 16,
+        "wall_seconds": 5
+      },
+      "bootstrap_started": true,
+      "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+      "code_sha256": "ebd4e2a1055ee1d2522a49afb3ba3f013585fec231118a29684f61482f341a2a",
+      "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "stdout_bytes": 556,
+      "stdout_sha256": "8e993c867d9ea98e04c256b2d03af32f2d3fdd436a9e700f8f547304513ba714",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "cleanup_confirmed": true,
+      "cleanup_classification": "collected_unit_absent",
+      "control_group_absent_after_stop": null,
+      "control_group_populated_after_stop": null,
+      "unit_active_state_after_stop": "inactive",
+      "unit_load_state_after_stop": "not-found",
+      "cleanup_state_returncode": 0,
+      "cleanup_stop_returncode": 5,
+      "stopped_by_adapter": null
+    },
+    "code_digest_matches_phase1_extracted_code": true,
+    "interpretation": "Positive current candidate execution receipt corroborates zero exit and code/data/stdout digests for W1; actual stdout bytes not supplied/read. Narrow static scope and malformed authored JSON remain. No evaluator re-execution.",
+    "other_execution": "exec-w7uyxdkg positively recorded, not independently source-assessed or credited here.",
+    "resource_label_qualification": "Candidate inventory calls 3 a cpu_count; actual positive receipt declares cpu_seconds:3. A three-CPU count is not attested by this projection."
+  },
+  "resources": {
+    "observed_complete_job_memory_max_bytes": 2415919104,
+    "memory_swap_max_bytes": 0,
+    "aggregate_memory_peak_bytes": 372776960,
+    "resource_oom_observed": false,
+    "fit": "UNKNOWN",
+    "aggregate_cpu_tasks_scratch_caps": "UNKNOWN_NOT_EXPOSED_BY_PROFILE",
+    "all_private_slice_descendants_quiet": true,
+    "all_owned_scopes_quiet": true,
+    "closed_before_original_total_stop": true,
+    "ownership_proof_enrichment_sequence": "UNKNOWN; embedded referenced receipt hash and final enriched hash are distinct"
+  },
+  "unknown_facets": [
+    "physical provider/model runtime attestation",
+    "opaque native Goal identity",
+    "HTTP/inference attempt count",
+    "billing dollars",
+    "aggregate undeclared CPU/tasks/scratch caps",
+    "historical S1 capture identity",
+    "authenticated predecessor semantic preservation",
+    "full final scientific quality",
+    "actual stdout byte content not in safe packet",
+    "proof-enrichment sequence"
+  ],
+  "report_ready_utc": "2026-10-06T08:00:17.723978+00:00",
+  "report_ready_monotonic_ns": 104036579131828,
+  "inclusive_p2_deadline_monotonic_ns": 104077564031821,
+  "original_whole_deadline_monotonic_ns": 104829951682002,
+  "handoff_and_terminal_closure_clock": "Will be recorded separately after required sends, not equated to report-ready time."
+}

@@ -1,0 +1,645 @@
+{
+  "candidate_ledger_rule": "Every existing actual attempt already counted once globally; no checkpoint reference adds tokens. Operational critique completion/final missing4 or failure is not scientific proposal/wholepaired pass.",
+  "cohorts": [
+    {
+      "accounting_source_window": {
+        "end": "2026-10-06T08:44:54.385525+00:00",
+        "start": "2026-10-06T08:44:53.739814+00:00"
+      },
+      "cohort": "DEC016_FOUR_ROLES",
+      "owner_checkpoint_pin": {
+        "path": "ops/dispatcher/DEC016_ALL_FOUR_TERMINAL_CHECKPOINT_001.json",
+        "sha256": "33d1b1b9d9b2828382a80eae455f6b7e75de6b50a688d3cf93ba11bb0e37f4e0"
+      },
+      "owner_observed_utc": "2026-10-06T08:38:00.506485+00:00",
+      "rows": [
+        {
+          "accounting_actual_attempt_present": true,
+          "accounting_native_starts_reference": 1,
+          "arm": "control",
+          "billing_dollars": "UNKNOWN",
+          "direct_freeze_quiet_metadata": {
+            "all_owned_scopes_quiet": null,
+            "client_tool_cgroups_quiet": null,
+            "client_tool_process_groups_absent": null,
+            "elapsed_seconds": 730.4470929689996,
+            "execution_units_quiet": null,
+            "held_process_groups_absent": null,
+            "native_cgroup_quiet": null,
+            "native_quiescent": true,
+            "operational_complete": true
+          },
+          "elapsed_seconds": 730.4470929689996,
+          "ended_utc": "2026-10-06T08:27:02.570599+00:00",
+          "freeze_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001-role-birth-r001/OUTPUT_FREEZE.json",
+            "sha256": "dd33d01368e0be39b7c16e273f139be74ace0dab7c8b21e28024bb5ea96c2c2d"
+          },
+          "job_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001",
+          "known_usage_reference_only": null,
+          "missing_required_artifacts": [],
+          "native_Goal_status_saved_reference": null,
+          "native_goal_starts": 1,
+          "native_quiescent": true,
+          "native_receipt_pins_reference_only": [],
+          "native_status": "completed",
+          "new_charge_from_checkpoint_reference": false,
+          "no_target_or_pass_credit": true,
+          "operational_complete": true,
+          "operator_permit_release_metadata": "UNKNOWN_UNEXPOSED_IN_FREEZE",
+          "private_slice_release": null,
+          "release_receipt_verified_projections": [
+            {
+              "exact_sha_verified": true,
+              "metadata": {
+                "all_owned_scopes_quiet": "UNKNOWN",
+                "all_private_units_quiet": "UNKNOWN",
+                "client_tool_cgroups_quiet": "UNKNOWN",
+                "client_tool_process_groups_absent": "UNKNOWN",
+                "execution_units_quiet": "UNKNOWN",
+                "held_process_groups_absent": "UNKNOWN",
+                "native_cgroup_quiet": "UNKNOWN",
+                "native_quiescent": "UNKNOWN",
+                "owned_quiet": "UNKNOWN",
+                "permit_release_confirmed": "UNKNOWN"
+              },
+              "scope": "Resource/quiet/release host metadata only; missing required fields UNKNOWN, original failure flags preserved.",
+              "source_pin": {
+                "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001-role-birth-r001/PRIVATE_SLICE_RELEASE.json",
+                "sha256": "c7202e845f79bb4b4360620595cb84248681b1657d7c5d3a6149fb25ad59276e"
+              }
+            }
+          ],
+          "release_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001-role-birth-r001/PRIVATE_SLICE_RELEASE.json",
+            "sha256": "c7202e845f79bb4b4360620595cb84248681b1657d7c5d3a6149fb25ad59276e"
+          },
+          "runtime_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+            "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+          },
+          "stage": "critique",
+          "status": "COMPLETED",
+          "usage_basis": "UNKNOWN"
+        },
+        {
+          "accounting_actual_attempt_present": true,
+          "accounting_native_starts_reference": 1,
+          "arm": "control",
+          "billing_dollars": "UNKNOWN",
+          "direct_freeze_quiet_metadata": {
+            "all_owned_scopes_quiet": null,
+            "client_tool_cgroups_quiet": null,
+            "client_tool_process_groups_absent": null,
+            "elapsed_seconds": 573.9258202820056,
+            "execution_units_quiet": null,
+            "held_process_groups_absent": null,
+            "native_cgroup_quiet": null,
+            "native_quiescent": true,
+            "operational_complete": false
+          },
+          "elapsed_seconds": 573.9258202820056,
+          "ended_utc": "2026-10-06T08:36:57.970145+00:00",
+          "freeze_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001-role-birth-r001/OUTPUT_FREEZE.json",
+            "sha256": "6b07c921ea49a410e696808f50fb8468b0d675750d64fe5bb21e0408c93f7d57"
+          },
+          "job_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001",
+          "known_usage_reference_only": null,
+          "missing_required_artifacts": [
+            "out/final/proposal.md",
+            "out/final/sources.json",
+            "out/final/witnesses.json",
+            "out/final/leads.json"
+          ],
+          "native_Goal_status_saved_reference": null,
+          "native_goal_starts": 1,
+          "native_quiescent": true,
+          "native_receipt_pins_reference_only": [],
+          "native_status": "cap_seconds",
+          "new_charge_from_checkpoint_reference": false,
+          "no_target_or_pass_credit": true,
+          "operational_complete": false,
+          "operator_permit_release_metadata": "UNKNOWN_UNEXPOSED_IN_FREEZE",
+          "private_slice_release": null,
+          "release_receipt_verified_projections": [
+            {
+              "exact_sha_verified": true,
+              "metadata": {
+                "all_owned_scopes_quiet": "UNKNOWN",
+                "all_private_units_quiet": "UNKNOWN",
+                "client_tool_cgroups_quiet": "UNKNOWN",
+                "client_tool_process_groups_absent": "UNKNOWN",
+                "execution_units_quiet": "UNKNOWN",
+                "held_process_groups_absent": "UNKNOWN",
+                "native_cgroup_quiet": "UNKNOWN",
+                "native_quiescent": "UNKNOWN",
+                "owned_quiet": "UNKNOWN",
+                "permit_release_confirmed": "UNKNOWN"
+              },
+              "scope": "Resource/quiet/release host metadata only; missing required fields UNKNOWN, original failure flags preserved.",
+              "source_pin": {
+                "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001-role-birth-r001/PRIVATE_SLICE_RELEASE.json",
+                "sha256": "e2e3889a31d99c06269166f87adef507641d053267f71900b12f54454bbcf0bd"
+              }
+            }
+          ],
+          "release_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001-role-birth-r001/PRIVATE_SLICE_RELEASE.json",
+            "sha256": "e2e3889a31d99c06269166f87adef507641d053267f71900b12f54454bbcf0bd"
+          },
+          "runtime_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/GLM_BUNDLE_CLOCK_V3_READY.json",
+            "sha256": "bb4c9a62092efaee7576cf778cf97edb3dd7f5912046e4080a10df1d878fbd99"
+          },
+          "stage": "revision",
+          "status": "FAILED",
+          "usage_basis": "UNKNOWN"
+        },
+        {
+          "accounting_actual_attempt_present": true,
+          "accounting_native_starts_reference": 1,
+          "arm": "treatment",
+          "billing_dollars": "UNKNOWN",
+          "direct_freeze_quiet_metadata": {
+            "all_owned_scopes_quiet": null,
+            "client_tool_cgroups_quiet": null,
+            "client_tool_process_groups_absent": null,
+            "elapsed_seconds": 578.7516265890008,
+            "execution_units_quiet": null,
+            "held_process_groups_absent": null,
+            "native_cgroup_quiet": null,
+            "native_quiescent": true,
+            "operational_complete": true
+          },
+          "elapsed_seconds": 578.7516265890008,
+          "ended_utc": "2026-10-06T08:22:44.980917+00:00",
+          "freeze_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001-role-birth-r001/OUTPUT_FREEZE.json",
+            "sha256": "02cf121cd0b84c62a97f40658a945e16bbd506aa1a368c80357a3402faa8e702"
+          },
+          "job_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001",
+          "known_usage_reference_only": null,
+          "missing_required_artifacts": [],
+          "native_Goal_status_saved_reference": null,
+          "native_goal_starts": 1,
+          "native_quiescent": true,
+          "native_receipt_pins_reference_only": [],
+          "native_status": "completed",
+          "new_charge_from_checkpoint_reference": false,
+          "no_target_or_pass_credit": true,
+          "operational_complete": true,
+          "operator_permit_release_metadata": "UNKNOWN_UNEXPOSED_IN_FREEZE",
+          "private_slice_release": null,
+          "release_receipt_verified_projections": [
+            {
+              "exact_sha_verified": true,
+              "metadata": {
+                "all_owned_scopes_quiet": "UNKNOWN",
+                "all_private_units_quiet": "UNKNOWN",
+                "client_tool_cgroups_quiet": "UNKNOWN",
+                "client_tool_process_groups_absent": "UNKNOWN",
+                "execution_units_quiet": "UNKNOWN",
+                "held_process_groups_absent": "UNKNOWN",
+                "native_cgroup_quiet": "UNKNOWN",
+                "native_quiescent": "UNKNOWN",
+                "owned_quiet": "UNKNOWN",
+                "permit_release_confirmed": "UNKNOWN"
+              },
+              "scope": "Resource/quiet/release host metadata only; missing required fields UNKNOWN, original failure flags preserved.",
+              "source_pin": {
+                "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001-role-birth-r001/PRIVATE_SLICE_RELEASE.json",
+                "sha256": "9e2a2b4ddfde15b8536e8f203026a07610d9425b8763abe17fb5e8c52f362f7d"
+              }
+            }
+          ],
+          "release_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001-role-birth-r001/PRIVATE_SLICE_RELEASE.json",
+            "sha256": "9e2a2b4ddfde15b8536e8f203026a07610d9425b8763abe17fb5e8c52f362f7d"
+          },
+          "runtime_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+            "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+          },
+          "stage": "critique",
+          "status": "COMPLETED",
+          "usage_basis": "UNKNOWN"
+        },
+        {
+          "accounting_actual_attempt_present": true,
+          "accounting_native_starts_reference": 1,
+          "arm": "treatment",
+          "billing_dollars": "UNKNOWN",
+          "direct_freeze_quiet_metadata": {
+            "all_owned_scopes_quiet": null,
+            "client_tool_cgroups_quiet": null,
+            "client_tool_process_groups_absent": null,
+            "elapsed_seconds": 573.924586025998,
+            "execution_units_quiet": null,
+            "held_process_groups_absent": null,
+            "native_cgroup_quiet": null,
+            "native_quiescent": true,
+            "operational_complete": false
+          },
+          "elapsed_seconds": 573.924586025998,
+          "ended_utc": "2026-10-06T08:32:44.771970+00:00",
+          "freeze_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001-role-birth-r001/OUTPUT_FREEZE.json",
+            "sha256": "615f5f6977162beb565e3657e3867d34ccdcc53cd722ec44f86b1334ba54bd7d"
+          },
+          "job_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001",
+          "known_usage_reference_only": null,
+          "missing_required_artifacts": [
+            "out/final/proposal.md",
+            "out/final/sources.json",
+            "out/final/witnesses.json",
+            "out/final/leads.json"
+          ],
+          "native_Goal_status_saved_reference": null,
+          "native_goal_starts": 1,
+          "native_quiescent": true,
+          "native_receipt_pins_reference_only": [],
+          "native_status": "cap_seconds",
+          "new_charge_from_checkpoint_reference": false,
+          "no_target_or_pass_credit": true,
+          "operational_complete": false,
+          "operator_permit_release_metadata": "UNKNOWN_UNEXPOSED_IN_FREEZE",
+          "private_slice_release": null,
+          "release_receipt_verified_projections": [
+            {
+              "exact_sha_verified": true,
+              "metadata": {
+                "all_owned_scopes_quiet": "UNKNOWN",
+                "all_private_units_quiet": "UNKNOWN",
+                "client_tool_cgroups_quiet": "UNKNOWN",
+                "client_tool_process_groups_absent": "UNKNOWN",
+                "execution_units_quiet": "UNKNOWN",
+                "held_process_groups_absent": "UNKNOWN",
+                "native_cgroup_quiet": "UNKNOWN",
+                "native_quiescent": "UNKNOWN",
+                "owned_quiet": "UNKNOWN",
+                "permit_release_confirmed": "UNKNOWN"
+              },
+              "scope": "Resource/quiet/release host metadata only; missing required fields UNKNOWN, original failure flags preserved.",
+              "source_pin": {
+                "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001-role-birth-r001/PRIVATE_SLICE_RELEASE.json",
+                "sha256": "7869ef514b66328f2c498bddc2cbfa2bb4b9d74a0c657e715626498cd1eac145"
+              }
+            }
+          ],
+          "release_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001-role-birth-r001/PRIVATE_SLICE_RELEASE.json",
+            "sha256": "7869ef514b66328f2c498bddc2cbfa2bb4b9d74a0c657e715626498cd1eac145"
+          },
+          "runtime_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/GLM_BUNDLE_CLOCK_V3_READY.json",
+            "sha256": "bb4c9a62092efaee7576cf778cf97edb3dd7f5912046e4080a10df1d878fbd99"
+          },
+          "stage": "revision",
+          "status": "FAILED",
+          "usage_basis": "UNKNOWN"
+        }
+      ],
+      "scope": "Operator lifecycle/output presence/quiet/release only. Native status in operator freeze is router enum unless independently exported Goal object; actual saved Goal status stays separate. Queued/blocked descriptors are not actor or billingzero; old failed/ENOSPC costs remain cumulative."
+    },
+    {
+      "accounting_source_window": {
+        "end": "2026-10-06T08:44:54.385525+00:00",
+        "start": "2026-10-06T08:44:53.739814+00:00"
+      },
+      "cohort": "DEC014_C03",
+      "owner_checkpoint_pin": {
+        "path": "ops/dispatcher/DEC014_C03_ALL_TERMINAL_CHECKPOINT_001.json",
+        "sha256": "1c6be48df13394ec111e23f1336bee4c936ecbd70eb293f03cceb898fb4d808b"
+      },
+      "owner_observed_utc": "2026-10-06T08:42:59.751217+00:00",
+      "rows": [
+        {
+          "accounting_actual_attempt_present": true,
+          "accounting_native_starts_reference": 1,
+          "arm": "control",
+          "billing_dollars": "UNKNOWN",
+          "direct_freeze_quiet_metadata": {
+            "all_owned_scopes_quiet": null,
+            "client_tool_cgroups_quiet": null,
+            "client_tool_process_groups_absent": null,
+            "elapsed_seconds": 817.4093191860011,
+            "execution_units_quiet": null,
+            "held_process_groups_absent": null,
+            "native_cgroup_quiet": null,
+            "native_quiescent": true,
+            "operational_complete": true
+          },
+          "elapsed_seconds": 817.4093191860011,
+          "ended_utc": "2026-10-06T08:07:05.530313+00:00",
+          "freeze_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001/OUTPUT_FREEZE.json",
+            "sha256": "2abdbb70b8aa9ae6c571256bd7be5f6b8b800262ea0b8236fc762cc51474f9a9"
+          },
+          "job_id": "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+          "known_usage_reference_only": {
+            "cached_input_included": 434112,
+            "input": 661370,
+            "output": 36184,
+            "reasoning_output_subset": 0,
+            "total": 697554
+          },
+          "missing_required_artifacts": [],
+          "native_Goal_status_saved_reference": "UNKNOWN",
+          "native_goal_starts": 1,
+          "native_quiescent": true,
+          "native_receipt_pins_reference_only": [
+            {
+              "path": "ops/dispatcher/runs/C-03-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001/native/receipt.json",
+              "sha256": "29cbf53a53f792cc08067f7dda25eee32c0e53fd60a31b9617805ec772cc827c"
+            }
+          ],
+          "native_status": "completed",
+          "new_charge_from_checkpoint_reference": false,
+          "no_target_or_pass_credit": true,
+          "operational_complete": true,
+          "operator_permit_release_metadata": "UNKNOWN_UNEXPOSED_IN_FREEZE",
+          "private_slice_release": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001/PRIVATE_SLICE_RELEASE.json",
+            "sha256": "951bddbcbb08f3bf0abe14fa26e6206bac49e9185773626348254101345bd199"
+          },
+          "release_receipt_verified_projections": [
+            {
+              "exact_sha_verified": true,
+              "metadata": {
+                "all_owned_scopes_quiet": "UNKNOWN",
+                "all_private_units_quiet": "UNKNOWN",
+                "client_tool_cgroups_quiet": "UNKNOWN",
+                "client_tool_process_groups_absent": "UNKNOWN",
+                "execution_units_quiet": "UNKNOWN",
+                "held_process_groups_absent": "UNKNOWN",
+                "native_cgroup_quiet": "UNKNOWN",
+                "native_quiescent": "UNKNOWN",
+                "owned_quiet": "UNKNOWN",
+                "permit_release_confirmed": "UNKNOWN"
+              },
+              "scope": "Resource/quiet/release host metadata only; missing required fields UNKNOWN, original failure flags preserved.",
+              "source_pin": {
+                "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001/PRIVATE_SLICE_RELEASE.json",
+                "sha256": "951bddbcbb08f3bf0abe14fa26e6206bac49e9185773626348254101345bd199"
+              }
+            }
+          ],
+          "release_ref": null,
+          "runtime_ref": null,
+          "stage": "research",
+          "status": "COMPLETED",
+          "usage_basis": "native_provider_request_sum_known_values"
+        },
+        {
+          "accounting_actual_attempt_present": true,
+          "accounting_native_starts_reference": 1,
+          "arm": "control",
+          "billing_dollars": "UNKNOWN",
+          "direct_freeze_quiet_metadata": {
+            "all_owned_scopes_quiet": null,
+            "client_tool_cgroups_quiet": null,
+            "client_tool_process_groups_absent": null,
+            "elapsed_seconds": 425.6950929799932,
+            "execution_units_quiet": null,
+            "held_process_groups_absent": null,
+            "native_cgroup_quiet": null,
+            "native_quiescent": true,
+            "operational_complete": true
+          },
+          "elapsed_seconds": 425.6950929799932,
+          "ended_utc": "2026-10-06T08:14:31.356278+00:00",
+          "freeze_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001-role-birth-r001/OUTPUT_FREEZE.json",
+            "sha256": "9fc599142f0b7fb1cb9a875cb265dc34bd40b6604c674c1b651f5b8f93869457"
+          },
+          "job_id": "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+          "known_usage_reference_only": null,
+          "missing_required_artifacts": [],
+          "native_Goal_status_saved_reference": null,
+          "native_goal_starts": 1,
+          "native_quiescent": true,
+          "native_receipt_pins_reference_only": [],
+          "native_status": "completed",
+          "new_charge_from_checkpoint_reference": false,
+          "no_target_or_pass_credit": true,
+          "operational_complete": true,
+          "operator_permit_release_metadata": "UNKNOWN_UNEXPOSED_IN_FREEZE",
+          "private_slice_release": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001-role-birth-r001/PRIVATE_SLICE_RELEASE.json",
+            "sha256": "4065cbb7484d98ab5352f55682537c31be9f023f7f0c227350af6f52aa1ec1a5"
+          },
+          "release_receipt_verified_projections": [
+            {
+              "exact_sha_verified": true,
+              "metadata": {
+                "all_owned_scopes_quiet": "UNKNOWN",
+                "all_private_units_quiet": "UNKNOWN",
+                "client_tool_cgroups_quiet": "UNKNOWN",
+                "client_tool_process_groups_absent": "UNKNOWN",
+                "execution_units_quiet": "UNKNOWN",
+                "held_process_groups_absent": "UNKNOWN",
+                "native_cgroup_quiet": "UNKNOWN",
+                "native_quiescent": "UNKNOWN",
+                "owned_quiet": "UNKNOWN",
+                "permit_release_confirmed": "UNKNOWN"
+              },
+              "scope": "Resource/quiet/release host metadata only; missing required fields UNKNOWN, original failure flags preserved.",
+              "source_pin": {
+                "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001-role-birth-r001/PRIVATE_SLICE_RELEASE.json",
+                "sha256": "4065cbb7484d98ab5352f55682537c31be9f023f7f0c227350af6f52aa1ec1a5"
+              }
+            }
+          ],
+          "release_ref": null,
+          "runtime_ref": null,
+          "stage": "critique",
+          "status": "COMPLETED",
+          "usage_basis": "UNKNOWN"
+        },
+        {
+          "accounting_actual_attempt_present": true,
+          "accounting_native_starts_reference": 1,
+          "arm": "control",
+          "billing_dollars": "UNKNOWN",
+          "direct_freeze_quiet_metadata": {
+            "all_owned_scopes_quiet": null,
+            "client_tool_cgroups_quiet": null,
+            "client_tool_process_groups_absent": null,
+            "elapsed_seconds": 573.9855852519977,
+            "execution_units_quiet": null,
+            "held_process_groups_absent": null,
+            "native_cgroup_quiet": null,
+            "native_quiescent": true,
+            "operational_complete": false
+          },
+          "elapsed_seconds": 573.9855852519977,
+          "ended_utc": "2026-10-06T08:42:34.569234+00:00",
+          "freeze_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001-role-birth-r001/OUTPUT_FREEZE.json",
+            "sha256": "4a7111a8be4902e12f9d8030e98260f005c7a4b7b89182faa19fe5672949779a"
+          },
+          "job_id": "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+          "known_usage_reference_only": null,
+          "missing_required_artifacts": [
+            "out/final/proposal.md",
+            "out/final/sources.json",
+            "out/final/witnesses.json",
+            "out/final/leads.json"
+          ],
+          "native_Goal_status_saved_reference": null,
+          "native_goal_starts": 1,
+          "native_quiescent": true,
+          "native_receipt_pins_reference_only": [],
+          "native_status": "cap_seconds",
+          "new_charge_from_checkpoint_reference": false,
+          "no_target_or_pass_credit": true,
+          "operational_complete": false,
+          "operator_permit_release_metadata": "UNKNOWN_UNEXPOSED_IN_FREEZE",
+          "private_slice_release": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001-role-birth-r001/PRIVATE_SLICE_RELEASE.json",
+            "sha256": "73154666d60950d3175310652ca5280ec049159de94649a6faebb1a09bd29cf5"
+          },
+          "release_receipt_verified_projections": [
+            {
+              "exact_sha_verified": true,
+              "metadata": {
+                "all_owned_scopes_quiet": "UNKNOWN",
+                "all_private_units_quiet": "UNKNOWN",
+                "client_tool_cgroups_quiet": "UNKNOWN",
+                "client_tool_process_groups_absent": "UNKNOWN",
+                "execution_units_quiet": "UNKNOWN",
+                "held_process_groups_absent": "UNKNOWN",
+                "native_cgroup_quiet": "UNKNOWN",
+                "native_quiescent": "UNKNOWN",
+                "owned_quiet": "UNKNOWN",
+                "permit_release_confirmed": "UNKNOWN"
+              },
+              "scope": "Resource/quiet/release host metadata only; missing required fields UNKNOWN, original failure flags preserved.",
+              "source_pin": {
+                "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001-role-birth-r001/PRIVATE_SLICE_RELEASE.json",
+                "sha256": "73154666d60950d3175310652ca5280ec049159de94649a6faebb1a09bd29cf5"
+              }
+            }
+          ],
+          "release_ref": null,
+          "runtime_ref": null,
+          "stage": "revision",
+          "status": "FAILED",
+          "usage_basis": "UNKNOWN"
+        },
+        {
+          "accounting_actual_attempt_present": true,
+          "accounting_native_starts_reference": 1,
+          "arm": "treatment",
+          "billing_dollars": "UNKNOWN",
+          "direct_freeze_quiet_metadata": {
+            "all_owned_scopes_quiet": null,
+            "client_tool_cgroups_quiet": null,
+            "client_tool_process_groups_absent": null,
+            "elapsed_seconds": 1174.3911821530055,
+            "execution_units_quiet": null,
+            "held_process_groups_absent": null,
+            "native_cgroup_quiet": null,
+            "native_quiescent": true,
+            "operational_complete": false
+          },
+          "elapsed_seconds": 1174.3911821530055,
+          "ended_utc": "2026-10-06T08:12:44.981699+00:00",
+          "freeze_ref": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001/OUTPUT_FREEZE.json",
+            "sha256": "e4a8abf26fd3771f753b77d7e7685316354a2c265abdf824edd0e9806b051518"
+          },
+          "job_id": "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001",
+          "known_usage_reference_only": {
+            "cached_input_included": 431104,
+            "input": 565612,
+            "output": 40345,
+            "reasoning_output_subset": 0,
+            "total": 605957
+          },
+          "missing_required_artifacts": [
+            "out/research/proposal.md",
+            "out/research/sources.json",
+            "out/research/witnesses.json",
+            "out/research/leads.json"
+          ],
+          "native_Goal_status_saved_reference": "UNKNOWN",
+          "native_goal_starts": 1,
+          "native_quiescent": true,
+          "native_receipt_pins_reference_only": [
+            {
+              "path": "ops/dispatcher/runs/C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001/native/receipt.json",
+              "sha256": "1d5c56d4f5caf6bf57c137fa6deffe673145df273aa0839d3432eb3bf2438895"
+            }
+          ],
+          "native_status": "cap_seconds",
+          "new_charge_from_checkpoint_reference": false,
+          "no_target_or_pass_credit": true,
+          "operational_complete": false,
+          "operator_permit_release_metadata": "UNKNOWN_UNEXPOSED_IN_FREEZE",
+          "private_slice_release": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001/PRIVATE_SLICE_RELEASE.json",
+            "sha256": "f9afa49007fa352647212067f392caae30806b5a5043b9e1033d0f3713e6d048"
+          },
+          "release_receipt_verified_projections": [
+            {
+              "exact_sha_verified": true,
+              "metadata": {
+                "all_owned_scopes_quiet": "UNKNOWN",
+                "all_private_units_quiet": "UNKNOWN",
+                "client_tool_cgroups_quiet": "UNKNOWN",
+                "client_tool_process_groups_absent": "UNKNOWN",
+                "execution_units_quiet": "UNKNOWN",
+                "held_process_groups_absent": "UNKNOWN",
+                "native_cgroup_quiet": "UNKNOWN",
+                "native_quiescent": "UNKNOWN",
+                "owned_quiet": "UNKNOWN",
+                "permit_release_confirmed": "UNKNOWN"
+              },
+              "scope": "Resource/quiet/release host metadata only; missing required fields UNKNOWN, original failure flags preserved.",
+              "source_pin": {
+                "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001/PRIVATE_SLICE_RELEASE.json",
+                "sha256": "f9afa49007fa352647212067f392caae30806b5a5043b9e1033d0f3713e6d048"
+              }
+            }
+          ],
+          "release_ref": null,
+          "runtime_ref": null,
+          "stage": "research",
+          "status": "FAILED",
+          "usage_basis": "native_provider_request_sum_known_values"
+        },
+        {
+          "accounting_actual_attempt_present": false,
+          "accounting_native_starts_reference": null,
+          "arm": "treatment",
+          "billing_dollars": "UNKNOWN",
+          "elapsed_seconds": null,
+          "ended_utc": null,
+          "freeze_ref": null,
+          "job_id": "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001",
+          "known_usage_reference_only": null,
+          "missing_required_artifacts": null,
+          "native_Goal_status_saved_reference": "UNKNOWN",
+          "native_goal_starts": 0,
+          "native_quiescent": null,
+          "native_receipt_pins_reference_only": [],
+          "native_status": null,
+          "new_charge_from_checkpoint_reference": false,
+          "no_target_or_pass_credit": true,
+          "operational_complete": null,
+          "private_slice_release": null,
+          "release_receipt_verified_projections": [],
+          "release_ref": null,
+          "runtime_ref": null,
+          "stage": "critic_final",
+          "status": "BLOCKED_PREDECESSOR_FAILED",
+          "usage_basis": "UNSTARTED_BLOCKED_DESCRIPTOR_NOT_AN_ACTOR_COST_ZERO"
+        }
+      ],
+      "scope": "Operator lifecycle/output presence/quiet/release only. Native status in operator freeze is router enum unless independently exported Goal object; actual saved Goal status stays separate. Queued/blocked descriptors are not actor or billingzero; old failed/ENOSPC costs remain cumulative."
+    }
+  ],
+  "schema": "er9.accounting.terminal-cohorts.v1"
+}

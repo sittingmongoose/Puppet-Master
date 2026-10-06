@@ -1,0 +1,124 @@
+{
+  "all4_source_closure": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/PIPELINE_CLOSURE.json",
+    "sha256": "2b6b5d36298624437b93dc45234c8c56cf2c69d71f5f744fe322fa2fc194e8e5"
+  },
+  "entrypoint": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/role_birth.py",
+    "sha256": "f9827af0cc344f06d1bd9a3f9ceeeed9a1e2f8ea588380600ee54db823df4fc4"
+  },
+  "external_mechanical_imports": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/prepare_successors.py",
+      "sha256": "ba45f3c3507c10e4339f78f6270dd9b56f5e23bdfb03984475d6f9dca94b9673"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/prepare_versions.py",
+      "sha256": "8e12e2e6f02050172bf92711933c56510912cc3a345c5a88750dc7a063ebdf77"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/blueprint.py",
+      "sha256": "c7b89a2546e8ecec82162f5d823480c828889c1be45235533266f375313e8bf2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/proof-model-normalizer-001/normalizer.py",
+      "sha256": "7e5890ce521730b6de72df1ecb14ab8e3bf51ae3894dde56c917aea6602c1234"
+    }
+  ],
+  "extra_logical_target_or_clean_unrepaired_credit": false,
+  "files": {
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/clock_fragment.md": "0533d4afedeb0c630f087e57a904c143d0bb913639802257bbd86037ba4b06ad",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/prepared-stage.json": "fa8821e9253d808b8b4cffefbc8999b125ab7854a1ce64630115298e4b8fe76a",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/workspace/TASK.inherited.md": "69041ca3788f17be74448bd6b00f67100293cfd9c003ff10ede779deb75045c1",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/workspace/TASK.md": "69041ca3788f17be74448bd6b00f67100293cfd9c003ff10ede779deb75045c1",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/workspace/inputs/brief.md": "a0bd5d028acfedcd443b7860e43fb6240627873b354fe2a282ad9884990cbe50",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/workspace/inputs/delivery_objective.md": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/workspace/inputs/output_contract.md": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/workspace/inputs/source_access.json": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/workspace/inputs/source_separation.md": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/clock_fragment.md": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/operator-profile/BUNDLE_PROFILE.json": "5a06b179ad411ff6c9fb25aefc49375e480fbb227d70d7762b48504dbdea712f",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/prepared-stage.json": "c6ebb70a3bc8bca0d0abe9b116b20e98aa579e99ac412f402d9d3a8ea1f77087",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/workspace/TASK.inherited.md": "78e57f18a376d991c9c7d32856c16aa2b417cd256c0dfca781e1a1e03840be11",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/workspace/TASK.md": "0ed06e65171c2c2a71cc5d2c013fd3839d434e935bf0061b7ba461fc6a8eb65a",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/workspace/inputs/brief.md": "a0bd5d028acfedcd443b7860e43fb6240627873b354fe2a282ad9884990cbe50",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/workspace/inputs/delivery_objective.md": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/workspace/inputs/delivery_role_manifest.json": "f4ea17f39b181b76776debca506fe71a45caa441c579b36e0c517d2496d88ac8",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/workspace/inputs/output_contract.md": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/workspace/inputs/source_access.json": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001/workspace/inputs/source_separation.md": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/clock_fragment.md": "0533d4afedeb0c630f087e57a904c143d0bb913639802257bbd86037ba4b06ad",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/prepared-stage.json": "523c851fb5fe1ff6b11a146db871357aa8ddc2d3666f03574f76c7845ce89327",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/workspace/TASK.inherited.md": "69041ca3788f17be74448bd6b00f67100293cfd9c003ff10ede779deb75045c1",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/workspace/TASK.md": "69041ca3788f17be74448bd6b00f67100293cfd9c003ff10ede779deb75045c1",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/workspace/inputs/brief.md": "a0bd5d028acfedcd443b7860e43fb6240627873b354fe2a282ad9884990cbe50",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/workspace/inputs/delivery_objective.md": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/workspace/inputs/output_contract.md": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/workspace/inputs/source_access.json": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/workspace/inputs/source_separation.md": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/clock_fragment.md": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/operator-profile/BUNDLE_PROFILE.json": "d1895e30b01ce55fa34f59a6e9e2120e11c1d4a1b74da132c76df77d4db29e1e",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/prepared-stage.json": "6067d4d89effceddcbbb9890ee8637bf6251be70700fffc9945d3e08ca7c8007",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/workspace/TASK.inherited.md": "8478a95a7082a0c941910838a9ae99073a6250e7d29b5dd307deaa294b63f5d9",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/workspace/TASK.md": "96a233fd836693c55145eb2da1dbdbfcf43edbe2ed8b6f28761037621e39cc83",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/workspace/inputs/brief.md": "a0bd5d028acfedcd443b7860e43fb6240627873b354fe2a282ad9884990cbe50",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/workspace/inputs/delivery_objective.md": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/workspace/inputs/delivery_role_manifest.json": "14bfc8abe03c71a8a1e3f5c6689223f206c8259d6dd7134dfd331cad5ea74fcf",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/workspace/inputs/output_contract.md": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/workspace/inputs/source_access.json": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/workspace/inputs/source_separation.md": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d",
+    "COMMON_RUNTIME_CLOSURE.json": "84c7fae9f420ee5ba939a0473e21e43fff9eb9f4824f20fc474e817438d62ae5",
+    "OLD_SOURCE_BYTE_SNAPSHOT.json": "e686fba19ccab21beda2d2eb8f7fbee84b5afdae137315a8ee5c30c69d233eaa",
+    "OUTBOX.json": "4b1c4c46144122e66ff06a78d16d6a37c2a8136329efa68d2783c870ad9bf421",
+    "PIPELINE_CLOSURE.json": "2b6b5d36298624437b93dc45234c8c56cf2c69d71f5f744fe322fa2fc194e8e5",
+    "README.md": "845c635b4cec987834356980318bfc51a4df37cc083c155e0aad95aa35962bc4",
+    "ROLE_BINDING_CONTRACT.json": "2c2533b6124c82064869588f97fa6720efdcbae67f70a6c7578677e3e5c67d3c",
+    "VERIFICATION.json": "8f8ebff7ed2e59d2676f325f271acaefa34814b13408d782cadb2ca662fefb27",
+    "card.json": "22b0f3c3750616cb885de65302ddd2419cf8bda88a81b8df45a6f1a2a6a18890",
+    "prepare.py": "b08ab32b9e3470dbc7880d7850a6857089a1ccd6338b97723b9bed9775c704b2",
+    "registration.json": "869a49c6c14de0eaaa31562eea9169ed8c1a60cf3b723f51cabe9da508d42bfa",
+    "role_birth.py": "f9827af0cc344f06d1bd9a3f9ceeeed9a1e2f8ea588380600ee54db823df4fc4",
+    "seal.py": "8ab8587ece1b77e44e3644dead6acd1f966f93afc6e6fd9bfb12a46d9b99b420",
+    "test_repair.py": "4bd6a6ef4e23c8370df00818e4488733e2b6e182e11a53df983f8d0577ec307c"
+  },
+  "frozen_utc": "2026-10-06T07:59:40.673741+00:00",
+  "model_proof_normalizer_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/proof-model-normalizer-001/SOURCE_PIN.json",
+    "sha256": "04f37c0074e2f98fd1754ef640461e928f2c8be25295f92f035f13d3e1dfa803"
+  },
+  "new_native_stage_count": 4,
+  "no_Rrerun_no_oldclockreset": true,
+  "outbox_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/OUTBOX.json",
+    "sha256": "4b1c4c46144122e66ff06a78d16d6a37c2a8136329efa68d2783c870ad9bf421"
+  },
+  "policy_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-016-C01-PAIRED-INFRASTRUCTURE-STAGE-REPAIR.json",
+    "sha256": "8958cfdad704dec538226f1b2dc035f282159ad41a751aa4fe080c6937cd03c8"
+  },
+  "research_beforeREADY_COMPLETE_quiet_proved": true,
+  "role_binding_contract": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/ROLE_BINDING_CONTRACT.json",
+    "sha256": "2c2533b6124c82064869588f97fa6720efdcbae67f70a6c7578677e3e5c67d3c"
+  },
+  "root": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001",
+  "schema": "er9.dec016-c01-paired-infrastructure-source-pin.v1",
+  "selection_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/DEC016_C01_INFRA_REPAIR_METADATA_001/SELECTION.json",
+    "sha256": "6079c5d6a4c7052849335e18a10fd76b596e84281bd139cdf5988065022c31a6"
+  },
+  "source_owner_native_model_calls": 0,
+  "source_pins": {
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/prepare.py": "b08ab32b9e3470dbc7880d7850a6857089a1ccd6338b97723b9bed9775c704b2",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/role_birth.py": "f9827af0cc344f06d1bd9a3f9ceeeed9a1e2f8ea588380600ee54db823df4fc4",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/blueprint.py": "c7b89a2546e8ecec82162f5d823480c828889c1be45235533266f375313e8bf2",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/prepare_versions.py": "8e12e2e6f02050172bf92711933c56510912cc3a345c5a88750dc7a063ebdf77",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/prepare_successors.py": "ba45f3c3507c10e4339f78f6270dd9b56f5e23bdfb03984475d6f9dca94b9673",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/proof-model-normalizer-001/normalizer.py": "7e5890ce521730b6de72df1ecb14ab8e3bf51ae3894dde56c917aea6602c1234"
+  },
+  "status": "READY_ZERO_INFERENCE_SOURCE_ONLY",
+  "verification": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/VERIFICATION.json",
+    "sha256": "8f8ebff7ed2e59d2676f325f271acaefa34814b13408d782cadb2ca662fefb27"
+  }
+}

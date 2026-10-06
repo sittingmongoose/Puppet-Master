@@ -1,0 +1,81 @@
+{
+  "actual_ops_mutations": 0,
+  "admission": "Sole ops validates current fixed R complete/quiet, old uncertain actors quiet, all4 new0Goal/noIntent/allsourceclosure, actual original birth hashes and ordinary Gcap2/private/growth/reserve gates",
+  "all4_source_closure": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/PIPELINE_CLOSURE.json",
+    "sha256": "2b6b5d36298624437b93dc45234c8c56cf2c69d71f5f744fe322fa2fc194e8e5"
+  },
+  "automatic_repeat": false,
+  "bundle_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/PIN.json",
+    "sha256": "57a8470b12a85f9d252f6670fc2a06395c5637d5e968dce8d2acee2f5eea324b"
+  },
+  "clean_unrepaired_pair_claim": false,
+  "core_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+    "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+  },
+  "extra_logical_target_matched_credit": false,
+  "frozen_utc": "2026-10-06T07:59:40.673741+00:00",
+  "model_proof_normalizer_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/proof-model-normalizer-001/SOURCE_PIN.json",
+    "sha256": "04f37c0074e2f98fd1754ef640461e928f2c8be25295f92f035f13d3e1dfa803"
+  },
+  "native_stage_count": 4,
+  "new_research_roles": 0,
+  "new_stage_seconds_per_arm": 1500,
+  "old_clocks_reset": false,
+  "ops_markers": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+      "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/GLM_BUNDLE_CLOCK_V3_READY.json",
+      "sha256": "bb4c9a62092efaee7576cf778cf97edb3dd7f5912046e4080a10df1d878fbd99"
+    }
+  ],
+  "pair_count": 1,
+  "policy_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-016-C01-PAIRED-INFRASTRUCTURE-STAGE-REPAIR.json",
+    "sha256": "8958cfdad704dec538226f1b2dc035f282159ad41a751aa4fe080c6937cd03c8"
+  },
+  "ready": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/READY.json",
+    "sha256": "b49a85cbd26fc55abba651d38b54b1a1b926fabd283673ab3ee6a8705909d284"
+  },
+  "requests": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/registration.json",
+      "sha256": "869a49c6c14de0eaaa31562eea9169ed8c1a60cf3b723f51cabe9da508d42bfa"
+    }
+  ],
+  "role_binding_contract": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/ROLE_BINDING_CONTRACT.json",
+    "sha256": "2c2533b6124c82064869588f97fa6720efdcbae67f70a6c7578677e3e5c67d3c"
+  },
+  "role_birth_constructor_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/SOURCE_PIN.json",
+    "sha256": "8e86a3f475329add0e538cad2ddc35dd865d39f07b881f1ad0c339f9ca524d2d"
+  },
+  "schema": "er9.dec016-c01-paired-infra-stage-repair-outbox.v1",
+  "selection_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/DEC016_C01_INFRA_REPAIR_METADATA_001/SELECTION.json",
+    "sha256": "6079c5d6a4c7052849335e18a10fd76b596e84281bd139cdf5988065022c31a6"
+  },
+  "source_native_model_Goal_calls": 0,
+  "source_parent_R_complete_quiet_proved": true,
+  "source_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/SOURCE_PIN.json",
+    "sha256": "8e86a3f475329add0e538cad2ddc35dd865d39f07b881f1ad0c339f9ca524d2d"
+  },
+  "tools_source_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/SOURCE_PINS.json",
+    "sha256": "abe26402b0156639e4c0a207e5a030db012c5f2d4b5af5d507a95f00eadeb748"
+  },
+  "total_new_stage_seconds": 3000,
+  "verification": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/VERIFICATION.json",
+    "sha256": "8f8ebff7ed2e59d2676f325f271acaefa34814b13408d782cadb2ca662fefb27"
+  }
+}
